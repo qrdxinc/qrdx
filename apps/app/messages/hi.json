@@ -5401,11 +5401,7 @@
       "nameIsNoLongerIn": "\"{name}\" अब कम्युनिटी में नहीं है।"
     },
     "itemCard": {
-      "empty": "खाली",
-      "official": "आधिकारिक",
-      "usecountUses": "{useCount} बार इस्तेमाल हुआ",
-      "seeAll": "सब देखें",
-      "likes": "लाइक"
+      "empty": "खाली"
     },
     "itemPages": {
       "previous": "पिछला",

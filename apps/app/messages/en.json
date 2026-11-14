@@ -5331,6 +5331,10 @@
     "browseLayout": {
       "filters": "Filters"
     },
+    "cardRail": {
+      "previous": "Show earlier ones",
+      "next": "Show more"
+    },
     "communityTabs": {
       "community": "Community"
     },
@@ -5402,10 +5406,9 @@
     },
     "itemCard": {
       "empty": "Empty",
-      "official": "Official",
-      "usecountUses": "{useCount} uses",
-      "seeAll": "See all",
-      "likes": "Likes"
+      "viewAll": "View all",
+      "saves": "Saves",
+      "itemCount": "{count, plural, one {# item} other {# items}}"
     },
     "itemPages": {
       "previous": "Previous",
@@ -5415,6 +5418,9 @@
       "loadMore": "Load more",
       "loading": "Loading",
       "failed": "The next page didn't load."
+    },
+    "makerCard": {
+      "itemsAndSaves": "{items, plural, one {# item} other {# items}} · {saves, plural, one {# save} other {# saves}}"
     },
     "more": {
       "load": "Load more",
@@ -5502,6 +5508,10 @@
     "tryIt": {
       "tryItWithYourLink": "Try it with your link",
       "drawnInYourBrowserNothing": "Drawn in your browser. Nothing is sent."
+    },
+    "search": {
+      "label": "Search the community",
+      "placeholder": "Search frames, themes and pages"
     }
   },
   "app": {

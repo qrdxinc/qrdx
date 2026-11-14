@@ -265,6 +265,14 @@ function matches(card: CommunityItemCard, words: string[]): boolean {
 export async function searchCommunity(
   search: CommunitySearch,
 ): Promise<{ items: CommunityApiItem[]; total: number }> {
+  const { cards, total } = await searchCommunityCards(search);
+  return { items: cards.map(toApiItem), total };
+}
+
+/** searchCommunity's results as cards, for the community's own pages. */
+export async function searchCommunityCards(
+  search: CommunitySearch,
+): Promise<{ cards: CommunityItemCard[]; total: number }> {
   const limit = Math.min(
     search.limit ?? COMMUNITY_PAGE_DEFAULT,
     COMMUNITY_PAGE_MAX,
@@ -275,7 +283,7 @@ export async function searchCommunity(
   const query = toPrefixQuery(search.q ?? "");
   if (query && (await fullTextSearchAvailable())) {
     try {
-      const found = await searchItemsFullText({
+      return await searchItemsFullText({
         query,
         words: searchWords(search.q ?? ""),
         type: search.type,
@@ -283,7 +291,6 @@ export async function searchCommunity(
         limit,
         offset,
       });
-      return { items: found.cards.map(toApiItem), total: found.total };
     } catch (error) {
       logError(error as Error, { action: "community full-text search" });
     }
@@ -296,7 +303,7 @@ async function searchInMemory(
   search: CommunitySearch,
   limit: number,
   offset: number,
-): Promise<{ items: CommunityApiItem[]; total: number }> {
+): Promise<{ cards: CommunityItemCard[]; total: number }> {
   const types = search.type ? [search.type] : COMMUNITY_TYPES;
   const lists = await Promise.all(types.map((type) => cachedCards(type)));
   const words = normalize(search.q ?? "")
@@ -322,10 +329,7 @@ async function searchInMemory(
     .filter((card) => card.slug)
     .filter((card) => !tag || card.tags.includes(tag))
     .filter((card) => matches(card, words));
-  return {
-    items: found.slice(offset, offset + limit).map(toApiItem),
-    total: found.length,
-  };
+  return { cards: found.slice(offset, offset + limit), total: found.length };
 }
 
 /** One item by id, or null when it isn't published. */

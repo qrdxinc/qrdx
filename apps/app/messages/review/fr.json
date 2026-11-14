@@ -16155,22 +16155,6 @@
     "source": "c6c094bc0054",
     "status": "machine"
   },
-  "community.itemCard.official": {
-    "source": "c409c66f71f2",
-    "status": "machine"
-  },
-  "community.itemCard.usecountUses": {
-    "source": "74be4a4a2b30",
-    "status": "machine"
-  },
-  "community.itemCard.seeAll": {
-    "source": "d7a8c446069a",
-    "status": "machine"
-  },
-  "community.itemCard.likes": {
-    "source": "cca0662f9ddd",
-    "status": "machine"
-  },
   "community.itemPages.previous": {
     "source": "a57b08a480b8",
     "status": "machine"

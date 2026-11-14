@@ -1,14 +1,15 @@
 "use server";
 
 import type { ReactNode } from "react";
-import {
-  cardKey,
-  ItemCard,
-  ItemRowCards,
-} from "@/components/community/item-card";
+import { homeRow } from "@/components/community/home-rows";
+import { cardKey, ItemCard } from "@/components/community/item-card";
 import type { InfinitePage } from "@/components/infinite/infinite-list";
 import { ShowcaseWall } from "@/components/showcase/showcase-wall";
 import { type CommunityHome, getCommunityHome } from "@/lib/community/home";
+import {
+  type HomeSectionId,
+  SECTION_ORDER,
+} from "@/lib/community/home-sections";
 import { findWallChunk } from "@/lib/landing/showcase-wall";
 import { MAX_PAGE, pageSlice } from "@/lib/paging";
 import {
@@ -20,8 +21,8 @@ import {
 // What the community pages load as someone scrolls. Public and read-only:
 // the same queries the pages run (cached), never a write.
 //
-// The overview (components/community/deferred-community.tsx): the "Made
-// with QRdx" wall's later rows and the rows of cards under it.
+// The overview's lower rows of cards, and the "Made with QRdx" wall's later
+// rows (components/community/deferred-community.tsx).
 //
 // A gallery (/community/frames and the others): its next page of cards
 // (components/infinite/infinite-list.tsx), with the same filters.
@@ -57,19 +58,8 @@ export async function loadCommunityGalleryPage(
   };
 }
 
-const ROWS = [
-  "official",
-  "featured",
-  "collections",
-  "themes",
-  "fresh",
-  "templates",
-] as const satisfies readonly (keyof CommunityHome)[];
-
-type RowName = (typeof ROWS)[number];
-
-const isRow = (name: string): name is RowName =>
-  (ROWS as readonly string[]).includes(name);
+const isRow = (name: string): name is HomeSectionId =>
+  (SECTION_ORDER as string[]).includes(name);
 
 /** Most chunks one request may ask for. */
 const MAX_KEYS = 64;
@@ -95,8 +85,8 @@ export async function loadCommunityChunks(
       const name = key.slice("row:".length);
       if (!isRow(name)) continue;
       home ??= await getCommunityHome();
-      const cards = home[name];
-      if (cards.length > 0) chunks[key] = <ItemRowCards cards={cards} />;
+      const row = homeRow(name, home);
+      if (row.count > 0) chunks[key] = row.cards(0);
     }
   }
   return chunks;
