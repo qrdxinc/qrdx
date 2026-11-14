@@ -7,15 +7,17 @@ import {
   CUSTOM_DOMAIN_HEADER,
   isCustomDomainRequest,
 } from "@/app/(app)/dashboard/domains/_lib/hostname";
-import { accentUse } from "@/lib/client-brands-shared";
+import { accentUse } from "@/ee/client-portal/brands-shared";
 import { loadPublicStats } from "@/lib/public-stats";
 import { DEFAULT_PUBLIC_STATS_RANGE } from "@/lib/public-stats-shared";
 import { getClientIp } from "@/lib/request-guards";
 
-// The link preview of a client-branded stats page (agency tools): the
-// client's name and the code's, in the page's monochrome look with the
-// client's color as one rule. No numbers, and no logo: the server never
-// fetches a logo URL someone typed. Plain pages have no preview image.
+// The link preview of a client-branded stats page (agency tools, ee/ under
+// the QRdx commercial licence; served at /stats/<token>/og): the client's
+// name and the code's, in the page's monochrome look with the client's
+// color as one rule. No numbers, and no logo: the server never fetches a
+// logo URL someone typed. Plain pages, and every page on a server without
+// the licence key, have no preview image (404).
 
 const limiter = createRateLimiter({ limiter: slidingWindow(30, "60 s") });
 

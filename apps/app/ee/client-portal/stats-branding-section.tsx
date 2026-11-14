@@ -1,8 +1,9 @@
 "use client";
 
-// The share dialog's client branding (agency tools): which client brand a
-// code's shared stats page shows (Pro and Business), and on Business the
-// verified custom domain its link is served on.
+// The share dialog's client branding (agency tools, ee/ under the QRdx
+// commercial licence): which client brand a code's shared stats page shows
+// (Pro and Business), and on Business the verified custom domain its link
+// is served on. The dialog leaves it out on servers without the licence.
 
 import { Button } from "@repo/design-system/components/ui/button";
 import { Label } from "@repo/design-system/components/ui/label";
@@ -18,22 +19,22 @@ import { Skeleton } from "@repo/design-system/components/ui/skeleton";
 import { Edit2, Trash } from "iconsax-reactjs";
 import Link from "next/link";
 import { useEffect, useId, useState, useTransition } from "react";
+import { useWorkspaceHref } from "@/components/workspace-provider";
 import {
   deleteClientBrandAction,
   saveClientBrandAction,
-} from "@/actions/client-brands";
+} from "@/ee/client-portal/brand-actions";
+import { BrandFields, BrandTile } from "@/ee/client-portal/brand-fields";
+import type {
+  ClientBrand,
+  StatsBranding,
+} from "@/ee/client-portal/brands-shared";
 import {
   getStatsBrandingAction,
   setStatsBrandingAction,
-} from "@/actions/public-stats";
-import { useWorkspaceHref } from "@/components/workspace-provider";
-import type { ClientBrand } from "@/lib/client-brands-shared";
-import type {
-  PublicStatsShare,
-  StatsBranding,
-} from "@/lib/public-stats-shared";
+} from "@/ee/client-portal/stats-branding-actions";
+import type { PublicStatsShare } from "@/lib/public-stats-shared";
 import { soundEvent } from "@/lib/sound/emit";
-import { BrandFields, BrandTile } from "./brand-fields";
 
 const NONE = "none";
 const NEW = "new";

@@ -1,4 +1,6 @@
-// Client-branded shared stats pages (agency tools): a share can carry a
+// Client-branded shared stats pages (agency tools; ee/client-portal under
+// the QRdx commercial licence, on here: vitest.config.ts sets the key;
+// without it see ./client-portal-off.test.ts): a share can carry a
 // client brand (a brand_kit row with purpose "client") on Pro and Business;
 // Pro keeps "Made with QRdx", Business drops every QRdx mark and can serve
 // the link on one of the workspace's verified custom domains, where only
@@ -55,13 +57,14 @@ vi.mock("@/lib/scans", () => ({
 const {
   enablePublicStats,
   getPublicStatsShare,
-  getStatsBranding,
   loadPublicStats,
   resetPublicStats,
-  setStatsBranding,
 } = await import("@/lib/public-stats");
+const { getStatsBranding, setStatsBranding } = await import(
+  "@/ee/client-portal/stats-branding"
+);
 const { deleteClientBrand, listClientBrands, saveClientBrand } = await import(
-  "@/lib/client-brands"
+  "@/ee/client-portal/brands"
 );
 
 const owner = {

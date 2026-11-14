@@ -1,4 +1,6 @@
-// The client portal (agency tools, Business): a workspace invites a client
+// The client portal (agency tools, Business; ee/client-portal under the
+// QRdx commercial licence, on here: vitest.config.ts sets the key; without
+// it see ./client-portal-off.test.ts): a workspace invites a client
 // by email and shares some folders; the client signs in and sees exactly
 // those folders' codes, read-only, at /portal/<workspace>. These tests hold
 // the line the feature depends on:
@@ -152,12 +154,13 @@ vi.mock("@/lib/shared", async (importOriginal) => ({
   logError: () => {},
 }));
 
-const access = await import("@/lib/portal/access");
-const portal = await import("@/actions/portal");
+const access = await import("@/ee/client-portal/portal");
+const portal = await import("@/ee/client-portal/actions");
 const qrCodes = await import("@/actions/qr-codes");
 const folders = await import("@/actions/folders");
 const publicStats = await import("@/actions/public-stats");
-const clientBrands = await import("@/actions/client-brands");
+const statsBranding = await import("@/ee/client-portal/stats-branding-actions");
+const clientBrands = await import("@/ee/client-portal/brand-actions");
 const v1List = await import("@/app/api/v1/codes/route");
 const v1One = await import("@/app/api/v1/codes/[id]/route");
 
@@ -510,7 +513,7 @@ describe("a client in the dashboard's actions", () => {
       folders.deleteCodeFolder({ id: "f_bloom" }),
       publicStats.getPublicStatsShareAction({ codeId: "c_menu" }),
       publicStats.setPublicStatsShareAction({ codeId: "c_menu", on: true }),
-      publicStats.setStatsBrandingAction({
+      statsBranding.setStatsBrandingAction({
         codeId: "c_menu",
         brandId: null,
         domainId: null,

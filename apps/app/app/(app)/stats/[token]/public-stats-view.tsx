@@ -9,7 +9,7 @@ import {
 } from "@repo/design-system/components/ui/card";
 import { cn } from "@repo/design-system/lib/utils";
 import Link from "next/link";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import {
   BreakdownCard,
   type BreakdownItem,
@@ -22,14 +22,15 @@ import {
 // NFC (feat/nfc): QR scans and NFC taps.
 import { ScanSourceCard } from "@/app/(app)/dashboard/codes/_components/scan-source-card";
 import { ScansChart } from "@/app/(app)/dashboard/codes/_components/scans-chart";
-import { accentUse } from "@/lib/client-brands-shared";
+// Client branding (ee/client-portal, QRdx commercial licence): only drawn
+// when the page loaded a brand, which needs the licence.
+import { BrandMark, brandStyle } from "@/ee/client-portal/brand-mark";
 import {
   type PublicStats,
   type PublicStatsRange,
   publicStatsPath,
 } from "@/lib/public-stats-shared";
 import type { BreakdownRow } from "@/lib/scans";
-import { logoImageSrc } from "@/lib/workspace-logo";
 
 // What /stats/<token> shows (page.tsx loads it): aggregates only.
 
@@ -110,59 +111,6 @@ export function PublicStatsShell({
       </header>
       {children}
     </main>
-  );
-}
-
-/**
- * The client's color, applied sparingly: the scans chart and the logo
- * tile. A color that can't be read on a theme's background (too pale on
- * white, too dark on black) leaves that theme monochrome.
- */
-export function brandStyle(accent: string | null): CSSProperties | undefined {
-  if (!accent) return;
-  const use = accentUse(accent);
-  return {
-    "--brand-accent": accent,
-    "--brand-on-accent": use.onAccent,
-    "--brand-chart-light": use.light ? accent : "var(--foreground)",
-    "--brand-chart-dark": use.dark ? accent : "var(--foreground)",
-  } as CSSProperties;
-}
-
-/** The client's logo, or its initial on the accent color. */
-export function BrandMark({
-  brand,
-}: {
-  brand: NonNullable<PublicStats["brand"]>;
-}) {
-  const src = logoImageSrc(brand.logo);
-  if (src) {
-    return (
-      <span className="bg-background ring-border flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg ring-1">
-        <img
-          alt=""
-          className="size-full object-cover"
-          decoding="async"
-          height={32}
-          referrerPolicy="no-referrer"
-          src={src}
-          width={32}
-        />
-      </span>
-    );
-  }
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-lg text-sm font-semibold uppercase",
-        brand.accent
-          ? "bg-[var(--brand-accent)] text-[var(--brand-on-accent)]"
-          : "bg-foreground text-background",
-      )}
-    >
-      {brand.name.trim().charAt(0) || "C"}
-    </span>
   );
 }
 

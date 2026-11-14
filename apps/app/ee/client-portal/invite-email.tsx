@@ -4,8 +4,8 @@ import {
   EmailHeading,
   EmailLayout,
   EmailText,
-} from "./layout";
-import { MutedText } from "./parts";
+} from "@/lib/email/templates/layout";
+import { MutedText } from "@/lib/email/templates/parts";
 
 // Agency tools: a workspace on Business shared some of its folders with a
 // client. Sent in the workspace's name (EmailLayout `sender`).
