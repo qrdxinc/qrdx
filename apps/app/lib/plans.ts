@@ -284,15 +284,32 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
 // the environment is fixed for the life of the process.
 const EE_ON_EVERY_PLAN = eeOnEveryPlan(featureContext());
 
+/** The ee features, as plan limits, that the licence covers there. */
+const EE_LIMITS = {
+  // packages/auth/ee/sso.ts, ee/audit-log
+  sso: true,
+  auditLog: true,
+  // ee/client-portal
+  clientReports: true,
+  clientReportsWhiteLabel: true,
+  clientPortal: true,
+  // ee/white-label: no QRdx branding, so no "Made with QRdx" footer either
+  whiteLabel: true,
+  customCss: true,
+  landingPageBadge: false,
+  // ee/conversions
+  conversions: true,
+} satisfies Partial<PlanLimits>;
+
 /**
- * The limits a scope on `plan` gets here: PLAN_LIMITS, plus workspace SSO
- * and the audit log on every plan where the ee licence covers them without a
- * plan (a self-hosted server with the key and no billing). On qrdx.dev and
+ * The limits a scope on `plan` gets here: PLAN_LIMITS, plus the ee features
+ * (EE_LIMITS) on every plan where the ee licence covers them without a plan
+ * (a self-hosted server with the key and no billing). On qrdx.dev and
  * anywhere that sells plans, exactly PLAN_LIMITS.
  */
 export function getPlanLimits(plan: Plan): PlanLimits {
   const limits = PLAN_LIMITS[plan];
-  return EE_ON_EVERY_PLAN ? { ...limits, sso: true, auditLog: true } : limits;
+  return EE_ON_EVERY_PLAN ? { ...limits, ...EE_LIMITS } : limits;
 }
 
 /**

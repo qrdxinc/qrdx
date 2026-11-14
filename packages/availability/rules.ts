@@ -362,10 +362,11 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
 };
 
 /**
- * Whether the ee features (workspace SSO, the audit log) come with every
- * plan here: a self-hosted copy on its own domain (./deployment.ts) with the
- * licence key that sells no plans (no "billing", so every account is on
- * Free). Its enterprise agreement covers them, so no plan is asked for.
+ * Whether the ee features (workspace SSO, the audit log, the client portal
+ * and client reports, white-label pages with custom CSS, conversion
+ * tracking) come with every plan here: a self-hosted copy on its own domain
+ * (./deployment.ts) with the licence key that sells no plans (no "billing",
+ * so every account is on Free). Its enterprise agreement covers them, so no plan is asked for.
  * Where plans are sold, and always on QRdx itself (qrdx.dev, its previews,
  * local dev), they stay with the plans that include them
  * (apps/app/lib/plans.ts).
