@@ -81,12 +81,13 @@ export function operationsOf(document: OpenAPIV3_1.Document): OperationInfo[] {
 /**
  * The first sentence of a description's first paragraph, for a table cell:
  * links and bold go, inline code stays (a bare `{ frame }` would be read as
- * a JSX expression), pipes are escaped.
+ * a JSX expression), backslashes and pipes are escaped.
  */
 export function firstSentence(markdown: string): string {
   const lead = (markdown.split("\n\n")[0] ?? "")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\\/g, "\\\\")
     .replace(/\|/g, "\\|")
     .trim();
   const match = /^(.{20,}?[.!?])(?:\s|$)/.exec(lead);

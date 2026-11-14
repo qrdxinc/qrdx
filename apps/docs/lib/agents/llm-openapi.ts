@@ -76,10 +76,11 @@ function deref(document: OpenApiDocument, value: unknown): Json {
 
 const code = (value: unknown) => `\`${String(value).replace(/`/g, "'")}\``;
 
-/** One line of a table cell: no newlines, pipes escaped. */
+/** One line of a table cell: no newlines, backslashes and pipes escaped. */
 const cell = (text: string) =>
   text
     .replace(/\s*\n\s*/g, " ")
+    .replace(/\\/g, "\\\\")
     .replace(/\|/g, "\\|")
     .trim();
 
