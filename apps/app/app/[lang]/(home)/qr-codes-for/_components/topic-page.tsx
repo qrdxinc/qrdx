@@ -210,6 +210,7 @@ export async function TopicPage({ topic, collection, other }: TopicPageProps) {
               <Button asChild>
                 <SignInLink
                   href={dashboardEntry("pages", { new: topic.startPage.page })}
+                  reason="hosted_page"
                   rel="nofollow"
                 >
                   {topic.startPage.label}
@@ -235,7 +236,7 @@ export async function TopicPage({ topic, collection, other }: TopicPageProps) {
                 </LocaleLink>
               </Button>
               <Button variant="outline" asChild>
-                <SignInLink href="/dashboard">
+                <SignInLink href="/dashboard" reason="make_dynamic">
                   {common("createDynamic")}
                 </SignInLink>
               </Button>
@@ -294,6 +295,9 @@ export async function TopicPage({ topic, collection, other }: TopicPageProps) {
               key={item.title}
               href={item.href}
               requireSignIn={item.href.startsWith("/dashboard")}
+              signInReason={
+                item.href.includes("pages") ? "hosted_page" : "make_dynamic"
+              }
               className={cn(
                 cardClass,
                 interactiveCardClass,

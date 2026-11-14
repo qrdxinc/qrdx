@@ -19,6 +19,7 @@ import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { siteConfig } from "@/config/site";
 import { SsoSignIn } from "@/ee/sso/sso-sign-in";
 import { pendingReferralCode } from "@/lib/affiliates/referral-client";
+import { type AuthDialogMode, showsSignIn } from "@/lib/analytics/auth-prompt";
 import { signUpLanding } from "@/lib/analytics/landing";
 import { socialSignInErrorPath } from "../sign-in/_lib/error-message";
 import { EmailCodeSignIn } from "./email-code-sign-in";
@@ -34,7 +35,11 @@ type TextComponent = ComponentType<{
 }>;
 
 export interface SignInPanelProps {
-  mode?: "signin" | "signup";
+  /**
+   * "auto": a sign-up, unless this browser has signed in before
+   * (lib/analytics/auth-prompt.ts).
+   */
+  mode?: AuthDialogMode;
   /**
    * Where Google and GitHub return to, as a same-site path (already checked
    * by lib/safe-redirect). Called when a sign-in starts, so it can read the
@@ -73,10 +78,10 @@ export function SignInPanel({
   shown = true,
 }: SignInPanelProps) {
   const t = useTranslations("auth.signInPanel");
-  const isSignIn = mode === "signin";
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
   const [lastLoginMethod, setLastLoginMethod] = useState<string | null>(null);
+  const isSignIn = showsSignIn(mode, lastLoginMethod);
   // Address the email code went to (the code step), and a key to start over.
   const [codeSentTo, setCodeSentTo] = useState<string | null>(null);
   const [emailFormKey, setEmailFormKey] = useState(0);

@@ -8827,6 +8827,21 @@
     },
     "dialogCloseButton": {
       "close": "Close"
+    },
+    "reasons": {
+      "saveDesign": "Save this design to your account and open it on any device.",
+      "makeDynamic": "Dynamic codes live in your account: change where they point after printing, and count every scan.",
+      "hostedPage": "Hosted pages live in your account, so you can change them after printing.",
+      "aiArt": "AI art runs on a free account, which comes with monthly images.",
+      "aiChat": "The AI designer needs a free account. Free accounts get {count, number} requests in total.",
+      "uploadFrame": "Uploading your own frames needs a free account.",
+      "publishFrame": "Sharing a frame with the community needs a free account.",
+      "communityAction": "Liking, saving, copying and publishing community designs needs a free account.",
+      "saveBarcode": "Saved barcodes live in your account, ready to download again.",
+      "bulkOverLimit": "Files of up to {limit, number} rows need no account. A free account makes up to {max, number} per file, and your file stays loaded.",
+      "keepDesigns": "Keep your designs in your account, on every device.",
+      "afterDownload": "It's free, and your code keeps working whatever happens to your plan.",
+      "upgrade": "Plans and billing belong to an account. You'll pick up right where you were."
     }
   },
   "codeBuilder": {

@@ -20,7 +20,9 @@ export function AuthDialogWrapper() {
   const {
     isOpen,
     mode,
+    reason,
     closeAuthDialog,
+    dismissAuthDialog,
     postLoginAction,
     clearPostLoginAction,
     callbackURL,
@@ -49,9 +51,13 @@ export function AuthDialogWrapper() {
   return (
     <AuthDialog
       callbackURL={callbackURL ?? undefined}
-      open={isOpen}
-      onOpenChange={closeAuthDialog}
       initialMode={mode}
+      onOpenChange={(open) => {
+        if (!open) dismissAuthDialog();
+      }}
+      onSignedIn={closeAuthDialog}
+      open={isOpen}
+      reason={reason}
     />
   );
 }

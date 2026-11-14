@@ -190,6 +190,10 @@ export function DynamicLimitCard({
   onUpgrade: () => void;
 }) {
   const t = useTranslations("editor.dynamicLinkToggle");
+  // Only Free caps dynamic codes.
+  useEffect(() => {
+    track("limit_gate_shown", { limit: "dynamic_codes", plan: "free" });
+  }, []);
   return (
     <div className="bg-muted/50 space-y-2 rounded-lg p-3 text-xs">
       <p>{message}</p>
@@ -281,7 +285,10 @@ export function DynamicLinkToggle() {
   const enable = () => {
     if (!destination) return;
     if (!userId) {
-      openAuthDialog("signin", "MAKE_DYNAMIC", makeDynamicIntent(destination));
+      openAuthDialog("make_dynamic", {
+        action: "MAKE_DYNAMIC",
+        data: makeDynamicIntent(destination),
+      });
       return;
     }
 
@@ -297,11 +304,10 @@ export function DynamicLinkToggle() {
         return;
       }
       if (outcome.kind === "signin") {
-        openAuthDialog(
-          "signin",
-          "MAKE_DYNAMIC",
-          makeDynamicIntent(destination),
-        );
+        openAuthDialog("make_dynamic", {
+          action: "MAKE_DYNAMIC",
+          data: makeDynamicIntent(destination),
+        });
         return;
       }
       if (outcome.kind === "error") {

@@ -6,6 +6,11 @@
  * (consent/consent-manager.tsx).
  */
 export type {
+  AuthPrompt,
+  AuthPromptKind,
+  AuthPromptReason,
+} from "./auth-prompt";
+export type {
   AnalyticsEventName,
   AnalyticsEvents,
   QrSource,
