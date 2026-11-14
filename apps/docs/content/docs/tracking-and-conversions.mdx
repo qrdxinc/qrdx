@@ -4,17 +4,30 @@ description: Add your analytics and retargeting pixels to hosted pages, see when
 icon: Target
 ---
 
-Every [dynamic QR code](/docs/dynamic-qr-codes) records scans without cookies. On top of that you can load your own pixels on hosted pages (Pro) and attribute conversions such as purchases to the scan that brought the visitor (Business). Both are set up on the code's page in the [dashboard](/dashboard?to=codes), on its **Settings** tab.
+Every [dynamic QR code](/docs/dynamic-qr-codes) records scans without cookies. On top of that you can load your own pixels on hosted pages (Pro)<IfAvailable feature="conversions"> and attribute conversions such as purchases to the scan that brought the visitor (Business). Both are</IfAvailable><IfAvailable feature="conversions" unavailable>. They're</IfAvailable> set up on the code's page in the [dashboard](/dashboard?to=codes), on its **Settings** tab.
 
 ## Analytics on every code
 
 Besides scans over time, countries, cities, devices, operating systems, browsers and referrers, each code's page shows:
+
+<IfAvailable feature="conversions">
 
 - **When people scan:** scans by hour of day and by weekday, in UTC or in your own time zone.
 - **Languages:** each visitor's preferred browser language ("Unknown" when the browser doesn't send one, and for scans from before languages were recorded).
 - **A/B splits:** scans per variant for each [A/B split rule](/docs/smart-routing#ab-tests).
 - **Page activity** (hosted pages): page views, unique viewers, taps and the most tapped links and buttons.
 - **Conversions**, when the code has any.
+
+</IfAvailable>
+
+<IfAvailable feature="conversions" unavailable>
+
+- **When people scan:** scans by hour of day and by weekday, in UTC or in your own time zone.
+- **Languages:** each visitor's preferred browser language ("Unknown" when the browser doesn't send one, and for scans from before languages were recorded).
+- **A/B splits:** scans per variant for each [A/B split rule](/docs/smart-routing#ab-tests).
+- **Page activity** (hosted pages): page views, unique viewers, taps and the most tapped links and buttons.
+
+</IfAvailable>
 
 [Dashboard → Analytics](/dashboard?to=analytics) adds up every code in the workspace: totals, scans over time, top codes, countries, devices, languages, scan times, and a comparison of up to 4 codes side by side.
 
@@ -45,9 +58,11 @@ You remain responsible for your own privacy policy and for how you use the data 
 
 Codes that open your own website go there directly, so add your pixels to your site instead.
 
-## Conversion tracking (Business)
+<IfAvailable feature="conversions" title="Conversion tracking (Business)">
 
 Conversion tracking tells you which scans led to a sale, sign-up or any other goal, with revenue.
+
+Conversion tracking is a Business feature under the QRdx commercial license. A self-hosted QRdx server needs a license key (`QRDX_EE_LICENSE`) to turn it on; see [Self-hosting](/docs/self-hosting#optional-services).
 
 1. On a code that opens your website, turn on **Conversion tracking**. Every scan then opens your URL with a signed `qrdx_sid` parameter added, for example `https://shop.example/?qrdx_sid=…`.
 2. Add the snippet to the pages people land on and the page where they convert:
@@ -92,3 +107,5 @@ With a token you can also send `"code": "<code id>"` instead of `sid` when the s
 - `qrdx_sid` is signed, so it can't be guessed or changed to point at another code.
 - Browser reports need conversion tracking to be on for the code, and each scan can report a limited number of conversions per hour.
 - Conversions stop being recorded if the workspace leaves Business; existing ones stay in your analytics, and turning tracking off is always possible.
+
+</IfAvailable>
