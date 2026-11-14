@@ -133,7 +133,8 @@
     "account": {
       "tryPlayground": "Try the Playground",
       "playground": "Playground",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "signIn": "Sign in"
     },
     "github": {
       "star": "Star",
@@ -4685,6 +4686,7 @@
       "fixedOncePrinted": "Fixed once printed",
       "dynamic": "Dynamic",
       "editLaterCountScans": "Edit later, count scans",
+      "signedOutNote": "Dynamic needs a free account. Your code keeps working whatever happens to your plan.",
       "linkOptions": "Link options…",
       "printedCodesStillOpenDestinationurl": "Printed codes still open <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Point it to the new address",

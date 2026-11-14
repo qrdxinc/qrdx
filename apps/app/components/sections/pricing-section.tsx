@@ -25,7 +25,6 @@ import { PricingOffers } from "@/components/sections/pricing/pricing-offers";
 import { maxYearlySavingsPercent } from "@/components/sections/pricing/savings";
 import { siteConfig } from "@/config/site";
 import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
-import { playgroundHref } from "@/lib/playground-links";
 import {
   BILLING_INTERVALS,
   type BillingInterval,
@@ -38,6 +37,7 @@ import {
   PRICING,
   type PricingCurrency,
 } from "@/lib/pricing";
+import { DEFAULT_NEXT_PATH } from "@/lib/safe-redirect";
 import { useAuthStore } from "@/store/auth-store";
 
 interface PricingSectionProps {
@@ -378,7 +378,31 @@ export function PricingSection({
       action: {
         button: (
           <Button asChild className="w-full" variant="outline">
-            <LocaleLink href={isSignedIn ? "/dashboard" : playgroundHref()}>
+            {/* Signed out: a free account (sign-up, or sign-in for someone
+                who has one), then the dashboard. */}
+            <LocaleLink
+              href={
+                isSignedIn
+                  ? "/dashboard"
+                  : `/sign-in?next=${encodeURIComponent(DEFAULT_NEXT_PATH)}`
+              }
+              onClick={(event) => {
+                if (isSignedIn) return;
+                if (
+                  event.metaKey ||
+                  event.ctrlKey ||
+                  event.shiftKey ||
+                  event.button !== 0
+                ) {
+                  return;
+                }
+                event.preventDefault();
+                openAuthDialog("nav", {
+                  mode: "auto",
+                  callbackURL: DEFAULT_NEXT_PATH,
+                });
+              }}
+            >
               {isSignedIn ? t("cards.goToDashboard") : t("tiers.free.cta")}
             </LocaleLink>
           </Button>
