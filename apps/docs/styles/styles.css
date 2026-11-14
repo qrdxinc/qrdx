@@ -11,6 +11,11 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
+/* The docs assistant's answers (components/chat/panel.tsx) render through
+   Streamdown, as the main app's AI chat does: its stylesheet and classes. */
+@import "streamdown/styles.css";
+@source "../node_modules/streamdown/dist";
+
 /* fumadocs' search marks matches with the CSS Custom Highlight API through
    these two classes. Next's CSS optimizer (lightningcss) doesn't know the
    valid ::highlight() pseudo-element yet and warns on every build, so they

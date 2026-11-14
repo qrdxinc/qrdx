@@ -1,0 +1,75 @@
+// The docs assistant's empty state (components/chat): which tab a page is
+// in, decided from the tabs' URLs so translated titles don't matter, and a
+// full set of suggested questions for every tab in the English catalog the
+// docs read (packages/i18n/messages/en.json, written by zone-inputs).
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { describe, expect, it } from "vitest";
+import { docsSectionOf } from "@/components/chat/section";
+import {
+  SUGGESTION_KEYS,
+  SUGGESTION_SECTIONS,
+} from "@/components/chat/suggestions";
+
+const tab = (...urls: string[]) => ({ urls: new Set(urls) });
+
+const TABS = [
+  tab("/docs/help", "/docs/help/contact", "/docs/help/dynamic-codes/create"),
+  tab("/docs/dynamic-qr-codes", "/docs/smart-routing", "/docs/teams"),
+  tab("/docs/developers", "/docs/developers/mcp", "/docs/webhooks"),
+  tab("/docs/getting-started", "/docs/usage", "/docs/components/qr-code"),
+  tab("/docs/self-hosting"),
+];
+
+describe("docsSectionOf", () => {
+  it("names the tab a page is in, by the tabs' pages", () => {
+    expect(docsSectionOf("/docs/help/contact", TABS)).toBe("help");
+    expect(docsSectionOf("/docs/smart-routing", TABS)).toBe("guides");
+    expect(docsSectionOf("/docs/webhooks", TABS)).toBe("developers");
+    expect(docsSectionOf("/docs/components/qr-code", TABS)).toBe("react");
+    expect(docsSectionOf("/docs/self-hosting", TABS)).toBe("selfHosting");
+  });
+
+  it("works for translated URLs, whose tabs list translated pages", () => {
+    const spanish = [
+      tab("/es/docs/help", "/es/docs/help/contact"),
+      tab("/es/docs/developers", "/es/docs/developers/mcp"),
+    ];
+    expect(docsSectionOf("/es/docs/help/contact?x=1", spanish)).toBe("help");
+    expect(docsSectionOf("/es/docs/developers/mcp#top", spanish)).toBe(
+      "developers",
+    );
+  });
+
+  it("falls back to home for /docs and pages no tab lists", () => {
+    expect(docsSectionOf("/docs", TABS)).toBe("home");
+    expect(docsSectionOf("/docs/unknown", TABS)).toBe("home");
+    expect(docsSectionOf("/docs/help", [{}])).toBe("home");
+  });
+});
+
+describe("suggested questions", () => {
+  const catalog = JSON.parse(
+    readFileSync(
+      join(import.meta.dirname, "../../../../packages/i18n/messages/en.json"),
+      "utf8",
+    ),
+  ) as {
+    docs: { chat: { suggestions: Record<string, Record<string, string>> } };
+  };
+
+  it("exist for every section and key, as real questions", () => {
+    for (const section of SUGGESTION_SECTIONS) {
+      const questions = catalog.docs.chat.suggestions[section];
+      expect(questions, section).toBeDefined();
+      expect(Object.keys(questions ?? {}).sort()).toEqual(
+        [...SUGGESTION_KEYS].sort(),
+      );
+      for (const key of SUGGESTION_KEYS) {
+        const question = questions?.[key] ?? "";
+        expect(question.length, `${section}.${key}`).toBeGreaterThan(10);
+        expect(question.endsWith("?"), `${section}.${key}`).toBe(true);
+      }
+    }
+  });
+});

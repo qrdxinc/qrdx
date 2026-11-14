@@ -1,16 +1,20 @@
 import type { Root } from "fumadocs-core/page-tree";
 import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
-import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { RootProvider } from "fumadocs-ui/provider/base";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { DocsChatLayout } from "@/components/chat/layout";
+import { DocsChatProvider } from "@/components/chat/provider";
 import { DocsFrameworkProvider } from "@/components/docs/docs-framework-provider";
 import { DocsProductLinks } from "@/components/docs/docs-product-links";
 import { DocsSidebarFooter } from "@/components/docs/docs-sidebar-footer";
 import CustomSearchDialog from "@/components/search";
 import { JsonLd } from "@/components/sections/tools/json-ld";
 import { docsTabs, filterPageTree, mapLinkNodes } from "@/lib/docs-tree";
-import { isPathAvailable } from "@/lib/feature-availability";
+import {
+  isFeatureAvailable,
+  isPathAvailable,
+} from "@/lib/feature-availability";
 import { LOCALE_INFO, type Locale } from "@/lib/i18n/config";
 import { englishDocsPath } from "@/lib/i18n/docs";
 import {
@@ -24,8 +28,12 @@ import { organizationSchema } from "@/lib/seo-schema";
 import { localizedSource } from "@/lib/source";
 import "katex/dist/katex.min.css";
 
-/** What the docs' client components translate (search, page actions, language menu). */
-const DOCS_CLIENT_NAMESPACES = [...CHROME_NAMESPACES, "docs.client"] as const;
+/** What the docs' client components translate (search, page actions, language menu, the chat). */
+const DOCS_CLIENT_NAMESPACES = [
+  ...CHROME_NAMESPACES,
+  "docs.client",
+  "docs.chat",
+] as const;
 
 const trees = new Map<Locale, Root>();
 
@@ -62,47 +70,52 @@ export default async function Layout({
         <NextIntlClientProvider
           messages={pickMessages(messages, DOCS_CLIENT_NAMESPACES)}
         >
-          <RootProvider
-            i18n={{ locale: LOCALE_INFO[locale].segment, translations }}
-            search={{ SearchDialog: CustomSearchDialog }}
-          >
-            <DocsLayout
-              tree={tree}
-              // Help, Guides, Developers, React library and Self-hosting:
-              // tabs above the page on desktop, a switcher in the mobile
-              // menu (lib/docs-tree.ts).
-              tabs={docsTabs(tree)}
-              tabMode="top"
-              {...baseOptions()}
-              links={linkItems.filter((item) => item.type === "icon")}
-              nav={{
-                ...baseOptions().nav,
-                url: localizePath("/", locale),
-                title: (
-                  <>
-                    {logo}
-                    <span className="font-medium in-[docs_layout_&]:text-[15px]">
-                      QRdx
-                    </span>
-                  </>
-                ),
-              }}
-              // One footer bar: the language menu and the theme switch
-              // (DocsSidebarFooter), so the built-in switch is off.
-              sidebar={{ footer: <DocsSidebarFooter /> }}
-              themeSwitch={{ enabled: false }}
+          {/* The docs assistant (components/chat), offered only where the
+              main app has it (availability "docsChat"); above RootProvider
+              so the search dialog can hand a query to it. */}
+          <DocsChatProvider enabled={isFeatureAvailable("docsChat")}>
+            <RootProvider
+              i18n={{ locale: LOCALE_INFO[locale].segment, translations }}
+              search={{ SearchDialog: CustomSearchDialog }}
             >
-              <JsonLd data={organizationSchema} />
-              {/* Neutral light from the top right (the old image was a blue glow).
+              <DocsChatLayout
+                tree={tree}
+                // Help, Guides, Developers, React library and Self-hosting:
+                // tabs above the page on desktop, a switcher in the mobile
+                // menu (lib/docs-tree.ts).
+                tabs={docsTabs(tree)}
+                tabMode="top"
+                {...baseOptions()}
+                links={linkItems.filter((item) => item.type === "icon")}
+                nav={{
+                  ...baseOptions().nav,
+                  url: localizePath("/", locale),
+                  title: (
+                    <>
+                      {logo}
+                      <span className="font-medium in-[docs_layout_&]:text-[15px]">
+                        QRdx
+                      </span>
+                    </>
+                  ),
+                }}
+                // One footer bar: the language menu and the theme switch
+                // (DocsSidebarFooter), so the built-in switch is off.
+                sidebar={{ footer: <DocsSidebarFooter /> }}
+                themeSwitch={{ enabled: false }}
+              >
+                <JsonLd data={organizationSchema} />
+                {/* Neutral light from the top right (the old image was a blue glow).
                   Light mode needs half the ink, or it reads as a grey smudge. */}
-              <div
-                aria-hidden
-                className="pointer-events-none fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_55%_45%_at_100%_0%,color-mix(in_oklab,var(--color-foreground)_3.5%,transparent),transparent)] dark:bg-[radial-gradient(ellipse_55%_45%_at_100%_0%,color-mix(in_oklab,var(--color-foreground)_7%,transparent),transparent)]"
-              />
-              {children}
-              <DocsProductLinks locale={locale} />
-            </DocsLayout>
-          </RootProvider>
+                <div
+                  aria-hidden
+                  className="pointer-events-none fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_55%_45%_at_100%_0%,color-mix(in_oklab,var(--color-foreground)_3.5%,transparent),transparent)] dark:bg-[radial-gradient(ellipse_55%_45%_at_100%_0%,color-mix(in_oklab,var(--color-foreground)_7%,transparent),transparent)]"
+                />
+                {children}
+                <DocsProductLinks locale={locale} />
+              </DocsChatLayout>
+            </RootProvider>
+          </DocsChatProvider>
         </NextIntlClientProvider>
       </TreeContextProvider>
     </DocsFrameworkProvider>
