@@ -143,6 +143,18 @@ export interface AnalyticsEvents {
 
   // Docs and errors
   docs_search: { query_length: number; result_count?: number };
+  /**
+   * The docs assistant (Ask AI): a question sent, its length, the docs tab
+   * it was asked from and whether it was a suggested one. Never the text.
+   */
+  docs_chat_asked: { query_length: number; tab?: string; suggested?: boolean };
+  /** An answer finished: how many docs pages it cited, or why there is none. */
+  docs_chat_answered: {
+    sources: number;
+    outcome: "answered" | "limited" | "error";
+  };
+  /** "Was this answer helpful?" under an answer. */
+  docs_chat_feedback: { helpful: boolean };
   "404_viewed": { area: "site" | "docs" };
   query_failed: { error_type: string };
 }

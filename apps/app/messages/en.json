@@ -846,6 +846,74 @@
         "note": "The docs are in these languages. Other languages read the English docs."
       }
     },
+    "chat": {
+      "open": "Ask AI",
+      "openLabel": "Ask AI about the docs",
+      "shortcut": "Ask AI",
+      "title": "Ask AI",
+      "subtitle": "Answers from the QRdx docs, with the pages they come from.",
+      "close": "Close Ask AI",
+      "newChat": "New chat",
+      "placeholder": "Ask a question about QRdx",
+      "send": "Send",
+      "stop": "Stop",
+      "askAbout": "Ask AI about “{query}”",
+      "askAboutPage": "Ask AI about this page",
+      "emptyTitle": "What do you want to know?",
+      "emptyBody": "Ask in your own words. The answer comes from the docs and links the pages it used.",
+      "suggestionsTitle": "Try one of these",
+      "sources": "Sources",
+      "reading": "Reading the docs",
+      "helpful": "Was this answer helpful?",
+      "yes": "Yes",
+      "no": "No",
+      "thanks": "Thanks. That helps us improve the docs.",
+      "privacy": "Questions go to the AI provider through Vercel AI Gateway and aren't stored by QRdx. <link>How QRdx uses AI</link>",
+      "limited": "The docs assistant has reached today's limit. Search still works.",
+      "pace": "You're asking quickly. Wait a moment and try again.",
+      "unavailable": "The docs assistant isn't available right now. Search still works.",
+      "tooLong": "Keep a question under {max, number} characters.",
+      "you": "You",
+      "assistant": "Ask AI",
+      "suggestions": {
+        "home": {
+          "q1": "How do I make my first QR code?",
+          "q2": "What is the difference between static and dynamic QR codes?",
+          "q3": "Can I change where a QR code points after printing it?",
+          "q4": "How do I create a QR code with the REST API?"
+        },
+        "help": {
+          "q1": "How do I change the link behind a dynamic code?",
+          "q2": "Why won't my QR code scan?",
+          "q3": "How do I invite someone to my workspace?",
+          "q4": "How do I cancel my plan?"
+        },
+        "guides": {
+          "q1": "What can smart routing do?",
+          "q2": "How do custom domains work?",
+          "q3": "What are the limits of each plan?",
+          "q4": "How do I move my codes from another provider?"
+        },
+        "developers": {
+          "q1": "How do I get an API key?",
+          "q2": "How do I create a code with the REST API?",
+          "q3": "How do I connect the MCP server to Claude or Cursor?",
+          "q4": "Which image formats does the image API return?"
+        },
+        "react": {
+          "q1": "How do I add a QR code to a Next.js app?",
+          "q2": "How do I put a logo in the middle of a QR code?",
+          "q3": "How do I download the code as a PNG?",
+          "q4": "Does the library work with Vue?"
+        },
+        "selfHosting": {
+          "q1": "How do I self-host QRdx?",
+          "q2": "Which environment variables are required?",
+          "q3": "How do I run QRdx with Docker?",
+          "q4": "What is left out when I self-host?"
+        }
+      }
+    },
     "help": {
       "search": "Search help and docs",
       "stillStuck": {
