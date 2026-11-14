@@ -1,7 +1,9 @@
 // Run: cd apps/app && DATABASE_URL=postgres://test@127.0.0.1:1/test \
 //   NEXT_PUBLIC_APP_URL=https://qrdx.dev BETTER_AUTH_SECRET=test-secret \
+//   QRDX_EE_LICENSE=test-license \
 //   npx tsx --conditions=react-server --test lib/redirect/routing.test.ts
-// (no database connection is made; the values only satisfy env.ts)
+// (no database connection is made; the values only satisfy env.ts, and the
+// licence key turns on conversion tracking's qrdx_sid, ee/conversions)
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { preferredLanguage, visitorHash } from "@/lib/scans";

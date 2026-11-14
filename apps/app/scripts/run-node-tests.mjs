@@ -54,6 +54,8 @@ const env = {
   R2_SECRET_ACCESS_KEY: "test",
   R2_BUCKET: "test-bucket",
   RESEND_API_KEY: "",
+  // The ee/ features are on, as on qrdx.dev (vitest.config.ts does the same).
+  QRDX_EE_LICENSE: "test-license",
 };
 
 const files = find(root);

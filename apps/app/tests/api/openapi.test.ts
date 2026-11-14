@@ -235,6 +235,9 @@ describe("errors catalogue", () => {
   // Files whose thrown errors reach /v1 callers.
   const thrown = [
     ...walk(join("app", "api", "v1")).filter((file) => file.endsWith(".ts")),
+    // POST /v1/conversions lives in ee/ (QRdx commercial licence)
+    "ee/conversions/api.ts",
+    "ee/conversions/access.ts",
     "app/(app)/dashboard/codes/_lib/qr-codes.ts",
     "app/(app)/dashboard/codes/_lib/code-kind.ts",
     "lib/api-errors.ts",
@@ -295,6 +298,7 @@ describe("errors catalogue", () => {
     const importers = [
       ...walk("app"),
       ...walk("components"),
+      ...walk("ee"),
       ...walk("lib"),
       "proxy.ts",
     ].filter(

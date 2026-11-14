@@ -817,7 +817,9 @@ export default function CodeBuilderModal({
 
   const shortcutContext = {
     singleKeys,
-    options: isPage ? codeOptionsFor("page") : codeOptionsFor("redirect"),
+    options: codeOptionsFor(isPage ? "page" : "redirect", {
+      conversions: availability.has("conversions"),
+    }),
     busy: isPending,
     formShown:
       formShown &&
