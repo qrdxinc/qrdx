@@ -3075,10 +3075,6 @@
     "source": "3cbb36cf1588",
     "status": "machine"
   },
-  "tools.bulk.metaDescription": {
-    "source": "4110cfe76f49",
-    "status": "machine"
-  },
   "tools.bulk.crumb": {
     "source": "48c46ecdf3c7",
     "status": "machine"
@@ -3089,10 +3085,6 @@
   },
   "tools.bulk.intro1": {
     "source": "beec676f9aeb",
-    "status": "machine"
-  },
-  "tools.bulk.intro2": {
-    "source": "2116fde6592a",
     "status": "machine"
   },
   "tools.bulk.facts.rows": {
@@ -3173,10 +3165,6 @@
   },
   "tools.bulk.faq.howManyQuestion": {
     "source": "9629b2d97771",
-    "status": "machine"
-  },
-  "tools.bulk.faq.howManyAnswer": {
-    "source": "890df5bc39c9",
     "status": "machine"
   },
   "tools.bulk.faq.rowQuestion": {

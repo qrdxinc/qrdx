@@ -1130,11 +1130,9 @@
     },
     "bulk": {
       "metaTitle": "Gerador de QR code em massa grátis a partir de CSV: estilizado, SVG, sem upload",
-      "metaDescription": "Transforme um CSV em até {rows, number} QR codes estilizados e baixe em PNG, WebP ou SVG dentro de um ZIP. Roda no seu navegador: sem upload, sem cadastro, sem marca d’água. Inclui CSV de exemplo.",
       "crumb": "Gerador em massa",
       "title": "Gerador de QR code em massa",
       "intro1": "Transforme um arquivo CSV em milhares de QR codes de uma só vez, com o estilo que você quiser, e baixe em PNG, WebP ou SVG dentro de um ZIP. Uma linha por código, com os nomes dos arquivos vindos de uma coluna: etiquetas de produto, ingressos de eventos, etiquetas de patrimônio, números de mesa ou malas diretas.",
-      "intro2": "Tudo roda no seu navegador, então o CSV nunca é enviado, e não há cadastro, marca d’água nem cobrança por código. Não tem certeza sobre o formato? Comece pelo CSV de exemplo.",
       "facts": {
         "rows": "Até {rows, number} linhas por arquivo",
         "styled": "Suas cores, formas e logo",
@@ -1168,7 +1166,6 @@
         "uploadQuestion": "Meu CSV é enviado para algum lugar?",
         "uploadAnswer": "Não. O arquivo é lido, os QR codes são desenhados e o ZIP é montado no seu navegador. Nada é enviado para os servidores do QRdx, então é seguro para links internos, senhas de Wi-Fi ou dados de clientes.",
         "howManyQuestion": "Quantos QR codes posso gerar de uma vez?",
-        "howManyAnswer": "Até {rows, number} linhas por arquivo; para mais, divida o CSV ou use o comando qrdx batch da CLI, que não tem limite. Um PNG de 512 px leva cerca de 20 ms em um notebook, então as {rows, number} linhas levam alguns minutos. PNGs maiores demoram mais e geram arquivos maiores, então escolha 512 px, a menos que precise de mais.",
         "rowQuestion": "O que cada linha pode conter?",
         "rowAnswer": "Qualquer texto até o limite do QR code: links, texto simples ou payloads como WIFI:..., mailto:..., tel:... e BEGIN:VCARD. O conteúdo é codificado exatamente como aparece na célula.",
         "excelQuestion": "Posso usar um arquivo do Excel ou do Google Sheets?",

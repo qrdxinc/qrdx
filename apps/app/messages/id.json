@@ -1130,11 +1130,9 @@
     },
     "bulk": {
       "metaTitle": "Generator Kode QR Massal Gratis dari CSV: Bergaya, SVG, Tanpa Unggah",
-      "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dan unduh sebagai PNG, WebP, atau SVG dalam ZIP. Berjalan di browser Anda: tanpa unggah, tanpa pendaftaran, tanpa watermark. Contoh CSV tersedia.",
       "crumb": "Generator massal",
       "title": "Generator kode QR massal",
       "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, atau SVG dalam ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, label aset, nomor meja, atau surat kiriman.",
-      "intro2": "Semuanya berjalan di browser Anda, sehingga CSV tidak pernah diunggah, dan tanpa pendaftaran, watermark, atau biaya per kode. Belum yakin dengan tata letaknya? Mulai dari contoh CSV.",
       "facts": {
         "rows": "Hingga {rows, number} baris per file",
         "styled": "Warna, bentuk, dan logo Anda",
@@ -1168,7 +1166,6 @@
         "uploadQuestion": "Apakah CSV saya diunggah ke suatu tempat?",
         "uploadAnswer": "Tidak. File dibaca, kode QR digambar, dan ZIP dibuat di browser Anda. Tidak ada yang dikirim ke server QRdx, sehingga aman untuk tautan internal, kata sandi Wi-Fi, atau data pelanggan.",
         "howManyQuestion": "Berapa banyak kode QR yang dapat saya buat sekaligus?",
-        "howManyAnswer": "Hingga {rows, number} baris per file; untuk lebih banyak, pisahkan CSV, atau gunakan perintah qrdx batch dari CLI, yang tidak memiliki batas. PNG 512 px membutuhkan sekitar 20 ms di laptop, sehingga seluruh {rows, number} baris selesai dalam beberapa menit. PNG yang lebih besar membutuhkan waktu lebih lama dan menghasilkan file lebih besar, jadi pilih 512 px kecuali Anda membutuhkan lebih.",
         "rowQuestion": "Apa yang bisa diisi di setiap baris?",
         "rowAnswer": "Teks apa pun hingga batas kode QR: tautan, teks biasa, atau payload seperti WIFI:..., mailto:..., tel:... dan BEGIN:VCARD. Konten dikodekan persis seperti yang tertulis di sel.",
         "excelQuestion": "Bisakah saya memakai file Excel atau Google Sheets?",

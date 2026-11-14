@@ -1130,11 +1130,9 @@
     },
     "bulk": {
       "metaTitle": "Generatore gratuito di QR code in blocco da CSV: personalizzati, SVG, senza upload",
-      "metaDescription": "Trasforma un CSV in fino a {rows, number} QR code personalizzati e scaricali come PNG, WebP o SVG in un ZIP. Funziona nel tuo browser: nessun upload, nessuna registrazione, nessuna filigrana. Include un CSV di esempio.",
       "crumb": "Generatore in blocco",
       "title": "Generatore di QR code in blocco",
       "intro1": "Trasforma un file CSV in migliaia di QR code in un colpo solo, con lo stile che preferisci, da scaricare come PNG, WebP o SVG in un ZIP. Una riga per ogni codice, con i nomi dei file presi da una colonna: etichette di prodotto, biglietti per eventi, targhette per asset, numeri di tavolo o mailing.",
-      "intro2": "Funziona tutto nel tuo browser, quindi il CSV non viene mai caricato, e non ci sono registrazioni, filigrane o costi per codice. Hai dubbi sulla struttura? Parti dal CSV di esempio.",
       "facts": {
         "rows": "Fino a {rows, number} righe per file",
         "styled": "I tuoi colori, forme e logo",
@@ -1168,7 +1166,6 @@
         "uploadQuestion": "Il mio CSV viene caricato da qualche parte?",
         "uploadAnswer": "No. Il file viene letto, i QR code vengono disegnati e lo ZIP viene creato nel tuo browser. Non viene inviato nulla ai server di QRdx, quindi puoi usarlo senza rischi per link interni, password Wi-Fi o dati dei clienti.",
         "howManyQuestion": "Quanti QR code posso generare in una volta?",
-        "howManyAnswer": "Fino a {rows, number} righe per file; per generarne di più, dividi il CSV oppure usa il comando qrdx batch della CLI, che non ha limiti. Un PNG da 512 px richiede circa 20 ms su un portatile, quindi per tutte le {rows, number} righe bastano pochi minuti. I PNG più grandi richiedono più tempo e producono file più pesanti, quindi scegli 512 px a meno che non ti serva di più.",
         "rowQuestion": "Cosa può contenere ogni riga?",
         "rowAnswer": "Qualsiasi testo fino al limite del QR code: link, testo semplice o payload come WIFI:..., mailto:..., tel:... e BEGIN:VCARD. Il contenuto viene codificato esattamente come appare nella cella.",
         "excelQuestion": "Posso usare un file Excel o Google Sheets?",

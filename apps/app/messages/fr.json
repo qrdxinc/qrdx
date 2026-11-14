@@ -1130,11 +1130,9 @@
     },
     "bulk": {
       "metaTitle": "Générateur de QR codes en masse gratuit à partir d’un CSV : personnalisés, SVG, sans envoi de fichier",
-      "metaDescription": "Transformez un CSV en jusqu’à {rows, number} QR codes personnalisés et téléchargez-les en PNG, WebP ou SVG dans un ZIP. Fonctionne dans votre navigateur : sans envoi de fichier, sans inscription, sans filigrane. Exemple de CSV inclus.",
       "crumb": "Générateur en masse",
       "title": "Générateur de QR code en masse",
       "intro1": "Transformez un fichier CSV en milliers de QR codes en une seule fois, personnalisés selon vos goûts et téléchargés en PNG, WebP ou SVG dans un ZIP. Une ligne par code, avec des noms de fichiers issus d’une colonne : étiquettes produits, billets d’événement, étiquettes d’inventaire, numéros de table ou courriers.",
-      "intro2": "Tout fonctionne dans votre navigateur : le CSV n’est jamais envoyé, et il n’y a ni inscription, ni filigrane, ni frais par code. Un doute sur la structure ? Partez de l’exemple de CSV.",
       "facts": {
         "rows": "Jusqu’à {rows, number} lignes par fichier",
         "styled": "Vos couleurs, formes et logo",
@@ -1168,7 +1166,6 @@
         "uploadQuestion": "Mon CSV est-il envoyé quelque part ?",
         "uploadAnswer": "Non. Le fichier est lu, les QR codes sont dessinés et le ZIP est créé dans votre navigateur. Rien n'est envoyé aux serveurs de QRdx : vous pouvez donc l'utiliser en toute sécurité pour des liens internes, des mots de passe Wi-Fi ou des données clients.",
         "howManyQuestion": "Combien de QR codes puis-je générer à la fois ?",
-        "howManyAnswer": "Jusqu'à {rows, number} lignes par fichier. Au-delà, scindez le CSV ou utilisez la commande qrdx batch de la CLI, qui n'a aucune limite. Un PNG de 512 px prend environ 20 ms sur un ordinateur portable : les {rows, number} lignes demandent donc quelques minutes. Les PNG plus grands sont plus longs à générer et plus lourds ; choisissez donc 512 px sauf si vous avez besoin de plus.",
         "rowQuestion": "Que peut contenir chaque ligne ?",
         "rowAnswer": "N'importe quel texte, dans la limite du QR code : liens, texte brut ou contenus tels que WIFI:..., mailto:..., tel:... et BEGIN:VCARD. Le contenu est encodé exactement tel qu'il apparaît dans la cellule.",
         "excelQuestion": "Puis-je utiliser un fichier Excel ou Google Sheets ?",
