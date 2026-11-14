@@ -2,7 +2,10 @@
 // Write for a first-time user: plain words, one or two short sentences,
 // and only what the product really does.
 
-import { MAX_BULK_TOOL_ROWS } from "@repo/config";
+import {
+  MAX_BULK_TOOL_ROWS,
+  MAX_BULK_TOOL_ROWS_SIGNED_OUT,
+} from "@repo/config";
 import { formatCount } from "@/lib/format-count";
 
 /** Live examples drawn with the real qrdx engine (components/help/hint-visual.tsx). */
@@ -222,7 +225,7 @@ export const HINTS = {
   // ─── Tools ────────────────────────────────────────────────────────────────
   "bulk-csv": {
     title: "Bulk from a CSV",
-    body: `Save a spreadsheet as CSV with one row per code and pick the column with each link or text. You get up to ${formatCount(MAX_BULK_TOOL_ROWS)} PNG or SVG files, zipped, made on your device.`,
+    body: `Save a spreadsheet as CSV with one row per code and pick the column with each link or text. You get up to ${formatCount(MAX_BULK_TOOL_ROWS)} PNG or SVG files, zipped, made on your device (up to ${formatCount(MAX_BULK_TOOL_ROWS_SIGNED_OUT)} without an account).`,
     visual: {
       type: "video",
       name: "bulk-csv",

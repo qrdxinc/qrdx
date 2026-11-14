@@ -6,6 +6,7 @@
   "exports": {
     ".": "./index.ts",
     "./analytics": "./analytics.tsx",
+    "./auth-prompt": "./auth-prompt.ts",
     "./config": "./config.ts",
     "./events": "./events.ts",
     "./featurebase": "./featurebase.tsx",

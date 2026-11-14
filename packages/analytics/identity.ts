@@ -1,3 +1,4 @@
+import { takeAuthPrompt } from "./auth-prompt";
 import type { SignInMethod } from "./events";
 import { setPostHogUser } from "./posthog";
 import { resetAnalytics, track } from "./track";
@@ -7,7 +8,9 @@ import { resetAnalytics, track } from "./track";
  * by user id (never email) with coarse person properties, groups by team,
  * and resets on sign-out. A session that started moments ago is a fresh
  * sign-in (or a sign-up, when the account is as new as the session), which
- * catches social sign-ins after their redirect as well as email codes.
+ * catches social sign-ins after their redirect as well as email codes. It
+ * names the dialog it came from (why it opened, and where), when there was
+ * one (auth-prompt.ts).
  */
 export type AnalyticsSession = {
   userId: string;
@@ -95,7 +98,11 @@ export function syncAnalyticsSession(
     lastUserId !== session.userId &&
     claimSession(session.sessionCreatedAt)
   ) {
-    track(event, { method: toSignInMethod(lastLoginMethod()) });
+    const prompt = takeAuthPrompt();
+    track(event, {
+      method: toSignInMethod(lastLoginMethod()),
+      ...(prompt && { reason: prompt.reason, surface: prompt.surface }),
+    });
   }
   lastUserId = session.userId;
 }

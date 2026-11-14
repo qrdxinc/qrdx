@@ -208,7 +208,7 @@ export function useAIArtRun({ store, onSignedOut }: UseAIArtRunOptions) {
   ): Promise<AIArtRunOutcome | null> => {
     if (!signedIn) {
       if (onSignedOut) onSignedOut(request, seeds);
-      else openAuthDialog("signin");
+      else openAuthDialog("ai_art");
       return null;
     }
 

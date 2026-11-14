@@ -4,6 +4,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import {
   MAX_BULK_TOOL_ROWS,
+  MAX_BULK_TOOL_ROWS_SIGNED_OUT,
   MAX_CODES_PER_REQUEST,
   MAX_IMPORT_ROWS,
 } from "@repo/config";
@@ -85,6 +86,8 @@ describe("PRODUCT_FACTS", () => {
       apiBatchCodes: MAX_CODES_PER_REQUEST.toLocaleString("en-US"),
       importRows: MAX_IMPORT_ROWS.toLocaleString("en-US"),
       bulkToolRows: MAX_BULK_TOOL_ROWS.toLocaleString("en-US"),
+      bulkToolRowsSignedOut:
+        MAX_BULK_TOOL_ROWS_SIGNED_OUT.toLocaleString("en-US"),
       newPaidAccountHourlyCodes: "2,000",
       imageApiPerMinute: 300,
       mcpPerMinute: 120,
