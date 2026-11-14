@@ -35,9 +35,9 @@ Keys use the same scopes as OAuth apps. Pick one of three options when you creat
 
 | Access | Scopes | Allows |
 | --- | --- | --- |
-| **Full access** | `profile:read`, `themes:read`, `codes:read`, `codes:write` | Everything the API does |
-| **Read only** | `profile:read`, `themes:read`, `codes:read` | Read codes, scan analytics, saved barcodes, themes and the profile |
-| **Custom** | The ones you tick | What those scopes allow ([the scope list](/docs/developers/rest-api#scopes)) |
+| Full access | `profile:read`, `themes:read`, `codes:read`, `codes:write` | Everything the API does |
+| Read only | `profile:read`, `themes:read`, `codes:read` | Read codes, scan analytics, saved barcodes, themes and the profile |
+| Custom | The ones you tick | What those scopes allow ([the scope list](/docs/developers/rest-api#scopes)) |
 
 `codes:write` also allows everything `codes:read` does. A key's scopes can't be changed later; create a new key instead. A request outside the key's scopes gets `403 INSUFFICIENT_SCOPE`, and the message names the scope it needed:
 
