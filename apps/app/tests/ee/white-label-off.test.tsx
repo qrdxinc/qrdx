@@ -89,6 +89,8 @@ const { PageSettingsEditor } = await import(
 const { DEFAULT_PAGE_SETTINGS } = await import(
   "@/components/landing/page-settings-block"
 );
+const { usePreviewCss } = await import("@/ee/white-label/editor");
+const { parseLandingPageContent } = await import("@/lib/landing/blocks");
 
 const ORG = "org_acme";
 const SCOPE = { userId: "u_ana", organizationId: ORG, role: "owner" as const };
@@ -174,14 +176,51 @@ async function serve() {
   return { page, css, html };
 }
 
+/** The page's content with `css` as its custom CSS. */
+const withCss = (css: string) => ({
+  ...structuredClone(CONTENT),
+  blocks: CONTENT.blocks.map((block) =>
+    block.type === PAGE_SETTINGS_TYPE
+      ? { ...block, props: { customCss: css } }
+      : block,
+  ),
+});
+const SETTINGS_INDEX = CONTENT.blocks.findIndex(
+  (block) => block.type === PAGE_SETTINGS_TYPE,
+);
+/** CSS that loads a file: outside the safe subset (custom-css.ts). */
+const UNSAFE = "h1 { background: url(https://evil.example/x.png) }";
+
 /** Publishes the page again as the editor sends it, CSS included. */
-const publish = () =>
+const publish = (content: unknown = structuredClone(CONTENT)) =>
   publishPage(SCOPE, {
     id: "page_1",
     title: "Café Luna",
-    content: structuredClone(CONTENT),
+    content,
     baseVersion: 1,
   });
+
+/** The editor's preview CSS and CSS problem, where `unavailable` is off. */
+function PreviewCss({ allowed, css }: { allowed: boolean; css: string }) {
+  const preview = usePreviewCss(allowed, css);
+  return (
+    <p>
+      {preview.css ?? "no-css"}|{preview.error ?? "no-error"}
+    </p>
+  );
+}
+const previewCss = (
+  unavailable: "whiteLabel"[],
+  allowed: boolean,
+  css: string,
+) =>
+  renderIntl(
+    <AvailabilityProvider
+      value={{ unavailable, hiddenPaths: [], hiddenIntegrations: [] }}
+    >
+      <PreviewCss allowed={allowed} css={css} />
+    </AvailabilityProvider>,
+  );
 
 beforeEach(() => {
   state.plan = "business";
@@ -221,9 +260,14 @@ describe("without QRDX_EE_LICENSE", () => {
     expect(html).not.toContain("rebeccapurple");
   });
 
-  it("saves a page that still holds custom CSS", async () => {
+  it("saves a page that still holds custom CSS, unchecked", async () => {
     license(undefined);
     await expect(publish()).resolves.toMatchObject({ version: 2 });
+    // Not even checked: it's never applied here.
+    seed();
+    await expect(publish(withCss(UNSAFE))).resolves.toMatchObject({
+      version: 2,
+    });
     // Also where the plan wouldn't allow it with the licence.
     seed();
     state.plan = "pro";
@@ -299,5 +343,51 @@ describe("the page editor", () => {
     const pro = editor([], false);
     expect(pro).toContain("Upgrade to Business for custom CSS");
     expect(pro).toContain("White-label with Business");
+  });
+});
+
+describe("checking custom CSS", () => {
+  it("is not the page model's job: it only caps the length", () => {
+    expect(parseLandingPageContent(withCss(UNSAFE)).success).toBe(true);
+    expect(
+      parseLandingPageContent(withCss("a{}".repeat(4000)), { mode: "write" })
+        .success,
+    ).toBe(false);
+  });
+
+  it("refuses unsafe CSS on save with the licence, as before, whatever the plan", async () => {
+    license("local-dev");
+    const refused = {
+      status: 400,
+      code: "VALIDATION_ERROR",
+      message: `url() is not allowed: custom CSS can't load files (blocks.${SETTINGS_INDEX}.props.customCss)`,
+    };
+    await expect(publish(withCss(UNSAFE))).rejects.toMatchObject(refused);
+    state.plan = "pro";
+    await expect(publish(withCss(UNSAFE))).rejects.toMatchObject(refused);
+  });
+
+  it("never applies stored unsafe CSS", async () => {
+    license("local-dev");
+    const row = fakeDb.find("landingPage", { id: "page_1" });
+    if (row) row.content = withCss(UNSAFE);
+    const { css, html } = await serve();
+    expect(css).toBeNull();
+    expect(html).not.toContain("evil.example");
+  });
+
+  it("shows the problem in the editor and keeps it out of the preview", () => {
+    expect(previewCss([], true, CSS)).toContain("[data-qrdx-page] h1");
+    expect(previewCss([], true, CSS)).toContain("no-error");
+    // On Pro the preview leaves valid CSS out, as the live page does.
+    expect(previewCss([], false, CSS)).toContain("no-css|no-error");
+    expect(previewCss([], true, UNSAFE)).toContain(
+      "no-css|url() is not allowed: custom CSS can&#x27;t load files",
+    );
+    // Without the licence: neither checked nor applied.
+    expect(previewCss(["whiteLabel"], true, UNSAFE)).toContain(
+      "no-css|no-error",
+    );
+    expect(previewCss(["whiteLabel"], true, CSS)).toContain("no-css|no-error");
   });
 });

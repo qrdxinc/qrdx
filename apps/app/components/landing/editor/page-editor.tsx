@@ -45,7 +45,7 @@ import { useShowLimit } from "@/components/limits/limit-dialog";
 import { PhoneFrame } from "@/components/mockups/phone-frame";
 import { useWorkspaceHref } from "@/components/workspace-provider";
 import { ViewOnlyNotice } from "@/components/workspaces/view-only";
-import { scopeCustomCss } from "@/ee/white-label/custom-css";
+import { usePreviewCss } from "@/ee/white-label/editor";
 import {
   type BlockEditorContext,
   createBlock,
@@ -57,6 +57,7 @@ import type { LandingBlock, LandingPageContent } from "@/types/landing";
 import { LandingPageFooter } from "../page-footer";
 import {
   DEFAULT_PAGE_SETTINGS,
+  getPageSettings,
   PAGE_SETTINGS_TYPE,
   type PageSettings,
 } from "../page-settings-block";
@@ -145,6 +146,20 @@ function writeDraft(id: string, draft: Draft | null) {
   }
 }
 
+/** Adds the custom CSS problem to the page settings block's issues. */
+function withCssIssue(
+  issues: Issues,
+  content: LandingPageContent,
+  error: string | null,
+): Issues {
+  if (!error) return issues;
+  const key =
+    content.blocks.find((block) => block.type === PAGE_SETTINGS_TYPE)?.id ??
+    "page";
+  issues.set(key, [...(issues.get(key) ?? []), error]);
+  return issues;
+}
+
 /** Validation issues keyed by block id ("theme" for theme issues). */
 function collectIssues(content: LandingPageContent): Issues {
   const issues: Issues = new Map();
@@ -215,7 +230,16 @@ export function PageEditor({
   const listRef = useRef<HTMLDivElement>(null);
 
   const dirty = snapshot(title, content) !== published;
-  const issues = useMemo(() => collectIssues(content), [content]);
+  // Custom CSS (ee/white-label): the preview's styles, and its problem among
+  // the page settings' issues.
+  const previewCss = usePreviewCss(
+    canUseCustomCss,
+    getPageSettings(content).customCss,
+  );
+  const issues = useMemo(
+    () => withCssIssue(collectIssues(content), content, previewCss.error),
+    [content, previewCss.error],
+  );
   const issueCount = [...issues.values()].reduce(
     (n, list) => n + list.length,
     0,
@@ -444,11 +468,7 @@ export function PageEditor({
     customDomain: code?.customDomain ?? null,
   };
 
-  const css = useMemo(() => {
-    if (!(canUseCustomCss && settings.customCss.trim())) return null;
-    const result = scopeCustomCss(settings.customCss);
-    return result.ok ? result.css : null;
-  }, [canUseCustomCss, settings.customCss]);
+  const css = previewCss.css;
 
   const onDrop = (event: DragEvent, targetIndex: number) => {
     event.preventDefault();

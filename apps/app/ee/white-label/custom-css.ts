@@ -10,7 +10,8 @@
 // The renderer gives the scope element `contain: paint`, so even fixed or
 // absolutely positioned content can't cover the "Report abuse" link.
 
-export const MAX_CUSTOM_CSS_LENGTH = 10_000;
+import { MAX_CUSTOM_CSS_LENGTH } from "@/components/landing/custom-css-limit";
+
 export const CUSTOM_CSS_SCOPE = "[data-qrdx-page]";
 
 const NESTING_AT_RULES = new Set(["media", "supports", "container"]);

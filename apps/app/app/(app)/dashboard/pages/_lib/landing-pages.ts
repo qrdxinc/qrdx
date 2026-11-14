@@ -34,10 +34,7 @@ import {
 } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import { getDomainRefs } from "@/app/(app)/dashboard/domains/_lib/domains";
 import { linkSearchTerm } from "@/app/(app)/dashboard/pages/_lib/filters";
-import {
-  getPageSettings,
-  PAGE_SETTINGS_TYPE,
-} from "@/components/landing/page-settings-block";
+import { PAGE_SETTINGS_TYPE } from "@/components/landing/page-settings-block";
 import { changedFields } from "@/ee/audit-log/metadata";
 import { recordAuditEvent } from "@/ee/audit-log/record";
 import { assertCustomCssAllowed } from "@/ee/white-label/access";
@@ -409,7 +406,7 @@ function assertContentAllowed(
   scope: ActiveScope,
   content: LandingPageContent,
 ): Promise<void> {
-  return assertCustomCssAllowed(scope, getPageSettings(content).customCss);
+  return assertCustomCssAllowed(scope, content);
 }
 
 function validateContent(input: unknown): LandingPageContent {

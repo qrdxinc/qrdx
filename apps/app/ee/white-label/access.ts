@@ -1,10 +1,15 @@
 import "server-only";
 
+import {
+  PAGE_SETTINGS_TYPE,
+  type PageSettings,
+} from "@/components/landing/page-settings-block";
 import { scopeCustomCss } from "@/ee/white-label/custom-css";
 import { HttpError } from "@/lib/error-response";
 import { isFeatureAvailable } from "@/lib/feature-availability";
 import { getPlanForScope, getPlanLimits, type PlanLimits } from "@/lib/plans";
 import type { ActiveScope } from "@/lib/scope";
+import type { LandingPageContent } from "@/types/landing";
 
 // White-label and custom CSS on hosted pages (/p). A page has them under the
 // same rule as the audit log: its workspace's plan includes them (Business,
@@ -45,16 +50,31 @@ export function hostedPageCss(
 }
 
 /**
- * Saving a page with custom CSS: 402 without the plan, where the feature
- * exists. On a server without the licence the editor doesn't offer custom
- * CSS and pages never apply it, so CSS a page already holds is kept as it is
+ * Saving page content with custom CSS, where the feature exists: 400 for CSS
+ * outside the safe subset (custom-css.ts), then 402 without the plan. On a
+ * server without the licence the editor doesn't offer custom CSS and pages
+ * never apply it, so CSS a page already holds is kept as it is, unchecked,
  * and saving goes through.
  */
 export async function assertCustomCssAllowed(
   scope: ActiveScope,
-  css: string,
+  content: LandingPageContent,
 ): Promise<void> {
+  const index = content.blocks.findIndex(
+    (block) => block.type === PAGE_SETTINGS_TYPE,
+  );
+  const settings = content.blocks[index]?.props as PageSettings | undefined;
+  const css = settings?.customCss ?? "";
   if (!(css.trim() && isFeatureAvailable("whiteLabel"))) return;
+  const result = scopeCustomCss(css);
+  if (!result.ok) {
+    // Worded like the other block problems a save reports.
+    throw new HttpError(
+      400,
+      "VALIDATION_ERROR",
+      `${result.error} (blocks.${index}.props.customCss)`,
+    );
+  }
   if (!getPlanLimits(await getPlanForScope(scope)).customCss) {
     throw new HttpError(
       402,
