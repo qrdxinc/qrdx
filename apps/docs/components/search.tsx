@@ -18,6 +18,7 @@ import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { ArrowRight } from "iconsax-reactjs";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef } from "react";
+import { DocsChatSearchEntry } from "@/components/chat/slot";
 import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
 import { track } from "@/lib/analytics";
 
@@ -112,6 +113,11 @@ export default function CustomSearchDialog(props: SharedProps) {
           <SearchDialogInput />
           <SearchDialogClose />
         </SearchDialogHeader>
+        {/* The Ask AI lane's entry point (components/chat/slot.tsx). */}
+        <DocsChatSearchEntry
+          close={() => props.onOpenChange(false)}
+          query={search.trim()}
+        />
         <SearchDialogList
           items={
             query.data !== "empty" || pageTreeAction

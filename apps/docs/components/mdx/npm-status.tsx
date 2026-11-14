@@ -1,9 +1,9 @@
 import "server-only";
 
 import { API_BASE_URL } from "@repo/config";
-import { Callout } from "fumadocs-ui/components/callout";
 import type { ReactNode } from "react";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { Callout } from "@/components/mdx/callout";
 import {
   compareVersions,
   getNpmLag,
