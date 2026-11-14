@@ -910,6 +910,92 @@
       "typeTableDefault": "Default",
       "typeTableParameters": "Parameters",
       "typeTableReturns": "Returns"
+    },
+    "shots": {
+      "diagrams": {
+        "dynamic-redirect": {
+          "title": "How a dynamic code redirects: the scan opens a short link, QRdx applies the code's rules and sends the phone to the destination, and records the scan on the way.",
+          "scan": "Scan",
+          "scanNote": "a phone reads the code",
+          "shortLink": "Short link",
+          "shortLinkNote": "what the pattern holds",
+          "rules": "Rules",
+          "rulesNote": "device, place, time, split",
+          "destination": "Destination",
+          "destinationNote": "change it any time",
+          "recorded": "Scan recorded",
+          "recordedNote": "country, device, time; never the person"
+        },
+        "static-vs-dynamic": {
+          "title": "Static versus dynamic: a static code carries its content in the pattern, a dynamic code carries a short link that QRdx resolves to a destination you can change.",
+          "static": "Static code",
+          "dynamic": "Dynamic code",
+          "printed": "Printed code",
+          "printedNote": "the pattern on paper or screen",
+          "content": "The content itself",
+          "contentNote": "a link, Wi-Fi details, a contact",
+          "staticEnd": "Fixed once printed. No scan counts.",
+          "shortLink": "Short link",
+          "shortLinkNote": "qrdx.dev/q/… or your domain",
+          "destination": "Destination",
+          "destinationNote": "editable; every scan counted"
+        },
+        "smart-routing": {
+          "title": "How smart routing decides: rules are read from the top, the first rule whose conditions match the scan sends it to that rule's destination, and a scan that matches no rule goes to the code's default destination.",
+          "scan": "A scan arrives",
+          "scanNote": "device, OS, country, language, time",
+          "rule1": "iPhone or iPad → iOS page",
+          "rule2": "Language is Spanish → Spanish page",
+          "rule3": "Weekends 08:00–14:00 → brunch offer",
+          "firstMatch": "First match wins",
+          "firstMatchNote": "the rule's destination",
+          "noMatch": "No rule matches",
+          "noMatchNote": "the code's default destination",
+          "footnote": "Rules are checked in the order shown on the Routing panel; drag them to change it."
+        },
+        "custom-domain": {
+          "title": "How a custom domain routes: a CNAME record at your DNS provider points the hostname at QRdx, which serves your short links on that domain and redirects each scan to its destination.",
+          "scan": "Scan",
+          "scanNote": "opens your domain's short link",
+          "dns": "Your DNS",
+          "dnsNote": "one CNAME record",
+          "record": "qr.example.com  CNAME → QRdx",
+          "qrdx": "QRdx",
+          "qrdxNote": "answers for your domain, with HTTPS",
+          "destination": "Destination",
+          "destinationNote": "the code's rules apply as usual",
+          "footnote": "Set the record once; QRdx checks it, then every code on that domain just works."
+        },
+        "webhook-delivery": {
+          "title": "How a webhook is delivered: QRdx posts the event to your endpoint with a signature; a 2xx reply marks it delivered, anything else is retried on a growing schedule and marked failed after eight attempts.",
+          "event": "Event",
+          "eventNote": "scan.created, form.submitted…",
+          "post": "POST to your endpoint",
+          "postNote": "JSON body, X-QRdx-Signature header",
+          "delivered": "Delivered",
+          "deliveredNote": "any 2xx reply",
+          "retry": "Retried",
+          "retryNote": "timeout or any other reply",
+          "schedule": "1 min · 4 min · 16 min · 1 h · 4 h · 17 h · 24 h",
+          "failed": "Failed",
+          "failedNote": "after 8 attempts; retry it by hand",
+          "footnote": "Every attempt is listed on the endpoint's page, with the reply it got."
+        },
+        "image-api": {
+          "title": "How the image API builds a code: one GET with the content and the style, QRdx encodes the data, renders the design and answers with an SVG, PNG, WebP or EPS image that any page can embed.",
+          "request": "GET /v1/qr",
+          "requestNote": "data, size, colors, style…",
+          "encode": "Encode",
+          "encodeNote": "error correction, version",
+          "render": "Render",
+          "renderNote": "patterns, eyes, frame, logo",
+          "response": "Image",
+          "responseNote": "SVG, PNG, WebP or EPS",
+          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
+          "noKey": "No key, no quota: the URL goes straight into an image tag on any page.",
+          "footnote": "The same query always returns the same bytes, so responses are cached for a year."
+        }
+      }
     }
   },
   "common": {

@@ -13,12 +13,14 @@
 // - Root-relative links become absolute.
 //
 // Code blocks and inline code are masked first and never touched.
+
 import {
   BODY_CATALOG,
   DOT_CATALOG,
   EYE_CATALOG,
   FRAME_CATALOG,
 } from "@/lib/pattern-catalog";
+import { shotMarkdown } from "@/lib/shots";
 
 export interface LlmMarkdownOptions {
   /** Origin for root-relative links and the shadcn registry, e.g. https://qrdx.dev */
@@ -357,6 +359,10 @@ const HANDLERS: Record<string, Handler> = {
       : "",
   PackageManagerTabs: (attributes) =>
     attributes.command ? shell(attributes.command) : "",
+  // Pictures and clips of the app (components/mdx/shot.tsx): the light image
+  // with its alt text; a clip adds a link to its video.
+  Shot: (attributes, _, options) => shotMarkdown(attributes, options.origin),
+  Clip: (attributes, _, options) => shotMarkdown(attributes, options.origin),
   QrCatalog: (attributes) => {
     const items = CATALOGS[attributes.kind ?? ""];
     if (!items) return "";

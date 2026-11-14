@@ -15,6 +15,7 @@ import { PackageManagerTabs } from "@/components/docs/registry/package-manager-t
 import { GithubCard } from "@/components/mdx/github-card";
 import { IfAvailable } from "@/components/mdx/if-available";
 import { NpmStatus } from "@/components/mdx/npm-status";
+import { shotComponents } from "@/components/mdx/shot";
 import { docsIcons } from "@/lib/docs-icons";
 
 // An odd last card spans the row instead of sitting alone in a half-empty one.
@@ -43,6 +44,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     GithubCard,
     IfAvailable,
     NpmStatus,
+    // Pictures and clips of the app (lib/shots-manifest.json): Shot, Clip
+    ...shotComponents,
     ComponentLinks,
     ComponentPreview,
     ComponentSource,
