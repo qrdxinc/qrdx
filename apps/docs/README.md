@@ -43,6 +43,27 @@ The tests also read the main app's `lib/docs-redirects.ts`, whose redirects must
 - `assetPrefix: "/docs-static"`, so the main app can proxy this app's `/_next` files without clashing with its own.
 - `robots.txt` disallows everything: only this app's own host serves it.
 
+## MDX building blocks
+
+Registered in `mdx-components.tsx`; a page uses them without importing. The look is `styles/styles.css` (the design system's palette and one accent in both themes, a smaller radius inside prose, the steps' markers).
+
+| Block | Use | Notes |
+| --- | --- | --- |
+| `<Callout type="info" title="...">` | A note in the flow of the page | `type`: `info` (the accent), `tip` (neutral), `warn`, `error`, `success`, `plan`. A title that starts with "Plan" picks `plan` by itself. Markdown blockquotes render as callouts too. |
+| `<PlanNote plans="pro,business" />` | "Needs Pro or Business", under a page's first paragraph | `plans` lists plan ids (`pro`, `business`, `enterprise`). Links to Plans and limits; pass children to say more instead. |
+| `### 1. Title` headings under an H2 | Numbered steps | `remarkSteps` (fumadocs): a marker and a joining line per step. Code blocks and frames inside a step align with its text. |
+| `<Cards>` / `<Card icon={<Name />} href title description arrow />` | Link cards | Icon names come from `lib/docs-icons.tsx`. `arrow` adds a "go there" arrow. One column on phones, two from `sm`; an odd last card spans the row. |
+| `<Tabs items={[...]}>` / `<Tab value>` | Alternatives (languages, package managers) | fumadocs' Tabs; `groupId` and `persist` as there. |
+| `<Accordions>` / `<Accordion title>` | FAQ-style folding sections | fumadocs' Accordions. |
+| `<Frame src alt caption width height />` | A framed image, zoomable on click (and with Enter or Space) | Pass children instead of `src` to frame other content; `plain` keeps the backdrop out. The Shots lane's `<Shot />` builds on it. |
+| `<Video src poster title caption />` | A short looping clip | Muted, inline, plays while on screen, paused with a click or the button. With "reduce motion" on, it waits on its poster. |
+| `<IfAvailable feature|path|integration>` | Content for features a deployment may not offer | See `lib/feature-availability.ts`. |
+| `{facts.bodyPatterns}` and the other tokens | Product counts and prices | From `apps/app/lib/product-facts.ts`, never typed by hand. |
+
+The Markdown copies of the pages (`/docs/<page>.md`, Copy page, `llms-full.txt`) turn Frame and Shot into a Markdown image with the alt text and caption, Video into a link named after its title, and PlanNote into a bold "Needs …" line (`lib/agents/llm-markdown.ts`).
+
+The AI chat mounts through `components/chat/slot.tsx` (`<DocsChatSlot />` in the docs layout, `<DocsChatSearchEntry />` at the top of the search dialog); the Ask AI work replaces that file.
+
 ## Deploys
 
 `.github/workflows/docs-deploy.yml` builds on GitHub's runner and deploys the prebuilt output to its own Vercel project (`vercel.json` turns off Vercel's Git deployments), on pushes to `main` that touch the docs, or by hand.
