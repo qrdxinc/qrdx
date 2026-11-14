@@ -1001,10 +1001,10 @@ async function main() {
   let scanRows = 0;
   for (const code of codes) {
     const scans = scansFor(code);
-    const lastScan = scans.reduce(
-      (latest, scan) => (scan.scannedAt > latest ? scan.scannedAt : latest),
-      null,
-    );
+    let lastScan = null;
+    for (const scan of scans) {
+      if (!lastScan || scan.scannedAt > lastScan) lastScan = scan.scannedAt;
+    }
     await q(
       `INSERT INTO qr_code (id, user_id, organization_id, slug, slug_scope, destination_url, title, content_type, style,
          is_active, archived_at, scan_count, last_scanned_at, kind, page_id, folder_id, notes, is_favorite,

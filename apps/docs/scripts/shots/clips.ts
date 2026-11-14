@@ -86,7 +86,7 @@ export function encode(
   holdLast = 1.2,
 ): Encoded {
   if (frames.length < 2) throw new Error("encode: not enough frames");
-  const list = join(outBase + ".frames.txt");
+  const list = `${outBase}.frames.txt`;
   const lines: string[] = [];
   for (let i = 0; i < frames.length; i++) {
     const duration =

@@ -24,10 +24,7 @@
     "height": 1174,
     "alt": "The Custom domains page with the Add domain form open: a field for the hostname and the button that adds it.",
     "title": "Adding a domain",
-    "pages": [
-      "/docs/help/domains/custom-domains",
-      "/docs/custom-domains"
-    ],
+    "pages": ["/docs/help/domains/custom-domains", "/docs/custom-domains"],
     "job": "add-domain-dialog"
   },
   "add-endpoint-dialog": {
@@ -39,9 +36,7 @@
     "height": 2024,
     "alt": "The Add endpoint dialog: the URL QRdx will post to and the events to subscribe to, such as scan.created and form.submitted.",
     "title": "Adding a webhook endpoint",
-    "pages": [
-      "/docs/webhooks"
-    ],
+    "pages": ["/docs/webhooks"],
     "job": "add-endpoint-dialog"
   },
   "add-routing-rule": {
@@ -59,10 +54,7 @@
     "seconds": 9.1,
     "alt": "In a code's Settings tab, a routing rule is added: a condition on the operating system is picked and a destination for it is typed, then the rules are saved.",
     "title": "Adding a routing rule",
-    "pages": [
-      "/docs/help/dynamic-codes/routing",
-      "/docs/smart-routing"
-    ],
+    "pages": ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
     "job": "add-routing-rule"
   },
   "analytics-workspace": {
@@ -105,9 +97,7 @@
     "height": 1174,
     "alt": "The Audit log page of a Business workspace, with filters by person and category above the list of recorded changes.",
     "title": "The audit log",
-    "pages": [
-      "/docs/help/teams/audit-log"
-    ],
+    "pages": ["/docs/help/teams/audit-log"],
     "job": "audit-log"
   },
   "change-destination": {
@@ -140,9 +130,7 @@
     "height": 2035,
     "alt": "The Change type dialog of a dynamic code: the current type, URL, and the other kinds of content the same printed code can open instead.",
     "title": "Changing what a code opens",
-    "pages": [
-      "/docs/help/dynamic-codes/change-the-type"
-    ],
+    "pages": ["/docs/help/dynamic-codes/change-the-type"],
     "job": "change-type-dialog"
   },
   "client-portal": {
@@ -154,10 +142,7 @@
     "height": 1174,
     "alt": "The Client portal page: the portal's branding (logo and accent), the switch that turns it on, and the Invite client button.",
     "title": "The client portal settings",
-    "pages": [
-      "/docs/client-portal",
-      "/docs/client-reports"
-    ],
+    "pages": ["/docs/client-portal", "/docs/client-reports"],
     "job": "client-portal"
   },
   "code-actions-menu": {
@@ -169,9 +154,7 @@
     "height": 1635,
     "alt": "The actions menu of a code in the list, open: edit, duplicate, move to a folder, archive and move to trash among them.",
     "title": "A code's actions menu",
-    "pages": [
-      "/docs/help/dynamic-codes/archive-and-delete"
-    ],
+    "pages": ["/docs/help/dynamic-codes/archive-and-delete"],
     "job": "code-actions-menu"
   },
   "code-analytics": {
@@ -213,10 +196,7 @@
     "height": 539,
     "alt": "The Password field in a code's Settings tab on a code that already has one, with the note that visitors type it once and stay unlocked for six hours.",
     "title": "Protecting a code with a password",
-    "pages": [
-      "/docs/help/dynamic-codes/password",
-      "/docs/code-controls"
-    ],
+    "pages": ["/docs/help/dynamic-codes/password", "/docs/code-controls"],
     "job": "code-password"
   },
   "code-settings": {
@@ -244,10 +224,7 @@
     "height": 1174,
     "alt": "The Codes page listing dynamic QR codes with their short links, destinations, tags, scan counts and a seven-day sparkline.",
     "title": "The list of dynamic codes",
-    "pages": [
-      "/docs/help/dynamic-codes/create",
-      "/docs/dynamic-qr-codes"
-    ],
+    "pages": ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
     "job": "codes-list"
   },
   "create-key-dialog": {
@@ -259,10 +236,7 @@
     "height": 1861,
     "alt": "The Create key dialog: a name for the key, the access to give it (full, read only or custom scopes) and an optional expiry.",
     "title": "Creating an API key",
-    "pages": [
-      "/docs/developers/api-keys",
-      "/docs/developers/quickstart"
-    ],
+    "pages": ["/docs/developers/api-keys", "/docs/developers/quickstart"],
     "job": "create-key-dialog"
   },
   "create-page": {
@@ -295,10 +269,7 @@
     "height": 1174,
     "alt": "The Custom domains page: a verified domain, qr.harborlane.example, with its DNS records available to show, a Check DNS button and the Add domain button.",
     "title": "Custom domains",
-    "pages": [
-      "/docs/help/domains/custom-domains",
-      "/docs/custom-domains"
-    ],
+    "pages": ["/docs/help/domains/custom-domains", "/docs/custom-domains"],
     "job": "custom-domains"
   },
   "dashboard-home": {
@@ -325,10 +296,7 @@
     "height": 1111,
     "alt": "The DNS records of a custom domain: a CNAME record pointing the hostname at QRdx and a TXT record proving ownership, each with a copy button.",
     "title": "The DNS records of a domain",
-    "pages": [
-      "/docs/help/domains/custom-domains",
-      "/docs/custom-domains"
-    ],
+    "pages": ["/docs/help/domains/custom-domains", "/docs/custom-domains"],
     "job": "dns-records"
   },
   "edit-link-dialog": {
@@ -340,9 +308,7 @@
     "height": 1372,
     "alt": "The Edit link dialog of a dynamic code, with the destination address field ready to change.",
     "title": "Changing where a code points",
-    "pages": [
-      "/docs/help/dynamic-codes/change-the-link"
-    ],
+    "pages": ["/docs/help/dynamic-codes/change-the-link"],
     "job": "edit-link-dialog"
   },
   "files-page": {
@@ -354,9 +320,7 @@
     "height": 1174,
     "alt": "The Files page of a workspace, where PDFs, images and other files for codes and pages are uploaded, with its Choose files button.",
     "title": "The Files page",
-    "pages": [
-      "/docs/files"
-    ],
+    "pages": ["/docs/files"],
     "job": "files-page"
   },
   "first-code": {
@@ -404,10 +368,7 @@
     "height": 1174,
     "alt": "The Responses page of a feedback form: a table of answers with a star rating, the choices picked and a free-text note, and an Export to Google Sheets button.",
     "title": "Form responses",
-    "pages": [
-      "/docs/help/pages-and-forms/forms",
-      "/docs/forms-and-pages"
-    ],
+    "pages": ["/docs/help/pages-and-forms/forms", "/docs/forms-and-pages"],
     "job": "form-responses"
   },
   "hosted-form-page": {
@@ -419,10 +380,7 @@
     "height": 1912,
     "alt": "A hosted feedback form on a phone: a star rating, a multiple-choice question, a text field and a Send button.",
     "title": "A hosted form on a phone",
-    "pages": [
-      "/docs/help/pages-and-forms/forms",
-      "/docs/forms-and-pages"
-    ],
+    "pages": ["/docs/help/pages-and-forms/forms", "/docs/forms-and-pages"],
     "job": "hosted-form-page"
   },
   "hosted-menu-page": {
@@ -449,10 +407,7 @@
     "height": 1174,
     "alt": "The Import codes from CSV page: step one asks for a CSV file and links a sample file; the columns the file may have are listed below.",
     "title": "Importing codes from a CSV file",
-    "pages": [
-      "/docs/help/dynamic-codes/import",
-      "/docs/migrate"
-    ],
+    "pages": ["/docs/help/dynamic-codes/import", "/docs/migrate"],
     "job": "import-csv"
   },
   "new-code-dialog": {
@@ -464,10 +419,7 @@
     "height": 1643,
     "alt": "The New dynamic QR code dialog: the destination URL field, the short link domain, an optional custom back-half and title, folder and tags, and the design preview.",
     "title": "Creating a dynamic code",
-    "pages": [
-      "/docs/help/dynamic-codes/create",
-      "/docs/getting-started"
-    ],
+    "pages": ["/docs/help/dynamic-codes/create", "/docs/getting-started"],
     "job": "new-code-dialog"
   },
   "nfc-page": {
@@ -479,9 +431,7 @@
     "height": 1174,
     "alt": "The Use with NFC page of a code: the link to write to a tag, a copy button, and how taps are counted apart from scans.",
     "title": "Writing a code's link to an NFC tag",
-    "pages": [
-      "/docs/nfc"
-    ],
+    "pages": ["/docs/nfc"],
     "job": "nfc-page"
   },
   "notifications": {
@@ -493,9 +443,7 @@
     "height": 1174,
     "alt": "The Notifications page: email alerts for scan milestones and form submissions with their switches, and the Slack and Discord options.",
     "title": "Notification settings",
-    "pages": [
-      "/docs/notifications"
-    ],
+    "pages": ["/docs/notifications"],
     "job": "notifications"
   },
   "page-editor": {
@@ -554,9 +502,7 @@
     "height": 1175,
     "alt": "The Passkeys section of Profile & security: a passkey named Work laptop with when it was added, its options menu, and the Add passkey button.",
     "title": "Passkeys on the account",
-    "pages": [
-      "/docs/help/privacy-and-security/passkeys"
-    ],
+    "pages": ["/docs/help/privacy-and-security/passkeys"],
     "job": "passkeys"
   },
   "plan-usage": {
@@ -585,10 +531,7 @@
     "height": 1174,
     "alt": "The Art tab of the playground, where a prompt or a picture turns the code into AI artwork while it stays scannable.",
     "title": "The Art tab of the playground",
-    "pages": [
-      "/docs/help/designing/art",
-      "/docs/features/art-qr"
-    ],
+    "pages": ["/docs/help/designing/art", "/docs/features/art-qr"],
     "job": "playground-art"
   },
   "playground-content": {
@@ -677,10 +620,7 @@
     "height": 1656,
     "alt": "The style browser of the playground: a grid of ready-made QR code styles with their names, grouped by category.",
     "title": "Browsing every style",
-    "pages": [
-      "/docs/help/designing/save-a-design",
-      "/docs/features/templates"
-    ],
+    "pages": ["/docs/help/designing/save-a-design", "/docs/features/templates"],
     "job": "playground-styles"
   },
   "playground-type-picker": {
@@ -707,9 +647,7 @@
     "height": 1174,
     "alt": "The Preferences page: the app's language, the light, dark and system theme choices, and keyboard shortcuts.",
     "title": "Preferences",
-    "pages": [
-      "/docs/help/account-and-billing/sign-in"
-    ],
+    "pages": ["/docs/help/account-and-billing/sign-in"],
     "job": "preferences"
   },
   "require-two-step": {
@@ -721,9 +659,7 @@
     "height": 706,
     "alt": "The Two-step verification card of the Team page, with the Require two-step verification switch and the note that the owner's own account needs it first.",
     "title": "Requiring two-step verification",
-    "pages": [
-      "/docs/help/teams/require-two-step-verification"
-    ],
+    "pages": ["/docs/help/teams/require-two-step-verification"],
     "job": "require-two-step"
   },
   "routing-rules": {
@@ -735,10 +671,7 @@
     "height": 1406,
     "alt": "The Routing section of a code's Settings tab: a list of rules by operating system, language and time of day, each with its destination, and an A/B split at the end.",
     "title": "Routing rules on a code",
-    "pages": [
-      "/docs/help/dynamic-codes/routing",
-      "/docs/smart-routing"
-    ],
+    "pages": ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
     "job": "routing-rules"
   },
   "routing-test": {
@@ -750,10 +683,7 @@
     "height": 1406,
     "alt": "The routing test panel: a pretend scan with a chosen device, operating system, country and language, the Run test button, and the rule that would match.",
     "title": "Testing routing rules",
-    "pages": [
-      "/docs/help/dynamic-codes/routing",
-      "/docs/smart-routing"
-    ],
+    "pages": ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
     "job": "routing-test"
   },
   "scan-ended": {
@@ -840,9 +770,7 @@
     "height": 1406,
     "alt": "The Single sign-on page: tabs for OIDC and SAML 2.0, the fields for the identity provider's details, and the Save connection button.",
     "title": "Single sign-on settings",
-    "pages": [
-      "/docs/help/teams/single-sign-on"
-    ],
+    "pages": ["/docs/help/teams/single-sign-on"],
     "job": "single-sign-on"
   },
   "team-invite": {
@@ -854,10 +782,7 @@
     "height": 904,
     "alt": "The Invite people section of the Team page: an email field, the role to give them, the Send invitation button, and a pending invitation below.",
     "title": "Inviting someone",
-    "pages": [
-      "/docs/help/teams/create-and-invite",
-      "/docs/help/teams/seats"
-    ],
+    "pages": ["/docs/help/teams/create-and-invite", "/docs/help/teams/seats"],
     "job": "team-invite"
   },
   "team-members": {
@@ -885,10 +810,7 @@
     "height": 1174,
     "alt": "The Themes page of a workspace: a shared theme named Harbor Lane brand with its preview, marked as the default for new codes.",
     "title": "Saved themes",
-    "pages": [
-      "/docs/help/designing/save-a-design",
-      "/docs/features/templates"
-    ],
+    "pages": ["/docs/help/designing/save-a-design", "/docs/features/templates"],
     "job": "themes-list"
   },
   "two-step-dialog": {
@@ -900,9 +822,7 @@
     "height": 1376,
     "alt": "The first step of turning on two-step verification: the choice between a passkey and an authenticator app as the second step.",
     "title": "Turning on two-step verification",
-    "pages": [
-      "/docs/help/privacy-and-security/two-step-verification"
-    ],
+    "pages": ["/docs/help/privacy-and-security/two-step-verification"],
     "job": "two-step-dialog"
   },
   "webhook-deliveries": {
@@ -914,9 +834,7 @@
     "height": 1174,
     "alt": "The deliveries page of a webhook endpoint: its signing secret (hidden, with Reveal and Rotate), and recent deliveries with their event, status, attempts and a Retry now button on a failed one.",
     "title": "An endpoint's deliveries",
-    "pages": [
-      "/docs/webhooks"
-    ],
+    "pages": ["/docs/webhooks"],
     "job": "webhook-deliveries"
   },
   "webhooks-list": {
@@ -928,10 +846,7 @@
     "height": 1174,
     "alt": "The Webhooks page of a workspace: one endpoint with the events it receives, its enabled switch, a Send test button and the Add endpoint button.",
     "title": "Webhooks",
-    "pages": [
-      "/docs/webhooks",
-      "/docs/developers/quickstart"
-    ],
+    "pages": ["/docs/webhooks", "/docs/developers/quickstart"],
     "job": "webhooks-list"
   },
   "workspace-general": {
@@ -943,10 +858,7 @@
     "height": 1174,
     "alt": "The General settings of a workspace: its logo, name and URL, with Save and the Delete workspace option at the bottom.",
     "title": "Workspace settings",
-    "pages": [
-      "/docs/teams",
-      "/docs/help/teams/create-and-invite"
-    ],
+    "pages": ["/docs/teams", "/docs/help/teams/create-and-invite"],
     "job": "workspace-general"
   }
 }
