@@ -57,6 +57,8 @@ Registered in `mdx-components.tsx`; a page uses them without importing. The look
 | `<Accordions>` / `<Accordion title>` | FAQ-style folding sections | fumadocs' Accordions. |
 | `<Frame src alt caption width height />` | A framed image, zoomable on click (and with Enter or Space) | Pass children instead of `src` to frame other content; `plain` keeps the backdrop out. The Shots lane's `<Shot />` builds on it. |
 | `<Video src poster title caption />` | A short looping clip | Muted, inline, plays while on screen, paused with a click or the button. With "reduce motion" on, it waits on its poster. |
+| `<auto-type-table path="…" type="…" />` | A component's props table from its TypeScript | fumadocs-typescript's `remarkAutoTypeTable` (source.config.ts) renders it as a `TypeTable`; the component pages use it. |
+| Code fences | Every block has a header with the copy button: its `title="…"`, or its language when it has none ("Terminal" for bash). In a tab group the button sits at the end of the tab row and copies the open tab. | `components/mdx/code-block.tsx` |
 | `<IfAvailable feature|path|integration>` | Content for features a deployment may not offer | See `lib/feature-availability.ts`. |
 | `{facts.bodyPatterns}` and the other tokens | Product counts and prices | From `apps/app/lib/product-facts.ts`, never typed by hand. |
 

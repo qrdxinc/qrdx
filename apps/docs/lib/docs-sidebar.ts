@@ -1,4 +1,4 @@
-import type { Root } from "fumadocs-core/page-tree";
+import type { Node, Root } from "fumadocs-core/page-tree";
 import { getSidebarTabs } from "fumadocs-ui/components/sidebar/tabs";
 import { docsTabs, filterPageTree, mapLinkNodes } from "@/lib/docs-tree";
 import { isPathAvailable } from "@/lib/feature-availability";
@@ -6,6 +6,25 @@ import type { Locale } from "@/lib/i18n/config";
 import { englishDocsPath } from "@/lib/i18n/docs";
 import { localizeHref } from "@/lib/i18n/paths";
 import { localizedSource } from "@/lib/source";
+
+/**
+ * The sidebar shows icons on folders (sections and their groups) only:
+ * some tabs' pages carry an `icon` in their frontmatter and others don't,
+ * which made the tabs look different from one another.
+ */
+function withoutPageIcons(root: Root): Root {
+  const visit = (nodes: Node[]): Node[] =>
+    nodes.map((node): Node => {
+      if (node.type === "page") return { ...node, icon: undefined };
+      if (node.type !== "folder") return node;
+      return {
+        ...node,
+        index: node.index ? { ...node.index, icon: undefined } : node.index,
+        children: visit(node.children),
+      };
+    });
+  return { ...root, children: visit(root.children) };
+}
 
 const trees = new Map<Locale, Root>();
 
@@ -17,11 +36,13 @@ const trees = new Map<Locale, Root>();
 export function sidebarTree(locale: Locale): Root {
   const cached = trees.get(locale);
   if (cached) return cached;
-  const tree = mapLinkNodes(
-    filterPageTree(localizedSource.getPageTree(locale), (url) =>
-      isPathAvailable(englishDocsPath(url)),
+  const tree = withoutPageIcons(
+    mapLinkNodes(
+      filterPageTree(localizedSource.getPageTree(locale), (url) =>
+        isPathAvailable(englishDocsPath(url)),
+      ),
+      (url) => localizeHref(url, locale),
     ),
-    (url) => localizeHref(url, locale),
   );
   trees.set(locale, tree);
   return tree;

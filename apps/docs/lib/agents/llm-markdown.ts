@@ -13,6 +13,7 @@
 // - Root-relative links become absolute.
 //
 // Code blocks and inline code are masked first and never touched.
+import { stripMdxComments } from "@/lib/mdx-comments";
 import {
   BODY_CATALOG,
   DOT_CATALOG,
@@ -437,7 +438,9 @@ export function cleanLlmMarkdown(
   const fenced = maskFences(markdown);
   const coded = maskInlineCode(fenced.text);
 
-  let text = render(parse(tokenize(coded.text)), resolved);
+  // Comment expressions ({/* shot: … */} markers, writers' notes): the docs
+  // index drops them already; this covers Markdown that arrives another way.
+  let text = render(parse(tokenize(stripMdxComments(coded.text))), resolved);
   if (resolved.origin) {
     text = text.replace(
       /\]\((\/(?!\/)[^)\s]*)\)/g,

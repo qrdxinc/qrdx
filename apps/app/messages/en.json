@@ -906,6 +906,10 @@
         "search": "Search the docs",
         "sections": "Or start from a section"
       },
+      "code": {
+        "copy": "Copy code",
+        "copied": "Copied"
+      },
       "video": {
         "play": "Play {title}",
         "pause": "Pause {title}",

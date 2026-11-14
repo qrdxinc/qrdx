@@ -10,6 +10,7 @@ import {
 } from "fumadocs-mdx/config";
 import jsonSchema from "fumadocs-mdx/plugins/json-schema";
 import lastModified from "fumadocs-mdx/plugins/last-modified";
+import { remarkAutoTypeTable } from "fumadocs-typescript";
 import type { ElementContent } from "hast";
 import { z } from "zod";
 import { docsIndex } from "./lib/docs-index-plugin";
@@ -70,6 +71,9 @@ export default defineConfig({
       lazy: true,
       langs: ["ts", "js", "html", "tsx", "mdx"],
       inline: "tailing-curly-colon",
+      // `language-<lang>` on the <code>: the code block's header names the
+      // language when the block has no title (components/mdx/code-block.tsx).
+      addLanguageClass: true,
       themes: {
         // Catppuccin Latte's greens, peaches and pinks are 2.3–3.5:1 on a
         // light code block; GitHub Light Default's code tokens are 4.8–15:1
@@ -109,7 +113,14 @@ export default defineConfig({
       },
     },
     // No math, Twoslash or TypeScript-to-JavaScript plugins: no page uses
-    // them, and each loaded CSS or a compiler on every page.
-    remarkPlugins: [remarkProductFacts, remarkNpmStatus, remarkSteps],
+    // them, and each loaded CSS or a compiler on every page. The component
+    // pages' props tables are `<auto-type-table path type />`, expanded
+    // from the registry's TypeScript by remarkAutoTypeTable.
+    remarkPlugins: [
+      remarkProductFacts,
+      remarkNpmStatus,
+      remarkSteps,
+      remarkAutoTypeTable,
+    ],
   },
 });

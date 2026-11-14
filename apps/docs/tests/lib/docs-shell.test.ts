@@ -5,6 +5,7 @@
 import { describe, expect, it } from "vitest";
 import { cleanLlmMarkdown } from "@/lib/agents/llm-markdown";
 import { getGitHubIssueUrl, getGithubEditUrl } from "@/lib/github";
+import { blankMdxComments, isMdxComment } from "@/lib/mdx-comments";
 
 const origin = "https://qrdx.dev";
 
@@ -52,6 +53,65 @@ describe("Markdown for the docs' media blocks", () => {
         `<PlanNote plans="business">\n  Only owners can turn it on.\n</PlanNote>`,
       ),
     ).toBe("**Needs Business**\n\nOnly owners can turn it on.\n");
+  });
+});
+
+describe("MDX comments stay out of the Markdown copies", () => {
+  it("recognises comment expressions, and only those", () => {
+    expect(
+      isMdxComment({
+        type: "mdxFlowExpression",
+        value: "/* shot: a | b | c */",
+      }),
+    ).toBe(true);
+    expect(
+      isMdxComment({ type: "mdxTextExpression", value: " /* note */ " }),
+    ).toBe(true);
+    expect(isMdxComment({ type: "mdxFlowExpression", value: "facts.x" })).toBe(
+      false,
+    );
+    expect(isMdxComment({ type: "paragraph" })).toBe(false);
+  });
+
+  it("blanks comments in the source without moving anything else", () => {
+    const source = [
+      "Para {/* inline note */} text.",
+      "",
+      "{/* shot: a | b",
+      "   | c */}",
+      "```tsx",
+      "const x = '{/* code stays */}';",
+      "```",
+      "Code `{/* span stays */}` here.",
+    ].join("\n");
+    const blanked = blankMdxComments(source);
+    expect(blanked.length).toBe(source.length);
+    expect(blanked.split("\n").length).toBe(source.split("\n").length);
+    expect(blanked).toContain("Para                     text.");
+    expect(blanked).not.toContain("shot:");
+    expect(blanked).toContain("const x = '{/* code stays */}';");
+    expect(blanked).toContain("`{/* span stays */}`");
+  });
+
+  it("drops shot, clip and diagram markers and plain notes, lines included", () => {
+    const md = cleanLlmMarkdown(
+      [
+        "Before.",
+        "",
+        "{/* shot: editor-controls | the Controls tab | /playground */}",
+        "",
+        "Middle {/* writer's note */} text.",
+        "",
+        "{/* clip: routing | the rule being added | Settings > Routing */}",
+        "```tsx",
+        "const kept = '{/* not a comment in code */}';",
+        "```",
+        "After `{/* inline code is kept */}`.",
+      ].join("\n"),
+    );
+    expect(md).toBe(
+      "Before.\n\nMiddle  text.\n\n```tsx\nconst kept = '{/* not a comment in code */}';\n```\nAfter `{/* inline code is kept */}`.\n",
+    );
   });
 });
 

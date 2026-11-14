@@ -101,7 +101,15 @@ let nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/**": [OG_FONT_GLOB],
   },
-  serverExternalPackages: ["shiki", "@takumi-rs/core"],
+  // ts-morph, typescript and oxc-transform: fumadocs-typescript's props
+  // tables (remarkAutoTypeTable, source.config.ts).
+  serverExternalPackages: [
+    "ts-morph",
+    "typescript",
+    "oxc-transform",
+    "shiki",
+    "@takumi-rs/core",
+  ],
   // The main app's headers for its docs pages (apps/app/next.config.ts).
   // When rules set the same header, the later one wins.
   async headers() {

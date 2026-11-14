@@ -14,12 +14,18 @@ import { InstallationTabs } from "@/components/docs/registry/installation-tabs";
 import { PackageManagerTabs } from "@/components/docs/registry/package-manager-tabs";
 import { Callout } from "@/components/mdx/callout";
 import { Card, Cards } from "@/components/mdx/card";
+import {
+  DocsCodeBlockTabs,
+  DocsCodeBlockTabsList,
+  DocsPre,
+} from "@/components/mdx/code-block";
 import { Frame } from "@/components/mdx/frame";
 import { GithubCard } from "@/components/mdx/github-card";
 import { IfAvailable } from "@/components/mdx/if-available";
 import { Mermaid } from "@/components/mdx/mermaid";
 import { NpmStatus } from "@/components/mdx/npm-status";
 import { PlanNote } from "@/components/mdx/plan-note";
+import { DocsTable } from "@/components/mdx/table";
 import { Video } from "@/components/mdx/video";
 import { docsIcons } from "@/lib/docs-icons";
 
@@ -65,6 +71,12 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...FilesComponents,
     Tabs: DocsTabs,
     Tab: DocsTab,
+    // Code blocks: a header with the copy button, never over the code.
+    pre: DocsPre,
+    CodeBlockTabs: DocsCodeBlockTabs,
+    CodeBlockTabsList: DocsCodeBlockTabsList,
+    // Tables scroll inside their own bordered box.
+    table: DocsTable,
     Accordion,
     Accordions: DocsAccordions,
     Callout,
