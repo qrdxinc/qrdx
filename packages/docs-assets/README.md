@@ -6,7 +6,7 @@ Files the docs render and the main app serves, kept outside `apps/app` so anothe
 | --- | --- | --- |
 | `openapi.json` | A copy of the REST API's OpenAPI document, `apps/app/public/openapi.json`, for an app that can't read the main app's files. Not committed (`.gitignore`): an app that imports it runs the command first, before it builds or starts | `bun run --filter app openapi:export` (`apps/app/scripts/openapi/export.ts`) |
 | `registry.json` | The shadcn/ui registry index: one item per component, with its files | By hand |
-| `registry/qrdx/*` | The registry components' sources, published with their imports rewritten (`registry/transform.ts`) | By hand |
+| `registry/qrdx/*` | The registry components' sources, published with their imports rewritten (`registry/transform.ts`). MIT-licensed (`registry/qrdx/LICENSE`); the rest of the package is AGPL-3.0-or-later | By hand |
 | `registry/examples/*` | The live examples on the component docs pages, and `examples/index.tsx`, which loads each one on its own | By hand |
 | `registry/ui/*`, `registry/lib/utils.ts` | Aliases to `@repo/design-system`, standing in for a project's shadcn/ui components and `cn` | By hand |
 | `registry/outputs.ts`, `registry/build.ts` | What `/r/<name>.json` contains, and the script that writes it to a folder | |

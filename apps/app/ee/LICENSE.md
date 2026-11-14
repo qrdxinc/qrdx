@@ -38,3 +38,7 @@ The Commercial Software is provided "as is", without warranty of any kind, expre
 ## 6. Ending
 
 If you break these terms, your rights under this license end automatically.
+
+---
+
+To ask for a written agreement, use the enterprise page at https://qrdx.dev/enterprise or email enterprise@qrdx.dev.
