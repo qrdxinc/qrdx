@@ -166,6 +166,42 @@ describe("qrdx/preact", () => {
     );
   });
 
+  it("QRCode forwards root attributes to the <svg>, like QRCodeSVG", () => {
+    const container = mount();
+    const props = {
+      value: "https://qrdx.dev",
+      size: 120,
+      level: "H",
+      logo: "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%2F%3E",
+      className: "qr",
+      "aria-label": "Guest Wi-Fi",
+      "data-code": "wifi",
+    } as const;
+    render(h(QRCode, props), container);
+    const svg = container.firstElementChild;
+    expect(svg?.getAttribute("class")).toBe("qr");
+    expect(svg?.getAttribute("aria-label")).toBe("Guest Wi-Fi");
+    expect(svg?.getAttribute("data-code")).toBe("wifi");
+    expect(svg?.hasAttribute("logo")).toBe(false);
+    expect(domSnapshot(container)).toBe(
+      coreSnapshot(resolveQRCodeProps(props))
+    );
+    expect(renderToString(h(QRCode, props))).toBe(
+      toSVGString(resolveQRCodeProps(props))
+    );
+
+    // With a frame, on the outer <svg> only
+    const framed = { ...props, frame: { style: "tag" as const, text: "Join" } };
+    render(h(QRCode, framed), container);
+    expect(container.firstElementChild?.getAttribute("aria-label")).toBe(
+      "Guest Wi-Fi"
+    );
+    expect(container.querySelectorAll("[aria-label]")).toHaveLength(1);
+    expect(domSnapshot(container)).toBe(
+      coreSnapshot(resolveQRCodeProps(framed))
+    );
+  });
+
   it("unmounts cleanly", () => {
     const container = mount();
     render(h(QRCodeSVG, { value: "https://qrdx.dev" }), container);

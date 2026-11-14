@@ -1,12 +1,14 @@
 import { cn } from "@repo/design-system/lib/utils";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import type { ReactNode } from "react";
+import { FrameShell } from "@/components/mdx/frame";
 import { ClipPlayer } from "@/components/mdx/shot-clip";
 import { Diagram } from "@/components/mdx/shot-diagram";
 import { clipSources, getClip, getShot } from "@/lib/shots";
 
 // Pictures and clips of the real app in the docs (lib/shots-manifest.json,
-// captured by scripts/shots). Both themes are rendered and the stylesheet
+// captured by scripts/shots), in the same frame as every other picture
+// (components/mdx/frame.tsx). Both themes are rendered and the stylesheet
 // picks one, so the page never flashes the wrong theme and never shifts:
 // width and height come from the manifest. A browser only fetches the image
 // it shows: the other has no layout box, so lazy loading never reaches it.
@@ -16,18 +18,8 @@ import { clipSources, getClip, getShot } from "@/lib/shots";
 //   <Clip id="first-code" />
 //
 // An id nobody captured throws, which fails the build with the fix in the
-// message. The frame below is the minimal one; the Shell lane's Frame takes
-// over the look in a later pass.
-
-const FRAME = "overflow-hidden rounded-xl border border-fd-border bg-fd-card";
-
-function Caption({ children }: { children: ReactNode }) {
-  return (
-    <figcaption className="mt-2 text-center text-fd-muted-foreground text-sm">
-      {children}
-    </figcaption>
-  );
-}
+// message. The pictures carry their own backdrop and shadow (style.ts), so
+// the frame adds no inner padding or border around them.
 
 export function Shot({
   id,
@@ -46,27 +38,30 @@ export function Shot({
   const image = (theme: "light" | "dark") => (
     <ImageZoom
       alt={text}
-      className={cn(
-        "block h-auto w-full",
-        theme === "light" ? "dark:hidden" : "hidden dark:block",
-      )}
-      height={shot.height}
-      loading="lazy"
+      caption={typeof caption === "string" ? caption : undefined}
       src={theme === "light" ? shot.light : shot.dark}
-      width={shot.width}
-    />
+    >
+      <img
+        alt={text}
+        className={cn(
+          "block h-auto w-full",
+          theme === "light" ? "dark:hidden" : "hidden dark:block",
+        )}
+        decoding="async"
+        height={shot.height}
+        loading="lazy"
+        src={theme === "light" ? shot.light : shot.dark}
+        width={shot.width}
+      />
+    </ImageZoom>
   );
   return (
-    <figure className={cn("not-prose my-6", className)} data-shot={id}>
-      <div
-        className={FRAME}
-        style={{ aspectRatio: `${shot.width} / ${shot.height}` }}
-      >
+    <FrameShell caption={caption} className={className} data-shot={id}>
+      <div style={{ aspectRatio: `${shot.width} / ${shot.height}` }}>
         {image("light")}
         {image("dark")}
       </div>
-      {caption && <Caption>{caption}</Caption>}
-    </figure>
+    </FrameShell>
   );
 }
 
@@ -83,11 +78,8 @@ export function Clip({
 }) {
   const clip = getClip(id);
   return (
-    <figure className={cn("not-prose my-6", className)} data-clip={id}>
-      <div
-        className={FRAME}
-        style={{ aspectRatio: `${clip.width} / ${clip.height}` }}
-      >
+    <FrameShell caption={caption} className={className} data-clip={id}>
+      <div style={{ aspectRatio: `${clip.width} / ${clip.height}` }}>
         <ClipPlayer
           alt={alt ?? clip.alt}
           dark={clipSources(clip, "dark")}
@@ -98,8 +90,7 @@ export function Clip({
           width={clip.width}
         />
       </div>
-      {caption && <Caption>{caption}</Caption>}
-    </figure>
+    </FrameShell>
   );
 }
 

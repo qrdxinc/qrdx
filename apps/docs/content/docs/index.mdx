@@ -1,61 +1,106 @@
 ---
 title: QRdx docs
-description: Help for everyone who makes QR codes with QRdx, guides to every feature, and docs for developers.
+description: Make QR codes, change them after printing, see their scans, and build with the API and the React library.
 icon: Book
 ---
 
-QRdx is an open-source (AGPL-3.0) QR code platform. Design static QR codes for free with no account, or sign in for dynamic codes you can change after printing, mobile pages and scan analytics.
+QRdx is an open-source QR code platform: static codes for free with no account, and dynamic codes you can change after printing, with hosted pages and scan analytics. A dynamic code keeps working on every plan, even after you cancel ([the Never-Hostage Guarantee](/guarantee)).
 
-Every dynamic code keeps redirecting on every plan, even after a downgrade or cancellation. That's the [Never-Hostage Guarantee](/guarantee).
+## What do you want to do?
 
-## Where to start
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="Make a first code"
+    description="Design a code in the editor, then download it in the format your printer needs."
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/create"
+    title="Make a code you can change after printing"
+    description="A dynamic code points at a short link. Change where it goes at any time."
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="See scans"
+    description="When, where and on which devices a code was scanned."
+  />
+  <Card
+    arrow
+    icon={<Terminal />}
+    href="/docs/developers/quickstart"
+    title="Build with the API"
+    description="Create and manage codes from your own app. Every endpoint has a Try it panel."
+  />
+  <Card
+    arrow
+    icon={<Code />}
+    href="/docs/getting-started"
+    title="Use the React library"
+    description="Render and export styled codes with the qrdx package."
+  />
+  <Card
+    arrow
+    icon={<Server />}
+    href="/docs/self-hosting"
+    title="Self-host QRdx"
+    description="Run your own QRdx, dynamic codes included, with Docker Compose or Node.js."
+  />
+</Cards>
+
+## The sections
 
 <Cards>
   <Card
     icon={<LifeBuoy />}
     href="/docs/help"
     title="Help"
-    description="Plain answers for making codes, billing, teams and fixing problems. No code needed."
+    description="Short answers for making codes, billing, teams and fixing problems. No code needed."
   />
   <Card
     icon={<Book />}
     href="/docs/dynamic-qr-codes"
     title="Guides"
-    description="Every product feature in depth: dynamic codes, pages, forms, routing, analytics and teams."
+    description="Each feature in depth: dynamic codes, pages, forms, routing, analytics and teams."
   />
   <Card
     icon={<Terminal />}
     href="/docs/developers"
     title="Developers"
-    description="The REST API with a Try it panel, webhooks, OAuth apps, MCP and the CLI."
+    description="The REST API, webhooks, OAuth apps, the MCP server and the CLI."
   />
   <Card
     icon={<Code />}
     href="/docs/getting-started"
     title="React library"
-    description="Render and export styled QR codes with the qrdx package and the shadcn/ui registry."
+    description="The qrdx package, framework guides and the shadcn/ui registry."
   />
   <Card
     icon={<Server />}
     href="/docs/self-hosting"
     title="Self-hosting"
-    description="Run your own QRdx, dynamic codes included, with Docker Compose or Node.js."
+    description="Install, configure and update your own QRdx."
   />
 </Cards>
 
-## Quick links
+## Popular pages
 
-- [Make your first QR code](/docs/help/getting-started/first-qr-code)
 - [Static or dynamic, which do you need?](/docs/help/getting-started/static-vs-dynamic)
+- [Change where a code points](/docs/help/dynamic-codes/change-the-link)
+- [Download and print a QR code](/docs/help/getting-started/download-and-print)
 - [A code won't scan](/docs/help/troubleshooting/wont-scan)
 - [Plans and limits](/docs/plans-and-limits)
 - [REST API and OAuth](/docs/developers/rest-api)
-- [Install the React library](/docs/getting-started)
 
-## Stay up to date
+## Get help
 
-- [Changelog](/changelogs): every release, newest first.
-- [What's new and what's next](/docs/help/whats-new).
-- [GitHub](https://github.com/qrdxinc/qrdx): source code, [issues](https://github.com/qrdxinc/qrdx/issues) and [discussions](https://github.com/qrdxinc/qrdx/discussions).
+Search the docs from any page with <kbd>⌘</kbd> <kbd>K</kbd>. If the docs don't answer it:
 
-Need a person? [Contact support](/docs/help/contact).
+- [Contact support](/docs/help/contact): a person answers.
+- [What's new and what's next](/docs/help/whats-new), and the full [changelog](/changelogs).
+- [GitHub](https://github.com/qrdxinc/qrdx): the source code, [issues](https://github.com/qrdxinc/qrdx/issues) and [discussions](https://github.com/qrdxinc/qrdx/discussions).

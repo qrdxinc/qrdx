@@ -13,14 +13,14 @@ import { createMemo, type JSX, untrack } from "solid-js";
 import * as web from "solid-js/web";
 import {
   createQRCodeTree,
-  type QRCodeProps,
+  type QRCodeOptions,
   type QRSVGOptions,
   renderToDOM,
   renderToString,
   resolveQRCodeProps,
 } from "./core";
 
-export type { QRCodeProps, QRSVGOptions } from "./core";
+export type { QRCodeOptions, QRCodeProps, QRSVGOptions } from "./core";
 
 const ROOT_TAG = /^<[^\s/>]+/;
 
@@ -65,11 +65,12 @@ export function QRCodeSVG(props: QRSVGOptions): JSX.Element {
 
 /**
  * `QRCodeSVG` with React's `QRCode` logo API: `logo`, `logoOptions`,
- * `hideLogo` and `scale`.
+ * `hideLogo` and `scale`. Any other prop (`class`, `aria-label`, `data-*`…)
+ * goes on the `<svg>`, as with `QRCodeSVG`.
  *
  * @example
  * <QRCode value="https://qrdx.dev" logo="/logo.png" level="H" />
  */
-export function QRCode(props: QRCodeProps): JSX.Element {
+export function QRCode(props: QRCodeOptions): JSX.Element {
   return draw(() => resolveQRCodeProps({ ...props }));
 }

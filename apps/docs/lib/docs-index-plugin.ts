@@ -30,6 +30,7 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import type { EmitEntry, Plugin, PluginContext } from "fumadocs-mdx";
 import type { DefaultMDXOptions } from "fumadocs-mdx/config";
+import { blankMdxComments, isMdxComment } from "./mdx-comments";
 
 const NAME = "qrdx:docs-index";
 const CONCURRENCY = 8;
@@ -220,8 +221,14 @@ async function createTextCompiler(core: Core, collection: DocCollection) {
         const title = walk(tree);
         if (title !== undefined) frontmatter.title = title;
       }
+      // Comment expressions ({/* shot: … */} markers and writers' notes)
+      // leave the Markdown copy; the collection's own filter decides the
+      // rest (lib/mdx-comments.ts).
+      const options = typeof llms === "object" ? llms : {};
       remarkLLMs({
-        ...(typeof llms === "object" ? llms : {}),
+        ...options,
+        filterElement: (node) =>
+          isMdxComment(node) ? false : (options.filterElement?.(node) ?? true),
         _data: true,
       })(tree as never, file as never, () => undefined);
       file.data.captured = {
@@ -269,10 +276,16 @@ async function createTextCompiler(core: Core, collection: DocCollection) {
       matter.data as Record<string, unknown>,
     );
     const lines = matter.matter.split("\n").length - 1;
+    // Comment expressions become spaces (positions kept), so neither the
+    // search data nor the Markdown copy, both sliced from the source, keep
+    // a {/* shot: … */} marker or a writer's note.
+    const content = filePath.endsWith(".mdx")
+      ? blankMdxComments(matter.content)
+      : matter.content;
     const file = await getProcessor(
       filePath.endsWith(".mdx") ? "mdx" : "md",
     ).process({
-      value: "\n".repeat(lines) + matter.content,
+      value: "\n".repeat(lines) + content,
       path: filePath,
       cwd: collection.cwd,
       data: {

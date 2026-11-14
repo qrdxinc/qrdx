@@ -9,6 +9,9 @@ import { docsOriginRedirects, docsZoneRewrites } from "@repo/i18n/docs";
 import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
+  ADMIN_CONSOLE_SECRET_MIN_LENGTH,
+  adminConsoleAddress,
+  adminConsoleRedirects,
   CONSOLE_ASSET_PREFIX,
   consoleZoneRewrites,
 } from "@repo/next-config/console-zone";
@@ -104,6 +107,30 @@ if (consoleZone.length > 0 && !env.CONSOLE_ZONE_KEY) {
     "⚠ CONSOLE_ORIGIN is set but CONSOLE_ZONE_KEY isn't: the console can't tell requests that came through this app. Set the same CONSOLE_ZONE_KEY on both.",
   );
 }
+// The console at its own address (ADMIN_CONSOLE_URL): its five sections
+// redirect there instead (@repo/next-config/console-zone), on QRdx's own
+// hosts, and lib/admin-console signs admins in through this app's OAuth
+// provider with CONSOLE_ZONE_KEY as the client secret. Without that secret
+// the console can't sign anyone in, so sending admins there would strand
+// them: the build fails rather than go half way.
+if (
+  env.ADMIN_CONSOLE_URL &&
+  !adminConsoleAddress({
+    adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+    secret: env.CONSOLE_ZONE_KEY,
+  })
+) {
+  throw new Error(
+    `ADMIN_CONSOLE_URL is set but CONSOLE_ZONE_KEY isn't, or is shorter than ${ADMIN_CONSOLE_SECRET_MIN_LENGTH} characters: it's the console's OAuth client secret, so the console couldn't sign anyone in. Set the same CONSOLE_ZONE_KEY on both deployments, or unset ADMIN_CONSOLE_URL.`,
+  );
+}
+const adminConsole = adminConsoleRedirects(
+  adminConsoleAddress({
+    adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+    secret: env.CONSOLE_ZONE_KEY,
+  }),
+  { hosts: `(?:${PLATFORM_HOSTS})` },
+);
 
 // The marketing site at SITE_ORIGIN serves groups of public pages (the blog
 // first) and its build assets (@repo/next-config/site-zone), on QRdx's own
@@ -228,6 +255,7 @@ let nextConfig: NextConfig = {
       "process.env.CONSOLE_ORIGIN": process.env.CONSOLE_ORIGIN ?? "",
       "process.env.SITE_ORIGIN": process.env.SITE_ORIGIN ?? "",
       "process.env.SITE_ZONE_GROUPS": process.env.SITE_ZONE_GROUPS ?? "",
+      "process.env.ADMIN_CONSOLE_URL": process.env.ADMIN_CONSOLE_URL ?? "",
     },
   },
   // Geist (@repo/design-system/og/font-files) for server images: OG cards,
@@ -387,6 +415,8 @@ let nextConfig: NextConfig = {
       })),
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
+      // The console's sections, when ADMIN_CONSOLE_URL is set (above).
+      ...adminConsole,
     ];
   },
   // Keep the shared rewrites (PostHog /ingest proxy) alongside these.

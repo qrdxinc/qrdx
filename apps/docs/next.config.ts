@@ -101,11 +101,12 @@ let nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/**": [OG_FONT_GLOB],
   },
+  // ts-morph, typescript and oxc-transform: fumadocs-typescript's props
+  // tables (remarkAutoTypeTable, source.config.ts).
   serverExternalPackages: [
     "ts-morph",
     "typescript",
     "oxc-transform",
-    "twoslash",
     "shiki",
     "@takumi-rs/core",
   ],
