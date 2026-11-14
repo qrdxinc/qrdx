@@ -1,6 +1,7 @@
 "use client";
 
 import { track } from "@repo/analytics";
+import { trackAuthPromptShown } from "@repo/analytics/auth-prompt";
 import { authClient } from "@repo/auth/client";
 import { HairlineFigure } from "@repo/design-system/components/hairline/hairline";
 import { Close as X } from "@repo/design-system/components/icons";
@@ -27,27 +28,40 @@ import {
   TableDocument as FileSpreadsheet,
   Export as Upload,
 } from "iconsax-reactjs";
+import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Papa from "papaparse";
 import { getQRCodeDataUrl, QRCode } from "qrdx";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useDropzone } from "react-dropzone";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { SignUpNudge, useSignUpNudge } from "@/components/sign-up-nudge";
 import { defaultThemeState } from "@/config/qr";
+import { authPromptSurface } from "@/lib/analytics/auth-prompt";
 import { useTrackEditorOpened } from "@/lib/analytics/react";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { useMounted } from "@/lib/hooks/use-mounted";
+import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
 import { useQRThemes } from "@/lib/hooks/use-themes";
 import { playgroundHref } from "@/lib/playground-links";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import { soundEvent } from "@/lib/sound/emit";
 import { createZipParts } from "@/lib/zip-stream";
+import { useAuthStore } from "@/store/auth-store";
 import { useQREditorStore } from "@/store/editor-store";
 import type { ThemeStyles } from "@/types/theme";
 import { defaultPresets } from "@/utils/qr-presets";
 import {
   type CsvTable,
+  clearBulkStash,
   createFilenameAllocator,
   dataUrlToBytes,
   guessFilenameColumn,
@@ -55,8 +69,12 @@ import {
   imageToDataUrl,
   MAX_BULK_ROWS,
   MAX_CSV_BYTES,
+  MAX_SIGNED_OUT_ROWS,
+  needsAccount,
   SAMPLE_CSV_ROWS,
   sanitizeFilename,
+  stashBulkFile,
+  takeBulkStash,
   toTable,
 } from "./bulk-utils";
 import { buildQrProps, QUIET_ZONE_MODULES } from "./qr-props";
@@ -155,7 +173,12 @@ function downloadSampleCsv() {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export function BulkGenerator() {
+export function BulkGenerator({
+  freeDynamicCodes,
+}: {
+  /** Dynamic codes the Free plan includes (lib/plans.ts), for the line after a run. */
+  freeDynamicCodes: number;
+}) {
   const t = useTranslations("tools.bulk.generator");
   useTrackEditorOpened("bulk_tool");
   const locale = useLocale();
@@ -192,6 +215,17 @@ export function BulkGenerator() {
   const [quietZone, setQuietZone] = useState(true);
   const [status, setStatus] = useState<Status>({ phase: "idle" });
   const runRef = useRef<{ cancelled: boolean } | null>(null);
+  const signedIn = Boolean(session?.user);
+  const openAuthDialog = useAuthStore((state) => state.openAuthDialog);
+  const authOpen = useAuthStore((state) => state.isOpen);
+  // Generate was asked for a file over the signed-out limit: the dialog is
+  // up, and the run starts once the session is back (`resumeRun`).
+  const [awaitingSignIn, setAwaitingSignIn] = useState(false);
+  const [resumeRun, setResumeRun] = useState(false);
+  // A file brought back after Google or GitHub, or lost on the way.
+  const [restoreNote, setRestoreNote] = useState<"restored" | "lost" | null>(
+    null,
+  );
 
   const table: CsvTable | null = useMemo(
     () => (rawRows ? toTable(rawRows, hasHeader) : null),
@@ -267,6 +301,35 @@ export function BulkGenerator() {
     [],
   );
 
+  // Back from a Google or GitHub sign-in started at the row limit: the file
+  // waited in this tab (bulk-utils.ts), so load it again.
+  useEffect(() => {
+    const stash = takeBulkStash();
+    if (!stash) return;
+    if (stash === "lost") {
+      setRestoreNote("lost");
+      return;
+    }
+    setFileName(stash.name || null);
+    setHasHeader(stash.hasHeader);
+    setRawRows(stash.rows);
+    setRestoreNote("restored");
+  }, []);
+
+  // Closed without signing in: the kept copy isn't needed (the file is
+  // still here). A Google or GitHub sign-in leaves the page before this.
+  useEffect(() => {
+    if (awaitingSignIn && !authOpen && !signedIn) {
+      setAwaitingSignIn(false);
+      clearBulkStash();
+    }
+  }, [awaitingSignIn, authOpen, signedIn]);
+
+  usePostLoginAction(
+    "BULK_GENERATE",
+    useCallback(() => setResumeRun(true), []),
+  );
+
   useEffect(() => {
     if (status.phase !== "done") return;
     return () => URL.revokeObjectURL(status.url);
@@ -278,6 +341,7 @@ export function BulkGenerator() {
       if (!file) return;
       setParseError(null);
       setStatus({ phase: "idle" });
+      setRestoreNote(null);
       Papa.parse<string[]>(file, {
         skipEmptyLines: "greedy",
         // Header row + MAX rows + 1 to detect truncation.
@@ -327,14 +391,17 @@ export function BulkGenerator() {
     setRawRows(null);
     setParseError(null);
     setStatus({ phase: "idle" });
+    setRestoreNote(null);
+    clearBulkStash();
   };
 
-  const generate = async () => {
+  /** `limit`: only the first rows (the signed-out allowance). */
+  const generate = async (limit?: number) => {
     if (!table || table.rows.length === 0) return;
 
     const run = { cancelled: false };
     runRef.current = run;
-    const rows = table.rows;
+    const rows = limit ? table.rows.slice(0, limit) : table.rows;
     const total = rows.length;
     const lineOffset = hasHeader ? 2 : 1;
     setStatus({ phase: "running", done: 0, total });
@@ -458,6 +525,48 @@ export function BulkGenerator() {
     }
   };
 
+  // Signed out, a file over the limit asks for a free account first (or
+  // makes just its first rows). While the session loads, it waits.
+  const overLimit = table ? needsAccount(table.rows.length, signedIn) : false;
+  const waitingForSession =
+    sessionPending && table !== null && table.rows.length > MAX_SIGNED_OUT_ROWS;
+
+  // The notice above is an ask too: counted once per file.
+  const pathname = usePathname();
+  useEffect(() => {
+    if (!overLimit) return;
+    trackAuthPromptShown(
+      { reason: "bulk_over_limit", surface: authPromptSurface(pathname) },
+      "nudge",
+    );
+  }, [overLimit, pathname]);
+
+  const askForAccount = () => {
+    if (!rawRows) return;
+    stashBulkFile({ name: fileName ?? "", rows: rawRows, hasHeader });
+    setAwaitingSignIn(true);
+    openAuthDialog("bulk_over_limit", { action: "BULK_GENERATE" });
+  };
+
+  // Signed in from that dialog: run the whole file, once.
+  const runResume = useEffectEvent(() => {
+    setResumeRun(false);
+    setAwaitingSignIn(false);
+    clearBulkStash();
+    if (table && status.phase !== "running") void generate();
+  });
+  useEffect(() => {
+    if (resumeRun && signedIn) runResume();
+  }, [resumeRun, signedIn]);
+
+  // After a run, signed out: what a free account adds (only what Free has).
+  const doneNudge = useSignUpNudge("bulk_done", status.phase === "done");
+  const saveStyleAfterSignIn = () =>
+    openAuthDialog("save_design", {
+      action: "SAVE_THEME",
+      callbackURL: playgroundStyleHref(activeStyleId),
+    });
+
   const failures =
     status.phase === "done" || status.phase === "error" ? status.failures : [];
 
@@ -506,7 +615,12 @@ export function BulkGenerator() {
               <Upload className="size-6 text-muted-foreground" />
               <p className="text-sm font-medium">{t("drop")}</p>
               <p className="text-xs text-muted-foreground">
-                {t("dropHelp", { rows: MAX_BULK_ROWS })}
+                {mounted && !sessionPending && !signedIn
+                  ? t("dropHelpSignedOut", {
+                      limit: MAX_SIGNED_OUT_ROWS,
+                      rows: MAX_BULK_ROWS,
+                    })
+                  : t("dropHelp", { rows: MAX_BULK_ROWS })}
               </p>
             </div>
           )}
@@ -519,6 +633,32 @@ export function BulkGenerator() {
             <p className="text-sm text-muted-foreground">
               {t("truncated", { rows: MAX_BULK_ROWS })}
             </p>
+          )}
+          {restoreNote && (
+            <p className="text-sm text-muted-foreground" role="status">
+              {restoreNote === "lost"
+                ? t("restoreLost")
+                : t("restored", { count: table?.rows.length ?? 0 })}
+            </p>
+          )}
+          {table && overLimit && !running && (
+            <div className="flex flex-col items-start gap-2 rounded-lg border border-border bg-muted/40 px-3 py-2.5 text-sm">
+              <p className="text-pretty">
+                {t("overLimit", {
+                  count: table.rows.length,
+                  limit: MAX_SIGNED_OUT_ROWS,
+                  max: MAX_BULK_ROWS,
+                })}
+              </p>
+              <Button
+                className="-ml-2 h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                onClick={() => void generate(MAX_SIGNED_OUT_ROWS)}
+                size="sm"
+                variant="ghost"
+              >
+                {t("firstOnly", { limit: MAX_SIGNED_OUT_ROWS })}
+              </Button>
+            </div>
           )}
           {table && (
             <div className="flex items-center gap-2">
@@ -776,12 +916,14 @@ export function BulkGenerator() {
         ) : (
           <Button
             className="w-full"
-            disabled={!table || table.rows.length === 0}
-            onClick={generate}
+            disabled={!table || table.rows.length === 0 || waitingForSession}
+            onClick={() => (overLimit ? askForAccount() : void generate())}
           >
             <Download className="size-4" />
             {table
-              ? t("generateCount", { count: table.rows.length })
+              ? overLimit
+                ? t("overLimitCta", { count: table.rows.length })
+                : t("generateCount", { count: table.rows.length })
               : t("generate")}
           </Button>
         )}
@@ -817,6 +959,18 @@ export function BulkGenerator() {
                 ? t("downloadPartAgain", { part: status.parts })
                 : t("downloadAgain")}
             </Button>
+            {doneNudge.shown && (
+              <SignUpNudge
+                className="mt-1 border-t border-border pt-3"
+                cta={t("doneNudgeCta")}
+                id="bulk_done"
+                onCta={saveStyleAfterSignIn}
+                onDismiss={doneNudge.dismiss}
+                reason="save_design"
+                stacked
+                text={t("doneNudge", { codes: freeDynamicCodes })}
+              />
+            )}
           </div>
         )}
 

@@ -23,7 +23,9 @@ export type PostLoginActionType =
    * The playground's "Make it dynamic…" or a hosted page type: open the code
    * builder or the page gallery over the editor (components/code-builder/playground-host.tsx).
    */
-  | "OPEN_CODE_BUILDER";
+  | "OPEN_CODE_BUILDER"
+  /** The bulk tool's Generate for a file over the signed-out row limit. */
+  | "BULK_GENERATE";
 
 export interface PostLoginActionPayload<T = any> {
   type: PostLoginActionType;

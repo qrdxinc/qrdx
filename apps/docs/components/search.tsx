@@ -18,7 +18,7 @@ import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { ArrowRight } from "iconsax-reactjs";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef } from "react";
-import { useAskAiSearchItem } from "@/components/chat/use-ask-ai-search-item";
+import { DocsChatSearchEntry } from "@/components/chat/slot";
 import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
 import { track } from "@/lib/analytics";
 
@@ -49,8 +49,6 @@ export default function CustomSearchDialog(props: SharedProps) {
   });
   const { full } = useTreeContext();
   const router = useRouter();
-  // "Ask AI about …" (components/chat), above the results.
-  const askAi = useAskAiSearchItem(search);
   useTrackDocsSearch(
     search,
     query.isLoading,
@@ -115,11 +113,15 @@ export default function CustomSearchDialog(props: SharedProps) {
           <SearchDialogInput />
           <SearchDialogClose />
         </SearchDialogHeader>
+        {/* The Ask AI lane's entry point (components/chat/slot.tsx). */}
+        <DocsChatSearchEntry
+          close={() => props.onOpenChange(false)}
+          query={search.trim()}
+        />
         <SearchDialogList
           items={
-            query.data !== "empty" || pageTreeAction || askAi
+            query.data !== "empty" || pageTreeAction
               ? [
-                  ...(askAi ? [askAi] : []),
                   ...(pageTreeAction ? [pageTreeAction] : []),
                   ...(Array.isArray(query.data) ? query.data : []),
                 ]

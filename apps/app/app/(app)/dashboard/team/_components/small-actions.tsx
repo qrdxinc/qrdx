@@ -25,7 +25,7 @@ export function SignInButton({
 }: ComponentProps<typeof Button>) {
   const openAuthDialog = useAuthStore((s) => s.openAuthDialog);
   return (
-    <Button onClick={() => openAuthDialog("signin")} {...props}>
+    <Button onClick={() => openAuthDialog("nav")} {...props}>
       {children}
     </Button>
   );

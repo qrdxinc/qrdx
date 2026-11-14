@@ -190,6 +190,10 @@ export function DynamicLimitCard({
   onUpgrade: () => void;
 }) {
   const t = useTranslations("editor.dynamicLinkToggle");
+  // Only Free caps dynamic codes.
+  useEffect(() => {
+    track("limit_gate_shown", { limit: "dynamic_codes", plan: "free" });
+  }, []);
   return (
     <div className="bg-muted/50 space-y-2 rounded-lg p-3 text-xs">
       <p>{message}</p>
@@ -216,6 +220,8 @@ const choiceItemClass =
  * design and content, which the editor store keeps. Signed in, "Link
  * options…" opens the code builder over the editor for the domain,
  * back-half, folder and tags (creating the code, or editing the linked one).
+ * Signed out, the choice shows from the start, with one line on what
+ * Dynamic needs and the guarantee, so the option isn't a surprise later.
  */
 export function DynamicLinkToggle() {
   const t = useTranslations("editor.dynamicLinkToggle");
@@ -281,7 +287,10 @@ export function DynamicLinkToggle() {
   const enable = () => {
     if (!destination) return;
     if (!userId) {
-      openAuthDialog("signin", "MAKE_DYNAMIC", makeDynamicIntent(destination));
+      openAuthDialog("make_dynamic", {
+        action: "MAKE_DYNAMIC",
+        data: makeDynamicIntent(destination),
+      });
       return;
     }
 
@@ -297,11 +306,10 @@ export function DynamicLinkToggle() {
         return;
       }
       if (outcome.kind === "signin") {
-        openAuthDialog(
-          "signin",
-          "MAKE_DYNAMIC",
-          makeDynamicIntent(destination),
-        );
+        openAuthDialog("make_dynamic", {
+          action: "MAKE_DYNAMIC",
+          data: makeDynamicIntent(destination),
+        });
         return;
       }
       if (outcome.kind === "error") {
@@ -408,8 +416,11 @@ export function DynamicLinkToggle() {
     }
   };
 
-  // Only a real website can become dynamic; until then there's no choice.
-  if (!(linked || destination)) return null;
+  // Only a real website can become dynamic. Signed in, there's no choice
+  // until there's one; signed out, the choice shows (Dynamic waits for an
+  // address), so visitors see it before they print.
+  const signedOut = !(isSessionPending || userId);
+  if (!(linked || destination || signedOut)) return null;
 
   const creating = isPending && !linked;
 
@@ -440,7 +451,11 @@ export function DynamicLinkToggle() {
           </ToggleGroupItem>
           <ToggleGroupItem
             className={choiceItemClass}
-            disabled={isPending || (isSessionPending && !linked)}
+            disabled={
+              isPending ||
+              (isSessionPending && !linked) ||
+              !(linked || destination)
+            }
             value="dynamic"
           >
             <span className="flex items-center gap-1.5 text-sm font-medium">
@@ -461,6 +476,12 @@ export function DynamicLinkToggle() {
         </ToggleGroup>
         <InfoHint align="end" className="mt-2.5" id="dynamic-qr" />
       </div>
+
+      {signedOut && !linked && (
+        <p className="text-muted-foreground text-xs text-pretty">
+          {t("signedOutNote")}
+        </p>
+      )}
 
       {limitMessage && !linked && (
         <DynamicLimitCard message={limitMessage} onUpgrade={openGetProDialog} />

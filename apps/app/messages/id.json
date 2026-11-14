@@ -133,7 +133,8 @@
     "account": {
       "tryPlayground": "Coba Playground",
       "playground": "Playground",
-      "dashboard": "Dasbor"
+      "dashboard": "Dasbor",
+      "signIn": "Masuk"
     },
     "github": {
       "star": "Star",
@@ -1130,11 +1131,11 @@
     },
     "bulk": {
       "metaTitle": "Generator Kode QR Massal Gratis dari CSV: Bergaya, SVG, Tanpa Unggah",
-      "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dan unduh sebagai PNG, WebP, atau SVG dalam ZIP. Berjalan di browser Anda: tanpa unggah, tanpa pendaftaran, tanpa watermark. Contoh CSV tersedia.",
+      "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dan unduh sebagai PNG, WebP, atau SVG dalam ZIP. Berjalan di browser Anda: tanpa unggahan, tanpa watermark, tanpa pendaftaran hingga {limit, number} baris.",
       "crumb": "Generator massal",
       "title": "Generator kode QR massal",
       "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, atau SVG dalam ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, label aset, nomor meja, atau surat kiriman.",
-      "intro2": "Semuanya berjalan di browser Anda, sehingga CSV tidak pernah diunggah, dan tanpa pendaftaran, watermark, atau biaya per kode. Belum yakin dengan tata letaknya? Mulai dari contoh CSV.",
+      "intro2": "Semuanya berjalan di browser Anda, sehingga CSV tidak pernah diunggah, dan tidak ada watermark atau biaya per kode. File hingga {limit, number} baris tidak memerlukan akun; file yang lebih besar, hingga {rows, number}, memerlukan akun gratis. Belum yakin dengan tata letaknya? Mulai dari contoh CSV.",
       "facts": {
         "rows": "Hingga {rows, number} baris per file",
         "styled": "Warna, bentuk, dan logo Anda",
@@ -1168,7 +1169,7 @@
         "uploadQuestion": "Apakah CSV saya diunggah ke suatu tempat?",
         "uploadAnswer": "Tidak. File dibaca, kode QR digambar, dan ZIP dibuat di browser Anda. Tidak ada yang dikirim ke server QRdx, sehingga aman untuk tautan internal, kata sandi Wi-Fi, atau data pelanggan.",
         "howManyQuestion": "Berapa banyak kode QR yang dapat saya buat sekaligus?",
-        "howManyAnswer": "Hingga {rows, number} baris per file; untuk lebih banyak, pisahkan CSV, atau gunakan perintah qrdx batch dari CLI, yang tidak memiliki batas. PNG 512 px membutuhkan sekitar 20 ms di laptop, sehingga seluruh {rows, number} baris selesai dalam beberapa menit. PNG yang lebih besar membutuhkan waktu lebih lama dan menghasilkan file lebih besar, jadi pilih 512 px kecuali Anda membutuhkan lebih.",
+        "howManyAnswer": "Hingga {limit, number} baris per file tanpa akun, dan hingga {rows, number} dengan akun gratis; untuk lebih banyak, pisahkan CSV, atau gunakan perintah qrdx batch dari CLI, yang tidak memiliki batas. PNG 512 px membutuhkan sekitar 20 md di laptop, sehingga {rows, number} baris penuh selesai dalam beberapa menit. PNG yang lebih besar memakan waktu lebih lama dan menghasilkan file lebih besar, jadi pilih 512 px kecuali Anda membutuhkan lebih.",
         "rowQuestion": "Apa yang bisa diisi di setiap baris?",
         "rowAnswer": "Teks apa pun hingga batas kode QR: tautan, teks biasa, atau payload seperti WIFI:..., mailto:..., tel:... dan BEGIN:VCARD. Konten dikodekan persis seperti yang tertulis di sel.",
         "excelQuestion": "Bisakah saya memakai file Excel atau Google Sheets?",
@@ -1195,7 +1196,13 @@
         "removeFile": "Hapus file",
         "drop": "Letakkan file CSV di sini, atau klik untuk memilih",
         "dropHelp": "Maksimal {rows, number} baris dan 10 MB. File tetap berada di perangkat Anda.",
+        "dropHelpSignedOut": "Hingga {limit, number} baris tanpa akun, {rows, number} dengan akun gratis, dan 10 MB. File tetap berada di perangkat Anda.",
         "truncated": "File ini memiliki lebih dari {rows, number} baris. Hanya {rows, number} baris pertama yang akan digunakan.",
+        "overLimit": "File ini memiliki {count, number} baris. Hingga {limit, number} baris dapat diproses tanpa akun; akun gratis dapat memproses hingga {max, number}, dan file Anda tetap termuat saat Anda masuk.",
+        "overLimitCta": "Daftar gratis dan buat {count, number}",
+        "firstOnly": "Buat {limit, number} pertama tanpa akun",
+        "restored": "File Anda sudah kembali: {count, plural, other {# baris}}.",
+        "restoreLost": "Proses masuk memuat ulang halaman dan file Anda tidak dapat dipertahankan. Letakkan kembali file tersebut untuk melanjutkan.",
         "header": "Baris pertama berisi nama kolom",
         "stepMap": "2. Petakan kolom",
         "valueColumn": "Isi kode QR",
@@ -1228,7 +1235,9 @@
         "skipped": "{count, plural, other {# baris dilewati}}:",
         "skippedListed": "{count, plural, other {# baris dilewati}} (tercantum di errors.csv):",
         "line": "Baris {row, number}: {error}",
-        "private": "Semua berjalan di browser Anda. CSV dan kode yang dibuat tidak pernah diunggah."
+        "private": "Semua berjalan di browser Anda. CSV dan kode yang dibuat tidak pernah diunggah.",
+        "doneNudge": "Simpan gaya ini sebagai tema, dan buat hingga {codes, number} kode dinamis yang dapat Anda edit setelah dicetak, dengan akun gratis.",
+        "doneNudgeCta": "Buat akun gratis"
       }
     },
     "printSize": {
@@ -3417,6 +3426,10 @@
         "scale": "Skala",
         "transparentBackground": "Latar belakang transparan",
         "makeManyFromACsv": "Buat banyak kode dari CSV dengan gaya ini",
+        "nudgeDynamic": "Perlu mengubah tautan setelah dicetak, atau menghitung pemindaian? Jadikan dinamis dengan akun gratis lalu unduh lagi. Kode ini tetap berfungsi apa pun yang terjadi pada paket Anda.",
+        "nudgeDynamicCta": "Jadikan dinamis",
+        "nudgeSave": "Simpan desain ini ke akun gratis dan gunakan di perangkat mana pun.",
+        "nudgeSaveCta": "Simpan desain",
         "scannedFromAbout": "Dipindai dari sekitar",
         "setsTheCodeWidthBelow": "Menentukan lebar kode di bawah.",
         "codeWidth": "Lebar kode",
@@ -3545,6 +3558,10 @@
       "undoRedoButtons": {
         "undo": "Urungkan",
         "redo": "Ulangi"
+      },
+      "keepDesigns": {
+        "text": "Simpan desain Anda di semua perangkat dengan akun gratis.",
+        "cta": "Buat akun gratis"
       }
     },
     "ai": {
@@ -4669,6 +4686,7 @@
       "fixedOncePrinted": "Tetap setelah dicetak",
       "dynamic": "Dinamis",
       "editLaterCountScans": "Edit nanti, hitung pemindaian",
+      "signedOutNote": "Kode dinamis memerlukan akun gratis. Kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
       "linkOptions": "Opsi tautan…",
       "printedCodesStillOpenDestinationurl": "Kode yang sudah dicetak tetap membuka <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Arahkan ke alamat baru",
@@ -5401,11 +5419,7 @@
       "nameIsNoLongerIn": "\"{name}\" tidak lagi ada di komunitas."
     },
     "itemCard": {
-      "empty": "Kosong",
-      "official": "Resmi",
-      "usecountUses": "{useCount} penggunaan",
-      "seeAll": "Lihat semua",
-      "likes": "Suka"
+      "empty": "Kosong"
     },
     "itemPages": {
       "previous": "Sebelumnya",
@@ -8376,6 +8390,8 @@
         "searchOrJumpTo2": "Cari atau buka",
         "findAPageACode": "Temukan halaman, kode, atau artikel dokumentasi, atau mulai sesuatu yang baru.",
         "searchCodesPagesSettingsAnd": "Cari kode, halaman, pengaturan, dan dokumentasi…",
+        "findAPageOrA": "Cari halaman atau kode, atau mulai sesuatu yang baru.",
+        "searchCodesPagesAndSettings": "Cari kode, halaman, dan pengaturan…",
         "codes": "Kode",
         "landingPages": "Landing page",
         "create": "Buat",
@@ -8825,6 +8841,24 @@
     },
     "dialogCloseButton": {
       "close": "Tutup"
+    },
+    "reasons": {
+      "saveDesign": "Simpan desain ini ke akun Anda dan buka di perangkat mana pun.",
+      "makeDynamic": "Kode dinamis tersimpan di akun Anda: ubah tujuannya setelah dicetak, dan hitung setiap pemindaian.",
+      "hostedPage": "Halaman yang di-hosting tersimpan di akun Anda, sehingga Anda bisa mengubahnya setelah dicetak.",
+      "aiArt": "Seni AI berjalan di akun gratis, yang menyertakan gambar bulanan.",
+      "aiChat": "Desainer AI memerlukan akun gratis. Akun gratis mendapat total {count, number} permintaan.",
+      "uploadFrame": "Mengunggah bingkai Anda sendiri memerlukan akun gratis.",
+      "publishFrame": "Membagikan bingkai ke komunitas memerlukan akun gratis.",
+      "communityAction": "Menyukai, menyimpan, menyalin, dan memublikasikan desain komunitas memerlukan akun gratis.",
+      "saveBarcode": "Barcode yang disimpan tersimpan di akun Anda, siap diunduh lagi.",
+      "bulkOverLimit": "File hingga {limit, number} baris tidak memerlukan akun. Akun gratis dapat membuat hingga {max, number} per file, dan file Anda tetap dimuat.",
+      "keepDesigns": "Simpan desain Anda di akun Anda, di setiap perangkat.",
+      "afterDownload": "Gratis, dan kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
+      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti."
+    },
+    "nudge": {
+      "dismiss": "Jangan tampilkan lagi"
     }
   },
   "codeBuilder": {

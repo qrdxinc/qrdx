@@ -1,66 +1,41 @@
-import type { Root } from "fumadocs-core/page-tree";
 import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
+import { DocsLayout } from "fumadocs-ui/layouts/notebook";
 import { RootProvider } from "fumadocs-ui/provider/base";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { DocsChatLayout } from "@/components/chat/layout";
-import { DocsChatProvider } from "@/components/chat/provider";
+import { getMessages, getTranslations } from "next-intl/server";
+import { DocsChatSlot } from "@/components/chat/slot";
 import { DocsFrameworkProvider } from "@/components/docs/docs-framework-provider";
 import { DocsProductLinks } from "@/components/docs/docs-product-links";
 import { DocsSidebarFooter } from "@/components/docs/docs-sidebar-footer";
 import CustomSearchDialog from "@/components/search";
 import { JsonLd } from "@/components/sections/tools/json-ld";
-import { docsTabs, filterPageTree, mapLinkNodes } from "@/lib/docs-tree";
-import {
-  isFeatureAvailable,
-  isPathAvailable,
-} from "@/lib/feature-availability";
-import { LOCALE_INFO, type Locale } from "@/lib/i18n/config";
-import { englishDocsPath } from "@/lib/i18n/docs";
+import { sidebarTabs, sidebarTree } from "@/lib/docs-sidebar";
+import { LOCALE_INFO } from "@/lib/i18n/config";
 import {
   fumadocsTranslations,
   requireDocsLocale,
 } from "@/lib/i18n/docs-server";
 import { CHROME_NAMESPACES, pickMessages } from "@/lib/i18n/messages";
-import { localizeHref, localizePath } from "@/lib/i18n/paths";
-import { baseOptions, linkItems, logo } from "@/lib/layout.shared";
+import { localizePath } from "@/lib/i18n/paths";
+import { baseOptions, headerLinks, logo } from "@/lib/layout.shared";
 import { organizationSchema } from "@/lib/seo-schema";
 import { localizedSource } from "@/lib/source";
-import "katex/dist/katex.min.css";
 
-/** What the docs' client components translate (search, page actions, language menu, the chat). */
+/** What the docs' client components translate (search, page actions, feedback, language menu). */
 const DOCS_CLIENT_NAMESPACES = [
   ...CHROME_NAMESPACES,
   "docs.client",
-  "docs.chat",
+  "docs.shell",
 ] as const;
-
-const trees = new Map<Locale, Root>();
-
-/**
- * The sidebar in `locale`: no entry for docs of features this deployment
- * can't offer, and links out of the docs to that language's pages.
- */
-function sidebarTree(locale: Locale): Root {
-  const cached = trees.get(locale);
-  if (cached) return cached;
-  const tree = mapLinkNodes(
-    filterPageTree(localizedSource.getPageTree(locale), (url) =>
-      isPathAvailable(englishDocsPath(url)),
-    ),
-    (url) => localizeHref(url, locale),
-  );
-  trees.set(locale, tree);
-  return tree;
-}
 
 export default async function Layout({
   children,
 }: LayoutProps<"/[lang]/docs">) {
   const locale = await requireDocsLocale();
-  const [messages, translations] = await Promise.all([
+  const [messages, translations, t] = await Promise.all([
     getMessages(),
     fumadocsTranslations(locale),
+    getTranslations({ locale, namespace: "docs.shell.header" }),
   ]);
   const tree = sidebarTree(locale);
 
@@ -70,52 +45,54 @@ export default async function Layout({
         <NextIntlClientProvider
           messages={pickMessages(messages, DOCS_CLIENT_NAMESPACES)}
         >
-          {/* The docs assistant (components/chat), offered only where the
-              main app has it (availability "docsChat"); above RootProvider
-              so the search dialog can hand a query to it. */}
-          <DocsChatProvider enabled={isFeatureAvailable("docsChat")}>
-            <RootProvider
-              i18n={{ locale: LOCALE_INFO[locale].segment, translations }}
-              search={{ SearchDialog: CustomSearchDialog }}
+          <RootProvider
+            i18n={{ locale: LOCALE_INFO[locale].segment, translations }}
+            search={{ SearchDialog: CustomSearchDialog }}
+          >
+            {/*
+              fumadocs' notebook layout: one header across the top (the
+              logo, search in the middle with its ⌘K hint, Dashboard and
+              GitHub on the right), the tabs (Help, Guides, Developers,
+              React library, Self-hosting) in a row under it, the sidebar
+              and the page below. Under `lg` the tabs become a switcher at
+              the top of the sidebar and the header items move into the
+              mobile menu (lib/layout.shared.tsx).
+            */}
+            <DocsLayout
+              tree={tree}
+              tabs={sidebarTabs(locale)}
+              tabMode="navbar"
+              {...baseOptions()}
+              links={headerLinks({
+                dashboard: t("dashboard"),
+                github: t("github"),
+              })}
+              nav={{
+                ...baseOptions().nav,
+                mode: "top",
+                url: localizePath("/", locale),
+                title: (
+                  <>
+                    {logo}
+                    <span className="font-medium text-[15px]">QRdx</span>
+                    <span className="font-normal text-[15px] text-fd-muted-foreground">
+                      {t("docs")}
+                    </span>
+                  </>
+                ),
+              }}
+              // One footer bar on every width: the language menu, with
+              // the GitHub link and theme switch fumadocs adds in the
+              // mobile menu (DocsSidebarFooter).
+              sidebar={{ footer: DocsSidebarFooter, className: "border-e" }}
             >
-              <DocsChatLayout
-                tree={tree}
-                // Help, Guides, Developers, React library and Self-hosting:
-                // tabs above the page on desktop, a switcher in the mobile
-                // menu (lib/docs-tree.ts).
-                tabs={docsTabs(tree)}
-                tabMode="top"
-                {...baseOptions()}
-                links={linkItems.filter((item) => item.type === "icon")}
-                nav={{
-                  ...baseOptions().nav,
-                  url: localizePath("/", locale),
-                  title: (
-                    <>
-                      {logo}
-                      <span className="font-medium in-[docs_layout_&]:text-[15px]">
-                        QRdx
-                      </span>
-                    </>
-                  ),
-                }}
-                // One footer bar: the language menu and the theme switch
-                // (DocsSidebarFooter), so the built-in switch is off.
-                sidebar={{ footer: <DocsSidebarFooter /> }}
-                themeSwitch={{ enabled: false }}
-              >
-                <JsonLd data={organizationSchema} />
-                {/* Neutral light from the top right (the old image was a blue glow).
-                  Light mode needs half the ink, or it reads as a grey smudge. */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none fixed inset-0 z-[-1] bg-[radial-gradient(ellipse_55%_45%_at_100%_0%,color-mix(in_oklab,var(--color-foreground)_3.5%,transparent),transparent)] dark:bg-[radial-gradient(ellipse_55%_45%_at_100%_0%,color-mix(in_oklab,var(--color-foreground)_7%,transparent),transparent)]"
-                />
-                {children}
-                <DocsProductLinks locale={locale} />
-              </DocsChatLayout>
-            </RootProvider>
-          </DocsChatProvider>
+              <JsonLd data={organizationSchema} />
+              {children}
+              <DocsProductLinks locale={locale} />
+              {/* The AI chat's mount point (components/chat/slot.tsx, the Ask AI lane). */}
+              <DocsChatSlot />
+            </DocsLayout>
+          </RootProvider>
         </NextIntlClientProvider>
       </TreeContextProvider>
     </DocsFrameworkProvider>

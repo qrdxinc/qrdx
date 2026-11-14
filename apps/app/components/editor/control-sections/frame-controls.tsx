@@ -249,7 +249,7 @@ export function FrameStylePicker({
           <Button
             className="shrink-0"
             onClick={() => {
-              if (!checkValidSession("signin")) return;
+              if (!checkValidSession("upload_frame")) return;
               setImportUsed(true);
               setImportOpen(true);
             }}
@@ -373,7 +373,7 @@ export function FrameControls() {
       {custom && (
         <Button
           onClick={() => {
-            if (!checkValidSession("signin")) return;
+            if (!checkValidSession("publish_frame")) return;
             setPublishUsed(true);
             setPublishOpen(true);
           }}

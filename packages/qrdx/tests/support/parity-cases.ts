@@ -313,6 +313,30 @@ export function parityCases(
     "code"
   );
   add("plain QRCode", { bodyPattern: "diamond", eyeColor: "#111" }, "code");
+  add(
+    "logo API with root attributes",
+    {
+      logo: LOGO,
+      level: "H",
+      className: "qr",
+      "aria-label": "Guest Wi-Fi",
+      "data-code": "wifi",
+      id: "wifi-code",
+    },
+    "code"
+  );
+  add(
+    "logo API with root attributes and frame",
+    {
+      logo: LOGO,
+      scale: 1.5,
+      frame: { style: "sticker", text: "Join" },
+      className: "qr framed",
+      role: "img",
+      "aria-label": "Guest Wi-Fi",
+    },
+    "code"
+  );
   add("OG context logo", {
     isOGContext: true,
     imageSettings: {

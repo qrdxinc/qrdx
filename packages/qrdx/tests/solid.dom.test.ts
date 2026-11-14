@@ -225,6 +225,28 @@ describe("qrdx/solid in the browser", () => {
     expect(container.innerHTML).toBe("");
   });
 
+  it("QRCode puts root attributes on the <svg>, like QRCodeSVG", () => {
+    const container = mount();
+    const props = {
+      value: "https://qrdx.dev",
+      size: 120,
+      logo: "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%2F%3E",
+      level: "H",
+      class: "qr",
+      "aria-label": "Guest Wi-Fi",
+      "data-code": "wifi",
+    } as const;
+    disposers.push(render(() => createComponent(QRCode, props), container));
+    const svg = container.firstElementChild;
+    expect(svg?.getAttribute("class")).toBe("qr");
+    expect(svg?.getAttribute("aria-label")).toBe("Guest Wi-Fi");
+    expect(svg?.getAttribute("data-code")).toBe("wifi");
+    expect(svg?.hasAttribute("logo")).toBe(false);
+    expect(domSnapshot(container)).toBe(
+      coreSnapshot(resolveQRCodeProps(props))
+    );
+  });
+
   it("hydrates server markup by adopting its <svg>", () => {
     // What renderToString writes for a code at the root of the page:
     // toSVGString's markup with data-hk="00" (asserted in solid.test.ts)
