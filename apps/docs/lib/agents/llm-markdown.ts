@@ -396,7 +396,13 @@ export function cleanLlmMarkdown(
   const fenced = maskFences(markdown);
   const coded = maskInlineCode(fenced.text);
 
-  let text = render(parse(tokenize(coded.text)), resolved);
+  // MDX comments on their own lines ({/* shot: … */}, generated-file notes)
+  // are notes for editors and tools, not for readers.
+  const commented = coded.text.replace(
+    /^[ \t]*\{\/\*[\s\S]*?\*\/\}[ \t]*(?:\n|$)/gm,
+    "",
+  );
+  let text = render(parse(tokenize(commented)), resolved);
   if (resolved.origin) {
     text = text.replace(
       /\]\((\/(?!\/)[^)\s]*)\)/g,
