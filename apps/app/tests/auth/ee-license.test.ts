@@ -8,6 +8,10 @@ import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import {
+  assertLicensePublicKey,
+  QRDX_LICENSE_PUBLIC_KEY,
+} from "@repo/auth/ee/license-public-key";
+import {
   checkLicenseKey,
   describeEeLicenseForLog,
   eeFeatureLicensed,
@@ -16,10 +20,6 @@ import {
   eeLicenseState,
   trustLicensePublicKeyForTests,
 } from "@repo/auth/license";
-import {
-  assertLicensePublicKey,
-  QRDX_LICENSE_PUBLIC_KEY,
-} from "@repo/auth/ee/license-public-key";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { licenceProbe } from "@/app/(app)/admin/_lib/licence";
 import {
