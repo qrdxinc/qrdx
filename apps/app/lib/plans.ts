@@ -117,7 +117,8 @@ export interface PlanLimits {
   // ─── Agency tools (feat/agency-tools) ──────────────────────────────────────
   /**
    * Shared stats pages (/stats/<token>) can carry a client's name, logo and
-   * accent color (lib/client-brands.ts). Pro keeps a small "Made with QRdx".
+   * accent color (ee/client-portal/brands.ts). Pro keeps a small "Made with
+   * QRdx".
    */
   clientReports: boolean;
   /**
@@ -126,8 +127,9 @@ export interface PlanLimits {
    */
   clientReportsWhiteLabel: boolean;
   /**
-   * The read-only client portal (/portal/<workspace>, lib/portal): invited
-   * clients see the folders shared with them, under the workspace's branding.
+   * The read-only client portal (/portal/<workspace>, ee/client-portal):
+   * invited clients see the folders shared with them, under the workspace's
+   * branding.
    */
   clientPortal: boolean;
   /**
