@@ -1,9 +1,12 @@
 import "server-only";
 
+import { registerPlanLimits } from "@repo/auth/plan-limits";
+import { eeOnEveryPlan } from "@repo/availability";
 import { MAX_FREE_THEMES } from "@repo/config";
 import { database as db, member } from "@repo/database";
 import { and, eq, like, or } from "drizzle-orm";
 import { cache } from "react";
+import { featureContext } from "./feature-context";
 import { holdsPlanRole } from "./permissions";
 import { type Plan, planForProductId } from "./pricing";
 import { SCAN_HISTORY_DAYS } from "./scan-history";
@@ -12,6 +15,10 @@ import { getMyActiveSubscription } from "./subscription";
 /**
  * Plans and their limits — the single source of truth for feature gating
  * (prices and display names live in the client-safe lib/pricing.ts).
+ * packages/auth reads them too (registered at the end of this file): who may
+ * create more workspaces, seats, workspace SSO and required two-step
+ * verification. A self-hosted server changes PLAN_LIMITS below; without
+ * billing (Polar) every account is on Free.
  *
  * Never-Hostage Guarantee: limits only block creating new things. Existing
  * dynamic codes keep redirecting on every plan, including after a downgrade,
@@ -63,14 +70,17 @@ export interface PlanLimits {
   teamMembers: number;
   /** Per-folder access rules for team members */
   folderPermissions: boolean;
-  /** Workspace single sign-on, OIDC and SAML (packages/auth/ee/sso.ts) */
+  /**
+   * Workspace single sign-on, OIDC and SAML (packages/auth/ee/sso.ts). An
+   * ee feature: see getPlanLimits.
+   */
   sso: boolean;
   /**
    * The workspace may require two-step verification of its members
-   * (packages/auth/workspace-two-factor.ts, which checks the same plan as
-   * workspacePlanTier "business").
+   * (packages/auth/workspace-two-factor.ts reads this).
    */
   requireTwoFactor: boolean;
+  /** The workspace audit log (ee/audit-log). An ee feature: see getPlanLimits. */
   auditLog: boolean;
   /** Password, start/expiry dates and scan limits (lib/redirect/lifecycle.ts) */
   linkControls: boolean;
@@ -269,8 +279,20 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
   },
 };
 
+// A self-hosted server with the ee licence key that sells no plans gives
+// every plan the ee features (@repo/availability eeOnEveryPlan). Read once:
+// the environment is fixed for the life of the process.
+const EE_ON_EVERY_PLAN = eeOnEveryPlan(featureContext());
+
+/**
+ * The limits a scope on `plan` gets here: PLAN_LIMITS, plus workspace SSO
+ * and the audit log on every plan where the ee licence covers them without a
+ * plan (a self-hosted server with the key and no billing). On qrdx.dev and
+ * anywhere that sells plans, exactly PLAN_LIMITS.
+ */
 export function getPlanLimits(plan: Plan): PlanLimits {
-  return PLAN_LIMITS[plan];
+  const limits = PLAN_LIMITS[plan];
+  return EE_ON_EVERY_PLAN ? { ...limits, sso: true, auditLog: true } : limits;
 }
 
 /**
@@ -349,3 +371,9 @@ export function getPlanForScope(scope: {
     ? getOwnerPlanForOrganization(scope.organizationId)
     : getPlan(scope.userId);
 }
+
+// packages/auth decides who may create more workspaces, seats, workspace SSO
+// and required two-step verification from these limits
+// (packages/auth/plan-limits.ts). Every server that loads this module hands
+// them over; instrumentation.ts and the auth route load it at start-up.
+registerPlanLimits(getPlanLimits);
