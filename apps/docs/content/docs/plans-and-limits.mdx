@@ -86,4 +86,4 @@ Upgrade from the [pricing page](/pricing). To change plans, switch between month
 
 ## Self-hosting
 
-A [self-hosted](/docs/self-hosting) instance uses the same plans. The limits are defined in one file, `apps/app/lib/plans.ts`, which you can change for your instance. Without Polar configured, upgrades are unavailable and every account uses the Free limits.
+A [self-hosted](/docs/self-hosting) instance uses the same plans. The limits are defined in one file, `apps/app/lib/plans.ts`, which you can change for your instance. That file also decides who can create more workspaces, how many members a workspace can have and whether it can require two-step verification. Without Polar configured, upgrades are unavailable and every account uses the Free limits, so raise Free's limits there to use teams. With a license key (`QRDX_EE_LICENSE`) and no Polar, every workspace on a server with its own domain also has single sign-on and the audit log. See [Plans and limits](/docs/self-hosting#plans-and-limits).
