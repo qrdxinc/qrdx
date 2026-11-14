@@ -3,7 +3,9 @@
 // sale or sign-up to the scan that led to it. Browsers report with the signed
 // qrdx_sid when tracking is on for the code; servers report with a codes:write
 // token, by sid or by code id, for their own workspace only; an `id` makes
-// retries idempotent. The route runs for real against in-memory tables.
+// retries idempotent. The route (ee/conversions/api.ts, on with the
+// licence key vitest.config.ts sets; ./conversions-off.test.ts covers the
+// server without it) runs for real against in-memory tables.
 import { createHash } from "node:crypto";
 import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

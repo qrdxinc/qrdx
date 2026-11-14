@@ -16,7 +16,6 @@ import {
   communityItemIdSchema,
   communityItemsQuerySchema,
 } from "@/app/api/v1/community/_lib/schemas";
-import { conversionBodySchema } from "@/app/api/v1/conversions/_lib/schemas";
 import {
   hookIdSchema,
   hookSampleQuerySchema,
@@ -30,6 +29,7 @@ import {
   ART_TEXT_MAX_LENGTH,
   aiArtRequestSchema,
 } from "@/components/sections/ai-art/config";
+import { conversionBodySchema } from "@/ee/conversions/schemas";
 import { AI_ART_DAILY_LIMIT } from "@/lib/ai/art";
 import {
   insufficientKeyScopeError,

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// Request schema of POST /v1/conversions, here rather than in the route file
+// Request schema of POST /v1/conversions (ee/conversions/api.ts), on its own
 // so the OpenAPI generator (lib/openapi) documents exactly what it validates.
 
 const MAX_METADATA_KEYS = 20;
