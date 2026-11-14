@@ -2,7 +2,6 @@ import {
   rehypeCodeDefaultOptions,
   remarkSteps,
 } from "fumadocs-core/mdx-plugins";
-import { remarkTypeScriptToJavaScript } from "fumadocs-docgen/remark-ts2js";
 import {
   defineConfig,
   defineDocs,
@@ -11,12 +10,7 @@ import {
 } from "fumadocs-mdx/config";
 import jsonSchema from "fumadocs-mdx/plugins/json-schema";
 import lastModified from "fumadocs-mdx/plugins/last-modified";
-import { transformerTwoslash } from "fumadocs-twoslash";
-import { createFileSystemTypesCache } from "fumadocs-twoslash/cache-fs";
-import { remarkAutoTypeTable } from "fumadocs-typescript";
 import type { ElementContent } from "hast";
-import rehypeKatex from "rehype-katex";
-import remarkMath from "remark-math";
 import { z } from "zod";
 import { docsIndex } from "./lib/docs-index-plugin";
 import { fillFactsDeep } from "./lib/product-facts";
@@ -34,7 +28,6 @@ export const docs = defineDocs({
   docs: {
     schema: frontmatterSchema
       .extend({
-        preview: z.string().optional(),
         index: z.boolean().default(false),
         /**
          * API routes only
@@ -80,15 +73,14 @@ export default defineConfig({
       themes: {
         // Catppuccin Latte's greens, peaches and pinks are 2.3–3.5:1 on a
         // light code block; GitHub Light Default's code tokens are 4.8–15:1
-        // (comments 4.3:1).
+        // (comments 4.3:1). GitHub Dark Default pairs with it: the same
+        // token colours, calm on the docs' dark card (the block's
+        // background is the docs' own, not the theme's).
         light: "github-light-default",
-        dark: "catppuccin-mocha",
+        dark: "github-dark-default",
       },
       transformers: [
         ...(rehypeCodeDefaultOptions.transformers ?? []),
-        transformerTwoslash({
-          typesCache: createFileSystemTypesCache(),
-        }),
         {
           name: "@shikijs/transformers:remove-notation-escape",
           code(hast) {
@@ -116,15 +108,8 @@ export default defineConfig({
         id: "package-manager",
       },
     },
-    remarkPlugins: [
-      remarkProductFacts,
-      remarkNpmStatus,
-      remarkSteps,
-      // "$12 vs $15" in prose is prices, not inline math; use $$…$$ for math.
-      [remarkMath, { singleDollarTextMath: false }],
-      remarkAutoTypeTable,
-      remarkTypeScriptToJavaScript,
-    ],
-    rehypePlugins: (v) => [rehypeKatex, ...v],
+    // No math, Twoslash or TypeScript-to-JavaScript plugins: no page uses
+    // them, and each loaded CSS or a compiler on every page.
+    remarkPlugins: [remarkProductFacts, remarkNpmStatus, remarkSteps],
   },
 });

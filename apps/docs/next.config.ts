@@ -101,14 +101,7 @@ let nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/**": [OG_FONT_GLOB],
   },
-  serverExternalPackages: [
-    "ts-morph",
-    "typescript",
-    "oxc-transform",
-    "twoslash",
-    "shiki",
-    "@takumi-rs/core",
-  ],
+  serverExternalPackages: ["shiki", "@takumi-rs/core"],
   // The main app's headers for its docs pages (apps/app/next.config.ts).
   // When rules set the same header, the later one wins.
   async headers() {
