@@ -1,12 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import {
-  BrandMark,
-  brandStyle,
-} from "@/app/(app)/stats/[token]/public-stats-view";
-import type { PortalWorkspace } from "@/lib/portal/access";
-import { portalPath } from "@/lib/portal/paths";
-import { PortalSignOut } from "./portal-sign-in";
+import { BrandMark, brandStyle } from "@/ee/client-portal/brand-mark";
+import { portalPath } from "@/ee/client-portal/paths";
+import type { PortalWorkspace } from "@/ee/client-portal/portal";
+import { PortalSignOut } from "@/ee/client-portal/portal-sign-in";
 
 // Every page of a client portal (agency tools): the workspace's brand in
 // place of QRdx's chrome, who's signed in, and a quiet footer. No QRdx mark.

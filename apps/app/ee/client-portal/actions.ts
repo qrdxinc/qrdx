@@ -2,25 +2,28 @@
 
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { revalidatePath } from "next/cache";
-import { type ClientBrand, savePortalBrand } from "@/lib/client-brands";
+import { requireClientPortal } from "@/ee/client-portal/access";
+import { type ClientBrand, savePortalBrand } from "@/ee/client-portal/brands";
 import {
   type BrandActionResult,
   brandFailure,
   brandInputFromForm,
-} from "@/lib/client-brands-form";
-import { HttpError } from "@/lib/error-response";
+} from "@/ee/client-portal/brands-form";
 import {
   invitePortalClient,
   type PortalClientInput,
   type PortalClientView,
   removePortalClient,
   updatePortalClient,
-} from "@/lib/portal/manage";
+} from "@/ee/client-portal/manage";
+import { HttpError } from "@/lib/error-response";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { getActiveScope } from "@/lib/scope";
 
 // Settings → Client portal (agency tools, Business): invite clients, choose
-// their folders, remove them, and brand the portal. Owners and admins.
+// their folders, remove them, and brand the portal. Owners and admins. On a
+// server without the licence key every action answers NOT_FOUND
+// (./access.ts).
 
 const inviteLimiter = createRateLimiter({ limiter: slidingWindow(30, "10 m") });
 const writeLimiter = createRateLimiter({ limiter: slidingWindow(60, "10 m") });
@@ -31,6 +34,7 @@ export async function invitePortalClientAction(
   input: PortalClientInput,
 ): Promise<BrandActionResult<{ client: PortalClientView; emailed: boolean }>> {
   try {
+    requireClientPortal();
     const scope = await getActiveScope();
     await enforceRateLimits([
       { limiter: inviteLimiter, key: `portal:invite:user:${scope.userId}` },
@@ -49,6 +53,7 @@ export async function updatePortalClientAction(input: {
   folderIds: string[];
 }): Promise<BrandActionResult<PortalClientView>> {
   try {
+    requireClientPortal();
     const id = typeof input?.id === "string" ? input.id.trim() : "";
     if (!id || id.length > 64) {
       throw new HttpError(404, "NOT_FOUND", "Client not found.");
@@ -71,6 +76,7 @@ export async function removePortalClientAction(input: {
   id: string;
 }): Promise<BrandActionResult<null>> {
   try {
+    requireClientPortal();
     const id = typeof input?.id === "string" ? input.id.trim() : "";
     if (!id || id.length > 64) {
       throw new HttpError(404, "NOT_FOUND", "Client not found.");
@@ -91,6 +97,7 @@ export async function savePortalBrandAction(
   form: FormData,
 ): Promise<BrandActionResult<ClientBrand>> {
   try {
+    requireClientPortal();
     const scope = await getActiveScope();
     await enforceRateLimits([
       { limiter: writeLimiter, key: `portal:write:user:${scope.userId}` },

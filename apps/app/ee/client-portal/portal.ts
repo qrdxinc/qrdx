@@ -13,8 +13,12 @@ import {
 import { and, asc, desc, eq, inArray, isNull, or } from "drizzle-orm";
 import { headers } from "next/headers";
 import { cache } from "react";
-import { findPortalBrand } from "@/lib/client-brands";
-import type { ClientBrand } from "@/lib/client-brands-shared";
+import {
+  clientTools,
+  isClientPortalAvailable,
+} from "@/ee/client-portal/access";
+import { findPortalBrand } from "@/ee/client-portal/brands";
+import type { ClientBrand } from "@/ee/client-portal/brands-shared";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { getOwnerPlanForOrganization, getPlanLimits } from "@/lib/plans";
 import {
@@ -27,8 +31,9 @@ import { codeHistoryStart, getScanAnalytics } from "@/lib/scans";
 import { logError } from "@/lib/shared";
 import { codeLinks, SHORT_LINK_BASE } from "@/lib/short-links";
 
-// The client portal (agency tools, Business): /portal/<workspace-slug>, a
-// read-only view of the folders a workspace shared with one client.
+// The client portal (agency tools, Business; ee/ under the QRdx commercial
+// licence, ./access.ts): /portal/<workspace-slug>, a read-only view of the
+// folders a workspace shared with one client.
 //
 // Clients are never workspace members (portal_client, not member), so
 // nothing in the dashboard, the server actions or the API knows them: a
@@ -69,13 +74,16 @@ const missing = (error: unknown, action: string) => {
 };
 
 /**
- * The portal for a workspace slug: null when there's no such workspace, its
- * plan has no client portal (Business), or the tables aren't there yet.
+ * The portal for a workspace slug: null when there's no such workspace, the
+ * server has no licence key, its plan has no client portal (Business), or
+ * the tables aren't there yet.
  * Nothing about the workspace is shown unless its portal is on.
  */
 export const findPortal = cache(
   async (slug: string): Promise<PortalWorkspace | null> => {
     if (!/^[a-z0-9][a-z0-9-]{0,62}$/i.test(slug)) return null;
+    // No licence key: no portal, and nothing read about the workspace.
+    if (!isClientPortalAvailable()) return null;
     const [row] = await db
       .select({
         id: organization.id,
@@ -88,7 +96,7 @@ export const findPortal = cache(
       .limit(1);
     if (!row) return null;
     const limits = getPlanLimits(await getOwnerPlanForOrganization(row.id));
-    if (!limits.clientPortal) return null;
+    if (!clientTools(limits).clientPortal) return null;
     let brand: ClientBrand | null = null;
     try {
       // Also proves the agency tables exist: the brand_kit.purpose column

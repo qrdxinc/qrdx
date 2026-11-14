@@ -18,7 +18,7 @@ import {
   BRAND_NAME_MAX,
   type ClientBrand,
   normalizeAccent,
-} from "@/lib/client-brands-shared";
+} from "@/ee/client-portal/brands-shared";
 import { soundEvent } from "@/lib/sound/emit";
 import { squareImage } from "@/lib/square-image";
 import {
@@ -95,7 +95,7 @@ export function BrandTile({
 }
 
 /**
- * The form. `save` gets the fields as FormData (actions/client-brands.ts
+ * The form. `save` gets the fields as FormData (ee/client-portal/brand-actions.ts
  * reads them); `onSaved` gets the saved brand.
  */
 export function BrandFields({

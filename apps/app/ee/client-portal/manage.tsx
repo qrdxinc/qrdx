@@ -11,23 +11,25 @@ import {
 import cuid from "cuid";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { z } from "zod";
-import { agencyPlanRequired, findPortalBrand } from "@/lib/client-brands";
-import { isMissingSchemaError } from "@/lib/community/tables";
-import { isEmailConfigured, sendEmail } from "@/lib/email/send";
+import { clientTools, requireClientPortal } from "@/ee/client-portal/access";
+import { agencyPlanRequired, findPortalBrand } from "@/ee/client-portal/brands";
 import {
   PortalInviteEmail,
   portalInviteSubject,
-} from "@/lib/email/templates/portal-invite";
+} from "@/ee/client-portal/invite-email";
+import { portalPath } from "@/ee/client-portal/paths";
+import { isMissingSchemaError } from "@/lib/community/tables";
+import { isEmailConfigured, sendEmail } from "@/lib/email/send";
 import { HttpError } from "@/lib/error-response";
 import { baseUrl } from "@/lib/metadata";
 import { assertCan } from "@/lib/permissions-server";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
-import { portalPath } from "@/lib/portal/paths";
 import type { ActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 
 // Managing a workspace's portal clients (Settings → Client portal): owners
-// and admins ("members.manage": inviting people from outside), on Business.
+// and admins ("members.manage": inviting people from outside), on Business,
+// on a server with the licence key (./access.ts).
 
 export interface PortalClientView {
   id: string;
@@ -82,8 +84,9 @@ const inputSchema = z.object({
 export type PortalClientInput = z.input<typeof inputSchema>;
 
 async function assertManage(scope: ActiveScope) {
+  requireClientPortal();
   assertCan(scope, "members.manage");
-  if (!getPlanLimits(await getPlanForScope(scope)).clientPortal) {
+  if (!clientTools(getPlanLimits(await getPlanForScope(scope))).clientPortal) {
     throw agencyPlanRequired("The client portal", (l) => l.clientPortal);
   }
 }
@@ -128,6 +131,7 @@ async function checkFolders(scope: ActiveScope, folderIds: string[]) {
 export async function listPortalClients(
   scope: ActiveScope,
 ): Promise<PortalClientView[]> {
+  requireClientPortal();
   assertCan(scope, "members.manage");
   const [clients, links] = await guarded(() =>
     Promise.all([
@@ -354,6 +358,7 @@ export async function removePortalClient(
   id: string,
 ): Promise<void> {
   // Removing always works, whatever the plan: it only takes access away.
+  requireClientPortal();
   assertCan(scope, "members.manage");
   await findClient(scope, id);
   await guarded(() =>

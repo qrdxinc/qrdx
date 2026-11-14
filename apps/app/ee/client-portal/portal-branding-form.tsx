@@ -6,9 +6,9 @@
 
 import { toast } from "@repo/design-system";
 import { useState } from "react";
-import { savePortalBrandAction } from "@/actions/portal";
-import type { ClientBrand } from "@/lib/client-brands-shared";
-import { BrandFields, BrandTile } from "./brand-fields";
+import { savePortalBrandAction } from "@/ee/client-portal/actions";
+import { BrandFields, BrandTile } from "@/ee/client-portal/brand-fields";
+import type { ClientBrand } from "@/ee/client-portal/brands-shared";
 
 export function PortalBrandingForm({
   brand,

@@ -1,12 +1,12 @@
 import "server-only";
 
-import type { BrandInput } from "@/lib/client-brands";
+import type { BrandInput } from "@/ee/client-portal/brands";
 import { HttpError } from "@/lib/error-response";
 import { logError } from "@/lib/shared";
 import { LOGO_MAX_BYTES } from "@/lib/workspace-logo";
 import { UnauthorizedError } from "@/types/errors";
 
-// The brand form's fields (components/agency/brand-fields.tsx), read by the
+// The brand form's fields (./brand-fields.tsx), read by the
 // client-brand and portal-branding actions.
 
 export type BrandActionResult<T> =
@@ -28,7 +28,7 @@ export const formText = (form: FormData, name: string) => {
 };
 
 /**
- * A brand form (components/agency/brand-fields.tsx): name, accent, and the
+ * A brand form (./brand-fields.tsx): name, accent, and the
  * logo as a file (`logo`), an https URL (`logoUrl`) or `removeLogo=1`.
  */
 export async function brandInputFromForm(form: FormData): Promise<BrandInput> {

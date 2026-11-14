@@ -1,6 +1,6 @@
-// Client-safe parts of client brands (lib/client-brands.ts): a client's
-// name, logo and accent color, shown on shared stats pages, and the
-// workspace's own branding for its client portal. Both are brand_kit rows.
+// Client-safe parts of client brands (./brands.ts): a client's name, logo
+// and accent color, shown on shared stats pages, and the workspace's own
+// branding for its client portal. Both are brand_kit rows.
 
 /** A brand as the app passes it around. */
 export interface ClientBrand {
@@ -82,4 +82,29 @@ export function brandNameProblem(name: string): string | null {
     return `Keep the name under ${BRAND_NAME_MAX} characters.`;
   }
   return null;
+}
+
+// ─── Client branding of a shared page (agency tools) ────────────────────────
+
+/** What the share dialog needs to brand a code's page. */
+export interface StatsBranding {
+  /** false until manual-sql/2026-11-11-agency.sql is applied */
+  available: boolean;
+  /** The viewer may change it (owners, admins and members) */
+  canManage: boolean;
+  /** The plan includes client branding (Pro and Business) */
+  allowed: boolean;
+  /** The plan drops the QRdx mark and serves links on custom domains (Business) */
+  whiteLabel: boolean;
+  /** The cheapest plans with each, for the upgrade line */
+  brandingPlan: string | null;
+  whiteLabelPlan: string | null;
+  /** The brand the page shows now */
+  brandId: string | null;
+  /** The workspace's client brands */
+  brands: ClientBrand[];
+  /** The custom domain the link is on now */
+  domainId: string | null;
+  /** The workspace's verified custom domains (Business only, else empty) */
+  domains: { id: string; hostname: string }[];
 }

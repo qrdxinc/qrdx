@@ -9,12 +9,17 @@ import {
 import cuid from "cuid";
 import { and, asc, eq } from "drizzle-orm";
 import {
+  clientTools,
+  requireClientBranding,
+  requireClientPortal,
+} from "@/ee/client-portal/access";
+import {
   BRAND_NAME_MAX,
   brandNameProblem,
   CLIENT_BRANDS_MAX,
   type ClientBrand,
   normalizeAccent,
-} from "@/lib/client-brands-shared";
+} from "@/ee/client-portal/brands-shared";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { HttpError } from "@/lib/error-response";
 import { isFeatureAvailable } from "@/lib/feature-availability";
@@ -44,14 +49,15 @@ import {
   workspaceLogoKeyFromUrl,
 } from "@/lib/workspace-logo";
 
-// Client brands and the portal's branding (agency tools). Both reuse the
+// Client brands and the portal's branding (agency tools, ee/ under the QRdx
+// commercial licence: ./access.ts). Both reuse the
 // brand_kit table: name, logo and colors.accent, told apart by `purpose`
 // (manual-sql/2026-11-11-agency.sql). Older QR design kits (purpose NULL)
 // are never listed here. Logos follow the workspace logo's rules
 // (lib/workspace-logo.ts): an upload under workspace-logos/<workspace>/ or
 // an https URL the browser loads; the server never fetches a typed URL.
 
-export type { ClientBrand } from "@/lib/client-brands-shared";
+export type { ClientBrand } from "@/ee/client-portal/brands-shared";
 
 type Purpose = (typeof BRAND_KIT_PURPOSES)[number];
 
@@ -291,8 +297,9 @@ async function releaseLogo(organizationId: string, logo: string | null) {
 }
 
 async function assertClientReports(scope: ActiveScope) {
+  requireClientBranding();
   assertCan(scope, "content.write");
-  if (!getPlanLimits(await getPlanForScope(scope)).clientReports) {
+  if (!clientTools(getPlanLimits(await getPlanForScope(scope))).clientReports) {
     throw agencyPlanRequired("Client branding", (l) => l.clientReports);
   }
 }
@@ -361,6 +368,7 @@ export async function deleteClientBrand(
   scope: ActiveScope,
   id: string,
 ): Promise<void> {
+  requireClientBranding();
   assertCan(scope, "content.write");
   const existing = await findClientBrand(scope.organizationId, id);
   if (!existing)
@@ -383,8 +391,9 @@ export async function savePortalBrand(
   scope: ActiveScope,
   input: BrandInput,
 ): Promise<ClientBrand> {
+  requireClientPortal();
   assertCan(scope, "workspace.update");
-  if (!getPlanLimits(await getPlanForScope(scope)).clientPortal) {
+  if (!clientTools(getPlanLimits(await getPlanForScope(scope))).clientPortal) {
     throw agencyPlanRequired("The client portal", (l) => l.clientPortal);
   }
   const { name, accent } = checkInput(input);

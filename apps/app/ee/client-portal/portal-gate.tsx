@@ -6,13 +6,10 @@ import {
   CardTitle,
 } from "@repo/design-system/components/ui/card";
 import type { Metadata } from "next";
-import { PortalShell } from "@/components/agency/portal-shell";
-import {
-  PortalSignIn,
-  PortalSignOut,
-} from "@/components/agency/portal-sign-in";
-import { brandIconUrl } from "@/lib/client-brand-icon";
-import type { PortalViewer, PortalWorkspace } from "@/lib/portal/access";
+import { brandIconUrl } from "@/ee/client-portal/brand-icon";
+import type { PortalViewer, PortalWorkspace } from "@/ee/client-portal/portal";
+import { PortalShell } from "@/ee/client-portal/portal-shell";
+import { PortalSignIn, PortalSignOut } from "@/ee/client-portal/portal-sign-in";
 
 // What a client portal shows before its reports: signing in, or "no
 // access" for someone signed in with another address (agency tools).

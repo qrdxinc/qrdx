@@ -1,6 +1,6 @@
 // Client portal addresses (agency tools). Client-safe.
 
-/** The portal of a workspace: always on QRdx's own host (see lib/portal). */
+/** The portal of a workspace: always on QRdx's own host (see ./portal.ts). */
 export const portalPath = (slug: string) =>
   `/portal/${encodeURIComponent(slug)}`;
 

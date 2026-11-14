@@ -1,26 +1,28 @@
 "use server";
 
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
+import { requireClientBranding } from "@/ee/client-portal/access";
 import {
   type ClientBrand,
   deleteClientBrand,
   saveClientBrand,
-} from "@/lib/client-brands";
+} from "@/ee/client-portal/brands";
 import {
   type BrandActionResult,
   brandFailure,
   brandInputFromForm,
   formText,
-} from "@/lib/client-brands-form";
+} from "@/ee/client-portal/brands-form";
 import { HttpError } from "@/lib/error-response";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { getActiveScope } from "@/lib/scope";
 
 // Client brands (agency tools): a client's name, logo and accent color for
 // shared stats pages. Anyone who can share a code's analytics (owners,
-// admins and members) on Pro or Business.
+// admins and members) on Pro or Business, on a server with the licence key
+// (./access.ts; NOT_FOUND without it).
 
-export type { BrandActionResult } from "@/lib/client-brands-form";
+export type { BrandActionResult } from "@/ee/client-portal/brands-form";
 
 const limiter = createRateLimiter({ limiter: slidingWindow(30, "10 m") });
 
@@ -29,6 +31,7 @@ export async function saveClientBrandAction(
   form: FormData,
 ): Promise<BrandActionResult<ClientBrand>> {
   try {
+    requireClientBranding();
     const scope = await getActiveScope();
     await enforceRateLimits([
       { limiter, key: `client-brands:write:user:${scope.userId}` },
@@ -45,6 +48,7 @@ export async function deleteClientBrandAction(input: {
   id: string;
 }): Promise<BrandActionResult<null>> {
   try {
+    requireClientBranding();
     const id = typeof input?.id === "string" ? input.id.trim() : "";
     if (!id || id.length > 64) {
       throw new HttpError(404, "NOT_FOUND", "Client brand not found.");

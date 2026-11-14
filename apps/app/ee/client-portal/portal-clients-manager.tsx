@@ -13,13 +13,13 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { cn } from "@repo/design-system/lib/utils";
 import { Edit2, Folder2, UserRemove } from "iconsax-reactjs";
 import { type FormEvent, useId, useState, useTransition } from "react";
+import { formatDate } from "@/app/(app)/dashboard/codes/_components/format";
 import {
   invitePortalClientAction,
   removePortalClientAction,
   updatePortalClientAction,
-} from "@/actions/portal";
-import { formatDate } from "@/app/(app)/dashboard/codes/_components/format";
-import type { PortalClientView } from "@/lib/portal/manage";
+} from "@/ee/client-portal/actions";
+import type { PortalClientView } from "@/ee/client-portal/manage";
 import { soundEvent } from "@/lib/sound/emit";
 
 export interface PortalFolderOption {

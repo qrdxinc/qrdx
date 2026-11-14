@@ -1,4 +1,4 @@
-import { accentUse, type ClientBrand } from "@/lib/client-brands-shared";
+import { accentUse, type ClientBrand } from "@/ee/client-portal/brands-shared";
 import { logoImageSrc } from "@/lib/workspace-logo";
 
 // The browser-tab icon of a page without QRdx marks (client-branded stats
