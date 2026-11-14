@@ -17,7 +17,9 @@ The server side of single sign-on is in [packages/auth/ee](../../../packages/aut
 The code in this folder is under the [QRdx Commercial License](LICENSE.md), not the AGPL that covers the rest of the app.
 
 - You may read it, and copy and change it to develop, test and evaluate it on non-production systems.
-- Using it in production, for real users or real data, needs a written agreement with QRdx. That includes a self-hosted server where `QRDX_EE_LICENSE` is set. QRdx issues the key with the agreement, and each key has an expiry date. The app doesn't check the key's value today: any value switches the features on, but the agreement is what lets you use them in production, and using a key QRdx didn't issue there breaks the license.
+- Using it in production, for real users or real data, needs a written agreement with QRdx and the key QRdx issues with it. That includes a self-hosted server where `QRDX_EE_LICENSE` is set. Each key has an expiry date. Today the app accepts any value in `QRDX_EE_LICENSE`, but that doesn't make production use allowed.
 - To get an agreement, use the [enterprise page](https://qrdx.dev/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
+
+Code that was published under the AGPL before it moved into an `ee/` folder keeps the AGPL's terms in the versions where it was published; [Earlier versions](../../../LICENSING.md#earlier-versions) in LICENSING.md has the details.
 
 [LICENSING.md](../../../LICENSING.md) explains the licenses of the rest of the repository.

@@ -36,7 +36,7 @@ You may:
 ## 4. License Keys
 
 - A License Key belongs to the Agreement it was issued with. Use it only for what that Agreement covers, keep it confidential and don't share it.
-- Each License Key has an expiry date. After it, you may no longer use that key, and the Commercial Software switches its features off once any grace period the software allows has run out. A renewed or new Agreement comes with a new key.
+- Each License Key has an expiry date. After it, you may no longer use that key, and the Commercial Software may switch its features off once any grace period it allows has run out. A renewed or new Agreement comes with a new key.
 - A key is a technical control. The Agreement, not the key, gives you the right to Production Use: a key that switches the features on gives you no rights the Agreement doesn't.
 
 ## 5. Your changes and contributions
