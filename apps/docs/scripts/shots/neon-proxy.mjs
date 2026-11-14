@@ -82,13 +82,18 @@ async function handle(body, headers) {
   if (Array.isArray(body.queries)) {
     const client = await pool.connect();
     try {
-      const level = headers["neon-batch-isolation-level"];
+      // Only the four levels Postgres knows, from a constant table: nothing
+      // from the request reaches the statement.
+      const LEVELS = {
+        ReadUncommitted: "READ UNCOMMITTED",
+        ReadCommitted: "READ COMMITTED",
+        RepeatableRead: "REPEATABLE READ",
+        Serializable: "SERIALIZABLE",
+      };
+      const level = LEVELS[String(headers["neon-batch-isolation-level"] ?? "")];
       const readOnly = headers["neon-batch-read-only"] === "true";
       const begin = ["BEGIN"];
-      if (level)
-        begin.push(
-          `ISOLATION LEVEL ${String(level).replace(/[^A-Za-z ]/g, "")}`,
-        );
+      if (level) begin.push(`ISOLATION LEVEL ${level}`);
       if (readOnly) begin.push("READ ONLY");
       await client.query(begin.join(" "));
       try {
@@ -122,9 +127,16 @@ const server = createServer((request, response) => {
       response.writeHead(200, { "content-type": "application/json" });
       response.end(JSON.stringify(result));
     } catch (error) {
-      const payload = { message: error?.message ?? String(error) };
-      for (const field of ERROR_FIELDS) {
-        if (error?.[field] !== undefined) payload[field] = error[field];
+      // Postgres errors carry a SQLSTATE code and are what the driver expects;
+      // anything else is reported without its details.
+      const isDatabaseError = typeof error?.code === "string";
+      const payload = {
+        message: isDatabaseError ? String(error.message) : "query failed",
+      };
+      if (isDatabaseError) {
+        for (const field of ERROR_FIELDS) {
+          if (error[field] !== undefined) payload[field] = String(error[field]);
+        }
       }
       response.writeHead(400, { "content-type": "application/json" });
       response.end(JSON.stringify(payload));

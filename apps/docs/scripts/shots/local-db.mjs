@@ -17,6 +17,7 @@ import {
   existsSync,
   mkdirSync,
   openSync,
+  readFileSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -94,10 +95,7 @@ function stopProxy() {
   const pidFile = join(dir, "proxy.pid");
   if (!existsSync(pidFile)) return;
   try {
-    process.kill(
-      Number(spawnSync("cat", [pidFile], { encoding: "utf8" }).stdout.trim()),
-      "SIGTERM",
-    );
+    process.kill(Number(readFileSync(pidFile, "utf8").trim()), "SIGTERM");
   } catch {}
   rmSync(pidFile, { force: true });
 }
