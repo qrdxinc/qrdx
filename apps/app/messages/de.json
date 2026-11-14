@@ -5419,11 +5419,7 @@
       "nameIsNoLongerIn": "„{name}“ ist nicht mehr in der Community."
     },
     "itemCard": {
-      "empty": "Leer",
-      "official": "Offiziell",
-      "usecountUses": "{useCount} Verwendungen",
-      "seeAll": "Alle ansehen",
-      "likes": "Likes"
+      "empty": "Leer"
     },
     "itemPages": {
       "previous": "Zurück",

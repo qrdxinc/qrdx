@@ -5419,11 +5419,7 @@
       "nameIsNoLongerIn": "\"{name}\" tidak lagi ada di komunitas."
     },
     "itemCard": {
-      "empty": "Kosong",
-      "official": "Resmi",
-      "usecountUses": "{useCount} penggunaan",
-      "seeAll": "Lihat semua",
-      "likes": "Suka"
+      "empty": "Kosong"
     },
     "itemPages": {
       "previous": "Sebelumnya",
