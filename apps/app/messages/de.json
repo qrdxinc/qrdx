@@ -479,8 +479,7 @@
           "answer": "Ja. Das Logo-Overlay ist im kostenlosen Tarif enthalten. Lade ein Bild hoch (am besten eine PNG-Datei mit transparentem Hintergrund), und QRdx zentriert es und räumt die Module darunter frei. QR-Codes nutzen die Reed-Solomon-Fehlerkorrektur (ISO/IEC 18004); QRdx verwendet standardmäßig Stufe Q, die etwa 25 % des Codes wiederherstellen kann, sodass ein zentriertes Logo scanbar bleibt. Teste vor dem Druck mit einigen Handys."
         },
         "openSource": {
-          "question": "Ist QRdx Open Source?",
-          "answer": "Ja. QRdx ist Open Source unter der GNU AGPL-3.0 (oder neuer) und wird öffentlich auf GitHub entwickelt. Du kannst den Code prüfen, Issues melden, mitwirken oder deine eigene Instanz selbst hosten, einschließlich dynamischer QR-Codes und gehosteter Seiten. Die QR-Bibliothek ist auf npm als qrdx für React-Apps veröffentlicht. AGPL ist eine Copyleft-Lizenz. Prüfe daher, ob sie zu deinem Projekt passt, bevor du sie in Closed-Source-Software einbettest."
+          "question": "Ist QRdx Open Source?"
         },
         "api": {
           "question": "Können Entwickler QR-Codes mit einer API generieren?",

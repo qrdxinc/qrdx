@@ -2,6 +2,7 @@
   "name": "@repo/docs-assets",
   "version": "0.0.0",
   "private": true,
+  "license": "AGPL-3.0-or-later",
   "exports": {
     "./openapi.json": "./openapi.json",
     "./registry.json": "./registry.json",
