@@ -90,14 +90,14 @@ export function authorizeUrl({ state, challenge }: { state: string; challenge: s
 }
 ```
 
-People who aren't signed in to QRdx sign in first. Then they see the consent screen: your app's logo, name, website and who built it, the permissions you asked for, and the account they're signed in with. Apps QRdx hasn't reviewed carry an **Unverified app.** note. **Authorize** asks them to [confirm it's them](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) unless they did in the last 10 minutes (signing in just now counts). Someone who already approved the same scopes for your app goes straight back to you.
+People who aren't signed in to QRdx sign in first. Then they see the consent screen: your app's logo, name, website and who built it, the permissions you asked for, and the account they're signed in with. Apps QRdx hasn't reviewed carry an **Unverified app.** note. **Authorize** asks them to [confirm it's them](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) unless they did in the last 10 minutes (a sign-in moments earlier counts). Someone who already approved the same scopes for your app goes straight back to you.
 
 {/* shot: oauth-consent-screen | the consent screen for an unverified app: logo, name, Built by, Requested permissions, the signed-in account, Cancel and Authorize | /api/oauth/authorize for a test app */}
 
 QRdx then redirects to your `redirect_uri`:
 
 - Approved: `?code=<authorization code>&state=<your state>`. The code works once, within 10 minutes.
-- Cancelled: `?error=access_denied&error_description=...&state=<your state>`.
+- Canceled: `?error=access_denied&error_description=...&state=<your state>`.
 
 Invalid requests never redirect; they answer JSON in the OAuth 2.0 shape. An unknown `client_id` is `invalid_client`, an unregistered `redirect_uri` or a `plain` challenge is `invalid_request`, and a scope the app doesn't have is `invalid_scope`:
 
@@ -127,7 +127,7 @@ export async function GET(req: Request) {
     return new Response("Invalid state", { status: 400 });
   }
   if (params.get("error")) {
-    return Response.redirect("https://acme.example/settings?qrdx=cancelled");
+    return Response.redirect("https://acme.example/settings?qrdx=canceled");
   }
 
   const response = await fetch("https://qrdx.dev/api/oauth/token", {

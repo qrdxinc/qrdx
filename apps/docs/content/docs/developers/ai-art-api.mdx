@@ -6,7 +6,7 @@ icon: Sparkles
 
 By the end of this page you will have a 1024 px PNG in which a QR code sits inside a painted picture, decoded by QRdx before it reached you, and you will know how to encode a dynamic code instead of fixed text, which mode to pick and what each error means.
 
-`POST https://api.qrdx.dev/v1/art` paints a QR code into AI artwork from a description and returns the image. It's the same [AI QR art](/ai/art) as the playground's Art tab and the studio: {facts.artModel} paints the picture, then QRdx checks that it scans to your content before you get it. Where the model's image doesn't scan as drawn, QRdx strengthens the code just enough, on the model's own pixels.
+`POST https://api.qrdx.dev/v1/art` paints a QR code into AI artwork from a description and returns the image. It's the same [AI QR art](/ai/art) as the playground's Art tab and the studio: {facts.artModel} paints the picture, then QRdx checks that it scans to your content before you get it. Where the model's image doesn't scan as drawn, QRdx strengthens the code only as much as needed, on the model's own pixels.
 
 <Callout type="info" title="API key and monthly images">
 The endpoint needs an [API key](/docs/developers/api-keys) with the `codes:write` scope (**Full access** keys have it). Each image uses one of the monthly AI art images of the key's workspace, the same allowance the app uses; [Plans and limits](/docs/plans-and-limits) has the numbers per plan. A call that fails, or whose image can't be made to scan, uses no image.
@@ -96,7 +96,7 @@ The response is JSON with the image as a `data:` URL:
 
 - `imageUrl` is a 1024 px square PNG as a `data:` URL. QRdx doesn't keep a copy, so save it.
 - `text` is exactly what the image scans to. QRdx decoded it before answering.
-- `blend` says how the image was made to scan: `none` (the model's image as drawn), `least` (the finder squares, quiet zone and modules strengthened just enough, on the model's image) or `image-qr` (redrawn as an Image QR code, the last resort). `blendStrength` goes from `0` (as drawn) to `1` (Image QR).
+- `blend` says how the image was made to scan: `none` (the model's image as drawn), `least` (the finder squares, quiet zone and modules strengthened only as much as needed, on the model's image) or `image-qr` (redrawn as an Image QR code, the last resort). `blendStrength` goes from `0` (as drawn) to `1` (Image QR).
 - `credits` is the workspace's allowance after this image.
 
 To get the PNG itself instead of JSON, add `?format=png` or send `Accept: image/png`. The seed, mode, blend and images left then come as the `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength` and `X-QRdx-Credits-Remaining` headers:
