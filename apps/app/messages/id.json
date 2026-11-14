@@ -479,8 +479,7 @@
           "answer": "Ya. Overlay logo tersedia di paket gratis. Unggah gambar (PNG dengan latar belakang transparan hasilnya paling baik) dan QRdx akan menempatkannya di tengah serta mengosongkan modul di bawahnya. Kode QR menggunakan koreksi kesalahan Reed-Solomon (ISO/IEC 18004); QRdx menggunakan level Q secara default, yang dapat memulihkan sekitar 25% kode, sehingga logo di tengah tetap dapat dipindai. Uji dengan beberapa ponsel sebelum mencetak."
         },
         "openSource": {
-          "question": "Apakah QRdx open source?",
-          "answer": "Ya. QRdx bersifat open source di bawah GNU AGPL-3.0 (atau yang lebih baru) dan dikembangkan secara terbuka di GitHub. Anda dapat meninjau kode, melaporkan masalah, berkontribusi, atau meng-host instans Anda sendiri, termasuk kode dinamis dan halaman yang di-hosting. Pustaka QR diterbitkan di npm sebagai qrdx untuk aplikasi React. AGPL adalah lisensi copyleft, jadi pastikan lisensi ini sesuai dengan proyek Anda sebelum menyematkannya ke perangkat lunak sumber tertutup."
+          "question": "Apakah QRdx open source?"
         },
         "api": {
           "question": "Bisakah developer membuat kode QR dengan API?",
