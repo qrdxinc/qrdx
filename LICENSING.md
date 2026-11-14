@@ -12,7 +12,7 @@ QRdx is open core. The repository is under three licenses:
 
 An enterprise agreement covers running the `ee/` features in production on your own server. To get one, use the [enterprise page](https://qrdx.dev/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
 
-The app doesn't check the key: any value in `QRDX_EE_LICENSE` switches the features on. The agreement, not the key, is what lets you use them in production.
+QRdx issues the license key for `QRDX_EE_LICENSE` with the agreement. The key has an expiry and is checked on your server, offline, against QRdx's public key (`packages/auth/ee/license.ts`). A value QRdx didn't sign, or a key more than 14 days past its expiry, switches nothing on.
 
 ## Third-party code
 

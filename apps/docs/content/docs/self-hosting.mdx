@@ -8,7 +8,7 @@ By the end of this guide you will have QRdx running at your own URL: the QR edit
 
 The web app is open source under the AGPL-3.0 license. Two parts are not: workspace single sign-on and the audit log live in the `ee/` folders under the QRdx commercial license and stay off unless you set a license key (`QRDX_EE_LICENSE`). Using them in production needs a written agreement with QRdx; see [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md). You don't need any of this to use the [`qrdx` React library](/docs/getting-started) or the [CLI](/docs/developers/cli): they run anywhere without a backend, under the MIT license. [Open source at QRdx](/open-source-qr-code-generator) lists each part of the repository and its license.
 
-The license key switches single sign-on and the audit log on. The app doesn't check it, so any value works technically, but using those features in production still needs the agreement. To get one, use the [enterprise page](/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
+QRdx issues the license key with the agreement. To get one, use the [enterprise page](/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev). The key has an expiry, and your server checks it offline against QRdx's public key, without calling QRdx. A value QRdx didn't sign, or a key more than 14 days past its expiry, leaves single sign-on and the audit log off, as if no key were set; the rest of QRdx, sign-in included, works as before. **Admin** → **Health** shows when your key expires, and the server log says at start-up whether it's valid.
 
 <Callout type="warn" title="The Docker setup is new">
   If a step doesn't work as written, [open an issue](https://github.com/qrdxinc/qrdx/issues) with the command you ran and its output.
@@ -188,8 +188,8 @@ Each variable switches on only its own feature. An empty value counts as unset; 
 | Google sign-in | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google sign-in is unavailable |
 | Auth base URL | `BETTER_AUTH_URL` | Inferred from each request, with a warning in the logs |
 | Admin panel | `ADMIN_EMAILS`, `ADMIN_USER_IDS` | Nobody can open `/admin` |
-| Workspace single sign-on | `QRDX_EE_LICENSE` | Single sign-on stays off: no **Sign in with SSO**, no SSO settings, and its sign-in routes don't exist. SSO is in the `ee/` folders under the QRdx commercial license, so production use needs a written agreement with QRdx. See [Single sign-on](/docs/help/teams/single-sign-on) |
-| Workspace audit log | `QRDX_EE_LICENSE` | The audit log stays off: nothing is recorded and there's no **Settings** → **Audit log**. Like single sign-on, it's in the `ee/` folders under the QRdx commercial license. Its rows are kept {facts.auditLogRetentionDays} days; the [scheduled webhook job](#scheduled-jobs) deletes older ones. See [Audit log](/docs/help/teams/audit-log) |
+| Workspace single sign-on | `QRDX_EE_LICENSE`, a key QRdx issues | Without a valid key, single sign-on stays off: no **Sign in with SSO**, no SSO settings, and its sign-in routes don't exist. SSO is in the `ee/` folders under the QRdx commercial license, so production use needs a written agreement with QRdx. See [Single sign-on](/docs/help/teams/single-sign-on) |
+| Workspace audit log | `QRDX_EE_LICENSE`, a key QRdx issues | Without a valid key, the audit log stays off: nothing is recorded and there's no **Settings** → **Audit log**. Like single sign-on, it's in the `ee/` folders under the QRdx commercial license. Its rows are kept {facts.auditLogRetentionDays} days; the [scheduled webhook job](#scheduled-jobs) deletes older ones. See [Audit log](/docs/help/teams/audit-log) |
 | AI themes, prompt enhancement and AI QR art (Vercel AI Gateway) | `AI_GATEWAY_API_KEY` | AI requests fail and the AI pages leave the navigation and sitemap. The editor works normally. Create the key in your own Vercel account (AI Gateway, API keys); usage is billed to that account's AI Gateway credits, and your app doesn't have to run on Vercel. The model for each task is set in `apps/app/lib/ai/models.ts` |
 | Short-link origin | `NEXT_PUBLIC_SHORT_LINK_BASE_URL` | [Dynamic codes](/docs/dynamic-qr-codes#self-hosting) use `NEXT_PUBLIC_APP_URL` |
 | Scan privacy salt | `SCAN_HASH_SALT` | Derived from `BETTER_AUTH_SECRET` |
@@ -253,7 +253,7 @@ free: {
 },
 ```
 
-Single sign-on and the audit log work differently. With `QRDX_EE_LICENSE` set and `POLAR_ACCESS_TOKEN` unset, every workspace has both, whatever its plan. That applies when `NEXT_PUBLIC_APP_URL` is your own domain. On `localhost`, and on any server where Polar is set up, they follow each plan's `sso` and `auditLog` limits (Business only, as shipped). Production use of either still needs a written agreement with QRdx.
+Single sign-on and the audit log work differently. With a valid `QRDX_EE_LICENSE` and `POLAR_ACCESS_TOKEN` unset, every workspace has both, whatever its plan. That applies when `NEXT_PUBLIC_APP_URL` is your own domain. On `localhost`, and on any server where Polar is set up, they follow each plan's `sso` and `auditLog` limits (Business only, as shipped). Production use of either still needs a written agreement with QRdx.
 
 ## Reverse proxy and HTTPS
 
