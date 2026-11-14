@@ -1,5 +1,8 @@
 import { Badge } from "@repo/design-system/components/ui/badge";
-import { isConsolePath } from "@repo/next-config/console-zone";
+import {
+  adminConsoleHref,
+  isConsolePath,
+} from "@repo/next-config/console-zone";
 import { SettingsHeader } from "@/app/(app)/settings/components/settings-header";
 import { env } from "@/env";
 import { DailyChart } from "./_components/daily-chart";
@@ -25,9 +28,17 @@ export default async function AdminOverviewPage() {
     attention.integrationErrors;
 
   // With the back-office console on, it serves some of the lists behind
-  // these numbers: those links load a new page.
-  const crossZone = (href: string) =>
-    Boolean(env.CONSOLE_ORIGIN) && isConsolePath(href);
+  // these numbers: those links load a new page, at the same path (proxied,
+  // CONSOLE_ORIGIN) or at the console's own address (ADMIN_CONSOLE_URL).
+  const consoleLink = (href: string) => {
+    const ownAddress = adminConsoleHref(href, env.ADMIN_CONSOLE_URL);
+    return {
+      href: ownAddress ?? href,
+      crossZone:
+        ownAddress !== null ||
+        (Boolean(env.CONSOLE_ORIGIN) && isConsolePath(href)),
+    };
+  };
 
   const providers = new Map<string, { active: number; total: number }>();
   for (const row of stats.integrationsByProvider) {
@@ -52,8 +63,7 @@ export default async function AdminOverviewPage() {
           hint={`${formatNumber(dashboard.users.last7d)} new this week`}
         />
         <StatCard
-          crossZone={crossZone("/admin/subscriptions")}
-          href="/admin/subscriptions?status=active"
+          {...consoleLink("/admin/subscriptions?status=active")}
           label="Paying users"
           value={formatNumber(dashboard.paidUsers)}
           hint="Active or trialing subscription"
@@ -82,8 +92,7 @@ export default async function AdminOverviewPage() {
           hint={`${formatNumber(dashboard.responses.last7d)} this week`}
         />
         <StatCard
-          crossZone={crossZone("/admin/ai-usage")}
-          href="/admin/ai-usage"
+          {...consoleLink("/admin/ai-usage")}
           label="AI generations (30d)"
           value={formatNumber(stats.ai.last30d)}
           hint={`${formatNumber(stats.ai.today)} today · ${formatNumber(stats.ai.total)} all time`}

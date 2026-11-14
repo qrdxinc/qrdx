@@ -27,7 +27,10 @@ export default async function AdminLayout({
       <div className="flex flex-col">
         <Header />
         <main className="flex w-full flex-1 flex-col gap-4 px-4 py-4 md:flex-row md:px-6 md:py-8">
-          <AdminNav consoleEnabled={Boolean(env.CONSOLE_ORIGIN)} />
+          <AdminNav
+            adminConsoleUrl={env.ADMIN_CONSOLE_URL}
+            consoleEnabled={Boolean(env.CONSOLE_ORIGIN)}
+          />
           <div className="mx-auto w-full max-w-6xl min-w-0 flex-1 space-y-4">
             <Suspense fallback={<div className="h-9" />}>
               <AdminSearch />

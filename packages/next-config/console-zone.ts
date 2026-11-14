@@ -1,8 +1,14 @@
 // The console zone: QRdx's back office, a separate Next.js app (apps/console
-// in the private qrdxinc/cloud repo) that serves five /admin sections at
-// their URLs on qrdx.dev. The main app proxies them there once
-// CONSOLE_ORIGIN is set; unset (self-hosting, and qrdx.dev until the
-// cutover), nothing changes and the main app serves its own pages. Both apps
+// in the private qrdxinc/cloud repo) that serves five /admin sections. Two
+// ways to reach it, both off until their variable is set (self-hosting, and
+// qrdx.dev until the cutover):
+// - ADMIN_CONSOLE_URL: the console at its own address (https://admin.qrdx.dev)
+//   with clean URLs (/growth, /affiliates/<id>) and its own sign-in through
+//   this app's OAuth provider (lib/admin-console). The main app answers
+//   /admin/<section> with a 308 there, and the admin menu links there.
+// - CONSOLE_ORIGIN: the console proxied behind /admin/<section> on qrdx.dev
+//   (the first design; its code stays until the clean-up).
+// Unset, nothing changes and the main app serves its own pages. Both apps
 // import this one list. Pure: next.config.ts, proxy.ts, client components
 // and tests import it.
 
@@ -56,9 +62,9 @@ function withoutTrailingSlashes(url: string): string {
 const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1"]);
 
 /**
- * Whether `value` can be CONSOLE_ORIGIN: an origin and nothing else (no
- * path, query, hash or credentials; trailing slashes are fine), over https,
- * or over http on localhost for local development.
+ * Whether `value` can be CONSOLE_ORIGIN or ADMIN_CONSOLE_URL: an origin and
+ * nothing else (no path, query, hash or credentials; trailing slashes are
+ * fine), over https, or over http on localhost for local development.
  */
 export function isConsoleOrigin(value: string): boolean {
   let url: URL;
@@ -168,4 +174,117 @@ export function consoleReturnPath(
     return null;
   }
   return `${url.pathname}${url.search}`;
+}
+
+// ─── The console at its own address (ADMIN_CONSOLE_URL) ─────────────────────
+
+// Its OAuth client, as both apps know it (the main app's lib/admin-console
+// defines the client from these; the console sends them).
+
+/** The client id the console sends; not an oauth_app row. */
+export const ADMIN_CONSOLE_CLIENT_ID = "qrdx_admin_console";
+
+/** The console's one redirect URI: this path under ADMIN_CONSOLE_URL. */
+export const ADMIN_CONSOLE_CALLBACK_PATH = "/auth/callback";
+
+/** OpenID Connect's names; `openid` is required, the others optional. */
+export const ADMIN_CONSOLE_SCOPES = ["openid", "email", "profile"] as const;
+export type AdminConsoleScope = (typeof ADMIN_CONSOLE_SCOPES)[number];
+
+/** The console's access tokens start with this, so userinfo knows whose they are. */
+export const ADMIN_CONSOLE_TOKEN_PREFIX = "qrdxc_";
+
+/** A next.config redirect that only applies on the hosts given. */
+export interface ConsoleRedirect {
+  source: string;
+  destination: string;
+  permanent: true;
+  has: { type: "host"; value: string }[];
+}
+
+/**
+ * The main app's redirects that send /admin/<section>[/…] (the query kept,
+ * as Next does by default) to the same section at the console's own
+ * address, `adminConsoleUrl`: /admin/growth → https://admin.qrdx.dev/growth,
+ * /admin/affiliates/abc → …/affiliates/abc. None while it's unset: this app
+ * serves its own pages. Only the five sections match, each as a whole
+ * segment; /admin, the other sections and /admin/growthx never do.
+ */
+export function adminConsoleRedirects(
+  adminConsoleUrl: string | undefined,
+  { hosts }: ConsoleZoneOptions
+): ConsoleRedirect[] {
+  if (!adminConsoleUrl) return [];
+  const origin = new URL(adminConsoleUrl).origin;
+  return [
+    {
+      source: `/admin/:section(${CONSOLE_SECTIONS.join("|")})/:path*`,
+      destination: `${origin}/:section/:path*`,
+      permanent: true,
+      has: [{ type: "host", value: hosts }],
+    },
+  ];
+}
+
+/**
+ * The console's own URL for one of its pages named the way this app names
+ * them (/admin/growth, /admin/subscriptions?status=active): the same path
+ * without /admin, with its query, on `adminConsoleUrl`. Null while that's
+ * unset, and for any href that isn't a console section.
+ */
+export function adminConsoleHref(
+  href: string,
+  adminConsoleUrl: string | undefined
+): string | null {
+  if (!adminConsoleUrl) return null;
+  let url: URL;
+  try {
+    url = new URL(href, RETURN_BASE);
+  } catch {
+    return null;
+  }
+  const section = consoleSection(url.pathname);
+  if (url.origin !== RETURN_BASE || section === null) return null;
+  const rest = url.pathname.slice("/admin/".length + section.length);
+  return `${new URL(adminConsoleUrl).origin}/${section}${rest}${url.search}`;
+}
+
+// The console's clean paths: /<section>, or /<section>/…, lower case.
+const CONSOLE_CLEAN_PATH = new RegExp(
+  `^/(?:${CONSOLE_SECTIONS.join("|")})(?:/|$)`
+);
+
+/**
+ * Where /admin/confirm may send an admin back to, or null: a console page
+ * on this site (consoleReturnPath), or, while ADMIN_CONSOLE_URL is set, a
+ * page at the console's own address: an absolute URL on exactly that origin
+ * whose path is one of the console's sections (/growth, /affiliates/abc?x=1).
+ * Never another origin, credentials, a backslash, a dot segment or a hash.
+ */
+export function consoleReturnTarget(
+  next: string | null | undefined,
+  adminConsoleUrl: string | undefined
+): string | null {
+  const onThisSite = consoleReturnPath(next);
+  if (onThisSite !== null) return onThisSite;
+  if (!(adminConsoleUrl && next)) return null;
+  // Backslashes, whitespace and control characters: browsers rewrite them.
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: rejecting them is the point
+  if (/[\\\s\u0000-\u001f\u007f]/.test(next)) return null;
+  let url: URL;
+  try {
+    url = new URL(next);
+  } catch {
+    return null;
+  }
+  if (
+    url.origin !== new URL(adminConsoleUrl).origin ||
+    url.username ||
+    url.password ||
+    !CONSOLE_CLEAN_PATH.test(url.pathname) ||
+    hasDotSegment(url.pathname)
+  ) {
+    return null;
+  }
+  return `${url.origin}${url.pathname}${url.search}`;
 }

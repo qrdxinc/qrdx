@@ -1,7 +1,9 @@
 // /admin/confirm: "Confirm it's you" for the back-office console's actions.
 // Admins only (anyone else gets the admin pages' 404), and it only ever
-// sends an admin back to a console page: any other `next` returns to /admin.
-// The guard is mocked; nothing touches a database or a service.
+// sends an admin back to a console page, here (/admin/<section>) or at the
+// console's own address (ADMIN_CONSOLE_URL, set here): any other `next`
+// returns to /admin. The guard is mocked; nothing touches a database or a
+// service.
 import { notFound } from "next/navigation";
 import { isValidElement, type ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -10,6 +12,12 @@ const state = vi.hoisted(() => ({
   admin: null as null | { id: string; email: string; name: string },
 }));
 
+const CONSOLE = "https://admin.qrdx.dev";
+
+vi.mock("@/env", async (importOriginal) => {
+  const { env } = await importOriginal<typeof import("@/env")>();
+  return { env: { ...env, ADMIN_CONSOLE_URL: CONSOLE } };
+});
 vi.mock("@/app/(app)/admin/_lib/guard", () => ({
   getAdminUser: vi.fn(async () => state.admin),
   requireAdmin: vi.fn(async () => {
@@ -68,6 +76,8 @@ describe("/admin/confirm", () => {
     it.each([
       ["/admin/affiliates/abc?page=2", "/admin/affiliates/abc?page=2"],
       ["/admin/growth", "/admin/growth"],
+      [`${CONSOLE}/affiliates/abc?page=2`, `${CONSOLE}/affiliates/abc?page=2`],
+      [`${CONSOLE}/growth`, `${CONSOLE}/growth`],
     ])("goes back to the console page %s", async (next, expected) => {
       expect(returnPath(await render(next))).toBe(expected);
     });
@@ -78,6 +88,12 @@ describe("/admin/confirm", () => {
       ["/admin/users/u1"],
       ["https://evil.example/admin/growth"],
       ["//evil.example/admin/growth"],
+      [`${CONSOLE}/`],
+      [`${CONSOLE}/auth/login`],
+      [`${CONSOLE}/users/u1`],
+      ["https://evil.example/growth"],
+      ["https://admin.qrdx.dev.evil.example/growth"],
+      ["//admin.qrdx.dev/growth"],
       [["/admin/growth", "/admin/numbers"]],
     ])("falls back to /admin for %j", async (next) => {
       expect(returnPath(await render(next))).toBe("/admin");

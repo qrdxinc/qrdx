@@ -9,6 +9,7 @@ import { docsOriginRedirects, docsZoneRewrites } from "@repo/i18n/docs";
 import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
+  adminConsoleRedirects,
   CONSOLE_ASSET_PREFIX,
   consoleZoneRewrites,
 } from "@repo/next-config/console-zone";
@@ -102,6 +103,18 @@ if (consoleZone.length > 0 && !env.CONSOLE_ZONE_KEY) {
   // key rule every page there would redirect back here in a loop.
   console.warn(
     "⚠ CONSOLE_ORIGIN is set but CONSOLE_ZONE_KEY isn't: the console can't tell requests that came through this app. Set the same CONSOLE_ZONE_KEY on both.",
+  );
+}
+// The console at its own address (ADMIN_CONSOLE_URL): its five sections
+// answer a 308 there instead (@repo/next-config/console-zone), on QRdx's own
+// hosts, and lib/admin-console signs admins in through this app's OAuth
+// provider with CONSOLE_ZONE_KEY as the client secret.
+const adminConsole = adminConsoleRedirects(env.ADMIN_CONSOLE_URL, {
+  hosts: `(?:${PLATFORM_HOSTS})`,
+});
+if (adminConsole.length > 0 && !env.CONSOLE_ZONE_KEY) {
+  console.warn(
+    "⚠ ADMIN_CONSOLE_URL is set but CONSOLE_ZONE_KEY isn't: the console can't sign admins in (it's the OAuth client secret). Set the same CONSOLE_ZONE_KEY on both.",
   );
 }
 
@@ -228,6 +241,7 @@ let nextConfig: NextConfig = {
       "process.env.CONSOLE_ORIGIN": process.env.CONSOLE_ORIGIN ?? "",
       "process.env.SITE_ORIGIN": process.env.SITE_ORIGIN ?? "",
       "process.env.SITE_ZONE_GROUPS": process.env.SITE_ZONE_GROUPS ?? "",
+      "process.env.ADMIN_CONSOLE_URL": process.env.ADMIN_CONSOLE_URL ?? "",
     },
   },
   // Geist (@repo/design-system/og/font-files) for server images: OG cards,
@@ -387,6 +401,8 @@ let nextConfig: NextConfig = {
       })),
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
+      // The console's sections, when ADMIN_CONSOLE_URL is set (above).
+      ...adminConsole,
     ];
   },
   // Keep the shared rewrites (PostHog /ingest proxy) alongside these.
