@@ -8,7 +8,9 @@
 /* The cookie banner and its settings come from @repo/analytics. */
 @source "../../../packages/analytics";
 
-@import "fumadocs-ui/css/neutral.css";
+/* fumadocs' colour tokens, registered as Tailwind colours (bg-fd-card and
+   the rest). Their values are the design system's, set below. */
+@import "fumadocs-ui/css/lib/default-colors.css";
 @import "fumadocs-ui/css/preset.css";
 
 /* fumadocs' search marks matches with the CSS Custom Highlight API through
@@ -17,90 +19,335 @@
    aren't generated here; the same rule ships inline from
    components/search-highlight-style.tsx instead. */
 @source not inline("[&_::highlight(fd-search)]:text-fd-primary [&_::highlight(fd-search)]:underline");
-@import "fumadocs-twoslash/twoslash.css";
 /* API reference pages (content/docs/developers/api) */
 @import "fumadocs-openapi/css/preset.css";
-@import "./loaders.css";
 
 :root {
   --fd-layout-width: 100vw;
+  /* The reading column: about 80 characters of body text at 16px, code
+     blocks and tables the same width (app/[lang]/docs/[[...slug]]/page.tsx,
+     components/docs/docs-product-links.tsx). API reference pages are wider. */
+  --docs-page-width: 42rem;
+  /* The design system's radius, kept for cards inside prose (where
+     --radius itself is smaller; see .prose below). */
+  --docs-card-radius: var(--radius);
 }
 
-/*
- * Light docs on the site's own surfaces. Fumadocs' neutral light theme is a
- * grey #f5f5f5 page with #f1f1f1 cards and #737373 muted text (4.2:1 on its
- * cards); this keeps the page near-white like the rest of the site, cards and
- * the sidebar one quiet step down, and muted text at AA. Dark keeps
- * fumadocs' values (`.dark` is not matched here).
+/* ─── Colour ────────────────────────────────────────────────────────────────
+ * The docs use the design system's palette in both themes, so they match the
+ * rest of qrdx.dev: the near-white page and the slightly blue near-black of
+ * dark mode (fumadocs' own dark theme is a neutral grey). The one accent is
+ * the design system's blue, mapped to fumadocs' primary: it marks the active
+ * sidebar item, the section eyebrow, the active table-of-contents entry, the
+ * underline of inline links, the header's primary button and focus rings.
+ * Everything else stays neutral.
  */
-:root:not(.dark) {
+:root,
+.dark {
   --color-fd-background: var(--background);
   --color-fd-foreground: var(--foreground);
-  --color-fd-card: oklch(0.98 0 0);
   --color-fd-card-foreground: var(--card-foreground);
   --color-fd-popover: var(--popover);
   --color-fd-popover-foreground: var(--popover-foreground);
   --color-fd-muted: var(--muted);
-  --color-fd-muted-foreground: oklch(0.5 0 0);
   --color-fd-secondary: var(--secondary);
   --color-fd-secondary-foreground: var(--secondary-foreground);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
   --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-ring: var(--primary);
+  /* Callouts (components/mdx/callout.tsx) and fumadocs' own notes. */
+  --color-fd-info: var(--primary);
+  --color-fd-error: var(--destructive);
+  --color-fd-idea: var(--foreground);
 }
 
-.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  font-size: 14px;
+:root {
+  /* Cards and the code blocks one quiet step down from the near-white page
+     (the design system's --card is pure white, which disappears on it). */
+  --color-fd-card: oklch(0.98 0 0);
+  /* AA on the page and on cards (the design system's 0.4386 is darker than
+     the docs need for long muted passages, fumadocs' 45% hsl is lighter). */
+  --color-fd-muted-foreground: oklch(0.5 0 0);
+  --color-fd-overlay: oklch(0 0 0 / 0.3);
+  /* Amber and green that read at AA as text on their own tints. */
+  --color-fd-warning: oklch(0.62 0.14 70);
+  --color-fd-success: oklch(0.55 0.15 150);
 }
 
+.dark {
+  --color-fd-card: var(--card);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-overlay: oklch(0 0 0 / 0.55);
+  --color-fd-warning: oklch(0.8 0.14 75);
+  --color-fd-success: oklch(0.78 0.15 150);
+}
+
+/* The reading column (API reference pages, data-full, keep fumadocs' wider one). */
+#nd-page:not([data-full="true"]) > * {
+  max-width: var(--docs-page-width);
+}
+
+/* The sidebar on the design system's sidebar surface, as in the app. */
+#nd-sidebar {
+  background-color: var(--sidebar);
+  color: var(--sidebar-foreground);
+  border-color: var(--sidebar-border);
+  --color-fd-accent: var(--sidebar-accent);
+  --color-fd-accent-foreground: var(--sidebar-accent-foreground);
+}
+
+/* ─── Type ──────────────────────────────────────────────────────────────────
+ * Body 16px on a 1.7 line, headings on the display face (globals.css gives
+ * h1 to h3 Mona Sans at its wider widths), a measure of about 70 characters
+ * (the page column, app/[lang]/docs/[[...slug]]/page.tsx).
+ */
+.prose {
+  line-height: 1.7;
+  /* Inside prose the design system's 1.4rem radius is too round for blocks
+     of text: code blocks, callouts, tabs, accordions, tables and frames get
+     a smaller scale. Cards keep theirs (components/mdx/card.tsx). */
+  --radius: 0.625rem;
+}
+
+.prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-top: 2.25em;
+  margin-bottom: 0.75em;
+}
+
+.prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-size: 1.1875rem;
+  line-height: 1.4;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+}
+
+.prose :where(h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-size: 1rem;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-top: 1.1em;
+  margin-bottom: 1.1em;
+}
+
+.prose :where(ul, ol):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-top: 0.375em;
+  margin-bottom: 0.375em;
+}
+
+.prose
+  :where(li > p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Inline links: text in the foreground, the underline in the accent. */
+.prose
+  :where(a:not([data-card])):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  text-decoration-skip-ink: auto;
+  text-underline-offset: 0.2em;
+}
+
+.prose
+  :where(a:not([data-card]):hover):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  opacity: 1;
+  text-decoration-thickness: 2px;
+}
+
+/* Inline code: a hairline chip in the mono face, no heavier than the text. */
+.prose
+  :where(code):not(
+    :where(pre *, [class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  font-size: 0.875em;
+  font-weight: 450;
+  padding: 0.1em 0.4em;
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-fd-border);
+  background: var(--color-fd-muted);
+}
+
+.prose
+  :where(h2 code, h3 code):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+/* Tables: a bordered block with a muted header row, cells on 14px. */
+.prose :where(table):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  width: 100%;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 0.625rem;
+  overflow: hidden;
+}
+
+.prose
+  :where(thead th):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  background: var(--color-fd-muted);
+  color: var(--color-fd-foreground);
+  font-weight: 500;
+  text-align: start;
+  vertical-align: bottom;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-fd-border);
+}
+
+.prose
+  :where(tbody td, tfoot td):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  padding: 0.5rem 0.75rem;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-fd-border);
+}
+
+.prose
+  :where(tbody tr:last-child td):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  border-bottom: 0;
+}
+
+.prose
+  :where(th:first-child, td:first-child):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  padding-inline-start: 0.875rem;
+}
+
+.prose
+  :where(th:last-child, td:last-child):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  padding-inline-end: 0.875rem;
+}
+
+/* ─── Code blocks ─────────────────────────────────────────────────────────── */
+.prose figure.shiki {
+  margin-block: 1.5rem;
+  background: var(--color-fd-card);
+}
+
+/* Inside code tabs the block already sits in the tabs' frame. */
+.prose [role="tabpanel"] > figure.shiki {
+  margin-block: 0;
+}
+
+/* The title bar (file path or "Terminal") in the mono face. */
+.prose figure.shiki > div:has(> figcaption) {
+  height: 2.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: color-mix(in oklab, var(--color-fd-muted) 55%, transparent);
+}
+
+.prose figure.shiki pre {
+  line-height: 1.65;
+}
+
+/* ─── Steps (remarkSteps: "### 1. Title" under an H2) ────────────────────────
+ * A numbered marker on each step and a hairline joining them, instead of
+ * fumadocs' filled circle on a full-height border.
+ */
+.prose .fd-steps {
+  counter-reset: step;
+  position: relative;
+  margin-inline-start: 0;
+  padding-inline-start: 2.75rem;
+  border: 0;
+}
+
+.prose .fd-step {
+  position: relative;
+  padding-bottom: 1.25rem;
+}
+
+.prose .fd-step:last-child {
+  padding-bottom: 0;
+}
+
+.prose .fd-step::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  inset-inline-start: -2.75rem;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-fd-border);
+  background: var(--color-fd-background);
+  color: var(--color-fd-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.prose .fd-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-2.75rem + 0.875rem - 0.5px);
+  top: 2rem;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-fd-border);
+}
+
+.prose .fd-step > :is(h2, h3, h4) {
+  margin-top: 0;
+  min-height: 1.75rem;
+  margin-bottom: 0.5em;
+}
+
+.prose .fd-step > :last-child {
+  margin-bottom: 0;
+}
+
+/* ─── Tabs (fumadocs-ui/components/tabs) ──────────────────────────────────── */
+.prose [data-docs-tabs] [role="tab"] {
+  padding-block: 0.625rem;
+}
+
+.prose [data-docs-tabs] [role="tab"][data-state="active"] {
+  color: var(--color-fd-foreground);
+  border-color: var(--color-fd-foreground);
+}
+
+/* ─── Headings' anchors stay out of the table of contents' way ────────────── */
+.prose :where(h2, h3, h4) > a[data-card] {
+  text-decoration: none;
+}
+
+/* Mermaid's XY charts draw a plot background the dark theme doesn't need. */
 g.main:has(> g.plot) > rect {
   display: none;
-}
-
-/* Mention styles */
-.mention {
-  @apply bg-primary/10 rounded-md px-1 font-mono text-sm font-semibold;
-}
-
-.code-inline {
-  @apply bg-muted text-muted-foreground px-1.5 py-0.5 font-mono text-xs font-medium;
-}
-
-@keyframes text {
-  from {
-    background-position: 0% center;
-  }
-  to {
-    background-position: -200% center;
-  }
-}
-
-.animate-text {
-  animation: text 3s linear infinite;
-}
-
-@utility no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-@utility scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-}
-
-@utility scrollbar-gutter-stable {
-  scrollbar-gutter: stable;
-}
-
-@utility scrollbar-gutter-both {
-  scrollbar-gutter: stable both-edges;
 }
 
 /*
@@ -140,16 +387,4 @@ g.main:has(> g.plot) > rect {
 :is(:lang(ja), :lang(ko), :lang(zh))
   :is(h1, h2, .font-display, .tracking-tight, .tracking-tighter) {
   letter-spacing: normal;
-}
-
-/*
- * The installed scanner (lib/scanner-app.ts) opens /scan in its own window.
- * There the scanner comes first: the page's hero, guide, FAQ and footer stay
- * on the website. The header stays, for languages and the rest of QRdx.
- */
-@media (display-mode: standalone) {
-  main[data-scanner-app] > :not([data-scanner-tool]),
-  main[data-scanner-app] ~ * {
-    display: none;
-  }
 }
