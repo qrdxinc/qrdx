@@ -1,9 +1,12 @@
 import { Setting4 as Settings2 } from "iconsax-reactjs";
 import { z } from "zod";
+import {
+  MAX_CUSTOM_CSS_LENGTH,
+  scopeCustomCss,
+} from "@/ee/white-label/custom-css";
 import { registerBlock } from "@/lib/landing/registry";
 import type { LandingPageContent } from "@/types/landing";
 import { imageSchema, lineText } from "./block-kit";
-import { MAX_CUSTOM_CSS_LENGTH, scopeCustomCss } from "./custom-css";
 import { PageSettingsEditor } from "./editor/page-settings-editor";
 
 /**
@@ -21,7 +24,10 @@ export const pageSettingsSchema = z.object({
   shareImage: imageSchema.optional(),
   /** Let search engines index the page (off by default) */
   indexable: z.boolean().default(false),
-  /** Business: validated + scoped by components/landing/custom-css */
+  /**
+   * Business: validated + scoped by ee/white-label/custom-css. Kept as stored
+   * where it isn't applied (another plan, or no licence key here).
+   */
   customCss: z
     .string()
     .max(MAX_CUSTOM_CSS_LENGTH)

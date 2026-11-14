@@ -40,6 +40,7 @@ import {
 } from "@/components/landing/page-settings-block";
 import { changedFields } from "@/ee/audit-log/metadata";
 import { recordAuditEvent } from "@/ee/audit-log/record";
+import { assertCustomCssAllowed } from "@/ee/white-label/access";
 import { HttpError } from "@/lib/error-response";
 import { PRODUCT_BLOCK_TYPE, pageGtin } from "@/lib/gs1/digital-link";
 import { parseLandingPageContent } from "@/lib/landing/blocks";
@@ -403,21 +404,12 @@ async function insertVersion(
   }
 }
 
-/** Plan-gated content: custom CSS needs Business. */
-async function assertContentAllowed(
+/** Plan-gated content: custom CSS needs Business (ee/white-label). */
+function assertContentAllowed(
   scope: ActiveScope,
   content: LandingPageContent,
-) {
-  const css = getPageSettings(content).customCss.trim();
-  if (!css) return;
-  const limits = getPlanLimits(await getPlanForScope(scope));
-  if (!limits.customCss) {
-    throw new HttpError(
-      402,
-      "PLAN_REQUIRED",
-      "Custom CSS is a Business feature. Remove it from Settings to publish.",
-    );
-  }
+): Promise<void> {
+  return assertCustomCssAllowed(scope, getPageSettings(content).customCss);
 }
 
 function validateContent(input: unknown): LandingPageContent {

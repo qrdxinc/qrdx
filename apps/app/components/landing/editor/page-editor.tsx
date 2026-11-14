@@ -45,6 +45,7 @@ import { useShowLimit } from "@/components/limits/limit-dialog";
 import { PhoneFrame } from "@/components/mockups/phone-frame";
 import { useWorkspaceHref } from "@/components/workspace-provider";
 import { ViewOnlyNotice } from "@/components/workspaces/view-only";
+import { scopeCustomCss } from "@/ee/white-label/custom-css";
 import {
   type BlockEditorContext,
   createBlock,
@@ -53,7 +54,6 @@ import {
 } from "@/lib/landing/blocks";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 import type { LandingBlock, LandingPageContent } from "@/types/landing";
-import { scopeCustomCss } from "../custom-css";
 import { LandingPageFooter } from "../page-footer";
 import {
   DEFAULT_PAGE_SETTINGS,
@@ -86,7 +86,7 @@ export interface PageEditorProps {
   } | null;
   savedThemes: SavedThemePalette[];
   canUseCustomCss: boolean;
-  /** badge: "Made with QRdx" footer (Free); whiteLabel: Business */
+  /** badge: "Made with QRdx" footer (Free); whiteLabel: Business (ee/white-label) */
   branding: { badge: boolean; whiteLabel: boolean };
   storageEnabled: boolean;
   /**
