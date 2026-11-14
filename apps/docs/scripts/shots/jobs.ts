@@ -290,6 +290,7 @@ export const JOBS: Job[] = [
     capture: { kind: "element", find: "label", name: "Password", margin: 110 },
   },
   {
+    kind: "shot",
     id: "code-analytics",
     look: "window",
     title: "One code's analytics",

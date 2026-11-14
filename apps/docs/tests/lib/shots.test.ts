@@ -201,10 +201,12 @@ describe("the committed manifest", () => {
           400 * 1024,
         );
       }
+      // Stills are 1600 to 2000 px wide; a clip is the viewport it recorded.
+      const minWidth = entry.kind === "shot" ? 1600 : 1280;
       expect(
         entry.width,
-        `${id}: width between 1600 and 2000`,
-      ).toBeGreaterThanOrEqual(1500);
+        `${id}: width at least ${minWidth}`,
+      ).toBeGreaterThanOrEqual(minWidth);
       expect(entry.width).toBeLessThanOrEqual(2000);
       expect(entry.height).toBeGreaterThan(0);
     }
