@@ -52,6 +52,34 @@ describe("qrdx/solid on a server", () => {
     }
   );
 
+  it("QRCode writes root attributes on the <svg>, like QRCodeSVG", () => {
+    const props = {
+      value: "https://qrdx.dev",
+      size: 120,
+      logo: "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%2F%3E",
+      level: "H",
+      class: "qr",
+      "aria-label": "Guest Wi-Fi",
+      "data-code": "wifi",
+    } as const;
+    for (const extra of [
+      {},
+      { frame: { style: "tag" as const, text: "Join" } },
+    ]) {
+      const all = { ...props, ...extra };
+      const html = renderToString(() => createComponent(QRCode, all));
+      const root = html.slice(0, html.indexOf(">") + 1);
+      expect(root).toContain('class="qr"');
+      expect(root).toContain('aria-label="Guest Wi-Fi"');
+      expect(root).toContain('data-code="wifi"');
+      expect(root).not.toMatch(/\blogo=/);
+      expect(html.match(/aria-label=/g)).toHaveLength(1);
+      expect(html.replace(/ data-hk=(?:"[^"]+"|[^\s>]+)/, "")).toBe(
+        toSVGString(resolveQRCodeProps(all))
+      );
+    }
+  });
+
   it("gives each code on a page its own key", () => {
     const html = renderToString(() => [
       createComponent(QRCodeSVG, { value: "https://qrdx.dev/a" }),

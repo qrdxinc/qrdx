@@ -1,7 +1,12 @@
 // QRCode's simpler logo API (`logo`, `logoOptions`, `hideLogo`, `scale`)
 // resolved into the props QRCodeSVG draws with. The React component and the
 // framework adapters share it, so a `<QRCode>` draws the same everywhere.
-import type { LogoOptions, QRProps, QRSVGOptions } from "../types";
+import type {
+  LogoOptions,
+  QRProps,
+  QRSVGAttributes,
+  QRSVGOptions,
+} from "../types";
 import { DEFAULT_MARGIN, DEFAULT_SIZE } from "./constants";
 import { getQRData } from "./helpers";
 
@@ -12,6 +17,66 @@ export interface QRCodeProps extends QRProps {
   /** Size, clear space and position of `logo` (see `LogoOptions`) */
   logoOptions?: LogoOptions;
   scale?: number;
+}
+
+/**
+ * `QRCode`'s props plus any root attribute (`aria-label`, `className`,
+ * `role`, `id`, `data-*`…), which goes on the `<svg>` as it does with
+ * `QRCodeSVG`: what the Preact and Solid `QRCode` take, and what
+ * `resolveQRCodeProps` resolves. React's `QRCode` types the attributes as
+ * `QRCodePropsSVG`.
+ */
+export type QRCodeOptions = QRCodeProps & QRSVGAttributes;
+
+/**
+ * Every prop `QRCode` draws with. Anything else among its props is a root
+ * attribute. `satisfies` keeps the list complete: a new `QRCodeProps` key
+ * that isn't added here fails to compile.
+ */
+const QR_CODE_PROP_KEYS = {
+  value: true,
+  size: true,
+  level: true,
+  bgColor: true,
+  fgColor: true,
+  eyeColor: true,
+  dotColor: true,
+  bodyPattern: true,
+  cornerEyePattern: true,
+  cornerEyeDotPattern: true,
+  margin: true,
+  style: true,
+  imageSettings: true,
+  isOGContext: true,
+  templateId: true,
+  customTemplate: true,
+  customProps: true,
+  frame: true,
+  art: true,
+  eyeColors: true,
+  moduleScale: true,
+  autoLevel: true,
+  shape: true,
+  frameLabelMarkers: true,
+  partMarkers: true,
+  hideLogo: true,
+  logo: true,
+  logoOptions: true,
+  scale: true,
+} as const satisfies Record<keyof QRCodeProps, true>;
+
+/**
+ * The root attributes among `QRCode`'s props, in the order they were given:
+ * everything that isn't one of its own props.
+ */
+function rootAttributes(props: QRCodeOptions): QRSVGAttributes {
+  const attributes: QRSVGAttributes = {};
+  for (const key of Object.keys(props)) {
+    if (!Object.hasOwn(QR_CODE_PROP_KEYS, key)) {
+      attributes[key] = props[key];
+    }
+  }
+  return attributes;
 }
 
 type QRData = ReturnType<typeof getQRData>;
@@ -38,9 +103,13 @@ export function getQRCodeData(props: QRCodeProps): QRData {
   });
 }
 
-/** The `QRCodeSVG` props `QRCode` draws with, given its laid-out data. */
+/**
+ * The `QRCodeSVG` props `QRCode` draws with, given its laid-out data. Root
+ * attributes among `props` come along, after the drawing props, so they land
+ * on the `<svg>` (on the frame's outer `<svg>` with a frame).
+ */
 export function getQRCodeSVGProps(
-  props: QRCodeProps,
+  props: QRCodeOptions,
   qrData: QRData
 ): QRSVGOptions {
   const {
@@ -103,13 +172,15 @@ export function getQRCodeSVGProps(
     templateId: qrData.templateId,
     value: qrData.value,
     ...(logoSettings && { imageSettings: logoSettings }),
+    ...rootAttributes(props),
   };
 }
 
 /**
- * `QRCode`'s props (with `logo`, `logoOptions`, `hideLogo` and `scale`) as
- * the props `createQRCodeTree` and `toSVGString` take: what `<QRCode>` draws.
+ * `QRCode`'s props (with `logo`, `logoOptions`, `hideLogo` and `scale`, plus
+ * any root attribute) as the props `createQRCodeTree` and `toSVGString`
+ * take: what `<QRCode>` draws.
  */
-export function resolveQRCodeProps(props: QRCodeProps): QRSVGOptions {
+export function resolveQRCodeProps(props: QRCodeOptions): QRSVGOptions {
   return getQRCodeSVGProps(props, getQRCodeData(props));
 }
