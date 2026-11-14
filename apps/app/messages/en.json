@@ -3417,6 +3417,10 @@
         "scale": "Scale",
         "transparentBackground": "Transparent background",
         "makeManyFromACsv": "Make many from a CSV with this style",
+        "nudgeDynamic": "Need to change the link after printing, or count scans? Make it dynamic with a free account and download it again. It keeps working whatever happens to your plan.",
+        "nudgeDynamicCta": "Make it dynamic",
+        "nudgeSave": "Save this design to a free account and use it on any device.",
+        "nudgeSaveCta": "Save design",
         "scannedFromAbout": "Scanned from about",
         "setsTheCodeWidthBelow": "Sets the code width below.",
         "codeWidth": "Code width",
@@ -3545,6 +3549,10 @@
       "undoRedoButtons": {
         "undo": "Undo",
         "redo": "Redo"
+      },
+      "keepDesigns": {
+        "text": "Keep your designs on every device with a free account.",
+        "cta": "Create free account"
       }
     },
     "ai": {
@@ -8842,6 +8850,9 @@
       "keepDesigns": "Keep your designs in your account, on every device.",
       "afterDownload": "It's free, and your code keeps working whatever happens to your plan.",
       "upgrade": "Plans and billing belong to an account. You'll pick up right where you were."
+    },
+    "nudge": {
+      "dismiss": "Don't show this again"
     }
   },
   "codeBuilder": {
