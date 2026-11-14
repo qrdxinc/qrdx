@@ -133,7 +133,8 @@
     "account": {
       "tryPlayground": "Try the Playground",
       "playground": "Playground",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "signIn": "Sign in"
     },
     "github": {
       "star": "Star",
@@ -480,7 +481,7 @@
         },
         "openSource": {
           "question": "Is QRdx open source?",
-          "answer": "Yes. QRdx is developed in public on GitHub. The web app is open source under the GNU AGPL-3.0 (or later): you can review the code, file issues, contribute, or self-host your own instance, dynamic codes and hosted pages included. The qrdx React library on npm and the @qrdx/cli command-line tool are MIT, so closed-source software can use them too. The business features in the ee folders, today workspace single sign-on and the audit log, are under the QRdx Commercial License."
+          "answer": "Yes. QRdx is developed in public on GitHub. The web app is open source under the GNU AGPL-3.0 (or later): you can review the code, file issues, contribute, or self-host your own instance, dynamic codes and hosted pages included. The qrdx React library on npm and the @qrdx/cli command-line tool are MIT, so closed-source software can use them too. The business features in the ee folders (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) are under the QRdx Commercial License."
         },
         "api": {
           "question": "Can developers generate QR codes with an API?",
@@ -755,7 +756,7 @@
         },
         "selfHost": {
           "question": "Can I self-host instead?",
-          "answer": "Yes. QRdx is open source under the AGPL-3.0. Run it with your own Postgres database by following the self-hosting guide; the plan limits are defined in one file that you can change for your instance."
+          "answer": "Yes. QRdx is open source under the AGPL-3.0. Run it with your own Postgres database by following the self-hosting guide; the plan limits are defined in one file that you can change for your instance. The business features in the ee folders (single sign-on, the audit log, the client portal, white-label pages and conversion tracking) need an enterprise agreement."
         },
         "nonprofit": {
           "question": "Do you have a discount for non-profits?",
@@ -797,7 +798,7 @@
         "contract": "A yearly contract, paid by invoice",
         "replies": "Replies within {hours, plural, one {# business hour} other {# business hours}} when codes stop working",
         "review": "Answers for your security review",
-        "selfHost": "SSO and audit log on your own server"
+        "selfHost": "SSO, audit log, client portal, white-label and conversions on your own server"
       },
       "security": "Security at QRdx"
     },
@@ -1130,11 +1131,11 @@
     },
     "bulk": {
       "metaTitle": "Free Bulk QR Code Generator from CSV: Styled, SVG, No Upload",
-      "metaDescription": "Turn a CSV into up to {rows, number} styled QR codes and download them as PNG, WebP or SVG in a ZIP. Runs in your browser: no upload, no signup, no watermark. Sample CSV included.",
+      "metaDescription": "Turn a CSV into up to {rows, number} styled QR codes and download them as PNG, WebP or SVG in a ZIP. Runs in your browser: no upload, no watermark, no sign-up up to {limit, number} rows.",
       "crumb": "Bulk generator",
       "title": "Bulk QR code generator",
       "intro1": "Turn a CSV file into thousands of QR codes in one go, styled the way you want and downloaded as PNG, WebP or SVG in a ZIP. One row per code, with file names from a column: product labels, event tickets, asset tags, table numbers or mailers.",
-      "intro2": "It all runs in your browser, so the CSV is never uploaded, and there's no sign-up, watermark or per-code charge. Not sure about the layout? Start from the sample CSV.",
+      "intro2": "It all runs in your browser, so the CSV is never uploaded, and there's no watermark or per-code charge. Files of up to {limit, number} rows need no account; bigger ones, up to {rows, number}, need a free account. Not sure about the layout? Start from the sample CSV.",
       "facts": {
         "rows": "Up to {rows, number} rows per file",
         "styled": "Your colors, shapes and logo",
@@ -1168,7 +1169,7 @@
         "uploadQuestion": "Is my CSV uploaded anywhere?",
         "uploadAnswer": "No. The file is read, the QR codes are drawn and the ZIP is built in your browser. Nothing is sent to QRdx's servers, so it's safe for internal links, Wi-Fi passwords or customer data.",
         "howManyQuestion": "How many QR codes can I generate at once?",
-        "howManyAnswer": "Up to {rows, number} rows per file; for more, split the CSV, or use the qrdx batch command of the CLI, which has no limit. A 512 px PNG takes about 20 ms on a laptop, so the full {rows, number} take a few minutes. Bigger PNGs take longer and make bigger files, so choose 512 px unless you need more.",
+        "howManyAnswer": "Up to {limit, number} rows per file without an account, and up to {rows, number} with a free account; for more, split the CSV, or use the qrdx batch command of the CLI, which has no limit. A 512 px PNG takes about 20 ms on a laptop, so the full {rows, number} take a few minutes. Bigger PNGs take longer and make bigger files, so choose 512 px unless you need more.",
         "rowQuestion": "What can each row contain?",
         "rowAnswer": "Any text up to the QR code limit: links, plain text, or payloads such as WIFI:..., mailto:..., tel:... and BEGIN:VCARD. The content is encoded exactly as it appears in the cell.",
         "excelQuestion": "Can I use an Excel or Google Sheets file?",
@@ -1195,7 +1196,13 @@
         "removeFile": "Remove file",
         "drop": "Drop a CSV file here, or click to choose one",
         "dropHelp": "Up to {rows, number} rows and 10 MB. The file stays on your device.",
+        "dropHelpSignedOut": "Up to {limit, number} rows without an account, {rows, number} with a free one, and 10 MB. The file stays on your device.",
         "truncated": "This file has more than {rows, number} rows. Only the first {rows, number} will be used.",
+        "overLimit": "This file has {count, number} rows. Up to {limit, number} run without an account; a free account runs up to {max, number}, and your file stays loaded while you sign in.",
+        "overLimitCta": "Sign up free and make {count, number}",
+        "firstOnly": "Make the first {limit, number} without an account",
+        "restored": "Your file is back: {count, plural, one {# row} other {# rows}}.",
+        "restoreLost": "Signing in reloaded the page and your file couldn't be kept. Drop it again to continue.",
         "header": "First row contains column names",
         "stepMap": "2. Map columns",
         "valueColumn": "QR code content",
@@ -1228,7 +1235,9 @@
         "skipped": "{count, plural, one {# row skipped} other {# rows skipped}}:",
         "skippedListed": "{count, plural, one {# row skipped} other {# rows skipped}} (listed in errors.csv):",
         "line": "Line {row, number}: {error}",
-        "private": "Everything runs in your browser. Your CSV and the generated codes are never uploaded."
+        "private": "Everything runs in your browser. Your CSV and the generated codes are never uploaded.",
+        "doneNudge": "Save this style as a theme, and make up to {codes, number} dynamic codes you can edit after printing, with a free account.",
+        "doneNudgeCta": "Create free account"
       }
     },
     "printSize": {
@@ -2208,8 +2217,8 @@
         "body": "We fill in your security questionnaire and send a signed copy of the Data Processing Addendum."
       },
       "selfHost": {
-        "title": "Single sign-on and audit log when you self-host",
-        "body": "QRdx is open source, but single sign-on and the audit log are under the QRdx commercial license. An Enterprise agreement lets you run them on your own server with a license key."
+        "title": "Business features when you self-host",
+        "body": "QRdx is open source, but single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking are under the QRdx commercial license. An Enterprise agreement lets you run them on your own server with a license key."
       }
     },
     "limitsNote": "On qrdx.dev, Enterprise workspaces have the Business plan's limits. If you need more of something, say so in the form.",
@@ -2236,7 +2245,7 @@
       },
       "sign": {
         "title": "Sign and pay by invoice",
-        "body": "Once the contract is signed, we send the invoice and move your workspace on qrdx.dev to the Business plan. If you self-host, the contract also covers single sign-on and the audit log on your own server, switched on with QRDX_EE_LICENSE."
+        "body": "Once the contract is signed, we send the invoice and move your workspace on qrdx.dev to the Business plan. If you self-host, the contract also covers single sign-on, the audit log, the client portal, white-label pages and conversion tracking on your own server: we send a license key for QRDX_EE_LICENSE. It has an expiry, and your server checks it offline."
       }
     },
     "formTitle": "Talk to us",
@@ -3028,7 +3037,7 @@
     "metaDescription": "QRdx is an open-source QR code generator on GitHub. The app is AGPL-3.0 and the React library and CLI are MIT. Use qrdx.dev free or run your own copy.",
     "crumb": "Open source",
     "title": "Open source QR code generator",
-    "intro1": "QRdx is built in public on GitHub. The web app that runs qrdx.dev, with its editor, dynamic codes, hosted pages and scan analytics, is licensed under the AGPL-3.0. The React library, the CLI, the plugins, the agent skill and the shadcn/ui components are MIT. Workspace single sign-on and the audit log are under the QRdx Commercial License.",
+    "intro1": "QRdx is built in public on GitHub. The web app that runs qrdx.dev, with its editor, dynamic codes, hosted pages and scan analytics, is licensed under the AGPL-3.0. The React library, the CLI, the plugins, the agent skill and the shadcn/ui components are MIT. The business features (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) are under the QRdx Commercial License.",
     "intro2": "You can use it free on qrdx.dev, run your own copy, or build QR codes into your app with the library. Making QR codes stays free for everyone. The project earns from the Pro and Business plans and from enterprise agreements.",
     "facts": {
       "agpl": "AGPL-3.0 app",
@@ -3060,10 +3069,10 @@
       "registryName": "shadcn/ui components",
       "registryBody": "The QR code, scanner and other components that npx shadcn add installs into your project",
       "eeName": "Business features",
-      "eeBody": "Workspace single sign-on and the workspace audit log"
+      "eeBody": "Workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking"
     },
     "eeLicense": "QRdx Commercial License",
-    "eeNote": "You can read, test and contribute to the code in the ee folders, but using it in production needs a written agreement with QRdx. On a self-hosted instance those two features stay off unless QRDX_EE_LICENSE is set, and everything else works without them.",
+    "eeNote": "You can read, test and contribute to the code in the ee folders, but using it in production needs a written agreement with QRdx. On a self-hosted instance those features stay off unless QRDX_EE_LICENSE holds a valid key, which QRdx issues with the agreement and your server checks offline, and everything else works without them.",
     "eeAgreement": "Enterprise agreements cover running them on your own server: <link>ask on the enterprise page</link> or email {email}.",
     "waysEyebrow": "Ways to use it",
     "waysTitle": "Pick how you run it",
@@ -3101,7 +3110,7 @@
       "mitTitle": "The library and tools (MIT)",
       "mitBody": "The qrdx library, the CLI, the plugins, the agent skill and the shadcn/ui components. Use them in any project, closed source included, as long as the copyright and license notice stay with the code. Releases before qrdx 0.0.47 and @qrdx/cli 0.0.5 were AGPL-3.0-or-later.",
       "eeTitle": "Business features (QRdx Commercial License)",
-      "eeBody": "You can read, change and test the code in the ee folders. Using single sign-on or the audit log in production on your own server needs a written agreement with QRdx.",
+      "eeBody": "You can read, change and test the code in the ee folders. Using those business features in production on your own server needs a written agreement with QRdx.",
       "trademarkTitle": "The name and logo",
       "trademarkBody": "The QRdx name and logo are trademarks. A fork or a public service built from the code needs its own name and logo; the <link>trademark policy</link> has the details."
     },
@@ -3133,11 +3142,11 @@
     "faqTitle": "Open source questions",
     "faq": {
       "openQuestion": "Is QRdx really open source?",
-      "openAnswer": "Yes. The source is on GitHub, the web app is licensed under the AGPL-3.0-or-later, and the qrdx library, @qrdx/cli, the plugins, the agent skill and the shadcn/ui components are MIT. Two business features, workspace single sign-on and the audit log, are in ee folders under the QRdx Commercial License: you can read that code, but production use needs an agreement with QRdx.",
+      "openAnswer": "Yes. The source is on GitHub, the web app is licensed under the AGPL-3.0-or-later, and the qrdx library, @qrdx/cli, the plugins, the agent skill and the shadcn/ui components are MIT. The business features (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) are in ee folders under the QRdx Commercial License: you can read that code, but production use needs an agreement with QRdx.",
       "githubQuestion": "Where is the QRdx source code on GitHub?",
       "githubAnswer": "At github.com/qrdxinc/qrdx. It's one monorepo with the web app, the qrdx library, the CLI, the plugins and the docs.",
       "freeQuestion": "Is QRdx free to self-host?",
-      "freeAnswer": "Yes. There's no license fee for the app; you pay only for your own server and database. A self-hosted instance runs dynamic codes, hosted pages and scan analytics. Single sign-on and the audit log are the exception: they stay off unless QRDX_EE_LICENSE is set, and using them in production needs an enterprise agreement.",
+      "freeAnswer": "Yes. There's no license fee for the app; you pay only for your own server and database. A self-hosted instance runs dynamic codes, hosted pages and scan analytics. The business features in the ee folders are the exception: single sign-on, the audit log, the client portal, white-label pages and conversion tracking stay off unless QRDX_EE_LICENSE holds a valid key, which QRdx issues with an enterprise agreement and your server checks offline. Using them in production needs that agreement.",
       "needQuestion": "What do I need to self-host QRdx?",
       "needAnswer": "You need Docker with Compose v2, or Node.js 22 and Bun 1.4 for the manual setup, and a Postgres database: the one docker-compose.yml starts, or Neon. Set NEXT_PUBLIC_APP_URL, DATABASE_URL and BETTER_AUTH_SECRET, and give people a way to sign in with a GitHub or Google OAuth app, or with email codes through Resend.",
       "closedQuestion": "Can I use the QR code library in a closed-source app?",
@@ -3424,6 +3433,10 @@
         "scale": "Scale",
         "transparentBackground": "Transparent background",
         "makeManyFromACsv": "Make many from a CSV with this style",
+        "nudgeDynamic": "Need to change the link after printing, or count scans? Make it dynamic with a free account and download it again. It keeps working whatever happens to your plan.",
+        "nudgeDynamicCta": "Make it dynamic",
+        "nudgeSave": "Save this design to a free account and use it on any device.",
+        "nudgeSaveCta": "Save design",
         "scannedFromAbout": "Scanned from about",
         "setsTheCodeWidthBelow": "Sets the code width below.",
         "codeWidth": "Code width",
@@ -3552,6 +3565,10 @@
       "undoRedoButtons": {
         "undo": "Undo",
         "redo": "Redo"
+      },
+      "keepDesigns": {
+        "text": "Keep your designs on every device with a free account.",
+        "cta": "Create free account"
       }
     },
     "ai": {
@@ -4676,6 +4693,7 @@
       "fixedOncePrinted": "Fixed once printed",
       "dynamic": "Dynamic",
       "editLaterCountScans": "Edit later, count scans",
+      "signedOutNote": "Dynamic needs a free account. Your code keeps working whatever happens to your plan.",
       "linkOptions": "Link options…",
       "printedCodesStillOpenDestinationurl": "Printed codes still open <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Point it to the new address",
@@ -8834,6 +8852,24 @@
     },
     "dialogCloseButton": {
       "close": "Close"
+    },
+    "reasons": {
+      "saveDesign": "Save this design to your account and open it on any device.",
+      "makeDynamic": "Dynamic codes live in your account: change where they point after printing, and count every scan.",
+      "hostedPage": "Hosted pages live in your account, so you can change them after printing.",
+      "aiArt": "AI art runs on a free account, which comes with monthly images.",
+      "aiChat": "The AI designer needs a free account. Free accounts get {count, number} requests in total.",
+      "uploadFrame": "Uploading your own frames needs a free account.",
+      "publishFrame": "Sharing a frame with the community needs a free account.",
+      "communityAction": "Liking, saving, copying and publishing community designs needs a free account.",
+      "saveBarcode": "Saved barcodes live in your account, ready to download again.",
+      "bulkOverLimit": "Files of up to {limit, number} rows need no account. A free account makes up to {max, number} per file, and your file stays loaded.",
+      "keepDesigns": "Keep your designs in your account, on every device.",
+      "afterDownload": "It's free, and your code keeps working whatever happens to your plan.",
+      "upgrade": "Plans and billing belong to an account. You'll pick up right where you were."
+    },
+    "nudge": {
+      "dismiss": "Don't show this again"
     }
   },
   "codeBuilder": {

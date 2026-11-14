@@ -28,7 +28,7 @@ export function AIChatHero() {
   const { setChatSuggestionsOpen } = usePreferencesStore();
 
   const handleRedirectAndThemeGeneration = (promptData: AIPromptData) => {
-    if (!checkValidSession("signup", "AI_GENERATE_FROM_PAGE", { promptData }))
+    if (!checkValidSession("ai_chat", "AI_GENERATE_FROM_PAGE", { promptData }))
       return;
     if (!checkValidSubscription()) return;
 

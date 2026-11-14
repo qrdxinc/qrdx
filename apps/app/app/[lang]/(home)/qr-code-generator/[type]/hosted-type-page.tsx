@@ -136,7 +136,7 @@ export async function HostedTypePage({
       >
         <div className="flex flex-wrap items-center justify-center gap-2.5">
           <Button asChild>
-            <SignInLink href={start} rel="nofollow">
+            <SignInLink href={start} reason="hosted_page" rel="nofollow">
               {content.cta}
               <ArrowRight className="size-4" />
             </SignInLink>

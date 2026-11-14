@@ -60,7 +60,7 @@ export function SaveBarcode({ current }: { current: CurrentBarcode | null }) {
           link: (chunks) => (
             <button
               className="text-foreground underline underline-offset-4 hover:no-underline"
-              onClick={() => openSignInTo("/barcode-generator")}
+              onClick={() => openSignInTo("/barcode-generator", "save_barcode")}
               type="button"
             >
               {chunks}

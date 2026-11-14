@@ -9,7 +9,8 @@
 //
 //   node packages/auth/ee/scripts/license.mjs issue --private-key <file> \
 //     --customer "Acme Ltd" --expires 2027-11-30 \
-//     [--features sso,auditLog] [--seats 50] [--id lic_acme_2026]
+//     [--features sso,auditLog,clientPortal,whiteLabel,conversions] \
+//     [--seats 50] [--id lic_acme_2026]
 //     Prints a licence key valid through the end of --expires (UTC). Without
 //     --features it covers every ee feature. --seats is recorded only.
 //
@@ -25,7 +26,14 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 
 const PREFIX = "qrdx-ee-1";
-const FEATURES = ["sso", "auditLog"];
+// The names in ../../ee-license.ts EE_FEATURES.
+const FEATURES = [
+  "sso",
+  "auditLog",
+  "clientPortal",
+  "whiteLabel",
+  "conversions",
+];
 
 function fail(message) {
   console.error(`license: ${message}`);

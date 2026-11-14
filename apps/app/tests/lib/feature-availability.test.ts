@@ -125,6 +125,9 @@ const NEEDS: Record<FeatureId, string[]> = {
   passkeys: ["NEXT_PUBLIC_APP_URL"],
   sso: ["QRDX_EE_LICENSE"],
   auditLog: ["QRDX_EE_LICENSE"],
+  clientPortal: ["QRDX_EE_LICENSE"],
+  whiteLabel: ["QRDX_EE_LICENSE"],
+  conversions: ["QRDX_EE_LICENSE"],
   slackBot: [
     "SLACK_CLIENT_ID",
     "SLACK_CLIENT_SECRET",
@@ -374,6 +377,54 @@ describe("workspace SSO", () => {
     expect(isPathShown(view.hiddenPaths, "/dashboard/acme/settings/sso")).toBe(
       false,
     );
+  });
+});
+
+describe("client portal, white-label and conversions (ee/)", () => {
+  const ids = ["clientPortal", "whiteLabel", "conversions"] as const;
+
+  it("run only with a valid licence key that covers them, like SSO and the audit log", () => {
+    for (const id of ids) {
+      expect(computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE }))[id]).toBe(true);
+      expect(
+        computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: [] }))[id],
+        id,
+      ).toBe(false);
+      expect(
+        computeFeatures(
+          ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: ["sso", "auditLog"] }),
+        )[id],
+        id,
+      ).toBe(false);
+      expect(computeFeatures(ctx({}))[id], id).toBe(false);
+      expect(computeFeatures(ctx({ QRDX_EE_LICENSE: " " }))[id], id).toBe(
+        false,
+      );
+      expect(missingFeatureSetup(id, ctx({})), id).toEqual(["QRDX_EE_LICENSE"]);
+    }
+  });
+
+  it("hide the client portal's pages without one", () => {
+    const view = toPublicAvailability(computeFeatures(ctx({})));
+    expect(view.unavailable).toEqual(expect.arrayContaining([...ids]));
+    expect(
+      isPathShown(view.hiddenPaths, "/dashboard/acme/settings/clients"),
+    ).toBe(false);
+    expect(isPathShown(view.hiddenPaths, "/docs/client-portal")).toBe(false);
+    expect(
+      isPathShown(view.hiddenPaths, "/docs/developers/api/create-conversion"),
+    ).toBe(false);
+    // Shared stats pages and the tracking docs stay: only their ee/ parts go.
+    expect(isPathShown(view.hiddenPaths, "/docs/client-reports")).toBe(true);
+    expect(
+      isPathShown(view.hiddenPaths, "/docs/tracking-and-conversions"),
+    ).toBe(true);
+    const licensed = toPublicAvailability(
+      computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE })),
+    );
+    expect(
+      isPathShown(licensed.hiddenPaths, "/dashboard/acme/settings/clients"),
+    ).toBe(true);
   });
 });
 

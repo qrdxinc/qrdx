@@ -1,6 +1,5 @@
 // Client-safe parts of public analytics pages (lib/public-stats.ts).
 
-import type { ClientBrand } from "@/lib/client-brands-shared";
 import type { ScanRange, SeriesInterval } from "@/lib/scan-ranges";
 import type { BreakdownRow, DailyCount, ScanSourceCounts } from "@/lib/scans";
 
@@ -35,6 +34,18 @@ export interface PublicStatsShare {
   since: string | null;
 }
 
+/**
+ * A client's brand on a shared page (ee/client-portal, QRdx commercial
+ * licence): their name, logo and accent color.
+ */
+export interface StatsPageBrand {
+  name: string;
+  /** An upload served by QRdx or an https image URL; null: the initial */
+  logo: string | null;
+  /** "#rrggbb", or null for the monochrome look */
+  accent: string | null;
+}
+
 /** What /stats/<token> shows: aggregates only, nothing about a visitor. */
 export interface PublicStats {
   code: {
@@ -49,7 +60,7 @@ export interface PublicStats {
   ranges: PublicStatsRange[];
   // Agency tools (feat/agency-tools)
   /** The client brand the page shows (Pro and Business), or null */
-  brand: Omit<ClientBrand, "id"> | null;
+  brand: StatsPageBrand | null;
   /** Business: a branded page shows no QRdx mark */
   hideQrdx: boolean;
   /** The short link is on QRdx's host, so a page without QRdx marks hides it */
@@ -70,31 +81,6 @@ export interface PublicStats {
     /** QR scans and NFC taps (they add up to `total`) */
     sources: ScanSourceCounts;
   };
-}
-
-// ─── Client branding of a shared page (agency tools) ────────────────────────
-
-/** What the share dialog needs to brand a code's page. */
-export interface StatsBranding {
-  /** false until manual-sql/2026-11-11-agency.sql is applied */
-  available: boolean;
-  /** The viewer may change it (owners, admins and members) */
-  canManage: boolean;
-  /** The plan includes client branding (Pro and Business) */
-  allowed: boolean;
-  /** The plan drops the QRdx mark and serves links on custom domains (Business) */
-  whiteLabel: boolean;
-  /** The cheapest plans with each, for the upgrade line */
-  brandingPlan: string | null;
-  whiteLabelPlan: string | null;
-  /** The brand the page shows now */
-  brandId: string | null;
-  /** The workspace's client brands */
-  brands: ClientBrand[];
-  /** The custom domain the link is on now */
-  domainId: string | null;
-  /** The workspace's verified custom domains (Business only, else empty) */
-  domains: { id: string; hostname: string }[];
 }
 
 /** /stats/<token> on a host: QRdx's own, or a customer's verified domain. */

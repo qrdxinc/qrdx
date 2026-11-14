@@ -10,7 +10,8 @@ QRdx's browser-side analytics and cookie consent: the cookie banner and preferen
 | `privacy.ts` | PII guards for properties, URLs and titles; `registerUntrackedPaths` and `isUntrackedAnalyticsPath`; Do Not Track and Global Privacy Control |
 | `posthog.ts` | PostHog, loaded only after the "Analytics" choice, through the same-origin `/ingest` proxy (`@repo/next-config` rewrites it) |
 | `umami.ts` | Umami: cookieless, no consent needed, off under Do Not Track or Global Privacy Control |
-| `identity.ts` | Keeps PostHog in step with the Better Auth session (user id, never email) |
+| `identity.ts` | Keeps PostHog in step with the Better Auth session (user id, never email), and sends `sign_up` / `sign_in` with the dialog they came from |
+| `auth-prompt.ts` | Why the sign-in dialog or a sign-up line appeared (`AUTH_PROMPT_REASONS`), `auth_prompt_shown` / `auth_prompt_dismissed`, and the tab's last dialog for the sign-up that follows |
 | `analytics.tsx` | `<Analytics>`: the Umami script, pageviews on App Router navigations, identity |
 | `featurebase.tsx`, `featurebase-launcher.ts` | The Featurebase widget (after the "Functionality" choice) and the hook that moves its launcher aside |
 | `config.ts` | Where analytics may run (the app's own host; local development only with the debug switch), and the consent mirror cookie |

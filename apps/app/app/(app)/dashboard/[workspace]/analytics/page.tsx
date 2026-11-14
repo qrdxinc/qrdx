@@ -17,7 +17,6 @@ import {
 import { Lock } from "iconsax-reactjs";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { use } from "react";
 import { PageHeader } from "@/app/(app)/dashboard/_components/page-header";
 import { CompareChart } from "@/app/(app)/dashboard/analytics/_components/charts";
 import { ComparePicker } from "@/app/(app)/dashboard/analytics/_components/compare-picker";
@@ -27,11 +26,9 @@ import {
   toCompareOption,
 } from "@/app/(app)/dashboard/analytics/_lib/code-label";
 import {
-  type ConversionSummary,
   codeOptionsByIds,
   filterScopeCodeIds,
   getCodeTotals,
-  getConversionSummary,
   getWorkspaceAnalytics,
   scopeScansWhere,
   searchCodeOptions,
@@ -54,6 +51,9 @@ import {
   TimeCard,
 } from "@/app/(app)/dashboard/codes/[id]/_components/analytics-extra";
 import { InfoHint } from "@/components/help/info-hint";
+import { conversionsAllowed } from "@/ee/conversions/access";
+import { ConversionsSummary } from "@/ee/conversions/analytics-cards";
+import { getConversionSummary } from "@/ee/conversions/queries";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { seriesDates } from "@/lib/scan-ranges";
@@ -161,45 +161,6 @@ function hrefWith(
   return query ? `${path}?${query}` : path;
 }
 
-function ConversionsSummary({
-  conversions,
-}: {
-  conversions: ConversionSummary;
-}) {
-  const t = use(getAppTranslations("app.dashboard.analytics.page"));
-  const revenue = conversions.revenue.filter((row) => Number(row.total) > 0);
-  return (
-    <Card className="gap-3 py-4">
-      <CardHeader className="px-4">
-        <CardTitle>{t("conversions")}</CardTitle>
-        <CardDescription>{t("salesAndSignUpsAttributed")}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-wrap gap-6 px-4">
-        <div>
-          <p className="text-muted-foreground text-xs">{t("conversions")}</p>
-          <p className="text-xl font-bold tabular-nums">
-            {formatNumber(conversions.count)}
-          </p>
-        </div>
-        {revenue.map((row) => (
-          <div key={row.currency ?? "none"}>
-            <p className="text-muted-foreground text-xs">
-              {t("revenue")}
-              {row.currency ? ` (${row.currency})` : ""}
-            </p>
-            <p className="text-xl font-bold tabular-nums">
-              {Number(row.total).toLocaleString("en-US", {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
-              })}
-            </p>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  );
-}
-
 export default async function AnalyticsPage({
   params: routeParams,
   searchParams,
@@ -235,7 +196,7 @@ export default async function AnalyticsPage({
       // The picker's list before anything is typed: the most scanned codes.
       searchCodeOptions(scope),
       filterScopeCodeIds(scope, requested),
-      limits.conversions
+      conversionsAllowed(limits)
         ? settle(getConversionSummary({ scope }, from))
         : Promise.resolve(null),
     ]);

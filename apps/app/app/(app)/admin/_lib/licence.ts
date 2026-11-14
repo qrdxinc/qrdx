@@ -1,3 +1,4 @@
+import type { EeFeature } from "@repo/auth/ee-license";
 import type { EeLicenseState } from "@repo/auth/license";
 
 // The ee licence key as /admin/health shows it (./health.ts). The key is
@@ -9,7 +10,13 @@ export interface LicenceProbe {
   detail: string;
 }
 
-const EE_FEATURE_NAMES = { sso: "single sign-on", auditLog: "the audit log" };
+const EE_FEATURE_NAMES: Record<EeFeature, string> = {
+  sso: "single sign-on",
+  auditLog: "the audit log",
+  clientPortal: "the client portal",
+  whiteLabel: "white-label",
+  conversions: "conversion tracking",
+};
 const DAY_MS = 24 * 60 * 60 * 1000;
 // A licence this close to its expiry shows as a warning.
 const EXPIRY_WARNING_DAYS = 30;
@@ -21,11 +28,12 @@ export function licenceProbe(
   state: EeLicenseState,
   now: Date = new Date(),
 ): LicenceProbe {
-  const both = "single sign-on and the audit log";
+  const all =
+    "the ee features (single sign-on, audit log, client portal, white-label, conversion tracking)";
   if (state.status === "missing") {
     return {
       status: "off",
-      detail: `QRDX_EE_LICENSE not set: ${both} are off`,
+      detail: `QRDX_EE_LICENSE not set: ${all} are off`,
     };
   }
   if (state.status === "invalid") {
@@ -33,8 +41,8 @@ export function licenceProbe(
       status: "error",
       detail:
         state.problem === "no-public-key"
-          ? `This build has no licence public key: ${both} are off`
-          : `Licence key is not valid: ${both} are off`,
+          ? `This build has no licence public key: ${all} are off`
+          : `Licence key is not valid: ${all} are off`,
     };
   }
   const { licence, offAt } = state;
@@ -42,19 +50,19 @@ export function licenceProbe(
   if (state.status === "grace") {
     return {
       status: "warn",
-      detail: `Licence expired on ${expired}: ${both} switch off on ${day(offAt)}`,
+      detail: `Licence expired on ${expired}: ${all} switch off on ${day(offAt)}`,
     };
   }
   if (state.status === "expired") {
     return {
       status: "error",
-      detail: `Licence expired on ${expired}: ${both} are off since ${day(offAt)}`,
+      detail: `Licence expired on ${expired}: ${all} are off since ${day(offAt)}`,
     };
   }
   const covers =
     licence.features.length === Object.keys(EE_FEATURE_NAMES).length
       ? ""
-      : ` (${licence.features.map((f) => EE_FEATURE_NAMES[f]).join(" and ") || "no features"} only)`;
+      : ` (${licence.features.map((f) => EE_FEATURE_NAMES[f]).join(", ") || "no features"} only)`;
   const daysLeft = (licence.expiresAt.getTime() - now.getTime()) / DAY_MS;
   return {
     status: daysLeft <= EXPIRY_WARNING_DAYS ? "warn" : "ok",

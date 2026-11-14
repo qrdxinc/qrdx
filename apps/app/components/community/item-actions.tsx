@@ -88,7 +88,7 @@ export function ItemActions({
 
   // A page template becomes a draft page in the open workspace.
   const copyTemplate = async () => {
-    if (!checkValidSession("signin")) return;
+    if (!checkValidSession("community_action")) return;
     setBusy("template");
     const result =
       item.type === "kit"
@@ -115,7 +115,7 @@ export function ItemActions({
   };
 
   const like = async () => {
-    if (!(item.id && checkValidSession("signin"))) return;
+    if (!(item.id && checkValidSession("community_action"))) return;
     setBusy("like");
     const result = await toggleCommunityLike(item.id);
     setBusy(null);
@@ -129,7 +129,7 @@ export function ItemActions({
   };
 
   const save = async () => {
-    if (!(item.id && checkValidSession("signin"))) return;
+    if (!(item.id && checkValidSession("community_action"))) return;
     setBusy("save");
     const result = await toggleCommunitySave(item.id);
     setBusy(null);
@@ -148,7 +148,7 @@ export function ItemActions({
   };
 
   const copy = async () => {
-    if (!checkValidSession("signin")) return;
+    if (!checkValidSession("community_action")) return;
     setBusy("copy");
     const result = await copyCommunityItem({
       type: item.type,

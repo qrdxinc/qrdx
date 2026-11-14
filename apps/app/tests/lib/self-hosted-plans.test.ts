@@ -301,7 +301,30 @@ describe("a self-hosted server with the licence key and no billing", () => {
       ...app.plans.PLAN_LIMITS.free,
       sso: true,
       auditLog: true,
+      clientReports: true,
+      clientReportsWhiteLabel: true,
+      clientPortal: true,
+      whiteLabel: true,
+      customCss: true,
+      landingPageBadge: false,
+      conversions: true,
     });
+  });
+});
+
+describe("a self-hosted server whose key covers only some ee features", () => {
+  it("gives every plan those features' limits and no others", async () => {
+    const app = await load({
+      ...SELF_HOSTED,
+      QRDX_EE_LICENSE: testLicence({ features: ["sso"] }),
+    });
+    expect(app.plans.getPlanLimits("free")).toEqual({
+      ...app.plans.PLAN_LIMITS.free,
+      sso: true,
+    });
+    // No white-label, so hosted pages keep the "Made with QRdx" footer.
+    expect(app.plans.getPlanLimits("free").landingPageBadge).toBe(true);
+    expect(await app.auditRecords("free")).toBe(false);
   });
 });
 

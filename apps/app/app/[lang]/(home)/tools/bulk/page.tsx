@@ -1,4 +1,7 @@
-import { MAX_BULK_TOOL_ROWS } from "@repo/config";
+import {
+  MAX_BULK_TOOL_ROWS,
+  MAX_BULK_TOOL_ROWS_SIGNED_OUT,
+} from "@repo/config";
 import { ArrowRight2, TickCircle } from "iconsax-reactjs";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -12,8 +15,11 @@ import { FaqList } from "@/components/sections/tools/faq-list";
 import { ToolHero } from "@/components/sections/tools/tool-hero";
 import { localizedMetadata } from "@/lib/i18n/metadata";
 import { requireLocale } from "@/lib/i18n/server";
+import { PLAN_LIMITS } from "@/lib/plans";
 
 const rows = MAX_BULK_TOOL_ROWS;
+/** Rows a file can have with no account (more asks for a free one). */
+const limit = MAX_BULK_TOOL_ROWS_SIGNED_OUT;
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await requireLocale();
@@ -22,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     locale,
     path: "/tools/bulk",
     title: t("metaTitle"),
-    description: t("metaDescription", { rows }),
+    description: t("metaDescription", { rows, limit }),
     ownOgImage: true,
   });
 }
@@ -48,7 +54,7 @@ export default async function BulkPage() {
     question: t(`faq.${key}Question`),
     answer:
       key === "howMany"
-        ? t("faq.howManyAnswer", { rows })
+        ? t("faq.howManyAnswer", { rows, limit })
         : t(`faq.${key}Answer`),
   }));
   return (
@@ -61,7 +67,7 @@ export default async function BulkPage() {
           { name: t("crumb"), path: "/tools/bulk" },
         ]}
         title={t("title")}
-        intro={[t("intro1"), t("intro2")]}
+        intro={[t("intro1"), t("intro2", { rows, limit })]}
       >
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
           <ul className="contents">
@@ -97,9 +103,14 @@ export default async function BulkPage() {
 
       <section aria-label={t("toolLabel")} className="w-full px-10 py-10">
         <ClientMessages
-          namespaces={["tools.bulk.generator", "editor.connections"]}
+          namespaces={[
+            "tools.bulk.generator",
+            "editor.connections",
+            // The line after a run (components/sign-up-nudge.tsx).
+            "auth.nudge",
+          ]}
         >
-          <BulkGenerator />
+          <BulkGenerator freeDynamicCodes={PLAN_LIMITS.free.dynamicCodes} />
         </ClientMessages>
       </section>
 

@@ -11,6 +11,7 @@ import {
   assertLicensePublicKey,
   QRDX_LICENSE_PUBLIC_KEY,
 } from "@repo/auth/ee/license-public-key";
+import { EE_FEATURES } from "@repo/auth/ee-license";
 import {
   checkLicenseKey,
   describeEeLicenseForLog,
@@ -64,14 +65,14 @@ describe("a key QRdx signed", () => {
       licence: {
         id: "lic_acme",
         customer: "Acme Ltd",
-        features: ["sso", "auditLog"],
+        features: [...EE_FEATURES],
         seats: null,
       },
     });
     if (state.status !== "active") throw new Error("not active");
     expect(state.licence.expiresAt.toISOString()).toBe(at(90).toISOString());
     expect(state.offAt.toISOString()).toBe(at(104).toISOString());
-    expect(eeLicensedFeatures(state)).toEqual(["sso", "auditLog"]);
+    expect(eeLicensedFeatures(state)).toEqual([...EE_FEATURES]);
   });
 
   it("turns on only the features it lists, and skips names it doesn't know", () => {
@@ -92,7 +93,7 @@ describe("a key QRdx signed", () => {
   it("keeps a seat count as information only", () => {
     const state = stateOf(licence(90, { seats: 50 }));
     expect(state).toMatchObject({ licence: { seats: 50 } });
-    expect(eeLicensedFeatures(state)).toEqual(["sso", "auditLog"]);
+    expect(eeLicensedFeatures(state)).toEqual([...EE_FEATURES]);
   });
 });
 
@@ -102,10 +103,7 @@ describe("expiry", () => {
   it("keeps the features on for 14 days' grace, then turns them off", () => {
     expect(stateOf(key, at(0)).status).toBe("active");
     expect(stateOf(key, at(1)).status).toBe("grace");
-    expect(eeLicensedFeatures(stateOf(key, at(1)))).toEqual([
-      "sso",
-      "auditLog",
-    ]);
+    expect(eeLicensedFeatures(stateOf(key, at(1)))).toEqual([...EE_FEATURES]);
     expect(stateOf(key, at(14)).status).toBe("grace");
     expect(stateOf(key, at(14.01)).status).toBe("expired");
     expect(eeLicensedFeatures(stateOf(key, at(15)))).toEqual([]);
@@ -319,10 +317,10 @@ describe("the log", () => {
   it("words each state plainly", () => {
     const key = licence(0, { id: "lic_words" });
     expect(describeEeLicenseForLog(stateOf(key, at(2))).message).toBe(
-      "QRdx licence lic_words expired on 2027-03-01: sso and auditLog stay on until 2027-03-15.",
+      "QRdx licence lic_words expired on 2027-03-01: sso, auditLog, clientPortal, whiteLabel, conversions stay on until 2027-03-15.",
     );
     expect(describeEeLicenseForLog({ status: "missing" }).message).toMatch(
-      /isn't set: single sign-on and the audit log are off/,
+      /isn't set: the ee features are off/,
     );
   });
 });
@@ -348,12 +346,12 @@ describe("what /admin/health says", () => {
     expect(licenceProbe(stateOf(key, at(3)), at(3))).toEqual({
       status: "warn",
       detail:
-        "Licence expired on 2027-03-01: single sign-on and the audit log switch off on 2027-03-15",
+        "Licence expired on 2027-03-01: the ee features (single sign-on, audit log, client portal, white-label, conversion tracking) switch off on 2027-03-15",
     });
     expect(licenceProbe(stateOf(key, at(20)), at(20))).toEqual({
       status: "error",
       detail:
-        "Licence expired on 2027-03-01: single sign-on and the audit log are off since 2027-03-15",
+        "Licence expired on 2027-03-01: the ee features (single sign-on, audit log, client portal, white-label, conversion tracking) are off since 2027-03-15",
     });
   });
 
@@ -361,23 +359,23 @@ describe("what /admin/health says", () => {
     expect(licenceProbe(stateOf("local-dev"))).toEqual({
       status: "error",
       detail:
-        "Licence key is not valid: single sign-on and the audit log are off",
+        "Licence key is not valid: the ee features (single sign-on, audit log, client portal, white-label, conversion tracking) are off",
     });
     expect(licenceProbe(stateOf(undefined))).toEqual({
       status: "off",
       detail:
-        "QRDX_EE_LICENSE not set: single sign-on and the audit log are off",
+        "QRDX_EE_LICENSE not set: the ee features (single sign-on, audit log, client portal, white-label, conversion tracking) are off",
     });
     expect(
       licenceProbe({ status: "invalid", problem: "no-public-key" }).detail,
     ).toBe(
-      "This build has no licence public key: single sign-on and the audit log are off",
+      "This build has no licence public key: the ee features (single sign-on, audit log, client portal, white-label, conversion tracking) are off",
     );
   });
 });
 
 describe("a licence that runs out while the server is up", () => {
-  it("turns SSO and the audit log off in the app and in sign-in, without a restart", async () => {
+  it("turns every ee feature off in the app, and SSO in sign-in, without a restart", async () => {
     vi.useFakeTimers({ toFake: ["Date"] });
     vi.setSystemTime(NOW);
     vi.resetModules();
@@ -391,9 +389,14 @@ describe("a licence that runs out while the server is up", () => {
     vi.setSystemTime(at(10));
     expect(app.isFeatureAvailable("sso")).toBe(true);
 
+    for (const feature of EE_FEATURES) {
+      expect(app.isFeatureAvailable(feature), feature).toBe(true);
+    }
+
     vi.setSystemTime(at(15));
-    expect(app.isFeatureAvailable("sso")).toBe(false);
-    expect(app.isFeatureAvailable("auditLog")).toBe(false);
+    for (const feature of EE_FEATURES) {
+      expect(app.isFeatureAvailable(feature), feature).toBe(false);
+    }
     expect(app.isPathAvailable("/dashboard/acme/settings/sso")).toBe(false);
     // Sign-in stops offering and accepting SSO, and stops requiring it, so
     // people use their other ways in (an email code, Google or GitHub).
@@ -494,8 +497,7 @@ describe("the issuing script", () => {
 
   it("covers every ee feature when --features is left out", () => {
     expect(eeLicensedFeatures(stateOf(testLicence()))).toEqual([
-      "sso",
-      "auditLog",
+      ...EE_FEATURES,
     ]);
   });
 });

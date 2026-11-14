@@ -21,8 +21,8 @@ import { QRDX_LICENSE_PUBLIC_KEY } from "./license-public-key";
 //
 // A key that is missing, malformed, signed by another key or past its expiry
 // and grace period turns the ee features off, exactly like no key. Codes,
-// pages and every other way to sign in keep working: only single sign-on and
-// the audit log stop. The check of each key is cached for the process; its
+// pages and every other way to sign in keep working: only the ee features
+// stop. The check of each key is cached for the process; its
 // expiry is compared with the clock on every read, so a licence that runs out
 // while the server is up turns its features off without a restart.
 
@@ -283,7 +283,7 @@ export function describeEeLicenseForLog(
   if (state.status === "missing") {
     return {
       status: "missing",
-      message: `${EE_LICENSE_ENV} isn't set: single sign-on and the audit log are off.`,
+      message: `${EE_LICENSE_ENV} isn't set: the ee features are off.`,
     };
   }
   if (state.status === "invalid") {
@@ -292,8 +292,8 @@ export function describeEeLicenseForLog(
       problem: state.problem,
       message:
         state.problem === "no-public-key"
-          ? "This build has no licence public key: every licence key is turned down, and single sign-on and the audit log are off."
-          : `${EE_LICENSE_ENV} isn't a valid QRdx licence key: single sign-on and the audit log are off.`,
+          ? "This build has no licence public key: every licence key is turned down, and the ee features are off."
+          : `${EE_LICENSE_ENV} isn't a valid QRdx licence key: the ee features are off.`,
     };
   }
   const { licence, offAt } = state;
@@ -305,11 +305,11 @@ export function describeEeLicenseForLog(
     offAt: day(offAt),
     features: licence.features,
   };
-  const on = licence.features.join(" and ") || "no features";
+  const on = licence.features.join(", ") || "no features";
   const message = {
     active: `QRdx licence ${licence.id} is valid until ${day(licence.expiresAt)}: ${on} on.`,
     grace: `QRdx licence ${licence.id} expired on ${day(licence.expiresAt)}: ${on} stay on until ${day(offAt)}.`,
-    expired: `QRdx licence ${licence.id} expired on ${day(licence.expiresAt)}: single sign-on and the audit log are off since ${day(offAt)}.`,
+    expired: `QRdx licence ${licence.id} expired on ${day(licence.expiresAt)}: the ee features are off since ${day(offAt)}.`,
   }[state.status];
   return { ...fields, message };
 }

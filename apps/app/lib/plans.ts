@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { EeFeature } from "@repo/auth/ee-license";
 import { registerPlanLimits } from "@repo/auth/plan-limits";
 import { eeOnEveryPlan, type FeatureContext } from "@repo/availability";
 import { MAX_FREE_THEMES } from "@repo/config";
@@ -127,7 +128,8 @@ export interface PlanLimits {
   // ─── Agency tools (feat/agency-tools) ──────────────────────────────────────
   /**
    * Shared stats pages (/stats/<token>) can carry a client's name, logo and
-   * accent color (lib/client-brands.ts). Pro keeps a small "Made with QRdx".
+   * accent color (ee/client-portal/brands.ts). Pro keeps a small "Made with
+   * QRdx".
    */
   clientReports: boolean;
   /**
@@ -136,8 +138,9 @@ export interface PlanLimits {
    */
   clientReportsWhiteLabel: boolean;
   /**
-   * The read-only client portal (/portal/<workspace>, lib/portal): invited
-   * clients see the folders shared with them, under the workspace's branding.
+   * The read-only client portal (/portal/<workspace>, ee/client-portal):
+   * invited clients see the folders shared with them, under the workspace's
+   * branding.
    */
   clientPortal: boolean;
   /**
@@ -277,33 +280,58 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
   },
 };
 
-// A self-hosted server with a valid ee licence key that sells no plans gives
-// every plan the ee features (@repo/availability eeOnEveryPlan). Worked out
-// once per feature context, which only changes when the licence expires or
-// its grace period ends (lib/feature-context.ts).
-const eeOnEveryPlanIn = new WeakMap<FeatureContext, boolean>();
+/**
+ * The plan limits each ee feature stands for (the names a licence key can
+ * list: packages/auth/ee-license.ts EE_FEATURES).
+ */
+const EE_LIMITS: Record<EeFeature, Partial<PlanLimits>> = {
+  // packages/auth/ee/sso.ts
+  sso: { sso: true },
+  // ee/audit-log
+  auditLog: { auditLog: true },
+  // ee/client-portal
+  clientPortal: {
+    clientReports: true,
+    clientReportsWhiteLabel: true,
+    clientPortal: true,
+  },
+  // ee/white-label: no QRdx branding, so no "Made with QRdx" footer either
+  whiteLabel: { whiteLabel: true, customCss: true, landingPageBadge: false },
+  // ee/conversions
+  conversions: { conversions: true },
+};
 
-function eeFeaturesOnEveryPlan(): boolean {
+// A self-hosted server with a valid ee licence key that sells no plans gives
+// every plan the ee features its licence covers (@repo/availability
+// eeOnEveryPlan). Worked out once per feature context, which only changes
+// when the licence expires or its grace period ends (lib/feature-context.ts).
+const eeLimitsIn = new WeakMap<FeatureContext, Partial<PlanLimits> | null>();
+
+function eeLimitsOnEveryPlan(): Partial<PlanLimits> | null {
   const context = featureContext();
-  let on = eeOnEveryPlanIn.get(context);
-  if (on === undefined) {
-    on = eeOnEveryPlan(context);
-    eeOnEveryPlanIn.set(context, on);
-  }
-  return on;
+  const known = eeLimitsIn.get(context);
+  if (known !== undefined) return known;
+  const extra: Partial<PlanLimits> | null = eeOnEveryPlan(context)
+    ? Object.assign(
+        {},
+        ...(context.eeFeatures ?? []).map((feature) => EE_LIMITS[feature]),
+      )
+    : null;
+  eeLimitsIn.set(context, extra);
+  return extra;
 }
 
 /**
- * The limits a scope on `plan` gets here: PLAN_LIMITS, plus workspace SSO
- * and the audit log on every plan where the ee licence covers them without a
- * plan (a self-hosted server with the key and no billing). On qrdx.dev and
- * anywhere that sells plans, exactly PLAN_LIMITS.
+ * The limits a scope on `plan` gets here: PLAN_LIMITS, plus the limits of
+ * each ee feature its licence covers (EE_LIMITS) on every plan where the
+ * licence covers them without a plan (a self-hosted server with a valid key
+ * and no billing). On qrdx.dev and anywhere that sells plans, exactly
+ * PLAN_LIMITS.
  */
 export function getPlanLimits(plan: Plan): PlanLimits {
   const limits = PLAN_LIMITS[plan];
-  return eeFeaturesOnEveryPlan()
-    ? { ...limits, sso: true, auditLog: true }
-    : limits;
+  const extra = eeLimitsOnEveryPlan();
+  return extra ? { ...limits, ...extra } : limits;
 }
 
 /**

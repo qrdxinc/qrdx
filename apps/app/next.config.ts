@@ -249,8 +249,11 @@ let nextConfig: NextConfig = {
   // Geist (@repo/design-system/og/font-files) for server images: OG cards,
   // and frame labels drawn from its glyph outlines (lib/qr-text-outline.ts),
   // read at runtime wherever a PNG is rasterized.
+  // The conversion tracking script (ee/conversions/script.ts) is read from
+  // disk when /conversions.js is built; traced in case it's ever rebuilt.
   outputFileTracingIncludes: {
     "/**": [OG_FONT_GLOB],
+    "/conversions.js": ["./ee/conversions/conversions.js"],
   },
   serverExternalPackages: ["shiki", "@takumi-rs/core"],
   // When rules set the same header, the later one wins.
