@@ -12,6 +12,7 @@
 // tables (../support/fake-db). Each case loads them afresh with its own
 // environment.
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { testLicence } from "../support/ee-license";
 
 vi.mock(
   "drizzle-orm",
@@ -34,13 +35,13 @@ const BUSINESS = "prod_business_monthly";
 const QRDX_DEV = {
   NEXT_PUBLIC_APP_URL: "https://qrdx.dev",
   POLAR_ACCESS_TOKEN: "test-polar-token",
-  QRDX_EE_LICENSE: "test-license",
+  QRDX_EE_LICENSE: testLicence(),
 };
 /** A self-hosted server on its own domain with the key and no Polar. */
 const SELF_HOSTED = {
   NEXT_PUBLIC_APP_URL: "https://qr.example.org",
   POLAR_ACCESS_TOKEN: undefined,
-  QRDX_EE_LICENSE: "local-dev",
+  QRDX_EE_LICENSE: testLicence(),
 };
 
 type Env = Record<string, string | undefined>;

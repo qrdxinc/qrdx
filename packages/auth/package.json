@@ -36,6 +36,8 @@
     "./sign-in-challenge": "./sign-in-challenge.ts",
     "./sign-in-challenge-rules": "./sign-in-challenge-rules.ts",
     "./ee-license": "./ee-license.ts",
+    "./license": "./ee/license.ts",
+    "./ee/license-public-key": "./ee/license-public-key.ts",
     "./sso": "./ee/sso.ts",
     "./sso-rules": "./ee/sso-rules.ts",
     "./two-factor-reset": "./two-factor-reset.ts",

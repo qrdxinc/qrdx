@@ -97,8 +97,8 @@ async function mutate<T>(
   { confirm = false }: { confirm?: boolean } = {},
 ): Promise<SsoActionResult<T>> {
   try {
-    // Without a licence key the SSO plugin isn't registered (packages/auth/
-    // ee-license.ts), so there's nothing to manage.
+    // Without a valid licence key the SSO plugin isn't registered
+    // (packages/auth/ee/license.ts), so there's nothing to manage.
     if (!isFeatureAvailable("sso")) {
       throw new HttpError(
         404,

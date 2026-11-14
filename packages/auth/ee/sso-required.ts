@@ -8,6 +8,7 @@ import { isPasskeyCheckWithoutSignIn } from "../passkey-check";
 import { workspacePlanLimits } from "../plan";
 import { CHALLENGE_COMPLETION_PATHS } from "../sign-in-challenge-rules";
 import { TWO_FACTOR_COOKIE } from "../sign-in-challenge-session";
+import { eeFeatureLicensed } from "./license";
 import { SSO_CALLBACK_PATHS } from "./sso";
 import {
   coveringDomains,
@@ -171,6 +172,10 @@ export async function findSsoRequirement(
   email: string,
   { fresh = false }: LookupOptions = {}
 ): Promise<SsoRequirement | null> {
+  // Nothing is required once the licence no longer covers SSO
+  // (./license.ts): SSO can't sign anyone in then, so people use their other
+  // ways in, as on a server without a key.
+  if (!eeFeatureLicensed("sso")) return null;
   const domain = emailDomain(email);
   if (!domain) return null;
   const covering = coveringDomains(domain);

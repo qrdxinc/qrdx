@@ -15,7 +15,7 @@
 // features. Paths in the comments below (lib/…, components/…, proxy.ts) are
 // the app's, under apps/app.
 
-import { EE_LICENSE_ENV, eeLicensed } from "@repo/auth/ee-license";
+import { EE_LICENSE_ENV, type EeFeature } from "@repo/auth/ee-license";
 import { passkeyRelyingParty } from "@repo/auth/passkey-rp";
 import { isQrdxDeployment } from "./deployment";
 import { isFlagOn } from "./flags";
@@ -70,6 +70,13 @@ export interface FeatureContext {
   onVercel: boolean;
   /** Production and preview builds (NODE_ENV === "production"). */
   production: boolean;
+  /**
+   * The ee features a valid QRDX_EE_LICENSE turns on now: signed by QRdx and
+   * not past its expiry and grace period. The server checks the key
+   * (packages/auth/ee/license.ts, server-only) and passes the result in, so
+   * these rules stay pure. Absent or empty: none.
+   */
+  eeFeatures?: readonly EeFeature[];
 }
 
 interface FeatureRule {
@@ -193,10 +200,12 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
   },
   sso: {
     // Workspace single sign-on is in ee/ under the QRdx commercial licence
-    // and runs only with a licence key (packages/auth/ee-license.ts): without
-    // one the server doesn't register it at all.
+    // and runs only with a valid licence key that covers it
+    // (packages/auth/ee/license.ts): without one the server doesn't register
+    // it at all. A key that is invalid or expired counts as none.
     name: "Workspace SSO (QRdx license key)",
     requires: () => [EE_LICENSE_ENV],
+    usable: (ctx) => Boolean(ctx.eeFeatures?.includes("sso")),
     paths: [
       `${WORKSPACE_PATTERN_PREFIX}/settings/sso`,
       "/docs/help/teams/single-sign-on",
@@ -204,9 +213,11 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
   },
   auditLog: {
     // The workspace audit log is in ee/ under the same licence: without a
-    // key nothing is recorded and Settings → Audit log doesn't exist.
+    // valid key that covers it nothing is recorded and Settings → Audit log
+    // doesn't exist.
     name: "Workspace audit log (QRdx license key)",
     requires: () => [EE_LICENSE_ENV],
+    usable: (ctx) => Boolean(ctx.eeFeatures?.includes("auditLog")),
     paths: [
       `${WORKSPACE_PATTERN_PREFIX}/settings/audit-log`,
       "/docs/help/teams/audit-log",
@@ -333,16 +344,16 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
 
 /**
  * Whether the ee features (workspace SSO, the audit log) come with every
- * plan here: a self-hosted copy on its own domain (./deployment.ts) with the
- * licence key that sells no plans (no "billing", so every account is on
- * Free). Its enterprise agreement covers them, so no plan is asked for.
+ * plan here: a self-hosted copy on its own domain (./deployment.ts) with a
+ * valid licence key (`eeFeatures`) that sells no plans (no "billing", so
+ * every account is on Free). Its enterprise agreement covers them, so no plan is asked for.
  * Where plans are sold, and always on QRdx itself (qrdx.dev, its previews,
  * local dev), they stay with the plans that include them
  * (apps/app/lib/plans.ts).
  */
 export function eeOnEveryPlan(ctx: FeatureContext): boolean {
   return (
-    eeLicensed(ctx.env) &&
+    (ctx.eeFeatures?.length ?? 0) > 0 &&
     missingFeatureSetup("billing", ctx).length > 0 &&
     !isQrdxDeployment({
       appUrl: ctx.env.NEXT_PUBLIC_APP_URL,

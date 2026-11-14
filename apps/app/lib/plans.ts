@@ -1,7 +1,7 @@
 import "server-only";
 
 import { registerPlanLimits } from "@repo/auth/plan-limits";
-import { eeOnEveryPlan } from "@repo/availability";
+import { eeOnEveryPlan, type FeatureContext } from "@repo/availability";
 import { MAX_FREE_THEMES } from "@repo/config";
 import { database as db, member } from "@repo/database";
 import { and, eq, like, or } from "drizzle-orm";
@@ -277,10 +277,21 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
   },
 };
 
-// A self-hosted server with the ee licence key that sells no plans gives
-// every plan the ee features (@repo/availability eeOnEveryPlan). Read once:
-// the environment is fixed for the life of the process.
-const EE_ON_EVERY_PLAN = eeOnEveryPlan(featureContext());
+// A self-hosted server with a valid ee licence key that sells no plans gives
+// every plan the ee features (@repo/availability eeOnEveryPlan). Worked out
+// once per feature context, which only changes when the licence expires or
+// its grace period ends (lib/feature-context.ts).
+const eeOnEveryPlanIn = new WeakMap<FeatureContext, boolean>();
+
+function eeFeaturesOnEveryPlan(): boolean {
+  const context = featureContext();
+  let on = eeOnEveryPlanIn.get(context);
+  if (on === undefined) {
+    on = eeOnEveryPlan(context);
+    eeOnEveryPlanIn.set(context, on);
+  }
+  return on;
+}
 
 /**
  * The limits a scope on `plan` gets here: PLAN_LIMITS, plus workspace SSO
@@ -290,7 +301,9 @@ const EE_ON_EVERY_PLAN = eeOnEveryPlan(featureContext());
  */
 export function getPlanLimits(plan: Plan): PlanLimits {
   const limits = PLAN_LIMITS[plan];
-  return EE_ON_EVERY_PLAN ? { ...limits, sso: true, auditLog: true } : limits;
+  return eeFeaturesOnEveryPlan()
+    ? { ...limits, sso: true, auditLog: true }
+    : limits;
 }
 
 /**
