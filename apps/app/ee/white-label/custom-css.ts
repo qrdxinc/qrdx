@@ -1,6 +1,6 @@
-// Custom CSS for hosted pages (Business). Owners write plain CSS; it is
-// validated on save and re-scoped on render so it can only style the page's
-// own content:
+// Custom CSS for hosted pages (Business; ee/white-label, under the QRdx
+// commercial licence). Owners write plain CSS; it is validated on save and
+// re-scoped on render so it can only style the page's own content:
 // - every selector is prefixed with the page scope (descendants only), and a
 //   selector may not start with a sibling combinator or use `&` nesting;
 // - only @media, @supports, @container and @keyframes at-rules are allowed;
@@ -10,7 +10,8 @@
 // The renderer gives the scope element `contain: paint`, so even fixed or
 // absolutely positioned content can't cover the "Report abuse" link.
 
-export const MAX_CUSTOM_CSS_LENGTH = 10_000;
+import { MAX_CUSTOM_CSS_LENGTH } from "@/components/landing/custom-css-limit";
+
 export const CUSTOM_CSS_SCOPE = "[data-qrdx-page]";
 
 const NESTING_AT_RULES = new Set(["media", "supports", "container"]);

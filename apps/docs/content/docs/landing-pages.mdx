@@ -58,7 +58,7 @@ The editor has three tabs and a live phone preview. Tap a block in the preview t
 
 - **Blocks**: add blocks with **Add block**, reorder them by dragging (or with the arrow buttons), hide a block without deleting it, duplicate or remove it. Each block has its own form; problems (for example a link without `https://`) are flagged on the block and must be fixed before publishing.
 - **Design**: use the colors of one of your [saved QR themes](/dashboard?to=themes) so the page matches the printed code, pick a preset palette or set each color yourself. Choose a font, corner radius, a solid, gradient or image background and an optional logo. **Match colors** derives readable text and card colors from your background and accent, and a warning appears when text contrast is low.
-- **Settings**: the share preview description and image, whether search engines may index the page (off by default), and custom CSS on Business.
+- **Settings**: <IfAvailable feature="whiteLabel">the share preview description and image, whether search engines may index the page (off by default), and custom CSS on Business.</IfAvailable><IfAvailable feature="whiteLabel" unavailable>the share preview description and image, and whether search engines may index the page (off by default).</IfAvailable>
 
 Click **Publish** (or press <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>) to put your changes live. Nothing changes for visitors until you publish; unpublished edits are kept in your browser so you can restore them after closing the tab. Each publish is stored as a version. If a teammate publishes the same page while you are editing, QRdx asks you to reload instead of overwriting their changes.
 
@@ -87,6 +87,8 @@ Click **Publish** (or press <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>) to pu
 
 ## Plans
 
+<IfAvailable feature="whiteLabel">
+
 | | Free | Pro | Business |
 | --- | --- | --- | --- |
 | Hosted pages | 3 | Unlimited | Unlimited |
@@ -94,17 +96,32 @@ Click **Publish** (or press <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>) to pu
 | White-label (your logo as the browser icon, no QRdx branding) | — | — | ✓ |
 | Custom CSS | — | — | ✓ |
 
-Limits only stop you from creating new pages. Pages you already have keep working on every plan, including after a downgrade; on a downgrade from Business, custom CSS simply stops being applied. Each page also uses one of your plan's dynamic codes. See [Plans and limits](/docs/plans-and-limits).
+White-label and custom CSS are Business features under the QRdx commercial license. A self-hosted QRdx server needs a license key (`QRDX_EE_LICENSE`) to turn them on; see [Self-hosting](/docs/self-hosting#optional-services).
 
-### Custom CSS (Business)
+</IfAvailable>
+
+<IfAvailable feature="whiteLabel" unavailable>
+
+| | Free | Pro | Business |
+| --- | --- | --- | --- |
+| Hosted pages | 3 | Unlimited | Unlimited |
+| "Made with QRdx" footer | Shown | Removed | Removed |
+
+</IfAvailable>
+
+Limits only stop you from creating new pages. Pages you already have keep working on every plan, including after a downgrade<IfAvailable feature="whiteLabel">; on a downgrade from Business, custom CSS simply stops being applied</IfAvailable>. Each page also uses one of your plan's dynamic codes. See [Plans and limits](/docs/plans-and-limits).
+
+<IfAvailable feature="whiteLabel" title="Custom CSS (Business)">
 
 Write plain CSS in **Settings → Custom CSS**. Rules only apply inside your page: every selector is scoped to the page content, and each block can be targeted with `.lp-block-<type>`, for example `.lp-block-links a` or `.lp-block-contact h1`. For safety, CSS can't load files (`url()`, `@import`, `@font-face`), can't use backslash escapes, and supports the `@media`, `@supports`, `@container` and `@keyframes` at-rules only.
+
+</IfAvailable>
 
 ## What visitors get
 
 - Fast, server-rendered pages built for phones, with no QRdx analytics or chat scripts. Tracking pixels load only if you add them to the code yourself.
 - Hidden from search engines unless you turn on **Show in search engines**.
 - Share previews (title, description, image) for chat apps and social networks. Password-protected codes never reveal page details in previews.
-- A small **Report abuse** link on every page, including white-label pages.
+- A small **Report abuse** link on every page<IfAvailable feature="whiteLabel">, including white-label pages</IfAvailable>.
 
 Password protection, start and end dates, scan limits and pausing from [code controls](/docs/code-controls) apply to the page and its **Save contact** file too, also when someone opens the page link directly.

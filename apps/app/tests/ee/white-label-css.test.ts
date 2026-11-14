@@ -1,7 +1,8 @@
-// Run: cd apps/app && npx tsx --test components/landing/custom-css.test.ts
+// Custom CSS on hosted pages (ee/white-label): scoped to the page, nothing
+// that loads files or escapes the <style> tag.
 import assert from "node:assert/strict";
-import { describe, it } from "node:test";
-import { scopeCustomCss } from "./custom-css";
+import { describe, it } from "vitest";
+import { scopeCustomCss } from "@/ee/white-label/custom-css";
 
 const scoped = (css: string) => {
   const result = scopeCustomCss(css, "#p");
