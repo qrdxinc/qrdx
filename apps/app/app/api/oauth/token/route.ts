@@ -7,6 +7,8 @@ import {
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { and, eq, isNull } from "drizzle-orm";
 import type { NextRequest } from "next/server";
+import { isAdminConsoleClientId } from "@/lib/admin-console/client";
+import { exchangeAdminConsoleCode } from "@/lib/admin-console/token";
 import {
   authenticateClient,
   createTokenPair,
@@ -39,6 +41,12 @@ export async function POST(req: NextRequest) {
   const body = await req.formData().catch(() => null);
   if (!body) {
     return oauthError("invalid_request", "Request body must be form-encoded");
+  }
+
+  // The back-office console: a first-party client defined by environment,
+  // with its own one-time codes (lib/admin-console).
+  if (isAdminConsoleClientId(body.get("client_id") as string | null)) {
+    return exchangeAdminConsoleCode(body);
   }
 
   const grantType = body.get("grant_type") as string | null;
