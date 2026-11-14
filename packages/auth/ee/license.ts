@@ -317,9 +317,12 @@ export function describeEeLicenseForLog(
 const logged = new Set<string>();
 
 // Once per state per process: at start-up (apps/app/instrumentation.ts), and
-// again when the licence enters its grace period or runs out.
+// again when the licence enters its grace period or runs out. Not while
+// `next build` runs: each of its workers is a process, and the build serves
+// no one.
 function logOnce(state: EeLicenseState) {
   if (process.env.NODE_ENV === "test") return;
+  if (process.env.NEXT_PHASE === "phase-production-build") return;
   const id =
     state.status === "missing"
       ? "missing"
