@@ -15,7 +15,7 @@ This license sets the terms for the code in the `ee/` directories of the QRdx re
 - **"Agreement"** means a written agreement between you and QRdx, such as an enterprise agreement or an order form, that allows Production Use and refers to this license.
 - **"License Key"** means a key QRdx issues to you with an Agreement. You set it in the `QRDX_EE_LICENSE` environment variable, and it switches the Commercial Software on.
 
-Using single sign-on or the audit log on qrdx.dev is covered by the [Terms of Service](https://qrdx.dev/legal/terms-of-service), not by this license.
+Using these features on qrdx.dev is covered by the [Terms of Service](https://qrdx.dev/legal/terms-of-service), not by this license.
 
 ## 2. Production Use needs an Agreement
 

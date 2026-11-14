@@ -6,7 +6,7 @@ This folder holds the server side of workspace single sign-on (OIDC and SAML 2.0
 - `sso-required.ts`: enforces "Require single sign-on" at sign-in.
 - `sso-rules.ts` and `sso-required-rules.ts`: the shared rules both use, which the app's screens and the tests also read.
 
-The settings and sign-in screens, and the workspace audit log, are in [apps/app/ee](../../../apps/app/ee).
+The settings and sign-in screens, and the other business features (the audit log, the client portal, white-label pages and conversion tracking), are in [apps/app/ee](../../../apps/app/ee).
 
 ## License
 
