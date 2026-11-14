@@ -1,4 +1,7 @@
-import { consoleReturnTarget } from "@repo/next-config/console-zone";
+import {
+  adminConsoleAddress,
+  consoleReturnTarget,
+} from "@repo/next-config/console-zone";
 import { SettingsHeader } from "@/app/(app)/settings/components/settings-header";
 import { env } from "@/env";
 import { CONFIRMATION_MINUTES } from "@/lib/account/confirmation";
@@ -25,7 +28,10 @@ export default async function AdminConfirmPage({
   const back =
     consoleReturnTarget(
       typeof next === "string" ? next : null,
-      env.ADMIN_CONSOLE_URL,
+      adminConsoleAddress({
+        adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+        secret: env.CONSOLE_ZONE_KEY,
+      }),
     ) ?? "/admin";
 
   return (

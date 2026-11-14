@@ -1,10 +1,18 @@
-// The console at its own address, as next.config.ts sees it: with
-// ADMIN_CONSOLE_URL set, qrdx.dev's five console sections answer a 308 to the
-// same section there (query kept), nothing else moves, and the value is
-// inlined into server code; unset, nothing changes. Nothing here reaches a
-// database or a service. (/admin/confirm: tests/admin/confirm-page.test.tsx.)
+// The console at its own address, as next.config.ts sees it, through Next's
+// own matcher: with ADMIN_CONSOLE_URL set, qrdx.dev's five console sections
+// answer a 307 to the same lower-case section there (query kept), nothing
+// else moves, and the value is inlined into server code; unset, nothing
+// changes; set without a usable CONSOLE_ZONE_KEY, the build fails. Nothing
+// here reaches a database or a service. (/admin/confirm:
+// tests/admin/confirm-page.test.tsx.)
 import { adminConsoleRedirects } from "@repo/next-config/console-zone";
 import type { NextConfig } from "next";
+import { getRedirectStatus } from "next/dist/lib/redirect-status";
+import { getPathMatch } from "next/dist/shared/lib/router/utils/path-match";
+import {
+  matchHas,
+  prepareDestination,
+} from "next/dist/shared/lib/router/utils/prepare-destination";
 import {
   getRedirectUrl,
   getRewrittenUrl,
@@ -42,20 +50,30 @@ describe("next.config.ts", () => {
 
   let on: NextConfig;
   let off: NextConfig;
-  let warned: string[];
+  let failures: unknown[];
 
   beforeAll(async () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     off = await loadConfig({});
-    expect(warn).not.toHaveBeenCalled();
     on = await loadConfig({
       ADMIN_CONSOLE_URL: `${CONSOLE}/`,
-      CONSOLE_ZONE_KEY: "k".repeat(40),
+      CONSOLE_ZONE_KEY: "k".repeat(32),
     });
     expect(warn).not.toHaveBeenCalled();
-    await loadConfig({ ADMIN_CONSOLE_URL: CONSOLE });
-    warned = warn.mock.calls.map((call) => String(call[0]));
     warn.mockRestore();
+    // One at a time: loadConfig sets process.env.
+    failures = [];
+    for (const key of [undefined, "k".repeat(31)]) {
+      failures.push(
+        await loadConfig({
+          ADMIN_CONSOLE_URL: CONSOLE,
+          CONSOLE_ZONE_KEY: key,
+        }).then(
+          () => null,
+          (error: unknown) => error,
+        ),
+      );
+    }
   }, 60_000);
 
   afterAll(() => {
@@ -66,6 +84,54 @@ describe("next.config.ts", () => {
   const resolve = (nextConfig: NextConfig, url: string) =>
     unstable_getResponseFromNextConfig({ url, nextConfig, headers: {} });
 
+  /**
+   * The first redirect for `url` as Next's server picks it
+   * (server/lib/router-utils: filesystem.js and resolve-routes.js), which
+   * matches paths without regard to case while caseSensitiveRoutes is off.
+   * The testing helper above extracts params case-sensitively, so it can't
+   * show where /admin/Growth goes.
+   */
+  async function serverRedirect(nextConfig: NextConfig, url: string) {
+    const parsed = new URL(url);
+    const query = Object.fromEntries(parsed.searchParams);
+    const request = { headers: { host: parsed.host } } as unknown as Parameters<
+      typeof matchHas
+    >[0];
+    for (const route of (await nextConfig.redirects?.()) ?? []) {
+      const match = getPathMatch(route.source, {
+        strict: true,
+        removeUnnamedParams: true,
+        sensitive: false,
+      });
+      const params = match(parsed.pathname);
+      if (!params) continue;
+      if (
+        (route.has || route.missing) &&
+        !matchHas(request, query, route.has, route.missing)
+      ) {
+        continue;
+      }
+      const { parsedDestination } = prepareDestination({
+        appendParamsToQuery: false,
+        destination: route.destination,
+        params,
+        query,
+      });
+      const location = new URL(
+        parsedDestination.pathname ?? "/",
+        `${parsedDestination.protocol}//${parsedDestination.hostname}${parsedDestination.port ? `:${parsedDestination.port}` : ""}`,
+      );
+      for (const [name, value] of Object.entries(parsedDestination.query)) {
+        location.searchParams.set(name, String(value));
+      }
+      return {
+        status: getRedirectStatus(route),
+        location: location.toString(),
+      };
+    }
+    return null;
+  }
+
   it.each([
     ["/admin/growth", "/growth"],
     ["/admin/numbers", "/numbers"],
@@ -73,10 +139,33 @@ describe("next.config.ts", () => {
     ["/admin/ai-usage", "/ai-usage"],
     ["/admin/affiliates", "/affiliates"],
     ["/admin/affiliates/abc?page=2", "/affiliates/abc?page=2"],
-  ])("sends %s to the console with a 308", async (pathname, target) => {
+  ])("sends %s to the console with a 307", async (pathname, target) => {
     const response = await resolve(on, `https://qrdx.dev${pathname}`);
-    expect(response.status).toBe(308);
+    // Temporary until the seven-day watch, so a rollback isn't cached.
+    expect(response.status).toBe(307);
     expect(getRedirectUrl(response)).toBe(`${CONSOLE}${target}`);
+  });
+
+  it.each([
+    ["/admin/growth", "/growth"],
+    ["/admin/Growth", "/growth"],
+    ["/ADMIN/growth", "/growth"],
+    ["/admin/AI-Usage", "/ai-usage"],
+    ["/Admin/Affiliates/AbC?page=2", "/affiliates/AbC?page=2"],
+  ])(
+    "sends %s to the lower-case section, as the server matches it",
+    async (pathname, target) => {
+      expect(await serverRedirect(on, `https://qrdx.dev${pathname}`)).toEqual({
+        status: 307,
+        location: `${CONSOLE}${target}`,
+      });
+    },
+  );
+
+  it("matches nothing the server would send there while unset", async () => {
+    expect(
+      await serverRedirect(off, "https://qrdx.dev/admin/Growth"),
+    ).toBeNull();
   });
 
   it.each([
@@ -132,9 +221,13 @@ describe("next.config.ts", () => {
     expect(inlined(on)).toBe(`${CONSOLE}/`);
   });
 
-  it("warns at build time when the client secret is missing", () => {
-    expect(warned).toHaveLength(1);
-    expect(warned[0]).toMatch(/ADMIN_CONSOLE_URL/);
-    expect(warned[0]).toMatch(/CONSOLE_ZONE_KEY/);
+  it("fails the build when the client secret is missing or short", () => {
+    // Without it the console can't sign anyone in: no redirects or menu
+    // links that would strand admins there.
+    for (const failure of failures) {
+      expect(failure).toBeInstanceOf(Error);
+      expect(String(failure)).toMatch(/ADMIN_CONSOLE_URL/);
+      expect(String(failure)).toMatch(/CONSOLE_ZONE_KEY/);
+    }
   });
 });

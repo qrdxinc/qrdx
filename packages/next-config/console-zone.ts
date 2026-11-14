@@ -1,11 +1,10 @@
-// The console zone: QRdx's back office, a separate Next.js app (apps/console
-// in the private qrdxinc/cloud repo) that serves five /admin sections. Two
-// ways to reach it, both off until their variable is set (self-hosting, and
-// qrdx.dev until the cutover):
+// The console zone: QRdx's back office, a separate Next.js app that serves
+// five /admin sections. Two ways to reach it, both off until their variable
+// is set (self-hosting, and qrdx.dev until the cutover):
 // - ADMIN_CONSOLE_URL: the console at its own address (https://admin.qrdx.dev)
 //   with clean URLs (/growth, /affiliates/<id>) and its own sign-in through
-//   this app's OAuth provider (lib/admin-console). The main app answers
-//   /admin/<section> with a 308 there, and the admin menu links there.
+//   this app's OAuth provider (lib/admin-console). The main app redirects
+//   /admin/<section> there, and the admin menu links there.
 // - CONSOLE_ORIGIN: the console proxied behind /admin/<section> on qrdx.dev
 //   (the first design; its code stays until the clean-up).
 // Unset, nothing changes and the main app serves its own pages. Both apps
@@ -198,17 +197,49 @@ export const ADMIN_CONSOLE_TOKEN_PREFIX = "qrdxc_";
 export interface ConsoleRedirect {
   source: string;
   destination: string;
-  permanent: true;
+  permanent: boolean;
   has: { type: "host"; value: string }[];
+}
+
+/**
+ * The client secret must be this long to count (the console requires the
+ * same): a short or missing CONSOLE_ZONE_KEY leaves everything off.
+ */
+export const ADMIN_CONSOLE_SECRET_MIN_LENGTH = 32;
+
+/**
+ * The console's address once it can be used: ADMIN_CONSOLE_URL, but only
+ * with a CONSOLE_ZONE_KEY of 32 characters or more (the console's OAuth
+ * client secret), since without it the console can't sign anyone in and
+ * sending admins there would strand them. Undefined otherwise. The
+ * redirects, the menu, the overview and /admin/confirm all read this one.
+ */
+export function adminConsoleAddress({
+  adminConsoleUrl,
+  secret,
+}: {
+  adminConsoleUrl: string | undefined;
+  secret: string | undefined;
+}): string | undefined {
+  if (!(adminConsoleUrl && secret)) return undefined;
+  if (secret.length < ADMIN_CONSOLE_SECRET_MIN_LENGTH) return undefined;
+  return new URL(adminConsoleUrl).origin;
 }
 
 /**
  * The main app's redirects that send /admin/<section>[/…] (the query kept,
  * as Next does by default) to the same section at the console's own
- * address, `adminConsoleUrl`: /admin/growth → https://admin.qrdx.dev/growth,
- * /admin/affiliates/abc → …/affiliates/abc. None while it's unset: this app
- * serves its own pages. Only the five sections match, each as a whole
- * segment; /admin, the other sections and /admin/growthx never do.
+ * address, `adminConsoleUrl` (from adminConsoleAddress): /admin/growth →
+ * https://admin.qrdx.dev/growth, /admin/affiliates/abc → …/affiliates/abc.
+ * None while it's unset: this app serves its own pages. One rule per
+ * section with a literal, lower-case destination: Next matches sources
+ * without regard to case, so /admin/Growth lands on /growth, not /Growth.
+ * Only the five sections match, each as a whole segment; /admin, the other
+ * sections and /admin/growthx never do.
+ *
+ * Temporary (307) for now, so browsers don't cache the move and a rollback
+ * (unsetting ADMIN_CONSOLE_URL) takes effect at once. After the seven-day
+ * watch it becomes permanent (308).
  */
 export function adminConsoleRedirects(
   adminConsoleUrl: string | undefined,
@@ -216,14 +247,12 @@ export function adminConsoleRedirects(
 ): ConsoleRedirect[] {
   if (!adminConsoleUrl) return [];
   const origin = new URL(adminConsoleUrl).origin;
-  return [
-    {
-      source: `/admin/:section(${CONSOLE_SECTIONS.join("|")})/:path*`,
-      destination: `${origin}/:section/:path*`,
-      permanent: true,
-      has: [{ type: "host", value: hosts }],
-    },
-  ];
+  return CONSOLE_SECTIONS.map((section) => ({
+    source: `/admin/${section}/:path*`,
+    destination: `${origin}/${section}/:path*`,
+    permanent: false,
+    has: [{ type: "host", value: hosts }],
+  }));
 }
 
 /**

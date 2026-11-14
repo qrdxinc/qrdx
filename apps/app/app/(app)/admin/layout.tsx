@@ -1,3 +1,4 @@
+import { adminConsoleAddress } from "@repo/next-config/console-zone";
 import type { Metadata } from "next";
 import { type ReactNode, Suspense } from "react";
 import { ConfirmIdentityProvider } from "@/components/confirm-identity/provider";
@@ -28,7 +29,10 @@ export default async function AdminLayout({
         <Header />
         <main className="flex w-full flex-1 flex-col gap-4 px-4 py-4 md:flex-row md:px-6 md:py-8">
           <AdminNav
-            adminConsoleUrl={env.ADMIN_CONSOLE_URL}
+            adminConsoleUrl={adminConsoleAddress({
+              adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+              secret: env.CONSOLE_ZONE_KEY,
+            })}
             consoleEnabled={Boolean(env.CONSOLE_ORIGIN)}
           />
           <div className="mx-auto w-full max-w-6xl min-w-0 flex-1 space-y-4">

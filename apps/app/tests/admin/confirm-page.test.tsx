@@ -16,7 +16,13 @@ const CONSOLE = "https://admin.qrdx.dev";
 
 vi.mock("@/env", async (importOriginal) => {
   const { env } = await importOriginal<typeof import("@/env")>();
-  return { env: { ...env, ADMIN_CONSOLE_URL: CONSOLE } };
+  return {
+    env: {
+      ...env,
+      ADMIN_CONSOLE_URL: CONSOLE,
+      CONSOLE_ZONE_KEY: "k".repeat(32),
+    },
+  };
 });
 vi.mock("@/app/(app)/admin/_lib/guard", () => ({
   getAdminUser: vi.fn(async () => state.admin),

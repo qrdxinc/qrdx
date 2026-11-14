@@ -1,5 +1,6 @@
 import { Badge } from "@repo/design-system/components/ui/badge";
 import {
+  adminConsoleAddress,
   adminConsoleHref,
   isConsolePath,
 } from "@repo/next-config/console-zone";
@@ -30,8 +31,12 @@ export default async function AdminOverviewPage() {
   // With the back-office console on, it serves some of the lists behind
   // these numbers: those links load a new page, at the same path (proxied,
   // CONSOLE_ORIGIN) or at the console's own address (ADMIN_CONSOLE_URL).
+  const consoleAddress = adminConsoleAddress({
+    adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+    secret: env.CONSOLE_ZONE_KEY,
+  });
   const consoleLink = (href: string) => {
-    const ownAddress = adminConsoleHref(href, env.ADMIN_CONSOLE_URL);
+    const ownAddress = adminConsoleHref(href, consoleAddress);
     return {
       href: ownAddress ?? href,
       crossZone:

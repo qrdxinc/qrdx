@@ -3,6 +3,7 @@
 // the redirects, the admin menu, /admin/confirm and the OAuth routes share.
 // Nothing here touches a database.
 import {
+  adminConsoleAddress,
   adminConsoleHref,
   adminConsoleRedirects,
   consoleReturnTarget,
@@ -19,6 +20,7 @@ import {
 import { readAuthorizeParams } from "@/lib/oauth-apps/authorize";
 
 const URL_ = "https://admin.qrdx.dev";
+const KEY = "k".repeat(32);
 const HOSTS = "(?:qrdx\\.dev|localhost)";
 // RFC 7636 appendix B
 const CHALLENGE = "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM";
@@ -29,16 +31,42 @@ describe("adminConsoleRedirects", () => {
     expect(adminConsoleRedirects("", { hosts: HOSTS })).toEqual([]);
   });
 
-  it("sends the five sections to the same section at the console, permanently", () => {
-    expect(adminConsoleRedirects(`${URL_}/`, { hosts: HOSTS })).toEqual([
-      {
-        source:
-          "/admin/:section(growth|numbers|subscriptions|ai-usage|affiliates)/:path*",
-        destination: `${URL_}/:section/:path*`,
-        permanent: true,
-        has: [{ type: "host", value: HOSTS }],
-      },
-    ]);
+  it("sends each section to its own lower-case section at the console, for now temporarily", () => {
+    expect(adminConsoleRedirects(`${URL_}/`, { hosts: HOSTS })).toEqual(
+      ["growth", "numbers", "subscriptions", "ai-usage", "affiliates"].map(
+        (section) => ({
+          source: `/admin/${section}/:path*`,
+          destination: `${URL_}/${section}/:path*`,
+          permanent: false,
+          has: [{ type: "host", value: HOSTS }],
+        }),
+      ),
+    );
+  });
+});
+
+describe("adminConsoleAddress (what the redirects, the menu and /admin/confirm read)", () => {
+  it("is the console's origin only with a client secret of 32 characters or more", () => {
+    expect(
+      adminConsoleAddress({ adminConsoleUrl: `${URL_}/`, secret: KEY }),
+    ).toBe(URL_);
+    for (const secret of [undefined, "", "k", "k".repeat(31)]) {
+      expect(
+        adminConsoleAddress({ adminConsoleUrl: URL_, secret }),
+        String(secret),
+      ).toBeUndefined();
+    }
+    expect(
+      adminConsoleAddress({ adminConsoleUrl: undefined, secret: KEY }),
+    ).toBeUndefined();
+    expect(
+      adminConsoleAddress({ adminConsoleUrl: "", secret: KEY }),
+    ).toBeUndefined();
+  });
+
+  it("leaves the menu as before without a usable secret", () => {
+    const address = adminConsoleAddress({ adminConsoleUrl: URL_, secret: "k" });
+    expect(adminNavLinks(false, address)).toEqual(adminNavLinks(false));
   });
 });
 
@@ -136,23 +164,26 @@ describe("the admin menu with the console at its own address", () => {
 });
 
 describe("the console client", () => {
-  const client = adminConsoleClient({ adminConsoleUrl: URL_, secret: "k" });
+  const client = adminConsoleClient({ adminConsoleUrl: URL_, secret: KEY });
 
-  it("exists only with both ADMIN_CONSOLE_URL and CONSOLE_ZONE_KEY", () => {
+  it("exists only with both ADMIN_CONSOLE_URL and a long enough CONSOLE_ZONE_KEY", () => {
     expect(client).toEqual({
       clientId: "qrdx_admin_console",
       redirectUri: `${URL_}/auth/callback`,
-      secret: "k",
+      secret: KEY,
     });
     expect(
-      adminConsoleClient({ adminConsoleUrl: `${URL_}/`, secret: "k" })
+      adminConsoleClient({ adminConsoleUrl: `${URL_}/`, secret: KEY })
         ?.redirectUri,
     ).toBe(`${URL_}/auth/callback`);
     expect(
-      adminConsoleClient({ adminConsoleUrl: undefined, secret: "k" }),
+      adminConsoleClient({ adminConsoleUrl: undefined, secret: KEY }),
     ).toBeNull();
     expect(
       adminConsoleClient({ adminConsoleUrl: URL_, secret: undefined }),
+    ).toBeNull();
+    expect(
+      adminConsoleClient({ adminConsoleUrl: URL_, secret: "k".repeat(31) }),
     ).toBeNull();
     expect(adminConsoleClient({ adminConsoleUrl: "", secret: "" })).toBeNull();
   });

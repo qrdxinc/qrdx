@@ -1,8 +1,7 @@
-// The back-office console (apps/console in the private qrdxinc/cloud repo),
-// at its own address (ADMIN_CONSOLE_URL), signs admins in through this
-// app's OAuth provider as a first-party client. The client isn't a row in
-// oauth_app: it's defined here from two variables, and doesn't exist while
-// either is unset. Pure: the routes, the console and tests import it.
+// QRdx's back-office console, at its own address (ADMIN_CONSOLE_URL), signs
+// admins in through this app's OAuth provider as a first-party client. The
+// client isn't a row in oauth_app: it's defined here from two variables, and
+// doesn't exist while either is unset. Pure: the routes and tests import it.
 //
 // What makes it different from a registered app:
 // - one exact redirect URI, <ADMIN_CONSOLE_URL>/auth/callback;
@@ -22,6 +21,7 @@ import {
   ADMIN_CONSOLE_SCOPES,
   ADMIN_CONSOLE_TOKEN_PREFIX,
   type AdminConsoleScope,
+  adminConsoleAddress,
 } from "@repo/next-config/console-zone";
 import { isValidPkceValue, parseScopes } from "@/lib/oauth";
 import type { AuthorizeParams } from "@/lib/oauth-apps/authorize";
@@ -53,7 +53,8 @@ export interface AdminConsoleClient {
 
 /**
  * The client as this deployment has it, or null while ADMIN_CONSOLE_URL or
- * CONSOLE_ZONE_KEY is unset: then the client id is unknown, as any other.
+ * CONSOLE_ZONE_KEY is unset, or the key is too short (adminConsoleAddress):
+ * then the client id is unknown, as any other.
  */
 export function adminConsoleClient({
   adminConsoleUrl,
@@ -62,10 +63,11 @@ export function adminConsoleClient({
   adminConsoleUrl: string | undefined;
   secret: string | undefined;
 }): AdminConsoleClient | null {
-  if (!(adminConsoleUrl && secret)) return null;
+  const origin = adminConsoleAddress({ adminConsoleUrl, secret });
+  if (!(origin && secret)) return null;
   return {
     clientId: ADMIN_CONSOLE_CLIENT_ID,
-    redirectUri: `${new URL(adminConsoleUrl).origin}${ADMIN_CONSOLE_CALLBACK_PATH}`,
+    redirectUri: `${origin}${ADMIN_CONSOLE_CALLBACK_PATH}`,
     secret,
   };
 }

@@ -179,12 +179,14 @@ export const env = validateTogether(() =>
       // Sent to the console on its pages (x-qrdx-zone-key), so it can turn
       // away requests that didn't come through this app. Same value on both.
       // With ADMIN_CONSOLE_URL it's also the console's OAuth client secret
-      // (lib/admin-console): the token exchange refuses without it.
+      // (lib/admin-console), and then must be 32 characters or more
+      // (openssl rand -hex 32): next.config.ts fails the build otherwise.
       CONSOLE_ZONE_KEY: z.string().min(1).optional(),
       // The console at its own address, e.g. https://admin.qrdx.dev: when
-      // set, /admin/<section> for its five sections answers a 308 there, the
-      // admin menu links there, and the console signs admins in through this
-      // app's OAuth provider as a first-party client (lib/admin-console).
+      // set (it needs CONSOLE_ZONE_KEY, above, or the build fails),
+      // /admin/<section> for its five sections redirects there, the admin
+      // menu links there, and the console signs admins in through this app's
+      // OAuth provider as a first-party client (lib/admin-console).
       // Decided at build time like CONSOLE_ORIGIN (next.config.ts inlines
       // it). An origin only: https, or http on localhost for development.
       ADMIN_CONSOLE_URL: z
