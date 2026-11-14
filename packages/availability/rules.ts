@@ -39,6 +39,9 @@ export const FEATURE_IDS = [
   "passkeys",
   "sso",
   "auditLog",
+  "clientPortal",
+  "whiteLabel",
+  "conversions",
   "slackBot",
   "discordBot",
   "telegramBot",
@@ -206,6 +209,33 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
       `${WORKSPACE_PATTERN_PREFIX}/settings/audit-log`,
       "/docs/help/teams/audit-log",
     ],
+  },
+  clientPortal: {
+    // The client portal and client-branded stats pages (agency tools) are in
+    // ee/client-portal under the same licence: without a key there is no
+    // Settings → Client portal, no portal, and shared stats pages carry no
+    // client brand (they keep working, plain).
+    name: "Client portal and client reports (QRdx license key)",
+    requires: () => [EE_LICENSE_ENV],
+    paths: [
+      `${WORKSPACE_PATTERN_PREFIX}/settings/clients`,
+      "/docs/client-portal",
+    ],
+  },
+  whiteLabel: {
+    // White-label and custom CSS on hosted pages are in ee/white-label under
+    // the same licence: without a key every hosted page shows QRdx's default
+    // branding and no custom CSS. Pages keep serving either way.
+    name: "White-label and custom CSS on hosted pages (QRdx license key)",
+    requires: () => [EE_LICENSE_ENV],
+  },
+  conversions: {
+    // Conversion tracking is in ee/conversions under the same licence:
+    // without a key scans get no qrdx_sid and POST /api/v1/conversions
+    // answers 404. Conversions already recorded stay in the data export.
+    name: "Conversion tracking (QRdx license key)",
+    requires: () => [EE_LICENSE_ENV],
+    paths: ["/docs/developers/api/create-conversion"],
   },
   slackBot: {
     // The QRdx bot for Slack (lib/slack-bot): the same Slack app as "Add to
