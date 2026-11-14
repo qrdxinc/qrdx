@@ -2,6 +2,8 @@
 
 Copyright (c) 2025-2026 Ritesh Bucha and QRdx contributors
 
+QRdx is operated by Ritesh Bucha, an individual based in India. In the licensing files, "QRdx" means Ritesh Bucha and any successor or assignee, including any company that operates QRdx now or later.
+
 QRdx is open core. The repository is under three licenses:
 
 - **AGPL-3.0-or-later.** Everything not listed below is licensed under the GNU Affero General Public License, version 3 or (at your option) any later version. Its full text is in [LICENSE](LICENSE). That includes the web app, two-step verification and passkeys.
@@ -12,7 +14,7 @@ QRdx is open core. The repository is under three licenses:
 
 An enterprise agreement covers running the `ee/` features in production on your own server. To get one, use the [enterprise page](https://qrdx.dev/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
 
-The app doesn't check the key: any value in `QRDX_EE_LICENSE` switches the features on. The agreement, not the key, is what lets you use them in production.
+QRdx issues the license key with the agreement, and each key has an expiry date. The app doesn't check the key today: any value in `QRDX_EE_LICENSE` switches the features on. The agreement, not the key, is what lets you use them in production, and using a key QRdx didn't issue in production breaks the license.
 
 ## Third-party code
 
