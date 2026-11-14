@@ -8,6 +8,7 @@ import {
   computeFeatures,
   configuredEntry,
   customDomainMode,
+  eeOnEveryPlan,
   FEATURE_IDS,
   type FeatureContext,
   type FeatureId,
@@ -71,6 +72,7 @@ const EVERYTHING: Record<string, string> = {
   TELEGRAM_WEBHOOK_SECRET: FAKE,
   TELEGRAM_BOT_USERNAME: FAKE,
   POLAR_WEBHOOK_SECRET: FAKE,
+  POLAR_ACCESS_TOKEN: FAKE,
   // A flag, not a secret: euro prices show only when it's "1" or "true".
   NEXT_PUBLIC_QRDX_EUR_PRICES: "1",
 };
@@ -115,6 +117,7 @@ const NEEDS: Record<FeatureId, string[]> = {
     "TELEGRAM_BOT_USERNAME",
   ],
   affiliates: ["POLAR_WEBHOOK_SECRET"],
+  billing: ["POLAR_ACCESS_TOKEN"],
   invoiceRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
   enterpriseRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
   eurPrices: ["NEXT_PUBLIC_QRDX_EUR_PRICES"],
@@ -330,6 +333,69 @@ describe("workspace SSO", () => {
     expect(isPathShown(view.hiddenPaths, "/dashboard/acme/settings/sso")).toBe(
       false,
     );
+  });
+});
+
+describe("billing", () => {
+  it("is Polar's access token, whatever its value", () => {
+    expect(computeFeatures(ctx({ POLAR_ACCESS_TOKEN: FAKE })).billing).toBe(
+      true,
+    );
+    expect(computeFeatures(ctx({})).billing).toBe(false);
+    expect(computeFeatures(ctx({ POLAR_ACCESS_TOKEN: " " })).billing).toBe(
+      false,
+    );
+    // The webhook secret alone sells nothing.
+    expect(computeFeatures(ctx({ POLAR_WEBHOOK_SECRET: FAKE })).billing).toBe(
+      false,
+    );
+  });
+});
+
+describe("the ee features on every plan", () => {
+  const SELF_HOSTED = {
+    NEXT_PUBLIC_APP_URL: "https://qr.example.org",
+    QRDX_EE_LICENSE: "local-dev",
+  };
+  const on = (env: Record<string, string | undefined>, flags = {}) =>
+    eeOnEveryPlan(ctx(env, flags));
+
+  it("only on a self-hosted copy with the licence key and no billing", () => {
+    expect(on(SELF_HOSTED)).toBe(true);
+    expect(on(SELF_HOSTED, vercelProd)).toBe(true);
+    expect(on({ ...SELF_HOSTED, NEXT_PUBLIC_APP_URL: "http://qr.lan" })).toBe(
+      true,
+    );
+  });
+
+  it("never without the key", () => {
+    expect(on({ ...SELF_HOSTED, QRDX_EE_LICENSE: undefined })).toBe(false);
+    expect(on({ ...SELF_HOSTED, QRDX_EE_LICENSE: "  " })).toBe(false);
+  });
+
+  it("never where plans are sold", () => {
+    expect(on({ ...SELF_HOSTED, POLAR_ACCESS_TOKEN: FAKE })).toBe(false);
+  });
+
+  it("never on QRdx itself: qrdx.dev, its previews and local dev", () => {
+    for (const appUrl of [
+      "https://qrdx.dev",
+      "https://www.qrdx.dev",
+      "http://localhost:3000",
+    ]) {
+      expect(on({ ...SELF_HOSTED, NEXT_PUBLIC_APP_URL: appUrl }), appUrl).toBe(
+        false,
+      );
+    }
+    expect(
+      on({
+        ...SELF_HOSTED,
+        NEXT_PUBLIC_APP_URL: "https://qrdx-git-branch.vercel.app",
+        VERCEL_PROJECT_PRODUCTION_URL: "qrdx.dev",
+      }),
+    ).toBe(false);
+    // Even if qrdx.dev ever ran without its Polar token.
+    expect(on({ ...EVERYTHING, POLAR_ACCESS_TOKEN: undefined })).toBe(false);
   });
 });
 

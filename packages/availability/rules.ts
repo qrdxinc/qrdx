@@ -15,7 +15,7 @@
 // features. Paths in the comments below (lib/…, components/…, proxy.ts) are
 // the app's, under apps/app.
 
-import { EE_LICENSE_ENV } from "@repo/auth/ee-license";
+import { EE_LICENSE_ENV, eeLicensed } from "@repo/auth/ee-license";
 import { passkeyRelyingParty } from "@repo/auth/passkey-rp";
 import { isQrdxDeployment } from "./deployment";
 import { isFlagOn } from "./flags";
@@ -43,6 +43,8 @@ export const FEATURE_IDS = [
   "discordBot",
   "telegramBot",
   "affiliates",
+  // Paid plans (Polar)
+  "billing",
   // Agency tools: "Pay by invoice" requests for Business yearly
   "invoiceRequests",
   // Enterprise pages: the contact form on /enterprise
@@ -53,6 +55,9 @@ export const FEATURE_IDS = [
 ] as const;
 
 export type FeatureId = (typeof FEATURE_IDS)[number];
+
+/** The variable that turns billing on (FEATURE_RULES.billing). */
+export const BILLING_ENV = "POLAR_ACCESS_TOKEN";
 
 export interface FeatureContext {
   /** Environment variables by name. Only whether each is set is read. */
@@ -267,6 +272,14 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
       "/docs/help/account-and-billing/affiliate-program",
     ],
   },
+  billing: {
+    // Selling plans through Polar (lib/polar.ts): checkout, the billing
+    // portal and the subscriptions the webhook records. Without it nothing
+    // is sold, and every account keeps the plan its subscription rows give
+    // it: Free on a new self-hosted server (lib/plans.ts).
+    name: "Billing (Polar)",
+    requires: () => [BILLING_ENV],
+  },
   invoiceRequests: {
     // Paying Business yearly by invoice (lib/invoice-requests.ts). Polar's
     // checkout takes cards and wallets only, so a request is emailed to
@@ -317,6 +330,26 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
     paths: ["/docs/help/account-and-billing/nonprofit-discount"],
   },
 };
+
+/**
+ * Whether the ee features (workspace SSO, the audit log) come with every
+ * plan here: a self-hosted copy on its own domain (./deployment.ts) with the
+ * licence key that sells no plans (no "billing", so every account is on
+ * Free). Its enterprise agreement covers them, so no plan is asked for.
+ * Where plans are sold, and always on QRdx itself (qrdx.dev, its previews,
+ * local dev), they stay with the plans that include them
+ * (apps/app/lib/plans.ts).
+ */
+export function eeOnEveryPlan(ctx: FeatureContext): boolean {
+  return (
+    eeLicensed(ctx.env) &&
+    missingFeatureSetup("billing", ctx).length > 0 &&
+    !isQrdxDeployment({
+      appUrl: ctx.env.NEXT_PUBLIC_APP_URL,
+      productionUrl: ctx.env.VERCEL_PROJECT_PRODUCTION_URL,
+    })
+  );
+}
 
 /**
  * The variable names `id` still needs here, in a stable order. Empty when it
