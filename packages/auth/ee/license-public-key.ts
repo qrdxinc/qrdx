@@ -3,13 +3,16 @@
 // (./license.ts). The private key stays with QRdx: never in this repository,
 // its tests, CI or logs.
 //
-// QRdx fills this in. Make the pair with
+// Made with
 //   node packages/auth/ee/scripts/license.mjs keygen --out <private key file>
-// and paste the public key it prints. While it's empty, a production build
-// stops (apps/app/next.config.ts) and a production server turns every key
-// down: nothing is accepted without it. Tests and development use a key they
-// make themselves (trustLicensePublicKeyForTests in ./license.ts).
-export const QRDX_LICENSE_PUBLIC_KEY = "";
+// To replace it, make a new pair the same way and paste the public key it
+// prints; every key signed with the old pair then stops working. If this is
+// ever empty, a production build stops (apps/app/next.config.ts) and a
+// production server turns every key down: nothing is accepted without it.
+// Tests and development can also trust a key they make themselves
+// (trustLicensePublicKeyForTests in ./license.ts).
+export const QRDX_LICENSE_PUBLIC_KEY =
+  "xVunqjj4YUay260ddLpfIpzexdYwintxORLoIPPYPGA";
 
 /** Stops a production build that has no licence public key. */
 export function assertLicensePublicKey(publicKey: string): void {

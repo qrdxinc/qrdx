@@ -205,12 +205,16 @@ describe("anything else counts as no key", () => {
 });
 
 describe("which public keys are trusted", () => {
-  it("in this repository QRdx's key isn't filled in yet, and a production build stops without it", () => {
-    expect(QRDX_LICENSE_PUBLIC_KEY).toBe("");
-    expect(() => assertLicensePublicKey(QRDX_LICENSE_PUBLIC_KEY)).toThrow(
+  it("holds QRdx's public key, and a production build stops without one", () => {
+    // An Ed25519 public key: 32 bytes in base64url.
+    expect(QRDX_LICENSE_PUBLIC_KEY).toMatch(/^[A-Za-z0-9_-]{43}$/);
+    expect(Buffer.from(QRDX_LICENSE_PUBLIC_KEY, "base64url").byteLength).toBe(
+      32,
+    );
+    expect(() => assertLicensePublicKey(QRDX_LICENSE_PUBLIC_KEY)).not.toThrow();
+    expect(() => assertLicensePublicKey("")).toThrow(
       /QRDX_LICENSE_PUBLIC_KEY is empty/,
     );
-    expect(() => assertLicensePublicKey(testLicencePublicKey())).not.toThrow();
     const nextConfig = readFileSync(
       path.resolve(import.meta.dirname, "../../next.config.ts"),
       "utf8",
@@ -221,10 +225,17 @@ describe("which public keys are trusted", () => {
   });
 
   it("without any trusted key, every key is turned down", () => {
+    expect(checkLicenseKey(licence(90), [])).toEqual({
+      ok: false,
+      problem: "no-public-key",
+    });
+  });
+
+  it("trusts QRdx's key: a key this run signed passes only through the test seam", () => {
     trustLicensePublicKeyForTests(null);
     expect(stateOf(licence(90))).toEqual({
       status: "invalid",
-      problem: "no-public-key",
+      problem: "signature",
     });
   });
 
@@ -252,16 +263,17 @@ describe("which public keys are trusted", () => {
       },
       own.privateKey,
     );
+    // Only QRdx's key counts.
     expect(
       eeLicenseState({ ...process.env, QRDX_EE_LICENSE: ownKey }, NOW),
     ).toEqual({
       status: "invalid",
-      problem: "no-public-key",
+      problem: "signature",
     });
     // Nor the test key trusted before NODE_ENV said production.
     expect(stateOf(licence(90))).toEqual({
       status: "invalid",
-      problem: "no-public-key",
+      problem: "signature",
     });
   });
 
@@ -356,8 +368,9 @@ describe("what /admin/health says", () => {
       detail:
         "QRDX_EE_LICENSE not set: single sign-on and the audit log are off",
     });
-    trustLicensePublicKeyForTests(null);
-    expect(licenceProbe(stateOf(licence(90))).detail).toBe(
+    expect(
+      licenceProbe({ status: "invalid", problem: "no-public-key" }).detail,
+    ).toBe(
       "This build has no licence public key: single sign-on and the audit log are off",
     );
   });
