@@ -5418,11 +5418,7 @@
       "nameIsNoLongerIn": "\"{name}\"은(는) 더 이상 커뮤니티에 없어요."
     },
     "itemCard": {
-      "empty": "비어 있음",
-      "official": "공식",
-      "usecountUses": "{useCount}회 사용",
-      "seeAll": "모두 보기",
-      "likes": "좋아요"
+      "empty": "비어 있음"
     },
     "itemPages": {
       "previous": "이전",

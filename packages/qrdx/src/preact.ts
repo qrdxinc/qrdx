@@ -8,13 +8,13 @@
 import { Component, h, type VNode } from "preact";
 import {
   createQRCodeTree,
-  type QRCodeProps,
+  type QRCodeOptions,
   type QRSVGOptions,
   resolveQRCodeProps,
   toHyperscript,
 } from "./core";
 
-export type { QRCodeProps, QRSVGOptions } from "./core";
+export type { QRCodeOptions, QRCodeProps, QRSVGOptions } from "./core";
 
 const element = (
   type: string,
@@ -68,12 +68,13 @@ export class QRCodeSVG extends Drawn<QRSVGOptions> {
 
 /**
  * `QRCodeSVG` with React's `QRCode` logo API: `logo`, `logoOptions`,
- * `hideLogo` and `scale`.
+ * `hideLogo` and `scale`. Any other prop (`class`, `aria-label`, `data-*`…)
+ * goes on the `<svg>`, as with `QRCodeSVG`.
  *
  * @example
  * <QRCode value="https://qrdx.dev" logo="/logo.png" level="H" />
  */
-export class QRCode extends Drawn<QRCodeProps> {
+export class QRCode extends Drawn<QRCodeOptions> {
   override render(): VNode {
     return draw(resolveQRCodeProps(this.props));
   }

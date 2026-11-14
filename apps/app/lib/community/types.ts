@@ -108,6 +108,21 @@ export interface CommunityItemDetail extends CommunityItemCard {
   isMine: boolean;
 }
 
+/** An item in a ranking, with what it was ranked by (saves, activity). */
+export interface RankedCard {
+  card: CommunityItemCard;
+  count: number;
+}
+
+/** A member in the "Top makers" row. */
+export interface CommunityMaker {
+  creator: CommunityCreator;
+  /** Their published items */
+  itemCount: number;
+  /** Saves on those items, all time */
+  saveCount: number;
+}
+
 export interface CommunityProfileView {
   creator: CommunityCreator;
   bio: string | null;

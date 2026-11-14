@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 export type CommunityTab =
   | "home"
+  | "all"
   | "frames"
   | "themes"
   | "collections"
@@ -12,6 +13,7 @@ export type CommunityTab =
 
 const TABS: { id: CommunityTab; label: string; href: string }[] = [
   { id: "home", label: "Overview", href: "/community" },
+  { id: "all", label: "All", href: "/community/all" },
   { id: "frames", label: "Frames", href: "/community/frames" },
   { id: "themes", label: "Themes", href: "/community/themes" },
   { id: "collections", label: "Collections", href: "/community/collections" },

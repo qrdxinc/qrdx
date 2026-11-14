@@ -8,6 +8,7 @@ import {
   communityProfile,
   communitySave,
   communityTheme,
+  communityUse,
   database as db,
   qrPreset,
   user as userTable,
@@ -20,6 +21,7 @@ import {
   eq,
   exists,
   gt,
+  gte,
   ilike,
   inArray,
   isNotNull,
@@ -29,6 +31,7 @@ import {
   type SQL,
   sql,
 } from "drizzle-orm";
+import { unionAll } from "drizzle-orm/pg-core";
 import { OFFICIAL_FRAME_COUNT } from "qrdx";
 import { customFrameSchema, type QRCustomFrame } from "qrdx/types";
 import type {
@@ -53,7 +56,9 @@ import type {
   CommunityItemCard,
   CommunityItemDetail,
   CommunityItemType,
+  CommunityMaker,
   CommunityProfileView,
+  RankedCard,
 } from "./types";
 import { authorNotBanned } from "./visibility";
 
@@ -331,7 +336,8 @@ async function buildCards(rows: ItemRow[]): Promise<CommunityItemCard[]> {
 export type ListSort = "popular" | "newest" | "oldest";
 
 export interface ListOptions {
-  type: CommunityItemType;
+  /** One type, or every type when left out */
+  type?: CommunityItemType;
   sort?: ListSort;
   official?: boolean;
   featured?: boolean;
@@ -340,6 +346,8 @@ export interface ListOptions {
   createdBy?: string;
   /** Items this account saved */
   savedBy?: string;
+  /** Items published since this moment */
+  since?: Date;
   limit?: number;
   offset?: number;
 }
@@ -360,12 +368,16 @@ function orderOf(options: Pick<ListOptions, "featured" | "sort">) {
   ];
 }
 
-/** Published items of a type (database only). */
+/** Published items of a type, or of every type (database only). */
 export async function listItems(
   options: ListOptions,
 ): Promise<CommunityItemCard[]> {
   return guardedRead(async () => {
-    const conditions: SQL[] = [visible(), eq(communityItem.type, options.type)];
+    const conditions: SQL[] = [visible()];
+    if (options.type) conditions.push(eq(communityItem.type, options.type));
+    if (options.since) {
+      conditions.push(gte(communityItem.publishedAt, options.since));
+    }
     if (options.official === true) {
       conditions.push(eq(communityItem.isOfficial, true));
     }
@@ -430,6 +442,243 @@ export async function listFrames(
   const seeded = new Set(official.map((card) => card.slug));
   const missing = officialFrameCards().filter((card) => !seeded.has(card.slug));
   return [...official, ...missing, ...others];
+}
+
+// ─── Rankings (the overview's rows and /community/top) ─────────────────────
+
+// Collections and kits that turn out unlistable (./queries.ts, listable)
+// are dropped after the query, so rankings read a few rows more than asked.
+const rankLimit = (limit: number) => limit + Math.ceil(limit / 4);
+
+/** Narrows a ranking: QRdx's items or members', staff picks only. */
+export interface RankFilter {
+  official?: boolean;
+  featured?: boolean;
+}
+
+function rankFilter(filter: RankFilter = {}): SQL {
+  return and(
+    visible(),
+    ...(filter.official === undefined
+      ? []
+      : [eq(communityItem.isOfficial, filter.official)]),
+    ...(filter.featured ? [isNotNull(communityItem.featuredAt)] : []),
+  ) as SQL;
+}
+
+/** Items ordered by a count per item (`counts`), most first. */
+async function rankedBy(
+  counts: ReturnType<typeof rankedSubquery>,
+  limit: number,
+  filter: RankFilter = {},
+): Promise<RankedCard[]> {
+  const rows = (await db
+    .select({ ...ROW, count: counts.n })
+    .from(communityItem)
+    .innerJoin(counts, eq(counts.itemId, communityItem.id))
+    .innerJoin(
+      communityProfile,
+      eq(communityProfile.id, communityItem.profileId),
+    )
+    .leftJoin(userTable, eq(userTable.id, communityProfile.userId))
+    .where(rankFilter(filter))
+    .orderBy(
+      desc(counts.n),
+      desc(communityItem.saveCount),
+      desc(communityItem.likeCount),
+      desc(communityItem.publishedAt),
+      asc(communityItem.id),
+    )
+    .limit(rankLimit(limit))) as (ItemRow & { count: number })[];
+  return withCounts(rows, limit);
+}
+
+/** Cards for ranked rows, each with its row's count. */
+async function withCounts(
+  rows: (ItemRow & { count: number })[],
+  limit: number,
+): Promise<RankedCard[]> {
+  const counted = new Map(rows.map((row) => [row.id, Number(row.count)]));
+  const cards = await toCards(rows);
+  return cards
+    .slice(0, limit)
+    .map((card) => ({ card, count: counted.get(card.id ?? "") ?? 0 }));
+}
+
+/** Per item id, how many rows `from` has (an aggregate to join). */
+function rankedSubquery(
+  name: string,
+  from: ReturnType<typeof savesSince> | ReturnType<typeof activitySince>,
+) {
+  const all = from.as(`${name}_rows`);
+  return db
+    .select({ itemId: all.itemId, n: count().as("n") })
+    .from(all)
+    .groupBy(all.itemId)
+    .as(name);
+}
+
+const savesSince = (since: Date) =>
+  db
+    .select({ itemId: communitySave.itemId })
+    .from(communitySave)
+    .where(gte(communitySave.createdAt, since));
+
+/** Saves, uses (copies, counted once a day) and published remixes. */
+const activitySince = (since: Date) =>
+  unionAll(
+    savesSince(since),
+    db
+      .select({ itemId: communityUse.itemId })
+      .from(communityUse)
+      .where(
+        and(
+          eq(communityUse.kind, "copy"),
+          gte(communityUse.day, Math.floor(since.getTime() / 86_400_000)),
+        ),
+      ),
+    db
+      .select({ itemId: sql<string>`${communityItem.remixedFromItemId}` })
+      .from(communityItem)
+      .where(
+        and(
+          isNotNull(communityItem.remixedFromItemId),
+          eq(communityItem.status, "published"),
+          gte(communityItem.publishedAt, since),
+        ),
+      ),
+  );
+
+/** Items ordered by a column or sum of columns, most first. */
+async function rankedByColumns(
+  total: SQL<number>,
+  limit: number,
+  filter: RankFilter = {},
+): Promise<RankedCard[]> {
+  const rows = (await db
+    .select({ ...ROW, count: total })
+    .from(communityItem)
+    .innerJoin(
+      communityProfile,
+      eq(communityProfile.id, communityItem.profileId),
+    )
+    .leftJoin(userTable, eq(userTable.id, communityProfile.userId))
+    .where(and(rankFilter(filter), gt(total, 0)))
+    .orderBy(
+      desc(total),
+      desc(communityItem.likeCount),
+      desc(communityItem.publishedAt),
+      asc(communityItem.id),
+    )
+    .limit(rankLimit(limit))) as (ItemRow & { count: number })[];
+  return withCounts(rows, limit);
+}
+
+/**
+ * The items saved most since `since`, with how many saves each got then;
+ * with no `since`, of all time (each item's save count).
+ */
+export async function mostSavedItems({
+  since,
+  limit,
+  filter,
+}: {
+  since: Date | null;
+  limit: number;
+  filter?: RankFilter;
+}): Promise<RankedCard[]> {
+  return guardedRead(
+    () =>
+      since
+        ? rankedBy(
+            rankedSubquery("window_saves", savesSince(since)),
+            limit,
+            filter,
+          )
+        : rankedByColumns(
+            sql<number>`${communityItem.saveCount}`,
+            limit,
+            filter,
+          ),
+    [],
+  );
+}
+
+/**
+ * The items with the most activity since `since` (all time without one):
+ * saves, uses and published remixes together, with that total.
+ */
+export async function trendingItems({
+  since,
+  limit,
+  filter,
+}: {
+  since: Date | null;
+  limit: number;
+  filter?: RankFilter;
+}): Promise<RankedCard[]> {
+  return guardedRead(
+    () =>
+      since
+        ? rankedBy(
+            rankedSubquery("window_activity", activitySince(since)),
+            limit,
+            filter,
+          )
+        : rankedByColumns(
+            sql<number>`${communityItem.saveCount} + ${communityItem.useCount} + ${communityItem.remixCount}`,
+            limit,
+            filter,
+          ),
+    [],
+  );
+}
+
+/**
+ * Members with a public handle, ranked by the saves on their published
+ * items (the official profile has a row of its own).
+ */
+export async function topMakers(limit: number): Promise<CommunityMaker[]> {
+  return guardedRead(async () => {
+    const saves = sql<number>`coalesce(sum(${communityItem.saveCount}), 0)`;
+    const rows = await db
+      .select({
+        profileId: communityProfile.id,
+        profileKind: communityProfile.kind,
+        handle: communityProfile.handle,
+        displayName: communityProfile.displayName,
+        avatarUrl: communityProfile.avatarUrl,
+        verifiedAt: communityProfile.verifiedAt,
+        items: count(communityItem.id),
+        saves,
+      })
+      .from(communityItem)
+      .innerJoin(
+        communityProfile,
+        eq(communityProfile.id, communityItem.profileId),
+      )
+      .leftJoin(userTable, eq(userTable.id, communityProfile.userId))
+      .where(
+        and(
+          visible(),
+          eq(communityProfile.kind, "person"),
+          isNotNull(communityProfile.handle),
+        ),
+      )
+      .groupBy(communityProfile.id)
+      .having(gt(saves, 0))
+      .orderBy(
+        desc(saves),
+        desc(count(communityItem.id)),
+        asc(communityProfile.displayName),
+      )
+      .limit(limit);
+    return rows.map((row) => ({
+      creator: creatorOf(row),
+      itemCount: Number(row.items),
+      saveCount: Number(row.saves),
+    }));
+  }, []);
 }
 
 // An official frame's row without its payload: its spec, name, description
