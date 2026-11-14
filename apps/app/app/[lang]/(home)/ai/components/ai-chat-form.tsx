@@ -55,7 +55,7 @@ export function AIChatForm({
   } = useAIEnhancePrompt();
 
   const handleEnhancePrompt = () => {
-    if (!checkValidSession() || !checkValidSubscription()) return;
+    if (!checkValidSession("ai_chat") || !checkValidSubscription()) return;
 
     // Only send images that are not loading, and strip loading property
     const images = uploadedImages
@@ -65,7 +65,7 @@ export function AIChatForm({
   };
 
   const handleGenerate = async () => {
-    if (!checkValidSession() || !checkValidSubscription()) return; // Act as an early return
+    if (!checkValidSession("ai_chat") || !checkValidSubscription()) return; // Act as an early return
 
     // Only send images that are not loading, and strip loading property
     const images = uploadedImages

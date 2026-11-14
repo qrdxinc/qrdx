@@ -3,6 +3,7 @@ import { colorConfigSchema, getSolidColor } from "qrdx/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { defaultThemeState } from "@/config/qr";
+import { noteEditorVisitStart } from "@/lib/sign-up-nudges";
 import { isShuffleId } from "@/lib/themes/shuffle";
 import { isDeepEqual } from "@/lib/utils";
 import type { QRStyle, ThemeEditorState } from "@/types/editor";
@@ -126,6 +127,10 @@ interface QREditorStore {
   setContentConfig: (type: ContentType, config: QRContentConfig) => void;
   getContentConfig: (type: ContentType) => QRContentConfig | undefined;
 }
+
+// Whether this tab's visit started with a design kept from an earlier one
+// (the "keep your designs" line): read before the store loads its own.
+noteEditorVisitStart();
 
 /**
  * QR Editor Store with history and preset management

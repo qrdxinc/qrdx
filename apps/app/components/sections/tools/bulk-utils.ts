@@ -1,8 +1,124 @@
-import { CANONICAL_ORIGIN, MAX_BULK_TOOL_ROWS } from "@repo/config";
+import {
+  CANONICAL_ORIGIN,
+  MAX_BULK_TOOL_ROWS,
+  MAX_BULK_TOOL_ROWS_SIGNED_OUT,
+} from "@repo/config";
 
 /** Rows in one file (@repo/config limits.ts, where the reasoning is). */
 export const MAX_BULK_ROWS = MAX_BULK_TOOL_ROWS;
+/** Rows in one file without an account; more asks for a free one. */
+export const MAX_SIGNED_OUT_ROWS = MAX_BULK_TOOL_ROWS_SIGNED_OUT;
 export const MAX_CSV_BYTES = 10 * 1024 * 1024;
+
+/** A file this long needs a free account first (signed-in files skip it). */
+export function needsAccount(rowCount: number, signedIn: boolean): boolean {
+  return !signedIn && rowCount > MAX_SIGNED_OUT_ROWS;
+}
+
+// ── Keeping the file through a sign-in ─────────────────────────────────────
+// An email code signs in without leaving the page, so the parsed file just
+// stays in memory. Google and GitHub leave and come back, which loses it,
+// so the rows wait in this tab's sessionStorage: on this device only,
+// never uploaded, gone with the tab, and taken (removed) as soon as the
+// page reads them back. A file too big for storage leaves a marker, so the
+// page can say why it's gone.
+
+const STASH_KEY = "qrdx:bulk-file";
+/** Long enough for any sign-in; an older file isn't brought back. */
+export const BULK_STASH_MAX_AGE_MS = 30 * 60_000;
+
+export interface BulkFile {
+  name: string;
+  rows: string[][];
+  hasHeader: boolean;
+}
+
+type StashStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
+
+function tabStorage(): StashStorage | null {
+  try {
+    return typeof window === "undefined" ? null : window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
+
+/** Keeps the file for the sign-in's round trip. */
+export function stashBulkFile(
+  file: BulkFile,
+  now: number = Date.now(),
+  storage: StashStorage | null = tabStorage(),
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(STASH_KEY, JSON.stringify({ ...file, at: now }));
+  } catch {
+    try {
+      storage.setItem(STASH_KEY, JSON.stringify({ lost: true, at: now }));
+    } catch {
+      // Nothing can be kept; the page just starts empty.
+    }
+  }
+}
+
+export function clearBulkStash(
+  storage: StashStorage | null = tabStorage(),
+): void {
+  try {
+    storage?.removeItem(STASH_KEY);
+  } catch {
+    // Nothing to clear.
+  }
+}
+
+/**
+ * The file kept for a sign-in, once (it's removed as it's read): the file,
+ * "lost" when it was too big to keep, or null.
+ */
+export function takeBulkStash(
+  now: number = Date.now(),
+  storage: StashStorage | null = tabStorage(),
+): BulkFile | "lost" | null {
+  let raw: string | null = null;
+  try {
+    raw = storage?.getItem(STASH_KEY) ?? null;
+  } catch {
+    return null;
+  }
+  if (!raw) return null;
+  clearBulkStash(storage);
+  try {
+    const stash = JSON.parse(raw) as Partial<BulkFile> & {
+      at?: unknown;
+      lost?: unknown;
+    };
+    if (
+      typeof stash.at !== "number" ||
+      stash.at > now ||
+      now - stash.at > BULK_STASH_MAX_AGE_MS
+    ) {
+      return null;
+    }
+    if (stash.lost === true) return "lost";
+    const rows = stash.rows;
+    if (
+      !Array.isArray(rows) ||
+      !rows.every(
+        (row) =>
+          Array.isArray(row) && row.every((cell) => typeof cell === "string"),
+      )
+    ) {
+      return null;
+    }
+    return {
+      name: typeof stash.name === "string" ? stash.name : "",
+      rows,
+      hasHeader: stash.hasHeader !== false,
+    };
+  } catch {
+    return null;
+  }
+}
 
 export interface CsvTable {
   columns: string[];

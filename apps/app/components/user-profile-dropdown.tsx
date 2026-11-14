@@ -122,7 +122,7 @@ export function UserProfileDropdown({
     return (
       <div key="auth-buttons" className={cn("flex gap-3.5", FADE_IN)}>
         <PlaygroundLink />
-        <Button variant="outline" onClick={() => openAuthDialog("signin")}>
+        <Button variant="outline" onClick={() => openAuthDialog("nav")}>
           {t("signIn")}
         </Button>
       </div>

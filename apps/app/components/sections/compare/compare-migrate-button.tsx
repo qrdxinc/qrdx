@@ -57,7 +57,7 @@ function MigrateButton({
       onClick={() => {
         // Sign in first; the dialog's callback URL carries ?migrate=1 back here.
         router.replace(`${pathname}?${RETURN_PARAM}=1`, { scroll: false });
-        openAuthDialog("signin");
+        openAuthDialog("make_dynamic");
       }}
       variant={variant}
     >

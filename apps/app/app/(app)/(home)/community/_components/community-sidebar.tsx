@@ -35,7 +35,7 @@ export function CommunitySidebarContent({
 
   const handleFilterClick = (value: CommunityFilterOption) => {
     if (value === "mine" || value === "liked") {
-      if (!checkValidSession("signin")) return;
+      if (!checkValidSession("community_action")) return;
     }
     onFilterChange(value);
   };

@@ -283,6 +283,10 @@
     "source": "67b696468610",
     "status": "machine"
   },
+  "nav.account.signIn": {
+    "source": "bfd402b2f6f3",
+    "status": "machine"
+  },
   "nav.github.star": {
     "source": "e357d396871d",
     "status": "machine"
@@ -3076,7 +3080,7 @@
     "status": "machine"
   },
   "tools.bulk.metaDescription": {
-    "source": "4110cfe76f49",
+    "source": "048809a291d1",
     "status": "machine"
   },
   "tools.bulk.crumb": {
@@ -3092,7 +3096,7 @@
     "status": "machine"
   },
   "tools.bulk.intro2": {
-    "source": "2116fde6592a",
+    "source": "739854d58f7c",
     "status": "machine"
   },
   "tools.bulk.facts.rows": {
@@ -3176,7 +3180,7 @@
     "status": "machine"
   },
   "tools.bulk.faq.howManyAnswer": {
-    "source": "890df5bc39c9",
+    "source": "6f4ac26865c9",
     "status": "machine"
   },
   "tools.bulk.faq.rowQuestion": {
@@ -3275,8 +3279,32 @@
     "source": "ce87ee8fcfe9",
     "status": "machine"
   },
+  "tools.bulk.generator.dropHelpSignedOut": {
+    "source": "156dac721b70",
+    "status": "machine"
+  },
   "tools.bulk.generator.truncated": {
     "source": "f44db1ba5919",
+    "status": "machine"
+  },
+  "tools.bulk.generator.overLimit": {
+    "source": "accf6d48f08f",
+    "status": "machine"
+  },
+  "tools.bulk.generator.overLimitCta": {
+    "source": "9f414d2af2dc",
+    "status": "machine"
+  },
+  "tools.bulk.generator.firstOnly": {
+    "source": "77db81120675",
+    "status": "machine"
+  },
+  "tools.bulk.generator.restored": {
+    "source": "96843cd6e2f8",
+    "status": "machine"
+  },
+  "tools.bulk.generator.restoreLost": {
+    "source": "7f8e38d12165",
     "status": "machine"
   },
   "tools.bulk.generator.header": {
@@ -3409,6 +3437,14 @@
   },
   "tools.bulk.generator.private": {
     "source": "b33ae6c141f7",
+    "status": "machine"
+  },
+  "tools.bulk.generator.doneNudge": {
+    "source": "b6a979381135",
+    "status": "machine"
+  },
+  "tools.bulk.generator.doneNudgeCta": {
+    "source": "db14ef13b269",
     "status": "machine"
   },
   "tools.printSize.metaTitle": {
@@ -10011,6 +10047,22 @@
     "source": "2af7ba1369bb",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.nudgeDynamic": {
+    "source": "01b1d7984328",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.nudgeDynamicCta": {
+    "source": "10603b2672ba",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.nudgeSave": {
+    "source": "15534602f37f",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.nudgeSaveCta": {
+    "source": "039de9dce407",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.scannedFromAbout": {
     "source": "c500cad2e01a",
     "status": "machine"
@@ -10433,6 +10485,14 @@
   },
   "editor.actionBar.undoRedoButtons.redo": {
     "source": "74273989b096",
+    "status": "machine"
+  },
+  "editor.actionBar.keepDesigns.text": {
+    "source": "b7ed4cea3272",
+    "status": "machine"
+  },
+  "editor.actionBar.keepDesigns.cta": {
+    "source": "db14ef13b269",
     "status": "machine"
   },
   "editor.ai.agentParts.scanScoreScoreValue": {
@@ -13965,6 +14025,10 @@
   },
   "editor.dynamicLinkToggle.editLaterCountScans": {
     "source": "c0b79d9087df",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.signedOutNote": {
+    "source": "ad0a2acf65a0",
     "status": "machine"
   },
   "editor.dynamicLinkToggle.linkOptions": {
@@ -26311,6 +26375,14 @@
     "source": "004dbe433b52",
     "status": "machine"
   },
+  "app.shell.commandMenu.findAPageOrA": {
+    "source": "955df8601fa4",
+    "status": "machine"
+  },
+  "app.shell.commandMenu.searchCodesPagesAndSettings": {
+    "source": "200ac473a8eb",
+    "status": "machine"
+  },
   "app.shell.commandMenu.codes": {
     "source": "e0d1d308a679",
     "status": "machine"
@@ -27693,6 +27765,62 @@
   },
   "auth.dialogCloseButton.close": {
     "source": "7d9eb7acb13e",
+    "status": "machine"
+  },
+  "auth.reasons.saveDesign": {
+    "source": "32fc1841b803",
+    "status": "machine"
+  },
+  "auth.reasons.makeDynamic": {
+    "source": "baf9df3cffea",
+    "status": "machine"
+  },
+  "auth.reasons.hostedPage": {
+    "source": "d6e4f8339b03",
+    "status": "machine"
+  },
+  "auth.reasons.aiArt": {
+    "source": "5aff241e9a69",
+    "status": "machine"
+  },
+  "auth.reasons.aiChat": {
+    "source": "97c6317b29f7",
+    "status": "machine"
+  },
+  "auth.reasons.uploadFrame": {
+    "source": "f74270b3a592",
+    "status": "machine"
+  },
+  "auth.reasons.publishFrame": {
+    "source": "ce9dca9f962a",
+    "status": "machine"
+  },
+  "auth.reasons.communityAction": {
+    "source": "58bc80e06ed1",
+    "status": "machine"
+  },
+  "auth.reasons.saveBarcode": {
+    "source": "b01ad4dcae20",
+    "status": "machine"
+  },
+  "auth.reasons.bulkOverLimit": {
+    "source": "4b5aca026d46",
+    "status": "machine"
+  },
+  "auth.reasons.keepDesigns": {
+    "source": "6993dc4b05f4",
+    "status": "machine"
+  },
+  "auth.reasons.afterDownload": {
+    "source": "13f063aa9d09",
+    "status": "machine"
+  },
+  "auth.reasons.upgrade": {
+    "source": "d4d0d17a08e8",
+    "status": "machine"
+  },
+  "auth.nudge.dismiss": {
+    "source": "497a0f940e31",
     "status": "machine"
   },
   "codeBuilder.builderOptions.on": {
