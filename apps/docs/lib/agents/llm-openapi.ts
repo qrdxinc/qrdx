@@ -349,7 +349,6 @@ function examplePath(path: string, parameters: Json[]): string {
 }
 
 function curlExample(
-  document: OpenApiDocument,
   found: OpenApiOperation,
   parameters: Json[],
   baseUrl: string,
@@ -482,12 +481,7 @@ export function operationMarkdown(
     }
   }
 
-  sections.push(
-    "",
-    "### Example",
-    "",
-    curlExample(document, found, parameters, baseUrl),
-  );
+  sections.push("", "### Example", "", curlExample(found, parameters, baseUrl));
 
   return `${sections.join("\n")}\n`;
 }
