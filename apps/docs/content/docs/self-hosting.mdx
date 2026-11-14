@@ -8,6 +8,8 @@ By the end of this guide you will have QRdx running at your own URL: the QR edit
 
 The web app is open source under the AGPL-3.0 license. Two parts are not: workspace single sign-on and the audit log live in the `ee/` folders under the QRdx commercial license and stay off unless you set a license key (`QRDX_EE_LICENSE`). Using them in production needs a written agreement with QRdx; see [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md). You don't need any of this to use the [`qrdx` React library](/docs/getting-started) or the [CLI](/docs/developers/cli): they run anywhere without a backend, under the MIT license. [Open source at QRdx](/open-source-qr-code-generator) lists each part of the repository and its license.
 
+The license key switches single sign-on and the audit log on. The app doesn't check it, so any value works technically, but using those features in production still needs the agreement. To get one, use the [enterprise page](/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
+
 <Callout type="warn" title="The Docker setup is new">
   If a step doesn't work as written, [open an issue](https://github.com/qrdxinc/qrdx/issues) with the command you ran and its output.
 </Callout>

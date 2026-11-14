@@ -121,4 +121,4 @@ Bump `version` in `package.json` and add a line to `CHANGELOG.md` for each relea
 
 ## License
 
-MIT, see [LICENSE](LICENSE). QRdx itself is AGPL-3.0; the QRdx name and logo are trademarks ([TRADEMARK.md](../../TRADEMARK.md)).
+MIT, see [LICENSE](LICENSE). The QRdx app is AGPL-3.0-or-later; the QRdx name and logo are trademarks ([TRADEMARK.md](../../TRADEMARK.md)).
