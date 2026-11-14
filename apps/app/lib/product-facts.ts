@@ -27,6 +27,7 @@
 import {
   DESIGN_QR_REQUESTS_PER_MINUTE,
   MAX_BULK_TOOL_ROWS,
+  MAX_BULK_TOOL_ROWS_SIGNED_OUT,
   MAX_CODES_PER_REQUEST,
   MAX_IMPORT_ROWS,
   MCP_REQUESTS_PER_MINUTE,
@@ -128,6 +129,8 @@ export const PRODUCT_FACTS = {
   importRows: formatCount(MAX_IMPORT_ROWS),
   /** Rows in one file of the free bulk tool. */
   bulkToolRows: formatCount(MAX_BULK_TOOL_ROWS),
+  /** Rows the bulk tool runs per file without an account. */
+  bulkToolRowsSignedOut: formatCount(MAX_BULK_TOOL_ROWS_SIGNED_OUT),
   /** Codes an hour a new account may create in a paid workspace. */
   newPaidAccountHourlyCodes: formatCount(NEW_PAID_ACCOUNT_CODES_PER_HOUR),
   // Keyless endpoints' per-IP limits (@repo/config limits.ts).

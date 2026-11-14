@@ -133,7 +133,8 @@
     "account": {
       "tryPlayground": "Playgroundを試す",
       "playground": "Playground",
-      "dashboard": "ダッシュボード"
+      "dashboard": "ダッシュボード",
+      "signIn": "ログイン"
     },
     "github": {
       "star": "スター",
@@ -1130,11 +1131,11 @@
     },
     "bulk": {
       "metaTitle": "CSVから作れる無料の一括QRコード生成ツール：デザイン対応、SVG対応、アップロード不要",
-      "metaDescription": "CSVから最大{rows, number}個のデザイン付きQRコードを作成し、PNG、WebP、SVGでZIPにまとめてダウンロードできます。ブラウザー上で動作するので、アップロード、登録、透かしはありません。サンプルCSV付きです。",
+      "metaDescription": "CSVから最大{rows, number}個のスタイル付きQRコードを作成し、PNG、WebP、SVGでZIPにまとめてダウンロードできます。ブラウザー上で動作し、アップロードも透かしも不要で、{limit, number}行まではサインアップなしで使えます。",
       "crumb": "一括生成",
       "title": "QRコード一括生成",
       "intro1": "CSVファイルから、好みのデザインのQRコードを一度に何千個でも作成し、PNG、WebP、SVGでZIPにまとめてダウンロードできます。1行が1つのコードに対応し、ファイル名は列から付けられます。商品ラベル、イベントチケット、資産タグ、テーブル番号、郵送物などにお使いください。",
-      "intro2": "すべてブラウザー上で動作するため、CSVがアップロードされることはなく、登録や透かし、コードごとの課金もありません。レイアウトがよくわからない場合は、サンプルCSVから始めてみてください。",
+      "intro2": "すべてブラウザー上で動作するため、CSVがアップロードされることはなく、透かしやコードごとの料金もありません。{limit, number}行までのファイルならアカウントは不要で、それより大きい最大{rows, number}行までのファイルには無料アカウントが必要です。レイアウトに迷ったときは、サンプルCSVから始めてください。",
       "facts": {
         "rows": "1ファイルにつき最大{rows, number}行",
         "styled": "お好みの色、形、ロゴ",
@@ -1168,7 +1169,7 @@
         "uploadQuestion": "CSVはどこかにアップロードされますか？",
         "uploadAnswer": "いいえ。ファイルの読み込み、QRコードの描画、ZIPの作成はすべてお使いのブラウザー内で行われます。QRdxのサーバーには何も送信されないため、社内リンクやWi-Fiのパスワード、顧客データにも安心してご利用いただけます。",
         "howManyQuestion": "一度に何個のQRコードを生成できますか？",
-        "howManyAnswer": "1ファイルにつき最大{rows, number}行です。それ以上の場合はCSVを分割するか、上限のないCLIのqrdx batchコマンドをご利用ください。512 pxのPNGはノートPCで1枚あたり約20 msなので、{rows, number}行すべてでも数分で完了します。PNGのサイズを大きくすると時間がかかり、ファイルも大きくなるため、特に必要がなければ512 pxをおすすめします。",
+        "howManyAnswer": "1ファイルあたり、アカウントなしで最大{limit, number}行、無料アカウントなら最大{rows, number}行までです。それ以上の場合は、CSVを分割するか、上限のないCLIのqrdx batchコマンドをご利用ください。512 pxのPNGはノートPCで1個あたり約20ミリ秒かかるため、{rows, number}行すべてでも数分で完了します。PNGが大きいほど時間がかかり、ファイルも大きくなるので、それ以上が必要な場合を除き512 pxをおすすめします。",
         "rowQuestion": "各行にはどのような内容を入れられますか？",
         "rowAnswer": "QRコードの上限までのテキストであれば何でも入力できます。リンクやプレーンテキストのほか、WIFI:...、mailto:...、tel:...、BEGIN:VCARD などのペイロードも使えます。内容はセルに入力されたとおりにエンコードされます。",
         "excelQuestion": "ExcelやGoogleスプレッドシートのファイルは使えますか？",
@@ -1195,7 +1196,13 @@
         "removeFile": "ファイルを削除",
         "drop": "CSVファイルをここにドロップするか、クリックして選択してください",
         "dropHelp": "最大{rows, number}行、10 MBまで対応しています。ファイルはお使いのデバイス内に保持されます。",
+        "dropHelpSignedOut": "アカウントなしで最大{limit, number}行、無料アカウントなら{rows, number}行まで、サイズは10 MBまでです。ファイルはお使いのデバイスから外に出ません。",
         "truncated": "このファイルは{rows, number}行を超えています。最初の{rows, number}行のみ使用されます。",
+        "overLimit": "このファイルは{count, number}行あります。アカウントなしで実行できるのは{limit, number}行までです。無料アカウントなら最大{max, number}行まで実行でき、サインインしている間もファイルは読み込まれたままです。",
+        "overLimitCta": "無料登録して{count, number}個作成",
+        "firstOnly": "アカウントなしで最初の{limit, number}個を作成",
+        "restored": "ファイルが戻りました:{count, plural, one {#行} other {#行}}。",
+        "restoreLost": "サインインによってページが再読み込みされ、ファイルを保持できませんでした。続けるには、もう一度ファイルをドロップしてください。",
         "header": "1行目に列名が含まれている",
         "stepMap": "2. 列の割り当て",
         "valueColumn": "QRコードの内容",
@@ -1228,7 +1235,9 @@
         "skipped": "{count, plural, one {#行をスキップしました} other {#行をスキップしました}}:",
         "skippedListed": "{count, plural, one {#行をスキップしました} other {#行をスキップしました}}(errors.csvに一覧があります):",
         "line": "{row, number}行目:{error}",
-        "private": "すべてブラウザ内で処理されます。CSVも生成されたコードもアップロードされることはありません。"
+        "private": "すべてブラウザ内で処理されます。CSVも生成されたコードもアップロードされることはありません。",
+        "doneNudge": "無料アカウントなら、このスタイルをテーマとして保存でき、印刷後も編集できる動的QRコードを最大{codes, number}個作成できます。",
+        "doneNudgeCta": "無料アカウントを作成"
       }
     },
     "printSize": {
@@ -3417,6 +3426,10 @@
         "scale": "倍率",
         "transparentBackground": "背景を透明にする",
         "makeManyFromACsv": "このスタイルでCSVから一括作成",
+        "nudgeDynamic": "印刷後にリンクを変更したい、あるいはスキャン数を数えたい場合は、無料アカウントで動的QRコードにして、もう一度ダウンロードしてください。プランがどうなっても、そのまま使い続けられます。",
+        "nudgeDynamicCta": "動的QRコードにする",
+        "nudgeSave": "このデザインを無料アカウントに保存すれば、どのデバイスでも使えます。",
+        "nudgeSaveCta": "デザインを保存",
         "scannedFromAbout": "スキャン可能な距離の目安",
         "setsTheCodeWidthBelow": "下でコードの幅を設定します。",
         "codeWidth": "コードの幅",
@@ -3545,6 +3558,10 @@
       "undoRedoButtons": {
         "undo": "元に戻す",
         "redo": "やり直す"
+      },
+      "keepDesigns": {
+        "text": "無料アカウントがあれば、すべてのデバイスでデザインを保管できます。",
+        "cta": "無料アカウントを作成"
       }
     },
     "ai": {
@@ -4669,6 +4686,7 @@
       "fixedOncePrinted": "印刷後は変更不可",
       "dynamic": "動的",
       "editLaterCountScans": "後から編集、スキャン数を計測",
+      "signedOutNote": "動的QRコードには無料アカウントが必要です。プランがどうなっても、コードはそのまま使い続けられます。",
       "linkOptions": "リンクオプション…",
       "printedCodesStillOpenDestinationurl": "印刷済みのコードは引き続き<span>{destinationUrl}</span>を開きます。",
       "pointItToTheNew": "新しいアドレスに切り替える",
@@ -5401,11 +5419,7 @@
       "nameIsNoLongerIn": "「{name}」はコミュニティから削除されました。"
     },
     "itemCard": {
-      "empty": "空",
-      "official": "公式",
-      "usecountUses": "{useCount}回使用",
-      "seeAll": "すべて見る",
-      "likes": "いいね"
+      "empty": "空"
     },
     "itemPages": {
       "previous": "前へ",
@@ -8376,6 +8390,8 @@
         "searchOrJumpTo2": "検索または移動",
         "findAPageACode": "ページ、コード、ドキュメント記事を検索するか、新しく作成を始めます。",
         "searchCodesPagesSettingsAnd": "コード、ページ、設定、ドキュメントを検索…",
+        "findAPageOrA": "ページやコードを検索するか、新しく作成を始めます。",
+        "searchCodesPagesAndSettings": "コード、ページ、設定を検索…",
         "codes": "コード",
         "landingPages": "ランディングページ",
         "create": "作成",
@@ -8825,6 +8841,24 @@
     },
     "dialogCloseButton": {
       "close": "閉じる"
+    },
+    "reasons": {
+      "saveDesign": "このデザインをアカウントに保存して、どのデバイスからでも開けます。",
+      "makeDynamic": "動的QRコードはアカウント内で管理されます。印刷後でもリンク先を変更でき、すべてのスキャンを数えられます。",
+      "hostedPage": "ホスト型ページはアカウント内で管理されるため、印刷後でも変更できます。",
+      "aiArt": "AIアートはフリーアカウントで利用でき、毎月の画像枠が付いています。",
+      "aiChat": "AIデザイナーのご利用にはフリーアカウントが必要です。フリーアカウントでは合計{count, number}回までリクエストできます。",
+      "uploadFrame": "オリジナルのフレームをアップロードするには、フリーアカウントが必要です。",
+      "publishFrame": "フレームをコミュニティと共有するには、フリーアカウントが必要です。",
+      "communityAction": "コミュニティのデザインへの「いいね」、保存、コピー、公開には、フリーアカウントが必要です。",
+      "saveBarcode": "保存したバーコードはアカウント内に残るので、いつでもまたダウンロードできます。",
+      "bulkOverLimit": "{limit, number}行までのファイルはアカウント不要です。フリーアカウントなら1ファイルあたり最大{max, number}件まで作成でき、ファイルは読み込まれたままです。",
+      "keepDesigns": "デザインをアカウントに保存して、すべてのデバイスで使えます。",
+      "afterDownload": "無料です。プランがどうなっても、お使いのコードは引き続き使えます。",
+      "upgrade": "プランと請求はアカウントに紐づいています。今の続きからそのまま再開できます。"
+    },
+    "nudge": {
+      "dismiss": "今後は表示しない"
     }
   },
   "codeBuilder": {

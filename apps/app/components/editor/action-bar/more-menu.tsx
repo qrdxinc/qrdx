@@ -239,11 +239,10 @@ function useMakeDynamicItem(): MoreItem {
   }
   const open = () => {
     if (!userId) {
-      openAuthDialog(
-        "signin",
-        "OPEN_CODE_BUILDER",
-        openCodeBuilderIntent("dynamic"),
-      );
+      openAuthDialog("make_dynamic", {
+        action: "OPEN_CODE_BUILDER",
+        data: openCodeBuilderIntent("dynamic"),
+      });
       return;
     }
     const next = currentBuilderRequest(userId);
