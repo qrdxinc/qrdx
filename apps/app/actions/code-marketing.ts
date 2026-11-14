@@ -12,8 +12,13 @@ import {
 } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import { codeEventsByIds } from "@/ee/audit-log/code-events";
 import { recordAuditEvent } from "@/ee/audit-log/record";
+import {
+  conversionsAllowed,
+  conversionsUnavailable,
+} from "@/ee/conversions/access";
 import { snapshotCodeVersion } from "@/lib/code-versions";
 import { HttpError } from "@/lib/error-response";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { baseUrl } from "@/lib/metadata";
 import { assertCan } from "@/lib/permissions-server";
 import {
@@ -70,6 +75,7 @@ export interface CodeMarketingSettings {
     routing: boolean;
     utm: boolean;
     pixels: boolean;
+    /** The plan includes it and the server has the licence (ee/conversions) */
     conversions: boolean;
     /** Ask scanners for precise location, geofence rules (lib/scan-location) */
     preciseLocation: boolean;
@@ -209,7 +215,7 @@ async function toSettings(
       routing: limits.routing,
       utm: limits.routing,
       pixels: limits.pixels,
-      conversions: limits.conversions,
+      conversions: conversionsAllowed(limits),
       preciseLocation: limits.preciseLocation,
     },
     routing: parseRoutingConfig(row.routing),
@@ -440,8 +446,13 @@ export async function saveCodePixels(input: {
       if (added && !limits.pixels) {
         throw planRequired("Tracking pixels", "pixels");
       }
-      if (parsed.conversions && !previous?.conversions && !limits.conversions) {
-        throw planRequired("Conversion tracking", "conversions");
+      // Conversion tracking (ee/conversions) also needs the licence key on
+      // the server; turning it off never needs either.
+      if (parsed.conversions && !previous?.conversions) {
+        if (!isFeatureAvailable("conversions")) throw conversionsUnavailable();
+        if (!limits.conversions) {
+          throw planRequired("Conversion tracking", "conversions");
+        }
       }
       if (
         parsed.preciseLocation &&
@@ -561,7 +572,11 @@ export async function testCodeRouting(
         },
         row.destinationUrl,
       );
-      const conversions = parsePixelConfig(row.pixels)?.conversions;
+      // As lib/redirect/routing.ts resolveDestination: qrdx_sid only where
+      // the server has the licence key (ee/conversions).
+      const conversions =
+        parsePixelConfig(row.pixels)?.conversions &&
+        isFeatureAvailable("conversions");
       return {
         ruleId: result.rule?.id ?? null,
         variantId: result.variant?.id ?? null,
