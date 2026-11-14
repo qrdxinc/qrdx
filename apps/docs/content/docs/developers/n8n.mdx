@@ -72,7 +72,7 @@ Add the **QRdx Trigger** node, pick the **Events**, then activate the workflow. 
 | **Code Changes** | A code's destination, title, design or domain changes |
 | **Form Submissions** | Someone submits a form on a hosted page |
 
-The node checks each delivery's `X-QRdx-Signature` with the signing secret QRdx returned when it subscribed, and answers `401` to anything that doesn't match. Under **Options**, turn on **Output One Item per Scan** to get a Scans batch as separate items, and **Include Test Events** to run the workflow when you choose **Send test** in **Settings → Webhooks**. The payloads are the ones described in [Webhooks](/docs/webhooks#3-read-the-payload).
+The node checks each delivery's `X-QRdx-Signature` with the signing secret QRdx returned when it subscribed, and answers `401` to anything that doesn't match. Under **Options**, turn on **Output One Item per Scan** to get a Scans batch as separate items, and **Include Test Events** to run the workflow when you choose **Send test** in **Settings → Webhooks**. The payloads are the ones described in [Webhooks](/docs/webhooks#payloads).
 
 {/* shot: n8n-qrdx-trigger | the QRdx Trigger node with Scans and Form Submissions ticked and the Options open | n8n, a workflow, QRdx Trigger node */}
 
