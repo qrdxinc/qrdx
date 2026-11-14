@@ -90,7 +90,8 @@ vi.stubGlobal(
         : input instanceof URL
           ? input.href
           : input.url;
-    if (url.startsWith(GATEWAY)) {
+    const origin = new URL(url).origin;
+    if (origin === new URL(GATEWAY).origin) {
       const call: GatewayCall = {
         url,
         headers: Object.fromEntries(new Headers(init?.headers).entries()),
@@ -101,7 +102,7 @@ vi.stubGlobal(
       if (!reply) throw new Error("No fake gateway reply left");
       return reply(call);
     }
-    if (url.startsWith(DOCS)) {
+    if (origin === DOCS) {
       const parsed = new URL(url);
       docsCalls.push(`${parsed.pathname}${parsed.search}`);
       if (parsed.pathname === "/api/search") return Response.json(SEARCH_ROWS);
