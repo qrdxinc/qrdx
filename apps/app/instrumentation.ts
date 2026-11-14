@@ -11,6 +11,10 @@
  * reader the app hands it. Registering it here means every server has it
  * from its first request, whichever page, action or route that is; the
  * modules that use the check register it too.
+ *
+ * The same goes for the plan limits packages/auth decides seats, more
+ * workspaces, workspace SSO and required two-step verification from:
+ * lib/plans.ts hands them over when it loads.
  */
 export async function register() {
   if (process.env.NEXT_RUNTIME !== "nodejs") return;
@@ -19,4 +23,5 @@ export async function register() {
     "./lib/account/session-origin"
   );
   registerAppSessionOriginReader();
+  await import("./lib/plans");
 }

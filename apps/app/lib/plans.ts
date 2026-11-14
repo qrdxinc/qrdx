@@ -1,5 +1,6 @@
 import "server-only";
 
+import { registerPlanLimits } from "@repo/auth/plan-limits";
 import { MAX_FREE_THEMES } from "@repo/config";
 import { database as db, member } from "@repo/database";
 import { and, eq, like, or } from "drizzle-orm";
@@ -12,6 +13,10 @@ import { getMyActiveSubscription } from "./subscription";
 /**
  * Plans and their limits — the single source of truth for feature gating
  * (prices and display names live in the client-safe lib/pricing.ts).
+ * packages/auth reads them too (registered at the end of this file): who may
+ * create more workspaces, seats, workspace SSO and required two-step
+ * verification. A self-hosted server changes PLAN_LIMITS below; without
+ * billing (Polar) every account is on Free.
  *
  * Never-Hostage Guarantee: limits only block creating new things. Existing
  * dynamic codes keep redirecting on every plan, including after a downgrade,
@@ -67,8 +72,7 @@ export interface PlanLimits {
   sso: boolean;
   /**
    * The workspace may require two-step verification of its members
-   * (packages/auth/workspace-two-factor.ts, which checks the same plan as
-   * workspacePlanTier "business").
+   * (packages/auth/workspace-two-factor.ts reads this).
    */
   requireTwoFactor: boolean;
   auditLog: boolean;
@@ -347,3 +351,9 @@ export function getPlanForScope(scope: {
     ? getOwnerPlanForOrganization(scope.organizationId)
     : getPlan(scope.userId);
 }
+
+// packages/auth decides who may create more workspaces, seats, workspace SSO
+// and required two-step verification from these limits
+// (packages/auth/plan-limits.ts). Every server that loads this module hands
+// them over; instrumentation.ts and the auth route load it at start-up.
+registerPlanLimits(getPlanLimits);
