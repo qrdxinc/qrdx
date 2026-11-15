@@ -825,6 +825,10 @@ async function main() {
 
   // A clean slate for the seed's own rows (and the test account's sessions).
   for (const table of [
+    "workspace_audit_log",
+    "affiliate_commission",
+    "affiliate_referral",
+    "affiliate",
     "form_response",
     "landing_event",
     "qr_scan",
@@ -1278,6 +1282,177 @@ async function main() {
       created(35),
     ],
   );
+
+  // The workspace's audit log (Business): a few weeks of everyday changes.
+  const label = (id) => {
+    const person = people.find((entry) => entry.id === id);
+    return `${person.name} <${person.email}>`;
+  };
+  const auditRows = [
+    [
+      0.2,
+      USER_ID,
+      "code.destination_changed",
+      "code",
+      "shots_code_window",
+      "Window poster",
+      {
+        before: { destination: "https://harborlane.example/autumn-blend" },
+        after: { destination: "https://harborlane.example/spring-blend" },
+      },
+    ],
+    [
+      0.9,
+      "shots_user_teo",
+      "code.routing_changed",
+      "code",
+      "shots_code_loyalty",
+      "Loyalty card",
+      null,
+    ],
+    [
+      1.3,
+      "shots_user_teo",
+      "page.published",
+      "page",
+      "shots_page_menu",
+      "Harbor Lane menu",
+      null,
+    ],
+    [
+      2.1,
+      USER_ID,
+      "member.role_changed",
+      "member",
+      "shots_user_ravi",
+      "Ravi Okonkwo",
+      { before: { role: "viewer" }, after: { role: "member" } },
+    ],
+    [
+      3.4,
+      "shots_user_ravi",
+      "code.created",
+      "code",
+      "shots_code_latte",
+      "Latte art night tickets",
+      null,
+    ],
+    [
+      5.2,
+      "shots_user_ravi",
+      "code.renamed",
+      "code",
+      "shots_code_latte",
+      "Latte art night tickets",
+      {
+        before: { title: "Latte night" },
+        after: { title: "Latte art night tickets" },
+      },
+    ],
+    [
+      8.0,
+      USER_ID,
+      "member.invited",
+      "member",
+      null,
+      "kim@harborlane.example",
+      { after: { role: "member" } },
+    ],
+    [
+      11.6,
+      USER_ID,
+      "code.paused",
+      "code",
+      "shots_code_paused",
+      "Delivery bag sticker",
+      null,
+    ],
+    [
+      12.1,
+      "shots_user_june",
+      "member.joined",
+      "member",
+      "shots_user_june",
+      "June Abara",
+      null,
+    ],
+    [
+      19.5,
+      "shots_user_teo",
+      "code.style_changed",
+      "code",
+      "shots_code_loyalty",
+      "Loyalty card",
+      null,
+    ],
+  ];
+  for (let index = 0; index < auditRows.length; index++) {
+    const [days, actor, action, targetType, targetId, targetLabel, metadata] =
+      auditRows[index];
+    await q(
+      `INSERT INTO workspace_audit_log (id, organization_id, actor_type, actor_user_id, actor_label, action, target_type, target_id, target_label, metadata, device, created_at)
+       VALUES ($1, $2, 'user', $3, $4, $5, $6, $7, $8, $9, 'Chrome on macOS', $10)`,
+      [
+        `shots_audit_${index}`,
+        TEAM_ID,
+        actor,
+        label(actor),
+        action,
+        targetType,
+        targetId,
+        targetLabel,
+        metadata ? JSON.stringify(metadata) : null,
+        new Date(now.getTime() - days * DAY),
+      ],
+    );
+  }
+
+  // The owner is an approved affiliate with a few commissions (the program
+  // is qrdx.dev's own; the capture run turns it on locally, README).
+  await q(
+    `INSERT INTO affiliate (id, user_id, status, code, paypal_email, click_count, approved_at, reviewed_at, created_at, updated_at)
+     VALUES ('shots_affiliate', $1, 'approved', 'k7m2q9xt', $2, 86, $3, $3, $4, $3)`,
+    [USER_ID, OWNER_EMAIL, created(60), created(63)],
+  );
+  // Two people who signed up through the link (not members of the workspace).
+  const referred = [
+    ["shots_user_mara", "Mara Voss", "mara@quayside.example", 55],
+    ["shots_user_idris", "Idris Bell", "idris@millpond.example", 33],
+  ];
+  for (const [id, name, email, days] of referred) {
+    await q(
+      `INSERT INTO "user" (id, name, email, email_verified, settings, created_at, updated_at)
+       VALUES ($1, $2, $3, true, '{}', $4, $4)`,
+      [id, name, email, created(days)],
+    );
+    await q(
+      `INSERT INTO affiliate_referral (id, affiliate_id, referred_user_id, attributed_via, first_paid_at, created_at)
+       VALUES ($1, 'shots_affiliate', $2, 'link', $3, $4)`,
+      [`shots_referral_${id}`, id, created(days - 2), created(days)],
+    );
+  }
+  const commissions = [
+    [52, 4800, "approved"],
+    [31, 14_400, "approved"],
+    [6, 4800, "pending"],
+  ];
+  for (let index = 0; index < commissions.length; index++) {
+    const [days, orderAmount, status] = commissions[index];
+    const paidAt = created(days);
+    await q(
+      `INSERT INTO affiliate_commission (id, affiliate_id, polar_order_id, currency, order_amount, rate_bps, amount, status, order_paid_at, available_at, created_at, updated_at)
+       VALUES ($1, 'shots_affiliate', $2, 'usd', $3, 3000, $4, $5, $6, $7, $6, $6)`,
+      [
+        `shots_commission_${index}`,
+        `shots_order_${index}`,
+        orderAmount,
+        Math.round(orderAmount * 0.3),
+        status,
+        paidAt,
+        new Date(paidAt.getTime() + 45 * DAY),
+      ],
+    );
+  }
 
   await q("COMMIT");
   await client.end();

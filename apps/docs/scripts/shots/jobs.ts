@@ -43,6 +43,23 @@ async function playgroundWithLink(page: Driver) {
   await page.waitQuiet();
 }
 
+/** Opens a section of the Design tab (its row is a button named after it) unless it is open already. */
+async function openDesignSection(page: Driver, inside: string, name: string) {
+  const open = await page.evaluate<boolean>(
+    `(text) => document.body.innerText.includes(text)`,
+    inside,
+  );
+  if (!open) {
+    await page.evaluate(
+      `(name) => { const row = [...document.querySelectorAll("button")].find((b) => window.__e2e.visible(b) && b.innerText.trim().split("\\n")[0].trim() === name); if (!row) throw new Error("No section " + name); row.setAttribute("data-shots-section", "1"); row.scrollIntoView({ block: "center", behavior: "instant" }); return true; }`,
+      name,
+    );
+    await page.pointerClick("css", "[data-shots-section]");
+  }
+  await page.waitText(inside);
+  await page.pause(500);
+}
+
 export const JOBS: Job[] = [
   // ─── Getting started ────────────────────────────────────────────────────
   {
@@ -62,10 +79,11 @@ export const JOBS: Job[] = [
     id: "playground-content",
     look: "window",
     title: "The playground with a link typed in",
-    alt: "The QRdx playground: the Content tab on the left with a website address filled in and a row of styles to start from, and the live QR code preview on the right.",
+    alt: "The QRdx playground: the Content tab on the left with a website address filled in, the Static or Dynamic choice under it and a row of styles to start from, and the live QR code preview on the right.",
     pages: [
       "/docs/help/getting-started/first-qr-code",
       "/docs/getting-started",
+      "/docs/dynamic-qr-codes",
     ],
     route: "/playground",
     steps: playgroundWithLink,
@@ -107,6 +125,74 @@ export const JOBS: Job[] = [
       await page.click("tab", "design", { exact: true });
       await page.pause(600);
     },
+  },
+  {
+    kind: "shot",
+    id: "design-colors",
+    look: "window",
+    title: "The Colors section of the Design tab",
+    alt: "The Design tab of the playground with the Colors section open: background, foreground, eye and dot colors with their hex values, a row of ready-made palettes under them, and the code in those colors on the right.",
+    pages: ["/docs/help/designing/colors-and-contrast"],
+    route: "/playground",
+    steps: async (page) => {
+      await playgroundWithLink(page);
+      await page.click("tab", "design", { exact: true });
+      await page.pause(600);
+    },
+  },
+  {
+    kind: "shot",
+    id: "design-logo",
+    look: "window",
+    title: "A logo in the center of the code",
+    alt: "The Design tab of the playground after a quick icon is picked as the logo: the Logo row reads Wi-Fi icon, a Logo options row sits under it, and the icon is in the middle of the code on the right with the modules behind it cleared.",
+    pages: ["/docs/help/designing/logos"],
+    route: "/playground",
+    steps: async (page) => {
+      await playgroundWithLink(page);
+      await page.click("tab", "design", { exact: true });
+      await page.pause(400);
+      await openDesignSection(page, "Logo in the center", "Logo");
+      // A quick icon as the logo, then the switch if picking one left it off.
+      await page.click("button", "Wi-Fi icon", { exact: true });
+      await page.pause(800);
+      await page.evaluate(
+        `() => { const toggle = document.getElementById("show-logo"); if (toggle && toggle.getAttribute("aria-checked") !== "true") window.__e2e.click(toggle); return true; }`,
+      );
+      // The panel from its top, so the Logo row and its options are in view whole.
+      await page.evaluate(
+        `() => { let node = window.__e2e.byText("Logo options"); for (; node; node = node.parentElement) node.scrollTop = 0; return true; }`,
+      );
+      await page.pause(1200);
+      await page.waitQuiet(15_000);
+    },
+  },
+  {
+    kind: "shot",
+    id: "design-frame",
+    look: "focus",
+    title: "Picking a frame and its label",
+    alt: "The Frame picker of the playground's Design tab: the frame in use, Banner, at the top, a search field with Upload SVG beside it, the groups of frames, and the frames themselves as tiles.",
+    pages: ["/docs/help/designing/frames"],
+    route: "/playground",
+    viewport: TALL,
+    steps: async (page) => {
+      await playgroundWithLink(page);
+      await page.click("tab", "design", { exact: true });
+      await page.pause(400);
+      await openDesignSection(page, "Upload SVG", "Frame");
+      await page.click("button", "Banner", { exact: true });
+      await page.pause(500);
+      await page.click("button", "Scan for menu", { exact: true });
+      await page.pause(800);
+      // Back to the top of the picker's list: the frame picked and the groups.
+      await page.evaluate(
+        `() => { for (const node of document.querySelectorAll('[role="dialog"] *')) if (node.scrollTop > 0) node.scrollTop = 0; return true; }`,
+      );
+      await page.pause(600);
+      await page.waitQuiet(15_000);
+    },
+    focus: { ...DIALOG, margin: 220 },
   },
   {
     kind: "shot",
@@ -249,6 +335,7 @@ export const JOBS: Job[] = [
       await page.click("button", "Edit link", { exact: true });
       await waitDialog(page);
       await page.waitQuiet(15_000);
+      await page.waitText("Scan score", 30_000);
     },
     focus: DIALOG,
   },
@@ -275,20 +362,21 @@ export const JOBS: Job[] = [
     id: "code-password",
     look: "window",
     title: "Protecting a code with a password",
-    alt: "The Access & schedule panel of a code's Settings tab with a password typed into the Password field (shown masked), a start and an end date, a scan limit and a fallback address, before Save changes.",
+    alt: "The Access & schedule panel of a code's Settings tab with a password typed into the Password field (shown masked), a start and an end date, a scan limit and a fallback address, and the Save changes button under them.",
     pages: ["/docs/help/dynamic-codes/password", "/docs/code-controls"],
     route: "{ws}/codes/shots_code_latte",
     steps: async (page) => {
       await codeTab("Settings")(page);
       await page.waitText("Scan limit");
       await page.fill("Password", "harbor-2026");
-      await page.scrollTo("text", "Access & schedule");
-      await page.scrollWindow(
-        await page.evaluate<number>(`() => window.scrollY - 120`),
-      );
       await page.pause(300);
     },
-    capture: { kind: "element", find: "card", name: "Password", margin: 16 },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Access & schedule",
+      margin: 16,
+    },
   },
   {
     kind: "shot",
@@ -318,19 +406,19 @@ export const JOBS: Job[] = [
     id: "routing-rules",
     look: "window",
     title: "Routing rules on a code",
-    alt: "The Routing section of a code's Settings tab: a list of rules by operating system, language and time of day, each with its destination, and an A/B split at the end.",
+    alt: "The Smart routing panel of a code's Settings tab: rules by operating system, language and time of day, each with its destination, an A/B split at the end, and the Test your rules panel under them.",
     pages: ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
     route: "{ws}/codes/shots_code_loyalty",
-    viewport: TALL,
     steps: async (page) => {
       await codeTab("Settings")(page);
       await page.waitText("Add rule");
-      // The rules sit above the Add rule button: put that button near the
-      // bottom of the viewport so the list fills it.
-      await page.evaluate(
-        `() => { const b = window.__e2e.byRole("button", "Add rule", { exact: true }); const r = b.getBoundingClientRect(); window.scrollBy({ top: r.bottom - window.innerHeight + 150, behavior: "instant" }); return true; }`,
-      );
       await page.pause(300);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Smart routing",
+      margin: 16,
     },
   },
   {
@@ -388,6 +476,7 @@ export const JOBS: Job[] = [
     alt: "The actions menu of a code in the list, open: edit, duplicate, move to a folder, archive and move to trash among them.",
     pages: ["/docs/help/dynamic-codes/archive-and-delete"],
     route: "{ws}/codes",
+    viewport: { width: 1440, height: 1500 },
     steps: async (page) => {
       // The row's "…" button has no name of its own: mark the last button in
       // the row that names the code, then open it with a real pointer click
@@ -409,7 +498,7 @@ export const JOBS: Job[] = [
     alt: "The Change type dialog of a dynamic code: the current type, URL, and the other kinds of content the same printed code can open instead.",
     pages: ["/docs/help/dynamic-codes/change-the-type"],
     route: "{ws}/codes/shots_code_loyalty",
-    viewport: TALL,
+    viewport: { width: 1440, height: 1500 },
     steps: async (page) => {
       await page.click("button", "Change type", { exact: true });
       await waitDialog(page);
@@ -548,15 +637,13 @@ export const JOBS: Job[] = [
     id: "team-invite",
     look: "window",
     title: "Inviting someone",
-    alt: "The Invite people section of the Team page: an email field, the role to give them, the Send invitation button, and a pending invitation below.",
+    alt: "The Invite people section of the Team page: an email address typed in, the role to give them, the Create invite link button, and a pending invitation below.",
     pages: ["/docs/help/teams/create-and-invite", "/docs/help/teams/seats"],
     route: "{ws}/settings/team",
     viewport: TALL,
     steps: async (page) => {
-      await page.scrollTo("text", "Invite people");
-      await page.scrollWindow(
-        await page.evaluate<number>(`() => window.scrollY - 120`),
-      );
+      await page.waitText("Invite people");
+      await page.fill("Email", "sam@harborlane.example");
       await page.pause(300);
     },
     capture: {
@@ -727,9 +814,22 @@ export const JOBS: Job[] = [
     id: "audit-log",
     look: "window",
     title: "The audit log",
-    alt: "The Audit log page of a Business workspace, with filters by person and category above the list of recorded changes.",
+    alt: "The Audit log page of a Business workspace: filters by person, category and date above the list of recorded changes, each with the time, who made it and what they changed.",
     pages: ["/docs/help/teams/audit-log"],
     route: "{ws}/settings/audit-log",
+    steps: async (page) => {
+      await page.waitText("Changed the destination");
+      // The last 30 days in the date filters, so they show dates.
+      const day = (ago: number) =>
+        new Date(Date.now() - ago * 86_400_000).toISOString().slice(0, 10);
+      await page.fill("To (UTC)", day(0));
+      await page.pause(1200);
+      await page.waitText("Changed the destination");
+      await page.fill("From (UTC)", day(30));
+      await page.pause(1200);
+      await page.waitText("Changed the destination");
+      await page.pause(600);
+    },
   },
   {
     kind: "shot",
@@ -916,42 +1016,6 @@ export const JOBS: Job[] = [
     },
     focus: DIALOG,
   },
-  ...(["colors", "frame", "logo"] as const).map((section) => ({
-    kind: "shot" as const,
-    id: `design-${section}`,
-    look: "window" as const,
-    title: `The ${section === "colors" ? "Colors" : section === "frame" ? "Frame" : "Logo"} section of the Design tab`,
-    alt:
-      section === "colors"
-        ? "The Colors section of the playground's Design tab: swatches for the code, its background, eyes and dots, with the live preview beside them."
-        : section === "frame"
-          ? "The Frame section of the playground's Design tab: the frame choices and the label field, with the framed code in the live preview."
-          : "The Logo section of the playground's Design tab: the logo switch, quick icons and the upload, with the logo in the middle of the live preview.",
-    pages: [
-      section === "colors"
-        ? "/docs/help/designing/colors-and-contrast"
-        : section === "frame"
-          ? "/docs/help/designing/frames"
-          : "/docs/help/designing/logos",
-    ],
-    route: "/playground",
-    steps: async (page: Driver) => {
-      await playgroundWithLink(page);
-      await page.click("tab", "design", { exact: true });
-      await page.pause(600);
-      await page
-        .scrollTo(
-          "text",
-          section === "colors"
-            ? "Colors"
-            : section === "frame"
-              ? "Frame"
-              : "Logo",
-        )
-        .catch(() => undefined);
-      await page.pause(400);
-    },
-  })),
   {
     kind: "shot",
     id: "themes-menu",
@@ -990,27 +1054,11 @@ export const JOBS: Job[] = [
   },
   {
     kind: "shot",
-    id: "playground-dynamic-switch",
-    look: "window",
-    title: "Static or dynamic",
-    alt: "The Content panel of the playground with a link typed in and the Static or Dynamic choice under it: Static is fixed once printed, Dynamic can be edited later and counts scans.",
-    pages: ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
-    route: "/playground",
-    steps: playgroundWithLink,
-    capture: {
-      kind: "element",
-      find: "card",
-      name: "Fixed once printed",
-      margin: 0,
-    },
-  },
-  {
-    kind: "shot",
     id: "playground-dynamic-on",
     look: "window",
     title: "Dynamic picked",
-    alt: "The Content panel of the playground after picking Dynamic: the short link the code will hold, with its copy button, where the static address was.",
-    pages: ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
+    alt: "The playground after picking Dynamic: where the Static or Dynamic choice was, the Content tab shows the code's short link with a copy button, Link options and Scans & settings, and the preview now encodes the short link.",
+    pages: ["/docs/help/dynamic-codes/create"],
     route: "/playground",
     steps: async (page) => {
       await playgroundWithLink(page);
@@ -1018,7 +1066,6 @@ export const JOBS: Job[] = [
       await page.pause(1500);
       await page.waitQuiet();
     },
-    capture: { kind: "element", find: "card", name: "Dynamic", margin: 0 },
   },
   {
     kind: "shot",
@@ -1117,17 +1164,16 @@ export const JOBS: Job[] = [
     id: "pixels-panel",
     look: "window",
     title: "The Tracking pixels panel",
-    alt: "The Tracking pixels panel on a hosted page code's Settings tab, where analytics and ad pixel IDs are added to the page.",
+    alt: "The Tracking pixels panel on a hosted page code's Settings tab, with a Google Analytics 4 measurement ID and a Meta pixel ID filled in, the other pixel fields empty, and the cookie consent banner setting under them.",
     pages: ["/docs/tracking-and-conversions"],
     route: "{ws}/codes/shots_code_menu",
     viewport: TALL,
     steps: async (page) => {
       await codeTab("Settings")(page);
       await page.waitText("Tracking pixels");
-      await page.scrollTo("text", "Tracking pixels");
-      await page.scrollWindow(
-        await page.evaluate<number>(`() => window.scrollY - 120`),
-      );
+      // Invented ids in the formats the fields take.
+      await page.fill("Google Analytics 4 measurement ID", "G-7KQ2HX9LMD");
+      await page.fill("Meta (Facebook) pixel ID", "482915630274819");
       await page.pause(400);
     },
     capture: {
@@ -1234,9 +1280,13 @@ export const JOBS: Job[] = [
     id: "affiliate-settings",
     look: "window",
     title: "The affiliate program page",
-    alt: "The Affiliate program settings page: the referral link with its copy button, the commission terms and the earnings so far.",
+    alt: "The Affiliate program page in Settings for an approved affiliate: the referral link with its Copy button, the code with Change once, counts of link visits, sign-ups and paying customers, and the earnings on hold, payable and paid.",
     pages: ["/docs/help/account-and-billing/affiliate-program"],
     route: "/settings/affiliate",
+    viewport: TALL,
+    steps: async (page) => {
+      await page.waitText("Your referral link");
+    },
   },
   {
     kind: "shot",
