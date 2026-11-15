@@ -33,6 +33,12 @@
   min-width: 0;
 }
 
+/* An answer's code has no per-line wrappers to carry the block's side
+   padding, so the block itself does. */
+[data-docs-chat] figure pre {
+  padding-inline: 1rem;
+}
+
 @media (max-width: 767px) {
   aside:has([data-docs-chat]) {
     --fd-ai-chat-width: 100vw;
