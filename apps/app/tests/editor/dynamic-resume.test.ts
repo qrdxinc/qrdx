@@ -64,7 +64,9 @@ describe("the stored post-login action", () => {
 
   it("keeps the pick while sign-in runs, then clears it", () => {
     const intent = makeDynamicIntent(DESTINATION, NOW);
-    useAuthStore.getState().openAuthDialog("signin", "MAKE_DYNAMIC", intent);
+    useAuthStore
+      .getState()
+      .openAuthDialog("make_dynamic", { action: "MAKE_DYNAMIC", data: intent });
     expect(useAuthStore.getState()).toMatchObject({
       isOpen: true,
       postLoginAction: { type: "MAKE_DYNAMIC", data: intent },

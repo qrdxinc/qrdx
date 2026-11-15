@@ -379,10 +379,13 @@ export function CommunitySheet() {
           <CommunitySheetBody
             onPublish={() => startPublish()}
             onSignInToLike={(theme) =>
-              openAuthDialog("signin", "LIKE_THEME", {
-                communityThemeId: theme.id,
-                name: theme.name,
-              } satisfies LikeThemeIntent)
+              openAuthDialog("community_action", {
+                action: "LIKE_THEME",
+                data: {
+                  communityThemeId: theme.id,
+                  name: theme.name,
+                } satisfies LikeThemeIntent,
+              })
             }
             published={publish.published}
             searchRef={searchRef}
@@ -431,7 +434,9 @@ function usePublishFlow(signedIn: boolean) {
     (asSignedIn = signedIn) => {
       const step = stepFor(asSignedIn);
       if (step.kind === "sign-in") {
-        openAuthDialog("signin", "SAVE_THEME_FOR_PUBLISH");
+        openAuthDialog("community_action", {
+          action: "SAVE_THEME_FOR_PUBLISH",
+        });
       } else if (step.kind === "published") {
         toast(`"${step.name}" is already in the community.`);
       } else if (step.kind === "publish") {

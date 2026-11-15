@@ -242,7 +242,7 @@ export function AIArtStudio({ configured, allowances }: AIArtStudioProps) {
               disabled={isGenerating}
               onClick={() => {
                 if (art.signedIn) void writeDescription(currentRequest());
-                else openAuthDialog("signin");
+                else openAuthDialog("ai_art");
               }}
               writing={writer.writing}
             />

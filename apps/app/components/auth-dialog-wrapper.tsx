@@ -16,11 +16,16 @@ const AuthDialog = dynamic(
   { ssr: false },
 );
 
+/** The dialog's closing animation, and a little more. */
+const DIALOG_CLOSE_MS = 350;
+
 export function AuthDialogWrapper() {
   const {
     isOpen,
     mode,
+    reason,
     closeAuthDialog,
+    dismissAuthDialog,
     postLoginAction,
     clearPostLoginAction,
     callbackURL,
@@ -31,15 +36,22 @@ export function AuthDialogWrapper() {
     if (isOpen && session) {
       closeAuthDialog();
     }
+  }, [session, isOpen, closeAuthDialog]);
 
-    // Analytics identity (by user id, never email): lib/analytics/identity.ts.
+  // Analytics identity (by user id, never email): lib/analytics/identity.ts.
 
-    if (session && postLoginAction) {
-      // Execute action immediately - the system will now handle waiting for handlers
+  // The interrupted action runs once the dialog has finished closing: as it
+  // goes it hands focus back to the page, which would dismiss a dialog the
+  // action opens (Save, the code builder) the moment it appeared.
+  useEffect(() => {
+    if (!(session && postLoginAction) || isOpen) return;
+    const timer = window.setTimeout(() => {
+      // Handlers that aren't mounted yet pick it up when they are.
       executePostLoginAction(postLoginAction);
       clearPostLoginAction();
-    }
-  }, [session, isOpen, closeAuthDialog, postLoginAction, clearPostLoginAction]);
+    }, DIALOG_CLOSE_MS);
+    return () => window.clearTimeout(timer);
+  }, [session, isOpen, postLoginAction, clearPostLoginAction]);
 
   // Once opened, keep it mounted so closing still animates.
   const [hasOpened, setHasOpened] = useState(isOpen);
@@ -49,9 +61,13 @@ export function AuthDialogWrapper() {
   return (
     <AuthDialog
       callbackURL={callbackURL ?? undefined}
-      open={isOpen}
-      onOpenChange={closeAuthDialog}
       initialMode={mode}
+      onOpenChange={(open) => {
+        if (!open) dismissAuthDialog();
+      }}
+      onSignedIn={closeAuthDialog}
+      open={isOpen}
+      reason={reason}
     />
   );
 }

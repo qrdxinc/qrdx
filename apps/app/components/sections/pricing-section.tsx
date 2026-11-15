@@ -25,7 +25,6 @@ import { PricingOffers } from "@/components/sections/pricing/pricing-offers";
 import { maxYearlySavingsPercent } from "@/components/sections/pricing/savings";
 import { siteConfig } from "@/config/site";
 import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
-import { playgroundHref } from "@/lib/playground-links";
 import {
   BILLING_INTERVALS,
   type BillingInterval,
@@ -38,6 +37,7 @@ import {
   PRICING,
   type PricingCurrency,
 } from "@/lib/pricing";
+import { DEFAULT_NEXT_PATH } from "@/lib/safe-redirect";
 import { useAuthStore } from "@/store/auth-store";
 
 interface PricingSectionProps {
@@ -246,7 +246,10 @@ export function PricingSection({
       }
       setPendingPlan(null);
       if (result.reason === "sign_in") {
-        openAuthDialog("signup", "CHECKOUT", { plan, interval: billing });
+        openAuthDialog("upgrade", {
+          action: "CHECKOUT",
+          data: { plan, interval: billing },
+        });
         return;
       }
       if (result.reason === "subscribed") {
@@ -275,7 +278,10 @@ export function PricingSection({
   const onUpgrade = (plan: PaidPlan) => {
     track("upgrade_clicked", { source: "pricing", plan });
     if (!isSignedIn) {
-      openAuthDialog("signup", "CHECKOUT", { plan, interval });
+      openAuthDialog("upgrade", {
+        action: "CHECKOUT",
+        data: { plan, interval },
+      });
       return;
     }
     startCheckout(plan, interval);
@@ -310,7 +316,7 @@ export function PricingSection({
           className="text-muted-foreground hover:text-foreground focus-visible:ring-ring rounded-sm text-xs underline-offset-4 transition-colors hover:underline focus-visible:ring-2 focus-visible:outline-none"
           onClick={() => {
             if (!isSignedIn) {
-              openAuthDialog("signin");
+              openAuthDialog("upgrade");
               return;
             }
             setInvoiceOpen(true);
@@ -372,7 +378,31 @@ export function PricingSection({
       action: {
         button: (
           <Button asChild className="w-full" variant="outline">
-            <LocaleLink href={isSignedIn ? "/dashboard" : playgroundHref()}>
+            {/* Signed out: a free account (sign-up, or sign-in for someone
+                who has one), then the dashboard. */}
+            <LocaleLink
+              href={
+                isSignedIn
+                  ? "/dashboard"
+                  : `/sign-in?next=${encodeURIComponent(DEFAULT_NEXT_PATH)}`
+              }
+              onClick={(event) => {
+                if (isSignedIn) return;
+                if (
+                  event.metaKey ||
+                  event.ctrlKey ||
+                  event.shiftKey ||
+                  event.button !== 0
+                ) {
+                  return;
+                }
+                event.preventDefault();
+                openAuthDialog("nav", {
+                  mode: "auto",
+                  callbackURL: DEFAULT_NEXT_PATH,
+                });
+              }}
+            >
               {isSignedIn ? t("cards.goToDashboard") : t("tiers.free.cta")}
             </LocaleLink>
           </Button>

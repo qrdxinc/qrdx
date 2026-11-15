@@ -5,6 +5,7 @@ import { useCodeDialogStore } from "@/components/editor/action-bar/code-dialog-s
 import { DownloadButton } from "@/components/editor/action-bar/download-button";
 import { DownloadDialog } from "@/components/editor/action-bar/download-dialog";
 import { useDownloadDialogStore } from "@/components/editor/action-bar/download-dialog-store";
+import { KeepDesignsNudge } from "@/components/editor/action-bar/keep-designs-nudge";
 import { MoreMenu } from "@/components/editor/action-bar/more-menu";
 import { ShareButton } from "@/components/editor/action-bar/share-button";
 import { HorizontalScrollArea } from "@/components/horizontal-scroll-area";
@@ -70,6 +71,7 @@ export function ActionBar({ layout = "desktop" }: ActionBarProps) {
       ) : (
         buttons
       )}
+      <KeepDesignsNudge />
       <DownloadDialog open={downloadOpen} onOpenChange={setDownloadOpen} />
     </div>
   );
