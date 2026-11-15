@@ -1,22 +1,30 @@
 "use client";
 
-import { ThemeSwitch } from "fumadocs-ui/layouts/shared/slots/theme-switch";
+import { cn } from "@repo/design-system/lib/utils";
+import type { ComponentProps } from "react";
 import { DocsLocaleMenu } from "@/components/docs/docs-locale-menu";
 
 /**
- * The docs sidebar's footer: one bar with the language menu filling it and
- * the theme switch at its end. The bar fumadocs draws holds icon links and
- * the theme switch; the docs have no icon links, so that bar was mostly
- * empty, with the language menu stacked under it as a second box. The
- * layout turns that theme switch off (themeSwitch.enabled: false) and
- * renders this instead, with the same classes as the fumadocs bar. It also
- * shows at the bottom of the mobile menu.
+ * The docs sidebar's footer: the language menu, in one bar with whatever
+ * fumadocs' notebook layout puts there (`children`: the GitHub link below
+ * `lg`, and in the mobile menu the theme switch too). Passed as a component
+ * so the bar shows on every width; the class fumadocs hands over hides its
+ * own footer on wide screens and is dropped.
  */
-export function DocsSidebarFooter() {
+export function DocsSidebarFooter({
+  children,
+  className: _className,
+  ...props
+}: ComponentProps<"div">) {
   return (
-    <div className="flex items-center gap-0.5 rounded-lg border bg-fd-secondary/50 p-0.5 text-fd-muted-foreground">
+    <div
+      {...props}
+      className={cn(
+        "flex items-center gap-1 border-t px-3 py-2.5 text-fd-muted-foreground",
+      )}
+    >
       <DocsLocaleMenu />
-      <ThemeSwitch className="ms-auto shrink-0 rounded-none border-y-0 border-e-0 px-1 py-0 *:rounded-md" />
+      {children}
     </div>
   );
 }

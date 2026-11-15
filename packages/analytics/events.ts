@@ -178,6 +178,11 @@ export interface AnalyticsEvents {
 
   // Docs and errors
   docs_search: { query_length: number; result_count?: number };
+  /**
+   * "Was this page helpful?" under a docs page: the page's path (English,
+   * at most 64 characters) and the answer. Nothing typed, no identity.
+   */
+  docs_feedback: { path: string; answer: "yes" | "no" };
   "404_viewed": { area: "site" | "docs" };
   query_failed: { error_type: string };
 }

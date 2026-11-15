@@ -5,29 +5,36 @@ import {
 } from "@repo/design-system/components/ui/hover-card";
 import Link from "fumadocs-core/link";
 import { PathUtils } from "fumadocs-core/source";
-import * as Twoslash from "fumadocs-twoslash/ui";
-import { createGenerator } from "fumadocs-typescript";
-import { Callout } from "fumadocs-ui/components/callout";
-import { Card } from "fumadocs-ui/components/card";
-import { TypeTable } from "fumadocs-ui/components/type-table";
-import { DocsPage, PageLastUpdate } from "fumadocs-ui/page";
+import { Lightbox } from "fumadocs-ui/components/image-zoom";
+import {
+  DocsBody,
+  DocsDescription,
+  DocsPage,
+  DocsTitle,
+  PageLastUpdate,
+} from "fumadocs-ui/layouts/notebook/page";
 import { LanguageSquare } from "iconsax-reactjs";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
-import type { ComponentProps, FC, ReactNode } from "react";
-import { LLMCopyButton, ViewOptions } from "@/components/ai/page-actions";
-import { Mermaid } from "@/components/mdx/mermaid";
-import * as Preview from "@/components/preview";
-import { Wrapper } from "@/components/preview/wrapper";
+import type { ComponentProps, FC } from "react";
+import { PageActions } from "@/components/ai/page-actions";
+import { PageEyebrow } from "@/components/docs/page-eyebrow";
+import { PageFeedback } from "@/components/docs/page-feedback";
+import { Callout } from "@/components/mdx/callout";
+import { Card } from "@/components/mdx/card";
 import {
   breadcrumbSchema,
   type Crumb,
   JsonLd,
 } from "@/components/sections/tools/json-ld";
-import { owner, repo } from "@/lib/github";
+import { getGitHubIssueUrl, getGithubEditUrl, owner, repo } from "@/lib/github";
 import { DEFAULT_LOCALE, LOCALE_INFO, type Locale } from "@/lib/i18n/config";
-import { docsLocaleFromSegment, docsUrl } from "@/lib/i18n/docs";
+import {
+  docsLocaleFromSegment,
+  docsUrl,
+  englishDocsPath,
+} from "@/lib/i18n/docs";
 import { docsPageSeo } from "@/lib/i18n/docs-seo";
 import { requireDocsLocale } from "@/lib/i18n/docs-server";
 import { localizeHref, localizePath } from "@/lib/i18n/paths";
@@ -43,15 +50,6 @@ import {
 } from "@/lib/source";
 import { buildTimeParams } from "@/lib/static-params";
 import { getMDXComponents } from "@/mdx-components";
-
-function PreviewRenderer({ preview }: { preview: string }): ReactNode {
-  if (preview && preview in Preview) {
-    const Comp = Preview[preview as keyof typeof Preview];
-    return <Comp />;
-  }
-
-  return null;
-}
 
 export const revalidate = false;
 
@@ -130,8 +128,6 @@ async function UntranslatedNote({ locale }: { locale: Locale }) {
   );
 }
 
-const _generator = createGenerator();
-
 export default async function Page(
   props: PageProps<"/[lang]/docs/[[...slug]]">,
 ) {
@@ -141,43 +137,57 @@ export default async function Page(
 
   if (!page) notFound();
 
-  const { body: Mdx, toc, preview } = page.data;
+  const { body: Mdx, toc } = page.data;
   // English text at another language's URL, until it's translated.
   const fallback = locale !== DEFAULT_LOCALE && !isTranslatedPage(page);
   const language: Locale = fallback ? DEFAULT_LOCALE : locale;
   const markdown = markdownUrl(page, locale);
+  const t = await getTranslations({ locale, namespace: "docs.shell.feedback" });
+  const tree = localizedSource.getPageTree(locale);
+
+  // "Edit this page" opens the file that rendered; "Report a problem" a new
+  // issue with the page's title and URL filled in.
+  const editUrl = getGithubEditUrl(page.path);
+  const reportUrl = getGitHubIssueUrl({
+    owner,
+    repo,
+    title: t("issueTitle", { title: page.data.title }),
+    body: t("issueBody", { url: new URL(page.url, baseUrl).toString() }),
+  });
 
   return (
     <DocsPage
       toc={toc}
       // API reference pages (frontmatter `full`) need the width for Try it.
       full={page.data.full}
-      tableOfContent={{
-        style: "clerk",
-      }}
+      // The reading column: styles/styles.css sets --docs-page-width.
+      className={page.data.full ? undefined : "*:max-w-(--docs-page-width)"}
+      // The section shows as an eyebrow above the title instead.
+      breadcrumb={{ enabled: false }}
+      tableOfContent={{ style: "clerk" }}
+      // English text at another language's URL is marked as English.
+      lang={fallback ? DEFAULT_LOCALE : undefined}
     >
       <JsonLd data={techArticleSchema(page, language)} />
       {page.slugs.length > 0 && (
         <JsonLd data={breadcrumbSchema(await docsCrumbs(page, locale))} />
       )}
       {fallback && <UntranslatedNote locale={locale} />}
-      <div className="contents" lang={fallback ? DEFAULT_LOCALE : undefined}>
-        <h1 className="text-[1.75em] font-semibold">{page.data.title}</h1>
-        <p className="text-lg text-fd-muted-foreground mb-2">
-          {page.data.description}
-        </p>
-        <div className="flex flex-row flex-wrap gap-2 items-center border-b pb-6">
-          <LLMCopyButton markdownUrl={markdown} />
-          <ViewOptions
-            markdownUrl={markdown}
-            githubUrl={`https://github.com/${owner}/${repo}/blob/main/apps/docs/content/docs/${page.path}`}
-          />
-        </div>
-        <div className="prose flex-1 text-fd-foreground/90">
-          {preview ? <PreviewRenderer preview={preview} /> : null}
+      {page.slugs.length > 0 && <PageEyebrow tree={tree} url={page.url} />}
+      <DocsTitle className="text-[2rem] leading-[1.15] tracking-tight">
+        {page.data.title}
+      </DocsTitle>
+      <DocsDescription className="mb-3 text-[1.0625rem] leading-relaxed text-pretty">
+        {page.data.description}
+      </DocsDescription>
+      <div className="flex flex-row flex-wrap items-center gap-2 border-b pb-6">
+        <PageActions markdownUrl={markdown} />
+      </div>
+      <DocsBody className="text-fd-foreground/90">
+        {/* One image viewer for the page's framed images (components/mdx/frame.tsx). */}
+        <Lightbox>
           <Mdx
             components={getMDXComponents({
-              ...Twoslash,
               a: ({ href, ...props }) => {
                 const found = localizedSource.getPageByHref(href ?? "", {
                   dir: PathUtils.dirname(page.path),
@@ -216,19 +226,23 @@ export default async function Page(
                 );
               },
               Card: LocalizedCard,
-              Mermaid,
-              TypeTable,
-              Wrapper,
               blockquote: Callout as unknown as FC<
                 ComponentProps<"blockquote">
               >,
             })}
           />
-        </div>
+        </Lightbox>
+      </DocsBody>
+      <div className="flex flex-col gap-4">
+        <PageFeedback
+          editUrl={editUrl}
+          path={englishDocsPath(page.url)}
+          reportUrl={reportUrl}
+        />
+        {page.data.lastModified && (
+          <PageLastUpdate date={page.data.lastModified} />
+        )}
       </div>
-      {page.data.lastModified && (
-        <PageLastUpdate date={page.data.lastModified} />
-      )}
     </DocsPage>
   );
 }

@@ -58,15 +58,24 @@ function asParsed(markup: string): string {
 /** The component's input for a `QRCodeProps` key (`style` is `svgStyle`). */
 const inputFor = (key: string) => (key === "style" ? "svgStyle" : key);
 
-function render(props: Record<string, unknown>) {
-  const fixture = TestBed.createComponent(ng.QRCode);
+/**
+ * The props the component takes as inputs. Root attributes (`className`,
+ * `aria-label`, `data-*`…) aren't inputs: on `<qrdx-qr-code>` they stay on
+ * the host element, so they're left out of what the `<svg>` draws.
+ */
+function inputProps(props: Record<string, unknown>): Record<string, unknown> {
   const inputs = new Set(
     reflectComponentType(ng.QRCode)?.inputs.map((input) => input.templateName)
   );
-  for (const [key, value] of Object.entries(props)) {
-    if (inputs.has(inputFor(key))) {
-      fixture.componentRef.setInput(inputFor(key), value);
-    }
+  return Object.fromEntries(
+    Object.entries(props).filter(([key]) => inputs.has(inputFor(key)))
+  );
+}
+
+function render(props: Record<string, unknown>) {
+  const fixture = TestBed.createComponent(ng.QRCode);
+  for (const [key, value] of Object.entries(inputProps(props))) {
+    fixture.componentRef.setInput(inputFor(key), value);
   }
   fixture.detectChanges();
   return fixture;
@@ -164,8 +173,9 @@ describe.skipIf(!existsSync(built))("qrdx/angular", () => {
         configure();
         const fixture = render(props);
         const host: HTMLElement = fixture.nativeElement;
-        const react = renderToStaticMarkup(createElement(ReactQRCode, props));
-        const core = ng.toSVGString(ng.resolveQRCodeProps(props));
+        const drawn = inputProps(props) as ParityProps;
+        const react = renderToStaticMarkup(createElement(ReactQRCode, drawn));
+        const core = ng.toSVGString(ng.resolveQRCodeProps(drawn));
 
         expect(fixture.componentInstance.markup()).toBe(core);
         expect(core).toBe(react);

@@ -3,7 +3,11 @@
 // React-free engine they draw with). The components build React elements
 // through the same renderer as the core, so their markup is the core's.
 
-export type { QRPropsCanvas, QRPropsSVG } from "../types/react";
+export type {
+  QRCodePropsSVG,
+  QRPropsCanvas,
+  QRPropsSVG,
+} from "../types/react";
 export * from "./api";
 export * from "./core";
 export * from "./qr-code";

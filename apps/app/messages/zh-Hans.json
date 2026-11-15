@@ -5419,11 +5419,7 @@
       "nameIsNoLongerIn": "“{name}”已不在社区中。"
     },
     "itemCard": {
-      "empty": "空",
-      "official": "官方",
-      "usecountUses": "{useCount} 次使用",
-      "seeAll": "查看全部",
-      "likes": "点赞"
+      "empty": "空"
     },
     "itemPages": {
       "previous": "上一页",

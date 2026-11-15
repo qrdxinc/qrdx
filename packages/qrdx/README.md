@@ -96,7 +96,7 @@ import { QRCode } from "qrdx";
 <QRCode value="https://example.com" size={256} logo="https://example.com/logo.png" level="H" />;
 ```
 
-It accepts the `QRCodeSVG` styling props above (`value`, `size`, `level`, colors, patterns, `margin`, `templateId`, `customTemplate`, `customProps`, `style`) plus:
+It accepts the `QRCodeSVG` styling props above (`value`, `size`, `level`, colors, patterns, `margin`, `templateId`, `customTemplate`, `customProps`, `style`), forwards any other prop (`className`, `aria-label`, `role`, `data-*`…) to the root `<svg>` like `QRCodeSVG`, and adds:
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
