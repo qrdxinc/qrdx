@@ -1,110 +1,84 @@
 ---
 title: Developers
-description: Every way to build with QRdx, from a keyless image URL to the REST API, webhooks, MCP and the CLI.
+description: Pick the QRdx tool for what you are building, from a keyless image URL to the REST API, webhooks, the MCP server and the CLI, then find the reference for it.
 icon: Terminal
 ---
 
-Pick the surface that fits what you're building. The first three need no account and no key.
+Everything QRdx does is available to code. Start from what you want to build: each row names the tool, what it needs and the page that gets you there.
 
-## No key needed
+| You want to | Use | Needs |
+| --- | --- | --- |
+| Put a QR code in a page, an email or a README | [QR code image API](/docs/developers/image-api): a `GET` URL that is the image | Nothing |
+| Draw a barcode for a label or a product feed | [Barcode API](/docs/developers/barcode-api): the same, for EAN, UPC, Code 128 and more | Nothing |
+| Create codes you can point somewhere else after printing, and read their scans | [REST API](/docs/developers/quickstart): `POST /v1/codes`, `PATCH`, `GET …/scans` | An [API key](/docs/developers/api-keys) |
+| React to scans, new codes or form answers in your own system | [Webhooks](/docs/webhooks): signed `POST` requests to your URL | An API key or the dashboard, Business plan |
+| Let an AI assistant make QR codes in a chat | [MCP server](/docs/developers/mcp): `https://mcp.qrdx.dev/mcp` | Nothing |
+| Make QR codes from a script, a build or a CSV | [CLI](/docs/developers/cli): `npx @qrdx/cli` | Node.js 22 |
+| Paint a QR code into AI artwork | [AI art API](/docs/developers/ai-art-api): `POST /v1/art` | An API key, monthly AI art images |
+| Let other people connect their QRdx account to your product | [Build an integration](/docs/developers/build-an-integration): OAuth 2.0 with PKCE | An OAuth app |
+| Automate QRdx in n8n | [n8n nodes](/docs/developers/n8n): `@qrdx/n8n-nodes-qrdx` | A self-hosted n8n |
+| Render styled codes inside a React app | [React library](/docs/getting-started): the `qrdx` package | npm |
+
+## First request in two minutes
+
+The [quickstart](/docs/developers/quickstart) makes a QR code image with one keyless request, creates an API key, creates a dynamic code and points it somewhere else. Everything else on this page builds on those four steps.
+
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png" -o qr.png
+```
+
+## Base URL and authentication
+
+The REST API lives at `https://api.qrdx.dev/v1`. The same routes answer at `https://qrdx.dev/api/v1`, and a [self-hosted](/docs/self-hosting) instance serves them at `/api/v1` on its own domain.
+
+Requests carry an [API key](/docs/developers/api-keys) as `Authorization: Bearer qrdx_…`. A key acts on the workspace it was created in, with your role there. Apps that act for other QRdx users send an [OAuth 2.0 access token](/docs/developers/rest-api#get-an-access-token) in the same header instead. The image, barcode and community endpoints need neither.
+
+## Reference
 
 <Cards>
-  <Card
-    icon={<ImageDown />}
-    href="/docs/developers/image-api"
-    title="QR code image API"
-    description="A QR code image from a URL. Paste it into Markdown, HTML or an email."
-  />
-  <Card
-    icon={<Bot />}
-    href="/docs/developers/mcp"
-    title="MCP server"
-    description="Let Claude, Cursor, VS Code and other AI tools make styled QR codes."
-  />
-  <Card
-    icon={<Terminal />}
-    href="/docs/developers/cli"
-    title="CLI"
-    description="SVG, PNG, WebP or EPS QR codes from your terminal or CI."
-  />
-</Cards>
-
-## With an account
-
-<Cards>
-  <Card
-    icon={<Rocket />}
-    href="/docs/developers/quickstart"
-    title="Quickstart"
-    description="Your first API request in under two minutes, then an API key and a dynamic code."
-  />
-  <Card
-    icon={<LockKeyhole />}
-    href="/docs/developers/api-keys"
-    title="API keys"
-    description="Create a qrdx_ key for your servers and scripts, scoped to one workspace."
-  />
-  <Card
-    icon={<Code />}
-    href="/docs/developers/rest-api"
-    title="REST API and OAuth"
-    description="Create and edit dynamic codes, read scans and report conversions over HTTP."
-  />
   <Card
     icon={<FileCode />}
     href="/docs/developers/api"
     title="API reference"
-    description="Every endpoint, with samples in curl, JavaScript and Python, and a Try it panel."
-  />
-  <Card
-    icon={<Webhook />}
-    href="/docs/webhooks"
-    title="Webhooks"
-    description="Signed events for scans, code changes and form responses. Works with Zapier, Make and n8n."
-  />
-  <Card
-    icon={<Blocks />}
-    href="/docs/developers/n8n"
-    title="n8n"
-    description="QRdx nodes for n8n: QR images, dynamic codes, scans and a trigger for QRdx events."
-  />
-  <Card
-    icon={<Blocks />}
-    href="/docs/developers/build-an-integration"
-    title="Build an integration"
-    description="Let people connect their QRdx account to your app with OAuth 2.0 and PKCE."
+    description="Every endpoint by resource, with its parameters, responses, samples in curl, JavaScript and Python, and a Try it panel."
   />
   <Card
     icon={<TriangleAlert />}
     href="/docs/developers/errors"
     title="Errors"
-    description="Every error the API returns, what it means and how to fix it."
+    description="Every error code, when it happens and what to do."
   />
-</Cards>
-
-## In your own code
-
-<Cards>
   <Card
-    icon={<Rocket />}
-    href="/docs/getting-started"
-    title="React library"
-    description="Render and export styled QR codes with the qrdx package."
+    icon={<Code />}
+    href="/docs/developers/rest-api"
+    title="REST API and OAuth"
+    description="Authentication, scopes, OAuth tokens, rate limits and the daily quota in depth."
+  />
+  <Card
+    icon={<Bot />}
+    href="/docs/developers/ai-agents"
+    title="Use QRdx with AI agents"
+    description="Connect an assistant to the MCP server, give agents image URLs, and read the docs as Markdown."
+  />
+  <Card
+    icon={<Wrench />}
+    href="/docs/developers/google-chart-api"
+    title="Replace the Google Chart QR API"
+    description="Map chl, chs and chld to the image API and rewrite old URLs with one command."
   />
   <Card
     icon={<Server />}
     href="/docs/self-hosting"
     title="Self-hosting"
-    description="Run the whole app, dynamic codes included, on your own servers."
+    description="Run the whole app, API included, on your own servers."
   />
 </Cards>
 
-## Base URL and authentication
+The OpenAPI 3.1 document at [`/openapi.json`](/openapi.json) describes every endpoint, schema and error. Any docs page is available as Markdown at its URL plus `.md`, and [`/llms.txt`](/llms.txt) indexes the site for agents.
 
-The REST API lives at `https://api.qrdx.dev/v1`. The same routes also answer at `https://qrdx.dev/api/v1`.
+## Related
 
-Requests authenticate with an [API key](/docs/developers/api-keys) in the `Authorization: Bearer` header. Apps that act for other QRdx users send an [OAuth 2.0 access token](/docs/developers/rest-api#get-an-access-token) there instead. The [quickstart](/docs/developers/quickstart#create-an-api-key) creates a key and makes a first request.
-
-## Stay up to date
-
-Library, CLI and API changes are in the [changelog](/changelogs). The source is on [GitHub](https://github.com/qrdxinc/qrdx).
+- [Quickstart](/docs/developers/quickstart): your first request, a key and a first dynamic code
+- [API keys](/docs/developers/api-keys): create a key, choose its access, revoke it
+- [Changelog](/changelogs): library, CLI and API changes
+- [GitHub](https://github.com/qrdxinc/qrdx): the source, issues and discussions

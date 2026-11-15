@@ -11,135 +11,169 @@
     "closeMenu": "Tutup menu",
     "entries": {
       "product": "Produk",
-      "tools": "Alat",
+      "solutions": "Solusi",
       "developers": "Developer",
-      "resources": "Sumber daya",
-      "pricing": "Harga"
+      "resources": "Sumber daya"
+    },
+    "columns": {
+      "industries": "Industri",
+      "teams": "Tim",
+      "codeTypes": "Jenis kode",
+      "build": "Bangun",
+      "embed": "Sematkan",
+      "connect": "Hubungkan",
+      "help": "Bantuan",
+      "company": "Perusahaan",
+      "updates": "Pembaruan"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "Rancang kode QR dengan pola, warna, logo, dan bingkai, lalu unduh. Tanpa daftar."
+        "description": "Desain dan unduh kode, gratis, tanpa daftar",
+        "short": "Gratis, tanpa daftar"
       },
       "dynamicCodes": {
-        "name": "Kode QR dinamis",
-        "description": "Ubah tautan setelah dicetak dan hitung pemindaian"
-      },
-      "aiThemes": {
-        "name": "Tema AI",
-        "description": "Jelaskan gayanya dan biarkan AI merancang temanya"
+        "description": "Ubah tautan setelah dicetak, hitung setiap pemindaian",
+        "short": "Ubah tautan, hitung pemindaian"
       },
       "aiArt": {
-        "name": "Seni QR AI",
-        "description": "Ubah tautan menjadi karya seni AI yang tetap bisa dipindai"
-      },
-      "communityThemes": {
-        "name": "Tema komunitas",
-        "description": "Jelajahi dan gunakan ulang desain yang dibagikan orang lain"
-      },
-      "pageTemplates": {
-        "name": "Templat halaman",
-        "description": "Demo langsung setiap templat halaman yang di-hosting"
-      },
-      "generators": {
-        "name": "Generator kode QR",
-        "description": "Generator untuk setiap jenis: Wi-Fi, vCard, WhatsApp, UPI, pembayaran, dan lainnya."
-      },
-      "bulk": {
-        "name": "Generator massal",
-        "description": "Ubah CSV menjadi hingga {max, number} kode bergaya"
-      },
-      "scanner": {
-        "name": "Pemindai kode QR",
-        "description": "Pindai kode dengan pratinjau tautan aman"
-      },
-      "scanChecker": {
-        "name": "Pemeriksa pemindaian",
-        "description": "Uji seberapa andal kode QR dipindai"
-      },
-      "printSize": {
-        "name": "Kalkulator ukuran cetak",
-        "description": "Temukan ukuran minimum sesuai jarak pemindaian Anda"
+        "description": "Kode yang bisa dipindai, terlukis dalam karya seni",
+        "short": "Kode terlukis dalam seni"
       },
       "barcode": {
-        "name": "Generator barcode",
-        "description": "EAN, UPC, Code 128 dan lainnya, dengan digit pemeriksa"
+        "description": "EAN, UPC, Code 128, dan lainnya",
+        "short": "EAN, UPC, Code 128"
       },
-      "allTools": {
-        "name": "Semua alat",
-        "description": "Semua alat kode QR gratis di satu tempat"
+      "bulk": {
+        "description": "Hingga {max, number} kode bergaya dari CSV",
+        "short": "Kode dari CSV"
       },
-      "docs": {
-        "name": "Dokumentasi",
-        "description": "Panduan untuk library React qrdx, kode dinamis, API, dan self-hosting."
+      "community": {
+        "description": "Bingkai dan tema yang dibagikan orang",
+        "short": "Bingkai dan tema dibagikan"
       },
-      "mcp": {
-        "name": "Server MCP",
-        "description": "Buat kode QR dari Claude, ChatGPT, atau Cursor"
+      "restaurants": {
+        "description": "Menu, Wi-Fi, dan permintaan ulasan",
+        "short": "Menu, Wi-Fi, ulasan"
       },
-      "qrCodeApi": {
-        "name": "API kode QR gratis",
-        "description": "Gambar kode QR dari satu URL, tanpa kunci atau pendaftaran"
+      "retail": {
+        "description": "Label rak, etalase toko, dan loyalitas",
+        "short": "Label rak dan loyalitas"
       },
-      "nextjs": {
-        "name": "Panduan Next.js",
-        "description": "Kode QR di Server dan Client Components"
+      "realEstate": {
+        "description": "Kode pada papan yang membuka listing properti",
+        "short": "Listing properti dari papan"
+      },
+      "events": {
+        "description": "Agenda, badge, dan umpan balik sesi",
+        "short": "Agenda dan badge"
+      },
+      "enterprise": {
+        "description": "Single sign-on, log audit, dan kontrak",
+        "short": "SSO, log audit, kontrak"
+      },
+      "agencies": {
+        "description": "Domain klien, UTM, dan laporan pemindaian",
+        "short": "Kode klien dan laporan"
+      },
+      "openSource": {
+        "description": "Host sendiri aplikasinya atau gunakan pustakanya",
+        "short": "Host sendiri atau sematkan"
+      },
+      "placements": {
+        "description": "Menu, kemasan, kartu nama, dan papan",
+        "short": "Menu, kemasan, papan"
+      },
+      "restApi": {
+        "description": "Kode, pemindaian, dan webhook lewat HTTP",
+        "short": "Kode dan pemindaian lewat HTTP"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "Gambar kode QR dari sebuah URL, tanpa API key"
+        "description": "Gambar kode dari satu URL, tanpa kunci",
+        "short": "Satu URL, tanpa kunci"
+      },
+      "mcp": {
+        "description": "Buat kode QR dari Claude, ChatGPT, atau Cursor",
+        "short": "Dari Claude, ChatGPT, atau Cursor"
+      },
+      "cli": {
+        "description": "Buat kode di terminal dan CI",
+        "short": "Terminal dan CI"
+      },
+      "react": {
+        "description": "Mesinnya sebagai komponen React",
+        "short": "Kode QR di React"
       },
       "shadcn": {
-        "name": "Registry shadcn/ui",
-        "description": "Tambahkan komponen kode QR dengan satu perintah"
+        "description": "Tambahkan komponen kode QR dengan satu perintah",
+        "short": "Komponen dengan satu perintah"
       },
-      "plugins": {
-        "name": "Plugin",
-        "description": "QRdx untuk Chrome, Figma, Raycast, dan Canva"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "Kode sumber, isu, dan rilis"
-      },
-      "help": {
-        "name": "Pusat bantuan",
-        "description": "Jawaban soal kode, penagihan, tim, dan perbaikan"
-      },
-      "blog": {
-        "name": "Blog",
-        "description": "Panduan dan kabar seputar kode QR"
-      },
-      "customers": {
-        "name": "Pelanggan",
-        "description": "Cara perusahaan memakai QRdx"
-      },
-      "compare": {
-        "name": "Bandingkan",
-        "description": "QRdx dibandingkan generator dan library lain"
-      },
-      "changelog": {
-        "name": "Changelog",
-        "description": "Yang baru di QRdx"
+      "nextjs": {
+        "description": "Kode QR di Server dan Client Components",
+        "short": "Server dan Client Components"
       },
       "integrations": {
-        "name": "Integrasi",
-        "description": "Zapier, Make, Discord, piksel analitik, dan lainnya"
+        "description": "Zapier, Make, Discord, piksel analitik, dan lainnya",
+        "short": "Zapier, Make, dan lainnya"
       },
-      "support": {
-        "name": "Hubungi dukungan",
-        "description": "Email, widget dukungan, atau GitHub"
+      "plugins": {
+        "description": "QRdx untuk Chrome, Figma, Raycast, dan Canva",
+        "short": "Chrome, Figma, Raycast, Canva"
+      },
+      "webhooks": {
+        "description": "Peristiwa pemindaian, formulir, dan kode ke URL Anda",
+        "short": "Peristiwa ke URL Anda"
+      },
+      "docs": {
+        "description": "Panduan, referensi API, dan hosting sendiri",
+        "short": "Panduan dan referensi"
+      },
+      "github": {
+        "description": "Mesin MIT dan CLI, aplikasi AGPL",
+        "short": "Mesin MIT, aplikasi AGPL"
+      },
+      "help": {
+        "description": "Jawaban soal kode, penagihan, tim, dan perbaikan",
+        "short": "Jawaban atas pertanyaan umum"
+      },
+      "contact": {
+        "description": "Email, widget dukungan, atau GitHub",
+        "short": "Email atau widget dukungan"
+      },
+      "customers": {
+        "description": "Cara perusahaan memakai QRdx",
+        "short": "Cara perusahaan memakai QRdx"
+      },
+      "security": {
+        "description": "Cara QRdx melindungi akun dan data",
+        "short": "Akun dan data"
+      },
+      "affiliates": {
+        "description": "Raih penghasilan dari pelanggan rujukan Anda",
+        "short": "Penghasilan dari rujukan"
+      },
+      "blog": {
+        "description": "Panduan dan kabar seputar kode QR",
+        "short": "Panduan dan berita"
+      },
+      "changelog": {
+        "description": "Yang baru di QRdx",
+        "short": "Yang baru"
+      },
+      "tools": {
+        "description": "Pemindai, pengecek pemindaian, ukuran cetak, dan lainnya",
+        "short": "Pemindai, pengecek, dan lainnya"
       }
     },
     "account": {
-      "tryPlayground": "Coba Playground",
-      "playground": "Playground",
-      "dashboard": "Dasbor",
-      "signIn": "Masuk"
+      "signIn": "Masuk",
+      "create": "Buat kode QR",
+      "dashboard": "Dasbor"
     },
     "github": {
       "star": "Star",
       "starOnGithub": "Beri bintang QRdx di GitHub",
-      "starOnGithubCount": "Beri bintang QRdx di GitHub ({count} bintang)"
+      "starOnGithubCount": "Beri bintang QRdx di GitHub ({count} bintang)",
+      "stars": "{count} bintang"
     },
     "userProfileDropdown": {
       "tryThePlayground": "Coba Playground",
@@ -169,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "Generator kode QR gratis dan open source. Pola kustom, gradien, logo, dan bingkai, dengan unduhan PNG, JPG, SVG, PDF, dan EPS tanpa perlu mendaftar. Ditambah kode dinamis, halaman yang di-hosting, dan analitik pemindaian.",
+    "description": "Platform kode QR open-source.",
     "starOnGithub": "Beri bintang di GitHub",
+    "newsOnX": "Kabar QRdx di X",
     "navLabel": "Footer",
-    "scanIt": "Ayo, pindai saja",
-    "copyright": "© {year} QRdx. Open source di bawah AGPL-3.0.",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "Produk",
-      "tools": "Alat",
       "developers": "Developer",
+      "solutions": "Solusi",
       "resources": "Sumber daya",
+      "company": "Perusahaan",
       "compare": "Bandingkan"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "Generator kode QR",
       "dynamicCodes": "Kode QR dinamis",
+      "aiArt": "Seni QR AI",
       "aiThemes": "Tema AI",
-      "communityThemes": "Tema komunitas",
+      "barcode": "Barcode",
+      "bulk": "Generator massal",
       "pageTemplates": "Templat halaman",
-      "pricing": "Harga",
-      "guarantee": "Jaminan Never-Hostage",
-      "enterprise": "Enterprise",
+      "community": "Komunitas",
       "slackBot": "Bot Slack",
       "telegramBot": "Bot Telegram",
       "discordBot": "Bot Discord",
-      "generators": "Generator kode QR",
-      "bulk": "Generator massal",
-      "scanChecker": "Pemeriksa pemindaian",
-      "printSize": "Kalkulator ukuran cetak",
-      "barcode": "Generator barcode",
-      "pdfQr": "Kode QR PDF",
-      "businessCard": "Kartu nama digital",
-      "menuQr": "Kode QR menu",
-      "scanner": "Pemindai kode QR",
-      "allTools": "Semua alat",
-      "docs": "Dokumentasi",
-      "apiReference": "Referensi API",
-      "qrCodeApi": "API kode QR gratis",
-      "nextjs": "Panduan Next.js",
-      "imageApi": "Image API",
-      "mcp": "Server MCP",
-      "shadcn": "Registry shadcn/ui",
-      "plugins": "Plugin",
-      "selfHosting": "Self-hosting",
-      "openSource": "Sumber terbuka",
-      "github": "GitHub",
-      "help": "Pusat bantuan",
-      "blog": "Blog",
-      "customers": "Pelanggan",
-      "changelog": "Changelog",
-      "integrations": "Integrasi",
+      "restaurants": "Restoran",
+      "retail": "Ritel",
+      "realEstate": "Properti",
+      "events": "Acara",
       "industries": "Kode QR per industri",
       "placements": "Kode QR per penempatan",
-      "affiliates": "Program afiliasi",
+      "generators": "Semua jenis kode",
+      "typeUrl": "Situs web",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "Enterprise",
+      "agencies": "Agensi",
+      "openSource": "Sumber terbuka",
+      "docs": "Dokumentasi",
+      "restApi": "REST API",
+      "apiReference": "Referensi API",
+      "imageApi": "Image API",
+      "mcp": "Server MCP",
+      "cli": "CLI",
+      "react": "Pustaka React",
+      "shadcn": "Registry shadcn/ui",
+      "nextjs": "Panduan Next.js",
+      "integrations": "Integrasi",
+      "plugins": "Plugin",
+      "webhooks": "Webhook",
+      "selfHosting": "Self-hosting",
+      "github": "GitHub",
+      "help": "Pusat bantuan",
       "contact": "Kontak",
+      "blog": "Blog",
+      "changelog": "Changelog",
+      "customers": "Pelanggan",
+      "tools": "Alat gratis",
+      "scanner": "Pemindai kode QR",
+      "scanChecker": "Pemeriksa pemindaian",
+      "printSize": "Kalkulator ukuran cetak",
+      "security": "Keamanan",
+      "affiliates": "Program afiliasi",
+      "guarantee": "Jaminan Never-Hostage",
+      "pricing": "Harga",
+      "allComparisons": "Semua perbandingan",
       "legal": "Hukum",
-      "privacy": "Kebijakan privasi",
       "terms": "Ketentuan layanan",
-      "subprocessors": "Subprosesor",
-      "reportAbuse": "Laporkan penyalahgunaan",
-      "acceptableUse": "Penggunaan yang wajar",
+      "privacy": "Kebijakan privasi",
       "cookies": "Kebijakan cookie",
       "dpa": "Pemrosesan data (DPA)",
+      "subprocessors": "Subprosesor",
+      "acceptableUse": "Penggunaan yang wajar",
       "aiFeatures": "Fitur AI",
       "refunds": "Pengembalian dana",
       "affiliateTerms": "Ketentuan afiliasi",
-      "security": "Keamanan",
       "securityPolicy": "Kebijakan keamanan",
-      "allComparisons": "Semua perbandingan"
+      "reportAbuse": "Laporkan penyalahgunaan"
     }
   },
   "localeSwitcher": {
@@ -244,9 +289,10 @@
     "englishOnly": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lain akan membuka halaman utamanya."
   },
   "cta": {
-    "title": "Buat kode QR berikutnya dalam hitungan detik.",
-    "subtext": "Gratis selamanya. Tanpa pendaftaran, tanpa watermark.",
-    "button": "Mulai Buat Kode QR Gratis"
+    "title": "Buat kode QR berikutnya",
+    "subtext": "Gratis di browser Anda, tanpa pendaftaran atau watermark, dengan kode dinamis saat Anda membutuhkannya.",
+    "button": "Buat kode QR",
+    "secondary": "Lihat harga"
   },
   "consent": {
     "banner": {
