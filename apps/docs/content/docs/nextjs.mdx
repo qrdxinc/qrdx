@@ -43,7 +43,7 @@ export default function Page() {
 
 Open the page. The `<svg>` is part of the HTML the server sends, so it shows before any JavaScript loads, a static page renders it once at build time, and screen readers get the `aria-label`.
 
-<Shot id="lib-nextjs-server-code" />
+{/* shot: nextjs-server-code | the 256 px code from app/page.tsx on an otherwise empty Next.js page, with the browser's "view source" showing the inline svg | run the example in a fresh create-next-app project */}
 
 `margin` is the quiet zone around the code, in modules. It defaults to 0, which suits a code inside a card with its own padding. The QR standard asks for 4, the safe choice on a busy or dark background.
 
@@ -89,6 +89,8 @@ export function LiveQrCode() {
 ```
 
 The code redraws on every keystroke, and the first value still renders on the server. A Server Component page can import this component as it is.
+
+{/* clip: nextjs-live-code | typing a link into the input and the code redrawing with each keystroke | render components/live-qr-code.tsx and type "https://example.com/menu" */}
 
 `QRCodeCanvas` is a Client Component too (it ships with `"use client"`), but it draws plain square modules only. Use `QRCodeSVG` or `QRCode` for styled codes.
 

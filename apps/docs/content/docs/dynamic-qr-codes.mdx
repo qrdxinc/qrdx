@@ -13,7 +13,7 @@ In a hurry? The short task pages: [Create a dynamic QR code](/docs/help/dynamic-
 
 ## How it works
 
-<Diagram id="dynamic-redirect" />
+{/* diagram: dynamic-code-redirect | A phone scans the printed code, which holds the short link; QRdx records the scan and redirects to the current destination, which the owner can change in the dashboard | concept drawing */}
 
 The printed code never changes: it holds the short link. When someone scans it, QRdx checks the code's settings (is it paused, scheduled, password-protected, routed by device or location), records the scan without cookies, and redirects to the destination. Changing the destination, the design or the settings takes effect on the next scan.
 
@@ -21,11 +21,11 @@ The printed code never changes: it holds the short link. When someone scans it, 
 
 **Dashboard:** open [Codes](/dashboard?to=codes) and click **New code**. The **New dynamic QR code** dialog asks what the code opens: **Website link**, or one of the [hosted page](/docs/landing-pages) templates. For a link, enter the **Destination URL** and an optional **Title**, then create the code. Download it as PNG, WebP or SVG from the code's **Overview** tab.
 
-<Shot id="new-code-dialog" />
+{/* shot: new-code-dialog | The New dynamic QR code dialog with Website link selected and the Destination URL field filled | Dashboard → Codes → New code */}
 
 **Playground:** choose the **URL** content type, enter your link and switch the link from **Static** to **Dynamic**. The QR code now holds a short link and keeps your design. If you edit the URL afterwards, click **Point it to the new address** to update the destination. **Save design to code** stores the current design with the code. The action bar's **⋯** menu has **Make it dynamic…** for a code you designed as static.
 
-<Shot id="playground-content" />
+{/* shot: playground-dynamic-toggle | The URL form in the playground with Dynamic selected and the Point it to the new address button | Playground → URL type → Dynamic */}
 
 Destinations must be `http://` or `https://` links. Links with a username or password, and links to other QRdx short links, are rejected. Every destination also goes through [safety checks](/docs/code-controls#safety-checks-on-links).
 
@@ -48,7 +48,7 @@ Open a code from [Codes](/dashboard?to=codes). Its page has three tabs: **Overvi
 - **Change type** turns a website link into a [hosted page](/docs/landing-pages), a page back into a link, or a page into another page type. The short link and the scans stay. See [Change what a printed code opens](/docs/help/dynamic-codes/change-the-type).
 - The **⋯** menu holds **Edit design in playground** (the editor opens with the code still bound to its short link), **Duplicate**, **Share analytics...**, **Move to folder...**, **Move to workspace...**, **Pause** or **Resume**, **Archive** and **Move to trash**.
 
-<Shot id="code-overview" />
+{/* shot: code-page-overview | A code's page on the Overview tab: the short link, QR preview with download buttons, scan totals and the Options grid | Dashboard → Codes → open a code */}
 
 **Duplicate** makes a new code with a new short link and no scans. It copies the destination, design, folder, tags, notes and type, and, when your plan includes them, the code's controls, routing, UTM and pixel settings.
 
@@ -65,7 +65,7 @@ Open a code from [Codes](/dashboard?to=codes). Its page has three tabs: **Overvi
 - **Bulk actions:** select codes to move, tag, pause, archive, favorite, trash or download them as a ZIP of PNG, WebP or SVG files.
 - **CSV import:** **Codes** → **Import** in the sidebar (or **New code** → **Import codes** → **From a CSV file**) creates up to {facts.importRows} dynamic codes from one file: destination, title, folder, tags and an optional custom back-half in a `slug` column. You can file every code into one folder and tag them all. A long import can be paused, and it picks up after a reload or a dropped connection without making any code twice. It ends with a results CSV (each row's short link) and a ZIP of the codes as PNG or SVG. Importing more than one row, and custom back-halves, need Pro.
 
-<Shot id="codes-list" />
+{/* shot: codes-list-folders | The Codes list with folders in the left column, a tag filter applied and two codes selected for a bulk action | Dashboard → Codes */}
 
 ## Who can do what
 
@@ -75,7 +75,7 @@ Codes belong to the workspace they're created in. Owners, admins and members cre
 
 A code's **Analytics** tab shows scans over time, unique visitors, QR scans and NFC taps, top countries and cities, devices, operating systems, browsers and referrers for the last 7, 30 or 90 days, 1 year or 3 years, or for all time since the first scan. Free shows the last {facts.freeScanHistoryYears} year; Pro and Business show everything. **Export CSV** downloads the scans in the selected range.
 
-<Shot id="code-analytics" />
+{/* shot: code-analytics-tab | A code's Analytics tab with the range picker, the scans-over-time chart and the country and device cards | Dashboard → Codes → open a code → Analytics */}
 
 Each scan records the time (UTC), the country, region and city from the network, the device type, operating system and browser from the user agent, and the referrer's host name. Instead of an IP address it stores a salted hash of the address, user agent and day, which counts unique visitors per day and can't be turned back into the address. Known bots, link previews and browser prefetches aren't counted. On Pro and Business a code can also [ask scanners for their precise location](/docs/precise-location). Full list: [What QRdx records when someone scans](/docs/help/privacy-and-security/scan-data).
 

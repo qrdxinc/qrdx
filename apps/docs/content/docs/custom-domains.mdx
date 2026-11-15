@@ -13,7 +13,7 @@ In a hurry? The short task page: [Use your own domain](/docs/help/domains/custom
 
 ## How it works
 
-<Diagram id="custom-domain" />
+{/* diagram: custom-domain-dns | Your DNS pointing go.yourbrand.com at QRdx, QRdx recognizing the domain on each request and answering with your codes' redirects and pages | concept drawing */}
 
 You point a domain (usually a subdomain like `go.yourbrand.com`) at QRdx with a DNS record and prove you own it. From then on QRdx answers requests for that host name with your workspace's codes and pages, and nothing else. The domain belongs to the workspace it was added in: owners and admins add, verify and remove it, and every member can use it for their codes.
 
@@ -28,7 +28,7 @@ You point a domain (usually a subdomain like `go.yourbrand.com`) at QRdx with a 
    Copy the exact values from the dashboard. Most providers want only the part before your domain as the name (`go`, or `@` for the root).
 3. Click **Verify**. DNS changes usually show up within minutes but can take up to 48 hours, so try again later if the records aren't found yet.
 
-<Shot id="custom-domains" />
+{/* shot: domains-settings | Settings → Domains with one domain waiting for DNS, its record table and the Verify button | Dashboard → Settings → Domains */}
 
 Once verified, the domain appears in the **Short link domain** picker when you create or edit a dynamic code. Verified domains stay verified until you remove them, and **Check DNS** re-reads the records any time.
 
@@ -53,7 +53,7 @@ The button appears only for subdomains such as `go.yourbrand.com`, and only when
 - **New code:** pick the domain in **Short link domain** before you create the code.
 - **Existing code:** choose the domain in **Edit link**, save, and download the QR code again, because the encoded link changes.
 
-<Shot id="short-link-domain-picker" />
+{/* shot: short-link-domain-picker | The Short link domain picker in the Edit link dialog with a verified custom domain selected | Dashboard → Codes → open a code → Edit link */}
 
 Every code also keeps working at its default `https://qrdx.dev/q/<slug>` link, so QR codes you printed before moving a code to your domain never break. Moving a code from one custom domain to another (or back to the default) does break QR codes printed with the old custom-domain link; the dialog warns you before you save.
 

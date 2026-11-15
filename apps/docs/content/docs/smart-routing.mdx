@@ -13,7 +13,7 @@ In a hurry? The short task page: [Send scans to different links](/docs/help/dyna
 
 ## How it works
 
-<Diagram id="smart-routing" />
+{/* diagram: routing-rules-order | A scan arriving at a list of rules checked top to bottom, the first match deciding the URL, and the main destination catching everything else | concept drawing */}
 
 You set up routing in the **Smart routing** panel on the code's **Settings** tab (open the code from [Codes](/dashboard?to=codes)).
 
@@ -26,7 +26,7 @@ You set up routing in the **Smart routing** panel on the code's **Settings** tab
 
 If a rule can't be evaluated for some reason, the scan still goes to the main destination: routing never stops a code from working.
 
-<Shot id="routing-rules" />
+{/* shot: routing-panel-rules | The Smart routing panel with three rules: an iOS rule, an Android rule and a country rule, with their reorder arrows | Dashboard → Codes → open a code → Settings → Smart routing */}
 
 ## Conditions
 
@@ -58,11 +58,13 @@ Set a rule's action to **Split between URLs (A/B)** and add 2 to 5 variants, eac
 - The code's **Analytics** tab shows an **A/B split** card with scans per variant since the split's variants or weights last changed. Each scan stores the variant it was served. Scans from before QRdx stored variants are replayed with your current rules, and the card is then marked as an estimate.
 - A split can have conditions too, for example an A/B test for visitors in Germany only.
 
+{/* shot: ab-split-card | The A/B split card on a code's Analytics tab showing scans per variant | Dashboard → Codes → open a code with a split → Analytics */}
+
 ## Test your rules
 
 Once a code has at least one rule, **Test your rules (uses unsaved changes)** at the bottom of the panel shows where a scan would go for any device, operating system, country, region, language, date and time, scan number, visitor and location. It runs the rules as you have them in the panel, saved or not, against the code's saved main destination and UTM settings. It lists which rule matched and why the others didn't, and shows the final URL including UTM parameters.
 
-<Shot id="routing-test" />
+{/* shot: routing-tester | The Test your rules form filled in for an Android scan from Germany, with the matched rule and final URL below it | Dashboard → Codes → open a code → Settings → Smart routing → Test your rules */}
 
 ## UTM parameters
 

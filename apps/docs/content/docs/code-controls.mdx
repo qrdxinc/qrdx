@@ -15,7 +15,7 @@ In a hurry? The short task pages: [Pause, schedule or limit a code](/docs/help/d
 
 Every control lives in the **Access & schedule** panel on the code's **Settings** tab (open the code from [Codes](/dashboard?to=codes)). On each scan QRdx checks the controls in order before it redirects: is the code paused, has it started, has it ended, is it over its scan limit, does it need a password. The first check that fails decides what the scanner sees. Changes apply to the next scan; you never reprint the code.
 
-<Shot id="code-settings" />
+{/* shot: access-schedule-panel | The Access & schedule panel on a code's Settings tab with the Pause code switch, Password, Starts, Ends, Scan limit and Fallback URL fields | Dashboard → Codes → open a code → Settings */}
 
 | Control | What scanners see | Plan |
 | --- | --- | --- |
@@ -34,7 +34,7 @@ Turn on **Pause code** to stop a code for a while, for example between two event
 
 Set a password of 4 to 64 characters and anyone who scans the code first sees a password screen. After the right password, that browser stays unlocked for 6 hours, on the short link and on the hosted page it opens. Changing the password locks out every browser that unlocked the old one; removing it opens the code to everyone again.
 
-<Shot id="scan-password" />
+{/* shot: password-screen | The password screen a scanner sees on a protected code, on a phone | Scan a code with a password set */}
 
 Passwords are stored as bcrypt hashes, so QRdx can't show you a password later, only replace it. Repeated wrong guesses from one visitor are slowed down. Share the password separately from the code: anyone who has both gets in.
 

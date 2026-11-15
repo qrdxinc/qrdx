@@ -19,7 +19,7 @@ Hosted pages can show files you upload to QRdx: a menu or brochure as a PDF, a p
 
 ## How it works
 
-<Diagram id="file-delivery" />
+{/* diagram: file-delivery | A browser uploading straight to the storage bucket, QRdx checking the file and copying it to its final key, and visitors reaching it through the file's QRdx link | concept drawing */}
 
 Your browser uploads the file straight to the storage bucket. QRdx then checks it (its size, and that its first bytes really are a file of its type), copies the checked version to the file's own place and gives it a link, `https://qrdx.dev/api/files/<id>`. Pages and codes use that link, which is why replacing the file changes nothing for them.
 
@@ -50,6 +50,8 @@ The **PDF**, **Images**, **MP3 / Audio**, **Video** and **Playlist** page types 
 
 In a block, choose **Upload** to add a file from your device, **From your files** to reuse one you uploaded before, or paste a link.
 
+{/* shot: file-field | A PDF block's file field in the editor with the Upload, From your files and paste-a-link options | Dashboard → Pages & forms → open a page → PDF block */}
+
 ## Replace or delete a file
 
 Open **Files** in the sidebar and use the menu next to a file:
@@ -58,7 +60,7 @@ Open **Files** in the sidebar and use the menu next to a file:
 - **Replace file…** uploads new content behind the same link, for example next season's menu. Pages and codes that use the file show the new version within a minute. A file can only be replaced by one of the same kind (a PDF by a PDF).
 - **Delete** removes the file for good. If pages or codes still use it, QRdx lists them first; after deleting, those pages show "File unavailable" where the file was.
 
-<Shot id="files-page" />
+{/* shot: files-page | The Files page with a few uploaded files, their sizes and the menu open on one showing Copy link, Replace file… and Delete | Dashboard → Files */}
 
 Members can replace and delete the files they uploaded; owners and admins can manage every file in the workspace.
 

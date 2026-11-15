@@ -24,9 +24,9 @@ Webhooks, Zapier and Make hooks and Slack and Discord alerts are part of the **B
 3. Copy the **Signing secret** shown after saving. Owners and admins can show it again, or rotate it, from the endpoint's **Deliveries** page.
 4. Choose **Send test**. QRdx sends a signed `ping` event and shows the response status in the delivery log.
 
-<Shot id="add-endpoint-dialog" />
+{/* shot: webhooks-add-endpoint | the Add webhook endpoint dialog with the Endpoint URL filled and three events ticked | Settings, Webhooks, Add endpoint */}
 
-<Shot id="webhook-signing-secret" />
+{/* shot: webhooks-signing-secret | the Signing secret dialog shown right after an endpoint is added, with Copy signing secret | Settings, Webhooks, after Add endpoint */}
 
 A workspace can have up to 20 endpoints and hooks together.
 
@@ -179,7 +179,7 @@ Deliveries can arrive more than once (a retry after a slow response, a manual re
 
 Each endpoint's **Deliveries** page lists the last 50 deliveries with their event, status, attempts and payload. **Retry now** re-sends a failed or pending delivery at once; **Send again** re-sends a delivered one. Deliveries are kept for 30 days.
 
-<Shot id="webhook-deliveries" />
+{/* shot: webhooks-deliveries | an endpoint's Deliveries page with delivered and failed rows, attempts and the next try time | Settings, Webhooks, Deliveries */}
 
 From an endpoint's menu you can **Edit** its URL and events, **Disable endpoint** (new deliveries stop; **Enable endpoint** resumes them), show or **Rotate** its **Signing secret**, and **Delete** it, which also deletes its log. If a workspace's plan no longer includes webhooks, endpoints are kept but nothing is sent until it is on Business again. Your QR codes keep working either way.
 

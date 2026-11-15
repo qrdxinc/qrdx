@@ -28,7 +28,7 @@ await downloadQRCode(
 );
 ```
 
-<Shot id="lib-download-result" />
+{/* clip: lib-download-png | clicking a Download button and the browser saving menu.png with the framed code in it | wire the snippet to a button and click it */}
 
 The browser saves `menu.png`. `size` is the pixel width and height of the code itself, from 50 to 5000 and square; a frame makes the file bigger than that. `filename` is optional: without it the file is named `qr-code.<ext>`, with the exact pixel size added for raster formats (`qr-code-1024x1024.png`, or `qr-code-1270x1454.png` with a bottom banner). `quality` (0 to 1) applies to WebP only.
 
