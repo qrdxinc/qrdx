@@ -23,9 +23,9 @@ Every endpoint that takes an OAuth access token takes a key in the same header. 
 2. Fill in **Name**: where the key is used, so you know which one to revoke later. Choose its **Access** and, under **Expires**, how long it lives. Choose **Create key**. A key works without you, so QRdx asks you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first, unless you did in that browser in the last 10 minutes.
 3. Copy the key from the **Copy your API key** dialog. It's shown only this once: QRdx stores only a hash of it. The same dialog shows a curl request with the key and this site's API address filled in, ready to paste.
 
-{/* shot: api-keys-page | the API keys & apps settings page with one key listed (name, masked start, access, last used) and the Create key button | Settings, API keys & apps */}
+<Shot id="api-keys" />
 
-{/* shot: api-key-form-access | the Create API key form with Access open: Full access, Read only and Custom with the scope checkboxes | Settings, API keys & apps, Create key */}
+<Shot id="api-key-form-access" />
 
 A key is `qrdx_` followed by 40 letters and digits. Lists show only its start, such as `qrdx_7KpQ2m…`, so you can tell keys apart.
 

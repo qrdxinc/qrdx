@@ -20,6 +20,44 @@ To see it through the main app as readers will, run the main app with `DOCS_ZONE
 
 `lib/seo-file-dates.json` holds each English page's last change from the full git history, for builds from a shallow clone (`lib/seo-dates.ts`). Git dates follow moves: a page keeps its date when its file is only moved.
 
+## Screenshots and clips
+
+The pictures and short clips in the docs are captured from the real app by `scripts/shots`, never pasted in by hand, so one command refreshes every image after a UI change. What a page shows is a job in `scripts/shots/jobs.ts` (the route, the steps to reach the state, the element to capture, the alt text, the pages that use it). The runner drives headless Chrome through the repo's own DevTools driver (`apps/app/e2e/cdp.mjs`), at 2x, with animations off, and writes:
+
+- the stills, light and dark, as WebP under `public/docs-static/shots/` (committed; `/docs-static/*` is one of the paths the main app proxies to this site, so they load on qrdx.dev too);
+- the clips under `media/videos/docs/` (git-ignored) as mp4 and webm, with a poster still; `shots:upload` puts them in the R2 bucket and records them in `lib/media-manifest.json`;
+- `lib/shots-manifest.json`: id → files, size, alt text, the pages that use it and the job that made it.
+
+The pictures on the React library's pages come from the same command: `scripts/shots/library.tsx` renders each page's own code sample with the real `qrdx` package (the React samples are the example files in `apps/app/tests/docs-examples`; the other frameworks' pages get the engine's output for the props their sample passes) into a small page that the runner captures in both themes. Nothing in them is drawn by hand.
+
+What the runner guarantees, so a picture never has to be fixed by hand:
+
+- a picture of one card, panel or dialog shows all of it: the viewport grows until the element fits, and the job fails if something still covers a side of it;
+- every job starts from the seeded state (the playground's saved design is cleared between jobs);
+- two jobs create something to show the dialog that follows (`api-key-copy-dialog`, `webhook-signing-secret`); they run last, and `shots:db seed` afterwards puts the lists back. The key and the secret in those pictures only ever existed in the throwaway database;
+- where a screen prints the app's own address (a referral link, the portal address), it reads `https://qrdx.dev`, as it does for a reader, not the capture server's `localhost`.
+
+Pages use them through `<Shot id="…" />`, `<Clip id="…" />` and `<Diagram id="…" />` (`components/mdx/shot.tsx`, `components/mdx/shot-diagram.tsx`; the diagrams are hand-written SVG whose words come from `docs.shots.diagrams` in `apps/app/messages/en.json`). An id nobody captured fails the build with the fix in the message. The `.md` copies of the pages show each picture as a Markdown image with its alt text.
+
+The app is captured against a throwaway local Postgres seeded with invented data (a café called Harbor Lane Coffee; nothing in it is real), never the shared database:
+
+```bash
+bun run --filter docs shots:db up          # local Postgres 16 + a Neon-HTTP proxy + the seed (scripts/shots/seed.mjs)
+bun run --filter docs shots:db env         # the DATABASE_URL etc. to put in apps/app/.env.local for the capture run
+                                           # add POLAR_WEBHOOK_SECRET=local-shots-only there too: any value turns on the
+                                           # affiliate settings page, which qrdx.dev has and a plain local run doesn't
+cd apps/app && mkdir -p ../docs/.shots && bun x next dev --port 3103 > ../docs/.shots/app.log 2>&1 &
+bun run --filter docs shots -- --list      # the jobs and the pages they serve
+bun run --filter docs shots                # every job (about 15 s a still, a minute a clip)
+bun run --filter docs shots -- --only codes-list,edit-link-dialog
+bun run --filter docs shots -- --stills    # or --clips
+bun run --filter docs shots -- --meta      # after editing alt text or a job's pages: the words only, no captures
+bun run --filter docs shots:upload         # the clips to R2 (R2_* in apps/app/.env.local)
+bun run --filter docs shots:db down        # stop and delete the local database
+```
+
+The sign-in code is read from the app's log (`SHOTS_DEV_LOG`, default `.shots/app.log`), as the e2e suites do; `SHOTS_APP_URL` (default `http://localhost:3103`) and `SHOTS_RAW_DIR` (keeps the raw PNGs) are the other knobs. Screens are captured in English only. Look at every new picture before committing it: nothing private, nothing broken, nothing a visitor to qrdx.dev can't get.
+
 ## What it reads from the main app
 
 `scripts/zone-inputs.mjs` runs before `dev`, `build`, `typecheck` and `test`, and writes every generated input (none of them is committed):
