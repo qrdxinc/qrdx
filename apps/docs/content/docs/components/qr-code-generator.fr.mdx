@@ -1,8 +1,10 @@
 ---
 title: "Générateur de QR code"
-description: "Un champ de texte avec aperçu du QR code en direct, des préréglages de style et des boutons de téléchargement."
+description: "Un champ de saisie de texte avec aperçu du QR code en direct, des préréglages de style et des boutons de téléchargement, pour les projets shadcn/ui."
 icon: Sparkles
 ---
+
+`QrCodeGenerator` est un petit générateur réuni en un seul composant : un champ de texte, un aperçu qui se redessine pendant la saisie, une rangée de préréglages de style et des boutons de téléchargement. Utilisez-le pour permettre à vos propres utilisateurs de créer des codes dans votre produit, sans les envoyer ailleurs.
 
 <ComponentLinks name="qr-code-generator" />
 
@@ -14,15 +16,15 @@ icon: Sparkles
 
 ## Utilisation [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeGenerator } from "@/components/qr-code-generator";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeGenerator defaultValue="https://example.com" />
 ```
 
-L'aperçu se met à jour pendant la saisie. Chaque bouton de préréglage affiche un petit échantillon de son style, et les téléchargements utilisent le préréglage sélectionné à 1024 pixels.
+L'aperçu se met à jour pendant la saisie. Chaque bouton de préréglage affiche un petit échantillon de son style, et les téléchargements utilisent le préréglage sélectionné à 1024 pixels. Lorsque le champ est vide, l'aperçu affiche « Type some text to generate a code » et les boutons de téléchargement sont désactivés.
 
 ## Exemples [#examples]
 
@@ -34,26 +36,52 @@ Remplacez les préréglages intégrés par les vôtres. Un préréglage se compo
 
 Les préréglages intégrés sont exportés sous le nom `QR_CODE_PRESETS`, ce qui vous permet de les étendre :
 
-```tsx
-import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator";
+```tsx title="components/brand-generator.tsx"
+import {
+  QR_CODE_PRESETS,
+  QrCodeGenerator,
+} from "@/components/qr-code-generator";
 
-<QrCodeGenerator
-  presets={[
-    ...QR_CODE_PRESETS,
-    { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
-  ]}
-/>
+export function BrandGenerator() {
+  return (
+    <QrCodeGenerator
+      presets={[
+        ...QR_CODE_PRESETS,
+        { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
+      ]}
+    />
+  );
+}
 ```
 
 ### Enregistrer le résultat [#saving-the-result]
 
 `onChange` transmet le texte et le préréglage sélectionné à chaque modification, par exemple pour mémoriser le choix de l'utilisateur :
 
-```tsx
-<QrCodeGenerator
-  onChange={({ value, preset }) => saveDraft({ value, style: preset.style })}
-/>
+```tsx title="components/draft-generator.tsx"
+import { QrCodeGenerator } from "@/components/qr-code-generator";
+
+export function DraftGenerator({
+  saveDraft,
+}: {
+  saveDraft: (draft: { value: string; style: object }) => void;
+}) {
+  return (
+    <QrCodeGenerator
+      onChange={({ value, preset }) =>
+        saveDraft({ value, style: preset.style })
+      }
+    />
+  );
+}
 ```
+
+## Accessibilité et rendu [#accessibility-and-rendering]
+
+- Le champ a une étiquette visible « Text or URL », et les préréglages forment un `<fieldset>` avec la légende « Style ». Chaque préréglage est un bouton à bascule avec `aria-pressed`, et son code d'échantillon est masqué pour les lecteurs d'écran.
+- L'aperçu est un élément `role="img"` dont l'étiquette est `QR code: <value>`, ou « Empty QR code preview » lorsqu'il n'y a pas de texte.
+- Une erreur de téléchargement s'affiche sous l'aperçu avec `role="alert"`.
+- Le composant est un Client Component avec son propre état. Affichez-le depuis n'importe quelle page ; passez `defaultValue` et `defaultPreset` pour qu'il démarre déjà rempli.
 
 ## Référence de l'API [#api-reference]
 
@@ -62,3 +90,11 @@ import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator
 ### QrCodePreset [#qrcodepreset]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-generator.tsx" name="QrCodePreset" />
+
+## Voir aussi [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code" title="QR Code" description="Un seul code avec des boutons de téléchargement, lorsque la valeur provient de vos données." />
+  <Card href="/docs/components/qr-code-download" title="Téléchargement de QR Code" description="Un menu proposant plus de formats et de tailles que les boutons du générateur." />
+  <Card href="/docs/features/colors-gradients" title="Définir les couleurs et les dégradés" description="Toutes les options de style qu'un préréglage peut contenir." />
+</Cards>

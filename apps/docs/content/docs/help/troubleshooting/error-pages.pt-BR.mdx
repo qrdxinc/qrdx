@@ -1,47 +1,62 @@
 ---
 title: "Uma leitura mostra uma página de erro"
-description: "O que significa cada página de erro de QR code, de \"QR code não encontrado\" a \"Esta campanha terminou\", e como resolver."
+description: "O que significa cada página de erro de QR code, de \"QR code not found\" a \"This campaign has ended\", e como resolver."
 ---
 
-Quando um QR code dinâmico não consegue abrir o destino, quem faz a leitura vê uma página curta. Veja o que cada uma significa.
+Quando um QR code dinâmico não consegue abrir o destino, quem faz a leitura vê uma página curta no lugar. Cada página abaixo é uma delas, com a causa, a solução e como conferir se funcionou. A maioria vem das configurações do próprio código.
 
-## "QR code não encontrado" [#qr-code-not-found]
+## "This campaign is paused", "This campaign hasn't started yet" ou "This campaign has ended" [#this-campaign-is-paused-this-campaign-hasnt-started-yet-or-this-campaign-has-ended]
 
-Essa é uma página 404: o link curto não pertence a nenhum código.
+O código está pausado, ainda não chegou à data de início, passou da data de término ou atingiu o limite de leituras.
 
-- O código foi **excluído permanentemente**.
-- O **final do link** (back-half) ou o **domínio** do código foi alterado depois da impressão.
-- A conta que era dona do código foi excluída.
+1. Abra o código em **Codes** e vá para a aba **Settings**, depois **Access & schedule**.
+2. Desative **Pause code**, altere **Starts** ou **Ends**, ou aumente o **Scan limit**.
+3. Clique em **Save changes**.
+
+Faça a leitura de novo: o destino abre. Para enviar as pessoas a um lugar útil enquanto um código está pausado ou encerrado, preencha **Fallback URL**. Veja [Pause, schedule or limit a code](/docs/help/dynamic-codes/pause-schedule-limit).
+
+<Shot id="scan-ended" />
+
+## "This QR code is password protected" [#this-qr-code-is-password-protected]
+
+O código tem uma senha, e esta é a página que a solicita. Digite-a em **Password** e clique em **Continue**; o navegador fica desbloqueado por 6 horas. Para remover a senha, abra **Access & schedule** e clique em **Remove password**. Veja [Protect a code with a password](/docs/help/dynamic-codes/password).
+
+## "This QR code is no longer active" [#this-qr-code-is-no-longer-active]
+
+O código está arquivado ou na lixeira. Em **Codes**, abra o menu do código e escolha **Unarchive**, ou filtre a lista por **Trash** e escolha **Restore**. No plano Grátis, você precisa de uma vaga livre para códigos. Faça a leitura de novo para confirmar. Veja [Archive, delete and restore codes](/docs/help/dynamic-codes/archive-and-delete).
+
+O QRdx também mostra esta página para um código que ele desativou após uma denúncia de abuso.
+
+## "QR code not found" [#qr-code-not-found]
+
+O link curto não pertence a nenhum código. Uma destas situações aconteceu:
+
+- O código foi excluído definitivamente, ou a conta dona dele foi excluída. Um código excluído não pode voltar.
+- O back-half do código foi alterado depois da impressão. Abra **Edit link** e volte ao valor anterior.
 - O link foi digitado à mão com algum erro. Links curtos diferenciam maiúsculas de minúsculas.
 
-Um código excluído não pode voltar. Se você alterou o final do link, volte ao valor anterior com **Editar link**.
+## "This domain isn't connected yet" [#this-domain-isnt-connected-yet]
 
-## "Este QR code não está mais ativo" [#this-qr-code-is-no-longer-active]
+O código usa um domínio personalizado cuja configuração de DNS não foi concluída. Vá em **Settings** → **Domains**, adicione os registros exibidos e clique em **Verify**. A página deixa de aparecer quando o domínio estiver como **Verified**. Veja [Use your own domain](/docs/help/domains/custom-domains).
 
-O código está **arquivado** ou na **lixeira**. Escolha **Desarquivar** ou **Restaurar** em **Códigos**. Veja [Arquivar, excluir e restaurar códigos](/docs/help/dynamic-codes/archive-and-delete).
+## "Too many requests" [#too-many-requests]
 
-A QRdx também desativa códigos que levam a sites nocivos.
+Uma mesma rede abriu muitos QR codes em poucos segundos. Espere um momento e faça a leitura de novo. Não há nada de errado com o código.
 
-## "Esta campanha está pausada", "ainda não começou" ou "terminou" [#this-campaign-is-paused-hasnt-started-yet-or-has-ended]
+## "Page not found" em uma página mobile [#page-not-found-on-a-mobile-page]
 
-Essas mensagens vêm das configurações do próprio código: uma pausa, uma data de início ou de término, ou um limite de leituras. Altere-as em **Acesso e agendamento**. Veja [Pausar, agendar ou limitar um código](/docs/help/dynamic-codes/pause-schedule-limit).
+A página hospedada em `/p/…` foi excluída ou o endereço foi digitado errado. Procure a página em **Pages & forms** e confira se o código aponta para ela. Veja [Change what a printed code opens](/docs/help/dynamic-codes/change-the-type).
 
-## "Este QR code é protegido por senha" [#this-qr-code-is-password-protected]
+## "This form isn't accepting responses right now." [#this-form-isnt-accepting-responses-right-now]
 
-O código tem uma senha. Digite-a e clique em **Continuar**. Veja [Proteger um código com senha](/docs/help/dynamic-codes/password).
+O workspace atingiu o limite mensal de respostas de formulário. Ele reabre no mês seguinte, ou na hora, após um upgrade. Veja [Collect answers with a form](/docs/help/pages-and-forms/forms#monthly-limits).
 
-## "Muitas requisições" [#too-many-requests]
+## Ainda com problemas [#still-stuck]
 
-Uma mesma rede abriu muitos QR codes em poucos segundos. Espere um pouco e faça a leitura de novo.
+[Fale com o suporte](/docs/help/contact) informando o link curto do código e o texto exato que aparece na página.
 
-## "Este domínio ainda não está conectado" [#this-domain-isnt-connected-yet]
+## Relacionados [#related]
 
-O código usa um domínio personalizado cuja configuração de DNS não foi concluída. Verifique o domínio na página **Domínios** do seu painel.
-
-## "Não foi possível encontrar esta página" em uma página [#this-page-could-not-be-found-on-a-page]
-
-Uma página para celular em `/p/…` mostra essa mensagem quando a página foi excluída ou o endereço foi digitado errado.
-
-## "Este formulário não está aceitando respostas no momento" [#this-form-isnt-accepting-responses-right-now]
-
-O workspace atingiu o limite mensal de respostas de formulário. Veja [Colete respostas com um formulário](/docs/help/pages-and-forms/forms#monthly-limits).
+- [Pause, schedule or limit a code](/docs/help/dynamic-codes/pause-schedule-limit)
+- [Archive, delete and restore codes](/docs/help/dynamic-codes/archive-and-delete)
+- [A code opens the wrong page](/docs/help/troubleshooting/wrong-destination)

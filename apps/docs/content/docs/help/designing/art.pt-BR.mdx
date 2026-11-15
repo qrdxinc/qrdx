@@ -1,41 +1,57 @@
 ---
 title: "Misture um logo ou uma foto no código"
-description: "Logo QR e Image QR misturam uma imagem nos próprios pontos, sem IA."
+description: "Logo QR e Image QR misturam uma imagem nos próprios pontos do código, sem IA."
 ---
 
-## Logo QR e Image QR [#logo-qr-and-image-qr]
+A aba **Art** mistura uma imagem nos próprios pontos do código, em vez de colocá-la por cima. **Logo QR** e **Image QR** funcionam sem nenhuma IA, e uma verificação de leitura testa o resultado no seu navegador antes de você baixar.
 
-No [playground](/playground?tab=art), abra a aba **Art**. Escolha um modo:
+## Escolha um modo [#choose-a-mode]
 
-- **Logo QR** colore os pontos dentro do formato do seu logo.
-- **Image QR** transforma o código inteiro na sua foto.
-- **Off** desativa a arte.
+1. No [Playground](/playground?tab=art), abra a aba **Art**.
+2. Escolha **Logo QR** para colorir os pontos dentro da forma do seu logo, ou **Image QR** para transformar o código inteiro na sua foto. **Off** desativa a arte.
+3. Envie sua própria imagem ou experimente um exemplo. Logos funcionam melhor como PNG transparente ou SVG. Fotos funcionam melhor com um único assunto bem claro.
+4. Em **Strength**, escolha **Subtle**, **Balanced** ou **Bold**. Uma arte mais forte fica mais bonita, mas é mais difícil de ler. **Fine-tune** oferece um controle deslizante.
 
-Envie sua própria imagem ou experimente um exemplo. Logos funcionam melhor como PNG transparente ou SVG. Fotos funcionam melhor com um único assunto bem definido.
+A arte funciona em todos os formatos de download.
 
-A arte funciona em todos os formatos de download, e não há IA envolvida.
+<Shot id="playground-art" />
 
-## Equilibre arte e leitura [#balance-art-and-scanning]
+## Verifique se o código é lido [#check-that-it-scans]
 
-Escolha a intensidade da arte: **Subtle**, **Balanced** ou **Bold**. Uma arte mais forte fica mais bonita, mas é mais difícil de ler.
+A **Scan check** abaixo da arte decodifica seu código real no navegador em três tamanhos. Se o resultado não for bom, ela lista o que corrigir.
 
-O **Scan check** abaixo da arte decodifica seu código real no navegador em três tamanhos. Se o resultado não for bom, ele lista o que corrigir.
+Para obter os melhores resultados, defina **Error correction** como **High** na aba **Design** e mantenha uma borda livre ao redor do código.
 
-Para obter os melhores resultados, defina **Error correction** como **High** e mantenha uma borda livre ao redor do código.
+## Por que o logo fica pequeno em um link curto [#why-the-logo-is-small-on-a-short-link]
 
-Com o selo do Logo QR, o logo só cresce até onde o código consegue reparar. Um link curto gera um código pequeno, então o logo fica pequeno, e os menores códigos não mostram logo nenhum. A correção de erros **High** dá o máximo de espaço.
+Com o Logo QR, o logo só cresce até onde o código consegue se recuperar. Um link curto gera um código pequeno, então o logo continua pequeno, e os menores códigos não mostram logo nenhum. A correção de erros **High** dá a ele o maior espaço possível.
 
 <IfAvailable feature="aiArt" title="AI art">
 
-O [AI QR art](/ai/art) gera uma arte ao redor de um código que continua sendo lido. Exige uma conta grátis.
+[AI QR art](/ai/art) gera uma arte ao redor de um código que continua sendo lido. Exige uma conta grátis.
 
-No playground, escolha **AI art** na aba **Art**. Ele pinta o código que você está editando. Se esse código estiver vinculado a um QR code dinâmico, a arte codifica o link curto, então você pode mudar o destino depois de imprimir. A AI art é uma imagem: baixe como PNG ou use **Use as Image QR** para transformá-la em um código vetorial para SVG, PDF ou EPS.
+No Playground, escolha **AI art** na aba **Art**. Ela pinta o código que você está editando. Se esse código for dinâmico, a arte codifica o link curto, então você pode mudar para onde ele aponta depois de imprimir. A AI art é uma imagem: baixe como PNG ou clique em **Use as Image QR** para transformá-la em um código vetorial para SVG, PDF ou EPS.
 
-Cada plano inclui um número de imagens de AI art por mês: 3 no Grátis, 30 no Pro e 150 no Business, compartilhadas por todos no workspace.
+Cada plano inclui um número de imagens de AI art por mês: 3 no Grátis, 30 no Pro e 150 no Business. No Business, a cota é compartilhada por todos no workspace. Uma imagem que falha não é contada.
 
 </IfAvailable>
+
+## Se algo der errado [#if-something-goes-wrong]
+
+### A Scan check não está Great [#the-scan-check-isnt-great]
+
+Diminua a **Strength**, defina **Error correction** como **High** e escolha uma imagem com um único assunto claro e bom contraste.
+
+### A foto fica embaçada no código [#the-photo-looks-muddy-in-the-code]
+
+Fotos muito cheias perdem a forma nos pontos. Recorte para um único assunto ou experimente o **Logo QR** com uma forma simples.
+
+### A AI art diz que o link é longo demais [#ai-art-says-the-link-is-too-long]
+
+A AI art comporta um número limitado de caracteres. Torne o código dinâmico primeiro, para que ele guarde um link curto em vez do endereço completo. Veja [Criar um QR code dinâmico](/docs/help/dynamic-codes/create).
 
 ## Relacionados [#related]
 
 - [Verifique um design com a pontuação de leitura](/docs/help/designing/scan-score)
+- [Adicionar um logo](/docs/help/designing/logos)
 - [QR codes artísticos para desenvolvedores](/docs/features/art-qr)

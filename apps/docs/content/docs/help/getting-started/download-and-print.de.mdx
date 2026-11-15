@@ -3,47 +3,102 @@ title: "Einen QR-Code herunterladen und drucken"
 description: "Wähle das passende Dateiformat und die richtige Größe und erhalte druckfertige Dateien mit Beschnitt und Schnittmarken."
 ---
 
-## Download [#download]
+Mit dem Button **Download** im [Playground](/playground) bekommst du entweder ein Bild für Bildschirme und Dokumente oder eine druckfertige Datei für die Druckerei. Diese Seite hilft dir bei der Wahl von Format und Größe und beim Prüfen des Ergebnisses, bevor du viele Exemplare druckst.
 
-Klicke im [Playground](/playground) auf das Download-Symbol über der Vorschau oder drücke <kbd>D</kbd>. Der Dialog **QR-Code herunterladen** öffnet sich mit zwei Tabs.
+## Eine Bilddatei herunterladen [#download-an-image-file]
 
-### Bilddatei [#image-file]
+Nutze das für Bildschirme, E-Mails, Folien und die meisten alltäglichen Drucke.
 
-Nutze diese Option für Bildschirme, E-Mail, Folien und die meisten Drucke.
+### 1. Den Download-Dialog öffnen [#1-open-the-download-dialog]
 
-1. Wähle ein Format: **PNG**, **JPG**, **WebP**, **SVG**, **PDF** oder **EPS**.
-2. Wähle eine Größe: E-Mail (200 px), Web (400 px), Social (800 px), Druck (1200 px), Poster (2000 px) oder gib eine eigene Größe ein.
-3. Aktiviere **Transparenter Hintergrund**, falls du ihn brauchst. JPG kann nicht transparent sein.
-4. Klicke unten auf die Download-Schaltfläche.
+Klicke über der Vorschau auf **Download** oder drücke <kbd>D</kbd>. Der Dialog **Download QR code** öffnet sich mit zwei Tabs, **Image file** und **Print-ready**.
 
-### Druckfertig [#print-ready]
+<Shot id="playground-download" />
 
-Nutze diese Option, wenn eine Druckerei eine Datei verlangt.
+### 2. Ein Format wählen [#2-choose-a-format]
 
-1. Lege die **Breite des Codes** in Millimetern oder Zoll fest.
-2. Wähle **RGB** oder **CMYK**. Druckereien wollen meist CMYK.
-3. Füge **3 mm Beschnitt** hinzu, wenn der Hintergrund bis zum Seitenrand reicht, damit beim Zuschneiden nie ein weißer Rand bleibt.
-4. Aktiviere **Schnittmarken**, um zu zeigen, wo geschnitten wird. Schnittmarken werden zu PDFs hinzugefügt.
-5. Lade eine **PDF**-, **SVG**- oder **EPS**-Datei herunter.
+Wähle **PNG**, **JPG**, **WebP**, **SVG**, **PDF** oder **EPS**. Welches Format wofür passt, zeigt die Tabelle unten.
+
+### 3. Eine Größe wählen [#3-choose-a-size]
+
+Wähle **Email** (200 px), **Web** (400 px), **Social** (800 px), **Print** (1200 px) oder **Poster** (2000 px), oder **Custom** für jede Breite von 50 bis 5000 px.
+
+### 4. Den Hintergrund festlegen [#4-set-the-background]
+
+Aktiviere **Transparent background**, wenn der Code auf einer farbigen Seite oder einem Bild liegt. JPG kann nicht transparent sein, deshalb ist der Schalter bei diesem Format ausgeschaltet.
+
+### 5. Herunterladen [#5-download]
+
+Klicke unten auf den Download-Button. Die Datei wird in deinem Download-Ordner gespeichert, in jedem Format mit dem Rahmen.
+
+## Eine druckfertige Datei herunterladen [#download-a-print-ready-file]
+
+Nutze das, wenn eine Druckerei eine Datei verlangt oder wenn du in einer exakten Größe druckst.
+
+### 1. Den Tab Print-ready öffnen [#1-open-the-print-ready-tab]
+
+Klicke im Dialog **Download QR code** auf **Print-ready**.
+
+<Shot id="playground-download-print" />
+
+### 2. Die Größe festlegen [#2-set-the-size]
+
+Wähle unter **Scanned from about** aus, aus welcher Entfernung der Code gescannt wird. Lege dann die **Code width** in mm oder Zoll fest. Der Dialog schlägt für diese Entfernung eine Mindestbreite vor.
+
+### 3. Den Farbmodus wählen [#3-choose-the-color-mode]
+
+Wähle unter **Color mode** **RGB** oder **CMYK**. Druckereien wollen meistens CMYK.
+
+### 4. Beschnitt und Schnittmarken hinzufügen [#4-add-bleed-and-crop-marks]
+
+Setze **Bleed** auf **3 mm**, wenn der Hintergrund bis an den Seitenrand reicht, damit beim Zuschneiden keine weiße Linie bleibt. Aktiviere **Crop marks (PDF)**, um zu zeigen, wo geschnitten wird. Schnittmarken werden nur dem PDF hinzugefügt.
+
+### 5. Herunterladen [#5-download-1]
+
+Klicke auf den PDF-Download-Button, oder auf **SVG** oder **EPS** für eine Vektordatei ohne Seiteneinrichtung.
 
 ## Welches Format du wählen solltest [#which-format-to-choose]
 
-- **PNG**, **JPG** oder **WebP**: Pixelbilder für Bildschirme, E-Mail und Dokumente. WebP hat dieselben Pixel wie PNG in einer kleineren Datei, was sich für Websites eignet.
-- **SVG**, **EPS** oder ein **PDF** aus **Druckfertig**: Vektordateien, die in jeder Größe scharf bleiben. Druckereien bevorzugen sie. Ein PDF aus dem Tab **Bilddatei** enthält ein Bild des Codes, also nutze für alles, was du druckst, „Druckfertig“.
+| Format | Wofür |
+| --- | --- |
+| PNG, WebP | Bildschirme, E-Mails, Dokumente und Webseiten. WebP enthält dieselben Pixel wie PNG in einer kleineren Datei. |
+| JPG | Fotos und Apps, die nur JPG akzeptieren. Kein transparenter Hintergrund. |
+| SVG, EPS | Druckereien und Design-Tools. Vektordateien bleiben in jeder Größe scharf. |
+| PDF aus **Print-ready** | Alles, was du druckst. Es enthält Größe, Farbmodus, Beschnitt und Schnittmarken. Ein PDF aus dem Tab **Image file** enthält stattdessen ein Bild des Codes. |
 
 ## Wie groß du drucken solltest [#how-big-to-print]
 
-Mach den Code etwa ein Zehntel so breit wie die Scan-Entfernung.
+Ein QR-Code lässt sich aus etwa dem Zehnfachen seiner Breite scannen. Mach den Code etwa ein Zehntel so breit wie die Scan-Entfernung:
 
-- Eine Visitenkarte, die aus 20 cm Entfernung gelesen wird, braucht einen Code von etwa 2 cm Breite.
-- Ein Poster, das aus 1 m Entfernung gelesen wird, braucht einen Code von etwa 10 cm Breite.
+- Eine Visitenkarte, die aus 20 cm gelesen wird, braucht einen Code von etwa 2 cm Breite.
+- Ein Poster, das aus 1 m gelesen wird, braucht einen Code von etwa 10 cm Breite.
 
-Codes mit mehr Inhalt brauchen mehr Platz. Der [Druckgrößen-Rechner](/tools/print-size) ermittelt die Mindestgröße für dich.
+Codes mit mehr Inhalt haben kleinere Quadrate und brauchen mehr Platz. Der [Rechner für die Druckgröße](/tools/print-size) berechnet die Mindestgröße für deinen Code und deine Entfernung.
 
-## Lass einen freien Rand [#leave-a-clear-border]
+## Einen freien Rand lassen [#leave-a-clear-border]
 
-Lass um den Code herum Platz frei. Scanner brauchen ihn, um den Code zu finden. Die Einstellung **Abstand** im Tab **Design** fügt ihn für dich hinzu; **Standard** (4 Module) ist die sichere Wahl.
+Scanner brauchen leeren Platz um den Code, um ihn zu finden. **Padding** im Tab **Design** fügt ihn für dich hinzu; **Standard** (4 Module) ist die sichere Wahl. Lass keine anderen Gestaltungselemente an den Code heranreichen.
 
-## Vor dem Drucken testen [#test-before-you-print]
+## Vor dem Druck testen [#test-before-you-print]
 
-Drucke ein Exemplar und scanne es mit zwei verschiedenen Handys aus der Entfernung, aus der die Leute es scannen werden. Du kannst auch ein Foto eines gedruckten Codes in den [Scan-Checker](/tools/scan-checker) hochladen.
+Drucke ein Exemplar und scanne es mit zwei verschiedenen Smartphones aus der Entfernung, aus der die Leute es scannen werden. Du kannst den gedruckten Code auch fotografieren und das Foto in den [Scan-Checker](/tools/scan-checker) ziehen.
+
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
+
+### EPS ist ausgegraut [#eps-is-grayed-out]
+
+EPS kann keine Bildfüllung enthalten. Lade stattdessen SVG oder ein druckfertiges PDF herunter oder ändere die Füllung im Tab **Design** in eine einfarbige Fläche oder einen Verlauf.
+
+### Transparenter Hintergrund ist ausgegraut [#transparent-background-is-grayed-out]
+
+Du hast JPG gewählt. Wähle stattdessen PNG, WebP oder SVG.
+
+### Der gedruckte Code sieht unscharf aus [#the-printed-code-looks-blurry]
+
+Ein Pixelbild wurde größer gedruckt, als es seine Größe zulässt. Lade ein SVG, ein EPS oder ein PDF aus dem Tab **Print-ready** herunter, die in jeder Größe scharf bleiben.
+
+## Weiterführend [#related]
+
+- [Ein Design mit dem Scan-Score prüfen](/docs/help/designing/scan-score)
+- [Einen Rahmen und einen Call-to-Action hinzufügen](/docs/help/designing/frames)
+- [Ein Code lässt sich nicht scannen](/docs/help/troubleshooting/wont-scan)

@@ -1,41 +1,80 @@
 ---
-title: "Collectez des réponses avec un formulaire"
-description: "Créez un formulaire de retour d'expérience, une enquête ou un formulaire d'inscription, et consultez les réponses dans votre tableau de bord."
+title: "Recueillir des réponses avec un formulaire"
+description: "Créez un formulaire d'avis, une enquête ou un formulaire d'inscription, et consultez les réponses dans votre tableau de bord."
 ---
+
+Un formulaire sur une page hébergée permet de recueillir des avis, des réponses à une enquête ou des inscriptions auprès des personnes qui scannent votre code. Les réponses arrivent dans votre tableau de bord et vous pouvez les télécharger sous forme de feuille de calcul.
+
+<Callout type="info">
+  Chaque espace de travail peut recueillir 50 réponses par mois avec Gratuit, 1.000 avec Pro et 10.000 avec Business. Les alertes par e-mail pour les nouvelles réponses sont incluses dans Pro et Business. Voir [Les offres et ce qu'elles incluent](/docs/help/account-and-billing/plans).
+</Callout>
 
 ## Créer un formulaire [#create-a-form]
 
-1. Allez dans **Pages** et cliquez sur **Nouvelle page**.
-2. Choisissez **Retours et formulaires**.
-3. Sélectionnez un modèle : **Avis des clients**, **Enquête NPS** ou **Formulaire d'inscription**.
-4. Cliquez sur **Créer la page**, modifiez les questions, puis cliquez sur **Publier**.
+### 1. Commencer une nouvelle page [#1-start-a-new-page]
 
-Vous pouvez aussi ajouter un bloc **Formulaire** à n'importe quelle autre page.
+Allez dans **Pages et formulaires** et cliquez sur **Nouvelle page**.
+
+### 2. Choisir Avis et formulaires [#2-pick-feedback--forms]
+
+Choisissez **Avis et formulaires**, puis un modèle : **Avis des clients**, **Enquête NPS** ou **Formulaire d'inscription**.
+
+### 3. Créer et modifier [#3-create-and-edit]
+
+Cliquez sur **Créer la page**, puis modifiez les questions dans l'onglet **Blocs**.
+
+<Shot id="form-editor" />
+
+### 4. Publier [#4-publish]
+
+Cliquez sur **Publier**. Le formulaire accepte des réponses dès que la page est en ligne.
+
+Vous pouvez aussi ajouter un bloc **Formulaire** à n'importe quelle autre page depuis le menu d'ajout de bloc.
 
 ## Consulter les réponses [#read-the-responses]
 
-Dans **Pages**, ouvrez le menu de la page (**⋯**) et choisissez **Réponses**.
+Dans **Pages et formulaires**, ouvrez le menu de la page (**⋯**) et choisissez **Réponses**. Cette option apparaît dès que la page contient un formulaire.
 
 Cliquez sur **Exporter en CSV** pour télécharger les réponses sous forme de feuille de calcul.
 
+<Shot id="form-responses" />
+
 ## Recevoir un e-mail pour chaque réponse [#get-an-email-for-each-response]
 
-Avec Pro et Business, allez dans **Paramètres** → **Notifications** et activez **Envois de formulaire**.
+Avec Pro et Business, allez dans **Paramètres** → **Notifications** et activez **Envois de formulaires**. Avec Business, vous pouvez aussi publier les réponses dans un canal Slack ou Discord depuis la même page.
 
 ## Limites mensuelles [#monthly-limits]
 
-Chaque espace de travail peut collecter un certain nombre de réponses par mois civil (UTC) :
+Les réponses sont comptées par espace de travail et par mois civil, en UTC :
 
-- **Gratuit** : 50.
-- **Pro** : 1.000.
-- **Business** : 10.000.
+| Offre | Réponses par mois |
+| --- | --- |
+| Gratuit | 50 |
+| Pro | 1.000 |
+| Business | 10.000 |
 
-Lorsque la limite est atteinte, les visiteurs voient le message « Ce formulaire n'accepte pas de réponses pour le moment. » Le formulaire accepte de nouveau des réponses le mois suivant, ou immédiatement après le passage à une offre supérieure.
+Lorsque la limite est atteinte, les visiteurs voient « Ce formulaire n'accepte pas de réponses pour le moment. Veuillez réessayer plus tard. » Les réponses déjà recueillies sont conservées. Le formulaire accepte de nouveau des réponses le premier du mois suivant, ou immédiatement après un changement d'offre vers une offre supérieure.
 
 ## Spam [#spam]
 
-Les formulaires intègrent une protection anti-spam. Vous n'avez rien à configurer.
+Les formulaires intègrent une protection contre le spam : une vérification anti-bot, un champ caché que les bots remplissent et une limite de vitesse d'envoi par visiteur. Vous n'avez rien à configurer.
+
+## En cas de problème [#if-something-goes-wrong]
+
+### Réponses n'apparaît pas dans le menu de la page [#responses-isnt-in-the-pages-menu]
+
+La page n'a pas de bloc formulaire. Ajoutez-en un dans l'éditeur et publiez.
+
+### Le formulaire indique qu'il n'accepte pas de réponses [#the-form-says-it-isnt-accepting-responses]
+
+L'espace de travail a atteint la limite du mois. Attendez le mois suivant, ou [passez à une offre supérieure](/pricing) et le formulaire rouvre immédiatement.
+
+### Quelqu'un indique que sa réponse a été refusée [#someone-says-their-answer-was-refused]
+
+Cette personne a envoyé plus de quelques réponses en une minute, ce que la limite anti-spam bloque. Demandez-lui d'attendre une minute et de réessayer.
 
 ## Voir aussi [#related]
 
+- [Créer une page mobile](/docs/help/pages-and-forms/create-a-page)
+- [Exporter vos données](/docs/help/account-and-billing/export-your-data)
 - [Guide des formulaires](/docs/forms-and-pages#forms)

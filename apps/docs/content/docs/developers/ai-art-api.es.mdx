@@ -1,78 +1,149 @@
 ---
 title: "API de arte con IA"
-description: "Pinta un código QR dentro de una ilustración de IA con una sola llamada REST o una herramienta MCP. QRdx comprueba que cada imagen se escanee, y cada una consume imágenes de arte con IA mensuales de tu espacio de trabajo."
+description: "Pinta un código QR dentro de una ilustración con IA con una sola llamada REST o con la herramienta MCP generate_ai_art. QRdx comprueba que cada imagen se escanee, y cada una consume una de las imágenes de arte con IA mensuales de tu espacio de trabajo."
 icon: Sparkles
 ---
 
-`POST https://api.qrdx.dev/v1/art` pinta un código QR dentro de una ilustración de IA a partir de una descripción y devuelve la imagen. Es el mismo [arte QR con IA](/ai/art) de la pestaña Art del Playground y del estudio: {facts.artModel} pinta la imagen y, antes de entregártela, QRdx comprueba que se escanee y lleve a tu contenido. Si la imagen del modelo no se escanea tal como la dibujó, QRdx refuerza el código lo justo, sobre los píxeles del propio modelo.
+Al terminar esta página tendrás un PNG de 1024 px en el que un código QR está integrado en una imagen pintada, decodificado por QRdx antes de llegar a ti, y sabrás cómo codificar un código dinámico en lugar de un texto fijo, qué modo elegir y qué significa cada error.
 
-Necesita una [clave de API](/docs/developers/api-keys) con el permiso `codes:write` (las claves de **Acceso completo** lo tienen). Cada imagen consume una de las imágenes de arte con IA mensuales del espacio de trabajo de la clave, la misma cuota que usa la aplicación.
+`POST https://api.qrdx.dev/v1/art` pinta un código QR dentro de una ilustración con IA a partir de una descripción y devuelve la imagen. Es el mismo [arte QR con IA](/ai/art) que la pestaña Art del Playground y el estudio: {facts.artModel} pinta la imagen y después QRdx comprueba que se escanee hacia tu contenido antes de entregártela. Si la imagen del modelo no se escanea tal como está dibujada, QRdx refuerza el código solo lo necesario, sobre los propios píxeles del modelo.
 
-```bash
-curl https://api.qrdx.dev/v1/art \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
-  --max-time 90 -o art.json
+<Callout type="info" title="Clave de API e imágenes mensuales">
+El endpoint necesita una [clave de API](/docs/developers/api-keys) con el permiso `codes:write` (las claves de **Acceso completo** lo tienen). Cada imagen consume una de las imágenes de arte con IA mensuales del espacio de trabajo de la clave, la misma cuota que usa la app; [Planes y límites](/docs/plans-and-limits) tiene las cifras por plan. Una llamada que falla, o cuya imagen no se puede lograr que se escanee, no consume ninguna imagen.
+</Callout>
+
+## Antes de empezar [#before-you-start]
+
+- Una clave de API con `codes:write`, exportada como `QRDX_API_KEY`.
+- Un cliente HTTP con un tiempo de espera de al menos 60 segundos. Una llamada tarda unos 15 a 45 segundos en modo code, de 25 a 45 en modo photo y de 40 a 55 en modo scene, que pinta primero su imagen.
+- Para un código dinámico, su `id` de [`GET /v1/codes`](/docs/developers/api/list-codes) o de la respuesta que [lo creó](/docs/developers/api/create-codes).
+
+## 1. Pinta un código para un enlace [#1-paint-a-code-for-a-link]
+
+<Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
+  <Tab value="curl">
+    ```bash title="Terminal"
+    curl https://api.qrdx.dev/v1/art \
+      -H "Authorization: Bearer $QRDX_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
+      --max-time 90 -o art.json
+    ```
+  </Tab>
+  <Tab value="JavaScript">
+    ```js title="art.mjs"
+    import { writeFile } from "node:fs/promises";
+
+    const response = await fetch("https://api.qrdx.dev/v1/art", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.QRDX_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: "https://qrdx.dev",
+        prompt: "a koi pond at dusk, ink and watercolor",
+      }),
+      signal: AbortSignal.timeout(90_000),
+    });
+    const { data, credits } = await response.json();
+    // data.imageUrl is a data: URL; save the PNG bytes
+    const base64 = data.imageUrl.split(",")[1];
+    await writeFile("art.png", Buffer.from(base64, "base64"));
+    console.log(data.text, data.blend, credits.remaining);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="art.py"
+    import base64
+    import os
+    import requests
+
+    response = requests.post(
+        "https://api.qrdx.dev/v1/art",
+        headers={"Authorization": f"Bearer {os.environ['QRDX_API_KEY']}"},
+        json={"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"},
+        timeout=90,
+    )
+    response.raise_for_status()
+    body = response.json()
+    png = base64.b64decode(body["data"]["imageUrl"].split(",", 1)[1])
+    open("art.png", "wb").write(png)
+    print(body["data"]["text"], body["data"]["blend"], body["credits"]["remaining"])
+    ```
+  </Tab>
+</Tabs>
+
+La respuesta es JSON con la imagen como una URL `data:`:
+
+```json title="200 OK (fields)"
+{
+  "data": {
+    "imageUrl": "data:image/png;base64,iVBORw0KGgo…",
+    "width": 1024,
+    "height": 1024,
+    "seed": 2841337190,
+    "mode": "code",
+    "blend": "least",
+    "blendStrength": 0.35,
+    "text": "https://qrdx.dev",
+    "visibility": 50,
+    "creativity": 45
+  },
+  "credits": { "plan": "pro", "limit": 30, "used": 7, "remaining": 23, "pooled": false, "resetsAt": "2026-12-01T00:00:00.000Z" }
+}
 ```
 
-Una llamada tarda unos 15 a 45 segundos en modo code, unos 25 a 45 en modo photo y unos 40 a 55 en modo scene, que crea primero su imagen. Configura en tu cliente HTTP un tiempo de espera de al menos 60 segundos. Una escena que se queda sin tiempo responde `504 AI_ART_TIMEOUT` y no consume ninguna imagen: inténtalo de nuevo o usa el modo code.
+- `imageUrl` es un PNG cuadrado de 1024 px como URL `data:`. QRdx no guarda ninguna copia, así que guárdala tú.
+- `text` es exactamente lo que la imagen escanea. QRdx lo decodificó antes de responder.
+- `blend` indica cómo se logró que la imagen se escaneara: `none` (la imagen del modelo tal como está dibujada), `least` (los cuadros de posición, la zona de silencio y los módulos se refuerzan solo lo necesario, sobre la imagen del modelo) o `image-qr` (redibujada como un código Image QR, el último recurso). `blendStrength` va de `0` (tal como está dibujada) a `1` (Image QR).
+- `credits` es la cuota del espacio de trabajo después de esta imagen.
 
-## Codificar un enlace o un código dinámico [#encode]
+Para obtener el PNG en lugar de JSON, añade `?format=png` o envía `Accept: image/png`. La semilla, el modo, el blend y las imágenes restantes llegan entonces en las cabeceras `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength` y `X-QRdx-Credits-Remaining`:
 
-Envía exactamente uno de estos:
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/art?format=png" \
+  -H "Authorization: Bearer $QRDX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "https://qrdx.dev", "prompt": "a lighthouse on a cliff, woodcut print"}' \
+  --max-time 90 -o art.png
+```
 
-- `text`: el enlace o texto que contiene el código, hasta 300 caracteres. El arte es una imagen, así que su contenido no puede cambiar después de imprimirlo.
-- `code`: el `id` de uno de los [códigos dinámicos](/docs/dynamic-qr-codes) del espacio de trabajo. El arte codifica el enlace corto del código, así que puedes cambiar su destino después de imprimir, y sus escaneos aparecen en las analíticas. Un código de otro espacio de trabajo, o uno que esté en la papelera, devuelve `404`.
+## 2. Codifica un código dinámico en su lugar [#encode]
 
-```bash
+Envía exactamente uno de `text` y `code`:
+
+- `text`: el enlace o el texto que contiene el código, hasta 300 caracteres. El arte es una imagen, así que su contenido no puede cambiar después de imprimirlo.
+- `code`: el `id` de uno de los [códigos dinámicos](/docs/dynamic-qr-codes) del espacio de trabajo. El arte codifica el enlace corto del código, así que puedes cambiar su destino después de imprimir, y sus escaneos aparecen en las analíticas. Un código de otro espacio de trabajo, o uno en la papelera, devuelve un `404`.
+
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/art \
   -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"code": "cm5code0spring0menu00001", "prompt": "a bistro chalkboard menu on a brick wall", "mode": "scene"}' \
-  --max-time 90
+  --max-time 90 -o art.json
 ```
 
-Obtén el `id` de un código con [`GET /v1/codes`](/docs/developers/api/list-codes) o cuando [crees uno](/docs/developers/api/create-codes).
+La respuesta incluye entonces también `"code": { "id", "shortLink" }`, y `text` es el enlace corto.
 
-## Solicitud [#request]
-
-| Campo | Valor por defecto | Descripción |
-| --- | --- | --- |
-| `text` | | Lo que codifica el código. Envía este o `code` |
-| `code` | | El `id` de un código dinámico, en lugar de `text` |
-| `prompt` | redactado por QRdx | La ilustración que se pintará, en palabras sencillas; consulta [Un prompt redactado por ti](#written-prompt) |
-| `mode` | `code` | Cómo se integra el código en el arte; consulta [Modos](#modes) |
-| `style` | | El id de un estilo rápido, que se combina con tu prompt; consulta [Estilos rápidos](#quick-looks) |
-| `negativePrompt` | | Lo que se debe dejar fuera de la imagen |
-| `visibility` | `50` | Visibilidad del QR, de `0` a `100`: un valor más alto muestra el código con más claridad, uno más bajo favorece la imagen |
-| `creativity` | `45` | `0` sigue el prompt al pie de la letra, `100` lo interpreta con libertad |
-| `seed` | aleatoria | Envía una semilla de una respuesta anterior para obtener una imagen similar |
-| `reference` | | Una imagen de referencia para colores y formas, como un logotipo o una paleta |
-| `photo` | | Solo en modo photo: la imagen dentro de la que se pinta el código |
-
-`reference` y `photo` son URL `data:` de PNG o JPEG (`data:image/jpeg;base64,…`). Reduce `reference` a unos 512 px en su lado más largo (como máximo 600 KB) y recorta `photo` en cuadrado a unos 1024 px (como máximo 1 MB), el tamaño con el que se crea el arte. Se envían al modelo y se descartan: QRdx nunca los almacena ni los registra. Las imágenes más grandes se rechazan con `413 AI_ART_IMAGE_TOO_LARGE`.
-
-La [referencia de la API](/docs/developers/api/create-art) incluye el esquema completo.
-
-## Modos [#modes]
+## 3. Elige un modo y un estilo [#modes]
 
 | `mode` | Qué obtienes |
 | --- | --- |
-| `code` | El código es toda la imagen: tu ilustración pintada dentro de sus módulos, con cuadrados de posición simples y una zona de silencio clara alrededor. Es el que se escanea con más fiabilidad |
-| `scene` | Primero se pinta una imagen a partir de la descripción y después se pinta el código en su centro, de modo que la imagen llega hasta el código y lo atraviesa, con módulos hechos de sus colores y su luz |
-| `photo` | Lo mismo, con tu propia `photo` como imagen: conserva su sujeto, colores y luz alrededor del código y a través de él. Envía la foto solo con este modo |
+| `code` (predeterminado) | El código es toda la imagen: tu ilustración pintada dentro de sus módulos, con cuadros de posición lisos y una zona de silencio clara alrededor. Es el que se escanea con más fiabilidad |
+| `scene` | Primero se pinta una imagen a partir de la descripción y luego se pinta el código en su centro, de modo que la imagen llega hasta el código y lo atraviesa, con los módulos hechos de sus colores y su luz |
+| `photo` | Lo mismo, con tu propia `photo` como imagen: conserva su sujeto, sus colores y su luz alrededor del código y a través de él. Envía la foto solo con este modo |
 
-## Estilos rápidos [#quick-looks]
+### Estilos rápidos [#quick-looks]
 
-Un estilo rápido es un estilo predefinido, como una técnica o un ambiente, que QRdx añade a tu propio `prompt`: `"a koi pond in the rain"` con `"style": "watercolor"` pinta el estanque de carpas koi como una acuarela. Envía su id como `style`; cualquier otro valor da un `400 VALIDATION_ERROR`. Los estilos son los que se ofrecen como chips en el [estudio de arte con IA](/ai/art) y en la pestaña Art del Playground, y funcionan en todos los modos.
+Un estilo rápido es un aspecto ya preparado, como una técnica o un ambiente, que QRdx añade a tu propio `prompt`: `"a koi pond in the rain"` con `"style": "watercolor"` pinta el estanque de carpas koi como una acuarela. Envía su id como `style`; cualquier otro valor es un `400 VALIDATION_ERROR`. Los estilos son los que se ofrecen como chips en el [estudio de arte con IA](/ai/art) y en la pestaña Art del Playground, y funcionan en todos los modos.
 
 | `style` | Estilo |
 | --- | --- |
 | `watercolor` | Acuarela |
-| `oil-painting` | Pintura al óleo |
+| `oil-painting` | Óleo |
 | `anime` | Anime |
-| `cartoon` | Dibujos animados |
+| `cartoon` | Dibujo animado |
 | `pixel-art` | Pixel art |
 | `pop-art` | Pop art |
 | `charcoal` | Carboncillo |
@@ -83,67 +154,37 @@ Un estilo rápido es un estilo predefinido, como una técnica o un ambiente, que
 | `low-poly` | Low poly |
 | `papercut` | Papel recortado |
 
-## Un prompt redactado por ti [#written-prompt]
+`prompt` es opcional. Si lo omites, QRdx escribe primero uno para el `mode`, el `style` y la `photo` que enviaste: una escena concreta con un sujeto, un entorno y la luz, o, en modo photo, una descripción de lo que hay en tu foto para que el arte lo conserve. Escribirlo no consume ninguna imagen de arte con IA adicional. La respuesta incluye entonces lo escrito como `writtenPrompt`, para que puedas enviarlo de nuevo, editado, la próxima vez. Si falla la escritura, recibes `502 AI_ART_DESCRIBE_FAILED` y no se consume ninguna imagen.
 
-`prompt` es opcional. Si lo omites, QRdx primero redacta uno según el `mode`, el `style` y la `photo` que enviaste: una escena concreta con un sujeto, un entorno y la luz o, en modo photo, una descripción de lo que hay en tu foto para que el arte lo conserve. Redactarlo no consume ninguna imagen de arte con IA adicional. La respuesta incluye entonces lo redactado como `writtenPrompt`, para que puedas enviarlo de nuevo, editado, la próxima vez. Si falla la redacción, recibes `502 AI_ART_DESCRIBE_FAILED` y no se consume ninguna imagen.
+## Campos de la solicitud [#request-fields]
 
-## Respuesta [#response]
+| Campo | Predeterminado | Descripción |
+| --- | --- | --- |
+| `text` | | Lo que codifica el código, hasta 300 caracteres. Envía este o `code` |
+| `code` | | El `id` de un código dinámico, en lugar de `text` |
+| `prompt` | escrito por QRdx | La ilustración que se va a pintar, en palabras sencillas, de al menos 3 caracteres cuando se envía |
+| `mode` | `code` | `code`, `scene` o `photo`; consulta más arriba |
+| `style` | | El id de un estilo rápido, combinado con tu prompt |
+| `negativePrompt` | | Lo que se debe dejar fuera de la imagen |
+| `visibility` | `50` | Visibilidad del QR, de `0` a `100`: un valor más alto muestra el código con más claridad, uno más bajo favorece la imagen |
+| `creativity` | `45` | `0` sigue el prompt al pie de la letra, `100` lo interpreta con libertad |
+| `seed` | aleatoria | Envía una semilla de una respuesta anterior para obtener una imagen similar |
+| `reference` | | Una imagen de referencia para colores y formas, como un logotipo o una paleta |
+| `photo` | | Solo modo photo: la imagen en la que se pinta el código |
 
-```json
-{
-  "data": {
-    "imageUrl": "data:image/png;base64,iVBORw0KGgo…",
-    "width": 1024,
-    "height": 1024,
-    "seed": 2841337190,
-    "mode": "code",
-    "blend": "least",
-    "blendStrength": 0.35,
-    "text": "https://qrdx.dev/q/aB3dE5f",
-    "code": { "id": "cm5code0spring0menu00001", "shortLink": "https://qrdx.dev/q/aB3dE5f" },
-    "visibility": 50,
-    "creativity": 45
-  },
-  "credits": {
-    "plan": "pro",
-    "limit": 30,
-    "used": 7,
-    "remaining": 23,
-    "pooled": false,
-    "resetsAt": "2026-02-01T00:00:00.000Z"
-  }
-}
-```
+`reference` y `photo` son URL `data:` de PNG o JPEG (`data:image/jpeg;base64,…`). Reduce una `reference` a unos 512 px en su lado más largo (como máximo 600 KB) y recorta una `photo` en cuadrado a unos 1024 px (como máximo 1 MB), el tamaño con el que se crea el arte. Se envían al modelo y se descartan: QRdx nunca las almacena ni las registra. Las imágenes más grandes se rechazan con `413 AI_ART_IMAGE_TOO_LARGE`. La [página de referencia](/docs/developers/api/create-art) tiene el esquema completo y un panel para probar.
 
-- `imageUrl` es un PNG cuadrado de 1024 px como URL `data:`. QRdx no guarda una copia, así que guárdala tú.
-- `text` es exactamente lo que la imagen devuelve al escanearse. QRdx lo decodificó antes de responder.
-- `blend` indica cómo se logró que la imagen se escaneara: `none` (la imagen del modelo tal como la dibujó), `least` (cuadrados de posición, zona de silencio y módulos reforzados lo justo, sobre la imagen del modelo) o `image-qr` (redibujada como código Image QR, el último recurso). `blendStrength` va de `0` (tal como se dibujó) a `1` (Image QR).
-- `writtenPrompt` aparece solo cuando omitiste `prompt`: la descripción que QRdx redactó por ti.
-- `credits` es la cuota del espacio de trabajo después de esta imagen.
+## Créditos y límites [#credits-and-limits]
 
-Para obtener el PNG directamente en lugar de JSON, añade `?format=png` o envía `Accept: image/png`. La semilla, el modo, el blend y las imágenes restantes llegan entonces en los encabezados `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength` y `X-QRdx-Credits-Remaining`.
+La API usa las mismas imágenes de arte con IA mensuales que la app, contadas para el espacio de trabajo al que pertenece la clave. Gratis, Pro y Business incluyen cada uno un número de imágenes al mes, y Business las comparte entre todo el equipo; [Planes y límites](/docs/plans-and-limits) tiene las cifras. Se reinician el día 1 de cada mes (UTC).
 
-```bash
-curl "https://api.qrdx.dev/v1/art?format=png" \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "https://qrdx.dev", "prompt": "a lighthouse on a cliff, woodcut print"}' \
-  --max-time 90 -o art.png
-```
-
-## Créditos [#credits]
-
-La API usa las mismas imágenes de arte con IA mensuales que la aplicación, contadas para el espacio de trabajo al que pertenece la clave. Gratis, Pro y Business incluyen cada una un número de imágenes al mes, y Business las comparte entre todo el equipo; [Planes y límites](/docs/plans-and-limits) tiene las cifras. Se restablecen el día 1 de cada mes (UTC).
-
-- Una llamada que falla, o cuya imagen no se puede lograr que se escanee, no consume ninguna imagen.
-- Cuando se agotan las imágenes del mes, la API responde `AI_ART_CREDITS_EXHAUSTED`: `402` en Gratis y Pro, donde mejorar de plan añade más, y `429` en Business.
-- Cada persona puede crear como máximo 25 imágenes al día, además de la cuota mensual (`429 AI_ART_DAILY_LIMIT`).
-- Cada persona puede iniciar hasta 12 imágenes por minuto.
+- Cuando se agotan las imágenes del mes, la API responde `AI_ART_CREDITS_EXHAUSTED`: `402` en Gratis y Pro, donde subir de plan añade más, y `429` en Business.
+- Cada persona puede crear como máximo 25 imágenes al día, además de la cuota mensual (`429 AI_ART_DAILY_LIMIT`), y empezar hasta 12 imágenes por minuto.
 - Cada llamada también cuenta para la cuota diaria de API del espacio de trabajo y para el límite por minuto de escrituras ([Límites de frecuencia](/docs/developers/rest-api#rate-limits)).
 
-## Errores [#errors]
+## Si algo sale mal [#if-something-goes-wrong]
 
-Los errores tienen el formato habitual de la API (`code`, `message`, `status`); [Errores](/docs/developers/errors) los enumera todos. Los específicos del arte con IA:
+Los errores tienen la forma habitual de la API (`code`, `message`, `status`); [Errores](/docs/developers/errors) los enumera todos. Ninguno de los errores `5xx` usa una imagen.
 
 | Estado | `code` | Qué hacer |
 | --- | --- | --- |
@@ -153,24 +194,35 @@ Los errores tienen el formato habitual de la API (`code`, `message`, `status`); 
 | 429 | `AI_ART_CREDITS_EXHAUSTED` | Business: espera al día 1 del mes |
 | 429 | `AI_ART_DAILY_LIMIT` | Inténtalo de nuevo mañana (UTC) |
 | 502 | `AI_ART_FAILED` | El modelo falló o rechazó el prompt. Inténtalo de nuevo o reformúlalo |
-| 502 | `AI_ART_UNSCANNABLE` | Inténtalo de nuevo con un valor más alto de `visibility` u otra semilla |
-| 502 | `AI_ART_DESCRIBE_FAILED` | No se envió ningún `prompt` y falló al redactar uno. Inténtalo de nuevo o envía el tuyo |
+| 502 | `AI_ART_UNSCANNABLE` | Inténtalo de nuevo con una `visibility` mayor u otra semilla |
+| 502 | `AI_ART_DESCRIBE_FAILED` | No se envió ningún `prompt` y falló al escribir uno. Inténtalo de nuevo o envía el tuyo |
 | 503 | `AI_ART_BUSY` | El modelo está ocupado. Espera un minuto e inténtalo de nuevo |
 | 503 | `AI_NOT_CONFIGURED` | El arte con IA no está configurado en este servidor (autoalojado) |
-| 504 | `AI_ART_TIMEOUT` | El modelo tardó demasiado (en modo escena, la imagen dejó muy poco tiempo para pintar el código). No se usa ninguna imagen. Inténtalo de nuevo, o usa el modo código |
+| 504 | `AI_ART_TIMEOUT` | El modelo tardó demasiado (en el modo escena, la imagen dejó muy poco tiempo para pintar el código). Inténtalo de nuevo, o usa el modo código |
 
-Ningún error `5xx` consume una imagen.
+Una instancia autoalojada sin Vercel AI Gateway responde a cada llamada con:
+
+```json title="503 Service Unavailable"
+{"code":"AI_NOT_CONFIGURED","message":"AI QR art is not configured on this server","status":503}
+```
 
 ## MCP [#mcp]
 
-Con una clave de API de QRdx en la conexión, el [servidor MCP](/docs/developers/mcp) incluye una herramienta `generate_ai_art`. Acepta los mismos campos que el cuerpo de la solicitud y devuelve el PNG, lo que se obtiene al escanearlo y las imágenes que quedan este mes. Pídeselo a tu asistente con palabras sencillas:
+Con una clave de API de QRdx en la conexión, el [servidor MCP](/docs/developers/mcp) tiene una herramienta `generate_ai_art`. Acepta los mismos campos que el cuerpo de la solicitud y devuelve el PNG, a qué apunta al escanearlo y las imágenes que quedan este mes. Pídeselo a tu asistente con palabras sencillas:
 
-```txt
+```txt title="Prompt"
 Make AI QR art for my code cm5code0spring0menu00001: a bistro chalkboard menu on a brick wall, as a scene.
 ```
 
-Sin clave, la herramienta responde con instrucciones para añadir una. La llamada tarda hasta un minuto, igual que la REST API.
+Sin una clave, la herramienta responde indicando cómo añadir una. La llamada tarda hasta un minuto, igual que la REST API.
 
 ## Autoalojamiento [#self-hosting]
 
 El arte con IA funciona a través de Vercel AI Gateway. En tu propia instancia, define `AI_GATEWAY_API_KEY`; sin ella, `POST /v1/art` y `generate_ai_art` responden `503 AI_NOT_CONFIGURED`.
+
+## Relacionado [#related]
+
+- [Generar arte QR con IA](/docs/developers/api/create-art): la página de referencia con el esquema completo y un panel para probar
+- [Crear códigos](/docs/developers/api/create-codes): crea el código dinámico que el arte debe codificar
+- [Servidor MCP](/docs/developers/mcp): la herramienta `generate_ai_art` para asistentes
+- [Planes y límites](/docs/plans-and-limits): imágenes de arte con IA al mes por plan

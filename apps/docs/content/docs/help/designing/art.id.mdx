@@ -1,41 +1,57 @@
 ---
 title: "Padukan logo atau foto ke dalam kode"
-description: "Logo QR dan Image QR memadukan gambar langsung ke dalam titik-titiknya, tanpa AI."
+description: "Logo QR dan Image QR memadukan gambar ke dalam titik-titik kode itu sendiri, tanpa AI."
 ---
 
-## Logo QR dan Image QR [#logo-qr-and-image-qr]
+Tab **Art** memadukan gambar ke dalam titik-titik kode itu sendiri, bukan menempatkannya di atas kode. **Logo QR** dan **Image QR** bekerja tanpa AI, dan pemeriksaan pemindaian menguji hasilnya di browser Anda sebelum Anda mengunduh.
 
-Di [Playground](/playground?tab=art), buka tab **Art**. Pilih salah satu mode:
+## Pilih mode [#choose-a-mode]
 
-- **Logo QR** mewarnai titik-titik di dalam bentuk logo Anda.
-- **Image QR** mengubah seluruh kode menjadi foto Anda.
-- **Off** menonaktifkan seni.
+1. Di [Playground](/playground?tab=art), buka tab **Art**.
+2. Pilih **Logo QR** untuk mewarnai titik-titik di dalam bentuk logo Anda, atau **Image QR** untuk mengubah seluruh kode menjadi foto Anda. **Off** mematikan art.
+3. Unggah gambar Anda sendiri, atau coba salah satu contoh. Logo paling baik berupa PNG transparan atau SVG. Foto paling baik jika memiliki satu subjek yang jelas.
+4. Di bawah **Strength**, pilih **Subtle**, **Balanced**, atau **Bold**. Art yang lebih kuat tampil lebih bagus tetapi lebih sulit dipindai. **Fine-tune** menyediakan penggeser.
 
-Unggah gambar Anda sendiri, atau coba salah satu contoh. Logo paling bagus berupa PNG transparan atau SVG. Foto paling bagus jika hanya memiliki satu subjek yang jelas.
+Art berfungsi di semua format unduhan.
 
-Seni berfungsi di semua format unduhan, dan tidak ada AI yang terlibat.
+<Shot id="playground-art" />
 
-## Seimbangkan seni dan pemindaian [#balance-art-and-scanning]
+## Periksa apakah kode bisa dipindai [#check-that-it-scans]
 
-Pilih seberapa kuat seninya: **Subtle**, **Balanced**, atau **Bold**. Seni yang lebih kuat terlihat lebih bagus, tetapi lebih sulit dipindai.
+**Scan check** di bawah art mendekode kode asli Anda di browser pada tiga ukuran. Jika hasilnya kurang baik, pemeriksaan ini mencantumkan apa yang perlu diperbaiki.
 
-**Scan check** di bawah seni men-decode kode asli Anda di browser pada tiga ukuran. Jika hasilnya kurang baik, daftar hal yang perlu diperbaiki akan ditampilkan.
+Untuk hasil terbaik, atur **Error correction** ke **High** di tab **Design** dan sisakan batas kosong yang jelas di sekeliling kode.
 
-Untuk hasil terbaik, atur **Error correction** ke **High** dan sisakan batas kosong yang jelas di sekitar kode.
+## Mengapa logo kecil pada tautan pendek [#why-the-logo-is-small-on-a-short-link]
 
-Dengan lencana Logo QR, logo hanya membesar sejauh yang masih bisa dipulihkan oleh kode. Tautan pendek menghasilkan kode yang kecil, sehingga logo tetap kecil, dan kode terkecil tidak menampilkan logo sama sekali. Error correction **High** memberikan ruang paling banyak.
+Pada Logo QR, logo hanya membesar sejauh yang dapat diperbaiki oleh kode. Tautan pendek menghasilkan kode kecil, sehingga logo tetap kecil, dan kode terkecil tidak menampilkan logo sama sekali. Koreksi kesalahan **High** memberikan ruang paling banyak.
 
-<IfAvailable feature="aiArt" id="ai-art" title="Seni AI">
+<IfAvailable feature="aiArt" title="AI art">
 
-[Seni QR AI](/ai/art) membuat karya seni di sekitar kode yang tetap dapat dipindai. Fitur ini memerlukan akun gratis.
+[AI QR art](/ai/art) membuat karya seni di sekeliling kode yang tetap bisa dipindai. Fitur ini memerlukan akun gratis.
 
-Di Playground, pilih **AI art** di tab **Art**. Fitur ini melukis kode yang sedang Anda edit. Jika kode tersebut terhubung ke kode QR dinamis, seni akan mengodekan tautan pendek, sehingga Anda dapat mengubah tujuannya setelah dicetak. Seni AI berupa gambar: unduh sebagai PNG, atau gunakan **Use as Image QR** untuk mengubahnya menjadi kode vektor untuk SVG, PDF, atau EPS.
+Di Playground, pilih **AI art** di tab **Art**. Fitur ini melukis kode yang sedang Anda edit. Jika kode tersebut dinamis, art mengodekan tautan pendek, sehingga Anda dapat mengubah tujuannya setelah dicetak. AI art adalah gambar: unduh sebagai PNG, atau klik **Use as Image QR** untuk mengubahnya menjadi kode vektor untuk SVG, PDF, atau EPS.
 
-Setiap paket menyertakan sejumlah gambar seni AI per bulan: 3 di Gratis, 30 di Pro, dan 150 di Business, dibagikan kepada semua anggota di workspace.
+Setiap paket menyertakan sejumlah gambar AI art per bulan: 3 di Gratis, 30 di Pro, dan 150 di Business. Di Business, jatah ini dibagi oleh semua anggota ruang kerja. Gambar yang gagal tidak dihitung.
 
 </IfAvailable>
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### Scan check tidak Great [#the-scan-check-isnt-great]
+
+Turunkan **Strength**, atur **Error correction** ke **High**, dan pilih gambar dengan satu subjek yang jelas dan kontras yang kuat.
+
+### Foto tampak buram di dalam kode [#the-photo-looks-muddy-in-the-code]
+
+Foto yang ramai kehilangan bentuknya di dalam titik-titik. Pangkas ke satu subjek, atau coba **Logo QR** dengan bentuk sederhana.
+
+### AI art menyatakan tautan terlalu panjang [#ai-art-says-the-link-is-too-long]
+
+AI art hanya muat sejumlah karakter terbatas. Jadikan kode dinamis terlebih dahulu, sehingga kode menyimpan tautan pendek, bukan alamat lengkap. Lihat [Buat kode QR dinamis](/docs/help/dynamic-codes/create).
 
 ## Terkait [#related]
 
 - [Periksa desain dengan skor pemindaian](/docs/help/designing/scan-score)
-- [Kode QR seni untuk developer](/docs/features/art-qr)
+- [Tambahkan logo](/docs/help/designing/logos)
+- [Kode QR art untuk developer](/docs/features/art-qr)

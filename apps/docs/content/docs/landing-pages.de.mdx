@@ -1,110 +1,146 @@
 ---
 title: "Landingpages"
-description: "Erstelle aus Blöcken eine mobile Seite für einen QR-Code, ganz ohne eigene Website. Linklisten, Business-Seiten, vCard Plus, Produktseiten und insgesamt {facts.hostedPageTypes} Seitentypen."
-icon: PanelsTopLeft
+description: "Baue aus Blöcken eine mobile Seite für einen QR-Code, ganz ohne Website. Linklisten, Business-Seiten, vCard Plus, Menüs, Produktseiten und insgesamt {facts.hostedPageTypes} Seitentypen."
 ---
 
-Eine gehostete Landingpage ist eine mobile Seite, die QRdx für dich unter `https://qrdx.dev/p/<slug>` (oder auf deiner [eigenen Domain](/docs/custom-domains)) ausliefert. Jede Seite kommt mit einem [dynamischen QR-Code](/docs/dynamic-qr-codes), sodass du die Seite auch nach dem Druck des Codes weiter bearbeiten und jeden Scan sehen kannst.
+Eine gehostete Landingpage ist eine mobile Seite, die QRdx für dich unter `https://qrdx.dev/p/<slug>` (oder auf deiner [eigenen Domain](/docs/custom-domains)) bereitstellt. Jede Seite hat einen [dynamischen QR-Code](/docs/dynamic-qr-codes). So kannst du die Seite auch nach dem Druck des Codes weiter bearbeiten und jeden Scan sehen. Nutze sie, wenn der Code noch kein Ziel hat oder wenn eine Seite im Smartphone-Format besser passt als deine Website: eine Speisekarte, eine Kontaktkarte, eine Linkliste, ein Event, die Details zu einem Produkt.
 
-## Seite erstellen [#create-a-page]
+<Callout type="info" title="Tarife">
+  Kostenlos enthält 3 gehostete Seiten mit dem Footer „Made with QRdx". Pro entfernt den Footer und das Limit; Business bietet zusätzlich White-Label-Seiten und eigenes CSS. Jede Seite belegt außerdem einen der dynamischen Codes deines Tarifs. Siehe [Tarife und Limits](/docs/plans-and-limits).
+</Callout>
 
-1. Öffne [Dashboard → Seiten & Formulare](/dashboard?to=pages) und klicke auf **Neue Seite**, oder klicke in der Code-Liste auf **Neuer Code** und wähle statt **Website-Link** einen Seitentyp.
-2. Wähle einen der {facts.hostedPageTypes} [Seitentypen](#page-types) und eine Vorlage aus der zugehörigen Galerie.
-3. Klicke auf **Seite erstellen**. Der Editor öffnet sich mit den Blöcken der Vorlage, und den QR-Code kannst du unter **QR-Code** herunterladen.
+Du hast es eilig? Hier sind die kurzen Anleitungen: [Eine mobile Seite erstellen](/docs/help/pages-and-forms/create-a-page) und [Ändern, was ein gedruckter Code öffnet](/docs/help/dynamic-codes/change-the-type).
 
-Du hast schon einen Code gedruckt, der eine Website öffnet? Öffne ihn und klicke auf **Typ ändern**, um ihn mit demselben Kurzlink in eine Seite umzuwandeln. Siehe [Ändern, was ein gedruckter Code öffnet](/docs/help/dynamic-codes/change-the-type).
+## So funktioniert es [#how-it-works]
 
-Vorlagen starten mit Beispielnamen, Preisen, Zahlen und Fotos, damit du siehst, wie die Seite aufgebaut ist. Bis zur ersten Veröffentlichung erinnert dich der Editor daran, sie durch deine eigenen Inhalte zu ersetzen.
+<Diagram id="hosted-page-anatomy" />
+
+Eine Seite ist ein Stapel aus Blöcken: ein Header, Links, eine Kontaktkarte, ein Menü, ein Formular. Du ordnest sie im Editor an und veröffentlichst sie. QRdx rendert die Seite auf den eigenen Servern, sodass sie auf Smartphones schnell lädt und du keine eigene Website brauchst. Der Kurzlink des Codes öffnet die Seite, und alles aus den [Code-Einstellungen](/docs/code-controls) gilt auch für sie: ein Passwort, ein Zeitplan, ein Scan-Limit.
+
+## Eine Seite erstellen [#create-a-page]
+
+1. Öffne **Pages & forms** in der Seitenleiste und klicke auf **New page**. Oder klicke in der Code-Liste auf **New code** und wähle statt **Website link** einen Seitentyp.
+2. Wähle einen der {facts.hostedPageTypes} [Seitentypen](#page-types) und eine Vorlage aus der Galerie.
+3. Klicke auf **Create page**. Der Editor öffnet sich mit den Blöcken der Vorlage, und der QR-Code der Seite steht zum Download bereit.
+
+<Shot id="page-templates" />
+
+Du hast schon einen Code gedruckt, der eine Website öffnet? Öffne ihn und klicke auf **Change type**, um ihn mit demselben Kurzlink in eine Seite zu verwandeln.
+
+Die Vorlagen enthalten Beispielnamen, Preise, Zahlen und Fotos, damit du siehst, wie die Seite aufgebaut ist. Bis zur ersten Veröffentlichung erinnert dich der Editor daran, sie durch deine eigenen Inhalte zu ersetzen.
 
 ## Seitentypen [#page-types]
 
-Jeder Seitentyp ist ein Ausgangspunkt: Jeder Block lässt sich zu jeder Seite hinzufügen, und eine Seite aus einem Typ kann wie ein anderer aussehen.
+Jeder Seitentyp ist ein Ausgangspunkt: Jeder Block lässt sich zu jeder Seite hinzufügen, und eine Seite, die aus einem Typ entstanden ist, kann wie ein anderer aussehen.
 
 | Seitentyp | Gedacht für | Startet mit |
 | --- | --- | --- |
-| **Link list** | Link in Bio, Creator, Podcasts | Profilkopf, Links, Social-Icons |
-| **Social media** | Alle Profile hinter einem Code | Profilkopf, eine Zeile pro Netzwerk mit deinem Handle |
-| **Business** | Läden, Salons, Büros | Öffnungszeiten, Adresse und Karte, Kontakt, ein Call-to-Action |
-| **vCard Plus** | Digitale Visitenkarten | Kontaktkarte mit **Kontakt speichern** |
-| **Menu** | Cafés, Restaurants, Bars | Speisekarte, Wi-Fi, Öffnungszeiten ([mehr](/docs/forms-and-pages#menu)) |
-| **Coupon** | Rabatte und Gratisaktionen | Gutschein mit Barcode und **Einlösen** ([mehr](/docs/forms-and-pages#coupon)) |
-| **Event** | Partys, Konferenzen, Webinare, Hochzeiten | Event mit Kalendereintrag ([mehr](/docs/forms-and-pages#event)) |
+| **Link list** | Link in Bio, Creator, Podcasts | Profil-Header, Links, Social-Icons |
+| **Social media** | Alle Profile hinter einem Code | Profil-Header, eine Zeile pro Netzwerk mit deinem Handle |
+| **Business** | Shops, Salons, Büros | Öffnungszeiten, Adresse und Karte, Kontakt, ein Call-to-Action |
+| **vCard Plus** | Digitale Visitenkarten | Kontaktkarte mit **Save contact** |
+| **Menu** | Cafés, Restaurants, Bars | Speisekarte mit Ernährungshinweisen und Allergenen ([mehr](/docs/forms-and-pages#menu)) |
+| **Coupon** | Rabatte und Gratisaktionen | Gutschein mit Code, Barcode oder Einlösen-Button ([mehr](/docs/forms-and-pages#coupon)) |
+| **Event** | Partys, Konferenzen, Webinare, Hochzeiten | Event mit Kalender-Eintrag ([mehr](/docs/forms-and-pages#event)) |
 | **App download** | Ein Code für alle App-Stores | App-Download ([mehr](/docs/forms-and-pages#app-download)) |
-| **Feedback & forms** | Bewertungen, NPS-Umfragen, Anmeldungen | Formular und Bewertungslinks ([mehr](/docs/forms-and-pages#forms)) |
-| **Product** | Verpackungen, Etiketten, Hang Tags | Zutaten, Allergene, Nährwerte, Zertifizierungen, Pflege, GS1 Digital Link ([mehr](/docs/product-pages)) |
+| **Feedback & forms** | Bewertungen, NPS-Umfragen, Anmeldungen | Formular und Bewertungslinks in der Feedback-Vorlage ([mehr](/docs/forms-and-pages#forms)) |
+| **Product** | Verpackungen, Etiketten, Hangtags | Zutaten, Allergene, Nährwerte, Zertifizierungen, Pflege, GS1 Digital Link ([mehr](/docs/product-pages)) |
 | **Appointments** | Salons, Praxen, Nachhilfe | Leistungen und Preise, ein Formular für Terminanfragen, Öffnungszeiten |
 | **Payments & tips** | Trinkgeld, Spenden, Rechnungen | Zahlungslinks und Bankdaten zum Kopieren |
-| **Property listing** | Immobilien zum Kauf oder zur Miete, Tage der offenen Tür | Preis und Eckdaten, Fotos, Makler, ein Formular für Besichtigungsanfragen oder Anmeldung |
-| **Pet ID tag** | Halsbandanhänger, Vermisstenplakate | Anruf-Button, Angaben zum Tier, ein „Gefunden“-Formular |
+| **Property listing** | Immobilien zum Kauf oder zur Miete, Tage der offenen Tür | Preis und Eckdaten, Fotos, Makler, ein Formular für Besichtigungsanfragen oder zum Eintragen |
+| **Pet ID tag** | Halsbandanhänger, Suchplakate für vermisste Tiere | Anruf-Button, Details zum Tier, ein Formular „Ich habe es gefunden" |
 | **Medical ID** | Anhänger, Armbänder, Allergiekarten | Notfallkontakt, Erkrankungen, Allergien, Medikamente |
-| **PDF** | Broschüren, Handbücher, Dokumentbibliotheken | Ein PDF zum Lesen oder Herunterladen, oder mehrere Dateien |
+| **PDF** | Broschüren, Handbücher, Dokumentenbibliotheken | Ein PDF zum Lesen oder Herunterladen, oder mehrere Dateien |
 | **Images** | Galerien und Portfolios | Fotogalerie |
-| **MP3 / Audio** | Musik, Podcasts, Sprachnachrichten | Audio-Player |
+| **MP3 / Audio** | Musik, Podcasts, Sprachnachrichten | Audioplayer |
 | **Video** | Produktvideos, Clips | Video |
-| **Playlist** | Mixe, Audiotouren, Hörbücher | Mehrere Titel, die nacheinander abgespielt werden |
+| **Playlist** | Mixes, Audiotouren, Hörbücher | Mehrere Titel, die nacheinander abgespielt werden |
 | **Custom page** | Alles andere | Eine leere Seite oder eine Ankündigung |
 
-Wo Datei-Uploads nicht eingerichtet sind, werden die Typen, die auf einem Upload basieren (PDF, Images, MP3 / Audio, Video und Playlist), in der Auswahl ausgeblendet.
+<IfAvailable feature="fileStorage" unavailable>
 
-**Appointments** sendet Terminanfragen an die [Antworten](/docs/forms-and-pages#responses) und Benachrichtigungen der Seite und kann auf dein Buchungstool verlinken. Einen Live-Kalender mit freien Zeiten zeigt die Seite nicht: Du bestätigst jede Anfrage selbst.
+Datei-Uploads sind in dieser Installation nicht eingerichtet. Deshalb sind die fünf Typen, die auf einem Upload basieren (PDF, Images, MP3 / Audio, Video und Playlist), in der Auswahl ausgeblendet. Blöcke können weiterhin auf Dateien verlinken, die anderswo gehostet sind.
 
-**Payments & tips** nimmt nie eine Zahlung entgegen. Jeder Button öffnet die eigene Seite der Zahlungs-App (PayPal, Venmo, Cash App, Revolut, Wise), und für Bankdaten, UPI-IDs und Wallet-Adressen gibt es Kopier-Buttons.
+</IfAvailable>
 
-**Pet ID tag**- und **Medical ID**-Seiten kann jeder lesen, der den Code scannt. Füge nur hinzu, was jemandem hilft, der dein Tier findet oder dir in einem Notfall hilft.
+**Appointments** sendet Terminanfragen an die [Antworten](/docs/forms-and-pages#responses) und Benachrichtigungen der Seite und kann auf dein Buchungstool verlinken. Einen Live-Kalender mit freien Zeiten zeigt es nicht: Du bestätigst jede Anfrage selbst.
+
+**Payments & tips** nimmt nie selbst eine Zahlung entgegen. Jeder Button öffnet die eigene Seite der Zahlungs-App (PayPal, Venmo, Cash App, Revolut, Wise), und Bankdaten, UPI-IDs und Wallet-Adressen haben Kopier-Buttons.
+
+**Pet ID tag**- und **Medical ID**-Seiten kann jeder lesen, der den Code scannt. Füge nur hinzu, was jemandem hilft, der dein Tier findet, oder dir in einem Notfall hilft.
 
 ## Bearbeiten und veröffentlichen [#edit-and-publish]
 
-Der Editor hat drei Tabs und eine Live-Vorschau im Smartphone-Format. Tippe in der Vorschau auf einen Block, um zu seinen Einstellungen zu springen.
+Der Editor hat drei Tabs und eine Live-Vorschau im Smartphone-Format. Tippe in der Vorschau auf einen Block, um direkt zu seinen Einstellungen zu springen.
 
-- **Blocks**: Füge Blöcke mit **Block hinzufügen** hinzu, ordne sie per Ziehen (oder mit den Pfeil-Buttons) neu an, blende einen Block aus, ohne ihn zu löschen, dupliziere oder entferne ihn. Jeder Block hat sein eigenes Formular; Probleme (zum Beispiel ein Link ohne `https://`) werden am Block markiert und müssen vor dem Veröffentlichen behoben werden.
-- **Design**: Verwende die Farben eines deiner [gespeicherten QR-Themes](/dashboard?to=themes), damit die Seite zum gedruckten Code passt, wähle eine vorgegebene Palette oder lege jede Farbe selbst fest. Wähle eine Schriftart, einen Eckenradius, einen einfarbigen Hintergrund, einen Farbverlauf oder ein Hintergrundbild und optional ein Logo. **Farben anpassen** leitet lesbare Text- und Kartenfarben aus deinem Hintergrund und deiner Akzentfarbe ab, und bei niedrigem Textkontrast erscheint eine Warnung.
-- **Settings**: die Beschreibung und das Bild der Share-Vorschau, ob Suchmaschinen die Seite indexieren dürfen (standardmäßig aus) und eigenes CSS bei Business.
+- **Blocks**: Füge Blöcke mit **Add block** hinzu, ordne sie per Drag-and-drop (oder mit den Pfeil-Buttons) neu an, blende einen Block aus, ohne ihn zu löschen, dupliziere oder entferne ihn. Jeder Block hat sein eigenes Formular. Probleme (zum Beispiel ein Link ohne `https://`) werden am Block markiert und müssen vor dem Veröffentlichen behoben werden.
+- **Design**: Nutze die Farben eines deiner [gespeicherten QR-Themes](/dashboard?to=themes), damit die Seite zum gedruckten Code passt, wähle eine voreingestellte Palette oder lege jede Farbe selbst fest. Wähle eine Schriftart, einen Eckenradius, einen einfarbigen Hintergrund, einen Farbverlauf oder ein Bild als Hintergrund und optional ein Logo. **Match colors** leitet lesbare Text- und Kartenfarben aus Hintergrund und Akzent ab, und bei zu geringem Textkontrast erscheint eine Warnung.
+- **Settings**: Beschreibung und Bild der Vorschau beim Teilen, **Show in search engines** (standardmäßig aus) und **Custom CSS** bei Business.
 
-Klicke auf **Veröffentlichen** (oder drücke <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>), um deine Änderungen live zu schalten. Für Besucher ändert sich erst etwas, wenn du veröffentlichst; unveröffentlichte Änderungen bleiben in deinem Browser gespeichert, sodass du sie nach dem Schließen des Tabs wiederherstellen kannst. Jede Veröffentlichung wird als Version gespeichert. Wenn ein Teammitglied dieselbe Seite veröffentlicht, während du sie bearbeitest, fordert QRdx dich zum Neuladen auf, statt seine Änderungen zu überschreiben.
+<Shot id="page-editor" />
 
-## Kernblöcke [#core-blocks]
+Klicke auf **Publish** (oder drücke <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>), um deine Änderungen live zu schalten. Für Besucher ändert sich erst etwas, wenn du veröffentlichst. Nicht veröffentlichte Änderungen bleiben in deinem Browser gespeichert, sodass du sie nach dem Schließen des Tabs wiederherstellen kannst. Jede Veröffentlichung wird als Version gespeichert. Wenn ein Teammitglied dieselbe Seite veröffentlicht, während du sie bearbeitest, bittet QRdx dich, neu zu laden, statt seine Änderungen zu überschreiben.
+
+## Blöcke [#blocks]
 
 | Block | Was er zeigt |
 | --- | --- |
-| Profile header | Foto oder Logo, Name, Bio und ein optionales Titelbild |
+| Profilkopf | Foto oder Logo, Name, Bio und ein optionales Titelbild |
 | Text | Eine Überschrift und ein Absatz (Zeilenumbrüche bleiben erhalten) |
 | Button | Ein Call-to-Action: ein Weblink, eine E-Mail-Adresse oder eine Telefonnummer |
-| Link list | Ein Stapel aus Link-Buttons, mit Website-Icons für Instagram, YouTube, WhatsApp und mehr |
-| Social icons | Profile als runde Icons, als Buttons oder als Liste mit jedem Handle |
-| Image | Ein Foto oder Banner, optional verlinkt |
-| Video | Ein Video von YouTube, Vimeo oder Loom. Es wird erst von der Videoseite geladen, wenn der Besucher auf Play tippt |
-| Contact card | Name, Position, Telefonnummern, E-Mail-Adressen, Website, Adresse, Schnellaktionen (Anrufen, WhatsApp, E-Mail, Route), **Kontakt speichern** und **Teilen** |
-| Address & map | Deine Adresse mit Routen in Google Maps und Apple Maps und optional eine eingebettete Karte |
-| Opening hours | Zeiten pro Tag (inklusive geteilter Schichten und Zeiten über Mitternacht hinaus) mit einem Badge **Jetzt geöffnet** in deiner Zeitzone |
-| Details | Bezeichnungen und Werte als Liste oder als Kachelraster (Schlafzimmer, Rasse, Blutgruppe, Nettogewicht) |
-| Product details | Zertifizierungen, Zutaten, Allergene, eine Nährwerttabelle, per Tippen aufklappbare Abschnitte und die GTIN ([mehr](/docs/product-pages)) |
-| Payment links | PayPal, Venmo, Cash App, Revolut, Wise, UPI, Banküberweisung und Krypto-Wallets. Die Buttons öffnen die jeweilige App; Angaben haben Kopier-Buttons. Die Seite nimmt die Zahlung nie selbst entgegen. |
-| Divider, Spacer | Hilfen fürs Layout |
+| Linkliste | Eine Reihe von Link-Buttons, mit Website-Icons für Instagram, YouTube, WhatsApp und mehr |
+| Social-Icons | Profile als runde Icons, als Buttons oder als Liste mit dem jeweiligen Handle |
+| App-Download | App Store, Google Play und eine Website, zuerst der Store des Besuchers ([mehr](/docs/forms-and-pages#app-download)) |
+| Bild | Ein Foto oder Banner, optional mit Link |
+| Video | Ein Video von YouTube, Vimeo oder Loom. Es wird erst von der Videoseite geladen, nachdem der Besucher auf Play getippt hat |
+| PDF, Galerie, Audio, Videodatei, Downloads | Dateien, die du hochlädst oder verlinkst ([mehr](/docs/files)) |
+| Kontaktkarte | Name, Jobtitel, Telefonnummern, E-Mail-Adressen, Website, Adresse, Schnellaktionen (Anrufen, WhatsApp, E-Mail, Website, Route), **Kontakt speichern** und **Teilen** |
+| Adresse & Karte | Deine Adresse mit Routen in Google Maps und Apple Maps und optional eine eingebettete Karte |
+| Öffnungszeiten | Zeiten pro Tag (mit geteilten Schichten und Zeiten über Mitternacht hinaus) mit einem Badge **Jetzt geöffnet**, das der Zeitzone folgt, die du im Block festlegst |
+| Wi-Fi | Netzwerkname und Passwort mit Kopier-Buttons ([mehr](/docs/forms-and-pages#menu)) |
+| Details | Bezeichnungen und Werte als Liste oder als Raster aus Kacheln (Schlafzimmer, Rasse, Blutgruppe, Nettogewicht) |
+| Event | Datum, Veranstaltungsort, Veranstalter und Zum-Kalender-hinzufügen ([mehr](/docs/forms-and-pages#event)) |
+| Formular, Bewertungslinks | Fragen mit einem Posteingang für Antworten und Bewertungs-Buttons ([mehr](/docs/forms-and-pages#forms)) |
+| Menü, Gutschein | Abschnitte und Einträge mit Preisen sowie ein Gutschein mit Barcode ([mehr](/docs/forms-and-pages)) |
+| Produktdetails | Zertifizierungen, Zutaten, Allergene, eine Nährwerttabelle, Abschnitte, die sich per Tippen öffnen, und die GTIN ([mehr](/docs/product-pages)) |
+| Zahlungslinks | PayPal, Venmo, Cash App, Revolut, Wise, UPI, Banküberweisung und Krypto-Wallets. Die Buttons öffnen die jeweilige App; die Details haben Kopier-Buttons. Die Seite nimmt die Zahlung nie selbst entgegen |
+| Trennlinie, Abstand | Layout-Helfer |
 
 ### vCard Plus und Kontakt speichern [#vcard-plus-and-save-contact]
 
-**Kontakt speichern** lädt eine vCard-3.0-Datei (`.vcf`) herunter, die Smartphones in der Kontakte-App öffnen. Sie enthält Name, Firma, Position, Telefonnummern, E-Mail-Adressen, Website, Adresse, Bio, die Social-Profile der Seite und das Foto. Fotos, die in den QRdx-Speicher hochgeladen wurden, werden in die Datei eingebettet; Fotos, die von anderen Websites verlinkt sind, werden als Link aufgenommen (QRdx lädt nie Bilder von anderen Websites herunter). **Teilen** öffnet das Share-Sheet des Smartphones oder kopiert auf Computern den Seitenlink.
+**Kontakt speichern** lädt eine vCard-3.0-Datei (`.vcf`) herunter, die Smartphones in der Kontakte-App öffnen. Sie enthält Name, Firma, Jobtitel, Telefonnummern, E-Mail-Adressen, Website, Adresse, Bio, die Social-Profile der Seite und das Foto. Ein Foto, das in den QRdx-Speicher hochgeladen wurde, wird in die Datei eingebettet, wenn es höchstens 1 MB groß ist; größere Fotos und Fotos, die von anderen Websites verlinkt sind, werden als Link eingefügt, weil QRdx nie Bilder von anderen Websites herunterlädt. **Teilen** öffnet das Share-Sheet des Smartphones oder kopiert auf Computern den Seitenlink. Wie du die Karte zusätzlich auf eine NFC-Karte bringst, siehst du unter [NFC-Visitenkarten](/docs/nfc#nfc-business-cards).
 
-## Pläne [#plans]
+## Das bekommen Besucher [#what-visitors-get]
+
+- Schnelle, serverseitig gerenderte Seiten, die für Smartphones gebaut sind. Das einzige QRdx-Skript auf der Seite zählt Aufrufe und Taps für deine Karte **Seitenaktivität**; es gibt keine Produkt-Analytics und kein Support-Widget. Deine eigenen [Tracking-Pixel](/docs/tracking-and-conversions#tracking-pixels-on-hosted-pages-pro) werden nur geladen, wenn du sie im Code hinzufügst.
+- Für Suchmaschinen nicht sichtbar, solange du **In Suchmaschinen anzeigen** nicht aktivierst.
+- Share-Vorschauen (Titel, Beschreibung, Bild) für Chat-Apps und soziale Netzwerke. Passwortgeschützte Codes zeigen in Vorschauen nie Details der Seite.
+- Ein kleiner Link **Missbrauch melden** auf jeder Seite, auch auf White-Label-Seiten.
+
+Passwortschutz, Start- und Enddatum, Scan-Limits und Pausieren aus den [Code-Einstellungen](/docs/code-controls) gelten auch für die Seite und ihre Datei **Kontakt speichern**, selbst wenn jemand den Seitenlink direkt öffnet.
+
+## Limits und Tarife [#limits-and-plans]
 
 | | Kostenlos | Pro | Business |
 | --- | --- | --- | --- |
 | Gehostete Seiten | 3 | Unbegrenzt | Unbegrenzt |
-| Footer „Made with QRdx“ | Sichtbar | Entfernt | Entfernt |
-| White-Label (dein Logo als Browser-Icon, kein QRdx-Branding) | — | — | ✓ |
-| Eigenes CSS | — | — | ✓ |
+| Footer „Made with QRdx“ | Angezeigt | Entfernt | Entfernt |
+| White-Label (dein Logo als Browser-Icon, kein QRdx-Branding) | Nein | Nein | Ja |
+| Eigenes CSS | Nein | Nein | Ja |
 
-Die Limits verhindern nur, dass du neue Seiten erstellst. Seiten, die du bereits hast, funktionieren in jedem Plan weiter, auch nach einem Downgrade. Bei einem Downgrade von Business wird eigenes CSS einfach nicht mehr angewendet. Außerdem belegt jede Seite einen der dynamischen QR-Codes deines Plans. Siehe [Pläne und Limits](/docs/plans-and-limits).
+Limits hindern dich nur daran, neue Seiten zu erstellen. Seiten, die du bereits hast, funktionieren in jedem Tarif weiter, auch nach einem Downgrade. Nach einem Downgrade von Business wird das eigene CSS einer Seite nicht mehr angewendet, und der Editor verweigert das erneute Veröffentlichung dieser Seite, bis du das CSS in den **Einstellungen** der Seite entfernst.
 
-### Eigenes CSS (Business) [#custom-css-business]
+### Eigenes CSS [#custom-css]
 
-Schreibe einfaches CSS unter **Einstellungen → Eigenes CSS**. Die Regeln gelten nur innerhalb deiner Seite: Jeder Selektor ist auf den Seiteninhalt begrenzt, und jeder Block lässt sich mit `.lp-block-<type>` ansprechen, zum Beispiel `.lp-block-links a` oder `.lp-block-contact h1`. Aus Sicherheitsgründen kann CSS keine Dateien laden (`url()`, `@import`, `@font-face`), keine Backslash-Escapes verwenden und unterstützt nur die At-Regeln `@media`, `@supports`, `@container` und `@keyframes`.
+In Business schreibst du einfaches CSS unter **Einstellungen** → **Eigenes CSS**. Die Regeln gelten nur innerhalb deiner Seite: Jeder Selektor ist auf den Seiteninhalt begrenzt, und jeder Block lässt sich mit `.lp-block-<type>` ansprechen, zum Beispiel `.lp-block-links a` oder `.lp-block-contact h1`. Aus Sicherheitsgründen kann CSS keine Dateien laden (`url()`, `@import`, `@font-face`), keine Backslash-Escapes verwenden und unterstützt nur die At-Rules `@media`, `@supports`, `@container` und `@keyframes`.
 
-## Das bekommen Besucher [#what-visitors-get]
+## Für Entwickler [#for-developers]
 
-- Schnelle, serverseitig gerenderte Seiten, die für Smartphones gebaut sind, ohne QRdx-Analytics- oder Chat-Skripte. Tracking-Pixel werden nur geladen, wenn du sie selbst in den Code einfügst.
-- Für Suchmaschinen unsichtbar, außer du aktivierst **In Suchmaschinen anzeigen**.
-- Vorschauen beim Teilen (Titel, Beschreibung, Bild) für Chat-Apps und soziale Netzwerke. Passwortgeschützte Codes zeigen in Vorschauen nie Details der Seite.
-- Ein kleiner Link **Missbrauch melden** auf jeder Seite, auch auf White-Label-Seiten.
+Das `kind` eines Codes in der [REST API](/docs/developers/api/update-code) ist `redirect` oder `page`, und `PATCH /v1/codes/{id}` wechselt zwischen beiden, so wie es **Typ ändern** tut. Die Seiten selbst baust du im Editor; die API bearbeitet keine Blöcke.
 
-Passwortschutz, Start- und Enddatum, Scan-Limits und Pausieren aus den [Code-Steuerungen](/docs/code-controls) gelten auch für die Seite und ihre **Kontakt speichern**-Datei, selbst wenn jemand den Seitenlink direkt öffnet.
+## Siehe auch [#related]
+
+- [Menüs, Gutscheine, Events und Formulare](/docs/forms-and-pages): die Blöcke für Restaurants, Angebote, Events und Feedback
+- [Produktseiten und GS1 Digital Link](/docs/product-pages)
+- [Dateien](/docs/files): PDFs, Galerien, Audio und Video auf einer Seite
+- [Eine mobile Seite erstellen](/docs/help/pages-and-forms/create-a-page)

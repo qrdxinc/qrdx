@@ -1,8 +1,10 @@
 ---
 title: "QR Code Share Dialog"
-description: "Uma caixa de diálogo de compartilhamento com um QR code para um link, um botão de copiar, o download em PNG e a folha de compartilhamento nativa."
+description: "Um diálogo de compartilhamento para projetos shadcn/ui com um QR code para um link, um botão de copiar, download em PNG e a folha de compartilhamento nativa."
 icon: Webhook
 ---
+
+`QrCodeShareDialog` abre um diálogo que mostra um link como QR code, com o link em um campo que você pode copiar, um download em PNG e, em celulares, a folha de compartilhamento do sistema. Use-o atrás de um botão "Compartilhar" em qualquer lugar onde as pessoas passam um link para alguém que está ao lado: um convite, um documento, um perfil.
 
 <ComponentLinks name="qr-code-share-dialog" />
 
@@ -14,40 +16,64 @@ icon: Webhook
 
 ## Uso [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeShareDialog } from "@/components/qr-code-share-dialog";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeShareDialog url="https://example.com/invite/abc123" />
 ```
 
-A caixa de diálogo mostra o código, o link em um campo somente leitura com um botão de copiar e o download em PNG. Em dispositivos com folha de compartilhamento (a maioria dos celulares), um botão "Compartilhar…" abre essa folha.
+O diálogo mostra o código, o link em um campo somente leitura com um botão de copiar e **Baixar PNG**. Em dispositivos com folha de compartilhamento (a maioria dos celulares), um botão **Compartilhar…** a abre.
 
 ## Exemplos [#examples]
 
 ### Gatilho personalizado [#custom-trigger]
 
-Passe seu próprio gatilho como children, como um botão de ícone em uma barra de ferramentas. `title`, `description` e `qr` personalizam a caixa de diálogo.
+Passe seu próprio gatilho como children, como um botão de ícone em uma barra de ferramentas. `title`, `description` e `qr` personalizam o diálogo.
 
 <ComponentPreview name="qr-code-share-dialog-trigger" />
 
 ### Controlado [#controlled]
 
-A caixa de diálogo aceita as props do [Dialog](https://ui.shadcn.com/docs/components/dialog), então você pode abri-la pelo código:
+O diálogo aceita as props do [Dialog](https://ui.shadcn.com/docs/components/dialog), então você pode abri-lo pelo código:
 
-```tsx
-const [open, setOpen] = useState(false);
+```tsx title="components/share-after-save.tsx"
+"use client";
 
-<QrCodeShareDialog
-  url="https://example.com"
-  open={open}
-  onOpenChange={setOpen}
-/>
+import { useState } from "react";
+import { QrCodeShareDialog } from "@/components/qr-code-share-dialog";
+
+export function ShareAfterSave({ url }: { url: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)}>
+        Save and share
+      </button>
+      <QrCodeShareDialog url={url} open={open} onOpenChange={setOpen} />
+    </>
+  );
+}
 ```
+
+## Acessibilidade e renderização [#accessibility-and-rendering]
+
+- O diálogo é o seu Dialog, então o foco vai para dentro dele quando abre e volta para o gatilho quando fecha.
+- O código tem `aria-label="QR code: <url>"`, e o campo do link tem um rótulo "Link" visualmente oculto. O rótulo do botão de copiar muda para "Link copiado" por um instante depois de uma cópia.
+- O botão **Compartilhar…** aparece somente onde `navigator.share` existe, depois da primeira renderização no navegador, para que o HTML do servidor e a primeira renderização do cliente sejam iguais.
+- Clicar no campo do link seleciona o link inteiro. Copiar exige um contexto seguro (HTTPS ou localhost).
 
 ## Referência da API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-share-dialog.tsx" type="{ [K in keyof QrCodeShareDialogProps as K extends Exclude<keyof ComponentProps<typeof Dialog>, 'children'> ? never : K]: QrCodeShareDialogProps[K] }" />
 
 `open`, `defaultOpen`, `onOpenChange` e `modal` são repassados ao Dialog.
+
+## Relacionados [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="Mais formatos e tamanhos do que o único botão de PNG do diálogo." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="O código inline em uma página, em vez de em um diálogo." />
+  <Card href="/docs/dynamic-qr-codes" title="QR codes dinâmicos" description="Compartilhe um link curto que você pode mudar depois, em vez da URL final." />
+</Cards>

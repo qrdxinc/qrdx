@@ -1,33 +1,57 @@
 ---
-title: "MCPサーバー"
-description: "QRdx MCPサーバーを使って、Claude、Cursor、VS Codeなどの AI ツールからスタイル付きQRコードを生成できます。"
+title: "MCP サーバー"
+description: "Claude、Cursor、VS Code、ChatGPT などの AI ツールを mcp.qrdx.dev の QRdx MCP サーバーに接続して、スキャンチェック済みのQRコードのデザイン、画像のレンダリング、Wi-Fi や連絡先のペイロード作成、バーコードの描画、AI アートの生成ができます。アカウントもキーも不要です。"
 icon: Bot
 ---
 
-QRdxは、次のURLで公開の[Model Context Protocol](https://modelcontextprotocol.io)サーバーを運用しています。
+このページを読み終えるころには、AI アシスタントでQRコードを作れるようになります。任意の内容に対して、スキャンスコアのチェック付きでデザインし、エディターのスタイルでレンダリングできます。Wi-Fi、連絡先、メール、SMS、位置情報、銀行振込に合ったペイロードの作成、コミュニティフレームの検索、バーコードの描画にも対応しています。接続に API キーを設定すると、デザインやバーコードをワークスペースに保存したり、AI アートを生成したりすることもできます。
 
-```txt
+QRdx は、次の場所で公開の [Model Context Protocol](https://modelcontextprotocol.io) サーバーを運用しています。
+
+```txt title="Server URL"
 https://mcp.qrdx.dev/mcp
 ```
 
-どのクライアントでもこのURLを使用してください。同じサーバーは `https://qrdx.dev/api/mcp` でも応答します。[接続ページ](/mcp)には、qrdx.dev、プレビューデプロイ、ローカル開発それぞれの公開URLが表示されます。
+Streamable HTTP トランスポートを使用し、セッション状態を保持せず、アカウントもサインインも API キーも不要です。同じサーバーは `https://qrdx.dev/api/mcp` でも応答します。[接続ページ](/mcp)には、ワンクリックのボタンと、このページで紹介しているより多くのクライアント向けの手順があります。
 
-Streamable HTTPトランスポートを使用し、セッション状態は保持しません。AIアシスタントはこのサーバーを呼び出して、あらゆるコンテンツタイプのQRコードをスキャンスコアの確認つきでデザインしたり、QRコードを描画したり、利用可能なスタイルを一覧したり、コミュニティのフレームやテーマを検索したりできます。また、Wi-Fi、連絡先、メール、SMS、地図の位置情報について、正しい形式のペイロードも作成できます。いずれもアカウントやAPIキーは不要です。QRdxのAPIキーを接続に設定すると、デザインを自分のテーマに保存したり、アップロード済みのロゴを使用したりすることもできます([APIキーを使用する](#use-an-api-key)を参照)。
+[Playground で試す](/playground?open=code&lang=mcp)：Playground でQRコードをスタイル設定し、`design_qr` の引数としてコピーして、アシスタントに渡せます。
 
-[Playgroundで試す](/playground?open=code&lang=mcp): Playgroundでコードをスタイル設定し、`design_qr` の引数としてコピーしてアシスタントに渡せます。
+## 1. クライアントを接続する [#1-connect-a-client]
 
-## セットアップ [#setup]
+<Tabs items={["Claude", "Claude Code", "Cursor", "VS Code", "ChatGPT", "Other clients"]}>
+  <Tab value="Claude">
+    Web 版の Claude と Claude Desktop では、同じコネクターを使います。
 
-<Tabs items={["Claude Code", "Cursor", "VS Code", "Other clients"]}>
+    1. **Customize → Connectors** を開き、**Add custom connector** を選びます。[接続ページ](/mcp)の **Connect to Claude** ボタンを使うと、名前と URL が入力済みのこのダイアログが開きます。
+    2. 名前を `QRdx` にして、`https://mcp.qrdx.dev/mcp` を入力します。OAuth の項目は空のままにします。
+    3. **Add** を選び、チャットのツールメニューから QRdx をオンにします。
+
+    フリープランでは、カスタムコネクターを 1 つ追加できます。Team プランと Enterprise プランでは、オーナーが組織向けにコネクターを追加します。
+  </Tab>
   <Tab value="Claude Code">
-    ```bash
+    ```bash title="Terminal"
     claude mcp add --transport http qrdx https://mcp.qrdx.dev/mcp
     ```
+
+    すべてのプロジェクトで使うには、`--scope user` を追加します。代わりにリポジトリで共有するには、`.mcp.json` をコミットします。
+
+    ```json title=".mcp.json"
+    {
+      "mcpServers": {
+        "qrdx": {
+          "type": "http",
+          "url": "https://mcp.qrdx.dev/mcp"
+        }
+      }
+    }
+    ```
+
+    Claude Code で `/mcp` を実行して、`qrdx` が接続されていることを確認します。
   </Tab>
   <Tab value="Cursor">
-    サーバーを `~/.cursor/mcp.json`(すべてのプロジェクト)または `.cursor/mcp.json`(1つのプロジェクト)に追加します。
+    [Add to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=qrdx&config=eyJ1cmwiOiJodHRwczovL21jcC5xcmR4LmRldi9tY3AifQ%3D%3D) をクリックすると、Cursor のインストールプロンプトが開きます。または、サーバーを `~/.cursor/mcp.json`（すべてのプロジェクト）か `.cursor/mcp.json`（1 つのプロジェクト）に追加します。
 
-    ```json
+    ```json title=".cursor/mcp.json"
     {
       "mcpServers": {
         "qrdx": {
@@ -38,9 +62,15 @@ Streamable HTTPトランスポートを使用し、セッション状態は保�
     ```
   </Tab>
   <Tab value="VS Code">
-    サーバーをワークスペースの `.vscode/mcp.json` に追加します。
+    [Install in VS Code](https://vscode.dev/redirect/mcp/install?name=qrdx&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.qrdx.dev%2Fmcp%22%7D) をクリックすると VS Code に切り替わり、確認を求められます。ターミナルから追加する場合は次のとおりです。
 
-    ```json
+    ```bash title="Terminal"
+    code --add-mcp '{"name":"qrdx","type":"http","url":"https://mcp.qrdx.dev/mcp"}'
+    ```
+
+    または、ワークスペースの `.vscode/mcp.json` に追加します。
+
+    ```json title=".vscode/mcp.json"
     {
       "servers": {
         "qrdx": {
@@ -50,11 +80,23 @@ Streamable HTTPトランスポートを使用し、セッション状態は保�
       }
     }
     ```
+
+    その後、エージェントモードで GitHub Copilot Chat を使い、ツールピッカーで `qrdx` がオンになっていることを確認します。
+  </Tab>
+  <Tab value="ChatGPT">
+    1. [ChatGPT Plugins](https://chatgpt.com/plugins) に移動し、**+** を選んで **Add custom MCP server** を選びます。
+    2. 名前を `QRdx` にして、URL として `https://mcp.qrdx.dev/mcp` を入力します。
+    3. 認証なしを選び、警告を了承して作成します。
+    4. 新しいチャットで `@` を入力し、QRdx を選びます。
+
+    カスタム MCP サーバーを使えるかどうかは、ChatGPT のプランとワークスペースの設定によって決まります。ChatGPT が接続できるのは、このようなリモートサーバーだけです。
   </Tab>
   <Tab value="Other clients">
-    リモート(Streamable HTTP)サーバーに対応しているクライアントでは、URL `https://mcp.qrdx.dev/mcp` だけで利用できます。ローカルのstdioサーバーしか実行できないクライアントでは、[`mcp-remote`](https://www.npmjs.com/package/mcp-remote)で橋渡しします。
+    リモート（Streamable HTTP）サーバーに対応しているアプリであれば、認証なしで URL `https://mcp.qrdx.dev/mcp` を設定するだけで接続できます。[接続ページ](/mcp)には、Devin Desktop（Windsurf）、Gemini CLI、Codex、Zed、Cline、Continue、Goose、LM Studio、Raycast、Warp、JetBrains IDE、Perplexity、Le Chat、Copilot Studio の手順があります。
 
-    ```json
+    ローカル（stdio）サーバーしか実行できないアプリでは、[`mcp-remote`](https://www.npmjs.com/package/mcp-remote) を使って URL に橋渡しできます。Node.js が必要です。
+
+    ```json title="mcp.json"
     {
       "mcpServers": {
         "qrdx": {
@@ -67,42 +109,60 @@ Streamable HTTPトランスポートを使用し、セッション状態は保�
   </Tab>
 </Tabs>
 
-そのあとは、必要なものを依頼してください。例:
+## 2. QRコードを依頼する [#2-ask-for-a-code]
 
-- 「https://example.com のQRコードを、ブランドカラーの青 #155dfc で、角丸のモジュールで作って。」
-- 「ネットワーク Office Guest、パスワード correct-horse-battery のWi-Fi QRコードを作成して。」
-- 「Ada Lovelace、ada@example.com の連絡先QRコードを生成して、READMEに追加して。」
-- 「Cafe Guest 用のWi-Fi QRコードを、温かみのある茶色で Free Wi-Fi フレームつきでデザインして、スキャンスコアも教えて。」
-- 「レストランのメニュー用のコミュニティフレームを探して、https://example.com/menu に使って。」
+あとは普通の言葉で依頼するだけです。次のプロンプトは、そのまま使えます。
+
+```txt title="Prompts"
+Make a QR code for https://example.com in our brand blue, #155dfc, with rounded modules.
+Create a Wi-Fi QR code for the network Office Guest with password correct-horse-battery.
+Design a Wi-Fi QR code for Cafe Guest in warm browns with a Free Wi-Fi banner, and tell me its scan score.
+Generate a contact QR code for Ada Lovelace, ada@example.com, and add it to the README.
+Find a community frame for a restaurant menu and use it for https://example.com/menu.
+Draw an EAN-13 barcode for 590123412345 as a PNG.
+```
+
+最初のプロンプトでは、アシスタントが `generate_qr_code` を呼び出し、PNG と次の行を受け取ります。そのまま貼り付けて使えます。
+
+```txt title="generate_qr_code result"
+QR code, 512x512px, error correction Q.
+SVG URL: https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&fg=155dfc&body=rounded
+PNG URL: https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=png&fg=155dfc&body=rounded
+WebP URL (lossless, smaller than PNG): https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=webp&fg=155dfc&body=rounded
+EPS URL (vector, for print; 512 pt wide): https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=eps&fg=155dfc&body=rounded
+Markdown: ![QR code](https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&fg=155dfc&body=rounded)
+```
+
+2 つ目のプロンプトでは、`qr_payload_wifi` を呼び出します。この呼び出しは `WIFI:T:WPA;S:Office Guest;P:correct-horse-battery;;` を返し、その文字列を `generate_qr_code` の `data` として、または `design_qr` の内容として渡します。
 
 ## ツール [#tools]
 
 | ツール | 機能 |
-|------|--------------|
-| `design_qr` | アシスタントが選んだスタイル、または組み込みテーマやコミュニティのアイテムを出発点にして、あらゆるコンテンツタイプのコードをデザインします。スキャンスコアを確認し、Great になるまでスタイルを修復します。スコア、変更内容、スタイルJSON、Playgroundへのリンク、PNG、SVGを返します。 |
-| `list_options` | `design_qr` が受け付けるすべての値を一覧にします。コンテンツタイプとそのフィールド、色とグラデーション、形状、フレーム（QRdx公式フレームのIDを含む）、枠線、ロゴアイコンとブランドロゴ、組み込みテーマ、誤り訂正レベル、制限が含まれます。 |
-| `generate_qr_code` | エディターのスタイルでQRコードを生成します。PNG画像と、Markdown、HTML、印刷にそのまま使える公開 [Image API](/docs/developers/image-api) のURL（SVG、PNG、ロスレスWebP、ベクターEPS）を返します。リクエストに応じてSVGマークアップも返します。 |
-| `list_qr_styles` | ボディパターン、コーナーアイとアイドットの形状、フレーム（組み込みスタイルと、テンプレートとして描かれたもの）、ロゴアイコン、誤り訂正レベル、デフォルト値、制限を一覧にします。 |
-| `search_community` | 公開されている[コミュニティ](/community)のフレーム、テーマ、コレクションを、キーワード、タイプ、タグで検索します。 |
-| `get_community_item` | コミュニティのアイテムを1件、適用されるスタイルとともに取得します。`design_qr` や `generate_qr_code` にそのまま渡せます。 |
-| `save_template` | デザインをテーマとしてワークスペースに保存します。[APIキー](#use-an-api-key)が必要です。 |
-| `generate_barcode` | 値（チェックディジット、長さ、文字）を確認したうえで、EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Data Matrix、PDF417、Aztecのバーコードを描画します。PNGと、公開の[バーコードAPI](/docs/developers/barcode-api)のURLを返します。 |
-| `save_barcode` | バーコードをワークスペースのバーコードに保存します。[APIキー](#use-an-api-key)が必要です。 |
-| `generate_ai_art` | QRコードをAIアートの中に描き込み、スキャンできるか確認します。ワークスペースの月間AIアート画像を1枚使い、最大1分かかります。[APIキー](#use-an-api-key)が必要です。詳しくは [AIアートAPI](/docs/developers/ai-art-api) をご覧ください。 |
-| `qr_payload_wifi` | 特殊文字をエスケープした `WIFI:` ネットワークのペイロード（WPA、WEP、またはオープン。非公開設定も可）を作成します。 |
-| `qr_payload_vcard` | vCard 3.0 の連絡先（RFC 2426）を作成します。氏名、組織、役職、電話番号、メール、ウェブサイト、住所、メモに対応します。 |
-| `qr_payload_email` | `mailto:` リンク（RFC 6068）を作成します。cc、bcc、件名、本文は任意です。 |
-| `qr_payload_sms` | `sms:` リンク（RFC 5724）を作成します。メッセージは任意で、従来の `SMSTO:` 形式にも対応します。 |
-| `qr_payload_geo` | 緯度と経度から `geo:` 位置情報（RFC 5870）を作成します。 |
-| `qr_payload_payment` | 銀行決済コードを作成します。Pix BR Code、SEPA口座振替（EPC069-12）、PayNow、PromptPay、VietQR（EMV、CRC付き）に対応します。Playgroundのフォームと同じようにフィールドを検証します。 |
+| --- | --- |
+| `design_qr` | アシスタントが選んだスタイル、組み込みテーマ、またはコミュニティのアイテムを出発点に、あらゆるコンテンツタイプ向けのコードをデザインします。スキャンスコアを確認し、Great になるまでスタイルを修復します。スコア、変更内容、スタイルJSON、Playground のリンク、PNG、SVG を返します |
+| `list_options` | `design_qr` が受け付けるすべての値を一覧表示します。コンテンツタイプとそのフィールド、色とグラデーション、形状、フレーム(QRdx公式フレームのID付き)、枠線、ロゴアイコンとブランドロゴ、組み込みテーマ、誤り訂正レベル、各種上限が含まれます |
+| `generate_qr_code` | エディターのスタイルでQRコードを描画します。PNG画像と、Markdown、HTML、印刷にそのまま使える公開の[Image API](/docs/developers/image-api) URL(SVG、PNG、ロスレスWebP、ベクターEPS)を返します。希望すれば SVG のマークアップも返します |
+| `list_qr_styles` | ボディパターン、コーナーアイと目のドットの形状、フレーム(組み込みスタイルとテンプレートとして描かれたもの)、ロゴアイコン、誤り訂正レベル、デフォルト値、上限を一覧表示します |
+| `search_community` | 公開されている[コミュニティ](/community)のフレーム、テーマ、コレクションを、キーワード、タイプ、タグで検索します |
+| `get_community_item` | コミュニティのアイテムを1件、適用されるスタイル付きで返します。`design_qr` や `generate_qr_code` にそのまま渡せます |
+| `save_template` | デザインをテーマとしてワークスペースに保存します。[APIキー](#use-an-api-key)が必要です |
+| `generate_barcode` | 値(チェックディジット、桁数、文字)を確認したうえで、EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Data Matrix、PDF417、Aztec のバーコードを描画します。PNG と公開の[バーコードAPI](/docs/developers/barcode-api) URL を返します |
+| `save_barcode` | バーコードをワークスペースのバーコードに保存します。[APIキー](#use-an-api-key)が必要です |
+| `generate_ai_art` | QRコードをAIアートに描き込み、スキャンできるか確認します。ワークスペースの月間AIアート画像を1枚消費し、最大1分かかります。[APIキー](#use-an-api-key)が必要です。[AIアートAPI](/docs/developers/ai-art-api)も参照してください |
+| `qr_payload_wifi` | 特殊文字をエスケープした `WIFI:` ネットワークペイロードを作成します(WPA、WEP、またはオープン。非公開設定も可) |
+| `qr_payload_vcard` | vCard 3.0 の連絡先(RFC 2426)を作成します。氏名、組織、役職、電話番号、メール、ウェブサイト、住所、メモに対応します |
+| `qr_payload_email` | `mailto:` リンク(RFC 6068)を作成します。cc、bcc、件名、本文は任意です |
+| `qr_payload_sms` | `sms:` リンク(RFC 5724)を作成します。メッセージは任意で、従来の `SMSTO:` 形式にも対応します |
+| `qr_payload_geo` | 緯度と経度から `geo:` 位置情報(RFC 5870)を作成します |
+| `qr_payload_payment` | 銀行決済コードを作成します。Pix BR Code、SEPA クレジットトランスファー(EPC069-12)、または PayNow、PromptPay、VietQR のコード(EMV、CRC付き)に対応します。フィールドは Playground のフォームと同様に確認されます |
 
-ペイロードツールは単純な文字列を返します。アシスタントはその文字列を `data` として `generate_qr_code` に渡します。
+ペイロードツールは単なる文字列を返します。アシスタントはそれを `data` として `generate_qr_code` に渡します。
 
 ### design_qr [#design_qr]
 
-`design_qr` は、コンテンツをタイプとそのフィールドで受け取ります。タイプと検証はエディターのコンテンツフォームと同じです（`list_options` で一覧できます）。スタイルは任意です。
+`design_qr` は、コンテンツをタイプとそのフィールドで受け取ります。タイプと検証はエディターのコンテンツフォームと同じです(`list_options` で一覧できます)。スタイルは任意です。
 
-```json
+```json title="design_qr arguments"
 {
   "content": { "type": "wifi", "ssid": "Cafe Guest", "password": "sunshine123", "encryption": "WPA" },
   "style": {
@@ -115,73 +175,84 @@ Streamable HTTPトランスポートを使用し、セッション状態は保�
 }
 ```
 
-省略したオプションにはデフォルト値が使われます（アイはドットの色に合わせ、形状は角型、マージンは4、誤り訂正はQ、フレームなし）。そのうえでQRdxは、エディターと同じスキャンチェックをデザインに実行します。コードを描画し、スマートフォンのカメラモデルで96px、160px、320pxの各サイズでデコードし、コントラスト、クワイエットゾーン、アイの形状、形状の組み合わせを確認します。スコアがGreat（85）に届かない場合は、最大3回までスタイルを修復し、変更を最小限に抑えます（色相を保ったまま色を暗くする、より安全なアイの形状にする、長いコンテンツでは誤り訂正を下げる、など）。それでも足りない場合は、フレームはそのままに、白地に黒のクラシックなコードに切り替えます。結果には、何をなぜ変更したかが記載されます。
+```txt title="design_qr result (first lines)"
+Scan score 85/100 (great). No changes were needed. Content: WiFi · Cafe Guest (47 bytes). Open it in the playground: https://qrdx.dev/playground?style=1.eyJiIjoiI0ZGRjdFRCIs…&ref=mcp
+```
 
-`design_qr` では、QRdx側でAIモデルは実行されません。スタイルはアシスタントが選び、QRdxが検証、チェック、修復を行います。無効なコンテンツ（8文字未満のWPAパスワード、不正な形式のメールアドレスなど）は、理由とともに拒否されます。`design_qr` には、IPアドレスごとに毎分20回までという独自の制限があります。
+結果のJSONには、`payload`(コードがエンコードする文字列そのもの)、`style`、`qrdxStyle`、`score`、`grade`、`stillFailing`(まだ不合格のチェックと、それぞれの修正方法)、`repairs`、`changes`、`playgroundUrl` が含まれ、続けて PNG と SVG が返されます。
 
-その他の入力：
+指定しなかったオプションにはデフォルトが適用されます(目はドットの色に従い、形状は四角、余白は 4、誤り訂正は Q、フレームなし)。そのうえで QRdx は、エディターのスキャンチェックをデザインに実行します。コードを描画し、スマートフォンのカメラモデルで 96、160、320 px でデコードし、コントラスト、クワイエットゾーン、目の形状、形状の組み合わせを確認します。Great(85)未満の場合は、できるだけ変更を抑えながら最大3回までスタイルを修復します(色相を保ったままの暗い色への変更、より安全な目の形状への変更、長いコンテンツでの誤り訂正の引き下げなど)。それでも足りない場合は、フレームはそのままに、白地に黒の標準的なコードに切り替えます。何をなぜ変更したかは結果に記載されます。
 
-- **`preset`**：IDで組み込みテーマを選んで出発点にします（`list_options` で一覧できます）。設定したスタイルオプションが優先されます。
-- **`community_item`**：`frame:wifi-card` のように、IDでコミュニティのフレームまたはテーマを選んで出発点にします。フレームのアイテムはクラシックなコードの上に配置され、スタイルオプションはその下のコードを変更します。
-- **公式フレーム**：QRdxの公式フレームもコミュニティのアイテムです。`list_options` が、祝日、季節、用途のグループ別にIDを一覧にするので、`frame:diwali-diya` や `frame:menu-cutlery` を `community_item` として使えます。
-- **カスタムフレーム**：`style.frame` には、`get_community_item` で取得したコミュニティのフレームなどのフレーム仕様を使って、`{ "style": "custom", "spec": … }` を指定できます。フレームはそのまま描画され、スコアが計算されます。修復で変更されるのはコードだけで、フレームは変わりません。
-- **`style.logo`**：クイックロゴアイコン（`wifi`、`location`、`phone`、`email`、`link`、`file`、`calendar`、`whatsapp`、`instagram`）、または [Simple Icons](https://simpleicons.org) のスラッグによるブランドロゴ（`spotify`、`paypal:white`）。人気のブランドのスラッグは `list_options` で一覧できます。
-- **エンジンオプション**：`style.eyeColors`（アイごとの `#RRGGBB` 色）、`moduleScale`（ドットのサイズ、`0.5` から `1`）、`shape`（丸いコードにするには `circle`）、`autoLevel`、`logoOptions`（ロゴのサイズ、余白、位置、トリミング、プレート）。指定したとおりに描画されてスコアが計算され、修復では変更されません。
+`design_qr` では、QRdx側でAIモデルは動作しません。スタイルはアシスタントが選び、QRdx が検証、確認、修復します。無効なコンテンツ(8文字未満のWPAパスワード、不正な形式のメールアドレスなど)は、理由とともに拒否されます。`design_qr` には、IPアドレスごとに1分あたり {facts.designQrPerMinute} 回という独自の制限があります。
+
+その他の入力:
+
+- **`preset`**: IDで組み込みテーマを指定して開始します(`list_options` で一覧できます)。設定したスタイルオプションが優先されます。
+- **`community_item`**: `frame:wifi-card` のように、IDでコミュニティのフレームまたはテーマを指定して開始します。フレームのアイテムは標準的なコードの上に配置され、スタイルオプションはその下のコードを変更します。QRdx公式フレームもコミュニティのアイテムなので、ここでは `frame:diwali-diya` や `frame:menu-cutlery` も使えます。
+- **カスタムフレーム**: `style.frame` には、フレームの仕様(`get_community_item` で得られるコミュニティフレームの仕様など)を使った `{ "style": "custom", "spec": … }` を指定できます。そのまま描画されスコアが付けられます。修復で変わるのはコードのみで、フレームは変わりません。
+- **`style.logo`**: クイックロゴアイコン(`wifi`、`location`、`phone`、`email`、`link`、`file`、`calendar`、`whatsapp`、`instagram`)、または [Simple Icons](https://simpleicons.org) のスラッグで指定するブランドロゴ(`spotify`、`paypal:white`)。`list_options` に人気のブランドスラッグが一覧されます。
+- **エンジンオプション**: `style.eyeColors`(目ごとの `#RRGGBB` 色)、`moduleScale`(ドットサイズ、`0.5` から `1`)、`shape`(丸いコードにする `circle`)、`autoLevel`、`logoOptions`(ロゴのサイズ、余白、位置、トリミング、プレート)。これらは指定どおりに描画されスコアが付けられ、修復では変更されません。
 
 <IfAvailable feature="fileStorage">
-`logo_file_id` を使うと、代わりにQRdxにアップロードしたロゴを描画できます。[APIキー](#use-an-api-key)が必要です。
+`logo_file_id` を使うと、代わりに QRdx にアップロードしたロゴを描画します。[APIキー](#use-an-api-key)が必要です。
 </IfAvailable>
 
-ロゴは、エディターと同様に、覆うモジュールの数でスコアが計算されます。そのため、修復で誤り訂正がHに引き上げられたり、ロゴが取り除かれたりすることがあります。エディターがデフォルトで表示するQRdxのマークは、ここでは描画されません。
+ロゴはエディターと同様に、覆うモジュール数でスコアが付けられるため、修復で誤り訂正が H に上がったり、ロゴが削除されたりすることがあります。エディターがデフォルトで表示する QRdx のマークは、ここでは描画されません。
 
-結果の `qrdxStyle` は、エディターのスタイルJSONとしてのデザインです。これを `save_template` に渡すか、`style` として `generate_qr_code` に渡すと、同じデザインを別のサイズで描画できます。Image APIの [`style`](/docs/developers/image-api#style) に渡すこともできます。`playground_url` は、デザインを[Playground](/playground)で開きます。含まれるのはスタイルだけで、ロゴやコンテンツは含まれません。含まれないものは `playgroundLeftOut` に記載されます。
+結果の `qrdxStyle` は、エディターのスタイルJSONとしてのデザインです。これを `save_template` に渡すか、`style` として `generate_qr_code` に渡せば、同じデザインを別のサイズで描画できます。Image API の [`style`](/docs/developers/image-api#style) にも渡せます。`playground_url` は、デザインを [Playground](/playground) で開きます。これにはスタイルだけが含まれ、ロゴやコンテンツは含まれません。含まれないものは `playgroundLeftOut` に示されます。
 
-### generate_qr_code の入力 [#generate_qr_code-inputs]
+### generate_qr_code [#generate_qr_code]
 
-入力は [Image APIのパラメータ](/docs/developers/image-api#parameters)と同じです。`data`（必須）、`size`、`fg`、`bg`、`eyeColor`、`dotColor`、`body`、`eye`、`dot`、`level`、`margin`、`template`、`frame`、`frameText`、`logoIcon`、`logoFileId`、`item`（コミュニティアイテムのID）、`style`（グラデーション、カスタムフレームなどを含む、`design_qr` が返すエディターのスタイルJSON）です。個別のオプションは `style` より優先され、`style` は `item` より優先されます。`include_svg` を `true` にすると、`.svg` ファイルを保存する場合などのために、SVGマークアップもテキストで取得できます。マークアップは50〜150 KBになることが多く、会話を埋めてしまうため、デフォルトではオフです。
+入力は [Image APIのパラメーター](/docs/developers/image-api#parameters)と同じです。`data`(必須)、`size`、`fg`、`bg`、`eyeColor`、`dotColor`、`body`、`eye`、`dot`、`level`、`margin`、`template`、`frame`、`frameText`、`logoIcon`、`logoFileId`、`item`(コミュニティアイテムのID)、`style`(エディターのスタイルJSON。`design_qr` が返すグラデーション、カスタムフレームなどを含みます)です。個別のオプションは `style` より優先され、`style` は `item` より優先されます。`include_svg` を `true` に設定すると、`.svg` ファイルの保存などのために、SVGのマークアップをテキストとしても取得できます。マークアップは多くの場合 50〜150 KB あり、会話を埋めてしまうため、デフォルトではオフです。
 
-`generate_qr_code` はスキャンスコアを確認しません。確認には `design_qr` を使ってください。アップロードしたロゴを使ったコードには、公開の画像URLがありません。Image APIは、そのロゴをお客様のキーを使ったリクエストに対してのみ描画するためです。
+`generate_qr_code` はスキャンスコアを確認しません。確認には `design_qr` を使ってください。アップロードしたロゴ付きのコードには、公開の画像URLがありません。Image API がそのロゴを描画するのは、あなたのキーを使ったリクエストのみだからです。
 
 ### QRカード [#qr-card]
 
-[MCP Apps](https://modelcontextprotocol.io/extensions/apps/overview) に対応したアプリでは、`design_qr` と `generate_qr_code` がチャット内にQRカードも表示します。カードには、コード、エンコードされている内容（Wi-Fiのコードにはネットワーク名が表示され、パスワードは表示されません）、サイズ、誤り訂正またはスキャンスコア、**エディターで開く** ボタンが含まれます。エディターへのリンクには、`playground_url` と同様にスタイルだけが含まれます。
+[MCP Apps](https://modelcontextprotocol.io/extensions/apps/overview) に対応したアプリでは、`design_qr` と `generate_qr_code` がチャットにQRカードも表示します。カードには、コード、エンコードされている内容(Wi-Fi のコードではネットワーク名を表示し、パスワードは表示しません)、サイズと誤り訂正またはスキャンスコア、そして **エディターで開く** ボタンがあります。エディターのリンクには、`playground_url` と同様にスタイルだけが含まれます。
 
-PNGボタンとSVGボタンの動作は、アプリの許可内容によって異なります。カードからファイルを保存できるアプリでは、ファイルが保存されます。そうでない場合は、Image APIのURLがブラウザーで開きます。そのため、`design_qr` のカードでは、ファイルを保存できるアプリでのみこれらのボタンが表示されます。そのコンテンツが画像URLに含まれることはありません。リンクを開く前に、アプリが確認を求める場合があります。
+PNG と SVG のボタンの動作は、アプリが許可する内容によって異なります。カードからファイルを保存できるアプリでは、ファイルを保存します。そうでない場合は、Image API の URL をブラウザーで開きます。そのため、`design_qr` のカードでは、ファイルを保存できるアプリでのみこれらのボタンが表示されます。そのコンテンツは画像URLに含まれることがないからです。リンクを開く前に、アプリが確認を求める場合があります。
 
-MCP Appsに対応していないアプリでは、従来どおりのテキストと画像が返されます。クライアント開発者向けの情報：
+MCP Apps に対応していないアプリでは、これまでと同じテキストと画像が返されます。クライアント開発者向けの情報:
 
-- カードはリソース `ui://qrdx/qr-card`（`text/html;profile=mcp-app`）で、`resources/list` に一覧表示されます。どちらのツールも `_meta.ui.resourceUri` でこのリソースを指します。
-- カードのデータは、ツール結果の `_meta` 内の `dev.qrdx/qr-card` に含まれます。これはカード用で、モデル用ではありません。ツールは `structuredContent` を返しません。
-- カードは、スタイルとスクリプトをインラインで含む単一のHTMLファイルです。読み込まれるのは、Image API（`https://api.qrdx.dev`、セルフホストの場合はお客様自身のドメイン）からのコードの画像だけです。コンテンツセキュリティポリシー（`_meta.ui.csp.resourceDomains`）は、そのホストのみを許可します。
+- カードはリソース `ui://qrdx/qr-card`(`text/html;profile=mcp-app`)で、`resources/list` に一覧されます。どちらのツールも `_meta.ui.resourceUri` でこれを指します。
+- カードのデータは、ツール結果の `_meta` の `dev.qrdx/qr-card` に入っています。これはモデル向けではなく、カード向けです。ツールは `structuredContent` を返しません。
+- カードは、スタイルとスクリプトをインラインで含む単一のHTMLファイルです。読み込むのは Image API(`https://api.qrdx.dev`、セルフホストの場合は独自ドメイン)からのコードの画像のみで、コンテンツセキュリティポリシー(`_meta.ui.csp.resourceDomains`)はそのホスト以外を許可しません。
 
-カードが導入される前にQRdxを接続していた場合は、コネクターを削除して追加し直すか、ツールを更新してください。これにより、アプリが新しいツールのメタデータを取得します。
+カードが登場する前に QRdx を接続した場合は、コネクターを削除して追加し直すか、ツールを更新してください。そうすると、アプリが新しいツールのメタデータを取得します。
 
 ### コミュニティ [#community]
 
-`search_community` は、公開されている[コミュニティ](/community)のフレーム、テーマ、コレクション（CC0で無料）を、キーワード（`q`）、`type`、`tag` で検索します。`get_community_item` は、アイテムを1件、適用されるスタイルとともに返します。そのIDを、`community_item` として `design_qr` に、または `item` として `generate_qr_code` に渡します。同じデータはREST APIの [`/v1/community/items`](/docs/developers/api/list-community-items) でも取得できます。
+`search_community` は、公開されている[コミュニティ](/community)のフレーム、テーマ、コレクション(CC0 のもと無料)を、キーワード(`q`)、`type`、`tag` で検索します。`get_community_item` は、アイテムを1件、適用されるスタイル付きで返します。そのIDを、`design_qr` には `community_item` として、`generate_qr_code` には `item` として渡します。同じデータは REST API の [`/v1/community/items`](/docs/developers/api/list-community-items) でも取得できます。
 
-アイテムのテキストはコミュニティメンバーが書いたものです。名前、説明、ハンドル、タグ、フレームのラベルは、短く、1行で、リンク、メールアドレス、マークアップを除いた形で返されます。すべての結果には、これらを指示ではなくデータとして扱うよう注意書きが付きます。
+アイテムのテキストは、コミュニティのメンバーが書いたものです。名前、説明、ハンドル、タグ、フレームのラベルは、短く、1行で、リンク、メールアドレス、マークアップを除いた形で返されます。また、すべての結果には、これらを指示ではなくデータとして扱うよう記載されています。
 
 ## APIキーを使う [#use-an-api-key]
 
-一部のツールでは、接続にQRdxの[APIキー](/docs/developers/api-keys)が必要です。キーは `Authorization: Bearer qrdx_…` として送信します。
+一部のツールでは、接続にQRdxの[APIキー](/docs/developers/api-keys)が必要です。`Authorization: Bearer qrdx_…` として送信します。
 
-- **`save_template`** は、デザインをテーマとして保存します。保存したテーマはダッシュボードの「テーマ」に一覧表示され、エディタでも選べるようになります。`codes:write` を持つキーが必要で、**フルアクセス**のキーには含まれています。自分のワークスペースのキーで保存すると自分のテーマに保存されます。チームキーの場合は、キーの作成者がオーナーまたは管理者で、プランにチームテーマがあれば、チームの共有テーマに保存されます。保存はプランの保存テーマ数の上限に含まれます([プランと制限](/docs/plans-and-limits)を参照)。上限を超えると、ツールはAPIの `LIMIT_REACHED` エラー(`402`)を返します。キーがない場合は、キーの追加方法を示す `401` エラーを返します。
-- **`save_barcode`** は、バーコード(フォーマット、値、任意のタイトル、描画オプション)をキーのワークスペースに保存します。保存したバーコードはダッシュボードの「バーコード」に一覧表示されます。`codes:write` を持つキーが必要です。バーコードはすべてのプランで保存でき、フリーでは最大1,000件です。上限を超えると `LIMIT_REACHED`(`402`)を返します。
-- **`generate_ai_art`** は、リンク、テキスト、またはIDで指定した動的QRコードから、QRコードをAIアートとして描き出します。QRdxがスキャンできることを確認したうえで、PNGを返します。[`POST /v1/art`](/docs/developers/ai-art-api) と同じフィールドを受け付け、`codes:write` を持つキーが必要です。画像1枚につき、キーのワークスペースの月間AIアート画像枠を1つ使用します。1回の呼び出しには最大1分かかります。
+- **`save_template`** はデザインをテーマとして保存します。保存したテーマはダッシュボードの「テーマ」に表示され、エディタでも選べるようになります。`codes:write` を持つキーが必要で、**フルアクセス**のキーにはこの権限があります。自分のワークスペースのキーで保存した場合は自分のテーマに保存されます。チームのキーの場合は、キーの作成者がオーナーまたは管理者で、プランにチームテーマが含まれていれば、チームの共有テーマに保存されます。保存はプランの保存テーマ数の上限に含まれます（[プランと制限](/docs/plans-and-limits)を参照）。上限を超えると、ツールはAPIの `LIMIT_REACHED` エラー（`402`）を返します。
+- **`save_barcode`** はバーコード（フォーマット、値、任意のタイトル、描画オプション）をキーのワークスペースに保存します。保存したバーコードはダッシュボードの「バーコード」に表示されます。`codes:write` を持つキーが必要です。バーコードはすべてのプランで保存でき、フリーでは最大1,000件です。上限を超えると `LIMIT_REACHED`（`402`）を返します。
+- **`generate_ai_art`** は、リンクまたはテキスト、あるいはIDで指定した動的QRコードから、QRコードをAIアートに描き込みます。QRdxがスキャンできることを確認したうえで、PNGを返します。[`POST /v1/art`](/docs/developers/ai-art-api) と同じフィールドを受け付け、`codes:write` を持つキーが必要です。画像1枚につき、キーのワークスペースの月間AIアート画像枠を1つ使用します。1回の呼び出しには最大1分かかります。
 <IfAvailable feature="fileStorage">
-- **アップロードしたロゴ**は、[ダッシュボード → ファイル](/docs/files)でアップロードしたもので、ファイルIDで指定します(`design_qr` では `logo_file_id`、`generate_qr_code` では `logoFileId`)。1 MB以下のPNGまたはJPEGが使えます。キーは、そのファイルを所有するワークスペースのものである必要があります。
+- **アップロードしたロゴ**は、[ダッシュボード → ファイル](/docs/files)でアップロードしたものを、ファイルIDで指定します（`design_qr` では `logo_file_id`、`generate_qr_code` では `logoFileId`）。1 MB以下のPNGまたはJPEGが使えます。キーは、そのファイルを所有するワークスペースのものである必要があります。
 </IfAvailable>
+
+キーがない場合、これらのツールはキーの追加方法を返します。
+
+```txt title="save_template without a key"
+save_template needs a QRdx API key: send it as Authorization: Bearer qrdx_… (create one in Settings → API keys & apps).
+```
 
 <Tabs items={["Claude Code", "Cursor", "VS Code"]}>
   <Tab value="Claude Code">
-    ```bash
+    ```bash title="Terminal"
     claude mcp add --transport http qrdx https://mcp.qrdx.dev/mcp \
       --header "Authorization: Bearer $QRDX_API_KEY"
     ```
   </Tab>
   <Tab value="Cursor">
-    ```json
+    ```json title=".cursor/mcp.json"
     {
       "mcpServers": {
         "qrdx": {
@@ -193,7 +264,7 @@ MCP Appsに対応していないアプリでは、従来どおりのテキスト
     ```
   </Tab>
   <Tab value="VS Code">
-    ```json
+    ```json title=".vscode/mcp.json"
     {
       "servers": {
         "qrdx": {
@@ -209,17 +280,40 @@ MCP Appsに対応していないアプリでは、従来どおりのテキスト
 
 キーは、共有する設定ファイルやコミットする設定ファイルに含めないでください。キーを使った呼び出しは、ワークスペースの1日あたりの[APIクォータ](/docs/plans-and-limits)に含まれます。それ以外のツールは、キーの有無にかかわらず同じように動作します。
 
+## 問題が発生した場合 [#if-something-goes-wrong]
+
+### クライアントが接続できない [#the-client-cant-connect]
+
+URLが正確に `https://mcp.qrdx.dev/mcp` であること、トランスポートがSSEやstdioではなくHTTP（Streamable HTTP）であることを確認してください。ローカルサーバーしか実行できないクライアントでは、前述の `mcp-remote` ブリッジが必要です。ブラウザでURLを開くと接続ページにリダイレクトされますが、これは想定どおりの動作です。MCPクライアントがHTMLを要求することはありません。
+
+### アシスタントがツールにAPIキーが必要だと言う [#the-assistant-says-a-tool-needs-an-api-key]
+
+`save_template`、`save_barcode`、`generate_ai_art`、およびアップロードしたロゴの利用には、接続に `Authorization: Bearer qrdx_…` が必要です。上記のとおりヘッダーを追加して、再接続してください。
+
+### `design_qr` がコンテンツを受け付けない [#design_qr-refuses-the-content]
+
+コンテンツが、エディタのフォームと同じチェックに通らなかった可能性があります。たとえば、8文字未満のWPAパスワード、形式が正しくないメールアドレス、範囲外の支払いフィールドなどです。理由は回答に含まれています。`list_options` で、各コンテンツタイプのフィールドとルールを確認できます。
+
+### リクエストが多すぎる [#too-many-requests]
+
+サーバーが許可するのは、IPアドレスごとに1分あたり{facts.mcpPerMinute}リクエストまでで、`design_qr` は{facts.designQrPerMinute}リクエストまでです。キーを使う場合、`save_template` にはユーザーごとに1分あたり30回の制限もあります。1分待ってから、もう一度お試しください。
+
 ## プライバシーと制限 [#privacy-and-limits]
 
-- これらのツールは、画像のレンダリング、デザインのチェック、テキストの整形、公開コミュニティの読み取りを行います。書き込みを行うのは `save_template` と `save_barcode` だけで、保存を依頼したテーマまたはバーコードをAPIキーのワークスペースに保存します。`generate_ai_art` はワークスペースの月間AIアート画像枠を1つ使用し、画像も、送信された写真も保存しません。サーバーは、生成したコードを保存しません。
+- ツールは、画像の生成、デザインのチェック、テキストの整形、公開コミュニティの閲覧を行います。書き込みを行うのは `save_template` と `save_barcode` だけで、依頼されたテーマまたはバーコードを、APIキーのワークスペースに保存します。`generate_ai_art` はワークスペースの月間AIアート画像枠を1つ使用し、画像も、送信された写真も保存しません。サーバーは、生成したコードを保存しません。
 - `generate_qr_code` と `generate_barcode` が返す画像URLには、エンコードしたデータが含まれます。Wi-Fiのパスワードなど、データが非公開の場合は、URLを共有しないでください。
-- リクエストはIPアドレスごとに1分あたり120件までで、`design_qr` は20件までです。キーを使う場合、`save_template` はユーザーごとに1分あたり30件までにも制限されます。
+- リクエストは、IPアドレスごとに1分あたり{facts.mcpPerMinute}回までで、`design_qr` は{facts.designQrPerMinute}回までに制限されています。
 
 ## セルフホストとローカル開発 [#self-hosting-and-local-development]
 
-MCPサーバーはQRdxのWebアプリの一部なので、どのインスタンスでも `/api/mcp` で提供されます。
+MCPサーバーはQRdxのウェブアプリの一部なので、どのインスタンスでも `/api/mcp` で提供されます。
 
-- **セルフホスト。** `NEXT_PUBLIC_APP_URL` が自分のドメインの場合、接続ページ、スニペット、インストールリンクでは `https://<your-domain>/api/mcp` が使われます。
-- **ローカル開発。** `bun run dev` を実行すると、`http://localhost:3000/api/mcp` で提供されます。接続ページには引き続き公開URLが表示され、ローカルのURLはヒントとして案内されます。サーバーへの変更をリリース前にテストするために、クライアントを手元のマシンに向けることができます。
+- **セルフホスト。** `NEXT_PUBLIC_APP_URL` が自分のドメインの場合、接続ページ、スニペット、インストールリンクには `https://<your-domain>/api/mcp` が使われます。
+- **ローカル開発。** `bun run dev` は `http://localhost:3000/api/mcp` で提供します。接続ページには引き続き公開URLが表示され、ローカルのURLはヒントとして案内されます。これにより、クライアントを自分のマシンに向けて、サーバーの変更をリリース前にテストできます。
 
-ブラウザで `/api/mcp` を開くと、接続ページにリダイレクトされます。MCPクライアントはHTMLを要求しないため、通常どおりサーバーに接続できます。
+## 関連ページ [#related]
+
+- [AIエージェントでQRdxを使う](/docs/developers/ai-agents): エージェントの視点から見たMCP、画像URL、REST API
+- [QRコード画像API](/docs/developers/image-api): ツールが返すURL
+- [AIアートAPI](/docs/developers/ai-art-api): `generate_ai_art` の動作と費用
+- [APIキー](/docs/developers/api-keys): 保存とAIアートに使うキー

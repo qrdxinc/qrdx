@@ -1,44 +1,55 @@
 ---
 title: "Report per i clienti"
-description: "Condividi con un cliente le statistiche delle scansioni di un codice su una pagina che mostra il suo nome, il suo logo e il suo colore."
-icon: ChartLine
+description: "Condividi con un cliente le statistiche delle scansioni di un codice su una pagina di sola lettura che mostra il suo nome, il suo logo e il suo colore al posto di quelli di QRdx."
 ---
 
-Ogni QR code dinamico può avere una pagina di statistiche condivisa: una pagina di sola lettura all'indirizzo `/stats/<token>` con le scansioni nel tempo, i paesi principali, i dispositivi e i siti di provenienza. Chiunque abbia il link può aprirla. I motori di ricerca non la indicizzano e non mostra nulla sulle persone che hanno effettuato la scansione.
+Ogni QR code dinamico può avere una pagina di statistiche condivisa: una pagina di sola lettura all'indirizzo `/stats/<token>` con le scansioni nel tempo, i paesi principali, i dispositivi e i referrer. Chiunque abbia il link può aprirla, i motori di ricerca non la indicizzano e non mostra nulla sulle persone che hanno fatto la scansione. I report per i clienti applicano il marchio del cliente a quella pagina, così puoi inviarla come suo report. Usali quando gestisci codici per conto di altri e vogliono vedere i numeri senza un account QRdx.
 
-Con Pro e Business puoi applicare il brand di un cliente a questa pagina. In alto mostra il nome, il logo e il colore d'accento del cliente, e il nome del cliente compare nella scheda del browser e nelle anteprime dei link, così puoi inviargliela come suo report.
+<Callout type="info" title="Pro e Business">
+  Condividere le statistiche di un codice funziona con tutti i piani. Mostrare nome, logo e colore del cliente sulla pagina è incluso in Pro e Business; Business rimuove anche ogni marchio QRdx e può servire la pagina sul tuo dominio. Vedi [Piani e limiti](/docs/plans-and-limits).
+</Callout>
+
+Hai fretta? [Guarda le tue scansioni](/docs/help/dynamic-codes/scans) spiega le statistiche su cui si basa la pagina.
+
+## Come funziona [#how-it-works]
+
+La pagina condivisa legge gli stessi dati di scansione della scheda **Analytics** del codice, ridotti a ciò che serve a un cliente e aggiornati ogni pochi minuti. Il marchio di un cliente è un nome, un logo e un colore di accento salvati nel tuo workspace; scegline uno su una pagina condivisa e la pagina ne assume l'aspetto. Un solo marchio può personalizzare tutte le pagine che condividi con quel cliente.
 
 | | Gratuito | Pro | Business |
 | --- | --- | --- | --- |
 | Pagina di statistiche condivisa | Sì | Sì | Sì |
 | Nome, logo e colore del cliente | No | Sì | Sì |
-| QRdx sulla pagina | Intestazione e piè di pagina | Un piccolo "Made with QRdx" in fondo | Nessuno |
+| QRdx su una pagina con marchio | Intestazione e piè di pagina | Un piccolo "Made with QRdx" in fondo | Nessuno |
 | Link sul tuo dominio | No | No | Sì |
+
+Una pagina senza marchio del cliente mantiene l'intestazione e il piè di pagina di QRdx con ogni piano.
 
 ## Condividere le statistiche di un codice [#share-a-codes-stats]
 
-1. In [Codici](/dashboard?to=codes), apri il menu **⋯** del codice e scegli **Condividi statistiche**.
-2. Attiva **Pagina di statistiche pubblica** e copia il link.
+1. In [Codici](/dashboard?to=codes), apri il menu **⋯** del codice e scegli **Condividi analytics...**.
+2. Attiva **Pagina analytics pubblica** e copia il link.
 
-**Reimposta link** crea un nuovo link e disattiva subito quello vecchio, mantenendo il brand della pagina. Se disattivi la pagina, il suo link restituisce un 404 e il brand viene rimosso dalla pagina; il brand in sé resta salvato.
+<Shot id="share-analytics-dialog" />
 
-## Aggiungere il brand del cliente [#add-the-clients-brand]
+**Reimposta link** crea un nuovo link e interrompe subito quello vecchio, mantenendo il marchio della pagina. Disattivando la pagina, il suo link restituisce un 404 e il marchio viene rimosso dalla pagina; il marchio in sé resta salvato.
 
-Quando la pagina è attiva, la stessa finestra mostra una sezione **Brand del cliente**.
+## Aggiungere il marchio del cliente [#add-the-clients-brand]
 
-1. Apri il menu e scegli **Nuovo brand cliente**.
-2. Inserisci il nome del cliente, aggiungi un logo (carica un'immagine o incolla l'URL `https` di un'immagine) e, se vuoi, un colore d'accento.
-3. Fai clic su **Aggiungi e usa**. La pagina mostra subito il brand.
+Quando la pagina è attiva, la stessa finestra mostra una sezione **Marchio del cliente**.
 
-I brand vengono salvati nel workspace, quindi per il prossimo codice dello stesso cliente basta sceglierne il brand dal menu. Il pulsante con la matita modifica il brand selezionato ovunque venga usato. Se elimini un brand, tutte le pagine che lo usavano tornano a essere pagine semplici.
+1. Apri il menu e scegli **Nuovo marchio cliente…**.
+2. Inserisci il nome del cliente, aggiungi un logo (carica un'immagine o incolla l'URL `https` di un'immagine) e, se vuoi, un colore di accento.
+3. Fai clic su **Aggiungi e usa**. La pagina mostra subito il marchio.
 
-Il colore d'accento viene usato con parsimonia: nel grafico delle scansioni e nel riquadro del logo. Se il colore risulterebbe poco visibile su uno sfondo bianco o nero, quel tema mantiene il grafico nel colore del testo della pagina. Lascia vuoto l'accento per una pagina completamente monocromatica.
+I marchi sono salvati nel workspace, quindi per il codice successivo dello stesso cliente basta scegliere il marchio dal menu. Il pulsante con la matita modifica il marchio selezionato ovunque venga usato. Eliminando un marchio, tutte le pagine che lo usavano tornano a essere pagine normali.
 
-Proprietari, amministratori e membri possono applicare il brand a una pagina. Gli osservatori e i membri della fatturazione vedono l'impostazione ma non possono modificarla.
+Il colore di accento viene usato con parsimonia: nel grafico delle scansioni e nel riquadro del logo. Se il colore risultasse poco visibile su uno sfondo bianco o nero, quel tema mantiene il grafico nel colore del testo della pagina. Lascia vuoto l'accento per una pagina completamente monocromatica.
 
-## Business: senza marchio QRdx, sul tuo dominio [#business-no-qrdx-mark-on-your-domain]
+Proprietari, amministratori e membri possono applicare un marchio a una pagina. Visualizzatori e membri della fatturazione possono vedere l'impostazione ma non modificarla.
 
-Con Business una pagina con il brand del cliente non ha il marchio QRdx: niente logo QRdx nell'intestazione, niente crediti nel piè di pagina e niente "QRdx" nel titolo della scheda. La scheda del browser mostra il logo del cliente o la sua iniziale. Se il link breve del codice è sul dominio di QRdx, la pagina non lo mostra.
+## Business: nessun marchio QRdx, sul tuo dominio [#business-no-qrdx-mark-on-your-domain]
+
+Con Business una pagina con marchio non ha alcun marchio QRdx: nessun logo QRdx nell'intestazione, nessun credito nel piè di pagina e nessun "QRdx" nel titolo della scheda. La scheda del browser mostra il logo del cliente o la sua iniziale. Se il link breve del codice si trova sul dominio di QRdx, la pagina lo omette.
 
 <IfAvailable feature="customDomains" id="serve-the-page-on-your-domain" title="Servi la pagina sul tuo dominio">
 
@@ -50,14 +61,20 @@ Il dominio serve solo le pagine che gli hai assegnato, e solo finché il workspa
 
 ## Cosa mostra la pagina [#what-the-page-shows]
 
-- Scansioni e visitatori unici degli ultimi 7, 30 o 90 giorni, fin dove il piano dello spazio di lavoro conserva lo storico, oppure di tutto il periodo con Pro e Business
-- Scansioni di QR e tocchi NFC
+- Scansioni e visitatori unici degli ultimi 7, 30 o 90 giorni, fin dove il piano del workspace conserva la cronologia, oppure di tutto il periodo con Pro e Business
+- Scansioni QR e tap NFC
 - Scansioni al giorno, paesi principali, tipi di dispositivo e siti di provenienza
 
 Non mostra mai il percorso o la query string della destinazione, le città, le posizioni precise né nulla su una singola scansione. I numeri possono avere fino a 5 minuti di ritardo.
 
-## Se il piano cambia [#if-the-plan-changes]
+## Limiti e piani [#limits-and-plans]
 
-Il brand viene conservato, ma compare solo finché il piano lo include. Quando un workspace Business passa a Pro, le sue pagine mostrano di nuovo il piccolo "Made with QRdx" e i link sul dominio personalizzato smettono di funzionare; l'indirizzo QRdx continua a funzionare. Con Gratuito la pagina non mostra alcun brand del cliente. Con un nuovo upgrade tornano entrambi.
+Il marchio viene conservato, ma è visibile solo finché il piano lo include. Quando un workspace Business passa a Pro, le sue pagine tornano ad avere il piccolo "Made with QRdx" e i link sui domini personalizzati smettono di funzionare; l'indirizzo QRdx continua a funzionare. Con Gratuito la pagina non mostra alcun marchio del cliente. Passando di nuovo a un piano superiore, entrambi vengono ripristinati.
 
 Per offrire a un cliente una vista di molti codici insieme, con le loro statistiche e le pagine ospitate, usa il [portale clienti](/docs/client-portal) con Business.
+
+## Correlati [#related]
+
+- [Portale clienti](/docs/client-portal): accesso di sola lettura a intere cartelle, con accesso tramite login
+- [Domini personalizzati](/docs/custom-domains): il dominio su cui può risiedere un report Business
+- [Guarda le tue scansioni](/docs/help/dynamic-codes/scans)

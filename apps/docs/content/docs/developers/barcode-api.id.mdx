@@ -1,37 +1,75 @@
 ---
 title: "Barcode API"
-description: "Buat gambar barcode EAN, UPC, Code 128, Data Matrix, dan lainnya dari sebuah URL tanpa kunci API, lalu simpan barcode di workspace dengan REST API."
+description: "Buat gambar barcode EAN, UPC, Code 128, GS1-128, Data Matrix, dan lainnya dari URL GET tanpa kunci API, kirim nilai sebagai JSON agar tidak muncul di URL, dan simpan barcode di workspace dengan REST API."
 icon: Barcode
 ---
 
-`GET https://api.qrdx.dev/v1/barcode` mengembalikan gambar barcode. Semuanya ada di query string, jadi URL itu sendiri adalah gambarnya: letakkan di tag `<img>`, feed produk, atau templat label. API ini menggambar format {facts.barcodeFormats} yang sama dengan [generator barcode](/barcode-generator), dengan aturan yang sama, dan menghasilkan SVG yang sama.
+Setelah membaca halaman ini, Anda akan memiliki URL gambar barcode untuk tag `<img>`, feed produk, atau templat label, memahami cara digit pemeriksa dan format divalidasi, serta tahu cara menyimpan barcode ke workspace agar dapat diedit nanti.
 
-```html
+`GET https://api.qrdx.dev/v1/barcode` mengembalikan gambar barcode. Semuanya ada di query string, sehingga URL itu sendiri adalah gambarnya. API ini menggambar format {facts.barcodeFormats} yang sama dengan [generator barcode](/barcode-generator), dengan aturan yang sama, dan menghasilkan SVG yang sama. Tidak perlu akun atau kunci API.
+
+```html title="index.html"
 <img
   src="https://api.qrdx.dev/v1/barcode?format=ean13&data=590123412345"
   alt="EAN-13 barcode 5901234123457"
 />
 ```
 
-Angka tersebut kurang satu digit, sehingga digit pemeriksa (7) ditambahkan. Jika Anda mengirim ke-13 digit, digit pemeriksa akan diverifikasi: digit yang salah mengembalikan `400` beserta nilai yang seharusnya.
+Angka tersebut kurang satu digit, sehingga digit pemeriksa (7) ditambahkan. Kirim ke-13 digit dan digit pemeriksa akan diverifikasi: digit yang salah mengembalikan `400` beserta nilai yang seharusnya.
 
-Tidak perlu akun atau kunci API. Untuk menyimpan barcode di workspace Anda dan mengeditnya nanti, gunakan [barcode tersimpan](#saved-barcodes).
+## 1. Meminta gambar [#1-request-an-image]
 
-## Contoh [#examples]
+<Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
+  <Tab value="curl">
+    ```bash title="Terminal"
+    curl -o box.png "https://api.qrdx.dev/v1/barcode?format=ean13&data=5901234123457&type=png&scale=3"
+    ```
+  </Tab>
+  <Tab value="JavaScript">
+    ```js title="barcode.mjs"
+    import { writeFile } from "node:fs/promises";
 
-PNG dengan 3 piksel per modul (beri tanda kutip pada URL agar shell Anda mempertahankan `&`):
+    const url = new URL("https://api.qrdx.dev/v1/barcode");
+    url.search = new URLSearchParams({
+      format: "ean13",
+      data: "5901234123457",
+      type: "png",
+      scale: "3",
+    }).toString();
 
-```bash
-curl -o box.png "https://api.qrdx.dev/v1/barcode?format=ean13&data=5901234123457&type=png&scale=3"
+    const response = await fetch(url);
+    await writeFile("box.png", Buffer.from(await response.arrayBuffer()));
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="barcode.py"
+    import requests
+
+    response = requests.get(
+        "https://api.qrdx.dev/v1/barcode",
+        params={"format": "ean13", "data": "5901234123457", "type": "png", "scale": 3},
+    )
+    response.raise_for_status()
+    open("box.png", "wb").write(response.content)
+    ```
+  </Tab>
+</Tabs>
+
+```txt title="Output"
+200 image/png
+box.png: PNG image data, 385 x 237, 8-bit/color RGBA, non-interlaced
 ```
 
-PDF vektor untuk label logistik GS1-128, dengan tanda kurung di sekitar setiap Application Identifier:
+Apit URL dengan tanda kutip di shell agar `&` tetap ada, dan enkode nilai yang mengandung `&`, `#`, `+`, atau spasi, misalnya dengan `encodeURIComponent` di JavaScript.
 
-```bash
+## 2. Contoh lainnya [#2-more-examples]
+
+PDF vektor label logistik GS1-128, dengan tanda kurung di sekitar setiap Application Identifier:
+
+```bash title="Terminal"
 curl -o pallet.pdf "https://api.qrdx.dev/v1/barcode?format=gs1-128&type=pdf&data=(01)09501101530003(17)261231(10)AB-123"
+# 200 application/pdf, 1 page
 ```
-
-Enkode nilai yang berisi `&`, `#`, `+`, atau spasi, misalnya dengan `encodeURIComponent` di JavaScript.
 
 Label rak Code 128 berwarna biru tua, tanpa teks di bawah batang, diputar 90°:
 
@@ -45,12 +83,29 @@ Data Matrix dengan margin lebih lebar:
 https://api.qrdx.dev/v1/barcode?format=datamatrix&data=SN-0042-7781&quietZone=4
 ```
 
+## 3. Jauhkan nilai dari URL [#3-keep-the-value-out-of-the-url]
+
+`POST https://api.qrdx.dev/v1/barcode` menerima kolom yang sama dalam bentuk JSON dan mengembalikan file yang sama, tanpa cache. Gunakan ini bila nilai tidak boleh tersimpan di log, riwayat, atau cache seperti halnya URL:
+
+```bash title="Terminal"
+curl -o label.png https://api.qrdx.dev/v1/barcode \
+  -H "Content-Type: application/json" \
+  -d '{"format":"datamatrix","data":"Internal note 42","type":"png"}'
+# 200 image/png, Cache-Control: no-store
+```
+
+Dalam JSON, `text` bertipe boolean, sedangkan `scale`, `height`, `quietZone`, dan `rotate` berupa angka. Body yang dikirim tanpa `Content-Type: application/json` menghasilkan `415`:
+
+```json title="415 Unsupported Media Type"
+{"code":"UNSUPPORTED_MEDIA_TYPE","message":"Send a JSON body with Content-Type: application/json.","status":415}
+```
+
 ## Parameter [#parameters]
 
 | Parameter | Default | Deskripsi |
 | --- | --- | --- |
-| `format` | wajib | Jenis barcode; lihat [Format](#formats). Huruf besar/kecil dan tanda hubung tidak berpengaruh: `EAN-13` juga bisa |
-| `data` | wajib | Angka atau teks yang akan di-enkode, hingga 1.000 karakter (lebih sedikit untuk sebagian besar format linear) |
+| `format` | wajib | Jenis barcode; lihat [Format](#formats). Huruf besar/kecil dan tanda hubung tidak berpengaruh: `EAN-13` juga berfungsi |
+| `data` | wajib | Angka atau teks yang di-enkode, hingga 1.000 karakter (lebih sedikit untuk sebagian besar format linear) |
 | `type` | `svg` | `svg`, `png`, `jpg`, `webp`, `avif`, `pdf`, atau `eps` |
 | `scale` | `4` | Piksel per modul pada PNG, JPG, WebP, dan AVIF, `1` sampai `10` |
 | `height` | tergantung format | Tinggi batang barcode linear dalam milimeter pada ukuran vektor, `5` sampai `60` (23 untuk EAN-13) |
@@ -84,56 +139,55 @@ Nomor ritel (EAN, UPC, ITF-14, GTIN pada GS1-128) dilisensikan kepada perusahaan
 
 PNG, JPG, WebP, dan AVIF berukuran `scale` piksel per modul, yaitu lebar batang tersempit. Satu sel 2D selebar dua modul.
 
-SVG, PDF, dan EPS adalah vektor dengan satu poin per modul (0,353 mm), sehingga EAN-13 pada pengaturan default tercetak sekitar 107% dari ukuran nominalnya. Skalakan file vektor di tata letak Anda; untuk barcode ritel, pertahankan di antara 80% dan 200% dan jangan memotong tinggi batang.
+SVG, PDF, dan EPS adalah vektor dengan satu poin per modul (0,353 mm), sehingga EAN-13 pada pengaturan default berukuran sekitar 45 × 28 mm, sekitar 107% dari ukuran nominalnya. Skalakan file vektor di tata letak Anda; untuk barcode ritel, pertahankan antara 80% dan 200% dan jangan memotong tinggi batang.
 
 ## Respons [#responses]
 
 Permintaan yang berhasil mengembalikan file dengan:
 
-- `Content-Type` sesuai jenis file. EPS dikirim sebagai unduhan (`Content-Disposition: attachment`); lainnya dibuka langsung dengan nama file seperti `ean13-5901234123457.png`
-- `Cache-Control: public, max-age=31536000, immutable`: kueri yang sama selalu mengembalikan byte yang sama
-- `Access-Control-Allow-Origin: *`, sehingga Anda bisa memanggilnya dengan `fetch` dari situs web mana pun
-
-Parameter yang hilang atau tidak valid, atau nilai yang tidak dapat ditampung format, mengembalikan `400` dan menyebutkan masalahnya:
-
-```json
-{
-  "code": "VALIDATION_ERROR",
-  "message": "Invalid query parameters",
-  "data": {
-    "details": [
-      {
-        "param": "data",
-        "message": "EAN-13: The check digit should be 7, not 8. Check the number, or leave the last digit off and it's worked out for you."
-      }
-    ]
-  },
-  "status": 400
-}
-```
-
-## Jaga nilai tetap di luar URL [#keep-the-value-out-of-the-url]
-
-`POST https://api.qrdx.dev/v1/barcode` menerima field yang sama sebagai JSON dan mengembalikan file yang sama, tanpa cache. Gunakan ini bila nilai tidak boleh berakhir di log, riwayat, atau cache seperti halnya URL:
-
-```bash
-curl -o label.png https://api.qrdx.dev/v1/barcode \
-  -H "Content-Type: application/json" \
-  -d '{"format":"datamatrix","data":"Internal note 42","type":"png"}'
-```
-
-Dalam JSON, `text` adalah boolean, sedangkan `scale`, `height`, `quietZone`, dan `rotate` adalah angka.
+- `Content-Type` sesuai jenis file. EPS dikirim sebagai unduhan (`Content-Disposition: attachment`); yang lain dibuka langsung dengan nama file seperti `ean13-5901234123457.png`
+- `Cache-Control: public, max-age=31536000, immutable` untuk `GET`: query yang sama selalu mengembalikan byte yang sama. Respons `POST` bersifat `no-store`
+- `Access-Control-Allow-Origin: *`, sehingga Anda dapat memanggilnya dengan `fetch` dari situs web mana pun
 
 ## Barcode tersimpan [#saved-barcodes]
 
-Dengan [kunci API](/docs/developers/api-keys), REST API menyimpan barcode di workspace milik kunci tersebut, tempat barcode muncul di bagian **Barcodes** pada dasbor. Scope-nya sama seperti kode: `codes:read` untuk melihat daftar dan mengunduh, `codes:write` untuk mengubah.
+Dengan [kunci API](/docs/developers/api-keys), REST API menyimpan barcode di workspace milik kunci tersebut, tempat barcode muncul di bawah **Barcodes** di dasbor. Scope-nya sama seperti kode: `codes:read` untuk menampilkan daftar dan mengunduh, `codes:write` untuk mengubah.
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/barcodes \
   -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"format":"ean13","value":"590123412345","title":"Spring box"}'
 ```
+
+```json title="201 Created"
+{
+  "data": {
+    "id": "cmwgwqcxo0003iscgecog7m1b",
+    "title": "Spring box",
+    "format": "ean13",
+    "formatLabel": "EAN-13",
+    "value": "5901234123457",
+    "options": {
+      "foreground": "#000000",
+      "background": "#ffffff",
+      "showText": true,
+      "barHeightMm": 23,
+      "quietZone": 11,
+      "scale": 4,
+      "rotation": 0
+    },
+    "folderId": null,
+    "imageUrl": "https://qrdx.dev/api/v1/barcode?format=ean13&data=5901234123457",
+    "createdAt": "2026-11-14T21:18:01.212Z",
+    "updatedAt": "2026-11-14T21:18:01.212Z",
+    "deletedAt": null,
+    "organizationId": "ws_ad2c5e1cce31ccf31535e78f08ab5b78"
+  }
+}
+```
+
+Nilai 12 digit dikembalikan beserta digit pemeriksanya, dan `options` berisi nilai default format. Setiap barcode tersimpan memiliki `imageUrl`: gambar yang sama dari `GET /v1/barcode`, yang dapat dimuat oleh siapa pun yang memiliki tautannya. Endpoint `/image` di bawah bersifat privat dan membutuhkan kunci.
 
 | Endpoint | Fungsi |
 | --- | --- |
@@ -141,23 +195,54 @@ curl https://api.qrdx.dev/v1/barcodes \
 | [`POST /v1/barcodes`](/docs/developers/api/create-barcode) | Menyimpan satu barcode. `options` menerima `foreground`, `background`, `showText`, `barHeightMm`, `quietZone`, `scale`, dan `rotation` |
 | [`GET /v1/barcodes/{id}`](/docs/developers/api/get-barcode) | Satu barcode |
 | [`PATCH /v1/barcodes/{id}`](/docs/developers/api/update-barcode) | Mengubah judul, format, nilai, opsi, atau folder |
-| [`DELETE /v1/barcodes/{id}`](/docs/developers/api/delete-barcode) | Memindahkannya ke tempat sampah; `?permanent=true` menghapusnya secara permanen |
-| [`GET /v1/barcodes/{id}/image`](/docs/developers/api/get-saved-barcode-image) | File yang digambar sesuai yang disimpan: `type` dan `scale` seperti di atas |
+| [`DELETE /v1/barcodes/{id}`](/docs/developers/api/delete-barcode) | Memindahkannya ke tempat sampah (`{ "deleted": false, "trashed": true }`); `?permanent=true` menghapusnya secara permanen |
+| [`GET /v1/barcodes/{id}/image`](/docs/developers/api/get-saved-barcode-image) | File yang digambar sesuai penyimpanan: `type` dan `scale` seperti di atas. `Cache-Control: private, no-store` |
 
-Setiap barcode tersimpan memiliki `imageUrl`: gambar yang sama dari `GET /v1/barcode`, yang dapat dimuat oleh siapa pun yang memiliki tautannya. Endpoint `/image` bersifat privat dan memerlukan kunci.
+Setiap paket dapat menyimpan barcode: hingga 1.000 di Gratis, 10.000 di Pro, dan 100.000 di Business, tidak termasuk tempat sampah. Permintaan ini dihitung dalam kuota API harian workspace dan mengirim header `X-RateLimit-*`, seperti [REST API](/docs/developers/rest-api#rate-limits) lainnya.
 
-Setiap paket dapat menyimpan barcode: hingga 1.000 di Gratis, 10.000 di Pro, dan 100.000 di Business, tidak termasuk tempat sampah. Permintaan ini dihitung dalam kuota API harian workspace dan mengirim header `X-RateLimit-*`, seperti [REST API](/docs/developers/rest-api).
+## Jika terjadi masalah [#if-something-goes-wrong]
 
-## MCP [#mcp]
+### `400` dengan `"param": "data"` [#400-with-param-data]
 
-[Server MCP](/docs/developers/mcp) memiliki `generate_barcode`, yang memeriksa nilai dan mengembalikan PNG beserta URL gambar, serta `save_barcode`, yang menyimpan ke workspace milik kunci API pada koneksi tersebut.
+Nilai melanggar aturan format. Pesan menjelaskan dengan tepat apa masalahnya, baik digit pemeriksa, panjang, maupun kumpulan karakter:
+
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"data","message":"EAN-13: The check digit should be 7, not 8. Check the number, or leave the last digit off and it's worked out for you."}]},"status":400}
+```
+
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"data","message":"Code 39: Code 39 has no lowercase letters. Use capitals, or Code 128 for mixed case."}]},"status":400}
+```
+
+### `400` dengan `"param": "format"` [#400-with-param-format]
+
+`format` tidak ada atau bukan salah satu dari sebelas id di [Format](#formats). Pesan menampilkan daftarnya.
+
+### Gambar raster ditolak atau terpotong [#the-raster-image-is-refused-or-cut]
+
+Gambar raster berukuran paling besar 6.000 piksel per sisi. Turunkan `scale` untuk nilai yang panjang, atau gunakan SVG atau PDF.
+
+### `429 RATE_LIMITED` [#429-rate_limited]
+
+Melebihi {facts.imageApiPerMinute} permintaan per menit dari satu alamat IP, untuk `GET` dan `POST /v1/barcode` secara gabungan. Tunggu sejumlah detik pada `Retry-After`; respons `GET` dapat di-cache selama setahun, jadi muat setiap gambar sekali saja.
 
 ## Batasan [#limits]
 
-- **Batas laju:** 300 permintaan per menit per alamat IP untuk `GET` dan `POST /v1/barcode`, sama seperti [Image API QR](/docs/developers/image-api). Jika melewati batas, Anda menerima `429` dengan header `Retry-After`. Barcode tersimpan mengikuti batas per menit dan kuota harian REST API.
-- **Ukuran gambar:** gambar raster maksimal 6.000 piksel per sisi. Turunkan `scale` untuk nilai yang panjang.
-- **Tidak ada pemeriksaan pemindaian di sini.** [Generator barcode](/barcode-generator) mendekode hasil gambarnya sebelum Anda mengunduh; API menggambar apa yang Anda minta. Cetak percobaan dan pindai dengan pemindai yang akan membacanya.
+- **Batas laju:** {facts.imageApiPerMinute} permintaan per menit per alamat IP untuk `GET` dan `POST /v1/barcode`, seperti pada [API gambar kode QR](/docs/developers/image-api). Barcode tersimpan mengikuti batas per menit dan kuota harian REST API.
+- **Ukuran gambar:** gambar raster berukuran paling besar 6.000 piksel per sisi.
+- **Tidak ada pemeriksaan pemindaian di sini.** [Generator barcode](/barcode-generator) mendekode hasil gambarnya sebelum Anda mengunduh; API menggambar apa yang Anda minta. Cetak uji coba dan pindai dengan pemindai yang akan membacanya.
+
+## MCP [#mcp]
+
+[Server MCP](/docs/developers/mcp) memiliki `generate_barcode`, yang memeriksa nilai dan mengembalikan PNG beserta URL gambar, dan `save_barcode`, yang menyimpan ke workspace milik kunci API pada koneksi tersebut.
 
 ## Hosting mandiri [#self-hosting]
 
 Endpoint ini adalah bagian dari aplikasi web QRdx, sehingga instans [hosting mandiri](/docs/self-hosting) menyajikannya di `/api/v1/barcode` dan `/api/v1/barcodes` pada domain Anda sendiri.
+
+## Terkait [#related]
+
+- [Render gambar barcode](/docs/developers/api/get-barcode-image): halaman referensi dengan panel Try it
+- [Simpan barcode](/docs/developers/api/create-barcode): endpoint barcode tersimpan, lengkap dengan semua opsi
+- [API gambar kode QR](/docs/developers/image-api): kode QR dengan cara yang sama
+- [Kunci API](/docs/developers/api-keys): kunci yang dibutuhkan barcode tersimpan

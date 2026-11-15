@@ -1,49 +1,104 @@
 ---
 title: "Scarica e stampa un QR code"
-description: "Scegli il formato e la dimensione giusti e ottieni file pronti per la stampa, con margine di abbondanza e crocini di taglio."
+description: "Scegli il formato e la dimensione giusti e ottieni file pronti per la stampa con abbondanza e crocini di taglio."
 ---
 
-## Download [#download]
+Il pulsante **Download** nel [Playground](/playground) ti dà un'immagine per schermi e documenti oppure un file pronto per la stampa da consegnare a una tipografia. Questa pagina ti aiuta a scegliere formato e dimensione e a controllare il risultato prima di stampare molte copie.
 
-Nel [Playground](/playground), clicca sull'icona di download sopra l'anteprima oppure premi <kbd>D</kbd>. Si apre la finestra **Scarica QR code** con due schede.
+## Scarica un file immagine [#download-an-image-file]
 
-### File immagine [#image-file]
+Usalo per schermi, email, presentazioni e la maggior parte delle stampe di uso quotidiano.
 
-Usalo per schermi, email, presentazioni e la maggior parte delle stampe.
+### 1. Apri la finestra di download [#1-open-the-download-dialog]
 
-1. Scegli un formato: **PNG**, **JPG**, **WebP**, **SVG**, **PDF** o **EPS**.
-2. Scegli una dimensione: Email (200 px), Web (400 px), Social (800 px), Stampa (1200 px), Poster (2000 px), oppure inserisci la tua.
-3. Attiva **Sfondo trasparente** se ti serve. Il formato JPG non supporta la trasparenza.
-4. Clicca sul pulsante di download in basso.
+Clicca su **Download** sopra l'anteprima, oppure premi <kbd>D</kbd>. Si apre la finestra **Download QR code** con due schede, **Image file** e **Print-ready**.
 
-### Pronto per la stampa [#print-ready]
+<Shot id="playground-download" />
 
-Usalo quando una tipografia ti chiede un file.
+### 2. Scegli un formato [#2-choose-a-format]
 
-1. Imposta la **larghezza del codice** in millimetri o pollici.
-2. Scegli **RGB** o **CMYK**. Le tipografie di solito richiedono CMYK.
-3. Aggiungi **3 mm di abbondanza** se lo sfondo arriva fino al bordo della pagina, così il taglio non lascia mai una riga bianca.
-4. Attiva **Crocini di taglio** per mostrare dove tagliare. I crocini di taglio vengono aggiunti ai PDF.
-5. Scarica un file **PDF**, **SVG** o **EPS**.
+Scegli **PNG**, **JPG**, **WebP**, **SVG**, **PDF** o **EPS**. La tabella qui sotto indica quale usare.
+
+### 3. Scegli una dimensione [#3-choose-a-size]
+
+Scegli **Email** (200 px), **Web** (400 px), **Social** (800 px), **Print** (1200 px) o **Poster** (2000 px), oppure **Custom** per qualsiasi larghezza da 50 a 5000 px.
+
+### 4. Imposta lo sfondo [#4-set-the-background]
+
+Attiva **Transparent background** se il codice si trova su una pagina o un'immagine colorata. Il formato JPG non può essere trasparente, quindi per questo formato l'interruttore è disattivato.
+
+### 5. Scarica [#5-download]
+
+Clicca sul pulsante di download in basso. Il file viene salvato nella cartella dei download con la cornice inclusa, in ogni formato.
+
+## Scarica un file pronto per la stampa [#download-a-print-ready-file]
+
+Usalo quando una tipografia ti chiede un file, oppure quando stampi a una dimensione esatta.
+
+### 1. Apri la scheda Print-ready [#1-open-the-print-ready-tab]
+
+Nella finestra **Download QR code**, clicca su **Print-ready**.
+
+<Shot id="playground-download-print" />
+
+### 2. Imposta la dimensione [#2-set-the-size]
+
+Sotto **Scanned from about**, scegli da che distanza le persone faranno la scansione del codice. Poi imposta **Code width** in mm o in pollici. La finestra suggerisce una larghezza minima per quella distanza.
+
+### 3. Scegli la modalità colore [#3-choose-the-color-mode]
+
+Scegli **RGB** o **CMYK** sotto **Color mode**. Le tipografie di solito richiedono CMYK.
+
+### 4. Aggiungi abbondanza e crocini di taglio [#4-add-bleed-and-crop-marks]
+
+Imposta **Bleed** su **3 mm** se lo sfondo arriva fino al bordo della pagina, così il taglio non lascia mai una linea bianca. Attiva **Crop marks (PDF)** per mostrare dove tagliare. I crocini di taglio vengono aggiunti solo al PDF.
+
+### 5. Scarica [#5-download-1]
+
+Clicca sul pulsante di download del PDF, oppure su **SVG** o **EPS** per un file vettoriale senza impostazioni di pagina.
 
 ## Quale formato scegliere [#which-format-to-choose]
 
-- **PNG**, **JPG** o **WebP**: immagini a pixel per schermi, email e documenti. WebP ha gli stessi pixel di PNG in un file più leggero, ideale per i siti web.
-- **SVG**, **EPS** o un **PDF** da **Pronto per la stampa**: file vettoriali che restano nitidi a qualsiasi dimensione. Le tipografie li preferiscono. Un PDF dalla scheda **File immagine** contiene un'immagine del codice, quindi usa Pronto per la stampa per tutto ciò che stampi.
+| Formato | Quando usarlo |
+| --- | --- |
+| PNG, WebP | Schermi, email, documenti e pagine web. WebP contiene gli stessi pixel di PNG in un file più piccolo. |
+| JPG | Foto e app che accettano solo JPG. Nessuno sfondo trasparente. |
+| SVG, EPS | Tipografie e strumenti di progettazione. I file vettoriali restano nitidi a qualsiasi dimensione. |
+| PDF da **Print-ready** | Tutto ciò che stampi. Include dimensione, modalità colore, abbondanza e crocini di taglio. Un PDF dalla scheda **Image file** contiene invece un'immagine del codice. |
 
 ## Quanto grande stampare [#how-big-to-print]
 
-Fai il codice largo circa un decimo della distanza di scansione.
+Un QR code si scansiona da una distanza pari a circa dieci volte la sua larghezza. Fai il codice largo circa un decimo della distanza di scansione:
 
 - Un biglietto da visita letto da 20 cm richiede un codice largo circa 2 cm.
 - Un poster letto da 1 m richiede un codice largo circa 10 cm.
 
-I codici che contengono più contenuto richiedono più spazio. Il [calcolatore della dimensione di stampa](/tools/print-size) calcola per te la dimensione minima.
+I codici che contengono più contenuto hanno quadratini più piccoli e richiedono più spazio. Il [calcolatore della dimensione di stampa](/tools/print-size) calcola la dimensione minima per il tuo codice e la tua distanza.
 
 ## Lascia un bordo libero [#leave-a-clear-border]
 
-Mantieni dello spazio vuoto attorno al codice: i lettori ne hanno bisogno per individuarlo. L'impostazione **Margine** nella scheda **Design** lo aggiunge per te; **Standard** (4 moduli) è la scelta sicura.
+Gli scanner hanno bisogno di spazio vuoto attorno al codice per individuarlo. **Padding** nella scheda **Design** lo aggiunge per te; **Standard** (4 moduli) è la scelta sicura. Non lasciare che altre grafiche tocchino il codice.
 
 ## Prova prima di stampare [#test-before-you-print]
 
-Stampa una copia e fai la scansione con due telefoni diversi, dalla distanza da cui le persone la faranno. Puoi anche caricare la foto di un codice stampato nel [verificatore di scansione](/tools/scan-checker).
+Stampa una copia e fai la scansione con due telefoni diversi, dalla distanza da cui la faranno le persone. Puoi anche fotografare il codice stampato e caricare la foto nel [controllo scansione](/tools/scan-checker).
+
+## Se qualcosa va storto [#if-something-goes-wrong]
+
+### EPS è disattivato [#eps-is-grayed-out]
+
+EPS non può contenere un riempimento con immagine. Scarica invece un SVG o un PDF pronto per la stampa, oppure cambia il riempimento in un colore pieno o in un gradiente nella scheda **Design**.
+
+### Lo sfondo trasparente è disattivato [#transparent-background-is-grayed-out]
+
+Hai scelto JPG. Scegli invece PNG, WebP o SVG.
+
+### Il codice stampato appare sfocato [#the-printed-code-looks-blurry]
+
+Un'immagine a pixel è stata stampata più grande di quanto la sua dimensione consenta. Scarica un SVG, un EPS o un PDF dalla scheda **Print-ready**, che restano nitidi a qualsiasi dimensione.
+
+## Correlati [#related]
+
+- [Controlla un design con il punteggio di scansione](/docs/help/designing/scan-score)
+- [Aggiungi una cornice e una call to action](/docs/help/designing/frames)
+- [Un codice non si scansiona](/docs/help/troubleshooting/wont-scan)

@@ -1,152 +1,135 @@
 ---
 title: "二维码检测"
-description: "在浏览器中读取并解码图片中的二维码。"
+description: "在浏览器中使用 handleImageLoad 从图片中读取并解码二维码,获取二维码的位置,并使用 getImageScanScore 为图片评分。"
 icon: Scan
 ---
 
-读取并解码已上传图片中的二维码。
+`handleImageLoad` 在浏览器中从图片元素解码二维码,并返回其文本。你可以用它读取上传的图片、截图或照片中的二维码,而无需把图片发送到任何地方。如果需要现成的拖放区域,请安装基于它构建的 [QR Code Scanner](/docs/components/qr-code-scanner) 组件。
 
-## 基本检测 [#basic-detection]
+| 函数 | 返回值 | 说明 |
+| --- | --- | --- |
+| `handleImageLoad(img, size, returnFullData?)` | `Promise<string \| QRCode \| "NO_QR">` | 返回解码后的文本;设置 `returnFullData` 时返回解码器的完整结果。未找到二维码时返回 `"NO_QR"`。仅限浏览器 |
+| `downloadImageWithBoundingBox(img, corners, filename)` | `void` | 将图片保存为 PNG,并用红色框出找到的二维码 |
+| `getImageScanScore(imageOrBlob, options?)` | `Promise<ImageScanScoreResult>` | 解码现有图片并为其评分。参见[能否扫描?](/docs/features/frames#will-it-scan) |
+| `scanQRPixels(pixels, expected, options?)` | `Promise<PixelScanResult>` | 在 Node 中检查 RGBA 像素是否解码为 `expected` |
 
-```tsx
-import { handleImageLoad } from 'qrdx';
+## 解码上传的图片 [#decode-an-uploaded-image]
 
-async function detectQR(file: File) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const img = new Image();
-      img.onload = async () => {
-        try {
-          const result = await handleImageLoad(img, 400, false);
-          if (result === "NO_QR") {
-            resolve("No QR code found");
-          } else {
-            resolve(result);
-          }
-        } catch (error) {
-          reject(error);
-        }
-      };
-      img.src = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  });
+```tsx title="components/qr-reader.tsx"
+"use client";
+
+import { handleImageLoad } from "qrdx";
+import { useState } from "react";
+
+async function decodeFile(file: File): Promise<string | null> {
+  const url = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+    const result = await handleImageLoad(image, image.naturalWidth);
+    return typeof result === "string" && result !== "NO_QR" ? result : null;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
-```
 
-## React 组件 [#react-component]
+export function QrReader() {
+  const [result, setResult] = useState("");
 
-```tsx
-import { useState } from 'react';
-import { handleImageLoad } from 'qrdx';
-
-export default function QRDetector() {
-  const [result, setResult] = useState('');
-
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  async function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
     if (!file) return;
-
     try {
-      const qrData = await detectQR(file);
-      setResult(qrData);
-    } catch (error) {
-      setResult(`Error: ${error.message}`);
+      setResult((await decodeFile(file)) ?? "No QR code found");
+    } catch {
+      setResult("Could not read that image");
     }
-  };
+  }
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleFile} />
-      {result && <p>{result}</p>}
+      <input
+        accept="image/*"
+        aria-label="Image with a QR code"
+        type="file"
+        onChange={onChange}
+      />
+      {result ? <p>{result}</p> : null}
     </div>
   );
 }
 ```
 
-## 检测参数 [#detection-parameters]
+选择一张二维码截图,其链接就会显示在输入框下方。`image.decode()` 会等待文件加载完成;随后 `handleImageLoad` 将图片绘制到画布上并运行 jsQR。jsQR 按需加载,因此不会进入从不扫描的打包产物中。
 
-```tsx
-handleImageLoad(
-  imgElement: HTMLImageElement,
-  size: number,              // Processing size (recommended: 400)
-  returnFullData?: boolean   // Return full data or just text
-)
-```
+## 检测的工作原理 [#how-detection-works]
 
-### 尺寸参数 [#size-parameter]
+`handleImageLoad(img, size, returnFullData)` 先尝试整张图片,再尝试四个裁剪区域(左下、右下、右上和中心区域,大小为图片的 65%),每个区域都使用从 100% 到 10% 的六种缩放比例。它会返回第一个成功的解码结果,因此即使二维码只占截图的一小部分,也能被找到。过宽或过高的图片会先被缩小。
 
-- **200-400** — 速度更快，适合清晰的图片
-- **600+** — 更适合较小或已损坏的二维码
-- **推荐值** — 大多数情况下使用 400
+- `img` 必须是已加载的 `<img>`。请等待 `decode()` 或 `load` 事件。
+- `size` 仅为兼容早期版本而保留,会被忽略:缩放比例由图片自身的尺寸得出。请传入图片的宽度。
+- `returnFullData` 会返回 jsQR 的结果对象,而不是文本。
 
-## 完整数据响应 [#full-data-response]
+如果二维码模糊、边缘被截断,或者比背景更浅(深色背景上的浅色模块),则会返回 `"NO_QR"`。
 
-获取完整的检测信息：
+## 位置与原始数据 [#position-and-raw-data]
 
-```tsx
-const fullData = await handleImageLoad(img, 400, true);
-// Returns:
-// {
-//   data: "https://example.com",
-//   binaryData: Uint8ClampedArray,
-//   location: { topLeftCorner, topRightCorner, ... },
-//   chunks: [...]
-// }
-```
+设置 `returnFullData` 后,返回的是解码器自己的对象:
 
-## 调试可视化 [#debug-visualization]
+```ts title="lib/decode-full.ts"
+import { handleImageLoad } from "qrdx";
 
-下载带有边界框的图片：
-
-```tsx
-import { downloadImageWithBoundingBox } from 'qrdx';
-
-const fullData = await handleImageLoad(img, 400, true);
-if (fullData?.location) {
-  const boundingBox = [
-    fullData.location.topLeftCorner,
-    fullData.location.topRightCorner,
-    fullData.location.bottomRightCorner,
-    fullData.location.bottomLeftCorner,
-  ];
-  downloadImageWithBoundingBox(img, boundingBox, "debug.png");
+const found = await handleImageLoad(image, image.naturalWidth, true);
+if (found !== "NO_QR") {
+  found.data; // "https://example.com"
+  found.version; // 1 to 40
+  found.binaryData; // the raw bytes, as number[]
+  found.chunks; // the encoded segments and their modes
+  found.location.topLeftCorner; // { x, y } in the image's pixels, and the other three corners
 }
 ```
 
-## 错误处理 [#error-handling]
+`downloadImageWithBoundingBox` 会在原始图片上画出二维码的轮廓并保存,当某张照片解码出意外内容时,这会很有帮助。四个角点的顺序为左上、右上、左下、右下:
 
-```tsx
-try {
-  const result = await handleImageLoad(img, 400, false);
-  if (result === "NO_QR") {
-    console.log("No QR code found");
-  } else {
-    console.log("QR data:", result);
-  }
-} catch (error) {
-  console.error("Detection failed:", error);
+```ts title="lib/debug-detection.ts"
+import { downloadImageWithBoundingBox, handleImageLoad } from "qrdx";
+
+const found = await handleImageLoad(image, image.naturalWidth, true);
+if (found !== "NO_QR") {
+  const { topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner } = found.location;
+  downloadImageWithBoundingBox(
+    image,
+    [topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner],
+    "found-code.png"
+  );
 }
 ```
 
-## 适用场景 [#when-to-use]
+## 不只解码,还要为图片评分 [#score-an-image-instead-of-only-decoding-it]
 
-- 处理已上传的二维码图片
-- 从截图中提取数据
-- 构建二维码扫描器
-- 验证二维码内容
-- 调试二维码问题
+`getImageScanScore` 会解码现有图片,并报告它扫描的可靠程度:在三种尺寸下解码,并模拟摄像头的模糊、对比度、极性、静区和分辨率。它接受 `File`、`Blob` 或 `<img>`。
 
-## 浏览器要求 [#browser-requirements]
+```ts title="lib/score-image.ts"
+import { getImageScanScore } from "qrdx";
 
-- FileReader API
-- HTMLCanvasElement
-- ImageData 和 getImageData
-- ES6+ 特性
+const { data, score, grade, checks } = await getImageScanScore(file);
+// data: "https://example.com" or null
+// score: 0 to 100, grade: "great" | "ok" | "risky" | "fails"
+```
 
-## 后续步骤 [#next-steps]
+[扫描检测器](/tools/scan-checker)就是基于它构建的。在 Node 中,可以用 `scanQRPixels(pixels, expected)` 检查 RGBA 像素(来自 `decodePNGPixels` 或 `sharp().raw()`)是否解码为已知的值。
 
-- [工具函数](/docs/utilities) — 检测工具函数
-- [下载](/docs/features/downloads) — 导出检测到的数据
-- [API 参考](/docs/api-reference) — 完整的检测 API
+## 出现问题时 [#if-something-goes-wrong]
+
+- **每张图片都返回 `"NO_QR"`。** 调用函数时图片尚未加载完成。请先 await `image.decode()`。如果已经加载完成,可能是二维码太小、模糊、被裁剪或颜色反转;请换一张更清晰、包含完整二维码且四周留有边距的图片。
+- **在服务器上调用了 `handleImageLoad`。** 它需要画布。请在 Client Component 或事件处理函数中调用它,或在 Node 中使用 `scanQRPixels`。
+- **`downloadImageWithBoundingBox` 画出的轮廓像蝴蝶结。** 角点顺序有误。请按左上、右上、左下、右下的顺序传入。
+
+## 相关内容 [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-scanner" title="QR Code Scanner" description="一个能完成以上所有功能的拖放区域,适用于 shadcn/ui 项目。" />
+  <Card href="/docs/features/frames" title="边框、扫描评分与印刷文件" description="在印刷之前为设计评分。" />
+  <Card href="/docs/api-reference" title="库 API 参考" description="按入口列出的所有导出项。" />
+</Cards>

@@ -1,61 +1,106 @@
 ---
 title: "QRdx 文档"
-description: "为所有使用 QRdx 制作二维码的用户提供帮助,涵盖各项功能的指南,以及面向开发者的文档。"
+description: "制作二维码，在印刷后修改，查看扫描情况，并通过 API 和 React 库进行开发。"
 icon: Book
 ---
 
-QRdx 是一个开源(AGPL-3.0)的二维码平台。无需账号即可免费设计静态二维码;登录后还可使用动态二维码(印刷后仍可修改)、移动端页面和扫描分析。
+QRdx 是一个开源的二维码平台：静态二维码免费使用，无需注册账号；动态二维码可在印刷后修改，并提供托管页面和扫描分析。动态二维码在所有套餐中都能持续使用，即使你取消订阅也一样（[Never-Hostage 保障](/guarantee)）。
 
-在任何套餐下,每个动态二维码都会持续跳转,即使降级或取消订阅也一样。这就是 [Never-Hostage 保障](/guarantee)。
+## 你想做什么？ [#what-do-you-want-to-do]
 
-## 从哪里开始 [#where-to-start]
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="制作第一个二维码"
+    description="在编辑器中设计二维码，然后按印刷所需的格式下载。"
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/create"
+    title="制作可在印刷后修改的二维码"
+    description="动态二维码指向一个短链接。你可以随时更改它的跳转目标。"
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="查看扫描情况"
+    description="二维码在何时、何地、通过哪些设备被扫描。"
+  />
+  <Card
+    arrow
+    icon={<Terminal />}
+    href="/docs/developers/quickstart"
+    title="使用 API 开发"
+    description="在你自己的应用中创建和管理二维码。每个端点都有“Try it”面板。"
+  />
+  <Card
+    arrow
+    icon={<Code />}
+    href="/docs/getting-started"
+    title="使用 React 库"
+    description="使用 qrdx 包渲染并导出带样式的二维码。"
+  />
+  <Card
+    arrow
+    icon={<Server />}
+    href="/docs/self-hosting"
+    title="自托管 QRdx"
+    description="使用 Docker Compose 或 Node.js 运行你自己的 QRdx，包括动态二维码。"
+  />
+</Cards>
+
+## 文档板块 [#the-sections]
 
 <Cards>
   <Card
     icon={<LifeBuoy />}
     href="/docs/help"
     title="帮助"
-    description="关于制作二维码、账单、团队和问题排查的通俗解答,无需编写代码。"
+    description="关于制作二维码、账单、团队和问题排查的简短解答。无需编写代码。"
   />
   <Card
     icon={<Book />}
     href="/docs/dynamic-qr-codes"
     title="指南"
-    description="深入介绍每项产品功能:动态二维码、页面、表单、路由、分析和团队。"
+    description="深入介绍每项功能：动态二维码、页面、表单、路由、分析和团队。"
   />
   <Card
     icon={<Terminal />}
     href="/docs/developers"
     title="开发者"
-    description="带有 Try it 面板的 REST API、Webhook、OAuth 应用、MCP 和 CLI。"
+    description="REST API、webhook、OAuth 应用、MCP 服务器和 CLI。"
   />
   <Card
     icon={<Code />}
     href="/docs/getting-started"
     title="React 库"
-    description="使用 qrdx 包和 shadcn/ui 注册表渲染并导出带样式的二维码。"
+    description="qrdx 包、各框架使用指南以及 shadcn/ui 注册表。"
   />
   <Card
     icon={<Server />}
     href="/docs/self-hosting"
     title="自托管"
-    description="使用 Docker Compose 或 Node.js 运行你自己的 QRdx,包含动态二维码。"
+    description="安装、配置和更新你自己的 QRdx。"
   />
 </Cards>
 
-## 快速链接 [#quick-links]
+## 热门页面 [#popular-pages]
 
-- [制作你的第一个二维码](/docs/help/getting-started/first-qr-code)
-- [静态还是动态,你需要哪一种?](/docs/help/getting-started/static-vs-dynamic)
+- [静态还是动态，你该选哪种？](/docs/help/getting-started/static-vs-dynamic)
+- [更改二维码的指向](/docs/help/dynamic-codes/change-the-link)
+- [下载并打印二维码](/docs/help/getting-started/download-and-print)
 - [二维码无法扫描](/docs/help/troubleshooting/wont-scan)
 - [套餐与限制](/docs/plans-and-limits)
 - [REST API 与 OAuth](/docs/developers/rest-api)
-- [安装 React 库](/docs/getting-started)
 
-## 了解最新动态 [#stay-up-to-date]
+## 获取帮助 [#get-help]
 
-- [更新日志](/changelogs):每次发布的内容,最新的在前。
-- [新功能与未来计划](/docs/help/whats-new)。
-- [GitHub](https://github.com/qrdxinc/qrdx):源代码、[issues](https://github.com/qrdxinc/qrdx/issues) 和 [discussions](https://github.com/qrdxinc/qrdx/discussions)。
+在任意页面按 <kbd>⌘</kbd> <kbd>K</kbd> 即可搜索文档。如果文档里没有你要的答案：
 
-需要人工帮助?[联系支持团队](/docs/help/contact)。
+- [联系支持](/docs/help/contact)：由真人回复。
+- [最新动态与后续计划](/docs/help/whats-new)，以及完整的[更新日志](/changelogs)。
+- [GitHub](https://github.com/qrdxinc/qrdx)：源代码、[issues](https://github.com/qrdxinc/qrdx/issues) 和 [discussions](https://github.com/qrdxinc/qrdx/discussions)。

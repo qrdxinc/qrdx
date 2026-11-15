@@ -1,78 +1,90 @@
 ---
-title: "Ubicación precisa y geovallas"
+title: "Ubicación precisa y geovallado"
 description: "Pide a quienes escanean un código QR dinámico que compartan su ubicación, consulta dónde se escaneó con una precisión de unos 100 m y dirige los escaneos según la zona."
-icon: MapPin
 ---
 
-Cada [código QR dinámico](/docs/dynamic-qr-codes) registra el país, la región y la ciudad de cada escaneo a partir de la red. En Pro y Business también puedes pedir a quienes escanean que compartan su ubicación precisa. Las personas que lo permiten aparecen en las analíticas del código como puntos redondeados a unos 100 m, y el [enrutamiento inteligente](/docs/smart-routing) puede enviarlas a un destino distinto según dónde estén.
+Cada [código QR dinámico](/docs/dynamic-qr-codes) registra el país, la región y la ciudad de cada escaneo a partir de la red. La ubicación precisa va más allá: el código pide a quien escanea que comparta su posición, las personas que lo permiten aparecen en las analíticas como puntos redondeados a unos 100 m, y el [enrutamiento inteligente](/docs/smart-routing) puede enviarlas a destinos distintos según dónde estén. Úsala en códigos colocados en un lugar concreto, como un recinto, una tienda o un sendero, donde saber "en qué ciudad" no basta.
 
-La solicitud está desactivada en todos los códigos hasta que la actives, y cada persona decide por sí misma en su navegador.
+<Callout type="info" title="Pro y Business">
+  Pedir la ubicación precisa forma parte de Pro y Business. Está desactivada en todos los códigos hasta que la actives, y cada persona decide por sí misma en su navegador. Consulta [Planes y límites](/docs/plans-and-limits).
+</Callout>
+
+¿Tienes prisa? [Consulta tus escaneos](/docs/help/dynamic-codes/scans) explica las analíticas, y [Envía los escaneos a enlaces distintos](/docs/help/dynamic-codes/routing) las reglas.
+
+## Cómo funciona [#how-it-works]
+
+<Diagram id="precise-location-flow" />
+
+Cuando la opción está activada y alguien escanea el código, su navegador le pregunta si quiere compartir su ubicación. Si lo permite, el navegador redondea la posición a 3 decimales (unos 100 m) antes de enviarla, QRdx la redondea de nuevo y el punto se guarda junto con ese escaneo, además de la precisión que indicó el navegador. Las posiciones exactas nunca llegan a QRdx. Si la persona omite el paso o lo rechaza, el escaneo se cuenta igualmente con su país, región y ciudad según la red, como siempre.
 
 ## Actívala [#turn-it-on]
 
-Abre el código en el [panel](/dashboard?to=codes), ve a su pestaña **Ajustes** y activa **Pedir a quienes escanean su ubicación precisa** en el apartado **Ubicación precisa**. Funciona con códigos que abren un enlace a un sitio web y con códigos que abren una página alojada.
+Abre el código desde [Códigos](/dashboard?to=codes), ve a su pestaña **Ajustes** y activa **Pedir ubicación precisa a quien escanea** en el panel **Ubicación precisa**. Funciona con códigos que abren un enlace web y con códigos que abren una página alojada.
 
-Con la [REST API](/docs/developers/rest-api), envía `PATCH /v1/codes/{id}` con `{"preciseLocation": true}`. Los códigos indican este ajuste en su campo `preciseLocation`.
+<Shot id="precise-location-panel" />
 
 ## Qué ve quien escanea [#what-scanners-see]
 
-**Los códigos que abren un enlace a un sitio web** muestran un breve paso «¿Compartir tu ubicación?» antes de abrir el enlace, con **Permitir** y **Omitir**. Permitir abre el aviso de ubicación del propio navegador. Este paso nunca impide que alguien llegue a tu enlace:
+**Los códigos que abren un enlace web** muestran un breve paso "¿Compartir tu ubicación?" antes de abrir el enlace, con **Permitir** y **Omitir**. Permitir abre la solicitud de ubicación del propio navegador. Este paso nunca impide que alguien llegue a tu enlace:
 
 - Omitir abre el enlace de inmediato.
-- Si la persona lo rechaza en el navegador, o el navegador no puede obtener la ubicación, el enlace se abre.
-- Si no hay ubicación 8 segundos después de tocar Permitir, el enlace se abre igualmente.
+- Si la persona lo rechaza en el navegador, o el navegador no encuentra una ubicación, el enlace se abre.
+- Si pasan 8 segundos desde que toca Permitir y no hay ubicación, el enlace se abre igualmente.
 - Un navegador que ya ha dicho que no para el sitio se salta el paso por sí solo, y uno que ya ha dicho que sí comparte la ubicación sin un segundo toque.
 - Sin JavaScript, el enlace se abre al instante.
 
 El paso indica el sitio al que llegará la persona e incluye un enlace a la política de privacidad.
 
-**Los códigos que abren una página alojada** abren la página de inmediato, como siempre. Una vez cargada, el navegador pide la ubicación en la página; la página nunca espera una respuesta. Solo la pide justo después de un escaneo, nunca cuando alguien abre directamente la dirección de la página.
+**Los códigos que abren una página alojada** abren la página de inmediato, como siempre. Una vez cargada, el navegador pide la ubicación en la propia página; la página nunca espera una respuesta. Solo la pide justo después de un escaneo, nunca cuando alguien abre directamente la dirección de la página.
 
-Cuando el ajuste está desactivado, nada cambia: los escaneos van directos al destino sin ningún paso adicional.
-
-## Qué se almacena [#whats-stored]
-
-Cuando alguien lo permite, su navegador redondea la ubicación a 3 decimales (unos 100 m) antes de enviarla, y QRdx la vuelve a redondear antes de guardarla con ese escaneo, junto con la precisión que indicó el navegador. Las posiciones exactas nunca llegan a QRdx.
-
-No se almacena nada cuando alguien omite o rechaza. El escaneo se cuenta igualmente, con su país, región y ciudad obtenidos de la red como siempre.
-
-Las ubicaciones precisas se conservan el mismo tiempo que el resto de los escaneos del código, y tu plan determina hasta cuándo puedes verlas. Consulta [Qué registra QRdx cuando alguien escanea](/docs/help/privacy-and-security/scan-data).
+Cuando la opción está desactivada, nada cambia: los escaneos van directos al destino, sin ningún paso adicional.
 
 ## En las analíticas [#in-analytics]
 
-La pestaña **Analíticas** del código tiene una tarjeta **Ubicaciones precisas**, aparte de los países y ciudades basados en la IP. Muestra a cuántas personas se les pidió, cuántas compartieron su ubicación y qué porcentaje es, y después cada punto compartido con su número de escaneos, precisión media y último escaneo. Ordena la tabla por cualquiera de esos datos y abre un punto en OpenStreetMap para ver dónde está.
+La pestaña **Analíticas** del código tiene una tarjeta **Ubicaciones precisas**, aparte de los países y ciudades basados en la IP. Muestra a cuántas personas se les pidió la ubicación, cuántas la compartieron y qué porcentaje supone, y después cada punto compartido con su número de escaneos, precisión media y último escaneo. Ordena la tabla por cualquiera de esos valores y abre un punto en OpenStreetMap para ver dónde está.
 
-La exportación CSV incluye las columnas `latitude`, `longitude`, `location_accuracy_m` y `location_source`. `location_source` es `gps` si se compartió la ubicación, `ip` cuando el código la pidió pero la persona no la compartió, y está vacío cuando el código no la pidió. [`GET /v1/codes/{id}/scans`](/docs/developers/api/get-code-scans) devuelve los mismos campos por escaneo, además de un resumen `preciseLocations`.
+La exportación CSV incluye las columnas `latitude`, `longitude`, `location_accuracy_m` y `location_source`. `location_source` es `gps` cuando se compartió la ubicación, `ip` cuando el código la pidió pero la persona no la compartió, y vacío cuando el código no la pidió.
 
-Los enlaces de analíticas compartidas (**Compartir analíticas** en el menú de un código) nunca muestran ubicaciones precisas. Se quedan en el nivel de país.
+Los enlaces de analíticas compartidas (**Compartir analíticas...** en el menú de un código) nunca muestran ubicaciones precisas. Se quedan a nivel de país. Las ubicaciones precisas se conservan el mismo tiempo que el resto de los escaneos del código, y tu plan determina hasta qué fecha anterior puedes verlas. Consulta [Qué registra QRdx cuando alguien escanea](/docs/help/privacy-and-security/scan-data).
 
 ## Dirige los escaneos por zona [#route-scans-by-area]
 
-En el apartado **Enrutamiento inteligente** del código, añade una regla con una condición de **Zona**: un punto central y un radio de entre 100 m y 500 km. Para obtener el centro, haz clic derecho en un lugar de una aplicación de mapas y copia sus coordenadas (por ejemplo `40.7580, -73.9855`), o usa **Usar mi ubicación** si estás allí. **Comprobar en un mapa** abre el punto en OpenStreetMap.
+En el panel **Enrutamiento inteligente** del código, añade una regla con una condición de **Zona**: un punto central y un radio entre 100 m y 500 km. Para obtener el centro, haz clic derecho en un lugar de una aplicación de mapas y copia sus coordenadas (por ejemplo `40.7580, -73.9855`), o haz clic en **Usar mi ubicación** cuando estés allí. **Comprobar en un mapa** abre el punto en OpenStreetMap.
 
-QRdx comprueba la zona con la mejor ubicación que tenga para ese escaneo:
+QRdx comprueba la zona con la mejor ubicación de la que dispone para ese escaneo:
 
 1. La ubicación que la persona compartió en el paso, cuando la ubicación precisa está activada y la permitió.
-2. Si no, la ubicación aproximada de su dirección IP. En qrdx.dev procede de la geolocalización por IP de Vercel y suele ser el centro de la ciudad o zona de la persona, por lo que sirve para radios de varios kilómetros. Se usa para dirigir el escaneo y nunca se almacena.
+2. Si no, la ubicación aproximada de su dirección IP. En qrdx.dev procede de la geolocalización IP de Vercel y suele ser el centro de la ciudad o zona de quien escanea, por lo que resulta adecuada para radios de varios kilómetros. Se usa para dirigir el escaneo y nunca se guarda.
 
-Cuando no hay ninguna de las dos, las condiciones de zona no coinciden y las condiciones de zona «no es» sí coinciden. Las copias autoalojadas que no se ejecutan en Vercel no tienen coordenadas IP, así que allí las reglas de zona solo funcionan con ubicaciones compartidas.
-
-**Prueba tus reglas** tiene un campo **Ubicación**, para que compruebes adónde iría un escaneo desde cualquier punto.
+Cuando no hay ninguna de las dos, las condiciones de zona no coinciden, y las condiciones de zona "no es" sí. **Prueba tus reglas** tiene un campo **Ubicación (para zonas)**, para que puedas comprobar adónde iría un escaneo desde cualquier punto.
 
 ### Solo dentro de una zona [#only-inside-an-area]
 
-Para mostrar algo únicamente a quienes están en un lugar, como un recinto o una tienda:
+Para mostrar algo únicamente a las personas que están en un lugar, como un recinto o una tienda:
 
-1. Añade una regla con una condición de Zona alrededor del lugar y define su URL con el contenido para quienes estén allí.
-2. Define el destino principal del código como una página para todos los demás, por ejemplo una que diga que la oferta solo está disponible en el local.
+1. Añade una regla con una condición de Zona alrededor del lugar y establece su URL con el contenido para quienes están allí.
+2. Configura el destino principal del código con una página para todos los demás, por ejemplo una que diga que la oferta solo está disponible en el local.
 
 Activa también la ubicación precisa, para que decida la ubicación que comparte la persona, con una precisión de unos 100 m. Sin ella, decide la ubicación por IP, que solo llega al nivel de ciudad.
 
-Los navegadores permiten falsear la ubicación, así que una regla de zona no es control de acceso. Usa una [contraseña](/docs/code-controls) para todo lo que deba seguir siendo privado.
+Los navegadores permiten falsear la ubicación, así que una regla de zona no es un control de acceso. Usa una [contraseña](/docs/code-controls#password) para todo lo que deba permanecer privado.
 
 ## Conviene saber [#good-to-know]
 
 - Los bots, las vistas previas de enlaces y las solicitudes HEAD nunca ven el paso; reciben la redirección habitual.
-- Los códigos con contraseña no muestran el paso: tras introducir la contraseña correcta, el escaneo va directo al destino.
-- Los recuentos de una prueba A/B de una división tras una condición de Zona son estimaciones, porque los escaneos no guardan qué ubicación usó la regla.
-- Si tu espacio de trabajo pasa a Gratis, QRdx deja de pedir ubicaciones precisas. Las reglas de zona guardadas siguen funcionando con la ubicación por IP, y desactivar el ajuste nunca requiere un plan.
+- En un código con contraseña, el escaneo que muestra el formulario de contraseña se salta el paso. Una vez desbloqueado un navegador, sus escaneos posteriores reciben la solicitud como cualquier otro.
+- Si tu espacio de trabajo pasa a Gratis, QRdx deja de pedir ubicaciones precisas. Las reglas de zona guardadas siguen funcionando con la ubicación por IP, y desactivar la opción nunca requiere un plan.
+
+## Para desarrolladores [#for-developers]
+
+Envía `PATCH /v1/codes/{id}` con `{"preciseLocation": true}` para activar el paso; cada código informa del ajuste en su campo `preciseLocation` ([Actualizar un código](/docs/developers/api/update-code)). [`GET /v1/codes/{id}/scans`](/docs/developers/api/get-code-scans) devuelve `latitude`, `longitude`, `locationAccuracyM` y `locationSource` en cada escaneo listado, además de un resumen `preciseLocations`.
+
+## Autoalojamiento [#self-hosting]
+
+Las copias autoalojadas que no se ejecutan en Vercel no tienen coordenadas por IP, así que allí las reglas de zona solo coinciden con escaneos que tengan una ubicación compartida. Consulta [Autoalojamiento](/docs/self-hosting#what-is-different-from-qrdxdev).
+
+## Relacionado [#related]
+
+- [Enrutamiento inteligente](/docs/smart-routing): todas las condiciones, divisiones A/B y el probador de reglas
+- [Controles del código](/docs/code-controls): contraseñas para el contenido que debe permanecer privado
+- [Qué registra QRdx cuando alguien escanea](/docs/help/privacy-and-security/scan-data)

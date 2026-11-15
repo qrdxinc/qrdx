@@ -3,42 +3,71 @@ title: "创建工作区并邀请成员"
 description: "与他人共享二维码、页面和主题。创建更多工作区需要 Pro 或 Business。"
 ---
 
-你在 QRdx 中创建的所有内容都属于某个工作区。同一工作区中的所有人共同使用相同的二维码、页面、文件、域名和主题。
+你在 QRdx 中创建的所有内容都属于某个工作区。同一工作区中的所有人共同使用相同的二维码、页面、文件、域名和主题。本页介绍如何创建工作区并邀请成员加入;工作区之间如何协作，请参阅[工作区与团队指南](/docs/teams)。
+
+<Callout type="info">
+  创建更多工作区和邀请成员属于 Pro(工作区最多 3 人)和 Business(不限人数)的功能。请参阅[席位与工作区限制](/docs/help/teams/seats)。
+</Callout>
 
 ## 你自己的工作区 [#your-own-workspace]
 
-每个账户都有一个自动创建的工作区,你是它的所有者。你不能退出或删除这个工作区。使用 Pro 或 Business 时,你可以邀请他人加入该工作区,也可以另外创建一个工作区供他们使用。
+每个账户都有一个自动创建的工作区，你是它的所有者。你无法退出或删除它。使用 Pro 或 Business 时，你可以邀请他人加入该工作区，也可以为他们另外创建一个工作区。
 
 ## 创建工作区 [#create-a-workspace]
 
-1. 打开侧边栏底部的工作区切换器(在手机上,位于菜单中)。
-2. 点击 **创建工作区**。
-3. 填写 **工作区名称** 和 **工作区网址**(3 到 48 个小写字母、数字和短横线)。
-4. 点击 **创建工作区**。QRdx 会自动切换到新工作区。
+1. 打开侧边栏底部的工作区切换器(在手机上位于菜单中)。
+2. 点击 **Create workspace**。
+3. 填写 **Workspace name** 和 **Workspace URL**(3 到 48 个小写字母、数字和连字符)。
+4. 点击 **Create workspace**。QRdx 会自动切换到新工作区。
 
-创建更多工作区需要 Pro 或 Business。
+<Shot id="create-workspace-dialog" />
 
 ## 邀请成员 [#invite-someone]
 
-1. 在工作区中进入 **设置** → **团队**。
-2. 输入对方的电子邮箱地址并选择角色:**成员** 或 **管理员**。参见[团队角色](/docs/help/teams/roles)。
-3. 点击 **创建邀请链接**。
+### 1. 打开团队页面 [#1-open-the-team-page]
 
-QRdx 会通过邮件发送邀请,并显示一个可由你自行分享的链接。确认提示会告诉你邮件是否已发送。
+在工作区中，前往 **Settings** → **Team**。
 
-以管理员身份邀请他人时,需要先[确认是你本人操作](/docs/help/privacy-and-security/two-step-verification#confirm-its-you),除非你在该浏览器中已于最近 10 分钟内完成确认。
+### 2. 填写邀请信息 [#2-fill-in-the-invitation]
+
+在 **Invite people** 下，输入对方的 **Email**，并选择一个 **Role**：**Admin**、**Member**、**Billing** 或 **Viewer**。只有所有者可以邀请账单成员。请参阅[团队角色](/docs/help/teams/roles)。
+
+### 3. 发送邀请 [#3-send-it]
+
+点击 **Create invite link**。QRdx 会提示已通过邮件发送邀请，并显示一个你可以自行分享的链接，旁边有 **Copy invite link**。
+
+<Shot id="team-invite" />
+
+以管理员身份邀请他人时，需要先[确认是你本人操作](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)，除非你在该浏览器中 10 分钟内已确认过。
 
 ## 接受邀请 [#accepting-an-invitation]
 
-- 被邀请人打开链接,并使用收到邀请的**同一个邮箱地址**登录。
-- 然后点击 **接受邀请** 或 **拒绝**。
-- 邀请链接在 48 小时后失效。
+被邀请的人打开链接，使用接收邀请的同一个邮箱地址登录，然后点击 **Accept invitation** 或 **Decline**。邀请链接 48 小时后过期。在此之前，邀请会显示在团队页面的 **Pending invitations** 下，点击 **Revoke** 可撤回邀请。
+
+## 分享加入链接 [#share-a-join-link]
+
+加入链接让任何拿到链接的人都能加入工作区，无需逐个发送邀请。在团队页面的 **Join link** 下，通过 **Joins as** 选择新成员的角色，然后点击 **Create join link**。出于安全考虑，链接只在创建时显示，因此请当时就用 **Copy join link** 复制。**Reset link** 会替换链接并使旧链接失效；**Turn off** 会彻底停用链接。已经加入的人仍然是成员。允许加入链接添加管理员时，需要你确认是本人操作。
 
 ## 在工作区之间切换 [#switch-between-workspaces]
 
-使用工作区切换器可以在你自己的工作区和你加入的其他工作区之间切换。你创建的二维码会保存到你当前所在的工作区。
+使用工作区切换器在你自己的工作区和你所属的其他工作区之间切换。你创建的二维码会保存到你当前所在的工作区。
+
+## 遇到问题时 [#if-something-goes-wrong]
+
+### 没有收到邀请邮件 [#the-invitation-email-didnt-arrive]
+
+从 **Pending invitations** 中复制邀请链接，直接发给对方。请参阅[收不到登录验证码或邮件](/docs/help/troubleshooting/emails)。
+
+### 对方无法接受邀请 [#they-cant-accept-the-invitation]
+
+对方使用了不同的邮箱地址登录。邀请只对接收邀请的地址有效；请让对方使用该地址登录，或者撤销邀请后向正确的地址重新发送。
+
+### Create invite link 是灰色的 [#create-invite-link-is-disabled]
+
+工作区没有空闲席位：在 Pro 中，包括待处理邀请在内共 3 人。请撤销不需要的邀请，或请所有者升级。请参阅[席位与工作区限制](/docs/help/teams/seats)。
 
 ## 相关内容 [#related]
 
+- [团队角色](/docs/help/teams/roles)
 - [席位与工作区限制](/docs/help/teams/seats)
 - [工作区与团队指南](/docs/teams)

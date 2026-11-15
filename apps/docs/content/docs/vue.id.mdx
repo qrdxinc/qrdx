@@ -1,50 +1,94 @@
 ---
 title: "Vue"
-description: "Gambar kode QR bergaya di Vue 3 dan Nuxt dengan qrdx/vue, menggunakan komponen QRCode dan QRCodeSVG yang dirender di server serta composable useQRCode untuk markup dan unduhan."
+description: "Gambar kode QR bergaya di Vue 3 dan Nuxt dengan qrdx/vue, lengkap dengan komponen QRCode dan QRCodeSVG yang dirender di server serta composable useQRCode untuk markup dan unduhan."
 icon: Code
 ---
 
-`qrdx/vue` menyediakan versi Vue 3 dari komponen React, yaitu `QRCode` dan `QRCodeSVG`, ditambah composable `useQRCode`. Props-nya sama dengan komponen React dan menggambar SVG yang sama, lengkap dengan semua pola, warna, logo, bingkai, dan templat. Entri ini dibangun di atas `qrdx/core` dan tidak mengimpor `react`.
+Di akhir halaman ini, Anda akan memiliki kode QR bergaya di komponen Vue 3, dirender di server dan di-hydrate tanpa ketidakcocokan, serta tombol yang menyimpannya sebagai PNG. `qrdx/vue` menyediakan versi Vue dari komponen React, yaitu `QRCode` dan `QRCodeSVG`, ditambah composable `useQRCode`. Props-nya sama dengan komponen React dan menggambar SVG yang sama. Entri ini dibangun di atas `qrdx/core` dan tidak mengimpor `react`.
 
-## Instal [#install]
+<NpmStatus package="qrdx" />
+
+## Sebelum Anda mulai [#before-you-start]
+
+- Proyek Vue 3.3 atau lebih baru, dengan Vite atau Nuxt. TypeScript memeriksa props komponen mulai dari Vue 3.4.20.
+- Node.js 18 atau lebih baru.
+
+## Membuatnya [#build-it]
+
+### 1. Instal qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`vue` 3.3 atau lebih baru adalah peer dependency opsional, sehingga Vue milik aplikasi Anda yang digunakan. TypeScript memeriksa props komponen dengan Vue 3.4.20 atau lebih baru.
+`vue` adalah peer dependency opsional, sehingga Vue milik aplikasi Anda yang digunakan.
 
-## Menggambar kode [#draw-a-code]
+### 2. Gambar sebuah kode [#2-draw-a-code]
 
-```vue
+```vue title="src/App.vue"
 <script setup lang="ts">
 import { QRCode } from "qrdx/vue";
 import { ref } from "vue";
 
-const url = ref("https://example.com");
+const url = ref("https://example.com/menu");
 </script>
 
 <template>
   <QRCode
     :value="url"
     :size="256"
+    :margin="4"
     body-pattern="rounded"
-    :frame="{ style: 'banner-bottom', text: 'Scan me' }"
-    aria-label="QR code for example.com"
+    :frame="{ style: 'banner-bottom', text: 'Scan for the menu' }"
+    aria-label="QR code for the menu"
   />
 </template>
 ```
 
-`QRCode` menerima props dari `QRCode` milik React: setiap opsi `QRProps`, ditambah `logo`, `logoOptions`, `hideLogo`, dan `scale` untuk logo. Di dalam templat, tulis dengan kebab-case (`body-pattern`) atau camelCase. Flag seperti `auto-level` atau `hide-logo` tidak memerlukan nilai.
+Halaman menampilkan kode 256 px dengan modul membulat dan banner di bawahnya. Ubah `url` dan kode digambar ulang, dengan Vue memperbarui `<svg>` di tempat.
 
-- Saat sebuah prop berubah, kode digambar ulang dan Vue memperbarui `<svg>` di tempat.
-- `class`, `style`, `aria-label`, dan atribut lain dipasang pada `<svg>`, atau pada `<svg>` terluar bingkai jika ada bingkai. Listener seperti `@click` juga dipasang di sana.
+<Shot id="lib-framed-menu-code" />
 
-## QRCodeSVG [#qrcodesvg]
+`QRCode` menerima props dari `QRCode` React: setiap opsi `QRProps`, ditambah `logo`, `logoOptions`, `hideLogo`, dan `scale` untuk logo. Di template, tulis dalam kebab-case (`body-pattern`) atau camelCase. Flag seperti `auto-level` atau `hide-logo` tidak memerlukan nilai. `class`, `style`, `aria-label`, dan atribut lain dipasang pada `<svg>`, atau pada `<svg>` terluar bingkai jika ada bingkai, begitu juga listener seperti `@click`.
 
-`QRCodeSVG` menerima `QRProps`, seperti `QRCodeSVG` milik React. Logo dimasukkan melalui `imageSettings`:
+### 3. Simpan sebagai file dengan useQRCode [#3-save-it-as-a-file-with-useqrcode]
 
-```vue
+```vue title="src/components/DownloadCode.vue"
+<script setup lang="ts">
+import { useQRCode } from "qrdx/vue";
+import { ref } from "vue";
+
+const url = ref("https://example.com/menu");
+const { svg, download } = useQRCode(() => ({
+  value: url.value,
+  size: 256,
+  margin: 4,
+  bodyPattern: "rounded",
+}));
+</script>
+
+<template>
+  <div v-html="svg" />
+  <button type="button" @click="download({ format: 'png', size: 1024, filename: 'menu.png' })">
+    Download PNG
+  </button>
+</template>
+```
+
+Kode tampil dari markup-nya, dan tombol menyimpan `menu.png` pada 1024 px. `useQRCode(props)` menerima props `QRCode` sebagai objek, ref, objek reactive, atau getter, dan mengembalikan:
+
+- `svg`: markup SVG sebagai computed ref. Nilainya mengikuti props dan berfungsi saat rendering di server.
+- `toDataURL(format, { size, quality })`: kode sebagai data URL.
+- `download({ format, filename, size, quality })`: menyimpan kode sebagai file.
+- `options`: opsi yang dipakai untuk menggambar kode, sebagai computed ref.
+
+`toDataURL` dan `download` secara default menghasilkan PNG pada `size` bawaan kode. Format yang tersedia adalah `png`, `jpg`, `webp`, `svg`, `pdf`, dan `eps`. PNG, JPG, dan WebP memerlukan browser, dan PDF memerlukan paket opsional `jspdf`.
+
+## QRCodeSVG dan pengaturan gambar mentah [#qrcodesvg-and-raw-image-settings]
+
+`QRCodeSVG` menerima `QRProps`, seperti `QRCodeSVG` React. Logo ditempatkan di `imageSettings`, dalam piksel:
+
+```vue title="src/components/LogoCode.vue"
 <script setup lang="ts">
 import { QRCodeSVG } from "qrdx/vue";
 </script>
@@ -52,56 +96,31 @@ import { QRCodeSVG } from "qrdx/vue";
 <template>
   <QRCodeSVG
     value="https://example.com"
+    :size="256"
     level="H"
     :image-settings="{ src: '/logo.png', width: 48, height: 48, excavate: true }"
   />
 </template>
 ```
 
+Gunakan `QRCode` dengan `logo` dan `logoOptions` kecuali Anda mengatur tata letak logo sendiri.
+
 ## Rendering di server dan Nuxt [#server-rendering-and-nuxt]
 
-Kedua komponen dirender dengan server renderer Vue (`vue/server-renderer`), sehingga kode menjadi bagian dari HTML server. Markup tidak memiliki id acak, jadi browser melakukan hidrasi tanpa ketidakcocokan.
+Kedua komponen dirender dengan server renderer Vue (`vue/server-renderer`), sehingga kode menjadi bagian dari HTML server. Markup tidak memiliki id acak, sehingga browser melakukan hydrate tanpa ketidakcocokan.
 
-Di Nuxt, gunakan keduanya di halaman atau komponen mana pun. Keduanya dirender di server lalu dihidrasi di browser, atau dirender hanya di browser jika berada di dalam `<ClientOnly>`.
+Di Nuxt, gunakan di halaman atau komponen mana pun. Komponen dirender di server dan di-hydrate di browser. Di dalam `<ClientOnly>`, komponen hanya dirender di browser.
 
-## useQRCode [#useqrcode]
-
-```vue
-<script setup lang="ts">
-import { useQRCode } from "qrdx/vue";
-import { ref } from "vue";
-
-const url = ref("https://example.com");
-const { svg, download } = useQRCode(() => ({ value: url.value, size: 256 }));
-</script>
-
-<template>
-  <div v-html="svg" />
-  <button type="button" @click="download({ format: 'png', size: 1024 })">
-    Download PNG
-  </button>
-</template>
-```
-
-`useQRCode(props)` menerima props `QRCode` sebagai objek, ref, objek reaktif, atau getter. Fungsi ini mengembalikan:
-
-- `svg`: markup SVG, sebagai computed ref. Mengikuti perubahan props dan berfungsi saat rendering di server.
-- `toDataURL(format, { size, quality })`: kode sebagai data URL.
-- `download({ format, filename, size, quality })`: menyimpan kode sebagai file.
-- `options`: opsi yang digunakan untuk menggambar kode, sebagai computed ref.
-
-`toDataURL` dan `download` secara default menggunakan PNG pada `size` bawaan kode. Formatnya adalah `png`, `jpg`, `webp`, `svg`, `pdf`, dan `eps`. PNG, JPG, dan WebP memerlukan browser, dan PDF memerlukan paket opsional `jspdf`.
-
-## Lainnya dari qrdx/core [#more-from-qrdxcore]
+## Lebih banyak dari qrdx/core [#more-from-qrdxcore]
 
 `qrdx/vue` mengekspor ulang semua yang ada di `qrdx/core`: `toSVGString`, `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, pustaka bingkai resmi (`getOfficialFrame`), dan lainnya. Semuanya dibahas di [Vanilla JavaScript](/docs/vanilla-js). Untuk PNG di server, gunakan `getQRAsPNG` dari `qrdx/node`.
 
-`wrapper` pada templat kustom ditulis dengan `h` yang diekspor oleh `qrdx/vue`. Itu adalah `h` milik core, bukan milik Vue, jadi impor salah satunya dengan nama lain jika sebuah file membutuhkan keduanya:
+`wrapper` pada template kustom ditulis dengan `h` yang diekspor oleh `qrdx/vue`. Itu adalah `h` milik core, bukan milik Vue, jadi impor salah satunya dengan nama lain jika sebuah file memerlukan keduanya:
 
-```js
+```ts title="src/labelled-template.ts"
 import { h } from "qrdx/vue";
 
-const Labelled = {
+export const Labelled = {
   id: "Labelled",
   name: "Labelled",
   wrapper: (children, props) =>
@@ -115,3 +134,18 @@ const Labelled = {
 ```
 
 Berikan sebagai `customTemplate`, dengan props-nya di `customProps`: `<QRCode value="https://example.com" :custom-template="Labelled" :custom-props="{ label: 'Scan me' }" />`.
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+- **`Failed to resolve component: QRCode`.** Komponen belum diimpor di file tersebut. Tambahkan `import { QRCode } from "qrdx/vue"` ke `<script setup>` file itu.
+- **Sebuah prop tidak berpengaruh.** Anda menulisnya sebagai string atribut padahal memerlukan nilai: `size="256"` mengirim string, `:size="256"` mengirim angka. Props objek seperti `frame` dan `image-settings` selalu memerlukan titik dua.
+- **`PDF export needs the optional "jspdf" package`.** Jalankan `npm install jspdf` di aplikasi Anda.
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/web-component" title="Web component" description="Elemen qrdx-code, yang dapat di-bind Vue dengan props yang sama." />
+  <Card href="/docs/vanilla-js" title="Vanilla JavaScript" description="Semua yang diekspor qrdx/core, yang diekspor ulang oleh qrdx/vue." />
+  <Card href="/docs/features/downloads" title="Ekspor dan unduh" description="Format, ukuran, clipboard, dan PNG di Node." />
+  <Card href="/docs/api-reference" title="Referensi API pustaka" description="Setiap prop, beserta tipe dan nilai defaultnya." />
+</Cards>

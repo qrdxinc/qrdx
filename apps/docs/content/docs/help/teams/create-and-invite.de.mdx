@@ -1,44 +1,73 @@
 ---
 title: "Workspace erstellen und Personen einladen"
-description: "Teile Codes, Seiten und Themes mit anderen Personen. Weitere Workspaces gibt es mit Pro oder Business."
+description: "Teile Codes, Seiten und Themes mit anderen. Weitere Workspaces gibt es mit Pro oder Business."
 ---
 
-Alles, was du in QRdx erstellst, gehört zu einem Workspace. Alle Personen in einem Workspace arbeiten an denselben Codes, Seiten, Dateien, Domains und Themes.
+Alles, was du in QRdx erstellst, gehört zu einem Workspace. Alle in einem Workspace arbeiten an denselben Codes, Seiten, Dateien, Domains und Themes. Auf dieser Seite legst du einen Workspace an und holst Personen hinein; wie Workspaces zusammenspielen, erklärt der [Leitfaden zu Workspaces und Teams](/docs/teams).
+
+<Callout type="info">
+  Weitere Workspaces zu erstellen und Personen einzuladen gehört zu Pro (bis zu 3 Personen in einem Workspace) und Business (ohne Limit). Siehe [Plätze und Workspace-Limits](/docs/help/teams/seats).
+</Callout>
 
 ## Dein eigener Workspace [#your-own-workspace]
 
-Jedes Konto hat einen Workspace, der automatisch angelegt wird, und du bist der Owner. Du kannst ihn weder verlassen noch löschen. Mit Pro oder Business kannst du Personen in diesen Workspace einladen oder einen weiteren Workspace für sie erstellen.
+Jedes Konto hat einen, der automatisch erstellt wird, und du bist dessen Inhaber. Du kannst ihn weder verlassen noch löschen. Mit Pro oder Business kannst du Personen in ihn einladen oder einen weiteren Workspace für sie erstellen.
 
 ## Workspace erstellen [#create-a-workspace]
 
 1. Öffne den Workspace-Umschalter unten in der Seitenleiste (auf dem Smartphone im Menü).
-2. Klicke auf **Workspace erstellen**.
-3. Gib einen **Workspace-Namen** und eine **Workspace-URL** ein (3 bis 48 Kleinbuchstaben, Zahlen und Bindestriche).
-4. Klicke auf **Workspace erstellen**. QRdx wechselt direkt in den neuen Workspace.
+2. Klicke auf **Create workspace**.
+3. Gib einen **Workspace name** und eine **Workspace URL** ein (3 bis 48 Kleinbuchstaben, Ziffern und Bindestriche).
+4. Klicke auf **Create workspace**. QRdx wechselt direkt in den neuen Workspace.
 
-Um weitere Workspaces zu erstellen, brauchst du Pro oder Business.
+<Shot id="create-workspace-dialog" />
 
 ## Jemanden einladen [#invite-someone]
 
-1. Gehe im Workspace zu **Einstellungen** → **Team**.
-2. Gib die E-Mail-Adresse der Person ein und wähle eine Rolle: **Mitglied** oder **Admin**. Siehe [Team-Rollen](/docs/help/teams/roles).
-3. Klicke auf **Einladungslink erstellen**.
+### 1. Team-Seite öffnen [#1-open-the-team-page]
 
-QRdx verschickt die Einladung per E-Mail und zeigt dir einen Link, den du selbst weitergeben kannst. In der Bestätigung siehst du, ob die E-Mail gesendet wurde.
+Gehe im Workspace zu **Settings** → **Team**.
 
-Wenn du jemanden als Admin einlädst, musst du zuerst [bestätigen, dass du es bist](/docs/help/privacy-and-security/two-step-verification#confirm-its-you). Das gilt nicht, wenn du das in diesem Browser in den letzten 10 Minuten bereits getan hast.
+### 2. Einladung ausfüllen [#2-fill-in-the-invitation]
+
+Gib unter **Invite people** die **Email** der Person ein und wähle eine **Role**: **Admin**, **Member**, **Billing** oder **Viewer**. Nur ein Inhaber kann ein Billing-Mitglied einladen. Siehe [Team-Rollen](/docs/help/teams/roles).
+
+### 3. Abschicken [#3-send-it]
+
+Klicke auf **Create invite link**. QRdx meldet, dass die Einladung per E-Mail verschickt wurde, und zeigt einen Link, den du selbst weitergeben kannst, mit **Copy invite link**.
+
+<Shot id="team-invite" />
+
+Wenn du jemanden als Admin einlädst, musst du zuerst [bestätigen, dass du es bist](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), es sei denn, du hast das in diesem Browser in den letzten 10 Minuten getan.
 
 ## Einladung annehmen [#accepting-an-invitation]
 
-- Die eingeladene Person öffnet den Link und meldet sich mit **derselben E-Mail-Adresse** an, an die die Einladung gesendet wurde.
-- Sie klickt auf **Einladung annehmen** oder auf **Ablehnen**.
-- Einladungslinks laufen nach 48 Stunden ab.
+Die eingeladene Person öffnet den Link und meldet sich mit derselben E-Mail-Adresse an, an die die Einladung gegangen ist. Dann klickt sie auf **Accept invitation** oder **Decline**. Einladungslinks laufen nach 48 Stunden ab. Bis dahin steht die Einladung auf der Team-Seite unter **Pending invitations**, wo du sie mit **Revoke** zurückziehen kannst.
+
+## Beitrittslink teilen [#share-a-join-link]
+
+Mit einem Beitrittslink kann jeder, der ihn hat, dem Workspace beitreten, ohne dass es für jede Person eine Einladung braucht. Wähle auf der Team-Seite unter **Join link** bei **Joins as** die Rolle für neue Personen und klicke auf **Create join link**. Aus Sicherheitsgründen wird der Link nur beim Erstellen angezeigt, kopiere ihn also gleich mit **Copy join link**. **Reset link** ersetzt ihn, und der alte Link funktioniert nicht mehr; **Turn off** schaltet ihn ganz ab. Wer schon beigetreten ist, bleibt Mitglied. Wenn ein Beitrittslink Admins hinzufügen darf, musst du bestätigen, dass du es bist.
 
 ## Zwischen Workspaces wechseln [#switch-between-workspaces]
 
 Mit dem Workspace-Umschalter wechselst du zwischen deinem eigenen Workspace und den anderen, in denen du Mitglied bist. Codes, die du erstellst, landen in dem Workspace, in dem du gerade bist.
 
+## Wenn etwas nicht klappt [#if-something-goes-wrong]
+
+### Die Einladungs-E-Mail ist nicht angekommen [#the-invitation-email-didnt-arrive]
+
+Kopiere den Einladungslink unter **Pending invitations** und schick ihn der Person direkt. Siehe [Anmeldecodes oder E-Mails kommen nicht an](/docs/help/troubleshooting/emails).
+
+### Die Person kann die Einladung nicht annehmen [#they-cant-accept-the-invitation]
+
+Sie hat sich mit einer anderen E-Mail-Adresse angemeldet. Einladungen funktionieren nur für die Adresse, an die sie gesendet wurden. Bitte die Person, sich mit genau dieser anzumelden, oder ziehe die Einladung zurück und lade die richtige Adresse ein.
+
+### Create invite link ist deaktiviert [#create-invite-link-is-disabled]
+
+Der Workspace hat keinen freien Platz: bei Pro sind es 3 Personen, ausstehende Einladungen eingerechnet. Ziehe eine Einladung zurück, die du nicht brauchst, oder bitte einen Inhaber, das Abo zu upgraden. Siehe [Plätze und Workspace-Limits](/docs/help/teams/seats).
+
 ## Verwandte Themen [#related]
 
-- [Seats und Workspace-Limits](/docs/help/teams/seats)
+- [Team-Rollen](/docs/help/teams/roles)
+- [Plätze und Workspace-Limits](/docs/help/teams/seats)
 - [Leitfaden zu Workspaces und Teams](/docs/teams)

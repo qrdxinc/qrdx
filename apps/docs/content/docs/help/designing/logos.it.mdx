@@ -3,43 +3,58 @@ title: "Aggiungi un logo"
 description: "Metti il tuo logo al centro di un QR code senza compromettere la scansione."
 ---
 
+Un logo al centro del codice lo rende tuo e fa capire alle persone cosa aspettarsi. QRdx nasconde alcuni quadrati del codice sotto il logo, e la correzione degli errori li ricostruisce quando il codice viene scansionato. Questa pagina mostra come aggiungere un logo e mantenere il codice leggibile.
+
 ## Aggiungi il tuo logo [#add-your-logo]
 
 1. Nel [Playground](/playground?tab=design&section=logo), apri la scheda **Design**, poi **Logo**.
 2. Attiva **Logo al centro**.
-3. Scegli una delle **Icone rapide**, scegli un marchio in **Loghi dei marchi**, oppure clicca su **Carica il tuo logo**.
-4. Per cambiarlo in seguito, clicca su **Sostituisci** o **Rimuovi**.
+3. Scegli una delle **Icone rapide**, scegli un marchio in **Loghi dei brand**, oppure clicca su **Carica il tuo logo**. I caricamenti possono essere file PNG, JPG, WebP o SVG fino a 1 MB. Un PNG trasparente o un SVG offrono il risultato migliore.
+4. Regola dimensione, forma e base in **Opzioni del logo**, che compare quando un logo è attivo.
 
-I loghi possono essere file PNG, JPG, WebP o SVG fino a 1 MB. Un PNG trasparente o un SVG offre il risultato migliore.
+Per cambiare il logo in seguito, clicca su **Sostituisci** o **Rimuovi**.
 
-## Usa il logo di un marchio [#use-a-brands-logo]
+<Shot id="design-logo" />
 
-**Loghi dei marchi** apre una galleria di {facts.brandLogos} marchi da [Simple Icons](https://simpleicons.org): Instagram, WhatsApp, PayPal, Spotify, Google Maps, gli app store e migliaia di altri. I più popolari vengono per primi e puoi cercare per nome.
+## Usa il logo di un brand [#use-a-brands-logo]
 
-- **Colore**: il colore del marchio, nero o bianco.
-- **Base**: una forma piena dietro il logo. Un logo bianco ne ha sempre una, nel colore del marchio, e lo stesso vale per un colore del marchio molto chiaro.
+**Loghi dei brand** apre una galleria di {facts.brandLogos} marchi da [Simple Icons](https://simpleicons.org): Instagram, WhatsApp, PayPal, Spotify, Google Maps, gli store di app e migliaia di altri. I più popolari vengono per primi e puoi cercare per nome.
 
-Il logo viene salvato dentro il tuo design, come un caricamento, quindi il codice non lo carica mai da nessun altro posto. Modifica dimensione, forma e base in **Opzioni del logo**.
+- Scegli **Colore del brand**, **Nero** o **Bianco** per il logo.
+- **Base** mette una forma piena dietro il logo. Un logo bianco ne ha sempre bisogno, nel colore del brand, e lo stesso vale per un colore del brand molto chiaro.
 
-Il marchio di ogni brand appartiene al suo proprietario. Usalo per indirizzare le persone verso quel marchio, ad esempio il tuo profilo Instagram. Alcuni marchi hanno chiesto a Simple Icons di rimuovere i propri loghi, quindi non sono presenti nella galleria.
+Il logo viene salvato dentro il tuo design, come un caricamento, quindi il codice non lo carica mai da altrove.
+
+Il marchio di ogni brand appartiene al suo proprietario. Usalo per indirizzare le persone verso quel brand, per esempio il tuo profilo Instagram. Alcuni brand hanno chiesto a Simple Icons di rimuovere i propri marchi, quindi non sono nella galleria.
 
 ## Imposta la correzione degli errori su Alta [#set-error-correction-to-high]
 
-Un logo copre alcuni quadrati del codice. La correzione degli errori li ricostruisce durante la scansione del codice.
+Apri **Correzione degli errori** nella scheda **Design** e scegli **Alta** ogni volta che c'è un logo. I livelli sono **Bassa** (7%), **Media** (15%), **Quartile** (25%) e **Alta** (30%): la quota di codice che può essere coperta o danneggiata e risultare comunque scansionabile.
 
-Apri **Correzione errori** nella scheda **Design** e scegli **Alta** ogni volta che c'è un logo. Il livello Alta permette di coprire fino al 30% del codice.
+## Se qualcosa va storto [#if-something-goes-wrong]
 
-## Se il punteggio scende [#if-the-score-drops]
+### Il punteggio di scansione cala dopo aver aggiunto il logo [#the-scan-score-drops-after-you-add-the-logo]
 
-QRdx dimensiona il logo per te. Se il **Punteggio di scansione** scende dopo l'aggiunta, controlla che **Correzione errori** sia impostata su **Alta**.
+Controlla che **Correzione degli errori** sia impostata su **Alta**. QRdx dimensiona il logo per te, quindi con il livello Alta il punteggio di solito torna a salire.
 
-Se continua ad andare male, prova **Logo QR**, che mantiene ogni quadrato al suo posto.
+### Il punteggio dice che il logo copre un occhio d'angolo [#the-score-says-the-logo-covers-a-corner-eye]
 
-## Preferisci il logo nei punti? [#want-the-logo-in-the-dots-instead]
+Il logo raggiunge uno dei tre grandi quadrati d'angolo, che gli scanner usano per trovare il codice. Rimpicciolisci il logo in **Opzioni del logo**.
 
-**Logo QR** disegna i punti dentro la forma del tuo logo, invece di collocare il logo sopra. Vedi [Fondi un logo o una foto nel codice](/docs/help/designing/art).
+### Il logo appare sfocato nel codice [#the-logo-looks-fuzzy-in-the-code]
+
+Un PNG o JPG piccolo è stato ingrandito. Carica un SVG o un PNG più grande con sfondo trasparente.
+
+### Il caricamento viene rifiutato [#the-upload-is-refused]
+
+Il file supera 1 MB oppure non è un PNG, JPG, WebP o SVG. Esporta un file più piccolo e riprova.
+
+## Vuoi il logo nei punti? [#want-the-logo-in-the-dots-instead]
+
+**Logo QR** nella scheda **Art** dipinge i punti dentro la forma del tuo logo, invece di posizionare il logo sopra. Vedi [Fondere un logo o una foto nel codice](/docs/help/designing/art).
 
 ## Correlati [#related]
 
 - [Controlla un design con il punteggio di scansione](/docs/help/designing/scan-score)
+- [Scegli colori che si scansionano bene](/docs/help/designing/colors-and-contrast)
 - [Loghi per sviluppatori](/docs/features/logos)

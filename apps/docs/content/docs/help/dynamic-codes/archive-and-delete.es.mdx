@@ -1,32 +1,47 @@
 ---
 title: "Archivar, eliminar y restaurar códigos"
-description: "Qué ocurre con un código impreso cuando lo archivas, lo mueves a la papelera o lo eliminas definitivamente."
+description: "Qué le ocurre a un código impreso cuando lo archivas, lo mueves a la papelera o lo eliminas para siempre."
 ---
 
+Cuando termines con un código QR dinámico, puedes archivarlo, moverlo a la papelera o eliminarlo para siempre. Cada opción hace que el código deje de funcionar, pero de una forma distinta.
+
 <Callout type="warn">
-  Archivar, mover a la papelera o eliminar un código **hace que deje de funcionar**. Para retirar un código impreso de forma gradual, [ponlo en pausa](/docs/help/dynamic-codes/pause-schedule-limit) y añade una URL alternativa.
+  Archivar, enviar a la papelera o eliminar un código hace que deje de funcionar. Para retirar un código impreso de forma gradual, [pausa el código](/docs/help/dynamic-codes/pause-schedule-limit) y añade una URL de respaldo.
 </Callout>
 
-## Archivar [#archive]
+## Cuál elegir [#which-to-choose]
 
-Elige **Archivar** en el menú del código en **Códigos**.
+| | Lo que ven los escáneres | Cuenta para tu límite | Se recupera con |
+| --- | --- | --- | --- |
+| **Pausar** | La URL de respaldo, o "Esta campaña está en pausa" | Sí | **Reanudar** |
+| **Archivar** | "Este código QR ya no está activo" | No | **Desarchivar** |
+| **Mover a la papelera** | "Este código QR ya no está activo" | No | **Restaurar** |
+| **Eliminar para siempre** | "No se encontró el código QR" | No | Nada. Desaparece definitivamente. |
 
-- Quienes lo escaneen verán "Este código QR ya no está activo".
-- Los códigos archivados no cuentan para el límite de códigos de tu plan.
-- Elige **Desarchivar** para volver a activar el código. En Gratis, necesitas un espacio libre para códigos.
+## Archivar un código [#archive-a-code]
 
-## Mover a la papelera [#move-to-the-trash]
+En **Códigos**, abre el menú del código (**⋯**) y elige **Archivar**. Los códigos archivados no cuentan para el límite de códigos de tu plan. Elige **Desarchivar** para volver a activar el código. En Gratis, necesitas un espacio libre para códigos.
 
-Elige **Mover a la papelera** en el menú del código.
+## Mover un código a la papelera [#move-a-code-to-the-trash]
 
-- Quienes lo escaneen verán "Este código QR ya no está activo".
-- Abre **Papelera** en la barra lateral de Códigos y elige **Restaurar** para recuperarlo.
-- QRdx nunca vacía la papelera por su cuenta.
+Abre el menú del código y elige **Mover a la papelera**. Para ver los códigos en la papelera, abre **Filtro** en la barra de herramientas y establece **Estado** en **Papelera**. Allí, el menú de cada código ofrece **Restaurar** y **Eliminar para siempre**. QRdx nunca vacía la papelera por su cuenta.
 
-## Eliminar definitivamente [#delete-forever]
+## Eliminar un código para siempre [#delete-a-code-forever]
 
-En **Papelera**, elige **Eliminar definitivamente**.
+En la papelera, elige **Eliminar para siempre** en un código, o **Vaciar papelera** para eliminar todo lo que contiene. El historial de escaneos y el historial de versiones del código se eliminan con él, y nada puede recuperarlo. Los escáneres ven "No se encontró el código QR".
 
-- Quienes lo escaneen verán "Código QR no encontrado".
-- El historial de escaneos del código se elimina.
-- Esta acción no se puede deshacer.
+## Si algo sale mal [#if-something-goes-wrong]
+
+### Desarchivar o Restaurar es rechazado [#unarchive-or-restore-is-refused]
+
+Estás en Gratis y ya tienes 10 códigos activos. Archiva primero otro código o [mejora tu plan](/pricing).
+
+### Eliminaste un código y quieres recuperar sus escaneos [#you-deleted-a-code-and-want-its-scans-back]
+
+Desaparecieron junto con el código. Antes de eliminar un código que quizá necesites, [exporta sus escaneos](/docs/help/dynamic-codes/scans#download-your-scans).
+
+## Relacionado [#related]
+
+- [Pausar, programar o limitar un código](/docs/help/dynamic-codes/pause-schedule-limit)
+- [Un escaneo muestra una página de error](/docs/help/troubleshooting/error-pages)
+- [Crear un código QR dinámico](/docs/help/dynamic-codes/create)

@@ -1,74 +1,90 @@
 ---
 title: "Domini personalizzati"
-description: "Servi i link brevi dei tuoi QR code dinamici da un dominio di tua proprietà."
-icon: Globe
+description: "Pubblica i link brevi e le pagine ospitate dei tuoi QR code dinamici da un dominio di tua proprietà, come go.yourbrand.com."
 ---
 
-Per impostazione predefinita un [QR code dinamico](/docs/dynamic-qr-codes) codifica un link breve come `https://qrdx.dev/q/aB3dE5f`. Con un dominio personalizzato codifica invece `https://go.yourbrand.com/aB3dE5f`, così le persone vedono il tuo brand prima di fare la scansione. Reindirizzamenti, modifiche e analisi delle scansioni funzionano allo stesso modo.
+Di default un [QR code dinamico](/docs/dynamic-qr-codes) codifica un link breve come `https://qrdx.dev/q/aB3dE5f`. Con un dominio personalizzato codifica invece `https://go.yourbrand.com/aB3dE5f`, così le persone vedono il tuo brand prima della scansione. Reindirizzamenti, modifica e statistiche delle scansioni funzionano allo stesso modo. Usalo quando il link stesso è stampato, o quando il tuo brand deve essere l'unico nome sulla confezione.
 
-I domini personalizzati sono inclusi in Pro (fino a 5 per workspace) e Business (fino a 25).
+<Callout type="info" title="Pro e Business">
+  I domini personalizzati sono inclusi in Pro (fino a 5 per workspace) e Business (fino a 25). Vedi [Piani e limiti](/docs/plans-and-limits).
+</Callout>
+
+Hai fretta? Ecco la pagina breve con i passaggi: [Usa il tuo dominio](/docs/help/domains/custom-domains).
+
+## Come funziona [#how-it-works]
+
+<Diagram id="custom-domain" />
+
+Punti un dominio (di solito un sottodominio come `go.yourbrand.com`) verso QRdx con un record DNS e dimostri di esserne il proprietario. Da quel momento QRdx risponde alle richieste per quel nome host con i codici e le pagine del tuo workspace, e nient'altro. Il dominio appartiene al workspace in cui è stato aggiunto: proprietari e amministratori lo aggiungono, lo verificano e lo rimuovono, e ogni membro può usarlo per i propri codici.
 
 ## Collega un dominio [#connect-a-domain]
 
-1. Apri [Impostazioni → Domini](/dashboard?to=settings/domains) e inserisci il dominio, ad esempio `go.yourbrand.com`. Un sottodominio è la scelta migliore, perché il tuo sito principale resta dov'è.
-2. Aggiungi i record DNS mostrati per il dominio presso il tuo provider DNS (dove hai acquistato il dominio, Cloudflare, ...):
+1. Apri **Impostazioni** → **Domini** nel workspace e inserisci il dominio, ad esempio `go.yourbrand.com`. Un sottodominio funziona meglio, perché il tuo sito principale resta dov'è.
+2. Aggiungi i record DNS mostrati per il dominio presso il tuo provider DNS (dove hai comprato il dominio, Cloudflare, o ovunque si trovi il suo DNS):
    - un sottodominio richiede un record `CNAME`,
    - un dominio root (`yourbrand.com`) richiede un record `A`,
    - viene mostrato anche un record `TXT` quando bisogna confermare la proprietà.
 
-   Copia i valori esatti dalla dashboard. La maggior parte dei provider vuole come nome solo la parte prima del tuo dominio (`go`, oppure `@` per il root).
-3. Fai clic su **Verifica**. Le modifiche DNS di solito compaiono in pochi minuti, ma possono richiedere fino a 48 ore: se i record non vengono ancora trovati, riprova più tardi.
+   Copia i valori esatti dalla dashboard. La maggior parte dei provider vuole come nome solo la parte prima del tuo dominio (`go`, oppure `@` per la root).
+3. Fai clic su **Verifica**. Le modifiche DNS di solito compaiono in pochi minuti ma possono richiedere fino a 48 ore, quindi riprova più tardi se i record non vengono ancora trovati.
+
+<Shot id="custom-domains" />
 
 Una volta verificato, il dominio compare nel selettore **Dominio del link breve** quando crei o modifichi un codice dinamico. I domini verificati restano verificati finché non li rimuovi, e **Controlla DNS** rilegge i record in qualsiasi momento.
 
 <Callout type="info">
-  Un dominio non verificato entro 3 giorni può essere aggiunto da un altro account, così nessuno può occupare un dominio che non controlla.
+  Un dominio non verificato entro 3 giorni può essere aggiunto da un altro account, così nessuno può tenersi un dominio che non controlla.
 </Callout>
 
 <IfAvailable feature="domainConnect" id="one-click-dns-setup" title="Configurazione DNS con un clic">
 
-Alcuni provider DNS supportano [Domain Connect](https://www.domainconnect.org), uno standard aperto che permette a un servizio di aggiungere i propri record al posto tuo. Quando il tuo provider lo supporta e offre la configurazione di QRdx, un dominio in attesa del DNS mostra un pulsante **Configura con …** con il nome del tuo provider.
+Alcuni provider DNS supportano [Domain Connect](https://www.domainconnect.org), uno standard aperto che permette a un servizio di aggiungere i propri record al posto tuo. Quando il tuo provider lo supporta e offre la configurazione di QRdx, un dominio in attesa del DNS mostra un pulsante **Configura con …** che porta il nome del tuo provider.
 
-1. Fai clic sul pulsante. Si apre il tuo provider DNS, che elenca i record di cui QRdx ha bisogno.
-2. Accedi se richiesto e approva la modifica. Non cambia nulla finché non approvi.
-3. Torni alla pagina Domini, che controlla subito il DNS e poi di nuovo nella mezz'ora successiva.
+1. Fai clic sul pulsante. Si apre il tuo provider DNS e mostra i record necessari a QRdx.
+2. Accedi lì se richiesto e approva la modifica. Non cambia nulla finché non lo fai.
+3. Torni alla pagina Domini, che controlla subito il DNS e lo ricontrolla nella mezz'ora... nei successivi trenta secondi.
 
-Il pulsante compare solo per sottodomini come `go.yourbrand.com` e solo quando il tuo provider può aggiungere esattamente i record mostrati. In caso contrario aggiungi tu i record dalla tabella, come descritto sopra.
+Il pulsante compare solo per sottodomini come `go.yourbrand.com`, e solo quando il tuo provider può aggiungere esattamente i record mostrati. Altrimenti aggiungi tu i record dalla tabella, come descritto sopra.
 
 </IfAvailable>
 
 ## Usalo per i codici [#use-it-for-codes]
 
-- **Nuovo codice:** scegli il dominio in **Dominio del link breve** prima di fare clic su **Crea codice**.
+- **Nuovo codice:** scegli il dominio in **Dominio del link breve** prima di creare il codice.
 - **Codice esistente:** scegli il dominio in **Modifica link**, salva e scarica di nuovo il QR code, perché il link codificato cambia.
 
-Ogni codice continua a funzionare anche con il suo link predefinito `https://qrdx.dev/q/<slug>`, quindi i QR code stampati prima di spostare un codice sul tuo dominio non smettono mai di funzionare. Spostare un codice da un dominio personalizzato a un altro (o di nuovo a quello predefinito) invece interrompe i QR code stampati con il vecchio link del dominio personalizzato; la finestra di dialogo ti avvisa prima di salvare.
+<Shot id="short-link-domain-picker" />
 
-### Back-half personalizzati [#your-own-back-halves]
+Ogni codice continua a funzionare anche sul suo link predefinito `https://qrdx.dev/q/<slug>`, quindi i QR code stampati prima di spostare un codice sul tuo dominio non smettono mai di funzionare. Spostare un codice da un dominio personalizzato a un altro (o di nuovo al link predefinito) invece rompe i QR code stampati con il vecchio link del dominio personalizzato; la finestra di dialogo ti avvisa prima del salvataggio.
 
-Con Pro e Business puoi scegliere il [back-half](/docs/dynamic-qr-codes#custom-back-halves) di un codice sul tuo dominio, ad esempio `go.yourbrand.com/spring-menu`. Deve essere univoco solo su quel dominio, quindi non importa se un altro cliente QRdx usa `spring-menu`, e lì sono riservati solo `api`, `p` e `q`. Un back-half scelto sul tuo dominio appartiene a quel dominio e non ha un link `qrdx.dev/q/`. Se sposti un codice di questo tipo su un altro dominio, il back-half resta se lì è libero; se lo riporti al link predefinito, resta se è libero su `qrdx.dev`, altrimenti il codice ne riceve uno nuovo generato.
+### I tuoi back-half [#your-own-back-halves]
 
-Sul tuo dominio:
+Con Pro e Business puoi scegliere il [back-half](/docs/dynamic-qr-codes#custom-back-halves) di un codice sul tuo dominio, ad esempio `go.yourbrand.com/spring-menu`. Deve essere univoco solo su quel dominio, quindi non importa se un altro cliente QRdx usa `spring-menu`, e solo poche parole tecniche (`api`, `_next`, `null`, `undefined`) sono riservate. Un back-half scelto sul tuo dominio appartiene a quel dominio e non ha un link `qrdx.dev/q/`. Spostando un codice simile su un altro dominio il back-half viene mantenuto se lì è libero; riportandolo al link predefinito viene mantenuto se è libero su `qrdx.dev`, altrimenti il codice ne riceve uno nuovo generato.
+
+## Cosa serve il dominio [#what-the-domain-serves]
 
 - `https://go.yourbrand.com/<slug>` reindirizza per i codici che usano quel dominio. I codici su altri domini, o solo sul link predefinito, mostrano lì una pagina "non trovato".
-- `https://go.yourbrand.com/` mostra una piccola pagina che dice che il dominio ospita link di QR code.
+- `https://go.yourbrand.com/p/<slug>` serve le tue [pagine ospitate](/docs/landing-pages), con i loro moduli, i file del calendario e i download di **Salva contatto**.
 - `https://go.yourbrand.com/01/<GTIN>` ([GS1 Digital Link](/docs/product-pages#gs1-digital-link)) apre la pagina prodotto con quel GTIN il cui codice usa il dominio.
-- Ogni altro percorso restituisce "non trovato". Il dominio non serve mai il resto di QRdx.
+- Con Business, `https://go.yourbrand.com/stats/<token>` serve i [report per i clienti](/docs/client-reports) che hai assegnato al dominio.
+- `https://go.yourbrand.com/` mostra una piccola pagina che dice che il dominio ospita link di QR code. Ogni altro percorso restituisce "non trovato": il dominio non serve mai la dashboard, l'editor o altre parti di QRdx.
 
-Le modifiche (un dominio appena verificato o rimosso) impiegano fino a un minuto per raggiungere tutti i server.
+Un dominio non ancora verificato mostra invece "Questo dominio non è ancora collegato". Le modifiche (un dominio appena verificato o rimosso) impiegano fino a un minuto per raggiungere tutti i server.
 
-## Workspace e ruoli [#workspaces-and-roles]
+## Limiti e piani [#limits-and-plans]
 
-Un dominio appartiene al workspace in cui è stato aggiunto. Proprietari e amministratori lo aggiungono, lo verificano e lo rimuovono; ogni membro può usare i domini verificati del workspace per i propri codici.
+| | Gratuito | Pro | Business |
+| --- | --- | --- | --- |
+| Domini personalizzati per workspace | Nessuno | 5 | 25 |
+| Report per i clienti sul tuo dominio | No | No | Sì |
 
-## Piani e rimozione dei domini [#plans-and-removing-domains]
+Il downgrade non rompe mai nulla: i domini verificati continuano a servire i codici che li usano. Senza Pro o Business non puoi aggiungere o verificare domini né spostare altri codici su un dominio, ma puoi comunque modificare quei codici e rimuovere i domini.
 
-- Il downgrade non rompe mai nulla: i domini verificati continuano a servire i codici che li usano. Senza Pro o Business non puoi aggiungere o verificare domini né spostarvi altri codici, ma puoi comunque modificare quei codici e rimuovere i domini.
-- Rimuovere un dominio riporta i suoi codici al link predefinito `qrdx.dev/q/<slug>`. I back-half scelti sul dominio passano a `qrdx.dev` quando lì sono liberi; gli altri ricevono un nuovo back-half generato. I QR code stampati con il link del dominio personalizzato smettono di funzionare, perciò la finestra di dialogo mostra prima quanti codici usano il dominio.
+Rimuovendo un dominio, i suoi codici tornano al link predefinito `qrdx.dev/q/<slug>`. I back-half scelti sul dominio passano a `qrdx.dev` se lì sono liberi; gli altri ricevono un nuovo back-half generato. I QR code stampati con il link del dominio personalizzato smettono di funzionare, quindi la finestra di dialogo mostra prima quanti codici usano il dominio.
 
-## REST API [#rest-api]
+## Per sviluppatori [#for-developers]
 
-La [API dei codici](/docs/dynamic-qr-codes#rest-api) accetta `domainId` (l'id di un dominio verificato nello stesso workspace) su `POST /v1/codes` e `PATCH /v1/codes/{id}`. Invia `"domainId": null` in una `PATCH` per tornare al link predefinito. Spostare un codice su un dominio richiede Pro, altrimenti restituisce `402 PLAN_REQUIRED`.
+La [API dei codici](/docs/developers/api/create-codes) accetta `domainId` (l'id di un dominio verificato nello stesso workspace) su `POST /v1/codes` e `PATCH /v1/codes/{id}`. Invia `"domainId": null` in una `PATCH` per tornare al link predefinito. Spostare un codice su un dominio richiede Pro o Business, altrimenti restituisce `402 PLAN_REQUIRED`.
 
 Ogni codice in una risposta include:
 
@@ -80,14 +96,21 @@ Ogni codice in una risposta include:
 
 ## Self-hosting [#self-hosting]
 
-Il modo in cui si collegano i domini dipende dal tuo deployment:
+Il modo in cui i domini vengono collegati dipende dal tuo deployment:
 
-- **Su Vercel:** imposta `VERCEL_API_TOKEN` (un token con accesso al progetto), `VERCEL_PROJECT_ID` e, per un progetto di team, `VERCEL_TEAM_ID`. I domini vengono quindi aggiunti al progetto tramite la Vercel Domains API, che emette anche i certificati TLS. Senza queste variabili la pagina Domini spiega che i domini personalizzati non sono configurati, perché Vercel instrada solo i domini aggiunti al progetto.
-- **Altrove** (Docker, Node.js): lascia queste variabili non impostate. I domini si verificano manualmente:
-  1. Punta il dominio al tuo server con un record `CNAME` (verso l'host name della tua app) o `A` (l'IP del tuo server).
-  2. Fai in modo che il tuo reverse proxy accetti il dominio, serva HTTPS per esso (ad esempio con il TLS on-demand di Caddy o un certificato certbot) e inoltri all'app l'header `Host` originale. Con nginx si fa con `proxy_set_header Host $host;`; Caddy lo fa di default.
+- **Su Vercel:** imposta `VERCEL_API_TOKEN` (un token con accesso al progetto), `VERCEL_PROJECT_ID` e, per un progetto di team, `VERCEL_TEAM_ID`. I domini vengono poi aggiunti al progetto tramite la Vercel Domains API, che emette anche i certificati TLS. Senza queste variabili la pagina Domini spiega che i domini personalizzati non sono configurati, perché Vercel instrada solo i domini aggiunti al progetto.
+- **Ovunque altrove** (Docker, Node.js): lascia queste variabili non impostate. I domini si verificano manualmente:
+  1. Punta il dominio al tuo server con un `CNAME` (verso il nome host della tua app) o un record `A` (l'IP del tuo server).
+  2. Fai in modo che il tuo reverse proxy accetti il dominio, serva HTTPS per esso (ad esempio con il TLS on-demand di Caddy o un certificato certbot) e inoltri l'header `Host` originale all'app. Con nginx è `proxy_set_header Host $host;`; Caddy lo fa di default.
   3. Aggiungi il dominio nella pagina Domini, crea il record `TXT` che mostra (`_qrdx-challenge.<your-domain>` con il valore `qrdx-verify=<token>`) e fai clic su **Verifica**. L'app controlla il record con una ricerca DNS.
 
-La **configurazione DNS con un clic** (facoltativa) usa [Domain Connect](https://www.domainconnect.org). Richiede un template tuo, accettato da ogni provider DNS che vuoi supportare, e una chiave RSA che firma i link di configurazione: imposta `DOMAIN_CONNECT_PROVIDER_ID`, `DOMAIN_CONNECT_SERVICE_ID` e `DOMAIN_CONNECT_PRIVATE_KEY` (PEM) e pubblica la chiave pubblica come record `TXT` in `_dck1.<provider id>`. Il template di QRdx (`domain-connect/` nel repository) funziona solo per qrdx.dev, perché i provider verificano la firma con la sua chiave. Finché la chiave pubblicata non corrisponde, non viene mostrato alcun pulsante e l'app registra nei log il motivo.
+La **configurazione DNS con un clic** (opzionale) usa [Domain Connect](https://www.domainconnect.org). Richiede un template tuo, accettato da ogni provider DNS che vuoi supportare, e una chiave RSA che firma i link di configurazione: imposta `DOMAIN_CONNECT_PROVIDER_ID`, `DOMAIN_CONNECT_SERVICE_ID` e `DOMAIN_CONNECT_PRIVATE_KEY` (PEM), e pubblica la chiave pubblica come record `TXT` in `_dck1.<provider id>`. Il template di QRdx (`domain-connect/` nel repository) funziona solo per qrdx.dev, perché i provider verificano la firma con la sua chiave. Finché la chiave pubblicata non corrisponde, non viene mostrato alcun pulsante e l'app registra nel log il motivo.
 
-L'app riconosce i domini personalizzati dall'header `Host`. Le richieste verso l'URL della tua app, `NEXT_PUBLIC_SHORT_LINK_BASE_URL`, `localhost` e `*.vercel.app` sono sempre trattate come l'app principale.
+L'app riconosce i domini personalizzati dall'header `Host`. Le richieste per l'URL della tua app, `NEXT_PUBLIC_SHORT_LINK_BASE_URL`, `localhost` e `*.vercel.app` sono sempre trattate come app principale. Vedi [Self-hosting](/docs/self-hosting#optional-services).
+
+## Correlati [#related]
+
+- [Usa il tuo dominio](/docs/help/domains/custom-domains)
+- [QR code dinamici](/docs/dynamic-qr-codes#custom-back-halves): back-half personalizzati
+- [Pagine prodotto e GS1 Digital Link](/docs/product-pages#gs1-digital-link)
+- [Report per i clienti](/docs/client-reports): pagine di statistiche con il tuo brand sul tuo dominio
