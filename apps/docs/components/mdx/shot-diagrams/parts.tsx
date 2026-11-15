@@ -1,4 +1,5 @@
-import type { Icon } from "iconsax-reactjs";
+import { CloseCircle, type Icon, TickCircle } from "iconsax-reactjs";
+import { QRCodeSVG, type QRProps } from "qrdx";
 import type { ReactNode } from "react";
 
 // The pieces the concept diagrams (./*.tsx) are drawn with: hand-written
@@ -308,4 +309,95 @@ export function Pill({
       </text>
     </g>
   );
+}
+
+/** The link the sample codes in the drawings hold. */
+const SAMPLE_VALUE = "https://qrdx.dev/docs";
+
+/**
+ * A real QR code, drawn by the engine (never a made-up pattern), placed at
+ * (x, y). `crop` shows only the top-left `crop` pixels of a code drawn at
+ * `size`, enlarged to `show`: a close look at one corner eye.
+ */
+export function SampleCode({
+  x,
+  y,
+  size,
+  crop,
+  show,
+  ...props
+}: {
+  x: number;
+  y: number;
+  size: number;
+  crop?: number;
+  show?: number;
+} & Omit<QRProps, "value" | "size">) {
+  const code = <QRCodeSVG size={size} value={SAMPLE_VALUE} {...props} />;
+  if (crop && show) {
+    return (
+      <svg
+        aria-hidden
+        height={show}
+        viewBox={`0 0 ${crop} ${crop}`}
+        width={show}
+        x={x}
+        y={y}
+      >
+        {code}
+      </svg>
+    );
+  }
+  return (
+    <g aria-hidden transform={`translate(${x}, ${y})`}>
+      {code}
+    </g>
+  );
+}
+
+/** A tick or a cross with a label and an optional second line: the verdict under a sample. */
+export function Verdict({
+  x,
+  y,
+  ok,
+  label,
+  note,
+}: {
+  x: number;
+  y: number;
+  ok: boolean;
+  label: string;
+  note?: string;
+}) {
+  const Mark = ok ? TickCircle : CloseCircle;
+  return (
+    <g>
+      <g color={ok ? ACCENT : MUTED} transform={`translate(${x}, ${y - 14})`}>
+        <Mark aria-hidden color="currentColor" size={18} variant="Bold" />
+      </g>
+      <text fill={INK} fontSize="13.5" fontWeight="600" x={x + 26} y={y}>
+        {label}
+      </text>
+      {note && (
+        <text fill={MUTED} fontSize="12" x={x + 26} y={y + 18}>
+          {note}
+        </text>
+      )}
+    </g>
+  );
+}
+
+/** WCAG contrast ratio of two #rrggbb colors, to one decimal ("17.7"). */
+export function contrastRatio(a: string, b: string): string {
+  const luminance = (hex: string) => {
+    const channel = (index: number) => {
+      const value = Number.parseInt(hex.slice(index, index + 2), 16) / 255;
+      return value <= 0.039_28
+        ? value / 12.92
+        : ((value + 0.055) / 1.055) ** 2.4;
+    };
+    return 0.2126 * channel(1) + 0.7152 * channel(3) + 0.0722 * channel(5);
+  };
+  const [light, dark] = [luminance(a), luminance(b)].sort((p, q) => q - p);
+  return ((light + 0.05) / (dark + 0.05)).toFixed(1);
 }
