@@ -227,6 +227,8 @@ const { values } = parseArgs({
     only: { type: "string" },
     lang: { type: "string" },
     concurrency: { type: "string", default: "2" },
+    /** The fake client address for the route's per-visitor limits (local servers only). */
+    ip: { type: "string", default: "203.0.113.42" },
   },
 });
 
@@ -243,7 +245,7 @@ async function ask(item: Case): Promise<Outcome> {
       "content-type": "application/json",
       // Its own rate-limit bucket on a local server, so a browser session
       // on the same machine isn't counted with it (production ignores it).
-      "x-forwarded-for": "203.0.113.42",
+      "x-forwarded-for": values.ip as string,
     },
     body: JSON.stringify({
       messages: [{ role: "user", content: item.question }],

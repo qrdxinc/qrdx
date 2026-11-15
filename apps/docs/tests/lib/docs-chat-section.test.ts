@@ -54,19 +54,20 @@ describe("suggested questions", () => {
       join(import.meta.dirname, "../../../../packages/i18n/messages/en.json"),
       "utf8",
     ),
-  ) as {
-    docs: { chat: { suggestions: Record<string, Record<string, string>> } };
-  };
+  ) as { docs: { chat: { suggestions: Record<string, string> } } };
 
+  // One level: "home_q1", not "home.q1" (next-intl's key types give up on
+  // deeper nesting and the shell's strings lose their types with it).
   it("exist for every section and key, as real questions", () => {
+    const questions = catalog.docs.chat.suggestions;
+    expect(Object.keys(questions).sort()).toEqual(
+      SUGGESTION_SECTIONS.flatMap((section) =>
+        SUGGESTION_KEYS.map((key) => `${section}_${key}`),
+      ).sort(),
+    );
     for (const section of SUGGESTION_SECTIONS) {
-      const questions = catalog.docs.chat.suggestions[section];
-      expect(questions, section).toBeDefined();
-      expect(Object.keys(questions ?? {}).sort()).toEqual(
-        [...SUGGESTION_KEYS].sort(),
-      );
       for (const key of SUGGESTION_KEYS) {
-        const question = questions?.[key] ?? "";
+        const question = questions[`${section}_${key}`] ?? "";
         expect(question.length, `${section}.${key}`).toBeGreaterThan(10);
         expect(question.endsWith("?"), `${section}.${key}`).toBe(true);
       }

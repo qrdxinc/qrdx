@@ -6,7 +6,7 @@ import { cn } from "@repo/design-system/lib/utils";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import type { Node } from "fumadocs-core/page-tree";
 import { useTreeContext } from "fumadocs-ui/contexts/tree";
-import { useDocsLayout } from "fumadocs-ui/layouts/docs";
+import { useNotebookLayout } from "fumadocs-ui/layouts/notebook";
 import { Add, Dislike, Like1, Send2, Stop } from "iconsax-reactjs";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
@@ -23,6 +23,7 @@ import {
 } from "react";
 import { Streamdown } from "streamdown";
 import { LocaleLink } from "@/components/i18n/locale-link";
+import { DocsPre } from "@/components/mdx/code-block";
 import { isDocsPage, ZoneLink } from "@/components/zone-link";
 import { track } from "@/lib/analytics";
 import { type AskSource, useDocsChat } from "./provider";
@@ -161,7 +162,39 @@ function AnswerLink({
   );
 }
 
-const answerComponents = { a: AnswerLink };
+/** Fenced code as on the docs pages: one block with a header and its copy button, scrolling sideways. */
+function AnswerPre({
+  node: _node,
+  ...props
+}: ComponentProps<"pre"> & { node?: unknown }) {
+  return <DocsPre {...(props as ComponentProps<typeof DocsPre>)} />;
+}
+
+/** Inline code as on the docs pages; code inside a block keeps its language class for the header. */
+function AnswerCode({
+  node: _node,
+  className,
+  children,
+  ...props
+}: ComponentProps<"code"> & { node?: unknown }) {
+  if (/(?:^|\s)language-/.test(className ?? "")) {
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    );
+  }
+  return (
+    <code
+      className="rounded-md bg-fd-muted px-1.5 py-0.5 font-mono text-[0.85em] text-fd-foreground"
+      {...props}
+    >
+      {children}
+    </code>
+  );
+}
+
+const answerComponents = { a: AnswerLink, pre: AnswerPre, code: AnswerCode };
 
 export function DocsChatPanel() {
   const t = useTranslations("docs.chat");
@@ -170,7 +203,7 @@ export function DocsChatPanel() {
   const { open, setOpen, pending, consume } = useDocsChat();
   const {
     props: { tabs },
-  } = useDocsLayout();
+  } = useNotebookLayout();
   const { full } = useTreeContext();
   const section: DocsSection = useMemo(
     () => docsSectionOf(pathname, tabs),
@@ -409,7 +442,7 @@ export function DocsChatPanel() {
                   <span className="sr-only">{t("assistant")}: </span>
                   {text.length > 0 ? (
                     <Streamdown
-                      className="prose prose-sm max-w-none text-fd-foreground/90 [&_pre]:text-xs"
+                      className="prose prose-sm max-w-none text-fd-foreground/90 [&_figure]:my-3 [&_pre]:text-xs"
                       codeBlockMaxHeight={320}
                       components={answerComponents}
                       controls={{
@@ -425,7 +458,10 @@ export function DocsChatPanel() {
                     </Streamdown>
                   ) : null}
                   {done && sources.length > 0 && (
-                    <div className="rounded-lg border bg-fd-card p-3">
+                    <div
+                      className="rounded-lg border bg-fd-card p-3"
+                      data-docs-chat-sources=""
+                    >
                       <p className="mb-1.5 text-xs font-medium text-fd-muted-foreground">
                         {t("sources")}
                       </p>
@@ -569,7 +605,11 @@ function EmptyState({
         </p>
         <ul className="flex flex-col gap-1.5">
           {SUGGESTION_KEYS.map((key) => {
-            const question = t(`suggestions.${section}.${key}`);
+            // Looked up by a plain string: the typed template-literal key
+            // makes next-intl's key types give up for the whole app.
+            const question = (t as unknown as (key: string) => string)(
+              `suggestions.${section}_${key}`,
+            );
             return (
               <li key={key}>
                 <button

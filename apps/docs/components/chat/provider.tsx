@@ -10,12 +10,17 @@ import {
   useRef,
   useState,
 } from "react";
+import { DOCS_CHAT_ENABLED } from "./enabled";
 
 // The docs assistant's state for one visit: whether the panel is open and a
 // question handed to it from elsewhere (the search dialog's "Ask AI about…"
-// row). The conversation itself lives in the panel (components/chat/panel.tsx),
-// which stays mounted once opened, so closing and reopening keeps it; a
-// reload forgets it. Nothing is written to storage.
+// row, components/chat/slot.tsx). The conversation itself lives in the panel
+// (components/chat/panel.tsx), which stays mounted once opened, so closing
+// and reopening keeps it; a reload forgets it. Nothing is written to storage.
+//
+// Hand-overs travel as a window event, so a component outside this provider
+// (the search dialog sits in fumadocs' RootProvider) can ask a question
+// without the layout threading context through Shell-owned files.
 
 /** Where a handed-over question came from, for analytics. */
 export type AskSource = "search" | "page" | "suggestion";
@@ -25,6 +30,16 @@ export interface PendingQuestion {
   source: AskSource;
   /** Changes with every hand-over, so the same text twice is asked twice. */
   nonce: number;
+}
+
+const ASK_EVENT = "qrdx:docs-chat-ask";
+
+/** Opens the chat and asks `text`, from anywhere in the docs (a no-op when the chat is off). */
+export function askDocsChat(text: string, source: AskSource): void {
+  if (!DOCS_CHAT_ENABLED || typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent(ASK_EVENT, { detail: { text, source } }),
+  );
 }
 
 interface DocsChatContextValue {
@@ -52,27 +67,19 @@ export function isAskAiShortcut(event: KeyboardEvent): boolean {
   );
 }
 
-export function DocsChatProvider({
-  enabled,
-  children,
-}: {
-  enabled: boolean;
-  children: ReactNode;
-}) {
+export function DocsChatProvider({ children }: { children: ReactNode }) {
+  const enabled = DOCS_CHAT_ENABLED;
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState<PendingQuestion | null>(null);
   const nonce = useRef(0);
 
-  const ask = useCallback(
-    (text: string, source: AskSource) => {
-      const trimmed = text.trim();
-      if (!(enabled && trimmed)) return;
-      nonce.current += 1;
-      setPending({ text: trimmed, source, nonce: nonce.current });
-      setOpen(true);
-    },
-    [enabled],
-  );
+  const ask = useCallback((text: string, source: AskSource) => {
+    const trimmed = text.trim();
+    if (!(enabled && trimmed)) return;
+    nonce.current += 1;
+    setPending({ text: trimmed, source, nonce: nonce.current });
+    setOpen(true);
+  }, []);
 
   const consume = useCallback((taken: number) => {
     setPending((current) => (current?.nonce === taken ? null : current));
@@ -87,13 +94,22 @@ export function DocsChatProvider({
       event.preventDefault();
       toggle();
     };
+    const onAsk = (event: Event) => {
+      const detail = (event as CustomEvent<{ text: string; source: AskSource }>)
+        .detail;
+      if (detail?.text) ask(detail.text, detail.source ?? "page");
+    };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [enabled, toggle]);
+    window.addEventListener(ASK_EVENT, onAsk);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener(ASK_EVENT, onAsk);
+    };
+  }, [toggle, ask]);
 
   const value = useMemo<DocsChatContextValue>(
     () => ({ enabled, open, setOpen, toggle, ask, pending, consume }),
-    [enabled, open, toggle, ask, pending, consume],
+    [open, toggle, ask, pending, consume],
   );
 
   return (
