@@ -2,48 +2,113 @@ import "server-only";
 
 import { unstable_cache } from "next/cache";
 import type { ThemeStyles } from "@/types/theme";
-import { legacyThemeCards, listFrames, listItems } from "./queries";
+import {
+  type HomeSectionId,
+  periodStart,
+  pickTopTier,
+  type RankPeriod,
+  TOP_MIN,
+  TOP_SIZE,
+  withoutShown,
+} from "./home-sections";
+import {
+  legacyThemeCards,
+  listFrames,
+  listItems,
+  mostSavedItems,
+  topMakers,
+  trendingItems,
+} from "./queries";
 import { checkScanGate, type ScanGate } from "./scan-gate";
 import { COMMUNITY_TAG, communityState } from "./store";
-import type { CommunityItemCard } from "./types";
+import type { CommunityItemCard, CommunityMaker, RankedCard } from "./types";
+
+/** Cards in each of the overview's plain rows. */
+export const ROW_SIZE = 10;
+
+const DAY_MS = 86_400_000;
 
 export interface CommunityHome {
+  /** The most saved items, over the shortest period that has enough */
+  top: { period: RankPeriod; items: RankedCard[] } | null;
+  /** This week's saves, uses and remixes, without Top's items */
+  trending: RankedCard[];
+  /** Featured by the QRdx team */
+  picks: CommunityItemCard[];
+  /** Members' newest items; `thisWeek` when they're all from the last 7 days */
+  fresh: { thisWeek: boolean; cards: CommunityItemCard[] };
+  /** QRdx's own frames */
   official: CommunityItemCard[];
-  featured: CommunityItemCard[];
-  collections: CommunityItemCard[];
   themes: CommunityItemCard[];
-  fresh: CommunityItemCard[];
+  /** The newest page templates */
   templates: CommunityItemCard[];
+  collections: CommunityItemCard[];
+  makers: CommunityMaker[];
+}
+
+/** Members' newest items, called "new this week" when enough are. */
+export function freshRow(
+  cards: CommunityItemCard[],
+  now: Date,
+): CommunityHome["fresh"] {
+  const weekAgo = now.getTime() - 7 * DAY_MS;
+  const thisWeek = cards.filter(
+    (card) => card.publishedAt && Date.parse(card.publishedAt) >= weekAgo,
+  );
+  return thisWeek.length >= TOP_MIN
+    ? { thisWeek: true, cards: thisWeek }
+    : { thisWeek: false, cards };
 }
 
 async function loadHome(): Promise<CommunityHome> {
+  const now = new Date();
   const state = await communityState();
   const [
-    official,
-    featuredFrames,
-    featuredThemes,
-    collections,
-    themes,
+    today,
+    week,
+    allTime,
+    trending,
+    picks,
     fresh,
+    official,
+    themes,
     templates,
+    collections,
+    makers,
   ] = await Promise.all([
+    mostSavedItems({ since: periodStart("day", now), limit: TOP_SIZE }),
+    mostSavedItems({ since: periodStart("week", now), limit: TOP_SIZE }),
+    mostSavedItems({ since: null, limit: TOP_SIZE }),
+    // Twice a row: Top's items come out of it.
+    trendingItems({ since: periodStart("week", now), limit: TOP_SIZE * 2 }),
+    listItems({ featured: true, limit: 12 }),
+    listItems({ official: false, sort: "newest", limit: ROW_SIZE }),
     listFrames({ official: true }),
-    listItems({ type: "frame", featured: true, limit: 4 }),
-    listItems({ type: "theme", featured: true, limit: 4 }),
-    listItems({ type: "collection", limit: 8 }),
     state.themes === "items"
-      ? listItems({ type: "theme", sort: "popular", limit: 8 })
-      : legacyThemeCards(8),
-    listItems({ type: "frame", official: false, sort: "newest", limit: 8 }),
+      ? listItems({ type: "theme", sort: "popular", limit: ROW_SIZE })
+      : legacyThemeCards(ROW_SIZE),
     listItems({ type: "page-template", sort: "newest", limit: 8 }),
+    listItems({ type: "collection", limit: 8 }),
+    topMakers(12),
+  ]);
+  const top = pickTopTier([
+    { period: "day", items: today },
+    { period: "week", items: week },
+    { period: "all", items: allTime },
   ]);
   return {
-    official: official.slice(0, 8),
-    featured: [...featuredFrames, ...featuredThemes].slice(0, 8),
-    collections,
+    top,
+    trending: withoutShown(
+      trending,
+      top?.items.map((item) => item.card) ?? [],
+    ).slice(0, TOP_SIZE),
+    picks,
+    fresh: freshRow(fresh, now),
+    official: official.slice(0, ROW_SIZE),
     themes,
-    fresh,
     templates,
+    collections,
+    makers,
   };
 }
 
@@ -51,6 +116,21 @@ async function loadHome(): Promise<CommunityHome> {
 export const getCommunityHome = unstable_cache(loadHome, ["community-home"], {
   revalidate: 60,
   tags: [COMMUNITY_TAG, "community-themes"],
+});
+
+/** How many items each of the overview's rows has (for pickSections). */
+export const homeSizes = (
+  home: CommunityHome,
+): Record<HomeSectionId, number> => ({
+  top: home.top?.items.length ?? 0,
+  trending: home.trending.length,
+  picks: home.picks.length,
+  fresh: home.fresh.cards.length,
+  official: home.official.length,
+  themes: home.themes.length,
+  templates: home.templates.length,
+  collections: home.collections.length,
+  makers: home.makers.length,
 });
 
 /** Whether any collection is published (for the Collections tab). */

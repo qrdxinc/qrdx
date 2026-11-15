@@ -879,6 +879,53 @@
         }
       }
     },
+    "shell": {
+      "header": {
+        "docs": "Docs",
+        "dashboard": "Dashboard",
+        "github": "QRdx on GitHub"
+      },
+      "actions": {
+        "copyPage": "Copy page",
+        "copied": "Copied",
+        "more": "More ways to use this page",
+        "copyMarkdown": "Copy page as Markdown",
+        "viewMarkdown": "View as Markdown",
+        "mcp": "Connect the QRdx MCP server"
+      },
+      "feedback": {
+        "question": "Was this page helpful?",
+        "yes": "Yes",
+        "no": "No",
+        "thanks": "Thanks. Feedback is anonymous: only the yes and no counts are kept.",
+        "edit": "Edit this page on GitHub",
+        "report": "Report a problem",
+        "issueTitle": "Docs: {title}",
+        "issueBody": "Page: {url}\n\nWhat is wrong or missing:\n"
+      },
+      "notFound": {
+        "search": "Search the docs",
+        "sections": "Or start from a section"
+      },
+      "code": {
+        "copy": "Copy code",
+        "copied": "Copied"
+      },
+      "video": {
+        "play": "Play {title}",
+        "pause": "Pause {title}",
+        "reducedMotion": "The clip waits for you because your system asks for less motion."
+      },
+      "plan": {
+        "title": "Needs {plans}",
+        "or": "{a} or {b}",
+        "body": "What each plan includes is on",
+        "link": "Plans and limits",
+        "pro": "Pro",
+        "business": "Business",
+        "enterprise": "Enterprise"
+      }
+    },
     "ui": {
       "search": "Search",
       "searchPlaceholder": "Search",
@@ -5356,6 +5403,10 @@
     "browseLayout": {
       "filters": "Filters"
     },
+    "cardRail": {
+      "previous": "Show earlier ones",
+      "next": "Show more"
+    },
     "communityTabs": {
       "community": "Community"
     },
@@ -5427,10 +5478,9 @@
     },
     "itemCard": {
       "empty": "Empty",
-      "official": "Official",
-      "usecountUses": "{useCount} uses",
-      "seeAll": "See all",
-      "likes": "Likes"
+      "viewAll": "View all",
+      "saves": "Saves",
+      "itemCount": "{count, plural, one {# item} other {# items}}"
     },
     "itemPages": {
       "previous": "Previous",
@@ -5440,6 +5490,9 @@
       "loadMore": "Load more",
       "loading": "Loading",
       "failed": "The next page didn't load."
+    },
+    "makerCard": {
+      "itemsAndSaves": "{items, plural, one {# item} other {# items}} · {saves, plural, one {# save} other {# saves}}"
     },
     "more": {
       "load": "Load more",
@@ -5527,6 +5580,10 @@
     "tryIt": {
       "tryItWithYourLink": "Try it with your link",
       "drawnInYourBrowserNothing": "Drawn in your browser. Nothing is sent."
+    },
+    "search": {
+      "label": "Search the community",
+      "placeholder": "Search frames, themes and pages"
     }
   },
   "app": {

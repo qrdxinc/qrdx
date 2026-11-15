@@ -6,6 +6,8 @@ import {
   currentSession,
   requireRecentConfirmation,
 } from "@/lib/account/confirmation-server";
+import { authorizeAdminConsole } from "@/lib/admin-console/authorize";
+import { isAdminConsoleClientId } from "@/lib/admin-console/client";
 import { baseUrl } from "@/lib/metadata";
 import { oauthError } from "@/lib/oauth";
 import {
@@ -24,6 +26,8 @@ import {
 // A repeat authorization for scopes already approved skips the page (and
 // "Confirm it's you"): it grants nothing new, and the code is only good to
 // the app's own registered redirect URI with its client secret.
+// The back-office console is a first-party client defined by environment,
+// not an oauth_app row (lib/admin-console): admins only, and no consent page.
 
 function consentPage(req: NextRequest, entries: [string, string][]) {
   const url = new URL("/oauth/authorize", req.nextUrl.origin);
@@ -35,6 +39,9 @@ export async function GET(req: NextRequest) {
   const params = readAuthorizeParams((key) =>
     req.nextUrl.searchParams.get(key),
   );
+  if (isAdminConsoleClientId(params.clientId)) {
+    return authorizeAdminConsole(req, params);
+  }
   const check = await checkAuthorizeRequest(params);
   if (!check.ok) return oauthError(check.error, check.description);
 
@@ -92,6 +99,10 @@ export async function POST(req: NextRequest) {
   };
 
   const params = readAuthorizeParams(field);
+  if (isAdminConsoleClientId(params.clientId)) {
+    // It has no consent page: GET issues its codes, or refuses.
+    return oauthError("invalid_client", "Unknown client_id");
+  }
   const check = await checkAuthorizeRequest(params);
   if (!check.ok) return oauthError(check.error, check.description);
 

@@ -19,4 +19,6 @@ The code in this folder is under the [QRdx Commercial License](LICENSE.md), not 
 - QRdx issues the license key with the agreement. It has an expiry, with 14 days' grace after it, and the server checks it offline against QRdx's public key: a value QRdx didn't sign, or a key past its grace period, switches nothing on. **Admin** → **Health** shows when it expires.
 - To get an agreement, use the [enterprise page](https://qrdx.dev/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
 
+Code that was published under the AGPL before it moved into an `ee/` folder keeps the AGPL's terms in the versions where it was published; [Earlier versions](../../../LICENSING.md#earlier-versions) in LICENSING.md has the details.
+
 [LICENSING.md](../../../LICENSING.md) explains the licenses of the rest of the repository.

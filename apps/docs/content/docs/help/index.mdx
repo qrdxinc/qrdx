@@ -1,23 +1,61 @@
 ---
 title: Help center
-description: Answers for making QR codes, dynamic codes, pages, billing and your account. No code needed.
+description: Short answers for making QR codes, dynamic codes, pages, billing and your account. No code needed.
 icon: LifeBuoy
 ---
 
 import { HelpSearch, StillStuck } from "@/components/docs/help-home";
 
+The help center covers everything you do in the editor and the dashboard. Each page is one task, with the steps, what you see after each one, and what to do when it goes wrong.
+
 <HelpSearch />
 
-## Common questions
+## What do you want to do?
 
-- [Make your first QR code](/docs/help/getting-started/first-qr-code)
-- [Static or dynamic, which do you need?](/docs/help/getting-started/static-vs-dynamic)
-- [Change where a code points](/docs/help/dynamic-codes/change-the-link)
-- [A code won't scan](/docs/help/troubleshooting/wont-scan)
-- [Download and print a QR code](/docs/help/getting-started/download-and-print)
-- [What happens to your codes if you stop paying](/docs/help/account-and-billing/never-hostage)
-- [Cancel your subscription](/docs/help/account-and-billing/cancel)
-- [A scan shows an error page](/docs/help/troubleshooting/error-pages)
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="Make a first code"
+    description="Design a code and download it for print or the web."
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/change-the-link"
+    title="Change where a printed code points"
+    description="Edit a dynamic code's link. Printed copies open the new one on the next scan."
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="See your scans"
+    description="When, where and on which devices a code was scanned."
+  />
+  <Card
+    arrow
+    icon={<Download />}
+    href="/docs/help/getting-started/download-and-print"
+    title="Download and print"
+    description="The right format and size for a flyer, a sticker or a screen."
+  />
+  <Card
+    arrow
+    icon={<CreditCard />}
+    href="/docs/help/account-and-billing/plans"
+    title="Pick or change a plan"
+    description="What each plan includes, and how to upgrade, downgrade or cancel."
+  />
+  <Card
+    arrow
+    icon={<Users />}
+    href="/docs/help/teams/create-and-invite"
+    title="Work with your team"
+    description="Create a workspace, invite people and set their roles."
+  />
+</Cards>
 
 ## Browse by topic
 
@@ -80,9 +118,17 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
   />
 </Cards>
 
-## More
+## Common questions
 
-- [What's new and what's next](/docs/help/whats-new), and the full [changelog](/changelogs).
-- Building something? The [Developers](/docs/developers) tab has the REST API, webhooks, MCP and the CLI.
+- [Static or dynamic, which do you need?](/docs/help/getting-started/static-vs-dynamic)
+- [A code won't scan](/docs/help/troubleshooting/wont-scan)
+- [A scan opens the wrong page](/docs/help/troubleshooting/wrong-destination)
+- [What happens to your codes if you stop paying](/docs/help/account-and-billing/never-hostage)
+- [Cancel your subscription](/docs/help/account-and-billing/cancel)
+- [Protect a code with a password](/docs/help/dynamic-codes/password)
+
+## Get help
+
+Building something instead? The [Developers](/docs/developers) section has the REST API, webhooks, the MCP server and the CLI. For everything else, ask a person:
 
 <StillStuck />

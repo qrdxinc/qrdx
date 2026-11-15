@@ -5418,11 +5418,7 @@
       "nameIsNoLongerIn": "「{name}」はコミュニティから削除されました。"
     },
     "itemCard": {
-      "empty": "空",
-      "official": "公式",
-      "usecountUses": "{useCount}回使用",
-      "seeAll": "すべて見る",
-      "likes": "いいね"
+      "empty": "空"
     },
     "itemPages": {
       "previous": "前へ",

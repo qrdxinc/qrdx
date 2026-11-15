@@ -5418,11 +5418,7 @@
       "nameIsNoLongerIn": "\"{name}\" ya no está en la comunidad."
     },
     "itemCard": {
-      "empty": "Vacío",
-      "official": "Oficial",
-      "usecountUses": "{useCount} usos",
-      "seeAll": "Ver todo",
-      "likes": "Me gusta"
+      "empty": "Vacío"
     },
     "itemPages": {
       "previous": "Anterior",

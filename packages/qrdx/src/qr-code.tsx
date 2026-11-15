@@ -1,15 +1,17 @@
 // memo/useMemo are available in React Server Components, so QRCode can render
 // on the server; only QRCodeCanvas needs a client boundary.
 import { memo, useMemo } from "react";
+import type { QRCodePropsSVG } from "../types/react";
 import { DEFAULT_MARGIN } from "./constants";
-import {
-  getQRCodeData,
-  getQRCodeSVGProps,
-  type QRCodeProps,
-} from "./qr-code-props";
+import { getQRCodeData, getQRCodeSVGProps } from "./qr-code-props";
 import { QRCodeSVG } from "./qr-code-svg";
 
-export const QRCode = memo((props: QRCodeProps) => {
+/**
+ * `QRCodeSVG` with the simpler logo API (`logo`, `logoOptions`, `hideLogo`,
+ * `scale`). Any other prop (`className`, `aria-label`, `role`, `data-*`…)
+ * goes on the `<svg>`, as with `QRCodeSVG`.
+ */
+export const QRCode = memo((props: QRCodePropsSVG) => {
   const {
     value,
     fgColor,
