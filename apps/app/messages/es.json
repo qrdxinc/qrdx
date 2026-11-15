@@ -11,135 +11,169 @@
     "closeMenu": "Cerrar menú",
     "entries": {
       "product": "Producto",
-      "tools": "Herramientas",
+      "solutions": "Soluciones",
       "developers": "Desarrolladores",
-      "resources": "Recursos",
-      "pricing": "Precios"
+      "resources": "Recursos"
+    },
+    "columns": {
+      "industries": "Sectores",
+      "teams": "Equipos",
+      "codeTypes": "Tipos de código",
+      "build": "Crear",
+      "embed": "Integrar",
+      "connect": "Conectar",
+      "help": "Ayuda",
+      "company": "Empresa",
+      "updates": "Novedades"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "Diseña un código QR con patrones, colores, logotipos y marcos, y descárgalo. Sin registro."
+        "description": "Diseña y descarga códigos, gratis y sin registro",
+        "short": "Gratis, sin registro"
       },
       "dynamicCodes": {
-        "name": "Códigos QR dinámicos",
-        "description": "Cambia el enlace después de imprimir y cuenta los escaneos"
-      },
-      "aiThemes": {
-        "name": "Temas con IA",
-        "description": "Describe un estilo y deja que la IA diseñe el tema"
+        "description": "Cambia el enlace tras imprimir y cuenta cada escaneo",
+        "short": "Edita enlaces, cuenta escaneos"
       },
       "aiArt": {
-        "name": "Arte QR con IA",
-        "description": "Convierte un enlace en arte de IA que se sigue escaneando"
-      },
-      "communityThemes": {
-        "name": "Temas de la comunidad",
-        "description": "Explora y reutiliza diseños compartidos por otros"
-      },
-      "pageTemplates": {
-        "name": "Plantillas de página",
-        "description": "Demos en vivo de cada plantilla de página alojada"
-      },
-      "generators": {
-        "name": "Generadores de códigos QR",
-        "description": "Un generador para cada tipo: Wi-Fi, vCard, WhatsApp, UPI, pagos y más."
-      },
-      "bulk": {
-        "name": "Generador masivo",
-        "description": "Convierte un CSV en hasta {max, number} códigos con estilo"
-      },
-      "scanner": {
-        "name": "Lector de códigos QR",
-        "description": "Escanea códigos con vista previa segura del enlace"
-      },
-      "scanChecker": {
-        "name": "Verificador de escaneo",
-        "description": "Prueba qué tan bien se escanea un código QR"
-      },
-      "printSize": {
-        "name": "Calculadora de tamaño de impresión",
-        "description": "Encuentra el tamaño mínimo para tu distancia de escaneo"
+        "description": "Un código escaneable pintado en una obra de arte",
+        "short": "Códigos pintados en arte"
       },
       "barcode": {
-        "name": "Generador de códigos de barras",
-        "description": "EAN, UPC, Code 128 y más, con dígitos de control"
+        "description": "EAN, UPC, Code 128 y más",
+        "short": "EAN, UPC, Code 128"
       },
-      "allTools": {
-        "name": "Todas las herramientas",
-        "description": "Todas las herramientas gratis de códigos QR en un solo lugar"
+      "bulk": {
+        "description": "Hasta {max, number} códigos con estilo desde un CSV",
+        "short": "Códigos desde un CSV"
       },
-      "docs": {
-        "name": "Documentación",
-        "description": "Guías de la biblioteca qrdx para React, los códigos dinámicos, las API y el autoalojamiento."
+      "community": {
+        "description": "Marcos y temas que comparte la gente",
+        "short": "Marcos y temas compartidos"
       },
-      "mcp": {
-        "name": "Servidor MCP",
-        "description": "Crea códigos QR desde Claude, ChatGPT o Cursor"
+      "restaurants": {
+        "description": "Menús, Wi-Fi y solicitudes de reseñas",
+        "short": "Menús, Wi-Fi, reseñas"
       },
-      "qrCodeApi": {
-        "name": "API de códigos QR gratis",
-        "description": "Una imagen de código QR desde una sola URL, sin clave ni registro"
+      "retail": {
+        "description": "Etiquetas de estante, escaparates y fidelización",
+        "short": "Etiquetas y fidelización"
       },
-      "nextjs": {
-        "name": "Guía de Next.js",
-        "description": "Códigos QR en Server y Client Components"
+      "realEstate": {
+        "description": "Códigos en carteles que abren el anuncio",
+        "short": "Anuncios desde un cartel"
+      },
+      "events": {
+        "description": "Agendas, acreditaciones y opiniones de sesiones",
+        "short": "Agendas y acreditaciones"
+      },
+      "enterprise": {
+        "description": "Inicio de sesión único, registro de auditoría y contrato",
+        "short": "SSO, auditoría, contrato"
+      },
+      "agencies": {
+        "description": "Dominios de clientes, UTM e informes de escaneos",
+        "short": "Códigos e informes de clientes"
+      },
+      "openSource": {
+        "description": "Aloja la app tú mismo o usa la biblioteca",
+        "short": "Alojar o integrar"
+      },
+      "placements": {
+        "description": "Menús, envases, tarjetas de visita y carteles",
+        "short": "Menús, envases, carteles"
+      },
+      "restApi": {
+        "description": "Códigos, escaneos y webhooks por HTTP",
+        "short": "Códigos y escaneos por HTTP"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "Una imagen de código QR desde una URL, sin clave de API"
+        "description": "La imagen de un código desde una URL, sin clave",
+        "short": "Una URL, sin clave"
+      },
+      "mcp": {
+        "description": "Crea códigos QR desde Claude, ChatGPT o Cursor",
+        "short": "Desde Claude, ChatGPT o Cursor"
+      },
+      "cli": {
+        "description": "Genera códigos en la terminal y en CI",
+        "short": "Terminal y CI"
+      },
+      "react": {
+        "description": "El motor como componente de React",
+        "short": "Códigos QR en React"
       },
       "shadcn": {
-        "name": "Registro de shadcn/ui",
-        "description": "Añade componentes de código QR con un solo comando"
+        "description": "Añade componentes de código QR con un solo comando",
+        "short": "Componentes con un comando"
       },
-      "plugins": {
-        "name": "Plugins",
-        "description": "QRdx para Chrome, Figma, Raycast y Canva"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "Código fuente, issues y versiones"
-      },
-      "help": {
-        "name": "Centro de ayuda",
-        "description": "Respuestas sobre códigos, facturación, equipos y soluciones"
-      },
-      "blog": {
-        "name": "Blog",
-        "description": "Guías y novedades sobre códigos QR"
-      },
-      "customers": {
-        "name": "Clientes",
-        "description": "Cómo usan QRdx las empresas"
-      },
-      "compare": {
-        "name": "Comparar",
-        "description": "QRdx frente a otros generadores y bibliotecas"
-      },
-      "changelog": {
-        "name": "Novedades",
-        "description": "Qué hay de nuevo en QRdx"
+      "nextjs": {
+        "description": "Códigos QR en Server y Client Components",
+        "short": "Server y Client Components"
       },
       "integrations": {
-        "name": "Integraciones",
-        "description": "Zapier, Make, Discord, píxeles de analítica y más"
+        "description": "Zapier, Make, Discord, píxeles de analítica y más",
+        "short": "Zapier, Make y más"
       },
-      "support": {
-        "name": "Contactar con soporte",
-        "description": "Correo, el widget de soporte o GitHub"
+      "plugins": {
+        "description": "QRdx para Chrome, Figma, Raycast y Canva",
+        "short": "Chrome, Figma, Raycast, Canva"
+      },
+      "webhooks": {
+        "description": "Eventos de escaneo, formularios y códigos a tu URL",
+        "short": "Eventos a tu URL"
+      },
+      "docs": {
+        "description": "Guías, referencia de la API y autoalojamiento",
+        "short": "Guías y referencia"
+      },
+      "github": {
+        "description": "Motor y CLI con MIT, app con AGPL",
+        "short": "Motor MIT, app AGPL"
+      },
+      "help": {
+        "description": "Respuestas sobre códigos, facturación, equipos y soluciones",
+        "short": "Respuestas a preguntas frecuentes"
+      },
+      "contact": {
+        "description": "Correo, el widget de soporte o GitHub",
+        "short": "Correo o widget de soporte"
+      },
+      "customers": {
+        "description": "Cómo usan QRdx las empresas",
+        "short": "Cómo usan QRdx las empresas"
+      },
+      "security": {
+        "description": "Cómo protege QRdx las cuentas y los datos",
+        "short": "Cuentas y datos"
+      },
+      "affiliates": {
+        "description": "Gana con los clientes que recomiendes",
+        "short": "Gana por recomendar"
+      },
+      "blog": {
+        "description": "Guías y novedades sobre códigos QR",
+        "short": "Guías y noticias"
+      },
+      "changelog": {
+        "description": "Qué hay de nuevo en QRdx",
+        "short": "Novedades"
+      },
+      "tools": {
+        "description": "Escáner, verificador de escaneo, tamaño de impresión y más",
+        "short": "Escáner, verificador y más"
       }
     },
     "account": {
-      "tryPlayground": "Prueba el Playground",
-      "playground": "Playground",
-      "dashboard": "Panel",
-      "signIn": "Iniciar sesión"
+      "signIn": "Iniciar sesión",
+      "create": "Crear un código QR",
+      "dashboard": "Panel"
     },
     "github": {
       "star": "Star",
       "starOnGithub": "Dale una estrella a QRdx en GitHub",
-      "starOnGithubCount": "Dale una estrella a QRdx en GitHub ({count} estrellas)"
+      "starOnGithubCount": "Dale una estrella a QRdx en GitHub ({count} estrellas)",
+      "stars": "{count} estrellas"
     },
     "userProfileDropdown": {
       "tryThePlayground": "Prueba el Playground",
@@ -169,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "Generador de códigos QR gratuito y de código abierto. Patrones personalizados, degradados, logos y marcos, con descargas en PNG, JPG, SVG, PDF y EPS y sin registro. Además, códigos dinámicos, páginas alojadas y analíticas de escaneo.",
+    "description": "La plataforma de códigos QR de código abierto.",
     "starOnGithub": "Dale una estrella en GitHub",
+    "newsOnX": "Novedades de QRdx en X",
     "navLabel": "Pie de página",
-    "scanIt": "Anda, escanéalo",
-    "copyright": "© {year} QRdx. Código abierto bajo AGPL-3.0.",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "Producto",
-      "tools": "Herramientas",
       "developers": "Desarrolladores",
+      "solutions": "Soluciones",
       "resources": "Recursos",
+      "company": "Empresa",
       "compare": "Comparar"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "Generador de códigos QR",
       "dynamicCodes": "Códigos QR dinámicos",
+      "aiArt": "Arte QR con IA",
       "aiThemes": "Temas con IA",
-      "communityThemes": "Temas de la comunidad",
+      "barcode": "Códigos de barras",
+      "bulk": "Generador masivo",
       "pageTemplates": "Plantillas de página",
-      "pricing": "Precios",
-      "guarantee": "Garantía Never-Hostage",
-      "enterprise": "Empresas",
+      "community": "Comunidad",
       "slackBot": "Bot de Slack",
       "telegramBot": "Bot de Telegram",
       "discordBot": "Bot de Discord",
-      "generators": "Generadores de códigos QR",
-      "bulk": "Generador masivo",
-      "scanChecker": "Verificador de escaneo",
-      "printSize": "Calculadora de tamaño de impresión",
-      "barcode": "Generador de códigos de barras",
-      "pdfQr": "Código QR para PDF",
-      "businessCard": "Tarjeta de visita digital",
-      "menuQr": "Código QR para menús",
-      "scanner": "Escáner de códigos QR",
-      "allTools": "Todas las herramientas",
-      "docs": "Documentación",
-      "apiReference": "Referencia de la API",
-      "qrCodeApi": "API de códigos QR gratis",
-      "nextjs": "Guía de Next.js",
-      "imageApi": "Image API",
-      "mcp": "Servidor MCP",
-      "shadcn": "Registro de shadcn/ui",
-      "plugins": "Plugins",
-      "selfHosting": "Autoalojamiento",
-      "openSource": "Código abierto",
-      "github": "GitHub",
-      "help": "Centro de ayuda",
-      "blog": "Blog",
-      "customers": "Clientes",
-      "changelog": "Novedades",
-      "integrations": "Integraciones",
+      "restaurants": "Restaurantes",
+      "retail": "Comercio",
+      "realEstate": "Inmobiliaria",
+      "events": "Eventos",
       "industries": "Códigos QR por sector",
       "placements": "Códigos QR por ubicación",
-      "affiliates": "Programa de afiliados",
+      "generators": "Todos los códigos",
+      "typeUrl": "Sitio web",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "Empresas",
+      "agencies": "Agencias",
+      "openSource": "Código abierto",
+      "docs": "Documentación",
+      "restApi": "REST API",
+      "apiReference": "Referencia de la API",
+      "imageApi": "Image API",
+      "mcp": "Servidor MCP",
+      "cli": "CLI",
+      "react": "Biblioteca React",
+      "shadcn": "Registro de shadcn/ui",
+      "nextjs": "Guía de Next.js",
+      "integrations": "Integraciones",
+      "plugins": "Plugins",
+      "webhooks": "Webhooks",
+      "selfHosting": "Autoalojamiento",
+      "github": "GitHub",
+      "help": "Centro de ayuda",
       "contact": "Contacto",
+      "blog": "Blog",
+      "changelog": "Novedades",
+      "customers": "Clientes",
+      "tools": "Herramientas gratis",
+      "scanner": "Escáner de códigos QR",
+      "scanChecker": "Verificador de escaneo",
+      "printSize": "Calculadora de tamaño de impresión",
+      "security": "Seguridad",
+      "affiliates": "Programa de afiliados",
+      "guarantee": "Garantía Never-Hostage",
+      "pricing": "Precios",
+      "allComparisons": "Todas las comparativas",
       "legal": "Legal",
-      "privacy": "Política de privacidad",
       "terms": "Términos del servicio",
-      "subprocessors": "Subencargados",
-      "reportAbuse": "Reportar abuso",
-      "acceptableUse": "Uso aceptable",
+      "privacy": "Política de privacidad",
       "cookies": "Política de cookies",
       "dpa": "Tratamiento de datos (DPA)",
+      "subprocessors": "Subencargados",
+      "acceptableUse": "Uso aceptable",
       "aiFeatures": "Funciones de IA",
       "refunds": "Reembolsos",
       "affiliateTerms": "Términos de afiliados",
-      "security": "Seguridad",
       "securityPolicy": "Política de seguridad",
-      "allComparisons": "Todas las comparativas"
+      "reportAbuse": "Reportar abuso"
     }
   },
   "localeSwitcher": {
@@ -244,9 +289,10 @@
     "englishOnly": "Esta página solo está en inglés. Los demás idiomas abren su página de inicio."
   },
   "cta": {
-    "title": "Crea tu próximo código QR en segundos.",
-    "subtext": "Gratis para siempre. Sin registro ni marca de agua.",
-    "button": "Empieza a crear códigos QR gratis"
+    "title": "Crea tu próximo código QR",
+    "subtext": "Gratis en tu navegador, sin registro ni marca de agua, y con códigos dinámicos cuando los necesites.",
+    "button": "Crear un código QR",
+    "secondary": "Ver precios"
   },
   "consent": {
     "banner": {
