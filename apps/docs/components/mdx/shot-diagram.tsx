@@ -275,14 +275,17 @@ export const DIAGRAMS = {
     ],
   },
   "wont-scan-contrast": {
+    fits: true,
     component: WontScanContrast,
     keys: ["good", "bad", "ratio"],
   },
   "wont-scan-quiet-zone": {
+    fits: true,
     component: WontScanQuietZone,
     keys: ["bad", "badNote", "good", "goodNote"],
   },
   "wont-scan-print-size": {
+    fits: true,
     component: WontScanPrintSize,
     keys: [
       "cardWidth",
@@ -295,12 +298,18 @@ export const DIAGRAMS = {
     ],
   },
   "wont-scan-eyes": {
+    fits: true,
     component: WontScanEyes,
     keys: ["good", "bad", "square", "rounded", "gear", "circle", "curly"],
   },
 } satisfies Record<
   string,
-  { component: (props: DiagramProps) => ReactNode; keys: readonly string[] }
+  {
+    component: (props: DiagramProps) => ReactNode;
+    keys: readonly string[];
+    /** A comparison narrow enough to show whole on a phone (no sideways scroll). */
+    fits?: boolean;
+  }
 >;
 
 export type DiagramId = keyof typeof DIAGRAMS;
@@ -314,7 +323,8 @@ export async function Diagram({
   caption?: ReactNode;
   className?: string;
 }) {
-  const spec = DIAGRAMS[id as DiagramId];
+  const spec: (typeof DIAGRAMS)[DiagramId] & { fits?: boolean } =
+    DIAGRAMS[id as DiagramId];
   if (!spec) {
     throw new Error(
       `<Diagram id="${id}" />: no diagram with this id. The ids are ${Object.keys(DIAGRAMS).join(", ")} (components/mdx/shot-diagram.tsx).`,
@@ -334,9 +344,10 @@ export async function Diagram({
   const Drawing = spec.component;
   return (
     <figure className={cn("not-prose my-6", className)} data-diagram={id}>
-      {/* On a phone the drawing keeps a readable size and scrolls sideways inside its card. */}
+      {/* On a phone a flow keeps a readable size and scrolls sideways inside
+          its card; a side-by-side comparison (`fits`) is narrow enough to show whole. */}
       <div className="overflow-x-auto rounded-xl border border-fd-border bg-fd-card px-4 py-5 sm:px-6">
-        <div className="min-w-[36rem]">
+        <div className={spec.fits ? undefined : "min-w-[36rem]"}>
           <Drawing labels={labels} />
         </div>
       </div>

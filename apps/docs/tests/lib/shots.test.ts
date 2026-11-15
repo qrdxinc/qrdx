@@ -289,7 +289,7 @@ describe("the pictures the English pages use", () => {
     // `"id": { component: …, keys: [ "a", "b" ] }` for every registered drawing.
     const registered = [
       ...source.matchAll(
-        /"([a-z0-9-]+)": \{\s*component: \w+,\s*keys: \[([^\]]*)\]/g,
+        /"([a-z0-9-]+)": \{\s*(?:fits: true,\s*)?component: \w+,\s*keys: \[([^\]]*)\]/g,
       ),
     ];
     expect(registered.length).toBeGreaterThanOrEqual(18);

@@ -50,18 +50,18 @@ export function WontScanContrast({ labels }: DiagramProps) {
   const ratio = (color: string) =>
     labels.ratio.replace("{ratio}", contrastRatio(color, WHITE));
   return (
-    <Canvas height={252} title={labels.title} width={760}>
-      <Plate size={176} x={102} y={16} />
-      <SampleCode fgColor={DARK} margin={2} size={160} x={110} y={24} />
-      <Verdict label={labels.good} note={ratio(DARK)} ok x={102} y={218} />
+    <Canvas height={252} title={labels.title} width={600}>
+      <Plate size={176} x={40} y={16} />
+      <SampleCode fgColor={DARK} margin={2} size={160} x={48} y={24} />
+      <Verdict label={labels.good} note={ratio(DARK)} ok x={40} y={218} />
 
-      <Plate size={176} x={482} y={16} />
-      <SampleCode fgColor={PALE} margin={2} size={160} x={490} y={24} />
+      <Plate size={176} x={340} y={16} />
+      <SampleCode fgColor={PALE} margin={2} size={160} x={348} y={24} />
       <Verdict
         label={labels.bad}
         note={ratio(PALE)}
         ok={false}
-        x={482}
+        x={340}
         y={218}
       />
     </Canvas>
@@ -85,20 +85,20 @@ export function WontScanQuietZone({ labels }: DiagramProps) {
     </g>
   );
   return (
-    <Canvas height={252} title={labels.title} width={760}>
-      {artwork(102)}
-      <SampleCode fgColor={DARK} margin={0} size={132} x={124} y={30} />
+    <Canvas height={252} title={labels.title} width={600}>
+      {artwork(40)}
+      <SampleCode fgColor={DARK} margin={0} size={132} x={62} y={30} />
       <Verdict
         label={labels.bad}
         note={labels.badNote}
         ok={false}
-        x={102}
+        x={40}
         y={218}
       />
 
-      {artwork(482)}
-      <SampleCode fgColor={DARK} margin={4} size={132} x={504} y={30} />
-      <Verdict label={labels.good} note={labels.goodNote} ok x={482} y={218} />
+      {artwork(340)}
+      <SampleCode fgColor={DARK} margin={4} size={132} x={362} y={30} />
+      <Verdict label={labels.good} note={labels.goodNote} ok x={340} y={218} />
     </Canvas>
   );
 }
@@ -112,7 +112,7 @@ export function WontScanPrintSize({ labels }: DiagramProps) {
     distance: string,
     note: string,
   ) => {
-    const left = 40;
+    const left = 30;
     const start = left + size + 14;
     const end = start + size * 10;
     const middle = y + size / 2;
@@ -181,16 +181,16 @@ export function WontScanPrintSize({ labels }: DiagramProps) {
     );
   };
   return (
-    <Canvas height={232} title={labels.title} width={760}>
-      {row(22, 26, labels.cardWidth, labels.cardDistance, labels.cardNote)}
+    <Canvas height={212} title={labels.title} width={600}>
+      {row(22, 22, labels.cardWidth, labels.cardDistance, labels.cardNote)}
       {row(
-        108,
-        60,
+        100,
+        44,
         labels.posterWidth,
         labels.posterDistance,
         labels.posterNote,
       )}
-      <Note x={16} y={222}>
+      <Note x={16} y={200}>
         {labels.footnote}
       </Note>
     </Canvas>
@@ -206,13 +206,13 @@ export function WontScanEyes({ labels }: DiagramProps) {
     { pattern: "circle", label: labels.circle, ok: false },
     { pattern: "curly", label: labels.curly, ok: false },
   ] as const;
-  const tile = 112;
-  const x = (index: number) => 16 + index * (tile + 22) + (index > 2 ? 60 : 0);
+  const tile = 96;
+  const x = (index: number) => 16 + index * (tile + 14) + (index > 2 ? 36 : 0);
   return (
-    <Canvas height={222} title={labels.title} width={760}>
+    <Canvas height={200} title={labels.title} width={600}>
       <Verdict label={labels.good} ok x={x(0)} y={30} />
       <Verdict label={labels.bad} ok={false} x={x(3)} y={30} />
-      <line stroke={LINE} x1={x(3) - 41} x2={x(3) - 41} y1={14} y2={206} />
+      <line stroke={LINE} x1={x(3) - 25} x2={x(3) - 25} y1={14} y2={186} />
       {eyes.map((eye, index) => (
         <g key={eye.pattern}>
           <Plate size={tile} x={x(index)} y={48} />
@@ -232,7 +232,7 @@ export function WontScanEyes({ labels }: DiagramProps) {
             fontSize="12.5"
             textAnchor="middle"
             x={x(index) + tile / 2}
-            y={182}
+            y={166}
           >
             {eye.label}
           </text>

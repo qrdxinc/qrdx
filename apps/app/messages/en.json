@@ -1174,7 +1174,7 @@
         "wont-scan-contrast": {
           "title": "The same QR code twice: dark on a white background, which scans, and light gray on white, which does not.",
           "good": "Dark on light: scans",
-          "bad": "Light gray on white: doesn't scan",
+          "bad": "Gray on white: doesn't scan",
           "ratio": "{ratio}:1 contrast"
         },
         "wont-scan-quiet-zone": {
