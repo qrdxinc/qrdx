@@ -16,11 +16,13 @@ export function Header() {
   return (
     // z-40: backdrop-blur makes the header its own stacking context, so the
     // nav dropdowns would otherwise sit under positioned page content.
+    // The menus' panel opens under the whole header, from its left edge
+    // (header-nav.module.css reads the two variables).
     <header
       className={cn(
         bar.bar,
         bar.surface,
-        "relative z-40 border-b backdrop-blur-md",
+        "relative z-40 border-b backdrop-blur-md [--nav-inset:1rem] [--nav-justify:flex-start]",
       )}
     >
       <div className="flex items-center justify-between gap-2 p-4">

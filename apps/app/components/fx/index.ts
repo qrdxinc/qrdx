@@ -12,6 +12,5 @@ export { Grain } from "./grain";
 export { GridLines } from "./grid-lines";
 export { MeshGradient } from "./mesh-gradient";
 export { QRDX_QR_H, QRDX_QR_M } from "./qr-matrix";
-export { QrMosaic } from "./qr-mosaic";
 export { RadialHalo } from "./radial-halo";
 export { SpotlightCard } from "./spotlight-card";

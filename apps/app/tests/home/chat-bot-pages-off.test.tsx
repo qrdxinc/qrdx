@@ -30,7 +30,7 @@ import TelegramPage from "@/app/(app)/(home)/telegram/page";
 import IntegrationDetailPage from "@/app/[lang]/(home)/integrations/[slug]/page";
 import PluginsPage from "@/app/[lang]/(home)/plugins/page";
 import { CHAT_BOTS } from "@/components/sections/chat-bots/bots";
-import { siteConfig } from "@/config/site";
+import { FOOTER_COLUMNS } from "@/config/navigation";
 import {
   isFeatureAvailable,
   isPathAvailable,
@@ -79,8 +79,8 @@ describe("with no chat bot set up", () => {
   it("puts them in the footer only behind their feature", () => {
     // The footer drops links whose path is hidden (useAvailability), so
     // every bot link must be one of the gated paths.
-    const footer = siteConfig.footerLinks.flatMap((column) =>
-      column.links.flatMap((link) => ("url" in link ? [link.url] : [])),
+    const footer = FOOTER_COLUMNS.flatMap((column) =>
+      column.links.map((link) => link.href),
     );
     for (const path of BOT_PATHS) {
       expect(footer).toContain(path);

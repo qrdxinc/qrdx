@@ -13,7 +13,9 @@ import { splitLocale } from "@repo/i18n/paths";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
-  type CSSProperties,
+  lazy,
+  Suspense,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -26,305 +28,271 @@ import {
 } from "@/components/i18n/locale-link";
 import { MAX_BULK_ROWS } from "@/components/sections/tools/bulk-utils";
 import {
-  type NavEntryConfig,
-  type NavItemConfig,
-  siteConfig,
-} from "@/config/site";
-import bar from "./header-bar.module.css";
+  HEADER_MENUS,
+  HEADER_PRICING,
+  type ItemKey,
+  isExternalHref,
+  type LinkKey,
+  type MenuId,
+  type NavIcon,
+  type ProductArt,
+} from "@/config/navigation";
 import styles from "./header-nav.module.css";
-import { NavPanel, navPanelRootClass } from "./header-nav-panel";
+import { ColumnsPanel } from "./header-nav-panel";
 
-/** A header link with its copy in the visitor's language. */
-export interface HeaderNavItem extends Omit<NavItemConfig, "key"> {
-  name: string;
-  description: string;
-}
-
-export interface HeaderNavEntry {
-  id: number;
-  name: string;
+/** A menu link in the visitor's language, for this deployment. */
+export interface HeaderLink {
+  key: LinkKey;
   href: string;
-  items?: HeaderNavItem[];
+  name: string;
+  /** The promise under the name; none on compact rows. */
+  description?: string;
+  /** The mobile menu's shorter promise. */
+  short?: string;
+  icon: NavIcon;
+  external: boolean;
+  compact: boolean;
+  art?: ProductArt;
+  github?: boolean;
 }
 
-export const headerNavEntries: NavEntryConfig[] = siteConfig.nav.links;
+export interface HeaderColumn {
+  label: string;
+  links: HeaderLink[];
+}
+
+export type HeaderMenu =
+  | { id: "product"; name: string; cards: HeaderLink[] }
+  | {
+      id: Exclude<MenuId, "product">;
+      name: string;
+      columns: HeaderColumn[];
+      strip: HeaderLink[];
+    };
+
+type LinkConfig = {
+  key: LinkKey;
+  href: string;
+  icon: NavIcon;
+  compact?: boolean;
+  art?: ProductArt;
+  github?: boolean;
+};
 
 /**
- * The header entries in the visitor's language, without links to pages for
- * features this deployment can't offer (packages/availability/rules.ts),
- * like AI QR art. Hrefs point at the page in that language where it exists.
+ * Turns a configured link into what the menus render: its name and promise
+ * in the visitor's language and its href in that language where the page
+ * exists, or nothing for a page about a feature this deployment can't offer
+ * (packages/availability/rules.ts), like AI QR art.
  */
-export function useHeaderNavEntries(): HeaderNavEntry[] {
+export function useResolveLink(): (link: LinkConfig) => HeaderLink[] {
   const { showsPath } = useAvailability();
   const t = useTranslations("nav");
+  const names = useTranslations("footer.links");
   const localize = useLocalizeHref();
-  return useMemo(
-    () =>
-      headerNavEntries.flatMap((entry) => {
-        const name = t(`entries.${entry.key}`);
-        const href = localize(entry.href);
-        if (!entry.items) {
-          return showsPath(entry.href) ? [{ id: entry.id, name, href }] : [];
-        }
-        const items = entry.items
-          .filter((item) => item.external || showsPath(item.href))
-          .map(({ key, ...item }) => ({
-            ...item,
-            href: localize(item.href),
-            name: t(`items.${key}.name`),
-            description: t(`items.${key}.description`, { max: MAX_BULK_ROWS }),
-          }));
-        return items.length > 0 ? [{ id: entry.id, name, href, items }] : [];
-      }),
-    [showsPath, t, localize],
+
+  return useCallback(
+    (link: LinkConfig) => {
+      const external = isExternalHref(link.href);
+      if (!(external || showsPath(link.href))) return [];
+      const compact = Boolean(link.compact);
+      const item = link.key as ItemKey;
+      return [
+        {
+          key: link.key,
+          href: external ? link.href : localize(link.href),
+          name: names(link.key),
+          ...(!compact && {
+            description: t(`items.${item}.description`, {
+              max: MAX_BULK_ROWS,
+            }),
+            short: t(`items.${item}.short`),
+          }),
+          icon: link.icon,
+          external,
+          compact,
+          art: link.art,
+          github: link.github,
+        },
+      ];
+    },
+    [showsPath, t, names, localize],
   );
 }
 
-const isExternal = (item: NavItemConfig) => Boolean(item.external);
+/** The header's menus, resolved (useResolveLink); empty menus drop out. */
+export function useHeaderMenus(): HeaderMenu[] {
+  const t = useTranslations("nav");
+  const resolve = useResolveLink();
 
-/** True when `pathname` is `href` or a page below it. */
-export function matchesPath(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  return useMemo(
+    () =>
+      HEADER_MENUS.flatMap((menu): HeaderMenu[] => {
+        const name = t(`entries.${menu.id}`);
+        if (menu.id === "product") {
+          const cards = menu.cards.flatMap(resolve);
+          return cards.length > 0 ? [{ id: menu.id, name, cards }] : [];
+        }
+        const columns = menu.columns.flatMap((column) => {
+          const links = column.links.flatMap(resolve);
+          return links.length > 0
+            ? [{ label: t(`columns.${column.label}`), links }]
+            : [];
+        });
+        if (columns.length === 0) return [];
+        return [
+          { id: menu.id, name, columns, strip: menu.strip.flatMap(resolve) },
+        ];
+      }),
+    [t, resolve],
+  );
 }
 
-/** The top-level entry the current page belongs to, if any. */
-export function getActiveEntryId(pathname: string): number | undefined {
-  // The most specific link wins (longest matching href), so a page is active
-  // under at most one entry; on a tie a top-level link beats a menu item.
-  let best: { id: number; length: number; direct: boolean } | undefined;
-  for (const entry of headerNavEntries) {
-    const hrefs = entry.items
-      ? entry.items.filter((item) => !isExternal(item)).map((i) => i.href)
-      : [entry.href];
-    for (const href of hrefs) {
-      if (!matchesPath(pathname, href)) continue;
-      const candidate = {
-        id: entry.id,
-        length: href.length,
-        direct: !entry.items,
-      };
-      if (
-        !best ||
-        candidate.length > best.length ||
-        (candidate.length === best.length && candidate.direct && !best.direct)
-      ) {
-        best = candidate;
-      }
-    }
-  }
-  return best?.id;
-}
+/** Every link a menu holds, in order. */
+export const menuLinks = (menu: HeaderMenu): HeaderLink[] =>
+  menu.id === "product"
+    ? menu.cards
+    : [...menu.columns.flatMap((column) => column.links), ...menu.strip];
 
-/** Colors and states come from header-bar.module.css (`.pill`). */
-const topLevelClass = cn(
-  bar.pill,
-  "h-9 px-3 text-sm font-medium tracking-tight",
-);
+// Loaded when the pointer first comes near the menus (or a menu opens): it
+// carries the qrdx engine for the Product menu's live codes, which no page
+// needs before that.
+const loadProductPanel = () => import("./header-product-panel");
+const ProductPanel = lazy(loadProductPanel);
 
 /**
- * Hover intent. A closed menu opens once the pointer rests on a trigger this
- * long (Radix's delayDuration), and an open one switches to another trigger
- * only after SWITCH_INTENT_MS on it, so sweeping across the bar on the way
- * somewhere else neither opens nor flips through the menus.
- */
-const HOVER_INTENT_MS = 200;
-const SWITCH_INTENT_MS = 90;
-/** The panel's close fade (header-nav.module.css): reopening within it morphs. */
-const CLOSE_FADE_MS = 150;
-/** Space the panel keeps from the window edges. */
-const EDGE_GUTTER = 16;
-
-/** Where the shared panel goes for a trigger, in the menu root's coordinates. */
-interface PanelAnchor {
-  x: number;
-  center: number;
-  min: number;
-  max: number;
-}
-
-function measureAnchor(root: HTMLElement, trigger: HTMLElement): PanelAnchor {
-  const box = root.getBoundingClientRect();
-  const rect = trigger.getBoundingClientRect();
-  const page = document.documentElement.clientWidth;
-  return {
-    x: rect.left - box.left,
-    center: rect.left + rect.width / 2 - box.left,
-    min: EDGE_GUTTER - box.left,
-    max: page - EDGE_GUTTER - box.left,
-  };
-}
-
-const anchorStyle = (anchor: PanelAnchor | undefined) =>
-  anchor &&
-  ({
-    "--nav-x": `${anchor.x}px`,
-    "--nav-center": `${anchor.center}px`,
-    "--nav-min": `${anchor.min}px`,
-    "--nav-max": `${anchor.max}px`,
-  } as CSSProperties);
-
-/**
- * A closed dropdown's links, as plain anchors in the server HTML. Radix only
+ * A closed menu's links, as plain anchors in the server HTML. Radix only
  * mounts a panel once it opens, so without these the page's first HTML has
- * no link to anything inside Product, Tools, Developers or Resources and
- * crawlers can't follow them. `hidden` keeps them out of view, out of the tab
- * order and out of the accessibility tree; the open panel is what people use.
+ * no link to anything inside the menus and crawlers can't follow them.
+ * `hidden` keeps them out of view, out of the tab order and out of the
+ * accessibility tree; the open panel is what people use.
  */
-function MenuLinks({ items }: { items: HeaderNavItem[] }) {
+function MenuLinks({ links }: { links: HeaderLink[] }) {
   return (
     <ul hidden>
-      {items.map((item) => (
-        <li key={item.href}>
-          <a href={item.href}>{item.name}</a>
+      {links.map((link) => (
+        <li key={link.href}>
+          <a href={link.href}>{link.name}</a>
         </li>
       ))}
     </ul>
   );
 }
 
-interface MenuState {
-  /** The open entry's id as a string, or "" when closed. */
-  value: string;
-  /** Moving between menus: the panel glides and resizes (see the CSS). */
-  morph: boolean;
-  anchor?: PanelAnchor;
-}
+/** Hover intent before a closed menu opens (Radix's delayDuration). */
+const OPEN_DELAY_MS = 150;
+/**
+ * After the pointer leaves, Radix waits 150 ms before it asks to close; the
+ * panel waits this much more, so a diagonal move back to it doesn't lose it.
+ * Escape, a click or a keyboard move closes at once.
+ */
+const CLOSE_GRACE_MS = 200;
 
 export function HeaderNav({ className }: { className?: string }) {
   const t = useTranslations("nav");
-  const entries = useHeaderNavEntries();
-  // Hrefs are localized, so match the current page by its localized URL…
+  const names = useTranslations("footer.links");
+  const menus = useHeaderMenus();
+  const localize = useLocalizeHref();
+  // Hrefs are localized, so match the current page by its localized URL.
   const pathname = usePathname() ?? "/";
-  // …and the active entry by its English path.
-  const activeId = getActiveEntryId(splitLocale(pathname).path);
-  const rootRef = useRef<HTMLElement>(null);
-  const triggers = useRef(new Map<string, HTMLButtonElement>());
-  const closedAt = useRef(0);
-  /** The committed value, for handlers that run between renders. */
-  const current = useRef("");
-  /** The trigger under the pointer, if any. */
-  const hovered = useRef<string | null>(null);
-  const pendingSwitch = useRef(0);
-  const [menu, setMenu] = useState<MenuState>({ value: "", morph: false });
+  const pricingHref = localize(HEADER_PRICING.href);
+  const onPricing = splitLocale(pathname).path === HEADER_PRICING.href;
 
-  // Measured here rather than after render, so the panel's first frame
-  // already sits under the new trigger.
-  const commit = (value: string) => {
-    const root = rootRef.current;
-    const trigger = triggers.current.get(value);
-    const anchor = root && trigger ? measureAnchor(root, trigger) : undefined;
-    const now = performance.now();
-    const fadingOut = now - closedAt.current < CLOSE_FADE_MS;
-    if (!value) closedAt.current = now;
-    const morph = value !== "" && (current.current !== "" || fadingOut);
-    current.current = value;
-    setMenu((prev) => ({ value, morph, anchor: anchor ?? prev.anchor }));
+  const [value, setValue] = useState("");
+  const [switching, setSwitching] = useState(false);
+  const current = useRef("");
+  const pointerInside = useRef(false);
+  const closeNow = useRef(false);
+  const closeTimer = useRef(0);
+
+  const commit = (next: string) => {
+    window.clearTimeout(closeTimer.current);
+    setSwitching(current.current !== "" && next !== "");
+    current.current = next;
+    setValue(next);
   };
 
-  const onValueChange = (value: string) => {
-    window.clearTimeout(pendingSwitch.current);
-    const switching =
-      current.current !== "" && value !== "" && value !== current.current;
-    // Pointer moves between open menus wait for intent; keys and clicks don't.
-    if (switching && hovered.current === value) {
-      pendingSwitch.current = window.setTimeout(
-        () => commit(value),
-        SWITCH_INTENT_MS,
-      );
+  const onValueChange = (next: string) => {
+    window.clearTimeout(closeTimer.current);
+    const leaving = next === "" && !pointerInside.current && !closeNow.current;
+    closeNow.current = false;
+    if (leaving) {
+      closeTimer.current = window.setTimeout(() => commit(""), CLOSE_GRACE_MS);
       return;
     }
-    commit(value);
+    commit(next);
   };
 
-  useEffect(() => () => window.clearTimeout(pendingSwitch.current), []);
-
-  // Keep the panel inside the window if it resizes while a menu is open.
+  // A key or a click outside closes at once rather than after the grace.
+  // Radix handles both in the same event, after these capture listeners.
   useEffect(() => {
-    const value = menu.value;
     if (!value) return;
-    const onResize = () => {
-      const root = rootRef.current;
-      const trigger = triggers.current.get(value);
-      if (!root || !trigger) return;
-      const anchor = measureAnchor(root, trigger);
-      setMenu((prev) => (prev.value === value ? { ...prev, anchor } : prev));
+    const mark = () => {
+      closeNow.current = true;
+      window.setTimeout(() => {
+        closeNow.current = false;
+      }, 0);
     };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [menu.value]);
+    window.addEventListener("keydown", mark, true);
+    window.addEventListener("pointerdown", mark, true);
+    return () => {
+      window.removeEventListener("keydown", mark, true);
+      window.removeEventListener("pointerdown", mark, true);
+    };
+  }, [value]);
+
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
   return (
     <NavigationMenu
-      ref={rootRef}
-      value={menu.value}
+      value={value}
       onValueChange={onValueChange}
-      delayDuration={HOVER_INTENT_MS}
+      delayDuration={OPEN_DELAY_MS}
+      onPointerEnter={() => {
+        pointerInside.current = true;
+        window.clearTimeout(closeTimer.current);
+        loadProductPanel();
+      }}
+      onPointerLeave={() => {
+        pointerInside.current = false;
+      }}
+      onFocus={() => loadProductPanel()}
       aria-label={t("main")}
-      data-morph={menu.morph ? "" : undefined}
-      style={anchorStyle(menu.anchor)}
-      className={cn(
-        styles.nav,
-        bar.bar,
-        navPanelRootClass,
-        "hidden lg:flex",
-        className,
-      )}
+      data-switching={switching ? "" : undefined}
+      className={cn(styles.nav, "static", className)}
     >
       <NavigationMenuList className="gap-0.5">
-        {entries.map((entry) => {
-          const active = entry.id === activeId;
-          const value = String(entry.id);
-
-          if (!entry.items) {
-            return (
-              <NavigationMenuItem key={entry.id}>
-                <NavigationMenuLink
-                  asChild
-                  active={active}
-                  className={cn(
-                    "inline-flex flex-row items-center justify-center",
-                    topLevelClass,
-                    active && bar.current,
-                  )}
-                >
-                  <Link
-                    href={entry.href}
-                    aria-current={active ? "page" : undefined}
-                  >
-                    {entry.name}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            );
-          }
-
-          return (
-            <NavigationMenuItem key={entry.id} value={value}>
-              <NavigationMenuTrigger
-                ref={(node) => {
-                  if (node) triggers.current.set(value, node);
-                  else triggers.current.delete(value);
-                }}
-                onPointerEnter={(event) => {
-                  // Radix opens on mouse hover only (touch taps click).
-                  if (event.pointerType === "mouse") hovered.current = value;
-                }}
-                onPointerLeave={() => {
-                  hovered.current = null;
-                  window.clearTimeout(pendingSwitch.current);
-                }}
-                className={cn(topLevelClass, active && bar.current)}
-              >
-                {entry.name}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavPanel items={entry.items} pathname={pathname} />
-              </NavigationMenuContent>
-              <MenuLinks items={entry.items} />
-            </NavigationMenuItem>
-          );
-        })}
+        {menus.map((menu) => (
+          <NavigationMenuItem key={menu.id} value={menu.id}>
+            <NavigationMenuTrigger className={styles.trigger}>
+              {menu.name}
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              {menu.id === "product" ? (
+                <Suspense fallback={<div className="h-[23.75rem]" />}>
+                  <ProductPanel cards={menu.cards} pathname={pathname} />
+                </Suspense>
+              ) : (
+                <ColumnsPanel menu={menu} pathname={pathname} />
+              )}
+            </NavigationMenuContent>
+            <MenuLinks links={menuLinks(menu)} />
+          </NavigationMenuItem>
+        ))}
+        <NavigationMenuItem>
+          <NavigationMenuLink
+            asChild
+            active={onPricing}
+            className={cn(styles.trigger, "flex-row items-center")}
+          >
+            <Link
+              href={pricingHref}
+              aria-current={onPricing ? "page" : undefined}
+            >
+              {names(HEADER_PRICING.key)}
+            </Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
