@@ -23,13 +23,17 @@ describe("public API rate limits", () => {
     expect(source(file)).toContain(`slidingWindow(${perMinute}, "60 s")`);
   });
 
+  // The docs write the numbers as {facts.*} tokens (lib/product-facts.ts),
+  // filled in at build time, so they can't drift from the constants.
   it("the docs quote the same numbers", () => {
     expect(PRODUCT_FACTS.imageApiPerMinute).toBe(QR_IMAGE_REQUESTS_PER_MINUTE);
+    expect(PRODUCT_FACTS.mcpPerMinute).toBe(MCP_REQUESTS_PER_MINUTE);
+    expect(PRODUCT_FACTS.designQrPerMinute).toBe(DESIGN_QR_REQUESTS_PER_MINUTE);
     expect(source("../docs/content/docs/developers/image-api.mdx")).toContain(
-      `${QR_IMAGE_REQUESTS_PER_MINUTE} requests per minute per IP address`,
+      "{facts.imageApiPerMinute} requests a minute per IP address",
     );
     expect(source("../docs/content/docs/developers/mcp.mdx")).toContain(
-      `${DESIGN_QR_REQUESTS_PER_MINUTE} calls per minute per IP address`,
+      "{facts.designQrPerMinute} calls a minute per IP address",
     );
   });
 });

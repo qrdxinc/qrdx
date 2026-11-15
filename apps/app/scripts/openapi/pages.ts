@@ -13,8 +13,11 @@ import {
   writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
+import { QR_IMAGE_REQUESTS_PER_MINUTE } from "@repo/config";
 import type { OpenAPIV3_1 } from "fumadocs-openapi";
+import { formatCount } from "@/lib/format-count";
 import { API_ERRORS, OAUTH_COMPATIBLE_ERRORS } from "@/lib/openapi/errors";
+import { getPlanLimits, type Plan } from "@/lib/plans";
 
 const METHODS = ["get", "post", "put", "patch", "delete"] as const;
 
@@ -75,6 +78,25 @@ export function operationsOf(document: OpenAPIV3_1.Document): OperationInfo[] {
   );
 }
 
+/**
+ * The first sentence of a description's first paragraph, for a table cell:
+ * links and bold go, inline code stays (a bare `{ frame }` would be read as
+ * a JSX expression), backslashes and pipes are escaped.
+ */
+export function firstSentence(markdown: string): string {
+  const lead = (markdown.split("\n\n")[0] ?? "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\\/g, "\\\\")
+    .replace(/\|/g, "\\|")
+    .trim();
+  const match = /^(.{20,}?[.!?])(?:\s|$)/.exec(lead);
+  return (match?.[1] ?? lead).trim();
+}
+
+const quota = (plan: Plan) =>
+  formatCount(getPlanLimits(plan).apiRequestsPerDay);
+
 export function indexPage(
   document: OpenAPIV3_1.Document,
   operations: OperationInfo[],
@@ -86,7 +108,7 @@ export function indexPage(
         .filter((operation) => operation.tag === tag.name)
         .map(
           (operation) =>
-            `| [${operation.summary}](/docs/developers/api/${operation.slug}) | \`${operation.method} ${operation.path}\` | ${operation.scope ? `\`${operation.scope}\`` : "None"} |`,
+            `| [${operation.summary}](/docs/developers/api/${operation.slug}) | \`${operation.method} ${operation.path}\` | ${operation.scope ? `\`${operation.scope}\`` : "None"} | ${firstSentence(operation.description)} |`,
         );
       if (rows.length === 0) return "";
       return [
@@ -94,8 +116,8 @@ export function indexPage(
         "",
         tag.description ?? "",
         "",
-        "| Endpoint | Request | Scope |",
-        "| --- | --- | --- |",
+        "| Endpoint | Request | Scope | What it does |",
+        "| --- | --- | --- | --- |",
         ...rows,
       ].join("\n");
     })
@@ -104,23 +126,54 @@ export function indexPage(
 
   return `---
 title: API reference
-description: Every QRdx REST API endpoint, with code samples in curl, JavaScript and Python and a Try it panel that sends real requests.
+description: Every QRdx REST API endpoint by resource, with the base URL, authentication, rate limits, errors, pagination and idempotency rules, and a Try it panel on every page.
 icon: FileCode
 ---
 
 {/* ${GENERATED_NOTE.replaceAll("/", "\\/")} */}
 
-Every endpoint of the QRdx REST API, generated from its [OpenAPI 3.1 document](/openapi.json), which is built from the same schemas the API validates requests with. Each page has code samples in curl, JavaScript and Python, and a **Try it** panel that sends real requests.
+The REST API manages dynamic QR codes, saved barcodes, scan analytics, conversions, hooks, themes and the profile over HTTPS, and renders QR code and barcode images without a key. This page lists every endpoint by resource. Each endpoint's page has its parameters, request and response schemas, samples in curl, JavaScript and Python, and a **Try it** panel. Everything is generated from the [OpenAPI 3.1 document](/openapi.json), which is built from the same schemas the API validates requests with.
 
-New to the API? The [quickstart](/docs/developers/quickstart) gets you from nothing to a first request in under two minutes.
+## Base URL and authentication
 
-## Base URL
+| Topic | Details |
+| --- | --- |
+| Base URL | \`https://api.qrdx.dev/v1\`. The same routes answer at \`https://qrdx.dev/api/v1\` |
+| Format | JSON requests and responses, except the image endpoints, which return the image |
+| Authentication | \`Authorization: Bearer qrdx_…\` with an [API key](/docs/developers/api-keys), or an [OAuth 2.0 access token](/docs/developers/rest-api#get-an-access-token) in the same header |
+| Scopes | \`profile:read\`, \`themes:read\`, \`codes:read\` and \`codes:write\`; \`codes:write\` includes everything \`codes:read\` allows. Each endpoint below names the one it needs |
+| Keyless | \`GET /qr\`, \`GET /barcode\`, \`POST /barcode\` and the two \`/community/items\` endpoints need no key and don't use the quota |
 
-\`\`\`txt
-https://api.qrdx.dev/v1
-\`\`\`
+A key acts on the workspace it was created in, with its creator's role there. A token acts on its user's own workspace. The [quickstart](/docs/developers/quickstart) creates a key and makes a first request.
 
-The same routes also answer at \`https://qrdx.dev/api/v1\`. Requests and responses are JSON, except the image API, which returns images.
+## Endpoints
+
+${sections}
+
+## Rate limits
+
+Two limits apply to requests made with a key or token. Both answer \`429 RATE_LIMITED\` with a \`Retry-After\` header.
+
+- **Daily quota per workspace:** ${quota("free")} requests on Free, ${quota("pro")} on Pro and ${quota("business")} on Business, from 00:00 to 24:00 UTC. Every response to a request that counts carries \`X-RateLimit-Limit\`, \`X-RateLimit-Remaining\` and \`X-RateLimit-Reset\`.
+- **Per minute:** 120 reads and 30 writes a minute per user, 300 requests a minute per IP address, and 20 create requests a minute on \`POST /codes\`.
+
+The keyless endpoints have per-IP limits of their own: ${QR_IMAGE_REQUESTS_PER_MINUTE} requests a minute for the image endpoints and 120 for community items. [Rate limits](/docs/developers/rest-api#rate-limits) has the details.
+
+## Errors
+
+Every error is JSON with the same shape: \`{ "code", "message", "status" }\`, plus \`docs\` when a page explains the fix and \`data\` with details on some errors. Branch on \`code\`; the wording of \`message\` may change. The [errors page](/docs/developers/errors) lists every code with when it happens and what to do.
+
+## Pagination
+
+- **Lists** (\`GET /codes\`, \`GET /barcodes\`, \`GET /community/items\`) take \`limit\` and \`offset\` and return \`pagination.total\`, the number of matches. Stop when \`offset + limit\` is at least \`total\`.
+- **Individual scans** (\`GET /codes/{id}/scans\` with \`limit\` above 0) are a cursor: pass the response's \`nextBefore\` as \`before\` for the next page.
+- **Hooks, themes and sample events** come back whole.
+
+## Idempotency
+
+- **\`POST /codes\`** takes an \`Idempotency-Key\` header. A retry with the same key returns the codes the first try made, with \`Idempotent-Replayed: true\`, and finishes a batch that was cut off, so a timeout never creates codes twice. The key is scoped to the workspace; use a UUID per batch. Keep the body the same for a replay.
+- **\`POST /conversions\`** takes your own \`id\`, such as an order id. A repeat returns \`200\` with \`duplicate: true\` instead of recording it again.
+- **\`PATCH\` and \`DELETE\`** can be repeated. Deleting a code that is already gone is a \`404\`.
 
 ## Try it
 
@@ -131,21 +184,16 @@ Try it sends real requests from your browser to this site's \`/api/v1\` (the sam
 
 Requests made with a key act on real data in the key's workspace and count against its daily quota, exactly as they would from your own code. A read-only key is a safe way to explore.
 
-## Authentication
-
-Send an [API key](/docs/developers/api-keys) in the \`Authorization\` header as \`Bearer qrdx_…\`. Apps that act for other QRdx users send an [OAuth 2.0 access token](/docs/developers/rest-api#get-an-access-token) in the same header instead. Each endpoint below lists the scope it needs, for keys and tokens alike; \`codes:write\` also allows everything \`codes:read\` does.
-
-## Errors and limits
-
-Errors are JSON: \`{ "code", "message", "status" }\`, plus \`docs\` when a page explains the fix. The [errors page](/docs/developers/errors) lists every code with its fix. Each workspace has a daily request quota, reported in the \`X-RateLimit-*\` headers; see [rate limits](/docs/developers/rest-api#rate-limits).
-
-## Endpoints
-
-${sections}
-
 ## OpenAPI document
 
-Download the document at [\`https://qrdx.dev/openapi.json\`](/openapi.json) (also served at \`https://api.qrdx.dev/openapi.json\`) to generate a client, import the API into Postman or Insomnia, or give an AI agent the full contract.
+Download the document at [\`https://qrdx.dev/openapi.json\`](/openapi.json) (also served at \`https://api.qrdx.dev/openapi.json\`) to generate a client, import the API into Postman or Insomnia, or give an AI agent the full contract. Every page of this reference is also available as Markdown at its URL plus \`.md\`, with the operation's parameters, responses and an example included.
+
+## Related
+
+- [Quickstart](/docs/developers/quickstart): a first request, a key and a first dynamic code
+- [REST API and OAuth](/docs/developers/rest-api): authentication, scopes, OAuth tokens and limits in depth
+- [Errors](/docs/developers/errors): every error code, when it happens and what to do
+- [Webhooks](/docs/webhooks): events pushed to your server instead of polling
 `;
 }
 
@@ -247,15 +295,15 @@ export function errorsPage(): string {
 
   return `---
 title: Errors
-description: Every error the QRdx API returns, with its HTTP status, what it means and how to fix it.
+description: Every error the QRdx REST API returns, with its HTTP status, when it happens and what to do about it.
 icon: TriangleAlert
 ---
 
 {/* ${GENERATED_NOTE.replace("Edit lib/openapi", "Edit lib/openapi/errors.ts").replaceAll("/", "\\/")} */}
 
-Every REST API error is JSON with the same shape, whichever endpoint returns it:
+Every REST API error is JSON with the same shape, whichever endpoint returns it. Branch on \`code\`, which never changes; \`message\` is written for people and may be reworded.
 
-\`\`\`json
+\`\`\`json title="403 Forbidden"
 {
   "code": "INSUFFICIENT_SCOPE",
   "message": "This API key needs the 'codes:write' scope. Create a key that includes it at https://qrdx.dev/dashboard?to=settings/developers; a key's scopes can't be changed.",
@@ -264,17 +312,27 @@ Every REST API error is JSON with the same shape, whichever endpoint returns it:
 }
 \`\`\`
 
+## Error codes
+
+Ordered by status. A code that appears twice has a different meaning at each status.
+
+| Status | Code | When it happens | What to do |
+| --- | --- | --- | --- |
+${rows}
+
+## The error body
+
 | Field | What it is |
 | --- | --- |
-| \`code\` | A stable, machine-readable code from the table below. Branch on this. |
-| \`message\` | What went wrong and how to fix it, for people. The wording may change. |
-| \`status\` | The HTTP status, repeated. |
-| \`docs\` | A page that explains the fix, when there is one. |
-| \`data\` | Extra detail, on some errors. \`VALIDATION_ERROR\` lists each problem in \`data.details\`. |
+| \`code\` | A stable, machine-readable code from the table above |
+| \`message\` | What went wrong and how to fix it, for people. The wording may change |
+| \`status\` | The HTTP status, repeated |
+| \`docs\` | A page that explains the fix, when there is one |
+| \`data\` | Extra detail on some errors. \`VALIDATION_ERROR\` lists each problem in \`data.details\` |
 
-A validation error names every field that failed:
+A validation error names every field that failed. In a batch of codes each problem also carries the row's \`index\`, counted from 0:
 
-\`\`\`json
+\`\`\`json title="400 Bad Request"
 {
   "code": "VALIDATION_ERROR",
   "message": "Invalid request body",
@@ -287,21 +345,15 @@ A validation error names every field that failed:
 }
 \`\`\`
 
-The image API reports query parameters as \`{ "param", "message" }\` instead of \`{ "path", "message" }\`.
-
-## Error codes
-
-| Status | Code | Meaning | Fix |
-| --- | --- | --- | --- |
-${rows}
+The image endpoints (\`GET /v1/qr\`, \`GET /v1/barcode\`) report query parameters as \`{ "param", "message" }\` instead of \`{ "path", "message" }\`.
 
 ## Retrying
 
-- **\`429\`:** wait the number of seconds in \`Retry-After\`, then send the same request. When the daily quota runs out, the \`X-RateLimit-*\` headers say how many requests the plan allows and when the count resets (00:00 UTC). See [rate limits](/docs/developers/rest-api#rate-limits).
-- **\`500\` and \`503\`:** retry with exponential backoff, starting at about a second.
+- **\`429\`:** wait the number of seconds in \`Retry-After\`, then send the same request. When the daily quota runs out, the \`X-RateLimit-*\` headers say how many requests the plan allows and when the count resets (00:00 UTC). A per-minute limit sends \`Retry-After\` only. See [rate limits](/docs/developers/rest-api#rate-limits).
+- **\`500\`, \`502\`, \`503\` and \`504\`:** retry with exponential backoff, starting at about a second. The AI art \`5xx\` errors never use an image, so a retry costs nothing.
 - **Other \`4xx\`:** the same request fails the same way. Fix it first.
 
-Creating codes isn't idempotent: if a \`POST /v1/codes\` times out, list your codes before sending it again, or you may create the code twice. Conversions are: send your own \`id\` and a repeat returns \`200\` with \`duplicate: true\`.
+A retry of \`POST /v1/codes\` is safe when the request carries an \`Idempotency-Key\` header: the same key returns the codes the first try made, with \`Idempotent-Replayed: true\`, instead of creating them twice ([Create codes](/docs/developers/api/create-codes)). Without the header, list your codes before sending the request again. \`POST /v1/conversions\` is safe to repeat when you send your own \`id\`: a repeat returns \`200\` with \`duplicate: true\`.
 
 ## \`/v1/me\` and \`/v1/themes\`
 
@@ -317,6 +369,13 @@ The OAuth endpoints under \`https://qrdx.dev/api/oauth\` (authorize, token, revo
 
 ## Unknown endpoints
 
-A path under \`/v1\` that doesn't exist returns \`404 NOT_FOUND\` as JSON, never an HTML page. The [API reference](/docs/developers/api) lists every endpoint.
+A path under \`/v1\` that doesn't exist returns \`404 NOT_FOUND\` as JSON, never an HTML page, with a \`docs\` link to the endpoint list. The [API reference](/docs/developers/api) lists every endpoint.
+
+## Related
+
+- [API reference](/docs/developers/api): every endpoint, with the errors each one can return
+- [Rate limits](/docs/developers/rest-api#rate-limits): the daily quota, the per-minute limits and the headers
+- [API keys](/docs/developers/api-keys): scopes, expiry and revoking, behind most \`401\` and \`403\` errors
+- [Quickstart](/docs/developers/quickstart): a working request to compare yours with
 `;
 }
