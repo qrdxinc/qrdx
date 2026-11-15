@@ -291,6 +291,17 @@ export function SetupGuide() {
       panel?.dataset.side === "top"
         ? Math.ceil(height - panel.getBoundingClientRect().top + GAP_PX)
         : 0;
+    // An open selection bar lifts the launcher only when it reaches the
+    // launcher's corner (always on phones, where the bar is full width; on
+    // wide screens the centred bar usually leaves the corner free).
+    const bar = document.querySelector<HTMLElement>(
+      '[data-selection-bar="open"] [data-selection-bar-panel]',
+    );
+    const lift =
+      bar !== null &&
+      bar.getBoundingClientRect().right + GAP_PX >
+        corner.getBoundingClientRect().left;
+    document.body.toggleAttribute("data-setup-guide-lift", lift);
     const { style } = document.body;
     style.setProperty("--setup-guide-clearance", `${launcher}px`);
     style.setProperty(
@@ -321,6 +332,7 @@ export function SetupGuide() {
       corner?.removeEventListener("transitionend", measure);
       window.removeEventListener("resize", measure);
       body.removeAttribute("data-setup-guide");
+      body.removeAttribute("data-setup-guide-lift");
       body.style.removeProperty("--setup-guide-clearance");
       body.style.removeProperty("--setup-guide-toast-clearance");
     };

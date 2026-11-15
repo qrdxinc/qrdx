@@ -17,15 +17,18 @@ import { CookiePreferences } from "./cookie-preferences";
 export function ConsentManager({
   link,
   getPlan,
+  featurebaseOn,
 }: {
   link: ConsentLink;
   getPlan?: GetAnalyticsPlan;
+  /** The pages that show Featurebase (default: every page). */
+  featurebaseOn?: (pathname: string) => boolean;
 }) {
   return (
     <ConsentRoot config={consentConfig}>
       <CookieBanner link={link} />
       <CookiePreferences link={link} />
-      <ConsentScripts getPlan={getPlan} />
+      <ConsentScripts featurebaseOn={featurebaseOn} getPlan={getPlan} />
     </ConsentRoot>
   );
 }
