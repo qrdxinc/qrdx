@@ -12,11 +12,14 @@ import { isFeatureAvailable } from "@/lib/feature-availability";
 /** Where the script lives, from the app's directory (the build's cwd). */
 export const CONVERSIONS_SCRIPT_FILE = "ee/conversions/conversions.js";
 
+// Read once per process: the file only changes with a deploy.
+let script: string | undefined;
+
 export function conversionsScript(): Response {
   if (!isFeatureAvailable("conversions")) {
     return new Response("Not found", { status: 404 });
   }
-  const script = readFileSync(
+  script ??= readFileSync(
     path.join(process.cwd(), CONVERSIONS_SCRIPT_FILE),
     "utf8",
   );
