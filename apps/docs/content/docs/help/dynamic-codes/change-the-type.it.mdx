@@ -1,49 +1,72 @@
 ---
-title: "Cambia ciò che apre un codice stampato"
+title: "Cambiare cosa apre un codice stampato"
 description: "Trasforma un codice con link a un sito web in una pagina ospitata, o una pagina di nuovo in un link. Il codice stampato continua a funzionare."
 ---
 
 Un QR code dinamico apre un link a un sito web oppure una pagina ospitata, e puoi passare dall'uno all'altra anche dopo la stampa. Il link breve non cambia, quindi ogni copia stampata apre la nuova pagina o il nuovo link alla scansione successiva, e le scansioni continuano a essere conteggiate sullo stesso codice.
 
-## Trasforma un link a un sito web in una pagina [#turn-a-website-link-into-a-page]
+## Trasformare un link a un sito web in una pagina [#turn-a-website-link-into-a-page]
 
-1. Apri il codice da **Codes** e clicca su **Change type**.
-2. Scegli un tipo di pagina, poi un template.
-3. Clicca su **Continue to editor** e crea la pagina.
-4. Clicca su **Publish**.
+### 1. Apri Cambia tipo [#1-open-change-type]
 
-Le scansioni continuano ad andare al vecchio link finché non pubblichi. Se esci dall'editor senza pubblicare, non cambia nulla. Le modifiche non pubblicate restano in questo browser.
+Apri il codice da **Codici** e fai clic su **Cambia tipo** nella scheda **Panoramica**. Si apre la finestra **Cambia cosa apre questo codice**.
 
-## Trasforma una pagina di nuovo in un link [#turn-a-page-back-into-a-link]
+<Shot id="change-type-dialog" />
 
-1. Apri il codice e clicca su **Change type**.
-2. Scegli **Website link**, inserisci l'indirizzo e clicca su **Switch to website link**.
+### 2. Scegli una pagina [#2-pick-a-page]
 
-La pagina resta in **Pages**. Per recuperarla, apri di nuovo **Change type** e selezionala sotto **Switch back**.
+In **Pagina ospitata**, scegli un tipo di pagina, poi un modello.
 
-## Passa a un altro tipo di pagina [#switch-to-another-page-type]
+### 3. Crea la pagina [#3-build-the-page]
 
-Scegli un tipo sotto **Another page type**. La nuova pagina parte dal template che scegli e riprende dalla vecchia ciò che è compatibile: nome della pagina, impostazioni e logo, più i blocchi presenti anche nel template, come l'intestazione, i link o i dati di contatto. La finestra elenca ciò che non è compatibile. Resta nella vecchia pagina, che viene conservata in **Pages**.
+Fai clic su **Continua all'editor** e crea la pagina.
+
+### 4. Pubblica [#4-publish]
+
+Fai clic su **Pubblica** nell'editor della pagina. Finché non lo fai, le scansioni continuano ad andare al vecchio link. Se esci dall'editor senza pubblicare, non cambia nulla e le modifiche non pubblicate restano in questo browser.
+
+## Riportare una pagina a un link [#turn-a-page-back-into-a-link]
+
+1. Apri il codice e fai clic su **Cambia tipo**.
+2. Scegli **Link a un sito web**, inserisci l'indirizzo e fai clic su **Passa al link a un sito web**.
+
+La pagina resta in **Pagine**. Per ripristinarla, apri di nuovo **Cambia tipo** e sceglila in **Torna indietro**, che compare quando il codice ha già avuto pagine in precedenza.
+
+## Passare a un altro tipo di pagina [#switch-to-another-page-type]
+
+Per un codice che apre già una pagina, la finestra ha una sezione **Altro tipo di pagina**. La nuova pagina parte dal modello che scegli e riprende dalla vecchia ciò che è compatibile: nome della pagina, impostazioni e logo, più i blocchi presenti anche nel modello, come intestazione, link o dati di contatto. La finestra elenca ciò che non è compatibile. Resta nella vecchia pagina, che viene conservata in **Pagine**.
 
 ## Cosa resta invariato [#what-stays-the-same]
 
-Il link breve, la cronologia delle scansioni, la cartella, i tag, le note, il design del QR, la password, la pianificazione e il limite di scansioni non cambiano.
+Link breve, cronologia delle scansioni, cartella, tag, note, design del QR, password, pianificazione e limite di scansioni non cambiano.
 
 Alcune impostazioni funzionano solo con un tipo:
 
-- Smart routing, A/B test, parametri UTM e tracciamento delle conversioni valgono solo per i link a siti web.
+- Smart routing, test A/B, parametri UTM e tracciamento delle conversioni valgono solo per i link a siti web.
 - I pixel di tracciamento si caricano solo nelle pagine ospitate.
 
-Vengono conservate quando cambi tipo e tornano a funzionare se torni indietro. La scheda **Settings** del codice indica quelle salvate ma non in uso.
+Vengono conservate quando cambi tipo e tornano a funzionare se ritorni al tipo precedente. La scheda **Impostazioni** del codice indica quelle salvate ma non in uso.
 
 ## Piani [#plans]
 
-Una nuova pagina viene conteggiata tra le pagine ospitate del tuo piano, come qualsiasi pagina che crei. Una pagina che il codice non apre più viene comunque conteggiata finché non la elimini da **Pages**. Tornare a una pagina che hai già non aumenta il conteggio. Vedi [Piani e limiti](/docs/plans-and-limits).
+Una nuova pagina conta nelle pagine ospitate del tuo piano, come qualsiasi pagina che crei. Una pagina che il codice non apre più conta comunque finché non la elimini da **Pagine**. Tornare a una pagina che hai già non aumenta il conteggio. Vedi [Piani e limiti](/docs/plans-and-limits).
 
-## Annulla un cambio [#undo-a-switch]
+## Annullare un cambio [#undo-a-switch]
 
-Ogni cambio salva le impostazioni precedenti del codice in **Version history**. Ripristinare una versione precedente riporta indietro il tipo, purché la pagina che apriva esista ancora.
+Ogni cambio salva le impostazioni precedenti del codice in **Cronologia versioni**, nella scheda **Impostazioni**. Ripristinando una versione precedente il tipo torna indietro, purché la pagina che apriva esista ancora.
 
-## Dall'API [#from-the-api]
+## Se qualcosa va storto [#if-something-goes-wrong]
 
-Invia `kind` con `PATCH /v1/codes/{id}`. Vedi [Aggiorna un codice](/docs/developers/api/update-code).
+### Le scansioni aprono ancora il vecchio link [#scans-still-open-the-old-link]
+
+Non hai ancora pubblicato la pagina. Aprila da **Pagine** e fai clic su **Pubblica**.
+
+### Torna indietro non è nella finestra [#switch-back-isnt-in-the-dialog]
+
+Compare solo se il codice ha già aperto una pagina. Per una pagina nuova, scegli un tipo in **Pagina ospitata**.
+
+## Vedi anche [#related]
+
+- [Crea una pagina per dispositivi mobili](/docs/help/pages-and-forms/create-a-page)
+- [Cambiare dove punta un codice](/docs/help/dynamic-codes/change-the-link)
+- [Aggiornare un codice con l'API](/docs/developers/api/update-code)

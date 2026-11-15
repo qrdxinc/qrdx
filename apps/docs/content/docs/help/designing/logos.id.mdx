@@ -3,43 +3,58 @@ title: "Tambahkan logo"
 description: "Letakkan logo Anda di tengah kode QR tanpa mengganggu pemindaian."
 ---
 
+Logo di tengah kode membuat kode tersebut menjadi milik Anda dan memberi tahu orang apa yang akan mereka temukan. QRdx menyembunyikan sebagian kotak kode di balik logo, dan koreksi kesalahan memulihkannya saat kode dipindai. Halaman ini menunjukkan cara menambahkan logo dan menjaga kode tetap terbaca.
+
 ## Tambahkan logo Anda [#add-your-logo]
 
-1. Di [playground](/playground?tab=design&section=logo), buka tab **Design**, lalu **Logo**.
+1. Di [Playground](/playground?tab=design&section=logo), buka tab **Design**, lalu **Logo**.
 2. Aktifkan **Logo in the center**.
-3. Pilih salah satu **Quick icons**, pilih merek di bawah **Brand logos**, atau klik **Upload your logo**.
-4. Untuk mengubahnya nanti, klik **Replace** atau **Remove**.
+3. Pilih salah satu **Quick icons**, pilih merek di bawah **Brand logos**, atau klik **Upload your logo**. Unggahan dapat berupa file PNG, JPG, WebP, atau SVG hingga 1 MB. PNG transparan atau SVG memberikan hasil terbaik.
+4. Atur ukuran, bentuk, dan alas di bawah **Logo options**, yang muncul setelah logo diaktifkan.
 
-Logo dapat berupa file PNG, JPG, WebP, atau SVG hingga 1 MB. PNG transparan atau SVG memberikan hasil terbaik.
+Untuk mengganti logo nanti, klik **Replace** atau **Remove**.
+
+<Shot id="design-logo" />
 
 ## Gunakan logo sebuah merek [#use-a-brands-logo]
 
 **Brand logos** membuka galeri berisi {facts.brandLogos} merek dari [Simple Icons](https://simpleicons.org): Instagram, WhatsApp, PayPal, Spotify, Google Maps, toko aplikasi, dan ribuan lainnya. Merek populer ditampilkan lebih dulu, dan Anda dapat mencari berdasarkan nama.
 
-- **Color**: warna asli merek, hitam, atau putih.
-- **Plate**: bentuk solid di belakang logo. Logo putih selalu diberi plate dengan warna merek, begitu pula warna merek yang sangat terang.
+- Pilih **Brand color**, **Black**, atau **White** untuk logo.
+- **Plate** menempatkan bentuk solid di belakang logo. Logo putih selalu membutuhkannya, dengan warna merek, begitu juga warna merek yang sangat terang.
 
-Logo disimpan di dalam desain Anda, seperti unggahan, sehingga kode tidak pernah memuatnya dari tempat lain. Ubah ukuran, bentuk, dan plate-nya di bawah **Logo options**.
+Logo disimpan di dalam desain Anda, seperti unggahan, sehingga kode tidak pernah memuatnya dari tempat lain.
 
-Setiap merek adalah milik pemiliknya. Gunakan untuk mengarahkan orang ke merek tersebut, misalnya profil Instagram Anda. Beberapa merek meminta Simple Icons menghapus logonya, sehingga tidak ada di galeri.
+Setiap tanda merek adalah milik pemiliknya. Gunakan untuk mengarahkan orang ke merek tersebut, misalnya profil Instagram Anda. Beberapa merek meminta Simple Icons menghapus tanda mereka, sehingga tidak ada di galeri.
 
 ## Atur koreksi kesalahan ke High [#set-error-correction-to-high]
 
-Logo menutupi sebagian kotak pada kode. Koreksi kesalahan membangun kembali kotak-kotak tersebut saat kode dipindai.
+Buka **Error correction** di tab **Design** dan pilih **High** setiap kali logo aktif. Tingkatnya adalah **Low** (7%), **Medium** (15%), **Quartile** (25%), dan **High** (30%): bagian kode yang dapat tertutup atau rusak dan tetap dapat dipindai.
 
-Buka **Error correction** di tab **Design** dan pilih **High** setiap kali logo aktif. High memungkinkan hingga 30% kode tertutup.
+## Jika terjadi masalah [#if-something-goes-wrong]
 
-## Jika skor turun [#if-the-score-drops]
+### Skor pemindaian turun setelah Anda menambahkan logo [#the-scan-score-drops-after-you-add-the-logo]
 
-QRdx mengatur ukuran logo untuk Anda. Jika **Scan score** turun setelah Anda menambahkan logo, pastikan **Error correction** diatur ke **High**.
+Pastikan **Error correction** diatur ke **High**. QRdx mengatur ukuran logo untuk Anda, jadi dengan High skor biasanya kembali naik.
 
-Jika masih bermasalah, coba **Logo QR**, yang mempertahankan setiap kotak di tempatnya.
+### Skor menyatakan logo menutupi mata sudut [#the-score-says-the-logo-covers-a-corner-eye]
+
+Logo menjangkau salah satu dari tiga kotak sudut besar, yang dibutuhkan pemindai untuk menemukan kode. Perkecil logo di bawah **Logo options**.
+
+### Logo terlihat buram di dalam kode [#the-logo-looks-fuzzy-in-the-code]
+
+PNG atau JPG kecil telah diperbesar. Unggah SVG atau PNG yang lebih besar dengan latar belakang transparan.
+
+### Unggahan ditolak [#the-upload-is-refused]
+
+File melebihi 1 MB atau bukan PNG, JPG, WebP, atau SVG. Ekspor file yang lebih kecil lalu coba lagi.
 
 ## Ingin logo berada di dalam titik-titik? [#want-the-logo-in-the-dots-instead]
 
-**Logo QR** melukis titik-titik di dalam bentuk logo Anda, bukan menaruh logo di atasnya. Lihat [Padukan logo atau foto ke dalam kode](/docs/help/designing/art).
+**Logo QR** di tab **Art** melukis titik-titik di dalam bentuk logo Anda, alih-alih menempatkan logo di atasnya. Lihat [Padukan logo atau foto ke dalam kode](/docs/help/designing/art).
 
 ## Terkait [#related]
 
 - [Periksa desain dengan skor pemindaian](/docs/help/designing/scan-score)
+- [Pilih warna yang dapat dipindai](/docs/help/designing/colors-and-contrast)
 - [Logo untuk developer](/docs/features/logos)

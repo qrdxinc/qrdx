@@ -1,29 +1,40 @@
 ---
-title: "Ubah apa yang dibuka oleh kode cetak"
-description: "Ubah kode tautan situs web menjadi halaman yang di-hosting, atau kembalikan halaman menjadi tautan. Kode yang sudah dicetak tetap berfungsi."
+title: "Ubah apa yang dibuka oleh kode yang sudah dicetak"
+description: "Ubah kode tautan situs web menjadi halaman yang di-hosting, atau ubah halaman kembali menjadi tautan. Kode yang sudah dicetak tetap berfungsi."
 ---
 
-Kode dinamis membuka tautan situs web atau halaman yang di-hosting, dan Anda dapat beralih di antara keduanya setelah dicetak. Tautan pendeknya tidak berubah, sehingga setiap salinan cetak akan membuka halaman atau tautan baru pada pemindaian berikutnya, dan pemindaian tetap dihitung pada kode yang sama.
+Kode dinamis membuka tautan situs web atau halaman yang di-hosting, dan Anda bisa beralih di antara keduanya setelah pencetakan. Tautan pendeknya tidak berubah, sehingga setiap salinan yang sudah dicetak akan membuka halaman atau tautan baru pada pemindaian berikutnya, dan pemindaian tetap dihitung pada kode yang sama.
 
 ## Ubah tautan situs web menjadi halaman [#turn-a-website-link-into-a-page]
 
-1. Buka kode dari **Codes** lalu klik **Change type**.
-2. Pilih jenis halaman, lalu pilih templat.
-3. Klik **Continue to editor** lalu buat halamannya.
-4. Klik **Publish**.
+### 1. Buka Change type [#1-open-change-type]
 
-Pemindaian tetap diarahkan ke tautan lama sampai Anda memublikasikan halaman. Jika Anda keluar dari editor tanpa memublikasikan, tidak ada yang berubah. Perubahan Anda yang belum dipublikasikan tetap tersimpan di browser ini.
+Buka kode dari **Codes**, lalu klik **Change type** di tab **Overview**. Dialog **Change what this code opens** akan terbuka.
 
-## Kembalikan halaman menjadi tautan [#turn-a-page-back-into-a-link]
+<Shot id="change-type-dialog" />
 
-1. Buka kode lalu klik **Change type**.
+### 2. Pilih halaman [#2-pick-a-page]
+
+Di bawah **Hosted page**, pilih jenis halaman, lalu pilih templat.
+
+### 3. Buat halaman [#3-build-the-page]
+
+Klik **Continue to editor** dan buat halamannya.
+
+### 4. Publikasikan [#4-publish]
+
+Klik **Publish** di editor halaman. Pemindaian tetap diarahkan ke tautan lama sampai Anda melakukannya. Jika Anda keluar dari editor tanpa memublikasikan, tidak ada yang berubah, dan suntingan Anda yang belum dipublikasikan tetap tersimpan di browser ini.
+
+## Ubah halaman kembali menjadi tautan [#turn-a-page-back-into-a-link]
+
+1. Buka kode, lalu klik **Change type**.
 2. Pilih **Website link**, masukkan alamatnya, lalu klik **Switch to website link**.
 
-Halaman tetap berada di **Pages**. Untuk memakainya kembali, buka **Change type** sekali lagi lalu pilih halaman tersebut di bawah **Switch back**.
+Halaman tetap ada di **Pages**. Untuk mengembalikannya, buka **Change type** lagi dan pilih halaman tersebut di bawah **Switch back**, yang muncul setelah kode pernah membuka halaman sebelumnya.
 
 ## Beralih ke jenis halaman lain [#switch-to-another-page-type]
 
-Pilih jenis di bawah **Another page type**. Halaman baru dimulai dari templat yang Anda pilih dan membawa bagian yang cocok dari halaman lama: nama halaman, pengaturan, dan logo, serta blok apa pun yang juga dimiliki templat, seperti header, tautan, atau detail kontak. Dialog akan mencantumkan hal yang tidak cocok. Hal tersebut tetap berada di halaman lama, yang disimpan di **Pages**.
+Untuk kode yang sudah membuka halaman, dialog memiliki bagian **Another page type**. Halaman baru dimulai dari templat yang Anda pilih dan mengambil bagian yang sesuai dari halaman lama: nama halaman, pengaturan, dan logo, serta blok apa pun yang juga ada di templat, seperti header, tautan, atau detail kontak. Dialog menampilkan daftar bagian yang tidak sesuai. Bagian itu tetap berada di halaman lama, yang disimpan di **Pages**.
 
 ## Yang tetap sama [#what-stays-the-same]
 
@@ -34,16 +45,28 @@ Beberapa pengaturan hanya berfungsi dengan satu jenis:
 - Smart routing, A/B tests, parameter UTM, dan pelacakan konversi hanya berlaku untuk tautan situs web.
 - Piksel pelacakan hanya dimuat di halaman yang di-hosting.
 
-Pengaturan ini tetap tersimpan saat Anda beralih dan berfungsi lagi jika Anda beralih kembali. Tab **Settings** pada kode menyebutkan pengaturan yang tersimpan tetapi tidak sedang digunakan.
+Pengaturan ini tetap tersimpan saat Anda beralih dan berfungsi kembali jika Anda beralih balik. Tab **Settings** pada kode menyebutkan pengaturan yang tersimpan tetapi tidak digunakan.
 
 ## Paket [#plans]
 
 Halaman baru dihitung dalam jumlah halaman yang di-hosting pada paket Anda, seperti halaman lain yang Anda buat. Halaman yang tidak lagi dibuka oleh kode tetap dihitung sampai Anda menghapusnya dari **Pages**. Beralih kembali ke halaman yang sudah Anda miliki tidak menambah hitungan. Lihat [Paket dan batas](/docs/plans-and-limits).
 
-## Batalkan peralihan [#undo-a-switch]
+## Urungkan peralihan [#undo-a-switch]
 
-Setiap peralihan menyimpan pengaturan kode sebelumnya di **Version history**. Memulihkan versi sebelumnya akan mengembalikan jenisnya, selama halaman yang dibuka sebelumnya masih ada.
+Setiap peralihan menyimpan pengaturan kode sebelumnya di **Version history** pada tab **Settings**. Memulihkan versi sebelumnya akan mengembalikan jenisnya, selama halaman yang dibukanya masih ada.
 
-## Dari API [#from-the-api]
+## Jika terjadi masalah [#if-something-goes-wrong]
 
-Kirim `kind` dengan `PATCH /v1/codes/{id}`. Lihat [Perbarui kode](/docs/developers/api/update-code).
+### Pemindaian masih membuka tautan lama [#scans-still-open-the-old-link]
+
+Anda belum memublikasikan halamannya. Buka dari **Pages** lalu klik **Publish**.
+
+### Switch back tidak ada di dialog [#switch-back-isnt-in-the-dialog]
+
+Opsi ini hanya muncul jika kode pernah membuka halaman sebelumnya. Untuk halaman baru, pilih jenis di bawah **Hosted page**.
+
+## Terkait [#related]
+
+- [Buat halaman seluler](/docs/help/pages-and-forms/create-a-page)
+- [Ubah tujuan kode](/docs/help/dynamic-codes/change-the-link)
+- [Perbarui kode dengan API](/docs/developers/api/update-code)

@@ -1,36 +1,44 @@
 ---
 title: "Comprueba un diseño con la puntuación de escaneo"
-description: "La puntuación de escaneo prueba tu diseño como lo ve la cámara de un teléfono y te indica qué corregir."
+description: "La puntuación de escaneo prueba tu diseño como lo ve la cámara de un teléfono y te dice qué corregir."
 ---
 
-Cada diseño del Playground recibe una **Puntuación de escaneo** de 0 a 100. Aparece debajo de la vista previa, por ejemplo "Puntuación de escaneo 92 · Excelente".
+Cada diseño del [playground](/playground) recibe una **Puntuación de escaneo** de 0 a 100, que aparece debajo de la vista previa, por ejemplo "Puntuación de escaneo 92 · Excelente". Prueba el código como lo haría la cámara de un teléfono, para que puedas corregir los problemas antes de imprimir.
+
+<Shot id="playground-content" />
 
 ## Qué significa la puntuación [#what-the-score-means]
 
-- **Excelente** (85 o más): listo para imprimir.
-- **Aceptable** (de 65 a 84): debería escanearse, pero revisa las advertencias.
-- **Arriesgado** (menos de 65): corrige las comprobaciones marcadas con una cruz.
-- **Falla**: el código no se decodificó en las pruebas, o el contraste es demasiado bajo. No lo imprimas.
+| Nivel | Puntuación | Qué hacer |
+| --- | --- | --- |
+| **Excelente** | 85 o más | Listo para imprimir. |
+| **Aceptable** | 65 a 84 | Debería escanearse. Lee las advertencias. |
+| **Arriesgado** | Menos de 65 | Corrige las comprobaciones marcadas con una cruz. |
+| **Falla** | | El código no se decodificó en el tamaño de prueba más grande, o el contraste es demasiado bajo. No lo imprimas. |
 
 ## Descubre qué corregir [#see-what-to-fix]
 
-Haz clic en la puntuación. El panel **¿Se escaneará?** muestra todas las comprobaciones, con las fallidas primero.
+Haz clic en la puntuación. El panel **¿Se escaneará?** enumera todas las comprobaciones, con las fallidas primero.
 
-La puntuación comprueba lo siguiente:
+<Shot id="scan-score-panel" />
 
-- **Decodificación**: el código se lee a tamaños pequeños con un desenfoque similar al de una cámara.
+Las comprobaciones son:
+
+- **Decodificación**: el código se lee en tres tamaños con un desenfoque similar al de una cámara.
 - **Contraste**: el código y el fondo deben diferir en una proporción de 4.5:1 o más.
 - **Oscuro sobre claro**: los códigos oscuros sobre fondos claros se escanean en más aplicaciones.
-- **Tamaño del logo**: un logo no debe cubrir más de lo que la corrección de errores puede reconstruir.
+- **Logo**: un logo no debe cubrir más de lo que la corrección de errores puede reconstruir, ni tocar el ojo de una esquina.
 - **Forma de los ojos**: los ojos circulares y ondulados fallan en algunas aplicaciones de escaneo.
-- **Espacio libre**: el borde vacío alrededor del código. Lo ideal son cuatro módulos.
+- **Zona de silencio**: el borde vacío alrededor del código. Lo ideal son cuatro módulos.
 
-## Correcciones rápidas [#quick-fixes]
+## Soluciones rápidas [#quick-fixes]
 
-- Contraste bajo: oscurece el código o aclara el fondo. Consulta [Elige colores que se escaneen](/docs/help/designing/colors-and-contrast).
-- El logo cubre demasiado: establece **Corrección de errores** en **Alta**. Consulta [Añade un logo](/docs/help/designing/logos).
-- Ojos: cambia a ojos cuadrados, redondeados o de engranaje.
-- Espacio libre: establece **Relleno** en **Estándar** o **Grande**.
+| La comprobación | La solución |
+| --- | --- |
+| Contraste bajo | Oscurece el código o aclara el fondo. Consulta [Elige colores que se escaneen](/docs/help/designing/colors-and-contrast). |
+| El logo cubre demasiado | Establece **Corrección de errores** en **Alta**, o reduce el logo. Consulta [Añade un logo](/docs/help/designing/logos). |
+| Forma de los ojos | Cambia a ojos cuadrados, redondeados o de engranaje. |
+| Zona de silencio | Establece **Margen** en **Estándar** o **Grande**. |
 
 ## Comprueba un código impreso [#check-a-printed-code]
 
@@ -39,3 +47,5 @@ La puntuación prueba el diseño en pantalla. Para probar un código que ya impr
 ## Relacionado [#related]
 
 - [Un código no se escanea](/docs/help/troubleshooting/wont-scan)
+- [Elige colores que se escaneen](/docs/help/designing/colors-and-contrast)
+- [Descarga e imprime un código QR](/docs/help/getting-started/download-and-print)

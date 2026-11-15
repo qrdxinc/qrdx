@@ -1,43 +1,60 @@
 ---
 title: "Pausar, agendar ou limitar um código"
-description: "Desative um QR code dinâmico, defina datas de início e fim, limite as leituras e escolha para onde os códigos encerrados levam as pessoas."
+description: "Desative um QR code dinâmico, defina datas de início e fim, limite o número de leituras e escolha para onde os códigos encerrados levam as pessoas."
 ---
 
-Tudo fica no mesmo lugar: abra o código em **Codes** e, em **Settings**, abra **Access & schedule**.
+Um código dinâmico pode ser pausado, ganhar datas de início e fim ou ter um limite de leituras. Tudo fica no mesmo lugar: abra o código em **Códigos**, vá para a aba **Configurações** e abra **Acesso e agendamento**. Quando terminar, clique em **Salvar alterações**.
+
+<Callout type="info">
+  Pausar funciona em todos os planos. Datas de início e fim, limites de leituras e URLs alternativas fazem parte do Pro e do Business. Veja [Planos e o que incluem](/docs/help/account-and-billing/plans).
+</Callout>
+
+<Shot id="code-settings" />
 
 ## Pausar um código [#pause-a-code]
 
-Ative **Pause code** e salve. Você também pode escolher **Pause** no menu do código em **Codes**, e **Resume** para reativá-lo.
-
-Pausar funciona em todos os planos.
+Ative **Pausar código** e clique em **Salvar alterações**. O status do código passa a mostrar "Code paused". Você também pode escolher **Pausar** no menu do código na lista **Códigos**, e **Retomar** para reativá-lo.
 
 ## Definir datas de início e fim [#set-start-and-end-dates]
 
-Preencha **Starts**, **Ends** ou os dois. Leituras antes do início ou depois do fim não chegam ao seu destino.
-
-Use isso em uma campanha com datas fixas. Apenas nos planos Pro e Business.
+Preencha **Início**, **Fim** ou os dois. Os horários seguem o seu fuso horário. Leituras antes do início ou depois do fim não chegam ao seu destino. Use isso em campanhas com datas fixas.
 
 ## Limitar as leituras [#cap-the-scans]
 
-Defina um **Scan limit**. Depois dessa quantidade de leituras, o código é encerrado. Apenas nos planos Pro e Business.
+Defina um **Limite de leituras**. As leituras são contadas do mesmo jeito que suas análises contam, sem os bots. Depois dessa quantidade de leituras, o código é encerrado.
 
 ## O que as pessoas veem [#what-people-see]
 
-Quando um código não está ativo, quem faz a leitura vê uma página simples, sem a marca QRdx:
+Quando um código não está ativo, quem faz a leitura vê uma página simples, sem a marca QRdx e com um link para denunciar abuso:
 
 - Pausado: "This campaign is paused".
 - Antes da data de início: "This campaign hasn't started yet".
 - Depois da data de fim ou do limite de leituras: "This campaign has ended".
 
-## Em vez disso, leve as pessoas a um lugar útil [#send-people-somewhere-useful-instead]
+## Leve as pessoas para um lugar útil [#send-people-somewhere-useful-instead]
 
-Preencha **Fallback URL** para enviar as leituras de um código pausado ou encerrado a uma página à sua escolha, como a sua página inicial. Isso não vale antes da data de início.
+Preencha **URL alternativa** para enviar as leituras de um código pausado ou encerrado para uma página que você escolher, como a sua página inicial. Ela vale para códigos pausados, códigos após a data de fim e códigos que passaram do limite de leituras. Antes da data de início, quem faz a leitura sempre vê a página "hasn't started yet".
 
 ## Depois de um downgrade [#after-a-downgrade]
 
-As configurações que você já salvou continuam funcionando. Remover uma configuração nunca exige um plano pago.
+As configurações que você já salvou continuam funcionando, e você pode removê-las a qualquer momento. Alterar ou adicionar uma de novo exige Pro ou Business.
 
-## Relacionado [#related]
+## Se algo der errado [#if-something-goes-wrong]
+
+### A página alternativa não aparece antes da data de início [#the-fallback-page-doesnt-show-before-the-start-date]
+
+Isso é esperado. A URL alternativa cobre apenas códigos pausados e encerrados.
+
+### O código está marcado como Held for review [#the-code-is-marked-held-for-review]
+
+O QRdx verifica as URLs alternativas do mesmo jeito que verifica os destinos. Uma URL alternativa que pareça insegura deixa o código retido para revisão, e ele não redireciona até que uma pessoa o analise. [Fale com o suporte](/docs/help/contact) se achar que foi um engano.
+
+### As leituras ainda passam depois da data de fim [#scans-still-get-through-after-the-end-date]
+
+Confira se você clicou em **Salvar alterações** e se o horário de fim está no seu fuso horário, que o painel mostra ao lado dos campos.
+
+## Relacionados [#related]
 
 - [Proteger um código com senha](/docs/help/dynamic-codes/password)
+- [Arquivar, excluir e restaurar códigos](/docs/help/dynamic-codes/archive-and-delete)
 - [Guia de controles do código](/docs/code-controls)

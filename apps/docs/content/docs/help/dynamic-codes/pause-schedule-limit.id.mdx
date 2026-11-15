@@ -1,43 +1,60 @@
 ---
-title: "Jeda, jadwalkan, atau batasi sebuah kode"
+title: "Jeda, jadwalkan, atau batasi kode"
 description: "Nonaktifkan kode QR dinamis, atur tanggal mulai dan berakhir, batasi jumlah pemindaiannya, dan pilih ke mana kode yang sudah berakhir mengarahkan orang."
 ---
 
-Semuanya ada di satu tempat: buka kode dari **Codes**, lalu di bawah **Settings**, buka **Access & schedule**.
+Kode dinamis dapat dijeda, diberi tanggal mulai dan berakhir, atau dibatasi pada jumlah pemindaian tertentu. Semuanya ada di satu tempat: buka kode dari **Codes**, masuk ke tab **Settings**, lalu buka **Access & schedule**. Klik **Save changes** setelah selesai.
 
-## Jeda sebuah kode [#pause-a-code]
+<Callout type="info">
+  Fitur jeda tersedia di semua paket. Tanggal mulai dan berakhir, batas pemindaian, dan URL cadangan adalah bagian dari Pro dan Business. Lihat [Paket dan isinya](/docs/help/account-and-billing/plans).
+</Callout>
 
-Aktifkan **Pause code** lalu simpan. Anda juga dapat memilih **Pause** dari menu kode di **Codes**, dan **Resume** untuk mengaktifkannya kembali.
+<Shot id="code-settings" />
 
-Fitur jeda tersedia di semua paket.
+## Jeda kode [#pause-a-code]
+
+Aktifkan **Pause code** lalu klik **Save changes**. Status kode akan menampilkan "Code paused". Anda juga dapat memilih **Pause** dari menu kode di daftar **Codes**, dan **Resume** untuk mengaktifkannya kembali.
 
 ## Atur tanggal mulai dan berakhir [#set-start-and-end-dates]
 
-Isi **Starts**, **Ends**, atau keduanya. Pemindaian sebelum tanggal mulai atau setelah tanggal berakhir tidak akan sampai ke tujuan Anda.
+Isi **Starts**, **Ends**, atau keduanya. Waktu mengikuti zona waktu Anda. Pemindaian sebelum waktu mulai atau setelah waktu berakhir tidak akan sampai ke tujuan Anda. Gunakan ini untuk kampanye dengan tanggal yang tetap.
 
-Gunakan ini untuk kampanye dengan tanggal tetap. Hanya untuk Pro dan Business.
+## Batasi pemindaian [#cap-the-scans]
 
-## Batasi jumlah pemindaian [#cap-the-scans]
-
-Atur **Scan limit**. Setelah mencapai jumlah pemindaian tersebut, kode berakhir. Hanya untuk Pro dan Business.
+Atur **Scan limit**. Pemindaian dihitung dengan cara yang sama seperti analitik Anda menghitungnya, dengan bot tidak disertakan. Setelah mencapai jumlah pemindaian tersebut, kode berakhir.
 
 ## Yang dilihat orang [#what-people-see]
 
-Saat kode tidak aktif, pemindai melihat halaman polos tanpa merek QRdx:
+Saat kode tidak aktif, pemindai melihat halaman sederhana tanpa merek QRdx dan dengan tautan untuk melaporkan penyalahgunaan:
 
 - Dijeda: "This campaign is paused".
 - Sebelum tanggal mulai: "This campaign hasn't started yet".
-- Setelah tanggal berakhir atau batas pemindaian tercapai: "This campaign has ended".
+- Setelah tanggal berakhir atau batas pemindaian: "This campaign has ended".
 
 ## Arahkan orang ke tempat yang berguna [#send-people-somewhere-useful-instead]
 
-Isi **Fallback URL** untuk mengarahkan pemindaian kode yang dijeda atau sudah berakhir ke halaman pilihan Anda, misalnya beranda Anda. Ini tidak berlaku sebelum tanggal mulai.
+Isi **Fallback URL** untuk mengarahkan pemindaian kode yang dijeda atau berakhir ke halaman pilihan Anda, misalnya beranda Anda. Ini berlaku untuk kode yang dijeda, kode yang melewati tanggal berakhir, dan kode yang melewati batas pemindaian. Sebelum tanggal mulai, pemindai selalu melihat halaman "hasn't started yet".
 
 ## Setelah penurunan paket [#after-a-downgrade]
 
-Pengaturan yang sudah Anda simpan tetap berfungsi. Menghapus pengaturan tidak pernah memerlukan paket berbayar.
+Pengaturan yang sudah Anda simpan tetap berfungsi, dan Anda dapat menghapusnya kapan saja. Untuk mengubah atau menambahkannya lagi, diperlukan Pro atau Business.
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### Halaman cadangan tidak muncul sebelum tanggal mulai [#the-fallback-page-doesnt-show-before-the-start-date]
+
+Itu memang wajar. URL cadangan hanya berlaku untuk kode yang dijeda dan yang sudah berakhir.
+
+### Kode ditandai Held for review [#the-code-is-marked-held-for-review]
+
+QRdx memeriksa URL cadangan dengan cara yang sama seperti memeriksa tujuan. URL cadangan yang terlihat tidak aman akan membuat kode ditahan untuk ditinjau, dan kode tidak akan mengarahkan sampai ada orang yang memeriksanya. [Hubungi dukungan](/docs/help/contact) jika Anda merasa ini keliru.
+
+### Pemindaian masih masuk setelah tanggal berakhir [#scans-still-get-through-after-the-end-date]
+
+Pastikan Anda sudah mengklik **Save changes**, dan waktu berakhir menggunakan zona waktu Anda, yang disebutkan panel di samping kolomnya.
 
 ## Terkait [#related]
 
 - [Lindungi kode dengan kata sandi](/docs/help/dynamic-codes/password)
+- [Arsipkan, hapus, dan pulihkan kode](/docs/help/dynamic-codes/archive-and-delete)
 - [Panduan kontrol kode](/docs/code-controls)

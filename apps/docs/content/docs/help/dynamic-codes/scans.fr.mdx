@@ -3,39 +3,63 @@ title: "Consulter vos scans"
 description: "Découvrez combien de personnes ont scanné un QR code dynamique, quand, où et sur quel appareil."
 ---
 
-Chaque scan d'un code dynamique est comptabilisé. Les codes statiques ne sont pas suivis.
+Chaque scan d'un code dynamique est comptabilisé. Ouvrez un code pour voir ses scans, ou la page **Analytics** pour voir tous les codes de l'espace de travail. Les codes statiques ne sont pas suivis, car leur scan ne passe jamais par QRdx.
 
 ## Un seul code [#one-code]
 
-Allez dans **Codes** et cliquez sur le nom du code. Le haut de la page affiche :
+Allez dans **Codes**, cliquez sur le code et ouvrez son onglet **Analytics**. Le haut de l'onglet affiche :
 
-- **Total scans** et **Scans sur la période** (les dates que vous avez choisies).
-- **Visiteurs uniques** : chaque visiteur n'est compté qu'une fois par jour.
-- **Dernier scan**.
+- **Total scans** et **Scans in range** (les dates que vous avez choisies).
+- **Unique visitors** : chaque visiteur est compté une seule fois par jour.
+- **Last scan**.
 
-En dessous, **Scans QR et contacts NFC** répartit les visites entre le QR code et les [tags NFC](/docs/nfc) qui portent le lien du code. Viennent ensuite des graphiques par pays, villes, appareils, systèmes d'exploitation, navigateurs et sources de provenance, ainsi que les moments où les gens scannent et la langue utilisée. Avec Pro et Business, les codes qui [demandent la position précise](/docs/precise-location) listent aussi les lieux que les personnes ont choisi de partager.
+<Shot id="code-analytics" />
+
+Plus bas, **QR scans and NFC taps** répartit les visites entre le QR code et les [tags NFC](/docs/nfc) qui portent le lien du code. Viennent ensuite **Scans over time**, **Top countries**, **Top cities**, **Devices**, **Operating systems**, **Browsers**, **Referrers**, **Languages** et **When people scan**, par heure de la journée ou par jour de la semaine.
+
+Avec Pro et Business, un code configuré avec **Ask scanners for precise location** affiche aussi **Precise locations** : les lieux que les personnes ont choisi de partager. Consultez [Localisation précise](/docs/precise-location).
 
 ## Tous vos codes [#all-your-codes]
 
-La page **Analytics** de votre tableau de bord affiche les totaux de tous vos codes, vos meilleurs codes, pays, appareils et langues. **Comparer les codes** permet de placer jusqu'à 4 codes côte à côte.
+Dans la barre latérale des codes, cliquez sur **Analytics**. La page affiche les totaux de tous les codes, ainsi que vos principaux codes, pays, appareils et langues. **Compare codes** permet de comparer jusqu'à 4 codes côte à côte.
 
 ## Périodes et historique [#date-ranges-and-history]
 
-Choisissez 7, 30 ou 90 jours, 1 an, 3 ans ou **Depuis toujours**. Depuis toujours commence le jour du premier scan du code, ou du premier scan de l'espace de travail sur la page **Analytics**. La durée consultable dépend de votre offre :
+Choisissez **7 days**, **30 days**, **90 days**, **1 year**, **3 years** ou **All time**. All time commence le jour du premier scan du code, ou du premier scan de l'espace de travail sur la page **Analytics**. La durée d'historique accessible dépend de votre offre :
 
 - **Gratuit** : {facts.freeScanHistoryYears} an.
-- **Pro** et **Business** : tout l'historique, y compris **Depuis toujours**.
+- **Pro** et **Business** : tout l'historique, y compris **All time**.
 
 Les scans que votre offre n'affiche pas ne sont pas supprimés. Ils réapparaissent après une mise à niveau.
 
 ## Télécharger vos scans [#download-your-scans]
 
-Sur la page d'un code, ouvrez l'onglet **Analytics** et cliquez sur **Exporter en CSV**. Vous obtenez jusqu'à 50 000 scans pour les dates sélectionnées, avec l'heure, le lieu, l'appareil, le système d'exploitation, le navigateur et la source de provenance de chacun, le type (scan QR ou contact NFC) et la position partagée, le cas échéant.
+Dans l'onglet **Analytics** d'un code, cliquez sur **Export CSV**. Vous obtenez jusqu'à 50.000 scans pour les dates sélectionnées, avec pour chacun l'heure, le lieu, l'appareil, le système d'exploitation, le navigateur et le référent, s'il s'agit d'un scan de QR code ou d'un contact NFC, ainsi que la localisation partagée le cas échéant.
 
 ## Ce qui n'est pas compté [#what-isnt-counted]
 
-Les robots et les aperçus de liens ne sont pas comptés. Si un même réseau scanne le même code plus de 20 fois en une minute, les scans en trop ne sont pas comptabilisés. Le code s'ouvre toujours à chaque fois.
+Les robots, les aperçus de liens et les préchargements ne sont pas comptés. Si un même réseau scanne le même code plus de 20 fois en une minute, les scans supplémentaires ne sont pas comptés. Le code s'ouvre toujours à chaque fois.
 
 ## Confidentialité [#privacy]
 
-QRdx ne stocke jamais l'adresse IP d'une personne qui scanne. Consultez [Ce que QRdx enregistre lorsque quelqu'un scanne](/docs/help/privacy-and-security/scan-data).
+QRdx ne stocke jamais l'adresse IP d'une personne qui scanne. Consultez [Ce que QRdx enregistre lors d'un scan](/docs/help/privacy-and-security/scan-data).
+
+## En cas de problème [#if-something-goes-wrong]
+
+### Des scans attendus sont absents [#scans-you-expect-are-missing]
+
+Avec l'offre Gratuit, les graphiques remontent à {facts.freeScanHistoryYears} an maximum. Les scans d'un même réseau au-delà de 20 par minute, ainsi que les visites de robots et d'aperçus de liens, ne sont pas comptés non plus.
+
+### Unique visitors est bien inférieur à Total scans [#unique-visitors-is-much-lower-than-total-scans]
+
+Les mêmes personnes ont scanné plusieurs fois dans la journée. Chaque visiteur est compté une fois par jour dans **Unique visitors**, et chaque scan est compté dans **Total scans**.
+
+### Le graphique affiche des scans alors que le code est statique [#the-chart-shows-scans-but-a-code-is-static]
+
+Seuls les codes dynamiques sont comptés. Un QR code statique imprimé ne remonte jamais rien, même s'il existe un QR code dynamique avec le même lien.
+
+## Voir aussi [#related]
+
+- [Ce que QRdx enregistre lors d'un scan](/docs/help/privacy-and-security/scan-data)
+- [Exporter vos données](/docs/help/account-and-billing/export-your-data)
+- [Guide du suivi et des conversions](/docs/tracking-and-conversions)

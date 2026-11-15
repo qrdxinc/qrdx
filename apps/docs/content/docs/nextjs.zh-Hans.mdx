@@ -1,22 +1,29 @@
 ---
-title: "Next.js 中的二维码"
-description: "使用 qrdx 在 Next.js App Router 中渲染二维码：在 Server Component 中无需客户端 JavaScript，在 Client Component 中响应实时输入，支持添加 logo，也可下载为 SVG。"
+title: "在 Next.js 中生成二维码"
+description: "使用 qrdx 在 Next.js App Router 中渲染二维码：在服务器组件中无需客户端 JavaScript、根据路由参数生成、在客户端组件中响应实时输入、添加徽标，以及作为 SVG 下载。"
 icon: Code
 ---
 
-`qrdx` 在 App Router 的两端都能使用。`QRCodeSVG` 和 `QRCode` 不使用仅限客户端的 hook，因此 Server Component 可以直接把二维码渲染到页面的 HTML 中，无需为它发送任何 JavaScript。只有在值需要在浏览器中变化，或需要下载文件时，才需要使用 Client Component。
+读完本页后，你将得到：由服务器组件渲染且无需客户端 JavaScript 的二维码、根据路由参数生成的二维码、与输入框绑定的实时二维码、带有你的徽标的二维码，以及一个保存 SVG 的按钮。`QRCodeSVG` 和 `QRCode` 不使用仅限客户端的 hook，因此服务器组件会直接把二维码渲染进页面的 HTML。只有当值需要在浏览器中变化，或需要保存文件时，才需要客户端组件。
 
 <NpmStatus package="qrdx" />
 
-## 安装 [#install]
+## 开始之前 [#before-you-start]
+
+- 一个使用 App Router 的 Next.js 项目。示例使用 App Router 的异步 `params`，与 Next.js 15 和 16 一致。
+- React 18 或更高版本，App Router 本身就要求这一点。
+
+## 动手实现 [#build-it]
+
+### 1. 安装 qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`react` 和 `react-dom` 18 或更高版本是对等依赖（peer dependencies），因此会使用你应用自身的版本。
+`react` 和 `react-dom` 是对等依赖，因此会使用你的应用自己的版本。
 
-## 在 Server Component 中 [#in-a-server-component]
+### 2. 在服务器组件中渲染二维码 [#2-render-a-code-in-a-server-component]
 
 ```tsx title="app/page.tsx"
 import { QRCodeSVG } from "qrdx";
@@ -34,11 +41,13 @@ export default function Page() {
 }
 ```
 
-SVG 是服务器所发送 HTML 的一部分。它在任何 JavaScript 加载之前就能显示；静态页面会在构建时渲染一次；屏幕阅读器可以读取 `aria-label`。
+打开页面。`<svg>` 是服务器发送的 HTML 的一部分，因此在任何 JavaScript 加载之前就会显示；静态页面会在构建时渲染一次；屏幕阅读器也能读取 `aria-label`。
 
-`margin` 是二维码周围的静区，单位为模块。`QRCodeSVG` 默认为 `0`，适合放在自带内边距的卡片中的二维码。二维码标准要求 4 个模块，在复杂或深色背景上这是更稳妥的选择。
+<Shot id="lib-nextjs-server-code" />
 
-### 来自路由参数或数据 [#from-route-params-or-data]
+`margin` 是二维码周围的静区，单位为模块。默认值为 0，适合放在自带内边距的卡片中的二维码。二维码标准要求为 4，在杂乱或深色背景上这是更稳妥的选择。
+
+### 3. 根据路由参数生成值 [#3-build-the-value-from-a-route-param]
 
 ```tsx title="app/tickets/[id]/page.tsx"
 import { QRCodeSVG } from "qrdx";
@@ -54,11 +63,9 @@ export default async function TicketPage({
 }
 ```
 
-Next.js 将 `params` 作为 promise 传入，因此页面是 `async` 的。来自用户或数据库的任何内容，在放入 URL 之前都要先编码。纠错等级 `H` 最多允许二维码有 30% 的损坏，这对会被折叠或刮擦的证件牌很有帮助。
+访问 `/tickets/A-12`，二维码会指向 `https://example.com/check-in/A-12`。Next.js 以 Promise 的形式传入 `params`，所以页面是 `async` 的。来自用户或数据库的任何内容，在放入 URL 之前都要先编码。`H` 级最多允许二维码有 30% 的部分受损，这对可能被折叠或刮擦的证件很有帮助。
 
-## 在 Client Component 中 [#in-a-client-component]
-
-当值来自输入框时，请在 Client Component 中渲染二维码：
+### 4. 在客户端组件中跟随输入 [#4-follow-an-input-in-a-client-component]
 
 ```tsx title="components/live-qr-code.tsx"
 "use client";
@@ -81,9 +88,11 @@ export function LiveQrCode() {
 }
 ```
 
-`QRCodeCanvas` 同样是客户端组件（自带 `"use client"`），但它只能绘制普通的方形模块。需要带样式的二维码时，请使用 `QRCodeSVG`。
+二维码会在每次按键时重绘，而首个值仍然在服务器上渲染。服务器组件页面可以直接导入这个组件。
 
-## 添加 logo [#with-a-logo]
+`QRCodeCanvas` 同样是客户端组件（自带 `"use client"`），但它只绘制普通的方形模块。需要样式化的二维码时，请使用 `QRCodeSVG` 或 `QRCode`。
+
+### 5. 添加徽标 [#5-add-a-logo]
 
 ```tsx title="components/logo-qr-code.tsx"
 import { QRCode } from "qrdx";
@@ -101,13 +110,11 @@ export function LogoQrCode() {
 }
 ```
 
-- **纠错等级 H。** logo 的宽度约为二维码宽度的四分之一，并且会清除其后方的模块，因此二维码要依靠纠错才能被扫描。如果 logo 过大、超出二维码的修复能力，`QRCode` 还会将其缩小。
-- **logo 的来源。** `logo` 可以接收应用内的路径、URL 或 data URL，页面中展示了这三种方式。用于下载时，data URL 最稳妥，因为远程图片需要 CORS 头才能被复制到文件中。
-- **检查效果。** 在几部手机上试试这个二维码，或者将截图上传到[扫描检测工具](/tools/scan-checker)。
+`/logo.png` 是项目 `public` 文件夹中的文件。徽标按二维码宽度的四分之一绘制，其后方的模块会被清除，因此二维码要依靠纠错来完成扫描，这就是 `level` 设为 `H` 的原因。如果徽标过大，超出二维码的修复能力，`QRCode` 还会将其缩小。
 
-`logoOptions` 用于设置 logo 的大小、留白、位置和裁剪；详见 [Logo](/docs/features/logos)。
+`logo` 可接受应用内的路径、URL 或 data URL。用于下载时，data URL 最稳妥，因为远程图片需要有 CORS 标头，浏览器才能将其复制进文件。`logoOptions` 用于设置徽标的大小、留白、位置和裁剪方式，详见[在代码中添加徽标](/docs/features/logos)。
 
-## 下载为 SVG [#download-as-svg]
+### 6. 下载为 SVG [#6-download-as-svg]
 
 ```tsx title="components/download-svg-button.tsx"
 "use client";
@@ -135,13 +142,13 @@ export function DownloadSvgButton({ value }: { value: string }) {
 }
 ```
 
-`downloadQRCode` 需要浏览器的 DOM，因此该按钮是 Client Component。Server Component 页面仍然可以渲染它，并将值作为 prop 传入。如需其他文件格式，请将 `format` 设置为 `png`、`jpg`、`webp`、`eps` 或 `pdf`（PDF 需要可选的 `jspdf` 包）。全部选项请参阅[下载](/docs/features/downloads)。
+点击按钮会保存 `qr-code.svg`，这是一个 1024 px 的矢量文件。`downloadQRCode` 需要浏览器的 DOM，所以按钮是客户端组件。服务器组件页面仍然可以渲染它，并通过 prop 传入值。如需其他文件格式，请将 `format` 设为 `png`、`jpg`、`webp`、`eps` 或 `pdf`（PDF 需要可选的 `jspdf` 包）。[导出与下载](/docs/features/downloads)介绍了所有选项。
 
 ## 需要图片 URL 时 [#when-you-need-an-image-url]
 
-电子邮件、Open Graph 图片、Markdown 文件，以及其他无法运行 React 的地方，需要的是图片 URL 而不是组件。[免费二维码 API](/qr-code-api) 无需密钥即可返回图片 URL：
+电子邮件、Open Graph 图片、Markdown 文件，以及其他无法运行 React 的地方，需要的是图片 URL 而不是组件。[二维码图片 API](/docs/developers/image-api) 无需密钥即可返回图片：
 
-```html
+```html title="email.html"
 <img src="https://api.qrdx.dev/v1/qr?data=https://example.com&format=png" width="256" height="256" alt="QR code for example.com" />
 ```
 
@@ -149,10 +156,21 @@ export function DownloadSvgButton({ value }: { value: string }) {
 
 [shadcn/ui 注册表](/docs/developers/shadcn)可将组件安装到你的项目中：[带下载按钮的二维码](/docs/components/qr-code)、卡片、分享对话框、生成器、扫描器，以及 Wi-Fi 和联系人二维码。
 
-```bash
+```bash title="Terminal"
 npx shadcn@latest add https://qrdx.dev/r/qr-code.json
 ```
 
-## 其他 React 二维码库 [#other-react-qr-code-libraries]
+## 遇到问题时 [#if-something-goes-wrong]
 
-如果你只需要普通的黑白二维码，`qrcode.react` 体积更小，历史也更久；`qrdx` 则增加了形状、渐变、边框、logo、PNG/SVG/PDF/EPS 导出以及扫描评分。与 [qrcode.react](/compare/qrcode-react) 和 [qr-code-styling](/compare/qr-code-styling) 的对比详细说明了这些差异。
+- **`useRef only works in Client Components`（或 `useState` 的同类报错）。** 你在服务器组件中渲染了 `QRCodeCanvas` 或带有 hook 的组件。请在该文件顶部添加 `"use client"`，或改用 `QRCodeSVG`。
+- **徽标在页面上显示，但下载的文件中没有。** 图片来自另一个源，且没有 CORS 标头。请从 `public` 提供该图片，或传入 data URL。
+- **`PDF export needs the optional "jspdf" package`。** 在应用中运行 `npm install jspdf`。其他格式无需额外安装任何东西。
+
+## 相关内容 [#related]
+
+<Cards>
+  <Card href="/docs/usage" title="基本用法" description="该使用哪个组件，以及决定二维码外观的 prop。" />
+  <Card href="/docs/features/downloads" title="导出与下载" description="所有格式、剪贴板、data URL，以及在服务器上生成 PNG。" />
+  <Card href="/docs/components/qr-code" title="二维码组件" description="带下载按钮的注册表组件，适用于 shadcn/ui 项目。" />
+  <Card href="/docs/developers/image-api" title="二维码图片 API" description="以图片 URL 形式提供二维码，适用于电子邮件和没有 React 的场景。" />
+</Cards>

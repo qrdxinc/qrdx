@@ -1,77 +1,110 @@
 ---
 title: "n8n"
-description: "QRdx コミュニティノードを使って、n8n から QR コードの作成、動的QRコードの管理、スキャンの取得を行い、QRdx のイベントで n8n ワークフローを開始できます。"
+description: "セルフホストのn8nにQRdxコミュニティノードをインストールして、QRコード画像の作成、動的QRコードの管理、スキャンの取得、QRdxのイベントからのワークフロー開始ができます。n8n Cloudでは、通常のWebhookノードでイベントを受け取れます。"
 icon: Blocks
 ---
 
-`@qrdx/n8n-nodes-qrdx` パッケージは、[n8n](https://n8n.io) に次の 2 つのノードを追加します。
+このページを読み終えると、n8nのワークフローでQRコード画像を作成し、ワークスペースの動的QRコードを作成・編集してそのスキャンを取得できるようになります。さらに、コードのスキャン、作成、変更、またはフォームの送信をきっかけに起動する、もう1つのワークフローも用意できます。
 
-- **QRdx** は、QRコード画像の生成、[動的QRコード](/docs/dynamic-qr-codes)の作成と編集、スキャンおよび保存済みテーマの取得を行います。n8n の AI Agent からツールとして使うこともできます。
-- **QRdx Trigger** は、コードがスキャン、作成、変更されたとき、または[ホスト型ページ](/docs/forms-and-pages)でフォームが送信されたときに、ワークフローを開始します。
+`@qrdx/n8n-nodes-qrdx`パッケージは、[n8n](https://n8n.io)に次の2つのノードを追加します。
 
-このパッケージは npm で [`@qrdx/n8n-nodes-qrdx`](https://www.npmjs.com/package/@qrdx/n8n-nodes-qrdx) として公開されており、セルフホストの n8n にインストールして使います。n8n Cloud で動作するコミュニティノードは n8n の検証済みのものだけで、このノードはまだ検証されていません。
+- **QRdx**は、QRコード画像の作成、[動的QRコード](/docs/dynamic-qr-codes)の作成と編集、スキャンや保存済みテーマの取得を行います。n8n AI Agentからツールとして使えます。
+- **QRdx Trigger**は、コードがスキャン、作成、変更されたとき、または[ホスト型ページ](/docs/forms-and-pages)でフォームが送信されたときにワークフローを開始します。
 
-何もインストールせずにイベントを受け取るには、代わりに [Webhook ノード](#without-the-package)を使ってください。
+<Callout type="info" title="セルフホストのn8n">
+このパッケージはnpmで[`@qrdx/n8n-nodes-qrdx`](https://www.npmjs.com/package/@qrdx/n8n-nodes-qrdx)として公開されており、セルフホストのn8nにインストールします。n8n Cloudで動くのはn8nが検証済みのコミュニティノードだけで、このノードはまだ検証されていません。n8n Cloudでイベントを受け取るには、代わりに[Webhookノード](#without-the-package)を使ってください。
+</Callout>
 
-## インストール [#install]
+## 始める前に [#before-you-start]
 
-n8n で **Settings → Community Nodes** を開き、**Install** をクリックして `@qrdx/n8n-nodes-qrdx` を入力します。コミュニティノードに関する注意事項に同意し、**Install** をクリックしてください。その後、ノードパネルで **QRdx** を検索します。
+- コミュニティノードをインストールできる、セルフホストのn8n。
+- ノードを使うワークスペースの[APIキー](/docs/developers/api-keys)。コード、スキャン、テーマの操作とトリガーに必要です。QR画像の生成にキーは不要です。
+- トリガーを使う場合：[Webhook](/docs/webhooks)はBusinessプランに含まれるため、Businessプランと、公開された`https://`アドレスで到達できるn8n。
 
-このページが n8n で非表示になっている場合や、コマンドラインで管理している場合は、n8n のユーザーフォルダ内の `nodes` フォルダにパッケージをインストールし、n8n を再起動してください。
+## 1. ノードをインストールする [#1-install-the-nodes]
 
-```bash
+n8nで**Settings → Community Nodes**を開き、**Install**を選んで`@qrdx/n8n-nodes-qrdx`を入力します。コミュニティノードに関する注意事項に同意して、もう一度**Install**を選びます。その後、ノードパネルで**QRdx**を検索してください。
+
+n8nでこのページが非表示になっている場合や、コマンドラインで管理している場合は、n8nユーザーフォルダの`nodes`フォルダにパッケージをインストールして、n8nを再起動します。
+
+```bash title="Terminal"
 mkdir -p ~/.n8n/nodes
 cd ~/.n8n/nodes
 npm install @qrdx/n8n-nodes-qrdx
 ```
 
-n8n を Docker で実行している場合は、同じコマンドをコンテナ内で実行する(`docker exec -it n8n sh`)か、イメージに組み込んでください。
+n8nをDockerで実行している場合は、同じコマンドをコンテナ内（`docker exec -it n8n sh`）で実行するか、イメージに組み込んでください。
 
-## ワークスペースを接続する [#connect-your-workspace]
+## 2. ワークスペースを接続する [#2-connect-your-workspace]
 
-[設定 → API キーとアプリ](/dashboard?to=settings/developers)で [API キー](/docs/developers/api-keys)を作成し、n8n でそのキーを使って **QRdx API** 認証情報を追加します。QRdx を[セルフホスト](/docs/self-hosting)している場合を除き、**Base URL** は `https://api.qrdx.dev/v1` のままにしてください。セルフホストの場合は、ご自身のアドレスの後ろに `/api/v1` を付けて指定します。
+[Settings → API keys & apps](/dashboard?to=settings/developers)で[APIキー](/docs/developers/api-keys)を作成し、n8nでそのキーを使って**QRdx API**認証情報を追加します。QRdxを[セルフホスト](/docs/self-hosting)している場合を除き、**Base URL**は`https://api.qrdx.dev/v1`のままにしてください。セルフホストの場合は、ご自身のアドレスの後ろに`/api/v1`を付けて指定します。
 
-n8n はプロフィールを読み取って認証情報をテストします。これには Profile スコープが必要なため、フルアクセスのキーを使うのが最も簡単です。キーは、作成したワークスペースに対して動作します。QR 画像の生成には認証情報はまったく必要ありません。
+n8nはプロフィールを読み取って認証情報をテストします。これには`profile:read`スコープが必要なので、**Full access**のキーが最も簡単です。キーは、作成したワークスペースに対して動作します。
 
-## QRdx ノード [#the-qrdx-node]
+## 3. QRdxノードを使う [#3-use-the-qrdx-node]
 
 | リソース | 操作 |
 | --- | --- |
-| QR Image | PNG、WebP、SVG、EPS の画像を生成します。API キーもアカウントも不要です |
-| Code | Create、Get、Get Many、Update(アーカイブと復元を含む)、Delete |
-| Scan | Get Many(個々のスキャンを新しい順に取得)、Get Summary(合計、日別の件数、上位の国、都市、デバイス、ブラウザ、参照元) |
-| Theme | Get、Get Many |
+| **QR Image** | PNG、WebP、SVG、EPSの画像を**Generate**します。APIキーもアカウントも不要です |
+| **Code** | **Create**、**Get**、**Get Many**、**Update**（アーカイブと復元を含む）、**Delete** |
+| **Scan** | **Get Many**（個々のスキャンを新しい順に取得）、**Get Summary**（合計、日別の件数、上位の国、都市、デバイス、ブラウザ、参照元） |
+| **Theme** | **Get**、**Get Many** |
 
-**Generate** は、メールに添付したり任意の場所にアップロードしたりできるバイナリフィールドに画像を出力します。サイズ、色、ボディ、アイとアイドットの形、誤り訂正、マージン、ラベル付きの[フレーム](/docs/features/frames)、ロゴアイコンを設定できます。出力には `url` も含まれます。これは [Image API](/docs/developers/image-api) による同じ画像へのリンクで、`<img>` タグにそのまま使えます。
+**Generate**は、画像をバイナリフィールドに出力します。メールに添付したり、任意の場所にアップロードしたりできます。サイズ、色、ボディ、アイ、アイドットの形、誤り訂正、マージン、ラベル付きの[フレーム](/docs/features/frames)、ロゴアイコンを設定できます。出力には`url`も含まれます。これは[画像API](/docs/developers/image-api)の同じ画像へのリンクで、`<img>`タグにそのまま使えます。
 
-コードとスキャンの操作は、キーを使って [REST API](/docs/developers/rest-api) を呼び出し、ワークスペースの 1 日あたりの API クォータに含まれます。**Get Many** は結果のページ送りを自動で行います。エラーには QRdx 自身のメッセージがそのまま表示されます。たとえば、カスタムのバックハーフには Pro または Business が必要で、フリーでは QRdx が返す[エラー](/docs/developers/errors)がノードに表示されます。
+コードとスキャンの操作は、キーを使って[REST API](/docs/developers/rest-api)を呼び出し、ワークスペースの1日あたりのAPIクォータに含まれます。**Get Many**は結果のページ送りを自動で行います。**Create**には宛先URLを指定し、追加フィールドでタイトル、カスタムバックハーフ（`slug`）、カスタムドメインを指定できます。**Update**では同じフィールドに加えて、アーカイブと復元も指定できます。エラーにはQRdx独自のメッセージがそのまま表示されます。たとえば、カスタムバックハーフにはProまたはBusinessが必要で、フリーではAPIの`PLAN_REQUIRED`[エラー](/docs/developers/errors)がノードに表示されます。
 
-## QRdx Trigger ノード [#the-qrdx-trigger-node]
+## 4. イベントからワークフローを開始する [#4-start-workflows-from-events]
 
-イベントを選んでからワークフローを有効化します。ノードは [REST Hooks API](/docs/webhooks#zapier-make-and-n8n-rest-hooks) を通じて登録し、ワークフローを無効化すると登録を解除します。有効な間、この登録は設定の Webhooks に表示されます。
+**QRdx Trigger**ノードを追加して**Events**を選び、ワークフローを有効にします。ノードは[REST Hooks API](/docs/webhooks#zapier-make-and-n8n-rest-hooks)経由でサブスクライブし、ワークフローを無効にすると登録を解除します。有効な間、登録は**Settings → Webhooks**に表示されます。
 
 | イベント | タイミング |
 | --- | --- |
-| Scans | コードがスキャンされたとき。配信はまとめて行われ、1 分に 1 回、最大 100 件のスキャンと正確な件数が含まれます |
-| Scan Milestones | コードの最初のスキャン、その後 10、100、500、1,000 回、およびそれ以降のスキャン |
-| New Codes | 動的QRコードが作成されたとき |
-| Code Changes | コードのリンク先、タイトル、デザイン、ドメインが変更されたとき |
-| Form Submissions | ホスト型ページでフォームが送信されたとき |
+| **Scans** | コードがスキャンされたとき。配信はまとめて行われ、1分に1回、最大100件のスキャンと正確な件数が届きます |
+| **Scan Milestones** | コードの最初のスキャン、その後10、100、500、1,000スキャン、それ以降 |
+| **New Codes** | 動的QRコードが作成されたとき |
+| **Code Changes** | コードの宛先、タイトル、デザイン、ドメインが変更されたとき |
+| **Form Submissions** | ホスト型ページでフォームが送信されたとき |
 
-ノードは、登録時に QRdx が返した署名シークレットを使って各配信の `X-QRdx-Signature` を検証し、一致しないものには `401` を返します。**Output One Item per Scan** をオンにすると、Scans のまとまりを個別のアイテムとして受け取れます。**Include Test Events** をオンにすると、設定の Webhooks で **Send test** をクリックしたときにワークフローが実行されます。ペイロードは [Webhooks](/docs/webhooks#payloads) で説明しているものと同じです。
+ノードは、サブスクライブ時にQRdxが返した署名シークレットで、各配信の`X-QRdx-Signature`を検証し、一致しないものには`401`を返します。**Options**で**Output One Item per Scan**をオンにすると、Scansのバッチを個別のアイテムとして取得できます。**Include Test Events**をオンにすると、**Settings → Webhooks**で**Send test**を選んだときにワークフローが実行されます。ペイロードは[Webhook](/docs/webhooks#payloads)で説明しているものと同じです。
 
-トリガーを使うには、次のものが必要です。
+トリガーには次のものが必要です。
 
-- Business プラン。[Webhooks](/docs/webhooks) は Business プランに含まれています
-- Manage codes スコープを持つ API キー
-- 公開された `https://` アドレスで動作する n8n。QRdx は `localhost` やプライベートネットワークには配信しません。プロキシの背後にある場合は、n8n の `WEBHOOK_URL` を設定してください。これは、**Listen for test event** をクリックしている間に n8n が使うテスト URL にも当てはまります
+- Businessプラン。[Webhook](/docs/webhooks)はBusinessプランに含まれます。
+- `codes:write`を持つAPIキー（**Full access**）。
+- 公開された`https://`アドレスのn8n。QRdxは`localhost`やプライベートネットワークには配信しません。プロキシの背後では、n8nの`WEBHOOK_URL`を設定してください。これは、**Listen for test event**を選んだときにn8nが使うテストURLにも当てはまります。
 
-## パッケージを使わない場合 [#without-the-package]
+## Without the package [#without-the-package]
 
-n8n Cloud でもセルフホストの n8n でも、QRdx は n8n の **Webhook** ノードに直接イベントを配信できます。
+QRdxは、n8n Cloudでもセルフホストのn8nでも、n8nの**Webhook**ノードにイベントを直接配信できます。
 
-1. Webhook ノードを追加し、HTTP メソッドを `POST` に設定して、本番 URL をコピーします。
-2. ワークフローを有効化します。本番 URL は、ワークフローが有効な間だけ応答します。
-3. [設定 → Webhooks](/dashboard?to=settings/webhooks)で **エンドポイントを追加** をクリックし、URL を貼り付けてイベントを選びます。
+1. Webhookノードを追加し、HTTPメソッドを`POST`にして、本番URLをコピーします。
+2. ワークフローを有効にします。本番URLは、ワークフローが有効な間だけ応答します。
+3. [Settings → Webhooks](/dashboard?to=settings/webhooks)で**Add endpoint**を選び、URLを貼り付けてイベントを選びます。
 
-各イベントは、JSON ペイロードを渡してワークフローを開始します。署名を確認するには、Code ノードで `X-QRdx-Signature` を読み取り、エンドポイントの署名シークレットを使って[検証](/docs/webhooks#verify-signatures)してください。
+各イベントは、JSONペイロードとともにワークフローを開始します。署名を確認するには、Codeノードで`X-QRdx-Signature`を読み取り、エンドポイントの署名シークレットで[検証](/docs/webhooks#verify-signatures)してください。
+
+## 問題が起きたときは [#if-something-goes-wrong]
+
+### 認証情報のテストが失敗する [#the-credential-test-fails]
+
+キーに`profile:read`がない（それを含まない**Custom**キー）、キーが無効化または期限切れになっている、または**Base URL**が間違ったホストを指しています。`https://api.qrdx.dev/v1`に対して**Full access**のキーを使えば成功します。
+
+### トリガーが有効にならない、または`402 PLAN_REQUIRED`が出る [#the-trigger-wont-activate-or-402-plan_required]
+
+Webhook: BusinessプランにWebhookが含まれています。ワークスペースをアップグレードするか、WebhookノードとQRdxの[通知](/docs/notifications)のメールアラートを使ってください。
+
+### トリガーは有効になるが何も届かない [#the-trigger-activates-but-nothing-arrives]
+
+QRdxがn8nに到達できていません。QRdxは`http://`、`localhost`、プライベートアドレスへの配信を拒否し、リダイレクトにも従いません。n8nを公開された`https://`のホスト名の背後に置き、`WEBHOOK_URL`を設定してください。そのうえで、**Settings → Webhooks**でサブスクリプションの配信状況を確認します。
+
+### Createで`PLAN_REQUIRED`が出る [#plan_required-on-create]
+
+カスタムバックハーフやカスタムドメインには、ProまたはBusinessが必要です。フリーではこれらのフィールドを空にしてください。
+
+## 関連ページ [#related]
+
+- [Webhook](/docs/webhooks)：トリガーが受け取るイベント、ペイロード、署名
+- [QRコード画像API](/docs/developers/image-api)：Generate操作が返す画像
+- [APIキー](/docs/developers/api-keys)：QRdx API認証情報に使うキー
+- [連携ディレクトリ](/integrations)：QRdxをほかのツールとつなぐその他の方法

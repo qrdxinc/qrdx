@@ -1,29 +1,35 @@
 ---
-title: "Farben & Verläufe"
-description: "Nutze einfarbige Flächen sowie lineare und radiale Verläufe und prüfe den Kontrast, damit Codes scanbar bleiben."
+title: "Farben und Verläufe festlegen"
+description: "Färbe Module, Eyes und Hintergrund mit einfarbigen Flächen, linearen, radialen und winkelförmigen Verläufen, durchsichtigen Farben oder Bildfüllungen und prüfe, ob sich das Ergebnis noch scannen lässt."
 icon: Palette
 ---
 
-Mit Farben und Verläufen gestaltest du QR-Codes im Look deiner Marke.
+Vier Props färben einen Code: `fgColor` für die Datenmodule, `bgColor` für den Hintergrund, `eyeColor` für die drei Eyes in den Ecken und `dotColor` für den Punkt in der Mitte jedes Eyes. Jede Prop nimmt eine einfarbige Fläche oder ein Verlaufsobjekt entgegen, und die Eye-Farben übernehmen standardmäßig `fgColor`. Diese Seite behandelt alle Arten von Füllungen und zeigt, wie der Code lesbar bleibt.
+
+Du gestaltest lieber im Playground oder im Dashboard? Dann lies in der Hilfe [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast).
 
 ## Einfarbige Flächen [#solid-colors]
 
-```tsx
-import { QRCode } from 'qrdx';
+```tsx title="components/brand-code.tsx"
+import { QRCode } from "qrdx";
 
-<QRCode
-  value="https://example.com"
-  size={256}
-  fgColor="#1a56db"
-  bgColor="#f9fafb"
-  eyeColor="#0d47a1"
-  dotColor="#3b82f6"
-/>
+export function BrandCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1a56db"
+      bgColor="#f9fafb"
+      eyeColor="#0d47a1"
+      dotColor="#3b82f6"
+    />
+  );
+}
 ```
 
-Unterstützte Formate: `#hex`, `rgb()`, `rgba()`, `hsl()`, `hsla()`, benannte Farben
+Eine einfarbige Fläche ist jede CSS-Farbe, die die Engine versteht: Hex mit 3, 4, 6 oder 8 Stellen, `rgb()` und `rgba()`, ein benannter Farbname oder `transparent`. Andere CSS-Schreibweisen wie `hsl()` werden zwar im SVG gerendert, aber die Kontrastprüfung, das PDF und das EPS können sie nicht lesen. Bleib deshalb bei den oben genannten Formen. `{ type: "solid", color: "#1a56db" }` entspricht dem String.
 
-Mit `eyeColors` legst du jedes Auge einzeln fest (`topLeft`, `topRight`, `bottomLeft`, jeweils mit einer `outer`- und einer `inner`-Farbe oder einem Verlauf); siehe [Muster](/docs/features/patterns#per-eye-colors).
+Mit `eyeColors` legst du jedes Eye einzeln fest (`topLeft`, `topRight`, `bottomLeft`, jeweils mit einer `outer`- und einer `inner`-Farbe oder einem Verlauf); siehe [Farben pro Eye](/docs/features/patterns#per-eye-colors).
 
 ### Transparenter Hintergrund [#transparent-background]
 
@@ -31,144 +37,145 @@ Mit `eyeColors` legst du jedes Auge einzeln fest (`topLeft`, `topRight`, `bottom
 
 ## Lineare Verläufe [#linear-gradients]
 
-```tsx
-import { QRCodeCanvas } from 'qrdx';
+```tsx title="components/gradient-code.tsx"
+import { QRCode } from "qrdx";
 
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 1, color: '#764ba2' }
-    ],
-    x1: 0, y1: 0,
-    x2: 1, y2: 1
-  }}
-/>
+export function GradientCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "linear",
+        angle: 45,
+        stops: [
+          { color: "#4f46e5", offset: 0 },
+          { color: "#db2777", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-### Verlaufsrichtungen [#gradient-directions]
+- `angle` wird in Grad angegeben: 0 verläuft von links nach rechts, 90 von oben nach unten, 45 von der linken oberen Ecke diagonal zur rechten unteren.
+- `stops` braucht mindestens zwei Einträge. `offset` ist ein Prozentwert von 0 bis 100, und die Farbe eines Stopps kann einen Alphawert enthalten.
+- Jede Farb-Prop nimmt einen Verlauf entgegen, auch `bgColor` und die Eyes. `QRCodeCanvas` kann keine Verläufe zeichnen und nutzt den ersten Stopp; verwende `QRCode` oder `QRCodeSVG`.
 
-- **Horizontal**: `x1: 0, y1: 0, x2: 1, y2: 0`
-- **Vertikal**: `x1: 0, y1: 0, x2: 0, y2: 1`
-- **Diagonal**: `x1: 0, y1: 0, x2: 1, y2: 1`
+Verläufe landen in Downloads als SVG, PNG, JPG, WebP und PDF. Das Druck-PDF und das EPS zeichnen sie als weiche Farbverläufe (Shadings).
 
-### Verläufe mit mehreren Stopps [#multi-stop-gradients]
-
-```tsx
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 0.3, color: '#764ba2' },
-      { offset: 0.7, color: '#f093fb' },
-      { offset: 1, color: '#f5576c' }
-    ],
-    x1: 0, y1: 0, x2: 1, y2: 1
-  }}
-/>
-```
+<Shot id="lib-gradient-codes" />
 
 ## Radiale Verläufe [#radial-gradients]
 
-```tsx
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'radial',
-    stops: [
-      { offset: 0, color: '#ff6b6b' },
-      { offset: 1, color: '#4ecdc4' }
-    ],
-    cx: 0.5, cy: 0.5,
-    r: 0.5
-  }}
-/>
+```tsx title="components/radial-code.tsx"
+import { QRCode } from "qrdx";
+
+export function RadialCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "radial",
+        stops: [
+          { color: "#0f766e", offset: 0 },
+          { color: "#0c4a6e", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-## Farb-Utilities [#color-utilities]
+Ein radialer Verlauf geht vom Mittelpunkt des Codes nach außen. Mittelpunkt und Radius richten sich nach der Größe des Codes, deshalb nimmt er nur `stops`.
 
-### Kontrast prüfen [#check-contrast]
+## Winkelförmige Verläufe [#angular-gradients]
 
-```tsx
-import { getContrastRatio, getContrastLevel } from 'qrdx';
+Ein winkelförmiger Verlauf läuft im Uhrzeigersinn um die Mitte der gefüllten Fläche, wie CSS `conic-gradient`. `angle` gibt an, wo der Verlauf beginnt, in Grad im Uhrzeigersinn von oben. Die Offsets laufen von 0 bis 100 einmal um den Kreis.
 
-const ratio = getContrastRatio('#000000', '#ffffff');
-// Returns: 21
+```tsx title="components/angular-code.tsx"
+import { QRCode } from "qrdx";
 
-const level = getContrastLevel(ratio);
-// Returns: { level: 'AAA', warning: false, message: 'Excellent contrast' }
-```
-
-### Kontrast-Richtlinien [#contrast-guidelines]
-
-- **Minimum**: Verhältnis 3,0:1
-- **Empfohlen**: 4,5:1 oder höher
-- **Ausgezeichnet**: 7,0:1 oder höher
-
-{/* Angular gradients, see-through colors and image fills (paint picker) */}
-
-## Winkelverläufe [#angular-gradients]
-
-Ein Winkelverlauf läuft im Uhrzeigersinn um die Mitte der gefüllten Fläche, wie CSS `conic-gradient`. `angle` ist der Startpunkt des Verlaufs, in Grad im Uhrzeigersinn von oben. Die Offsets laufen von 0 bis 100 um die volle Drehung.
-
-```tsx
-<QRCode
-  value="https://example.com"
-  fgColor={{
-    type: "angular",
-    angle: 30,
-    stops: [
-      { color: "#1d4ed8", offset: 0 },
-      { color: "#7c3aed", offset: 50 },
-      { color: "#1d4ed8", offset: 100 },
-    ],
-  }}
-/>
+export function AngularCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "angular",
+        angle: 30,
+        stops: [
+          { color: "#1d4ed8", offset: 0 },
+          { color: "#7c3aed", offset: 50 },
+          { color: "#1d4ed8", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
 SVG kennt keinen konischen Verlauf, deshalb zeichnet der Code einen Fächer aus dünnen Keilen, etwa zwei Farbstufen voneinander entfernt. PDF und EPS zeichnen dieselben Keile.
 
 ## Durchsichtige Farben [#see-through-colors]
 
-Farben und Verlaufsstopps können einen Alphawert enthalten, etwa `#1d4ed8cc` oder `rgba(29, 78, 216, 0.8)`. SVG schreibt ihn als `fill-opacity` und `stop-opacity`, und PDF behält ihn bei. EPS kennt keine Transparenz, daher wird eine durchsichtige Farbe mit dem Hintergrund gemischt. Die Scan-Prüfung beurteilt eine durchsichtige Farbe so, wie sie auf dem Hintergrund aussieht.
+Farben und Verlaufsstopps können einen Alphawert enthalten, etwa `#1d4ed8cc` oder `rgba(29, 78, 216, 0.8)`. SVG schreibt ihn als `fill-opacity` und `stop-opacity`, und PDF behält ihn bei. EPS kennt keine Transparenz, deshalb wird eine durchsichtige Farbe mit dem Hintergrund gemischt. Die Scan-Prüfung beurteilt eine durchsichtige Farbe so, wie sie auf dem Hintergrund aussieht.
 
 ## Bildfüllungen [#image-fills]
 
-Eine Bildfüllung legt ein Bild über den Hintergrund, die Punkte oder die Augen. Das Bild liegt über dem ganzen Code, sodass Punkte und Augen, die sich eines teilen, ein einziges Bild zeigen.
+Eine Bildfüllung legt ein Bild in den Hintergrund, in die Module oder in die Eyes. Das Bild liegt über dem ganzen Code, sodass Module und Eyes, die sich eines teilen, ein einziges Bild zeigen.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  fgColor={{
-    type: "image",
-    src: "data:image/jpeg;base64,…",
-    fit: "cover", // or "contain", "tile"
-    position: "center",
-    scale: 1,
-    opacity: 0.45,
-    underlay: "#000000",
-  }}
-/>
+```tsx title="components/photo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function PhotoCode({ photo }: { photo: string }) {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "image",
+        src: photo, // a data:image/jpeg;base64,… URL
+        fit: "cover", // or "contain", "tile"
+        position: "center",
+        scale: 1,
+        opacity: 0.45,
+        underlay: "#000000",
+      }}
+    />
+  );
+}
 ```
 
-- `src` ist das Bild selbst, wie bei einem Logo. QRdx speichert eine Bildfüllung (in Codes, Themes und der REST API) nur als base64-`data:image`-URL (PNG, JPEG, WebP oder GIF) mit höchstens 1,5 MB; ein Bild über einen Link wird abgelehnt. PNG und JPEG werden in jedem Export eingebettet, und Server rufen nie einen Link ab.
-- `underlay` ist eine einfarbige Fläche unter dem Bild. `opacity` lässt sie durchscheinen: Über Schwarz dunkelt sie ein Foto für die Punkte ab, über Weiß hellt sie eines für den Hintergrund auf.
-- Die Details eines Bildes wirken auf eine Kamera wie Rauschen, deshalb verlangt die Scan-Prüfung mehr Kontrast: 7:1 in den Punkten oder Augen, 12:1 dahinter (`SCAN_IMAGE_CONTRAST_MIN`). Sie misst ein Bild an seinem hellsten und dunkelsten Zehntel (`getImageTones`). Im Editor findet „Make it scannable" die Deckkraft über dem Underlay, die besteht.
-- SVG, PNG und PDF unterstützen Bildfüllungen. EPS nicht ([Downloads](/docs/features/downloads#eps)).
+- `src` ist das Bild selbst, wie bei einem Logo. QRdx speichert eine Bildfüllung (in Codes, Themes und der REST API) nur als base64-`data:image`-URL (PNG, JPEG, WebP oder GIF) mit höchstens 1,5 MB; ein Bild von einem Link wird abgelehnt. PNG und JPEG sind in jedem Export eingebettet, und Server rufen nie einen Link ab.
+- `underlay` ist eine einfarbige Fläche unter dem Bild. `opacity` lässt sie durchscheinen: Über Schwarz dunkelt sie ein Foto für die Module ab, über Weiß hellt sie eines für den Hintergrund auf.
+- Die Details eines Bildes wirken auf eine Kamera wie Rauschen, deshalb verlangt die Scan-Prüfung mehr Kontrast: 7:1 in den Modulen oder Eyes, 12:1 dahinter (`SCAN_IMAGE_CONTRAST_MIN`). Ein Bild wird nach seinem hellsten und dunkelsten Zehntel bemessen (`getImageTones`). Im Editor findet **Make it scannable** die Deckkraft über dem Underlay, die besteht.
+- SVG, PNG und PDF enthalten Bildfüllungen. EPS nicht; siehe [EPS](/docs/features/downloads#eps).
 
-Bildfüllungen verhalten sich wie Logos. Sie bleiben beim Design im Editor, in gespeicherten Codes und in gespeicherten Themes. In `?style=`-Links, veröffentlichten Community-Stilen, Get-code-Snippets und im Kontext des Chats fehlen sie: Dort wird jede Bildfüllung durch ihre Underlay-Farbe ersetzt. Die Image API (`GET /v1/qr`) und der MCP-Server unterstützen sie noch nicht. `POST /v1/codes` und `PATCH /v1/codes/{id}` nehmen eine nur als `data:image`-URL an und antworten bei allem anderen mit 400; eine ID für hochgeladene Dateien gibt es für Bilder noch nicht.
+Bildfüllungen verhalten sich wie Logos. Sie bleiben beim Design im Editor, in gespeicherten Codes und in gespeicherten Themes. Sie landen nicht in `?style=`-Links, veröffentlichten Community-Stilen, Get-code-Snippets oder im Kontext des Chats: Dort weicht jede Bildfüllung ihrer Underlay-Farbe. Die Image API (`GET /v1/qr`) und der MCP-Server nehmen sie nicht an. `POST /v1/codes` und `PATCH /v1/codes/{id}` nehmen eine nur als `data:image`-URL an und antworten bei allem anderen mit 400.
 
-Winkelverläufe und Bildfüllungen sind im qrdx-Quellcode enthalten und erscheinen mit dem nächsten npm-Release. qrdx 0.0.46 auf npm enthält sie nicht.
+## Kontrast prüfen [#check-the-contrast]
 
-## Nächste Schritte [#next-steps]
+Scanner brauchen dunkle Module auf hellem Hintergrund. Der Scan-Score prüft jede Farbe, auch jeden Verlaufsstopp, gegen den Hintergrund; dieselben Helfer sind exportiert:
 
-- [Logos](/docs/features/logos) — Logos zu farbigen QR-Codes hinzufügen
-- [Muster](/docs/features/patterns) — Farben mit Mustern kombinieren
-- [Downloads](/docs/features/downloads) — Farbige QR-Codes exportieren
+```ts title="lib/check-contrast.ts"
+import { getContrastLevel, getContrastRatio } from "qrdx";
+
+const ratio = getContrastRatio("#1a56db", "#f9fafb");
+// 5.9
+
+getContrastLevel(ratio);
+// { level: "AA", warning: false, message: "Good contrast" }
+```
+
+Der Scan-Score lässt ein Verhältnis ab 4,5 durch (`SCAN_CONTRAST_MIN`), zieht darunter Punkte ab und lässt das Design unter 1,5 durchfallen. `getContrastLevel` gibt `AAA` ab 7 zurück, `AA` ab 4,5, `AA Large` ab 3 mit einer Warnung und darunter `Fail`. Ein heller Code auf dunklem Hintergrund besteht das Verhältnis, verliert aber Punkte bei der Polaritätsprüfung: Die meisten Handykameras lesen ihn, manche Scanner-Apps nicht.
+
+## Verwandte Themen [#related]
+
+<Cards>
+  <Card href="/docs/features/patterns" title="Modul- und Eye-Formen wählen" description="Farben pro Eye und die Formen, die diese Farben füllen." />
+  <Card href="/docs/features/logos" title="Logo im Code hinzufügen" description="Ein Logo auf einem farbigen Code, mit einer Platte dahinter." />
+  <Card href="/docs/features/downloads" title="Exportieren und herunterladen" description="Welche Formate Verläufe, Transparenz und Bildfüllungen beibehalten." />
+  <Card href="/docs/utilities" title="Hilfsfunktionen" description="Die Farb- und Kontrasthelfer im Detail." />
+</Cards>

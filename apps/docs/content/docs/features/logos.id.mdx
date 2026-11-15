@@ -1,166 +1,136 @@
 ---
-title: "Logo"
-description: "Tambahkan logo di tengah kode QR tanpa mengganggu pemindaian."
+title: "Tambahkan logo lewat kode"
+description: "Letakkan logo di tengah kode QR dengan prop logo dan logoOptions, atur ukuran dan posisinya, potong bentuknya, beri alas, dan pastikan kode tetap bisa dipindai."
 icon: Image
 ---
 
-Tambahkan logo merek ke kode QR dengan tetap menjaga keterbacaan pemindaian.
+`QRCode` menerima prop `logo` dan menata gambarnya untuk Anda: modul di belakang logo dikosongkan, dan logo tidak pernah digambar lebih besar daripada yang bisa dipulihkan oleh kode. Halaman ini membahas opsi tata letak, batasan, dan API `imageSettings` mentah yang ada di baliknya.
 
-## Logo Dasar [#basic-logo]
+Mendesain di playground atau dasbor? Lihat [Tambahkan logo](/docs/help/designing/logos) di Bantuan.
 
-```tsx
-import { QRCode } from 'qrdx';
+## Logo dalam tiga baris [#a-logo-in-three-lines]
 
-<QRCode
-  value="https://example.com"
-  size={512}
-  hideLogo={false}
-  logo="https://example.com/logo.png"
-  level="Q"
-/>
+```tsx title="components/logo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function LogoCode() {
+  return (
+    <QRCode value="https://example.com" size={256} level="H" logo="/logo.png" />
+  );
+}
 ```
 
-Selalu gunakan koreksi kesalahan yang lebih tinggi (`Q` atau `H`) saat memakai logo.
+`logo` menerima path di aplikasi Anda, URL, atau data URL. Logo digambar dengan lebar seperempat dari lebar kode, modul di belakangnya dikosongkan, dan kode mengandalkan koreksi kesalahan agar bisa dipindai. Gunakan `level="H"` (30% kode boleh rusak) atau minimal `Q` bawaan (25%).
+
+<Shot id="lib-logo-code" />
 
 ## Ukuran, ruang kosong, dan posisi [#size-clear-space-and-position]
 
-`logoOptions` menata logo dalam satuan yang tidak bergantung pada ukuran render, baik pada `QRCode` maupun di `getQRData`:
+`logoOptions` menata logo dengan satuan yang tidak bergantung pada ukuran render:
 
-- `size`: lebar logo sebagai bagian dari lebar kode, `0.1` hingga `0.3` (default `0.25`). Dalam pengujian dekode kami, bahkan level H berhenti terbaca jika logo melebihi 25%.
-- `padding`: ruang kosong di sekeliling logo, `0` hingga `2` modul.
-- `x` dan `y`: posisi titik tengah logo pada kode, `0` hingga `1` (default `0.5`, yaitu di tengah). Logo selalu tetap berada di dalam kode.
+| Opsi | Rentang | Bawaan | Fungsi |
+| --- | --- | --- | --- |
+| `size` | 0.1 sampai 0.3 | 0.25 | Lebar logo sebagai bagian dari lebar kode. Di atas 25%, bahkan level H tidak lagi terbaca dalam uji dekode paket |
+| `padding` | 0 sampai 2 | 0 | Ruang kosong di sekeliling logo, dalam modul |
+| `x`, `y` | 0 sampai 1 | 0.5 | Posisi titik tengah logo pada kode. Logo selalu tetap berada di dalam kode |
+| `shape` | `square`, `rounded`, `circle` | `square` | Memotong bentuk logo |
+| `plate` | sebuah warna | tidak ada | Alas warna solid di belakang logo, dengan bentuk yang sama |
 
-```tsx
-<QRCode
-  value="https://example.com"
-  logo="https://example.com/logo.png"
-  level="H"
-  logoOptions={{ size: 0.2, padding: 1, x: 0.6, y: 0.55 }}
-/>
+```tsx title="components/placed-logo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function PlacedLogoCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      level="H"
+      logo="/logo.png"
+      logoOptions={{ size: 0.2, padding: 1, x: 0.6, y: 0.55 }}
+    />
+  );
+}
 ```
 
-`QRCode` dan `getQRData` tidak pernah menggambar logo yang lebih besar daripada yang dapat dipulihkan kode. Logo (beserta ruang kosongnya) merusak setiap codeword yang disentuhnya, dan setiap blok koreksi kesalahan hanya dapat memulihkan sejumlah tertentu. Karena itu, keduanya menghitung codeword yang rusak blok demi blok, lalu memperkecil logo hingga blok terburuk memakai paling banyak 60% dari kapasitas pemulihannya (anggaran yang sama dengan lencana Logo QR). Kode kecil memuat lebih sedikit: pada level Q, tautan pendek hanya cukup untuk logo sekitar 13–17% dari lebar, sedangkan level H atau konten yang lebih pendek memberi ruang lebih besar. `getLogoSizeLimit(props)` mengembalikan ukuran terbesar untuk suatu kode, dan skor pemindaian memeriksa perhitungan yang sama. `imageSettings` mentah pada `QRCodeSVG`, `QRCodeCanvas`, dan `getQRAsSVG` mendapat batas yang sama: logo yang muat digambar sesuai pengaturan, sedangkan logo yang lebih besar diperkecil di sekitar titik tengahnya sendiri.
+Jauhkan logo yang dipindahkan dari ketiga mata sudut dan dari kotak kecil di dekat sudut kanan bawah (pola penyelarasan yang dipakai dekoder untuk mengoreksi perspektif). Skor pemindaian akan menggagalkan logo yang menutupi salah satunya.
 
-Jauhkan logo yang dipindahkan dari tiga mata sudut dan dari kotak kecil di dekat sudut kanan bawah (pola perataan yang dipakai dekoder untuk mengoreksi perspektif). Skor pemindaian menggagalkan logo yang menutupi salah satunya.
+## Seberapa besar logo boleh dibuat [#how-big-a-logo-can-be]
 
-Di Playground, **Design → Logo options** memiliki kontrol yang sama, ditambah **Raise error correction for big logos** (`autoLevel`).
+Logo (beserta ruang kosongnya) merusak setiap codeword yang disentuhnya, dan setiap blok koreksi kesalahan hanya bisa memulihkan sejumlah tertentu. `QRCode` dan `getQRData` menghitung codeword yang rusak blok demi blok, lalu mengecilkan logo sampai blok terburuk memakai paling banyak 60% kapasitas pemulihannya (`LOGO_EC_SAFETY`). Kode kecil menampung lebih sedikit: pada level Q, tautan pendek muat logo sekitar 13% sampai 17% dari lebar, dan level H atau nilai yang lebih pendek memberi ruang lebih banyak.
+
+- `getLogoSizeLimit(props)` mengembalikan `size` terbesar yang muat pada sebuah kode, sehingga slider bisa berhenti di situ.
+- `imageSettings` mentah pada `QRCodeSVG`, `QRCodeCanvas`, dan `getQRAsSVG` mendapat batas yang sama: logo yang muat digambar apa adanya, sedangkan yang lebih besar dikecilkan di sekitar titik tengahnya sendiri.
+- `autoLevel` menaikkan koreksi kesalahan ke `H` setiap kali area yang dikosongkan menutupi lebih dari 7% kode (`AUTO_LEVEL_LOGO_COVERAGE`). Opsi ini nonaktif secara bawaan, sehingga kode yang sudah ada tetap pada levelnya.
+- Skor pemindaian menghitung codeword yang sama dan memberi peringatan sebelum batas membuat logo Anda dikecilkan.
 
 ## Bentuk, alas, dan latar belakang [#shape-plate-and-background]
 
-- `shape`: memotong logo menjadi `"square"` (apa adanya saat diunggah, default), sudut `"rounded"`, atau `"circle"`.
-- `plate`: warna solid yang digambar di belakang logo dengan bentuk yang sama; logo diletakkan menjorok di atasnya.
+```tsx title="components/round-logo-code.tsx"
+import { QRCode } from "qrdx";
 
-```tsx
-<QRCode
-  value="https://example.com"
-  logo="/logo.png"
-  level="H"
-  logoOptions={{ size: 0.22, shape: "circle", plate: "#ffffff" }}
-/>
+export function RoundLogoCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      level="H"
+      logo="/logo.png"
+      logoOptions={{ size: 0.22, shape: "circle", plate: "#ffffff" }}
+    />
+  );
+}
 ```
 
-Pemotongan ini menggunakan SVG clip path. PDF cetak dan EPS dipotong mengikuti kontur yang sama, sehingga semua format unduhan terlihat sama. EPS tidak mendukung transparansi, sehingga bagian logo yang transparan dicetak putih di sana.
+Pemotongan bentuk memakai clip path SVG. PDF cetak dan EPS dipotong dengan kontur yang sama, sehingga semua unduhan tampak sama. EPS tidak mendukung transparansi, jadi bagian logo yang transparan dicetak putih di sana.
 
-Jika logo yang diunggah berada di atas kotak berwarna solid (umum pada JPEG), Playground menawarkan **Remove background**. Jika keempat sudut memiliki warna yang sama, warna itu dihapus dari tepi ke arah dalam, sehingga warna yang sama di dalam logo (misalnya huruf putih) tetap ada. Dalam kode, `removeLogoBackground(src)` mengembalikan PNG yang sudah dibersihkan sebagai data URL di browser, dan `removeLogoBackdrop(pixels)` melakukan hal yang sama pada piksel RGBA di mana saja.
+Jika logo berada di dalam kotak solid (umum pada JPEG), hapuslah kotak itu: `removeLogoBackground(src)` mengembalikan PNG yang sudah dibersihkan sebagai data URL di browser, dan `removeLogoBackdrop(pixels)` melakukan hal yang sama pada piksel RGBA di mana saja. Bila keempat sudut memiliki satu warna yang sama, warna itu dihapus dari tepi ke dalam, sehingga warna yang sama di dalam logo (misalnya huruf putih) tetap ada. Keduanya mengembalikan `null` jika gambar tidak memiliki latar belakang solid.
 
-## Kontrol Lanjutan [#advanced-control]
+## Pengaturan gambar mentah [#raw-image-settings]
 
-```tsx
-import { QRCodeCanvas } from 'qrdx';
+`QRCodeSVG` dan `QRCodeCanvas` menerima logo sebagai `imageSettings`, dalam piksel yang sama dengan `size`. Gunakan ini bila Anda menata logo sendiri atau memindahkan kode dari renderer lain.
 
-<QRCodeCanvas
-  value="https://example.com"
-  size={512}
-  imageSettings={{
-    src: "https://example.com/logo.png",
-    height: 80,
-    width: 80,
-    excavate: true,
-    x: 216,
-    y: 216,
-    opacity: 0.9
-  }}
-  level="Q"
-/>
+```tsx title="components/image-settings-code.tsx"
+import { QRCodeSVG } from "qrdx";
+
+export function ImageSettingsCode() {
+  return (
+    <QRCodeSVG
+      value="https://example.com"
+      size={512}
+      level="H"
+      autoLevel
+      imageSettings={{
+        src: "/logo.png",
+        width: 110,
+        height: 110,
+        excavate: true,
+        padding: 8,
+      }}
+    />
+  );
+}
 ```
 
-## Panduan Ukuran [#size-guidelines]
+- `width` dan `height` dalam piksel. Hilangkan `x` dan `y` agar logo berada di tengah.
+- `excavate` mengosongkan modul di belakang logo. Biarkan aktif kecuali logo bersifat tembus pandang dan Anda ingin modul terlihat menembusnya.
+- `padding` mengosongkan modul tambahan di sekeliling logo, dalam piksel yang sama dengan `width` dan `height`.
+- `shape` dan `plate` bekerja seperti pada `logoOptions`.
+- Logo mempertahankan ukuran pikselnya berapa pun `margin`.
 
-- **QR 256px**: logo 32-48px
-- **QR 512px**: logo 64-96px
-- **QR 1024px**: logo 128-192px
+`getQRData(props)` mengubah `logo` dan `logoOptions` menjadi `imageSettings` ini untuk kode berukuran 1024 px, dan begitulah cara `QRCode` serta helper unduhan berbagi satu tata letak.
 
-Jaga ukuran logo antara 10-30% dari ukuran kode QR.
+## Unduhan dan format [#downloads-and-formats]
 
-## Ekskavasi Logo [#logo-excavation]
+- Logo PNG dan JPEG tertanam di setiap ekspor. Logo SVG dan WebP digambar dalam ekspor di browser dan tidak disertakan pada PNG yang dibuat di server.
+- Untuk unduhan, data URL adalah yang paling aman. Gambar jarak jauh memerlukan header CORS sebelum browser boleh menyalinnya ke dalam file; tanpa header itu, file tidak akan memiliki logo.
+- PNG dengan transparansi memberi hasil paling bersih pada kode berwarna. Untuk JPEG, tambahkan `plate` dengan warna latar belakang atau hapus kotaknya terlebih dahulu.
+- Uji kode berlogo di dua atau tiga ponsel sebelum mencetaknya, atau periksa dengan [skor pemindaian](/docs/features/frames#will-it-scan).
 
-### Fungsinya [#what-it-does]
+## Terkait [#related]
 
-Ekskavasi menghapus modul QR di bawah logo agar pemindaian lebih baik.
-
-```tsx
-<QRCodeCanvas
-  value="https://example.com"
-  size={512}
-  imageSettings={{
-    src: "/logo.png",
-    height: 80,
-    width: 80,
-    excavate: true  // Recommended for most logos
-  }}
-/>
-```
-
-### Ruang kosong dan koreksi kesalahan [#clear-space-and-error-correction]
-
-`padding` (dalam piksel yang sama dengan `width` dan `height`) mengosongkan modul tambahan di sekeliling logo, sehingga tepinya tidak pernah menyentuh kode. `autoLevel` menaikkan koreksi kesalahan ke H setiap kali area yang dikosongkan melebihi 7% dari kode, sehingga logo yang lebih besar tetap terbaca; opsi ini nonaktif secara default, jadi kode yang sudah ada tetap pada levelnya.
-
-```tsx
-<QRCodeSVG
-  value="https://example.com"
-  size={512}
-  autoLevel
-  imageSettings={{ src: "/logo.png", height: 110, width: 110, excavate: true, padding: 8 }}
-/>
-```
-
-Logo mempertahankan ukuran pikselnya berapa pun `margin` (rilis hingga 0.0.46 memperkecilnya seiring bertambahnya margin).
-
-### Kapan Digunakan [#when-to-use]
-
-- ✅ Logo dengan latar belakang solid
-- ✅ Logo yang mungkin mengganggu pemindaian
-- ❌ Logo transparan (opsional)
-- ⚠️ Selalu uji pemindaian pada perangkat sungguhan
-
-## Format Logo [#logo-formats]
-
-- **PNG** — Terbaik untuk transparansi
-- **JPG** — Baik untuk foto
-- **SVG** — Dapat diskalakan, tetapi bisa bermasalah saat dimuat
-- **WebP** — Format modern, kompresi baik
-
-## Perhitungan Titik Tengah [#center-calculation]
-
-```tsx
-const qrSize = 512;
-const logoSize = 80;
-const position = {
-  x: (qrSize - logoSize) / 2,  // 216
-  y: (qrSize - logoSize) / 2   // 216
-};
-```
-
-## Praktik Terbaik [#best-practices]
-
-1. Gunakan format PNG dengan transparansi
-2. Aktifkan ekskavasi untuk logo solid
-3. Gunakan koreksi kesalahan `Q` atau `H`
-4. Jaga ukuran logo tetap wajar (10-30%)
-5. Uji pemindaian pada perangkat target
-
-## Langkah Berikutnya [#next-steps]
-
-- [Unduhan](/docs/features/downloads) — Ekspor kode QR dengan logo
-- [Templat](/docs/features/templates) — Gabungkan logo dengan templat
-- [Warna & Gradien](/docs/features/colors-gradients) — Beri gaya pada logo dengan warna
+<Cards>
+  <Card href="/docs/features/art-qr" title="Padukan gambar ke dalam modul" description="Logo QR dan Image QR, untuk logo yang memenuhi kode alih-alih berada di atasnya." />
+  <Card href="/docs/features/frames" title="Bingkai, skor pemindaian, dan file cetak" description="Periksa kode berlogo sebelum Anda mencetaknya." />
+  <Card href="/docs/features/downloads" title="Ekspor dan unduh" description="Format mana saja yang menyematkan logo." />
+  <Card href="/docs/api-reference" title="Referensi API pustaka" description="LogoOptions, ImageSettings, dan getQRData." />
+</Cards>

@@ -1,37 +1,57 @@
 ---
 title: "添加边框和行动号召"
-description: "在二维码周围加上边框和一句简短的提示，例如“Scan me”。"
+description: "在二维码周围加上边框和“扫描我”之类的简短文字。"
 ---
 
-边框能让人们在扫描之前就知道会得到什么。
+边框会在二维码周围加上外框和一句简短的文字，让人们在扫描时知道会得到什么。边框位于二维码之外，不会遮挡任何方块，因此不会影响扫描。
 
 ## 添加边框 [#add-a-frame]
 
 1. 在 [Playground](/playground?tab=design&section=frame) 中，打开 **Design** 标签页，然后选择 **Frame**。
-2. 选择一个边框。可以按名称搜索，也可以选择一个分组：**Classic** 包含内置边框，如 Arrow、Standard Box、Square Border、Striked Box、Halloween 和 Dot Ring。选择新边框会替换你之前选的边框。如果想使用自己的设计图，请先登录，然后点击搜索框旁边的 **Upload SVG**：SVG 中的形状和颜色会变成边框。
-3. 在 **Label** 中输入文字，或者选择现成的文案：Scan me、Scan for menu、Join Wi-Fi、Leave a review、Follow us、Pay here、Save contact 或 Download the app。
-4. 设置 **Frame color**、**Text color** 和 **Text size**。部分边框还有 **Second line**。Arrow、Standard Box、Square Border 和 Dot Ring 会采用二维码圆点的颜色，Striked Box 和 Halloween 则保留自带的颜色。
+2. 选择一个边框。可以按名称搜索，也可以浏览各个分组：**Classic** 包含内置边框，有 Arrow、Standard Box、Square Border、Striked Box、Halloween 和 Dot Ring；之后是边框库中的各个合集；**Saved** 包含你保存的边框。选择新边框会替换当前使用的边框。
+3. 在 **Label** 中输入文字，或选择一个 **Label ideas**：Scan me、Scan for menu、Join Wi-Fi、Leave a review、Follow us、Pay here、Save contact 或 Download the app。在未启用边框时选择标签创意，会自动添加默认边框。
+4. 设置 **Frame color**、**Text color** 和 **Text size**。部分边框还提供 **Second line**、**Accent color** 或 **Icon**。
 
-{/* Shaped codes (feat/heart-silhouette-shapes) */}
+Arrow、Standard Box、Square Border 和 Dot Ring 使用二维码圆点的颜色，而不是边框颜色；Striked Box 和 Halloween 则保持各自的颜色。
 
-## 把二维码放进形状里 [#put-the-code-in-a-shape]
+<Shot id="design-frame" />
 
-同一个选择器中还有 **Shaped codes** 分组。**Dot circle** 和 **Heart** 会把二维码放进由装饰圆点组成的圆形或心形中。**Silhouette** 会填充你自己的形状：上传 PNG、JPEG 或 SVG，图片中应是深色或实心的形状，背景为浅色或透明。系统只保留它的轮廓，不会保留图片本身。
+如需使用自己的图稿，请登录后点击搜索框旁边的 **Upload SVG**。SVG 中的形状和颜色会变成边框。
 
-扫描器只会读取中间的二维码，因此在相同的扫描距离下，带形状的二维码要比方形二维码印得更大。形状会取代边框：选择其中一个，另一个就会被清除。如果形状太细，容纳不下二维码，系统会拒绝并给出提示。
+## 把二维码放进图形中 [#put-the-code-in-a-shape]
 
-{/* end shaped codes */}
+同一个选择器中还有 **Shaped codes** 分组。**Dot circle** 和 **Heart** 会把二维码放进由装饰圆点组成的圆形或心形中。**Silhouette** 会填充你自己的图形：上传 PNG、JPEG 或 SVG 文件，图形为深色或实心，背景为浅色或透明。只会保留其轮廓，不会保留图片本身。
 
-## 边框不会影响扫描 [#frames-never-hurt-scanning]
+扫描器只读取中间的二维码，因此要获得相同的扫描距离，图形二维码的打印尺寸应比方形二维码更大。图形会取代边框：选择其中一个，另一个就会被清除。
 
-边框位于二维码之外，不会遮挡二维码的任何方块。
+## 文字要简短 [#keep-the-text-short]
 
-边框文字要简短。三四个词在远处最容易看清。
+三四个词在远处最容易看清。写明人们能得到什么，比如“Scan for menu”，而不是告诉他们要用手机做什么。
 
-## 带边框下载 [#download-with-the-frame]
+## 下载带边框的二维码 [#download-with-the-frame]
 
-边框会包含在每一种格式的下载文件中。关于打印，请参阅[下载并打印二维码](/docs/help/getting-started/download-and-print)。
+边框是每种格式下载内容的一部分。打印方面请参阅[下载并打印二维码](/docs/help/getting-started/download-and-print)。
+
+## 分享你的边框 [#share-your-frame]
+
+你上传的边框或从边框库中取用的边框可以单独发布：在 **Frame** 部分点击 **Publish frame**。它会按照与已发布设计相同的条款发布到[社区](/community)。请参阅[保存并重复使用设计](/docs/help/designing/save-a-design)。
+
+## 如果出了问题 [#if-something-goes-wrong]
+
+### Label 字段无法编辑 [#the-label-field-is-disabled]
+
+未启用任何边框。该字段显示“Pick a frame first”：请先选择一个边框，或选择一个标签创意，它会自动添加边框。
+
+### Frame color 没有效果 [#frame-color-has-no-effect]
+
+你选择的边框使用二维码圆点的颜色（Arrow、Standard Box、Square Border、Dot Ring），或保持自己的颜色（Striked Box、Halloween）。请在 **Colors** 下更改 **Dots** 的颜色，或选择其他边框。
+
+### Silhouette 被拒绝 [#a-silhouette-is-refused]
+
+图形太细，无法容纳二维码。请上传图形更粗、更实心的图片。
 
 ## 相关内容 [#related]
 
+- [下载并打印二维码](/docs/help/getting-started/download-and-print)
+- [保存并重复使用设计](/docs/help/designing/save-a-design)
 - [面向开发者的边框与打印](/docs/features/frames)

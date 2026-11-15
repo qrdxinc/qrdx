@@ -1,180 +1,138 @@
 ---
 title: "Utilitários"
-description: "Funções auxiliares de cor, contraste, validação de tamanho e detecção de recursos exportadas pelo qrdx."
+description: "Os helpers de cor, contraste, validação de tamanho e detecção de recursos que o qrdx exporta, com suas assinaturas, valores de retorno e um exemplo de cada um."
 icon: Wrench
 ---
 
-Funções auxiliares para cores, contraste e processamento de QR codes.
+Estes helpers são as pequenas funções que o renderizador e a nota de leitura usam, exportadas para a sua própria UI: escolher uma cor representativa, verificar o contraste, validar o tamanho de um download e detectar recursos do canvas. Eles rodam em qualquer lugar, exceto onde indicado.
 
-## Utilitários de cor [#color-utilities]
+| Função | Retorno | Observações |
+| --- | --- | --- |
+| `getSolidColor(color, fallback?)` | `string` | Uma cor que representa um `ColorConfig`: a string, o `color` de uma cor sólida, a primeira parada de um gradiente, o `underlay` de um preenchimento de imagem ou, se nada disso existir, `fallback` (`"#000000"`) |
+| `getContrastRatio(a, b)` | `number` | A razão de contraste WCAG entre duas cores CSS, de 1 a 21. Cores transparentes são combinadas sobre o branco antes. Retorna 1 quando uma cor não pode ser interpretada |
+| `getContrastLevel(ratio)` | `{ level, warning, message }` | `AAA` a partir de 7, `AA` a partir de 4.5, `AA Large` a partir de 3 (com `warning: true`), `Fail` abaixo de 3 |
+| `getLuminance(r, g, b)` | `number` | Luminância relativa de uma cor sRGB, de 0 a 1 |
+| `hexToRgb(hex)` | `{ r, g, b } \| null` | Lê hex de 3, 4, 6 e 8 dígitos, descartando o alfa. `null` para qualquer outro formato |
+| `validateSize(width, height)` | `{ isValid, error? }` | A regra que todo download aplica: de 50 a 5000 px e quadrado |
+| `SUPPORTS_PATH2D` | `boolean` | Indica se o canvas deste ambiente suporta `Path2D` com `addPath` |
 
-### getSolidColor [#getsolidcolor]
+## Cores [#colors]
 
-Extraia uma cor sólida de qualquer configuração de cor:
+```ts title="lib/colors.ts"
+import { getSolidColor, hexToRgb } from "qrdx";
 
-```tsx
-import { getSolidColor } from 'qrdx';
-
-const color = getSolidColor({
-  type: 'linear',
+getSolidColor({
+  type: "linear",
+  angle: 45,
   stops: [
-    { offset: 0, color: '#ff6b6b' },
-    { offset: 1, color: '#4ecdc4' }
+    { color: "#ff6b6b", offset: 0 },
+    { color: "#4ecdc4", offset: 100 },
   ],
-  x1: 0, y1: 0, x2: 1, y2: 1
 });
-// Returns: "#ff6b6b"
+// "#ff6b6b": the first stop
+
+getSolidColor({ type: "image", src: photo, underlay: "#111111" }); // "#111111"
+getSolidColor(undefined, "#ffffff"); // "#ffffff"
+
+hexToRgb("#ff6b6b"); // { r: 255, g: 107, b: 107 }
+hexToRgb("#f00"); // { r: 255, g: 0, b: 0 }
+hexToRgb("red"); // null
 ```
 
-### hexToRgb [#hextorgb]
+Use `getSolidColor` onde você precisar de uma única cor para uma amostra, um fundo CSS ou um fallback. O renderizador a usa onde um formato não consegue desenhar um gradiente, como em `QRCodeCanvas` e no desenho de moldura no Canvas.
 
-Converta hexadecimal para RGB:
+## Contraste [#contrast]
 
-```tsx
-import { hexToRgb } from 'qrdx';
+```ts title="lib/contrast.ts"
+import { getContrastLevel, getContrastRatio, getLuminance } from "qrdx";
 
-const rgb = hexToRgb('#ff6b6b');
-// Returns: { r: 255, g: 107, b: 107 }
+getContrastRatio("#000000", "#ffffff"); // 21
+getContrastRatio("#1d4ed8", "#f8fafc"); // 6.4
+getContrastRatio("rgba(29, 78, 216, 0.5)", "#ffffff"); // the blue over white, so lower
+
+getContrastLevel(4.5);
+// { level: "AA", warning: false, message: "Good contrast" }
+
+getContrastLevel(2);
+// { level: "Fail", warning: true, message: "Poor contrast - QR code may not scan properly" }
+
+getLuminance(255, 255, 255); // 1
 ```
 
-## Verificação de contraste [#contrast-checking]
+A nota de leitura aprova um código com razão de 4.5 ou mais (`SCAN_CONTRAST_MIN`), tira pontos abaixo disso e reprova abaixo de 1.5. Imagens exigem mais: `SCAN_IMAGE_CONTRAST_MIN` é 7 para um preenchimento de imagem nos módulos e 12 para um atrás deles. `getScanContrast(props)` executa a verificação da própria nota em um design inteiro, incluindo todas as paradas de gradiente e as cores dos olhos; veja [Molduras, nota de leitura e arquivos de impressão](/docs/features/frames#will-it-scan).
 
-### getContrastRatio [#getcontrastratio]
+Um verificador de contraste ao vivo cabe em uma dúzia de linhas:
 
-Calcule a razão de contraste WCAG:
+```tsx title="components/contrast-checker.tsx"
+"use client";
 
-```tsx
-import { getContrastRatio } from 'qrdx';
+import { getContrastLevel, getContrastRatio } from "qrdx";
+import { useState } from "react";
 
-const ratio = getContrastRatio('#000000', '#ffffff');
-// Returns: 21
-```
-
-### getContrastLevel [#getcontrastlevel]
-
-Obtenha a avaliação do contraste:
-
-```tsx
-import { getContrastLevel } from 'qrdx';
-
-const level = getContrastLevel(4.5);
-// Returns: { level: 'AA', warning: false, message: 'Good contrast' }
-```
-
-**Diretrizes de contraste:**
-- **`AAA` (7.0 ou mais)** — Contraste excelente
-- **`AA` (4.5 – 7.0)** — Bom contraste
-- **`AA Large` (3.0 – 4.5)** — Contraste baixo, `warning: true`, pode ser difícil de ler
-- **`Fail` (abaixo de 3.0)** — Não recomendado, `warning: true`
-
-### getLuminance [#getluminance]
-
-Calcule a luminância relativa:
-
-```tsx
-import { getLuminance } from 'qrdx';
-
-const luminance = getLuminance(255, 255, 255);
-// Returns: 1.0 (white)
-```
-
-## Validação [#validation]
-
-### validateSize [#validatesize]
-
-Valide as dimensões do download:
-
-```tsx
-import { validateSize } from 'qrdx';
-
-const validation = validateSize(512, 512);
-if (validation.isValid) {
-  console.log("Valid size");
-} else {
-  console.error(validation.error);
-}
-```
-
-## Detecção de recursos [#feature-detection]
-
-### SUPPORTS_PATH2D [#supports_path2d]
-
-Verifique o suporte a Path2D:
-
-```tsx
-import { SUPPORTS_PATH2D } from 'qrdx';
-
-if (SUPPORTS_PATH2D) {
-  // Use optimized rendering
-} else {
-  // Use fallback
-}
-```
-
-## Exemplo: verificador de contraste [#example-contrast-checker]
-
-```tsx
-import { getContrastRatio, getContrastLevel } from 'qrdx';
-import { useState } from 'react';
-
-export default function ContrastChecker() {
-  const [fgColor, setFgColor] = useState('#000000');
-  const [bgColor, setBgColor] = useState('#ffffff');
-
+export function ContrastChecker() {
+  const [fgColor, setFgColor] = useState("#000000");
+  const [bgColor, setBgColor] = useState("#ffffff");
   const ratio = getContrastRatio(fgColor, bgColor);
   const level = getContrastLevel(ratio);
 
   return (
     <div>
       <input
+        aria-label="Module color"
         type="color"
         value={fgColor}
-        onChange={(e) => setFgColor(e.target.value)}
+        onChange={(event) => setFgColor(event.target.value)}
       />
       <input
+        aria-label="Background color"
         type="color"
         value={bgColor}
-        onChange={(e) => setBgColor(e.target.value)}
+        onChange={(event) => setBgColor(event.target.value)}
       />
-      <p>Ratio: {ratio.toFixed(2)}:1</p>
-      <p>Level: {level.level}</p>
-      <p>{level.message}</p>
+      <p>
+        {ratio.toFixed(2)}:1, {level.level}. {level.message}
+      </p>
     </div>
   );
 }
 ```
 
-## Exemplo: calculadora de tamanho [#example-size-calculator]
+## Validação [#validation]
 
-```tsx
-import { validateSize } from 'qrdx';
-import { useState } from 'react';
+```ts title="lib/sizes.ts"
+import { validateSize } from "qrdx";
 
-export default function SizeCalculator() {
-  const [width, setWidth] = useState(512);
-  const [height, setHeight] = useState(512);
+validateSize(1024, 1024); // { isValid: true }
+validateSize(40, 40); // { isValid: false, error: "Size must be at least 50x50 pixels" }
+validateSize(6000, 6000); // { isValid: false, error: "Size must not exceed 5000x5000 pixels" }
+validateSize(400, 300); // { isValid: false, error: "Width and height must be equal for QR codes" }
+```
 
-  const validation = validateSize(width, height);
+`downloadQRCode`, `getQRCodeDataUrl` e `copyQRCodeToClipboard` lançam o mesmo texto de `error` quando um tamanho falha, então um formulário pode verificar antes.
 
-  return (
-    <div>
-      <input
-        type="number"
-        value={width}
-        onChange={(e) => setWidth(Number(e.target.value))}
-      />
-      <input
-        type="number"
-        value={height}
-        onChange={(e) => setHeight(Number(e.target.value))}
-      />
-      <p>{validation.isValid ? 'Valid' : validation.error}</p>
-    </div>
-  );
+## Detecção de recursos [#feature-detection]
+
+```ts title="lib/features.ts"
+import { SUPPORTS_PATH2D } from "qrdx";
+
+if (SUPPORTS_PATH2D) {
+  // draw module paths with Path2D
 }
 ```
 
-## Próximos passos [#next-steps]
+`SUPPORTS_PATH2D` é calculado uma vez quando o módulo é carregado, então ele é `false` em um servidor.
 
-- [Uso](/docs/usage) — Aplique os utilitários aos QR codes
-- [Referência da API](/docs/api-reference) — Referência completa dos utilitários
+## Outros helpers [#other-helpers]
+
+- `getColorString(color)` e `normalizeColorConfig(color)` convertem as formas de `ColorConfig` entre si; `isGradient(color)` e `isImagePaint(color)` as distinguem.
+- `sanitizeFrameText(text)` e `isLatin1Text(text)` aplicam as regras do texto da moldura (24 caracteres; Latin-1 para PDF e EPS).
+- `decodePNGPixels(bytes)` lê um PNG de 8 bits em pixels RGBA sem DOM, para `createQRArtImage`, `createQRSilhouette` ou `scanQRPixels` no Node.
+- `rgbToCmyk(color)` é a conversão usada pelos arquivos de impressão CMYK.
+
+## Relacionados [#related]
+
+<Cards>
+  <Card href="/docs/features/colors-gradients" title="Defina cores e gradientes" description="Onde essas cores entram em um código." />
+  <Card href="/docs/features/frames" title="Molduras, nota de leitura e arquivos de impressão" description="A nota de leitura, que executa a verificação de contraste em um design inteiro." />
+  <Card href="/docs/api-reference" title="Referência da API da biblioteca" description="Todas as exportações, por ponto de entrada." />
+</Cards>

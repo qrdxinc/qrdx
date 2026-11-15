@@ -1,8 +1,10 @@
 ---
 title: "QR Code Scanner"
-description: "एक ड्रॉप ज़ोन जो ब्राउज़र में इमेज से QR कोड पढ़ता है, साथ में कॉपी और लिंक खोलने के एक्शन भी देता है।"
+description: "shadcn/ui प्रोजेक्ट्स के लिए एक ड्रॉप ज़ोन, जो ब्राउज़र में इमेज से QR कोड पढ़ता है और कॉपी व लिंक खोलने के एक्शन देता है।"
 icon: Scan
 ---
+
+`QrCodeScanner` एक ड्रॉप ज़ोन है, जो ब्राउज़र में ही किसी इमेज फ़ाइल से QR कोड डिकोड करता है और आपको उसका टेक्स्ट देता है। इसका इस्तेमाल स्क्रीनशॉट से टिकट चेक-इन करने, लोगों की अपलोड की गई फ़ोटो से कोड पढ़ने, या आपके बनाए कोड को जाँचने के लिए करें। यह इमेज फ़ाइलें पढ़ता है, लाइव कैमरा फ़ीड नहीं।
 
 <ComponentLinks name="qr-code-scanner" />
 
@@ -12,30 +14,55 @@ icon: Scan
 
 <InstallationTabs name="qr-code-scanner" />
 
-## उपयोग [#usage]
+## इस्तेमाल [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeScanner } from "@/components/qr-code-scanner";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeScanner onResult={(value) => console.log(value)} />
 ```
 
-यूज़र कोई इमेज ड्रॉप करते हैं या क्लिक करके चुनते हैं। डिकोडिंग ब्राउज़र में ही qrdx के [डिटेक्शन हेल्पर](/docs/qr-detection) से होती है, इसलिए इमेज डिवाइस से बाहर नहीं जाती। यह इमेज फ़ाइलें पढ़ता है, लाइव कैमरा फ़ीड नहीं।
-
-नतीजा एक कॉपी बटन के साथ दिखता है, और अगर वह `http` या `https` URL है तो "Open link" बटन भी दिखता है।
+लोग कोई इमेज ड्रॉप करते हैं या क्लिक करके चुनते हैं। डिकोडिंग ब्राउज़र में qrdx के [डिटेक्शन हेल्पर](/docs/qr-detection) से होती है, इसलिए इमेज कभी डिवाइस से बाहर नहीं जाती। नतीजा **Copy** बटन के साथ दिखता है, और अगर वह `http` या `https` URL है तो **Open link** बटन भी दिखता है।
 
 ## उदाहरण [#examples]
 
 ### नतीजा जाँचना [#checking-a-result]
 
-`onResult` को डिकोड किया हुआ टेक्स्ट मिलता है, जिससे आप उस पर कार्रवाई कर सकते हैं, जैसे किसी टिकट को चेक-इन करना। `label` ड्रॉप ज़ोन का शीर्षक बदलता है। ऊपर दिया गया सैंपल कोड डाउनलोड करें और उसे ड्रॉप करके देखें कि वैध टिकट कैसा दिखता है।
+`onResult` को डिकोड किया गया टेक्स्ट मिलता है, ताकि आप उस पर कोई कार्रवाई कर सकें, जैसे टिकट चेक-इन करना। `label` ड्रॉप ज़ोन का हेडिंग बदलता है। ऊपर का सैंपल कोड डाउनलोड करें और उसे ड्रॉप करके एक वैध टिकट देखें।
 
 <ComponentPreview name="qr-code-scanner-tickets" />
+
+## रीडर क्या दिखाता है [#what-the-reader-shows]
+
+| स्थिति | संदेश |
+| --- | --- |
+| स्कैन हो रहा है | "Scanning…" |
+| इमेज में कोई कोड नहीं | "No QR code found. Try a sharper or closer image." |
+| इमेज फ़ाइल नहीं है | "Choose an image file." |
+| इमेज पढ़ी नहीं जा सकती | "Could not read that image." |
+| कोड मिला | डिकोड किया गया टेक्स्ट, **Copy** के साथ, और लिंक होने पर **Open link** भी |
+
+डिकोडर पूरी इमेज और चार क्रॉप को कई स्केल पर आज़माता है, इसलिए स्क्रीनशॉट के छोटे हिस्से में होने पर भी कोड मिल जाता है।
+
+## एक्सेसिबिलिटी और रेंडरिंग [#accessibility-and-rendering]
+
+- ड्रॉप ज़ोन एक छिपे हुए फ़ाइल इनपुट का `<label>` है, इसलिए यह किसी भी फ़ाइल पिकर की तरह कीबोर्ड और स्क्रीन रीडर के साथ काम करता है।
+- नतीजे और एरर एक पोलाइट लाइव रीजन के ज़रिए बताए जाते हैं।
+- **Open link** नए टैब में `rel="noopener noreferrer nofollow"` के साथ खुलता है, ताकि स्कैन किया गया पेज आपके पेज तक न पहुँच सके।
+- यह कॉम्पोनेंट एक Client Component है। इसे ब्राउज़र के canvas की ज़रूरत होती है और पहले स्कैन पर यह डिकोडर को ज़रूरत के समय लोड करता है।
 
 ## API रेफ़रेंस [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-scanner.tsx" type="{ [K in keyof QrCodeScannerProps as K extends keyof ComponentProps<'div'> ? never : K]: QrCodeScannerProps[K] }" />
 
-कोई भी दूसरा prop, जैसे `className`, रैपिंग `<div>` को पास कर दिया जाता है।
+`className` जैसा कोई भी दूसरा प्रॉप रैपिंग `<div>` को पास कर दिया जाता है।
+
+## संबंधित [#related]
+
+<Cards>
+  <Card href="/docs/qr-detection" title="QR डिटेक्शन" description="स्कैनर जिन लाइब्रेरी फ़ंक्शन को कॉल करता है, अपना रीडर बनाने के लिए।" />
+  <Card href="/docs/components/qr-code" title="QR Code" description="वे कोड बनाएँ जिन्हें स्कैनर पढ़ता है।" />
+  <Card href="/docs/features/frames" title="फ़्रेम, स्कैन स्कोर और प्रिंट फ़ाइलें" description="कोड इमेज को सिर्फ़ डिकोड करने के बजाय getImageScanScore से स्कोर करें।" />
+</Cards>

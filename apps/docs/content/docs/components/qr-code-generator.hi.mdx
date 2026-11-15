@@ -1,8 +1,10 @@
 ---
 title: "QR Code Generator"
-description: "लाइव QR कोड प्रीव्यू, स्टाइल प्रीसेट और डाउनलोड बटन वाला एक टेक्स्ट इनपुट।"
+description: "shadcn/ui प्रोजेक्ट्स के लिए लाइव QR कोड प्रीव्यू, स्टाइल प्रीसेट और डाउनलोड बटन वाला टेक्स्ट इनपुट।"
 icon: Sparkles
 ---
+
+`QrCodeGenerator` एक ही कॉम्पोनेंट में बना छोटा जनरेटर है: एक टेक्स्ट फ़ील्ड, एक प्रीव्यू जो टाइप करते ही दोबारा बनता है, स्टाइल प्रीसेट की एक पंक्ति और डाउनलोड बटन। इसका इस्तेमाल करके आप अपने यूज़र्स को अपने प्रोडक्ट के अंदर ही कोड बनाने का तरीका दे सकते हैं, उन्हें कहीं और भेजे बिना।
 
 <ComponentLinks name="qr-code-generator" />
 
@@ -12,48 +14,74 @@ icon: Sparkles
 
 <InstallationTabs name="qr-code-generator" />
 
-## उपयोग [#usage]
+## इस्तेमाल [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeGenerator } from "@/components/qr-code-generator";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeGenerator defaultValue="https://example.com" />
 ```
 
-आप जैसे-जैसे टाइप करते हैं, प्रीव्यू अपडेट होता रहता है। हर प्रीसेट बटन अपनी स्टाइल का एक छोटा सैंपल दिखाता है, और डाउनलोड चुने गए प्रीसेट के साथ 1024 पिक्सल पर होते हैं।
+टाइप करते ही प्रीव्यू अपडेट होता है। हर प्रीसेट बटन अपनी स्टाइल का छोटा सैंपल दिखाता है, और डाउनलोड चुने गए प्रीसेट के साथ 1024 पिक्सेल पर होते हैं। फ़ील्ड खाली होने पर प्रीव्यू में "Type some text to generate a code" दिखता है और डाउनलोड बटन बंद रहते हैं।
 
 ## उदाहरण [#examples]
 
 ### कस्टम प्रीसेट [#custom-presets]
 
-बिल्ट-इन प्रीसेट की जगह अपने खुद के प्रीसेट इस्तेमाल करें। एक प्रीसेट में `id`, `name` और `style` होता है, और `style` में कोई भी qrdx ऑप्शन हो सकता है, जैसे ग्रेडिएंट, लोगो और एरर करेक्शन `level`।
+बिल्ट-इन प्रीसेट की जगह अपने प्रीसेट इस्तेमाल करें। प्रीसेट में एक `id`, एक `name` और एक `style` होता है, जिसमें कोई भी qrdx विकल्प हो सकता है, जैसे ग्रेडिएंट, लोगो और एरर करेक्शन `level`।
 
 <ComponentPreview name="qr-code-generator-presets" />
 
-बिल्ट-इन प्रीसेट `QR_CODE_PRESETS` के नाम से एक्सपोर्ट किए गए हैं, इसलिए आप इन्हें बढ़ा सकते हैं:
+बिल्ट-इन प्रीसेट `QR_CODE_PRESETS` के नाम से एक्सपोर्ट किए गए हैं, इसलिए आप उन्हें बढ़ा सकते हैं:
 
-```tsx
-import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator";
+```tsx title="components/brand-generator.tsx"
+import {
+  QR_CODE_PRESETS,
+  QrCodeGenerator,
+} from "@/components/qr-code-generator";
 
-<QrCodeGenerator
-  presets={[
-    ...QR_CODE_PRESETS,
-    { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
-  ]}
-/>
+export function BrandGenerator() {
+  return (
+    <QrCodeGenerator
+      presets={[
+        ...QR_CODE_PRESETS,
+        { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
+      ]}
+    />
+  );
+}
 ```
 
 ### नतीजा सेव करना [#saving-the-result]
 
 `onChange` हर बदलाव पर टेक्स्ट और चुना गया प्रीसेट बताता है, जैसे यूज़र की पसंद को स्टोर करने के लिए:
 
-```tsx
-<QrCodeGenerator
-  onChange={({ value, preset }) => saveDraft({ value, style: preset.style })}
-/>
+```tsx title="components/draft-generator.tsx"
+import { QrCodeGenerator } from "@/components/qr-code-generator";
+
+export function DraftGenerator({
+  saveDraft,
+}: {
+  saveDraft: (draft: { value: string; style: object }) => void;
+}) {
+  return (
+    <QrCodeGenerator
+      onChange={({ value, preset }) =>
+        saveDraft({ value, style: preset.style })
+      }
+    />
+  );
+}
 ```
+
+## एक्सेसिबिलिटी और रेंडरिंग [#accessibility-and-rendering]
+
+- फ़ील्ड पर "Text or URL" का दिखने वाला लेबल है, और प्रीसेट एक `<fieldset>` में हैं जिसकी लेजेंड "Style" है। हर प्रीसेट एक टॉगल बटन है जिसमें `aria-pressed` है, और उसका सैंपल कोड स्क्रीन रीडर से छिपा रहता है।
+- प्रीव्यू एक `role="img"` एलिमेंट है जिसका लेबल `QR code: <value>` है, या टेक्स्ट न होने पर "Empty QR code preview"।
+- डाउनलोड में एरर आने पर वह प्रीव्यू के नीचे `role="alert"` के साथ दिखता है।
+- यह कॉम्पोनेंट अपने स्टेट वाला Client Component है। इसे किसी भी पेज से रेंडर करें; भरा हुआ शुरू करने के लिए `defaultValue` और `defaultPreset` दें।
 
 ## API रेफ़रेंस [#api-reference]
 
@@ -62,3 +90,11 @@ import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator
 ### QrCodePreset [#qrcodepreset]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-generator.tsx" name="QrCodePreset" />
+
+## संबंधित [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code" title="QR Code" description="डाउनलोड बटन वाला एक अकेला कोड, जब वैल्यू आपके डेटा से आती हो।" />
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="जनरेटर के बटनों से ज़्यादा फ़ॉर्मैट और साइज़ वाला मेन्यू।" />
+  <Card href="/docs/features/colors-gradients" title="रंग और ग्रेडिएंट सेट करें" description="हर वह स्टाइल विकल्प जो प्रीसेट में रखा जा सकता है।" />
+</Cards>

@@ -3,39 +3,63 @@ title: "Deine Scans ansehen"
 description: "Finde heraus, wie viele Personen einen dynamischen QR-Code gescannt haben, wann, wo und mit welchem Gerät."
 ---
 
-Jeder Scan eines dynamischen QR-Codes wird gezählt. Statische QR-Codes werden nicht erfasst.
+Jeder Scan eines dynamischen Codes wird gezählt. Öffne einen Code, um seine Scans zu sehen, oder die Seite **Analytics**, um alle Codes im Workspace zu sehen. Statische Codes werden nicht erfasst, weil ein Scan davon nie über QRdx läuft.
 
-## Ein einzelner Code [#one-code]
+## Ein Code [#one-code]
 
-Gehe zu **Codes** und klicke auf den Namen des Codes. Oben auf der Seite siehst du:
+Gehe zu **Codes**, klicke den Code an und öffne den Tab **Analytics**. Oben im Tab siehst du:
 
-- **Scans gesamt** und **Scans im Zeitraum** (die Daten, die du ausgewählt hast).
-- **Eindeutige Besucher**: Jeder Besucher wird pro Tag einmal gezählt.
-- **Letzter Scan**.
+- **Total scans** und **Scans in range** (der Zeitraum, den du gewählt hast).
+- **Unique visitors**: Jeder Besucher wird einmal pro Tag gezählt.
+- **Last scan**.
 
-Darunter teilt **QR-Scans und NFC-Taps** die Besuche auf den QR-Code und auf [NFC-Tags](/docs/nfc) auf, die den Link des Codes enthalten. Danach folgen Diagramme zu Ländern, Städten, Geräten, Betriebssystemen, Browsern und Referrern sowie dazu, wann Personen scannen und in welcher Sprache. Bei Pro und Business listen Codes, die [nach dem genauen Standort fragen](/docs/precise-location), außerdem die Orte auf, die Scanner freigegeben haben.
+<Shot id="code-analytics" />
+
+Darunter teilt **QR scans and NFC taps** die Besuche auf den QR-Code und auf [NFC-Tags](/docs/nfc) auf, die den Link des Codes tragen. Danach folgen **Scans over time**, **Top countries**, **Top cities**, **Devices**, **Operating systems**, **Browsers**, **Referrers**, **Languages** und **When people scan**, nach Tageszeit oder Wochentag.
+
+Bei Pro und Business zeigt ein Code mit der Einstellung **Ask scanners for precise location** außerdem **Precise locations**: die Orte, die Scanner freigegeben haben. Siehe [Genauer Standort](/docs/precise-location).
 
 ## Alle deine Codes [#all-your-codes]
 
-Die Seite **Analytics** in deinem Dashboard zeigt Summen für alle Codes sowie deine Top-Codes, Länder, Geräte und Sprachen. Mit **Codes vergleichen** stellst du bis zu 4 Codes nebeneinander.
+Klicke in der Seitenleiste von Codes auf **Analytics**. Die Seite zeigt Summen für alle Codes sowie deine Top-Codes, Länder, Geräte und Sprachen. Mit **Compare codes** stellst du bis zu 4 Codes nebeneinander.
 
 ## Zeiträume und Verlauf [#date-ranges-and-history]
 
-Wähle 7, 30 oder 90 Tage, 1 Jahr, 3 Jahre oder **Gesamt**. „Gesamt“ beginnt am Tag des ersten Scans des Codes, oder auf der Seite **Analytics** am Tag des ersten Scans des Workspace. Wie weit du zurückblicken kannst, hängt von deinem Tarif ab:
+Wähle **7 days**, **30 days**, **90 days**, **1 year**, **3 years** oder **All time**. All time beginnt am Tag des ersten Scans des Codes, auf der Seite **Analytics** am Tag des ersten Scans im Workspace. Wie weit du zurückschauen kannst, hängt von deinem Tarif ab:
 
 - **Kostenlos**: {facts.freeScanHistoryYears} Jahr.
-- **Pro** und **Business**: alles, einschließlich **Gesamt**.
+- **Pro** und **Business**: der gesamte Verlauf, einschließlich **All time**.
 
 Scans, die dein Tarif nicht anzeigt, werden nicht gelöscht. Nach einem Upgrade erscheinen sie wieder.
 
 ## Scans herunterladen [#download-your-scans]
 
-Öffne auf der Seite eines Codes den Tab **Analytics** und klicke auf **CSV exportieren**. Du erhältst bis zu 50.000 Scans für den ausgewählten Zeitraum, jeweils mit Uhrzeit, Ort, Gerät, Betriebssystem, Browser und Referrer, der Angabe, ob es ein QR-Scan oder ein NFC-Tap war, und dem freigegebenen Standort, falls vorhanden.
+Klicke auf dem Tab **Analytics** eines Codes auf **Export CSV**. Du erhältst bis zu 50.000 Scans für den gewählten Zeitraum, jeweils mit Zeit, Ort, Gerät, Betriebssystem, Browser und Referrer, der Angabe, ob es ein QR-Scan oder ein NFC-Tap war, und dem freigegebenen Standort, falls vorhanden.
 
 ## Was nicht gezählt wird [#what-isnt-counted]
 
-Bots und Link-Vorschauen werden nicht gezählt. Wenn ein Netzwerk denselben Code mehr als 20 Mal in einer Minute scannt, werden die zusätzlichen Scans nicht gezählt. Der Code öffnet sich trotzdem jedes Mal.
+Bots, Link-Vorschauen und Prefetches werden nicht gezählt. Wenn ein Netzwerk denselben Code mehr als 20 Mal in einer Minute scannt, werden die zusätzlichen Scans nicht gezählt. Der Code öffnet sich trotzdem jedes Mal.
 
 ## Datenschutz [#privacy]
 
 QRdx speichert nie die IP-Adresse eines Scanners. Siehe [Was QRdx erfasst, wenn jemand scannt](/docs/help/privacy-and-security/scan-data).
+
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
+
+### Erwartete Scans fehlen [#scans-you-expect-are-missing]
+
+Bei Kostenlos enden die Diagramme {facts.freeScanHistoryYears} Jahr in der Vergangenheit. Scans aus einem Netzwerk über 20 pro Minute sowie Besuche von Bots und Link-Vorschauen werden ebenfalls nicht gezählt.
+
+### Unique visitors ist deutlich niedriger als Total scans [#unique-visitors-is-much-lower-than-total-scans]
+
+Dieselben Personen haben an einem Tag mehrfach gescannt. Bei **Unique visitors** zählt jeder Besucher einmal pro Tag, bei **Total scans** jeder Scan.
+
+### Das Diagramm zeigt Scans, aber der Code ist statisch [#the-chart-shows-scans-but-a-code-is-static]
+
+Nur dynamische Codes werden gezählt. Ein gedruckter statischer Code meldet nie etwas, auch wenn es einen dynamischen Code mit demselben Link gibt.
+
+## Weiterführend [#related]
+
+- [Was QRdx erfasst, wenn jemand scannt](/docs/help/privacy-and-security/scan-data)
+- [Deine Daten exportieren](/docs/help/account-and-billing/export-your-data)
+- [Leitfaden zu Tracking und Conversions](/docs/tracking-and-conversions)

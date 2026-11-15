@@ -1,43 +1,55 @@
 ---
 title: "Exigir la verificación en dos pasos"
-description: "Haz que todos los miembros de un espacio de trabajo activen la verificación en dos pasos antes de poder abrirlo. Forma parte del plan Business."
+description: "Haz que todos los miembros de un espacio de trabajo activen la verificación en dos pasos antes de poder acceder a él. Forma parte del plan Business."
 ---
 
 Los propietarios y administradores pueden exigir que todos los miembros de un espacio de trabajo usen la [verificación en dos pasos](/docs/help/privacy-and-security/two-step-verification). Un miembro que no la haya activado no podrá abrir el espacio de trabajo hasta que lo haga, así que acceder al correo de alguien no basta para entrar en tu espacio de trabajo.
 
-Exigir la verificación en dos pasos forma parte del plan **Business**. Un espacio de trabajo la tiene cuando uno de sus propietarios o miembros de facturación está en Business. Consulta [Asientos y límites del espacio de trabajo](/docs/help/teams/seats).
+<Callout type="info">
+  Exigir la verificación en dos pasos forma parte del plan **Business**. Un espacio de trabajo la tiene cuando uno de sus propietarios o miembros de facturación está en Business. Consulta [Puestos y límites del espacio de trabajo](/docs/help/teams/seats).
+</Callout>
 
 ## Actívala [#turn-it-on]
 
-1. Activa primero la verificación en dos pasos en tu propia cuenta, en **Ajustes** → **Perfil y seguridad**. No puedes exigirla sin tenerla tú.
-2. En el espacio de trabajo, ve a **Ajustes** → **Equipo**.
-3. En **Verificación en dos pasos**, activa **Exigir la verificación en dos pasos**.
-4. Si algunos miembros aún no la tienen activada, QRdx te indica cuántos y te pregunta antes de continuar.
-5. [Confirma que eres tú](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
+### 1. Actívala primero en tu cuenta [#1-turn-it-on-for-yourself-first]
 
-Solo los propietarios y administradores pueden cambiarla, y para activarla o desactivarla se te pide confirmar que eres tú.
+Activa la verificación en dos pasos en tu propia cuenta en **Ajustes** → **Perfil y seguridad**. No puedes exigirla sin tenerla tú mismo.
 
-No se envía ningún correo. Los miembros sin verificación en dos pasos se enterarán la próxima vez que abran el espacio de trabajo.
+### 2. Abre la página Equipo [#2-open-the-team-page]
+
+En el espacio de trabajo, ve a **Ajustes** → **Equipo**.
+
+### 3. Exígela [#3-require-it]
+
+En **Verificación en dos pasos**, activa **Exigir la verificación en dos pasos**. Si algunos miembros aún no la tienen activada, QRdx te indica cuántos son y te pide confirmación antes de continuar.
+
+<Shot id="require-two-step" />
+
+### 4. Confirma que eres tú [#4-confirm-its-you]
+
+[Confirma que eres tú](/docs/help/privacy-and-security/two-step-verification#confirm-its-you). Después, la tarjeta mostrará "La verificación en dos pasos ahora es obligatoria".
+
+Solo los propietarios y administradores pueden cambiarlo, y para activarlo o desactivarlo se te pide confirmar que eres tú. No se envía ningún correo: los miembros sin verificación en dos pasos lo descubren la próxima vez que abren el espacio de trabajo.
 
 ## Consulta quién la tiene activada [#see-who-has-it-on]
 
-En la página **Ajustes** → **Equipo**, los propietarios y administradores ven si cada miembro tiene la verificación en dos pasos **Activada** o **Desactivada**. En el móvil aparece debajo del correo electrónico de cada persona.
+En la página **Ajustes** → **Equipo**, los propietarios y administradores ven si la verificación en dos pasos de cada miembro está **Activada** o **Desactivada**. En el teléfono aparece debajo del correo de cada persona.
 
 ## Qué ven los miembros que no la tienen [#what-members-without-it-see]
 
-Al abrir el espacio de trabajo, ven que exige la verificación en dos pasos, con un botón **Activar la verificación en dos pasos**. El botón les lleva a **Ajustes** → **Perfil y seguridad** y, una vez activada, **Volver al** espacio de trabajo los lleva a la página en la que estaban.
+Al abrir el espacio de trabajo, ven que exige la verificación en dos pasos, con un botón **Activar la verificación en dos pasos**. Este los lleva a **Ajustes** → **Perfil y seguridad** y, una vez activada, **Volver al** espacio de trabajo los lleva a la página en la que estaban.
 
 Hasta entonces no pueden ver ni cambiar nada en ese espacio de trabajo. Sus otros espacios de trabajo funcionan como siempre.
 
-Eso incluye lo que el espacio de trabajo les envía. Dejan de recibir sus alertas por correo, el resumen semanal y las alertas de Slack o Discord de ese espacio, y no pueden añadir otras nuevas. Las sincronizaciones que configuraron para enviar sus datos a otras herramientas se pausan. Las alertas se reanudan cuando se activa la verificación en dos pasos; una sincronización pausada hay que volver a activarla.
+Eso incluye lo que el espacio de trabajo les envía. Sus alertas por correo, el resumen semanal y las alertas de Slack o Discord de ese espacio se detienen, y no pueden añadir otras nuevas. Las sincronizaciones que configuraron para enviar sus datos a otras herramientas se pausan. Las alertas se reanudan en cuanto se activa la verificación en dos pasos; una sincronización en pausa hay que volver a activarla.
 
 Si alguien desactiva la verificación en dos pasos más adelante, el espacio de trabajo se cierra de nuevo para esa persona hasta que la vuelva a activar. Esto incluye a propietarios y administradores.
 
 ## Claves de API [#api-keys]
 
-Las claves de API creadas en el espacio de trabajo siguen funcionando para quien las creó, con o sin verificación en dos pasos. La verificación en dos pasos protege el inicio de sesión, y una clave es una credencial independiente. Nadie puede crear una clave nueva en el espacio de trabajo sin poder abrirlo, y los propietarios y administradores pueden ver y revocar las claves de todos en **Ajustes** → **Desarrolladores** del espacio de trabajo.
+Las claves de API creadas en el espacio de trabajo siguen funcionando para la persona que las creó, con o sin verificación en dos pasos. La verificación en dos pasos protege el inicio de sesión, y una clave es una credencial independiente. Nadie puede crear una clave nueva en el espacio de trabajo sin poder abrirlo, y los propietarios y administradores pueden ver y revocar las claves de todos en **Ajustes** → **Claves de API y apps** del espacio de trabajo.
 
-Las aplicaciones conectadas a la cuenta de alguien mediante OAuth solo funcionan en el espacio de trabajo personal de esa persona, así que nunca llegan a un espacio de trabajo de equipo.
+Las apps conectadas a la cuenta de alguien con OAuth solo funcionan en el espacio de trabajo personal de esa persona, así que nunca llegan a un espacio de trabajo de equipo.
 
 ## Si el espacio de trabajo deja Business [#if-the-workspace-leaves-business]
 
@@ -46,3 +58,19 @@ El requisito deja de aplicarse y el ajuste aparece desactivado. Si el espacio de
 ## Desactívala [#turn-it-off]
 
 En la página **Ajustes** → **Equipo**, desactiva **Exigir la verificación en dos pasos** y confirma que eres tú. Los miembros sin verificación en dos pasos podrán volver a abrir el espacio de trabajo de inmediato.
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### El interruptor está deshabilitado [#the-switch-is-disabled]
+
+O bien tu propia cuenta aún no tiene activada la verificación en dos pasos, o bien el espacio de trabajo no está en Business. La tarjeta indica cuál es el caso.
+
+### Un miembro está bloqueado y no puede activarla [#a-member-is-locked-out-and-cant-turn-it-on]
+
+Puede activarla desde sus propios **Ajustes** → **Perfil y seguridad**, que no requieren abrir el espacio de trabajo. Si ha perdido el teléfono y los códigos de respaldo, consulta [Perdiste el teléfono y los códigos de respaldo](/docs/help/privacy-and-security/two-step-verification#lost-your-phone-and-your-backup-codes).
+
+## Relacionado [#related]
+
+- [Verificación en dos pasos](/docs/help/privacy-and-security/two-step-verification)
+- [Roles del equipo](/docs/help/teams/roles)
+- [Mantén tu cuenta segura](/docs/help/privacy-and-security/account-security)

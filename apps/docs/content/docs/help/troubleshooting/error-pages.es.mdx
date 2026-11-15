@@ -3,45 +3,60 @@ title: "Un escaneo muestra una página de error"
 description: "Qué significa cada página de error de un código QR, desde \"QR code not found\" hasta \"This campaign has ended\", y cómo solucionarla."
 ---
 
-Cuando un código dinámico no puede abrir su destino, quien lo escanea ve una página breve. Esto es lo que significa cada una.
+Cuando un código dinámico no puede abrir su destino, quien lo escanea ve una página breve en su lugar. Cada página de abajo es una de ellas, con su causa, la solución y cómo comprobar que funcionó. La mayoría se deben a los ajustes del propio código.
 
-## "QR code not found" [#qr-code-not-found]
+## "This campaign is paused", "This campaign hasn't started yet" o "This campaign has ended" [#this-campaign-is-paused-this-campaign-hasnt-started-yet-or-this-campaign-has-ended]
 
-Es una página 404: el enlace corto no pertenece a ningún código.
+El código está en pausa, aún no ha llegado a su fecha de inicio, ha pasado su fecha de fin o ha alcanzado su límite de escaneos.
 
-- El código se **eliminó para siempre**.
-- La **parte final** o el **dominio** del código se cambió después de imprimirlo.
-- Se eliminó la cuenta propietaria.
-- El enlace se escribió a mano con un error. Los enlaces cortos distinguen entre mayúsculas y minúsculas.
+1. Abre el código desde **Codes** y ve a su pestaña **Settings**, y luego a **Access & schedule**.
+2. Desactiva **Pause code**, cambia **Starts** o **Ends**, o aumenta el **Scan limit**.
+3. Haz clic en **Save changes**.
 
-Un código eliminado no se puede recuperar. Si cambiaste la parte final, vuelve a cambiarla con **Edit link**.
+Vuelve a escanear: se abrirá el destino. Para enviar a las personas a un lugar útil mientras un código está en pausa o ha terminado, rellena **Fallback URL**. Consulta [Pausar, programar o limitar un código](/docs/help/dynamic-codes/pause-schedule-limit).
 
-## "This QR code is no longer active" [#this-qr-code-is-no-longer-active]
-
-El código está **archivado** o en la **papelera**. Elige **Unarchive** o **Restore** en **Codes**. Consulta [Archivar, eliminar y restaurar códigos](/docs/help/dynamic-codes/archive-and-delete).
-
-QRdx también desactiva los códigos que enlazan a sitios dañinos.
-
-## "This campaign is paused", "hasn't started yet" or "has ended" [#this-campaign-is-paused-hasnt-started-yet-or-has-ended]
-
-Estos mensajes provienen de los ajustes del propio código: una pausa, una fecha de inicio o de fin, o un límite de escaneos. Cámbialos en **Access & schedule**. Consulta [Pausar, programar o limitar un código](/docs/help/dynamic-codes/pause-schedule-limit).
+<Shot id="scan-ended" />
 
 ## "This QR code is password protected" [#this-qr-code-is-password-protected]
 
-El código tiene una contraseña. Introdúcela y haz clic en **Continue**. Consulta [Proteger un código con contraseña](/docs/help/dynamic-codes/password).
+El código tiene una contraseña y esta es la página que la solicita. Escríbela en **Password** y haz clic en **Continue**; el navegador permanece desbloqueado durante 6 horas. Para quitar la contraseña, abre **Access & schedule** y haz clic en **Remove password**. Consulta [Proteger un código con contraseña](/docs/help/dynamic-codes/password).
 
-## "Too many requests" [#too-many-requests]
+## "This QR code is no longer active" [#this-qr-code-is-no-longer-active]
 
-Una red abrió muchos códigos QR en pocos segundos. Espera un momento y vuelve a escanear.
+El código está archivado o en la papelera. En **Codes**, abre el menú del código y elige **Unarchive**, o filtra la lista por **Trash** y elige **Restore**. En Gratis necesitas un espacio libre para códigos. Vuelve a escanear para confirmarlo. Consulta [Archivar, eliminar y restaurar códigos](/docs/help/dynamic-codes/archive-and-delete).
+
+QRdx también muestra esta página para un código que desactivó tras un informe de abuso.
+
+## "QR code not found" [#qr-code-not-found]
+
+El enlace corto no pertenece a ningún código. Ocurrió una de estas cosas:
+
+- El código se eliminó definitivamente, o se eliminó la cuenta que lo poseía. Un código eliminado no se puede recuperar.
+- Se cambió el back-half del código después de imprimirlo. Abre **Edit link** y vuelve a ponerlo como estaba.
+- El enlace se escribió a mano con un error. Los enlaces cortos distinguen entre mayúsculas y minúsculas.
 
 ## "This domain isn't connected yet" [#this-domain-isnt-connected-yet]
 
-El código usa un dominio personalizado cuya configuración de DNS no está terminada. Revisa el dominio en la página **Domains** de tu panel.
+El código usa un dominio personalizado cuya configuración de DNS no está terminada. Ve a **Settings** → **Domains**, añade los registros que se muestran y haz clic en **Verify**. La página desaparece cuando el dominio aparece como **Verified**. Consulta [Usa tu propio dominio](/docs/help/domains/custom-domains).
 
-## "This page could not be found" en una página [#this-page-could-not-be-found-on-a-page]
+## "Too many requests" [#too-many-requests]
 
-Una página móvil en `/p/…` muestra este mensaje cuando la página se eliminó o la dirección se escribió mal.
+Una misma red abrió muchos códigos QR en pocos segundos. Espera un momento y vuelve a escanear. No hay ningún problema con el código.
 
-## "This form isn't accepting responses right now" [#this-form-isnt-accepting-responses-right-now]
+## "Page not found" en una página móvil [#page-not-found-on-a-mobile-page]
 
-El espacio de trabajo alcanzó su límite mensual de respuestas de formularios. Consulta [Recopilar respuestas con un formulario](/docs/help/pages-and-forms/forms#monthly-limits).
+La página alojada en `/p/…` se eliminó, o su dirección se escribió mal. Busca la página en **Pages & forms** y comprueba que el código apunte a ella. Consulta [Cambiar lo que abre un código impreso](/docs/help/dynamic-codes/change-the-type).
+
+## "This form isn't accepting responses right now." [#this-form-isnt-accepting-responses-right-now]
+
+El espacio de trabajo alcanzó su límite mensual de respuestas de formulario. Se reabre el mes siguiente, o de inmediato tras una mejora de plan. Consulta [Recopilar respuestas con un formulario](/docs/help/pages-and-forms/forms#monthly-limits).
+
+## Sigues atascado [#still-stuck]
+
+[Contacta con soporte](/docs/help/contact) con el enlace corto del código y el texto exacto de la página.
+
+## Relacionado [#related]
+
+- [Pausar, programar o limitar un código](/docs/help/dynamic-codes/pause-schedule-limit)
+- [Archivar, eliminar y restaurar códigos](/docs/help/dynamic-codes/archive-and-delete)
+- [Un código abre la página equivocada](/docs/help/troubleshooting/wrong-destination)

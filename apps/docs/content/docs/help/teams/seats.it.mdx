@@ -1,38 +1,60 @@
 ---
-title: "Posti e limiti dello spazio di lavoro"
-description: "Quante persone può avere uno spazio di lavoro e come uscire, rimuovere qualcuno o eliminare uno spazio di lavoro."
+title: "Posti e limiti del workspace"
+description: "Quante persone può avere un workspace e come uscire, rimuovere qualcuno o eliminare un workspace."
 ---
 
-## Quanti posti hai a disposizione [#how-many-seats-you-get]
+I posti di un workspace dipendono dal piano dei suoi proprietari e dei membri con accesso alla fatturazione. Questa pagina spiega quante persone possono entrare e come si esce, si rimuove qualcuno o si elimina un workspace.
 
-- **Pro**: 3 posti, incluso il proprietario.
-- **Business**: posti illimitati.
-- **Gratuito**: 1 posto, solo per te.
+## Quanti posti hai [#how-many-seats-you-get]
 
-Uno spazio di lavoro usa il piano migliore tra quelli dei suoi proprietari. I membri non hanno bisogno di un abbonamento personale.
+| Piano | Posti |
+| --- | --- |
+| Gratuito | 1 (tu) |
+| Pro | 3, incluso il proprietario |
+| Business | Illimitati |
+
+Un workspace usa il piano migliore tra quelli dei suoi proprietari e dei membri con accesso alla fatturazione. I membri non hanno bisogno di un abbonamento personale.
 
 ## Gli inviti in sospeso occupano un posto [#pending-invitations-use-a-seat]
 
-Un invito occupa un posto finché non viene accettato o revocato. Per liberare il posto, trova l'invito nella pagina **Impostazioni** → **Team** e fai clic su **Revoca**.
+Un invito occupa un posto finché non viene accettato o revocato. Per liberare il posto, trova l'invito in **Inviti in sospeso** nella pagina **Impostazioni** → **Team** e fai clic su **Revoca**.
 
-## Se il piano dei proprietari cambia [#if-the-owners-plan-changes]
+## Se cambia il piano dei proprietari [#if-the-owners-plan-changes]
 
-Le persone già presenti nello spazio di lavoro restano. Vengono bloccati solo i nuovi inviti, finché non c'è un posto libero.
+Le persone già presenti nel workspace restano. Vengono bloccati solo i nuovi inviti, finché non c'è un posto libero.
 
 ## Rimuovere qualcuno [#remove-someone]
 
-Nella pagina **Impostazioni** → **Team**, fai clic su **Rimuovi** accanto al nome della persona, poi su **Rimuovi membro**. Solo gli amministratori e i proprietari possono rimuovere i membri, e nessuno può essere rimosso dal proprio spazio di lavoro personale.
+Nella pagina **Impostazioni** → **Team**, fai clic su **Rimuovi** accanto al nome della persona, poi su **Rimuovi membro** e, se richiesto, [conferma la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you). Solo gli amministratori e i proprietari possono rimuovere i membri, e nessuno può essere rimosso dal proprio workspace personale.
 
-I codici e le pagine che ha creato restano nello spazio di lavoro.
+I codici e le pagine che ha creato restano nel workspace. Le chiavi API che ha creato per il workspace smettono di funzionare.
 
-## Uscire da uno spazio di lavoro [#leave-a-workspace]
+## Uscire da un workspace [#leave-a-workspace]
 
-Nelle **Impostazioni** → **Generali** dello spazio di lavoro, fai clic su **Esci dallo spazio di lavoro**.
+In **Impostazioni** → **Generale** del workspace, fai clic su **Esci dal workspace**. Perdi l'accesso ai suoi codici, alle sue pagine e ai suoi temi; ciò che hai creato resta nel workspace e ti serve un nuovo invito per rientrare.
 
-Se sei l'unico proprietario, nomina prima un altro proprietario. Vedi [Ruoli del team](/docs/help/teams/roles). Non puoi uscire dal tuo spazio di lavoro personale.
+Se sei l'unico proprietario, prima nomina proprietario qualcun altro. Vedi [Ruoli del team](/docs/help/teams/roles). Non puoi uscire dal tuo workspace personale.
 
-## Eliminare uno spazio di lavoro [#delete-a-workspace]
+## Eliminare un workspace [#delete-a-workspace]
 
-I proprietari possono fare clic su **Elimina spazio di lavoro** in **Impostazioni** → **Generali**. Per confermare, digita l'URL dello spazio di lavoro. Il tuo spazio di lavoro personale non può essere eliminato: scompare quando [elimini il tuo account](/docs/help/account-and-billing/delete-your-account).
+I proprietari possono fare clic su **Elimina workspace** in **Impostazioni** → **Generale**. Per confermare, digita l'URL del workspace. Il tuo workspace personale non può essere eliminato: scompare quando [elimini il tuo account](/docs/help/account-and-billing/delete-your-account).
 
-Niente smette di funzionare. Ogni codice, pagina, file e dominio passa allo spazio di lavoro personale di chi lo ha creato, e i codici stampati continuano a reindirizzare. Le chiavi API dello spazio di lavoro vengono eliminate.
+<Shot id="workspace-danger-zone" />
+
+Niente smette di funzionare. Ogni codice, pagina, tema, file e dominio passa al workspace personale del membro che lo ha creato, e i codici stampati continuano a reindirizzare. I membri del workspace e gli inviti in sospeso vengono rimossi e le sue chiavi API vengono eliminate.
+
+## Se qualcosa non funziona [#if-something-goes-wrong]
+
+### Crea link di invito è disattivato [#create-invite-link-is-disabled]
+
+Tutti i posti sono occupati, inviti in sospeso compresi. Revoca un invito, rimuovi qualcuno oppure chiedi a un proprietario o a un membro con accesso alla fatturazione di passare a un piano superiore.
+
+### Esci dal workspace viene rifiutato [#leave-workspace-is-refused]
+
+Sei l'unico proprietario oppure è il tuo workspace personale. Nomina prima proprietario un altro membro; dal tuo workspace personale non si può uscire.
+
+## Correlati [#related]
+
+- [Creare un workspace e invitare persone](/docs/help/teams/create-and-invite)
+- [Ruoli del team](/docs/help/teams/roles)
+- [Piani e cosa includono](/docs/help/account-and-billing/plans)

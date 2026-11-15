@@ -1,8 +1,10 @@
 ---
 title: "QR Code Card"
-description: "Una tarjeta con un código QR dentro de un marco «Escanéame», un título, una descripción y espacio para acciones."
+description: "Una tarjeta con un código QR dentro de un marco \"Escanéame\", un título, una descripción y espacio para acciones, para proyectos con shadcn/ui."
 icon: Frame
 ---
+
+`QrCodeCard` coloca un código QR en una tarjeta con un marco de llamada a la acción, un encabezado, una línea de texto y un pie para botones. Úsalo cuando el código sea el protagonista de la tarjeta: un display de mesa, una pantalla de check-in, la vista previa de un cartel de evento, un recuadro de "descarga nuestra app".
 
 <ComponentLinks name="qr-code-card" />
 
@@ -14,11 +16,11 @@ icon: Frame
 
 ## Uso [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeCard } from "@/components/qr-code-card";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeCard
   value="https://example.com/menu"
   title="Our menu"
@@ -32,29 +34,50 @@ Todo lo que pases como children se muestra en el pie de la tarjeta, por ejemplo 
 
 ### Marcos [#frames]
 
-`frame` coloca la llamada a la acción debajo del código (`"bottom"`), encima (`"top"`) o elimina el marco (`"none"`). `cta` cambia el texto, y `frameClassName` modifica el estilo del marco, por ejemplo con el color de tu marca.
+`frame` coloca la llamada a la acción debajo del código (`"bottom"`), encima (`"top"`) o elimina el marco (`"none"`). `cta` cambia la etiqueta y `frameClassName` modifica el estilo del marco, por ejemplo con el color de tu marca.
 
 <ComponentPreview name="qr-code-card-frames" />
 
-De forma predeterminada, el marco usa los colores `foreground` y `background` de tu tema, por lo que se lee bien tanto en modo claro como en modo oscuro. El código en sí mantiene un fondo claro, que cualquier lector puede escanear.
+Por defecto, el marco usa los colores `foreground` y `background` de tu tema, así que se lee bien tanto en modo claro como oscuro. El código en sí mantiene un fondo claro, que todos los lectores pueden leer.
 
 ### Estilo del código [#styling-the-code]
 
 `qr` acepta cualquier opción de estilo de qrdx: `fgColor`, `bgColor`, degradados, `bodyPattern`, patrones de esquina, `logo` y `templateId`.
 
-```tsx
-<QrCodeCard
-  value="https://example.com"
-  qr={{
-    fgColor: "#155DFC",
-    bodyPattern: "rounded",
-    cornerEyePattern: "extra-rounded",
-  }}
-/>
+```tsx title="components/brand-card.tsx"
+import { QrCodeCard } from "@/components/qr-code-card";
+
+export function BrandCard() {
+  return (
+    <QrCodeCard
+      value="https://example.com"
+      title="example.com"
+      qr={{
+        fgColor: "#155DFC",
+        bodyPattern: "rounded",
+        cornerEyePattern: "extra-rounded",
+      }}
+    />
+  );
+}
 ```
+
+## Accesibilidad y renderizado [#accessibility-and-rendering]
+
+- El código se encuentra dentro de un elemento `role="img"` cuyo `aria-label` es `label`, o `QR code: <value>` si no se define. Define `label` cuando el valor no sea un enlace público.
+- `title` se muestra como el encabezado de la tarjeta y `description` debajo; ambos aceptan cualquier nodo de React.
+- El componente es un Client Component. Una página de Server Component puede importarlo y pasarle datos del servidor como props, y el código se renderiza en el servidor.
 
 ## Referencia de la API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-card.tsx" type="{ [K in keyof QrCodeCardProps as K extends Exclude<keyof ComponentProps<'div'>, 'title' | 'children'> ? never : K]: QrCodeCardProps[K] }" />
 
 Cualquier otra prop, como `className`, se pasa a [Card](https://ui.shadcn.com/docs/components/card).
+
+## Relacionado [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="Un menú de descarga para colocar en el pie de la tarjeta." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="El código por sí solo, con botones de descarga." />
+  <Card href="/docs/features/frames" title="Marcos, puntuación de escaneo y archivos de impresión" description="Los marcos propios de la biblioteca, dibujados en la imagen del código." />
+</Cards>

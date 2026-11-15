@@ -1,58 +1,145 @@
 ---
-title: "安装 React 库"
-description: "安装 qrdx React 库,只需几行代码即可渲染你的第一个二维码。"
+title: "React 库快速入门"
+description: "安装 qrdx,在 React 组件中渲染带样式的二维码,并将其保存为文件,几分钟即可完成。"
 icon: Rocket
 ---
 
-安装 `qrdx`,几分钟内即可创建你的第一个二维码。
+读完本页后,你将得到一个由 React 组件渲染的带样式二维码,以及一个可将其保存为 SVG 的按钮。该库自行绘制二维码,因此无需账号,也无需 API 密钥。
 
 <NpmStatus package="qrdx" />
 
-## 安装软件包 [#install-the-package]
+## 开始之前 [#before-you-start]
+
+- 一个使用 React 18 或更高版本的 React 应用。Next.js、Vite、Remix 等均可使用。
+- Node.js 18 或更高版本。
+
+想在写代码之前先看看有哪些选项?可以在 [Playground](/playground?open=code&lang=react) 中设计二维码的样式,并将其复制为 React 组件。
+
+## 动手构建 [#build-it]
+
+### 1. 安装 qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`react` 和 `react-dom`(18 或更高版本)是对等依赖,因此 `qrdx` 会使用你的应用已有的版本。PDF 导出为可选功能:只有需要时才安装 `jspdf`。
+`react` 和 `react-dom` 是对等依赖(peer dependencies),因此该包会使用你的应用已有的版本。不会再安装其他任何依赖:PDF 导出需要可选的 `jspdf` 包,而且只有在使用时才需要。
 
-## 快速开始 [#quick-start]
+### 2. 渲染二维码 [#2-render-a-code]
 
-创建你的第一个二维码:
+```tsx title="components/first-qr-code.tsx"
+import { QRCode } from "qrdx";
 
-```tsx
-import { QRCode } from 'qrdx';
+export function FirstQrCode() {
+  return <QRCode value="https://example.com" size={256} />;
+}
+```
 
-export default function App() {
+把该组件放到页面上,你会看到一个 256 px 的二维码,采用库的默认外观:圆形模块、齿轮形的角定位点,以及白底黑码。用手机摄像头对准屏幕,即可打开 example.com。
+
+<Shot id="lib-first-code" />
+
+`QRCode` 渲染的是 `<svg>`,不使用仅限浏览器的 hook,因此可在 React Server Components 中使用,并且在任何 JavaScript 运行之前就会渲染到页面的 HTML 中。屏幕阅读器无法单靠它获取任何信息:第 3 步会介绍如何为它添加标签。
+
+### 3. 设置样式 [#3-style-it]
+
+```tsx title="components/styled-qr-code.tsx"
+import { QRCode } from "qrdx";
+
+export function StyledQrCode() {
   return (
     <QRCode
-      value="https://example.com"
+      value="https://example.com/menu"
       size={256}
+      margin={4}
+      fgColor="#1d4ed8"
+      bodyPattern="rounded"
+      cornerEyePattern="extra-rounded"
+      cornerEyeDotPattern="rounded"
+      frame={{ style: "banner-bottom", text: "Scan for the menu" }}
     />
   );
 }
 ```
 
-就这么简单。你现在已经有了一个可用的二维码。
+现在二维码变成了蓝色的圆形模块,下方有一条横幅,写着“Scan for the menu”。输出的高度超过 256 px,这是因为边框是添加在二维码周围,而不是绘制在二维码上方,所以二维码依然可以被扫描。
 
-想先设计一下?[在 Playground 中试用](/playground?open=code&lang=react):在那里设计好样式,然后将其复制为 React 组件。
+<Shot id="lib-styled-code" />
 
-## 后续步骤 [#next-steps]
+各个属性的作用:
+
+- `margin` 是二维码周围的静区,单位为模块。默认值为 0,适合放在自带内边距的卡片中的二维码。在杂乱或深色背景上请使用 4。
+- `fgColor` 接受任意 CSS 颜色或渐变。`bgColor`、`eyeColor` 和 `dotColor` 的用法相同。
+- `bodyPattern`、`cornerEyePattern` 和 `cornerEyeDotPattern` 分别决定模块、角定位点以及其内部圆点的形状。共有 {facts.bodyPatterns} 种主体图案、{facts.eyeShapes} 种定位点形状和 {facts.eyeCentres} 种定位点中心,全部可在[形状、定位点与边框](/docs/styles)中实时查看。
+- `frame` 可添加 {facts.frameStyles} 种内置行动号召边框之一,也可以使用你自己的边框。
+- `QRCode` 只接受二维码自身的属性和 `style`,不接受其他属性。若要为二维码设置无障碍名称或类名,请用一个元素包裹它(`<div role="img" aria-label="QR code for the menu">`),或者渲染 `QRCodeSVG`,它会把 `aria-label`、`className` 及其他任意属性放到 `<svg>` 上。
+
+### 4. 保存为文件 [#4-save-it-as-a-file]
+
+```tsx title="components/download-svg-button.tsx"
+"use client";
+
+import { downloadQRCode } from "qrdx";
+
+const menuCode = {
+  value: "https://example.com/menu",
+  margin: 4,
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+  frame: { style: "banner-bottom", text: "Scan for the menu" },
+} as const;
+
+export function DownloadSvgButton() {
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        downloadQRCode(menuCode, {
+          format: "svg",
+          size: { width: 1024, height: 1024 },
+          filename: "menu.svg",
+        })
+      }
+    >
+      Download SVG
+    </button>
+  );
+}
+```
+
+点击按钮会保存 `menu.svg`:内容与屏幕上的二维码相同,以 1024 px 绘制,任意缩放都清晰,正是印刷店所要求的文件。将 `format` 设为 `png`、`jpg` 或 `webp` 可得到图片,设为 `eps` 可得到供设计工具使用的矢量文件,设为 `pdf` 则可得到 PDF(需要可选的 `jspdf` 包)。
+
+`downloadQRCode` 使用浏览器的 DOM,因此按钮需要放在 Client Component 中。Server Component 仍然可以渲染它。请像上面那样把二维码的选项集中放在一个对象里,这样文件就会与预览一致。
+
+### 5. 检查能否扫描 [#5-check-that-it-scans]
+
+印刷之前,请用两三部手机扫描二维码。对于颜色特殊或带有 Logo 的设计,`getScanScore` 会在浏览器中运行同样的检查,并返回分数、等级以及需要修复的问题:
+
+```tsx title="lib/check-code.ts"
+import { getScanScore } from "qrdx";
+
+const { score, grade, checks } = await getScanScore({
+  value: "https://example.com/menu",
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+});
+// score: 0 to 100, grade: "great" | "ok" | "risky" | "fails"
+// checks: [{ id, passed, message, fix? }]
+```
+
+你也可以把截图或印刷二维码的照片上传到[扫描检测工具](/tools/scan-checker)。
+
+## 出现问题时 [#if-something-goes-wrong]
+
+- **`Module not found: Can't resolve 'qrdx'`。** 请在导入它的工作区或应用中安装该包,然后重启开发服务器。
+- **二维码能渲染,但手机无法识别。** 添加 `margin={4}`,保持深色模块配浅色背景,并且在屏幕上至少渲染 128 px 宽。其他原因请参阅[二维码无法扫描](/docs/help/troubleshooting/wont-scan)。
+- **`PDF export needs the optional "jspdf" package`。** 请在同一个包中运行 `npm install jspdf`。SVG、PNG、JPG、WebP 和 EPS 无需任何额外安装。
+
+## 相关内容 [#related]
 
 <Cards>
-  <Card
-    href="/docs/usage"
-    title="学习使用方法"
-    description="自定义颜色、图案等"
-  />
-  <Card
-    href="/docs/features/templates"
-    title="使用模板"
-    description="立即应用预置样式"
-  />
-  <Card
-    href="/docs/api-reference"
-    title="API 参考"
-    description="完整的属性文档"
-  />
+  <Card href="/docs/usage" title="基本用法" description="该用哪个组件,以及决定二维码外观的所有属性。" />
+  <Card href="/docs/nextjs" title="Next.js 中的二维码" description="App Router 中的 Server Components、路由参数、实时输入和下载。" />
+  <Card href="/docs/features/patterns" title="选择模块和定位点形状" description="所有形状,以及应避免的搭配。" />
+  <Card href="/docs/api-reference" title="库 API 参考" description="该包导出的所有组件、函数和类型。" />
 </Cards>

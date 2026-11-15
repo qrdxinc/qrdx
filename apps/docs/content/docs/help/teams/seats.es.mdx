@@ -1,19 +1,23 @@
 ---
 title: "Asientos y límites del espacio de trabajo"
-description: "Cuántas personas puede tener un espacio de trabajo y cómo salir de él, quitar a alguien o eliminarlo."
+description: "Cuántas personas puede tener un espacio de trabajo y cómo salir de uno, quitar a alguien o eliminar un espacio de trabajo."
 ---
+
+Los asientos de un espacio de trabajo dependen del plan de sus propietarios y de los miembros de facturación. Esta página explica cuántas personas caben, cómo se sale, cómo se quita a alguien y cómo se elimina un espacio de trabajo.
 
 ## Cuántos asientos tienes [#how-many-seats-you-get]
 
-- **Pro**: 3 asientos, incluido el propietario.
-- **Business**: asientos ilimitados.
-- **Gratis**: 1 asiento, solo para ti.
+| Plan | Asientos |
+| --- | --- |
+| Gratis | 1 (tú) |
+| Pro | 3, incluido el propietario |
+| Business | Ilimitados |
 
-Un espacio de trabajo usa el mejor plan entre sus propietarios. Los miembros no necesitan su propia suscripción.
+Un espacio de trabajo usa el mejor plan entre sus propietarios y sus miembros de facturación. Los miembros no necesitan su propia suscripción.
 
 ## Las invitaciones pendientes ocupan un asiento [#pending-invitations-use-a-seat]
 
-Una invitación ocupa un asiento hasta que se acepta o se revoca. Para liberar el asiento, busca la invitación en la página **Ajustes** → **Equipo** y haz clic en **Revocar**.
+Una invitación ocupa un asiento hasta que se acepta o se revoca. Para liberar el asiento, busca la invitación en **Invitaciones pendientes** en la página **Ajustes** → **Equipo** y haz clic en **Revocar**.
 
 ## Si cambia el plan de los propietarios [#if-the-owners-plan-changes]
 
@@ -21,13 +25,13 @@ Las personas que ya están en el espacio de trabajo se quedan. Solo se bloquean 
 
 ## Quitar a alguien [#remove-someone]
 
-En la página **Ajustes** → **Equipo**, haz clic en **Quitar** junto a su nombre y luego en **Quitar miembro**. Solo los administradores y propietarios pueden quitar miembros, y no se puede quitar a nadie de su propio espacio de trabajo.
+En la página **Ajustes** → **Equipo**, haz clic en **Quitar** junto a su nombre, luego en **Quitar miembro** y [confirma que eres tú](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) si se te pide. Solo los administradores y los propietarios pueden quitar miembros, y nadie puede ser quitado de su propio espacio de trabajo.
 
-Los códigos y las páginas que crearon se quedan en el espacio de trabajo.
+Los códigos y las páginas que creó se quedan en el espacio de trabajo. Las claves de API que creó para el espacio de trabajo dejan de funcionar.
 
 ## Salir de un espacio de trabajo [#leave-a-workspace]
 
-En **Ajustes** → **General** del espacio de trabajo, haz clic en **Salir del espacio de trabajo**.
+En **Ajustes** → **General** del espacio de trabajo, haz clic en **Salir del espacio de trabajo**. Pierdes el acceso a sus códigos, páginas y temas; lo que creaste se queda en el espacio de trabajo y necesitas una nueva invitación para volver a unirte.
 
 Si eres el único propietario, primero nombra propietario a otra persona. Consulta [Roles del equipo](/docs/help/teams/roles). No puedes salir de tu propio espacio de trabajo.
 
@@ -35,4 +39,22 @@ Si eres el único propietario, primero nombra propietario a otra persona. Consul
 
 Los propietarios pueden hacer clic en **Eliminar espacio de trabajo** en **Ajustes** → **General**. Para confirmar, escribe la URL del espacio de trabajo. Tu propio espacio de trabajo no se puede eliminar; desaparece cuando [eliminas tu cuenta](/docs/help/account-and-billing/delete-your-account).
 
-Nada deja de funcionar. Cada código, página, archivo y dominio pasa al espacio de trabajo propio de la persona que lo creó, y los códigos impresos siguen redirigiendo. Las claves de API del espacio de trabajo se eliminan.
+<Shot id="workspace-danger-zone" />
+
+Nada deja de funcionar. Cada código, página, tema, archivo y dominio pasa al espacio de trabajo propio del miembro que lo creó, y los códigos impresos siguen redirigiendo. Los miembros del espacio de trabajo y las invitaciones pendientes se eliminan, y sus claves de API se borran.
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### Crear enlace de invitación está desactivado [#create-invite-link-is-disabled]
+
+Todos los asientos están ocupados, contando las invitaciones pendientes. Revoca una invitación, quita a alguien o pide a un propietario o a un miembro de facturación que mejore el plan.
+
+### Se rechaza Salir del espacio de trabajo [#leave-workspace-is-refused]
+
+Eres el único propietario, o es tu propio espacio de trabajo. Primero nombra propietario a otro miembro; no puedes salir de tu propio espacio de trabajo.
+
+## Relacionado [#related]
+
+- [Crear un espacio de trabajo e invitar a personas](/docs/help/teams/create-and-invite)
+- [Roles del equipo](/docs/help/teams/roles)
+- [Planes y qué incluyen](/docs/help/account-and-billing/plans)
