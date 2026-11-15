@@ -39,6 +39,18 @@
     "pages": ["/docs/webhooks"],
     "job": "add-endpoint-dialog"
   },
+  "add-passkey-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/add-passkey-dialog.light.webp",
+    "dark": "/docs-static/shots/add-passkey-dialog.dark.webp",
+    "width": 1800,
+    "height": 1217,
+    "alt": "The Add a passkey step: a Name field for the passkey and the Continue button that asks the browser for it.",
+    "title": "Adding a passkey",
+    "pages": ["/docs/help/privacy-and-security/passkeys"],
+    "job": "add-passkey-dialog"
+  },
   "add-routing-rule": {
     "kind": "clip",
     "poster": {
@@ -56,6 +68,18 @@
     "title": "Adding a routing rule",
     "pages": ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
     "job": "add-routing-rule"
+  },
+  "affiliate-settings": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/affiliate-settings.light.webp",
+    "dark": "/docs-static/shots/affiliate-settings.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Affiliate program settings page: the referral link with its copy button, the commission terms and the earnings so far.",
+    "title": "The affiliate program page",
+    "pages": ["/docs/help/account-and-billing/affiliate-program"],
+    "job": "affiliate-settings"
   },
   "analytics-workspace": {
     "kind": "shot",
@@ -193,8 +217,8 @@
     "light": "/docs-static/shots/code-password.light.webp",
     "dark": "/docs-static/shots/code-password.dark.webp",
     "width": 1800,
-    "height": 539,
-    "alt": "The Password field in a code's Settings tab on a code that already has one, with the note that visitors type it once and stay unlocked for six hours.",
+    "height": 1703,
+    "alt": "The Access & schedule panel of a code's Settings tab with a password typed into the Password field (shown masked), a start and an end date, a scan limit and a fallback address, before Save changes.",
     "title": "Protecting a code with a password",
     "pages": ["/docs/help/dynamic-codes/password", "/docs/code-controls"],
     "job": "code-password"
@@ -206,7 +230,7 @@
     "dark": "/docs-static/shots/code-settings.dark.webp",
     "width": 1800,
     "height": 1174,
-    "alt": "The Settings tab of a dynamic code: the Pause code switch, the Password field, Starts and Ends dates, the Scan limit and the Fallback URL.",
+    "alt": "The Settings tab of a dynamic code with every control in use: a password set, a start and an end date, a scan limit of 300 and a fallback address for scans outside the window.",
     "title": "A code's Settings tab",
     "pages": [
       "/docs/help/dynamic-codes/pause-schedule-limit",
@@ -260,6 +284,18 @@
     ],
     "job": "create-page"
   },
+  "create-workspace-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/create-workspace-dialog.light.webp",
+    "dark": "/docs-static/shots/create-workspace-dialog.dark.webp",
+    "width": 1800,
+    "height": 1273,
+    "alt": "The Create workspace dialog: the Workspace name and Workspace URL fields and the Create button.",
+    "title": "Creating a workspace",
+    "pages": ["/docs/help/teams/create-and-invite"],
+    "job": "create-workspace-dialog"
+  },
   "custom-domains": {
     "kind": "shot",
     "look": "window",
@@ -287,13 +323,49 @@
     ],
     "job": "dashboard-home"
   },
+  "design-colors": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/design-colors.light.webp",
+    "dark": "/docs-static/shots/design-colors.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Colors section of the playground's Design tab: swatches for the code, its background, eyes and dots, with the live preview beside them.",
+    "title": "The Colors section of the Design tab",
+    "pages": ["/docs/help/designing/colors-and-contrast"],
+    "job": "design-colors"
+  },
+  "design-frame": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/design-frame.light.webp",
+    "dark": "/docs-static/shots/design-frame.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Frame section of the playground's Design tab: the frame choices and the label field, with the framed code in the live preview.",
+    "title": "The Frame section of the Design tab",
+    "pages": ["/docs/help/designing/frames"],
+    "job": "design-frame"
+  },
+  "design-logo": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/design-logo.light.webp",
+    "dark": "/docs-static/shots/design-logo.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Logo section of the playground's Design tab: the logo switch, quick icons and the upload, with the logo in the middle of the live preview.",
+    "title": "The Logo section of the Design tab",
+    "pages": ["/docs/help/designing/logos"],
+    "job": "design-logo"
+  },
   "dns-records": {
     "kind": "shot",
     "look": "window",
     "light": "/docs-static/shots/dns-records.light.webp",
     "dark": "/docs-static/shots/dns-records.dark.webp",
     "width": 1800,
-    "height": 1111,
+    "height": 588,
     "alt": "The DNS records of a custom domain: a CNAME record pointing the hostname at QRdx and a TXT record proving ownership, each with a copy button.",
     "title": "The DNS records of a domain",
     "pages": ["/docs/help/domains/custom-domains", "/docs/custom-domains"],
@@ -358,6 +430,18 @@
       "/docs/dynamic-qr-codes"
     ],
     "job": "folders-menu"
+  },
+  "form-editor": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/form-editor.light.webp",
+    "dark": "/docs-static/shots/form-editor.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The page editor with the Form block open: its questions, each with a type and a required switch, the submit button label and the thank-you message, next to the phone preview.",
+    "title": "Editing a form block",
+    "pages": ["/docs/help/pages-and-forms/forms", "/docs/forms-and-pages"],
+    "job": "form-editor"
   },
   "form-responses": {
     "kind": "shot",
@@ -499,11 +583,23 @@
     "light": "/docs-static/shots/passkeys.light.webp",
     "dark": "/docs-static/shots/passkeys.dark.webp",
     "width": 1800,
-    "height": 1175,
+    "height": 783,
     "alt": "The Passkeys section of Profile & security: a passkey named Work laptop with when it was added, its options menu, and the Add passkey button.",
     "title": "Passkeys on the account",
     "pages": ["/docs/help/privacy-and-security/passkeys"],
     "job": "passkeys"
+  },
+  "pixels-panel": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/pixels-panel.light.webp",
+    "dark": "/docs-static/shots/pixels-panel.dark.webp",
+    "width": 1800,
+    "height": 879,
+    "alt": "The Tracking pixels panel on a hosted page code's Settings tab, where analytics and ad pixel IDs are added to the page.",
+    "title": "The Tracking pixels panel",
+    "pages": ["/docs/tracking-and-conversions"],
+    "job": "pixels-panel"
   },
   "plan-usage": {
     "kind": "shot",
@@ -595,6 +691,42 @@
     ],
     "job": "playground-download"
   },
+  "playground-download-print": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/playground-download-print.light.webp",
+    "dark": "/docs-static/shots/playground-download-print.dark.webp",
+    "width": 1800,
+    "height": 1746,
+    "alt": "The Print-ready tab of the Download QR code dialog: the scanning distance, the code's printed width, the color mode and bleed, with the download button.",
+    "title": "The Print-ready tab of the download dialog",
+    "pages": ["/docs/help/getting-started/download-and-print"],
+    "job": "playground-download-print"
+  },
+  "playground-dynamic-on": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/playground-dynamic-on.light.webp",
+    "dark": "/docs-static/shots/playground-dynamic-on.dark.webp",
+    "width": 1800,
+    "height": 264,
+    "alt": "The Content panel of the playground after picking Dynamic: the short link the code will hold, with its copy button, where the static address was.",
+    "title": "Dynamic picked",
+    "pages": ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
+    "job": "playground-dynamic-on"
+  },
+  "playground-dynamic-switch": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/playground-dynamic-switch.light.webp",
+    "dark": "/docs-static/shots/playground-dynamic-switch.dark.webp",
+    "width": 1800,
+    "height": 256,
+    "alt": "The Content panel of the playground with a link typed in and the Static or Dynamic choice under it: Static is fixed once printed, Dynamic can be edited later and counts scans.",
+    "title": "Static or dynamic",
+    "pages": ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
+    "job": "playground-dynamic-switch"
+  },
   "playground-fine-tune": {
     "kind": "shot",
     "look": "window",
@@ -638,6 +770,18 @@
     ],
     "job": "playground-type-picker"
   },
+  "precise-location-panel": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/precise-location-panel.light.webp",
+    "dark": "/docs-static/shots/precise-location-panel.dark.webp",
+    "width": 1800,
+    "height": 554,
+    "alt": "The Precise location panel on a code's Settings tab: the Ask scanners for precise location switch and what scanners see when it is on.",
+    "title": "The Precise location panel",
+    "pages": ["/docs/precise-location"],
+    "job": "precise-location-panel"
+  },
   "preferences": {
     "kind": "shot",
     "look": "window",
@@ -650,17 +794,53 @@
     "pages": ["/docs/help/account-and-billing/sign-in"],
     "job": "preferences"
   },
+  "pricing-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/pricing-page.light.webp",
+    "dark": "/docs-static/shots/pricing-page.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The pricing page with the Monthly and Yearly choice and the Free, Pro and Business plans side by side, each with its upgrade button.",
+    "title": "The pricing page",
+    "pages": ["/docs/help/account-and-billing/change-plan"],
+    "job": "pricing-page"
+  },
+  "report-abuse-form": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/report-abuse-form.light.webp",
+    "dark": "/docs-static/shots/report-abuse-form.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Report abuse page: the field for the link, the choice of reason and an optional note, with the Send report button.",
+    "title": "Reporting a code",
+    "pages": ["/docs/help/privacy-and-security/report-abuse"],
+    "job": "report-abuse-form"
+  },
   "require-two-step": {
     "kind": "shot",
     "look": "window",
     "light": "/docs-static/shots/require-two-step.light.webp",
     "dark": "/docs-static/shots/require-two-step.dark.webp",
     "width": 1800,
-    "height": 706,
+    "height": 546,
     "alt": "The Two-step verification card of the Team page, with the Require two-step verification switch and the note that the owner's own account needs it first.",
     "title": "Requiring two-step verification",
     "pages": ["/docs/help/teams/require-two-step-verification"],
     "job": "require-two-step"
+  },
+  "routing-add-rule": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/routing-add-rule.light.webp",
+    "dark": "/docs-static/shots/routing-add-rule.dark.webp",
+    "width": 1800,
+    "height": 1298,
+    "alt": "The Add rule menu of the Smart routing panel, open, listing the rule templates to start from.",
+    "title": "Adding a routing rule",
+    "pages": ["/docs/help/dynamic-codes/routing"],
+    "job": "routing-add-rule"
   },
   "routing-rules": {
     "kind": "shot",
@@ -761,6 +941,78 @@
     ],
     "job": "scan-paused"
   },
+  "scan-score-panel": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/scan-score-panel.light.webp",
+    "dark": "/docs-static/shots/scan-score-panel.dark.webp",
+    "width": 1800,
+    "height": 1631,
+    "alt": "The Will it scan? panel of the playground, opened from the Scan score badge: the list of checks on the current design, each marked as passed or needing attention.",
+    "title": "The Will it scan? panel",
+    "pages": ["/docs/help/designing/scan-score"],
+    "job": "scan-score-panel"
+  },
+  "sessions-card": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/sessions-card.light.webp",
+    "dark": "/docs-static/shots/sessions-card.dark.webp",
+    "width": 1800,
+    "height": 475,
+    "alt": "The sessions card in Profile & security: the devices signed in to the account and the Sign out everywhere else button.",
+    "title": "Where you are signed in",
+    "pages": ["/docs/help/privacy-and-security/account-security"],
+    "job": "sessions-card"
+  },
+  "share-analytics-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/share-analytics-dialog.light.webp",
+    "dark": "/docs-static/shots/share-analytics-dialog.dark.webp",
+    "width": 1800,
+    "height": 1196,
+    "alt": "The Share analytics dialog of a code: the Public analytics page switch, the link to share and who can see it.",
+    "title": "Sharing a code's analytics",
+    "pages": ["/docs/client-reports"],
+    "job": "share-analytics-dialog"
+  },
+  "short-link-domain-picker": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/short-link-domain-picker.light.webp",
+    "dark": "/docs-static/shots/short-link-domain-picker.dark.webp",
+    "width": 1800,
+    "height": 1643,
+    "alt": "The Edit dynamic QR code dialog with the Short link domain list open: the default qrdx.dev/q/ and the workspace's verified custom domain.",
+    "title": "Picking the short link domain",
+    "pages": ["/docs/custom-domains", "/docs/help/domains/custom-domains"],
+    "job": "short-link-domain-picker"
+  },
+  "sign-in-code-step": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/sign-in-code-step.light.webp",
+    "dark": "/docs-static/shots/sign-in-code-step.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The sign-in page after Email me a code: the Check your email step with the six-digit code field and the option to use a different email.",
+    "title": "Waiting for the sign-in code",
+    "pages": ["/docs/help/troubleshooting/emails"],
+    "job": "sign-in-code-step"
+  },
+  "sign-in-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/sign-in-page.light.webp",
+    "dark": "/docs-static/shots/sign-in-page.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The sign-in page: Continue with Google and GitHub, the email field and the Email me a code button.",
+    "title": "The sign-in page",
+    "pages": ["/docs/help/account-and-billing/sign-in"],
+    "job": "sign-in-page"
+  },
   "single-sign-on": {
     "kind": "shot",
     "look": "window",
@@ -779,7 +1031,7 @@
     "light": "/docs-static/shots/team-invite.light.webp",
     "dark": "/docs-static/shots/team-invite.dark.webp",
     "width": 1800,
-    "height": 904,
+    "height": 696,
     "alt": "The Invite people section of the Team page: an email field, the role to give them, the Send invitation button, and a pending invitation below.",
     "title": "Inviting someone",
     "pages": ["/docs/help/teams/create-and-invite", "/docs/help/teams/seats"],
@@ -813,6 +1065,30 @@
     "pages": ["/docs/help/designing/save-a-design", "/docs/features/templates"],
     "job": "themes-list"
   },
+  "themes-menu": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/themes-menu.light.webp",
+    "dark": "/docs-static/shots/themes-menu.dark.webp",
+    "width": 1800,
+    "height": 1062,
+    "alt": "The menu of a saved theme on the Themes page, open: edit it in the playground, make it the default, share it with the team, rename or delete it.",
+    "title": "A saved theme's menu",
+    "pages": ["/docs/help/designing/save-a-design"],
+    "job": "themes-menu"
+  },
+  "two-step-card": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/two-step-card.light.webp",
+    "dark": "/docs-static/shots/two-step-card.dark.webp",
+    "width": 1800,
+    "height": 783,
+    "alt": "The Two-step verification card in Profile & security, off, with its Turn on button.",
+    "title": "The Two-step verification card",
+    "pages": ["/docs/help/privacy-and-security/two-step-verification"],
+    "job": "two-step-card"
+  },
   "two-step-dialog": {
     "kind": "shot",
     "look": "focus",
@@ -824,6 +1100,18 @@
     "title": "Turning on two-step verification",
     "pages": ["/docs/help/privacy-and-security/two-step-verification"],
     "job": "two-step-dialog"
+  },
+  "use-a-link-from": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/use-a-link-from.light.webp",
+    "dark": "/docs-static/shots/use-a-link-from.dark.webp",
+    "width": 1800,
+    "height": 727,
+    "alt": "The Use a link from… menu of the playground's URL form, listing the connected services a link can be picked from.",
+    "title": "Use a link from…",
+    "pages": ["/docs/short-links-and-file-pickers"],
+    "job": "use-a-link-from"
   },
   "webhook-deliveries": {
     "kind": "shot",
@@ -849,6 +1137,33 @@
     "pages": ["/docs/webhooks", "/docs/developers/quickstart"],
     "job": "webhooks-list"
   },
+  "when-people-scan": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/when-people-scan.light.webp",
+    "dark": "/docs-static/shots/when-people-scan.dark.webp",
+    "width": 1800,
+    "height": 653,
+    "alt": "The When people scan card on a code's Analytics tab: scans by hour of the day and by weekday, as bar charts.",
+    "title": "When people scan",
+    "pages": [
+      "/docs/tracking-and-conversions",
+      "/docs/help/dynamic-codes/scans"
+    ],
+    "job": "when-people-scan"
+  },
+  "workspace-danger-zone": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/workspace-danger-zone.light.webp",
+    "dark": "/docs-static/shots/workspace-danger-zone.dark.webp",
+    "width": 1800,
+    "height": 411,
+    "alt": "The bottom of a workspace's General settings: the card with Leave workspace and Delete workspace, and what each one does.",
+    "title": "Leaving or deleting a workspace",
+    "pages": ["/docs/help/teams/seats"],
+    "job": "workspace-danger-zone"
+  },
   "workspace-general": {
     "kind": "shot",
     "look": "window",
@@ -860,5 +1175,29 @@
     "title": "Workspace settings",
     "pages": ["/docs/teams", "/docs/help/teams/create-and-invite"],
     "job": "workspace-general"
+  },
+  "workspace-switcher": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/workspace-switcher.light.webp",
+    "dark": "/docs-static/shots/workspace-switcher.dark.webp",
+    "width": 1800,
+    "height": 1040,
+    "alt": "The workspace switcher at the bottom of the sidebar, open: the person's own workspace and Harbor Lane Coffee, with Create workspace at the end.",
+    "title": "The workspace switcher",
+    "pages": ["/docs/teams", "/docs/help/teams/create-and-invite"],
+    "job": "workspace-switcher"
+  },
+  "your-data-card": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/your-data-card.light.webp",
+    "dark": "/docs-static/shots/your-data-card.dark.webp",
+    "width": 1800,
+    "height": 567,
+    "alt": "The Your data card in Profile & security, with the Download my data button and the Delete account option.",
+    "title": "Your data",
+    "pages": ["/docs/help/account-and-billing/export-your-data"],
+    "job": "your-data-card"
   }
 }
