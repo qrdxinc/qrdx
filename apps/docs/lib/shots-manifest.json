@@ -1,0 +1,1444 @@
+{
+  "account-security": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/account-security.light.webp",
+    "dark": "/docs-static/shots/account-security.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The security part of the Profile & security page: two-step verification with its Turn on button, passkeys with one named Work laptop, and the devices signed in to the account.",
+    "title": "Profile and security",
+    "pages": [
+      "/docs/help/privacy-and-security/account-security",
+      "/docs/help/privacy-and-security/two-step-verification",
+      "/docs/help/privacy-and-security/passkeys"
+    ],
+    "job": "account-security"
+  },
+  "add-domain-dialog": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/add-domain-dialog.light.webp",
+    "dark": "/docs-static/shots/add-domain-dialog.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Custom domains page with the Add domain form open: a field for the hostname and the button that adds it.",
+    "title": "Adding a domain",
+    "pages": ["/docs/help/domains/custom-domains", "/docs/custom-domains"],
+    "job": "add-domain-dialog"
+  },
+  "add-endpoint-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/add-endpoint-dialog.light.webp",
+    "dark": "/docs-static/shots/add-endpoint-dialog.dark.webp",
+    "width": 1800,
+    "height": 2024,
+    "alt": "The Add webhook endpoint dialog with an Endpoint URL typed in and the five events ticked: scans, scan milestones, new codes, code changes and form submissions.",
+    "title": "Adding a webhook endpoint",
+    "pages": ["/docs/webhooks"],
+    "job": "add-endpoint-dialog"
+  },
+  "add-passkey-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/add-passkey-dialog.light.webp",
+    "dark": "/docs-static/shots/add-passkey-dialog.dark.webp",
+    "width": 1800,
+    "height": 1217,
+    "alt": "The Add a passkey step: a Name field for the passkey and the Continue button that asks the browser for it.",
+    "title": "Adding a passkey",
+    "pages": ["/docs/help/privacy-and-security/passkeys"],
+    "job": "add-passkey-dialog"
+  },
+  "add-routing-rule": {
+    "kind": "clip",
+    "poster": {
+      "light": "/docs-static/shots/add-routing-rule.poster.light.webp",
+      "dark": "/docs-static/shots/add-routing-rule.poster.dark.webp"
+    },
+    "sources": {
+      "webm": "/videos/docs/add-routing-rule.{theme}.webm",
+      "mp4": "/videos/docs/add-routing-rule.{theme}.mp4"
+    },
+    "width": 1440,
+    "height": 900,
+    "seconds": 9.1,
+    "alt": "In a code's Settings tab, a routing rule is added: a condition on the operating system is picked and a destination for it is typed, then the rules are saved.",
+    "title": "Adding a routing rule",
+    "pages": ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
+    "job": "add-routing-rule"
+  },
+  "affiliate-settings": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/affiliate-settings.light.webp",
+    "dark": "/docs-static/shots/affiliate-settings.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The Affiliate program page in Settings for an approved affiliate: the referral link with its Copy button, the code with Change once, counts of link visits, sign-ups and paying customers, and the earnings on hold, payable and paid.",
+    "title": "The affiliate program page",
+    "pages": ["/docs/help/account-and-billing/affiliate-program"],
+    "job": "affiliate-settings"
+  },
+  "analytics-workspace": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/analytics-workspace.light.webp",
+    "dark": "/docs-static/shots/analytics-workspace.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Analytics page: totals for the last 30 days and a line chart of scans per day across every code in the workspace.",
+    "title": "Workspace analytics",
+    "pages": [
+      "/docs/help/dynamic-codes/scans",
+      "/docs/tracking-and-conversions"
+    ],
+    "job": "analytics-workspace"
+  },
+  "api-key-copy-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/api-key-copy-dialog.light.webp",
+    "dark": "/docs-static/shots/api-key-copy-dialog.dark.webp",
+    "width": 1800,
+    "height": 1299,
+    "alt": "The Copy your API key dialog right after a key is created: the key, shown this once, with a copy button, and a curl command under it that creates a dynamic code with the key.",
+    "title": "Copying a new API key",
+    "pages": ["/docs/developers/quickstart"],
+    "job": "api-key-copy-dialog"
+  },
+  "api-key-form-access": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/api-key-form-access.light.webp",
+    "dark": "/docs-static/shots/api-key-form-access.dark.webp",
+    "width": 1800,
+    "height": 2024,
+    "alt": "The Create API key dialog with Custom picked under Access: below Full access and Read only, a checkbox for each scope the key can have.",
+    "title": "Choosing what an API key can do",
+    "pages": ["/docs/developers/api-keys"],
+    "job": "api-key-form-access"
+  },
+  "api-keys": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/api-keys.light.webp",
+    "dark": "/docs-static/shots/api-keys.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The API keys & apps page: two keys with their names, masked prefixes, scopes and last use, a Create key button, and under them the OAuth apps section with one app and New app.",
+    "title": "API keys",
+    "pages": [
+      "/docs/developers/api-keys",
+      "/docs/developers/quickstart",
+      "/docs/developers/rest-api"
+    ],
+    "job": "api-keys"
+  },
+  "audit-log": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/audit-log.light.webp",
+    "dark": "/docs-static/shots/audit-log.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Audit log page of a Business workspace: filters by person, category and date above the list of recorded changes, each with the time, who made it and what they changed.",
+    "title": "The audit log",
+    "pages": ["/docs/help/teams/audit-log"],
+    "job": "audit-log"
+  },
+  "change-destination": {
+    "kind": "clip",
+    "poster": {
+      "light": "/docs-static/shots/change-destination.poster.light.webp",
+      "dark": "/docs-static/shots/change-destination.poster.dark.webp"
+    },
+    "sources": {
+      "webm": "/videos/docs/change-destination.{theme}.webm",
+      "mp4": "/videos/docs/change-destination.{theme}.mp4"
+    },
+    "width": 1440,
+    "height": 900,
+    "seconds": 13.9,
+    "alt": "On a dynamic code's page, Edit link is opened, the destination address is replaced with a new one and the change is saved; the printed code stays the same.",
+    "title": "Changing a printed code's destination",
+    "pages": [
+      "/docs/help/dynamic-codes/change-the-link",
+      "/docs/dynamic-qr-codes"
+    ],
+    "job": "change-destination"
+  },
+  "change-type-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/change-type-dialog.light.webp",
+    "dark": "/docs-static/shots/change-type-dialog.dark.webp",
+    "width": 1800,
+    "height": 2447,
+    "alt": "The Change type dialog of a dynamic code: the current type, URL, and the other kinds of content the same printed code can open instead.",
+    "title": "Changing what a code opens",
+    "pages": ["/docs/help/dynamic-codes/change-the-type"],
+    "job": "change-type-dialog"
+  },
+  "client-portal": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/client-portal.light.webp",
+    "dark": "/docs-static/shots/client-portal.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Client portal page: the portal's branding (logo and accent), the switch that turns it on, and the Invite client button.",
+    "title": "The client portal settings",
+    "pages": ["/docs/client-portal", "/docs/client-reports"],
+    "job": "client-portal"
+  },
+  "code-actions-menu": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/code-actions-menu.light.webp",
+    "dark": "/docs-static/shots/code-actions-menu.dark.webp",
+    "width": 1800,
+    "height": 1854,
+    "alt": "The actions menu of a code in the list, open: edit, duplicate, move to a folder, archive and move to trash among them.",
+    "title": "A code's actions menu",
+    "pages": ["/docs/help/dynamic-codes/archive-and-delete"],
+    "job": "code-actions-menu"
+  },
+  "code-analytics": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/code-analytics.light.webp",
+    "dark": "/docs-static/shots/code-analytics.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Analytics tab of a dynamic code: scans over time, and breakdowns by country, city, device, operating system and browser.",
+    "title": "One code's analytics",
+    "pages": [
+      "/docs/help/dynamic-codes/scans",
+      "/docs/tracking-and-conversions"
+    ],
+    "job": "code-analytics"
+  },
+  "code-overview": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/code-overview.light.webp",
+    "dark": "/docs-static/shots/code-overview.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The page of a dynamic code named Loyalty card: its short link, the address it opens, scan totals, the QR image with download buttons, and the options grid.",
+    "title": "A dynamic code's page",
+    "pages": [
+      "/docs/help/dynamic-codes/change-the-link",
+      "/docs/help/dynamic-codes/scans"
+    ],
+    "job": "code-overview"
+  },
+  "code-password": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/code-password.light.webp",
+    "dark": "/docs-static/shots/code-password.dark.webp",
+    "width": 1800,
+    "height": 1147,
+    "alt": "The Access & schedule panel of a code's Settings tab with a password typed into the Password field (shown masked), a start and an end date, a scan limit and a fallback address, and the Save changes button under them.",
+    "title": "Protecting a code with a password",
+    "pages": ["/docs/help/dynamic-codes/password", "/docs/code-controls"],
+    "job": "code-password"
+  },
+  "code-settings": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/code-settings.light.webp",
+    "dark": "/docs-static/shots/code-settings.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Settings tab of a dynamic code with every control in use: a password set, a start and an end date, a scan limit of 300 and a fallback address for scans outside the window.",
+    "title": "A code's Settings tab",
+    "pages": [
+      "/docs/help/dynamic-codes/pause-schedule-limit",
+      "/docs/help/dynamic-codes/password",
+      "/docs/code-controls"
+    ],
+    "job": "code-settings"
+  },
+  "codes-list": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/codes-list.light.webp",
+    "dark": "/docs-static/shots/codes-list.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Codes page listing dynamic QR codes with their short links, destinations, tags, scan counts and a seven-day sparkline.",
+    "title": "The list of dynamic codes",
+    "pages": ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
+    "job": "codes-list"
+  },
+  "create-key-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/create-key-dialog.light.webp",
+    "dark": "/docs-static/shots/create-key-dialog.dark.webp",
+    "width": 1800,
+    "height": 1861,
+    "alt": "The Create key dialog: a name for the key, the access to give it (full, read only or custom scopes) and an optional expiry.",
+    "title": "Creating an API key",
+    "pages": ["/docs/developers/api-keys", "/docs/developers/quickstart"],
+    "job": "create-key-dialog"
+  },
+  "create-page": {
+    "kind": "clip",
+    "poster": {
+      "light": "/docs-static/shots/create-page.poster.light.webp",
+      "dark": "/docs-static/shots/create-page.poster.dark.webp"
+    },
+    "sources": {
+      "webm": "/videos/docs/create-page.{theme}.webm",
+      "mp4": "/videos/docs/create-page.{theme}.mp4"
+    },
+    "width": 1440,
+    "height": 900,
+    "seconds": 5.9,
+    "alt": "On the Pages & forms list, New page opens the template picker, a template is chosen and the editor opens with the page's blocks and its phone preview.",
+    "title": "Creating a page from a template",
+    "pages": [
+      "/docs/help/pages-and-forms/create-a-page",
+      "/docs/landing-pages"
+    ],
+    "job": "create-page"
+  },
+  "create-workspace-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/create-workspace-dialog.light.webp",
+    "dark": "/docs-static/shots/create-workspace-dialog.dark.webp",
+    "width": 1800,
+    "height": 1273,
+    "alt": "The Create workspace dialog: the Workspace name and Workspace URL fields and the Create button.",
+    "title": "Creating a workspace",
+    "pages": ["/docs/help/teams/create-and-invite"],
+    "job": "create-workspace-dialog"
+  },
+  "custom-domains": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/custom-domains.light.webp",
+    "dark": "/docs-static/shots/custom-domains.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Custom domains page: a verified domain, qr.harborlane.example, with its DNS records available to show, a Check DNS button and the Add domain button.",
+    "title": "Custom domains",
+    "pages": ["/docs/help/domains/custom-domains", "/docs/custom-domains"],
+    "job": "custom-domains"
+  },
+  "dashboard-home": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/dashboard-home.light.webp",
+    "dark": "/docs-static/shots/dashboard-home.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The QRdx dashboard home for a workspace called Harbor Lane Coffee: counts of dynamic codes, scans and landing pages, and a list of recent codes.",
+    "title": "The workspace home after signing in",
+    "pages": [
+      "/docs/getting-started",
+      "/docs/help/getting-started/first-qr-code"
+    ],
+    "job": "dashboard-home"
+  },
+  "design-colors": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/design-colors.light.webp",
+    "dark": "/docs-static/shots/design-colors.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Design tab of the playground with the Colors section open: background, foreground, eye and dot colors with their hex values, a row of ready-made palettes under them, and the code in those colors on the right.",
+    "title": "The Colors section of the Design tab",
+    "pages": ["/docs/help/designing/colors-and-contrast"],
+    "job": "design-colors"
+  },
+  "design-frame": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/design-frame.light.webp",
+    "dark": "/docs-static/shots/design-frame.dark.webp",
+    "width": 1800,
+    "height": 1598,
+    "alt": "The Frame picker of the playground's Design tab: the frame in use, Banner, at the top, a search field with Upload SVG beside it, the groups of frames, and the frames themselves as tiles.",
+    "title": "Picking a frame and its label",
+    "pages": ["/docs/help/designing/frames"],
+    "job": "design-frame"
+  },
+  "design-logo": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/design-logo.light.webp",
+    "dark": "/docs-static/shots/design-logo.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Design tab of the playground after a quick icon is picked as the logo: the Logo row reads Wi-Fi icon, a Logo options row sits under it, and the icon is in the middle of the code on the right with the modules behind it cleared.",
+    "title": "A logo in the center of the code",
+    "pages": ["/docs/help/designing/logos"],
+    "job": "design-logo"
+  },
+  "dns-records": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/dns-records.light.webp",
+    "dark": "/docs-static/shots/dns-records.dark.webp",
+    "width": 1800,
+    "height": 588,
+    "alt": "The DNS records of a custom domain: a CNAME record pointing the hostname at QRdx and a TXT record proving ownership, each with a copy button.",
+    "title": "The DNS records of a domain",
+    "pages": ["/docs/help/domains/custom-domains", "/docs/custom-domains"],
+    "job": "dns-records"
+  },
+  "edit-link-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/edit-link-dialog.light.webp",
+    "dark": "/docs-static/shots/edit-link-dialog.dark.webp",
+    "width": 1800,
+    "height": 1643,
+    "alt": "The Edit dynamic QR code dialog, with the Destination URL field at the top, the short link domain and back-half below it, and the code's design on the right.",
+    "title": "Changing where a code points",
+    "pages": ["/docs/help/dynamic-codes/change-the-link"],
+    "job": "edit-link-dialog"
+  },
+  "files-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/files-page.light.webp",
+    "dark": "/docs-static/shots/files-page.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Files page of a workspace, where PDFs, images and other files for codes and pages are uploaded, with its Choose files button.",
+    "title": "The Files page",
+    "pages": ["/docs/files"],
+    "job": "files-page"
+  },
+  "first-code": {
+    "kind": "clip",
+    "poster": {
+      "light": "/docs-static/shots/first-code.poster.light.webp",
+      "dark": "/docs-static/shots/first-code.poster.dark.webp"
+    },
+    "sources": {
+      "webm": "/videos/docs/first-code.{theme}.webm",
+      "mp4": "/videos/docs/first-code.{theme}.mp4"
+    },
+    "width": 1440,
+    "height": 900,
+    "seconds": 13.1,
+    "alt": "In the playground, a website address is typed in, the live preview becomes a real code, a style is picked and the Download button is opened.",
+    "title": "Making a first code in the playground",
+    "pages": [
+      "/docs/help/getting-started/first-qr-code",
+      "/docs/getting-started"
+    ],
+    "job": "first-code"
+  },
+  "folders-menu": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/folders-menu.light.webp",
+    "dark": "/docs-static/shots/folders-menu.dark.webp",
+    "width": 1800,
+    "height": 1186,
+    "alt": "The folder menu of the Codes page, open: All codes, then the workspace's folders Menus, Events and Marketing with a Print runs subfolder, and the option to make a new folder.",
+    "title": "Folders",
+    "pages": [
+      "/docs/help/dynamic-codes/archive-and-delete",
+      "/docs/dynamic-qr-codes"
+    ],
+    "job": "folders-menu"
+  },
+  "form-editor": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/form-editor.light.webp",
+    "dark": "/docs-static/shots/form-editor.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The page editor with the Form block open: its questions, each with a type and a required switch, the submit button label and the thank-you message, next to the phone preview.",
+    "title": "Editing a form block",
+    "pages": ["/docs/help/pages-and-forms/forms", "/docs/forms-and-pages"],
+    "job": "form-editor"
+  },
+  "form-responses": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/form-responses.light.webp",
+    "dark": "/docs-static/shots/form-responses.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Responses page of a feedback form: a table of answers with a star rating, the choices picked and a free-text note, and an Export to Google Sheets button.",
+    "title": "Form responses",
+    "pages": ["/docs/help/pages-and-forms/forms", "/docs/forms-and-pages"],
+    "job": "form-responses"
+  },
+  "hosted-form-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/hosted-form-page.light.webp",
+    "dark": "/docs-static/shots/hosted-form-page.dark.webp",
+    "width": 1800,
+    "height": 1912,
+    "alt": "A hosted feedback form on a phone: a star rating, a multiple-choice question, a text field and a Send button.",
+    "title": "A hosted form on a phone",
+    "pages": ["/docs/help/pages-and-forms/forms", "/docs/forms-and-pages"],
+    "job": "hosted-form-page"
+  },
+  "hosted-menu-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/hosted-menu-page.light.webp",
+    "dark": "/docs-static/shots/hosted-menu-page.dark.webp",
+    "width": 1800,
+    "height": 1912,
+    "alt": "A hosted menu page as a visitor sees it on a phone: the café's name, a menu with sections and prices, opening hours and the Wi-Fi details.",
+    "title": "A hosted menu page on a phone",
+    "pages": [
+      "/docs/help/pages-and-forms/create-a-page",
+      "/docs/landing-pages"
+    ],
+    "job": "hosted-menu-page"
+  },
+  "import-csv": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/import-csv.light.webp",
+    "dark": "/docs-static/shots/import-csv.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Import codes from CSV page: step one asks for a CSV file and links a sample file; the columns the file may have are listed below.",
+    "title": "Importing codes from a CSV file",
+    "pages": ["/docs/help/dynamic-codes/import", "/docs/migrate"],
+    "job": "import-csv"
+  },
+  "lib-angular-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-angular-code.light.webp",
+    "dark": "/docs-static/shots/lib-angular-code.dark.webp",
+    "width": 1800,
+    "height": 920,
+    "alt": "The code src/app/app.ts draws: rounded modules in a gradient from blue at the top left to navy at the bottom right, with a Scan me banner under the code.",
+    "title": "The gradient code of the Angular sample",
+    "pages": ["/docs/angular"],
+    "job": "lib-angular-code"
+  },
+  "lib-art-codes": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-art-codes.light.webp",
+    "dark": "/docs-static/shots/lib-art-codes.dark.webp",
+    "width": 1800,
+    "height": 854,
+    "alt": "Two art codes: on the left a Logo QR, where the modules inside a coffee cup logo take the logo's browns, and on the right an Image QR, where every module shows part of a photo of a latte.",
+    "title": "A Logo QR code and an Image QR code",
+    "pages": ["/docs/features/art-qr"],
+    "job": "lib-art-codes"
+  },
+  "lib-circle-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-circle-code.light.webp",
+    "dark": "/docs-static/shots/lib-circle-code.dark.webp",
+    "width": 1800,
+    "height": 854,
+    "alt": "Two shaped codes with rounded modules: on the left a circle code, the QR code in the middle of a disc filled with decorative modules, and on the right a heart code, the same inside a heart outline.",
+    "title": "A circle code and a heart code",
+    "pages": ["/docs/features/patterns"],
+    "job": "lib-circle-code"
+  },
+  "lib-download-result": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-download-result.light.webp",
+    "dark": "/docs-static/shots/lib-download-result.dark.webp",
+    "width": 1800,
+    "height": 920,
+    "alt": "What menu.png holds: the code from the snippet, blue with rounded modules, and a Scan me banner under it.",
+    "title": "The image downloadQRCode saves",
+    "pages": ["/docs/features/downloads"],
+    "job": "lib-download-result"
+  },
+  "lib-element-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-element-code.light.webp",
+    "dark": "/docs-static/shots/lib-element-code.dark.webp",
+    "width": 1800,
+    "height": 854,
+    "alt": "The code the qrdx-code element draws for the attributes in step 2: a black QR code with rounded modules and a quiet zone around it.",
+    "title": "The code the qrdx-code element draws",
+    "pages": ["/docs/web-component"],
+    "job": "lib-element-code"
+  },
+  "lib-first-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-first-code.light.webp",
+    "dark": "/docs-static/shots/lib-first-code.dark.webp",
+    "width": 1800,
+    "height": 854,
+    "alt": "The code components/first-qr-code.tsx draws: a black QR code on white in the library's default look, with round modules and gear-shaped corner eyes.",
+    "title": "The default QRCode",
+    "pages": ["/docs/getting-started"],
+    "job": "lib-first-code"
+  },
+  "lib-frame-banner": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-frame-banner.light.webp",
+    "dark": "/docs-static/shots/lib-frame-banner.dark.webp",
+    "width": 1800,
+    "height": 1045,
+    "alt": "The code components/menu-frame-code.tsx draws, with a navy banner under it that reads Scan for the menu, next to the same code without the frame prop: the framed one is wider and taller, and the code inside is the same size.",
+    "title": "A code with and without a frame",
+    "pages": ["/docs/features/frames"],
+    "job": "lib-frame-banner"
+  },
+  "lib-framed-menu-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-framed-menu-code.light.webp",
+    "dark": "/docs-static/shots/lib-framed-menu-code.dark.webp",
+    "width": 1800,
+    "height": 920,
+    "alt": "The code the sample draws: a black QR code with rounded modules and a black banner under it that reads Scan for the menu.",
+    "title": "A framed code from a framework entry",
+    "pages": ["/docs/vue", "/docs/vanilla-js"],
+    "job": "lib-framed-menu-code"
+  },
+  "lib-gradient-codes": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-gradient-codes.light.webp",
+    "dark": "/docs-static/shots/lib-gradient-codes.dark.webp",
+    "width": 1800,
+    "height": 808,
+    "alt": "Three codes with gradient colors: a linear gradient from indigo to pink, a radial gradient from teal in the middle to dark blue at the edges, and an angular gradient that sweeps from blue through violet and back.",
+    "title": "Linear, radial and angular gradients",
+    "pages": ["/docs/features/colors-gradients"],
+    "job": "lib-gradient-codes"
+  },
+  "lib-logo-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-logo-code.light.webp",
+    "dark": "/docs-static/shots/lib-logo-code.dark.webp",
+    "width": 1800,
+    "height": 854,
+    "alt": "The code components/logo-code.tsx draws: a black QR code with a small coffee cup logo in the middle and the modules behind the logo cleared.",
+    "title": "A code with a logo in the middle",
+    "pages": ["/docs/features/logos"],
+    "job": "lib-logo-code"
+  },
+  "lib-nextjs-server-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-nextjs-server-code.light.webp",
+    "dark": "/docs-static/shots/lib-nextjs-server-code.dark.webp",
+    "width": 1800,
+    "height": 854,
+    "alt": "The code app/page.tsx renders: a black QR code for example.com with a quiet zone of four modules around it.",
+    "title": "The code a Server Component renders",
+    "pages": ["/docs/nextjs"],
+    "job": "lib-nextjs-server-code"
+  },
+  "lib-preact-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-preact-code.light.webp",
+    "dark": "/docs-static/shots/lib-preact-code.dark.webp",
+    "width": 1800,
+    "height": 920,
+    "alt": "The code menu-code.tsx draws: a black QR code with rounded modules and a Scan me banner under it.",
+    "title": "The framed code of the Preact sample",
+    "pages": ["/docs/preact"],
+    "job": "lib-preact-code"
+  },
+  "lib-solid-signal-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-solid-signal-code.light.webp",
+    "dark": "/docs-static/shots/lib-solid-signal-code.dark.webp",
+    "width": 1800,
+    "height": 920,
+    "alt": "The code menu-code.tsx draws, twice: on the left as it first appears, dark navy with a Scan me banner, and on the right after Blue is clicked, the same code redrawn in blue.",
+    "title": "The Solid sample before and after the signal changes",
+    "pages": ["/docs/solid"],
+    "job": "lib-solid-signal-code"
+  },
+  "lib-styled-code": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-styled-code.light.webp",
+    "dark": "/docs-static/shots/lib-styled-code.dark.webp",
+    "width": 1800,
+    "height": 920,
+    "alt": "The code components/styled-qr-code.tsx draws: blue rounded modules, extra-rounded corner eyes, and a banner under the code that reads Scan for the menu.",
+    "title": "The styled code of the quickstart",
+    "pages": ["/docs/getting-started"],
+    "job": "lib-styled-code"
+  },
+  "lib-templates": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/lib-templates.light.webp",
+    "dark": "/docs-static/shots/lib-templates.dark.webp",
+    "width": 1800,
+    "height": 808,
+    "alt": "Three template codes: Arrow in blue, with an arrow pointing at the code; Standard Box, a boxed code with a logo in the middle; and Dot Ring, a round navy badge with Scan for the menu in yellow under the code.",
+    "title": "Three built-in templates",
+    "pages": ["/docs/features/templates"],
+    "job": "lib-templates"
+  },
+  "new-code-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/new-code-dialog.light.webp",
+    "dark": "/docs-static/shots/new-code-dialog.dark.webp",
+    "width": 1800,
+    "height": 1643,
+    "alt": "The New dynamic QR code dialog: the destination URL field, the short link domain, an optional custom back-half and title, folder and tags, and the design preview.",
+    "title": "Creating a dynamic code",
+    "pages": ["/docs/help/dynamic-codes/create", "/docs/getting-started"],
+    "job": "new-code-dialog"
+  },
+  "nfc-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/nfc-page.light.webp",
+    "dark": "/docs-static/shots/nfc-page.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Use with NFC page of a code: the link to write to a tag, a copy button, and how taps are counted apart from scans.",
+    "title": "Writing a code's link to an NFC tag",
+    "pages": ["/docs/nfc"],
+    "job": "nfc-page"
+  },
+  "notifications": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/notifications.light.webp",
+    "dark": "/docs-static/shots/notifications.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Notifications page: email alerts for scan milestones and form submissions with their switches, and the Slack and Discord options.",
+    "title": "Notification settings",
+    "pages": ["/docs/notifications"],
+    "job": "notifications"
+  },
+  "oauth-app-credentials": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/oauth-app-credentials.light.webp",
+    "dark": "/docs-static/shots/oauth-app-credentials.dark.webp",
+    "width": 1800,
+    "height": 551,
+    "alt": "The Credentials section of an OAuth app's page: the client ID with a copy button, and the client secret, hidden, with Regenerate secret.",
+    "title": "An OAuth app's credentials",
+    "pages": ["/docs/developers/build-an-integration"],
+    "job": "oauth-app-credentials"
+  },
+  "oauth-consent-screen": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/oauth-consent-screen.light.webp",
+    "dark": "/docs-static/shots/oauth-consent-screen.dark.webp",
+    "width": 1800,
+    "height": 1768,
+    "alt": "The consent screen for an app QRdx hasn't reviewed: the app's name, who built it and its website, an Unverified app note, the permissions it asks for, the signed-in account with Switch, and the Cancel and Authorize buttons.",
+    "title": "The consent screen of an OAuth app",
+    "pages": ["/docs/developers/build-an-integration"],
+    "job": "oauth-consent-screen"
+  },
+  "oauth-new-app-form": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/oauth-new-app-form.light.webp",
+    "dark": "/docs-static/shots/oauth-new-app-form.dark.webp",
+    "width": 1800,
+    "height": 1870,
+    "alt": "The New OAuth app form: App details with a logo, name, description and website, and OAuth with the redirect URIs, a checkbox for each scope and the Require PKCE switch.",
+    "title": "Registering an OAuth app",
+    "pages": ["/docs/developers/build-an-integration"],
+    "job": "oauth-new-app-form"
+  },
+  "page-editor": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/page-editor.light.webp",
+    "dark": "/docs-static/shots/page-editor.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The page editor for a feedback page: the Blocks tab on the left with the header and form blocks, and a phone-sized live preview of the page on the right.",
+    "title": "The page editor",
+    "pages": [
+      "/docs/help/pages-and-forms/create-a-page",
+      "/docs/help/pages-and-forms/forms",
+      "/docs/landing-pages"
+    ],
+    "job": "page-editor"
+  },
+  "page-templates": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/page-templates.light.webp",
+    "dark": "/docs-static/shots/page-templates.dark.webp",
+    "width": 1800,
+    "height": 2035,
+    "alt": "The page template picker: cards for menu, event, business card, coupon, feedback and other page types.",
+    "title": "Starting a page from a template",
+    "pages": [
+      "/docs/help/pages-and-forms/create-a-page",
+      "/docs/landing-pages"
+    ],
+    "job": "page-templates"
+  },
+  "pages-list": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/pages-list.light.webp",
+    "dark": "/docs-static/shots/pages-list.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Pages & forms list: a menu page and a feedback form page, each with its short link, template, last update and scan count; the feedback page has a Responses button.",
+    "title": "The list of hosted pages",
+    "pages": [
+      "/docs/help/pages-and-forms/create-a-page",
+      "/docs/landing-pages",
+      "/docs/forms-and-pages"
+    ],
+    "job": "pages-list"
+  },
+  "passkeys": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/passkeys.light.webp",
+    "dark": "/docs-static/shots/passkeys.dark.webp",
+    "width": 1800,
+    "height": 783,
+    "alt": "The Passkeys section of Profile & security: a passkey named Work laptop with when it was added, its options menu, and the Add passkey button.",
+    "title": "Passkeys on the account",
+    "pages": ["/docs/help/privacy-and-security/passkeys"],
+    "job": "passkeys"
+  },
+  "pixels-panel": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/pixels-panel.light.webp",
+    "dark": "/docs-static/shots/pixels-panel.dark.webp",
+    "width": 1800,
+    "height": 879,
+    "alt": "The Tracking pixels panel on a hosted page code's Settings tab, with a Google Analytics 4 measurement ID and a Meta pixel ID filled in, the other pixel fields empty, and the cookie consent banner setting under them.",
+    "title": "The Tracking pixels panel",
+    "pages": ["/docs/tracking-and-conversions"],
+    "job": "pixels-panel"
+  },
+  "plan-usage": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/plan-usage.light.webp",
+    "dark": "/docs-static/shots/plan-usage.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The Plan & usage page: the workspace's plan, what it includes, the Manage billing link, and this month's usage against the plan's limits.",
+    "title": "Plan and usage",
+    "pages": [
+      "/docs/help/account-and-billing/plans",
+      "/docs/help/account-and-billing/change-plan",
+      "/docs/plans-and-limits",
+      "/docs/usage"
+    ],
+    "job": "plan-usage"
+  },
+  "playground-art": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/playground-art.light.webp",
+    "dark": "/docs-static/shots/playground-art.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Art tab of the playground, where a prompt or a picture turns the code into AI artwork while it stays scannable.",
+    "title": "The Art tab of the playground",
+    "pages": ["/docs/help/designing/art", "/docs/features/art-qr"],
+    "job": "playground-art"
+  },
+  "playground-content": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/playground-content.light.webp",
+    "dark": "/docs-static/shots/playground-content.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The QRdx playground: the Content tab on the left with a website address filled in, the Static or Dynamic choice under it and a row of styles to start from, and the live QR code preview on the right.",
+    "title": "The playground with a link typed in",
+    "pages": [
+      "/docs/help/getting-started/first-qr-code",
+      "/docs/getting-started",
+      "/docs/dynamic-qr-codes"
+    ],
+    "job": "playground-content"
+  },
+  "playground-contrast": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/playground-contrast.light.webp",
+    "dark": "/docs-static/shots/playground-contrast.dark.webp",
+    "width": 1800,
+    "height": 1506,
+    "alt": "The contrast checker of the playground: the code's foreground and background colors, their contrast ratio, and whether scanners read it well.",
+    "title": "The contrast checker",
+    "pages": [
+      "/docs/help/designing/colors-and-contrast",
+      "/docs/help/designing/scan-score"
+    ],
+    "job": "playground-contrast"
+  },
+  "playground-design": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/playground-design.light.webp",
+    "dark": "/docs-static/shots/playground-design.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Design tab of the playground: colors, body and eye pattern choices and the logo controls on the left, the styled QR code preview on the right.",
+    "title": "The Design tab of the playground",
+    "pages": [
+      "/docs/help/designing/colors-and-contrast",
+      "/docs/features/patterns",
+      "/docs/features/colors-gradients"
+    ],
+    "job": "playground-design"
+  },
+  "playground-download": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/playground-download.light.webp",
+    "dark": "/docs-static/shots/playground-download.dark.webp",
+    "width": 1800,
+    "height": 1556,
+    "alt": "The Download QR code dialog of the playground: a choice of image file formats such as PNG, SVG and PDF, the size, and the download button.",
+    "title": "Downloading a code",
+    "pages": [
+      "/docs/help/getting-started/download-and-print",
+      "/docs/features/downloads"
+    ],
+    "job": "playground-download"
+  },
+  "playground-download-print": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/playground-download-print.light.webp",
+    "dark": "/docs-static/shots/playground-download-print.dark.webp",
+    "width": 1800,
+    "height": 1746,
+    "alt": "The Print-ready tab of the Download QR code dialog: the scanning distance, the code's printed width, the color mode and bleed, with the download button.",
+    "title": "The Print-ready tab of the download dialog",
+    "pages": ["/docs/help/getting-started/download-and-print"],
+    "job": "playground-download-print"
+  },
+  "playground-dynamic-on": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/playground-dynamic-on.light.webp",
+    "dark": "/docs-static/shots/playground-dynamic-on.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The playground after picking Dynamic: where the Static or Dynamic choice was, the Content tab shows the code's short link with a copy button, Link options and Scans & settings, and the preview now encodes the short link.",
+    "title": "Dynamic picked",
+    "pages": ["/docs/help/dynamic-codes/create"],
+    "job": "playground-dynamic-on"
+  },
+  "playground-fine-tune": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/playground-fine-tune.light.webp",
+    "dark": "/docs-static/shots/playground-fine-tune.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The playground's fine-tune panel: color pickers for the code, its eyes and dots, pattern choices and the logo upload, next to the live preview.",
+    "title": "Fine-tuning colors, dots and the logo",
+    "pages": [
+      "/docs/help/designing/logos",
+      "/docs/features/logos",
+      "/docs/help/designing/colors-and-contrast"
+    ],
+    "job": "playground-fine-tune"
+  },
+  "playground-styles": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/playground-styles.light.webp",
+    "dark": "/docs-static/shots/playground-styles.dark.webp",
+    "width": 1800,
+    "height": 1656,
+    "alt": "The style browser of the playground: a grid of ready-made QR code styles with their names, grouped by category.",
+    "title": "Browsing every style",
+    "pages": ["/docs/help/designing/save-a-design", "/docs/features/templates"],
+    "job": "playground-styles"
+  },
+  "playground-type-picker": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/playground-type-picker.light.webp",
+    "dark": "/docs-static/shots/playground-type-picker.dark.webp",
+    "width": 1800,
+    "height": 1419,
+    "alt": "The Choose a QR code type dialog of the playground, listing content types such as URL, Wi-Fi, vCard, email and payment, with a search field at the top.",
+    "title": "Choosing a QR code type",
+    "pages": [
+      "/docs/help/getting-started/first-qr-code",
+      "/docs/help/getting-started/static-vs-dynamic"
+    ],
+    "job": "playground-type-picker"
+  },
+  "precise-location-panel": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/precise-location-panel.light.webp",
+    "dark": "/docs-static/shots/precise-location-panel.dark.webp",
+    "width": 1800,
+    "height": 554,
+    "alt": "The Precise location panel on a code's Settings tab: the Ask scanners for precise location switch and what scanners see when it is on.",
+    "title": "The Precise location panel",
+    "pages": ["/docs/precise-location"],
+    "job": "precise-location-panel"
+  },
+  "preferences": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/preferences.light.webp",
+    "dark": "/docs-static/shots/preferences.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Preferences page: the app's language, the light, dark and system theme choices, and keyboard shortcuts.",
+    "title": "Preferences",
+    "pages": ["/docs/help/account-and-billing/sign-in"],
+    "job": "preferences"
+  },
+  "pricing-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/pricing-page.light.webp",
+    "dark": "/docs-static/shots/pricing-page.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The pricing page with the Monthly and Yearly choice and the Free, Pro and Business plans side by side, each with its upgrade button.",
+    "title": "The pricing page",
+    "pages": ["/docs/help/account-and-billing/change-plan"],
+    "job": "pricing-page"
+  },
+  "report-abuse-form": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/report-abuse-form.light.webp",
+    "dark": "/docs-static/shots/report-abuse-form.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Report abuse page: the field for the link, the choice of reason and an optional note, with the Send report button.",
+    "title": "Reporting a code",
+    "pages": ["/docs/help/privacy-and-security/report-abuse"],
+    "job": "report-abuse-form"
+  },
+  "require-two-step": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/require-two-step.light.webp",
+    "dark": "/docs-static/shots/require-two-step.dark.webp",
+    "width": 1800,
+    "height": 546,
+    "alt": "The Two-step verification card of the Team page, with the Require two-step verification switch and the note that the owner's own account needs it first.",
+    "title": "Requiring two-step verification",
+    "pages": ["/docs/help/teams/require-two-step-verification"],
+    "job": "require-two-step"
+  },
+  "routing-add-rule": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/routing-add-rule.light.webp",
+    "dark": "/docs-static/shots/routing-add-rule.dark.webp",
+    "width": 1800,
+    "height": 1298,
+    "alt": "The Add rule menu of the Smart routing panel, open, listing the rule templates to start from.",
+    "title": "Adding a routing rule",
+    "pages": ["/docs/help/dynamic-codes/routing"],
+    "job": "routing-add-rule"
+  },
+  "routing-rules": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/routing-rules.light.webp",
+    "dark": "/docs-static/shots/routing-rules.dark.webp",
+    "width": 1800,
+    "height": 2944,
+    "alt": "The Smart routing panel of a code's Settings tab: rules by operating system, language and time of day, each with its destination, an A/B split at the end, and the Test your rules panel under them.",
+    "title": "Routing rules on a code",
+    "pages": ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
+    "job": "routing-rules"
+  },
+  "routing-test": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/routing-test.light.webp",
+    "dark": "/docs-static/shots/routing-test.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The routing test panel: a pretend scan with a chosen device, operating system, country and language, the Run test button, and the rule that would match.",
+    "title": "Testing routing rules",
+    "pages": ["/docs/help/dynamic-codes/routing", "/docs/smart-routing"],
+    "job": "routing-test"
+  },
+  "scan-ended": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/scan-ended.light.webp",
+    "dark": "/docs-static/shots/scan-ended.dark.webp",
+    "width": 1800,
+    "height": 1912,
+    "alt": "What a phone shows after scanning a code whose end date has passed: the message This campaign has ended.",
+    "title": "An ended campaign, as scanned",
+    "pages": [
+      "/docs/help/troubleshooting/error-pages",
+      "/docs/help/dynamic-codes/pause-schedule-limit"
+    ],
+    "job": "scan-ended"
+  },
+  "scan-not-found": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/scan-not-found.light.webp",
+    "dark": "/docs-static/shots/scan-not-found.dark.webp",
+    "width": 1800,
+    "height": 1912,
+    "alt": "What a phone shows after scanning a code that no longer exists: the message QR code not found.",
+    "title": "A deleted or unknown code, as scanned",
+    "pages": [
+      "/docs/help/troubleshooting/error-pages",
+      "/docs/help/dynamic-codes/archive-and-delete"
+    ],
+    "job": "scan-not-found"
+  },
+  "scan-not-started": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/scan-not-started.light.webp",
+    "dark": "/docs-static/shots/scan-not-started.dark.webp",
+    "width": 1800,
+    "height": 1912,
+    "alt": "What a phone shows after scanning a code whose start date is in the future: the message This campaign hasn't started yet.",
+    "title": "A scheduled code before its start, as scanned",
+    "pages": [
+      "/docs/help/troubleshooting/error-pages",
+      "/docs/help/dynamic-codes/pause-schedule-limit"
+    ],
+    "job": "scan-not-started"
+  },
+  "scan-password": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/scan-password.light.webp",
+    "dark": "/docs-static/shots/scan-password.dark.webp",
+    "width": 1800,
+    "height": 1912,
+    "alt": "What a phone shows after scanning a password-protected code: the message This QR code is password protected, a password field and a Continue button.",
+    "title": "A password-protected code, as scanned",
+    "pages": [
+      "/docs/help/dynamic-codes/password",
+      "/docs/help/troubleshooting/error-pages"
+    ],
+    "job": "scan-password"
+  },
+  "scan-paused": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/scan-paused.light.webp",
+    "dark": "/docs-static/shots/scan-paused.dark.webp",
+    "width": 1800,
+    "height": 1912,
+    "alt": "What a phone shows after scanning a paused code: the message This campaign is paused.",
+    "title": "A paused code, as scanned",
+    "pages": [
+      "/docs/help/troubleshooting/error-pages",
+      "/docs/help/dynamic-codes/pause-schedule-limit"
+    ],
+    "job": "scan-paused"
+  },
+  "scan-score-panel": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/scan-score-panel.light.webp",
+    "dark": "/docs-static/shots/scan-score-panel.dark.webp",
+    "width": 1800,
+    "height": 1631,
+    "alt": "The Will it scan? panel of the playground, opened from the Scan score badge: the list of checks on the current design, each marked as passed or needing attention.",
+    "title": "The Will it scan? panel",
+    "pages": ["/docs/help/designing/scan-score"],
+    "job": "scan-score-panel"
+  },
+  "sessions-card": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/sessions-card.light.webp",
+    "dark": "/docs-static/shots/sessions-card.dark.webp",
+    "width": 1800,
+    "height": 733,
+    "alt": "The sessions card in Profile & security: the devices signed in to the account and the Sign out everywhere else button.",
+    "title": "Where you are signed in",
+    "pages": ["/docs/help/privacy-and-security/account-security"],
+    "job": "sessions-card"
+  },
+  "share-analytics-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/share-analytics-dialog.light.webp",
+    "dark": "/docs-static/shots/share-analytics-dialog.dark.webp",
+    "width": 1800,
+    "height": 1196,
+    "alt": "The Share analytics dialog of a code: the Public analytics page switch, the link to share and who can see it.",
+    "title": "Sharing a code's analytics",
+    "pages": ["/docs/client-reports"],
+    "job": "share-analytics-dialog"
+  },
+  "short-link-domain-picker": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/short-link-domain-picker.light.webp",
+    "dark": "/docs-static/shots/short-link-domain-picker.dark.webp",
+    "width": 1800,
+    "height": 1643,
+    "alt": "The Edit dynamic QR code dialog with the Short link domain list open: the default qrdx.dev/q/ and the workspace's verified custom domain.",
+    "title": "Picking the short link domain",
+    "pages": ["/docs/custom-domains", "/docs/help/domains/custom-domains"],
+    "job": "short-link-domain-picker"
+  },
+  "sign-in-code-step": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/sign-in-code-step.light.webp",
+    "dark": "/docs-static/shots/sign-in-code-step.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The sign-in page after Email me a code: the Check your email step with the six-digit code field and the option to use a different email.",
+    "title": "Waiting for the sign-in code",
+    "pages": ["/docs/help/troubleshooting/emails"],
+    "job": "sign-in-code-step"
+  },
+  "sign-in-page": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/sign-in-page.light.webp",
+    "dark": "/docs-static/shots/sign-in-page.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The sign-in page: Continue with Google and GitHub, the email field and the Email me a code button.",
+    "title": "The sign-in page",
+    "pages": ["/docs/help/account-and-billing/sign-in"],
+    "job": "sign-in-page"
+  },
+  "single-sign-on": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/single-sign-on.light.webp",
+    "dark": "/docs-static/shots/single-sign-on.dark.webp",
+    "width": 1800,
+    "height": 1406,
+    "alt": "The Single sign-on page: tabs for OIDC and SAML 2.0, the fields for the identity provider's details, and the Save connection button.",
+    "title": "Single sign-on settings",
+    "pages": ["/docs/help/teams/single-sign-on"],
+    "job": "single-sign-on"
+  },
+  "team-invite": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/team-invite.light.webp",
+    "dark": "/docs-static/shots/team-invite.dark.webp",
+    "width": 1800,
+    "height": 696,
+    "alt": "The Invite people section of the Team page: an email address typed in, the role to give them, the Create invite link button, and a pending invitation below.",
+    "title": "Inviting someone",
+    "pages": ["/docs/help/teams/create-and-invite", "/docs/help/teams/seats"],
+    "job": "team-invite"
+  },
+  "team-members": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/team-members.light.webp",
+    "dark": "/docs-static/shots/team-members.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Team page of a workspace: four members with their roles (owner, admin, member, viewer), whether two-step verification is on, and when they joined; below it, the Require two-step verification switch.",
+    "title": "The Team page",
+    "pages": [
+      "/docs/help/teams/create-and-invite",
+      "/docs/help/teams/roles",
+      "/docs/teams"
+    ],
+    "job": "team-members"
+  },
+  "themes-list": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/themes-list.light.webp",
+    "dark": "/docs-static/shots/themes-list.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Themes page of a workspace: a shared theme named Harbor Lane brand with its preview, marked as the default for new codes.",
+    "title": "Saved themes",
+    "pages": ["/docs/help/designing/save-a-design", "/docs/features/templates"],
+    "job": "themes-list"
+  },
+  "themes-menu": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/themes-menu.light.webp",
+    "dark": "/docs-static/shots/themes-menu.dark.webp",
+    "width": 1800,
+    "height": 1062,
+    "alt": "The menu of a saved theme on the Themes page, open: edit it in the playground, make it the default, share it with the team, rename or delete it.",
+    "title": "A saved theme's menu",
+    "pages": ["/docs/help/designing/save-a-design"],
+    "job": "themes-menu"
+  },
+  "two-step-card": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/two-step-card.light.webp",
+    "dark": "/docs-static/shots/two-step-card.dark.webp",
+    "width": 1800,
+    "height": 783,
+    "alt": "The Two-step verification card in Profile & security, off, with its Turn on button.",
+    "title": "The Two-step verification card",
+    "pages": ["/docs/help/privacy-and-security/two-step-verification"],
+    "job": "two-step-card"
+  },
+  "two-step-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/two-step-dialog.light.webp",
+    "dark": "/docs-static/shots/two-step-dialog.dark.webp",
+    "width": 1800,
+    "height": 1376,
+    "alt": "The first step of turning on two-step verification: the choice between a passkey and an authenticator app as the second step.",
+    "title": "Turning on two-step verification",
+    "pages": ["/docs/help/privacy-and-security/two-step-verification"],
+    "job": "two-step-dialog"
+  },
+  "use-a-link-from": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/use-a-link-from.light.webp",
+    "dark": "/docs-static/shots/use-a-link-from.dark.webp",
+    "width": 1800,
+    "height": 727,
+    "alt": "The Use a link from… menu of the playground's URL form, listing the connected services a link can be picked from.",
+    "title": "Use a link from…",
+    "pages": ["/docs/short-links-and-file-pickers"],
+    "job": "use-a-link-from"
+  },
+  "webhook-deliveries": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/webhook-deliveries.light.webp",
+    "dark": "/docs-static/shots/webhook-deliveries.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The deliveries page of a webhook endpoint: its signing secret (hidden, with Reveal and Rotate), and recent deliveries with their event, status, attempts and a Retry now button on a failed one.",
+    "title": "An endpoint's deliveries",
+    "pages": ["/docs/webhooks"],
+    "job": "webhook-deliveries"
+  },
+  "webhook-signing-secret": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/webhook-signing-secret.light.webp",
+    "dark": "/docs-static/shots/webhook-signing-secret.dark.webp",
+    "width": 1800,
+    "height": 1212,
+    "alt": "The Endpoint added dialog right after an endpoint is saved: the signing secret that verifies every delivery, with a copy button, a note about the X-QRdx-Signature header, and Done.",
+    "title": "A new endpoint's signing secret",
+    "pages": ["/docs/webhooks"],
+    "job": "webhook-signing-secret"
+  },
+  "webhooks-list": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/webhooks-list.light.webp",
+    "dark": "/docs-static/shots/webhooks-list.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The Webhooks page of a workspace: one endpoint with the events it receives, its enabled switch, a Send test button and the Add endpoint button.",
+    "title": "Webhooks",
+    "pages": ["/docs/webhooks", "/docs/developers/quickstart"],
+    "job": "webhooks-list"
+  },
+  "when-people-scan": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/when-people-scan.light.webp",
+    "dark": "/docs-static/shots/when-people-scan.dark.webp",
+    "width": 1800,
+    "height": 653,
+    "alt": "The When people scan card on a code's Analytics tab: scans by hour of the day and by weekday, as bar charts.",
+    "title": "When people scan",
+    "pages": [
+      "/docs/tracking-and-conversions",
+      "/docs/help/dynamic-codes/scans"
+    ],
+    "job": "when-people-scan"
+  },
+  "workspace-danger-zone": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/workspace-danger-zone.light.webp",
+    "dark": "/docs-static/shots/workspace-danger-zone.dark.webp",
+    "width": 1800,
+    "height": 411,
+    "alt": "The bottom of a workspace's General settings: the card with Leave workspace and Delete workspace, and what each one does.",
+    "title": "Leaving or deleting a workspace",
+    "pages": ["/docs/help/teams/seats"],
+    "job": "workspace-danger-zone"
+  },
+  "workspace-general": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/workspace-general.light.webp",
+    "dark": "/docs-static/shots/workspace-general.dark.webp",
+    "width": 1800,
+    "height": 1174,
+    "alt": "The General settings of a workspace: its logo, name and URL, with Save and the Delete workspace option at the bottom.",
+    "title": "Workspace settings",
+    "pages": ["/docs/teams", "/docs/help/teams/create-and-invite"],
+    "job": "workspace-general"
+  },
+  "workspace-switcher": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/workspace-switcher.light.webp",
+    "dark": "/docs-static/shots/workspace-switcher.dark.webp",
+    "width": 1800,
+    "height": 1040,
+    "alt": "The workspace switcher at the bottom of the sidebar, open: the person's own workspace and Harbor Lane Coffee, with Create workspace at the end.",
+    "title": "The workspace switcher",
+    "pages": ["/docs/teams", "/docs/help/teams/create-and-invite"],
+    "job": "workspace-switcher"
+  },
+  "your-data-card": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/your-data-card.light.webp",
+    "dark": "/docs-static/shots/your-data-card.dark.webp",
+    "width": 1800,
+    "height": 567,
+    "alt": "The Your data card in Profile & security, with the Download my data button and the Delete account option.",
+    "title": "Your data",
+    "pages": ["/docs/help/account-and-billing/export-your-data"],
+    "job": "your-data-card"
+  }
+}

@@ -25,8 +25,6 @@ The package is on npm as [`@qrdx/n8n-nodes-qrdx`](https://www.npmjs.com/package/
 
 In n8n, open **Settings → Community Nodes**, choose **Install**, enter `@qrdx/n8n-nodes-qrdx`, accept the note about community nodes and choose **Install**. Then search for **QRdx** in the nodes panel.
 
-{/* shot: n8n-community-nodes-install | n8n's Community Nodes install dialog with @qrdx/n8n-nodes-qrdx entered | n8n, Settings, Community Nodes, Install */}
-
 If your n8n hides that page, or you manage it from the command line, install the package in the `nodes` folder of your n8n user folder and restart n8n:
 
 ```bash title="Terminal"
@@ -43,8 +41,6 @@ Create an [API key](/docs/developers/api-keys) in [Settings → API keys & apps]
 
 n8n tests the credential by reading your profile, which needs the `profile:read` scope, so a **Full access** key is simplest. A key acts on the workspace it was created in.
 
-{/* shot: n8n-qrdx-credential | the QRdx API credential form in n8n with the API key field and the Base URL | n8n, Credentials, QRdx API */}
-
 ## 3. Use the QRdx node
 
 | Resource | Operations |
@@ -57,8 +53,6 @@ n8n tests the credential by reading your profile, which needs the `profile:read`
 **Generate** puts the image in a binary field you can attach to an email or upload anywhere. You can set its size, colors, body, eye and eye dot shapes, error correction, margin, a [frame](/docs/features/frames) with its label, and a logo icon. The output also has `url`: a link to the same image from the [image API](/docs/developers/image-api), ready for an `<img>` tag.
 
 The code and scan operations call the [REST API](/docs/developers/rest-api) with your key and count toward the workspace's daily API quota. **Get Many** pages through results for you. **Create** takes the destination URL, and under additional fields a title, a custom back-half (`slug`) and a custom domain; **Update** takes the same fields plus archive and restore. Errors keep QRdx's own message: a custom back-half needs Pro or Business, for example, and on Free the node shows the API's `PLAN_REQUIRED` [error](/docs/developers/errors).
-
-{/* shot: n8n-qrdx-node-create | the QRdx node with Resource Code and Operation Create, the Destination URL filled | n8n, a workflow, QRdx node */}
 
 ## 4. Start workflows from events
 
@@ -73,8 +67,6 @@ Add the **QRdx Trigger** node, pick the **Events**, then activate the workflow. 
 | **Form Submissions** | Someone submits a form on a hosted page |
 
 The node checks each delivery's `X-QRdx-Signature` with the signing secret QRdx returned when it subscribed, and answers `401` to anything that doesn't match. Under **Options**, turn on **Output One Item per Scan** to get a Scans batch as separate items, and **Include Test Events** to run the workflow when you choose **Send test** in **Settings → Webhooks**. The payloads are the ones described in [Webhooks](/docs/webhooks#payloads).
-
-{/* shot: n8n-qrdx-trigger | the QRdx Trigger node with Scans and Form Submissions ticked and the Options open | n8n, a workflow, QRdx Trigger node */}
 
 The trigger needs:
 

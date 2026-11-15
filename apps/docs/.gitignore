@@ -18,3 +18,7 @@
 .env*.local
 .vercel
 next-env.d.ts
+
+# the screenshot pipeline (scripts/shots): local database, raw captures, clips before upload
+/.shots/
+/media/
