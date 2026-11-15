@@ -825,6 +825,7 @@ async function main() {
 
   // A clean slate for the seed's own rows (and the test account's sessions).
   for (const table of [
+    "oauth_app",
     "workspace_audit_log",
     "affiliate_commission",
     "affiliate_referral",
@@ -1453,6 +1454,21 @@ async function main() {
       ],
     );
   }
+
+  // An OAuth app the workspace built (unverified, as every new app is). The
+  // secret's hash matches no secret: the app can't be used.
+  await q(
+    `INSERT INTO oauth_app (id, name, description, client_id, client_secret_hash, redirect_uris, scopes, is_active, owner_user_id, organization_id, website_url, verified, pkce_required, created_at, updated_at)
+     VALUES ('shots_app_orders', 'Harbor Lane Orders', 'Adds a QR code to every online order receipt.', 'qrdx_app_harborlaneorders', $1, $2, $3, true, $4, $5, 'https://harborlane.example', false, true, $6, $6)`,
+    [
+      hex(64),
+      JSON.stringify(["https://orders.harborlane.example/oauth/callback"]),
+      JSON.stringify(["profile:read", "codes:read", "codes:write"]),
+      USER_ID,
+      TEAM_ID,
+      created(20),
+    ],
+  );
 
   await q("COMMIT");
   await client.end();

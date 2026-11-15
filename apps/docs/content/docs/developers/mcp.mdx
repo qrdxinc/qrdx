@@ -109,8 +109,6 @@ It uses the Streamable HTTP transport, keeps no session state and needs no accou
   </Tab>
 </Tabs>
 
-{/* shot: mcp-claude-connector | Claude's Add custom connector dialog with QRdx and the server URL filled in | Claude, Customize, Connectors, Add custom connector */}
-
 ## 2. Ask for a code
 
 Then ask in plain words. These prompts work as written:
@@ -136,8 +134,6 @@ Markdown: ![QR code](https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&f
 ```
 
 For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office Guest;P:correct-horse-battery;;`, and passes that string as `data` to `generate_qr_code` or as the content of `design_qr`.
-
-{/* shot: mcp-qr-card | the QR card in a chat after design_qr: the code, what it encodes, the scan score, Open in editor and the PNG and SVG buttons | Claude with the QRdx connector, after a design_qr call */}
 
 ## Tools
 

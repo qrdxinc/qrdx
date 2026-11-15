@@ -3,6 +3,7 @@
 // at the end, with a fixed viewport at 2x, animations off and the caret
 // hidden, so two runs of a job give the same picture.
 import { readFileSync, statSync } from "node:fs";
+import { API_BASE_URL, CANONICAL_ORIGIN } from "@repo/config";
 import { launch, PAGE_HELPERS, sleep } from "../../../app/e2e/cdp.mjs";
 import type { Box, Driver, Theme } from "./types";
 
@@ -40,9 +41,6 @@ const KEYS: Record<string, { code: string; keyCode: number; text?: string }> = {
   Backspace: { code: "Backspace", keyCode: 8 },
   " ": { code: "Space", keyCode: 32, text: " " },
 };
-
-/** What the capture server's own address is shown as (showProductionOrigin). */
-const PRODUCTION_ORIGIN = "https://qrdx.dev";
 
 /**
  * Page-side: the element a capture or a focus names. "card" is the bordered
@@ -285,18 +283,21 @@ export class Browser {
    */
   async showProductionOrigin(): Promise<void> {
     await this.page.evaluate(
-      `(local, live) => {
+      `(local, live, api) => {
+        // The API first: on qrdx.dev it has its own host (lib/api-keys/shared.ts).
+        const fix = (text) => text.replaceAll(local + "/api/v1", api).replaceAll(local, live);
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-          if (node.nodeValue.includes(local)) node.nodeValue = node.nodeValue.replaceAll(local, live);
+          if (node.nodeValue.includes(local)) node.nodeValue = fix(node.nodeValue);
         }
         for (const field of document.querySelectorAll("input, textarea")) {
-          if (field.value.includes(local)) field.value = field.value.replaceAll(local, live);
+          if (field.value.includes(local)) field.value = fix(field.value);
         }
         return true;
       }`,
       this.baseUrl,
-      PRODUCTION_ORIGIN,
+      CANONICAL_ORIGIN,
+      API_BASE_URL,
     );
   }
 

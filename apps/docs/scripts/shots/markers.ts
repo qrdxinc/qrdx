@@ -162,6 +162,17 @@ const MAP: Record<string, { kind: "shot" | "clip" | "diagram"; id: string }> = {
   "lib-circle-code": { kind: "shot", id: "lib-circle-code" },
   "lib-gradient-codes": { kind: "shot", id: "lib-gradient-codes" },
   "lib-logo-code": { kind: "shot", id: "lib-logo-code" },
+  // Developers
+  "webhooks-add-endpoint": { kind: "shot", id: "add-endpoint-dialog" },
+  "webhooks-signing-secret": { kind: "shot", id: "webhook-signing-secret" },
+  "webhooks-deliveries": { kind: "shot", id: "webhook-deliveries" },
+  "api-key-create-form": { kind: "shot", id: "create-key-dialog" },
+  "api-key-copy-dialog": { kind: "shot", id: "api-key-copy-dialog" },
+  "api-keys-page": { kind: "shot", id: "api-keys" },
+  "api-key-form-access": { kind: "shot", id: "api-key-form-access" },
+  "oauth-new-app-form": { kind: "shot", id: "oauth-new-app-form" },
+  "oauth-app-credentials": { kind: "shot", id: "oauth-app-credentials" },
+  "oauth-consent-screen": { kind: "shot", id: "oauth-consent-screen" },
 };
 
 /** Markers no honest picture can fulfil from the local stack; the page loses the comment. */
@@ -211,6 +222,12 @@ const REMOVE: Record<string, string> = {
     "motion (typing redraws the code); a still would repeat the page's other picture",
   "lib-qr-reader":
     "motion in a running app (a file picker, then the decoded link); no truthful still",
+  "n8n-community-nodes-install": "a screen of n8n, not of QRdx",
+  "n8n-qrdx-credential": "a screen of n8n, not of QRdx",
+  "n8n-qrdx-node-create": "a screen of n8n, not of QRdx",
+  "n8n-qrdx-trigger": "a screen of n8n, not of QRdx",
+  "mcp-claude-connector": "a dialog of Claude, not of QRdx",
+  "mcp-qr-card": "a card inside a Claude chat, not a QRdx screen",
 };
 
 interface Found {

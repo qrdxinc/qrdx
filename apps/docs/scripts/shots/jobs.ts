@@ -755,12 +755,17 @@ export const JOBS: Job[] = [
     id: "add-endpoint-dialog",
     look: "focus",
     title: "Adding a webhook endpoint",
-    alt: "The Add endpoint dialog: the URL QRdx will post to and the events to subscribe to, such as scan.created and form.submitted.",
+    alt: "The Add webhook endpoint dialog with an Endpoint URL typed in and the five events ticked: scans, scan milestones, new codes, code changes and form submissions.",
     pages: ["/docs/webhooks"],
     route: "{ws}/settings/webhooks",
     steps: async (page) => {
       await page.click("button", "Add endpoint", { exact: true });
       await waitDialog(page);
+      await page.fill(
+        "Endpoint URL",
+        "https://hooks.harborlane.example/orders",
+      );
+      await page.pause(300);
     },
     focus: DIALOG,
   },
@@ -778,7 +783,7 @@ export const JOBS: Job[] = [
     id: "api-keys",
     look: "window",
     title: "API keys",
-    alt: "The API keys & apps page: two keys with their names, masked prefixes, scopes and last use, a Create key button, and the OAuth apps section below.",
+    alt: "The API keys & apps page: two keys with their names, masked prefixes, scopes and last use, a Create key button, and under them the OAuth apps section with one app and New app.",
     pages: [
       "/docs/developers/api-keys",
       "/docs/developers/quickstart",
@@ -797,6 +802,8 @@ export const JOBS: Job[] = [
     steps: async (page) => {
       await page.click("button", "Create key", { exact: true });
       await waitDialog(page);
+      await page.fill("Name", "Order sync");
+      await page.pause(300);
     },
     focus: DIALOG,
   },
@@ -1420,6 +1427,140 @@ export const JOBS: Job[] = [
   },
 
   // ─── Clips ──────────────────────────────────────────────────────────────
+  // ─── Developers ──────────────────────────────────────────────────────────
+  {
+    kind: "shot",
+    id: "api-key-form-access",
+    look: "focus",
+    title: "Choosing what an API key can do",
+    alt: "The Create API key dialog with Custom picked under Access: below Full access and Read only, a checkbox for each scope the key can have.",
+    pages: ["/docs/developers/api-keys"],
+    route: "{ws}/settings/developers",
+    viewport: TALL,
+    steps: async (page) => {
+      await page.click("button", "Create key", { exact: true });
+      await waitDialog(page);
+      await page.fill("Name", "Order sync");
+      await page.clickText("Custom");
+      await page.pause(500);
+    },
+    focus: DIALOG,
+  },
+  {
+    kind: "shot",
+    id: "oauth-new-app-form",
+    look: "window",
+    title: "Registering an OAuth app",
+    alt: "The New OAuth app form: App details with a logo, name, description and website, and OAuth with the redirect URIs, a checkbox for each scope and the Require PKCE switch.",
+    pages: ["/docs/developers/build-an-integration"],
+    route: "{ws}/settings/developers/new",
+    viewport: { width: 1440, height: 1500 },
+    steps: async (page) => {
+      await page.waitText("Redirect URIs");
+      await page.fill("Name", "Harbor Lane Orders");
+      await page.fill(
+        "Description",
+        "Adds a QR code to every online order receipt.",
+      );
+      await page.fill("Website", "https://harborlane.example");
+      await page.fill(
+        "Redirect URIs",
+        "https://orders.harborlane.example/oauth/callback",
+      );
+      // Scopes: the profile (ticked already) and reading codes.
+      await page.evaluate(
+        `() => { const row = [...document.querySelectorAll("main label")].find((label) => label.innerText.includes("codes:read")); (row.querySelector('[role="checkbox"], input') ?? row).click(); return true; }`,
+      );
+      await page.pause(400);
+    },
+  },
+  {
+    kind: "shot",
+    id: "oauth-app-credentials",
+    look: "window",
+    title: "An OAuth app's credentials",
+    alt: "The Credentials section of an OAuth app's page: the client ID with a copy button, and the client secret, hidden, with Regenerate secret.",
+    pages: ["/docs/developers/build-an-integration"],
+    route: "{ws}/settings/developers/shots_app_orders",
+    steps: async (page) => {
+      await page.waitText("Client secret");
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Client secret",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "oauth-consent-screen",
+    look: "window",
+    title: "The consent screen of an OAuth app",
+    alt: "The consent screen for an app QRdx hasn't reviewed: the app's name, who built it and its website, an Unverified app note, the permissions it asks for, the signed-in account with Switch, and the Cancel and Authorize buttons.",
+    pages: ["/docs/developers/build-an-integration"],
+    route: `/api/oauth/authorize?client_id=qrdx_app_harborlaneorders&redirect_uri=${encodeURIComponent("https://orders.harborlane.example/oauth/callback")}&response_type=code&scope=${encodeURIComponent("profile:read codes:read codes:write")}&state=docs&code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM&code_challenge_method=S256`,
+    viewport: { width: 1000, height: 980 },
+    steps: async (page) => {
+      await page.waitText("Authorize");
+    },
+  },
+  // The two below create something (a key, an endpoint) to show the dialog
+  // that follows. They run last; reseed (`shots:db seed`) before the next
+  // full run so the lists are the seed's again.
+  {
+    kind: "shot",
+    id: "api-key-copy-dialog",
+    look: "focus",
+    title: "Copying a new API key",
+    alt: "The Copy your API key dialog right after a key is created: the key, shown this once, with a copy button, and a curl command under it that creates a dynamic code with the key.",
+    pages: ["/docs/developers/quickstart"],
+    route: "{ws}/settings/developers",
+    viewport: TALL,
+    steps: async (page) => {
+      await page.click("button", "Create key", { exact: true });
+      await waitDialog(page);
+      await page.fill("Name", "Order sync");
+      await page.click("button", "Create key", {
+        exact: true,
+        within: "Create API key",
+      });
+      await page.waitText("Copy your API key", 30_000);
+      // The field arrives with its text selected: show it plain.
+      await page.evaluate(
+        `() => { getSelection()?.removeAllRanges(); document.activeElement?.blur?.(); return true; }`,
+      );
+      await page.pause(600);
+    },
+    focus: DIALOG,
+  },
+  {
+    kind: "shot",
+    id: "webhook-signing-secret",
+    look: "focus",
+    title: "A new endpoint's signing secret",
+    alt: "The Endpoint added dialog right after an endpoint is saved: the signing secret that verifies every delivery, with a copy button, a note about the X-QRdx-Signature header, and Done.",
+    pages: ["/docs/webhooks"],
+    route: "{ws}/settings/webhooks",
+    steps: async (page) => {
+      await page.click("button", "Add endpoint", { exact: true });
+      await waitDialog(page);
+      // The app resolves the host before it saves: example.com exists (and
+      // is reserved for examples); the café's invented host doesn't.
+      await page.fill("Endpoint URL", "https://example.com/webhooks/qrdx");
+      await page.click("button", "Add endpoint", {
+        exact: true,
+        within: "Add webhook endpoint",
+      });
+      await page.waitText("Endpoint added", 30_000);
+      // The field arrives with its text selected: show it plain.
+      await page.evaluate(
+        `() => { getSelection()?.removeAllRanges(); document.activeElement?.blur?.(); return true; }`,
+      );
+      await page.pause(600);
+    },
+    focus: DIALOG,
+  },
   {
     kind: "clip",
     id: "first-code",

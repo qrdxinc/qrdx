@@ -34,7 +34,7 @@
     "dark": "/docs-static/shots/add-endpoint-dialog.dark.webp",
     "width": 1800,
     "height": 2024,
-    "alt": "The Add endpoint dialog: the URL QRdx will post to and the events to subscribe to, such as scan.created and form.submitted.",
+    "alt": "The Add webhook endpoint dialog with an Endpoint URL typed in and the five events ticked: scans, scan milestones, new codes, code changes and form submissions.",
     "title": "Adding a webhook endpoint",
     "pages": ["/docs/webhooks"],
     "job": "add-endpoint-dialog"
@@ -96,6 +96,30 @@
     ],
     "job": "analytics-workspace"
   },
+  "api-key-copy-dialog": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/api-key-copy-dialog.light.webp",
+    "dark": "/docs-static/shots/api-key-copy-dialog.dark.webp",
+    "width": 1800,
+    "height": 1299,
+    "alt": "The Copy your API key dialog right after a key is created: the key, shown this once, with a copy button, and a curl command under it that creates a dynamic code with the key.",
+    "title": "Copying a new API key",
+    "pages": ["/docs/developers/quickstart"],
+    "job": "api-key-copy-dialog"
+  },
+  "api-key-form-access": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/api-key-form-access.light.webp",
+    "dark": "/docs-static/shots/api-key-form-access.dark.webp",
+    "width": 1800,
+    "height": 2024,
+    "alt": "The Create API key dialog with Custom picked under Access: below Full access and Read only, a checkbox for each scope the key can have.",
+    "title": "Choosing what an API key can do",
+    "pages": ["/docs/developers/api-keys"],
+    "job": "api-key-form-access"
+  },
   "api-keys": {
     "kind": "shot",
     "look": "window",
@@ -103,7 +127,7 @@
     "dark": "/docs-static/shots/api-keys.dark.webp",
     "width": 1800,
     "height": 1174,
-    "alt": "The API keys & apps page: two keys with their names, masked prefixes, scopes and last use, a Create key button, and the OAuth apps section below.",
+    "alt": "The API keys & apps page: two keys with their names, masked prefixes, scopes and last use, a Create key button, and under them the OAuth apps section with one app and New app.",
     "title": "API keys",
     "pages": [
       "/docs/developers/api-keys",
@@ -710,6 +734,42 @@
     "pages": ["/docs/notifications"],
     "job": "notifications"
   },
+  "oauth-app-credentials": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/oauth-app-credentials.light.webp",
+    "dark": "/docs-static/shots/oauth-app-credentials.dark.webp",
+    "width": 1800,
+    "height": 551,
+    "alt": "The Credentials section of an OAuth app's page: the client ID with a copy button, and the client secret, hidden, with Regenerate secret.",
+    "title": "An OAuth app's credentials",
+    "pages": ["/docs/developers/build-an-integration"],
+    "job": "oauth-app-credentials"
+  },
+  "oauth-consent-screen": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/oauth-consent-screen.light.webp",
+    "dark": "/docs-static/shots/oauth-consent-screen.dark.webp",
+    "width": 1800,
+    "height": 1768,
+    "alt": "The consent screen for an app QRdx hasn't reviewed: the app's name, who built it and its website, an Unverified app note, the permissions it asks for, the signed-in account with Switch, and the Cancel and Authorize buttons.",
+    "title": "The consent screen of an OAuth app",
+    "pages": ["/docs/developers/build-an-integration"],
+    "job": "oauth-consent-screen"
+  },
+  "oauth-new-app-form": {
+    "kind": "shot",
+    "look": "window",
+    "light": "/docs-static/shots/oauth-new-app-form.light.webp",
+    "dark": "/docs-static/shots/oauth-new-app-form.dark.webp",
+    "width": 1800,
+    "height": 1870,
+    "alt": "The New OAuth app form: App details with a logo, name, description and website, and OAuth with the redirect URIs, a checkbox for each scope and the Require PKCE switch.",
+    "title": "Registering an OAuth app",
+    "pages": ["/docs/developers/build-an-integration"],
+    "job": "oauth-new-app-form"
+  },
   "page-editor": {
     "kind": "shot",
     "look": "window",
@@ -1293,6 +1353,18 @@
     "title": "An endpoint's deliveries",
     "pages": ["/docs/webhooks"],
     "job": "webhook-deliveries"
+  },
+  "webhook-signing-secret": {
+    "kind": "shot",
+    "look": "focus",
+    "light": "/docs-static/shots/webhook-signing-secret.light.webp",
+    "dark": "/docs-static/shots/webhook-signing-secret.dark.webp",
+    "width": 1800,
+    "height": 1212,
+    "alt": "The Endpoint added dialog right after an endpoint is saved: the signing secret that verifies every delivery, with a copy button, a note about the X-QRdx-Signature header, and Done.",
+    "title": "A new endpoint's signing secret",
+    "pages": ["/docs/webhooks"],
+    "job": "webhook-signing-secret"
   },
   "webhooks-list": {
     "kind": "shot",

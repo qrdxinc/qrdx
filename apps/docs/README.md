@@ -34,6 +34,7 @@ What the runner guarantees, so a picture never has to be fixed by hand:
 
 - a picture of one card, panel or dialog shows all of it: the viewport grows until the element fits, and the job fails if something still covers a side of it;
 - every job starts from the seeded state (the playground's saved design is cleared between jobs);
+- two jobs create something to show the dialog that follows (`api-key-copy-dialog`, `webhook-signing-secret`); they run last, and `shots:db seed` afterwards puts the lists back. The key and the secret in those pictures only ever existed in the throwaway database;
 - where a screen prints the app's own address (a referral link, the portal address), it reads `https://qrdx.dev`, as it does for a reader, not the capture server's `localhost`.
 
 Pages use them through `<Shot id="…" />`, `<Clip id="…" />` and `<Diagram id="…" />` (`components/mdx/shot.tsx`, `components/mdx/shot-diagram.tsx`; the diagrams are hand-written SVG whose words come from `docs.shots.diagrams` in `apps/app/messages/en.json`). An id nobody captured fails the build with the fix in the message. The `.md` copies of the pages show each picture as a Markdown image with its alt text.
