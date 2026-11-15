@@ -7,6 +7,7 @@
 //    real slug for the dynamic routes) or a page of the docs.
 
 import { existsSync, readdirSync, statSync } from "node:fs";
+import { createRequire } from "node:module";
 import { join, relative, resolve, sep } from "node:path";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NextIntlClientProvider } from "next-intl";
@@ -26,6 +27,12 @@ import { QR_TYPE_SLUGS } from "@/lib/qr-types-content";
 import { HOSTED_TYPE_SLUGS } from "@/lib/qr-types-content-hosted";
 import { industries, placements } from "@/lib/seo-content";
 import en from "@/messages/en.json";
+
+// jsdom is installed for the browser-environment suites but ships no types;
+// this suite runs in node and only needs its parser.
+const { JSDOM } = createRequire(import.meta.url)("jsdom") as {
+  JSDOM: new (html: string) => { window: { document: Document } };
+};
 
 vi.mock("next/navigation", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/navigation")>()),
@@ -124,15 +131,14 @@ describe("one name per destination", () => {
           </NextIntlClientProvider>
         </QueryClientProvider>,
       );
+    // Read the links with a real HTML parser (jsdom), not regular
+    // expressions: attribute values and text come back decoded.
     const anchors = (html: string, where: string) =>
-      [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>(.*?)<\/a>/gs)]
-        .map(([, href = "", inner = ""]) => ({
+      [...new JSDOM(html).window.document.querySelectorAll("a[href]")]
+        .map((anchor) => ({
           where,
-          href: href.replaceAll("&amp;", "&"),
-          name: inner
-            .replace(/<[^>]+>/g, "")
-            .replaceAll("&amp;", "&")
-            .trim(),
+          href: anchor.getAttribute("href") ?? "",
+          name: (anchor.textContent ?? "").trim(),
         }))
         // Icon-only links (the logo's mark, the social glyphs) have no text.
         .filter((anchor) => anchor.name !== "");
