@@ -5,6 +5,7 @@ import {
   MCP_HOST,
 } from "@repo/config";
 import { OG_FONT_GLOB } from "@repo/design-system/og/font-files";
+import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import { docsOriginRedirects, docsZoneRewrites } from "@repo/i18n/docs";
 import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
@@ -437,6 +438,19 @@ let nextConfig: NextConfig = {
         // The site's groups of pages, when SITE_ORIGIN is set (above): ahead
         // of this app's own copies of those pages too.
         ...siteZone,
+        // The home page at /home and /<language>/home too (lib/home-path.ts):
+        // the logo links there, and unlike / it never sends a signed-in
+        // visitor to the dashboard (proxy.ts). Canonical stays /.
+        {
+          source: "/home",
+          has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
+          destination: "/en",
+        },
+        {
+          source: `/:locale(${TRANSLATED_LOCALES.map((locale) => LOCALE_INFO[locale].segment).join("|")})/home`,
+          has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
+          destination: "/:locale",
+        },
         // Community profiles live at /community/@handle; a folder named
         // @handle would be a parallel route slot, so they render from
         // app/(app)/(home)/community/u/[handle].
