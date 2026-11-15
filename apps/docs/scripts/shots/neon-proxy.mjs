@@ -3,8 +3,11 @@
 // pipeline only. The app talks to its database through
 // @neondatabase/serverless over HTTP (packages/database/index.ts); pointed at
 // this proxy (DATABASE_HTTP_ENDPOINT), it works against a throwaway Postgres
-// started by scripts/shots/local-db.mjs. Never put it in front of a shared
-// database: it has no authentication.
+// started by scripts/shots/local-db.mjs. Running the SQL the app's driver
+// posts is its whole job, so it has no authentication; what keeps it safe is
+// below: it listens on 127.0.0.1 only, refuses a database that isn't local,
+// and turns away anything a browser sends. Never put it in front of a shared
+// database.
 //
 //   node scripts/shots/neon-proxy.mjs --listen 54330 --database postgresql://postgres@127.0.0.1:54329/qrdx
 //
@@ -31,8 +34,9 @@ const connectionString =
 
 // Loopback only, on both sides: the proxy never fronts anything but a local
 // database, and nothing but local processes can reach it.
+const LOOPBACK_HOSTS = ["localhost", "127.0.0.1", "[::1]", "::1"];
 const databaseHost = new URL(connectionString).hostname;
-if (!["localhost", "127.0.0.1", "::1"].includes(databaseHost)) {
+if (!LOOPBACK_HOSTS.includes(databaseHost)) {
   console.error(
     `neon-proxy: refusing to front ${databaseHost}; only a local database.`,
   );
@@ -107,6 +111,19 @@ async function handle(body, headers) {
 const server = createServer((request, response) => {
   if (request.method !== "POST") {
     response.writeHead(405).end();
+    return;
+  }
+  // Only the app's own server-side driver calls this. A web page open in a
+  // browser on this machine could otherwise post SQL here: browsers send an
+  // Origin (or Sec-Fetch-Site) header with such a request, the driver sends
+  // neither, and a rebound DNS name shows up as a Host that isn't loopback.
+  const host = String(request.headers.host ?? "").replace(/:\d+$/, "");
+  if (
+    request.headers.origin !== undefined ||
+    request.headers["sec-fetch-site"] !== undefined ||
+    !LOOPBACK_HOSTS.includes(host)
+  ) {
+    response.writeHead(403).end();
     return;
   }
   const chunks = [];
