@@ -257,13 +257,13 @@ export const JOBS: Job[] = [
     id: "code-settings",
     look: "window",
     title: "A code's Settings tab",
-    alt: "The Settings tab of a dynamic code: the Pause code switch, the Password field, Starts and Ends dates, the Scan limit and the Fallback URL.",
+    alt: "The Settings tab of a dynamic code with every control in use: a password set, a start and an end date, a scan limit of 300 and a fallback address for scans outside the window.",
     pages: [
       "/docs/help/dynamic-codes/pause-schedule-limit",
       "/docs/help/dynamic-codes/password",
       "/docs/code-controls",
     ],
-    route: "{ws}/codes/shots_code_loyalty",
+    route: "{ws}/codes/shots_code_latte",
     steps: async (page) => {
       await codeTab("Settings")(page);
       await page.waitText("Scan limit");
@@ -275,19 +275,20 @@ export const JOBS: Job[] = [
     id: "code-password",
     look: "window",
     title: "Protecting a code with a password",
-    alt: "The Password field in a code's Settings tab on a code that already has one, with the note that visitors type it once and stay unlocked for six hours.",
+    alt: "The Access & schedule panel of a code's Settings tab with a password typed into the Password field (shown masked), a start and an end date, a scan limit and a fallback address, before Save changes.",
     pages: ["/docs/help/dynamic-codes/password", "/docs/code-controls"],
     route: "{ws}/codes/shots_code_latte",
     steps: async (page) => {
       await codeTab("Settings")(page);
       await page.waitText("Scan limit");
-      await page.scrollTo("label", "Password");
+      await page.fill("Password", "harbor-2026");
+      await page.scrollTo("text", "Access & schedule");
       await page.scrollWindow(
-        await page.evaluate<number>(`() => window.scrollY - 200`),
+        await page.evaluate<number>(`() => window.scrollY - 120`),
       );
       await page.pause(300);
     },
-    capture: { kind: "element", find: "label", name: "Password", margin: 110 },
+    capture: { kind: "element", find: "card", name: "Password", margin: 16 },
   },
   {
     kind: "shot",
@@ -560,10 +561,9 @@ export const JOBS: Job[] = [
     },
     capture: {
       kind: "element",
-      find: "text",
+      find: "card",
       name: "Invite people",
-      margin: 40,
-      below: 420,
+      margin: 16,
     },
   },
   {
@@ -583,10 +583,9 @@ export const JOBS: Job[] = [
     },
     capture: {
       kind: "element",
-      find: "text",
+      find: "card",
       name: "Require two-step verification",
-      margin: 60,
-      below: 150,
+      margin: 16,
     },
   },
   {
@@ -650,10 +649,9 @@ export const JOBS: Job[] = [
     },
     capture: {
       kind: "element",
-      find: "text",
+      find: "card",
       name: "qr.harborlane.example",
-      margin: 60,
-      below: 300,
+      margin: 16,
     },
   },
   {
@@ -796,13 +794,7 @@ export const JOBS: Job[] = [
       );
       await page.pause(300);
     },
-    capture: {
-      kind: "element",
-      find: "text",
-      name: "Passkeys",
-      margin: 48,
-      below: 360,
-    },
+    capture: { kind: "element", find: "card", name: "Passkeys", margin: 16 },
   },
   {
     kind: "shot",
@@ -888,6 +880,493 @@ export const JOBS: Job[] = [
     ],
     route: "/q/nothere",
     viewport: PHONE,
+  },
+
+  // ─── Added for the pages' markers (phase 2) ─────────────────────────────
+  {
+    kind: "shot",
+    id: "scan-score-panel",
+    look: "focus",
+    title: "The Will it scan? panel",
+    alt: "The Will it scan? panel of the playground, opened from the Scan score badge: the list of checks on the current design, each marked as passed or needing attention.",
+    pages: ["/docs/help/designing/scan-score"],
+    route: "/playground",
+    steps: async (page) => {
+      await playgroundWithLink(page);
+      await page.click("button", "Scan score");
+      await page.waitFor(`() => !!document.querySelector('[role="dialog"]')`);
+      await page.pause(400);
+    },
+    focus: DIALOG,
+  },
+  {
+    kind: "shot",
+    id: "playground-download-print",
+    look: "focus",
+    title: "The Print-ready tab of the download dialog",
+    alt: "The Print-ready tab of the Download QR code dialog: the scanning distance, the code's printed width, the color mode and bleed, with the download button.",
+    pages: ["/docs/help/getting-started/download-and-print"],
+    route: "/playground",
+    steps: async (page) => {
+      await playgroundWithLink(page);
+      await page.click("button", "Download", { exact: true });
+      await waitDialog(page);
+      await page.click("tab", "Print-ready");
+      await page.pause(500);
+    },
+    focus: DIALOG,
+  },
+  ...(["colors", "frame", "logo"] as const).map((section) => ({
+    kind: "shot" as const,
+    id: `design-${section}`,
+    look: "window" as const,
+    title: `The ${section === "colors" ? "Colors" : section === "frame" ? "Frame" : "Logo"} section of the Design tab`,
+    alt:
+      section === "colors"
+        ? "The Colors section of the playground's Design tab: swatches for the code, its background, eyes and dots, with the live preview beside them."
+        : section === "frame"
+          ? "The Frame section of the playground's Design tab: the frame choices and the label field, with the framed code in the live preview."
+          : "The Logo section of the playground's Design tab: the logo switch, quick icons and the upload, with the logo in the middle of the live preview.",
+    pages: [
+      section === "colors"
+        ? "/docs/help/designing/colors-and-contrast"
+        : section === "frame"
+          ? "/docs/help/designing/frames"
+          : "/docs/help/designing/logos",
+    ],
+    route: "/playground",
+    steps: async (page: Driver) => {
+      await playgroundWithLink(page);
+      await page.click("tab", "design", { exact: true });
+      await page.pause(600);
+      await page
+        .scrollTo(
+          "text",
+          section === "colors"
+            ? "Colors"
+            : section === "frame"
+              ? "Frame"
+              : "Logo",
+        )
+        .catch(() => undefined);
+      await page.pause(400);
+    },
+  })),
+  {
+    kind: "shot",
+    id: "themes-menu",
+    look: "focus",
+    title: "A saved theme's menu",
+    alt: "The menu of a saved theme on the Themes page, open: edit it in the playground, make it the default, share it with the team, rename or delete it.",
+    pages: ["/docs/help/designing/save-a-design"],
+    route: "{ws}/themes",
+    steps: async (page) => {
+      await page.pointerClick("button", "Actions for Harbor Lane brand");
+      await page.waitFor(`() => !!document.querySelector('[role="menu"]')`);
+      await page.pause(400);
+    },
+    focus: MENU,
+  },
+  {
+    kind: "shot",
+    id: "use-a-link-from",
+    look: "focus",
+    title: "Use a link from…",
+    alt: "The Use a link from… menu of the playground's URL form, listing the connected services a link can be picked from.",
+    pages: ["/docs/short-links-and-file-pickers"],
+    route: "/playground",
+    steps: async (page) => {
+      await playgroundWithLink(page);
+      await page.pointerClick("button", "Use a link from");
+      await page.waitFor(
+        `() => !!document.querySelector('[role="menu"], [role="dialog"], [role="listbox"]')`,
+      );
+      await page.pause(400);
+    },
+    focus: {
+      find: "css",
+      name: '[role="menu"], [role="dialog"], [role="listbox"]',
+    },
+  },
+  {
+    kind: "shot",
+    id: "playground-dynamic-switch",
+    look: "window",
+    title: "Static or dynamic",
+    alt: "The Content panel of the playground with a link typed in and the Static or Dynamic choice under it: Static is fixed once printed, Dynamic can be edited later and counts scans.",
+    pages: ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
+    route: "/playground",
+    steps: playgroundWithLink,
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Fixed once printed",
+      margin: 0,
+    },
+  },
+  {
+    kind: "shot",
+    id: "playground-dynamic-on",
+    look: "window",
+    title: "Dynamic picked",
+    alt: "The Content panel of the playground after picking Dynamic: the short link the code will hold, with its copy button, where the static address was.",
+    pages: ["/docs/help/dynamic-codes/create", "/docs/dynamic-qr-codes"],
+    route: "/playground",
+    steps: async (page) => {
+      await playgroundWithLink(page);
+      await page.click("button", "Dynamic");
+      await page.pause(1500);
+      await page.waitQuiet();
+    },
+    capture: { kind: "element", find: "card", name: "Dynamic", margin: 0 },
+  },
+  {
+    kind: "shot",
+    id: "when-people-scan",
+    look: "window",
+    title: "When people scan",
+    alt: "The When people scan card on a code's Analytics tab: scans by hour of the day and by weekday, as bar charts.",
+    pages: ["/docs/tracking-and-conversions", "/docs/help/dynamic-codes/scans"],
+    route: "{ws}/codes/shots_code_loyalty",
+    viewport: TALL,
+    steps: async (page) => {
+      await codeTab("Analytics")(page);
+      await page.waitText("When people scan", 30_000);
+      await page.scrollTo("text", "When people scan");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 120`),
+      );
+      await page.pause(500);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "When people scan",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "short-link-domain-picker",
+    look: "focus",
+    title: "Picking the short link domain",
+    alt: "The Edit dynamic QR code dialog with the Short link domain list open: the default qrdx.dev/q/ and the workspace's verified custom domain.",
+    pages: ["/docs/custom-domains", "/docs/help/domains/custom-domains"],
+    route: "{ws}/codes/shots_code_loyalty",
+    viewport: TALL,
+    steps: async (page) => {
+      await page.click("button", "Edit link", { exact: true });
+      await waitDialog(page);
+      await page.waitQuiet(15_000);
+      await page.pointerClick("css", '[role="dialog"] [role="combobox"]');
+      await page.pause(600);
+    },
+    focus: DIALOG,
+  },
+  {
+    kind: "shot",
+    id: "routing-add-rule",
+    look: "focus",
+    title: "Adding a routing rule",
+    alt: "The Add rule menu of the Smart routing panel, open, listing the rule templates to start from.",
+    pages: ["/docs/help/dynamic-codes/routing"],
+    route: "{ws}/codes/shots_code_loyalty",
+    viewport: TALL,
+    steps: async (page) => {
+      await codeTab("Settings")(page);
+      await page.waitText("Add rule");
+      await page.scrollTo("button", "Add rule");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 1200`),
+      );
+      await page.pointerClick("button", "Add rule");
+      await page.waitFor(
+        `() => !!document.querySelector('[role="menu"], [role="dialog"]')`,
+      );
+      await page.pause(400);
+    },
+    focus: { find: "css", name: '[role="menu"], [role="dialog"]' },
+  },
+  {
+    kind: "shot",
+    id: "precise-location-panel",
+    look: "window",
+    title: "The Precise location panel",
+    alt: "The Precise location panel on a code's Settings tab: the Ask scanners for precise location switch and what scanners see when it is on.",
+    pages: ["/docs/precise-location"],
+    route: "{ws}/codes/shots_code_loyalty",
+    viewport: TALL,
+    steps: async (page) => {
+      await codeTab("Settings")(page);
+      await page.waitText("Precise location");
+      await page.scrollTo("text", "Precise location");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 120`),
+      );
+      await page.pause(400);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Precise location",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "pixels-panel",
+    look: "window",
+    title: "The Tracking pixels panel",
+    alt: "The Tracking pixels panel on a hosted page code's Settings tab, where analytics and ad pixel IDs are added to the page.",
+    pages: ["/docs/tracking-and-conversions"],
+    route: "{ws}/codes/shots_code_menu",
+    viewport: TALL,
+    steps: async (page) => {
+      await codeTab("Settings")(page);
+      await page.waitText("Tracking pixels");
+      await page.scrollTo("text", "Tracking pixels");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 120`),
+      );
+      await page.pause(400);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Tracking pixels",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "share-analytics-dialog",
+    look: "focus",
+    title: "Sharing a code's analytics",
+    alt: "The Share analytics dialog of a code: the Public analytics page switch, the link to share and who can see it.",
+    pages: ["/docs/client-reports"],
+    route: "{ws}/codes/shots_code_loyalty",
+    steps: async (page) => {
+      await page.pointerClick("button", "Code actions");
+      await page.waitFor(`() => !!document.querySelector('[role="menu"]')`);
+      await page.click("menuitem", "Share analytics");
+      await waitDialog(page);
+    },
+    focus: DIALOG,
+  },
+  {
+    kind: "shot",
+    id: "form-editor",
+    look: "window",
+    title: "Editing a form block",
+    alt: "The page editor with the Form block open: its questions, each with a type and a required switch, the submit button label and the thank-you message, next to the phone preview.",
+    pages: ["/docs/help/pages-and-forms/forms", "/docs/forms-and-pages"],
+    route: "{ws}/pages/shots_page_feedback",
+    viewport: TALL,
+    steps: async (page) => {
+      await page.clickText("Form");
+      await page.pause(900);
+      await page.waitQuiet();
+    },
+  },
+  {
+    kind: "shot",
+    id: "workspace-switcher",
+    look: "focus",
+    title: "The workspace switcher",
+    alt: "The workspace switcher at the bottom of the sidebar, open: the person's own workspace and Harbor Lane Coffee, with Create workspace at the end.",
+    pages: ["/docs/teams", "/docs/help/teams/create-and-invite"],
+    route: "{ws}",
+    steps: async (page) => {
+      await page.pointerClick("button", "Switch workspace");
+      await page.waitFor(
+        `() => !!document.querySelector('[role="menu"], [role="dialog"]')`,
+      );
+      await page.pause(400);
+    },
+    focus: { find: "css", name: '[role="menu"], [role="dialog"]' },
+  },
+  {
+    kind: "shot",
+    id: "create-workspace-dialog",
+    look: "focus",
+    title: "Creating a workspace",
+    alt: "The Create workspace dialog: the Workspace name and Workspace URL fields and the Create button.",
+    pages: ["/docs/help/teams/create-and-invite"],
+    route: "{ws}",
+    steps: async (page) => {
+      await page.pointerClick("button", "Switch workspace");
+      await page.waitFor(
+        `() => !!document.querySelector('[role="menu"], [role="dialog"]')`,
+      );
+      await page.click("menuitem", "Create workspace");
+      await waitDialog(page);
+      await page
+        .fill("Workspace name", "Harbor Lane Events")
+        .catch(() => undefined);
+      await page.pause(400);
+    },
+    focus: DIALOG,
+  },
+  {
+    kind: "shot",
+    id: "workspace-danger-zone",
+    look: "window",
+    title: "Leaving or deleting a workspace",
+    alt: "The bottom of a workspace's General settings: the card with Leave workspace and Delete workspace, and what each one does.",
+    pages: ["/docs/help/teams/seats"],
+    route: "{ws}/settings",
+    steps: async (page) => {
+      await page.scrollTo("button", "Delete workspace");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 300`),
+      );
+      await page.pause(300);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Delete workspace",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "affiliate-settings",
+    look: "window",
+    title: "The affiliate program page",
+    alt: "The Affiliate program settings page: the referral link with its copy button, the commission terms and the earnings so far.",
+    pages: ["/docs/help/account-and-billing/affiliate-program"],
+    route: "/settings/affiliate",
+  },
+  {
+    kind: "shot",
+    id: "pricing-page",
+    look: "window",
+    title: "The pricing page",
+    alt: "The pricing page with the Monthly and Yearly choice and the Free, Pro and Business plans side by side, each with its upgrade button.",
+    pages: ["/docs/help/account-and-billing/change-plan"],
+    route: "/pricing",
+    signedIn: false,
+    viewport: TALL,
+  },
+  {
+    kind: "shot",
+    id: "sign-in-page",
+    look: "window",
+    title: "The sign-in page",
+    alt: "The sign-in page: Continue with Google and GitHub, the email field and the Email me a code button.",
+    pages: ["/docs/help/account-and-billing/sign-in"],
+    route: "/sign-in",
+    signedIn: false,
+  },
+  {
+    kind: "shot",
+    id: "sign-in-code-step",
+    look: "window",
+    title: "Waiting for the sign-in code",
+    alt: "The sign-in page after Email me a code: the Check your email step with the six-digit code field and the option to use a different email.",
+    pages: ["/docs/help/troubleshooting/emails"],
+    route: "/sign-in",
+    signedIn: false,
+    steps: async (page) => {
+      await page.waitText("Email me a code", 60_000);
+      await page.fill("Email address", "noor@harborlane.example");
+      await page.click("button", "Email me a code", { exact: true });
+      await page.waitText("Check your email", 30_000);
+      await page.pause(400);
+    },
+  },
+  {
+    kind: "shot",
+    id: "two-step-card",
+    look: "window",
+    title: "The Two-step verification card",
+    alt: "The Two-step verification card in Profile & security, off, with its Turn on button.",
+    pages: ["/docs/help/privacy-and-security/two-step-verification"],
+    route: "/settings/account",
+    steps: async (page) => {
+      await page.scrollTo("text", "Two-step verification");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 120`),
+      );
+      await page.pause(300);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Two-step verification",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "add-passkey-dialog",
+    look: "focus",
+    title: "Adding a passkey",
+    alt: "The Add a passkey step: a Name field for the passkey and the Continue button that asks the browser for it.",
+    pages: ["/docs/help/privacy-and-security/passkeys"],
+    route: "/settings/account",
+    steps: async (page) => {
+      await page.click("button", "Add passkey");
+      await waitDialog(page);
+      await page.fill("Name", "Front desk tablet").catch(() => undefined);
+      await page.pause(300);
+    },
+    focus: DIALOG,
+  },
+  {
+    kind: "shot",
+    id: "sessions-card",
+    look: "window",
+    title: "Where you are signed in",
+    alt: "The sessions card in Profile & security: the devices signed in to the account and the Sign out everywhere else button.",
+    pages: ["/docs/help/privacy-and-security/account-security"],
+    route: "/settings/account",
+    steps: async (page) => {
+      await page.scrollTo("button", "Sign out everywhere else");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 300`),
+      );
+      await page.pause(300);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Sign out everywhere else",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "your-data-card",
+    look: "window",
+    title: "Your data",
+    alt: "The Your data card in Profile & security, with the Download my data button and the Delete account option.",
+    pages: ["/docs/help/account-and-billing/export-your-data"],
+    route: "/settings/account",
+    steps: async (page) => {
+      await page.scrollTo("button", "Download my data");
+      await page.scrollWindow(
+        await page.evaluate<number>(`() => window.scrollY - 300`),
+      );
+      await page.pause(300);
+    },
+    capture: {
+      kind: "element",
+      find: "card",
+      name: "Download my data",
+      margin: 16,
+    },
+  },
+  {
+    kind: "shot",
+    id: "report-abuse-form",
+    look: "window",
+    title: "Reporting a code",
+    alt: "The Report abuse page: the field for the link, the choice of reason and an optional note, with the Send report button.",
+    pages: ["/docs/help/privacy-and-security/report-abuse"],
+    route: "/report-abuse",
+    signedIn: false,
   },
 
   // ─── Clips ──────────────────────────────────────────────────────────────

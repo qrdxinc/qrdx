@@ -13,6 +13,7 @@
     "seo:dates": "tsx scripts/seo-dates.ts",
     "shots": "tsx scripts/shots/run.ts",
     "shots:db": "node scripts/shots/local-db.mjs",
+    "shots:markers": "tsx scripts/shots/markers.ts",
     "shots:upload": "node --env-file-if-exists=../app/.env.local scripts/shots/upload-media.mjs",
     "pretest": "bun run zone-inputs",
     "test": "vitest run",

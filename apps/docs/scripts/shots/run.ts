@@ -313,6 +313,9 @@ async function main() {
         if (job.signedIn !== false && !signedIn) {
           await browser.signIn(EMAIL, DEV_LOG);
           signedIn = true;
+        } else if (job.signedIn === false && signedIn) {
+          await browser.page.cdp.send("Network.clearBrowserCookies");
+          signedIn = false;
         }
         const wanted = {
           width: job.viewport?.width ?? 1440,

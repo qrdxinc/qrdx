@@ -403,6 +403,18 @@ export class Browser {
           if (find === "text") el = window.__e2e.byText(name);
           else if (find === "label") el = window.__e2e.byLabel(name);
           else if (find === "css") el = document.querySelector(name);
+          else if (find === "card") {
+            // The bordered container (a card, a panel, a fieldset) around the
+            // element: what a picture of "that section" should frame.
+            el = window.__e2e.byText(name) ?? window.__e2e.byLabel(name) ?? window.__e2e.byRole("button", name);
+            let node = el;
+            for (let i = 0; node && i < 16; i++) {
+              const style = getComputedStyle(node);
+              const rect = node.getBoundingClientRect();
+              if (rect.width >= 480 && (Number.parseFloat(style.borderTopWidth) > 0 || style.boxShadow !== "none") && node !== document.body) { el = node; break; }
+              node = node.parentElement;
+            }
+          }
           else el = window.__e2e.byRole(find, name);
           if (!el) return null;
           const r = el.getBoundingClientRect();

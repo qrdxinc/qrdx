@@ -401,7 +401,11 @@ const HANDLERS: Record<string, Handler> = {
     attributes.command ? shell(attributes.command) : "",
   // Pictures and clips of the app (components/mdx/shot.tsx): the light image
   // with its alt text; a clip adds a link to its video.
-  Shot: (attributes, _, options) => shotMarkdown(attributes, options.origin),
+  // A captured picture by id; with a `src` instead, a plain framed image.
+  Shot: (attributes, children, options) =>
+    attributes.id
+      ? shotMarkdown(attributes, options.origin)
+      : image(attributes, children, options),
   Clip: (attributes, _, options) => shotMarkdown(attributes, options.origin),
   QrCatalog: (attributes) => {
     const items = CATALOGS[attributes.kind ?? ""];

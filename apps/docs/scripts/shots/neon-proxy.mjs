@@ -29,28 +29,19 @@ const connectionString =
   process.env.SHOTS_DATABASE_URL ??
   "postgresql://postgres@127.0.0.1:54329/qrdx";
 
+// Loopback only, on both sides: the proxy never fronts anything but a local
+// database, and nothing but local processes can reach it.
+const databaseHost = new URL(connectionString).hostname;
+if (!["localhost", "127.0.0.1", "::1"].includes(databaseHost)) {
+  console.error(
+    `neon-proxy: refusing to front ${databaseHost}; only a local database.`,
+  );
+  process.exit(1);
+}
+
 // Raw text out: the client parses values itself from each field's type OID.
 const rawText = { getTypeParser: () => (value) => value };
 const pool = new pg.Pool({ connectionString, types: rawText, max: 8 });
-
-const ERROR_FIELDS = [
-  "severity",
-  "code",
-  "detail",
-  "hint",
-  "position",
-  "internalPosition",
-  "internalQuery",
-  "where",
-  "schema",
-  "table",
-  "column",
-  "dataType",
-  "constraint",
-  "file",
-  "line",
-  "routine",
-];
 
 function shape(result) {
   return {
@@ -127,17 +118,11 @@ const server = createServer((request, response) => {
       response.writeHead(200, { "content-type": "application/json" });
       response.end(JSON.stringify(result));
     } catch (error) {
-      // Postgres errors carry a SQLSTATE code and are what the driver expects;
-      // anything else is reported without its details.
-      const isDatabaseError = typeof error?.code === "string";
-      const payload = {
-        message: isDatabaseError ? String(error.message) : "query failed",
-      };
-      if (isDatabaseError) {
-        for (const field of ERROR_FIELDS) {
-          if (error[field] !== undefined) payload[field] = String(error[field]);
-        }
-      }
+      // The driver gets the SQLSTATE code it understands and a generic
+      // message; the details stay in this process's log.
+      console.error("neon-proxy:", error?.code ?? "", error?.message ?? error);
+      const payload = { message: "query failed" };
+      if (typeof error?.code === "string") payload.code = error.code;
       response.writeHead(400, { "content-type": "application/json" });
       response.end(JSON.stringify(payload));
     }

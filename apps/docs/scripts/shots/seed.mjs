@@ -314,6 +314,11 @@ const codes = [
     scans: 140,
     createdDaysAgo: 21,
     password: "harbor-2026",
+    // A used Access & schedule panel: a window, a cap and somewhere to send late scans.
+    startsAt: daysAgo(14, 8),
+    expiresAt: daysAhead(30, 23),
+    scanLimit: 300,
+    fallbackUrl: `${SITE}/events`,
   },
   {
     id: "shots_code_tasting",
@@ -351,6 +356,7 @@ const codes = [
     style: HARBOR_STYLE,
     scans: 500,
     scanLimit: 500,
+    limitReached: true,
     createdDaysAgo: 110,
     scanEnd: 30,
   },
@@ -1019,7 +1025,7 @@ async function main() {
         code.title,
         JSON.stringify(code.style),
         code.archivedAt ?? null,
-        code.scanLimit ? code.scanLimit : scans.length,
+        code.limitReached ? code.scanLimit : scans.length,
         lastScan,
         code.kind ?? "redirect",
         code.pageId ?? null,
