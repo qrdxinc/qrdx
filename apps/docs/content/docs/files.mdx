@@ -19,7 +19,7 @@ Hosted pages can show files you upload to QRdx: a menu or brochure as a PDF, a p
 
 ## How it works
 
-{/* diagram: file-delivery | A browser uploading straight to the storage bucket, QRdx checking the file and copying it to its final key, and visitors reaching it through the file's QRdx link | concept drawing */}
+<Diagram id="file-delivery" />
 
 Your browser uploads the file straight to the storage bucket. QRdx then checks it (its size, and that its first bytes really are a file of its type), copies the checked version to the file's own place and gives it a link, `https://qrdx.dev/api/files/<id>`. Pages and codes use that link, which is why replacing the file changes nothing for them.
 

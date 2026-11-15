@@ -13,7 +13,10 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { JOBS } from "./jobs";
+import { JOBS as APP_JOBS } from "./jobs";
+import { LIBRARY_JOBS } from "./library";
+
+const JOBS = [...APP_JOBS, ...LIBRARY_JOBS];
 
 /** components/mdx/shot-diagram.tsx (not imported: it is a React server module). */
 const DIAGRAM_IDS = [
@@ -23,6 +26,18 @@ const DIAGRAM_IDS = [
   "custom-domain",
   "webhook-delivery",
   "image-api",
+  "hosted-page-anatomy",
+  "import-flow",
+  "precise-location-flow",
+  "nfc-link",
+  "file-delivery",
+  "tracking-paths",
+  "client-portal-access",
+  "self-hosting-stack",
+  "wont-scan-contrast",
+  "wont-scan-quiet-zone",
+  "wont-scan-print-size",
+  "wont-scan-eyes",
 ];
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -33,9 +48,9 @@ const MARKER =
 /** marker id → the job (or diagram) that fulfils it. Several markers can share one picture. */
 const MAP: Record<string, { kind: "shot" | "clip" | "diagram"; id: string }> = {
   // Getting started, playground, designing
-  "playground-content-tab": { kind: "shot", id: "playground-content" },
+  "playground-content-tab": { kind: "shot", id: "playground-type-picker" },
   "playground-link-typed": { kind: "shot", id: "playground-content" },
-  "playground-download-button": { kind: "shot", id: "playground-content" },
+  "playground-download-button": { kind: "shot", id: "playground-download" },
   "scan-score-badge": { kind: "shot", id: "playground-content" },
   "will-it-scan-panel": { kind: "shot", id: "scan-score-panel" },
   "download-dialog-image-file": { kind: "shot", id: "playground-download" },
@@ -51,12 +66,9 @@ const MAP: Record<string, { kind: "shot" | "clip" | "diagram"; id: string }> = {
   "use-a-link-from-menu": { kind: "shot", id: "use-a-link-from" },
   "playground-static-dynamic-switch": {
     kind: "shot",
-    id: "playground-dynamic-switch",
+    id: "playground-content",
   },
-  "playground-dynamic-toggle": {
-    kind: "shot",
-    id: "playground-dynamic-switch",
-  },
+  "playground-dynamic-toggle": { kind: "shot", id: "playground-content" },
   "playground-dynamic-on": { kind: "shot", id: "playground-dynamic-on" },
   // Dynamic codes
   "new-code-dialog": { kind: "shot", id: "new-code-dialog" },
@@ -119,6 +131,37 @@ const MAP: Record<string, { kind: "shot" | "clip" | "diagram"; id: string }> = {
   "sessions-sign-out": { kind: "shot", id: "sessions-card" },
   "your-data-download": { kind: "shot", id: "your-data-card" },
   "report-abuse-form": { kind: "shot", id: "report-abuse-form" },
+  // Concept drawings (components/mdx/shot-diagrams)
+  "hosted-page-anatomy": { kind: "diagram", id: "hosted-page-anatomy" },
+  "import-flow": { kind: "diagram", id: "import-flow" },
+  "precise-location-flow": { kind: "diagram", id: "precise-location-flow" },
+  "nfc-link": { kind: "diagram", id: "nfc-link" },
+  "file-delivery": { kind: "diagram", id: "file-delivery" },
+  "tracking-paths": { kind: "diagram", id: "tracking-paths" },
+  "client-portal-access": { kind: "diagram", id: "client-portal-access" },
+  "self-hosting-stack": { kind: "diagram", id: "self-hosting-stack" },
+  "wont-scan-contrast": { kind: "diagram", id: "wont-scan-contrast" },
+  "wont-scan-quiet-zone": { kind: "diagram", id: "wont-scan-quiet-zone" },
+  "wont-scan-print-size": { kind: "diagram", id: "wont-scan-print-size" },
+  "wont-scan-eyes": { kind: "diagram", id: "wont-scan-eyes" },
+  // The React library's pages: what the page's sample draws (library.tsx).
+  // A marker that asked for motion gets a still of the result.
+  "lib-first-code": { kind: "shot", id: "lib-first-code" },
+  "lib-styled-code": { kind: "shot", id: "lib-styled-code" },
+  "vue-first-code": { kind: "shot", id: "lib-framed-menu-code" },
+  "vanilla-first-code": { kind: "shot", id: "lib-framed-menu-code" },
+  "angular-first-code": { kind: "shot", id: "lib-angular-code" },
+  "preact-first-code": { kind: "shot", id: "lib-preact-code" },
+  "solid-signal-code": { kind: "shot", id: "lib-solid-signal-code" },
+  "element-first-code": { kind: "shot", id: "lib-element-code" },
+  "nextjs-server-code": { kind: "shot", id: "lib-nextjs-server-code" },
+  "lib-download-png": { kind: "shot", id: "lib-download-result" },
+  "lib-art-codes": { kind: "shot", id: "lib-art-codes" },
+  "lib-templates": { kind: "shot", id: "lib-templates" },
+  "lib-frame-banner": { kind: "shot", id: "lib-frame-banner" },
+  "lib-circle-code": { kind: "shot", id: "lib-circle-code" },
+  "lib-gradient-codes": { kind: "shot", id: "lib-gradient-codes" },
+  "lib-logo-code": { kind: "shot", id: "lib-logo-code" },
 };
 
 /** Markers no honest picture can fulfil from the local stack; the page loses the comment. */
@@ -164,6 +207,10 @@ const REMOVE: Record<string, string> = {
   "product-page-phone": "no product page in the seed",
   "product-details-editor": "no product page in the seed",
   "gs1-link-copy": "no product page on a custom domain in the seed",
+  "nextjs-live-code":
+    "motion (typing redraws the code); a still would repeat the page's other picture",
+  "lib-qr-reader":
+    "motion in a running app (a file picker, then the decoded link); no truthful still",
 };
 
 interface Found {

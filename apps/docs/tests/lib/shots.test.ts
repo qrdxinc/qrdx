@@ -1,8 +1,8 @@
 // The docs' pictures and clips: the manifest scripts/shots writes
 // (lib/shots-manifest.json), the lookup behind <Shot> and <Clip>
 // (lib/shots.ts), and the files it points at.
-import { existsSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
 import { cleanLlmMarkdown } from "@/lib/agents/llm-markdown";
 import {
@@ -14,7 +14,12 @@ import {
   shotMarkdown,
 } from "@/lib/shots";
 import manifest from "@/lib/shots-manifest.json";
-import { JOBS } from "@/scripts/shots/jobs";
+import { JOBS as APP_JOBS } from "@/scripts/shots/jobs";
+import { LIBRARY_JOBS } from "@/scripts/shots/library";
+import en from "../../../app/messages/en.json";
+
+// The app's screens and the library's rendered samples.
+const JOBS = [...APP_JOBS, ...LIBRARY_JOBS];
 
 const PUBLIC = join(__dirname, "../../public");
 const shots = manifest as ShotsManifest;
@@ -174,7 +179,7 @@ describe("the committed manifest", () => {
       const entry = shots[id] as ShotsManifest[string];
       expect(
         JOBS.some((job) => job.id === entry.job),
-        `${id}: job ${entry.job} is not in scripts/shots/jobs.ts`,
+        `${id}: job ${entry.job} is not in scripts/shots/jobs.ts or library.tsx`,
       ).toBe(true);
       expect(entry.alt.trim().length, `${id}: alt text`).toBeGreaterThan(20);
       expect(
@@ -214,5 +219,87 @@ describe("the committed manifest", () => {
 
   it("uses only ids that are valid in MDX attributes and file names", () => {
     for (const id of ids) expect(id).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+  });
+});
+
+describe("the pictures the English pages use", () => {
+  const CONTENT = join(__dirname, "../../content/docs");
+  const englishPages = (dir = CONTENT): string[] =>
+    readdirSync(dir).flatMap((name) => {
+      const full = join(dir, name);
+      if (statSync(full).isDirectory()) return englishPages(full);
+      return /^[^.]+\.mdx$/.test(name) ? [full] : [];
+    });
+  const pages = englishPages().map((file) => ({
+    name: relative(CONTENT, file),
+    uses: [
+      ...readFileSync(file, "utf8").matchAll(
+        /<(Shot|Clip|Diagram) id="([^"]+)"/g,
+      ),
+    ].map((match) => ({ tag: match[1], id: match[2] })),
+    text: readFileSync(file, "utf8"),
+  }));
+  const diagrams = en.docs.shots.diagrams as Record<
+    string,
+    Record<string, string>
+  >;
+
+  it("are all captured or drawn", () => {
+    for (const page of pages) {
+      for (const { tag, id } of page.uses) {
+        if (tag === "Diagram") {
+          expect(
+            diagrams[id]?.title,
+            `${page.name}: <Diagram id="${id}" /> has no labels in docs.shots.diagrams`,
+          ).toBeTruthy();
+        } else {
+          expect(
+            shots[id]?.kind,
+            `${page.name}: <${tag} id="${id}" /> is not in the manifest`,
+          ).toBe(tag === "Shot" ? "shot" : "clip");
+        }
+      }
+    }
+  });
+
+  it("never repeat on one page", () => {
+    for (const page of pages) {
+      const ids = page.uses.map((use) => `${use.tag} ${use.id}`);
+      expect(
+        ids.filter((id, index) => ids.indexOf(id) !== index),
+        `${page.name} shows a picture twice`,
+      ).toEqual([]);
+    }
+  });
+
+  it("leave no marker behind", () => {
+    for (const page of pages) {
+      expect(
+        page.text,
+        `${page.name} still has a shot, clip or diagram marker`,
+      ).not.toMatch(/\{\/\*\s*(shot|clip|diagram):/);
+    }
+  });
+
+  it("have every word a drawing shows in the English catalog", () => {
+    const source = readFileSync(
+      join(__dirname, "../../components/mdx/shot-diagram.tsx"),
+      "utf8",
+    );
+    // `"id": { component: …, keys: [ "a", "b" ] }` for every registered drawing.
+    const registered = [
+      ...source.matchAll(
+        /"([a-z0-9-]+)": \{\s*component: \w+,\s*keys: \[([^\]]*)\]/g,
+      ),
+    ];
+    expect(registered.length).toBeGreaterThanOrEqual(18);
+    for (const [, id, keys] of registered) {
+      for (const [, key] of keys.matchAll(/"([^"]+)"/g)) {
+        expect(
+          diagrams[id]?.[key],
+          `docs.shots.diagrams.${id}.${key} is missing in apps/app/messages/en.json`,
+        ).toBeTruthy();
+      }
+    }
   });
 });

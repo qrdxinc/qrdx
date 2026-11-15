@@ -13,7 +13,7 @@ In a hurry? [See your scans](/docs/help/dynamic-codes/scans) covers the analytic
 
 ## How it works
 
-{/* diagram: tracking-paths | Two paths from a scan: a hosted page that loads the owner's pixels after consent, and a website visit that carries qrdx_sid and reports a conversion back to QRdx | concept drawing */}
+<Diagram id="tracking-paths" />
 
 A code either opens a hosted page or redirects to your website, and each path has its own tool. On a hosted page QRdx controls the HTML, so it can load your pixels after the visitor agrees. On your website QRdx controls nothing, so it hands your site a signed scan id in the URL and your site reports back when the visitor converts.
 

@@ -9,7 +9,7 @@ QRdx doesn't sell, print or ship tags or cards. Buy blank ones from any NFC supp
 
 ## How it works
 
-{/* diagram: nfc-link | A phone tapping a tag that holds the code's NFC link (the short link plus ?nfc), QRdx counting the visit as a tap and redirecting like a scan | concept drawing */}
+<Diagram id="nfc-link" />
 
 A code's NFC link is its short link with `?nfc` on the end, like `https://qrdx.dev/q/aB3dE5f?nfc`, or `https://go.example.com/menu?nfc` on a [custom domain](/docs/custom-domains). It goes through the same redirect as the short link, so smart routing, passwords, schedules and scan limits apply to taps as well. The `?nfc` ending only tells analytics the visit was a tap. The QR code keeps its own link, and codes you've already printed work exactly as before.
 
