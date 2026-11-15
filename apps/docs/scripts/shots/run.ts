@@ -8,6 +8,7 @@
 //   bun run --filter docs shots              # every job
 //   bun run --filter docs shots -- --only codes-list,new-code   # some jobs
 //   bun run --filter docs shots -- --list    # the jobs and the pages they serve
+//   bun run --filter docs shots -- --meta    # alt text, titles and pages from the jobs into the manifest, no captures
 //
 // Env: SHOTS_APP_URL (http://localhost:3103), SHOTS_DEV_LOG (.shots/app.log,
 // where the sign-in code is read from), SHOTS_WORKSPACE (harbor-lane-coffee),
@@ -21,11 +22,12 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { findChrome, serverIsUp } from "../../../app/e2e/cdp.mjs";
 import { Browser } from "./browser";
 import { encode, hasFfmpeg, startRecording } from "./clips";
 import { JOBS } from "./jobs";
+import { LIBRARY_JOBS } from "./library";
 import {
   focusLook,
   posterLook,
@@ -71,6 +73,9 @@ const option = (name: string) => {
   const inline = args.find((arg) => arg.startsWith(`--${name}=`));
   return inline?.slice(name.length + 3);
 };
+
+/** The app's screens (jobs.ts) and the library's rendered samples (library.tsx). */
+const ALL_JOBS: Job[] = [...JOBS, ...LIBRARY_JOBS];
 
 const THEMES: Theme[] = ["light", "dark"];
 /** A job that takes longer than this is stuck. */
@@ -122,9 +127,18 @@ async function regionOf(
   const capture = job.capture ?? { kind: "viewport" };
   if (capture.kind === "viewport") return undefined;
   if (capture.kind === "box") return scaled(capture.box);
-  const box = await browser.driver.box(capture.find, capture.name);
   const margin = capture.margin ?? 24;
   const below = capture.below ?? 0;
+  // The whole element, never a slice of it: the viewport grows to hold it.
+  await browser.fit(
+    capture.find,
+    capture.name,
+    job.viewport?.width ?? 1440,
+    job.viewport?.height ?? 900,
+    margin + below,
+  );
+  await browser.settle(300);
+  const box = await browser.driver.box(capture.find, capture.name);
   return scaled({
     x: box.x - margin,
     y: box.y - margin,
@@ -146,6 +160,7 @@ async function runShot(browser: Browser, job: ShotJob): Promise<ShotEntry> {
   for (const theme of THEMES) {
     await browser.setTheme(theme);
     await browser.settle(theme === "dark" ? 500 : 150);
+    await browser.showProductionOrigin();
     const png = await browser.screenshot();
     if (RAW_DIR) {
       mkdirSync(RAW_DIR, { recursive: true });
@@ -253,9 +268,11 @@ async function main() {
     ?.split(",")
     .map((id) => id.trim())
     .filter(Boolean);
-  let jobs = only ? JOBS.filter((job) => only.includes(job.id)) : [...JOBS];
+  let jobs = only
+    ? ALL_JOBS.filter((job) => only.includes(job.id))
+    : [...ALL_JOBS];
   if (only) {
-    const missing = only.filter((id) => !JOBS.some((job) => job.id === id));
+    const missing = only.filter((id) => !ALL_JOBS.some((job) => job.id === id));
     if (missing.length)
       throw new Error(`Unknown job ids: ${missing.join(", ")}`);
   }
@@ -265,7 +282,33 @@ async function main() {
     listJobs(jobs);
     return;
   }
-  const duplicate = JOBS.map((job) => job.id).find(
+  if (flag("meta")) {
+    // The words only (alt text, title, the pages that use a picture), from
+    // the jobs into the manifest, without taking any picture again.
+    const manifest = readManifest();
+    let changed = 0;
+    for (const job of ALL_JOBS) {
+      const entry = manifest[job.id];
+      if (!entry) continue;
+      const next = {
+        ...entry,
+        alt: job.alt,
+        title: job.title,
+        pages: job.pages,
+      };
+      if (JSON.stringify(next) !== JSON.stringify(entry)) changed++;
+      manifest[job.id] = next;
+    }
+    const orphans = Object.keys(manifest).filter(
+      (id) => !ALL_JOBS.some((job) => job.id === id),
+    );
+    writeManifest(manifest);
+    console.log(
+      `${changed} entries updated.${orphans.length ? ` No job for: ${orphans.join(", ")}` : ""}`,
+    );
+    return;
+  }
+  const duplicate = ALL_JOBS.map((job) => job.id).find(
     (id, index, all) => all.indexOf(id) !== index,
   );
   if (duplicate) throw new Error(`Duplicate job id: ${duplicate}`);
@@ -335,14 +378,39 @@ async function main() {
           );
           viewport = wanted;
         }
+        // The playground keeps its design in the browser: every job starts
+        // from the seeded look, whatever the job before it changed.
+        await browser.page.cdp.send("Storage.clearDataForOrigin", {
+          origin: APP_URL,
+          storageTypes: "local_storage",
+        });
         const capture = async (): Promise<ManifestEntry> => {
           if (job.kind === "shot") {
             await browser.setMotion(false);
-            await browser.driver.open(job.route);
+            if (job.document) {
+              // A page the job writes itself (the library's rendered samples).
+              const file = join(scratch, `${job.id}.html`);
+              writeFileSync(file, await job.document());
+              await browser.driver.open(pathToFileURL(file).href, {
+                wait: 300,
+              });
+            } else {
+              await browser.driver.open(job.route);
+            }
             await job.steps?.(browser.driver);
             await browser.driver.waitQuiet();
             await browser.settle(300);
-            return runShot(browser, job);
+            const entry = await runShot(browser, job);
+            if (job.capture?.kind === "element") {
+              // fit() may have grown the viewport for this picture.
+              await browser.setViewport(
+                wanted.width,
+                wanted.height,
+                2,
+                wanted.mobile,
+              );
+            }
+            return entry;
           }
           return runClip(browser, job, scratch);
         };

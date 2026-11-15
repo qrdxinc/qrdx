@@ -95,6 +95,11 @@ export interface JobBase {
   viewport?: { width: number; height: number; mobile?: boolean };
   /** Reaches the state to capture. */
   steps?: (page: Driver) => Promise<void>;
+  /**
+   * The HTML of a page the job writes itself, opened instead of `route`
+   * (the React library's samples, rendered by the real package: library.tsx).
+   */
+  document?: () => Promise<string>;
   /** Skip this job and say why (a feature the local deployment can't show). */
   skip?: string;
 }

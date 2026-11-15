@@ -41,6 +41,33 @@ const KEYS: Record<string, { code: string; keyCode: number; text?: string }> = {
   " ": { code: "Space", keyCode: 32, text: " " },
 };
 
+/** What the capture server's own address is shown as (showProductionOrigin). */
+const PRODUCTION_ORIGIN = "https://qrdx.dev";
+
+/**
+ * Page-side: the element a capture or a focus names. "card" is the bordered
+ * container (a card, a panel, a fieldset) around the named text, label or
+ * button: what a picture of "that section" should frame.
+ */
+const FIND_ELEMENT = `(find, name) => {
+  let el;
+  if (find === "text") el = window.__e2e.byText(name);
+  else if (find === "label") el = window.__e2e.byLabel(name);
+  else if (find === "css") el = document.querySelector(name);
+  else if (find === "card") {
+    el = window.__e2e.byText(name) ?? window.__e2e.byLabel(name) ?? window.__e2e.byRole("button", name);
+    let node = el;
+    for (let i = 0; node && i < 16; i++) {
+      const style = getComputedStyle(node);
+      const rect = node.getBoundingClientRect();
+      if (rect.width >= 480 && (Number.parseFloat(style.borderTopWidth) > 0 || style.boxShadow !== "none") && node !== document.body) { el = node; break; }
+      node = node.parentElement;
+    }
+  }
+  else el = window.__e2e.byRole(find, name);
+  return el ?? null;
+}`;
+
 export class Browser {
   readonly page: CdpPage;
   readonly baseUrl: string;
@@ -203,6 +230,76 @@ export class Browser {
     await this.settle(500);
   }
 
+  /**
+   * Makes room for a whole element: grows the viewport until the element
+   * and `room` pixels around it fit, centres it, and checks that nothing
+   * (a sticky header, the viewport's edge) covers any side of it. A picture
+   * of a card must show the whole card, so this throws when it can't.
+   */
+  async fit(
+    find: string,
+    name: string,
+    width: number,
+    height: number,
+    room: number,
+  ): Promise<void> {
+    let tall = height;
+    for (let pass = 0; pass < 3; pass++) {
+      const state = (await this.page.evaluate(
+        `(find, name) => {
+        const el = (${FIND_ELEMENT})(find, name);
+        if (!el) return null;
+        el.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" });
+        const r = el.getBoundingClientRect();
+        const inside = (x, y) => { const hit = document.elementFromPoint(x, y); return !!hit && (el.contains(hit) || hit.contains(el)); };
+        const cx = r.x + r.width / 2;
+        const clear = r.width > 0 && r.height > 0 && r.x >= 0 && r.right <= window.innerWidth && r.y >= 0 && r.bottom <= window.innerHeight
+          && inside(cx, r.y + 3) && inside(cx, r.bottom - 3) && inside(r.x + 3, r.y + r.height / 2) && inside(r.right - 3, r.y + r.height / 2);
+        return { height: r.height, top: r.y, bottom: window.innerHeight - r.bottom, clear };
+      }`,
+        find,
+        name,
+      )) as {
+        height: number;
+        top: number;
+        bottom: number;
+        clear: boolean;
+      } | null;
+      if (!state) throw new Error(`No ${find} "${name}" to frame`);
+      if (state.clear && state.top >= room && state.bottom >= room) return;
+      // Room for the element, the margin and a sticky header on either side.
+      tall = Math.max(tall, Math.ceil(state.height + room * 2 + 240));
+      await this.setViewport(width, tall, 2, false);
+      await sleep(400);
+    }
+    throw new Error(
+      `${find} "${name}" doesn't fit in the picture whole: something covers it or it runs off the page`,
+    );
+  }
+
+  /**
+   * The app writes its own address into some screens (a referral link, the
+   * client portal's address, a redirect URI). On qrdx.dev that address is
+   * qrdx.dev; here it is the local capture server, which no reader has.
+   * Shown as qrdx.dev, the picture is the screen a reader gets.
+   */
+  async showProductionOrigin(): Promise<void> {
+    await this.page.evaluate(
+      `(local, live) => {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+          if (node.nodeValue.includes(local)) node.nodeValue = node.nodeValue.replaceAll(local, live);
+        }
+        for (const field of document.querySelectorAll("input, textarea")) {
+          if (field.value.includes(local)) field.value = field.value.replaceAll(local, live);
+        }
+        return true;
+      }`,
+      this.baseUrl,
+      PRODUCTION_ORIGIN,
+    );
+  }
+
   /** A PNG of the viewport at the device pixel ratio. */
   async screenshot(): Promise<Buffer> {
     const { data } = (await this.page.cdp.send("Page.captureScreenshot", {
@@ -229,18 +326,18 @@ export class Browser {
       baseUrl: this.baseUrl,
       ws: this.ws,
       open: async (route, options) => {
-        const url = route.startsWith("http")
+        const url = /^(https?|file):/.test(route)
           ? route
           : `${this.baseUrl}${route.replaceAll("{ws}", this.ws)}`;
         // Not the driver's goto(): on a busy dev server the load event can
         // take a minute to fire. The document is usable once it has parsed
-        // and has text.
+        // and has text (a page the job wrote itself may be pictures only).
         await this.page
           .evaluate(`() => { window.__shotsLeaving = true; return true; }`)
           .catch(() => undefined);
         await this.page.cdp.send("Page.navigate", { url });
         await this.page.waitFor(
-          `() => !window.__shotsLeaving && document.readyState !== "loading" && !!document.body && document.body.innerText.length > 0`,
+          `() => !window.__shotsLeaving && document.readyState !== "loading" && !!document.body && (location.protocol === "file:" || document.body.innerText.length > 0)`,
           { timeout: 90_000, interval: 250 },
         );
         await sleep(options?.wait ?? 1200);
@@ -399,23 +496,7 @@ export class Browser {
       box: async (find, name) => {
         const box = (await this.page.evaluate(
           `(find, name) => {
-          let el;
-          if (find === "text") el = window.__e2e.byText(name);
-          else if (find === "label") el = window.__e2e.byLabel(name);
-          else if (find === "css") el = document.querySelector(name);
-          else if (find === "card") {
-            // The bordered container (a card, a panel, a fieldset) around the
-            // element: what a picture of "that section" should frame.
-            el = window.__e2e.byText(name) ?? window.__e2e.byLabel(name) ?? window.__e2e.byRole("button", name);
-            let node = el;
-            for (let i = 0; node && i < 16; i++) {
-              const style = getComputedStyle(node);
-              const rect = node.getBoundingClientRect();
-              if (rect.width >= 480 && (Number.parseFloat(style.borderTopWidth) > 0 || style.boxShadow !== "none") && node !== document.body) { el = node; break; }
-              node = node.parentElement;
-            }
-          }
-          else el = window.__e2e.byRole(find, name);
+          const el = (${FIND_ELEMENT})(find, name);
           if (!el) return null;
           const r = el.getBoundingClientRect();
           const radius = Number.parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
