@@ -405,3 +405,16 @@ g.main:has(> g.plot) > rect {
   :is(h1, h2, .font-display, .tracking-tight, .tracking-tighter) {
   letter-spacing: normal;
 }
+
+/* Callouts hold a sentence or two: their text sits tight to the box. The
+   prose rules above are unlayered, so the component's utilities can't
+   override them; this does. */
+.prose [data-callout] :where(p, ul, ol) {
+  margin-block: 0.375rem;
+}
+.prose [data-callout] > div > :first-child {
+  margin-top: 0;
+}
+.prose [data-callout] > div > :last-child {
+  margin-bottom: 0;
+}
