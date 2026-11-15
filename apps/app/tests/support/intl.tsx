@@ -17,7 +17,10 @@ type Options = string | { locale?: string; namespace?: string } | undefined;
 const namespaceOf = (options: Options) =>
   typeof options === "string" ? options : options?.namespace;
 
-export const intlServer = {
+// Annotated loosely: the translator's inferred type, typed by the whole
+// catalog, grew past what TypeScript will write out (TS7056). Only vi.mock
+// factories read this object.
+export const intlServer: Record<string, (...args: never[]) => unknown> = {
   getTranslations: async (options?: Options) =>
     createTranslator({
       locale: "en",
