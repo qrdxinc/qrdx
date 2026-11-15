@@ -4,7 +4,7 @@ import "@/lib/analytics/privacy";
 import { ConsentManager as Consent } from "@repo/analytics/consent/consent-manager";
 import { getAnalyticsPlan } from "@/actions/analytics";
 import { LocaleLink } from "@/components/i18n/locale-link";
-import { isHomePath } from "@/lib/home-path";
+import { isLandingPath } from "@/lib/home-path";
 
 /**
  * The cookie banner, preferences and consent-gated tools
@@ -17,7 +17,7 @@ import { isHomePath } from "@/lib/home-path";
 export function ConsentManager() {
   return (
     <Consent
-      featurebaseOn={isHomePath}
+      featurebaseOn={isLandingPath}
       getPlan={getAnalyticsPlan}
       link={LocaleLink}
     />

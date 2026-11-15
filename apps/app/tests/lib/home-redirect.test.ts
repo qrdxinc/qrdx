@@ -5,7 +5,7 @@
 import { LOCALE_INFO, LOCALES } from "@repo/i18n/config";
 import { NextRequest } from "next/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
-import { isHomePath } from "@/lib/home-path";
+import { isHomePath, isLandingPath, landingHref } from "@/lib/home-path";
 
 describe("isHomePath", () => {
   it.each(["/", "/es", "/es/", "/pt-br", "/zh-hans", "/en"])(
@@ -24,6 +24,21 @@ describe("isHomePath", () => {
     "/community",
   ])("isn't the home page: %s", (path) => {
     expect(isHomePath(path)).toBe(false);
+  });
+});
+
+describe("the /home address", () => {
+  it.each(["/home", "/es/home", "/home/"])(
+    "is the home page for Featurebase but never redirects: %s",
+    (path) => {
+      expect(isLandingPath(path)).toBe(true);
+      expect(isHomePath(path)).toBe(false);
+    },
+  );
+
+  it("is where the logo links, in the page's language", () => {
+    expect(landingHref("/")).toBe("/home");
+    expect(landingHref("/es")).toBe("/es/home");
   });
 });
 
@@ -96,6 +111,15 @@ describe("signed-in visitors on the home page", () => {
     const response = await proxy(request("/", SESSION));
     expect(response.headers.get("location")).toBeNull();
     state.signedIn = true;
+  });
+
+  it("let them open the home page at /home", async () => {
+    state.lookups = 0;
+    for (const path of ["/home", "/es/home"]) {
+      const response = await proxy(request(path, SESSION));
+      expect(response.headers.get("location")).toBeNull();
+    }
+    expect(state.lookups).toBe(0);
   });
 
   it("leave other marketing pages alone", async () => {

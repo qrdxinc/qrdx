@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 // Featurebase shows on the home page only (components/consent/consent-manager.tsx
-// passes lib/home-path.ts to @repo/analytics, whose FeaturebaseGate decides
+// passes lib/home-path.ts's isLandingPath to @repo/analytics, whose FeaturebaseGate decides
 // per page, once the consent allows it): a visit that
 // never reaches the home page never loads its SDK, and after the home page
 // the launcher is hidden and an open messenger closed.
@@ -58,8 +58,8 @@ afterEach(() => {
 
 async function render() {
   const { FeaturebaseGate } = await import("@repo/analytics/featurebase-gate");
-  const { isHomePath } = await import("@/lib/home-path");
-  const node = <FeaturebaseGate allowed on={isHomePath} />;
+  const { isLandingPath } = await import("@/lib/home-path");
+  const node = <FeaturebaseGate allowed on={isLandingPath} />;
   if (root) {
     await act(async () => root?.render(node));
     return;
@@ -89,8 +89,8 @@ describe("Featurebase on the home page only", () => {
     expect(scripts.loaded).toEqual([]);
   });
 
-  it("loads on the home page with its launcher", async () => {
-    nav.pathname = "/es";
+  it("loads on the home page with its launcher (/home too)", async () => {
+    nav.pathname = "/es/home";
     await render();
     expect(scripts.loaded).toEqual(["featurebase-sdk"]);
     const boot = calls()
