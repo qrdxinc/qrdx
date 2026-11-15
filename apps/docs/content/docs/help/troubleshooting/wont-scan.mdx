@@ -14,19 +14,19 @@ If a phone camera doesn't react to your code, or reads it only sometimes, the ca
 
 Scanners look for dark squares on a light background, and give up when the two are too close. Make the code darker or the background lighter, and swap the colors if the code is the light part. Confirm it: the **Contrast** check in the scan score passes at 4.5:1 or more. See [Choose colors that scan](/docs/help/designing/colors-and-contrast).
 
-<Diagram id="wont-scan-contrast" />
+{/* diagram: wont-scan-contrast | the same code twice: dark on light, which scans, and light gray on white, which doesn't | concept */}
 
 ### No clear border around the code
 
 Scanners need empty space around the code to find its edges. Set **Padding** to **Standard** or **Large** in the **Design** tab, and don't let text or artwork touch the code. Confirm it: the **Quiet zone** check passes.
 
-<Diagram id="wont-scan-quiet-zone" />
+{/* diagram: wont-scan-quiet-zone | a code with artwork touching its edge next to the same code with four modules of empty space around it | concept */}
 
 ### Printed too small
 
 A code scans from about ten times its width, so a 2 cm code read from across a room fails. Print it at about one tenth of the scanning distance: 2 cm for a card read at 20 cm, 10 cm for a poster read from 1 m. The [print size calculator](/tools/print-size) works it out for your code. Confirm it: scan a test print from the real distance.
 
-<Diagram id="wont-scan-print-size" />
+{/* diagram: wont-scan-print-size | a code's width next to the distance it can be scanned from, at about ten to one | concept */}
 
 ## It scans only sometimes
 
@@ -38,7 +38,7 @@ Error correction can only rebuild so much of a code. Set **Error correction** to
 
 Some scanner apps don't recognize round or curly corner eyes. Switch to square, rounded or gear eyes. Confirm it: the **Eye shape** check passes.
 
-<Diagram id="wont-scan-eyes" />
+{/* diagram: wont-scan-eyes | corner eyes that scan everywhere (square, rounded, gear) next to the circle and curly ones that fail in some apps | concept */}
 
 ### Too much content
 

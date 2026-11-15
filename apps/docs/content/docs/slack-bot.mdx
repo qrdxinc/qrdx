@@ -27,6 +27,8 @@ The bot never stores message text and never uploads an image. Each code is a QR 
 2. Pick the Slack workspace and approve. The bot asks to see its slash command, mentions of it and its direct messages, and to post messages.
 3. You come back to the settings page, which lists the Slack workspaces you added the bot to.
 
+{/* shot: slack-settings-add-bot | Settings → Integrations → Slack with the Add the bot to Slack button and one connected Slack workspace listed | Settings → Integrations → Slack */}
+
 The same Slack app also posts [alerts](/docs/notifications#slack-and-discord) to a channel. Adding the bot doesn't turn alerts on, and adding alerts doesn't add the bot.
 
 </IfAvailable>
@@ -41,6 +43,8 @@ The same Slack app also posts [alerts](/docs/notifications#slack-and-discord) to
 | Any message | **More actions** → **Make a QR code** | In the message's thread |
 
 Each answer is a QR code image with the content under it, three buttons and the style menus described below. The buttons are **Download PNG** (1024 pixels), **Download SVG** and **Open in editor**, where you can change the design further. A link opens the editor with that link filled in; text opens an empty editor, because text never goes into a link.
+
+{/* shot: slack-qr-reply | A /qr reply in a Slack channel: the QR code, the content under it, the three buttons and the four style menus | Run /qr with a link in Slack */}
 
 The shortcut makes a code of the message's first web address, or of its whole text when it has none. If the bot isn't in that channel, only you see the code, with the note "Only you can see this. Add the QRdx app to this channel to reply in threads."
 
@@ -94,6 +98,8 @@ A plain code holds the link itself. A tracked code holds a short link (`https://
 3. Pick the QRdx workspace your tracked codes should go to and click **Confirm**. QRdx asks you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first unless you did recently, because the link lets that Slack account make codes in your workspace.
 4. Back in Slack, the bot sends you a direct message naming the QRdx account and workspace you linked to. If you didn't link it, run `/qr unlink`.
 5. Run `/qr track` followed by a link that starts with `https://` or `http://`. You can also mention the bot with `track` and a link.
+
+{/* clip: slack-link-and-track | Running /qr link, confirming the workspace in QRdx, then /qr track with a link and the tracked code appearing in the channel | /qr link → QRdx link page → /qr track https://… */}
 
 The code appears in the channel with its short link and the name of the QRdx workspace it's in. The **Open in QRdx** button, which leads to the code in your dashboard, comes in a separate message that only you can see. The code is named after the link's site plus "from Slack", and you'll find it in the workspace's codes like any other.
 

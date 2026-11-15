@@ -32,6 +32,8 @@ Send the bot a link or some text, and it replies with the QR code and four butto
 - **Open in editor** opens the QRdx editor with the same design. A web address goes along with it. Other text doesn't, so paste it into the editor yourself.
 - **Style** changes the look of the code right in the chat (see below).
 
+{/* shot: telegram-reply | The bot's reply in a private chat: the QR code with its four buttons | Send a link to the bot in Telegram */}
+
 The code holds what you sent, line breaks included; surrounding spaces are trimmed, and a bare domain such as `qrdx.dev` becomes `https://qrdx.dev`. Send `/help` (or `/start`) to see how to use the bot. If the text is too long for one QR code, the bot says so; a link to a page with the full text makes a smaller code that's easier to scan.
 
 ## Style your code
@@ -39,6 +41,8 @@ The code holds what you sent, line breaks included; surrounding spaces are trimm
 Tap **Style** under a code and the download buttons give way to **Look**, **Color**, **Frame** and **Logo**, with **Download PNG** and **Done** underneath. Each group opens its options, with a ✓ next to the one the code has now and **Back** to return. Tap an option and the bot redraws the photo. **Done** brings the download buttons back. Each change builds on the code as it is now. In a group, only the person who asked for the code can restyle it; anyone else who taps gets a short note.
 
 The looks are some of the editor's built-in designs that read well at small sizes; **Plain** is the black-on-white one. Picking a look changes the shapes and colors and keeps the frame and logo you chose. A color puts the whole code in that color on white. The frames add a "Scan me" label, and the logo menu offers seven of the editor's quick icons.
+
+{/* clip: telegram-restyle | Tapping Style, picking a look and a color, and the photo redrawing in place | Send a link to the bot → Style → Look → Done */}
 
 You can also style a code as you make it by adding options after the link or text, with the same names as the [QRdx CLI](/docs/developers/cli). This works in a private chat, after `/qr` in a group, and in inline mode, where it's the only way to style a code because there's no message to change yet:
 

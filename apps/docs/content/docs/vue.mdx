@@ -47,7 +47,7 @@ const url = ref("https://example.com/menu");
 
 The page shows a 256 px code with rounded modules and a banner under it. Change `url` and the code redraws, with Vue updating the `<svg>` in place.
 
-<Shot id="lib-framed-menu-code" />
+{/* shot: vue-first-code | the framed code from src/App.vue in a Vite Vue project | run the example with npm create vue */}
 
 `QRCode` takes the props of React's `QRCode`: every `QRProps` option, plus `logo`, `logoOptions`, `hideLogo` and `scale` for a logo. In a template, write them in kebab-case (`body-pattern`) or camelCase. A flag such as `auto-level` or `hide-logo` needs no value. `class`, `style`, `aria-label` and other attributes go on the `<svg>`, or on the frame's outer `<svg>` when there is a frame, and so do listeners such as `@click`.
 

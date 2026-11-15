@@ -33,7 +33,7 @@ QRdx uses the standard OIDC and SAML 2.0 settings that identity providers ask fo
 3. Back in QRdx, fill in the **Email domain** (your company's domain, like `acme.com`), the **Issuer URL**, and the **Client ID** and **Client secret** from the app you created. QRdx reads the rest from `<issuer>/.well-known/openid-configuration`, so the issuer has to match that document exactly.
 4. Click **Save connection**.
 
-<Shot id="single-sign-on" />
+{/* shot: sso-settings-oidc | the Single sign-on settings page with OIDC selected and the Redirect URI, Email domain, Issuer URL, Client ID and Client secret fields | Dashboard, Settings, Single sign-on */}
 
 QRdx asks for the `openid`, `email` and `profile` scopes and uses PKCE. The issuer has to be reachable over HTTPS from the internet; identity providers on a private network aren't supported.
 
@@ -73,6 +73,8 @@ A verified domain covers its subdomains too, so `acme.com` also covers `eu.acme.
 1. On the sign-in page, they enter their work email and click **Email me a code**, like any email sign-in.
 2. Before sending a code, QRdx checks the address's domain. For your verified domain, it says your company signs in with single sign-on and offers **Continue with SSO**. No code is sent unless they ask for one.
 3. **Continue with SSO** sends them to your identity provider, then back to QRdx, signed in and in your workspace.
+
+{/* shot: sign-in-continue-with-sso | the sign-in page after a work email is entered, offering Continue with SSO | /sign-in with an address at a verified domain */}
 
 They can choose **Email me a code** instead, unless you [require single sign-on](#require-single-sign-on). **Sign in with SSO**, below the email field, also still works: it asks for their work email and goes straight to your identity provider.
 

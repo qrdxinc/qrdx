@@ -9,13 +9,13 @@ QRdx doesn't sell, print or ship tags or cards. Buy blank ones from any NFC supp
 
 ## How it works
 
-<Diagram id="nfc-link" />
+{/* diagram: nfc-link | A phone tapping a tag that holds the code's NFC link (the short link plus ?nfc), QRdx counting the visit as a tap and redirecting like a scan | concept drawing */}
 
 A code's NFC link is its short link with `?nfc` on the end, like `https://qrdx.dev/q/aB3dE5f?nfc`, or `https://go.example.com/menu?nfc` on a [custom domain](/docs/custom-domains). It goes through the same redirect as the short link, so smart routing, passwords, schedules and scan limits apply to taps as well. The `?nfc` ending only tells analytics the visit was a tap. The QR code keeps its own link, and codes you've already printed work exactly as before.
 
 To find the link, open the code from [Codes](/dashboard?to=codes) and choose **Use with NFC** on its **Overview** tab.
 
-<Shot id="nfc-page" />
+{/* shot: nfc-page | The code's NFC page with the NFC link, its size in bytes and the Write to NFC tag button | Dashboard → Codes → open a code → Use with NFC */}
 
 ## Write a tag on Android
 
@@ -65,6 +65,8 @@ A [vCard Plus page](/docs/landing-pages#vcard-plus-and-save-contact) is a contac
 3. Write the NFC link to each card from the code's NFC page.
 
 Because each card holds the code's link, editing the vCard Plus page in QRdx updates every card you've handed out.
+
+{/* shot: nfc-card-guide | The NFC page for a vCard Plus code, with the card guide and the QR code to print alongside | Dashboard → Codes → open a vCard Plus code → Put this card on NFC */}
 
 ## Taps in analytics
 

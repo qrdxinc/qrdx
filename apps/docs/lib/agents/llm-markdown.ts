@@ -20,7 +20,6 @@ import {
   EYE_CATALOG,
   FRAME_CATALOG,
 } from "@/lib/pattern-catalog";
-import { shotMarkdown } from "@/lib/shots";
 
 export interface LlmMarkdownOptions {
   /** Origin for root-relative links and the shadcn registry, e.g. https://qrdx.dev */
@@ -370,11 +369,12 @@ const HANDLERS: Record<string, Handler> = {
     const body = dedent(children).trim();
     return `\n\n**Needs ${list}**${body ? `\n\n${body}` : ""}\n\n`;
   },
-  // A framed image (components/mdx/frame.tsx): a Markdown image, its
-  // caption under it. A frame around other content keeps that content.
-  // <Shot /> and <Clip /> (an id in lib/shots-manifest.json) are below.
+  // A framed image (components/mdx/frame.tsx) and the Shots lane's <Shot />
+  // on top of it: a Markdown image, its caption under it. A frame around
+  // other content keeps that content.
   Frame: (attributes, children, options) =>
     image(attributes, children, options),
+  Shot: (attributes, children, options) => image(attributes, children, options),
   // A clip (components/mdx/video.tsx): a link to the file, named after it.
   Video: (attributes, _, options) => {
     if (!attributes.src) return "";
@@ -399,14 +399,6 @@ const HANDLERS: Record<string, Handler> = {
       : "",
   PackageManagerTabs: (attributes) =>
     attributes.command ? shell(attributes.command) : "",
-  // Pictures and clips of the app (components/mdx/shot.tsx): the light image
-  // with its alt text; a clip adds a link to its video.
-  // A captured picture by id; with a `src` instead, a plain framed image.
-  Shot: (attributes, children, options) =>
-    attributes.id
-      ? shotMarkdown(attributes, options.origin)
-      : image(attributes, children, options),
-  Clip: (attributes, _, options) => shotMarkdown(attributes, options.origin),
   QrCatalog: (attributes) => {
     const items = CATALOGS[attributes.kind ?? ""];
     if (!items) return "";

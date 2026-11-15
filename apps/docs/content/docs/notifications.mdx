@@ -21,7 +21,7 @@ Every scan, form response and code change is an event. Notifications subscribe y
 | Slack, Discord | Scan milestones, form submissions, new codes, code changes | Business |
 | [Webhooks](/docs/webhooks), Zapier, Make | Every event, including each scan | Business |
 
-<Shot id="notifications" />
+{/* shot: notification-settings | Settings → Notifications for one workspace: the Email section with its five switches and the Slack and Discord section below | Settings → Notifications */}
 
 ## Alerts
 
@@ -46,6 +46,8 @@ Alert emails go to your account's email address, under the **Email to** heading 
    - **Discord:** channel settings → **Integrations** → **Webhooks** → **New Webhook** → **Copy Webhook URL** (`https://discord.com/api/webhooks/...`).
 2. In [Settings → Notifications](/settings/notifications), under **Slack and Discord** for the workspace, click **Slack** or **Discord**, paste the URL and pick the events. Adding one asks you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first.
 3. Use the send button next to the target to post a test message.
+
+{/* shot: add-slack-target | The Slack and Discord section with a Slack target added, its events ticked and the test send button | Settings → Notifications → Slack */}
 
 Only Slack and Discord webhook URLs are accepted. After saving, QRdx shows only the start of the URL, because anyone who has it can post to the channel. Messages never mention `@everyone`, `@here` or roles, whatever visitors type into a form.
 

@@ -21,7 +21,7 @@ The **Menu** block lists sections (Starters, Mains and so on) with items. Each i
 
 All prices on one menu use the currency you pick. With two or more sections, shortcut chips at the top jump to each section. A menu holds up to 30 sections and 300 items.
 
-<Shot id="hosted-menu-page" />
+{/* shot: menu-block | A menu page on a phone with section chips, an item with a photo, a dietary tag and an allergen line | Scan a Menu page */}
 
 The **Wi-Fi** block shows your network name and password with copy buttons. Phones can't join a network from a web page, so guests copy the password and paste it in their Wi-Fi settings. Anyone who opens the page can see the password.
 
@@ -37,6 +37,8 @@ By default the barcode encodes the coupon code; set **Barcode value** to encode 
 **Valid from** and **Valid until** are calendar days. A coupon counts as started once its first day has begun anywhere in the world and as expired only after its last day has ended everywhere, so nobody sees "expired" early because of their time zone. Expired coupons stay visible, marked as expired.
 
 Turn on **Redeem button** to count redemptions: the visitor taps **Redeem coupon**, shows the screen to your staff and confirms with **Redeem now**. The page then shows "Redeemed" with the time on that phone, and the count appears on the page's [Responses](#responses) screen. It can't stop the same code being shown on another phone, so treat it as a counter, not a lock.
+
+{/* shot: coupon-block | A coupon page with the code, its barcode and the Redeem coupon button | Scan a Coupon page */}
 
 ## Event
 
@@ -64,7 +66,7 @@ The **Form** block collects answers. Questions can be:
 
 Mark questions as **Required** to make them mandatory. Visitors see errors next to the question, and a thank-you message you write after sending. Ask only for what you need, and say how you'll use contact details.
 
-<Shot id="form-editor" />
+{/* shot: form-editor | The Form block's settings in the editor with three questions, one marked Required, and the thank-you message field | Dashboard → Pages & forms → open a page → Form block */}
 
 Spam protection is built in: a hidden field that only bots fill in, and limits on how often one device can send a form. When the server has [Cloudflare Turnstile](#cloudflare-turnstile) keys, forms also run Turnstile's invisible check.
 
@@ -76,7 +78,7 @@ The **Review links** block shows "Review us on Google" (and Tripadvisor, Yelp, F
 
 Open a page in **Pages & forms** and choose **Responses**. Responses are listed newest first, 25 per screen, with the time (UTC), the code the visitor scanned and every answer. Email addresses and phone numbers are links.
 
-<Shot id="form-responses" />
+{/* shot: responses-inbox | The Responses screen of a page with the form tabs, a list of responses and the Export CSV button | Dashboard → Pages & forms → open a page → Responses */}
 
 - **Several forms on one page:** tabs filter by form.
 - **Export CSV:** one row per response and one column per question. Columns follow the current questions, then questions you removed that still have answers. Renaming a question keeps its column.

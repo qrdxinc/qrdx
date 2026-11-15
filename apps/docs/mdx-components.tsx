@@ -25,7 +25,6 @@ import { IfAvailable } from "@/components/mdx/if-available";
 import { Mermaid } from "@/components/mdx/mermaid";
 import { NpmStatus } from "@/components/mdx/npm-status";
 import { PlanNote } from "@/components/mdx/plan-note";
-import { shotComponents } from "@/components/mdx/shot";
 import { DocsTable } from "@/components/mdx/table";
 import { Video } from "@/components/mdx/video";
 import { docsIcons } from "@/lib/docs-icons";
@@ -91,8 +90,6 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     GithubCard,
     IfAvailable,
     NpmStatus,
-    // Pictures and clips of the app (lib/shots-manifest.json): Shot, Clip
-    ...shotComponents,
     ComponentLinks,
     ComponentPreview,
     ComponentSource,
