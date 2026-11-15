@@ -1,46 +1,68 @@
 ---
 title: "Programa de afiliados"
-description: "Indique o QRdx e ganhe uma comissão sobre o que seus indicados pagam nos primeiros meses. Veja como se candidatar, compartilhar seu link, acompanhar seus ganhos e receber."
+description: "Indique pessoas para o QRdx e ganhe uma comissão sobre o que elas pagam nos primeiros meses. Veja como se candidatar, compartilhar seu link, acompanhar seus ganhos e receber."
 ---
 
-O programa de afiliados funciona somente no qrdx.dev. Um servidor QRdx auto-hospedado não oferece esse programa; veja [Auto-hospedagem](/docs/self-hosting#optional-services).
+O programa de afiliados do QRdx paga a você uma parte do que os clientes indicados por você pagam. Ele funciona apenas em qrdx.dev; um servidor QRdx auto-hospedado não oferece o programa. Os [Termos de Afiliados](/legal/affiliate-terms) trazem as regras completas; esta página mostra onde fica cada coisa.
 
 <IfAvailable feature="affiliates">
 
-O programa de afiliados do QRdx paga a você {facts.affiliateCommissionPercent}% do que os clientes indicados por você pagam nos primeiros {facts.affiliateCommissionMonths} meses como clientes pagantes. Os [Termos de Afiliados](/legal/affiliate-terms) trazem as regras completas; esta página mostra onde fica cada coisa.
+Você ganha {facts.affiliateCommissionPercent}% do que os clientes indicados por você pagam nos primeiros {facts.affiliateCommissionMonths} meses como clientes pagantes.
 
 ## Candidate-se [#apply]
 
 1. Entre no QRdx ou crie uma conta grátis.
-2. Abra a [página do programa de afiliados](/affiliates), leia os termos e preencha o formulário curto de candidatura.
-3. Analisamos cada candidatura manualmente. A resposta aparece em **Configurações** → **Programa de afiliados**.
+2. Abra a [página do programa de afiliados](/affiliates), leia os termos e preencha a candidatura curta.
+3. Aguarde a resposta. Analisamos cada candidatura manualmente, e o resultado aparece em **Configurações** → **Programa de afiliados**.
 
 ## Compartilhe seu link [#share-your-link]
 
-Depois de aprovado, **Configurações** → **Programa de afiliados** mostra seu link de indicação com um botão **Copiar**. Quem abrir o link e criar uma conta nova no QRdx nessa mesma visita se torna seu indicado.
+Depois de aprovado, **Configurações** → **Programa de afiliados** mostra seu link de indicação com um botão **Copiar**. Quem abrir o link e criar uma nova conta no QRdx na mesma visita se torna sua indicação.
 
-- A pessoa precisa se cadastrar durante essa visita, sem recarregar a página, abrir o QRdx em uma nova aba ou alternar entre a documentação e o resto do site: o código acompanha o cadastro. Nenhum cookie é usado e nada é guardado no dispositivo dela, então um cadastro em uma visita posterior não conta.
-- Seu link começa com um código aleatório. Em **Código** você pode trocá-lo uma vez por um que escolher; os links com o primeiro código continuam funcionando.
-- Uma conta que já existe não pode se tornar sua indicada, e uma conta mantém a primeira indicação que recebe.
-- Sua própria conta não conta, nem uma conta que use seu endereço de email com outra grafia, nem qualquer pessoa de um workspace do qual você seja membro.
+{/* shot: affiliate-settings-page | the Affiliate program settings page with the referral link, its Copy button and the Earnings section | Dashboard, Settings, Affiliate program */}
+
+- A pessoa precisa se cadastrar durante essa visita, sem recarregar a página, abrir o QRdx em outra aba ou alternar entre a documentação e o resto do site. Nenhum cookie é usado e nada é armazenado no dispositivo dela, então um cadastro em uma visita posterior não conta.
+- Seu link começa com um código aleatório. Em **Código**, clique em **Alterar uma vez** para escolher o seu, com 3 a 32 caracteres. Ele não pode ser alterado de novo, e os links com o primeiro código continuam funcionando.
+- Uma conta que já existe não pode se tornar sua indicação, e uma conta mantém a primeira indicação que recebe.
+- Sua própria conta não conta, nem uma conta que use seu endereço de email com outra grafia, nem qualquer pessoa em um workspace do qual você seja membro.
 
 ## Acompanhe seus ganhos [#follow-your-earnings]
 
 A mesma página mostra:
 
-- **Visitas ao link**, contadas sem cookies (visitas repetidas contam de novo), **Cadastros** e **Clientes pagantes**. Você nunca vê quem são essas pessoas.
+- **Visitas ao link**, contadas sem cookies (visitas repetidas contam de novo, até 20 por minuto de um mesmo endereço IP), **Cadastros** e **Clientes pagantes**. Você nunca vê quem são essas pessoas.
 - **Em espera**: comissões ainda no período de espera de {facts.affiliateHoldDays} dias. Um reembolso ou chargeback nesse período cancela a comissão.
 - **A pagar**: comissões que já passaram pela espera e ainda não foram pagas.
-- **Pago**: o que enviamos a você, com o ID da transação PayPal de cada pagamento.
+- **Pago**: o que enviamos a você, com o ID da transação do PayPal de cada pagamento.
 
-As comissões aparecem na moeda em que o cliente pagou, dólares americanos ou rupias indianas. Os pagamentos são feitos em dólares americanos.
+As comissões aparecem na moeda em que o cliente pagou. Os pagamentos são em dólares americanos.
 
-## Receba [#get-paid]
+## Receba seus pagamentos [#get-paid]
 
-Adicione seu email do PayPal em **Ganhos**. O QRdx pede que você confirme que é você antes de alterá-lo, porque ele define para onde vai seu dinheiro, e envia um email para o endereço da sua conta a cada alteração.
+Adicione seu **email do PayPal** em **Ganhos**. O QRdx pede que você confirme que é você antes de alterá-lo, porque ele define para onde vai seu dinheiro, e envia um email para o endereço da sua conta a cada alteração.
 
-Pagamos pelo PayPal em dólares americanos uma vez por mês, manualmente, assim que tudo o que está a pagar chegar a {facts.affiliateMinPayoutUsd}. As comissões em rupias são convertidas pela taxa de referência do Banco Central Europeu na data do pagamento, e cada pagamento mostra a taxa usada. Um saldo abaixo do mínimo é acumulado para o mês seguinte. Os impostos sobre o que você ganha são de sua responsabilidade.
+Pagamos pelo PayPal em dólares americanos uma vez por mês, manualmente, quando tudo o que está a pagar chega a {facts.affiliateMinPayoutUsd}. Comissões em outras moedas são convertidas pela taxa de referência do Banco Central Europeu na data do pagamento, e cada pagamento mostra a taxa usada. Um saldo abaixo do mínimo é acumulado para o mês seguinte. Os impostos sobre o que você ganha são de sua responsabilidade.
+
+## Se algo der errado [#if-something-goes-wrong]
+
+### Um cadastro que você indicou não contou [#a-sign-up-you-sent-didnt-count]
+
+A pessoa se cadastrou em uma visita posterior, em outra aba, ou já tinha uma conta. Só conta uma conta nova criada na mesma visita em que o link foi aberto.
+
+### Uma comissão sumiu de Em espera [#a-commission-disappeared-from-on-hold]
+
+O cliente pediu reembolso ou o pagamento sofreu chargeback dentro da espera de {facts.affiliateHoldDays} dias, o que cancela a comissão.
+
+### Você não recebeu neste mês [#you-werent-paid-this-month]
+
+Seu saldo a pagar está abaixo de {facts.affiliateMinPayoutUsd}, ou nenhum email do PayPal foi definido. O saldo é acumulado para o mês seguinte.
 
 Dúvidas sobre uma comissão ou um pagamento: envie um email para [support@qrdx.dev](mailto:support@qrdx.dev).
 
 </IfAvailable>
+
+## Veja também [#related]
+
+- [Termos de Afiliados](/legal/affiliate-terms)
+- [Planos e o que incluem](/docs/help/account-and-billing/plans)
+- [Fale com o suporte](/docs/help/contact)

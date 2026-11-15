@@ -1,46 +1,68 @@
 ---
 title: "Affiliate-Programm"
-description: "Empfiehl QRdx weiter und verdiene eine Provision auf das, was deine Empfehlungen in den ersten Monaten zahlen. So bewirbst du dich, teilst deinen Link, verfolgst deine Einnahmen und wirst ausgezahlt."
+description: "Empfiehl QRdx weiter und verdiene eine Provision auf das, was deine Empfehlungen in den ersten Monaten zahlen. So bewirbst du dich, teilst deinen Link, verfolgst deine Einnahmen und bekommst dein Geld."
 ---
 
-Das Affiliate-Programm gibt es nur auf qrdx.dev. Ein selbst gehosteter QRdx-Server bietet es nicht an; siehe [Self-Hosting](/docs/self-hosting#optional-services).
+Das QRdx-Affiliate-Programm zahlt dir einen Anteil an dem, was die von dir geworbenen Kunden zahlen. Es läuft nur auf qrdx.dev; ein selbst gehosteter QRdx-Server bietet es nicht an. Die [Affiliate-Bedingungen](/legal/affiliate-terms) enthalten die vollständigen Regeln; diese Seite zeigt dir, wo du was findest.
 
 <IfAvailable feature="affiliates">
 
-Das QRdx-Affiliate-Programm zahlt dir {facts.affiliateCommissionPercent}% dessen, was die von dir empfohlenen Kunden in ihren ersten {facts.affiliateCommissionMonths} Monaten als zahlende Kunden bezahlen. Die [Affiliate-Bedingungen](/legal/affiliate-terms) enthalten die vollständigen Regeln; diese Seite zeigt dir, wo du was findest.
+Du erhältst {facts.affiliateCommissionPercent}% dessen, was die von dir geworbenen Kunden in ihren ersten {facts.affiliateCommissionMonths} Monaten als zahlende Kunden bezahlen.
 
 ## Bewerben [#apply]
 
 1. Melde dich bei QRdx an oder erstelle ein kostenloses Konto.
-2. Öffne die [Seite zum Affiliate-Programm](/affiliates), lies die Bedingungen und fülle die kurze Bewerbung aus.
-3. Wir prüfen jede Bewerbung von Hand. Die Antwort findest du unter **Einstellungen** → **Affiliate-Programm**.
+2. Öffne die [Seite des Affiliate-Programms](/affiliates), lies die Bedingungen und fülle die kurze Bewerbung aus.
+3. Warte auf die Antwort. Wir prüfen jede Bewerbung von Hand, und das Ergebnis siehst du unter **Einstellungen** → **Affiliate-Programm**.
 
-## Link teilen [#share-your-link]
+## Deinen Link teilen [#share-your-link]
 
-Sobald du freigeschaltet bist, zeigt **Einstellungen** → **Affiliate-Programm** deinen Empfehlungslink mit einer Schaltfläche **Kopieren**. Wer ihn öffnet und in diesem Besuch ein neues QRdx-Konto erstellt, wird zu deiner Empfehlung.
+Sobald du angenommen bist, zeigt **Einstellungen** → **Affiliate-Programm** deinen Empfehlungslink mit einer Schaltfläche **Kopieren**. Wer ihn öffnet und bei diesem Besuch ein neues QRdx-Konto erstellt, wird zu deiner Empfehlung.
 
-- Die Person muss sich während dieses Besuchs registrieren, ohne die Seite neu zu laden, QRdx in einem neuen Tab zu öffnen oder zwischen den Docs und dem Rest der Website zu wechseln: Der Code wird bei der Registrierung mitgeschickt. Es wird kein Cookie verwendet und nichts auf dem Gerät gespeichert, daher zählt eine Registrierung bei einem späteren Besuch nicht.
-- Dein Link beginnt mit einem zufälligen Code. Unter **Code** kannst du ihn einmal in einen selbst gewählten ändern; Links mit dem ersten Code funktionieren weiterhin.
-- Ein bereits bestehendes Konto kann nicht zu deiner Empfehlung werden, und ein Konto behält die erste Empfehlung, die es erhält.
-- Dein eigenes Konto zählt nicht, ebenso wenig ein Konto mit deiner E-Mail-Adresse in anderer Schreibweise oder von Personen in einem Workspace, in dem du Mitglied bist.
+{/* shot: affiliate-settings-page | the Affiliate program settings page with the referral link, its Copy button and the Earnings section | Dashboard, Settings, Affiliate program */}
 
-## Einnahmen verfolgen [#follow-your-earnings]
+- Die Person muss sich bei diesem Besuch registrieren, ohne die Seite neu zu laden, QRdx in einem neuen Tab zu öffnen oder zwischen den Docs und dem Rest der Website zu wechseln. Es wird kein Cookie verwendet und nichts auf dem Gerät gespeichert, daher zählt eine Registrierung bei einem späteren Besuch nicht.
+- Dein Link beginnt mit einem zufälligen Code. Klicke unter **Code** auf **Einmal ändern**, um einen eigenen mit 3 bis 32 Zeichen zu wählen. Er lässt sich nicht noch einmal ändern, und Links mit dem ersten Code funktionieren weiter.
+- Ein bereits bestehendes Konto kann nicht zu deiner Empfehlung werden, und ein Konto behält die erste Empfehlung, die es bekommt.
+- Dein eigenes Konto zählt nicht, ebenso wenig ein Konto mit deiner E-Mail-Adresse in anderer Schreibweise oder jemand aus einem Workspace, in dem du Mitglied bist.
+
+## Deine Einnahmen verfolgen [#follow-your-earnings]
 
 Dieselbe Seite zeigt:
 
-- **Link-Besuche**, ohne Cookies gezählt (wiederholte Besuche zählen erneut), **Registrierungen** und **Zahlende Kunden**. Wer sie sind, siehst du nie.
-- **Ausstehend**: Provisionen, die noch in ihrer {facts.affiliateHoldDays}-tägigen Wartezeit sind. Eine Rückerstattung oder Rückbuchung in dieser Zeit storniert die Provision.
+- **Link-Besuche**, ohne Cookies gezählt (wiederholte Besuche zählen erneut, bis zu 20 pro Minute von einer IP-Adresse), **Registrierungen** und **Zahlende Kunden**. Wer sie sind, siehst du nie.
+- **Zurückgehalten**: Provisionen, die noch in ihrer Wartezeit von {facts.affiliateHoldDays} Tagen sind. Eine Rückerstattung oder Rückbuchung in dieser Zeit storniert die Provision.
 - **Auszahlbar**: Provisionen, deren Wartezeit vorbei ist und die noch nicht ausgezahlt wurden.
 - **Ausgezahlt**: was wir dir geschickt haben, mit der PayPal-Transaktions-ID jeder Auszahlung.
 
-Provisionen werden in der Währung angezeigt, in der der Kunde bezahlt hat, US-Dollar oder Indische Rupien. Auszahlungen erfolgen in US-Dollar.
+Provisionen werden in der Währung angezeigt, in der der Kunde bezahlt hat. Auszahlungen erfolgen in US-Dollar.
 
-## Auszahlung erhalten [#get-paid]
+## Dein Geld erhalten [#get-paid]
 
-Trag deine PayPal-E-Mail-Adresse unter **Einnahmen** ein. QRdx bittet dich zu bestätigen, dass du es bist, bevor sie sich ändert, weil sie bestimmt, wohin dein Geld geht, und schickt bei jeder Änderung eine E-Mail an die Adresse deines Kontos.
+Trage unter **Einnahmen** deine **PayPal-E-Mail** ein. QRdx bittet dich zu bestätigen, dass du es bist, bevor sie geändert wird, weil sie bestimmt, wohin dein Geld geht, und schickt jedes Mal eine E-Mail an die Adresse deines Kontos, wenn sie sich ändert.
 
-Wir zahlen einmal im Monat von Hand per PayPal in US-Dollar aus, sobald alles Auszahlbare {facts.affiliateMinPayoutUsd} erreicht. Provisionen in Rupien werden zum Referenzkurs der Europäischen Zentralbank am Auszahlungstag gerechnet, und jede Auszahlung zeigt den verwendeten Kurs. Ein Guthaben unter dem Mindestbetrag wird übertragen. Um die Steuern auf deine Einnahmen kümmerst du dich selbst.
+Wir zahlen einmal im Monat von Hand per PayPal in US-Dollar aus, sobald alles Auszahlbare {facts.affiliateMinPayoutUsd} erreicht. Provisionen in anderen Währungen werden zum Referenzkurs der Europäischen Zentralbank am Auszahlungstag umgerechnet, und jede Auszahlung zeigt den verwendeten Kurs. Ein Guthaben unter dem Mindestbetrag wird übertragen. Um die Steuern auf deine Einnahmen kümmerst du dich selbst.
 
-Fragen zu einer Provision oder Auszahlung: Schreib eine E-Mail an [support@qrdx.dev](mailto:support@qrdx.dev).
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
+
+### Eine von dir vermittelte Registrierung wurde nicht gezählt [#a-sign-up-you-sent-didnt-count]
+
+Die Person hat sich bei einem späteren Besuch oder in einem anderen Tab registriert oder hatte bereits ein Konto. Nur ein neues Konto, das beim selben Besuch wie der Link erstellt wird, zählt.
+
+### Eine Provision ist aus „Zurückgehalten“ verschwunden [#a-commission-disappeared-from-on-hold]
+
+Der Kunde hat eine Rückerstattung verlangt oder seine Zahlung wurde innerhalb der Wartezeit von {facts.affiliateHoldDays} Tagen zurückgebucht, wodurch die Provision storniert wird.
+
+### Du wurdest diesen Monat nicht bezahlt [#you-werent-paid-this-month]
+
+Dein auszahlbares Guthaben liegt unter {facts.affiliateMinPayoutUsd} oder es ist keine PayPal-E-Mail hinterlegt. Das Guthaben wird in den nächsten Monat übertragen.
+
+Fragen zu einer Provision oder Auszahlung: Schreib an [support@qrdx.dev](mailto:support@qrdx.dev).
 
 </IfAvailable>
+
+## Siehe auch [#related]
+
+- [Affiliate-Bedingungen](/legal/affiliate-terms)
+- [Tarife und ihre Leistungen](/docs/help/account-and-billing/plans)
+- [Support kontaktieren](/docs/help/contact)
