@@ -22,7 +22,7 @@ You can set up both, and use whichever is at hand when you sign in.
 3. Set up your second step<IfAvailable feature="passkeys">: pick **Passkey** or **Authenticator app**</IfAvailable>, as described below.
 4. Save your 10 backup codes. Copy them or download them as a text file, and keep them somewhere safe, such as a password manager. QRdx shows them only once. Check **I've saved my backup codes** and click **Done**.
 
-{/* shot: two-step-settings-card | the Two-step verification card in Profile & security with the Turn on button | Dashboard, Settings, Profile & security */}
+<Shot id="two-step-card" />
 
 <IfAvailable feature="passkeys">
 
@@ -31,8 +31,6 @@ For a passkey, keep the suggested name (your browser and system, like "Chrome on
 </IfAvailable>
 
 For an authenticator app, scan the QR code with the app, or type the key shown under it. Enter the 6-digit code the app shows and click **Verify**.
-
-{/* shot: two-step-authenticator-setup | the Set up your authenticator app step with the QR code and the 6-digit code field | Dashboard, Settings, Profile & security, Turn on, Authenticator app */}
 
 Two-step verification is now on, and every other browser or device signed in to your account is signed out. Each one has to sign in again, now with the second step. The browser you turned it on in stays signed in.<IfAvailable feature="passkeys"> To add the other method later, use the same section. You keep the backup codes you already have, and nobody is signed out.</IfAvailable>
 
@@ -110,8 +108,6 @@ Before a change to your account's security, QRdx asks you to confirm it's you, e
 So does creating, editing, verifying or deleting a workspace's single sign-on connection, or requiring single sign-on.
 
 </IfAvailable>
-
-{/* shot: confirm-its-you-dialog | the Confirm it's you dialog offering the authenticator code and backup code methods | any change that asks, for example Change next to Email in Profile & security */}
 
 How you confirm depends on whether two-step verification is on:
 

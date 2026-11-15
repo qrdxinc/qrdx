@@ -21,7 +21,7 @@ When the setting is on and someone scans the code, their browser asks whether to
 
 Open the code from [Codes](/dashboard?to=codes), go to its **Settings** tab and switch on **Ask scanners for precise location** in the **Precise location** panel. It works for codes that open a website link and for codes that open a hosted page.
 
-{/* shot: precise-location-panel | The Precise location panel on a code's Settings tab with the Ask scanners for precise location switch on | Dashboard → Codes → open a code → Settings → Precise location */}
+<Shot id="precise-location-panel" />
 
 ## What scanners see
 
@@ -35,8 +35,6 @@ Open the code from [Codes](/dashboard?to=codes), go to its **Settings** tab and 
 
 The step names the site the scanner will land on and links to the privacy policy.
 
-{/* shot: location-step | The Share your location? step on a phone, with the Allow and Skip buttons and the destination's name | Scan a code with precise location on */}
-
 **Codes that open a hosted page** open the page right away, as usual. Once it has loaded, the browser asks for the location on the page; the page never waits for an answer. It only asks right after a scan, never when someone opens the page's address directly.
 
 When the setting is off, nothing changes: scans go straight to the destination with no extra step.
@@ -45,8 +43,6 @@ When the setting is off, nothing changes: scans go straight to the destination w
 
 The code's **Analytics** tab has a **Precise locations** card, apart from the IP-based countries and cities. It shows how many scanners were asked, how many shared their location and what share that is, then each shared point with its number of scans, average accuracy and latest scan. Sort the table by any of those, and open a point in OpenStreetMap to see where it is.
 
-{/* shot: precise-locations-card | The Precise locations card with the asked and shared counts and the table of points | Dashboard → Codes → open a code → Analytics */}
-
 The CSV export has `latitude`, `longitude`, `location_accuracy_m` and `location_source` columns. `location_source` is `gps` for a shared location, `ip` when the code asked but the scanner didn't share, and empty when the code didn't ask.
 
 Shared analytics links (**Share analytics...** in a code's menu) never show precise locations. They stay at country level. Precise locations are kept as long as the rest of the code's scans, and your plan decides how far back you can see them. See [What QRdx records when someone scans](/docs/help/privacy-and-security/scan-data).
@@ -54,8 +50,6 @@ Shared analytics links (**Share analytics...** in a code's menu) never show prec
 ## Route scans by area
 
 In the code's **Smart routing** panel, add a rule with an **Area** condition: a center point and a radius between 100 m and 500 km. To get the center, right-click a place in a map app and copy its coordinates (for example `40.7580, -73.9855`), or click **Use my location** while you're there. **Check on a map** opens the point in OpenStreetMap.
-
-{/* shot: area-condition | An Area condition in a routing rule with the coordinates, the radius slider and the Use my location and Check on a map buttons | Dashboard → Codes → open a code → Settings → Smart routing → Add rule → Area */}
 
 QRdx checks the area with the best location it has for that scan:
 
