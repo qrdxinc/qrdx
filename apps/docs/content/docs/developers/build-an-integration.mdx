@@ -18,7 +18,7 @@ An integration is an OAuth app. Unlike an [API key](/docs/developers/api-keys), 
 
 Open [Settings → API keys & apps](/dashboard?to=settings/developers) and choose **New app**. The app belongs to the workspace that's open. Only the workspace's owners can create and change apps; admins and members can see them.
 
-{/* shot: oauth-new-app-form | the New app form with App details (name, description, logo, website) and OAuth (redirect URIs, scopes, Require PKCE) filled in | Settings, API keys & apps, New app */}
+<Shot id="oauth-new-app-form" />
 
 | Field | What it's for |
 | --- | --- |
@@ -29,7 +29,7 @@ Open [Settings → API keys & apps](/dashboard?to=settings/developers) and choos
 
 After you save, QRdx shows the **Client ID** and the **Client secret**. Copy the secret then: QRdx keeps only a hash of it and can't show it again. If you lose it or it leaks, choose **Regenerate secret** on the app's page. The old secret stops working at once; people who already connected stay connected. Creating an app and regenerating its secret ask you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first, unless you did in that browser in the last 10 minutes.
 
-{/* shot: oauth-app-credentials | the app page's Credentials section with the client ID, the hidden client secret and Regenerate secret | Settings, API keys & apps, an app */}
+<Shot id="oauth-app-credentials" />
 
 Keep both values on your server:
 
@@ -92,7 +92,7 @@ export function authorizeUrl({ state, challenge }: { state: string; challenge: s
 
 People who aren't signed in to QRdx sign in first. Then they see the consent screen: your app's logo, name, website and who built it, the permissions you asked for, and the account they're signed in with. Apps QRdx hasn't reviewed carry an **Unverified app.** note. **Authorize** asks them to [confirm it's them](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) unless they did in the last 10 minutes (a sign-in moments earlier counts). Someone who already approved the same scopes for your app goes straight back to you.
 
-{/* shot: oauth-consent-screen | the consent screen for an unverified app: logo, name, Built by, Requested permissions, the signed-in account, Cancel and Authorize | /api/oauth/authorize for a test app */}
+<Shot id="oauth-consent-screen" />
 
 QRdx then redirects to your `redirect_uri`:
 

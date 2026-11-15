@@ -63,8 +63,6 @@ export function QrReader() {
 
 Pick a screenshot of a code and its link appears under the input. `image.decode()` waits for the file to load; `handleImageLoad` then draws the image on a canvas and runs jsQR, which it loads on demand so it stays out of bundles that never scan.
 
-{/* clip: lib-qr-reader | choosing a screenshot in the file input and the decoded link appearing under it | render components/qr-reader.tsx and pick a saved QR code image */}
-
 ## How detection works
 
 `handleImageLoad(img, size, returnFullData)` tries the whole image first, then four crops (the bottom left, bottom right, top right and center regions at 65% of the image), each at six scales from 100% down to 10%. It returns the first decode that succeeds, so a code that fills a small part of a screenshot is still found. Very wide or tall images are downscaled first.
