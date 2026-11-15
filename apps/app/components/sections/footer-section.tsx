@@ -27,6 +27,7 @@ import {
   FOOTER_LEGAL,
   type FooterLink,
 } from "@/config/navigation";
+import { landingHref } from "@/lib/home-path";
 
 const LINK =
   "rounded-sm text-sm leading-5 text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
@@ -115,7 +116,7 @@ export function FooterSection() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <LocaleLink
-              href="/"
+              href={landingHref(home)}
               className="flex w-fit items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
               <QrdxLogo className="size-5 text-foreground" />

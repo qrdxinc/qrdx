@@ -3,10 +3,12 @@
  * app, above the phone's home indicator.
  *
  * A list's floating selection bar (bottom centre, full width on phones)
- * marks its layer data-selection-bar="open" while rows are selected. The
- * launcher then sits above it, at every width, so the two never overlap.
- * The bar's height comes from --selection-bar-height when something sets
- * it (on <body> or above), else 3rem.
+ * marks its layer data-selection-bar="open" while rows are selected. When
+ * the bar reaches the launcher's corner, setup-guide.tsx sets
+ * data-setup-guide-lift on <body> and the launcher sits above the bar, so
+ * the two never overlap; when the bar leaves the corner free (wide screens),
+ * the launcher stays put. The bar's height comes from --selection-bar-height
+ * when something sets it (on <body> or above), else 3rem.
  */
 .corner {
   position: fixed;
@@ -17,7 +19,7 @@
   transition: bottom 200ms ease-out;
 }
 
-:global(body:has([data-selection-bar="open"])) .corner {
+:global(body[data-setup-guide-lift]) .corner {
   bottom: calc(
     1rem +
     env(safe-area-inset-bottom, 0px) +
@@ -32,7 +34,7 @@
     bottom: 1.5rem;
   }
 
-  :global(body:has([data-selection-bar="open"])) .corner {
+  :global(body[data-setup-guide-lift]) .corner {
     bottom: calc(1.5rem + var(--selection-bar-height, 3rem) + 0.75rem);
   }
 }

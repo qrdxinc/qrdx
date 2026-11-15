@@ -320,6 +320,9 @@ export function SelectionBar({
       >
         <div
           aria-label={label}
+          // The bar itself (not its full-width layer): the "Get set up"
+          // launcher measures it to tell whether it has to move up.
+          data-selection-bar-panel=""
           className={cn(
             "bg-popover/95 text-popover-foreground supports-backdrop-filter:bg-popover/80 flex w-full max-w-full items-center gap-1 rounded-xl border p-1.5 shadow-lg backdrop-blur-md sm:w-auto dark:shadow-black/40",
             "transition-[translate,opacity,visibility] duration-200 ease-out motion-reduce:transition-none",

@@ -40,10 +40,21 @@ function boot(theme: "light" | "dark", hideLauncher: boolean) {
   });
 }
 
-export const FeaturebaseScript = () => {
+/**
+ * `visible`: whether this page shows the messenger (the app decides which
+ * pages do, consent/consent-scripts.tsx). Once loaded, the SDK stays for the
+ * rest of the visit, so on other pages the launcher is hidden and an open
+ * messenger is closed.
+ */
+export const FeaturebaseScript = ({
+  visible = true,
+}: {
+  visible?: boolean;
+}) => {
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === "dark" ? "dark" : "light";
-  const hideLauncher = useFeaturebaseLauncherHidden();
+  const sheetOpen = useFeaturebaseLauncherHidden();
+  const hideLauncher = sheetOpen || !visible;
   const loaded = useRef(false);
 
   // Booting again with the new theme (or launcher setting) is how
@@ -51,6 +62,11 @@ export const FeaturebaseScript = () => {
   useEffect(() => {
     if (loaded.current) boot(theme, hideLauncher);
   }, [theme, hideLauncher]);
+
+  // Leaving a page that shows it closes the messenger if it was open.
+  useEffect(() => {
+    if (loaded.current && !visible) featurebase()("hide");
+  }, [visible]);
 
   return (
     <Script
