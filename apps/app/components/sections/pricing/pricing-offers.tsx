@@ -69,7 +69,7 @@ export function PricingOffers({
               className={LINK}
               onClick={() => {
                 if (!signedIn) {
-                  openAuthDialog("signin");
+                  openAuthDialog("upgrade");
                   return;
                 }
                 setOpen(true);

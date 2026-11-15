@@ -230,6 +230,11 @@ function entries(docs: Entry[]): Entry[] {
       priority: 0.8,
     },
     {
+      url: url("/community/made-with-qrdx"),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: url("/templates"),
       lastModified: pageDate("/templates"),
       changeFrequency: "monthly",

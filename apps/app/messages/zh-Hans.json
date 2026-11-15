@@ -133,7 +133,8 @@
     "account": {
       "tryPlayground": "试用 Playground",
       "playground": "Playground",
-      "dashboard": "控制台"
+      "dashboard": "控制台",
+      "signIn": "登录"
     },
     "github": {
       "star": "收藏",
@@ -1129,11 +1130,11 @@
     },
     "bulk": {
       "metaTitle": "免费 CSV 批量二维码生成器：自定义样式，支持 SVG，无需上传",
-      "metaDescription": "将 CSV 转换为最多 {rows, number} 个自定义样式的二维码，并以 ZIP 压缩包下载 PNG、WebP 或 SVG 文件。在浏览器中运行：无需上传、无需注册、无水印。附带示例 CSV。",
+      "metaDescription": "将 CSV 转换为最多 {rows, number} 个带样式的二维码，并以 ZIP 压缩包下载 PNG、WebP 或 SVG 文件。在浏览器中运行：无需上传，无水印，{limit, number} 行以内无需注册。",
       "crumb": "批量生成器",
       "title": "二维码批量生成器",
       "intro1": "一次性将 CSV 文件转换为数千个二维码，按你的想法设置样式，并以 ZIP 压缩包下载 PNG、WebP 或 SVG 文件。每行对应一个二维码，文件名取自某一列：适用于产品标签、活动门票、资产标签、桌号或邮寄信函。",
-      "intro2": "全部在浏览器中运行，CSV 不会被上传，也无需注册，没有水印，不按二维码数量收费。不确定格式？可以从示例 CSV 开始。",
+      "intro2": "所有处理都在浏览器中完成，CSV 不会被上传，也没有水印或按个收费。不超过 {limit, number} 行的文件无需账号；更大的文件（最多 {rows, number} 行）需要免费账号。不确定格式？可以从示例 CSV 开始。",
       "facts": {
         "rows": "每个文件最多 {rows, number} 行",
         "styled": "你的颜色、形状和 Logo",
@@ -1167,7 +1168,7 @@
         "uploadQuestion": "我的 CSV 会被上传到别处吗？",
         "uploadAnswer": "不会。读取文件、绘制二维码和打包 ZIP 都在你的浏览器中完成。不会向 QRdx 的服务器发送任何内容，因此用于内部链接、Wi-Fi 密码或客户数据也很安全。",
         "howManyQuestion": "一次最多可以生成多少个二维码？",
-        "howManyAnswer": "每个文件最多 {rows, number} 行；如需更多，可拆分 CSV，或使用 CLI 的 qrdx batch 命令，该命令没有数量限制。在笔记本电脑上，一个 512 px 的 PNG 大约需要 20 毫秒，因此完整的 {rows, number} 行需要几分钟。更大的 PNG 耗时更长，文件也更大，所以除非有需要，请选择 512 px。",
+        "howManyAnswer": "未登录账号时每个文件最多 {limit, number} 行，使用免费账号最多 {rows, number} 行；超出时可以拆分 CSV，或使用 CLI 的 qrdx batch 命令，该命令没有数量限制。在笔记本电脑上生成一个 512 px 的 PNG 约需 20 毫秒，所以完整的 {rows, number} 个只需几分钟。PNG 尺寸越大，耗时越长，文件也越大，除非有更高需求，建议选择 512 px。",
         "rowQuestion": "每行可以包含什么内容？",
         "rowAnswer": "只要不超过二维码的容量上限，任何文本都可以：链接、纯文本，或 WIFI:...、mailto:...、tel:...、BEGIN:VCARD 等格式的内容。内容会与单元格中的文字完全一致地进行编码。",
         "excelQuestion": "可以使用 Excel 或 Google Sheets 文件吗？",
@@ -1194,7 +1195,13 @@
         "removeFile": "移除文件",
         "drop": "将 CSV 文件拖放到此处，或点击选择文件",
         "dropHelp": "最多 {rows, number} 行，文件大小不超过 10 MB。文件仅保留在你的设备上。",
+        "dropHelpSignedOut": "无账号最多 {limit, number} 行，免费账号最多 {rows, number} 行，文件不超过 10 MB。文件只保留在你的设备上。",
         "truncated": "此文件超过 {rows, number} 行，仅会使用前 {rows, number} 行。",
+        "overLimit": "此文件有 {count, number} 行。无账号最多可生成 {limit, number} 行；免费账号最多可生成 {max, number} 行，登录期间你的文件会保持加载状态。",
+        "overLimitCta": "免费注册并生成 {count, number} 个",
+        "firstOnly": "无需账号，先生成前 {limit, number} 个",
+        "restored": "你的文件已恢复：{count, plural, other {# 行}}。",
+        "restoreLost": "登录时页面重新加载，你的文件未能保留。请重新拖入文件后继续。",
         "header": "第一行为列名",
         "stepMap": "2. 映射列",
         "valueColumn": "二维码内容",
@@ -1227,7 +1234,9 @@
         "skipped": "{count, plural, one {已跳过 # 行} other {已跳过 # 行}}：",
         "skippedListed": "{count, plural, one {已跳过 # 行} other {已跳过 # 行}}（已列在 errors.csv 中）：",
         "line": "第 {row, number} 行：{error}",
-        "private": "所有处理都在你的浏览器中完成。你的 CSV 和生成的二维码绝不会被上传。"
+        "private": "所有处理都在你的浏览器中完成。你的 CSV 和生成的二维码绝不会被上传。",
+        "doneNudge": "使用免费账号，可将此样式保存为主题，并制作最多 {codes, number} 个打印后仍可编辑的动态二维码。",
+        "doneNudgeCta": "创建免费账号"
       }
     },
     "printSize": {
@@ -3416,6 +3425,10 @@
         "scale": "缩放",
         "transparentBackground": "透明背景",
         "makeManyFromACsv": "用此样式从 CSV 批量生成",
+        "nudgeDynamic": "打印后需要更改链接，或者统计扫描次数？用免费账号将它设为动态二维码，然后重新下载即可。无论你的套餐有什么变化，它都会继续有效。",
+        "nudgeDynamicCta": "设为动态二维码",
+        "nudgeSave": "将此设计保存到免费账号，即可在任何设备上使用。",
+        "nudgeSaveCta": "保存设计",
         "scannedFromAbout": "可扫描距离约",
         "setsTheCodeWidthBelow": "将设置下方的二维码宽度。",
         "codeWidth": "二维码宽度",
@@ -3544,6 +3557,10 @@
       "undoRedoButtons": {
         "undo": "撤销",
         "redo": "重做"
+      },
+      "keepDesigns": {
+        "text": "用免费账号，在所有设备上保留你的设计。",
+        "cta": "创建免费账号"
       }
     },
     "ai": {
@@ -4668,6 +4685,7 @@
       "fixedOncePrinted": "打印后内容固定",
       "dynamic": "动态",
       "editLaterCountScans": "稍后可编辑，统计扫描次数",
+      "signedOutNote": "动态二维码需要一个免费账号。无论你的套餐有什么变化，二维码都会继续有效。",
       "linkOptions": "链接选项…",
       "printedCodesStillOpenDestinationurl": "已打印的二维码仍会打开 <span>{destinationUrl}</span>。",
       "pointItToTheNew": "指向新地址",
@@ -5400,11 +5418,7 @@
       "nameIsNoLongerIn": "“{name}”已不在社区中。"
     },
     "itemCard": {
-      "empty": "空",
-      "official": "官方",
-      "usecountUses": "{useCount} 次使用",
-      "seeAll": "查看全部",
-      "likes": "点赞"
+      "empty": "空"
     },
     "itemPages": {
       "previous": "上一页",
@@ -8375,6 +8389,8 @@
         "searchOrJumpTo2": "搜索或跳转",
         "findAPageACode": "查找页面、二维码或文档文章，或新建内容。",
         "searchCodesPagesSettingsAnd": "搜索二维码、页面、设置和文档…",
+        "findAPageOrA": "查找页面或二维码，或新建内容。",
+        "searchCodesPagesAndSettings": "搜索二维码、页面和设置…",
         "codes": "二维码",
         "landingPages": "落地页",
         "create": "创建",
@@ -8824,6 +8840,24 @@
     },
     "dialogCloseButton": {
       "close": "关闭"
+    },
+    "reasons": {
+      "saveDesign": "将此设计保存到你的账户，即可在任何设备上打开。",
+      "makeDynamic": "动态二维码保存在你的账户中：打印后仍可更改它们指向的地址，并统计每一次扫描。",
+      "hostedPage": "托管页面保存在你的账户中，因此打印后仍可修改。",
+      "aiArt": "AI 绘图需使用免费账户，账户每月附带一定数量的图片。",
+      "aiChat": "AI 设计师需要免费账户。免费账户共可发送 {count, number} 次请求。",
+      "uploadFrame": "上传自己的边框需要免费账户。",
+      "publishFrame": "向社区分享边框需要免费账户。",
+      "communityAction": "点赞、收藏、复制和发布社区设计需要免费账户。",
+      "saveBarcode": "保存的条形码存放在你的账户中，随时可再次下载。",
+      "bulkOverLimit": "最多 {limit, number} 行的文件无需账户。免费账户每个文件最多可生成 {max, number} 个，且你的文件会保持已加载状态。",
+      "keepDesigns": "将你的设计保存在账户中，所有设备都能用。",
+      "afterDownload": "免费使用，无论你的套餐如何变化，你的二维码都能继续正常使用。",
+      "upgrade": "套餐和账单归属于账户。你可以从刚才中断的地方继续。"
+    },
+    "nudge": {
+      "dismiss": "不再显示此提示"
     }
   },
   "codeBuilder": {

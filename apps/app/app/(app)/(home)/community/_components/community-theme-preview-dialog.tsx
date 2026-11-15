@@ -103,7 +103,7 @@ export function CommunityThemePreviewDialog({
 
   const handleLike = () => {
     if (
-      !checkValidSession("signin", "LIKE_THEME", {
+      !checkValidSession("community_action", "LIKE_THEME", {
         communityThemeId: displayTheme.id,
       })
     ) {

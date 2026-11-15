@@ -1,6 +1,7 @@
 "use client";
 
 import { track } from "@repo/analytics";
+import { authClient } from "@repo/auth/client";
 import { toast } from "@repo/design-system";
 import { Tick } from "@repo/design-system/components/icons";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
@@ -67,12 +68,14 @@ import {
 } from "qrdx";
 import type { QRArt } from "qrdx/types";
 import React from "react";
+import { openCodeBuilderIntent } from "@/components/code-builder/playground-request";
 import { AIArtDownloadDialog } from "@/components/editor/art/ai-art-download";
 import { useShownArt } from "@/components/editor/art/art-canvas";
 import { DialogCloseButton } from "@/components/editor/dialog-close-button";
 import { emitSound } from "@/components/editor/sound";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { SignUpNudge, useSignUpNudge } from "@/components/sign-up-nudge";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import {
   fromMillimeters,
@@ -86,6 +89,8 @@ import {
   scanDistanceUnit,
 } from "@/lib/print-size";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
+import { isNudgeDismissed, wasNudgeShown } from "@/lib/sign-up-nudges";
+import { useAuthStore } from "@/store/auth-store";
 import { useQREditorStore } from "@/store/editor-store";
 import { usePreferencesStore } from "@/store/preferences-store";
 import type { DownloadOptions as DownloadOptionsType } from "@/types/theme";
@@ -211,6 +216,39 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
   React.useEffect(() => {
     if (!open) setDistanceDraft(null);
   }, [open]);
+
+  // Signed out, the first download of a visit keeps the dialog open for one
+  // line: make it dynamic (a URL) or save the design, with a free account.
+  // Waved off, or once it has shown in this tab, downloads close as before.
+  const { data: session, isPending: sessionPending } = authClient.useSession();
+  const [justDownloaded, setJustDownloaded] = React.useState(false);
+  React.useEffect(() => {
+    if (!open) setJustDownloaded(false);
+  }, [open]);
+  const nudge = useSignUpNudge("after_download", justDownloaded);
+  const openAuthDialog = useAuthStore((state) => state.openAuthDialog);
+  const contentType = useQREditorStore((state) => state.contentType);
+  const canBeDynamic = contentType === "url" && Boolean(value.trim());
+  const afterDownload = () => {
+    const offerNudge =
+      !(sessionPending || session?.user) &&
+      !isNudgeDismissed("after_download") &&
+      !wasNudgeShown("after_download");
+    if (offerNudge) setJustDownloaded(true);
+    else onOpenChange(false);
+  };
+  const startFromNudge = () => {
+    onOpenChange(false);
+    // After sign-in: the "Make it dynamic" builder for a URL, else Save.
+    if (canBeDynamic) {
+      openAuthDialog("after_download", {
+        action: "OPEN_CODE_BUILDER",
+        data: openCodeBuilderIntent("dynamic"),
+      });
+    } else {
+      openAuthDialog("after_download", { action: "SAVE_THEME" });
+    }
+  };
 
   const format = downloadOptions.format;
   const formatInfo = FORMATS.find((item) => item.id === format) ?? FORMATS[0];
@@ -359,7 +397,7 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
         content_type: useQREditorStore.getState().contentType,
       });
       toast.success(t("downloadedFilename", { filename }));
-      onOpenChange(false);
+      afterDownload();
     } catch (error) {
       console.error("Error downloading QR code:", error);
       toast.error(
@@ -408,7 +446,7 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
         content_type: useQREditorStore.getState().contentType,
       });
       toast.success(t("downloadedPrintfilename", { printFilename }));
-      onOpenChange(false);
+      afterDownload();
     } catch (error) {
       console.error("Error creating print file:", error);
       toast.error(
@@ -796,6 +834,17 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                 </>
               )}
             </div>
+            {nudge.shown && (
+              <SignUpNudge
+                className="border-t px-6 py-3"
+                cta={canBeDynamic ? t("nudgeDynamicCta") : t("nudgeSaveCta")}
+                id="after_download"
+                onCta={startFromNudge}
+                onDismiss={nudge.dismiss}
+                reason="after_download"
+                text={canBeDynamic ? t("nudgeDynamic") : t("nudgeSave")}
+              />
+            )}
             <div className="border-t px-6 py-3">
               <Link
                 className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-xs underline-offset-4 transition-colors hover:underline"

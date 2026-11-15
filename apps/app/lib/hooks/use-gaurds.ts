@@ -1,3 +1,5 @@
+import { track } from "@repo/analytics";
+import type { AuthPromptReason } from "@repo/analytics/auth-prompt";
 import { authClient } from "@repo/auth/client";
 import { useAuthStore } from "@/store/auth-store";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
@@ -20,13 +22,17 @@ export function useSessionGuard() {
   const { data: session } = authClient.useSession();
   const { openAuthDialog } = useAuthStore();
 
+  /** True when signed in; else opens the dialog, saying why (`reason`). */
   const checkValidSession = (
-    mode: "signin" | "signup" = "signin",
+    reason: AuthPromptReason,
     postLoginActionType?: PostLoginActionType,
     postLoginActionData?: any,
   ) => {
     if (!session) {
-      openAuthDialog(mode, postLoginActionType, postLoginActionData);
+      openAuthDialog(reason, {
+        action: postLoginActionType,
+        data: postLoginActionData,
+      });
       return false;
     }
 
@@ -52,6 +58,7 @@ export function useSubscriptionGuard() {
     if (isSubscribed) return true;
 
     if (requestsRemaining <= 0) {
+      track("limit_gate_shown", { limit: "ai_requests", plan: "free" });
       openGetProDialog();
       return false;
     }
@@ -69,6 +76,7 @@ export function useSubscriptionGuard() {
 
     if (isSubscribed) return true;
 
+    track("limit_gate_shown", { limit: "pro_feature", plan: "free" });
     openGetProDialog();
     return false;
   };

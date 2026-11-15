@@ -1,5 +1,6 @@
 "use client";
 
+import type { AuthPromptReason } from "@repo/analytics/auth-prompt";
 import type { ComponentProps } from "react";
 import { useSignInGate } from "@/components/auth/sign-in-link";
 import { SpotlightCard } from "@/components/fx";
@@ -11,6 +12,8 @@ import {
 type SpotlightLinkProps = Omit<ComponentProps<typeof Link>, "as"> & {
   /** The target needs an account: signed-out visitors sign in first. */
   requireSignIn?: boolean;
+  /** Why it needs one (the dialog's line). */
+  signInReason?: AuthPromptReason;
 };
 
 /**
@@ -20,13 +23,14 @@ type SpotlightLinkProps = Omit<ComponentProps<typeof Link>, "as"> & {
  */
 export function SpotlightLink({
   requireSignIn,
+  signInReason = "nav",
   onClick,
   href,
   ...props
 }: SpotlightLinkProps) {
   const localize = useLocalizeHref();
   const target = typeof href === "string" ? localize(href) : href;
-  const gate = useSignInGate(String(target), onClick);
+  const gate = useSignInGate(String(target), onClick, signInReason);
   return (
     <SpotlightCard
       as={Link}

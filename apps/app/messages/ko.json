@@ -133,7 +133,8 @@
     "account": {
       "tryPlayground": "Playground 체험하기",
       "playground": "Playground",
-      "dashboard": "대시보드"
+      "dashboard": "대시보드",
+      "signIn": "로그인"
     },
     "github": {
       "star": "Star",
@@ -1129,11 +1130,11 @@
     },
     "bulk": {
       "metaTitle": "CSV로 만드는 무료 대량 QR 코드 생성기: 스타일 적용, SVG, 업로드 없음",
-      "metaDescription": "CSV 파일 하나로 스타일이 적용된 QR 코드를 최대 {rows, number}개까지 만들고 PNG, WebP, SVG 형식으로 ZIP에 담아 내려받으세요. 브라우저에서 실행되어 업로드, 가입, 워터마크가 없어요. 샘플 CSV도 있어요.",
+      "metaDescription": "CSV 파일 하나로 스타일이 적용된 QR 코드를 최대 {rows, number}개까지 만들고, PNG, WebP 또는 SVG 형식으로 ZIP 파일에 담아 내려받으세요. 브라우저에서 실행되므로 업로드도, 워터마크도 없고 {limit, number}행까지는 가입도 필요 없어요.",
       "crumb": "대량 생성기",
       "title": "QR 코드 대량 생성기",
       "intro1": "CSV 파일 하나로 수천 개의 QR 코드를 한 번에 만들어 보세요. 원하는 스타일을 적용해 PNG, WebP, SVG 형식으로 ZIP에 담아 내려받을 수 있습니다. 한 행이 코드 하나이고, 파일 이름은 열에서 가져옵니다. 제품 라벨, 행사 티켓, 자산 태그, 테이블 번호, 우편물에 활용해 보세요.",
-      "intro2": "모든 작업이 브라우저에서 실행되므로 CSV는 업로드되지 않으며, 가입, 워터마크, 코드당 요금도 없습니다. 형식이 헷갈린다면 샘플 CSV로 시작해 보세요.",
+      "intro2": "모든 과정이 브라우저에서 실행되어 CSV 파일은 업로드되지 않으며, 워터마크나 코드당 요금도 없어요. {limit, number}행 이하 파일은 계정 없이 쓸 수 있고, 최대 {rows, number}행까지의 더 큰 파일은 무료 계정이 필요해요. 형식이 헷갈린다면 샘플 CSV로 시작해 보세요.",
       "facts": {
         "rows": "파일당 최대 {rows, number}행",
         "styled": "내 색상, 모양, 로고 적용",
@@ -1167,7 +1168,7 @@
         "uploadQuestion": "CSV가 어딘가에 업로드되나요?",
         "uploadAnswer": "아니요. 파일 읽기, QR 코드 그리기, ZIP 만들기가 모두 브라우저에서 이루어져요. QRdx 서버로는 아무것도 전송되지 않으므로 내부 링크, Wi-Fi 비밀번호, 고객 데이터에도 안심하고 사용할 수 있어요.",
         "howManyQuestion": "한 번에 QR 코드를 몇 개까지 만들 수 있나요?",
-        "howManyAnswer": "파일당 최대 {rows, number}행까지 가능해요. 더 많이 필요하면 CSV를 나누거나, 제한이 없는 CLI의 qrdx batch 명령을 사용하세요. 512 px PNG 하나를 만드는 데 노트북에서 약 20 ms가 걸리므로, {rows, number}행 전체는 몇 분 정도 걸려요. PNG가 클수록 시간이 더 걸리고 파일도 커지므로, 더 큰 크기가 필요하지 않다면 512 px를 선택하세요.",
+        "howManyAnswer": "파일당 계정 없이 최대 {limit, number}행, 무료 계정이 있으면 최대 {rows, number}행까지 가능해요. 그보다 많다면 CSV를 나누거나 제한이 없는 CLI의 qrdx batch 명령을 사용하세요. 512 px PNG 하나는 노트북에서 약 20 ms가 걸려서 {rows, number}개를 모두 만드는 데 몇 분이 걸려요. PNG가 클수록 더 오래 걸리고 파일도 커지므로, 더 큰 크기가 필요하지 않다면 512 px를 선택하세요.",
         "rowQuestion": "각 행에 무엇을 넣을 수 있나요?",
         "rowAnswer": "QR 코드 용량 한도 내의 모든 텍스트를 넣을 수 있어요. 링크, 일반 텍스트, 또는 WIFI:..., mailto:..., tel:..., BEGIN:VCARD 같은 페이로드도 가능해요. 내용은 셀에 적힌 그대로 인코딩돼요.",
         "excelQuestion": "Excel이나 Google Sheets 파일도 쓸 수 있나요?",
@@ -1194,7 +1195,13 @@
         "removeFile": "파일 삭제",
         "drop": "CSV 파일을 여기에 끌어다 놓거나, 클릭해서 선택하세요",
         "dropHelp": "최대 {rows, number}개 행, 10 MB까지 가능해요. 파일은 내 기기에만 있어요.",
+        "dropHelpSignedOut": "계정 없이 최대 {limit, number}행, 무료 계정이면 {rows, number}행, 용량은 10 MB까지 가능해요. 파일은 내 기기에만 있어요.",
         "truncated": "이 파일은 {rows, number}개 행을 넘어요. 처음 {rows, number}개 행만 사용돼요.",
+        "overLimit": "이 파일은 {count, number}행이에요. 계정 없이 {limit, number}행까지 실행할 수 있고, 무료 계정이 있으면 최대 {max, number}행까지 가능해요. 로그인하는 동안에도 파일은 그대로 유지돼요.",
+        "overLimitCta": "무료로 가입하고 {count, number}개 만들기",
+        "firstOnly": "계정 없이 처음 {limit, number}개만 만들기",
+        "restored": "파일이 복원되었어요: {count, plural, one {#행} other {#행}}.",
+        "restoreLost": "로그인하면서 페이지가 새로고침되어 파일을 유지하지 못했어요. 계속하려면 파일을 다시 끌어다 놓으세요.",
         "header": "첫 번째 행에 열 이름이 있어요",
         "stepMap": "2. 열 매핑",
         "valueColumn": "QR 코드 내용",
@@ -1227,7 +1234,9 @@
         "skipped": "{count, plural, one {#개 행을 건너뛰었어요} other {#개 행을 건너뛰었어요}}:",
         "skippedListed": "{count, plural, one {#개 행을 건너뛰었어요} other {#개 행을 건너뛰었어요}}(errors.csv에 정리됨):",
         "line": "{row, number}번째 줄: {error}",
-        "private": "모든 작업은 브라우저에서 실행돼요. CSV와 생성된 코드는 절대 업로드되지 않아요."
+        "private": "모든 작업은 브라우저에서 실행돼요. CSV와 생성된 코드는 절대 업로드되지 않아요.",
+        "doneNudge": "무료 계정이 있으면 이 스타일을 테마로 저장하고, 인쇄 후에도 수정할 수 있는 동적 QR 코드를 최대 {codes, number}개까지 만들 수 있어요.",
+        "doneNudgeCta": "무료 계정 만들기"
       }
     },
     "printSize": {
@@ -3416,6 +3425,10 @@
         "scale": "배율",
         "transparentBackground": "투명 배경",
         "makeManyFromACsv": "이 스타일로 CSV에서 여러 개 만들기",
+        "nudgeDynamic": "인쇄한 뒤에 링크를 바꾸거나 스캔 수를 확인해야 하나요? 무료 계정으로 동적 QR 코드로 만들고 다시 다운로드하세요. 요금제에 어떤 일이 생겨도 계속 작동해요.",
+        "nudgeDynamicCta": "동적 QR 코드로 만들기",
+        "nudgeSave": "이 디자인을 무료 계정에 저장하고 어떤 기기에서든 사용하세요.",
+        "nudgeSaveCta": "디자인 저장",
         "scannedFromAbout": "스캔 가능 거리 약",
         "setsTheCodeWidthBelow": "아래에서 코드 너비를 설정해요.",
         "codeWidth": "코드 너비",
@@ -3544,6 +3557,10 @@
       "undoRedoButtons": {
         "undo": "실행 취소",
         "redo": "다시 실행"
+      },
+      "keepDesigns": {
+        "text": "무료 계정으로 모든 기기에서 디자인을 보관하세요.",
+        "cta": "무료 계정 만들기"
       }
     },
     "ai": {
@@ -4668,6 +4685,7 @@
       "fixedOncePrinted": "인쇄 후 고정",
       "dynamic": "동적",
       "editLaterCountScans": "나중에 수정, 스캔 집계",
+      "signedOutNote": "동적 QR 코드는 무료 계정이 필요해요. 요금제에 어떤 일이 생겨도 코드는 계속 작동해요.",
       "linkOptions": "링크 옵션…",
       "printedCodesStillOpenDestinationurl": "인쇄된 코드는 계속 <span>{destinationUrl}</span>을(를) 열어요.",
       "pointItToTheNew": "새 주소로 연결하기",
@@ -5400,11 +5418,7 @@
       "nameIsNoLongerIn": "\"{name}\"은(는) 더 이상 커뮤니티에 없어요."
     },
     "itemCard": {
-      "empty": "비어 있음",
-      "official": "공식",
-      "usecountUses": "{useCount}회 사용",
-      "seeAll": "모두 보기",
-      "likes": "좋아요"
+      "empty": "비어 있음"
     },
     "itemPages": {
       "previous": "이전",
@@ -8375,6 +8389,8 @@
         "searchOrJumpTo2": "검색 또는 이동",
         "findAPageACode": "페이지, 코드, 문서 글을 찾거나 새로 만들기를 시작해 보세요.",
         "searchCodesPagesSettingsAnd": "코드, 페이지, 설정, 문서 검색…",
+        "findAPageOrA": "페이지나 코드를 찾거나 새로 만들어 보세요.",
+        "searchCodesPagesAndSettings": "코드, 페이지, 설정 검색…",
         "codes": "코드",
         "landingPages": "랜딩 페이지",
         "create": "만들기",
@@ -8824,6 +8840,24 @@
     },
     "dialogCloseButton": {
       "close": "닫기"
+    },
+    "reasons": {
+      "saveDesign": "이 디자인을 계정에 저장하고 어떤 기기에서든 열어 보세요.",
+      "makeDynamic": "동적 QR 코드는 계정에 보관돼요. 인쇄한 뒤에도 연결 위치를 바꿀 수 있고, 모든 스캔을 집계해요.",
+      "hostedPage": "호스팅 페이지는 계정에 보관되므로 인쇄한 뒤에도 수정할 수 있어요.",
+      "aiArt": "AI 아트는 무료 계정에서 사용할 수 있으며, 매월 이미지가 제공돼요.",
+      "aiChat": "AI 디자이너를 사용하려면 무료 계정이 필요해요. 무료 계정은 총 {count, number}번 요청할 수 있어요.",
+      "uploadFrame": "직접 만든 프레임을 업로드하려면 무료 계정이 필요해요.",
+      "publishFrame": "프레임을 커뮤니티에 공유하려면 무료 계정이 필요해요.",
+      "communityAction": "커뮤니티 디자인에 좋아요를 누르거나 저장, 복사, 게시하려면 무료 계정이 필요해요.",
+      "saveBarcode": "저장한 바코드는 계정에 보관되어 언제든 다시 다운로드할 수 있어요.",
+      "bulkOverLimit": "최대 {limit, number}행까지의 파일은 계정 없이 사용할 수 있어요. 무료 계정은 파일당 최대 {max, number}개까지 만들 수 있고, 불러온 파일도 그대로 유지돼요.",
+      "keepDesigns": "디자인을 계정에 보관하고 모든 기기에서 사용하세요.",
+      "afterDownload": "무료이고, 요금제에 어떤 일이 생기더라도 QR 코드는 계속 작동해요.",
+      "upgrade": "요금제와 결제는 계정에 속해요. 보던 곳에서 바로 이어서 진행할 수 있어요."
+    },
+    "nudge": {
+      "dismiss": "다시 표시하지 않기"
     }
   },
   "codeBuilder": {

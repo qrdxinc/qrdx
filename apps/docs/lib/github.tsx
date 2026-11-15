@@ -1,8 +1,7 @@
-/** biome-ignore-all lint/suspicious/useIterableCallbackReturn: false positive */
-
 // Links to the QRdx repository (edit this page, open an issue). Docs feedback
 // used to post to GitHub Discussions from a server action here; that path was
 // disabled and has been removed, so nothing on the site writes to GitHub.
+// Page feedback is an analytics event now (components/docs/page-feedback.tsx).
 
 import { GITHUB_OWNER, GITHUB_REPO } from "@repo/config";
 export const repo = GITHUB_REPO;
@@ -41,26 +40,32 @@ export function getGitHubIssueUrl(params: GitHubIssueUrlParams): string {
   const baseUrl = `https://github.com/${owner}/${repo}/issues/new`;
   const urlParams = new URLSearchParams();
 
-  Object.entries(issueParams).forEach(([key, value]) => {
+  for (const [key, value] of Object.entries(issueParams)) {
     if (Array.isArray(value)) {
-      value.forEach((item) => urlParams.append(key, item));
+      for (const item of value) urlParams.append(key, item);
     } else if (value !== undefined) {
       urlParams.append(key, value.toString());
     }
-  });
+  }
 
   return `${baseUrl}?${urlParams.toString()}`;
 }
 
-interface GithubFileUrlParams {
-  owner: string;
-  repo: string;
-  slug: string;
-}
+/** Where the docs' content lives in the repository. */
+export const DOCS_CONTENT_DIR = "apps/docs/content/docs";
 
-export function getGithubFileUrl(params: GithubFileUrlParams) {
-  const { owner, repo, slug } = params;
-  return `https://github.com/${owner}/${repo}/edit/main/apps/docs/content${
-    slug === "/docs" ? "/docs/index" : slug
-  }.mdx`;
+/**
+ * GitHub's editor for a docs page, from the page's file path inside
+ * content/docs ("help/index.mdx", "developers/mcp.es.mdx"): the file that
+ * rendered, so an index page edits its index.mdx and a translated page its
+ * translation. The old helper built the path from the page URL and so
+ * pointed index pages at a file that doesn't exist.
+ */
+export function getGithubEditUrl(filePath: string): string {
+  const path = filePath
+    .split("/")
+    .filter(Boolean)
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
+  return `https://github.com/${owner}/${repo}/edit/main/${DOCS_CONTENT_DIR}/${path}`;
 }

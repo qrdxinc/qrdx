@@ -1,8 +1,8 @@
 import { cn } from "@repo/design-system/lib/utils";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
-import { Cards } from "fumadocs-ui/components/card";
 import * as FilesComponents from "fumadocs-ui/components/files";
 import * as TabsComponents from "fumadocs-ui/components/tabs";
+import { TypeTable } from "fumadocs-ui/components/type-table";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import type { ComponentProps } from "react";
@@ -12,21 +12,53 @@ import { ComponentPreview } from "@/components/docs/registry/component-preview";
 import { ComponentSource } from "@/components/docs/registry/component-source";
 import { InstallationTabs } from "@/components/docs/registry/installation-tabs";
 import { PackageManagerTabs } from "@/components/docs/registry/package-manager-tabs";
+import { Callout } from "@/components/mdx/callout";
+import { Card, Cards } from "@/components/mdx/card";
+import {
+  DocsCodeBlockTabs,
+  DocsCodeBlockTabsList,
+  DocsPre,
+} from "@/components/mdx/code-block";
+import { Frame } from "@/components/mdx/frame";
 import { GithubCard } from "@/components/mdx/github-card";
 import { IfAvailable } from "@/components/mdx/if-available";
+import { Mermaid } from "@/components/mdx/mermaid";
 import { NpmStatus } from "@/components/mdx/npm-status";
+import { PlanNote } from "@/components/mdx/plan-note";
+import { DocsTable } from "@/components/mdx/table";
+import { Video } from "@/components/mdx/video";
 import { docsIcons } from "@/lib/docs-icons";
 
-// An odd last card spans the row instead of sitting alone in a half-empty one.
-// Module-level, so the component keeps its identity across renders.
-function SpanningCards(props: ComponentProps<typeof Cards>) {
+// The building blocks a docs page can use, documented in README.md ("MDX
+// building blocks"). Module-level wrappers, so each keeps its identity
+// across renders.
+
+/** Tabs on the docs' scale (styles/styles.css restyles the triggers). */
+function DocsTabs(props: ComponentProps<typeof TabsComponents.Tabs>) {
   return (
-    <Cards
+    <TabsComponents.Tabs
       {...props}
-      className={cn(
-        "[&>[data-card]:last-child:nth-child(odd)]:col-span-full",
-        props.className,
-      )}
+      className={cn("my-6 bg-fd-card", props.className)}
+      data-docs-tabs=""
+    />
+  );
+}
+
+function DocsTab(props: ComponentProps<typeof TabsComponents.Tab>) {
+  return (
+    <TabsComponents.Tab
+      {...props}
+      className={cn("text-[0.9375rem] leading-relaxed", props.className)}
+    />
+  );
+}
+
+function DocsAccordions(props: ComponentProps<typeof Accordions>) {
+  return (
+    <Accordions
+      {...props}
+      className={cn("my-6 rounded-xl", props.className)}
+      data-docs-accordions=""
     />
   );
 }
@@ -37,9 +69,24 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...defaultMdxComponents,
     ...TabsComponents,
     ...FilesComponents,
-    Cards: SpanningCards,
+    Tabs: DocsTabs,
+    Tab: DocsTab,
+    // Code blocks: a header with the copy button, never over the code.
+    pre: DocsPre,
+    CodeBlockTabs: DocsCodeBlockTabs,
+    CodeBlockTabsList: DocsCodeBlockTabsList,
+    // Tables scroll inside their own bordered box.
+    table: DocsTable,
     Accordion,
-    Accordions,
+    Accordions: DocsAccordions,
+    Callout,
+    Card,
+    Cards,
+    Frame,
+    Video,
+    PlanNote,
+    Mermaid,
+    TypeTable,
     GithubCard,
     IfAvailable,
     NpmStatus,

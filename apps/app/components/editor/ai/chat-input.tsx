@@ -87,7 +87,7 @@ export function ChatInput({
   } = useAIEnhancePrompt();
 
   const handleEnhancePrompt = () => {
-    if (!checkValidSession() || !checkValidSubscription()) return;
+    if (!checkValidSession("ai_chat") || !checkValidSubscription()) return;
 
     // Only send images that are not loading, and strip loading property
     const images = uploadedImages
@@ -126,7 +126,7 @@ export function ChatInput({
       },
     };
 
-    if (!checkValidSession("signup", "AI_GENERATE_FROM_CHAT", payload)) return;
+    if (!checkValidSession("ai_chat", "AI_GENERATE_FROM_CHAT", payload)) return;
     if (!checkValidSubscription()) return;
 
     generateTheme(payload);

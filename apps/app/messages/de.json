@@ -133,7 +133,8 @@
     "account": {
       "tryPlayground": "Playground testen",
       "playground": "Playground",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "signIn": "Anmelden"
     },
     "github": {
       "star": "Star",
@@ -1129,11 +1130,11 @@
     },
     "bulk": {
       "metaTitle": "Kostenloser Massen-QR-Code-Generator aus CSV: gestaltet, SVG, ohne Upload",
-      "metaDescription": "Verwandle eine CSV in bis zu {rows, number} gestaltete QR-Codes und lade sie als PNG, WebP oder SVG in einer ZIP herunter. Läuft in deinem Browser: ohne Upload, ohne Anmeldung, ohne Wasserzeichen. Beispiel-CSV inklusive.",
+      "metaDescription": "Verwandle eine CSV in bis zu {rows, number} gestylte QR-Codes und lade sie als PNG, WebP oder SVG in einer ZIP-Datei herunter. Läuft in deinem Browser: kein Upload, kein Wasserzeichen, keine Registrierung bis {limit, number} Zeilen.",
       "crumb": "Bulk-Generator",
       "title": "Bulk-QR-Code-Generator",
       "intro1": "Verwandle eine CSV-Datei in einem Rutsch in Tausende QR-Codes, so gestaltet, wie du es willst, und als PNG, WebP oder SVG in einer ZIP heruntergeladen. Eine Zeile pro Code, mit Dateinamen aus einer Spalte: Produktetiketten, Event-Tickets, Asset-Tags, Tischnummern oder Mailings.",
-      "intro2": "Alles läuft in deinem Browser, die CSV wird also nie hochgeladen, und es gibt keine Anmeldung, kein Wasserzeichen und keine Gebühr pro Code. Unsicher beim Aufbau? Starte mit der Beispiel-CSV.",
+      "intro2": "Alles läuft in deinem Browser, die CSV wird also nie hochgeladen, und es gibt kein Wasserzeichen und keine Gebühr pro Code. Dateien mit bis zu {limit, number} Zeilen brauchen kein Konto; größere, bis zu {rows, number}, brauchen ein kostenloses Konto. Unsicher beim Aufbau? Starte mit der Beispiel-CSV.",
       "facts": {
         "rows": "Bis zu {rows, number} Zeilen pro Datei",
         "styled": "Deine Farben, Formen und dein Logo",
@@ -1167,7 +1168,7 @@
         "uploadQuestion": "Wird meine CSV irgendwohin hochgeladen?",
         "uploadAnswer": "Nein. Die Datei wird gelesen, die QR-Codes werden gezeichnet und die ZIP-Datei wird direkt in deinem Browser erstellt. Es wird nichts an die Server von QRdx gesendet, daher ist es auch für interne Links, Wi-Fi-Passwörter oder Kundendaten sicher.",
         "howManyQuestion": "Wie viele QR-Codes kann ich auf einmal erstellen?",
-        "howManyAnswer": "Bis zu {rows, number} Zeilen pro Datei. Für mehr teilst du die CSV auf oder nutzt den Befehl qrdx batch der CLI, der keine Begrenzung hat. Ein PNG mit 512 px braucht auf einem Laptop etwa 20 ms, also dauern die vollen {rows, number} ein paar Minuten. Größere PNGs brauchen länger und ergeben größere Dateien, wähle daher 512 px, sofern du nicht mehr brauchst.",
+        "howManyAnswer": "Bis zu {limit, number} Zeilen pro Datei ohne Konto und bis zu {rows, number} mit einem kostenlosen Konto. Für mehr teilst du die CSV auf oder nutzt den Befehl qrdx batch der CLI, der kein Limit hat. Ein PNG mit 512 px braucht auf einem Laptop etwa 20 ms, also dauern alle {rows, number} ein paar Minuten. Größere PNGs brauchen länger und erzeugen größere Dateien, wähle also 512 px, sofern du nicht mehr brauchst.",
         "rowQuestion": "Was darf jede Zeile enthalten?",
         "rowAnswer": "Beliebigen Text bis zur Grenze des QR-Codes: Links, normalen Text oder Payloads wie WIFI:..., mailto:..., tel:... und BEGIN:VCARD. Der Inhalt wird genau so codiert, wie er in der Zelle steht.",
         "excelQuestion": "Kann ich eine Excel- oder Google-Sheets-Datei verwenden?",
@@ -1194,7 +1195,13 @@
         "removeFile": "Datei entfernen",
         "drop": "CSV-Datei hierher ziehen oder klicken, um eine auszuwählen",
         "dropHelp": "Bis zu {rows, number} Zeilen und 10 MB. Die Datei bleibt auf deinem Gerät.",
+        "dropHelpSignedOut": "Bis zu {limit, number} Zeilen ohne Konto, {rows, number} mit einem kostenlosen, und 10 MB. Die Datei bleibt auf deinem Gerät.",
         "truncated": "Diese Datei hat mehr als {rows, number} Zeilen. Nur die ersten {rows, number} werden verwendet.",
+        "overLimit": "Diese Datei hat {count, number} Zeilen. Bis zu {limit, number} laufen ohne Konto; mit einem kostenlosen Konto sind es bis zu {max, number}, und deine Datei bleibt geladen, während du dich anmeldest.",
+        "overLimitCta": "Kostenlos registrieren und {count, number} erstellen",
+        "firstOnly": "Die ersten {limit, number} ohne Konto erstellen",
+        "restored": "Deine Datei ist wieder da: {count, plural, one {# Zeile} other {# Zeilen}}.",
+        "restoreLost": "Durch die Anmeldung wurde die Seite neu geladen und deine Datei konnte nicht behalten werden. Zieh sie noch einmal hinein, um fortzufahren.",
         "header": "Erste Zeile enthält Spaltennamen",
         "stepMap": "2. Spalten zuordnen",
         "valueColumn": "QR-Code-Inhalt",
@@ -1227,7 +1234,9 @@
         "skipped": "{count, plural, one {# Zeile übersprungen} other {# Zeilen übersprungen}}:",
         "skippedListed": "{count, plural, one {# Zeile übersprungen} other {# Zeilen übersprungen}} (aufgelistet in errors.csv):",
         "line": "Zeile {row, number}: {error}",
-        "private": "Alles läuft in deinem Browser. Deine CSV und die erzeugten Codes werden nie hochgeladen."
+        "private": "Alles läuft in deinem Browser. Deine CSV und die erzeugten Codes werden nie hochgeladen.",
+        "doneNudge": "Speichere diesen Stil als Theme und erstelle mit einem kostenlosen Konto bis zu {codes, number} dynamische QR-Codes, die du auch nach dem Drucken bearbeiten kannst.",
+        "doneNudgeCta": "Kostenloses Konto erstellen"
       }
     },
     "printSize": {
@@ -3416,6 +3425,10 @@
         "scale": "Skalierung",
         "transparentBackground": "Transparenter Hintergrund",
         "makeManyFromACsv": "Mit diesem Stil viele aus einer CSV erstellen",
+        "nudgeDynamic": "Du willst den Link nach dem Druck ändern oder Scans zählen? Mach ihn mit einem kostenlosen Konto dynamisch und lade ihn erneut herunter. Er funktioniert weiter, egal was mit deinem Tarif passiert.",
+        "nudgeDynamicCta": "Dynamisch machen",
+        "nudgeSave": "Speichere dieses Design in einem kostenlosen Konto und nutze es auf jedem Gerät.",
+        "nudgeSaveCta": "Design speichern",
         "scannedFromAbout": "Scanbar ab etwa",
         "setsTheCodeWidthBelow": "Legt unten die Codebreite fest.",
         "codeWidth": "Codebreite",
@@ -3544,6 +3557,10 @@
       "undoRedoButtons": {
         "undo": "Rückgängig",
         "redo": "Wiederholen"
+      },
+      "keepDesigns": {
+        "text": "Behalte deine Designs auf jedem Gerät mit einem kostenlosen Konto.",
+        "cta": "Kostenloses Konto erstellen"
       }
     },
     "ai": {
@@ -4668,6 +4685,7 @@
       "fixedOncePrinted": "Nach dem Druck fest",
       "dynamic": "Dynamisch",
       "editLaterCountScans": "Später ändern, Scans zählen",
+      "signedOutNote": "Für dynamische Codes brauchst du ein kostenloses Konto. Dein Code funktioniert weiter, egal was mit deinem Tarif passiert.",
       "linkOptions": "Link-Optionen…",
       "printedCodesStillOpenDestinationurl": "Gedruckte Codes öffnen weiterhin <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Auf die neue Adresse verweisen",
@@ -5400,11 +5418,7 @@
       "nameIsNoLongerIn": "„{name}“ ist nicht mehr in der Community."
     },
     "itemCard": {
-      "empty": "Leer",
-      "official": "Offiziell",
-      "usecountUses": "{useCount} Verwendungen",
-      "seeAll": "Alle ansehen",
-      "likes": "Likes"
+      "empty": "Leer"
     },
     "itemPages": {
       "previous": "Zurück",
@@ -8375,6 +8389,8 @@
         "searchOrJumpTo2": "Suchen oder springen zu",
         "findAPageACode": "Finde eine Seite, einen Code oder einen Docs-Artikel oder starte etwas Neues.",
         "searchCodesPagesSettingsAnd": "Codes, Seiten, Einstellungen und Docs durchsuchen…",
+        "findAPageOrA": "Finde eine Seite oder einen Code oder starte etwas Neues.",
+        "searchCodesPagesAndSettings": "Codes, Seiten und Einstellungen durchsuchen…",
         "codes": "Codes",
         "landingPages": "Landingpages",
         "create": "Erstellen",
@@ -8824,6 +8840,24 @@
     },
     "dialogCloseButton": {
       "close": "Schließen"
+    },
+    "reasons": {
+      "saveDesign": "Speichere dieses Design in deinem Konto und öffne es auf jedem Gerät.",
+      "makeDynamic": "Dynamische Codes leben in deinem Konto: Ändere nach dem Druck, wohin sie führen, und zähle jeden Scan.",
+      "hostedPage": "Gehostete Seiten liegen in deinem Konto, sodass du sie auch nach dem Druck noch ändern kannst.",
+      "aiArt": "KI-Art läuft mit einem kostenlosen Konto, das monatliche Bilder enthält.",
+      "aiChat": "Der KI-Designer braucht ein kostenloses Konto. Kostenlose Konten erhalten insgesamt {count, number} Anfragen.",
+      "uploadFrame": "Zum Hochladen eigener Rahmen brauchst du ein kostenloses Konto.",
+      "publishFrame": "Um einen Rahmen mit der Community zu teilen, brauchst du ein kostenloses Konto.",
+      "communityAction": "Zum Liken, Speichern, Kopieren und Veröffentlichen von Community-Designs brauchst du ein kostenloses Konto.",
+      "saveBarcode": "Gespeicherte Barcodes liegen in deinem Konto und stehen bereit, erneut heruntergeladen zu werden.",
+      "bulkOverLimit": "Dateien mit bis zu {limit, number} Zeilen brauchen kein Konto. Mit einem kostenlosen Konto sind bis zu {max, number} pro Datei möglich, und deine Datei bleibt geladen.",
+      "keepDesigns": "Bewahre deine Designs in deinem Konto auf, auf jedem Gerät.",
+      "afterDownload": "Es ist kostenlos, und dein Code funktioniert weiter, egal was mit deinem Tarif passiert.",
+      "upgrade": "Tarife und Abrechnung gehören zu einem Konto. Du machst genau dort weiter, wo du warst."
+    },
+    "nudge": {
+      "dismiss": "Nicht mehr anzeigen"
     }
   },
   "codeBuilder": {

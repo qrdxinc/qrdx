@@ -112,11 +112,10 @@ export function AIArtPanel({ style }: AIArtPanelProps) {
   const art = useAIArtRun({
     store: useArtSessionStore,
     onSignedOut: () =>
-      openAuthDialog(
-        "signin",
-        "AI_ART_GENERATE",
-        artGenerateIntent(payload, useArtSessionStore.getState().draft),
-      ),
+      openAuthDialog("ai_art", {
+        action: "AI_ART_GENERATE",
+        data: artGenerateIntent(payload, useArtSessionStore.getState().draft),
+      }),
   });
 
   const writer = useArtPromptWriter({ mock: art.mock });
@@ -237,7 +236,7 @@ export function AIArtPanel({ style }: AIArtPanelProps) {
             disabled={generating}
             onClick={() => {
               if (!art.signedIn) {
-                openAuthDialog("signin");
+                openAuthDialog("ai_art");
                 return;
               }
               void writeDescription(artRequestFor(payload, draft));
