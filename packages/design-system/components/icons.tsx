@@ -44,10 +44,6 @@ export function Tick({
 }
 
 /**
- * Whole star, the iconsax Star1 outline. iconsax's filled stars are split in
- * two halves (Star1 Bold/Bulk), so `variant="Bold"` fills this outline instead.
- */
-/**
  * A plain play triangle with rounded corners. iconsax's Play draws a split
  * glyph; `variant="Bold"` (or "Bulk") fills this one, Linear outlines it.
  */
@@ -82,6 +78,12 @@ export function Play({
   );
 }
 
+/**
+ * Whole star, the iconsax Star1 outline. iconsax's filled Star1 (Bold, Bulk)
+ * is split in two halves and its StarSlash is cut by the slash, so
+ * `variant="Bold"` (or "Bulk") fills this outline instead. Neither iconsax
+ * star may be imported (apps/app/tests/repo/no-cut-stars.test.ts).
+ */
 export function Star({
   className,
   size = 24,

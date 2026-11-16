@@ -8,7 +8,7 @@ import { CANONICAL_ORIGIN, SUPPORT_EMAIL, MAX_CODES_PER_REQUEST } from "@repo/co
 
 | Module | What it holds |
 | --- | --- |
-| `brand.ts` | The product name and the GitHub repository |
+| `brand.ts` | The product name, the brand blue and the GitHub repository |
 | `urls.ts` | The hosted service's addresses (`qrdx.dev`, the API at `api.qrdx.dev/v1`, the MCP server at `mcp.qrdx.dev/mcp`, the shadcn registry) and `isQrdxHost()` |
 | `origins.ts` | The two origins that depend on the environment, imported as `@repo/config/origins`: `appOrigin()` (`NEXT_PUBLIC_APP_URL`) and `shortLinkOrigin()` (`NEXT_PUBLIC_SHORT_LINK_BASE_URL`, falling back to the origin it's given). They stay out of the main entry so the tools that compile `next.config.ts` and the docs source config only see plain values |
 | `contact.ts` | The email addresses people are told to write to |
