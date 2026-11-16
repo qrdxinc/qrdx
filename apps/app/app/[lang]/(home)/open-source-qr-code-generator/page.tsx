@@ -1,3 +1,4 @@
+import { ENTERPRISE_EMAIL } from "@repo/config";
 import { GithubLogo } from "@repo/design-system/components/icons";
 import { JsonLd } from "@repo/design-system/components/seo/json-ld";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -44,8 +45,12 @@ import { organizationId } from "@/lib/seo-schema";
 // self-hosting guide (/docs/self-hosting) for the steps instead of repeating
 // them. Sources:
 // - licenses: LICENSING.md, LICENSE, the LICENSE files in packages/qrdx,
-//   packages/cli and plugins/*, the LICENSE.md files in the ee/ folders, and
-//   the README's License section (MIT from qrdx 0.0.47 and @qrdx/cli 0.0.5)
+//   packages/cli, plugins/*, skills/generate-qr and
+//   packages/docs-assets/registry/qrdx, the LICENSE.md files in the ee/
+//   folders, and the README's License section (MIT from qrdx 0.0.47 and
+//   @qrdx/cli 0.0.5)
+// - enterprise agreements for the ee/ features: /enterprise and
+//   ENTERPRISE_EMAIL (@repo/config)
 // - self-hosting: apps/docs/content/docs/self-hosting.mdx and the README; the Free
 //   limits without payments: apps/docs/content/docs/plans-and-limits.mdx
 // - the name and logo: TRADEMARK.md; contributing: CONTRIBUTING.md
@@ -94,6 +99,18 @@ const PARTS = [
     folder: "plugins/*",
     license: "MIT",
     href: `${REPO}/tree/main/plugins`,
+  },
+  {
+    key: "skill",
+    folder: "skills/generate-qr",
+    license: "MIT",
+    href: blob("skills/generate-qr/LICENSE"),
+  },
+  {
+    key: "registry",
+    folder: "packages/docs-assets/registry/qrdx",
+    license: "MIT",
+    href: blob("packages/docs-assets/registry/qrdx/LICENSE"),
   },
   {
     key: "ee",
@@ -160,6 +177,7 @@ export default async function OpenSourcePage() {
   const licenses = [
     { key: "agpl", href: blob("LICENSE") },
     { key: "mit", href: blob("packages/qrdx/LICENSE") },
+    { key: "ee", href: blob("apps/app/ee/LICENSE.md") },
     { key: "trademark", href: blob("TRADEMARK.md") },
   ] as const;
 
@@ -316,7 +334,15 @@ export default async function OpenSourcePage() {
           </table>
         </div>
         <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground text-pretty">
-          {t("eeNote")}
+          {t("eeNote")}{" "}
+          {t.rich("eeAgreement", {
+            email: ENTERPRISE_EMAIL,
+            link: (chunks) => (
+              <Link href="/enterprise" className={textLinkClass}>
+                {chunks}
+              </Link>
+            ),
+          })}
         </p>
       </section>
 

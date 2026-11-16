@@ -526,8 +526,7 @@
           "answer": "Sí. La superposición de logo está incluida en el plan gratuito. Sube una imagen (un PNG con fondo transparente funciona mejor) y QRdx la centra y despeja los módulos que quedan debajo. Los códigos QR usan corrección de errores Reed-Solomon (ISO/IEC 18004); QRdx usa por defecto el nivel Q, que puede recuperar aproximadamente el 25% del código, así que un logo centrado sigue siendo escaneable. Prueba con varios teléfonos antes de imprimir."
         },
         "openSource": {
-          "question": "¿QRdx es de código abierto?",
-          "answer": "Sí. QRdx es de código abierto bajo la GNU AGPL-3.0 (o posterior) y se desarrolla en público en GitHub. Puedes revisar el código, abrir incidencias, contribuir o alojar tu propia instancia, con códigos dinámicos y páginas alojadas incluidos. La biblioteca de QR está publicada en npm como qrdx para apps de React. AGPL es una licencia copyleft, así que comprueba que encaje con tu proyecto antes de incorporarla a software de código cerrado."
+          "question": "¿QRdx es de código abierto?"
         },
         "api": {
           "question": "¿Pueden los desarrolladores generar códigos QR con una API?",
