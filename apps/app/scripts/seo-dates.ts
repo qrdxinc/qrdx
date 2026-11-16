@@ -10,7 +10,6 @@
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import path from "node:path";
-import { translationLocale } from "@repo/i18n/docs";
 import { industries, placements } from "@/lib/seo-content";
 import { gitLastModified, withoutGitEnv } from "@/lib/seo-dates";
 import {
@@ -44,7 +43,7 @@ if (git(["rev-parse", "--is-shallow-repository"]) !== "false") {
  */
 const content = git(["ls-files", "content/legal", "content/compare"])
   .split("\n")
-  .filter((file) => file.endsWith(".mdx") && !translationLocale(file));
+  .filter((file) => file.endsWith(".mdx"));
 
 const listed = [
   QR_TYPES_SOURCE,
