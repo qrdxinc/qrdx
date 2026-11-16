@@ -1,6 +1,6 @@
 "use client";
 
-import { GithubLogo } from "@repo/design-system/components/icons";
+import { GithubLogo, Star } from "@repo/design-system/components/icons";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Tooltip,
@@ -9,7 +9,6 @@ import {
 } from "@repo/design-system/components/ui/tooltip";
 import { cn } from "@repo/design-system/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { Star1 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect, useState } from "react";
 import { siteConfig } from "@/config/site";
@@ -109,7 +108,7 @@ export function GithubStarCount({ className }: { className?: string }) {
     <span
       className={cn("inline-flex items-center gap-1 tabular-nums", className)}
     >
-      <Star1 aria-hidden variant="Bold" className="size-3" />
+      <Star aria-hidden variant="Bold" className="size-3" />
       <span aria-hidden>{label}</span>
       <span className="sr-only">{t("stars", { count: label })}</span>
     </span>

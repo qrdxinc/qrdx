@@ -526,8 +526,7 @@
           "answer": "Oui. La superposition de logo est incluse dans l'offre gratuite. Importez une image (un PNG à fond transparent donne les meilleurs résultats) et QRdx la centre et dégage les modules situés dessous. Les QR codes utilisent la correction d'erreurs Reed-Solomon (ISO/IEC 18004) ; QRdx utilise par défaut le niveau Q, qui peut récupérer environ 25 % du code, de sorte qu'un logo centré reste scannable. Testez avec plusieurs téléphones avant d'imprimer."
         },
         "openSource": {
-          "question": "QRdx est-il open source ?",
-          "answer": "Oui. QRdx est open source sous licence GNU AGPL-3.0 (ou ultérieure) et développé publiquement sur GitHub. Vous pouvez consulter le code, ouvrir des tickets, contribuer ou héberger votre propre instance, QR codes dynamiques et pages hébergées inclus. La bibliothèque QR est publiée sur npm sous le nom qrdx pour les applications React. L'AGPL est une licence copyleft : vérifiez donc qu'elle convient à votre projet avant de l'intégrer à un logiciel propriétaire."
+          "question": "QRdx est-il open source ?"
         },
         "api": {
           "question": "Les développeurs peuvent-ils générer des QR codes avec une API ?",
@@ -925,6 +924,53 @@
         }
       }
     },
+    "shell": {
+      "header": {
+        "docs": "Docs",
+        "dashboard": "Tableau de bord",
+        "github": "QRdx sur GitHub"
+      },
+      "actions": {
+        "copyPage": "Copier la page",
+        "copied": "Copié",
+        "more": "Autres façons d’utiliser cette page",
+        "copyMarkdown": "Copier la page en Markdown",
+        "viewMarkdown": "Voir en Markdown",
+        "mcp": "Connecter le serveur MCP de QRdx"
+      },
+      "feedback": {
+        "question": "Cette page vous a-t-elle été utile ?",
+        "yes": "Oui",
+        "no": "Non",
+        "thanks": "Merci. Les retours sont anonymes : seuls les nombres de oui et de non sont conservés.",
+        "edit": "Modifier cette page sur GitHub",
+        "report": "Signaler un problème",
+        "issueTitle": "Docs : {title}",
+        "issueBody": "Page : {url}\n\nCe qui est incorrect ou manquant :\n"
+      },
+      "notFound": {
+        "search": "Rechercher dans la doc",
+        "sections": "Ou commencez par une section"
+      },
+      "code": {
+        "copy": "Copier le code",
+        "copied": "Copié"
+      },
+      "video": {
+        "play": "Lire {title}",
+        "pause": "Mettre {title} en pause",
+        "reducedMotion": "La vidéo attend votre action, car votre système demande moins d’animations."
+      },
+      "plan": {
+        "title": "Nécessite {plans}",
+        "or": "{a} ou {b}",
+        "body": "Le contenu de chaque offre est détaillé sur",
+        "link": "Offres et limites",
+        "pro": "Pro",
+        "business": "Business",
+        "enterprise": "Enterprise"
+      }
+    },
     "ui": {
       "search": "Rechercher",
       "searchPlaceholder": "Rechercher",
@@ -957,6 +1003,253 @@
       "typeTableDefault": "Défaut",
       "typeTableParameters": "Paramètres",
       "typeTableReturns": "Retourne"
+    },
+    "shots": {
+      "diagrams": {
+        "dynamic-redirect": {
+          "title": "Comment un code dynamique redirige : le scan ouvre un lien court, QRdx applique les règles du code, envoie le téléphone vers la destination et enregistre le scan au passage.",
+          "scan": "Scan",
+          "scanNote": "un téléphone lit le code",
+          "shortLink": "Lien court",
+          "shortLinkNote": "ce que contient le motif",
+          "rules": "Règles",
+          "rulesNote": "appareil, lieu, heure, répartition",
+          "destination": "Destination",
+          "destinationNote": "modifiable à tout moment",
+          "recorded": "Scan enregistré",
+          "recordedNote": "pays, appareil, heure ; jamais la personne"
+        },
+        "static-vs-dynamic": {
+          "title": "QR code statique et QR code dynamique : un QR code statique contient son contenu dans le motif, un QR code dynamique contient un lien court que QRdx résout vers une destination que vous pouvez modifier.",
+          "static": "QR code statique",
+          "dynamic": "QR code dynamique",
+          "printed": "Code imprimé",
+          "printedNote": "le motif sur papier ou à l’écran",
+          "content": "Le contenu lui-même",
+          "contentNote": "un lien, des infos Wi-Fi, un contact",
+          "staticEnd": "Figé une fois imprimé. Aucun comptage des scans.",
+          "shortLink": "Lien court",
+          "shortLinkNote": "qrdx.dev/q/… ou votre domaine",
+          "destination": "Destination",
+          "destinationNote": "modifiable ; chaque scan est compté"
+        },
+        "smart-routing": {
+          "title": "Comment le routage intelligent décide : les règles sont lues de haut en bas, la première règle dont les conditions correspondent au scan l’envoie vers la destination de cette règle, et un scan qui ne correspond à aucune règle va vers la destination par défaut du code.",
+          "scan": "Un scan arrive",
+          "scanNote": "appareil, OS, pays, langue, heure",
+          "rule1": "iPhone ou iPad → page iOS",
+          "rule2": "Langue espagnole → page en espagnol",
+          "rule3": "Week-ends 08:00–14:00 → offre brunch",
+          "firstMatch": "La première règle gagne",
+          "firstMatchNote": "la destination de la règle",
+          "noMatch": "Aucune règle ne correspond",
+          "noMatchNote": "la destination par défaut du code",
+          "footnote": "Les règles sont vérifiées dans l’ordre affiché dans le panneau Routage ; faites-les glisser pour le modifier."
+        },
+        "custom-domain": {
+          "title": "Fonctionnement d’un domaine personnalisé : un enregistrement CNAME chez votre fournisseur DNS pointe le nom d’hôte vers QRdx, qui sert vos liens courts sur ce domaine et redirige chaque scan vers sa destination.",
+          "scan": "Scan",
+          "scanNote": "ouvre le lien court de votre domaine",
+          "dns": "Votre DNS",
+          "dnsNote": "un enregistrement CNAME",
+          "record": "qr.example.com  CNAME → QRdx",
+          "qrdx": "QRdx",
+          "qrdxNote": "répond pour votre domaine, en HTTPS",
+          "destination": "Destination",
+          "destinationNote": "les règles du code s’appliquent comme d’habitude",
+          "footnote": "Configurez l’enregistrement une seule fois ; QRdx le vérifie, puis tous les codes de ce domaine fonctionnent."
+        },
+        "webhook-delivery": {
+          "title": "Fonctionnement de l’envoi d’un webhook : QRdx envoie l’événement par POST à votre endpoint avec une signature ; une réponse 2xx le marque comme livré, toute autre réponse entraîne de nouvelles tentatives selon un calendrier espacé, puis il est marqué comme échoué après huit tentatives.",
+          "event": "Événement",
+          "eventNote": "scan.created, form.submitted…",
+          "post": "POST vers votre endpoint",
+          "postNote": "corps JSON, en-tête X-QRdx-Signature",
+          "delivered": "Livré",
+          "deliveredNote": "toute réponse 2xx",
+          "retry": "Réessayé",
+          "retryNote": "délai dépassé ou autre réponse",
+          "schedule": "1 min · 4 min · 16 min · 1 h · 4 h · 17 h · 24 h",
+          "failed": "Échoué",
+          "failedNote": "après 8 tentatives ; relancez-le à la main",
+          "footnote": "Chaque tentative est listée sur la page de l’endpoint, avec la réponse reçue."
+        },
+        "image-api": {
+          "title": "Fonctionnement de l’Image API pour créer un code : une requête GET avec le contenu et le style, QRdx encode les données, génère le design et répond avec une image SVG, PNG, WebP ou EPS que n’importe quelle page peut intégrer.",
+          "request": "GET /v1/qr",
+          "requestNote": "données, taille, couleurs, style…",
+          "encode": "Encodage",
+          "encodeNote": "correction d’erreur, version",
+          "render": "Rendu",
+          "renderNote": "motifs, yeux, cadre, logo",
+          "response": "Image",
+          "responseNote": "SVG, PNG, WebP ou EPS",
+          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
+          "noKey": "Pas de clé, pas de quota : l’URL se place directement dans une balise image, sur n’importe quelle page.",
+          "footnote": "La même requête renvoie toujours les mêmes octets, les réponses sont donc mises en cache pendant un an."
+        },
+        "hosted-page-anatomy": {
+          "title": "Fonctionnement d’une page hébergée : vous disposez les blocs dans l’éditeur et vous publiez, QRdx sert la page, et le lien court du code imprimé ouvre la dernière version publiée sur un téléphone.",
+          "editor": "Éditeur",
+          "editorNote": "disposez les blocs de la page",
+          "publish": "Publier",
+          "page": "Page hébergée",
+          "pageNote": "servie par QRdx sur qrdx.dev/p/…",
+          "code": "QR code imprimé",
+          "codeNote": "contient le lien court de la page",
+          "scan": "un scan ouvre la page",
+          "block1": "En-tête",
+          "block2": "Liens",
+          "block3": "Menu",
+          "block4": "Formulaire",
+          "footnote": "Publiez à nouveau et chaque code déjà imprimé ouvre la nouvelle version."
+        },
+        "import-flow": {
+          "title": "Fonctionnement d’un import : les liens chez votre ancien fournisseur deviennent des QR codes dynamiques dans QRdx, et une étape facultative redirige chaque ancien lien vers son nouveau lien QRdx pour que les codes déjà imprimés continuent de fonctionner.",
+          "importing": "L’import",
+          "source": "Votre ancien fournisseur",
+          "sourceNote": "un compte connecté ou un fichier",
+          "import": "Importer",
+          "importNote": "choisir, prévisualiser, importer",
+          "codes": "QR codes dynamiques dans QRdx",
+          "codesNote": "destination, titre, tags, dossier",
+          "keeping": "Garder les codes imprimés fonctionnels (facultatif)",
+          "printed": "Un code que vous avez imprimé",
+          "printedNote": "contient l’ancien lien court",
+          "newLink": "Son nouveau lien QRdx",
+          "newLinkNote": "l’ancien lien pointe ici",
+          "destination": "Destination",
+          "destinationNote": "modifiée et comptée dans QRdx",
+          "footnote": "L’ancien compte doit rester actif pour que ses liens continuent de rediriger."
+        },
+        "precise-location-flow": {
+          "title": "Fonctionnement de la localisation précise : après un scan, la personne qui scanne est invitée à partager sa position ; une position partagée est arrondie à environ 100 m, enregistrée avec le scan et utilisée par les règles de zone, et la personne arrive à la destination qu’elle autorise ou non le partage.",
+          "scan": "Scan",
+          "scanNote": "ouvre le lien court",
+          "ask": "Partager votre position ?",
+          "askNote": "la personne choisit",
+          "skip": "Ignorer",
+          "allow": "Autoriser",
+          "destination": "Destination",
+          "destinationNote": "s’ouvre dans les deux cas",
+          "stored": "Point enregistré avec le scan",
+          "storedNote": "arrondi à environ 100 m",
+          "rule": "Règles de zone",
+          "ruleNote": "le routage intelligent peut l’utiliser",
+          "footnote": "Une personne qui ignore ou refuse le partage est tout de même comptée, avec le pays, la région et la ville issus du réseau."
+        },
+        "nfc-link": {
+          "title": "Fonctionnement d’un tag NFC avec un code : le tag contient le lien court du code suivi de ?nfc, de sorte qu’un contact passe par la même redirection qu’un scan et soit compté comme un contact.",
+          "tap": "Le téléphone touche le tag",
+          "tapNote": "y ouvre le lien",
+          "tag": "Tag NFC",
+          "tagNote": "contient le lien NFC",
+          "link": "Lien court avec ?nfc",
+          "linkNote": "la même redirection qu’un scan",
+          "example": "qrdx.dev/q/aB3dE5f?nfc",
+          "counted": "Compté comme un contact",
+          "countedNote": "avec les scans dans Analytics",
+          "destination": "Destination",
+          "destinationNote": "comme pour un scan",
+          "footnote": "Le QR code garde son propre lien : les codes déjà imprimés fonctionnent donc comme avant."
+        },
+        "file-delivery": {
+          "title": "Comment un fichier est stocké et servi : votre navigateur l’envoie directement dans le bucket de stockage, QRdx le vérifie et lui attribue son propre lien, que les pages, les codes et les visiteurs utilisent.",
+          "browser": "Votre navigateur",
+          "browserNote": "envoie le fichier directement",
+          "bucket": "Bucket de stockage",
+          "bucketNote": "reçoit le fichier envoyé",
+          "check": "QRdx vérifie le fichier",
+          "checkNote": "sa taille et son vrai type",
+          "link": "Le lien QRdx du fichier",
+          "linkNote": "qrdx.dev/api/files/…",
+          "visitor": "Pages, codes et visiteurs",
+          "visitorNote": "ouvrent le fichier via son lien",
+          "footnote": "Remplacer le fichier conserve le lien : rien de ce qui l’utilise n’a besoin de changer."
+        },
+        "tracking-paths": {
+          "title": "Les deux façons de suivre ce qui se passe après un scan : une page hébergée charge vos pixels une fois le consentement du visiteur demandé lorsque la loi l’exige, et une visite sur votre propre site web transporte un identifiant de scan signé que votre site renvoie à QRdx lorsque le visiteur convertit.",
+          "scan": "Scan",
+          "scanNote": "toujours compté",
+          "pagePath": "Un code qui ouvre une page hébergée",
+          "sitePath": "Un code qui ouvre votre site web",
+          "page": "Ouverture de la page",
+          "pageNote": "servie par QRdx",
+          "consent": "Consentement",
+          "consentNote": "demandé si nécessaire",
+          "pixels": "Vos pixels",
+          "pixelsNote": "se charge ensuite",
+          "site": "Ouverture du lien",
+          "siteNote": "qrdx_sid est ajouté",
+          "convert": "Le visiteur convertit",
+          "convertNote": "un achat, une inscription",
+          "report": "Conversion",
+          "reportNote": "envoyée à QRdx",
+          "footnote": "Les pixels font partie de Pro et Business ; le suivi des conversions fait partie de Business."
+        },
+        "client-portal-access": {
+          "title": "Comment le portail client limite ce que voit un client : vous cochez des dossiers dans l’invitation du client, et le portail ne lui montre que ces dossiers, en lecture seule, sous votre nom.",
+          "workspace": "Les dossiers de votre espace de travail",
+          "folder1": "Client A : menus",
+          "folder2": "Client A : événements",
+          "folder3": "Client B",
+          "folder4": "Interne",
+          "invite": "Invitation",
+          "inviteNote": "e-mail et dossiers cochés",
+          "portal": "Ce que voit le client",
+          "portalName": "Votre portail",
+          "readOnly": "Lecture seule, avec statistiques de scan",
+          "footnote": "Les clients ne sont pas membres de votre espace de travail et n’occupent pas de siège."
+        },
+        "self-hosting-stack": {
+          "title": "Les quatre services Docker Compose : une requête du navigateur atteint l’application, l’application envoie ses requêtes au proxy HTTP compatible Neon, le proxy dialogue avec Postgres, et une tâche de migration ponctuelle applique le schéma.",
+          "browser": "Navigateur",
+          "browserNote": "vos visiteurs",
+          "compose": "docker compose",
+          "app": "app",
+          "appNote": "le serveur QRdx",
+          "proxy": "db-proxy",
+          "proxyNote": "HTTP vers Postgres",
+          "db": "db",
+          "dbNote": "Postgres 16",
+          "migrate": "migrer",
+          "migrateNote": "applique le schéma une fois",
+          "footnote": "Avec Neon plutôt qu’un Postgres classique, l’application se connecte directement et n’a pas besoin de proxy."
+        },
+        "wont-scan-contrast": {
+          "title": "Le même QR code en double : foncé sur fond blanc, qui se scanne, et gris clair sur blanc, qui ne se scanne pas.",
+          "good": "Foncé sur clair : se scanne",
+          "bad": "Gris sur blanc : ne se scanne pas",
+          "ratio": "Contraste de {ratio}:1"
+        },
+        "wont-scan-quiet-zone": {
+          "title": "Le même QR code sur un visuel, en double : avec le visuel qui touche ses bords, ce que les scanners peuvent manquer, et avec quatre modules d’espace vide autour, qui se scanne.",
+          "bad": "Le visuel touche le code",
+          "badNote": "les scanners ne trouvent pas ses bords",
+          "good": "Espace vide autour",
+          "goodNote": "une zone de silence de quatre modules"
+        },
+        "wont-scan-print-size": {
+          "title": "Un QR code se scanne à environ dix fois sa largeur : un code de 2 cm à environ 20 cm, un code de 10 cm à environ 1 m.",
+          "cardWidth": "2 cm",
+          "cardDistance": "environ 20 cm",
+          "cardNote": "une carte tenue en main",
+          "posterWidth": "10 cm",
+          "posterDistance": "environ 1 m",
+          "posterNote": "une affiche sur un mur",
+          "footnote": "La distance de scan est d’environ dix fois la largeur du code."
+        },
+        "wont-scan-eyes": {
+          "title": "Formes des yeux d’angle : les yeux carrés, arrondis et en engrenage se scannent dans toutes les applications ; les yeux en cercle et en boucles ne sont pas reconnus par certaines applications de scan.",
+          "good": "Se scannent partout",
+          "bad": "Échouent dans certaines apps",
+          "square": "Carré",
+          "rounded": "Arrondi",
+          "gear": "Engrenage",
+          "circle": "Cercle",
+          "curly": "Bouclé"
+        }
+      }
     }
   },
   "common": {
@@ -5395,6 +5688,10 @@
     "browseLayout": {
       "filters": "Filtres"
     },
+    "cardRail": {
+      "previous": "Afficher les précédents",
+      "next": "Afficher plus"
+    },
     "communityTabs": {
       "community": "Communauté"
     },
@@ -5465,7 +5762,10 @@
       "nameIsNoLongerIn": "« {name} » n’est plus dans la communauté."
     },
     "itemCard": {
-      "empty": "Vide"
+      "empty": "Vide",
+      "viewAll": "Tout voir",
+      "saves": "Ajouts",
+      "itemCount": "{count, plural, one {# élément} other {# éléments}}"
     },
     "itemPages": {
       "previous": "Précédent",
@@ -5475,6 +5775,9 @@
       "loadMore": "Voir plus",
       "loading": "Chargement",
       "failed": "La page suivante n’a pas chargé."
+    },
+    "makerCard": {
+      "itemsAndSaves": "{items, plural, one {# élément} other {# éléments}} · {saves, plural, one {# ajout} other {# ajouts}}"
     },
     "more": {
       "load": "Voir plus",
@@ -5562,6 +5865,10 @@
     "tryIt": {
       "tryItWithYourLink": "Essayer avec votre lien",
       "drawnInYourBrowserNothing": "Généré dans votre navigateur. Rien n’est envoyé."
+    },
+    "search": {
+      "label": "Rechercher dans la communauté",
+      "placeholder": "Rechercher des cadres, thèmes et pages"
     }
   },
   "app": {

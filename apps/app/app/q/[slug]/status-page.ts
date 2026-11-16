@@ -60,7 +60,7 @@ a{display:inline-block;margin-top:28px;color:var(--fg);font-size:14px;font-weigh
 </head>
 <body>
 <main>
-<img src="${origin}/favicon.svg" alt="QRdx">
+<img src="${origin}/logo-mark.svg" alt="QRdx">
 <h1>${title}</h1>
 <p>${message}</p>
 <a href="${origin}${localizePath("/", locale)}">${escapeHtml(t("status.makeYourOwn"))}</a>

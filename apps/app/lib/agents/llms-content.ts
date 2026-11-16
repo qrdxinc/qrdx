@@ -20,6 +20,7 @@ import { filterVisible } from "@/lib/integration-availability-rules";
 import { baseUrl } from "@/lib/metadata";
 import { getPublishedVersion } from "@/lib/npm-version";
 import { PLAN_LIMITS } from "@/lib/plans";
+import { siteServes } from "@/lib/site-zone-on";
 import cliPackage from "../../../../packages/cli/package.json";
 import qrdxPackage from "../../../../packages/qrdx/package.json";
 import { buildLlmsTxt, type LlmsDocsSection, type LlmsLink } from "./llms-txt";
@@ -105,11 +106,16 @@ export async function llmsTxt(): Promise<string> {
 
   const newestFirst = (a: { data: { date: string } }, b: typeof a) =>
     new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-  const blog = blogSource
-    .getPages()
-    .filter((page) => page.data.published)
-    .sort(newestFirst)
-    .map(pageLink);
+  // The marketing site serves the blog when it's on (lib/site-zone-on.ts):
+  // this app's copy of the posts may be out of date, so only the Blog link
+  // stays.
+  const blog = siteServes("blog")
+    ? []
+    : blogSource
+        .getPages()
+        .filter((page) => page.data.published)
+        .sort(newestFirst)
+        .map(pageLink);
   // Published customers' stories only (lib/content-source.ts).
   const customers = customersSource.getPages().sort(newestFirst).map(pageLink);
 

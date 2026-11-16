@@ -22,13 +22,17 @@ const messages = en as unknown as Record<string, string>;
 const namespaceOf = (options: Options) =>
   typeof options === "string" ? options : options?.namespace;
 
+// Annotated: the inferred translator type over the whole catalog is too
+// large for the compiler to write out (TS7056).
+type Translator = ReturnType<typeof createTranslator>;
+
 export const intlServer = {
-  getTranslations: async (options?: Options) =>
+  getTranslations: async (options?: Options): Promise<Translator> =>
     createTranslator({
       locale: "en",
       messages,
       namespace: namespaceOf(options) as never,
-    }),
+    }) as Translator,
   getLocale: async () => "en",
   getMessages: async () => en,
   getFormatter: async () => createFormatter({ locale: "en", timeZone: "UTC" }),
