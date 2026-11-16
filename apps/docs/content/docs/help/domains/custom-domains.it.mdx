@@ -3,28 +3,55 @@ title: "Usa il tuo dominio"
 description: "Collega un dominio personalizzato, come go.yourbrand.com, per i link brevi dei tuoi QR code dinamici."
 ---
 
-Con un dominio personalizzato, i tuoi codici codificano `go.yourbrand.com/…` invece di un link `qrdx.dev`. Le persone vedono il tuo brand prima della scansione. Pro include 5 domini e Business 25.
+Con un dominio personalizzato, i tuoi codici codificano `go.yourbrand.com/…` invece di un link `qrdx.dev`, così le persone vedono il tuo brand prima della scansione. Questa pagina ti guida a collegare un dominio e ad associarlo a un codice; la [guida ai domini personalizzati](/docs/custom-domains) contiene tutti i dettagli.
+
+<Callout type="info">
+  Pro include 5 domini e Business 25. I proprietari e gli amministratori del workspace aggiungono e verificano i domini; ogni membro può usare un dominio verificato. Consulta [Piani e cosa includono](/docs/help/account-and-billing/plans).
+</Callout>
 
 ## Collega un dominio [#connect-a-domain]
 
-1. Vai su **Domini** nella tua dashboard e clicca su **Aggiungi dominio**.
-2. Inserisci il dominio, per esempio `go.yourbrand.com`. Un sottodominio funziona meglio: il tuo sito principale resta dov'è.
-3. Aggiungi i record DNS che QRdx ti mostra presso il tuo provider DNS, cioè il posto in cui hai acquistato il dominio o ne gestisci il DNS. Copia i valori esattamente come sono.<IfAvailable feature="domainConnect"> Se vedi **Configura con** e il nome del tuo provider, puoi cliccarlo al posto di fare tutto a mano: il provider aggiunge i record dopo che li hai approvati lì.</IfAvailable>
-4. Clicca su **Verifica**.
+### 1. Aggiungi il dominio [#1-add-the-domain]
 
-Lo stato mostra **In attesa del DNS** finché i record non vengono trovati, poi **Verificato**. Le modifiche DNS di solito compaiono entro pochi minuti, ma possono richiedere fino a 48 ore.
+Vai su **Impostazioni** → **Domini** nella tua dashboard e fai clic su **Aggiungi dominio**. Inserisci il dominio, per esempio `go.yourbrand.com`. Un sottodominio come `go.` o `qr.` funziona meglio: il tuo sito principale resta dov'è.
+
+### 2. Aggiungi i record DNS [#2-add-the-dns-records]
+
+QRdx mostra i record da aggiungere, con **Tipo**, **Nome** e **Valore**. Aggiungili presso il tuo provider DNS, cioè il posto in cui hai acquistato il dominio o ne gestisci il DNS, copiando i valori esattamente.<IfAvailable feature="domainConnect"> Se QRdx riconosce il tuo provider, puoi fare clic su **Configura con** e il nome del tuo provider: approvi la modifica lì e poi torni qui.</IfAvailable>
+
+<Shot id="dns-records" />
+
+### 3. Verifica [#3-verify]
+
+Fai clic su **Verifica**. Lo stato mostra **In attesa del DNS** finché i record non vengono trovati, poi **Verificato**, e QRdx ti indica che ora puoi scegliere il dominio per i tuoi QR code dinamici. Le modifiche DNS di solito compaiono entro pochi minuti, ma possono richiedere fino a 48 ore.
 
 ## Usalo per un codice [#use-it-for-a-code]
 
-- **Nuovo codice:** scegli il tuo dominio in **Dominio del link breve** prima di cliccare su **Crea codice**.
-- **Codice esistente:** scegli il dominio in **Modifica link**, salva, poi scarica di nuovo il codice. Il link codificato è cambiato.
+- **Nuovo codice:** scegli il tuo dominio in **Dominio del link breve** prima di fare clic su **Crea codice**.
+- **Codice esistente:** apri **Modifica link**, scegli il dominio e fai clic su **Salva modifiche**. Ora il codice codifica il nuovo link, quindi scaricalo di nuovo. I codici che hai già stampato con il link `qrdx.dev` continuano a funzionare.
 
 ## I codici stampati continuano a funzionare [#printed-codes-keep-working]
 
-Ogni codice continua a funzionare anche con il suo link `qrdx.dev`. I codici che hai stampato prima di passare al tuo dominio non smettono di funzionare.
+Ogni codice continua a funzionare anche al suo link `qrdx.dev`, quindi i codici che hai stampato prima di passare al tuo dominio non smettono di funzionare.
 
 Spostare un codice da un dominio personalizzato a un altro invece fa smettere di funzionare i codici stampati con il vecchio dominio. QRdx ti avvisa prima del salvataggio.
+
+## Se qualcosa non va [#if-something-goes-wrong]
+
+### Lo stato resta su In attesa del DNS [#the-status-stays-on-waiting-for-dns]
+
+Controlla che nome e valore di ogni record corrispondano a quanto mostra QRdx, senza caratteri in più, poi fai clic su **Controlla DNS**. Alcuni provider impiegano ore a pubblicare una modifica, e alcuni fino a 48 ore.
+
+### Il tuo provider DNS non ha aggiunto i record [#your-dns-provider-didnt-add-the-records]
+
+La configurazione automatica non è andata a buon fine. Aggiungi i record tu stesso dalla tabella sotto il dominio, poi fai clic su **Verifica**.
+
+### Gli scanner mostrano "Questo dominio non è ancora collegato" [#scanners-see-this-domain-isnt-connected-yet]
+
+Un codice codifica già il dominio, ma la sua configurazione DNS non è terminata. Completa i passaggi qui sopra; il codice funziona non appena il dominio è **Verificato**.
 
 ## Correlati [#related]
 
 - [Guida ai domini personalizzati](/docs/custom-domains)
+- [Crea un QR code dinamico](/docs/help/dynamic-codes/create)
+- [Una scansione mostra una pagina di errore](/docs/help/troubleshooting/error-pages)

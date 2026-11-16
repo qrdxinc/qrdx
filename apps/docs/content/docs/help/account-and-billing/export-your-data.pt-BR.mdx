@@ -1,25 +1,51 @@
 ---
-title: "Exportar seus dados"
-description: "Baixe tudo o que está na sua conta ou exporte leituras e respostas de formulários em CSV."
+title: "Exporte seus dados"
+description: "Baixe tudo o que há na sua conta ou exporte leituras e respostas de formulários em CSV."
 ---
+
+Tudo o que está na sua conta pode ser baixado, em qualquer plano: um ZIP com tudo, ou um CSV com as leituras de um código, as respostas de um formulário ou as imagens dos seus códigos. Nada fica bloqueado atrás de um plano pago.
 
 ## Tudo de uma vez [#everything-at-once]
 
-1. Acesse **Configurações** → **Perfil e segurança**.
+1. Vá em **Configurações** → **Perfil e segurança**.
 2. Em **Seus dados**, clique em **Baixar meus dados**.
 
-Você recebe um arquivo ZIP com seus códigos, leituras, páginas, respostas de formulários, temas e dados da conta, em arquivos JSON e CSV, além de um README que explica cada um deles.
+Você recebe um arquivo ZIP com seu perfil, códigos, páginas, temas e configurações em arquivos JSON, suas leituras em `scans.csv`, suas respostas de formulários em `form-responses.csv` e um `README.txt` que explica cada arquivo.
 
-Você pode baixar até 3 vezes por hora.
+A exportação inclui até 500.000 leituras e 100.000 respostas. Você pode baixá-la até 3 vezes por hora.
+
+<Shot id="your-data-card" />
 
 ## Leituras de um código [#scans-of-one-code]
 
-Abra o código em **Códigos** e clique em **Exportar CSV**. Você recebe até 50.000 leituras do período que escolheu.
+Abra o código em **Códigos**, vá até a aba **Análises** e clique em **Exportar CSV**. Você recebe até 50.000 leituras das datas escolhidas, com horário, local, dispositivo, sistema operacional, navegador e origem de cada uma. Veja [Veja suas leituras](/docs/help/dynamic-codes/scans).
 
 ## Respostas de formulários [#form-responses]
 
-Em **Páginas**, abra o menu da página (**⋯**), escolha **Respostas** e clique em **Exportar CSV**.
+Em **Páginas e formulários**, abra o menu da página (**⋯**), escolha **Respostas** e clique em **Exportar CSV**.
 
-## Imagens de QR code [#qr-code-images]
+## Imagens dos QR codes [#qr-code-images]
 
-Em **Códigos**, selecione os códigos que você quer e clique em **Baixar**. Você recebe um ZIP com arquivos PNG, WebP ou SVG, junto com uma lista dos códigos em CSV.
+Em **Códigos**, selecione os códigos que você quer, clique em **Baixar** e escolha **Imagens PNG (ZIP)**, **Imagens WebP (ZIP)** ou **Imagens SVG (ZIP)**. O ZIP também traz um `codes.csv` que lista cada arquivo com título, link curto e destino.
+
+<IfAvailable feature="auditLog" id="the-audit-log" title="O log de auditoria">
+
+No Business, proprietários e administradores podem exportar o [log de auditoria](/docs/help/teams/audit-log#export-as-csv) do workspace em CSV.
+
+</IfAvailable>
+
+## Se algo der errado [#if-something-goes-wrong]
+
+### O download dos meus dados é recusado [#download-my-data-is-refused]
+
+Você já baixou 3 vezes na última hora. Aguarde e tente de novo.
+
+### O ZIP não traz todas as suas leituras [#the-zip-doesnt-hold-all-your-scans]
+
+A exportação completa para em 500.000 leituras. Para um código com muito movimento, use **Exportar CSV** no próprio código com um período menor, quantas vezes precisar.
+
+## Veja também [#related]
+
+- [Veja suas leituras](/docs/help/dynamic-codes/scans)
+- [Exclua sua conta](/docs/help/account-and-billing/delete-your-account)
+- [O que acontece com seus códigos se você parar de pagar](/docs/help/account-and-billing/never-hostage)

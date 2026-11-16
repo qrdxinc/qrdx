@@ -1,8 +1,10 @@
 ---
 title: "QR Code Card"
-description: "「Scan me」フレーム付きのQRコード、タイトル、説明文、アクション用のスペースを備えたカードです。"
+description: "shadcn/ui プロジェクト向けの、「Scan me」フレーム付きQRコード、タイトル、説明文、アクション用スペースを備えたカードです。"
 icon: Frame
 ---
+
+`QrCodeCard` は、行動を促すフレーム付きのQRコード、見出し、説明文、ボタン用のフッターをカードにまとめます。コードがカードの主役になる場面で使います。たとえば、テーブルテント、チェックイン画面、イベントポスターのプレビュー、「アプリをダウンロード」タイルなどです。
 
 <ComponentLinks name="qr-code-card" />
 
@@ -14,11 +16,11 @@ icon: Frame
 
 ## 使い方 [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeCard } from "@/components/qr-code-card";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeCard
   value="https://example.com/menu"
   title="Our menu"
@@ -26,13 +28,13 @@ import { QrCodeCard } from "@/components/qr-code-card";
 />
 ```
 
-children として渡した要素はカードのフッターに表示されます。コピーボタンや[ダウンロードメニュー](/docs/components/qr-code-download)などを置けます。
+children として渡した要素はすべてカードのフッターに表示されます。コピーボタンや[ダウンロードメニュー](/docs/components/qr-code-download)などを置けます。
 
 ## 例 [#examples]
 
 ### フレーム [#frames]
 
-`frame` は、コールトゥアクションをコードの下(`"bottom"`)や上(`"top"`)に配置するか、フレームを表示しない(`"none"`)かを指定します。`cta` でラベルを変更でき、`frameClassName` でフレームのスタイルを変更できます。たとえばブランドカラーを適用できます。
+`frame` は、行動を促すフレームをコードの下 (`"bottom"`)、上 (`"top"`) に置くか、フレームなし (`"none"`) にします。`cta` はラベルを変更し、`frameClassName` はフレームのスタイルを変更します。たとえばブランドカラーを適用できます。
 
 <ComponentPreview name="qr-code-card-frames" />
 
@@ -40,21 +42,42 @@ children として渡した要素はカードのフッターに表示されま�
 
 ### コードのスタイル設定 [#styling-the-code]
 
-`qr` には、qrdx のあらゆるスタイルオプションを指定できます。`fgColor`、`bgColor`、グラデーション、`bodyPattern`、コーナーパターン、`logo`、`templateId` が使えます。
+`qr` には、`fgColor`、`bgColor`、グラデーション、`bodyPattern`、コーナーパターン、`logo`、`templateId` など、qrdx のあらゆるスタイルオプションを指定できます。
 
-```tsx
-<QrCodeCard
-  value="https://example.com"
-  qr={{
-    fgColor: "#155DFC",
-    bodyPattern: "rounded",
-    cornerEyePattern: "extra-rounded",
-  }}
-/>
+```tsx title="components/brand-card.tsx"
+import { QrCodeCard } from "@/components/qr-code-card";
+
+export function BrandCard() {
+  return (
+    <QrCodeCard
+      value="https://example.com"
+      title="example.com"
+      qr={{
+        fgColor: "#155DFC",
+        bodyPattern: "rounded",
+        cornerEyePattern: "extra-rounded",
+      }}
+    />
+  );
+}
 ```
+
+## アクセシビリティとレンダリング [#accessibility-and-rendering]
+
+- コードは `role="img"` の要素内に配置され、その `aria-label` には `label` が使われます。`label` がない場合は `QR code: <value>` になります。値が公開リンクでない場合は `label` を設定してください。
+- `title` はカードの見出しとして、`description` はその下に表示されます。どちらも任意の React ノードを受け取れます。
+- このコンポーネントは Client Component です。Server Component のページからインポートして、サーバーのデータを props として渡せます。コードはサーバー側でレンダリングされます。
 
 ## APIリファレンス [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-card.tsx" type="{ [K in keyof QrCodeCardProps as K extends Exclude<keyof ComponentProps<'div'>, 'title' | 'children'> ? never : K]: QrCodeCardProps[K] }" />
 
-`className` などその他のプロパティは、[Card](https://ui.shadcn.com/docs/components/card)に渡されます。
+`className` などその他の props は、[Card](https://ui.shadcn.com/docs/components/card) に渡されます。
+
+## 関連項目 [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="カードのフッターに置けるダウンロードメニューです。" />
+  <Card href="/docs/components/qr-code" title="QR Code" description="ダウンロードボタン付きの、コード単体のコンポーネントです。" />
+  <Card href="/docs/features/frames" title="フレーム、スキャンスコア、印刷用ファイル" description="ライブラリ独自のフレームで、コードの画像に直接描画されます。" />
+</Cards>

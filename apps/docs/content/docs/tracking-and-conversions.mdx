@@ -13,7 +13,7 @@ In a hurry? [See your scans](/docs/help/dynamic-codes/scans) covers the analytic
 
 ## How it works
 
-{/* diagram: tracking-paths | Two paths from a scan: a hosted page that loads the owner's pixels after consent, and a website visit that carries qrdx_sid and reports a conversion back to QRdx | concept drawing */}
+<Diagram id="tracking-paths" />
 
 A code either opens a hosted page or redirects to your website, and each path has its own tool. On a hosted page QRdx controls the HTML, so it can load your pixels after the visitor agrees. On your website QRdx controls nothing, so it hands your site a signed scan id in the URL and your site reports back when the visitor converts.
 
@@ -27,7 +27,7 @@ Besides scans over time, countries, cities, devices, operating systems, browsers
 - **Page activity** (hosted pages): page views, unique viewers, taps and the most tapped links and buttons.
 - **Conversions**, when the code has any.
 
-{/* shot: when-people-scan | The When people scan card with the hour-of-day and weekday charts | Dashboard → Codes → open a code → Analytics */}
+<Shot id="when-people-scan" />
 
 **Codes** → **Analytics** in the sidebar adds up every code in the workspace: totals, scans over time, top codes, countries, devices, languages, scan times, and a comparison of up to 4 codes side by side. Bots and link previews aren't counted, a visitor counts once per day for "unique", and IP addresses are never stored.
 
@@ -42,7 +42,7 @@ For codes that open a hosted page, the **Tracking pixels** panel on the code's *
 | TikTok pixel | 10 to 30 letters and digits |
 | LinkedIn Insight Tag | Partner ID, 3 to 12 digits |
 
-{/* shot: pixels-panel | The Tracking pixels panel with a Google Analytics 4 ID filled in and the consent setting below it | Dashboard → Codes → open a page code → Settings → Tracking pixels */}
+<Shot id="pixels-panel" />
 
 Pixels only load when you set them up. Besides your pixels, the only script on a hosted page is QRdx's own page-activity counter, which reports views and taps to QRdx and to nobody else.
 
@@ -80,8 +80,6 @@ Conversion tracking tells you which scans led to a sale, sign-up or any other go
 ```
 
 The script remembers `qrdx_sid` in a first-party cookie on your domain for 30 days (add `data-storage="session"` to the script tag to keep it only for the browser session) and removes it from the address bar. Conversions are only sent for visitors who arrived from a scan, so other visitors are never tracked.
-
-{/* shot: conversions-card | The Conversions card on a code's Analytics tab with conversions and revenue over the selected range | Dashboard → Codes → open a code with conversions → Analytics */}
 
 | Field | Meaning |
 | --- | --- |

@@ -1,41 +1,65 @@
 ---
 title: "스캔 확인하기"
-description: "동적 QR 코드를 몇 명이, 언제, 어디서, 어떤 기기로 스캔했는지 확인하세요."
+description: "동적 QR 코드를 몇 명이 언제, 어디서, 어떤 기기로 스캔했는지 확인해요."
 ---
 
-동적 코드의 스캔은 모두 집계됩니다. 정적 코드는 추적하지 않습니다.
+동적 코드의 스캔은 모두 집계돼요. 코드를 열면 해당 코드의 스캔을, **Analytics** 페이지에서는 워크스페이스에 있는 모든 코드의 스캔을 볼 수 있어요. 정적 코드는 스캔이 QRdx를 거치지 않기 때문에 추적되지 않아요.
 
 ## 코드 하나 [#one-code]
 
-**Codes**로 이동해 코드 이름을 클릭하세요. 페이지 상단에는 다음이 표시됩니다.
+**Codes**로 이동해 코드를 클릭하고 **Analytics** 탭을 열어요. 탭 상단에는 다음 항목이 표시돼요.
 
 - **Total scans**와 **Scans in range**(선택한 기간).
-- **Unique visitors**: 방문자는 하루에 한 번만 집계됩니다.
+- **Unique visitors**: 방문자는 하루에 한 번만 집계돼요.
 - **Last scan**.
 
-그 아래의 **QR scans and NFC taps**는 방문을 QR 코드와 해당 코드의 링크를 담은 [NFC 태그](/docs/nfc)로 나누어 보여 줍니다. 이어서 국가, 도시, 기기, 운영 체제, 브라우저, 유입 경로 차트와 함께 사용자가 스캔하는 시간대와 언어도 확인할 수 있습니다. Pro와 Business에서는 [정확한 위치를 요청하는](/docs/precise-location) 코드의 경우, 스캔한 사람이 공유하기로 한 장소도 함께 표시됩니다.
+<Shot id="code-analytics" />
+
+그 아래의 **QR scans and NFC taps**에서는 방문을 QR 코드와, 코드의 링크가 담긴 [NFC 태그](/docs/nfc)로 나누어 보여 줘요. 이어서 **Scans over time**, **Top countries**, **Top cities**, **Devices**, **Operating systems**, **Browsers**, **Referrers**, **Languages**, 그리고 시간대별 또는 요일별 **When people scan**이 나와요.
+
+Pro와 Business에서 **Ask scanners for precise location**을 설정한 코드에는 **Precise locations**도 표시돼요. 스캔한 사람이 공유하기로 선택한 위치예요. [정밀 위치](/docs/precise-location)를 참고하세요.
 
 ## 모든 코드 [#all-your-codes]
 
-대시보드의 **Analytics** 페이지에서는 모든 코드의 합계, 상위 코드, 국가, 기기, 언어를 볼 수 있습니다. **Compare codes**를 사용하면 최대 4개의 코드를 나란히 비교할 수 있습니다.
+Codes 사이드바에서 **Analytics**를 클릭해요. 이 페이지에는 모든 코드의 합계와 상위 코드, 국가, 기기, 언어가 표시돼요. **Compare codes**를 사용하면 최대 4개의 코드를 나란히 비교할 수 있어요.
 
 ## 기간과 기록 [#date-ranges-and-history]
 
-7일, 30일, 90일, 1년, 3년 또는 **All time**을 선택하세요. All time은 코드의 첫 스캔일부터 시작하며, **Analytics** 페이지에서는 워크스페이스의 첫 스캔일부터 시작합니다. 얼마나 이전 기록까지 볼 수 있는지는 요금제에 따라 달라집니다.
+**7 days**, **30 days**, **90 days**, **1 year**, **3 years**, **All time** 중에서 선택해요. All time은 코드의 첫 스캔이 있던 날부터 시작하고, **Analytics** 페이지에서는 워크스페이스의 첫 스캔이 있던 날부터 시작해요. 얼마나 과거까지 볼 수 있는지는 플랜에 따라 달라요.
 
 - **무료**: {facts.freeScanHistoryYears}년.
-- **Pro**와 **Business**: **All time**을 포함한 전체 기록.
+- **Pro**와 **Business**: **All time**을 포함해 전체 기록.
 
-요금제에서 보여 주지 않는 스캔 기록은 삭제되지 않습니다. 업그레이드하면 다시 표시됩니다.
+플랜에서 보여 주지 않는 스캔도 삭제되지는 않아요. 업그레이드하면 다시 표시돼요.
 
-## 스캔 데이터 다운로드 [#download-your-scans]
+## 스캔 다운로드 [#download-your-scans]
 
-코드 페이지에서 **Analytics** 탭을 열고 **Export CSV**를 클릭하세요. 선택한 기간의 스캔을 최대 50,000건까지 받을 수 있으며, 각 스캔의 시간, 장소, 기기, 운영 체제, 브라우저, 유입 경로, QR 스캔인지 NFC 탭인지 여부, 그리고 공유된 위치가 있으면 그 위치도 포함됩니다.
+코드의 **Analytics** 탭에서 **Export CSV**를 클릭해요. 선택한 기간의 스캔을 최대 50,000건까지 받을 수 있어요. 각 스캔의 시간, 위치, 기기, 운영 체제, 브라우저, 리퍼러, QR 스캔인지 NFC 탭인지 여부, 그리고 공유된 위치가 있으면 그 위치도 포함돼요.
 
 ## 집계되지 않는 항목 [#what-isnt-counted]
 
-봇과 링크 미리보기는 집계되지 않습니다. 하나의 네트워크가 같은 코드를 1분 안에 20번 넘게 스캔하면 초과분은 집계되지 않습니다. 코드는 그래도 매번 열립니다.
+봇, 링크 미리 보기, 프리페치는 집계되지 않아요. 한 네트워크에서 같은 코드를 1분 동안 20번 넘게 스캔하면 초과분은 집계되지 않아요. 코드는 매번 정상적으로 열려요.
 
-## 개인정보 보호 [#privacy]
+## 개인정보 [#privacy]
 
-QRdx는 스캔한 사람의 IP 주소를 저장하지 않습니다. [누군가 스캔할 때 QRdx가 기록하는 정보](/docs/help/privacy-and-security/scan-data)를 참고하세요.
+QRdx는 스캔한 사람의 IP 주소를 저장하지 않아요. [누군가 스캔할 때 QRdx가 기록하는 정보](/docs/help/privacy-and-security/scan-data)를 참고하세요.
+
+## 문제가 생겼을 때 [#if-something-goes-wrong]
+
+### 예상한 스캔이 보이지 않아요 [#scans-you-expect-are-missing]
+
+무료 플랜에서는 차트가 {facts.freeScanHistoryYears}년 전까지만 표시돼요. 한 네트워크에서 1분에 20건을 넘는 스캔과 봇, 링크 미리 보기의 방문도 집계되지 않아요.
+
+### Unique visitors가 전체 스캔보다 훨씬 적어요 [#unique-visitors-is-much-lower-than-total-scans]
+
+같은 사람이 하루에 여러 번 스캔한 경우예요. **Unique visitors**에서는 방문자가 하루에 한 번만 집계되고, **Total scans**에서는 모든 스캔이 집계돼요.
+
+### 정적 코드인데 차트에 스캔이 표시돼요 [#the-chart-shows-scans-but-a-code-is-static]
+
+동적 코드만 집계돼요. 인쇄된 정적 코드는 같은 링크를 쓰는 동적 코드가 있더라도 아무것도 보고하지 않아요.
+
+## 관련 문서 [#related]
+
+- [누군가 스캔할 때 QRdx가 기록하는 정보](/docs/help/privacy-and-security/scan-data)
+- [데이터 내보내기](/docs/help/account-and-billing/export-your-data)
+- [추적 및 전환 가이드](/docs/tracking-and-conversions)

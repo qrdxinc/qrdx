@@ -1,79 +1,94 @@
 ---
-title: "Vanilla JavaScript"
-description: "无需 React，即可绘制、更新和导出带样式的二维码：在页面或应用中使用 qrdx/vanilla，用 qrdx/core 生成标记和 DOM 节点，无打包工具的页面可使用单个 ES 模块。"
+title: "原生 JavaScript"
+description: "无需框架即可绘制、更新和导出带样式的二维码：在打包项目中或通过一个 script 标签使用 qrdx/vanilla，用 qrdx/core 生成标记和 DOM 节点。"
 icon: FileCode
 ---
 
-`qrdx` 并不只适用于 React。React 组件所用的绘制引擎已作为 `qrdx/core` 单独发布，而 `qrdx/vanilla` 则在其基础上为原生 JavaScript 提供了一套小巧的 API。它们绘制的 SVG 与 `QRCodeSVG` 逐字节完全一致，支持所有样式、边框、Logo 和导出功能。两者都不会导入 `react` 或 `react-dom`。
+读完本页，你将在一个普通 HTML 页面中绘制出带样式的二维码，通过代码更新它，并保存为 PNG，打包工具或单个 script 标签均可。`qrdx/vanilla` 与 React 组件使用的是同一个绘制引擎，因此会绘制出相同的 SVG，支持所有图案、颜色、徽标、边框和导出方式，并且不会导入 `react` 或 `react-dom`。
 
-## 安装 [#install]
+<NpmStatus package="qrdx" />
+
+## 开始之前 [#before-you-start]
+
+- 步骤 1 到 3 需要一个使用打包工具的页面（Vite、webpack、Parcel 或其他均可）。如果不用打包工具，请直接跳到[步骤 4](#4-use-it-without-a-bundler)。
+- 打包工具需要 Node.js 18 或更高版本。
+
+## 动手实现 [#build-it]
+
+### 1. 安装 qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
 `react` 和 `react-dom` 是可选的对等依赖。使用 `qrdx/vanilla` 或 `qrdx/core` 时不需要它们。
 
-## 在页面中绘制二维码 [#draw-a-code-in-a-page]
+### 2. 在元素中绘制二维码 [#2-draw-a-code-into-an-element]
 
-```js
+```html title="index.html"
+<div id="qr"></div>
+<script type="module" src="/main.js"></script>
+```
+
+```js title="main.js"
 import { createQRCode } from "qrdx/vanilla";
 
 const qr = createQRCode("#qr", {
-  value: "https://example.com",
+  value: "https://example.com/menu",
   size: 256,
+  margin: 4,
   bodyPattern: "rounded",
-  frame: { style: "banner-bottom", text: "Scan me" },
-  "aria-label": "QR code for example.com",
+  frame: { style: "banner-bottom", text: "Scan for the menu" },
+  "aria-label": "QR code for the menu",
 });
 ```
 
-`createQRCode(element, options)` 接受一个元素或 CSS 选择器，以及 `QRCodeSVG` 支持的所有选项：图案、颜色与渐变、Logo（`imageSettings`）、边框、形状和 Art QR。`className`、`style` 或 `aria-label` 等属性会设置在 `<svg>` 上。`<svg>` 通过 `createElementNS` 构建，因此不会解析任何 HTML。
+`#qr` 中会出现一个 `<svg>`：一个 256 px 的二维码，模块为圆角，下方带有横幅。`createQRCode(element, options)` 接受一个元素或 CSS 选择器，并支持 React `QRCodeSVG` 的所有选项：图案、颜色和渐变、徽标（`imageSettings`）、边框、形状、模板和艺术样式。`className`、`style` 或 `aria-label` 等属性会设置在 `<svg>` 上。该元素通过 `createElementNS` 构建，因此不会解析任何 HTML。
 
-## 更新、导出和移除 [#update-export-and-remove-it]
+<Shot id="lib-framed-menu-code" />
 
-```js
-qr.update({ fgColor: "#1d4ed8" });
+### 3. 更新、导出和移除 [#3-update-export-and-remove-it]
 
-qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "svg", "pdf" or "eps"
-await qr.download({ format: "svg", filename: "menu.svg" });
+```js title="main.js"
+qr.update({ fgColor: "#1d4ed8" }); // redraws the code in place, now blue
 
-qr.destroy();
+qr.toSVGString(); // '<svg xmlns="http://www.w3.org/2000/svg" …'
+await qr.toDataURL("png", { size: 1024 }); // "data:image/png;base64,…"
+await qr.download({ format: "png", size: 1024, filename: "menu.png" });
+
+qr.destroy(); // removes the <svg>
 ```
 
-- `update` 会把新选项合并到当前选项中并重新绘制。传入 `undefined` 可移除某个选项。如果标记没有变化，则不会改动页面。
-- `toDataURL` 和 `download` 默认以二维码自身的 `size` 输出 PNG。添加边框后，图片会比二维码本身更大。导出 PDF 需要可选的 `jspdf` 包。
+- `update` 会把新选项合并到当前选项中并重新绘制。传入 `undefined` 可移除某个选项。如果标记没有变化，页面不会被改动。
+- `toDataURL` 和 `download` 默认导出 PNG，尺寸为二维码自身的 `size`。支持的格式有 `png`、`jpg`、`webp`、`svg`、`pdf` 和 `eps`。使用边框时，图片会比二维码本身更大。PDF 需要可选的 `jspdf` 包。
 - `qr.svg` 是 `<svg>` 元素，`qr.options` 是当前选项。
-- `destroy` 会移除 `<svg>`。调用后再调用 `update` 会抛出错误。
+- `destroy` 会移除 `<svg>`。调用之后再执行 `update` 会抛出错误。
 
-## 无需打包工具 [#without-a-bundler]
+### 4. 不使用打包工具 [#4-use-it-without-a-bundler]
 
-`dist/vanilla.browser.mjs` 是同一套 API 的单个 ES 模块，适合直接从 CDN 加载的页面：
-
-```html
+```html title="index.html"
 <div id="qr"></div>
 <script type="module">
   import { createQRCode } from "https://cdn.jsdelivr.net/npm/qrdx/dist/vanilla.browser.mjs";
 
-  createQRCode("#qr", { value: "https://example.com", size: 256 });
+  createQRCode("#qr", { value: "https://example.com", size: 256, margin: 4 });
 </script>
 ```
 
-在 URL 中 `qrdx` 之后添加 `@` 和版本号即可锁定版本。相同的路径在 unpkg 上同样适用。
+`dist/vanilla.browser.mjs` 是同一套 API 的单个 ES 模块。在 URL 中的 `qrdx` 后面加上 `@` 和版本号即可固定版本。同样的路径在 unpkg 上也可用。
 
-该文件不包含官方边框库的数据，因此不使用边框库的页面不必下载这些数据。若要使用官方边框，请从相邻的文件中导入：
+该文件不包含官方边框库的数据，因此不使用它的页面不会下载这些数据。要使用官方边框，请从它旁边的文件中导入：
 
-```js
+```js title="index.html"
 import { getOfficialFrame } from "https://cdn.jsdelivr.net/npm/qrdx/dist/frames-official.mjs";
 
 const wifi = getOfficialFrame("wifi-card");
 qr.update({ frame: { style: "custom", spec: wifi.spec } });
 ```
 
-PDF 导出和扫描评分会在运行时加载 `jspdf` 和 `jsqr`。使用它们的页面需要通过 import map 映射这两个包，并将其放在模块脚本之前：
+PDF 导出和扫描评分在运行时会加载 `jspdf` 和 `jsqr`。用到它们的页面需要用 import map 映射这两个包，import map 要放在模块脚本之前：
 
-```html
+```html title="index.html"
 <script type="importmap">
   {
     "imports": {
@@ -84,11 +99,11 @@ PDF 导出和扫描评分会在运行时加载 `jspdf` 和 `jsqr`。使用它们
 </script>
 ```
 
-## 标记和 DOM 节点（qrdx/core） [#markup-and-dom-nodes-qrdxcore]
+## 使用 qrdx/core 生成标记和 DOM 节点 [#markup-and-dom-nodes-with-qrdxcore]
 
-`qrdx/core` 包含主入口 `qrdx` 的全部功能，但不含 React 组件。它既可在 Node 中运行，也可在浏览器中运行。
+`qrdx/core` 包含 `qrdx` 主入口的全部内容，只是不含 React 组件。它可在 Node 和浏览器中使用。
 
-```ts
+```ts title="code.ts"
 import {
   createQRCodeTree,
   renderToDOM,
@@ -113,13 +128,13 @@ renderToDOM(tree);
 toSVGString(resolveQRCodeProps({ value: "https://example.com", logo: "/logo.png" }));
 ```
 
-输出中没有随机 id，因此在服务器上渲染的标记与浏览器中的一致。下载、扫描评分以及可直接印刷的 PDF 和 EPS，使用的函数与 React 库中相同：`downloadQRCode`、`getQRCodeDataUrl`、`getScanScore`、`downloadPrintPDF` 等。若要在服务器上生成 PNG，请使用 `qrdx/node` 中的 `getQRAsPNG`。
+输出中没有随机 id，因此在服务器上渲染的标记与浏览器中的一致。下载、扫描评分以及可直接印刷的 PDF 和 EPS，都来自与 React 库相同的函数：`downloadQRCode`、`getQRCodeDataUrl`、`getScanScore`、`downloadPrintPDF` 等。需要在服务器上生成 PNG 时，请使用 `qrdx/node` 中的 `getQRAsPNG`。
 
-## 无需 JSX 的自定义模板 [#custom-templates-without-jsx]
+## 不用 JSX 的自定义模板 [#custom-templates-without-jsx]
 
-模板的 `wrapper` 接收绘制好的二维码，并返回包装后的结果。`h(type, props, ...children)` 可以不借助 JSX 来编写它：
+模板的 `wrapper` 接收已绘制的二维码，并返回包装后的结果。`h(type, props, ...children)` 可以让你不用 JSX 来编写它：
 
-```js
+```js title="labelled-template.js"
 import { h, toSVGString } from "qrdx/core";
 
 const Labelled = {
@@ -141,4 +156,20 @@ toSVGString({
 });
 ```
 
-如果改为从 `qrdx` 导入 `h`，同一个 wrapper 也可以在 React 组件中使用。
+如果改为从 `qrdx` 导入 `h`，同样的 wrapper 也可以用在 React 组件中。
+
+## 遇到问题时 [#if-something-goes-wrong]
+
+- **`qrdx: no element matches #qr`。** 脚本运行时元素还不存在。请把 `<script type="module">` 放在该元素之后，或等待 `DOMContentLoaded`。
+- **`qrdx: this QR code was destroyed`。** 你在 `destroy` 之后调用了 `update`。请用 `createQRCode` 创建一个新的二维码。
+- **`PDF export needs the optional "jspdf" package`。** 请在 `qrdx` 旁边安装 `jspdf`；在没有打包工具的页面中，则把它添加到 import map。
+- **二维码已绘制出来，但手机无法识别。** 添加 `margin: 4`，保持深色模块配浅色背景，并用 `getScanScore` 检查设计。参见[二维码无法扫描](/docs/help/troubleshooting/wont-scan)。
+
+## 相关内容 [#related]
+
+<Cards>
+  <Card href="/docs/web-component" title="Web 组件" description="同一个引擎，以自定义元素的形式提供，无需脚本即可使用标记。" />
+  <Card href="/docs/features/downloads" title="导出和下载" description="所有格式、剪贴板、data URL，以及 Node 中的 PNG。" />
+  <Card href="/docs/features/frames" title="边框、扫描评分和印刷文件" description="内置边框和官方边框、边框规格，以及可直接印刷的导出。" />
+  <Card href="/docs/api-reference" title="库 API 参考" description="qrdx/core 导出的所有函数。" />
+</Cards>

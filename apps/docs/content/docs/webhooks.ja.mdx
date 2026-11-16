@@ -1,53 +1,64 @@
 ---
 title: "Webhooks"
-description: "QRコードがスキャンされたとき、作成・変更されたとき、またはフォームが送信されたときに、署名付きのHTTPSリクエストを受け取れます。Zapier、Make、n8nで利用できます。"
+description: "QRコードがスキャンされたとき、作成または変更されたとき、またはフォームが送信されたときに、署名付きHTTPSリクエストを受け取れます。エンドポイントの追加、署名の検証、再試行の扱い、Zapier、Make、n8nからの購読方法を説明します。"
 icon: Webhook
 ---
 
-Webhooksは、ワークスペースで発生したイベントを、発生した時点で指定したURLに送信します。たとえば、フォームが送信されたらCRMを更新する、コードのスキャン数が1,000に達したら社内ツールに投稿する、スキャンデータの独自コピーを保持する、といった用途に使えます。
+このページを読み終えると、選択したイベントが発生するたびに数分以内に、管理下のURLが署名付きの `POST` を受け取れるようになります。サーバーは各リクエストがQRdxから送られたものであることを検証できます。さらに、再試行、重複、配信ログの動作も把握できます。
 
-Webhooks、Zapier/Makeのフック、Slack/Discordのアラートは**Business**プランに含まれます。メールアラートと週次ダイジェストはProに含まれます。詳しくは[通知](/docs/notifications)をご覧ください。
+Webhookは、ワークスペースのイベントを発生と同時にサーバーへ送信します。たとえば、フォームが送信されたらCRMを更新する、コードが1,000回スキャンされたら社内ツールに投稿する、スキャンデータの自分用コピーを保持する、といった使い方ができます。
 
-## エンドポイントを追加する [#add-an-endpoint]
+<Callout type="info" title="Businessプラン">
+Webhook、ZapierとMakeのフック、SlackとDiscordのアラートは **Business** プランに含まれます。メールアラートと週次ダイジェストは Pro に含まれます。詳しくは[通知](/docs/notifications)をご覧ください。プランの比較は[プランと上限](/docs/plans-and-limits)で確認できます。
+</Callout>
 
-1. イベントを受け取りたいワークスペースで[設定 → Webhooks](/dashboard?to=settings/webhooks)を開きます。リンクを開くと最後に使ったワークスペースが表示されます。ワークスペース切り替えで別のワークスペースを選んでも、同じページのままです。
-2. **エンドポイントを追加**をクリックし、`https://`のURLを入力してイベントを選びます。最初に[本人確認](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)が求められ、エンドポイントのURLを変更するときにも再度求められます。イベントの変更や一時停止では求められません。
-3. 保存後に表示される**署名シークレット**をコピーします。オーナーと管理者は、[本人確認](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)を行えば、あとからシークレットを再表示したりローテーションしたりできます。
-4. **テスト送信**をクリックします。QRdxは署名付きの`ping`イベントを送信し、レスポンスのステータスを表示します。
+## 始める前に [#before-you-start]
 
-エンドポイントを管理できるのはオーナーと管理者です。メンバーはエンドポイントと配信ログを閲覧できます。1つのワークスペースに作成できるエンドポイントは最大20個です。
+- `POST` リクエストに応答できる、公開された `https://` のURL。IPアドレス、`localhost`、プライベートネットワークに解決されるホスト名は拒否され、リダイレクトは追跡されません。ローカル開発では、公開ホスト名を提供するトンネルを使用してください。
+- ワークスペースのオーナーまたは管理者のロール。メンバーはエンドポイントと配信ログを確認できますが、追加や変更はできません。
 
-エンドポイントのURLは、公開された`https://`のホスト名でなければなりません。IPアドレス、`localhost`、プライベートネットワークに解決される名前は拒否され、リダイレクトは追跡されません。
+## 1. エンドポイントを追加する [#1-add-an-endpoint]
 
-## イベント [#events]
+1. 対象のイベントが発生するワークスペースで、[設定 → Webhooks](/dashboard?to=settings/webhooks)を開きます。このリンクは最後に使用したワークスペースを開きます。ワークスペース切り替えで別のワークスペースを選んでも、同じページのままです。
+2. **エンドポイントを追加** を選び、**エンドポイントURL** を入力して、必要な **イベント** にチェックを入れ、ダイアログで **エンドポイントを追加** を選びます。最初に[本人確認](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)が求められ、エンドポイントのURLを変更するときにも再度求められます。イベントの変更や無効化では求められません。
+3. 保存後に表示される **署名シークレット** をコピーします。オーナーと管理者は、エンドポイントの **配信** ページで再表示やローテーションができます。
+4. **テスト送信** を選びます。QRdxは署名付きの `ping` イベントを送信し、配信ログに応答ステータスを表示します。
+
+<Shot id="add-endpoint-dialog" />
+
+<Shot id="webhook-signing-secret" />
+
+1つのワークスペースには、エンドポイントとフックを合わせて最大20個まで作成できます。
+
+## 2. イベントを選ぶ [#2-pick-the-events]
 
 | イベント | タイミング | 備考 |
 | --- | --- | --- |
-| `scan.created` | 動的QRコードがスキャンされたとき | バッチ送信：エンドポイントごとに1分あたり最大1リクエスト、数分以内に送信され、最大100件のスキャンと正確な`count`を含みます |
-| `scan.milestone` | コードの1回目のスキャン、続いて10、100、500、1,000、5,000、10,000、50,000、100,000、500,000、1,000,000回目のスキャン、以降は100万回ごと | マイルストーンごとに1回発生します |
-| `code.created` | 動的QRコードが作成されたとき（ダッシュボードまたはAPI） | コード1件につき1イベント。一括作成でも同様です |
-| `code.updated` | コードのリンク先、タイトル、デザイン、短縮リンクのドメインが変更されたとき | `changes`に変更されたフィールドが一覧で入ります |
-| `form.submitted` | ホスト型ページでフォームが送信されたとき | 回答が含まれます |
-| `ping` | **テスト送信**をクリックしたとき | |
+| `scan.created` | 動的QRコードがスキャンされたとき | まとめて送信: エンドポイントごとに1分あたり最大1リクエストで、最大100件のスキャンと正確な `count` を含みます |
+| `scan.milestone` | コードの1回目のスキャン、その後10、100、500、1,000、5,000、10,000、50,000、100,000、500,000、1,000,000回、以降は100万回ごと | マイルストーンごとに1回発生します |
+| `code.created` | ダッシュボードまたはAPIで動的コードが作成されたとき | コードごとに1イベント。一括作成でも同様です |
+| `code.updated` | コードのリンク先、タイトル、デザイン、短縮リンクのドメインが変更されたとき | `changes` に変更されたフィールドが一覧で入ります |
+| `form.submitted` | ホスト型ページでフォームが送信されたとき | 回答を含みます |
+| `ping` | **テスト送信** を選んだとき | |
 
-ボット、リンクプレビュー、プリフェッチャーによるスキャンや、同一訪問者による短時間の連続スキャンはカウントされず、イベントも発生しません。これは[スキャン分析](/docs/dynamic-qr-codes)と同じ扱いです。
+ボット、リンクプレビュー、プリフェッチャーによるスキャンや、同じ訪問者による短時間の連続スキャンはカウントされず、イベントも発生しません。これは[スキャン分析](/docs/dynamic-qr-codes#scan-analytics)と同じ扱いです。
 
-## ペイロード [#payloads]
+## 3. ペイロードを読む [#payloads]
 
-すべてのリクエストは、JSON本文と次のヘッダーを持つ`POST`です。
+すべてのリクエストは JSON 本文を持つ `POST` で、次のヘッダーが付きます。
 
 | ヘッダー | 値 |
 | --- | --- |
 | `Content-Type` | `application/json` |
 | `User-Agent` | `QRdx-Webhooks/1.0 (+https://qrdx.dev/docs/webhooks)` |
-| `X-QRdx-Event` | イベントの種類（例：`code.created`） |
+| `X-QRdx-Event` | `code.created` など、イベントの種類 |
 | `X-QRdx-Delivery` | 配信ID。再試行でも同じ値なので、重複を無視できます |
-| `X-QRdx-Timestamp` | この試行が署名されたUNIX秒 |
+| `X-QRdx-Timestamp` | この試行に署名した時刻(Unix秒) |
 | `X-QRdx-Signature` | `t=<timestamp>,v1=<hex HMAC-SHA256>` |
 
-本文は常にエンベロープ形式です。
+本文は常に、`id`、`type`、`created_at`、`data` を持つエンベロープです。
 
-```json
+```json title="code.created"
 {
   "id": "evt_cm3x8c1a20001",
   "type": "code.created",
@@ -69,9 +80,9 @@ Webhooks、Zapier/Makeのフック、Slack/Discordのアラートは**Business**
 }
 ```
 
-`scan.created`のバッチ：
+`scan.created` のバッチ:
 
-```json
+```json title="scan.created"
 {
   "id": "evt_cm3x9d0b10002",
   "type": "scan.created",
@@ -99,19 +110,26 @@ Webhooks、Zapier/Makeのフック、Slack/Discordのアラートは**Business**
 }
 ```
 
-1分間に100件を超えるスキャンがあった場合、`scans`には最初の100件が入り、`count`には正確な合計が入ります。`source`は、[NFCタグ](/docs/nfc)へのタップなら`nfc`、QRのスキャンなら`qr`です。スキャンのペイロードにIPアドレスや訪問者のハッシュは含まれません。
+1分間に100件を超えるスキャンがあった場合、`scans` には最初の100件が入り、`count` には正確な合計数が入ります。`source` は、[NFCタグ](/docs/nfc)へのタップなら `nfc`、QRのスキャンなら `qr` です。スキャンのペイロードには、IPアドレスや訪問者ハッシュは含まれません。
 
-その他のイベントには次の内容が含まれます。
+その他のイベントには、次の内容が含まれます。
 
-- `scan.milestone`：`milestone`、`code`（`id`、`slug`、`title`、`scan_count`）、マイルストーンに到達した`scan`。
-- `code.updated`：`code.created`と同じ内容に加えて`changes`（例：`["destination_url"]`）。
-- `form.submitted`：`response_id`、`page`（`id`、`title`）、`code`（`id`、`slug`、または`null`）、`fields`（`name`、`label`、テキストとしての`value`）、`submitted_at`。
+- `scan.milestone`: `milestone`、`code`(`id`、`slug`、`title`、`scan_count`)、そのマイルストーンに到達した `scan`。
+- `code.updated`: `code.created` と同じ内容に加えて、`["destination_url"]` のような `changes`。
+- `form.submitted`: `response_id`、`page`(`id`、`title`)、`code`(`id`、`slug`、または `null`)、`fields`(`name`、`label`、テキストとしての `value`)、`submitted_at`。
 
-## 署名を検証する [#verify-signatures]
+最初の本番イベントが届く前に、ご自身のデータから作られた各イベントのペイロード例を確認するには、[サンプルイベントを取得](/docs/developers/api/get-hook-samples)を呼び出します。
 
-署名シークレットを使って`<timestamp>.<raw body>`のHMAC-SHA256を計算し、`X-QRdx-Signature`の`v1`と比較します。JSON解析の前の生のリクエスト本文を使い、5分より古いタイムスタンプは拒否してください。
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/hooks/sample?event=scan.created" \
+  -H "Authorization: Bearer $QRDX_API_KEY"
+```
 
-```ts
+## 4. 署名を検証する [#verify-signatures]
+
+署名シークレットを使って `<timestamp>.<raw body>` のHMAC-SHA256を計算し、`X-QRdx-Signature` の `v1` と比較します。JSONとして解析する前の、生のリクエスト本文を使用してください。また、5分より古いタイムスタンプは拒否してください。
+
+```ts title="lib/qrdx-webhook.ts"
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export function isFromQRdx(rawBody: string, header: string, secret: string) {
@@ -132,62 +150,115 @@ export function isFromQRdx(rawBody: string, header: string, secret: string) {
 }
 ```
 
-シークレットのローテーションは即座に反映されます。古いシークレットでは検証できなくなるため、ローテーションの直後にサーバーを更新してください。
+```python title="qrdx_webhook.py"
+import hmac
+import hashlib
+import time
 
-## 再試行と配信ログ [#retries-and-the-delivery-log]
 
-10秒以内に任意の`2xx`ステータスで応答してください。それ以外（エラーステータス、リダイレクト、タイムアウト、到達できないホスト）は失敗として扱われ、QRdxは1分、4分、16分、1時間、4時間、17時間、24時間以上と、待ち時間を延ばしながら再試行します。各再試行は、待ち時間が終わってから数分以内に送信されます。合計で約2日間に8回試行し、その後も届かなければ配信は**失敗**になります。
+def is_from_qrdx(raw_body: bytes, header: str, secret: str) -> bool:
+    parts = dict(part.strip().split("=", 1) for part in header.split(","))
+    timestamp = int(parts.get("t", "0"))
+    if not timestamp or abs(time.time() - timestamp) > 300:
+        return False
+    expected = hmac.new(
+        secret.encode(), f"{timestamp}.".encode() + raw_body, hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(parts.get("v1", ""), expected)
+```
 
-各エンドポイントの**配信**ページには、直近50件の配信が、ステータス、試行回数、最後のエラー、ペイロードとともに表示されます。**再試行**をクリックすると、配信を即座に再送します（配信済みのものも可能です）。配信は30日間保持されます。
+シークレットのローテーションはただちに有効になり、古いシークレットでは検証できなくなります。ローテーション後はすぐにサーバー側を更新してください。
 
-配信は、複数回届いたり（応答が遅れたあとの再試行や手動の再試行）、順序が前後したりすることがあります。`X-QRdx-Delivery`またはエンベロープの`id`を使って重複を無視してください。
+## 5. 応答と再試行への対応 [#5-respond-and-handle-retries]
 
-エンドポイントを無効にすると新しい配信は止まります。削除するとログも削除されます。ワークスペースのプランがWebhooksを含まなくなった場合、エンドポイントは保持されますが、再びBusinessになるまで何も送信されません。どちらの場合も、QRコードは引き続き動作します。
+10秒以内に任意の `2xx` ステータスで応答してください。それ以外(エラーステータス、リダイレクト、タイムアウト、到達できないホスト)は失敗として扱われ、QRdxは約1分、4分、16分、1時間、4時間、17時間、24時間と待機時間を延ばしながら再試行します。各再試行は、待機時間が終わってから数分以内に送信されます。合計で約2日間に8回試行し、その後は配信が失敗としてマークされます。
 
-## Zapier、Make、n8n（REST Hooks） [#zapier-make-and-n8n-rest-hooks]
+配信は、複数回届くこと(応答が遅かったあとの再試行、手動での再試行)や、順序が入れ替わることがあります。重複は `X-QRdx-Delivery` またはエンベロープの `id` で無視してください。処理に数秒以上かかる場合は、`2xx` で応答してから処理を行ってください。
 
-自動化ツールは、REST Hooks APIを通じて自分で登録と解除ができます。認証には、[コードAPI](/docs/dynamic-qr-codes#rest-api)と同様に、[APIキー](/docs/developers/api-keys)またはOAuthアクセストークンを使います。登録と解除には`codes:write`、一覧取得には`codes:read`が必要です。フックのURLは秘密であることが多いため、`codes:read`のみの場合、`target_url`にはホストだけが表示されます（`https://hooks.zapier.com/…`）。トークンによるリクエストはご自身のワークスペースに対して動作し、キーはそのキーを作成したワークスペースに対して動作します。キーやトークンではなく、サインイン中のブラウザセッションで登録する場合は、最初に[本人確認](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)が求められ、直近10分以内に確認していないと`403`と`CONFIRMATION_REQUIRED`が返ります。登録は通常のエンドポイントなので、設定 → Webhooksに表示され、そこから削除もできます。
+## あとから変更する [#change-it-later]
+
+各エンドポイントの **配信** ページには、直近50件の配信が、イベント、ステータス、試行回数、ペイロードとともに表示されます。**今すぐ再試行** は、失敗または保留中の配信をすぐに再送します。**再送信** は、配信済みの配信を再送します。配信は30日間保持されます。
+
+<Shot id="webhook-deliveries" />
+
+エンドポイントのメニューから、URLとイベントの **編集**、**エンドポイントを無効化**(新しい配信が止まります。**エンドポイントを有効化** で再開します)、**署名シークレット** の表示や **ローテーション**、**削除** ができます。削除するとログも削除されます。ワークスペースのプランにWebhookが含まれなくなった場合、エンドポイントは保持されますが、Businessに戻るまで何も送信されません。いずれの場合も、QRコードは引き続き使えます。
+
+## Zapier、Make、n8n(REST Hooks) [#zapier-make-and-n8n-rest-hooks]
+
+自動化ツールは、REST Hooks APIを通じて自分で購読と購読解除ができます。認証には[APIキー](/docs/developers/api-keys)またはOAuthアクセストークンを使います。購読と購読解除には `codes:write`、一覧表示には `codes:read` が必要です。フックのURLは秘密であることが多いため、`codes:read` のみの場合、`target_url` にはホスト(`https://hooks.zapier.com`)だけが表示されます。トークンのリクエストはご自身のワークスペースに対して動作し、キーはそのキーが作成されたワークスペースに対して動作します。ログイン中のブラウザーセッションで購読する場合は、最初に[本人確認](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)が求められ、過去10分以内に確認していないと `403 CONFIRMATION_REQUIRED` が返されます。購読は通常のエンドポイントと同じで、**設定 → Webhooks** に表示され、そこから削除もできます。
 
 | メソッド | パス | 説明 |
 | --- | --- | --- |
-| `POST` | `/v1/hooks` | 登録します。本文：`target_url`（またはZapierの`hookUrl`）と`event`（または`events`配列）。`201`と、登録の`id`およびその`secret`を返します |
-| `DELETE` | `/v1/hooks/{id}` | 登録を解除します（`204`） |
-| `GET` | `/v1/hooks` | 登録とエンドポイントを一覧表示します |
-| `GET` | `/v1/hooks/{id}` | 登録を1件取得します |
-| `GET` | `/v1/hooks/sample?event=<event>` | `event`の最近のサンプルペイロードを配列で返します（Zapierの「perform list」用） |
+| `POST` | `/v1/hooks` | 購読します。本文: `target_url`(またはZapierの `hookUrl`)と `event`(または `events` 配列)。購読の `id` と `secret` を含む `201` を返します |
+| `DELETE` | `/v1/hooks/{id}` | 購読を解除します(`204`) |
+| `GET` | `/v1/hooks` | 購読とエンドポイントを一覧表示します |
+| `GET` | `/v1/hooks/{id}` | 1件の購読を取得します |
+| `GET` | `/v1/hooks/sample?event=<event>` | `event` の最近のペイロード例を配列で返します(Zapierの「perform list」) |
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/hooks \
-  -H "Authorization: Bearer $QRDX_TOKEN" \
+  -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"target_url": "https://hooks.zapier.com/hooks/standard/123/abc/", "event": "form.submitted"}'
 ```
 
-```json
+```json title="201 Created (fields)"
 {
-  "id": "cm3xa1b2c0003",
+  "id": "<hook id>",
   "target_url": "https://hooks.zapier.com/hooks/standard/123/abc/",
   "events": ["form.submitted"],
   "event": "form.submitted",
   "active": true,
-  "created_at": "2026-10-31T09:40:00.000Z",
-  "secret": "whsec_..."
+  "created_at": "<ISO 8601 time>",
+  "secret": "whsec_<shown only here>"
 }
 ```
 
-Businessでない場合、登録の呼び出しは`402 PLAN_REQUIRED`を返します。`scan.created`の配信は1つのバッチなので、Zapierでは`data.scans`の明細項目を使って各スキャンを処理してください。
+Businessでない場合、購読の呼び出しは `402` を返します。
 
-n8nでは、[n8n用QRdxノード](/docs/developers/n8n)のQRdx Triggerノードがこれらの呼び出しを代行し、署名も毎回検証します。通常のWebhookノードも、ほかのエンドポイントと同じように設定すれば使えます。
+```json title="402 Payment Required"
+{"code":"PLAN_REQUIRED","message":"Webhooks and Zapier/Make hooks are part of the Business plan.","status":402}
+```
+
+`scan.created` の配信は1つのバッチなので、Zapierでは `data.scans` のラインアイテムを使って各スキャンに対応します。n8nでは、[n8n用QRdxノード](/docs/developers/n8n)のQRdx Triggerノードがこれらの呼び出しを代行し、各署名も検証します。通常のWebhookノードも、ほかのエンドポイントと同じように設定すれば使えます。リファレンスページは[イベントを購読](/docs/developers/api/create-hook)、[フックを一覧表示](/docs/developers/api/list-hooks)、[購読を解除](/docs/developers/api/delete-hook)です。
+
+## 問題が発生した場合 [#if-something-goes-wrong]
+
+### エンドポイントURLが拒否される [#the-endpoint-url-is-refused]
+
+受け付けられるのは、公開されている `https://` のホスト名だけです。`http://`、IPアドレス、`localhost`、プライベートネットワークに解決される名前は使えません。開発中は、公開ホスト名を持つトンネルを使用してください。
+
+### すべての配信が失敗ステータスになる [#every-delivery-shows-a-failed-status]
+
+サーバーが10秒以内に `2xx` 以外を返したか、リダイレクトしたか、応答しなかったことを示しています。配信の詳細を開いて正確なHTTPステータスまたはエラーを確認し、問題を修正してから **今すぐ再試行** を選択してください。ハンドラーの処理が遅い場合は、先に `2xx` を返してから処理を行ってください。
+
+### 署名を検証できない [#signatures-dont-verify]
+
+再シリアライズしたJSONオブジェクトではなく、生のリクエストボディをハッシュ化していること、そしてサーバーが現在のシークレットを使っていることを確認してください。シークレットをローテーションすると、古いシークレットはすぐに無効になります。タイムスタンプの確認では5分までの差が許容されるため、サーバーの時刻も確認してください。
+
+### イベントが届かなくなった [#events-stopped-arriving]
+
+ワークスペースが Business プランから外れた（エンドポイントは保持されますが一時停止されます）、エンドポイントが **無効** になっている、またはサブスクリプションを作成したZap、シナリオ、ワークフローがオフになり購読解除された、のいずれかが考えられます。**設定 → Webhook** を確認してください。
+
+### `POST /v1/hooks` で `403 CONFIRMATION_REQUIRED` が返される [#403-confirmation_required-from-post-v1hooks]
+
+ブラウザーセッションで購読しました。QRdxで本人確認を行い、10分以内にやり直すか、サーバーからAPIキーを使って購読してください。
 
 ## セルフホスティング [#self-hosting]
 
-配信はすぐに送信されます。再試行と、1分が経過したスキャンのバッチは、スケジュールされたジョブが送信します。QRdxはこのジョブをGitHub Actionsのワークフローから5分ごとに実行しており、Vercelの無料Hobbyプランでも動作します。また`apps/app/vercel.json`でも、1日1回フルで実行します。GitHubはスケジュール実行の開始が遅れることがあるため、再試行は分単位の正確さではなく、数分以内に行われるものとお考えください。
+配信はすぐに送信されます。再試行と、対象の分が終了したスキャンのバッチは、スケジュールされたジョブによって送信されます。QRdxはこのジョブをGitHub Actionsのワークフローから5分ごとに実行しており、Vercelの無料Hobbyプランでも動作します。さらに `apps/app/vercel.json` により、1日1回すべてを実行します。GitHubはスケジュール実行の開始が遅れることがあるため、再試行は分単位の正確さではなく、数分以内に行われるものと考えてください。
 
-同じ構成にするには、`.github/workflows/webhook-worker.yml`をコピーし、`CRON_SECRET`をActionsのシークレットとして、ジョブのURLを変数`WEBHOOK_WORKER_URL`として追加します。または、環境に設定した`CRON_SECRET`を使って、任意のスケジューラーからジョブを呼び出します。
+同じ構成にするには、`.github/workflows/webhook-worker.yml` をコピーし、`CRON_SECRET` をActionsのシークレットとして、ジョブのURLを変数 `WEBHOOK_WORKER_URL` として追加します。または、環境に設定した `CRON_SECRET` を使って、任意のスケジューラーからジョブを呼び出してください。
 
-```bash
-# every 1-5 minutes
+```bash title="crontab (every 1 to 5 minutes)"
 curl -H "Authorization: Bearer $CRON_SECRET" https://your-host/api/cron/webhooks
 ```
 
-URLに`?source=github`を付けると、ジョブはまずUpstash Redis内の小さなマーカーを確認し、実行すべきものがなければデータベースに問い合わせずに`{"skipped": true}`を返します。これにより、ゼロまでスケールダウンするデータベースを停止したままにできます（Upstashがない場合は、常にジョブ全体を実行します）。このパラメーターなしの呼び出しを1日1回は残してください。その実行は常にジョブ全体を行い、マーカーを修復します。
+URLに `?source=github` を付けると、ジョブはまずUpstash Redis上の小さなマーカーを確認し、実行すべきものがなければデータベースにクエリを送らずに `{"skipped": true}` を返します。これにより、ゼロにスケールするデータベースを停止したままにできます（Upstashがない場合は、常にジョブ全体を実行します）。この指定なしの呼び出しを1日1回は残してください。その実行は常にジョブ全体を行い、マーカーを修復します。その他のスケジュールジョブは、[セルフホスティング](/docs/self-hosting#scheduled-jobs)に一覧があります。
+
+## 関連ページ [#related]
+
+- [イベントを購読する](/docs/developers/api/create-hook): Try it パネル付きのREST Hooksエンドポイント
+- [n8n](/docs/developers/n8n): 購読と検証を代行するQRdx Triggerノード
+- [通知](/docs/notifications): 同じイベントに対するメール、Slack、Discordのアラートを、コードなしで設定できます
+- [連携を構築する](/docs/developers/build-an-integration): アプリを接続するユーザーに代わってイベントを購読します

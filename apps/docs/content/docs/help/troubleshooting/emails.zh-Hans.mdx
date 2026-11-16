@@ -1,35 +1,49 @@
 ---
-title: "未收到登录验证码或邮件"
-description: "登录验证码、团队邀请或提醒邮件迟迟没有到达时，该怎么处理。"
+title: "收不到登录验证码或邮件"
+description: "收不到登录验证码、团队邀请或提醒邮件时该怎么办。"
 ---
 
-## 登录验证码 [#the-sign-in-code]
+QRdx 会通过邮件向你发送登录验证码、团队邀请、提醒以及账户安全通知。收不到邮件时，原因通常在下面的列表中，最常见的排在前面。
 
-邮件主题为“Your QRdx sign-in code”。验证码为 6 位数字，有效期 5 分钟。
+## 收不到“Your QRdx sign-in code” [#your-qrdx-sign-in-code-doesnt-arrive]
 
-如果没有收到：
+这是登录邮件的主题。验证码为 6 位数字，有效期 5 分钟。
 
-1. **检查垃圾邮件、广告邮件或促销邮件文件夹。** 在收件箱中搜索“QRdx sign-in code”。
-2. **检查邮箱地址。** 如果输入有误，请点击 **Use a different email**。
-3. **等待 30 秒，然后点击 Resend。** 每次获取的新验证码都会使旧验证码失效，请使用最新的一封邮件。
-4. **改用 Google 或 GitHub 登录**，前提是你的 QRdx 账户使用的是同一个邮箱地址。
+1. 检查垃圾邮件、广告邮件或促销邮件文件夹。在收件箱中搜索“QRdx sign-in code”。
+2. 检查你输入的邮箱地址。如果输错了，请点击 **Use a different email**。
+3. 等待 **Resend** 变为可点击状态（30 秒），然后点击它。每个新验证码都会使旧验证码失效，因此请使用最新的邮件。
+4. 如果该账户使用相同的邮箱地址，也可以改用 **Google** 或 **GitHub** 登录。
 
-如果看到“Too many codes requested”，请等待一分钟。同一个邮箱地址每 15 分钟最多可请求 5 次验证码，每天最多 30 次。
+<Shot id="sign-in-code-step" />
 
-### 工作邮箱 [#work-email]
+如果使用的是工作邮箱，公司的邮件过滤器可能会拦截来自新发件人的邮件。请让你的 IT 团队放行来自 qrdx.dev 的邮件，或者改用其他方式登录。
 
-部分公司的邮件过滤器会拦截来自新发件人的邮件。请让 IT 团队放行 QRdx 的邮件，或改用其他方式登录。
+## “Too many codes requested. Wait a minute, then try again.” [#too-many-codes-requested-wait-a-minute-then-try-again]
 
-## 团队邀请 [#a-team-invitation]
+你连续请求了多个验证码。同一个邮箱地址每 15 分钟最多可请求 5 个验证码，每天最多 30 个。请等待一分钟，只请求一次，并使用最新的邮件。
 
-请邀请你的人在 **Team** 页面复制邀请链接，并直接发给你。链接 48 小时后失效。参见[创建工作区并邀请成员](/docs/help/teams/create-and-invite)。
+## 验证码被拒绝 [#the-code-is-rejected]
 
-## 提醒邮件和每周摘要 [#alerts-and-the-weekly-digest]
+验证码已在 5 分钟后过期，或已被更新的验证码取代。请点击 **Resend**，并输入最新邮件中的验证码。
 
-- 邮件提醒和每周摘要仅适用于 Pro 和 Business。
-- 默认全部关闭，需要在 **Settings** → **Notifications** 中开启。如需停止接收，也在这里关闭。
-- 每周摘要在每周一 09:00 UTC 发送。如果过去两周没有任何扫描，也没有表单回复，则不会发送。
+## 没有收到团队邀请 [#a-team-invitation-didnt-arrive]
 
-## 仍然没有收到 [#still-nothing]
+请让邀请你的人打开 **Settings** → **Team**，复制 **Pending invitations** 下的邀请链接，并直接发给你。链接 48 小时后过期，并且只对收到邀请的邮箱地址有效。请参阅[创建工作区并邀请成员](/docs/help/teams/create-and-invite)。
 
-请[联系支持团队](/docs/help/contact)，并告诉我们你使用的邮箱地址。
+## 收不到提醒或每周摘要 [#alerts-or-the-weekly-digest-dont-arrive]
+
+邮件提醒和摘要属于 Pro 和 Business，在 **Settings** → **Notifications** 中开启之前，它们全部处于关闭状态。每周摘要在每周一 09:00 UTC 发送；如果过去两周没有扫描，也没有表单回复，则不会发送。
+
+## 收到了意料之外的安全邮件 [#you-got-a-security-email-you-didnt-expect]
+
+当有新的浏览器登录、两步验证发生变化或邮箱地址发生变化时，QRdx 会向你发送邮件。如果不是你本人操作，请按照邮件中的步骤处理。请参阅[保护你的账户安全](/docs/help/privacy-and-security/account-security#emails-about-your-accounts-security)。
+
+## 仍然收不到 [#still-nothing]
+
+请[联系支持团队](/docs/help/contact)，并告诉我们你使用的邮箱地址和你尝试的时间。
+
+## 相关内容 [#related]
+
+- [登录方式与邮箱地址](/docs/help/account-and-billing/sign-in)
+- [保护你的账户安全](/docs/help/privacy-and-security/account-security)
+- [创建工作区并邀请成员](/docs/help/teams/create-and-invite)

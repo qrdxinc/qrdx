@@ -1,25 +1,51 @@
 ---
 title: "Exporta tus datos"
-description: "Descarga todo lo de tu cuenta, o exporta escaneos y respuestas de formularios como CSV."
+description: "Descarga todo lo que hay en tu cuenta, o exporta escaneos y respuestas de formularios como CSV."
 ---
+
+Todo lo que hay en tu cuenta se puede descargar, en todos los planes: un ZIP con todo, o un CSV con los escaneos de un código, las respuestas de un formulario o las imágenes de tus códigos. Nada queda bloqueado tras un plan de pago.
 
 ## Todo de una vez [#everything-at-once]
 
 1. Ve a **Ajustes** → **Perfil y seguridad**.
 2. En **Tus datos**, haz clic en **Descargar mis datos**.
 
-Recibes un archivo ZIP con tus códigos, escaneos, páginas, respuestas de formularios, temas y datos de la cuenta, en archivos JSON y CSV, además de un README que los explica.
+Obtienes un archivo ZIP con tu perfil, códigos, páginas, temas y ajustes como archivos JSON, tus escaneos como `scans.csv`, tus respuestas de formularios como `form-responses.csv` y un `README.txt` que explica cada archivo.
 
-Puedes descargarlo hasta 3 veces por hora.
+La exportación incluye hasta 500.000 escaneos y 100.000 respuestas. Puedes descargarla hasta 3 veces por hora.
+
+<Shot id="your-data-card" />
 
 ## Escaneos de un código [#scans-of-one-code]
 
-Abre el código desde **Códigos** y haz clic en **Exportar CSV**. Obtienes hasta 50.000 escaneos de las fechas que hayas elegido.
+Abre el código desde **Códigos**, ve a su pestaña **Analíticas** y haz clic en **Exportar CSV**. Obtienes hasta 50.000 escaneos de las fechas que elegiste, con la hora, el lugar, el dispositivo, el sistema operativo, el navegador y el referente de cada uno. Consulta [Consulta tus escaneos](/docs/help/dynamic-codes/scans).
 
 ## Respuestas de formularios [#form-responses]
 
-En **Páginas**, abre el menú de la página (**⋯**), elige **Respuestas** y haz clic en **Exportar CSV**.
+En **Páginas y formularios**, abre el menú de la página (**⋯**), elige **Respuestas** y haz clic en **Exportar CSV**.
 
 ## Imágenes de códigos QR [#qr-code-images]
 
-En **Códigos**, selecciona los códigos que quieras y haz clic en **Descargar**. Recibes un ZIP de archivos PNG, WebP o SVG, con una lista de los códigos en CSV.
+En **Códigos**, selecciona los códigos que quieras, haz clic en **Descargar** y elige **Imágenes PNG (ZIP)**, **Imágenes WebP (ZIP)** o **Imágenes SVG (ZIP)**. El ZIP también incluye un `codes.csv` que lista cada archivo con su título, enlace corto y destino.
+
+<IfAvailable feature="auditLog" id="the-audit-log" title="El registro de auditoría">
+
+En Business, los propietarios y administradores pueden exportar como CSV el [registro de auditoría](/docs/help/teams/audit-log#export-as-csv) del espacio de trabajo.
+
+</IfAvailable>
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### Se rechaza Descargar mis datos [#download-my-data-is-refused]
+
+Ya lo has descargado 3 veces en la última hora. Espera e inténtalo de nuevo.
+
+### El ZIP no incluye todos tus escaneos [#the-zip-doesnt-hold-all-your-scans]
+
+La exportación completa se detiene en 500.000 escaneos. Si un código tiene mucha actividad, usa **Exportar CSV** en el código con un intervalo de fechas más corto, tantas veces como necesites.
+
+## Relacionado [#related]
+
+- [Consulta tus escaneos](/docs/help/dynamic-codes/scans)
+- [Elimina tu cuenta](/docs/help/account-and-billing/delete-your-account)
+- [Qué pasa con tus códigos si dejas de pagar](/docs/help/account-and-billing/never-hostage)

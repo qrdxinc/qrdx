@@ -1,46 +1,68 @@
 ---
 title: "Programme d'affiliation"
-description: "Recommandez QRdx et gagnez une commission sur ce que vos filleuls paient durant leurs premiers mois. Comment postuler, partager votre lien, suivre vos gains et être payé."
+description: "Recommandez QRdx et touchez une commission sur ce que paient vos filleuls pendant leurs premiers mois. Comment postuler, partager votre lien, suivre vos gains et être payé."
 ---
 
-Le programme d'affiliation n'existe que sur qrdx.dev. Un serveur QRdx auto-hébergé ne le propose pas ; consultez [Auto-hébergement](/docs/self-hosting#optional-services).
+Le programme d'affiliation QRdx vous reverse une part de ce que paient les clients que vous recommandez. Il n'existe que sur qrdx.dev ; un serveur QRdx auto-hébergé ne le propose pas. Les [Conditions d'affiliation](/legal/affiliate-terms) donnent les règles complètes ; cette page vous indique où trouver chaque élément.
 
 <IfAvailable feature="affiliates">
 
-Le programme d'affiliation QRdx vous reverse {facts.affiliateCommissionPercent}\u00a0% de ce que paient les clients que vous recommandez pendant leurs {facts.affiliateCommissionMonths} premiers mois en tant que clients payants. Les [Conditions d'affiliation](/legal/affiliate-terms) donnent les règles complètes ; cette page vous montre où trouver chaque élément.
+Vous touchez {facts.affiliateCommissionPercent} % de ce que paient les clients que vous recommandez pendant leurs {facts.affiliateCommissionMonths} premiers mois en tant que clients payants.
 
 ## Postuler [#apply]
 
 1. Connectez-vous à QRdx, ou créez un compte gratuit.
 2. Ouvrez la [page du programme d'affiliation](/affiliates), lisez les conditions et remplissez la courte candidature.
-3. Nous examinons chaque candidature manuellement. La réponse s'affiche dans **Paramètres** → **Programme d'affiliation**.
+3. Attendez la réponse. Nous examinons chaque candidature à la main, et le résultat s'affiche dans **Paramètres** → **Programme d'affiliation**.
 
 ## Partager votre lien [#share-your-link]
 
-Une fois votre candidature approuvée, **Paramètres** → **Programme d'affiliation** affiche votre lien de parrainage avec un bouton **Copier**. Toute personne qui l'ouvre et crée un nouveau compte QRdx lors de cette même visite devient votre filleul.
+Une fois votre candidature acceptée, **Paramètres** → **Programme d'affiliation** affiche votre lien de parrainage avec un bouton **Copier**. Toute personne qui l'ouvre et crée un nouveau compte QRdx au cours de cette visite devient votre filleul.
 
-- Elle doit s'inscrire pendant cette visite, sans recharger la page, sans ouvrir QRdx dans un nouvel onglet ni passer de la documentation au reste du site : le code accompagne l'inscription. Aucun cookie n'est utilisé et rien n'est stocké sur son appareil, donc une inscription lors d'une visite ultérieure n'est pas comptée.
-- Votre lien commence par un code aléatoire. Sous **Code**, vous pouvez le remplacer une seule fois par un code de votre choix ; les liens avec le premier code continuent de fonctionner.
+<Shot id="affiliate-settings" />
+
+- La personne doit s'inscrire pendant cette visite, sans recharger la page, sans ouvrir QRdx dans un nouvel onglet et sans passer de la documentation au reste du site. Aucun cookie n'est utilisé et rien n'est stocké sur son appareil : une inscription lors d'une visite ultérieure n'est donc pas comptée.
+- Votre lien commence par un code aléatoire. Sous **Code**, cliquez sur **Modifier une fois** pour choisir le vôtre, de 3 à 32 caractères. Il ne peut plus être modifié ensuite, et les liens avec le premier code continuent de fonctionner.
 - Un compte déjà existant ne peut pas devenir votre filleul, et un compte conserve le premier parrainage qu'il reçoit.
-- Votre propre compte ne compte pas, ni un compte utilisant votre adresse e-mail sous une autre graphie, ni celui d'une personne appartenant à un espace de travail dont vous êtes membre.
+- Votre propre compte n'est pas compté, pas plus qu'un compte utilisant votre adresse e-mail sous une autre orthographe ou celui d'un membre d'un espace de travail dont vous faites partie.
 
 ## Suivre vos gains [#follow-your-earnings]
 
 La même page affiche :
 
-- **Visites du lien**, comptées sans cookies (les visites répétées sont comptées à nouveau), **Inscriptions** et **Clients payants**. Vous ne voyez jamais de qui il s'agit.
+- **Visites du lien**, comptées sans cookies (les visites répétées sont comptées de nouveau, jusqu'à 20 par minute depuis une même adresse IP), **Inscriptions** et **Clients payants**. Vous ne voyez jamais qui ils sont.
 - **En attente** : les commissions encore dans leur délai de {facts.affiliateHoldDays} jours. Un remboursement ou une contestation de paiement pendant ce délai annule la commission.
-- **À payer** : les commissions dont le délai est écoulé et qui n'ont pas encore été versées.
-- **Payé** : ce que nous vous avons envoyé, avec l'identifiant de transaction PayPal de chaque paiement.
+- **Payable** : les commissions dont le délai est écoulé et qui n'ont pas été versées.
+- **Payé** : ce que nous vous avons envoyé, avec l'identifiant de transaction PayPal de chaque versement.
 
-Les commissions s'affichent dans la devise utilisée par le client, dollars américains ou roupies indiennes. Les paiements sont effectués en dollars américains.
+Les commissions s'affichent dans la devise dans laquelle le client a payé. Les versements sont effectués en dollars américains.
 
 ## Être payé [#get-paid]
 
-Ajoutez votre e-mail PayPal sous **Gains**. QRdx vous demande de confirmer votre identité avant toute modification, car cette adresse détermine où va votre argent, et envoie un e-mail à l'adresse de votre compte à chaque changement.
+Ajoutez votre **e-mail PayPal** sous **Gains**. QRdx vous demande de confirmer que c'est bien vous avant toute modification, car cette adresse détermine où va votre argent, et envoie un e-mail à l'adresse de votre compte à chaque changement.
 
-Nous payons par PayPal en dollars américains une fois par mois, manuellement, dès que le total à payer atteint {facts.affiliateMinPayoutUsd}. Les commissions en roupies sont converties au taux de référence de la Banque centrale européenne à la date du paiement, et chaque paiement indique le taux utilisé. Un solde inférieur au minimum est reporté. Vous êtes responsable des impôts sur vos gains.
+Nous payons par PayPal en dollars américains une fois par mois, à la main, dès que l'ensemble des sommes payables atteint {facts.affiliateMinPayoutUsd}. Les commissions dans d'autres devises sont converties au taux de référence de la Banque centrale européenne à la date du versement, et chaque versement indique le taux utilisé. Un solde inférieur au minimum est reporté. Vous êtes responsable des impôts sur ce que vous gagnez.
 
-Pour toute question sur une commission ou un paiement, écrivez à [support@qrdx.dev](mailto:support@qrdx.dev).
+## En cas de problème [#if-something-goes-wrong]
+
+### Une inscription que vous avez générée n'a pas été comptée [#a-sign-up-you-sent-didnt-count]
+
+La personne s'est inscrite lors d'une visite ultérieure, dans un autre onglet, ou avait déjà un compte. Seul un nouveau compte créé pendant la même visite que celle du lien est compté.
+
+### Une commission a disparu de « En attente » [#a-commission-disappeared-from-on-hold]
+
+Le client a demandé un remboursement ou son paiement a été contesté pendant le délai de {facts.affiliateHoldDays} jours, ce qui annule la commission.
+
+### Vous n'avez pas été payé ce mois-ci [#you-werent-paid-this-month]
+
+Votre solde payable est inférieur à {facts.affiliateMinPayoutUsd}, ou aucun e-mail PayPal n'est renseigné. Le solde est reporté au mois suivant.
+
+Pour toute question sur une commission ou un versement, écrivez à [support@qrdx.dev](mailto:support@qrdx.dev).
 
 </IfAvailable>
+
+## Voir aussi [#related]
+
+- [Conditions d'affiliation](/legal/affiliate-terms)
+- [Les offres et ce qu'elles incluent](/docs/help/account-and-billing/plans)
+- [Contacter le support](/docs/help/contact)

@@ -1,8 +1,10 @@
 ---
-title: "Boîte de dialogue de partage de QR code"
-description: "Une boîte de dialogue de partage avec un QR code pour un lien, un bouton de copie, un téléchargement PNG et la feuille de partage native."
+title: "QR Code Share Dialog"
+description: "Une boîte de dialogue de partage pour les projets shadcn/ui, avec un QR code pour un lien, un bouton de copie, un téléchargement PNG et la feuille de partage native."
 icon: Webhook
 ---
+
+`QrCodeShareDialog` ouvre une boîte de dialogue qui affiche un lien sous forme de QR code, avec le lien dans un champ que vous pouvez copier, un téléchargement PNG et, sur téléphone, la feuille de partage du système. Utilisez-le derrière un bouton « Partager » partout où l'on transmet un lien à quelqu'un qui se trouve à côté : une invitation, un document, un profil.
 
 <ComponentLinks name="qr-code-share-dialog" />
 
@@ -14,40 +16,64 @@ icon: Webhook
 
 ## Utilisation [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeShareDialog } from "@/components/qr-code-share-dialog";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeShareDialog url="https://example.com/invite/abc123" />
 ```
 
-La boîte de dialogue affiche le code, le lien dans un champ en lecture seule avec un bouton de copie, et un téléchargement PNG. Sur les appareils dotés d'une feuille de partage (la plupart des téléphones), un bouton « Partager… » l'ouvre.
+La boîte de dialogue affiche le code, le lien dans un champ en lecture seule avec un bouton de copie, et **Télécharger le PNG**. Sur les appareils dotés d'une feuille de partage (la plupart des téléphones), un bouton **Partager…** l'ouvre.
 
 ## Exemples [#examples]
 
 ### Déclencheur personnalisé [#custom-trigger]
 
-Passez votre propre déclencheur en tant qu'enfant, par exemple un bouton d'icône dans une barre d'outils. `title`, `description` et `qr` personnalisent la boîte de dialogue.
+Passez votre propre déclencheur en tant qu'enfant, par exemple un bouton à icône dans une barre d'outils. `title`, `description` et `qr` personnalisent la boîte de dialogue.
 
 <ComponentPreview name="qr-code-share-dialog-trigger" />
 
 ### Contrôlé [#controlled]
 
-La boîte de dialogue accepte les props de [Dialog](https://ui.shadcn.com/docs/components/dialog), ce qui vous permet de l'ouvrir depuis le code :
+La boîte de dialogue accepte les props de [Dialog](https://ui.shadcn.com/docs/components/dialog), ce qui permet de l'ouvrir depuis le code :
 
-```tsx
-const [open, setOpen] = useState(false);
+```tsx title="components/share-after-save.tsx"
+"use client";
 
-<QrCodeShareDialog
-  url="https://example.com"
-  open={open}
-  onOpenChange={setOpen}
-/>
+import { useState } from "react";
+import { QrCodeShareDialog } from "@/components/qr-code-share-dialog";
+
+export function ShareAfterSave({ url }: { url: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)}>
+        Save and share
+      </button>
+      <QrCodeShareDialog url={url} open={open} onOpenChange={setOpen} />
+    </>
+  );
+}
 ```
+
+## Accessibilité et rendu [#accessibility-and-rendering]
+
+- La boîte de dialogue est votre Dialog : le focus y entre à l'ouverture et revient sur le déclencheur à la fermeture.
+- Le code porte `aria-label="QR code: <url>"`, et le champ du lien a un libellé « Lien » masqué visuellement. Le libellé du bouton de copie devient « Lien copié » un court instant après une copie.
+- Le bouton **Partager…** n'apparaît que là où `navigator.share` existe, après le premier rendu dans le navigateur, afin que le HTML du serveur et le premier affichage du client correspondent.
+- Un clic sur le champ du lien sélectionne tout le lien. La copie nécessite un contexte sécurisé (HTTPS ou localhost).
 
 ## Référence de l'API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-share-dialog.tsx" type="{ [K in keyof QrCodeShareDialogProps as K extends Exclude<keyof ComponentProps<typeof Dialog>, 'children'> ? never : K]: QrCodeShareDialogProps[K] }" />
 
 `open`, `defaultOpen`, `onOpenChange` et `modal` sont transmis à Dialog.
+
+## Voir aussi [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="Plus de formats et de tailles que l'unique bouton PNG de la boîte de dialogue." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="Le code intégré dans une page plutôt que dans une boîte de dialogue." />
+  <Card href="/docs/dynamic-qr-codes" title="QR codes dynamiques" description="Partagez un lien court modifiable plus tard plutôt que l'URL finale." />
+</Cards>

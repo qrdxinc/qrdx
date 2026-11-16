@@ -1,8 +1,10 @@
 ---
 title: "QR Code"
-description: "Kode QR bergaya yang mudah diakses, lengkap dengan tombol unduh. Warna, gradasi, pola, logo, dan templat bingkai berasal dari pustaka qrdx."
+description: "Kode QR bergaya dan mudah diakses dengan tombol unduh untuk proyek shadcn/ui. Warna, gradasi, pola, logo, dan templat bingkai berasal dari pustaka qrdx."
 icon: QrCode
 ---
+
+`QrCode` merender kode QR sebagai SVG dengan nama yang dapat diakses, keterangan, serta tombol unduh PNG dan SVG, dalam satu komponen yang Anda miliki sendiri. Gunakan di mana pun halaman menampilkan kode yang mungkin ingin disimpan pengguna: konfirmasi pesanan, tiket, menu, kartu Wi-Fi.
 
 <ComponentLinks name="qr-code" />
 
@@ -14,27 +16,27 @@ icon: QrCode
 
 ## Penggunaan [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCode } from "@/components/qr-code";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCode value="https://qrdx.dev" />
 ```
 
-Kode ini dirender sebagai SVG dengan nama yang dapat diakses, sehingga tetap tajam di ukuran berapa pun dan pembaca layar mengumumkan tautan yang dituju.
+Kode dirender sebagai SVG di dalam kotak `role="img"`, sehingga tetap tajam di ukuran berapa pun dan pembaca layar menyebutkan tautan tujuannya. Dua tombol di bawahnya menyimpan PNG 1024 px dan SVG.
 
 ## Contoh [#examples]
 
 ### Ukuran [#sizes]
 
-`size` menentukan lebar dan tinggi di layar dalam piksel. Unduhan menggunakan `downloadSize`, sehingga kode kecil di halaman tetap menghasilkan file siap cetak.
+`size` mengatur lebar dan tinggi di layar dalam piksel. Unduhan memakai `downloadSize`, sehingga kode kecil di halaman tetap menghasilkan file siap cetak.
 
 <ComponentPreview name="qr-code-sizes" />
 
 ### Warna [#colors]
 
-`fgColor` dan `bgColor` menerima warna CSS apa pun. `eyeColor` dan `dotColor` mewarnai tiga mata di sudut secara terpisah. Jaga agar modul lebih gelap daripada latar belakang agar semua pemindai dapat membaca kodenya.
+`fgColor` dan `bgColor` menerima warna CSS apa pun. `eyeColor` dan `dotColor` mewarnai ketiga mata sudut secara terpisah. Jaga agar modul lebih gelap daripada latar belakang agar semua pemindai dapat membaca kodenya.
 
 <ComponentPreview name="qr-code-colors" />
 
@@ -46,19 +48,19 @@ Berikan gradasi qrdx sebagai ganti warna: `linear` dengan `angle`, atau `radial`
 
 ### Pola [#patterns]
 
-`bodyPattern` membentuk modul data, `cornerEyePattern` membentuk bingkai sudut, dan `cornerEyeDotPattern` membentuk titik di dalamnya. Lihat [pola](/docs/features/patterns) untuk semua bentuk.
+`bodyPattern` membentuk modul data, `cornerEyePattern` bingkai sudut, dan `cornerEyeDotPattern` titik di dalamnya. [Pilih bentuk modul dan mata](/docs/features/patterns) memuat semua bentuk.
 
 <ComponentPreview name="qr-code-patterns" />
 
 ### Logo [#logo]
 
-`logo` menempatkan gambar di tengah dan mengosongkan modul di belakangnya. Gunakan tingkat koreksi kesalahan `H` agar kode tetap dapat dipindai meski sebagian tertutup. Data URL mempertahankan logo di unduhan; gambar jarak jauh memerlukan header CORS.
+`logo` menempatkan gambar di tengah dan mengosongkan modul di belakangnya. Gunakan tingkat koreksi kesalahan `H` agar kode tetap dapat dipindai meski sebagian tertutup. Data URL mempertahankan logo di unduhan; gambar dari server lain memerlukan header CORS.
 
 <ComponentPreview name="qr-code-logo" />
 
 ### Templat bingkai [#frame-templates]
 
-`templateId` menggambar salah satu [bingkai qrdx yang digambar sebagai template](/docs/features/templates) di sekeliling kode. Padukan dengan `caption` untuk ajakan bertindak di bawah bingkai.
+`templateId` menggambar salah satu [templat bingkai](/docs/features/templates) qrdx di sekeliling kode. Padukan dengan `caption` untuk ajakan bertindak di bawah bingkai.
 
 <ComponentPreview name="qr-code-template" />
 
@@ -72,7 +74,7 @@ Untuk satu menu dengan format dan ukuran, gunakan [QR Code Download](/docs/compo
 
 ### Mode gelap [#dark-mode]
 
-Latar belakang putih bawaan adalah pilihan paling aman di tema gelap: modul gelap pada ubin terang dapat dipindai oleh semua pembaca. Untuk mengikuti tema, atur `fgColor="currentColor"` dan latar belakang transparan. Kode akan terbalik di mode gelap, yang terbaca oleh kamera ponsel tetapi tidak oleh sebagian pemindai lama.
+Latar putih bawaan adalah pilihan paling aman di tema gelap: modul gelap pada ubin terang dapat dipindai oleh semua pembaca. Untuk mengikuti tema, atur `fgColor="currentColor"` dan latar transparan. Kode lalu terbalik di mode gelap, yang dapat dibaca kamera ponsel tetapi tidak oleh sebagian pemindai lama.
 
 <ComponentPreview name="qr-code-dark-mode" />
 
@@ -94,11 +96,11 @@ export default function MenuPage() {
 }
 ```
 
-Kodenya sendiri tetap dirender di server, jadi sudah ada di HTML halaman sebelum tombol dapat digunakan. Untuk info lebih lanjut tentang merender kode di App Router, lihat [Kode QR di Next.js](/docs/nextjs).
+Kodenya sendiri tetap dirender di server, sehingga sudah ada di HTML halaman sebelum tombol menjadi interaktif. Untuk info lebih lanjut tentang merender kode di App Router, lihat [Kode QR di Next.js](/docs/nextjs).
 
 ## Konten apa pun, bukan hanya tautan [#any-content-not-only-links]
 
-`value` dienkode persis seperti yang Anda berikan, sehingga payload QR apa pun dapat digunakan: jaringan Wi-Fi, kartu kontak, `mailto:`, `tel:`, atau teks biasa. Atur `label` agar pembaca layar mengumumkan fungsi kode tersebut, bukan payload mentahnya, yang untuk Wi-Fi mencakup kata sandi.
+`value` dikodekan persis seperti yang Anda berikan, sehingga payload QR apa pun dapat dipakai: jaringan Wi-Fi, kartu kontak, `mailto:`, `tel:`, atau teks biasa. Atur `label` agar pembaca layar menyebutkan fungsi kode, bukan payload mentah, yang untuk Wi-Fi memuat kata sandi.
 
 ```tsx title="components/guest-wifi.tsx"
 import { QrCode } from "@/components/qr-code";
@@ -140,7 +142,7 @@ export function LinkQrCode() {
 }
 ```
 
-`downloadFormats={[]}` menyembunyikan tombol saat seseorang masih mengetik; tampilkan setelah nilainya final.
+`downloadFormats={[]}` menyembunyikan tombol selagi seseorang masih mengetik; tampilkan setelah nilainya final.
 
 ## Unduhan siap cetak [#print-ready-downloads]
 
@@ -162,20 +164,35 @@ export function TableCode() {
 ```
 
 - **SVG** dapat diskalakan ke ukuran berapa pun tanpa buram, sehingga menjadi file terbaik untuk percetakan atau alat desain.
-- **PNG** dengan `downloadSize={2048}` tercetak tajam hingga lebar sekitar 17 cm (6,8 inci) pada 300 piksel per inci. `downloadSize` menerima 50 hingga 5000 piksel.
+- **PNG** pada `downloadSize={2048}` tercetak tajam hingga lebar sekitar 17 cm (6,8 inci) pada 300 piksel per inci. `downloadSize` menerima 50 hingga 5000 piksel.
 - **PDF** memerlukan paket opsional `jspdf` (`npm install jspdf`).
 - `filename` menamai file tanpa ekstensinya: `table-12.svg`, `table-12.png`.
 
+## Aksesibilitas [#accessibility]
+
+- Kode berada dalam elemen `role="img"` dengan `aria-label` berisi `label`, atau `QR code: <value>` jika tanpa `label`. Atur `label` setiap kali nilainya bukan tautan publik.
+- Tombol unduh berupa `<fieldset>` dengan legenda tersembunyi secara visual, "Download QR code". Hasil unduhan diumumkan melalui live region yang sopan, dan kesalahan muncul di bawah tombol dengan `role="alert"`.
+- `caption` dirender sebagai `<figcaption>` pada figure.
+
 ## Pastikan kode dapat dipindai [#make-sure-it-scans]
 
-- **Kontras.** Modul gelap pada latar belakang terang dapat dipindai oleh semua pembaca. Kode terang pada latar belakang gelap berfungsi di sebagian besar kamera ponsel, tetapi tidak di beberapa pemindai lama.
-- **Zona tenang.** `margin` secara bawaan 2 modul. Gunakan 4 saat kode berada di atas foto, pola, atau halaman gelap.
-- **Logo.** Gunakan `level="H"` dengan `logo`, agar kode tetap terbaca meski modulnya tertutup logo.
+- **Kontras.** Modul gelap pada latar terang dapat dipindai oleh semua pembaca. Kode terang pada latar gelap berfungsi di sebagian besar kamera ponsel tetapi tidak di beberapa pemindai lama.
+- **Zona tenang.** `margin` bawaannya 2 modul. Gunakan 4 saat kode berada di atas foto, pola, atau halaman gelap.
+- **Logo.** Gunakan `level="H"` dengan `logo`, agar kode tetap terbaca meski modul yang tertutup logo hilang.
 - **Ukuran cetak.** Tautan pendek yang dipindai dari jarak sekitar 25 cm memerlukan kode selebar sekitar 2,5 cm; [kalkulator ukuran cetak](/tools/print-size) menghitungnya untuk jarak lain.
-- **Uji.** Pindai kode yang sudah jadi dengan beberapa ponsel, atau unggah gambar ke [pemeriksa pemindaian](/tools/scan-checker).
+- **Ujilah.** Pindai kode jadi dengan beberapa ponsel, atau unggah gambar ke [pemeriksa pemindaian](/tools/scan-checker).
 
 ## Referensi API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code.tsx" type="{ [K in keyof QrCodeProps as K extends keyof ComponentProps<'figure'> ? never : K]: QrCodeProps[K] }" />
 
 Prop lain apa pun, seperti `className`, diteruskan ke `<figure>` pembungkus.
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="Satu menu dengan semua format dan ukuran, sebagai ganti deretan tombol." />
+  <Card href="/docs/components/qr-code-card" title="QR Code Card" description="Kode dalam kartu dengan judul, deskripsi, dan aksi." />
+  <Card href="/docs/features/patterns" title="Pilih bentuk modul dan mata" description="Semua nilai yang diterima bodyPattern, cornerEyePattern, dan cornerEyeDotPattern." />
+  <Card href="/docs/developers/shadcn" title="Registri shadcn/ui" description="Kedelapan komponen dan cara registri memasangnya." />
+</Cards>

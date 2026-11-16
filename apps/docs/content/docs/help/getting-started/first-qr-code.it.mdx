@@ -3,32 +3,63 @@ title: "Crea il tuo primo QR code"
 description: "Crea un QR code nel Playground e scaricalo. Gratuito, senza account e senza filigrana."
 ---
 
-Puoi creare un QR code in circa un minuto. Non serve un account.
+Il [Playground](/playground) è l'editor di QRdx. Qui puoi creare un QR code in circa un minuto, senza account. Il codice che scarichi è statico: il link è memorizzato all'interno del codice, funziona per sempre e non si può modificare dopo la stampa.
 
 ## Crea il codice [#make-the-code]
 
-1. Apri il [Playground](/playground). È l'editor di QRdx.
-2. **URL** è già selezionato. Per Wi-Fi, un biglietto da visita, WhatsApp o qualsiasi altro tipo, fai clic su **Cambia** accanto a **Tipo di QR code** e scegli un tipo.
-3. Scrivi il tuo link in **Indirizzo del sito web**. L'anteprima mostra il codice non appena l'indirizzo è valido.
-4. Facoltativo: scegli un aspetto in **Parti da uno stile**, oppure apri la scheda **Design** per cambiare colori, punti, occhi, logo e cornice.
-5. Fai clic sull'icona di download sopra l'anteprima, oppure premi <kbd>D</kbd>. Scegli un formato e una dimensione, poi scarica.
+### 1. Scegli cosa deve aprire il codice [#1-pick-what-the-code-opens]
 
-Sotto l'indirizzo, QRdx mostra dove si aprono le scansioni, per esempio "Le scansioni aprono example.com". Controlla prima di stampare.
+Apri il [Playground](/playground). La scheda **Contenuto** è aperta e **URL** è il tipo selezionato, quello giusto per qualsiasi indirizzo web.
 
-## Prima di stampare [#before-you-print]
+Per Wi-Fi, un biglietto da visita, WhatsApp o altro, fai clic su **Cambia** nella scheda **Tipo di QR code** e scegli un tipo.
 
-Controlla il **Punteggio di scansione** sotto l'anteprima. Un punteggio di 85 o più è ottimo. Sotto 65, correggi i controlli segnati con una croce. Vedi [Verificare un design con il punteggio di scansione](/docs/help/designing/scan-score).
+<Shot id="playground-type-picker" />
 
-Poi scansiona il codice con il tuo telefono.
+### 2. Scrivi il tuo link [#2-type-your-link]
 
-## I codici del Playground sono statici [#codes-from-the-playground-are-static]
+Incolla o scrivi l'indirizzo in **Indirizzo del sito web**. L'anteprima passa dall'esempio sfocato al tuo codice appena l'indirizzo è un link valido, e la riga sotto il campo indica dove si aprono le scansioni, ad esempio "Le scansioni aprono example.com". Controllala prima di stampare.
 
-Un codice che scarichi dal Playground è un **QR code statico**: il link è memorizzato dentro il codice. Funziona per sempre, ma non puoi modificarlo dopo la stampa.
+<Shot id="playground-content" />
 
-Se potresti dover cambiare il link in seguito, crea invece un QR code dinamico. Vedi [Statico o dinamico](/docs/help/getting-started/static-vs-dynamic).
+### 3. Scegli un aspetto [#3-pick-a-look]
 
-## Passi successivi [#next-steps]
+Questo passaggio è facoltativo. In **Parti da uno stile**, scegli uno degli stili già pronti. Per personalizzare di più, apri la scheda **Design**, che contiene colori, punti, occhi, logo e cornice.
 
-- [Scaricare e stampare un QR code](/docs/help/getting-started/download-and-print)
-- [Scegliere colori che si scansionano bene](/docs/help/designing/colors-and-contrast)
-- [Aggiungere un logo](/docs/help/designing/logos)
+### 4. Scarica [#4-download]
+
+Fai clic su **Scarica** sopra l'anteprima, oppure premi <kbd>D</kbd>. Scegli un formato e una dimensione, poi fai clic sul pulsante di download in fondo alla finestra. Il file finisce nella tua cartella dei download.
+
+<Shot id="playground-download" />
+
+<Clip id="first-code" />
+
+## Verifica che si legga [#check-that-it-scans]
+
+Guarda il **Punteggio di scansione** sotto l'anteprima. Da 85 in su è Ottimo e il codice è pronto per la stampa. Sotto 65, fai clic sul punteggio e correggi i controlli segnati con una croce. Vedi [Verifica un design con il punteggio di scansione](/docs/help/designing/scan-score).
+
+Poi inquadra il codice con il tuo telefono.
+
+## Se potresti cambiare il link in futuro [#if-you-might-change-the-link-later]
+
+Un codice creato nel Playground contiene il link stesso, quindi una copia stampata non si può modificare. Se il link potrebbe cambiare, o vuoi contare le scansioni, scegli **Dinamico** nel selettore **QR code statico o dinamico** sotto l'indirizzo, prima di scaricare. Serve un account gratuito. Vedi [Crea un QR code dinamico](/docs/help/dynamic-codes/create) e [Statico o dinamico: quale ti serve?](/docs/help/getting-started/static-vs-dynamic).
+
+## Se qualcosa va storto [#if-something-goes-wrong]
+
+### L'anteprima mostra ancora l'esempio sfocato [#the-preview-still-shows-the-blurred-sample]
+
+L'indirizzo non è ancora un link valido. Controlla se manca un punto o c'è uno spazio di troppo e scrivi l'indirizzo completo.
+
+### Il pulsante Scarica è grigio [#the-download-button-is-grayed-out]
+
+Resta disattivato finché il codice non ha un contenuto. Scrivi prima l'indirizzo.
+
+### Il telefono non legge il codice [#your-phone-doesnt-read-the-code]
+
+Controlla il punteggio di scansione, poi vedi [Un codice non si legge](/docs/help/troubleshooting/wont-scan).
+
+## Correlati [#related]
+
+- [Scarica e stampa un QR code](/docs/help/getting-started/download-and-print)
+- [Scegli colori che si leggono bene](/docs/help/designing/colors-and-contrast)
+- [Aggiungi un logo](/docs/help/designing/logos)
+- [Crea un QR code dinamico](/docs/help/dynamic-codes/create)

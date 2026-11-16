@@ -1,8 +1,10 @@
 ---
 title: "Wi-Fi QR कोड"
-description: "ऐसा QR कोड जो स्कैन करने पर Wi-Fi नेटवर्क से जुड़ जाता है, टाइप्ड और एस्केप किए गए payload builder के साथ।"
+description: "shadcn/ui प्रोजेक्ट्स के लिए एक QR कोड, जो स्कैन करने पर Wi-Fi नेटवर्क से जुड़ जाता है। इसमें टाइप्ड और escaped payload builder दिया गया है।"
 icon: Globe
 ---
+
+`WifiQrCode` एक ऐसा कोड दिखाता है जो फ़ोन का कैमरा स्कैन करने पर Wi-Fi नेटवर्क से जुड़ जाता है। कोड के नीचे नेटवर्क का नाम भी दिखता है। इसे रिसेप्शन पर गेस्ट नेटवर्क कार्ड, कैफ़े में टेबल टेंट या किराये की प्रॉपर्टी के वेलकम पेज के लिए इस्तेमाल करें।
 
 <ComponentLinks name="wifi-qr-code" />
 
@@ -14,36 +16,50 @@ icon: Globe
 
 ## उपयोग [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { WifiQrCode } from "@/components/wifi-qr-code";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <WifiQrCode ssid="Cafe Guest" password="espresso-2024" />
 ```
 
-iOS और Android के कैमरे कोड स्कैन करने पर नेटवर्क से जुड़ने का विकल्प देते हैं। किसी app की ज़रूरत नहीं है।
+कोड स्कैन करने पर iOS और Android के कैमरे नेटवर्क से जुड़ने का विकल्प देते हैं। इसके लिए किसी app की ज़रूरत नहीं है। कोड के नीचे कॉम्पोनेंट नेटवर्क का नाम और "Scan with your camera to join" लिखकर दिखाता है।
 
 ## उदाहरण [#examples]
 
 ### वेरिएंट [#variants]
 
-`showPassword` पासवर्ड को प्रिंट करता है, ताकि मेहमान उसे टाइप कर सकें। ओपन नेटवर्क के लिए `encryption="nopass"` और ऐसे नेटवर्क के लिए `hidden` इस्तेमाल करें जो अपना नाम ब्रॉडकास्ट नहीं करते।
+`showPassword` पासवर्ड दिखाता है, ताकि मेहमान उसे खुद टाइप कर सकें। खुले नेटवर्क के लिए `encryption="nopass"` और अपना नाम ब्रॉडकास्ट न करने वाले नेटवर्क के लिए `hidden` इस्तेमाल करें।
 
 <ComponentPreview name="wifi-qr-code-variants" />
 
 ### Payload builder [#payload-builder]
 
-`buildWifiPayload` वह `WIFI:` टेक्स्ट लौटाता है जिसे कोड एन्कोड करता है। यह नाम और पासवर्ड में `\`, `;`, `,`, `:` और `"` को एस्केप करता है, जहाँ हाथ से लिखे payload आमतौर पर टूट जाते हैं। इसे किसी भी QR renderer के साथ इस्तेमाल करें, या डीबगिंग के लिए payload प्रिंट करने में।
+`buildWifiPayload` वह `WIFI:` टेक्स्ट लौटाता है जिसे कोड में एन्कोड किया जाता है। यह नाम और पासवर्ड में `\`, `;`, `,`, `:` और `"` को escape करता है, क्योंकि हाथ से लिखे payload अक्सर यहीं टूटते हैं। इसे किसी भी QR renderer के साथ इस्तेमाल करें, या डीबगिंग के लिए payload प्रिंट करने में।
 
 <ComponentPreview name="wifi-qr-code-payload" />
+
+## एक्सेसिबिलिटी और रेंडरिंग [#accessibility-and-rendering]
+
+- कोड में `aria-label="QR code to join the Wi-Fi network <ssid>"` होता है। पासवर्ड वाला payload कभी पढ़कर नहीं सुनाया जाता।
+- कोड के नीचे का नाम और पासवर्ड figure का `<figcaption>` हैं। सिर्फ़ कोड दिखाने के लिए `showDetails={false}` सेट करें।
+- यह कॉम्पोनेंट एक Client Component है, और कोड सर्वर पर रेंडर होता है।
 
 ## API रेफ़रेंस [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/wifi-qr-code.tsx" type="{ [K in keyof WifiQrCodeProps as K extends Exclude<keyof ComponentProps<'figure'>, 'hidden'> ? never : K]: WifiQrCodeProps[K] }" />
 
-कोई भी दूसरा prop, जैसे `className`, रैपिंग `<figure>` को पास कर दिया जाता है।
+कोई भी अन्य prop, जैसे `className`, रैपर `<figure>` को भेज दिया जाता है।
 
 ### buildWifiPayload [#buildwifipayload]
 
-`buildWifiPayload(network: WifiNetwork): string` वही नेटवर्क फ़ील्ड लेता है जो कॉम्पोनेंट लेता है: `ssid`, `password`, `encryption` और `hidden`।
+`buildWifiPayload(network: WifiNetwork): string` वही नेटवर्क फ़ील्ड लेता है जो कॉम्पोनेंट लेता है: `ssid`, `password`, `encryption` और `hidden`। `"WPA"` में WPA, WPA2 और WPA3 आते हैं; `"WEP"` और `"nopass"` बाकी वैल्यू हैं। `"nopass"` होने पर पासवर्ड शामिल नहीं किया जाता।
+
+## संबंधित [#related]
+
+<Cards>
+  <Card href="/docs/components/vcard-qr-code" title="vCard QR कोड" description="यही तरीका कॉन्टैक्ट कार्ड के लिए।" />
+  <Card href="/docs/components/qr-code" title="QR कोड" description="किसी भी payload के लिए कोड, डाउनलोड बटन के साथ।" />
+  <Card href="/docs/components/qr-code-download" title="QR कोड डाउनलोड" description="प्रिंट करने के लिए Wi-Fi कोड एक्सपोर्ट करें।" />
+</Cards>

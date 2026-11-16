@@ -1,61 +1,137 @@
 ---
 title: "APIキー"
-description: "設定 → APIキーとアプリで qrdx_ APIキーを作成し、REST APIを呼び出します。スコープ、ワークスペースとロール、有効期限、最終使用、無効化について説明します。"
+description: "設定 → APIキーとアプリで qrdx_ APIキーを作成し、許可する操作と有効期限を選んで REST API を呼び出します。キーが漏えいしたときは失効させましょう。"
 icon: LockKeyhole
 ---
 
-APIキーを使うと、OAuthのフローなしで、ご自身のサーバー、スクリプト、CIジョブから[REST API](/docs/developers/rest-api)を呼び出せます。キーは `Authorization` ヘッダーで送信します。
+APIキーを使うと、OAuthのフローなしで、自分のサーバー、スクリプト、CIジョブから [REST API](/docs/developers/rest-api) を呼び出せます。このページを読み終えると、1つのワークスペース用のキーを作成でき、そのキーで何ができるかを正確に把握し、ローテーションの方法もわかります。
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/codes -H "Authorization: Bearer $QRDX_API_KEY"
 ```
 
-OAuthアクセストークンを受け付けるエンドポイントは、同じヘッダーでキーも受け付けます。[Image API](/docs/developers/image-api)はどちらも不要です。お使いのプロダクトが他のQRdxユーザーに代わって操作する場合は、代わりに[OAuthアプリ](/docs/developers/build-an-integration)を使ってください。そうすれば、各ユーザーが個別に承認します。
+OAuthアクセストークンを受け付けるエンドポイントは、同じヘッダーでキーも受け付けます。[Image API](/docs/developers/image-api) と[バーコードAPI](/docs/developers/barcode-api)には、どちらも必要ありません。ご自身のプロダクトが他のQRdxユーザーの代わりに操作する場合は、代わりに [OAuthアプリ](/docs/developers/build-an-integration)を使ってください。そうすれば、各ユーザーが承認する形になります。
 
-## キーを作成する [#create-a-key]
+## 始める前に [#before-you-start]
 
-1. キーを使うワークスペースで[設定 → APIキーとアプリ](/dashboard?to=settings/developers&new=1)を開きます。このリンクは最後に使ったワークスペースを開きます。別のワークスペースを使う場合は、ワークスペース切り替えで選択してください。
-2. **キーを作成**を選びます。キーを実行する場所に合わせて名前を付け、アクセス権を選び、必要であれば有効期限も設定します。キーはあなたがいなくても動作するため、QRdxはまず[本人確認](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)を求めます。ただし、そのブラウザーで直近10分以内に確認済みの場合は求められません。
-3. キーをコピーします。キーが表示されるのは一度だけです。QRdxにはキーのハッシュしか保存されないため、再表示はできません。同じダイアログには、キーとこのサイトのAPIアドレスが入力済みのcurlリクエストが表示されるので、そのまま貼り付けて使えます。
+- サインイン済みのQRdxアカウント。APIキーはすべてのプランで利用できます。
+- キーを使うワークスペース。キーは1つのワークスペースに属し、そのワークスペースであなたとして動作します。
 
-キーは `qrdx_` に続く40文字の英数字です。一覧には、キーを見分けられるように先頭部分のみ(例:`qrdx_7KpQ2m…`)が表示されます。
+## 1. キーを作成する [#create-a-key]
 
-## アクセス権 [#access]
+1. キーを使うワークスペースで [設定 → APIキーとアプリ](/dashboard?to=settings/developers&new=1) を開きます。リンクを開くと、最後に使ったワークスペースが表示されます。別のワークスペースにするには、ワークスペース切り替えで選んでください。**APIキーを作成**フォームが開きます。
+2. **名前**を入力します。キーを使う場所を書いておくと、後でどのキーを失効させるか判断できます。**アクセス**を選び、**有効期限**でキーの有効期間を選んで、**キーを作成**を選びます。キーはあなたがいなくても動作するため、QRdxはまず[本人確認](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)を求めます。ただし、そのブラウザーで直近10分以内に本人確認をしていれば求められません。
+3. **APIキーをコピー**ダイアログからキーをコピーします。キーが表示されるのは、この1回だけです。QRdxが保存するのはキーのハッシュのみです。同じダイアログには、キーとこのサイトのAPIアドレスが入力済みの curl リクエストが表示されるので、そのまま貼り付けて使えます。
 
-キーには、OAuthアプリと同じスコープを使います。キーの作成時に、次の3つから選びます。
+<Shot id="api-keys" />
 
-| アクセス権 | スコープ | できること |
+<Shot id="api-key-form-access" />
+
+キーは `qrdx_` に続く40文字の英数字です。一覧には `qrdx_7KpQ2m…` のように先頭部分だけが表示され、キーを見分けられます。
+
+## 2. アクセスを選ぶ [#access]
+
+キーは、OAuthアプリと同じスコープを使います。キーの作成時に、次の3つから1つを選びます。
+
+| アクセス | スコープ | 許可される操作 |
 | --- | --- | --- |
-| フルアクセス | `profile:read`、`themes:read`、`codes:read`、`codes:write` | APIで可能なすべての操作 |
-| 読み取り専用 | `profile:read`、`themes:read`、`codes:read` | QRコード、スキャン分析、テーマ、プロフィールの読み取り |
-| カスタム | 選択したスキャープ | 選択したスコープで許可される操作([スコープ一覧](/docs/developers/rest-api#get-an-access-token)) |
+| フルアクセス | `profile:read`, `themes:read`, `codes:read`, `codes:write` | APIでできるすべての操作 |
+| 読み取り専用 | `profile:read`, `themes:read`, `codes:read` | コード、スキャン分析、保存したバーコード、テーマ、プロフィールの読み取り |
+| カスタム | チェックを入れたもの | それらのスコープで許可される操作（[スコープ一覧](/docs/developers/rest-api#scopes)） |
 
-`codes:write` は `codes:read` でできることもすべて許可します。キーのスコープは後から変更できません。変更したい場合は新しいキーを作成してください。キーのスコープ外のリクエストは `403 INSUFFICIENT_SCOPE` となり、メッセージには必要だったスコープ名が示されます。
+`codes:write` には、`codes:read` でできる操作もすべて含まれます。キーのスコープは後から変更できません。変更したい場合は新しいキーを作成してください。キーのスコープ外のリクエストは `403 INSUFFICIENT_SCOPE` を返し、メッセージに必要だったスコープ名が示されます。
+
+```json title="403 Forbidden"
+{
+  "code": "INSUFFICIENT_SCOPE",
+  "message": "This API key needs the 'codes:write' scope. Create a key that includes it at https://qrdx.dev/dashboard?to=settings/developers; a key's scopes can't be changed.",
+  "status": 403,
+  "docs": "https://qrdx.dev/docs/developers/api-keys"
+}
+```
+
+## 3. キーを使う [#3-use-it]
+
+キーはBearerトークンとして送信します。最初に試すのに適しているのは `GET /v1/me` です。キーの作成者のプロフィールを返すので、キーが機能することを確認できます。
+
+```bash title="Terminal"
+curl https://api.qrdx.dev/v1/me -H "Authorization: Bearer $QRDX_API_KEY"
+```
+
+```json title="200 OK"
+{"data":{"id":"usr_docsdev0000000000000001","name":"Ada Lovelace","email":"ada@example.com","image":null}}
+```
+
+キーはサーバー上の環境変数またはシークレットマネージャーに保管し、コードではそこから読み込んでください。
+
+```js title="qrdx.mjs"
+const response = await fetch("https://api.qrdx.dev/v1/codes", {
+  headers: { Authorization: `Bearer ${process.env.QRDX_API_KEY}` },
+});
+```
+
+```python title="qrdx.py"
+import os
+import requests
+
+response = requests.get(
+    "https://api.qrdx.dev/v1/codes",
+    headers={"Authorization": f"Bearer {os.environ['QRDX_API_KEY']}"},
+)
+```
 
 ## ワークスペースとロール [#workspaces-and-roles]
 
-キーは、作成時に開いていたワークスペースに属し、そのワークスペース内であなたとして動作します。
+キーは、作成時に開いていたワークスペースに属し、そのワークスペースであなたとして動作します。
 
-- キーは、そのワークスペースのQRコード、スキャン、フック、テーマに対して使え、ワークスペースのプランと[1日あたりのクォータ](/docs/developers/rest-api#rate-limits)が適用されます。
-- キーは、あなたがそのワークスペースで実行できる操作を、リクエストごとにあなたの[ロール](/docs/teams)に基づいて判定したうえで実行できます。ご自身のワークスペースでは、あなたはオーナーです。ロールが変わるとキーの権限も変わります。ワークスペースを退出するとキーは使えなくなり、ワークスペースを削除するとそのキーも削除されます。
+- キーは、そのワークスペースのコード、スキャン、バーコード、フック、テーマを対象に、ワークスペースのプランと[1日の上限](/docs/developers/rest-api#rate-limits)の範囲内で動作します。
+- キーは、あなたがそのワークスペースでできる操作を実行できます。権限は、リクエストごとにそのときの[ロール](/docs/teams)で判断されます。ご自身のワークスペースでは、あなたはオーナーです。ロールが変わると、キーの権限も変わります。ワークスペースを退出するとキーは使えなくなり、ワークスペースを削除するとそのキーも削除されます。
 
-ワークスペースのメンバーは全員キーを作成できます。オーナーと管理者はワークスペース内のすべてのキーを確認し、いずれも無効化できます。メンバーは自分のキーのみ確認および無効化できます。`GET /v1/me` は、キーを作成した本人のプロフィールを返します。
+ワークスペースのメンバーは全員、キーを作成できます。オーナーと管理者はワークスペース内のすべてのキーを確認でき、どのキーも失効させられます。メンバーが確認・失効できるのは自分のキーだけです。1人あたり、各ワークスペースで最大25個の有効なキーを持てます。失効したキーと期限切れのキーは数に含まれません。
 
-## 有効期限、最終使用、無効化 [#revoke]
+## 有効期限、最終使用、失効 [#revoke]
 
-- **有効期限。** キーは無期限にするか、30日、90日、1年で期限切れになるように設定できます。期限切れのキーは `401 INVALID_TOKEN` になり、無効化するまで**期限切れ**と表示されたまま一覧に残ります。
+- **有効期限。** **有効期限**では、キーを無期限（**なし**）にするか、30日、90日、1年から選べます。期限切れのキーは `401 INVALID_TOKEN` を返し、失効させるまで**期限切れ**と表示されて一覧に残ります。
 - **最終使用。** 一覧には、各キーが最後にリクエストの認証に使われた日付が表示されます。
-- **無効化。** キーの横にある**無効化**を選びます。それ以降、そのキーでのリクエストは `401 INVALID_TOKEN` になります。無効化は取り消せません。
+- **失効。** キーの横の**失効**を選び、**キーを失効**で確定します。以降、そのキーを使ったリクエストは `401 INVALID_TOKEN` を返します。失効は元に戻せません。
 
-1人あたり、ワークスペースごとに最大25個の有効なキーを持てます。無効化済みや期限切れのキーは数に含まれません。
+```json title="401 Unauthorized"
+{
+  "code": "INVALID_TOKEN",
+  "message": "Invalid API key: it doesn't exist, was revoked or has expired, or its creator left the workspace. Check that you copied the whole key, or create a new one at https://qrdx.dev/dashboard?to=settings/developers.",
+  "status": 401,
+  "docs": "https://qrdx.dev/docs/developers/api-keys"
+}
+```
 
-## キーを安全に管理する [#keep-keys-safe]
+## キーを安全に保つ [#keep-keys-safe]
 
-- キーはサーバー上の環境変数またはシークレットマネージャーに保管してください。Webページ、モバイルアプリ、プロンプト、リポジトリには絶対に入れないでください。
-- キーは実行場所ごとに1つ使います。そうすれば、他に影響を与えずに1つだけ無効化できます。
-- レポートのみ行うスクリプトには読み取り専用キーを、短期間のジョブには期限付きのキーを使ってください。
-- キーが漏えいした場合は、無効化して新しいキーを作成してください。`qrdx_` というプレフィックスがあるため、コードやログでキーを検索しやすくなっています。
+- キーをWebページ、モバイルアプリ、プロンプト、リポジトリに入れないでください。QR画像が必要なブラウザーのコードには、キー不要の [Image API](/docs/developers/image-api) を使います。
+- キーは使う場所ごとに1つずつ用意します。そうすれば、他に影響を与えずに1つだけ失効させられます。
+- レポートを出すだけのスクリプトには**読み取り専用**のキーを、短時間で終わるジョブには有効期限付きのキーを渡してください。
+- キーが漏えいしたら、失効させて新しいキーを作成してください。`qrdx_` というプレフィックスのおかげで、コードやログからキーを見つけやすくなっています。シークレットスキャナーでは `qrdx_[0-9A-Za-z]{40}` で検出できます。
 
-## セルフホスティング [#self-hosting]
+## うまくいかない場合 [#if-something-goes-wrong]
 
-[セルフホスト](/docs/self-hosting)のインスタンスでは、データベースに `api_key` テーブルが必要です。このテーブルは、更新後に通常行うスキーマ同期で作成されます(Dockerでは `migrate` サービス、それ以外では `bun run db:push`。[更新](/docs/self-hosting)を参照してください)。テーブルがない間は、設定 → APIキーとアプリにAPIキーを利用できない旨が表示され、APIはキーを `401` で拒否します。APIはそのインスタンス自身のドメインの `/api/v1` にあり、これが新規キーのダイアログに入力されるアドレスです。
+### `401 UNAUTHORIZED` [#401-unauthorized]
+
+リクエストに `Authorization` ヘッダーがありませんでした。ヘッダー名と、HTTPクライアントがヘッダーを送信しているかを確認してください。値は `Bearer ` に続けてキー全体を指定します。
+
+### `401 INVALID_TOKEN` [#401-invalid_token]
+
+キーが途中までしかコピーされていない、失効している、期限切れである、または作成者がワークスペースを退出した可能性があります。新しいキーを作成してください。OAuthトークンの場合は、トークンを更新するか、ユーザーにもう一度認可してもらってください。
+
+### `403 INSUFFICIENT_SCOPE` [#403-insufficient_scope]
+
+キーが**読み取り専用**であるか、メッセージに示されたスコープを持たない**カスタム**キーです。そのスコープを持つキーを作成してください。既存のキーにスコープを追加することはできません。
+
+### このデプロイではAPIキーをまだ利用できません [#api-keys-arent-available-on-this-deployment-yet]
+
+[セルフホスト](/docs/self-hosting)のインスタンスでは、データベースに `api_key` テーブルができるまでこのメッセージが表示されます。このテーブルは、更新後のスキーマ同期で作成されます（Dockerでは `migrate` サービス、それ以外では `bun run db:push`）。それまでは、APIはキーを `401` で拒否します。そのAPIは自分のドメインの `/api/v1` にあり、新規キーのダイアログに入力されるのもこのアドレスです。
+
+## 関連ページ [#related]
+
+- [クイックスタート](/docs/developers/quickstart): 数分でキーと最初の動的QRコードを用意
+- [REST APIとOAuth](/docs/developers/rest-api): スコープ、他のユーザーのアカウント用トークン、レート制限
+- [連携を構築する](/docs/developers/build-an-integration): ご自身のプロダクトが他のQRdxユーザーの代わりに操作する場合
+- [2段階認証](/docs/help/privacy-and-security/two-step-verification): キー作成前の本人確認ステップ

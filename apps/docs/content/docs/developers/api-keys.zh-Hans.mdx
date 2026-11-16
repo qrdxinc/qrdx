@@ -1,61 +1,137 @@
 ---
 title: "API 密钥"
-description: "在“设置 → API 密钥和应用”中创建 qrdx_ API 密钥,并用它调用 REST API。涵盖权限范围、工作区与角色、有效期、最近使用和撤销。"
+description: "在“设置 → API 密钥与应用”中创建 qrdx_ API 密钥，选择它的权限和有效期，用它调用 REST API，并在泄露时将其撤销。"
 icon: LockKeyhole
 ---
 
-API 密钥让你自己的服务器、脚本和 CI 任务无需 OAuth 流程即可调用 [REST API](/docs/developers/rest-api)。将它放在 `Authorization` 请求头中发送:
+API 密钥让你自己的服务器、脚本和 CI 任务无需 OAuth 流程即可调用 [REST API](/docs/developers/rest-api)。读完本页，你将拥有一个对应某个工作区的密钥，清楚它能做什么，并知道如何轮换它。
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/codes -H "Authorization: Bearer $QRDX_API_KEY"
 ```
 
-凡是接受 OAuth 访问令牌的端点,都可以在同一个请求头中使用密钥;[Image API](/docs/developers/image-api) 则两者都不需要。如果你的产品要代表其他 QRdx 用户操作,请改用 [OAuth 应用](/docs/developers/build-an-integration),这样每个人都需要自行授权。
+所有接受 OAuth 访问令牌的端点，也接受放在同一个请求头里的密钥。[Image API](/docs/developers/image-api) 和[条形码 API](/docs/developers/barcode-api) 两者都不需要。如果你的产品要代表其他 QRdx 用户操作，请改用 [OAuth 应用](/docs/developers/build-an-integration)，这样每个人都可以自行授权。
 
-## 创建密钥 [#create-a-key]
+## 开始之前 [#before-you-start]
 
-1. 在密钥所属的工作区中打开[设置 → API 密钥和应用](/dashboard?to=settings/developers&new=1)。该链接会打开你上次使用的工作区;如需切换,请使用工作区切换器选择其他工作区。
-2. 选择 **创建密钥**。按密钥的运行位置为它命名,选择访问权限,也可以按需设置到期时间。密钥无需你在场即可工作,因此 QRdx 会先要求你[确认是你本人](/docs/help/privacy-and-security/two-step-verification#confirm-its-you),除非你在该浏览器中 10 分钟内已确认过。
-3. 复制密钥。密钥只显示一次:QRdx 仅保存它的哈希值,因此无法再次显示。同一对话框中还会显示一条 curl 请求,其中已填入该密钥和本站的 API 地址,可直接粘贴使用。
+- 一个已登录的 QRdx 账号。所有套餐都支持 API 密钥。
+- 密钥所属的工作区。一个密钥只属于一个工作区，并在该工作区中以你的身份操作。
 
-密钥由 `qrdx_` 加 40 个字母和数字组成。列表中只显示它的开头部分,例如 `qrdx_7KpQ2m…`,方便你区分不同的密钥。
+## 1. 创建密钥 [#create-a-key]
 
-## 访问权限 [#access]
+1. 在密钥所属的工作区中打开[设置 → API 密钥与应用](/dashboard?to=settings/developers&new=1)。该链接会打开你上次使用的工作区；如需切换，请在工作区切换器中选择其他工作区。**创建 API 密钥**表单随即打开。
+2. 填写**名称**：写明密钥的用途，以便日后知道该撤销哪一个。选择它的**权限**，并在**有效期**下选择它的存续时间。选择**创建密钥**。密钥无需你本人在场即可工作，因此 QRdx 会先要求你[确认是你本人](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)，除非你在该浏览器中 10 分钟内已确认过。
+3. 从**复制你的 API 密钥**对话框中复制密钥。它只显示这一次：QRdx 只保存它的哈希值。该对话框还会给出一条 curl 请求，其中已填入密钥和本站的 API 地址，可直接粘贴使用。
 
-密钥使用与 OAuth 应用相同的权限范围。创建密钥时,从三个选项中选择一个:
+<Shot id="api-keys" />
 
-| 访问权限 | 权限范围 | 允许的操作 |
+<Shot id="api-key-form-access" />
+
+密钥由 `qrdx_` 加 40 个字母和数字组成。列表中只显示它的开头部分，例如 `qrdx_7KpQ2m…`，方便你区分不同的密钥。
+
+## 2. 选择权限 [#access]
+
+密钥与 OAuth 应用使用相同的权限范围。创建密钥时，从三个选项中选择一个：
+
+| 权限 | 权限范围 | 允许的操作 |
 | --- | --- | --- |
 | 完全访问 | `profile:read`、`themes:read`、`codes:read`、`codes:write` | API 能做的一切 |
-| 只读 | `profile:read`、`themes:read`、`codes:read` | 读取二维码、扫描分析、主题和个人资料 |
-| 自定义 | 由你选择 | 这些权限范围所允许的操作([权限范围列表](/docs/developers/rest-api#get-an-access-token)) |
+| 只读 | `profile:read`、`themes:read`、`codes:read` | 读取二维码、扫描分析、已保存的条形码、主题和个人资料 |
+| 自定义 | 你勾选的范围 | 这些范围所允许的操作（[范围列表](/docs/developers/rest-api#scopes)） |
 
-`codes:write` 同时包含 `codes:read` 允许的所有操作。密钥的权限范围之后无法更改,如需调整请创建新密钥。超出密钥权限范围的请求会收到 `403 INSUFFICIENT_SCOPE`,错误信息中会指出所需的权限范围。
+`codes:write` 同时包含 `codes:read` 的所有权限。密钥的权限范围创建后无法更改；如需更改，请创建新密钥。超出密钥权限范围的请求会收到 `403 INSUFFICIENT_SCOPE`，错误信息会指出所需的范围：
+
+```json title="403 Forbidden"
+{
+  "code": "INSUFFICIENT_SCOPE",
+  "message": "This API key needs the 'codes:write' scope. Create a key that includes it at https://qrdx.dev/dashboard?to=settings/developers; a key's scopes can't be changed.",
+  "status": 403,
+  "docs": "https://qrdx.dev/docs/developers/api-keys"
+}
+```
+
+## 3. 使用密钥 [#3-use-it]
+
+将密钥作为 Bearer 令牌发送。第一个值得发起的调用是 `GET /v1/me`，它会返回密钥创建者的个人资料，并确认密钥可用：
+
+```bash title="Terminal"
+curl https://api.qrdx.dev/v1/me -H "Authorization: Bearer $QRDX_API_KEY"
+```
+
+```json title="200 OK"
+{"data":{"id":"usr_docsdev0000000000000001","name":"Ada Lovelace","email":"ada@example.com","image":null}}
+```
+
+请把密钥保存在服务器上的环境变量或密钥管理器中，并在代码中从那里读取：
+
+```js title="qrdx.mjs"
+const response = await fetch("https://api.qrdx.dev/v1/codes", {
+  headers: { Authorization: `Bearer ${process.env.QRDX_API_KEY}` },
+});
+```
+
+```python title="qrdx.py"
+import os
+import requests
+
+response = requests.get(
+    "https://api.qrdx.dev/v1/codes",
+    headers={"Authorization": f"Bearer {os.environ['QRDX_API_KEY']}"},
+)
+```
 
 ## 工作区与角色 [#workspaces-and-roles]
 
-密钥属于你创建它时打开的工作区,并以你的身份在该工作区中操作:
+密钥属于你创建它时打开的工作区，并在该工作区中以你的身份操作：
 
-- 密钥可操作该工作区的二维码、扫描、钩子和主题,并遵循该工作区的套餐和[每日配额](/docs/developers/rest-api#rate-limits)。
-- 它能做你在该工作区中能做的事,每次请求时按你当时的[角色](/docs/teams)判断。在你自己的工作区中,你是所有者。如果你的角色变化,密钥的权限也随之变化;如果你离开该工作区,密钥会失效;删除工作区时,其中的密钥也会一并删除。
+- 密钥可以操作该工作区的二维码、扫描、条形码、钩子和主题，受该工作区套餐和[每日配额](/docs/developers/rest-api#rate-limits)的限制。
+- 它能做你在该工作区中能做的事，并在每次请求时按你当时的[角色](/docs/teams)判断。在你自己的工作区中，你是所有者。如果你的角色发生变化，密钥的权限也随之变化；如果你离开该工作区，密钥将失效；删除工作区也会删除其中的密钥。
 
-工作区的每位成员都可以创建密钥。所有者和管理员可以看到工作区中的所有密钥并撤销其中任何一个;成员只能查看和撤销自己的密钥。`GET /v1/me` 返回创建该密钥的人的个人资料。
+工作区的每位成员都可以创建密钥。所有者和管理员可以看到工作区中的所有密钥，并能撤销其中任何一个；成员只能查看和撤销自己的密钥。每个人在每个工作区中最多可以有 25 个有效密钥；已撤销和已过期的密钥不计入。
 
-## 有效期、最近使用和撤销 [#revoke]
+## 有效期、最近使用与撤销 [#revoke]
 
-- **有效期。** 密钥可以永不过期,也可以在 30 天、90 天或 1 年后过期。过期的密钥会收到 `401 INVALID_TOKEN`,并保留在列表中,标记为 **已过期**,直到你将其撤销。
-- **最近使用。** 列表会显示每个密钥最近一次通过请求认证的日期。
-- **撤销。** 选择密钥旁边的 **撤销**。此后使用该密钥的请求会收到 `401 INVALID_TOKEN`。撤销后无法恢复。
+- **有效期。** 在**有效期**下，密钥可以永久有效（**永不过期**），也可以有效 30 天、90 天或 1 年。过期的密钥会收到 `401 INVALID_TOKEN`，并保留在列表中，标记为**已过期**，直到你将其撤销。
+- **最近使用。** 列表会显示每个密钥最近一次通过请求验证的日期。
+- **撤销。** 选择密钥旁边的**撤销**，并用**撤销密钥**确认。此后，使用该密钥的请求会收到 `401 INVALID_TOKEN`。撤销后无法恢复。
 
-每个人在每个工作区中最多可有 25 个有效密钥。已撤销和已过期的密钥不计入。
+```json title="401 Unauthorized"
+{
+  "code": "INVALID_TOKEN",
+  "message": "Invalid API key: it doesn't exist, was revoked or has expired, or its creator left the workspace. Check that you copied the whole key, or create a new one at https://qrdx.dev/dashboard?to=settings/developers.",
+  "status": 401,
+  "docs": "https://qrdx.dev/docs/developers/api-keys"
+}
+```
 
-## 保管好密钥 [#keep-keys-safe]
+## 妥善保管密钥 [#keep-keys-safe]
 
-- 把密钥放在服务器上:存入环境变量或密钥管理器。切勿将其放入网页、移动应用、提示词或代码仓库。
-- 每个运行位置使用一个密钥,这样撤销其中一个不会影响其他的。
-- 只做报表的脚本使用只读密钥,短期任务使用会过期的密钥。
-- 如果密钥泄露,请撤销它并创建新密钥。`qrdx_` 前缀便于在代码和日志中搜索密钥。
+- 切勿把密钥放进网页、移动应用、提示词或代码仓库。需要二维码图片的浏览器代码，请使用无需密钥的 [Image API](/docs/developers/image-api)。
+- 每个运行位置使用一个密钥，这样撤销其中一个不会影响其他密钥。
+- 只做报表的脚本使用**只读**密钥，短期任务使用会过期的密钥。
+- 如果密钥泄露，请将其撤销并创建新密钥。`qrdx_` 前缀便于在代码和日志中找到密钥，密钥扫描工具可以匹配 `qrdx_[0-9A-Za-z]{40}`。
 
-## 自托管 [#self-hosting]
+## 出现问题时 [#if-something-goes-wrong]
 
-[自托管](/docs/self-hosting)实例的数据库中需要有 `api_key` 表,更新后执行常规的架构同步即可创建它(使用 Docker 时是 `migrate` 服务,否则运行 `bun run db:push`;参见[更新](/docs/self-hosting))。在此之前,“设置 → API 密钥和应用”会提示 API 密钥不可用,API 也会以 `401` 拒绝密钥。其 API 位于自有域名的 `/api/v1` 下,这也是新建密钥对话框中填入的地址。
+### `401 UNAUTHORIZED` [#401-unauthorized]
+
+请求中没有 `Authorization` 请求头。请检查请求头名称以及你的 HTTP 客户端是否发送了它；其值是 `Bearer ` 后面跟完整的密钥。
+
+### `401 INVALID_TOKEN` [#401-invalid_token]
+
+密钥复制不完整、已被撤销、已过期，或其创建者已离开工作区。请创建新密钥。对于 OAuth 令牌，请刷新它，或让用户重新走一遍授权流程。
+
+### `403 INSUFFICIENT_SCOPE` [#403-insufficient_scope]
+
+该密钥是**只读**密钥，或是缺少错误信息中所指范围的**自定义**密钥。请创建带有该范围的密钥；已有密钥无法追加范围。
+
+### 此部署暂不支持 API 密钥 [#api-keys-arent-available-on-this-deployment-yet]
+
+[自托管](/docs/self-hosting)实例在其数据库中还没有 `api_key` 表时会显示此提示，更新后的架构同步会创建该表（使用 Docker 时是 `migrate` 服务，其他情况运行 `bun run db:push`）。在此之前，API 会以 `401` 拒绝密钥。它的 API 位于其自有域名下的 `/api/v1`，新建密钥对话框填入的就是这个地址。
+
+## 相关内容 [#related]
+
+- [快速入门](/docs/developers/quickstart)：几分钟内获得密钥和第一个动态二维码
+- [REST API 与 OAuth](/docs/developers/rest-api)：权限范围、用于他人账号的令牌以及速率限制
+- [构建集成](/docs/developers/build-an-integration)：当你的产品代表其他 QRdx 用户操作时
+- [两步验证](/docs/help/privacy-and-security/two-step-verification)：创建密钥前的“确认是你本人”步骤

@@ -1,65 +1,90 @@
 ---
 title: "Code-Steuerung"
-description: "Pausiere einen dynamischen QR-Code, schütze ihn mit einem Passwort, plane ihn zeitlich, begrenze seine Scans und lege fest, wohin beendete Codes Menschen weiterleiten."
-icon: LockKeyhole
+description: "Pausiere einen dynamischen QR-Code, schütze ihn mit einem Passwort, gib ihm Start- und Enddatum, begrenze seine Scans und lege fest, wohin beendete Codes Besucher weiterleiten."
 ---
 
-Jeder [dynamische QR-Code](/docs/dynamic-qr-codes) hat auf seiner Seite im [Dashboard](/dashboard?to=codes) ein Panel **Zugriff & Zeitplan** (öffne einen Code und dann den Tab **Einstellungen**). Änderungen gelten ab dem nächsten Scan; du musst den Code nie neu drucken.
+Die Code-Steuerung entscheidet, ob der Scan eines [dynamischen QR-Codes](/docs/dynamic-qr-codes) überhaupt durchgeht. Nutze sie, wenn ein Code nur eine Zeit lang funktionieren soll (eine Veranstaltung, eine Aktion), nur für bestimmte Personen (ein Passwort) oder nur eine bestimmte Anzahl von Malen, und wenn du einen gedruckten Code abschalten willst, ohne ihn neu zu drucken.
 
-| Steuerung | Was Scanner sehen | Tarif |
+<Callout type="info" title="Pausieren ist kostenlos, der Rest ist Pro">
+  Pausieren funktioniert in jedem Tarif. Passwörter, Start- und Enddatum, Scan-Limits und die Fallback-URL gehören zu Pro und Business. Siehe [Tarife und Limits](/docs/plans-and-limits).
+</Callout>
+
+Es eilt? Die kurzen Anleitungen: [Code pausieren, planen oder begrenzen](/docs/help/dynamic-codes/pause-schedule-limit) und [Code mit einem Passwort schützen](/docs/help/dynamic-codes/password).
+
+## So funktioniert es [#how-it-works]
+
+Jede Steuerung findest du im Bereich **Zugriff & Zeitplan** auf dem Tab **Einstellungen** des Codes (öffne den Code unter [Codes](/dashboard?to=codes)). Bei jedem Scan prüft QRdx die Steuerungen der Reihe nach, bevor es weiterleitet: Ist der Code pausiert, hat er begonnen, ist er beendet, hat er sein Scan-Limit überschritten, braucht er ein Passwort. Die erste Prüfung, die fehlschlägt, bestimmt, was die scannende Person sieht. Änderungen gelten ab dem nächsten Scan; du musst den Code nie neu drucken.
+
+<Shot id="code-settings" />
+
+| Steuerung | Was Scannende sehen | Tarif |
 | --- | --- | --- |
 | Pause | Deine Fallback-URL oder eine neutrale Seite „Diese Kampagne ist pausiert“ | Jeder Tarif |
 | Passwort | Eine Passwortabfrage; mit dem richtigen Passwort öffnet sich der Code | Pro und Business |
-| Start | Vor dem Start: eine Seite „Noch nicht gestartet“ | Pro und Business |
-| Ende | Nach dem Ende: deine Fallback-URL oder eine neutrale Seite „Die Kampagne ist beendet“ | Pro und Business |
-| Scan-Limit | Sobald das Limit erreicht ist: deine Fallback-URL oder die Seite „Beendet“ | Pro und Business |
-| Fallback-URL | Wohin pausierte, beendete und über das Limit hinausgehende Codes Menschen weiterleiten | Pro und Business |
+| Start | Vor dem Start: „Diese Kampagne hat noch nicht begonnen“ | Pro und Business |
+| Ende | Nach dem Ende: deine Fallback-URL oder „Diese Kampagne ist beendet“ | Pro und Business |
+| Scan-Limit | Sobald das Limit erreicht ist: deine Fallback-URL oder die Seite „beendet“ | Pro und Business |
+| Fallback-URL | Wohin pausierte, beendete und über das Limit hinausgehende Codes weiterleiten | Pro und Business |
 
 ## Pause [#pause]
 
-Aktiviere **Code pausieren**, um einen Code vorübergehend zu stoppen, zum Beispiel zwischen zwei Events, und deaktiviere die Option, um ihn fortzusetzen. Scans während der Pause führen zu deiner Fallback-URL, falls du eine festgelegt hast, sonst zu einer schlichten Seite, die sagt, dass die Kampagne pausiert ist. Pausieren ist in jedem Tarif kostenlos.
+Aktiviere **Code pausieren**, um einen Code für eine Weile zu stoppen, zum Beispiel zwischen zwei Veranstaltungen, und deaktiviere es, um ihn fortzusetzen. Auch das **⋯**-Menü des Codes bietet **Pausieren** und **Fortsetzen**, und mit den Sammelaktionen in der Codes-Liste pausierst du mehrere Codes auf einmal. Scans eines pausierten Codes gehen an deine Fallback-URL, falls du eine festgelegt hast, sonst auf eine einfache Seite, die besagt, dass die Kampagne pausiert ist.
 
 ## Passwort [#password]
 
-Lege ein Passwort fest (mindestens 4 Zeichen). Wer den Code scannt, sieht dann zuerst eine Passwortabfrage. Nach Eingabe des richtigen Passworts bleibt dieser Browser 6 Stunden lang freigeschaltet, sowohl auf dem Kurzlink als auch auf der gehosteten Seite, die er öffnet. Wenn du das Passwort änderst oder entfernst, werden alle Browser gesperrt, die mit dem alten Passwort freigeschaltet wurden.
+Lege ein Passwort mit 4 bis 64 Zeichen fest, und wer den Code scannt, sieht zuerst eine Passwortabfrage. Nach der Eingabe des richtigen Passworts bleibt dieser Browser 6 Stunden lang freigeschaltet, sowohl beim Kurzlink als auch auf der gehosteten Seite, die sich öffnet. Wenn du das Passwort änderst, werden alle Browser gesperrt, die das alte freigeschaltet hatten; wenn du es entfernst, ist der Code wieder für alle offen.
 
-Passwörter werden als bcrypt-Hashes gespeichert; QRdx kann dir ein Passwort später nicht anzeigen, sondern nur ersetzen. Wiederholte falsche Eingaben von einem Besucher werden verlangsamt.
+<Shot id="scan-password" />
+
+Passwörter werden als bcrypt-Hashes gespeichert, deshalb kann QRdx dir ein Passwort später nicht anzeigen, sondern nur ersetzen. Wiederholte falsche Eingaben von einer Person werden verlangsamt. Teile das Passwort getrennt vom Code: Wer beides hat, kommt hinein.
 
 ## Start- und Enddatum [#start-and-end-dates]
 
-- **Start:** Bis dahin zeigen Scans „Diese Kampagne ist noch nicht gestartet. Bitte scanne diesen Code später erneut.“
-- **Ende:** Ab dann führen Scans zu deiner Fallback-URL oder zeigen „Diese Kampagne ist beendet“.
+- **Start:** Bis dahin zeigen Scans „Diese Kampagne hat noch nicht begonnen. Bitte scanne diesen Code später noch einmal.“ Die Fallback-URL wird vor dem Start nicht verwendet.
+- **Ende:** Ab dann gehen Scans an deine Fallback-URL oder zeigen „Diese Kampagne ist beendet“.
 
-Datumsangaben gibst du in deiner eigenen Zeitzone ein; sie werden als exakte Zeitpunkte gespeichert, sodass ein Code überall im selben Moment endet. Das Ende muss nach dem Start liegen.
+Datumsangaben gibst du in deiner eigenen Zeitzone ein, gespeichert werden sie als exakte Zeitpunkte, sodass ein Code überall im selben Moment endet. Das Ende muss nach dem Start liegen.
 
 ## Scan-Limit [#scan-limit]
 
-Das Limit zählt Scans genauso wie deine Analysen: Bots, Link-Vorschauen und schnelle wiederholte Scans von einem Gerät werden nicht mitgezählt. Sobald der Code das Limit erreicht hat, führen die nächsten Scans zu deiner Fallback-URL oder zur Seite „Beendet“. Erhöhe oder entferne das Limit, um den Code wieder zu öffnen.
+Das Limit zählt Scans genauso wie deine Analysen: Bots und Link-Vorschauen werden nicht gezählt, und wiederholte Scans von derselben Adresse innerhalb einer Minute zählen einmal. Sobald der Code das Limit erreicht hat, gehen die nächsten Scans an deine Fallback-URL oder auf die Seite „beendet“. Erhöhe oder entferne das Limit, um den Code wieder zu öffnen.
 
 ## Fallback-URL [#fallback-url]
 
-Die Adresse, zu der pausierte, abgelaufene und über das Limit hinausgehende Codes Menschen weiterleiten, etwa deine Startseite oder die nächste Kampagne. Ohne Fallback-URL sehen Scanner eine kleine neutrale Seite. Diese Seite zeigt nie Werbung, keine QRdx-Eigenwerbung und keine Aufforderung zur Registrierung, sondern nur den Status der Kampagne und einen Link „Missbrauch melden“.
+Die Adresse, an die pausierte, beendete und über das Limit hinausgehende Codes Besucher weiterleiten, etwa deine Startseite oder die nächste Kampagne. Ohne Fallback-URL sehen Scannende eine kleine neutrale Seite. Diese Seite zeigt nie Werbung, keine QRdx-Eigenwerbung und keine Aufforderung zur Anmeldung, sondern nur den Status der Kampagne und einen Link **Missbrauch melden**. Die Fallback-URL durchläuft dieselben Sicherheitsprüfungen wie ein Ziel.
 
-Die Fallback-URL durchläuft dieselben Sicherheitsprüfungen wie das Ziel eines Codes.
-
-## Tarife und Downgrades [#plans-and-downgrades]
+## Limits und Tarife [#limits-and-plans]
 
 - Pausieren funktioniert in jedem Tarif.
-- Zum Festlegen oder Ändern von Passwort, Datumsangaben, Scan-Limit oder Fallback-URL brauchst du Pro oder Business.
-- **Ein Downgrade beendet oder sperrt nie einen Code.** Steuerungen, die du unter Pro eingerichtet hast, funktionieren weiter genau wie konfiguriert, und du kannst jede davon in jedem Tarif entfernen.
+- Um ein Passwort, Datumsangaben, ein Scan-Limit oder eine Fallback-URL festzulegen oder zu ändern, brauchst du Pro oder Business.
+- Ein Downgrade beendet oder sperrt nie einen Code. Steuerungen, die du unter Pro festgelegt hast, funktionieren weiter wie konfiguriert, und du kannst sie in jedem Tarif entfernen.
 
 ## Sicherheitsprüfungen für Links [#safety-checks-on-links]
 
 QRdx prüft jedes Ziel und jede Fallback-URL beim Speichern:
 
-- Links, die [Google Web Risk](https://cloud.google.com/web-risk) als Malware, Phishing oder unerwünschte Software listet, werden abgelehnt (wenn der Server einen Web-Risk-Schlüssel hat). Kann Web Risk nicht rechtzeitig antworten, wie es bei einem großen Batch vorkommen kann, wird der Code erstellt und sein Link kurz darauf erneut geprüft; listet Web Risk ihn dann, wird der Code deaktiviert und ein Prüfer sieht ihn sich an;
-- `javascript:`, `data:` und andere Nicht-Web-Links werden abgelehnt;
-- in den ersten 7 Tagen eines Kontos werden Codes, die auf URL-Shortener, reine IP-Adressen oder täuschend ähnliche (Homoglyphen-)Domains verweisen, deaktiviert gespeichert und **zur Prüfung zurückgehalten**. Das Panel weist darauf hin; von dir ist nichts weiter nötig, und ein Prüfer aktiviert den Code, sobald er unbedenklich ist. Neue Konten können außerdem bis zu 30 dynamische Codes pro Stunde erstellen, in einem Workspace mit kostenpflichtigem Tarif {facts.newPaidAccountHourlyCodes}. Wird das überschritten, nennt der Fehler, wie viele Minuten es dauert, bis du weitere erstellen kannst, und ein Import im Dashboard pausiert bis dahin.
+- Links, die [Google Web Risk](https://cloud.google.com/web-risk) als Malware, Phishing oder unerwünschte Software auflistet, werden abgelehnt (wenn der Server einen Web-Risk-Schlüssel hat). Wenn Web Risk nicht rechtzeitig antworten kann, wie es bei einem großen Stapel vorkommen kann, wird der Code erstellt und sein Link kurz danach erneut geprüft; wenn Web Risk ihn dann auflistet, wird der Code abgeschaltet und eine Prüferin oder ein Prüfer sieht ihn sich an.
+- `javascript:`, `data:` und andere Nicht-Web-Links werden abgelehnt.
+- In den ersten 7 Tagen eines Kontos werden Codes, die auf URL-Kürzer, reine IP-Adressen oder täuschend ähnliche (Homoglyphen-)Domains verweisen, abgeschaltet gespeichert und **zur Prüfung zurückgehalten**. Das Panel weist darauf hin; von dir ist nichts weiter nötig, und ein Prüfer schaltet den Code ein, sobald er in Ordnung ist.
+- Neue Konten können bis zu 30 dynamische Codes pro Stunde erstellen, in einem Workspace mit bezahltem Tarif {facts.newPaidAccountHourlyCodes}. Darüber hinaus nennt die Fehlermeldung, wie viele Minuten du warten musst, und ein Import im Dashboard pausiert bis dahin.
 
-Jeder kann einen Code unter [qrdx.dev/report-abuse](/report-abuse) melden. Codes, die nach einer Prüfung deaktiviert wurden, funktionieren für niemanden mehr und können von ihrem Besitzer nicht wieder aktiviert werden.
+Jeder kann einen Code unter [qrdx.dev/report-abuse](/report-abuse) melden. Codes, die nach einer Prüfung abgeschaltet wurden, funktionieren für niemanden mehr und können von ihren Eigentümern nicht wieder eingeschaltet werden. Siehe [Einen schädlichen QR-Code melden](/docs/help/privacy-and-security/report-abuse).
+
+## Für Entwickler [#for-developers]
+
+Die REST API erstellt, aktualisiert und löscht Codes, legt aber keine Steuerungen fest; die findest du im Dashboard. Der `status` eines Codes in API-Antworten zeigt dir, ob er aktiv oder archiviert ist. Scans, die von einer Steuerung blockiert werden, werden nicht als `scan.created`-[Webhook](/docs/webhooks)-Ereignisse zugestellt, weil sie nicht als Scans erfasst werden.
 
 ## Self-Hosting [#self-hosting]
 
-- `WEB_RISK_API_KEY`: ein Google-Cloud-API-Schlüssel mit aktivierter Web Risk API. Ohne ihn werden Links nur mit den oben genannten Offline-Regeln geprüft.
+- `WEB_RISK_API_KEY`: ein Google-Cloud-API-Schlüssel mit aktivierter Web Risk API. Ohne ihn werden Links nur durch die oben genannten Offline-Regeln geprüft.
+- `SAFETY_YOUNG_ACCOUNT_DAYS`, `SAFETY_YOUNG_ACCOUNT_DYNAMIC_PER_HOUR` und `SAFETY_RECHECK_BATCH` ändern die 7 Tage, die 30 Codes pro Stunde und die Größe einer Web-Risk-Neuprüfung.
 - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` und `TURNSTILE_SECRET_KEY`: Cloudflare Turnstile im öffentlichen Meldeformular (optional).
-- Freischalt-Cookies werden mit `BETTER_AUTH_SECRET` signiert.
+- Freischaltungs-Cookies werden mit `BETTER_AUTH_SECRET` signiert.
+
+Siehe [Self-Hosting](/docs/self-hosting#optional-services).
+
+## Verwandte Themen [#related]
+
+- [Smart Routing](/docs/smart-routing): ein anderes Ziel je nach Gerät, Land, Zeit oder Gebiet
+- [Ein Scan zeigt eine Fehlerseite](/docs/help/troubleshooting/error-pages): was jede neutrale Seite bedeutet
+- [Was mit deinen Codes passiert, wenn du nicht mehr zahlst](/docs/help/account-and-billing/never-hostage)

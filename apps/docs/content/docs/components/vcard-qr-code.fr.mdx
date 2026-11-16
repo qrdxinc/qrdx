@@ -1,8 +1,10 @@
 ---
 title: "QR code vCard"
-description: "Un QR code qui enregistre une carte de contact lorsqu'il est scanné, avec un générateur vCard 3.0 typé."
+description: "Un QR code pour les projets shadcn/ui qui enregistre une fiche de contact lorsqu'il est scanné, avec un générateur vCard 3.0 typé."
 icon: Users
 ---
+
+`VCardQrCode` affiche un code qui enregistre un contact lorsqu'un appareil photo de téléphone le scanne, avec le nom et la fonction en dessous. Utilisez-le sur une carte de visite, dans un annuaire du personnel, sur un badge de conférence ou sur une page de signature d'e-mail.
 
 <ComponentLinks name="vcard-qr-code" />
 
@@ -14,11 +16,11 @@ icon: Users
 
 ## Utilisation [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { VCardQrCode } from "@/components/vcard-qr-code";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <VCardQrCode
   contact={{
     firstName: "Ada",
@@ -35,18 +37,34 @@ Les appareils photo des téléphones proposent d'enregistrer le contact lorsqu'i
 
 ### Générateur vCard [#vcard-builder]
 
-`buildVCard` renvoie le texte vCard 3.0 encodé par le code, avec les virgules, points-virgules, barres obliques inverses et sauts de ligne échappés. Utilisez-le avec n'importe quel moteur de rendu de QR code, ou pour proposer le même contact en téléchargement `.vcf`.
+`buildVCard` renvoie le texte vCard 3.0 encodé par le code, avec les virgules, les points-virgules, les barres obliques inverses et les sauts de ligne échappés. Utilisez-le avec n'importe quel moteur de rendu de QR code, ou pour proposer le même contact en téléchargement `.vcf`.
 
 <ComponentPreview name="vcard-qr-code-payload" />
 
-Une carte de contact contient plus de texte qu'un lien. Le composant utilise donc le niveau de correction d'erreur `M` pour conserver de grands modules. N'ajoutez que les champs utiles, et vérifiez la taille d'impression nécessaire avec le [calculateur de taille d'impression](/tools/print-size).
+Une fiche de contact contient plus de texte qu'un lien. Le composant utilise donc le niveau de correction d'erreur `M` afin de garder des modules de grande taille. N'ajoutez que les champs utiles, et vérifiez la taille d'impression avec le [calculateur de taille d'impression](/tools/print-size).
+
+## Accessibilité et rendu [#accessibility-and-rendering]
+
+- Le code porte `aria-label="QR code with the contact card for <name>"`. Les champs de la fiche ne sont pas lus à voix haute.
+- Le nom, ainsi que le titre et l'organisation sous le code, forment le `<figcaption>` de la figure. Définissez `showDetails={false}` pour n'afficher que le code.
+- Le composant est un Client Component, et le code est rendu sur le serveur.
 
 ## Référence de l'API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/vcard-qr-code.tsx" type="{ [K in keyof VCardQrCodeProps as K extends keyof ComponentProps<'figure'> ? never : K]: VCardQrCodeProps[K] }" />
 
-Toute autre prop, comme `className`, est transmise à l'élément `<figure>` englobant.
+Toute autre prop, comme `className`, est transmise au `<figure>` englobant.
 
 ### VCardContact [#vcardcontact]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/vcard-qr-code.tsx" name="VCardContact" />
+
+`buildVCard(contact: VCardContact): string` écrit les lignes `N`, `FN`, `ORG`, `TITLE`, `TEL` (professionnel et mobile), `EMAIL`, `URL`, `ADR` et `NOTE`, chacune uniquement lorsque le champ est renseigné.
+
+## Voir aussi [#related]
+
+<Cards>
+  <Card href="/docs/components/wifi-qr-code" title="QR code Wi-Fi" description="La même idée pour un réseau Wi-Fi." />
+  <Card href="/docs/components/qr-code" title="QR code" description="Un code pour n'importe quel contenu, avec des boutons de téléchargement." />
+  <Card href="/docs/nfc" title="Tags NFC et cartes de visite" description="Placez le même contact sur un tag NFC." />
+</Cards>

@@ -31,8 +31,8 @@
     "source": "fb9ef894175c",
     "status": "machine"
   },
-  "nav.entries.tools": {
-    "source": "ea93d6a262ec",
+  "nav.entries.solutions": {
+    "source": "900fe12faa26",
     "status": "machine"
   },
   "nav.entries.developers": {
@@ -43,240 +43,316 @@
     "source": "e89b30aa1dc3",
     "status": "machine"
   },
-  "nav.entries.pricing": {
-    "source": "dfe95783edfe",
+  "nav.columns.industries": {
+    "source": "a8da99328cf9",
     "status": "machine"
   },
-  "nav.items.playground.name": {
-    "source": "a6273fb551f2",
+  "nav.columns.teams": {
+    "source": "1e1a1c078af2",
+    "status": "machine"
+  },
+  "nav.columns.codeTypes": {
+    "source": "eb2337fd0f88",
+    "status": "machine"
+  },
+  "nav.columns.build": {
+    "source": "bdd254b65baa",
+    "status": "machine"
+  },
+  "nav.columns.embed": {
+    "source": "7512561d2f68",
+    "status": "machine"
+  },
+  "nav.columns.connect": {
+    "source": "1a2303ede074",
+    "status": "machine"
+  },
+  "nav.columns.help": {
+    "source": "b79cac926e0b",
+    "status": "machine"
+  },
+  "nav.columns.company": {
+    "source": "de4743c87973",
+    "status": "machine"
+  },
+  "nav.columns.updates": {
+    "source": "22e2bada8f1c",
     "status": "machine"
   },
   "nav.items.playground.description": {
-    "source": "6225fd0047c0",
+    "source": "8e6a7931018d",
     "status": "machine"
   },
-  "nav.items.dynamicCodes.name": {
-    "source": "6089067b0798",
+  "nav.items.playground.short": {
+    "source": "3a6c424bf0ae",
     "status": "machine"
   },
   "nav.items.dynamicCodes.description": {
-    "source": "6cfd26f51e37",
+    "source": "d50147a2bafc",
     "status": "machine"
   },
-  "nav.items.aiThemes.name": {
-    "source": "0f7e5513dd4c",
-    "status": "machine"
-  },
-  "nav.items.aiThemes.description": {
-    "source": "18c508a95efe",
-    "status": "machine"
-  },
-  "nav.items.aiArt.name": {
-    "source": "fbd1abbf8fdc",
+  "nav.items.dynamicCodes.short": {
+    "source": "024a54ddf421",
     "status": "machine"
   },
   "nav.items.aiArt.description": {
-    "source": "e4172f97ec71",
+    "source": "b0e0d0012f53",
     "status": "machine"
   },
-  "nav.items.communityThemes.name": {
-    "source": "037a4b1636b8",
-    "status": "machine"
-  },
-  "nav.items.communityThemes.description": {
-    "source": "7f84a1986809",
-    "status": "machine"
-  },
-  "nav.items.pageTemplates.name": {
-    "source": "632a00fb54a6",
-    "status": "machine"
-  },
-  "nav.items.pageTemplates.description": {
-    "source": "44312f9cc9cf",
-    "status": "machine"
-  },
-  "nav.items.generators.name": {
-    "source": "603c1d77656d",
-    "status": "machine"
-  },
-  "nav.items.generators.description": {
-    "source": "615f79e6bd38",
-    "status": "machine"
-  },
-  "nav.items.bulk.name": {
-    "source": "48c46ecdf3c7",
-    "status": "machine"
-  },
-  "nav.items.bulk.description": {
-    "source": "3a9f01d0ae7c",
-    "status": "machine"
-  },
-  "nav.items.scanner.name": {
-    "source": "f96c48da96ed",
-    "status": "machine"
-  },
-  "nav.items.scanner.description": {
-    "source": "94ea9ed03d9f",
-    "status": "machine"
-  },
-  "nav.items.scanChecker.name": {
-    "source": "208aae4852a3",
-    "status": "machine"
-  },
-  "nav.items.scanChecker.description": {
-    "source": "eb8dfd035fc3",
-    "status": "machine"
-  },
-  "nav.items.printSize.name": {
-    "source": "457447ccdac3",
-    "status": "machine"
-  },
-  "nav.items.printSize.description": {
-    "source": "fc75451dc6a2",
-    "status": "machine"
-  },
-  "nav.items.barcode.name": {
-    "source": "4717ee594681",
+  "nav.items.aiArt.short": {
+    "source": "57d5bb58e51c",
     "status": "machine"
   },
   "nav.items.barcode.description": {
-    "source": "3919b6853880",
+    "source": "e6aeabe38f5f",
     "status": "machine"
   },
-  "nav.items.allTools.name": {
-    "source": "81c151f98a19",
+  "nav.items.barcode.short": {
+    "source": "7070f6f07727",
     "status": "machine"
   },
-  "nav.items.allTools.description": {
-    "source": "0e6d7ddbe4d2",
+  "nav.items.bulk.description": {
+    "source": "6d650bb212a8",
     "status": "machine"
   },
-  "nav.items.docs.name": {
-    "source": "c205924de0fe",
+  "nav.items.bulk.short": {
+    "source": "8edc0792e767",
     "status": "machine"
   },
-  "nav.items.docs.description": {
-    "source": "59b67e24421e",
+  "nav.items.community.description": {
+    "source": "3c3290bca300",
     "status": "machine"
   },
-  "nav.items.mcp.name": {
-    "source": "d938c8168e3a",
+  "nav.items.community.short": {
+    "source": "9cf8acbbb726",
+    "status": "machine"
+  },
+  "nav.items.restaurants.description": {
+    "source": "c6b5664da57d",
+    "status": "machine"
+  },
+  "nav.items.restaurants.short": {
+    "source": "601e4c80b05c",
+    "status": "machine"
+  },
+  "nav.items.retail.description": {
+    "source": "a1aa00a625a8",
+    "status": "machine"
+  },
+  "nav.items.retail.short": {
+    "source": "940a37866797",
+    "status": "machine"
+  },
+  "nav.items.realEstate.description": {
+    "source": "05731ca0be19",
+    "status": "machine"
+  },
+  "nav.items.realEstate.short": {
+    "source": "c184d8dfa42a",
+    "status": "machine"
+  },
+  "nav.items.events.description": {
+    "source": "d2fc7ddf08c3",
+    "status": "machine"
+  },
+  "nav.items.events.short": {
+    "source": "468ae393b7cd",
+    "status": "machine"
+  },
+  "nav.items.enterprise.description": {
+    "source": "cc0b3932f28e",
+    "status": "machine"
+  },
+  "nav.items.enterprise.short": {
+    "source": "56bc38326807",
+    "status": "machine"
+  },
+  "nav.items.agencies.description": {
+    "source": "a66b48d55a12",
+    "status": "machine"
+  },
+  "nav.items.agencies.short": {
+    "source": "bccc8bccd013",
+    "status": "machine"
+  },
+  "nav.items.openSource.description": {
+    "source": "0492d65ff56c",
+    "status": "machine"
+  },
+  "nav.items.openSource.short": {
+    "source": "d3fec33eb28d",
+    "status": "machine"
+  },
+  "nav.items.placements.description": {
+    "source": "ecb38f7bb387",
+    "status": "machine"
+  },
+  "nav.items.placements.short": {
+    "source": "114534ba154a",
+    "status": "machine"
+  },
+  "nav.items.restApi.description": {
+    "source": "b46141ec8751",
+    "status": "machine"
+  },
+  "nav.items.restApi.short": {
+    "source": "5cf4f4279b68",
+    "status": "machine"
+  },
+  "nav.items.imageApi.description": {
+    "source": "f63ebfc16c71",
+    "status": "machine"
+  },
+  "nav.items.imageApi.short": {
+    "source": "33010caf171f",
     "status": "machine"
   },
   "nav.items.mcp.description": {
     "source": "977b2c1d5ca1",
     "status": "machine"
   },
-  "nav.items.qrCodeApi.name": {
-    "source": "f04a8a45ca80",
+  "nav.items.mcp.short": {
+    "source": "18a6d4e358a2",
     "status": "machine"
   },
-  "nav.items.qrCodeApi.description": {
-    "source": "35a969b520cc",
+  "nav.items.cli.description": {
+    "source": "f33278d639b1",
     "status": "machine"
   },
-  "nav.items.nextjs.name": {
-    "source": "0f3633c8f553",
+  "nav.items.cli.short": {
+    "source": "d9049b03f4ff",
     "status": "machine"
   },
-  "nav.items.nextjs.description": {
-    "source": "14638c3c59b8",
+  "nav.items.react.description": {
+    "source": "43db91f36b29",
     "status": "machine"
   },
-  "nav.items.imageApi.name": {
-    "source": "6856e461415d",
-    "status": "machine"
-  },
-  "nav.items.imageApi.description": {
-    "source": "2cef6a46994e",
-    "status": "machine"
-  },
-  "nav.items.shadcn.name": {
-    "source": "5ce934a766f9",
+  "nav.items.react.short": {
+    "source": "09591724693a",
     "status": "machine"
   },
   "nav.items.shadcn.description": {
     "source": "7cfb7251f1f0",
     "status": "machine"
   },
-  "nav.items.plugins.name": {
-    "source": "9514b7ff4860",
+  "nav.items.shadcn.short": {
+    "source": "74a5d102458d",
     "status": "machine"
   },
-  "nav.items.plugins.description": {
-    "source": "eefe5821f4b2",
+  "nav.items.nextjs.description": {
+    "source": "14638c3c59b8",
     "status": "machine"
   },
-  "nav.items.github.name": {
-    "source": "f911e414cf6b",
-    "status": "machine"
-  },
-  "nav.items.github.description": {
-    "source": "85a3a994b2c1",
-    "status": "machine"
-  },
-  "nav.items.help.name": {
-    "source": "e2f55c84f3b4",
-    "status": "machine"
-  },
-  "nav.items.help.description": {
-    "source": "cdd480f80c60",
-    "status": "machine"
-  },
-  "nav.items.blog.name": {
-    "source": "8c6bc099534a",
-    "status": "machine"
-  },
-  "nav.items.blog.description": {
-    "source": "598fa110bdc1",
-    "status": "machine"
-  },
-  "nav.items.customers.name": {
-    "source": "aabe76f1f4ec",
-    "status": "machine"
-  },
-  "nav.items.customers.description": {
-    "source": "83aee76af003",
-    "status": "machine"
-  },
-  "nav.items.compare.name": {
-    "source": "e888155d8c7d",
-    "status": "machine"
-  },
-  "nav.items.compare.description": {
-    "source": "88268c3c2897",
-    "status": "machine"
-  },
-  "nav.items.changelog.name": {
-    "source": "ead07c84baac",
-    "status": "machine"
-  },
-  "nav.items.changelog.description": {
-    "source": "3a7d3aa5b71f",
-    "status": "machine"
-  },
-  "nav.items.integrations.name": {
-    "source": "090512d93fcc",
+  "nav.items.nextjs.short": {
+    "source": "5565afdafca1",
     "status": "machine"
   },
   "nav.items.integrations.description": {
     "source": "5e7b8b2c9bb0",
     "status": "machine"
   },
-  "nav.items.support.name": {
-    "source": "814f4ed2d5bd",
+  "nav.items.integrations.short": {
+    "source": "1c669d425d98",
     "status": "machine"
   },
-  "nav.items.support.description": {
+  "nav.items.plugins.description": {
+    "source": "eefe5821f4b2",
+    "status": "machine"
+  },
+  "nav.items.plugins.short": {
+    "source": "c0f42b2178f0",
+    "status": "machine"
+  },
+  "nav.items.webhooks.description": {
+    "source": "fd895a4ce41e",
+    "status": "machine"
+  },
+  "nav.items.webhooks.short": {
+    "source": "84c4ba18150d",
+    "status": "machine"
+  },
+  "nav.items.docs.description": {
+    "source": "edeb10a03edf",
+    "status": "machine"
+  },
+  "nav.items.docs.short": {
+    "source": "1a51d2126a06",
+    "status": "machine"
+  },
+  "nav.items.github.description": {
+    "source": "9838c4cf2382",
+    "status": "machine"
+  },
+  "nav.items.github.short": {
+    "source": "666920766d4f",
+    "status": "machine"
+  },
+  "nav.items.help.description": {
+    "source": "cdd480f80c60",
+    "status": "machine"
+  },
+  "nav.items.help.short": {
+    "source": "a8f97dd434be",
+    "status": "machine"
+  },
+  "nav.items.contact.description": {
     "source": "b6644d31b741",
     "status": "machine"
   },
-  "nav.account.tryPlayground": {
-    "source": "9a49d38f2987",
+  "nav.items.contact.short": {
+    "source": "4618d61c09f6",
     "status": "machine"
   },
-  "nav.account.playground": {
-    "source": "a6273fb551f2",
+  "nav.items.customers.description": {
+    "source": "83aee76af003",
+    "status": "machine"
+  },
+  "nav.items.customers.short": {
+    "source": "83aee76af003",
+    "status": "machine"
+  },
+  "nav.items.security.description": {
+    "source": "7a50ad5bd3db",
+    "status": "machine"
+  },
+  "nav.items.security.short": {
+    "source": "ead3b7fe0ba9",
+    "status": "machine"
+  },
+  "nav.items.affiliates.description": {
+    "source": "36096be0e033",
+    "status": "machine"
+  },
+  "nav.items.affiliates.short": {
+    "source": "0db0f2b829e9",
+    "status": "machine"
+  },
+  "nav.items.blog.description": {
+    "source": "598fa110bdc1",
+    "status": "machine"
+  },
+  "nav.items.blog.short": {
+    "source": "08498494f9b1",
+    "status": "machine"
+  },
+  "nav.items.changelog.description": {
+    "source": "3a7d3aa5b71f",
+    "status": "machine"
+  },
+  "nav.items.changelog.short": {
+    "source": "135e912e8905",
+    "status": "machine"
+  },
+  "nav.items.tools.description": {
+    "source": "77f2d796fda0",
+    "status": "machine"
+  },
+  "nav.items.tools.short": {
+    "source": "759a9b1fce60",
+    "status": "machine"
+  },
+  "nav.account.create": {
+    "source": "3f839cb21501",
     "status": "machine"
   },
   "nav.account.dashboard": {
@@ -297,6 +373,10 @@
   },
   "nav.github.starOnGithubCount": {
     "source": "20417aca9e57",
+    "status": "machine"
+  },
+  "nav.github.stars": {
+    "source": "2de13519aab9",
     "status": "machine"
   },
   "nav.userProfileDropdown.tryThePlayground": {
@@ -372,39 +452,43 @@
     "status": "machine"
   },
   "footer.description": {
-    "source": "78e26afcf37f",
+    "source": "c882420675c8",
     "status": "machine"
   },
   "footer.starOnGithub": {
     "source": "9000a7b3a285",
     "status": "machine"
   },
+  "footer.newsOnX": {
+    "source": "063a2a55464f",
+    "status": "machine"
+  },
   "footer.navLabel": {
     "source": "26c87bb51e69",
     "status": "machine"
   },
-  "footer.scanIt": {
-    "source": "9bbd07dba8b4",
-    "status": "machine"
-  },
   "footer.copyright": {
-    "source": "94bde9ba3b05",
+    "source": "02b39870e404",
     "status": "machine"
   },
   "footer.columns.product": {
     "source": "fb9ef894175c",
     "status": "machine"
   },
-  "footer.columns.tools": {
-    "source": "ea93d6a262ec",
-    "status": "machine"
-  },
   "footer.columns.developers": {
     "source": "fc799da2088d",
     "status": "machine"
   },
+  "footer.columns.solutions": {
+    "source": "900fe12faa26",
+    "status": "machine"
+  },
   "footer.columns.resources": {
     "source": "e89b30aa1dc3",
+    "status": "machine"
+  },
+  "footer.columns.company": {
+    "source": "de4743c87973",
     "status": "machine"
   },
   "footer.columns.compare": {
@@ -412,35 +496,35 @@
     "status": "machine"
   },
   "footer.links.playground": {
-    "source": "a6273fb551f2",
+    "source": "799653bb4ee1",
     "status": "machine"
   },
   "footer.links.dynamicCodes": {
     "source": "6089067b0798",
     "status": "machine"
   },
+  "footer.links.aiArt": {
+    "source": "fbd1abbf8fdc",
+    "status": "machine"
+  },
   "footer.links.aiThemes": {
     "source": "0f7e5513dd4c",
     "status": "machine"
   },
-  "footer.links.communityThemes": {
-    "source": "037a4b1636b8",
+  "footer.links.barcode": {
+    "source": "eb409b2f71a8",
+    "status": "machine"
+  },
+  "footer.links.bulk": {
+    "source": "48c46ecdf3c7",
     "status": "machine"
   },
   "footer.links.pageTemplates": {
     "source": "632a00fb54a6",
     "status": "machine"
   },
-  "footer.links.pricing": {
-    "source": "dfe95783edfe",
-    "status": "machine"
-  },
-  "footer.links.guarantee": {
-    "source": "cc813935fc0f",
-    "status": "machine"
-  },
-  "footer.links.enterprise": {
-    "source": "3fbe5ed156f1",
+  "footer.links.community": {
+    "source": "bb501d7877eb",
     "status": "machine"
   },
   "footer.links.slackBot": {
@@ -455,108 +539,20 @@
     "source": "edfc291b97bb",
     "status": "machine"
   },
-  "footer.links.generators": {
-    "source": "603c1d77656d",
+  "footer.links.restaurants": {
+    "source": "0beeae358e66",
     "status": "machine"
   },
-  "footer.links.bulk": {
-    "source": "48c46ecdf3c7",
+  "footer.links.retail": {
+    "source": "cdb38c8dc89a",
     "status": "machine"
   },
-  "footer.links.scanChecker": {
-    "source": "208aae4852a3",
+  "footer.links.realEstate": {
+    "source": "133a8c12d13d",
     "status": "machine"
   },
-  "footer.links.printSize": {
-    "source": "457447ccdac3",
-    "status": "machine"
-  },
-  "footer.links.barcode": {
-    "source": "4717ee594681",
-    "status": "machine"
-  },
-  "footer.links.pdfQr": {
-    "source": "121fe1fb37e8",
-    "status": "machine"
-  },
-  "footer.links.businessCard": {
-    "source": "16267e06af8f",
-    "status": "machine"
-  },
-  "footer.links.menuQr": {
-    "source": "658c43b0ede6",
-    "status": "machine"
-  },
-  "footer.links.scanner": {
-    "source": "f96c48da96ed",
-    "status": "machine"
-  },
-  "footer.links.allTools": {
-    "source": "81c151f98a19",
-    "status": "machine"
-  },
-  "footer.links.docs": {
-    "source": "c205924de0fe",
-    "status": "machine"
-  },
-  "footer.links.apiReference": {
-    "source": "484ee9bb6e51",
-    "status": "machine"
-  },
-  "footer.links.qrCodeApi": {
-    "source": "f04a8a45ca80",
-    "status": "machine"
-  },
-  "footer.links.nextjs": {
-    "source": "0f3633c8f553",
-    "status": "machine"
-  },
-  "footer.links.imageApi": {
-    "source": "6856e461415d",
-    "status": "machine"
-  },
-  "footer.links.mcp": {
-    "source": "d938c8168e3a",
-    "status": "machine"
-  },
-  "footer.links.shadcn": {
-    "source": "5ce934a766f9",
-    "status": "machine"
-  },
-  "footer.links.plugins": {
-    "source": "9514b7ff4860",
-    "status": "machine"
-  },
-  "footer.links.selfHosting": {
-    "source": "b817cbd4d6df",
-    "status": "machine"
-  },
-  "footer.links.openSource": {
-    "source": "67a0d2e0dab4",
-    "status": "machine"
-  },
-  "footer.links.github": {
-    "source": "f911e414cf6b",
-    "status": "machine"
-  },
-  "footer.links.help": {
-    "source": "e2f55c84f3b4",
-    "status": "machine"
-  },
-  "footer.links.blog": {
-    "source": "8c6bc099534a",
-    "status": "machine"
-  },
-  "footer.links.customers": {
-    "source": "aabe76f1f4ec",
-    "status": "machine"
-  },
-  "footer.links.changelog": {
-    "source": "ead07c84baac",
-    "status": "machine"
-  },
-  "footer.links.integrations": {
-    "source": "090512d93fcc",
+  "footer.links.events": {
+    "source": "8d14f6e72de8",
     "status": "machine"
   },
   "footer.links.industries": {
@@ -567,36 +563,160 @@
     "source": "1dc58ba725ad",
     "status": "machine"
   },
-  "footer.links.affiliates": {
-    "source": "ce78cb6655b7",
+  "footer.links.generators": {
+    "source": "baa016e655b5",
+    "status": "machine"
+  },
+  "footer.links.typeUrl": {
+    "source": "b5a229ac8bec",
+    "status": "machine"
+  },
+  "footer.links.typeWifi": {
+    "source": "337253f2e8d4",
+    "status": "machine"
+  },
+  "footer.links.typeVcard": {
+    "source": "5f1e585d4bb9",
+    "status": "machine"
+  },
+  "footer.links.typePdf": {
+    "source": "1d393b0081b6",
+    "status": "machine"
+  },
+  "footer.links.enterprise": {
+    "source": "3fbe5ed156f1",
+    "status": "machine"
+  },
+  "footer.links.agencies": {
+    "source": "3b8797f648d8",
+    "status": "machine"
+  },
+  "footer.links.openSource": {
+    "source": "67a0d2e0dab4",
+    "status": "machine"
+  },
+  "footer.links.docs": {
+    "source": "7af023c43013",
+    "status": "machine"
+  },
+  "footer.links.restApi": {
+    "source": "41a52587276c",
+    "status": "machine"
+  },
+  "footer.links.apiReference": {
+    "source": "484ee9bb6e51",
+    "status": "machine"
+  },
+  "footer.links.imageApi": {
+    "source": "6856e461415d",
+    "status": "machine"
+  },
+  "footer.links.mcp": {
+    "source": "d938c8168e3a",
+    "status": "machine"
+  },
+  "footer.links.cli": {
+    "source": "e759793341ff",
+    "status": "machine"
+  },
+  "footer.links.react": {
+    "source": "438d3a498a33",
+    "status": "machine"
+  },
+  "footer.links.shadcn": {
+    "source": "5ce934a766f9",
+    "status": "machine"
+  },
+  "footer.links.nextjs": {
+    "source": "0f3633c8f553",
+    "status": "machine"
+  },
+  "footer.links.integrations": {
+    "source": "090512d93fcc",
+    "status": "machine"
+  },
+  "footer.links.plugins": {
+    "source": "9514b7ff4860",
+    "status": "machine"
+  },
+  "footer.links.webhooks": {
+    "source": "45808d75bf89",
+    "status": "machine"
+  },
+  "footer.links.selfHosting": {
+    "source": "b817cbd4d6df",
+    "status": "machine"
+  },
+  "footer.links.github": {
+    "source": "f911e414cf6b",
+    "status": "machine"
+  },
+  "footer.links.help": {
+    "source": "e2f55c84f3b4",
     "status": "machine"
   },
   "footer.links.contact": {
     "source": "2b5c3d26721a",
     "status": "machine"
   },
-  "footer.links.legal": {
-    "source": "4787eaf7c938",
+  "footer.links.blog": {
+    "source": "8c6bc099534a",
     "status": "machine"
   },
-  "footer.links.privacy": {
-    "source": "ba445cff3898",
+  "footer.links.changelog": {
+    "source": "ead07c84baac",
+    "status": "machine"
+  },
+  "footer.links.customers": {
+    "source": "aabe76f1f4ec",
+    "status": "machine"
+  },
+  "footer.links.tools": {
+    "source": "5c2bd9d1471a",
+    "status": "machine"
+  },
+  "footer.links.scanner": {
+    "source": "f96c48da96ed",
+    "status": "machine"
+  },
+  "footer.links.scanChecker": {
+    "source": "208aae4852a3",
+    "status": "machine"
+  },
+  "footer.links.printSize": {
+    "source": "457447ccdac3",
+    "status": "machine"
+  },
+  "footer.links.security": {
+    "source": "8f6fb4eb7f42",
+    "status": "machine"
+  },
+  "footer.links.affiliates": {
+    "source": "ce78cb6655b7",
+    "status": "machine"
+  },
+  "footer.links.guarantee": {
+    "source": "cc813935fc0f",
+    "status": "machine"
+  },
+  "footer.links.pricing": {
+    "source": "dfe95783edfe",
+    "status": "machine"
+  },
+  "footer.links.allComparisons": {
+    "source": "ed36a5ad0845",
+    "status": "machine"
+  },
+  "footer.links.legal": {
+    "source": "4787eaf7c938",
     "status": "machine"
   },
   "footer.links.terms": {
     "source": "e69e06144877",
     "status": "machine"
   },
-  "footer.links.subprocessors": {
-    "source": "4fd685570eae",
-    "status": "machine"
-  },
-  "footer.links.reportAbuse": {
-    "source": "179e5a21cc1e",
-    "status": "machine"
-  },
-  "footer.links.acceptableUse": {
-    "source": "9b41b2884b0e",
+  "footer.links.privacy": {
+    "source": "ba445cff3898",
     "status": "machine"
   },
   "footer.links.cookies": {
@@ -605,6 +725,14 @@
   },
   "footer.links.dpa": {
     "source": "5730e8c986a8",
+    "status": "machine"
+  },
+  "footer.links.subprocessors": {
+    "source": "4fd685570eae",
+    "status": "machine"
+  },
+  "footer.links.acceptableUse": {
+    "source": "9b41b2884b0e",
     "status": "machine"
   },
   "footer.links.aiFeatures": {
@@ -619,16 +747,12 @@
     "source": "3f433549a264",
     "status": "machine"
   },
-  "footer.links.security": {
-    "source": "8f6fb4eb7f42",
-    "status": "machine"
-  },
   "footer.links.securityPolicy": {
     "source": "5929ef9641ba",
     "status": "machine"
   },
-  "footer.links.allComparisons": {
-    "source": "ed36a5ad0845",
+  "footer.links.reportAbuse": {
+    "source": "179e5a21cc1e",
     "status": "machine"
   },
   "localeSwitcher.label": {
@@ -640,15 +764,19 @@
     "status": "machine"
   },
   "cta.title": {
-    "source": "1f78fdd09efb",
+    "source": "97faf67ad6ce",
     "status": "machine"
   },
   "cta.subtext": {
-    "source": "cd7bad450b9c",
+    "source": "824877bffa1f",
     "status": "machine"
   },
   "cta.button": {
-    "source": "6d3d007809fa",
+    "source": "3f839cb21501",
+    "status": "machine"
+  },
+  "cta.secondary": {
+    "source": "e64f4839ef20",
     "status": "machine"
   },
   "consent.banner.title": {

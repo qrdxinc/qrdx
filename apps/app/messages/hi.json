@@ -11,135 +11,169 @@
     "closeMenu": "मेन्यू बंद करें",
     "entries": {
       "product": "प्रोडक्ट",
-      "tools": "टूल्स",
+      "solutions": "समाधान",
       "developers": "डेवलपर्स",
-      "resources": "रिसोर्स",
-      "pricing": "प्राइसिंग"
+      "resources": "रिसोर्स"
+    },
+    "columns": {
+      "industries": "इंडस्ट्री",
+      "teams": "टीमें",
+      "codeTypes": "कोड के प्रकार",
+      "build": "बनाएँ",
+      "embed": "एम्बेड",
+      "connect": "कनेक्ट",
+      "help": "मदद",
+      "company": "कंपनी",
+      "updates": "अपडेट"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "पैटर्न, रंग, लोगो और फ़्रेम के साथ QR कोड डिज़ाइन करें और डाउनलोड करें। साइनअप की ज़रूरत नहीं।"
+        "description": "डिज़ाइन करें और कोड डाउनलोड करें, फ़्री, बिना साइनअप",
+        "short": "फ़्री, बिना साइनअप"
       },
       "dynamicCodes": {
-        "name": "डायनेमिक QR कोड",
-        "description": "प्रिंट के बाद भी लिंक बदलें और स्कैन गिनें"
-      },
-      "aiThemes": {
-        "name": "AI थीम",
-        "description": "स्टाइल बताएं और AI से थीम डिज़ाइन करवाएं"
+        "description": "प्रिंट के बाद लिंक बदलें, हर स्कैन गिनें",
+        "short": "लिंक बदलें, स्कैन गिनें"
       },
       "aiArt": {
-        "name": "AI QR आर्ट",
-        "description": "लिंक को AI आर्टवर्क में बदलें, जो फिर भी स्कैन हो"
-      },
-      "communityThemes": {
-        "name": "कम्युनिटी थीम",
-        "description": "दूसरों के शेयर किए डिज़ाइन देखें और दोबारा इस्तेमाल करें"
-      },
-      "pageTemplates": {
-        "name": "पेज टेम्पलेट",
-        "description": "हर होस्टेड पेज टेम्पलेट के लाइव डेमो"
-      },
-      "generators": {
-        "name": "QR कोड जनरेटर",
-        "description": "हर टाइप के लिए एक जनरेटर: Wi-Fi, vCard, WhatsApp, UPI, पेमेंट और बहुत कुछ।"
-      },
-      "bulk": {
-        "name": "बल्क जनरेटर",
-        "description": "एक CSV से {max, number} तक स्टाइल वाले कोड बनाएं"
-      },
-      "scanner": {
-        "name": "QR कोड स्कैनर",
-        "description": "सेफ़-लिंक प्रीव्यू के साथ कोड स्कैन करें"
-      },
-      "scanChecker": {
-        "name": "स्कैन चेकर",
-        "description": "जांचें कि QR कोड कितनी भरोसे से स्कैन होता है"
-      },
-      "printSize": {
-        "name": "प्रिंट साइज़ कैलकुलेटर",
-        "description": "अपनी स्कैन दूरी के लिए कम से कम साइज़ पता करें"
+        "description": "आर्टवर्क में रचा स्कैन होने वाला कोड",
+        "short": "आर्ट में बने कोड"
       },
       "barcode": {
-        "name": "बारकोड जनरेटर",
-        "description": "EAN, UPC, Code 128 और अन्य, चेक डिजिट के साथ"
+        "description": "EAN, UPC, Code 128 और अन्य",
+        "short": "EAN, UPC, Code 128"
       },
-      "allTools": {
-        "name": "सभी टूल",
-        "description": "QR कोड के सभी फ़्री टूल एक जगह"
+      "bulk": {
+        "description": "CSV से {max, number} तक स्टाइल वाले कोड",
+        "short": "CSV से कोड"
       },
-      "docs": {
-        "name": "डॉक्यूमेंटेशन",
-        "description": "qrdx React लाइब्रेरी, डायनेमिक QR कोड, APIs और सेल्फ-होस्टिंग की गाइड।"
+      "community": {
+        "description": "लोगों के शेयर किए फ़्रेम और थीम",
+        "short": "शेयर किए फ़्रेम और थीम"
       },
-      "mcp": {
-        "name": "MCP server",
-        "description": "Claude, ChatGPT या Cursor से QR कोड बनाएं"
+      "restaurants": {
+        "description": "मेन्यू, Wi-Fi और रिव्यू अनुरोध",
+        "short": "मेन्यू, Wi-Fi, रिव्यू"
       },
-      "qrCodeApi": {
-        "name": "फ़्री QR code API",
-        "description": "एक URL से QR code इमेज, बिना key या साइनअप के"
+      "retail": {
+        "description": "शेल्फ टैग, विंडो शॉपिंग और लॉयल्टी",
+        "short": "शेल्फ टैग और लॉयल्टी"
       },
-      "nextjs": {
-        "name": "Next.js गाइड",
-        "description": "Server और Client Components में QR code"
+      "realEstate": {
+        "description": "साइन पर ऐसे कोड जो लिस्टिंग खोलें",
+        "short": "साइन से लिस्टिंग तक"
+      },
+      "events": {
+        "description": "एजेंडा, बैज और सेशन फ़ीडबैक",
+        "short": "एजेंडा और बैज"
+      },
+      "enterprise": {
+        "description": "सिंगल साइन-ऑन, ऑडिट लॉग और कॉन्ट्रैक्ट",
+        "short": "SSO, ऑडिट लॉग, कॉन्ट्रैक्ट"
+      },
+      "agencies": {
+        "description": "क्लाइंट डोमेन, UTM और स्कैन रिपोर्ट",
+        "short": "क्लाइंट कोड और रिपोर्ट"
+      },
+      "openSource": {
+        "description": "ऐप खुद होस्ट करें या लाइब्रेरी इस्तेमाल करें",
+        "short": "सेल्फ-होस्ट या एम्बेड"
+      },
+      "placements": {
+        "description": "मेन्यू, पैकेजिंग, बिज़नेस कार्ड और साइन",
+        "short": "मेन्यू, पैकेजिंग, साइन"
+      },
+      "restApi": {
+        "description": "HTTP पर कोड, स्कैन और वेबहुक",
+        "short": "HTTP पर कोड और स्कैन"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "URL से QR कोड इमेज, API key की ज़रूरत नहीं"
+        "description": "एक URL से कोड की इमेज, बिना key",
+        "short": "एक URL, बिना key"
+      },
+      "mcp": {
+        "description": "Claude, ChatGPT या Cursor से QR कोड बनाएं",
+        "short": "Claude, ChatGPT या Cursor से"
+      },
+      "cli": {
+        "description": "टर्मिनल और CI में कोड बनाएँ",
+        "short": "टर्मिनल और CI"
+      },
+      "react": {
+        "description": "इंजन, React कंपोनेंट के रूप में",
+        "short": "React में QR कोड"
       },
       "shadcn": {
-        "name": "shadcn/ui registry",
-        "description": "एक कमांड से QR कोड कॉम्पोनेंट जोड़ें"
+        "description": "एक कमांड से QR कोड कॉम्पोनेंट जोड़ें",
+        "short": "एक कमांड में कंपोनेंट"
       },
-      "plugins": {
-        "name": "प्लगइन",
-        "description": "Chrome, Figma, Raycast और Canva के लिए QRdx"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "सोर्स कोड, issues और releases"
-      },
-      "help": {
-        "name": "हेल्प सेंटर",
-        "description": "कोड, बिलिंग, टीम और समस्याओं के जवाब"
-      },
-      "blog": {
-        "name": "ब्लॉग",
-        "description": "QR कोड की गाइड और ख़बरें"
-      },
-      "customers": {
-        "name": "ग्राहक",
-        "description": "कंपनियाँ QRdx कैसे इस्तेमाल करती हैं"
-      },
-      "compare": {
-        "name": "तुलना",
-        "description": "QRdx की दूसरे जनरेटर और लाइब्रेरी से तुलना"
-      },
-      "changelog": {
-        "name": "Changelog",
-        "description": "QRdx में नया क्या है"
+      "nextjs": {
+        "description": "Server और Client Components में QR code",
+        "short": "सर्वर और क्लाइंट कंपोनेंट"
       },
       "integrations": {
-        "name": "इंटीग्रेशन",
-        "description": "Zapier, Make, Discord, एनालिटिक्स पिक्सल और अन्य"
+        "description": "Zapier, Make, Discord, एनालिटिक्स पिक्सल और अन्य",
+        "short": "Zapier, Make और अन्य"
       },
-      "support": {
-        "name": "सपोर्ट से संपर्क",
-        "description": "ईमेल, सपोर्ट विजेट या GitHub"
+      "plugins": {
+        "description": "Chrome, Figma, Raycast और Canva के लिए QRdx",
+        "short": "Chrome, Figma, Raycast, Canva"
+      },
+      "webhooks": {
+        "description": "आपके URL पर स्कैन, फ़ॉर्म और कोड इवेंट",
+        "short": "आपके URL पर इवेंट"
+      },
+      "docs": {
+        "description": "गाइड, API रेफ़रेंस और सेल्फ-होस्टिंग",
+        "short": "गाइड और रेफ़रेंस"
+      },
+      "github": {
+        "description": "MIT इंजन और CLI, AGPL ऐप",
+        "short": "MIT इंजन, AGPL ऐप"
+      },
+      "help": {
+        "description": "कोड, बिलिंग, टीम और समस्याओं के जवाब",
+        "short": "आम सवालों के जवाब"
+      },
+      "contact": {
+        "description": "ईमेल, सपोर्ट विजेट या GitHub",
+        "short": "ईमेल या सपोर्ट विजेट"
+      },
+      "customers": {
+        "description": "कंपनियाँ QRdx कैसे इस्तेमाल करती हैं",
+        "short": "कंपनियों में QRdx का उपयोग"
+      },
+      "security": {
+        "description": "QRdx अकाउंट और डेटा को कैसे सुरक्षित रखता है",
+        "short": "अकाउंट और डेटा"
+      },
+      "affiliates": {
+        "description": "रेफ़र किए ग्राहकों से कमाएँ",
+        "short": "रेफ़र करके कमाएँ"
+      },
+      "blog": {
+        "description": "QR कोड की गाइड और ख़बरें",
+        "short": "गाइड और खबरें"
+      },
+      "changelog": {
+        "description": "QRdx में नया क्या है",
+        "short": "नया क्या है"
+      },
+      "tools": {
+        "description": "स्कैनर, स्कैन चेकर, प्रिंट साइज़ और अन्य",
+        "short": "स्कैनर, चेकर और अन्य"
       }
     },
     "account": {
-      "tryPlayground": "Playground आज़माएं",
-      "playground": "Playground",
-      "dashboard": "डैशबोर्ड",
-      "signIn": "साइन इन"
+      "signIn": "साइन इन",
+      "create": "QR कोड बनाएँ",
+      "dashboard": "डैशबोर्ड"
     },
     "github": {
       "star": "Star",
       "starOnGithub": "GitHub पर QRdx को Star करें",
-      "starOnGithubCount": "GitHub पर QRdx को Star करें ({count} stars)"
+      "starOnGithubCount": "GitHub पर QRdx को Star करें ({count} stars)",
+      "stars": "{count} स्टार"
     },
     "userProfileDropdown": {
       "tryThePlayground": "Playground आज़माएँ",
@@ -169,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "फ़्री, ओपन-सोर्स QR कोड जनरेटर। कस्टम पैटर्न, ग्रेडिएंट, लोगो और फ़्रेम, PNG, JPG, SVG, PDF और EPS डाउनलोड के साथ और बिना साइनअप के। साथ में डायनेमिक कोड, होस्टेड पेज और स्कैन एनालिटिक्स।",
+    "description": "ओपन-सोर्स QR कोड प्लैटफ़ॉर्म",
     "starOnGithub": "GitHub पर Star करें",
+    "newsOnX": "X पर QRdx की खबरें",
     "navLabel": "फ़ूटर",
-    "scanIt": "चलिए, स्कैन करके देखिए",
-    "copyright": "© {year} QRdx. AGPL-3.0 के तहत ओपन सोर्स।",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "प्रोडक्ट",
-      "tools": "टूल्स",
       "developers": "डेवलपर्स",
+      "solutions": "समाधान",
       "resources": "रिसोर्सेज़",
+      "company": "कंपनी",
       "compare": "तुलना करें"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "QR कोड जनरेटर",
       "dynamicCodes": "डायनेमिक QR कोड",
+      "aiArt": "AI QR आर्ट",
       "aiThemes": "AI थीम",
-      "communityThemes": "कम्युनिटी थीम",
+      "barcode": "बारकोड",
+      "bulk": "बल्क जनरेटर",
       "pageTemplates": "पेज टेम्पलेट",
-      "pricing": "प्राइसिंग",
-      "guarantee": "Never-Hostage गारंटी",
-      "enterprise": "एंटरप्राइज़",
+      "community": "कम्युनिटी",
       "slackBot": "Slack बॉट",
       "telegramBot": "Telegram बॉट",
       "discordBot": "Discord बॉट",
-      "generators": "QR कोड जनरेटर",
-      "bulk": "बल्क जनरेटर",
-      "scanChecker": "स्कैन चेकर",
-      "printSize": "प्रिंट साइज़ कैलकुलेटर",
-      "barcode": "बारकोड जनरेटर",
-      "pdfQr": "PDF QR कोड",
-      "businessCard": "डिजिटल बिज़नेस कार्ड",
-      "menuQr": "मेन्यू QR कोड",
-      "scanner": "QR कोड स्कैनर",
-      "allTools": "सभी टूल्स",
-      "docs": "डॉक्यूमेंटेशन",
-      "apiReference": "API रेफ़रेंस",
-      "qrCodeApi": "फ़्री QR कोड API",
-      "nextjs": "Next.js गाइड",
-      "imageApi": "Image API",
-      "mcp": "MCP सर्वर",
-      "shadcn": "shadcn/ui रजिस्ट्री",
-      "plugins": "प्लगइन",
-      "selfHosting": "सेल्फ़-होस्टिंग",
-      "openSource": "ओपन सोर्स",
-      "github": "GitHub",
-      "help": "हेल्प सेंटर",
-      "blog": "ब्लॉग",
-      "customers": "ग्राहक",
-      "changelog": "चेंजलॉग",
-      "integrations": "इंटीग्रेशन",
+      "restaurants": "रेस्टोरेंट",
+      "retail": "रिटेल",
+      "realEstate": "रियल एस्टेट",
+      "events": "इवेंट",
       "industries": "इंडस्ट्री के हिसाब से QR कोड",
       "placements": "प्लेसमेंट के हिसाब से QR कोड",
-      "affiliates": "एफ़िलिएट प्रोग्राम",
+      "generators": "सभी कोड टाइप",
+      "typeUrl": "वेबसाइट",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "एंटरप्राइज़",
+      "agencies": "एजेंसियां",
+      "openSource": "ओपन सोर्स",
+      "docs": "डॉक्स",
+      "restApi": "REST API",
+      "apiReference": "API रेफ़रेंस",
+      "imageApi": "Image API",
+      "mcp": "MCP सर्वर",
+      "cli": "CLI",
+      "react": "React लाइब्रेरी",
+      "shadcn": "shadcn/ui रजिस्ट्री",
+      "nextjs": "Next.js गाइड",
+      "integrations": "इंटीग्रेशन",
+      "plugins": "प्लगइन",
+      "webhooks": "वेबहुक",
+      "selfHosting": "सेल्फ़-होस्टिंग",
+      "github": "GitHub",
+      "help": "हेल्प सेंटर",
       "contact": "संपर्क करें",
+      "blog": "ब्लॉग",
+      "changelog": "चेंजलॉग",
+      "customers": "ग्राहक",
+      "tools": "फ़्री टूल",
+      "scanner": "QR कोड स्कैनर",
+      "scanChecker": "स्कैन चेकर",
+      "printSize": "प्रिंट साइज़ कैलकुलेटर",
+      "security": "सुरक्षा",
+      "affiliates": "एफ़िलिएट प्रोग्राम",
+      "guarantee": "Never-Hostage गारंटी",
+      "pricing": "प्राइसिंग",
+      "allComparisons": "सभी तुलनाएँ",
       "legal": "कानूनी",
-      "privacy": "प्राइवेसी पॉलिसी",
       "terms": "सेवा की शर्तें",
-      "subprocessors": "सबप्रोसेसर",
-      "reportAbuse": "दुरुपयोग की रिपोर्ट",
-      "acceptableUse": "स्वीकार्य उपयोग",
+      "privacy": "प्राइवेसी पॉलिसी",
       "cookies": "कुकी पॉलिसी",
       "dpa": "डेटा प्रोसेसिंग (DPA)",
+      "subprocessors": "सबप्रोसेसर",
+      "acceptableUse": "स्वीकार्य उपयोग",
       "aiFeatures": "AI फ़ीचर",
       "refunds": "रिफ़ंड",
       "affiliateTerms": "एफ़िलिएट शर्तें",
-      "security": "सुरक्षा",
       "securityPolicy": "सुरक्षा नीति",
-      "allComparisons": "सभी तुलनाएँ"
+      "reportAbuse": "दुरुपयोग की रिपोर्ट"
     }
   },
   "localeSwitcher": {
@@ -244,9 +289,10 @@
     "englishOnly": "यह पेज सिर्फ़ अंग्रेज़ी में है। दूसरी भाषाएँ चुनने पर उनका होम पेज खुलेगा।"
   },
   "cta": {
-    "title": "अपना अगला QR कोड कुछ ही सेकंड में बनाएँ।",
-    "subtext": "हमेशा फ़्री। न साइनअप, न वॉटरमार्क।",
-    "button": "फ़्री में QR कोड बनाना शुरू करें"
+    "title": "अपना अगला QR कोड बनाइए",
+    "subtext": "आपके ब्राउज़र में फ़्री, बिना साइनअप और वॉटरमार्क के, और ज़रूरत पड़ने पर डायनेमिक QR कोड भी।",
+    "button": "QR कोड बनाएँ",
+    "secondary": "प्राइसिंग देखें"
   },
   "consent": {
     "banner": {

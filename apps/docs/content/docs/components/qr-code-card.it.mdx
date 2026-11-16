@@ -1,8 +1,10 @@
 ---
 title: "QR Code Card"
-description: "Una card con un QR code in una cornice \"Scan me\", un titolo, una descrizione e lo spazio per le azioni."
+description: "Una card con un QR code in una cornice \"Scan me\", un titolo, una descrizione e spazio per le azioni, per progetti shadcn/ui."
 icon: Frame
 ---
+
+`QrCodeCard` mette un QR code in una card con una cornice di invito all'azione, un titolo, una riga di testo e un footer per i pulsanti. Usalo dove il codice è il centro della card: un segnatavolo, una schermata di check-in, l'anteprima di una locandina per un evento, un riquadro "scarica la nostra app".
 
 <ComponentLinks name="qr-code-card" />
 
@@ -14,11 +16,11 @@ icon: Frame
 
 ## Utilizzo [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeCard } from "@/components/qr-code-card";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeCard
   value="https://example.com/menu"
   title="Our menu"
@@ -32,29 +34,50 @@ Tutto ciò che passi come children viene mostrato nel footer della card, per ese
 
 ### Cornici [#frames]
 
-`frame` mette la call to action sotto il codice (`"bottom"`), sopra (`"top"`) oppure omette la cornice (`"none"`). `cta` cambia l'etichetta, mentre `frameClassName` modifica lo stile della cornice, per esempio con il colore del tuo brand.
+`frame` mette l'invito all'azione sotto il codice (`"bottom"`), sopra (`"top"`) oppure elimina la cornice (`"none"`). `cta` cambia l'etichetta e `frameClassName` modifica lo stile della cornice, per esempio con il colore del tuo brand.
 
 <ComponentPreview name="qr-code-card-frames" />
 
-Per impostazione predefinita la cornice usa i colori `foreground` e `background` del tuo tema, quindi resta leggibile sia in modalità chiara sia in modalità scura. Il codice invece mantiene uno sfondo chiaro, che ogni scanner riesce a leggere.
+Per impostazione predefinita la cornice usa i colori `foreground` e `background` del tuo tema, così resta leggibile in modalità chiara e scura. Il codice invece mantiene uno sfondo chiaro, che ogni scanner riesce a leggere.
 
-### Stile del codice [#styling-the-code]
+### Personalizzare lo stile del codice [#styling-the-code]
 
-`qr` accetta qualsiasi opzione di stile di qrdx: `fgColor`, `bgColor`, gradienti, `bodyPattern`, pattern degli angoli, `logo` e `templateId`.
+`qr` accetta qualsiasi opzione di stile di qrdx: `fgColor`, `bgColor`, gradienti, `bodyPattern`, motivi degli angoli, `logo` e `templateId`.
 
-```tsx
-<QrCodeCard
-  value="https://example.com"
-  qr={{
-    fgColor: "#155DFC",
-    bodyPattern: "rounded",
-    cornerEyePattern: "extra-rounded",
-  }}
-/>
+```tsx title="components/brand-card.tsx"
+import { QrCodeCard } from "@/components/qr-code-card";
+
+export function BrandCard() {
+  return (
+    <QrCodeCard
+      value="https://example.com"
+      title="example.com"
+      qr={{
+        fgColor: "#155DFC",
+        bodyPattern: "rounded",
+        cornerEyePattern: "extra-rounded",
+      }}
+    />
+  );
+}
 ```
+
+## Accessibilità e rendering [#accessibility-and-rendering]
+
+- Il codice si trova in un elemento `role="img"` il cui `aria-label` è `label`, oppure `QR code: <value>` se `label` non è impostato. Imposta `label` quando il valore non è un link pubblico.
+- `title` viene mostrato come titolo della card e `description` sotto di esso; entrambi accettano qualsiasi nodo React.
+- Il componente è un Client Component. Una pagina Server Component può importarlo e passargli dati del server come props, e il codice viene renderizzato sul server.
 
 ## Riferimento API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-card.tsx" type="{ [K in keyof QrCodeCardProps as K extends Exclude<keyof ComponentProps<'div'>, 'title' | 'children'> ? never : K]: QrCodeCardProps[K] }" />
 
 Qualsiasi altra prop, come `className`, viene passata alla [Card](https://ui.shadcn.com/docs/components/card).
+
+## Correlati [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="Un menu di download da inserire nel footer della card." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="Il codice da solo, con i pulsanti di download." />
+  <Card href="/docs/features/frames" title="Cornici, punteggio di scansione e file di stampa" description="Le cornici della libreria, disegnate nell'immagine del codice." />
+</Cards>

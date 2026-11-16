@@ -1,73 +1,144 @@
 ---
 title: "AI art API"
-description: "एक REST call या MCP tool से QR कोड को AI artwork में पेंट करें। QRdx जाँचता है कि हर इमेज स्कैन होती है, और हर इमेज आपके workspace की मासिक AI art images में से एक इस्तेमाल करती है।"
+description: "एक REST call या MCP टूल generate_ai_art से QR code को AI आर्टवर्क में पेंट करें। QRdx जाँचता है कि हर इमेज स्कैन होती है, और हर इमेज आपके वर्कस्पेस की मासिक AI art इमेज में से एक इस्तेमाल करती है।"
 icon: Sparkles
 ---
 
-`POST https://api.qrdx.dev/v1/art` किसी विवरण से QR कोड को AI artwork में पेंट करता है और इमेज लौटाता है। यह वही [AI QR art](/ai/art) है जो Playground के Art टैब और स्टूडियो में है: {facts.artModel} तस्वीर बनाता है, फिर QRdx आपको इमेज देने से पहले जाँचता है कि वह आपके कंटेंट पर स्कैन होती है। जहाँ मॉडल की इमेज जैसी बनी है वैसी स्कैन नहीं होती, वहाँ QRdx मॉडल के अपने पिक्सल पर कोड को बस उतना मज़बूत करता है जितना ज़रूरी हो।
+इस पेज के अंत तक आपके पास 1024 px की एक PNG होगी, जिसमें QR code एक पेंट की गई तस्वीर के अंदर बैठा है और आपके पास पहुँचने से पहले QRdx उसे डिकोड कर चुका है। आप यह भी जान जाएँगे कि फ़िक्स्ड टेक्स्ट की जगह डायनेमिक कोड कैसे एन्कोड करें, कौन-सा मोड चुनें और हर error का क्या मतलब है।
 
-इसके लिए `codes:write` scope वाली [API key](/docs/developers/api-keys) चाहिए (**Full access** keys में यह होता है)। हर इमेज key के workspace की मासिक AI art images में से एक इस्तेमाल करती है, यानी वही सीमा जो ऐप इस्तेमाल करता है।
+`POST https://api.qrdx.dev/v1/art` विवरण से QR code को AI आर्टवर्क में पेंट करता है और इमेज लौटाता है। यह वही [AI QR art](/ai/art) है जो Playground के Art टैब और स्टूडियो में है: {facts.artModel} तस्वीर पेंट करता है, फिर आपको देने से पहले QRdx जाँचता है कि वह आपके कंटेंट पर स्कैन होती है। जहाँ मॉडल की इमेज जैसी बनी है वैसी स्कैन नहीं होती, वहाँ QRdx मॉडल के अपने पिक्सल पर कोड को उतना ही मज़बूत करता है जितना ज़रूरी हो।
 
-```bash
-curl https://api.qrdx.dev/v1/art \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
-  --max-time 90 -o art.json
+<Callout type="info" title="API key और मासिक इमेज">
+इस endpoint के लिए `codes:write` स्कोप वाली [API key](/docs/developers/api-keys) चाहिए (**Full access** keys में यह होता है)। हर इमेज key के वर्कस्पेस की मासिक AI art इमेज में से एक इस्तेमाल करती है, यानी वही कोटा जो app इस्तेमाल करता है; हर प्लान के आँकड़े [प्लान और सीमाएँ](/docs/plans-and-limits) में हैं। जो call fail हो जाए, या जिसकी इमेज को स्कैन होने लायक न बनाया जा सके, वह कोई इमेज इस्तेमाल नहीं करती।
+</Callout>
+
+## शुरू करने से पहले [#before-you-start]
+
+- `codes:write` वाली एक API key, जो `QRDX_API_KEY` के रूप में export की गई हो।
+- कम से कम 60 सेकंड के timeout वाला HTTP client। एक call code मोड में लगभग 15 से 45 सेकंड, photo मोड में 25 से 45 और scene मोड में 40 से 55 सेकंड लेती है, क्योंकि scene मोड पहले अपनी तस्वीर पेंट करता है।
+- डायनेमिक कोड के लिए उसका `id`, जो [`GET /v1/codes`](/docs/developers/api/list-codes) से या उस response से मिलता है जिसने उसे [बनाया था](/docs/developers/api/create-codes)।
+
+## 1. किसी लिंक के लिए कोड पेंट करें [#1-paint-a-code-for-a-link]
+
+<Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
+  <Tab value="curl">
+    ```bash title="Terminal"
+    curl https://api.qrdx.dev/v1/art \
+      -H "Authorization: Bearer $QRDX_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
+      --max-time 90 -o art.json
+    ```
+  </Tab>
+  <Tab value="JavaScript">
+    ```js title="art.mjs"
+    import { writeFile } from "node:fs/promises";
+
+    const response = await fetch("https://api.qrdx.dev/v1/art", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.QRDX_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: "https://qrdx.dev",
+        prompt: "a koi pond at dusk, ink and watercolor",
+      }),
+      signal: AbortSignal.timeout(90_000),
+    });
+    const { data, credits } = await response.json();
+    // data.imageUrl is a data: URL; save the PNG bytes
+    const base64 = data.imageUrl.split(",")[1];
+    await writeFile("art.png", Buffer.from(base64, "base64"));
+    console.log(data.text, data.blend, credits.remaining);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="art.py"
+    import base64
+    import os
+    import requests
+
+    response = requests.post(
+        "https://api.qrdx.dev/v1/art",
+        headers={"Authorization": f"Bearer {os.environ['QRDX_API_KEY']}"},
+        json={"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"},
+        timeout=90,
+    )
+    response.raise_for_status()
+    body = response.json()
+    png = base64.b64decode(body["data"]["imageUrl"].split(",", 1)[1])
+    open("art.png", "wb").write(png)
+    print(body["data"]["text"], body["data"]["blend"], body["credits"]["remaining"])
+    ```
+  </Tab>
+</Tabs>
+
+Response JSON होता है, जिसमें इमेज `data:` URL के रूप में होती है:
+
+```json title="200 OK (fields)"
+{
+  "data": {
+    "imageUrl": "data:image/png;base64,iVBORw0KGgo…",
+    "width": 1024,
+    "height": 1024,
+    "seed": 2841337190,
+    "mode": "code",
+    "blend": "least",
+    "blendStrength": 0.35,
+    "text": "https://qrdx.dev",
+    "visibility": 50,
+    "creativity": 45
+  },
+  "credits": { "plan": "pro", "limit": 30, "used": 7, "remaining": 23, "pooled": false, "resetsAt": "2026-12-01T00:00:00.000Z" }
+}
 ```
 
-code मोड में एक call में लगभग 15 से 45 सेकंड लगते हैं, photo मोड में लगभग 25 से 45 और scene मोड में लगभग 40 से 55, क्योंकि इसमें पहले तस्वीर बनती है। अपने HTTP client का timeout कम से कम 60 सेकंड रखें। जो scene समय पर पूरा नहीं होता, वह `504 AI_ART_TIMEOUT` देता है और कोई इमेज इस्तेमाल नहीं होती: दोबारा कोशिश करें, या code मोड इस्तेमाल करें।
+- `imageUrl` 1024 px की चौकोर PNG है, `data:` URL के रूप में। QRdx इसकी कॉपी नहीं रखता, इसलिए इसे सेव कर लें।
+- `text` ठीक वही है जिस पर इमेज स्कैन होती है। QRdx ने जवाब देने से पहले इसे डिकोड किया था।
+- `blend` बताता है कि इमेज को स्कैन होने लायक कैसे बनाया गया: `none` (मॉडल की इमेज जैसी बनी थी), `least` (फ़ाइंडर स्क्वेयर, क्वाइट ज़ोन और मॉड्यूल उतने ही मज़बूत किए गए जितना ज़रूरी था, मॉडल की इमेज पर) या `image-qr` (Image QR कोड के रूप में दोबारा बनाई गई, आख़िरी उपाय)। `blendStrength` `0` (जैसी बनी थी) से `1` (Image QR) तक जाता है।
+- `credits` इस इमेज के बाद वर्कस्पेस का बचा हुआ कोटा है।
 
-## लिंक या डायनेमिक कोड एन्कोड करें [#encode]
+JSON की जगह सीधे PNG पाने के लिए `?format=png` जोड़ें या `Accept: image/png` भेजें। तब seed, मोड, blend और बची हुई इमेज `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength` और `X-QRdx-Credits-Remaining` headers में आती हैं:
 
-इनमें से ठीक एक भेजें:
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/art?format=png" \
+  -H "Authorization: Bearer $QRDX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "https://qrdx.dev", "prompt": "a lighthouse on a cliff, woodcut print"}' \
+  --max-time 90 -o art.png
+```
 
-- `text`: कोड में रखा जाने वाला लिंक या टेक्स्ट, अधिकतम 300 अक्षर। आर्ट एक तस्वीर है, इसलिए प्रिंट करने के बाद इसका कंटेंट बदला नहीं जा सकता।
-- `code`: workspace के किसी [डायनेमिक QR कोड](/docs/dynamic-qr-codes) का `id`। आर्ट कोड के शॉर्ट लिंक को एन्कोड करता है, इसलिए प्रिंट के बाद भी आप बदल सकते हैं कि वह कहाँ जाए, और उसके स्कैन analytics में दिखते हैं। दूसरे workspace का कोड, या ट्रैश में पड़ा कोड, `404` देता है।
+## 2. इसकी जगह डायनेमिक कोड एन्कोड करें [#encode]
 
-```bash
+`text` और `code` में से ठीक एक भेजें:
+
+- `text`: वह लिंक या टेक्स्ट जो कोड में रहता है, अधिकतम 300 अक्षर। आर्ट एक तस्वीर है, इसलिए प्रिंट करने के बाद इसका कंटेंट बदला नहीं जा सकता।
+- `code`: वर्कस्पेस के किसी [डायनेमिक कोड](/docs/dynamic-qr-codes) का `id`। आर्ट कोड के शॉर्ट लिंक को एन्कोड करता है, इसलिए प्रिंट के बाद भी आप बदल सकते हैं कि वह कहाँ जाए, और उसके स्कैन analytics में दिखते हैं। किसी दूसरे वर्कस्पेस का कोड, या ट्रैश में पड़ा कोड, `404` देता है।
+
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/art \
   -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"code": "cm5code0spring0menu00001", "prompt": "a bistro chalkboard menu on a brick wall", "mode": "scene"}' \
-  --max-time 90
+  --max-time 90 -o art.json
 ```
 
-कोड का `id` [`GET /v1/codes`](/docs/developers/api/list-codes) से लें या तब जब आप [कोड बनाते हैं](/docs/developers/api/create-codes)।
+तब response में `"code": { "id", "shortLink" }` भी होता है, और `text` शॉर्ट लिंक होता है।
 
-## Request [#request]
-
-| फ़ील्ड | डिफ़ॉल्ट | विवरण |
-| --- | --- | --- |
-| `text` | | कोड में क्या एन्कोड होगा। यह या `code` भेजें |
-| `code` | | `text` की जगह डायनेमिक कोड का `id` |
-| `prompt` | आपके लिए लिखा जाता है | पेंट किया जाने वाला artwork, सरल शब्दों में; देखें [आपके लिए लिखा गया prompt](#written-prompt) |
-| `mode` | `code` | कोड आर्ट में कैसे बैठता है; देखें [मोड](#modes) |
-| `style` | | किसी quick look की id, जो आपके prompt के साथ जुड़ती है; देखें [Quick looks](#quick-looks) |
-| `negativePrompt` | | तस्वीर से क्या बाहर रखना है |
-| `visibility` | `50` | QR की visibility, `0` से `100`: ज़्यादा होने पर कोड ज़्यादा साफ़ दिखता है, कम होने पर तस्वीर को तरजीह मिलती है |
-| `creativity` | `45` | `0` prompt का सीधे-सीधे पालन करता है, `100` उसे खुलकर समझता है |
-| `seed` | random | मिलती-जुलती इमेज के लिए पिछले response का seed भेजें |
-| `reference` | | रंगों और आकारों के लिए एक reference इमेज, जैसे लोगो या palette |
-| `photo` | | सिर्फ़ photo मोड के लिए: वह तस्वीर जिसमें कोड पेंट होगा |
-
-`reference` और `photo` PNG या JPEG `data:` URL होते हैं (`data:image/jpeg;base64,…`)। `reference` को सबसे लंबी तरफ़ लगभग 512 px तक छोटा करें (अधिकतम 600 KB), और `photo` को लगभग 1024 px के वर्ग में क्रॉप करें (अधिकतम 1 MB), यही वह साइज़ है जिसमें आर्ट बनता है। ये मॉडल को जाते हैं और फिर हटा दिए जाते हैं: QRdx इन्हें कभी स्टोर या log नहीं करता। इससे बड़ी इमेज `413 AI_ART_IMAGE_TOO_LARGE` के साथ अस्वीकार हो जाती हैं।
-
-पूरा schema [API reference](/docs/developers/api/create-art) में है।
-
-## मोड [#modes]
+## 3. मोड और लुक चुनें [#modes]
 
 | `mode` | आपको क्या मिलता है |
 | --- | --- |
-| `code` | कोड ही पूरी तस्वीर है: आपका artwork उसके modules में पेंट होता है, साथ में सादे finder squares और चारों ओर हल्का quiet zone रहता है। सबसे भरोसेमंद ढंग से स्कैन होता है |
-| `scene` | पहले विवरण से एक तस्वीर पेंट होती है, फिर कोड उसके बीच में पेंट होता है, इसलिए तस्वीर कोड तक और उसके आर-पार फैलती है, और modules उसी के रंगों और रोशनी से बनते हैं |
-| `photo` | वही, पर तस्वीर के रूप में आपकी अपनी `photo` के साथ: वह कोड के आसपास और आर-पार अपना विषय, रंग और रोशनी बनाए रखती है। फ़ोटो सिर्फ़ इसी मोड के साथ भेजें |
+| `code` (डिफ़ॉल्ट) | कोड ही पूरी तस्वीर है: आपका आर्टवर्क उसके मॉड्यूल में पेंट होता है, साथ में सादे फ़ाइंडर स्क्वेयर और चारों ओर हल्का क्वाइट ज़ोन। सबसे भरोसेमंद ढंग से स्कैन होता है |
+| `scene` | पहले विवरण से एक तस्वीर पेंट होती है, फिर कोड उसके बीच में पेंट किया जाता है, इसलिए तस्वीर कोड तक और उसके आर-पार जाती है, और मॉड्यूल उसके रंगों और रोशनी से बनते हैं |
+| `photo` | वही, पर तस्वीर के रूप में आपकी अपनी `photo` के साथ: कोड के आसपास और आर-पार उसका विषय, रंग और रोशनी बने रहते हैं। फ़ोटो सिर्फ़ इसी मोड के साथ भेजें |
 
-## Quick looks [#quick-looks]
+### क्विक लुक [#quick-looks]
 
-Quick look एक तैयार स्टाइल है, जैसे कोई माध्यम या मूड, जिसे QRdx आपके अपने `prompt` में जोड़ देता है: `"a koi pond in the rain"` के साथ `"style": "watercolor"` कोई तालाब वॉटरकलर में पेंट करता है। इसकी id को `style` के रूप में भेजें; कोई भी दूसरा मान `400 VALIDATION_ERROR` देता है। ये looks वही हैं जो [AI art स्टूडियो](/ai/art) और Playground के Art टैब में chips के रूप में दिखते हैं, और ये हर मोड में काम करते हैं।
+क्विक लुक एक तैयार स्टाइल है, जैसे कोई माध्यम या मूड, जिसे QRdx आपके अपने `prompt` में जोड़ देता है: `"style": "watercolor"` के साथ `"a koi pond in the rain"` कोई पोखर को वॉटरकलर में पेंट करता है। इसकी id `style` के रूप में भेजें; कोई और मान `400 VALIDATION_ERROR` देता है। ये लुक वही हैं जो [AI art स्टूडियो](/ai/art) और Playground के Art टैब में चिप्स के रूप में दिखते हैं, और ये हर मोड में काम करते हैं।
 
-| `style` | Look |
+| `style` | लुक |
 | --- | --- |
 | `watercolor` | वॉटरकलर |
 | `oil-painting` | ऑयल पेंटिंग |
@@ -83,94 +154,75 @@ Quick look एक तैयार स्टाइल है, जैसे को
 | `low-poly` | लो पॉली |
 | `papercut` | पेपरकट |
 
-## आपके लिए लिखा गया prompt [#written-prompt]
+`prompt` वैकल्पिक है। इसे छोड़ दें तो QRdx आपके भेजे `mode`, `style` और `photo` के लिए पहले खुद एक लिख देता है: विषय, जगह और रोशनी वाला एक ठोस दृश्य, या photo मोड में आपकी फ़ोटो में जो है उसका विवरण ताकि आर्ट उसे बनाए रखे। इसे लिखने में कोई अतिरिक्त AI art इमेज इस्तेमाल नहीं होती। तब response में जो लिखा गया वह `writtenPrompt` के रूप में आता है, ताकि आप अगली बार उसे बदलकर दोबारा भेज सकें। अगर लिखना fail हो जाए, तो आपको `502 AI_ART_DESCRIBE_FAILED` मिलता है और कोई इमेज इस्तेमाल नहीं होती।
 
-`prompt` वैकल्पिक है। इसे छोड़ दें तो QRdx पहले आपके भेजे `mode`, `style` और `photo` के हिसाब से एक prompt लिखता है: एक ठोस दृश्य जिसमें विषय, जगह और रोशनी हो, या photo मोड में आपकी फ़ोटो में क्या है उसका विवरण, ताकि आर्ट उसे बनाए रखे। इसे लिखने में कोई अतिरिक्त AI art image इस्तेमाल नहीं होती। फिर response में जो लिखा गया वह `writtenPrompt` के रूप में आता है, ताकि अगली बार आप उसे बदलकर दोबारा भेज सकें। अगर लिखना विफल हो, तो `502 AI_ART_DESCRIBE_FAILED` मिलता है और कोई इमेज इस्तेमाल नहीं होती।
+## Request फ़ील्ड [#request-fields]
 
-## Response [#response]
+| फ़ील्ड | डिफ़ॉल्ट | विवरण |
+| --- | --- | --- |
+| `text` | | कोड क्या एन्कोड करता है, अधिकतम 300 अक्षर। यह या `code` भेजें |
+| `code` | | डायनेमिक कोड का `id`, `text` की जगह |
+| `prompt` | आपके लिए लिखा जाता है | पेंट किया जाने वाला आर्टवर्क, सादे शब्दों में, भेजने पर कम से कम 3 अक्षर |
+| `mode` | `code` | `code`, `scene` या `photo`; ऊपर देखें |
+| `style` | | क्विक लुक की id, जो आपके prompt के साथ जुड़ती है |
+| `negativePrompt` | | तस्वीर से क्या बाहर रखना है |
+| `visibility` | `50` | QR की दृश्यता, `0` से `100`: ज़्यादा होने पर कोड ज़्यादा साफ़ दिखता है, कम होने पर तस्वीर को तरजीह मिलती है |
+| `creativity` | `45` | `0` prompt का अक्षरशः पालन करता है, `100` उसे खुलकर समझता है |
+| `seed` | रैंडम | मिलती-जुलती इमेज के लिए पिछले response का seed भेजें |
+| `reference` | | रंगों और आकृतियों के लिए रेफ़रेंस इमेज, जैसे लोगो या पैलेट |
+| `photo` | | सिर्फ़ photo मोड: वह तस्वीर जिसमें कोड पेंट करना है |
 
-```json
-{
-  "data": {
-    "imageUrl": "data:image/png;base64,iVBORw0KGgo…",
-    "width": 1024,
-    "height": 1024,
-    "seed": 2841337190,
-    "mode": "code",
-    "blend": "least",
-    "blendStrength": 0.35,
-    "text": "https://qrdx.dev/q/aB3dE5f",
-    "code": { "id": "cm5code0spring0menu00001", "shortLink": "https://qrdx.dev/q/aB3dE5f" },
-    "visibility": 50,
-    "creativity": 45
-  },
-  "credits": {
-    "plan": "pro",
-    "limit": 30,
-    "used": 7,
-    "remaining": 23,
-    "pooled": false,
-    "resetsAt": "2026-02-01T00:00:00.000Z"
-  }
-}
-```
+`reference` और `photo` PNG या JPEG `data:` URL होते हैं (`data:image/jpeg;base64,…`)। `reference` को उसकी सबसे लंबी तरफ़ लगभग 512 px तक छोटा करें (अधिकतम 600 KB), और `photo` को लगभग 1024 px पर चौकोर क्रॉप करें (अधिकतम 1 MB), यही वह साइज़ है जिस पर आर्ट बनता है। ये मॉडल को जाते हैं और फिर हटा दिए जाते हैं: QRdx इन्हें कभी स्टोर या लॉग नहीं करता। बड़ी इमेज `413 AI_ART_IMAGE_TOO_LARGE` के साथ ठुकरा दी जाती हैं। [रेफ़रेंस पेज](/docs/developers/api/create-art) में पूरा schema और Try it पैनल है।
 
-- `imageUrl` 1024 px वर्ग की PNG है, `data:` URL के रूप में। QRdx इसकी कॉपी नहीं रखता, इसलिए इसे सेव कर लें।
-- `text` ठीक वही है जिस पर इमेज स्कैन होती है। QRdx ने जवाब देने से पहले इसे डिकोड किया था।
-- `blend` बताता है कि इमेज को स्कैन होने लायक कैसे बनाया गया: `none` (मॉडल की इमेज जैसी बनी), `least` (मॉडल की इमेज पर finder squares, quiet zone और modules को बस उतना मज़बूत किया गया जितना ज़रूरी था) या `image-qr` (Image QR कोड के रूप में दोबारा बनाई गई, आख़िरी उपाय)। `blendStrength` `0` (जैसी बनी) से `1` (Image QR) तक जाता है।
-- `writtenPrompt` तभी होता है जब आपने `prompt` नहीं भेजा: वह विवरण जो QRdx ने आपके लिए लिखा।
-- `credits` इस इमेज के बाद workspace की बची हुई सीमा है।
+## क्रेडिट और सीमाएँ [#credits-and-limits]
 
-JSON की जगह सीधे PNG पाने के लिए `?format=png` जोड़ें या `Accept: image/png` भेजें। तब seed, मोड, blend और बची हुई images `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength` और `X-QRdx-Credits-Remaining` headers में आती हैं।
+API उसी मासिक AI art इमेज कोटे से चलता है जिससे app, और यह उस वर्कस्पेस के लिए गिना जाता है जिसकी key है। फ़्री, Pro और Business हर एक में महीने की कुछ इमेज शामिल हैं, और Business इन्हें पूरी टीम में साझा करता है; आँकड़े [प्लान और सीमाएँ](/docs/plans-and-limits) में हैं। ये हर महीने की 1 तारीख़ (UTC) को रीसेट होती हैं।
 
-```bash
-curl "https://api.qrdx.dev/v1/art?format=png" \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "https://qrdx.dev", "prompt": "a lighthouse on a cliff, woodcut print"}' \
-  --max-time 90 -o art.png
-```
+- जब महीने की इमेज खत्म हो जाती हैं, तो API `AI_ART_CREDITS_EXHAUSTED` लौटाता है: फ़्री और Pro पर `402`, जहाँ अपग्रेड करने से और मिलती हैं, और Business पर `429`।
+- मासिक कोटे के अलावा हर व्यक्ति दिन में अधिकतम 25 इमेज बना सकता है (`429 AI_ART_DAILY_LIMIT`), और एक मिनट में अधिकतम 12 इमेज शुरू कर सकता है।
+- हर call वर्कस्पेस के रोज़ाना API कोटे और writes की प्रति-मिनट सीमा ([Rate limits](/docs/developers/rest-api#rate-limits)) में भी गिनी जाती है।
 
-## Credits [#credits]
+## अगर कुछ गलत हो जाए [#if-something-goes-wrong]
 
-API उन्हीं मासिक AI art images का इस्तेमाल करती है जो ऐप करता है, और गिनती उस workspace के लिए होती है जिसका key है। फ़्री, Pro और Business, तीनों में हर महीने कुछ images शामिल हैं, और Business में ये पूरी टीम में साझा होती हैं; संख्याएँ [प्लान और सीमाएँ](/docs/plans-and-limits) में हैं। ये हर महीने की 1 तारीख़ (UTC) को रीसेट होती हैं।
-
-- जो call विफल हो, या जिसकी इमेज को स्कैन होने लायक न बनाया जा सके, वह कोई इमेज इस्तेमाल नहीं करती।
-- जब महीने की images ख़त्म हो जाती हैं, तो API `AI_ART_CREDITS_EXHAUSTED` देती है: फ़्री और Pro पर `402`, जहाँ अपग्रेड करने से और images मिलती हैं, और Business पर `429`।
-- हर व्यक्ति मासिक सीमा के अलावा एक दिन में अधिकतम 25 images बना सकता है (`429 AI_ART_DAILY_LIMIT`)।
-- हर व्यक्ति एक मिनट में अधिकतम 12 images शुरू कर सकता है।
-- हर call workspace के दैनिक API quota और writes की प्रति-मिनट सीमा में भी गिनी जाती है ([Rate limits](/docs/developers/rest-api#rate-limits))।
-
-## Errors [#errors]
-
-Errors का format API के बाकी responses जैसा ही होता है (`code`, `message`, `status`); सभी errors की सूची [Errors](/docs/developers/errors) में है। AI art से जुड़े errors ये हैं:
+Errors का स्वरूप API के सामान्य स्वरूप जैसा ही है (`code`, `message`, `status`); सभी errors की सूची [Errors](/docs/developers/errors) में है। किसी भी `5xx` error में इमेज नहीं आती।
 
 | Status | `code` | क्या करें |
 | --- | --- | --- |
-| 400 | `AI_ART_TEXT_TOO_LONG` | `text` छोटा करें, या डायनेमिक QR कोड का `code` भेजें |
-| 402 | `AI_ART_CREDITS_EXHAUSTED` | महीने की 1 तारीख़ तक रुकें, या upgrade करें |
+| 400 | `AI_ART_TEXT_TOO_LONG` | `text` छोटा करें, या डायनेमिक कोड का `code` भेजें |
+| 402 | `AI_ART_CREDITS_EXHAUSTED` | महीने की 1 तारीख का इंतज़ार करें, या अपग्रेड करें |
 | 413 | `AI_ART_IMAGE_TOO_LARGE` | `photo` या `reference` का साइज़ घटाएँ |
-| 429 | `AI_ART_CREDITS_EXHAUSTED` | Business: महीने की 1 तारीख़ तक रुकें |
-| 429 | `AI_ART_DAILY_LIMIT` | कल (UTC) फिर कोशिश करें |
-| 502 | `AI_ART_FAILED` | मॉडल फ़ेल हो गया या उसने prompt को मना कर दिया। फिर कोशिश करें या prompt के शब्द बदलें |
-| 502 | `AI_ART_UNSCANNABLE` | ज़्यादा `visibility` या दूसरे seed के साथ फिर कोशिश करें |
-| 502 | `AI_ART_DESCRIBE_FAILED` | कोई `prompt` नहीं भेजा गया था और prompt लिखना फ़ेल हो गया। फिर कोशिश करें या अपना prompt भेजें |
-| 503 | `AI_ART_BUSY` | मॉडल व्यस्त है। एक मिनट रुककर फिर कोशिश करें |
-| 503 | `AI_NOT_CONFIGURED` | इस सर्वर पर AI art सेट अप नहीं है (self-hosted) |
-| 504 | `AI_ART_TIMEOUT` | मॉडल ने बहुत ज़्यादा समय लिया (scene mode में तस्वीर बनाने के बाद कोड पेंट करने के लिए बहुत कम समय बचा)। कोई image इस्तेमाल नहीं होती। फिर कोशिश करें, या code mode इस्तेमाल करें |
+| 429 | `AI_ART_CREDITS_EXHAUSTED` | Business: महीने की 1 तारीख का इंतज़ार करें |
+| 429 | `AI_ART_DAILY_LIMIT` | कल दोबारा कोशिश करें (UTC) |
+| 502 | `AI_ART_FAILED` | मॉडल फ़ेल हो गया या उसने प्रॉम्प्ट को अस्वीकार कर दिया। दोबारा कोशिश करें या प्रॉम्प्ट बदलकर लिखें |
+| 502 | `AI_ART_UNSCANNABLE` | ज़्यादा `visibility` के साथ या दूसरे seed के साथ दोबारा कोशिश करें |
+| 502 | `AI_ART_DESCRIBE_FAILED` | कोई `prompt` नहीं भेजा गया था और प्रॉम्प्ट लिखने की कोशिश फ़ेल हो गई। दोबारा कोशिश करें या अपना प्रॉम्प्ट भेजें |
+| 503 | `AI_ART_BUSY` | मॉडल व्यस्त है। एक मिनट रुककर दोबारा कोशिश करें |
+| 503 | `AI_NOT_CONFIGURED` | इस सर्वर पर AI art सेट अप नहीं है (सेल्फ़-होस्टेड) |
+| 504 | `AI_ART_TIMEOUT` | मॉडल ने बहुत ज़्यादा समय लिया (scene मोड में, तस्वीर बनाने के बाद कोड पेंट करने के लिए बहुत कम समय बचा)। दोबारा कोशिश करें, या code मोड इस्तेमाल करें |
 
-किसी भी `5xx` error में image इस्तेमाल नहीं होती।
+Vercel AI Gateway के बिना चल रहा सेल्फ़-होस्टेड इंस्टेंस हर कॉल का जवाब इस तरह देता है:
+
+```json title="503 Service Unavailable"
+{"code":"AI_NOT_CONFIGURED","message":"AI QR art is not configured on this server","status":503}
+```
 
 ## MCP [#mcp]
 
-कनेक्शन पर QRdx API key होने पर [MCP server](/docs/developers/mcp) में `generate_ai_art` tool मिलता है। यह request body वाले ही fields लेता है और PNG, QR कोड स्कैन करने पर खुलने वाला कंटेंट और इस महीने बची हुई images लौटाता है। अपने assistant से सीधी भाषा में कहें:
+कनेक्शन पर QRdx API key होने पर, [MCP सर्वर](/docs/developers/mcp) में `generate_ai_art` टूल मिलता है। यह request body वाले ही फ़ील्ड लेता है और PNG लौटाता है, साथ ही यह भी बताता है कि वह किस पर स्कैन होता है और इस महीने कितनी इमेज बची हैं। अपने असिस्टेंट से सीधी भाषा में कहें:
 
-```txt
+```txt title="Prompt"
 Make AI QR art for my code cm5code0spring0menu00001: a bistro chalkboard menu on a brick wall, as a scene.
 ```
 
-key के बिना tool यह बताता है कि key कैसे जोड़ें। REST API की तरह इस कॉल में भी एक मिनट तक लग सकता है।
+key न होने पर, टूल बताता है कि उसे कैसे जोड़ें। REST API की तरह इस कॉल में भी एक मिनट तक लग सकता है।
 
-## Self-hosting [#self-hosting]
+## सेल्फ़-होस्टिंग [#self-hosting]
 
-AI art Vercel AI Gateway से चलता है। अपने instance पर `AI_GATEWAY_API_KEY` सेट करें; इसके बिना `POST /v1/art` और `generate_ai_art` `503 AI_NOT_CONFIGURED` लौटाते हैं।
+AI art Vercel AI Gateway के ज़रिए चलता है। अपने इंस्टेंस पर `AI_GATEWAY_API_KEY` सेट करें; इसके बिना `POST /v1/art` और `generate_ai_art` का जवाब `503 AI_NOT_CONFIGURED` आता है।
+
+## संबंधित [#related]
+
+- [AI QR art बनाएँ](/docs/developers/api/create-art): पूरे schema और Try it पैनल वाला रेफ़रेंस पेज
+- [कोड बनाएँ](/docs/developers/api/create-codes): वह डायनेमिक कोड बनाएँ जिसे art में encode होना है
+- [MCP सर्वर](/docs/developers/mcp): असिस्टेंट के लिए `generate_ai_art` टूल
+- [प्लान और सीमाएँ](/docs/plans-and-limits): हर प्लान में हर महीने की AI art इमेज

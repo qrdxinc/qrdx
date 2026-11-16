@@ -1,8 +1,10 @@
 ---
 title: "Kode QR Wi-Fi"
-description: "Kode QR yang menghubungkan ke jaringan Wi-Fi saat dipindai, dengan pembuat payload bertipe yang sudah di-escape."
+description: "Kode QR untuk proyek shadcn/ui yang menghubungkan ke jaringan Wi-Fi saat dipindai, dengan pembuat payload yang bertipe dan ter-escape."
 icon: Globe
 ---
+
+`WifiQrCode` menampilkan kode yang menghubungkan ke jaringan Wi-Fi saat dipindai kamera ponsel, lengkap dengan nama jaringan di bawahnya. Gunakan untuk kartu jaringan tamu di resepsionis, standing menu di kafe, atau halaman sambutan properti sewaan.
 
 <ComponentLinks name="wifi-qr-code" />
 
@@ -14,29 +16,35 @@ icon: Globe
 
 ## Penggunaan [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { WifiQrCode } from "@/components/wifi-qr-code";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <WifiQrCode ssid="Cafe Guest" password="espresso-2024" />
 ```
 
-Kamera iOS dan Android menawarkan untuk terhubung ke jaringan saat memindai kode ini. Tidak perlu aplikasi.
+Kamera iOS dan Android menawarkan untuk terhubung ke jaringan saat memindai kode. Tidak perlu aplikasi. Di bawah kode, komponen menampilkan nama jaringan dan teks "Scan with your camera to join".
 
 ## Contoh [#examples]
 
 ### Varian [#variants]
 
-`showPassword` menampilkan kata sandi untuk tamu yang mengetiknya secara manual. Gunakan `encryption="nopass"` untuk jaringan terbuka dan `hidden` untuk jaringan yang tidak menyiarkan namanya.
+`showPassword` menampilkan kata sandi bagi tamu yang mengetikkannya secara manual. Gunakan `encryption="nopass"` untuk jaringan terbuka dan `hidden` untuk jaringan yang tidak menyiarkan namanya.
 
 <ComponentPreview name="wifi-qr-code-variants" />
 
 ### Pembuat payload [#payload-builder]
 
-`buildWifiPayload` mengembalikan teks `WIFI:` yang dienkode oleh kode tersebut. Fungsi ini meng-escape `\`, `;`, `,`, `:` dan `"` pada nama dan kata sandi, yang biasanya menjadi sumber kesalahan pada payload yang ditulis manual. Gunakan dengan renderer QR apa pun, atau untuk mencetak payload saat debugging.
+`buildWifiPayload` mengembalikan teks `WIFI:` yang dienkode oleh kode. Fungsi ini melakukan escape pada `\`, `;`, `,`, `:` dan `"` di nama dan kata sandi, bagian yang biasanya membuat payload tulisan tangan bermasalah. Gunakan dengan perender QR apa pun, atau untuk mencetak payload saat debugging.
 
 <ComponentPreview name="wifi-qr-code-payload" />
+
+## Aksesibilitas dan rendering [#accessibility-and-rendering]
+
+- Kode memiliki `aria-label="QR code to join the Wi-Fi network <ssid>"`. Payload, yang berisi kata sandi, tidak pernah dibacakan.
+- Nama dan kata sandi di bawah kode adalah `<figcaption>` dari figure. Atur `showDetails={false}` untuk menampilkan kode saja.
+- Komponen ini adalah Client Component, dan kodenya dirender di server.
 
 ## Referensi API [#api-reference]
 
@@ -46,4 +54,12 @@ Prop lain apa pun, seperti `className`, diteruskan ke `<figure>` pembungkus.
 
 ### buildWifiPayload [#buildwifipayload]
 
-`buildWifiPayload(network: WifiNetwork): string` menerima kolom jaringan yang sama dengan komponen: `ssid`, `password`, `encryption` dan `hidden`.
+`buildWifiPayload(network: WifiNetwork): string` menerima kolom jaringan yang sama dengan komponen: `ssid`, `password`, `encryption` dan `hidden`. `"WPA"` mencakup WPA, WPA2 dan WPA3; `"WEP"` dan `"nopass"` adalah nilai lainnya. Dengan `"nopass"`, kata sandi dihilangkan.
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/components/vcard-qr-code" title="Kode QR vCard" description="Gagasan yang sama untuk kartu kontak." />
+  <Card href="/docs/components/qr-code" title="Kode QR" description="Kode untuk payload apa pun, dengan tombol unduh." />
+  <Card href="/docs/components/qr-code-download" title="Unduh Kode QR" description="Ekspor kode Wi-Fi untuk dicetak." />
+</Cards>

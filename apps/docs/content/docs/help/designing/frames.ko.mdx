@@ -1,37 +1,57 @@
 ---
 title: "프레임과 행동 유도 문구 추가하기"
-description: "QR 코드 주위에 테두리와 \"Scan me\" 같은 짧은 문구를 넣어 보세요."
+description: "QR 코드 둘레에 테두리와 \"Scan me\" 같은 짧은 문구를 넣어 보세요."
 ---
 
-프레임은 스캔하면 무엇을 얻을 수 있는지 사람들에게 알려 줍니다.
+프레임은 코드 둘레에 테두리와 짧은 문구를 넣어, 스캔하면 무엇을 얻는지 사람들이 알 수 있게 해 줘요. 프레임은 코드 바깥에 놓이며 코드의 어떤 사각형도 가리지 않으므로 스캔에 영향을 주지 않아요.
 
 ## 프레임 추가하기 [#add-a-frame]
 
-1. [Playground](/playground?tab=design&section=frame)에서 **디자인** 탭을 열고 **프레임**을 선택해요.
-2. 프레임을 고르세요. 이름으로 검색하거나 그룹을 선택할 수 있습니다. **클래식**에는 Arrow, Standard Box, Square Border, Striked Box, Halloween, Dot Ring을 포함한 기본 프레임이 있습니다. 프레임을 고르면 기존에 사용하던 프레임이 바뀝니다. 직접 만든 아트워크를 사용하려면 로그인한 뒤 검색창 옆의 **SVG 업로드**를 선택하세요. SVG의 도형과 색상이 프레임이 됩니다.
-3. **라벨**에 문구를 입력하거나 준비된 문구를 고르세요. Scan me, Scan for menu, Join Wi-Fi, Leave a review, Follow us, Pay here, Save contact, Download the app 중에서 선택할 수 있습니다.
-4. **프레임 색상**, **텍스트 색상**, **텍스트 크기**를 설정하세요. 일부 프레임에는 **두 번째 줄**도 있습니다. Arrow, Standard Box, Square Border, Dot Ring은 대신 코드 점의 색상을 따르고, Striked Box와 Halloween은 자체 색상을 유지합니다.
+1. [Playground](/playground?tab=design&section=frame)에서 **Design** 탭을 열고 **Frame**을 선택하세요.
+2. 프레임을 고르세요. 이름으로 검색하거나 그룹별로 둘러볼 수 있어요. **Classic**에는 Arrow, Standard Box, Square Border, Striked Box, Halloween, Dot Ring을 포함한 기본 제공 프레임이 있고, 그다음에 프레임 라이브러리의 컬렉션이 이어지며, **Saved**에는 저장해 둔 프레임이 있어요. 프레임을 고르면 기존에 사용하던 프레임이 바뀌어요.
+3. **Label**에 문구를 입력하거나 **Label ideas** 중 하나를 고르세요. Scan me, Scan for menu, Join Wi-Fi, Leave a review, Follow us, Pay here, Save contact, Download the app이 있어요. 프레임이 없는 상태에서 문구 아이디어를 고르면 기본 프레임이 추가돼요.
+4. **Frame color**, **Text color**, **Text size**를 설정하세요. 일부 프레임에는 **Second line**, **Accent color**, **Icon**도 있어요.
 
-{/* Shaped codes (feat/heart-silhouette-shapes) */}
+Arrow, Standard Box, Square Border, Dot Ring은 프레임 색상 대신 코드 점의 색상을 따르고, Striked Box와 Halloween은 자체 색상을 유지해요.
+
+<Shot id="design-frame" />
+
+직접 만든 이미지를 사용하려면 로그인한 뒤 검색창 옆의 **Upload SVG**를 클릭하세요. SVG의 도형과 색상이 프레임이 돼요.
 
 ## 코드를 도형 안에 넣기 [#put-the-code-in-a-shape]
 
-같은 선택기에 **도형 코드** 그룹이 있습니다. **Dot circle**과 **Heart**는 코드를 장식용 점으로 만든 원이나 하트 안에 넣어 줍니다. **Silhouette**는 직접 만든 도형을 채웁니다. 밝거나 투명한 배경에 어둡거나 단색인 도형이 있는 PNG, JPEG, SVG를 업로드하세요. 윤곽선만 사용되며 그림 자체는 사용되지 않습니다.
+같은 선택기에 **Shaped codes** 그룹이 있어요. **Dot circle**과 **Heart**는 장식용 점으로 이루어진 원이나 하트 안에 코드를 넣어요. **Silhouette**는 직접 만든 도형을 채워요. 밝거나 투명한 배경에 어둡거나 꽉 찬 도형이 있는 PNG, JPEG 또는 SVG를 업로드하세요. 윤곽선만 사용하며 그림은 사용하지 않아요.
 
-스캐너는 가운데 있는 코드만 읽으므로, 같은 스캔 거리를 유지하려면 도형 코드를 정사각형 코드보다 크게 인쇄하세요. 도형은 프레임을 대신합니다. 하나를 고르면 다른 하나는 해제됩니다. 코드를 담기에 너무 얇은 도형은 메시지와 함께 거부됩니다.
+스캐너는 가운데의 코드만 읽으므로, 같은 스캔 거리를 유지하려면 도형 코드를 사각형 코드보다 더 크게 인쇄하세요. 도형은 프레임을 대신해요. 하나를 고르면 다른 하나는 해제돼요.
 
-{/* end shaped codes */}
+## 문구는 짧게 [#keep-the-text-short]
 
-## 프레임은 스캔에 영향을 주지 않아요 [#frames-never-hurt-scanning]
-
-프레임은 코드 바깥에 놓입니다. 코드의 어떤 사각형도 가리지 않습니다.
-
-프레임 문구는 짧게 유지하세요. 멀리서는 서너 단어가 가장 읽기 좋습니다.
+멀리서는 서너 단어가 가장 잘 읽혀요. 휴대폰으로 무엇을 하라고 안내하기보다 "Scan for menu"처럼 무엇을 얻는지 알려 주세요.
 
 ## 프레임 포함해서 다운로드하기 [#download-with-the-frame]
 
-프레임은 모든 형식의 다운로드에 포함됩니다. 인쇄에 대해서는 [QR 코드 다운로드 및 인쇄하기](/docs/help/getting-started/download-and-print)를 참고하세요.
+프레임은 모든 형식의 모든 다운로드에 포함돼요. 인쇄에 관해서는 [QR 코드 다운로드 및 인쇄하기](/docs/help/getting-started/download-and-print)를 참고하세요.
+
+## 프레임 공유하기 [#share-your-frame]
+
+직접 업로드했거나 라이브러리에서 가져온 프레임은 따로 게시할 수 있어요. **Frame** 섹션에서 **Publish frame**을 클릭하세요. 게시한 디자인과 같은 약관으로 [커뮤니티](/community)에 올라가요. [디자인 저장하고 다시 사용하기](/docs/help/designing/save-a-design)를 참고하세요.
+
+## 문제가 생겼을 때 [#if-something-goes-wrong]
+
+### Label 필드가 비활성화되어 있어요 [#the-label-field-is-disabled]
+
+프레임이 적용되어 있지 않은 상태예요. 필드에 "Pick a frame first"라고 표시돼요. 프레임을 고르거나, 프레임을 추가해 주는 문구 아이디어를 고르세요.
+
+### Frame color가 적용되지 않아요 [#frame-color-has-no-effect]
+
+선택한 프레임이 코드 점의 색상을 따르거나(Arrow, Standard Box, Square Border, Dot Ring) 자체 색상을 유지해요(Striked Box, Halloween). **Colors**에서 **Dots** 색상을 바꾸거나 다른 프레임을 고르세요.
+
+### Silhouette가 거부돼요 [#a-silhouette-is-refused]
+
+도형이 너무 얇아서 코드를 담을 수 없어요. 더 굵고 꽉 찬 도형이 있는 그림을 업로드하세요.
 
 ## 관련 문서 [#related]
 
+- [QR 코드 다운로드 및 인쇄하기](/docs/help/getting-started/download-and-print)
+- [디자인 저장하고 다시 사용하기](/docs/help/designing/save-a-design)
 - [개발자를 위한 프레임과 인쇄](/docs/features/frames)

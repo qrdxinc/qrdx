@@ -1,8 +1,10 @@
 ---
 title: "QR Code Share Dialog"
-description: "링크용 QR 코드, 복사 버튼, PNG 다운로드, 기본 공유 시트를 제공하는 공유 대화상자입니다."
+description: "링크를 QR 코드로 보여 주고, 복사 버튼, PNG 다운로드, 기본 공유 시트를 제공하는 shadcn/ui 프로젝트용 공유 대화상자입니다."
 icon: Webhook
 ---
+
+`QrCodeShareDialog`는 링크를 QR 코드로 보여 주는 대화상자를 엽니다. 복사할 수 있는 입력란에 링크가 표시되고, PNG 다운로드를 할 수 있으며, 휴대폰에서는 시스템 공유 시트도 사용할 수 있습니다. 초대장, 문서, 프로필처럼 바로 옆에 있는 사람에게 링크를 건네는 곳이라면 어디든 "공유" 버튼 뒤에 두고 사용하세요.
 
 <ComponentLinks name="qr-code-share-dialog" />
 
@@ -14,40 +16,64 @@ icon: Webhook
 
 ## 사용법 [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeShareDialog } from "@/components/qr-code-share-dialog";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeShareDialog url="https://example.com/invite/abc123" />
 ```
 
-대화상자에는 QR 코드, 복사 버튼이 있는 읽기 전용 링크 입력란, PNG 다운로드가 표시됩니다. 공유 시트를 지원하는 기기(대부분의 휴대폰)에서는 "공유…" 버튼을 누르면 공유 시트가 열려요.
+대화상자에는 QR 코드, 복사 버튼이 있는 읽기 전용 링크 입력란, **PNG 다운로드**가 표시됩니다. 공유 시트를 지원하는 기기(대부분의 휴대폰)에서는 **공유…** 버튼을 누르면 공유 시트가 열려요.
 
-## 예제 [#examples]
+## 예시 [#examples]
 
 ### 사용자 지정 트리거 [#custom-trigger]
 
-도구 모음의 아이콘 버튼처럼 원하는 트리거를 children으로 전달하세요. `title`, `description`, `qr`로 대화상자를 사용자 지정할 수 있습니다.
+툴바의 아이콘 버튼처럼 원하는 트리거를 children으로 전달하세요. `title`, `description`, `qr`로 대화상자를 사용자 지정할 수 있습니다.
 
 <ComponentPreview name="qr-code-share-dialog-trigger" />
 
 ### 제어 모드 [#controlled]
 
-이 대화상자는 [Dialog](https://ui.shadcn.com/docs/components/dialog)의 props를 그대로 받으므로 코드에서 직접 열 수 있습니다.
+이 대화상자는 [Dialog](https://ui.shadcn.com/docs/components/dialog) props를 받으므로 코드에서 직접 열 수 있습니다.
 
-```tsx
-const [open, setOpen] = useState(false);
+```tsx title="components/share-after-save.tsx"
+"use client";
 
-<QrCodeShareDialog
-  url="https://example.com"
-  open={open}
-  onOpenChange={setOpen}
-/>
+import { useState } from "react";
+import { QrCodeShareDialog } from "@/components/qr-code-share-dialog";
+
+export function ShareAfterSave({ url }: { url: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)}>
+        Save and share
+      </button>
+      <QrCodeShareDialog url={url} open={open} onOpenChange={setOpen} />
+    </>
+  );
+}
 ```
+
+## 접근성과 렌더링 [#accessibility-and-rendering]
+
+- 이 대화상자는 사용 중인 Dialog이므로, 열리면 포커스가 대화상자 안으로 이동하고 닫히면 트리거로 돌아갑니다.
+- QR 코드에는 `aria-label="QR code: <url>"`이 있고, 링크 입력란에는 시각적으로 숨겨진 "Link" 레이블이 있습니다. 복사 버튼의 레이블은 복사 직후 잠시 동안 "Link copied"로 바뀝니다.
+- **공유…** 버튼은 `navigator.share`가 있는 환경에서만, 브라우저에서 첫 렌더링이 끝난 뒤에 나타납니다. 그래서 서버 HTML과 클라이언트의 첫 화면이 일치합니다.
+- 링크 입력란을 클릭하면 링크 전체가 선택됩니다. 복사하려면 보안 컨텍스트(HTTPS 또는 localhost)가 필요합니다.
 
 ## API 레퍼런스 [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-share-dialog.tsx" type="{ [K in keyof QrCodeShareDialogProps as K extends Exclude<keyof ComponentProps<typeof Dialog>, 'children'> ? never : K]: QrCodeShareDialogProps[K] }" />
 
 `open`, `defaultOpen`, `onOpenChange`, `modal`은 Dialog에 전달됩니다.
+
+## 관련 문서 [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="대화상자의 PNG 버튼 하나보다 더 다양한 형식과 크기를 지원합니다." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="대화상자 대신 페이지 안에 QR 코드를 바로 표시합니다." />
+  <Card href="/docs/dynamic-qr-codes" title="동적 QR 코드" description="최종 URL 대신 나중에 변경할 수 있는 짧은 링크를 공유하세요." />
+</Cards>

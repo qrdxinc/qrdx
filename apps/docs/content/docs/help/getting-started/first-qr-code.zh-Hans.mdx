@@ -1,34 +1,65 @@
 ---
 title: "制作你的第一个二维码"
-description: "在 Playground 中创建二维码并下载。免费，无需账号，没有水印。"
+description: "在 Playground 中创建二维码并下载。免费，无需账号，无水印。"
 ---
 
-大约一分钟就能做出一个二维码。你不需要账号。
+[Playground](/playground) 是 QRdx 的编辑器。你无需账号，大约一分钟就能在这里制作一个二维码。你下载的二维码是静态的：链接直接存储在二维码里，永久有效，但打印后无法再修改。
 
 ## 制作二维码 [#make-the-code]
 
-1. 打开 [Playground](/playground)。这是 QRdx 的编辑器。
-2. 默认已选中 **URL**。如果要生成 Wi-Fi、名片、WhatsApp 或其他类型的二维码，请点击 **二维码类型** 旁边的 **更改**，然后选择一种类型。
-3. 在 **网站地址** 中输入你的链接。地址有效后，预览会立即显示你的二维码。
-4. 可选：在 **从样式开始** 下选择一种外观，或打开 **设计** 标签页，更改颜色、圆点、定位眼、Logo 和边框。
-5. 点击预览上方的下载图标，或按 <kbd>D</kbd>。选择格式和尺寸，然后下载。
+### 1. 选择二维码要打开的内容 [#1-pick-what-the-code-opens]
 
-在地址下方，QRdx 会显示扫描后将打开的位置，例如“扫描后打开 example.com”。打印前请先核对。
+打开 [Playground](/playground)。此时 **内容** 标签页处于打开状态，所选类型为 **URL**，适用于任何网址。
 
-## 打印前 [#before-you-print]
+如果要生成 Wi-Fi、名片、WhatsApp 或其他类型的二维码，请点击 **二维码类型** 卡片上的 **更改**，然后选择类型。
 
-查看预览下方的 **扫描评分**。85 分或以上就很好。低于 65 分时，请修复标有叉号的检查项。参见[用扫描评分检查设计](/docs/help/designing/scan-score)。
+<Shot id="playground-type-picker" />
+
+### 2. 输入你的链接 [#2-type-your-link]
+
+在 **网站地址** 中粘贴或输入地址。地址成为有效链接后，预览会从模糊的示例变为你的二维码，输入框下方的文字会说明扫描后打开的位置，例如“扫描后打开 example.com”。打印前请先核对。
+
+<Shot id="playground-content" />
+
+### 3. 选择外观 [#3-pick-a-look]
+
+这一步是可选的。在 **从样式开始** 下，选择一个现成的样式。如需进一步定制，请打开 **设计** 标签页，其中包含颜色、圆点、定位点、Logo 和边框。
+
+### 4. 下载 [#4-download]
+
+点击预览上方的 **下载**，或按 <kbd>D</kbd>。选择格式和尺寸，然后点击对话框底部的下载按钮。文件会保存到你的下载文件夹。
+
+<Shot id="playground-download" />
+
+<Clip id="first-code" />
+
+## 检查能否扫描 [#check-that-it-scans]
+
+查看预览下方的 **扫描评分**。85 分及以上为优秀，可以直接打印。低于 65 分时，请点击评分，修复标有叉号的检查项。参见[用扫描评分检查设计](/docs/help/designing/scan-score)。
 
 然后用你自己的手机扫描这个二维码。
 
-## 来自 Playground 的二维码是静态的 [#codes-from-the-playground-are-static]
+## 如果之后可能更改链接 [#if-you-might-change-the-link-later]
 
-从 Playground 下载的二维码是**静态**的：链接直接存储在二维码内部。它可以永久使用，但打印后无法再更改。
+Playground 生成的二维码直接存储链接本身，所以打印出来的二维码无法修改。如果链接可能会变，或者你想统计扫描次数，请在下载前，在地址下方的 **静态或动态二维码** 开关中选择 **动态**。这需要一个免费账号。参见[创建动态二维码](/docs/help/dynamic-codes/create)和[静态还是动态，你需要哪一种？](/docs/help/getting-started/static-vs-dynamic)。
 
-如果以后可能需要更改链接，请改为创建动态二维码。参见[静态还是动态](/docs/help/getting-started/static-vs-dynamic)。
+## 如果出现问题 [#if-something-goes-wrong]
 
-## 后续步骤 [#next-steps]
+### 预览仍然显示模糊的示例 [#the-preview-still-shows-the-blurred-sample]
+
+地址还不是有效链接。请检查是否漏了点号或多了空格，并输入完整地址。
+
+### 下载按钮是灰色的 [#the-download-button-is-grayed-out]
+
+二维码有内容之前，该按钮一直不可用。请先输入地址。
+
+### 手机无法识别二维码 [#your-phone-doesnt-read-the-code]
+
+先查看扫描评分，然后参见[二维码无法扫描](/docs/help/troubleshooting/wont-scan)。
+
+## 相关内容 [#related]
 
 - [下载并打印二维码](/docs/help/getting-started/download-and-print)
 - [选择易于扫描的颜色](/docs/help/designing/colors-and-contrast)
 - [添加 Logo](/docs/help/designing/logos)
+- [创建动态二维码](/docs/help/dynamic-codes/create)

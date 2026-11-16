@@ -1,31 +1,42 @@
 ---
 title: "Cambia lo que abre un código impreso"
-description: "Convierte un código con enlace a un sitio web en una página alojada, o una página de nuevo en un enlace. El código impreso sigue funcionando."
+description: "Convierte un código de enlace a un sitio web en una página alojada, o una página de nuevo en un enlace. El código impreso sigue funcionando."
 ---
 
-Un código dinámico abre un enlace a un sitio web o una página alojada, y puedes cambiar entre ambos después de imprimirlo. El enlace corto no cambia, así que cada copia impresa abrirá la nueva página o el nuevo enlace en su próximo escaneo, y los escaneos se siguen contando en el mismo código.
+Un código dinámico abre un enlace a un sitio web o una página alojada, y puedes cambiar entre ambos después de imprimirlo. El enlace corto no cambia, así que cada copia impresa abre la nueva página o el nuevo enlace en su próximo escaneo, y los escaneos se siguen contando en el mismo código.
 
-## Convierte un enlace a un sitio web en una página [#turn-a-website-link-into-a-page]
+## Convertir un enlace a un sitio web en una página [#turn-a-website-link-into-a-page]
 
-1. Abre el código desde **Códigos** y haz clic en **Cambiar tipo**.
-2. Elige un tipo de página y después una plantilla.
-3. Haz clic en **Continuar al editor** y crea la página.
-4. Haz clic en **Publicar**.
+### 1. Abre Cambiar tipo [#1-open-change-type]
 
-Los escaneos siguen yendo al enlace anterior hasta que publiques. Si sales del editor sin publicar, no cambia nada. Tus cambios sin publicar se quedan en este navegador.
+Abre el código desde **Códigos** y haz clic en **Cambiar tipo** en su pestaña **Resumen**. Se abre el cuadro de diálogo **Cambia lo que abre este código**.
 
-## Convierte una página de nuevo en un enlace [#turn-a-page-back-into-a-link]
+<Shot id="change-type-dialog" />
+
+### 2. Elige una página [#2-pick-a-page]
+
+En **Página alojada**, elige un tipo de página y luego una plantilla.
+
+### 3. Crea la página [#3-build-the-page]
+
+Haz clic en **Continuar al editor** y crea la página.
+
+### 4. Publica [#4-publish]
+
+Haz clic en **Publicar** en el editor de páginas. Los escaneos seguirán yendo al enlace anterior hasta que lo hagas. Si sales del editor sin publicar, no cambia nada, y tus ediciones sin publicar se quedan en este navegador.
+
+## Convertir una página de nuevo en un enlace [#turn-a-page-back-into-a-link]
 
 1. Abre el código y haz clic en **Cambiar tipo**.
-2. Elige **Enlace a sitio web**, introduce la dirección y haz clic en **Cambiar a enlace a sitio web**.
+2. Elige **Enlace a un sitio web**, escribe la dirección y haz clic en **Cambiar a enlace a un sitio web**.
 
-La página permanece en **Páginas**. Para recuperarla, abre **Cambiar tipo** otra vez y elígela en **Volver a la anterior**.
+La página se queda en **Páginas**. Para recuperarla, abre **Cambiar tipo** otra vez y elígela en **Volver a una anterior**, que aparece cuando el código ya ha tenido páginas anteriores.
 
-## Cambia a otro tipo de página [#switch-to-another-page-type]
+## Cambiar a otro tipo de página [#switch-to-another-page-type]
 
-Elige un tipo en **Otro tipo de página**. La nueva página parte de la plantilla que elijas y toma de la anterior lo que encaje: el nombre de la página, los ajustes y el logotipo, además de los bloques que la plantilla también tenga, como el encabezado, los enlaces o los datos de contacto. El cuadro de diálogo enumera lo que no encaja. Eso se queda en la página anterior, que se conserva en **Páginas**.
+Si el código ya abre una página, el cuadro de diálogo tiene una sección **Otro tipo de página**. La nueva página parte de la plantilla que elijas y toma de la anterior lo que encaje: el nombre de la página, los ajustes y el logo, además de los bloques que la plantilla también tenga, como el encabezado, los enlaces o los datos de contacto. El cuadro de diálogo enumera lo que no encaja. Eso se queda en la página anterior, que se conserva en **Páginas**.
 
-## Qué se mantiene igual [#what-stays-the-same]
+## Qué permanece igual [#what-stays-the-same]
 
 El enlace corto, el historial de escaneos, la carpeta, las etiquetas, las notas, el diseño del QR, la contraseña, la programación y el límite de escaneos no cambian.
 
@@ -34,16 +45,28 @@ Algunos ajustes solo funcionan con un tipo:
 - El enrutamiento inteligente, las pruebas A/B, los parámetros UTM y el seguimiento de conversiones se aplican solo a enlaces a sitios web.
 - Los píxeles de seguimiento se cargan solo en páginas alojadas.
 
-Se conservan al cambiar y vuelven a funcionar si regresas al tipo anterior. La pestaña **Ajustes** del código indica cuáles están guardados pero no se usan.
+Se conservan al cambiar y vuelven a funcionar si regresas al tipo anterior. La pestaña **Ajustes** del código indica cuáles están guardados pero sin uso.
 
 ## Planes [#plans]
 
-Una página nueva cuenta para las páginas alojadas de tu plan, como cualquier página que crees. Una página que el código deja de abrir sigue contando hasta que la elimines desde **Páginas**. Volver a una página que ya tienes no suma al recuento. Consulta [Planes y límites](/docs/plans-and-limits).
+Una página nueva cuenta para las páginas alojadas de tu plan, como cualquier página que crees. Una página que el código deja de abrir sigue contando hasta que la elimines de **Páginas**. Volver a una página que ya tienes no suma al recuento. Consulta [Planes y límites](/docs/plans-and-limits).
 
 ## Deshacer un cambio [#undo-a-switch]
 
-Cada cambio guarda los ajustes anteriores del código en **Historial de versiones**. Restaurar una versión anterior devuelve el tipo al que tenía, siempre que la página que abría siga existiendo.
+Cada cambio guarda los ajustes anteriores del código en el **Historial de versiones** de la pestaña **Ajustes**. Restaurar una versión anterior devuelve el tipo anterior, siempre que la página que abría siga existiendo.
 
-## Desde la API [#from-the-api]
+## Si algo sale mal [#if-something-goes-wrong]
 
-Envía `kind` con `PATCH /v1/codes/{id}`. Consulta [Actualizar un código](/docs/developers/api/update-code).
+### Los escaneos siguen abriendo el enlace anterior [#scans-still-open-the-old-link]
+
+Aún no has publicado la página. Ábrela desde **Páginas** y haz clic en **Publicar**.
+
+### Volver a una anterior no aparece en el cuadro de diálogo [#switch-back-isnt-in-the-dialog]
+
+Solo aparece cuando el código ya ha abierto una página antes. Para una página nueva, elige un tipo en **Página alojada**.
+
+## Relacionado [#related]
+
+- [Crear una página para móvil](/docs/help/pages-and-forms/create-a-page)
+- [Cambiar a dónde apunta un código](/docs/help/dynamic-codes/change-the-link)
+- [Actualizar un código con la API](/docs/developers/api/update-code)

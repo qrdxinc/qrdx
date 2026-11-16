@@ -3,27 +3,38 @@ title: "Ändern, was ein gedruckter Code öffnet"
 description: "Wandle einen Code mit Website-Link in eine gehostete Seite um, oder eine Seite zurück in einen Link. Der gedruckte Code funktioniert weiter."
 ---
 
-Ein dynamischer QR-Code öffnet entweder einen Website-Link oder eine gehostete Seite, und du kannst nach dem Druck zwischen beiden wechseln. Der Kurzlink bleibt gleich. Deshalb öffnet jede gedruckte Kopie beim nächsten Scan die neue Seite oder den neuen Link, und die Scans werden weiter auf demselben Code gezählt.
+Ein dynamischer QR-Code öffnet entweder einen Website-Link oder eine gehostete Seite, und du kannst nach dem Druck zwischen beiden wechseln. Der Kurzlink ändert sich nicht. Jede gedruckte Kopie öffnet also beim nächsten Scan die neue Seite oder den neuen Link, und die Scans werden weiter für denselben Code gezählt.
 
 ## Einen Website-Link in eine Seite umwandeln [#turn-a-website-link-into-a-page]
 
-1. Öffne den Code unter **Codes** und klicke auf **Typ ändern**.
-2. Wähle einen Seitentyp und dann eine Vorlage.
-3. Klicke auf **Weiter zum Editor** und erstelle die Seite.
-4. Klicke auf **Veröffentlichen**.
+### 1. Typ ändern öffnen [#1-open-change-type]
 
-Scans führen weiter zum alten Link, bis du veröffentlichst. Wenn du den Editor verlässt, ohne zu veröffentlichen, ändert sich nichts. Deine unveröffentlichten Änderungen bleiben in diesem Browser gespeichert.
+Öffne den Code unter **Codes** und klicke im Tab **Übersicht** auf **Typ ändern**. Der Dialog **Ändern, was dieser Code öffnet** wird geöffnet.
+
+<Shot id="change-type-dialog" />
+
+### 2. Seite auswählen [#2-pick-a-page]
+
+Wähle unter **Gehostete Seite** einen Seitentyp und dann eine Vorlage.
+
+### 3. Seite erstellen [#3-build-the-page]
+
+Klicke auf **Weiter zum Editor** und erstelle die Seite.
+
+### 4. Veröffentlichen [#4-publish]
+
+Klicke im Seiteneditor auf **Veröffentlichen**. Bis dahin führen Scans weiter zum alten Link. Wenn du den Editor verlässt, ohne zu veröffentlichen, ändert sich nichts, und deine unveröffentlichten Änderungen bleiben in diesem Browser gespeichert.
 
 ## Eine Seite zurück in einen Link umwandeln [#turn-a-page-back-into-a-link]
 
 1. Öffne den Code und klicke auf **Typ ändern**.
-2. Wähle **Website-Link**, gib die Adresse ein und klicke auf **Zu Website-Link wechseln**.
+2. Wähle **Website-Link**, gib die Adresse ein und klicke auf **Zum Website-Link wechseln**.
 
-Die Seite bleibt unter **Seiten** erhalten. Um sie zurückzuholen, öffne **Typ ändern** noch einmal und wähle sie unter **Zurückwechseln** aus.
+Die Seite bleibt unter **Seiten** erhalten. Um sie zurückzuholen, öffne erneut **Typ ändern** und wähle sie unter **Zurückwechseln** aus. Dieser Bereich erscheint, sobald der Code früher Seiten geöffnet hat.
 
 ## Zu einem anderen Seitentyp wechseln [#switch-to-another-page-type]
 
-Wähle unter **Anderer Seitentyp** einen Typ aus. Die neue Seite beginnt mit der Vorlage, die du wählst, und übernimmt aus der alten Seite, was passt: den Seitennamen, die Einstellungen und das Logo sowie alle Blöcke, die auch die Vorlage hat, etwa Kopfbereich, Links oder Kontaktdaten. Der Dialog listet auf, was nicht passt. Das bleibt auf der alten Seite, die unter **Seiten** aufbewahrt wird.
+Bei einem Code, der bereits eine Seite öffnet, hat der Dialog den Bereich **Anderer Seitentyp**. Die neue Seite beginnt mit der Vorlage, die du auswählst, und übernimmt aus der alten, was passt: Seitenname, Einstellungen und Logo sowie alle Blöcke, die auch die Vorlage hat, etwa Kopfbereich, Links oder Kontaktdaten. Der Dialog listet auf, was nicht passt. Das bleibt auf der alten Seite, die unter **Seiten** aufbewahrt wird.
 
 ## Was gleich bleibt [#what-stays-the-same]
 
@@ -34,16 +45,28 @@ Manche Einstellungen funktionieren nur mit einem Typ:
 - Smart Routing, A/B-Tests, UTM-Parameter und Conversion-Tracking gelten nur für Website-Links.
 - Tracking-Pixel werden nur auf gehosteten Seiten geladen.
 
-Sie bleiben beim Wechsel erhalten und funktionieren wieder, wenn du zurückwechselst. Auf dem Tab **Einstellungen** des Codes steht, welche gespeichert, aber gerade nicht in Gebrauch sind.
+Sie bleiben beim Wechsel erhalten und funktionieren wieder, wenn du zurückwechselst. Im Tab **Einstellungen** des Codes sind alle aufgeführt, die gespeichert, aber gerade nicht in Gebrauch sind.
 
-## Tarife [#plans]
+## Pläne [#plans]
 
-Eine neue Seite zählt wie jede Seite, die du erstellst, zu den gehosteten Seiten deines Tarifs. Eine Seite, die der Code nicht mehr öffnet, zählt weiter, bis du sie unter **Seiten** löschst. Wenn du zu einer Seite zurückwechselst, die du schon hast, erhöht sich die Zahl nicht. Siehe [Tarife und Limits](/docs/plans-and-limits).
+Eine neue Seite zählt wie jede Seite, die du erstellst, zu den gehosteten Seiten deines Plans. Eine Seite, die der Code nicht mehr öffnet, zählt weiter, bis du sie unter **Seiten** löschst. Wenn du zu einer Seite zurückwechselst, die du schon hast, erhöht sich die Zahl nicht. Siehe [Pläne und Limits](/docs/plans-and-limits).
 
 ## Einen Wechsel rückgängig machen [#undo-a-switch]
 
-Jeder Wechsel speichert die vorherigen Einstellungen des Codes im **Versionsverlauf**. Wenn du eine frühere Version wiederherstellst, wechselt der Typ zurück, solange die Seite, die der Code geöffnet hat, noch existiert.
+Bei jedem Wechsel werden die bisherigen Einstellungen des Codes im **Versionsverlauf** im Tab **Einstellungen** gespeichert. Wenn du eine frühere Version wiederherstellst, wechselt der Typ zurück, sofern die Seite, die er geöffnet hat, noch existiert.
 
-## Über die API [#from-the-api]
+## Wenn etwas nicht klappt [#if-something-goes-wrong]
 
-Sende `kind` mit `PATCH /v1/codes/{id}`. Siehe [Einen Code aktualisieren](/docs/developers/api/update-code).
+### Scans öffnen weiterhin den alten Link [#scans-still-open-the-old-link]
+
+Du hast die Seite noch nicht veröffentlicht. Öffne sie unter **Seiten** und klicke auf **Veröffentlichen**.
+
+### „Zurückwechseln“ fehlt im Dialog [#switch-back-isnt-in-the-dialog]
+
+Der Bereich erscheint nur, wenn der Code zuvor eine Seite geöffnet hat. Für eine neue Seite wähle unter **Gehostete Seite** einen Typ.
+
+## Weiterführend [#related]
+
+- [Eine mobile Seite erstellen](/docs/help/pages-and-forms/create-a-page)
+- [Ändern, wohin ein Code zeigt](/docs/help/dynamic-codes/change-the-link)
+- [Einen Code per API aktualisieren](/docs/developers/api/update-code)

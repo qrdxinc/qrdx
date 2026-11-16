@@ -1,35 +1,49 @@
 ---
-title: "Pilih warna yang bisa dipindai"
-description: "Pertahankan kode gelap di atas latar belakang terang, jaga kontras tetap kuat, dan gunakan gradien dengan hati-hati."
+title: "Pilih warna yang dapat dipindai"
+description: "Pertahankan kode gelap di atas latar terang, jaga kontras tetap kuat, dan gunakan gradien dengan hati-hati."
 ---
 
-Pemindai mencari kotak gelap di atas latar belakang terang. Sebagian besar masalah warna muncul karena aturan itu dilanggar.
+Pemindai mencari kotak gelap di atas latar yang terang. Sebagian besar masalah warna muncul karena aturan itu dilanggar. Halaman ini menunjukkan letak pengaturan warna di Playground dan cara menjaga kode tetap dapat dipindai saat Anda mengubahnya.
 
 ## Ubah warna [#change-the-colors]
 
-Di [Playground](/playground?tab=design&section=colors), buka tab **Design**, lalu **Colors**.
+1. Di [Playground](/playground?tab=design&section=colors), buka tab **Design**, lalu **Colors**.
+2. Pilih warna yang ingin diubah. **Background** adalah area di belakang kode. **Foreground** mewarnai kotak-kotak kecil yang menyimpan data Anda. **Eyes** mewarnai tiga kotak besar di sudut. **Dots** mewarnai bagian tengah setiap kotak sudut.
+3. Pilih isian: **Solid**, **Linear**, **Radial**, **Angular**, atau **Image**.
 
-- **Background** adalah area di belakang kode.
-- **Foreground** mewarnai kotak-kotak kecil yang menyimpan data Anda.
-- **Eyes** mewarnai tiga kotak besar di sudut-sudut kode.
-- **Dots** mewarnai bagian tengah setiap kotak sudut.
+Pratinjau dan **Scan score** di bawahnya diperbarui secara langsung. **Color palettes**, di bawah keempat warna tersebut, mengatur semuanya sekaligus.
 
-Setiap warna dapat berupa warna solid, gradien linear, atau gradien radial. Palet di bawah keempat warna tersebut mengatur semuanya sekaligus.
+<Shot id="design-colors" />
 
 ## Aturan agar kode tetap dapat dipindai [#rules-that-keep-a-code-scannable]
 
-- **Kode gelap, latar belakang terang.** Kode terang di atas latar belakang gelap gagal dipindai di beberapa aplikasi kamera.
-- **Kontras kuat.** Usahakan rasio kontras 4.5:1 atau lebih antara kode dan latar belakang.
-- **Gradien tetap gelap.** Gradien boleh digunakan selama setiap warna di dalamnya cukup gelap terhadap latar belakang.
-- **Latar belakang polos.** Foto yang ramai di belakang kode membuatnya lebih sulit dibaca.
+- **Kode gelap, latar terang.** Kode terang di atas latar gelap gagal dibaca di beberapa aplikasi kamera.
+- **Kontras kuat.** Usahakan rasio kontras 4.5:1 atau lebih antara kode dan latar.
+- **Gradien tetap gelap.** Gradien boleh digunakan jika setiap warna di dalamnya cukup gelap terhadap latar.
+- **Latar polos.** Foto yang ramai di belakang kode membuatnya lebih sulit dibaca. Jika ingin gambar di dalam kode, gunakan [Image QR](/docs/help/designing/art), yang menguji hasilnya untuk Anda.
 
 ## Periksa kontras [#check-the-contrast]
 
-Pemeriksa kontras di bilah alat di atas pratinjau menampilkan rasio untuk warna Anda. Pemeriksa ini menandai pasangan warna di bawah 4.5:1.
+**Contrast Checker** di bilah alat di atas pratinjau menampilkan rasio untuk warna Anda dan menandai pasangan warna di bawah 4.5:1.
 
-**Scan score** di bawah pratinjau juga memeriksa kontras, bersama ukuran, ruang kosong, dan logo. Lihat [Periksa desain dengan scan score](/docs/help/designing/scan-score).
+**Scan score** di bawah pratinjau juga memeriksa kontras, bersama dengan ukuran, ruang kosong, dan logo. Lihat [Periksa desain dengan scan score](/docs/help/designing/scan-score).
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### Skor menunjukkan Fails setelah warna diubah [#the-score-says-fails-after-a-color-change]
+
+Kontrasnya terlalu rendah sehingga kamera tidak dapat membedakan kode dari latar. Buat foreground lebih gelap atau background lebih terang sampai skor kembali normal.
+
+### Kode terbaca di ponsel Anda tetapi tidak di ponsel lain [#it-scans-on-your-phone-but-not-on-other-phones]
+
+Kode terang di atas gelap dan pasangan warna berkontras rendah terbaca di sebagian kamera, tetapi tidak di kamera lain. Tukar warnanya agar kode menjadi bagian yang gelap, lalu naikkan rasio menjadi 4.5:1 atau lebih.
+
+### Gradien membuat skor menjadi Risky [#a-gradient-makes-the-score-risky]
+
+Salah satu ujung gradien terlalu terang. Geser kedua warna ke arah yang lebih gelap, atau gunakan foreground solid dan simpan gradien untuk eyes.
 
 ## Terkait [#related]
 
+- [Periksa desain dengan scan score](/docs/help/designing/scan-score)
 - [Kode tidak dapat dipindai](/docs/help/troubleshooting/wont-scan)
 - [Warna dan gradien untuk developer](/docs/features/colors-gradients)

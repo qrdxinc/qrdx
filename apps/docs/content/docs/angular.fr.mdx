@@ -4,23 +4,30 @@ description: "Dessinez des QR codes stylisés dans Angular avec le composant aut
 icon: Code
 ---
 
-`qrdx/angular` est un composant Angular autonome, `<qrdx-qr-code>`, construit sur le même moteur que les composants React. Il reprend les props du `<QRCode>` de React sous forme d'entrées signal et dessine le même SVG, octet pour octet : motifs, couleurs et dégradés, logos, cadres, formes, Art QR et modèles. Il s'affiche côté serveur avec `@angular/ssr` et s'hydrate sans erreur.
+À la fin de cette page, vous aurez un QR code stylisé dans un composant Angular, lié à un signal, et un bouton qui l'enregistre au format SVG. `qrdx/angular` est un composant autonome, `<qrdx-qr-code>`, construit sur le même moteur que les composants React. Il reprend les props du `<QRCode>` de React sous forme d'entrées signal et dessine le même SVG. Il s'affiche côté serveur avec `@angular/ssr` et s'hydrate sans erreur.
 
-Il fonctionne avec Angular 20 et les versions plus récentes, dans les builds de production comme avec `ng serve`.
+<NpmStatus package="qrdx" />
 
-## Installation [#install]
+## Avant de commencer [#before-you-start]
+
+- Un projet Angular 20 ou plus récent, créé avec l'Angular CLI. Les builds de production et `ng serve` fonctionnent tous les deux.
+- Node.js 18 ou plus récent.
+
+## Mise en place [#build-it]
+
+### 1. Installer qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
 `@angular/core` est une dépendance peer facultative de `qrdx` : l'installer n'ajoute donc jamais Angular aux applications qui ne l'utilisent pas, et n'ajoute jamais React à la vôtre.
 
-## Dessiner un code [#draw-a-code]
+### 2. Dessiner un code [#2-draw-a-code]
 
 Importez `QRCode` et ajoutez-le aux `imports` de votre composant. Aucun NgModule n'est nécessaire.
 
-```ts title="app.ts"
+```ts title="src/app/app.ts"
 import { Component, signal } from "@angular/core";
 import { QRCode, type QRCodeProps } from "qrdx/angular";
 
@@ -31,6 +38,7 @@ import { QRCode, type QRCodeProps } from "qrdx/angular";
     <qrdx-qr-code
       [value]="url()"
       [size]="240"
+      [margin]="4"
       level="Q"
       bodyPattern="rounded"
       [fgColor]="fgColor"
@@ -52,15 +60,36 @@ export class App {
 }
 ```
 
-Le code est redessiné quand une entrée change. Quand un changement laisse le balisage identique, la page n'est pas modifiée.
+`ng serve` affiche un code de 240 px avec des modules arrondis, un dégradé du bleu au bleu marine et une bannière « Scan me ». Donnez à `url` un autre lien et le code se redessine. Lorsqu'une modification laisse le balisage identique, la page n'est pas touchée.
+
+<Shot id="lib-angular-code" />
+
+### 3. L'enregistrer dans un fichier [#3-save-it-as-a-file]
+
+Le composant télécharge et exporte le code qu'il dessine, comme `qrdx/vanilla`. Accédez-y avec une variable de référence de modèle ou `viewChild(QRCode)` :
+
+```html title="src/app/app.html"
+<qrdx-qr-code #qr value="https://example.com" [size]="256" [margin]="4" />
+<button type="button" (click)="qr.download({ format: 'svg', filename: 'qr-code.svg' })">
+  Download SVG
+</button>
+```
+
+Un clic sur le bouton enregistre `qr-code.svg`.
+
+- `download({ format, size, filename, quality })` enregistre un fichier : PNG par défaut, ou `"jpg"`, `"webp"`, `"svg"`, `"pdf"` ou `"eps"`. Le PDF nécessite le paquet facultatif `jspdf`.
+- `toDataURL(format, { size, quality })` renvoie le code sous forme d'URL de données.
+- `markup()` est le balisage SVG, `options()` les props avec lesquelles le code est dessiné, et `svg` l'élément `<svg>`.
+
+Tout ce qui se trouve dans `qrdx/core` est aussi exporté par `qrdx/angular` : `toSVGString`, `downloadQRCode`, `getScanScore` et le reste viennent donc du même import.
 
 ## Entrées [#inputs]
 
-Chaque prop du `<QRCode>` de React est une entrée de même nom et de même type, et Angular vérifie vos liaisons par rapport à elles quand il compile vos templates. `value` est obligatoire.
+Chaque prop du `<QRCode>` de React est une entrée portant le même nom et le même type, et Angular vérifie vos liaisons par rapport à elles lorsqu'il compile vos modèles. `value` est obligatoire.
 
 | Entrées | Rôle |
 | --- | --- |
-| `value`, `size`, `level`, `margin`, `autoLevel` | Contenu, taille en pixels, correction d'erreur, zone de silence, et relèvement du niveau pour un grand logo |
+| `value`, `size`, `level`, `margin`, `autoLevel` | Contenu, taille en pixels, correction d'erreur, zone de silence, et augmentation du niveau pour un grand logo |
 | `fgColor`, `bgColor`, `eyeColor`, `dotColor`, `eyeColors` | Couleurs, dégradés et remplissages par image |
 | `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern`, `moduleScale` | Formes des points et des yeux |
 | `logo`, `logoOptions`, `hideLogo`, `scale` | Un logo au centre, disposé comme celui de `<QRCode>` |
@@ -69,31 +98,31 @@ Chaque prop du `<QRCode>` de React est une entrée de même nom et de même type
 | `frameLabelMarkers`, `partMarkers` | Marqueurs pour l'aperçu en direct d'un éditeur |
 | `svgStyle` | Styles en ligne pour le `<svg>` (le `style` de `QRCode`) |
 
-`style` s'appelle `svgStyle` parce qu'une entrée nommée `style` prendrait le dessus sur l'attribut `style` propre à l'élément. Les attributs que vous placez sur `<qrdx-qr-code>`, comme `class`, `style` ou `aria-label`, restent sur cet élément ; le `<svg>` se trouve à l'intérieur.
+`style` s'appelle `svgStyle` parce qu'une entrée nommée `style` prendrait le dessus sur l'attribut `style` de l'élément lui-même. Les attributs que vous placez sur `<qrdx-qr-code>`, comme `class`, `style` ou `aria-label`, restent sur cet élément ; le `<svg>` se trouve à l'intérieur.
 
-Les styles propres à votre composant n'atteignent pas le `<svg>`, car Angular les limite aux éléments de votre template. Pour qu'un code remplisse son conteneur, utilisez `svgStyle` :
+Les styles propres à votre composant n'atteignent pas le `<svg>`, car Angular les limite aux éléments de votre modèle. Pour qu'un code remplisse son conteneur, utilisez `svgStyle` :
 
-```html
+```html title="src/app/app.html"
 <qrdx-qr-code value="https://example.com" [svgStyle]="{ width: '100%', height: 'auto' }" />
 ```
 
-## Téléchargement et export [#download-and-export]
-
-Le composant télécharge et exporte le code qu'il dessine, comme `qrdx/vanilla`. Accédez-y avec une variable de référence de template ou `viewChild(QRCode)` :
-
-```html
-<qrdx-qr-code #qr value="https://example.com" [size]="256" />
-<button type="button" (click)="qr.download({ format: 'svg' })">Download SVG</button>
-```
-
-- `download({ format, size, filename, quality })` enregistre un fichier : PNG par défaut, ou `"jpg"`, `"webp"`, `"svg"`, `"pdf"` ou `"eps"`. Le PDF nécessite le paquet facultatif `jspdf`.
-- `toDataURL(format, { size, quality })` renvoie le code sous forme d'URL de données.
-- `markup()` donne le balisage SVG, `options()` les props avec lesquelles le code est dessiné, et `svg` l'élément `<svg>`.
-
-Tout ce qui se trouve dans `qrdx/core` est aussi exporté depuis `qrdx/angular` : `toSVGString`, `downloadQRCode`, `getScanScore` et le reste viennent donc du même import.
-
 ## Rendu serveur et hydratation [#server-rendering-and-hydration]
 
-Avec `@angular/ssr`, le HTML du serveur contient déjà le code, qui s'affiche donc avant le chargement de l'application. Dans le navigateur, Angular hydrate la page et conserve l'élément `<qrdx-qr-code>` ; le composant dessine ensuite de nouveau son code, identique à celui du serveur. Vous n'avez pas besoin de `ngSkipHydration`.
+Avec `@angular/ssr`, le HTML du serveur contient déjà le code, qui s'affiche donc avant le chargement de l'application. Dans le navigateur, Angular hydrate la page et conserve l'élément `<qrdx-qr-code>` ; le composant redessine alors son code, identique à celui du serveur. Vous n'avez pas besoin de `ngSkipHydration`.
 
-Le résultat ne contient aucun identifiant aléatoire : le serveur et le navigateur dessinent donc le même balisage.
+La sortie ne contient aucun identifiant aléatoire : le serveur et le navigateur dessinent donc le même balisage.
+
+## En cas de problème [#if-something-goes-wrong]
+
+- **`NG8001: 'qrdx-qr-code' is not a known element`.** `QRCode` est absent du tableau `imports` du composant. Ajoutez-le, comme à l'étape 2.
+- **Une règle CSS pour `svg` dans votre composant n'a aucun effet.** Angular limite vos styles à votre propre modèle. Utilisez l'entrée `svgStyle`, ou placez la règle dans une feuille de style globale.
+- **`PDF export needs the optional "jspdf" package`.** Exécutez `npm install jspdf` dans l'application.
+
+## Voir aussi [#related]
+
+<Cards>
+  <Card href="/docs/web-component" title="Composant web" description="L'élément qrdx-code, une alternative qui ne nécessite aucun composant Angular." />
+  <Card href="/docs/vanilla-js" title="JavaScript natif" description="Tout ce qu'exporte qrdx/core, et que qrdx/angular réexporte." />
+  <Card href="/docs/features/downloads" title="Export et téléchargement" description="Formats, tailles, presse-papiers et PNG dans Node." />
+  <Card href="/docs/api-reference" title="Référence de l'API de la bibliothèque" description="Chaque prop, avec son type et sa valeur par défaut." />
+</Cards>

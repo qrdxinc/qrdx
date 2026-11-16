@@ -1,30 +1,57 @@
 ---
-title: "使用您自己的域名"
-description: "为动态二维码的短链接绑定自定义域名，例如 go.yourbrand.com。"
+title: "使用你自己的域名"
+description: "连接自定义域名（例如 go.yourbrand.com），用于动态二维码的短链接。"
 ---
 
-使用自定义域名后，您的二维码编码的是 `go.yourbrand.com/…`，而不是 `qrdx.dev` 链接。人们在扫描之前就能看到您的品牌。Pro 包含 5 个域名，Business 包含 25 个。
+使用自定义域名后，你的二维码编码的是 `go.yourbrand.com/…`，而不是 `qrdx.dev` 链接，这样用户在扫描之前就能看到你的品牌。本页将带你完成域名的连接，并将其应用到二维码上；更多细节请参阅[自定义域名指南](/docs/custom-domains)。
+
+<Callout type="info">
+  Pro 包含 5 个域名，Business 包含 25 个。工作区所有者和管理员可以添加并验证域名；所有成员都可以使用已验证的域名。请参阅[套餐及其包含的内容](/docs/help/account-and-billing/plans)。
+</Callout>
 
 ## 连接域名 [#connect-a-domain]
 
-1. 在控制台中进入 **Domains**，点击 **Add domain**。
-2. 输入域名，例如 `go.yourbrand.com`。建议使用子域名：您的主网站不受影响。
-3. 在您的 DNS 服务商处（即您购买域名或管理域名 DNS 的地方）添加 QRdx 显示的 DNS 记录。请原样复制各项值。<IfAvailable feature="domainConnect"> 如果您看到 **Set up with** 和您的服务商名称，可以直接点击它：您在服务商页面确认后，服务商会自动添加这些记录。</IfAvailable>
-4. 点击 **Verify**。
+### 1. 添加域名 [#1-add-the-domain]
 
-在找到这些记录之前，状态会显示为 **Waiting for DNS**，之后变为 **Verified**。DNS 变更通常几分钟内生效，但最长可能需要 48 小时。
+在控制台中前往 **设置** → **域名**，然后点击 **添加域名**。输入域名，例如 `go.yourbrand.com`。最好使用 `go.` 或 `qr.` 之类的子域名：这样你的主网站不受影响。
 
-## 为二维码使用该域名 [#use-it-for-a-code]
+### 2. 添加 DNS 记录 [#2-add-the-dns-records]
 
-- **新二维码：** 在点击 **Create code** 之前，在 **Short link domain** 中选择您的域名。
-- **已有二维码：** 在 **Edit link** 中选择该域名并保存，然后重新下载二维码。编码的链接已经改变。
+QRdx 会显示需要添加的记录，包括它们的 **类型**、**名称** 和 **值**。请在你的 DNS 服务商处添加这些记录（即你购买域名或管理其 DNS 的地方），并原样复制各项值。<IfAvailable feature="domainConnect"> 如果 QRdx 识别出你的服务商，你可以点击 **使用服务商名称进行设置**：在服务商页面确认更改后再返回即可。</IfAvailable>
 
-## 已打印的二维码仍然有效 [#printed-codes-keep-working]
+<Shot id="dns-records" />
 
-每个二维码在其 `qrdx.dev` 链接下也始终有效。在迁移到您的域名之前打印的二维码不会失效。
+### 3. 验证 [#3-verify]
 
-将二维码从一个自定义域名迁移到另一个自定义域名，会导致使用旧域名打印的二维码失效。保存之前，QRdx 会向您发出警告。
+点击 **验证**。在找到记录之前，状态会显示为 **等待 DNS**，随后变为 **已验证**，QRdx 会提示你现在可以为动态二维码选择该域名。DNS 更改通常几分钟内生效，但最长可能需要 48 小时。
+
+## 将其用于二维码 [#use-it-for-a-code]
+
+- **新建二维码：** 在点击 **创建二维码** 之前，在 **短链接域名** 下选择你的域名。
+- **已有二维码：** 打开 **编辑链接**，选择该域名，然后点击 **保存更改**。此时二维码编码的是新链接，因此请重新下载。之前使用 `qrdx.dev` 链接印刷的二维码仍然有效。
+
+## 已印刷的二维码仍然有效 [#printed-codes-keep-working]
+
+每个二维码在其 `qrdx.dev` 链接下也会继续有效，因此你在迁移到自己的域名之前印刷的二维码不会失效。
+
+将二维码从一个自定义域名迁移到另一个自定义域名，则会导致使用旧域名印刷的二维码失效。保存之前，QRdx 会向你发出警告。
+
+## 如果出现问题 [#if-something-goes-wrong]
+
+### 状态一直停留在“等待 DNS” [#the-status-stays-on-waiting-for-dns]
+
+检查每条记录的名称和值是否与 QRdx 显示的一致，且没有多余字符，然后点击 **检查 DNS**。有些服务商需要数小时才能发布更改，个别服务商最长需要 48 小时。
+
+### 你的 DNS 服务商没有添加记录 [#your-dns-provider-didnt-add-the-records]
+
+自动设置未能完成。请根据域名下方的表格自行添加记录，然后点击 **验证**。
+
+### 扫描时显示“此域名尚未连接” [#scanners-see-this-domain-isnt-connected-yet]
+
+某个二维码已经编码了该域名，但其 DNS 设置尚未完成。请完成上述步骤；域名一旦变为 **已验证**，二维码即可正常使用。
 
 ## 相关内容 [#related]
 
 - [自定义域名指南](/docs/custom-domains)
+- [创建动态二维码](/docs/help/dynamic-codes/create)
+- [扫描后显示错误页面](/docs/help/troubleshooting/error-pages)

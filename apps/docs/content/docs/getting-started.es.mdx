@@ -1,58 +1,145 @@
 ---
-title: "Instala la biblioteca de React"
-description: "Instala la biblioteca de React qrdx y genera tu primer código QR con unas pocas líneas."
+title: "Empieza con la biblioteca de React"
+description: "Instala qrdx, muestra un código QR con estilo en un componente de React y guárdalo como archivo, en pocos minutos."
 icon: Rocket
 ---
 
-Instala `qrdx` y crea tu primer código QR en minutos.
+Al terminar esta página tendrás un código QR con estilo mostrado por un componente de React y un botón que lo guarda como SVG. La biblioteca dibuja el código por sí misma, así que no necesitas cuenta ni clave de API.
 
 <NpmStatus package="qrdx" />
 
-## Instala el paquete [#install-the-package]
+## Antes de empezar [#before-you-start]
+
+- Una aplicación de React con React 18 o posterior. Next.js, Vite, Remix y los demás funcionan.
+- Node.js 18 o posterior.
+
+¿Quieres ver las opciones antes de escribir código? Dale estilo a un código en el [Playground](/playground?open=code&lang=react) y cópialo como componente de React.
+
+## Constrúyelo [#build-it]
+
+### 1. Instala qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`react` y `react-dom` (versión 18 o posterior) son dependencias peer, así que `qrdx` usa las versiones que tu aplicación ya tiene. La exportación a PDF es opcional: instala `jspdf` solo si la necesitas.
+`react` y `react-dom` son dependencias de pares, así que el paquete usa las versiones que ya tiene tu aplicación. No se instala nada más: la exportación a PDF necesita el paquete opcional `jspdf`, y solo cuando la usas.
 
-## Inicio rápido [#quick-start]
+### 2. Muestra un código [#2-render-a-code]
 
-Crea tu primer código QR:
+```tsx title="components/first-qr-code.tsx"
+import { QRCode } from "qrdx";
 
-```tsx
-import { QRCode } from 'qrdx';
+export function FirstQrCode() {
+  return <QRCode value="https://example.com" size={256} />;
+}
+```
 
-export default function App() {
+Coloca el componente en una página. Verás un código de 256 px con el aspecto predeterminado de la biblioteca: módulos redondos, ojos de las esquinas en forma de engranaje y negro sobre blanco. Apunta la cámara de un teléfono a la pantalla y se abrirá example.com.
+
+<Shot id="lib-first-code" />
+
+`QRCode` muestra un `<svg>` y no usa hooks exclusivos del navegador, así que funciona en React Server Components y se muestra en el HTML de la página antes de que se ejecute cualquier JavaScript. Por sí solo, no ofrece nada a los lectores de pantalla: el paso 3 explica cómo etiquetarlo.
+
+### 3. Dale estilo [#3-style-it]
+
+```tsx title="components/styled-qr-code.tsx"
+import { QRCode } from "qrdx";
+
+export function StyledQrCode() {
   return (
     <QRCode
-      value="https://example.com"
+      value="https://example.com/menu"
       size={256}
+      margin={4}
+      fgColor="#1d4ed8"
+      bodyPattern="rounded"
+      cornerEyePattern="extra-rounded"
+      cornerEyeDotPattern="rounded"
+      frame={{ style: "banner-bottom", text: "Scan for the menu" }}
     />
   );
 }
 ```
 
-Eso es todo. Ya tienes un código QR funcionando.
+Ahora el código es azul con módulos redondeados y debajo aparece un banner que dice "Scan for the menu". El resultado es más alto que 256 px, porque se añade un marco alrededor del código en lugar de dibujarlo encima, de modo que el código sigue escaneándose.
 
-¿Quieres diseñarlo primero? [Pruébalo en el Playground](/playground?open=code&lang=react): dale estilo a un código allí y luego cópialo como componente de React.
+<Shot id="lib-styled-code" />
 
-## Siguientes pasos [#next-steps]
+Qué hace cada prop:
+
+- `margin` es la zona de silencio alrededor del código, en módulos. El valor predeterminado es 0, que va bien para un código dentro de una tarjeta con su propio relleno. Usa 4 sobre un fondo cargado u oscuro.
+- `fgColor` acepta cualquier color de CSS o un degradado. `bgColor`, `eyeColor` y `dotColor` funcionan igual.
+- `bodyPattern`, `cornerEyePattern` y `cornerEyeDotPattern` dan forma a los módulos, a los ojos de las esquinas y a los puntos que hay dentro de ellos. Hay {facts.bodyPatterns} patrones de cuerpo, {facts.eyeShapes} formas de ojo y {facts.eyeCentres} centros de ojo, todos dibujados en vivo en [Formas, ojos y marcos](/docs/styles).
+- `frame` añade uno de los {facts.frameStyles} marcos con llamada a la acción incluidos, o un marco propio.
+- `QRCode` acepta las props propias del código y `style`, nada más. Para darle al código un nombre accesible o una clase, envuélvelo en un elemento (`<div role="img" aria-label="QR code for the menu">`), o usa `QRCodeSVG`, que pone `aria-label`, `className` y cualquier otro atributo en el `<svg>`.
+
+### 4. Guárdalo como archivo [#4-save-it-as-a-file]
+
+```tsx title="components/download-svg-button.tsx"
+"use client";
+
+import { downloadQRCode } from "qrdx";
+
+const menuCode = {
+  value: "https://example.com/menu",
+  margin: 4,
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+  frame: { style: "banner-bottom", text: "Scan for the menu" },
+} as const;
+
+export function DownloadSvgButton() {
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        downloadQRCode(menuCode, {
+          format: "svg",
+          size: { width: 1024, height: 1024 },
+          filename: "menu.svg",
+        })
+      }
+    >
+      Download SVG
+    </button>
+  );
+}
+```
+
+Al hacer clic en el botón se guarda `menu.svg`: el mismo código que ves en pantalla, dibujado a 1024 px y nítido a cualquier tamaño, que es el archivo que pide una imprenta. Establece `format` en `png`, `jpg` o `webp` para una imagen, `eps` para un archivo vectorial para herramientas de diseño, o `pdf` (necesita el paquete opcional `jspdf`).
+
+`downloadQRCode` usa el DOM del navegador, así que el botón debe estar en un Client Component. Un Server Component puede mostrarlo igualmente. Mantén las opciones del código en un solo objeto, como arriba, para que el archivo coincida con la vista previa.
+
+### 5. Comprueba que se escanea [#5-check-that-it-scans]
+
+Escanea el código con dos o tres teléfonos antes de imprimirlo. Si el diseño tiene colores poco habituales o un logotipo, `getScanScore` ejecuta las mismas comprobaciones en el navegador y devuelve una puntuación, una nota y qué corregir:
+
+```tsx title="lib/check-code.ts"
+import { getScanScore } from "qrdx";
+
+const { score, grade, checks } = await getScanScore({
+  value: "https://example.com/menu",
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+});
+// score: 0 to 100, grade: "great" | "ok" | "risky" | "fails"
+// checks: [{ id, passed, message, fix? }]
+```
+
+También puedes subir una captura de pantalla o una foto de un código impreso al [verificador de escaneo](/tools/scan-checker).
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+- **`Module not found: Can't resolve 'qrdx'`.** Instala el paquete en el espacio de trabajo o la aplicación que lo importa y reinicia el servidor de desarrollo.
+- **El código se muestra, pero los teléfonos no lo leen.** Añade `margin={4}`, mantén los módulos oscuros sobre un fondo claro y muéstralo con al menos 128 px de ancho en pantalla. [Un código no se escanea](/docs/help/troubleshooting/wont-scan) enumera las demás causas.
+- **`PDF export needs the optional "jspdf" package`.** Ejecuta `npm install jspdf` en el mismo paquete. SVG, PNG, JPG, WebP y EPS no necesitan nada más.
+
+## Relacionado [#related]
 
 <Cards>
-  <Card
-    href="/docs/usage"
-    title="Aprende a usarlo"
-    description="Personaliza colores, patrones y más"
-  />
-  <Card
-    href="/docs/features/templates"
-    title="Usa plantillas"
-    description="Aplica estilos prediseñados al instante"
-  />
-  <Card
-    href="/docs/api-reference"
-    title="Referencia de la API"
-    description="Documentación completa de las props"
-  />
+  <Card href="/docs/usage" title="Uso básico" description="Qué componente usar y todas las props que definen el aspecto de un código." />
+  <Card href="/docs/nextjs" title="Códigos QR en Next.js" description="Server Components, parámetros de ruta, entrada en vivo y descargas en el App Router." />
+  <Card href="/docs/features/patterns" title="Elige las formas de módulos y ojos" description="Todas las formas y las parejas que conviene evitar." />
+  <Card href="/docs/api-reference" title="Referencia de la API de la biblioteca" description="Todos los componentes, funciones y tipos que exporta el paquete." />
 </Cards>

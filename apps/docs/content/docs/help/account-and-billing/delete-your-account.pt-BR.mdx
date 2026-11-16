@@ -3,27 +3,38 @@ title: "Excluir sua conta"
 description: "Exclua permanentemente sua conta do QRdx e tudo o que há nela. Seus QR codes dinâmicos param de funcionar."
 ---
 
+Excluir sua conta remove a conta e tudo o que está no seu próprio workspace. Se você só quer parar de pagar, não precisa disso: [cancele sua assinatura](/docs/help/account-and-billing/cancel) e seus códigos continuam funcionando no plano Grátis.
+
 <Callout type="warn">
-  Excluir sua conta **não pode ser desfeito**. Os QR codes dinâmicos do seu próprio workspace param de funcionar: quem fizer a leitura vê "QR code não encontrado". [Exporte seus dados](/docs/help/account-and-billing/export-your-data) antes.
+  Excluir sua conta não pode ser desfeito. Os QR codes dinâmicos do seu próprio workspace param de funcionar: quem fizer a leitura vê "QR code not found". [Exporte seus dados](/docs/help/account-and-billing/export-your-data) antes.
 </Callout>
 
 ## Excluir [#delete]
 
-1. Vá em **Configurações** → **Perfil e segurança**.
-2. Em **Zona de perigo**, clique em **Excluir conta…**.
-3. Digite `delete` para confirmar.
-4. Confirme que é você. O que pedimos depende de você ter ativado a [verificação em duas etapas](/docs/help/privacy-and-security/two-step-verification):
-   - **Está ativada:** informe um código do seu app autenticador ou um dos seus códigos de backup. Não enviamos código por e-mail. Cada código de backup funciona uma única vez.
-   - **Está desativada:** clique em **Enviar código por e-mail** e digite o código de 6 dígitos que enviarmos para você.
-5. Clique em **Excluir conta**.
+### 1. Abra a zona de perigo [#1-open-the-danger-zone]
 
-Se a verificação em duas etapas está ativada e você perdeu o celular e os códigos de backup, veja [Perdi meu celular e meus códigos de backup](/docs/help/privacy-and-security/two-step-verification#lost-your-phone-and-your-backup-codes).
+Vá em **Settings** → **Profile & security**. Em **Danger zone**, clique em **Delete account…**.
+
+### 2. Confirme [#2-confirm]
+
+Na janela **Delete your account?**, digite `delete` e clique em **Delete account**.
+
+### 3. Comprove que é você [#3-show-its-you]
+
+A menos que você tenha confirmado sua identidade nos últimos 10 minutos, o QRdx pede essa confirmação. O que ele pede depende de a [verificação em duas etapas](/docs/help/privacy-and-security/two-step-verification) estar ativada ou não:
+
+- **Ativada:** use sua passkey, um código do seu app autenticador ou um dos seus códigos de backup. Nós não enviamos código por e-mail.
+- **Desativada:** clique em **Send code** e digite o código de 6 dígitos que enviamos por e-mail, ou entre novamente com uma conta Google ou GitHub que você tenha vinculado.
+
+Sua conta é então excluída e você é desconectado de todos os dispositivos.
+
+Se a verificação em duas etapas estiver ativada e você perdeu o celular e os códigos de backup, veja [Perdi meu celular e meus códigos de backup](/docs/help/privacy-and-security/two-step-verification#lost-your-phone-and-your-backup-codes).
 
 ## O que é excluído [#what-gets-deleted]
 
-Seu próprio workspace: os códigos, leituras, páginas, arquivos e domínios dele, além dos seus temas, webhooks e integrações. Você é desconectado de todos os dispositivos.
+Seu próprio workspace: códigos, leituras, páginas, arquivos e domínios, além dos seus temas, webhooks e integrações.
 
-Se você convidou outras pessoas para o seu próprio workspace, ele não é excluído: como em qualquer workspace compartilhado (veja abaixo), outro membro se torna proprietário e fica com ele.
+Se você convidou outras pessoas para o seu próprio workspace, ele não é excluído: como em qualquer workspace compartilhado, outro membro vira proprietário e fica com ele.
 
 ## Sua assinatura [#your-subscription]
 
@@ -32,8 +43,20 @@ Se você paga pelo Pro ou pelo Business, o QRdx cancela a assinatura imediatamen
 ## Seus outros workspaces [#your-other-workspaces]
 
 - Em um workspace em que você é o único membro, o workspace é excluído.
-- Em um workspace com outros membros, outro membro se torna proprietário e fica com os códigos e as páginas que você criou lá.
+- Em um workspace com outros membros, outro membro vira proprietário e fica com os códigos e as páginas que você criou lá.
 
-## Só quer parar de pagar? [#just-want-to-stop-paying]
+## Se algo der errado [#if-something-goes-wrong]
 
-Você não precisa excluir sua conta. [Cancele sua assinatura](/docs/help/account-and-billing/cancel) e seus códigos continuam funcionando no plano Grátis.
+### O botão Delete account continua desativado [#the-delete-account-button-stays-disabled]
+
+Digite `delete` exatamente assim, em minúsculas.
+
+### Você não consegue fazer a segunda etapa [#you-cant-do-the-second-step]
+
+Entre de outra forma primeiro, ou siga [Perdi meu celular e meus códigos de backup](/docs/help/privacy-and-security/two-step-verification#lost-your-phone-and-your-backup-codes). O suporte não pode excluir uma conta para você sem confirmar que ela é sua.
+
+## Relacionado [#related]
+
+- [Exportar seus dados](/docs/help/account-and-billing/export-your-data)
+- [Cancelar sua assinatura](/docs/help/account-and-billing/cancel)
+- [Assentos e limites do workspace](/docs/help/teams/seats)

@@ -1,79 +1,94 @@
 ---
 title: "Vanilla JavaScript"
-description: "Zeichne, aktualisiere und exportiere gestaltete QR-Codes ohne React: mit qrdx/vanilla in einer Seite oder App, mit qrdx/core für Markup und DOM-Knoten und mit einem ES-Modul für Seiten ohne Bundler."
+description: "Zeichne, aktualisiere und exportiere gestaltete QR-Codes ohne Framework: mit qrdx/vanilla in einer gebündelten App oder mit einem einzigen Script-Tag, dazu qrdx/core für Markup und DOM-Knoten."
 icon: FileCode
 ---
 
-`qrdx` ist nicht nur für React. Die Engine, mit der die React-Komponenten zeichnen, wird separat als `qrdx/core` veröffentlicht, und `qrdx/vanilla` ergänzt darauf eine kleine API für reines JavaScript. Beide zeichnen dasselbe SVG wie `QRCodeSVG`, Byte für Byte, mit jedem Stil, Rahmen, Logo und Export. Keines von beiden importiert `react` oder `react-dom`.
+Am Ende dieser Seite hast du einen gestalteten QR-Code in eine einfache HTML-Seite gezeichnet, aus deinem Code heraus aktualisiert und als PNG gespeichert, entweder mit einem Bundler oder mit einem einzigen Script-Tag. `qrdx/vanilla` ist dieselbe Engine, mit der auch die React-Komponenten zeichnen. Sie erzeugt also dasselbe SVG, mit allen Mustern, Farben, Logos, Rahmen und Exporten, und importiert weder `react` noch `react-dom`.
 
-## Installation [#install]
+<NpmStatus package="qrdx" />
+
+## Bevor du anfängst [#before-you-start]
+
+- Eine Seite mit einem Bundler (Vite, webpack, Parcel oder einem anderen) für die Schritte 1 bis 3. Ohne Bundler springst du direkt zu [Schritt 4](#4-use-it-without-a-bundler).
+- Node.js 18 oder neuer für den Bundler.
+
+## So baust du es [#build-it]
+
+### 1. qrdx installieren [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
 `react` und `react-dom` sind optionale Peer-Abhängigkeiten. Für `qrdx/vanilla` oder `qrdx/core` brauchst du sie nicht.
 
-## Einen Code in einer Seite zeichnen [#draw-a-code-in-a-page]
+### 2. Einen Code in ein Element zeichnen [#2-draw-a-code-into-an-element]
 
-```js
+```html title="index.html"
+<div id="qr"></div>
+<script type="module" src="/main.js"></script>
+```
+
+```js title="main.js"
 import { createQRCode } from "qrdx/vanilla";
 
 const qr = createQRCode("#qr", {
-  value: "https://example.com",
+  value: "https://example.com/menu",
   size: 256,
+  margin: 4,
   bodyPattern: "rounded",
-  frame: { style: "banner-bottom", text: "Scan me" },
-  "aria-label": "QR code for example.com",
+  frame: { style: "banner-bottom", text: "Scan for the menu" },
+  "aria-label": "QR code for the menu",
 });
 ```
 
-`createQRCode(element, options)` nimmt ein Element oder einen CSS-Selektor entgegen sowie jede Option, die auch `QRCodeSVG` akzeptiert: Muster, Farben und Verläufe, Logos (`imageSettings`), Rahmen, Formen und Art QR. Attribute wie `className`, `style` oder `aria-label` landen auf dem `<svg>`. Das `<svg>` wird mit `createElementNS` erzeugt, es wird also kein HTML geparst.
+In `#qr` erscheint ein `<svg>`: ein 256 px großer Code mit abgerundeten Modulen und einem Banner darunter. `createQRCode(element, options)` akzeptiert ein Element oder einen CSS-Selektor und jede Option, die auch das React-`QRCodeSVG` kennt: Muster, Farben und Verläufe, Logos (`imageSettings`), Rahmen, Formen, Vorlagen und Art. Attribute wie `className`, `style` oder `aria-label` landen auf dem `<svg>`. Das Element wird mit `createElementNS` aufgebaut, es wird also kein HTML geparst.
 
-## Aktualisieren, exportieren und entfernen [#update-export-and-remove-it]
+<Shot id="lib-framed-menu-code" />
 
-```js
-qr.update({ fgColor: "#1d4ed8" });
+### 3. Aktualisieren, exportieren und entfernen [#3-update-export-and-remove-it]
 
-qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "svg", "pdf" or "eps"
-await qr.download({ format: "svg", filename: "menu.svg" });
+```js title="main.js"
+qr.update({ fgColor: "#1d4ed8" }); // redraws the code in place, now blue
 
-qr.destroy();
+qr.toSVGString(); // '<svg xmlns="http://www.w3.org/2000/svg" …'
+await qr.toDataURL("png", { size: 1024 }); // "data:image/png;base64,…"
+await qr.download({ format: "png", size: 1024, filename: "menu.png" });
+
+qr.destroy(); // removes the <svg>
 ```
 
 - `update` führt neue Optionen mit den aktuellen zusammen und zeichnet neu. Übergib `undefined`, um eine Option zu entfernen. Ändert sich das Markup nicht, wird die Seite nicht angefasst.
-- `toDataURL` und `download` verwenden standardmäßig PNG in der eigenen `size` des Codes. Ein Rahmen macht das Bild größer als den Code. Für PDF brauchst du das optionale Paket `jspdf`.
+- `toDataURL` und `download` liefern standardmäßig PNG in der eigenen `size` des Codes. Die Formate sind `png`, `jpg`, `webp`, `svg`, `pdf` und `eps`. Ein Rahmen macht das Bild größer als den Code. PDF benötigt das optionale Paket `jspdf`.
 - `qr.svg` ist das `<svg>`-Element und `qr.options` sind die aktuellen Optionen.
 - `destroy` entfernt das `<svg>`. Danach wirft `update` einen Fehler.
 
-## Ohne Bundler [#without-a-bundler]
+### 4. Ohne Bundler verwenden [#4-use-it-without-a-bundler]
 
-`dist/vanilla.browser.mjs` ist dieselbe API als ein ES-Modul, für eine Seite, die es direkt von einem CDN lädt:
-
-```html
+```html title="index.html"
 <div id="qr"></div>
 <script type="module">
   import { createQRCode } from "https://cdn.jsdelivr.net/npm/qrdx/dist/vanilla.browser.mjs";
 
-  createQRCode("#qr", { value: "https://example.com", size: 256 });
+  createQRCode("#qr", { value: "https://example.com", size: 256, margin: 4 });
 </script>
 ```
 
-Hänge in der URL nach `qrdx` ein `@` und eine Version an, um eine Version festzulegen. Derselbe Pfad funktioniert auf unpkg.
+`dist/vanilla.browser.mjs` ist dieselbe API als einzelnes ES-Modul. Hänge in der URL nach `qrdx` ein `@` und eine Version an, um eine Version festzulegen. Derselbe Pfad funktioniert auch auf unpkg.
 
-Die Datei lässt die Daten der offiziellen Rahmenbibliothek weg, damit Seiten, die sie nicht nutzen, sie nicht herunterladen. Um einen offiziellen Rahmen zu verwenden, importiere ihn aus der Datei daneben:
+Die Datei enthält die Daten der offiziellen Rahmenbibliothek nicht, damit Seiten, die sie nicht nutzen, sie auch nicht herunterladen. Um einen offiziellen Rahmen zu verwenden, importiere ihn aus der Datei daneben:
 
-```js
+```js title="index.html"
 import { getOfficialFrame } from "https://cdn.jsdelivr.net/npm/qrdx/dist/frames-official.mjs";
 
 const wifi = getOfficialFrame("wifi-card");
 qr.update({ frame: { style: "custom", spec: wifi.spec } });
 ```
 
-Der PDF-Export und der Scan-Score laden `jspdf` und `jsqr`, wenn sie ausgeführt werden. Eine Seite, die sie nutzt, ordnet beide mit einer Import Map zu, die vor dem Modul-Script steht:
+Der PDF-Export und der Scan-Score laden `jspdf` und `jsqr`, sobald sie laufen. Eine Seite, die sie nutzt, ordnet beide mit einer Import Map zu, die vor dem Modul-Script steht:
 
-```html
+```html title="index.html"
 <script type="importmap">
   {
     "imports": {
@@ -84,11 +99,11 @@ Der PDF-Export und der Scan-Score laden `jspdf` und `jsqr`, wenn sie ausgeführt
 </script>
 ```
 
-## Markup und DOM-Knoten (qrdx/core) [#markup-and-dom-nodes-qrdxcore]
+## Markup und DOM-Knoten mit qrdx/core [#markup-and-dom-nodes-with-qrdxcore]
 
-`qrdx/core` enthält alles, was auch der Haupteinstieg `qrdx` hat, außer den React-Komponenten. Es funktioniert in Node und im Browser.
+`qrdx/core` enthält alles, was der Haupteinstieg `qrdx` hat, außer den React-Komponenten. Es funktioniert in Node und im Browser.
 
-```ts
+```ts title="code.ts"
 import {
   createQRCodeTree,
   renderToDOM,
@@ -113,13 +128,13 @@ renderToDOM(tree);
 toSVGString(resolveQRCodeProps({ value: "https://example.com", logo: "/logo.png" }));
 ```
 
-Die Ausgabe enthält keine zufälligen IDs, daher stimmt auf einem Server gerendertes Markup mit dem des Browsers überein. Downloads, der Scan-Score sowie druckfertige PDF- und EPS-Dateien kommen aus denselben Funktionen wie in der React-Bibliothek: `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, `downloadPrintPDF` und die übrigen. Für PNG auf einem Server verwende `getQRAsPNG` aus `qrdx/node`.
+Die Ausgabe enthält keine zufälligen IDs, daher stimmt auf einem Server gerendertes Markup mit dem des Browsers überein. Downloads, der Scan-Score und druckfertige PDF- und EPS-Dateien kommen aus denselben Funktionen wie in der React-Bibliothek: `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, `downloadPrintPDF` und die übrigen. Für PNG auf einem Server nutze `getQRAsPNG` aus `qrdx/node`.
 
 ## Eigene Vorlagen ohne JSX [#custom-templates-without-jsx]
 
-Der `wrapper` einer Vorlage erhält den gezeichneten Code und gibt ihn umhüllt zurück. Mit `h(type, props, ...children)` schreibst du einen ohne JSX:
+Der `wrapper` einer Vorlage erhält den gezeichneten Code und gibt ihn eingepackt zurück. Mit `h(type, props, ...children)` schreibst du einen ohne JSX:
 
-```js
+```js title="labelled-template.js"
 import { h, toSVGString } from "qrdx/core";
 
 const Labelled = {
@@ -142,3 +157,19 @@ toSVGString({
 ```
 
 Derselbe Wrapper funktioniert auch in den React-Komponenten, wenn du `h` stattdessen aus `qrdx` importierst.
+
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
+
+- **`qrdx: no element matches #qr`.** Das Script lief, bevor das Element existierte. Setze das `<script type="module">` hinter das Element oder warte auf `DOMContentLoaded`.
+- **`qrdx: this QR code was destroyed`.** Du hast `update` nach `destroy` aufgerufen. Erstelle mit `createQRCode` einen neuen Code.
+- **`PDF export needs the optional "jspdf" package`.** Installiere `jspdf` neben `qrdx` oder füge es auf einer Seite ohne Bundler der Import Map hinzu.
+- **Der Code wird gezeichnet, aber ein Handy liest ihn nicht.** Füge `margin: 4` hinzu, halte dunkle Module auf hellem Hintergrund und prüfe das Design mit `getScanScore`. Siehe [Ein Code lässt sich nicht scannen](/docs/help/troubleshooting/wont-scan).
+
+## Weiterführend [#related]
+
+<Cards>
+  <Card href="/docs/web-component" title="Web Component" description="Dieselbe Engine als Custom Element, für Markup ohne Script." />
+  <Card href="/docs/features/downloads" title="Export und Download" description="Alle Formate, die Zwischenablage, Data-URLs und PNG in Node." />
+  <Card href="/docs/features/frames" title="Rahmen, Scan-Score und Druckdateien" description="Integrierte und offizielle Rahmen, Rahmenspezifikationen und druckfertiger Export." />
+  <Card href="/docs/api-reference" title="API-Referenz der Bibliothek" description="Jede Funktion, die qrdx/core exportiert." />
+</Cards>

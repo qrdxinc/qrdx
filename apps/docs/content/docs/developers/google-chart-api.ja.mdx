@@ -1,54 +1,72 @@
 ---
 title: "Google Chart の QR コード API を置き換える"
-description: "chart.googleapis.com の QR コードは現在 404 を返します。chl、chs、chld を無料の QRdx Image API のパラメータに対応させ、古い URL は 1 つのコマンドで更新できます。"
+description: "chart.googleapis.com の chl、chs、chld パラメーターを無料の QRdx Image API に対応付け、古い URL をファイル内でコマンド 1 つで書き換えます。"
 icon: Wrench
 ---
 
-Google は 2012 年 4 月に Image Charts を非推奨にしました。これには `chart.googleapis.com/chart?cht=qr` の QR コードも含まれます。このエンドポイントは現在 `404` を返します（2026 年 11 月 13 日に確認）。そのため、これを使っていた古い `<img>` タグ、メール、スプレッドシートでは画像が表示されません。
+このページを終えると、ページ、メール、スプレッドシートで `chart.googleapis.com` から読み込んでいたすべての QR コードが、代わりに QRdx の [Image API](/docs/developers/image-api) から読み込まれるようになります。サイズと誤り訂正レベルは同じで、アカウントもキーも不要です。
 
-QRdx の [Image API](/docs/developers/image-api) も同じ方式です。画像を返す `GET` の URL で、アカウントもキーも不要です。ホストを変更し、3 つのパラメータ名を変えるだけで移行できます。
+Google は 2012 年 4 月に Image Charts を非推奨にしました。`chart.googleapis.com/chart?cht=qr` の QR コードも含まれます。このエンドポイントは現在 `404` を返すため (2026 年 11 月 15 日に確認)、古い `<img>` タグはすべて画像が表示されません。QRdx の Image API も、画像を返す `GET` URL という同じ仕組みです。変更点は、ホストの変更と 3 つのパラメーター名の変更だけです。
 
-## 変更前と変更後 [#before-and-after]
+## 始める前に [#before-you-start]
 
-```txt
+- 古い API をまだ使っているファイルを探します。次のコマンドで、古い `chart.apis.google.com` ホストを含めて一覧表示できます。
+
+```bash title="Terminal"
+grep -rlE "chart\.(googleapis|apis\.google)\.com/chart" .
+```
+
+- git のチェックアウト環境など、公開前に変更内容を確認できる場所で作業してください。
+
+## 1. URL を 1 つ比べる [#1-compare-one-url]
+
+次の 2 つの URL は同じものを描画します。`https://example.com` を誤り訂正 `M`、余白 2 モジュールで描画した 300 × 300 の PNG です。
+
+```txt title="Before and after"
 https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https%3A%2F%2Fexample.com&chld=M|2
 https://api.qrdx.dev/v1/qr?format=png&size=300&data=https%3A%2F%2Fexample.com&level=M&margin=2
 ```
 
-どちらも、`https://example.com` を誤り訂正レベル M、余白 2 モジュールで、300 × 300 の PNG として描画します。
+```bash title="Terminal"
+curl -o after.png "https://api.qrdx.dev/v1/qr?format=png&size=300&data=https%3A%2F%2Fexample.com&level=M&margin=2"
+file after.png
+# after.png: PNG image data, 300 x 300, 8-bit/color RGBA, non-interlaced
+```
 
-## パラメータの対応 [#parameter-mapping]
+## 2. パラメーターを対応付ける [#2-map-the-parameters]
 
 | Google Chart | QRdx | 備考 |
 | --- | --- | --- |
-| `cht=qr` | 不要 | このエンドポイントは QR コードしか描画しません。付けていても無視されます。 |
-| `chl=<data>` | `data=<data>` | 同じ方法で URL エンコードします。最大 2048 文字です。 |
-| `chs=<width>x<height>` | `size=<width>` | QR コードは正方形なので数値は 1 つです。`64` から `2048` ピクセルです。 |
-| `chld=<level>\|<margin>` | `level=<level>&margin=<margin>` | 文字は同じで、`L`、`M`、`Q`、`H` です。余白の単位はモジュールで、`0` から `16` です。 |
-| `choe=UTF-8` | 不要 | QRdx は常にテキストを UTF-8 でエンコードします。これは Google の既定値でもありました。Shift_JIS や ISO-8859-1 のオプションはありません。付けていても無視されます。 |
-| 常に PNG | `format=png` | `png`、`webp`、`eps` を指定しない限り、QRdx は SVG を返します。SVG を表示できないメールクライアントが多いため、メールでは PNG のままにしてください。 |
+| `cht=qr` | 不要 | このエンドポイントは QR コードしか描画しません。残しても無視されます |
+| `chl=<data>` | `data=<data>` | URL エンコードの方法は同じで、最大 2,048 文字です |
+| `chs=<width>x<height>` | `size=<width>` | QR コードは正方形なので数値は 1 つです。`64` から `2048` ピクセルです |
+| `chld=<level>\|<margin>` | `level=<level>&margin=<margin>` | レベルの文字は同じで、`L`、`M`、`Q`、`H` です。余白の単位はモジュールで、`0` から `16` です |
+| `choe=UTF-8` | 不要 | QRdx は常にテキストを UTF-8 でエンコードします。これは Google の既定値でした。Shift_JIS や ISO-8859-1 のオプションはありません。残しても無視されます |
+| 常に PNG | `format=png` | `png`、`webp`、`eps` を指定しない限り、QRdx は SVG を返します。SVG を表示できないメールクライアントが多いため、メールでは PNG のままにしてください |
 
-既定値は 2 点異なります。`chld` がない場合、Google は誤り訂正レベル `L` を使っていましたが、QRdx は `Q` を使います。`Q` は破損に強い反面、コードが密になります。以前の見た目にしたい場合は `level=L` を追加してください。余白はどちらも既定で 4 モジュールです。
+既定値が 2 つ異なります。`chld` がない場合、Google は誤り訂正 `L` を使っていましたが、QRdx は `Q` を使います。`Q` は損傷に強い反面、より高密度なコードになります。以前の見た目にしたい場合は `level=L` を追加してください。余白はどちらも既定で 4 モジュールです。
 
-## 1 つのコマンドで移行する [#migrate-with-one-command]
+## 3. ファイル内の URL を書き換える [#3-rewrite-the-urls-in-your-files]
 
-指定したファイル内にあるすべての Google Chart の QR URL を書き換えます。古い `chart.apis.google.com` ホストも対象です。ホストとパスを変更し、`chl`、`chs`、`chld` の名前を変え、画像が PNG のままになるよう `format=png` を追加します。Perl は macOS と、ほとんどの Linux ディストリビューションに付属しています。
+指定したファイル内の Google Chart QR の URL をすべて書き換えます。両方のホストが対象です。ホストとパスを変更し、`chl`、`chs`、`chld` の名前を変え、画像が PNG のままになるよう `format=png` を追加します。Perl は macOS と、ほとんどの Linux ディストリビューションに付属しています。
 
-```bash
+```bash title="Terminal"
 perl -pi -e 's{https?://chart\.(?:googleapis|apis\.google)\.com/chart\?([^\s"\x27<>)]*)}{my $q = $1; $q =~ s/(^|[&;])chl=/${1}data=/; $q =~ s/(^|[&;])chs=(\d+)x\d+/${1}size=$2/; $q =~ s/(^|[&;])chld=([LMQH])(?:\||%7C)(\d+)/${1}level=$2&margin=$3/i; $q =~ s/(^|[&;])chld=([LMQH])/${1}level=$2/i; "https://api.qrdx.dev/v1/qr?format=png&$q"}ge' index.html
 ```
 
-変更内容を確認できる環境、たとえば git のチェックアウト上で実行し、差分を確認してください。古い API をまだ使っているファイルを探すには、次のようにします。
+古いタグが 3 つあるファイルに実行すると、次のようになります。
 
-```bash
-grep -rlE "chart\.(googleapis|apis\.google)\.com/chart" .
+```html title="index.html (after)"
+<img src="https://api.qrdx.dev/v1/qr?format=png&cht=qr&size=300&data=https%3A%2F%2Fexample.com&level=M&margin=2" alt="QR">
+<img src="https://api.qrdx.dev/v1/qr?format=png&cht=qr&size=150&data=https%3A%2F%2Fexample.com%2Fmenu" alt="QR 2">
+<img src="https://api.qrdx.dev/v1/qr?format=png&size=200&cht=qr&data=hello&level=H&choe=UTF-8" alt="QR 3">
 ```
 
-`chs` が 64 ピクセル未満（`50x50` など）または 2048 を超える場合、QRdx は `400` を返します。これらのサイズは手作業で変更してください。
+残った `cht=qr` と `choe=UTF-8` は QRdx に無視されます。URL をすっきりさせたい場合は手作業で削除してください。差分を確認してから、最初の `grep` をもう一度実行します。何も表示されなければ完了です。
 
-## コードでの例 [#in-code]
+## 4. URL を組み立てるコードを変更する [#4-change-the-code-that-builds-urls]
 
-```js
+```js title="qr.js"
 // Before
 const src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(link)}`;
 
@@ -56,17 +74,40 @@ const src = `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeU
 const src = `https://api.qrdx.dev/v1/qr?format=png&size=200&data=${encodeURIComponent(link)}`;
 ```
 
-Google スプレッドシートでは次のようにします。
+Google スプレッドシートでは次のとおりです。
 
-```txt
+```txt title="Sheets formula"
 =IMAGE("https://api.qrdx.dev/v1/qr?format=png&size=150&data="&ENCODEURL(A2))
 ```
 
-スプレッドシートは Google 自身のサーバー経由で画像を読み込むため、数百個のコードがあるシートでは、下記の IP ごとの制限に達することがあります。大量のリストでは、[一括ジェネレーター](/tools/bulk)か、[CLI](/docs/developers/cli) の `qrdx batch` でファイルを一度に作成してください。
+スプレッドシートは Google 自身のサーバー経由で画像を読み込むため、数百個のコードがあるシートでは、後述の IP ごとの上限に達することがあります。リストが長い場合は、[一括ジェネレーター](/tools/bulk)か [CLI](/docs/developers/cli) の `qrdx batch` で、ファイルを一度だけ作成してください。
+
+## うまくいかない場合 [#if-something-goes-wrong]
+
+### `"param": "size"` を伴う `400` [#400-with-param-size]
+
+64 ピクセル未満 (`50x50` など) または 2048 を超える `chs` は拒否されます。これらのサイズは手作業で変更してください。Image API が描画できる最小サイズは `64` です。
+
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"size","message":"Too small: expected number to be >=64"}]},"status":400}
+```
+
+### 以前より画像が高密度になる [#the-image-is-denser-than-before]
+
+Google の既定の誤り訂正は `L` でしたが、QRdx の既定は `Q` です。以前の見た目に合わせるには `level=L` を追加してください。
+
+### 一括再読み込みの後に `429` が返る [#429-after-a-bulk-reload]
+
+Image API は、IP アドレスごとに 1 分あたり {facts.imageApiPerMinute} リクエストまで受け付けます。`Retry-After` ヘッダーに示された秒数だけ待つか、リアルタイムで読み込む代わりにファイルを一度だけ生成してください。
 
 ## その他の注意点 [#what-else-to-know]
 
-- **レート制限:** IP アドレスごとに 1 分あたり {facts.imageApiPerMinute} リクエストです。超えると `Retry-After` ヘッダー付きで `429` が返ります。
-- **キャッシュ:** 同じ URL は常に同じバイト列を返すため、レスポンスは 1 年間キャッシュされます（`Cache-Control: public, max-age=31536000, immutable`）。
-- **その他のオプション:** 色（`fg`、`bg`）、モジュールとアイの形状、ロゴアイコン（`logoIcon`）、フレームがあります。[URL ビルダー](/qr-code-api)で試すか、[パラメータ](/docs/developers/image-api#parameters)をご覧ください。
-- **セルフホスト:** [セルフホスト](/docs/self-hosting)した QRdx では、自分のドメインの `/api/v1/qr` で同じ API を提供します。
+- **キャッシュ:** 同じ URL は常に同じバイト列を返すため、レスポンスは 1 年間キャッシュされます (`Cache-Control: public, max-age=31536000, immutable`)。
+- **その他のオプション:** 色 (`fg`、`bg`)、モジュールと目の形、ロゴアイコン (`logoIcon`)、フレームがあります。[URL ビルダー](/qr-code-api)で試すか、[パラメーター](/docs/developers/image-api#parameters)をご覧ください。
+- **セルフホスト:** [セルフホスト](/docs/self-hosting)した QRdx は、ご自身のドメインの `/api/v1/qr` で同じ API を提供します。
+
+## 関連ページ [#related]
+
+- [QR コード Image API](/docs/developers/image-api): すべてのパラメーター、スタイル、ロゴ、制限
+- [CLI](/docs/developers/cli): CSV 全体を含め、ファイルを一度に作成します
+- [QR コード画像を描画する](/docs/developers/api/get-qr-image): Try it パネル付きのリファレンスページ

@@ -1,34 +1,65 @@
 ---
 title: "Buat kode QR pertama Anda"
-description: "Buat kode QR di playground lalu unduh. Gratis, tanpa akun, dan tanpa watermark."
+description: "Buat kode QR di Playground lalu unduh. Gratis, tanpa akun, dan tanpa watermark."
 ---
 
-Anda bisa membuat kode QR dalam waktu sekitar satu menit. Anda tidak memerlukan akun.
+[Playground](/playground) adalah editor QRdx. Anda bisa membuat kode QR di sana dalam sekitar satu menit, tanpa akun. Kode yang Anda unduh bersifat statis: tautan disimpan di dalam kode, berfungsi selamanya, dan tidak dapat diubah setelah dicetak.
 
 ## Buat kodenya [#make-the-code]
 
-1. Buka [playground](/playground). Ini adalah editor QRdx.
-2. **URL** sudah dipilih. Untuk Wi-Fi, kartu kontak, WhatsApp, atau jenis lainnya, klik **Ubah** di samping **Jenis kode QR** lalu pilih jenisnya.
-3. Ketik tautan Anda di **Alamat situs web**. Pratinjau menampilkan kode Anda segera setelah alamatnya valid.
-4. Opsional: pilih tampilan di bawah **Mulai dari gaya**, atau buka tab **Desain** untuk mengubah warna, titik, mata, logo, dan bingkai.
-5. Klik ikon unduh di atas pratinjau, atau tekan <kbd>D</kbd>. Pilih format dan ukuran, lalu unduh.
+### 1. Pilih apa yang dibuka oleh kode [#1-pick-what-the-code-opens]
 
-Di bawah alamat, QRdx menampilkan tujuan yang akan dibuka saat pemindaian, misalnya "Pemindaian membuka example.com". Periksa sebelum Anda mencetak.
+Buka [Playground](/playground). Tab **Content** terbuka dan **URL** adalah jenis yang terpilih, yang cocok untuk alamat web apa pun.
 
-## Sebelum mencetak [#before-you-print]
+Untuk Wi-Fi, kartu kontak, WhatsApp, atau jenis lainnya, klik **Change** pada kartu **QR code type** lalu pilih jenisnya.
 
-Periksa **Skor pemindaian** di bawah pratinjau. Skor 85 atau lebih sudah sangat baik. Jika di bawah 65, perbaiki pemeriksaan yang ditandai silang. Lihat [Periksa desain dengan skor pemindaian](/docs/help/designing/scan-score).
+<Shot id="playground-type-picker" />
+
+### 2. Ketik tautan Anda [#2-type-your-link]
+
+Tempel atau ketik alamat di **Website address**. Pratinjau berubah dari contoh yang buram menjadi kode Anda begitu alamat tersebut merupakan tautan yang valid, dan baris di bawah kolom menunjukkan ke mana pemindaian akan terbuka, misalnya "Scans open example.com". Periksa baris itu sebelum Anda mencetak.
+
+<Shot id="playground-content" />
+
+### 3. Pilih tampilan [#3-pick-a-look]
+
+Langkah ini opsional. Di bawah **Start from a style**, pilih salah satu gaya siap pakai. Untuk penyesuaian lebih lanjut, buka tab **Design**, yang berisi warna, titik, mata, logo, dan bingkai.
+
+### 4. Unduh [#4-download]
+
+Klik **Download** di atas pratinjau, atau tekan <kbd>D</kbd>. Pilih format dan ukuran, lalu klik tombol unduh di bagian bawah dialog. File akan tersimpan di folder unduhan Anda.
+
+<Shot id="playground-download" />
+
+<Clip id="first-code" />
+
+## Pastikan kode dapat dipindai [#check-that-it-scans]
+
+Lihat **Scan score** di bawah pratinjau. Skor 85 atau lebih berarti Great dan siap dicetak. Jika di bawah 65, klik skornya dan perbaiki pemeriksaan yang ditandai silang. Lihat [Periksa desain dengan skor pemindaian](/docs/help/designing/scan-score).
 
 Lalu pindai kode tersebut dengan ponsel Anda sendiri.
 
-## Kode dari playground bersifat statis [#codes-from-the-playground-are-static]
+## Jika Anda mungkin mengubah tautan nanti [#if-you-might-change-the-link-later]
 
-Kode yang Anda unduh dari playground adalah **statis**: tautannya disimpan di dalam kode. Kode ini berfungsi selamanya, tetapi Anda tidak dapat mengubahnya setelah dicetak.
+Kode dari Playground menyimpan tautan itu sendiri, sehingga salinan yang sudah dicetak tidak dapat diubah. Jika tautan mungkin berubah, atau Anda ingin menghitung pemindaian, pilih **Dynamic** pada tombol **Static or dynamic QR code** di bawah alamat sebelum mengunduh. Ini memerlukan akun gratis. Lihat [Buat kode QR dinamis](/docs/help/dynamic-codes/create) dan [Statis atau dinamis, mana yang Anda perlukan?](/docs/help/getting-started/static-vs-dynamic).
 
-Jika Anda mungkin perlu mengubah tautan nanti, buatlah kode QR dinamis. Lihat [Statis atau dinamis](/docs/help/getting-started/static-vs-dynamic).
+## Jika terjadi masalah [#if-something-goes-wrong]
 
-## Langkah berikutnya [#next-steps]
+### Pratinjau masih menampilkan contoh yang buram [#the-preview-still-shows-the-blurred-sample]
+
+Alamat tersebut belum merupakan tautan yang valid. Periksa apakah ada titik yang hilang atau spasi yang tidak sengaja, lalu ketik alamat lengkapnya.
+
+### Tombol Download berwarna abu-abu [#the-download-button-is-grayed-out]
+
+Tombol ini tetap nonaktif sampai kode memiliki konten. Ketik alamatnya terlebih dahulu.
+
+### Ponsel Anda tidak membaca kode [#your-phone-doesnt-read-the-code]
+
+Periksa skor pemindaian, lalu lihat [Kode tidak bisa dipindai](/docs/help/troubleshooting/wont-scan).
+
+## Terkait [#related]
 
 - [Unduh dan cetak kode QR](/docs/help/getting-started/download-and-print)
-- [Pilih warna yang dapat dipindai](/docs/help/designing/colors-and-contrast)
+- [Pilih warna yang bisa dipindai](/docs/help/designing/colors-and-contrast)
 - [Tambahkan logo](/docs/help/designing/logos)
+- [Buat kode QR dinamis](/docs/help/dynamic-codes/create)

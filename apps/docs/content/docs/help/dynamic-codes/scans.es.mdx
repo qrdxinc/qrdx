@@ -1,41 +1,65 @@
 ---
 title: "Consulta tus escaneos"
-description: "Descubre cuántas personas escanearon un código QR dinámico, cuándo, dónde y desde qué dispositivo."
+description: "Descubre cuántas personas escanearon un código QR dinámico, cuándo, dónde y en qué dispositivo."
 ---
 
-Se cuenta cada escaneo de un código dinámico. Los códigos estáticos no se rastrean.
+Cada escaneo de un código dinámico se cuenta. Abre un código para ver sus escaneos, o la página **Analytics** para ver todos los códigos del espacio de trabajo. Los códigos estáticos no se rastrean, porque su escaneo nunca pasa por QRdx.
 
 ## Un código [#one-code]
 
-Ve a **Codes** y haz clic en el nombre del código. En la parte superior de la página verás:
+Ve a **Codes**, haz clic en el código y abre su pestaña **Analytics**. En la parte superior de la pestaña verás:
 
 - **Total scans** y **Scans in range** (las fechas que elegiste).
-- **Unique visitors**: cada visitante cuenta una vez al día.
+- **Unique visitors**: cada visitante cuenta una vez por día.
 - **Last scan**.
 
-Debajo, **QR scans and NFC taps** divide las visitas entre el código QR y las [etiquetas NFC](/docs/nfc) que llevan el enlace del código. Después encontrarás gráficos de países, ciudades, dispositivos, sistemas operativos, navegadores y referentes, además de cuándo escanea la gente y en qué idioma. En Pro y Business, los códigos que [piden la ubicación precisa](/docs/precise-location) también muestran los lugares que quienes escanean decidieron compartir.
+<Shot id="code-analytics" />
+
+Más abajo, **QR scans and NFC taps** divide las visitas entre el código QR y las [etiquetas NFC](/docs/nfc) que llevan el enlace del código. Después vienen **Scans over time**, **Top countries**, **Top cities**, **Devices**, **Operating systems**, **Browsers**, **Referrers**, **Languages** y **When people scan**, por hora del día o día de la semana.
+
+En Pro y Business, un código configurado con **Ask scanners for precise location** también muestra **Precise locations**: los lugares que los usuarios eligieron compartir. Consulta [Ubicación precisa](/docs/precise-location).
 
 ## Todos tus códigos [#all-your-codes]
 
-La página **Analytics** de tu panel muestra los totales de todos los códigos, tus mejores códigos, países, dispositivos e idiomas. **Compare codes** coloca hasta 4 códigos lado a lado.
+En la barra lateral de Codes, haz clic en **Analytics**. La página muestra los totales de todos los códigos, tus mejores códigos, países, dispositivos e idiomas. **Compare codes** coloca hasta 4 códigos lado a lado.
 
 ## Rangos de fechas e historial [#date-ranges-and-history]
 
-Elige 7, 30 o 90 días, 1 año, 3 años o **All time**. All time empieza el día del primer escaneo del código, o del primer escaneo del espacio de trabajo en la página **Analytics**. Cuánto tiempo atrás puedes consultar depende de tu plan:
+Elige **7 days**, **30 days**, **90 days**, **1 year**, **3 years** o **All time**. All time empieza el día del primer escaneo del código, o del primer escaneo del espacio de trabajo en la página **Analytics**. Hasta cuándo puedes mirar atrás depende de tu plan:
 
 - **Gratis**: {facts.freeScanHistoryYears} año.
 - **Pro** y **Business**: todo el historial, incluido **All time**.
 
-Los escaneos que tu plan no muestra no se eliminan. Vuelven a mostrarse al mejorar tu plan.
+Los escaneos que tu plan no muestra no se eliminan. Vuelven a verse tras mejorar de plan.
 
 ## Descarga tus escaneos [#download-your-scans]
 
-En la página de un código, abre la pestaña **Analytics** y haz clic en **Export CSV**. Obtienes hasta 50.000 escaneos de las fechas seleccionadas, con la hora, el lugar, el dispositivo, el sistema operativo, el navegador y el referente de cada uno, si fue un escaneo de QR o un toque NFC, y la ubicación compartida cuando la hay.
+En la pestaña **Analytics** de un código, haz clic en **Export CSV**. Obtienes hasta 50.000 escaneos de las fechas seleccionadas, con la hora, el lugar, el dispositivo, el sistema operativo, el navegador y el referente de cada uno, si fue un escaneo de QR o un toque NFC, y la ubicación compartida cuando existe.
 
-## Qué no se cuenta [#what-isnt-counted]
+## Lo que no se cuenta [#what-isnt-counted]
 
-No se cuentan los bots ni las vistas previas de enlaces. Si una misma red escanea el mismo código más de 20 veces en un minuto, los escaneos adicionales no se cuentan. El código sigue abriéndose siempre.
+Los bots, las vistas previas de enlaces y las precargas no se cuentan. Si una misma red escanea el mismo código más de 20 veces en un minuto, los escaneos adicionales no se cuentan. El código sigue abriéndose siempre.
 
 ## Privacidad [#privacy]
 
-QRdx nunca almacena la dirección IP de quien escanea. Consulta [Qué registra QRdx cuando alguien escanea](/docs/help/privacy-and-security/scan-data).
+QRdx nunca guarda la dirección IP de quien escanea. Consulta [Qué registra QRdx cuando alguien escanea](/docs/help/privacy-and-security/scan-data).
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### Faltan escaneos que esperas ver [#scans-you-expect-are-missing]
+
+En Gratis, los gráficos llegan hasta {facts.freeScanHistoryYears} año atrás. Tampoco se cuentan los escaneos de una misma red que superan 20 por minuto, ni las visitas de bots y vistas previas de enlaces.
+
+### Unique visitors es mucho menor que Total scans [#unique-visitors-is-much-lower-than-total-scans]
+
+Las mismas personas escanearon más de una vez en un día. Cada visitante cuenta una vez por día en **Unique visitors**, y cada escaneo en **Total scans**.
+
+### El gráfico muestra escaneos pero el código es estático [#the-chart-shows-scans-but-a-code-is-static]
+
+Solo se cuentan los códigos dinámicos. Un código estático impreso nunca informa de nada, aunque exista un código dinámico con el mismo enlace.
+
+## Relacionado [#related]
+
+- [Qué registra QRdx cuando alguien escanea](/docs/help/privacy-and-security/scan-data)
+- [Exporta tus datos](/docs/help/account-and-billing/export-your-data)
+- [Guía de seguimiento y conversiones](/docs/tracking-and-conversions)

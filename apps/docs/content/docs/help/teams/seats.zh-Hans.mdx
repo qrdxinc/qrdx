@@ -1,38 +1,60 @@
 ---
-title: "席位与工作区上限"
-description: "一个工作区可以有多少成员，以及如何退出工作区、移除成员或删除工作区。"
+title: "席位与工作区限制"
+description: "一个工作区可以容纳多少人,以及如何退出、移除成员或删除工作区。"
 ---
+
+工作区的席位数取决于其所有者和账单成员的套餐。本页介绍可容纳的人数,以及成员如何退出、被移除,或工作区如何被删除。
 
 ## 可用席位数 [#how-many-seats-you-get]
 
-- **Pro**：3 个席位，包括所有者。
-- **Business**：席位数不限。
-- **免费版**：1 个席位，仅限你本人。
+| 套餐 | 席位 |
+| --- | --- |
+| 免费版 | 1(仅你自己) |
+| Pro | 3,包含所有者 |
+| Business | 不限 |
 
-工作区按所有者中最高的套餐计算。成员无需拥有自己的订阅。
+工作区采用其所有者和账单成员中最高的套餐。成员无需自己订阅。
 
 ## 待处理的邀请会占用席位 [#pending-invitations-use-a-seat]
 
-邀请在被接受或撤销之前会一直占用一个席位。要释放席位，请在 **设置** → **团队** 页面找到该邀请，然后点击 **撤销**。
+邀请在被接受或撤销之前会一直占用一个席位。要释放席位,请在 **Settings** → **Team** 页面的 **Pending invitations** 下找到该邀请,然后点击 **Revoke**。
 
 ## 所有者的套餐变更后 [#if-the-owners-plan-changes]
 
-已在工作区中的成员会保留。只有新的邀请会被拦截，直到有空闲席位为止。
+已在工作区中的成员会保留。只有新的邀请会被阻止,直到有空闲席位。
 
 ## 移除成员 [#remove-someone]
 
-在 **设置** → **团队** 页面，点击对方姓名旁的 **移除**，然后点击 **移除成员**。只有管理员和所有者可以移除成员，并且任何人都不能被移出自己的工作区。
+在 **Settings** → **Team** 页面,点击成员姓名旁的 **Remove**,再点击 **Remove member**,如有提示,请[确认是你本人操作](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)。只有管理员和所有者可以移除成员,且任何人都不能从自己的工作区中被移除。
 
-对方创建的二维码和页面会保留在工作区中。
+他们创建的二维码和页面会保留在工作区中。他们为该工作区创建的 API 密钥将失效。
 
 ## 退出工作区 [#leave-a-workspace]
 
-在工作区的 **设置** → **常规** 中，点击 **退出工作区**。
+在工作区的 **Settings** → **General** 中,点击 **Leave workspace**。你将无法再访问其中的二维码、页面和主题;你创建的内容会保留在工作区中,若要重新加入,需要新的邀请。
 
-如果你是唯一的所有者，请先将其他人设为所有者。参见[团队角色](/docs/help/teams/roles)。你不能退出自己的工作区。
+如果你是唯一的所有者,请先将其他人设为所有者。参见[团队角色](/docs/help/teams/roles)。你无法退出自己的工作区。
 
 ## 删除工作区 [#delete-a-workspace]
 
-所有者可以在 **设置** → **常规** 中点击 **删除工作区**。确认时，请输入该工作区的 URL。你自己的工作区无法删除；它会在你[删除账号](/docs/help/account-and-billing/delete-your-account)时一并删除。
+所有者可以在 **Settings** → **General** 中点击 **Delete workspace**。确认时,请输入工作区的 URL。你自己的工作区无法删除;它会在你[删除账户](/docs/help/account-and-billing/delete-your-account)时一并删除。
 
-一切都不会停止工作。每个二维码、页面、文件和域名都会转移到其创建者自己的工作区，已印刷的二维码仍会继续跳转。该工作区的 API 密钥会被删除。
+<Shot id="workspace-danger-zone" />
+
+不会有任何内容停止工作。每个二维码、页面、主题、文件和域名都会转移到创建它的成员各自的工作区,已印刷的二维码仍会继续重定向。工作区的成员和待处理的邀请会被移除,其 API 密钥会被删除。
+
+## 遇到问题时 [#if-something-goes-wrong]
+
+### Create invite link 无法点击 [#create-invite-link-is-disabled]
+
+所有席位都已占用(待处理的邀请也计算在内)。请撤销一个邀请、移除某位成员,或请所有者或账单成员升级套餐。
+
+### Leave workspace 被拒绝 [#leave-workspace-is-refused]
+
+你是唯一的所有者,或者这是你自己的工作区。请先将另一位成员设为所有者;你自己的工作区无法退出。
+
+## 相关内容 [#related]
+
+- [创建工作区并邀请成员](/docs/help/teams/create-and-invite)
+- [团队角色](/docs/help/teams/roles)
+- [套餐及其包含的内容](/docs/help/account-and-billing/plans)
