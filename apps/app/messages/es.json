@@ -925,6 +925,53 @@
         }
       }
     },
+    "shell": {
+      "header": {
+        "docs": "Docs",
+        "dashboard": "Panel",
+        "github": "QRdx en GitHub"
+      },
+      "actions": {
+        "copyPage": "Copiar página",
+        "copied": "Copiado",
+        "more": "Más formas de usar esta página",
+        "copyMarkdown": "Copiar página como Markdown",
+        "viewMarkdown": "Ver como Markdown",
+        "mcp": "Conectar el servidor MCP de QRdx"
+      },
+      "feedback": {
+        "question": "¿Te ha resultado útil esta página?",
+        "yes": "Sí",
+        "no": "No",
+        "thanks": "Gracias. Los comentarios son anónimos: solo se guardan los recuentos de síes y noes.",
+        "edit": "Edita esta página en GitHub",
+        "report": "Informar de un problema",
+        "issueTitle": "Docs: {title}",
+        "issueBody": "Página: {url}\n\nQué es incorrecto o qué falta:\n"
+      },
+      "notFound": {
+        "search": "Buscar en la documentación",
+        "sections": "O empieza desde una sección"
+      },
+      "code": {
+        "copy": "Copiar código",
+        "copied": "Copiado"
+      },
+      "video": {
+        "play": "Reproducir {title}",
+        "pause": "Pausar {title}",
+        "reducedMotion": "El clip espera a que lo inicies porque tu sistema pide menos movimiento."
+      },
+      "plan": {
+        "title": "Requiere {plans}",
+        "or": "{a} o {b}",
+        "body": "Lo que incluye cada plan está en",
+        "link": "Planes y límites",
+        "pro": "Pro",
+        "business": "Business",
+        "enterprise": "Enterprise"
+      }
+    },
     "ui": {
       "search": "Buscar",
       "searchPlaceholder": "Buscar",
@@ -957,6 +1004,253 @@
       "typeTableDefault": "Por defecto",
       "typeTableParameters": "Parámetros",
       "typeTableReturns": "Devuelve"
+    },
+    "shots": {
+      "diagrams": {
+        "dynamic-redirect": {
+          "title": "Cómo redirige un código dinámico: el escaneo abre un enlace corto, QRdx aplica las reglas del código y envía el teléfono al destino, y registra el escaneo por el camino.",
+          "scan": "Escaneo",
+          "scanNote": "un teléfono lee el código",
+          "shortLink": "Enlace corto",
+          "shortLinkNote": "lo que contiene el patrón",
+          "rules": "Reglas",
+          "rulesNote": "dispositivo, lugar, hora, reparto",
+          "destination": "Destino",
+          "destinationNote": "cámbialo cuando quieras",
+          "recorded": "Escaneo registrado",
+          "recordedNote": "país, dispositivo, hora; nunca la persona"
+        },
+        "static-vs-dynamic": {
+          "title": "Estático frente a dinámico: un código estático lleva su contenido en el patrón; un código dinámico lleva un enlace corto que QRdx resuelve hacia un destino que puedes cambiar.",
+          "static": "Código estático",
+          "dynamic": "Código dinámico",
+          "printed": "Código impreso",
+          "printedNote": "el patrón en papel o en pantalla",
+          "content": "El contenido en sí",
+          "contentNote": "un enlace, datos de Wi-Fi, un contacto",
+          "staticEnd": "Fijo una vez impreso. Sin recuento de escaneos.",
+          "shortLink": "Enlace corto",
+          "shortLinkNote": "qrdx.dev/q/… o tu dominio",
+          "destination": "Destino",
+          "destinationNote": "editable; cada escaneo se cuenta"
+        },
+        "smart-routing": {
+          "title": "Cómo decide el enrutamiento inteligente: las reglas se leen de arriba abajo, la primera regla cuyas condiciones coinciden con el escaneo lo envía al destino de esa regla, y un escaneo que no coincide con ninguna va al destino predeterminado del código.",
+          "scan": "Llega un escaneo",
+          "scanNote": "dispositivo, SO, país, idioma, hora",
+          "rule1": "iPhone o iPad → página de iOS",
+          "rule2": "El idioma es español → página en español",
+          "rule3": "Fines de semana 08:00–14:00 → oferta de brunch",
+          "firstMatch": "Gana la primera regla",
+          "firstMatchNote": "el destino de la regla",
+          "noMatch": "Ninguna regla coincide",
+          "noMatchNote": "el destino predeterminado del código",
+          "footnote": "Las reglas se comprueban en el orden que se muestra en el panel de enrutamiento; arrástralas para cambiarlo."
+        },
+        "custom-domain": {
+          "title": "Cómo enruta un dominio personalizado: un registro CNAME en tu proveedor de DNS apunta el nombre de host a QRdx, que sirve tus enlaces cortos en ese dominio y redirige cada escaneo a su destino.",
+          "scan": "Escaneo",
+          "scanNote": "abre el enlace corto de tu dominio",
+          "dns": "Tu DNS",
+          "dnsNote": "un registro CNAME",
+          "record": "qr.example.com  CNAME → QRdx",
+          "qrdx": "QRdx",
+          "qrdxNote": "responde por tu dominio, con HTTPS",
+          "destination": "Destino",
+          "destinationNote": "se aplican las reglas del código como siempre",
+          "footnote": "Configura el registro una vez; QRdx lo comprueba y después todos los códigos de ese dominio funcionan sin más."
+        },
+        "webhook-delivery": {
+          "title": "Cómo se entrega un webhook: QRdx envía el evento a tu endpoint con una firma; una respuesta 2xx lo marca como entregado, cualquier otra se reintenta con un calendario creciente y se marca como fallido tras ocho intentos.",
+          "event": "Evento",
+          "eventNote": "scan.created, form.submitted…",
+          "post": "POST a tu endpoint",
+          "postNote": "cuerpo JSON, cabecera X-QRdx-Signature",
+          "delivered": "Entregado",
+          "deliveredNote": "respuesta 2xx",
+          "retry": "Reintentado",
+          "retryNote": "tiempo agotado u otra respuesta",
+          "schedule": "1 min · 4 min · 16 min · 1 h · 4 h · 17 h · 24 h",
+          "failed": "Fallido",
+          "failedNote": "tras 8 intentos; reinténtalo a mano",
+          "footnote": "Cada intento aparece en la página del endpoint, con la respuesta obtenida."
+        },
+        "image-api": {
+          "title": "Cómo genera un código la Image API: un GET con el contenido y el estilo, QRdx codifica los datos, renderiza el diseño y responde con una imagen SVG, PNG, WebP o EPS que cualquier página puede incrustar.",
+          "request": "GET /v1/qr",
+          "requestNote": "datos, tamaño, colores, estilo…",
+          "encode": "Codificar",
+          "encodeNote": "corrección de errores, versión",
+          "render": "Renderizar",
+          "renderNote": "patrones, ojos, marco, logo",
+          "response": "Imagen",
+          "responseNote": "SVG, PNG, WebP o EPS",
+          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
+          "noKey": "Sin clave ni cuota: la URL se coloca directamente en una etiqueta de imagen en cualquier página.",
+          "footnote": "La misma consulta siempre devuelve los mismos bytes, por eso las respuestas se guardan en caché durante un año."
+        },
+        "hosted-page-anatomy": {
+          "title": "Cómo funciona una página alojada: organizas bloques en el editor y publicas, QRdx sirve la página, y el enlace corto del código impreso abre en el teléfono la última versión publicada.",
+          "editor": "Editor",
+          "editorNote": "organiza los bloques de la página",
+          "publish": "Publicar",
+          "page": "Página alojada",
+          "pageNote": "servida por QRdx en qrdx.dev/p/…",
+          "code": "Código QR impreso",
+          "codeNote": "contiene el enlace corto de la página",
+          "scan": "un escaneo abre la página",
+          "block1": "Cabecera",
+          "block2": "Enlaces",
+          "block3": "Menú",
+          "block4": "Formulario",
+          "footnote": "Vuelve a publicar y todos los códigos ya impresos abrirán la nueva versión."
+        },
+        "import-flow": {
+          "title": "Cómo funciona una importación: los enlaces de tu proveedor anterior se convierten en códigos QR dinámicos en QRdx, y un paso opcional redirige cada enlace antiguo a su nuevo enlace de QRdx para que los códigos que ya imprimiste sigan funcionando.",
+          "importing": "La importación",
+          "source": "Tu proveedor anterior",
+          "sourceNote": "una cuenta conectada o un archivo",
+          "import": "Importar",
+          "importNote": "elegir, previsualizar, importar",
+          "codes": "Códigos dinámicos en QRdx",
+          "codesNote": "destino, título, etiquetas, carpeta",
+          "keeping": "Mantén funcionando los códigos impresos (opcional)",
+          "printed": "Un código que imprimiste",
+          "printedNote": "contiene el enlace corto antiguo",
+          "newLink": "Su nuevo enlace de QRdx",
+          "newLinkNote": "el enlace antiguo apunta aquí",
+          "destination": "Destino",
+          "destinationNote": "se edita y se cuenta en QRdx",
+          "footnote": "La cuenta anterior debe seguir activa para que sus enlaces sigan redirigiendo."
+        },
+        "precise-location-flow": {
+          "title": "Cómo funciona la ubicación precisa: tras un escaneo se pide a quien escanea que comparta su ubicación; la posición compartida se redondea a unos 100 m, se guarda con el escaneo y la usan las reglas de zona, y quien escanea llega al destino tanto si la permite como si la omite.",
+          "scan": "Escaneo",
+          "scanNote": "abre el enlace corto",
+          "ask": "¿Compartir tu ubicación?",
+          "askNote": "decide quien escanea",
+          "skip": "Omitir",
+          "allow": "Permitir",
+          "destination": "Destino",
+          "destinationNote": "se abre en ambos casos",
+          "stored": "Punto guardado con el escaneo",
+          "storedNote": "redondeado a unos 100 m",
+          "rule": "Reglas de zona",
+          "ruleNote": "el enrutamiento inteligente puede usarlo",
+          "footnote": "Quien escanea y omite o rechaza compartir su ubicación se cuenta igualmente, con país, región y ciudad obtenidos de la red."
+        },
+        "nfc-link": {
+          "title": "Cómo funciona una etiqueta NFC con un código: la etiqueta guarda el enlace corto del código con ?nfc al final, de modo que un toque pasa por la misma redirección que un escaneo y se cuenta como toque.",
+          "tap": "El teléfono toca la etiqueta",
+          "tapNote": "abre el enlace guardado",
+          "tag": "Etiqueta NFC",
+          "tagNote": "guarda el enlace NFC",
+          "link": "Enlace corto con ?nfc",
+          "linkNote": "la misma redirección que un escaneo",
+          "example": "qrdx.dev/q/aB3dE5f?nfc",
+          "counted": "Cuenta como un toque",
+          "countedNote": "junto a los escaneos QR en Analytics",
+          "destination": "Destino",
+          "destinationNote": "igual que en un escaneo",
+          "footnote": "El código QR conserva su propio enlace, así que los códigos que ya imprimiste funcionan como antes."
+        },
+        "file-delivery": {
+          "title": "Cómo se guarda y se sirve un archivo: tu navegador lo sube directamente al bucket de almacenamiento, QRdx lo comprueba y le da un enlace propio, y las páginas, los códigos y los visitantes usan ese enlace.",
+          "browser": "Tu navegador",
+          "browserNote": "sube el archivo directamente",
+          "bucket": "Bucket de almacenamiento",
+          "bucketNote": "recibe la subida",
+          "check": "QRdx revisa el archivo",
+          "checkNote": "su tamaño y su tipo real",
+          "link": "El enlace QRdx del archivo",
+          "linkNote": "qrdx.dev/api/files/…",
+          "visitor": "Páginas, códigos y visitantes",
+          "visitorNote": "abren el archivo mediante su enlace",
+          "footnote": "Al reemplazar el archivo se mantiene el enlace, así que nada de lo que lo usa tiene que cambiar."
+        },
+        "tracking-paths": {
+          "title": "Las dos formas de medir lo que ocurre después de un escaneo: una página alojada carga tus píxeles después de pedir el consentimiento del visitante donde la ley lo exige, y una visita a tu propio sitio web lleva un ID de escaneo firmado que tu sitio comunica de vuelta a QRdx cuando el visitante convierte.",
+          "scan": "Escaneo",
+          "scanNote": "siempre se cuenta",
+          "pagePath": "Un código que abre una página alojada",
+          "sitePath": "Un código que abre tu sitio web",
+          "page": "Se abre la página",
+          "pageNote": "servida por QRdx",
+          "consent": "Consentimiento",
+          "consentNote": "se pide donde es necesario",
+          "pixels": "Tus píxeles",
+          "pixelsNote": "se cargan después",
+          "site": "Se abre el enlace",
+          "siteNote": "se añade qrdx_sid",
+          "convert": "El visitante convierte",
+          "convertNote": "una compra, un registro",
+          "report": "Conversión",
+          "reportNote": "enviada a QRdx",
+          "footnote": "Los píxeles forman parte de Pro y Business; el seguimiento de conversiones forma parte de Business."
+        },
+        "client-portal-access": {
+          "title": "Cómo limita el portal de clientes lo que ve un cliente: marcas las carpetas en la invitación del cliente y el portal le muestra solo esas carpetas, en modo de solo lectura, bajo tu nombre.",
+          "workspace": "Las carpetas de tu espacio de trabajo",
+          "folder1": "Cliente A: menús",
+          "folder2": "Cliente A: eventos",
+          "folder3": "Cliente B",
+          "folder4": "Interno",
+          "invite": "Invitación",
+          "inviteNote": "correo y carpetas marcadas",
+          "portal": "Lo que ve el cliente",
+          "portalName": "Tu portal",
+          "readOnly": "Solo lectura, con analítica de escaneos",
+          "footnote": "Los clientes no son miembros de tu espacio de trabajo y no ocupan una plaza."
+        },
+        "self-hosting-stack": {
+          "title": "Los cuatro servicios de Docker Compose: una solicitud del navegador llega a la aplicación, la aplicación envía sus consultas al proxy HTTP compatible con Neon, el proxy habla con Postgres y un trabajo de migración puntual aplica el esquema.",
+          "browser": "Navegador",
+          "browserNote": "tus visitantes",
+          "compose": "docker compose",
+          "app": "app",
+          "appNote": "el servidor de QRdx",
+          "proxy": "db-proxy",
+          "proxyNote": "HTTP a Postgres",
+          "db": "db",
+          "dbNote": "Postgres 16",
+          "migrate": "migrar",
+          "migrateNote": "aplica el esquema una vez",
+          "footnote": "Con Neon en lugar de Postgres simple, la aplicación se conecta directamente y no necesita proxy."
+        },
+        "wont-scan-contrast": {
+          "title": "El mismo código QR dos veces: oscuro sobre fondo blanco, que se escanea, y gris claro sobre blanco, que no se escanea.",
+          "good": "Oscuro sobre claro: se escanea",
+          "bad": "Gris sobre blanco: no se escanea",
+          "ratio": "Contraste {ratio}:1"
+        },
+        "wont-scan-quiet-zone": {
+          "title": "El mismo código QR dos veces sobre una ilustración: con la ilustración tocando sus bordes, que los lectores pueden no detectar, y con cuatro módulos de espacio vacío alrededor, que se escanea.",
+          "bad": "La ilustración toca el código",
+          "badNote": "los lectores no encuentran sus bordes",
+          "good": "Espacio vacío alrededor",
+          "goodNote": "una zona de silencio de cuatro módulos"
+        },
+        "wont-scan-print-size": {
+          "title": "Un código QR se escanea desde unas diez veces su ancho: un código de 2 cm desde unos 20 cm, uno de 10 cm desde aproximadamente 1 m.",
+          "cardWidth": "2 cm",
+          "cardDistance": "unos 20 cm",
+          "cardNote": "una tarjeta sostenida en la mano",
+          "posterWidth": "10 cm",
+          "posterDistance": "alrededor de 1 m",
+          "posterNote": "un póster en una pared",
+          "footnote": "La distancia de escaneo es de unas diez veces el ancho del código."
+        },
+        "wont-scan-eyes": {
+          "title": "Formas de los ojos de las esquinas: los ojos cuadrados, redondeados y de engranaje se escanean en todas las apps; los ojos de círculo y rizados no los reconocen algunas apps de escaneo.",
+          "good": "Se escanean en todas partes",
+          "bad": "Fallan en algunas apps",
+          "square": "Cuadrado",
+          "rounded": "Redondeado",
+          "gear": "Engranaje",
+          "circle": "Círculo",
+          "curly": "Rizado"
+        }
+      }
     }
   },
   "common": {
@@ -5395,6 +5689,10 @@
     "browseLayout": {
       "filters": "Filtros"
     },
+    "cardRail": {
+      "previous": "Mostrar anteriores",
+      "next": "Mostrar más"
+    },
     "communityTabs": {
       "community": "Comunidad"
     },
@@ -5465,7 +5763,10 @@
       "nameIsNoLongerIn": "\"{name}\" ya no está en la comunidad."
     },
     "itemCard": {
-      "empty": "Vacío"
+      "empty": "Vacío",
+      "viewAll": "Ver todo",
+      "saves": "Guardados",
+      "itemCount": "{count, plural, one {# elemento} other {# elementos}}"
     },
     "itemPages": {
       "previous": "Anterior",
@@ -5475,6 +5776,9 @@
       "loadMore": "Cargar más",
       "loading": "Cargando",
       "failed": "No se cargó la página siguiente."
+    },
+    "makerCard": {
+      "itemsAndSaves": "{items, plural, one {# elemento} other {# elementos}} · {saves, plural, one {# guardado} other {# guardados}}"
     },
     "more": {
       "load": "Cargar más",
@@ -5562,6 +5866,10 @@
     "tryIt": {
       "tryItWithYourLink": "Pruébalo con tu enlace",
       "drawnInYourBrowserNothing": "Se dibuja en tu navegador. No se envía nada."
+    },
+    "search": {
+      "label": "Buscar en la comunidad",
+      "placeholder": "Busca marcos, temas y páginas"
     }
   },
   "app": {
