@@ -1,10 +1,27 @@
 ---
 title: "File"
-description: "Unggah PDF, gambar, audio, dan video untuk halaman yang di-hosting, serta atur penyimpanan file saat Anda melakukan self-hosting."
-icon: FolderOpen
+description: "Unggah PDF, gambar, audio, dan video untuk halaman yang di-hosting, ganti file tanpa mengubah tautannya, dan siapkan penyimpanan file saat Anda melakukan self-hosting."
 ---
 
-Halaman yang di-hosting dapat menampilkan file yang Anda unggah ke QRdx: menu atau brosur sebagai PDF, galeri foto, musik atau podcast, atau video. File yang diunggah berada di **Dasbor → File**, menjadi milik workspace tempat Anda mengunggahnya, dan setiap file memiliki tautan tetap yang tetap berfungsi saat Anda mengganti file tersebut.
+Halaman yang di-hosting dapat menampilkan file yang Anda unggah ke QRdx: menu atau brosur dalam bentuk PDF, galeri foto, musik atau podcast, maupun video. File yang diunggah berada di **File** pada bilah samping, menjadi milik ruang kerja tempat Anda mengunggahnya, dan masing-masing memiliki tautan tetap yang tetap berfungsi saat Anda mengganti file. Gunakan fitur ini saat file tidak memiliki tempat lain, atau saat Anda ingin mengganti menu musim berikutnya tanpa menyentuh halamannya.
+
+<Callout type="info" title="Paket">
+  Gratis mencakup penyimpanan 50 MB per ruang kerja dengan file hingga 10 MB; Pro 5 GB dan 100 MB; Business 50 GB dan 250 MB. Lihat [Paket dan batas](/docs/plans-and-limits).
+</Callout>
+
+<IfAvailable feature="fileStorage" unavailable>
+
+<Callout type="warn" title="Unggahan belum disiapkan pada deployment ini">
+  Halaman File menyatakan hal itu dan menawarkan **Siapkan penyimpanan file**. Sampai saat itu, blok halaman tetap dapat menautkan ke file yang di-hosting di tempat lain. Melakukan self-hosting? Lihat [Siapkan penyimpanan](#set-up-storage-self-hosting) di bawah.
+</Callout>
+
+</IfAvailable>
+
+## Cara kerjanya [#how-it-works]
+
+<Diagram id="file-delivery" />
+
+Browser Anda mengunggah file langsung ke bucket penyimpanan. QRdx kemudian memeriksanya (ukurannya, dan bahwa byte pertamanya benar-benar sesuai dengan jenis file tersebut), menyalin versi yang sudah diperiksa ke tempat khusus file itu, dan memberinya tautan, `https://qrdx.dev/api/files/<id>`. Halaman dan kode menggunakan tautan tersebut, sehingga mengganti file tidak mengubah apa pun bagi mereka.
 
 ## Yang dapat Anda unggah [#what-you-can-upload]
 
@@ -17,55 +34,61 @@ Halaman yang di-hosting dapat menampilkan file yang Anda unggah ke QRdx: menu at
 
 MP4 dengan video H.264 dapat diputar di semua browser. File MOV dari ponsel biasanya juga dapat diputar, tetapi konversikan ke MP4 jika browser tidak dapat memutarnya. SVG, HTML, arsip, dan dokumen office tidak dapat diunggah, sehingga tidak ada yang disajikan dari penyimpanan yang dapat menjalankan kode di browser pengunjung.
 
-Setiap unggahan diperiksa sebelum digunakan: ukurannya harus sesuai dengan yang diumumkan, dan byte pertamanya harus benar-benar file dengan jenis tersebut (halaman HTML yang diganti namanya menjadi `.pdf` akan ditolak). Unggahan yang ditolak dihapus dari penyimpanan dan ditampilkan sebagai **Diblokir**.
+Setiap unggahan diperiksa sebelum digunakan: ukurannya harus sesuai dengan yang diumumkan, dan byte pertamanya harus benar-benar sesuai dengan jenis file tersebut (halaman HTML yang diganti namanya menjadi `.pdf` akan ditolak). Unggahan yang ditolak dihapus dari penyimpanan dan dicantumkan sebagai **Diblokir**.
 
-## Batas per paket [#limits-per-plan]
+## Gunakan file pada halaman [#use-files-on-a-page]
 
-| Paket | Penyimpanan per workspace | File terbesar |
+Lima blok menampilkan file. Masing-masing dapat menggunakan file yang diunggah atau tautan ke file yang di-hosting di tempat lain:
+
+- **PDF** menampilkan dokumen yang diunggah secara inline di tablet dan komputer, dengan **Buka PDF** (penampil layar penuh di ponsel) dan tombol unduh opsional. PDF yang ditautkan dari situs lain mendapatkan tombol **Buka PDF**.
+- **Galeri** menampilkan foto dalam kisi 1 hingga 3 kolom. Mengetuk foto membukanya dalam layar penuh; geser atau gunakan tombol panah untuk menjelajah.
+- **Audio** memutar lagu dengan sampul dan daftar putar; lagu berikutnya dimulai saat satu lagu selesai. Tombol unduh bersifat opsional.
+- **File video** memutar MP4 atau WebM yang Anda unggah, dapat dibisukan dan diulang seperti GIF. Untuk YouTube, Vimeo, atau Loom, gunakan blok **Video**: blok ini menyematkan video tanpa memuat apa pun dari situs video sampai seseorang mengetuk putar.
+- **Unduhan** mencantumkan file yang dapat disimpan orang, masing-masing dengan labelnya sendiri.
+
+Jenis halaman **PDF**, **Gambar**, **MP3 / Audio**, **Video**, dan **Daftar putar** di **Kode baru** memulai Anda dengan blok-blok ini yang sudah terpasang.
+
+Di dalam blok, pilih **Unggah** untuk menambahkan file dari perangkat Anda, **Dari file Anda** untuk menggunakan ulang file yang pernah Anda unggah, atau tempelkan tautan.
+
+## Ganti atau hapus file [#replace-or-delete-a-file]
+
+Buka **File** pada bilah samping dan gunakan menu di sebelah file:
+
+- **Salin tautan** menyalin tautan file itu sendiri (`https://qrdx.dev/api/files/<id>`). Anda juga dapat menggunakannya sebagai tujuan kode QR dinamis.
+- **Ganti file…** mengunggah konten baru di balik tautan yang sama, misalnya menu musim berikutnya. Halaman dan kode yang menggunakan file tersebut menampilkan versi baru dalam waktu satu menit. File hanya dapat diganti dengan file sejenis (PDF dengan PDF).
+- **Hapus** menghapus file secara permanen. Jika masih ada halaman atau kode yang menggunakannya, QRdx mencantumkannya terlebih dahulu; setelah dihapus, halaman tersebut menampilkan "File tidak tersedia" di tempat file berada.
+
+<Shot id="files-page" />
+
+Anggota dapat mengganti dan menghapus file yang mereka unggah; pemilik dan admin dapat mengelola setiap file di ruang kerja.
+
+## File yang dilaporkan [#reported-files]
+
+Setiap halaman yang di-hosting memiliki tautan **Laporkan penyalahgunaan**. Jika sebuah file melanggar aturan atau pemilik hak cipta meminta agar file dihapus, QRdx dapat memblokirnya. File yang diblokir berhenti disajikan di setiap halaman dan melalui tautan QRdx-nya dalam waktu satu menit (halaman menampilkan "File tidak tersedia"), dan salinan identik darinya (hingga 25 MB) tidak dapat diunggah lagi.
+
+## Batas dan paket [#limits-and-plans]
+
+| Paket | Penyimpanan per ruang kerja | File terbesar |
 | --- | --- | --- |
 | Gratis | 50 MB | 10 MB |
 | Pro | 5 GB | 100 MB |
 | Business | 50 GB | 250 MB |
 
-Workspace menggunakan paket terbaik di antara para pemiliknya. Batas hanya menghentikan unggahan baru: setelah penurunan paket, atau saat workspace melebihi penyimpanannya, setiap file yang sudah Anda unggah tetap disajikan di setiap halaman yang menggunakannya. Hapus file yang tidak lagi Anda perlukan (atau tingkatkan paket) untuk mengunggah file baru.
+Ruang kerja menggunakan paket terbaik di antara pemilik dan anggota penagihannya. Batas hanya menghentikan unggahan baru: setelah penurunan paket, atau saat ruang kerja melebihi penyimpanannya, setiap file yang sudah Anda unggah tetap disajikan di setiap halaman yang menggunakannya. Hapus file yang tidak lagi Anda perlukan (atau tingkatkan paket) untuk mengunggah file baru. Unggahan yang tidak pernah selesai berhenti dihitung dalam penyimpanan setelah dua jam.
 
-## Gunakan file di halaman [#use-files-on-a-page]
+## Untuk developer [#for-developers]
 
-Lima blok menampilkan file. Masing-masing dapat menggunakan file yang diunggah atau tautan ke file yang di-hosting di tempat lain:
+File diunggah dan dikelola di dasbor. Dari sisi API, desain kode dapat menggunakan logo yang diunggah melalui id file-nya: lihat [logo dalam gaya kode](/docs/developers/rest-api#code-logos).
 
-- **PDF** menampilkan dokumen secara inline di tablet dan komputer, dengan tombol **Buka PDF** (penampil layar penuh di ponsel) dan **Unduh**.
-- **Galeri** menampilkan foto dalam grid 1–3 kolom. Mengetuk foto akan membukanya layar penuh; geser atau gunakan tombol panah untuk menjelajah.
-- **Audio** memutar lagu dengan sampul dan daftar putar; lagu berikutnya dimulai saat satu lagu selesai. Tombol unduh bersifat opsional.
-- **File video** memutar MP4 atau WebM yang Anda unggah, dengan opsi senyap dan berulang seperti GIF. Untuk YouTube, Vimeo, atau Loom, gunakan blok **Video**: blok ini menyematkan video tanpa memuat apa pun dari YouTube hingga seseorang mengetuk putar.
-- **Unduhan** mendaftar file yang dapat disimpan orang, masing-masing dengan labelnya sendiri.
+## Siapkan penyimpanan (self-hosting) [#set-up-storage-self-hosting]
 
-Jenis halaman **PDF**, **Gambar**, **MP3 / Audio**, dan **Video** di **Kode baru** langsung memulai Anda dengan blok-blok ini.
-
-Di dalam blok, pilih **Unggah** untuk menambahkan file dari perangkat Anda, **Dari file Anda** untuk menggunakan kembali file yang pernah Anda unggah, atau tempel tautan.
-
-## Ganti atau hapus file [#replace-or-delete-a-file]
-
-Buka **Dasbor → File** dan gunakan menu di samping file:
-
-- **Salin tautan** menyalin tautan file itu sendiri (`https://qrdx.dev/api/files/<id>`). Anda juga dapat menggunakannya sebagai tujuan kode QR dinamis.
-- **Ganti file** mengunggah konten baru di balik tautan yang sama, misalnya menu musim berikutnya. Halaman dan kode yang menggunakan file tersebut menampilkan versi baru dalam waktu satu menit. File hanya dapat diganti dengan jenis yang sama (PDF dengan PDF).
-- **Hapus** menghapus file secara permanen. Jika halaman atau kode masih menggunakannya, QRdx mendaftarkannya terlebih dahulu; setelah dihapus, halaman tersebut menampilkan "File tidak tersedia" di tempat file berada.
-
-Anggota dapat mengganti dan menghapus file yang mereka unggah; pemilik dan admin dapat mengelola semua file di workspace.
-
-## File yang dilaporkan [#reported-files]
-
-Setiap halaman yang di-hosting memiliki tautan **Laporkan penyalahgunaan**. Jika sebuah file melanggar aturan atau pemilik hak cipta meminta agar file dihapus, QRdx dapat memblokirnya. File yang diblokir berhenti disajikan di setiap halaman dan melalui tautan QRdx-nya dalam waktu satu menit (halaman menampilkan "File tidak tersedia"), dan salinan identiknya (hingga 25 MB) tidak dapat diunggah lagi.
-
-## Atur penyimpanan (self-hosting) [#set-up-storage-self-hosting]
-
-Unggahan file menggunakan [Cloudflare R2](https://developers.cloudflare.com/r2/). Tanpa itu, halaman File menampilkan "Penyimpanan belum dikonfigurasi di server ini", API unggah menjawab `503`, dan blok tetap dapat menggunakan tautan ke file yang di-hosting di tempat lain.
+Unggahan file menggunakan [Cloudflare R2](https://developers.cloudflare.com/r2/). Tanpa R2, halaman File menyatakan unggahan tidak tersedia, API unggah menjawab `503` dengan "Storage not configured on this server.", kelima jenis halaman unggahan disembunyikan dari pemilih, dan blok tetap dapat menggunakan tautan ke file yang di-hosting di tempat lain.
 
 1. Di dasbor Cloudflare, buka **R2** dan buat bucket, misalnya `qrdx-files`.
-2. Di **R2 → Manage API tokens**, buat token dengan **Object Read & Write** pada bucket tersebut.
-3. Atur variabel lingkungan berikut lalu mulai ulang:
+2. Di bawah **R2** → **Manage API tokens**, buat token dengan **Object Read & Write** pada bucket tersebut.
+3. Atur variabel lingkungan berikut dan mulai ulang:
 
-   ```bash
+   ```bash title="apps/app/.env.local"
    R2_ACCOUNT_ID=your-cloudflare-account-id
    R2_ACCESS_KEY_ID=token-access-key-id
    R2_SECRET_ACCESS_KEY=token-secret-access-key
@@ -74,9 +97,9 @@ Unggahan file menggunakan [Cloudflare R2](https://developers.cloudflare.com/r2/)
    R2_PUBLIC_BASE_URL=https://files.example.com
    ```
 
-4. Tambahkan kebijakan CORS ke bucket (**Settings → CORS policy**). Browser mengunggah langsung ke R2, sehingga bucket harus menerima permintaan `PUT` dengan header `Content-Type` dari origin aplikasi Anda:
+4. Tambahkan kebijakan CORS ke bucket (**Settings** → **CORS policy**). Browser mengunggah langsung ke R2, sehingga bucket harus menerima permintaan `PUT` dengan header `Content-Type` dari origin aplikasi Anda:
 
-   ```json
+   ```json title="R2 bucket CORS policy"
    [
      {
        "AllowedOrigins": ["https://qrdx.example.com", "http://localhost:3000"],
@@ -94,13 +117,19 @@ Unggahan file menggunakan [Cloudflare R2](https://developers.cloudflare.com/r2/)
 
 Pengunjung selalu membuka file melalui `/api/files/<id>`, yang mengalihkan ke objek yang tersimpan:
 
-- Dengan `R2_PUBLIC_BASE_URL` diatur (domain kustom yang terhubung ke bucket, atau URL `r2.dev`-nya, yang dibatasi lajunya oleh Cloudflare dan hanya direkomendasikan untuk pengujian), pengunjung dialihkan ke URL publik. Kunci objek berisi id acak, sehingga file tidak dapat didaftar atau ditebak.
-- Tanpa itu, bucket tetap privat dan setiap pengalihan berupa tautan presigned yang kedaluwarsa setelah satu jam.
+- Dengan `R2_PUBLIC_BASE_URL` diatur (domain khusus yang terhubung ke bucket, atau URL `r2.dev`-nya, yang dibatasi lajunya oleh Cloudflare dan hanya direkomendasikan untuk pengujian), pengunjung dialihkan ke URL publik. Kunci objek berisi id acak, sehingga file tidak dapat didaftar atau ditebak.
+- Tanpanya, bucket tetap privat dan setiap pengalihan berupa tautan presigned yang kedaluwarsa setelah satu jam.
 
-Dengan cara mana pun, file yang diganti, dihapus, atau diblokir berhenti disajikan melalui tautan QRdx-nya dalam waktu satu menit. File yang diblokir juga langsung hilang dari URL publiknya: objeknya dipindahkan ke kunci `quarantine/` dengan bagian acak (disimpan agar admin dapat memulihkannya), dan tautan QRdx-nya menjawab `410 Gone`.
+Dengan cara mana pun, file yang diganti, dihapus, atau diblokir berhenti disajikan melalui tautan QRdx-nya dalam waktu satu menit. File yang diblokir juga langsung lepas dari URL publiknya: objeknya dipindahkan ke kunci `quarantine/` dengan bagian acak (disimpan agar admin dapat memulihkannya), dan tautan QRdx-nya menjawab `410 Gone`.
 
-Browser mengunggah ke kunci `staging/`. Setelah unggahan diperiksa, QRdx menyalin tepat versi yang telah diperiksa ke kunci milik file tersebut, sehingga tautan unggah yang masih berlaku tidak dapat menggantikan file yang telah diperiksa.
+Browser mengunggah ke kunci `staging/`. Setelah unggahan diperiksa, QRdx menyalin persis versi yang sudah diperiksa ke kunci milik file tersebut, sehingga tautan unggah yang masih valid tidak dapat menggantikan file yang sudah diperiksa.
 
-<Callout type="info">
-  Unggahan yang tidak pernah selesai berhenti dihitung dalam penyimpanan setelah dua jam dan dibersihkan saat berikutnya seseorang mengunggah ke workspace tersebut. Tambahkan aturan siklus hidup objek ke bucket (**Settings → Object lifecycle rules**) yang menghapus objek dengan awalan `staging/` setelah satu hari, agar sisa unggahan yang ditinggalkan juga hilang.
+<Callout type="info" title="Bersihkan unggahan yang ditinggalkan">
+  Unggahan yang tidak pernah selesai berhenti dihitung dalam penyimpanan setelah dua jam dan dibersihkan saat berikutnya seseorang mengunggah ke ruang kerja tersebut. Tambahkan aturan siklus hidup objek ke bucket (**Settings** → **Object lifecycle rules**) yang menghapus objek berawalan `staging/` setelah satu hari, agar sisa unggahan yang ditinggalkan juga hilang.
 </Callout>
+
+## Terkait [#related]
+
+- [Halaman arahan](/docs/landing-pages): blok yang menampilkan file
+- [Paket dan batas](/docs/plans-and-limits): penyimpanan per paket
+- [Self-hosting](/docs/self-hosting#optional-services): setiap layanan opsional

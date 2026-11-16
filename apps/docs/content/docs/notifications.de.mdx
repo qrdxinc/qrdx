@@ -1,59 +1,78 @@
 ---
 title: "Benachrichtigungen"
-description: "E-Mail-Benachrichtigungen, ein wöchentlicher Digest sowie Slack- oder Discord-Nachrichten, wenn deine QR-Codes gescannt werden oder deine Formulare Antworten erhalten."
-icon: Bell
+description: "E-Mail-Benachrichtigungen, ein wöchentlicher Digest und Slack- oder Discord-Nachrichten, wenn deine QR-Codes gescannt werden oder deine Formulare Antworten erhalten."
 ---
 
-Lege in [Einstellungen → Benachrichtigungen](/settings/notifications) fest, worüber QRdx dich informiert. Die Einstellungen gelten pro Person und pro Workspace: Dein eigener Workspace und jeder andere Workspace, dem du angehörst, haben jeweils eigene Schalter, und in einem gemeinsamen Workspace wählt jedes Mitglied selbst.
+Benachrichtigungen sagen dir, was mit deinen Codes passiert, ohne dass du das Dashboard öffnen musst: ein erster Scan, ein Meilenstein, eine Formularantwort, die Änderung eines Teammitglieds und eine wöchentliche Zusammenfassung. Was QRdx dir mitteilt, wählst du unter [Einstellungen → Benachrichtigungen](/settings/notifications). Die Einstellungen gelten pro Person und pro Workspace: Dein eigener Workspace und jeder andere Workspace, dem du angehörst, haben jeweils eigene Schalter, und in einem gemeinsamen Workspace wählt jedes Mitglied selbst.
+
+<Callout type="info" title="E-Mail mit Pro, Chat mit Business">
+  E-Mail-Benachrichtigungen und der wöchentliche Digest sind Teil von Pro und Business; Slack- und Discord-Nachrichten sind Teil von Business. Jeder Workspace folgt dem Tarif seiner Inhaber und Abrechnungsmitglieder. Alles ist ausgeschaltet, bis du es einschaltest. Siehe [Tarife und Limits](/docs/plans-and-limits).
+</Callout>
+
+Du hast es eilig? [Anmeldecodes oder E-Mails kommen nicht an](/docs/help/troubleshooting/emails) behandelt fehlende Benachrichtigungen.
+
+## So funktioniert es [#how-it-works]
+
+Jeder Scan, jede Formularantwort und jede Code-Änderung ist ein Ereignis. Mit Benachrichtigungen abonnierst du die Ereignisse, die dich interessieren, jeweils über einen Kanal: E-Mail an die Adresse deines Kontos, einen Slack- oder Discord-Kanal über einen Incoming-Webhook oder deine eigenen Systeme über [Webhooks](/docs/webhooks).
 
 | Kanal | Was du bekommen kannst | Tarif |
 | --- | --- | --- |
 | E-Mail | Wöchentlicher Digest, Scan-Meilensteine, Formularantworten, neue Codes, Code-Änderungen | Pro und Business |
 | Slack, Discord | Scan-Meilensteine, Formularantworten, neue Codes, Code-Änderungen | Business |
-| [Webhooks](/docs/webhooks), Zapier, Make | Jedes Ereignis, einschließlich jedes einzelnen Scans | Business |
+| [Webhooks](/docs/webhooks), Zapier, Make | Jedes Ereignis, auch jeder einzelne Scan | Business |
 
-Jeder Workspace folgt dem Tarif seiner Eigentümer. Alles ist ausgeschaltet, bis du es einschaltest.
+<Shot id="notifications" />
 
 ## Benachrichtigungen [#alerts]
 
-- **Scan-Meilensteine:** der erste Scan eines Codes (mit Zeitpunkt, Ort und Gerät), danach 10, 100, 500, 1.000, 5.000, 10.000 Scans und darüber hinaus.
-- **Formularantworten:** die Antworten aus einem Formular auf einer deiner [gehosteten Seiten](/docs/landing-pages), mit einem Link zu allen Antworten.
-- **Neue Codes** und **Code-Änderungen:** wer einen Code erstellt oder sein Ziel, seinen Titel, sein Design oder seine Domain geändert hat. Besonders nützlich in Workspaces, die du mit anderen teilst.
+- **Scan-Meilensteine:** der erste Scan eines Codes, dann 10, 100, 500, 1.000, 5.000, 10.000, 50.000, 100.000, 500.000, 1.000.000 Scans und danach jede weitere Million. Die E-Mail zum ersten Scan nennt Zeitpunkt, Ort und Gerät; die Slack- und Discord-Nachricht nennt Stadt und Land.
+- **Formularantworten:** die Antworten aus einem Formular auf einer deiner [gehosteten Seiten](/docs/forms-and-pages#forms), mit einem Link zu allen Antworten.
+- **Neue Codes** und **Code-Änderungen:** wer einen Code erstellt oder sein Ziel, seinen Titel, sein Design oder seine Domain geändert hat. Am nützlichsten in Workspaces, die du mit anderen teilst.
 
-Damit ein stark genutztes Formular oder ein Massenimport nicht dein Postfach oder deinen Kanal überflutet, erhält jedes Ziel höchstens 30 Benachrichtigungen einer Art pro Stunde; der Rest wird übersprungen (der wöchentliche Digest zählt sie trotzdem mit, und Webhooks erhalten weiterhin jedes Ereignis).
+Damit ein stark genutztes Formular oder ein Massenimport dein Postfach oder deinen Kanal nicht überflutet, erhält jedes Ziel höchstens 30 Benachrichtigungen einer Art pro Stunde; der Rest wird übersprungen. Der wöchentliche Digest zählt sie trotzdem mit, und Webhooks erhalten weiterhin jedes Ereignis.
 
 ## Wöchentlicher Digest [#weekly-digest]
 
-Jeden Montag (UTC) bekommst du die Zahlen der letzten Woche für den Workspace: Scans im Vergleich zur Vorwoche, eindeutige Besucher, deine Top 5 Codes, die Top-Länder, neue Codes und Formularantworten. Er entfällt, wenn es zwei Wochen lang keine Scans und keine Formularantworten gab.
+Jeden Montagmorgen (UTC) bekommst du die Zahlen der letzten Woche für den Workspace: Scans im Vergleich zur Vorwoche, eindeutige Besucher, deine Top 5 Codes, die Top-Länder, neue Codes und Formularantworten. Er wird übersprungen, wenn es zwei Wochen lang keine Scans und keine Formularantworten gab.
 
 ## E-Mail [#email]
 
-Benachrichtigungs-E-Mails gehen an die E-Mail-Adresse deines Kontos. Jede enthält einen Link **Abmelden**, der diese Art von E-Mail ohne Anmeldung ausschaltet (Mail-Apps, die Abmeldung mit einem Klick unterstützen, zeigen ihn ebenfalls an). Du kannst E-Mails jederzeit in den Benachrichtigungseinstellungen wieder ein- oder ausschalten.
-
-Team-Einladungen und andere Konto-E-Mails sind von diesen Einstellungen nicht betroffen.
+Benachrichtigungs-E-Mails gehen an die E-Mail-Adresse deines Kontos, unter der Überschrift **E-Mail an** in den Benachrichtigungseinstellungen. Jede enthält einen Link **Abbestellen**, der diese Art von E-Mail ohne Anmeldung ausschaltet (Mail-Apps mit Ein-Klick-Abmeldung zeigen ihn ebenfalls an). In den Benachrichtigungseinstellungen kannst du E-Mails jederzeit wieder ein- oder ausschalten. Team-Einladungen und andere Konto-E-Mails sind von diesen Einstellungen nicht betroffen.
 
 ## Slack und Discord [#slack-and-discord]
 
-1. Erstelle einen eingehenden Webhook:
-   - **Slack:** Füge die App [Incoming WebHooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks) oder deine eigene Slack-App mit eingehenden Webhooks zu einem Kanal hinzu und kopiere die URL (`https://hooks.slack.com/services/...`).
+1. Erstelle einen Incoming-Webhook in der Chat-App:
+   - **Slack:** Füge die App [Incoming WebHooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks) oder deine eigene Slack-App mit Incoming-Webhooks zu einem Kanal hinzu und kopiere die URL (`https://hooks.slack.com/services/...`).
    - **Discord:** Kanaleinstellungen → **Integrationen** → **Webhooks** → **Neuer Webhook** → **Webhook-URL kopieren** (`https://discord.com/api/webhooks/...`).
-2. Klicke in [Einstellungen → Benachrichtigungen](/settings/notifications) im Workspace auf **+ Slack** oder **+ Discord**, füge die URL ein und wähle die Ereignisse aus. Beim Hinzufügen musst du zuerst [bestätigen, dass du es bist](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
-3. Mit der Senden-Schaltfläche schickst du eine Testnachricht.
+2. Klicke in [Einstellungen → Benachrichtigungen](/settings/notifications) unter **Slack und Discord** für den Workspace auf **Slack** oder **Discord**, füge die URL ein und wähle die Ereignisse. Beim Hinzufügen musst du zuerst [bestätigen, dass du es bist](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
+3. Mit der Senden-Schaltfläche neben dem Ziel verschickst du eine Testnachricht.
 
-Es werden nur Webhook-URLs von Slack und Discord akzeptiert. Nach dem Speichern zeigt QRdx nur den Anfang der URL, denn jeder, der sie hat, kann im Kanal posten. Nachrichten erwähnen nie `@everyone`, `@here` oder Rollen, egal was Besucher in ein Formular eingeben.
+Es werden nur Slack- und Discord-Webhook-URLs akzeptiert. Nach dem Speichern zeigt QRdx nur den Anfang der URL, denn jeder, der sie kennt, kann im Kanal posten. Nachrichten erwähnen niemals `@everyone`, `@here` oder Rollen, egal was Besucher in ein Formular eingeben.
 
-## Tarife und Downgrades [#plans-and-downgrades]
+Der [QRdx-Bot für Slack](/docs/slack-bot) ist etwas anderes: Er erstellt QR-Codes direkt in Slack. Das Hinzufügen schaltet keine Benachrichtigungen ein, und das Hinzufügen von Benachrichtigungen fügt den Bot nicht hinzu.
 
-Wenn der Tarif eines Workspaces einen Kanal nicht mehr enthält, enden dessen Benachrichtigungen, aber deine Einstellungen bleiben erhalten, und du kannst sie weiterhin ausschalten oder Ziele entfernen. Deine QR-Codes funktionieren in jedem Tarif weiter.
+## Limits und Tarife [#limits-and-plans]
+
+Wenn der Tarif eines Workspaces einen Kanal nicht mehr enthält, stoppen dessen Benachrichtigungen, aber deine Einstellungen bleiben erhalten, und du kannst sie weiterhin ausschalten oder Ziele entfernen. Deine QR-Codes funktionieren in jedem Tarif weiter.
+
+## Für Entwickler [#for-developers]
+
+Für alles, was über diese Benachrichtigungen hinausgeht, etwa jeden einzelnen Scan, nutze [Webhooks](/docs/webhooks): signierte `POST`-Anfragen an deinen eigenen Endpunkt für `scan.created`, `form.submitted` und die anderen Ereignisse, mit Wiederholungsversuchen und Zustellprotokollen.
 
 ## Self-Hosting [#self-hosting]
 
-E-Mails werden über [Resend](https://resend.com) versendet: Setze `RESEND_API_KEY` und `EMAIL_FROM` (eine Adresse auf einer in Resend verifizierten Domain). Ohne sie werden E-Mails übersprungen und protokolliert, und Team-Einladungen fallen auf kopierbare Links zurück.
+E-Mails werden über [Resend](https://resend.com) versendet: Setze `RESEND_API_KEY` und `EMAIL_FROM` (eine Adresse auf einer in Resend verifizierten Domain). Ohne sie werden E-Mails übersprungen und protokolliert, und Team-Einladungen greifen auf kopierbare Links zurück.
 
-Der wöchentliche Digest läuft über einen geplanten Job am Montagmorgen (`apps/app/vercel.json` ruft auf Vercel `/api/cron/digest?shard=all` auf, was die Digests aller Abonnenten in einem Durchlauf versendet). Bei vielen Abonnenten kannst du den Endpunkt stattdessen montags stündlich ohne `shard=all` aufrufen, sodass jeder Durchlauf ein Vierundzwanzigstel davon abarbeitet. Anderswo rufst du ihn mit dem `CRON_SECRET` aus deiner Umgebung auf:
+Der wöchentliche Digest wird von `/api/cron/digest` versendet. Auf Vercel ruft `apps/app/vercel.json` ihn jeden Montag mit `?shard=all` auf, wodurch die Digests aller Abonnenten in einem Durchlauf versendet werden. Bei vielen Abonnenten kannst du ihn stattdessen montags stündlich ohne `shard=all` aufrufen, sodass jeder Durchlauf ein Vierundzwanzigstel davon abarbeitet. Überall sonst rufst du ihn mit dem `CRON_SECRET` aus deiner Umgebung über deinen eigenen Scheduler auf:
 
-```bash
-curl -H "Authorization: Bearer $CRON_SECRET" https://your-host/api/cron/digest
+```bash title="Terminal"
+curl -H "Authorization: Bearer $CRON_SECRET" "https://your-host/api/cron/digest?shard=all"
 ```
 
-Abmelde-Links werden mit `BETTER_AUTH_SECRET` signiert; wenn du es änderst, werden Links in bereits versendeten E-Mails ungültig.
+Abmelde-Links werden mit `BETTER_AUTH_SECRET` signiert; wenn du es änderst, werden Links in bereits versendeten E-Mails ungültig. Siehe [Self-Hosting](/docs/self-hosting#scheduled-jobs).
+
+## Verwandte Themen [#related]
+
+- [Webhooks](/docs/webhooks): jedes Ereignis an deinen eigenen Endpunkt, Zapier oder Make
+- [Menüs, Coupons, Events und Formulare](/docs/forms-and-pages#forms): die Formulare, zu deren Antworten du benachrichtigt wirst
+- [Anmeldecodes oder E-Mails kommen nicht an](/docs/help/troubleshooting/emails)

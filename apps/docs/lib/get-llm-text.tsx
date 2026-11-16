@@ -1,4 +1,10 @@
+import openapi from "@repo/docs-assets/openapi.json";
 import { cleanLlmMarkdown } from "@/lib/agents/llm-markdown";
+import {
+  findOperation,
+  type OpenApiDocument,
+  operationMarkdown,
+} from "@/lib/agents/llm-openapi";
 import type { DocsIndexPage as Page } from "@/lib/docs-index";
 import {
   isFeatureAvailable,
@@ -34,6 +40,21 @@ function isShown({
 /** The page's absolute URL. */
 export const pageUrl = (page: Page) => new URL(page.url, baseUrl).toString();
 
+/**
+ * The operation an API reference page (developers/api/<slug>) renders with
+ * <OpenAPIPage />, which the Markdown drops: its Markdown comes from the
+ * OpenAPI document instead (lib/agents/llm-openapi.ts).
+ */
+function apiOperationMarkdown(page: Page): string {
+  const [section, folder, slug, ...rest] = page.slugs;
+  if (section !== "developers" || folder !== "api" || !slug || rest.length) {
+    return "";
+  }
+  const document = openapi as unknown as OpenApiDocument;
+  const operation = findOperation(document, slug);
+  return operation ? `\n${operationMarkdown(document, operation)}` : "";
+}
+
 /** One docs page as Markdown (llms-full.txt and the per-page .md links). */
 export async function getLLMText(page: Page) {
   const processed = await page.data.getText("processed");
@@ -51,5 +72,5 @@ export async function getLLMText(page: Page) {
   return `${header.join("\n")}\n${cleanLlmMarkdown(processed, {
     origin: baseUrl.origin,
     isShown,
-  })}`;
+  })}${apiOperationMarkdown(page)}`;
 }

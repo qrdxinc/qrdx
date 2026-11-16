@@ -14,6 +14,11 @@ import en from "@/messages/en.json";
 
 type Options = string | { locale?: string; namespace?: string } | undefined;
 
+// The catalog as a plain record: keys are typed as `never` below anyway, and
+// the translator's type over the whole catalog is too large for tsc to
+// serialize (TS7056) now that the catalog has grown.
+const messages = en as unknown as Record<string, string>;
+
 const namespaceOf = (options: Options) =>
   typeof options === "string" ? options : options?.namespace;
 
@@ -24,7 +29,7 @@ export const intlServer: Record<string, (...args: never[]) => unknown> = {
   getTranslations: async (options?: Options) =>
     createTranslator({
       locale: "en",
-      messages: en,
+      messages,
       namespace: namespaceOf(options) as never,
     }),
   getLocale: async () => "en",

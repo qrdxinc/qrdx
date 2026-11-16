@@ -1,45 +1,47 @@
 ---
 title: "Kode membuka halaman yang salah"
-description: "Mengapa kode QR membuka tautan lama atau tidak terduga, dan cara mengetahui isi sebenarnya dari kode tersebut."
+description: "Mengapa kode QR membuka tautan lama atau tak terduga, dan cara mengetahui isi kode yang sebenarnya."
 ---
+
+Kode yang membuka halaman lama atau tak terduga biasanya adalah kode QR statis yang masih menyimpan tautan lama, atau kode QR dinamis dengan pengaturan yang mengarahkan pemindaian ke tempat lain. Cari tahu dulu mana yang terjadi, lalu periksa daftar di bawah satu per satu.
 
 ## Pertama, lihat isi kode [#first-see-what-the-code-holds]
 
-Foto kode yang sudah dicetak, lalu unggah ke [pemeriksa pemindaian](/tools/scan-checker). Alat ini menampilkan dengan tepat apa isi kode tersebut.
+Foto kode yang sudah dicetak, lalu masukkan ke [pemeriksa pemindaian](/tools/scan-checker). Alat ini menampilkan isi kode secara persis.
 
-- Jika yang muncul adalah alamat situs web Anda, kode tersebut **statis**.
-- Jika yang muncul adalah tautan pendek seperti `qrdx.dev/q/…`, kode tersebut **dinamis**.
+- Jika yang tampil adalah alamat situs web Anda, kodenya **statis**.
+- Jika yang tampil adalah tautan pendek seperti `qrdx.dev/q/…` atau tautan di domain Anda sendiri, kodenya **dinamis**.
 
-## Kode statis [#a-static-code]
+## Kode QR statis membuka tautan lama [#a-static-code-opens-the-old-link]
 
-Kode statis menyimpan tautan di dalam kodenya. Tautan ini tidak dapat diubah setelah dicetak.
+Kode diunduh sebelum dijadikan dinamis, sehingga kode itu menyimpan tautan lama secara langsung dan tidak bisa diubah. Jadikan kode ini dinamis, lalu cetak versi barunya. Pastikan hasilnya: pemeriksa pemindaian menampilkan tautan pendek. Lihat [Membuat kode QR dinamis](/docs/help/dynamic-codes/create).
 
-Hal ini terjadi jika kode diunduh sebelum dijadikan dinamis. Untuk memperbaikinya, cetak versi dinamisnya. Lihat [Membuat kode QR dinamis](/docs/help/dynamic-codes/create).
+## Kode QR dinamis masih membuka tujuan lama [#a-dynamic-code-still-opens-the-old-destination]
 
-## Kode dinamis [#a-dynamic-code]
+Tujuan baru belum tersimpan. Di Playground, mengubah alamat saja tidak cukup: klik **Point it to the new address**. Di dasbor, buka **Edit link**, ubah **Destination URL**, lalu klik **Save changes**. Pastikan hasilnya: lakukan pemindaian lagi. QRdx tidak menyimpan cache pengalihan, jadi pemindaian berikutnya memakai tujuan baru. Lihat [Mengubah tujuan kode](/docs/help/dynamic-codes/change-the-link).
 
-Buka kode di **Codes** lalu periksa setiap hal berikut.
+## Sebagian orang masuk ke halaman yang berbeda [#some-people-land-on-a-different-page]
 
-### Tujuan baru belum tersimpan [#the-new-destination-wasnt-saved]
+Aturan smart routing atau uji A/B mengarahkan sebagian pemindaian ke tempat lain. Buka tab **Settings** pada kode, lalu **Smart routing**. Aturan pertama yang cocok yang berlaku, jadi periksa urutannya. Buka **Test your rules (uses unsaved changes)** dan klik **Run test** untuk melihat ke mana pemindaian akan diarahkan. Pada uji A/B, setiap pengunjung tetap mendapat versinya sepanjang hari, sehingga dua orang bisa melihat halaman yang berbeda. Lihat [Mengarahkan pemindaian ke tautan berbeda](/docs/help/dynamic-codes/routing).
 
-Di Playground, mengubah alamat saja tidak cukup: klik **Point it to the new address**. Di dasbor, gunakan **Edit link** dan **Save changes**. Lihat [Mengubah tujuan kode](/docs/help/dynamic-codes/change-the-link).
+## Kode membuka halaman cadangan Anda [#the-code-opens-your-fallback-page]
 
-### Aturan smart routing cocok [#a-smart-routing-rule-matched]
+Kode dijeda, sudah melewati tanggal berakhir, atau sudah melewati batas pemindaian, sehingga pemindaian diarahkan ke **Fallback URL**. Buka **Access & schedule** di tab **Settings**, lalu lanjutkan kode, atau ubah tanggal atau batasnya. Lihat [Menjeda, menjadwalkan, atau membatasi kode](/docs/help/dynamic-codes/pause-schedule-limit).
 
-Aturan dapat mengarahkan sebagian pemindaian ke tempat lain, misalnya berdasarkan perangkat atau negara. Aturan pertama yang cocok yang berlaku. Buka **Smart routing** lalu klik **Test your rules**.
+## Tautan memiliki teks tambahan setelah tanda tanya [#the-link-has-extra-text-after-a-question-mark]
 
-### Uji A/B sedang berjalan [#an-ab-test-is-running]
+Anda mengatur parameter UTM, sehingga pemindaian membuka tautan Anda dengan tag `utm_` tambahan. Ini wajar, dan halamannya tetap sama.
 
-Setiap pengunjung melihat satu versi untuk hari itu. Orang lain mungkin melihat halaman yang berbeda.
+## Halaman yang benar terbuka, tetapi tampilannya lama [#the-right-page-opens-but-it-looks-old]
 
-### Kode dijeda atau telah berakhir [#the-code-is-paused-or-ended]
+Ponsel menampilkan salinan cache dari situs web Anda, bukan dari pengalihan. Muat ulang halaman di browser.
 
-Kode yang dijeda atau berakhir akan membuka **Fallback URL**, jika Anda telah mengaturnya. Periksa **Access & schedule**.
+## Masih salah [#still-wrong]
 
-### Parameter UTM ditambahkan [#utm-parameters-were-added]
+[Hubungi dukungan](/docs/help/contact) dengan menyertakan tautan pendek kode dan halaman yang terbuka saat pemindaian.
 
-Jika Anda mengatur parameter UTM, pemindaian akan membuka tautan Anda dengan tag `utm_` tambahan. Ini wajar, dan halamannya tetap sama.
+## Terkait [#related]
 
-## Masih melihat halaman lama? [#still-seeing-the-old-page]
-
-QRdx tidak menyimpan cache pengalihan, sehingga pemindaian berikutnya menggunakan tujuan yang baru. Jika ponsel Anda menampilkan versi lama dari halaman itu sendiri, muat ulang halaman tersebut di browser.
+- [Mengubah tujuan kode](/docs/help/dynamic-codes/change-the-link)
+- [Mengarahkan pemindaian ke tautan berbeda](/docs/help/dynamic-codes/routing)
+- [Pemindaian menampilkan halaman error](/docs/help/troubleshooting/error-pages)

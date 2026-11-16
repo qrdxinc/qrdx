@@ -1,58 +1,145 @@
 ---
-title: "React 라이브러리 설치"
-description: "qrdx React 라이브러리를 설치하고 몇 줄의 코드로 첫 QR 코드를 렌더링해 보세요."
+title: "React 라이브러리 시작하기"
+description: "qrdx를 설치하고, React 컴포넌트에서 스타일을 입힌 QR 코드를 렌더링한 뒤 파일로 저장해 보세요. 몇 분이면 충분해요."
 icon: Rocket
 ---
 
-`qrdx`를 설치하고 몇 분 만에 첫 QR 코드를 만들어 보세요.
+이 페이지를 끝까지 따라 하면 React 컴포넌트로 렌더링한 스타일 QR 코드와, 이를 SVG로 저장하는 버튼이 완성됩니다. 라이브러리가 QR 코드를 직접 그리므로 계정도 API 키도 필요하지 않습니다.
 
 <NpmStatus package="qrdx" />
 
-## 패키지 설치 [#install-the-package]
+## 시작하기 전에 [#before-you-start]
+
+- React 18 이상의 React 앱. Next.js, Vite, Remix 등 어떤 환경에서도 동작합니다.
+- Node.js 18 이상.
+
+코드를 작성하기 전에 옵션부터 보고 싶으신가요? [Playground](/playground?open=code&lang=react)에서 QR 코드를 꾸민 뒤 React 컴포넌트로 복사하세요.
+
+## 만들어 보기 [#build-it]
+
+### 1. qrdx 설치 [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`react`와 `react-dom`(18 이상)은 피어 의존성이므로 `qrdx`는 앱에 이미 설치된 버전을 사용합니다. PDF 내보내기는 선택 사항입니다. 필요한 경우에만 `jspdf`를 설치하세요.
+`react`와 `react-dom`은 피어 의존성이라서, 패키지는 앱에 이미 설치된 버전을 사용합니다. 그 밖에 설치되는 것은 없습니다. PDF 내보내기에는 선택 사항인 `jspdf` 패키지가 필요하며, PDF 내보내기를 사용할 때만 설치하면 됩니다.
 
-## 빠른 시작 [#quick-start]
+### 2. 코드 렌더링 [#2-render-a-code]
 
-첫 QR 코드를 만들어 보세요.
+```tsx title="components/first-qr-code.tsx"
+import { QRCode } from "qrdx";
 
-```tsx
-import { QRCode } from 'qrdx';
+export function FirstQrCode() {
+  return <QRCode value="https://example.com" size={256} />;
+}
+```
 
-export default function App() {
+페이지에 컴포넌트를 넣으세요. 라이브러리 기본 모양의 256 px QR 코드가 보입니다. 모듈은 둥글고, 모서리 눈은 톱니바퀴 모양이며, 흰 바탕에 검은색입니다. 휴대폰 카메라를 화면에 비추면 example.com이 열립니다.
+
+<Shot id="lib-first-code" />
+
+`QRCode`는 `<svg>`를 렌더링하고 브라우저 전용 훅을 사용하지 않습니다. 그래서 React Server Components에서도 동작하고, JavaScript가 실행되기 전에 페이지 HTML에 먼저 렌더링됩니다. 다만 이것만으로는 스크린 리더가 읽을 내용이 없습니다. 레이블을 붙이는 방법은 3단계에서 설명합니다.
+
+### 3. 스타일 적용 [#3-style-it]
+
+```tsx title="components/styled-qr-code.tsx"
+import { QRCode } from "qrdx";
+
+export function StyledQrCode() {
   return (
     <QRCode
-      value="https://example.com"
+      value="https://example.com/menu"
       size={256}
+      margin={4}
+      fgColor="#1d4ed8"
+      bodyPattern="rounded"
+      cornerEyePattern="extra-rounded"
+      cornerEyeDotPattern="rounded"
+      frame={{ style: "banner-bottom", text: "Scan for the menu" }}
     />
   );
 }
 ```
 
-이게 전부입니다. 이제 작동하는 QR 코드가 생겼습니다.
+이제 QR 코드가 둥근 모듈의 파란색으로 바뀌고, 아래에 "Scan for the menu"라고 적힌 배너가 나타납니다. 프레임은 코드 위에 덧그리지 않고 코드 둘레에 추가되므로 결과물은 256 px보다 커집니다. 따라서 코드는 그대로 스캔됩니다.
 
-먼저 디자인해 보고 싶으신가요? [Playground에서 사용해 보세요](/playground?open=code&lang=react). 그곳에서 코드를 꾸민 다음 React 컴포넌트로 복사할 수 있습니다.
+<Shot id="lib-styled-code" />
 
-## 다음 단계 [#next-steps]
+각 prop의 역할은 다음과 같습니다.
+
+- `margin`은 코드 주위의 여백(quiet zone)이며, 단위는 모듈입니다. 기본값은 0으로, 자체 패딩이 있는 카드 안에 코드를 넣을 때 알맞습니다. 배경이 복잡하거나 어두울 때는 4를 사용하세요.
+- `fgColor`에는 CSS 색상이나 그라디언트를 사용할 수 있습니다. `bgColor`, `eyeColor`, `dotColor`도 같은 방식으로 동작합니다.
+- `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern`은 각각 모듈, 모서리 눈, 그 안의 점 모양을 정합니다. 본문 패턴 {facts.bodyPatterns}개, 눈 모양 {facts.eyeShapes}개, 눈 중심 {facts.eyeCentres}개가 있으며, 모두 [모양, 눈, 프레임](/docs/styles)에서 실시간으로 확인할 수 있습니다.
+- `frame`은 내장된 행동 유도 프레임 {facts.frameStyles}개 중 하나, 또는 직접 만든 프레임을 추가합니다.
+- `QRCode`는 QR 코드 자체의 prop과 `style`만 받습니다. 그 밖의 속성은 받지 않습니다. 코드에 접근 가능한 이름이나 클래스를 지정하려면 요소로 감싸거나(`<div role="img" aria-label="QR code for the menu">`), `QRCodeSVG`를 렌더링하세요. `QRCodeSVG`는 `aria-label`, `className` 등 다른 속성을 `<svg>`에 그대로 적용합니다.
+
+### 4. 파일로 저장 [#4-save-it-as-a-file]
+
+```tsx title="components/download-svg-button.tsx"
+"use client";
+
+import { downloadQRCode } from "qrdx";
+
+const menuCode = {
+  value: "https://example.com/menu",
+  margin: 4,
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+  frame: { style: "banner-bottom", text: "Scan for the menu" },
+} as const;
+
+export function DownloadSvgButton() {
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        downloadQRCode(menuCode, {
+          format: "svg",
+          size: { width: 1024, height: 1024 },
+          filename: "menu.svg",
+        })
+      }
+    >
+      Download SVG
+    </button>
+  );
+}
+```
+
+버튼을 클릭하면 `menu.svg`가 저장됩니다. 화면에 보이는 것과 같은 코드를 1024 px로 그린 파일이며, 어떤 크기에서도 선명하고 인쇄소에서 요구하는 파일 형식입니다. 이미지로 저장하려면 `format`을 `png`, `jpg`, `webp` 중 하나로, 디자인 도구용 벡터 파일은 `eps`로, PDF는 `pdf`로 설정하세요(PDF에는 선택 사항인 `jspdf` 패키지가 필요합니다).
+
+`downloadQRCode`는 브라우저의 DOM을 사용하므로 버튼은 Client Component 안에 있어야 합니다. Server Component에서 이 버튼을 렌더링하는 것은 가능합니다. 위 예시처럼 코드의 옵션을 하나의 객체에 모아 두면 저장되는 파일이 미리 보기와 일치합니다.
+
+### 5. 스캔되는지 확인 [#5-check-that-it-scans]
+
+인쇄하기 전에 휴대폰 두세 대로 코드를 스캔해 보세요. 색상이 특이하거나 로고가 들어간 디자인이라면 `getScanScore`가 브라우저에서 같은 검사를 실행하고 점수, 등급, 수정할 부분을 반환합니다.
+
+```tsx title="lib/check-code.ts"
+import { getScanScore } from "qrdx";
+
+const { score, grade, checks } = await getScanScore({
+  value: "https://example.com/menu",
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+});
+// score: 0 to 100, grade: "great" | "ok" | "risky" | "fails"
+// checks: [{ id, passed, message, fix? }]
+```
+
+인쇄한 코드의 스크린샷이나 사진을 [스캔 검사기](/tools/scan-checker)에 업로드할 수도 있어요.
+
+## 문제가 생겼다면 [#if-something-goes-wrong]
+
+- **`Module not found: Can't resolve 'qrdx'`.** 패키지를 가져오는 워크스페이스나 앱에 설치한 다음 개발 서버를 다시 시작하세요.
+- **코드는 렌더링되지만 휴대폰이 인식하지 못해요.** `margin={4}`를 추가하고, 밝은 배경에 어두운 모듈을 유지하며, 화면에서 너비를 128 px 이상으로 렌더링하세요. 그 밖의 원인은 [QR 코드가 스캔되지 않아요](/docs/help/troubleshooting/wont-scan)에서 확인할 수 있습니다.
+- **`PDF export needs the optional "jspdf" package`.** 같은 패키지에서 `npm install jspdf`를 실행하세요. SVG, PNG, JPG, WebP, EPS는 추가로 설치할 것이 없습니다.
+
+## 관련 문서 [#related]
 
 <Cards>
-  <Card
-    href="/docs/usage"
-    title="사용법 알아보기"
-    description="색상, 패턴 등을 사용자 지정하세요"
-  />
-  <Card
-    href="/docs/features/templates"
-    title="템플릿 사용하기"
-    description="미리 만들어진 스타일을 바로 적용하세요"
-  />
-  <Card
-    href="/docs/api-reference"
-    title="API 레퍼런스"
-    description="전체 prop 문서"
-  />
+  <Card href="/docs/usage" title="기본 사용법" description="어떤 컴포넌트를 사용할지, 그리고 QR 코드의 모양을 정하는 모든 prop을 설명합니다." />
+  <Card href="/docs/nextjs" title="Next.js에서 QR 코드 만들기" description="App Router의 Server Components, 라우트 파라미터, 실시간 입력, 다운로드를 다룹니다." />
+  <Card href="/docs/features/patterns" title="모듈과 눈 모양 선택" description="모든 모양과 피해야 할 조합을 소개합니다." />
+  <Card href="/docs/api-reference" title="라이브러리 API 레퍼런스" description="패키지가 내보내는 모든 컴포넌트, 함수, 타입을 정리했습니다." />
 </Cards>

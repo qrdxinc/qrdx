@@ -3,30 +3,45 @@ title: "Arsipkan, hapus, dan pulihkan kode"
 description: "Apa yang terjadi pada kode yang sudah dicetak saat Anda mengarsipkannya, memindahkannya ke tempat sampah, atau menghapusnya secara permanen."
 ---
 
+Jika Anda sudah selesai menggunakan kode QR dinamis, Anda dapat mengarsipkannya, memindahkannya ke tempat sampah, atau menghapusnya secara permanen. Masing-masing menghentikan fungsi kode dengan cara yang berbeda.
+
 <Callout type="warn">
-  Mengarsipkan, memindahkan ke tempat sampah, atau menghapus kode akan **menghentikan fungsinya**. Untuk menonaktifkan kode yang sudah dicetak secara halus, [jeda kode tersebut](/docs/help/dynamic-codes/pause-schedule-limit) dan tambahkan URL cadangan.
+  Mengarsipkan, membuang ke tempat sampah, atau menghapus kode akan menghentikan fungsinya. Untuk menonaktifkan kode yang sudah dicetak secara halus, [jeda kode tersebut](/docs/help/dynamic-codes/pause-schedule-limit) dan tambahkan URL cadangan.
 </Callout>
 
-## Arsipkan [#archive]
+## Mana yang harus dipilih [#which-to-choose]
 
-Pilih **Arsipkan** dari menu kode di **Kode**.
+| | Yang dilihat pemindai | Dihitung dalam batas Anda | Dapat kembali dengan |
+| --- | --- | --- | --- |
+| **Jeda** | URL cadangan, atau "Kampanye ini dijeda" | Ya | **Lanjutkan** |
+| **Arsipkan** | "Kode QR ini tidak lagi aktif" | Tidak | **Batalkan pengarsipan** |
+| **Pindahkan ke tempat sampah** | "Kode QR ini tidak lagi aktif" | Tidak | **Pulihkan** |
+| **Hapus permanen** | "Kode QR tidak ditemukan" | Tidak | Tidak ada. Kode hilang selamanya. |
 
-- Pemindai akan melihat "Kode QR ini tidak lagi aktif".
-- Kode yang diarsipkan tidak dihitung dalam batas kode paket Anda.
-- Pilih **Batalkan pengarsipan** untuk mengaktifkan kembali kode. Di paket Gratis, Anda memerlukan slot kode yang kosong.
+## Arsipkan kode [#archive-a-code]
 
-## Pindahkan ke tempat sampah [#move-to-the-trash]
+Di **Kode**, buka menu kode (**⋯**) lalu pilih **Arsipkan**. Kode yang diarsipkan tidak dihitung dalam batas kode paket Anda. Pilih **Batalkan pengarsipan** untuk mengaktifkan kembali kode. Pada paket Gratis, Anda memerlukan slot kode yang kosong.
 
-Pilih **Pindahkan ke tempat sampah** dari menu kode.
+## Pindahkan kode ke tempat sampah [#move-a-code-to-the-trash]
 
-- Pemindai akan melihat "Kode QR ini tidak lagi aktif".
-- Buka **Tempat sampah** di sidebar Kode, lalu pilih **Pulihkan** untuk mengembalikannya.
-- QRdx tidak pernah mengosongkan tempat sampah secara otomatis.
+Buka menu kode lalu pilih **Pindahkan ke tempat sampah**. Untuk melihat kode di tempat sampah, buka **Filter** di bilah alat dan atur **Status** ke **Sampah**. Di sana, menu setiap kode menyediakan **Pulihkan** dan **Hapus permanen**. QRdx tidak pernah mengosongkan tempat sampah secara otomatis.
 
-## Hapus permanen [#delete-forever]
+## Hapus kode secara permanen [#delete-a-code-forever]
 
-Di **Tempat sampah**, pilih **Hapus permanen**.
+Di tempat sampah, pilih **Hapus permanen** pada satu kode, atau **Kosongkan tempat sampah** untuk menghapus semua isinya. Riwayat pemindaian dan riwayat versi kode ikut terhapus, dan tidak ada yang dapat mengembalikannya. Pemindai akan melihat "Kode QR tidak ditemukan".
 
-- Pemindai akan melihat "Kode QR tidak ditemukan".
-- Riwayat pemindaian kode tersebut dihapus.
-- Tindakan ini tidak dapat dibatalkan.
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### Batalkan pengarsipan atau Pulihkan ditolak [#unarchive-or-restore-is-refused]
+
+Anda menggunakan paket Gratis dan sudah memiliki 10 kode aktif. Arsipkan kode lain terlebih dahulu, atau [tingkatkan paket](/pricing).
+
+### Anda menghapus kode dan ingin data pemindaiannya kembali [#you-deleted-a-code-and-want-its-scans-back]
+
+Data tersebut hilang bersama kodenya. Sebelum menghapus kode yang mungkin masih Anda perlukan, [ekspor data pemindaiannya](/docs/help/dynamic-codes/scans#download-your-scans).
+
+## Terkait [#related]
+
+- [Jeda, jadwalkan, atau batasi kode](/docs/help/dynamic-codes/pause-schedule-limit)
+- [Pemindaian menampilkan halaman error](/docs/help/troubleshooting/error-pages)
+- [Buat kode QR dinamis](/docs/help/dynamic-codes/create)

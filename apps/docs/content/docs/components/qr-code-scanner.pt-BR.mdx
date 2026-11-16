@@ -1,8 +1,10 @@
 ---
-title: "Leitor de QR Code"
-description: "Uma área de soltar arquivos que lê um QR code a partir de uma imagem no navegador, com ações de copiar e abrir link."
+title: "QR Code Scanner"
+description: "Uma área de soltar arquivos para projetos shadcn/ui que lê um QR code a partir de uma imagem no navegador, com ações de copiar e abrir link."
 icon: Scan
 ---
+
+`QrCodeScanner` é uma área de soltar arquivos que decodifica um QR code de uma imagem, no navegador, e devolve o texto para você. Use para fazer check-in de ingressos a partir de capturas de tela, ler códigos de fotos enviadas pelas pessoas ou verificar um código que você gerou. Ele lê arquivos de imagem, não a imagem ao vivo da câmera.
 
 <ComponentLinks name="qr-code-scanner" />
 
@@ -14,28 +16,53 @@ icon: Scan
 
 ## Uso [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeScanner } from "@/components/qr-code-scanner";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeScanner onResult={(value) => console.log(value)} />
 ```
 
-As pessoas soltam uma imagem ou clicam para escolher uma. A decodificação roda no navegador com os [helpers de detecção](/docs/qr-detection) do qrdx, então a imagem nunca sai do dispositivo. Ele lê arquivos de imagem, não a transmissão de uma câmera ao vivo.
-
-O resultado aparece com um botão de copiar, além de um botão "Abrir link" quando for uma URL `http` ou `https`.
+As pessoas soltam uma imagem ou clicam para escolher uma. A decodificação roda no navegador com os [auxiliares de detecção](/docs/qr-detection) do qrdx, então a imagem nunca sai do dispositivo. O resultado aparece com um botão **Copiar**, além de um botão **Abrir link** quando for uma URL `http` ou `https`.
 
 ## Exemplos [#examples]
 
 ### Verificando um resultado [#checking-a-result]
 
-`onResult` recebe o texto decodificado, então você pode agir sobre ele, por exemplo para fazer o check-in de um ingresso. `label` muda o título na área de soltar arquivos. Baixe o código de exemplo acima e solte-o aqui para ver um ingresso válido.
+`onResult` recebe o texto decodificado, para que você possa agir sobre ele, por exemplo, para fazer check-in de um ingresso. `label` muda o título na área de soltar. Baixe o código de exemplo acima e solte-o para ver um ingresso válido.
 
 <ComponentPreview name="qr-code-scanner-tickets" />
+
+## O que o leitor mostra [#what-the-reader-shows]
+
+| Estado | Mensagem |
+| --- | --- |
+| Lendo | "Lendo…" |
+| Nenhum código na imagem | "Nenhum QR code encontrado. Tente uma imagem mais nítida ou mais próxima." |
+| Não é um arquivo de imagem | "Escolha um arquivo de imagem." |
+| Não foi possível ler a imagem | "Não foi possível ler essa imagem." |
+| Encontrado | O texto decodificado, com **Copiar** e, para links, **Abrir link** |
+
+O decodificador tenta a imagem inteira e quatro recortes, em várias escalas, então um código que ocupa uma pequena parte de uma captura de tela ainda é encontrado.
+
+## Acessibilidade e renderização [#accessibility-and-rendering]
+
+- A área de soltar é um `<label>` de um campo de arquivo oculto visualmente, então funciona com o teclado e com leitores de tela como qualquer seletor de arquivos.
+- Resultados e erros são anunciados por uma região live com prioridade polite.
+- **Abrir link** abre em uma nova aba com `rel="noopener noreferrer nofollow"`, para que uma página lida não consiga acessar a sua.
+- O componente é um Client Component. Ele precisa do canvas do navegador e, na primeira leitura, carrega o decodificador sob demanda.
 
 ## Referência da API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-scanner.tsx" type="{ [K in keyof QrCodeScannerProps as K extends keyof ComponentProps<'div'> ? never : K]: QrCodeScannerProps[K] }" />
 
 Qualquer outra prop, como `className`, é repassada ao `<div>` que envolve o componente.
+
+## Relacionados [#related]
+
+<Cards>
+  <Card href="/docs/qr-detection" title="Detecção de QR" description="As funções da biblioteca que o leitor chama, para você criar seu próprio leitor." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="Gere os códigos que o leitor lê." />
+  <Card href="/docs/features/frames" title="Molduras, pontuação de leitura e arquivos de impressão" description="Avalie a imagem de um código com getImageScanScore em vez de apenas decodificá-la." />
+</Cards>

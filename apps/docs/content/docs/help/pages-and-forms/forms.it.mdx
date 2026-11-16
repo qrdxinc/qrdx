@@ -3,39 +3,78 @@ title: "Raccogli risposte con un modulo"
 description: "Crea un modulo di feedback, un sondaggio o un modulo di iscrizione e leggi le risposte nella tua dashboard."
 ---
 
+Un modulo in una pagina ospitata raccoglie feedback, risposte a sondaggi o iscrizioni da chi fa la scansione del tuo codice. Le risposte arrivano nella tua dashboard e puoi scaricarle come foglio di calcolo.
+
+<Callout type="info">
+  Ogni workspace può raccogliere 50 risposte al mese con Gratuito, 1.000 con Pro e 10.000 con Business. Gli avvisi via email per le nuove risposte sono inclusi in Pro e Business. Vedi [Piani e cosa includono](/docs/help/account-and-billing/plans).
+</Callout>
+
 ## Crea un modulo [#create-a-form]
 
-1. Vai su **Pages** e clicca **New page**.
-2. Scegli **Feedback & forms**.
-3. Scegli un modello: **Guest feedback**, **NPS survey** o **Sign-up form**.
-4. Clicca **Create page**, modifica le domande, poi clicca **Publish**.
+### 1. Avvia una nuova pagina [#1-start-a-new-page]
 
-Puoi anche aggiungere un blocco **Form** a qualsiasi altra pagina.
+Vai su **Pages & forms** e clicca su **New page**.
+
+### 2. Scegli Feedback & forms [#2-pick-feedback--forms]
+
+Scegli **Feedback & forms**, poi un modello: **Guest feedback**, **NPS survey** o **Sign-up form**.
+
+### 3. Crea e modifica [#3-create-and-edit]
+
+Clicca su **Create page**, poi modifica le domande nella scheda **Blocks**.
+
+<Shot id="form-editor" />
+
+### 4. Pubblica [#4-publish]
+
+Clicca su **Publish**. Il modulo accetta risposte non appena la pagina è online.
+
+Puoi anche aggiungere un blocco **Form** a qualsiasi altra pagina dal menu di aggiunta dei blocchi.
 
 ## Leggi le risposte [#read-the-responses]
 
-In **Pages**, apri il menu della pagina (**⋯**) e scegli **Responses**.
+In **Pages & forms**, apri il menu della pagina (**⋯**) e scegli **Responses**. La voce compare quando la pagina contiene un modulo.
 
-Clicca **Export CSV** per scaricare le risposte come foglio di calcolo.
+Clicca su **Export CSV** per scaricare le risposte come foglio di calcolo.
+
+<Shot id="form-responses" />
 
 ## Ricevi un'email per ogni risposta [#get-an-email-for-each-response]
 
-Con Pro e Business, vai su **Settings** → **Notifications** e attiva **Form submissions**.
+Con Pro e Business, vai su **Settings** → **Notifications** e attiva **Form submissions**. Con Business puoi anche inviare le risposte a un canale Slack o Discord dalla stessa pagina.
 
 ## Limiti mensili [#monthly-limits]
 
-Ogni workspace può raccogliere un certo numero di risposte per ogni mese di calendario (UTC):
+Le risposte vengono conteggiate per workspace e per mese di calendario, in UTC:
 
-- **Gratuito**: 50.
-- **Pro**: 1.000.
-- **Business**: 10.000.
+| Piano | Risposte al mese |
+| --- | --- |
+| Gratuito | 50 |
+| Pro | 1.000 |
+| Business | 10.000 |
 
-Quando raggiungi il limite, i visitatori vedono "This form isn't accepting responses right now." Il modulo torna ad accettare risposte il mese successivo, oppure subito dopo il passaggio a un piano superiore.
+Quando il limite viene raggiunto, i visitatori vedono "This form isn't accepting responses right now. Please try again later." Le risposte che hai già ricevuto vengono conservate. Il modulo torna ad accettare risposte il primo del mese successivo, oppure subito dopo il passaggio a un piano superiore.
 
 ## Spam [#spam]
 
-I moduli hanno una protezione antispam integrata. Non devi configurare nulla.
+I moduli hanno una protezione antispam integrata: un controllo anti-bot, un campo nascosto che i bot compilano e un limite alla velocità con cui un singolo visitatore può inviare risposte. Non devi configurare nulla.
+
+## Se qualcosa non funziona [#if-something-goes-wrong]
+
+### Responses non compare nel menu della pagina [#responses-isnt-in-the-pages-menu]
+
+La pagina non ha un blocco modulo. Aggiungine uno nell'editor e pubblica.
+
+### Il modulo dice che non accetta risposte [#the-form-says-it-isnt-accepting-responses]
+
+Il workspace ha raggiunto il limite di questo mese. Aspetta il mese successivo oppure [passa a un piano superiore](/pricing) e il modulo si riapre subito.
+
+### Qualcuno dice che la sua risposta è stata rifiutata [#someone-says-their-answer-was-refused]
+
+Ha inviato più di poche risposte in un minuto e il limite antispam le ha bloccate. Chiedigli di aspettare un minuto e riprovare.
 
 ## Correlati [#related]
 
+- [Crea una pagina mobile](/docs/help/pages-and-forms/create-a-page)
+- [Esporta i tuoi dati](/docs/help/account-and-billing/export-your-data)
 - [Guida ai moduli](/docs/forms-and-pages#forms)

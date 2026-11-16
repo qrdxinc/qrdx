@@ -1,41 +1,81 @@
 ---
 title: "Einen dynamischen QR-Code erstellen"
-description: "Erstelle einen Code, den du auch nach dem Druck noch ändern kannst, im Playground oder in deinem Dashboard."
+description: "Erstelle einen Code, den du nach dem Druck noch ändern kannst, im Playground oder in deinem Dashboard."
 ---
 
-Ein dynamischer Code enthält einen kurzen Link, der auf dein Ziel weiterleitet. Du brauchst dafür ein kostenloses QRdx-Konto. Der Plan Kostenlos enthält 10 dynamische Codes; bei Pro und Business gibt es kein Limit.
+Ein dynamischer Code enthält einen Kurzlink wie `qrdx.dev/q/aB3xY7k`, der jeden Scan an dein Ziel weiterleitet: die Seite, die der Code öffnen soll. Du kannst das Ziel nach dem Druck ändern und siehst jeden Scan. Du kannst einen Code im Playground erstellen, während du ihn gestaltest, oder in deinem Dashboard.
+
+<Callout type="info">
+  Für dynamische Codes brauchst du ein kostenloses QRdx-Konto. Der Plan Kostenlos enthält 10 aktive Codes; Pro und Business haben kein Limit. Siehe [Pläne und was sie enthalten](/docs/help/account-and-billing/plans).
+</Callout>
 
 ## Im Playground [#from-the-playground]
 
-1. Öffne den [Playground](/playground?type=url) und gib deinen Link unter **Website-Adresse** ein.
-2. Unter der Adresse findest du die Karte **Dynamischer QR-Code**.
-3. Wenn du abgemeldet bist, klicke auf **Anmelden, um ihn dynamisch zu machen** und melde dich an. Dein Link ist noch da, wenn du zurückkommst.
-4. Klicke auf **Dynamisch machen**.
+### 1. Link eingeben [#1-type-your-link]
 
-Die Karte zeigt jetzt deinen Kurzlink und „Scans gehen an" dein Ziel. Lade den Code wie gewohnt herunter: Er enthält jetzt den Kurzlink.
+Öffne den [Playground](/playground?type=url) und gib die Adresse unter **Website-Adresse** ein.
 
-Dynamische Codes aus dem Playground funktionieren für Website-Links. Für andere Inhalte erstellst du eine [mobile Seite](/docs/help/pages-and-forms/create-a-page), die ebenfalls einen dynamischen Code erhält.
+### 2. Dynamisch auswählen [#2-pick-dynamic]
+
+Unter der Adresse bietet der Schalter **Statischer oder dynamischer QR-Code** die Optionen **Statisch** („Nach dem Druck fest“) und **Dynamisch** („Später bearbeiten, Scans zählen“). Wähle **Dynamisch**.
+
+Wenn du nicht angemeldet bist, öffnet sich der Anmeldedialog. Dein Link bleibt erhalten, und der Code wird erstellt, sobald du angemeldet bist.
+
+### 3. Code herunterladen [#3-download-the-code]
+
+QRdx bestätigt mit „Dein QR-Code ist jetzt dynamisch“. Der Schalter zeigt jetzt den Kurzlink mit einer Kopieren-Schaltfläche, dazu **Link-Optionen…** für Domain, Back-Half, Ordner und Tags sowie **Scans & Einstellungen**, um den Code in deinem Dashboard zu öffnen. Lade den Code wie gewohnt herunter: Er enthält jetzt den Kurzlink.
+
+<Shot id="playground-dynamic-on" />
+
+Der Schalter gilt für den Typ URL. Für eine Kontaktkarte, eine Speisekarte oder andere Inhalte, die du später ändern willst, erstelle eine [mobile Seite](/docs/help/pages-and-forms/create-a-page), die einen eigenen dynamischen Code bekommt.
 
 ## In deinem Dashboard [#from-your-dashboard]
 
-1. Gehe in deinem Dashboard zu **Codes** und klicke auf **Neuer Code**.
-2. Wähle unter **Link** die Option **Website-Link**.
-3. Fülle **Ziel-URL** aus und, wenn du möchtest, einen **Titel**.
-4. Klicke auf **Code erstellen**.
+### 1. Neuen Code starten [#1-start-a-new-code]
 
-Danach kannst du den Code herunterladen oder auf **Analysen ansehen** klicken, um ihn zu öffnen.
+Gehe zu **Codes** und klicke auf **Neuer Code**. Der Dialog **Neuer dynamischer QR-Code** öffnet sich.
 
-## Eigenes Ende für den Kurzlink wählen [#choose-your-own-short-link-ending]
+### 2. Festlegen, was geöffnet wird [#2-say-what-it-opens]
 
-Bei Pro und Business kannst du in **Eigener Back-Half** das Ende des Kurzlinks festlegen, zum Beispiel `qrdx.dev/q/spring-menu`. Er darf 3 bis 64 Buchstaben, Zahlen, Bindestriche oder Unterstriche enthalten.
+Wähle unter **Was soll sich öffnen?** die Option **Website-Link**.
 
-Bei Kostenlos wählt QRdx ein kurzes zufälliges Ende für dich aus.
+### 3. Details ausfüllen [#3-fill-in-the-details]
+
+Fülle **Ziel-URL** aus. Wenn du möchtest, wähle eine **Kurzlink-Domain**, gib einen **Eigenen Back-Half (optional)** ein und gib dem Code einen **Titel (optional)**.
+
+<Shot id="new-code-dialog" />
+
+### 4. Erstellen [#4-create-it]
+
+Klicke auf **Code erstellen**. Der Dialog zeigt „Dein dynamischer QR-Code ist fertig“ mit **Analysen ansehen**, **Code öffnen**, **Weiteren erstellen** und **Fertig**. Lade den Code von seiner Seite herunter.
+
+## Das Ende deines Kurzlinks selbst wählen [#choose-your-own-short-link-ending]
+
+Mit Pro und Business kannst du über **Eigenen Back-Half (optional)** das Ende des Kurzlinks selbst wählen, zum Beispiel `qrdx.dev/q/spring-menu`. Er darf 3 bis 64 Buchstaben, Ziffern, Bindestriche oder Unterstriche lang sein, darf nicht mit einem Bindestrich beginnen oder enden, und einige reservierte Wörter sind nicht erlaubt.
+
+Im Plan Kostenlos wählt QRdx ein zufälliges Ende mit 7 Zeichen für dich. Bei Kurzlinks wird zwischen Groß- und Kleinschreibung unterschieden.
 
 ## Wenn du das Limit erreichst [#when-you-reach-the-limit]
 
-Bei Kostenlos zählen nur aktive Codes zu den 10. Archivierte Codes und Codes im Papierkorb zählen nicht. Archiviere einen Code, den du nicht mehr brauchst, oder [wechsle zu Pro](/pricing).
+Im Plan Kostenlos zählen nur aktive Codes zu den 10. Archivierte Codes und Codes im Papierkorb zählen nicht; pausierte Codes zählen. Wenn du am Limit bist, zeigt der Playground **Auf Pro upgraden** und **Codes verwalten**. [Archiviere](/docs/help/dynamic-codes/archive-and-delete) einen Code, den du nicht mehr brauchst, oder [wechsle auf einen höheren Plan](/pricing).
 
-## Weiterführend [#related]
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
 
-- [Ändern, wohin ein Code zeigt](/docs/help/dynamic-codes/change-the-link)
+### Der Schalter zeigt nicht Dynamisch an [#the-switch-doesnt-show-dynamic]
+
+Der Typ des Codes ist nicht URL. Klicke auf der Karte **QR-Code-Typ** auf **Ändern** und wähle **URL**, oder erstelle eine mobile Seite für andere Inhalte.
+
+### Du hast dich angemeldet, aber der Code wurde nicht erstellt [#you-signed-in-but-the-code-wasnt-made]
+
+Wähle noch einmal **Dynamisch**. Der eingegebene Link ist noch da.
+
+### Der Back-Half wird abgelehnt [#the-back-half-is-refused]
+
+Er ist schon vergeben oder enthält ein nicht erlaubtes Zeichen oder ein reserviertes Wort. Probiere ein anderes Ende.
+
+## Verwandte Themen [#related]
+
+- [Das Ziel eines Codes ändern](/docs/help/dynamic-codes/change-the-link)
+- [Deine Scans ansehen](/docs/help/dynamic-codes/scans)
+- [Statisch oder dynamisch: Was brauchst du?](/docs/help/getting-started/static-vs-dynamic)
 - [Leitfaden zu dynamischen QR-Codes](/docs/dynamic-qr-codes)

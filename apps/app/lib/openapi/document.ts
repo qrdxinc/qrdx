@@ -812,7 +812,7 @@ No key needed; cached for a minute (5 at the CDN); 120 requests a minute per IP 
         security: security("codes:read"),
         description: `The dynamic codes of the workspace the key or token acts on, newest first.
 
-Page through them with \`limit\` and \`offset\`; \`pagination.total\` counts every match.`,
+\`status\` picks active codes (the default), archived ones or both. \`q\` searches titles, destinations, notes and tags, and also matches a back-half or short link exactly, so you can look a printed code up by what it encodes. Page with \`limit\` (1 to 100, default 50) and \`offset\`; \`pagination.total\` counts every match, so the last page is reached when \`offset + limit\` is at least \`total\`. Each code's \`shortLink\` is what its QR code encodes.`,
         parameters: c.parameters(listCodesQuerySchema, "query", {
           status: "Which codes: `active` (default), `archived` or `all`",
           q: "Search: titles, destinations, notes and tags contain it, or it is the exact back-half or short link",
@@ -915,8 +915,9 @@ An array is all or nothing: when any row has a problem, nothing is created and \
         summary: "Get a code",
         tags: ["Codes"],
         security: security("codes:read"),
-        description:
-          "One dynamic code of the workspace the key or token acts on.",
+        description: `One dynamic code of the workspace the key or token acts on, active or archived.
+
+Read it before you change a code, to see its current \`destinationUrl\`, \`status\` and \`scanCount\`. \`shortLink\` is what the printed code encodes; \`defaultShortLink\` is the qrdx.dev link that always works, and \`nfcLink\` the same link for an NFC tag. A code of another workspace, or one that was deleted, is a \`404\`.`,
         responses: {
           "200": json("The code", c.schema(codeResponseSchema), {
             code: { data: exampleCode },
@@ -1014,7 +1015,7 @@ To change what a printed code opens, send \`kind\`. \`"kind": "page"\` with \`pa
         security: security("codes:write"),
         description: `Permanently deletes a code and its scan history.
 
-Its short link stops working, and this can't be undone. To pause a code and keep its scans, archive it with PATCH instead.`,
+Its short link stops working at once, and this can't be undone. To pause a code and keep its scans, archive it with PATCH instead; archived codes don't count toward the plan's limit. Workspace members can delete only the codes they created; owners and admins can delete any (\`FORBIDDEN\` otherwise). The response is \`{ "data": { "id", "deleted": true } }\`.`,
         responses: {
           "200": json("Deleted", c.schema(codeDeletedResponseSchema), {
             deleted: { data: { id: exampleCode.id, deleted: true } },
@@ -1186,9 +1187,9 @@ From your server, send an API key (or token) and the scan's \`sid\`, or the code
         summary: "List hooks",
         tags: ["Hooks"],
         security: security("codes:read"),
-        description: `The workspace's hooks: REST Hooks subscriptions and webhook endpoints.
+        description: `The workspace's hooks: REST Hooks subscriptions made through this API and endpoints added in Settings → Webhooks, newest first.
 
-\`target_url\` shows only the origin unless the key or token has \`codes:write\` and, in a workspace with other members, belongs to an owner or admin. Listing works on every plan; subscribing needs Business.`,
+Hook URLs are often secret, so \`target_url\` shows only the origin (\`https://hooks.zapier.com\`) unless the key or token has \`codes:write\` and, in a workspace with other members, belongs to an owner or admin. The signing \`secret\` is never listed. Listing works on every plan; subscribing needs Business.`,
         responses: {
           "200": json("The hooks", c.schema(hookListResponseSchema), {
             hooks: { data: [exampleHook] },
@@ -1251,7 +1252,9 @@ With a signed-in browser session instead of a key or token, it needs a recent "C
         summary: "Get a hook",
         tags: ["Hooks"],
         security: security("codes:read"),
-        description: "One hook of the workspace.",
+        description: `One hook or endpoint of the workspace, by id.
+
+Use it to check that a subscription is still \`active\` and which \`events\` it receives. \`target_url\` follows the same rule as the list: the full URL for a key or token with \`codes:write\` that belongs to an owner or admin (or to the workspace's only member), the origin alone otherwise. The signing \`secret\` is shown only once, when the hook is created. A hook of another workspace is a \`404\`.`,
         responses: {
           "200": json("The hook", c.schema(hookResponseSchema), {
             hook: { data: exampleHook },
@@ -1268,9 +1271,9 @@ With a signed-in browser session instead of a key or token, it needs a recent "C
         summary: "Unsubscribe",
         tags: ["Hooks"],
         security: security("codes:write"),
-        description: `Unsubscribes a hook: events stop at once.
+        description: `Unsubscribes a hook: events stop at once, and its delivery log is deleted with it.
 
-This is the REST Hooks unsubscribe Zapier calls when a Zap is turned off. It works on every plan.`,
+This is the REST Hooks unsubscribe Zapier calls when a Zap is turned off, and the call your integration makes when someone disconnects it. It works on every plan, and also removes endpoints added in Settings → Webhooks. Unsubscribing a hook that is already gone is a \`404\`.`,
         responses: {
           "204": {
             description: "Unsubscribed (no body)",
@@ -1291,9 +1294,9 @@ This is the REST Hooks unsubscribe Zapier calls when a Zap is turned off. It wor
         summary: "Get sample events",
         tags: ["Hooks"],
         security: security("codes:read"),
-        description: `Sample payloads of an event, shaped exactly like real deliveries.
+        description: `Sample payloads of an event, shaped exactly like real deliveries, as a bare array.
 
-Zapier's “perform list”: up to three payloads built from the workspace's recent data, newest first, or a fixed example when it has none. Use it to map fields while building a Zap.`,
+Zapier's “perform list”: up to three payloads built from the workspace's recent data, newest first, or a fixed example when it has none. Use it to map fields while building a Zap, or to test your handler before the first real event: each sample is a whole envelope (\`id\`, \`type\`, \`created_at\`, \`data\`), as a delivery's body would be, only not signed.`,
         parameters: c.parameters(
           hookSampleQuerySchema,
           "query",
@@ -1324,7 +1327,7 @@ Zapier's “perform list”: up to three payloads built from the workspace's rec
         security: security("profile:read"),
         description: `The id, name, email and avatar of the user who created the API key or authorized the token.
 
-Keys and tokens only: a browser session gets \`401\`.`,
+The quickest way to check that a key works and whose it is. For an OAuth token, \`id\` is the stable account id (the same value \`GET /api/oauth/userinfo\` returns as \`sub\`); emails can change. Keys and tokens only: a browser session gets \`401\`.`,
         responses: {
           "200": json("The user", c.schema(profileResponseSchema), {
             profile: {
@@ -1352,7 +1355,7 @@ Keys and tokens only: a browser session gets \`401\`.`,
         security: security("themes:read"),
         description: `Saved QR themes, each one's name and design: every theme the user saved for an OAuth token, the workspace's themes for an API key.
 
-Keys and tokens only: a browser session gets \`401\`.`,
+A theme's \`style\` is the editor's design JSON. Pass it as \`style\` to \`GET /qr\` to render a code in that design, or send it as a code's \`style\` when you create or update one, so codes made by your integration match the designs the person already uses. Keys and tokens only: a browser session gets \`401\`.`,
         responses: {
           "200": json("The themes", c.schema(themeListResponseSchema), {
             themes: { data: [exampleTheme] },
@@ -1381,8 +1384,9 @@ Keys and tokens only: a browser session gets \`401\`.`,
         summary: "Get a theme",
         tags: ["Themes"],
         security: security("themes:read"),
-        description:
-          "One saved theme, from the same set List themes returns for the key or token.",
+        description: `One saved theme, from the same set List themes returns for the key or token.
+
+Use it when you stored a theme's \`id\` and need its current \`style\`, for example before rendering codes in a design the person may have edited since. A theme of another user or workspace is a \`404\`.`,
         responses: {
           "200": json("The theme", c.schema(themeResponseSchema), {
             theme: { data: exampleTheme },
@@ -1639,8 +1643,9 @@ The value is checked against the format's rules first: a retail number one digit
         summary: "Get a saved barcode",
         tags: ["Barcodes"],
         security: security("codes:read"),
-        description:
-          "One saved barcode of the workspace the key or token acts on, in the trash or not.",
+        description: `One saved barcode of the workspace the key or token acts on, in the trash or not.
+
+\`imageUrl\` is a public link to the same picture from \`GET /barcode\`, which anyone with the link can load; \`options\` are the drawing options as saved, and \`deletedAt\` is set while it sits in the trash. A barcode of another workspace is a \`404\`.`,
         responses: {
           "200": json("The barcode", c.schema(barcodeResponseSchema), {
             barcode: { data: exampleBarcode },

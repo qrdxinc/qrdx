@@ -1,65 +1,90 @@
 ---
 title: "Kontrol kode"
-description: "Jeda kode QR dinamis, lindungi dengan kata sandi, jadwalkan, batasi jumlah pemindaiannya, dan tentukan ke mana kode yang sudah berakhir mengarahkan orang."
-icon: LockKeyhole
+description: "Jeda kode QR dinamis, lindungi dengan kata sandi, beri tanggal mulai dan berakhir, batasi jumlah pemindaian, dan tentukan ke mana kode yang sudah berakhir mengarahkan orang."
 ---
 
-Setiap [kode QR dinamis](/docs/dynamic-qr-codes) memiliki panel **Access & schedule** di halamannya pada [dasbor](/dashboard?to=codes) (buka sebuah kode, lalu buka tab **Settings**-nya). Perubahan berlaku pada pemindaian berikutnya; Anda tidak perlu mencetak ulang kodenya.
+Kontrol kode menentukan apakah pemindaian [kode QR dinamis](/docs/dynamic-qr-codes) dapat diteruskan atau tidak. Gunakan kontrol ini saat sebuah kode hanya boleh berfungsi untuk sementara waktu (acara, promosi), hanya untuk orang tertentu (kata sandi), atau hanya untuk sejumlah pemindaian tertentu, dan saat Anda ingin menonaktifkan kode yang sudah dicetak tanpa mencetak ulang.
+
+<Callout type="info" title="Menjeda gratis, sisanya Pro">
+  Menjeda tersedia di semua paket. Kata sandi, tanggal mulai dan berakhir, batas pemindaian, dan URL cadangan termasuk dalam Pro dan Business. Lihat [Paket dan batasan](/docs/plans-and-limits).
+</Callout>
+
+Sedang terburu-buru? Lihat halaman tugas singkat: [Jeda, jadwalkan, atau batasi kode](/docs/help/dynamic-codes/pause-schedule-limit) dan [Lindungi kode dengan kata sandi](/docs/help/dynamic-codes/password).
+
+## Cara kerjanya [#how-it-works]
+
+Setiap kontrol ada di panel **Access & schedule** pada tab **Settings** milik kode (buka kode dari [Codes](/dashboard?to=codes)). Pada setiap pemindaian, QRdx memeriksa kontrol secara berurutan sebelum mengalihkan: apakah kode dijeda, sudah dimulai, sudah berakhir, sudah melewati batas pemindaian, dan apakah memerlukan kata sandi. Pemeriksaan pertama yang gagal menentukan apa yang dilihat pemindai. Perubahan berlaku pada pemindaian berikutnya; Anda tidak perlu mencetak ulang kode.
+
+<Shot id="code-settings" />
 
 | Kontrol | Yang dilihat pemindai | Paket |
 | --- | --- | --- |
-| Jeda | URL cadangan Anda, atau halaman netral "kampanye ini dijeda" | Semua paket |
+| Jeda | URL cadangan Anda, atau halaman netral "This campaign is paused" | Semua paket |
 | Kata sandi | Layar kata sandi; kata sandi yang benar membuka kode | Pro dan Business |
-| Mulai | Sebelum waktu mulai: halaman "belum dimulai" | Pro dan Business |
-| Berakhir | Setelah waktu berakhir: URL cadangan Anda, atau halaman netral "kampanye telah berakhir" | Pro dan Business |
+| Mulai | Sebelum dimulai: "This campaign hasn't started yet" | Pro dan Business |
+| Berakhir | Setelah berakhir: URL cadangan Anda, atau "This campaign has ended" | Pro dan Business |
 | Batas pemindaian | Setelah batas tercapai: URL cadangan Anda, atau halaman "berakhir" | Pro dan Business |
-| URL cadangan | Tujuan kode yang dijeda, berakhir, dan melewati batas | Pro dan Business |
+| URL cadangan | Tujuan bagi kode yang dijeda, berakhir, dan melewati batas | Pro dan Business |
 
 ## Jeda [#pause]
 
-Aktifkan **Pause code** untuk menghentikan kode sementara, misalnya di antara dua acara, lalu nonaktifkan untuk melanjutkan. Pemindaian saat kode dijeda diarahkan ke URL cadangan Anda jika sudah diatur, atau jika belum, ke halaman sederhana yang menyatakan kampanye dijeda. Menjeda kode gratis di semua paket.
+Aktifkan **Pause code** untuk menghentikan kode sementara, misalnya di antara dua acara, lalu nonaktifkan untuk melanjutkan. Menu **⋯** pada kode juga memiliki **Pause** dan **Resume**, dan tindakan massal di daftar Codes dapat menjeda beberapa kode sekaligus. Pemindaian saat kode dijeda diarahkan ke URL cadangan Anda jika sudah diatur, atau jika belum, ke halaman sederhana yang menyatakan kampanye dijeda.
 
 ## Kata sandi [#password]
 
-Atur kata sandi (minimal 4 karakter), dan siapa pun yang memindai kode akan lebih dulu melihat layar kata sandi. Setelah memasukkan kata sandi yang benar, peramban tersebut tetap terbuka selama 6 jam, baik pada tautan pendek maupun pada halaman yang di-hosting yang dibukanya. Mengubah atau menghapus kata sandi akan mengunci semua peramban yang sebelumnya membuka dengan kata sandi lama.
+Atur kata sandi sepanjang 4 hingga 64 karakter, dan siapa pun yang memindai kode akan lebih dulu melihat layar kata sandi. Setelah memasukkan kata sandi yang benar, peramban tersebut tetap terbuka selama 6 jam, pada tautan pendek maupun pada halaman yang di-hosting yang dibukanya. Mengganti kata sandi akan mengunci semua peramban yang sebelumnya membuka dengan kata sandi lama; menghapusnya membuka kode untuk semua orang lagi.
 
-Kata sandi disimpan sebagai hash bcrypt; QRdx tidak dapat menampilkan kata sandi kepada Anda di kemudian hari, hanya menggantinya. Tebakan salah yang berulang dari satu pengunjung akan diperlambat.
+<Shot id="scan-password" />
+
+Kata sandi disimpan sebagai hash bcrypt, sehingga QRdx tidak dapat menampilkan kata sandi kepada Anda nanti, hanya menggantinya. Tebakan salah yang berulang dari satu pengunjung akan diperlambat. Bagikan kata sandi secara terpisah dari kodenya: siapa pun yang memiliki keduanya bisa masuk.
 
 ## Tanggal mulai dan berakhir [#start-and-end-dates]
 
-- **Mulai:** sampai waktu itu, pemindaian menampilkan "Kampanye ini belum dimulai. Silakan pindai kode ini lagi nanti."
-- **Berakhir:** sejak waktu itu, pemindaian diarahkan ke URL cadangan Anda, atau menampilkan "Kampanye ini telah berakhir".
+- **Starts:** sampai saat itu, pemindaian menampilkan "This campaign hasn't started yet. Please scan this code again later." URL cadangan tidak digunakan sebelum dimulai.
+- **Ends:** sejak saat itu, pemindaian diarahkan ke URL cadangan Anda, atau menampilkan "This campaign has ended".
 
-Tanggal dimasukkan dalam zona waktu Anda sendiri dan disimpan sebagai waktu yang tepat, sehingga kode berakhir pada saat yang sama di mana pun. Waktu berakhir harus setelah waktu mulai.
+Tanggal dimasukkan dalam zona waktu Anda sendiri dan disimpan sebagai momen yang tepat, sehingga kode berakhir pada saat yang sama di mana pun. Waktu berakhir harus setelah waktu mulai.
 
 ## Batas pemindaian [#scan-limit]
 
-Batas ini menghitung pemindaian dengan cara yang sama seperti analitik Anda: bot, pratinjau tautan, dan pemindaian berulang yang cepat dari satu perangkat tidak dihitung. Setelah kode mencapai batas, pemindaian berikutnya diarahkan ke URL cadangan Anda atau halaman "berakhir". Naikkan atau hapus batas untuk membuka kembali kode.
+Batas menghitung pemindaian dengan cara yang sama seperti analitik Anda: bot dan pratinjau tautan tidak dihitung, dan pemindaian berulang dari satu alamat dalam satu menit dihitung sekali. Setelah kode mencapai batas, pemindaian berikutnya diarahkan ke URL cadangan Anda atau halaman "berakhir". Naikkan atau hapus batas untuk membuka kembali kode.
 
 ## URL cadangan [#fallback-url]
 
-Alamat tujuan bagi kode yang dijeda, kedaluwarsa, dan melewati batas, seperti beranda Anda atau kampanye berikutnya. Tanpa URL cadangan, pemindai melihat halaman netral kecil. Halaman itu tidak pernah menampilkan iklan, promosi QRdx, atau ajakan mendaftar, hanya status kampanye dan tautan "Report abuse".
+Alamat tujuan bagi kode yang dijeda, berakhir, dan melewati batas, seperti beranda Anda atau kampanye berikutnya. Tanpa URL cadangan, pemindai melihat halaman netral kecil. Halaman itu tidak pernah menampilkan iklan, promosi QRdx, atau ajakan mendaftar, hanya status kampanye dan tautan **Report abuse**. URL cadangan melalui pemeriksaan keamanan yang sama dengan tujuan.
 
-URL cadangan melewati pemeriksaan keamanan yang sama dengan tujuan sebuah kode.
+## Batasan dan paket [#limits-and-plans]
 
-## Paket dan penurunan paket [#plans-and-downgrades]
-
-- Fitur jeda berfungsi di semua paket.
+- Menjeda tersedia di semua paket.
 - Mengatur atau mengubah kata sandi, tanggal, batas pemindaian, atau URL cadangan memerlukan Pro atau Business.
-- **Penurunan paket tidak pernah mengakhiri atau mengunci kode.** Kontrol yang Anda atur saat menggunakan Pro tetap berfungsi persis seperti yang dikonfigurasi, dan Anda dapat menghapus kontrol mana pun di paket apa pun.
+- Penurunan paket tidak pernah mengakhiri atau mengunci kode. Kontrol yang Anda atur saat memakai Pro tetap berfungsi sesuai konfigurasi, dan Anda dapat menghapus kontrol mana pun di paket apa pun.
 
-## Pemeriksaan keamanan tautan [#safety-checks-on-links]
+## Pemeriksaan keamanan pada tautan [#safety-checks-on-links]
 
 QRdx memeriksa setiap tujuan dan URL cadangan saat Anda menyimpannya:
 
-- tautan yang terdaftar di [Google Web Risk](https://cloud.google.com/web-risk) sebagai malware, phishing, atau perangkat lunak yang tidak diinginkan ditolak (jika server memiliki kunci Web Risk). Jika Web Risk tidak dapat menjawab tepat waktu, seperti yang bisa terjadi pada batch besar, kode tetap dibuat dan tautannya diperiksa lagi tidak lama kemudian; jika saat itu Web Risk mendaftarkannya, kode dinonaktifkan dan seorang peninjau memeriksanya;
-- `javascript:`, `data:`, dan tautan non-web lainnya ditolak;
-- selama 7 hari pertama sebuah akun, kode yang mengarah ke pemendek URL, alamat IP langsung, atau domain tiruan (homoglyph) disimpan dalam keadaan nonaktif dan **ditahan untuk ditinjau**. Panel akan menyatakannya; Anda tidak perlu melakukan apa pun, dan seorang peninjau mengaktifkan kode setelah dinyatakan aman. Akun baru juga dapat membuat hingga 30 kode dinamis per jam, atau {facts.newPaidAccountHourlyCodes} di workspace dengan paket berbayar. Jika melebihi itu, pesan galat menyebutkan berapa menit lagi Anda dapat membuat kode lagi, dan impor dari dasbor dijeda sampai saat itu.
+- Tautan yang terdaftar oleh [Google Web Risk](https://cloud.google.com/web-risk) sebagai malware, phishing, atau perangkat lunak yang tidak diinginkan akan ditolak (jika server memiliki kunci Web Risk). Jika Web Risk tidak dapat menjawab tepat waktu, seperti yang bisa terjadi pada batch besar, kode tetap dibuat dan tautannya diperiksa ulang tidak lama kemudian; jika saat itu Web Risk mendaftarkannya, kode dinonaktifkan dan seorang peninjau memeriksanya.
+- `javascript:`, `data:`, dan tautan non-web lainnya ditolak.
+- Selama 7 hari pertama sebuah akun, kode yang mengarah ke pemendek URL, alamat IP langsung, atau domain tiruan (homoglif) disimpan dalam keadaan nonaktif dan **ditahan untuk ditinjau**. Panel akan menyatakannya; Anda tidak perlu melakukan apa pun, dan seorang peninjau mengaktifkan kode setelah dinyatakan aman.
+- Akun baru dapat membuat hingga 30 kode dinamis per jam, atau {facts.newPaidAccountHourlyCodes} di workspace pada paket berbayar. Jika melebihi itu, pesan galat menyebutkan berapa menit yang harus ditunggu, dan impor dari dasbor dijeda hingga saat itu.
 
-Siapa pun dapat melaporkan kode di [qrdx.dev/report-abuse](/report-abuse). Kode yang dinonaktifkan setelah peninjauan berhenti berfungsi untuk semua orang dan tidak dapat diaktifkan kembali oleh pemiliknya.
+Siapa pun dapat melaporkan kode di [qrdx.dev/report-abuse](/report-abuse). Kode yang dinonaktifkan setelah peninjauan berhenti berfungsi untuk semua orang dan tidak dapat diaktifkan kembali oleh pemiliknya. Lihat [Laporkan kode QR yang berbahaya](/docs/help/privacy-and-security/report-abuse).
 
-## Hosting mandiri [#self-hosting]
+## Untuk developer [#for-developers]
+
+REST API membuat, memperbarui, dan menghapus kode tetapi tidak mengatur kontrol; kontrol ada di dasbor. `status` pada kode dalam respons API memberi tahu apakah kode aktif atau diarsipkan. Pemindaian yang diblokir oleh kontrol tidak dikirim sebagai event [webhook](/docs/webhooks) `scan.created`, karena tidak dicatat sebagai pemindaian.
+
+## Self-hosting [#self-hosting]
 
 - `WEB_RISK_API_KEY`: kunci API Google Cloud dengan Web Risk API diaktifkan. Tanpa kunci ini, tautan hanya diperiksa dengan aturan offline di atas.
+- `SAFETY_YOUNG_ACCOUNT_DAYS`, `SAFETY_YOUNG_ACCOUNT_DYNAMIC_PER_HOUR`, dan `SAFETY_RECHECK_BATCH` mengubah 7 hari, 30 kode per jam, dan ukuran pemeriksaan ulang Web Risk.
 - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` dan `TURNSTILE_SECRET_KEY`: Cloudflare Turnstile pada formulir laporan publik (opsional).
 - Cookie pembuka ditandatangani dengan `BETTER_AUTH_SECRET`.
+
+Lihat [Self-hosting](/docs/self-hosting#optional-services).
+
+## Terkait [#related]
+
+- [Smart routing](/docs/smart-routing): tujuan berbeda menurut perangkat, negara, waktu, atau area
+- [Pemindaian menampilkan halaman galat](/docs/help/troubleshooting/error-pages): arti setiap halaman netral
+- [Apa yang terjadi pada kode Anda jika Anda berhenti membayar](/docs/help/account-and-billing/never-hostage)

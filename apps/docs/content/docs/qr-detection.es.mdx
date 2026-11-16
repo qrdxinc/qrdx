@@ -1,152 +1,135 @@
 ---
 title: "Detección de QR"
-description: "Lee y decodifica códigos QR a partir de imágenes en el navegador."
+description: "Lee y decodifica códigos QR desde imágenes en el navegador con handleImageLoad, obtén la posición del código y puntúa una imagen con getImageScanScore."
 icon: Scan
 ---
 
-Lee y decodifica códigos QR a partir de imágenes subidas.
+`handleImageLoad` decodifica un código QR a partir de un elemento de imagen en el navegador y devuelve su texto. Úsalo para leer códigos de archivos subidos, capturas de pantalla o fotos sin enviar la imagen a ningún sitio. Si quieres una zona de arrastre ya lista, instala el componente [QR Code Scanner](/docs/components/qr-code-scanner), que está construido sobre esta función.
 
-## Detección básica [#basic-detection]
+| Función | Devuelve | Notas |
+| --- | --- | --- |
+| `handleImageLoad(img, size, returnFullData?)` | `Promise<string \| QRCode \| "NO_QR">` | El texto decodificado, o el resultado completo del decodificador con `returnFullData`. `"NO_QR"` cuando no se encuentra nada. Solo en el navegador |
+| `downloadImageWithBoundingBox(img, corners, filename)` | `void` | Guarda la imagen como PNG con el código encontrado enmarcado en rojo |
+| `getImageScanScore(imageOrBlob, options?)` | `Promise<ImageScanScoreResult>` | Decodifica y puntúa una imagen existente. Consulta [¿Se podrá escanear?](/docs/features/frames#will-it-scan) |
+| `scanQRPixels(pixels, expected, options?)` | `Promise<PixelScanResult>` | Comprueba que los píxeles RGBA se decodifican como `expected`, en Node |
 
-```tsx
-import { handleImageLoad } from 'qrdx';
+## Decodificar una imagen subida [#decode-an-uploaded-image]
 
-async function detectQR(file: File) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const img = new Image();
-      img.onload = async () => {
-        try {
-          const result = await handleImageLoad(img, 400, false);
-          if (result === "NO_QR") {
-            resolve("No QR code found");
-          } else {
-            resolve(result);
-          }
-        } catch (error) {
-          reject(error);
-        }
-      };
-      img.src = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  });
+```tsx title="components/qr-reader.tsx"
+"use client";
+
+import { handleImageLoad } from "qrdx";
+import { useState } from "react";
+
+async function decodeFile(file: File): Promise<string | null> {
+  const url = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+    const result = await handleImageLoad(image, image.naturalWidth);
+    return typeof result === "string" && result !== "NO_QR" ? result : null;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
-```
 
-## Componente de React [#react-component]
+export function QrReader() {
+  const [result, setResult] = useState("");
 
-```tsx
-import { useState } from 'react';
-import { handleImageLoad } from 'qrdx';
-
-export default function QRDetector() {
-  const [result, setResult] = useState('');
-
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  async function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
     if (!file) return;
-
     try {
-      const qrData = await detectQR(file);
-      setResult(qrData);
-    } catch (error) {
-      setResult(`Error: ${error.message}`);
+      setResult((await decodeFile(file)) ?? "No QR code found");
+    } catch {
+      setResult("Could not read that image");
     }
-  };
+  }
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleFile} />
-      {result && <p>{result}</p>}
+      <input
+        accept="image/*"
+        aria-label="Image with a QR code"
+        type="file"
+        onChange={onChange}
+      />
+      {result ? <p>{result}</p> : null}
     </div>
   );
 }
 ```
 
-## Parámetros de detección [#detection-parameters]
+Elige una captura de pantalla de un código y su enlace aparecerá debajo del campo. `image.decode()` espera a que el archivo se cargue; después `handleImageLoad` dibuja la imagen en un canvas y ejecuta jsQR, que carga bajo demanda para que no forme parte de los paquetes que nunca escanean.
 
-```tsx
-handleImageLoad(
-  imgElement: HTMLImageElement,
-  size: number,              // Processing size (recommended: 400)
-  returnFullData?: boolean   // Return full data or just text
-)
-```
+## Cómo funciona la detección [#how-detection-works]
 
-### Parámetro de tamaño [#size-parameter]
+`handleImageLoad(img, size, returnFullData)` prueba primero la imagen completa y después cuatro recortes (las regiones inferior izquierda, inferior derecha, superior derecha y central al 65% de la imagen), cada uno en seis escalas, del 100% al 10%. Devuelve la primera decodificación que tiene éxito, de modo que un código que ocupa una parte pequeña de una captura de pantalla también se encuentra. Las imágenes muy anchas o muy altas se reducen primero.
 
-- **200-400** — Más rápido, adecuado para imágenes nítidas
-- **600+** — Mejor para códigos QR pequeños o dañados
-- **Recomendado** — 400 para la mayoría de los casos
+- `img` debe ser un `<img>` ya cargado. Espera a `decode()` o al evento `load`.
+- `size` se conserva por compatibilidad con versiones anteriores y se ignora: las escalas salen de las dimensiones de la propia imagen. Pasa el ancho de la imagen.
+- `returnFullData` devuelve el objeto de resultado de jsQR en lugar del texto.
 
-## Respuesta con todos los datos [#full-data-response]
+Un código borroso, cortado en los bordes o más claro que su fondo (módulos claros sobre fondo oscuro) se notifica como `"NO_QR"`.
 
-Obtén la información completa de la detección:
+## Posición y datos sin procesar [#position-and-raw-data]
 
-```tsx
-const fullData = await handleImageLoad(img, 400, true);
-// Returns:
-// {
-//   data: "https://example.com",
-//   binaryData: Uint8ClampedArray,
-//   location: { topLeftCorner, topRightCorner, ... },
-//   chunks: [...]
-// }
-```
+Con `returnFullData` activado, el resultado es el objeto propio del decodificador:
 
-## Visualización de depuración [#debug-visualization]
+```ts title="lib/decode-full.ts"
+import { handleImageLoad } from "qrdx";
 
-Descarga imágenes con los cuadros delimitadores:
-
-```tsx
-import { downloadImageWithBoundingBox } from 'qrdx';
-
-const fullData = await handleImageLoad(img, 400, true);
-if (fullData?.location) {
-  const boundingBox = [
-    fullData.location.topLeftCorner,
-    fullData.location.topRightCorner,
-    fullData.location.bottomRightCorner,
-    fullData.location.bottomLeftCorner,
-  ];
-  downloadImageWithBoundingBox(img, boundingBox, "debug.png");
+const found = await handleImageLoad(image, image.naturalWidth, true);
+if (found !== "NO_QR") {
+  found.data; // "https://example.com"
+  found.version; // 1 to 40
+  found.binaryData; // the raw bytes, as number[]
+  found.chunks; // the encoded segments and their modes
+  found.location.topLeftCorner; // { x, y } in the image's pixels, and the other three corners
 }
 ```
 
-## Gestión de errores [#error-handling]
+`downloadImageWithBoundingBox` dibuja el contorno del código sobre la imagen original y la guarda, lo que ayuda cuando una foto se decodifica como algo inesperado. Las esquinas van en este orden: superior izquierda, superior derecha, inferior izquierda, inferior derecha:
 
-```tsx
-try {
-  const result = await handleImageLoad(img, 400, false);
-  if (result === "NO_QR") {
-    console.log("No QR code found");
-  } else {
-    console.log("QR data:", result);
-  }
-} catch (error) {
-  console.error("Detection failed:", error);
+```ts title="lib/debug-detection.ts"
+import { downloadImageWithBoundingBox, handleImageLoad } from "qrdx";
+
+const found = await handleImageLoad(image, image.naturalWidth, true);
+if (found !== "NO_QR") {
+  const { topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner } = found.location;
+  downloadImageWithBoundingBox(
+    image,
+    [topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner],
+    "found-code.png"
+  );
 }
 ```
 
-## Cuándo usarlo [#when-to-use]
+## Puntuar una imagen en lugar de solo decodificarla [#score-an-image-instead-of-only-decoding-it]
 
-- Procesar imágenes subidas de códigos QR
-- Extraer datos de capturas de pantalla
-- Crear lectores de códigos QR
-- Verificar el contenido de códigos QR
-- Depurar problemas con códigos QR
+`getImageScanScore` decodifica una imagen existente y además indica con qué fiabilidad se escanearía: decodifica en tres tamaños con desenfoque similar al de una cámara, contraste, polaridad, zona de silencio y resolución. Acepta un `File`, un `Blob` o un `<img>`.
 
-## Requisitos del navegador [#browser-requirements]
+```ts title="lib/score-image.ts"
+import { getImageScanScore } from "qrdx";
 
-- FileReader API
-- HTMLCanvasElement
-- ImageData y getImageData
-- Funciones de ES6+
+const { data, score, grade, checks } = await getImageScanScore(file);
+// data: "https://example.com" or null
+// score: 0 to 100, grade: "great" | "ok" | "risky" | "fails"
+```
 
-## Siguientes pasos [#next-steps]
+El [verificador de escaneo](/tools/scan-checker) está construido sobre esta función. En Node, `scanQRPixels(pixels, expected)` comprueba que los píxeles RGBA (de `decodePNGPixels` o `sharp().raw()`) se decodifican como un valor conocido.
 
-- [Utilidades](/docs/utilities) — Utilidades de detección
-- [Descargas](/docs/features/downloads) — Exporta los datos detectados
-- [Referencia de la API](/docs/api-reference) — API de detección completa
+## Si algo sale mal [#if-something-goes-wrong]
+
+- **Todas las imágenes devuelven `"NO_QR"`.** La imagen no estaba cargada cuando llamaste a la función. Usa primero `await` con `image.decode()`. Si ya está cargada, puede que el código sea demasiado pequeño, esté borroso, recortado o invertido; prueba con una imagen más nítida que muestre el código completo y algo de margen a su alrededor.
+- **Se llama a `handleImageLoad` en el servidor.** Necesita un canvas. Llámala desde un Client Component o un controlador de eventos, o usa `scanQRPixels` en Node.
+- **El contorno de `downloadImageWithBoundingBox` parece un lazo.** Las esquinas están en el orden incorrecto. Pasa superior izquierda, superior derecha, inferior izquierda, inferior derecha.
+
+## Relacionado [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-scanner" title="QR Code Scanner" description="Una zona de arrastre que hace todo esto, para proyectos con shadcn/ui." />
+  <Card href="/docs/features/frames" title="Marcos, puntuación de escaneo y archivos de impresión" description="Puntúa un diseño antes de imprimirlo." />
+  <Card href="/docs/api-reference" title="Referencia de la API de la biblioteca" description="Todas las exportaciones, por punto de entrada." />
+</Cards>

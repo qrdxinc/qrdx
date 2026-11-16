@@ -1,58 +1,76 @@
 ---
 title: "Passkey"
-description: "Accedi con l'impronta digitale, il volto o il blocco schermo, usa una passkey come secondo passaggio e rinomina o rimuovi quelle che non usi più."
+description: "Accedi con la tua impronta digitale, il volto o il blocco schermo, usa una passkey come secondo passaggio e rinomina o rimuovi quelle che non usi più."
 ---
 
 Una passkey verifica che sei tu con la tua impronta digitale, il tuo volto, il blocco schermo del dispositivo o una chiave di sicurezza. Viene salvata sul tuo dispositivo o nel tuo gestore di password e funziona solo sul sito ufficiale di QRdx, quindi un sito clone non può raccoglierla.
 
-Su QRdx una passkey svolge due funzioni:
+Su QRdx una passkey ha due funzioni:
 
 - ti fa accedere da sola, con **Continua con passkey** nella pagina di accesso;
-- è il secondo passaggio della [verifica in due passaggi](/docs/help/privacy-and-security/two-step-verification) dopo che accedi con un codice via email, con Google o con GitHub<IfAvailable feature="sso"> (o con il single sign-on del tuo workspace)</IfAvailable>.
+- è il secondo passaggio della [verifica in due passaggi](/docs/help/privacy-and-security/two-step-verification) dopo che hai effettuato l'accesso con un codice via email, Google o GitHub<IfAvailable feature="sso"> (o con il single sign-on del tuo workspace)</IfAvailable>.
 
-Serve anche a [confermare che sei tu](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) prima di modificare la sicurezza del tuo account, ad esempio attivando o disattivando la verifica in due passaggi. È comodo se non riesci ad accedere alla tua email.
+[Conferma anche la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) prima delle modifiche alla sicurezza del tuo account, come attivare o disattivare la verifica in due passaggi. Torna utile se non riesci ad accedere alla tua email.
 
-## Aggiungere una passkey [#add-a-passkey]
+## Aggiungi una passkey [#add-a-passkey]
 
 1. Vai su **Impostazioni** → **Profilo e sicurezza**.
-2. In **Verifica in due passaggi**, clicca su **Aggiungi passkey** e conferma che sei tu.
-3. Mantieni il nome suggerito (il tuo browser e sistema, ad esempio "Chrome on macOS") oppure scrivine uno tuo, poi clicca su **Continua**.
-4. Il browser ti chiede dove salvare la passkey e verifica la tua impronta digitale, il tuo volto o il blocco schermo.
+2. In **Verifica in due passaggi**, fai clic su **Aggiungi passkey** e conferma che sei tu.
+3. Mantieni il nome suggerito (il tuo browser e sistema, ad esempio "Chrome on macOS") oppure scrivine uno tuo, poi fai clic su **Continua**.
+4. Il tuo browser ti chiede dove salvare la passkey e verifica la tua impronta digitale, il tuo volto o il blocco schermo.
 
-Se la verifica in due passaggi è disattivata, aggiungere una passkey la attiva e QRdx ti mostra 10 codici di backup da salvare. Ti permettono di accedere quando non hai la passkey.
+<Shot id="add-passkey-dialog" />
 
-A ogni utilizzo la passkey deve verificare che sei tu. Telefoni, computer e gestori di password lo fanno con la tua impronta digitale, il tuo volto o il blocco schermo. Una chiave di sicurezza richiede un PIN impostato su di essa.
+Se la verifica in due passaggi è disattivata, aggiungere una passkey la attiva e QRdx ti mostra 10 codici di backup da salvare. Ti permettono di accedere quando non hai la tua passkey.
+
+La passkey deve verificare che sei tu a ogni utilizzo. Telefoni, computer e gestori di password lo fanno con la tua impronta digitale, il tuo volto o il blocco schermo. Una chiave di sicurezza richiede un PIN impostato su di essa.
 
 QRdx invia un'email all'indirizzo del tuo account ogni volta che una passkey viene aggiunta o rimossa.
 
-## Accedere con una passkey [#sign-in-with-a-passkey]
+## Accedi con una passkey [#sign-in-with-a-passkey]
 
-Nella pagina di accesso, clicca su **Continua con passkey**, in fondo all'elenco dei modi per accedere, e scegli la tua. L'accesso con passkey vale per entrambi i passaggi, quindi QRdx non chiede nient'altro.
+Nella pagina di accesso, fai clic su **Continua con passkey**, in fondo ai metodi di accesso, e scegli la tua. L'accesso con passkey vale come entrambi i passaggi, quindi QRdx non ti chiede nient'altro.
 
 Il campo email non suggerisce le passkey: usa il pulsante.
 
 Una passkey accede all'account a cui è stata aggiunta. Non può creare un account: se sei nuovo su QRdx, accedi prima con Google, GitHub o un codice via email, poi aggiungi una passkey.
 
-## Usare una passkey come secondo passaggio [#use-a-passkey-as-your-second-step]
+## Usa una passkey come secondo passaggio [#use-a-passkey-as-your-second-step]
 
-Con la verifica in due passaggi attiva, accedi come fai di solito. Il messaggio della passkey del browser si apre poi da solo: verifica che sei tu e sei dentro. Alcuni browser aprono il messaggio solo dopo un clic: in quel caso clicca su **Continua con passkey**.
+Con la verifica in due passaggi attiva, accedi come fai di solito. Il prompt della passkey del tuo browser si apre poi da solo; verifica che sei tu e sei dentro. Alcuni browser aprono il prompt solo dopo un clic: in tal caso fai clic su **Continua con passkey**.
 
-Non hai una passkey a portata di mano? Clicca su **Usa un codice dell'app di autenticazione** (se hai configurato un'app di autenticazione) oppure su **Usa un codice di backup**.
+Non hai una passkey a portata di mano? Fai clic su **Usa un codice di autenticazione** (se hai configurato un'app di autenticazione) oppure su **Usa un codice di backup**.
 
-Se hai aggiunto una passkey prima che potesse essere un secondo passaggio e la verifica in due passaggi è disattivata, nelle Impostazioni compare **La tua passkey è pronta per essere il tuo secondo passaggio**. Clicca su **Attiva** per usarla in questo modo: conferma che sei tu, verifica che sei tu con la passkey e salva i tuoi codici di backup.
+Se hai aggiunto una passkey prima che potesse fungere da secondo passaggio e la verifica in due passaggi è disattivata, nelle Impostazioni compare **La tua passkey è pronta per diventare il tuo secondo passaggio**. Fai clic su **Attiva** per usarla in questo modo: conferma che sei tu, verifica la tua identità con la passkey e salva i tuoi codici di backup.
 
 ## Passkey sincronizzate e legate al dispositivo [#synced-and-device-bound-passkeys]
 
-Una passkey sincronizzata ha un backup in un gestore di password o in un portachiavi cloud, come iCloud Keychain o Google Password Manager. Funziona su tutti i dispositivi collegati a quell'account.
+Una passkey sincronizzata ha un backup in un gestore di password o in un portachiavi cloud, come iCloud Keychain o Google Password Manager. Funziona su ogni dispositivo con l'accesso a quell'account. Nelle Impostazioni ogni passkey è contrassegnata come **Sincronizzata** o **Legata al dispositivo**.
 
-Una passkey legata al dispositivo resta solo sul telefono, sul computer o sulla chiave di sicurezza che l'ha creata. Per accedere da un'altra parte, usa un altro metodo di accesso o aggiungi una passkey anche su quel dispositivo.
+Una passkey legata al dispositivo resta sul singolo telefono, computer o chiave di sicurezza che l'ha creata. Per accedere altrove, usa un altro metodo di accesso oppure aggiungi una passkey anche su quel dispositivo.
 
-## Rinominare o rimuovere una passkey [#rename-or-remove-a-passkey]
+## Rinomina o rimuovi una passkey [#rename-or-remove-a-passkey]
 
-In **Verifica in due passaggi**, apri il menu accanto alla passkey e clicca su **Rinomina** o **Rimuovi**, poi conferma che sei tu. Una passkey rimossa smette subito di funzionare su QRdx. Il tuo dispositivo o gestore di password potrebbe continuare a mostrarla finché non la elimini anche lì.
+In **Verifica in due passaggi**, apri il menu accanto alla passkey e fai clic su **Rinomina** o **Rimuovi**, poi conferma che sei tu. Una passkey rimossa smette di funzionare su QRdx subito. Il tuo dispositivo o gestore di password potrebbe continuare a mostrarla finché non la elimini anche lì.
 
-Se quella passkey è il tuo unico secondo passaggio, rimuoverla disattiva la verifica in due passaggi. QRdx te lo comunica prima che tu confermi.
+Se quella passkey è il tuo unico secondo passaggio, rimuoverla disattiva la verifica in due passaggi. QRdx ti avvisa prima che tu confermi.
 
-Hai perso un dispositivo con una passkey? Accedi in un altro modo e rimuovi quella passkey.
+## Se qualcosa va storto [#if-something-goes-wrong]
 
-Puoi sempre accedere con un codice inviato alla tua email, quindi rimuovere la tua ultima passkey non ti blocca fuori.
+### Il prompt della passkey non si apre [#the-passkey-prompt-doesnt-open]
+
+Alcuni browser lo aprono solo dopo un clic. Fai clic su **Continua con passkey**. Se ancora non si apre, la passkey potrebbe trovarsi su un altro dispositivo: usa un altro metodo, poi aggiungi una passkey su questo dispositivo.
+
+### Hai perso un dispositivo che conteneva una passkey [#you-lost-a-device-that-had-a-passkey-on-it]
+
+Accedi in un altro modo e rimuovi quella passkey in **Verifica in due passaggi**.
+
+### Hai rimosso la tua ultima passkey [#you-removed-your-last-passkey]
+
+Puoi sempre accedere con un codice inviato alla tua email, quindi non resti bloccato fuori. Se era il tuo unico secondo passaggio, la verifica in due passaggi ora è disattivata; riattivala con una nuova passkey o con un'app di autenticazione.
+
+## Vedi anche [#related]
+
+- [Verifica in due passaggi](/docs/help/privacy-and-security/two-step-verification)
+- [Proteggi il tuo account](/docs/help/privacy-and-security/account-security)
+- [Metodi di accesso e indirizzo email](/docs/help/account-and-billing/sign-in)

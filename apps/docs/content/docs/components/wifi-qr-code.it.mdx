@@ -1,8 +1,10 @@
 ---
 title: "QR code Wi-Fi"
-description: "Un QR code che, quando viene scansionato, collega a una rete Wi-Fi, con un generatore di payload tipizzato e con escape dei caratteri."
+description: "Un QR code per progetti shadcn/ui che, alla scansione, collega a una rete Wi-Fi, con un costruttore di payload tipizzato e con escape dei caratteri."
 icon: Globe
 ---
+
+`WifiQrCode` mostra un codice che collega a una rete Wi-Fi quando la fotocamera di uno smartphone lo inquadra, con il nome della rete sotto. Usalo per il cartoncino della rete ospiti alla reception, per il segnatavolo di un bar o per la pagina di benvenuto di un alloggio in affitto.
 
 <ComponentLinks name="wifi-qr-code" />
 
@@ -14,29 +16,35 @@ icon: Globe
 
 ## Utilizzo [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { WifiQrCode } from "@/components/wifi-qr-code";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <WifiQrCode ssid="Cafe Guest" password="espresso-2024" />
 ```
 
-Le fotocamere di iOS e Android propongono di collegarsi alla rete quando eseguono la scansione del codice. Non serve nessuna app.
+Le fotocamere di iOS e Android propongono di collegarsi alla rete quando eseguono la scansione del codice. Non serve nessuna app. Sotto il codice il componente mostra il nome della rete e "Scan with your camera to join".
 
 ## Esempi [#examples]
 
 ### Varianti [#variants]
 
-`showPassword` mostra la password stampata per gli ospiti che preferiscono digitarla. Usa `encryption="nopass"` per le reti aperte e `hidden` per le reti che non trasmettono il proprio nome.
+`showPassword` mostra la password per gli ospiti che preferiscono digitarla. Usa `encryption="nopass"` per le reti aperte e `hidden` per le reti che non trasmettono il proprio nome.
 
 <ComponentPreview name="wifi-qr-code-variants" />
 
-### Generatore di payload [#payload-builder]
+### Costruttore di payload [#payload-builder]
 
 `buildWifiPayload` restituisce il testo `WIFI:` codificato dal codice. Esegue l'escape di `\`, `;`, `,`, `:` e `"` nei nomi e nelle password, che è il punto in cui di solito si rompono i payload scritti a mano. Usalo con qualsiasi renderer di QR code, oppure per stampare il payload a scopo di debug.
 
 <ComponentPreview name="wifi-qr-code-payload" />
+
+## Accessibilità e rendering [#accessibility-and-rendering]
+
+- Il codice ha `aria-label="QR code to join the Wi-Fi network <ssid>"`. Il payload, che contiene la password, non viene mai letto ad alta voce.
+- Il nome e la password sotto il codice sono il `<figcaption>` della figura. Imposta `showDetails={false}` per mostrare solo il codice.
+- Il componente è un Client Component e il codice viene renderizzato sul server.
 
 ## Riferimento API [#api-reference]
 
@@ -46,4 +54,12 @@ Qualsiasi altra prop, come `className`, viene passata al `<figure>` che fa da co
 
 ### buildWifiPayload [#buildwifipayload]
 
-`buildWifiPayload(network: WifiNetwork): string` accetta gli stessi campi di rete del componente: `ssid`, `password`, `encryption` e `hidden`.
+`buildWifiPayload(network: WifiNetwork): string` accetta gli stessi campi di rete del componente: `ssid`, `password`, `encryption` e `hidden`. `"WPA"` copre WPA, WPA2 e WPA3; `"WEP"` e `"nopass"` sono gli altri valori. Con `"nopass"` la password viene omessa.
+
+## Correlati [#related]
+
+<Cards>
+  <Card href="/docs/components/vcard-qr-code" title="QR code vCard" description="La stessa idea per un biglietto da visita." />
+  <Card href="/docs/components/qr-code" title="QR code" description="Un codice per qualsiasi payload, con pulsanti di download." />
+  <Card href="/docs/components/qr-code-download" title="Download del QR code" description="Esporta il codice Wi-Fi per la stampa." />
+</Cards>

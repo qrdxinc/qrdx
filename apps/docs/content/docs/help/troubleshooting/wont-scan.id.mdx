@@ -1,44 +1,65 @@
 ---
 title: "Kode tidak bisa dipindai"
-description: "Mengapa kode QR tidak terbaca, dan cara memperbaiki setiap penyebabnya."
+description: "Mengapa kode QR tidak terpindai, dan cara memperbaiki setiap penyebabnya."
 ---
 
-Jika kamera ponsel tidak bereaksi terhadap kode Anda, atau hanya kadang-kadang membacanya, lakukan pemeriksaan berikut.
+Jika kamera ponsel tidak bereaksi terhadap kode Anda, atau hanya kadang-kadang bisa membacanya, penyebabnya hampir selalu salah satu dari hal di bawah ini. Mulailah dengan mencari tahu penyebab yang mana.
 
-Mulailah dengan **Skor pemindaian** di bawah pratinjau di [Playground](/playground). Klik skor tersebut untuk melihat pemeriksaan mana yang gagal. Lihat [Periksa desain dengan skor pemindaian](/docs/help/designing/scan-score).
+- Untuk desain di [Playground](/playground), klik **Skor pemindaian** di bawah pratinjau. Panel **Apakah akan terpindai?** menampilkan pemeriksaan yang gagal lebih dulu. Lihat [Periksa desain dengan skor pemindaian](/docs/help/designing/scan-score).
+- Untuk kode yang sudah dicetak, ambil foto lalu masukkan ke [pemeriksa pemindaian](/tools/scan-checker). Alat ini menampilkan isi kode dan seberapa baik kode tersebut terbaca.
 
-Untuk kode yang sudah dicetak, ambil foto lalu masukkan ke [pemeriksa pemindaian](/tools/scan-checker). Alat ini menampilkan isi kode dan menguji seberapa baik kode terbaca.
+## Kamera sama sekali tidak bereaksi [#the-camera-doesnt-react-at-all]
 
-## Penyebab umum [#common-causes]
+### Kontras rendah, atau kode terang di latar gelap [#low-contrast-or-a-light-code-on-a-dark-background]
 
-### Kontras rendah atau terang di atas gelap [#low-contrast-or-light-on-dark]
+Pemindai mencari kotak gelap pada latar terang, dan menyerah jika keduanya terlalu mirip. Buat kode lebih gelap atau latar lebih terang, dan tukar warnanya jika kode berupa bagian yang terang. Pastikan: pemeriksaan **Kontras** di skor pemindaian lolos pada 4.5:1 atau lebih. Lihat [Pilih warna yang bisa dipindai](/docs/help/designing/colors-and-contrast).
 
-Pemindai mencari kotak gelap di atas latar yang terang. Buat kode lebih gelap atau latar lebih terang, dan hindari kode terang di atas latar gelap. Lihat [Pilih warna yang bisa dipindai](/docs/help/designing/colors-and-contrast).
+<Diagram id="wont-scan-contrast" />
 
-### Logo menutupi terlalu banyak [#a-logo-covers-too-much]
+### Tidak ada batas yang jelas di sekitar kode [#no-clear-border-around-the-code]
 
-Atur **Koreksi kesalahan** ke **Tinggi** di tab **Desain**. Lihat [Tambahkan logo](/docs/help/designing/logos).
+Pemindai membutuhkan ruang kosong di sekitar kode untuk menemukan tepinya. Atur **Padding** ke **Standar** atau **Besar** di tab **Desain**, dan jangan biarkan teks atau gambar menyentuh kode. Pastikan: pemeriksaan **Zona tenang** lolos.
 
-### Bentuk mata yang tidak umum [#unusual-eye-shapes]
-
-Mata lingkaran dan sudut melengkung gagal terbaca di beberapa aplikasi pemindai. Mata persegi, membulat, dan gerigi terbaca di mana saja.
-
-### Tidak ada batas yang jelas [#no-clear-border]
-
-Pemindai membutuhkan ruang kosong di sekitar kode. Atur **Padding** ke **Standar** atau **Besar**, dan jangan biarkan gambar lain menyentuh kode.
+<Diagram id="wont-scan-quiet-zone" />
 
 ### Dicetak terlalu kecil [#printed-too-small]
 
-Buat kode sekitar sepersepuluh dari jarak pemindaian: 2 cm untuk kartu yang dipindai dari jarak 20 cm, 10 cm untuk poster yang dipindai dari jarak 1 m. [Kalkulator ukuran cetak](/tools/print-size) dapat menghitungnya untuk Anda.
+Kode terpindai dari jarak sekitar sepuluh kali lebarnya, jadi kode 2 cm yang dibaca dari seberang ruangan akan gagal. Cetak dengan ukuran sekitar sepersepuluh dari jarak pemindaian: 2 cm untuk kartu yang dibaca dari 20 cm, 10 cm untuk poster yang dibaca dari 1 m. [Kalkulator ukuran cetak](/tools/print-size) menghitungnya untuk kode Anda. Pastikan: pindai hasil cetak uji dari jarak sebenarnya.
+
+<Diagram id="wont-scan-print-size" />
+
+## Hanya kadang-kadang terpindai [#it-scans-only-sometimes]
+
+### Logo menutupi terlalu banyak [#a-logo-covers-too-much]
+
+Koreksi kesalahan hanya bisa memulihkan sebagian kode. Atur **Koreksi kesalahan** ke **Tinggi** di tab **Desain**, atau perkecil logonya. Pastikan: pemeriksaan **Logo** lolos. Lihat [Tambahkan logo](/docs/help/designing/logos).
+
+### Mata berbentuk lingkaran atau keriting [#circle-or-curly-eyes]
+
+Beberapa aplikasi pemindai tidak mengenali mata sudut yang bulat atau keriting. Ganti ke mata persegi, membulat, atau roda gigi. Pastikan: pemeriksaan **Bentuk mata** lolos.
+
+<Diagram id="wont-scan-eyes" />
 
 ### Konten terlalu banyak [#too-much-content]
 
-Kode statis yang berisi banyak teks menjadi padat dan sulit dibaca saat berukuran kecil. Gunakan kode dinamis sebagai gantinya: kode ini hanya berisi tautan pendek. Lihat [Statis atau dinamis](/docs/help/getting-started/static-vs-dynamic).
+Kode QR statis yang berisi teks atau alamat panjang menjadi padat, dan kode yang padat gagal terbaca saat kecil. Jadikan kodenya dinamis: kode hanya berisi tautan pendek. Lihat [Statis atau dinamis, mana yang Anda perlukan?](/docs/help/getting-started/static-vs-dynamic).
 
-### Hasil cetaknya sendiri [#the-print-itself]
+## Terpindai di layar tetapi tidak di media cetak [#it-scans-on-screen-but-not-in-print]
 
-Cetakan buram, permukaan mengilap yang memantulkan cahaya, serta permukaan melengkung atau terlipat membuat kode lebih sulit dibaca. Cetak sebagai file vektor (SVG, EPS, atau PDF dari **Siap cetak**) dan uji satu salinan sebelum mencetak dalam jumlah banyak.
+### Cetakan buram, atau permukaan mengilap atau melengkung [#blurry-print-or-a-glossy-or-curved-surface]
 
-## Kode terbaca, tetapi muncul kesalahan [#it-scans-but-shows-an-error]
+Gambar piksel yang dicetak besar menjadi buram, dan permukaan mengilap atau melengkung memantulkan cahaya ke kamera. Unduh SVG, EPS, atau PDF dari tab **Siap cetak**, cetak di permukaan doff, dan jaga agar kode tetap datar. Pastikan: cetak satu salinan dan pindai dengan dua ponsel berbeda sebelum mencetak lebih banyak. Lihat [Unduh dan cetak kode QR](/docs/help/getting-started/download-and-print).
 
-Jika kamera membaca kode tetapi Anda melihat halaman seperti "QR code not found", lihat [Pemindaian menampilkan halaman kesalahan](/docs/help/troubleshooting/error-pages).
+## Terpindai, tetapi menampilkan kesalahan [#it-scans-but-shows-an-error]
+
+Kamera membaca kode lalu membuka halaman seperti "Kode QR tidak ditemukan". Itu bukan masalah pemindaian: lihat [Pemindaian menampilkan halaman kesalahan](/docs/help/troubleshooting/error-pages).
+
+## Masih buntu [#still-stuck]
+
+[Hubungi dukungan](/docs/help/contact) dengan foto kode yang dicetak dan ponsel yang Anda coba.
+
+## Terkait [#related]
+
+- [Periksa desain dengan skor pemindaian](/docs/help/designing/scan-score)
+- [Pilih warna yang bisa dipindai](/docs/help/designing/colors-and-contrast)
+- [Unduh dan cetak kode QR](/docs/help/getting-started/download-and-print)

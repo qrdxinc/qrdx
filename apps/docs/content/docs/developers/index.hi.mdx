@@ -1,110 +1,84 @@
 ---
 title: "डेवलपर्स"
-description: "QRdx के साथ बनाने के सभी तरीके: बिना key वाले इमेज URL से लेकर REST API, webhooks, MCP और CLI तक।"
+description: "आप जो बना रहे हैं उसके लिए सही QRdx टूल चुनें, बिना key वाले इमेज URL से लेकर REST API, webhooks, MCP सर्वर और CLI तक, और फिर उसका रेफ़रेंस देखें।"
 icon: Terminal
 ---
 
-वह तरीका चुनिए जो आपके प्रोजेक्ट के लिए सही हो। पहले तीन के लिए न अकाउंट चाहिए, न key।
+QRdx में जो कुछ भी होता है, वह सब कोड से उपलब्ध है। इससे शुरू करें कि आप क्या बनाना चाहते हैं: हर पंक्ति में टूल का नाम, उसकी ज़रूरतें और वह पेज दिया है जहाँ से आप आगे बढ़ सकते हैं।
 
-## key की ज़रूरत नहीं [#no-key-needed]
+| आप क्या करना चाहते हैं | इस्तेमाल करें | ज़रूरत |
+| --- | --- | --- |
+| किसी पेज, ईमेल या README में QR कोड लगाना | [QR code image API](/docs/developers/image-api): एक `GET` URL जो खुद इमेज है | कुछ नहीं |
+| लेबल या प्रोडक्ट फ़ीड के लिए बारकोड बनाना | [Barcode API](/docs/developers/barcode-api): वही तरीका, EAN, UPC, Code 128 और अन्य के लिए | कुछ नहीं |
+| ऐसे कोड बनाना जिन्हें प्रिंट के बाद कहीं और पॉइंट किया जा सके, और उनके स्कैन पढ़ना | [REST API](/docs/developers/quickstart): `POST /v1/codes`, `PATCH`, `GET …/scans` | एक [API key](/docs/developers/api-keys) |
+| अपने सिस्टम में स्कैन, नए कोड या फ़ॉर्म के जवाबों पर प्रतिक्रिया देना | [Webhooks](/docs/webhooks): आपके URL पर साइन किए गए `POST` अनुरोध | API key या डैशबोर्ड, Business प्लान |
+| AI असिस्टेंट से चैट में QR कोड बनवाना | [MCP सर्वर](/docs/developers/mcp): `https://mcp.qrdx.dev/mcp` | कुछ नहीं |
+| स्क्रिप्ट, बिल्ड या CSV से QR कोड बनाना | [CLI](/docs/developers/cli): `npx @qrdx/cli` | Node.js 22 |
+| AI आर्टवर्क में QR कोड पेंट करना | [AI art API](/docs/developers/ai-art-api): `POST /v1/art` | एक API key, हर महीने के AI art इमेज |
+| दूसरे लोगों को अपना QRdx अकाउंट आपके प्रोडक्ट से जोड़ने देना | [इंटीग्रेशन बनाएँ](/docs/developers/build-an-integration): PKCE के साथ OAuth 2.0 | एक OAuth ऐप |
+| n8n में QRdx को ऑटोमेट करना | [n8n nodes](/docs/developers/n8n): `@qrdx/n8n-nodes-qrdx` | सेल्फ़-होस्टेड n8n |
+| React ऐप के अंदर स्टाइल वाले कोड रेंडर करना | [React लाइब्रेरी](/docs/getting-started): `qrdx` पैकेज | npm |
+
+## दो मिनट में पहला अनुरोध [#first-request-in-two-minutes]
+
+[क्विकस्टार्ट](/docs/developers/quickstart) में बिना key के एक अनुरोध से QR कोड इमेज बनती है, फिर API key बनती है, फिर एक डायनेमिक QR कोड बनता है और उसे कहीं और पॉइंट किया जाता है। इस पेज की बाकी सारी चीज़ें इन्हीं चार चरणों पर टिकी हैं।
+
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png" -o qr.png
+```
+
+## Base URL और ऑथेंटिकेशन [#base-url-and-authentication]
+
+REST API `https://api.qrdx.dev/v1` पर चलता है। वही routes `https://qrdx.dev/api/v1` पर भी जवाब देते हैं, और [सेल्फ़-होस्टेड](/docs/self-hosting) इंस्टेंस उन्हें अपने डोमेन पर `/api/v1` पर देता है।
+
+अनुरोधों में [API key](/docs/developers/api-keys) `Authorization: Bearer qrdx_…` के रूप में जाती है। key उसी workspace पर काम करती है जिसमें वह बनी थी, और वहाँ आपकी भूमिका के साथ। जो ऐप दूसरे QRdx यूज़र्स की ओर से काम करते हैं, वे इसी header में [OAuth 2.0 access token](/docs/developers/rest-api#get-an-access-token) भेजते हैं। इमेज, बारकोड और कम्युनिटी endpoints को इनमें से किसी की ज़रूरत नहीं होती।
+
+## रेफ़रेंस [#reference]
 
 <Cards>
-  <Card
-    icon={<ImageDown />}
-    href="/docs/developers/image-api"
-    title="QR कोड इमेज API"
-    description="URL से QR कोड इमेज। इसे Markdown, HTML या ईमेल में पेस्ट करें।"
-  />
-  <Card
-    icon={<Bot />}
-    href="/docs/developers/mcp"
-    title="MCP सर्वर"
-    description="Claude, Cursor, VS Code और दूसरे AI टूल से स्टाइल वाले QR कोड बनवाइए।"
-  />
-  <Card
-    icon={<Terminal />}
-    href="/docs/developers/cli"
-    title="CLI"
-    description="अपने टर्मिनल या CI से SVG, PNG, WebP या EPS QR कोड बनाइए।"
-  />
-</Cards>
-
-## अकाउंट के साथ [#with-an-account]
-
-<Cards>
-  <Card
-    icon={<Rocket />}
-    href="/docs/developers/quickstart"
-    title="क्विकस्टार्ट"
-    description="दो मिनट से कम में अपना पहला API रिक्वेस्ट, फिर एक API key और एक डायनेमिक कोड।"
-  />
-  <Card
-    icon={<LockKeyhole />}
-    href="/docs/developers/api-keys"
-    title="API keys"
-    description="अपने सर्वर और स्क्रिप्ट के लिए `qrdx_` key बनाइए, जो एक वर्कस्पेस तक सीमित रहती है।"
-  />
-  <Card
-    icon={<Code />}
-    href="/docs/developers/rest-api"
-    title="REST API और OAuth"
-    description="HTTP से डायनेमिक कोड बनाइए और एडिट कीजिए, स्कैन पढ़िए और कन्वर्ज़न रिपोर्ट कीजिए।"
-  />
   <Card
     icon={<FileCode />}
     href="/docs/developers/api"
     title="API रेफ़रेंस"
-    description="हर endpoint, curl, JavaScript और Python के सैंपल और Try it पैनल के साथ।"
-  />
-  <Card
-    icon={<Webhook />}
-    href="/docs/webhooks"
-    title="Webhooks"
-    description="स्कैन, कोड में बदलाव और फ़ॉर्म रिस्पॉन्स के लिए साइन किए गए इवेंट। Zapier, Make और n8n के साथ काम करता है।"
-  />
-  <Card
-    icon={<Blocks />}
-    href="/docs/developers/n8n"
-    title="n8n"
-    description="n8n के लिए QRdx नोड: QR इमेज, डायनेमिक कोड, स्कैन और QRdx इवेंट के लिए ट्रिगर।"
-  />
-  <Card
-    icon={<Blocks />}
-    href="/docs/developers/build-an-integration"
-    title="इंटीग्रेशन बनाइए"
-    description="OAuth 2.0 और PKCE से लोगों को अपना QRdx अकाउंट आपके app से जोड़ने दीजिए।"
+    description="हर endpoint रिसोर्स के हिसाब से, उसके पैरामीटर, रिस्पॉन्स, curl, JavaScript और Python के सैंपल, और एक Try it पैनल के साथ।"
   />
   <Card
     icon={<TriangleAlert />}
     href="/docs/developers/errors"
     title="एरर"
-    description="API जो भी एरर लौटाता है, उसका मतलब क्या है और उसे कैसे ठीक करें।"
+    description="हर एरर कोड, वह कब आता है और क्या करना है।"
   />
-</Cards>
-
-## अपने कोड में [#in-your-own-code]
-
-<Cards>
   <Card
-    icon={<Rocket />}
-    href="/docs/getting-started"
-    title="React लाइब्रेरी"
-    description="`qrdx` पैकेज से स्टाइल वाले QR कोड रेंडर और एक्सपोर्ट कीजिए।"
+    icon={<Code />}
+    href="/docs/developers/rest-api"
+    title="REST API और OAuth"
+    description="ऑथेंटिकेशन, scopes, OAuth tokens, रेट लिमिट और दैनिक कोटा की विस्तार से जानकारी।"
+  />
+  <Card
+    icon={<Bot />}
+    href="/docs/developers/ai-agents"
+    title="AI एजेंट्स के साथ QRdx इस्तेमाल करें"
+    description="असिस्टेंट को MCP सर्वर से जोड़ें, एजेंट्स को इमेज URL दें, और डॉक्स को Markdown के रूप में पढ़ें।"
+  />
+  <Card
+    icon={<Wrench />}
+    href="/docs/developers/google-chart-api"
+    title="Google Chart QR API को बदलें"
+    description="chl, chs और chld को इमेज API से मैप करें और पुराने URLs को एक कमांड से दोबारा लिखें।"
   />
   <Card
     icon={<Server />}
     href="/docs/self-hosting"
     title="सेल्फ़-होस्टिंग"
-    description="डायनेमिक कोड समेत पूरा app अपने सर्वर पर चलाइए।"
+    description="पूरा ऐप, API समेत, अपने सर्वर पर चलाएँ।"
   />
 </Cards>
 
-## Base URL और ऑथेंटिकेशन [#base-url-and-authentication]
+[`/openapi.json`](/openapi.json) पर मौजूद OpenAPI 3.1 दस्तावेज़ हर endpoint, schema और एरर का वर्णन करता है। कोई भी डॉक्स पेज उसके URL के अंत में `.md` जोड़ने पर Markdown में मिलता है, और [`/llms.txt`](/llms.txt) एजेंट्स के लिए साइट का इंडेक्स है।
 
-REST API `https://api.qrdx.dev/v1` पर चलता है। यही routes `https://qrdx.dev/api/v1` पर भी जवाब देते हैं।
+## संबंधित [#related]
 
-रिक्वेस्ट `Authorization: Bearer` हेडर में [API key](/docs/developers/api-keys) से ऑथेंटिकेट होते हैं। जो app दूसरे QRdx यूज़र्स की ओर से काम करते हैं, वे वहाँ [OAuth 2.0 access token](/docs/developers/rest-api#get-an-access-token) भेजते हैं। [क्विकस्टार्ट](/docs/developers/quickstart#create-an-api-key) में key बनाई जाती है और पहला रिक्वेस्ट किया जाता है।
-
-## अपडेट रहिए [#stay-up-to-date]
-
-लाइब्रेरी, CLI और API के बदलाव [changelog](/changelogs) में हैं। सोर्स कोड [GitHub](https://github.com/qrdxinc/qrdx) पर है।
+- [क्विकस्टार्ट](/docs/developers/quickstart): आपका पहला अनुरोध, एक key और पहला डायनेमिक QR कोड
+- [API keys](/docs/developers/api-keys): key बनाएँ, उसका एक्सेस चुनें, उसे रद्द करें
+- [चेंजलॉग](/changelogs): लाइब्रेरी, CLI और API के बदलाव
+- [GitHub](https://github.com/qrdxinc/qrdx): सोर्स, issues और चर्चाएँ

@@ -1,152 +1,149 @@
 ---
 title: "基本用法"
-description: "使用 QRCode 组件渲染二维码，然后调整其颜色、图案、徽标、模板和纠错级别。"
+description: "应渲染哪个 qrdx 组件，以及用于设置二维码尺寸、静区、颜色、形状、徽标、边框和纠错等级的属性。"
 icon: FileCode
 ---
 
-按需创建并自定义二维码。
+首选组件是 `QRCode`：它支持所有样式选项，并提供简单易用的 `logo` 属性，还能在服务端渲染。本页介绍最常设置的属性。所有属性请参阅[库 API 参考](/docs/api-reference)。
 
 <NpmStatus package="qrdx" />
 
-## 基础二维码 [#basic-qr-code]
+## 选择组件 [#choose-a-component]
 
-```tsx
-import { QRCode } from 'qrdx';
+| 组件 | 绘制内容 | 适用场景 |
+| --- | --- | --- |
+| `QRCode` | 一个带有全部样式选项的 `<svg>`，另有 `logo`、`logoOptions`、`hideLogo` 和 `scale`。不接受其他属性 | 几乎所有情况 |
+| `QRCodeSVG` | 同样的 `<svg>`，但徽标以像素为单位的原始 `imageSettings` 传入。其他属性（`aria-label`、`className`、`role`）都会加到 `<svg>` 上 | 需要给 `<svg>` 添加属性、自行排布徽标，或从其他渲染器迁移代码 |
+| `QRCodeCanvas` | 一个 `<canvas>`，使用普通方形模块和纯色 | 需要 canvas 元素。图案、定位点颜色、渐变和模板都会被忽略 |
 
-<QRCode
-  value="https://example.com"
-  size={256}
-/>
+`QRCode` 和 `QRCodeSVG` 不使用仅限浏览器的 Hook，因此可以在 React Server Components 和静态 HTML 中渲染。`QRCodeCanvas` 带有 `"use client"`。
+
+```tsx title="components/menu-code.tsx"
+import { QRCode } from "qrdx";
+
+export function MenuCode() {
+  return (
+    <div role="img" aria-label="QR code for the menu">
+      <QRCode value="https://example.com/menu" size={256} margin={4} />
+    </div>
+  );
+}
 ```
 
-## 自定义颜色 [#customize-colors]
+`value` 会按传入内容原样编码，因此 Wi-Fi 载荷、vCard、`mailto:` 或纯文本都可以。`QRCode` 只接受二维码自身的属性和 `style`，不接受其他属性：如上所示，请通过包裹一层元素为它提供可访问名称。`QRCodeSVG` 会把 `aria-label`、`className`、`role` 及任何其他属性直接加到 `<svg>` 上。
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={256}
-  fgColor="#1a56db"
-  bgColor="#ffffff"
-  eyeColor="#0d47a1"
-  dotColor="#3b82f6"
-/>
+## 尺寸与静区 [#size-and-quiet-zone]
+
+- `size` 是宽度和高度，单位为像素（默认 128）。低于约 128 px 时，密度较高的二维码在屏幕上很难扫描。
+- `margin` 是二维码周围的静区，以模块为单位（默认 0）。二维码标准要求为 4。当二维码放在照片、图案或深色页面上时请设置它；如果二维码位于带有自身内边距的白色卡片内，可以保持 0。
+- 在 `QRCode` 上，`scale` 会对 `size` 进行倍数缩放。
+
+边框或模板会改变输出尺寸。参见[边框或模板](#frame-or-template)。
+
+## 颜色 [#colors]
+
+```tsx title="components/brand-code.tsx"
+import { QRCode } from "qrdx";
+
+export function BrandCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1d4ed8"
+      bgColor="#f8fafc"
+      eyeColor="#0f172a"
+      dotColor="#1d4ed8"
+    />
+  );
+}
 ```
 
-## 添加图案 [#add-patterns]
+- `fgColor` 设置数据模块的颜色，`bgColor` 设置背景色，`eyeColor` 设置三个角上的定位点颜色，`dotColor` 设置每个定位点内部圆点的颜色。定位点颜色默认与 `fgColor` 相同。
+- 每个属性都可使用任意 CSS 颜色（`#1d4ed8`、`rgb(29 78 216)`、颜色名称）或渐变对象。渐变、透明色和图像填充请参阅[设置颜色和渐变](/docs/features/colors-gradients)。
+- 模块颜色要比背景更深。扫描器读取的是浅底深码；浅色二维码配深色背景在大多数手机相机中可以识别，但某些较旧的应用无法识别。
 
-可选择 {facts.bodyPatterns} 种主体图案、{facts.eyeShapes} 种角落定位眼图案和 {facts.eyeCentres} 种角落定位眼圆点图案：
+## 形状 [#shapes]
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={256}
-  bodyPattern="rounded"
-  cornerEyePattern="circle"
-/>
+```tsx title="components/rounded-code.tsx"
+import { QRCode } from "qrdx";
+
+export function RoundedCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      bodyPattern="rounded"
+      cornerEyePattern="extra-rounded"
+      cornerEyeDotPattern="rounded"
+    />
+  );
+}
 ```
 
-共有 {facts.bodyPatterns} 种主体图案，从 `square`、`rounded` 和 `circle`，到相连的 `liquid` 和 `classy` 风格，再到活泼的 `star` 或 `heart` 圆点。完整列表以及角落定位眼和定位眼圆点选项请参阅[图案](/docs/features/patterns)，查看全部样式请参阅[形状、定位眼和边框](/docs/styles)。
+- `bodyPattern` 设置数据模块的形状（默认 `circle`）。共有 {facts.bodyPatterns} 可选。
+- `cornerEyePattern` 设置三个角上定位点的形状（默认 `gear`），取值为 {facts.eyeShapes} 之一。
+- `cornerEyeDotPattern` 设置每个定位点内部圆点的形状（默认 `circle`），取值为 {facts.eyeCentres} 之一。
 
-## 添加徽标 [#add-a-logo]
+[形状、定位点和边框](/docs/styles)会实时绘制每个取值。[选择模块和定位点形状](/docs/features/patterns)则介绍了模块缩放、异形二维码，以及少数组合在一起扫描效果不佳的搭配。
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={512}
-  hideLogo={false}
-  logo="https://example.com/logo.png"
-  level="Q"
-/>
+## 徽标 [#logo]
+
+```tsx title="components/logo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function LogoCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      level="H"
+      logo="/logo.png"
+      logoOptions={{ size: 0.2, padding: 1 }}
+    />
+  );
+}
 ```
 
-添加徽标时，请使用更高的纠错级别（`Q` 或 `H`）。
+`logo` 接受应用内的路径、URL 或 data URL。徽标后方的模块会被清除，因此二维码依靠纠错来完成扫描：请使用 `level="H"`。`logoOptions` 用于设置徽标宽度占二维码的比例（0.1 到 0.3，默认 0.25）、以模块为单位的留白、位置和裁剪方式。组件绘制的徽标不会超过二维码可修复的范围。详情请参阅[在代码中添加徽标](/docs/features/logos)。
 
-## 使用模板 [#use-templates]
+## 边框或模板 [#frame-or-template]
 
-```tsx
-<QRCode
-  value="https://example.com"
-  templateId="Arrow"
-  size={256}
-/>
+```tsx title="components/framed-code.tsx"
+import { QRCode } from "qrdx";
+
+export function FramedCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      frame={{ style: "banner-bottom", text: "Scan me", color: "#0f172a" }}
+    />
+  );
+}
 ```
 
-可用模板：`default`、`Arrow`、`StandardBox`、`SquareBorder`、`StrikedBox`、`Halloween`、`DotRing`
+- `frame` 会在二维码周围绘制行动号召边框。二维码的宽度仍为 `size`，输出尺寸会随边框增大。内置样式有 {facts.frameStyles} 种，此外还有官方边框库和你自己的边框规格。参见[边框、扫描评分和印刷文件](/docs/features/frames)。
+- `templateId` 则改为绘制模板，例如 `Arrow` 或 `StandardBox`。模板会按 `size` 绘制完整的图稿，二维码在其中会更小。参见[使用边框模板](/docs/features/templates)。
 
-## 纠错级别 [#error-correction]
+两者同时设置时，边框会绘制在模板图稿的外围。
 
-请根据使用场景选择：
+## 纠错等级 [#error-correction]
 
-- **L（低）** — 约 7% 的纠错能力，适用于干净的环境
-- **M（中）** — 约 15% 的纠错能力，适用于一般场景
-- **Q（四分位）** — 约 25% 的纠错能力，适用于带徽标的二维码
-- **H（高）** — 约 30% 的纠错能力，抗损能力最强
+| `level` | 可承受的损坏程度 | 适用场景 |
+| --- | --- | --- |
+| `L` | 约 7% | 干净的屏幕、短链接、最小的二维码 |
+| `M` | 约 15% | vCard 等较长的载荷，此时更需要较小的二维码 |
+| `Q` | 约 25% | 默认值。通用场景 |
+| `H` | 约 30% | 徽标、艺术设计、可能被刮擦或折叠的印刷品 |
 
-```tsx
-<QRCode
-  value="https://example.com"
-  level="Q"
-/>
-```
+等级越高，模块越多，因此在相同尺寸下二维码会更密。当徽标覆盖超过二维码的 7% 时，`autoLevel` 会自动将等级提升到 `H`；该选项默认关闭，以便已有二维码保持原有外观。
 
-## 组件变体 [#component-variants]
+## 相关内容 [#related]
 
-### QRCodeCanvas [#qrcodecanvas]
-
-用于渐变等高级自定义：
-
-```tsx
-import { QRCodeCanvas } from 'qrdx';
-
-<QRCodeCanvas
-  value="https://example.com"
-  size={512}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 1, color: '#764ba2' }
-    ],
-    x1: 0, y1: 0, x2: 1, y2: 1
-  }}
-/>
-```
-
-### QRCodeSVG [#qrcodesvg]
-
-用于可缩放矢量图形：
-
-```tsx
-import { QRCodeSVG } from 'qrdx';
-
-<QRCodeSVG
-  value="https://example.com"
-  size={512}
-/>
-```
-
-## 最佳实践 [#best-practices]
-
-### 尺寸建议 [#size-guidelines]
-
-- **128px** — 可扫描的最小尺寸
-- **256-512px** — 网页推荐尺寸
-- **1024px+** — 高质量印刷
-
-### 纠错级别 [#error-correction-1]
-
-- 添加徽标时使用 `Q` 或 `H`
-- 一般应用使用 `M`
-- 仅在干净的环境中使用 `L`
-
-### 性能 [#performance]
-
-- 尽可能使用纯色而非渐变
-- 选择更简单的图案以获得更好的性能
-- 尽可能在服务端缓存二维码
-
-## 后续步骤 [#next-steps]
-
-- [颜色与渐变](/docs/features/colors-gradients) — 高级颜色选项
-- [模板](/docs/features/templates) — 预置样式
-- [下载](/docs/features/downloads) — 导出选项
+<Cards>
+  <Card href="/docs/features/colors-gradients" title="设置颜色和渐变" description="纯色、线性渐变、径向渐变和角度渐变、透明色以及图像填充。" />
+  <Card href="/docs/features/logos" title="在代码中添加徽标" description="尺寸、留白、位置、裁剪和纠错预算。" />
+  <Card href="/docs/features/downloads" title="导出和下载" description="PNG、JPG、WebP、SVG、PDF 和 EPS，剪贴板，以及 Node 中的 PNG。" />
+  <Card href="/docs/api-reference" title="库 API 参考" description="每个属性及其类型和默认值。" />
+</Cards>

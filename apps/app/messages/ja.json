@@ -11,135 +11,169 @@
     "closeMenu": "メニューを閉じる",
     "entries": {
       "product": "製品",
-      "tools": "ツール",
+      "solutions": "ソリューション",
       "developers": "開発者向け",
-      "resources": "リソース",
-      "pricing": "料金"
+      "resources": "リソース"
+    },
+    "columns": {
+      "industries": "業種別",
+      "teams": "チーム別",
+      "codeTypes": "コードの種類",
+      "build": "作成",
+      "embed": "組み込み",
+      "connect": "連携",
+      "help": "ヘルプ",
+      "company": "会社情報",
+      "updates": "最新情報"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "パターン、色、ロゴ、フレームでQRコードをデザインしてダウンロードできます。登録は不要です。"
+        "description": "登録不要で、無料でコードをデザインしてダウンロードできます",
+        "short": "無料、登録不要"
       },
       "dynamicCodes": {
-        "name": "動的QRコード",
-        "description": "印刷後もリンクを変更でき、スキャン数を集計できます"
-      },
-      "aiThemes": {
-        "name": "AIテーマ",
-        "description": "スタイルを言葉で伝えると、AIがテーマをデザインします"
+        "description": "印刷後もリンクを変更でき、スキャンをすべて集計します",
+        "short": "リンク編集、スキャン集計"
       },
       "aiArt": {
-        "name": "AI QRアート",
-        "description": "リンクを、スキャンできるAIアートに変えられます"
-      },
-      "communityThemes": {
-        "name": "コミュニティテーマ",
-        "description": "他のユーザーが共有したデザインを探して再利用できます"
-      },
-      "pageTemplates": {
-        "name": "ページテンプレート",
-        "description": "すべてのホスト型ページテンプレートのライブデモ"
-      },
-      "generators": {
-        "name": "QRコードジェネレーター",
-        "description": "Wi-Fi、vCard、WhatsApp、UPI、決済など、種類ごとのジェネレーターを用意しています。"
-      },
-      "bulk": {
-        "name": "一括ジェネレーター",
-        "description": "CSVから最大{max, number}個のスタイル付きコードを作成"
-      },
-      "scanner": {
-        "name": "QRコードスキャナー",
-        "description": "安全なリンクプレビュー付きでコードをスキャン"
-      },
-      "scanChecker": {
-        "name": "スキャンチェッカー",
-        "description": "QRコードのスキャンしやすさをテストします"
-      },
-      "printSize": {
-        "name": "印刷サイズ計算ツール",
-        "description": "スキャン距離に合わせた最小サイズを調べられます"
+        "description": "アートに描き込まれたスキャンできるコード",
+        "short": "アートに描き込むコード"
       },
       "barcode": {
-        "name": "バーコードジェネレーター",
-        "description": "EAN、UPC、Code 128などに対応し、チェックディジットも付きます"
+        "description": "EAN、UPC、Code 128など",
+        "short": "EAN、UPC、Code 128"
       },
-      "allTools": {
-        "name": "すべてのツール",
-        "description": "無料のQRコードツールをまとめて確認できます"
+      "bulk": {
+        "description": "CSVから最大{max, number}個のスタイル付きコードを作成",
+        "short": "CSVからコードを作成"
       },
-      "docs": {
-        "name": "ドキュメント",
-        "description": "qrdx React ライブラリ、動的QRコード、API、セルフホストのガイドです。"
+      "community": {
+        "description": "みんなが共有するフレームとテーマ",
+        "short": "共有フレームとテーマ"
       },
-      "mcp": {
-        "name": "MCPサーバー",
-        "description": "Claude、ChatGPT、CursorからQRコードを作成できます"
+      "restaurants": {
+        "description": "メニュー、Wi-Fi、レビュー依頼",
+        "short": "メニュー、Wi-Fi、レビュー"
       },
-      "qrCodeApi": {
-        "name": "無料のQRコードAPI",
-        "description": "キーや登録なしで、1つのURLからQRコード画像を生成できます"
+      "retail": {
+        "description": "棚札、ウィンドウショッピング、ポイント特典",
+        "short": "棚札とポイント特典"
       },
-      "nextjs": {
-        "name": "Next.jsガイド",
-        "description": "サーバーコンポーネントとクライアントコンポーネントでのQRコード"
+      "realEstate": {
+        "description": "物件ページを開く看板用コード",
+        "short": "看板から物件情報へ"
+      },
+      "events": {
+        "description": "アジェンダ、バッジ、セッションのフィードバック",
+        "short": "アジェンダとバッジ"
+      },
+      "enterprise": {
+        "description": "シングルサインオン、監査ログ、契約",
+        "short": "SSO、監査ログ、契約"
+      },
+      "agencies": {
+        "description": "クライアントのドメイン、UTM、スキャンレポート",
+        "short": "クライアント別コードとレポート"
+      },
+      "openSource": {
+        "description": "アプリをセルフホストするか、ライブラリを利用",
+        "short": "セルフホストまたは組み込み"
+      },
+      "placements": {
+        "description": "メニュー、パッケージ、名刺、看板",
+        "short": "メニュー、パッケージ、看板"
+      },
+      "restApi": {
+        "description": "コード、スキャン、Webhookを HTTP で利用",
+        "short": "HTTPでコードとスキャンを操作"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "APIキー不要で、URLからQRコード画像を取得できます"
+        "description": "1つのURLだけでコード画像を取得、キー不要",
+        "short": "URL1つ、キー不要"
+      },
+      "mcp": {
+        "description": "Claude、ChatGPT、CursorからQRコードを作成できます",
+        "short": "Claude、ChatGPT、Cursorから利用"
+      },
+      "cli": {
+        "description": "ターミナルやCIでコードを生成",
+        "short": "ターミナルとCI"
+      },
+      "react": {
+        "description": "エンジンをReactコンポーネントとして利用",
+        "short": "ReactでQRコード"
       },
       "shadcn": {
-        "name": "shadcn/ui registry",
-        "description": "1つのコマンドでQRコードのコンポーネントを追加できます"
+        "description": "1つのコマンドでQRコードのコンポーネントを追加できます",
+        "short": "1コマンドで追加できるコンポーネント"
       },
-      "plugins": {
-        "name": "プラグイン",
-        "description": "Chrome、Figma、Raycast、Canva向けのQRdx"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "ソースコード、issue、リリース"
-      },
-      "help": {
-        "name": "ヘルプセンター",
-        "description": "コード、お支払い、チーム、トラブル解決の回答集です"
-      },
-      "blog": {
-        "name": "ブログ",
-        "description": "QRコードのガイドとニュース"
-      },
-      "customers": {
-        "name": "導入事例",
-        "description": "企業でのQRdxの活用方法"
-      },
-      "compare": {
-        "name": "比較",
-        "description": "他のジェネレーターやライブラリとQRdxを比較できます"
-      },
-      "changelog": {
-        "name": "更新履歴",
-        "description": "QRdxの最新情報"
+      "nextjs": {
+        "description": "サーバーコンポーネントとクライアントコンポーネントでのQRコード",
+        "short": "サーバーとクライアントのコンポーネント"
       },
       "integrations": {
-        "name": "連携",
-        "description": "Zapier、Make、Discord、分析ピクセルなど"
+        "description": "Zapier、Make、Discord、分析ピクセルなど",
+        "short": "Zapier、Makeなど"
       },
-      "support": {
-        "name": "サポートに問い合わせる",
-        "description": "メール、サポートウィジェット、GitHubから"
+      "plugins": {
+        "description": "Chrome、Figma、Raycast、Canva向けのQRdx",
+        "short": "Chrome、Figma、Raycast、Canva"
+      },
+      "webhooks": {
+        "description": "スキャン、フォーム、コードのイベントをURLへ送信",
+        "short": "イベントをURLへ送信"
+      },
+      "docs": {
+        "description": "ガイド、APIリファレンス、セルフホスト",
+        "short": "ガイドとリファレンス"
+      },
+      "github": {
+        "description": "エンジンとCLIはMIT、アプリはAGPL",
+        "short": "エンジンはMIT、アプリはAGPL"
+      },
+      "help": {
+        "description": "コード、お支払い、チーム、トラブル解決の回答集です",
+        "short": "よくある質問への回答"
+      },
+      "contact": {
+        "description": "メール、サポートウィジェット、GitHub",
+        "short": "メールまたはサポートウィジェット"
+      },
+      "customers": {
+        "description": "企業でのQRdxの活用方法",
+        "short": "企業でのQRdx活用事例"
+      },
+      "security": {
+        "description": "QRdxがアカウントとデータを守る方法",
+        "short": "アカウントとデータ"
+      },
+      "affiliates": {
+        "description": "ご紹介したお客様に応じて報酬を獲得",
+        "short": "紹介で報酬を獲得"
+      },
+      "blog": {
+        "description": "QRコードのガイドとニュース",
+        "short": "ガイドとニュース"
+      },
+      "changelog": {
+        "description": "QRdxの最新情報",
+        "short": "新着情報"
+      },
+      "tools": {
+        "description": "スキャナー、スキャンチェッカー、印刷サイズなど",
+        "short": "スキャナー、チェッカーなど"
       }
     },
     "account": {
-      "tryPlayground": "Playgroundを試す",
-      "playground": "Playground",
-      "dashboard": "ダッシュボード",
-      "signIn": "ログイン"
+      "signIn": "ログイン",
+      "create": "QRコードを作成",
+      "dashboard": "ダッシュボード"
     },
     "github": {
       "star": "スター",
       "starOnGithub": "GitHubでQRdxにスターを付ける",
-      "starOnGithubCount": "GitHubでQRdxにスターを付ける（{count}スター）"
+      "starOnGithubCount": "GitHubでQRdxにスターを付ける（{count}スター）",
+      "stars": "{count}スター"
     },
     "userProfileDropdown": {
       "tryThePlayground": "Playgroundを試す",
@@ -169,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "無料のオープンソースQRコードジェネレーター。カスタムパターン、グラデーション、ロゴ、フレームに対応し、PNG、JPG、SVG、PDF、EPSでダウンロードできます。登録は不要です。さらに、動的QRコード、ホスト型ページ、スキャン解析も利用できます。",
+    "description": "オープンソースのQRコードプラットフォーム。",
     "starOnGithub": "GitHubでスターする",
+    "newsOnX": "QRdxのXニュース",
     "navLabel": "フッター",
-    "scanIt": "さあ、スキャンしてみて",
-    "copyright": "© {year} QRdx。AGPL-3.0のオープンソースです。",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "製品",
-      "tools": "ツール",
       "developers": "開発者向け",
+      "solutions": "ソリューション",
       "resources": "リソース",
+      "company": "会社情報",
       "compare": "比較"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "QRコードジェネレーター",
       "dynamicCodes": "動的QRコード",
+      "aiArt": "AI QRアート",
       "aiThemes": "AIテーマ",
-      "communityThemes": "コミュニティテーマ",
+      "barcode": "バーコード",
+      "bulk": "一括ジェネレーター",
       "pageTemplates": "ページテンプレート",
-      "pricing": "料金",
-      "guarantee": "Never-Hostage保証",
-      "enterprise": "エンタープライズ",
+      "community": "コミュニティ",
       "slackBot": "Slackボット",
       "telegramBot": "Telegramボット",
       "discordBot": "Discordボット",
-      "generators": "QRコードジェネレーター",
-      "bulk": "一括ジェネレーター",
-      "scanChecker": "スキャンチェッカー",
-      "printSize": "印刷サイズ計算ツール",
-      "barcode": "バーコードジェネレーター",
-      "pdfQr": "PDF QRコード",
-      "businessCard": "デジタル名刺",
-      "menuQr": "メニューQRコード",
-      "scanner": "QRコードスキャナー",
-      "allTools": "すべてのツール",
-      "docs": "ドキュメント",
-      "apiReference": "APIリファレンス",
-      "qrCodeApi": "フリーQRコードAPI",
-      "nextjs": "Next.jsガイド",
-      "imageApi": "Image API",
-      "mcp": "MCPサーバー",
-      "shadcn": "shadcn/uiレジストリ",
-      "plugins": "プラグイン",
-      "selfHosting": "セルフホスティング",
-      "openSource": "オープンソース",
-      "github": "GitHub",
-      "help": "ヘルプセンター",
-      "blog": "ブログ",
-      "customers": "導入事例",
-      "changelog": "変更履歴",
-      "integrations": "連携",
+      "restaurants": "飲食店",
+      "retail": "小売",
+      "realEstate": "不動産",
+      "events": "イベント",
       "industries": "業種別QRコード",
       "placements": "設置場所別QRコード",
-      "affiliates": "アフィリエイトプログラム",
+      "generators": "すべてのコード種類",
+      "typeUrl": "ウェブサイト",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "エンタープライズ",
+      "agencies": "代理店",
+      "openSource": "オープンソース",
+      "docs": "ドキュメント",
+      "restApi": "REST API",
+      "apiReference": "APIリファレンス",
+      "imageApi": "Image API",
+      "mcp": "MCPサーバー",
+      "cli": "CLI",
+      "react": "Reactライブラリ",
+      "shadcn": "shadcn/uiレジストリ",
+      "nextjs": "Next.jsガイド",
+      "integrations": "連携",
+      "plugins": "プラグイン",
+      "webhooks": "Webhook",
+      "selfHosting": "セルフホスティング",
+      "github": "GitHub",
+      "help": "ヘルプセンター",
       "contact": "お問い合わせ",
+      "blog": "ブログ",
+      "changelog": "変更履歴",
+      "customers": "導入事例",
+      "tools": "無料ツール",
+      "scanner": "QRコードスキャナー",
+      "scanChecker": "スキャンチェッカー",
+      "printSize": "印刷サイズ計算ツール",
+      "security": "セキュリティ",
+      "affiliates": "アフィリエイトプログラム",
+      "guarantee": "Never-Hostage保証",
+      "pricing": "料金",
+      "allComparisons": "比較一覧",
       "legal": "法的情報",
-      "privacy": "プライバシーポリシー",
       "terms": "利用規約",
-      "subprocessors": "サブプロセッサー",
-      "reportAbuse": "不正利用の報告",
-      "acceptableUse": "利用ポリシー",
+      "privacy": "プライバシーポリシー",
       "cookies": "Cookieポリシー",
       "dpa": "データ処理契約(DPA)",
+      "subprocessors": "サブプロセッサー",
+      "acceptableUse": "利用ポリシー",
       "aiFeatures": "AI機能",
       "refunds": "返金",
       "affiliateTerms": "アフィリエイト規約",
-      "security": "セキュリティ",
       "securityPolicy": "セキュリティポリシー",
-      "allComparisons": "比較一覧"
+      "reportAbuse": "不正利用の報告"
     }
   },
   "localeSwitcher": {
@@ -244,9 +289,10 @@
     "englishOnly": "このページは英語のみです。他の言語を選ぶと、その言語のホームページが開きます。"
   },
   "cta": {
-    "title": "次のQRコードを数秒で作成できます。",
-    "subtext": "ずっと無料。登録不要、透かしなし。",
-    "button": "無料でQRコードを作成する"
+    "title": "次のQRコードを作りましょう",
+    "subtext": "ブラウザで無料、登録もウォーターマークも不要です。必要なときは動的QRコードも使えます。",
+    "button": "QRコードを作成",
+    "secondary": "料金を見る"
   },
   "consent": {
     "banner": {

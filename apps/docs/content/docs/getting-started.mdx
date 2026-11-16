@@ -37,7 +37,7 @@ export function FirstQrCode() {
 
 Put the component on a page. You see a 256 px code in the library's default look: round modules, gear-shaped corner eyes and black on white. Point a phone camera at the screen and it opens example.com.
 
-{/* shot: lib-first-code | the default QRCode (round modules, gear eyes) rendered at 256 px on an otherwise empty page | render components/first-qr-code.tsx in a Vite or Next.js app */}
+<Shot id="lib-first-code" />
 
 `QRCode` renders an `<svg>` and uses no browser-only hooks, so it works in React Server Components and renders in the page's HTML before any JavaScript runs. Screen readers get nothing from it on its own: step 3 shows how to label it.
 
@@ -64,7 +64,7 @@ export function StyledQrCode() {
 
 The code is now blue with rounded modules, and a banner under it reads "Scan for the menu". The output is taller than 256 px, because a frame is added around the code rather than drawn over it, so the code still scans.
 
-{/* shot: lib-styled-code | the styled code from step 3: blue rounded modules, extra-rounded eyes and a bottom banner reading "Scan for the menu" | render components/styled-qr-code.tsx */}
+<Shot id="lib-styled-code" />
 
 What each prop does:
 

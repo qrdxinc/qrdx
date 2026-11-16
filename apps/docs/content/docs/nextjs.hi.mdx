@@ -1,22 +1,29 @@
 ---
 title: "Next.js में QR कोड"
-description: "qrdx के साथ Next.js App Router में QR कोड रेंडर करें: Server Components में बिना क्लाइंट JavaScript के, लाइव इनपुट के लिए Client Components में, लोगो के साथ, और SVG डाउनलोड के रूप में।"
+description: "qrdx के साथ Next.js App Router में QR कोड रेंडर करें: बिना client JavaScript के Server Components में, route params से, लाइव इनपुट के लिए Client Components में, लोगो के साथ, और SVG डाउनलोड के रूप में।"
 icon: Code
 ---
 
-`qrdx` App Router के दोनों तरफ़ काम करता है। `QRCodeSVG` और `QRCode` कोई client-only hook इस्तेमाल नहीं करते, इसलिए Server Component कोड को सीधे पेज के HTML में रेंडर कर सकता है, और इसके लिए कोई JavaScript नहीं भेजना पड़ता। Client Component की ज़रूरत सिर्फ़ तब होती है जब वैल्यू ब्राउज़र में बदलती है, या फ़ाइल डाउनलोड करनी हो।
+इस पेज के अंत तक आपके पास ये सब होंगे: Server Component से रेंडर किया गया QR कोड (बिना client JavaScript के), route param से बना कोड, इनपुट से जुड़ा लाइव कोड, आपके लोगो वाला कोड, और SVG सेव करने वाला बटन। `QRCodeSVG` और `QRCode` में सिर्फ़ client वाले hooks इस्तेमाल नहीं होते, इसलिए Server Component कोड को सीधे पेज के HTML में रेंडर कर देता है। Client Component की ज़रूरत तभी पड़ती है जब वैल्यू ब्राउज़र में बदलती हो या फ़ाइल सेव करनी हो।
 
 <NpmStatus package="qrdx" />
 
-## इंस्टॉल करें [#install]
+## शुरू करने से पहले [#before-you-start]
+
+- App Router पर चलने वाला Next.js प्रोजेक्ट। उदाहरणों में App Router के async `params` इस्तेमाल हुए हैं, जैसे Next.js 15 और 16 में।
+- React 18 या नया वर्शन, जो App Router में पहले से ज़रूरी है।
+
+## बनाएँ [#build-it]
+
+### 1. qrdx इंस्टॉल करें [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`react` और `react-dom` 18 या उससे नए peer dependencies हैं, इसलिए आपके app के अपने वर्शन ही इस्तेमाल होते हैं।
+`react` और `react-dom` peer dependencies हैं, इसलिए आपके app के अपने वर्शन इस्तेमाल होते हैं।
 
-## Server Component में [#in-a-server-component]
+### 2. Server Component में कोड रेंडर करें [#2-render-a-code-in-a-server-component]
 
 ```tsx title="app/page.tsx"
 import { QRCodeSVG } from "qrdx";
@@ -34,11 +41,13 @@ export default function Page() {
 }
 ```
 
-SVG उस HTML का हिस्सा है जो सर्वर भेजता है। यह कोई भी JavaScript लोड होने से पहले दिखता है, स्टैटिक पेज इसे बिल्ड के समय एक बार रेंडर करता है, और स्क्रीन रीडर को `aria-label` मिलता है।
+पेज खोलें। `<svg>` उस HTML का हिस्सा है जो सर्वर भेजता है, इसलिए यह किसी भी JavaScript के लोड होने से पहले दिख जाता है, स्टैटिक पेज इसे build के समय एक बार रेंडर करता है, और screen readers को `aria-label` मिलता है।
 
-`margin` कोड के चारों ओर की quiet zone है, modules में। `QRCodeSVG` में इसका डिफ़ॉल्ट `0` है, जो अपनी padding वाले कार्ड के अंदर रखे कोड के लिए ठीक है। QR स्टैंडर्ड 4 modules माँगता है, और भीड़-भाड़ वाली या गहरी बैकग्राउंड पर यही सुरक्षित चुनाव है।
+<Shot id="lib-nextjs-server-code" />
 
-### Route params या डेटा से [#from-route-params-or-data]
+`margin` कोड के चारों ओर की quiet zone है, modules में। इसकी डिफ़ॉल्ट वैल्यू 0 है, जो अपनी padding वाले कार्ड के अंदर रखे कोड के लिए ठीक है। QR स्टैंडर्ड 4 माँगता है, जो व्यस्त या गहरे बैकग्राउंड पर सुरक्षित चुनाव है।
+
+### 3. Route param से वैल्यू बनाएँ [#3-build-the-value-from-a-route-param]
 
 ```tsx title="app/tickets/[id]/page.tsx"
 import { QRCodeSVG } from "qrdx";
@@ -54,11 +63,9 @@ export default async function TicketPage({
 }
 ```
 
-Next.js `params` को promise के रूप में देता है, इसलिए पेज `async` है। यूज़र या डेटाबेस से आने वाली किसी भी चीज़ को URL में डालने से पहले encode करें। लेवल `H` कोड के 30% तक हिस्से के खराब होने को सह लेता है, जो मुड़ने या खुरचने वाले बैज पर काम आता है।
+`/tickets/A-12` खोलें और कोड `https://example.com/check-in/A-12` खोलेगा। Next.js `params` को promise के रूप में देता है, इसलिए पेज `async` है। यूज़र या डेटाबेस से आने वाली किसी भी चीज़ को URL में डालने से पहले encode करें। लेवल `H` कोड के 30% तक हिस्से को खराब होने देता है, जो मुड़ने या खरोंचे जाने वाले बैज पर मदद करता है।
 
-## Client Component में [#in-a-client-component]
-
-जब वैल्यू किसी इनपुट से आती है, तो कोड को Client Component में रेंडर करें:
+### 4. Client Component में इनपुट को फ़ॉलो करें [#4-follow-an-input-in-a-client-component]
 
 ```tsx title="components/live-qr-code.tsx"
 "use client";
@@ -81,9 +88,11 @@ export function LiveQrCode() {
 }
 ```
 
-`QRCodeCanvas` भी एक client component है (यह `"use client"` के साथ आता है), लेकिन यह सिर्फ़ सादे चौकोर modules बनाता है। स्टाइल वाले कोड के लिए `QRCodeSVG` इस्तेमाल करें।
+हर keystroke पर कोड दोबारा बनता है, और पहली वैल्यू फिर भी सर्वर पर रेंडर होती है। Server Component पेज इस component को जैसा है वैसा import कर सकता है।
 
-## लोगो के साथ [#with-a-logo]
+`QRCodeCanvas` भी एक Client Component है (यह `"use client"` के साथ आता है), लेकिन यह सिर्फ़ सादे चौकोर modules बनाता है। स्टाइल वाले कोड के लिए `QRCodeSVG` या `QRCode` इस्तेमाल करें।
+
+### 5. लोगो जोड़ें [#5-add-a-logo]
 
 ```tsx title="components/logo-qr-code.tsx"
 import { QRCode } from "qrdx";
@@ -101,13 +110,11 @@ export function LogoQrCode() {
 }
 ```
 
-- **Error correction H।** लोगो कोड की चौड़ाई के लगभग एक चौथाई आकार में बनता है और उसके पीछे के modules को साफ़ कर देता है, इसलिए कोड को स्कैन होने के लिए error correction पर निर्भर रहना पड़ता है। अगर लोगो इतना बड़ा हो कि कोड उसे ठीक न कर सके, तो `QRCode` उसे छोटा भी कर देता है।
-- **लोगो कहाँ से आता है।** `logo` में आपके app का पाथ, URL या data URL दिया जा सकता है। पेज तीनों दिखाता है। डाउनलोड के लिए data URL सबसे सुरक्षित है, क्योंकि रिमोट इमेज को फ़ाइल में कॉपी करने से पहले CORS headers चाहिए होते हैं।
-- **जाँच लें।** कोड को कुछ फ़ोन पर आज़माएँ, या स्क्रीनशॉट [स्कैन चेकर](/tools/scan-checker) पर अपलोड करें।
+`/logo.png` आपके प्रोजेक्ट के `public` फ़ोल्डर की एक फ़ाइल है। लोगो कोड की चौड़ाई के एक चौथाई आकार में बनता है और उसके पीछे के modules साफ़ कर दिए जाते हैं, इसलिए कोड स्कैन होने के लिए error correction पर निर्भर करता है: इसीलिए `level` `H` है। `QRCode` ऐसे लोगो को भी छोटा कर देता है जो कोड के सुधार करने की क्षमता से बड़ा हो।
 
-`logoOptions` लोगो का आकार, खाली जगह, पोज़िशन और क्रॉप तय करता है; देखें [लोगो](/docs/features/logos)।
+`logo` में आपके app का path, URL या data URL दिया जा सकता है। डाउनलोड के लिए data URL सबसे सुरक्षित है, क्योंकि रिमोट इमेज को ब्राउज़र फ़ाइल में कॉपी करे, इससे पहले उसे CORS headers चाहिए। `logoOptions` लोगो का आकार, खाली जगह, स्थिति और crop तय करता है; देखें [कोड में लोगो जोड़ें](/docs/features/logos)।
 
-## SVG के रूप में डाउनलोड करें [#download-as-svg]
+### 6. SVG के रूप में डाउनलोड करें [#6-download-as-svg]
 
 ```tsx title="components/download-svg-button.tsx"
 "use client";
@@ -135,24 +142,35 @@ export function DownloadSvgButton({ value }: { value: string }) {
 }
 ```
 
-`downloadQRCode` को ब्राउज़र के DOM की ज़रूरत होती है, इसलिए बटन एक Client Component है। Server Component पेज फिर भी इसे रेंडर कर सकता है और वैल्यू को prop के रूप में पास कर सकता है। दूसरी फ़ाइलों के लिए `format` को `png`, `jpg`, `webp`, `eps` या `pdf` पर सेट करें (PDF के लिए वैकल्पिक `jspdf` पैकेज चाहिए)। सभी विकल्पों के लिए [डाउनलोड](/docs/features/downloads) देखें।
+बटन क्लिक करने पर `qr-code.svg` सेव होती है, जो 1024 px की वेक्टर फ़ाइल है। `downloadQRCode` को ब्राउज़र के DOM की ज़रूरत है, इसलिए बटन एक Client Component है। Server Component पेज फिर भी इसे रेंडर कर सकता है और वैल्यू को prop के रूप में दे सकता है। दूसरी फ़ाइलों के लिए `format` को `png`, `jpg`, `webp`, `eps` या `pdf` पर सेट करें (PDF के लिए वैकल्पिक `jspdf` पैकेज चाहिए)। [Export और डाउनलोड](/docs/features/downloads) में सभी विकल्प दिए हैं।
 
 ## जब आपको इमेज URL चाहिए [#when-you-need-an-image-url]
 
-ईमेल, Open Graph इमेज, Markdown फ़ाइलें और दूसरी जगहें जो React नहीं चला सकतीं, उन्हें कंपोनेंट की जगह इमेज URL चाहिए। [फ़्री QR कोड API](/qr-code-api) बिना key के एक देता है:
+ईमेल, Open Graph इमेज, Markdown फ़ाइलें और दूसरी जगहें जहाँ React नहीं चल सकता, वहाँ component की जगह इमेज URL चाहिए। [QR code इमेज API](/docs/developers/image-api) बिना key के एक देती है:
 
-```html
+```html title="email.html"
 <img src="https://api.qrdx.dev/v1/qr?data=https://example.com&format=png" width="256" height="256" alt="QR code for example.com" />
 ```
 
-## तैयार कंपोनेंट [#ready-made-components]
+## तैयार components [#ready-made-components]
 
-[shadcn/ui registry](/docs/developers/shadcn) कंपोनेंट को सीधे आपके प्रोजेक्ट में इंस्टॉल करता है: [डाउनलोड बटन वाला QR कोड](/docs/components/qr-code), एक कार्ड, एक शेयर डायलॉग, एक जनरेटर, एक स्कैनर, और Wi-Fi व कॉन्टैक्ट कोड।
+[shadcn/ui registry](/docs/developers/shadcn) components को आपके प्रोजेक्ट में इंस्टॉल करती है: [डाउनलोड बटन वाला QR कोड](/docs/components/qr-code), एक कार्ड, share dialog, जनरेटर, स्कैनर, और Wi-Fi व कॉन्टैक्ट कोड।
 
-```bash
+```bash title="Terminal"
 npx shadcn@latest add https://qrdx.dev/r/qr-code.json
 ```
 
-## दूसरी React QR कोड लाइब्रेरी [#other-react-qr-code-libraries]
+## कुछ गड़बड़ हो जाए तो [#if-something-goes-wrong]
 
-अगर आपको सिर्फ़ सादा ब्लैक-एंड-व्हाइट कोड चाहिए, तो `qrcode.react` छोटा है और ज़्यादा पुराना है; `qrdx` में आकार, ग्रेडिएंट, फ़्रेम, लोगो, PNG/SVG/PDF/EPS एक्सपोर्ट और स्कैन स्कोर जुड़ जाते हैं। [qrcode.react](/compare/qrcode-react) और [qr-code-styling](/compare/qr-code-styling) की तुलनाएँ अंतर समझाती हैं।
+- **`useRef only works in Client Components` (या `useState` के लिए यही मैसेज)।** आपने Server Component से `QRCodeCanvas` या hooks वाला कोई component रेंडर किया है। उस फ़ाइल के ऊपर `"use client"` जोड़ें, या इसकी जगह `QRCodeSVG` रेंडर करें।
+- **लोगो पेज पर दिखता है पर डाउनलोड की गई फ़ाइल में नहीं।** इमेज किसी दूसरे origin से आ रही है और उसमें CORS headers नहीं हैं। उसे `public` से सर्व करें, या data URL दें।
+- **`PDF export needs the optional "jspdf" package`।** app में `npm install jspdf` चलाएँ। बाकी फ़ॉर्मैट के लिए कुछ अतिरिक्त नहीं चाहिए।
+
+## संबंधित [#related]
+
+<Cards>
+  <Card href="/docs/usage" title="बुनियादी इस्तेमाल" description="कौन सा component इस्तेमाल करें, और कोड का लुक तय करने वाले props।" />
+  <Card href="/docs/features/downloads" title="Export और डाउनलोड" description="सभी फ़ॉर्मैट, clipboard, data URLs और सर्वर पर PNG।" />
+  <Card href="/docs/components/qr-code" title="QR Code component" description="डाउनलोड बटन वाला registry component, shadcn/ui प्रोजेक्ट के लिए।" />
+  <Card href="/docs/developers/image-api" title="QR code इमेज API" description="कोड इमेज URL के रूप में, ईमेल और React के बिना की जगहों के लिए।" />
+</Cards>

@@ -11,7 +11,7 @@ The client portal is for agencies that run QR codes for their clients. You invit
 
 ## How it works
 
-{/* diagram: client-portal-access | Your workspace's folders on one side, the client's invitation naming two of them, and the portal page the client sees with only those folders | concept drawing */}
+<Diagram id="client-portal-access" />
 
 The portal lives at `https://qrdx.dev/portal/<your workspace's URL name>`. A client gets in with a one-time code sent to the address you invited; the first time, signing in also gives them a free QRdx account of their own, which they never need to use. The portal shows them the folders you ticked, under your name, logo and color, and nothing about the rest of your workspace.
 
@@ -25,7 +25,7 @@ Open **Settings** → **Client portal** in the workspace. Owners and admins mana
 2. Put each client's codes in a folder of their own in [Codes](/dashboard?to=codes).
 3. Under **Clients**, enter the client's email address, tick their folders and click **Invite client**.
 
-{/* shot: client-portal-settings | Settings → Client portal with the Branding card filled in and one client listed with their folders | Dashboard → Settings → Client portal */}
+<Shot id="client-portal" />
 
 QRdx emails the client a link to the portal, in your portal's name. If email isn't set up on the server you use, copy the address from **Portal address** and send it yourself.
 
@@ -38,8 +38,6 @@ Signed in, a client sees:
 - each shared folder with its codes, scan totals and last scan
 - for each code, scans over time, unique visitors, QR scans and NFC taps, top countries, devices and referrer sites for the last 7, 30 or 90 days, or for all time
 - for codes that open a hosted page, a button to open the page (opening it there doesn't count as a scan)
-
-{/* shot: client-portal-view | The portal as a client sees it: the agency's logo and name, one folder with its codes and a code's analytics | Open a workspace's portal as an invited client */}
 
 They can't see other folders, codes in the trash, a destination's full address, cities, precise locations, your members, settings or billing. The portal shows your name, logo and color and no QRdx mark.
 

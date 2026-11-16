@@ -1,4 +1,4 @@
-import { withoutAuthCookies } from "@repo/auth/auth-cookies";
+import { isAuthCookieName, withoutAuthCookies } from "@repo/auth/auth-cookies";
 import { workspaceSlugFromPath } from "@repo/availability/workspace-pattern";
 import {
   CONSOLE_KEY_HEADER,
@@ -32,6 +32,7 @@ import {
   getSessionAllowingHold,
   isSessionHeld,
 } from "@/lib/account/session-origin-server";
+import { isHomePath } from "@/lib/home-path";
 import { signInPath } from "@/lib/safe-redirect";
 import { cspOptionsFromEnv } from "@/lib/security/csp";
 import { WORKSPACE_HEADER } from "@/lib/workspace-paths";
@@ -172,6 +173,14 @@ function next(request: NextRequest): NextResponse {
   return response;
 }
 
+/** Whether the request carries a Better Auth session cookie (not whether it's valid). */
+const hasSessionCookie = (request: NextRequest) =>
+  request.cookies
+    .getAll()
+    .some(
+      ({ name }) => isAuthCookieName(name) && name.endsWith("session_token"),
+    );
+
 export default async function proxy(request: NextRequest) {
   // Customers' domains only serve their short links (null on QRdx's own hosts).
   const customDomainResponse = await routeCustomDomain(request);
@@ -199,6 +208,18 @@ export default async function proxy(request: NextRequest) {
     hasDotSegment(request.nextUrl.pathname)
   ) {
     return new NextResponse("Not found", { status: 404 });
+  }
+  // Signed-in visitors on the home page (in any language) go straight to
+  // their dashboard. Only a request with a session cookie pays for the
+  // session lookup; everyone else, crawlers included, gets the page.
+  if (isHomePath(request.nextUrl.pathname)) {
+    if (hasSessionCookie(request)) {
+      const session = await getSessionAllowingHold(await headers());
+      if (session) {
+        return NextResponse.redirect(new URL("/dashboard", request.url));
+      }
+    }
+    return next(request);
   }
   // The catch-all matcher also reaches here on hosts that aren't custom domains.
   const appPath = APP_PATHS.test(request.nextUrl.pathname);
@@ -276,6 +297,11 @@ export const config = {
     // cover every prefix.
     "/:prefix([bB][lL][oO][gG])/:path*",
     "/:prefix([sS][iI][tT][eE]-[sS][tT][aA][tT][iI][cC])/:path*",
+    // The home page in every language (lib/home-path.ts): signed-in visitors
+    // go to their dashboard. tests/lib/home-redirect.test.ts checks these
+    // cover every language's segment.
+    "/",
+    "/:locale(en|es|pt-br|fr|de|it|ja|ko|zh-hans|id|hi)",
     "/oauth/:path*",
     "/invite/:path*",
     "/join/:path*",

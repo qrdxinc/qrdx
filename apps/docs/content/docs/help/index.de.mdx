@@ -1,25 +1,63 @@
 ---
 title: "Hilfecenter"
-description: "Antworten zu QR-Codes, dynamischen Codes, Seiten, Abrechnung und deinem Konto. Ganz ohne Code."
+description: "Kurze Antworten zu QR-Codes, dynamischen Codes, Seiten, Abrechnung und deinem Konto. Ohne Code."
 icon: LifeBuoy
 ---
 
 import { HelpSearch, StillStuck } from "@/components/docs/help-home";
 
+Das Hilfecenter deckt alles ab, was du im Editor und im Dashboard tust. Jede Seite behandelt eine Aufgabe: mit den Schritten, dem, was du nach jedem Schritt siehst, und dem, was du tun kannst, wenn etwas schiefgeht.
+
 <HelpSearch />
 
-## Häufige Fragen [#common-questions]
+## Was möchtest du tun? [#what-do-you-want-to-do]
 
-- [Deinen ersten QR-Code erstellen](/docs/help/getting-started/first-qr-code)
-- [Statisch oder dynamisch: Was brauchst du?](/docs/help/getting-started/static-vs-dynamic)
-- [Das Ziel eines Codes ändern](/docs/help/dynamic-codes/change-the-link)
-- [Ein Code lässt sich nicht scannen](/docs/help/troubleshooting/wont-scan)
-- [Einen QR-Code herunterladen und drucken](/docs/help/getting-started/download-and-print)
-- [Was mit deinen Codes passiert, wenn du nicht mehr zahlst](/docs/help/account-and-billing/never-hostage)
-- [Dein Abo kündigen](/docs/help/account-and-billing/cancel)
-- [Ein Scan zeigt eine Fehlerseite](/docs/help/troubleshooting/error-pages)
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="Ersten Code erstellen"
+    description="Gestalte einen Code und lade ihn für Druck oder Web herunter."
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/change-the-link"
+    title="Ziel eines gedruckten Codes ändern"
+    description="Bearbeite den Link eines dynamischen QR-Codes. Gedruckte Exemplare öffnen beim nächsten Scan das neue Ziel."
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="Deine Scans ansehen"
+    description="Wann, wo und auf welchen Geräten ein Code gescannt wurde."
+  />
+  <Card
+    arrow
+    icon={<Download />}
+    href="/docs/help/getting-started/download-and-print"
+    title="Herunterladen und drucken"
+    description="Das passende Format und die passende Größe für Flyer, Aufkleber oder Bildschirm."
+  />
+  <Card
+    arrow
+    icon={<CreditCard />}
+    href="/docs/help/account-and-billing/plans"
+    title="Tarif wählen oder wechseln"
+    description="Was jeder Tarif enthält und wie du upgradest, downgradest oder kündigst."
+  />
+  <Card
+    arrow
+    icon={<Users />}
+    href="/docs/help/teams/create-and-invite"
+    title="Mit deinem Team arbeiten"
+    description="Erstelle einen Workspace, lade Leute ein und lege ihre Rollen fest."
+  />
+</Cards>
 
-## Nach Thema durchsuchen [#browse-by-topic]
+## Nach Thema stöbern [#browse-by-topic]
 
 <Cards>
   <Card
@@ -37,8 +75,8 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
   <Card
     icon={<QrCode />}
     href="/docs/help/dynamic-codes/create"
-    title="Dynamische Codes"
-    description="Link ändern, Scans ansehen sowie Codes pausieren, schützen und weiterleiten."
+    title="Dynamische QR-Codes"
+    description="Link ändern, Scans ansehen, Codes pausieren, schützen und weiterleiten."
   />
   <Card
     icon={<PanelsTopLeft />}
@@ -50,13 +88,13 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
     icon={<CreditCard />}
     href="/docs/help/account-and-billing/plans"
     title="Konto und Abrechnung"
-    description="Pläne, Rechnungen, Kündigung, deine Daten und dein Konto."
+    description="Tarife, Rechnungen, Kündigung, deine Daten und dein Konto."
   />
   <Card
     icon={<Users />}
     href="/docs/help/teams/create-and-invite"
     title="Workspaces und Teams"
-    description="Workspaces erstellen, Personen einladen, Rollen und Plätze."
+    description="Workspaces erstellen, Leute einladen, Rollen und Plätze."
   />
   <IfAvailable path="/docs/help/domains/custom-domains">
     <Card
@@ -70,7 +108,7 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
     icon={<TriangleAlert />}
     href="/docs/help/troubleshooting/wont-scan"
     title="Fehlerbehebung"
-    description="Codes, die sich nicht scannen lassen, falsche Seiten, Fehlerseiten und fehlende E-Mails."
+    description="Codes, die nicht scannen, falsche Seiten, Fehlerseiten und fehlende E-Mails."
   />
   <Card
     icon={<ShieldCheck />}
@@ -80,9 +118,17 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
   />
 </Cards>
 
-## Mehr [#more]
+## Häufige Fragen [#common-questions]
 
-- [Was es Neues gibt und was kommt](/docs/help/whats-new) sowie das vollständige [Changelog](/changelogs).
-- Du entwickelst etwas? Im Tab [Entwickler](/docs/developers) findest du die REST API, Webhooks, MCP und die CLI.
+- [Statisch oder dynamisch: Was brauchst du?](/docs/help/getting-started/static-vs-dynamic)
+- [Ein Code lässt sich nicht scannen](/docs/help/troubleshooting/wont-scan)
+- [Ein Scan öffnet die falsche Seite](/docs/help/troubleshooting/wrong-destination)
+- [Was mit deinen Codes passiert, wenn du nicht mehr zahlst](/docs/help/account-and-billing/never-hostage)
+- [Dein Abo kündigen](/docs/help/account-and-billing/cancel)
+- [Einen Code mit einem Passwort schützen](/docs/help/dynamic-codes/password)
+
+## Hilfe erhalten [#get-help]
+
+Du willst stattdessen etwas bauen? Der Bereich [Entwickler](/docs/developers) enthält die REST API, Webhooks, den MCP-Server und die CLI. Für alles andere frag einen Menschen:
 
 <StillStuck />

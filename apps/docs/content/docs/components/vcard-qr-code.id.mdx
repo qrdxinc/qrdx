@@ -1,8 +1,10 @@
 ---
 title: "Kode QR vCard"
-description: "Kode QR yang menyimpan kartu kontak saat dipindai, dengan pembuat vCard 3.0 bertipe."
+description: "Kode QR untuk proyek shadcn/ui yang menyimpan kartu kontak saat dipindai, dengan pembuat vCard 3.0 bertipe."
 icon: Users
 ---
+
+`VCardQrCode` menampilkan kode yang menyimpan kontak saat kamera ponsel memindainya, dengan nama dan jabatan di bawahnya. Gunakan pada kartu nama, direktori staf, tanda pengenal konferensi, atau halaman tanda tangan email.
 
 <ComponentLinks name="vcard-qr-code" />
 
@@ -14,11 +16,11 @@ icon: Users
 
 ## Penggunaan [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { VCardQrCode } from "@/components/vcard-qr-code";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <VCardQrCode
   contact={{
     firstName: "Ada",
@@ -29,24 +31,40 @@ import { VCardQrCode } from "@/components/vcard-qr-code";
 />
 ```
 
-Kamera ponsel akan menawarkan untuk menyimpan kontak saat memindai kode tersebut. Kolom yang kosong dihilangkan, sehingga kode tetap kecil dan cepat dipindai.
+Kamera ponsel menawarkan untuk menyimpan kontak saat memindai kode tersebut. Kolom yang kosong dihilangkan, sehingga kode tetap kecil dan cepat dipindai.
 
 ## Contoh [#examples]
 
 ### Pembuat vCard [#vcard-builder]
 
-`buildVCard` mengembalikan teks vCard 3.0 yang dienkode oleh kode tersebut, dengan koma, titik koma, garis miring terbalik, dan jeda baris yang sudah di-escape. Gunakan dengan pustaka render QR apa pun, atau untuk menyediakan kontak yang sama sebagai unduhan `.vcf`.
+`buildVCard` mengembalikan teks vCard 3.0 yang dienkode oleh kode tersebut, dengan koma, titik koma, garis miring terbalik, dan jeda baris yang di-escape. Gunakan dengan perender QR apa pun, atau untuk menawarkan kontak yang sama sebagai unduhan `.vcf`.
 
 <ComponentPreview name="vcard-qr-code-payload" />
 
-Kartu kontak memuat lebih banyak teks daripada sebuah tautan, sehingga komponen ini memakai tingkat koreksi kesalahan `M` agar modul tetap besar. Tambahkan hanya kolom yang dibutuhkan orang, dan periksa ukuran cetaknya dengan [kalkulator ukuran cetak](/tools/print-size).
+Kartu kontak memuat teks lebih banyak daripada sebuah tautan, sehingga komponen ini menggunakan tingkat koreksi kesalahan `M` agar modulnya tetap besar. Tambahkan hanya kolom yang dibutuhkan orang, dan periksa ukuran cetak yang sesuai dengan [kalkulator ukuran cetak](/tools/print-size).
+
+## Aksesibilitas dan perenderan [#accessibility-and-rendering]
+
+- Kode memiliki `aria-label="QR code with the contact card for <name>"`. Isi kolom kartu tidak dibacakan.
+- Nama serta jabatan dan organisasi di bawah kode adalah `<figcaption>` dari figure. Atur `showDetails={false}` untuk menampilkan kode saja.
+- Komponen ini adalah Client Component, dan kodenya dirender di server.
 
 ## Referensi API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/vcard-qr-code.tsx" type="{ [K in keyof VCardQrCodeProps as K extends keyof ComponentProps<'figure'> ? never : K]: VCardQrCodeProps[K] }" />
 
-Prop lainnya, seperti `className`, diteruskan ke `<figure>` pembungkus.
+Prop lain, seperti `className`, diteruskan ke `<figure>` pembungkus.
 
 ### VCardContact [#vcardcontact]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/vcard-qr-code.tsx" name="VCardContact" />
+
+`buildVCard(contact: VCardContact): string` menulis baris `N`, `FN`, `ORG`, `TITLE`, `TEL` (kantor dan ponsel), `EMAIL`, `URL`, `ADR`, dan `NOTE`, masing-masing hanya jika kolomnya diisi.
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/components/wifi-qr-code" title="Kode QR Wi-Fi" description="Gagasan yang sama untuk jaringan Wi-Fi." />
+  <Card href="/docs/components/qr-code" title="Kode QR" description="Kode untuk payload apa pun, dengan tombol unduh." />
+  <Card href="/docs/nfc" title="Tag NFC dan kartu nama" description="Simpan kontak yang sama pada tag NFC." />
+</Cards>

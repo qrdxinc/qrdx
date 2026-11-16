@@ -1,58 +1,76 @@
 ---
 title: "Passkeys"
-description: "Melde dich mit Fingerabdruck, Gesicht oder Displaysperre an, nutze einen Passkey als zweiten Schritt und benenne einen Passkey um oder entferne ihn, wenn du ihn nicht mehr brauchst."
+description: "Melde dich mit Fingerabdruck, Gesicht oder Bildschirmsperre an, nutze einen Passkey als zweiten Schritt und benenne einen Passkey um oder entferne ihn, wenn du ihn nicht mehr brauchst."
 ---
 
-Ein Passkey bestätigt mit deinem Fingerabdruck, deinem Gesicht, der Displaysperre deines Geräts oder einem Sicherheitsschlüssel, dass du es bist. Er wird auf deinem Gerät oder in deinem Passwortmanager gespeichert und funktioniert nur auf der echten Website von QRdx, sodass eine täuschend ähnliche Seite ihn nicht abgreifen kann.
+Ein Passkey prüft mit deinem Fingerabdruck, deinem Gesicht, der Bildschirmsperre deines Geräts oder einem Sicherheitsschlüssel, dass du es bist. Er wird auf deinem Gerät oder in deinem Passwortmanager gespeichert und funktioniert nur auf der echten Website von QRdx. Eine täuschend ähnliche Fake-Seite kann ihn also nicht abgreifen.
 
-Ein Passkey hat bei QRdx zwei Aufgaben:
+Ein Passkey übernimmt bei QRdx zwei Aufgaben:
 
-- Er meldet dich allein an, mit **Mit Passkey fortfahren** auf der Anmeldeseite;
-- er ist der zweite Schritt der [Bestätigung in zwei Schritten](/docs/help/privacy-and-security/two-step-verification), nachdem du dich mit einem E-Mail-Code, Google oder GitHub angemeldet hast<IfAvailable feature="sso"> (oder mit dem Single Sign-on deines Workspace)</IfAvailable>.
+- Er meldet dich allein an, über **Mit Passkey fortfahren** auf der Anmeldeseite.
+- Er ist der zweite Schritt der [Bestätigung in zwei Schritten](/docs/help/privacy-and-security/two-step-verification), nachdem du dich mit einem E-Mail-Code, Google oder GitHub<IfAvailable feature="sso"> (oder dem Single Sign-on deines Workspaces)</IfAvailable> angemeldet hast.
 
-Außerdem [bestätigt er, dass du es bist](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), bevor sich die Sicherheitseinstellungen deines Kontos ändern, etwa wenn die Bestätigung in zwei Schritten ein- oder ausgeschaltet wird. Das ist praktisch, wenn du nicht auf deine E-Mails zugreifen kannst.
+Außerdem [bestätigt er, dass du es bist](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), bevor sich Sicherheitseinstellungen deines Kontos ändern, etwa wenn du die Bestätigung in zwei Schritten ein- oder ausschaltest. Das ist praktisch, wenn du nicht auf deine E-Mails zugreifen kannst.
 
 ## Passkey hinzufügen [#add-a-passkey]
 
 1. Gehe zu **Einstellungen** → **Profil & Sicherheit**.
 2. Klicke unter **Bestätigung in zwei Schritten** auf **Passkey hinzufügen** und bestätige, dass du es bist.
-3. Behalte den vorgeschlagenen Namen (dein Browser und dein System, z. B. „Chrome on macOS“) oder gib einen eigenen ein und klicke dann auf **Weiter**.
-4. Dein Browser fragt, wo der Passkey gespeichert werden soll, und prüft deinen Fingerabdruck, dein Gesicht oder deine Displaysperre.
+3. Behalte den vorgeschlagenen Namen (dein Browser und dein System, zum Beispiel „Chrome on macOS“) oder gib einen eigenen ein. Klicke dann auf **Weiter**.
+4. Dein Browser fragt, wo der Passkey gespeichert werden soll, und prüft deinen Fingerabdruck, dein Gesicht oder deine Bildschirmsperre.
 
-Wenn die Bestätigung in zwei Schritten ausgeschaltet ist, schaltet das Hinzufügen eines Passkeys sie ein, und QRdx zeigt dir 10 Backup-Codes zum Speichern an. Mit ihnen kommst du rein, wenn du deinen Passkey nicht zur Hand hast.
+<Shot id="add-passkey-dialog" />
 
-Der Passkey muss bei jeder Verwendung prüfen, dass du es bist. Smartphones, Computer und Passwortmanager erledigen das mit deinem Fingerabdruck, deinem Gesicht oder deiner Displaysperre. Ein Sicherheitsschlüssel braucht dafür eine PIN, die darauf eingerichtet ist.
+Ist die Bestätigung in zwei Schritten ausgeschaltet, schaltet das Hinzufügen eines Passkeys sie ein, und QRdx zeigt dir 10 Backup-Codes zum Speichern. Mit ihnen kommst du rein, wenn du deinen Passkey nicht zur Hand hast.
+
+Der Passkey muss bei jeder Nutzung prüfen, dass du es bist. Smartphones, Computer und Passwortmanager machen das mit deinem Fingerabdruck, deinem Gesicht oder deiner Bildschirmsperre. Bei einem Sicherheitsschlüssel muss dafür eine PIN eingerichtet sein.
 
 QRdx schickt eine E-Mail an die Adresse deines Kontos, sobald ein Passkey hinzugefügt oder entfernt wird.
 
 ## Mit einem Passkey anmelden [#sign-in-with-a-passkey]
 
-Klicke auf der Anmeldeseite unten bei den Anmeldeoptionen auf **Mit Passkey fortfahren** und wähle deinen Passkey aus. Eine Anmeldung mit Passkey zählt als beide Schritte, daher fragt QRdx nach nichts weiter.
+Klicke auf der Anmeldeseite unten bei den Anmeldemöglichkeiten auf **Mit Passkey fortfahren** und wähle deinen Passkey aus. Eine Anmeldung per Passkey zählt als beide Schritte, daher fragt QRdx nichts weiter ab.
 
-Das E-Mail-Feld schlägt keine Passkeys vor: Nutze die Schaltfläche.
+Das E-Mail-Feld schlägt keine Passkeys vor: Nutze den Button.
 
 Ein Passkey meldet dich bei dem Konto an, zu dem er hinzugefügt wurde. Er kann kein Konto erstellen: Wenn du neu bei QRdx bist, melde dich zuerst mit Google, GitHub oder einem E-Mail-Code an und füge dann einen Passkey hinzu.
 
-## Passkey als zweiten Schritt verwenden [#use-a-passkey-as-your-second-step]
+## Passkey als zweiten Schritt nutzen [#use-a-passkey-as-your-second-step]
 
-Wenn die Bestätigung in zwei Schritten eingeschaltet ist, melde dich so an, wie du es sonst tust. Die Passkey-Abfrage deines Browsers öffnet sich dann von selbst; bestätige, dass du es bist, und du bist drin. Manche Browser öffnen die Abfrage erst nach einem Klick: Klicke dann auf **Mit Passkey fortfahren**.
+Ist die Bestätigung in zwei Schritten eingeschaltet, melde dich wie gewohnt an. Danach öffnet sich die Passkey-Abfrage deines Browsers von selbst. Bestätige, dass du es bist, und schon bist du drin. Manche Browser öffnen die Abfrage erst nach einem Klick: Klicke dann auf **Mit Passkey fortfahren**.
 
-Hast du keinen Passkey zur Hand? Klicke auf **Authenticator-Code verwenden** (wenn du eine Authenticator-App eingerichtet hast) oder auf **Backup-Code verwenden**.
+Kein Passkey zur Hand? Klicke auf **Authenticator-Code verwenden** (wenn du eine Authenticator-App eingerichtet hast) oder auf **Backup-Code verwenden**.
 
-Wenn du einen Passkey hinzugefügt hast, bevor er als zweiter Schritt möglich war, und die Bestätigung in zwei Schritten ausgeschaltet ist, steht in den Einstellungen **Dein Passkey kann dein zweiter Schritt werden**. Klicke auf **Einschalten**, um ihn so zu nutzen: Bestätige, dass du es bist, prüfe mit dem Passkey, dass du es bist, und speichere deine Backup-Codes.
+Hast du einen Passkey hinzugefügt, bevor er als zweiter Schritt dienen konnte, und die Bestätigung in zwei Schritten ist ausgeschaltet, steht in den Einstellungen **Dein Passkey ist bereit, dein zweiter Schritt zu sein**. Klicke auf **Einschalten**, um ihn so zu nutzen: Bestätige, dass du es bist, prüfe mit dem Passkey, dass du es bist, und speichere deine Backup-Codes.
 
 ## Synchronisierte und gerätegebundene Passkeys [#synced-and-device-bound-passkeys]
 
-Ein synchronisierter Passkey wird in einem Passwortmanager oder einem Cloud-Schlüsselbund gesichert, zum Beispiel im iCloud-Schlüsselbund oder im Google Passwortmanager. Er funktioniert auf jedem Gerät, das bei diesem Konto angemeldet ist.
+Ein synchronisierter Passkey wird in einem Passwortmanager oder einem Cloud-Schlüsselbund gesichert, zum Beispiel im iCloud-Schlüsselbund oder im Google Passwortmanager. Er funktioniert auf jedem Gerät, das bei diesem Konto angemeldet ist. In den Einstellungen ist jeder Passkey als **Synchronisiert** oder **Gerätegebunden** markiert.
 
 Ein gerätegebundener Passkey bleibt auf dem einen Smartphone, Computer oder Sicherheitsschlüssel, der ihn erstellt hat. Um dich woanders anzumelden, nutze eine andere Anmeldemethode oder füge auch auf diesem Gerät einen Passkey hinzu.
 
 ## Passkey umbenennen oder entfernen [#rename-or-remove-a-passkey]
 
-Öffne unter **Bestätigung in zwei Schritten** das Menü neben dem Passkey, klicke auf **Umbenennen** oder **Entfernen** und bestätige dann, dass du es bist. Ein entfernter Passkey funktioniert bei QRdx sofort nicht mehr. Dein Gerät oder dein Passwortmanager führt ihn eventuell weiter auf, bis du ihn auch dort löschst.
+Öffne unter **Bestätigung in zwei Schritten** das Menü neben dem Passkey, klicke auf **Umbenennen** oder **Entfernen** und bestätige, dass du es bist. Ein entfernter Passkey funktioniert bei QRdx sofort nicht mehr. Dein Gerät oder dein Passwortmanager listet ihn eventuell weiter auf, bis du ihn auch dort löschst.
 
-Wenn dieser Passkey dein einziger zweiter Schritt ist, schaltet sein Entfernen die Bestätigung in zwei Schritten aus. QRdx sagt dir das, bevor du bestätigst.
+Wenn dieser Passkey dein einziger zweiter Schritt ist, schaltet das Entfernen die Bestätigung in zwei Schritten aus. QRdx sagt dir das, bevor du bestätigst.
 
-Hast du ein Gerät verloren, auf dem ein Passkey gespeichert war? Melde dich auf anderem Weg an und entferne diesen Passkey.
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
 
-Du kannst dich immer mit einem Code anmelden, der an deine E-Mail-Adresse geschickt wird. Wenn du deinen letzten Passkey entfernst, sperrst du dich also nicht aus.
+### Die Passkey-Abfrage öffnet sich nicht [#the-passkey-prompt-doesnt-open]
+
+Manche Browser öffnen sie erst nach einem Klick. Klicke auf **Mit Passkey fortfahren**. Öffnet sie sich trotzdem nicht, liegt der Passkey vielleicht auf einem anderen Gerät: Nutze eine andere Methode und füge dann auf diesem Gerät einen Passkey hinzu.
+
+### Du hast ein Gerät mit einem Passkey verloren [#you-lost-a-device-that-had-a-passkey-on-it]
+
+Melde dich auf anderem Weg an und entferne den Passkey unter **Bestätigung in zwei Schritten**.
+
+### Du hast deinen letzten Passkey entfernt [#you-removed-your-last-passkey]
+
+Du kannst dich immer mit einem Code anmelden, der an deine E-Mail-Adresse geschickt wird, du sperrst dich also nicht aus. Wenn der Passkey dein einziger zweiter Schritt war, ist die Bestätigung in zwei Schritten jetzt ausgeschaltet. Schalte sie mit einem neuen Passkey oder einer Authenticator-App wieder ein.
+
+## Verwandte Themen [#related]
+
+- [Bestätigung in zwei Schritten](/docs/help/privacy-and-security/two-step-verification)
+- [Dein Konto sicher halten](/docs/help/privacy-and-security/account-security)
+- [Anmeldemethoden und E-Mail-Adresse](/docs/help/account-and-billing/sign-in)

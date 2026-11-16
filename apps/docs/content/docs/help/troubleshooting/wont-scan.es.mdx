@@ -3,42 +3,63 @@ title: "Un código no se escanea"
 description: "Por qué un código QR no se escanea y cómo solucionar cada causa."
 ---
 
-Si la cámara del teléfono no reacciona a tu código, o solo lo lee a veces, repasa estas comprobaciones.
+Si la cámara del teléfono no reacciona a tu código, o solo lo lee a veces, la causa casi siempre es una de las que aparecen abajo. Empieza por averiguar cuál es.
 
-Empieza por la **Puntuación de escaneo** que aparece debajo de la vista previa en el [Playground](/playground). Haz clic en ella para ver qué comprobaciones fallan. Consulta [Comprobar un diseño con la puntuación de escaneo](/docs/help/designing/scan-score).
+- Si es un diseño en el [Playground](/playground), haz clic en la **Puntuación de escaneo** debajo de la vista previa. El panel **¿Se escaneará?** muestra primero las comprobaciones fallidas. Consulta [Comprueba un diseño con la puntuación de escaneo](/docs/help/designing/scan-score).
+- Si el código ya está impreso, haz una foto y súbela al [verificador de escaneo](/tools/scan-checker). Muestra lo que dice el código y qué tan bien se lee.
 
-Si el código ya está impreso, haz una foto y súbela al [verificador de escaneo](/tools/scan-checker). Te muestra lo que dice el código y comprueba lo bien que se lee.
+## La cámara no reacciona en absoluto [#the-camera-doesnt-react-at-all]
 
-## Causas comunes [#common-causes]
+### Poco contraste, o un código claro sobre fondo oscuro [#low-contrast-or-a-light-code-on-a-dark-background]
 
-### Contraste bajo o código claro sobre fondo oscuro [#low-contrast-or-light-on-dark]
+Los lectores buscan cuadrados oscuros sobre un fondo claro y se rinden cuando ambos son demasiado parecidos. Oscurece el código o aclara el fondo, e invierte los colores si el código es la parte clara. Compruébalo: la comprobación **Contraste** de la puntuación de escaneo se supera con 4.5:1 o más. Consulta [Elige colores que se escaneen](/docs/help/designing/colors-and-contrast).
 
-Los escáneres buscan cuadrados oscuros sobre un fondo claro. Oscurece el código o aclara el fondo, y evita los códigos claros sobre fondos oscuros. Consulta [Elige colores que se escaneen bien](/docs/help/designing/colors-and-contrast).
+<Diagram id="wont-scan-contrast" />
 
-### Un logo cubre demasiado [#a-logo-covers-too-much]
+### Sin un borde despejado alrededor del código [#no-clear-border-around-the-code]
 
-Ajusta **Corrección de errores** a **Alta** en la pestaña **Diseño**. Consulta [Añadir un logo](/docs/help/designing/logos).
+Los lectores necesitan espacio vacío alrededor del código para encontrar sus bordes. En la pestaña **Diseño**, establece **Relleno** en **Estándar** o **Grande**, y evita que texto o gráficos toquen el código. Compruébalo: se supera la comprobación **Zona de silencio**.
 
-### Formas de ojos poco habituales [#unusual-eye-shapes]
-
-Los ojos de esquina circulares y ondulados fallan en algunas aplicaciones de escáner. Los ojos cuadrados, redondeados y de engranaje se leen en todas partes.
-
-### Sin un borde despejado [#no-clear-border]
-
-Los escáneres necesitan espacio vacío alrededor del código. Ajusta **Relleno** a **Estándar** o **Grande**, y no dejes que otros elementos gráficos toquen el código.
+<Diagram id="wont-scan-quiet-zone" />
 
 ### Impreso demasiado pequeño [#printed-too-small]
 
-Haz el código aproximadamente una décima parte de la distancia de escaneo: 2 cm para una tarjeta leída a 20 cm, 10 cm para un póster leído a 1 m. La [calculadora de tamaño de impresión](/tools/print-size) lo calcula por ti.
+Un código se escanea desde una distancia de unas diez veces su ancho, así que un código de 2 cm leído desde el otro lado de una sala falla. Imprímelo a aproximadamente una décima parte de la distancia de escaneo: 2 cm para una tarjeta leída a 20 cm, 10 cm para un póster leído a 1 m. La [calculadora de tamaño de impresión](/tools/print-size) lo calcula para tu código. Compruébalo: escanea una impresión de prueba desde la distancia real.
+
+<Diagram id="wont-scan-print-size" />
+
+## Se escanea solo a veces [#it-scans-only-sometimes]
+
+### Un logotipo cubre demasiado [#a-logo-covers-too-much]
+
+La corrección de errores solo puede reconstruir una parte del código. En la pestaña **Diseño**, establece **Corrección de errores** en **Alta**, o reduce el logotipo. Compruébalo: se supera la comprobación **Logotipo**. Consulta [Añade un logotipo](/docs/help/designing/logos).
+
+### Ojos circulares o rizados [#circle-or-curly-eyes]
+
+Algunas apps de lectura no reconocen los ojos de las esquinas redondos o rizados. Cambia a ojos cuadrados, redondeados o de engranaje. Compruébalo: se supera la comprobación **Forma del ojo**.
+
+<Diagram id="wont-scan-eyes" />
 
 ### Demasiado contenido [#too-much-content]
 
-Un código QR estático que contiene mucho texto se vuelve denso y difícil de leer cuando es pequeño. Usa en su lugar un código QR dinámico: solo contiene un enlace corto. Consulta [Estático o dinámico](/docs/help/getting-started/static-vs-dynamic).
+Un código QR estático que contiene un texto o una dirección largos se vuelve denso, y los códigos densos fallan cuando son pequeños. Haz que el código sea dinámico: solo contendrá un enlace corto. Consulta [Estático o dinámico, ¿cuál necesitas?](/docs/help/getting-started/static-vs-dynamic).
 
-### La impresión en sí [#the-print-itself]
+## Se escanea en pantalla pero no impreso [#it-scans-on-screen-but-not-in-print]
 
-La impresión borrosa, las superficies brillantes que reflejan la luz y las superficies curvas o dobladas hacen que los códigos sean más difíciles de leer. Imprime con un archivo vectorial (SVG, EPS o un PDF desde **Listo para imprimir**) y prueba una copia antes de imprimir muchas.
+### Impresión borrosa, o superficie brillante o curva [#blurry-print-or-a-glossy-or-curved-surface]
+
+Las imágenes de píxeles impresas en grande pierden nitidez, y las superficies brillantes o curvas reflejan la luz hacia la cámara. Descarga un SVG, un EPS o un PDF desde la pestaña **Listo para imprimir**, imprime sobre una superficie mate y mantén el código plano. Compruébalo: imprime una copia y escanéala con dos teléfonos distintos antes de imprimir más. Consulta [Descarga e imprime un código QR](/docs/help/getting-started/download-and-print).
 
 ## Se escanea, pero muestra un error [#it-scans-but-shows-an-error]
 
-Si la cámara lee el código pero ves una página como "Código QR no encontrado", consulta [Un escaneo muestra una página de error](/docs/help/troubleshooting/error-pages).
+La cámara lee el código y abre una página como "Código QR no encontrado". Eso no es un problema de escaneo: consulta [Un escaneo muestra una página de error](/docs/help/troubleshooting/error-pages).
+
+## Sigues atascado [#still-stuck]
+
+[Contacta con soporte](/docs/help/contact) con una foto del código impreso y el teléfono con el que lo probaste.
+
+## Relacionado [#related]
+
+- [Comprueba un diseño con la puntuación de escaneo](/docs/help/designing/scan-score)
+- [Elige colores que se escaneen](/docs/help/designing/colors-and-contrast)
+- [Descarga e imprime un código QR](/docs/help/getting-started/download-and-print)

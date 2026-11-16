@@ -10,6 +10,7 @@
     "./config": "./config.ts",
     "./events": "./events.ts",
     "./featurebase": "./featurebase.tsx",
+    "./featurebase-gate": "./featurebase-gate.tsx",
     "./featurebase-launcher": "./featurebase-launcher.ts",
     "./identity": "./identity.ts",
     "./keys": "./keys.ts",

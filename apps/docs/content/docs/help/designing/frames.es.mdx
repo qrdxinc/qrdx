@@ -3,35 +3,55 @@ title: "Añade un marco y una llamada a la acción"
 description: "Pon un borde y un mensaje corto como \"Escanéame\" alrededor de tu código QR."
 ---
 
-Un marco le dice a la gente qué obtiene al escanear.
+Un marco pone un borde y un mensaje corto alrededor del código, para que la gente sepa qué obtiene al hacer el escaneo. Los marcos quedan fuera del código y nunca cubren ninguno de sus cuadrados, así que nunca perjudican el escaneo.
 
 ## Añade un marco [#add-a-frame]
 
-1. En el [Playground](/playground?tab=design&section=frame), abre la pestaña **Diseño** y después **Marco**.
-2. Elige un marco. Busca por nombre o elige un grupo: **Clásicos** incluye los marcos integrados, entre ellos Arrow, Standard Box, Square Border, Striked Box, Halloween y Dot Ring. Al elegir un marco, reemplazas el que tenías. Para usar tu propio diseño, inicia sesión y elige **Subir SVG** junto al buscador: las formas y los colores del SVG se convierten en un marco.
-3. Escribe tu texto en **Etiqueta** o elige uno predefinido: Scan me, Scan for menu, Join Wi-Fi, Leave a review, Follow us, Pay here, Save contact o Download the app.
-4. Define el **Color del marco**, el **Color del texto** y el **Tamaño del texto**. Algunos marcos también tienen una **Segunda línea**. Arrow, Standard Box, Square Border y Dot Ring toman en cambio el color de los puntos del código, y Striked Box y Halloween conservan sus propios colores.
+1. En el [Playground](/playground?tab=design&section=frame), abre la pestaña **Diseño** y luego **Marco**.
+2. Elige un marco. Busca por nombre o explora los grupos: **Clásicos** contiene los marcos integrados, entre ellos Arrow, Standard Box, Square Border, Striked Box, Halloween y Dot Ring; después vienen las colecciones de la biblioteca de marcos; **Guardados** contiene los marcos que guardaste. Al elegir un marco, este reemplaza al que tenías.
+3. Escribe tu texto en **Etiqueta**, o elige una de las **Ideas de etiqueta**: Escanéame, Escanea para ver el menú, Conéctate al Wi-Fi, Deja una reseña, Síguenos, Paga aquí, Guarda el contacto o Descarga la app. Si eliges una idea de etiqueta sin ningún marco activo, se añade el marco predeterminado.
+4. Define el **Color del marco**, el **Color del texto** y el **Tamaño del texto**. Algunos marcos también tienen una **Segunda línea**, un **Color de acento** o un **Icono**.
 
-{/* Shaped codes (feat/heart-silhouette-shapes) */}
+Arrow, Standard Box, Square Border y Dot Ring toman el color de los puntos del código en lugar de un color de marco, y Striked Box y Halloween conservan sus propios colores.
 
-## Coloca el código en una forma [#put-the-code-in-a-shape]
+<Shot id="design-frame" />
 
-El mismo selector tiene un grupo **Códigos con forma**. **Dot circle** y **Heart** colocan el código dentro de un círculo o un corazón de puntos decorativos. **Silhouette** rellena una forma tuya: sube un PNG, JPEG o SVG con una forma oscura o sólida sobre un fondo claro o transparente. Solo se conserva su contorno, nunca la imagen.
+Para usar tu propio diseño, inicia sesión y haz clic en **Subir SVG** junto a la búsqueda. Las formas y los colores del SVG se convierten en un marco.
 
-Los lectores solo leen el código del centro, así que imprime un código con forma más grande que uno cuadrado para la misma distancia de escaneo. Una forma ocupa el lugar de un marco: al elegir una, se quita el otro. Si una forma es demasiado delgada para contener el código, se rechaza con un mensaje.
+## Pon el código dentro de una forma [#put-the-code-in-a-shape]
 
-{/* end shaped codes */}
+El mismo selector tiene un grupo **Códigos con forma**. **Dot circle** y **Heart** colocan el código dentro de un círculo o de un corazón hechos de puntos decorativos. **Silhouette** rellena una forma tuya: sube un PNG, JPEG o SVG con una forma oscura o sólida sobre un fondo claro o transparente. Solo se conserva su contorno, nunca la imagen.
 
-## Los marcos nunca perjudican el escaneo [#frames-never-hurt-scanning]
+Los lectores solo leen el código del centro, así que imprime un código con forma más grande que uno cuadrado para la misma distancia de escaneo. Una forma ocupa el lugar de un marco: al elegir una, se quita el otro.
 
-Los marcos quedan fuera del código. Nunca cubren ninguno de sus cuadrados.
+## Mantén el texto corto [#keep-the-text-short]
 
-Mantén el texto del marco corto. Tres o cuatro palabras se leen mejor a distancia.
+Tres o cuatro palabras se leen mejor a distancia. Di qué obtiene la gente, como "Escanea para ver el menú", en lugar de lo que debe hacer con su teléfono.
 
 ## Descarga con el marco [#download-with-the-frame]
 
-El marco forma parte de todas las descargas, en todos los formatos. Para imprimir, consulta [Descargar e imprimir un código QR](/docs/help/getting-started/download-and-print).
+El marco forma parte de todas las descargas, en todos los formatos. Para imprimir, consulta [Descarga e imprime un código QR](/docs/help/getting-started/download-and-print).
+
+## Comparte tu marco [#share-your-frame]
+
+Un marco que subiste o tomaste de la biblioteca se puede publicar por separado: haz clic en **Publicar marco** en la sección **Marco**. Se publica en la [comunidad](/community) con los mismos términos que un diseño publicado. Consulta [Guarda y reutiliza un diseño](/docs/help/designing/save-a-design).
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### El campo Etiqueta está desactivado [#the-label-field-is-disabled]
+
+No hay ningún marco activo. El campo dice "Primero elige un marco": elige un marco, o elige una idea de etiqueta, que añade uno.
+
+### El color del marco no tiene efecto [#frame-color-has-no-effect]
+
+El marco que elegiste toma el color de los puntos del código (Arrow, Standard Box, Square Border, Dot Ring) o conserva sus propios colores (Striked Box, Halloween). Cambia el color de **Puntos** en **Colores**, o elige otro marco.
+
+### Se rechaza una silueta [#a-silhouette-is-refused]
+
+La forma es demasiado delgada para contener el código. Sube una imagen con una forma más gruesa y sólida.
 
 ## Relacionado [#related]
 
+- [Descarga e imprime un código QR](/docs/help/getting-started/download-and-print)
+- [Guarda y reutiliza un diseño](/docs/help/designing/save-a-design)
 - [Marcos e impresión para desarrolladores](/docs/features/frames)

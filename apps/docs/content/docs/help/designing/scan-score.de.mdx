@@ -1,41 +1,51 @@
 ---
 title: "Design mit dem Scan-Score prüfen"
-description: "Der Scan-Score testet dein Design so, wie eine Handykamera es sieht, und zeigt dir, was du korrigieren solltest."
+description: "Der Scan-Score testet dein Design so, wie eine Handykamera es sieht, und zeigt dir, was du verbessern solltest."
 ---
 
-Jedes Design im Playground bekommt einen **Scan-Score** von 0 bis 100. Er wird unter der Vorschau angezeigt, zum Beispiel „Scan-Score 92 · Great".
+Jedes Design im [Playground](/playground) bekommt einen **Scan-Score** von 0 bis 100. Er steht unter der Vorschau, zum Beispiel „Scan-Score 92 · Great". Der Score testet den Code so, wie es eine Handykamera tun würde. So kannst du Probleme beheben, bevor du druckst.
+
+<Shot id="playground-content" />
 
 ## Was der Score bedeutet [#what-the-score-means]
 
-- **Great** (85 oder mehr): bereit zum Drucken.
-- **OK** (65 bis 84): Er sollte sich scannen lassen, aber prüfe die Warnungen.
-- **Risky** (unter 65): Korrigiere die mit einem Kreuz markierten Prüfungen.
-- **Fails**: Der Code wurde im Test nicht dekodiert, oder der Kontrast ist viel zu niedrig. Drucke ihn nicht.
+| Bewertung | Score | Was zu tun ist |
+| --- | --- | --- |
+| **Great** | 85 oder mehr | Bereit zum Drucken. |
+| **OK** | 65 bis 84 | Er sollte sich scannen lassen. Lies die Warnungen. |
+| **Risky** | Unter 65 | Behebe die Prüfungen, die mit einem Kreuz markiert sind. |
+| **Fails** | | Der Code wurde bei der größten Testgröße nicht dekodiert, oder der Kontrast ist viel zu niedrig. Drucke ihn nicht. |
 
-## Sieh, was zu korrigieren ist [#see-what-to-fix]
+## Sieh, was du beheben musst [#see-what-to-fix]
 
 Klicke auf den Score. Das Panel **Will it scan?** listet alle Prüfungen auf, die fehlgeschlagenen zuerst.
 
-Der Score prüft Folgendes:
+<Shot id="scan-score-panel" />
 
-- **Decoding**: Der Code wird in kleinen Größen mit einer kameraähnlichen Unschärfe gelesen.
-- **Contrast**: Code und Hintergrund sollten sich um mindestens 4.5:1 unterscheiden.
+Das sind die Prüfungen:
+
+- **Decoding**: Der Code wird in drei Größen mit einer kameraähnlichen Unschärfe gelesen.
+- **Contrast**: Code und Hintergrund sollten sich um mindestens 4,5:1 unterscheiden.
 - **Dark on light**: Dunkle Codes auf hellem Hintergrund lassen sich in mehr Apps scannen.
-- **Logo size**: Ein Logo darf nicht mehr abdecken, als die Fehlerkorrektur wiederherstellen kann.
-- **Eye shape**: Runde und geschwungene Augen scheitern in manchen Scanner-Apps.
-- **Clear space**: der leere Rand um den Code. Vier Module sind ideal.
+- **Logo**: Ein Logo darf nicht mehr abdecken, als die Fehlerkorrektur wiederherstellen kann, und darf keine Eckaugen berühren.
+- **Eye shape**: Kreisförmige und geschwungene Augen scheitern in manchen Scanner-Apps.
+- **Quiet zone**: der leere Rand um den Code. Ideal sind vier Module.
 
 ## Schnelle Lösungen [#quick-fixes]
 
-- Niedriger Kontrast: Mach den Code dunkler oder den Hintergrund heller. Siehe [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast).
-- Logo verdeckt zu viel: Stelle **Error correction** auf **High**. Siehe [Logo hinzufügen](/docs/help/designing/logos).
-- Augen: Wechsle zu quadratischen, abgerundeten oder zahnradförmigen Augen.
-- Ruhezone: Stelle **Padding** auf **Standard** oder **Large**.
+| Die Prüfung | Die Lösung |
+| --- | --- |
+| Niedriger Kontrast | Mache den Code dunkler oder den Hintergrund heller. Siehe [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast). |
+| Logo deckt zu viel ab | Stelle **Error correction** auf **High** oder mache das Logo kleiner. Siehe [Logo hinzufügen](/docs/help/designing/logos). |
+| Eye shape | Wechsle zu quadratischen, abgerundeten oder zahnradförmigen Augen. |
+| Quiet zone | Stelle **Padding** auf **Standard** oder **Large**. |
 
 ## Gedruckten Code prüfen [#check-a-printed-code]
 
-Der Score testet das Design auf dem Bildschirm. Um einen bereits gedruckten Code zu testen, mach ein Foto und ziehe es in den [Scan-Checker](/tools/scan-checker). Das Bild verlässt dein Gerät nie.
+Der Score testet das Design am Bildschirm. Um einen Code zu testen, den du schon gedruckt hast, mache ein Foto und lade es in den [Scan-Checker](/tools/scan-checker) hoch. Das Bild verlässt dein Gerät nie.
 
 ## Verwandte Themen [#related]
 
 - [Ein Code lässt sich nicht scannen](/docs/help/troubleshooting/wont-scan)
+- [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast)
+- [QR-Code herunterladen und drucken](/docs/help/getting-started/download-and-print)

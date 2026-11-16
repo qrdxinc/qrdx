@@ -1,27 +1,36 @@
 ---
 title: CLI
-description: Generate styled QR codes as SVG, PNG, WebP or vector EPS from your terminal or CI with the @qrdx/cli command-line tool, one at a time or a whole CSV with qrdx batch.
+description: Generate styled QR codes as SVG, PNG, WebP or vector EPS from your terminal or CI with @qrdx/cli, one at a time with qrdx generate or a whole CSV with qrdx batch.
 icon: Terminal
 ---
 
-`@qrdx/cli` renders the same QR codes as the playground and the [`qrdx` library](/docs/getting-started) from the command line. It never prompts in scripts and CI, and when you run `qrdx generate` with no arguments in a terminal it asks for the content and options step by step.
+By the end of this page you will have QR code files made from your terminal, in the same styles as the playground, and a folder of codes made from a CSV in one command, with nothing uploaded anywhere.
+
+`@qrdx/cli` renders the same QR codes as the playground and the [`qrdx` library](/docs/getting-started) from the command line. In scripts and CI it never prompts; run `qrdx generate` with no arguments in a terminal and it asks for the content and options step by step.
 
 <NpmStatus package="@qrdx/cli" />
 
-```bash
+## Before you start
+
+- Node.js 22 or later.
+- PNG and WebP output use [sharp](https://sharp.pixelplumbing.com), an optional dependency npm installs where your platform supports it; SVG and EPS work without it.
+- The `qrdx` npm package is the React library. The CLI is only in `@qrdx/cli`.
+
+## 1. Make one code
+
+Run it once with `npx`, or install it globally to get the `qrdx` command:
+
+```bash title="Terminal"
 npx @qrdx/cli generate "https://example.com" -o qr.svg
-```
 
-Install it globally to get the `qrdx` command:
-
-```bash
 npm install -g @qrdx/cli
 qrdx generate "https://example.com" -o qr.png --size 1024
 ```
 
-It needs Node.js 22 or later. PNG and WebP output use [sharp](https://sharp.pixelplumbing.com), an optional dependency npm installs where your platform supports it; SVG and EPS work without it. The `qrdx` npm package is the React library: the CLI is only in `@qrdx/cli`.
-
-## Output formats
+```txt title="Output"
+◇  ✔  Saved to qr.png (1024×1024)
+└  Done!
+```
 
 The file extension picks the format, or use `--format` when the file name has none.
 
@@ -34,56 +43,11 @@ The file extension picks the format, or use `--format` when the file name has no
 
 EPS files are vector PostScript. PNG and JPEG logos are embedded as they are; other logo formats are converted with sharp when it's installed, and otherwise left out with a warning.
 
-## Options
+## 2. Style it
 
-| Flag | Default | Description |
-| --- | --- | --- |
-| `-o`, `--output` | `qr.svg` | Output file |
-| `--format` | from the extension | `svg`, `png`, `webp` or `eps` |
-| `--size` | `512` | Output size (see above) |
-| `-l`, `--level` | `Q` | Error correction: `L`, `M`, `Q` or `H` |
-| `--body` | `square` | Data module [pattern](/docs/features/patterns) |
-| `--eye` | `square` | Corner eye pattern |
-| `--dot` | `square` | Corner eye dot pattern |
-| `--fg`, `--bg` | `#000000`, `#ffffff` | Foreground and background: a hex color or a JSON gradient |
-| `--eye-color`, `--dot-color` | `--fg` | Corner eye and eye dot colors |
-| `--logo` | | Center logo image URL (use with `--level H`) |
-| `--margin` | `0` | Quiet zone, in modules |
-| `--template` | | `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox` or `Halloween` |
-| `--frame` | | Call-to-action [frame](/docs/features/frames): any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `rounded-border`, `circle`, `sticker` or `phone` (see [all of them](/docs/styles#frames)) |
-| `--frame-text` | `Scan me` | Frame label, up to 24 characters |
-| `--frame-color`, `--frame-text-color` | | Frame and label colors (hex) |
-
-`qrdx --help` lists every pattern name. Invalid values exit with code `1` and a message listing the accepted values.
-
-## Many codes from a CSV
-
-`qrdx batch` writes a static QR code for every row of a CSV file into a folder:
-
-```bash
-qrdx batch products.csv -o codes --format png --size 1024 --body circle
-```
-
-It reads the same columns as the [bulk generator](/tools/bulk): the content from a column named `value`, `url`, `link`, `data`, `content`, `text` or `qr` (else the first column), and file names from one named `file name`, `name`, `label`, `id`, `title` or `sku` (else `qr-00001`, `qr-00002` and so on). Choose others by header name or column number:
-
-| Flag | Default | Description |
-| --- | --- | --- |
-| `-o`, `--out` | `qr-codes` | Folder for the codes |
-| `--format` | `svg` | `svg`, `png` or `eps` |
-| `--value-column` | guessed | Column with each code's content |
-| `--name-column` | guessed | Column with file names |
-| `--no-header` | | The first row is a code, not column names |
-| `--jobs` | `4` for SVG, `8` otherwise | Codes rendered at a time |
-
-Every style option above applies to all the codes. The CSV is read as a stream and each code is saved as soon as it's made, so the command has no row limit: on a laptop, 10,000 SVG codes took about 40 seconds and under 200 MB of memory. Nothing is uploaded and no account is needed. Rows that can't be encoded are skipped and listed with the reason in `errors.csv` in the output folder.
-
-To print [dynamic codes](/docs/dynamic-qr-codes) in bulk, create them first (the dashboard's CSV import or the API) and run `qrdx batch` on the results CSV the import gives you, with `--value-column short_link`.
-
-## Examples
-
-```bash
+```bash title="Terminal"
 # High-resolution PNG for print
-qrdx generate "https://example.com" -o qr.png --size 2048 --level H
+qrdx generate "https://example.com" -o print.png --size 2048 --level H
 
 # Vector EPS, 2 inches wide, for a print shop
 qrdx generate "https://example.com" -o qr.eps --size 144
@@ -102,8 +66,96 @@ qrdx generate "https://example.com/menu" --frame banner-bottom --frame-text "Sca
 qrdx generate "WIFI:T:WPA;S:MyNetwork;P:MyPassword;;" -o wifi.svg
 ```
 
-To print a [dynamic QR code](/docs/dynamic-qr-codes), pass its short link (`https://qrdx.dev/q/<slug>`) as the data.
+```txt title="Output of the frame example"
+◇  ✔  Saved to menu.png (635×727)
+```
+
+With a frame, `--size` is the code's width and the frame adds to the image. To print a [dynamic QR code](/docs/dynamic-qr-codes), pass its short link (`https://qrdx.dev/q/<slug>`) as the data.
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-o`, `--output` | `qr.svg` | Output file |
+| `--format` | from the extension | `svg`, `png`, `webp` or `eps` |
+| `--size` | `512` | Output size (see above) |
+| `-l`, `--level` | `Q` | Error correction: `L`, `M`, `Q` or `H` |
+| `--body` | `square` | Data module [pattern](/docs/features/patterns) |
+| `--eye` | `square` | Corner eye pattern |
+| `--dot` | `square` | Corner eye dot pattern |
+| `--fg`, `--bg` | `#000000`, `#ffffff` | Foreground and background: a hex color or a JSON gradient (`linear`, `radial` or `angular`) |
+| `--eye-color`, `--dot-color` | `--fg` | Corner eye and eye dot colors |
+| `--logo` | | Center logo image URL (use with `--level H`) |
+| `--no-logo` | | Skip the logo prompt in interactive mode |
+| `--margin` | `0` | Quiet zone, in modules |
+| `--template` | | A frame drawn as a template: `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween` or `DotRing` |
+| `--frame` | | Call-to-action [frame](/docs/features/frames): any of the {facts.frameStyles} built-in frames, such as `banner-bottom`, `rounded-border`, `circle`, `sticker` or `phone` (see [all of them](/docs/styles#frames)) |
+| `--frame-text` | `Scan me` | Frame label, up to 24 characters; `""` hides it |
+| `--frame-color`, `--frame-text-color` | | Frame and label colors (hex) |
+
+`qrdx --help` lists every pattern name. An invalid value exits with code `1` and lists what is accepted:
+
+```txt title="qrdx generate https://example.com --body nope -o bad.svg"
+✗ Invalid --body "nope". Expected one of: circle, circle-large, square, diamond, circle-mixed, pacman, rounded, small-square, vertical-line, horizontal-line, liquid, liquid-horizontal, liquid-vertical, classy, classy-rounded, leaf, plus, hexagon, star, heart, random-dots, mosaic, octagon
+```
+
+## 3. Make many codes from a CSV
+
+`qrdx batch` writes a static QR code for every row of a CSV file into a folder:
+
+```csv title="products.csv"
+sku,url
+A-100,https://example.com/products/a-100
+A-101,https://example.com/products/a-101
+```
+
+```bash title="Terminal"
+qrdx batch products.csv -o codes --format png --size 1024 --body circle
+```
+
+```txt title="Output"
+2 rows · 2 saved
+✔  Saved 2 PNG codes to codes in 0.2 s
+```
+
+The folder holds `A-100.png` and `A-101.png`. It reads the same columns as the [bulk generator](/tools/bulk): the content from a column named `value`, `url`, `link`, `data`, `content`, `text` or `qr` (else the first column), and file names from one named `file name`, `name`, `label`, `id`, `title` or `sku` (else `qr-00001`, `qr-00002` and so on). Choose others by header name or column number:
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-o`, `--out` | `qr-codes` | Folder for the codes |
+| `--format` | `svg` | `svg`, `png` or `eps` |
+| `--value-column` | guessed | Column with each code's content |
+| `--name-column` | guessed | Column with file names |
+| `--no-header` | | The first row is a code, not column names |
+| `--jobs` | `4` for SVG, `8` otherwise | Codes rendered at a time, 1 to 64 |
+
+Every style option above applies to all the codes. The CSV is read as a stream and each code is saved as soon as it's made, so the command has no row limit: on a laptop, 10,000 SVG codes took about 40 seconds and under 200 MB of memory. Nothing is uploaded and no account is needed. Rows that can't be encoded are skipped and listed with the reason in `errors.csv` in the output folder.
+
+To print [dynamic codes](/docs/dynamic-qr-codes) in bulk, create them first (the dashboard's CSV import or [`POST /v1/codes`](/docs/developers/api/create-codes)) and run `qrdx batch` on the results CSV the import gives you, with `--value-column short_link`.
+
+## If something goes wrong
+
+### `Invalid --body "…"` (or `--eye`, `--dot`, `--frame`)
+
+The value isn't one of the pattern or frame names. The message lists the accepted ones; `qrdx --help` lists them too.
+
+### PNG or WebP output fails, SVG works
+
+sharp isn't installed for your platform. Reinstall `@qrdx/cli` with network access so npm can fetch the optional dependency, or output SVG or EPS.
+
+### `--jobs` is refused
+
+It takes a number from 1 to 64.
+
+### A row is missing from the output folder
+
+Its content couldn't be encoded (empty, or too long for a QR code). Open `errors.csv` in the output folder for the row and the reason.
 
 ## Use it from an AI coding agent
 
 The repository's [`generate-qr` skill](https://github.com/qrdxinc/qrdx/tree/main/skills/generate-qr) teaches agents such as Claude Code to call the CLI. For agents that support MCP, the [MCP server](/docs/developers/mcp) needs no install at all.
+
+## Related
+
+- [QR code image API](/docs/developers/image-api): the same styles from a URL, with no install
+- [Bulk generator](/tools/bulk): the CSV workflow in the browser
+- [Patterns](/docs/features/patterns) and [frames](/docs/features/frames): every value the style flags take
+- [Changelog](/changelogs): CLI releases

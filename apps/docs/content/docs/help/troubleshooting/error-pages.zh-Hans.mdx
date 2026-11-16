@@ -1,47 +1,62 @@
 ---
 title: "扫描后显示错误页面"
-description: "各类二维码错误页面的含义，从“未找到二维码”到“此活动已结束”，以及对应的解决方法。"
+description: "各个二维码错误页面的含义，从“未找到二维码”到“该活动已结束”，以及如何修复。"
 ---
 
-当动态二维码无法打开其目标地址时，扫描者会看到一个简短的页面。下面说明每种页面的含义。
+当动态二维码无法打开其目标地址时，扫描者会看到一个简短的页面。下面的每个页面都对应一种情况，包含原因、修复方法以及如何确认已经修好。大多数情况都源于二维码自身的设置。
 
-## “未找到二维码” [#qr-code-not-found]
+## “该活动已暂停”“该活动尚未开始”或“该活动已结束” [#this-campaign-is-paused-this-campaign-hasnt-started-yet-or-this-campaign-has-ended]
 
-这是 404 页面：该短链接不属于任何二维码。
+该二维码已暂停、尚未到达开始日期、已超过结束日期，或已达到扫描次数上限。
 
-- 该二维码已被**永久删除**。
-- 二维码在打印后，其**后缀**或**域名**被更改。
-- 拥有该二维码的账户已被删除。
-- 短链接是手动输入的，并且有拼写错误。短链接区分大小写。
+1. 在 **Codes** 中打开该二维码，进入 **Settings** 标签页，然后选择 **Access & schedule**。
+2. 关闭 **Pause code**，修改 **Starts** 或 **Ends**，或提高 **Scan limit**。
+3. 点击 **Save changes**。
 
-已删除的二维码无法恢复。如果你更改了后缀，可以通过**编辑链接**把它改回来。
+再次扫描：目标地址即可打开。如果希望在二维码暂停或结束期间把用户引导到有用的地方，请填写 **Fallback URL**。参见[暂停、定时或限制二维码](/docs/help/dynamic-codes/pause-schedule-limit)。
 
-## “此二维码已停用” [#this-qr-code-is-no-longer-active]
-
-该二维码已**归档**或在**回收站**中。在**二维码**中选择**取消归档**或**恢复**。参见[归档、删除和恢复二维码](/docs/help/dynamic-codes/archive-and-delete)。
-
-QRdx 也会停用指向有害网站的二维码。
-
-## “此活动已暂停”“尚未开始”或“已结束” [#this-campaign-is-paused-hasnt-started-yet-or-has-ended]
-
-这些提示来自二维码自身的设置：暂停、开始或结束日期，或扫描次数上限。你可以在**访问与排期**中修改这些设置。参见[暂停、定时或限制二维码](/docs/help/dynamic-codes/pause-schedule-limit)。
+<Shot id="scan-ended" />
 
 ## “此二维码受密码保护” [#this-qr-code-is-password-protected]
 
-该二维码设置了密码。输入密码后点击**继续**。参见[用密码保护二维码](/docs/help/dynamic-codes/password)。
+该二维码设置了密码，这个页面就是用来输入密码的。在 **Password** 中输入密码并点击 **Continue**；浏览器会保持解锁状态 6 小时。如需移除密码，请打开 **Access & schedule** 并点击 **Remove password**。参见[用密码保护二维码](/docs/help/dynamic-codes/password)。
 
-## “请求过多” [#too-many-requests]
+## “此二维码已失效” [#this-qr-code-is-no-longer-active]
 
-同一网络在几秒内打开了大量二维码。请稍等片刻，然后重新扫描。
+该二维码已归档或在回收站中。在 **Codes** 中打开该二维码的菜单并选择 **Unarchive**，或将列表筛选为 **Trash** 并选择 **Restore**。在免费版中，你需要有一个空闲的二维码名额。再次扫描以确认。参见[归档、删除和恢复二维码](/docs/help/dynamic-codes/archive-and-delete)。
+
+如果二维码因收到滥用举报而被 QRdx 停用，也会显示此页面。
+
+## “未找到二维码” [#qr-code-not-found]
+
+该短链接不属于任何二维码。可能发生了以下情况之一：
+
+- 二维码已被永久删除，或其所属账户已被删除。已删除的二维码无法恢复。
+- 二维码印刷后，其后缀部分（back-half）被修改过。打开 **Edit link** 并改回原来的内容。
+- 链接是手动输入的，且输入有误。短链接区分大小写。
 
 ## “此域名尚未连接” [#this-domain-isnt-connected-yet]
 
-该二维码使用了自定义域名，但其 DNS 设置尚未完成。请在控制台的**域名**页面中检查该域名。
+该二维码使用了自定义域名，但其 DNS 设置尚未完成。前往 **Settings** → **Domains**，添加所显示的记录并点击 **Verify**。当域名状态变为 **Verified** 后，此页面就会消失。参见[使用你自己的域名](/docs/help/domains/custom-domains)。
 
-## 页面显示“找不到此页面” [#this-page-could-not-be-found-on-a-page]
+## “请求过多” [#too-many-requests]
 
-位于 `/p/…` 的移动页面在被删除或地址输入有误时，会显示此提示。
+同一个网络在几秒内打开了大量二维码。请稍等片刻后再次扫描。二维码本身没有问题。
 
-## “此表单目前不接受回复” [#this-form-isnt-accepting-responses-right-now]
+## 移动端页面显示“未找到页面” [#page-not-found-on-a-mobile-page]
 
-工作区已达到每月表单回复数量上限。参见[用表单收集回复](/docs/help/pages-and-forms/forms#monthly-limits)。
+位于 `/p/…` 的托管页面已被删除，或其地址输入有误。请在 **Pages & forms** 中检查该页面是否存在，并确认二维码指向它。参见[更改已印刷二维码打开的内容](/docs/help/dynamic-codes/change-the-type)。
+
+## “此表单目前不接受回复。” [#this-form-isnt-accepting-responses-right-now]
+
+工作区已达到每月表单回复数量上限。下个月会重新开放，升级后则会立即开放。参见[用表单收集答案](/docs/help/pages-and-forms/forms#monthly-limits)。
+
+## 仍然无法解决 [#still-stuck]
+
+请[联系支持团队](/docs/help/contact)，并附上该二维码的短链接和页面上显示的准确文字。
+
+## 相关内容 [#related]
+
+- [暂停、定时或限制二维码](/docs/help/dynamic-codes/pause-schedule-limit)
+- [归档、删除和恢复二维码](/docs/help/dynamic-codes/archive-and-delete)
+- [二维码打开了错误的页面](/docs/help/troubleshooting/wrong-destination)

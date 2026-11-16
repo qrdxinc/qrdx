@@ -1,41 +1,80 @@
 ---
-title: "使用表单收集反馈"
-description: "创建反馈表单、问卷调查或注册表单，并在控制台中查看收到的回复。"
+title: "使用表单收集回复"
+description: "创建反馈表单、调查问卷或注册表单,并在控制台中查看回复。"
 ---
+
+托管页面上的表单可以收集扫描您二维码的用户提交的反馈、调查答案或注册信息。回复会汇总到控制台,您还可以将其下载为电子表格。
+
+<Callout type="info">
+  每个工作区每月可收集的回复数量:免费版 50 条,Pro 1,000 条,Business 10,000 条。新回复的邮件提醒包含在 Pro 和 Business 中。请参阅[套餐及其包含的内容](/docs/help/account-and-billing/plans)。
+</Callout>
 
 ## 创建表单 [#create-a-form]
 
-1. 前往 **Pages**，点击 **New page**。
-2. 选择 **Feedback & forms**。
-3. 选择一个模板：**Guest feedback**、**NPS survey** 或 **Sign-up form**。
-4. 点击 **Create page**，编辑问题，然后点击 **Publish**。
+### 1. 新建页面 [#1-start-a-new-page]
 
-你也可以在任意其他页面中添加 **Form** 区块。
+前往 **Pages & forms**,点击 **New page**。
+
+### 2. 选择 Feedback & forms [#2-pick-feedback--forms]
+
+选择 **Feedback & forms**,然后选择一个模板:**Guest feedback**、**NPS survey** 或 **Sign-up form**。
+
+### 3. 创建并编辑 [#3-create-and-edit]
+
+点击 **Create page**,然后在 **Blocks** 标签页中编辑问题。
+
+<Shot id="form-editor" />
+
+### 4. 发布 [#4-publish]
+
+点击 **Publish**。页面上线后,表单即可接收回复。
+
+您也可以在添加区块菜单中,为任意其他页面添加 **Form** 区块。
 
 ## 查看回复 [#read-the-responses]
 
-在 **Pages** 中，打开该页面的菜单（**⋯**），选择 **Responses**。
+在 **Pages & forms** 中,打开页面的菜单(**⋯**),选择 **Responses**。只有页面包含表单后,才会出现该菜单项。
 
-点击 **Export CSV**，即可将回复下载为电子表格。
+点击 **Export CSV**,即可将回复下载为电子表格。
 
-## 每条回复都收到邮件通知 [#get-an-email-for-each-response]
+<Shot id="form-responses" />
 
-在 Pro 和 Business 上，前往 **Settings** → **Notifications**，开启 **Form submissions**。
+## 每条回复都收到邮件 [#get-an-email-for-each-response]
 
-## 每月额度 [#monthly-limits]
+在 Pro 和 Business 中,前往 **Settings** → **Notifications**,开启 **Form submissions**。在 Business 中,您还可以在同一页面将回复发送到 Slack 或 Discord 频道。
 
-每个工作区每个日历月（UTC）可以收集一定数量的回复：
+## 每月上限 [#monthly-limits]
 
-- **免费版**：50 条。
-- **Pro**：1,000 条。
-- **Business**：10,000 条。
+回复按工作区和日历月(UTC)计数:
 
-达到额度后，访客会看到“This form isn't accepting responses right now.”。下个月表单会重新开始接收回复，升级后也会立即恢复。
+| 套餐 | 每月回复数 |
+| --- | --- |
+| 免费版 | 50 |
+| Pro | 1,000 |
+| Business | 10,000 |
+
+达到上限后,访问者会看到“This form isn't accepting responses right now. Please try again later.”。已有的回复会保留。下个月 1 日表单会恢复接收回复,升级套餐后也会立即恢复。
 
 ## 垃圾信息 [#spam]
 
-表单内置垃圾信息防护，无需任何设置。
+表单内置了垃圾信息防护:机器人检测、供机器人填写的隐藏字段,以及对单个访问者提交频率的限制。您无需进行任何设置。
+
+## 遇到问题时 [#if-something-goes-wrong]
+
+### 页面菜单中没有 Responses [#responses-isnt-in-the-pages-menu]
+
+该页面没有表单区块。请在编辑器中添加一个,然后发布。
+
+### 表单提示不接受回复 [#the-form-says-it-isnt-accepting-responses]
+
+工作区已达到本月上限。请等到下个月,或[升级](/pricing),表单会立即重新开放。
+
+### 有人说他们的答案被拒绝了 [#someone-says-their-answer-was-refused]
+
+他们在一分钟内提交了过多回复,被垃圾信息限制拦截。请让他们等待一分钟后重试。
 
 ## 相关内容 [#related]
 
+- [创建移动端页面](/docs/help/pages-and-forms/create-a-page)
+- [导出您的数据](/docs/help/account-and-billing/export-your-data)
 - [表单指南](/docs/forms-and-pages#forms)
