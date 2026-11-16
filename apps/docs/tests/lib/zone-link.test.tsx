@@ -67,8 +67,8 @@ describe("LocaleLink", () => {
     expect(docs).toContain('href="/es/docs/styles"');
     expect(docs).toContain("data-next-link");
 
-    const pricing = inSpanish(<LocaleLink href="/pricing">x</LocaleLink>);
-    expect(pricing).toBe('<a href="/es/pricing">x</a>');
+    const playground = inSpanish(<LocaleLink href="/playground">x</LocaleLink>);
+    expect(playground).toBe('<a href="/es/playground">x</a>');
   });
 });
 
@@ -94,8 +94,8 @@ describe("useLocaleRouter", () => {
     localeRouter?.push("/docs/styles");
     expect(router.push).toHaveBeenCalledWith("/es/docs/styles", undefined);
 
-    localeRouter?.push("/pricing");
-    expect(location.assign).toHaveBeenCalledWith("/es/pricing");
+    localeRouter?.push("/playground");
+    expect(location.assign).toHaveBeenCalledWith("/es/playground");
 
     // A page that isn't translated keeps its English URL.
     localeRouter?.replace("/community");
