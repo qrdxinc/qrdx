@@ -28,9 +28,18 @@ export const env = validateTogether(() =>
   createEnv({
     extends: [analytics(), auth(), config(), core(), database(), rateLimit()],
     server: {
-      // AI - Vercel AI Gateway (AI themes, prompt enhancement and AI QR art;
-      // models per task in lib/ai/models.ts)
+      // AI - Vercel AI Gateway (AI themes, prompt enhancement, AI QR art and
+      // the docs assistant; models per task in lib/ai/models.ts)
       AI_GATEWAY_API_KEY: z.string().min(1).optional(),
+      // The docs assistant (Ask AI in the docs, app/api/docs-chat): "0" or
+      // "false" switches it off without touching the key; unset means on.
+      // The daily cap across every visitor, in answers (default in
+      // lib/docs-chat/config.ts).
+      DOCS_CHAT_ENABLED: z.string().min(1).optional(),
+      DOCS_CHAT_DAILY_LIMIT: z
+        .string()
+        .regex(/^[1-9]\d*$/)
+        .optional(),
 
       // Payments - Polar
       POLAR_ACCESS_TOKEN: z.string().min(1).optional(),
@@ -251,6 +260,8 @@ export const env = validateTogether(() =>
     },
     runtimeEnv: {
       AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
+      DOCS_CHAT_ENABLED: process.env.DOCS_CHAT_ENABLED,
+      DOCS_CHAT_DAILY_LIMIT: process.env.DOCS_CHAT_DAILY_LIMIT,
       POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
       POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
       DUB_CLIENT_ID: process.env.DUB_CLIENT_ID,

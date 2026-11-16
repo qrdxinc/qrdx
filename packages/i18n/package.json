@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "next": "16.4.3",
+    "next": "16.4.5",
     "typescript": "^6.0.3"
   },
   "engines": {

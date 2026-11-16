@@ -11,7 +11,8 @@ export type AITextTask =
   | "base"
   | "qr-theme-generation"
   | "prompt-enhancement"
-  | "code-suggestions";
+  | "code-suggestions"
+  | "docs-chat";
 export type AITask = AITextTask | "art";
 
 /** Options for one provider, as `providerOptions[name]` takes them. */
@@ -114,6 +115,15 @@ export const AI_MODELS: { [T in AITextTask]: AIModelChoice } & {
    * short call with a two-line reply.
    */
   "code-suggestions": {
+    model: "anthropic/claude-haiku-5.5",
+    providers: ["anthropic"],
+  },
+  /**
+   * The docs assistant (Ask AI in the docs, app/api/docs-chat): answers
+   * questions from the docs pages it reads with two tools. Same small text
+   * model and provider pinning as the theme chat; short answers.
+   */
+  "docs-chat": {
     model: "anthropic/claude-haiku-5.5",
     providers: ["anthropic"],
   },
