@@ -1,8 +1,8 @@
 // The site's icons, its web app manifest and the home page's preferred image.
 // The icons in public/ come from scripts/icons/build-icons.ts. Google shows a
 // site icon cropped to a circle and launchers crop maskable icons, so the
-// whole mark has to sit inside the 80% safe-zone circle, with no edge-to-edge
-// artwork for a crop to cut off.
+// whole mark has to sit inside the circle (and inside the 80% safe zone on
+// opaque icons), with no edge-to-edge artwork for a crop to cut off.
 
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -87,12 +87,28 @@ function measure({ size, data }: Raster, opaque: boolean) {
   return { farthest: farthest / size, brandBlue };
 }
 
-function expectMarkInSafeZone(raster: Raster, opaque: boolean, label: string) {
+/**
+ * Where the mark may reach, as a share of the width from the centre. Icons
+ * shown in a circle fill it, short of its edge (0.5) by a small margin;
+ * opaque icons stay inside the 80% safe zone (0.4). The lower bounds keep the
+ * mark from shrinking: about 72% and 60% of the canvas wide.
+ */
+const REACH = {
+  circle: { min: 0.42, max: 0.47 },
+  safeZone: { min: 0.35, max: 0.4 },
+};
+
+function expectMarkWithin(
+  raster: Raster,
+  opaque: boolean,
+  { min, max }: { min: number; max: number },
+  label: string,
+) {
   const { farthest, brandBlue } = measure(raster, opaque);
-  // Inside the 80% safe-zone circle, allowing one pixel of antialiasing.
-  expect(farthest, label).toBeLessThanOrEqual(0.4 + 1 / raster.size);
-  // And not shrunk to a dot: the mark spans more than half the width.
-  expect(farthest, label).toBeGreaterThan(0.3);
+  // Half a pixel of antialiasing either way.
+  const pixel = 0.5 / raster.size;
+  expect(farthest, label).toBeLessThanOrEqual(max + pixel);
+  expect(farthest, label).toBeGreaterThanOrEqual(min - pixel);
   expect(brandBlue, `${label} is drawn in ${BRAND_BLUE}`).toBe(true);
 }
 
@@ -121,7 +137,7 @@ describe("site icons", () => {
     expect(images.map((image) => image.size)).toEqual([16, 32, 48]);
     for (const image of images) {
       for (const at of corners(image)) expect(image.data[at + 3]).toBe(0);
-      expectMarkInSafeZone(image, false, `favicon.ico ${image.size}`);
+      expectMarkWithin(image, false, REACH.circle, `favicon.ico ${image.size}`);
     }
   });
 
@@ -132,7 +148,7 @@ describe("site icons", () => {
     const image = await decodePng(file);
     expect(image.size).toBe(size);
     for (const at of corners(image)) expect(image.data[at + 3]).toBe(0);
-    expectMarkInSafeZone(image, false, file);
+    expectMarkWithin(image, false, REACH.circle, file);
   });
 
   it.each([
@@ -149,7 +165,7 @@ describe("site icons", () => {
       }
       for (const at of corners(image))
         expect(hex(image.data, at)).toBe("#ffffff");
-      expectMarkInSafeZone(image, true, file);
+      expectMarkWithin(image, true, REACH.safeZone, file);
     },
   );
 });
