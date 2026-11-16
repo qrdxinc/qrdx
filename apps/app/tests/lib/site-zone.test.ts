@@ -103,9 +103,17 @@ describe("siteZoneRewrites", () => {
 
   it("proxies the blog and the assets, on the given hosts only", () => {
     expect(siteZoneRewrites(`${ORIGIN}//`, { hosts: HOSTS })).toEqual([
+      // The group's own page first, exactly: one /blog/:path* rule sent
+      // /blog as /blog/ on Vercel, and the zone's trailing-slash redirect
+      // looped it (2026-11-15).
       {
-        source: "/blog/:path*",
-        destination: `${ORIGIN}/blog/:path*`,
+        source: "/blog",
+        destination: `${ORIGIN}/blog`,
+        has,
+      },
+      {
+        source: "/blog/:path+",
+        destination: `${ORIGIN}/blog/:path+`,
         has,
       },
       {
@@ -129,7 +137,11 @@ describe("siteZoneRewrites", () => {
           (rule) => rule.destination,
         ),
         value,
-      ).toEqual([`${ORIGIN}/blog/:path*`, `${ORIGIN}/site-static/:path*`]);
+      ).toEqual([
+        `${ORIGIN}/blog`,
+        `${ORIGIN}/blog/:path+`,
+        `${ORIGIN}/site-static/:path*`,
+      ]);
     }
   });
 
@@ -137,7 +149,7 @@ describe("siteZoneRewrites", () => {
     const run = "/".repeat(200_000);
     const start = performance.now();
     const [rule] = siteZoneRewrites(`${ORIGIN}${run}`, { hosts: HOSTS });
-    expect(rule?.destination).toBe(`${ORIGIN}/blog/:path*`);
+    expect(rule?.destination).toBe(`${ORIGIN}/blog`);
     expect(performance.now() - start).toBeLessThan(200);
   });
 });
@@ -573,10 +585,22 @@ describe("next.config.ts", () => {
     return phases?.beforeFiles ?? [];
   };
 
-  it("adds exactly those two rules", async () => {
+  it("adds exactly those three rules", async () => {
     const rules = await beforeFiles(on);
-    expect(rules.filter((rule) => onSite(rule.destination))).toHaveLength(2);
-    expect(rules.length - (await beforeFiles(off)).length).toBe(2);
+    expect(rules.filter((rule) => onSite(rule.destination))).toHaveLength(3);
+    expect(rules.length - (await beforeFiles(off)).length).toBe(3);
+  });
+
+  it("sends /blog as /blog, never /blog/ (a zone's slash redirect would loop)", async () => {
+    expect(await siteTarget(on, "https://qrdx.dev/blog")).toBe(
+      `${ORIGIN}/blog`,
+    );
+    expect(await siteTarget(on, "https://qrdx.dev/blog?x=1")).toBe(
+      `${ORIGIN}/blog?x=1`,
+    );
+    expect(await siteTarget(on, "https://qrdx.dev/blog/a/b")).toBe(
+      `${ORIGIN}/blog/a/b`,
+    );
   });
 
   it("puts them right after the console's when every zone is on", async () => {
@@ -595,8 +619,9 @@ describe("next.config.ts", () => {
       "console",
       "site",
       "site",
+      "site",
     ]);
-    expect(rules.length - (await beforeFiles(off)).length).toBe(docsCount + 4);
+    expect(rules.length - (await beforeFiles(off)).length).toBe(docsCount + 5);
     expect(await siteTarget(all, "https://qrdx.dev/blog/x")).toBe(
       `${ORIGIN}/blog/x`,
     );
