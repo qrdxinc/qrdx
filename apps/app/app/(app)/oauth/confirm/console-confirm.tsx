@@ -12,9 +12,17 @@ type Status = "checking" | "waiting" | "failed";
  * back to `next`, a page at the console's address, once this session has a
  * strong confirmation. The check is the admin pages' own
  * (checkStrongConfirmationAction): two-step verification on, and a passkey,
- * an authenticator code or a backup code in the last 10 minutes.
+ * an authenticator code or a backup code in the last 10 minutes. "Go back"
+ * goes to `cancel`: the same page without the console's "just confirmed"
+ * marker.
  */
-export function ConsoleConfirm({ next }: { next: string }) {
+export function ConsoleConfirm({
+  next,
+  cancel,
+}: {
+  next: string;
+  cancel: string;
+}) {
   const { withConfirmation } = useConfirmation();
   const [status, setStatus] = useState<Status>("checking");
   const [error, setError] = useState<string | null>(null);
@@ -58,7 +66,7 @@ export function ConsoleConfirm({ next }: { next: string }) {
       )}
       <div className="grid grid-cols-2 gap-3">
         <Button asChild variant="outline">
-          <a href={next}>Go back</a>
+          <a href={cancel}>Go back</a>
         </Button>
         <Button
           aria-busy={status === "checking"}
@@ -73,11 +81,11 @@ export function ConsoleConfirm({ next }: { next: string }) {
 }
 
 /** Without two-step verification: where to turn it on, or back. */
-export function TwoFactorFirst({ next }: { next: string }) {
+export function TwoFactorFirst({ cancel }: { cancel: string }) {
   return (
     <div className="grid grid-cols-2 gap-3">
       <Button asChild variant="outline">
-        <a href={next}>Go back</a>
+        <a href={cancel}>Go back</a>
       </Button>
       <Button asChild>
         <a href="/settings/account#two-factor">Account settings</a>

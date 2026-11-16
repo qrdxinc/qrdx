@@ -2,6 +2,7 @@ import { QrdxLogo } from "@repo/design-system/components/brand/qrdx-logo";
 import {
   ADMIN_CONSOLE_CONFIRM_PATH,
   adminConsoleAddress,
+  adminConsoleCancelUrl,
   adminConsoleReturnUrl,
 } from "@repo/next-config/console-zone";
 import type { Metadata } from "next";
@@ -27,7 +28,9 @@ import { ConsoleConfirm, TwoFactorFirst } from "./console-confirm";
 //
 // Only for the console: a 404 while it isn't set up here, and `next` must be
 // a page at exactly its address (adminConsoleReturnUrl), else the admin goes
-// back to its front page. Signed out: sign in, then back here. A held
+// back to its front page. "Go back" drops the console's "just confirmed"
+// marker (adminConsoleCancelUrl), so the console doesn't read a cancelled
+// confirmation as a finished one. Signed out: sign in, then back here. A held
 // session: the session check first. Anyone but an admin: a 404. An admin
 // without two-step verification is told to turn it on: the console's
 // confirmations take a passkey, an authenticator code or a backup code.
@@ -65,6 +68,7 @@ export default async function ConsoleConfirmPage({
   if (admin.id !== session.userId) notFound();
   const twoFactorOn = await twoFactorEnabledFor(admin.id);
   const consoleHost = new URL(consoleUrl).host;
+  const cancel = adminConsoleCancelUrl(back);
 
   return (
     <ConfirmIdentityProvider>
@@ -92,9 +96,9 @@ export default async function ConsoleConfirmPage({
 
         <div className="mt-6">
           {twoFactorOn ? (
-            <ConsoleConfirm next={back} />
+            <ConsoleConfirm cancel={cancel} next={back} />
           ) : (
-            <TwoFactorFirst next={back} />
+            <TwoFactorFirst cancel={cancel} />
           )}
         </div>
       </AuthorizeShell>

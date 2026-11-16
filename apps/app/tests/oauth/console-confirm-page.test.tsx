@@ -76,10 +76,16 @@ const render = (next?: string | string[]) =>
     searchParams: Promise.resolve(next === undefined ? {} : { next }),
   });
 
-/** The client part the page renders, and the `next` it hands it. */
-function found(
-  node: ReactNode,
-): { kind: "confirm" | "two-factor"; next: string } | undefined {
+interface Found {
+  kind: "confirm" | "two-factor";
+  /** Where it goes once confirmed (none without two-step verification) */
+  next?: string;
+  /** Where "Go back" goes */
+  cancel: string;
+}
+
+/** The client part the page renders, and the addresses it hands it. */
+function found(node: ReactNode): Found | undefined {
   if (Array.isArray(node)) {
     for (const child of node) {
       const hit = found(child);
@@ -88,12 +94,20 @@ function found(
     return undefined;
   }
   if (!isValidElement(node)) return undefined;
-  const props = node.props as { next?: string; children?: ReactNode };
+  const props = node.props as {
+    next?: string;
+    cancel?: string;
+    children?: ReactNode;
+  };
   if (node.type === ConsoleConfirm) {
-    return { kind: "confirm", next: props.next as string };
+    return {
+      kind: "confirm",
+      next: props.next as string,
+      cancel: props.cancel as string,
+    };
   }
   if (node.type === TwoFactorFirst) {
-    return { kind: "two-factor", next: props.next as string };
+    return { kind: "two-factor", cancel: props.cancel as string };
   }
   return found(props.children);
 }
@@ -184,20 +198,37 @@ describe("/oauth/confirm", () => {
 
     it("without two-step verification: no dialog, where to turn it on", async () => {
       state.twoFactor = false;
-      expect(found(await render(`${CONSOLE}/growth`))).toEqual({
+      expect(found(await render(`${CONSOLE}/growth?confirmed=1`))).toEqual({
         kind: "two-factor",
-        next: `${CONSOLE}/growth`,
+        cancel: `${CONSOLE}/growth`,
       });
     });
 
     it.each([
-      [`${CONSOLE}/affiliates/abc?page=2&confirmed=1`],
-      [`${CONSOLE}/users/u_1?confirmed=1`],
-      [`${CONSOLE}/search?q=maria`],
-      [`${CONSOLE}/growth`],
-      [`${CONSOLE}/`],
-    ])("goes back to the console page %s", async (next) => {
-      expect(found(await render(next))).toEqual({ kind: "confirm", next });
+      [
+        `${CONSOLE}/affiliates/abc?page=2&confirmed=1`,
+        `${CONSOLE}/affiliates/abc?page=2`,
+      ],
+      [`${CONSOLE}/users/u_1?confirmed=1`, `${CONSOLE}/users/u_1`],
+      [`${CONSOLE}/search?q=maria`, `${CONSOLE}/search?q=maria`],
+      [`${CONSOLE}/growth`, `${CONSOLE}/growth`],
+      [`${CONSOLE}/`, `${CONSOLE}/`],
+    ])("goes back to the console page %s", async (next, cancel) => {
+      expect(found(await render(next))).toEqual({
+        kind: "confirm",
+        next,
+        cancel,
+      });
+    });
+
+    it("goes back without the console's \"just confirmed\" marker, so a cancel isn't read as a confirmation", async () => {
+      const hit = found(
+        await render(`${CONSOLE}/affiliates/abc?confirmed=1&page=2`),
+      );
+      expect(hit?.next).toBe(`${CONSOLE}/affiliates/abc?confirmed=1&page=2`);
+      expect(new URL(hit?.cancel ?? "").searchParams.has("confirmed")).toBe(
+        false,
+      );
     });
 
     it.each([
@@ -220,10 +251,14 @@ describe("/oauth/confirm", () => {
       [`${CONSOLE}/auth/logout`],
       [`${CONSOLE}/growth/../auth/login`],
       ["javascript:alert(1)"],
+      [`${CONSOLE}//auth/logout`],
+      [`${CONSOLE}/%61uth/login`],
+      [`${CONSOLE}/auth%2flogin`],
     ])("goes back to the console's front page for %j", async (next) => {
       expect(found(await render(next))).toEqual({
         kind: "confirm",
         next: `${CONSOLE}/`,
+        cancel: `${CONSOLE}/`,
       });
     });
   });

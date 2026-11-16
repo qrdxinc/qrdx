@@ -344,12 +344,22 @@ export function adminConsoleHref(
 const MAX_RETURN_LENGTH = 2048;
 
 /**
+ * The query parameter the console adds to the page it sends to
+ * /oauth/confirm, so it can tell, once back, that the admin has just
+ * confirmed (`?confirmed=1`). Going back without confirming drops it
+ * (adminConsoleCancelUrl).
+ */
+export const ADMIN_CONSOLE_CONFIRMED_PARAM = "confirmed";
+
+/**
  * Where /oauth/confirm may send an admin back to, or null: a page at exactly
  * the console's own address (`adminConsoleUrl`), as an absolute URL, without
  * its hash. Never another origin (scheme, host or port), credentials, a
  * relative or protocol-relative URL, a backslash, whitespace or a control
- * character (browsers rewrite those), a dot segment, the console's sign-in
- * routes (/auth…), or anything longer than 2,048 characters.
+ * character (browsers rewrite those), a path with an empty segment (//) or
+ * any percent-encoding (so what's checked is what the console routes), a dot
+ * segment, the console's sign-in routes (/auth…), or anything longer than
+ * 2,048 characters. The query may hold anything.
  */
 export function adminConsoleReturnUrl(
   next: string | null | undefined,
@@ -367,14 +377,31 @@ export function adminConsoleReturnUrl(
   } catch {
     return null;
   }
+  const path = url.pathname;
   if (
     url.origin !== new URL(adminConsoleUrl).origin ||
     url.username ||
     url.password ||
-    hasDotSegment(url.pathname) ||
-    /^\/auth(?:\/|$)/i.test(url.pathname)
+    // The console's ids and section names are plain: an encoded character
+    // (%61uth, auth%2flogin) or an empty segment (//auth) is never needed,
+    // and could hide a path the checks below would refuse.
+    path.includes("%") ||
+    path.includes("//") ||
+    hasDotSegment(path) ||
+    /^\/auth(?:\/|$)/i.test(path)
   ) {
     return null;
   }
-  return `${url.origin}${url.pathname}${url.search}`;
+  return `${url.origin}${path}${url.search}`;
+}
+
+/**
+ * The console page `back` (from adminConsoleReturnUrl) without the console's
+ * "just confirmed" marker: where "Go back" on /oauth/confirm goes, so a
+ * return without confirming isn't read as one after confirming.
+ */
+export function adminConsoleCancelUrl(back: string): string {
+  const url = new URL(back);
+  url.searchParams.delete(ADMIN_CONSOLE_CONFIRMED_PARAM);
+  return url.toString();
 }

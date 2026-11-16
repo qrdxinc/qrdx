@@ -7,6 +7,7 @@ import path from "node:path";
 import {
   ADMIN_CONSOLE_SECTIONS,
   adminConsoleAddress,
+  adminConsoleCancelUrl,
   adminConsoleHref,
   adminConsoleRedirects,
   adminConsoleReturnUrl,
@@ -181,6 +182,11 @@ describe("adminConsoleReturnUrl (/oauth/confirm's ?next=)", () => {
     ],
     [`${URL_}/users/u_1?confirmed=1`, `${URL_}/users/u_1?confirmed=1`],
     [`${URL_}/numbers#x`, `${URL_}/numbers`],
+    // Anything in the query, encoded or not.
+    [
+      `${URL_}/search?q=caf%C3%A9&next=%2F%2Fx&confirmed=1`,
+      `${URL_}/search?q=caf%C3%A9&next=%2F%2Fx&confirmed=1`,
+    ],
     // The same origin, written differently: given back as the URL parser has it.
     ["HTTPS://CONSOLE.QRDX.DEV/growth", `${URL_}/growth`],
     ["https://console.qrdx.dev:443/growth", `${URL_}/growth`],
@@ -222,12 +228,28 @@ describe("adminConsoleReturnUrl (/oauth/confirm's ?next=)", () => {
     "https://console.qrdx.dev/\tgrowth",
     "\nhttps://evil.example/",
     "https://console.qrdx.dev/\u0000growth",
-    // Dot segments, encoded or not, and the console's sign-in routes.
+    // Dot segments, encoded or not, and the console's sign-in routes,
+    // however the path hides them: an empty segment, an encoded letter or
+    // an encoded slash.
     `${URL_}/growth/../auth/login`,
     `${URL_}/growth/%2e%2e/auth`,
+    `${URL_}/auth`,
     `${URL_}/auth/login`,
     `${URL_}/auth/logout`,
+    `${URL_}/auth/callback?code=x`,
     `${URL_}/AUTH`,
+    `${URL_}//auth/logout`,
+    `${URL_}///auth/login`,
+    `${URL_}/%61uth/login`,
+    `${URL_}/%41UTH/login`,
+    `${URL_}/auth%2flogin`,
+    `${URL_}/auth%2Flogout`,
+    `${URL_}/%2fauth/login`,
+    // Any empty segment or encoding in the path, which the console's own
+    // pages never need.
+    `${URL_}/growth//x`,
+    `${URL_}/users/%75_1`,
+    `${URL_}/users/café`,
     // Not a web page at all.
     "javascript:alert(1)",
     "data:text/html,hi",
@@ -239,9 +261,34 @@ describe("adminConsoleReturnUrl (/oauth/confirm's ?next=)", () => {
     expect(adminConsoleReturnUrl(next, URL_)).toBeNull();
   });
 
+  it("never lets a hidden /auth path through, however it's written", () => {
+    for (const path of [
+      "//auth/logout",
+      "/%61uth/login",
+      "/auth%2flogin",
+      "/a%75th",
+      "/./auth/login",
+      "/x/../auth/login",
+    ]) {
+      expect(adminConsoleReturnUrl(`${URL_}${path}`, URL_), path).toBeNull();
+    }
+  });
+
   it("refuses everything while the console isn't set up", () => {
     expect(adminConsoleReturnUrl(`${URL_}/growth`, undefined)).toBeNull();
     expect(adminConsoleReturnUrl(`${URL_}/growth`, "")).toBeNull();
+  });
+});
+
+describe("adminConsoleCancelUrl (/oauth/confirm's Go back)", () => {
+  it.each([
+    [`${URL_}/affiliates/a?page=2&confirmed=1`, `${URL_}/affiliates/a?page=2`],
+    [`${URL_}/growth?confirmed=1`, `${URL_}/growth`],
+    [`${URL_}/users/u_1?confirmed=0&x=1`, `${URL_}/users/u_1?x=1`],
+    [`${URL_}/`, `${URL_}/`],
+    [`${URL_}/search?q=a`, `${URL_}/search?q=a`],
+  ])("turns %s into %s", (back, expected) => {
+    expect(adminConsoleCancelUrl(back)).toBe(expected);
   });
 });
 
