@@ -1,9 +1,10 @@
-// /admin/confirm: "Confirm it's you" for the back-office console's actions.
-// Admins only (anyone else gets the admin pages' 404), and it only ever
-// sends an admin back to a console page, here (/admin/<section>) or at the
-// console's own address (ADMIN_CONSOLE_URL, set here): any other `next`
-// returns to /admin. The guard is mocked; nothing touches a database or a
-// service.
+// /admin/confirm: "Confirm it's you" for the proxied back-office console's
+// actions (CONSOLE_ORIGIN). Admins only (anyone else gets the admin pages'
+// 404), and it only ever sends an admin back to a console page on this site
+// (/admin/<section>): any other `next`, the console's own address included,
+// returns to /admin. With ADMIN_CONSOLE_URL set, next.config.ts redirects
+// this URL to /oauth/confirm (tests/oauth/console-confirm-page.test.tsx).
+// The guard is mocked; nothing touches a database or a service.
 import { notFound } from "next/navigation";
 import { isValidElement, type ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -12,7 +13,7 @@ const state = vi.hoisted(() => ({
   admin: null as null | { id: string; email: string; name: string },
 }));
 
-const CONSOLE = "https://admin.qrdx.dev";
+const CONSOLE = "https://console.qrdx.dev";
 
 vi.mock("@/env", async (importOriginal) => {
   const { env } = await importOriginal<typeof import("@/env")>();
@@ -82,8 +83,6 @@ describe("/admin/confirm", () => {
     it.each([
       ["/admin/affiliates/abc?page=2", "/admin/affiliates/abc?page=2"],
       ["/admin/growth", "/admin/growth"],
-      [`${CONSOLE}/affiliates/abc?page=2`, `${CONSOLE}/affiliates/abc?page=2`],
-      [`${CONSOLE}/growth`, `${CONSOLE}/growth`],
     ])("goes back to the console page %s", async (next, expected) => {
       expect(returnPath(await render(next))).toBe(expected);
     });
@@ -97,9 +96,12 @@ describe("/admin/confirm", () => {
       [`${CONSOLE}/`],
       [`${CONSOLE}/auth/login`],
       [`${CONSOLE}/users/u1`],
+      // The console's own address confirms on /oauth/confirm instead.
+      [`${CONSOLE}/growth`],
+      [`${CONSOLE}/affiliates/abc?page=2`],
       ["https://evil.example/growth"],
-      ["https://admin.qrdx.dev.evil.example/growth"],
-      ["//admin.qrdx.dev/growth"],
+      ["https://console.qrdx.dev.evil.example/growth"],
+      ["//console.qrdx.dev/growth"],
       [["/admin/growth", "/admin/numbers"]],
     ])("falls back to /admin for %j", async (next) => {
       expect(returnPath(await render(next))).toBe("/admin");

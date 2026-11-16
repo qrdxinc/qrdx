@@ -108,8 +108,8 @@ if (consoleZone.length > 0 && !env.CONSOLE_ZONE_KEY) {
     "⚠ CONSOLE_ORIGIN is set but CONSOLE_ZONE_KEY isn't: the console can't tell requests that came through this app. Set the same CONSOLE_ZONE_KEY on both.",
   );
 }
-// The console at its own address (ADMIN_CONSOLE_URL): its five sections
-// redirect there instead (@repo/next-config/console-zone), on QRdx's own
+// The console at its own address (ADMIN_CONSOLE_URL): every /admin URL
+// redirects there instead (@repo/next-config/console-zone), on QRdx's own
 // hosts, and lib/admin-console signs admins in through this app's OAuth
 // provider with CONSOLE_ZONE_KEY as the client secret. Without that secret
 // the console can't sign anyone in, so sending admins there would strand
@@ -416,7 +416,7 @@ let nextConfig: NextConfig = {
       })),
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
-      // The console's sections, when ADMIN_CONSOLE_URL is set (above).
+      // All of /admin, when ADMIN_CONSOLE_URL is set (above).
       ...adminConsole,
     ];
   },
