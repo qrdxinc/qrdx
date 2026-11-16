@@ -1,14 +1,14 @@
 // How the docs assistant and the MCP docs tools read the docs
 // (lib/docs-chat/retrieval.ts): through the docs site's search route and
-// .md pages, behind a fake fetch. Hidden pages never come back, a language
-// without a match or a translation falls back to English, pages are cut at
-// the cap, and repeat reads come from the cache.
+// .md pages, behind a fake fetch. The docs are English only: nothing asks
+// for a language, and a path kept from the translated docs (/es/docs/a)
+// names the English page. Hidden pages never come back, pages are cut at the
+// cap, and repeat reads come from the cache.
 import { describe, expect, it, vi } from "vitest";
 import { DOCS_CHAT } from "@/lib/docs-chat/config";
 import {
   createDocsRetriever,
   DocsRetrievalError,
-  docsLang,
   groupSearchResults,
   normalizeDocsPath,
   parseMarkdownPage,
@@ -43,7 +43,7 @@ const passage = (url: string, text: string): Row => ({
   content: text,
 });
 
-/** A fake docs site: search answers by locale, pages by path. */
+/** A fake docs site: search answers by query, pages by path. */
 function fakeDocs(
   searches: Record<string, Row[]>,
   pages: Record<string, string>,
@@ -56,20 +56,13 @@ function fakeDocs(
       throw new Error(`Unexpected origin in a test: ${url.origin}`);
     }
     if (url.pathname === "/api/search") {
-      const locale = url.searchParams.get("locale") ?? "en";
       const query = url.searchParams.get("query") ?? "";
-      const rows = searches[`${locale}:${query}`] ?? [];
-      return Response.json(rows);
+      return Response.json(searches[query] ?? []);
     }
     const text = pages[url.pathname];
     if (text === undefined) return new Response("not found", { status: 404 });
-    const english = url.pathname.startsWith("/docs/");
     return new Response(text, {
-      headers: {
-        "content-type": "text/markdown; charset=utf-8",
-        // The docs app says which language it served (docs-md route).
-        "content-language": english ? "en" : (url.pathname.split("/")[1] ?? ""),
-      },
+      headers: { "content-type": "text/markdown; charset=utf-8" },
     });
   });
   return { fetch: fetcher as unknown as typeof fetch, calls };
@@ -88,36 +81,35 @@ Add the server URL.
 `;
 
 describe("normalizeDocsPath", () => {
-  it("accepts docs paths, with or without a language prefix or .md", () => {
-    expect(normalizeDocsPath("/docs/developers/mcp")).toEqual({
-      path: "/docs/developers/mcp",
-      lang: "en",
-    });
-    expect(normalizeDocsPath("docs/developers/mcp.md")).toEqual({
-      path: "/docs/developers/mcp",
-      lang: "en",
-    });
-    expect(normalizeDocsPath("/es/docs/help/contact.mdx#top")).toEqual({
-      path: "/docs/help/contact",
-      lang: "es",
-    });
-    expect(normalizeDocsPath("/pt-br/docs?x=1")).toEqual({
-      path: "/docs",
-      lang: "pt-BR",
-    });
-    expect(normalizeDocsPath("/docs/index")).toEqual({
-      path: "/docs",
-      lang: "en",
-    });
+  it("accepts docs paths, with or without .md", () => {
+    expect(normalizeDocsPath("/docs/developers/mcp")).toBe(
+      "/docs/developers/mcp",
+    );
+    expect(normalizeDocsPath("docs/developers/mcp.md")).toBe(
+      "/docs/developers/mcp",
+    );
+    expect(normalizeDocsPath("/docs/help/contact.mdx#top")).toBe(
+      "/docs/help/contact",
+    );
+    expect(normalizeDocsPath("/docs?x=1")).toBe("/docs");
+    expect(normalizeDocsPath("/docs/index")).toBe("/docs");
+  });
+
+  it("reads a path from the translated docs as the English page", () => {
+    expect(normalizeDocsPath("/es/docs/help/contact.mdx#top")).toBe(
+      "/docs/help/contact",
+    );
+    expect(normalizeDocsPath("/pt-br/docs?x=1")).toBe("/docs");
+    expect(normalizeDocsPath("/zh-hans/docs/angular.md")).toBe("/docs/angular");
   });
 
   it("accepts URLs on the docs' origins only", () => {
     expect(
       normalizeDocsPath(`${PUBLIC}/docs/developers/mcp`, [PUBLIC, DOCS]),
-    ).toEqual({ path: "/docs/developers/mcp", lang: "en" });
+    ).toBe("/docs/developers/mcp");
     expect(
       normalizeDocsPath(`${DOCS}/ja/docs/getting-started`, [PUBLIC, DOCS]),
-    ).toEqual({ path: "/docs/getting-started", lang: "ja" });
+    ).toBe("/docs/getting-started");
     expect(normalizeDocsPath("https://evil.example/docs/x", [PUBLIC])).toBe(
       null,
     );
@@ -139,17 +131,6 @@ describe("normalizeDocsPath", () => {
     ]) {
       expect(normalizeDocsPath(bad), bad).toBe(null);
     }
-  });
-});
-
-describe("docsLang", () => {
-  it("takes a docs locale or its URL segment, else English", () => {
-    expect(docsLang("es")).toBe("es");
-    expect(docsLang("pt-BR")).toBe("pt-BR");
-    expect(docsLang("pt-br")).toBe("pt-BR");
-    expect(docsLang("zh-hans")).toBe("zh-Hans");
-    expect(docsLang("xx")).toBe("en");
-    expect(docsLang(undefined)).toBe("en");
   });
 });
 
@@ -200,7 +181,8 @@ describe("groupSearchResults", () => {
     expect(hits.map((hit) => hit.path)).toEqual(["/docs/help/contact"]);
   });
 
-  it("keeps a translated page's own URL and checks its English path", () => {
+  it("lists a row at a translated docs URL as the English page", () => {
+    // What an old docs deployment's index could still hold.
     const seen: string[] = [];
     const hits = groupSearchResults(
       [page("/es/docs/help/contact", "Contacto")],
@@ -214,8 +196,8 @@ describe("groupSearchResults", () => {
       },
     );
     expect(hits[0]).toMatchObject({
-      path: "/es/docs/help/contact",
-      url: `${PUBLIC}/es/docs/help/contact`,
+      path: "/docs/help/contact",
+      url: `${PUBLIC}/docs/help/contact`,
       section: "Help",
     });
     expect(seen).toEqual(["/docs/help/contact"]);
@@ -249,12 +231,12 @@ describe("parseMarkdownPage", () => {
 });
 
 describe("createDocsRetriever", () => {
-  it("searches the docs site in the asked language and shapes the hits", async () => {
+  it("searches the docs site, with no language, and shapes the hits", async () => {
     const docs = fakeDocs(
       {
-        "es:mcp": [
-          page("/es/docs/developers/mcp", "Servidor MCP"),
-          passage("/es/docs/developers/mcp", "Conecta QRdx."),
+        mcp: [
+          page("/docs/developers/mcp", "MCP server"),
+          passage("/docs/developers/mcp", "Connect QRdx."),
         ],
       },
       {},
@@ -264,23 +246,24 @@ describe("createDocsRetriever", () => {
       publicOrigin: PUBLIC,
       fetch: docs.fetch,
     });
-    const result = await retriever.search("mcp", "es");
-    expect(result.lang).toBe("es");
-    expect(result.hits).toEqual([
-      {
-        title: "Servidor MCP",
-        path: "/es/docs/developers/mcp",
-        url: `${PUBLIC}/es/docs/developers/mcp`,
-        snippet: "Conecta QRdx.",
-        section: "Developers",
-      },
-    ]);
-    expect(docs.calls).toEqual(["/api/search?query=mcp&locale=es"]);
+    const result = await retriever.search("mcp");
+    expect(result).toEqual({
+      hits: [
+        {
+          title: "MCP server",
+          path: "/docs/developers/mcp",
+          url: `${PUBLIC}/docs/developers/mcp`,
+          snippet: "Connect QRdx.",
+          section: "Developers",
+        },
+      ],
+    });
+    expect(docs.calls).toEqual(["/api/search?query=mcp"]);
   });
 
-  it("falls back to English when the language has no match, and caches the answer", async () => {
+  it("caches a search, and one that found nothing isn't asked again", async () => {
     const docs = fakeDocs(
-      { "en:webhooks": [page("/docs/webhooks", "Webhooks")] },
+      { webhooks: [page("/docs/webhooks", "Webhooks")] },
       {},
     );
     const retriever = createDocsRetriever({
@@ -288,14 +271,14 @@ describe("createDocsRetriever", () => {
       publicOrigin: PUBLIC,
       fetch: docs.fetch,
     });
-    const first = await retriever.search("webhooks", "ja");
-    expect(first.lang).toBe("en");
+    const first = await retriever.search("webhooks");
     expect(first.hits.map((hit) => hit.path)).toEqual(["/docs/webhooks"]);
-    const second = await retriever.search("  Webhooks ", "ja");
-    expect(second).toEqual(first);
+    expect(await retriever.search("  Webhooks ")).toEqual(first);
+    expect(await retriever.search("ウェブフック")).toEqual({ hits: [] });
+    expect(await retriever.search("ウェブフック")).toEqual({ hits: [] });
     expect(docs.calls).toEqual([
-      "/api/search?query=webhooks&locale=ja",
-      "/api/search?query=webhooks&locale=en",
+      "/api/search?query=webhooks",
+      `/api/search?query=${encodeURIComponent("ウェブフック")}`,
     ]);
   });
 
@@ -304,16 +287,13 @@ describe("createDocsRetriever", () => {
       page(`/docs/page-${i}`, `Page ${i}`),
     );
     const longQuery = "a".repeat(DOCS_CHAT.maxQueryChars + 50);
-    const docs = fakeDocs(
-      { [`en:${"a".repeat(DOCS_CHAT.maxQueryChars)}`]: rows },
-      {},
-    );
+    const docs = fakeDocs({ ["a".repeat(DOCS_CHAT.maxQueryChars)]: rows }, {});
     const retriever = createDocsRetriever({
       docsOrigin: DOCS,
       publicOrigin: PUBLIC,
       fetch: docs.fetch,
     });
-    const result = await retriever.search(longQuery, "en", 50);
+    const result = await retriever.search(longQuery, 50);
     expect(result.hits).toHaveLength(DOCS_CHAT.searchLimit);
   });
 
@@ -324,10 +304,7 @@ describe("createDocsRetriever", () => {
       publicOrigin: PUBLIC,
       fetch: docs.fetch,
     });
-    expect(await retriever.search("   ", "en")).toEqual({
-      hits: [],
-      lang: "en",
-    });
+    expect(await retriever.search("   ")).toEqual({ hits: [] });
     expect(docs.calls).toEqual([]);
   });
 
@@ -343,7 +320,6 @@ describe("createDocsRetriever", () => {
       title: "MCP server",
       path: "/docs/developers/mcp",
       url: `${PUBLIC}/docs/developers/mcp`,
-      lang: "en",
       markdown:
         "Connect QRdx to any MCP client.\n\n## Connect\n\nAdd the server URL.",
       truncated: false,
@@ -352,57 +328,27 @@ describe("createDocsRetriever", () => {
     expect(docs.calls).toEqual(["/docs/developers/mcp.md"]);
   });
 
-  it("reads a translation when there is one, else the English page at the English URL", async () => {
+  it("reads the English page for a path from the translated docs", async () => {
     const docs = fakeDocs(
       {},
-      {
-        "/es/docs/help/contact.md": "# Contacto (Ayuda)\n\nEscríbenos.",
-        "/docs/webhooks.md": "# Webhooks\n\nEnglish only.",
-      },
+      { "/docs/help/contact.md": "# Contact (Help)\n\nWrite to us." },
     );
     const retriever = createDocsRetriever({
       docsOrigin: DOCS,
       publicOrigin: PUBLIC,
       fetch: docs.fetch,
     });
-    const spanish = await retriever.readPage("/docs/help/contact", "es");
-    expect(spanish).toMatchObject({
-      title: "Contacto",
-      path: "/es/docs/help/contact",
-      lang: "es",
-      markdown: "Escríbenos.",
+    const page = await retriever.readPage("/es/docs/help/contact");
+    expect(page).toMatchObject({
+      title: "Contact",
+      path: "/docs/help/contact",
+      url: `${PUBLIC}/docs/help/contact`,
+      markdown: "Write to us.",
     });
-    const fallback = await retriever.readPage("/docs/webhooks", "es");
-    expect(fallback).toMatchObject({
-      title: "Webhooks",
-      path: "/docs/webhooks",
-      url: `${PUBLIC}/docs/webhooks`,
-      lang: "en",
-    });
-    expect(docs.calls).toEqual([
-      "/es/docs/help/contact.md",
-      "/es/docs/webhooks.md",
-      "/docs/webhooks.md",
-    ]);
-  });
-
-  it("marks a page the docs app served in English at a translated URL", async () => {
-    // The docs-md route answers an untranslated page with the English
-    // text and Content-Language: en.
-    const fetcher = vi.fn(
-      async () =>
-        new Response("# Webhooks\n\nEnglish text.", {
-          headers: { "content-language": "en" },
-        }),
-    );
-    const retriever = createDocsRetriever({
-      docsOrigin: DOCS,
-      publicOrigin: PUBLIC,
-      fetch: fetcher as unknown as typeof fetch,
-    });
-    const page = await retriever.readPage("/docs/webhooks", "de");
-    expect(page.lang).toBe("en");
-    expect(page.path).toBe("/docs/webhooks");
+    // One request, for the English page; the same cache entry either way.
+    await retriever.readPage(`${PUBLIC}/pt-br/docs/help/contact.md`);
+    await retriever.readPage("/docs/help/contact");
+    expect(docs.calls).toEqual(["/docs/help/contact.md"]);
   });
 
   it("cuts a long page at the cap and says where the rest is", async () => {
@@ -457,7 +403,7 @@ describe("createDocsRetriever", () => {
       publicOrigin: PUBLIC,
       fetch: fetcher as unknown as typeof fetch,
     });
-    await expect(retriever.search("mcp", "en")).rejects.toMatchObject({
+    await expect(retriever.search("mcp")).rejects.toMatchObject({
       code: "fetch_failed",
     });
     await expect(retriever.readPage("/docs/a")).rejects.toMatchObject({
