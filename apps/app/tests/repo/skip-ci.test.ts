@@ -54,14 +54,13 @@ describe("skip-ci", () => {
         ],
       }).skip,
     ).toBe(true);
-    // The docs' content and its translation records are the docs site's.
+    // The docs' content is the docs site's.
     expect(
       shouldSkip({
         ...production,
         changedFiles: [
           "apps/docs/content/docs/index.mdx",
-          "apps/docs/content/docs/index.es.mdx",
-          "apps/docs/content/review/es.json",
+          "apps/docs/content/docs/help/meta.json",
         ],
       }).skip,
     ).toBe(true);
