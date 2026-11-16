@@ -4,27 +4,14 @@ import { type Framework, FrameworkProvider } from "fumadocs-core/framework";
 import Image from "next/image";
 import { useParams, usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import {
-  LocaleLink as Link,
-  useLocaleRouter as useRouter,
-} from "@/components/i18n/locale-link";
-import { DEFAULT_LOCALE, LOCALE_INFO } from "@/lib/i18n/config";
-
-const ENGLISH_PREFIX = new RegExp(
-  `^/${LOCALE_INFO[DEFAULT_LOCALE].segment}(?=/docs(?:/|$))`,
-);
+import { ZoneLink as Link } from "@/components/zone-link";
+import { useZoneRouter as useRouter } from "@/components/zone-router";
 
 /**
- * The pathname the reader sees. English docs are prerendered at
- * /en/docs/... (next.config.ts rewrites /docs/... there), so on the server
- * Next reports that path while the browser shows /docs/...; fumadocs marks
- * the current sidebar item and tab from it, and the two must agree.
+ * fumadocs' Next integration (fumadocs-core/framework/next), with the docs
+ * zone's link and router: pages outside the docs belong to the main app and
+ * load in full (components/zone-link.tsx).
  */
-function useDocsPathname(): string {
-  return usePathname().replace(ENGLISH_PREFIX, "");
-}
-
-/** fumadocs' Next integration (fumadocs-core/framework/next), with that pathname. */
 export function DocsFrameworkProvider({ children }: { children: ReactNode }) {
   return (
     <FrameworkProvider
@@ -32,7 +19,7 @@ export function DocsFrameworkProvider({ children }: { children: ReactNode }) {
       Image={Image as Framework["Image"]}
       Link={Link as Framework["Link"]}
       useParams={useParams}
-      usePathname={useDocsPathname}
+      usePathname={usePathname}
       useRouter={useRouter}
     >
       {children}

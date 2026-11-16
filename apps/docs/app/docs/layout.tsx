@@ -8,22 +8,15 @@ import { DocsChatLayout as DocsLayout } from "@/components/chat/layout";
 import { DocsChatSlot } from "@/components/chat/slot";
 import { DocsFrameworkProvider } from "@/components/docs/docs-framework-provider";
 import { DocsProductLinks } from "@/components/docs/docs-product-links";
-import { DocsSidebarFooter } from "@/components/docs/docs-sidebar-footer";
 import CustomSearchDialog from "@/components/search";
 import { JsonLd } from "@/components/sections/tools/json-ld";
 import { sidebarTabs, sidebarTree } from "@/lib/docs-sidebar";
-import { LOCALE_INFO } from "@/lib/i18n/config";
-import {
-  fumadocsTranslations,
-  requireDocsLocale,
-} from "@/lib/i18n/docs-server";
 import { CHROME_NAMESPACES, pickMessages } from "@/lib/i18n/messages";
-import { localizePath } from "@/lib/i18n/paths";
 import { baseOptions, headerLinks, logo } from "@/lib/layout.shared";
 import { organizationSchema } from "@/lib/seo-schema";
-import { localizedSource } from "@/lib/source";
+import { source } from "@/lib/source";
 
-/** What the docs' client components translate (search, page actions, feedback, language menu). */
+/** The catalog paths the docs' client components read (search, page actions, feedback, the chat). */
 const DOCS_CLIENT_NAMESPACES = [
   ...CHROME_NAMESPACES,
   "docs.client",
@@ -31,27 +24,20 @@ const DOCS_CLIENT_NAMESPACES = [
   "docs.chat",
 ] as const;
 
-export default async function Layout({
-  children,
-}: LayoutProps<"/[lang]/docs">) {
-  const locale = await requireDocsLocale();
-  const [messages, translations, t] = await Promise.all([
+export default async function Layout({ children }: LayoutProps<"/docs">) {
+  const [messages, t] = await Promise.all([
     getMessages(),
-    fumadocsTranslations(locale),
-    getTranslations({ locale, namespace: "docs.shell.header" }),
+    getTranslations("docs.shell.header"),
   ]);
-  const tree = sidebarTree(locale);
+  const tree = sidebarTree();
 
   return (
     <DocsFrameworkProvider>
-      <TreeContextProvider tree={localizedSource.getPageTree(locale)}>
+      <TreeContextProvider tree={source.pageTree}>
         <NextIntlClientProvider
           messages={pickMessages(messages, DOCS_CLIENT_NAMESPACES)}
         >
-          <RootProvider
-            i18n={{ locale: LOCALE_INFO[locale].segment, translations }}
-            search={{ SearchDialog: CustomSearchDialog }}
-          >
+          <RootProvider search={{ SearchDialog: CustomSearchDialog }}>
             {/*
               fumadocs' notebook layout: one header across the top (the
               logo, search in the middle with its ⌘K hint, Dashboard and
@@ -63,7 +49,7 @@ export default async function Layout({
             */}
             <DocsLayout
               tree={tree}
-              tabs={sidebarTabs(locale)}
+              tabs={sidebarTabs()}
               tabMode="navbar"
               {...baseOptions()}
               links={headerLinks({
@@ -73,7 +59,7 @@ export default async function Layout({
               nav={{
                 ...baseOptions().nav,
                 mode: "top",
-                url: localizePath("/", locale),
+                url: "/",
                 title: (
                   <>
                     {logo}
@@ -84,14 +70,11 @@ export default async function Layout({
                   </>
                 ),
               }}
-              // One footer bar on every width: the language menu, with
-              // the GitHub link and theme switch fumadocs adds in the
-              // mobile menu (DocsSidebarFooter).
-              sidebar={{ footer: DocsSidebarFooter, className: "border-e" }}
+              sidebar={{ className: "border-e" }}
             >
               <JsonLd data={organizationSchema} />
               {children}
-              <DocsProductLinks locale={locale} />
+              <DocsProductLinks />
               {/* The AI chat's mount point (components/chat/slot.tsx, the Ask AI lane). */}
               <DocsChatSlot />
             </DocsLayout>
