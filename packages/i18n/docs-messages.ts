@@ -16,9 +16,12 @@ export type DocsMessages = Record<string, Catalog>;
 /** Reads the copy; rejects when it isn't there. */
 export type DocsMessagesReader = () => Promise<unknown>;
 
-/** The copy, as written. */
+/**
+ * The copy, as written. Found by a path built at run time: the file isn't
+ * committed, so a literal import would fail the type check on a fresh clone.
+ */
 const readCopy: DocsMessagesReader = async () =>
-  (await import("./messages/en.json")).default;
+  (await import(`./messages/${DOCS_MESSAGES_FILE}`)).default;
 
 const isCatalog = (value: unknown): value is Catalog =>
   typeof value === "object" && value !== null && !Array.isArray(value);
