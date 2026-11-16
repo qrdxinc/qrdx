@@ -1,50 +1,94 @@
 ---
 title: "Vue"
-description: "qrdx/vue के साथ Vue 3 और Nuxt में स्टाइल वाले QR कोड बनाएँ। इसमें सर्वर पर रेंडर होने वाले QRCode और QRCodeSVG कंपोनेंट हैं, और मार्कअप व डाउनलोड के लिए useQRCode composable है।"
+description: "qrdx/vue के साथ Vue 3 और Nuxt में स्टाइल्ड QR कोड बनाएँ। इसमें सर्वर पर रेंडर होने वाले QRCode और QRCodeSVG कंपोनेंट हैं, और मार्कअप व डाउनलोड के लिए useQRCode composable है।"
 icon: Code
 ---
 
-`qrdx/vue` में React कंपोनेंट `QRCode` और `QRCodeSVG` के Vue 3 वर्शन हैं, साथ में एक `useQRCode` composable भी है। ये React कंपोनेंट जैसे ही props लेते हैं और वही SVG बनाते हैं, जिसमें हर पैटर्न, रंग, लोगो, फ़्रेम और टेम्पलेट शामिल है। यह एंट्री `qrdx/core` पर बनी है और `react` इम्पोर्ट नहीं करती।
+इस पेज के अंत तक आपके पास Vue 3 कंपोनेंट में एक स्टाइल्ड QR कोड होगा, जो सर्वर पर रेंडर होता है और बिना mismatch के hydrate होता है, और एक बटन होगा जो उसे PNG के रूप में सेव करता है। `qrdx/vue` में React कंपोनेंट `QRCode` और `QRCodeSVG` के Vue वर्शन हैं, साथ में एक `useQRCode` composable भी है। ये React कंपोनेंट जैसे ही props लेते हैं और वही SVG बनाते हैं। यह एंट्री `qrdx/core` पर बनी है और `react` को import नहीं करती।
 
-## इंस्टॉल करें [#install]
+<NpmStatus package="qrdx" />
+
+## शुरू करने से पहले [#before-you-start]
+
+- Vue 3.3 या उससे नया प्रोजेक्ट, Vite या Nuxt के साथ। TypeScript कंपोनेंट के props की जाँच Vue 3.4.20 से करता है।
+- Node.js 18 या उससे नया।
+
+## इसे बनाएँ [#build-it]
+
+### 1. qrdx इंस्टॉल करें [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`vue` 3.3 या नया वर्शन एक वैकल्पिक peer dependency है, इसलिए आपके ऐप का अपना Vue ही इस्तेमाल होता है। TypeScript कंपोनेंट के props को Vue 3.4.20 या नए वर्शन के साथ चेक करता है।
+`vue` एक optional peer dependency है, इसलिए आपके app का अपना Vue इस्तेमाल होता है।
 
-## कोड बनाएँ [#draw-a-code]
+### 2. कोड बनाएँ [#2-draw-a-code]
 
-```vue
+```vue title="src/App.vue"
 <script setup lang="ts">
 import { QRCode } from "qrdx/vue";
 import { ref } from "vue";
 
-const url = ref("https://example.com");
+const url = ref("https://example.com/menu");
 </script>
 
 <template>
   <QRCode
     :value="url"
     :size="256"
+    :margin="4"
     body-pattern="rounded"
-    :frame="{ style: 'banner-bottom', text: 'Scan me' }"
-    aria-label="QR code for example.com"
+    :frame="{ style: 'banner-bottom', text: 'Scan for the menu' }"
+    aria-label="QR code for the menu"
   />
 </template>
 ```
 
-`QRCode` वही props लेता है जो React के `QRCode` में हैं: हर `QRProps` विकल्प, और लोगो के लिए `logo`, `logoOptions`, `hideLogo` और `scale`। टेम्पलेट में इन्हें kebab-case (`body-pattern`) या camelCase में लिखा जा सकता है। `auto-level` या `hide-logo` जैसे फ़्लैग को किसी वैल्यू की ज़रूरत नहीं होती।
+पेज पर 256 px का कोड दिखता है, जिसके modules गोल हैं और नीचे एक बैनर है। `url` बदलें और कोड दोबारा बन जाता है, Vue `<svg>` को वहीं अपडेट करता है।
 
-- जब कोई prop बदलता है, तो कोड दोबारा बनता है और Vue `<svg>` को उसी जगह अपडेट कर देता है।
-- `class`, `style`, `aria-label` और दूसरे एट्रिब्यूट `<svg>` पर लगते हैं, या फ़्रेम होने पर फ़्रेम के बाहरी `<svg>` पर। `@click` जैसे लिसनर भी वहीं लगते हैं।
+<Shot id="lib-framed-menu-code" />
 
-## QRCodeSVG [#qrcodesvg]
+`QRCode` वही props लेता है जो React के `QRCode` में हैं: हर `QRProps` विकल्प, और लोगो के लिए `logo`, `logoOptions`, `hideLogo` और `scale`। टेम्पलेट में इन्हें kebab-case (`body-pattern`) या camelCase में लिखें। `auto-level` या `hide-logo` जैसे फ़्लैग को किसी वैल्यू की ज़रूरत नहीं होती। `class`, `style`, `aria-label` और दूसरे attributes `<svg>` पर जाते हैं, या फ़्रेम होने पर फ़्रेम के बाहरी `<svg>` पर जाते हैं, और `@click` जैसे listeners भी वहीं जाते हैं।
 
-`QRCodeSVG`, React के `QRCodeSVG` की तरह `QRProps` लेता है। लोगो `imageSettings` में दिया जाता है:
+### 3. useQRCode से फ़ाइल के रूप में सेव करें [#3-save-it-as-a-file-with-useqrcode]
 
-```vue
+```vue title="src/components/DownloadCode.vue"
+<script setup lang="ts">
+import { useQRCode } from "qrdx/vue";
+import { ref } from "vue";
+
+const url = ref("https://example.com/menu");
+const { svg, download } = useQRCode(() => ({
+  value: url.value,
+  size: 256,
+  margin: 4,
+  bodyPattern: "rounded",
+}));
+</script>
+
+<template>
+  <div v-html="svg" />
+  <button type="button" @click="download({ format: 'png', size: 1024, filename: 'menu.png' })">
+    Download PNG
+  </button>
+</template>
+```
+
+कोड अपने मार्कअप से दिखता है, और बटन `menu.png` को 1024 px में सेव करता है। `useQRCode(props)` में `QRCode` के props ऑब्जेक्ट, ref, reactive ऑब्जेक्ट या getter के रूप में दिए जा सकते हैं, और यह ये लौटाता है:
+
+- `svg`: SVG मार्कअप, computed ref के रूप में। यह props के साथ बदलता है और सर्वर रेंडरिंग के दौरान भी काम करता है।
+- `toDataURL(format, { size, quality })`: कोड को data URL के रूप में।
+- `download({ format, filename, size, quality })`: कोड को फ़ाइल के रूप में सेव करता है।
+- `options`: वे विकल्प जिनसे कोड बनाया गया है, computed ref के रूप में।
+
+`toDataURL` और `download` डिफ़ॉल्ट रूप से कोड के अपने `size` पर PNG बनाते हैं। फ़ॉर्मैट `png`, `jpg`, `webp`, `svg`, `pdf` और `eps` हैं। PNG, JPG और WebP के लिए ब्राउज़र चाहिए, और PDF के लिए optional `jspdf` पैकेज चाहिए।
+
+## QRCodeSVG और raw image settings [#qrcodesvg-and-raw-image-settings]
+
+`QRCodeSVG`, React के `QRCodeSVG` की तरह `QRProps` लेता है। लोगो `imageSettings` में पिक्सल में दिया जाता है:
+
+```vue title="src/components/LogoCode.vue"
 <script setup lang="ts">
 import { QRCodeSVG } from "qrdx/vue";
 </script>
@@ -52,56 +96,31 @@ import { QRCodeSVG } from "qrdx/vue";
 <template>
   <QRCodeSVG
     value="https://example.com"
+    :size="256"
     level="H"
     :image-settings="{ src: '/logo.png', width: 48, height: 48, excavate: true }"
   />
 </template>
 ```
 
+जब तक आप लोगो का लेआउट खुद नहीं बना रहे, `logo` और `logoOptions` के साथ `QRCode` को प्राथमिकता दें।
+
 ## सर्वर रेंडरिंग और Nuxt [#server-rendering-and-nuxt]
 
-दोनों कंपोनेंट Vue के सर्वर रेंडरर (`vue/server-renderer`) से रेंडर होते हैं, इसलिए कोड सर्वर के HTML का हिस्सा होता है। मार्कअप में कोई random id नहीं होती, इसलिए ब्राउज़र बिना mismatch के इसे hydrate कर लेता है।
+दोनों कंपोनेंट Vue के सर्वर रेंडरर (`vue/server-renderer`) से रेंडर होते हैं, इसलिए कोड सर्वर के HTML का हिस्सा होता है। मार्कअप में कोई random id नहीं होती, इसलिए ब्राउज़र इसे बिना mismatch के hydrate करता है।
 
-Nuxt में इन्हें किसी भी पेज या कंपोनेंट में इस्तेमाल करें। ये सर्वर पर रेंडर होकर ब्राउज़र में hydrate होते हैं, या `<ClientOnly>` के अंदर सिर्फ़ ब्राउज़र में रेंडर होते हैं।
-
-## useQRCode [#useqrcode]
-
-```vue
-<script setup lang="ts">
-import { useQRCode } from "qrdx/vue";
-import { ref } from "vue";
-
-const url = ref("https://example.com");
-const { svg, download } = useQRCode(() => ({ value: url.value, size: 256 }));
-</script>
-
-<template>
-  <div v-html="svg" />
-  <button type="button" @click="download({ format: 'png', size: 1024 })">
-    Download PNG
-  </button>
-</template>
-```
-
-`useQRCode(props)`, `QRCode` के props को ऑब्जेक्ट, ref, reactive ऑब्जेक्ट या getter के रूप में लेता है। यह ये लौटाता है:
-
-- `svg`: SVG मार्कअप, computed ref के रूप में। यह props के साथ बदलता है और सर्वर रेंडरिंग के दौरान भी काम करता है।
-- `toDataURL(format, { size, quality })`: कोड को data URL के रूप में।
-- `download({ format, filename, size, quality })`: कोड को फ़ाइल के रूप में सेव करता है।
-- `options`: वे विकल्प जिनसे कोड बनाया जाता है, computed ref के रूप में।
-
-`toDataURL` और `download` डिफ़ॉल्ट रूप से कोड के अपने `size` पर PNG बनाते हैं। फ़ॉर्मैट `png`, `jpg`, `webp`, `svg`, `pdf` और `eps` हैं। PNG, JPG और WebP के लिए ब्राउज़र चाहिए, और PDF के लिए वैकल्पिक `jspdf` पैकेज चाहिए।
+Nuxt में इन्हें किसी भी पेज या कंपोनेंट में इस्तेमाल करें। ये सर्वर पर रेंडर होते हैं और ब्राउज़र में hydrate होते हैं। `<ClientOnly>` के अंदर ये सिर्फ़ ब्राउज़र में रेंडर होते हैं।
 
 ## qrdx/core से और कुछ [#more-from-qrdxcore]
 
-`qrdx/vue`, `qrdx/core` की हर चीज़ फिर से एक्सपोर्ट करता है: `toSVGString`, `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, आधिकारिक फ़्रेम लाइब्रेरी (`getOfficialFrame`) और बाकी सब। इनके बारे में [Vanilla JavaScript](/docs/vanilla-js) में बताया गया है। सर्वर पर PNG के लिए `qrdx/node` से `getQRAsPNG` इस्तेमाल करें।
+`qrdx/vue`, `qrdx/core` की हर चीज़ फिर से export करता है: `toSVGString`, `downloadQRCode`, `getQRCodeDataUrl`, `getScanScore`, आधिकारिक फ़्रेम लाइब्रेरी (`getOfficialFrame`) और बाकी सब। इनके बारे में [Vanilla JavaScript](/docs/vanilla-js) में बताया गया है। सर्वर पर PNG के लिए `qrdx/node` से `getQRAsPNG` इस्तेमाल करें।
 
-कस्टम टेम्पलेट का `wrapper` उस `h` से लिखा जाता है जिसे `qrdx/vue` एक्सपोर्ट करता है। यह core का `h` है, Vue का नहीं, इसलिए अगर किसी फ़ाइल में दोनों चाहिए तो उनमें से एक को दूसरे नाम से इम्पोर्ट करें:
+कस्टम टेम्पलेट का `wrapper` उस `h` से लिखा जाता है जो `qrdx/vue` export करता है। यह core का `h` है, Vue का नहीं, इसलिए अगर किसी फ़ाइल को दोनों चाहिए तो एक को दूसरे नाम से import करें:
 
-```js
+```ts title="src/labelled-template.ts"
 import { h } from "qrdx/vue";
 
-const Labelled = {
+export const Labelled = {
   id: "Labelled",
   name: "Labelled",
   wrapper: (children, props) =>
@@ -115,3 +134,18 @@ const Labelled = {
 ```
 
 इसे `customTemplate` के रूप में दें, और इसके props `customProps` में दें: `<QRCode value="https://example.com" :custom-template="Labelled" :custom-props="{ label: 'Scan me' }" />`।
+
+## अगर कुछ गड़बड़ हो [#if-something-goes-wrong]
+
+- **`Failed to resolve component: QRCode`.** कंपोनेंट उस फ़ाइल में import नहीं किया गया है। उसके `<script setup>` में `import { QRCode } from "qrdx/vue"` जोड़ें।
+- **कोई prop असर नहीं करता।** आपने उसे attribute string के रूप में लिखा है जबकि वहाँ वैल्यू चाहिए: `size="256"` string देता है, `:size="256"` संख्या देता है। `frame` और `image-settings` जैसे ऑब्जेक्ट props में हमेशा कोलन चाहिए।
+- **`PDF export needs the optional "jspdf" package`.** app में `npm install jspdf` चलाएँ।
+
+## संबंधित [#related]
+
+<Cards>
+  <Card href="/docs/web-component" title="वेब कंपोनेंट" description="qrdx-code एलिमेंट, जिससे Vue उन्हीं props के साथ बाइंड होता है।" />
+  <Card href="/docs/vanilla-js" title="Vanilla JavaScript" description="qrdx/core जो कुछ export करता है और qrdx/vue फिर से export करता है, वह सब।" />
+  <Card href="/docs/features/downloads" title="एक्सपोर्ट और डाउनलोड" description="फ़ॉर्मैट, साइज़, क्लिपबोर्ड और Node में PNG।" />
+  <Card href="/docs/api-reference" title="लाइब्रेरी API रेफ़रेंस" description="हर prop, उसके टाइप और डिफ़ॉल्ट के साथ।" />
+</Cards>

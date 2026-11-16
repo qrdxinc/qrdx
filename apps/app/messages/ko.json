@@ -11,135 +11,169 @@
     "closeMenu": "메뉴 닫기",
     "entries": {
       "product": "제품",
-      "tools": "도구",
+      "solutions": "솔루션",
       "developers": "개발자",
-      "resources": "리소스",
-      "pricing": "요금제"
+      "resources": "리소스"
+    },
+    "columns": {
+      "industries": "업종별",
+      "teams": "팀별",
+      "codeTypes": "코드 유형",
+      "build": "제작",
+      "embed": "임베드",
+      "connect": "연동",
+      "help": "도움말",
+      "company": "회사",
+      "updates": "소식"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "패턴, 색상, 로고, 프레임으로 QR 코드를 디자인하고 다운로드하세요. 가입이 필요 없어요."
+        "description": "가입 없이 무료로 코드를 디자인하고 다운로드해요",
+        "short": "무료, 가입 불필요"
       },
       "dynamicCodes": {
-        "name": "동적 QR 코드",
-        "description": "인쇄 후에도 링크를 바꾸고 스캔 수를 확인해요"
-      },
-      "aiThemes": {
-        "name": "AI 테마",
-        "description": "스타일을 설명하면 AI가 테마를 디자인해요"
+        "description": "인쇄 후에도 링크를 바꾸고 모든 스캔을 집계해요",
+        "short": "링크 수정, 스캔 집계"
       },
       "aiArt": {
-        "name": "AI QR 아트",
-        "description": "링크를 스캔되는 AI 아트워크로 바꿔요"
-      },
-      "communityThemes": {
-        "name": "커뮤니티 테마",
-        "description": "다른 사람들이 공유한 디자인을 둘러보고 재사용해요"
-      },
-      "pageTemplates": {
-        "name": "페이지 템플릿",
-        "description": "모든 호스팅 페이지 템플릿의 라이브 데모예요"
-      },
-      "generators": {
-        "name": "QR 코드 생성기",
-        "description": "Wi-Fi, vCard, WhatsApp, UPI, 결제 등 모든 유형에 맞는 생성기가 있어요."
-      },
-      "bulk": {
-        "name": "대량 생성기",
-        "description": "CSV로 최대 {max, number}개의 스타일 코드를 만들어요"
-      },
-      "scanner": {
-        "name": "QR 코드 스캐너",
-        "description": "안전한 링크 미리보기로 코드를 스캔해요"
-      },
-      "scanChecker": {
-        "name": "스캔 검사기",
-        "description": "QR 코드가 얼마나 잘 스캔되는지 테스트해요"
-      },
-      "printSize": {
-        "name": "인쇄 크기 계산기",
-        "description": "스캔 거리에 맞는 최소 크기를 확인해요"
+        "description": "스캔되는 코드를 작품 속에 그려 넣어요",
+        "short": "작품 속에 그려 넣은 코드"
       },
       "barcode": {
-        "name": "바코드 생성기",
-        "description": "EAN, UPC, Code 128 등을 체크 디지트와 함께 만들어요"
+        "description": "EAN, UPC, Code 128 등",
+        "short": "EAN, UPC, Code 128"
       },
-      "allTools": {
-        "name": "모든 도구",
-        "description": "무료 QR 코드 도구를 한곳에서 만나요"
+      "bulk": {
+        "description": "CSV로 최대 {max, number}개의 스타일 코드를 만들어요",
+        "short": "CSV로 코드 만들기"
       },
-      "docs": {
-        "name": "문서",
-        "description": "qrdx React 라이브러리, 동적 QR 코드, API, 셀프 호스팅 가이드예요."
+      "community": {
+        "description": "사람들이 공유한 프레임과 테마",
+        "short": "공유된 프레임과 테마"
       },
-      "mcp": {
-        "name": "MCP 서버",
-        "description": "Claude, ChatGPT, Cursor에서 QR 코드를 만들어요"
+      "restaurants": {
+        "description": "메뉴, Wi-Fi, 리뷰 요청",
+        "short": "메뉴, Wi-Fi, 리뷰"
       },
-      "qrCodeApi": {
-        "name": "무료 QR 코드 API",
-        "description": "키나 가입 없이 URL 하나로 QR 코드 이미지를 만들어요"
+      "retail": {
+        "description": "진열대 태그, 윈도 쇼핑, 적립 혜택",
+        "short": "진열대 태그와 적립"
       },
-      "nextjs": {
-        "name": "Next.js 가이드",
-        "description": "서버 및 클라이언트 컴포넌트에서 QR 코드 사용하기"
+      "realEstate": {
+        "description": "매물 정보를 여는 간판용 코드",
+        "short": "간판에서 매물로"
+      },
+      "events": {
+        "description": "일정, 배지, 세션 피드백",
+        "short": "일정과 배지"
+      },
+      "enterprise": {
+        "description": "싱글 사인온, 감사 로그, 계약",
+        "short": "SSO, 감사 로그, 계약"
+      },
+      "agencies": {
+        "description": "고객사 도메인, UTM, 스캔 리포트",
+        "short": "고객 코드와 리포트"
+      },
+      "openSource": {
+        "description": "앱을 직접 호스팅하거나 라이브러리를 사용해요",
+        "short": "직접 호스팅 또는 임베드"
+      },
+      "placements": {
+        "description": "메뉴, 포장, 명함, 간판",
+        "short": "메뉴, 포장, 간판"
+      },
+      "restApi": {
+        "description": "HTTP로 코드, 스캔, 웹훅을 다뤄요",
+        "short": "HTTP로 코드와 스캔 관리"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "API 키 없이 URL로 QR 코드 이미지를 받아요"
+        "description": "URL 하나로 코드 이미지를 만들어요, 키 불필요",
+        "short": "URL 하나, 키 불필요"
+      },
+      "mcp": {
+        "description": "Claude, ChatGPT, Cursor에서 QR 코드를 만들어요",
+        "short": "Claude, ChatGPT, Cursor에서 사용"
+      },
+      "cli": {
+        "description": "터미널과 CI에서 코드를 생성해요",
+        "short": "터미널과 CI"
+      },
+      "react": {
+        "description": "엔진을 React 컴포넌트로 사용해요",
+        "short": "React에서 QR 코드 사용"
       },
       "shadcn": {
-        "name": "shadcn/ui registry",
-        "description": "명령어 하나로 QR 코드 컴포넌트를 추가해요"
+        "description": "명령어 하나로 QR 코드 컴포넌트를 추가해요",
+        "short": "명령어 하나로 컴포넌트 추가"
       },
-      "plugins": {
-        "name": "플러그인",
-        "description": "Chrome, Figma, Raycast, Canva용 QRdx"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "소스 코드, 이슈, 릴리스"
-      },
-      "help": {
-        "name": "도움말 센터",
-        "description": "QR 코드, 결제, 팀, 문제 해결에 대한 답변이에요"
-      },
-      "blog": {
-        "name": "블로그",
-        "description": "QR 코드 가이드와 소식"
-      },
-      "customers": {
-        "name": "고객 사례",
-        "description": "기업이 QRdx를 활용하는 방법"
-      },
-      "compare": {
-        "name": "비교",
-        "description": "다른 생성기, 라이브러리와 QRdx를 비교해요"
-      },
-      "changelog": {
-        "name": "변경 내역",
-        "description": "QRdx의 새로운 소식"
+      "nextjs": {
+        "description": "서버 및 클라이언트 컴포넌트에서 QR 코드 사용하기",
+        "short": "서버 및 클라이언트 컴포넌트"
       },
       "integrations": {
-        "name": "연동",
-        "description": "Zapier, Make, Discord, 분석 픽셀 등"
+        "description": "Zapier, Make, Discord, 분석 픽셀 등",
+        "short": "Zapier, Make 등"
       },
-      "support": {
-        "name": "지원 문의",
-        "description": "이메일, 지원 위젯 또는 GitHub"
+      "plugins": {
+        "description": "Chrome, Figma, Raycast, Canva용 QRdx",
+        "short": "Chrome, Figma, Raycast, Canva"
+      },
+      "webhooks": {
+        "description": "스캔, 폼, 코드 이벤트를 내 URL로 보내요",
+        "short": "내 URL로 이벤트 전송"
+      },
+      "docs": {
+        "description": "가이드, API 레퍼런스, 직접 호스팅",
+        "short": "가이드와 레퍼런스"
+      },
+      "github": {
+        "description": "MIT 엔진과 CLI, AGPL 앱",
+        "short": "MIT 엔진, AGPL 앱"
+      },
+      "help": {
+        "description": "QR 코드, 결제, 팀, 문제 해결에 대한 답변이에요",
+        "short": "자주 묻는 질문에 대한 답변"
+      },
+      "contact": {
+        "description": "이메일, 지원 위젯 또는 GitHub",
+        "short": "이메일 또는 지원 위젯"
+      },
+      "customers": {
+        "description": "기업이 QRdx를 활용하는 방법",
+        "short": "기업이 QRdx를 쓰는 방법"
+      },
+      "security": {
+        "description": "QRdx가 계정과 데이터를 보호하는 방법",
+        "short": "계정과 데이터"
+      },
+      "affiliates": {
+        "description": "추천한 고객으로 수익을 얻어요",
+        "short": "추천하고 수익 얻기"
+      },
+      "blog": {
+        "description": "QR 코드 가이드와 소식",
+        "short": "가이드와 소식"
+      },
+      "changelog": {
+        "description": "QRdx의 새로운 소식",
+        "short": "새로운 소식"
+      },
+      "tools": {
+        "description": "스캐너, 스캔 검사기, 인쇄 크기 등",
+        "short": "스캐너, 검사기 등"
       }
     },
     "account": {
-      "tryPlayground": "Playground 체험하기",
-      "playground": "Playground",
-      "dashboard": "대시보드",
-      "signIn": "로그인"
+      "signIn": "로그인",
+      "create": "QR 코드 만들기",
+      "dashboard": "대시보드"
     },
     "github": {
       "star": "Star",
       "starOnGithub": "GitHub에서 QRdx에 Star 주기",
-      "starOnGithubCount": "GitHub에서 QRdx에 Star 주기 (Star {count}개)"
+      "starOnGithubCount": "GitHub에서 QRdx에 Star 주기 (Star {count}개)",
+      "stars": "별 {count}개"
     },
     "userProfileDropdown": {
       "tryThePlayground": "Playground 체험하기",
@@ -169,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "무료 오픈소스 QR 코드 생성기예요. 맞춤 패턴, 그라디언트, 로고, 프레임을 지원하고 PNG, JPG, SVG, PDF, EPS로 다운로드할 수 있으며 가입이 필요 없어요. 동적 QR 코드, 호스팅 페이지, 스캔 분석도 함께 제공해요.",
+    "description": "오픈소스 QR 코드 플랫폼",
     "starOnGithub": "GitHub에서 별표 주기",
+    "newsOnX": "X에서 보는 QRdx 소식",
     "navLabel": "푸터",
-    "scanIt": "어서, 스캔해 보세요",
-    "copyright": "© {year} QRdx. AGPL-3.0 오픈소스입니다.",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "제품",
-      "tools": "도구",
       "developers": "개발자",
+      "solutions": "솔루션",
       "resources": "리소스",
+      "company": "회사",
       "compare": "비교"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "QR 코드 생성기",
       "dynamicCodes": "동적 QR 코드",
+      "aiArt": "AI QR 아트",
       "aiThemes": "AI 테마",
-      "communityThemes": "커뮤니티 테마",
+      "barcode": "바코드",
+      "bulk": "대량 생성기",
       "pageTemplates": "페이지 템플릿",
-      "pricing": "요금제",
-      "guarantee": "Never-Hostage 보장",
-      "enterprise": "엔터프라이즈",
+      "community": "커뮤니티",
       "slackBot": "Slack 봇",
       "telegramBot": "Telegram 봇",
       "discordBot": "Discord 봇",
-      "generators": "QR 코드 생성기",
-      "bulk": "대량 생성기",
-      "scanChecker": "스캔 검사기",
-      "printSize": "인쇄 크기 계산기",
-      "barcode": "바코드 생성기",
-      "pdfQr": "PDF QR 코드",
-      "businessCard": "디지털 명함",
-      "menuQr": "메뉴 QR 코드",
-      "scanner": "QR 코드 스캐너",
-      "allTools": "모든 도구",
-      "docs": "문서",
-      "apiReference": "API 레퍼런스",
-      "qrCodeApi": "무료 QR 코드 API",
-      "nextjs": "Next.js 가이드",
-      "imageApi": "Image API",
-      "mcp": "MCP 서버",
-      "shadcn": "shadcn/ui 레지스트리",
-      "plugins": "플러그인",
-      "selfHosting": "셀프 호스팅",
-      "openSource": "오픈 소스",
-      "github": "GitHub",
-      "help": "도움말 센터",
-      "blog": "블로그",
-      "customers": "고객 사례",
-      "changelog": "변경 내역",
-      "integrations": "연동",
+      "restaurants": "레스토랑",
+      "retail": "소매",
+      "realEstate": "부동산",
+      "events": "이벤트",
       "industries": "업종별 QR 코드",
       "placements": "부착 위치별 QR 코드",
-      "affiliates": "제휴 프로그램",
+      "generators": "모든 코드 유형",
+      "typeUrl": "웹사이트",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "엔터프라이즈",
+      "agencies": "에이전시",
+      "openSource": "오픈 소스",
+      "docs": "문서",
+      "restApi": "REST API",
+      "apiReference": "API 레퍼런스",
+      "imageApi": "Image API",
+      "mcp": "MCP 서버",
+      "cli": "CLI",
+      "react": "React 라이브러리",
+      "shadcn": "shadcn/ui 레지스트리",
+      "nextjs": "Next.js 가이드",
+      "integrations": "연동",
+      "plugins": "플러그인",
+      "webhooks": "웹훅",
+      "selfHosting": "셀프 호스팅",
+      "github": "GitHub",
+      "help": "도움말 센터",
       "contact": "문의하기",
+      "blog": "블로그",
+      "changelog": "변경 내역",
+      "customers": "고객 사례",
+      "tools": "무료 도구",
+      "scanner": "QR 코드 스캐너",
+      "scanChecker": "스캔 검사기",
+      "printSize": "인쇄 크기 계산기",
+      "security": "보안",
+      "affiliates": "제휴 프로그램",
+      "guarantee": "Never-Hostage 보장",
+      "pricing": "요금제",
+      "allComparisons": "전체 비교",
       "legal": "법적 고지",
-      "privacy": "개인정보 처리방침",
       "terms": "이용약관",
-      "subprocessors": "하위 처리자",
-      "reportAbuse": "악용 신고",
-      "acceptableUse": "허용 가능한 사용",
+      "privacy": "개인정보 처리방침",
       "cookies": "쿠키 정책",
       "dpa": "데이터 처리 (DPA)",
+      "subprocessors": "하위 처리자",
+      "acceptableUse": "허용 가능한 사용",
       "aiFeatures": "AI 기능",
       "refunds": "환불",
       "affiliateTerms": "제휴 약관",
-      "security": "보안",
       "securityPolicy": "보안 정책",
-      "allComparisons": "전체 비교"
+      "reportAbuse": "악용 신고"
     }
   },
   "localeSwitcher": {
@@ -244,9 +289,10 @@
     "englishOnly": "이 페이지는 영어로만 제공돼요. 다른 언어를 선택하면 해당 언어의 홈 페이지가 열려요."
   },
   "cta": {
-    "title": "다음 QR 코드를 몇 초 만에 만들어 보세요.",
-    "subtext": "영원히 무료예요. 회원가입도, 워터마크도 없어요.",
-    "button": "무료로 QR 코드 만들기"
+    "title": "다음 QR 코드를 만들어 보세요",
+    "subtext": "브라우저에서 무료로, 가입이나 워터마크 없이 만들 수 있고, 필요할 때는 동적 QR 코드도 쓸 수 있어요.",
+    "button": "QR 코드 만들기",
+    "secondary": "요금제 보기"
   },
   "consent": {
     "banner": {

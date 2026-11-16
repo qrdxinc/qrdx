@@ -1,6 +1,6 @@
 ---
 title: "Passkeys"
-description: "Inicia sesión con tu huella, tu rostro o el bloqueo de pantalla, usa una passkey como segundo paso, y cambia el nombre o elimina una que ya no uses."
+description: "Inicia sesión con tu huella, tu rostro o el bloqueo de pantalla, usa una passkey como segundo paso y cambia el nombre o elimina una que ya no uses."
 ---
 
 Una passkey comprueba que eres tú con tu huella, tu rostro, el bloqueo de pantalla de tu dispositivo o una llave de seguridad. Se guarda en tu dispositivo o en tu gestor de contraseñas, y solo funciona en el sitio oficial de QRdx, así que un sitio falso que imite al original no puede capturarla.
@@ -8,7 +8,7 @@ Una passkey comprueba que eres tú con tu huella, tu rostro, el bloqueo de panta
 Una passkey cumple dos funciones en QRdx:
 
 - te permite iniciar sesión por sí sola, con **Continuar con passkey** en la página de inicio de sesión;
-- es el segundo paso de la [verificación en dos pasos](/docs/help/privacy-and-security/two-step-verification) después de iniciar sesión con un código por correo, con Google o con GitHub<IfAvailable feature="sso"> (o con el inicio de sesión único de tu espacio de trabajo)</IfAvailable>.
+- es el segundo paso de la [verificación en dos pasos](/docs/help/privacy-and-security/two-step-verification) después de iniciar sesión con un código por correo, Google o GitHub<IfAvailable feature="sso"> (o el inicio de sesión único de tu espacio de trabajo)</IfAvailable>.
 
 También [confirma que eres tú](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) antes de hacer cambios en la seguridad de tu cuenta, como activar o desactivar la verificación en dos pasos. Es útil si no puedes acceder a tu correo.
 
@@ -16,43 +16,61 @@ También [confirma que eres tú](/docs/help/privacy-and-security/two-step-verifi
 
 1. Ve a **Ajustes** → **Perfil y seguridad**.
 2. En **Verificación en dos pasos**, haz clic en **Añadir passkey** y confirma que eres tú.
-3. Conserva el nombre sugerido (tu navegador y sistema, como "Chrome on macOS") o escribe uno propio, y haz clic en **Continuar**.
+3. Conserva el nombre sugerido (tu navegador y tu sistema, como "Chrome on macOS") o escribe el tuyo, y haz clic en **Continuar**.
 4. Tu navegador te pregunta dónde guardar la passkey y comprueba tu huella, tu rostro o el bloqueo de pantalla.
 
-Si la verificación en dos pasos está desactivada, al añadir una passkey se activa, y QRdx te muestra 10 códigos de respaldo para que los guardes. Te permiten entrar cuando no tienes tu passkey.
+<Shot id="add-passkey-dialog" />
 
-La passkey debe comprobar que eres tú cada vez que se usa. Los teléfonos, los ordenadores y los gestores de contraseñas lo hacen con tu huella, tu rostro o el bloqueo de pantalla. Una llave de seguridad necesita tener un PIN configurado.
+Si la verificación en dos pasos está desactivada, al añadir una passkey se activa y QRdx te muestra 10 códigos de respaldo para que los guardes. Te permiten entrar cuando no tienes tu passkey.
+
+La passkey debe comprobar que eres tú cada vez que se usa. Los teléfonos, los ordenadores y los gestores de contraseñas lo hacen con tu huella, tu rostro o el bloqueo de pantalla. Una llave de seguridad necesita un PIN configurado.
 
 QRdx envía un correo a la dirección de tu cuenta cada vez que se añade o se elimina una passkey.
 
 ## Iniciar sesión con una passkey [#sign-in-with-a-passkey]
 
-En la página de inicio de sesión, haz clic en **Continuar con passkey**, al final de las formas de iniciar sesión, y elige la tuya. Iniciar sesión con una passkey cuenta como los dos pasos, así que QRdx no te pide nada más.
+En la página de inicio de sesión, haz clic en **Continuar con passkey**, al final de las opciones para iniciar sesión, y elige la tuya. Iniciar sesión con una passkey cuenta como los dos pasos, así que QRdx no te pide nada más.
 
 El campo de correo no sugiere passkeys: usa el botón.
 
-Una passkey inicia sesión en la cuenta a la que se añadió. No puede crear una cuenta: si eres nuevo en QRdx, inicia sesión primero con Google, GitHub o un código por correo, y luego añade una passkey.
+Una passkey inicia sesión en la cuenta a la que se añadió. No puede crear una cuenta: si eres nuevo en QRdx, inicia sesión primero con Google, GitHub o un código por correo y luego añade una passkey.
 
 ## Usar una passkey como segundo paso [#use-a-passkey-as-your-second-step]
 
-Con la verificación en dos pasos activada, inicia sesión como lo haces normalmente. Entonces se abre por sí solo el aviso de passkey de tu navegador; comprueba que eres tú y ya estás dentro. Algunos navegadores solo abren el aviso después de un clic: en ese caso, haz clic en **Continuar con passkey**.
+Con la verificación en dos pasos activada, inicia sesión como lo haces normalmente. Entonces se abre solo el aviso de passkey de tu navegador; comprueba que eres tú y ya habrás entrado. Algunos navegadores solo abren el aviso después de un clic: en ese caso, haz clic en **Continuar con passkey**.
 
-¿No tienes ninguna passkey a mano? Haz clic en **Usar un código de autenticación** (si has configurado una app de autenticación) o en **Usar un código de respaldo**.
+¿No tienes una passkey a mano? Haz clic en **Usar un código de autenticación** (si configuraste una app de autenticación) o en **Usar un código de respaldo**.
 
-Si añadiste una passkey antes de que pudiera ser un segundo paso y la verificación en dos pasos está desactivada, Ajustes muestra **Tu passkey está lista para ser tu segundo paso**. Haz clic en **Activar** para usarla así: confirma que eres tú, comprueba que eres tú con la passkey y guarda tus códigos de respaldo.
+Si añadiste una passkey antes de que pudiera ser un segundo paso y la verificación en dos pasos está desactivada, en Ajustes aparece **Tu passkey está lista para ser tu segundo paso**. Haz clic en **Activar** para usarla así: confirma que eres tú, comprueba con la passkey que eres tú y guarda tus códigos de respaldo.
 
-## Passkeys sincronizadas y passkeys vinculadas al dispositivo [#synced-and-device-bound-passkeys]
+## Passkeys sincronizadas y ligadas al dispositivo [#synced-and-device-bound-passkeys]
 
-Una passkey sincronizada tiene copia de seguridad en un gestor de contraseñas o en un llavero en la nube, como el Llavero de iCloud o el Gestor de contraseñas de Google. Funciona en todos los dispositivos con la sesión iniciada en esa cuenta.
+Una passkey sincronizada tiene copia de seguridad en un gestor de contraseñas o en un llavero en la nube, como el llavero de iCloud o Google Password Manager. Funciona en todos los dispositivos con sesión iniciada en esa cuenta. En Ajustes, cada passkey aparece marcada como **Sincronizada** o **Ligada al dispositivo**.
 
-Una passkey vinculada al dispositivo se queda en el único teléfono, ordenador o llave de seguridad que la creó. Para iniciar sesión en otro lugar, usa otro método de inicio de sesión o añade también una passkey en ese dispositivo.
+Una passkey ligada al dispositivo se queda en el único teléfono, ordenador o llave de seguridad que la creó. Para iniciar sesión en otro lugar, usa otro método de inicio de sesión o añade también una passkey en ese dispositivo.
 
 ## Cambiar el nombre o eliminar una passkey [#rename-or-remove-a-passkey]
 
-En **Verificación en dos pasos**, abre el menú junto a la passkey y haz clic en **Renombrar** o **Eliminar**, y luego confirma que eres tú. Una passkey eliminada deja de funcionar en QRdx de inmediato. Es posible que tu dispositivo o tu gestor de contraseñas siga mostrándola hasta que la borres también allí.
+En **Verificación en dos pasos**, abre el menú junto a la passkey, haz clic en **Cambiar nombre** o **Eliminar** y confirma que eres tú. Una passkey eliminada deja de funcionar en QRdx al instante. Es posible que tu dispositivo o tu gestor de contraseñas la siga mostrando hasta que también la borres allí.
 
 Si esa passkey es tu único segundo paso, al eliminarla se desactiva la verificación en dos pasos. QRdx te avisa antes de que confirmes.
 
-¿Perdiste un dispositivo que tenía una passkey? Inicia sesión de otra forma y elimina esa passkey.
+## Si algo sale mal [#if-something-goes-wrong]
 
-Siempre puedes iniciar sesión con un código enviado a tu correo, así que eliminar tu última passkey no te deja sin acceso.
+### El aviso de passkey no se abre [#the-passkey-prompt-doesnt-open]
+
+Algunos navegadores solo lo abren después de un clic. Haz clic en **Continuar con passkey**. Si sigue sin abrirse, es posible que la passkey esté en otro dispositivo: usa otro método y luego añade una passkey en este dispositivo.
+
+### Perdiste un dispositivo que tenía una passkey [#you-lost-a-device-that-had-a-passkey-on-it]
+
+Inicia sesión de otra forma y elimina esa passkey en **Verificación en dos pasos**.
+
+### Eliminaste tu última passkey [#you-removed-your-last-passkey]
+
+Siempre puedes iniciar sesión con un código enviado a tu correo, así que no te quedas fuera. Si era tu único segundo paso, la verificación en dos pasos ahora está desactivada; vuelve a activarla con una passkey nueva o una app de autenticación.
+
+## Relacionado [#related]
+
+- [Verificación en dos pasos](/docs/help/privacy-and-security/two-step-verification)
+- [Mantén tu cuenta segura](/docs/help/privacy-and-security/account-security)
+- [Métodos de inicio de sesión y dirección de correo](/docs/help/account-and-billing/sign-in)

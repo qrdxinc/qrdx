@@ -1,22 +1,61 @@
 ---
-title: "API d'images de QR code"
-description: "Transformez n'importe quelle URL en image de QR code à intégrer dans du Markdown, du HTML ou des e-mails. Aucune clé API requise."
+title: "API d'image de QR code"
+description: "Transformez n'importe quelle URL ou n'importe quel texte en image de QR code avec une seule requête GET et sans clé d'API, au format SVG, PNG, WebP ou EPS, avec les styles de l'éditeur, pour Markdown, HTML, e-mails et impression."
 icon: ImageDown
 ---
 
-`GET https://api.qrdx.dev/v1/qr` renvoie un QR code sous forme d'image SVG, PNG ou WebP, ou de fichier EPS vectoriel pour l'impression et les outils de design. Tout se trouve dans la chaîne de requête : l'URL est donc l'image elle-même, et vous pouvez la coller dans un README, une balise `<img>` ou un modèle d'e-mail. Elle accepte aussi les styles de l'éditeur : dégradés, cadres (cadres personnalisés compris), bordures, couleurs des yeux et des points, et icônes de logo.
+À la fin de cette page, vous aurez une URL d'image de QR code que vous pourrez coller dans un README, une balise `<img>` ou un modèle d'e-mail, avec le style de votre choix, et vous saurez ce que l'API refuse et pourquoi.
 
-```md
+`GET https://api.qrdx.dev/v1/qr` renvoie un QR code sous forme d'image SVG, PNG ou WebP, ou de fichier EPS vectoriel pour l'impression et les outils de design. Tout se règle dans la chaîne de requête : l'URL elle-même est donc l'image. Elle accepte aussi les styles de l'éditeur : dégradés, cadres (y compris les cadres personnalisés), bordures, couleurs des yeux et des points, et icônes de logo. Aucun compte ni aucune clé d'API n'est nécessaire, sauf pour un logo que vous avez téléversé dans QRdx (voir [Logos](#logos)).
+
+```md title="README.md"
 ![QR code](https://api.qrdx.dev/v1/qr?data=https://github.com/you/repo)
 ```
 
-Aucun compte ni clé API n'est nécessaire. La seule exception est un logo que vous avez importé dans QRdx (voir [Logos](#logos)).
+[Essayer dans le Playground](/playground?open=code&lang=image) : stylisez-y un code, puis copiez l'URL de son image. Vous pouvez aussi envoyer des requêtes depuis la page de référence [Générer une image de QR code](/docs/developers/api/get-qr-image).
 
-[Essayer dans le Playground](/playground?open=code&lang=image) : stylisez-y un code, puis copiez l'URL de son image.
+## 1. Demander une image [#1-request-an-image]
 
-## Exemples [#examples]
+<Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
+  <Tab value="curl">
+    ```bash title="Terminal"
+    curl -o qr.png "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png&size=1024"
+    ```
+  </Tab>
+  <Tab value="JavaScript">
+    ```js title="qr.mjs"
+    import { writeFile } from "node:fs/promises";
 
-```html
+    const url = new URL("https://api.qrdx.dev/v1/qr");
+    url.searchParams.set("data", "https://qrdx.dev");
+    url.searchParams.set("format", "png");
+    url.searchParams.set("size", "1024");
+
+    const response = await fetch(url);
+    await writeFile("qr.png", Buffer.from(await response.arrayBuffer()));
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="qr.py"
+    import requests
+
+    response = requests.get(
+        "https://api.qrdx.dev/v1/qr",
+        params={"data": "https://qrdx.dev", "format": "png", "size": 1024},
+    )
+    response.raise_for_status()
+    open("qr.png", "wb").write(response.content)
+    ```
+  </Tab>
+</Tabs>
+
+```txt title="Output"
+qr.png: PNG image data, 1024 x 1024, 8-bit/color RGBA, non-interlaced
+```
+
+Dans un shell, placez l'URL entre guillemets pour conserver le `&`. Dans une page HTML, l'URL va directement dans `src` :
+
+```html title="index.html"
 <img
   src="https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&size=256&fg=155dfc"
   width="256"
@@ -25,40 +64,39 @@ Aucun compte ni clé API n'est nécessaire. La seule exception est un logo que v
 />
 ```
 
-Téléchargez un PNG avec curl (mettez l'URL entre guillemets pour que votre shell conserve le `&`) :
+## 2. Choisir un format [#2-pick-a-format]
 
-```bash
-curl -o qr.png "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png&size=1024"
-```
+| `format` | Renvoie | Quand |
+| --- | --- | --- |
+| `svg` (par défaut) | `image/svg+xml` | Pages web et tout ce qui doit s'adapter à l'échelle |
+| `png` | `image/png` | E-mail, applications de messagerie, documents |
+| `webp` | `image/webp`, sans perte, transparence conservée | Sites web : les pixels du PNG dans un fichier plus léger |
+| `eps` | `application/postscript`, envoyé en téléchargement sous le nom `qr-code.eps` | Illustrator, InDesign, imprimeurs. `size` correspond alors à la largeur en points, 72 par pouce, donc `144` fait 2 pouces |
 
-Ou un WebP : les mêmes pixels que le PNG, sans perte et avec la transparence, dans un fichier plus léger :
-
-```bash
+```bash title="Terminal"
 curl -o qr.webp "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=webp&size=1024"
-```
-
-Obtenez un EPS vectoriel pour Illustrator, InDesign ou un imprimeur (`size` correspond à la largeur en points, à raison de 72 par pouce, donc `144` fait 2 pouces) :
-
-```bash
 curl -o qr.eps "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=eps&size=144"
+head -2 qr.eps
+# %!PS-Adobe-3.0 EPSF-3.0
+# %%BoundingBox: 0 0 144 144
 ```
 
-Des points stylisés avec un cadre :
+## 3. Le styliser [#3-style-it]
 
-```txt
+Des paramètres simples couvrent les couleurs, les formes, un cadre et un logo :
+
+```txt title="Rounded modules with a frame drawn as a template"
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&body=rounded&eye=rounded&dot=rounded&template=Arrow
 ```
 
-Un cadre intégré avec son libellé, et un cadre de la communauté par son identifiant :
-
-```txt
+```txt title="A built-in frame with its label, and a community frame by id"
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&frame=banner-bottom&frameText=Scan%20the%20menu
 https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&item=frame:wifi-card
 ```
 
-Tout le design en JSON dans `style`, ici un dégradé, des yeux rouges et un cadre :
+Pour les dégradés, les cadres personnalisés et les couleurs par œil, envoyez tout le design en JSON dans `style` :
 
-```js
+```js title="styled.mjs"
 const style = {
   fgColor: {
     type: "linear",
@@ -72,78 +110,83 @@ const style = {
   frame: { style: "banner-bottom", text: "Scan the menu" },
 };
 const src = `https://api.qrdx.dev/v1/qr?data=${encodeURIComponent(link)}&style=${encodeURIComponent(JSON.stringify(style))}`;
+// 200 image/svg+xml, 634.88 × 727.04: the frame adds to the 512 px code
 ```
 
-<Callout>
-  Encodez la valeur de `data` lorsqu'elle contient `&`, `#`, `+` ou des espaces, par exemple avec `encodeURIComponent` en JavaScript. Sinon, l'URL est coupée à ces caractères. Encodez `style` de la même façon.
+<Callout type="info">
+Encodez la valeur de `data` lorsqu'elle contient `&`, `#`, `+` ou des espaces, par exemple avec `encodeURIComponent` en JavaScript. Sinon, l'URL est coupée à ces caractères. Encodez `style` de la même manière, et écrivez les couleurs sans le `#` (ou sous la forme `%23`) : un `#` seul démarre le fragment de l'URL et n'est jamais envoyé.
 </Callout>
 
 ## Paramètres [#parameters]
 
-| Paramètre | Valeur par défaut | Description |
-|-----------|---------|-------------|
+| Paramètre | Par défaut | Description |
+| --- | --- | --- |
 | `data` | obligatoire | Texte ou URL à encoder, jusqu'à 2048 caractères |
-| `format` | `svg` | `svg`, `png`, `webp` (sans perte) ou `eps` (PostScript vectoriel ; `size` est alors la largeur en points) |
-| `size` | `512` | Largeur et hauteur en pixels, de `64` à `2048` |
+| `format` | `svg` | `svg`, `png`, `webp` ou `eps` |
+| `size` | `512` | Largeur et hauteur en pixels, de `64` à `2048` (en points pour l'EPS) |
 | `fg` | `000000` | Couleur des modules en hexadécimal (`155dfc`, `fff`, ou 8 chiffres avec alpha) |
-| `bg` | `ffffff` | Couleur de fond en hexadécimal. `00000000` donne un fond transparent |
+| `bg` | `ffffff` | Couleur d'arrière-plan en hexadécimal. `00000000` donne un arrière-plan transparent |
 | `eyeColor` | `fg` | Couleur des trois yeux d'angle |
-| `dotColor` | `fg` | Couleur du point au centre de chaque œil d'angle |
-| `body` | `square` | Forme des modules de données |
-| `eye` | `square` | Forme du cadre des yeux d'angle |
-| `dot` | `square` | Forme du point au centre de chaque œil d'angle |
-| `level` | `Q` | Correction d'erreur : `L` (~7 %), `M` (~15 %), `Q` (~25 %) ou `H` (~30 %) |
+| `dotColor` | `fg` | Couleur du point à l'intérieur de chaque œil d'angle |
+| `body` | `square` | Forme des modules de données ; voir [Valeurs des motifs](#pattern-values) |
+| `eye` | `square` | Forme des cadres des yeux d'angle |
+| `dot` | `square` | Forme du point à l'intérieur de chaque œil d'angle |
+| `level` | `Q` | Correction d'erreur : `L` (environ 7 %), `M` (15 %), `Q` (25 %) ou `H` (30 %) |
 | `margin` | `4` | Zone de silence autour du code, en modules, de `0` à `16` |
-| `template` | aucun | Un [cadre dessiné comme modèle](/docs/features/templates) : l'image entière fait `size` de large, avec le code plus petit à l'intérieur |
-| `frame` | aucun | Un [cadre](/docs/features/frames) d'appel à l'action intégré, tel que `banner-bottom`, `speech-bubble` ou `circle` (l'un des {facts.frameStyles} cadres intégrés, chacun dessiné à partir de sa spécification de cadre) |
+| `template` | aucun | Un [cadre dessiné comme un modèle](/docs/features/templates) : l'image entière fait `size` de large, avec le code plus petit à l'intérieur |
+| `frame` | aucun | Un [cadre](/docs/features/frames) d'appel à l'action intégré, tel que `banner-bottom`, `speech-bubble` ou `circle` : n'importe lequel des {facts.frameStyles} cadres intégrés |
 | `frameText` | `Scan me` | Le libellé du cadre, jusqu'à 24 caractères. Renomme aussi le cadre d'un `style` ou d'un `item` |
 | `style` | aucun | Tout le design de l'éditeur en JSON ; voir [Styles](#style) |
-| `item` | aucun | Un cadre ou un thème de la communauté par identifiant, tel que `frame:wifi-card` ; voir [Éléments de la communauté](#community-items) |
+| `item` | aucun | Un cadre ou un thème de la communauté, par identifiant, tel que `frame:wifi-card` ; voir [Éléments de la communauté](#community-items) |
 | `logoIcon` | aucun | Une icône rapide ou un logo de marque au centre ; voir [Logos](#logos) |
-| `logoFileId` | aucun | Un logo que vous avez importé, par identifiant de fichier ; nécessite une clé API ; voir [Logos](#logos) |
+| `logoFileId` | aucun | Un logo que vous avez téléversé, par identifiant de fichier ; nécessite une clé d'API ; voir [Logos](#logos) |
 
-Écrivez les couleurs sans le `#`, ou encodez-le en `%23` : un `#` seul démarre le fragment de l'URL et n'est jamais envoyé. Les valeurs énumérées (`level`, `format`, `template`, `frame`) ne sont pas sensibles à la casse.
-
-Avec un cadre, `size` correspond à la largeur du code lui-même et le cadre s'ajoute à l'image, quel que soit le format.
+Les valeurs d'énumération (`level`, `format`, `template`, `frame`) ne sont pas sensibles à la casse. Avec un cadre, `size` est la largeur du code lui-même et le cadre s'ajoute à l'image, dans tous les formats. Les paramètres simples l'emportent sur `style`, et `style` l'emporte sur `item`.
 
 ## Styles [#style]
 
-`style` accepte le design en JSON, avec les mêmes champs qu'un thème enregistré. Un thème issu de [`GET /v1/themes`](/docs/developers/api/list-themes) ou le `qrdxStyle` renvoyé par `design_qr` du [serveur MCP](/docs/developers/mcp) peut donc être transmis tel quel (hors logo importé, voir plus bas) :
+`style` accepte le design en JSON avec les mêmes champs qu'un thème enregistré. Un thème issu de [`GET /v1/themes`](/docs/developers/api/list-themes) ou le `qrdxStyle` renvoyé par `design_qr` du [serveur MCP](/docs/developers/mcp) peut donc être transmis tel quel (hors logo téléversé, voir plus bas) :
 
 | Champ | Accepte |
 | --- | --- |
 | `bgColor`, `fgColor`, `eyeColor`, `dotColor` | Une couleur (hexadécimal comme `#155dfc`, `rgb()`, `hsl()` ou un nom de couleur), ou un dégradé : `{ "type": "linear", "angle": 45, "stops": [...] }` ou `{ "type": "radial", "stops": [...] }`, avec 2 à 8 arrêts de la forme `{ "color", "offset" }` (offset de 0 à 100) |
-| `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern` | Les [valeurs de motif](#pattern-values) |
+| `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern` | Les [valeurs des motifs](#pattern-values) |
 | `level`, `margin` | Comme les paramètres ci-dessus (`margin` de 0 à 16) |
-| `templateId` | Un cadre dessiné comme modèle, `default` pour aucun |
-| `frame` | Un cadre intégré, `{ "style": "banner-bottom", "text": "Scan me", "color": "#155dfc", "textColor": "#ffffff" }`, ou un cadre personnalisé, `{ "style": "custom", "spec": { … } }`, avec une spécification de cadre issue de la [communauté](#community-items) ou d'un cadre personnalisé créé dans la section Cadre du Playground. Les spécifications sont vérifiées selon les règles de spécification de cadre du moteur (ni balisage, ni liens, ni images ; 32 Ko au maximum) |
+| `templateId` | Un cadre dessiné comme un modèle, `default` pour aucun |
+| `frame` | Un cadre intégré, `{ "style": "banner-bottom", "text": "Scan me", "color": "#155dfc", "textColor": "#ffffff" }`, ou un cadre personnalisé, `{ "style": "custom", "spec": { … } }`, avec une spécification de cadre issue de la [communauté](#community-items) ou d'un cadre personnalisé créé dans la section Cadre du Playground. Les spécifications sont vérifiées selon les règles de spécification de cadre du moteur (pas de balisage, de liens ni d'images ; 32 Ko au maximum) |
 | `eyeColors` | Couleurs par œil, prioritaires sur `eyeColor` et `dotColor` : `{ "topLeft": { "outer": "#b91c1c", "inner": "#1d4ed8" }, "topRight": …, "bottomLeft": … }`, chacune étant une couleur ou un dégradé |
-| `moduleScale` | Taille de chaque point, de `0.5` à `1` (par défaut `1`) |
+| `moduleScale` | Taille de chaque point, de `0.5` à `1` (`1` par défaut) |
 | `shape` | `square` (par défaut) ou `circle` : le code dans un disque de points décoratifs |
-| `autoLevel` | Passe la correction d'erreur à `H` lorsque le logo couvre plus de 7 % du code (toujours actif ici quand il y a un logo) |
-| `logoOptions` | La disposition du logo : `size` (de `0.1` à `0.3` de la largeur du code ; QRdx le réduit quand le code ne peut pas se permettre de sacrifier autant de modules), `padding` (de `0` à `2` modules), `x` et `y` (de `0` à `1`), `shape` (découpe `square`, `rounded` ou `circle`) et `plate` (une couleur derrière le logo) |
+| `autoLevel` | Passe la correction d'erreur à `H` lorsque le logo couvre plus de 7 % du code (toujours activé ici lorsqu'il y a un logo) |
+| `logoOptions` | La disposition du logo : `size` (de `0.1` à `0.3` de la largeur du code ; QRdx le réduit lorsque le code ne peut pas se passer d'autant de modules), `padding` (de `0` à `2` modules), `x` et `y` (de `0` à `1`), `shape` (découpe `square`, `rounded` ou `circle`) et `plate` (une couleur derrière le logo) |
 | `showLogo`, `logoIcon`, `logoFileId` | Voir [Logos](#logos) |
 
-`style` accepte aussi la valeur `style` d'un lien du Playground (elle commence par `1.`) : un design partagé depuis le [Playground](/playground) s'affiche donc comme il apparaît là-bas, sans son logo.
+`style` accepte aussi la valeur `style` d'un lien du Playground (elle commence par `1.`) : un design partagé depuis le [Playground](/playground) s'affiche donc comme dans le Playground, sans son logo. Les champs inconnus, les adresses de logo (`customLogo`) et les visuels Logo QR ou Image QR (`art`) sont refusés avec une erreur `400` qui en explique la raison :
 
-Les champs que vous définissez avec les paramètres simples (`fg`, `body`, `frame` et les autres) l'emportent sur `style`, et `style` l'emporte sur `item`. Les champs inconnus, les adresses de logo (`customLogo`) et les visuels Logo QR ou Image QR (`art`) sont refusés avec une erreur `400` qui en explique la raison.
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"style.customLogo","message":"Logo images by address aren't accepted: upload the image to QRdx and pass its file id as logoFileId, or pick a logoIcon."}]},"status":400}
+```
 
 ## Éléments de la communauté [#community-items]
 
-`item` génère un cadre ou un thème publié de la [communauté](/community), gratuit et sous licence CC0. Trouvez les identifiants avec [`GET /v1/community/items`](/docs/developers/api/list-community-items), ou ouvrez la page d'un élément et utilisez son type et son slug : `/community/frames/wifi-card` correspond à `frame:wifi-card`. Un cadre s'applique à un code simple noir sur blanc ; ajoutez `style` ou des paramètres simples pour modifier le code qu'il contient.
+`item` génère un cadre ou un thème publié par la [communauté](/community), libre de droits sous CC0. Trouvez les identifiants avec [`GET /v1/community/items`](/docs/developers/api/list-community-items), ou ouvrez la page d'un élément et utilisez son type et son slug : `/community/frames/wifi-card` correspond à `frame:wifi-card`. Un cadre de ce type s'applique à un code simple noir sur blanc ; ajoutez `style` ou des paramètres simples pour modifier le code placé dessous. Les rendus avec `item` sont mis en cache pendant 5 minutes (10 au niveau du CDN), car un élément peut recevoir une nouvelle version ou être retiré.
 
 ## Logos [#logos]
 
-- **Icônes rapides.** `logoIcon` place au centre l'une des icônes de l'éditeur sur une pastille blanche : `wifi`, `location`, `phone`, `email`, `link`, `file`, `calendar`, `whatsapp` ou `instagram`. QRdx les dessine lui-même, et elles ne nécessitent aucune clé.
-- **Logos de marque.** `logoIcon` accepte aussi n'importe laquelle des {facts.brandLogos} marques de [Simple Icons](https://simpleicons.org), via son slug : `spotify`, `paypal`, `googlemaps`, `appstore`. Le logo est dessiné seul, dans la couleur de sa marque ; ajoutez `:black` ou `:white` pour ces couleurs (`whatsapp:white`), et `logoOptions.plate` dans `style` pour ajouter une plaque derrière. [`GET /api/brand-logos`](https://qrdx.dev/api/brand-logos) liste tous les slugs. Un slug inconnu de QRdx renvoie une erreur `400`.
+- **Icônes rapides.** `logoIcon` place au centre l'une des icônes de l'éditeur sur une pastille blanche : `wifi`, `location`, `phone`, `email`, `link`, `file`, `calendar`, `whatsapp` ou `instagram`. QRdx les dessine lui-même et aucune clé n'est nécessaire.
+- **Logos de marque.** `logoIcon` accepte aussi n'importe laquelle des {facts.brandLogos} marques de [Simple Icons](https://simpleicons.org), par son slug : `spotify`, `paypal`, `googlemaps`, `appstore`. Le logo est dessiné sans fond, dans la couleur de la marque ; ajoutez `:black` ou `:white` pour ces couleurs (`whatsapp:white`), et `logoOptions.plate` dans `style` pour ajouter une plaque derrière. [`GET /api/brand-logos`](https://qrdx.dev/api/brand-logos) liste tous les slugs. Un slug que QRdx ne connaît pas renvoie une erreur `400` qui suggère la bonne forme.
 - **Le logo QRdx** que l'éditeur affiche par défaut n'est pas dessiné ici : `showLogo: true` seul n'ajoute aucun logo.
 - **La correction d'erreur augmente avec un logo.** Lorsqu'un logo couvre plus de 7 % du code, le code est dessiné au niveau `H`, quelle que soit la valeur de `level`, afin qu'il reste scannable.
 
+```bash title="Terminal"
+curl -o spotify.png "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png&logoIcon=spotify"
+```
+
 <IfAvailable feature="fileStorage">
 
-**Votre propre logo.** `logoFileId` dessine un PNG ou un JPEG de 1 Mo maximum que vous avez téléversé dans [Tableau de bord → Fichiers](/docs/files). L'identifiant est la dernière partie du lien du fichier, `https://qrdx.dev/api/files/<id>`. Envoyez une [clé d'API](/docs/developers/api-keys) de l'espace de travail propriétaire du fichier :
+**Votre propre logo.** `logoFileId` dessine un PNG ou un JPEG de 1 Mo maximum que vous avez téléversé dans [Tableau de bord → Fichiers](/docs/files). L'identifiant est la dernière partie du lien du fichier, `https://qrdx.dev/api/files/<id>`. Envoyez une [clé API](/docs/developers/api-keys) de l'espace de travail propriétaire du fichier :
 
-```bash
+```bash title="Terminal"
 curl -o qr.png -H "Authorization: Bearer $QRDX_API_KEY" \
   "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png&logoFileId=<id>"
 ```
@@ -152,9 +195,7 @@ La réponse est privée (`Cache-Control: private, no-store`) et compte dans le q
 
 </IfAvailable>
 
-`logoOptions` règle la taille, la position, le rognage et le fond de n'importe lequel de ces logos. La suppression de l'arrière-plan d'un logo téléversé se fait dans le Playground ; l'Image API dessine le fichier téléversé tel quel.
-
-Les designs Logo QR et Image QR ne sont pas disponibles ici : le Playground les construit à partir de votre image dans le navigateur, et l'Image API ne génère pas de design à partir de fichiers téléversés. Concevez vos QR codes artistiques dans le [Playground](/playground?tab=art).
+`logoOptions` règle la taille, la position, le recadrage et le fond de chacun de ces logos. La suppression de l'arrière-plan d'un logo téléversé se fait dans le Playground ; l'Image API dessine le fichier téléversé tel quel. Les créations Logo QR et Image QR ne sont pas disponibles ici : le Playground les génère dans le navigateur à partir de votre image. Concevez des QR codes artistiques dans le [Playground](/playground?tab=art), ou transformez un code en illustration IA avec l'[API d'art IA](/docs/developers/ai-art-api).
 
 ### Valeurs des motifs [#pattern-values]
 
@@ -163,49 +204,69 @@ Les designs Logo QR et Image QR ne sont pas disponibles ici : le Playground les 
 - `dot` : `square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`
 - `template` : `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`
 
-Ce sont les mêmes styles que ceux de la [bibliothèque React `qrdx`](/docs/features/patterns). Le [serveur MCP](/docs/developers/mcp) peut également les lister avec de courtes descriptions.
+Ce sont les mêmes styles que dans la [bibliothèque React `qrdx`](/docs/features/patterns). Le [serveur MCP](/docs/developers/mcp) peut aussi les lister avec de courtes descriptions.
 
 ## Réponses [#responses]
 
 Une requête réussie renvoie l'image avec :
 
-- `Content-Type: image/svg+xml`, `image/png` ou `application/postscript` (l'EPS est envoyé en téléchargement sous le nom `qr-code.eps`)
-- `Cache-Control: public, max-age=31536000, immutable`, sauf pour les rendus avec `item` (5 minutes, 10 au niveau du CDN, car un élément peut recevoir une nouvelle version ou être retiré) et avec `logoFileId` (`private, no-store`)
-- `Access-Control-Allow-Origin: *`, ce qui permet de l'appeler avec `fetch` depuis n'importe quel site web
+- `Content-Type: image/svg+xml`, `image/png`, `image/webp` ou `application/postscript` (l'EPS est envoyé en téléchargement sous le nom `qr-code.eps`)
+- `Cache-Control: public, max-age=31536000, immutable`, sauf pour les rendus avec `item` (5 minutes, 10 sur le CDN) et avec `logoFileId` (`private, no-store`)
+- `Access-Control-Allow-Origin: *`, ce qui vous permet de l'appeler avec `fetch` depuis n'importe quel site web
 
-Le rendu est déterministe : la même chaîne de requête renvoie toujours exactement les mêmes octets, ce qui permet de mettre les réponses en cache pendant un an. Les URL qui n'utilisent que les paramètres d'origine produisent exactement le même rendu qu'auparavant.
+Le rendu est déterministe : la même chaîne de requête renvoie toujours les mêmes octets, c'est pourquoi les réponses peuvent être mises en cache pendant un an. Les URL qui n'utilisent que les paramètres d'origine produisent exactement le même rendu qu'auparavant.
 
-Les paramètres invalides renvoient `400` avec un corps JSON qui nomme chaque problème :
+## En cas de problème [#if-something-goes-wrong]
 
-```json
-{
-  "code": "VALIDATION_ERROR",
-  "message": "Invalid query parameters",
-  "data": {
-    "details": [
-      { "param": "size", "message": "Too small: expected number to be >=64" }
-    ]
-  },
-  "status": 400
-}
+### `400` avec `"param": "size"` [#400-with-param-size]
+
+`size` est inférieur à 64 ou supérieur à 2048. Le corps de la réponse indique la limite :
+
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"size","message":"Too small: expected number to be >=64"}]},"status":400}
 ```
 
-Des données qui ne tiennent pas dans un QR code au niveau de correction d'erreur choisi renvoient également `400` avec `param: "data"`. Utilisez un `level` plus bas ou des données plus courtes.
+### `400` avec `"param": "data"` [#400-with-param-data]
+
+Les données ne tiennent pas dans un QR code au niveau de correction d'erreur choisi. Utilisez un `level` plus bas (`L` est celui qui contient le plus) ou des données plus courtes ; le lien court d'un QR code dynamique règle généralement le problème pour les longues URL.
+
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"data","message":"Data is too long for a QR code at error correction level H. Shorten it or use a lower level (L holds the most)."}]},"status":400}
+```
+
+### `400` avec `"param": "logoIcon"` [#400-with-param-logoicon]
+
+Le slug ne correspond ni à une marque connue de QRdx ni à une icône rapide. Le message suggère les formes qui fonctionnent (`spotify`, `paypal`, `googlemaps`, ou `wifi`, `phone`, `email`).
+
+### L'image est incorrecte ou coupée [#the-image-looks-wrong-or-is-split]
+
+Un `&`, un `#` ou un `+` dans `data` ou `style` n'a pas été encodé, et l'URL a donc été coupée à ce caractère. Encodez ces deux valeurs et écrivez les couleurs sans le `#`.
+
+### `429 RATE_LIMITED` [#429-rate_limited]
+
+Plus de {facts.imageApiPerMinute} requêtes par minute depuis une même adresse IP. Attendez le nombre de secondes indiqué dans `Retry-After`. La même URL renvoie toujours la même image : mettez-la en cache ou enregistrez le fichier plutôt que de la charger en direct.
 
 ## Limites [#limits]
 
-- **Limite de débit :** 300 requêtes par minute et par adresse IP. Au-delà, vous recevez `429` avec un en-tête `Retry-After`.
-- **Aucune vérification de scan.** L'Image API dessine ce que vous demandez. Pour vérifier et corriger d'abord le score de scan d'un design, utilisez `design_qr` sur le [serveur MCP](/docs/developers/mcp), ou le score de scan dans le [Playground](/playground?tab=design).
+- **Limite de débit :** {facts.imageApiPerMinute} requêtes par minute et par adresse IP. Les images n'utilisent pas le quota quotidien de la REST API.
+- **Aucune vérification du scan.** L'Image API dessine ce que vous demandez. Pour vérifier et corriger d'abord le score de scan d'un design, utilisez `design_qr` sur le [serveur MCP](/docs/developers/mcp), ou le score de scan dans le [Playground](/playground?tab=design).
 - **`style` est limité à 8 192 caractères** dans l'URL, et son JSON à 40 Ko.
-- **Les données font partie de l'URL.** Comme toute URL, elle peut se retrouver dans les journaux de serveur, l'historique du navigateur et les caches. N'y mettez ni mots de passe ni autres secrets.
+- **Les données font partie de l'URL.** Comme toute URL, elle peut se retrouver dans les journaux du serveur, l'historique du navigateur et les caches. N'y mettez ni mots de passe ni autres secrets.
 
-## Conseils pour le scan [#scanning-tips]
+## Conseils de scan [#scanning-tips]
 
-- Gardez `margin` à `2` ou plus lorsque l'image se trouve sur un fond sombre ou chargé, comme un README en mode sombre sur GitHub.
-- Conservez un bon contraste entre `fg` et `bg`. Des modules sombres sur fond clair offrent la lecture la plus fiable.
-- Les valeurs par défaut (modules carrés, marge de 4 modules) sont lues par tous les lecteurs. Les formes stylisées, comme les points `circle`, ont un rendu plus doux, mais certains anciens lecteurs les lisent moins bien — vérifiez avec le [vérificateur de scan](/tools/scan-checker).
+- Gardez `margin` à `2` ou plus lorsque l'image est placée sur un fond sombre ou chargé, comme un README en mode sombre sur GitHub.
+- Conservez un bon contraste entre `fg` et `bg`. Des modules sombres sur fond clair sont ce qui se scanne le plus fiablement.
+- Les valeurs par défaut (modules carrés, marge de 4 modules) se scannent avec tous les lecteurs. Les formes stylisées, comme les points `circle`, ont un aspect plus doux, et certains anciens lecteurs les lisent moins bien : vérifiez avec le [vérificateur de scan](/tools/scan-checker).
 - Testez le code avec plusieurs téléphones avant de l'imprimer.
 
 ## Auto-hébergement [#self-hosting]
 
-Le point de terminaison fait partie de l'application web QRdx : une instance [auto-hébergée](/docs/self-hosting) le sert donc à l'adresse `/api/v1/qr` sur votre propre domaine (par exemple `https://qr.example.com/api/v1/qr?data=…`). Le chemin court `/v1/qr` ne fonctionne que sur `api.qrdx.dev`. La limitation de débit utilise Upstash Redis lorsqu'il est configuré, et elle est désactivée dans le cas contraire.
+Le point de terminaison fait partie de l'application web QRdx : une instance [auto-hébergée](/docs/self-hosting) le sert donc sur `/api/v1/qr`, sur votre propre domaine (par exemple `https://qr.example.com/api/v1/qr?data=…`). Le chemin court `/v1/qr` ne fonctionne que sur `api.qrdx.dev`. La limitation de débit utilise Upstash Redis lorsqu'il est configuré, et elle est désactivée sinon.
+
+## Voir aussi [#related]
+
+- [Générer une image de QR code](/docs/developers/api/get-qr-image) : la page de référence avec tous les paramètres et un panneau d'essai
+- [Remplacer l'API QR code de Google Chart](/docs/developers/google-chart-api) : faites correspondre `chl`, `chs` et `chld` à ces paramètres
+- [API de codes-barres](/docs/developers/barcode-api) : le même principe pour EAN, UPC, Code 128 et plus encore
+- [Démarrage rapide](/docs/developers/quickstart) : d'une URL d'image à un QR code dynamique que vous pouvez rediriger ailleurs

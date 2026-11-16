@@ -3,32 +3,63 @@ title: "Erstelle deinen ersten QR-Code"
 description: "Erstelle einen QR-Code im Playground und lade ihn herunter. Kostenlos, ohne Konto und ohne Wasserzeichen."
 ---
 
-Einen QR-Code erstellst du in etwa einer Minute. Ein Konto brauchst du dafür nicht.
+Der [Playground](/playground) ist der QRdx-Editor. Dort erstellst du in etwa einer Minute einen QR-Code, ohne Konto. Der Code, den du herunterlädst, ist statisch: Der Link ist im Code selbst gespeichert, er funktioniert für immer und lässt sich nach dem Druck nicht mehr ändern.
 
 ## Den Code erstellen [#make-the-code]
 
-1. Öffne den [Playground](/playground). Das ist der QRdx-Editor.
-2. **URL** ist bereits ausgewählt. Für Wi-Fi, eine Kontaktkarte, WhatsApp oder etwas anderes klickst du neben **QR-Code-Typ** auf **Ändern** und wählst einen Typ.
-3. Gib deinen Link unter **Website-Adresse** ein. Die Vorschau zeigt deinen Code, sobald die Adresse gültig ist.
-4. Optional: Wähle unter **Mit einem Stil starten** ein Aussehen aus oder öffne den Tab **Design**, um Farben, Punkte, Augen, das Logo und den Rahmen zu ändern.
-5. Klicke auf das Download-Symbol über der Vorschau oder drücke <kbd>D</kbd>. Wähle ein Format und eine Größe und lade den Code herunter.
+### 1. Wähle aus, was der Code öffnet [#1-pick-what-the-code-opens]
 
-Unter der Adresse zeigt QRdx, wohin Scans führen, zum Beispiel „Scans öffnen example.com". Prüfe das, bevor du druckst.
+Öffne den [Playground](/playground). Der Tab **Inhalt** ist geöffnet und **URL** ist als Typ ausgewählt, was für jede Webadresse passt.
 
-## Vor dem Drucken [#before-you-print]
+Für Wi-Fi, eine Visitenkarte, WhatsApp oder etwas anderes klickst du in der Karte **QR-Code-Typ** auf **Ändern** und wählst einen Typ.
 
-Prüfe den **Scan-Score** unter der Vorschau. Ein Wert von 85 oder mehr ist sehr gut. Bei unter 65 behebst du die Prüfungen, die mit einem Kreuz markiert sind. Siehe [Design mit dem Scan-Score prüfen](/docs/help/designing/scan-score).
+<Shot id="playground-type-picker" />
 
-Scanne den Code anschließend mit deinem eigenen Handy.
+### 2. Gib deinen Link ein [#2-type-your-link]
 
-## Codes aus dem Playground sind statisch [#codes-from-the-playground-are-static]
+Füge die Adresse bei **Website-Adresse** ein oder tippe sie ein. Sobald die Adresse ein gültiger Link ist, wechselt die vorschau vom unscharfen Beispiel zu deinem Code. Die Zeile unter dem Feld zeigt, wo Scans landen, zum Beispiel „Scans öffnen example.com“. Prüfe das, bevor du druckst.
 
-Ein Code, den du aus dem Playground herunterlädst, ist **statisch**: Der Link ist im Code selbst gespeichert. Er funktioniert für immer, aber nach dem Drucken kannst du ihn nicht mehr ändern.
+<Shot id="playground-content" />
 
-Falls du den Link später vielleicht ändern musst, erstelle stattdessen einen dynamischen Code. Siehe [Statisch oder dynamisch](/docs/help/getting-started/static-vs-dynamic).
+### 3. Wähle ein Aussehen [#3-pick-a-look]
 
-## Nächste Schritte [#next-steps]
+Dieser Schritt ist optional. Wähle unter **Mit einem Stil starten** einen der fertigen Stile. Wenn du weitergehen willst, öffne den Tab **Design**. Dort findest du Farben, Punkte, Augen, Logo und Rahmen.
 
-- [QR-Code herunterladen und drucken](/docs/help/getting-started/download-and-print)
+### 4. Herunterladen [#4-download]
+
+Klicke über der Vorschau auf **Herunterladen** oder drücke <kbd>D</kbd>. Wähle ein Format und eine Größe und klicke dann unten im Dialog auf die Download-Schaltfläche. Die Datei landet in deinem Download-Ordner.
+
+<Shot id="playground-download" />
+
+<Clip id="first-code" />
+
+## Prüfen, ob er sich scannen lässt [#check-that-it-scans]
+
+Sieh dir den **Scan-Score** unter der Vorschau an. Ab 85 ist er „Sehr gut“ und bereit zum Druck. Liegt er unter 65, klicke auf den Score und behebe die mit einem Kreuz markierten Prüfungen. Siehe [Ein Design mit dem Scan-Score prüfen](/docs/help/designing/scan-score).
+
+Scanne den Code danach mit deinem eigenen Handy.
+
+## Falls du den Link später ändern könntest [#if-you-might-change-the-link-later]
+
+Ein Code aus dem Playground speichert den Link selbst, deshalb lässt sich eine gedruckte Kopie nicht ändern. Wenn sich der Link ändern könnte oder du Scans zählen willst, wähle vor dem Download im Schalter **Statischer oder dynamischer QR-Code** unter der Adresse **Dynamisch**. Dafür brauchst du ein kostenloses Konto. Siehe [Einen dynamischen QR-Code erstellen](/docs/help/dynamic-codes/create) und [Statisch oder dynamisch: Was brauchst du?](/docs/help/getting-started/static-vs-dynamic).
+
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
+
+### Die Vorschau zeigt weiterhin das unscharfe Beispiel [#the-preview-still-shows-the-blurred-sample]
+
+Die Adresse ist noch kein gültiger Link. Prüfe, ob ein Punkt fehlt oder ein Leerzeichen zu viel ist, und gib die vollständige Adresse ein.
+
+### Die Schaltfläche „Herunterladen“ ist ausgegraut [#the-download-button-is-grayed-out]
+
+Sie bleibt deaktiviert, bis der Code Inhalt hat. Gib zuerst die Adresse ein.
+
+### Dein Handy liest den Code nicht [#your-phone-doesnt-read-the-code]
+
+Prüfe den Scan-Score und sieh dir dann [Ein Code lässt sich nicht scannen](/docs/help/troubleshooting/wont-scan) an.
+
+## Verwandte Themen [#related]
+
+- [Einen QR-Code herunterladen und drucken](/docs/help/getting-started/download-and-print)
 - [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast)
-- [Logo hinzufügen](/docs/help/designing/logos)
+- [Ein Logo hinzufügen](/docs/help/designing/logos)
+- [Einen dynamischen QR-Code erstellen](/docs/help/dynamic-codes/create)

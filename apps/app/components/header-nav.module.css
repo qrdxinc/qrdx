@@ -1,98 +1,267 @@
 /*
- * The morphing mega menu in components/header-nav.tsx. Radix renders every
- * dropdown into one shared viewport (the data-slot hooks come from the
- * design-system NavigationMenu, which stays untouched), so moving from one
- * menu to the next keeps the panel open: it glides under the new trigger and
- * resizes to the new content while the content cross-fades.
+ * The header menus (components/header-nav.tsx and the panels it opens).
+ * Radix renders every menu into one shared panel (the design-system
+ * NavigationMenu, which stays untouched; its data-slot hooks are styled
+ * here). The panel spans the bar, so every menu has the same width and only
+ * its height follows the content.
  *
- * HeaderNav sets, in the menu root's coordinates:
- *   --nav-x       the open trigger's left edge, where the panel starts
- *   --nav-center  the trigger's centre, the zoom origin
- *   --nav-min/max the window edges less a gutter, which the panel stays inside
- * and [data-morph] while moving between menus (a fresh open just appears).
- *
- * This CSS is unlayered, so it beats the Tailwind utilities on the same
- * elements without !important.
+ * This CSS is unlayered, so it beats the primitive's Tailwind utilities on
+ * the same elements without !important.
  */
 
 .nav {
   --nav-ease: cubic-bezier(0.32, 0.72, 0, 1);
-  --nav-morph: 240ms;
-  /* How far content slides in the direction of travel. */
-  --nav-shift: 1rem;
+  --nav-text: color-mix(in oklab, var(--foreground) 74%, transparent);
+  --nav-tint: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --nav-ring: color-mix(in oklab, var(--foreground) 48%, transparent);
+
+  --panel-bg: oklch(1 0 0);
+  --panel-border: oklch(0 0 0 / 9%);
+  --panel-shadow:
+    0 4px 6px -1px oklch(0 0 0 / 8%), 0 2px 4px -2px oklch(0 0 0 / 8%);
+  --panel-rule: oklch(0 0 0 / 7%);
+  --panel-muted: oklch(0.975 0 0);
+  --item-hover: oklch(0 0 0 / 3.5%);
+  --box-bg: oklch(1 0 0 / 60%);
+  --box-border: oklch(0 0 0 / 9%);
+  --card-bg: oklch(0.985 0 0);
+  --card-border: oklch(0 0 0 / 7%);
+  --card-border-hover: oklch(0 0 0 / 14%);
+  --paper: oklch(1 0 0);
+  --paper-border: oklch(0 0 0 / 8%);
+}
+
+:global(.dark) .nav {
+  --panel-bg: oklch(0.2 0.004 275);
+  --panel-border: oklch(1 0 0 / 10%);
+  --panel-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 5%), 0 10px 24px -8px oklch(0 0 0 / 55%),
+    0 2px 6px oklch(0 0 0 / 35%);
+  --panel-rule: oklch(1 0 0 / 8%);
+  --panel-muted: oklch(1 0 0 / 3%);
+  --item-hover: oklch(1 0 0 / 5%);
+  --box-bg: oklch(1 0 0 / 3%);
+  --box-border: oklch(1 0 0 / 10%);
+  --card-bg: oklch(1 0 0 / 2.5%);
+  --card-border: oklch(1 0 0 / 8%);
+  --card-border-hover: oklch(1 0 0 / 16%);
+  --paper-border: oklch(1 0 0 / 12%);
+}
+
+/* Top-level triggers and the Pricing link: 32 px, 8 px corners, a 5 % tint
+   on hover and while open, a ring only for keyboard focus. */
+.trigger {
+  height: 2rem;
+  padding-inline: 0.75rem;
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--nav-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  outline: none;
+  box-shadow: none;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+.trigger:hover,
+.trigger[data-state="open"],
+.trigger[aria-current="page"] {
+  background-color: var(--nav-tint);
+  color: var(--foreground);
+}
+.trigger:focus-visible {
+  color: var(--foreground);
+  outline: 2px solid var(--nav-ring);
+  outline-offset: 0;
+}
+.trigger svg {
+  margin-left: 0.25rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  top: 0;
+  opacity: 0.7;
+  transition: rotate 200ms var(--nav-ease);
+}
+
+/* The panel's slot: from the bar's left edge to its right, under it.
+   HeaderNav's root is `static`, so this positions against the bar. */
+.nav > div:has(> [data-slot="navigation-menu-viewport"]) {
+  top: 100%;
+  right: var(--nav-inset, 0px);
+  left: var(--nav-inset, 0px);
+  justify-content: var(--nav-justify, center);
 }
 
 .nav [data-slot="navigation-menu-viewport"] {
-  --nav-left: max(
-    var(--nav-min, 0px),
-    min(
-      var(--nav-x, 0px),
-      calc(
-        var(--nav-max, 100vw) -
-        var(--radix-navigation-menu-viewport-width, 0px)
-      )
-    )
-  );
-  translate: var(--nav-left) 0;
-  transform-origin: calc(var(--nav-center, 0px) - var(--nav-left)) top;
+  width: 100%;
+  max-width: var(--nav-max, 75rem);
+  margin-top: 0.5rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  background: var(--panel-bg);
+  box-shadow: var(--panel-shadow);
+  color: var(--foreground);
+  transform-origin: 50% 0;
+}
+
+.nav [data-slot="navigation-menu-content"] {
+  width: 100%;
+  padding: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Open and close: a short fade with a slight zoom from the trigger. */
-  .nav [data-slot="navigation-menu-viewport"] {
-    --tw-ease: var(--nav-ease);
-    --tw-duration: 200ms;
-    --tw-enter-opacity: 0;
-    --tw-enter-scale: 0.97;
-    --tw-exit-opacity: 0;
-    --tw-exit-scale: 0.97;
+  /* Open: the panel tips down from the bar. Close: a shorter fade. */
+  .nav [data-slot="navigation-menu-viewport"][data-state="open"] {
+    animation: tip-in 200ms var(--nav-ease);
   }
   .nav [data-slot="navigation-menu-viewport"][data-state="closed"] {
-    --tw-duration: 150ms;
+    animation: tip-out 150ms ease-in forwards;
   }
 
-  .nav[data-morph] [data-slot="navigation-menu-viewport"] {
-    transition:
-      translate var(--nav-morph) var(--nav-ease),
-      width var(--nav-morph) var(--nav-ease),
-      height var(--nav-morph) var(--nav-ease);
+  /* Moving between menus: the height tweens while the content slides a
+     little in the direction of travel. A fresh open has no tween. */
+  .nav[data-switching] [data-slot="navigation-menu-viewport"] {
+    transition: height 180ms var(--nav-ease);
   }
-  /* Reopened while fading out: stay solid instead of replaying the entrance. */
-  .nav[data-morph] [data-slot="navigation-menu-viewport"][data-state="open"] {
+  .nav[data-switching]
+    [data-slot="navigation-menu-viewport"][data-state="open"] {
     animation: none;
   }
-
-  /* The old menu leaves quickly towards the side being moved away from while
-     the new one comes in from the side being moved to, so the two cross-fade
-     without reading as a double image. */
   .nav [data-slot="navigation-menu-content"] {
     --tw-ease: var(--nav-ease);
-  }
-  .nav [data-slot="navigation-menu-content"][data-motion^="from-"] {
-    --tw-duration: 220ms;
+    --tw-duration: 160ms;
   }
   .nav [data-slot="navigation-menu-content"][data-motion^="to-"] {
-    --tw-duration: 120ms;
+    --tw-duration: 110ms;
   }
   .nav [data-slot="navigation-menu-content"][data-motion="from-end"] {
-    --tw-enter-translate-x: var(--nav-shift);
+    --tw-enter-translate-x: 2rem;
   }
   .nav [data-slot="navigation-menu-content"][data-motion="from-start"] {
-    --tw-enter-translate-x: calc(var(--nav-shift) * -1);
+    --tw-enter-translate-x: -2rem;
   }
   .nav [data-slot="navigation-menu-content"][data-motion="to-start"] {
-    --tw-exit-translate-x: calc(var(--nav-shift) * -1);
+    --tw-exit-translate-x: -2rem;
   }
   .nav [data-slot="navigation-menu-content"][data-motion="to-end"] {
-    --tw-exit-translate-x: var(--nav-shift);
+    --tw-exit-translate-x: 2rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .nav [data-slot="navigation-menu-viewport"],
   .nav [data-slot="navigation-menu-content"],
-  .nav [data-slot="navigation-menu-trigger"] svg {
+  .trigger,
+  .trigger svg {
     animation: none;
+    transition: none;
+  }
+}
+
+@keyframes tip-in {
+  from {
+    opacity: 0;
+    transform: perspective(1600px) rotateX(-20deg) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes tip-out {
+  to {
+    opacity: 0;
+    transform: perspective(1600px) rotateX(-8deg) scale(0.98);
+  }
+}
+
+/* ── Column menus (Solutions, Developers, Resources) ───────────────────── */
+
+.columns {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+}
+.column + .column {
+  border-left: 1px solid var(--panel-rule);
+}
+
+.label {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+/* Rows, the strip's links and the product cards share the focus ring. */
+.item {
+  border-radius: 10px;
+  background-color: transparent;
+  outline: none;
+  transition: background-color 150ms ease;
+}
+.item:hover,
+.item[data-active] {
+  background-color: var(--item-hover);
+}
+.item:focus-visible {
+  background-color: var(--item-hover);
+  outline: 2px solid var(--nav-ring);
+  outline-offset: -2px;
+}
+
+.box {
+  border: 1px solid var(--box-border);
+  border-radius: 8px;
+  background: var(--box-bg);
+  color: color-mix(in oklab, var(--foreground) 78%, transparent);
+}
+
+.strip {
+  border-top: 1px solid var(--panel-rule);
+  background: var(--panel-muted);
+}
+
+/* ── Product cards ─────────────────────────────────────────────────────── */
+
+.card {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  outline: none;
+  transition: border-color 150ms ease;
+}
+/* The card's link stretches over it, so the card shows its states. */
+.card:hover,
+.card:has([data-active]) {
+  border-color: var(--card-border-hover);
+}
+.card:has(:focus-visible) {
+  border-color: transparent;
+  outline: 2px solid var(--nav-ring);
+  outline-offset: -1px;
+}
+
+/* A code's own paper: white in both themes, so every code can scan. */
+.paper {
+  border: 1px solid var(--paper-border);
+  background: var(--paper);
+  color: #0b0b0d;
+}
+
+/* The bottom of a card's miniature fades out instead of being cut. */
+.fade {
+  mask-image: linear-gradient(to bottom, black 78%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .card {
     transition: none;
   }
 }

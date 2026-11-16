@@ -1,23 +1,61 @@
 ---
 title: "ヘルプセンター"
-description: "QRコードの作成、動的QRコード、ページ、お支払い、アカウントに関する回答をまとめています。コードの知識は必要ありません。"
+description: "QRコードの作成、動的QRコード、ページ、お支払い、アカウントについての簡潔な回答です。コードの知識は不要です。"
 icon: LifeBuoy
 ---
 
 import { HelpSearch, StillStuck } from "@/components/docs/help-home";
 
+ヘルプセンターでは、エディターとダッシュボードで行うすべての操作を紹介しています。各ページは1つの作業を扱い、手順、各手順の後に表示される内容、うまくいかない場合の対処方法を説明しています。
+
 <HelpSearch />
 
-## よくある質問 [#common-questions]
+## やりたいことは何ですか? [#what-do-you-want-to-do]
 
-- [最初のQRコードを作成する](/docs/help/getting-started/first-qr-code)
-- [静的QRコードと動的QRコード、どちらが必要？](/docs/help/getting-started/static-vs-dynamic)
-- [コードのリンク先を変更する](/docs/help/dynamic-codes/change-the-link)
-- [コードがスキャンできない](/docs/help/troubleshooting/wont-scan)
-- [QRコードをダウンロードして印刷する](/docs/help/getting-started/download-and-print)
-- [支払いを止めた場合にコードはどうなるか](/docs/help/account-and-billing/never-hostage)
-- [サブスクリプションを解約する](/docs/help/account-and-billing/cancel)
-- [スキャンするとエラーページが表示される](/docs/help/troubleshooting/error-pages)
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="最初のQRコードを作る"
+    description="コードをデザインして、印刷用またはWeb用にダウンロードします。"
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/change-the-link"
+    title="印刷済みのコードのリンク先を変える"
+    description="動的QRコードのリンクを編集します。印刷済みのコードも、次回のスキャンから新しいリンクを開きます。"
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="スキャン数を確認する"
+    description="コードがいつ、どこで、どのデバイスでスキャンされたかを確認できます。"
+  />
+  <Card
+    arrow
+    icon={<Download />}
+    href="/docs/help/getting-started/download-and-print"
+    title="ダウンロードと印刷"
+    description="チラシ、ステッカー、画面表示に適した形式とサイズを紹介します。"
+  />
+  <Card
+    arrow
+    icon={<CreditCard />}
+    href="/docs/help/account-and-billing/plans"
+    title="プランを選ぶ・変更する"
+    description="各プランに含まれる内容と、アップグレード、ダウングレード、解約の方法です。"
+  />
+  <Card
+    arrow
+    icon={<Users />}
+    href="/docs/help/teams/create-and-invite"
+    title="チームで使う"
+    description="ワークスペースを作成し、メンバーを招待して、ロールを設定します。"
+  />
+</Cards>
 
 ## トピックから探す [#browse-by-topic]
 
@@ -26,63 +64,71 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
     icon={<Rocket />}
     href="/docs/help/getting-started/first-qr-code"
     title="はじめに"
-    description="最初のコードの作成、ダウンロード、印刷。静的QRコードと動的QRコード。"
+    description="最初のコードの作成、ダウンロード、印刷。静的QRコードも動的QRコードも扱います。"
   />
   <Card
     icon={<Palette />}
     href="/docs/help/designing/colors-and-contrast"
     title="デザイン"
-    description="色、ロゴ、フレーム、アート、そして確実にスキャンできるコード。"
+    description="色、ロゴ、フレーム、アート、そして確実にスキャンできるコードについて説明します。"
   />
   <Card
     icon={<QrCode />}
     href="/docs/help/dynamic-codes/create"
     title="動的QRコード"
-    description="リンクの変更、スキャンの確認、一時停止、保護、コードの振り分け。"
+    description="リンクの変更、スキャン数の確認、一時停止、保護、振り分けができます。"
   />
   <Card
     icon={<PanelsTopLeft />}
     href="/docs/help/pages-and-forms/create-a-page"
     title="ページとフォーム"
-    description="QRdxがホストするモバイルページとフォーム。"
+    description="QRdxがホストするモバイル向けページとフォームです。"
   />
   <Card
     icon={<CreditCard />}
     href="/docs/help/account-and-billing/plans"
     title="アカウントとお支払い"
-    description="プラン、請求書、解約、データ、アカウント。"
+    description="プラン、請求書、解約、データ、アカウントについて説明します。"
   />
   <Card
     icon={<Users />}
     href="/docs/help/teams/create-and-invite"
     title="ワークスペースとチーム"
-    description="ワークスペースの作成、メンバーの招待、ロール、シート。"
+    description="ワークスペースの作成、メンバーの招待、ロール、シートについて説明します。"
   />
   <IfAvailable path="/docs/help/domains/custom-domains">
     <Card
       icon={<Globe />}
       href="/docs/help/domains/custom-domains"
       title="ドメイン"
-      description="お持ちのドメインで短縮リンクを使う。"
+      description="お持ちのドメインで短縮リンクを使えます。"
     />
   </IfAvailable>
   <Card
     icon={<TriangleAlert />}
     href="/docs/help/troubleshooting/wont-scan"
     title="トラブルシューティング"
-    description="スキャンできないコード、誤ったページ、エラーページ、届かないメール。"
+    description="スキャンできないコード、誤ったページ、エラーページ、届かないメールについて説明します。"
   />
   <Card
     icon={<ShieldCheck />}
     href="/docs/help/privacy-and-security/scan-data"
     title="プライバシーとセキュリティ"
-    description="スキャンで記録される内容、アカウントの安全、不正利用の報告。"
+    description="スキャンで記録される内容、アカウントの安全、不正利用の報告について説明します。"
   />
 </Cards>
 
-## その他 [#more]
+## よくある質問 [#common-questions]
 
-- [最新情報と今後の予定](/docs/help/whats-new)、および[変更履歴](/changelogs)の全文。
-- 開発をお考えですか？[開発者向け](/docs/developers)タブに、REST API、Webhook、MCP、CLIの情報があります。
+- [静的QRコードと動的QRコード、どちらが必要ですか?](/docs/help/getting-started/static-vs-dynamic)
+- [コードがスキャンできない](/docs/help/troubleshooting/wont-scan)
+- [スキャンすると誤ったページが開く](/docs/help/troubleshooting/wrong-destination)
+- [お支払いを止めた場合、コードはどうなりますか](/docs/help/account-and-billing/never-hostage)
+- [サブスクリプションを解約する](/docs/help/account-and-billing/cancel)
+- [コードをパスワードで保護する](/docs/help/dynamic-codes/password)
+
+## サポートを受ける [#get-help]
+
+何かを開発したい場合は、[開発者向け](/docs/developers)セクションをご覧ください。REST API、Webhook、MCPサーバー、CLIを紹介しています。それ以外のことは、担当者にお問い合わせください。
 
 <StillStuck />

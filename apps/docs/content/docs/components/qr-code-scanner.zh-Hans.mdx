@@ -1,8 +1,10 @@
 ---
 title: "二维码扫描器"
-description: "一个拖放区域，可在浏览器中从图片里读取二维码，并提供复制和打开链接的操作。"
+description: "适用于 shadcn/ui 项目的拖放区域，可在浏览器中从图片读取二维码，并提供复制和打开链接操作。"
 icon: Scan
 ---
+
+`QrCodeScanner` 是一个拖放区域，可在浏览器中从图片文件解码二维码，并把文本交给你。你可以用它从截图中核验门票、读取用户上传照片里的二维码，或检查自己生成的二维码。它读取的是图片文件，而不是实时摄像头画面。
 
 <ComponentLinks name="qr-code-scanner" />
 
@@ -14,28 +16,53 @@ icon: Scan
 
 ## 用法 [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeScanner } from "@/components/qr-code-scanner";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeScanner onResult={(value) => console.log(value)} />
 ```
 
-用户可以拖入图片，也可以点击选择图片。解码在浏览器中通过 qrdx 的[检测辅助函数](/docs/qr-detection)完成，因此图片不会离开设备。它读取的是图片文件，而不是实时摄像头画面。
-
-识别结果会连同复制按钮一起显示；如果结果是 `http` 或 `https` 网址，还会显示“打开链接”按钮。
+用户可以拖入图片，也可以点击选择图片。解码在浏览器中通过 qrdx 的[检测辅助函数](/docs/qr-detection)完成，因此图片不会离开设备。结果会连同 **复制** 按钮一起显示；如果结果是 `http` 或 `https` URL，还会显示 **打开链接** 按钮。
 
 ## 示例 [#examples]
 
-### 校验结果 [#checking-a-result]
+### 检查结果 [#checking-a-result]
 
-`onResult` 会接收解码后的文本，因此你可以据此执行操作，例如为门票办理签到。`label` 用于更改拖放区域中的标题。请下载上方的示例二维码并拖入，即可看到一张有效的门票。
+`onResult` 会接收解码后的文本，你可以据此执行操作，例如核验门票。`label` 用于修改拖放区域中的标题。请下载上方的示例二维码并拖入，即可看到一张有效的门票。
 
 <ComponentPreview name="qr-code-scanner-tickets" />
+
+## 读取器显示的内容 [#what-the-reader-shows]
+
+| 状态 | 消息 |
+| --- | --- |
+| 扫描中 | "Scanning…" |
+| 图片中没有二维码 | "No QR code found. Try a sharper or closer image." |
+| 不是图片文件 | "Choose an image file." |
+| 无法读取图片 | "Could not read that image." |
+| 已找到 | 解码后的文本，附带 **复制**；若为链接，还会有 **打开链接** |
+
+解码器会以多种缩放比例尝试整张图片和四个裁剪区域，因此即使二维码只占截图的一小部分，也能被找到。
+
+## 无障碍与渲染 [#accessibility-and-rendering]
+
+- 拖放区域是一个指向视觉隐藏文件输入框的 `<label>`，因此与任何文件选择器一样，可通过键盘和屏幕阅读器使用。
+- 结果和错误会通过礼貌型（polite）实时区域播报。
+- **打开链接** 会在新标签页中打开，并带有 `rel="noopener noreferrer nofollow"`，因此被扫描的页面无法访问你的页面。
+- 该组件是客户端组件（Client Component）。它需要浏览器的 canvas，并会在首次扫描时按需加载解码器。
 
 ## API 参考 [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-scanner.tsx" type="{ [K in keyof QrCodeScannerProps as K extends keyof ComponentProps<'div'> ? never : K]: QrCodeScannerProps[K] }" />
 
 其他任何属性（例如 `className`）都会传递给外层的 `<div>`。
+
+## 相关内容 [#related]
+
+<Cards>
+  <Card href="/docs/qr-detection" title="二维码检测" description="扫描器所调用的库函数，可用于构建你自己的读取器。" />
+  <Card href="/docs/components/qr-code" title="二维码" description="生成扫描器所读取的二维码。" />
+  <Card href="/docs/features/frames" title="边框、扫描评分与打印文件" description="用 getImageScanScore 为二维码图片评分，而不只是解码。" />
+</Cards>

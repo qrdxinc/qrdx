@@ -1,19 +1,26 @@
 ---
 title: "Link brevi e selettori di file"
-description: "Accorcia il link di un QR code con il tuo account Bitly, Rebrandly o Short.io, oppure codifica un link di condivisione di Dropbox."
-icon: Blocks
+description: "Accorcia il link di un QR code con il tuo account Bitly, Rebrandly o Short.io, oppure codifica un link di condivisione di Dropbox, direttamente dall'editor QR."
 ---
 
-Collega un account in [Impostazioni → Integrazioni](/settings/integrations) e comparirà nel tipo **URL** dell'editor QR, nel menu **Usa un link da…** accanto al campo **Indirizzo del sito web**. In **I tuoi account**, ogni servizio indica cosa fa:
+Gli account collegati permettono all'editor QR di usare link che si trovano negli altri tuoi strumenti: un link breve che gestisci in Bitly, Rebrandly o Short.io, oppure un link di condivisione a un file in Dropbox o in un altro cloud drive. Il QR code codifica quel link, così continui a usare lo strumento che già conosci. Usalo quando i tuoi link devono restare nelle statistiche di quello strumento, o quando il codice deve aprire un file che tieni in un cloud drive.
 
-- **Accorcia**: Bitly, Rebrandly o Short.io. Crea un link con **Crea nuovo**, oppure scegline uno che hai già con **Usa esistente**. Il QR code codifica quel link breve, quindi puoi cambiare in seguito la destinazione direttamente in quel servizio, che inoltre conta i clic.
+<Callout type="info" title="Ogni piano">
+  Gli account collegati appartengono al tuo account utente e funzionano con ogni piano. Se preferisci poter modificare la destinazione direttamente in QRdx, con le statistiche delle scansioni, usa invece un [QR code dinamico](/docs/dynamic-qr-codes).
+</Callout>
+
+## Come funziona [#how-it-works]
+
+Collega un account in [Impostazioni → Integrazioni](/settings/integrations) e lo troverai nel tipo **URL** dell'editor QR, nel menu **Usa un link da…** accanto al campo **Indirizzo del sito web**. Sotto **I tuoi account**, ogni servizio indica cosa fa:
+
+- **Accorcia**: Bitly, Rebrandly o Short.io. Crea un link sotto **Crea nuovo**, oppure scegline uno che hai già sotto **Usa esistente**. Il QR code codifica quel link breve, quindi puoi cambiare in seguito la destinazione nel servizio stesso, che conta anche i clic.
 - **File**: Dropbox<IfAvailable integration="onedrive">, OneDrive</IfAvailable><IfAvailable integration="box">, Box</IfAvailable><IfAvailable integration="notion">, Notion</IfAvailable>. Sfoglia o cerca, poi scegli un file o una cartella. QRdx crea il link di condivisione dell'elemento e il QR code lo codifica.
 
-I servizi che non hai ancora collegato si trovano sotto **Collega un account**, in fondo allo stesso menu.
+Lo stesso menu elenca le altre tue fonti di contenuto collegate, come i link di pagamento e di prenotazione. I servizi che non hai ancora collegato si trovano sotto **Collega un account**, in fondo al menu.
 
-Anche le pagine ospitate possono usare file nel cloud: i blocchi PDF, audio, video e download mostrano **Da Dropbox**<IfAvailable integration="onedrive">, **Da OneDrive**</IfAvailable><IfAvailable integration="box">, **Da Box**</IfAvailable> accanto ai pulsanti di caricamento.
+<Shot id="use-a-link-from" />
 
-Le integrazioni appartengono al tuo account utente. Token e chiavi API sono archiviati in forma cifrata e puoi scollegarli in qualsiasi momento.
+I token e le chiavi API sono archiviati in forma cifrata e puoi scollegarli in qualsiasi momento.
 
 ## Link brevi [#short-links]
 
@@ -26,56 +33,56 @@ Le integrazioni appartengono al tuo account utente. Token e chiavi API sono arch
 La pagina delle impostazioni di ogni integrazione mostra i tuoi domini e ti permette di scegliere quello predefinito per i nuovi link. Puoi comunque scegliere un altro dominio per ogni link.
 
 <Callout type="info" title="Cambiare la destinazione in seguito">
-QRdx crea il link; la modifica della destinazione si fa in Bitly, Rebrandly o Short.io. Bitly consente di cambiare la destinazione di un link solo ai piani a pagamento.
+  QRdx crea il link; la modifica della destinazione si fa in Bitly, Rebrandly o Short.io. Bitly consente di cambiare la destinazione di un link solo ai piani a pagamento.
 </Callout>
-
-Se preferisci poter modificare la destinazione direttamente in QRdx, con le statistiche delle scansioni, usa invece un [QR code dinamico](/docs/dynamic-qr-codes).
 
 ## Selettori di file [#file-pickers]
 
-**Dropbox** codifica un link condiviso (creato ora, oppure quello esistente se c'è già). Chiunque abbia il link può aprirlo, a meno che il tuo team non consenta solo link di team.
+**Dropbox** codifica un link condiviso (creato, oppure quello già esistente viene riutilizzato). Chiunque abbia il link può aprirlo, a meno che il tuo team non consenta solo link del team.
 
 <IfAvailable integration="onedrive">
 
-**OneDrive** codifica un link di condivisione di sola visualizzazione. Chiunque abbia il link può aprirlo; solo la tua organizzazione può farlo dove l'amministratore ha disattivato i link "Chiunque".
+**OneDrive** codifica un link di condivisione di sola visualizzazione. Chiunque abbia il link può aprirlo; solo la tua organizzazione può farlo dove il tuo amministratore ha disattivato i link "Chiunque".
 
 </IfAvailable>
 
 <IfAvailable integration="box">
 
-**Box** codifica il link condiviso dell'elemento, impostato su "Persone con il link". Chiunque abbia il link può aprirlo; solo la tua azienda può farlo dove l'amministratore lo richiede.
+**Box** codifica il link condiviso dell'elemento, impostato su "Persone con il link". Chiunque abbia il link può aprirlo; solo la tua azienda può farlo dove il tuo amministratore lo richiede.
 
 </IfAvailable>
 
 <IfAvailable integration="notion">
 
-**Notion** codifica il link "Publish to web" della pagina. Chiunque può aprirla dopo che la pagina è stata pubblicata.
+**Notion** codifica il link "Pubblica sul web" della pagina. Chiunque può aprirla una volta pubblicata.
 
 </IfAvailable>
 
-Quando il link non può essere aperto da tutti, QRdx te lo segnala subito dopo la scelta, così un codice stampato non porta le persone a una pagina di accesso.
+Quando il link non può essere aperto da tutti, QRdx te lo segnala subito dopo la selezione, così un codice stampato non porta le persone a una pagina di accesso.
 
 <IfAvailable integration="notion">
 
-**Pagine Notion.** QRdx vede solo le pagine che condividi con lui: Notion ti chiede quali quando colleghi l'account. Per aggiungerne altre in seguito, apri la pagina in Notion, fai clic su **•••** → **Connections** e aggiungi QRdx (oppure ricollega l'account e scegli le pagine).
-
-L'API di Notion non può pubblicare una pagina. Pubblicala tu (**Share** → **Publish** → **Publish to web**), poi sceglila di nuovo in modo che QRdx usi il link pubblico.
+**Pagine Notion.** QRdx vede solo le pagine che condividi con lui: Notion ti chiede quali quando ti colleghi. Per aggiungerne altre in seguito, apri la pagina in Notion, fai clic su **•••** → **Connessioni** e aggiungi QRdx (oppure ricollegati e selezionale). L'API di Notion non può pubblicare una pagina. Pubblicala tu (**Condividi** → **Pubblica** → **Pubblica sul web**), poi selezionala di nuovo così QRdx usa il link pubblico.
 
 </IfAvailable>
 
 ### File nelle pagine ospitate [#files-on-hosted-pages]
 
-Per Dropbox<IfAvailable integration="box"> e Box</IfAvailable>, i blocchi della pagina ricevono un link diretto al file, così i lettori audio e video e il visualizzatore PDF possono caricarlo.<IfAvailable integration="onedrive"> I link di condivisione di OneDrive aprono il visualizzatore di OneDrive, quindi un blocco li mostra come link.</IfAvailable>
+Anche le pagine ospitate possono usare file nel cloud: i blocchi PDF, audio, video e download mostrano un pulsante **Da Dropbox** accanto al pulsante di caricamento quando Dropbox è l'unico drive collegato, oppure **Dal cloud storage** quando ne hai collegato più di uno<IfAvailable integration="onedrive">, OneDrive incluso</IfAvailable><IfAvailable integration="box">, Box incluso</IfAvailable>. Per Dropbox<IfAvailable integration="box"> e Box</IfAvailable>, i blocchi della pagina ricevono un link diretto al file, così i lettori audio e video e il visualizzatore PDF possono caricarlo.<IfAvailable integration="onedrive"> I link di condivisione di OneDrive aprono il visualizzatore di OneDrive, quindi un blocco li mostra come link.</IfAvailable>
 
-## Scollegare un account [#disconnecting]
+## Scollegare [#disconnecting]
 
-Scollegare un account elimina il token memorizzato. Per Dropbox<IfAvailable integration="box">, Box</IfAvailable><IfAvailable integration="notion">, Notion</IfAvailable>, QRdx lo revoca anche presso il servizio. Per Bitly, Rebrandly e Short.io, elimina la chiave anche in quel servizio se non la usi più<IfAvailable integration="onedrive">; per OneDrive, rimuovi QRdx dalle autorizzazioni delle app del tuo account Microsoft</IfAvailable>.
+Scollegare elimina il token memorizzato. Per Dropbox<IfAvailable integration="box">, Box</IfAvailable><IfAvailable integration="notion">, Notion</IfAvailable>, QRdx lo revoca anche presso il servizio. Per Bitly, Rebrandly e Short.io, elimina la chiave anche in quel servizio se non la usi più<IfAvailable integration="onedrive">; per OneDrive, rimuovi QRdx dalle autorizzazioni delle app del tuo account Microsoft</IfAvailable>.
 
 I QR code che hai già creato continuano a funzionare: contengono il link breve o il link di condivisione, non il tuo token.
 
+## Limiti e piani [#limits-and-plans]
+
+Gli account collegati non hanno un limite di piano proprio. I link che creano sono statici dal punto di vista di QRdx: QRdx non ne conta le scansioni né può cambiarne la destinazione. Il piano di ciascun servizio decide cosa puoi fare con il link lì.
+
 ## Self-hosting [#self-hosting]
 
-Rebrandly e Short.io non richiedono nulla sul server. Gli altri richiedono un'app in ciascun servizio, con il relativo client ID e secret nell'ambiente; senza di essi l'integrazione mostra "Non configurato". Bitly funziona comunque senza, tramite token di accesso incollati.
+Rebrandly e Short.io non richiedono nulla sul server. Gli altri richiedono un'app in ciascun servizio, con il relativo client ID e secret nell'ambiente; senza di essi l'integrazione è nascosta in produzione (lo sviluppo in locale mostra un badge **Richiede configurazione**). Bitly funziona comunque anche senza, tramite token di accesso incollati.
 
 | Integrazione | Variabili | Redirect URI |
 | --- | --- | --- |
@@ -85,11 +92,19 @@ Rebrandly e Short.io non richiedono nulla sul server. Gli altri richiedono un'ap
 | Box | `BOX_CLIENT_ID`, `BOX_CLIENT_SECRET` | `<app url>/api/integrations/box/callback` |
 | Notion | `NOTION_CLIENT_ID`, `NOTION_CLIENT_SECRET` | `<app url>/api/integrations/notion/callback` |
 
-`<app url>` è `http://localhost:3000` in sviluppo e l'URL di produzione negli altri casi. In produzione ogni integrazione richiede anche `INTEGRATION_ENCRYPTION_KEY`, che cifra i token e le chiavi memorizzati.
+`<app url>` è `http://localhost:3000` in sviluppo e il tuo URL di produzione negli altri casi. Ogni integrazione richiede inoltre `INTEGRATION_ENCRYPTION_KEY` in produzione, che cifra i token e le chiavi memorizzati.
 
-Ambiti (scope) da richiedere:
+Scope da richiedere:
 
 - **Dropbox:** `account_info.read`, `files.metadata.read`, `sharing.read`, `sharing.write`
 - **OneDrive:** `offline_access`, `Files.ReadWrite` (Microsoft Graph richiede l'accesso in scrittura per creare link di condivisione)
 - **Box:** Read and write all files and folders (`root_readwrite`)
 - **Bitly, Notion:** nessuno scope; Notion chiede all'utente quali pagine condividere
+
+Vedi [Self-hosting](/docs/self-hosting#optional-services).
+
+## Correlati [#related]
+
+- [QR code dinamici](/docs/dynamic-qr-codes): link modificabili e tracciati all'interno di QRdx
+- [Passa da Bitly, Rebrandly e altri](/docs/migrate): porta invece i link esistenti in QRdx
+- [File](/docs/files): carica file su QRdx stesso

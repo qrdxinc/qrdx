@@ -1,234 +1,155 @@
 ---
-title: "Unduhan"
-description: "Ekspor kode QR sebagai PNG, JPG, WebP, SVG, PDF, atau EPS vektor, salin ke papan klip, atau dapatkan data URL."
+title: "Ekspor dan unduh"
+description: "Simpan kode QR sebagai PNG, JPG, WebP, SVG, PDF, atau EPS dengan downloadQRCode, dapatkan sebagai data URL, Blob, atau markup SVG, salin ke papan klip, dan buat PNG di Node."
 icon: Download
 ---
 
-Ekspor kode QR sebagai PNG, JPG, WebP, SVG, PDF, atau EPS.
+`downloadQRCode(props, options)` menyimpan kode yang dijelaskan oleh `props` sebagai file di browser, dalam enam format. Fungsi-fungsi pendampingnya mengembalikan file yang sama sebagai data URL, Blob, atau markup, dan `qrdx/node` membuat PNG di server. Setiap fungsi menerima `props` yang sama dengan `QRCode`, sehingga file yang dihasilkan sama dengan kode di layar.
 
-## Unduh Cepat [#quick-download]
+Mengunduh dari Playground atau dasbor? Lihat [Unduh dan cetak kode QR](/docs/help/getting-started/download-and-print) di Bantuan.
 
-```tsx
-import { downloadQRCode, PRESET_SIZES } from 'qrdx';
+## Mengunduh file [#download-a-file]
+
+```ts title="lib/download.ts"
+import { downloadQRCode } from "qrdx";
 
 await downloadQRCode(
   {
     value: "https://example.com",
-    size: 1024,
-    fgColor: "#000000",
-    bgColor: "#ffffff",
+    fgColor: "#1d4ed8",
+    bodyPattern: "rounded",
+    frame: { style: "banner-bottom", text: "Scan me" },
   },
   {
     format: "png",
-    size: PRESET_SIZES.large,
-    filename: "my-qrcode.png"
+    size: { width: 1024, height: 1024 },
+    filename: "menu.png",
   }
 );
 ```
 
-## Format yang Didukung [#supported-formats]
+<Shot id="lib-download-result" />
 
-### PNG [#png]
-Terbaik untuk web, mendukung transparansi.
+Browser menyimpan `menu.png`. `size` adalah lebar dan tinggi kode itu sendiri dalam piksel, dari 50 hingga 5000 dan berbentuk persegi; bingkai membuat file lebih besar dari ukuran tersebut. `filename` bersifat opsional: tanpanya, file diberi nama `qr-code.<ext>`, dengan ukuran piksel persis ditambahkan untuk format raster (`qr-code-1024x1024.png`, atau `qr-code-1270x1454.png` dengan banner bawah). `quality` (0 sampai 1) hanya berlaku untuk WebP.
 
-```tsx
-await downloadQRCode(
-  { value: "https://example.com", size: 512 },
-  {
-    format: "png",
-    size: { width: 512, height: 512 },
-    filename: "qrcode.png"
-  }
-);
-```
+Props-nya sama seperti pada `QRCode`, kecuali logo dimasukkan lewat `imageSettings`. Untuk mengekspor kode yang digambar oleh `QRCode`, termasuk `logo` dan `logoOptions`-nya, berikan `getQRData(props)` atau `resolveQRCodeProps(props)` sebagai ganti props mentah.
 
-### JPG [#jpg]
-File lebih kecil, hanya untuk latar belakang solid.
+## Format [#formats]
 
-```tsx
-await downloadQRCode(
-  { value: "https://example.com", size: 512 },
-  { format: "jpg", size: { width: 512, height: 512 }, filename: "qrcode.jpg" }
-);
-```
+| `format` | File | Catatan |
+| --- | --- | --- |
+| `png` | Gambar | Mempertahankan latar belakang transparan. Default untuk sebagian besar kebutuhan |
+| `jpg` | Gambar | Hanya latar belakang solid, file lebih kecil |
+| `webp` | Gambar | Piksel PNG dalam file yang lebih kecil; lossless kecuali `quality` diatur |
+| `svg` | Vektor | Tajam di ukuran berapa pun; file untuk percetakan dan alat desain |
+| `pdf` | Dokumen | Satu halaman berisi kode sebagai PNG. Memerlukan paket opsional `jspdf` |
+| `eps` | Vektor | PostScript untuk Illustrator, CorelDRAW, dan InDesign. `size.width` dibaca sebagai poin (72 per inci) |
 
 ### WebP [#webp]
-Piksel yang sama dengan PNG dalam file yang lebih kecil, untuk situs web. WebP bersifat lossless secara default, sehingga tepi modul tetap presisi, dan latar belakang transparan tetap transparan.
 
-```tsx
-await downloadQRCode(
-  { value: "https://example.com", size: 512 },
-  { format: "webp", size: { width: 512, height: 512 }, filename: "qrcode.webp" }
-);
-```
+WebP bersifat lossless secara default, sehingga tepi modul tetap presisi dan latar belakang transparan tetap transparan. Jika kanvas browser dapat menulis WebP lossless (Chrome dan Edge bisa), browser yang membuat file. Jika tidak bisa, pustaka memeriksa byte-nya dan mengenkode piksel sendiri dengan encoder lossless bawaan yang kecil: Safari, saat diminta WebP, mengembalikan PNG. Bagaimanapun, file `.webp` selalu berformat WebP.
 
-Jika canvas browser dapat menulis WebP lossless (Chrome dan Edge bisa), file dibuat oleh browser. Jika tidak bisa, qrdx memeriksa byte-nya dan meng-encode piksel sendiri dengan encoder lossless bawaan yang kecil. Safari termasuk yang demikian: saat diminta WebP, ia mengembalikan PNG. Bagaimanapun, file `.webp` selalu berformat WebP.
+`quality` (0 sampai 1) meminta file lossy yang lebih kecil, jika didukung browser. WebP lossy melunakkan tepi modul dan warna, jadi pertahankan default untuk kode yang harus bisa dipindai dari jauh. `getQRAsWebP` mengembalikan file sebagai `Blob`:
 
-`quality` (0 sampai 1) meminta file lossy yang lebih kecil, jika didukung browser. WebP lossy melembutkan tepi modul dan warna, jadi gunakan nilai default untuk kode yang harus bisa dipindai dari jarak jauh. `getQRAsWebP` mengembalikan file sebagai `Blob`:
-
-```tsx
+```ts title="lib/webp.ts"
 import { getQRAsWebP } from "qrdx";
 
 const lossless = await getQRAsWebP({ value: "https://example.com", size: 1024 });
 const lossy = await getQRAsWebP({ value: "https://example.com", size: 1024 }, { quality: 0.9 });
 ```
 
-### SVG [#svg]
-Sempurna untuk cetak, dapat diskalakan tanpa batas.
-
-```tsx
-await downloadQRCode(
-  { value: "https://example.com", size: 512 },
-  { format: "svg", size: { width: 512, height: 512 }, filename: "qrcode.svg" }
-);
-```
+`canvasToWebP(canvas, options)` melakukan hal yang sama untuk kanvas apa pun, dan `encodeWebPLossless(rgba, width, height)` mengenkode piksel RGBA tanpa DOM.
 
 ### PDF [#pdf]
-Ideal untuk dokumen profesional. Ekspor PDF memerlukan paket opsional `jspdf` (`npm i jspdf`); tanpa paket ini, unduhan PDF akan memunculkan error yang jelas.
 
-```tsx
-await downloadQRCode(
-  { value: "https://example.com", size: 1024 },
-  { format: "pdf", size: { width: 1024, height: 1024 }, filename: "qrcode.pdf" }
-);
-```
+Unduhan PDF berisi kode sebagai PNG pada halaman berukuran sama. Ini memerlukan paket opsional `jspdf` (`npm install jspdf`); tanpanya, unduhan PDF melempar `PDF export needs the optional "jspdf" package`. Untuk PDF vektor dengan ukuran fisik, dengan bleed, tanda potong, dan CMYK, gunakan `downloadPrintPDF`; lihat [Ekspor siap cetak](/docs/features/frames#print-ready-export).
 
 ### EPS [#eps]
-PostScript vektor untuk percetakan dan alat desain (Illustrator, CorelDRAW, InDesign). Tidak perlu paket tambahan. Di sini `size.width` dalam poin (72 per inci), sehingga lebar file ini adalah 512 pt:
 
-```tsx
-await downloadQRCode(
-  { value: "https://example.com", size: 512 },
-  { format: "eps", size: { width: 512, height: 512 }, filename: "qrcode.eps" }
-);
-```
+EPS tidak memerlukan paket tambahan. `downloadQRCode` membaca `size.width` sebagai poin, jadi permintaan 512 px menulis file 512 pt (18 cm). Untuk ukuran fisik yang tepat, gunakan `getQRAsEPS`, yang mengembalikan EPS sebagai string: kode selebar `sizeMm` (default 50 mm), dan bingkai menambah ukuran tersebut.
 
-Untuk ukuran fisik yang tepat, gunakan `getQRAsEPS`. Fungsi ini mengembalikan EPS sebagai string: lebar kode adalah `sizeMm` (default 50 mm), dan bingkai menambah ukuran tersebut.
-
-```tsx
-import { getQRAsEPS } from "qrdx";
+```ts title="lib/eps.ts"
+import { downloadPrintEPS, getQRAsEPS } from "qrdx";
 
 const eps = await getQRAsEPS(
   { value: "https://example.com" },
   { sizeMm: 40, bleedMm: 3, colorMode: "cmyk" }
 );
+
+await downloadPrintEPS({ value: "https://example.com" }, { sizeMm: 40, filename: "menu.eps" });
 ```
 
-EPS tidak mendukung transparansi dan tidak memiliki tanda potong. Gradasi linear dan radial dicetak sebagai shading PostScript Level 3 yang halus. Logo PNG dan JPEG disematkan.
+EPS tidak mendukung transparansi dan tanda potong. Gradien linear dan radial dicetak sebagai shading PostScript Level 3 yang halus; gradien sudut dicetak sebagai kipas irisan tipis. Warna tembus pandang dicampur dengan latar belakang, dan latar belakang dengan kertas putih. Logo PNG dan JPEG disematkan. EPS tidak dapat membawa [isian gambar](/docs/features/colors-gradients#image-fills): `getQRAsEPS` melempar `EPS_IMAGE_FILL_REASON`, dan dialog unduh di dasbor menawarkan PDF, SVG, dan PNG sebagai gantinya.
 
-{/* Angular gradients, see-through colors and image fills (paint picker) */}
-Gradasi angular dicetak sebagai kipas irisan tipis. Warna tembus pandang dicampur dengan latar belakang, dan latar belakang dicampur dengan kertas putih. EPS tidak dapat memuat [isian gambar](/docs/features/colors-gradients#image-fills): `getQRAsEPS` memunculkan `EPS_IMAGE_FILL_REASON`, dan dialog unduhan menawarkan PDF, SVG, dan PNG sebagai gantinya.
+## Data URL, Blob, dan markup [#data-urls-blobs-and-markup]
 
-## Ukuran Preset [#preset-sizes]
+```ts title="lib/export.ts"
+import { copyQRCodeToClipboard, getQRCodeDataUrl, getSVGString } from "qrdx";
 
-```tsx
-import { PRESET_SIZES } from 'qrdx';
+const props = { value: "https://example.com", size: 512 };
 
-PRESET_SIZES.small    // 200x200
-PRESET_SIZES.medium   // 400x400
-PRESET_SIZES.large    // 800x800
-PRESET_SIZES.xlarge   // 1200x1200
-PRESET_SIZES["2xl"]   // 1600x1600
-PRESET_SIZES["3xl"]   // 2000x2000
+// The same file as a data URL, for an <img> or a form field
+const png = await getQRCodeDataUrl(props, "png", { width: 512, height: 512 });
+
+// A PNG on the clipboard, for pasting into a document
+await copyQRCodeToClipboard(props, { width: 512, height: 512 });
+
+// The SVG markup, for inlining in a page or an email template
+const svg = await getSVGString(props);
 ```
 
-### Rekomendasi Ukuran [#size-recommendations]
+- `getQRCodeDataUrl(props, format, size, { quality })` menerima setiap format yang diterima `downloadQRCode`.
+- `copyQRCodeToClipboard` menulis PNG. Panggil dari handler klik: browser menolak penulisan papan klip di luar gestur pengguna.
+- `getSVGString` menyematkan logo sebagai data URL, sehingga markup berdiri sendiri. `toSVGString` dari `qrdx/core` adalah versi sinkron tanpa langkah tersebut.
 
-- **Kecil (200px)** — Thumbnail media sosial
-- **Sedang (400px)** — Penggunaan web standar
-- **Besar (800px)** — Web berkualitas tinggi
-- **Ekstra Besar (1200px)** — Materi cetak
-- **2X Besar (1600px)** — Cetak format besar
-- **3X Besar (2000px)** — Kualitas maksimum
+## Ukuran preset [#preset-sizes]
 
-## Opsi Lanjutan [#advanced-options]
+```ts title="lib/sizes.ts"
+import { PRESET_SIZES, validateSize } from "qrdx";
 
-### Dapatkan Data URL [#get-data-url]
+PRESET_SIZES.small; // { width: 200, height: 200 }
+PRESET_SIZES.medium; // 400
+PRESET_SIZES.large; // 800
+PRESET_SIZES.xlarge; // 1200
+PRESET_SIZES["2xl"]; // 1600
+PRESET_SIZES["3xl"]; // 2000
 
-```tsx
-import { getQRCodeDataUrl } from 'qrdx';
+validateSize(4000, 4000); // { isValid: true }
+validateSize(6000, 6000); // { isValid: false, error: "Size must not exceed 5000x5000 pixels" }
+```
 
-const dataUrl = await getQRCodeDataUrl(
-  { value: "https://example.com", size: 512 },
-  "png",
-  { width: 512, height: 512 }
+Pilih ukuran sesuai tujuan file: 256 hingga 512 px untuk halaman web, 1024 px atau lebih untuk cetak pada 300 piksel per inci (1024 px tercetak tajam hingga lebar sekitar 8,7 cm). Untuk ukuran cetak yang tepat, gunakan fungsi cetak, yang bekerja dalam milimeter dan inci.
+
+## PNG di Node [#png-in-node]
+
+`getQRAsPNG` dari `qrdx/node` mengembalikan byte PNG tanpa browser. Fungsi ini memerlukan satu rasterizer opsional yang dipasang di samping `qrdx`: `@resvg/resvg-js` menggambar SVG, termasuk logo, seperti yang dilakukan browser; `sharp` juga bisa digunakan.
+
+```ts title="scripts/make-png.ts"
+import { writeFile } from "node:fs/promises";
+import { getQRAsPNG } from "qrdx/node";
+
+const png = await getQRAsPNG(
+  { value: "https://example.com", bodyPattern: "rounded", margin: 4 },
+  { size: 1024 }
 );
+await writeFile("qr-code.png", png);
 ```
 
-### Salin ke Papan Klip [#copy-to-clipboard]
+Impor dari `qrdx/node`, jangan pernah dari `qrdx`, agar bundle browser tidak pernah memuat modul native. Logo berupa data URL disematkan apa adanya; URL `http(s)` atau path lokal hanya dimuat dengan `loadExternalLogos: true`, sehingga server yang meneruskan pengaturan dari pemanggil tidak bisa dipaksa mengambil URL internal atau membaca disknya sendiri. Markup SVG tidak memerlukan rasterizer: `toSVGString` dari `qrdx/core` berjalan di mana saja.
 
-```tsx
-import { copyQRCodeToClipboard } from 'qrdx';
+## Jika terjadi masalah [#if-something-goes-wrong]
 
-await copyQRCodeToClipboard(
-  { value: "https://example.com" },
-  { width: 512, height: 512 }
-);
-```
+- **`Size must be at least 50x50 pixels`, `Size must not exceed 5000x5000 pixels`, atau `Width and height must be equal for QR codes`.** `validateSize` menolak ukuran tersebut. Berikan ukuran persegi dalam rentang yang valid.
+- **`PDF export needs the optional "jspdf" package`.** Pasang `jspdf` di paket yang sama dengan `qrdx`.
+- **Logo tidak ada di file.** Gambar berasal dari origin lain tanpa header CORS, sehingga browser tidak dapat menyalinnya. Sajikan dari origin Anda sendiri atau berikan data URL.
+- **`copyQRCodeToClipboard` ditolak.** Fungsi dijalankan di luar handler klik atau tombol, atau halaman tidak disajikan melalui HTTPS. Panggil dari handler itu sendiri.
+- **`getQRAsPNG` melempar error tentang rasterizer yang hilang.** Pasang `@resvg/resvg-js` atau `sharp` di samping `qrdx`.
 
-### Dapatkan String SVG [#get-svg-string]
+## Terkait [#related]
 
-```tsx
-import { getSVGString } from 'qrdx';
-
-const svgString = await getSVGString({
-  value: "https://example.com",
-  size: 512
-});
-```
-
-## Unduhan Massal [#batch-downloads]
-
-Unduh beberapa kode QR sekaligus:
-
-```tsx
-const qrCodes = [
-  {
-    props: { value: "https://example.com", size: 512 },
-    options: { format: "png", size: { width: 512, height: 512 }, filename: "site.png" }
-  },
-  {
-    props: { value: "tel:+1234567890", size: 512 },
-    options: { format: "svg", size: { width: 512, height: 512 }, filename: "phone.svg" }
-  }
-];
-
-for (const qr of qrCodes) {
-  await downloadQRCode(qr.props, qr.options);
-}
-```
-
-## Penanganan Error [#error-handling]
-
-```tsx
-try {
-  await downloadQRCode(
-    { value: "https://example.com", size: 512 },
-    { format: "png", size: { width: 512, height: 512 }, filename: "qr.png" }
-  );
-} catch (error) {
-  console.error("Download failed:", error);
-}
-```
-
-## Memilih Format [#format-selection]
-
-- **PNG** — Kualitas terbaik, file lebih besar, mendukung transparansi
-- **JPG** — File lebih kecil, tanpa transparansi
-- **WebP** — Kualitas dan transparansi PNG dalam file yang lebih kecil, untuk situs web
-- **SVG** — Dapat diskalakan, file kecil, untuk web/cetak
-- **PDF** — Dokumen profesional, file lebih besar
-- **EPS** — File cetak vektor untuk percetakan dan alat desain
-
-## Optimasi Ukuran [#size-optimization]
-
-- **Penggunaan web** — 256-512px, PNG atau WebP
-- **Cetak** — 1024px+, PDF atau PNG
-- **Seluler** — 256px, dioptimalkan
-- **Email** — 200-300px, seimbang
-
-## Langkah Berikutnya [#next-steps]
-
-- [Penggunaan](/docs/usage) — Pelajari pembuatan dasar
-- [Template](/docs/features/templates) — Unduh kode QR bergaya
-- [Referensi API](/docs/api-reference) — API unduhan lengkap
+<Cards>
+  <Card href="/docs/features/frames" title="Bingkai, skor pemindaian, dan file cetak" description="PDF vektor dan SVG dalam ukuran fisik, dengan bleed dan tanda potong." />
+  <Card href="/docs/components/qr-code-download" title="Komponen QR Code Download" description="Menu unduh siap pakai untuk proyek shadcn/ui." />
+  <Card href="/docs/developers/image-api" title="API gambar kode QR" description="Kode sebagai URL gambar, tanpa perlu menulis kode." />
+  <Card href="/docs/api-reference" title="Referensi API pustaka" description="Setiap fungsi unduh dan ekspor, beserta signature-nya." />
+</Cards>

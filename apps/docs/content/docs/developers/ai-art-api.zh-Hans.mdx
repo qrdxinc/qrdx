@@ -1,95 +1,82 @@
 ---
-title: "AI 艺术图 API"
-description: "通过一次 REST 调用或 MCP 工具，把二维码绘入 AI 艺术图。QRdx 会确保每张图片都能扫描，每张图片消耗一次工作区的每月 AI 艺术图额度。"
+title: "AI 艺术 API"
+description: "通过一次 REST 调用或 MCP 工具 generate_ai_art，将二维码绘入 AI 艺术作品。QRdx 会确认每张图片都能扫描，每张图片会消耗工作区每月 AI 艺术图片额度中的一张。"
 icon: Sparkles
 ---
 
-`POST https://api.qrdx.dev/v1/art` 会根据一段描述，把二维码绘入 AI 艺术图并返回图片。它与 Playground 的 Art 标签页和工作室使用的是同一个 [AI 二维码艺术图](/ai/art)功能：由 {facts.artModel} 绘制画面，QRdx 随后检查图片能否扫描出你的内容，通过后才会交给你。如果模型生成的图片按原样无法扫描，QRdx 会在模型自身的像素上，把二维码加强到刚好可以扫描的程度。
+读完本页，你将得到一张 1024 px 的 PNG：二维码融入一幅绘制的画面中，并且在交付给你之前已由 QRdx 解码验证。你还会了解如何编码动态二维码而非固定文本、如何选择模式，以及每种错误的含义。
 
-调用需要一个带有 `codes:write` 权限范围的 [API 密钥](/docs/developers/api-keys)（**完全访问**密钥具备该权限）。每张图片会消耗该密钥所属工作区的一次每月 AI 艺术图额度，与应用内使用的是同一份额度。
+`POST https://api.qrdx.dev/v1/art` 会根据描述将二维码绘入 AI 艺术作品，并返回图片。它与 Playground 的“艺术”标签页和工作室中的 [AI 二维码艺术](/ai/art)相同：由 {facts.artModel} 绘制画面，然后 QRdx 会在交付前检查它是否能扫描出你的内容。如果模型生成的图片按原样无法扫描，QRdx 只会在模型自身的像素上按需增强二维码。
 
-```bash
-curl https://api.qrdx.dev/v1/art \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
-  --max-time 90 -o art.json
-```
+<Callout type="info" title="API 密钥与每月图片额度">
+该端点需要具有 `codes:write` 权限范围的 [API 密钥](/docs/developers/api-keys)（**完全访问**密钥具备该权限）。每张图片会消耗该密钥所属工作区每月 AI 艺术图片额度中的一张，与应用使用的是同一份额度；各套餐的具体数量见[套餐与限制](/docs/plans-and-limits)。调用失败，或图片无法做到可扫描时，不会消耗额度。
+</Callout>
 
-在 code 模式下，一次调用大约需要 15 到 45 秒；photo 模式约 25 到 45 秒；scene 模式需要先生成画面，约 40 到 55 秒。请把 HTTP 客户端的超时时间设置为至少 60 秒。如果 scene 模式超时，会返回 `504 AI_ART_TIMEOUT`，且不会消耗图片额度：请重试，或改用 code 模式。
+## 开始之前 [#before-you-start]
 
-## 编码链接或动态二维码 [#encode]
+- 一个具有 `codes:write` 权限的 API 密钥，并导出为 `QRDX_API_KEY`。
+- 超时时间至少为 60 秒的 HTTP 客户端。一次调用在 code 模式下约需 15 到 45 秒，在 photo 模式下约需 25 到 45 秒，在 scene 模式下约需 40 到 55 秒，因为它要先绘制画面。
+- 若使用动态二维码，需要它的 `id`，可从 [`GET /v1/codes`](/docs/developers/api/list-codes) 或[创建它](/docs/developers/api/create-codes)时的响应中获取。
 
-以下两项请只发送其中一项：
+## 1. 为链接绘制二维码 [#1-paint-a-code-for-a-link]
 
-- `text`：二维码包含的链接或文本，最多 300 个字符。艺术图是一张图片，因此打印后内容无法再更改。
-- `code`：工作区中某个[动态二维码](/docs/dynamic-qr-codes)的 `id`。艺术图编码的是该二维码的短链接，因此打印后你仍可更改它的跳转目标，其扫描数据也会显示在分析中。来自其他工作区或已在回收站中的二维码会返回 `404`。
+<Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
+  <Tab value="curl">
+    ```bash title="Terminal"
+    curl https://api.qrdx.dev/v1/art \
+      -H "Authorization: Bearer $QRDX_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
+      --max-time 90 -o art.json
+    ```
+  </Tab>
+  <Tab value="JavaScript">
+    ```js title="art.mjs"
+    import { writeFile } from "node:fs/promises";
 
-```bash
-curl https://api.qrdx.dev/v1/art \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"code": "cm5code0spring0menu00001", "prompt": "a bistro chalkboard menu on a brick wall", "mode": "scene"}' \
-  --max-time 90
-```
+    const response = await fetch("https://api.qrdx.dev/v1/art", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.QRDX_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: "https://qrdx.dev",
+        prompt: "a koi pond at dusk, ink and watercolor",
+      }),
+      signal: AbortSignal.timeout(90_000),
+    });
+    const { data, credits } = await response.json();
+    // data.imageUrl is a data: URL; save the PNG bytes
+    const base64 = data.imageUrl.split(",")[1];
+    await writeFile("art.png", Buffer.from(base64, "base64"));
+    console.log(data.text, data.blend, credits.remaining);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="art.py"
+    import base64
+    import os
+    import requests
 
-二维码的 `id` 可通过 [`GET /v1/codes`](/docs/developers/api/list-codes) 获取，也可以在[创建时](/docs/developers/api/create-codes)得到。
+    response = requests.post(
+        "https://api.qrdx.dev/v1/art",
+        headers={"Authorization": f"Bearer {os.environ['QRDX_API_KEY']}"},
+        json={"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"},
+        timeout=90,
+    )
+    response.raise_for_status()
+    body = response.json()
+    png = base64.b64decode(body["data"]["imageUrl"].split(",", 1)[1])
+    open("art.png", "wb").write(png)
+    print(body["data"]["text"], body["data"]["blend"], body["credits"]["remaining"])
+    ```
+  </Tab>
+</Tabs>
 
-## 请求 [#request]
+响应为 JSON，图片以 `data:` URL 的形式给出：
 
-| 字段 | 默认值 | 说明 |
-| --- | --- | --- |
-| `text` | | 二维码要编码的内容。请发送此项或 `code` |
-| `code` | | 动态二维码的 `id`，用于代替 `text` |
-| `prompt` | 自动生成 | 要绘制的艺术图，用平实的文字描述；参见[为你生成的提示词](#written-prompt) |
-| `mode` | `code` | 二维码在艺术图中的呈现方式；参见[模式](#modes) |
-| `style` | | 快捷风格的 id，会与你的提示词结合；参见[快捷风格](#quick-looks) |
-| `negativePrompt` | | 画面中要避免出现的内容 |
-| `visibility` | `50` | 二维码可见度，范围 `0` 到 `100`：数值越高，二维码越清晰；越低则越偏向画面 |
-| `creativity` | `45` | `0` 严格遵循提示词，`100` 自由发挥 |
-| `seed` | 随机 | 发送之前响应中的种子，可得到相似的图片 |
-| `reference` | | 用于参考颜色和形状的参考图，例如徽标或调色板 |
-| `photo` | | 仅限 photo 模式：要绘入二维码的图片 |
-
-`reference` 和 `photo` 是 PNG 或 JPEG 的 `data:` URL（`data:image/jpeg;base64,…`）。请把 `reference` 缩小到最长边约 512 px（不超过 600 KB），并把 `photo` 裁剪为约 1024 px 的正方形（不超过 1 MB），这也是生成艺术图所用的尺寸。它们会发送给模型，用后即丢弃：QRdx 不会存储或记录它们。过大的图片会被拒绝，并返回 `413 AI_ART_IMAGE_TOO_LARGE`。
-
-完整的数据结构见 [API 参考](/docs/developers/api/create-art)。
-
-## 模式 [#modes]
-
-| `mode` | 效果 |
-| --- | --- |
-| `code` | 二维码就是整幅画面：你的艺术图被绘入其模块中，定位方块保持朴素，四周留有浅色静区。扫描最可靠 |
-| `scene` | 先根据描述绘制一幅画面，再把二维码绘入画面中央，使画面延伸到二维码边缘并贯穿其中，模块由画面的色彩和光线构成 |
-| `photo` | 与 scene 类似，但以你自己的 `photo` 作为画面：照片的主体、色彩和光线会保留在二维码周围并贯穿其中。仅在此模式下发送照片 |
-
-## 快捷风格 [#quick-looks]
-
-快捷风格是预设好的样式，例如某种绘画媒介或氛围，QRdx 会把它加到你自己的 `prompt` 上：`"a koi pond in the rain"` 搭配 `"style": "watercolor"`，会把锦鲤池塘画成水彩画。请把它的 id 作为 `style` 发送；其他任何值都会返回 `400 VALIDATION_ERROR`。这些风格与 [AI 艺术图工作室](/ai/art)和 Playground 的 Art 标签页中以标签形式提供的风格相同，并且适用于所有模式。
-
-| `style` | 风格 |
-| --- | --- |
-| `watercolor` | 水彩 |
-| `oil-painting` | 油画 |
-| `anime` | 动漫 |
-| `cartoon` | 卡通 |
-| `pixel-art` | 像素画 |
-| `pop-art` | 波普艺术 |
-| `charcoal` | 炭笔 |
-| `ink` | 水墨 |
-| `cyberpunk` | 赛博朋克 |
-| `fantasy` | 奇幻 |
-| `photographic` | 摄影 |
-| `low-poly` | 低多边形 |
-| `papercut` | 剪纸 |
-
-## 为你生成的提示词 [#written-prompt]
-
-`prompt` 是可选的。如果省略，QRdx 会先根据你发送的 `mode`、`style` 和 `photo` 写一段提示词：一个具体的场景，包含主体、环境和光线；在 photo 模式下，则是对你照片内容的描述，以便艺术图保留这些内容。生成提示词不会额外消耗 AI 艺术图额度。响应中会以 `writtenPrompt` 返回所写的内容，方便你下次编辑后再次发送。如果生成提示词失败，会返回 `502 AI_ART_DESCRIBE_FAILED`，且不会消耗图片额度。
-
-## 响应 [#response]
-
-```json
+```json title="200 OK (fields)"
 {
   "data": {
     "imageUrl": "data:image/png;base64,iVBORw0KGgo…",
@@ -99,31 +86,22 @@ curl https://api.qrdx.dev/v1/art \
     "mode": "code",
     "blend": "least",
     "blendStrength": 0.35,
-    "text": "https://qrdx.dev/q/aB3dE5f",
-    "code": { "id": "cm5code0spring0menu00001", "shortLink": "https://qrdx.dev/q/aB3dE5f" },
+    "text": "https://qrdx.dev",
     "visibility": 50,
     "creativity": 45
   },
-  "credits": {
-    "plan": "pro",
-    "limit": 30,
-    "used": 7,
-    "remaining": 23,
-    "pooled": false,
-    "resetsAt": "2026-02-01T00:00:00.000Z"
-  }
+  "credits": { "plan": "pro", "limit": 30, "used": 7, "remaining": 23, "pooled": false, "resetsAt": "2026-12-01T00:00:00.000Z" }
 }
 ```
 
-- `imageUrl` 是 1024 px 正方形的 PNG，格式为 `data:` URL。QRdx 不会保留副本，请自行保存。
-- `text` 就是这张图片扫描后得到的内容。QRdx 在响应前已对其解码验证。
-- `blend` 说明这张图片是如何做到可扫描的：`none`（模型生成的原图）、`least`（在模型图片上，把定位方块、静区和模块加强到刚好可扫描）或 `image-qr`（重新绘制为 Image QR 二维码，是最后的手段）。`blendStrength` 的范围从 `0`（原图）到 `1`（Image QR）。
-- `writtenPrompt` 仅在你省略 `prompt` 时出现：即 QRdx 为你写的描述。
-- `credits` 是这张图片生成后工作区的剩余额度。
+- `imageUrl` 是以 `data:` URL 表示的 1024 px 方形 PNG。QRdx 不保留副本，请自行保存。
+- `text` 就是这张图片扫描后得到的内容。QRdx 在响应之前已对其解码。
+- `blend` 表示图片是如何做到可扫描的：`none`（模型生成的原图）、`least`（仅按需增强定位方块、静区和模块，基于模型的图片）或 `image-qr`（重绘为 Image QR 二维码，最后的手段）。`blendStrength` 的范围从 `0`（原图）到 `1`（Image QR）。
+- `credits` 是本张图片生成后工作区的剩余额度。
 
-如果想直接获得 PNG 而不是 JSON，请添加 `?format=png`，或发送 `Accept: image/png`。此时种子、模式、blend 和剩余图片数会通过 `X-QRdx-Seed`、`X-QRdx-Mode`、`X-QRdx-Blend`、`X-QRdx-Blend-Strength` 和 `X-QRdx-Credits-Remaining` 响应头返回。
+若想直接获得 PNG 而非 JSON，请添加 `?format=png` 或发送 `Accept: image/png`。此时种子、模式、融合方式和剩余图片数会通过 `X-QRdx-Seed`、`X-QRdx-Mode`、`X-QRdx-Blend`、`X-QRdx-Blend-Strength` 和 `X-QRdx-Credits-Remaining` 响应头返回：
 
-```bash
+```bash title="Terminal"
 curl "https://api.qrdx.dev/v1/art?format=png" \
   -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
@@ -131,46 +109,120 @@ curl "https://api.qrdx.dev/v1/art?format=png" \
   --max-time 90 -o art.png
 ```
 
-## 额度 [#credits]
+## 2. 改为编码动态二维码 [#encode]
 
-该 API 使用与应用相同的每月 AI 艺术图额度，按密钥所属的工作区计算。免费版、Pro 和 Business 每月各包含一定数量的图片，Business 的额度由整个团队共享；具体数字见[套餐与限制](/docs/plans-and-limits)。额度在每月 1 日（UTC）重置。
+`text` 和 `code` 只能二选一发送：
 
-- 调用失败，或图片无法做到可扫描时，不会消耗图片额度。
-- 当月额度用完后，API 会返回 `AI_ART_CREDITS_EXHAUSTED`：免费版和 Pro 为 `402`，升级后可获得更多额度；Business 为 `429`。
-- 在每月额度之外，每人每天最多可生成 25 张图片（`429 AI_ART_DAILY_LIMIT`）。
-- 每人每分钟最多可发起 12 张图片的生成。
-- 每次调用还会计入工作区的每日 API 配额和写入操作的每分钟限制（[速率限制](/docs/developers/rest-api#rate-limits)）。
+- `text`：二维码包含的链接或文本，最多 300 个字符。艺术图是一幅图片，所以印刷之后其内容无法更改。
+- `code`：工作区中某个[动态二维码](/docs/dynamic-qr-codes)的 `id`。艺术图编码的是该二维码的短链接，因此印刷后你仍可更改其指向的目标，并且扫描数据会显示在分析中。来自其他工作区或位于回收站中的二维码会返回 `404`。
 
-## 错误 [#errors]
+```bash title="Terminal"
+curl https://api.qrdx.dev/v1/art \
+  -H "Authorization: Bearer $QRDX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"code": "cm5code0spring0menu00001", "prompt": "a bistro chalkboard menu on a brick wall", "mode": "scene"}' \
+  --max-time 90 -o art.json
+```
 
-错误采用 API 一贯的结构（`code`、`message`、`status`）；完整列表见[错误](/docs/developers/errors)。以下是 AI 艺术码特有的错误：
+此时响应中还会包含 `"code": { "id", "shortLink" }`，并且 `text` 为该短链接。
+
+## 3. 选择模式和风格 [#modes]
+
+| `mode` | 效果 |
+| --- | --- |
+| `code`（默认） | 二维码就是整幅画面：你的艺术作品绘入其模块中，带有普通的定位方块，周围是浅色静区。扫描最可靠 |
+| `scene` | 先根据描述绘制一幅画面，再将二维码绘入画面中央，使画面一直延伸到二维码内部并穿过它，模块由画面的色彩与光线构成 |
+| `photo` | 与上面类似，但以你自己的 `photo` 作为画面：它的主体、色彩和光线会保留在二维码周围并贯穿其中。仅在此模式下发送照片 |
+
+### 快捷风格 [#quick-looks]
+
+快捷风格是现成的样式，例如某种绘画媒介或氛围，QRdx 会将其添加到你自己的 `prompt` 中：`"a koi pond in the rain"` 搭配 `"style": "watercolor"` 会把锦鲤池塘绘制成水彩画。请将其 id 作为 `style` 发送；任何其他值都会返回 `400 VALIDATION_ERROR`。这些风格与 [AI 艺术工作室](/ai/art)和 Playground 的“艺术”标签页中以标签形式提供的风格相同，并且适用于所有模式。
+
+| `style` | 风格 |
+| --- | --- |
+| `watercolor` | 水彩 |
+| `oil-painting` | 油画 |
+| `anime` | 动漫 |
+| `cartoon` | 卡通 |
+| `pixel-art` | 像素艺术 |
+| `pop-art` | 波普艺术 |
+| `charcoal` | 炭笔 |
+| `ink` | 水墨 |
+| `cyberpunk` | 赛博朋克 |
+| `fantasy` | 奇幻 |
+| `photographic` | 摄影 |
+| `low-poly` | 低多边形 |
+| `papercut` | 剪纸 |
+
+`prompt` 是可选的。省略它时，QRdx 会先根据你发送的 `mode`、`style` 和 `photo` 为你写一段：一个具体的场景，包含主体、环境和光线；在 photo 模式下则是对照片内容的描述，以便艺术图保留这些内容。撰写提示词不会额外消耗 AI 艺术图片额度。响应中会以 `writtenPrompt` 返回所写的内容，方便你下次编辑后再次发送。如果撰写失败，你会收到 `502 AI_ART_DESCRIBE_FAILED`，且不会消耗任何图片额度。
+
+## 请求字段 [#request-fields]
+
+| 字段 | 默认值 | 说明 |
+| --- | --- | --- |
+| `text` | | 二维码编码的内容，最多 300 个字符。与 `code` 二选一发送 |
+| `code` | | 动态二维码的 `id`，用于替代 `text` |
+| `prompt` | 自动撰写 | 要绘制的艺术作品，用通俗的文字描述，发送时至少 3 个字符 |
+| `mode` | `code` | `code`、`scene` 或 `photo`；见上文 |
+| `style` | | 快捷风格的 id，与你的提示词组合使用 |
+| `negativePrompt` | | 画面中要避免出现的内容 |
+| `visibility` | `50` | 二维码可见度，`0` 到 `100`：数值越高二维码越清晰，越低则越偏向画面 |
+| `creativity` | `45` | `0` 严格遵循提示词，`100` 则自由发挥 |
+| `seed` | 随机 | 发送之前响应中的种子，可得到相似的图片 |
+| `reference` | | 用于参考色彩和形状的参考图，例如徽标或调色板 |
+| `photo` | | 仅限 photo 模式：要将二维码绘入的图片 |
+
+`reference` 和 `photo` 为 PNG 或 JPEG 的 `data:` URL（`data:image/jpeg;base64,…`）。请将 `reference` 缩小到最长边约 512 px（不超过 600 KB），并将 `photo` 裁剪为约 1024 px 的正方形（不超过 1 MB），这也是艺术图生成时使用的尺寸。它们会发送给模型，随后即被丢弃：QRdx 绝不会存储或记录它们。过大的图片会被拒绝，并返回 `413 AI_ART_IMAGE_TOO_LARGE`。完整的数据结构和“试一试”面板见[参考页面](/docs/developers/api/create-art)。
+
+## 额度与限制 [#credits-and-limits]
+
+API 使用的是与应用相同的每月 AI 艺术图片额度，按密钥所属的工作区计算。免费版、Pro 和 Business 每月都包含一定数量的图片，其中 Business 在整个团队内共享；具体数量见[套餐与限制](/docs/plans-and-limits)。额度在每月 1 日（UTC）重置。
+
+- 当月图片额度用完后，API 会返回 `AI_ART_CREDITS_EXHAUSTED`：免费版和 Pro 为 `402`，升级后可获得更多额度；Business 为 `429`。
+- 除每月额度外，每人每天最多可生成 25 张图片（`429 AI_ART_DAILY_LIMIT`），每分钟最多可发起 12 张。
+- 每次调用还会计入工作区的每日 API 配额以及每分钟写入限制（[速率限制](/docs/developers/rest-api#rate-limits)）。
+
+## 出错时怎么办 [#if-something-goes-wrong]
+
+错误沿用 API 一贯的结构（`code`、`message`、`status`），完整列表见[错误](/docs/developers/errors)。所有 `5xx` 错误都不会返回图像。
 
 | 状态码 | `code` | 处理方式 |
 | --- | --- | --- |
-| 400 | `AI_ART_TEXT_TOO_LONG` | 缩短 `text`，或改为发送动态二维码的 `code` |
+| 400 | `AI_ART_TEXT_TOO_LONG` | 缩短 `text`，或改为发送动态码的 `code` |
 | 402 | `AI_ART_CREDITS_EXHAUSTED` | 等到每月 1 日，或升级套餐 |
 | 413 | `AI_ART_IMAGE_TOO_LARGE` | 缩小 `photo` 或 `reference` 的尺寸 |
 | 429 | `AI_ART_CREDITS_EXHAUSTED` | Business：等到每月 1 日 |
-| 429 | `AI_ART_DAILY_LIMIT` | 明天再试（UTC） |
+| 429 | `AI_ART_DAILY_LIMIT` | 明天（UTC）再试 |
 | 502 | `AI_ART_FAILED` | 模型生成失败或拒绝了该提示词。请重试或改写提示词 |
-| 502 | `AI_ART_UNSCANNABLE` | 提高 `visibility` 或更换种子后重试 |
-| 502 | `AI_ART_DESCRIBE_FAILED` | 未发送 `prompt`，且自动生成提示词失败。请重试或自行提供 |
+| 502 | `AI_ART_UNSCANNABLE` | 调高 `visibility` 或更换种子后重试 |
+| 502 | `AI_ART_DESCRIBE_FAILED` | 未发送 `prompt`，且自动生成提示词失败。请重试或自行发送提示词 |
 | 503 | `AI_ART_BUSY` | 模型繁忙。请等待一分钟后重试 |
 | 503 | `AI_NOT_CONFIGURED` | 此服务器未配置 AI 艺术码（自托管） |
-| 504 | `AI_ART_TIMEOUT` | 模型耗时过长（在场景模式下，画面占用了过多时间，导致没有足够时间绘制二维码）。不会使用任何图片额度。请重试，或改用二维码模式 |
+| 504 | `AI_ART_TIMEOUT` | 模型耗时过长（在场景模式下，画面占用了过多时间，导致没有足够时间绘制二维码）。请重试，或使用二维码模式 |
 
-所有 `5xx` 错误都不会使用图片额度。
+未接入 Vercel AI Gateway 的自托管实例会用以下内容响应每一次调用：
+
+```json title="503 Service Unavailable"
+{"code":"AI_NOT_CONFIGURED","message":"AI QR art is not configured on this server","status":503}
+```
 
 ## MCP [#mcp]
 
-只要连接中带有 QRdx API 密钥，[MCP 服务器](/docs/developers/mcp)就会提供 `generate_ai_art` 工具。它接受与请求体相同的字段，并返回 PNG、扫描后指向的内容以及本月剩余的图片数量。你可以直接用日常语言向助手提出需求：
+连接时带上 QRdx API 密钥后，[MCP 服务器](/docs/developers/mcp)会提供 `generate_ai_art` 工具。它接受与请求体相同的字段，并返回 PNG、扫描后指向的内容，以及本月剩余的图像数量。你可以直接用日常语言向助手提出需求：
 
-```txt
+```txt title="Prompt"
 Make AI QR art for my code cm5code0spring0menu00001: a bistro chalkboard menu on a brick wall, as a scene.
 ```
 
-没有密钥时，该工具会返回添加密钥的方法。与 REST API 一样，调用最多需要一分钟。
+没有密钥时，该工具会回复如何添加密钥。与 REST API 一样，调用最长需要一分钟。
 
 ## 自托管 [#self-hosting]
 
 AI 艺术码通过 Vercel AI Gateway 运行。在你自己的实例上，请设置 `AI_GATEWAY_API_KEY`；未设置时，`POST /v1/art` 和 `generate_ai_art` 会返回 `503 AI_NOT_CONFIGURED`。
+
+## 相关内容 [#related]
+
+- [生成 AI 二维码艺术图](/docs/developers/api/create-art)：包含完整 schema 和 Try it 面板的参考页面
+- [创建二维码](/docs/developers/api/create-codes)：创建艺术码要编码的动态二维码
+- [MCP 服务器](/docs/developers/mcp)：供助手使用的 `generate_ai_art` 工具
+- [套餐与限制](/docs/plans-and-limits)：各套餐每月可生成的 AI 艺术图数量

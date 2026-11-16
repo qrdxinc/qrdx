@@ -1,48 +1,76 @@
 ---
 title: "Richiedere la verifica in due passaggi"
-description: "Fai in modo che tutti i membri di uno spazio di lavoro attivino la verifica in due passaggi prima di poterci accedere. Fa parte del piano Business."
+description: "Fai in modo che tutti i membri di un workspace attivino la verifica in due passaggi prima di poterlo aprire. Fa parte del piano Business."
 ---
 
-Proprietari e amministratori possono richiedere a tutti i membri di uno spazio di lavoro di usare la [verifica in due passaggi](/docs/help/privacy-and-security/two-step-verification). Un membro che non l'ha attivata non può aprire lo spazio di lavoro finché non lo fa, quindi accedere all'email di qualcuno non basta per entrare nel tuo spazio di lavoro.
+Proprietari e amministratori possono richiedere a tutti i membri di un workspace di usare la [verifica in due passaggi](/docs/help/privacy-and-security/two-step-verification). Un membro che non l'ha attivata non può aprire il workspace finché non lo fa, quindi l'accesso alla email di qualcuno non basta per entrare nel tuo workspace.
 
-La richiesta della verifica in due passaggi fa parte del piano **Business**. Uno spazio di lavoro la ha quando almeno uno dei suoi proprietari o membri con accesso alla fatturazione è su Business. Vedi [Postazioni e limiti dello spazio di lavoro](/docs/help/teams/seats).
+<Callout type="info">
+  Richiedere la verifica in due passaggi fa parte del piano **Business**. Un workspace ce l'ha quando uno dei suoi proprietari o dei membri che gestiscono la fatturazione ha il piano Business. Vedi [Posti e limiti del workspace](/docs/help/teams/seats).
+</Callout>
 
-## Attivala [#turn-it-on]
+## Attivarla [#turn-it-on]
 
-1. Attiva prima la verifica in due passaggi per il tuo account, in **Impostazioni** → **Profilo e sicurezza**. Non puoi richiederla se non ce l'hai anche tu.
-2. Nello spazio di lavoro, vai su **Impostazioni** → **Team**.
-3. In **Verifica in due passaggi**, attiva **Richiedi la verifica in due passaggi**.
-4. Se alcuni membri non l'hanno ancora attivata, QRdx ti dice quanti sono e chiede conferma prima di procedere.
-5. [Conferma la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
+### 1. Attivala prima per te [#1-turn-it-on-for-yourself-first]
 
-Solo proprietari e amministratori possono modificarla, e per attivarla o disattivarla ti viene chiesto di confermare la tua identità.
+Attiva la verifica in due passaggi per il tuo account in **Impostazioni** → **Profilo e sicurezza**. Non puoi richiederla se non ce l'hai anche tu.
 
-Non viene inviata nessuna email. I membri senza verifica in due passaggi lo scoprono la prossima volta che aprono lo spazio di lavoro.
+### 2. Apri la pagina Team [#2-open-the-team-page]
 
-## Vedi chi l'ha attivata [#see-who-has-it-on]
+Nel workspace, vai su **Impostazioni** → **Team**.
+
+### 3. Richiedila [#3-require-it]
+
+In **Verifica in due passaggi**, attiva **Richiedi la verifica in due passaggi**. Se alcuni membri non l'hanno ancora attivata, QRdx ti dice quanti sono e te lo chiede prima di procedere.
+
+<Shot id="require-two-step" />
+
+### 4. Conferma la tua identità [#4-confirm-its-you]
+
+[Conferma la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you). La scheda mostrerà poi "La verifica in due passaggi è ora obbligatoria".
+
+Solo proprietari e amministratori possono modificarla, e per attivarla o disattivarla ti viene chiesto di confermare la tua identità. Nessuno riceve una email: i membri senza verifica in due passaggi lo scoprono alla prossima apertura del workspace.
+
+## Vedere chi l'ha attivata [#see-who-has-it-on]
 
 Nella pagina **Impostazioni** → **Team**, proprietari e amministratori vedono se per ogni membro la verifica in due passaggi è **Attiva** o **Disattiva**. Su smartphone si trova sotto l'indirizzo email di ciascuna persona.
 
 ## Cosa vedono i membri che non l'hanno attivata [#what-members-without-it-see]
 
-Quando aprono lo spazio di lavoro, vedono che richiede la verifica in due passaggi, con un pulsante **Attiva la verifica in due passaggi**. Il pulsante li porta in **Impostazioni** → **Profilo e sicurezza** e, una volta attivata, **Torna a** lo spazio di lavoro li riporta alla pagina in cui si trovavano.
+Quando aprono il workspace, vedono che richiede la verifica in due passaggi, con un pulsante **Attiva la verifica in due passaggi**. Il pulsante li porta in **Impostazioni** → **Profilo e sicurezza**, e una volta attivata, **Torna al** workspace li riporta alla pagina in cui si trovavano.
 
-Fino ad allora non possono vedere né modificare nulla in quello spazio di lavoro. Gli altri loro spazi di lavoro funzionano come al solito.
+Fino ad allora non possono vedere né modificare nulla in quel workspace. Gli altri loro workspace funzionano come sempre.
 
-Questo vale anche per ciò che lo spazio di lavoro invia loro. Gli avvisi via email, il riepilogo settimanale e gli avvisi su Slack o Discord per quello spazio di lavoro si interrompono, e non possono aggiungerne di nuovi. Le sincronizzazioni che hanno configurato per inviare i dati dello spazio di lavoro ad altri strumenti vengono messe in pausa. Gli avvisi ripartono quando la verifica in due passaggi è attiva; una sincronizzazione in pausa va riattivata.
+Questo vale anche per ciò che il workspace invia loro. Gli avvisi via email, il riepilogo settimanale e gli avvisi Slack o Discord relativi al workspace si interrompono, e non possono aggiungerne di nuovi. Le sincronizzazioni che hanno configurato per inviare i dati del workspace ad altri strumenti vengono messe in pausa. Gli avvisi ripartono quando la verifica in due passaggi è attiva; una sincronizzazione in pausa va riattivata.
 
-Se in seguito qualcuno disattiva la verifica in due passaggi, lo spazio di lavoro si chiude di nuovo per lui finché non la riattiva. Questo vale anche per proprietari e amministratori.
+Se in seguito qualcuno disattiva la verifica in due passaggi, il workspace si chiude di nuovo per lui finché non la riattiva. Questo vale anche per proprietari e amministratori.
 
 ## Chiavi API [#api-keys]
 
-Le chiavi API create nello spazio di lavoro continuano a funzionare per la persona che le ha create, con o senza verifica in due passaggi. La verifica in due passaggi protegge l'accesso, e una chiave è una credenziale a sé. Nessuno può creare una nuova chiave nello spazio di lavoro senza poterlo aprire, e proprietari e amministratori possono vedere e revocare le chiavi di tutti in **Impostazioni** → **Sviluppatori** dello spazio di lavoro.
+Le chiavi API create nel workspace continuano a funzionare per la persona che le ha create, con o senza verifica in due passaggi. La verifica in due passaggi protegge l'accesso, mentre una chiave è una credenziale a sé. Nessuno può creare una nuova chiave nel workspace senza poterlo aprire, e proprietari e amministratori possono vedere e revocare le chiavi di tutti in **Impostazioni** → **Chiavi API e app** del workspace.
 
-Le app collegate all'account di qualcuno tramite OAuth funzionano sempre e solo nello spazio di lavoro personale di quella persona, quindi non raggiungono mai uno spazio di lavoro di team.
+Le app collegate all'account di una persona tramite OAuth funzionano solo nel workspace personale di quella persona, quindi non raggiungono mai un workspace di team.
 
-## Se lo spazio di lavoro esce da Business [#if-the-workspace-leaves-business]
+## Se il workspace esce dal piano Business [#if-the-workspace-leaves-business]
 
-La richiesta smette di applicarsi e l'impostazione risulta disattivata. Se lo spazio di lavoro torna su Business, si applica di nuovo.
+Il requisito smette di essere applicato e l'impostazione risulta disattivata. Se il workspace torna al piano Business, viene applicato di nuovo.
 
-## Disattivala [#turn-it-off]
+## Disattivarla [#turn-it-off]
 
-Nella pagina **Impostazioni** → **Team**, disattiva **Richiedi la verifica in due passaggi** e conferma la tua identità. I membri senza verifica in due passaggi possono riaprire subito lo spazio di lavoro.
+Nella pagina **Impostazioni** → **Team**, disattiva **Richiedi la verifica in due passaggi** e conferma la tua identità. I membri senza verifica in due passaggi possono aprire di nuovo il workspace subito.
+
+## Se qualcosa va storto [#if-something-goes-wrong]
+
+### L'interruttore è disabilitato [#the-switch-is-disabled]
+
+O il tuo account non ha ancora la verifica in due passaggi attiva, oppure il workspace non ha il piano Business. La scheda indica quale dei due casi.
+
+### Un membro è bloccato e non riesce ad attivarla [#a-member-is-locked-out-and-cant-turn-it-on]
+
+Può attivarla da **Impostazioni** → **Profilo e sicurezza** del proprio account, che non richiede il workspace. Se ha perso il telefono e i codici di backup, vedi [Hai perso il telefono e i codici di backup](/docs/help/privacy-and-security/two-step-verification#lost-your-phone-and-your-backup-codes).
+
+## Correlati [#related]
+
+- [Verifica in due passaggi](/docs/help/privacy-and-security/two-step-verification)
+- [Ruoli del team](/docs/help/teams/roles)
+- [Proteggi il tuo account](/docs/help/privacy-and-security/account-security)

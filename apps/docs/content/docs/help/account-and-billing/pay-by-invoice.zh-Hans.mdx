@@ -1,19 +1,37 @@
 ---
 title: "通过发票付款"
-description: "申请 Business 年度套餐的发票,以银行转账代替银行卡付款。"
+description: "为一年的 Business 套餐申请发票，通过银行转账而不是银行卡付款。"
 ---
 
-<IfAvailable feature="invoiceRequests" id="pay-by-invoice" title="通过发票付款">
+结账时支持银行卡以及 Apple Pay、Google Pay 等钱包。如果贵公司通过银行转账付款，或需要先收到发票，可以为一年的 Business 套餐申请发票。QRdx 团队会手动处理，因此该方式仅在 qrdx.dev 上提供；自托管的 QRdx 服务器有自己的计费方式。
 
-结账页面支持银行卡以及 Apple Pay、Google Pay 等电子钱包。如果贵公司通过银行转账付款,或需要先拿到发票,可以申请一年期 Business 套餐的发票。
+<IfAvailable feature="invoiceRequests">
 
-1. 登录后打开[定价页面](/pricing)。
-2. 选择 **Yearly**,然后点击 Business 套餐下方的 **Pay by invoice instead**。
-3. 填写公司名称、账单邮箱地址和所在国家或地区;如有需要,还可以填写税号或 VAT 编号、账单地址和采购订单号。
-4. 点击 **Send request**。
+## 申请发票 [#ask-for-an-invoice]
 
-申请会通过电子邮件发送给 QRdx 团队。我们会手动安排发票,并向账单邮箱回复发票以及付款方式。提交申请时不会产生任何扣款。
+1. 登录并打开[定价页面](/pricing)。
+2. 选择**按年**，然后点击 Business 套餐下的**改为通过发票付款**。
+3. 填写公司名称、账单邮箱和国家或地区；如有需要，还可填写税号或 VAT 编号、账单地址和采购订单号。
+4. 点击**发送申请**。
 
-如果表单无法发送你的申请,请携带相同的信息发送电子邮件至 [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev)。
+## 后续流程 [#what-happens-next]
+
+申请会通过邮件发送给 QRdx 团队。我们会回复到账单邮箱，附上发票和付款方式，并在款项到账后为您的账户开通 Business。发送申请时不会扣款。
+
+## 如果出现问题 [#if-something-goes-wrong]
+
+### 表单无法发送申请 [#the-form-cant-send-your-request]
+
+请将相同的信息通过邮件发送至 [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev)。
+
+### 定价页面上没有“改为通过发票付款” [#pay-by-invoice-instead-isnt-on-the-pricing-page]
+
+该选项仅在选择 Business 套餐并选中**按年**，且已登录时才会显示。
 
 </IfAvailable>
+
+## 相关内容 [#related]
+
+- [套餐及包含的功能](/docs/help/account-and-billing/plans)
+- [查找发票和收据](/docs/help/account-and-billing/invoices)
+- [联系支持](/docs/help/contact)

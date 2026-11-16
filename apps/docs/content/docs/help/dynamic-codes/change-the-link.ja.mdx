@@ -3,41 +3,62 @@ title: "コードのリンク先を変更する"
 description: "動的QRコードのリンク先を編集します。印刷済みのコードは、次回のスキャンから新しいリンクを開きます。"
 ---
 
-動的QRコードのリンク先は、いつでも変更できます。印刷済みのコードはすべて、次回のスキャンから新しいリンクを開きます。
+動的QRコードのリンク先（スキャンしたときに開くページ）は、いつでも変更できます。コード自体が保持しているのは短縮リンクだけなので、印刷済みのコードはすべて、次回のスキャンから新しいリンクを開きます。
 
-## ダッシュボードから変更する [#from-your-dashboard]
+## ダッシュボードから [#from-your-dashboard]
 
-1. **コード**に移動します。
-2. コードのメニュー（**⋯**）を開き、**リンクを編集**を選びます。コードを開いて**リンクを編集**をクリックすることもできます。
-3. **リンク先URL**を変更します。
-4. **変更を保存**をクリックします。
+### 1. リンクの編集を開く [#1-open-edit-link]
 
-QRdxに「Scans now open the updated destination.」と確認が表示されます。
+**Codes** に移動します。コードのメニュー（**Code actions** ボタン、**⋯** で表示）を開き、**Edit link** を選びます。コードを開いて、**Overview** タブの **Edit link** をクリックすることもできます。
 
-## Playgroundから変更する [#from-the-playground]
+### 2. リンク先を変更する [#2-change-the-destination]
 
-コードがPlaygroundで開いている場合は、アドレスを変更します。**新しいアドレスに切り替える**をクリックするまで、カードには印刷済みのコードが「Printed codes still open」の状態で、古いリンクを開くと表示されます。
+**Edit dynamic QR code** ダイアログで、**Destination URL** を変更します。
+
+<Shot id="edit-link-dialog" />
+
+<Clip id="change-destination" />
+
+### 3. 保存する [#3-save]
+
+**Save changes** をクリックします。QRdx に「Changes saved」と「Scans now open the updated destination.」と表示されます。
+
+## Playgroundから [#from-the-playground]
+
+動的QRコードをPlaygroundで開いている場合は、**Website address** に新しいアドレスを入力します。その下のスイッチには、**Point it to the new address** をクリックするまでは、印刷済みのコードが引き続き古いリンクを開くこと（「Printed codes still open」）が表示されます。クリックすると、QRdx に「Destination updated」と表示されます。
 
 ## 変更はすぐに反映されます [#changes-take-effect-right-away]
 
-QRdxはリダイレクトをキャッシュしません。次回のスキャンから、どのスマートフォンでも新しいリンク先が開きます。
+QRdx はリダイレクトをキャッシュしません。次のスキャンから、どのスマートフォンでも新しいリンク先が開きます。
 
 ## 短縮リンク自体は変更しないでください [#dont-change-the-short-link-itself]
 
-リンク先の変更は常に安全です。一方、コードの**バックハーフ**や**ドメイン**を変更するのは安全ではありません。古い短縮リンクで印刷済みのコードは使えなくなります。
+リンク先の変更は常に安全です。一方、コードのバックハーフを変更したり、カスタムドメインから別の場所へ移したりすると安全ではありません。古いリンクで印刷したコードが使えなくなることを、QRdx が警告します。ただし、コードを `qrdx.dev` のリンクからカスタムドメインへ移す場合は例外で、`qrdx.dev` のリンクは引き続き使えます。
 
 ## 変更を元に戻す [#undo-a-change]
 
-1. **コード**からコードを開きます。
-2. **設定**の中にある**バージョン履歴**を開きます。
-3. 戻したいバージョンの横にある**復元**をクリックし、続けて**バージョンを復元**をクリックします。
+1. **Codes** からコードを開き、**Settings** タブに移動します。
+2. **Version history** を開きます。
+3. 戻したいバージョンの横にある **Restore** をクリックし、続けて **Restore version** をクリックします。
 
-QRdxは、各コードについて最大100バージョンを保持します。
+QRdx は、どのプランでも各コードにつき最大100バージョンを保存します。
 
-## リンクの代わりにページを開く [#open-a-page-instead]
+## 代わりにページを開く [#open-a-page-instead]
 
-コードがリンクの代わりにホスト型ページを開くようにするには、コードのページで**タイプを変更**を使います。[印刷済みコードの開き先を変更する](/docs/help/dynamic-codes/change-the-type)を参照してください。
+コードがリンクではなくホスト型ページを開くようにするには、コードの **Overview** タブで **Change type** をクリックします。[印刷したコードの開き先を変更する](/docs/help/dynamic-codes/change-the-type)をご覧ください。
 
-## 静的QRコードは変更できません [#static-codes-cant-change]
+## うまくいかない場合 [#if-something-goes-wrong]
 
-静的QRコードは、リンクをコード自体に保存します。変更するには、新しいコードを印刷する必要があります。[静的と動的の違い](/docs/help/getting-started/static-vs-dynamic)を参照してください。
+### 印刷したコードが古いページを開く [#the-printed-code-still-opens-the-old-page]
+
+Playgroundでは、アドレスを変更するだけでは不十分です。**Point it to the new address** をクリックしてください。ダッシュボードでは、**Save changes** をクリックしたか確認してください。リンク先が正しいのにスキャンすると別のページが開く場合は、[コードが間違ったページを開く](/docs/help/troubleshooting/wrong-destination)をご覧ください。
+
+### Edit link が表示されない [#edit-link-isnt-there]
+
+そのコードは静的QRコードです。リンクはコードの中に保存されており、変更できません。代わりに動的QRコードを印刷してください。[静的と動的、どちらが必要ですか？](/docs/help/getting-started/static-vs-dynamic)をご覧ください。
+
+## 関連項目 [#related]
+
+- [印刷したコードの開き先を変更する](/docs/help/dynamic-codes/change-the-type)
+- [コードが間違ったページを開く](/docs/help/troubleshooting/wrong-destination)
+- [独自ドメインを使う](/docs/help/domains/custom-domains)

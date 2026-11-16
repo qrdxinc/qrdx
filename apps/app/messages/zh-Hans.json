@@ -11,135 +11,169 @@
     "closeMenu": "关闭菜单",
     "entries": {
       "product": "产品",
-      "tools": "工具",
+      "solutions": "解决方案",
       "developers": "开发者",
-      "resources": "资源",
-      "pricing": "定价"
+      "resources": "资源"
+    },
+    "columns": {
+      "industries": "行业",
+      "teams": "团队",
+      "codeTypes": "码类型",
+      "build": "制作",
+      "embed": "嵌入",
+      "connect": "连接",
+      "help": "帮助",
+      "company": "公司",
+      "updates": "更新"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "用图案、颜色、Logo 和边框设计二维码，然后下载。无需注册。"
+        "description": "设计并下载二维码，免费，无需注册",
+        "short": "免费，无需注册"
       },
       "dynamicCodes": {
-        "name": "动态二维码",
-        "description": "印刷后仍可更改链接，并统计扫描次数"
-      },
-      "aiThemes": {
-        "name": "AI 主题",
-        "description": "描述一种风格，让 AI 设计主题"
+        "description": "印刷后可更改链接，统计每次扫描",
+        "short": "编辑链接，统计扫描"
       },
       "aiArt": {
-        "name": "AI 二维码艺术",
-        "description": "将链接变成仍可扫描的 AI 艺术作品"
-      },
-      "communityThemes": {
-        "name": "社区主题",
-        "description": "浏览并复用其他人分享的设计"
-      },
-      "pageTemplates": {
-        "name": "页面模板",
-        "description": "每个托管页面模板的在线演示"
-      },
-      "generators": {
-        "name": "二维码生成器",
-        "description": "每种类型都有对应的生成器：Wi-Fi、vCard、WhatsApp、UPI、支付等。"
-      },
-      "bulk": {
-        "name": "批量生成器",
-        "description": "将 CSV 转换为最多 {max, number} 个带样式的二维码"
-      },
-      "scanner": {
-        "name": "二维码扫描器",
-        "description": "扫描二维码，并预览链接是否安全"
-      },
-      "scanChecker": {
-        "name": "扫描检测",
-        "description": "测试二维码的扫描可靠性"
-      },
-      "printSize": {
-        "name": "打印尺寸计算器",
-        "description": "根据扫描距离计算最小印刷尺寸"
+        "description": "融入艺术画面的可扫描二维码",
+        "short": "绘入艺术作品的二维码"
       },
       "barcode": {
-        "name": "条形码生成器",
-        "description": "支持 EAN、UPC、Code 128 等，含校验位"
+        "description": "EAN、UPC、Code 128 等",
+        "short": "EAN、UPC、Code 128"
       },
-      "allTools": {
-        "name": "全部工具",
-        "description": "所有免费二维码工具，一站俱全"
+      "bulk": {
+        "description": "通过 CSV 生成最多 {max, number} 个带样式的二维码",
+        "short": "通过 CSV 生成二维码"
       },
-      "docs": {
-        "name": "文档",
-        "description": "qrdx React 库、动态二维码、API 与自托管指南。"
+      "community": {
+        "description": "大家分享的边框和主题",
+        "short": "共享的边框和主题"
       },
-      "mcp": {
-        "name": "MCP 服务器",
-        "description": "在 Claude、ChatGPT 或 Cursor 中生成二维码"
+      "restaurants": {
+        "description": "菜单、Wi-Fi 和评价请求",
+        "short": "菜单、Wi-Fi、评价"
       },
-      "qrCodeApi": {
-        "name": "免费二维码 API",
-        "description": "只需一个 URL 即可生成二维码图片，无需密钥或注册"
+      "retail": {
+        "description": "货架标签、橱窗购物和客户忠诚度",
+        "short": "货架标签和忠诚度"
       },
-      "nextjs": {
-        "name": "Next.js 指南",
-        "description": "在服务端组件和客户端组件中使用二维码"
+      "realEstate": {
+        "description": "打开房源页面的标牌二维码",
+        "short": "从标牌查看房源"
+      },
+      "events": {
+        "description": "议程、胸牌和场次反馈",
+        "short": "议程和胸牌"
+      },
+      "enterprise": {
+        "description": "单点登录、审计日志和合同",
+        "short": "SSO、审计日志、合同"
+      },
+      "agencies": {
+        "description": "客户域名、UTM 和扫描报告",
+        "short": "客户二维码和报告"
+      },
+      "openSource": {
+        "description": "自托管应用，或使用该库",
+        "short": "自托管或嵌入"
+      },
+      "placements": {
+        "description": "菜单、包装、名片和标牌",
+        "short": "菜单、包装、标牌"
+      },
+      "restApi": {
+        "description": "通过 HTTP 管理二维码、扫描和 Webhook",
+        "short": "通过 HTTP 处理二维码和扫描"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "通过 URL 获取二维码图片，无需 API 密钥"
+        "description": "通过一个 URL 获取二维码图片，无需密钥",
+        "short": "一个 URL，无需密钥"
+      },
+      "mcp": {
+        "description": "在 Claude、ChatGPT 或 Cursor 中生成二维码",
+        "short": "在 Claude、ChatGPT 或 Cursor 中使用"
+      },
+      "cli": {
+        "description": "在终端和 CI 中生成二维码",
+        "short": "终端和 CI"
+      },
+      "react": {
+        "description": "以 React 组件形式提供的引擎",
+        "short": "React 中的二维码"
       },
       "shadcn": {
-        "name": "shadcn/ui registry",
-        "description": "一条命令添加二维码组件"
+        "description": "一条命令添加二维码组件",
+        "short": "一条命令安装组件"
       },
-      "plugins": {
-        "name": "插件",
-        "description": "适用于 Chrome、Figma、Raycast 和 Canva 的 QRdx"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "源代码、问题反馈与版本发布"
-      },
-      "help": {
-        "name": "帮助中心",
-        "description": "二维码、账单、团队与故障问题解答"
-      },
-      "blog": {
-        "name": "博客",
-        "description": "二维码相关指南与资讯"
-      },
-      "customers": {
-        "name": "客户",
-        "description": "企业如何使用 QRdx"
-      },
-      "compare": {
-        "name": "对比",
-        "description": "QRdx 与其他生成器和库的对比"
-      },
-      "changelog": {
-        "name": "更新日志",
-        "description": "QRdx 的最新动态"
+      "nextjs": {
+        "description": "在服务端组件和客户端组件中使用二维码",
+        "short": "服务端组件和客户端组件"
       },
       "integrations": {
-        "name": "集成",
-        "description": "Zapier、Make、Discord、分析像素等"
+        "description": "Zapier、Make、Discord、分析像素等",
+        "short": "Zapier、Make 等"
       },
-      "support": {
-        "name": "联系支持",
-        "description": "通过邮件、支持小组件或 GitHub"
+      "plugins": {
+        "description": "适用于 Chrome、Figma、Raycast 和 Canva 的 QRdx",
+        "short": "Chrome、Figma、Raycast、Canva"
+      },
+      "webhooks": {
+        "description": "将扫描、表单和二维码事件发送到你的 URL",
+        "short": "事件发送到你的 URL"
+      },
+      "docs": {
+        "description": "指南、API 参考和自托管",
+        "short": "指南和参考"
+      },
+      "github": {
+        "description": "MIT 引擎和 CLI，AGPL 应用",
+        "short": "MIT 引擎，AGPL 应用"
+      },
+      "help": {
+        "description": "二维码、账单、团队与故障问题解答",
+        "short": "常见问题解答"
+      },
+      "contact": {
+        "description": "邮件、支持小组件或 GitHub",
+        "short": "邮件或支持小组件"
+      },
+      "customers": {
+        "description": "企业如何使用 QRdx",
+        "short": "企业如何使用 QRdx"
+      },
+      "security": {
+        "description": "QRdx 如何保护账户和数据",
+        "short": "账户和数据"
+      },
+      "affiliates": {
+        "description": "从你推荐的客户中获得收益",
+        "short": "推荐赚收益"
+      },
+      "blog": {
+        "description": "二维码相关指南与资讯",
+        "short": "指南和新闻"
+      },
+      "changelog": {
+        "description": "QRdx 的最新动态",
+        "short": "最新动态"
+      },
+      "tools": {
+        "description": "扫描器、扫描检查器、打印尺寸等",
+        "short": "扫描器、检查器等"
       }
     },
     "account": {
-      "tryPlayground": "试用 Playground",
-      "playground": "Playground",
-      "dashboard": "控制台",
-      "signIn": "登录"
+      "signIn": "登录",
+      "create": "创建二维码",
+      "dashboard": "控制台"
     },
     "github": {
       "star": "收藏",
       "starOnGithub": "在 GitHub 上为 QRdx 点星",
-      "starOnGithubCount": "在 GitHub 上为 QRdx 点星（{count} 个星标）"
+      "starOnGithubCount": "在 GitHub 上为 QRdx 点星（{count} 个星标）",
+      "stars": "{count} 星标"
     },
     "userProfileDropdown": {
       "tryThePlayground": "试用 Playground",
@@ -169,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "免费开源的二维码生成器。支持自定义图案、渐变、徽标和边框，可下载 PNG、JPG、SVG、PDF 和 EPS 格式，无需注册。还提供动态二维码、托管页面和扫描分析。",
+    "description": "开源二维码平台。",
     "starOnGithub": "在 GitHub 上点星标",
+    "newsOnX": "X 上的 QRdx 动态",
     "navLabel": "页脚",
-    "scanIt": "来，扫一下试试",
-    "copyright": "© {year} QRdx。基于 AGPL-3.0 开源。",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "产品",
-      "tools": "工具",
       "developers": "开发者",
+      "solutions": "解决方案",
       "resources": "资源",
+      "company": "公司",
       "compare": "对比"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "二维码生成器",
       "dynamicCodes": "动态二维码",
+      "aiArt": "AI 二维码艺术",
       "aiThemes": "AI 主题",
-      "communityThemes": "社区主题",
+      "barcode": "条形码",
+      "bulk": "批量生成器",
       "pageTemplates": "页面模板",
-      "pricing": "价格",
-      "guarantee": "Never-Hostage 保障",
-      "enterprise": "企业版",
+      "community": "社区",
       "slackBot": "Slack 机器人",
       "telegramBot": "Telegram 机器人",
       "discordBot": "Discord 机器人",
-      "generators": "二维码生成器",
-      "bulk": "批量生成器",
-      "scanChecker": "扫描检测",
-      "printSize": "打印尺寸计算器",
-      "barcode": "条形码生成器",
-      "pdfQr": "PDF 二维码",
-      "businessCard": "电子名片",
-      "menuQr": "菜单二维码",
-      "scanner": "二维码扫描器",
-      "allTools": "全部工具",
-      "docs": "文档",
-      "apiReference": "API 参考",
-      "qrCodeApi": "免费二维码 API",
-      "nextjs": "Next.js 指南",
-      "imageApi": "Image API",
-      "mcp": "MCP 服务器",
-      "shadcn": "shadcn/ui 注册表",
-      "plugins": "插件",
-      "selfHosting": "自托管",
-      "openSource": "开源",
-      "github": "GitHub",
-      "help": "帮助中心",
-      "blog": "博客",
-      "customers": "客户",
-      "changelog": "更新日志",
-      "integrations": "集成",
+      "restaurants": "餐饮",
+      "retail": "零售",
+      "realEstate": "房地产",
+      "events": "活动",
       "industries": "按行业查看二维码",
       "placements": "按投放位置查看二维码",
-      "affiliates": "联盟计划",
+      "generators": "全部码类型",
+      "typeUrl": "网站",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "企业版",
+      "agencies": "代理机构",
+      "openSource": "开源",
+      "docs": "文档",
+      "restApi": "REST API",
+      "apiReference": "API 参考",
+      "imageApi": "Image API",
+      "mcp": "MCP 服务器",
+      "cli": "CLI",
+      "react": "React 库",
+      "shadcn": "shadcn/ui 注册表",
+      "nextjs": "Next.js 指南",
+      "integrations": "集成",
+      "plugins": "插件",
+      "webhooks": "Webhook",
+      "selfHosting": "自托管",
+      "github": "GitHub",
+      "help": "帮助中心",
       "contact": "联系我们",
+      "blog": "博客",
+      "changelog": "更新日志",
+      "customers": "客户",
+      "tools": "免费工具",
+      "scanner": "二维码扫描器",
+      "scanChecker": "扫描检测",
+      "printSize": "打印尺寸计算器",
+      "security": "安全",
+      "affiliates": "联盟计划",
+      "guarantee": "Never-Hostage 保障",
+      "pricing": "价格",
+      "allComparisons": "全部对比",
       "legal": "法律信息",
-      "privacy": "隐私政策",
       "terms": "服务条款",
-      "subprocessors": "子处理方",
-      "reportAbuse": "举报滥用",
-      "acceptableUse": "可接受使用政策",
+      "privacy": "隐私政策",
       "cookies": "Cookie 政策",
       "dpa": "数据处理协议（DPA）",
+      "subprocessors": "子处理方",
+      "acceptableUse": "可接受使用政策",
       "aiFeatures": "AI 功能",
       "refunds": "退款政策",
       "affiliateTerms": "联盟条款",
-      "security": "安全",
       "securityPolicy": "安全政策",
-      "allComparisons": "全部对比"
+      "reportAbuse": "举报滥用"
     }
   },
   "localeSwitcher": {
@@ -244,9 +289,10 @@
     "englishOnly": "此页面仅提供英文版本。选择其他语言将打开对应语言的首页。"
   },
   "cta": {
-    "title": "几秒钟，轻松生成你的下一个二维码。",
-    "subtext": "永久免费，无需注册，无水印。",
-    "button": "免费开始创建二维码"
+    "title": "制作你的下一个二维码",
+    "subtext": "在浏览器中免费使用，无需注册，没有水印，需要时还可使用动态二维码。",
+    "button": "创建二维码",
+    "secondary": "查看价格"
   },
   "consent": {
     "banner": {

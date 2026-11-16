@@ -1,0 +1,36 @@
+/*
+ * The marketing header (navbar.tsx): transparent over the top of the page,
+ * then a frosted strip with a hairline under it once the page scrolls.
+ * No shadow; the strip only fades in, so nothing in the bar moves.
+ */
+
+.strip {
+  --strip-bg: oklch(1 0 0 / 75%);
+  --strip-line: oklch(0 0 0 / 7%);
+  border-bottom: 1px solid var(--strip-line);
+  background-color: var(--strip-bg);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+:global(.dark) .strip {
+  --strip-bg: oklch(0.17 0.005 275 / 75%);
+  --strip-line: oklch(1 0 0 / 8%);
+}
+
+.strip[data-shown] {
+  opacity: 1;
+}
+
+/* Under the open mobile menu the bar is solid, like the menu. */
+.strip[data-solid] {
+  background-color: var(--background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip {
+    transition: none;
+  }
+}

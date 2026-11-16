@@ -1,188 +1,199 @@
 "use client";
 
 import { CookieSettingsButton } from "@repo/analytics/consent/cookie-settings-button";
-import { CANONICAL_HOST, CANONICAL_ORIGIN } from "@repo/config";
-import { QrdxLogo } from "@repo/design-system/components/brand/qrdx-logo";
-import { GithubLogo } from "@repo/design-system/components/icons";
-import { Button } from "@repo/design-system/components/ui/button";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@repo/design-system/components/ui/tooltip";
+  CANONICAL_HOST,
+  CANONICAL_ORIGIN,
+  GITHUB_REPO_URL,
+  X_PROFILE_URL,
+} from "@repo/config";
+import { QrdxLogo } from "@repo/design-system/components/brand/qrdx-logo";
+import { GithubLogo, XLogo } from "@repo/design-system/components/icons";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@repo/design-system/components/ui/popover";
 import { cn } from "@repo/design-system/lib/utils";
-import { ArrowDown2 } from "iconsax-reactjs";
+import { ArrowUp2 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useAvailability } from "@/components/availability-provider";
-import { EGG_QR } from "@/components/fx/qr-matrix";
-import { QrMosaic } from "@/components/fx/qr-mosaic";
+import { GithubStarCount } from "@/components/github-stars";
 import { LocaleLink, useLocalizeHref } from "@/components/i18n/locale-link";
 import { LocaleSwitcher } from "@/components/i18n/locale-switcher";
-import { type FooterLinkConfig, siteConfig } from "@/config/site";
+import {
+  FOOTER_COLUMNS,
+  FOOTER_LEGAL,
+  type FooterLink,
+} from "@/config/navigation";
+import { landingHref } from "@/lib/home-path";
 
 const LINK =
-  "rounded-sm text-sm/snug text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+  "rounded-sm text-sm leading-5 text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
-/** A footer link's text: its translation, or a name that stays as is. */
+const SOCIAL =
+  "inline-flex h-8 items-center gap-1.5 rounded-full px-2 text-xs text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+/** A footer link's text: the destination's name, or one that stays as is. */
 function useLinkText() {
   const t = useTranslations("footer.links");
-  return (link: FooterLinkConfig) => (link.key ? t(link.key) : link.label);
+  return (link: FooterLink) => (link.key ? t(link.key) : link.label);
 }
 
-/** A footer item that opens a nested list of links (e.g. Legal). */
-function FooterDisclosure({
-  title,
-  links,
-}: {
-  title: string;
-  links: readonly FooterLinkConfig[];
-}) {
-  const [open, setOpen] = useState(false);
-  const id = useId();
+/** "Legal ▾": the legal pages in a small menu that opens upwards. */
+function LegalMenu({ links }: { links: FooterLink[] }) {
+  const t = useTranslations("footer.links");
   const text = useLinkText();
+  const localize = useLocalizeHref();
+  const [open, setOpen] = useState(false);
 
   return (
-    <li className="flex flex-col">
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={id}
-        onClick={() => setOpen((value) => !value)}
-        className={cn(
-          LINK,
-          "group inline-flex w-fit items-center gap-1 text-left",
-          open && "text-foreground",
-        )}
-      >
-        {title}
-        <ArrowDown2
-          aria-hidden="true"
-          className="size-3.5 transition-transform duration-300 ease-[cubic-bezier(.32,.72,0,1)] group-aria-expanded:rotate-180 motion-reduce:transition-none"
-        />
-      </button>
-      <div
-        id={id}
-        inert={!open}
-        className={cn(
-          "grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(.32,.72,0,1)] motion-reduce:transition-none",
-          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-        )}
-      >
-        <ul className="flex min-h-0 flex-col gap-y-2 overflow-hidden border-l border-border pt-2.5 pl-3 ml-0.5">
-          {links.map((link) => (
-            <li key={link.id}>
-              <LocaleLink href={link.url} className={LINK} prefetch={false}>
-                {text(link)}
-              </LocaleLink>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <li>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          className={cn(
+            LINK,
+            "group inline-flex items-center gap-1",
+            open && "text-foreground",
+          )}
+        >
+          {t("legal")}
+          <ArrowUp2
+            aria-hidden
+            className="size-3 transition-transform duration-200 group-data-[state=closed]:rotate-180 motion-reduce:transition-none"
+          />
+        </PopoverTrigger>
+        <PopoverContent
+          side="top"
+          align="start"
+          sideOffset={8}
+          className="w-56 rounded-xl p-1.5 shadow-md"
+        >
+          <ul className="flex flex-col">
+            {links.map((link) => (
+              <li key={link.href}>
+                <LocaleLink
+                  href={link.href}
+                  prefetch={false}
+                  onClick={() => setOpen(false)}
+                  className="flex h-9 items-center rounded-lg px-2.5 text-sm text-muted-foreground outline-none transition-colors hover:bg-foreground/5 hover:text-foreground focus-visible:bg-foreground/5 focus-visible:text-foreground"
+                >
+                  {text(link)}
+                </LocaleLink>
+              </li>
+            ))}
+          </ul>
+        </PopoverContent>
+      </Popover>
+      {/* The popover mounts only when open: these keep its links in the
+          page's HTML for crawlers, out of view and out of the tab order. */}
+      <ul hidden>
+        {links.map((link) => (
+          <li key={link.href}>
+            <a href={localize(link.href)}>{text(link)}</a>
+          </li>
+        ))}
+      </ul>
     </li>
   );
 }
 
 export function FooterSection() {
   const t = useTranslations("footer");
+  const github = useTranslations("nav.github");
   const text = useLinkText();
-  const currentYear = new Date().getFullYear();
+  const year = String(new Date().getFullYear());
   // No links to pages for features this deployment can't offer.
   const { showsPath } = useAvailability();
   // The official site's home in this page's language (qrdx.dev/hi).
   const localizeHref = useLocalizeHref();
+  const home = localizeHref("/");
 
   return (
-    <footer id="footer" className="w-full">
-      <div className="flex flex-col gap-10 px-10 pt-14 pb-10 lg:flex-row lg:justify-between">
-        <div className="flex max-w-xs flex-col items-start gap-5">
-          <LocaleLink
-            href="/"
-            className="flex items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
-          >
-            <QrdxLogo className="size-6 text-foreground" />
-            <span className="text-xl font-semibold tracking-tight">
-              {siteConfig.name}
-            </span>
-          </LocaleLink>
-          <p className="text-sm text-muted-foreground text-pretty leading-relaxed">
-            {t("description")}
-          </p>
-          <Button asChild variant="outline">
-            <a href={siteConfig.links.github}>
-              <GithubLogo className="size-4" />
-              {t("starOnGithub")}
+    <footer id="footer" className="w-full border-t">
+      <div className="flex flex-col gap-12 px-10 pt-14 pb-12">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <LocaleLink
+              href={landingHref(home)}
+              className="flex w-fit items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+            >
+              <QrdxLogo className="size-5 text-foreground" />
+              <span className="text-lg font-semibold tracking-tight">QRdx</span>
+            </LocaleLink>
+            <p className="text-sm text-muted-foreground">{t("description")}</p>
+          </div>
+          <div className="-ml-2 flex items-center gap-1 sm:ml-0">
+            <a
+              href={GITHUB_REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={SOCIAL}
+              aria-label={github("starOnGithub")}
+            >
+              <GithubLogo aria-hidden className="size-4" />
+              <GithubStarCount />
             </a>
-          </Button>
+            <a
+              href={X_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={SOCIAL}
+              aria-label={t("newsOnX")}
+            >
+              <XLogo aria-hidden className="size-3.5" />
+            </a>
+          </div>
         </div>
-        <nav aria-label={t("navLabel")} className="lg:flex-1 lg:pl-10">
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
-            {siteConfig.footerLinks.map((column) => (
-              <div key={column.key} className="flex flex-col gap-3">
-                <h2 className="text-xs font-medium tracking-wider text-foreground uppercase">
+
+        <nav aria-label={t("navLabel")}>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
+            {FOOTER_COLUMNS.map((column) => (
+              <div key={column.key} className="flex flex-col gap-4">
+                <h2 className="text-sm font-medium text-foreground">
                   {t(`columns.${column.key}`)}
                 </h2>
-                <ul className="flex flex-col gap-y-2">
+                <ul className="flex flex-col gap-2.5">
                   {column.links
-                    .filter(
-                      (link) =>
-                        !("url" in link && link.url) || showsPath(link.url),
-                    )
-                    .map((link) =>
-                      "children" in link ? (
-                        <FooterDisclosure
-                          key={link.id}
-                          title={t(`links.${link.key}`)}
-                          // The affiliate terms only where the program runs.
-                          links={link.children.filter((child) =>
-                            showsPath(child.url),
-                          )}
-                        />
-                      ) : (
-                        <li key={link.id}>
-                          <LocaleLink
-                            href={link.url}
-                            className={LINK}
-                            prefetch={false}
-                          >
-                            {text(link)}
-                          </LocaleLink>
-                        </li>
-                      ),
-                    )}
+                    .filter((link) => showsPath(link.href))
+                    .map((link) => (
+                      <li key={link.href}>
+                        <LocaleLink
+                          href={link.href}
+                          className={LINK}
+                          prefetch={false}
+                        >
+                          {text(link)}
+                        </LocaleLink>
+                      </li>
+                    ))}
+                  {column.key === "company" && (
+                    // The affiliate terms only where the program runs.
+                    <LegalMenu
+                      links={FOOTER_LEGAL.filter((link) =>
+                        showsPath(link.href),
+                      )}
+                    />
+                  )}
                 </ul>
               </div>
             ))}
           </div>
         </nav>
       </div>
-      <div className="relative h-56 overflow-hidden border-t md:h-72">
-        <QrMosaic
-          code={EGG_QR.footer}
-          className="[mask-image:radial-gradient(ellipse_52%_70%_at_50%_50%,black_35%,transparent_100%)]"
-        />
-        {/* Where the code resolves on hover: (25 + 4) modules × 7 px. */}
-        <Tooltip delayDuration={500}>
-          <TooltipTrigger asChild>
-            <span
-              aria-hidden="true"
-              className="absolute top-1/2 left-1/2 size-[203px] -translate-x-1/2 -translate-y-1/2"
-            />
-          </TooltipTrigger>
-          <TooltipContent side="top">{t("scanIt")}</TooltipContent>
-        </Tooltip>
-      </div>
-      <div className="flex flex-col gap-3 border-t px-10 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-1">
+
+      <div className="flex flex-col gap-3 border-t px-10 py-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="text-sm text-muted-foreground">
-            {t("copyright", { year: String(currentYear) })}
+            {t("copyright", { year })}
           </p>
           <CookieSettingsButton />
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <LocaleSwitcher />
           <a
-            href={`${CANONICAL_ORIGIN}${localizeHref("/") === "/" ? "" : localizeHref("/")}`}
+            href={`${CANONICAL_ORIGIN}${home === "/" ? "" : home}`}
             className="w-fit font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             {CANONICAL_HOST}

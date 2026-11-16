@@ -1,22 +1,31 @@
 ---
 title: "Preact"
-description: "QR codes stylisés sous forme de composants Preact avec qrdx/preact, dessinés avec le `h` natif de Preact (sans preact/compat), rendus côté serveur avec preact-render-to-string et hydratés sans nouveau dessin."
+description: "QR codes stylisés sous forme de composants Preact avec qrdx/preact, dessinés avec le h natif de Preact et sans preact/compat, rendus côté serveur avec preact-render-to-string et hydratés sans nouveau dessin."
 icon: FileCode
 ---
 
-`qrdx/preact` propose pour Preact les deux composants SVG de la bibliothèque React, `QRCodeSVG` et `QRCode`. Ils dessinent avec le `h` natif de Preact, donc vous n'avez pas besoin de `preact/compat`, et ils produisent le même SVG que les composants React.
+À la fin de cette page, vous aurez un QR code stylisé dans un composant Preact et un bouton qui l'enregistre en PNG. `qrdx/preact` propose les deux composants SVG de la bibliothèque React, `QRCodeSVG` et `QRCode`, conçus pour Preact. Ils dessinent avec le `h` natif de Preact : vous n'avez besoin ni de `preact/compat` ni de `react`, et ils produisent le même SVG que les composants React.
 
-## Installation [#install]
+<NpmStatus package="qrdx" />
+
+## Avant de commencer [#before-you-start]
+
+- Un projet Preact 10 ou plus récent, avec Vite ou un autre bundler.
+- Node.js 18 ou plus récent.
+
+## Mise en place [#build-it]
+
+### 1. Installer qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`preact` 10 ou version ultérieure est une dépendance peer facultative de `qrdx`. Votre application l'a déjà, et vous n'avez pas besoin de `react`.
+`preact` est une dépendance peer facultative de `qrdx`. Votre application l'a déjà.
 
-## Dessiner un code [#draw-a-code]
+### 2. Dessiner un code [#2-draw-a-code]
 
-```tsx
+```tsx title="src/components/menu-code.tsx"
 import { QRCodeSVG } from "qrdx/preact";
 
 export function MenuCode() {
@@ -24,6 +33,7 @@ export function MenuCode() {
     <QRCodeSVG
       value="https://example.com/menu"
       size={256}
+      margin={4}
       bodyPattern="rounded"
       frame={{ style: "banner-bottom", text: "Scan me" }}
       aria-label="QR code for the menu"
@@ -32,33 +42,33 @@ export function MenuCode() {
 }
 ```
 
-`QRCodeSVG` accepte toutes les options du `QRCodeSVG` de React : motifs, couleurs et dégradés, logos (`imageSettings`), cadres, formes, modèles et Art QR. Les attributs comme `class`, `style` ou `aria-label` sont placés sur le `<svg>`, ou sur le `<svg>` extérieur du cadre lorsqu'il y a un cadre.
+La page affiche un code de 256 px avec des modules arrondis et une bannière « Scan me » en dessous.
 
-`QRCode` ajoute le raccourci de logo du `QRCode` de React : `logo`, `logoOptions`, `hideLogo` et `scale`.
+<Shot id="lib-preact-code" />
 
-```tsx
+`QRCodeSVG` accepte toutes les options du `QRCodeSVG` de React : motifs, couleurs et dégradés, logos (`imageSettings`), cadres, formes, modèles et illustrations. Les attributs tels que `class`, `style` ou `aria-label` se placent sur le `<svg>`, ou sur le `<svg>` extérieur du cadre lorsqu'il y en a un.
+
+`QRCode` ajoute le raccourci de logo du `QRCode` de React : `logo`, `logoOptions`, `hideLogo` et `scale`. Il n'accepte que les props du code et `style` ; placez `class` ou `aria-label` sur un élément qui l'entoure, ou utilisez `QRCodeSVG`.
+
+```tsx title="src/components/logo-code.tsx"
 import { QRCode } from "qrdx/preact";
 
-<QRCode value="https://example.com" logo="/logo.png" level="H" />;
+export function LogoCode() {
+  return <QRCode value="https://example.com" size={256} logo="/logo.png" level="H" />;
+}
 ```
 
-Les deux composants se redessinent quand une prop change et ne font aucun travail lorsqu'aucune n'a changé. Les gestionnaires d'événements passés dans les props ne sont pas placés sur le `<svg>`, comme dans React. Placez-les sur un élément qui entoure le code.
+Les deux composants se redessinent lorsqu'une prop change et ne font aucun calcul lorsqu'aucune n'a changé. Comme dans React, les gestionnaires d'événements passés dans les props ne sont pas placés sur le `<svg>`. Placez-les sur un élément qui entoure le code.
 
-## Rendu côté serveur [#server-rendering]
-
-`renderToString` de `preact-render-to-string` produit le même SVG que `toSVGString` de `qrdx/core`. La seule différence concerne l'échappement : Preact laisse `>` et `'` tels quels dans le texte, là où le cœur écrit `&gt;` et `&#x27;`. Les navigateurs interprètent les deux de la même façon.
-
-`hydrate` conserve le `<svg>` du serveur et ne le redessine pas. Le balisage ne contient aucun identifiant aléatoire, donc le serveur et le navigateur sont toujours d'accord.
-
-## Téléchargements, balisage et score de scan [#downloads-markup-and-the-scan-score]
+### 3. Enregistrer dans un fichier [#3-save-it-as-a-file]
 
 Les composants se contentent de dessiner le code. Les téléchargements, `toSVGString`, le score de scan et les autres fonctions viennent de `qrdx/core`. C'est le moteur que les composants utilisent déjà, il n'est donc pas inclus deux fois.
 
-```tsx
+```tsx title="src/components/downloadable-code.tsx"
 import { downloadQRCode } from "qrdx/core";
 import { QRCodeSVG } from "qrdx/preact";
 
-const options = { value: "https://example.com", size: 256 };
+const options = { value: "https://example.com", size: 256, margin: 4 };
 
 export function DownloadableCode() {
   return (
@@ -70,6 +80,7 @@ export function DownloadableCode() {
           downloadQRCode(options, {
             format: "png",
             size: { width: 1024, height: 1024 },
+            filename: "qr-code.png",
           })
         }
       >
@@ -80,8 +91,29 @@ export function DownloadableCode() {
 }
 ```
 
-[JavaScript natif](/docs/vanilla-js) présente `qrdx/core` en détail.
+Un clic sur le bouton enregistre `qr-code.png` en 1024 px. Gardez les options dans un seul objet, comme ci-dessus, afin que le fichier corresponde au code affiché à l'écran. [JavaScript natif](/docs/vanilla-js) présente `qrdx/core` en détail.
+
+## Rendu côté serveur [#server-rendering]
+
+`renderToString` de `preact-render-to-string` produit le même SVG que `toSVGString` de `qrdx/core`. La seule différence concerne l'échappement : Preact laisse `>` et `'` tels quels dans le texte, là où le moteur écrit `&gt;` et `&#x27;`. Les navigateurs lisent les deux de la même façon.
+
+`hydrate` conserve le `<svg>` du serveur et ne le redessine pas. Le balisage ne contient aucun identifiant aléatoire, donc le serveur et le navigateur sont toujours d'accord.
 
 ## Avec preact/compat [#with-preactcompat]
 
-Si votre application associe déjà `react` à `preact/compat` par un alias, les composants React de `qrdx` fonctionnent aussi : `import { QRCodeSVG } from "qrdx"`. `qrdx/preact` dessine le même code sans alias, alors préférez-le quand vous ajoutez `qrdx` à une application Preact.
+Si votre application associe déjà `react` à `preact/compat` par un alias, les composants React de `qrdx` fonctionnent aussi : `import { QRCodeSVG } from "qrdx"`. `qrdx/preact` dessine le même code sans l'alias ; préférez-le donc lorsque vous ajoutez `qrdx` à une application Preact.
+
+## En cas de problème [#if-something-goes-wrong]
+
+- **`Failed to resolve import "react"`.** Vous avez importé depuis `qrdx` au lieu de `qrdx/preact`, dans une application sans `preact/compat`. Modifiez l'import.
+- **Un gestionnaire de clic sur le composant ne fait rien.** Les gestionnaires sont retirés du `<svg>`. Entourez le code d'un `<button>` ou d'un `<div>` et placez le gestionnaire sur cet élément.
+- **`PDF export needs the optional "jspdf" package`.** Exécutez `npm install jspdf` dans l'application.
+
+## Voir aussi [#related]
+
+<Cards>
+  <Card href="/docs/vanilla-js" title="JavaScript natif" description="Tout ce qu'exporte qrdx/core : téléchargements, balisage, score de scan et fichiers d'impression." />
+  <Card href="/docs/web-component" title="Composant web" description="L'élément qrdx-code, sur lequel Preact définit des attributs." />
+  <Card href="/docs/features/patterns" title="Choisir les formes des modules et des yeux" description="Toutes les formes, et les associations à éviter." />
+  <Card href="/docs/api-reference" title="Référence de l'API de la bibliothèque" description="Chaque prop, avec son type et sa valeur par défaut." />
+</Cards>

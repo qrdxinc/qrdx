@@ -1,74 +1,80 @@
 ---
 title: "웹 컴포넌트"
-description: "CDN 또는 번들러에서 `<qrdx-code>` 커스텀 엘리먼트로 스타일이 적용된 QR 코드를 그려 보세요. 일반 HTML, React 19, Vue에서 사용할 수 있고, 선언적 shadow DOM으로 서버 렌더링도 지원합니다."
+description: "qrdx-code 커스텀 엘리먼트로 스타일이 적용된 QR 코드를 그려 보세요. CDN이나 번들러에서 순수 HTML, React 19, Vue로 사용할 수 있고, 선언적 shadow DOM으로 서버 렌더링도 지원합니다."
 icon: Blocks
 ---
 
-`qrdx/element`는 `<qrdx-code>` 커스텀 엘리먼트입니다. `qrdx/core`를 기반으로 만들어져, `QRCodeSVG`와 같은 SVG를 모든 스타일, 프레임, 로고, 내보내기와 함께 그립니다. 프레임워크가 필요 없습니다. 일반 HTML과 DOM 엘리먼트를 렌더링하는 프레임워크에서 모두 동작합니다. React 19와 Vue 3에서 테스트했습니다.
+이 페이지를 끝까지 따라 하면 순수 HTML 페이지에서 `<qrdx-code>` 엘리먼트가 그린 스타일 QR 코드를 만들 수 있습니다. 스크립트로 객체 옵션을 설정하고 PNG로 내보내는 방법도 다룹니다. `qrdx/element`는 `qrdx/core`를 기반으로 만들어졌기 때문에 React `QRCodeSVG`와 같은 SVG를 그립니다. 모든 스타일, 프레임, 로고, 내보내기를 그대로 쓸 수 있습니다. 프레임워크 없이 동작하며, DOM 엘리먼트를 렌더링하는 프레임워크에서도 동작합니다. React 19와 Vue 3에서 테스트했습니다.
 
-## CDN에서 사용하기 [#from-a-cdn]
+<NpmStatus package="qrdx" />
 
-```html
+## 시작하기 전에 [#before-you-start]
+
+- `<script type="module">`을 추가할 수 있는 페이지가 필요합니다. 번들러는 필요 없지만 써도 됩니다.
+- 번들러를 사용하려면 Node.js 18 이상이 필요합니다.
+
+## 만들어 보기 [#build-it]
+
+### 1. 엘리먼트 불러오기 [#1-load-the-element]
+
+<Tabs items={["From a CDN", "With a bundler"]}>
+<Tab value="From a CDN">
+
+```html title="index.html"
 <script
   type="module"
   src="https://cdn.jsdelivr.net/npm/qrdx/dist/element-define.browser.mjs"
 ></script>
-
-<qrdx-code
-  value="https://example.com"
-  size="256"
-  body-pattern="rounded"
-  label="Link to example.com"
-></qrdx-code>
 ```
 
-`dist/element-define.browser.mjs`는 `<qrdx-code>`를 등록합니다. 이 파일은 엔진이 포함된 ES 모듈 하나인 `dist/element.browser.mjs`를 불러옵니다. 버전을 고정하려면 URL의 `qrdx` 뒤에 `@`와 버전을 붙이세요. 같은 경로가 unpkg에서도 동작합니다.
+`dist/element-define.browser.mjs`가 `<qrdx-code>`를 등록합니다. 이 파일은 엔진이 들어 있는 ES 모듈 하나인 `dist/element.browser.mjs`를 불러옵니다. 버전을 고정하려면 URL에서 `qrdx` 뒤에 `@`와 버전을 붙이세요. unpkg에서도 같은 경로를 쓸 수 있습니다.
 
-## 번들러와 함께 사용하기 [#with-a-bundler]
+</Tab>
+<Tab value="With a bundler">
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-```js
+```js title="main.js"
 import "qrdx/element/define"; // registers <qrdx-code>
 ```
 
-`qrdx/element`를 import해도 아무것도 등록되지 않습니다. 태그 이름을 직접 정하려면 `defineQRdxCode`를 호출하세요.
+`qrdx/element`를 가져오기만 해서는 아무것도 등록되지 않습니다. 태그 이름을 직접 정하려면 `defineQRdxCode`를 호출하세요.
 
-```js
+```js title="main.js"
 import { defineQRdxCode } from "qrdx/element";
 
 defineQRdxCode(); // <qrdx-code>
 defineQRdxCode("brand-qr"); // <brand-qr> as well
 ```
 
-여러 번 호출해도 안전하며, 서버에서는 아무 일도 하지 않습니다. 같은 이름을 다른 엘리먼트가 이미 사용 중이면 오류가 발생합니다.
+여러 번 호출해도 안전하며, 서버에서는 아무 동작도 하지 않습니다. 다른 엘리먼트가 이미 그 이름을 쓰고 있으면 오류가 발생합니다.
 
-## 속성 [#attributes]
+</Tab>
+</Tabs>
 
-| 속성 | 설정하는 값 |
-| --- | --- |
-| `value` | 인코딩할 텍스트 또는 URL입니다. 이 값이 없으면 아무것도 그리지 않습니다 |
-| `size` | 너비와 높이(픽셀)입니다. 프레임이 있으면 그만큼 더해집니다 |
-| `level` | 오류 정정 수준: `L`, `M`, `Q`, `H` |
-| `fg-color`, `bg-color`, `eye-color`, `dot-color` | 단색 |
-| `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern` | 점, 눈, 눈 점의 모양 |
-| `margin` | 여백 영역(모듈 단위)입니다 |
-| `template-id` | 기본 제공 템플릿 |
-| `module-scale` | 각 점의 크기(0.5~1)입니다 |
-| `auto-level` | 로고에 필요하면 오류 정정 수준을 `H`로 높입니다 |
-| `shape` | `square`, `circle`, `heart` |
-| `label` | 스크린 리더가 읽어 주는 내용입니다(기본값 "QR code") |
-| `props` | 그 밖의 모든 옵션(JSON)입니다 |
+### 2. 페이지에 코드 넣기 [#2-put-a-code-in-the-page]
 
-읽을 수 없는 숫자와 수준 값은 무시됩니다. 모든 패턴은 [스타일](/docs/styles)에서 확인하세요.
+```html title="index.html"
+<qrdx-code
+  value="https://example.com/menu"
+  size="256"
+  margin="4"
+  body-pattern="rounded"
+  label="QR code for the menu"
+></qrdx-code>
+```
 
-## 프로퍼티 [#properties]
+페이지에 둥근 모듈로 된 256 px QR 코드가 표시됩니다. 브라우저 검사기에서 속성을 수정하면 코드가 다시 그려집니다.
 
-각 속성은 옵션 이름과 같은 프로퍼티로도 사용할 수 있습니다. 예: `qr.fgColor`, `qr.bodyPattern`, `qr.templateId`. 객체인 옵션은 프로퍼티로만 사용할 수 있습니다. 그라디언트와 이미지 채우기, `frame`, `imageSettings`, `eyeColors`, `art`, `customTemplate`, `customProps`가 해당합니다. `props`는 모든 옵션을 한 번에 받습니다.
+<Shot id="lib-element-code" />
 
-```js
+### 3. 스크립트로 객체 옵션 설정하기 [#3-set-object-options-from-a-script]
+
+그라디언트, 프레임, 로고 같은 객체 옵션은 프로퍼티입니다. 스크립트에서 설정하세요.
+
+```js title="main.js"
 const qr = document.querySelector("qrdx-code");
 
 qr.fgColor = {
@@ -79,82 +85,94 @@ qr.fgColor = {
     { color: "#0f172a", offset: 100 },
   ],
 };
-qr.frame = { style: "banner-bottom", text: "Scan me" };
+qr.frame = { style: "banner-bottom", text: "Scan for the menu" };
 qr.imageSettings = { src: "/logo.png", width: 40, height: 40, excavate: true };
-qr.props = { margin: 2, eyeColor: "#be123c" };
+qr.props = { eyeColor: "#be123c" };
 ```
 
-- 속성이나 이름이 있는 프로퍼티는 `props`의 같은 옵션보다 우선합니다. 속성과 해당 프로퍼티 사이에서는 나중에 설정한 쪽이 우선합니다. 프로퍼티를 `undefined`로 설정하면 해당 값이 제거됩니다.
-- 프로퍼티는 속성에 다시 기록되지 않습니다.
-- 변경 사항은 일괄 처리됩니다. 연속으로 몇 번을 바꿔도 마이크로태스크에서 코드를 한 번만 다시 그리며, 마크업이 바뀐 경우에만 그립니다.
-- `qr.options`는 코드를 그릴 때 사용하는 옵션이고, `qr.svg`는 그려진 `<svg>`입니다.
-- 엘리먼트가 정의되기 전에 설정한 프로퍼티는 정의되는 시점에 반영됩니다.
+그라디언트, 배너, 로고, 빨간 눈 모양이 적용된 코드가 한 번만 다시 그려집니다. 스크립트를 쓰지 않는다면 객체 옵션을 JSON으로 `props` 속성에 넣으세요.
 
-스크립트 없이 사용하려면 객체 옵션을 JSON으로 `props` 속성에 넣으세요.
-
-```html
+```html title="index.html"
 <qrdx-code
   value="https://example.com"
   props='{"frame": {"style": "banner-bottom", "text": "Scan me"}}'
 ></qrdx-code>
 ```
 
-공식 프레임은 엘리먼트 옆에 있는 파일에서 가져옵니다.
+### 4. 내보내기 [#4-export-it]
 
-```js
-import { getOfficialFrame } from "https://cdn.jsdelivr.net/npm/qrdx/dist/frames-official.mjs";
-
-qr.frame = { style: "custom", spec: getOfficialFrame("wifi-card").spec };
+```js title="main.js"
+qr.toSVGString(); // '<svg xmlns="http://www.w3.org/2000/svg" …'
+await qr.toDataURL("png", { size: 1024 }); // "data:image/png;base64,…"
+await qr.download({ format: "png", size: 1024, filename: "menu.png" });
 ```
 
-## 내보내기 [#export]
+`download`는 `menu.png`를 1024 px로 저장합니다. 내보내기는 `qrdx/core`의 `toSVGString`, `downloadQRCode`와 마찬가지로 `qr.options`로 코드를 그리며, 엘리먼트의 `part`, `role`, `aria-label`은 포함하지 않습니다. `toDataURL`과 `download`는 기본적으로 코드의 `size`로 PNG를 만듭니다. 지원하는 형식은 `png`, `jpg`, `webp`, `svg`, `pdf`, `eps`입니다. 값이 없으면 `toSVGString`은 오류를 던지고, 나머지는 거부됩니다.
 
-```js
-qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "svg", "pdf" or "eps"
-await qr.download({ format: "svg", filename: "menu.svg" });
-```
+PDF에는 선택 패키지인 `jspdf`가 필요합니다. CDN에서는 모듈 스크립트보다 앞에 import map을 두어 매핑하세요.
 
-`qrdx/core`의 `toSVGString`과 `downloadQRCode`처럼 `qr.options`의 코드를 내보내며, 엘리먼트의 `part`, `role`, `aria-label`은 포함하지 않습니다. `toDataURL`과 `download`는 기본적으로 코드의 `size` 크기로 PNG를 만듭니다. 값이 없으면 오류가 발생하거나(`toSVGString`) 거부됩니다.
-
-PDF에는 선택 사항인 `jspdf` 패키지가 필요합니다. CDN에서는 모듈 스크립트보다 앞에 import map을 두어 매핑하세요.
-
-```html
+```html title="index.html"
 <script type="importmap">
   { "imports": { "jspdf": "https://cdn.jsdelivr.net/npm/jspdf@4/+esm" } }
 </script>
 ```
 
-## 스타일링과 접근성 [#styling-and-accessibility]
+## 속성 [#attributes]
 
-코드는 열린 shadow root 안에 그려집니다. 페이지의 CSS는 경로(path)에 닿지 않으므로 `svg path { fill: red }`나 `svg { width: 100% }` 같은 규칙이 코드를 망가뜨릴 수 없습니다. 바깥에서 `<svg>`를 꾸미려면 `::part(svg)`를 사용하세요.
+| 속성 | 설정하는 내용 |
+| --- | --- |
+| `value` | 인코딩할 텍스트 또는 URL. 이 값이 없으면 아무것도 그려지지 않습니다 |
+| `size` | 가로와 세로 크기(픽셀). 프레임이 있으면 그만큼 더해집니다 |
+| `level` | 오류 정정 수준: `L`, `M`, `Q`, `H` |
+| `fg-color`, `bg-color`, `eye-color`, `dot-color` | 단색 |
+| `body-pattern`, `corner-eye-pattern`, `corner-eye-dot-pattern` | 모듈, 눈, 눈 점의 모양 |
+| `margin` | 여백 영역(모듈 단위) |
+| `template-id` | 기본 제공 템플릿 |
+| `module-scale` | 각 모듈의 크기, 0.5~1 |
+| `auto-level` | 로고 때문에 필요하면 오류 정정을 `H`로 올립니다 |
+| `shape` | `square`, `circle`, `heart` |
+| `label` | 스크린 리더가 읽어 주는 내용(기본값 "QR code") |
+| `props` | 그 밖의 모든 옵션(JSON) |
 
-```css
+읽을 수 없는 숫자와 수준 값은 무시됩니다. 모든 패턴은 [모양, 눈, 프레임](/docs/styles)에서 확인할 수 있습니다.
+
+## 프로퍼티 [#properties]
+
+모든 속성은 옵션 이름과 같은 프로퍼티로도 쓸 수 있습니다. 예: `qr.fgColor`, `qr.bodyPattern`, `qr.templateId`. 객체인 옵션은 프로퍼티로만 설정할 수 있습니다. 그라디언트와 이미지 채우기, `frame`, `imageSettings`, `eyeColors`, `art`, `customTemplate`, `customProps`가 여기에 해당합니다. `props`는 모든 옵션을 한 번에 받습니다.
+
+- 속성이나 이름이 있는 프로퍼티는 `props`의 같은 옵션보다 우선합니다. 속성과 해당 프로퍼티 사이에서는 나중에 설정한 쪽이 우선합니다. 프로퍼티를 `undefined`로 설정하면 해제됩니다.
+- 프로퍼티는 속성에 다시 쓰이지 않습니다.
+- 변경 사항은 일괄 처리됩니다. 연달아 몇 번을 바꾸든 코드는 마이크로태스크에서 한 번만, 마크업이 바뀐 경우에만 다시 그려집니다.
+- `qr.options`는 코드를 그리는 데 쓰이는 옵션이고, `qr.svg`는 그려진 `<svg>`입니다.
+- 엘리먼트가 정의되기 전에 설정한 프로퍼티는 정의되는 시점에 반영됩니다.
+
+공식 프레임은 엘리먼트 옆에 있는 파일에서 가져옵니다.
+
+```js title="main.js"
+import { getOfficialFrame } from "https://cdn.jsdelivr.net/npm/qrdx/dist/frames-official.mjs";
+
+qr.frame = { style: "custom", spec: getOfficialFrame("wifi-card").spec };
+```
+
+## 스타일과 접근성 [#styling-and-accessibility]
+
+코드는 열린 shadow root 안에 그려집니다. 페이지의 CSS는 경로에 닿지 않으므로 `svg path { fill: red }`나 `svg { width: 100% }` 같은 규칙으로 코드가 깨지지 않습니다. 바깥에서 `<svg>`의 스타일을 지정하려면 `::part(svg)`를 사용하세요.
+
+```css title="styles.css"
 qrdx-code::part(svg) {
   border-radius: 12px;
 }
 ```
 
-엘리먼트는 `inline-block`입니다. `<svg>`는 `size`를 유지하지만 더 좁은 컨테이너에서는 맞게 줄어듭니다.
+엘리먼트는 `inline-block`입니다. `<svg>`는 `size`를 유지하되, 컨테이너가 더 좁으면 맞춰서 줄어듭니다.
 
-`<svg>`에는 `role="img"`와, `label` 속성에서 가져온 `aria-label`이 있습니다. `label`이 없으면 "QR code"가 됩니다. 레이블은 값으로 대체되지 않습니다. 값에는 Wi-Fi 비밀번호나 연락처 정보가 들어 있을 수 있기 때문입니다.
-
-## 오류 [#errors]
-
-값이 QR 코드에 넣기에 너무 긴 경우처럼 코드를 그릴 수 없으면, 엘리먼트는 이전 코드를 지우고 `qrdx-error` 이벤트를 발생시킵니다. 오류는 `event.detail.error`에 담깁니다. 리스너가 `event.preventDefault()`를 호출하지 않으면 오류를 콘솔에 기록합니다. JSON 객체가 아닌 `props` 속성도 이 이벤트를 발생시킵니다.
-
-```js
-qr.addEventListener("qrdx-error", (event) => {
-  event.preventDefault();
-  showMessage("That text is too long for a QR code.");
-});
-```
+`<svg>`에는 `role="img"`와, `label` 속성에서 가져온 `aria-label`이 있습니다. `label`이 없으면 "QR code"를 씁니다. Wi-Fi 비밀번호나 연락처가 들어 있을 수 있으므로 레이블이 value로 대체되는 일은 없습니다.
 
 ## 서버 렌더링 [#server-rendering]
 
 `toQRdxCodeHTML(options)`는 선언적 shadow root 안에 코드가 이미 그려진 엘리먼트 마크업을 반환합니다. 브라우저는 스크립트가 실행되기 전에 코드를 보여 주고, 엘리먼트가 정의되면 그때부터 엘리먼트가 이어받습니다. Node에서 실행되며 DOM이 필요 없습니다.
 
-```js
+```js title="server.js"
 import { toQRdxCodeHTML } from "qrdx/element";
 
 const html = toQRdxCodeHTML(
@@ -169,13 +187,13 @@ const html = toQRdxCodeHTML(
 //   props="{…}"><template shadowrootmode="open">…</template></qrdx-code>
 ```
 
-단순한 옵션은 속성이 되고 나머지는 JSON으로 `props`에 들어가므로, 엘리먼트는 같은 옵션을 그대로 읽어 들입니다. `customTemplate`은 마크업으로 쓸 수 없으니 브라우저에서 프로퍼티로 설정하세요. 다른 이름으로 등록했다면 `tagName`을 전달하세요.
+단순한 옵션은 속성이 되고 나머지는 JSON으로 `props`에 들어가므로, 엘리먼트가 같은 옵션을 그대로 읽어 냅니다. `customTemplate`은 마크업으로 쓸 수 없으니 브라우저에서 프로퍼티로 설정하세요. 다른 이름으로 등록했다면 `tagName`을 전달하세요.
 
 ## React 19 [#react-19]
 
-React 19는 엘리먼트에 해당 프로퍼티가 있으면 prop을 프로퍼티로 설정하므로, 객체도 prop으로 사용할 수 있습니다. 렌더링하기 전에 엘리먼트를 한 번 등록하세요.
+React 19는 엘리먼트에 해당 프로퍼티가 있으면 prop을 프로퍼티로 설정하므로, 객체도 prop으로 쓸 수 있습니다. 렌더링 전에 엘리먼트를 한 번 등록하세요.
 
-```tsx
+```tsx title="components/menu-code.tsx"
 import "qrdx/element/define";
 
 export function MenuCode({ url }: { url: string }) {
@@ -191,9 +209,9 @@ export function MenuCode({ url }: { url: string }) {
 }
 ```
 
-TypeScript에서는 `.d.ts` 파일에서 엘리먼트를 JSX에 추가하세요.
+TypeScript에서는 `.d.ts` 파일에서 JSX에 엘리먼트를 추가하세요.
 
-```ts
+```ts title="qrdx-code.d.ts"
 import type { QRdxCodeElement, QRdxCodeJSXProps } from "qrdx/element";
 
 declare module "react" {
@@ -209,14 +227,13 @@ declare module "react" {
 }
 ```
 
-`ref`로 엘리먼트를 가져와 `toDataURL`과 `download`에 사용할 수 있습니다.
+`ref`로 엘리먼트를 가져와 `toDataURL`과 `download`를 사용할 수 있습니다.
 
 ## Vue [#vue]
 
-Vue 컴파일러에 `qrdx-code`가 커스텀 엘리먼트라고 알려 주세요.
+Vue 컴파일러에 `qrdx-code`가 커스텀 엘리먼트임을 알려 주세요.
 
-```js
-// vite.config.js
+```js title="vite.config.js"
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 
@@ -231,9 +248,9 @@ export default defineConfig({
 });
 ```
 
-그런 다음 `main.js`에서 `qrdx/element/define`을 한 번 import하고 템플릿에서 옵션을 바인딩하세요. 엘리먼트에 해당 프로퍼티가 있으면 Vue는 바인딩을 프로퍼티로 설정합니다.
+그런 다음 `main.js`에서 `qrdx/element/define`을 한 번 가져오고, 템플릿에서 옵션을 바인딩하세요. Vue는 엘리먼트에 해당 프로퍼티가 있으면 바인딩을 프로퍼티로 설정합니다.
 
-```vue
+```vue title="src/App.vue"
 <qrdx-code
   :value="url"
   :size="256"
@@ -242,3 +259,27 @@ export default defineConfig({
   label="Menu"
 />
 ```
+
+## 문제가 생겼을 때 [#if-something-goes-wrong]
+
+- **아무것도 그려지지 않아요.** 엘리먼트에 `value`가 없거나 정의 스크립트가 실행되지 않은 경우입니다. 속성을 확인하고, `element-define`이 모듈로 로드되는지 확인하세요.
+- **`qrdx-error` 이벤트가 발생해요.** 코드를 그릴 수 없는 경우입니다. 예를 들어 값이 QR 코드에 넣기에 너무 길거나, `props` 속성이 JSON 객체가 아닐 때입니다. 오류는 `event.detail.error`에 담깁니다. 리스너가 `event.preventDefault()`를 호출하지 않으면 엘리먼트는 기존 코드를 지우고 오류를 로그에 남깁니다.
+
+  ```js title="main.js"
+  qr.addEventListener("qrdx-error", (event) => {
+    event.preventDefault();
+    showMessage("That text is too long for a QR code.");
+  });
+  ```
+
+- **`qrdx: <qrdx-code> is already defined by another element`.** 다른 스크립트가 같은 태그 이름을 등록했습니다. `defineQRdxCode`에 다른 이름을 전달하세요.
+- **TypeScript: `Property 'qrdx-code' does not exist on type 'JSX.IntrinsicElements'`.** React 19 섹션의 선언을 추가하세요.
+
+## 관련 문서 [#related]
+
+<Cards>
+  <Card href="/docs/vanilla-js" title="Vanilla JavaScript" description="엘리먼트 없이 스크립트에서 쓸 수 있는 createQRCode와 qrdx/core의 모든 기능." />
+  <Card href="/docs/features/frames" title="프레임, 스캔 점수, 인쇄 파일" description="기본 제공 프레임과 공식 프레임, 그리고 frame 프로퍼티용 프레임 사양." />
+  <Card href="/docs/features/downloads" title="내보내기와 다운로드" description="형식, 크기, 클립보드, Node에서의 PNG." />
+  <Card href="/docs/api-reference" title="라이브러리 API 레퍼런스" description="엘리먼트가 받는 모든 옵션과 타입, 기본값." />
+</Cards>

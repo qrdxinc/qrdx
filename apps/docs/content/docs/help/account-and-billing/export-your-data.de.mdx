@@ -3,23 +3,49 @@ title: "Deine Daten exportieren"
 description: "Lade alles aus deinem Konto herunter oder exportiere Scans und Formularantworten als CSV."
 ---
 
+Alles in deinem Konto lässt sich herunterladen, in jedem Tarif: eine ZIP-Datei mit allem oder eine CSV mit den Scans eines Codes, den Antworten eines Formulars oder deinen Code-Bildern. Nichts ist hinter einem kostenpflichtigen Tarif gesperrt.
+
 ## Alles auf einmal [#everything-at-once]
 
 1. Gehe zu **Einstellungen** → **Profil & Sicherheit**.
 2. Klicke unter **Deine Daten** auf **Meine Daten herunterladen**.
 
-Du erhältst eine ZIP-Datei mit deinen Codes, Scans, Seiten, Formularantworten, Designs und Kontodaten als JSON- und CSV-Dateien, dazu eine README, die sie erklärt.
+Du erhältst eine ZIP-Datei mit deinem Profil, deinen Codes, Seiten, Designs und Einstellungen als JSON-Dateien, deinen Scans als `scans.csv`, deinen Formularantworten als `form-responses.csv` und einer `README.txt`, die jede Datei erklärt.
 
-Du kannst den Download bis zu 3-mal pro Stunde ausführen.
+Der Export enthält bis zu 500.000 Scans und 100.000 Antworten. Du kannst ihn bis zu 3-mal pro Stunde herunterladen.
+
+<Shot id="your-data-card" />
 
 ## Scans eines Codes [#scans-of-one-code]
 
-Öffne den Code unter **Codes** und klicke auf **CSV exportieren**. Du erhältst bis zu 50.000 Scans für den gewählten Zeitraum.
+Öffne den Code unter **Codes**, wechsle zum Tab **Analytics** und klicke auf **CSV exportieren**. Du erhältst bis zu 50.000 Scans für den gewählten Zeitraum, jeweils mit Uhrzeit, Ort, Gerät, Betriebssystem, Browser und Referrer. Siehe [Deine Scans ansehen](/docs/help/dynamic-codes/scans).
 
 ## Formularantworten [#form-responses]
 
-Öffne unter **Seiten** das Menü der Seite (**⋯**), wähle **Antworten** und klicke dann auf **CSV exportieren**.
+Öffne unter **Seiten & Formulare** das Menü der Seite (**⋯**), wähle **Antworten** und klicke dann auf **CSV exportieren**.
 
 ## QR-Code-Bilder [#qr-code-images]
 
-Wähle unter **Codes** die gewünschten Codes aus und klicke dann auf **Herunterladen**. Du erhältst eine ZIP-Datei mit PNG-, WebP- oder SVG-Dateien sowie einer CSV-Liste der Codes.
+Wähle unter **Codes** die gewünschten Codes aus, klicke dann auf **Herunterladen** und wähle **PNG-Bilder (ZIP)**, **WebP-Bilder (ZIP)** oder **SVG-Bilder (ZIP)**. Die ZIP-Datei enthält außerdem eine `codes.csv`, die jede Datei mit Titel, Kurzlink und Ziel auflistet.
+
+<IfAvailable feature="auditLog" id="the-audit-log" title="Das Audit-Log">
+
+Im Tarif Business können Inhaber und Admins das [Audit-Log](/docs/help/teams/audit-log#export-as-csv) des Workspace als CSV exportieren.
+
+</IfAvailable>
+
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
+
+### Meine Daten herunterladen wird abgelehnt [#download-my-data-is-refused]
+
+Du hast den Export in der letzten Stunde bereits 3-mal heruntergeladen. Warte kurz und versuche es dann erneut.
+
+### Die ZIP-Datei enthält nicht alle deine Scans [#the-zip-doesnt-hold-all-your-scans]
+
+Der vollständige Export endet bei 500.000 Scans. Nutze bei einem Code mit vielen Scans **CSV exportieren** direkt am Code mit einem kürzeren Zeitraum, so oft du brauchst.
+
+## Verwandte Themen [#related]
+
+- [Deine Scans ansehen](/docs/help/dynamic-codes/scans)
+- [Dein Konto löschen](/docs/help/account-and-billing/delete-your-account)
+- [Was mit deinen Codes passiert, wenn du nicht mehr zahlst](/docs/help/account-and-billing/never-hostage)

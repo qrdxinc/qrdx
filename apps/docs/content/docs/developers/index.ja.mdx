@@ -1,110 +1,84 @@
 ---
 title: "開発者向け"
-description: "キー不要の画像URLから REST API、Webhook、MCP、CLI まで、QRdx で開発するためのあらゆる方法を紹介します。"
+description: "作りたいものに合わせて QRdx のツールを選べます。キー不要の画像 URL から REST API、Webhook、MCP サーバー、CLI まで、それぞれのリファレンスも見つかります。"
 icon: Terminal
 ---
 
-作るものに合った方法を選んでください。最初の3つはアカウントもキーも不要です。
+QRdx のあらゆる機能はコードから利用できます。作りたいものから探してください。各行に、ツール、必要なもの、そこへ進むためのページを示しています。
 
-## キー不要 [#no-key-needed]
+| やりたいこと | 使うもの | 必要なもの |
+| --- | --- | --- |
+| ページ、メール、README に QRコードを入れる | [QR code image API](/docs/developers/image-api): そのまま画像になる `GET` URL | なし |
+| ラベルや商品フィード用のバーコードを描画する | [Barcode API](/docs/developers/barcode-api): 同じ方式で、EAN、UPC、Code 128 などに対応 | なし |
+| 印刷後でも転送先を変えられるコードを作成し、スキャンを取得する | [REST API](/docs/developers/quickstart): `POST /v1/codes`、`PATCH`、`GET …/scans` | [APIキー](/docs/developers/api-keys) |
+| スキャン、新しいコード、フォームの回答に自分のシステムで反応する | [Webhook](/docs/webhooks): お客様の URL に送られる署名付き `POST` リクエスト | APIキーまたはダッシュボード、Business プラン |
+| AI アシスタントにチャットで QRコードを作らせる | [MCP server](/docs/developers/mcp): `https://mcp.qrdx.dev/mcp` | なし |
+| スクリプト、ビルド、CSV から QRコードを作る | [CLI](/docs/developers/cli): `npx @qrdx/cli` | Node.js 22 |
+| AI アートに QRコードを描き込む | [AI art API](/docs/developers/ai-art-api): `POST /v1/art` | APIキー、月ごとの AI アート画像枠 |
+| 他のユーザーが自分の QRdx アカウントをお客様の製品に接続できるようにする | [連携を構築する](/docs/developers/build-an-integration): PKCE 付き OAuth 2.0 | OAuth アプリ |
+| n8n で QRdx を自動化する | [n8n ノード](/docs/developers/n8n): `@qrdx/n8n-nodes-qrdx` | セルフホストの n8n |
+| React アプリ内でスタイル付きコードを描画する | [React ライブラリ](/docs/getting-started): `qrdx` パッケージ | npm |
+
+## 2分で最初のリクエスト [#first-request-in-two-minutes]
+
+[クイックスタート](/docs/developers/quickstart)では、キー不要のリクエスト 1 回で QRコード画像を作成し、APIキーを作成し、動的QRコードを作成して、別の転送先に切り替えます。このページの他の内容は、この 4 つのステップを土台にしています。
+
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png" -o qr.png
+```
+
+## ベース URL と認証 [#base-url-and-authentication]
+
+REST API は `https://api.qrdx.dev/v1` にあります。同じルートは `https://qrdx.dev/api/v1` でも応答し、[セルフホスト](/docs/self-hosting)したインスタンスでは、そのドメインの `/api/v1` で提供されます。
+
+リクエストには [APIキー](/docs/developers/api-keys)を `Authorization: Bearer qrdx_…` として付けます。キーは、作成したワークスペースで、そこでのお客様のロールとして動作します。他の QRdx ユーザーに代わって動作するアプリは、代わりに [OAuth 2.0 アクセストークン](/docs/developers/rest-api#get-an-access-token)を同じヘッダーで送ります。画像、バーコード、コミュニティのエンドポイントはどちらも不要です。
+
+## リファレンス [#reference]
 
 <Cards>
-  <Card
-    icon={<ImageDown />}
-    href="/docs/developers/image-api"
-    title="QRコード画像API"
-    description="URLからQRコード画像を取得できます。Markdown、HTML、メールにそのまま貼り付けられます。"
-  />
-  <Card
-    icon={<Bot />}
-    href="/docs/developers/mcp"
-    title="MCPサーバー"
-    description="Claude、Cursor、VS Code などのAIツールからスタイル付きQRコードを作成できます。"
-  />
-  <Card
-    icon={<Terminal />}
-    href="/docs/developers/cli"
-    title="CLI"
-    description="ターミナルやCIから、SVG、PNG、WebP、EPS形式のQRコードを作成できます。"
-  />
-</Cards>
-
-## アカウントを使う場合 [#with-an-account]
-
-<Cards>
-  <Card
-    icon={<Rocket />}
-    href="/docs/developers/quickstart"
-    title="クイックスタート"
-    description="2分足らずで最初のAPIリクエストを送り、続けてAPIキーの作成と動的QRコードの作成まで進めます。"
-  />
-  <Card
-    icon={<LockKeyhole />}
-    href="/docs/developers/api-keys"
-    title="APIキー"
-    description="サーバーやスクリプト用の qrdx_ キーを作成します。キーは1つのワークスペースに限定されます。"
-  />
-  <Card
-    icon={<Code />}
-    href="/docs/developers/rest-api"
-    title="REST APIとOAuth"
-    description="HTTPで動的QRコードの作成と編集、スキャンの取得、コンバージョンの報告ができます。"
-  />
   <Card
     icon={<FileCode />}
     href="/docs/developers/api"
-    title="APIリファレンス"
-    description="すべてのエンドポイントを掲載しています。curl、JavaScript、Pythonのサンプルと、試せるパネルもあります。"
-  />
-  <Card
-    icon={<Webhook />}
-    href="/docs/webhooks"
-    title="Webhook"
-    description="スキャン、コードの変更、フォーム回答について署名付きイベントを受け取れます。Zapier、Make、n8n と連携できます。"
-  />
-  <Card
-    icon={<Blocks />}
-    href="/docs/developers/n8n"
-    title="n8n"
-    description="n8n 用の QRdx ノードです。QR画像、動的QRコード、スキャン、QRdxイベントのトリガーを利用できます。"
-  />
-  <Card
-    icon={<Blocks />}
-    href="/docs/developers/build-an-integration"
-    title="連携を構築する"
-    description="OAuth 2.0 と PKCE を使って、ユーザーが自分の QRdx アカウントをあなたのアプリに接続できるようにします。"
+    title="API リファレンス"
+    description="リソースごとの全エンドポイントを、パラメータ、レスポンス、curl、JavaScript、Python のサンプル、Try it パネルとともに掲載しています。"
   />
   <Card
     icon={<TriangleAlert />}
     href="/docs/developers/errors"
     title="エラー"
-    description="APIが返すすべてのエラーについて、その意味と対処方法を説明します。"
+    description="すべてのエラーコードについて、発生する状況と対処方法を説明します。"
   />
-</Cards>
-
-## 自分のコードで使う [#in-your-own-code]
-
-<Cards>
   <Card
-    icon={<Rocket />}
-    href="/docs/getting-started"
-    title="Reactライブラリ"
-    description="qrdx パッケージで、スタイル付きQRコードを描画してエクスポートできます。"
+    icon={<Code />}
+    href="/docs/developers/rest-api"
+    title="REST API と OAuth"
+    description="認証、スコープ、OAuth トークン、レート制限、1日あたりのクォータを詳しく説明します。"
+  />
+  <Card
+    icon={<Bot />}
+    href="/docs/developers/ai-agents"
+    title="AI エージェントで QRdx を使う"
+    description="アシスタントを MCP サーバーに接続し、エージェントに画像 URL を渡し、ドキュメントを Markdown で読めます。"
+  />
+  <Card
+    icon={<Wrench />}
+    href="/docs/developers/google-chart-api"
+    title="Google Chart QR API の置き換え"
+    description="chl、chs、chld を画像 API に対応させ、古い URL を 1 つのコマンドで書き換えます。"
   />
   <Card
     icon={<Server />}
     href="/docs/self-hosting"
-    title="セルフホスティング"
-    description="動的QRコードを含むアプリ全体を、自分のサーバーで動かせます。"
+    title="セルフホスト"
+    description="API を含むアプリ全体を、ご自身のサーバーで実行します。"
   />
 </Cards>
 
-## ベースURLと認証 [#base-url-and-authentication]
+[`/openapi.json`](/openapi.json) の OpenAPI 3.1 ドキュメントには、すべてのエンドポイント、スキーマ、エラーが記載されています。どのドキュメントページも、URL の末尾に `.md` を付けると Markdown で取得でき、[`/llms.txt`](/llms.txt) はエージェント向けにサイトの索引を提供します。
 
-REST API は `https://api.qrdx.dev/v1` で提供されています。同じルートは `https://qrdx.dev/api/v1` でも利用できます。
+## 関連ページ [#related]
 
-リクエストの認証には、`Authorization: Bearer` ヘッダーに [APIキー](/docs/developers/api-keys) を指定します。ほかの QRdx ユーザーに代わって動作するアプリは、代わりに [OAuth 2.0 アクセストークン](/docs/developers/rest-api#get-an-access-token) を送ります。[クイックスタート](/docs/developers/quickstart#create-an-api-key) では、キーの作成と最初のリクエストを行います。
-
-## 最新情報を確認する [#stay-up-to-date]
-
-ライブラリ、CLI、APIの変更は[変更履歴](/changelogs)に掲載しています。ソースコードは [GitHub](https://github.com/qrdxinc/qrdx) で公開しています。
+- [クイックスタート](/docs/developers/quickstart): 最初のリクエスト、キー、最初の動的QRコード
+- [APIキー](/docs/developers/api-keys): キーの作成、アクセス権の選択、無効化
+- [変更履歴](/changelogs): ライブラリ、CLI、API の変更
+- [GitHub](https://github.com/qrdxinc/qrdx): ソースコード、Issue、ディスカッション

@@ -1,23 +1,61 @@
 ---
 title: "Pusat bantuan"
-description: "Jawaban untuk membuat kode QR, kode dinamis, halaman, penagihan, dan akun Anda. Tanpa perlu kode."
+description: "Jawaban singkat untuk membuat kode QR, kode dinamis, halaman, penagihan, dan akun Anda. Tanpa perlu kode."
 icon: LifeBuoy
 ---
 
 import { HelpSearch, StillStuck } from "@/components/docs/help-home";
 
+Pusat bantuan ini membahas semua hal yang Anda lakukan di editor dan dasbor. Setiap halaman membahas satu tugas, lengkap dengan langkah-langkahnya, apa yang Anda lihat setelah tiap langkah, dan apa yang perlu dilakukan jika terjadi masalah.
+
 <HelpSearch />
 
-## Pertanyaan umum [#common-questions]
+## Apa yang ingin Anda lakukan? [#what-do-you-want-to-do]
 
-- [Buat kode QR pertama Anda](/docs/help/getting-started/first-qr-code)
-- [Statis atau dinamis, mana yang Anda perlukan?](/docs/help/getting-started/static-vs-dynamic)
-- [Ubah tujuan sebuah kode](/docs/help/dynamic-codes/change-the-link)
-- [Kode tidak bisa dipindai](/docs/help/troubleshooting/wont-scan)
-- [Unduh dan cetak kode QR](/docs/help/getting-started/download-and-print)
-- [Apa yang terjadi pada kode Anda jika Anda berhenti membayar](/docs/help/account-and-billing/never-hostage)
-- [Batalkan langganan Anda](/docs/help/account-and-billing/cancel)
-- [Pemindaian menampilkan halaman error](/docs/help/troubleshooting/error-pages)
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="Buat kode pertama"
+    description="Desain kode dan unduh untuk dicetak atau dipakai di web."
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/change-the-link"
+    title="Ubah tujuan kode yang sudah dicetak"
+    description="Edit tautan kode dinamis. Salinan cetak akan membuka tautan baru pada pemindaian berikutnya."
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="Lihat pemindaian Anda"
+    description="Kapan, di mana, dan di perangkat apa sebuah kode dipindai."
+  />
+  <Card
+    arrow
+    icon={<Download />}
+    href="/docs/help/getting-started/download-and-print"
+    title="Unduh dan cetak"
+    description="Format dan ukuran yang tepat untuk brosur, stiker, atau layar."
+  />
+  <Card
+    arrow
+    icon={<CreditCard />}
+    href="/docs/help/account-and-billing/plans"
+    title="Pilih atau ubah paket"
+    description="Apa saja yang termasuk di setiap paket, serta cara upgrade, downgrade, atau berhenti berlangganan."
+  />
+  <Card
+    arrow
+    icon={<Users />}
+    href="/docs/help/teams/create-and-invite"
+    title="Bekerja dengan tim Anda"
+    description="Buat workspace, undang orang, dan atur peran mereka."
+  />
+</Cards>
 
 ## Telusuri berdasarkan topik [#browse-by-topic]
 
@@ -31,8 +69,8 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
   <Card
     icon={<Palette />}
     href="/docs/help/designing/colors-and-contrast"
-    title="Desain"
-    description="Warna, logo, bingkai, dan seni, serta kode yang selalu bisa dipindai."
+    title="Mendesain"
+    description="Warna, logo, bingkai, dan seni, serta kode yang selalu terpindai."
   />
   <Card
     icon={<QrCode />}
@@ -70,7 +108,7 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
     icon={<TriangleAlert />}
     href="/docs/help/troubleshooting/wont-scan"
     title="Pemecahan masalah"
-    description="Kode yang tidak bisa dipindai, halaman yang salah, halaman error, dan email yang tidak masuk."
+    description="Kode yang tidak terpindai, halaman yang salah, halaman galat, dan email yang tidak masuk."
   />
   <Card
     icon={<ShieldCheck />}
@@ -80,9 +118,17 @@ import { HelpSearch, StillStuck } from "@/components/docs/help-home";
   />
 </Cards>
 
-## Lainnya [#more]
+## Pertanyaan umum [#common-questions]
 
-- [Yang baru dan yang akan datang](/docs/help/whats-new), serta [changelog](/changelogs) lengkap.
-- Sedang membangun sesuatu? Tab [Developer](/docs/developers) berisi REST API, webhook, MCP, dan CLI.
+- [Statis atau dinamis, mana yang Anda butuhkan?](/docs/help/getting-started/static-vs-dynamic)
+- [Kode tidak bisa dipindai](/docs/help/troubleshooting/wont-scan)
+- [Pemindaian membuka halaman yang salah](/docs/help/troubleshooting/wrong-destination)
+- [Apa yang terjadi pada kode Anda jika Anda berhenti membayar](/docs/help/account-and-billing/never-hostage)
+- [Batalkan langganan Anda](/docs/help/account-and-billing/cancel)
+- [Lindungi kode dengan kata sandi](/docs/help/dynamic-codes/password)
+
+## Dapatkan bantuan [#get-help]
+
+Sedang membangun sesuatu? Bagian [Developers](/docs/developers) berisi REST API, webhook, server MCP, dan CLI. Untuk hal lainnya, tanyakan kepada orang:
 
 <StillStuck />

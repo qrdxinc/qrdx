@@ -1,48 +1,52 @@
 ---
 title: "Statico o dinamico: quale ti serve?"
-description: "I codici statici memorizzano il contenuto nel codice e non cambiano mai. I codici dinamici memorizzano un link breve che puoi modificare anche dopo la stampa."
+description: "I QR code statici memorizzano il contenuto nel codice e non cambiano mai. I QR code dinamici memorizzano un link breve che puoi modificare anche dopo la stampa."
 ---
+
+Ogni QR code che crei con QRdx è di uno di due tipi. Un QR code statico memorizza il contenuto nel codice stesso. Un QR code dinamico memorizza un link breve che inoltra ogni scansione alla tua destinazione, cioè la pagina che il codice deve aprire. Scegli prima di stampare, perché un QR code statico già stampato non può diventare dinamico.
+
+<Diagram id="static-vs-dynamic" />
 
 ## QR code statici [#static-qr-codes]
 
-Un codice statico memorizza il contenuto direttamente nel codice: il link, la password del Wi-Fi o il biglietto da visita.
+Un QR code statico contiene direttamente il link, la password del Wi-Fi o il biglietto da visita.
 
 - Funziona per sempre, senza account e senza server.
 - È gratuito e illimitato.
-- **Non puoi modificarlo** dopo la stampa. Per cambiare il contenuto, devi stampare un nuovo codice.
+- Non si può modificare dopo la stampa. Per cambiare il contenuto devi stampare un nuovo codice.
 - Le scansioni non vengono conteggiate.
 
-Ogni codice che scarichi dal [Playground](/playground) senza renderlo dinamico è statico.
+Ogni codice che scarichi dal [Playground](/playground) senza selezionare **Dinamico** è statico.
 
 ## QR code dinamici [#dynamic-qr-codes]
 
-Un codice dinamico memorizza un link breve, come `qrdx.dev/q/aB3xY7k`. Il link breve inoltra ogni scansione alla tua destinazione.
+Un QR code dinamico contiene un link breve, come `qrdx.dev/q/aB3xY7k`. Quando qualcuno lo scansiona, QRdx lo inoltra alla tua destinazione.
 
-- Puoi **cambiare la destinazione** in qualsiasi momento, anche dopo la stampa.
+- Puoi cambiare la destinazione in qualsiasi momento, anche dopo la stampa.
 - Ogni scansione viene conteggiata, con data e ora, luogo e dispositivo.
-- Puoi metterlo in pausa, programmarlo, aggiungere una password o indirizzare le scansioni verso link diversi.
-- Serve un account QRdx gratuito. Il piano Gratuito include 10 codici dinamici; Pro e Business non hanno limiti.
+- Puoi metterlo in pausa, impostare date di inizio e fine, aggiungere una password o indirizzare le scansioni a link diversi.
+- Serve un account QRdx gratuito. Il piano Gratuito include 10 QR code dinamici; Pro e Business non hanno limiti.
 
-Vedi [Creare un QR code dinamico](/docs/help/dynamic-codes/create).
+Consulta [Creare un QR code dinamico](/docs/help/dynamic-codes/create).
 
-## Quale scegliere [#which-to-choose]
+## Come scegliere [#which-to-choose]
 
-Scegli il **dinamico** quando:
-
-- il codice finisce su qualcosa di stampato che non puoi sostituire facilmente, come confezioni, insegne o menu;
-- il link potrebbe cambiare, come un'offerta stagionale o un menu;
-- vuoi sapere quante persone lo scansionano.
-
-Scegli lo **statico** quando:
-
-- il contenuto non cambia mai, come i dati del Wi-Fi o un biglietto da visita;
-- non vuoi un account;
-- vuoi che non ci sia nulla tra la scansione e il tuo contenuto.
+| Scegli il dinamico quando | Scegli lo statico quando |
+| --- | --- |
+| Il codice finisce su qualcosa che non puoi sostituire senza ristampare, come confezioni, insegne o menu. | Il contenuto non cambia mai, come i dati del Wi-Fi o un biglietto da visita. |
+| Il link potrebbe cambiare, come un'offerta stagionale o un menu. | Non vuoi creare un account. |
+| Vuoi sapere quante persone lo scansionano. | Non vuoi nulla tra la scansione e il tuo contenuto. |
 
 ## Anche le pagine sono dinamiche [#pages-are-dynamic-too]
 
-Una [pagina mobile](/docs/help/pages-and-forms/create-a-page) ospitata da QRdx ottiene un codice dinamico. Puoi modificare la pagina in qualsiasi momento e il codice stampato continua a funzionare.
+Una [pagina mobile](/docs/help/pages-and-forms/create-a-page) ospitata da QRdx ha sempre un QR code dinamico. Puoi modificare la pagina quando vuoi e il codice stampato continua a funzionare.
 
-## I codici dinamici continuano a funzionare [#dynamic-codes-keep-working]
+## I QR code dinamici continuano a funzionare [#dynamic-codes-keep-working]
 
-Un codice dinamico continua a reindirizzare anche se passi a un piano inferiore, annulli o un pagamento non va a buon fine. Vedi [Cosa succede ai tuoi codici se smetti di pagare](/docs/help/account-and-billing/never-hostage).
+Un QR code dinamico continua a inoltrare le scansioni se passi a un piano inferiore, annulli l'abbonamento o un pagamento non va a buon fine. Consulta [Cosa succede ai tuoi codici se smetti di pagare](/docs/help/account-and-billing/never-hostage).
+
+## Vedi anche [#related]
+
+- [Crea il tuo primo QR code](/docs/help/getting-started/first-qr-code)
+- [Creare un QR code dinamico](/docs/help/dynamic-codes/create)
+- [Guida ai QR code dinamici](/docs/dynamic-qr-codes)

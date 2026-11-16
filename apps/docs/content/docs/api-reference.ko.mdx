@@ -1,421 +1,263 @@
 ---
 title: "라이브러리 API 레퍼런스"
-description: "qrdx React 라이브러리가 내보내는 모든 컴포넌트, 함수, 타입을 정리했습니다. HTTP 엔드포인트는 REST API를 참고하세요."
+description: "qrdx 패키지가 내보내는 모든 진입점, 컴포넌트, 함수, 상수, 타입을 타입과 기본값과 함께 정리했습니다. HTTP 엔드포인트는 REST API를 참고하세요."
 icon: Code
 ---
 
-모든 `qrdx` 컴포넌트, 함수, 타입에 대한 전체 레퍼런스입니다.
+이 페이지에서는 `qrdx`가 내보내는 항목을 진입점별, 작업별로 나열하고 각 prop의 타입과 기본값을 함께 보여 줍니다. 사용 방법은 기능 페이지에서 설명하고, 이 페이지는 이름을 찾아볼 때 사용합니다.
 
 <NpmStatus package="qrdx" />
+
+## 진입점 [#entry-points]
+
+| 가져올 경로 | 포함 항목 | 필요한 것 |
+| --- | --- | --- |
+| `qrdx` | React 컴포넌트(`QRCode`, `QRCodeSVG`, `QRCodeCanvas`, `getQRAsSVG`)와 `qrdx/core`의 모든 항목 | `react`, `react-dom` |
+| `qrdx/core` | React 없는 전체 엔진: 마크업, 다운로드, 인쇄 파일, 스캔 점수, 프레임, 템플릿, 아트, 타입 | 없음 |
+| `qrdx/vanilla` | `createQRCode`와 `qrdx/core` | DOM |
+| `qrdx/element` | `<qrdx-code>` 커스텀 엘리먼트: `QRdxCodeElement`, `defineQRdxCode`, `toQRdxCodeHTML` | 그리려면 DOM 필요, 마크업 렌더링에는 불필요 |
+| `qrdx/element/define` | 가져오면 `<qrdx-code>`를 등록 | DOM |
+| `qrdx/node` | `getQRAsPNG` | `@resvg/resvg-js` 또는 `sharp` |
+| `qrdx/vue` | `QRCode`, `QRCodeSVG`, `useQRCode`와 `qrdx/core` | `vue` 3.3 이상 |
+| `qrdx/preact` | `QRCode`, `QRCodeSVG` | `preact` 10 이상 |
+| `qrdx/solid` | `QRCode`, `QRCodeSVG` | `solid-js` 1.8 이상 |
+| `qrdx/angular` | `QRCode` 컴포넌트(`<qrdx-qr-code>`)와 `qrdx/core` | `@angular/core` 20 이상 |
+| `qrdx/types` | 렌더러 없이 모든 타입, 옵션 목록, zod 스키마 | 없음 |
+
+모든 프레임워크 패키지는 선택적 peer dependency입니다. `qrdx`를 설치해도 사용하지 않는 패키지가 추가되지 않습니다. PDF용 `jspdf`도 선택 사항입니다.
 
 ## 컴포넌트 [#components]
 
 ### QRCode [#qrcode]
 
-QR 코드를 렌더링하는 메인 컴포넌트입니다.
+대부분의 경우에 쓰는 컴포넌트입니다. `QRProps`에 간단한 로고 API를 더해 `<svg>`로 렌더링합니다. 브라우저 전용 훅을 쓰지 않아 React Server Components에서도 렌더링됩니다.
 
-```tsx
-import { QRCode } from 'qrdx';
+```tsx title="components/example.tsx"
+import { QRCode } from "qrdx";
 
-<QRCode
-  value="https://example.com"
-  size={256}
-  fgColor="#000000"
-  bgColor="#ffffff"
-/>
+<QRCode value="https://example.com" size={256} margin={4} level="H" logo="/logo.png" />;
 ```
-
-#### Props [#props]
 
 | Prop | 타입 | 기본값 | 설명 |
-|------|------|---------|-------------|
-| `value` | `string` | **필수** | 인코딩할 URL 또는 텍스트 |
-| `size` | `number` | `128` | 픽셀 단위 크기 |
-| `scale` | `number` | `1` | 배율 |
-| `fgColor` | `ColorConfig` | `#000000` | QR 코드 색상 |
-| `bgColor` | `ColorConfig` | `#ffffff` | 배경 색상 |
-| `eyeColor` | `ColorConfig` | `fgColor` | 모서리 마커 색상 |
-| `dotColor` | `ColorConfig` | `fgColor` | 각 모서리 눈 안쪽 점의 색상 |
-| `bodyPattern` | `BodyPattern` | `'circle'` | 데이터 점 패턴 |
-| `cornerEyePattern` | `CornerEyePattern` | `'gear'` | 모서리 마커 패턴 |
-| `cornerEyeDotPattern` | `CornerEyeDotPattern` | `'circle'` | 모서리 점 패턴 |
-| `hideLogo` | `boolean` | `false` | 로고를 숨깁니다. `logo`를 설정하지 않으면 로고는 그려지지 않습니다 |
-| `logo` | `string` | — | 로고 URL |
-| `templateId` | `string` | `'default'` | [템플릿으로 그리는 프레임](/docs/features/templates)(`'Arrow'`, `'StandardBox'` 등): 전체 아트워크의 너비가 `size`입니다 |
-| `customTemplate` | `TemplateDefinition` | — | 코드로 그리는 프레임(`templateId`보다 우선해요) |
-| `level` | `ErrorLevel` | `'Q'` | 오류 정정 |
-| `autoLevel` | `boolean` | `false` | 로고가 코드의 7% 넘게 차지하면 `level`을 H로 올립니다(`AUTO_LEVEL_LOGO_COVERAGE`) |
-| `margin` | `number` | `0` | 모듈 단위 여백 |
-| `imageSettings` | `ImageSettings` | — | 로고 설정 |
-| `eyeColors` | `EyeColors` | — | `topLeft`, `topRight`, `bottomLeft` 각각의 `outer` / `inner` 눈별 색상이며, 각각 `eyeColor` / `dotColor`보다 우선합니다 |
-| `moduleScale` | `number` | `1` | 데이터 모듈 크기(0.5~1). 각 패턴은 스캔이 가능한 가장 작은 크기에서 멈춥니다(`MODULE_SCALE_FLOOR`) |
-| `frame` | `QRFrame` | — | 행동 유도 프레임. [프레임 및 인쇄](/docs/features/frames) 참고 |
-| `art` | `QRArt` | — | 로고나 사진을 모듈에 섞어 넣습니다(Logo QR, Image QR). [아트 QR](/docs/features/art-qr) 참고 |
-| `frameLabelMarkers` | `boolean` | `false` | 편집기용: 각 프레임 레이블 `<text>`에 `data-qrdx-frame-label`(`"text"`, `"secondaryText"` 또는 스펙 레이블의 id)을 표시합니다. 다운로드와 내보내기에는 포함되지 않습니다 |
+| --- | --- | --- | --- |
+| `value` | `string` | 필수 | 인코딩할 텍스트 또는 URL이며, 입력한 그대로 사용합니다 |
+| `size` | `number` | `128` | 너비와 높이(픽셀)입니다. 프레임은 이 크기에 더해지고, 템플릿은 이 크기 안에 맞춰집니다 |
+| `scale` | `number` | `1` | `size`에 곱하는 배율입니다 |
+| `level` | `"L" \| "M" \| "Q" \| "H"` | `"Q"` | 오류 정정 수준입니다. 코드의 약 7%, 15%, 25%, 30%가 손상되어도 읽을 수 있습니다 |
+| `margin` | `number` | `0` | 코드 주변의 여백(콰이어트 존)이며 모듈 단위입니다. 표준에서는 4를 요구합니다 |
+| `fgColor` | `ColorConfig` | `"#000000"` | 데이터 모듈의 색입니다. CSS 색상, 그라디언트, 이미지 채우기를 쓸 수 있습니다 |
+| `bgColor` | `ColorConfig` | `"#FFFFFF"` | 배경입니다. `"transparent"`는 배경을 칠하지 않습니다 |
+| `eyeColor` | `ColorConfig` | `fgColor` | 모서리 세 곳에 있는 눈의 색입니다 |
+| `dotColor` | `ColorConfig` | `fgColor` | 각 눈 안쪽 점의 색입니다 |
+| `eyeColors` | `EyeColors` | 없음 | `topLeft`, `topRight`, `bottomLeft`별 `outer`, `inner` 색입니다. 각각 `eyeColor`와 `dotColor`보다 우선합니다 |
+| `bodyPattern` | `BodyPattern` | `"circle"` | 데이터 모듈의 모양이며 {facts.bodyPatterns} 중 하나입니다 |
+| `cornerEyePattern` | `CornerEyePattern` | `"gear"` | 모서리 눈의 모양이며 {facts.eyeShapes} 중 하나입니다 |
+| `cornerEyeDotPattern` | `CornerEyeDotPattern` | `"circle"` | 눈 안쪽 점의 모양이며 {facts.eyeCentres} 중 하나입니다 |
+| `moduleScale` | `number` | `1` | 각 데이터 모듈의 크기이며 0.5에서 1 사이입니다. 각 패턴은 스캔이 가능한 최소 크기(`MODULE_SCALE_FLOOR`)에서 멈춥니다 |
+| `logo` | `string` | 없음 | 가운데에 그릴 경로, URL, 데이터 URL이며 뒤쪽 모듈은 비워 둡니다. 지정하지 않으면 로고를 그리지 않습니다 |
+| `logoOptions` | `LogoOptions` | 없음 | 로고의 `size`(0.1~0.3, 기본값 0.25), `padding`(0~2모듈), `x`와 `y`(0~1), `shape`, `plate`입니다 |
+| `hideLogo` | `boolean` | `false` | `logo`가 설정되어 있어도 로고를 숨깁니다 |
+| `autoLevel` | `boolean` | `false` | 로고가 코드의 7% 넘게 가리면 `level`을 `H`로 올립니다(`AUTO_LEVEL_LOGO_COVERAGE`) |
+| `frame` | `AnyQRFrame` | 없음 | 행동 유도 프레임입니다. `{ style, text, color, textColor, secondaryText, secondaryColor, fontScale }` 또는 `{ style: "custom", spec }` 형태이며, 출력 크기가 프레임에 맞게 커집니다 |
+| `templateId` | `string` | 없음 | `size`로 그려지고 코드가 안에 들어가는 템플릿입니다. `"Arrow"`, `"StandardBox"`, `"SquareBorder"`, `"StrikedBox"`, `"Halloween"`, `"DotRing"`, `"default"` 중 하나입니다 |
+| `customTemplate` | `TemplateDefinition` | 없음 | 코드로 직접 그린 템플릿입니다. `templateId`보다 우선합니다 |
+| `customProps` | `Record<string, any>` | 없음 | 템플릿의 `wrapper`에 전달할 prop입니다(예: `DotRingProps`) |
+| `shape` | `"square" \| "circle" \| "heart" \| QRSilhouette` | `"square"` | 코드를 원, 하트 또는 직접 만든 윤곽선 안에 넣고 장식용 모듈로 채웁니다 |
+| `art` | `QRArt` | 없음 | 그림을 모듈에 섞어 넣습니다. `{ mode, image, intensity, variant, matchEyes }` 형태입니다 |
+| `style` | `CSSProperties` | 없음 | `<svg>`에 적용할 인라인 스타일입니다 |
+| `frameLabelMarkers` | `boolean` | `false` | 에디터용입니다. 각 프레임 레이블 `<text>`에 `data-qrdx-frame-label`을 표시하며, 내보낸 파일에는 포함되지 않습니다 |
+| `partMarkers` | `boolean` | `false` | 에디터용입니다. 그려진 각 부분에 `data-qrdx-part`를 표시하며, 내보낸 파일에는 포함되지 않습니다 |
+| `isOGContext` | `boolean` | `false` | Open Graph 이미지 렌더러를 위해 로고를 위치가 지정된 `<img>`로 그립니다 |
 
-{facts.bodyPatterns}가지 본문 패턴, {facts.eyeShapes}가지 눈 모양, {facts.eyeCentres}가지 눈 중심, {facts.frameStyles}가지 기본 제공 프레임은 [모양, 눈, 프레임](/docs/styles)에서 실시간으로 볼 수 있습니다.
-
-### QRCodeCanvas [#qrcodecanvas]
-
-Canvas 기반 렌더링입니다.
-
-```tsx
-import { QRCodeCanvas } from 'qrdx';
-
-<QRCodeCanvas
-  value="https://example.com"
-  size={512}
-  fgColor="#000000"
-/>
-```
+`QRCode`는 위 prop만 받으며, 그 밖의 prop은 버려집니다. `QRCodeSVG`는 그 밖의 prop(`className`, `aria-label`, `role`, `data-*` 등)을 `<svg>`에 붙이고, 프레임이 있으면 프레임의 바깥쪽 `<svg>`에 붙입니다. 이벤트 핸들러는 마크업에 포함되지 않습니다.
 
 ### QRCodeSVG [#qrcodesvg]
 
-SVG 기반 렌더링입니다.
-
-```tsx
-import { QRCodeSVG } from 'qrdx';
-
-<QRCodeSVG
-  value="https://example.com"
-  size={512}
-/>
-```
-
-## 다운로드 함수 [#download-functions]
-
-### downloadQRCode [#downloadqrcode]
-
-QR 코드를 여러 형식으로 다운로드합니다.
-
-```tsx
-downloadQRCode(
-  qrProps: QRProps,
-  options: {
-    format: 'png' | 'jpg' | 'webp' | 'svg' | 'pdf' | 'eps';
-    size: { width: number; height: number };
-    filename?: string;
-    quality?: number; // WebP only: 0 to 1 for lossy; lossless when left out
-  }
-): Promise<void>
-```
-
-### getQRCodeDataUrl [#getqrcodedataurl]
-
-데이터 URL로 가져옵니다.
-
-```tsx
-getQRCodeDataUrl(
-  qrProps: QRProps,
-  format: DownloadFormat,
-  size: DownloadSize,
-  options?: { quality?: number } // WebP only
-): Promise<string>
-```
-
-### getQRAsWebP [#getqraswebp]
-
-코드를 WebP `Blob`으로 반환하며, `quality`를 설정하지 않으면 무손실입니다. 브라우저가 WebP를 인코딩하지 못하는 경우(Safari)에는 qrdx에 내장된 무손실 인코더가 만듭니다. `canvasToWebP(canvas, options)`는 임의의 canvas에 같은 작업을 하고, `encodeWebPLossless(rgba, width, height)`는 DOM 없이 RGBA 픽셀을 인코딩합니다.
-
-```tsx
-getQRAsWebP(
-  qrProps: QRProps,
-  options?: { quality?: number }
-): Promise<Blob>
-```
-
-### copyQRCodeToClipboard [#copyqrcodetoclipboard]
-
-클립보드에 복사합니다.
-
-```tsx
-copyQRCodeToClipboard(
-  qrProps: QRProps,
-  size?: DownloadSize
-): Promise<void>
-```
-
-### getSVGString [#getsvgstring]
-
-SVG 마크업을 가져옵니다.
-
-```tsx
-getSVGString(qrProps: QRProps): Promise<string>
-```
-
-## 인쇄 및 스캔 함수 [#print-and-scan-functions]
-
-각 기능 페이지에 예제와 함께 설명되어 있습니다.
-
-| 함수 | 기능 | 문서 |
-|----------|--------------|------|
-| `getQRAsSVG(props)` | 프레임을 포함한 코드의 SVG 마크업 | [프레임](/docs/features/frames) |
-| `getQRAsPrintPDF`, `downloadPrintPDF` | 정확한 실제 크기의 벡터 PDF로, 블리드, 재단선, CMYK를 지원합니다(`jspdf` 필요) | [인쇄용 내보내기](/docs/features/frames#print-ready-export) |
-| `downloadPrintSVG` | 정확한 실제 크기의 인쇄용 SVG | [인쇄용 내보내기](/docs/features/frames#print-ready-export) |
-| `getQRAsEPS`, `downloadPrintEPS` | 인쇄소와 디자인 도구용 벡터 EPS | [다운로드](/docs/features/downloads) |
-| `getScanScore(props)` | 디자인이 얼마나 안정적으로 스캔되는지 추정합니다 | [스캔될까요?](/docs/features/frames#will-it-scan) |
-| `getImageScanScore(image)` | 이미 가지고 있는 QR 코드 이미지를 평가합니다(브라우저 전용) | [스캔될까요?](/docs/features/frames#will-it-scan) |
-| `getQRAsPNG(props, { size })` | DOM 없이 순수 Node에서 PNG 바이트를 반환합니다. `qrdx/node`에서 가져오며, `@resvg/resvg-js` 또는 `sharp`가 설치되어 있어야 합니다 | — |
-| `scanQRPixels(pixels, expected)` | 원시 RGBA 픽셀이 `expected`로 디코딩되는지 확인하며, 흐리게 하거나 축소한 경우도 검사합니다. Node에서 실행됩니다 | — |
-| `getStylePairRisk(...)` | 일부 스캐너가 인식하지 못하는 눈과 패턴 조합을 경고합니다 | [패턴](/docs/features/patterns) |
-
-## 감지 함수 [#detection-functions]
-
-### handleImageLoad [#handleimageload]
-
-이미지에서 QR 코드를 감지합니다.
-
-```tsx
-handleImageLoad(
-  imgElement: HTMLImageElement,
-  size: number,
-  returnFullData?: boolean
-): Promise<string | any>
-```
-
-### downloadImageWithBoundingBox [#downloadimagewithboundingbox]
-
-바운딩 박스로 디버그합니다.
-
-```tsx
-downloadImageWithBoundingBox(
-  imgElement: HTMLImageElement,
-  boundingBox: { x: number; y: number }[],
-  filename: string
-): void
-```
-
-## 템플릿 함수 [#template-functions]
-
-### getTemplate [#gettemplate]
-
-특정 템플릿을 가져옵니다.
-
-```tsx
-getTemplate(templateId: string): TemplateDefinition | undefined
-```
-
-### getAllTemplates [#getalltemplates]
-
-모든 템플릿을 가져옵니다.
-
-```tsx
-getAllTemplates(): TemplateDefinition[]
-```
-
-### getTemplateIds [#gettemplateids]
-
-템플릿 ID를 가져옵니다.
-
-```tsx
-getTemplateIds(): string[]
-```
-
-## 유틸리티 함수 [#utility-functions]
-
-### 색상 및 대비 [#color--contrast]
-
-```tsx
-getSolidColor(colorConfig: ColorConfig, fallback?: string): string
-getContrastRatio(color1: string, color2: string): number
-getContrastLevel(ratio: number): ContrastLevel
-getLuminance(r: number, g: number, b: number): number
-hexToRgb(hex: string): { r: number; g: number; b: number }
-```
-
-### 유효성 검사 [#validation]
-
-```tsx
-validateSize(width: number, height: number): {
-  isValid: boolean;
-  error?: string;
-}
-```
-
-### 기능 감지 [#feature-detection]
-
-```tsx
-SUPPORTS_PATH2D: boolean
-```
-
-## 타입 [#types]
-
-### 핵심 타입 [#core-types]
-
-```tsx
-type QRProps = {
-  value: string;
-  size?: number;
-  level?: ErrorLevel;
-  bgColor?: ColorConfig;
-  fgColor?: ColorConfig;
-  margin?: number;
-  imageSettings?: ImageSettings;
-  // ...
-};
-
-type ColorConfig =
-  | string
-  | { type: 'solid'; color: string }
-  | LinearGradient
-  | RadialGradient;
-
-type ErrorLevel = 'L' | 'M' | 'Q' | 'H';
-```
-
-### 패턴 타입 [#pattern-types]
-
-```tsx
-// The arrays BODY_PATTERN, CORNER_EYE_PATTERNS, CORNER_EYE_DOT_PATTERNS and
-// FRAME_STYLES (and their zod schemas) are exported from 'qrdx/types'.
-// FRAME_STYLES names the built-in frames; each is a frame spec in
-// BUILT_IN_FRAMES (from 'qrdx').
-
-type BodyPattern =
-  | 'circle' | 'circle-large' | 'square' | 'diamond' | 'circle-mixed'
-  | 'pacman' | 'rounded' | 'small-square' | 'vertical-line'
-  | 'horizontal-line' | 'liquid' | 'liquid-horizontal' | 'liquid-vertical'
-  | 'classy' | 'classy-rounded' | 'leaf' | 'plus' | 'hexagon' | 'star'
-  | 'heart' | 'random-dots' | 'mosaic' | 'octagon';
-
-type CornerEyePattern =
-  | 'square' | 'rounded' | 'gear' | 'circle' | 'diya' | 'extra-rounded'
-  | 'message' | 'pointy' | 'leaf' | 'drop' | 'octagon' | 'bevel'
-  | 'squircle' | 'cushion' | 'shield' | 'petal' | 'leaf-reverse';
-
-type CornerEyeDotPattern =
-  | 'square' | 'rounded' | 'circle' | 'message' | 'message-reverse'
-  | 'diya' | 'diya-reverse' | 'rounded-triangle' | 'leaf' | 'drop' | 'plus'
-  | 'cross-rounded' | 'hexagon' | 'octagon' | 'flower' | 'heart'
-  | 'squircle' | 'dots' | 'extra-rounded' | 'leaf-reverse' | 'drop-reverse';
-
-// Retired (deprecated) values still render for saved designs but are not
-// offered: RETIRED_CORNER_EYE_PATTERNS, RETIRED_CORNER_EYE_DOT_PATTERNS.
-
-type EyeColors = {
-  topLeft?: { outer?: ColorConfig; inner?: ColorConfig };
-  topRight?: { outer?: ColorConfig; inner?: ColorConfig };
-  bottomLeft?: { outer?: ColorConfig; inner?: ColorConfig };
-};
-
-type QRFrame = {
-  style: FrameStyle; // "none" or a built-in frame, see FRAME_STYLES
-  text?: string; // up to 24 characters, default "Scan me"
-  color?: string;
-  textColor?: string;
-  secondaryText?: string; // banner-top-bottom, circle, menu-card
-  secondaryColor?: string; // gradient-border end color
-  fontScale?: number; // 0.5 to 1.5
-};
-```
-
-### 다운로드 타입 [#download-types]
-
-```tsx
-type DownloadFormat = 'png' | 'jpg' | 'webp' | 'svg' | 'pdf' | 'eps';
-
-type DownloadSize = {
-  width: number;
-  height: number;
-};
-
-const PRESET_SIZES: Record<string, DownloadSize> = {
-  small: { width: 200, height: 200 },
-  medium: { width: 400, height: 400 },
-  large: { width: 800, height: 800 },
-  xlarge: { width: 1200, height: 1200 },
-  '2xl': { width: 1600, height: 1600 },
-  '3xl': { width: 2000, height: 2000 },
-};
-```
-
-### 그라디언트 타입 [#gradient-types]
-
-```tsx
-type LinearGradient = {
-  type: 'linear';
-  stops: GradientStop[];
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-};
-
-type RadialGradient = {
-  type: 'radial';
-  stops: GradientStop[];
-  cx: number;
-  cy: number;
-  r: number;
-};
-
-type GradientStop = {
-  offset: number;
-  color: string;
-};
-```
-
-### 이미지 설정 [#image-settings]
-
-```tsx
-type ImageSettings = {
-  src: string;
-  height: number;
-  width: number;
-  excavate?: boolean;
-  x?: number;
-  y?: number;
-  /** Extra clear space around the logo when excavating, in pixels */
-  padding?: number;
-  opacity?: number;
-};
-```
-
-## 오류 정정 수준 [#error-correction-levels]
-
-```tsx
-const ERROR_LEVELS = {
-  L: 'Low (~7%)',
-  M: 'Medium (~15%)',
-  Q: 'Quartile (~25%)',
-  H: 'High (~30%)',
-} as const;
-```
-
-## 오류 처리 [#error-handling]
-
-비동기 함수는 try-catch로 감싸세요.
-
-```tsx
-try {
-  await downloadQRCode(props, options);
-} catch (error) {
-  console.error('Failed:', error);
-}
-```
-
-자주 발생하는 오류:
-- 잘못된 이미지 URL
-- 네트워크 오류
-- 잘못된 크기 매개변수
-- 사용할 수 없는 Canvas 컨텍스트
-
-## 브라우저 지원 [#browser-support]
-
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-## 서버 지원 [#server-support]
-
-Node.js 환경에서 작동합니다.
-- Next.js
-- Remix
-- Express.js
-- 기타 Node.js 프레임워크
-
-일부 기능은 브라우저 API가 필요합니다.
-- Canvas 작업
-- Clipboard API
-- File API
+`QRProps`에 React의 SVG 속성(`QRPropsSVG`)을 더한 것입니다. `QRCode`와 같은 prop에서 `logo`, `logoOptions`, `hideLogo`, `scale`을 뺀 구성입니다. 로고는 픽셀 단위의 `imageSettings`로 지정합니다.
+
+| 필드 | 타입 | 기본값 | 설명 |
+| --- | --- | --- | --- |
+| `src` | `string` | 필수 | 이미지이며 URL 또는 데이터 URL입니다 |
+| `width`, `height` | `number` | 필수 | `size`와 같은 픽셀 단위의 크기입니다 |
+| `excavate` | `boolean` | 필수 | 이미지 뒤쪽의 모듈을 비웁니다 |
+| `x`, `y` | `number` | 가운데 | 이미지의 왼쪽 위 모서리입니다 |
+| `padding` | `number` | `0` | 모듈을 비울 때 이미지 주변에 추가로 두는 빈 공간이며 픽셀 단위입니다 |
+| `shape` | `"square" \| "rounded" \| "circle"` | `"square"` | 이미지를 잘라 냅니다 |
+| `plate` | `string` | 없음 | 이미지 뒤에 이미지 모양대로 놓는 단색 판입니다 |
+
+코드가 복원할 수 있는 범위보다 큰 로고는 가운데를 기준으로 줄어듭니다(`capImageSettings`, `QRCode`와 같은 기준). 
+
+### QRCodeCanvas [#qrcodecanvas]
+
+`QRProps`에 React의 canvas 속성(`QRPropsCanvas`)을 더한 것으로, 기기의 픽셀 비율에 맞춰 `<canvas>`에 그립니다. 단색의 일반 사각형 모듈만 그립니다. 그라디언트는 첫 번째 색으로 대체되고, 패턴, 눈 색상, `eyeColors`, `moduleScale`, `art`, 템플릿 prop은 무시됩니다. `"use client"`가 포함되어 제공됩니다.
+
+### getQRAsSVG [#getqrassvg]
+
+`getQRAsSVG(props: QRPropsSVG): Promise<JSX.Element>`는 로고를 데이터 URL로 포함한 코드를 React 엘리먼트로 반환합니다. 문자열이 필요하면 `toSVGString` 또는 `getSVGString`을 사용하세요.
+
+## 다운로드 및 내보내기 [#download-and-export]
+
+| 함수 | 반환값 | 참고 |
+| --- | --- | --- |
+| `downloadQRCode(props, { format, size, filename?, quality? })` | `Promise<void>` | 파일을 저장합니다. `size`는 50~5000px이며 정사각형입니다. 래스터 형식의 기본 파일 이름에는 픽셀 크기가 들어갑니다 |
+| `getQRCodeDataUrl(props, format, size, { quality? })` | `Promise<string>` | 같은 파일을 데이터 URL로 반환합니다 |
+| `getQRAsWebP(props, { quality? })` | `Promise<Blob>` | `quality`를 지정하지 않으면 무손실입니다. 브라우저가 지원하지 않으면 직접 인코딩합니다 |
+| `copyQRCodeToClipboard(props, size?)` | `Promise<void>` | PNG를 클립보드에 복사합니다. 사용자 동작에서 호출하세요 |
+| `getSVGString(props)` | `Promise<string>` | 로고가 포함된 SVG 마크업입니다 |
+| `toSVGString(props)` | `string` | 동기 방식의 SVG 마크업이며 로고는 포함되지 않습니다. 어디서든 실행됩니다 |
+| `toSVGElement(props, document?)` | `SVGSVGElement` | QR 코드를 DOM 요소로 반환합니다 |
+| `getQRAsSVGDataUri(props)` | `Promise<string>` | `data:image/svg+xml,…`이며 모든 내보내기의 첫 단계입니다 |
+| `getQRAsCanvas(props, mimeType, getCanvas?)` | `Promise<string \| HTMLCanvasElement>` | 데이터 URL을 반환하며, `getCanvas`를 쓰면 캔버스 자체를 반환합니다 |
+| `getQRAsPNG(props, { size?, loadExternalLogos? })` | `Promise<Uint8Array>` | Node에서 `qrdx/node`로 가져오는 PNG 바이트입니다. `@resvg/resvg-js` 또는 `sharp`가 필요합니다 |
+| `validateSize(width, height)` | `{ isValid, error? }` | `downloadQRCode`가 적용하는 크기 규칙입니다 |
+| `getDownloadFilename(format, size, frame?)` | `string` | 기본 파일 이름입니다 |
+| `withQRSize(props, size)` | `QRProps` | `size`로 그려지는 props이며, 픽셀 로고도 함께 크기가 조정됩니다 |
+| `canvasToWebP(canvas, { quality? })`, `blobToDataUrl(blob)`, `encodeWebPLossless(rgba, width, height)` | | WebP 헬퍼입니다 |
+
+상수: `DownloadFormat`은 `"png" \| "jpg" \| "webp" \| "svg" \| "pdf" \| "eps"`입니다. `DOWNLOAD_FORMATS`는 각 형식을 MIME 타입과 확장자에 대응시킵니다. `PRESET_SIZES`에는 `small`(200), `medium`(400), `large`(800), `xlarge`(1200), `2xl`(1600), `3xl`(2000)이 있습니다. `DEFAULT_SIZE`는 128입니다.
+
+## 인쇄 및 EPS [#print-and-eps]
+
+| 함수 | 반환값 | 참고 |
+| --- | --- | --- |
+| `getPrintLayout(props, { size, unit?, bleed?, cropMarks?, colorMode? })` | `PrintLayout` | mm 단위의 실제 크기: `codeWidth`, `trimWidth`, `trimHeight`, `bleed`, `pageWidth`, `pageHeight`, `moduleSize`, `moduleCount`, `maxScanDistance`. `size`는 5mm~2m입니다 |
+| `getQRAsPrintPDF(props, options)` | `Promise<string>` | 벡터 PDF를 데이터 URL로 반환합니다. `jspdf`가 필요합니다 |
+| `getQRAsPrintPDFBuffer(props, options)` | `Promise<ArrayBuffer>` | 같은 PDF를 바이트로 반환하며 Node용입니다 |
+| `getQRAsPrintSVG(props, { size, unit? })` | `Promise<string>` | `width`와 `height`가 mm 또는 in인 SVG입니다 |
+| `downloadPrintPDF(props, options & { filename? })`, `downloadPrintSVG(props, options & { filename? })` | `Promise<void>` | 두 형식의 브라우저 다운로드입니다 |
+| `getQRAsEPS(props, { sizeMm?, bleedMm?, colorMode? })` | `Promise<string>` | EPSF-3.0 텍스트입니다. 이미지 채우기이면 `EPS_IMAGE_FILL_REASON` 오류를 던집니다 |
+| `downloadPrintEPS(props, options & { filename? })` | `Promise<void>` | 브라우저 다운로드입니다 |
+| `svgToEPS(svg, { width?, colorMode?, bleed?, bleedColor?, title? })` | `Promise<string>` | 라이브러리가 렌더링하는 모든 SVG를 변환합니다 |
+| `epsToDataUrl(eps)`, `hasImageFill(props)`, `rgbToCmyk(color)`, `getQRModuleCount(props)` | | 헬퍼입니다 |
+
+`PrintOptions`: `size`(숫자), `unit`(`"mm"` 또는 `"in"`, 기본값 `"mm"`), `bleed`(mm, 0~20), `cropMarks`(불리언), `colorMode`(`"rgb"` 또는 `"cmyk"`).
+
+## 스캔 점수 및 감지 [#scan-score-and-detection]
+
+| 함수 | 반환값 | 참고 |
+| --- | --- | --- |
+| `getScanScore(props, { sizes?, signal? })` | `Promise<ScanScoreResult>` | `{ score, grade, checks }`. 브라우저 전용이며 jsQR을 필요할 때 불러옵니다. 기본 크기는 96, 160, 320px(`SCAN_TEST_SIZES`)입니다 |
+| `getImageScanScore(imageOrBlob, options?)` | `Promise<ImageScanScoreResult>` | 기존 이미지에 대한 같은 기능이며 `data`와 `version`이 추가됩니다. 브라우저 전용 |
+| `getScanScoreFromPixels(pixels, options?)` | `Promise<ImageScanScoreResult>` | Node에서 RGBA 픽셀에 대한 이미지 점수입니다 |
+| `scanQRPixels(pixels, expected, { sizes? })` | `Promise<PixelScanResult>` | 픽셀이 원본 그대로, 그리고 카메라 모델을 거쳐서도 `expected`로 디코딩되는지 확인합니다. Node |
+| `getScanContrast(props)` | `{ ratio, required, inverted }` | 대비 검사만 단독으로 실행합니다 |
+| `getStylePairRisk(props)` | `StylePairRisk \| null` | 일부 스캐너가 인식하지 못하는 모양 조합이며 `fix`가 함께 제공됩니다 |
+| `handleImageLoad(img, size, returnFullData?)` | `Promise<string \| QRCode \| "NO_QR">` | `<img>`에서 QR 코드를 디코딩합니다. [QR 감지](/docs/qr-detection)를 참고하세요 |
+| `downloadImageWithBoundingBox(img, corners, filename)` | `void` | 찾은 코드에 윤곽선을 그린 이미지를 저장합니다 |
+
+등급은 `"great"`, `"ok"`, `"risky"`, `"fails"`입니다. 각 검사는 `{ id, passed, message, fix?, skipped? }`입니다. 대비 기준: `SCAN_CONTRAST_MIN` 4.5, `SCAN_CONTRAST_LOW` 3, `SCAN_CONTRAST_FAIL` 1.5, 그리고 코드 안의 그림은 `SCAN_IMAGE_CONTRAST_MIN` 7, 코드 뒤의 그림은 12입니다. 취약한 조합은 `WEAK_BODY_EYES`, `WEAK_DOT_EYES`, `WEAK_SHARP_DOT_EYES`, `SHARP_DOT_EYE_SAFE_BODIES`, `WEAK_EYES`, `WEAK_DOTS`로 제공됩니다.
+
+## 로고 [#logos]
+
+| 함수 | 반환값 | 참고 |
+| --- | --- | --- |
+| `getQRData(props)` | `imageSettings`가 포함된 props | 1024px 코드 기준으로 `logo`와 `logoOptions`를 배치하며, 오류 정정 예산을 넘지 않도록 제한합니다 |
+| `resolveQRCodeProps(props)` | `QRSVGOptions` | `QRCode`의 props를 렌더러가 그리는 형태로 변환하며 `scale`이 적용됩니다 |
+| `getLogoSizeLimit({ value, level, margin, shape, autoLevel, logoOptions })` | `number` | 들어갈 수 있는 가장 큰 `logoOptions.size`이며, 없으면 0입니다 |
+| `getLogoBlockDamage(...)`, `logoFitsBudget(...)`, `getCodewordMap(...)`, `damagedCodewords(...)` | | 예산을 구성하는 부분들입니다. `LOGO_EC_SAFETY`는 0.6입니다 |
+| `removeLogoBackground(src)` | `Promise<string \| null>` | 단색 배경을 제거한 로고를 PNG 데이터 URL로 반환합니다. 브라우저 |
+| `removeLogoBackdrop(pixels)` | `LogoPixels \| null` | RGBA 픽셀에 대한 같은 기능이며 어디서든 실행됩니다 |
+
+제한값: `LOGO_SIZE_MIN` 0.1, `LOGO_SIZE_MAX` 0.3, `LOGO_SIZE_DEFAULT` 0.25, `LOGO_PADDING_MAX` 2, `LOGO_SHAPES`(`square`, `rounded`, `circle`).
+
+## 프레임 [#frames]
+
+| 내보내기 | 설명 |
+| --- | --- |
+| `BUILT_IN_FRAMES` | 모든 기본 제공 프레임: `{ style, name, tags, labelOn, spec }`이며 선택기 순서와 같습니다 |
+| `BUILT_IN_FRAME_SPECS`, `getBuiltInFrame(style)` | 스타일별 사양입니다 |
+| `frameSpecOf(frame)` | 프레임이 그리는 사양이며, 없으면 `null`입니다 |
+| `getFrameColors(frame)` | 옵션 또는 사양의 기본값에서 가져온 `{ frame, text, accent }`입니다 |
+| `getFrameDimensions(size, frame)` | `size`px 코드에 대한 출력 `{ width, height }`입니다 |
+| `getFrameLayout(size, frame)`, `getFrameText(frame)`, `getFrameSecondaryText(frame)`, `frameLabels(layout)`, `isFrameActive(frame)` | 레이아웃 헬퍼입니다 |
+| `OFFICIAL_FRAMES`, `OFFICIAL_FRAME_INDEX`, `getOfficialFrame(id)`, `OFFICIAL_FRAME_COLLECTIONS`, `OFFICIAL_FRAME_COUNT` | 공식 프레임 라이브러리입니다. 프레임은 별도 모듈로 빌드되므로 사용하지 않으면 비용이 들지 않습니다 |
+| `resolveFrameSpec(spec)`, `getFrameSpecIssues(spec)`, `frameSpecSchema` | 사양을 검사합니다. `resolveFrameSpec`은 `FrameSpecError`를 던집니다 |
+| `importFrameSvg(svg, options)` | SVG 그림을 프레임 사양으로 변환하며 경고를 함께 제공합니다(`FRAME_IMPORT_LIMITS`) |
+| `frameSpecHash(spec)` | 사양의 안정적인 해시입니다 |
+
+상수: `FRAME_STYLES`({facts.frameStyles}가지 기본 스타일과 `none`), `DEFAULT_FRAME_TEXT`(`"Scan me"`), `FRAME_TEXT_MAX_LENGTH`(24), `FRAME_FONT_SCALE_MIN`(0.5), `FRAME_FONT_SCALE_MAX`(1.5), `CUSTOM_FRAME_STYLE`(`"custom"`), `GRADIENT_FRAME_DEFAULTS`.
+
+## 템플릿 [#templates]
+
+| 내보내기 | 설명 |
+| --- | --- |
+| `TEMPLATES` | 레지스트리: `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing` |
+| `getTemplate(id)` | `TemplateDefinition` 하나이며, 없으면 `undefined`입니다 |
+| `getAllTemplates()`, `getTemplateIds()` | 목록과 ID입니다 |
+| `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`, `defaultTemplate` | 정의 자체입니다. `DotRingProps`는 Dot Ring의 `customProps` 타입입니다 |
+
+`TemplateDefinition<TCustomProps>`는 `{ id, name, description?, spec?, wrapper(children, props?, config?) }`입니다. 래퍼는 300×300 캔버스에 그리며 `{ fgColor, bgColor, ...customProps }`와 `{ url, pixelSize }`를 받습니다.
+
+## 모양과 아트 [#shapes-and-art]
+
+| 내보내기 | 설명 |
+| --- | --- |
+| `createQRArtImage(pixels, { maxSize?, square? })` | RGBA 픽셀을 샘플링해 `QRArtImage`를 만듭니다. 어디서든 실행됩니다 |
+| `loadQRArtImage(source, { mode?, maxSize? })` | 파일, 데이터 URL 또는 `<img>`에서 같은 작업을 수행합니다. 브라우저 |
+| `isQRArtActive(art)`, `getQRArtVariant(art)`, `getQRArtColorIssue(props)` | 아트 헬퍼입니다 |
+| `createQRSilhouette(pixels, { mode?, cells? })`, `loadQRSilhouette(source, options?)` | 픽셀이나 그림으로 `shape`에 쓸 `QRSilhouette`를 만듭니다 |
+| `getQRSilhouetteFit(silhouette)` | `{ ok: true, share }` 또는 `{ ok: false, reason, message }`입니다 |
+| `isShapedCode(shape)`, `getQRShapePath(...)`, `circleQuietZone(...)`, `getLayoutMargin(...)` | 모양 헬퍼입니다 |
+| `clampModuleScale(scale, pattern?)`, `MODULE_SCALE_FLOOR` | 각 패턴이 스캔되는 가장 작은 `moduleScale`입니다 |
+
+상수: `QR_SHAPES`(`square`, `circle`, `heart`), `QR_CIRCLE_QUIET_MIN`(3), `QR_SILHOUETTE_MAX_CELLS`(64), `QR_ART_MODES`(`logo`, `halftone`), `QR_ART_VARIANTS`, `QR_ART_MAX_SAMPLE_SIZE`(192), `DEFAULT_ART_INTENSITY`(0.6).
+
+## 렌더링 기본 요소 [#rendering-primitives]
+
+`qrdx/core`에서 제공하는 React 없는 렌더러입니다.
+
+| 내보내기 | 설명 |
+| --- | --- |
+| `createQRCodeTree(options)` | 일반 `{ type, props, key }` 노드(`QRNode`)로 표현한 QR 코드입니다 |
+| `renderToString(tree)`, `renderToDOM(tree, document?)` | 마크업 또는 DOM 노드입니다 |
+| `toHyperscript(tree, createElement)` | 트리를 다른 프레임워크의 요소로 변환합니다. Vue 및 Preact 엔트리가 이를 기반으로 만들어졌습니다 |
+| `h(type, props, ...children)`, `Fragment`, `isQRNode(value)` | JSX 없이 템플릿 래퍼를 작성합니다 |
+| `getQRAsSVGNode(options)` | 로고가 포함된 `Promise<QRNode>`입니다 |
+| `getQRCodeData(props)`, `getQRCodeSVGProps(props, data)` | `resolveQRCodeProps`의 두 부분입니다 |
+
+## 유틸리티 [#utilities]
+
+`getSolidColor`, `getContrastRatio`, `getContrastLevel`, `getLuminance`, `hexToRgb`, `SUPPORTS_PATH2D`, `getColorString`, `normalizeColorConfig`, `isGradient`, `isImagePaint`, `decodePNGPixels`, `sanitizeFrameText`, `isLatin1Text`는 [유틸리티](/docs/utilities)에 설명되어 있습니다.
+
+## 타입과 옵션 목록 [#types-and-option-lists]
+
+아래 타입은 `qrdx`, `qrdx/core`, `qrdx/types`에서 가져옵니다. 옵션 목록은 일반 배열이며, zod 스키마(`qrPropsSchema`, `frameSchema`, `frameSpecSchema`, `colorConfigSchema`, `qrArtSchema`, `logoOptionsSchema`, `imageSettingsSchema` 등)는 이 배열을 바탕으로 만들어집니다.
+
+| 타입 | 형태 |
+| --- | --- |
+| `QRProps` | 위의 props 표에서 로고 API를 뺀 것 |
+| `QRCodeProps` | `QRProps`에 `logo`, `logoOptions`, `hideLogo`, `scale`을 더한 것 |
+| `QRSVGOptions` | `QRProps`에 루트 속성을 더한 것: 코어가 그리는 내용 |
+| `ColorConfig` | `string \| SolidColor \| LinearGradient \| RadialGradient \| AngularGradient \| ImagePaint` |
+| `LinearGradient` | `{ type: "linear", stops, angle? }`, `angle`은 도 단위이며 기본값은 0 |
+| `RadialGradient` | `{ type: "radial", stops }` |
+| `AngularGradient` | `{ type: "angular", stops, angle? }` |
+| `GradientStop` | `{ color, offset }`, `offset`은 0에서 100 |
+| `ImagePaint` | `{ type: "image", src, fit?, scale?, position?, opacity?, underlay? }` |
+| `ImageSettings`, `LogoOptions`, `EyeColors` | 위의 표와 같음 |
+| `QRFrame` | `{ style: FrameStyle, text?, color?, textColor?, secondaryText?, secondaryColor?, fontScale? }` |
+| `QRCustomFrame`, `AnyQRFrame`, `FrameSpec` | `{ style: "custom", spec, ...labels and colors }`, 유니온 타입, 그리고 스펙 형식 |
+| `QRArt`, `QRArtImage` | `{ mode, image, intensity?, variant?, matchEyes? }` 및 `{ width, height, data }` |
+| `QRCodeShape`, `QRSilhouette` | `"square" \| "circle" \| "heart"` 또는 `{ type: "silhouette", width, height, cells }` |
+| `TemplateDefinition`, `BaseTemplateProps`, `TemplateConfig` | 템플릿 |
+| `DownloadFormat`, `DownloadSize`, `DownloadOptions`, `PrintOptions`, `PrintLayout`, `EPSOptions` | 내보내기 |
+| `ScanScoreResult`, `ImageScanScoreResult`, `ScanCheck`, `ScanGrade`, `StylePairRisk` | 스캔 점수 |
+| `BodyPattern`, `CornerEyePattern`, `CornerEyeDotPattern`, `FrameStyle`, `ErrorLevel` | 옵션 유니온 타입 |
+
+옵션 목록: `BODY_PATTERN`, `CORNER_EYE_PATTERNS`, `CORNER_EYE_DOT_PATTERNS`, `FRAME_STYLES`, `QR_SHAPES`, `LOGO_SHAPES`, `EYE_POSITIONS`. 저장된 디자인에서는 계속 렌더링되는 지원 중단 값: `RETIRED_CORNER_EYE_PATTERNS`(`curly`), `RETIRED_CORNER_EYE_DOT_PATTERNS`(`diamond`, `star`, `banner`).
+
+## 실행 환경 [#where-things-run]
+
+- **어디서나, DOM 없이:** `toSVGString`, `createQRCodeTree`, `renderToString`, `getQRData`, 프레임 및 템플릿 헬퍼, `createQRArtImage`, `createQRSilhouette`, `getPrintLayout`, `getQRAsEPS`, `getQRAsPrintPDFBuffer`, `scanQRPixels`, `toQRdxCodeHTML`.
+- **브라우저:** `downloadQRCode`와 그 밖의 다운로드 함수, `copyQRCodeToClipboard`, `getQRAsCanvas`, `getScanScore`, `getImageScanScore`, `handleImageLoad`, `loadQRArtImage`, `loadQRSilhouette`, `removeLogoBackground`, `createQRCode`, 커스텀 엘리먼트.
+- **Node 전용:** `qrdx/node`의 `getQRAsPNG`.
+- **React Server Components:** `QRCode`, `QRCodeSVG`, 그리고 DOM이 필요 없는 모든 것. `QRCodeCanvas`는 Client Component입니다.
+
+## 관련 문서 [#related]
+
+<Cards>
+  <Card href="/docs/usage" title="기본 사용법" description="가장 자주 설정하는 props를 예제와 함께 소개합니다." />
+  <Card href="/docs/utilities" title="유틸리티" description="색상, 대비, 유효성 검사 헬퍼입니다." />
+  <Card href="/docs/qr-detection" title="QR 감지" description="이미지에서 코드를 읽는 방법입니다." />
+  <Card href="/docs/developers/rest-api" title="REST API와 OAuth" description="직접 호스팅하는 코드를 위한 HTTP API입니다." />
+</Cards>
