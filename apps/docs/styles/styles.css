@@ -13,6 +13,42 @@
 @import "fumadocs-ui/css/lib/default-colors.css";
 @import "fumadocs-ui/css/preset.css";
 
+/* The docs assistant's answers (components/chat/panel.tsx) render through
+   Streamdown, as the main app's AI chat does: its stylesheet and classes. */
+@import "streamdown/styles.css";
+@source "../node_modules/streamdown/dist";
+
+/*
+ * The docs assistant on phones (components/chat): fumadocs floats its AI
+ * panel as a card with a margin; here it is an edge-to-edge, full-height
+ * sheet, above the cookie banner (z-50) so the composer is never covered.
+ * Wider screens keep fumadocs' card, then the docked panel.
+ */
+/* The messages are flex items: without this a code block's widest line
+   would set their width instead of scrolling inside the block. */
+[data-docs-chat] ol > li,
+[data-docs-chat] ol > li > div,
+[data-docs-chat] figure {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* An answer's code has no per-line wrappers to carry the block's side
+   padding, so the block itself does. */
+[data-docs-chat] figure pre {
+  padding-inline: 1rem;
+}
+
+@media (max-width: 767px) {
+  aside:has([data-docs-chat]) {
+    --fd-ai-chat-width: 100vw;
+    inset: 0;
+    border: 0;
+    border-radius: 0;
+    z-index: 60;
+  }
+}
+
 /* fumadocs' search marks matches with the CSS Custom Highlight API through
    these two classes. Next's CSS optimizer (lightningcss) doesn't know the
    valid ::highlight() pseudo-element yet and warns on every build, so they
