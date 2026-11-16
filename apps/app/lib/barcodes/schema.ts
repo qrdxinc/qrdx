@@ -24,7 +24,7 @@ export const barcodeTitleSchema = z
 const formatField = z
   .enum(BARCODE_FORMAT_IDS)
   .describe(
-    "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, itf14, gs1-128, datamatrix, pdf417 or aztec",
+    "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, codabar, itf14, gs1-128, datamatrix, pdf417 or aztec",
   );
 
 const valueField = z

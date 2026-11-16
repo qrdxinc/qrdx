@@ -2420,6 +2420,8 @@
       "code128Chars": "Code 128 here takes plain ASCII letters, digits, spaces and symbols. Not allowed: {chars}",
       "code39Chars": "Code 39 takes capital letters, digits, spaces and - . $ / + % only. Not allowed: {chars}",
       "code39Lowercase": "Code 39 has no lowercase letters. Use capitals, or Code 128 for mixed case.",
+      "codabarStartStop": "Codabar starts and ends with A, B, C or D, with at least one character between them, e.g. A40156B.",
+      "codabarChars": "Codabar takes digits and - $ : / . + between its start and stop letters. Not allowed: {chars}",
       "gs1Enter": "Enter Application Identifiers in brackets with their values, e.g. (01)09501101530003.",
       "gs1Start": "Start with an Application Identifier in brackets, e.g. (01) for a GTIN, then its value.",
       "gs1Brackets": "Brackets don't line up: write each AI as (digits), followed by its value.",
