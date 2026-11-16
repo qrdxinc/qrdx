@@ -17,6 +17,8 @@
     "---Tools---",
     "image-api",
     "google-chart-api",
+    "goqr-api",
+    "quickchart-qr-api",
     "barcode-api",
     "ai-art-api",
     "mcp",
