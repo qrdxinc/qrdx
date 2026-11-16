@@ -1,0 +1,110 @@
+---
+title: Why a QR code stops working
+description: The usual reasons a printed QR code that used to work stops opening its page, how to tell which one you have, and what you can do about each.
+---
+
+Use this page when a printed code that used to work now opens an error, someone else's page or nothing at all. It covers the usual causes, how to tell which one you have, and what you, your current provider and QRdx can each do about it.
+
+Static codes don't stop on their own. A static code holds your link or text itself, so no service stands between the scan and your page. When a static code fails, the cause is the page it opens or the print. A dynamic code holds a short link instead, and a service sends each scan on to your page. If that service stops, the code stops. See [Static or dynamic, which do you need?](/docs/help/getting-started/static-vs-dynamic)
+
+## 1. See what the code holds
+
+Take a photo of the code and drop it into the [scan checker](/tools/scan-checker). It shows exactly what the code contains.
+
+- **Your own web address**, such as `https://example.com/menu`: the code is static. Go to [The page it opens is gone or has moved](#the-page-it-opens-is-gone-or-has-moved) or [The print is damaged, too small or too faint](#the-print-is-damaged-too-small-or-too-faint).
+- **A short link**, such as `qrdx.dev/q/…`, another service's short link, or a link on your own domain: the code is dynamic, and the service behind the link decides where scans go.
+
+## 2. Scan it and look at what opens
+
+| What opens | Go to |
+| --- | --- |
+| A page from your current provider: an error, a sign-in or upgrade page, or a notice that the code isn't active | [The trial ended](#the-trial-ended), [The plan lapsed](#the-plan-lapsed) or [A scan cap was reached](#a-scan-cap-was-reached) |
+| A browser error such as "server not found", or a page from a domain registrar | [The short link's domain expired](#the-short-links-domain-expired) |
+| "This campaign is paused", "This campaign has ended" or "This campaign hasn't started yet" | [The code is paused or past its end date](#the-code-is-paused-or-past-its-end-date) |
+| Your website, with a "page not found" error or the wrong page | [The page it opens is gone or has moved](#the-page-it-opens-is-gone-or-has-moved) |
+| Nothing: the camera doesn't react, or reads the code only sometimes | [The print is damaged, too small or too faint](#the-print-is-damaged-too-small-or-too-faint) |
+
+## The code's short link was switched off
+
+These causes apply to dynamic codes whose short link belongs to another service. Only that service can turn its link back on. QRdx can't: the printed code holds their link. What a given provider does when a trial ends or a plan lapses is on our [comparison pages](/compare).
+
+### The trial ended
+
+**How to tell:** you made the code during a free trial, and it stopped around the day the trial ended. Some providers switch off dynamic codes made in a trial when it ends.
+
+**What to do:** sign in to your current provider and check the code's status. Starting a paid plan there may turn the code back on. If you'd rather not pay for it, the code needs a reprint: see [If your codes have already stopped](#if-your-codes-have-already-stopped).
+
+### The plan lapsed
+
+**How to tell:** a payment failed, a card expired, or the plan was canceled, and every dynamic code on the account stopped at about the same time. Many providers stop dynamic codes when a paid plan ends.
+
+**What to do:** sign in to your current provider, check the billing page, and pay or restart the plan if you want the codes back. If the printed codes can't be reprinted soon, keep the plan active until they are.
+
+On QRdx, billing never turns a code off. Dynamic codes keep redirecting after a downgrade, a failed payment or a cancellation, on every plan, Free included. See [What happens to your codes if you stop paying](/docs/help/account-and-billing/never-hostage).
+
+### A scan cap was reached
+
+**How to tell:** the code worked for a while, then stopped partway through a month. Some plans cap scans, as a monthly total or a number per code, and pause or stop codes once the cap is reached.
+
+**What to do:** check the scan count and the plan's limits in your current provider's dashboard. Wait for the cap to reset, or move to a plan with a higher one.
+
+QRdx doesn't cap scans on any plan. The only scan limit on QRdx is one you set on a code yourself: see [The code is paused or past its end date](#the-code-is-paused-or-past-its-end-date).
+
+### The short link's domain expired
+
+**How to tell:** the code holds a short link on your own domain, such as `go.example.com/menu`, and scanning it shows a browser error or a page from a domain registrar instead of your provider's redirect.
+
+**What to do:** renew the domain at your registrar, then check that its DNS records still point where your provider told you to point them. When the domain resolves again, the codes work again, as long as the plan behind them is still active. No QR provider can serve a domain that has expired.
+
+<IfAvailable feature="customDomains">
+
+If the codes are on a domain you own, you can also move that domain to QRdx and keep the printed codes working without a reprint, as long as their back-halves fit QRdx's rules. Custom domains need Pro or Business. See [Your own domain](/docs/migrate#your-own-domain-go-yourbrand-com) in the migration guide.
+
+</IfAvailable>
+
+## The code is paused or past its end date
+
+**How to tell:** the scan shows a plain page that reads "This campaign is paused", "This campaign has ended" or "This campaign hasn't started yet". QRdx shows these pages when one of a code's own settings stops it. A code is paused, has a start or end date, or has a scan limit only when someone in your workspace set it.
+
+**What to do:** open the code from **Codes**, go to its **Settings** tab and open **Access & schedule**. Turn off **Pause code**, change **Starts** or **Ends**, or raise the **Scan limit**, then click **Save changes**. See [Pause, schedule or limit a code](/docs/help/dynamic-codes/pause-schedule-limit), and [A scan shows an error page](/docs/help/troubleshooting/error-pages) for every other page a scan can show.
+
+## The page it opens is gone or has moved
+
+**How to tell:** the code opens your website, but the page says "page not found" or shows something you didn't expect. The code works; the page it points to doesn't.
+
+**What to do:**
+
+- **Dynamic code:** change its destination to the page's new address. On QRdx, open **Edit link**, change the **Destination URL** and click **Save changes**; the printed code opens the new address on the next scan. See [Change where a code points](/docs/help/dynamic-codes/change-the-link). At another provider, change it in their dashboard.
+- **Static code:** the address is printed inside the code, so nothing can change it. Put the page back at its old address, or have your website redirect the old address to the new one. Otherwise, reprint, and consider a dynamic code this time.
+
+If a dynamic code opens a page you didn't expect, see [A code opens the wrong page](/docs/help/troubleshooting/wrong-destination).
+
+## The print is damaged, too small or too faint
+
+**How to tell:** the camera doesn't react, or reads the code only from some angles. The [scan checker](/tools/scan-checker) can't read a photo of it, or reads it poorly.
+
+**What to do:** a damaged print can't be repaired, so reprint it. Before you do, check the size, the contrast and the empty border around the code, the usual reasons a new print fails too. See [A code won't scan](/docs/help/troubleshooting/wont-scan).
+
+## If your codes have already stopped
+
+When a provider has switched off short links on its own domain, there's nothing left to move: the printed codes only work again if that provider turns them back on. You have two options.
+
+1. **Reprint now** with a code you control. If what the code holds won't change, a static code is free and can't be switched off. A dynamic code on QRdx lets you change the destination later without another reprint. See [Create a dynamic QR code](/docs/help/dynamic-codes/create).
+2. **Bridge while you reprint**, when a reprint takes time, such as packaging or signs. Pay for the old plan again, bring the codes into QRdx, and point each old code at its new QRdx code. For some providers, **Keep my printed codes working** does this for you after the import; for the others, you change each old code's destination in their dashboard. See [Keep printed codes working](/docs/migrate#keep-printed-codes-working). The old plan has to stay active the whole time, and every scan goes through the old provider first. Cancel it only when the last old print is gone.
+
+<IfAvailable feature="customDomains">
+
+Codes on a domain you own are different: the domain is yours, so you can move it to QRdx and the printed codes work again once it's verified, with no reprint, as long as their back-halves fit QRdx's rules. You'll need each code's back-half and destination, from an export or written out by hand. See [Your own domain](/docs/migrate#your-own-domain-go-yourbrand-com).
+
+</IfAvailable>
+
+## Still stuck
+
+[Contact support](/docs/help/contact) with the code's short link, or a photo of the code, and what a scan shows.
+
+## Related
+
+- [What happens to your codes if you stop paying](/docs/help/account-and-billing/never-hostage)
+- [Move your codes to QRdx](/docs/migrate)
+- [A scan shows an error page](/docs/help/troubleshooting/error-pages)
+- [A code won't scan](/docs/help/troubleshooting/wont-scan)

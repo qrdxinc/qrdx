@@ -1,0 +1,181 @@
+---
+title: Replace the QuickChart QR API
+description: Map the text, size, ecLevel, dark and light parameters of quickchart.io/qr to the free QRdx image API, and rewrite every old URL in your files with one command.
+---
+
+By the end of this page, every QR code your pages, emails or templates load from QuickChart's `quickchart.io/qr` loads from the QRdx [image API](/docs/developers/image-api) instead, at the same size and error correction level, with no account or key.
+
+Both APIs work the same way: a `GET` URL that returns the image. `size` and `margin` keep their names and units, so the change is a new host, four renamed parameters and three defaults. The QuickChart parameters on this page come from its [QR code documentation](https://quickchart.io/documentation/qr-codes/), checked on November 17, 2026.
+
+## Before you start
+
+- Find the files that use the old API. The second pattern finds QuickChart's Google-style QR URLs, covered [below](#google-style-urls):
+
+```bash title="Terminal"
+grep -rlE "quickchart\.io/(qr\?|chart\?[^\"' ]*cht=qr)" .
+```
+
+- Work in a git checkout or another place where you can review the change before it goes live.
+
+## 1. Compare one URL
+
+The two URLs below ask for the same code: a 300 × 300 PNG of `https://example.com` at error correction `Q` with a 2-module margin.
+
+```txt title="Before and after"
+https://quickchart.io/qr?text=https%3A%2F%2Fexample.com&size=300&ecLevel=Q&margin=2
+https://api.qrdx.dev/v1/qr?format=png&data=https%3A%2F%2Fexample.com&size=300&level=Q&margin=2
+```
+
+```bash title="Terminal"
+curl -o after.png "https://api.qrdx.dev/v1/qr?format=png&data=https%3A%2F%2Fexample.com&size=300&level=Q&margin=2"
+file after.png
+# after.png: PNG image data, 300 x 300, 8-bit/color RGBA, non-interlaced
+```
+
+## 2. Map the parameters
+
+| QuickChart | QRdx | Notes |
+| --- | --- | --- |
+| `text=<text>` | `data=<text>` | URL-encoded the same way, up to 2,048 characters |
+| `size=<pixels>` | `size=<pixels>` | The same name: `64` to `2048` pixels. QuickChart goes up to `3000` |
+| `margin=<modules>` | `margin=<modules>` | The same name and unit, and the same default of `4`. QRdx takes `0` to `16` |
+| `ecLevel=<level>` | `level=<level>` | The same letters, `L`, `M`, `Q` and `H` |
+| `dark=<hex>` | `fg=<hex>` | Hex with 3, 4, 6 or 8 digits. Leave out the `#` or write it as `%23` |
+| `light=<hex>` | `bg=<hex>` | As `fg`. `00000000` gives a transparent background |
+| `finderColor=<hex>` | `eyeColor=<hex>&dotColor=<hex>` | QRdx colors each corner eye's frame (`eyeColor`) and the dot inside it (`dotColor`) separately |
+| `dotStyle` | `body` | `square`, `rounded` or `circle` for QuickChart's `square`, `rounded` and `dot`. QRdx has {facts.bodyPatterns} shapes in all |
+| `finderStyle` | `eye` | `square`, `rounded` or `circle` |
+| `finderDotStyle` | `dot` | `square`, `rounded` or `circle`. QuickChart matches it to `finderStyle` when it's missing; QRdx draws `square` unless you set `dot` |
+| `format=png` or `svg` | the same | QRdx has no `jpg`, `jpeg` or `base64`: use `png`, or `webp` for a smaller file |
+| `centerImageUrl=<url>` | none | QRdx never fetches a logo from a web address. Use `logoIcon` for a quick icon or a brand logo, or upload your logo and pass `logoFileId` with an API key. See [Logos](/docs/developers/image-api#logos) |
+| `caption=<text>` | `frame=banner-bottom&frameText=<text>` | The nearest match: a built-in frame with a label of up to 24 characters. The frame adds to the image instead of fitting inside `size`. See [Frames](/docs/features/frames) |
+| `GET` or `POST` | `GET` only | A `POST` to the image API returns `405`. Send the JSON body's fields as query parameters |
+
+Three defaults differ, and the rewrite below sets each one so the codes look as they did:
+
+- **Format:** QuickChart returns PNG. QRdx returns SVG unless you ask for `png`, `webp` or `eps`. Keep PNG for email, since many email clients don't show SVG.
+- **Size:** QuickChart draws `150`, QRdx `512`.
+- **Error correction:** QuickChart uses `M`, or `H` with a center image. QRdx uses `Q`, which survives more damage but makes a denser code. Drop the added `level=M` if you'd rather have QRdx's default.
+
+## 3. Rewrite the URLs in your files
+
+This rewrites every `quickchart.io/qr` URL in the files you name. It changes the host and path, renames `text`, `ecLevel`, `dark` and `light`, swaps JPEG for PNG, and adds `format=png`, `size=150` and `level=M` where a URL relied on QuickChart's defaults. Perl comes with macOS and most Linux distributions.
+
+```bash title="Terminal"
+perl -pi -e 's{https?://quickchart\.io/qr\?([^\s"\x27<>)]*)}{my $q = $1; $q =~ s/(^|[&;])text=/${1}data=/; $q =~ s/(^|[&;])ecLevel=/${1}level=/; $q =~ s/(^|[&;])dark=/${1}fg=/; $q =~ s/(^|[&;])light=/${1}bg=/; $q =~ s/(^|[&;])format=\.?(?:jpe?g|png)(?=[&;]|$)/${1}format=png/i; $q =~ s/(^|[&;])format=\.svg/${1}format=svg/i; my $p = ""; $p .= "format=png&" unless $q =~ /(^|[&;])format=/; $p .= "size=150&" unless $q =~ /(^|[&;])size=/; $p .= "level=M&" unless $q =~ /(^|[&;])level=/; "https://api.qrdx.dev/v1/qr?$p$q"}ge' index.html
+```
+
+Run on a file with three old tags:
+
+```html title="index.html (before)"
+<img src="https://quickchart.io/qr?text=https%3A%2F%2Fexample.com" alt="QR">
+<img src="https://quickchart.io/qr?text=Hello%20world&dark=f00&light=0ff&ecLevel=Q&format=svg" alt="QR 2">
+<img src="https://quickchart.io/qr?text=https%3A%2F%2Fexample.com%2Fmenu&amp;size=300&amp;margin=2&amp;format=jpg" alt="QR 3">
+```
+
+it produces:
+
+```html title="index.html (after)"
+<img src="https://api.qrdx.dev/v1/qr?format=png&size=150&level=M&data=https%3A%2F%2Fexample.com" alt="QR">
+<img src="https://api.qrdx.dev/v1/qr?size=150&data=Hello%20world&fg=f00&bg=0ff&level=Q&format=svg" alt="QR 2">
+<img src="https://api.qrdx.dev/v1/qr?level=M&data=https%3A%2F%2Fexample.com%2Fmenu&amp;size=300&amp;margin=2&amp;format=png" alt="QR 3">
+```
+
+The command leaves the style parameters (`finderColor`, `dotStyle`, `finderStyle`, `finderDotStyle`), `centerImageUrl` and `caption` as they are. QRdx ignores them, so those codes come out with plain square shapes and no logo or caption: change them by hand with the table above.
+
+The command also stops at a quote mark, so a URL with a bare `'` in its text, such as `text=Here's%20my%20text`, is only rewritten up to the quote. Encode it as `%27` first. Where code adds parameters after a variable, the part after the variable keeps its old names. This lists what may be left, along with any other URL that uses those names; fix the QR ones by hand, then run it again:
+
+```bash title="Terminal"
+grep -rnE "quickchart\.io/qr\?|[?&;](text=|ecLevel=|dark=|light=)" .
+```
+
+## 4. Change the code that builds URLs
+
+```js title="qr.js"
+// Before
+const src = `https://quickchart.io/qr?size=200&text=${encodeURIComponent(link)}`;
+
+// After
+const src = `https://api.qrdx.dev/v1/qr?format=png&size=200&level=M&data=${encodeURIComponent(link)}`;
+```
+
+If you sent a `POST` with a JSON body, build the same URL from its fields instead:
+
+```js title="qr.mjs"
+import { writeFile } from "node:fs/promises";
+
+const url = new URL("https://api.qrdx.dev/v1/qr");
+url.searchParams.set("data", "https://example.com/?a=1&b=2");
+url.searchParams.set("size", "300");
+url.searchParams.set("format", "png");
+
+const response = await fetch(url);
+await writeFile("qr.png", Buffer.from(await response.arrayBuffer()));
+```
+
+```txt title="Output"
+qr.png: PNG image data, 300 x 300, 8-bit/color RGBA, non-interlaced
+```
+
+## Google-style URLs
+
+QuickChart also answers Google Chart URLs at `quickchart.io/chart?cht=qr…`. Those use Google's parameters (`chl`, `chs`, `chld`), which [Replace the Google Chart QR code API](/docs/developers/google-chart-api) maps one by one. This rewrites them, and only the QR ones: a `quickchart.io/chart` URL without `cht=qr` is a chart, and stays as it is.
+
+```bash title="Terminal"
+perl -pi -e 's{https?://quickchart\.io/chart\?((?=[^\s"\x27<>)]*cht=qr)[^\s"\x27<>)]*)}{my $q = $1; $q =~ s/(^|[&;])chl=/${1}data=/; $q =~ s/(^|[&;])chs=(\d+)x\d+/${1}size=$2/; $q =~ s/(^|[&;])chld=([LMQH])(?:\||%7C)(\d+)/${1}level=$2&margin=$3/i; $q =~ s/(^|[&;])chld=([LMQH])/${1}level=$2/i; "https://api.qrdx.dev/v1/qr?format=png&$q"}ge' index.html
+```
+
+```html title="index.html (before)"
+<img src="https://quickchart.io/chart?cht=qr&chs=150x150&chl=Testing123" alt="QR">
+<img src="https://quickchart.io/chart?c={type:'bar',data:{labels:['A','B'],datasets:[{data:[1,2]}]}}" alt="A bar chart">
+```
+
+```html title="index.html (after)"
+<img src="https://api.qrdx.dev/v1/qr?format=png&cht=qr&size=150&data=Testing123" alt="QR">
+<img src="https://quickchart.io/chart?c={type:'bar',data:{labels:['A','B'],datasets:[{data:[1,2]}]}}" alt="A bar chart">
+```
+
+QRdx ignores the leftover `cht=qr`.
+
+## If something goes wrong
+
+### `400` with `"param": "data"`
+
+The URL still says `text` instead of `data`, often in code the rewrite didn't reach.
+
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"data","message":"Invalid input: expected string, received undefined"}]},"status":400}
+```
+
+### `400` with `"param": "size"`
+
+A size over 2048 pixels, or under 64, is refused. Change those sizes by hand.
+
+```json title="400 Bad Request"
+{"code":"VALIDATION_ERROR","message":"Invalid query parameters","data":{"details":[{"param":"size","message":"Too big: expected number to be <=2048"}]},"status":400}
+```
+
+### `400` with `"param": "format"`
+
+`jpg`, `jpeg` or `base64` came from code the rewrite didn't reach. Use `png`. For a data URI, fetch the PNG and encode it yourself.
+
+### The logo or caption is missing
+
+QRdx ignores `centerImageUrl` and `caption`. Use `logoIcon` or `logoFileId` for the logo and a `frame` for the label, as in the table above.
+
+### `429` after a bulk reload
+
+The image API allows {facts.imageApiPerMinute} requests a minute per IP address. Wait the seconds in the `Retry-After` header, or generate the files once instead of loading them live.
+
+## What else to know
+
+- **Caching:** the same URL always returns the same bytes, so responses are cached for a year (`Cache-Control: public, max-age=31536000, immutable`). Renders with a logo you uploaded (`logoFileId`) aren't cached.
+- **More options:** more shapes, gradients and frames. Try them in the [URL builder](/qr-code-api), or read the [parameters](/docs/developers/image-api#parameters).
+- **Self-hosting:** a [self-hosted](/docs/self-hosting) QRdx serves the same API at `/api/v1/qr` on your own domain.
+
+## Related
+
+- [QR code image API](/docs/developers/image-api): every parameter, styles, logos and limits
+- [Replace the Google Chart QR code API](/docs/developers/google-chart-api): the parameters of Google-style URLs
+- [CLI](/docs/developers/cli): make the files once, including a whole CSV
+- [Render a QR code image](/docs/developers/api/get-qr-image): the reference page with a Try it panel
