@@ -146,6 +146,27 @@ describe("the MCP docs tools", () => {
     expect(docsCalls).toEqual(["/api/search?query=webhooks"]);
   });
 
+  it("read_docs_page returns the page as Markdown with its title and URL", async () => {
+    const { result } = await call("read_docs_page", { path: "/docs/webhooks" });
+    expect(result.isError).toBeFalsy();
+    expect(result.content[0].text).toBe(
+      "# Webhooks\nURL: http://localhost:3000/docs/webhooks\n\nQRdx calls your URL when a code is scanned.",
+    );
+    expect(result.structuredContent).toEqual({
+      title: "Webhooks",
+      url: "http://localhost:3000/docs/webhooks",
+      path: "/docs/webhooks",
+      language: "en",
+      truncated: false,
+    });
+    // The same page by URL comes from the cache.
+    const again = await call("read_docs_page", {
+      path: "http://localhost:3000/docs/webhooks",
+    });
+    expect(again.result.isError).toBeFalsy();
+    expect(docsCalls).toEqual(["/docs/webhooks.md"]);
+  });
+
   it("still takes `language`, and ignores it: the docs are English only", async () => {
     const { result } = await call("search_docs", {
       query: "webhook events",
@@ -169,28 +190,8 @@ describe("the MCP docs tools", () => {
       path: "/docs/webhooks",
       language: "en",
     });
-    for (const path of docsCalls) expect(path).toBe("/docs/webhooks.md");
-  });
-
-  it("read_docs_page returns the page as Markdown with its title and URL", async () => {
-    const { result } = await call("read_docs_page", { path: "/docs/webhooks" });
-    expect(result.isError).toBeFalsy();
-    expect(result.content[0].text).toBe(
-      "# Webhooks\nURL: http://localhost:3000/docs/webhooks\n\nQRdx calls your URL when a code is scanned.",
-    );
-    expect(result.structuredContent).toEqual({
-      title: "Webhooks",
-      url: "http://localhost:3000/docs/webhooks",
-      path: "/docs/webhooks",
-      language: "en",
-      truncated: false,
-    });
-    // The same page by URL comes from the cache.
-    const again = await call("read_docs_page", {
-      path: "http://localhost:3000/docs/webhooks",
-    });
-    expect(again.result.isError).toBeFalsy();
-    expect(docsCalls).toEqual(["/docs/webhooks.md"]);
+    // The English page, already read above: nothing asked for /es/docs/….
+    expect(docsCalls).toEqual([]);
   });
 
   it("read_docs_page refuses paths outside the docs, hidden pages and missing pages", async () => {
