@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 // right, and the filters in use as removable chips below. Every filter lives
 // in the URL (codesHref), so a filtered list can be linked and reloaded.
 
-import { Tick, Close as X } from "@repo/design-system/components/icons";
+import { Star, Tick, Close as X } from "@repo/design-system/components/icons";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -42,7 +42,6 @@ import {
   Edit2,
   Filter,
   Global,
-  Star1,
   Tag2,
   Trash as Trash2,
 } from "iconsax-reactjs";
@@ -377,7 +376,7 @@ export function CodesToolbar({
               <DropdownMenuItem
                 onSelect={() => go({ favorites: !filters.favorites })}
               >
-                <Star1
+                <Star
                   aria-hidden
                   variant={filters.favorites ? "Bold" : "Linear"}
                 />

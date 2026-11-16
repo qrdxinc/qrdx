@@ -1,7 +1,7 @@
 {
   "name": "QRdx",
   "short_name": "QRdx",
-  "description": "AI-powered, fully customizable QR codes for designers, businesses, and developers. Open-source with batteries included.",
+  "description": "Free, open-source QR code generator: unlimited codes with logos, colors and frames, no signup or watermark. Plus dynamic codes and scan analytics.",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -16,7 +16,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#10b981",
+  "theme_color": "#0051ff",
   "background_color": "#0a0a0a",
   "display": "standalone",
   "start_url": "/",
