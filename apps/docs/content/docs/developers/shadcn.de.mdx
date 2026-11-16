@@ -1,33 +1,31 @@
 ---
 title: "shadcn/ui-Registry"
-description: "Acht QR-Code-Komponenten für shadcn/ui-Projekte, gebaut auf der qrdx-Bibliothek. Installiere eine mit einem einzigen Befehl und besitze den Code."
+description: "Acht QR-Code-Komponenten für shadcn/ui-Projekte, gebaut auf der qrdx-Bibliothek. Installiere eine mit der shadcn CLI und besitze den Code."
 icon: Blocks
 ---
 
-QRdx veröffentlicht eine [shadcn/ui](https://ui.shadcn.com)-Registry mit QR-Code-Komponenten, die auf der [`qrdx`](https://www.npmjs.com/package/qrdx)-Bibliothek aufbauen. Die shadcn CLI kopiert den Quellcode in dein Projekt, sodass der Code dir gehört und du ihn ändern kannst.
+QRdx veröffentlicht eine shadcn/ui-Registry mit QR-Code-Komponenten, die auf der `qrdx`-Bibliothek basieren. Die shadcn CLI kopiert den Quellcode jeder Komponente in dein Projekt, sodass der Code dir gehört und du ihn ändern kannst. Nutze die Registry, wenn du ein fertiges UI-Element brauchst, etwa mit Download-Buttons, einer Karte, einem Teilen-Dialog oder einem Scanner. Nutze das `QRCode` der Bibliothek selbst, wenn du nur den Code brauchst.
 
 <NpmStatus package="qrdx" />
 
 <PackageManagerTabs command="npx shadcn@latest add https://qrdx.dev/r/qr-code.json" />
 
-Jede Komponente hat eine eigene Seite mit Live-Vorschau, Quellcode, Installationsschritten, Beispielen und API-Referenz.
-
-[Im Playground ausprobieren](/playground?open=code&lang=shadcn): Gestalte dort einen Code und kopiere ihn dann für die QR-Code-Komponente der Registry.
+Jede Komponente hat eine eigene Seite mit Live-Vorschau, Quellcode, Installationsschritten, Beispielen und einer Props-Tabelle. Hast du einen Code im [Playground](/playground?open=code&lang=shadcn) gestaltet? Kopiere ihn dort für die QR-Code-Komponente der Registry.
 
 ## Komponenten [#components]
 
 <Cards>
   <Card title="QR Code" href="/docs/components/qr-code" icon={<QrCode />}>
-    Gestalteter, barrierefreier QR-Code mit Download-Buttons, Farben, Verläufen, Mustern, Logos und Rahmenvorlagen.
+    Ein gestalteter, barrierefreier QR-Code mit Download-Buttons. Farben, Verläufe, Muster, Logos und Rahmenvorlagen.
   </Card>
-  <Card title="QR Code Card" href="/docs/components/qr-code-card" icon={<Frame />}>
-    Eine Karte mit dem Code in einem „Scan me"-Rahmen, einem Titel, einer Beschreibung und Platz für Aktionen.
+  <Card title="QR Code Card" href="/docs/components/qr-code-card" icon={<CreditCard />}>
+    Eine Karte mit dem Code in einem „Scan me“-Rahmen, einem Titel, einer Beschreibung und Platz für Aktionen.
   </Card>
   <Card title="QR Code Download" href="/docs/components/qr-code-download" icon={<Download />}>
     Ein Menü, das PNG, SVG, JPG oder PDF in der gewählten Größe exportiert oder das Bild kopiert.
   </Card>
   <Card title="QR Code Share Dialog" href="/docs/components/qr-code-share-dialog" icon={<Webhook />}>
-    Ein Dialog mit dem Code für einen Link, einem Kopieren-Button, einem PNG-Download und dem nativen Teilen-Dialog.
+    Ein Dialog mit dem Code für einen Link, einem Kopieren-Button, einem PNG-Download und dem nativen Teilen-Menü.
   </Card>
   <Card title="QR Code Generator" href="/docs/components/qr-code-generator" icon={<Sparkles />}>
     Ein Texteingabefeld mit Live-Vorschau, Stilvorlagen und Download-Buttons.
@@ -45,15 +43,15 @@ Jede Komponente hat eine eigene Seite mit Live-Vorschau, Quellcode, Installation
 
 ## Was installiert wird [#what-gets-installed]
 
-Jede Komponente ist eine einzelne Datei in `components/`. Die CLI installiert außerdem `qrdx` (plus `lucide-react` für die Icons, die manche Komponenten verwenden) und fügt die shadcn/ui-Komponenten hinzu, auf denen sie aufbaut, etwa `button`, `card`, `dialog`, `dropdown-menu` oder `input`.
+Jede Komponente ist eine einzelne Datei in deinem `components`-Ordner. Die CLI installiert außerdem `qrdx` (plus `lucide-react` für die Icons, die die meisten Komponenten verwenden) und fügt die shadcn/ui-Komponenten hinzu, auf denen sie aufbaut, etwa `button`, `card`, `dialog`, `dropdown-menu`, `input` oder `label`. Die Seite jeder Komponente listet ihre eigenen Abhängigkeiten unter **Manual** in den Installations-Tabs auf.
 
-Den vollständigen Index findest du unter [`https://qrdx.dev/r/registry.json`](https://qrdx.dev/r/registry.json).
+Den vollständigen Index findest du unter [`https://qrdx.dev/r/registry.json`](https://qrdx.dev/r/registry.json) und jedes einzelne Element unter `https://qrdx.dev/r/<name>.json`.
 
-## Den Registry-Namespace verwenden [#using-the-registry-namespace]
+## Installation über den Namen [#install-by-name]
 
-Um mit einem Kurznamen zu installieren, füge die Registry in deine `components.json` ein:
+Für die Installation mit einem Kurznamen fügst du die Registry zu deiner `components.json` hinzu:
 
-```json
+```json title="components.json"
 {
   "registries": {
     "@qrdx": "https://qrdx.dev/r/{name}.json"
@@ -61,12 +59,22 @@ Um mit einem Kurznamen zu installieren, füge die Registry in deine `components.
 }
 ```
 
-Füge dann eine oder mehrere Komponenten per Namen hinzu:
+Füge dann eine oder mehrere Komponenten über den Namen hinzu:
 
 <PackageManagerTabs command="npx shadcn@latest add @qrdx/qr-code @qrdx/qr-code-download @qrdx/qr-code-share-dialog" />
 
-## Styling [#styling]
+## Styling und Theming [#styling-and-theming]
 
-Die Komponenten nutzen Tailwind-Klassen mit den Standard-Theme-Tokens von shadcn/ui (`bg-card`, `border`, `text-muted-foreground`, `ring-ring`) sowie deine eigenen Button-, Card-, Dialog- und Input-Komponenten, sodass sie deinem Theme und dem Dark Mode folgen. QR-Codes behalten standardmäßig einen hellen Hintergrund, weil dunkle Module auf einer hellen Fläche mit jedem Lesegerät gescannt werden können.
+Die Komponenten nutzen Tailwind-Klassen mit den Standard-Theme-Tokens von shadcn/ui (`bg-card`, `border`, `text-muted-foreground`, `ring-ring`) sowie deine eigenen Button-, Card-, Dialog- und Input-Komponenten. Sie folgen daher deinem Theme und dem Dark Mode. QR-Codes behalten standardmäßig einen hellen Hintergrund, weil dunkle Module auf einer hellen Fläche mit jedem Lesegerät scannen. Auf der Seite [QR Code](/docs/components/qr-code#dark-mode) siehst du, wie sie stattdessen dem Theme folgen.
 
-PDF-Downloads benötigen das optionale Paket `jspdf` (`npm install jspdf`).
+Jede Komponente ist eine Client Component (ihre Datei beginnt mit `"use client"`), wegen ihrer Buttons und ihres Zustands. Der Code selbst wird trotzdem auf dem Server gerendert, sodass er im HTML der Seite steht, bevor die Buttons interaktiv werden. Eine Seite als Server Component kann jede davon importieren und Serverdaten als Props übergeben.
+
+PDF-Downloads brauchen das optionale Paket `jspdf` (`npm install jspdf`). Alles andere funktioniert, sobald die CLI fertig ist.
+
+## Verwandte Themen [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code" title="QR Code" description="Die Komponente, mit der die meisten Projekte starten." />
+  <Card href="/docs/nextjs" title="QR-Codes in Next.js" description="Die Bibliothek allein im App Router, ohne die Registry." />
+  <Card href="/docs/getting-started" title="Erste Schritte mit der React-Bibliothek" description="Installiere qrdx und rendere einen Code ohne shadcn/ui." />
+</Cards>

@@ -3,76 +3,86 @@ title: "Login único (SSO)"
 description: "Deixe sua equipe entrar no QRdx com o provedor de identidade da sua empresa, via OIDC ou SAML 2.0. Faz parte do plano Business."
 ---
 
-O login único permite que as pessoas da sua empresa entrem no QRdx pelo seu provedor de identidade, em vez de usar um código por e-mail, o Google ou o GitHub. Você configura uma conexão para um domínio de e-mail, comprova que é dono do domínio, e as pessoas desse domínio recebem a opção de login único quando digitam o e-mail de trabalho para entrar. Entrar assim torna a pessoa membro do seu workspace. Você também pode [exigir o login único](#require-single-sign-on), para que o seu provedor de identidade seja o único caminho de acesso desse domínio.
+O login único permite que as pessoas da sua empresa entrem no QRdx pelo seu provedor de identidade, em vez de usar um código por e-mail, o Google ou o GitHub. Você configura uma conexão para um domínio de e-mail, comprova que é dono do domínio, e as pessoas desse domínio recebem a opção de login único ao digitar o e-mail de trabalho. Entrar dessa forma as torna membros do seu workspace. Você também pode [exigir o login único](#require-single-sign-on), para que o seu provedor de identidade seja a única forma de entrar para esse domínio.
 
-O login único faz parte do plano **Business**. Um workspace tem esse recurso quando um dos proprietários ou membros de cobrança está no Business. Veja [Assentos e limites do workspace](/docs/help/teams/seats).
+<Callout type="info">
+  O login único faz parte do plano **Business**. Um workspace tem esse recurso quando um dos proprietários ou membros de cobrança está no Business. Veja [Assentos e limites do workspace](/docs/help/teams/seats).
+</Callout>
 
 O login único é um recurso do Business sob a licença comercial do QRdx. Um servidor QRdx auto-hospedado precisa de uma chave de licença (`QRDX_EE_LICENSE`) para ativá-lo; veja [Auto-hospedagem](/docs/self-hosting#optional-services).
 
 ## Antes de começar [#before-you-start]
 
 - Você precisa ser **proprietário** ou **administrador** do workspace.
-- Você precisa poder adicionar um registro DNS para o seu domínio de e-mail, como `acme.com`.
-- Configurar, alterar, verificar ou remover a conexão, e exigir o login único, pede que você [confirme que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) antes: com a sua passkey ou um código da verificação em duas etapas ou, se a verificação em duas etapas estiver desativada, com um código que enviamos por e-mail ou, no caso de uma conexão OIDC, entrando novamente por ela. Uma confirmação vale para as suas alterações pelos próximos 10 minutos.
+- Você precisa poder adicionar um registro DNS ao seu domínio de e-mail, como `acme.com`.
+- Configurar, alterar, verificar ou remover a conexão, e exigir o login único, pede que você [confirme que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) antes: com a sua passkey ou um código de verificação em duas etapas ou, se a verificação em duas etapas estiver desativada, com um código que enviamos por e-mail ou, no caso de uma conexão OIDC, entrando de novo por ela. Uma confirmação vale para as suas alterações nos próximos 10 minutos.
 
-O QRdx usa as configurações padrão de OIDC e SAML 2.0 que os provedores de identidade pedem. Os passos abaixo listam os valores; onde colá-los depende do seu provedor.
+O QRdx usa as configurações padrão de OIDC e SAML 2.0 que os provedores de identidade pedem. Onde colar cada valor depende do seu provedor.
+
+## O que você troca com o seu provedor de identidade [#what-you-exchange-with-your-identity-provider]
+
+| | Você entrega ao provedor | O provedor entrega a você |
+| --- | --- | --- |
+| **OIDC** | O **Redirect URI** exibido na página de login único | A **Issuer URL**, um **Client ID** e um **Client secret** |
+| **SAML 2.0** | A **Assertion Consumer Service (ACS) URL**, o **Entity ID (audience)** e, se ele ler as configurações a partir de uma URL, a **Metadata URL** | O **metadata XML** dele, ou a **Sign-in URL (SSO URL)**, o **entity ID** e o **certificado de assinatura** |
 
 ## Configurar com OIDC [#set-up-with-oidc]
 
 1. No workspace, vá em **Configurações** → **Login único**. **OIDC** já vem selecionado.
-2. No seu provedor de identidade, crie um app web (cliente OIDC) para o QRdx e adicione o **URI de redirecionamento** mostrado na página como um redirecionamento permitido.
-3. De volta ao QRdx, preencha:
-   - **Domínio de e-mail**: o domínio da sua empresa, como `acme.com`.
-   - **URL do emissor**: o emissor do seu provedor. O QRdx lê o resto em `<issuer>/.well-known/openid-configuration`, então o emissor precisa corresponder exatamente a esse documento.
-   - **ID do cliente** e **Segredo do cliente** do app que você criou.
+2. No seu provedor de identidade, crie um app web (cliente OIDC) para o QRdx e adicione o **Redirect URI** exibido na página como um redirecionamento permitido.
+3. De volta ao QRdx, preencha o **Domínio de e-mail** (o domínio da sua empresa, como `acme.com`), a **Issuer URL**, e o **Client ID** e o **Client secret** do app que você criou. O QRdx lê o restante de `<issuer>/.well-known/openid-configuration`, então o issuer precisa ser exatamente igual ao desse documento.
 4. Clique em **Salvar conexão**.
 
-O QRdx pede os escopos `openid`, `email` e `profile` e usa PKCE. O emissor precisa estar acessível por HTTPS pela internet; provedores de identidade em rede privada não são compatíveis.
+<Shot id="single-sign-on" />
+
+O QRdx pede os escopos `openid`, `email` e `profile` e usa PKCE. O issuer precisa estar acessível por HTTPS pela internet; provedores de identidade em rede privada não são compatíveis.
 
 ## Configurar com SAML 2.0 [#set-up-with-saml-20]
 
 1. No workspace, vá em **Configurações** → **Login único** e escolha **SAML 2.0**.
-2. No seu provedor de identidade, crie um app SAML para o QRdx com os valores mostrados na página:
-   - **URL do Assertion Consumer Service (ACS)**
-   - **Entity ID (audiência)**
-   - **URL de metadados**, se o seu provedor puder ler as configurações do QRdx a partir de uma URL
-3. Envie o endereço de e-mail da pessoa como **NameID** (formato de e-mail) ou como um atributo chamado `email`. Para o nome, envie `givenName` e `surname` (ou `firstName` e `lastName`, ou os nomes X.500 `urn:oid:2.5.4.42` e `urn:oid:2.5.4.4`), ou um nome de exibição (`displayName`, `name` ou `urn:oid:2.16.840.1.113730.3.1.241`). Sem um nome, o QRdx usa a parte do endereço antes do @.
-4. De volta ao QRdx, informe o seu **Domínio de e-mail** e cole o **XML de metadados** do seu provedor. Ou clique em **Informar os detalhes manualmente** e preencha a **URL de login (URL de SSO)**, o **entity ID** do provedor e o **certificado de assinatura** dele.
+2. No seu provedor de identidade, crie um app SAML para o QRdx com a **Assertion Consumer Service (ACS) URL**, o **Entity ID (audience)** e, se o seu provedor puder ler as configurações do QRdx a partir de uma URL, a **Metadata URL** exibidas na página.
+3. Envie o endereço de e-mail e o nome da pessoa na assertion, conforme a tabela abaixo.
+4. De volta ao QRdx, informe o seu **Domínio de e-mail** e cole o **metadata XML** do seu provedor. Ou clique em **Informar os detalhes** e preencha a **Sign-in URL (SSO URL)**, o **entity ID** do provedor e o **certificado de assinatura** dele.
 5. Clique em **Salvar conexão**.
 
-O seu provedor precisa assinar as respostas e incluir uma URL de login HTTP-Redirect. O QRdx recusa respostas sem uma assinatura válida ou sem prazos de validade (`NotBefore` e `NotOnOrAfter`).
+| O quê | Como enviar |
+| --- | --- |
+| Endereço de e-mail | Como **NameID** (formato e-mail) ou como um atributo chamado `email`. |
+| Nome | `givenName` e `surname`, ou `firstName` e `lastName`, ou os nomes X.500 `urn:oid:2.5.4.42` e `urn:oid:2.5.4.4`; ou um nome de exibição como `displayName`, `name` ou `urn:oid:2.16.840.1.113730.3.1.241`. Sem nome, o QRdx usa a parte do endereço antes do @. |
 
-As assinaturas precisam usar SHA-256 ou mais forte. O QRdx recusa respostas assinadas ou com digest em SHA-1; se o seu provedor estiver configurado com SHA-1 para o app do QRdx, mude para SHA-256.
+Seu provedor precisa assinar as respostas e incluir uma URL de login HTTP-Redirect. O QRdx rejeita respostas sem uma assinatura válida ou sem horários de validade (`NotBefore` e `NotOnOrAfter`).
 
-O QRdx não assina as próprias solicitações de login. Se o seu provedor estiver configurado para exigir solicitações assinadas do app do QRdx, desative essa opção, ou ele recusará as pessoas antes de elas conseguirem entrar.
+As assinaturas precisam usar SHA-256 ou mais forte. O QRdx rejeita respostas assinadas ou com digest em SHA-1; se o seu provedor estiver configurado com SHA-1 para o app do QRdx, mude para SHA-256.
 
-## Verificar seu domínio [#verify-your-domain]
+O QRdx não assina as suas solicitações de login. Se o seu provedor estiver configurado para exigir solicitações assinadas do app do QRdx, desative isso, ou ele barrará as pessoas antes de elas entrarem.
+
+## Verifique seu domínio [#verify-your-domain]
 
 Ninguém consegue entrar pela conexão até você comprovar que é dono do domínio.
 
-1. Em **Verificar**, na página de Login único, copie o **Nome** e o **Valor** do registro TXT.
+1. Em **Verificar**, na página de login único, copie o **Nome** e o **Valor** do registro TXT.
 2. Adicione o registro TXT no seu provedor de DNS.
 3. Clique em **Verificar**. Registros novos podem levar alguns minutos, às vezes mais, para aparecer. Se o QRdx ainda não encontrar o registro, ele avisa; espere e tente de novo.
 
-O valor de verificação é válido por 7 dias. Se expirar, recarregue a página para receber um novo e atualize o registro.
+O valor de verificação é válido por 7 dias. Se expirar, recarregue a página para obter um novo e atualize o registro.
 
-Um domínio verificado cobre também os subdomínios, então `acme.com` cobre também `eu.acme.com`. Um domínio só pode ser verificado para login único em um workspace. Se outro workspace já o verificou, ou verificou um domínio que se sobrepõe a ele, o QRdx avisa quando você salvar ou verificar.
+Um domínio verificado cobre também os seus subdomínios, então `acme.com` também cobre `eu.acme.com`. Um domínio só pode ser verificado para login único em um workspace. Se outro workspace já o verificou, ou verificou um domínio que se sobrepõe a ele, o QRdx avisa quando você salvar ou verificar.
 
 ## O que sua equipe vê [#what-your-team-sees]
 
 1. Na página de login, a pessoa digita o e-mail de trabalho e clica em **Enviar código por e-mail**, como em qualquer login por e-mail.
-2. Antes de enviar um código, o QRdx verifica o domínio do endereço. Para o seu domínio verificado, ele informa que a sua empresa entra com login único e oferece **Continuar com SSO**. Nenhum código é enviado a menos que a pessoa peça.
-3. **Continuar com SSO** leva a pessoa ao seu provedor de identidade e depois de volta ao QRdx, já conectada e no seu workspace.
+2. Antes de enviar um código, o QRdx confere o domínio do endereço. Para o seu domínio verificado, ele informa que a sua empresa entra com login único e oferece **Continuar com SSO**. Nenhum código é enviado a menos que a pessoa peça um.
+3. **Continuar com SSO** leva a pessoa ao seu provedor de identidade e depois de volta ao QRdx, já logada e no seu workspace.
 
 Ela pode escolher **Enviar código por e-mail**, a menos que você [exija o login único](#require-single-sign-on). **Entrar com SSO**, abaixo do campo de e-mail, também continua funcionando: pede o e-mail de trabalho e vai direto ao seu provedor de identidade.
 
-O QRdx só oferece o login único enquanto o domínio estiver verificado e o workspace estiver no Business. A checagem olha apenas o domínio, então nunca mostra se alguém tem uma conta no QRdx.
+O QRdx só oferece o login único enquanto o domínio estiver verificado e o workspace estiver no Business. A verificação olha apenas o domínio, então nunca revela se alguém tem uma conta no QRdx.
 
-Se alguém ativou a [verificação em duas etapas](/docs/help/privacy-and-security/two-step-verification), o QRdx ainda pede a segunda etapa depois que o seu provedor de identidade a conecta, a menos que a pessoa tenha escolhido não ser perguntada de novo naquele dispositivo. Isso vale também quando o login único é exigido.
+Se alguém ativou a [verificação em duas etapas](/docs/help/privacy-and-security/two-step-verification), o QRdx ainda pede a segunda etapa depois que o seu provedor de identidade a autentica, a menos que ela tenha escolhido não ser consultada de novo naquele dispositivo. Isso vale também quando o login único é obrigatório.
 
 Todo login por SSO garante que a pessoa esteja no seu workspace:
 
-- Quem não é membro entra com a função que você escolher em **Novos membros**: **Membro** (o padrão) ou **Visualizador**.
+- Quem não é membro entra com a função que você escolher em **Novos membros**: **Membro** (o padrão) ou **Leitor**.
 - Quem tem um convite pendente para o workspace entra com a função do convite, e o convite é marcado como aceito.
 - Os membros mantêm a função que já têm. Você pode alterar a função de qualquer pessoa na página **Equipe**.
 
@@ -80,83 +90,83 @@ Isso inclui pessoas que você removeu do workspace: elas voltam a entrar na pró
 
 Se alguém já tem uma conta no QRdx com o mesmo endereço de e-mail, o login com SSO usa essa conta. A pessoa mantém o próprio workspace e tudo o que há nele.
 
-O QRdx só conecta alguém pela sua conexão se o endereço enviado pelo seu provedor for do seu domínio verificado. As outras formas de entrada dessa pessoa, como um código por e-mail para o mesmo endereço, continuam funcionando, a menos que você exija o login único.
+O QRdx só autentica alguém pela sua conexão se o endereço enviado pelo seu provedor estiver no seu domínio verificado. As outras formas de entrar, como um código por e-mail para o mesmo endereço, continuam funcionando, a menos que você exija o login único.
 
-Os endereços de e-mail precisam estar verificados no seu provedor de identidade. Se ele informar ao QRdx que um endereço não está verificado (a claim `email_verified` do OIDC, ou um atributo SAML `email_verified` ou `emailVerified`, definido como false), o QRdx não conecta a pessoa, não cria uma conta para ela e não vincula uma conta existente. Ela vê uma mensagem pedindo que o seu administrador verifique os endereços lá. Se o seu provedor não disser nem uma coisa nem outra, o QRdx confia nele para o seu domínio verificado.
+Os endereços de e-mail precisam estar verificados no seu provedor de identidade. Se ele informar ao QRdx que um endereço não está verificado (a claim `email_verified` do OIDC, ou um atributo SAML `email_verified` ou `emailVerified`, definido como false), o QRdx não autentica a pessoa, não cria uma conta para ela e não vincula uma já existente. Ela vê uma mensagem pedindo que o seu administrador verifique os endereços lá. Se o seu provedor não informar nem uma coisa nem outra, o QRdx confia nele para o seu domínio verificado.
 
-Sair do QRdx não desconecta ninguém do seu provedor de identidade. Enquanto a pessoa ainda estiver conectada lá, o próximo login por SSO passa direto, sem pedir a senha. Em um computador compartilhado, saia também do seu provedor de identidade.
+Sair do QRdx não desconecta ninguém do seu provedor de identidade. Enquanto a pessoa continuar logada lá, o próximo login por SSO passa direto, sem pedir a senha. Em um computador compartilhado, saia também do seu provedor de identidade.
 
-## Abrir o QRdx pelo seu provedor de identidade [#open-qrdx-from-your-identity-provider]
+## Abrir o QRdx a partir do seu provedor de identidade [#open-qrdx-from-your-identity-provider]
 
 Com uma conexão SAML, as pessoas também podem começar pelo seu provedor de identidade: ao clicar no app do QRdx no painel de apps dele, elas entram no QRdx sem passar pela página de login do QRdx. Isso costuma ser chamado de login iniciado pelo IdP.
 
-No seu provedor de identidade, abra o app SAML que você criou para o QRdx e confira se ele aparece para as pessoas no painel de apps e se permite login iniciado pelo provedor de identidade. As pessoas chegam ao painel do seu workspace. O QRdx ignora qualquer **RelayState** que o app enviar, então um login que o QRdx não pediu nunca escolhe a página que abre.
+No seu provedor de identidade, abra o app SAML que você criou para o QRdx e confira se ele aparece para as pessoas no painel de apps e se permite login iniciado pelo provedor de identidade. As pessoas chegam ao painel do seu workspace. O QRdx ignora qualquer **RelayState** que o app envie, então um login que o QRdx não solicitou nunca define a página que abre.
 
-Valem as mesmas regras de quando o login começa no QRdx: o domínio precisa estar verificado, o workspace precisa estar no Business e a resposta precisa ser assinada com SHA-256 ou mais forte. O QRdx também exige:
+Valem as mesmas regras de quando o login começa no QRdx: o domínio precisa estar verificado, o workspace precisa estar no Business e a resposta precisa estar assinada com SHA-256 ou mais forte. O QRdx também exige:
 
 - exatamente uma asserção, com um ID, que não esteja criptografada;
 - uma validade na asserção (`NotOnOrAfter` em `Conditions`), que a maioria dos provedores de identidade envia por padrão.
 
 Cada resposta autentica uma pessoa uma única vez. Se a mesma resposta chegar de novo, o QRdx a recusa e pede que a pessoa entre novamente. Se alguém ativou a verificação em duas etapas, o QRdx pede primeiro a segunda etapa e depois leva a pessoa ao painel.
 
-Um login feito pelo painel de apps não conta como [confirmar que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), a menos que a pessoa tenha respondido à segunda etapa, porque o QRdx não pediu essa etapa. Antes de uma alteração que exija confirmação, a pessoa confirma como de costume.
+Um login feito pelo painel de apps não conta como [confirmar que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), a menos que a pessoa tenha respondido à segunda etapa, porque o QRdx não a pediu. Antes de uma alteração que exige isso, a pessoa confirma normalmente.
 
 Uma conexão OIDC sempre começa no QRdx. Para colocar o QRdx no painel de apps do seu provedor de identidade, adicione-o como um link para a página de login do QRdx.
 
 ## Exigir login único [#require-single-sign-on]
 
-Com o domínio verificado, você pode fazer do seu provedor de identidade a única forma de entrada para as pessoas desse domínio. Na página **Single sign-on**, ative **Require single sign-on for** seu domínio. Isso vale também para subdomínios, como na conexão.
+Depois que seu domínio for verificado, você pode fazer do seu provedor de identidade a única forma de entrar para as pessoas desse domínio. Na página **Single sign-on**, ative **Require single sign-on for** com o seu domínio. Isso vale também para subdomínios, assim como a conexão.
 
 Enquanto estiver ativado, para um endereço do seu domínio:
 
-- Códigos por e-mail, Google e GitHub não fazem o login<IfAvailable feature="passkeys">, e **Continue with passkey** também não</IfAvailable>. A pessoa vê que a sua empresa exige login único e o botão **Continue with SSO**.
-- A [verificação em duas etapas](/docs/help/privacy-and-security/two-step-verification) dela continua valendo depois que o seu provedor de identidade a autentica.<IfAvailable feature="passkeys"> Uma passkey continua funcionando como essa segunda etapa.</IfAvailable>
-- Um login dura no máximo 24 horas. Depois disso, a pessoa passa pelo seu provedor de identidade de novo. Assim, quem você desatribui lá não consegue entrar no QRdx outra vez e é desconectado em até um dia.
-- O e-mail da pessoa no QRdx não pode ser trocado por um endereço de outro domínio, e o e-mail de ninguém mais pode ser trocado por um do seu domínio. O login único é o jeito de um endereço do seu domínio entrar no QRdx.
+- Códigos por e-mail, Google e GitHub não fazem login<IfAvailable feature="passkeys">, e **Continue with passkey** também não</IfAvailable>. A pessoa vê que sua empresa exige login único e **Continue with SSO**.
+- A [verificação em duas etapas](/docs/help/privacy-and-security/two-step-verification) continua valendo depois que seu provedor de identidade faz o login.<IfAvailable feature="passkeys"> Uma passkey continua funcionando como essa segunda etapa.</IfAvailable>
+- Um login dura no máximo 24 horas. Depois disso, a pessoa passa pelo seu provedor de identidade de novo, então quem você desatribui lá não consegue entrar no QRdx outra vez e é desconectado em até um dia.
+- O e-mail da pessoa no QRdx não pode ser trocado por um endereço de outro domínio, e o e-mail de ninguém mais pode ser trocado por um do seu domínio. Entrar com login único é a forma de um endereço desse domínio chegar ao QRdx.
 
-Ao ativar, todas as pessoas do seu domínio são desconectadas das sessões que não começaram com login único, e as que começaram terminam 24 horas depois desse login. Ninguém recebe e-mail sobre isso; na próxima vez, elas são orientadas a entrar com SSO.
+Ao ativar, todas as pessoas do seu domínio são desconectadas das sessões que não começaram com login único, e as que começaram terminam 24 horas depois desse login. Ninguém recebe e-mail sobre isso; na próxima vez, a pessoa é convidada a entrar com SSO.
 
-**Os proprietários mantêm as outras formas de login.** Nada disso vale para os proprietários do workspace: eles ainda podem usar um código por e-mail, Google ou GitHub<IfAvailable feature="passkeys">, ou uma passkey</IfAvailable>, as sessões deles não são encurtadas e eles podem trocar o e-mail. Assim, um problema no seu provedor de identidade não deixa todo mundo sem acesso a essa configuração. Mantenha a função de proprietário só para quem realmente precisa.
+**Os proprietários mantêm as outras formas de entrar.** Nada disso vale para os proprietários do workspace: eles ainda podem usar código por e-mail, Google ou GitHub<IfAvailable feature="passkeys">, ou uma passkey</IfAvailable>, as sessões deles não são encurtadas e eles podem trocar o e-mail. Assim, um problema no seu provedor de identidade não deixa todo mundo sem acesso a essa configuração. Reserve o papel de proprietário para as poucas pessoas que precisam dele.
 
 Para ativar:
 
-- Você precisa ser **proprietário** ou **administrador** no plano Business, com um domínio verificado, e será solicitado que você [confirme que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
-- Se você é administrador com um endereço do domínio, entre antes com login único. Caso contrário, ao ativar você seria desconectado, e entrar assim mostra que a conexão funciona.
+- Você precisa ser **proprietário** ou **administrador** no plano Business, com um domínio verificado, e será pedido que você [confirme que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
+- Se você é administrador com um endereço nesse domínio, entre antes com login único. Caso contrário, ao ativar você seria desconectado, e entrar dessa forma mostra que a conexão funciona.
 
-Desativar, remover a conexão ou o workspace sair do Business faz a exigência acabar. As pessoas mantêm as sessões que já têm e podem usar de novo as outras formas de login. Pode levar até um minuto para chegar a todos os servidores do QRdx: quem entrar de outra forma nesse minuto pode ser desconectado logo em seguida e poderá entrar de novo um minuto depois.
+Desativar, remover a conexão ou o workspace sair do Business deixa de exigir o login único. As pessoas mantêm as sessões que têm e podem voltar a usar as outras formas de entrar. Pode levar até um minuto para chegar a todos os servidores do QRdx: quem entrar de outra forma nesse minuto pode ser desconectado logo em seguida e poderá entrar de novo um minuto depois.
 
-O login único diz respeito a entrar na conta. Chaves de API não são logins, então exigir o login único não as bloqueia; remover alguém na página **Team** interrompe as chaves de API que a pessoa criou para o workspace.
+O login único diz respeito a entrar na conta. Chaves de API não são logins, então exigi-lo não as bloqueia; remover alguém na página **Team** faz parar as chaves de API que a pessoa criou para o workspace.
 
 ## Remover alguém de vez [#remove-someone-for-good]
 
 Como cada login por SSO adiciona a pessoa de volta, remover na página **Team** não basta por si só:
 
-1. No seu provedor de identidade, desatribua a pessoa do app do QRdx (ou desative a conta dela lá), para que ele não possa mais colocá-la no QRdx.
+1. No seu provedor de identidade, desatribua a pessoa do app do QRdx (ou desative a conta dela lá), para que ele não possa fazê-la entrar no QRdx.
 2. Depois, remova a pessoa na página **Team**. A caixa de remoção avisa quando o endereço da pessoa é do seu domínio verificado.
 
 Se você [exige login único](#require-single-sign-on), o passo 1 também desconecta a pessoa do QRdx em até 24 horas. Remova-a também na página **Team**, para que ela deixe de ser membro e as chaves de API dela para o workspace parem de funcionar.
 
-Remover alguém do workspace não exclui a conta dela no QRdx. A menos que o login único seja exigido para o endereço dela, ela ainda pode entrar no próprio workspace com um código por e-mail, Google ou GitHub.
+Remover alguém do workspace não exclui a conta dela no QRdx. A menos que o login único seja exigido para o endereço da pessoa, ela ainda pode entrar no próprio workspace com código por e-mail, Google ou GitHub.
 
 ## Alterar ou remover a conexão [#change-or-remove-the-connection]
 
 - **Replace secret** (OIDC) ou **Replace certificate** (SAML) atualiza a conexão quando você troca esses dados no seu provedor de identidade. Uma conexão SAML configurada a partir do XML de metadados é alterada removendo-a e configurando-a de novo.
-- **Remove** desativa o login único e deixa de exigi-lo. Todas as pessoas continuam no workspace e podem entrar com um código por e-mail, Google ou GitHub.
+- **Remove** desativa o login único e deixa de exigi-lo. Todas as pessoas continuam no workspace e podem entrar com código por e-mail, Google ou GitHub.
 
 ## Se o plano mudar [#if-the-plan-changes]
 
-Se o workspace deixar de estar no Business, ninguém consegue entrar com SSO, nem no meio de um login, e o login único deixa de ser exigido. As pessoas veem uma mensagem e podem entrar de outra forma. A conexão e as configurações são mantidas, então voltam a funcionar quando o workspace estiver de novo no Business, e você ainda pode removê-la.
+Se o workspace deixar de estar no Business, ninguém consegue entrar com SSO, nem no meio de um login, e o login único deixa de ser exigido. As pessoas veem uma mensagem e podem entrar de outra forma. A conexão e as configurações dela são mantidas, então voltam a funcionar quando o workspace voltar ao Business, e você ainda pode removê-la.
 
 ## O que não é compatível [#what-isnt-supported]
 
-- Provisionamento e remoção automáticos (SCIM). Remover alguém do seu provedor de identidade não remove a pessoa do workspace. Sem [login único obrigatório](#require-single-sign-on), isso também não encerra as sessões dela no QRdx; remova-a também na página **Team** (veja [Remover alguém de vez](#remove-someone-for-good)).
-- Funções ou grupos do seu provedor de identidade. Todas as pessoas entram com a função definida em **New members**.
+- Provisionamento e remoção automáticos (SCIM). Remover alguém do seu provedor de identidade não a remove do workspace. Sem [login único obrigatório](#require-single-sign-on), isso também não encerra as sessões da pessoa no QRdx; remova-a também na página **Team** (veja [Remover alguém de vez](#remove-someone-for-good)).
+- Papéis ou grupos do seu provedor de identidade. Todas as pessoas entram com o papel definido em **New members**.
 - Mais de uma conexão, ou mais de um domínio, por workspace.
-- Login iniciado pelo seu provedor de identidade com uma conexão OIDC (com SAML funciona: veja [Abrir o QRdx pelo seu provedor de identidade](#open-qrdx-from-your-identity-provider)), logout único do SAML e asserções criptografadas.
+- Login iniciado pelo seu provedor de identidade com uma conexão OIDC (com SAML funciona: veja [Abrir o QRdx a partir do seu provedor de identidade](#open-qrdx-from-your-identity-provider)), logout único do SAML e asserções criptografadas.
 - Provedores de identidade que não são acessíveis pela internet.
 
 ## Relacionados [#related]
 
-- [Funções da equipe](/docs/help/teams/roles)
-- [Assentos e limites do workspace](/docs/help/teams/seats)
-- [Criar um workspace e convidar pessoas](/docs/help/teams/create-and-invite)
+- [Exigir verificação em duas etapas](/docs/help/teams/require-two-step-verification)
+- [Papéis da equipe](/docs/help/teams/roles)
+- [Mantenha sua conta segura](/docs/help/privacy-and-security/account-security)

@@ -1,8 +1,10 @@
 ---
 title: "QR Code Scanner"
-description: "Una drop zone che legge un QR code da un'immagine nel browser, con azioni per copiare e aprire il link."
+description: "Una drop zone per progetti shadcn/ui che legge un QR code da un'immagine nel browser, con azioni per copiare e aprire il link."
 icon: Scan
 ---
+
+`QrCodeScanner` è una drop zone che decodifica un QR code da un file immagine, nel browser, e ti restituisce il testo. Usalo per registrare biglietti da screenshot, leggere codici da foto caricate dagli utenti o verificare un codice che hai generato. Legge file immagine, non un flusso live della fotocamera.
 
 <ComponentLinks name="qr-code-scanner" />
 
@@ -14,28 +16,53 @@ icon: Scan
 
 ## Utilizzo [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeScanner } from "@/components/qr-code-scanner";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeScanner onResult={(value) => console.log(value)} />
 ```
 
-Gli utenti trascinano un'immagine oppure cliccano per sceglierne una. La decodifica avviene nel browser con gli [helper di rilevamento](/docs/qr-detection) di qrdx, quindi l'immagine non lascia mai il dispositivo. Legge file immagine, non un feed live della fotocamera.
-
-Il risultato compare con un pulsante per copiare, più un pulsante "Apri link" quando si tratta di un URL `http` o `https`.
+L'utente trascina un'immagine oppure fa clic per sceglierne una. La decodifica avviene nel browser con gli [helper di rilevamento](/docs/qr-detection) di qrdx, quindi l'immagine non lascia mai il dispositivo. Il risultato compare con un pulsante **Copy**, più un pulsante **Open link** quando è un URL `http` o `https`.
 
 ## Esempi [#examples]
 
-### Verifica di un risultato [#checking-a-result]
+### Verificare un risultato [#checking-a-result]
 
-`onResult` riceve il testo decodificato, così puoi usarlo per agire, ad esempio per fare il check-in di un biglietto. `label` cambia il titolo nella drop zone. Scarica il codice di esempio qui sopra e trascinalo per vedere un biglietto valido.
+`onResult` riceve il testo decodificato, così puoi usarlo per agire, ad esempio per registrare un biglietto. `label` cambia il titolo nella drop zone. Scarica il codice di esempio qui sopra e trascinalo per vedere un biglietto valido.
 
 <ComponentPreview name="qr-code-scanner-tickets" />
+
+## Cosa mostra il lettore [#what-the-reader-shows]
+
+| Stato | Messaggio |
+| --- | --- |
+| Scansione in corso | "Scanning…" |
+| Nessun codice nell'immagine | "No QR code found. Try a sharper or closer image." |
+| Non è un file immagine | "Choose an image file." |
+| L'immagine non può essere letta | "Could not read that image." |
+| Trovato | Il testo decodificato, con **Copy** e, per i link, **Open link** |
+
+Il decodificatore prova l'immagine intera e quattro ritagli, a diverse scale, quindi un codice che occupa una piccola parte di uno screenshot viene comunque trovato.
+
+## Accessibilità e rendering [#accessibility-and-rendering]
+
+- La drop zone è una `<label>` per un input file nascosto visivamente, quindi funziona con la tastiera e con gli screen reader come qualsiasi selettore di file.
+- Risultati ed errori vengono annunciati tramite una live region polite.
+- **Open link** si apre in una nuova scheda con `rel="noopener noreferrer nofollow"`, così una pagina scansionata non può raggiungere la tua.
+- Il componente è un Client Component. Richiede il canvas del browser e, alla prima scansione, carica il decodificatore on demand.
 
 ## Riferimento API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-scanner.tsx" type="{ [K in keyof QrCodeScannerProps as K extends keyof ComponentProps<'div'> ? never : K]: QrCodeScannerProps[K] }" />
 
 Qualsiasi altra prop, come `className`, viene passata al `<div>` che fa da contenitore.
+
+## Correlati [#related]
+
+<Cards>
+  <Card href="/docs/qr-detection" title="Rilevamento QR" description="Le funzioni della libreria che lo scanner richiama, per creare un tuo lettore." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="Genera i codici che lo scanner legge." />
+  <Card href="/docs/features/frames" title="Cornici, punteggio di scansione e file di stampa" description="Valuta l'immagine di un codice con getImageScanScore invece di limitarti a decodificarla." />
+</Cards>

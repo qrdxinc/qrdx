@@ -1,5 +1,8 @@
 import { Bot } from "@repo/design-system/components/icons";
-import { isConsolePath } from "@repo/next-config/console-zone";
+import {
+  adminConsoleHref,
+  isConsolePath,
+} from "@repo/next-config/console-zone";
 import {
   People as Community,
   Card as CreditCard,
@@ -93,13 +96,25 @@ export interface AdminNavLink extends AdminNavItem {
 
 /**
  * The menu as this app shows it. With the console on, its sections are
- * served there whichever app has a copy, so their links load a new page.
+ * served there whichever app has a copy, so their links load a new page:
+ * at the same path (proxied, `consoleEnabled`), or at the console's own
+ * address (`adminConsoleUrl`, ADMIN_CONSOLE_URL), where the href becomes
+ * https://admin.qrdx.dev/growth and the like.
  */
-export function adminNavLinks(consoleEnabled: boolean): AdminNavLink[] {
-  return ADMIN_NAV_ITEMS.filter(
-    (item) => item.zone === "core" || consoleEnabled,
-  ).map((item) => ({
-    ...item,
-    crossZone: consoleEnabled && isConsolePath(item.href),
-  }));
+export function adminNavLinks(
+  consoleEnabled: boolean,
+  adminConsoleUrl?: string,
+): AdminNavLink[] {
+  const on = consoleEnabled || Boolean(adminConsoleUrl);
+  return ADMIN_NAV_ITEMS.filter((item) => item.zone === "core" || on).map(
+    (item) => {
+      const ownAddress = adminConsoleHref(item.href, adminConsoleUrl);
+      return {
+        ...item,
+        href: ownAddress ?? item.href,
+        crossZone:
+          ownAddress !== null || (consoleEnabled && isConsolePath(item.href)),
+      };
+    },
+  );
 }

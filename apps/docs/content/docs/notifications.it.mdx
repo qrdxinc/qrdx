@@ -1,59 +1,78 @@
 ---
 title: "Notifiche"
 description: "Avvisi via email, un riepilogo settimanale e messaggi su Slack o Discord quando i tuoi QR code vengono scansionati o i tuoi moduli ricevono risposte."
-icon: Bell
 ---
 
-Scegli di cosa vuoi essere informato da QRdx in [Impostazioni → Notifiche](/settings/notifications). Le impostazioni sono per persona e per workspace: il tuo workspace e ogni altro workspace di cui fai parte hanno i propri interruttori, e in un workspace condiviso ogni membro sceglie i suoi.
+Le notifiche ti dicono cosa succede ai tuoi codici senza dover aprire la dashboard: una prima scansione, un traguardo, una risposta a un modulo, una modifica di un collega e un riepilogo settimanale. Scegli di cosa vuoi essere informato da QRdx in [Impostazioni → Notifiche](/settings/notifications). Le impostazioni sono per persona e per workspace: il tuo workspace e ogni altro workspace di cui fai parte hanno i propri interruttori, e in un workspace condiviso ogni membro sceglie i propri.
+
+<Callout type="info" title="Email con Pro, chat con Business">
+  Gli avvisi via email e il riepilogo settimanale sono inclusi in Pro e Business; i messaggi su Slack e Discord sono inclusi in Business. Ogni workspace segue il piano dei suoi proprietari e dei membri che gestiscono la fatturazione. Tutto è disattivato finché non lo attivi. Vedi [Piani e limiti](/docs/plans-and-limits).
+</Callout>
+
+Hai fretta? [I codici di accesso o le email non arrivano](/docs/help/troubleshooting/emails) spiega cosa fare se gli avvisi non arrivano.
+
+## Come funziona [#how-it-works]
+
+Ogni scansione, risposta a un modulo e modifica a un codice è un evento. Le notifiche ti iscrivono agli eventi che ti interessano, ciascuno su un canale: email all'indirizzo del tuo account, un canale Slack o Discord tramite un webhook in entrata, oppure i tuoi sistemi tramite i [webhook](/docs/webhooks).
 
 | Canale | Cosa puoi ricevere | Piano |
 | --- | --- | --- |
-| Email | Riepilogo settimanale, traguardi di scansioni, invii dei moduli, nuovi codici, modifiche ai codici | Pro e Business |
-| Slack, Discord | Traguardi di scansioni, invii dei moduli, nuovi codici, modifiche ai codici | Business |
-| [Webhook](/docs/webhooks), Zapier, Make | Ogni evento, comprese le singole scansioni | Business |
+| Email | Riepilogo settimanale, traguardi di scansioni, invii di moduli, nuovi codici, modifiche ai codici | Pro e Business |
+| Slack, Discord | Traguardi di scansioni, invii di moduli, nuovi codici, modifiche ai codici | Business |
+| [Webhook](/docs/webhooks), Zapier, Make | Ogni evento, comprese tutte le scansioni | Business |
 
-Ogni workspace segue il piano dei suoi proprietari. Tutto è disattivato finché non lo attivi.
+<Shot id="notifications" />
 
 ## Avvisi [#alerts]
 
-- **Traguardi di scansioni:** la prima scansione di un codice (con quando, dove e su quale dispositivo), poi 10, 100, 500, 1.000, 5.000, 10.000 scansioni e oltre.
-- **Invii dei moduli:** le risposte di un modulo presente in una delle tue [pagine ospitate](/docs/landing-pages), con un link a tutte le risposte.
-- **Nuovi codici** e **modifiche ai codici:** chi ha creato un codice, o ne ha cambiato la destinazione, il titolo, il design o il dominio. Utilissimi nei workspace che condividi con altre persone.
+- **Traguardi di scansioni:** la prima scansione di un codice, poi 10, 100, 500, 1.000, 5.000, 10.000, 50.000, 100.000, 500.000, 1.000.000 di scansioni e ogni milione successivo. L'email della prima scansione indica quando, dove e su quale dispositivo è avvenuta; il messaggio su Slack e Discord indica città e paese.
+- **Invii di moduli:** le risposte di un modulo presente in una delle tue [pagine ospitate](/docs/forms-and-pages#forms), con un link a tutte le risposte.
+- **Nuovi codici** e **modifiche ai codici:** chi ha creato un codice, o ne ha cambiato la destinazione, il titolo, il design o il dominio. Particolarmente utili nei workspace condivisi con altre persone.
 
-Per evitare che un modulo molto usato o un'importazione in blocco inondi la tua casella di posta o il tuo canale, ogni destinazione riceve al massimo 30 avvisi dello stesso tipo all'ora; gli altri vengono saltati (il riepilogo settimanale li conta comunque, e i webhook ricevono sempre ogni evento).
+Per evitare che un modulo molto frequentato o un'importazione in blocco riempia la tua casella di posta o il tuo canale, ogni destinazione riceve al massimo 30 avvisi dello stesso tipo all'ora; gli altri vengono saltati. Il riepilogo settimanale li conta comunque e i webhook ricevono sempre ogni evento.
 
 ## Riepilogo settimanale [#weekly-digest]
 
-Ogni lunedì (UTC) ricevi i numeri della settimana precedente per il workspace: scansioni a confronto con la settimana prima, visitatori unici, i tuoi 5 codici migliori, i paesi principali, nuovi codici e risposte ai moduli. Viene saltato quando non ci sono state scansioni per due settimane e nessuna risposta ai moduli.
+Ogni lunedì mattina (UTC) ricevi i numeri della settimana precedente per il workspace: le scansioni a confronto con la settimana prima, i visitatori unici, i tuoi 5 codici migliori, i paesi principali, i nuovi codici e le risposte ai moduli. Viene saltato se non ci sono state scansioni per due settimane e nessuna risposta ai moduli.
 
 ## Email [#email]
 
-Le email di avviso arrivano all'indirizzo email del tuo account. Ognuna contiene un link **Annulla iscrizione** che disattiva quel tipo di email senza dover accedere (anche le app di posta che supportano l'annullamento con un clic lo mostrano). Puoi riattivare o disattivare le email in qualsiasi momento dalle impostazioni delle notifiche.
-
-Gli inviti al team e le altre email dell'account non sono influenzati da queste impostazioni.
+Gli avvisi via email arrivano all'indirizzo email del tuo account, sotto il titolo **Email to** nelle impostazioni delle notifiche. Ognuno contiene un link **Unsubscribe** che disattiva quel tipo di email senza dover accedere (anche le app di posta che supportano la disiscrizione con un clic lo mostrano). Puoi riattivare o disattivare le email in qualsiasi momento dalle impostazioni delle notifiche. Gli inviti al team e le altre email dell'account non sono influenzati da queste impostazioni.
 
 ## Slack e Discord [#slack-and-discord]
 
-1. Crea un webhook in entrata:
+1. Crea un webhook in entrata nell'app di chat:
    - **Slack:** aggiungi a un canale l'app [Incoming WebHooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks), o una tua app Slack con webhook in entrata, e copia l'URL (`https://hooks.slack.com/services/...`).
-   - **Discord:** impostazioni del canale → **Integrazioni** → **Webhook** → **Nuovo webhook** → **Copia URL del webhook** (`https://discord.com/api/webhooks/...`).
-2. In [Impostazioni → Notifiche](/settings/notifications), fai clic su **+ Slack** o **+ Discord** nel workspace, incolla l'URL e scegli gli eventi. Per aggiungerne uno devi prima [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
-3. Usa il pulsante di invio per pubblicare un messaggio di prova.
+   - **Discord:** impostazioni del canale → **Integrations** → **Webhooks** → **New Webhook** → **Copy Webhook URL** (`https://discord.com/api/webhooks/...`).
+2. In [Impostazioni → Notifiche](/settings/notifications), sotto **Slack and Discord** per il workspace, fai clic su **Slack** o **Discord**, incolla l'URL e scegli gli eventi. Prima di aggiungerne uno ti viene chiesto di [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
+3. Usa il pulsante di invio accanto alla destinazione per pubblicare un messaggio di prova.
 
-Sono accettati solo URL di webhook di Slack e Discord. Dopo il salvataggio, QRdx mostra solo l'inizio dell'URL, perché chiunque lo possieda può pubblicare nel canale. I messaggi non menzionano mai `@everyone`, `@here` o i ruoli, qualunque cosa i visitatori scrivano in un modulo.
+Sono accettati solo gli URL dei webhook di Slack e Discord. Dopo il salvataggio, QRdx mostra solo l'inizio dell'URL, perché chiunque lo possieda può pubblicare nel canale. I messaggi non menzionano mai `@everyone`, `@here` o i ruoli, qualunque cosa i visitatori scrivano in un modulo.
 
-## Piani e downgrade [#plans-and-downgrades]
+Il [bot QRdx per Slack](/docs/slack-bot) è un'altra cosa: crea QR code direttamente in Slack. Aggiungerlo non attiva gli avvisi, e aggiungere gli avvisi non aggiunge il bot.
 
-Se il piano di un workspace non include più un canale, i relativi avvisi si interrompono, ma le tue impostazioni vengono conservate e puoi comunque disattivarle o rimuovere le destinazioni. I tuoi QR code continuano a funzionare con ogni piano.
+## Limiti e piani [#limits-and-plans]
+
+Se il piano di un workspace non include più un canale, i relativi avvisi si interrompono, ma le tue impostazioni vengono conservate e puoi comunque disattivarle o rimuovere le destinazioni. I tuoi QR code continuano a funzionare con qualsiasi piano.
+
+## Per sviluppatori [#for-developers]
+
+Per tutto ciò che va oltre questi avvisi, come ogni singola scansione, usa i [webhook](/docs/webhooks): richieste `POST` firmate al tuo endpoint per `scan.created`, `form.submitted` e gli altri eventi, con tentativi ripetuti e log di consegna.
 
 ## Self-hosting [#self-hosting]
 
-Le email vengono inviate tramite [Resend](https://resend.com): imposta `RESEND_API_KEY` e `EMAIL_FROM` (un indirizzo su un dominio verificato in Resend). Senza di esse, le email vengono saltate e registrate nei log, e gli inviti al team ripiegano su link copiabili.
+Le email vengono inviate tramite [Resend](https://resend.com): imposta `RESEND_API_KEY` e `EMAIL_FROM` (un indirizzo su un dominio verificato in Resend). Senza di essi, le email vengono saltate e registrate nei log, e gli inviti al team ripiegano su link copiabili.
 
-Il riepilogo settimanale parte da un job pianificato il lunedì mattina (`apps/app/vercel.json` su Vercel chiama `/api/cron/digest?shard=all`, che invia in un'unica esecuzione il riepilogo di ogni iscritto). Con molti iscritti puoi invece chiamarlo ogni ora il lunedì senza `shard=all`, così ogni esecuzione gestisce un ventiquattresimo di loro. Altrove, chiamalo con il `CRON_SECRET` del tuo ambiente:
+Il riepilogo settimanale viene inviato da `/api/cron/digest`. Su Vercel, `apps/app/vercel.json` lo richiama ogni lunedì con `?shard=all`, che invia in un'unica esecuzione il riepilogo di tutti gli iscritti. Con molti iscritti puoi invece richiamarlo ogni ora il lunedì senza `shard=all`, così ogni esecuzione gestisce un ventiquattresimo di essi. Altrove, richiamalo dal tuo scheduler con il `CRON_SECRET` del tuo ambiente:
 
-```bash
-curl -H "Authorization: Bearer $CRON_SECRET" https://your-host/api/cron/digest
+```bash title="Terminal"
+curl -H "Authorization: Bearer $CRON_SECRET" "https://your-host/api/cron/digest?shard=all"
 ```
 
-I link per annullare l'iscrizione sono firmati con `BETTER_AUTH_SECRET`; cambiarlo invalida i link nelle email già inviate.
+I link di disiscrizione sono firmati con `BETTER_AUTH_SECRET`; cambiarlo invalida i link nelle email già inviate. Vedi [Self-hosting](/docs/self-hosting#scheduled-jobs).
+
+## Correlati [#related]
+
+- [Webhook](/docs/webhooks): ogni evento verso il tuo endpoint, Zapier o Make
+- [Menu, coupon, eventi e moduli](/docs/forms-and-pages#forms): i moduli di cui ricevi gli avvisi sulle risposte
+- [I codici di accesso o le email non arrivano](/docs/help/troubleshooting/emails)

@@ -1,31 +1,64 @@
 ---
-title: "Traga seus códigos de outro serviço"
-description: "Importe links de um arquivo CSV ou traga seus códigos do Bitly e de outros serviços de QR code."
+title: "Traga códigos de outro serviço"
+description: "Importe links de um arquivo CSV ou leve seus códigos do Bitly e de outros serviços de QR code para o QRdx."
 ---
 
-## De um arquivo CSV [#from-a-csv-file]
+Você pode criar vários QR codes dinâmicos de uma só vez a partir de um arquivo CSV, ou levar para o QRdx os códigos que você tem em outro serviço. Esta página trata da importação em si; [Migre do Bitly, Rebrandly e outros](/docs/migrate) explica como manter funcionando os códigos que você já imprimiu.
 
-1. Vá em **Códigos** e clique em **Importar CSV**.
-2. Envie um arquivo CSV com um código por linha.
+<Callout type="info">
+  No plano Grátis, você importa um código por vez. Pro e Business importam vários de uma vez. Veja [Planos e o que incluem](/docs/help/account-and-billing/plans).
+</Callout>
 
-A única coluna obrigatória é o destino. Você também pode incluir título, pasta, tags e um final de link personalizado. Um arquivo pode ter até {facts.importRows} linhas e até 10 MB. Todas as linhas são verificadas antes de qualquer coisa ser criada; as linhas com problemas são ignoradas e listadas.
+## A partir de um arquivo CSV [#from-a-csv-file]
 
-Você também pode escolher uma pasta e tags para todos os códigos do arquivo. Uma linha que já tem pasta própria a mantém, e as tags do arquivo são somadas às que você escolher.
+### 1. Abra a importação [#1-open-the-import]
 
-Arquivos grandes são enviados em partes enquanto uma barra de progresso é preenchida. Você pode pausar e retomar. Se a página recarregar ou a conexão cair, a importação para e oferece retomar ou tentar de novo, e nenhum código é criado duas vezes. Quando terminar, baixe um CSV de resultados com o link curto de cada linha, ou um ZIP com os novos códigos em arquivos PNG ou SVG.
+Vá em **Codes** e clique em **Import** na barra lateral de Codes. Você também pode abrir o menu **More code actions** (**⋯**) e escolher **Import codes**, depois **From a CSV file**. A página **Import codes from CSV** será aberta.
 
-No plano Grátis, você importa um código por vez. Pro e Business podem importar vários de uma vez.
+### 2. Envie seu arquivo [#2-upload-your-file]
 
-## De outro serviço [#from-another-service]
+Envie um arquivo CSV com um código por linha. A única coluna obrigatória é o destino. Você também pode incluir título, pasta, tags e um slug (o final personalizado do link). Um arquivo pode ter até {facts.importRows} linhas e até 10 MB.
 
-Clique em **Importar** na página **Códigos** e escolha onde seus códigos estão agora.
+Você também pode escolher uma pasta e tags para todos os códigos do arquivo. Uma linha que tem pasta própria mantém essa pasta, e as tags do arquivo são somadas às que você escolher.
+
+<Shot id="import-csv" />
+
+### 3. Deixe rodar [#3-let-it-run]
+
+Cada linha é verificada antes de qualquer coisa ser criada; as linhas com problemas são ignoradas e listadas. Arquivos grandes são enviados em partes enquanto uma barra de progresso avança, e você pode pausar e retomar.
+
+### 4. Baixe os resultados [#4-download-the-results]
+
+Quando terminar, baixe o **Results CSV** com o link curto de cada linha, ou um ZIP dos novos códigos em arquivos **PNG (1024 px)** ou **SVG (vector)** com um índice `codes.csv`.
+
+## A partir de outro serviço [#from-another-service]
+
+Abra o menu **More code actions** (**⋯**), escolha **Import codes**, depois **From Bitly and other apps**, e selecione onde seus códigos estão hoje.
 
 - **Bitly**: entre na sua conta do Bitly e escolha os links.
 - **Rebrandly** e **Short.io**: cole uma chave de API desse serviço.
-- **QR Code Generator PRO, Uniqode, Flowcode, QR TIGER, ME-QR, TinyURL, Hovercode, Scanova** e outros: envie o arquivo de exportação desse serviço.
+- **QR Code Generator PRO**, **Uniqode**, **Flowcode**, **QR TIGER**, **ME-QR**, **TinyURL**, **Hovercode**, **Scanova** e **Another provider (CSV)**: envie o arquivo exportado desse serviço, com até 2 MB.
 
 ## Mantenha os códigos impressos funcionando [#keep-printed-codes-working]
 
-Os códigos impressos continuam apontando para o serviço antigo. O guia de migração explica como mantê-los funcionando e como manter os finais de link originais.
+Os códigos impressos continuam apontando para o serviço antigo. O guia de migração explica como mantê-los funcionando e como preservar os finais de link originais. Veja [Migre do Bitly, Rebrandly e outros](/docs/migrate).
 
-Veja [Migrar do Bitly, Rebrandly e outros](/docs/migrate).
+## Se algo der errado [#if-something-goes-wrong]
+
+### Algumas linhas foram ignoradas [#some-rows-were-skipped]
+
+Os resultados listam cada linha ignorada com o motivo, como um endereço que não é um link ou um final de link que já está em uso. Corrija essas linhas no arquivo e importe de novo. Nada é criado em duplicidade.
+
+### A importação parou [#the-import-stopped]
+
+Se a página recarregou ou a conexão caiu, ao voltar a página oferece a opção de retomar ou tentar de novo. Os códigos que já foram criados não são criados outra vez.
+
+### Só uma linha foi importada [#only-one-row-was-imported]
+
+Você está no plano Grátis, que importa um código por vez. Importe a próxima linha ou [faça upgrade](/pricing) para importar o arquivo inteiro.
+
+## Veja também [#related]
+
+- [Migre do Bitly, Rebrandly e outros](/docs/migrate)
+- [Crie um QR code dinâmico](/docs/help/dynamic-codes/create)
+- [Use seu próprio domínio](/docs/help/domains/custom-domains)

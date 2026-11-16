@@ -3,22 +3,24 @@ title: "Passer à une offre supérieure ou inférieure, ou changer de facturatio
 description: "Passez de Gratuit à Pro ou Business, ou de la facturation mensuelle à la facturation annuelle."
 ---
 
+Vous passez à une offre supérieure depuis la page des tarifs, et vous modifiez un abonnement existant dans le portail de facturation. Les paiements sont gérés par [Polar](https://polar.sh), qui vend les abonnements QRdx en tant que merchant of record.
+
 ## Passer de Gratuit à une offre payante [#upgrade-from-free]
 
-1. Allez sur la [page des tarifs](/pricing).
+1. Rendez-vous sur la [page des tarifs](/pricing).
 2. Choisissez **Mensuel** ou **Annuel**.
 3. Cliquez sur **Passer à Pro** ou **Passer à Business**.
 4. Connectez-vous si on vous le demande, puis payez lors du paiement.
 
-Votre nouvelle offre démarre dès que le paiement est accepté.
+Votre nouvelle offre démarre dès que le paiement est validé, et **Paramètres** → **Offre et utilisation** l'affiche.
 
-Les paiements sont gérés par [Polar](https://polar.sh). Les prix s'affichent dans la devise de votre pays lorsque QRdx en propose une, par exemple les roupies en Inde, et le paiement est facturé dans cette devise.
+Les prix s'affichent dans la devise de votre pays lorsque QRdx en propose une, comme les roupies en Inde, et le paiement est prélevé dans cette devise. Votre premier paiement pour une offre payante est couvert par une garantie de remboursement de {facts.moneyBackDays} jours. Consultez [Remboursements](/docs/help/account-and-billing/invoices#refunds).
 
-Votre premier paiement pour une offre payante est couvert par une garantie de remboursement de {facts.moneyBackDays} jours. Consultez la page [Remboursements](/docs/help/account-and-billing/invoices#refunds).
+<Shot id="pricing-page" />
 
 ## Changer d'offre quand vous payez déjà [#change-plan-when-you-already-pay]
 
-Les changements d'offre se font dans le portail de facturation, géré par Polar. Vous pouvez l'ouvrir de l'une de ces façons :
+Les changements d'offre se font dans le portail de facturation, géré par Polar. Ouvrez-le depuis l'un de ces endroits :
 
 - Le menu de votre avatar → **Gérer la facturation**.
 - **Paramètres** → **Offre et utilisation** → **Gérer la facturation**.
@@ -32,4 +34,24 @@ Pour revenir à Gratuit, [résiliez votre abonnement](/docs/help/account-and-bil
 
 ## Ce qui se passe quand vous passez à une offre inférieure [#what-happens-when-you-downgrade]
 
-Vos codes continuent de fonctionner. Seules les nouvelles créations sont limitées. Consultez [Ce qu'il advient de vos codes si vous arrêtez de payer](/docs/help/account-and-billing/never-hostage).
+Vos codes continuent de fonctionner. Seules les nouvelles créations sont limitées : vous ne pouvez pas créer de codes ou de pages au-delà des limites de la nouvelle offre, et l'historique des scans affiche ce que la nouvelle offre inclut. Consultez [Ce qui arrive à vos codes si vous arrêtez de payer](/docs/help/account-and-billing/never-hostage).
+
+## En cas de problème [#if-something-goes-wrong]
+
+### Vous avez payé, mais le tableau de bord indique toujours Gratuit [#you-paid-but-the-dashboard-still-says-free]
+
+Vérifiez que vous êtes connecté au compte avec lequel vous avez payé, puis rechargez la page. Si Gratuit s'affiche encore au bout de quelques minutes, [contactez le support](/docs/help/contact) en indiquant l'adresse e-mail figurant sur le reçu.
+
+### Gérer la facturation n'apparaît pas dans le menu [#manage-billing-isnt-in-the-menu]
+
+Cette option n'apparaît que si vous avez un abonnement payant. Avec l'offre Gratuit, passez à une offre supérieure depuis la page des tarifs.
+
+### Le paiement affiche une devise inattendue [#checkout-shows-a-currency-you-didnt-expect]
+
+Le paiement est prélevé dans la devise du pays où vous vous trouvez. Utilisez le sélecteur de devise au-dessus des offres sur la page des tarifs pour voir les prix dans une autre devise.
+
+## Voir aussi [#related]
+
+- [Les offres et ce qu'elles incluent](/docs/help/account-and-billing/plans)
+- [Retrouver vos factures et reçus](/docs/help/account-and-billing/invoices)
+- [Résilier votre abonnement](/docs/help/account-and-billing/cancel)

@@ -3,39 +3,55 @@ title: "Intégrer un logo ou une photo dans le code"
 description: "Logo QR et Image QR intègrent une image directement dans les points du code, sans IA."
 ---
 
-## Logo QR et Image QR [#logo-qr-and-image-qr]
+L'onglet **Art** intègre une image directement dans les points du code, au lieu de la placer par-dessus. **Logo QR** et **Image QR** fonctionnent sans aucune IA, et une vérification du scan teste le résultat dans votre navigateur avant le téléchargement.
 
-Dans le [Playground](/playground?tab=art), ouvrez l'onglet **Art**. Choisissez un mode :
+## Choisir un mode [#choose-a-mode]
 
-- **Logo QR** colorie les points à l'intérieur de la forme de votre logo.
-- **Image QR** transforme tout le code en votre photo.
-- **Off** désactive l'art.
+1. Dans le [Playground](/playground?tab=art), ouvrez l'onglet **Art**.
+2. Choisissez **Logo QR** pour colorer les points à l'intérieur de la forme de votre logo, ou **Image QR** pour transformer tout le code en votre photo. **Désactivé** désactive l'art.
+3. Importez votre propre image, ou essayez un exemple. Les logos donnent les meilleurs résultats en PNG transparent ou en SVG. Les photos fonctionnent mieux avec un sujet bien net.
+4. Sous **Intensité**, choisissez **Discrète**, **Équilibrée** ou **Marquée**. Plus l'art est prononcé, plus le rendu est beau, mais plus le code est difficile à scanner. **Réglage précis** vous donne un curseur.
 
-Importez votre propre image ou essayez un exemple. Les logos fonctionnent mieux en PNG transparent ou en SVG. Les photos fonctionnent mieux avec un seul sujet bien net.
+L'art fonctionne dans tous les formats de téléchargement.
 
-L'art fonctionne dans tous les formats de téléchargement, et aucune IA n'intervient.
+<Shot id="playground-art" />
 
-## Équilibrer art et scan [#balance-art-and-scanning]
+## Vérifier que le code se scanne [#check-that-it-scans]
 
-Choisissez l'intensité de l'art : **Subtle**, **Balanced** ou **Bold**. Plus l'art est marqué, plus le rendu est beau, mais plus le code est difficile à scanner.
+La **Vérification du scan** située sous l'art décode votre vrai code dans votre navigateur, à trois tailles. Si le résultat n'est pas excellent, elle liste les points à corriger.
 
-Le **Scan check** sous l'art décode votre vrai code dans votre navigateur, à trois tailles. Si le résultat n'est pas bon, il liste ce qu'il faut corriger.
+Pour de meilleurs résultats, réglez **Correction d'erreur** sur **Élevée** dans l'onglet **Design** et gardez une bordure dégagée autour du code.
 
-Pour de meilleurs résultats, réglez **Error correction** sur **High** et gardez une bordure dégagée autour du code.
+## Pourquoi le logo est petit avec un lien court [#why-the-logo-is-small-on-a-short-link]
 
-Avec le badge Logo QR, le logo ne grandit que dans la limite de ce que le code peut réparer. Un lien court produit un petit code, donc le logo reste petit, et les plus petits codes n'affichent aucun logo. Avec **Error correction** sur **High**, le logo dispose de la marge la plus large.
+Avec Logo QR, le logo ne peut grandir que dans la limite de ce que le code peut réparer. Un lien court produit un petit code, donc le logo reste petit, et les plus petits codes n'affichent aucun logo. Une correction d'erreur **Élevée** lui laisse le plus de place.
 
 <IfAvailable feature="aiArt" id="ai-art" title="Art IA">
 
 [L'art QR par IA](/ai/art) génère une illustration autour d'un code qui reste scannable. Il nécessite un compte gratuit.
 
-Dans le Playground, choisissez **AI art** dans l'onglet **Art**. L'IA peint le code que vous modifiez. Si ce code est lié à un QR code dynamique, l'art encode le lien court : vous pouvez donc changer sa destination après l'impression. L'art IA est une image : téléchargez-la en PNG, ou utilisez **Use as Image QR** pour la convertir en code vectoriel pour SVG, PDF ou EPS.
+Dans le Playground, choisissez **Art IA** dans l'onglet **Art**. L'IA illustre le code que vous modifiez. Si ce code est dynamique, l'art encode le lien court : vous pouvez donc changer sa destination après l'impression. L'art IA est une image : téléchargez-la en PNG, ou cliquez sur **Utiliser comme Image QR** pour la convertir en code vectoriel pour SVG, PDF ou EPS.
 
-Chaque offre inclut un certain nombre d'images d'art IA par mois : 3 avec Gratuit, 30 avec Pro et 150 avec Business, partagées par tous les membres de l'espace de travail.
+Chaque offre inclut un nombre d'images d'art IA par mois : 3 avec Gratuit, 30 avec Pro et 150 avec Business. Avec Business, le quota est partagé par tous les membres de l'espace de travail. Une image qui échoue n'est pas comptée.
 
 </IfAvailable>
+
+## En cas de problème [#if-something-goes-wrong]
+
+### La vérification du scan n'est pas Excellente [#the-scan-check-isnt-great]
+
+Réduisez l'**Intensité**, réglez **Correction d'erreur** sur **Élevée**, et choisissez une image avec un sujet net et un fort contraste.
+
+### La photo paraît brouillée dans le code [#the-photo-looks-muddy-in-the-code]
+
+Les photos chargées perdent leur forme dans les points. Recadrez sur un seul sujet, ou essayez **Logo QR** avec une forme simple.
+
+### L'art IA indique que le lien est trop long [#ai-art-says-the-link-is-too-long]
+
+L'art IA accepte un nombre limité de caractères. Rendez d'abord le code dynamique, afin qu'il contienne un lien court plutôt que l'adresse complète. Consultez [Créer un QR code dynamique](/docs/help/dynamic-codes/create).
 
 ## Voir aussi [#related]
 
 - [Vérifier un design avec le score de scan](/docs/help/designing/scan-score)
+- [Ajouter un logo](/docs/help/designing/logos)
 - [Les QR codes artistiques pour les développeurs](/docs/features/art-qr)

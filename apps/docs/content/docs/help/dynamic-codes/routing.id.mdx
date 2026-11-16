@@ -3,51 +3,82 @@ title: "Arahkan pemindaian ke tautan yang berbeda"
 description: "Arahkan setiap pemindaian berdasarkan perangkat, negara, area, bahasa, atau waktu, dan jalankan uji A/B dengan perutean cerdas."
 ---
 
-Perutean cerdas mengarahkan setiap pemindaian kode QR dinamis ke tautan yang berbeda, berdasarkan aturan yang Anda tetapkan. Hanya untuk Pro dan Business.
+Perutean cerdas mengirim setiap pemindaian kode QR dinamis ke tautan yang berbeda, berdasarkan aturan yang Anda tetapkan: iPhone ke App Store, pengunjung di Prancis ke halaman berbahasa Prancis, pemindaian setelah jam tutup ke formulir pemesanan. Halaman ini membantu Anda membuat aturan yang berfungsi; [Panduan perutean cerdas](/docs/smart-routing) membahas setiap kondisi secara mendalam.
+
+<Callout type="info">
+  Perutean cerdas tersedia di Pro dan Business, dan berfungsi pada kode yang membuka tautan situs web. Lihat [Paket dan isinya](/docs/help/account-and-billing/plans).
+</Callout>
 
 ## Tambahkan aturan [#add-a-rule]
 
-1. Buka kode dari **Codes**.
-2. Di bawah **Settings**, buka **Smart routing**.
-3. Klik **Add rule**, atau mulai dari templat.
-4. Pilih kondisi dan tautan yang dibuka oleh pemindaian yang cocok.
-5. Klik **Save rules**.
+### 1. Buka Perutean cerdas [#1-open-smart-routing]
 
-Pemindaian yang tidak cocok dengan aturan apa pun akan membuka tujuan normal kode tersebut.
+Buka kode dari **Codes**, masuk ke tab **Settings**, lalu buka **Smart routing**.
+
+### 2. Mulai aturan [#2-start-a-rule]
+
+Klik **Add rule**. Di bawah **Start from**, pilih templat atau **Empty rule**.
+
+<Shot id="routing-add-rule" />
+
+<Clip id="add-routing-rule" />
+
+### 3. Tetapkan kondisi dan tautan [#3-set-the-conditions-and-the-link]
+
+Pilih kondisi yang harus dipenuhi oleh pemindaian, serta tautan yang dibuka oleh pemindaian yang cocok.
+
+### 4. Simpan [#4-save]
+
+Klik **Save rules**. Pemindaian yang tidak cocok dengan aturan mana pun akan membuka tujuan normal kode.
 
 ## Kondisi yang dapat digunakan [#conditions-you-can-use]
 
-Perangkat, sistem operasi, negara, wilayah, area, bahasa, waktu dalam sehari, rentang tanggal, dan jumlah pemindaian. Setiap kondisi juga dapat dibalik dengan **is not**.
+**Device**, **Operating system**, **Country**, **Region**, **Area**, **Language**, **Time of day**, **Date range**, dan **Scan count**. Centang **is not** untuk membalik suatu kondisi.
 
-Sebuah **area** adalah satu titik dan satu radius. Area menggunakan lokasi yang dibagikan pemindai saat [lokasi presisi](/docs/precise-location) aktif, dan jika tidak, menggunakan perkiraan lokasi jaringan mereka.
+**Area** adalah sebuah titik dan radius. Area menggunakan lokasi yang dibagikan pemindai saat [lokasi presisi](/docs/precise-location) aktif, dan jika tidak, menggunakan perkiraan lokasi jaringan mereka.
 
 Satu aturan dapat memiliki hingga 8 kondisi. Satu kode dapat memiliki hingga 20 aturan.
 
 ## Templat [#templates]
 
-- **Smart app link**: iPhone ke App Store, ponsel Android ke Google Play.
+- **Smart app link (App Store / Google Play)**: iPhone ke App Store, ponsel Android ke Google Play.
 - **Country** dan **Visitor language**.
 - **Business hours**.
-- **Date range** untuk sebuah kampanye.
+- **Date range (campaign)**.
 - **First scans**: tautan berbeda untuk beberapa pemindaian pertama.
-- **Inside an area**: tautan berbeda untuk pemindaian di dekat suatu tempat.
-- **A/B split**: bagi pemindaian di antara hingga 5 versi.
+- **Inside an area (geofence)**: tautan berbeda untuk pemindaian di dekat suatu tempat.
+- **A/B split**: bagi pemindaian ke 2 hingga 5 versi.
 
-## Aturan pertama yang cocok yang berlaku [#the-first-matching-rule-wins]
+## Aturan pertama yang cocok yang dipakai [#the-first-matching-rule-wins]
 
 Aturan diperiksa dari atas ke bawah. Letakkan aturan yang paling spesifik di urutan pertama.
 
-Klik **Test your rules** untuk melihat ke mana sebuah pemindaian akan diarahkan sebelum Anda menyimpan.
+Buka **Test your rules (uses unsaved changes)** dan klik **Run test** untuk melihat ke mana pemindaian akan diarahkan sebelum Anda menyimpan.
 
 ## Uji A/B [#ab-tests]
 
-A/B split mengarahkan setiap pengunjung ke satu versi. Pengunjung yang sama akan melihat versi yang sama selama sisa hari itu. Halaman kode menunjukkan bagaimana pemindaian terbagi di antara versi.
+A/B split mengirim setiap pengunjung ke salah satu versi. Setiap pengunjung tetap mendapat versi yang sama selama satu hari. Tab **Analytics** pada kode menampilkan pembagian pemindaian antarversi.
 
-## Setelah penurunan paket [#after-a-downgrade]
+## Setelah paket diturunkan [#after-a-downgrade]
 
-Aturan yang tersimpan tetap berfungsi.
+Aturan yang tersimpan tetap berfungsi. Untuk mengubahnya lagi, Anda memerlukan Pro atau Business.
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### Smart routing tidak ada di Settings [#smart-routing-isnt-in-settings]
+
+Kode tersebut membuka halaman yang di-hosting. Perutean hanya untuk kode yang membuka tautan situs web; ubah tipenya terlebih dahulu. Lihat [Mengubah apa yang dibuka kode yang sudah dicetak](/docs/help/dynamic-codes/change-the-type).
+
+### Pemindaian diarahkan ke tautan yang salah [#a-scan-went-to-the-wrong-link]
+
+Aturan yang lebih awal cocok lebih dulu. Ubah urutan aturan, lalu pastikan dengan **Run test**. Lihat [Kode membuka halaman yang salah](/docs/help/troubleshooting/wrong-destination).
+
+### Aturan area tidak mengenai orang yang berada di sana [#an-area-rule-misses-people-who-are-there]
+
+Tanpa lokasi presisi, QRdx hanya mengetahui perkiraan lokasi jaringan pemindai, yang bisa berjarak satu kota. Aktifkan **Ask scanners for precise location** pada kode, atau perbesar radiusnya.
 
 ## Terkait [#related]
 
 - [Panduan perutean cerdas](/docs/smart-routing)
 - [Kode membuka halaman yang salah](/docs/help/troubleshooting/wrong-destination)
+- [Lokasi presisi](/docs/precise-location)

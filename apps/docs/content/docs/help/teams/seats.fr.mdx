@@ -1,33 +1,37 @@
 ---
 title: "Places et limites de l'espace de travail"
-description: "Combien de personnes un espace de travail peut compter, et comment le quitter, retirer un membre ou supprimer un espace de travail."
+description: "Combien de personnes un espace de travail peut accueillir, et comment quitter un espace, retirer quelqu'un ou supprimer un espace de travail."
 ---
 
-## Nombre de places incluses [#how-many-seats-you-get]
+Les places d'un espace de travail dépendent du forfait de ses propriétaires et de ses membres de facturation. Cette page explique combien de personnes peuvent y entrer, et comment on le quitte, comment on en retire quelqu'un ou comment un espace de travail est supprimé.
 
-- **Pro** : 3 places, propriétaire compris.
-- **Business** : places illimitées.
-- **Gratuit** : 1 place, la vôtre uniquement.
+## Combien de places vous avez [#how-many-seats-you-get]
 
-Un espace de travail bénéficie du meilleur forfait parmi ceux de ses propriétaires. Les membres n'ont pas besoin de leur propre abonnement.
+| Forfait | Places |
+| --- | --- |
+| Gratuit | 1 (vous) |
+| Pro | 3, propriétaire inclus |
+| Business | Illimitées |
+
+Un espace de travail utilise le meilleur forfait parmi ceux de ses propriétaires et de ses membres de facturation. Les membres n'ont pas besoin de leur propre abonnement.
 
 ## Les invitations en attente occupent une place [#pending-invitations-use-a-seat]
 
-Une invitation occupe une place jusqu'à ce qu'elle soit acceptée ou révoquée. Pour libérer la place, repérez l'invitation sur la page **Paramètres** → **Équipe** et cliquez sur **Révoquer**.
+Une invitation occupe une place jusqu'à ce qu'elle soit acceptée ou révoquée. Pour libérer la place, trouvez l'invitation sous **Invitations en attente** sur la page **Paramètres** → **Équipe**, puis cliquez sur **Révoquer**.
 
 ## Si le forfait des propriétaires change [#if-the-owners-plan-changes]
 
 Les personnes déjà présentes dans l'espace de travail y restent. Seules les nouvelles invitations sont bloquées tant qu'il n'y a pas de place libre.
 
-## Retirer un membre [#remove-someone]
+## Retirer quelqu'un [#remove-someone]
 
-Sur la page **Paramètres** → **Équipe**, cliquez sur **Retirer** à côté de son nom, puis sur **Retirer le membre**. Seuls les administrateurs et les propriétaires peuvent retirer des membres, et personne ne peut être retiré de son propre espace de travail.
+Sur la page **Paramètres** → **Équipe**, cliquez sur **Retirer** à côté de son nom, puis sur **Retirer le membre**, et [confirmez votre identité](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) si on vous le demande. Seuls les administrateurs et les propriétaires peuvent retirer des membres, et personne ne peut être retiré de son propre espace de travail.
 
-Les codes et les pages qu'il a créés restent dans l'espace de travail.
+Les codes et les pages qu'ils ont créés restent dans l'espace de travail. Les clés API qu'ils ont créées pour l'espace de travail cessent de fonctionner.
 
 ## Quitter un espace de travail [#leave-a-workspace]
 
-Dans **Paramètres** → **Général** de l'espace de travail, cliquez sur **Quitter l'espace de travail**.
+Dans **Paramètres** → **Général** de l'espace de travail, cliquez sur **Quitter l'espace de travail**. Vous perdez l'accès à ses codes, à ses pages et à ses thèmes ; ce que vous avez créé reste dans l'espace de travail, et il vous faut une nouvelle invitation pour le rejoindre à nouveau.
 
 Si vous êtes le seul propriétaire, nommez d'abord quelqu'un d'autre propriétaire. Consultez [Rôles de l'équipe](/docs/help/teams/roles). Vous ne pouvez pas quitter votre propre espace de travail.
 
@@ -35,4 +39,22 @@ Si vous êtes le seul propriétaire, nommez d'abord quelqu'un d'autre propriéta
 
 Les propriétaires peuvent cliquer sur **Supprimer l'espace de travail** dans **Paramètres** → **Général**. Pour confirmer, saisissez l'URL de l'espace de travail. Votre propre espace de travail ne peut pas être supprimé ; il disparaît lorsque vous [supprimez votre compte](/docs/help/account-and-billing/delete-your-account).
 
-Rien ne cesse de fonctionner. Chaque code, page, fichier et domaine est transféré vers l'espace de travail personnel de la personne qui l'a créé, et les codes imprimés continuent de rediriger. Les clés API de l'espace de travail sont supprimées.
+<Shot id="workspace-danger-zone" />
+
+Rien ne cesse de fonctionner. Chaque code, page, thème, fichier et domaine passe dans l'espace de travail personnel du membre qui l'a créé, et les codes imprimés continuent de rediriger. Les membres de l'espace de travail et les invitations en attente sont supprimés, et ses clés API sont effacées.
+
+## En cas de problème [#if-something-goes-wrong]
+
+### Le bouton Créer un lien d'invitation est désactivé [#create-invite-link-is-disabled]
+
+Toutes les places sont occupées, invitations en attente comprises. Révoquez une invitation, retirez quelqu'un, ou demandez à un propriétaire ou à un membre de facturation de passer à un forfait supérieur.
+
+### Quitter l'espace de travail est refusé [#leave-workspace-is-refused]
+
+Vous êtes le seul propriétaire, ou il s'agit de votre propre espace de travail. Nommez d'abord un autre membre propriétaire ; votre propre espace de travail ne peut pas être quitté.
+
+## Voir aussi [#related]
+
+- [Créer un espace de travail et inviter des personnes](/docs/help/teams/create-and-invite)
+- [Rôles de l'équipe](/docs/help/teams/roles)
+- [Les forfaits et ce qu'ils incluent](/docs/help/account-and-billing/plans)

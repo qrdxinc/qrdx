@@ -1,77 +1,110 @@
 ---
 title: "n8n"
-description: "n8n के लिए QRdx community nodes से QR कोड बनाएँ, डायनेमिक QR कोड मैनेज करें, स्कैन पढ़ें और QRdx इवेंट से n8n workflows शुरू करें।"
+description: "सेल्फ़-होस्टेड n8n में QRdx कम्युनिटी नोड्स इंस्टॉल करें, ताकि QR कोड इमेज बना सकें, डायनेमिक QR कोड मैनेज कर सकें, स्कैन पढ़ सकें और QRdx इवेंट से वर्कफ़्लो शुरू कर सकें। n8n Cloud पर सादे Webhook नोड से इवेंट पाएँ।"
 icon: Blocks
 ---
 
-`@qrdx/n8n-nodes-qrdx` पैकेज [n8n](https://n8n.io) में दो nodes जोड़ता है:
+इस पेज के अंत तक आपका एक n8n वर्कफ़्लो QR कोड इमेज बनाएगा, आपके वर्कस्पेस में डायनेमिक कोड बनाएगा और एडिट करेगा और उनके स्कैन पढ़ेगा। दूसरा वर्कफ़्लो तब शुरू होगा जब कोई कोड स्कैन किया जाए, बनाया या बदला जाए, या कोई फ़ॉर्म सबमिट हो।
 
-- **QRdx** QR कोड इमेज बनाता है, [डायनेमिक कोड](/docs/dynamic-qr-codes) बनाता और एडिट करता है, और उनके स्कैन तथा आपके सेव किए हुए थीम पढ़ता है। n8n AI Agent इसे टूल की तरह इस्तेमाल कर सकता है।
-- **QRdx Trigger** तब workflow शुरू करता है जब आपके कोड स्कैन, बनाए या बदले जाते हैं, या जब कोई [होस्टेड पेज](/docs/forms-and-pages) पर फ़ॉर्म सबमिट करता है।
+`@qrdx/n8n-nodes-qrdx` पैकेज [n8n](https://n8n.io) में दो नोड जोड़ता है:
 
-यह पैकेज npm पर [`@qrdx/n8n-nodes-qrdx`](https://www.npmjs.com/package/@qrdx/n8n-nodes-qrdx) नाम से मिलता है और सेल्फ़-होस्टेड n8n में इंस्टॉल होता है। n8n Cloud सिर्फ़ वही community nodes चलाता है जिन्हें n8n ने verify किया है, और यह node अभी verified नहीं है।
+- **QRdx** QR कोड इमेज बनाता है, [डायनेमिक QR कोड](/docs/dynamic-qr-codes) बनाता और एडिट करता है, और उनके स्कैन व आपकी सेव की हुई थीम पढ़ता है। n8n AI Agent इसे टूल की तरह इस्तेमाल कर सकता है।
+- **QRdx Trigger** तब वर्कफ़्लो शुरू करता है जब आपके कोड स्कैन किए जाएँ, बनाए या बदले जाएँ, या कोई [होस्टेड पेज](/docs/forms-and-pages) पर फ़ॉर्म सबमिट करे।
 
-कुछ इंस्टॉल किए बिना इवेंट पाने के लिए इसकी जगह [Webhook node](#without-the-package) इस्तेमाल करें।
+<Callout type="info" title="सेल्फ़-होस्टेड n8n">
+यह पैकेज npm पर [`@qrdx/n8n-nodes-qrdx`](https://www.npmjs.com/package/@qrdx/n8n-nodes-qrdx) नाम से है और सेल्फ़-होस्टेड n8n में इंस्टॉल होता है। n8n Cloud सिर्फ़ वही कम्युनिटी नोड्स चलाता है जिन्हें n8n ने वेरिफ़ाई किया है, और यह नोड अभी वेरिफ़ाई नहीं हुआ है। n8n Cloud पर इवेंट पाने के लिए इसके बजाय [Webhook नोड](#without-the-package) इस्तेमाल करें।
+</Callout>
 
-## इंस्टॉल करें [#install]
+## शुरू करने से पहले [#before-you-start]
 
-n8n में **Settings → Community Nodes** खोलें, **Install** पर क्लिक करें, `@qrdx/n8n-nodes-qrdx` डालें, community nodes वाला नोट स्वीकार करें और **Install** पर क्लिक करें। फिर nodes पैनल में **QRdx** खोजें।
+- एक सेल्फ़-होस्टेड n8n, जहाँ आप कम्युनिटी नोड्स इंस्टॉल कर सकें।
+- उस वर्कस्पेस की एक [API key](/docs/developers/api-keys) जिसमें नोड्स को काम करना है। यह कोड, स्कैन और थीम ऑपरेशन और ट्रिगर के लिए चाहिए। QR इमेज बनाने के लिए key नहीं चाहिए।
+- ट्रिगर के लिए: Business प्लान, क्योंकि [वेबहुक](/docs/webhooks) उसी का हिस्सा हैं, और n8n का एक पब्लिक `https://` पते पर उपलब्ध होना।
 
-अगर आपके n8n में वह पेज छिपा है, या आप इसे कमांड लाइन से मैनेज करते हैं, तो पैकेज को अपने n8n user folder के `nodes` फ़ोल्डर में इंस्टॉल करें और n8n रीस्टार्ट करें:
+## 1. नोड्स इंस्टॉल करें [#1-install-the-nodes]
 
-```bash
+n8n में **Settings → Community Nodes** खोलें, **Install** चुनें, `@qrdx/n8n-nodes-qrdx` डालें, कम्युनिटी नोड्स वाला नोट स्वीकार करें और **Install** चुनें। फिर नोड्स पैनल में **QRdx** खोजें।
+
+अगर आपका n8n यह पेज छिपा देता है, या आप इसे कमांड लाइन से मैनेज करते हैं, तो पैकेज को अपने n8n यूज़र फ़ोल्डर के `nodes` फ़ोल्डर में इंस्टॉल करें और n8n रीस्टार्ट करें:
+
+```bash title="Terminal"
 mkdir -p ~/.n8n/nodes
 cd ~/.n8n/nodes
 npm install @qrdx/n8n-nodes-qrdx
 ```
 
-अगर n8n Docker में चलता है, तो यही कमांड container के अंदर चलाएँ (`docker exec -it n8n sh`) या इन्हें अपनी image में सेट करें।
+अगर n8n Docker में चलता है, तो यही कमांड कंटेनर के अंदर चलाएँ (`docker exec -it n8n sh`) या उन्हें अपनी इमेज में सेट करें।
 
-## अपना वर्कस्पेस कनेक्ट करें [#connect-your-workspace]
+## 2. अपना वर्कस्पेस कनेक्ट करें [#2-connect-your-workspace]
 
-[Settings → API keys & apps](/dashboard?to=settings/developers) में [API key](/docs/developers/api-keys) बनाएँ, फिर n8n में उस key के साथ **QRdx API** credential जोड़ें। **Base URL** को `https://api.qrdx.dev/v1` ही रहने दें, जब तक आप QRdx को [सेल्फ़-होस्ट](/docs/self-hosting) नहीं करते; उस स्थिति में अपना पता लिखें और उसके बाद `/api/v1` जोड़ें।
+[Settings → API keys & apps](/dashboard?to=settings/developers) में एक [API key](/docs/developers/api-keys) बनाएँ, फिर n8n में उस key के साथ **QRdx API** क्रेडेंशियल जोड़ें। **Base URL** को `https://api.qrdx.dev/v1` ही रहने दें, जब तक आप QRdx को [सेल्फ़-होस्ट](/docs/self-hosting) नहीं करते; तब अपना पता डालें और उसके बाद `/api/v1` लगाएँ।
 
-n8n credential को आपकी प्रोफ़ाइल पढ़कर टेस्ट करता है, जिसके लिए Profile scope चाहिए, इसलिए full access वाली key सबसे आसान है। एक key उसी वर्कस्पेस पर काम करती है जिसमें वह बनाई गई थी। QR इमेज बनाने के लिए किसी credential की ज़रूरत नहीं है।
+n8n क्रेडेंशियल को आपकी प्रोफ़ाइल पढ़कर टेस्ट करता है, जिसके लिए `profile:read` स्कोप चाहिए, इसलिए **Full access** key सबसे आसान है। key उसी वर्कस्पेस पर काम करती है जिसमें वह बनाई गई थी।
 
-## QRdx node [#the-qrdx-node]
+## 3. QRdx नोड इस्तेमाल करें [#3-use-the-qrdx-node]
 
-| Resource | Operations |
+| रिसोर्स | ऑपरेशन |
 | --- | --- |
-| QR Image | PNG, WebP, SVG या EPS इमेज बनाएँ। न API key, न अकाउंट |
-| Code | Create, Get, Get Many, Update (archive और restore सहित), Delete |
-| Scan | Get Many (अलग-अलग स्कैन, नए पहले), Get Summary (कुल संख्या, रोज़ की गिनती और टॉप देश, शहर, डिवाइस, ब्राउज़र और रेफ़रर) |
-| Theme | Get, Get Many |
+| **QR Image** | PNG, WebP, SVG या EPS इमेज **Generate** करें। न API key, न अकाउंट |
+| **Code** | **Create**, **Get**, **Get Many**, **Update** (आर्काइव और रीस्टोर सहित), **Delete** |
+| **Scan** | **Get Many** (अलग-अलग स्कैन, नए पहले), **Get Summary** (कुल संख्या, रोज़ की गिनती और टॉप देश, शहर, डिवाइस, ब्राउज़र और रेफ़रर) |
+| **Theme** | **Get**, **Get Many** |
 
-**Generate** इमेज को एक binary field में रखता है, जिसे आप ईमेल में अटैच कर सकते हैं या कहीं भी अपलोड कर सकते हैं। आप इसका साइज़, रंग, body, eye और eye dot के आकार, error correction, margin, लेबल के साथ [फ़्रेम](/docs/features/frames) और लोगो आइकन सेट कर सकते हैं। आउटपुट में `url` भी होता है: [image API](/docs/developers/image-api) से उसी इमेज का लिंक, जो `<img>` टैग के लिए तैयार है।
+**Generate** इमेज को एक बाइनरी फ़ील्ड में रखता है, जिसे आप ईमेल में अटैच कर सकते हैं या कहीं भी अपलोड कर सकते हैं। आप इसका साइज़, रंग, बॉडी, आई और आई डॉट के शेप, एरर करेक्शन, मार्जिन, लेबल के साथ [फ़्रेम](/docs/features/frames) और लोगो आइकन सेट कर सकते हैं। आउटपुट में `url` भी होता है: [इमेज API](/docs/developers/image-api) से उसी इमेज का लिंक, जो `<img>` टैग के लिए तैयार है।
 
-कोड और स्कैन ऑपरेशन आपकी key के साथ [REST API](/docs/developers/rest-api) को कॉल करते हैं और वर्कस्पेस के रोज़ाना API कोटे में गिने जाते हैं। **Get Many** नतीजों के पेज अपने-आप पार करता है। एरर में QRdx का अपना मैसेज ही रहता है; उदाहरण के लिए, कस्टम back-half के लिए Pro या Business चाहिए, और फ़्री पर node वही [एरर](/docs/developers/errors) दिखाता है जो QRdx लौटाता है।
+कोड और स्कैन ऑपरेशन आपकी key से [REST API](/docs/developers/rest-api) को कॉल करते हैं और वर्कस्पेस के रोज़ के API कोटा में गिने जाते हैं। **Get Many** आपके लिए नतीजों के सारे पेज पढ़ लेता है। **Create** में डेस्टिनेशन URL देना होता है, और अतिरिक्त फ़ील्ड में टाइटल, कस्टम बैक-हाफ़ (`slug`) और कस्टम डोमेन; **Update** में यही फ़ील्ड और साथ में आर्काइव व रीस्टोर होते हैं। एरर में QRdx का अपना मैसेज ही रहता है: जैसे कस्टम बैक-हाफ़ के लिए Pro या Business चाहिए, और फ़्री पर नोड API का `PLAN_REQUIRED` [एरर](/docs/developers/errors) दिखाता है।
 
-## QRdx Trigger node [#the-qrdx-trigger-node]
+## 4. इवेंट से वर्कफ़्लो शुरू करें [#4-start-workflows-from-events]
 
-इवेंट चुनें, फिर workflow को activate करें। node [REST Hooks API](/docs/webhooks#zapier-make-and-n8n-rest-hooks) से subscribe करता है और workflow deactivate करने पर unsubscribe कर देता है। जब तक यह active है, subscription Settings → Webhooks में दिखता है।
+**QRdx Trigger** नोड जोड़ें, **Events** चुनें, फिर वर्कफ़्लो को एक्टिवेट करें। नोड [REST Hooks API](/docs/webhooks#zapier-make-and-n8n-rest-hooks) से सब्सक्राइब करता है और वर्कफ़्लो डिएक्टिवेट करने पर अनसब्सक्राइब कर देता है। जब तक सब्सक्रिप्शन एक्टिव है, वह **Settings → Webhooks** में दिखता है।
 
-| Event | कब |
+| इवेंट | कब |
 | --- | --- |
-| Scans | कोड स्कैन होते हैं। डिलीवरी batch में होती है: हर मिनट एक, जिसमें अधिकतम 100 स्कैन और सटीक गिनती होती है |
-| Scan Milestones | किसी कोड का पहला स्कैन, फिर 10, 100, 500, 1,000 स्कैन और उसके बाद |
-| New Codes | कोई डायनेमिक कोड बनाया जाता है |
-| Code Changes | किसी कोड का डेस्टिनेशन, टाइटल, डिज़ाइन या डोमेन बदलता है |
-| Form Submissions | कोई होस्टेड पेज पर फ़ॉर्म सबमिट करता है |
+| **Scans** | कोड स्कैन किए जाते हैं। डिलीवरी बैच में होती है: हर मिनट एक, जिसमें अधिकतम 100 स्कैन और सटीक गिनती होती है |
+| **Scan Milestones** | किसी कोड का पहला स्कैन, फिर 10, 100, 500, 1,000 स्कैन और उसके आगे |
+| **New Codes** | कोई डायनेमिक QR कोड बनाया जाता है |
+| **Code Changes** | किसी कोड का डेस्टिनेशन, टाइटल, डिज़ाइन या डोमेन बदलता है |
+| **Form Submissions** | कोई होस्टेड पेज पर फ़ॉर्म सबमिट करता है |
 
-node हर डिलीवरी का `X-QRdx-Signature` उस signing secret से जाँचता है जो subscribe करते समय QRdx ने लौटाया था, और जो मेल नहीं खाता उसे `401` का जवाब देता है। Scans batch को अलग-अलग items के रूप में पाने के लिए **Output One Item per Scan** चालू करें, और Settings → Webhooks में **Send test** पर क्लिक करने पर workflow चलाने के लिए **Include Test Events** चालू करें। payloads वही हैं जो [Webhooks](/docs/webhooks#payloads) में बताए गए हैं।
+नोड हर डिलीवरी का `X-QRdx-Signature` उस साइनिंग सीक्रेट से जाँचता है जो सब्सक्राइब करते समय QRdx ने लौटाया था, और जो मेल न खाए उसे `401` जवाब देता है। **Options** में **Output One Item per Scan** चालू करें ताकि Scans बैच अलग-अलग आइटम के रूप में मिले, और **Include Test Events** चालू करें ताकि **Settings → Webhooks** में **Send test** चुनने पर वर्कफ़्लो चले। पेलोड वही हैं जो [वेबहुक](/docs/webhooks#payloads) में बताए गए हैं।
 
-Trigger के लिए ये चाहिए:
+ट्रिगर के लिए ये चाहिए:
 
-- Business प्लान, क्योंकि [webhooks](/docs/webhooks) उसी का हिस्सा हैं
-- Manage codes scope वाली API key
-- सार्वजनिक `https://` पते पर n8n, क्योंकि QRdx `localhost` या प्राइवेट नेटवर्क पर डिलीवर नहीं करता। प्रॉक्सी के पीछे n8n का `WEBHOOK_URL` सेट करें। यह उस टेस्ट URL पर भी लागू होता है जिसे n8n **Listen for test event** पर क्लिक करने के दौरान इस्तेमाल करता है
+- Business प्लान, क्योंकि [वेबहुक](/docs/webhooks) उसी का हिस्सा हैं;
+- `codes:write` वाली API key (**Full access**);
+- पब्लिक `https://` पते पर n8n, क्योंकि QRdx `localhost` या प्राइवेट नेटवर्क पर डिलीवर नहीं करता। प्रॉक्सी के पीछे n8n का `WEBHOOK_URL` सेट करें। यह उस टेस्ट URL पर भी लागू होता है जो n8n **Listen for test event** चुनने पर इस्तेमाल करता है।
 
 ## पैकेज के बिना [#without-the-package]
 
-QRdx इवेंट सीधे n8n **Webhook** node तक पहुँचा सकता है, चाहे n8n Cloud हो या सेल्फ़-होस्टेड n8n:
+QRdx इवेंट सीधे n8n **Webhook** नोड पर डिलीवर कर सकता है, n8n Cloud पर या सेल्फ़-होस्टेड n8n पर:
 
-1. Webhook node जोड़ें, उसका HTTP method `POST` सेट करें और उसका production URL कॉपी करें।
-2. workflow को activate करें। production URL तभी जवाब देता है जब workflow active हो।
-3. [Settings → Webhooks](/dashboard?to=settings/webhooks) में **Add endpoint** पर क्लिक करें, URL पेस्ट करें और इवेंट चुनें।
+1. एक Webhook नोड जोड़ें, उसका HTTP मेथड `POST` सेट करें और उसका प्रोडक्शन URL कॉपी करें।
+2. वर्कफ़्लो एक्टिवेट करें। प्रोडक्शन URL तभी जवाब देता है जब वर्कफ़्लो एक्टिव हो।
+3. [Settings → Webhooks](/dashboard?to=settings/webhooks) में **Add endpoint** चुनें, URL पेस्ट करें और इवेंट चुनें।
 
-हर इवेंट JSON payload के साथ workflow शुरू करता है। signatures जाँचने के लिए Code node में `X-QRdx-Signature` पढ़ें और endpoint के signing secret से [उसे verify करें](/docs/webhooks#verify-signatures)।
+हर इवेंट JSON पेलोड के साथ वर्कफ़्लो शुरू करता है। सिग्नेचर जाँचने के लिए Code नोड में `X-QRdx-Signature` पढ़ें और एंडपॉइंट के साइनिंग सीक्रेट से [उसे वेरिफ़ाई करें](/docs/webhooks#verify-signatures)।
+
+## कुछ गड़बड़ हो जाए तो [#if-something-goes-wrong]
+
+### क्रेडेंशियल टेस्ट फ़ेल हो जाता है [#the-credential-test-fails]
+
+key में `profile:read` नहीं है (उसके बिना **Custom** key), key रिवोक हो गई या एक्सपायर हो गई, या **Base URL** गलत होस्ट पर है। `https://api.qrdx.dev/v1` के सामने **Full access** key पास हो जाती है।
+
+### ट्रिगर एक्टिवेट नहीं होता, या `402 PLAN_REQUIRED` [#the-trigger-wont-activate-or-402-plan_required]
+
+वेबहुक Business प्लान का हिस्सा हैं। वर्कस्पेस अपग्रेड करें, या Webhook नोड और [नोटिफ़िकेशन](/docs/notifications) के ईमेल अलर्ट इस्तेमाल करें।
+
+### ट्रिगर एक्टिवेट हो जाता है पर कुछ नहीं आता [#the-trigger-activates-but-nothing-arrives]
+
+QRdx n8n तक पहुँच नहीं पा रहा: वह `http://`, `localhost` और प्राइवेट पते अस्वीकार करता है और रीडायरेक्ट फ़ॉलो नहीं करता। n8n को पब्लिक `https://` होस्ट नाम के पीछे रखें और `WEBHOOK_URL` सेट करें। फिर **Settings → Webhooks** में सब्सक्रिप्शन की डिलीवरी देखें।
+
+### Create पर `PLAN_REQUIRED` [#plan_required-on-create]
+
+कस्टम बैक-हाफ़ या कस्टम डोमेन के लिए Pro या Business चाहिए। फ़्री पर वे फ़ील्ड खाली छोड़ें।
+
+## संबंधित [#related]
+
+- [वेबहुक](/docs/webhooks): ट्रिगर जो इवेंट, पेलोड और सिग्नेचर पाता है
+- [QR कोड इमेज API](/docs/developers/image-api): Generate ऑपरेशन जो इमेज लौटाता है
+- [API keys](/docs/developers/api-keys): QRdx API क्रेडेंशियल के पीछे की key
+- [इंटीग्रेशन डायरेक्टरी](/integrations): QRdx को आपके टूल्स से जोड़ने के दूसरे तरीके

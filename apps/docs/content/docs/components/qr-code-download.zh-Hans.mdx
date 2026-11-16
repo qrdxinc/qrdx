@@ -1,8 +1,10 @@
 ---
 title: "二维码下载"
-description: "下载菜单,可按所选尺寸将二维码导出为 PNG、SVG、JPG 或 PDF,也可将其作为图片复制。"
+description: "适用于 shadcn/ui 项目的下载菜单，可按所选尺寸将二维码导出为 PNG、SVG、JPG 或 PDF，也可将其复制为图片。"
 icon: Download
 ---
+
+`QrCodeDownload` 是一个按钮，点击后会打开包含格式和尺寸选项的菜单，可将二维码保存为文件，或将 PNG 复制到剪贴板。请将它放在任意已渲染的二维码旁边，并使用相同的样式对象，这样导出的文件就会与预览一致。
 
 <ComponentLinks name="qr-code-download" />
 
@@ -14,37 +16,71 @@ icon: Download
 
 ## 用法 [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeDownload } from "@/components/qr-code-download";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeDownload value="https://qrdx.dev" />
 ```
 
-菜单列出每种格式及简短说明,并提供尺寸选择器和“复制图片”(会将 PNG 放入剪贴板)。文件在浏览器中生成,不会上传任何内容。
+菜单中会列出每种格式及简短说明、一个尺寸选择器，以及 **复制图片**，后者会把 PNG 放入剪贴板。文件在浏览器中渲染，不会上传任何内容。
 
 ## 示例 [#examples]
 
-### 带样式导出 [#styled-export]
+### 样式化导出 [#styled-export]
 
-为 `qr` 传入与屏幕上渲染时相同的样式对象,这样导出的每个文件都与预览一致。`formats`、`sizes`、`label` 和 `variant` 用于调整菜单及其按钮。
+给 `qr` 传入与屏幕上渲染时相同的样式对象，这样每个导出的文件都与预览一致。`formats`、`sizes`、`label` 和 `variant` 用于定制菜单及其按钮。
 
 <ComponentPreview name="qr-code-download-styled" />
 
 ### 格式 [#formats]
 
 | 格式 | 输出 |
-|--------|--------|
-| `png` | 带二维码背景的图片 |
+| --- | --- |
+| `png` | 带有二维码背景的图片 |
 | `jpg` | 带纯色背景的图片 |
-| `svg` | 可缩放至任意大小的矢量图 |
-| `pdf` | 单页文档。需要可选的 `jspdf` 包(`npm install jspdf`) |
+| `svg` | 可缩放至任意尺寸的矢量图 |
+| `pdf` | 单页文档。需要可选的 `jspdf` 包（`npm install jspdf`） |
+| `eps` | 适用于印刷厂和设计工具的矢量图 |
 
-栅格图尺寸范围为 50 到 5000 像素。在 `sizes` 中只传入一项,即可隐藏尺寸选择器。
+位图尺寸范围为 50 到 5000 像素。如果在 `sizes` 中只传入一个条目，则会隐藏尺寸选择器。菜单会在位图格式旁显示像素尺寸，在 SVG 和 EPS 旁显示“vector”。
+
+### 下载之后 [#after-a-download]
+
+文件保存或图片复制完成后，会调用 `onComplete`，并传入对应的格式，复制时则传入 `"copy"`。导出失败时，`onError` 会收到错误对象；错误信息也会显示在按钮下方。
+
+```tsx title="components/tracked-download.tsx"
+import { QrCodeDownload } from "@/components/qr-code-download";
+
+export function TrackedDownload({ url }: { url: string }) {
+  return (
+    <QrCodeDownload
+      value={url}
+      onComplete={(action) => console.log("exported", action)}
+      onError={(error) => console.error(error.message)}
+    />
+  );
+}
+```
+
+## 无障碍与渲染 [#accessibility-and-rendering]
+
+- 触发器就是你的 Button，在文件渲染期间带有 `aria-busy`。结果会通过 polite 实时区域播报，错误则以 `role="alert"` 显示在按钮下方。
+- 菜单就是你的 DropdownMenu，因此键盘导航和焦点行为遵循你主题中的组件。
+- 复制操作需要用户手势和安全上下文（HTTPS 或 localhost），否则浏览器会拒绝，错误信息会显示在按钮下方。
+- 该组件是 Client Component。除按钮外，它在服务器端不渲染任何可见内容。
 
 ## API 参考 [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-download.tsx" type="{ [K in keyof QrCodeDownloadProps as K extends Exclude<keyof ComponentProps<'div'>, 'onError'> ? never : K]: QrCodeDownloadProps[K] }" />
 
-其他任何属性(例如 `className`)都会传递给外层的 `<div>`。
+其他任何属性（例如 `className`）都会传给外层的 `<div>`。
+
+## 相关内容 [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code" title="二维码" description="带有一排下载按钮而非菜单的二维码。" />
+  <Card href="/docs/features/downloads" title="导出与下载" description="菜单背后的库函数，以及每种格式的详细说明。" />
+  <Card href="/docs/components/qr-code-card" title="二维码卡片" description="页脚可放置此菜单的卡片。" />
+</Cards>

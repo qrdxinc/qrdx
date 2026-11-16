@@ -3,43 +3,45 @@ title: "Um código abre a página errada"
 description: "Por que um QR code abre um link antigo ou inesperado e como descobrir o que ele realmente guarda."
 ---
 
+Um código que abre uma página antiga ou inesperada é um QR code estático que ainda guarda o link antigo, ou um QR code dinâmico com alguma configuração que envia a leitura para outro lugar. Descubra primeiro qual é o caso e depois siga a lista.
+
 ## Primeiro, veja o que o código guarda [#first-see-what-the-code-holds]
 
-Tire uma foto do código impresso e envie para o [verificador de leitura](/tools/scan-checker). Ele mostra exatamente o que o código contém.
+Tire uma foto do código impresso e coloque no [verificador de leitura](/tools/scan-checker). Ele mostra exatamente o que o código contém.
 
-- Se aparecer o endereço do seu site, o código é **estático**.
-- Se aparecer um link curto como `qrdx.dev/q/…`, o código é **dinâmico**.
+- Se mostrar o endereço do seu site, o código é **estático**.
+- Se mostrar um link curto como `qrdx.dev/q/…` ou um link no seu próprio domínio, o código é **dinâmico**.
 
-## Um código estático [#a-static-code]
+## Um código estático abre o link antigo [#a-static-code-opens-the-old-link]
 
-Um código estático guarda o link dentro do próprio código. Ele não pode ser alterado depois de impresso.
+O código foi baixado antes de se tornar dinâmico, então ele guarda o link antigo e não pode ser alterado. Transforme o código em dinâmico e imprima a nova versão. Confirme: o verificador de leitura mostra um link curto. Veja [Crie um QR code dinâmico](/docs/help/dynamic-codes/create).
 
-Isso acontece quando o código é baixado antes de se tornar dinâmico. Para corrigir, imprima a versão dinâmica. Veja [Criar um QR code dinâmico](/docs/help/dynamic-codes/create).
+## Um código dinâmico ainda abre o destino antigo [#a-dynamic-code-still-opens-the-old-destination]
 
-## Um código dinâmico [#a-dynamic-code]
+O novo destino não foi salvo. No Playground, alterar o endereço não basta: clique em **Point it to the new address**. No painel, abra **Edit link**, altere a **Destination URL** e clique em **Save changes**. Confirme: faça a leitura de novo. O QRdx não faz cache dos redirecionamentos, então a próxima leitura usa o novo destino. Veja [Mude para onde um código aponta](/docs/help/dynamic-codes/change-the-link).
 
-Abra o código em **Codes** e confira cada um destes pontos.
+## Algumas pessoas chegam a outra página [#some-people-land-on-a-different-page]
 
-### O novo destino não foi salvo [#the-new-destination-wasnt-saved]
+Uma regra de roteamento inteligente ou um teste A/B envia parte das leituras para outro lugar. Abra a aba **Settings** do código e depois **Smart routing**. A primeira regra que corresponder vence, então confira a ordem. Abra **Test your rules (uses unsaved changes)** e clique em **Run test** para ver para onde uma leitura iria. Em um teste A/B, cada visitante mantém a mesma versão durante o dia, então duas pessoas podem ver páginas diferentes. Veja [Envie leituras para links diferentes](/docs/help/dynamic-codes/routing).
 
-No Playground, mudar o endereço não basta: clique em **Point it to the new address**. No painel, use **Edit link** e **Save changes**. Veja [Mudar para onde um código aponta](/docs/help/dynamic-codes/change-the-link).
+## O código abre a sua página de fallback [#the-code-opens-your-fallback-page]
 
-### Uma regra de roteamento inteligente foi aplicada [#a-smart-routing-rule-matched]
+O código está pausado, passou da data de término ou do limite de leituras, então as leituras vão para a **Fallback URL**. Abra **Access & schedule** na aba **Settings** e retome o código, ou altere as datas ou o limite. Veja [Pause, agende ou limite um código](/docs/help/dynamic-codes/pause-schedule-limit).
 
-As regras podem enviar algumas leituras para outro lugar, por exemplo por dispositivo ou país. A primeira regra que corresponder é a que vale. Abra **Smart routing** e clique em **Test your rules**.
+## O link tem texto extra depois de um ponto de interrogação [#the-link-has-extra-text-after-a-question-mark]
 
-### Um teste A/B está em andamento [#an-ab-test-is-running]
+Você configurou parâmetros UTM, então as leituras abrem o seu link com tags `utm_` adicionadas. Isso é esperado, e a página é a mesma.
 
-Cada visitante vê uma versão por dia. Outra pessoa pode ver uma página diferente.
+## A página certa abre, mas parece antiga [#the-right-page-opens-but-it-looks-old]
 
-### O código está pausado ou encerrado [#the-code-is-paused-or-ended]
+O celular está mostrando uma cópia em cache do seu site, não do redirecionamento. Recarregue a página no navegador.
 
-Um código pausado ou encerrado abre a **Fallback URL**, se você tiver definido uma. Confira **Access & schedule**.
+## Continua errado [#still-wrong]
 
-### Parâmetros UTM foram adicionados [#utm-parameters-were-added]
+[Fale com o suporte](/docs/help/contact) informando o link curto do código e o que a leitura abriu.
 
-Se você definiu parâmetros UTM, as leituras abrem seu link com tags `utm_` adicionadas. Isso é esperado, e a página é a mesma.
+## Relacionado [#related]
 
-## Ainda vendo a página antiga? [#still-seeing-the-old-page]
-
-O QRdx não faz cache de redirecionamentos, então a próxima leitura usa o novo destino. Se o seu celular mostra uma versão antiga da própria página, recarregue-a no navegador.
+- [Mude para onde um código aponta](/docs/help/dynamic-codes/change-the-link)
+- [Envie leituras para links diferentes](/docs/help/dynamic-codes/routing)
+- [Uma leitura mostra uma página de erro](/docs/help/troubleshooting/error-pages)

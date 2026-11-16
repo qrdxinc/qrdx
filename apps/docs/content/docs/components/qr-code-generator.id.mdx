@@ -1,8 +1,10 @@
 ---
-title: "Generator Kode QR"
-description: "Input teks dengan pratinjau kode QR langsung, preset gaya, dan tombol unduh."
+title: "QR Code Generator"
+description: "Kolom input teks dengan pratinjau kode QR langsung, preset gaya, dan tombol unduh, untuk proyek shadcn/ui."
 icon: Sparkles
 ---
+
+`QrCodeGenerator` adalah generator kecil dalam satu komponen: kolom teks, pratinjau yang digambar ulang saat Anda mengetik, deretan preset gaya, dan tombol unduh. Gunakan komponen ini agar pengguna Anda bisa membuat kode langsung di dalam produk Anda, tanpa perlu diarahkan ke tempat lain.
 
 <ComponentLinks name="qr-code-generator" />
 
@@ -14,15 +16,15 @@ icon: Sparkles
 
 ## Penggunaan [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeGenerator } from "@/components/qr-code-generator";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeGenerator defaultValue="https://example.com" />
 ```
 
-Pratinjau diperbarui saat Anda mengetik. Setiap tombol preset menampilkan contoh kecil gayanya, dan unduhan menggunakan preset yang dipilih pada ukuran 1024 piksel.
+Pratinjau diperbarui saat Anda mengetik. Setiap tombol preset menampilkan contoh kecil gayanya, dan unduhan menggunakan preset yang dipilih pada ukuran 1024 piksel. Jika kolom kosong, pratinjau menampilkan "Type some text to generate a code" dan tombol unduh dinonaktifkan.
 
 ## Contoh [#examples]
 
@@ -32,28 +34,54 @@ Ganti preset bawaan dengan preset Anda sendiri. Sebuah preset terdiri dari `id`,
 
 <ComponentPreview name="qr-code-generator-presets" />
 
-Preset bawaan diekspor sebagai `QR_CODE_PRESETS`, sehingga Anda dapat memperluasnya:
+Preset bawaan diekspor sebagai `QR_CODE_PRESETS`, sehingga Anda bisa memperluasnya:
 
-```tsx
-import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator";
+```tsx title="components/brand-generator.tsx"
+import {
+  QR_CODE_PRESETS,
+  QrCodeGenerator,
+} from "@/components/qr-code-generator";
 
-<QrCodeGenerator
-  presets={[
-    ...QR_CODE_PRESETS,
-    { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
-  ]}
-/>
+export function BrandGenerator() {
+  return (
+    <QrCodeGenerator
+      presets={[
+        ...QR_CODE_PRESETS,
+        { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
+      ]}
+    />
+  );
+}
 ```
 
 ### Menyimpan hasil [#saving-the-result]
 
 `onChange` melaporkan teks dan preset yang dipilih pada setiap perubahan, misalnya untuk menyimpan pilihan pengguna:
 
-```tsx
-<QrCodeGenerator
-  onChange={({ value, preset }) => saveDraft({ value, style: preset.style })}
-/>
+```tsx title="components/draft-generator.tsx"
+import { QrCodeGenerator } from "@/components/qr-code-generator";
+
+export function DraftGenerator({
+  saveDraft,
+}: {
+  saveDraft: (draft: { value: string; style: object }) => void;
+}) {
+  return (
+    <QrCodeGenerator
+      onChange={({ value, preset }) =>
+        saveDraft({ value, style: preset.style })
+      }
+    />
+  );
+}
 ```
+
+## Aksesibilitas dan rendering [#accessibility-and-rendering]
+
+- Kolom ini memiliki label "Text or URL" yang terlihat, dan preset berupa `<fieldset>` dengan legenda "Style". Setiap preset adalah tombol toggle dengan `aria-pressed`, dan kode contohnya disembunyikan dari pembaca layar.
+- Pratinjau adalah elemen `role="img"` dengan label `QR code: <value>`, atau "Empty QR code preview" jika tidak ada teks.
+- Kesalahan unduhan ditampilkan di bawah pratinjau dengan `role="alert"`.
+- Komponen ini adalah Client Component dengan state sendiri. Render dari halaman mana pun; berikan `defaultValue` dan `defaultPreset` agar komponen langsung terisi saat dimulai.
 
 ## Referensi API [#api-reference]
 
@@ -62,3 +90,11 @@ import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator
 ### QrCodePreset [#qrcodepreset]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-generator.tsx" name="QrCodePreset" />
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code" title="QR Code" description="Satu kode dengan tombol unduh, saat nilainya berasal dari data Anda." />
+  <Card href="/docs/components/qr-code-download" title="QR Code Download" description="Menu dengan lebih banyak format dan ukuran daripada tombol pada generator." />
+  <Card href="/docs/features/colors-gradients" title="Atur warna dan gradien" description="Setiap opsi gaya yang dapat dimuat dalam sebuah preset." />
+</Cards>

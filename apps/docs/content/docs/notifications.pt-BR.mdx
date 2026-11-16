@@ -1,59 +1,78 @@
 ---
 title: "Notificações"
 description: "Alertas por e-mail, um resumo semanal e mensagens no Slack ou no Discord quando seus QR codes são lidos ou seus formulários recebem respostas."
-icon: Bell
 ---
 
-Escolha sobre o que o QRdx avisa você em [Configurações → Notificações](/settings/notifications). As configurações são por pessoa e por workspace: seu próprio workspace e cada outro workspace do qual você participa têm seus próprios controles, e em um workspace compartilhado cada membro escolhe os seus.
+As notificações avisam o que acontece com seus códigos sem você precisar abrir o painel: a primeira leitura, um marco, uma resposta de formulário, uma alteração de um colega de equipe e um resumo semanal. Escolha sobre o que o QRdx avisa você em [Configurações → Notificações](/settings/notifications). As configurações são por pessoa e por workspace: seu próprio workspace e cada outro workspace do qual você participa têm seus próprios controles, e em um workspace compartilhado cada membro escolhe os seus.
+
+<Callout type="info" title="E-mail no Pro, chat no Business">
+  Os alertas por e-mail e o resumo semanal fazem parte do Pro e do Business; as mensagens no Slack e no Discord fazem parte do Business. Cada workspace segue o plano dos seus proprietários e dos membros responsáveis pela cobrança. Tudo vem desativado até você ativar. Veja [Planos e limites](/docs/plans-and-limits).
+</Callout>
+
+Com pressa? [Códigos de login ou e-mails não chegam](/docs/help/troubleshooting/emails) explica o que fazer quando os alertas não chegam.
+
+## Como funciona [#how-it-works]
+
+Cada leitura, resposta de formulário e alteração de código é um evento. As notificações inscrevem você nos eventos que importam, cada um em um canal: e-mail para o endereço da sua conta, um canal do Slack ou do Discord por meio de um webhook de entrada, ou seus próprios sistemas por meio de [webhooks](/docs/webhooks).
 
 | Canal | O que você pode receber | Plano |
 | --- | --- | --- |
-| E-mail | Resumo semanal, marcos de leituras, envios de formulário, novos códigos, alterações em códigos | Pro e Business |
-| Slack, Discord | Marcos de leituras, envios de formulário, novos códigos, alterações em códigos | Business |
+| E-mail | Resumo semanal, marcos de leitura, envios de formulário, novos códigos, alterações de código | Pro e Business |
+| Slack, Discord | Marcos de leitura, envios de formulário, novos códigos, alterações de código | Business |
 | [Webhooks](/docs/webhooks), Zapier, Make | Todos os eventos, incluindo cada leitura | Business |
 
-Cada workspace segue o plano de seus proprietários. Tudo vem desativado até você ativar.
+<Shot id="notifications" />
 
 ## Alertas [#alerts]
 
-- **Marcos de leituras:** a primeira leitura de um código (com quando, onde e em qual dispositivo), depois 10, 100, 500, 1.000, 5.000, 10.000 leituras e assim por diante.
-- **Envios de formulário:** as respostas de um formulário em uma das suas [páginas hospedadas](/docs/landing-pages), com um link para todas as respostas.
-- **Novos códigos** e **alterações em códigos:** quem criou um código, ou mudou o destino, o título, o design ou o domínio dele. Mais útil em workspaces que você compartilha com outras pessoas.
+- **Marcos de leitura:** a primeira leitura de um código e depois 10, 100, 500, 1.000, 5.000, 10.000, 50.000, 100.000, 500.000, 1.000.000 de leituras e a cada milhão a partir daí. O e-mail de primeira leitura informa quando, onde e em qual dispositivo; a mensagem no Slack e no Discord cita a cidade e o país.
+- **Envios de formulário:** as respostas de um formulário em uma das suas [páginas hospedadas](/docs/forms-and-pages#forms), com um link para todas as respostas.
+- **Novos códigos** e **alterações de código:** quem criou um código ou alterou o destino, o título, o design ou o domínio dele. Mais útil em workspaces compartilhados com outras pessoas.
 
-Para evitar que um formulário muito movimentado ou uma importação em massa inunde sua caixa de entrada ou seu canal, cada destino recebe no máximo 30 alertas de um mesmo tipo por hora; os demais são ignorados (o resumo semanal ainda os conta, e os webhooks continuam recebendo todos os eventos).
+Para evitar que um formulário muito movimentado ou uma importação em massa inunde sua caixa de entrada ou seu canal, cada destino recebe no máximo 30 alertas de um mesmo tipo por hora; os demais são ignorados. O resumo semanal ainda os contabiliza, e os webhooks continuam recebendo todos os eventos.
 
 ## Resumo semanal [#weekly-digest]
 
-Toda segunda-feira (UTC) você recebe os números da semana anterior do workspace: leituras comparadas com a semana anterior, visitantes únicos, seus 5 melhores códigos, os principais países, novos códigos e respostas de formulários. Ele não é enviado quando não houve leituras por duas semanas e nenhuma resposta de formulário.
+Toda segunda-feira de manhã (UTC) você recebe os números da semana anterior do workspace: leituras comparadas com a semana anterior, visitantes únicos, seus 5 principais códigos, os principais países, novos códigos e respostas de formulário. Ele não é enviado quando não houve leituras por duas semanas nem respostas de formulário.
 
 ## E-mail [#email]
 
-Os e-mails de alerta vão para o endereço de e-mail da sua conta. Cada um tem um link **Cancelar inscrição** que desativa esse tipo de e-mail sem precisar entrar na conta (apps de e-mail que oferecem cancelamento com um clique também o exibem). Você pode ativar ou desativar os e-mails de novo a qualquer momento nas configurações de notificações.
-
-Convites de equipe e outros e-mails da conta não são afetados por essas configurações.
+Os e-mails de alerta vão para o endereço de e-mail da sua conta, sob o título **Enviar e-mail para** nas configurações de notificação. Cada um tem um link de **Cancelar inscrição** que desativa aquele tipo de e-mail sem precisar fazer login (apps de e-mail que oferecem cancelamento com um clique também o mostram). Ative ou desative os e-mails de novo nas configurações de notificação quando quiser. Convites de equipe e outros e-mails da conta não são afetados por essas configurações.
 
 ## Slack e Discord [#slack-and-discord]
 
-1. Crie um webhook de entrada:
+1. Crie um webhook de entrada no app de chat:
    - **Slack:** adicione o app [Incoming WebHooks](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks), ou seu próprio app do Slack com webhooks de entrada, a um canal e copie a URL (`https://hooks.slack.com/services/...`).
    - **Discord:** configurações do canal → **Integrações** → **Webhooks** → **Novo webhook** → **Copiar URL do webhook** (`https://discord.com/api/webhooks/...`).
-2. Em [Configurações → Notificações](/settings/notifications), clique em **+ Slack** ou **+ Discord** no workspace, cole a URL e escolha os eventos. Para adicionar, primeiro você precisa [confirmar que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
-3. Use o botão de envio para postar uma mensagem de teste.
+2. Em [Configurações → Notificações](/settings/notifications), em **Slack e Discord** do workspace, clique em **Slack** ou **Discord**, cole a URL e escolha os eventos. Para adicionar um, primeiro você precisa [confirmar que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
+3. Use o botão de envio ao lado do destino para publicar uma mensagem de teste.
 
-Só URLs de webhook do Slack e do Discord são aceitas. Depois de salvar, o QRdx mostra apenas o início da URL, porque qualquer pessoa que a tenha pode postar no canal. As mensagens nunca mencionam `@everyone`, `@here` ou cargos, não importa o que os visitantes digitem em um formulário.
+Só são aceitas URLs de webhook do Slack e do Discord. Depois de salvar, o QRdx mostra apenas o início da URL, porque qualquer pessoa que a tenha pode publicar no canal. As mensagens nunca mencionam `@everyone`, `@here` nem cargos, não importa o que os visitantes digitem em um formulário.
 
-## Planos e downgrades [#plans-and-downgrades]
+O [bot do QRdx para Slack](/docs/slack-bot) é outra coisa: ele cria QR codes dentro do Slack. Adicioná-lo não ativa os alertas, e adicionar alertas não adiciona o bot.
 
-Se o plano de um workspace deixar de incluir um canal, os alertas dele param, mas suas configurações são mantidas e você ainda pode desativá-las ou remover destinos. Seus QR codes continuam funcionando em qualquer plano.
+## Limites e planos [#limits-and-plans]
+
+Se o plano de um workspace deixar de incluir um canal, os alertas dele param, mas suas configurações são mantidas e você ainda pode desativá-los ou remover destinos. Seus QR codes continuam funcionando em qualquer plano.
+
+## Para desenvolvedores [#for-developers]
+
+Para qualquer coisa além desses alertas, como cada leitura individual, use [webhooks](/docs/webhooks): requisições `POST` assinadas para o seu próprio endpoint com `scan.created`, `form.submitted` e os outros eventos, com novas tentativas e logs de entrega.
 
 ## Hospedagem própria [#self-hosting]
 
-Os e-mails são enviados pelo [Resend](https://resend.com): defina `RESEND_API_KEY` e `EMAIL_FROM` (um endereço em um domínio verificado no Resend). Sem eles, os e-mails são ignorados e registrados em log, e os convites de equipe viram links copiáveis.
+Os e-mails são enviados pelo [Resend](https://resend.com): defina `RESEND_API_KEY` e `EMAIL_FROM` (um endereço de um domínio verificado no Resend). Sem eles, os e-mails são ignorados e registrados em log, e os convites de equipe passam a usar links que podem ser copiados.
 
-O resumo semanal roda a partir de uma tarefa agendada nas manhãs de segunda-feira (`apps/app/vercel.json` na Vercel chama `/api/cron/digest?shard=all`, que envia o resumo de todos os assinantes em uma única execução). Com muitos assinantes, você pode chamá-lo a cada hora nas segundas-feiras sem `shard=all`, e assim cada execução cuida de um vinte e quatro avos deles. Em outros ambientes, chame-o com o `CRON_SECRET` do seu ambiente:
+O resumo semanal é enviado por `/api/cron/digest`. Na Vercel, `apps/app/vercel.json` o chama toda segunda-feira com `?shard=all`, o que envia o resumo de todos os assinantes em uma única execução. Com muitos assinantes, você pode chamá-lo a cada hora nas segundas-feiras sem `shard=all`, de modo que cada execução cuide de um vinte e quatro avos deles. Em qualquer outro lugar, chame-o pelo seu próprio agendador com o `CRON_SECRET` do seu ambiente:
 
-```bash
-curl -H "Authorization: Bearer $CRON_SECRET" https://your-host/api/cron/digest
+```bash title="Terminal"
+curl -H "Authorization: Bearer $CRON_SECRET" "https://your-host/api/cron/digest?shard=all"
 ```
 
-Os links de cancelamento de inscrição são assinados com `BETTER_AUTH_SECRET`; alterá-lo invalida os links de e-mails já enviados.
+Os links de cancelamento de inscrição são assinados com `BETTER_AUTH_SECRET`; alterá-lo invalida os links dos e-mails já enviados. Veja [Hospedagem própria](/docs/self-hosting#scheduled-jobs).
+
+## Relacionados [#related]
+
+- [Webhooks](/docs/webhooks): todos os eventos no seu próprio endpoint, no Zapier ou no Make
+- [Cardápios, cupons, eventos e formulários](/docs/forms-and-pages#forms): os formulários cujas respostas geram alertas
+- [Códigos de login ou e-mails não chegam](/docs/help/troubleshooting/emails)

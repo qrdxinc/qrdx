@@ -179,9 +179,17 @@ describe("Organization schema", () => {
   it("isn't in the root layout, which also wraps white-label hosted pages", () => {
     const root = readFileSync(join(APP, "app/(app)/layout.tsx"), "utf8");
     expect(root).not.toContain("organizationSchema");
+    // Both marketing layouts render it through their shared shell.
     for (const layout of [
       "app/(app)/(home)/layout.tsx",
       "app/[lang]/(home)/layout.tsx",
+    ]) {
+      expect(readFileSync(join(APP, layout), "utf8")).toContain(
+        "<MarketingShell>",
+      );
+    }
+    for (const layout of [
+      "components/sections/marketing-shell.tsx",
       // Both playground layouts render it (/playground and shared themes).
       "components/playground/playground-shell.tsx",
     ]) {

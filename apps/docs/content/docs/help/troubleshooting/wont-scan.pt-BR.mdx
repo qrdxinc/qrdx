@@ -1,44 +1,65 @@
 ---
-title: "O código não é lido"
+title: "Um código não é lido"
 description: "Por que um QR code não é lido e como corrigir cada causa."
 ---
 
-Se a câmera do celular não reage ao seu código, ou só o lê às vezes, siga estas verificações.
+Se a câmera do celular não reage ao seu código, ou só o lê às vezes, a causa quase sempre é uma das que estão abaixo. Comece descobrindo qual delas é.
 
-Comece pelo **Scan score** abaixo da prévia no [Playground](/playground). Clique nele para ver quais verificações falham. Veja [Verifique um design com o scan score](/docs/help/designing/scan-score).
+- Para um design no [Playground](/playground), clique em **Pontuação de leitura** abaixo da prévia. O painel **Vai ser lido?** lista primeiro as verificações que falharam. Veja [Verifique um design com a pontuação de leitura](/docs/help/designing/scan-score).
+- Para um código que já foi impresso, tire uma foto e solte-a no [verificador de leitura](/tools/scan-checker). Ele mostra o que o código diz e quão bem ele é lido.
 
-Para um código que já foi impresso, tire uma foto e envie para o [verificador de leitura](/tools/scan-checker). Ele mostra o que o código diz e testa quão bem ele é lido.
+## A câmera não reage de jeito nenhum [#the-camera-doesnt-react-at-all]
 
-## Causas comuns [#common-causes]
+### Contraste baixo, ou código claro em fundo escuro [#low-contrast-or-a-light-code-on-a-dark-background]
 
-### Contraste baixo ou código claro sobre fundo escuro [#low-contrast-or-light-on-dark]
+Os leitores procuram quadrados escuros sobre um fundo claro e desistem quando os dois ficam parecidos demais. Deixe o código mais escuro ou o fundo mais claro e inverta as cores se o código estiver na parte clara. Confirme: a verificação **Contraste** na pontuação de leitura passa com 4.5:1 ou mais. Veja [Escolha cores que sejam lidas](/docs/help/designing/colors-and-contrast).
 
-Os leitores procuram quadrados escuros sobre um fundo claro. Deixe o código mais escuro ou o fundo mais claro, e evite códigos claros sobre fundos escuros. Veja [Escolha cores que funcionam na leitura](/docs/help/designing/colors-and-contrast).
+<Diagram id="wont-scan-contrast" />
 
-### Um logo cobre demais [#a-logo-covers-too-much]
+### Sem uma borda livre ao redor do código [#no-clear-border-around-the-code]
 
-Defina **Correção de erro** como **Alta** na aba **Design**. Veja [Adicione um logo](/docs/help/designing/logos).
+Os leitores precisam de espaço vazio ao redor do código para encontrar as bordas dele. Defina **Margem** como **Padrão** ou **Grande** na aba **Design** e não deixe texto ou imagens encostarem no código. Confirme: a verificação **Zona de silêncio** passa.
 
-### Formatos de olho incomuns [#unusual-eye-shapes]
-
-Os olhos em círculo e em canto ondulado falham em alguns apps leitores. Os olhos quadrados, arredondados e de engrenagem são lidos em qualquer lugar.
-
-### Sem borda livre [#no-clear-border]
-
-Os leitores precisam de espaço vazio ao redor do código. Defina **Margem** como **Padrão** ou **Grande**, e não deixe outras artes encostarem no código.
+<Diagram id="wont-scan-quiet-zone" />
 
 ### Impresso pequeno demais [#printed-too-small]
 
-Faça o código com cerca de um décimo da distância de leitura: 2 cm para um cartão lido a 20 cm, 10 cm para um pôster lido a 1 m. A [calculadora de tamanho de impressão](/tools/print-size) faz essa conta para você.
+Um código é lido a uma distância de cerca de dez vezes a sua largura, então um código de 2 cm lido do outro lado de uma sala falha. Imprima com cerca de um décimo da distância de leitura: 2 cm para um cartão lido a 20 cm, 10 cm para um pôster lido a 1 m. A [calculadora de tamanho de impressão](/tools/print-size) faz essa conta para o seu código. Confirme: leia uma impressão de teste a partir da distância real.
+
+<Diagram id="wont-scan-print-size" />
+
+## Só é lido às vezes [#it-scans-only-sometimes]
+
+### Um logo cobre demais [#a-logo-covers-too-much]
+
+A correção de erros só consegue reconstruir uma parte do código. Defina **Correção de erros** como **Alta** na aba **Design** ou diminua o logo. Confirme: a verificação **Logo** passa. Veja [Adicione um logo](/docs/help/designing/logos).
+
+### Olhos circulares ou ondulados [#circle-or-curly-eyes]
+
+Alguns apps leitores não reconhecem os olhos redondos ou ondulados dos cantos. Troque para olhos quadrados, arredondados ou de engrenagem. Confirme: a verificação **Formato dos olhos** passa.
+
+<Diagram id="wont-scan-eyes" />
 
 ### Conteúdo demais [#too-much-content]
 
-Um QR code estático com muito texto fica denso e difícil de ler quando pequeno. Use um QR code dinâmico: ele guarda apenas um link curto. Veja [Estático ou dinâmico](/docs/help/getting-started/static-vs-dynamic).
+Um QR code estático com um texto ou endereço longo fica denso, e códigos densos falham quando são pequenos. Em vez disso, use um QR code dinâmico: ele guarda só um link curto. Veja [Estático ou dinâmico: qual você precisa?](/docs/help/getting-started/static-vs-dynamic).
 
-### A própria impressão [#the-print-itself]
+## É lido na tela, mas não na impressão [#it-scans-on-screen-but-not-in-print]
 
-Impressão borrada, superfícies brilhantes que refletem a luz e superfícies curvas ou dobradas dificultam a leitura dos códigos. Imprima em arquivo vetorial (SVG, EPS ou um PDF de **Pronto para impressão**) e teste uma cópia antes de imprimir muitas.
+### Impressão borrada, ou superfície brilhante ou curva [#blurry-print-or-a-glossy-or-curved-surface]
 
-## Ele é lido, mas mostra um erro [#it-scans-but-shows-an-error]
+Imagens de pixels impressas em tamanho grande ficam borradas, e superfícies brilhantes ou curvas refletem luz na câmera. Baixe um SVG, um EPS ou um PDF na aba **Pronto para impressão**, imprima em uma superfície fosca e mantenha o código plano. Confirme: imprima uma cópia e leia com dois celulares diferentes antes de imprimir mais. Veja [Baixe e imprima um QR code](/docs/help/getting-started/download-and-print).
 
-Se a câmera lê o código, mas você vê uma página como "QR code não encontrado", veja [Uma leitura mostra uma página de erro](/docs/help/troubleshooting/error-pages).
+## É lido, mas mostra um erro [#it-scans-but-shows-an-error]
+
+A câmera lê o código e abre uma página como "QR code não encontrado". Isso não é um problema de leitura: veja [Uma leitura mostra uma página de erro](/docs/help/troubleshooting/error-pages).
+
+## Ainda com problemas [#still-stuck]
+
+[Fale com o suporte](/docs/help/contact) enviando uma foto do código impresso e informando o celular que você usou.
+
+## Relacionados [#related]
+
+- [Verifique um design com a pontuação de leitura](/docs/help/designing/scan-score)
+- [Escolha cores que sejam lidas](/docs/help/designing/colors-and-contrast)
+- [Baixe e imprima um QR code](/docs/help/getting-started/download-and-print)

@@ -3,41 +3,62 @@ title: "Mude para onde um código aponta"
 description: "Edite o destino de um QR code dinâmico. As cópias impressas abrem o novo link na próxima leitura."
 ---
 
-Você pode mudar o destino de um código dinâmico a qualquer momento. Todas as cópias impressas abrem o novo link na próxima leitura.
+Você pode mudar o destino de um código dinâmico a qualquer momento: a página que uma leitura abre. Todas as cópias impressas abrem o novo link na próxima leitura, porque o código em si guarda apenas o link curto.
 
-## Pelo painel [#from-your-dashboard]
+## Pelo seu painel [#from-your-dashboard]
 
-1. Vá em **Códigos**.
-2. Abra o menu do código (**⋯**) e escolha **Editar link**. Você também pode abrir o código e clicar em **Editar link**.
-3. Altere a **URL de destino**.
-4. Clique em **Salvar alterações**.
+### 1. Abra Editar link [#1-open-edit-link]
 
-O QRdx confirma com "As leituras agora abrem o destino atualizado."
+Vá em **Códigos**. Abra o menu do código (o botão **Ações do código**, exibido como **⋯**) e escolha **Editar link**. Você também pode abrir o código e clicar em **Editar link** na aba **Visão geral**.
+
+### 2. Mude o destino [#2-change-the-destination]
+
+Na caixa de diálogo **Editar QR code dinâmico**, altere a **URL de destino**.
+
+<Shot id="edit-link-dialog" />
+
+<Clip id="change-destination" />
+
+### 3. Salve [#3-save]
+
+Clique em **Salvar alterações**. O QRdx confirma com "Alterações salvas" e "As leituras agora abrem o destino atualizado."
 
 ## Pelo Playground [#from-the-playground]
 
-Se o código estiver aberto no Playground, altere o endereço. O cartão avisa que os "Códigos impressos ainda abrem" o link antigo até você clicar em **Apontar para o novo endereço**.
+Se o código dinâmico estiver aberto no Playground, digite o novo endereço em **Endereço do site**. O interruptor logo abaixo diz "Os códigos impressos ainda abrem" o link antigo até você clicar em **Apontar para o novo endereço**. Em seguida, o QRdx confirma com "Destino atualizado".
 
 ## As mudanças valem na hora [#changes-take-effect-right-away]
 
 O QRdx não faz cache de redirecionamentos. A próxima leitura abre o novo destino, em qualquer celular.
 
-## Não mude o próprio link curto [#dont-change-the-short-link-itself]
+## Não mude o link curto em si [#dont-change-the-short-link-itself]
 
-Mudar o destino é sempre seguro. Mudar o **final do link** ou o **domínio** do código não é: os códigos já impressos com o link curto antigo deixam de funcionar.
+Mudar o destino é sempre seguro. Mudar o final do link do código (back-half) ou tirá-lo de um domínio próprio não é: o QRdx avisa que os códigos impressos com o link antigo deixam de funcionar. Mover um código do link `qrdx.dev` para um domínio próprio é a exceção: o link `qrdx.dev` continua funcionando.
 
-## Desfazer uma mudança [#undo-a-change]
+## Desfaça uma mudança [#undo-a-change]
 
-1. Abra o código em **Códigos**.
-2. Em **Configurações**, abra o **Histórico de versões**.
+1. Abra o código em **Códigos** e vá para a aba **Configurações**.
+2. Abra o **Histórico de versões**.
 3. Clique em **Restaurar** ao lado da versão que você quer e depois em **Restaurar versão**.
 
-O QRdx guarda até 100 versões de cada código.
+O QRdx guarda até 100 versões de cada código, em todos os planos.
 
-## Abrir uma página em vez de um link [#open-a-page-instead]
+## Abra uma página em vez disso [#open-a-page-instead]
 
-Para fazer o código abrir uma página hospedada em vez de um link, use **Alterar tipo** na página do código. Veja [Mude o que um código impresso abre](/docs/help/dynamic-codes/change-the-type).
+Para fazer o código abrir uma página hospedada em vez de um link, clique em **Alterar tipo** na aba **Visão geral** do código. Veja [Mude o que um código impresso abre](/docs/help/dynamic-codes/change-the-type).
 
-## QR codes estáticos não podem ser alterados [#static-codes-cant-change]
+## Se algo der errado [#if-something-goes-wrong]
 
-Um QR code estático guarda o link dentro do próprio código. Para mudá-lo, você precisa imprimir um novo código. Veja [Estático ou dinâmico](/docs/help/getting-started/static-vs-dynamic).
+### O código impresso ainda abre a página antiga [#the-printed-code-still-opens-the-old-page]
+
+No Playground, mudar o endereço não basta: clique em **Apontar para o novo endereço**. No painel, confira se você clicou em **Salvar alterações**. Se o destino está certo e uma leitura ainda cai em outro lugar, veja [Um código abre a página errada](/docs/help/troubleshooting/wrong-destination).
+
+### Não aparece Editar link [#edit-link-isnt-there]
+
+O código é estático: o link fica guardado dentro dele e não pode mudar. Imprima um código dinâmico no lugar. Veja [Estático ou dinâmico: qual você precisa?](/docs/help/getting-started/static-vs-dynamic).
+
+## Relacionados [#related]
+
+- [Mude o que um código impresso abre](/docs/help/dynamic-codes/change-the-type)
+- [Um código abre a página errada](/docs/help/troubleshooting/wrong-destination)
+- [Use seu próprio domínio](/docs/help/domains/custom-domains)

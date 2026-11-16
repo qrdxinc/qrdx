@@ -1,69 +1,83 @@
 ---
-title: "Log de auditoria"
-description: "Veja quem alterou o quê no seu workspace e quando, filtre o histórico e exporte em CSV. Faz parte do plano Business."
+title: "Registro de auditoria"
+description: "Veja quem mudou o quê no seu workspace e quando, filtre o registro e exporte em CSV. Faz parte do plano Business."
 ---
 
-O log de auditoria é um recurso Business da licença comercial do QRdx. Um servidor QRdx auto-hospedado precisa de uma chave de licença (`QRDX_EE_LICENSE`) para ativá-lo; veja [Auto-hospedagem](/docs/self-hosting#optional-services).
+O registro de auditoria lista as alterações que as pessoas fazem em um workspace: quem fez, o que mudou e quando. É um recurso do Business, sob a licença comercial do QRdx. Um servidor QRdx hospedado por você precisa de uma chave de licença (`QRDX_EE_LICENSE`) para ativá-lo; veja [Hospedagem própria](/docs/self-hosting#optional-services).
 
 <IfAvailable feature="auditLog">
 
-O log de auditoria lista as alterações que as pessoas fazem em um workspace: quem fez, o que mudou e quando. Proprietários e administradores o leem em **Configurações** → **Log de auditoria**, onde podem filtrá-lo e exportá-lo como arquivo CSV.
+<Callout type="info">
+  O registro de auditoria faz parte do plano **Business**. Um workspace tem o recurso quando um dos seus proprietários ou membros de cobrança está no Business. Só **proprietários** e **administradores** podem abri-lo e exportá-lo. Veja [Assentos e limites do workspace](/docs/help/teams/seats) e [Funções da equipe](/docs/help/teams/roles).
+</Callout>
 
-## Quem tem acesso [#who-has-it]
+## Abrir o registro de auditoria [#open-the-audit-log]
 
-O log de auditoria faz parte do plano **Business**. Um workspace o tem quando um de seus proprietários ou membros de cobrança está no Business. Veja [Assentos e limites do workspace](/docs/help/teams/seats).
+Vá em **Configurações** → **Registro de auditoria** no workspace. As alterações mais recentes aparecem primeiro, 50 por vez; clique em **Carregar mais** no fim da lista para ver as mais antigas. Clique na seta de uma entrada para ver os valores antigos e novos, como o destino antigo e o novo de um código.
 
-O histórico começa quando o workspace passa a ter o Business. Alterações feitas antes disso, ou enquanto o workspace estava em outro plano, não são registradas. Se o workspace sair do Business, o registro para; as entradas já guardadas permanecem até completarem {facts.auditLogRetentionDays} dias, e você pode vê-las de novo se o workspace voltar ao Business.
+<Shot id="audit-log" />
 
-Somente **proprietários** e **administradores** podem abrir o log de auditoria e exportá-lo. Membros, visualizadores e membros de cobrança não podem. Veja [Funções](/docs/help/teams/roles).
+O histórico começa quando o workspace passa a ter o Business. Alterações feitas antes disso, ou enquanto o workspace estava em outro plano, não são registradas. Se o workspace sair do Business, o registro para; as entradas já guardadas permanecem até completarem {facts.auditLogRetentionDays} dias, e você poderá vê-las de novo se o workspace voltar ao Business.
 
 ## O que é registrado [#whats-recorded]
 
-Cada entrada tem o horário, quem fez a alteração, o que foi alterado e o alvo (um código, uma página, uma pessoa, um domínio). Quando se aplica, a entrada guarda o valor antigo e o novo, como o destino antigo e o novo de um código. Clique na seta de uma entrada para vê-los.
+Cada entrada tem o horário, quem fez a alteração, o que mudou e o alvo (um código, uma página, uma pessoa, um domínio). Quem fez a alteração é uma pessoa, ou uma chave de API ou um app agindo em nome de uma pessoa: alterações feitas pela [REST API](/docs/developers/rest-api) com uma chave de API mostram o nome da chave, e alterações feitas por um app que você autorizou mostram o nome do app.<IfAvailable feature="slackBot"> Códigos criados no Slack com `/qr track` mostram a pessoa vinculada "via Slack", com os IDs do usuário e do workspace do Slack. Quando um proprietário ou administrador revoga o vínculo de uma conta do Slack em **Configurações** → **Chaves de API e apps**, isso é registrado em Desenvolvedores.</IfAvailable>
 
-Quem fez a alteração é uma pessoa, ou uma chave de API ou um app agindo em nome de uma pessoa. Alterações feitas pela [REST API](/docs/developers/rest-api) com uma chave de API mostram o nome da chave; alterações feitas por um app que você autorizou mostram o nome do app.<IfAvailable feature="slackBot"> Códigos criados no Slack com `/qr track` mostram a pessoa vinculada "via Slack", com os ids do usuário e do workspace do Slack. Quando um proprietário ou administrador revoga o vínculo de uma conta do Slack em [Configurações → Chaves de API e apps](/dashboard?to=settings/developers), isso é registrado em Desenvolvedores.</IfAvailable>
+Cada entrada também guarda o endereço IP e o dispositivo da requisição, o navegador e o sistema, como "Chrome no macOS". Alterações feitas pelo sistema, como uma mudança de plano vinda da cobrança, não têm nenhum dos dois.
 
-Cada entrada também guarda o endereço IP e o dispositivo da requisição, ou seja, o navegador e o sistema, como "Chrome no macOS". Alterações feitas pelo sistema, como uma mudança de plano vinda da cobrança, não têm nenhum dos dois.
+| Categoria | O que é registrado |
+| --- | --- |
+| **Códigos** | Criado (incluindo importações e cópias), destino alterado, renomeado, design alterado, link curto alterado, controles do link alterados (senha ativada ou desativada, datas de início e fim, limite de leituras, URL de fallback), regras de roteamento alteradas, pausado ou retomado, arquivado ou desarquivado, movido para a lixeira, restaurado, excluído definitivamente, uma versão anterior restaurada, movido para outra pasta, movido para outro workspace ou vindo de outro. Pastas e tags criadas, renomeadas ou excluídas. |
+| **Páginas** | Criada, publicada, excluída. |
+| **Equipe** | Convites enviados e revogados, pessoas que entram com um convite, com o link de entrada ou com login único, mudanças de função, pessoas removidas, pessoas que saem, e o link de entrada ativado, alterado ou desativado. Registrado seja qual for a forma da alteração, no QRdx ou pela API. |
+| **Segurança** | "Exigir verificação em duas etapas" e "Exigir login único" ativados ou desativados (ativar o login único também informa quantas sessões ele encerrou), login único configurado, alterado, verificado ou removido, a função que as novas pessoas recebem no primeiro acesso com login único, e exportações do registro de auditoria. |
+| **Desenvolvedores** | Chaves de API criadas e revogadas (com nome e escopos), apps autorizados ou revogados, endpoints de webhook adicionados, alterados ou excluídos, e o segredo de assinatura de um webhook substituído. Para um endpoint, o registro guarda apenas o servidor, como `https://hooks.zapier.com/…`, já que o resto da URL de um webhook costuma ser secreto. |
+| **Domínios** | Domínios personalizados adicionados, verificados ou removidos. |
+| **Workspace** | Nome ou URL alterados, e o workspace passando para o Business (registrado como "Cobrança"). |
 
-Estas alterações são registradas:
+O registro de auditoria nunca guarda uma chave de API, um token OAuth, uma senha, o caminho ou a query de uma URL de webhook, um segredo de assinatura de webhook, nem um segredo de cliente ou certificado de login único. Ele registra que um deles foi criado, substituído ou removido, não o valor.
 
-- **Códigos:** criado (incluindo importações e cópias), destino alterado, renomeado, design alterado, link curto alterado, controles do link alterados (senha ativada ou desativada, datas de início e fim, limite de leituras, URL alternativa), regras de roteamento alteradas, pausado ou retomado, arquivado ou desarquivado, movido para a lixeira, restaurado, excluído definitivamente, versão anterior restaurada, movido para outra pasta, movido para ou de outro workspace. Pastas e tags criadas, renomeadas ou excluídas.
-- **Páginas:** criada, publicada, excluída.
-- **Equipe:** convites enviados e revogados, pessoas que entraram por convite, pelo link de entrada ou pelo login único, mudanças de função, pessoas removidas, pessoas que saíram, e o link de entrada ativado, alterado ou desativado. Tudo isso é registrado independentemente de como a alteração foi feita, no QRdx ou pela API.
-- **Segurança:** "Exigir verificação em duas etapas" e "Exigir login único" ativados ou desativados (ativar o login único também informa quantas sessões ele encerrou), login único configurado, alterado, verificado ou removido, a função que as pessoas novas recebem no primeiro acesso com login único, e exportações do log de auditoria.
-- **Desenvolvedores:** chaves de API criadas e revogadas (nome e escopos), apps autorizados ou revogados, endpoints de webhook adicionados, alterados ou excluídos, e o segredo de assinatura de um webhook substituído. De um endpoint, o log guarda só o servidor, como `https://hooks.zapier.com/…`, já que o resto da URL de um webhook costuma ser secreto.
-- **Domínios:** domínios personalizados adicionados, verificados ou removidos.
-- **Workspace:** nome ou URL alterados, e o workspace passando para o Business (registrado como "Cobrança").
+Apps que você autoriza agem no seu próprio workspace, então autorizar ou revogar um app é registrado nele.
 
-O log de auditoria nunca guarda uma chave de API, um token OAuth, uma senha, o caminho ou a query de uma URL de webhook, um segredo de assinatura de webhook, nem um segredo de cliente ou certificado de login único. Ele registra que um deles foi criado, substituído ou removido, não o valor.
+Isto não está no registro de auditoria:
 
-Os apps que você autoriza agem no seu próprio workspace, então autorizar ou revogar um app é registrado lá.
-
-Estes itens não estão no log de auditoria:
-
-- leituras, respostas de formulários e análises, que não são alterações no workspace (veja em Análises e Respostas);
+- leituras, respostas de formulários e analytics, que não são alterações do workspace (veja em Analytics e Respostas);
 - alterações na sua própria conta, como nome, e-mail ou verificação em duas etapas.
 
-## Filtrar o log [#filter-the-log]
+## Filtrar o registro [#filter-the-log]
 
-As alterações mais recentes vêm primeiro, 50 por vez. Clique em **Carregar mais** no final para ver as mais antigas.
-
-- **Quem**: uma pessoa, junto com as chaves de API e os apps que agem por ela.
+- **Quem**: uma pessoa, com as chaves de API e os apps que agem por ela.
 - **Categoria**: Códigos (com pastas e tags), Páginas, Equipe, Segurança, Desenvolvedores, Domínios ou Workspace.
 - **De** e **Até**: o primeiro e o último dia a mostrar. Os dias são em UTC; os horários de cada entrada ficam no seu fuso horário.
 
-## Exportar como CSV [#export-as-csv]
+## Exportar em CSV [#export-as-csv]
 
-Clique em **Exportar CSV** para baixar o que os filtros mostram, das mais recentes para as mais antigas. Uma exportação tem até {facts.auditLogExportRows} entradas. Para mais, exporte um intervalo de datas menor por vez.
+Clique em **Exportar CSV** para baixar o que os filtros mostram, das mais recentes para as mais antigas. Uma exportação tem até {facts.auditLogExportRows} entradas. Para mais, exporte um intervalo de datas menor de cada vez.
 
-O arquivo tem uma linha por alteração: o horário em UTC, a categoria, a ação, uma frase que a descreve, quem a fez (e a chave de API ou o app, se houver), o alvo, o endereço IP, o dispositivo, e os valores antigo e novo em JSON.
+O arquivo tem uma linha por alteração: o horário em UTC, a categoria, a ação, uma frase que a descreve, quem a fez (e a chave de API ou o app, se houver), o alvo, o endereço IP, o dispositivo, e os valores antigos e novos em JSON.
 
 A exportação também é registrada, com os filtros usados.
 
 ## Por quanto tempo as entradas são guardadas [#how-long-entries-are-kept]
 
-As entradas são guardadas por {facts.auditLogRetentionDays} dias e depois são excluídas. Excluir um workspace exclui o log de auditoria dele junto.
+As entradas são guardadas por {facts.auditLogRetentionDays} dias e depois são excluídas. Excluir um workspace exclui o registro de auditoria dele junto.
 
-Os endereços IP e dispositivos no log de auditoria são dados pessoais das pessoas que trabalham no workspace. A [política de privacidade](/legal/privacy-policy) explica como o QRdx lida com eles.
+Os endereços IP e dispositivos no registro de auditoria são dados pessoais das pessoas que trabalham no workspace. A [política de privacidade](/legal/privacy-policy) explica como o QRdx os trata.
+
+## Se algo der errado [#if-something-goes-wrong]
+
+### O registro de auditoria não aparece em Configurações [#audit-log-isnt-in-settings]
+
+Você é membro, visualizador ou membro de cobrança, ou o workspace não está no Business. Peça a um proprietário ou administrador, ou veja [Planos e o que incluem](/docs/help/account-and-billing/plans).
+
+### Uma alteração que você esperava não aparece [#a-change-you-expect-isnt-listed]
+
+Ela aconteceu antes de o workspace estar no Business, tem mais de {facts.auditLogRetentionDays} dias, ou é uma leitura, uma resposta ou uma alteração na conta de alguém, que não são registradas.
 
 </IfAvailable>
+
+## Veja também [#related]
+
+- [Funções da equipe](/docs/help/teams/roles)
+- [Exigir verificação em duas etapas](/docs/help/teams/require-two-step-verification)
+- [Exportar seus dados](/docs/help/account-and-billing/export-your-data)

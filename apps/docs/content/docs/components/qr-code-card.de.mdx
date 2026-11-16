@@ -1,8 +1,10 @@
 ---
 title: "QR-Code-Karte"
-description: "Eine Karte mit einem QR-Code in einem „Scan me\"-Rahmen, einem Titel, einer Beschreibung und Platz für Aktionen."
+description: "Eine Karte mit einem QR-Code in einem „Scan me\"-Rahmen, einem Titel, einer Beschreibung und Platz für Aktionen, für shadcn/ui-Projekte."
 icon: Frame
 ---
+
+`QrCodeCard` setzt einen QR-Code in eine Karte mit Call-to-Action-Rahmen, einer Überschrift, einer Textzeile und einem Footer für Buttons. Nutze die Komponente dort, wo der Code der Kern der Karte ist: ein Tischaufsteller, ein Check-in-Bildschirm, die Vorschau eines Event-Posters, eine Kachel „Lade unsere App herunter".
 
 <ComponentLinks name="qr-code-card" />
 
@@ -14,11 +16,11 @@ icon: Frame
 
 ## Verwendung [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeCard } from "@/components/qr-code-card";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeCard
   value="https://example.com/menu"
   title="Our menu"
@@ -26,35 +28,56 @@ import { QrCodeCard } from "@/components/qr-code-card";
 />
 ```
 
-Alles, was du als Children übergibst, wird im Footer der Karte angezeigt, zum Beispiel ein Kopier-Button oder ein [Download-Menü](/docs/components/qr-code-download).
+Alles, was du als Children übergibst, wird im Footer der Karte gerendert, zum Beispiel ein Kopieren-Button oder ein [Download-Menü](/docs/components/qr-code-download).
 
 ## Beispiele [#examples]
 
 ### Rahmen [#frames]
 
-`frame` setzt den Call-to-Action unter den Code (`"bottom"`), über den Code (`"top"`) oder lässt den Rahmen weg (`"none"`). Mit `cta` änderst du das Label, und mit `frameClassName` gestaltest du den Rahmen um, zum Beispiel in deiner Markenfarbe.
+Mit `frame` setzt du den Call-to-Action unter den Code (`"bottom"`), über den Code (`"top"`) oder lässt den Rahmen weg (`"none"`). `cta` ändert die Beschriftung, und mit `frameClassName` gestaltest du den Rahmen um, zum Beispiel in deiner Markenfarbe.
 
 <ComponentPreview name="qr-code-card-frames" />
 
-Der Rahmen verwendet standardmäßig die Farben `foreground` und `background` deines Themes und bleibt dadurch im hellen und im dunklen Modus gut lesbar. Der Code selbst behält einen hellen Hintergrund, den jeder Scanner lesen kann.
+Der Rahmen verwendet standardmäßig die Farben `foreground` und `background` deines Themes und bleibt so im hellen und im dunklen Modus gut lesbar. Der Code selbst behält einen hellen Hintergrund, den jeder Scanner lesen kann.
 
 ### Den Code gestalten [#styling-the-code]
 
 `qr` akzeptiert jede qrdx-Stiloption: `fgColor`, `bgColor`, Verläufe, `bodyPattern`, Eckenmuster, `logo` und `templateId`.
 
-```tsx
-<QrCodeCard
-  value="https://example.com"
-  qr={{
-    fgColor: "#155DFC",
-    bodyPattern: "rounded",
-    cornerEyePattern: "extra-rounded",
-  }}
-/>
+```tsx title="components/brand-card.tsx"
+import { QrCodeCard } from "@/components/qr-code-card";
+
+export function BrandCard() {
+  return (
+    <QrCodeCard
+      value="https://example.com"
+      title="example.com"
+      qr={{
+        fgColor: "#155DFC",
+        bodyPattern: "rounded",
+        cornerEyePattern: "extra-rounded",
+      }}
+    />
+  );
+}
 ```
+
+## Barrierefreiheit und Rendering [#accessibility-and-rendering]
+
+- Der Code steckt in einem Element mit `role="img"`, dessen `aria-label` `label` ist, oder `QR code: <value>`, wenn kein `label` gesetzt ist. Setze `label`, wenn der Wert kein öffentlicher Link ist.
+- `title` wird als Überschrift der Karte gerendert und `description` darunter; beide akzeptieren jeden React-Node.
+- Die Komponente ist eine Client Component. Eine Seite als Server Component kann sie importieren und Serverdaten als Props übergeben, und der Code wird auf dem Server gerendert.
 
 ## API-Referenz [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-card.tsx" type="{ [K in keyof QrCodeCardProps as K extends Exclude<keyof ComponentProps<'div'>, 'title' | 'children'> ? never : K]: QrCodeCardProps[K] }" />
 
-Alle weiteren Props, etwa `className`, werden an die [Card](https://ui.shadcn.com/docs/components/card) weitergegeben.
+Alle anderen Props, etwa `className`, werden an die [Card](https://ui.shadcn.com/docs/components/card) weitergereicht.
+
+## Siehe auch [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-download" title="QR-Code-Download" description="Ein Download-Menü für den Footer der Karte." />
+  <Card href="/docs/components/qr-code" title="QR-Code" description="Der Code für sich allein, mit Download-Buttons." />
+  <Card href="/docs/features/frames" title="Rahmen, Scan-Score und Druckdateien" description="Die eigenen Rahmen der Bibliothek, direkt ins Bild des Codes gezeichnet." />
+</Cards>

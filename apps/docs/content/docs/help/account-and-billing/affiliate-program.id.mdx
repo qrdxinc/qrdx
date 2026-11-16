@@ -1,46 +1,68 @@
 ---
 title: "Program afiliasi"
-description: "Rekomendasikan QRdx dan dapatkan komisi dari pembayaran mereka pada bulan-bulan pertama. Cara mendaftar, membagikan tautan Anda, memantau penghasilan, dan menerima pembayaran."
+description: "Rekomendasikan QRdx kepada orang lain dan dapatkan komisi dari pembayaran mereka pada beberapa bulan pertama. Cara mendaftar, membagikan tautan Anda, memantau penghasilan, dan menerima pembayaran."
 ---
 
-Program afiliasi hanya berjalan di qrdx.dev. Server QRdx yang di-host sendiri tidak menyediakannya; lihat [Hosting mandiri](/docs/self-hosting#optional-services).
+Program afiliasi QRdx membayar Anda sebagian dari pembayaran pelanggan yang Anda rekomendasikan. Program ini hanya berjalan di qrdx.dev; server QRdx yang di-host sendiri tidak menyediakannya. [Ketentuan Afiliasi](/legal/affiliate-terms) memuat aturan lengkapnya; halaman ini menunjukkan di mana setiap hal berada.
 
 <IfAvailable feature="affiliates">
 
-Program afiliasi QRdx membayar Anda {facts.affiliateCommissionPercent}% dari yang dibayarkan pelanggan yang Anda rujuk selama {facts.affiliateCommissionMonths} bulan pertama mereka sebagai pelanggan berbayar. [Ketentuan Afiliasi](/legal/affiliate-terms) memuat aturan lengkapnya; halaman ini menunjukkan di mana semuanya berada.
+Anda mendapatkan {facts.affiliateCommissionPercent}% dari pembayaran pelanggan yang Anda rekomendasikan selama {facts.affiliateCommissionMonths} bulan pertama mereka sebagai pelanggan berbayar.
 
 ## Mendaftar [#apply]
 
 1. Masuk ke QRdx, atau buat akun gratis.
 2. Buka [halaman program afiliasi](/affiliates), baca ketentuannya, lalu isi formulir pendaftaran singkat.
-3. Kami meninjau setiap pendaftaran secara manual. Jawabannya muncul di **Settings** → **Affiliate program**.
+3. Tunggu jawabannya. Kami meninjau setiap pendaftaran secara manual, dan hasilnya muncul di **Pengaturan** → **Program afiliasi**.
 
 ## Bagikan tautan Anda [#share-your-link]
 
-Setelah disetujui, **Settings** → **Affiliate program** menampilkan tautan rujukan Anda dengan tombol **Copy**. Siapa pun yang membukanya dan membuat akun QRdx baru dalam kunjungan itu menjadi rujukan Anda.
+Setelah disetujui, **Pengaturan** → **Program afiliasi** menampilkan tautan referral Anda beserta tombol **Salin**. Siapa pun yang membukanya dan membuat akun QRdx baru dalam kunjungan itu menjadi referral Anda.
 
-- Mereka harus mendaftar dalam kunjungan itu, tanpa memuat ulang halaman, membuka QRdx di tab baru, atau berpindah antara dokumentasi dan bagian situs lainnya: kodenya ikut terbawa saat pendaftaran. Tidak ada cookie yang digunakan dan tidak ada yang disimpan di perangkat mereka, jadi pendaftaran pada kunjungan berikutnya tidak dihitung.
-- Tautan Anda diawali dengan kode acak. Di bawah **Code**, Anda dapat mengubahnya satu kali menjadi kode pilihan Anda; tautan dengan kode pertama tetap berfungsi.
-- Akun yang sudah ada tidak bisa menjadi rujukan Anda, dan satu akun tetap memakai rujukan pertama yang diterimanya.
-- Akun Anda sendiri tidak dihitung, begitu pula akun yang memakai alamat email Anda dengan penulisan lain atau siapa pun di workspace tempat Anda menjadi anggota.
+<Shot id="affiliate-settings" />
+
+- Mereka harus mendaftar dalam kunjungan tersebut, tanpa memuat ulang halaman, membuka QRdx di tab baru, atau berpindah antara dokumentasi dan bagian lain situs. Tidak ada cookie yang digunakan dan tidak ada yang disimpan di perangkat mereka, sehingga pendaftaran pada kunjungan berikutnya tidak dihitung.
+- Tautan Anda diawali dengan kode acak. Di bawah **Kode**, klik **Ubah sekali** untuk memilih kode sendiri, sepanjang 3 sampai 32 karakter. Kode tidak dapat diubah lagi, dan tautan dengan kode pertama tetap berfungsi.
+- Akun yang sudah ada tidak dapat menjadi referral Anda, dan sebuah akun tetap memakai referral pertama yang diterimanya.
+- Akun Anda sendiri tidak dihitung, begitu pula akun yang memakai alamat email Anda dengan penulisan lain atau siapa pun dalam workspace tempat Anda menjadi anggota.
 
 ## Pantau penghasilan Anda [#follow-your-earnings]
 
 Halaman yang sama menampilkan:
 
-- **Link visits**, dihitung tanpa cookie (kunjungan berulang dihitung lagi), **Sign-ups**, dan **Paying customers**. Anda tidak pernah melihat siapa mereka.
-- **On hold**: komisi yang masih dalam masa tunggu {facts.affiliateHoldDays} hari. Pengembalian dana atau chargeback dalam masa itu membatalkan komisi.
-- **Payable**: komisi yang sudah lewat masa tunggu dan belum dibayar.
-- **Paid**: yang telah kami kirim kepada Anda, beserta ID transaksi PayPal setiap pembayaran.
+- **Kunjungan tautan**, dihitung tanpa cookie (kunjungan berulang dihitung lagi, hingga 20 per menit dari satu alamat IP), **Pendaftaran**, dan **Pelanggan berbayar**. Anda tidak pernah melihat siapa mereka.
+- **Ditahan**: komisi yang masih dalam masa tunggu {facts.affiliateHoldDays} hari. Pengembalian dana atau chargeback dalam masa itu membatalkan komisi.
+- **Dapat dibayar**: komisi yang telah melewati masa tunggu dan belum dibayarkan.
+- **Dibayar**: yang telah kami kirim kepada Anda, lengkap dengan ID transaksi PayPal setiap pembayaran.
 
-Komisi ditampilkan dalam mata uang yang dipakai pelanggan untuk membayar, dolar AS atau rupee India. Pembayaran dilakukan dalam dolar AS.
+Komisi ditampilkan dalam mata uang yang digunakan pelanggan untuk membayar. Pembayaran dilakukan dalam dolar AS.
 
 ## Menerima pembayaran [#get-paid]
 
-Tambahkan email PayPal Anda di bawah **Earnings**. QRdx meminta Anda mengonfirmasi bahwa itu memang Anda sebelum email diubah, karena email itu menentukan ke mana uang Anda dikirim, dan QRdx mengirim email ke alamat akun Anda setiap kali email tersebut berubah.
+Tambahkan **email PayPal** Anda di bawah **Penghasilan**. QRdx meminta Anda mengonfirmasi bahwa itu memang Anda sebelum email diubah, karena email tersebut menentukan ke mana uang Anda dikirim, dan QRdx mengirim email ke alamat akun Anda setiap kali email itu berubah.
 
-Kami membayar lewat PayPal dalam dolar AS sebulan sekali, secara manual, setelah seluruh komisi yang dapat dibayar mencapai {facts.affiliateMinPayoutUsd}. Komisi dalam rupee dihitung dengan kurs referensi Bank Sentral Eropa pada tanggal pembayaran, dan setiap pembayaran menampilkan kurs yang dipakai. Saldo di bawah batas minimum akan dibawa ke periode berikutnya. Pajak atas penghasilan Anda menjadi tanggung jawab Anda.
+Kami membayar melalui PayPal dalam dolar AS sekali sebulan, secara manual, setelah seluruh jumlah yang dapat dibayar mencapai {facts.affiliateMinPayoutUsd}. Komisi dalam mata uang lain dihitung dengan kurs referensi Bank Sentral Eropa pada tanggal pembayaran, dan setiap pembayaran menampilkan kurs yang digunakan. Saldo di bawah batas minimum akan dibawa ke periode berikutnya. Pajak atas penghasilan Anda menjadi tanggung jawab Anda.
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### Pendaftaran yang Anda kirim tidak dihitung [#a-sign-up-you-sent-didnt-count]
+
+Orang tersebut mendaftar pada kunjungan berikutnya, di tab lain, atau sudah memiliki akun. Hanya akun baru yang dibuat dalam kunjungan yang sama dengan tautan yang dihitung.
+
+### Komisi menghilang dari Ditahan [#a-commission-disappeared-from-on-hold]
+
+Pelanggan meminta pengembalian dana atau pembayarannya di-chargeback dalam masa tunggu {facts.affiliateHoldDays} hari, sehingga komisi dibatalkan.
+
+### Anda tidak dibayar bulan ini [#you-werent-paid-this-month]
+
+Saldo yang dapat dibayar kurang dari {facts.affiliateMinPayoutUsd}, atau email PayPal belum diatur. Saldo akan dibawa ke bulan berikutnya.
 
 Pertanyaan tentang komisi atau pembayaran: kirim email ke [support@qrdx.dev](mailto:support@qrdx.dev).
 
 </IfAvailable>
+
+## Terkait [#related]
+
+- [Ketentuan Afiliasi](/legal/affiliate-terms)
+- [Paket dan apa saja yang disertakan](/docs/help/account-and-billing/plans)
+- [Hubungi dukungan](/docs/help/contact)

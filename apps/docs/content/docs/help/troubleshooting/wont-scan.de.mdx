@@ -3,42 +3,63 @@ title: "Ein Code lässt sich nicht scannen"
 description: "Warum ein QR-Code nicht gescannt wird und wie du jede Ursache behebst."
 ---
 
-Wenn die Handykamera nicht auf deinen Code reagiert oder ihn nur manchmal liest, gehe diese Prüfungen der Reihe nach durch.
+Wenn die Handykamera nicht auf deinen Code reagiert oder ihn nur manchmal liest, liegt die Ursache fast immer bei einem der folgenden Punkte. Finde zuerst heraus, welcher es ist.
 
-Beginne mit dem **Scan-Score** unter der Vorschau im [Playground](/playground). Klicke darauf, um zu sehen, welche Prüfungen fehlschlagen. Siehe [Ein Design mit dem Scan-Score prüfen](/docs/help/designing/scan-score).
+- Bei einem Design im [Playground](/playground) klickst du unter der Vorschau auf den **Scan-Score**. Das Panel **Wird er gescannt?** listet die fehlgeschlagenen Prüfungen zuerst auf. Siehe [Ein Design mit dem Scan-Score prüfen](/docs/help/designing/scan-score).
+- Bei einem bereits gedruckten Code machst du ein Foto und ziehst es in den [Scan-Checker](/tools/scan-checker). Er zeigt, was der Code enthält und wie gut er sich lesen lässt.
 
-Bei einem Code, der schon gedruckt ist, mache ein Foto und lade es in den [Scan-Checker](/tools/scan-checker). Er zeigt, was der Code enthält, und testet, wie gut er sich lesen lässt.
+## Die Kamera reagiert gar nicht [#the-camera-doesnt-react-at-all]
 
-## Häufige Ursachen [#common-causes]
+### Niedriger Kontrast oder ein heller Code auf dunklem Hintergrund [#low-contrast-or-a-light-code-on-a-dark-background]
 
-### Zu wenig Kontrast oder hell auf dunkel [#low-contrast-or-light-on-dark]
+Scanner suchen nach dunklen Quadraten auf hellem Hintergrund und geben auf, wenn beides zu nah beieinander liegt. Mach den Code dunkler oder den Hintergrund heller und tausche die Farben, wenn der Code der helle Teil ist. So prüfst du es: Die Prüfung **Kontrast** im Scan-Score besteht ab 4.5:1. Siehe [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast).
 
-Scanner suchen nach dunklen Quadraten auf hellem Hintergrund. Mache den Code dunkler oder den Hintergrund heller und vermeide helle Codes auf dunklem Hintergrund. Siehe [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast).
+<Diagram id="wont-scan-contrast" />
 
-### Ein Logo verdeckt zu viel [#a-logo-covers-too-much]
+### Kein freier Rand um den Code [#no-clear-border-around-the-code]
 
-Stelle **Fehlerkorrektur** im Tab **Design** auf **Hoch**. Siehe [Logo hinzufügen](/docs/help/designing/logos).
+Scanner brauchen freien Raum um den Code, um seine Ränder zu finden. Stelle im Tab **Design** den **Innenabstand** auf **Standard** oder **Groß** und lass keinen Text und keine Grafik an den Code stoßen. So prüfst du es: Die Prüfung **Ruhezone** besteht.
 
-### Ungewöhnliche Eye-Formen [#unusual-eye-shapes]
-
-Kreisförmige Eyes und Eyes mit geschwungenen Ecken werden von manchen Scanner-Apps nicht gelesen. Quadratische, abgerundete und Zahnrad-Eyes werden überall gelesen.
-
-### Kein freier Rand [#no-clear-border]
-
-Scanner brauchen leeren Raum um den Code. Stelle **Abstand** auf **Standard** oder **Groß** und lasse keine anderen Grafiken den Code berühren.
+<Diagram id="wont-scan-quiet-zone" />
 
 ### Zu klein gedruckt [#printed-too-small]
 
-Mache den Code etwa ein Zehntel so groß wie die Scan-Entfernung: 2 cm für eine Karte, die aus 20 cm gelesen wird, 10 cm für ein Poster, das aus 1 m gelesen wird. Der [Druckgrößen-Rechner](/tools/print-size) berechnet das für dich.
+Ein Code lässt sich etwa aus dem Zehnfachen seiner Breite scannen, ein 2 cm großer Code scheitert also quer durch den Raum. Drucke ihn mit etwa einem Zehntel der Scan-Entfernung: 2 cm für eine Karte, die aus 20 cm gelesen wird, 10 cm für ein Poster, das aus 1 m gelesen wird. Der [Druckgrößen-Rechner](/tools/print-size) berechnet es für deinen Code. So prüfst du es: Scanne einen Testdruck aus der echten Entfernung.
+
+<Diagram id="wont-scan-print-size" />
+
+## Er wird nur manchmal gescannt [#it-scans-only-sometimes]
+
+### Ein Logo verdeckt zu viel [#a-logo-covers-too-much]
+
+Die Fehlerkorrektur kann nur eine begrenzte Menge eines Codes wiederherstellen. Stelle im Tab **Design** die **Fehlerkorrektur** auf **Hoch** oder mach das Logo kleiner. So prüfst du es: Die Prüfung **Logo** besteht. Siehe [Ein Logo hinzufügen](/docs/help/designing/logos).
+
+### Kreisförmige oder geschwungene Augen [#circle-or-curly-eyes]
+
+Manche Scanner-Apps erkennen runde oder geschwungene Eckaugen nicht. Wechsle zu eckigen, abgerundeten oder zahnradförmigen Augen. So prüfst du es: Die Prüfung **Augenform** besteht.
+
+<Diagram id="wont-scan-eyes" />
 
 ### Zu viel Inhalt [#too-much-content]
 
-Ein statischer QR-Code mit viel Text wird dicht und ist klein schwer lesbar. Verwende stattdessen einen dynamischen QR-Code: Er enthält nur einen kurzen Link. Siehe [Statisch oder dynamisch](/docs/help/getting-started/static-vs-dynamic).
+Ein statischer QR-Code mit langem Text oder langer Adresse wird dicht, und dichte Codes scheitern, wenn sie klein sind. Mach den Code stattdessen dynamisch: Er enthält dann nur einen kurzen Link. Siehe [Statisch oder dynamisch, was brauchst du?](/docs/help/getting-started/static-vs-dynamic).
 
-### Der Druck selbst [#the-print-itself]
+## Am Bildschirm klappt es, im Druck nicht [#it-scans-on-screen-but-not-in-print]
 
-Unscharfer Druck, glänzende Oberflächen, die Licht reflektieren, sowie gewölbte oder geknickte Flächen erschweren das Lesen der Codes. Drucke als Vektordatei (SVG, EPS oder ein PDF aus **Druckfertig**) und teste ein Exemplar, bevor du viele druckst.
+### Unscharfer Druck oder eine glänzende oder gewölbte Oberfläche [#blurry-print-or-a-glossy-or-curved-surface]
+
+Pixelbilder werden bei großem Druck weich, und glänzende oder gewölbte Oberflächen werfen Licht in die Kamera zurück. Lade im Tab **Druckfertig** eine SVG-, EPS- oder PDF-Datei herunter, drucke auf eine matte Oberfläche und halte den Code flach. So prüfst du es: Drucke eine Kopie und scanne sie mit zwei verschiedenen Handys, bevor du mehr druckst. Siehe [Einen QR-Code herunterladen und drucken](/docs/help/getting-started/download-and-print).
 
 ## Er wird gescannt, zeigt aber einen Fehler [#it-scans-but-shows-an-error]
 
-Wenn die Kamera den Code liest, du aber eine Seite wie „QR code not found“ siehst, lies [Ein Scan zeigt eine Fehlerseite](/docs/help/troubleshooting/error-pages).
+Die Kamera liest den Code und öffnet eine Seite wie „QR-Code nicht gefunden“. Das ist kein Scan-Problem: Siehe [Ein Scan zeigt eine Fehlerseite](/docs/help/troubleshooting/error-pages).
+
+## Immer noch ein Problem? [#still-stuck]
+
+[Kontaktiere den Support](/docs/help/contact) mit einem Foto des gedruckten Codes und dem Handy, mit dem du es versucht hast.
+
+## Verwandte Themen [#related]
+
+- [Ein Design mit dem Scan-Score prüfen](/docs/help/designing/scan-score)
+- [Farben wählen, die sich scannen lassen](/docs/help/designing/colors-and-contrast)
+- [Einen QR-Code herunterladen und drucken](/docs/help/getting-started/download-and-print)

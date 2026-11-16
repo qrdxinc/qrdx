@@ -1,44 +1,73 @@
 ---
 title: "Crie um workspace e convide pessoas"
-description: "Compartilhe códigos, páginas e temas com outras pessoas. Ter mais de um workspace exige o plano Pro ou Business."
+description: "Compartilhe códigos, páginas e temas com outras pessoas. Mais workspaces exigem Pro ou Business."
 ---
 
-Tudo o que você cria no QRdx pertence a um workspace. Todas as pessoas de um workspace trabalham nos mesmos códigos, páginas, arquivos, domínios e temas.
+Tudo o que você cria no QRdx pertence a um workspace. Todas as pessoas de um workspace trabalham nos mesmos códigos, páginas, arquivos, domínios e temas. Esta página mostra como criar um workspace e colocar pessoas nele; o [guia de Workspaces e equipes](/docs/teams) explica como os workspaces se encaixam.
+
+<Callout type="info">
+  Criar mais workspaces e convidar pessoas fazem parte do Pro (até 3 pessoas em um workspace) e do Business (sem limite). Veja [Assentos e limites de workspace](/docs/help/teams/seats).
+</Callout>
 
 ## Seu próprio workspace [#your-own-workspace]
 
-Toda conta tem um, criado automaticamente, e você é o proprietário. Você não pode sair dele nem excluí-lo. No Pro ou no Business, você pode convidar pessoas para ele ou criar outro workspace para elas.
+Toda conta tem um, criado automaticamente, e você é o proprietário dele. Você não pode sair dele nem excluí-lo. No Pro ou no Business, você pode convidar pessoas para ele ou criar outro workspace para elas.
 
-## Crie um workspace [#create-a-workspace]
+## Criar um workspace [#create-a-workspace]
 
-1. Abra o seletor de workspace na parte de baixo da barra lateral (no celular, fica no menu).
+1. Abra o seletor de workspace na parte de baixo da barra lateral (no celular, no menu).
 2. Clique em **Criar workspace**.
-3. Preencha o **Nome do workspace** e a **URL do workspace** (de 3 a 48 letras minúsculas, números e hifens).
-4. Clique em **Criar workspace**. O QRdx muda você para ele.
+3. Preencha o **Nome do workspace** e a **URL do workspace** (3 a 48 letras minúsculas, números e hifens).
+4. Clique em **Criar workspace**. O QRdx leva você para ele.
 
-Criar mais workspaces exige o plano Pro ou Business.
+<Shot id="create-workspace-dialog" />
 
-## Convide alguém [#invite-someone]
+## Convidar alguém [#invite-someone]
 
-1. Vá em **Configurações** → **Equipe** no workspace.
-2. Digite o endereço de e-mail da pessoa e escolha uma função: **Membro** ou **Admin**. Veja [Funções na equipe](/docs/help/teams/roles).
-3. Clique em **Criar link de convite**.
+### 1. Abra a página Equipe [#1-open-the-team-page]
 
-O QRdx envia o convite por e-mail e mostra um link que você mesmo pode compartilhar. A confirmação informa se o e-mail foi enviado.
+No workspace, vá em **Configurações** → **Equipe**.
+
+### 2. Preencha o convite [#2-fill-in-the-invitation]
+
+Em **Convidar pessoas**, informe o **E-mail** da pessoa e escolha uma **Função**: **Admin**, **Membro**, **Cobrança** ou **Leitor**. Só um proprietário pode convidar um membro de cobrança. Veja [Funções da equipe](/docs/help/teams/roles).
+
+### 3. Envie [#3-send-it]
+
+Clique em **Criar link de convite**. O QRdx informa que enviou o convite por e-mail e mostra um link que você mesmo pode compartilhar, com **Copiar link de convite**.
+
+<Shot id="team-invite" />
 
 Para convidar alguém como admin, primeiro você precisa [confirmar que é você](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), a menos que já tenha feito isso nesse navegador nos últimos 10 minutos.
 
-## Aceitando um convite [#accepting-an-invitation]
+## Aceitar um convite [#accepting-an-invitation]
 
-- A pessoa convidada abre o link e entra com o **mesmo endereço de e-mail** para o qual o convite foi enviado.
-- Ela clica em **Aceitar convite** ou em **Recusar**.
-- Os links de convite expiram após 48 horas.
+A pessoa convidada abre o link e entra com o mesmo endereço de e-mail para o qual o convite foi enviado, e então clica em **Aceitar convite** ou **Recusar**. Os links de convite expiram após 48 horas. Até lá, o convite fica em **Convites pendentes** na página Equipe, onde **Revogar** o cancela.
 
-## Alterne entre workspaces [#switch-between-workspaces]
+## Compartilhar um link de entrada [#share-a-join-link]
 
-Use o seletor de workspace para alternar entre o seu workspace e os outros dos quais você participa. Os códigos que você cria vão para o workspace em que você está.
+Um link de entrada permite que qualquer pessoa que o tenha entre no workspace, sem precisar de um convite para cada uma. Na página Equipe, em **Link de entrada**, escolha a função que as novas pessoas recebem em **Entra como** e clique em **Criar link de entrada**. Por segurança, o link só aparece no momento em que é criado, então copie-o nessa hora com **Copiar link de entrada**. **Redefinir link** o substitui e faz o antigo parar de funcionar; **Desativar** o desativa por completo. Quem já entrou continua como membro. Permitir que um link de entrada adicione admins exige que você confirme que é você.
+
+## Alternar entre workspaces [#switch-between-workspaces]
+
+Use o seletor de workspace para alternar entre seu próprio workspace e os outros dos quais você faz parte. Os códigos que você cria vão para o workspace em que você está.
+
+## Se algo der errado [#if-something-goes-wrong]
+
+### O e-mail do convite não chegou [#the-invitation-email-didnt-arrive]
+
+Copie o link de convite em **Convites pendentes** e envie diretamente para a pessoa. Veja [Códigos de login ou e-mails não chegam](/docs/help/troubleshooting/emails).
+
+### A pessoa não consegue aceitar o convite [#they-cant-accept-the-invitation]
+
+Ela entrou com um endereço de e-mail diferente. Os convites só funcionam para o endereço para o qual foram enviados; peça que entre com esse endereço ou revogue o convite e convide o endereço certo.
+
+### Criar link de convite está desativado [#create-invite-link-is-disabled]
+
+O workspace não tem assento livre: no Pro, são 3 pessoas, contando os convites pendentes. Revogue um convite de que você não precisa ou peça a um proprietário para fazer upgrade. Veja [Assentos e limites de workspace](/docs/help/teams/seats).
 
 ## Relacionados [#related]
 
+- [Funções da equipe](/docs/help/teams/roles)
 - [Assentos e limites de workspace](/docs/help/teams/seats)
-- [Guia de workspaces e equipes](/docs/teams)
+- [Guia de Workspaces e equipes](/docs/teams)

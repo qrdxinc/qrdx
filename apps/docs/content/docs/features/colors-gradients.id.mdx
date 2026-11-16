@@ -1,174 +1,181 @@
 ---
-title: "Warna & gradien"
-description: "Gunakan warna solid atau gradien linear dan radial, lalu periksa kontras agar kode tetap dapat dipindai."
+title: "Atur warna dan gradien"
+description: "Warnai modul, mata, dan latar belakang dengan warna solid, gradien linear, radial, dan sudut, warna transparan, atau isian gambar, lalu pastikan hasilnya tetap dapat dipindai."
 icon: Palette
 ---
 
-Terapkan warna dan gradien untuk membuat kode QR sesuai merek Anda.
+Empat prop mewarnai sebuah kode: `fgColor` untuk modul data, `bgColor` untuk latar belakang, `eyeColor` untuk tiga mata di sudut, dan `dotColor` untuk titik di dalam setiap mata. Masing-masing menerima warna solid atau objek gradien, dan warna mata secara default mengikuti `fgColor`. Halaman ini membahas setiap jenis isian dan cara menjaga kode tetap terbaca.
 
-## Warna Solid [#solid-colors]
+Mendesain di playground atau dasbor? Lihat [Pilih warna yang dapat dipindai](/docs/help/designing/colors-and-contrast) di Bantuan.
 
-```tsx
-import { QRCode } from 'qrdx';
+## Warna solid [#solid-colors]
 
-<QRCode
-  value="https://example.com"
-  size={256}
-  fgColor="#1a56db"
-  bgColor="#f9fafb"
-  eyeColor="#0d47a1"
-  dotColor="#3b82f6"
-/>
+```tsx title="components/brand-code.tsx"
+import { QRCode } from "qrdx";
+
+export function BrandCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1a56db"
+      bgColor="#f9fafb"
+      eyeColor="#0d47a1"
+      dotColor="#3b82f6"
+    />
+  );
+}
 ```
 
-Format yang didukung: `#hex`, `rgb()`, `rgba()`, `hsl()`, `hsla()`, nama warna
+Warna solid adalah warna CSS apa pun yang dapat diurai mesin: hex dengan 3, 4, 6, atau 8 digit, `rgb()` dan `rgba()`, warna bernama, atau `transparent`. Sintaks CSS lain seperti `hsl()` dirender di SVG, tetapi pemeriksaan kontras, PDF, dan EPS tidak dapat membacanya, jadi gunakan bentuk di atas. `{ type: "solid", color: "#1a56db" }` sama dengan string tersebut.
 
-`eyeColors` mengatur setiap mata secara terpisah (`topLeft`, `topRight`, `bottomLeft`, masing-masing dengan warna atau gradien `outer` dan `inner`); lihat [Pola](/docs/features/patterns#per-eye-colors).
+`eyeColors` mengatur setiap mata secara terpisah (`topLeft`, `topRight`, `bottomLeft`, masing-masing dengan warna atau gradien `outer` dan `inner`); lihat [Warna per mata](/docs/features/patterns#per-eye-colors).
 
 ### Latar belakang transparan [#transparent-background]
 
-`bgColor="transparent"` tidak menggambar latar belakang, sehingga unduhan PNG dan SVG menjadi tembus pandang, sedangkan file PDF dan EPS tidak memiliki isian latar belakang. Letakkan kode pada permukaan yang terang dan polos: pemindai membutuhkan celah terang di antara modul.
+`bgColor="transparent"` tidak melukis latar belakang, sehingga unduhan PNG dan SVG menjadi transparan dan file PDF serta EPS tidak memiliki isian latar belakang. Tempatkan kode di permukaan yang terang dan polos: dekoder membutuhkan celah terang di antara modul.
 
-## Gradien Linear [#linear-gradients]
+## Gradien linear [#linear-gradients]
 
-```tsx
-import { QRCodeCanvas } from 'qrdx';
+```tsx title="components/gradient-code.tsx"
+import { QRCode } from "qrdx";
 
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 1, color: '#764ba2' }
-    ],
-    x1: 0, y1: 0,
-    x2: 1, y2: 1
-  }}
-/>
+export function GradientCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "linear",
+        angle: 45,
+        stops: [
+          { color: "#4f46e5", offset: 0 },
+          { color: "#db2777", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-### Arah Gradien [#gradient-directions]
+- `angle` dalam derajat: 0 berjalan dari kiri ke kanan, 90 dari atas ke bawah, 45 dari sudut kiri atas ke sudut kanan bawah.
+- `stops` membutuhkan minimal dua entri. `offset` adalah persentase dari 0 hingga 100, dan warna sebuah stop dapat memiliki alfa.
+- Prop warna apa pun menerima gradien, termasuk `bgColor` dan mata. `QRCodeCanvas` tidak dapat menggambar gradien dan memakai stop pertama; gunakan `QRCode` atau `QRCodeSVG`.
 
-- **Horizontal**: `x1: 0, y1: 0, x2: 1, y2: 0`
-- **Vertikal**: `x1: 0, y1: 0, x2: 0, y2: 1`
-- **Diagonal**: `x1: 0, y1: 0, x2: 1, y2: 1`
+Gradien terbawa ke unduhan SVG, PNG, JPG, WebP, dan PDF. PDF cetak dan EPS menggambarnya sebagai shading yang halus.
 
-### Gradien Multi-Stop [#multi-stop-gradients]
+<Shot id="lib-gradient-codes" />
 
-```tsx
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 0.3, color: '#764ba2' },
-      { offset: 0.7, color: '#f093fb' },
-      { offset: 1, color: '#f5576c' }
-    ],
-    x1: 0, y1: 0, x2: 1, y2: 1
-  }}
-/>
+## Gradien radial [#radial-gradients]
+
+```tsx title="components/radial-code.tsx"
+import { QRCode } from "qrdx";
+
+export function RadialCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "radial",
+        stops: [
+          { color: "#0f766e", offset: 0 },
+          { color: "#0c4a6e", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-## Gradien Radial [#radial-gradients]
+Gradien radial berjalan dari tengah kode ke arah luar. Pusat dan radiusnya mengikuti ukuran kode, jadi hanya membutuhkan `stops`.
 
-```tsx
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'radial',
-    stops: [
-      { offset: 0, color: '#ff6b6b' },
-      { offset: 1, color: '#4ecdc4' }
-    ],
-    cx: 0.5, cy: 0.5,
-    r: 0.5
-  }}
-/>
+## Gradien sudut [#angular-gradients]
+
+Gradien sudut menyapu searah jarum jam mengelilingi pusat area yang diisinya, seperti `conic-gradient` di CSS. `angle` adalah titik awal sapuan, dalam derajat searah jarum jam dari atas. Offset berjalan dari 0 hingga 100 sepanjang satu putaran.
+
+```tsx title="components/angular-code.tsx"
+import { QRCode } from "qrdx";
+
+export function AngularCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "angular",
+        angle: 30,
+        stops: [
+          { color: "#1d4ed8", offset: 0 },
+          { color: "#7c3aed", offset: 50 },
+          { color: "#1d4ed8", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-## Utilitas Warna [#color-utilities]
+SVG tidak memiliki gradien konik, jadi kode menggambar kipas dari irisan tipis, dengan selisih sekitar dua tingkat warna. PDF dan EPS menggambar irisan yang sama.
 
-### Memeriksa Kontras [#check-contrast]
+## Warna transparan [#see-through-colors]
 
-```tsx
-import { getContrastRatio, getContrastLevel } from 'qrdx';
-
-const ratio = getContrastRatio('#000000', '#ffffff');
-// Returns: 21
-
-const level = getContrastLevel(ratio);
-// Returns: { level: 'AAA', warning: false, message: 'Excellent contrast' }
-```
-
-### Panduan Kontras [#contrast-guidelines]
-
-- **Minimum**: rasio 3.0:1
-- **Disarankan**: 4.5:1 atau lebih tinggi
-- **Sangat baik**: 7.0:1 atau lebih tinggi
-
-{/* Angular gradients, see-through colors and image fills (paint picker) */}
-
-## Gradien angular [#angular-gradients]
-
-Gradien angular menyapu searah jarum jam mengelilingi pusat area yang diisinya, seperti `conic-gradient` pada CSS. `angle` adalah titik awal sapuan, dalam derajat searah jarum jam dari atas. Offset berjalan dari 0 sampai 100 mengelilingi satu putaran.
-
-```tsx
-<QRCode
-  value="https://example.com"
-  fgColor={{
-    type: "angular",
-    angle: 30,
-    stops: [
-      { color: "#1d4ed8", offset: 0 },
-      { color: "#7c3aed", offset: 50 },
-      { color: "#1d4ed8", offset: 100 },
-    ],
-  }}
-/>
-```
-
-SVG tidak memiliki gradien konik, sehingga kode menggambar kipas dari irisan tipis, dengan selisih sekitar dua tingkat warna. PDF dan EPS menggambar irisan yang sama.
-
-## Warna tembus pandang [#see-through-colors]
-
-Warna dan stop gradien dapat memuat alfa, misalnya `#1d4ed8cc` atau `rgba(29, 78, 216, 0.8)`. SVG menuliskannya sebagai `fill-opacity` dan `stop-opacity`, dan PDF mempertahankannya. EPS tidak mendukung transparansi, sehingga warna tembus pandang dicampur dengan latar belakang. Pemeriksaan pemindaian menilai warna tembus pandang sesuai tampilannya di atas latar belakang.
+Warna dan stop gradien dapat memiliki alfa, seperti `#1d4ed8cc` atau `rgba(29, 78, 216, 0.8)`. SVG menuliskannya sebagai `fill-opacity` dan `stop-opacity`, dan PDF mempertahankannya. EPS tidak mendukung transparansi, jadi warna transparan dicampur dengan latar belakang. Pemeriksaan pemindaian menilai warna transparan sesuai tampilannya di atas latar belakang.
 
 ## Isian gambar [#image-fills]
 
-Isian gambar melukiskan sebuah gambar pada latar belakang, titik, atau mata. Gambar dibentangkan di seluruh kode, sehingga titik dan mata yang memakai isian yang sama menampilkan satu gambar.
+Isian gambar melukis sebuah gambar pada latar belakang, modul, atau mata. Gambar dibentangkan di seluruh kode, sehingga modul dan mata yang memakai gambar yang sama menampilkan satu gambar.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  fgColor={{
-    type: "image",
-    src: "data:image/jpeg;base64,…",
-    fit: "cover", // or "contain", "tile"
-    position: "center",
-    scale: 1,
-    opacity: 0.45,
-    underlay: "#000000",
-  }}
-/>
+```tsx title="components/photo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function PhotoCode({ photo }: { photo: string }) {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "image",
+        src: photo, // a data:image/jpeg;base64,… URL
+        fit: "cover", // or "contain", "tile"
+        position: "center",
+        scale: 1,
+        opacity: 0.45,
+        underlay: "#000000",
+      }}
+    />
+  );
+}
 ```
 
-- `src` adalah gambarnya sendiri, seperti pada logo. QRdx menyimpan isian gambar (di kode, tema, dan REST API) hanya sebagai URL `data:image` base64 (PNG, JPEG, WebP, atau GIF) berukuran maksimal 1,5 MB; gambar dari tautan ditolak. PNG dan JPEG disematkan di setiap ekspor, dan server tidak pernah mengambil tautan.
-- `underlay` adalah warna solid di bawah gambar. `opacity` membiarkannya tembus: di atas hitam, warna ini menggelapkan foto untuk titik, dan di atas putih, warna ini mencerahkan foto untuk latar belakang.
-- Detail pada gambar terbaca sebagai derau oleh kamera, sehingga pemeriksaan pemindaian meminta kontras yang lebih tinggi: 7:1 pada titik atau mata, 12:1 pada latar belakangnya (`SCAN_IMAGE_CONTRAST_MIN`). Gambar diukur dari sepersepuluh bagian terterang dan tergelapnya (`getImageTones`). Di editor, "Make it scannable" mencari opasitas di atas underlay yang lolos pemeriksaan.
-- SVG, PNG, dan PDF mendukung isian gambar. EPS tidak bisa ([Unduhan](/docs/features/downloads#eps)).
+- `src` adalah gambarnya sendiri, seperti pada logo. QRdx menyimpan isian gambar (di kode, tema, dan REST API) hanya sebagai URL `data:image` base64 (PNG, JPEG, WebP, atau GIF) berukuran maksimal 1,5 MB; gambar dari tautan ditolak. PNG dan JPEG tersemat di setiap ekspor, dan server tidak pernah mengambil tautan.
+- `underlay` adalah warna solid di bawah gambar. `opacity` membiarkannya tembus: di atas hitam, ia menggelapkan foto untuk modul, dan di atas putih, ia mencerahkan foto untuk latar belakang.
+- Detail gambar terbaca sebagai derau oleh kamera, jadi pemeriksaan pemindaian meminta kontras lebih tinggi: 7:1 pada modul atau mata, 12:1 di belakangnya (`SCAN_IMAGE_CONTRAST_MIN`). Gambar diukur dari sepersepuluh bagian terang dan tergelapnya (`getImageTones`). Di editor, **Make it scannable** menemukan opasitas di atas underlay yang lolos.
+- SVG, PNG, dan PDF mendukung isian gambar. EPS tidak; lihat [EPS](/docs/features/downloads#eps).
 
-Isian gambar diperlakukan seperti logo. Isian ini tetap menyertai desain di editor, di kode tersimpan, dan di tema tersimpan. Isian ini tidak masuk ke tautan `?style=`, gaya komunitas yang dipublikasikan, cuplikan Get code, atau konteks obrolan: di sana, setiap isian gambar digantikan oleh warna underlay-nya. Image API (`GET /v1/qr`) dan server MCP belum mendukungnya. `POST /v1/codes` dan `PATCH /v1/codes/{id}` hanya menerimanya sebagai URL `data:image`, dan menjawab 400 untuk yang lain; belum ada id file unggahan untuk gambar.
+Isian gambar diperlakukan seperti logo. Isian ini tetap menyertai desain di editor, di kode tersimpan, dan di tema tersimpan. Isian ini tidak masuk ke tautan `?style=`, gaya komunitas yang dipublikasikan, cuplikan Get code, atau konteks chat: di sana setiap isian gambar digantikan oleh warna underlay-nya. Image API (`GET /v1/qr`) dan server MCP tidak menerimanya. `POST /v1/codes` dan `PATCH /v1/codes/{id}` menerimanya hanya sebagai URL `data:image`, dan membalas 400 untuk yang lain.
 
-Gradien angular dan isian gambar sudah ada di sumber qrdx dan akan dirilis bersama rilis npm berikutnya. qrdx 0.0.46 di npm belum memilikinya.
+## Periksa kontras [#check-the-contrast]
 
-## Langkah Berikutnya [#next-steps]
+Pemindai membutuhkan modul gelap di atas latar belakang terang. Skor pemindaian memeriksa setiap warna, termasuk setiap stop gradien, terhadap latar belakang; helper yang sama diekspor:
 
-- [Logo](/docs/features/logos) — Tambahkan logo ke kode QR berwarna
-- [Pola](/docs/features/patterns) — Padukan warna dengan pola
-- [Unduhan](/docs/features/downloads) — Ekspor kode QR berwarna
+```ts title="lib/check-contrast.ts"
+import { getContrastLevel, getContrastRatio } from "qrdx";
+
+const ratio = getContrastRatio("#1a56db", "#f9fafb");
+// 5.9
+
+getContrastLevel(ratio);
+// { level: "AA", warning: false, message: "Good contrast" }
+```
+
+Skor pemindaian meloloskan rasio 4,5 atau lebih (`SCAN_CONTRAST_MIN`), mengurangi poin di bawahnya, dan menggagalkan desain di bawah 1,5. `getContrastLevel` mengembalikan `AAA` mulai 7, `AA` mulai 4,5, `AA Large` mulai 3 disertai peringatan, dan `Fail` di bawahnya. Kode terang di atas latar belakang gelap lolos rasio tetapi kehilangan poin pada pemeriksaan polaritas: sebagian besar kamera ponsel dapat membacanya, beberapa aplikasi pemindai tidak.
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/features/patterns" title="Pilih bentuk modul dan mata" description="Warna per mata dan bentuk yang diisi warna-warna ini." />
+  <Card href="/docs/features/logos" title="Tambahkan logo lewat kode" description="Logo pada kode berwarna, dengan alas di belakangnya." />
+  <Card href="/docs/features/downloads" title="Ekspor dan unduh" description="Format mana yang mempertahankan gradien, transparansi, dan isian gambar." />
+  <Card href="/docs/utilities" title="Utilitas" description="Helper warna dan kontras selengkapnya." />
+</Cards>

@@ -187,7 +187,24 @@ export const env = validateTogether(() =>
         .optional(),
       // Sent to the console on its pages (x-qrdx-zone-key), so it can turn
       // away requests that didn't come through this app. Same value on both.
+      // With ADMIN_CONSOLE_URL it's also the console's OAuth client secret
+      // (lib/admin-console), and then must be 32 characters or more
+      // (openssl rand -hex 32): next.config.ts fails the build otherwise.
       CONSOLE_ZONE_KEY: z.string().min(1).optional(),
+      // The console at its own address, e.g. https://admin.qrdx.dev: when
+      // set (it needs CONSOLE_ZONE_KEY, above, or the build fails),
+      // /admin/<section> for its five sections redirects there, the admin
+      // menu links there, and the console signs admins in through this app's
+      // OAuth provider as a first-party client (lib/admin-console).
+      // Decided at build time like CONSOLE_ORIGIN (next.config.ts inlines
+      // it). An origin only: https, or http on localhost for development.
+      ADMIN_CONSOLE_URL: z
+        .url()
+        .refine(isConsoleOrigin, {
+          error:
+            "must be an origin only (https://host, or http://localhost:port), with no path or query",
+        })
+        .optional(),
 
       // The marketing site (a separate app, @repo/next-config/site-zone),
       // e.g. https://qrdx-site.vercel.app: when set, next.config.ts proxies
@@ -310,6 +327,7 @@ export const env = validateTogether(() =>
       SITE_ORIGIN: process.env.SITE_ORIGIN,
       SITE_ZONE_KEY: process.env.SITE_ZONE_KEY,
       SITE_ZONE_GROUPS: process.env.SITE_ZONE_GROUPS,
+      ADMIN_CONSOLE_URL: process.env.ADMIN_CONSOLE_URL,
       OPENAI_APPS_CHALLENGE: process.env.OPENAI_APPS_CHALLENGE,
       NODE_ENV: process.env.NODE_ENV,
       NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
