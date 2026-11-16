@@ -1,53 +1,64 @@
 ---
 title: "Webhook"
-description: "Ricevi una richiesta HTTPS firmata quando i tuoi QR code vengono scansionati, creati o modificati, o quando qualcuno invia un modulo. Funziona con Zapier, Make e n8n."
+description: "Ricevi una richiesta HTTPS firmata quando i tuoi QR code vengono scansionati, creati o modificati, o quando qualcuno invia un modulo. Aggiungi un endpoint, verifica la firma, gestisci i nuovi tentativi e iscriviti da Zapier, Make e n8n."
 icon: Webhook
 ---
 
-I webhook inviano gli eventi di un workspace a un URL che controlli tu, nel momento in cui accadono. Usali per aggiornare un CRM quando qualcuno compila un modulo, per scrivere in uno strumento interno quando un codice supera 1.000 scansioni, o per mantenere una tua copia dei dati delle scansioni.
+Alla fine di questa pagina, un URL che controlli riceverà un `POST` firmato entro pochi minuti da ogni evento che hai scelto, il tuo server verificherà che ogni richiesta provenga da QRdx e saprai come si comportano nuovi tentativi, duplicati e log delle consegne.
 
-I webhook, gli hook Zapier/Make e gli avvisi Slack/Discord fanno parte del piano **Business**. Gli avvisi via email e il riepilogo settimanale fanno parte di Pro; vedi [Notifiche](/docs/notifications).
+I webhook inviano gli eventi di uno spazio di lavoro al tuo server nel momento in cui accadono: aggiorna un CRM quando qualcuno compila un modulo, scrivi su uno strumento interno quando un codice supera le 1.000 scansioni, oppure conserva una tua copia dei dati delle scansioni.
 
-## Aggiungere un endpoint [#add-an-endpoint]
+<Callout type="info" title="Piano Business">
+I webhook, gli hook per Zapier e Make e gli avvisi su Slack e Discord sono inclusi nel piano **Business**. Gli avvisi via email e il riepilogo settimanale sono inclusi in Pro; vedi [Notifiche](/docs/notifications). Confronta i piani in [Piani e limiti](/docs/plans-and-limits).
+</Callout>
 
-1. Apri [Impostazioni → Webhook](/dashboard?to=settings/webhooks) nel workspace di cui vuoi ricevere gli eventi. Il link apre l'ultimo workspace che hai usato; scegline un altro nel selettore dei workspace e resti sulla stessa pagina.
-2. Fai clic su **Aggiungi endpoint**, inserisci un URL `https://` e scegli gli eventi. Prima QRdx ti chiede di [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), e lo chiede di nuovo quando cambi l'URL di un endpoint; cambiare gli eventi o metterlo in pausa non richiede conferma.
-3. Copia il **segreto di firma** mostrato dopo il salvataggio. Proprietari e amministratori possono mostrarlo di nuovo, o ruotarlo, in seguito, dopo aver [confermato la propria identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
-4. Fai clic su **Invia test**. QRdx invia un evento `ping` firmato e mostra lo stato della risposta.
+## Prima di iniziare [#before-you-start]
 
-Proprietari e amministratori gestiscono gli endpoint; i membri possono vedere gli endpoint e i relativi log di consegna. Un workspace può avere fino a 20 endpoint.
+- Un URL `https://` pubblico che risponda alle richieste `POST`. Indirizzi IP, `localhost` e nomi host che si risolvono in reti private vengono rifiutati, e i reindirizzamenti non vengono seguiti. Per lo sviluppo in locale, usa un tunnel che fornisca un nome host pubblico.
+- Ruolo di proprietario o amministratore nello spazio di lavoro. I membri possono vedere gli endpoint e i relativi log delle consegne, ma non aggiungerli né modificarli.
 
-Gli URL degli endpoint devono usare nomi host pubblici `https://`. Indirizzi IP, `localhost` e nomi che risolvono verso reti private vengono rifiutati, e i reindirizzamenti non vengono seguiti.
+## 1. Aggiungi un endpoint [#1-add-an-endpoint]
 
-## Eventi [#events]
+1. Apri [Impostazioni → Webhook](/dashboard?to=settings/webhooks) nello spazio di lavoro di cui vuoi gli eventi. Il link apre l'ultimo spazio di lavoro che hai usato; sceglierne un altro nel selettore degli spazi di lavoro ti lascia sulla stessa pagina.
+2. Scegli **Aggiungi endpoint**, inserisci l'**URL dell'endpoint** e seleziona gli **Eventi** che vuoi, poi scegli **Aggiungi endpoint** nella finestra di dialogo. QRdx ti chiede prima di [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), e di nuovo ogni volta che cambi l'URL di un endpoint; modificarne gli eventi o disattivarlo non richiede conferma.
+3. Copia il **Segreto di firma** mostrato dopo il salvataggio. Proprietari e amministratori possono mostrarlo di nuovo, o rigenerarlo, dalla pagina **Consegne** dell'endpoint.
+4. Scegli **Invia test**. QRdx invia un evento `ping` firmato e mostra lo stato della risposta nel log delle consegne.
+
+<Shot id="add-endpoint-dialog" />
+
+<Shot id="webhook-signing-secret" />
+
+Uno spazio di lavoro può avere fino a 20 endpoint e hook in totale.
+
+## 2. Scegli gli eventi [#2-pick-the-events]
 
 | Evento | Quando | Note |
 | --- | --- | --- |
-| `scan.created` | Un codice dinamico viene scansionato | Raggruppato: al massimo una richiesta al minuto per endpoint, inviata entro pochi minuti, con fino a 100 scansioni e il `count` esatto |
-| `scan.milestone` | La 1ª scansione di un codice, poi 10, 100, 500, 1.000, 5.000, 10.000, 50.000, 100.000, 500.000 e 1.000.000 di scansioni, poi ogni milione | Scatta una sola volta per traguardo |
-| `code.created` | Viene creato un codice dinamico (dashboard o API) | Un evento per codice, anche per la creazione in blocco |
+| `scan.created` | Un QR code dinamico viene scansionato | Raggruppato: al massimo una richiesta al minuto per endpoint, con fino a 100 scansioni e il `count` esatto |
+| `scan.milestone` | La 1ª scansione di un codice, poi 10, 100, 500, 1.000, 5.000, 10.000, 50.000, 100.000, 500.000 e 1.000.000 di scansioni, poi ogni milione | Scatta una volta per traguardo |
+| `code.created` | Un QR code dinamico viene creato, nella dashboard o tramite l'API | Un evento per codice, anche per la creazione in blocco |
 | `code.updated` | Cambiano la destinazione, il titolo, il design o il dominio del link breve di un codice | `changes` elenca i campi |
-| `form.submitted` | Qualcuno invia un modulo in una pagina ospitata | Include le risposte |
-| `ping` | Fai clic su **Invia test** | |
+| `form.submitted` | Qualcuno invia un modulo su una pagina ospitata | Include le risposte |
+| `ping` | Scegli **Invia test** | |
 
-Le scansioni di bot, anteprime dei link e prefetcher, e le ripetizioni rapide dello stesso visitatore, non vengono conteggiate e non generano eventi, esattamente come nelle [analisi delle scansioni](/docs/dynamic-qr-codes).
+Le scansioni di bot, anteprime dei link e prefetcher, e le ripetizioni rapide dello stesso visitatore, non vengono conteggiate e non generano eventi, esattamente come nelle [analisi delle scansioni](/docs/dynamic-qr-codes#scan-analytics).
 
-## Payload [#payloads]
+## 3. Leggi il payload [#payloads]
 
-Ogni richiesta è una `POST` con un corpo JSON e questi header:
+Ogni richiesta è un `POST` con un corpo JSON e queste intestazioni:
 
-| Header | Valore |
+| Intestazione | Valore |
 | --- | --- |
 | `Content-Type` | `application/json` |
 | `User-Agent` | `QRdx-Webhooks/1.0 (+https://qrdx.dev/docs/webhooks)` |
-| `X-QRdx-Event` | Il tipo di evento, ad es. `code.created` |
-| `X-QRdx-Delivery` | ID della consegna: identico a ogni nuovo tentativo, così puoi ignorare i duplicati |
-| `X-QRdx-Timestamp` | Secondi Unix in cui è stato firmato questo tentativo |
+| `X-QRdx-Event` | Il tipo di evento, ad esempio `code.created` |
+| `X-QRdx-Delivery` | ID della consegna: è lo stesso a ogni nuovo tentativo, così puoi ignorare i duplicati |
+| `X-QRdx-Timestamp` | Secondi Unix in cui questo tentativo è stato firmato |
 | `X-QRdx-Signature` | `t=<timestamp>,v1=<hex HMAC-SHA256>` |
 
-Il corpo è sempre una busta:
+Il corpo è sempre un involucro con `id`, `type`, `created_at` e `data`:
 
-```json
+```json title="code.created"
 {
   "id": "evt_cm3x8c1a20001",
   "type": "code.created",
@@ -69,9 +80,9 @@ Il corpo è sempre una busta:
 }
 ```
 
-Un batch `scan.created`:
+Un gruppo `scan.created`:
 
-```json
+```json title="scan.created"
 {
   "id": "evt_cm3x9d0b10002",
   "type": "scan.created",
@@ -99,19 +110,26 @@ Un batch `scan.created`:
 }
 ```
 
-Quando in un minuto arrivano più di 100 scansioni, `scans` contiene le prime 100 e `count` il totale esatto. `source` è `nfc` per un tocco su un [tag NFC](/docs/nfc) e `qr` per una scansione di QR code. I payload delle scansioni non includono mai indirizzi IP o hash dei visitatori.
+Quando in un minuto arrivano più di 100 scansioni, `scans` contiene le prime 100 e `count` il totale esatto. `source` è `nfc` per un tocco su un [tag NFC](/docs/nfc) e `qr` per la scansione di un QR code. I payload delle scansioni non includono mai indirizzi IP né hash dei visitatori.
 
 Gli altri eventi contengono:
 
-- `scan.milestone`: `milestone`, `code` (`id`, `slug`, `title`, `scan_count`) e la `scan` che l'ha raggiunto.
-- `code.updated`: come `code.created`, più `changes`, ad es. `["destination_url"]`.
+- `scan.milestone`: `milestone`, `code` (`id`, `slug`, `title`, `scan_count`) e la `scan` che lo ha raggiunto.
+- `code.updated`: come `code.created`, più `changes`, ad esempio `["destination_url"]`.
 - `form.submitted`: `response_id`, `page` (`id`, `title`), `code` (`id`, `slug`, oppure `null`), `fields` (`name`, `label`, `value` come testo) e `submitted_at`.
 
-## Verificare le firme [#verify-signatures]
+Per vedere un payload di ogni evento costruito con i tuoi dati prima che arrivi il primo reale, chiama [Ottieni eventi di esempio](/docs/developers/api/get-hook-samples):
+
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/hooks/sample?event=scan.created" \
+  -H "Authorization: Bearer $QRDX_API_KEY"
+```
+
+## 4. Verifica le firme [#verify-signatures]
 
 Calcola un HMAC-SHA256 di `<timestamp>.<raw body>` con il tuo segreto di firma e confrontalo con `v1` in `X-QRdx-Signature`. Usa il corpo grezzo della richiesta, prima di qualsiasi parsing JSON, e rifiuta i timestamp più vecchi di cinque minuti.
 
-```ts
+```ts title="lib/qrdx-webhook.ts"
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export function isFromQRdx(rawBody: string, header: string, secret: string) {
@@ -132,62 +150,115 @@ export function isFromQRdx(rawBody: string, header: string, secret: string) {
 }
 ```
 
+```python title="qrdx_webhook.py"
+import hmac
+import hashlib
+import time
+
+
+def is_from_qrdx(raw_body: bytes, header: str, secret: str) -> bool:
+    parts = dict(part.strip().split("=", 1) for part in header.split(","))
+    timestamp = int(parts.get("t", "0"))
+    if not timestamp or abs(time.time() - timestamp) > 300:
+        return False
+    expected = hmac.new(
+        secret.encode(), f"{timestamp}.".encode() + raw_body, hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(parts.get("v1", ""), expected)
+```
+
 La rotazione del segreto ha effetto immediato: il vecchio segreto smette di essere valido, quindi aggiorna il tuo server subito dopo la rotazione.
 
-## Nuovi tentativi e log delle consegne [#retries-and-the-delivery-log]
+## 5. Rispondi e gestisci i nuovi tentativi [#5-respond-and-handle-retries]
 
-Rispondi con uno stato `2xx` qualsiasi entro 10 secondi. Qualsiasi altra cosa (uno stato di errore, un reindirizzamento, un timeout, un host irraggiungibile) conta come errore, e QRdx riprova con attese crescenti di almeno 1 minuto, 4 minuti, 16 minuti, 1 ora, 4 ore, 17 ore e 24 ore. Ogni nuovo tentativo parte entro pochi minuti dalla fine della sua attesa. Sono 8 tentativi in circa due giorni, dopodiché la consegna viene contrassegnata come **Non riuscita**.
+Rispondi con uno stato `2xx` entro 10 secondi. Qualsiasi altra cosa (uno stato di errore, un reindirizzamento, un timeout, un host irraggiungibile) conta come errore, e QRdx riprova con attese crescenti di circa 1 minuto, 4 minuti, 16 minuti, 1 ora, 4 ore, 17 ore e 24 ore. Ogni nuovo tentativo parte entro pochi minuti dalla fine della sua attesa. Sono 8 tentativi in circa due giorni, dopodiché la consegna viene contrassegnata come non riuscita.
 
-La pagina **Consegne** di ogni endpoint elenca le ultime 50 consegne con stato, tentativi, ultimo errore e payload. **Riprova** la reinvia subito (anche se era stata consegnata). Le consegne vengono conservate per 30 giorni.
+Le consegne possono arrivare più di una volta (un nuovo tentativo dopo una risposta lenta, un nuovo tentativo manuale) e fuori ordine. Usa `X-QRdx-Delivery` o l'`id` dell'involucro per ignorare i duplicati, ed esegui il tuo lavoro dopo aver risposto `2xx` se richiede più di qualche secondo.
 
-Le consegne possono arrivare più di una volta (un nuovo tentativo dopo una risposta lenta, un nuovo tentativo manuale) e fuori ordine. Usa `X-QRdx-Delivery` o l'`id` della busta per ignorare i duplicati.
+## Modificare in seguito [#change-it-later]
 
-Disattivare un endpoint ferma le nuove consegne; eliminarlo elimina anche il suo log. Se il piano di un workspace non include più i webhook, gli endpoint vengono mantenuti ma non viene inviato nulla finché non torna a Business. I tuoi QR code continuano a funzionare in ogni caso.
+La pagina **Consegne** di ogni endpoint elenca le ultime 50 consegne con evento, stato, tentativi e payload. **Riprova ora** reinvia subito una consegna non riuscita o in sospeso; **Invia di nuovo** reinvia una consegna già recapitata. Le consegne vengono conservate per 30 giorni.
+
+<Shot id="webhook-deliveries" />
+
+Dal menu di un endpoint puoi **Modifica** il suo URL e gli eventi, **Disattiva endpoint** (le nuove consegne si fermano; **Attiva endpoint** le riprende), mostrare o **Rigenera** il suo **Segreto di firma**, ed **Elimina** l'endpoint, il che cancella anche il suo log. Se il piano di uno spazio di lavoro non include più i webhook, gli endpoint vengono conservati ma non viene inviato nulla finché non torna al piano Business. I tuoi QR code continuano a funzionare in ogni caso.
 
 ## Zapier, Make e n8n (REST Hooks) [#zapier-make-and-n8n-rest-hooks]
 
-Gli strumenti di automazione possono iscriversi e disiscriversi da soli tramite la REST Hooks API. Autenticati con una [chiave API](/docs/developers/api-keys) o un token di accesso OAuth, come per la [API dei codici](/docs/dynamic-qr-codes#rest-api): `codes:write` per iscriversi o disiscriversi, `codes:read` per elencare. Gli URL degli hook sono spesso segreti, quindi con il solo `codes:read` `target_url` mostra soltanto l'host (`https://hooks.zapier.com/…`). Le richieste con token agiscono sul tuo workspace; una chiave agisce sul workspace in cui è stata creata. Se ti iscrivi con la sessione del browser in cui hai effettuato l'accesso, invece che con una chiave o un token, QRdx ti chiede prima di [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) e risponde `403` con `CONFIRMATION_REQUIRED` finché non l'hai fatto negli ultimi 10 minuti. Le iscrizioni sono normali endpoint: compaiono in Impostazioni → Webhook, dove puoi anche rimuoverle.
+Gli strumenti di automazione possono iscriversi e annullare l'iscrizione da soli tramite la REST Hooks API. Autenticati con una [chiave API](/docs/developers/api-keys) o un token di accesso OAuth: `codes:write` per iscriversi o annullare l'iscrizione, `codes:read` per elencare. Gli URL degli hook sono spesso segreti, quindi con il solo `codes:read` `target_url` mostra solo l'host (`https://hooks.zapier.com`). Le richieste con token agiscono sul tuo spazio di lavoro; una chiave agisce sullo spazio di lavoro in cui è stata creata. Iscriversi invece con la sessione del browser in cui hai effettuato l'accesso ti chiede prima di [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), e risponde `403 CONFIRMATION_REQUIRED` finché non l'hai fatto negli ultimi 10 minuti. Le iscrizioni sono normali endpoint: compaiono in **Impostazioni → Webhook**, dove puoi anche rimuoverle.
 
 | Metodo | Percorso | Descrizione |
 | --- | --- | --- |
-| `POST` | `/v1/hooks` | Iscrizione. Corpo: `target_url` (o `hookUrl` di Zapier) ed `event` (o un array `events`). Restituisce `201` con l'`id` dell'iscrizione e il suo `secret` |
-| `DELETE` | `/v1/hooks/{id}` | Disiscrizione (`204`) |
+| `POST` | `/v1/hooks` | Iscrizione. Corpo: `target_url` (o `hookUrl` di Zapier) e `event` (o un array `events`). Restituisce `201` con l'`id` dell'iscrizione e il suo `secret` |
+| `DELETE` | `/v1/hooks/{id}` | Annulla l'iscrizione (`204`) |
 | `GET` | `/v1/hooks` | Elenca iscrizioni ed endpoint |
 | `GET` | `/v1/hooks/{id}` | Una singola iscrizione |
-| `GET` | `/v1/hooks/sample?event=<event>` | Payload di esempio recenti per `event`, come array («perform list» di Zapier) |
+| `GET` | `/v1/hooks/sample?event=<event>` | Payload di esempio recenti per `event`, come array ("perform list" di Zapier) |
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/hooks \
-  -H "Authorization: Bearer $QRDX_TOKEN" \
+  -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"target_url": "https://hooks.zapier.com/hooks/standard/123/abc/", "event": "form.submitted"}'
 ```
 
-```json
+```json title="201 Created (fields)"
 {
-  "id": "cm3xa1b2c0003",
+  "id": "<hook id>",
   "target_url": "https://hooks.zapier.com/hooks/standard/123/abc/",
   "events": ["form.submitted"],
   "event": "form.submitted",
   "active": true,
-  "created_at": "2026-10-31T09:40:00.000Z",
-  "secret": "whsec_..."
+  "created_at": "<ISO 8601 time>",
+  "secret": "whsec_<shown only here>"
 }
 ```
 
-Senza Business la chiamata di iscrizione restituisce `402 PLAN_REQUIRED`. Una consegna `scan.created` è un unico batch, quindi in Zapier usa gli elementi di riga `data.scans` per agire su ogni scansione.
+Senza il piano Business la chiamata di iscrizione restituisce `402`:
 
-In n8n, il nodo QRdx Trigger dei [nodi QRdx per n8n](/docs/developers/n8n) esegue queste chiamate al posto tuo e controlla ogni firma. Funziona anche un normale nodo Webhook, configurato come qualsiasi altro endpoint.
+```json title="402 Payment Required"
+{"code":"PLAN_REQUIRED","message":"Webhooks and Zapier/Make hooks are part of the Business plan.","status":402}
+```
+
+Una consegna `scan.created` è un unico gruppo, quindi in Zapier usa le voci di elenco `data.scans` per agire su ogni scansione. In n8n, il nodo QRdx Trigger dei [nodi QRdx per n8n](/docs/developers/n8n) esegue queste chiamate al posto tuo e controlla ogni firma; funziona anche un normale nodo Webhook, configurato come qualsiasi altro endpoint. Le pagine di riferimento sono [Iscriviti agli eventi](/docs/developers/api/create-hook), [Elenca gli hook](/docs/developers/api/list-hooks) e [Annulla l'iscrizione](/docs/developers/api/delete-hook).
+
+## Se qualcosa va storto [#if-something-goes-wrong]
+
+### L'URL dell'endpoint viene rifiutato [#the-endpoint-url-is-refused]
+
+Sono accettati solo nomi host pubblici con `https://`: niente `http://`, niente indirizzi IP, niente `localhost`, niente nomi che si risolvono in una rete privata. Durante lo sviluppo usa un tunnel con un nome host pubblico.
+
+### Ogni consegna mostra lo stato di errore [#every-delivery-shows-a-failed-status]
+
+Il tuo server ha risposto con qualcosa di diverso da `2xx` entro 10 secondi, ha reindirizzato oppure non ha risposto. Apri i dettagli della consegna per vedere lo stato HTTP o l'errore esatto, correggilo, poi scegli **Riprova ora**. Se il tuo handler è lento, rispondi prima con `2xx` ed elabora dopo.
+
+### Le firme non risultano valide [#signatures-dont-verify]
+
+Assicurati di calcolare l'hash del corpo grezzo della richiesta, non di un oggetto JSON serializzato di nuovo, e che il tuo server usi il secret attuale: ruotarlo invalida subito quello vecchio. Controlla anche l'orologio del server, perché il controllo del timestamp ammette cinque minuti di scarto.
+
+### Gli eventi non arrivano più [#events-stopped-arriving]
+
+Il workspace ha lasciato il piano Business (gli endpoint vengono conservati ma messi in pausa), l'endpoint è **Disattivato**, oppure lo Zap, lo scenario o il workflow che ha creato la sottoscrizione è stato disattivato e la sottoscrizione annullata. Controlla **Impostazioni → Webhook**.
+
+### `403 CONFIRMATION_REQUIRED` da `POST /v1/hooks` [#403-confirmation_required-from-post-v1hooks]
+
+Ti sei iscritto con una sessione del browser. Conferma che sei tu in QRdx e riprova entro 10 minuti, oppure iscriviti con una chiave API dal tuo server.
 
 ## Self-hosting [#self-hosting]
 
-Le consegne vengono inviate subito; i nuovi tentativi e i batch di scansioni il cui minuto è terminato vengono inviati da un job pianificato. QRdx lo esegue ogni 5 minuti da un workflow di GitHub Actions, che funziona sul piano gratuito Hobby di Vercel, e `apps/app/vercel.json` lo esegue anche in modo completo una volta al giorno. GitHub può avviare le esecuzioni pianificate in ritardo, quindi aspettati i nuovi tentativi entro pochi minuti e non al minuto esatto.
+Le consegne vengono inviate subito; i nuovi tentativi e i batch di scansioni il cui minuto è terminato vengono inviati da un job pianificato. QRdx lo esegue ogni 5 minuti da un workflow di GitHub Actions, che funziona sul piano Hobby gratuito di Vercel, e `apps/app/vercel.json` lo esegue anche per intero una volta al giorno. GitHub può avviare le esecuzioni pianificate in ritardo, quindi aspettati i nuovi tentativi entro qualche minuto e non al minuto esatto.
 
 Per fare lo stesso, copia `.github/workflows/webhook-worker.yml`, aggiungi il tuo `CRON_SECRET` come secret di Actions e l'URL del tuo job come variabile `WEBHOOK_WORKER_URL`. Oppure chiama il job da qualsiasi scheduler con il `CRON_SECRET` che hai impostato nell'ambiente:
 
-```bash
-# every 1-5 minutes
+```bash title="crontab (every 1 to 5 minutes)"
 curl -H "Authorization: Bearer $CRON_SECRET" https://your-host/api/cron/webhooks
 ```
 
-Aggiungendo `?source=github` all'URL, il job controlla prima un piccolo marcatore in Upstash Redis e restituisce `{"skipped": true}` senza interrogare il database quando non c'è nulla in scadenza, così un database che scala a zero può restare inattivo (senza Upstash, esegue sempre il job completo). Mantieni una chiamata al giorno senza questo parametro: quell'esecuzione svolge sempre il job completo e ripara il marcatore.
+Con `?source=github` aggiunto all'URL, il job controlla prima un piccolo marcatore in Upstash Redis e restituisce `{"skipped": true}` senza interrogare il database quando non c'è nulla da inviare, così un database che scala a zero può restare inattivo (senza Upstash, esegue sempre il job completo). Mantieni una chiamata al giorno senza questo parametro: quell'esecuzione svolge sempre il job completo e ripara il marcatore. Gli altri job pianificati sono elencati in [Self-hosting](/docs/self-hosting#scheduled-jobs).
+
+## Correlati [#related]
+
+- [Iscriversi agli eventi](/docs/developers/api/create-hook): l'endpoint REST Hooks con un pannello Try it
+- [n8n](/docs/developers/n8n): il nodo QRdx Trigger che si iscrive e verifica per te
+- [Notifiche](/docs/notifications): avvisi via email, Slack e Discord per gli stessi eventi, senza codice
+- [Crea un'integrazione](/docs/developers/build-an-integration): iscriviti per conto delle persone che collegano la tua app

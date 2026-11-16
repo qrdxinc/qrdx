@@ -195,6 +195,7 @@ export * from "./print";
 export {
   getQRCodeData,
   getQRCodeSVGProps,
+  type QRCodeOptions,
   type QRCodeProps,
   resolveQRCodeProps,
 } from "./qr-code-props";

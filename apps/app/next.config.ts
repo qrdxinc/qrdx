@@ -5,10 +5,14 @@ import {
   MCP_HOST,
 } from "@repo/config";
 import { OG_FONT_GLOB } from "@repo/design-system/og/font-files";
+import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import { docsOriginRedirects, docsZoneRewrites } from "@repo/i18n/docs";
 import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
+  ADMIN_CONSOLE_SECRET_MIN_LENGTH,
+  adminConsoleAddress,
+  adminConsoleRedirects,
   CONSOLE_ASSET_PREFIX,
   consoleZoneRewrites,
 } from "@repo/next-config/console-zone";
@@ -104,6 +108,30 @@ if (consoleZone.length > 0 && !env.CONSOLE_ZONE_KEY) {
     "⚠ CONSOLE_ORIGIN is set but CONSOLE_ZONE_KEY isn't: the console can't tell requests that came through this app. Set the same CONSOLE_ZONE_KEY on both.",
   );
 }
+// The console at its own address (ADMIN_CONSOLE_URL): its five sections
+// redirect there instead (@repo/next-config/console-zone), on QRdx's own
+// hosts, and lib/admin-console signs admins in through this app's OAuth
+// provider with CONSOLE_ZONE_KEY as the client secret. Without that secret
+// the console can't sign anyone in, so sending admins there would strand
+// them: the build fails rather than go half way.
+if (
+  env.ADMIN_CONSOLE_URL &&
+  !adminConsoleAddress({
+    adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+    secret: env.CONSOLE_ZONE_KEY,
+  })
+) {
+  throw new Error(
+    `ADMIN_CONSOLE_URL is set but CONSOLE_ZONE_KEY isn't, or is shorter than ${ADMIN_CONSOLE_SECRET_MIN_LENGTH} characters: it's the console's OAuth client secret, so the console couldn't sign anyone in. Set the same CONSOLE_ZONE_KEY on both deployments, or unset ADMIN_CONSOLE_URL.`,
+  );
+}
+const adminConsole = adminConsoleRedirects(
+  adminConsoleAddress({
+    adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+    secret: env.CONSOLE_ZONE_KEY,
+  }),
+  { hosts: `(?:${PLATFORM_HOSTS})` },
+);
 
 // The marketing site at SITE_ORIGIN serves groups of public pages (the blog
 // first) and its build assets (@repo/next-config/site-zone), on QRdx's own
@@ -228,6 +256,7 @@ let nextConfig: NextConfig = {
       "process.env.CONSOLE_ORIGIN": process.env.CONSOLE_ORIGIN ?? "",
       "process.env.SITE_ORIGIN": process.env.SITE_ORIGIN ?? "",
       "process.env.SITE_ZONE_GROUPS": process.env.SITE_ZONE_GROUPS ?? "",
+      "process.env.ADMIN_CONSOLE_URL": process.env.ADMIN_CONSOLE_URL ?? "",
     },
   },
   // Geist (@repo/design-system/og/font-files) for server images: OG cards,
@@ -387,6 +416,8 @@ let nextConfig: NextConfig = {
       })),
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
+      // The console's sections, when ADMIN_CONSOLE_URL is set (above).
+      ...adminConsole,
     ];
   },
   // Keep the shared rewrites (PostHog /ingest proxy) alongside these.
@@ -407,6 +438,19 @@ let nextConfig: NextConfig = {
         // The site's groups of pages, when SITE_ORIGIN is set (above): ahead
         // of this app's own copies of those pages too.
         ...siteZone,
+        // The home page at /home and /<language>/home too (lib/home-path.ts):
+        // the logo links there, and unlike / it never sends a signed-in
+        // visitor to the dashboard (proxy.ts). Canonical stays /.
+        {
+          source: "/home",
+          has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
+          destination: "/en",
+        },
+        {
+          source: `/:locale(${TRANSLATED_LOCALES.map((locale) => LOCALE_INFO[locale].segment).join("|")})/home`,
+          has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
+          destination: "/:locale",
+        },
         // Community profiles live at /community/@handle; a folder named
         // @handle would be a parallel route slot, so they render from
         // app/(app)/(home)/community/u/[handle].

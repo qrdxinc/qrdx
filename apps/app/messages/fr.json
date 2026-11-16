@@ -11,134 +11,169 @@
     "closeMenu": "Fermer le menu",
     "entries": {
       "product": "Produit",
-      "tools": "Outils",
+      "solutions": "Solutions",
       "developers": "Développeurs",
-      "resources": "Ressources",
-      "pricing": "Tarifs"
+      "resources": "Ressources"
+    },
+    "columns": {
+      "industries": "Secteurs",
+      "teams": "Équipes",
+      "codeTypes": "Types de codes",
+      "build": "Créer",
+      "embed": "Intégrer",
+      "connect": "Connecter",
+      "help": "Aide",
+      "company": "Entreprise",
+      "updates": "Nouveautés"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "Créez un QR code avec motifs, couleurs, logos et cadres, puis téléchargez-le. Sans inscription."
+        "description": "Concevez et téléchargez des codes, gratuitement, sans inscription",
+        "short": "Gratuit, sans compte"
       },
       "dynamicCodes": {
-        "name": "QR codes dynamiques",
-        "description": "Modifiez le lien après l'impression et comptez les scans"
-      },
-      "aiThemes": {
-        "name": "Thèmes IA",
-        "description": "Décrivez un style et laissez l'IA concevoir le thème"
+        "description": "Modifiez le lien après l’impression, comptez chaque scan",
+        "short": "Liens modifiables, scans comptés"
       },
       "aiArt": {
-        "name": "QR art IA",
-        "description": "Transformez un lien en œuvre IA qui se scanne toujours"
-      },
-      "communityThemes": {
-        "name": "Thèmes de la communauté",
-        "description": "Parcourez et réutilisez les designs partagés par d'autres"
-      },
-      "pageTemplates": {
-        "name": "Modèles de page",
-        "description": "Démos en direct de chaque modèle de page hébergée"
-      },
-      "generators": {
-        "name": "Générateurs de QR code",
-        "description": "Un générateur pour chaque type : Wi-Fi, vCard, WhatsApp, UPI, paiements et plus encore."
-      },
-      "bulk": {
-        "name": "Générateur en masse",
-        "description": "Transformez un CSV en jusqu'à {max, number} codes stylisés"
-      },
-      "scanner": {
-        "name": "Scanner de QR code",
-        "description": "Scannez des codes avec aperçu sécurisé du lien"
-      },
-      "scanChecker": {
-        "name": "Vérificateur de scan",
-        "description": "Testez la fiabilité du scan d'un QR code"
-      },
-      "printSize": {
-        "name": "Calculateur de taille d'impression",
-        "description": "Trouvez la taille minimale selon votre distance de scan"
+        "description": "Un code scannable peint dans une œuvre",
+        "short": "Des codes peints dans l’art"
       },
       "barcode": {
-        "name": "Générateur de codes-barres",
-        "description": "EAN, UPC, Code 128 et plus, avec chiffres de contrôle"
+        "description": "EAN, UPC, Code 128 et autres",
+        "short": "EAN, UPC, Code 128"
       },
-      "allTools": {
-        "name": "Tous les outils",
-        "description": "Tous les outils QR code gratuits au même endroit"
+      "bulk": {
+        "description": "Jusqu’à {max, number} codes stylisés depuis un CSV",
+        "short": "Codes depuis un CSV"
       },
-      "docs": {
-        "name": "Documentation",
-        "description": "Guides sur la bibliothèque React qrdx, les codes dynamiques, les API et l'auto-hébergement."
+      "community": {
+        "description": "Les cadres et thèmes que les gens partagent",
+        "short": "Cadres et thèmes partagés"
       },
-      "mcp": {
-        "name": "Serveur MCP",
-        "description": "Créez des QR codes depuis Claude, ChatGPT ou Cursor"
+      "restaurants": {
+        "description": "Menus, Wi-Fi et demandes d’avis",
+        "short": "Menus, Wi-Fi, avis"
       },
-      "qrCodeApi": {
-        "name": "API QR code gratuite",
-        "description": "Une image de QR code à partir d’une seule URL, sans clé ni inscription"
+      "retail": {
+        "description": "Étiquettes de rayon, lèche-vitrine et fidélité",
+        "short": "Étiquettes de rayon et fidélité"
       },
-      "nextjs": {
-        "name": "Guide Next.js",
-        "description": "Des QR codes dans les Server et Client Components"
+      "realEstate": {
+        "description": "Codes sur panneau qui ouvrent l’annonce",
+        "short": "Annonces depuis un panneau"
+      },
+      "events": {
+        "description": "Programmes, badges et retours de session",
+        "short": "Programmes et badges"
+      },
+      "enterprise": {
+        "description": "Authentification unique, journal d’audit et contrat",
+        "short": "SSO, journal d’audit, contrat"
+      },
+      "agencies": {
+        "description": "Domaines clients, UTM et rapports de scans",
+        "short": "Codes clients et rapports"
+      },
+      "openSource": {
+        "description": "Auto-hébergez l’application ou utilisez la bibliothèque",
+        "short": "Auto-hébergez ou intégrez"
+      },
+      "placements": {
+        "description": "Menus, emballages, cartes de visite et panneaux",
+        "short": "Menus, emballages, panneaux"
+      },
+      "restApi": {
+        "description": "Codes, scans et webhooks via HTTP",
+        "short": "Codes et scans via HTTP"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "Une image de QR code depuis une URL, sans clé API"
+        "description": "Une image de code depuis une URL, sans clé",
+        "short": "Une URL, sans clé"
+      },
+      "mcp": {
+        "description": "Créez des QR codes depuis Claude, ChatGPT ou Cursor",
+        "short": "Depuis Claude, ChatGPT ou Cursor"
+      },
+      "cli": {
+        "description": "Générez des codes dans le terminal et la CI",
+        "short": "Terminal et CI"
+      },
+      "react": {
+        "description": "Le moteur sous forme de composant React",
+        "short": "QR codes dans React"
       },
       "shadcn": {
-        "name": "Registre shadcn/ui",
-        "description": "Ajoutez des composants QR code en une commande"
+        "description": "Ajoutez des composants QR code en une commande",
+        "short": "Composants en une commande"
       },
-      "plugins": {
-        "name": "Plugins",
-        "description": "QRdx pour Chrome, Figma, Raycast et Canva"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "Code source, tickets et versions"
-      },
-      "help": {
-        "name": "Centre d'aide",
-        "description": "Réponses sur les codes, la facturation, les équipes et les dépannages"
-      },
-      "blog": {
-        "name": "Blog",
-        "description": "Guides et actualités sur les QR codes"
-      },
-      "customers": {
-        "name": "Clients",
-        "description": "Comment les entreprises utilisent QRdx"
-      },
-      "compare": {
-        "name": "Comparer",
-        "description": "QRdx face aux autres générateurs et bibliothèques"
-      },
-      "changelog": {
-        "name": "Changelog",
-        "description": "Les nouveautés de QRdx"
+      "nextjs": {
+        "description": "Des QR codes dans les Server et Client Components",
+        "short": "Server et Client Components"
       },
       "integrations": {
-        "name": "Intégrations",
-        "description": "Zapier, Make, Discord, pixels d'analyse et plus"
+        "description": "Zapier, Make, Discord, pixels d'analyse et plus",
+        "short": "Zapier, Make et autres"
       },
-      "support": {
-        "name": "Contacter le support",
-        "description": "E-mail, widget de support ou GitHub"
+      "plugins": {
+        "description": "QRdx pour Chrome, Figma, Raycast et Canva",
+        "short": "Chrome, Figma, Raycast, Canva"
+      },
+      "webhooks": {
+        "description": "Événements de scan, de formulaire et de code vers votre URL",
+        "short": "Événements vers votre URL"
+      },
+      "docs": {
+        "description": "Guides, référence API et auto-hébergement",
+        "short": "Guides et référence"
+      },
+      "github": {
+        "description": "Moteur et CLI MIT, application AGPL",
+        "short": "Moteur MIT, appli AGPL"
+      },
+      "help": {
+        "description": "Réponses sur les codes, la facturation, les équipes et les dépannages",
+        "short": "Réponses aux questions courantes"
+      },
+      "contact": {
+        "description": "E-mail, widget d’assistance ou GitHub",
+        "short": "E-mail ou widget d’assistance"
+      },
+      "customers": {
+        "description": "Comment les entreprises utilisent QRdx",
+        "short": "L’usage de QRdx en entreprise"
+      },
+      "security": {
+        "description": "Comment QRdx protège comptes et données",
+        "short": "Comptes et données"
+      },
+      "affiliates": {
+        "description": "Gagnez sur les clients que vous parrainez",
+        "short": "Gagnez en parrainant"
+      },
+      "blog": {
+        "description": "Guides et actualités sur les QR codes",
+        "short": "Guides et actualités"
+      },
+      "changelog": {
+        "description": "Les nouveautés de QRdx",
+        "short": "Nouveautés"
+      },
+      "tools": {
+        "description": "Scanner, vérificateur de scan, taille d’impression et plus encore",
+        "short": "Scanner, vérificateur et plus"
       }
     },
     "account": {
-      "tryPlayground": "Essayer le Playground",
-      "playground": "Playground",
+      "signIn": "Connexion",
+      "create": "Créer un QR code",
       "dashboard": "Tableau de bord"
     },
     "github": {
       "star": "Star",
       "starOnGithub": "Mettre une étoile à QRdx sur GitHub",
-      "starOnGithubCount": "Mettre une étoile à QRdx sur GitHub ({count} étoiles)"
+      "starOnGithubCount": "Mettre une étoile à QRdx sur GitHub ({count} étoiles)",
+      "stars": "{count} étoiles"
     },
     "userProfileDropdown": {
       "tryThePlayground": "Essayer le Playground",
@@ -168,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "Générateur de QR code gratuit et open source. Motifs personnalisés, dégradés, logos et cadres, avec téléchargements PNG, JPG, SVG, PDF et EPS, sans inscription. Et aussi des codes dynamiques, des pages hébergées et des statistiques de scan.",
+    "description": "La plateforme de QR code open source.",
     "starOnGithub": "Étoile sur GitHub",
+    "newsOnX": "Actus QRdx sur X",
     "navLabel": "Pied de page",
-    "scanIt": "Allez, scannez-le",
-    "copyright": "© {year} QRdx. Open source sous licence AGPL-3.0.",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "Produit",
-      "tools": "Outils",
       "developers": "Développeurs",
+      "solutions": "Solutions",
       "resources": "Ressources",
+      "company": "Entreprise",
       "compare": "Comparer"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "Générateur de QR code",
       "dynamicCodes": "QR codes dynamiques",
+      "aiArt": "QR art par IA",
       "aiThemes": "Thèmes IA",
-      "communityThemes": "Thèmes communautaires",
+      "barcode": "Codes-barres",
+      "bulk": "Générateur en masse",
       "pageTemplates": "Modèles de pages",
-      "pricing": "Tarifs",
-      "guarantee": "Garantie Never-Hostage",
-      "enterprise": "Entreprise",
+      "community": "Communauté",
       "slackBot": "Bot Slack",
       "telegramBot": "Bot Telegram",
       "discordBot": "Bot Discord",
-      "generators": "Générateurs de QR code",
-      "bulk": "Générateur en masse",
-      "scanChecker": "Testeur de scan",
-      "printSize": "Calculateur de taille d’impression",
-      "barcode": "Générateur de codes-barres",
-      "pdfQr": "QR code PDF",
-      "businessCard": "Carte de visite numérique",
-      "menuQr": "QR code de menu",
-      "scanner": "Lecteur de QR code",
-      "allTools": "Tous les outils",
-      "docs": "Documentation",
-      "apiReference": "Référence API",
-      "qrCodeApi": "API QR code gratuite",
-      "nextjs": "Guide Next.js",
-      "imageApi": "Image API",
-      "mcp": "Serveur MCP",
-      "shadcn": "Registre shadcn/ui",
-      "plugins": "Plugins",
-      "selfHosting": "Auto-hébergement",
-      "openSource": "Open source",
-      "github": "GitHub",
-      "help": "Centre d'aide",
-      "blog": "Blog",
-      "customers": "Clients",
-      "changelog": "Notes de version",
-      "integrations": "Intégrations",
+      "restaurants": "Restaurants",
+      "retail": "Commerce",
+      "realEstate": "Immobilier",
+      "events": "Événements",
       "industries": "QR codes par secteur",
       "placements": "QR codes par support",
-      "affiliates": "Programme d'affiliation",
+      "generators": "Tous les types",
+      "typeUrl": "Site web",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "Entreprise",
+      "agencies": "Agences",
+      "openSource": "Open source",
+      "docs": "Docs",
+      "restApi": "REST API",
+      "apiReference": "Référence API",
+      "imageApi": "Image API",
+      "mcp": "Serveur MCP",
+      "cli": "CLI",
+      "react": "Bibliothèque React",
+      "shadcn": "Registre shadcn/ui",
+      "nextjs": "Guide Next.js",
+      "integrations": "Intégrations",
+      "plugins": "Plugins",
+      "webhooks": "Webhooks",
+      "selfHosting": "Auto-hébergement",
+      "github": "GitHub",
+      "help": "Centre d'aide",
       "contact": "Contact",
+      "blog": "Blog",
+      "changelog": "Notes de version",
+      "customers": "Clients",
+      "tools": "Outils gratuits",
+      "scanner": "Lecteur de QR code",
+      "scanChecker": "Testeur de scan",
+      "printSize": "Calculateur de taille d’impression",
+      "security": "Sécurité",
+      "affiliates": "Programme d'affiliation",
+      "guarantee": "Garantie Never-Hostage",
+      "pricing": "Tarifs",
+      "allComparisons": "Toutes les comparaisons",
       "legal": "Mentions légales",
-      "privacy": "Confidentialité",
       "terms": "Conditions d'utilisation",
-      "subprocessors": "Sous-traitants",
-      "reportAbuse": "Signaler un abus",
-      "acceptableUse": "Usage acceptable",
+      "privacy": "Confidentialité",
       "cookies": "Politique de cookies",
       "dpa": "Traitement des données (DPA)",
+      "subprocessors": "Sous-traitants",
+      "acceptableUse": "Usage acceptable",
       "aiFeatures": "Fonctions d'IA",
       "refunds": "Remboursements",
       "affiliateTerms": "Conditions d'affiliation",
-      "security": "Sécurité",
       "securityPolicy": "Politique de sécurité",
-      "allComparisons": "Toutes les comparaisons"
+      "reportAbuse": "Signaler un abus"
     }
   },
   "localeSwitcher": {
@@ -243,9 +289,10 @@
     "englishOnly": "Cette page n’est disponible qu’en anglais. Les autres langues ouvrent leur page d’accueil."
   },
   "cta": {
-    "title": "Créez votre prochain QR code en quelques secondes.",
-    "subtext": "Gratuit pour toujours. Sans inscription, sans filigrane.",
-    "button": "Créer des QR codes gratuitement"
+    "title": "Créez votre prochain QR code",
+    "subtext": "Gratuit dans votre navigateur, sans inscription ni filigrane, avec des codes dynamiques quand vous en avez besoin.",
+    "button": "Créer un QR code",
+    "secondary": "Voir les tarifs"
   },
   "consent": {
     "banner": {
@@ -878,6 +925,53 @@
         }
       }
     },
+    "shell": {
+      "header": {
+        "docs": "Docs",
+        "dashboard": "Tableau de bord",
+        "github": "QRdx sur GitHub"
+      },
+      "actions": {
+        "copyPage": "Copier la page",
+        "copied": "Copié",
+        "more": "Autres façons d’utiliser cette page",
+        "copyMarkdown": "Copier la page en Markdown",
+        "viewMarkdown": "Voir en Markdown",
+        "mcp": "Connecter le serveur MCP de QRdx"
+      },
+      "feedback": {
+        "question": "Cette page vous a-t-elle été utile ?",
+        "yes": "Oui",
+        "no": "Non",
+        "thanks": "Merci. Les retours sont anonymes : seuls les nombres de oui et de non sont conservés.",
+        "edit": "Modifier cette page sur GitHub",
+        "report": "Signaler un problème",
+        "issueTitle": "Docs : {title}",
+        "issueBody": "Page : {url}\n\nCe qui est incorrect ou manquant :\n"
+      },
+      "notFound": {
+        "search": "Rechercher dans la doc",
+        "sections": "Ou commencez par une section"
+      },
+      "code": {
+        "copy": "Copier le code",
+        "copied": "Copié"
+      },
+      "video": {
+        "play": "Lire {title}",
+        "pause": "Mettre {title} en pause",
+        "reducedMotion": "La vidéo attend votre action, car votre système demande moins d’animations."
+      },
+      "plan": {
+        "title": "Nécessite {plans}",
+        "or": "{a} ou {b}",
+        "body": "Le contenu de chaque offre est détaillé sur",
+        "link": "Offres et limites",
+        "pro": "Pro",
+        "business": "Business",
+        "enterprise": "Enterprise"
+      }
+    },
     "ui": {
       "search": "Rechercher",
       "searchPlaceholder": "Rechercher",
@@ -910,6 +1004,253 @@
       "typeTableDefault": "Défaut",
       "typeTableParameters": "Paramètres",
       "typeTableReturns": "Retourne"
+    },
+    "shots": {
+      "diagrams": {
+        "dynamic-redirect": {
+          "title": "Comment un code dynamique redirige : le scan ouvre un lien court, QRdx applique les règles du code, envoie le téléphone vers la destination et enregistre le scan au passage.",
+          "scan": "Scan",
+          "scanNote": "un téléphone lit le code",
+          "shortLink": "Lien court",
+          "shortLinkNote": "ce que contient le motif",
+          "rules": "Règles",
+          "rulesNote": "appareil, lieu, heure, répartition",
+          "destination": "Destination",
+          "destinationNote": "modifiable à tout moment",
+          "recorded": "Scan enregistré",
+          "recordedNote": "pays, appareil, heure ; jamais la personne"
+        },
+        "static-vs-dynamic": {
+          "title": "QR code statique et QR code dynamique : un QR code statique contient son contenu dans le motif, un QR code dynamique contient un lien court que QRdx résout vers une destination que vous pouvez modifier.",
+          "static": "QR code statique",
+          "dynamic": "QR code dynamique",
+          "printed": "Code imprimé",
+          "printedNote": "le motif sur papier ou à l’écran",
+          "content": "Le contenu lui-même",
+          "contentNote": "un lien, des infos Wi-Fi, un contact",
+          "staticEnd": "Figé une fois imprimé. Aucun comptage des scans.",
+          "shortLink": "Lien court",
+          "shortLinkNote": "qrdx.dev/q/… ou votre domaine",
+          "destination": "Destination",
+          "destinationNote": "modifiable ; chaque scan est compté"
+        },
+        "smart-routing": {
+          "title": "Comment le routage intelligent décide : les règles sont lues de haut en bas, la première règle dont les conditions correspondent au scan l’envoie vers la destination de cette règle, et un scan qui ne correspond à aucune règle va vers la destination par défaut du code.",
+          "scan": "Un scan arrive",
+          "scanNote": "appareil, OS, pays, langue, heure",
+          "rule1": "iPhone ou iPad → page iOS",
+          "rule2": "Langue espagnole → page en espagnol",
+          "rule3": "Week-ends 08:00–14:00 → offre brunch",
+          "firstMatch": "La première règle gagne",
+          "firstMatchNote": "la destination de la règle",
+          "noMatch": "Aucune règle ne correspond",
+          "noMatchNote": "la destination par défaut du code",
+          "footnote": "Les règles sont vérifiées dans l’ordre affiché dans le panneau Routage ; faites-les glisser pour le modifier."
+        },
+        "custom-domain": {
+          "title": "Fonctionnement d’un domaine personnalisé : un enregistrement CNAME chez votre fournisseur DNS pointe le nom d’hôte vers QRdx, qui sert vos liens courts sur ce domaine et redirige chaque scan vers sa destination.",
+          "scan": "Scan",
+          "scanNote": "ouvre le lien court de votre domaine",
+          "dns": "Votre DNS",
+          "dnsNote": "un enregistrement CNAME",
+          "record": "qr.example.com  CNAME → QRdx",
+          "qrdx": "QRdx",
+          "qrdxNote": "répond pour votre domaine, en HTTPS",
+          "destination": "Destination",
+          "destinationNote": "les règles du code s’appliquent comme d’habitude",
+          "footnote": "Configurez l’enregistrement une seule fois ; QRdx le vérifie, puis tous les codes de ce domaine fonctionnent."
+        },
+        "webhook-delivery": {
+          "title": "Fonctionnement de l’envoi d’un webhook : QRdx envoie l’événement par POST à votre endpoint avec une signature ; une réponse 2xx le marque comme livré, toute autre réponse entraîne de nouvelles tentatives selon un calendrier espacé, puis il est marqué comme échoué après huit tentatives.",
+          "event": "Événement",
+          "eventNote": "scan.created, form.submitted…",
+          "post": "POST vers votre endpoint",
+          "postNote": "corps JSON, en-tête X-QRdx-Signature",
+          "delivered": "Livré",
+          "deliveredNote": "toute réponse 2xx",
+          "retry": "Réessayé",
+          "retryNote": "délai dépassé ou autre réponse",
+          "schedule": "1 min · 4 min · 16 min · 1 h · 4 h · 17 h · 24 h",
+          "failed": "Échoué",
+          "failedNote": "après 8 tentatives ; relancez-le à la main",
+          "footnote": "Chaque tentative est listée sur la page de l’endpoint, avec la réponse reçue."
+        },
+        "image-api": {
+          "title": "Fonctionnement de l’Image API pour créer un code : une requête GET avec le contenu et le style, QRdx encode les données, génère le design et répond avec une image SVG, PNG, WebP ou EPS que n’importe quelle page peut intégrer.",
+          "request": "GET /v1/qr",
+          "requestNote": "données, taille, couleurs, style…",
+          "encode": "Encodage",
+          "encodeNote": "correction d’erreur, version",
+          "render": "Rendu",
+          "renderNote": "motifs, yeux, cadre, logo",
+          "response": "Image",
+          "responseNote": "SVG, PNG, WebP ou EPS",
+          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
+          "noKey": "Pas de clé, pas de quota : l’URL se place directement dans une balise image, sur n’importe quelle page.",
+          "footnote": "La même requête renvoie toujours les mêmes octets, les réponses sont donc mises en cache pendant un an."
+        },
+        "hosted-page-anatomy": {
+          "title": "Fonctionnement d’une page hébergée : vous disposez les blocs dans l’éditeur et vous publiez, QRdx sert la page, et le lien court du code imprimé ouvre la dernière version publiée sur un téléphone.",
+          "editor": "Éditeur",
+          "editorNote": "disposez les blocs de la page",
+          "publish": "Publier",
+          "page": "Page hébergée",
+          "pageNote": "servie par QRdx sur qrdx.dev/p/…",
+          "code": "QR code imprimé",
+          "codeNote": "contient le lien court de la page",
+          "scan": "un scan ouvre la page",
+          "block1": "En-tête",
+          "block2": "Liens",
+          "block3": "Menu",
+          "block4": "Formulaire",
+          "footnote": "Publiez à nouveau et chaque code déjà imprimé ouvre la nouvelle version."
+        },
+        "import-flow": {
+          "title": "Fonctionnement d’un import : les liens chez votre ancien fournisseur deviennent des QR codes dynamiques dans QRdx, et une étape facultative redirige chaque ancien lien vers son nouveau lien QRdx pour que les codes déjà imprimés continuent de fonctionner.",
+          "importing": "L’import",
+          "source": "Votre ancien fournisseur",
+          "sourceNote": "un compte connecté ou un fichier",
+          "import": "Importer",
+          "importNote": "choisir, prévisualiser, importer",
+          "codes": "QR codes dynamiques dans QRdx",
+          "codesNote": "destination, titre, tags, dossier",
+          "keeping": "Garder les codes imprimés fonctionnels (facultatif)",
+          "printed": "Un code que vous avez imprimé",
+          "printedNote": "contient l’ancien lien court",
+          "newLink": "Son nouveau lien QRdx",
+          "newLinkNote": "l’ancien lien pointe ici",
+          "destination": "Destination",
+          "destinationNote": "modifiée et comptée dans QRdx",
+          "footnote": "L’ancien compte doit rester actif pour que ses liens continuent de rediriger."
+        },
+        "precise-location-flow": {
+          "title": "Fonctionnement de la localisation précise : après un scan, la personne qui scanne est invitée à partager sa position ; une position partagée est arrondie à environ 100 m, enregistrée avec le scan et utilisée par les règles de zone, et la personne arrive à la destination qu’elle autorise ou non le partage.",
+          "scan": "Scan",
+          "scanNote": "ouvre le lien court",
+          "ask": "Partager votre position ?",
+          "askNote": "la personne choisit",
+          "skip": "Ignorer",
+          "allow": "Autoriser",
+          "destination": "Destination",
+          "destinationNote": "s’ouvre dans les deux cas",
+          "stored": "Point enregistré avec le scan",
+          "storedNote": "arrondi à environ 100 m",
+          "rule": "Règles de zone",
+          "ruleNote": "le routage intelligent peut l’utiliser",
+          "footnote": "Une personne qui ignore ou refuse le partage est tout de même comptée, avec le pays, la région et la ville issus du réseau."
+        },
+        "nfc-link": {
+          "title": "Fonctionnement d’un tag NFC avec un code : le tag contient le lien court du code suivi de ?nfc, de sorte qu’un contact passe par la même redirection qu’un scan et soit compté comme un contact.",
+          "tap": "Le téléphone touche le tag",
+          "tapNote": "y ouvre le lien",
+          "tag": "Tag NFC",
+          "tagNote": "contient le lien NFC",
+          "link": "Lien court avec ?nfc",
+          "linkNote": "la même redirection qu’un scan",
+          "example": "qrdx.dev/q/aB3dE5f?nfc",
+          "counted": "Compté comme un contact",
+          "countedNote": "avec les scans dans Analytics",
+          "destination": "Destination",
+          "destinationNote": "comme pour un scan",
+          "footnote": "Le QR code garde son propre lien : les codes déjà imprimés fonctionnent donc comme avant."
+        },
+        "file-delivery": {
+          "title": "Comment un fichier est stocké et servi : votre navigateur l’envoie directement dans le bucket de stockage, QRdx le vérifie et lui attribue son propre lien, que les pages, les codes et les visiteurs utilisent.",
+          "browser": "Votre navigateur",
+          "browserNote": "envoie le fichier directement",
+          "bucket": "Bucket de stockage",
+          "bucketNote": "reçoit le fichier envoyé",
+          "check": "QRdx vérifie le fichier",
+          "checkNote": "sa taille et son vrai type",
+          "link": "Le lien QRdx du fichier",
+          "linkNote": "qrdx.dev/api/files/…",
+          "visitor": "Pages, codes et visiteurs",
+          "visitorNote": "ouvrent le fichier via son lien",
+          "footnote": "Remplacer le fichier conserve le lien : rien de ce qui l’utilise n’a besoin de changer."
+        },
+        "tracking-paths": {
+          "title": "Les deux façons de suivre ce qui se passe après un scan : une page hébergée charge vos pixels une fois le consentement du visiteur demandé lorsque la loi l’exige, et une visite sur votre propre site web transporte un identifiant de scan signé que votre site renvoie à QRdx lorsque le visiteur convertit.",
+          "scan": "Scan",
+          "scanNote": "toujours compté",
+          "pagePath": "Un code qui ouvre une page hébergée",
+          "sitePath": "Un code qui ouvre votre site web",
+          "page": "Ouverture de la page",
+          "pageNote": "servie par QRdx",
+          "consent": "Consentement",
+          "consentNote": "demandé si nécessaire",
+          "pixels": "Vos pixels",
+          "pixelsNote": "se charge ensuite",
+          "site": "Ouverture du lien",
+          "siteNote": "qrdx_sid est ajouté",
+          "convert": "Le visiteur convertit",
+          "convertNote": "un achat, une inscription",
+          "report": "Conversion",
+          "reportNote": "envoyée à QRdx",
+          "footnote": "Les pixels font partie de Pro et Business ; le suivi des conversions fait partie de Business."
+        },
+        "client-portal-access": {
+          "title": "Comment le portail client limite ce que voit un client : vous cochez des dossiers dans l’invitation du client, et le portail ne lui montre que ces dossiers, en lecture seule, sous votre nom.",
+          "workspace": "Les dossiers de votre espace de travail",
+          "folder1": "Client A : menus",
+          "folder2": "Client A : événements",
+          "folder3": "Client B",
+          "folder4": "Interne",
+          "invite": "Invitation",
+          "inviteNote": "e-mail et dossiers cochés",
+          "portal": "Ce que voit le client",
+          "portalName": "Votre portail",
+          "readOnly": "Lecture seule, avec statistiques de scan",
+          "footnote": "Les clients ne sont pas membres de votre espace de travail et n’occupent pas de siège."
+        },
+        "self-hosting-stack": {
+          "title": "Les quatre services Docker Compose : une requête du navigateur atteint l’application, l’application envoie ses requêtes au proxy HTTP compatible Neon, le proxy dialogue avec Postgres, et une tâche de migration ponctuelle applique le schéma.",
+          "browser": "Navigateur",
+          "browserNote": "vos visiteurs",
+          "compose": "docker compose",
+          "app": "app",
+          "appNote": "le serveur QRdx",
+          "proxy": "db-proxy",
+          "proxyNote": "HTTP vers Postgres",
+          "db": "db",
+          "dbNote": "Postgres 16",
+          "migrate": "migrer",
+          "migrateNote": "applique le schéma une fois",
+          "footnote": "Avec Neon plutôt qu’un Postgres classique, l’application se connecte directement et n’a pas besoin de proxy."
+        },
+        "wont-scan-contrast": {
+          "title": "Le même QR code en double : foncé sur fond blanc, qui se scanne, et gris clair sur blanc, qui ne se scanne pas.",
+          "good": "Foncé sur clair : se scanne",
+          "bad": "Gris sur blanc : ne se scanne pas",
+          "ratio": "Contraste de {ratio}:1"
+        },
+        "wont-scan-quiet-zone": {
+          "title": "Le même QR code sur un visuel, en double : avec le visuel qui touche ses bords, ce que les scanners peuvent manquer, et avec quatre modules d’espace vide autour, qui se scanne.",
+          "bad": "Le visuel touche le code",
+          "badNote": "les scanners ne trouvent pas ses bords",
+          "good": "Espace vide autour",
+          "goodNote": "une zone de silence de quatre modules"
+        },
+        "wont-scan-print-size": {
+          "title": "Un QR code se scanne à environ dix fois sa largeur : un code de 2 cm à environ 20 cm, un code de 10 cm à environ 1 m.",
+          "cardWidth": "2 cm",
+          "cardDistance": "environ 20 cm",
+          "cardNote": "une carte tenue en main",
+          "posterWidth": "10 cm",
+          "posterDistance": "environ 1 m",
+          "posterNote": "une affiche sur un mur",
+          "footnote": "La distance de scan est d’environ dix fois la largeur du code."
+        },
+        "wont-scan-eyes": {
+          "title": "Formes des yeux d’angle : les yeux carrés, arrondis et en engrenage se scannent dans toutes les applications ; les yeux en cercle et en boucles ne sont pas reconnus par certaines applications de scan.",
+          "good": "Se scannent partout",
+          "bad": "Échouent dans certaines apps",
+          "square": "Carré",
+          "rounded": "Arrondi",
+          "gear": "Engrenage",
+          "circle": "Cercle",
+          "curly": "Bouclé"
+        }
+      }
     }
   },
   "common": {
@@ -1130,11 +1471,11 @@
     },
     "bulk": {
       "metaTitle": "Générateur de QR codes en masse gratuit à partir d’un CSV : personnalisés, SVG, sans envoi de fichier",
-      "metaDescription": "Transformez un CSV en jusqu’à {rows, number} QR codes personnalisés et téléchargez-les en PNG, WebP ou SVG dans un ZIP. Fonctionne dans votre navigateur : sans envoi de fichier, sans inscription, sans filigrane. Exemple de CSV inclus.",
+      "metaDescription": "Transformez un CSV en jusqu’à {rows, number} QR codes personnalisés et téléchargez-les en PNG, WebP ou SVG dans un ZIP. Fonctionne dans votre navigateur : sans envoi de fichier, sans filigrane, sans inscription jusqu’à {limit, number} lignes.",
       "crumb": "Générateur en masse",
       "title": "Générateur de QR code en masse",
       "intro1": "Transformez un fichier CSV en milliers de QR codes en une seule fois, personnalisés selon vos goûts et téléchargés en PNG, WebP ou SVG dans un ZIP. Une ligne par code, avec des noms de fichiers issus d’une colonne : étiquettes produits, billets d’événement, étiquettes d’inventaire, numéros de table ou courriers.",
-      "intro2": "Tout fonctionne dans votre navigateur : le CSV n’est jamais envoyé, et il n’y a ni inscription, ni filigrane, ni frais par code. Un doute sur la structure ? Partez de l’exemple de CSV.",
+      "intro2": "Tout se passe dans votre navigateur : le CSV n’est jamais envoyé, et il n’y a ni filigrane ni frais par code. Les fichiers de {limit, number} lignes maximum ne nécessitent aucun compte ; les fichiers plus volumineux, jusqu’à {rows, number}, demandent un compte gratuit. Un doute sur la structure ? Partez de l’exemple de CSV.",
       "facts": {
         "rows": "Jusqu’à {rows, number} lignes par fichier",
         "styled": "Vos couleurs, formes et logo",
@@ -1168,7 +1509,7 @@
         "uploadQuestion": "Mon CSV est-il envoyé quelque part ?",
         "uploadAnswer": "Non. Le fichier est lu, les QR codes sont dessinés et le ZIP est créé dans votre navigateur. Rien n'est envoyé aux serveurs de QRdx : vous pouvez donc l'utiliser en toute sécurité pour des liens internes, des mots de passe Wi-Fi ou des données clients.",
         "howManyQuestion": "Combien de QR codes puis-je générer à la fois ?",
-        "howManyAnswer": "Jusqu'à {rows, number} lignes par fichier. Au-delà, scindez le CSV ou utilisez la commande qrdx batch de la CLI, qui n'a aucune limite. Un PNG de 512 px prend environ 20 ms sur un ordinateur portable : les {rows, number} lignes demandent donc quelques minutes. Les PNG plus grands sont plus longs à générer et plus lourds ; choisissez donc 512 px sauf si vous avez besoin de plus.",
+        "howManyAnswer": "Jusqu’à {limit, number} lignes par fichier sans compte, et jusqu’à {rows, number} avec un compte gratuit ; pour en traiter davantage, scindez le CSV ou utilisez la commande qrdx batch de la CLI, qui n’a aucune limite. Un PNG de 512 px prend environ 20 ms sur un ordinateur portable : les {rows, number} codes demandent donc quelques minutes. Les PNG plus grands prennent plus de temps et donnent des fichiers plus lourds ; choisissez donc 512 px, sauf si vous avez besoin de plus.",
         "rowQuestion": "Que peut contenir chaque ligne ?",
         "rowAnswer": "N'importe quel texte, dans la limite du QR code : liens, texte brut ou contenus tels que WIFI:..., mailto:..., tel:... et BEGIN:VCARD. Le contenu est encodé exactement tel qu'il apparaît dans la cellule.",
         "excelQuestion": "Puis-je utiliser un fichier Excel ou Google Sheets ?",
@@ -1195,7 +1536,13 @@
         "removeFile": "Retirer le fichier",
         "drop": "Déposez un fichier CSV ici, ou cliquez pour en choisir un",
         "dropHelp": "Jusqu’à {rows, number} lignes et 10 Mo. Le fichier reste sur votre appareil.",
+        "dropHelpSignedOut": "Jusqu’à {limit, number} lignes sans compte, {rows, number} avec un compte gratuit, et 10 Mo. Le fichier reste sur votre appareil.",
         "truncated": "Ce fichier contient plus de {rows, number} lignes. Seules les {rows, number} premières seront utilisées.",
+        "overLimit": "Ce fichier compte {count, number} lignes. Jusqu’à {limit, number} peuvent être traitées sans compte ; un compte gratuit en traite jusqu’à {max, number}, et votre fichier reste chargé pendant votre connexion.",
+        "overLimitCta": "Inscrivez-vous gratuitement et créez-en {count, number}",
+        "firstOnly": "Créer les {limit, number} premiers sans compte",
+        "restored": "Votre fichier est de retour : {count, plural, one {# ligne} other {# lignes}}.",
+        "restoreLost": "La connexion a rechargé la page et votre fichier n’a pas pu être conservé. Déposez-le à nouveau pour continuer.",
         "header": "La première ligne contient les noms de colonnes",
         "stepMap": "2. Associer les colonnes",
         "valueColumn": "Contenu du QR code",
@@ -1228,7 +1575,9 @@
         "skipped": "{count, plural, one {# ligne ignorée} other {# lignes ignorées}} :",
         "skippedListed": "{count, plural, one {# ligne ignorée} other {# lignes ignorées}} (listées dans errors.csv) :",
         "line": "Ligne {row, number} : {error}",
-        "private": "Tout s'exécute dans votre navigateur. Votre fichier CSV et les codes générés ne sont jamais envoyés."
+        "private": "Tout s'exécute dans votre navigateur. Votre fichier CSV et les codes générés ne sont jamais envoyés.",
+        "doneNudge": "Enregistrez ce style comme thème et créez jusqu’à {codes, number} QR codes dynamiques modifiables après impression, avec un compte gratuit.",
+        "doneNudgeCta": "Créer un compte gratuit"
       }
     },
     "printSize": {
@@ -3417,6 +3766,10 @@
         "scale": "Échelle",
         "transparentBackground": "Fond transparent",
         "makeManyFromACsv": "En créer plusieurs à partir d’un CSV avec ce style",
+        "nudgeDynamic": "Besoin de modifier le lien après l’impression, ou de compter les scans ? Rendez-le dynamique avec un compte gratuit et téléchargez-le à nouveau. Il continue de fonctionner, quoi qu’il arrive à votre abonnement.",
+        "nudgeDynamicCta": "Rendre dynamique",
+        "nudgeSave": "Enregistrez ce design dans un compte gratuit et utilisez-le sur n’importe quel appareil.",
+        "nudgeSaveCta": "Enregistrer",
         "scannedFromAbout": "Scannable à environ",
         "setsTheCodeWidthBelow": "Définit la largeur du code ci-dessous.",
         "codeWidth": "Largeur du code",
@@ -3545,6 +3898,10 @@
       "undoRedoButtons": {
         "undo": "Annuler",
         "redo": "Rétablir"
+      },
+      "keepDesigns": {
+        "text": "Retrouvez vos designs sur tous vos appareils avec un compte gratuit.",
+        "cta": "Créer un compte gratuit"
       }
     },
     "ai": {
@@ -4669,6 +5026,7 @@
       "fixedOncePrinted": "Fixe une fois imprimé",
       "dynamic": "Dynamique",
       "editLaterCountScans": "Modifiez, comptez les scans",
+      "signedOutNote": "Le mode dynamique nécessite un compte gratuit. Votre code continue de fonctionner, quoi qu’il arrive à votre abonnement.",
       "linkOptions": "Options du lien…",
       "printedCodesStillOpenDestinationurl": "Les codes imprimés ouvrent toujours <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Redirigez-le vers la nouvelle adresse",
@@ -5331,6 +5689,10 @@
     "browseLayout": {
       "filters": "Filtres"
     },
+    "cardRail": {
+      "previous": "Afficher les précédents",
+      "next": "Afficher plus"
+    },
     "communityTabs": {
       "community": "Communauté"
     },
@@ -5402,10 +5764,9 @@
     },
     "itemCard": {
       "empty": "Vide",
-      "official": "Officiel",
-      "usecountUses": "{useCount} utilisations",
-      "seeAll": "Tout voir",
-      "likes": "J’aime"
+      "viewAll": "Tout voir",
+      "saves": "Ajouts",
+      "itemCount": "{count, plural, one {# élément} other {# éléments}}"
     },
     "itemPages": {
       "previous": "Précédent",
@@ -5415,6 +5776,9 @@
       "loadMore": "Voir plus",
       "loading": "Chargement",
       "failed": "La page suivante n’a pas chargé."
+    },
+    "makerCard": {
+      "itemsAndSaves": "{items, plural, one {# élément} other {# éléments}} · {saves, plural, one {# ajout} other {# ajouts}}"
     },
     "more": {
       "load": "Voir plus",
@@ -5502,6 +5866,10 @@
     "tryIt": {
       "tryItWithYourLink": "Essayer avec votre lien",
       "drawnInYourBrowserNothing": "Généré dans votre navigateur. Rien n’est envoyé."
+    },
+    "search": {
+      "label": "Rechercher dans la communauté",
+      "placeholder": "Rechercher des cadres, thèmes et pages"
     }
   },
   "app": {
@@ -8376,6 +8744,8 @@
         "searchOrJumpTo2": "Rechercher ou aller à",
         "findAPageACode": "Trouvez une page, un code ou un article de la documentation, ou commencez quelque chose de nouveau.",
         "searchCodesPagesSettingsAnd": "Rechercher des codes, pages, paramètres et docs…",
+        "findAPageOrA": "Trouvez une page ou un code, ou commencez quelque chose de nouveau.",
+        "searchCodesPagesAndSettings": "Rechercher codes, pages et paramètres…",
         "codes": "Codes",
         "landingPages": "Pages d’atterrissage",
         "create": "Créer",
@@ -8825,6 +9195,24 @@
     },
     "dialogCloseButton": {
       "close": "Fermer"
+    },
+    "reasons": {
+      "saveDesign": "Enregistrez ce design dans votre compte et ouvrez-le sur n’importe quel appareil.",
+      "makeDynamic": "Les codes dynamiques vivent dans votre compte : modifiez leur destination après l’impression et comptez chaque scan.",
+      "hostedPage": "Les pages hébergées vivent dans votre compte, vous pouvez donc les modifier après l’impression.",
+      "aiArt": "L’art IA fonctionne avec un compte gratuit, qui inclut des images chaque mois.",
+      "aiChat": "Le designer IA nécessite un compte gratuit. Les comptes gratuits disposent de {count, number} requêtes au total.",
+      "uploadFrame": "Importer vos propres cadres nécessite un compte gratuit.",
+      "publishFrame": "Partager un cadre avec la communauté nécessite un compte gratuit.",
+      "communityAction": "Aimer, enregistrer, copier et publier des designs de la communauté nécessite un compte gratuit.",
+      "saveBarcode": "Les codes-barres enregistrés vivent dans votre compte, prêts à être téléchargés à nouveau.",
+      "bulkOverLimit": "Les fichiers jusqu’à {limit, number} lignes ne nécessitent aucun compte. Un compte gratuit permet d’en générer jusqu’à {max, number} par fichier, et votre fichier reste chargé.",
+      "keepDesigns": "Conservez vos designs dans votre compte, sur chaque appareil.",
+      "afterDownload": "C’est gratuit, et votre code continue de fonctionner quoi qu’il arrive à votre offre.",
+      "upgrade": "Les offres et la facturation sont liées à un compte. Vous reprendrez exactement là où vous en étiez."
+    },
+    "nudge": {
+      "dismiss": "Ne plus afficher ce message"
     }
   },
   "codeBuilder": {

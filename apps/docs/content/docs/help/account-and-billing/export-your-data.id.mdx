@@ -3,23 +3,49 @@ title: "Ekspor data Anda"
 description: "Unduh semua isi akun Anda, atau ekspor data pemindaian dan respons formulir sebagai CSV."
 ---
 
+Semua isi akun Anda dapat diunduh, di setiap paket: satu file ZIP berisi semuanya, atau CSV berisi pemindaian satu kode, respons satu formulir, atau gambar kode Anda. Tidak ada yang dikunci di balik paket berbayar.
+
 ## Semuanya sekaligus [#everything-at-once]
 
 1. Buka **Settings** → **Profile & security**.
 2. Di bawah **Your data**, klik **Download my data**.
 
-Anda akan mendapatkan file ZIP berisi kode, data pemindaian, halaman, respons formulir, tema, dan detail akun Anda, dalam bentuk file JSON dan CSV, ditambah README yang menjelaskannya.
+Anda akan mendapatkan file ZIP berisi profil, kode, halaman, tema, dan pengaturan Anda sebagai file JSON, data pemindaian Anda sebagai `scans.csv`, respons formulir Anda sebagai `form-responses.csv`, serta `README.txt` yang menjelaskan setiap file.
 
-Anda dapat mengunduhnya hingga 3 kali per jam.
+Ekspor ini memuat hingga 500.000 pemindaian dan 100.000 respons. Anda dapat mengunduhnya hingga 3 kali per jam.
+
+<Shot id="your-data-card" />
 
 ## Pemindaian satu kode [#scans-of-one-code]
 
-Buka kode dari **Codes** lalu klik **Export CSV**. Anda mendapatkan hingga 50.000 pemindaian untuk rentang tanggal yang Anda pilih.
+Buka kode dari **Codes**, masuk ke tab **Analytics**, lalu klik **Export CSV**. Anda mendapatkan hingga 50.000 pemindaian untuk tanggal yang Anda pilih, lengkap dengan waktu, lokasi, perangkat, sistem operasi, browser, dan perujuk dari setiap pemindaian. Lihat [Lihat pemindaian Anda](/docs/help/dynamic-codes/scans).
 
 ## Respons formulir [#form-responses]
 
-Di **Pages**, buka menu halaman (**⋯**), pilih **Responses**, lalu klik **Export CSV**.
+Di **Pages & forms**, buka menu halaman (**⋯**), pilih **Responses**, lalu klik **Export CSV**.
 
 ## Gambar kode QR [#qr-code-images]
 
-Di **Codes**, pilih kode yang Anda inginkan, lalu klik **Download**. Anda mendapatkan ZIP berisi file PNG, WebP, atau SVG, beserta daftar kode dalam format CSV.
+Di **Codes**, pilih kode yang Anda inginkan, lalu klik **Download** dan pilih **PNG images (ZIP)**, **WebP images (ZIP)**, atau **SVG images (ZIP)**. ZIP tersebut juga berisi `codes.csv` yang mencantumkan setiap file beserta judul, tautan pendek, dan tujuannya.
+
+<IfAvailable feature="auditLog" id="the-audit-log" title="Log audit">
+
+Di Business, pemilik dan admin dapat mengekspor [log audit](/docs/help/teams/audit-log#export-as-csv) workspace sebagai CSV.
+
+</IfAvailable>
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### Download my data ditolak [#download-my-data-is-refused]
+
+Anda sudah mengunduhnya 3 kali dalam satu jam terakhir. Tunggu sebentar lalu coba lagi.
+
+### ZIP tidak memuat semua pemindaian Anda [#the-zip-doesnt-hold-all-your-scans]
+
+Ekspor lengkap berhenti di 500.000 pemindaian. Untuk kode dengan lalu lintas tinggi, gunakan **Export CSV** pada kode tersebut dengan rentang tanggal yang lebih pendek, sebanyak yang Anda perlukan.
+
+## Terkait [#related]
+
+- [Lihat pemindaian Anda](/docs/help/dynamic-codes/scans)
+- [Hapus akun Anda](/docs/help/account-and-billing/delete-your-account)
+- [Apa yang terjadi pada kode Anda jika Anda berhenti membayar](/docs/help/account-and-billing/never-hostage)

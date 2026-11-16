@@ -61,7 +61,7 @@ export function ChatInterface() {
     promptData: AIPromptData | undefined,
   ) => {
     if (
-      !checkValidSession("signup", "AI_GENERATE_FROM_CHAT_SUGGESTION", {
+      !checkValidSession("ai_chat", "AI_GENERATE_FROM_CHAT_SUGGESTION", {
         promptData,
       })
     )
@@ -72,7 +72,7 @@ export function ChatInterface() {
   };
 
   const handleRetry = (messageIndex: number) => {
-    if (!checkValidSession("signup", "AI_GENERATE_RETRY", { messageIndex }))
+    if (!checkValidSession("ai_chat", "AI_GENERATE_RETRY", { messageIndex }))
       return;
     if (!checkValidSubscription()) return;
 
@@ -89,7 +89,7 @@ export function ChatInterface() {
   };
 
   const handleEdit = (messageIndex: number) => {
-    if (!checkValidSession()) return; // Simply act as an early return
+    if (!checkValidSession("ai_chat")) return; // Simply act as an early return
 
     setEditingMessageIndex(messageIndex);
   };
@@ -100,7 +100,7 @@ export function ChatInterface() {
 
   const handleEditSubmit = (messageIndex: number, promptData: AIPromptData) => {
     if (
-      !checkValidSession("signup", "AI_GENERATE_EDIT", {
+      !checkValidSession("ai_chat", "AI_GENERATE_EDIT", {
         messageIndex,
         promptData,
       })

@@ -1,0 +1,9 @@
+# CodeQL configuration for .github/workflows/codeql.yml.
+name: QRdx CodeQL
+
+# Not part of any deployed app:
+# - apps/docs/scripts/shots: the docs' local screenshot tooling. Its
+#   Neon-HTTP proxy only binds to 127.0.0.1 and refuses non-local databases.
+#   Excluded at the owner's request (2026-11-15).
+paths-ignore:
+  - apps/docs/scripts/shots

@@ -59,6 +59,13 @@ export const IMPORT_CHUNK_ROWS = 500;
 export const MAX_BULK_TOOL_ROWS = 10_000;
 
 /**
+ * Rows a signed-out visitor runs through the bulk tool per file. A bigger
+ * file (up to MAX_BULK_TOOL_ROWS) asks for a free account first; it's still
+ * made in the browser, and the file stays loaded while they sign in.
+ */
+export const MAX_BULK_TOOL_ROWS_SIGNED_OUT = 500;
+
+/**
  * Dynamic codes a new account (its first days, lib/safety/velocity.ts) may
  * create an hour in a paid workspace; free workspaces stay at 30. A paid
  * checkout isn't a throwaway sign-up, but a new customer's volume is still

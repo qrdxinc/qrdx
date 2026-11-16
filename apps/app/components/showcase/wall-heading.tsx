@@ -14,7 +14,7 @@ import { EASE_CLASS } from "@/components/mockups/motion";
 /** Hoisted once into <head> by React (same href). */
 const TRANSITION_CSS = `::view-transition-group(.made-with-qrdx){animation-duration:420ms;animation-timing-function:cubic-bezier(.32,.72,0,1)}@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}`;
 
-export const WALL_PATH = "/community#made-with-qrdx";
+export const WALL_PATH = "/community/made-with-qrdx";
 
 export function WallLink({
   href,

@@ -115,7 +115,7 @@ function useDialogActionsStore(): DialogActionsContextType {
     if (!session) {
       let action: "SAVE_THEME" | "SAVE_THEME_FOR_SHARE" = "SAVE_THEME";
       if (options?.shareAfterSave) action = "SAVE_THEME_FOR_SHARE";
-      openAuthDialog("signin", action);
+      openAuthDialog("save_design", { action });
       return;
     }
 

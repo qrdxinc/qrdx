@@ -9,7 +9,10 @@ import {
   buildHighlights,
   type PricingOptions,
 } from "@/components/sections/pricing/plan-content";
-import { MAX_BULK_ROWS } from "@/components/sections/tools/bulk-utils";
+import {
+  MAX_BULK_ROWS,
+  MAX_SIGNED_OUT_ROWS,
+} from "@/components/sections/tools/bulk-utils";
 import { BARCODE_FORMATS } from "@/lib/barcode/formats";
 import { ENTERPRISE_ADDS } from "@/lib/enterprise";
 import { claudeCodeCommand, mcpServerUrl } from "@/lib/mcp-clients";
@@ -282,7 +285,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "Bulk QR code generator",
       url: "/tools/bulk",
-      description: `Up to ${MAX_BULK_ROWS.toLocaleString("en-US")} styled codes from a CSV, as a ZIP; runs in the browser`,
+      description: `Up to ${MAX_BULK_ROWS.toLocaleString("en-US")} styled codes from a CSV, as a ZIP; runs in the browser. Files of up to ${MAX_SIGNED_OUT_ROWS.toLocaleString("en-US")} rows need no account; bigger ones need a free account`,
     },
     {
       title: "QR code scanner",

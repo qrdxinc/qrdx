@@ -3,39 +3,78 @@ title: "フォームで回答を集める"
 description: "フィードバックフォーム、アンケート、登録フォームを作成し、ダッシュボードで回答を確認できます。"
 ---
 
+ホスト型ページにフォームを設置すると、コードをスキャンした人からフィードバック、アンケートの回答、登録情報を集められます。回答はダッシュボードに届き、スプレッドシートとしてダウンロードできます。
+
+<Callout type="info">
+  各ワークスペースで受け付けられる回答数は、月あたり フリー 50件、Pro 1,000件、Business 10,000件です。新しい回答のメール通知は Pro と Business でご利用いただけます。[プランと含まれる内容](/docs/help/account-and-billing/plans)をご覧ください。
+</Callout>
+
 ## フォームを作成する [#create-a-form]
 
-1. **Pages** に移動し、**New page** をクリックします。
-2. **Feedback & forms** を選択します。
-3. テンプレートを選びます：**Guest feedback**、**NPS survey**、**Sign-up form** のいずれかです。
-4. **Create page** をクリックして質問を編集し、**Publish** をクリックします。
+### 1. 新しいページを開始する [#1-start-a-new-page]
 
-ほかのページに **Form** ブロックを追加することもできます。
+**Pages & forms** に移動し、**New page** をクリックします。
+
+### 2. Feedback & forms を選ぶ [#2-pick-feedback--forms]
+
+**Feedback & forms** を選び、続けてテンプレートを選択します。**Guest feedback**、**NPS survey**、**Sign-up form** から選べます。
+
+### 3. 作成して編集する [#3-create-and-edit]
+
+**Create page** をクリックし、**Blocks** タブで質問を編集します。
+
+<Shot id="form-editor" />
+
+### 4. 公開する [#4-publish]
+
+**Publish** をクリックします。ページが公開されると、すぐにフォームが回答の受け付けを開始します。
+
+ブロックの追加メニューから、ほかのページにも **Form** ブロックを追加できます。
 
 ## 回答を確認する [#read-the-responses]
 
-**Pages** で、そのページのメニュー（**⋯**）を開き、**Responses** を選択します。
+**Pages & forms** で、ページのメニュー（**⋯**）を開き、**Responses** を選びます。この項目は、ページにフォームがある場合に表示されます。
 
 **Export CSV** をクリックすると、回答をスプレッドシートとしてダウンロードできます。
 
+<Shot id="form-responses" />
+
 ## 回答ごとにメールを受け取る [#get-an-email-for-each-response]
 
-Pro と Business では、**Settings** → **Notifications** に移動し、**Form submissions** をオンにします。
+Pro と Business では、**Settings** → **Notifications** に移動し、**Form submissions** をオンにします。Business では、同じページから Slack または Discord のチャンネルに回答を投稿することもできます。
 
 ## 月間の上限 [#monthly-limits]
 
-各ワークスペースで、暦月（UTC）ごとに集められる回答数は次のとおりです。
+回答はワークスペースごと、UTC の暦月ごとに集計されます。
 
-- **フリー**：50件
-- **Pro**：1,000件
-- **Business**：10,000件
+| プラン | 月あたりの回答数 |
+| --- | --- |
+| フリー | 50 |
+| Pro | 1,000 |
+| Business | 10,000 |
 
-上限に達すると、訪問者には「This form isn't accepting responses right now.」と表示されます。フォームは翌月になると再び回答を受け付けます。プランをアップグレードした場合は、すぐに再開されます。
+上限に達すると、訪問者には「This form isn't accepting responses right now. Please try again later.」と表示されます。すでに集まっている回答は保持されます。フォームは翌月1日に再び回答を受け付けます。アップグレードした場合は、すぐに再開されます。
 
-## スパム [#spam]
+## スパム対策 [#spam]
 
-フォームにはスパム対策が組み込まれています。設定は不要です。
+フォームにはスパム対策が組み込まれています。ボットチェック、ボットが入力する非表示フィールド、1人の訪問者が送信できる速度の上限です。設定は不要です。
+
+## 問題が発生した場合 [#if-something-goes-wrong]
+
+### ページのメニューに Responses がない [#responses-isnt-in-the-pages-menu]
+
+ページにフォームブロックがありません。エディタで追加し、公開してください。
+
+### フォームが回答を受け付けていないと表示される [#the-form-says-it-isnt-accepting-responses]
+
+ワークスペースが今月の上限に達しています。翌月まで待つか、[アップグレード](/pricing)するとフォームがすぐに再開されます。
+
+### 回答が拒否されたと言われた [#someone-says-their-answer-was-refused]
+
+1分間に数件を超える回答が送信され、スパム対策の上限によりブロックされました。1分ほど待ってからもう一度試すようお伝えください。
 
 ## 関連項目 [#related]
 
+- [モバイルページを作成する](/docs/help/pages-and-forms/create-a-page)
+- [データをエクスポートする](/docs/help/account-and-billing/export-your-data)
 - [フォームガイド](/docs/forms-and-pages#forms)

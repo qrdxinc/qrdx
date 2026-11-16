@@ -1,38 +1,49 @@
 ---
 title: Webhooks
-description: Get a signed HTTPS request when your QR codes are scanned, created or changed, or when someone submits a form. Works with Zapier, Make and n8n.
+description: Get a signed HTTPS request when your QR codes are scanned, created or changed, or when someone submits a form. Add an endpoint, verify the signature, handle retries, and subscribe from Zapier, Make and n8n.
 icon: Webhook
 ---
 
-Webhooks send events from a workspace to a URL you control, as they happen. Use them to update a CRM when someone fills in a form, post to an internal tool when a code passes 1,000 scans, or keep your own copy of scan data.
+By the end of this page, a URL you control receives a signed `POST` within a few minutes of every event you picked, your server verifies that each request came from QRdx, and you know how retries, duplicates and the delivery log behave.
 
-Webhooks, Zapier/Make hooks and Slack/Discord alerts are part of the **Business** plan. Email alerts and the weekly digest are part of Pro; see [Notifications](/docs/notifications).
+Webhooks push events from a workspace to your server as they happen: update a CRM when someone fills in a form, post to an internal tool when a code passes 1,000 scans, or keep your own copy of scan data.
 
-## Add an endpoint
+<Callout type="info" title="Business plan">
+Webhooks, Zapier and Make hooks and Slack and Discord alerts are part of the **Business** plan. Email alerts and the weekly digest are part of Pro; see [Notifications](/docs/notifications). Compare the plans on [Plans and limits](/docs/plans-and-limits).
+</Callout>
+
+## Before you start
+
+- A public `https://` URL that answers `POST` requests. IP addresses, `localhost` and host names that resolve to private networks are refused, and redirects are not followed. For local development, use a tunnel that gives you a public host name.
+- Owner or admin role in the workspace. Members can see endpoints and their delivery logs, not add or change them.
+
+## 1. Add an endpoint
 
 1. Open [Settings → Webhooks](/dashboard?to=settings/webhooks) in the workspace whose events you want. The link opens the workspace you last used; pick another one in the workspace switcher and you stay on the same page.
-2. Click **Add endpoint**, enter an `https://` URL and pick the events. QRdx asks you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first, and again when you change an endpoint's URL; changing its events or pausing it doesn't ask.
-3. Copy the **signing secret** shown after saving. Owners and admins can show it again, or rotate it, later, after they [confirm it's them](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
-4. Click **Send test**. QRdx sends a signed `ping` event and shows the response status.
+2. Choose **Add endpoint**, enter the **Endpoint URL** and tick the **Events** you want, then choose **Add endpoint** in the dialog. QRdx asks you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first, and again whenever you change an endpoint's URL; changing its events or disabling it doesn't ask.
+3. Copy the **Signing secret** shown after saving. Owners and admins can show it again, or rotate it, from the endpoint's **Deliveries** page.
+4. Choose **Send test**. QRdx sends a signed `ping` event and shows the response status in the delivery log.
 
-Owners and admins manage endpoints; members can see the endpoints and their delivery logs. A workspace can have up to 20 endpoints.
+<Shot id="add-endpoint-dialog" />
 
-Endpoint URLs must be public `https://` host names. IP addresses, `localhost` and names that resolve to private networks are refused, and redirects are not followed.
+<Shot id="webhook-signing-secret" />
 
-## Events
+A workspace can have up to 20 endpoints and hooks together.
+
+## 2. Pick the events
 
 | Event | When | Notes |
 | --- | --- | --- |
-| `scan.created` | A dynamic code is scanned | Batched: at most one request per minute per endpoint, sent within a few minutes, with up to 100 scans and the exact `count` |
+| `scan.created` | A dynamic code is scanned | Batched: at most one request a minute per endpoint, with up to 100 scans and the exact `count` |
 | `scan.milestone` | A code's 1st scan, then 10, 100, 500, 1,000, 5,000, 10,000, 50,000, 100,000, 500,000 and 1,000,000 scans, then every million | Fires once per milestone |
-| `code.created` | A dynamic code is created (dashboard or API) | One event per code, also for bulk creation |
+| `code.created` | A dynamic code is created, in the dashboard or through the API | One event per code, also for bulk creation |
 | `code.updated` | A code's destination, title, design or short-link domain changes | `changes` lists the fields |
 | `form.submitted` | Someone submits a form on a hosted page | Includes the answers |
-| `ping` | You click **Send test** | |
+| `ping` | You choose **Send test** | |
 
-Scans by bots, link previews and prefetchers, and rapid repeats from one visitor, are not counted and don't trigger events, exactly as in [scan analytics](/docs/dynamic-qr-codes).
+Scans by bots, link previews and prefetchers, and rapid repeats from one visitor, are not counted and don't trigger events, exactly as in [scan analytics](/docs/dynamic-qr-codes#scan-analytics).
 
-## Payloads
+## 3. Read the payload [#payloads]
 
 Every request is a `POST` with a JSON body and these headers:
 
@@ -40,14 +51,14 @@ Every request is a `POST` with a JSON body and these headers:
 | --- | --- |
 | `Content-Type` | `application/json` |
 | `User-Agent` | `QRdx-Webhooks/1.0 (+https://qrdx.dev/docs/webhooks)` |
-| `X-QRdx-Event` | The event type, e.g. `code.created` |
+| `X-QRdx-Event` | The event type, such as `code.created` |
 | `X-QRdx-Delivery` | Delivery id: the same on every retry, so you can ignore duplicates |
 | `X-QRdx-Timestamp` | Unix seconds when this attempt was signed |
 | `X-QRdx-Signature` | `t=<timestamp>,v1=<hex HMAC-SHA256>` |
 
-The body is always an envelope:
+The body is always an envelope with `id`, `type`, `created_at` and `data`:
 
-```json
+```json title="code.created"
 {
   "id": "evt_cm3x8c1a20001",
   "type": "code.created",
@@ -71,7 +82,7 @@ The body is always an envelope:
 
 A `scan.created` batch:
 
-```json
+```json title="scan.created"
 {
   "id": "evt_cm3x9d0b10002",
   "type": "scan.created",
@@ -101,17 +112,24 @@ A `scan.created` batch:
 
 When more than 100 scans arrive in one minute, `scans` holds the first 100 and `count` the exact total. `source` is `nfc` for a tap on an [NFC tag](/docs/nfc) and `qr` for a QR scan. Scan payloads never include IP addresses or visitor hashes.
 
-Other events carry:
+The other events carry:
 
 - `scan.milestone`: `milestone`, `code` (`id`, `slug`, `title`, `scan_count`) and the `scan` that reached it.
-- `code.updated`: like `code.created`, plus `changes`, e.g. `["destination_url"]`.
+- `code.updated`: like `code.created`, plus `changes`, such as `["destination_url"]`.
 - `form.submitted`: `response_id`, `page` (`id`, `title`), `code` (`id`, `slug`, or `null`), `fields` (`name`, `label`, `value` as text) and `submitted_at`.
 
-## Verify signatures
+To see a payload of each event built from your own data before the first real one arrives, call [Get sample events](/docs/developers/api/get-hook-samples):
+
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/hooks/sample?event=scan.created" \
+  -H "Authorization: Bearer $QRDX_API_KEY"
+```
+
+## 4. Verify signatures [#verify-signatures]
 
 Compute an HMAC-SHA256 of `<timestamp>.<raw body>` with your signing secret and compare it with `v1` in `X-QRdx-Signature`. Use the raw request body, before any JSON parsing, and reject timestamps older than five minutes.
 
-```ts
+```ts title="lib/qrdx-webhook.ts"
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export function isFromQRdx(rawBody: string, header: string, secret: string) {
@@ -132,21 +150,42 @@ export function isFromQRdx(rawBody: string, header: string, secret: string) {
 }
 ```
 
+```python title="qrdx_webhook.py"
+import hmac
+import hashlib
+import time
+
+
+def is_from_qrdx(raw_body: bytes, header: str, secret: str) -> bool:
+    parts = dict(part.strip().split("=", 1) for part in header.split(","))
+    timestamp = int(parts.get("t", "0"))
+    if not timestamp or abs(time.time() - timestamp) > 300:
+        return False
+    expected = hmac.new(
+        secret.encode(), f"{timestamp}.".encode() + raw_body, hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(parts.get("v1", ""), expected)
+```
+
 Rotating the secret takes effect immediately: the old secret stops verifying, so update your server right after rotating.
 
-## Retries and the delivery log
+## 5. Respond, and handle retries
 
-Respond with any `2xx` status within 10 seconds. Anything else (an error status, a redirect, a timeout, an unreachable host) counts as a failure, and QRdx retries with growing waits of at least 1 minute, 4 minutes, 16 minutes, 1 hour, 4 hours, 17 hours and 24 hours. Each retry goes out within a few minutes of its wait ending. That's 8 attempts over roughly two days, after which the delivery is marked **Failed**.
+Respond with any `2xx` status within 10 seconds. Anything else (an error status, a redirect, a timeout, an unreachable host) counts as a failure, and QRdx retries with growing waits of about 1 minute, 4 minutes, 16 minutes, 1 hour, 4 hours, 17 hours and 24 hours. Each retry goes out within a few minutes of its wait ending. That's 8 attempts over roughly two days, after which the delivery is marked failed.
 
-Each endpoint's **Deliveries** page lists the last 50 deliveries with their status, attempts, last error and payload. **Retry** re-sends one immediately (also for delivered ones). Deliveries are kept for 30 days.
+Deliveries can arrive more than once (a retry after a slow response, a manual retry) and out of order. Use `X-QRdx-Delivery` or the envelope `id` to ignore duplicates, and do your work after you have answered `2xx` if it takes longer than a few seconds.
 
-Deliveries can arrive more than once (a retry after a slow response, a manual retry) and out of order. Use `X-QRdx-Delivery` or the envelope `id` to ignore duplicates.
+## Change it later
 
-Disabling an endpoint stops new deliveries; deleting it also deletes its log. If a workspace's plan no longer includes webhooks, endpoints are kept but nothing is sent until it is on Business again. Your QR codes keep working either way.
+Each endpoint's **Deliveries** page lists the last 50 deliveries with their event, status, attempts and payload. **Retry now** re-sends a failed or pending delivery at once; **Send again** re-sends a delivered one. Deliveries are kept for 30 days.
 
-## Zapier, Make and n8n (REST Hooks)
+<Shot id="webhook-deliveries" />
 
-Automation tools can subscribe and unsubscribe on their own through the REST Hooks API. Authenticate with an [API key](/docs/developers/api-keys) or an OAuth access token, like the [codes API](/docs/dynamic-qr-codes#rest-api): `codes:write` to subscribe or unsubscribe, `codes:read` to list. Hook URLs are often secret, so with `codes:read` alone `target_url` shows only the host (`https://hooks.zapier.com/…`). Token requests act on your own workspace; a key acts on the workspace it was created in. Subscribing with your signed-in browser session instead of a key or token asks you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first, and answers `403` with `CONFIRMATION_REQUIRED` until you have in the last 10 minutes. Subscriptions are ordinary endpoints: they appear in Settings → Webhooks, where you can also remove them.
+From an endpoint's menu you can **Edit** its URL and events, **Disable endpoint** (new deliveries stop; **Enable endpoint** resumes them), show or **Rotate** its **Signing secret**, and **Delete** it, which also deletes its log. If a workspace's plan no longer includes webhooks, endpoints are kept but nothing is sent until it is on Business again. Your QR codes keep working either way.
+
+## Zapier, Make and n8n (REST Hooks) [#zapier-make-and-n8n-rest-hooks]
+
+Automation tools can subscribe and unsubscribe on their own through the REST Hooks API. Authenticate with an [API key](/docs/developers/api-keys) or an OAuth access token: `codes:write` to subscribe or unsubscribe, `codes:read` to list. Hook URLs are often secret, so with `codes:read` alone `target_url` shows only the host (`https://hooks.zapier.com`). Token requests act on your own workspace; a key acts on the workspace it was created in. Subscribing with your signed-in browser session instead asks you to [confirm it's you](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) first, and answers `403 CONFIRMATION_REQUIRED` until you have in the last 10 minutes. Subscriptions are ordinary endpoints: they appear in **Settings → Webhooks**, where you can also remove them.
 
 | Method | Path | Description |
 | --- | --- | --- |
@@ -156,28 +195,54 @@ Automation tools can subscribe and unsubscribe on their own through the REST Hoo
 | `GET` | `/v1/hooks/{id}` | One subscription |
 | `GET` | `/v1/hooks/sample?event=<event>` | Recent example payloads for `event`, as an array (Zapier's "perform list") |
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/hooks \
-  -H "Authorization: Bearer $QRDX_TOKEN" \
+  -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"target_url": "https://hooks.zapier.com/hooks/standard/123/abc/", "event": "form.submitted"}'
 ```
 
-```json
+```json title="201 Created (fields)"
 {
-  "id": "cm3xa1b2c0003",
+  "id": "<hook id>",
   "target_url": "https://hooks.zapier.com/hooks/standard/123/abc/",
   "events": ["form.submitted"],
   "event": "form.submitted",
   "active": true,
-  "created_at": "2026-10-31T09:40:00.000Z",
-  "secret": "whsec_..."
+  "created_at": "<ISO 8601 time>",
+  "secret": "whsec_<shown only here>"
 }
 ```
 
-Without Business the subscribe call returns `402 PLAN_REQUIRED`. A `scan.created` delivery is one batch, so in Zapier use the `data.scans` line items to act on each scan.
+Without Business the subscribe call returns `402`:
 
-In n8n, the QRdx Trigger node from the [QRdx nodes for n8n](/docs/developers/n8n) makes these calls for you and checks each signature. A plain Webhook node works too, set up like any other endpoint.
+```json title="402 Payment Required"
+{"code":"PLAN_REQUIRED","message":"Webhooks and Zapier/Make hooks are part of the Business plan.","status":402}
+```
+
+A `scan.created` delivery is one batch, so in Zapier use the `data.scans` line items to act on each scan. In n8n, the QRdx Trigger node from the [QRdx nodes for n8n](/docs/developers/n8n) makes these calls for you and checks each signature; a plain Webhook node works too, set up like any other endpoint. The reference pages are [Subscribe to events](/docs/developers/api/create-hook), [List hooks](/docs/developers/api/list-hooks) and [Unsubscribe](/docs/developers/api/delete-hook).
+
+## If something goes wrong
+
+### The endpoint URL is refused
+
+Only public `https://` host names are accepted: no `http://`, no IP addresses, no `localhost`, no names that resolve to a private network. Use a tunnel with a public host name while developing.
+
+### Every delivery shows a failed status
+
+Your server answered something other than `2xx` within 10 seconds, redirected, or didn't answer. Open the delivery's details for the exact HTTP status or error, fix it, then choose **Retry now**. Answer `2xx` first and process afterwards if your handler is slow.
+
+### Signatures don't verify
+
+Make sure you hash the raw request body, not a re-serialized JSON object, and that your server uses the current secret: rotating it invalidates the old one at once. Check your server's clock too, since the timestamp check allows five minutes.
+
+### Events stopped arriving
+
+The workspace left the Business plan (endpoints are kept but paused), the endpoint is **Disabled**, or the Zap, scenario or workflow that created the subscription was turned off and unsubscribed. Check **Settings → Webhooks**.
+
+### `403 CONFIRMATION_REQUIRED` from `POST /v1/hooks`
+
+You subscribed with a browser session. Confirm it's you in QRdx and retry within 10 minutes, or subscribe with an API key from your server.
 
 ## Self-hosting
 
@@ -185,9 +250,15 @@ Deliveries are sent right away; retries and scan batches whose minute has ended 
 
 To do the same, copy `.github/workflows/webhook-worker.yml`, add your `CRON_SECRET` as an Actions secret and your job URL as the `WEBHOOK_WORKER_URL` variable. Or call the job from any scheduler with the `CRON_SECRET` you set in the environment:
 
-```bash
-# every 1-5 minutes
+```bash title="crontab (every 1 to 5 minutes)"
 curl -H "Authorization: Bearer $CRON_SECRET" https://your-host/api/cron/webhooks
 ```
 
-With `?source=github` added to the URL, the job first checks a small marker in Upstash Redis and returns `{"skipped": true}` without querying the database when nothing is due, so a database that scales to zero can stay asleep (without Upstash, it always runs the full job). Keep one call a day without it: that run always does the full job and repairs the marker.
+With `?source=github` added to the URL, the job first checks a small marker in Upstash Redis and returns `{"skipped": true}` without querying the database when nothing is due, so a database that scales to zero can stay asleep (without Upstash, it always runs the full job). Keep one call a day without it: that run always does the full job and repairs the marker. The other scheduled jobs are listed under [Self-hosting](/docs/self-hosting#scheduled-jobs).
+
+## Related
+
+- [Subscribe to events](/docs/developers/api/create-hook): the REST Hooks endpoint with a Try it panel
+- [n8n](/docs/developers/n8n): the QRdx Trigger node that subscribes and verifies for you
+- [Notifications](/docs/notifications): email, Slack and Discord alerts for the same events, without code
+- [Build an integration](/docs/developers/build-an-integration): subscribe on behalf of the people who connect your app

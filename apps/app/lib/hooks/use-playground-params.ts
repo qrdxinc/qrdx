@@ -169,7 +169,10 @@ export function usePlaygroundParams({
         signIn: (intent) =>
           useAuthStore
             .getState()
-            .openAuthDialog("signin", "OPEN_CODE_BUILDER", intent),
+            .openAuthDialog(
+              intent.kind === "page" ? "hosted_page" : "make_dynamic",
+              { action: "OPEN_CODE_BUILDER", data: intent },
+            ),
       },
     });
 

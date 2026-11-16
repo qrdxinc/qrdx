@@ -1,5 +1,9 @@
-import { consoleReturnPath } from "@repo/next-config/console-zone";
+import {
+  adminConsoleAddress,
+  consoleReturnTarget,
+} from "@repo/next-config/console-zone";
 import { SettingsHeader } from "@/app/(app)/settings/components/settings-header";
+import { env } from "@/env";
 import { CONFIRMATION_MINUTES } from "@/lib/account/confirmation";
 import { requireAdmin } from "../_lib/guard";
 import { adminMetadata } from "../_lib/metadata";
@@ -8,8 +12,9 @@ import { ConfirmAndReturn } from "./confirm-and-return";
 // "Confirm it's you" for the back-office console's actions. The console
 // can't open this app's dialog (its server actions only answer this app),
 // so a console action that needs a recent confirmation links here with
-// ?next=<its page>. Only the console's pages are accepted as `next`;
-// anything else comes back to /admin.
+// ?next=<its page>. Only the console's pages are accepted as `next`: here
+// (/admin/<section>…) or, with ADMIN_CONSOLE_URL set, at exactly that origin
+// (https://admin.qrdx.dev/<section>…); anything else comes back to /admin.
 
 export const generateMetadata = adminMetadata("Admin · Confirm it's you");
 
@@ -21,7 +26,13 @@ export default async function AdminConfirmPage({
   await requireAdmin();
   const { next } = await searchParams;
   const back =
-    consoleReturnPath(typeof next === "string" ? next : null) ?? "/admin";
+    consoleReturnTarget(
+      typeof next === "string" ? next : null,
+      adminConsoleAddress({
+        adminConsoleUrl: env.ADMIN_CONSOLE_URL,
+        secret: env.CONSOLE_ZONE_KEY,
+      }),
+    ) ?? "/admin";
 
   return (
     <div className="space-y-4">

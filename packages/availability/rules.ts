@@ -27,6 +27,8 @@ import {
 export const FEATURE_IDS = [
   "aiThemes",
   "aiArt",
+  // The docs assistant (Ask AI in the docs)
+  "docsChat",
   "customDomains",
   "domainConnect",
   "fileStorage",
@@ -108,6 +110,17 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
     name: "AI QR art (Vercel AI Gateway)",
     requires: () => ["AI_GATEWAY_API_KEY"],
     paths: ["/ai/art", "/docs/developers/ai-art-api"],
+  },
+  docsChat: {
+    // The docs assistant (app/api/docs-chat): answers questions from the
+    // docs site's own search and Markdown pages at DOCS_ZONE_URL through the
+    // gateway, for anyone. Off without a docs site to read from, or when
+    // DOCS_CHAT_ENABLED says "0" or "false" (the kill switch; unset means
+    // on). The docs app reads this id at build time and shows the Ask AI
+    // button only where it's on.
+    name: "Docs assistant (Vercel AI Gateway, docs site)",
+    requires: () => ["AI_GATEWAY_API_KEY", "DOCS_ZONE_URL"],
+    usable: (ctx) => isDocsChatSwitchedOn(ctx.env.DOCS_CHAT_ENABLED),
   },
   customDomains: {
     // Serving domains already verified never depends on this: proxy.ts reads
@@ -349,6 +362,15 @@ export function eeOnEveryPlan(ctx: FeatureContext): boolean {
       productionUrl: ctx.env.VERCEL_PROJECT_PRODUCTION_URL,
     })
   );
+}
+
+/**
+ * The docs assistant's switch: on unless DOCS_CHAT_ENABLED is "0" or
+ * "false" (any other value, or none, leaves it on).
+ */
+export function isDocsChatSwitchedOn(value: string | undefined): boolean {
+  const flag = value?.trim().toLowerCase();
+  return !(flag === "0" || flag === "false");
 }
 
 /**

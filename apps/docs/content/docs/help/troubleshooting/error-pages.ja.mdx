@@ -1,47 +1,62 @@
 ---
 title: "スキャンするとエラーページが表示される"
-description: "「QRコードが見つかりません」から「このキャンペーンは終了しました」まで、QRコードの各エラーページの意味と対処方法を説明します。"
+description: "「QR code not found」から「This campaign has ended」まで、QRコードのエラーページが何を意味するのか、そして修正方法を説明します。"
 ---
 
-動的QRコードがリンク先を開けない場合、スキャンした人には短いページが表示されます。ここでは、それぞれの意味を説明します。
+動的QRコードが転送先を開けないとき、スキャンした人には短いページが表示されます。以下の各ページについて、原因、対処法、修正できたかどうかの確認方法を説明します。ほとんどは、コード自体の設定が原因です。
 
-## 「QRコードが見つかりません」 [#qr-code-not-found]
+## 「This campaign is paused」「This campaign hasn't started yet」「This campaign has ended」 [#this-campaign-is-paused-this-campaign-hasnt-started-yet-or-this-campaign-has-ended]
 
-404ページです。この短縮リンクに該当するコードがありません。
+コードが一時停止中、開始日前、終了日後、またはスキャン上限に達しています。
 
-- コードが**完全に削除**された。
-- 印刷後に、コードの**バックハーフ**または**ドメイン**が変更された。
-- コードを所有していたアカウントが削除された。
+1. **Codes** からコードを開き、**Settings** タブの **Access & schedule** に進みます。
+2. **Pause code** をオフにするか、**Starts** や **Ends** を変更するか、**Scan limit** を引き上げます。
+3. **Save changes** をクリックします。
+
+もう一度スキャンすると、転送先が開きます。コードの一時停止中や終了後に、役立つページへ誘導したい場合は、**Fallback URL** を入力してください。[コードの一時停止、スケジュール設定、上限設定](/docs/help/dynamic-codes/pause-schedule-limit)をご覧ください。
+
+<Shot id="scan-ended" />
+
+## 「This QR code is password protected」 [#this-qr-code-is-password-protected]
+
+コードにパスワードが設定されており、これはそのパスワードを求めるページです。**Password** に入力して **Continue** をクリックしてください。ブラウザーは6時間ロック解除の状態が続きます。パスワードを削除するには、**Access & schedule** を開いて **Remove password** をクリックします。[パスワードでコードを保護する](/docs/help/dynamic-codes/password)をご覧ください。
+
+## 「This QR code is no longer active」 [#this-qr-code-is-no-longer-active]
+
+コードがアーカイブされているか、ゴミ箱に入っています。**Codes** でコードのメニューを開いて **Unarchive** を選ぶか、一覧を **Trash** で絞り込んで **Restore** を選んでください。フリープランでは、空きコード枠が必要です。もう一度スキャンして確認してください。[コードのアーカイブ、削除、復元](/docs/help/dynamic-codes/archive-and-delete)をご覧ください。
+
+QRdx は、不正利用の報告を受けて停止したコードにもこのページを表示します。
+
+## 「QR code not found」 [#qr-code-not-found]
+
+短縮リンクがどのコードにも対応していません。次のいずれかが原因として考えられます。
+
+- コードが完全に削除された、またはコードを所有していたアカウントが削除された。削除したコードは元に戻せません。
+- 印刷後にコードのバックハーフが変更された。**Edit link** を開いて元に戻してください。
 - リンクを手入力した際に間違えた。短縮リンクは大文字と小文字が区別されます。
 
-削除したコードは元に戻せません。バックハーフを変更した場合は、**リンクを編集**で元に戻してください。
+## 「This domain isn't connected yet」 [#this-domain-isnt-connected-yet]
 
-## 「このQRコードは現在無効です」 [#this-qr-code-is-no-longer-active]
+コードが使用しているカスタムドメインのDNS設定が完了していません。**Settings** → **Domains** に進み、表示されたレコードを追加して **Verify** をクリックしてください。ドメインが **Verified** になると、このページは表示されなくなります。[独自ドメインを使う](/docs/help/domains/custom-domains)をご覧ください。
 
-コードが**アーカイブ**されているか、**ゴミ箱**に入っています。**コード**で**アーカイブ解除**または**復元**を選択してください。[コードのアーカイブ、削除、復元](/docs/help/dynamic-codes/archive-and-delete)を参照してください。
+## 「Too many requests」 [#too-many-requests]
 
-QRdxは、有害なサイトにリンクしているコードも無効にします。
+同じネットワークから、数秒のうちに多数のQRコードが開かれました。少し待ってから、もう一度スキャンしてください。コードに問題はありません。
 
-## 「このキャンペーンは一時停止中です」「まだ開始されていません」「終了しました」 [#this-campaign-is-paused-hasnt-started-yet-or-has-ended]
+## モバイルページでの「Page not found」 [#page-not-found-on-a-mobile-page]
 
-これらはコード自体の設定によって表示されます。一時停止、開始日または終了日、スキャン数の上限が該当します。**アクセスとスケジュール**で変更できます。[コードの一時停止、スケジュール設定、制限](/docs/help/dynamic-codes/pause-schedule-limit)を参照してください。
+`/p/…` のホスト型ページが削除されたか、アドレスが間違っています。**Pages & forms** でページがあるかどうか、およびコードがそのページを指しているかを確認してください。[印刷済みコードの転送先を変更する](/docs/help/dynamic-codes/change-the-type)をご覧ください。
 
-## 「このQRコードはパスワードで保護されています」 [#this-qr-code-is-password-protected]
+## 「This form isn't accepting responses right now.」 [#this-form-isnt-accepting-responses-right-now]
 
-コードにパスワードが設定されています。パスワードを入力して**続行**をクリックしてください。[パスワードでコードを保護する](/docs/help/dynamic-codes/password)を参照してください。
+ワークスペースが、月ごとのフォーム回答数の上限に達しました。来月になると再開されます。アップグレードすれば、すぐに再開されます。[フォームで回答を集める](/docs/help/pages-and-forms/forms#monthly-limits)をご覧ください。
 
-## 「リクエストが多すぎます」 [#too-many-requests]
+## 解決しない場合 [#still-stuck]
 
-同じネットワークから、数秒の間に多数のQRコードが開かれました。しばらく待ってから、もう一度スキャンしてください。
+コードの短縮リンクと、ページに表示されている文言をそのまま添えて、[サポートに問い合わせてください](/docs/help/contact)。
 
-## 「このドメインはまだ接続されていません」 [#this-domain-isnt-connected-yet]
+## 関連項目 [#related]
 
-このコードはカスタムドメインを使用していますが、DNSの設定が完了していません。ダッシュボードの**ドメイン**ページでドメインを確認してください。
-
-## ページで「このページは見つかりませんでした」と表示される [#this-page-could-not-be-found-on-a-page]
-
-`/p/…` のモバイルページで、ページが削除されたか、アドレスが間違っている場合に表示されます。
-
-## 「このフォームは現在回答を受け付けていません」 [#this-form-isnt-accepting-responses-right-now]
-
-ワークスペースが、月間のフォーム回答数の上限に達しました。[フォームで回答を集める](/docs/help/pages-and-forms/forms#monthly-limits)を参照してください。
+- [コードの一時停止、スケジュール設定、上限設定](/docs/help/dynamic-codes/pause-schedule-limit)
+- [コードのアーカイブ、削除、復元](/docs/help/dynamic-codes/archive-and-delete)
+- [コードが間違ったページを開く](/docs/help/troubleshooting/wrong-destination)

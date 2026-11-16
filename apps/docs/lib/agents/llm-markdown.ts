@@ -13,12 +13,14 @@
 // - Root-relative links become absolute.
 //
 // Code blocks and inline code are masked first and never touched.
+import { stripMdxComments } from "@/lib/mdx-comments";
 import {
   BODY_CATALOG,
   DOT_CATALOG,
   EYE_CATALOG,
   FRAME_CATALOG,
 } from "@/lib/pattern-catalog";
+import { shotMarkdown } from "@/lib/shots";
 
 export interface LlmMarkdownOptions {
   /** Origin for root-relative links and the shadcn registry, e.g. https://qrdx.dev */
@@ -309,6 +311,16 @@ type Handler = (
   options: Required<LlmMarkdownOptions>,
 ) => string;
 
+/** `![alt](src)` with the caption under it; without `src`, the content. */
+const image: Handler = (attributes, children, options) => {
+  if (!attributes.src) return dedent(children);
+  const alt = oneLine(attributes.alt ?? attributes.caption ?? "");
+  const caption = attributes.caption
+    ? `\n\n${oneLine(attributes.caption)}`
+    : "";
+  return `\n\n![${alt}](${absolute(attributes.src, options.origin)})${caption}\n\n`;
+};
+
 /** Rendered as nothing: live demos and widgets with no text of their own. */
 const DROP = [
   "ComponentPreview",
@@ -343,6 +355,36 @@ const HANDLERS: Record<string, Handler> = {
       .join("\n")}\n\n`,
   Callout: (attributes, children) =>
     `\n\n${attributes.title ? `**${attributes.title}**\n\n` : ""}${dedent(children).trim()}\n\n`,
+  // "Needs Pro or Business" (components/mdx/plan-note.tsx): the plan ids
+  // spelt out, then whatever the note says.
+  PlanNote: (attributes, children) => {
+    const plans = (attributes.plans ?? "")
+      .split(",")
+      .map((plan) => plan.trim())
+      .filter(Boolean)
+      .map((plan) => plan.charAt(0).toUpperCase() + plan.slice(1));
+    const list =
+      plans.length > 1
+        ? `${plans.slice(0, -1).join(", ")} or ${plans.at(-1)}`
+        : (plans[0] ?? "");
+    const body = dedent(children).trim();
+    return `\n\n**Needs ${list}**${body ? `\n\n${body}` : ""}\n\n`;
+  },
+  // A framed image (components/mdx/frame.tsx): a Markdown image, its
+  // caption under it. A frame around other content keeps that content.
+  // <Shot /> and <Clip /> (an id in lib/shots-manifest.json) are below.
+  Frame: (attributes, children, options) =>
+    image(attributes, children, options),
+  // A clip (components/mdx/video.tsx): a link to the file, named after it.
+  Video: (attributes, _, options) => {
+    if (!attributes.src) return "";
+    const label = attributes.title ?? attributes.caption ?? "Video";
+    const caption =
+      attributes.caption && attributes.caption !== label
+        ? `\n\n${attributes.caption}`
+        : "";
+    return `\n\n[${label}](${absolute(attributes.src, options.origin)})${caption}\n\n`;
+  },
   Tab: (attributes, children) => {
     const label = attributes.value ?? attributes.title;
     return `\n\n${label ? `**${label}**\n\n` : ""}${dedent(children).trim()}\n\n`;
@@ -357,6 +399,14 @@ const HANDLERS: Record<string, Handler> = {
       : "",
   PackageManagerTabs: (attributes) =>
     attributes.command ? shell(attributes.command) : "",
+  // Pictures and clips of the app (components/mdx/shot.tsx): the light image
+  // with its alt text; a clip adds a link to its video.
+  // A captured picture by id; with a `src` instead, a plain framed image.
+  Shot: (attributes, children, options) =>
+    attributes.id
+      ? shotMarkdown(attributes, options.origin)
+      : image(attributes, children, options),
+  Clip: (attributes, _, options) => shotMarkdown(attributes, options.origin),
   QrCatalog: (attributes) => {
     const items = CATALOGS[attributes.kind ?? ""];
     if (!items) return "";
@@ -396,7 +446,9 @@ export function cleanLlmMarkdown(
   const fenced = maskFences(markdown);
   const coded = maskInlineCode(fenced.text);
 
-  let text = render(parse(tokenize(coded.text)), resolved);
+  // Comment expressions ({/* shot: … */} markers, writers' notes): the docs
+  // index drops them already; this covers Markdown that arrives another way.
+  let text = render(parse(tokenize(stripMdxComments(coded.text))), resolved);
   if (resolved.origin) {
     text = text.replace(
       /\]\((\/(?!\/)[^)\s]*)\)/g,

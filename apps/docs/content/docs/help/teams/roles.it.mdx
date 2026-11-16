@@ -1,42 +1,60 @@
 ---
 title: "Ruoli del team"
-description: "Cosa possono fare proprietari, amministratori e membri in un workspace."
+description: "Cosa possono fare in un workspace proprietari, amministratori, membri, membri con ruolo Fatturazione e osservatori."
 ---
 
-Ogni membro di un workspace ha un solo ruolo. Nel tuo workspace personale sei il proprietario.
+Ogni membro di un workspace ha un solo ruolo: **Proprietario**, **Amministratore**, **Membro**, **Fatturazione** oppure **Osservatore**. Nel tuo workspace personale sei il proprietario. Il ruolo decide cosa una persona può modificare; tutti possono vedere i codici, le pagine e le statistiche del workspace.
 
-## Membro [#member]
+## Cosa può fare ogni ruolo [#what-each-role-can-do]
 
-- Crea e modifica i codici e le pagine del workspace e carica file.
-- Elimina i propri codici, file e risposte dei moduli.
-- Usa i temi condivisi e i domini verificati del workspace.
+| | Proprietario | Amministratore | Membro | Fatturazione | Osservatore |
+| --- | --- | --- | --- | --- | --- |
+| Vedere codici, pagine, file e statistiche | Sì | Sì | Sì | Sì | Sì |
+| Creare codici, pagine, file, cartelle, tag e temi; modificare i codici del workspace; eliminare i propri | Sì | Sì | Sì | | |
+| Creare chiavi API | Sì | Sì | Sì | | |
+| Eliminare o modificare ciò che hanno creato altri membri | Sì | Sì | | | |
+| Invitare e rimuovere persone e cambiare i ruoli | Sì | Sì | | | |
+| Rinominare il workspace, cambiarne l'URL e il logo e gestire il link di invito | Sì | Sì | | | |
+| Aggiungere, verificare e rimuovere domini personalizzati | Sì | Sì | | | |
+| Gestire webhook, temi condivisi e il tema predefinito | Sì | Sì | | | |
+| Vedere e revocare le chiavi API di tutti | Sì | Sì | | | |
+| [Richiedere la verifica in due passaggi](/docs/help/teams/require-two-step-verification) e configurare il single sign-on (Business) | Sì | Sì | | | |
+| Leggere il registro di audit (Business) | Sì | Sì | | | |
+| Passare a un piano superiore, cambiare o annullare il piano su cui funziona il workspace | Sì | | | Sì | |
+| Rendere altri membri proprietari o membri con ruolo Fatturazione | Sì | | | | |
+| Creare e modificare app OAuth | Sì | | | | |
+| Eliminare il workspace | Sì | | | | |
 
-## Amministratore [#admin]
+Un membro con ruolo **Fatturazione** gestisce il piano ed è in sola lettura per tutto il resto. Un **Osservatore** vede tutto e non modifica nulla.
 
-Tutto ciò che può fare un membro, più:
+## Chi paga per il workspace [#who-pays-for-the-workspace]
 
-- Eliminare qualsiasi codice, file o risposta dei moduli.
-- Invitare e rimuovere membri e cambiare i loro ruoli.
-- Condividere temi con il workspace.
-- Rinominare il workspace e cambiarne l'URL.
-- [Richiedere la verifica in due passaggi](/docs/help/teams/require-two-step-verification) a tutti i membri (Business).
-- Aggiungere, verificare e rimuovere domini personalizzati.
-- Gestire i webhook.
+Un workspace usa il piano migliore tra quelli dei suoi proprietari e dei membri con ruolo Fatturazione. Dare a qualcuno il ruolo Fatturazione gli permette di pagare per il workspace senza poterne modificare i codici.
 
-## Proprietario [#owner]
+## Cambiare il ruolo di una persona [#change-someones-role]
 
-Tutto ciò che può fare un amministratore, più:
+Nella pagina **Impostazioni** → **Team**, cambia il **Ruolo** accanto al nome della persona. Gli amministratori possono assegnare i ruoli amministratore, membro e osservatore; solo i proprietari possono assegnare o togliere i ruoli proprietario e fatturazione.
 
-- Rendere proprietari altri membri.
-- Creare e modificare le app OAuth.
-- Eliminare il workspace (mai il workspace personale di qualcuno).
+Cambiare il ruolo di una persona, rimuovere qualcuno, invitare un amministratore ed eliminare il workspace richiedono prima di [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), a meno che tu non l'abbia già fatto in quel browser negli ultimi 10 minuti.
 
-## Cambiare il ruolo di qualcuno [#change-someones-role]
+<Shot id="team-members" />
 
-Nella pagina **Impostazioni** → **Team**, cambia il ruolo accanto al nome della persona. Solo amministratori e proprietari possono cambiare i ruoli.
-
-Cambiare il ruolo di qualcuno, rimuovere un membro, invitare un amministratore ed eliminare il workspace ti chiedono prima di [confermare la tua identità](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), a meno che tu non l'abbia già fatto in quel browser negli ultimi 10 minuti.
-
-## Passare un workspace a un altro proprietario [#hand-over-a-workspace]
+## Passare un workspace a un'altra persona [#hand-over-a-workspace]
 
 Non esiste un pulsante di trasferimento separato. Rendi la nuova persona **Proprietario**. Quando c'è un altro proprietario, puoi lasciare il workspace. Il tuo workspace personale non può essere ceduto in questo modo: non puoi lasciarlo.
+
+## Se qualcosa non funziona [#if-something-goes-wrong]
+
+### Non puoi scegliere Proprietario o Fatturazione per una persona [#you-cant-pick-owner-or-billing-for-someone]
+
+Solo un proprietario può assegnare questi ruoli. Chiedi a uno dei proprietari del workspace.
+
+### Un membro non riesce a eliminare un codice [#a-member-cant-delete-a-code]
+
+I membri eliminano solo ciò che hanno creato. Per un codice creato da qualcun altro serve un amministratore o un proprietario.
+
+## Correlati [#related]
+
+- [Creare un workspace e invitare persone](/docs/help/teams/create-and-invite)
+- [Posti e limiti del workspace](/docs/help/teams/seats)
+- [Richiedere la verifica in due passaggi](/docs/help/teams/require-two-step-verification)

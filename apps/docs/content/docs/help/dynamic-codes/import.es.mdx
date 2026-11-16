@@ -1,31 +1,64 @@
 ---
-title: "Trae códigos desde otro servicio"
+title: "Trae tus códigos desde otro servicio"
 description: "Importa enlaces desde un archivo CSV o traslada tus códigos desde Bitly y otros servicios de códigos QR."
 ---
 
+Puedes crear muchos códigos dinámicos a la vez desde un archivo CSV, o trasladar a QRdx los códigos que tienes en otro servicio. Esta página trata de la importación en sí; [Cambiarte desde Bitly, Rebrandly y otros](/docs/migrate) explica cómo mantener en funcionamiento los códigos que ya imprimiste.
+
+<Callout type="info">
+  En Gratis puedes importar un código cada vez. Pro y Business importan muchos a la vez. Consulta [Planes y qué incluyen](/docs/help/account-and-billing/plans).
+</Callout>
+
 ## Desde un archivo CSV [#from-a-csv-file]
 
-1. Ve a **Codes** y haz clic en **Import CSV**.
-2. Sube un archivo CSV con un código por fila.
+### 1. Abre la importación [#1-open-the-import]
 
-La única columna obligatoria es el destino. También puedes incluir un título, una carpeta, etiquetas y un back-half personalizado. Un archivo puede tener hasta {facts.importRows} filas y pesar hasta 10 MB. Se revisa cada fila antes de crear nada; las filas con problemas se omiten y se muestran en una lista.
+Ve a **Códigos** y haz clic en **Importar** en la barra lateral de Códigos. También puedes abrir el menú **Más acciones de códigos** (**⋯**) y elegir **Importar códigos**, y luego **Desde un archivo CSV**. Se abre la página **Importar códigos desde CSV**.
+
+### 2. Sube tu archivo [#2-upload-your-file]
+
+Sube un archivo CSV con un código por fila. La única columna obligatoria es el destino. También puedes incluir un título, una carpeta, etiquetas y un slug (la parte final personalizada). Un archivo puede tener hasta {facts.importRows} filas y un tamaño de hasta 10 MB.
 
 También puedes elegir una carpeta y etiquetas para todos los códigos del archivo. Una fila con su propia carpeta la conserva, y las etiquetas del archivo se suman a las que elijas.
 
-Los archivos grandes se envían por partes mientras se llena una barra de progreso. Puedes pausar y reanudar. Si la página se recarga o se corta la conexión, la importación se detiene y te ofrece reanudar o reintentar, y ningún código se crea dos veces. Al terminar, descarga un CSV de resultados con el enlace corto de cada fila, o un ZIP con los códigos nuevos como archivos PNG o SVG.
+<Shot id="import-csv" />
 
-En Gratis puedes importar un código a la vez. Pro y Business pueden importar muchos a la vez.
+### 3. Deja que se ejecute [#3-let-it-run]
+
+Cada fila se comprueba antes de crear nada; las filas con problemas se omiten y se enumeran. Los archivos grandes se envían por partes mientras se llena una barra de progreso, y puedes pausar y reanudar.
+
+### 4. Descarga los resultados [#4-download-the-results]
+
+Cuando termine, descarga el **CSV de resultados** con el enlace corto de cada fila, o un ZIP con los códigos nuevos como archivos **PNG (1024 px)** o **SVG (vectorial)** junto con un índice `codes.csv`.
 
 ## Desde otro servicio [#from-another-service]
 
-Haz clic en **Import** en la página **Codes** y elige dónde están tus códigos ahora.
+Abre el menú **Más acciones de códigos** (**⋯**), elige **Importar códigos**, luego **Desde Bitly y otras apps**, y selecciona dónde están ahora tus códigos.
 
 - **Bitly**: inicia sesión en Bitly y elige los enlaces.
 - **Rebrandly** y **Short.io**: pega una clave de API de ese servicio.
-- **QR Code Generator PRO, Uniqode, Flowcode, QR TIGER, ME-QR, TinyURL, Hovercode, Scanova** y otros: sube el archivo de exportación de ese servicio.
+- **QR Code Generator PRO**, **Uniqode**, **Flowcode**, **QR TIGER**, **ME-QR**, **TinyURL**, **Hovercode**, **Scanova** y **Otro proveedor (CSV)**: sube el archivo de exportación de ese servicio, de hasta 2 MB.
 
-## Mantén funcionando los códigos impresos [#keep-printed-codes-working]
+## Mantén en funcionamiento los códigos impresos [#keep-printed-codes-working]
 
-Los códigos impresos siguen apuntando al servicio anterior. La guía de migración explica cómo mantenerlos funcionando y cómo conservar tus back-halves originales.
+Los códigos impresos siguen apuntando al servicio anterior. La guía de migración explica cómo mantenerlos en funcionamiento y cómo conservar tus partes finales originales. Consulta [Cambiarte desde Bitly, Rebrandly y otros](/docs/migrate).
 
-Consulta [Migrar desde Bitly, Rebrandly y otros](/docs/migrate).
+## Si algo sale mal [#if-something-goes-wrong]
+
+### Se omitieron algunas filas [#some-rows-were-skipped]
+
+Los resultados enumeran cada fila omitida con el motivo, por ejemplo una dirección que no es un enlace o una parte final que ya está en uso. Corrige esas filas en tu archivo y vuelve a importarlas. Nada se crea dos veces.
+
+### La importación se detuvo [#the-import-stopped]
+
+Si la página se recargó o se cortó la conexión, al volver la página te ofrece reanudar o reintentar. Los códigos ya creados no se vuelven a crear.
+
+### Solo se importó una fila [#only-one-row-was-imported]
+
+Estás en Gratis, que importa un código cada vez. Importa la siguiente fila, o [mejora tu plan](/pricing) para importar el archivo completo.
+
+## Relacionado [#related]
+
+- [Cambiarte desde Bitly, Rebrandly y otros](/docs/migrate)
+- [Crear un código QR dinámico](/docs/help/dynamic-codes/create)
+- [Usar tu propio dominio](/docs/help/domains/custom-domains)

@@ -1,174 +1,181 @@
 ---
-title: "Couleurs et dégradés"
-description: "Utilisez des couleurs unies ou des dégradés linéaires et radiaux, et vérifiez le contraste pour que les codes restent scannables."
+title: "Définir les couleurs et les dégradés"
+description: "Colorez les modules, les yeux et l'arrière-plan avec des couleurs unies, des dégradés linéaires, radiaux et angulaires, des couleurs transparentes ou des remplissages d'image, puis vérifiez que le résultat reste scannable."
 icon: Palette
 ---
 
-Appliquez des couleurs et des dégradés pour créer des QR codes à l'image de votre marque.
+Quatre props colorent un code : `fgColor` pour les modules de données, `bgColor` pour l'arrière-plan, `eyeColor` pour les trois yeux d'angle et `dotColor` pour le point à l'intérieur de chaque œil. Chacune accepte une couleur unie ou un objet de dégradé, et les couleurs des yeux utilisent `fgColor` par défaut. Cette page présente chaque type de remplissage et la façon de garder le code lisible.
+
+Vous créez votre design dans le Playground ou le tableau de bord ? Consultez [Choisir des couleurs qui se scannent](/docs/help/designing/colors-and-contrast) dans l'aide.
 
 ## Couleurs unies [#solid-colors]
 
-```tsx
-import { QRCode } from 'qrdx';
+```tsx title="components/brand-code.tsx"
+import { QRCode } from "qrdx";
 
-<QRCode
-  value="https://example.com"
-  size={256}
-  fgColor="#1a56db"
-  bgColor="#f9fafb"
-  eyeColor="#0d47a1"
-  dotColor="#3b82f6"
-/>
+export function BrandCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1a56db"
+      bgColor="#f9fafb"
+      eyeColor="#0d47a1"
+      dotColor="#3b82f6"
+    />
+  );
+}
 ```
 
-Formats pris en charge : `#hex`, `rgb()`, `rgba()`, `hsl()`, `hsla()`, couleurs nommées
+Une couleur unie est n'importe quelle couleur CSS que le moteur sait interpréter : hexadécimal à 3, 4, 6 ou 8 chiffres, `rgb()` et `rgba()`, une couleur nommée ou `transparent`. Les autres syntaxes CSS, comme `hsl()`, s'affichent dans le SVG, mais la vérification du contraste, le PDF et l'EPS ne peuvent pas les lire ; tenez-vous-en donc aux formes ci-dessus. `{ type: "solid", color: "#1a56db" }` équivaut à la chaîne.
 
-`eyeColors` définit chaque œil séparément (`topLeft`, `topRight`, `bottomLeft`, chacun avec une couleur ou un dégradé `outer` et `inner`) ; voir [Motifs](/docs/features/patterns#per-eye-colors).
+`eyeColors` définit chaque œil séparément (`topLeft`, `topRight`, `bottomLeft`, chacun avec une couleur ou un dégradé `outer` et `inner`) ; voir [Couleurs par œil](/docs/features/patterns#per-eye-colors).
 
 ### Arrière-plan transparent [#transparent-background]
 
-`bgColor="transparent"` ne peint aucun arrière-plan : les téléchargements PNG et SVG sont donc transparents, et les fichiers PDF et EPS n'ont aucun remplissage d'arrière-plan. Placez le code sur une surface claire et unie : les décodeurs ont besoin des espaces clairs entre les modules.
+`bgColor="transparent"` ne peint aucun arrière-plan : les téléchargements PNG et SVG sont donc transparents, et les fichiers PDF et EPS n'ont pas de remplissage d'arrière-plan. Placez le code sur une surface claire et unie : les décodeurs ont besoin des espaces clairs entre les modules.
 
 ## Dégradés linéaires [#linear-gradients]
 
-```tsx
-import { QRCodeCanvas } from 'qrdx';
+```tsx title="components/gradient-code.tsx"
+import { QRCode } from "qrdx";
 
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 1, color: '#764ba2' }
-    ],
-    x1: 0, y1: 0,
-    x2: 1, y2: 1
-  }}
-/>
+export function GradientCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "linear",
+        angle: 45,
+        stops: [
+          { color: "#4f46e5", offset: 0 },
+          { color: "#db2777", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-### Directions du dégradé [#gradient-directions]
+- `angle` est exprimé en degrés : 0 va de gauche à droite, 90 de haut en bas, 45 du coin supérieur gauche vers le coin inférieur droit.
+- `stops` nécessite au moins deux entrées. `offset` est un pourcentage de 0 à 100, et la couleur d'un point d'arrêt peut comporter de l'alpha.
+- Toute prop de couleur accepte un dégradé, y compris `bgColor` et les yeux. `QRCodeCanvas` ne sait pas dessiner de dégradés et utilise le premier point d'arrêt ; utilisez `QRCode` ou `QRCodeSVG`.
 
-- **Horizontal** : `x1: 0, y1: 0, x2: 1, y2: 0`
-- **Vertical** : `x1: 0, y1: 0, x2: 0, y2: 1`
-- **Diagonal** : `x1: 0, y1: 0, x2: 1, y2: 1`
+Les dégradés sont conservés dans les téléchargements SVG, PNG, JPG, WebP et PDF. Le PDF d'impression et l'EPS les dessinent sous forme de dégradés lisses.
 
-### Dégradés à plusieurs arrêts [#multi-stop-gradients]
-
-```tsx
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 0.3, color: '#764ba2' },
-      { offset: 0.7, color: '#f093fb' },
-      { offset: 1, color: '#f5576c' }
-    ],
-    x1: 0, y1: 0, x2: 1, y2: 1
-  }}
-/>
-```
+<Shot id="lib-gradient-codes" />
 
 ## Dégradés radiaux [#radial-gradients]
 
-```tsx
-<QRCodeCanvas
-  value="https://example.com"
-  size={256}
-  fgColor={{
-    type: 'radial',
-    stops: [
-      { offset: 0, color: '#ff6b6b' },
-      { offset: 1, color: '#4ecdc4' }
-    ],
-    cx: 0.5, cy: 0.5,
-    r: 0.5
-  }}
-/>
+```tsx title="components/radial-code.tsx"
+import { QRCode } from "qrdx";
+
+export function RadialCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "radial",
+        stops: [
+          { color: "#0f766e", offset: 0 },
+          { color: "#0c4a6e", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-## Utilitaires de couleur [#color-utilities]
-
-### Vérifier le contraste [#check-contrast]
-
-```tsx
-import { getContrastRatio, getContrastLevel } from 'qrdx';
-
-const ratio = getContrastRatio('#000000', '#ffffff');
-// Returns: 21
-
-const level = getContrastLevel(ratio);
-// Returns: { level: 'AAA', warning: false, message: 'Excellent contrast' }
-```
-
-### Recommandations de contraste [#contrast-guidelines]
-
-- **Minimum** : ratio de 3,0:1
-- **Recommandé** : 4,5:1 ou plus
-- **Excellent** : 7,0:1 ou plus
-
-{/* Angular gradients, see-through colors and image fills (paint picker) */}
+Un dégradé radial part du centre du code vers l'extérieur. Son centre et son rayon suivent la taille du code ; il n'accepte donc que `stops`.
 
 ## Dégradés angulaires [#angular-gradients]
 
-Un dégradé angulaire balaie le remplissage dans le sens horaire autour de son centre, comme le `conic-gradient` de CSS. `angle` indique où commence le balayage, en degrés dans le sens horaire à partir du haut. Les décalages vont de 0 à 100 sur le tour complet.
+Un dégradé angulaire balaie le centre de la zone remplie dans le sens horaire, comme le `conic-gradient` CSS. `angle` est le point de départ du balayage, en degrés dans le sens horaire à partir du haut. Les décalages vont de 0 à 100 sur le tour complet.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  fgColor={{
-    type: "angular",
-    angle: 30,
-    stops: [
-      { color: "#1d4ed8", offset: 0 },
-      { color: "#7c3aed", offset: 50 },
-      { color: "#1d4ed8", offset: 100 },
-    ],
-  }}
-/>
+```tsx title="components/angular-code.tsx"
+import { QRCode } from "qrdx";
+
+export function AngularCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "angular",
+        angle: 30,
+        stops: [
+          { color: "#1d4ed8", offset: 0 },
+          { color: "#7c3aed", offset: 50 },
+          { color: "#1d4ed8", offset: 100 },
+        ],
+      }}
+    />
+  );
+}
 ```
 
-SVG n'a pas de dégradé conique : le code dessine donc un éventail de fines pointes, espacées d'environ deux niveaux de couleur. PDF et EPS dessinent les mêmes pointes.
+Le SVG n'a pas de dégradé conique : le code dessine donc un éventail de fines portions, séparées d'environ deux niveaux de couleur. Le PDF et l'EPS dessinent les mêmes portions.
 
-## Couleurs semi-transparentes [#see-through-colors]
+## Couleurs transparentes [#see-through-colors]
 
-Les couleurs et les arrêts de dégradé peuvent porter un alpha, comme `#1d4ed8cc` ou `rgba(29, 78, 216, 0.8)`. SVG l'écrit sous forme de `fill-opacity` et `stop-opacity`, et PDF le conserve. EPS ne gère pas la transparence : une couleur semi-transparente y est donc mélangée à l'arrière-plan. La vérification de scan juge une couleur semi-transparente telle qu'elle apparaît sur l'arrière-plan.
+Les couleurs et les points d'arrêt des dégradés peuvent comporter de l'alpha, par exemple `#1d4ed8cc` ou `rgba(29, 78, 216, 0.8)`. Le SVG l'écrit sous forme de `fill-opacity` et `stop-opacity`, et le PDF le conserve. L'EPS ne gère pas la transparence : une couleur transparente est donc mélangée à l'arrière-plan. La vérification de scan juge une couleur transparente telle qu'elle apparaît sur l'arrière-plan.
 
-## Remplissages par image [#image-fills]
+## Remplissages d'image [#image-fills]
 
-Un remplissage par image peint une image à travers l'arrière-plan, les points ou les yeux. L'image est posée sur l'ensemble du code : les points et les yeux qui en partagent une affichent donc une seule image.
+Un remplissage d'image peint une image à travers l'arrière-plan, les modules ou les yeux. L'image est posée sur l'ensemble du code ; les modules et les yeux qui en partagent une affichent donc une seule image.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  fgColor={{
-    type: "image",
-    src: "data:image/jpeg;base64,…",
-    fit: "cover", // or "contain", "tile"
-    position: "center",
-    scale: 1,
-    opacity: 0.45,
-    underlay: "#000000",
-  }}
-/>
+```tsx title="components/photo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function PhotoCode({ photo }: { photo: string }) {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={{
+        type: "image",
+        src: photo, // a data:image/jpeg;base64,… URL
+        fit: "cover", // or "contain", "tile"
+        position: "center",
+        scale: 1,
+        opacity: 0.45,
+        underlay: "#000000",
+      }}
+    />
+  );
+}
 ```
 
-- `src` est l'image elle-même, comme pour un logo. QRdx n'enregistre un remplissage par image (dans les codes, les thèmes et la REST API) que sous la forme d'une URL `data:image` en base64 (PNG, JPEG, WebP ou GIF) de 1,5 Mo au maximum ; une image provenant d'un lien est refusée. PNG et JPEG s'intègrent dans tous les exports, et les serveurs ne récupèrent jamais un lien.
-- `underlay` est une couleur unie placée sous l'image. `opacity` la laisse transparaître : sur du noir, elle assombrit une photo pour les points ; sur du blanc, elle en éclaircit une pour l'arrière-plan.
-- Les détails d'une image sont perçus comme du bruit par une caméra : la vérification de scan exige donc plus de contraste, soit 7:1 dans les points ou les yeux et 12:1 derrière eux (`SCAN_IMAGE_CONTRAST_MIN`). Elle mesure une image par son dixième le plus clair et son dixième le plus sombre (`getImageTones`). Dans l'éditeur, « Make it scannable » trouve l'opacité sur la couleur sous-jacente qui réussit la vérification.
-- SVG, PNG et PDF prennent en charge les remplissages par image. EPS ne le peut pas ([Téléchargements](/docs/features/downloads#eps)).
+- `src` est l'image elle-même, comme pour un logo. QRdx n'enregistre un remplissage d'image (dans les codes, les thèmes et la REST API) que sous la forme d'une URL `data:image` en base64 (PNG, JPEG, WebP ou GIF) de 1,5 Mo maximum ; une image provenant d'un lien est refusée. Les PNG et JPEG sont intégrés dans tous les exports, et les serveurs ne récupèrent jamais un lien.
+- `underlay` est une couleur unie placée sous l'image. `opacity` la laisse apparaître : sur du noir, elle assombrit une photo pour les modules, et sur du blanc, elle en éclaircit une pour l'arrière-plan.
+- Le détail d'une image est perçu comme du bruit par une caméra ; la vérification de scan exige donc plus de contraste : 7:1 dans les modules ou les yeux, 12:1 derrière eux (`SCAN_IMAGE_CONTRAST_MIN`). Elle mesure une image à partir de son dixième le plus clair et de son dixième le plus sombre (`getImageTones`). Dans l'éditeur, **Rendre scannable** trouve l'opacité au-dessus de la couleur de fond qui réussit la vérification.
+- Le SVG, le PNG et le PDF prennent en charge les remplissages d'image. Ce n'est pas le cas de l'EPS ; voir [EPS](/docs/features/downloads#eps).
 
-Les remplissages par image circulent comme les logos. Ils restent avec le design dans l'éditeur, dans les codes enregistrés et dans les thèmes enregistrés. Ils ne sont pas inclus dans les liens `?style=`, les styles communautaires publiés, les extraits Get code ni le contexte du chat : chaque remplissage par image y est remplacé par sa couleur `underlay`. L'Image API (`GET /v1/qr`) et le serveur MCP ne les acceptent pas encore. `POST /v1/codes` et `PATCH /v1/codes/{id}` n'en acceptent un que sous forme d'URL `data:image` et répondent 400 pour tout autre cas ; il n'existe pas encore d'identifiant de fichier téléversé pour les images.
+Les remplissages d'image se comportent comme les logos. Ils restent avec le design dans l'éditeur, dans les codes enregistrés et dans les thèmes enregistrés. Ils ne sont pas inclus dans les liens `?style=`, les styles communautaires publiés, les extraits de Get code ni le contexte du chat : chaque remplissage d'image y est remplacé par sa couleur `underlay`. L'Image API (`GET /v1/qr`) et le serveur MCP ne les acceptent pas. `POST /v1/codes` et `PATCH /v1/codes/{id}` n'en acceptent un que sous forme d'URL `data:image` et répondent 400 pour tout le reste.
 
-Les dégradés angulaires et les remplissages par image figurent dans le code source de qrdx et seront livrés avec la prochaine version npm. qrdx 0.0.46 sur npm ne les inclut pas.
+## Vérifier le contraste [#check-the-contrast]
 
-## Étapes suivantes [#next-steps]
+Les scanners ont besoin de modules foncés sur un arrière-plan clair. Le score de scan vérifie chaque couleur, y compris chaque point d'arrêt de dégradé, par rapport à l'arrière-plan ; les mêmes utilitaires sont exportés :
 
-- [Logos](/docs/features/logos) — Ajoutez des logos à des QR codes colorés
-- [Motifs](/docs/features/patterns) — Associez les couleurs aux motifs
-- [Téléchargements](/docs/features/downloads) — Exportez des QR codes colorés
+```ts title="lib/check-contrast.ts"
+import { getContrastLevel, getContrastRatio } from "qrdx";
+
+const ratio = getContrastRatio("#1a56db", "#f9fafb");
+// 5.9
+
+getContrastLevel(ratio);
+// { level: "AA", warning: false, message: "Good contrast" }
+```
+
+Le score de scan accepte un ratio de 4,5 ou plus (`SCAN_CONTRAST_MIN`), retire des points en dessous, et fait échouer le design sous 1,5. `getContrastLevel` renvoie `AAA` à partir de 7, `AA` à partir de 4,5, `AA Large` à partir de 3 avec un avertissement, et `Fail` en dessous. Un code clair sur un arrière-plan foncé passe le ratio mais perd des points à la vérification de polarité : la plupart des caméras de téléphone le lisent, certaines applications de scan non.
+
+## Voir aussi [#related]
+
+<Cards>
+  <Card href="/docs/features/patterns" title="Choisir les formes des modules et des yeux" description="Les couleurs par œil et les formes que ces couleurs remplissent." />
+  <Card href="/docs/features/logos" title="Ajouter un logo dans le code" description="Un logo sur un code coloré, avec une plaque derrière." />
+  <Card href="/docs/features/downloads" title="Exporter et télécharger" description="Les formats qui conservent les dégradés, la transparence et les remplissages d'image." />
+  <Card href="/docs/utilities" title="Utilitaires" description="Les utilitaires de couleur et de contraste en détail." />
+</Cards>

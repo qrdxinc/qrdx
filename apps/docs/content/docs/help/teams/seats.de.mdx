@@ -1,38 +1,60 @@
 ---
-title: "Plätze und Workspace-Limits"
+title: "Seats und Workspace-Limits"
 description: "Wie viele Personen ein Workspace haben kann und wie du einen Workspace verlässt, jemanden entfernst oder einen Workspace löschst."
 ---
 
-## Wie viele Plätze du bekommst [#how-many-seats-you-get]
+Die Seats eines Workspace richten sich nach dem Plan der Owner und der Mitglieder mit Zugriff auf die Abrechnung. Diese Seite zeigt, wie viele Personen Platz haben und wie Personen den Workspace verlassen, entfernt werden oder ein Workspace gelöscht wird.
 
-- **Pro**: 3 Plätze, der Owner eingeschlossen.
-- **Business**: unbegrenzte Plätze.
-- **Kostenlos**: 1 Platz, nur für dich.
+## Wie viele Seats du bekommst [#how-many-seats-you-get]
 
-Ein Workspace nutzt den besten Tarif unter seinen Owners. Mitglieder brauchen kein eigenes Abo.
+| Plan | Seats |
+| --- | --- |
+| Kostenlos | 1 (du) |
+| Pro | 3, inklusive Owner |
+| Business | Unbegrenzt |
 
-## Ausstehende Einladungen belegen einen Platz [#pending-invitations-use-a-seat]
+Ein Workspace nutzt den besten Plan unter seinen Ownern und Mitgliedern mit Zugriff auf die Abrechnung. Mitglieder brauchen kein eigenes Abo.
 
-Eine Einladung belegt einen Platz, bis sie angenommen oder widerrufen wird. Um den Platz freizugeben, suche die Einladung auf der Seite **Einstellungen** → **Team** und klicke auf **Widerrufen**.
+## Ausstehende Einladungen belegen einen Seat [#pending-invitations-use-a-seat]
 
-## Wenn sich der Tarif der Owners ändert [#if-the-owners-plan-changes]
+Eine Einladung belegt einen Seat, bis sie angenommen oder widerrufen wird. Um den Seat freizugeben, suche die Einladung unter **Ausstehende Einladungen** auf der Seite **Einstellungen** → **Team** und klicke auf **Widerrufen**.
 
-Personen, die schon im Workspace sind, bleiben. Nur neue Einladungen werden blockiert, bis wieder ein Platz frei ist.
+## Wenn sich der Plan der Owner ändert [#if-the-owners-plan-changes]
+
+Personen, die bereits im Workspace sind, bleiben. Nur neue Einladungen sind blockiert, bis wieder ein Seat frei ist.
 
 ## Jemanden entfernen [#remove-someone]
 
-Klicke auf der Seite **Einstellungen** → **Team** neben dem Namen der Person auf **Entfernen** und dann auf **Mitglied entfernen**. Nur Admins und Owners können Mitglieder entfernen, und niemand kann aus seinem eigenen Workspace entfernt werden.
+Klicke auf der Seite **Einstellungen** → **Team** neben dem Namen auf **Entfernen**, dann auf **Mitglied entfernen** und [bestätige, dass du es bist](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), falls du dazu aufgefordert wirst. Nur Admins und Owner können Mitglieder entfernen, und aus dem eigenen Workspace kann niemand entfernt werden.
 
-Die Codes und Seiten, die die Person erstellt hat, bleiben im Workspace.
+Die Codes und Seiten, die die Person erstellt hat, bleiben im Workspace. API-Schlüssel, die sie für den Workspace erstellt hat, funktionieren nicht mehr.
 
 ## Einen Workspace verlassen [#leave-a-workspace]
 
-Klicke in den **Einstellungen** → **Allgemein** des Workspace auf **Workspace verlassen**.
+Klicke in den **Einstellungen** → **Allgemein** des Workspace auf **Workspace verlassen**. Du verlierst den Zugriff auf seine Codes, Seiten und Themes; was du erstellt hast, bleibt im Workspace, und um wieder beizutreten, brauchst du eine neue Einladung.
 
 Wenn du der einzige Owner bist, mache zuerst jemand anderen zum Owner. Siehe [Team-Rollen](/docs/help/teams/roles). Deinen eigenen Workspace kannst du nicht verlassen.
 
 ## Einen Workspace löschen [#delete-a-workspace]
 
-Owners können unter **Einstellungen** → **Allgemein** auf **Workspace löschen** klicken. Gib zur Bestätigung die URL des Workspace ein. Dein eigener Workspace kann nicht gelöscht werden; er verschwindet, wenn du [dein Konto löschst](/docs/help/account-and-billing/delete-your-account).
+Owner können in **Einstellungen** → **Allgemein** auf **Workspace löschen** klicken. Zur Bestätigung gibst du die URL des Workspace ein. Dein eigener Workspace kann nicht gelöscht werden; er verschwindet, wenn du [dein Konto löschst](/docs/help/account-and-billing/delete-your-account).
 
-Nichts hört auf zu funktionieren. Jeder Code, jede Seite, jede Datei und jede Domain wechselt in den eigenen Workspace der Person, die sie erstellt hat, und gedruckte Codes leiten weiter. Die API-Schlüssel des Workspace werden gelöscht.
+<Shot id="workspace-danger-zone" />
+
+Nichts hört auf zu funktionieren. Jeder Code, jede Seite, jedes Theme, jede Datei und jede Domain wechselt in den eigenen Workspace des Mitglieds, das sie erstellt hat, und gedruckte Codes leiten weiterhin weiter. Die Mitglieder und ausstehenden Einladungen des Workspace werden entfernt, und seine API-Schlüssel werden gelöscht.
+
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
+
+### Einladungslink erstellen ist deaktiviert [#create-invite-link-is-disabled]
+
+Alle Seats sind belegt, ausstehende Einladungen eingerechnet. Widerrufe eine Einladung, entferne jemanden oder bitte einen Owner oder ein Mitglied mit Zugriff auf die Abrechnung, den Plan zu upgraden.
+
+### Workspace verlassen wird abgelehnt [#leave-workspace-is-refused]
+
+Du bist der einzige Owner, oder es ist dein eigener Workspace. Mache zuerst ein anderes Mitglied zum Owner; deinen eigenen Workspace kannst du nicht verlassen.
+
+## Verwandte Themen [#related]
+
+- [Einen Workspace erstellen und Personen einladen](/docs/help/teams/create-and-invite)
+- [Team-Rollen](/docs/help/teams/roles)
+- [Pläne und was sie enthalten](/docs/help/account-and-billing/plans)

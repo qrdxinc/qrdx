@@ -8,6 +8,8 @@
  * app's `trackServer()` (apps/app/lib/analytics/server.ts).
  */
 
+import type { AuthPromptKind, AuthPromptReason } from "./auth-prompt";
+
 /** How someone signed in (Better Auth's last-used login method). */
 export type SignInMethod =
   | "google"
@@ -37,8 +39,36 @@ type NoProps = Record<string, never>;
 
 export interface AnalyticsEvents {
   // Auth
-  sign_up: { method: SignInMethod };
-  sign_in: { method: SignInMethod };
+  /**
+   * `reason` and `surface`: the sign-in dialog this came from, when it
+   * opened in this tab in the last 30 minutes (auth-prompt.ts).
+   */
+  sign_up: {
+    method: SignInMethod;
+    reason?: AuthPromptReason;
+    surface?: string;
+  };
+  sign_in: {
+    method: SignInMethod;
+    reason?: AuthPromptReason;
+    surface?: string;
+  };
+  /**
+   * The sign-in dialog opened, or a quiet sign-up line appeared (`kind`):
+   * why, and where (a site section such as "playground" or "tools/bulk", or
+   * "header").
+   */
+  auth_prompt_shown: {
+    reason: AuthPromptReason;
+    surface: string;
+    kind: AuthPromptKind;
+  };
+  /** Closed without signing in, or a sign-up line waved off for good. */
+  auth_prompt_dismissed: {
+    reason: AuthPromptReason;
+    surface: string;
+    kind: AuthPromptKind;
+  };
   sign_out: NoProps;
   /** Settings → Account: the account moved to a new address (never the address). */
   email_changed: NoProps;
@@ -136,6 +166,11 @@ export interface AnalyticsEvents {
   chat_bot_add_clicked: { bot: "slack" | "telegram" | "discord" };
 
   // Billing
+  /**
+   * A plan limit stopped something and offered an upgrade: which limit
+   * ("ai_requests", "pro_feature", "dynamic_codes") and the plan it hit.
+   */
+  limit_gate_shown: { limit: string; plan: string };
   upgrade_clicked: { source: string; plan?: "pro" | "business" };
   checkout_started: { plan: "pro" | "business"; interval: "month" | "year" };
   /** Server side, from the Polar webhook. */
@@ -143,6 +178,23 @@ export interface AnalyticsEvents {
 
   // Docs and errors
   docs_search: { query_length: number; result_count?: number };
+  /**
+   * The docs assistant (Ask AI): a question sent, its length, the docs tab
+   * it was asked from and whether it was a suggested one. Never the text.
+   */
+  docs_chat_asked: { query_length: number; tab?: string; suggested?: boolean };
+  /** An answer finished: how many docs pages it cited, or why there is none. */
+  docs_chat_answered: {
+    sources: number;
+    outcome: "answered" | "limited" | "error";
+  };
+  /** "Was this answer helpful?" under an answer. */
+  docs_chat_feedback: { helpful: boolean };
+  /**
+   * "Was this page helpful?" under a docs page: the page's path (English,
+   * at most 64 characters) and the answer. Nothing typed, no identity.
+   */
+  docs_feedback: { path: string; answer: "yes" | "no" };
   "404_viewed": { area: "site" | "docs" };
   query_failed: { error_type: string };
 }

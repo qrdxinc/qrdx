@@ -1,6 +1,8 @@
 import { database as db, user as userTable } from "@repo/database";
 import { eq } from "drizzle-orm";
 import type { NextRequest } from "next/server";
+import { isAdminConsoleToken } from "@/lib/admin-console/client";
+import { adminConsoleUserinfo } from "@/lib/admin-console/userinfo";
 import { oauthError, validateAccessToken } from "@/lib/oauth";
 
 export async function GET(req: NextRequest) {
@@ -14,6 +16,8 @@ export async function GET(req: NextRequest) {
   }
 
   const token = authHeader.slice(7);
+  // The back-office console's tokens (lib/admin-console): OpenID claims.
+  if (isAdminConsoleToken(token)) return adminConsoleUserinfo(token);
   const tokenData = await validateAccessToken(token);
 
   if (!tokenData) {

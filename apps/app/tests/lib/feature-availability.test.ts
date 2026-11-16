@@ -41,6 +41,8 @@ const ctx = (
 /** Every variable any feature reads, set. */
 const EVERYTHING: Record<string, string> = {
   AI_GATEWAY_API_KEY: FAKE,
+  // The docs assistant reads the docs site; its switch is unset (on).
+  DOCS_ZONE_URL: "https://docs.qrdx.dev",
   VERCEL_API_TOKEN: FAKE,
   VERCEL_PROJECT_ID: FAKE,
   DOMAIN_CONNECT_PROVIDER_ID: FAKE,
@@ -81,6 +83,7 @@ const EVERYTHING: Record<string, string> = {
 const NEEDS: Record<FeatureId, string[]> = {
   aiThemes: ["AI_GATEWAY_API_KEY"],
   aiArt: ["AI_GATEWAY_API_KEY"],
+  docsChat: ["AI_GATEWAY_API_KEY", "DOCS_ZONE_URL"],
   customDomains: ["VERCEL_API_TOKEN", "VERCEL_PROJECT_ID"],
   fileStorage: [
     "R2_ACCOUNT_ID",
@@ -137,6 +140,51 @@ describe("euro prices wait for the flag", () => {
     expect(on("0")).toBe(false);
     expect(on("false")).toBe(false);
     expect(on(undefined)).toBe(false);
+  });
+});
+
+describe("the docs assistant", () => {
+  const ready = {
+    AI_GATEWAY_API_KEY: FAKE,
+    DOCS_ZONE_URL: "https://docs.qrdx.dev",
+  };
+  const on = (env: Record<string, string | undefined>) =>
+    computeFeatures(ctx({ ...ready, ...env }, vercelProd)).docsChat;
+
+  it("runs with the gateway key and a docs site, and its switch unset", () => {
+    expect(on({})).toBe(true);
+    expect(
+      computeFeatures(ctx({ AI_GATEWAY_API_KEY: FAKE }, vercelProd)).docsChat,
+    ).toBe(false);
+    expect(
+      missingFeatureSetup(
+        "docsChat",
+        ctx({ AI_GATEWAY_API_KEY: FAKE }, vercelProd),
+      ),
+    ).toEqual(["DOCS_ZONE_URL"]);
+  });
+
+  it("switches off with DOCS_CHAT_ENABLED=0 or false, and on with anything else", () => {
+    expect(on({ DOCS_CHAT_ENABLED: "0" })).toBe(false);
+    expect(on({ DOCS_CHAT_ENABLED: "false" })).toBe(false);
+    expect(on({ DOCS_CHAT_ENABLED: " FALSE " })).toBe(false);
+    expect(on({ DOCS_CHAT_ENABLED: "1" })).toBe(true);
+    expect(on({ DOCS_CHAT_ENABLED: "true" })).toBe(true);
+    // Switched off: the variables it needs are named, as for passkeys.
+    expect(
+      missingFeatureSetup(
+        "docsChat",
+        ctx({ ...ready, DOCS_CHAT_ENABLED: "0" }, vercelProd),
+      ),
+    ).toEqual(["AI_GATEWAY_API_KEY", "DOCS_ZONE_URL"]);
+  });
+
+  it("hides no page: the Ask AI button is the only thing that goes", () => {
+    const view = toPublicAvailability(
+      computeFeatures(ctx({ AI_GATEWAY_API_KEY: FAKE }, vercelProd)),
+    );
+    expect(view.unavailable).toContain("docsChat");
+    expect(view.hiddenPaths.some((path) => path.includes("chat"))).toBe(false);
   });
 });
 
@@ -570,6 +618,8 @@ describe("the Slack bot", () => {
 const PRODUCTION_LIKE: Record<string, string> = {
   // Always set: the build requires it.
   NEXT_PUBLIC_APP_URL: "https://qrdx.dev",
+  // The docs site (apps/docs) serves /docs since 14 November 2026.
+  DOCS_ZONE_URL: "https://docs.qrdx.dev",
   // qrdx.dev runs the ee/ features (workspace SSO) with its own key.
   QRDX_EE_LICENSE: FAKE,
   ...Object.fromEntries(
@@ -602,10 +652,11 @@ const PRODUCTION_LIKE: Record<string, string> = {
 describe("a production-like deployment", () => {
   const features = computeFeatures(ctx(PRODUCTION_LIKE, vercelProd));
 
-  it("offers AI themes and art, storage, email, link safety and cron", () => {
+  it("offers AI themes and art, the docs assistant, storage, email, link safety and cron", () => {
     for (const id of [
       "aiThemes",
       "aiArt",
+      "docsChat",
       "fileStorage",
       "email",
       "linkSafety",

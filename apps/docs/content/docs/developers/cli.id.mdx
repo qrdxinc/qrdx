@@ -1,27 +1,36 @@
 ---
 title: "CLI"
-description: "Buat kode QR bergaya dalam format SVG, PNG, WebP, atau EPS vektor dari terminal atau CI Anda dengan alat baris perintah @qrdx/cli, satu per satu atau seluruh CSV dengan qrdx batch."
+description: "Buat kode QR bergaya sebagai SVG, PNG, WebP, atau EPS vektor dari terminal atau CI Anda dengan @qrdx/cli, satu per satu dengan qrdx generate atau seluruh CSV dengan qrdx batch."
 icon: Terminal
 ---
 
-`@qrdx/cli` menghasilkan kode QR yang sama seperti Playground dan [pustaka `qrdx`](/docs/getting-started) dari baris perintah. Alat ini tidak pernah meminta masukan di skrip dan CI, dan saat Anda menjalankan `qrdx generate` tanpa argumen di terminal, alat ini menanyakan konten dan opsi langkah demi langkah.
+Di akhir halaman ini, Anda akan memiliki file kode QR yang dibuat dari terminal dengan gaya yang sama seperti di Playground, serta satu folder berisi kode yang dibuat dari CSV hanya dengan satu perintah, tanpa mengunggah apa pun ke mana pun.
+
+`@qrdx/cli` merender kode QR yang sama seperti Playground dan [pustaka `qrdx`](/docs/getting-started) dari baris perintah. Di skrip dan CI, CLI tidak pernah meminta masukan; jalankan `qrdx generate` tanpa argumen di terminal dan CLI akan menanyakan konten serta opsi langkah demi langkah.
 
 <NpmStatus package="@qrdx/cli" />
 
-```bash
+## Sebelum Anda mulai [#before-you-start]
+
+- Node.js 22 atau lebih baru.
+- Keluaran PNG dan WebP menggunakan [sharp](https://sharp.pixelplumbing.com), dependensi opsional yang dipasang npm jika platform Anda mendukungnya; SVG dan EPS berfungsi tanpanya.
+- Paket npm `qrdx` adalah pustaka React. CLI hanya ada di `@qrdx/cli`.
+
+## 1. Buat satu kode [#1-make-one-code]
+
+Jalankan sekali dengan `npx`, atau pasang secara global untuk mendapatkan perintah `qrdx`:
+
+```bash title="Terminal"
 npx @qrdx/cli generate "https://example.com" -o qr.svg
-```
 
-Instal secara global untuk mendapatkan perintah `qrdx`:
-
-```bash
 npm install -g @qrdx/cli
 qrdx generate "https://example.com" -o qr.png --size 1024
 ```
 
-Alat ini membutuhkan Node.js 22 atau yang lebih baru. Keluaran PNG dan WebP menggunakan [sharp](https://sharp.pixelplumbing.com), dependensi opsional yang dipasang npm jika platform Anda mendukungnya; SVG dan EPS berfungsi tanpanya. Paket npm `qrdx` adalah pustaka React: CLI hanya ada di `@qrdx/cli`.
-
-## Format keluaran [#output-formats]
+```txt title="Output"
+◇  ✔  Saved to qr.png (1024×1024)
+└  Done!
+```
 
 Ekstensi file menentukan format, atau gunakan `--format` jika nama file tidak memiliki ekstensi.
 
@@ -34,56 +43,11 @@ Ekstensi file menentukan format, atau gunakan `--format` jika nama file tidak me
 
 File EPS adalah PostScript vektor. Logo PNG dan JPEG disematkan apa adanya; format logo lain dikonversi dengan sharp jika terpasang, dan jika tidak, dihilangkan disertai peringatan.
 
-## Opsi [#options]
+## 2. Beri gaya [#2-style-it]
 
-| Flag | Default | Deskripsi |
-| --- | --- | --- |
-| `-o`, `--output` | `qr.svg` | File keluaran |
-| `--format` | dari ekstensi | `svg`, `png`, `webp`, atau `eps` |
-| `--size` | `512` | Ukuran keluaran (lihat di atas) |
-| `-l`, `--level` | `Q` | Koreksi kesalahan: `L`, `M`, `Q`, atau `H` |
-| `--body` | `square` | [Pola](/docs/features/patterns) modul data |
-| `--eye` | `square` | Pola mata sudut |
-| `--dot` | `square` | Pola titik mata sudut |
-| `--fg`, `--bg` | `#000000`, `#ffffff` | Latar depan dan latar belakang: warna hex atau gradien JSON |
-| `--eye-color`, `--dot-color` | `--fg` | Warna mata sudut dan titik mata |
-| `--logo` | | URL gambar logo di tengah (gunakan dengan `--level H`) |
-| `--margin` | `0` | Zona tenang, dalam modul |
-| `--template` | | `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, atau `Halloween` |
-| `--frame` | | [Bingkai](/docs/features/frames) ajakan bertindak: salah satu dari {facts.frameStyles} bingkai bawaan, seperti `banner-bottom`, `rounded-border`, `circle`, `sticker`, atau `phone` (lihat [semuanya](/docs/styles#frames)) |
-| `--frame-text` | `Scan me` | Label bingkai, hingga 24 karakter |
-| `--frame-color`, `--frame-text-color` | | Warna bingkai dan label (hex) |
-
-`qrdx --help` menampilkan semua nama pola. Nilai yang tidak valid keluar dengan kode `1` dan pesan yang mencantumkan nilai yang diterima.
-
-## Banyak kode dari CSV [#many-codes-from-a-csv]
-
-`qrdx batch` menulis kode QR statis untuk setiap baris file CSV ke dalam sebuah folder:
-
-```bash
-qrdx batch products.csv -o codes --format png --size 1024 --body circle
-```
-
-Alat ini membaca kolom yang sama seperti [generator massal](/tools/bulk): konten dari kolom bernama `value`, `url`, `link`, `data`, `content`, `text`, atau `qr` (jika tidak ada, kolom pertama), dan nama file dari kolom bernama `file name`, `name`, `label`, `id`, `title`, atau `sku` (jika tidak ada, `qr-00001`, `qr-00002`, dan seterusnya). Pilih kolom lain berdasarkan nama header atau nomor kolom:
-
-| Flag | Default | Deskripsi |
-| --- | --- | --- |
-| `-o`, `--out` | `qr-codes` | Folder untuk kode |
-| `--format` | `svg` | `svg`, `png`, atau `eps` |
-| `--value-column` | ditebak | Kolom berisi konten setiap kode |
-| `--name-column` | ditebak | Kolom berisi nama file |
-| `--no-header` | | Baris pertama adalah kode, bukan nama kolom |
-| `--jobs` | `4` untuk SVG, selain itu `8` | Jumlah kode yang dirender sekaligus |
-
-Setiap opsi gaya di atas berlaku untuk semua kode. CSV dibaca sebagai aliran dan setiap kode disimpan segera setelah dibuat, sehingga perintah ini tidak memiliki batas baris: di laptop, 10.000 kode SVG memakan waktu sekitar 40 detik dan memori di bawah 200 MB. Tidak ada yang diunggah dan tidak perlu akun. Baris yang tidak dapat dienkode dilewati dan dicantumkan beserta alasannya di `errors.csv` di folder keluaran.
-
-Untuk mencetak [kode dinamis](/docs/dynamic-qr-codes) secara massal, buat terlebih dahulu (impor CSV di dasbor atau API) lalu jalankan `qrdx batch` pada CSV hasil yang diberikan oleh impor, dengan `--value-column short_link`.
-
-## Contoh [#examples]
-
-```bash
+```bash title="Terminal"
 # High-resolution PNG for print
-qrdx generate "https://example.com" -o qr.png --size 2048 --level H
+qrdx generate "https://example.com" -o print.png --size 2048 --level H
 
 # Vector EPS, 2 inches wide, for a print shop
 qrdx generate "https://example.com" -o qr.eps --size 144
@@ -102,8 +66,96 @@ qrdx generate "https://example.com/menu" --frame banner-bottom --frame-text "Sca
 qrdx generate "WIFI:T:WPA;S:MyNetwork;P:MyPassword;;" -o wifi.svg
 ```
 
-Untuk mencetak [kode QR dinamis](/docs/dynamic-qr-codes), berikan tautan pendeknya (`https://qrdx.dev/q/<slug>`) sebagai data.
+```txt title="Output of the frame example"
+◇  ✔  Saved to menu.png (635×727)
+```
+
+Dengan bingkai, `--size` adalah lebar kode dan bingkai menambah ukuran gambar. Untuk mencetak [kode QR dinamis](/docs/dynamic-qr-codes), berikan tautan pendeknya (`https://qrdx.dev/q/<slug>`) sebagai data.
+
+| Flag | Default | Deskripsi |
+| --- | --- | --- |
+| `-o`, `--output` | `qr.svg` | File keluaran |
+| `--format` | dari ekstensi | `svg`, `png`, `webp`, atau `eps` |
+| `--size` | `512` | Ukuran keluaran (lihat di atas) |
+| `-l`, `--level` | `Q` | Koreksi kesalahan: `L`, `M`, `Q`, atau `H` |
+| `--body` | `square` | [Pola](/docs/features/patterns) modul data |
+| `--eye` | `square` | Pola mata sudut |
+| `--dot` | `square` | Pola titik mata sudut |
+| `--fg`, `--bg` | `#000000`, `#ffffff` | Latar depan dan latar belakang: warna hex atau gradien JSON (`linear`, `radial`, atau `angular`) |
+| `--eye-color`, `--dot-color` | `--fg` | Warna mata sudut dan titik mata |
+| `--logo` | | URL gambar logo di tengah (gunakan dengan `--level H`) |
+| `--no-logo` | | Lewati prompt logo dalam mode interaktif |
+| `--margin` | `0` | Zona tenang, dalam modul |
+| `--template` | | Bingkai yang digambar sebagai templat: `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, atau `DotRing` |
+| `--frame` | | [Bingkai](/docs/features/frames) ajakan bertindak: salah satu dari {facts.frameStyles} bingkai bawaan, seperti `banner-bottom`, `rounded-border`, `circle`, `sticker`, atau `phone` (lihat [semuanya](/docs/styles#frames)) |
+| `--frame-text` | `Scan me` | Label bingkai, maksimal 24 karakter; `""` menyembunyikannya |
+| `--frame-color`, `--frame-text-color` | | Warna bingkai dan label (hex) |
+
+`qrdx --help` menampilkan semua nama pola. Nilai yang tidak valid akan keluar dengan kode `1` dan menampilkan nilai yang diterima:
+
+```txt title="qrdx generate https://example.com --body nope -o bad.svg"
+✗ Invalid --body "nope". Expected one of: circle, circle-large, square, diamond, circle-mixed, pacman, rounded, small-square, vertical-line, horizontal-line, liquid, liquid-horizontal, liquid-vertical, classy, classy-rounded, leaf, plus, hexagon, star, heart, random-dots, mosaic, octagon
+```
+
+## 3. Buat banyak kode dari CSV [#3-make-many-codes-from-a-csv]
+
+`qrdx batch` menulis kode QR statis untuk setiap baris file CSV ke dalam satu folder:
+
+```csv title="products.csv"
+sku,url
+A-100,https://example.com/products/a-100
+A-101,https://example.com/products/a-101
+```
+
+```bash title="Terminal"
+qrdx batch products.csv -o codes --format png --size 1024 --body circle
+```
+
+```txt title="Output"
+2 rows · 2 saved
+✔  Saved 2 PNG codes to codes in 0.2 s
+```
+
+Folder tersebut berisi `A-100.png` dan `A-101.png`. Perintah ini membaca kolom yang sama seperti [generator massal](/tools/bulk): konten dari kolom bernama `value`, `url`, `link`, `data`, `content`, `text`, atau `qr` (jika tidak ada, kolom pertama), dan nama file dari kolom bernama `file name`, `name`, `label`, `id`, `title`, atau `sku` (jika tidak ada, `qr-00001`, `qr-00002`, dan seterusnya). Pilih kolom lain berdasarkan nama header atau nomor kolom:
+
+| Flag | Default | Deskripsi |
+| --- | --- | --- |
+| `-o`, `--out` | `qr-codes` | Folder untuk kode |
+| `--format` | `svg` | `svg`, `png`, atau `eps` |
+| `--value-column` | ditebak | Kolom berisi konten tiap kode |
+| `--name-column` | ditebak | Kolom berisi nama file |
+| `--no-header` | | Baris pertama adalah kode, bukan nama kolom |
+| `--jobs` | `4` untuk SVG, `8` selain itu | Jumlah kode yang dirender sekaligus, 1 sampai 64 |
+
+Setiap opsi gaya di atas berlaku untuk semua kode. CSV dibaca sebagai stream dan setiap kode disimpan segera setelah dibuat, sehingga perintah ini tidak memiliki batas baris: di laptop, 10.000 kode SVG memerlukan sekitar 40 detik dan memori di bawah 200 MB. Tidak ada yang diunggah dan tidak perlu akun. Baris yang tidak dapat dienkode dilewati dan dicantumkan beserta alasannya di `errors.csv` pada folder keluaran.
+
+Untuk mencetak [kode dinamis](/docs/dynamic-qr-codes) secara massal, buat kodenya terlebih dahulu (impor CSV di dasbor atau [`POST /v1/codes`](/docs/developers/api/create-codes)) lalu jalankan `qrdx batch` pada CSV hasil yang diberikan oleh impor tersebut, dengan `--value-column short_link`.
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### `Invalid --body "…"` (atau `--eye`, `--dot`, `--frame`) [#invalid---body--or---eye---dot---frame]
+
+Nilainya bukan salah satu nama pola atau bingkai. Pesan tersebut mencantumkan nilai yang diterima; `qrdx --help` juga mencantumkannya.
+
+### Keluaran PNG atau WebP gagal, SVG berhasil [#png-or-webp-output-fails-svg-works]
+
+sharp tidak terpasang untuk platform Anda. Pasang ulang `@qrdx/cli` dengan akses jaringan agar npm dapat mengambil dependensi opsional, atau gunakan keluaran SVG atau EPS.
+
+### `--jobs` ditolak [#--jobs-is-refused]
+
+Opsi ini menerima angka dari 1 sampai 64.
+
+### Ada baris yang hilang dari folder keluaran [#a-row-is-missing-from-the-output-folder]
+
+Kontennya tidak dapat dienkode (kosong, atau terlalu panjang untuk kode QR). Buka `errors.csv` di folder keluaran untuk melihat baris dan alasannya.
 
 ## Gunakan dari agen pengodean AI [#use-it-from-an-ai-coding-agent]
 
-[Skill `generate-qr`](https://github.com/qrdxinc/qrdx/tree/main/skills/generate-qr) di repositori mengajarkan agen seperti Claude Code untuk memanggil CLI. Untuk agen yang mendukung MCP, [server MCP](/docs/developers/mcp) tidak memerlukan instalasi sama sekali.
+[Skill `generate-qr`](https://github.com/qrdxinc/qrdx/tree/main/skills/generate-qr) di repositori mengajarkan agen seperti Claude Code untuk memanggil CLI. Untuk agen yang mendukung MCP, [server MCP](/docs/developers/mcp) tidak memerlukan pemasangan sama sekali.
+
+## Terkait [#related]
+
+- [API gambar kode QR](/docs/developers/image-api): gaya yang sama dari sebuah URL, tanpa pemasangan
+- [Generator massal](/tools/bulk): alur kerja CSV di browser
+- [Pola](/docs/features/patterns) dan [bingkai](/docs/features/frames): setiap nilai yang diterima flag gaya
+- [Changelog](/changelogs): rilis CLI

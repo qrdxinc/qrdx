@@ -1,24 +1,31 @@
 ---
 title: "Início rápido"
-description: "Sua primeira requisição à API do QRdx em menos de dois minutos, sem chave. Depois, uma chave de API e seu primeiro QR code dinâmico."
+description: "Gere a imagem de um QR code com uma única requisição sem chave, crie uma chave de API, crie um código dinâmico e aponte-o para outro destino, tudo em menos de cinco minutos."
 icon: Rocket
 ---
 
-A API do QRdx tem duas metades. Imagens não exigem nada: nem conta, nem chave. QR codes dinâmicos, leituras e webhooks pertencem a um workspace, então precisam de uma chave de API.
+Ao final desta página, você terá a imagem de um QR code salva a partir de uma requisição, uma chave de API para o seu workspace, um código dinâmico cujo QR impresso continua funcionando depois que você muda para onde ele leva as pessoas, e uma primeira olhada nas análises de leitura dele.
 
-## 1. Crie um QR code (sem chave) [#1-make-a-qr-code-no-key]
+A API tem duas metades. As imagens não exigem nada: nem conta, nem chave. Os códigos dinâmicos, as leituras e os webhooks pertencem a um workspace, então precisam de uma chave de API.
 
-Execute isto. Ele salva um PNG de um QR code que abre qrdx.dev:
+## Antes de começar [#before-you-start]
+
+- curl, Node.js 18 ou posterior, ou Python 3 com o pacote `requests`. Escolha a aba da ferramenta que você usa; a escolha é mantida nas outras páginas.
+- Uma conta QRdx para os passos 2 a 4. Uma conta Grátis basta: workspaces Grátis têm 10 códigos dinâmicos ativos e 1.000 requisições de API por dia.
+
+## 1. Gere a imagem de um QR code (sem chave) [#1-make-a-qr-code-image-no-key]
+
+Execute o comando abaixo. Ele salva um PNG de um QR code que abre qrdx.dev.
 
 <Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
   <Tab value="curl">
-    ```bash
+    ```bash title="Terminal"
     curl "https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&format=png" -o qr.png
     ```
   </Tab>
   <Tab value="JavaScript">
-    ```js
-    // Node 18 or later (save as qr.mjs)
+    ```js title="qr.mjs"
+    // Node 18 or later
     import { writeFile } from "node:fs/promises";
 
     const url = new URL("https://api.qrdx.dev/v1/qr");
@@ -27,10 +34,11 @@ Execute isto. Ele salva um PNG de um QR code que abre qrdx.dev:
 
     const response = await fetch(url);
     await writeFile("qr.png", Buffer.from(await response.arrayBuffer()));
+    console.log(response.status, response.headers.get("content-type"));
     ```
   </Tab>
   <Tab value="Python">
-    ```python
+    ```python title="qr.py"
     # pip install requests
     import requests
 
@@ -40,41 +48,51 @@ Execute isto. Ele salva um PNG de um QR code que abre qrdx.dev:
     )
     response.raise_for_status()
     open("qr.png", "wb").write(response.content)
+    print(response.status_code, response.headers["content-type"])
     ```
   </Tab>
 </Tabs>
 
-Essa é uma chamada de API funcionando. A própria URL é a imagem, então ela também funciona direto em uma tag `<img>`:
+```txt title="Output"
+200 image/png
+qr.png: PNG image data, 512 x 512, 8-bit/color RGBA, non-interlaced
+```
 
-```html
+Essa já é uma chamada de API funcionando. A própria URL é a imagem, então ela também funciona direto em uma tag `<img>`:
+
+```html title="index.html"
 <img src="https://api.qrdx.dev/v1/qr?data=https://qrdx.dev&fg=111111&body=circle" alt="QR code for qrdx.dev" />
 ```
 
-Mude cores, formatos, tamanho e formato do arquivo com parâmetros de consulta, ou teste tudo no navegador na página [Gerar a imagem de um QR code](/docs/developers/api/get-qr-image): o painel **Try it** envia a requisição e mostra a imagem. Imagens não contam para nenhuma cota; o limite é de 300 requisições por minuto por endereço IP.
+Mude cores, formas, tamanho e formato com parâmetros de consulta, ou experimente no navegador na página [Gerar a imagem de um QR code](/docs/developers/api/get-qr-image): o painel **Try it** envia a requisição e mostra a imagem. As imagens não contam em nenhuma cota; o limite é de {facts.imageApiPerMinute} requisições por minuto por endereço IP.
 
 ## 2. Crie uma chave de API [#create-an-api-key]
 
-Todo o resto da API atua sobre um workspace: criar QR codes dinâmicos, mudar para onde eles apontam, ler suas leituras. Essas requisições levam uma chave de API no cabeçalho `Authorization`.
+Todo o resto da API age sobre um workspace: criar códigos dinâmicos, mudar para onde eles apontam, ler as leituras. Essas requisições levam uma chave de API no cabeçalho `Authorization`.
 
-1. Abra [Configurações → Chaves de API e apps](/dashboard?to=settings/developers&new=1) (faça login antes, se precisar). O formulário **Criar chave** será aberto.
-2. Mantenha **Acesso total** e escolha **Criar chave**.
-3. Copie a chave. Ela aparece só uma vez. A janela também mostra uma requisição curl que cria um QR code dinâmico, já com a sua chave preenchida, caso você prefira colar essa.
+1. Abra [Configurações → Chaves de API e apps](/dashboard?to=settings/developers&new=1), entrando na conta antes, se precisar. O formulário **Criar chave de API** abre.
+2. Dê um nome à chave, como o servidor em que ela vai rodar, mantenha **Acesso total** e escolha **Criar chave**. O QRdx pode pedir que você confirme que é você primeiro.
+3. Copie a chave na caixa de diálogo **Copie sua chave de API**. Ela é exibida só desta vez: o QRdx guarda um hash dela e não consegue mostrá-la de novo. A caixa de diálogo também mostra uma requisição curl que cria um código dinâmico, já com a sua chave, caso você prefira colar essa.
+
+<Shot id="create-key-dialog" />
+
+<Shot id="api-key-copy-dialog" />
 
 Exporte a chave para os próximos passos:
 
-```bash
+```bash title="Terminal"
 export QRDX_API_KEY=qrdx_...
 ```
 
-A chave age como você no workspace que estava aberto quando a criou, e as requisições feitas com ela contam para a cota diária desse workspace (1.000 requisições no plano Grátis). [Chaves de API](/docs/developers/api-keys) explica escopos, equipes, validade e revogação.
+A chave age como você no workspace que estava aberto quando a criou, e as requisições feitas com ela contam na cota diária desse workspace. [Chaves de API](/docs/developers/api-keys) explica escopos, equipes, expiração e revogação.
 
-## 3. Crie um QR code dinâmico [#3-create-a-dynamic-code]
+## 3. Crie um código dinâmico [#3-create-a-dynamic-code]
 
-Um QR code dinâmico é um link curto que você pode apontar para outro lugar depois de impresso:
+Um código dinâmico é um link curto que você pode apontar para outro lugar depois de impresso:
 
 <Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
   <Tab value="curl">
-    ```bash
+    ```bash title="Terminal"
     curl -X POST https://api.qrdx.dev/v1/codes \
       -H "Authorization: Bearer $QRDX_API_KEY" \
       -H "Content-Type: application/json" \
@@ -82,7 +100,7 @@ Um QR code dinâmico é um link curto que você pode apontar para outro lugar de
     ```
   </Tab>
   <Tab value="JavaScript">
-    ```js
+    ```js title="create.mjs"
     const response = await fetch("https://api.qrdx.dev/v1/codes", {
       method: "POST",
       headers: {
@@ -95,11 +113,11 @@ Um QR code dinâmico é um link curto que você pode apontar para outro lugar de
       }),
     });
     const { data: code } = await response.json();
-    console.log(code.shortLink);
+    console.log(response.status, code.id, code.shortLink);
     ```
   </Tab>
   <Tab value="Python">
-    ```python
+    ```python title="create.py"
     import os
     import requests
 
@@ -110,47 +128,91 @@ Um QR code dinâmico é um link curto que você pode apontar para outro lugar de
     )
     response.raise_for_status()
     code = response.json()["data"]
-    print(code["shortLink"])
+    print(response.status_code, code["id"], code["shortLink"])
     ```
   </Tab>
 </Tabs>
 
-A resposta é `201 Created` com o novo QR code:
+A resposta é `201 Created` com o novo código:
 
-```json
+```json title="201 Created"
 {
   "data": {
-    "id": "cm5code0spring0menu00001",
-    "slug": "aB3dE5f",
-    "shortLink": "https://qrdx.dev/q/aB3dE5f",
+    "id": "cmwgwq0t80000iscg4ybn05kh",
+    "slug": "l0q9fZn",
+    "shortLink": "https://qrdx.dev/q/l0q9fZn",
+    "defaultShortLink": "https://qrdx.dev/q/l0q9fZn",
+    "nfcLink": "https://qrdx.dev/q/l0q9fZn?nfc",
+    "domain": null,
     "destinationUrl": "https://example.com/",
     "title": "My first code",
+    "contentType": "url",
+    "kind": "redirect",
+    "pageId": null,
     "status": "active",
-    "scanCount": 0
+    "style": null,
+    "scanCount": 0,
+    "lastScannedAt": null,
+    "archivedAt": null,
+    "createdAt": "2026-11-14T21:17:45.512Z",
+    "updatedAt": "2026-11-14T21:17:45.512Z",
+    "organizationId": "ws_ad2c5e1cce31ccf31535e78f08ab5b78",
+    "preciseLocation": false
   }
 }
 ```
 
-(Resumida: [Criar QR codes](/docs/developers/api/create-codes) mostra todos os campos.) O QR code codifica `shortLink`. Gere a imagem com a Image API, como no passo 1, `https://api.qrdx.dev/v1/qr?data=https://qrdx.dev/q/aB3dE5f`, e imprima.
+Dois campos importam agora. `shortLink` é o que o QR code codifica: gere a imagem com a Image API do passo 1, `https://api.qrdx.dev/v1/qr?data=https://qrdx.dev/q/l0q9fZn&format=png`, e imprima. `id` é como você se refere ao código daqui em diante, então guarde-o:
 
-## 4. Aponte para outro lugar [#4-point-it-somewhere-else]
+```bash title="Terminal"
+export CODE_ID=cmwgwq0t80000iscg4ybn05kh
+```
 
-Mude o destino quando quiser; o QR code impresso continua funcionando:
+[Criar códigos](/docs/developers/api/create-codes) lista todos os campos que você pode enviar, incluindo um final de link personalizado e um design.
 
-```bash
+## 4. Aponte para outro destino [#4-point-it-somewhere-else]
+
+Mude o destino quando quiser; o código impresso continua funcionando:
+
+```bash title="Terminal"
 curl -X PATCH https://api.qrdx.dev/v1/codes/$CODE_ID \
   -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"destinationUrl": "https://example.com/new-page"}'
 ```
 
-Faça uma leitura do QR code e depois consulte as análises com `GET /v1/codes/$CODE_ID/scans` ([Obter análises de leituras](/docs/developers/api/get-code-scans)).
+A resposta `200 OK` é o mesmo código com `"destinationUrl": "https://example.com/new-page"` e um novo `updatedAt`. Leia o código com o celular e depois consulte as análises dele:
 
-## Quando algo dá errado [#when-something-goes-wrong]
+```bash title="Terminal"
+curl "https://api.qrdx.dev/v1/codes/$CODE_ID/scans?range=7d" \
+  -H "Authorization: Bearer $QRDX_API_KEY"
+```
 
-Todo erro é um JSON com um `code` estável e uma mensagem que diz o que fazer:
+```json title="200 OK (before the first scan, trimmed)"
+{
+  "data": {
+    "codeId": "cmwgwq0t80000iscg4ybn05kh",
+    "range": "7d",
+    "retentionDays": 365,
+    "days": 7,
+    "total": 0,
+    "unique": 0,
+    "interval": "day",
+    "series": [{ "date": "2026-11-08", "count": 0 }, { "date": "2026-11-09", "count": 0 }],
+    "countries": [],
+    "devices": [],
+    "sources": { "qr": 0, "nfc": 0 }
+  }
+}
+```
 
-```json
+Depois de uma leitura, `total` aumenta e `countries`, `cities`, `devices`, `os` e `browsers` são preenchidos. [Obter análises de leitura](/docs/developers/api/get-code-scans) explica os intervalos e como paginar as leituras individuais.
+
+## Se algo der errado [#if-something-goes-wrong]
+
+Todo erro é um JSON com um `code` estável e uma mensagem que diz o que fazer. Os dois que você tem mais chance de encontrar nesta página:
+
+```json title="401 Unauthorized: the header is missing"
 {
   "code": "UNAUTHORIZED",
   "message": "Missing API key. Send an API key as \"Authorization: Bearer <key>\"; create one at https://qrdx.dev/dashboard?to=settings/developers. OAuth access tokens go in the same header.",
@@ -159,25 +221,34 @@ Todo erro é um JSON com um `code` estável e uma mensagem que diz o que fazer:
 }
 ```
 
-A [página de erros](/docs/developers/errors) lista cada código com a solução.
+```json title="400 Bad Request: the destination isn't a full URL"
+{
+  "code": "VALIDATION_ERROR",
+  "message": "Invalid request body",
+  "data": { "details": [{ "path": "destinationUrl", "message": "Enter a full URL, starting with https://" }] },
+  "status": 400
+}
+```
 
-## Agir em nome de outras pessoas [#get-an-access-token]
+Um `401 INVALID_TOKEN` significa que a chave foi copiada incompleta, revogada ou expirou: crie uma nova. Um `403 INSUFFICIENT_SCOPE` significa que você criou uma chave **Somente leitura**; o passo 3 precisa de `codes:write`. A [página de erros](/docs/developers/errors) lista cada código com a solução.
 
-Uma chave de API age como você. Se o seu produto chama o QRdx em nome de outras pessoas, registre um app OAuth: cada pessoa o aprova uma vez, e seu servidor recebe um token de acesso para a conta dela, enviado no mesmo cabeçalho `Authorization: Bearer`. Todas as requisições acima funcionam sem mudanças com um token no lugar da chave. Veja [REST API e OAuth](/docs/developers/rest-api#get-an-access-token) e [Crie uma integração](/docs/developers/build-an-integration).
+## Agindo em nome de outras pessoas [#get-an-access-token]
 
-## Próximos passos [#next-steps]
+Uma chave de API age como você. Se o seu produto chama o QRdx em nome de outras pessoas, registre um app OAuth: cada pessoa o aprova uma vez, e o seu servidor recebe um token de acesso para a conta dela, enviado no mesmo cabeçalho `Authorization: Bearer`. Todas as requisições acima funcionam sem mudanças com um token no lugar da chave. Veja [REST API e OAuth](/docs/developers/rest-api#get-an-access-token) e [Crie uma integração](/docs/developers/build-an-integration).
+
+## Relacionado [#related]
 
 <Cards>
   <Card title="Referência da API" href="/docs/developers/api">
     Todos os endpoints, com exemplos em curl, JavaScript e Python e um painel Try it.
   </Card>
-  <Card title="Erros" href="/docs/developers/errors">
-    Todos os códigos de erro, o que significam e como resolvê-los.
-  </Card>
   <Card title="Webhooks" href="/docs/webhooks">
-    Receba leituras e novos QR codes no seu servidor (Business).
+    Receba leituras e novos códigos no seu servidor, em vez de consultar repetidamente (Business).
   </Card>
   <Card title="Limites de requisições" href="/docs/developers/rest-api#rate-limits">
-    Cotas diárias por plano e os cabeçalhos `X-RateLimit-*`.
+    A cota diária por plano, os limites por minuto e os cabeçalhos X-RateLimit.
+  </Card>
+  <Card title="Erros" href="/docs/developers/errors">
+    Todos os códigos de erro, quando acontecem e o que fazer.
   </Card>
 </Cards>

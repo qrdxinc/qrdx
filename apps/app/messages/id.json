@@ -11,134 +11,169 @@
     "closeMenu": "Tutup menu",
     "entries": {
       "product": "Produk",
-      "tools": "Alat",
+      "solutions": "Solusi",
       "developers": "Developer",
-      "resources": "Sumber daya",
-      "pricing": "Harga"
+      "resources": "Sumber daya"
+    },
+    "columns": {
+      "industries": "Industri",
+      "teams": "Tim",
+      "codeTypes": "Jenis kode",
+      "build": "Bangun",
+      "embed": "Sematkan",
+      "connect": "Hubungkan",
+      "help": "Bantuan",
+      "company": "Perusahaan",
+      "updates": "Pembaruan"
     },
     "items": {
       "playground": {
-        "name": "Playground",
-        "description": "Rancang kode QR dengan pola, warna, logo, dan bingkai, lalu unduh. Tanpa daftar."
+        "description": "Desain dan unduh kode, gratis, tanpa daftar",
+        "short": "Gratis, tanpa daftar"
       },
       "dynamicCodes": {
-        "name": "Kode QR dinamis",
-        "description": "Ubah tautan setelah dicetak dan hitung pemindaian"
-      },
-      "aiThemes": {
-        "name": "Tema AI",
-        "description": "Jelaskan gayanya dan biarkan AI merancang temanya"
+        "description": "Ubah tautan setelah dicetak, hitung setiap pemindaian",
+        "short": "Ubah tautan, hitung pemindaian"
       },
       "aiArt": {
-        "name": "Seni QR AI",
-        "description": "Ubah tautan menjadi karya seni AI yang tetap bisa dipindai"
-      },
-      "communityThemes": {
-        "name": "Tema komunitas",
-        "description": "Jelajahi dan gunakan ulang desain yang dibagikan orang lain"
-      },
-      "pageTemplates": {
-        "name": "Templat halaman",
-        "description": "Demo langsung setiap templat halaman yang di-hosting"
-      },
-      "generators": {
-        "name": "Generator kode QR",
-        "description": "Generator untuk setiap jenis: Wi-Fi, vCard, WhatsApp, UPI, pembayaran, dan lainnya."
-      },
-      "bulk": {
-        "name": "Generator massal",
-        "description": "Ubah CSV menjadi hingga {max, number} kode bergaya"
-      },
-      "scanner": {
-        "name": "Pemindai kode QR",
-        "description": "Pindai kode dengan pratinjau tautan aman"
-      },
-      "scanChecker": {
-        "name": "Pemeriksa pemindaian",
-        "description": "Uji seberapa andal kode QR dipindai"
-      },
-      "printSize": {
-        "name": "Kalkulator ukuran cetak",
-        "description": "Temukan ukuran minimum sesuai jarak pemindaian Anda"
+        "description": "Kode yang bisa dipindai, terlukis dalam karya seni",
+        "short": "Kode terlukis dalam seni"
       },
       "barcode": {
-        "name": "Generator barcode",
-        "description": "EAN, UPC, Code 128 dan lainnya, dengan digit pemeriksa"
+        "description": "EAN, UPC, Code 128, dan lainnya",
+        "short": "EAN, UPC, Code 128"
       },
-      "allTools": {
-        "name": "Semua alat",
-        "description": "Semua alat kode QR gratis di satu tempat"
+      "bulk": {
+        "description": "Hingga {max, number} kode bergaya dari CSV",
+        "short": "Kode dari CSV"
       },
-      "docs": {
-        "name": "Dokumentasi",
-        "description": "Panduan untuk library React qrdx, kode dinamis, API, dan self-hosting."
+      "community": {
+        "description": "Bingkai dan tema yang dibagikan orang",
+        "short": "Bingkai dan tema dibagikan"
       },
-      "mcp": {
-        "name": "Server MCP",
-        "description": "Buat kode QR dari Claude, ChatGPT, atau Cursor"
+      "restaurants": {
+        "description": "Menu, Wi-Fi, dan permintaan ulasan",
+        "short": "Menu, Wi-Fi, ulasan"
       },
-      "qrCodeApi": {
-        "name": "API kode QR gratis",
-        "description": "Gambar kode QR dari satu URL, tanpa kunci atau pendaftaran"
+      "retail": {
+        "description": "Label rak, etalase toko, dan loyalitas",
+        "short": "Label rak dan loyalitas"
       },
-      "nextjs": {
-        "name": "Panduan Next.js",
-        "description": "Kode QR di Server dan Client Components"
+      "realEstate": {
+        "description": "Kode pada papan yang membuka listing properti",
+        "short": "Listing properti dari papan"
+      },
+      "events": {
+        "description": "Agenda, badge, dan umpan balik sesi",
+        "short": "Agenda dan badge"
+      },
+      "enterprise": {
+        "description": "Single sign-on, log audit, dan kontrak",
+        "short": "SSO, log audit, kontrak"
+      },
+      "agencies": {
+        "description": "Domain klien, UTM, dan laporan pemindaian",
+        "short": "Kode klien dan laporan"
+      },
+      "openSource": {
+        "description": "Host sendiri aplikasinya atau gunakan pustakanya",
+        "short": "Host sendiri atau sematkan"
+      },
+      "placements": {
+        "description": "Menu, kemasan, kartu nama, dan papan",
+        "short": "Menu, kemasan, papan"
+      },
+      "restApi": {
+        "description": "Kode, pemindaian, dan webhook lewat HTTP",
+        "short": "Kode dan pemindaian lewat HTTP"
       },
       "imageApi": {
-        "name": "Image API",
-        "description": "Gambar kode QR dari sebuah URL, tanpa API key"
+        "description": "Gambar kode dari satu URL, tanpa kunci",
+        "short": "Satu URL, tanpa kunci"
+      },
+      "mcp": {
+        "description": "Buat kode QR dari Claude, ChatGPT, atau Cursor",
+        "short": "Dari Claude, ChatGPT, atau Cursor"
+      },
+      "cli": {
+        "description": "Buat kode di terminal dan CI",
+        "short": "Terminal dan CI"
+      },
+      "react": {
+        "description": "Mesinnya sebagai komponen React",
+        "short": "Kode QR di React"
       },
       "shadcn": {
-        "name": "Registry shadcn/ui",
-        "description": "Tambahkan komponen kode QR dengan satu perintah"
+        "description": "Tambahkan komponen kode QR dengan satu perintah",
+        "short": "Komponen dengan satu perintah"
       },
-      "plugins": {
-        "name": "Plugin",
-        "description": "QRdx untuk Chrome, Figma, Raycast, dan Canva"
-      },
-      "github": {
-        "name": "GitHub",
-        "description": "Kode sumber, isu, dan rilis"
-      },
-      "help": {
-        "name": "Pusat bantuan",
-        "description": "Jawaban soal kode, penagihan, tim, dan perbaikan"
-      },
-      "blog": {
-        "name": "Blog",
-        "description": "Panduan dan kabar seputar kode QR"
-      },
-      "customers": {
-        "name": "Pelanggan",
-        "description": "Cara perusahaan memakai QRdx"
-      },
-      "compare": {
-        "name": "Bandingkan",
-        "description": "QRdx dibandingkan generator dan library lain"
-      },
-      "changelog": {
-        "name": "Changelog",
-        "description": "Yang baru di QRdx"
+      "nextjs": {
+        "description": "Kode QR di Server dan Client Components",
+        "short": "Server dan Client Components"
       },
       "integrations": {
-        "name": "Integrasi",
-        "description": "Zapier, Make, Discord, piksel analitik, dan lainnya"
+        "description": "Zapier, Make, Discord, piksel analitik, dan lainnya",
+        "short": "Zapier, Make, dan lainnya"
       },
-      "support": {
-        "name": "Hubungi dukungan",
-        "description": "Email, widget dukungan, atau GitHub"
+      "plugins": {
+        "description": "QRdx untuk Chrome, Figma, Raycast, dan Canva",
+        "short": "Chrome, Figma, Raycast, Canva"
+      },
+      "webhooks": {
+        "description": "Peristiwa pemindaian, formulir, dan kode ke URL Anda",
+        "short": "Peristiwa ke URL Anda"
+      },
+      "docs": {
+        "description": "Panduan, referensi API, dan hosting sendiri",
+        "short": "Panduan dan referensi"
+      },
+      "github": {
+        "description": "Mesin MIT dan CLI, aplikasi AGPL",
+        "short": "Mesin MIT, aplikasi AGPL"
+      },
+      "help": {
+        "description": "Jawaban soal kode, penagihan, tim, dan perbaikan",
+        "short": "Jawaban atas pertanyaan umum"
+      },
+      "contact": {
+        "description": "Email, widget dukungan, atau GitHub",
+        "short": "Email atau widget dukungan"
+      },
+      "customers": {
+        "description": "Cara perusahaan memakai QRdx",
+        "short": "Cara perusahaan memakai QRdx"
+      },
+      "security": {
+        "description": "Cara QRdx melindungi akun dan data",
+        "short": "Akun dan data"
+      },
+      "affiliates": {
+        "description": "Raih penghasilan dari pelanggan rujukan Anda",
+        "short": "Penghasilan dari rujukan"
+      },
+      "blog": {
+        "description": "Panduan dan kabar seputar kode QR",
+        "short": "Panduan dan berita"
+      },
+      "changelog": {
+        "description": "Yang baru di QRdx",
+        "short": "Yang baru"
+      },
+      "tools": {
+        "description": "Pemindai, pengecek pemindaian, ukuran cetak, dan lainnya",
+        "short": "Pemindai, pengecek, dan lainnya"
       }
     },
     "account": {
-      "tryPlayground": "Coba Playground",
-      "playground": "Playground",
+      "signIn": "Masuk",
+      "create": "Buat kode QR",
       "dashboard": "Dasbor"
     },
     "github": {
       "star": "Star",
       "starOnGithub": "Beri bintang QRdx di GitHub",
-      "starOnGithubCount": "Beri bintang QRdx di GitHub ({count} bintang)"
+      "starOnGithubCount": "Beri bintang QRdx di GitHub ({count} bintang)",
+      "stars": "{count} bintang"
     },
     "userProfileDropdown": {
       "tryThePlayground": "Coba Playground",
@@ -168,74 +203,85 @@
     }
   },
   "footer": {
-    "description": "Generator kode QR gratis dan open source. Pola kustom, gradien, logo, dan bingkai, dengan unduhan PNG, JPG, SVG, PDF, dan EPS tanpa perlu mendaftar. Ditambah kode dinamis, halaman yang di-hosting, dan analitik pemindaian.",
+    "description": "Platform kode QR open-source.",
     "starOnGithub": "Beri bintang di GitHub",
+    "newsOnX": "Kabar QRdx di X",
     "navLabel": "Footer",
-    "scanIt": "Ayo, pindai saja",
-    "copyright": "© {year} QRdx. Open source di bawah AGPL-3.0.",
+    "copyright": "© {year} QRdx",
     "columns": {
       "product": "Produk",
-      "tools": "Alat",
       "developers": "Developer",
+      "solutions": "Solusi",
       "resources": "Sumber daya",
+      "company": "Perusahaan",
       "compare": "Bandingkan"
     },
     "links": {
-      "playground": "Playground",
+      "playground": "Generator kode QR",
       "dynamicCodes": "Kode QR dinamis",
+      "aiArt": "Seni QR AI",
       "aiThemes": "Tema AI",
-      "communityThemes": "Tema komunitas",
+      "barcode": "Barcode",
+      "bulk": "Generator massal",
       "pageTemplates": "Templat halaman",
-      "pricing": "Harga",
-      "guarantee": "Jaminan Never-Hostage",
-      "enterprise": "Enterprise",
+      "community": "Komunitas",
       "slackBot": "Bot Slack",
       "telegramBot": "Bot Telegram",
       "discordBot": "Bot Discord",
-      "generators": "Generator kode QR",
-      "bulk": "Generator massal",
-      "scanChecker": "Pemeriksa pemindaian",
-      "printSize": "Kalkulator ukuran cetak",
-      "barcode": "Generator barcode",
-      "pdfQr": "Kode QR PDF",
-      "businessCard": "Kartu nama digital",
-      "menuQr": "Kode QR menu",
-      "scanner": "Pemindai kode QR",
-      "allTools": "Semua alat",
-      "docs": "Dokumentasi",
-      "apiReference": "Referensi API",
-      "qrCodeApi": "API kode QR gratis",
-      "nextjs": "Panduan Next.js",
-      "imageApi": "Image API",
-      "mcp": "Server MCP",
-      "shadcn": "Registry shadcn/ui",
-      "plugins": "Plugin",
-      "selfHosting": "Self-hosting",
-      "openSource": "Sumber terbuka",
-      "github": "GitHub",
-      "help": "Pusat bantuan",
-      "blog": "Blog",
-      "customers": "Pelanggan",
-      "changelog": "Changelog",
-      "integrations": "Integrasi",
+      "restaurants": "Restoran",
+      "retail": "Ritel",
+      "realEstate": "Properti",
+      "events": "Acara",
       "industries": "Kode QR per industri",
       "placements": "Kode QR per penempatan",
-      "affiliates": "Program afiliasi",
+      "generators": "Semua jenis kode",
+      "typeUrl": "Situs web",
+      "typeWifi": "Wi-Fi",
+      "typeVcard": "vCard",
+      "typePdf": "PDF",
+      "enterprise": "Enterprise",
+      "agencies": "Agensi",
+      "openSource": "Sumber terbuka",
+      "docs": "Dokumentasi",
+      "restApi": "REST API",
+      "apiReference": "Referensi API",
+      "imageApi": "Image API",
+      "mcp": "Server MCP",
+      "cli": "CLI",
+      "react": "Pustaka React",
+      "shadcn": "Registry shadcn/ui",
+      "nextjs": "Panduan Next.js",
+      "integrations": "Integrasi",
+      "plugins": "Plugin",
+      "webhooks": "Webhook",
+      "selfHosting": "Self-hosting",
+      "github": "GitHub",
+      "help": "Pusat bantuan",
       "contact": "Kontak",
+      "blog": "Blog",
+      "changelog": "Changelog",
+      "customers": "Pelanggan",
+      "tools": "Alat gratis",
+      "scanner": "Pemindai kode QR",
+      "scanChecker": "Pemeriksa pemindaian",
+      "printSize": "Kalkulator ukuran cetak",
+      "security": "Keamanan",
+      "affiliates": "Program afiliasi",
+      "guarantee": "Jaminan Never-Hostage",
+      "pricing": "Harga",
+      "allComparisons": "Semua perbandingan",
       "legal": "Hukum",
-      "privacy": "Kebijakan privasi",
       "terms": "Ketentuan layanan",
-      "subprocessors": "Subprosesor",
-      "reportAbuse": "Laporkan penyalahgunaan",
-      "acceptableUse": "Penggunaan yang wajar",
+      "privacy": "Kebijakan privasi",
       "cookies": "Kebijakan cookie",
       "dpa": "Pemrosesan data (DPA)",
+      "subprocessors": "Subprosesor",
+      "acceptableUse": "Penggunaan yang wajar",
       "aiFeatures": "Fitur AI",
       "refunds": "Pengembalian dana",
       "affiliateTerms": "Ketentuan afiliasi",
-      "security": "Keamanan",
       "securityPolicy": "Kebijakan keamanan",
-      "allComparisons": "Semua perbandingan"
+      "reportAbuse": "Laporkan penyalahgunaan"
     }
   },
   "localeSwitcher": {
@@ -243,9 +289,10 @@
     "englishOnly": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lain akan membuka halaman utamanya."
   },
   "cta": {
-    "title": "Buat kode QR berikutnya dalam hitungan detik.",
-    "subtext": "Gratis selamanya. Tanpa pendaftaran, tanpa watermark.",
-    "button": "Mulai Buat Kode QR Gratis"
+    "title": "Buat kode QR berikutnya",
+    "subtext": "Gratis di browser Anda, tanpa pendaftaran atau watermark, dengan kode dinamis saat Anda membutuhkannya.",
+    "button": "Buat kode QR",
+    "secondary": "Lihat harga"
   },
   "consent": {
     "banner": {
@@ -878,6 +925,53 @@
         }
       }
     },
+    "shell": {
+      "header": {
+        "docs": "Dokumen",
+        "dashboard": "Dasbor",
+        "github": "QRdx di GitHub"
+      },
+      "actions": {
+        "copyPage": "Salin halaman",
+        "copied": "Disalin",
+        "more": "Cara lain memakai halaman ini",
+        "copyMarkdown": "Salin halaman sebagai Markdown",
+        "viewMarkdown": "Lihat sebagai Markdown",
+        "mcp": "Hubungkan server MCP QRdx"
+      },
+      "feedback": {
+        "question": "Apakah halaman ini membantu?",
+        "yes": "Ya",
+        "no": "Tidak",
+        "thanks": "Terima kasih. Masukan bersifat anonim: hanya jumlah jawaban ya dan tidak yang disimpan.",
+        "edit": "Edit halaman ini di GitHub",
+        "report": "Laporkan masalah",
+        "issueTitle": "Dokumen: {title}",
+        "issueBody": "Halaman: {url}\n\nApa yang salah atau kurang:\n"
+      },
+      "notFound": {
+        "search": "Cari di dokumen",
+        "sections": "Atau mulai dari satu bagian"
+      },
+      "code": {
+        "copy": "Salin kode",
+        "copied": "Disalin"
+      },
+      "video": {
+        "play": "Putar {title}",
+        "pause": "Jeda {title}",
+        "reducedMotion": "Klip menunggu Anda karena sistem Anda meminta gerakan yang lebih sedikit."
+      },
+      "plan": {
+        "title": "Perlu {plans}",
+        "or": "{a} atau {b}",
+        "body": "Isi setiap paket ada di",
+        "link": "Paket dan batasan",
+        "pro": "Pro",
+        "business": "Business",
+        "enterprise": "Enterprise"
+      }
+    },
     "ui": {
       "search": "Cari",
       "searchPlaceholder": "Cari",
@@ -910,6 +1004,253 @@
       "typeTableDefault": "Default",
       "typeTableParameters": "Parameter",
       "typeTableReturns": "Nilai Kembali"
+    },
+    "shots": {
+      "diagrams": {
+        "dynamic-redirect": {
+          "title": "Cara kode dinamis mengalihkan: pemindaian membuka tautan pendek, QRdx menerapkan aturan kode, mengarahkan ponsel ke tujuan, dan mencatat pemindaian di tengah jalan.",
+          "scan": "Pemindaian",
+          "scanNote": "ponsel membaca kode",
+          "shortLink": "Tautan pendek",
+          "shortLinkNote": "isi dari pola kode",
+          "rules": "Aturan",
+          "rulesNote": "perangkat, lokasi, waktu, pembagian",
+          "destination": "Tujuan",
+          "destinationNote": "ubah kapan saja",
+          "recorded": "Pemindaian tercatat",
+          "recordedNote": "negara, perangkat, waktu; bukan orangnya"
+        },
+        "static-vs-dynamic": {
+          "title": "Statis dan dinamis: kode statis membawa isinya di dalam pola, sedangkan kode dinamis membawa tautan pendek yang diarahkan QRdx ke tujuan yang dapat Anda ubah.",
+          "static": "Kode statis",
+          "dynamic": "Kode dinamis",
+          "printed": "Kode tercetak",
+          "printedNote": "pola di kertas atau layar",
+          "content": "Isi itu sendiri",
+          "contentNote": "tautan, detail Wi-Fi, kontak",
+          "staticEnd": "Tetap setelah dicetak. Tanpa hitungan pemindaian.",
+          "shortLink": "Tautan pendek",
+          "shortLinkNote": "qrdx.dev/q/… atau domain Anda",
+          "destination": "Tujuan",
+          "destinationNote": "dapat diedit; setiap pemindaian dihitung"
+        },
+        "smart-routing": {
+          "title": "Cara smart routing memutuskan: aturan dibaca dari atas, aturan pertama yang kondisinya cocok dengan pemindaian mengarahkannya ke tujuan aturan itu, dan pemindaian yang tidak cocok dengan aturan mana pun menuju tujuan default kode.",
+          "scan": "Pemindaian masuk",
+          "scanNote": "perangkat, OS, negara, bahasa, waktu",
+          "rule1": "iPhone atau iPad → halaman iOS",
+          "rule2": "Bahasa Spanyol → halaman Spanyol",
+          "rule3": "Akhir pekan 08:00–14:00 → penawaran brunch",
+          "firstMatch": "Kecocokan pertama menang",
+          "firstMatchNote": "tujuan aturan tersebut",
+          "noMatch": "Tidak ada aturan cocok",
+          "noMatchNote": "tujuan bawaan kode tersebut",
+          "footnote": "Aturan diperiksa sesuai urutan yang ditampilkan di panel Routing; seret untuk mengubahnya."
+        },
+        "custom-domain": {
+          "title": "Cara kerja domain kustom: sebuah rekaman CNAME di penyedia DNS Anda mengarahkan hostname ke QRdx, yang melayani tautan pendek Anda di domain tersebut dan mengarahkan setiap pemindaian ke tujuannya.",
+          "scan": "Pemindaian",
+          "scanNote": "membuka tautan pendek domain Anda",
+          "dns": "DNS Anda",
+          "dnsNote": "satu rekaman CNAME",
+          "record": "qr.example.com  CNAME → QRdx",
+          "qrdx": "QRdx",
+          "qrdxNote": "menjawab untuk domain Anda, dengan HTTPS",
+          "destination": "Tujuan",
+          "destinationNote": "aturan kode berlaku seperti biasa",
+          "footnote": "Atur rekaman satu kali; QRdx akan memeriksanya, lalu setiap kode di domain itu langsung berfungsi."
+        },
+        "webhook-delivery": {
+          "title": "Cara webhook dikirim: QRdx mengirim (POST) peristiwa ke endpoint Anda beserta tanda tangan; balasan 2xx menandainya terkirim, selain itu dicoba ulang dengan jeda yang makin panjang dan ditandai gagal setelah delapan kali percobaan.",
+          "event": "Peristiwa",
+          "eventNote": "scan.created, form.submitted…",
+          "post": "POST ke endpoint Anda",
+          "postNote": "Isi JSON, header X-QRdx-Signature",
+          "delivered": "Terkirim",
+          "deliveredNote": "balasan 2xx apa pun",
+          "retry": "Diulang",
+          "retryNote": "timeout atau balasan lainnya",
+          "schedule": "1 mnt · 4 mnt · 16 mnt · 1 jam · 4 jam · 17 jam · 24 jam",
+          "failed": "Gagal",
+          "failedNote": "setelah 8 percobaan; coba ulang secara manual",
+          "footnote": "Setiap percobaan tercantum di halaman endpoint, beserta balasan yang diterima."
+        },
+        "image-api": {
+          "title": "Cara Image API membuat kode: satu permintaan GET berisi konten dan gaya, QRdx mengodekan data, merender desain, lalu menjawab dengan gambar SVG, PNG, WebP, atau EPS yang bisa disematkan di halaman mana pun.",
+          "request": "GET /v1/qr",
+          "requestNote": "data, ukuran, warna, gaya…",
+          "encode": "Enkode",
+          "encodeNote": "koreksi galat, versi",
+          "render": "Render",
+          "renderNote": "pola, mata, bingkai, logo",
+          "response": "Gambar",
+          "responseNote": "SVG, PNG, WebP, atau EPS",
+          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
+          "noKey": "Tanpa kunci, tanpa kuota: URL langsung dimasukkan ke tag gambar di halaman mana pun.",
+          "footnote": "Kueri yang sama selalu menghasilkan byte yang sama, sehingga respons di-cache selama satu tahun."
+        },
+        "hosted-page-anatomy": {
+          "title": "Cara kerja halaman yang di-hosting: Anda menyusun blok di editor lalu memublikasikannya, QRdx menyajikan halaman tersebut, dan tautan pendek pada kode yang dicetak membuka versi terbaru yang dipublikasikan di ponsel.",
+          "editor": "Editor",
+          "editorNote": "susun blok halaman",
+          "publish": "Publikasikan",
+          "page": "Halaman yang di-hosting",
+          "pageNote": "disajikan QRdx di qrdx.dev/p/…",
+          "code": "Kode QR cetak",
+          "codeNote": "berisi tautan pendek halaman",
+          "scan": "satu pemindaian membuka halaman",
+          "block1": "Header",
+          "block2": "Tautan",
+          "block3": "Menu",
+          "block4": "Formulir",
+          "footnote": "Publikasikan lagi, dan setiap kode yang sudah dicetak akan membuka versi barunya."
+        },
+        "import-flow": {
+          "title": "Cara kerja impor: tautan di penyedia lama Anda menjadi kode QR dinamis di QRdx, dan satu langkah opsional mengarahkan setiap tautan lama ke tautan QRdx barunya agar kode yang sudah Anda cetak tetap berfungsi.",
+          "importing": "Impor",
+          "source": "Penyedia lama Anda",
+          "sourceNote": "akun yang terhubung atau file",
+          "import": "Impor",
+          "importNote": "pilih, pratinjau, impor",
+          "codes": "Kode dinamis di QRdx",
+          "codesNote": "tujuan, judul, tag, folder",
+          "keeping": "Jaga kode cetak tetap berfungsi (opsional)",
+          "printed": "Kode yang Anda cetak",
+          "printedNote": "berisi tautan pendek lama",
+          "newLink": "Tautan QRdx barunya",
+          "newLinkNote": "tautan lama mengarah ke sini",
+          "destination": "Tujuan",
+          "destinationNote": "diedit dan dihitung di QRdx",
+          "footnote": "Akun lama harus tetap aktif agar tautannya terus mengalihkan."
+        },
+        "precise-location-flow": {
+          "title": "Cara kerja lokasi presisi: setelah pemindaian, pemindai diminta membagikan lokasinya; posisi yang dibagikan dibulatkan hingga sekitar 100 m, disimpan bersama pemindaian, dan digunakan oleh aturan area, dan pemindai tetap sampai ke tujuan, baik mengizinkan maupun melewati.",
+          "scan": "Pemindaian",
+          "scanNote": "membuka tautan pendek",
+          "ask": "Bagikan lokasi Anda?",
+          "askNote": "pemindai yang memilih",
+          "skip": "Lewati",
+          "allow": "Izinkan",
+          "destination": "Tujuan",
+          "destinationNote": "terbuka dalam kedua kasus",
+          "stored": "Titik disimpan bersama pemindaian",
+          "storedNote": "dibulatkan hingga sekitar 100 m",
+          "rule": "Aturan area",
+          "ruleNote": "dapat dipakai perutean cerdas",
+          "footnote": "Pemindai yang melewati atau menolak tetap dihitung, dengan negara, wilayah, dan kota dari jaringan."
+        },
+        "nfc-link": {
+          "title": "Cara kerja tag NFC dengan kode: tag menyimpan tautan pendek kode dengan ?nfc di bagian akhir, sehingga satu ketukan melewati pengalihan yang sama seperti pemindaian dan dihitung sebagai ketukan.",
+          "tap": "Ponsel mengetuk tag",
+          "tapNote": "membuka tautan di dalamnya",
+          "tag": "Tag NFC",
+          "tagNote": "menyimpan tautan NFC",
+          "link": "Tautan pendek dengan ?nfc",
+          "linkNote": "pengalihan sama seperti pemindaian",
+          "example": "qrdx.dev/q/aB3dE5f?nfc",
+          "counted": "Dihitung sebagai ketukan",
+          "countedNote": "di samping pemindaian QR di Analytics",
+          "destination": "Tujuan",
+          "destinationNote": "seperti pemindaian",
+          "footnote": "Kode QR tetap memiliki tautannya sendiri, sehingga kode yang sudah Anda cetak berfungsi seperti sebelumnya."
+        },
+        "file-delivery": {
+          "title": "Cara file disimpan dan disajikan: browser Anda mengunggahnya langsung ke bucket penyimpanan, QRdx memeriksanya dan memberinya tautan tersendiri, lalu halaman, kode, dan pengunjung menggunakan tautan tersebut.",
+          "browser": "Browser Anda",
+          "browserNote": "mengunggah file secara langsung",
+          "bucket": "Bucket penyimpanan",
+          "bucketNote": "menerima unggahan",
+          "check": "QRdx memeriksa file",
+          "checkNote": "ukuran dan tipe aslinya",
+          "link": "Tautan QRdx file",
+          "linkNote": "qrdx.dev/api/files/…",
+          "visitor": "Halaman, kode, dan pengunjung",
+          "visitorNote": "membuka file lewat tautannya",
+          "footnote": "Mengganti file tidak mengubah tautannya, jadi semua yang menggunakannya tidak perlu diubah."
+        },
+        "tracking-paths": {
+          "title": "Dua cara melacak apa yang terjadi setelah pemindaian: halaman yang di-hosting memuat piksel Anda setelah pengunjung dimintai persetujuan jika diwajibkan oleh hukum, dan kunjungan ke situs web Anda sendiri membawa ID pemindaian bertanda tangan yang dilaporkan kembali oleh situs Anda ke QRdx saat pengunjung melakukan konversi.",
+          "scan": "Pemindaian",
+          "scanNote": "selalu dihitung",
+          "pagePath": "Kode yang membuka halaman yang di-hosting",
+          "sitePath": "Kode yang membuka situs web Anda",
+          "page": "Halaman terbuka",
+          "pageNote": "disajikan oleh QRdx",
+          "consent": "Persetujuan",
+          "consentNote": "diminta jika diwajibkan",
+          "pixels": "Piksel Anda",
+          "pixelsNote": "dimuat setelahnya",
+          "site": "Tautan dibuka",
+          "siteNote": "qrdx_sid ditambahkan",
+          "convert": "Pengunjung berkonversi",
+          "convertNote": "pembelian, pendaftaran",
+          "report": "Konversi",
+          "reportNote": "dikirim ke QRdx",
+          "footnote": "Pixel termasuk dalam Pro dan Business; pelacakan konversi termasuk dalam Business."
+        },
+        "client-portal-access": {
+          "title": "Cara portal klien membatasi apa yang dilihat klien: Anda mencentang folder di undangan klien, lalu portal hanya menampilkan folder tersebut kepada klien itu, bersifat hanya-baca, atas nama Anda.",
+          "workspace": "Folder di workspace Anda",
+          "folder1": "Klien A: menu",
+          "folder2": "Klien A: acara",
+          "folder3": "Klien B",
+          "folder4": "Internal",
+          "invite": "Undangan",
+          "inviteNote": "email dan folder terpilih",
+          "portal": "Yang dilihat klien",
+          "portalName": "Portal Anda",
+          "readOnly": "Hanya-baca, dengan analitik pemindaian",
+          "footnote": "Klien bukan anggota workspace Anda dan tidak memakai kursi."
+        },
+        "self-hosting-stack": {
+          "title": "Empat layanan Docker Compose: permintaan dari browser masuk ke app, app mengirim kuerinya ke proxy HTTP yang kompatibel dengan Neon, proxy berkomunikasi dengan Postgres, dan satu tugas migrate sekali jalan menerapkan skema.",
+          "browser": "Browser",
+          "browserNote": "pengunjung Anda",
+          "compose": "docker compose",
+          "app": "app",
+          "appNote": "server QRdx",
+          "proxy": "db-proxy",
+          "proxyNote": "HTTP ke Postgres",
+          "db": "db",
+          "dbNote": "Postgres 16",
+          "migrate": "migrasi",
+          "migrateNote": "menerapkan skema satu kali",
+          "footnote": "Dengan Neon, bukan Postgres biasa, aplikasi terhubung langsung dan tidak memerlukan proxy."
+        },
+        "wont-scan-contrast": {
+          "title": "Kode QR yang sama dua kali: gelap di atas latar putih, yang bisa dipindai, dan abu-abu muda di atas putih, yang tidak bisa dipindai.",
+          "good": "Gelap di atas terang: terpindai",
+          "bad": "Abu-abu di atas putih: tidak terpindai",
+          "ratio": "Kontras {ratio}:1"
+        },
+        "wont-scan-quiet-zone": {
+          "title": "Kode QR yang sama pada sebuah karya desain, dua kali: dengan desain yang menyentuh tepinya, yang mungkin tidak terbaca pemindai, dan dengan ruang kosong selebar empat modul di sekelilingnya, yang bisa dipindai.",
+          "bad": "Desain menyentuh kode",
+          "badNote": "pemindai tidak menemukan tepinya",
+          "good": "Ruang kosong di sekitarnya",
+          "goodNote": "quiet zone selebar empat modul"
+        },
+        "wont-scan-print-size": {
+          "title": "Kode QR terpindai dari jarak sekitar sepuluh kali lebarnya: kode 2 cm dari sekitar 20 cm, kode 10 cm dari sekitar 1 m.",
+          "cardWidth": "2 cm",
+          "cardDistance": "sekitar 20 cm",
+          "cardNote": "kartu yang dipegang di tangan",
+          "posterWidth": "10 cm",
+          "posterDistance": "sekitar 1 m",
+          "posterNote": "poster di dinding",
+          "footnote": "Jarak pemindaian sekitar sepuluh kali lebar kode."
+        },
+        "wont-scan-eyes": {
+          "title": "Bentuk mata di sudut: mata persegi, membulat, dan gerigi terpindai di semua aplikasi; mata lingkaran dan keriting tidak dikenali oleh sebagian aplikasi pemindai.",
+          "good": "Terpindai di mana saja",
+          "bad": "Gagal di beberapa aplikasi",
+          "square": "Persegi",
+          "rounded": "Membulat",
+          "gear": "Gerigi",
+          "circle": "Lingkaran",
+          "curly": "Keriting"
+        }
+      }
     }
   },
   "common": {
@@ -1130,11 +1471,11 @@
     },
     "bulk": {
       "metaTitle": "Generator Kode QR Massal Gratis dari CSV: Bergaya, SVG, Tanpa Unggah",
-      "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dan unduh sebagai PNG, WebP, atau SVG dalam ZIP. Berjalan di browser Anda: tanpa unggah, tanpa pendaftaran, tanpa watermark. Contoh CSV tersedia.",
+      "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dan unduh sebagai PNG, WebP, atau SVG dalam ZIP. Berjalan di browser Anda: tanpa unggahan, tanpa watermark, tanpa pendaftaran hingga {limit, number} baris.",
       "crumb": "Generator massal",
       "title": "Generator kode QR massal",
       "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, atau SVG dalam ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, label aset, nomor meja, atau surat kiriman.",
-      "intro2": "Semuanya berjalan di browser Anda, sehingga CSV tidak pernah diunggah, dan tanpa pendaftaran, watermark, atau biaya per kode. Belum yakin dengan tata letaknya? Mulai dari contoh CSV.",
+      "intro2": "Semuanya berjalan di browser Anda, sehingga CSV tidak pernah diunggah, dan tidak ada watermark atau biaya per kode. File hingga {limit, number} baris tidak memerlukan akun; file yang lebih besar, hingga {rows, number}, memerlukan akun gratis. Belum yakin dengan tata letaknya? Mulai dari contoh CSV.",
       "facts": {
         "rows": "Hingga {rows, number} baris per file",
         "styled": "Warna, bentuk, dan logo Anda",
@@ -1168,7 +1509,7 @@
         "uploadQuestion": "Apakah CSV saya diunggah ke suatu tempat?",
         "uploadAnswer": "Tidak. File dibaca, kode QR digambar, dan ZIP dibuat di browser Anda. Tidak ada yang dikirim ke server QRdx, sehingga aman untuk tautan internal, kata sandi Wi-Fi, atau data pelanggan.",
         "howManyQuestion": "Berapa banyak kode QR yang dapat saya buat sekaligus?",
-        "howManyAnswer": "Hingga {rows, number} baris per file; untuk lebih banyak, pisahkan CSV, atau gunakan perintah qrdx batch dari CLI, yang tidak memiliki batas. PNG 512 px membutuhkan sekitar 20 ms di laptop, sehingga seluruh {rows, number} baris selesai dalam beberapa menit. PNG yang lebih besar membutuhkan waktu lebih lama dan menghasilkan file lebih besar, jadi pilih 512 px kecuali Anda membutuhkan lebih.",
+        "howManyAnswer": "Hingga {limit, number} baris per file tanpa akun, dan hingga {rows, number} dengan akun gratis; untuk lebih banyak, pisahkan CSV, atau gunakan perintah qrdx batch dari CLI, yang tidak memiliki batas. PNG 512 px membutuhkan sekitar 20 md di laptop, sehingga {rows, number} baris penuh selesai dalam beberapa menit. PNG yang lebih besar memakan waktu lebih lama dan menghasilkan file lebih besar, jadi pilih 512 px kecuali Anda membutuhkan lebih.",
         "rowQuestion": "Apa yang bisa diisi di setiap baris?",
         "rowAnswer": "Teks apa pun hingga batas kode QR: tautan, teks biasa, atau payload seperti WIFI:..., mailto:..., tel:... dan BEGIN:VCARD. Konten dikodekan persis seperti yang tertulis di sel.",
         "excelQuestion": "Bisakah saya memakai file Excel atau Google Sheets?",
@@ -1195,7 +1536,13 @@
         "removeFile": "Hapus file",
         "drop": "Letakkan file CSV di sini, atau klik untuk memilih",
         "dropHelp": "Maksimal {rows, number} baris dan 10 MB. File tetap berada di perangkat Anda.",
+        "dropHelpSignedOut": "Hingga {limit, number} baris tanpa akun, {rows, number} dengan akun gratis, dan 10 MB. File tetap berada di perangkat Anda.",
         "truncated": "File ini memiliki lebih dari {rows, number} baris. Hanya {rows, number} baris pertama yang akan digunakan.",
+        "overLimit": "File ini memiliki {count, number} baris. Hingga {limit, number} baris dapat diproses tanpa akun; akun gratis dapat memproses hingga {max, number}, dan file Anda tetap termuat saat Anda masuk.",
+        "overLimitCta": "Daftar gratis dan buat {count, number}",
+        "firstOnly": "Buat {limit, number} pertama tanpa akun",
+        "restored": "File Anda sudah kembali: {count, plural, other {# baris}}.",
+        "restoreLost": "Proses masuk memuat ulang halaman dan file Anda tidak dapat dipertahankan. Letakkan kembali file tersebut untuk melanjutkan.",
         "header": "Baris pertama berisi nama kolom",
         "stepMap": "2. Petakan kolom",
         "valueColumn": "Isi kode QR",
@@ -1228,7 +1575,9 @@
         "skipped": "{count, plural, other {# baris dilewati}}:",
         "skippedListed": "{count, plural, other {# baris dilewati}} (tercantum di errors.csv):",
         "line": "Baris {row, number}: {error}",
-        "private": "Semua berjalan di browser Anda. CSV dan kode yang dibuat tidak pernah diunggah."
+        "private": "Semua berjalan di browser Anda. CSV dan kode yang dibuat tidak pernah diunggah.",
+        "doneNudge": "Simpan gaya ini sebagai tema, dan buat hingga {codes, number} kode dinamis yang dapat Anda edit setelah dicetak, dengan akun gratis.",
+        "doneNudgeCta": "Buat akun gratis"
       }
     },
     "printSize": {
@@ -3417,6 +3766,10 @@
         "scale": "Skala",
         "transparentBackground": "Latar belakang transparan",
         "makeManyFromACsv": "Buat banyak kode dari CSV dengan gaya ini",
+        "nudgeDynamic": "Perlu mengubah tautan setelah dicetak, atau menghitung pemindaian? Jadikan dinamis dengan akun gratis lalu unduh lagi. Kode ini tetap berfungsi apa pun yang terjadi pada paket Anda.",
+        "nudgeDynamicCta": "Jadikan dinamis",
+        "nudgeSave": "Simpan desain ini ke akun gratis dan gunakan di perangkat mana pun.",
+        "nudgeSaveCta": "Simpan desain",
         "scannedFromAbout": "Dipindai dari sekitar",
         "setsTheCodeWidthBelow": "Menentukan lebar kode di bawah.",
         "codeWidth": "Lebar kode",
@@ -3545,6 +3898,10 @@
       "undoRedoButtons": {
         "undo": "Urungkan",
         "redo": "Ulangi"
+      },
+      "keepDesigns": {
+        "text": "Simpan desain Anda di semua perangkat dengan akun gratis.",
+        "cta": "Buat akun gratis"
       }
     },
     "ai": {
@@ -4669,6 +5026,7 @@
       "fixedOncePrinted": "Tetap setelah dicetak",
       "dynamic": "Dinamis",
       "editLaterCountScans": "Edit nanti, hitung pemindaian",
+      "signedOutNote": "Kode dinamis memerlukan akun gratis. Kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
       "linkOptions": "Opsi tautan…",
       "printedCodesStillOpenDestinationurl": "Kode yang sudah dicetak tetap membuka <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Arahkan ke alamat baru",
@@ -5331,6 +5689,10 @@
     "browseLayout": {
       "filters": "Filter"
     },
+    "cardRail": {
+      "previous": "Tampilkan sebelumnya",
+      "next": "Lihat lainnya"
+    },
     "communityTabs": {
       "community": "Komunitas"
     },
@@ -5402,10 +5764,9 @@
     },
     "itemCard": {
       "empty": "Kosong",
-      "official": "Resmi",
-      "usecountUses": "{useCount} penggunaan",
-      "seeAll": "Lihat semua",
-      "likes": "Suka"
+      "viewAll": "Lihat semua",
+      "saves": "Disimpan",
+      "itemCount": "{count, plural, other {# item}}"
     },
     "itemPages": {
       "previous": "Sebelumnya",
@@ -5415,6 +5776,9 @@
       "loadMore": "Muat lebih banyak",
       "loading": "Memuat",
       "failed": "Halaman berikutnya gagal dimuat."
+    },
+    "makerCard": {
+      "itemsAndSaves": "{items, plural, other {# item}} · {saves, plural, other {# disimpan}}"
     },
     "more": {
       "load": "Muat lebih banyak",
@@ -5502,6 +5866,10 @@
     "tryIt": {
       "tryItWithYourLink": "Coba dengan tautan Anda",
       "drawnInYourBrowserNothing": "Digambar di browser Anda. Tidak ada yang dikirim."
+    },
+    "search": {
+      "label": "Cari di komunitas",
+      "placeholder": "Cari bingkai, tema, dan halaman"
     }
   },
   "app": {
@@ -8376,6 +8744,8 @@
         "searchOrJumpTo2": "Cari atau buka",
         "findAPageACode": "Temukan halaman, kode, atau artikel dokumentasi, atau mulai sesuatu yang baru.",
         "searchCodesPagesSettingsAnd": "Cari kode, halaman, pengaturan, dan dokumentasi…",
+        "findAPageOrA": "Cari halaman atau kode, atau mulai sesuatu yang baru.",
+        "searchCodesPagesAndSettings": "Cari kode, halaman, dan pengaturan…",
         "codes": "Kode",
         "landingPages": "Landing page",
         "create": "Buat",
@@ -8825,6 +9195,24 @@
     },
     "dialogCloseButton": {
       "close": "Tutup"
+    },
+    "reasons": {
+      "saveDesign": "Simpan desain ini ke akun Anda dan buka di perangkat mana pun.",
+      "makeDynamic": "Kode dinamis tersimpan di akun Anda: ubah tujuannya setelah dicetak, dan hitung setiap pemindaian.",
+      "hostedPage": "Halaman yang di-hosting tersimpan di akun Anda, sehingga Anda bisa mengubahnya setelah dicetak.",
+      "aiArt": "Seni AI berjalan di akun gratis, yang menyertakan gambar bulanan.",
+      "aiChat": "Desainer AI memerlukan akun gratis. Akun gratis mendapat total {count, number} permintaan.",
+      "uploadFrame": "Mengunggah bingkai Anda sendiri memerlukan akun gratis.",
+      "publishFrame": "Membagikan bingkai ke komunitas memerlukan akun gratis.",
+      "communityAction": "Menyukai, menyimpan, menyalin, dan memublikasikan desain komunitas memerlukan akun gratis.",
+      "saveBarcode": "Barcode yang disimpan tersimpan di akun Anda, siap diunduh lagi.",
+      "bulkOverLimit": "File hingga {limit, number} baris tidak memerlukan akun. Akun gratis dapat membuat hingga {max, number} per file, dan file Anda tetap dimuat.",
+      "keepDesigns": "Simpan desain Anda di akun Anda, di setiap perangkat.",
+      "afterDownload": "Gratis, dan kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
+      "upgrade": "Paket dan penagihan terhubung ke sebuah akun. Anda akan melanjutkan tepat dari tempat Anda berhenti."
+    },
+    "nudge": {
+      "dismiss": "Jangan tampilkan lagi"
     }
   },
   "codeBuilder": {

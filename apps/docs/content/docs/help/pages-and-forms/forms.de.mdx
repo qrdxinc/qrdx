@@ -3,39 +3,78 @@ title: "Antworten mit einem Formular sammeln"
 description: "Erstelle ein Feedback-Formular, eine Umfrage oder ein Anmeldeformular und lies die Antworten in deinem Dashboard."
 ---
 
+Ein Formular auf einer gehosteten Seite sammelt Feedback, Umfrageantworten oder Anmeldungen von den Personen, die deinen Code scannen. Die Antworten landen in deinem Dashboard, und du kannst sie als Tabelle herunterladen.
+
+<Callout type="info">
+  Jeder Workspace kann pro Monat 50 Antworten sammeln mit Kostenlos, 1.000 mit Pro und 10.000 mit Business. E-Mail-Benachrichtigungen für neue Antworten sind in Pro und Business enthalten. Siehe [Tarife und was sie enthalten](/docs/help/account-and-billing/plans).
+</Callout>
+
 ## Formular erstellen [#create-a-form]
 
-1. Gehe zu **Seiten** und klicke auf **Neue Seite**.
-2. Wähle **Feedback & Formulare**.
-3. Wähle eine Vorlage: **Gästefeedback**, **NPS-Umfrage** oder **Anmeldeformular**.
-4. Klicke auf **Seite erstellen**, bearbeite die Fragen und klicke dann auf **Veröffentlichen**.
+### 1. Neue Seite starten [#1-start-a-new-page]
 
-Du kannst auch auf jeder anderen Seite einen **Formular**-Block hinzufügen.
+Gehe zu **Pages & forms** und klicke auf **New page**.
 
-## Antworten ansehen [#read-the-responses]
+### 2. Feedback & forms auswählen [#2-pick-feedback--forms]
 
-Öffne unter **Seiten** das Menü der Seite (**⋯**) und wähle **Antworten**.
+Wähle **Feedback & forms** und dann eine Vorlage: **Guest feedback**, **NPS survey** oder **Sign-up form**.
 
-Klicke auf **CSV exportieren**, um die Antworten als Tabelle herunterzuladen.
+### 3. Erstellen und bearbeiten [#3-create-and-edit]
+
+Klicke auf **Create page** und bearbeite dann die Fragen im Tab **Blocks**.
+
+<Shot id="form-editor" />
+
+### 4. Veröffentlichen [#4-publish]
+
+Klicke auf **Publish**. Das Formular nimmt Antworten an, sobald die Seite live ist.
+
+Über das Menü zum Hinzufügen von Blöcken kannst du außerdem jeder anderen Seite einen **Form**-Block hinzufügen.
+
+## Antworten lesen [#read-the-responses]
+
+Öffne in **Pages & forms** das Menü der Seite (**⋯**) und wähle **Responses**. Der Eintrag erscheint, sobald die Seite ein Formular hat.
+
+Klicke auf **Export CSV**, um die Antworten als Tabelle herunterzuladen.
+
+<Shot id="form-responses" />
 
 ## Für jede Antwort eine E-Mail erhalten [#get-an-email-for-each-response]
 
-Gehe bei Pro und Business zu **Einstellungen** → **Benachrichtigungen** und aktiviere **Formulareinsendungen**.
+Gehe mit Pro und Business zu **Settings** → **Notifications** und aktiviere **Form submissions**. Mit Business kannst du von derselben Seite aus außerdem Antworten in einen Slack- oder Discord-Kanal senden.
 
 ## Monatliche Limits [#monthly-limits]
 
-Jeder Workspace kann pro Kalendermonat (UTC) eine bestimmte Anzahl an Antworten sammeln:
+Antworten werden pro Workspace und pro Kalendermonat in UTC gezählt:
 
-- **Kostenlos**: 50.
-- **Pro**: 1.000.
-- **Business**: 10.000.
+| Tarif | Antworten pro Monat |
+| --- | --- |
+| Kostenlos | 50 |
+| Pro | 1.000 |
+| Business | 10.000 |
 
-Wenn das Limit erreicht ist, sehen Besucher die Meldung „Dieses Formular nimmt momentan keine Antworten an.“ Im nächsten Monat nimmt das Formular wieder Antworten an, nach einem Upgrade sofort.
+Wenn das Limit erreicht ist, sehen Besucher die Meldung „This form isn't accepting responses right now. Please try again later." Bereits vorhandene Antworten bleiben erhalten. Das Formular nimmt am Ersten des nächsten Monats wieder Antworten an, oder sofort nach einem Upgrade.
 
 ## Spam [#spam]
 
-Formulare haben einen integrierten Spam-Schutz. Du musst nichts einrichten.
+Formulare haben einen eingebauten Spam-Schutz: eine Bot-Prüfung, ein verstecktes Feld, das Bots ausfüllen, und eine Obergrenze dafür, wie schnell ein Besucher Antworten absenden kann. Du musst nichts einrichten.
+
+## Wenn etwas nicht klappt [#if-something-goes-wrong]
+
+### Responses fehlt im Menü der Seite [#responses-isnt-in-the-pages-menu]
+
+Die Seite hat keinen Formular-Block. Füge im Editor einen hinzu und veröffentliche die Seite.
+
+### Das Formular meldet, dass es keine Antworten annimmt [#the-form-says-it-isnt-accepting-responses]
+
+Der Workspace hat das Limit dieses Monats erreicht. Warte bis zum nächsten Monat oder [führe ein Upgrade durch](/pricing), dann öffnet das Formular sofort wieder.
+
+### Jemand sagt, die Antwort wurde abgelehnt [#someone-says-their-answer-was-refused]
+
+Die Person hat innerhalb einer Minute mehr als ein paar Antworten gesendet, was die Spam-Obergrenze blockiert. Bitte sie, eine Minute zu warten und es erneut zu versuchen.
 
 ## Verwandte Themen [#related]
 
-- [Anleitung zu Formularen](/docs/forms-and-pages#forms)
+- [Eine Mobile-Seite erstellen](/docs/help/pages-and-forms/create-a-page)
+- [Deine Daten exportieren](/docs/help/account-and-billing/export-your-data)
+- [Leitfaden zu Formularen](/docs/forms-and-pages#forms)

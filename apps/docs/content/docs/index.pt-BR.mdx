@@ -1,61 +1,106 @@
 ---
 title: "Documentação do QRdx"
-description: "Ajuda para todo mundo que cria QR codes com o QRdx, guias de cada recurso e documentação para desenvolvedores."
+description: "Crie QR codes, altere-os depois de impressos, veja as leituras e desenvolva com a API e a biblioteca React."
 icon: Book
 ---
 
-QRdx é uma plataforma de QR code de código aberto (AGPL-3.0). Crie QR codes estáticos de graça, sem conta, ou entre para ter QR codes dinâmicos que você pode alterar depois de impressos, páginas para celular e análises de leitura.
+QRdx é uma plataforma de QR codes de código aberto: QR codes estáticos grátis e sem conta, e QR codes dinâmicos que você pode alterar depois de impressos, com páginas hospedadas e análise de leituras. Um QR code dinâmico continua funcionando em todos os planos, mesmo depois de você cancelar ([a Garantia Never-Hostage](/guarantee)).
 
-Todo QR code dinâmico continua redirecionando em todos os planos, mesmo depois de um downgrade ou cancelamento. Essa é a [Garantia Never-Hostage](/guarantee).
+## O que você quer fazer? [#what-do-you-want-to-do]
 
-## Por onde começar [#where-to-start]
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="Crie seu primeiro QR code"
+    description="Desenhe um QR code no editor e baixe no formato que a gráfica precisa."
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/create"
+    title="Crie um QR code que você pode alterar depois de impresso"
+    description="Um QR code dinâmico aponta para um link curto. Mude o destino quando quiser."
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="Veja as leituras"
+    description="Quando, onde e em quais dispositivos um QR code foi lido."
+  />
+  <Card
+    arrow
+    icon={<Terminal />}
+    href="/docs/developers/quickstart"
+    title="Desenvolva com a API"
+    description="Crie e gerencie QR codes a partir do seu próprio app. Todo endpoint tem um painel Try it."
+  />
+  <Card
+    arrow
+    icon={<Code />}
+    href="/docs/getting-started"
+    title="Use a biblioteca React"
+    description="Renderize e exporte QR codes estilizados com o pacote qrdx."
+  />
+  <Card
+    arrow
+    icon={<Server />}
+    href="/docs/self-hosting"
+    title="Hospede o QRdx você mesmo"
+    description="Rode o seu próprio QRdx, com QR codes dinâmicos incluídos, usando Docker Compose ou Node.js."
+  />
+</Cards>
+
+## As seções [#the-sections]
 
 <Cards>
   <Card
     icon={<LifeBuoy />}
     href="/docs/help"
     title="Ajuda"
-    description="Respostas simples para criar QR codes, cobrança, equipes e resolução de problemas. Sem precisar de código."
+    description="Respostas curtas sobre como criar QR codes, cobrança, equipes e resolução de problemas. Sem precisar de código."
   />
   <Card
     icon={<Book />}
     href="/docs/dynamic-qr-codes"
     title="Guias"
-    description="Cada recurso do produto em detalhes: QR codes dinâmicos, páginas, formulários, roteamento, análises e equipes."
+    description="Cada recurso em detalhe: QR codes dinâmicos, páginas, formulários, roteamento, análises e equipes."
   />
   <Card
     icon={<Terminal />}
     href="/docs/developers"
     title="Desenvolvedores"
-    description="A REST API com painel para testar, webhooks, apps OAuth, MCP e a CLI."
+    description="A REST API, webhooks, apps OAuth, o servidor MCP e a CLI."
   />
   <Card
     icon={<Code />}
     href="/docs/getting-started"
     title="Biblioteca React"
-    description="Renderize e exporte QR codes estilizados com o pacote qrdx e o registro do shadcn/ui."
+    description="O pacote qrdx, guias por framework e o registro do shadcn/ui."
   />
   <Card
     icon={<Server />}
     href="/docs/self-hosting"
     title="Hospedagem própria"
-    description="Rode seu próprio QRdx, com QR codes dinâmicos incluídos, usando Docker Compose ou Node.js."
+    description="Instale, configure e atualize o seu próprio QRdx."
   />
 </Cards>
 
-## Links rápidos [#quick-links]
+## Páginas populares [#popular-pages]
 
-- [Crie seu primeiro QR code](/docs/help/getting-started/first-qr-code)
 - [Estático ou dinâmico: qual você precisa?](/docs/help/getting-started/static-vs-dynamic)
+- [Mude para onde um QR code aponta](/docs/help/dynamic-codes/change-the-link)
+- [Baixe e imprima um QR code](/docs/help/getting-started/download-and-print)
 - [Um QR code não é lido](/docs/help/troubleshooting/wont-scan)
 - [Planos e limites](/docs/plans-and-limits)
 - [REST API e OAuth](/docs/developers/rest-api)
-- [Instale a biblioteca React](/docs/getting-started)
 
-## Fique por dentro [#stay-up-to-date]
+## Receba ajuda [#get-help]
 
-- [Changelog](/changelogs): cada versão lançada, da mais recente para a mais antiga.
-- [Novidades e próximos passos](/docs/help/whats-new).
-- [GitHub](https://github.com/qrdxinc/qrdx): código-fonte, [issues](https://github.com/qrdxinc/qrdx/issues) e [discussões](https://github.com/qrdxinc/qrdx/discussions).
+Pesquise na documentação de qualquer página com <kbd>⌘</kbd> <kbd>K</kbd>. Se a documentação não responder:
 
-Precisa falar com uma pessoa? [Fale com o suporte](/docs/help/contact).
+- [Fale com o suporte](/docs/help/contact): uma pessoa responde.
+- [Novidades e próximos passos](/docs/help/whats-new), e o [changelog](/changelogs) completo.
+- [GitHub](https://github.com/qrdxinc/qrdx): o código-fonte, as [issues](https://github.com/qrdxinc/qrdx/issues) e as [discussões](https://github.com/qrdxinc/qrdx/discussions).

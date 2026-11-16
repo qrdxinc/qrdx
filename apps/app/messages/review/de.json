@@ -31,8 +31,8 @@
     "source": "fb9ef894175c",
     "status": "machine"
   },
-  "nav.entries.tools": {
-    "source": "ea93d6a262ec",
+  "nav.entries.solutions": {
+    "source": "900fe12faa26",
     "status": "machine"
   },
   "nav.entries.developers": {
@@ -43,240 +43,320 @@
     "source": "e89b30aa1dc3",
     "status": "machine"
   },
-  "nav.entries.pricing": {
-    "source": "dfe95783edfe",
+  "nav.columns.industries": {
+    "source": "a8da99328cf9",
     "status": "machine"
   },
-  "nav.items.playground.name": {
-    "source": "a6273fb551f2",
+  "nav.columns.teams": {
+    "source": "1e1a1c078af2",
+    "status": "machine"
+  },
+  "nav.columns.codeTypes": {
+    "source": "eb2337fd0f88",
+    "status": "machine"
+  },
+  "nav.columns.build": {
+    "source": "bdd254b65baa",
+    "status": "machine"
+  },
+  "nav.columns.embed": {
+    "source": "7512561d2f68",
+    "status": "machine"
+  },
+  "nav.columns.connect": {
+    "source": "1a2303ede074",
+    "status": "machine"
+  },
+  "nav.columns.help": {
+    "source": "b79cac926e0b",
+    "status": "machine"
+  },
+  "nav.columns.company": {
+    "source": "de4743c87973",
+    "status": "machine"
+  },
+  "nav.columns.updates": {
+    "source": "22e2bada8f1c",
     "status": "machine"
   },
   "nav.items.playground.description": {
-    "source": "6225fd0047c0",
+    "source": "8e6a7931018d",
     "status": "machine"
   },
-  "nav.items.dynamicCodes.name": {
-    "source": "6089067b0798",
+  "nav.items.playground.short": {
+    "source": "3a6c424bf0ae",
     "status": "machine"
   },
   "nav.items.dynamicCodes.description": {
-    "source": "6cfd26f51e37",
+    "source": "d50147a2bafc",
     "status": "machine"
   },
-  "nav.items.aiThemes.name": {
-    "source": "0f7e5513dd4c",
-    "status": "machine"
-  },
-  "nav.items.aiThemes.description": {
-    "source": "18c508a95efe",
-    "status": "machine"
-  },
-  "nav.items.aiArt.name": {
-    "source": "fbd1abbf8fdc",
+  "nav.items.dynamicCodes.short": {
+    "source": "024a54ddf421",
     "status": "machine"
   },
   "nav.items.aiArt.description": {
-    "source": "e4172f97ec71",
+    "source": "b0e0d0012f53",
     "status": "machine"
   },
-  "nav.items.communityThemes.name": {
-    "source": "037a4b1636b8",
-    "status": "machine"
-  },
-  "nav.items.communityThemes.description": {
-    "source": "7f84a1986809",
-    "status": "machine"
-  },
-  "nav.items.pageTemplates.name": {
-    "source": "632a00fb54a6",
-    "status": "machine"
-  },
-  "nav.items.pageTemplates.description": {
-    "source": "44312f9cc9cf",
-    "status": "machine"
-  },
-  "nav.items.generators.name": {
-    "source": "603c1d77656d",
-    "status": "machine"
-  },
-  "nav.items.generators.description": {
-    "source": "615f79e6bd38",
-    "status": "machine"
-  },
-  "nav.items.bulk.name": {
-    "source": "48c46ecdf3c7",
-    "status": "machine"
-  },
-  "nav.items.bulk.description": {
-    "source": "3a9f01d0ae7c",
-    "status": "machine"
-  },
-  "nav.items.scanner.name": {
-    "source": "f96c48da96ed",
-    "status": "machine"
-  },
-  "nav.items.scanner.description": {
-    "source": "94ea9ed03d9f",
-    "status": "machine"
-  },
-  "nav.items.scanChecker.name": {
-    "source": "208aae4852a3",
-    "status": "machine"
-  },
-  "nav.items.scanChecker.description": {
-    "source": "eb8dfd035fc3",
-    "status": "machine"
-  },
-  "nav.items.printSize.name": {
-    "source": "457447ccdac3",
-    "status": "machine"
-  },
-  "nav.items.printSize.description": {
-    "source": "fc75451dc6a2",
-    "status": "machine"
-  },
-  "nav.items.barcode.name": {
-    "source": "4717ee594681",
+  "nav.items.aiArt.short": {
+    "source": "57d5bb58e51c",
     "status": "machine"
   },
   "nav.items.barcode.description": {
-    "source": "3919b6853880",
+    "source": "e6aeabe38f5f",
     "status": "machine"
   },
-  "nav.items.allTools.name": {
-    "source": "81c151f98a19",
+  "nav.items.barcode.short": {
+    "source": "7070f6f07727",
     "status": "machine"
   },
-  "nav.items.allTools.description": {
-    "source": "0e6d7ddbe4d2",
+  "nav.items.bulk.description": {
+    "source": "6d650bb212a8",
     "status": "machine"
   },
-  "nav.items.docs.name": {
-    "source": "c205924de0fe",
+  "nav.items.bulk.short": {
+    "source": "8edc0792e767",
     "status": "machine"
   },
-  "nav.items.docs.description": {
-    "source": "59b67e24421e",
+  "nav.items.community.description": {
+    "source": "3c3290bca300",
     "status": "machine"
   },
-  "nav.items.mcp.name": {
-    "source": "d938c8168e3a",
+  "nav.items.community.short": {
+    "source": "9cf8acbbb726",
+    "status": "machine"
+  },
+  "nav.items.restaurants.description": {
+    "source": "c6b5664da57d",
+    "status": "machine"
+  },
+  "nav.items.restaurants.short": {
+    "source": "601e4c80b05c",
+    "status": "machine"
+  },
+  "nav.items.retail.description": {
+    "source": "a1aa00a625a8",
+    "status": "machine"
+  },
+  "nav.items.retail.short": {
+    "source": "940a37866797",
+    "status": "machine"
+  },
+  "nav.items.realEstate.description": {
+    "source": "05731ca0be19",
+    "status": "machine"
+  },
+  "nav.items.realEstate.short": {
+    "source": "c184d8dfa42a",
+    "status": "machine"
+  },
+  "nav.items.events.description": {
+    "source": "d2fc7ddf08c3",
+    "status": "machine"
+  },
+  "nav.items.events.short": {
+    "source": "468ae393b7cd",
+    "status": "machine"
+  },
+  "nav.items.enterprise.description": {
+    "source": "cc0b3932f28e",
+    "status": "machine"
+  },
+  "nav.items.enterprise.short": {
+    "source": "56bc38326807",
+    "status": "machine"
+  },
+  "nav.items.agencies.description": {
+    "source": "a66b48d55a12",
+    "status": "machine"
+  },
+  "nav.items.agencies.short": {
+    "source": "bccc8bccd013",
+    "status": "machine"
+  },
+  "nav.items.openSource.description": {
+    "source": "0492d65ff56c",
+    "status": "machine"
+  },
+  "nav.items.openSource.short": {
+    "source": "d3fec33eb28d",
+    "status": "machine"
+  },
+  "nav.items.placements.description": {
+    "source": "ecb38f7bb387",
+    "status": "machine"
+  },
+  "nav.items.placements.short": {
+    "source": "114534ba154a",
+    "status": "machine"
+  },
+  "nav.items.restApi.description": {
+    "source": "b46141ec8751",
+    "status": "machine"
+  },
+  "nav.items.restApi.short": {
+    "source": "5cf4f4279b68",
+    "status": "machine"
+  },
+  "nav.items.imageApi.description": {
+    "source": "f63ebfc16c71",
+    "status": "machine"
+  },
+  "nav.items.imageApi.short": {
+    "source": "33010caf171f",
     "status": "machine"
   },
   "nav.items.mcp.description": {
     "source": "977b2c1d5ca1",
     "status": "machine"
   },
-  "nav.items.qrCodeApi.name": {
-    "source": "f04a8a45ca80",
+  "nav.items.mcp.short": {
+    "source": "18a6d4e358a2",
     "status": "machine"
   },
-  "nav.items.qrCodeApi.description": {
-    "source": "35a969b520cc",
+  "nav.items.cli.description": {
+    "source": "f33278d639b1",
     "status": "machine"
   },
-  "nav.items.nextjs.name": {
-    "source": "0f3633c8f553",
+  "nav.items.cli.short": {
+    "source": "d9049b03f4ff",
     "status": "machine"
   },
-  "nav.items.nextjs.description": {
-    "source": "14638c3c59b8",
+  "nav.items.react.description": {
+    "source": "43db91f36b29",
     "status": "machine"
   },
-  "nav.items.imageApi.name": {
-    "source": "6856e461415d",
-    "status": "machine"
-  },
-  "nav.items.imageApi.description": {
-    "source": "2cef6a46994e",
-    "status": "machine"
-  },
-  "nav.items.shadcn.name": {
-    "source": "5ce934a766f9",
+  "nav.items.react.short": {
+    "source": "09591724693a",
     "status": "machine"
   },
   "nav.items.shadcn.description": {
     "source": "7cfb7251f1f0",
     "status": "machine"
   },
-  "nav.items.plugins.name": {
-    "source": "9514b7ff4860",
+  "nav.items.shadcn.short": {
+    "source": "74a5d102458d",
     "status": "machine"
   },
-  "nav.items.plugins.description": {
-    "source": "eefe5821f4b2",
+  "nav.items.nextjs.description": {
+    "source": "14638c3c59b8",
     "status": "machine"
   },
-  "nav.items.github.name": {
-    "source": "f911e414cf6b",
-    "status": "machine"
-  },
-  "nav.items.github.description": {
-    "source": "85a3a994b2c1",
-    "status": "machine"
-  },
-  "nav.items.help.name": {
-    "source": "e2f55c84f3b4",
-    "status": "machine"
-  },
-  "nav.items.help.description": {
-    "source": "cdd480f80c60",
-    "status": "machine"
-  },
-  "nav.items.blog.name": {
-    "source": "8c6bc099534a",
-    "status": "machine"
-  },
-  "nav.items.blog.description": {
-    "source": "598fa110bdc1",
-    "status": "machine"
-  },
-  "nav.items.customers.name": {
-    "source": "aabe76f1f4ec",
-    "status": "machine"
-  },
-  "nav.items.customers.description": {
-    "source": "83aee76af003",
-    "status": "machine"
-  },
-  "nav.items.compare.name": {
-    "source": "e888155d8c7d",
-    "status": "machine"
-  },
-  "nav.items.compare.description": {
-    "source": "88268c3c2897",
-    "status": "machine"
-  },
-  "nav.items.changelog.name": {
-    "source": "ead07c84baac",
-    "status": "machine"
-  },
-  "nav.items.changelog.description": {
-    "source": "3a7d3aa5b71f",
-    "status": "machine"
-  },
-  "nav.items.integrations.name": {
-    "source": "090512d93fcc",
+  "nav.items.nextjs.short": {
+    "source": "5565afdafca1",
     "status": "machine"
   },
   "nav.items.integrations.description": {
     "source": "5e7b8b2c9bb0",
     "status": "machine"
   },
-  "nav.items.support.name": {
-    "source": "814f4ed2d5bd",
+  "nav.items.integrations.short": {
+    "source": "1c669d425d98",
     "status": "machine"
   },
-  "nav.items.support.description": {
+  "nav.items.plugins.description": {
+    "source": "eefe5821f4b2",
+    "status": "machine"
+  },
+  "nav.items.plugins.short": {
+    "source": "c0f42b2178f0",
+    "status": "machine"
+  },
+  "nav.items.webhooks.description": {
+    "source": "fd895a4ce41e",
+    "status": "machine"
+  },
+  "nav.items.webhooks.short": {
+    "source": "84c4ba18150d",
+    "status": "machine"
+  },
+  "nav.items.docs.description": {
+    "source": "edeb10a03edf",
+    "status": "machine"
+  },
+  "nav.items.docs.short": {
+    "source": "1a51d2126a06",
+    "status": "machine"
+  },
+  "nav.items.github.description": {
+    "source": "9838c4cf2382",
+    "status": "machine"
+  },
+  "nav.items.github.short": {
+    "source": "666920766d4f",
+    "status": "machine"
+  },
+  "nav.items.help.description": {
+    "source": "cdd480f80c60",
+    "status": "machine"
+  },
+  "nav.items.help.short": {
+    "source": "a8f97dd434be",
+    "status": "machine"
+  },
+  "nav.items.contact.description": {
     "source": "b6644d31b741",
     "status": "machine"
   },
-  "nav.account.tryPlayground": {
-    "source": "9a49d38f2987",
+  "nav.items.contact.short": {
+    "source": "4618d61c09f6",
     "status": "machine"
   },
-  "nav.account.playground": {
-    "source": "a6273fb551f2",
+  "nav.items.customers.description": {
+    "source": "83aee76af003",
+    "status": "machine"
+  },
+  "nav.items.customers.short": {
+    "source": "83aee76af003",
+    "status": "machine"
+  },
+  "nav.items.security.description": {
+    "source": "7a50ad5bd3db",
+    "status": "machine"
+  },
+  "nav.items.security.short": {
+    "source": "ead3b7fe0ba9",
+    "status": "machine"
+  },
+  "nav.items.affiliates.description": {
+    "source": "36096be0e033",
+    "status": "machine"
+  },
+  "nav.items.affiliates.short": {
+    "source": "0db0f2b829e9",
+    "status": "machine"
+  },
+  "nav.items.blog.description": {
+    "source": "598fa110bdc1",
+    "status": "machine"
+  },
+  "nav.items.blog.short": {
+    "source": "08498494f9b1",
+    "status": "machine"
+  },
+  "nav.items.changelog.description": {
+    "source": "3a7d3aa5b71f",
+    "status": "machine"
+  },
+  "nav.items.changelog.short": {
+    "source": "135e912e8905",
+    "status": "machine"
+  },
+  "nav.items.tools.description": {
+    "source": "77f2d796fda0",
+    "status": "machine"
+  },
+  "nav.items.tools.short": {
+    "source": "759a9b1fce60",
+    "status": "machine"
+  },
+  "nav.account.signIn": {
+    "source": "bfd402b2f6f3",
+    "status": "machine"
+  },
+  "nav.account.create": {
+    "source": "3f839cb21501",
     "status": "machine"
   },
   "nav.account.dashboard": {
@@ -293,6 +373,10 @@
   },
   "nav.github.starOnGithubCount": {
     "source": "20417aca9e57",
+    "status": "machine"
+  },
+  "nav.github.stars": {
+    "source": "2de13519aab9",
     "status": "machine"
   },
   "nav.userProfileDropdown.tryThePlayground": {
@@ -368,39 +452,43 @@
     "status": "machine"
   },
   "footer.description": {
-    "source": "78e26afcf37f",
+    "source": "c882420675c8",
     "status": "machine"
   },
   "footer.starOnGithub": {
     "source": "9000a7b3a285",
     "status": "machine"
   },
+  "footer.newsOnX": {
+    "source": "063a2a55464f",
+    "status": "machine"
+  },
   "footer.navLabel": {
     "source": "26c87bb51e69",
     "status": "machine"
   },
-  "footer.scanIt": {
-    "source": "9bbd07dba8b4",
-    "status": "machine"
-  },
   "footer.copyright": {
-    "source": "94bde9ba3b05",
+    "source": "02b39870e404",
     "status": "machine"
   },
   "footer.columns.product": {
     "source": "fb9ef894175c",
     "status": "machine"
   },
-  "footer.columns.tools": {
-    "source": "ea93d6a262ec",
-    "status": "machine"
-  },
   "footer.columns.developers": {
     "source": "fc799da2088d",
     "status": "machine"
   },
+  "footer.columns.solutions": {
+    "source": "900fe12faa26",
+    "status": "machine"
+  },
   "footer.columns.resources": {
     "source": "e89b30aa1dc3",
+    "status": "machine"
+  },
+  "footer.columns.company": {
+    "source": "de4743c87973",
     "status": "machine"
   },
   "footer.columns.compare": {
@@ -408,35 +496,35 @@
     "status": "machine"
   },
   "footer.links.playground": {
-    "source": "a6273fb551f2",
+    "source": "799653bb4ee1",
     "status": "machine"
   },
   "footer.links.dynamicCodes": {
     "source": "6089067b0798",
     "status": "machine"
   },
+  "footer.links.aiArt": {
+    "source": "fbd1abbf8fdc",
+    "status": "machine"
+  },
   "footer.links.aiThemes": {
     "source": "0f7e5513dd4c",
     "status": "machine"
   },
-  "footer.links.communityThemes": {
-    "source": "037a4b1636b8",
+  "footer.links.barcode": {
+    "source": "eb409b2f71a8",
+    "status": "machine"
+  },
+  "footer.links.bulk": {
+    "source": "48c46ecdf3c7",
     "status": "machine"
   },
   "footer.links.pageTemplates": {
     "source": "632a00fb54a6",
     "status": "machine"
   },
-  "footer.links.pricing": {
-    "source": "dfe95783edfe",
-    "status": "machine"
-  },
-  "footer.links.guarantee": {
-    "source": "cc813935fc0f",
-    "status": "machine"
-  },
-  "footer.links.enterprise": {
-    "source": "3fbe5ed156f1",
+  "footer.links.community": {
+    "source": "bb501d7877eb",
     "status": "machine"
   },
   "footer.links.slackBot": {
@@ -451,108 +539,20 @@
     "source": "edfc291b97bb",
     "status": "machine"
   },
-  "footer.links.generators": {
-    "source": "603c1d77656d",
+  "footer.links.restaurants": {
+    "source": "0beeae358e66",
     "status": "machine"
   },
-  "footer.links.bulk": {
-    "source": "48c46ecdf3c7",
+  "footer.links.retail": {
+    "source": "cdb38c8dc89a",
     "status": "machine"
   },
-  "footer.links.scanChecker": {
-    "source": "208aae4852a3",
+  "footer.links.realEstate": {
+    "source": "133a8c12d13d",
     "status": "machine"
   },
-  "footer.links.printSize": {
-    "source": "457447ccdac3",
-    "status": "machine"
-  },
-  "footer.links.barcode": {
-    "source": "4717ee594681",
-    "status": "machine"
-  },
-  "footer.links.pdfQr": {
-    "source": "121fe1fb37e8",
-    "status": "machine"
-  },
-  "footer.links.businessCard": {
-    "source": "16267e06af8f",
-    "status": "machine"
-  },
-  "footer.links.menuQr": {
-    "source": "658c43b0ede6",
-    "status": "machine"
-  },
-  "footer.links.scanner": {
-    "source": "f96c48da96ed",
-    "status": "machine"
-  },
-  "footer.links.allTools": {
-    "source": "81c151f98a19",
-    "status": "machine"
-  },
-  "footer.links.docs": {
-    "source": "c205924de0fe",
-    "status": "machine"
-  },
-  "footer.links.apiReference": {
-    "source": "484ee9bb6e51",
-    "status": "machine"
-  },
-  "footer.links.qrCodeApi": {
-    "source": "f04a8a45ca80",
-    "status": "machine"
-  },
-  "footer.links.nextjs": {
-    "source": "0f3633c8f553",
-    "status": "machine"
-  },
-  "footer.links.imageApi": {
-    "source": "6856e461415d",
-    "status": "machine"
-  },
-  "footer.links.mcp": {
-    "source": "d938c8168e3a",
-    "status": "machine"
-  },
-  "footer.links.shadcn": {
-    "source": "5ce934a766f9",
-    "status": "machine"
-  },
-  "footer.links.plugins": {
-    "source": "9514b7ff4860",
-    "status": "machine"
-  },
-  "footer.links.selfHosting": {
-    "source": "b817cbd4d6df",
-    "status": "machine"
-  },
-  "footer.links.openSource": {
-    "source": "67a0d2e0dab4",
-    "status": "machine"
-  },
-  "footer.links.github": {
-    "source": "f911e414cf6b",
-    "status": "machine"
-  },
-  "footer.links.help": {
-    "source": "e2f55c84f3b4",
-    "status": "machine"
-  },
-  "footer.links.blog": {
-    "source": "8c6bc099534a",
-    "status": "machine"
-  },
-  "footer.links.customers": {
-    "source": "aabe76f1f4ec",
-    "status": "machine"
-  },
-  "footer.links.changelog": {
-    "source": "ead07c84baac",
-    "status": "machine"
-  },
-  "footer.links.integrations": {
-    "source": "090512d93fcc",
+  "footer.links.events": {
+    "source": "8d14f6e72de8",
     "status": "machine"
   },
   "footer.links.industries": {
@@ -563,36 +563,160 @@
     "source": "1dc58ba725ad",
     "status": "machine"
   },
-  "footer.links.affiliates": {
-    "source": "ce78cb6655b7",
+  "footer.links.generators": {
+    "source": "baa016e655b5",
+    "status": "machine"
+  },
+  "footer.links.typeUrl": {
+    "source": "b5a229ac8bec",
+    "status": "machine"
+  },
+  "footer.links.typeWifi": {
+    "source": "337253f2e8d4",
+    "status": "machine"
+  },
+  "footer.links.typeVcard": {
+    "source": "5f1e585d4bb9",
+    "status": "machine"
+  },
+  "footer.links.typePdf": {
+    "source": "1d393b0081b6",
+    "status": "machine"
+  },
+  "footer.links.enterprise": {
+    "source": "3fbe5ed156f1",
+    "status": "machine"
+  },
+  "footer.links.agencies": {
+    "source": "3b8797f648d8",
+    "status": "machine"
+  },
+  "footer.links.openSource": {
+    "source": "67a0d2e0dab4",
+    "status": "machine"
+  },
+  "footer.links.docs": {
+    "source": "7af023c43013",
+    "status": "machine"
+  },
+  "footer.links.restApi": {
+    "source": "41a52587276c",
+    "status": "machine"
+  },
+  "footer.links.apiReference": {
+    "source": "484ee9bb6e51",
+    "status": "machine"
+  },
+  "footer.links.imageApi": {
+    "source": "6856e461415d",
+    "status": "machine"
+  },
+  "footer.links.mcp": {
+    "source": "d938c8168e3a",
+    "status": "machine"
+  },
+  "footer.links.cli": {
+    "source": "e759793341ff",
+    "status": "machine"
+  },
+  "footer.links.react": {
+    "source": "438d3a498a33",
+    "status": "machine"
+  },
+  "footer.links.shadcn": {
+    "source": "5ce934a766f9",
+    "status": "machine"
+  },
+  "footer.links.nextjs": {
+    "source": "0f3633c8f553",
+    "status": "machine"
+  },
+  "footer.links.integrations": {
+    "source": "090512d93fcc",
+    "status": "machine"
+  },
+  "footer.links.plugins": {
+    "source": "9514b7ff4860",
+    "status": "machine"
+  },
+  "footer.links.webhooks": {
+    "source": "45808d75bf89",
+    "status": "machine"
+  },
+  "footer.links.selfHosting": {
+    "source": "b817cbd4d6df",
+    "status": "machine"
+  },
+  "footer.links.github": {
+    "source": "f911e414cf6b",
+    "status": "machine"
+  },
+  "footer.links.help": {
+    "source": "e2f55c84f3b4",
     "status": "machine"
   },
   "footer.links.contact": {
     "source": "2b5c3d26721a",
     "status": "machine"
   },
-  "footer.links.legal": {
-    "source": "4787eaf7c938",
+  "footer.links.blog": {
+    "source": "8c6bc099534a",
     "status": "machine"
   },
-  "footer.links.privacy": {
-    "source": "ba445cff3898",
+  "footer.links.changelog": {
+    "source": "ead07c84baac",
+    "status": "machine"
+  },
+  "footer.links.customers": {
+    "source": "aabe76f1f4ec",
+    "status": "machine"
+  },
+  "footer.links.tools": {
+    "source": "5c2bd9d1471a",
+    "status": "machine"
+  },
+  "footer.links.scanner": {
+    "source": "f96c48da96ed",
+    "status": "machine"
+  },
+  "footer.links.scanChecker": {
+    "source": "208aae4852a3",
+    "status": "machine"
+  },
+  "footer.links.printSize": {
+    "source": "457447ccdac3",
+    "status": "machine"
+  },
+  "footer.links.security": {
+    "source": "8f6fb4eb7f42",
+    "status": "machine"
+  },
+  "footer.links.affiliates": {
+    "source": "ce78cb6655b7",
+    "status": "machine"
+  },
+  "footer.links.guarantee": {
+    "source": "cc813935fc0f",
+    "status": "machine"
+  },
+  "footer.links.pricing": {
+    "source": "dfe95783edfe",
+    "status": "machine"
+  },
+  "footer.links.allComparisons": {
+    "source": "ed36a5ad0845",
+    "status": "machine"
+  },
+  "footer.links.legal": {
+    "source": "4787eaf7c938",
     "status": "machine"
   },
   "footer.links.terms": {
     "source": "e69e06144877",
     "status": "machine"
   },
-  "footer.links.subprocessors": {
-    "source": "4fd685570eae",
-    "status": "machine"
-  },
-  "footer.links.reportAbuse": {
-    "source": "179e5a21cc1e",
-    "status": "machine"
-  },
-  "footer.links.acceptableUse": {
-    "source": "9b41b2884b0e",
+  "footer.links.privacy": {
+    "source": "ba445cff3898",
     "status": "machine"
   },
   "footer.links.cookies": {
@@ -601,6 +725,14 @@
   },
   "footer.links.dpa": {
     "source": "5730e8c986a8",
+    "status": "machine"
+  },
+  "footer.links.subprocessors": {
+    "source": "4fd685570eae",
+    "status": "machine"
+  },
+  "footer.links.acceptableUse": {
+    "source": "9b41b2884b0e",
     "status": "machine"
   },
   "footer.links.aiFeatures": {
@@ -615,16 +747,12 @@
     "source": "3f433549a264",
     "status": "machine"
   },
-  "footer.links.security": {
-    "source": "8f6fb4eb7f42",
-    "status": "machine"
-  },
   "footer.links.securityPolicy": {
     "source": "5929ef9641ba",
     "status": "machine"
   },
-  "footer.links.allComparisons": {
-    "source": "ed36a5ad0845",
+  "footer.links.reportAbuse": {
+    "source": "179e5a21cc1e",
     "status": "machine"
   },
   "localeSwitcher.label": {
@@ -636,15 +764,19 @@
     "status": "machine"
   },
   "cta.title": {
-    "source": "1f78fdd09efb",
+    "source": "97faf67ad6ce",
     "status": "machine"
   },
   "cta.subtext": {
-    "source": "cd7bad450b9c",
+    "source": "824877bffa1f",
     "status": "machine"
   },
   "cta.button": {
-    "source": "6d3d007809fa",
+    "source": "3f839cb21501",
+    "status": "machine"
+  },
+  "cta.secondary": {
+    "source": "e64f4839ef20",
     "status": "machine"
   },
   "consent.banner.title": {
@@ -2279,6 +2411,130 @@
     "source": "c02a102cb413",
     "status": "machine"
   },
+  "docs.shell.header.docs": {
+    "source": "7af023c43013",
+    "status": "machine"
+  },
+  "docs.shell.header.dashboard": {
+    "source": "67b696468610",
+    "status": "machine"
+  },
+  "docs.shell.header.github": {
+    "source": "31da14f57884",
+    "status": "machine"
+  },
+  "docs.shell.actions.copyPage": {
+    "source": "4104018941ae",
+    "status": "machine"
+  },
+  "docs.shell.actions.copied": {
+    "source": "8d525e5f158b",
+    "status": "machine"
+  },
+  "docs.shell.actions.more": {
+    "source": "4ac01872c246",
+    "status": "machine"
+  },
+  "docs.shell.actions.copyMarkdown": {
+    "source": "0d998dc31617",
+    "status": "machine"
+  },
+  "docs.shell.actions.viewMarkdown": {
+    "source": "17d36a505f97",
+    "status": "machine"
+  },
+  "docs.shell.actions.mcp": {
+    "source": "48d9ecf40dc1",
+    "status": "machine"
+  },
+  "docs.shell.feedback.question": {
+    "source": "c8f62fcc6b3a",
+    "status": "machine"
+  },
+  "docs.shell.feedback.yes": {
+    "source": "85a39ab345d6",
+    "status": "machine"
+  },
+  "docs.shell.feedback.no": {
+    "source": "1ea442a134b2",
+    "status": "machine"
+  },
+  "docs.shell.feedback.thanks": {
+    "source": "bc4c044ea84c",
+    "status": "machine"
+  },
+  "docs.shell.feedback.edit": {
+    "source": "073fd1036ab1",
+    "status": "machine"
+  },
+  "docs.shell.feedback.report": {
+    "source": "53de38dec81e",
+    "status": "machine"
+  },
+  "docs.shell.feedback.issueTitle": {
+    "source": "e88050663a26",
+    "status": "machine"
+  },
+  "docs.shell.feedback.issueBody": {
+    "source": "b26edd625f2a",
+    "status": "machine"
+  },
+  "docs.shell.notFound.search": {
+    "source": "3c1004b71f0f",
+    "status": "machine"
+  },
+  "docs.shell.notFound.sections": {
+    "source": "e0282060ed09",
+    "status": "machine"
+  },
+  "docs.shell.code.copy": {
+    "source": "49a0053f3b0d",
+    "status": "machine"
+  },
+  "docs.shell.code.copied": {
+    "source": "8d525e5f158b",
+    "status": "machine"
+  },
+  "docs.shell.video.play": {
+    "source": "64010fec3cf5",
+    "status": "machine"
+  },
+  "docs.shell.video.pause": {
+    "source": "276c419a574f",
+    "status": "machine"
+  },
+  "docs.shell.video.reducedMotion": {
+    "source": "e285fa12b655",
+    "status": "machine"
+  },
+  "docs.shell.plan.title": {
+    "source": "0bf0fb69b7c0",
+    "status": "machine"
+  },
+  "docs.shell.plan.or": {
+    "source": "8705becfbed6",
+    "status": "machine"
+  },
+  "docs.shell.plan.body": {
+    "source": "0012b63de521",
+    "status": "machine"
+  },
+  "docs.shell.plan.link": {
+    "source": "eafe3bbcbe19",
+    "status": "machine"
+  },
+  "docs.shell.plan.pro": {
+    "source": "957b0b874524",
+    "status": "machine"
+  },
+  "docs.shell.plan.business": {
+    "source": "76f68a75f01e",
+    "status": "machine"
+  },
+  "docs.shell.plan.enterprise": {
+    "source": "3fbe5ed156f1",
+    "status": "machine"
+  },
   "docs.ui.search": {
     "source": "49c266baaaa7",
     "status": "machine"
@@ -2401,6 +2657,834 @@
   },
   "docs.ui.typeTableReturns": {
     "source": "16dcaa923f16",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.title": {
+    "source": "8b9202b73da3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.scan": {
+    "source": "ea1c510d1ddb",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.scanNote": {
+    "source": "944ac5dcaa45",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.shortLink": {
+    "source": "f44e613ad8ad",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.shortLinkNote": {
+    "source": "db4b2deb9712",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.rules": {
+    "source": "4228aeb07c41",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.rulesNote": {
+    "source": "40d035859db6",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.destinationNote": {
+    "source": "2a5adbdae891",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.recorded": {
+    "source": "97f0d8762a55",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.dynamic-redirect.recordedNote": {
+    "source": "771a354d1361",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.title": {
+    "source": "80b3cefd65b4",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.static": {
+    "source": "eb169d5fd4a0",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.dynamic": {
+    "source": "92c3278451d4",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.printed": {
+    "source": "a8cbee2f834f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.printedNote": {
+    "source": "083c23eb998a",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.content": {
+    "source": "94e55bf68090",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.contentNote": {
+    "source": "420fb7be6728",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.staticEnd": {
+    "source": "0155b73c1388",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.shortLink": {
+    "source": "f44e613ad8ad",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.shortLinkNote": {
+    "source": "567b15d458af",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.static-vs-dynamic.destinationNote": {
+    "source": "8a728698b53b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.title": {
+    "source": "0c9486aedd1a",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.scan": {
+    "source": "d2f1dc5a6ead",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.scanNote": {
+    "source": "76f6616fc7f0",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.rule1": {
+    "source": "ca5877abe462",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.rule2": {
+    "source": "76cca9e13121",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.rule3": {
+    "source": "c0b0c6c44c37",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.firstMatch": {
+    "source": "c0556de83c71",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.firstMatchNote": {
+    "source": "b02f939aed9b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.noMatch": {
+    "source": "47619bea13d4",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.noMatchNote": {
+    "source": "7d6ccff785c4",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.smart-routing.footnote": {
+    "source": "cd4bd38f3b66",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.title": {
+    "source": "472c5430a6c9",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.scan": {
+    "source": "ea1c510d1ddb",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.scanNote": {
+    "source": "c964251d7880",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.dns": {
+    "source": "c82110d993ff",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.dnsNote": {
+    "source": "d350ba9ad9f0",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.record": {
+    "source": "4a8e1434c657",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.qrdx": {
+    "source": "fbb7e1cb8111",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.qrdxNote": {
+    "source": "6311a10df80a",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.destinationNote": {
+    "source": "23117f4f49f6",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.custom-domain.footnote": {
+    "source": "d462f065489b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.title": {
+    "source": "18cacf5a7c8d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.event": {
+    "source": "4e1f49a9c8ae",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.eventNote": {
+    "source": "a35e0981b64e",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.post": {
+    "source": "7b0068a03b17",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.postNote": {
+    "source": "933d3d72b947",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.delivered": {
+    "source": "906115657390",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.deliveredNote": {
+    "source": "c02cf70e5ce8",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.retry": {
+    "source": "2146f24a9115",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.retryNote": {
+    "source": "d1f4974c42e3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.schedule": {
+    "source": "f7cec5b11603",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.failed": {
+    "source": "031a8f0f659d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.failedNote": {
+    "source": "4ca5bd897230",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.webhook-delivery.footnote": {
+    "source": "47c8cd3d0ffc",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.title": {
+    "source": "20c5e08a7537",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.request": {
+    "source": "2ff551289b10",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.requestNote": {
+    "source": "25d42fefcf9a",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.encode": {
+    "source": "23389a1f5476",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.encodeNote": {
+    "source": "bcffce847511",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.render": {
+    "source": "6d89eb7d0938",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.renderNote": {
+    "source": "2182f6045aed",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.response": {
+    "source": "1aa4cb0bcca7",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.responseNote": {
+    "source": "d5b404dd94d3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.example": {
+    "source": "da0bb5dde1a8",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.noKey": {
+    "source": "ee7c659c4478",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.image-api.footnote": {
+    "source": "1874bf1c43a0",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.title": {
+    "source": "93c0dd9de2ac",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.editor": {
+    "source": "936a161c3931",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.editorNote": {
+    "source": "b7f5321981ed",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.publish": {
+    "source": "859390eb495b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.page": {
+    "source": "26b569e208d6",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.pageNote": {
+    "source": "4cb3279125ab",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.code": {
+    "source": "d970bf1a0d99",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.codeNote": {
+    "source": "12d694ec488f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.scan": {
+    "source": "f94b986738a7",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.block1": {
+    "source": "ba5caa4285a8",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.block2": {
+    "source": "9024c197d849",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.block3": {
+    "source": "99af6606ff9d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.block4": {
+    "source": "2e0e960ab320",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.hosted-page-anatomy.footnote": {
+    "source": "ba600acf169b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.title": {
+    "source": "e998efe09bd1",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.importing": {
+    "source": "5cddfe2bcac9",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.source": {
+    "source": "5ae0c96060fb",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.sourceNote": {
+    "source": "e3864bbec85a",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.import": {
+    "source": "2cff9baabf56",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.importNote": {
+    "source": "a51dfbf49b45",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.codes": {
+    "source": "9abc98b72579",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.codesNote": {
+    "source": "073118311839",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.keeping": {
+    "source": "986b40196760",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.printed": {
+    "source": "6fc5d6217932",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.printedNote": {
+    "source": "893b0adff969",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.newLink": {
+    "source": "33bfd64f8bc7",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.newLinkNote": {
+    "source": "edb794a602ee",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.destinationNote": {
+    "source": "b617fefef502",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.import-flow.footnote": {
+    "source": "42b10c7e0123",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.title": {
+    "source": "dae38b64c032",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.scan": {
+    "source": "ea1c510d1ddb",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.scanNote": {
+    "source": "115794794596",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.ask": {
+    "source": "7b356f0145e7",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.askNote": {
+    "source": "022cb53f1cd3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.skip": {
+    "source": "28d03596d24e",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.allow": {
+    "source": "e213c161d5ce",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.destinationNote": {
+    "source": "fe7adad0c49c",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.stored": {
+    "source": "c0ffa6a5be89",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.storedNote": {
+    "source": "6cd47ee5bf59",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.rule": {
+    "source": "15aec128dd00",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.ruleNote": {
+    "source": "b588f37c30b7",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.precise-location-flow.footnote": {
+    "source": "f9ed2812d969",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.title": {
+    "source": "1432a3c68dc2",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.tap": {
+    "source": "0bbdb0f3b99c",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.tapNote": {
+    "source": "5c05b68f11ac",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.tag": {
+    "source": "171b1a3125b0",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.tagNote": {
+    "source": "0f7efe5ced03",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.link": {
+    "source": "3732912142f5",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.linkNote": {
+    "source": "874aaf4d67b5",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.example": {
+    "source": "12ee381c417b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.counted": {
+    "source": "e62cfc55559b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.countedNote": {
+    "source": "e11096537686",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.destinationNote": {
+    "source": "8028dec1e39d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.nfc-link.footnote": {
+    "source": "b2c2af72aaca",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.title": {
+    "source": "df311f077fee",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.browser": {
+    "source": "42d3cbd0ef8d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.browserNote": {
+    "source": "f7804165371e",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.bucket": {
+    "source": "ad9f53d86d6e",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.bucketNote": {
+    "source": "1fcb746d391f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.check": {
+    "source": "41781ab2d075",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.checkNote": {
+    "source": "735cb71b14d2",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.link": {
+    "source": "6b8be5cc6cda",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.linkNote": {
+    "source": "00c0368bb713",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.visitor": {
+    "source": "6904825c6d32",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.visitorNote": {
+    "source": "7f7d3c6cbcd4",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.file-delivery.footnote": {
+    "source": "8e163f295326",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.title": {
+    "source": "89203a9a817d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.scan": {
+    "source": "ea1c510d1ddb",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.scanNote": {
+    "source": "98ee647efc58",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.pagePath": {
+    "source": "7f84e32bead1",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.sitePath": {
+    "source": "faf0f6b0b5de",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.page": {
+    "source": "4c6c9f09145d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.pageNote": {
+    "source": "a3e34a375712",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.consent": {
+    "source": "d37e0cd00f18",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.consentNote": {
+    "source": "36b4c3a8a505",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.pixels": {
+    "source": "35c2ee910e9f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.pixelsNote": {
+    "source": "e8768932345c",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.site": {
+    "source": "d3a75962d980",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.siteNote": {
+    "source": "e5c23b54dba5",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.convert": {
+    "source": "cf19ad427969",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.convertNote": {
+    "source": "8c3d028769a2",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.report": {
+    "source": "1f04a8531a46",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.reportNote": {
+    "source": "c008af655caa",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.tracking-paths.footnote": {
+    "source": "8533b2b184a0",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.title": {
+    "source": "d74513420612",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.workspace": {
+    "source": "159a6629546f",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.folder1": {
+    "source": "7e5c7b9b77c7",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.folder2": {
+    "source": "6fedbf565e98",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.folder3": {
+    "source": "4d34e9db92b3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.folder4": {
+    "source": "2ea1842b445b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.invite": {
+    "source": "af4ea02852eb",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.inviteNote": {
+    "source": "768368c9814d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.portal": {
+    "source": "6879433990b3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.portalName": {
+    "source": "39fe467fd6d2",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.readOnly": {
+    "source": "aa05d1a165d2",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.client-portal-access.footnote": {
+    "source": "ae3d57567041",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.title": {
+    "source": "69b5db2fe477",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.browser": {
+    "source": "d31de1a5c5c8",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.browserNote": {
+    "source": "0df095a85cb8",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.compose": {
+    "source": "75ddf920195c",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.app": {
+    "source": "a172cedcae47",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.appNote": {
+    "source": "4babaa556bde",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.proxy": {
+    "source": "599b6b79f991",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.proxyNote": {
+    "source": "8e8908e1b0a6",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.db": {
+    "source": "7bdc25d1694e",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.dbNote": {
+    "source": "eec7e169d5b3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.migrate": {
+    "source": "3bc801a33ea8",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.migrateNote": {
+    "source": "8f0a4dc7719a",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.self-hosting-stack.footnote": {
+    "source": "18c142776e1e",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-contrast.title": {
+    "source": "133f5265891c",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-contrast.good": {
+    "source": "91448ef731b1",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-contrast.bad": {
+    "source": "9e5cbe13fb36",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-contrast.ratio": {
+    "source": "0d3441bb3673",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-quiet-zone.title": {
+    "source": "ffa93d940255",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-quiet-zone.bad": {
+    "source": "139720d56e49",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-quiet-zone.badNote": {
+    "source": "c49717036555",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-quiet-zone.good": {
+    "source": "d4b69dae6014",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-quiet-zone.goodNote": {
+    "source": "0d30c799010d",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.title": {
+    "source": "ce63c3d60fae",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.cardWidth": {
+    "source": "b79f6c641c3b",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.cardDistance": {
+    "source": "c0db18a498b9",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.cardNote": {
+    "source": "de22f64e1518",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.posterWidth": {
+    "source": "5a8bb84c72fb",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.posterDistance": {
+    "source": "54d9ca2cf569",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.posterNote": {
+    "source": "4900709479a8",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-print-size.footnote": {
+    "source": "e60d3248854c",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.title": {
+    "source": "32be03b621b7",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.good": {
+    "source": "a8d6844b0ec3",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.bad": {
+    "source": "dd87cefcf260",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.square": {
+    "source": "c11092bc0861",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.rounded": {
+    "source": "0a62cd800f27",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.gear": {
+    "source": "d6eaec65e742",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.circle": {
+    "source": "b93d3bcecff5",
+    "status": "machine"
+  },
+  "docs.shots.diagrams.wont-scan-eyes.curly": {
+    "source": "71142c83f114",
     "status": "machine"
   },
   "common.breadcrumb": {
@@ -3076,7 +4160,7 @@
     "status": "machine"
   },
   "tools.bulk.metaDescription": {
-    "source": "4110cfe76f49",
+    "source": "048809a291d1",
     "status": "machine"
   },
   "tools.bulk.crumb": {
@@ -3092,7 +4176,7 @@
     "status": "machine"
   },
   "tools.bulk.intro2": {
-    "source": "2116fde6592a",
+    "source": "739854d58f7c",
     "status": "machine"
   },
   "tools.bulk.facts.rows": {
@@ -3176,7 +4260,7 @@
     "status": "machine"
   },
   "tools.bulk.faq.howManyAnswer": {
-    "source": "890df5bc39c9",
+    "source": "6f4ac26865c9",
     "status": "machine"
   },
   "tools.bulk.faq.rowQuestion": {
@@ -3275,8 +4359,32 @@
     "source": "ce87ee8fcfe9",
     "status": "machine"
   },
+  "tools.bulk.generator.dropHelpSignedOut": {
+    "source": "156dac721b70",
+    "status": "machine"
+  },
   "tools.bulk.generator.truncated": {
     "source": "f44db1ba5919",
+    "status": "machine"
+  },
+  "tools.bulk.generator.overLimit": {
+    "source": "accf6d48f08f",
+    "status": "machine"
+  },
+  "tools.bulk.generator.overLimitCta": {
+    "source": "9f414d2af2dc",
+    "status": "machine"
+  },
+  "tools.bulk.generator.firstOnly": {
+    "source": "77db81120675",
+    "status": "machine"
+  },
+  "tools.bulk.generator.restored": {
+    "source": "96843cd6e2f8",
+    "status": "machine"
+  },
+  "tools.bulk.generator.restoreLost": {
+    "source": "7f8e38d12165",
     "status": "machine"
   },
   "tools.bulk.generator.header": {
@@ -3409,6 +4517,14 @@
   },
   "tools.bulk.generator.private": {
     "source": "b33ae6c141f7",
+    "status": "machine"
+  },
+  "tools.bulk.generator.doneNudge": {
+    "source": "b6a979381135",
+    "status": "machine"
+  },
+  "tools.bulk.generator.doneNudgeCta": {
+    "source": "db14ef13b269",
     "status": "machine"
   },
   "tools.printSize.metaTitle": {
@@ -10011,6 +11127,22 @@
     "source": "2af7ba1369bb",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.nudgeDynamic": {
+    "source": "01b1d7984328",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.nudgeDynamicCta": {
+    "source": "10603b2672ba",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.nudgeSave": {
+    "source": "15534602f37f",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.nudgeSaveCta": {
+    "source": "039de9dce407",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.scannedFromAbout": {
     "source": "c500cad2e01a",
     "status": "machine"
@@ -10433,6 +11565,14 @@
   },
   "editor.actionBar.undoRedoButtons.redo": {
     "source": "74273989b096",
+    "status": "machine"
+  },
+  "editor.actionBar.keepDesigns.text": {
+    "source": "b7ed4cea3272",
+    "status": "machine"
+  },
+  "editor.actionBar.keepDesigns.cta": {
+    "source": "db14ef13b269",
     "status": "machine"
   },
   "editor.ai.agentParts.scanScoreScoreValue": {
@@ -13967,6 +15107,10 @@
     "source": "c0b79d9087df",
     "status": "machine"
   },
+  "editor.dynamicLinkToggle.signedOutNote": {
+    "source": "ad0a2acf65a0",
+    "status": "machine"
+  },
   "editor.dynamicLinkToggle.linkOptions": {
     "source": "854665437a38",
     "status": "machine"
@@ -15923,6 +17067,14 @@
     "source": "546ebb8eb993",
     "status": "machine"
   },
+  "community.cardRail.previous": {
+    "source": "2ddaf50c7c90",
+    "status": "machine"
+  },
+  "community.cardRail.next": {
+    "source": "f5c9bd131486",
+    "status": "machine"
+  },
   "community.communityTabs.community": {
     "source": "bb501d7877eb",
     "status": "machine"
@@ -16155,20 +17307,16 @@
     "source": "c6c094bc0054",
     "status": "machine"
   },
-  "community.itemCard.official": {
-    "source": "c409c66f71f2",
+  "community.itemCard.viewAll": {
+    "source": "30a64216eaea",
     "status": "machine"
   },
-  "community.itemCard.usecountUses": {
-    "source": "74be4a4a2b30",
+  "community.itemCard.saves": {
+    "source": "989716267f5c",
     "status": "machine"
   },
-  "community.itemCard.seeAll": {
-    "source": "d7a8c446069a",
-    "status": "machine"
-  },
-  "community.itemCard.likes": {
-    "source": "cca0662f9ddd",
+  "community.itemCard.itemCount": {
+    "source": "1eb9964e9518",
     "status": "machine"
   },
   "community.itemPages.previous": {
@@ -16197,6 +17345,10 @@
   },
   "community.itemPages.failed": {
     "source": "2ee27b98630c",
+    "status": "machine"
+  },
+  "community.makerCard.itemsAndSaves": {
+    "source": "96e13059b4e8",
     "status": "machine"
   },
   "community.more.load": {
@@ -16473,6 +17625,14 @@
   },
   "community.tryIt.drawnInYourBrowserNothing": {
     "source": "c6eb34ea06b3",
+    "status": "machine"
+  },
+  "community.search.label": {
+    "source": "a409f201afc9",
+    "status": "machine"
+  },
+  "community.search.placeholder": {
+    "source": "ff85aeb387e6",
     "status": "machine"
   },
   "app.settings.general.language.title": {
@@ -26311,6 +27471,14 @@
     "source": "004dbe433b52",
     "status": "machine"
   },
+  "app.shell.commandMenu.findAPageOrA": {
+    "source": "955df8601fa4",
+    "status": "machine"
+  },
+  "app.shell.commandMenu.searchCodesPagesAndSettings": {
+    "source": "200ac473a8eb",
+    "status": "machine"
+  },
   "app.shell.commandMenu.codes": {
     "source": "e0d1d308a679",
     "status": "machine"
@@ -27693,6 +28861,62 @@
   },
   "auth.dialogCloseButton.close": {
     "source": "7d9eb7acb13e",
+    "status": "machine"
+  },
+  "auth.reasons.saveDesign": {
+    "source": "32fc1841b803",
+    "status": "machine"
+  },
+  "auth.reasons.makeDynamic": {
+    "source": "baf9df3cffea",
+    "status": "machine"
+  },
+  "auth.reasons.hostedPage": {
+    "source": "d6e4f8339b03",
+    "status": "machine"
+  },
+  "auth.reasons.aiArt": {
+    "source": "5aff241e9a69",
+    "status": "machine"
+  },
+  "auth.reasons.aiChat": {
+    "source": "97c6317b29f7",
+    "status": "machine"
+  },
+  "auth.reasons.uploadFrame": {
+    "source": "f74270b3a592",
+    "status": "machine"
+  },
+  "auth.reasons.publishFrame": {
+    "source": "ce9dca9f962a",
+    "status": "machine"
+  },
+  "auth.reasons.communityAction": {
+    "source": "58bc80e06ed1",
+    "status": "machine"
+  },
+  "auth.reasons.saveBarcode": {
+    "source": "b01ad4dcae20",
+    "status": "machine"
+  },
+  "auth.reasons.bulkOverLimit": {
+    "source": "4b5aca026d46",
+    "status": "machine"
+  },
+  "auth.reasons.keepDesigns": {
+    "source": "6993dc4b05f4",
+    "status": "machine"
+  },
+  "auth.reasons.afterDownload": {
+    "source": "13f063aa9d09",
+    "status": "machine"
+  },
+  "auth.reasons.upgrade": {
+    "source": "d4d0d17a08e8",
+    "status": "machine"
+  },
+  "auth.nudge.dismiss": {
+    "source": "497a0f940e31",
     "status": "machine"
   },
   "codeBuilder.builderOptions.on": {

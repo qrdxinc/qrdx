@@ -1,68 +1,86 @@
 ---
 title: "Méthodes de connexion et adresse e-mail"
-description: "Connectez-vous avec Google, GitHub ou un code envoyé par e-mail, associez des méthodes de connexion, changez votre adresse e-mail et sachez quoi faire si vous avez perdu l'accès à votre messagerie."
+description: "Connectez-vous avec Google, GitHub ou un code envoyé par e-mail, associez plusieurs méthodes de connexion, changez votre adresse e-mail et sachez quoi faire si vous avez perdu l'accès à votre messagerie."
 ---
 
-## Façons de se connecter [#ways-to-sign-in]
+QRdx n'utilise pas de mots de passe. Vous vous connectez avec Google, GitHub ou un code envoyé par e-mail, et votre compte est lié à cette adresse e-mail. Cette page présente les méthodes de connexion, la façon de les associer, le changement d'adresse et la marche à suivre si vous avez perdu l'accès à votre boîte mail.
+
+## Méthodes de connexion [#ways-to-sign-in]
 
 - **Google** ou **GitHub**.
-- **Code par e-mail** : saisissez votre adresse e-mail, puis tapez le code à 6 chiffres que nous vous envoyons. Un code est valable 5 minutes.
+- **Code par e-mail** : saisissez votre adresse e-mail et cliquez sur **Email me a code**, puis entrez le code à 6 chiffres que nous vous envoyons. Un code est valable 5 minutes.
 
 <IfAvailable feature="passkeys">
-Une fois que vous avez [ajouté une clé d'accès](/docs/help/privacy-and-security/passkeys), vous pouvez aussi vous connecter avec votre empreinte digitale, votre visage ou le verrouillage d'écran.
+Une fois que vous avez [ajouté une clé d'accès](/docs/help/privacy-and-security/passkeys), vous pouvez aussi cliquer sur **Continue with passkey** et vous connecter avec votre empreinte digitale, votre visage ou le verrouillage de votre écran.
 </IfAvailable>
 
-QRdx crée votre compte lors de votre première connexion. Il n'y a aucun mot de passe à retenir.
+Lors de votre première connexion, QRdx crée votre compte.
 
 Avec Google ou GitHub, QRdx ne crée le compte que si votre adresse e-mail y a été vérifiée. Si la vôtre ne l'est pas, vérifiez-la d'abord (GitHub liste vos adresses sous **Settings** → **Emails**), ou connectez-vous plutôt avec un code par e-mail.
 
-## Un compte à votre adresse que vous n'avez pas créé [#an-account-for-your-address-you-didnt-make]
+<Shot id="sign-in-page" />
 
-Si QRdx a déjà un compte pour votre adresse et que vous ne l'avez pas créé, connectez-vous avec un code par e-mail. Une fois que cela prouve que l'adresse est la vôtre, QRdx supprime ce que l'inscription précédente pourrait utiliser pour y revenir ou pour continuer à recevoir les données du compte :
+## Un compte pour votre adresse que vous n'avez pas créé [#an-account-for-your-address-you-didnt-make]
 
-- ses liens Google et GitHub, ainsi que toutes les sessions ;
+Si QRdx possède déjà un compte pour votre adresse et que vous ne l'avez pas créé, connectez-vous avec un code par e-mail. Dès que cela prouve que l'adresse est la vôtre, QRdx supprime ce que l'inscription précédente pourrait utiliser pour revenir dans le compte ou pour continuer à récupérer ses données :
+
+- ses liens Google et GitHub, et toutes ses sessions ;
 - sa vérification en deux étapes et ses appareils de confiance<IfAvailable feature="passkeys">, ainsi que ses clés d'accès</IfAvailable> ;
-- ses clés d'API et les applications autorisées à utiliser le compte ;
-- les webhooks et les alertes Slack et Discord configurés, ainsi que les synchronisations configurées qui envoient des scans ou des réponses de formulaire vers un autre outil.
+- ses clés API, et les applications qu'il avait autorisées à utiliser le compte ;
+- les webhooks et les alertes Slack et Discord qu'il avait configurés, ainsi que les synchronisations qu'il avait mises en place pour envoyer des scans ou des réponses de formulaire vers un autre outil.
 
 Tout le reste du compte est conservé : vérifiez donc ensuite ses espaces de travail et leurs membres.
 
 ## Associer Google ou GitHub [#link-google-or-github]
 
-Allez dans **Paramètres** → **Profil et sécurité** → **Méthodes de connexion**.
+Allez dans **Settings** → **Profile & security** → **Sign-in methods**.
 
-- **Code par e-mail** est toujours activé.
+- **Email code** est toujours activé.
 - Associez Google ou GitHub pour vous connecter en un clic. Le compte doit utiliser la même adresse e-mail que votre compte QRdx.
-- Cliquez sur **Dissocier** pour en retirer une.
+- Cliquez sur **Unlink** pour en supprimer une.
 
 ## Changer votre adresse e-mail [#change-your-email-address]
 
-1. Allez dans **Paramètres** → **Profil et sécurité**.
-2. À côté de **E-mail**, cliquez sur **Modifier**, puis [confirmez que c'est bien vous](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
-3. Saisissez la nouvelle adresse et tapez le code que nous y envoyons.
+1. Allez dans **Settings** → **Profile & security**.
+2. À côté de **Email**, cliquez sur **Change**, puis [confirmez votre identité](/docs/help/privacy-and-security/two-step-verification#confirm-its-you).
+3. Saisissez la nouvelle adresse et entrez le code que nous y envoyons.
 
-QRdx vous déconnecte ensuite de tous les autres appareils et navigateurs, et votre ancienne adresse reçoit un e-mail indiquant que le compte a été déplacé, avec un moyen de joindre le support si ce n'était pas vous.
+QRdx vous déconnecte ensuite de tous les autres appareils et navigateurs, et votre ancienne adresse reçoit un e-mail indiquant que le compte a été déplacé, avec un moyen de contacter le support si ce n'était pas vous.
 
-## Accès à votre messagerie perdu [#lost-access-to-your-email]
+## Perte d'accès à votre e-mail [#lost-access-to-your-email]
 
-Si vous pouvez encore accéder à QRdx, changez vous-même votre adresse e-mail, comme indiqué plus haut. Pour confirmer que c'est bien vous sans votre messagerie, utilisez <IfAvailable feature="passkeys">votre clé d'accès, </IfAvailable>un compte Google ou GitHub que vous avez associé, ou votre méthode de vérification en deux étapes si elle est activée. Vous êtes déconnecté ? Connectez-vous d'abord avec <IfAvailable feature="passkeys">votre clé d'accès ou </IfAvailable>un compte Google ou GitHub associé.
+Si vous pouvez encore accéder à QRdx, changez vous-même votre adresse e-mail, comme indiqué ci-dessus. Pour confirmer votre identité sans votre boîte mail, utilisez <IfAvailable feature="passkeys">votre clé d'accès, </IfAvailable>un compte Google ou GitHub que vous avez associé, ou votre méthode de vérification en deux étapes si elle est activée. Vous êtes déconnecté ? Connectez-vous d'abord avec <IfAvailable feature="passkeys">votre clé d'accès ou </IfAvailable>un compte Google ou GitHub associé.
 
-Si aucune de ces options ne fonctionne, écrivez à [support@qrdx.dev](mailto:support@qrdx.dev) depuis l'adresse que vous souhaitez utiliser. Déplacer un compte vers une nouvelle adresse est l'opération la plus sensible que fait le support, donc :
+Si aucune de ces méthodes ne fonctionne, écrivez à [support@qrdx.dev](mailto:support@qrdx.dev) depuis l'adresse que vous souhaitez utiliser. Déplacer un compte vers une nouvelle adresse est l'opération la plus sensible du support, c'est pourquoi elle suit trois étapes :
 
-- **Nous avons besoin d'une preuve que le compte est le vôtre.** Nous vous demanderons l'adresse e-mail du compte, ainsi que l'un des éléments suivants :
-  - si vous avez payé pour QRdx, le numéro de l'une de vos [factures](/docs/help/account-and-billing/invoices) et la date approximative du paiement ;
-  - si un espace de travail de votre compte utilise son propre [domaine](/docs/help/domains/custom-domains), un enregistrement DNS que nous vous envoyons, à ajouter à ce domaine.
-- **Nous prévenons l'ancienne adresse et attendons 7 jours.** Si quelqu'un répond depuis cette adresse pendant ce délai pour s'y opposer, nous arrêtons.
-- **Ensuite, nous déplaçons le compte.** Nous remplaçons son e-mail par la nouvelle adresse, le déconnectons partout et écrivons à l'ancienne adresse. Connectez-vous avec un code envoyé à la nouvelle adresse. Votre vérification en deux étapes, si elle est activée, reste telle quelle.
+1. **Nous avons besoin d'une preuve que le compte est le vôtre.** Nous vous demandons l'adresse e-mail du compte, ainsi que l'un des éléments suivants : si vous avez payé pour QRdx, le numéro de l'une de vos [factures](/docs/help/account-and-billing/invoices) et la date approximative du paiement ; si un espace de travail de votre compte utilise son propre [domaine](/docs/help/domains/custom-domains), un enregistrement DNS que nous vous envoyons, à ajouter à ce domaine.
+2. **Nous prévenons l'ancienne adresse et attendons 7 jours.** Si quelqu'un y répond pendant ce délai pour refuser, nous arrêtons la procédure.
+3. **Ensuite, nous déplaçons le compte.** Nous remplaçons son adresse e-mail par la nouvelle, le déconnectons partout et envoyons un e-mail à l'ancienne adresse. Connectez-vous avec un code envoyé à la nouvelle adresse. Votre vérification en deux étapes, si elle est activée, reste inchangée.
 
-Si nous ne pouvons pas confirmer que le compte est le vôtre, nous ne le déplacerons pas, même si vous n'y avez plus accès. Le confier à la mauvaise personne serait pire.
+Si nous ne pouvons pas confirmer que le compte est le vôtre, nous ne le déplacerons pas, même si cela le rend inaccessible. Le confier à la mauvaise personne serait pire.
 
-Avant que votre ancienne adresse ne cesse de fonctionner, ajoutez une clé d'accès ou associez Google ou GitHub, afin de toujours pouvoir confirmer que c'est bien vous.
+Avant que votre ancienne adresse ne cesse de fonctionner, ajoutez une clé d'accès ou associez Google ou GitHub, afin de toujours pouvoir confirmer votre identité.
 
 ## Se déconnecter des autres appareils [#sign-out-of-other-devices]
 
-Sous **Sessions**, dans **Paramètres** → **Profil et sécurité**, déconnectez-vous d'un appareil, ou cliquez sur **Se déconnecter partout ailleurs**.
+Sous **Sessions** dans **Settings** → **Profile & security**, déconnectez un appareil, ou cliquez sur **Sign out everywhere else**.
 
-## Problèmes de connexion [#trouble-signing-in]
+## En cas de problème [#if-something-goes-wrong]
+
+### Le code de connexion n'arrive pas [#the-sign-in-code-doesnt-arrive]
 
 Consultez [Les codes ou e-mails de connexion n'arrivent pas](/docs/help/troubleshooting/emails).
+
+### Google ou GitHub indique que votre adresse e-mail n'est pas vérifiée [#google-or-github-says-your-email-isnt-verified]
+
+Vérifiez d'abord l'adresse sur ce service, ou connectez-vous avec un code par e-mail envoyé à la même adresse.
+
+### L'association de Google ou GitHub est refusée [#linking-google-or-github-is-refused]
+
+Ce compte utilise une autre adresse e-mail que votre compte QRdx. Associez un compte ayant la même adresse, ou [changez d'abord votre adresse e-mail](#change-your-email-address).
+
+## Voir aussi [#related]
+
+- [Sécuriser votre compte](/docs/help/privacy-and-security/account-security)
+- [Vérification en deux étapes](/docs/help/privacy-and-security/two-step-verification)
+- [Les codes ou e-mails de connexion n'arrivent pas](/docs/help/troubleshooting/emails)

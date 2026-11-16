@@ -39,6 +39,7 @@ import {
   QR_TYPES_SOURCE,
   seoGroupSource,
 } from "@/lib/seo-page-sources";
+import { siteServes } from "@/lib/site-zone-on";
 
 export const revalidate = false;
 
@@ -104,7 +105,13 @@ function entries(docs: Entry[]): Entry[] {
       : undefined;
   };
 
-  const posts = blogSource.getPages().filter((p) => p.data.published);
+  // The blog's pages come from the marketing site when it serves them
+  // (lib/site-zone-on.ts): its own sitemap lists them (/blog/sitemap.xml,
+  // named in robots.txt), so this one leaves the blog out.
+  const blogOnSite = siteServes("blog");
+  const posts = blogOnSite
+    ? []
+    : blogSource.getPages().filter((p) => p.data.published);
   // A post's `updated` is its last substantive change; small fixes don't
   // count, so its git date isn't used.
   const postDate = (p: (typeof posts)[number]) =>
@@ -230,6 +237,11 @@ function entries(docs: Entry[]): Entry[] {
       priority: 0.8,
     },
     {
+      url: url("/community/made-with-qrdx"),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
       url: url("/templates"),
       lastModified: pageDate("/templates"),
       changeFrequency: "monthly",
@@ -299,12 +311,16 @@ function entries(docs: Entry[]): Entry[] {
     },
     // The docs (docsEntries).
     ...docs,
-    {
-      url: url("/blog"),
-      lastModified: latest(posts.map(postDate)),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
+    ...(blogOnSite
+      ? []
+      : [
+          {
+            url: url("/blog"),
+            lastModified: latest(posts.map(postDate)),
+            changeFrequency: "weekly",
+            priority: 0.8,
+          } satisfies Entry,
+        ]),
     ...categories,
     ...authors,
     ...posts.map(

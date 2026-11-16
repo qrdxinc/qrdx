@@ -62,9 +62,9 @@ export function GradientCode() {
 - `stops` need at least two entries. `offset` is a percentage from 0 to 100, and a stop's color can carry alpha.
 - Any color prop takes a gradient, including `bgColor` and the eyes. `QRCodeCanvas` cannot draw gradients and uses the first stop; use `QRCode` or `QRCodeSVG`.
 
-Gradients carry into SVG, PNG, JPG, WebP and PDF downloads.
+Gradients carry into SVG, PNG, JPG, WebP and PDF downloads. The print PDF and EPS draw them as smooth shadings.
 
-{/* shot: lib-gradient-codes | the linear, radial and angular gradient codes from this page side by side at 256 px | render gradient-code.tsx, radial-code.tsx and angular-code.tsx */} The print PDF and EPS draw them as smooth shadings.
+<Shot id="lib-gradient-codes" />
 
 ## Radial gradients
 

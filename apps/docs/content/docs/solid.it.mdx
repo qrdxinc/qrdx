@@ -1,22 +1,31 @@
 ---
 title: "SolidJS"
-description: "QR code con stile come componenti Solid grazie a qrdx/solid, con prop reattive, nessun JSX da compilare per il pacchetto, rendering lato server con renderToString e hydration che mantiene l'SVG del server."
+description: "QR code stilizzati come componenti Solid con qrdx/solid, con props reattive, nessun JSX da compilare per il pacchetto, rendering lato server con renderToString e idratazione che mantiene l'SVG del server."
 icon: FileCode
 ---
 
-`qrdx/solid` offre per SolidJS i due componenti SVG della libreria React, `QRCodeSVG` e `QRCode`. Disegnano lo stesso SVG dei componenti React, seguono i tuoi signal e funzionano anche su un server.
+Alla fine di questa pagina avrai un QR code stilizzato in un componente Solid che segue un signal, e un pulsante che lo salva come PNG. `qrdx/solid` offre i due componenti SVG della libreria React, `QRCodeSVG` e `QRCode`, realizzati per SolidJS. Disegnano lo stesso SVG dei componenti React, seguono i tuoi signal e funzionano anche su un server.
 
-## Installazione [#install]
+<NpmStatus package="qrdx" />
+
+## Prima di iniziare [#before-you-start]
+
+- Un progetto Solid 1.8 o successivo (nella linea 1.x), con Vite o SolidStart.
+- Node.js 18 o successivo.
+
+## Costruiscilo [#build-it]
+
+### 1. Installa qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`solid-js` 1.8 o successiva (nella linea 1.x) è una peer dependency opzionale di `qrdx`. La tua app ce l'ha già e non ti serve `react`.
+`solid-js` è una peer dependency opzionale di `qrdx`. La tua app ce l'ha già e non ti serve `react`.
 
-## Disegnare un codice [#draw-a-code]
+### 2. Disegna un codice che segue un signal [#2-draw-a-code-that-follows-a-signal]
 
-```tsx
+```tsx title="src/components/menu-code.tsx"
 import { createSignal } from "solid-js";
 import { QRCodeSVG } from "qrdx/solid";
 
@@ -27,6 +36,7 @@ export function MenuCode() {
       <QRCodeSVG
         value="https://example.com/menu"
         size={256}
+        margin={4}
         fgColor={color()}
         frame={{ style: "banner-bottom", text: "Scan me" }}
         aria-label="QR code for the menu"
@@ -39,40 +49,33 @@ export function MenuCode() {
 }
 ```
 
-`QRCodeSVG` accetta tutte le opzioni di `QRCodeSVG` di React: pattern, colori e gradienti, loghi (`imageSettings`), cornici, forme, template e Art QR. Attributi come `class`, `style` o `aria-label` vanno sull'elemento `<svg>`, oppure sull'`<svg>` esterno della cornice quando c'è una cornice.
+La pagina mostra un codice scuro con un banner "Scan me". Fai clic su **Blue** e il codice viene ridisegnato in blu.
 
-`QRCode` aggiunge la scorciatoia per il logo del `QRCode` di React: `logo`, `logoOptions`, `hideLogo` e `scale`.
+<Shot id="lib-solid-signal-code" />
 
-```tsx
+`QRCodeSVG` accetta tutte le opzioni di `QRCodeSVG` di React: pattern, colori e gradienti, logo (`imageSettings`), cornici, forme, template e art. Attributi come `class`, `style` o `aria-label` vanno sull'`<svg>`, oppure sull'`<svg>` esterno della cornice quando c'è una cornice.
+
+`QRCode` aggiunge la scorciatoia per il logo del `QRCode` di React: `logo`, `logoOptions`, `hideLogo` e `scale`. Accetta solo le props del codice e `style`; metti `class` o `aria-label` su un elemento che lo racchiude, oppure usa `QRCodeSVG`.
+
+```tsx title="src/components/logo-code.tsx"
 import { QRCode } from "qrdx/solid";
 
-<QRCode value="https://example.com" logo="/logo.png" level="H" />;
+export function LogoCode() {
+  return <QRCode value="https://example.com" size={256} logo="/logo.png" level="H" />;
+}
 ```
 
-Le prop sono reattive, come in qualsiasi componente Solid. Quando `color()` cambia, il codice viene ridisegnato. I gestori di eventi passati nelle prop non vengono applicati all'`<svg>`, quindi mettili su un elemento che racchiude il codice.
+Le props sono reattive, come in qualsiasi componente Solid. Quando `color()` cambia, il codice viene ridisegnato. Gli event handler nelle props non vengono applicati all'`<svg>`, quindi mettili su un elemento che racchiude il codice.
 
-## Come disegna [#how-it-draws]
+### 3. Salvalo come file [#3-save-it-as-a-file]
 
-Il pacchetto non contiene JSX di Solid, quindi non richiede il compilatore di Solid e funziona con qualsiasi configurazione di build.
+I componenti si limitano a disegnare il codice. Download, `toSVGString`, il punteggio di scansione e le altre funzioni arrivano da `qrdx/core`. È il motore che i componenti usano già, quindi non viene incluso due volte.
 
-- Nel browser, un componente restituisce direttamente l'elemento `<svg>`, creato con `createElementNS` (nessun HTML viene analizzato). Solid lo inserisce nella pagina, lo sostituisce con uno nuovo quando la modifica di una prop cambia il markup e lo rimuove quando il componente viene smontato.
-- Se la modifica di una prop produce lo stesso markup, la pagina non viene toccata.
-
-## Rendering lato server e hydration [#server-rendering-and-hydration]
-
-Con `renderToString` di `solid-js/web`, un componente scrive lo stesso markup di `toSVGString` di `qrdx/core`, più la chiave di hydration `data-hk` di Solid sull'elemento radice. `hydrate` usa quella chiave per mantenere l'`<svg>` del server invece di disegnarlo di nuovo. All'interno di `<NoHydration>`, la chiave viene omessa.
-
-Il markup non contiene id casuali, quindi server e browser sono sempre allineati.
-
-## Download, markup e punteggio di scansione [#downloads-markup-and-the-scan-score]
-
-I componenti si limitano a disegnare il codice. I download, `toSVGString`, il punteggio di scansione e le altre funzioni arrivano da `qrdx/core`. È il motore che i componenti usano già, quindi non viene incluso due volte nel bundle.
-
-```tsx
+```tsx title="src/components/downloadable-code.tsx"
 import { downloadQRCode } from "qrdx/core";
 import { QRCodeSVG } from "qrdx/solid";
 
-const options = { value: "https://example.com", size: 256 };
+const options = { value: "https://example.com", size: 256, margin: 4 };
 
 export function DownloadableCode() {
   return (
@@ -84,6 +87,7 @@ export function DownloadableCode() {
           downloadQRCode(options, {
             format: "png",
             size: { width: 1024, height: 1024 },
+            filename: "qr-code.png",
           })
         }
       >
@@ -94,4 +98,32 @@ export function DownloadableCode() {
 }
 ```
 
-[JavaScript puro](/docs/vanilla-js) tratta `qrdx/core` in modo completo.
+Il clic sul pulsante salva `qr-code.png` a 1024 px. [JavaScript vanilla](/docs/vanilla-js) tratta `qrdx/core` per intero.
+
+## Come disegna [#how-it-draws]
+
+Il pacchetto non contiene JSX di Solid, quindi non richiede il compilatore di Solid e funziona con qualsiasi configurazione di build.
+
+- Nel browser, un componente restituisce direttamente l'elemento `<svg>`, costruito con `createElementNS` (nessun HTML viene analizzato). Solid lo inserisce nella pagina, lo sostituisce con uno nuovo quando la modifica di una prop cambia il markup e lo rimuove quando il componente viene smontato.
+- Una modifica di prop che produce lo stesso markup lascia la pagina invariata.
+
+## Rendering lato server e idratazione [#server-rendering-and-hydration]
+
+Con `renderToString` di `solid-js/web`, un componente scrive lo stesso markup di `toSVGString` di `qrdx/core`, più la chiave di idratazione `data-hk` di Solid sull'elemento radice. `hydrate` usa quella chiave per mantenere l'`<svg>` del server invece di disegnarlo di nuovo. All'interno di `<NoHydration>`, la chiave viene omessa.
+
+Il markup non contiene id casuali, quindi server e browser concordano sempre.
+
+## Se qualcosa va storto [#if-something-goes-wrong]
+
+- **`Failed to resolve import "react"`.** Hai importato da `qrdx` invece che da `qrdx/solid`. L'entry principale contiene i componenti React; cambia l'import.
+- **Un click handler sul componente non fa nulla.** Gli handler vengono scartati dall'`<svg>`. Racchiudi il codice in un elemento e metti lì l'handler.
+- **`PDF export needs the optional "jspdf" package`.** Esegui `npm install jspdf` nella tua app.
+
+## Correlati [#related]
+
+<Cards>
+  <Card href="/docs/vanilla-js" title="JavaScript vanilla" description="Tutto ciò che qrdx/core esporta: download, markup, il punteggio di scansione e i file di stampa." />
+  <Card href="/docs/web-component" title="Web component" description="L'elemento qrdx-code, per qualsiasi framework che renderizza il DOM." />
+  <Card href="/docs/features/patterns" title="Scegli le forme dei moduli e degli occhi" description="Tutte le forme e le coppie da evitare." />
+  <Card href="/docs/api-reference" title="Riferimento API della libreria" description="Ogni prop, con il suo tipo e il valore predefinito." />
+</Cards>

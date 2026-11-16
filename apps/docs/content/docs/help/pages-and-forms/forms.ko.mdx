@@ -1,41 +1,80 @@
 ---
-title: "양식으로 응답 수집하기"
-description: "피드백 양식, 설문 또는 가입 양식을 만들고 대시보드에서 응답을 확인하세요."
+title: "폼으로 응답 수집하기"
+description: "피드백 폼, 설문 또는 가입 폼을 만들고 대시보드에서 응답을 확인하세요."
 ---
 
-## 양식 만들기 [#create-a-form]
+호스팅 페이지의 폼으로 코드를 스캔한 사람들에게서 피드백, 설문 응답, 가입 정보를 받을 수 있습니다. 응답은 대시보드에 모이며 스프레드시트로 내려받을 수 있습니다.
 
-1. **Pages**로 이동해서 **New page**를 클릭해요.
-2. **Feedback & forms**를 선택해요.
-3. 템플릿을 선택해요: **Guest feedback**, **NPS survey** 또는 **Sign-up form**.
-4. **Create page**를 클릭하고 질문을 수정한 다음 **Publish**를 클릭해요.
+<Callout type="info">
+  각 워크스페이스에서 한 달에 받을 수 있는 응답은 무료 50건, Pro 1,000건, Business 10,000건입니다. 새 응답에 대한 이메일 알림은 Pro와 Business에 포함됩니다. [요금제와 포함 내용](/docs/help/account-and-billing/plans)을 참고하세요.
+</Callout>
 
-다른 페이지에도 **Form** 블록을 추가할 수 있어요.
+## 폼 만들기 [#create-a-form]
+
+### 1. 새 페이지 시작하기 [#1-start-a-new-page]
+
+**Pages & forms**로 이동해 **New page**를 클릭하세요.
+
+### 2. Feedback & forms 선택하기 [#2-pick-feedback--forms]
+
+**Feedback & forms**를 선택한 다음 템플릿(**Guest feedback**, **NPS survey**, **Sign-up form**) 중 하나를 고르세요.
+
+### 3. 만들고 편집하기 [#3-create-and-edit]
+
+**Create page**를 클릭한 다음 **Blocks** 탭에서 질문을 편집하세요.
+
+<Shot id="form-editor" />
+
+### 4. 게시하기 [#4-publish]
+
+**Publish**를 클릭하세요. 페이지가 게시되면 바로 폼이 응답을 받기 시작합니다.
+
+블록 추가 메뉴에서 다른 페이지에도 **Form** 블록을 추가할 수 있습니다.
 
 ## 응답 확인하기 [#read-the-responses]
 
-**Pages**에서 해당 페이지의 메뉴(**⋯**)를 열고 **Responses**를 선택해요.
+**Pages & forms**에서 페이지의 메뉴(**⋯**)를 열고 **Responses**를 선택하세요. 이 항목은 페이지에 폼이 있을 때만 나타납니다.
 
-**Export CSV**를 클릭하면 응답을 스프레드시트로 다운로드할 수 있어요.
+**Export CSV**를 클릭하면 응답을 스프레드시트로 내려받을 수 있습니다.
+
+<Shot id="form-responses" />
 
 ## 응답마다 이메일 받기 [#get-an-email-for-each-response]
 
-Pro와 Business에서는 **Settings** → **Notifications**로 이동해 **Form submissions**를 켜세요.
+Pro와 Business에서는 **Settings** → **Notifications**로 이동해 **Form submissions**를 켜세요. Business에서는 같은 페이지에서 응답을 Slack 또는 Discord 채널로 보내도록 설정할 수도 있습니다.
 
 ## 월별 한도 [#monthly-limits]
 
-각 워크스페이스는 매 달력 월(UTC)마다 정해진 수의 응답을 수집할 수 있어요.
+응답은 워크스페이스별, UTC 기준 달력 월별로 집계합니다.
 
-- **무료**: 50개.
-- **Pro**: 1,000개.
-- **Business**: 10,000개.
+| 요금제 | 월별 응답 수 |
+| --- | --- |
+| 무료 | 50 |
+| Pro | 1,000 |
+| Business | 10,000 |
 
-한도에 도달하면 방문자에게 "This form isn't accepting responses right now."라는 메시지가 표시돼요. 양식은 다음 달에 다시 응답을 받으며, 업그레이드하면 즉시 다시 받아요.
+한도에 도달하면 방문자에게 "This form isn't accepting responses right now. Please try again later."라는 메시지가 표시됩니다. 이미 받은 응답은 그대로 보관됩니다. 폼은 다음 달 1일에 다시 응답을 받으며, 업그레이드하면 바로 다시 받습니다.
 
 ## 스팸 [#spam]
 
-양식에는 스팸 방지 기능이 기본으로 포함되어 있어요. 따로 설정할 필요가 없어요.
+폼에는 봇 확인, 봇이 채우는 숨김 필드, 방문자 한 명이 제출할 수 있는 속도 제한 등 스팸 방지 기능이 기본으로 들어 있습니다. 따로 설정할 필요는 없습니다.
+
+## 문제가 생겼을 때 [#if-something-goes-wrong]
+
+### 페이지 메뉴에 Responses가 없어요 [#responses-isnt-in-the-pages-menu]
+
+페이지에 폼 블록이 없는 경우입니다. 편집기에서 폼 블록을 추가하고 게시하세요.
+
+### 폼에 응답을 받지 않는다고 표시돼요 [#the-form-says-it-isnt-accepting-responses]
+
+워크스페이스가 이번 달 한도에 도달했습니다. 다음 달까지 기다리거나 [업그레이드](/pricing)하면 폼이 바로 다시 열립니다.
+
+### 누군가 답변이 거부됐다고 해요 [#someone-says-their-answer-was-refused]
+
+1분 안에 여러 번 응답을 보내서 스팸 제한에 걸린 경우입니다. 1분 정도 기다렸다가 다시 시도해 달라고 안내하세요.
 
 ## 관련 문서 [#related]
 
-- [양식 가이드](/docs/forms-and-pages#forms)
+- [모바일 페이지 만들기](/docs/help/pages-and-forms/create-a-page)
+- [데이터 내보내기](/docs/help/account-and-billing/export-your-data)
+- [폼 가이드](/docs/forms-and-pages#forms)

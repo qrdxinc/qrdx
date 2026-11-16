@@ -413,11 +413,10 @@ export function ContentTypeModal({
           currentPageGalleryRequest({ type: item.pageType }),
         );
       } else {
-        openAuthDialog(
-          "signin",
-          "OPEN_CODE_BUILDER",
-          openCodeBuilderIntent("page", { type: item.pageType }),
-        );
+        openAuthDialog("hosted_page", {
+          action: "OPEN_CODE_BUILDER",
+          data: openCodeBuilderIntent("page", { type: item.pageType }),
+        });
       }
       return;
     }

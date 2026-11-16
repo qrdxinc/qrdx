@@ -13,15 +13,20 @@ import {
   CARD_ART,
   CARD_FRAME,
   CARD_TEXT,
-  ROW_CARD,
-  ROW_CARDS,
+  MAKER_CARD,
+  RAIL,
+  RAIL_CARD,
+  RAIL_MAKER,
+  RAIL_RANKED,
+  RANK_ROOM,
+  RANK_ROOM_WIDE,
 } from "./card-layout";
 
-// The /community overview past its first screen: the "Made with QRdx"
-// wall's later rows and the rows of cards under it load as they near the
-// screen, all that do so at once in one request
-// (app/(app)/(home)/community/actions.tsx). Until then each shows a
-// placeholder of its exact size.
+// Community content past the first screen, loaded as it nears the screen,
+// all that does so at once in one request
+// (app/(app)/(home)/community/actions.tsx): the overview's lower rows of
+// cards, and the "Made with QRdx" wall's later rows. Until then each shows
+// a placeholder of its exact size.
 
 const loader = createChunkLoader(loadCommunityChunks);
 
@@ -47,46 +52,64 @@ export function DeferredWallRows({
 }
 
 /**
- * A card before it loads: its frame, its design's box and its two lines,
- * laid out as the card's (components/community/item-card.tsx), so it has
- * the card's height to the pixel.
+ * A card before it loads: its design's box and its two lines, laid out as
+ * the card's (components/community/item-card.tsx), so it has the card's
+ * height to the pixel.
  */
-function CardPlaceholder() {
+function CardPlaceholder({ rank }: { rank?: number }) {
   return (
-    <div aria-hidden className={cn(CARD_FRAME, ROW_CARD)}>
-      <div className={CARD_ART} />
-      <div className={CARD_TEXT}>
-        <div className="flex min-w-0 items-baseline gap-2">
-          <span className="truncate text-sm font-medium">{" "}</span>
-        </div>
-        <div className="flex min-w-0 items-center text-xs">
-          <span className="size-5 shrink-0" />
+    <li
+      className={
+        rank === undefined
+          ? RAIL_CARD
+          : cn(RAIL_RANKED, rank >= 10 ? RANK_ROOM_WIDE : RANK_ROOM)
+      }
+    >
+      <div className={CARD_FRAME}>
+        <div className={CARD_ART} />
+        <div className={CARD_TEXT}>
+          <div className="h-5" />
+          <div className="h-5" />
         </div>
       </div>
-    </div>
+    </li>
   );
 }
 
-/** A row of the overview's cards (lib/community/home.ts). */
-export function DeferredRowCards({
+/** One of the overview's rows (lib/community/home.ts). */
+export function DeferredRow({
   row,
   count,
+  kind,
   labels,
 }: {
   row: string;
   /** How many cards the row has, for the placeholder */
   count: number;
+  kind: "cards" | "ranked" | "makers";
   labels: DeferredLabels;
 }) {
   return (
     <Deferred
       chunkKey={`row:${row}`}
-      className={ROW_CARDS}
       labels={labels}
       loader={loader}
-      placeholder={Array.from({ length: count }, (_, index) => (
-        <CardPlaceholder key={index} />
-      ))}
+      placeholder={
+        <ol aria-hidden className={RAIL}>
+          {Array.from({ length: count }, (_, index) =>
+            kind === "makers" ? (
+              <li className={RAIL_MAKER} key={index}>
+                <div className={MAKER_CARD} />
+              </li>
+            ) : (
+              <CardPlaceholder
+                key={index}
+                rank={kind === "ranked" ? index + 1 : undefined}
+              />
+            ),
+          )}
+        </ol>
+      }
     />
   );
 }

@@ -1,42 +1,60 @@
 ---
 title: "Roles del equipo"
-description: "Qué pueden hacer los propietarios, los administradores y los miembros en un espacio de trabajo."
+description: "Qué pueden hacer los propietarios, administradores, miembros, miembros de facturación y lectores en un espacio de trabajo."
 ---
 
-Cada miembro de un espacio de trabajo tiene un rol. En tu propio espacio de trabajo, eres el propietario.
+Cada miembro de un espacio de trabajo tiene un rol: **Propietario**, **Administrador**, **Miembro**, **Facturación** o **Lector**. En tu propio espacio de trabajo, eres el propietario. El rol decide qué puede cambiar cada persona; todos pueden ver los códigos, las páginas y las analíticas del espacio de trabajo.
 
-## Miembro [#member]
+## Qué puede hacer cada rol [#what-each-role-can-do]
 
-- Crear y editar los códigos y las páginas del espacio de trabajo, y subir archivos.
-- Eliminar sus propios códigos, archivos y respuestas de formularios.
-- Usar los temas compartidos y los dominios verificados del espacio de trabajo.
+| | Propietario | Administrador | Miembro | Facturación | Lector |
+| --- | --- | --- | --- | --- | --- |
+| Ver códigos, páginas, archivos y analíticas | Sí | Sí | Sí | Sí | Sí |
+| Crear códigos, páginas, archivos, carpetas, etiquetas y temas; editar los códigos del espacio de trabajo; eliminar los propios | Sí | Sí | Sí | | |
+| Crear claves de API | Sí | Sí | Sí | | |
+| Eliminar o cambiar lo que crearon otros miembros | Sí | Sí | | | |
+| Invitar y quitar personas, y cambiar roles | Sí | Sí | | | |
+| Cambiar el nombre del espacio de trabajo, su URL y su logotipo, y gestionar el enlace para unirse | Sí | Sí | | | |
+| Añadir, verificar y quitar dominios personalizados | Sí | Sí | | | |
+| Gestionar webhooks, temas compartidos y el tema predeterminado | Sí | Sí | | | |
+| Ver y revocar las claves de API de todos | Sí | Sí | | | |
+| [Exigir la verificación en dos pasos](/docs/help/teams/require-two-step-verification) y configurar el inicio de sesión único (Business) | Sí | Sí | | | |
+| Leer el registro de auditoría (Business) | Sí | Sí | | | |
+| Mejorar, cambiar o cancelar el plan en el que funciona el espacio de trabajo | Sí | | | Sí | |
+| Convertir a otros miembros en propietarios o miembros de facturación | Sí | | | | |
+| Crear y modificar aplicaciones OAuth | Sí | | | | |
+| Eliminar el espacio de trabajo | Sí | | | | |
 
-## Administrador [#admin]
+Un miembro de **Facturación** gestiona el plan y es de solo lectura en todo lo demás. Un **Lector** lo ve todo y no cambia nada.
 
-Todo lo que puede hacer un miembro, y además:
+## Quién paga el espacio de trabajo [#who-pays-for-the-workspace]
 
-- Eliminar cualquier código, archivo o respuesta de formulario.
-- Invitar y quitar miembros, y cambiar sus roles.
-- Compartir temas con el espacio de trabajo.
-- Cambiar el nombre del espacio de trabajo y su URL.
-- [Exigir la verificación en dos pasos](/docs/help/teams/require-two-step-verification) a todos sus miembros (Business).
-- Añadir, verificar y quitar dominios personalizados.
-- Gestionar webhooks.
-
-## Propietario [#owner]
-
-Todo lo que puede hacer un administrador, y además:
-
-- Convertir a otros miembros en propietarios.
-- Crear y modificar aplicaciones OAuth.
-- Eliminar el espacio de trabajo (nunca el espacio de trabajo propio de una persona).
+Un espacio de trabajo funciona con el mejor plan entre sus propietarios y miembros de facturación. Dar a alguien el rol de Facturación le permite pagar el espacio de trabajo sin poder cambiar sus códigos.
 
 ## Cambiar el rol de alguien [#change-someones-role]
 
-En la página **Ajustes** → **Equipo**, cambia el rol junto a su nombre. Solo los administradores y los propietarios pueden cambiar roles.
+En la página **Ajustes** → **Equipo**, cambia el **Rol** junto a su nombre. Los administradores pueden asignar los roles de administrador, miembro y lector; solo los propietarios pueden dar o quitar los roles de propietario y de facturación.
 
-Cambiar el rol de alguien, quitar a un miembro, invitar a un administrador y eliminar el espacio de trabajo requieren que primero [confirmes que eres tú](/docs/help/privacy-and-security/two-step-verification#confirm-its-you), a menos que ya lo hayas hecho en ese navegador en los últimos 10 minutos.
+Cambiar el rol de alguien, quitar a alguien, invitar a un administrador y eliminar el espacio de trabajo te piden [confirmar que eres tú](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) antes, salvo que ya lo hayas hecho en ese navegador en los últimos 10 minutos.
+
+<Shot id="team-members" />
 
 ## Traspasar un espacio de trabajo [#hand-over-a-workspace]
 
-No hay un botón de transferencia aparte. Convierte a la otra persona en **Propietario**. Cuando haya otro propietario, podrás salir del espacio de trabajo. Tu propio espacio de trabajo no se puede traspasar de esta forma: no puedes salir de él.
+No hay un botón de traspaso aparte. Convierte a la nueva persona en **Propietario**. Cuando haya otro propietario, podrás abandonar el espacio de trabajo. Tu propio espacio de trabajo no se puede traspasar de esta forma: no puedes abandonarlo.
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### No puedes elegir Propietario o Facturación para alguien [#you-cant-pick-owner-or-billing-for-someone]
+
+Solo un propietario puede dar esos roles. Pídeselo a uno de los propietarios del espacio de trabajo.
+
+### Un miembro no puede eliminar un código [#a-member-cant-delete-a-code]
+
+Los miembros solo eliminan lo que crearon. Un código creado por otra persona requiere un administrador o propietario.
+
+## Relacionado [#related]
+
+- [Crear un espacio de trabajo e invitar personas](/docs/help/teams/create-and-invite)
+- [Plazas y límites del espacio de trabajo](/docs/help/teams/seats)
+- [Exigir la verificación en dos pasos](/docs/help/teams/require-two-step-verification)

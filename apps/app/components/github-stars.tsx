@@ -9,6 +9,7 @@ import {
 } from "@repo/design-system/components/ui/tooltip";
 import { cn } from "@repo/design-system/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import { Star1 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect, useState } from "react";
 import { siteConfig } from "@/config/site";
@@ -95,7 +96,28 @@ function Odometer({ value }: { value: string }) {
 }
 
 /**
- * GitHub pill for the site headers: the GitHub mark plus the live star count
+ * The live star count as a quiet "★ 1.2k", for a link to the repository
+ * (the header's Developers menu, the footer). Nothing until the count
+ * arrives, or when it can't be read.
+ */
+export function GithubStarCount({ className }: { className?: string }) {
+  const t = useTranslations("nav.github");
+  const { data: stars = 0 } = useStars();
+  if (stars <= 0) return null;
+  const label = formatCompactNumber(stars);
+  return (
+    <span
+      className={cn("inline-flex items-center gap-1 tabular-nums", className)}
+    >
+      <Star1 aria-hidden variant="Bold" className="size-3" />
+      <span aria-hidden>{label}</span>
+      <span className="sr-only">{t("stars", { count: label })}</span>
+    </span>
+  );
+}
+
+/**
+ * GitHub pill for the app header: the GitHub mark plus the live star count
  * (rolls up on load) and a light sweep now and then. Icon-only below `sm`.
  * Reduced motion: no roll, no sweep.
  */
