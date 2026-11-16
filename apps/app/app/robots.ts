@@ -5,6 +5,7 @@ import {
   SEARCH_CRAWLERS,
 } from "@/lib/agents/robots-rules";
 import { baseUrl } from "@/lib/metadata";
+import { siteServes } from "@/lib/site-zone-on";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -13,6 +14,13 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: DISALLOW,
     })),
-    sitemap: new URL("/sitemap.xml", baseUrl).toString(),
+    // The marketing site's own sitemap lists the blog while it serves it
+    // (app/sitemap.ts leaves the blog out then).
+    sitemap: [
+      new URL("/sitemap.xml", baseUrl).toString(),
+      ...(siteServes("blog")
+        ? [new URL("/blog/sitemap.xml", baseUrl).toString()]
+        : []),
+    ],
   };
 }
