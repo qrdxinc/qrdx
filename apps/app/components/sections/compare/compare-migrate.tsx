@@ -1,3 +1,4 @@
+import { SUPPORT_EMAIL } from "@repo/config";
 import { Info } from "@repo/design-system/components/icons";
 import { ArrowSwapHorizontal, Global, Printer } from "iconsax-reactjs";
 import type { ReactNode } from "react";
@@ -26,13 +27,16 @@ interface PrintedCase {
  * Codes from an import (api, file) depend on where they point: a domain the
  * customer owns can move with no reprint, codes on the provider's domain need
  * its plan until the reprint, and codes that already stopped need a reprint.
+ * Imports also get the switch offers (docs/migrate "Free help with your
+ * move"): a switch check from one old link, and help with a big move.
  */
 export function CompareMigrate({ slug, competitor }: CompareMigrateProps) {
   const migration = compareMigration(slug, competitor);
   const imported = migration.kind === "api" || migration.kind === "file";
+  const customDomains = isFeatureAvailable("customDomains");
 
   const cases: PrintedCase[] = [
-    ...(isFeatureAvailable("customDomains")
+    ...(customDomains
       ? [
           {
             icon: Global,
@@ -158,6 +162,24 @@ export function CompareMigrate({ slug, competitor }: CompareMigrateProps) {
             </div>
           </div>
         )}
+
+        {imported ? (
+          <p className="text-center text-sm text-muted-foreground text-pretty">
+            Not sure which way fits? Send one of your old QR links to{" "}
+            <a className={LINK_CLASS} href={`mailto:${SUPPORT_EMAIL}`}>
+              {SUPPORT_EMAIL}
+            </a>{" "}
+            and we&apos;ll tell you. Moving many codes
+            {customDomains ? " or your own domain" : ""}? We do the move with
+            you.{" "}
+            <LocaleLink
+              className={LINK_CLASS}
+              href="/docs/migrate#free-help-with-your-move"
+            >
+              Free help with your move
+            </LocaleLink>
+          </p>
+        ) : null}
 
         <div className="flex justify-center">
           <CompareMigrateButton

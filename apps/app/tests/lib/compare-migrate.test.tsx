@@ -2,7 +2,8 @@
 // switch "in minutes", and for imported codes it covers the three cases that
 // decide whether printed codes need a reprint (own domain, still on the old
 // provider's domain, already stopped). The own-domain case shows only where
-// custom domains can be added.
+// custom domains can be added. Imports also get the switch offers (a switch
+// check from one old link, help with a big move), with no countdown.
 
 import { renderToStaticMarkup } from "react-dom/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -55,6 +56,26 @@ describe("compare pages: How to switch", () => {
     expect(html).toContain("Download URLs");
   });
 
+  it("offers a switch check and help with a big move for imports", () => {
+    const html = render("bitly-qr", "Bitly");
+    expect(html).toContain("Send one of your old QR links");
+    expect(html).toContain('href="mailto:support@qrdx.dev"');
+    expect(html).toContain("Moving many codes or your own domain?");
+    expect(html).toContain("We do the move with you.");
+    expect(html).toContain('href="/docs/migrate#free-help-with-your-move"');
+    // No cap, countdown or urgency in the offer.
+    const offer = html.match(/Not sure which way fits\?.*?<\/p>/)?.[0] ?? "";
+    expect(offer).toContain("support@qrdx.dev");
+    expect(offer).not.toMatch(
+      /\b(only|left|spots?|hurry|limited|first \d+)\b/i,
+    );
+
+    state.customDomains = false;
+    expect(render("uniqode", "Uniqode")).toContain(
+      "Moving many codes? We do the move with you.",
+    );
+  });
+
   it("leaves out the own-domain case where custom domains can't be added", () => {
     state.customDomains = false;
     const html = render("uniqode", "Uniqode");
@@ -72,6 +93,7 @@ describe("compare pages: How to switch", () => {
       expect(html).toContain("Printed codes");
       expect(html).not.toContain("If your codes have already stopped");
       expect(html).not.toContain("On a domain you own");
+      expect(html).not.toContain("free-help-with-your-move");
     }
   });
 });
