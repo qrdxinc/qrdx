@@ -56,6 +56,17 @@ export const organizationSchema = {
   },
   description:
     "Open-source QR code platform: a free QR code generator, dynamic QR codes with hosted pages and scan analytics, and developer tools.",
+  // Says what QRdx is not, for search engines that merge it with the
+  // unrelated projects sharing the name.
+  disambiguatingDescription:
+    "QRdx at qrdx.dev makes and manages QR codes and barcodes. It is software for QR codes, not a cryptocurrency, token or blockchain network.",
+  knowsAbout: [
+    "QR codes",
+    "Dynamic QR codes",
+    "QR code design",
+    "Barcodes",
+    "Scan analytics",
+  ],
   email: SUPPORT_EMAIL,
   // The GitHub repository was created on 30 Oct 2025.
   foundingDate: "2025",

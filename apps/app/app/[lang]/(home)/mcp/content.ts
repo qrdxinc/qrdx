@@ -5,11 +5,13 @@ import {
   ArchiveAdd,
   Bank,
   Barcode,
+  Book,
   Brush2,
   Category,
   Coffee,
   ColorSwatch,
   DocumentDownload,
+  DocumentText,
   type Icon,
   Location,
   MagicStar,
@@ -120,6 +122,20 @@ export const MCP_TOOLS: {
       "Paints a QR code into AI artwork from your description, a scene or your photo, and checks that it scans. Each image uses one of your workspace's monthly AI art images and takes up to a minute. Needs a QRdx API key on the connection.",
     icon: MagicStar,
     needsKey: true,
+  },
+  {
+    name: "search_docs",
+    title: "Search the docs",
+    description:
+      "Finds QRdx docs pages for a question: how a feature works, API endpoints and fields, limits and plans, the React library. Returns titles, links and matching snippets, best first.",
+    icon: Book,
+  },
+  {
+    name: "read_docs_page",
+    title: "Read a docs page",
+    description:
+      "One docs page as Markdown, by the path search_docs returned or its URL, in English or any docs language. Long pages are cut with a link to the rest.",
+    icon: DocumentText,
   },
   {
     name: "list_qr_styles",

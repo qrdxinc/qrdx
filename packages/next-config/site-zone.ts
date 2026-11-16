@@ -140,6 +140,17 @@ function sourceFor(prefix: string): string {
 }
 
 /**
+ * A group prefix's sources: the page itself, exactly, then everything below
+ * it. With one `${prefix}/:path*` rule, Vercel forwards the bare prefix as
+ * `${prefix}/` (an empty :path* keeps the slash), and a zone that redirects
+ * trailing slashes sends it straight back: /blog looped that way on
+ * 2026-11-15. The exact rule keeps the address as it was asked for.
+ */
+function pageSourcesFor(prefix: string): string[] {
+  return prefix === "/" ? ["/"] : [prefix, `${prefix}/:path+`];
+}
+
+/**
  * The main app's beforeFiles rewrites that send the groups' pages and the
  * site's build assets to the site at `origin` (its origin is used, so a
  * stray path or query can't end up in the destinations). None while
@@ -158,7 +169,7 @@ export function siteZoneRewrites(
   const has = [{ type: "host" as const, value: hosts }];
   const sources = [
     ...SITE_GROUP_NAMES.filter((group) => groups.includes(group)).flatMap(
-      (group) => SITE_GROUPS[group].map(sourceFor)
+      (group) => SITE_GROUPS[group].flatMap(pageSourcesFor)
     ),
     sourceFor(SITE_ASSET_PREFIX),
   ];
