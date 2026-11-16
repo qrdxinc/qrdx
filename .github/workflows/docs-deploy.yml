@@ -15,11 +15,11 @@ on:
     branches:
       - main
     paths:
-      # The docs site: its code, content (content/docs), translation review
-      # records and recorded dates
+      # The docs site: its code, content (content/docs) and recorded dates
       - apps/docs/**
       - .github/workflows/docs-deploy.yml
-      # The message catalogs, which stay with the main app's
+      # The message catalogs, which stay with the main app's (the docs read
+      # the English one)
       - apps/app/messages/**
       # The generated inputs' sources: the docs' message subset and the OpenAPI
       # document's copy (apps/docs/scripts/zone-inputs.mjs)
