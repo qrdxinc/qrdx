@@ -5,6 +5,11 @@
 // there). Links to any other page stay unprefixed in every language. The
 // docs are the exception: in a language with docs (docs.ts) every /docs page
 // has a prefixed URL; French visitors reach the English docs at /docs.
+//
+// The marketing pages are English only (owner decision, 17 Nov 2026): they
+// still live under app/[lang], listed as `englishOnly`, and render in
+// English at their unprefixed URLs; their old translated URLs redirect there
+// (routing.ts). Links to them never gain a prefix.
 
 import {
   DEFAULT_LOCALE,
@@ -48,6 +53,20 @@ const MATCHERS = LOCALIZED_PATHS.map(routeMatcher);
 
 export function isLocalizedPath(path: string): boolean {
   return MATCHERS.some((matches) => matches(path));
+}
+
+/**
+ * Marketing pages under app/[lang] that exist in English only, as route
+ * paths (written like LOCALIZED_PATHS). English serves them at their
+ * unprefixed URLs (routing.ts englishRewrites); /es/pricing and the other
+ * translated URLs they had redirect there (routing.ts englishOnlyRedirects).
+ */
+export const ENGLISH_ONLY_PATHS: readonly string[] = localized.englishOnly;
+
+const ENGLISH_ONLY_MATCHERS = ENGLISH_ONLY_PATHS.map(routeMatcher);
+
+export function isEnglishOnlyPath(path: string): boolean {
+  return ENGLISH_ONLY_MATCHERS.some((matches) => matches(path));
 }
 
 /**
@@ -97,10 +116,14 @@ export function splitLocale(pathname: string): {
   const match = /^\/([^/]+)(\/.*)?$/.exec(pathname);
   const locale = localeFromSegment(match?.[1]);
   // "/en/scan" too: the route an English page prerenders as, which is what
-  // usePathname() says while it does, before the browser's "/scan".
+  // usePathname() says while it does, before the browser's "/scan". English
+  // only pages prerender under /en as well ("/en" is the home page).
   if (match && locale) {
     const path = match[2] ?? "/";
     if (isPathIn(path, locale)) return { locale, path };
+    if (locale === DEFAULT_LOCALE && isEnglishOnlyPath(path)) {
+      return { locale, path };
+    }
   }
   return { locale: DEFAULT_LOCALE, path: pathname };
 }

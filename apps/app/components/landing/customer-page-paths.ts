@@ -1,4 +1,4 @@
-import { splitLocale } from "@repo/i18n/paths";
+import { localeFromSegment } from "@repo/i18n/config";
 
 /**
  * Paths where QRdx's own analytics (PostHog) and support widget (Featurebase)
@@ -16,12 +16,22 @@ import { splitLocale } from "@repo/i18n/paths";
  */
 const UNTRACKED_PATHS = ["/p", "/q", "/ended", "/scan", "/stats", "/portal"];
 
-// Translated pages (/es/scan) count as their English path (packages/i18n/paths.ts).
 const TEMPLATE_DEMO_PATH = /^\/templates\/[^/]+\/[^/]+\/?$/;
+
+/**
+ * "/es/scan" → "/scan": any language prefix, whether or not the page exists
+ * in that language (the English-only pages redirect their old translated
+ * URLs before anything loads, packages/i18n/routing.ts), so the promise
+ * holds for any page that ever renders under one.
+ */
+function withoutLanguage(pathname: string): string {
+  const match = /^\/([^/]+)(\/.*)?$/.exec(pathname);
+  return match && localeFromSegment(match[1]) ? (match[2] ?? "/") : pathname;
+}
 
 export function isUntrackedPath(pathname: string | null): boolean {
   if (!pathname) return false;
-  const { path } = splitLocale(pathname);
+  const path = withoutLanguage(pathname);
   return (
     TEMPLATE_DEMO_PATH.test(path) ||
     UNTRACKED_PATHS.some(

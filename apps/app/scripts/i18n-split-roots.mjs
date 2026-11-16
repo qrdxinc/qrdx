@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // Splits apps/app/app into two root layouts (i18n design §3 and §10):
 //
-//   app/[lang]/   translated public pages (packages/i18n/localized-paths.json),
-//                 each under app/[lang]/(home)/…
+//   app/[lang]/   translated public pages (packages/i18n/localized-paths.json
+//                 `paths`), each under app/[lang]/(home)/…; the English-only
+//                 marketing pages there (`englishOnly`) stay where they are
 //   app/(app)/    every other page, layout and boundary, URLs unchanged
 //   app/          route handlers and metadata files stay where they are
 //
