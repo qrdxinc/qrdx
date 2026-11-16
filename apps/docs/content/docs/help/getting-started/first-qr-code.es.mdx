@@ -3,32 +3,63 @@ title: "Crea tu primer código QR"
 description: "Crea un código QR en el Playground y descárgalo. Gratis, sin cuenta y sin marca de agua."
 ---
 
-Puedes crear un código QR en aproximadamente un minuto. No necesitas una cuenta.
+El [Playground](/playground) es el editor de QRdx. Puedes crear un código QR en él en aproximadamente un minuto, sin cuenta. El código que descargas es estático: el enlace se guarda dentro del código, funciona para siempre y no se puede cambiar después de imprimirlo.
 
 ## Crea el código [#make-the-code]
 
-1. Abre el [Playground](/playground). Es el editor de QRdx.
-2. **URL** ya está seleccionado. Para Wi-Fi, una tarjeta de contacto, WhatsApp o cualquier otra cosa, haz clic en **Cambiar** junto a **Tipo de código QR** y elige un tipo.
-3. Escribe tu enlace en **Dirección del sitio web**. La vista previa muestra tu código en cuanto la dirección es válida.
-4. Opcional: elige un aspecto en **Empezar desde un estilo**, o abre la pestaña **Diseño** para cambiar los colores, los puntos, los ojos, el logo y el marco.
-5. Haz clic en el icono de descarga sobre la vista previa, o pulsa <kbd>D</kbd>. Elige un formato y un tamaño, y descarga.
+### 1. Elige qué abre el código [#1-pick-what-the-code-opens]
 
-Debajo de la dirección, QRdx muestra dónde se abrirán los escaneos, por ejemplo "Los escaneos abren example.com". Compruébalo antes de imprimir.
+Abre el [Playground](/playground). La pestaña **Contenido** está abierta y **URL** es el tipo seleccionado, que sirve para cualquier dirección web.
 
-## Antes de imprimir [#before-you-print]
+Para Wi-Fi, una tarjeta de contacto, WhatsApp o cualquier otra cosa, haz clic en **Cambiar** en la tarjeta **Tipo de código QR** y elige un tipo.
 
-Revisa la **puntuación de escaneo** debajo de la vista previa. Una puntuación de 85 o más es excelente. Por debajo de 65, corrige las comprobaciones marcadas con una cruz. Consulta [Comprueba un diseño con la puntuación de escaneo](/docs/help/designing/scan-score).
+<Shot id="playground-type-picker" />
 
-Después, escanea el código con tu propio teléfono.
+### 2. Escribe tu enlace [#2-type-your-link]
 
-## Los códigos del Playground son estáticos [#codes-from-the-playground-are-static]
+Pega o escribe la dirección en **Dirección del sitio web**. La vista previa pasa del ejemplo borroso a tu código en cuanto la dirección es un enlace válido, y la línea bajo el campo indica dónde se abren los escaneos, por ejemplo "Los escaneos abren example.com". Compruébalo antes de imprimir.
 
-Un código que descargas desde el Playground es **estático**: el enlace se guarda dentro del código. Funciona para siempre, pero no puedes cambiarlo después de imprimirlo.
+<Shot id="playground-content" />
 
-Si es posible que necesites cambiar el enlace más adelante, crea un código dinámico en su lugar. Consulta [Estático o dinámico](/docs/help/getting-started/static-vs-dynamic).
+### 3. Elige un aspecto [#3-pick-a-look]
 
-## Siguientes pasos [#next-steps]
+Este paso es opcional. En **Empieza con un estilo**, elige uno de los estilos predefinidos. Para personalizar más, abre la pestaña **Diseño**, que incluye los colores, los puntos, los ojos, el logo y el marco.
+
+### 4. Descarga [#4-download]
+
+Haz clic en **Descargar** sobre la vista previa, o pulsa <kbd>D</kbd>. Elige un formato y un tamaño, y luego haz clic en el botón de descarga en la parte inferior del cuadro de diálogo. El archivo se guarda en tu carpeta de descargas.
+
+<Shot id="playground-download" />
+
+<Clip id="first-code" />
+
+## Comprueba que se escanea [#check-that-it-scans]
+
+Mira la **Puntuación de escaneo** bajo la vista previa. Con 85 o más es Excelente y está listo para imprimir. Si es inferior a 65, haz clic en la puntuación y corrige las comprobaciones marcadas con una cruz. Consulta [Comprueba un diseño con la puntuación de escaneo](/docs/help/designing/scan-score).
+
+Después escanea el código con tu propio teléfono.
+
+## Si puede que cambies el enlace más adelante [#if-you-might-change-the-link-later]
+
+Un código del Playground guarda el propio enlace, así que una copia impresa no se puede cambiar. Si el enlace puede cambiar, o quieres contar los escaneos, elige **Dinámico** en el interruptor **Código QR estático o dinámico** bajo la dirección antes de descargar. Requiere una cuenta gratis. Consulta [Crea un código QR dinámico](/docs/help/dynamic-codes/create) y [Estático o dinámico, ¿cuál necesitas?](/docs/help/getting-started/static-vs-dynamic).
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### La vista previa sigue mostrando el ejemplo borroso [#the-preview-still-shows-the-blurred-sample]
+
+La dirección aún no es un enlace válido. Comprueba si falta un punto o hay un espacio de más, y escribe la dirección completa.
+
+### El botón Descargar aparece atenuado [#the-download-button-is-grayed-out]
+
+Permanece desactivado hasta que el código tenga contenido. Escribe primero la dirección.
+
+### Tu teléfono no lee el código [#your-phone-doesnt-read-the-code]
+
+Revisa la puntuación de escaneo y consulta [Un código no se escanea](/docs/help/troubleshooting/wont-scan).
+
+## Relacionado [#related]
 
 - [Descarga e imprime un código QR](/docs/help/getting-started/download-and-print)
 - [Elige colores que se escaneen bien](/docs/help/designing/colors-and-contrast)
 - [Añade un logo](/docs/help/designing/logos)
+- [Crea un código QR dinámico](/docs/help/dynamic-codes/create)

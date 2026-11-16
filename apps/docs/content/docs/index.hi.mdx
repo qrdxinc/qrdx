@@ -1,61 +1,106 @@
 ---
 title: "QRdx डॉक्स"
-description: "QRdx से QR कोड बनाने वाले हर व्यक्ति के लिए मदद, हर फ़ीचर की गाइड और डेवलपर्स के लिए डॉक्स।"
+description: "QR कोड बनाइए, प्रिंट करने के बाद उन्हें बदलिए, उनके स्कैन देखिए, और API व React लाइब्रेरी के साथ अपना प्रोडक्ट बनाइए।"
 icon: Book
 ---
 
-QRdx एक ओपन-सोर्स (AGPL-3.0) QR कोड प्लेटफ़ॉर्म है। बिना अकाउंट के मुफ़्त में स्टैटिक QR कोड डिज़ाइन करें, या साइन इन करके डायनेमिक QR कोड, मोबाइल पेज और स्कैन एनालिटिक्स का इस्तेमाल करें। डायनेमिक QR कोड प्रिंट होने के बाद भी बदले जा सकते हैं।
+QRdx एक ओपन-सोर्स QR कोड प्लेटफ़ॉर्म है: स्टैटिक कोड बिना अकाउंट के फ़्री में, और डायनेमिक कोड जिन्हें प्रिंट करने के बाद भी बदला जा सकता है, होस्टेड पेज और स्कैन एनालिटिक्स के साथ। डायनेमिक कोड हर प्लान पर चलता रहता है, आपके कैंसल करने के बाद भी ([Never-Hostage गारंटी](/guarantee))।
 
-हर डायनेमिक QR कोड हर प्लान में रीडायरेक्ट करता रहता है, डाउनग्रेड या कैंसिल करने के बाद भी। यही है [Never-Hostage गारंटी](/guarantee)।
+## आप क्या करना चाहते हैं? [#what-do-you-want-to-do]
 
-## शुरुआत कहाँ से करें [#where-to-start]
+<Cards>
+  <Card
+    arrow
+    icon={<QrCode />}
+    href="/docs/help/getting-started/first-qr-code"
+    title="पहला कोड बनाइए"
+    description="एडिटर में कोड डिज़ाइन कीजिए, फिर उसे उस फ़ॉर्मैट में डाउनलोड कीजिए जो आपके प्रिंटर को चाहिए।"
+  />
+  <Card
+    arrow
+    icon={<Split />}
+    href="/docs/help/dynamic-codes/create"
+    title="ऐसा कोड बनाइए जिसे प्रिंट के बाद बदल सकें"
+    description="डायनेमिक कोड एक शॉर्ट लिंक की ओर इशारा करता है। वह कहाँ जाता है, इसे कभी भी बदल सकते हैं।"
+  />
+  <Card
+    arrow
+    icon={<ChartLine />}
+    href="/docs/help/dynamic-codes/scans"
+    title="स्कैन देखिए"
+    description="कोड कब, कहाँ और किन डिवाइस पर स्कैन किया गया।"
+  />
+  <Card
+    arrow
+    icon={<Terminal />}
+    href="/docs/developers/quickstart"
+    title="API के साथ बनाइए"
+    description="अपने ऐप से कोड बनाइए और मैनेज कीजिए। हर endpoint में Try it पैनल है।"
+  />
+  <Card
+    arrow
+    icon={<Code />}
+    href="/docs/getting-started"
+    title="React लाइब्रेरी इस्तेमाल कीजिए"
+    description="qrdx पैकेज से स्टाइल वाले कोड रेंडर और एक्सपोर्ट कीजिए।"
+  />
+  <Card
+    arrow
+    icon={<Server />}
+    href="/docs/self-hosting"
+    title="QRdx खुद होस्ट कीजिए"
+    description="Docker Compose या Node.js के साथ अपना QRdx चलाइए, डायनेमिक कोड समेत।"
+  />
+</Cards>
+
+## सेक्शन [#the-sections]
 
 <Cards>
   <Card
     icon={<LifeBuoy />}
     href="/docs/help"
-    title="मदद"
-    description="QR कोड बनाने, बिलिंग, टीमों और समस्याएँ ठीक करने के सीधे जवाब। कोड की ज़रूरत नहीं।"
+    title="Help"
+    description="कोड बनाने, बिलिंग, टीम और समस्याएँ ठीक करने के छोटे जवाब। कोड लिखने की ज़रूरत नहीं।"
   />
   <Card
     icon={<Book />}
     href="/docs/dynamic-qr-codes"
     title="गाइड"
-    description="हर प्रोडक्ट फ़ीचर की विस्तार से जानकारी: डायनेमिक QR कोड, पेज, फ़ॉर्म, रूटिंग, एनालिटिक्स और टीमें।"
+    description="हर फ़ीचर विस्तार से: डायनेमिक कोड, पेज, फ़ॉर्म, रूटिंग, एनालिटिक्स और टीम।"
   />
   <Card
     icon={<Terminal />}
     href="/docs/developers"
     title="डेवलपर्स"
-    description="Try it पैनल वाला REST API, वेबहुक, OAuth ऐप्स, MCP और CLI।"
+    description="REST API, वेबहुक, OAuth ऐप, MCP सर्वर और CLI।"
   />
   <Card
     icon={<Code />}
     href="/docs/getting-started"
     title="React लाइब्रेरी"
-    description="qrdx पैकेज और shadcn/ui रजिस्ट्री से स्टाइल किए हुए QR कोड रेंडर और एक्सपोर्ट करें।"
+    description="qrdx पैकेज, फ़्रेमवर्क गाइड और shadcn/ui रजिस्ट्री।"
   />
   <Card
     icon={<Server />}
     href="/docs/self-hosting"
     title="सेल्फ़-होस्टिंग"
-    description="Docker Compose या Node.js से अपना QRdx चलाएँ, डायनेमिक QR कोड समेत।"
+    description="अपना QRdx इंस्टॉल, कॉन्फ़िगर और अपडेट कीजिए।"
   />
 </Cards>
 
-## क्विक लिंक [#quick-links]
+## लोकप्रिय पेज [#popular-pages]
 
-- [अपना पहला QR कोड बनाएँ](/docs/help/getting-started/first-qr-code)
 - [स्टैटिक या डायनेमिक, आपको कौन सा चाहिए?](/docs/help/getting-started/static-vs-dynamic)
+- [कोड कहाँ जाता है, इसे बदलिए](/docs/help/dynamic-codes/change-the-link)
+- [QR कोड डाउनलोड और प्रिंट कीजिए](/docs/help/getting-started/download-and-print)
 - [कोड स्कैन नहीं हो रहा](/docs/help/troubleshooting/wont-scan)
 - [प्लान और सीमाएँ](/docs/plans-and-limits)
 - [REST API और OAuth](/docs/developers/rest-api)
-- [React लाइब्रेरी इंस्टॉल करें](/docs/getting-started)
 
-## अपडेट रहें [#stay-up-to-date]
+## मदद पाइए [#get-help]
 
-- [चेंजलॉग](/changelogs): हर रिलीज़, नई सबसे ऊपर।
-- [क्या नया है और आगे क्या आ रहा है](/docs/help/whats-new)।
+किसी भी पेज से <kbd>⌘</kbd> <kbd>K</kbd> दबाकर डॉक्स में खोजिए। अगर डॉक्स में जवाब न मिले:
+
+- [सपोर्ट से संपर्क कीजिए](/docs/help/contact): कोई इंसान जवाब देता है।
+- [नया क्या है और आगे क्या आ रहा है](/docs/help/whats-new), और पूरा [changelog](/changelogs)।
 - [GitHub](https://github.com/qrdxinc/qrdx): सोर्स कोड, [issues](https://github.com/qrdxinc/qrdx/issues) और [discussions](https://github.com/qrdxinc/qrdx/discussions)।
-
-किसी व्यक्ति से बात करनी है? [सपोर्ट से संपर्क करें](/docs/help/contact)।

@@ -3,35 +3,55 @@ title: "Ajouter un cadre et un appel à l'action"
 description: "Placez une bordure et un court message comme « Scannez-moi » autour de votre QR code."
 ---
 
-Un cadre indique aux gens ce qu'ils obtiennent en scannant.
+Un cadre place une bordure et un court message autour du code, pour que les gens sachent ce qu'ils obtiennent en le scannant. Les cadres se trouvent à l'extérieur du code et ne recouvrent jamais aucun de ses carrés : ils ne gênent donc jamais le scan.
 
 ## Ajouter un cadre [#add-a-frame]
 
-1. Dans le [Playground](/playground?tab=design&section=frame), ouvrez l'onglet **Design**, puis **Cadre**.
-2. Choisissez un cadre. Recherchez-le par nom ou choisissez un groupe : **Classique** contient les cadres intégrés, dont Arrow, Standard Box, Square Border, Striked Box, Halloween et Dot Ring. Choisir un cadre remplace celui que vous aviez. Pour utiliser votre propre illustration, connectez-vous et choisissez **Importer un SVG** à côté de la recherche : les formes et les couleurs du SVG deviennent un cadre.
-3. Saisissez votre texte dans **Libellé**, ou choisissez-en un prêt à l'emploi : Scannez-moi, Scannez pour le menu, Rejoignez le Wi-Fi, Laissez un avis, Suivez-nous, Payez ici, Enregistrez le contact ou Téléchargez l'application.
-4. Réglez la **Couleur du cadre**, la **Couleur du texte** et la **Taille du texte**. Certains cadres ont aussi une **Deuxième ligne**. Arrow, Standard Box, Square Border et Dot Ring prennent à la place la couleur des points du code, tandis que Striked Box et Halloween gardent leurs propres couleurs.
+1. Dans le [Playground](/playground?tab=design&section=frame), ouvrez l'onglet **Design**, puis **Frame**.
+2. Choisissez un cadre. Recherchez par nom ou parcourez les groupes : **Classic** contient les cadres intégrés, dont Arrow, Standard Box, Square Border, Striked Box, Halloween et Dot Ring ; les collections de la bibliothèque de cadres viennent ensuite ; **Saved** contient les cadres que vous avez conservés. Choisir un cadre remplace celui que vous aviez.
+3. Saisissez votre texte dans **Label**, ou choisissez l'une des **Label ideas** : Scan me, Scan for menu, Join Wi-Fi, Leave a review, Follow us, Pay here, Save contact ou Download the app. Choisir une idée de libellé alors qu'aucun cadre n'est activé ajoute le cadre par défaut.
+4. Réglez la **Frame color**, la **Text color** et la **Text size**. Certains cadres proposent aussi une **Second line**, une **Accent color** ou une **Icon**.
 
-{/* Shaped codes (feat/heart-silhouette-shapes) */}
+Arrow, Standard Box, Square Border et Dot Ring prennent la couleur des points du code au lieu d'une couleur de cadre, tandis que Striked Box et Halloween gardent leurs propres couleurs.
+
+<Shot id="design-frame" />
+
+Pour utiliser votre propre illustration, connectez-vous et cliquez sur **Upload SVG** à côté de la recherche. Les formes et les couleurs du SVG deviennent un cadre.
 
 ## Placer le code dans une forme [#put-the-code-in-a-shape]
 
-Le même sélecteur contient un groupe **Codes en forme**. **Dot circle** et **Heart** placent le code dans un cercle ou un cœur de points décoratifs. **Silhouette** remplit une forme de votre choix : importez un PNG, un JPEG ou un SVG avec une forme sombre ou pleine sur un fond clair ou transparent. Seul son contour est conservé, jamais l'image.
+Le même sélecteur contient un groupe **Shaped codes**. **Dot circle** et **Heart** placent le code à l'intérieur d'un cercle ou d'un cœur de points décoratifs. **Silhouette** remplit une forme de votre choix : importez un PNG, un JPEG ou un SVG avec une forme sombre ou pleine sur un fond clair ou transparent. Seul son contour est conservé, jamais l'image.
 
-Les lecteurs ne lisent que le code au centre : imprimez donc un code en forme plus grand qu'un code carré pour la même distance de scan. Une forme prend la place d'un cadre : en choisir une supprime l'autre. Une forme trop fine pour contenir le code est refusée avec un message.
+Les lecteurs ne lisent que le code au centre : imprimez donc un code en forme plus grand qu'un code carré pour la même distance de scan. Une forme prend la place d'un cadre : en choisir une supprime l'autre.
 
-{/* end shaped codes */}
+## Gardez un texte court [#keep-the-text-short]
 
-## Les cadres ne nuisent jamais au scan [#frames-never-hurt-scanning]
-
-Les cadres se placent à l'extérieur du code. Ils ne recouvrent jamais aucun de ses carrés.
-
-Gardez un texte de cadre court. Trois ou quatre mots se lisent le mieux de loin.
+Trois ou quatre mots se lisent le mieux de loin. Dites ce que les gens obtiennent, par exemple « Scan for menu », plutôt que ce qu'ils doivent faire avec leur téléphone.
 
 ## Télécharger avec le cadre [#download-with-the-frame]
 
-Le cadre fait partie de chaque téléchargement, quel que soit le format. Pour l'impression, consultez [Télécharger et imprimer un QR code](/docs/help/getting-started/download-and-print).
+Le cadre fait partie de tous les téléchargements, quel que soit le format. Pour l'impression, consultez [Télécharger et imprimer un QR code](/docs/help/getting-started/download-and-print).
+
+## Partager votre cadre [#share-your-frame]
+
+Un cadre que vous avez importé ou pris dans la bibliothèque peut être publié séparément : cliquez sur **Publish frame** dans la section **Frame**. Il est envoyé à la [communauté](/community) aux mêmes conditions qu'un design publié. Consultez [Enregistrer et réutiliser un design](/docs/help/designing/save-a-design).
+
+## En cas de problème [#if-something-goes-wrong]
+
+### Le champ Label est désactivé [#the-label-field-is-disabled]
+
+Aucun cadre n'est activé. Le champ affiche « Pick a frame first » : choisissez un cadre, ou choisissez une idée de libellé, qui en ajoute un.
+
+### La couleur du cadre n'a aucun effet [#frame-color-has-no-effect]
+
+Le cadre choisi prend la couleur des points du code (Arrow, Standard Box, Square Border, Dot Ring) ou garde ses propres couleurs (Striked Box, Halloween). Modifiez la couleur **Dots** sous **Colors**, ou choisissez un autre cadre.
+
+### Une silhouette est refusée [#a-silhouette-is-refused]
+
+La forme est trop fine pour contenir le code. Importez une image avec une forme plus épaisse et plus pleine.
 
 ## Voir aussi [#related]
 
+- [Télécharger et imprimer un QR code](/docs/help/getting-started/download-and-print)
+- [Enregistrer et réutiliser un design](/docs/help/designing/save-a-design)
 - [Cadres et impression pour les développeurs](/docs/features/frames)

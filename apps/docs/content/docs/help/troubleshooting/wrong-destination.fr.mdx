@@ -3,43 +3,45 @@ title: "Un code ouvre la mauvaise page"
 description: "Pourquoi un QR code ouvre un ancien lien ou un lien inattendu, et comment savoir ce qu'il contient réellement."
 ---
 
+Un code qui ouvre une ancienne page ou une page inattendue est soit un QR code statique qui contient encore l'ancien lien, soit un QR code dynamique dont un réglage envoie le scan ailleurs. Déterminez d'abord de quel cas il s'agit, puis parcourez la liste.
+
 ## Commencez par voir ce que contient le code [#first-see-what-the-code-holds]
 
 Prenez en photo le code imprimé et déposez-la dans le [vérificateur de scan](/tools/scan-checker). Il affiche exactement ce que le code contient.
 
 - S'il affiche l'adresse de votre site web, le code est **statique**.
-- S'il affiche un lien court comme `qrdx.dev/q/…`, le code est **dynamique**.
+- S'il affiche un lien court comme `qrdx.dev/q/…` ou un lien sur votre propre domaine, le code est **dynamique**.
 
-## Un code statique [#a-static-code]
+## Un QR code statique ouvre l'ancien lien [#a-static-code-opens-the-old-link]
 
-Un code statique enregistre le lien à l'intérieur du code. Il ne peut pas être modifié après l'impression.
+Le code a été téléchargé avant d'être rendu dynamique : il contient donc lui-même l'ancien lien et ne peut pas être modifié. Rendez le code dynamique et imprimez la nouvelle version. Vérification : le vérificateur de scan affiche un lien court. Consultez [Créer un QR code dynamique](/docs/help/dynamic-codes/create).
 
-Cela arrive lorsqu'un code est téléchargé avant d'avoir été rendu dynamique. Pour corriger le problème, imprimez la version dynamique. Consultez [Créer un QR code dynamique](/docs/help/dynamic-codes/create).
+## Un QR code dynamique ouvre toujours l'ancienne destination [#a-dynamic-code-still-opens-the-old-destination]
 
-## Un code dynamique [#a-dynamic-code]
+La nouvelle destination n'a pas été enregistrée. Dans le Playground, modifier l'adresse ne suffit pas : cliquez sur **Point it to the new address**. Dans le tableau de bord, ouvrez **Edit link**, modifiez la **Destination URL** et cliquez sur **Save changes**. Vérification : scannez à nouveau. QRdx ne met pas les redirections en cache, donc le scan suivant utilise la nouvelle destination. Consultez [Modifier la destination d'un code](/docs/help/dynamic-codes/change-the-link).
 
-Ouvrez le code dans **Codes** et vérifiez chacun des points suivants.
+## Certaines personnes arrivent sur une autre page [#some-people-land-on-a-different-page]
 
-### La nouvelle destination n'a pas été enregistrée [#the-new-destination-wasnt-saved]
+Une règle de routage intelligent ou un test A/B envoie une partie des scans ailleurs. Ouvrez l'onglet **Settings** du code, puis **Smart routing**. La première règle qui correspond l'emporte, vérifiez donc l'ordre. Ouvrez **Test your rules (uses unsaved changes)** et cliquez sur **Run test** pour voir où irait un scan. Dans un test A/B, chaque visiteur garde sa version pendant la journée, deux personnes peuvent donc voir des pages différentes. Consultez [Envoyer les scans vers différents liens](/docs/help/dynamic-codes/routing).
 
-Dans le Playground, modifier l'adresse ne suffit pas : cliquez sur **Point it to the new address**. Dans le tableau de bord, utilisez **Edit link** puis **Save changes**. Consultez [Changer la destination d'un code](/docs/help/dynamic-codes/change-the-link).
+## Le code ouvre votre page de secours [#the-code-opens-your-fallback-page]
 
-### Une règle de routage intelligent s'est appliquée [#a-smart-routing-rule-matched]
+Le code est en pause, a dépassé sa date de fin ou sa limite de scans : les scans sont donc envoyés vers son **Fallback URL**. Ouvrez **Access & schedule** dans l'onglet **Settings** et réactivez le code, ou modifiez les dates ou la limite. Consultez [Mettre en pause, planifier ou limiter un code](/docs/help/dynamic-codes/pause-schedule-limit).
 
-Des règles peuvent envoyer certains scans ailleurs, par exemple selon l'appareil ou le pays. La première règle correspondante l'emporte. Ouvrez **Smart routing** et cliquez sur **Test your rules**.
+## Le lien contient du texte après un point d'interrogation [#the-link-has-extra-text-after-a-question-mark]
 
-### Un test A/B est en cours [#an-ab-test-is-running]
+Vous avez défini des paramètres UTM : les scans ouvrent donc votre lien avec des balises `utm_` ajoutées. C'est normal, et la page est la même.
 
-Chaque visiteur voit une seule version pendant la journée. Une autre personne peut voir une page différente.
+## La bonne page s'ouvre, mais elle semble ancienne [#the-right-page-opens-but-it-looks-old]
 
-### Le code est en pause ou terminé [#the-code-is-paused-or-ended]
+Le téléphone affiche une copie en cache de votre site web, et non de la redirection. Rechargez la page dans le navigateur.
 
-Un code en pause ou terminé ouvre son **Fallback URL**, si vous en avez défini un. Vérifiez **Access & schedule**.
+## Le problème persiste [#still-wrong]
 
-### Des paramètres UTM ont été ajoutés [#utm-parameters-were-added]
+[Contactez le support](/docs/help/contact) en indiquant le lien court du code et ce que le scan a ouvert.
 
-Si vous avez défini des paramètres UTM, les scans ouvrent votre lien avec des balises `utm_` ajoutées. C'est normal, et la page est la même.
+## Voir aussi [#related]
 
-## Vous voyez toujours l'ancienne page ? [#still-seeing-the-old-page]
-
-QRdx ne met pas les redirections en cache, donc le scan suivant utilise la nouvelle destination. Si votre téléphone affiche une ancienne version de la page elle-même, rechargez-la dans le navigateur.
+- [Modifier la destination d'un code](/docs/help/dynamic-codes/change-the-link)
+- [Envoyer les scans vers différents liens](/docs/help/dynamic-codes/routing)
+- [Un scan affiche une page d'erreur](/docs/help/troubleshooting/error-pages)

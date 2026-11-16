@@ -3,43 +3,45 @@ title: "二维码打开了错误的页面"
 description: "二维码为什么会打开旧链接或意外的链接，以及如何查明它实际包含的内容。"
 ---
 
-## 首先，查看二维码里存了什么 [#first-see-what-the-code-holds]
+二维码打开旧页面或意外的页面，原因要么是静态二维码里仍保存着旧链接，要么是动态二维码的某项设置把扫描引向了别处。请先确定是哪一种，再按下面的列表逐项排查。
 
-给印出来的二维码拍一张照片，然后上传到[扫描检测工具](/tools/scan-checker)。它会准确显示二维码包含的内容。
+## 先查看二维码里保存的内容 [#first-see-what-the-code-holds]
+
+给已印刷的二维码拍一张照片，然后放入[扫描检测工具](/tools/scan-checker)。它会准确显示二维码包含的内容。
 
 - 如果显示的是你的网站地址，说明这是**静态**二维码。
-- 如果显示的是类似 `qrdx.dev/q/…` 的短链接，说明这是**动态**二维码。
+- 如果显示的是类似 `qrdx.dev/q/…` 的短链接，或是你自己域名下的短链接，说明这是**动态**二维码。
 
-## 静态二维码 [#a-static-code]
+## 静态二维码打开了旧链接 [#a-static-code-opens-the-old-link]
 
-静态二维码把链接直接存储在码中，印刷后无法更改。
+这个二维码是在改成动态之前下载的，所以旧链接直接保存在码里，无法更改。请将它改为动态二维码，并重新印刷新版本。确认方法：用扫描检测工具检查，应显示短链接。请参阅[创建动态二维码](/docs/help/dynamic-codes/create)。
 
-如果在二维码变为动态之前就下载了它，就会出现这种情况。要解决此问题，请印刷动态版本。参见[创建动态二维码](/docs/help/dynamic-codes/create)。
+## 动态二维码仍然打开旧目标地址 [#a-dynamic-code-still-opens-the-old-destination]
 
-## 动态二维码 [#a-dynamic-code]
+新的目标地址没有保存。在 Playground 中，仅修改地址是不够的：请点击 **Point it to the new address**。在控制台中，打开 **Edit link**，修改 **Destination URL**，然后点击 **Save changes**。确认方法：再扫描一次。QRdx 不会缓存重定向，因此下一次扫描就会使用新的目标地址。请参阅[更改二维码指向的位置](/docs/help/dynamic-codes/change-the-link)。
 
-在 **Codes** 中打开该二维码，逐项检查以下内容。
+## 部分用户进入了不同的页面 [#some-people-land-on-a-different-page]
 
-### 新的目标地址没有保存 [#the-new-destination-wasnt-saved]
+智能路由规则或 A/B 测试会把一部分扫描引向别处。打开该二维码的 **Settings** 标签页，然后进入 **Smart routing**。第一条匹配的规则生效，因此请检查规则的顺序。打开 **Test your rules (uses unsaved changes)** 并点击 **Run test**，即可查看一次扫描会前往哪里。在 A/B 测试中，每位访客当天会固定看到自己的版本，所以两个人可能看到不同的页面。请参阅[将扫描引向不同的链接](/docs/help/dynamic-codes/routing)。
 
-在 Playground 中，仅修改地址是不够的：请点击 **Point it to the new address**。在控制台中，请使用 **Edit link** 和 **Save changes**。参见[更改二维码的指向](/docs/help/dynamic-codes/change-the-link)。
+## 二维码打开了备用页面 [#the-code-opens-your-fallback-page]
 
-### 匹配了智能路由规则 [#a-smart-routing-rule-matched]
+二维码已暂停、已过结束日期或已超过扫描次数上限，因此扫描会前往它的 **Fallback URL**。在 **Settings** 标签页中打开 **Access & schedule**，恢复该二维码，或修改日期或上限。请参阅[暂停、定时或限制二维码](/docs/help/dynamic-codes/pause-schedule-limit)。
 
-规则可以把部分扫描引导到其他地方，例如按设备或国家/地区。系统采用第一条匹配的规则。打开 **Smart routing**，然后点击 **Test your rules**。
+## 链接的问号后面多了一些文字 [#the-link-has-extra-text-after-a-question-mark]
 
-### 正在进行 A/B 测试 [#an-ab-test-is-running]
+你设置了 UTM 参数，因此扫描时打开的链接会带上 `utm_` 标签。这是正常现象，页面本身是同一个。
 
-每位访问者当天只会看到其中一个版本。其他人看到的页面可能不同。
+## 打开的页面正确，但内容看起来是旧的 [#the-right-page-opens-but-it-looks-old]
 
-### 二维码已暂停或已结束 [#the-code-is-paused-or-ended]
+手机显示的是你网站的缓存副本，而不是重定向的缓存。请在浏览器中重新加载页面。
 
-已暂停或已结束的二维码会打开其 **Fallback URL**（如果你设置了的话）。请检查 **Access & schedule**。
+## 仍然不对 [#still-wrong]
 
-### 添加了 UTM 参数 [#utm-parameters-were-added]
+请[联系支持团队](/docs/help/contact)，并提供该二维码的短链接以及扫描后打开的内容。
 
-如果你设置了 UTM 参数，扫描时打开的链接会附带 `utm_` 标签。这是正常现象，页面本身是相同的。
+## 相关内容 [#related]
 
-## 仍然看到旧页面？ [#still-seeing-the-old-page]
-
-QRdx 不会缓存重定向，因此下一次扫描就会使用新的目标地址。如果手机显示的是页面本身的旧版本，请在浏览器中重新加载该页面。
+- [更改二维码指向的位置](/docs/help/dynamic-codes/change-the-link)
+- [将扫描引向不同的链接](/docs/help/dynamic-codes/routing)
+- [扫描后显示错误页面](/docs/help/troubleshooting/error-pages)

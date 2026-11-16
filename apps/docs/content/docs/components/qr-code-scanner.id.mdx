@@ -1,8 +1,10 @@
 ---
 title: "QR Code Scanner"
-description: "Area tarik dan lepas yang membaca kode QR dari gambar di browser, dengan aksi salin dan buka tautan."
+description: "Area tarik-dan-lepas untuk proyek shadcn/ui yang membaca kode QR dari gambar di browser, dengan aksi salin dan buka tautan."
 icon: Scan
 ---
+
+`QrCodeScanner` adalah area tarik-dan-lepas yang mendekode kode QR dari berkas gambar, di browser, lalu memberikan teksnya kepada Anda. Gunakan untuk memeriksa tiket dari tangkapan layar, membaca kode dari foto yang diunggah pengguna, atau memverifikasi kode yang Anda buat. Komponen ini membaca berkas gambar, bukan umpan kamera langsung.
 
 <ComponentLinks name="qr-code-scanner" />
 
@@ -14,28 +16,53 @@ icon: Scan
 
 ## Penggunaan [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeScanner } from "@/components/qr-code-scanner";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeScanner onResult={(value) => console.log(value)} />
 ```
 
-Pengguna dapat menjatuhkan gambar atau mengeklik untuk memilihnya. Proses decoding berjalan di browser dengan [helper deteksi](/docs/qr-detection) dari qrdx, sehingga gambar tidak pernah meninggalkan perangkat. Komponen ini membaca file gambar, bukan umpan kamera langsung.
-
-Hasilnya muncul bersama tombol salin, ditambah tombol "Open link" jika hasilnya berupa URL `http` atau `https`.
+Pengguna menjatuhkan gambar atau mengeklik untuk memilihnya. Dekode berjalan di browser dengan [fungsi bantu deteksi](/docs/qr-detection) dari qrdx, sehingga gambar tidak pernah meninggalkan perangkat. Hasilnya muncul dengan tombol **Copy**, ditambah tombol **Open link** jika hasilnya berupa URL `http` atau `https`.
 
 ## Contoh [#examples]
 
 ### Memeriksa hasil [#checking-a-result]
 
-`onResult` menerima teks hasil decoding, sehingga Anda dapat melakukan tindakan terhadapnya, misalnya untuk memeriksa tiket masuk. `label` mengubah judul di area tarik dan lepas. Unduh kode contoh di atas lalu jatuhkan ke area tersebut untuk melihat tiket yang valid.
+`onResult` menerima teks hasil dekode, sehingga Anda dapat menindaklanjutinya, misalnya untuk memeriksa tiket. `label` mengubah judul di area tarik-dan-lepas. Unduh kode contoh di atas dan jatuhkan ke area tersebut untuk melihat tiket yang valid.
 
 <ComponentPreview name="qr-code-scanner-tickets" />
+
+## Yang ditampilkan pembaca [#what-the-reader-shows]
+
+| Status | Pesan |
+| --- | --- |
+| Pemindaian | "Scanning…" |
+| Tidak ada kode di gambar | "No QR code found. Try a sharper or closer image." |
+| Bukan berkas gambar | "Choose an image file." |
+| Gambar tidak dapat dibaca | "Could not read that image." |
+| Ditemukan | Teks hasil dekode, dengan **Copy** dan, untuk tautan, **Open link** |
+
+Dekoder mencoba seluruh gambar dan empat potongan, pada beberapa skala, sehingga kode yang hanya menempati sebagian kecil tangkapan layar tetap dapat ditemukan.
+
+## Aksesibilitas dan rendering [#accessibility-and-rendering]
+
+- Area tarik-dan-lepas adalah `<label>` untuk input berkas yang tersembunyi secara visual, sehingga dapat digunakan dengan keyboard dan pembaca layar seperti pemilih berkas pada umumnya.
+- Hasil dan kesalahan diumumkan melalui live region dengan tingkat polite.
+- **Open link** terbuka di tab baru dengan `rel="noopener noreferrer nofollow"`, sehingga halaman hasil pemindaian tidak dapat mengakses halaman Anda.
+- Komponen ini adalah Client Component. Komponen ini memerlukan canvas browser dan, pada pemindaian pertama, memuat dekoder sesuai kebutuhan.
 
 ## Referensi API [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-scanner.tsx" type="{ [K in keyof QrCodeScannerProps as K extends keyof ComponentProps<'div'> ? never : K]: QrCodeScannerProps[K] }" />
 
 Prop lainnya, seperti `className`, diteruskan ke `<div>` pembungkus.
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/qr-detection" title="Deteksi QR" description="Fungsi pustaka yang dipanggil pemindai, untuk pembaca buatan Anda sendiri." />
+  <Card href="/docs/components/qr-code" title="QR Code" description="Buat kode yang dibaca oleh pemindai." />
+  <Card href="/docs/features/frames" title="Bingkai, skor pemindaian, dan berkas cetak" description="Beri skor pada gambar kode dengan getImageScanScore, bukan hanya mendekodenya." />
+</Cards>

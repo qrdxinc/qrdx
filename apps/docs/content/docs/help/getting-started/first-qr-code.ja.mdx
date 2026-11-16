@@ -1,34 +1,65 @@
 ---
 title: "最初のQRコードを作る"
-description: "Playgroundでダウンロードまでできます。無料で、アカウント登録もウォーターマークも不要です。"
+description: "PlaygroundでQRコードを作成してダウンロードします。無料で、アカウント登録もウォーターマークも不要です。"
 ---
 
-QRコードは約1分で作れます。アカウントは必要ありません。
+[Playground](/playground)はQRdxのエディタです。アカウントなしで、1分ほどでQRコードを作成できます。ダウンロードしたコードは静的QRコードです。リンクはコード自体に保存され、永久に使えますが、印刷後に変更することはできません。
 
 ## コードを作る [#make-the-code]
 
-1. [Playground](/playground)を開きます。QRdxのエディタです。
-2. **URL**があらかじめ選択されています。Wi-Fi、連絡先カード、WhatsAppなどを作る場合は、**QR code type**の横にある**Change**をクリックして、タイプを選びます。
-3. **Website address**にリンクを入力します。アドレスが有効になると、すぐにプレビューにコードが表示されます。
-4. 任意：**Start from a style**でデザインを選ぶか、**Design**タブを開いて、色、ドット、アイ、ロゴ、フレームを変更します。
-5. プレビューの上にあるダウンロードアイコンをクリックするか、<kbd>D</kbd>を押します。形式とサイズを選んでダウンロードします。
+### 1. コードで開く内容を選ぶ [#1-pick-what-the-code-opens]
 
-アドレスの下には、スキャンしたときに開くページが「Scans open example.com」のように表示されます。印刷する前に確認してください。
+[Playground](/playground)を開きます。**コンテンツ**タブが開いていて、タイプには**URL**が選択されています。一般的なWebアドレスであれば、そのままで問題ありません。
 
-## 印刷する前に [#before-you-print]
+Wi-Fi、連絡先カード、WhatsAppなどを使う場合は、**QRコードのタイプ**カードの**変更**をクリックして、タイプを選びます。
 
-プレビューの下にある**Scan score**を確認します。85以上なら優秀です。65未満の場合は、×印が付いたチェック項目を修正してください。詳しくは[スキャンスコアでデザインを確認する](/docs/help/designing/scan-score)をご覧ください。
+<Shot id="playground-type-picker" />
 
-そのあと、ご自身のスマートフォンでコードをスキャンしてみてください。
+### 2. リンクを入力する [#2-type-your-link]
 
-## Playgroundのコードは静的です [#codes-from-the-playground-are-static]
+**Webサイトのアドレス**にアドレスを貼り付けるか入力します。アドレスが有効なリンクになると、プレビューがぼかしたサンプルからあなたのコードに切り替わります。入力欄の下の行には、スキャンしたときに開く先が表示されます。たとえば「Scans open example.com」のように表示されます。印刷する前に確認してください。
 
-Playgroundでダウンロードしたコードは**静的**です。リンクはコード自体に保存されます。ずっと使えますが、印刷後にリンクを変更することはできません。
+<Shot id="playground-content" />
 
-あとでリンクを変更する可能性がある場合は、代わりに動的QRコードを作成してください。詳しくは[静的と動的の違い](/docs/help/getting-started/static-vs-dynamic)をご覧ください。
+### 3. デザインを選ぶ [#3-pick-a-look]
 
-## 次のステップ [#next-steps]
+この手順は任意です。**スタイルから始める**で、用意されたスタイルから1つ選びます。さらに調整するには**デザイン**タブを開きます。色、ドット、アイ、ロゴ、フレームを設定できます。
+
+### 4. ダウンロードする [#4-download]
+
+プレビューの上にある**ダウンロード**をクリックするか、<kbd>D</kbd>を押します。形式とサイズを選び、ダイアログ下部のダウンロードボタンをクリックします。ファイルはダウンロードフォルダに保存されます。
+
+<Shot id="playground-download" />
+
+<Clip id="first-code" />
+
+## スキャンできるか確認する [#check-that-it-scans]
+
+プレビューの下にある**スキャンスコア**を確認します。85以上なら「Great」で、そのまま印刷できます。65未満の場合は、スコアをクリックして、×印の付いたチェック項目を修正してください。[スキャンスコアでデザインを確認する](/docs/help/designing/scan-score)を参照してください。
+
+そのあと、お手持ちのスマートフォンでコードをスキャンします。
+
+## あとでリンクを変更する可能性がある場合 [#if-you-might-change-the-link-later]
+
+Playgroundで作成したコードにはリンクそのものが保存されるため、印刷したものは変更できません。リンクが変わる可能性がある場合や、スキャン数を計測したい場合は、ダウンロードする前に、アドレスの下にある**静的QRコードか動的QRコードか**のスイッチで**動的**を選びます。無料アカウントが必要です。[動的QRコードを作成する](/docs/help/dynamic-codes/create)と[静的と動的、どちらが必要?](/docs/help/getting-started/static-vs-dynamic)を参照してください。
+
+## うまくいかない場合 [#if-something-goes-wrong]
+
+### プレビューがぼかしたサンプルのままになる [#the-preview-still-shows-the-blurred-sample]
+
+アドレスがまだ有効なリンクになっていません。ドットが抜けていないか、余分なスペースがないかを確認し、完全なアドレスを入力してください。
+
+### ダウンロードボタンがグレーになっている [#the-download-button-is-grayed-out]
+
+コードに内容が入るまで無効のままです。先にアドレスを入力してください。
+
+### スマートフォンでコードが読み取れない [#your-phone-doesnt-read-the-code]
+
+スキャンスコアを確認してから、[コードがスキャンできない](/docs/help/troubleshooting/wont-scan)を参照してください。
+
+## 関連ページ [#related]
 
 - [QRコードをダウンロードして印刷する](/docs/help/getting-started/download-and-print)
 - [スキャンしやすい色を選ぶ](/docs/help/designing/colors-and-contrast)
 - [ロゴを追加する](/docs/help/designing/logos)
+- [動的QRコードを作成する](/docs/help/dynamic-codes/create)

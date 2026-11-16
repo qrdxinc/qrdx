@@ -3,28 +3,55 @@ title: "Eigene Domain verwenden"
 description: "Verbinde eine eigene Domain wie go.yourbrand.com für die Kurzlinks deiner dynamischen Codes."
 ---
 
-Mit einer eigenen Domain enthalten deine Codes `go.yourbrand.com/…` statt eines `qrdx.dev`-Links. Die Leute sehen deine Marke, bevor sie scannen. Pro enthält 5 Domains, Business 25.
+Mit einer eigenen Domain codieren deine Codes `go.yourbrand.com/…` statt eines `qrdx.dev`-Links, sodass die Leute deine Marke sehen, bevor sie scannen. Diese Seite zeigt dir, wie du eine Domain verbindest und einem Code zuweist; Details findest du in der [Anleitung zu eigenen Domains](/docs/custom-domains).
+
+<Callout type="info">
+  Pro enthält 5 Domains und Business 25. Workspace-Inhaber und Admins fügen Domains hinzu und verifizieren sie; jedes Mitglied kann eine verifizierte Domain nutzen. Siehe [Pläne und ihre Leistungen](/docs/help/account-and-billing/plans).
+</Callout>
 
 ## Domain verbinden [#connect-a-domain]
 
-1. Gehe in deinem Dashboard zu **Domains** und klicke auf **Domain hinzufügen**.
-2. Gib die Domain ein, zum Beispiel `go.yourbrand.com`. Am besten eignet sich eine Subdomain: Deine Hauptwebsite bleibt, wo sie ist.
-3. Füge die DNS-Einträge, die QRdx dir anzeigt, bei deinem DNS-Anbieter hinzu, also dort, wo du die Domain gekauft hast oder ihr DNS verwaltest. Kopiere die Werte exakt.<IfAvailable feature="domainConnect"> Wenn du **Einrichten mit** und den Namen deines Anbieters siehst, kannst du stattdessen darauf klicken: Dein Anbieter fügt die Einträge hinzu, sobald du sie dort bestätigst.</IfAvailable>
-4. Klicke auf **Verifizieren**.
+### 1. Domain hinzufügen [#1-add-the-domain]
 
-Der Status zeigt **Warte auf DNS**, bis die Einträge gefunden werden, dann **Verifiziert**. DNS-Änderungen sind meist innerhalb weniger Minuten sichtbar, können aber bis zu 48 Stunden dauern.
+Gehe in deinem Dashboard zu **Einstellungen** → **Domains** und klicke auf **Domain hinzufügen**. Gib die Domain ein, zum Beispiel `go.yourbrand.com`. Am besten eignet sich eine Subdomain wie `go.` oder `qr.`: Deine Hauptwebsite bleibt, wo sie ist.
+
+### 2. DNS-Einträge hinzufügen [#2-add-the-dns-records]
+
+QRdx zeigt dir die Einträge an, die du hinzufügen musst, mit **Typ**, **Name** und **Wert**. Füge sie bei deinem DNS-Anbieter hinzu, also dort, wo du die Domain gekauft hast oder ihre DNS-Einstellungen verwaltest, und kopiere die Werte exakt.<IfAvailable feature="domainConnect"> Wenn QRdx deinen Anbieter erkennt, kannst du stattdessen auf **Einrichten mit** und den Namen deines Anbieters klicken: Du bestätigst die Änderung dort und kehrst zurück.</IfAvailable>
+
+<Shot id="dns-records" />
+
+### 3. Verifizieren [#3-verify]
+
+Klicke auf **Verifizieren**. Der Status zeigt **Warten auf DNS**, bis die Einträge gefunden werden, dann **Verifiziert**, und QRdx teilt dir mit, dass du die Domain jetzt für deine dynamischen QR-Codes auswählen kannst. DNS-Änderungen sind meist innerhalb weniger Minuten sichtbar, können aber bis zu 48 Stunden dauern.
 
 ## Für einen Code verwenden [#use-it-for-a-code]
 
 - **Neuer Code:** Wähle deine Domain unter **Kurzlink-Domain**, bevor du auf **Code erstellen** klickst.
-- **Bestehender Code:** Wähle die Domain unter **Link bearbeiten**, speichere und lade den Code dann erneut herunter. Der codierte Link hat sich geändert.
+- **Vorhandener Code:** Öffne **Link bearbeiten**, wähle die Domain und klicke auf **Änderungen speichern**. Der Code codiert jetzt den neuen Link, lade ihn also erneut herunter. Codes, die du bereits mit dem `qrdx.dev`-Link gedruckt hast, funktionieren weiterhin.
 
 ## Gedruckte Codes funktionieren weiter [#printed-codes-keep-working]
 
-Jeder Code funktioniert außerdem weiterhin über seinen `qrdx.dev`-Link. Codes, die du vor dem Wechsel zu deiner Domain gedruckt hast, funktionieren weiter.
+Jeder Code funktioniert zusätzlich weiterhin über seinen `qrdx.dev`-Link, sodass Codes, die du vor dem Wechsel zu deiner Domain gedruckt hast, nicht kaputtgehen.
 
-Wenn du einen Code von einer eigenen Domain auf eine andere umziehst, funktionieren Codes nicht mehr, die mit der alten Domain gedruckt wurden. QRdx warnt dich, bevor du speicherst.
+Wenn du einen Code von einer eigenen Domain auf eine andere umstellst, funktionieren mit der alten Domain gedruckte Codes dagegen nicht mehr. QRdx warnt dich, bevor du speicherst.
 
-## Verwandte Themen [#related]
+## Wenn etwas schiefgeht [#if-something-goes-wrong]
 
-- [Leitfaden zu eigenen Domains](/docs/custom-domains)
+### Der Status bleibt bei „Warten auf DNS" [#the-status-stays-on-waiting-for-dns]
+
+Prüfe, ob Name und Wert jedes Eintrags mit den Angaben in QRdx übereinstimmen und keine zusätzlichen Zeichen enthalten, und klicke dann auf **DNS prüfen**. Manche Anbieter brauchen Stunden, um eine Änderung zu veröffentlichen, einige bis zu 48 Stunden.
+
+### Dein DNS-Anbieter hat die Einträge nicht hinzugefügt [#your-dns-provider-didnt-add-the-records]
+
+Die automatische Einrichtung ist nicht durchgelaufen. Füge die Einträge selbst anhand der Tabelle unter der Domain hinzu und klicke dann auf **Verifizieren**.
+
+### Scanner sehen „Diese Domain ist noch nicht verbunden" [#scanners-see-this-domain-isnt-connected-yet]
+
+Ein Code codiert die Domain bereits, aber ihre DNS-Einrichtung ist noch nicht abgeschlossen. Führe die obigen Schritte zu Ende; der Code funktioniert, sobald die Domain **Verifiziert** ist.
+
+## Siehe auch [#related]
+
+- [Anleitung zu eigenen Domains](/docs/custom-domains)
+- [Dynamischen QR-Code erstellen](/docs/help/dynamic-codes/create)
+- [Ein Scan zeigt eine Fehlerseite](/docs/help/troubleshooting/error-pages)

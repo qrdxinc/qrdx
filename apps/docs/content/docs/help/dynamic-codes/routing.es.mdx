@@ -1,53 +1,84 @@
 ---
-title: "Envía los escaneos a enlaces diferentes"
-description: "Dirige cada escaneo según el dispositivo, el país, el área, el idioma o la hora, y haz pruebas A/B con el enrutamiento inteligente."
+title: "Envía los escaneos a enlaces distintos"
+description: "Dirige cada escaneo según el dispositivo, el país, la zona, el idioma o la hora, y realiza pruebas A/B con el enrutamiento inteligente."
 ---
 
-El enrutamiento inteligente envía cada escaneo de un código QR dinámico a un enlace distinto, según las reglas que definas. Solo para Pro y Business.
+El enrutamiento inteligente envía cada escaneo de un código dinámico a un enlace distinto, según las reglas que definas: los iPhone a la App Store, los visitantes de Francia a la página en francés, los escaneos fuera del horario de atención a un formulario de pedido. Esta página te lleva a una regla que funciona; la [guía de enrutamiento inteligente](/docs/smart-routing) explica a fondo cada condición.
 
-## Añade una regla [#add-a-rule]
+<Callout type="info">
+  El enrutamiento inteligente forma parte de Pro y Business, y funciona con códigos que abren un enlace a un sitio web. Consulta [Planes y qué incluyen](/docs/help/account-and-billing/plans).
+</Callout>
 
-1. Abre el código desde **Códigos**.
-2. En **Ajustes**, abre **Enrutamiento inteligente**.
-3. Haz clic en **Añadir regla** o parte de una plantilla.
-4. Elige una condición y el enlace que abrirán los escaneos que la cumplan.
-5. Haz clic en **Guardar reglas**.
+## Añadir una regla [#add-a-rule]
 
-Los escaneos que no cumplan ninguna regla abren el destino normal del código.
+### 1. Abre Enrutamiento inteligente [#1-open-smart-routing]
+
+Abre el código desde **Códigos**, ve a su pestaña **Ajustes** y abre **Enrutamiento inteligente**.
+
+### 2. Empieza una regla [#2-start-a-rule]
+
+Haz clic en **Añadir regla**. En **Empezar desde**, elige una plantilla o **Regla vacía**.
+
+<Shot id="routing-add-rule" />
+
+<Clip id="add-routing-rule" />
+
+### 3. Define las condiciones y el enlace [#3-set-the-conditions-and-the-link]
+
+Elige las condiciones que debe cumplir un escaneo y el enlace que abrirán los escaneos que las cumplan.
+
+### 4. Guarda [#4-save]
+
+Haz clic en **Guardar reglas**. Los escaneos que no cumplan ninguna regla abren el destino normal del código.
 
 ## Condiciones que puedes usar [#conditions-you-can-use]
 
-Dispositivo, sistema operativo, país, región, área, idioma, hora del día, intervalo de fechas y número de escaneos. Cada condición también se puede invertir con **no es**.
+**Dispositivo**, **Sistema operativo**, **País**, **Región**, **Zona**, **Idioma**, **Hora del día**, **Rango de fechas** y **Número de escaneos**. Marca **no es** para invertir una condición.
 
-Un **área** es un punto y un radio. Usa la ubicación que comparte quien escanea cuando la [ubicación precisa](/docs/precise-location) está activada y, si no, la ubicación aproximada de su red.
+Una **Zona** es un punto y un radio. Usa la ubicación que comparte quien escanea cuando la [ubicación precisa](/docs/precise-location) está activada y, si no, la ubicación aproximada de su red.
 
 Una regla puede tener hasta 8 condiciones. Un código puede tener hasta 20 reglas.
 
 ## Plantillas [#templates]
 
-- **Enlace inteligente a la app**: los iPhone a la App Store y los teléfonos Android a Google Play.
+- **Enlace inteligente a la app (App Store / Google Play)**: los iPhone a la App Store y los teléfonos Android a Google Play.
 - **País** e **Idioma del visitante**.
-- **Horario laboral**.
-- **Intervalo de fechas** para una campaña.
+- **Horario de atención**.
+- **Rango de fechas (campaña)**.
 - **Primeros escaneos**: un enlace distinto para los primeros escaneos.
-- **Dentro de un área**: un enlace distinto para los escaneos cerca de un lugar.
-- **División A/B**: reparte los escaneos entre hasta 5 versiones.
+- **Dentro de una zona (geovalla)**: un enlace distinto para los escaneos cerca de un lugar.
+- **División A/B**: reparte los escaneos entre 2 y 5 versiones.
 
-## Gana la primera regla que coincida [#the-first-matching-rule-wins]
+## Gana la primera regla que coincide [#the-first-matching-rule-wins]
 
 Las reglas se comprueban de arriba abajo. Pon primero las más específicas.
 
-Haz clic en **Probar tus reglas** para ver adónde iría un escaneo antes de guardar.
+Abre **Prueba tus reglas (usa cambios sin guardar)** y haz clic en **Ejecutar prueba** para ver adónde iría un escaneo antes de guardar.
 
 ## Pruebas A/B [#ab-tests]
 
-Una división A/B envía a cada visitante a una versión. El mismo visitante ve la misma versión durante el resto del día. La página del código muestra cómo se reparten los escaneos entre las versiones.
+Una división A/B envía a cada visitante a una versión. Cada visitante conserva su versión durante el día. La pestaña **Analíticas** del código muestra cómo se reparten los escaneos entre las versiones.
 
-## Tras bajar de plan [#after-a-downgrade]
+## Después de bajar de plan [#after-a-downgrade]
 
-Las reglas guardadas siguen funcionando.
+Las reglas guardadas siguen funcionando. Para volver a modificarlas necesitas Pro o Business.
+
+## Si algo sale mal [#if-something-goes-wrong]
+
+### Enrutamiento inteligente no aparece en Ajustes [#smart-routing-isnt-in-settings]
+
+El código abre una página alojada. El enrutamiento es para códigos que abren un enlace a un sitio web; cambia primero el tipo. Consulta [Cambiar lo que abre un código impreso](/docs/help/dynamic-codes/change-the-type).
+
+### Un escaneo fue al enlace equivocado [#a-scan-went-to-the-wrong-link]
+
+Una regla anterior coincidió primero. Reordena las reglas y confírmalo con **Ejecutar prueba**. Consulta [Un código abre la página equivocada](/docs/help/troubleshooting/wrong-destination).
+
+### Una regla de zona no detecta a personas que están allí [#an-area-rule-misses-people-who-are-there]
+
+Sin ubicación precisa, QRdx solo conoce la ubicación aproximada de la red de quien escanea, que puede estar a una ciudad de distancia. Activa **Pedir ubicación precisa a quien escanea** en el código o amplía el radio.
 
 ## Relacionado [#related]
 
 - [Guía de enrutamiento inteligente](/docs/smart-routing)
 - [Un código abre la página equivocada](/docs/help/troubleshooting/wrong-destination)
+- [Ubicación precisa](/docs/precise-location)

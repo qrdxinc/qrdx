@@ -1,8 +1,10 @@
 ---
 title: "Generador de códigos QR"
-description: "Un campo de texto con vista previa en vivo del código QR, estilos predefinidos y botones de descarga."
+description: "Un campo de texto con vista previa en vivo del código QR, estilos predefinidos y botones de descarga, para proyectos con shadcn/ui."
 icon: Sparkles
 ---
+
+`QrCodeGenerator` es un pequeño generador en un solo componente: un campo de texto, una vista previa que se redibuja mientras escribes, una fila de estilos predefinidos y botones de descarga. Úsalo para que tus propios usuarios puedan crear códigos dentro de tu producto, sin enviarlos a ningún otro sitio.
 
 <ComponentLinks name="qr-code-generator" />
 
@@ -14,15 +16,15 @@ icon: Sparkles
 
 ## Uso [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { QrCodeGenerator } from "@/components/qr-code-generator";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <QrCodeGenerator defaultValue="https://example.com" />
 ```
 
-La vista previa se actualiza mientras escribes. Cada botón de estilo predefinido muestra una pequeña muestra de su estilo, y las descargas usan el estilo seleccionado a 1024 píxeles.
+La vista previa se actualiza mientras escribes. Cada botón de estilo predefinido muestra una pequeña muestra de su estilo, y las descargas usan el estilo seleccionado a 1024 píxeles. Con el campo vacío, la vista previa muestra "Type some text to generate a code" y los botones de descarga están deshabilitados.
 
 ## Ejemplos [#examples]
 
@@ -34,26 +36,52 @@ Sustituye los estilos predefinidos integrados por los tuyos. Un estilo predefini
 
 Los estilos predefinidos integrados se exportan como `QR_CODE_PRESETS`, así que puedes ampliarlos:
 
-```tsx
-import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator";
+```tsx title="components/brand-generator.tsx"
+import {
+  QR_CODE_PRESETS,
+  QrCodeGenerator,
+} from "@/components/qr-code-generator";
 
-<QrCodeGenerator
-  presets={[
-    ...QR_CODE_PRESETS,
-    { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
-  ]}
-/>
+export function BrandGenerator() {
+  return (
+    <QrCodeGenerator
+      presets={[
+        ...QR_CODE_PRESETS,
+        { id: "brand", name: "Brand", style: { fgColor: "#155DFC" } },
+      ]}
+    />
+  );
+}
 ```
 
 ### Guardar el resultado [#saving-the-result]
 
 `onChange` informa del texto y del estilo predefinido seleccionado en cada cambio, por ejemplo para guardar la elección del usuario:
 
-```tsx
-<QrCodeGenerator
-  onChange={({ value, preset }) => saveDraft({ value, style: preset.style })}
-/>
+```tsx title="components/draft-generator.tsx"
+import { QrCodeGenerator } from "@/components/qr-code-generator";
+
+export function DraftGenerator({
+  saveDraft,
+}: {
+  saveDraft: (draft: { value: string; style: object }) => void;
+}) {
+  return (
+    <QrCodeGenerator
+      onChange={({ value, preset }) =>
+        saveDraft({ value, style: preset.style })
+      }
+    />
+  );
+}
 ```
+
+## Accesibilidad y renderizado [#accessibility-and-rendering]
+
+- El campo tiene una etiqueta visible "Text or URL", y los estilos predefinidos forman un `<fieldset>` con la leyenda "Style". Cada estilo es un botón de alternancia con `aria-pressed`, y su código de muestra está oculto para los lectores de pantalla.
+- La vista previa es un elemento `role="img"` con la etiqueta `QR code: <value>`, o "Empty QR code preview" si no hay texto.
+- Un error de descarga aparece bajo la vista previa con `role="alert"`.
+- El componente es un Client Component con su propio estado. Renderízalo desde cualquier página; pasa `defaultValue` y `defaultPreset` para que empiece con contenido.
 
 ## Referencia de la API [#api-reference]
 
@@ -62,3 +90,11 @@ import { QR_CODE_PRESETS, QrCodeGenerator } from "@/components/qr-code-generator
 ### QrCodePreset [#qrcodepreset]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/qr-code-generator.tsx" name="QrCodePreset" />
+
+## Relacionado [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code" title="Código QR" description="Un solo código con botones de descarga, cuando el valor proviene de tus datos." />
+  <Card href="/docs/components/qr-code-download" title="Descarga de código QR" description="Un menú con más formatos y tamaños que los botones del generador." />
+  <Card href="/docs/features/colors-gradients" title="Configurar colores y degradados" description="Todas las opciones de estilo que puede incluir un estilo predefinido." />
+</Cards>

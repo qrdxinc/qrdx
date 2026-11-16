@@ -1,49 +1,72 @@
 ---
-title: "Changer ce qu'ouvre un code imprimé"
-description: "Transformez un code de lien de site web en page hébergée, ou une page en lien. Le code imprimé continue de fonctionner."
+title: "Modifier ce qu'ouvre un code imprimé"
+description: "Transformez un code qui ouvre un lien de site web en page hébergée, ou une page en lien. Le code imprimé continue de fonctionner."
 ---
 
-Un QR code dynamique ouvre soit un lien de site web, soit une page hébergée, et vous pouvez passer de l'un à l'autre après l'impression. Le lien court ne change pas : chaque exemplaire imprimé ouvre donc la nouvelle page ou le nouveau lien dès son prochain scan, et les scans continuent d'être comptés sur le même code.
+Un code dynamique ouvre soit un lien de site web, soit une page hébergée, et vous pouvez passer de l'un à l'autre après l'impression. Le lien court ne change pas : chaque exemplaire imprimé ouvre donc la nouvelle page ou le nouveau lien au prochain scan, et les scans continuent d'être comptés sur le même code.
 
 ## Transformer un lien de site web en page [#turn-a-website-link-into-a-page]
 
-1. Ouvrez le code depuis **Codes** et cliquez sur **Changer le type**.
-2. Choisissez un type de page, puis un modèle.
-3. Cliquez sur **Continuer vers l'éditeur** et créez la page.
-4. Cliquez sur **Publier**.
+### 1. Ouvrir Modifier le type [#1-open-change-type]
 
-Les scans continuent d'aller vers l'ancien lien tant que vous ne publiez pas. Si vous quittez l'éditeur sans publier, rien ne change. Vos modifications non publiées restent dans ce navigateur.
+Ouvrez le code depuis **Codes** et cliquez sur **Modifier le type** dans son onglet **Aperçu**. La boîte de dialogue **Modifier ce que ce code ouvre** s'affiche.
+
+<Shot id="change-type-dialog" />
+
+### 2. Choisir une page [#2-pick-a-page]
+
+Sous **Page hébergée**, choisissez un type de page, puis un modèle.
+
+### 3. Créer la page [#3-build-the-page]
+
+Cliquez sur **Continuer vers l'éditeur** et créez la page.
+
+### 4. Publier [#4-publish]
+
+Cliquez sur **Publier** dans l'éditeur de page. Les scans continuent d'aller vers l'ancien lien tant que vous ne publiez pas. Si vous quittez l'éditeur sans publier, rien ne change, et vos modifications non publiées restent dans ce navigateur.
 
 ## Transformer une page en lien [#turn-a-page-back-into-a-link]
 
-1. Ouvrez le code et cliquez sur **Changer le type**.
-2. Choisissez **Lien de site web**, saisissez l'adresse et cliquez sur **Passer au lien de site web**.
+1. Ouvrez le code et cliquez sur **Modifier le type**.
+2. Choisissez **Lien de site web**, saisissez l'adresse, puis cliquez sur **Passer au lien de site web**.
 
-La page reste dans **Pages**. Pour la récupérer, rouvrez **Changer le type** et sélectionnez-la sous **Revenir en arrière**.
+La page reste dans **Pages**. Pour la rétablir, rouvrez **Modifier le type** et sélectionnez-la sous **Revenir en arrière**, qui apparaît dès que le code a déjà ouvert des pages.
 
 ## Passer à un autre type de page [#switch-to-another-page-type]
 
-Choisissez un type sous **Autre type de page**. La nouvelle page part du modèle que vous choisissez et reprend de l'ancienne ce qui convient : le nom de la page, les paramètres et le logo, ainsi que les blocs que le modèle comporte aussi, comme l'en-tête, les liens ou les coordonnées. La boîte de dialogue liste ce qui ne convient pas. Cela reste sur l'ancienne page, qui est conservée dans **Pages**.
+Pour un code qui ouvre déjà une page, la boîte de dialogue contient une section **Autre type de page**. La nouvelle page part du modèle que vous choisissez et reprend ce qui convient de l'ancienne : le nom de la page, les paramètres et le logo, ainsi que les blocs que le modèle comporte aussi, comme l'en-tête, les liens ou les coordonnées. La boîte de dialogue liste ce qui ne convient pas. Ces éléments restent sur l'ancienne page, qui est conservée dans **Pages**.
 
 ## Ce qui ne change pas [#what-stays-the-same]
 
-Le lien court, l'historique des scans, le dossier, les tags, les notes, le design du QR code, le mot de passe, la planification et la limite de scans ne changent pas.
+Le lien court, l'historique des scans, le dossier, les étiquettes, les notes, le design du QR, le mot de passe, la planification et la limite de scans ne changent pas.
 
 Certains paramètres ne fonctionnent qu'avec un seul type :
 
 - Le routage intelligent, les tests A/B, les paramètres UTM et le suivi des conversions s'appliquent uniquement aux liens de site web.
 - Les pixels de suivi ne se chargent que sur les pages hébergées.
 
-Ils sont conservés lorsque vous changez de type et refonctionnent si vous revenez en arrière. L'onglet **Paramètres** du code indique ceux qui sont enregistrés mais inutilisés.
+Ils sont conservés lorsque vous changez de type et fonctionnent de nouveau si vous revenez en arrière. L'onglet **Paramètres** du code indique ceux qui sont enregistrés mais inutilisés.
 
 ## Offres [#plans]
 
-Une nouvelle page compte dans les pages hébergées de votre offre, comme toute page que vous créez. Une page que le code n'ouvre plus compte toujours tant que vous ne la supprimez pas depuis **Pages**. Revenir à une page que vous avez déjà n'augmente pas le décompte. Consultez [Offres et limites](/docs/plans-and-limits).
+Une nouvelle page compte dans les pages hébergées de votre offre, comme toute page que vous créez. Une page que le code n'ouvre plus compte toujours tant que vous ne la supprimez pas dans **Pages**. Revenir à une page que vous avez déjà n'augmente pas le nombre. Consultez [Offres et limites](/docs/plans-and-limits).
 
 ## Annuler un changement [#undo-a-switch]
 
-Chaque changement enregistre les paramètres précédents du code dans l'**Historique des versions**. Restaurer une version antérieure rétablit l'ancien type, tant que la page qu'il ouvrait existe encore.
+Chaque changement enregistre les paramètres précédents du code dans **Historique des versions**, dans l'onglet **Paramètres**. Restaurer une version antérieure rétablit l'ancien type, à condition que la page qu'il ouvrait existe encore.
 
-## Depuis l'API [#from-the-api]
+## En cas de problème [#if-something-goes-wrong]
 
-Envoyez `kind` avec `PATCH /v1/codes/{id}`. Consultez [Mettre à jour un code](/docs/developers/api/update-code).
+### Les scans ouvrent toujours l'ancien lien [#scans-still-open-the-old-link]
+
+Vous n'avez pas encore publié la page. Ouvrez-la depuis **Pages** et cliquez sur **Publier**.
+
+### L'option Revenir en arrière n'apparaît pas dans la boîte de dialogue [#switch-back-isnt-in-the-dialog]
+
+Elle n'apparaît que si le code a déjà ouvert une page. Pour une nouvelle page, choisissez un type sous **Page hébergée**.
+
+## Voir aussi [#related]
+
+- [Créer une page mobile](/docs/help/pages-and-forms/create-a-page)
+- [Modifier la destination d'un code](/docs/help/dynamic-codes/change-the-link)
+- [Mettre à jour un code avec l'API](/docs/developers/api/update-code)

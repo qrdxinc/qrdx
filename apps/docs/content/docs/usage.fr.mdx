@@ -1,152 +1,149 @@
 ---
 title: "Utilisation de base"
-description: "Affichez un QR code avec le composant QRCode, puis modifiez ses couleurs, ses motifs, son logo, son modèle et sa correction d'erreur."
+description: "Quel composant qrdx afficher, et les props qui définissent la taille, la zone de silence, les couleurs, les formes, le logo, le cadre et la correction d'erreur d'un code."
 icon: FileCode
 ---
 
-Créez et personnalisez des QR codes selon vos besoins.
+`QRCode` est le composant à privilégier : il accepte toutes les options de style et une prop `logo` simple, et il s'affiche côté serveur. Cette page passe en revue les props que vous définissez le plus souvent. Pour la liste complète des props, consultez la [référence de l'API de la bibliothèque](/docs/api-reference).
 
 <NpmStatus package="qrdx" />
 
-## QR code de base [#basic-qr-code]
+## Choisir un composant [#choose-a-component]
 
-```tsx
-import { QRCode } from 'qrdx';
+| Composant | Ce qu'il dessine | À utiliser quand |
+| --- | --- | --- |
+| `QRCode` | Un `<svg>` avec toutes les options de style, plus `logo`, `logoOptions`, `hideLogo` et `scale`. N'accepte aucun autre attribut | Presque toujours |
+| `QRCodeSVG` | Le même `<svg>`, avec le logo fourni sous forme d'`imageSettings` brut en pixels. Toute autre prop (`aria-label`, `className`, `role`) est placée sur le `<svg>` | Vous avez besoin d'attributs sur le `<svg>`, vous placez le logo vous-même, ou vous portez du code depuis un autre moteur de rendu |
+| `QRCodeCanvas` | Un `<canvas>` avec des modules carrés simples et des couleurs unies | Vous avez besoin d'un élément canvas. Les motifs, les couleurs des yeux, les dégradés et les modèles sont ignorés |
 
-<QRCode
-  value="https://example.com"
-  size={256}
-/>
+`QRCode` et `QRCodeSVG` n'utilisent aucun hook réservé au navigateur : ils s'affichent donc dans les React Server Components et en HTML statique. `QRCodeCanvas` est fourni avec `"use client"`.
+
+```tsx title="components/menu-code.tsx"
+import { QRCode } from "qrdx";
+
+export function MenuCode() {
+  return (
+    <div role="img" aria-label="QR code for the menu">
+      <QRCode value="https://example.com/menu" size={256} margin={4} />
+    </div>
+  );
+}
 ```
 
-## Personnaliser les couleurs [#customize-colors]
+`value` est encodé exactement tel que vous le transmettez : une charge utile Wi-Fi, une vCard, `mailto:` ou du texte brut fonctionnent donc tous. `QRCode` n'accepte que les props propres au code et `style`, rien d'autre : donnez-lui un nom accessible en l'enveloppant, comme ci-dessus. `QRCodeSVG` place `aria-label`, `className`, `role` et tout autre attribut sur le `<svg>` lui-même.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={256}
-  fgColor="#1a56db"
-  bgColor="#ffffff"
-  eyeColor="#0d47a1"
-  dotColor="#3b82f6"
-/>
+## Taille et zone de silence [#size-and-quiet-zone]
+
+- `size` est la largeur et la hauteur en pixels (128 par défaut). En dessous d'environ 128 px, un code dense devient difficile à scanner depuis un écran.
+- `margin` est la zone de silence autour du code, en modules (0 par défaut). La norme QR en demande 4. Définissez-la quand le code est placé sur une photo, un motif ou une page sombre ; un code placé dans une carte blanche avec son propre remplissage peut garder 0.
+- `scale` multiplie `size` sur `QRCode`.
+
+Un cadre ou un modèle modifie la taille du rendu. Voir [Cadre ou modèle](#frame-or-template).
+
+## Couleurs [#colors]
+
+```tsx title="components/brand-code.tsx"
+import { QRCode } from "qrdx";
+
+export function BrandCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1d4ed8"
+      bgColor="#f8fafc"
+      eyeColor="#0f172a"
+      dotColor="#1d4ed8"
+    />
+  );
+}
 ```
 
-## Ajouter des motifs [#add-patterns]
+- `fgColor` colore les modules de données, `bgColor` l'arrière-plan, `eyeColor` les trois yeux d'angle et `dotColor` le point à l'intérieur de chaque œil. Les couleurs des yeux reprennent par défaut `fgColor`.
+- Chacune accepte n'importe quelle couleur CSS (`#1d4ed8`, `rgb(29 78 216)`, une couleur nommée) ou un objet de dégradé. [Définir les couleurs et les dégradés](/docs/features/colors-gradients) détaille les dégradés, les couleurs transparentes et les remplissages par image.
+- Gardez les modules plus foncés que l'arrière-plan. Les scanners lisent du foncé sur du clair ; un code clair sur fond sombre fonctionne avec la plupart des appareils photo de téléphone, mais pas avec certaines applications plus anciennes.
 
-Choisissez parmi {facts.bodyPatterns} motifs de corps, {facts.eyeShapes} motifs d'œil d'angle et {facts.eyeCentres} motifs de point d'œil d'angle :
+## Formes [#shapes]
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={256}
-  bodyPattern="rounded"
-  cornerEyePattern="circle"
-/>
+```tsx title="components/rounded-code.tsx"
+import { QRCode } from "qrdx";
+
+export function RoundedCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      bodyPattern="rounded"
+      cornerEyePattern="extra-rounded"
+      cornerEyeDotPattern="rounded"
+    />
+  );
+}
 ```
 
-Il existe {facts.bodyPatterns} motifs de corps, de `square`, `rounded` et `circle` aux styles connectés `liquid` et `classy`, en passant par les points ludiques `star` ou `heart`. Consultez [Motifs](/docs/features/patterns) pour la liste complète ainsi que les options d'œil d'angle et de point d'œil, et [Formes, yeux et cadres](/docs/styles) pour tous les voir.
+- `bodyPattern` définit la forme des modules de données (`circle` par défaut). Vous avez le choix entre {facts.bodyPatterns}.
+- `cornerEyePattern` définit la forme des trois yeux d'angle (`gear` par défaut), parmi {facts.eyeShapes}.
+- `cornerEyeDotPattern` définit la forme du point à l'intérieur de chaque œil (`circle` par défaut), parmi {facts.eyeCentres}.
 
-## Ajouter un logo [#add-a-logo]
+[Formes, yeux et cadres](/docs/styles) affiche chaque valeur en direct. [Choisir les formes des modules et des yeux](/docs/features/patterns) explique l'échelle des modules, les codes à forme particulière et les quelques associations qui se scannent mal.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={512}
-  hideLogo={false}
-  logo="https://example.com/logo.png"
-  level="Q"
-/>
+## Logo [#logo]
+
+```tsx title="components/logo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function LogoCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      level="H"
+      logo="/logo.png"
+      logoOptions={{ size: 0.2, padding: 1 }}
+    />
+  );
+}
 ```
 
-Utilisez une correction d'erreur plus élevée (`Q` ou `H`) lorsque vous ajoutez des logos.
+`logo` accepte un chemin dans votre application, une URL ou une URL de données. Les modules situés derrière sont effacés : le code s'appuie donc sur la correction d'erreur pour être scanné, utilisez `level="H"`. `logoOptions` définit la largeur du logo en proportion du code (de 0.1 à 0.3, 0.25 par défaut), son espace libre en modules, sa position et son recadrage. Le composant ne dessine jamais un logo plus grand que ce que le code peut réparer. [Ajouter un logo dans le code](/docs/features/logos) donne tous les détails.
 
-## Utiliser des modèles [#use-templates]
+## Cadre ou modèle [#frame-or-template]
 
-```tsx
-<QRCode
-  value="https://example.com"
-  templateId="Arrow"
-  size={256}
-/>
+```tsx title="components/framed-code.tsx"
+import { QRCode } from "qrdx";
+
+export function FramedCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      frame={{ style: "banner-bottom", text: "Scan me", color: "#0f172a" }}
+    />
+  );
+}
 ```
 
-Modèles disponibles : `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`
+- `frame` dessine un cadre d'appel à l'action autour du code. Le code garde une largeur de `size` et le rendu s'agrandit pour accueillir le cadre. Il existe {facts.frameStyles} styles intégrés, en plus de la bibliothèque officielle de cadres et de vos propres spécifications de cadre. Voir [Cadres, score de scan et fichiers d'impression](/docs/features/frames).
+- `templateId` dessine à la place un modèle tel que `Arrow` ou `StandardBox`. Un modèle dessine tout son visuel à la taille `size`, le code étant plus petit à l'intérieur. Voir [Utiliser un modèle de cadre](/docs/features/templates).
+
+Si les deux sont définis, le cadre est dessiné autour du visuel du modèle.
 
 ## Correction d'erreur [#error-correction]
 
-Choisissez selon votre cas d'usage :
+| `level` | Dommages tolérés | À utiliser pour |
+| --- | --- | --- |
+| `L` | environ 7 % | Écrans propres, liens courts, code le plus petit |
+| `M` | environ 15 % | Longues charges utiles comme les vCards, quand un code plus petit compte davantage |
+| `Q` | environ 25 % | La valeur par défaut. Usage général |
+| `H` | environ 30 % | Logos, visuels artistiques, impressions susceptibles d'être rayées ou pliées |
 
-- **L (Low)** — ~7 % de correction, environnements propres
-- **M (Medium)** — ~15 % de correction, usage général
-- **Q (Quartile)** — ~25 % de correction, avec des logos
-- **H (High)** — ~30 % de correction, résistance maximale
+Un niveau plus élevé ajoute des modules : le code devient donc plus dense à taille égale. `autoLevel` passe automatiquement le niveau à `H` lorsqu'un logo couvre plus de 7 % du code ; il est désactivé par défaut afin que les codes existants conservent leur apparence.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  level="Q"
-/>
-```
+## Voir aussi [#related]
 
-## Variantes du composant [#component-variants]
-
-### QRCodeCanvas [#qrcodecanvas]
-
-Pour une personnalisation avancée avec des dégradés :
-
-```tsx
-import { QRCodeCanvas } from 'qrdx';
-
-<QRCodeCanvas
-  value="https://example.com"
-  size={512}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 1, color: '#764ba2' }
-    ],
-    x1: 0, y1: 0, x2: 1, y2: 1
-  }}
-/>
-```
-
-### QRCodeSVG [#qrcodesvg]
-
-Pour des graphiques vectoriels redimensionnables :
-
-```tsx
-import { QRCodeSVG } from 'qrdx';
-
-<QRCodeSVG
-  value="https://example.com"
-  size={512}
-/>
-```
-
-## Bonnes pratiques [#best-practices]
-
-### Recommandations de taille [#size-guidelines]
-
-- **128px** — Minimum pour le scan
-- **256-512px** — Recommandé pour le web
-- **1024px+** — Impression haute qualité
-
-### Correction d'erreur [#error-correction-1]
-
-- Utilisez `Q` ou `H` lorsque vous ajoutez des logos
-- Utilisez `M` pour les applications générales
-- Utilisez `L` uniquement dans des environnements propres
-
-### Performances [#performance]
-
-- Privilégiez les couleurs unies plutôt que les dégradés lorsque c'est possible
-- Choisissez des motifs plus simples pour de meilleures performances
-- Mettez en cache les QR codes côté serveur lorsque c'est possible
-
-## Étapes suivantes [#next-steps]
-
-- [Couleurs et dégradés](/docs/features/colors-gradients) — Options de couleur avancées
-- [Modèles](/docs/features/templates) — Styles prêts à l'emploi
-- [Téléchargements](/docs/features/downloads) — Options d'export
+<Cards>
+  <Card href="/docs/features/colors-gradients" title="Définir les couleurs et les dégradés" description="Couleurs unies, dégradés linéaires, radiaux et angulaires, couleurs transparentes et remplissages par image." />
+  <Card href="/docs/features/logos" title="Ajouter un logo dans le code" description="Taille, espace libre, position, recadrage et budget de correction d'erreur." />
+  <Card href="/docs/features/downloads" title="Exporter et télécharger" description="PNG, JPG, WebP, SVG, PDF et EPS, le presse-papiers et le PNG dans Node." />
+  <Card href="/docs/api-reference" title="Référence de l'API de la bibliothèque" description="Chaque prop, avec son type et sa valeur par défaut." />
+</Cards>

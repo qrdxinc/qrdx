@@ -1,43 +1,60 @@
 ---
-title: "코드 일시 중지, 예약, 제한하기"
-description: "동적 QR 코드를 끄고, 시작일과 종료일을 설정하고, 스캔 횟수를 제한하고, 종료된 코드가 사람들을 보낼 곳을 선택하세요."
+title: "코드 일시중지, 예약, 스캔 제한"
+description: "동적 QR 코드를 끄고, 시작일과 종료일을 설정하고, 스캔 횟수를 제한하고, 종료된 코드가 사용자를 보낼 위치를 선택하세요."
 ---
 
-이 설정은 모두 한곳에 있어요. **Codes**에서 코드를 열고 **Settings** 아래의 **Access & schedule**을 여세요.
+동적 코드는 일시중지하거나, 시작일과 종료일을 지정하거나, 스캔 횟수를 제한할 수 있습니다. 이 기능은 모두 한곳에 있습니다. **Codes**에서 코드를 열고 **Settings** 탭으로 이동한 다음 **Access & schedule**을 여세요. 마치면 **Save changes**를 클릭하세요.
 
-## 코드 일시 중지 [#pause-a-code]
+<Callout type="info">
+  일시중지는 모든 요금제에서 사용할 수 있습니다. 시작일과 종료일, 스캔 제한, 대체 URL은 Pro와 Business에 포함됩니다. [요금제와 포함 기능](/docs/help/account-and-billing/plans)을 참고하세요.
+</Callout>
 
-**Pause code**를 켜고 저장하세요. **Codes**에서 코드의 메뉴로 **Pause**를 선택해도 되고, 다시 켜려면 **Resume**을 선택하세요.
+<Shot id="code-settings" />
 
-일시 중지는 모든 요금제에서 사용할 수 있어요.
+## 코드 일시중지 [#pause-a-code]
+
+**Pause code**를 켜고 **Save changes**를 클릭하세요. 코드의 상태가 "Code paused"로 표시됩니다. **Codes** 목록의 코드 메뉴에서 **Pause**를 선택해도 되고, 다시 켜려면 **Resume**을 선택하세요.
 
 ## 시작일과 종료일 설정 [#set-start-and-end-dates]
 
-**Starts**, **Ends** 또는 둘 다 입력하세요. 시작 전이나 종료 후의 스캔은 목적지에 도달하지 않습니다.
-
-기간이 정해진 캠페인에 사용하세요. Pro와 Business에서만 사용할 수 있어요.
+**Starts**, **Ends** 중 하나 또는 둘 다 입력하세요. 시간은 사용자의 시간대를 기준으로 합니다. 시작 전이나 종료 후의 스캔은 목적지에 도달하지 않습니다. 날짜가 정해진 캠페인에 사용하세요.
 
 ## 스캔 횟수 제한 [#cap-the-scans]
 
-**Scan limit**을 설정하세요. 설정한 횟수만큼 스캔되면 코드가 종료됩니다. Pro와 Business에서만 사용할 수 있어요.
+**Scan limit**을 설정하세요. 스캔은 분석에서 집계하는 방식대로 계산되며 봇은 제외됩니다. 설정한 횟수만큼 스캔되면 코드가 종료됩니다.
 
-## 사람들에게 보이는 화면 [#what-people-see]
+## 사용자에게 보이는 화면 [#what-people-see]
 
-코드가 활성 상태가 아니면 스캔한 사람에게 QRdx 브랜딩이 없는 간단한 페이지가 표시됩니다.
+코드가 활성 상태가 아니면 스캔한 사용자에게 QRdx 브랜딩이 없는 단순한 페이지와 악용 신고 링크가 표시됩니다.
 
-- 일시 중지됨: "This campaign is paused".
-- 시작일 전: "This campaign hasn't started yet".
+- 일시중지: "This campaign is paused".
+- 시작일 이전: "This campaign hasn't started yet".
 - 종료일 이후 또는 스캔 제한 도달 후: "This campaign has ended".
 
 ## 대신 유용한 곳으로 보내기 [#send-people-somewhere-useful-instead]
 
-**Fallback URL**을 입력하면 일시 중지되었거나 종료된 코드의 스캔을 홈페이지 같은 원하는 페이지로 보낼 수 있습니다. 시작일 전에는 적용되지 않습니다.
+**Fallback URL**을 입력하면 일시중지되었거나 종료된 코드의 스캔을 홈페이지 같은 원하는 페이지로 보낼 수 있습니다. 일시중지된 코드, 종료일이 지난 코드, 스캔 제한을 넘은 코드에 적용됩니다. 시작일 이전에는 항상 "hasn't started yet" 페이지가 표시됩니다.
 
-## 요금제를 낮춘 후 [#after-a-downgrade]
+## 다운그레이드 후 [#after-a-downgrade]
 
-이미 저장한 설정은 계속 작동합니다. 설정을 제거하는 데는 유료 요금제가 필요하지 않습니다.
+이미 저장한 설정은 계속 작동하며 언제든 제거할 수 있습니다. 설정을 다시 변경하거나 추가하려면 Pro 또는 Business가 필요합니다.
+
+## 문제가 생겼나요? [#if-something-goes-wrong]
+
+### 시작일 이전에 대체 페이지가 표시되지 않아요 [#the-fallback-page-doesnt-show-before-the-start-date]
+
+정상적인 동작입니다. 대체 URL은 일시중지되었거나 종료된 코드에만 적용됩니다.
+
+### 코드가 Held for review로 표시돼요 [#the-code-is-marked-held-for-review]
+
+QRdx는 대체 URL도 목적지와 같은 방식으로 검사합니다. 안전하지 않아 보이는 대체 URL이 있으면 코드가 검토 대기 상태가 되며, 담당자가 확인하기 전까지 코드는 리디렉션되지 않습니다. 오류라고 생각되면 [지원팀에 문의하세요](/docs/help/contact).
+
+### 종료일이 지났는데도 스캔이 계속 들어와요 [#scans-still-get-through-after-the-end-date]
+
+**Save changes**를 클릭했는지, 그리고 종료 시간이 사용자의 시간대로 설정되었는지 확인하세요. 시간대는 패널의 입력란 옆에 표시됩니다.
 
 ## 관련 문서 [#related]
 
 - [비밀번호로 코드 보호하기](/docs/help/dynamic-codes/password)
+- [코드 보관, 삭제, 복원](/docs/help/dynamic-codes/archive-and-delete)
 - [코드 제어 가이드](/docs/code-controls)

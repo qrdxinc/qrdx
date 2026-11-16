@@ -1,19 +1,26 @@
 ---
 title: "Tautan pendek dan pemilih file"
-description: "Persingkat tautan kode QR dengan akun Bitly, Rebrandly, atau Short.io Anda sendiri, atau encode tautan berbagi Dropbox."
-icon: Blocks
+description: "Pendekkan tautan kode QR dengan akun Bitly, Rebrandly, atau Short.io milik Anda sendiri, atau enkode tautan berbagi Dropbox, langsung dari editor QR."
 ---
 
-Hubungkan akun di [Pengaturan → Integrasi](/settings/integrations) dan akun tersebut akan muncul di tipe **URL** pada editor QR, di menu **Gunakan tautan dari…** di samping kolom **Alamat situs web**. Di bawah **Akun Anda**, setiap layanan menjelaskan fungsinya:
+Akun yang terhubung memungkinkan editor QR memakai tautan yang ada di alat lain Anda: tautan pendek yang Anda kelola di Bitly, Rebrandly, atau Short.io, atau tautan berbagi ke file di Dropbox atau penyimpanan cloud lainnya. Kode QR mengenkode tautan tersebut, sehingga Anda tetap memakai alat yang sudah biasa Anda gunakan. Gunakan fitur ini jika tautan Anda harus tetap berada di analitik alat tersebut, atau jika kode perlu membuka file yang Anda simpan di penyimpanan cloud.
 
-- **Persingkat**: Bitly, Rebrandly, atau Short.io. Buat tautan di bawah **Buat baru**, atau pilih tautan yang sudah Anda miliki di bawah **Gunakan yang ada**. Kode QR akan menyandikan tautan pendek tersebut, sehingga Anda dapat mengubah tujuannya nanti di layanan itu, dan layanan itu juga menghitung klik.
-- **File**: Dropbox<IfAvailable integration="onedrive">, OneDrive</IfAvailable><IfAvailable integration="box">, Box</IfAvailable><IfAvailable integration="notion">, Notion</IfAvailable>. Telusuri atau cari, lalu pilih file atau folder. QRdx membuat tautan berbagi untuk item tersebut dan kode QR menyandikannya.
+<Callout type="info" title="Semua paket">
+  Akun yang terhubung adalah milik akun pengguna Anda dan berfungsi di semua paket. Jika Anda lebih suka tujuan tetap bisa diedit di QRdx sendiri, lengkap dengan analitik pemindaian, gunakan [kode QR dinamis](/docs/dynamic-qr-codes).
+</Callout>
 
-Layanan yang belum Anda hubungkan ada di bawah **Hubungkan akun** di bagian bawah menu yang sama.
+## Cara kerjanya [#how-it-works]
 
-Halaman yang di-hosting juga dapat memakai file cloud: blok PDF, audio, video, dan unduhan memiliki **Dari Dropbox**<IfAvailable integration="onedrive">, **Dari OneDrive**</IfAvailable><IfAvailable integration="box">, **Dari Box**</IfAvailable> di samping tombol unggah.
+Hubungkan akun di [Pengaturan → Integrasi](/settings/integrations) dan akun tersebut akan muncul di tipe **URL** pada editor QR, di menu **Use a link from…** di samping kolom **Website address**. Di bawah **Your accounts**, setiap layanan menjelaskan fungsinya:
 
-Integrasi terhubung ke akun pengguna Anda. Token dan kunci API disimpan terenkripsi, dan Anda dapat memutuskan koneksi kapan saja.
+- **Shorten**: Bitly, Rebrandly, atau Short.io. Buat tautan di bawah **Create new**, atau pilih tautan yang sudah Anda miliki di bawah **Use existing**. Kode QR mengenkode tautan pendek tersebut, sehingga Anda dapat mengubah tujuannya nanti di layanan itu, dan layanan itu menghitung kliknya.
+- **File**: Dropbox<IfAvailable integration="onedrive">, OneDrive</IfAvailable><IfAvailable integration="box">, Box</IfAvailable><IfAvailable integration="notion">, Notion</IfAvailable>. Telusuri atau cari, lalu pilih file atau folder. QRdx membuat tautan berbagi untuk item tersebut dan kode QR mengenkodenya.
+
+Menu yang sama menampilkan sumber konten terhubung lainnya, seperti tautan pembayaran dan pemesanan. Layanan yang belum Anda hubungkan ada di balik **Connect an account** di bagian bawah menu.
+
+<Shot id="use-a-link-from" />
+
+Token dan kunci API disimpan terenkripsi, dan Anda dapat memutuskan koneksi kapan saja.
 
 ## Tautan pendek [#short-links]
 
@@ -23,59 +30,59 @@ Integrasi terhubung ke akun pengguna Anda. Token dan kunci API disimpan terenkri
 | Rebrandly | Tempel kunci API (Account → API keys) | rebrand.ly dan domain bermerek Anda | Slashtag Anda sendiri, atau acak |
 | Short.io | Tempel kunci API rahasia (Integrations & API → API) | Domain Short.io Anda | Path Anda sendiri, atau acak |
 
-Halaman pengaturan tiap integrasi menampilkan domain Anda dan memungkinkan Anda memilih domain default untuk tautan baru. Anda tetap dapat memilih domain lain untuk setiap tautan.
+Halaman pengaturan setiap integrasi menampilkan domain Anda dan memungkinkan Anda memilih domain default untuk tautan baru. Anda tetap bisa memilih domain lain untuk setiap tautan.
 
 <Callout type="info" title="Mengubah tujuan nanti">
-QRdx membuat tautannya; pengeditan tujuan dilakukan di Bitly, Rebrandly, atau Short.io. Bitly hanya mengizinkan paket berbayar untuk mengubah tujuan tautan.
+  QRdx membuat tautan; mengubah tujuannya dilakukan di Bitly, Rebrandly, atau Short.io. Bitly hanya mengizinkan paket berbayar untuk mengubah tujuan tautan.
 </Callout>
-
-Jika Anda lebih suka menjaga tujuan tetap dapat diedit di QRdx sendiri, lengkap dengan analitik pemindaian, gunakan [kode QR dinamis](/docs/dynamic-qr-codes).
 
 ## Pemilih file [#file-pickers]
 
-**Dropbox** menyandikan tautan berbagi (dibuat baru, atau tautan yang sudah ada dipakai ulang). Siapa pun yang memiliki tautan dapat membukanya, kecuali tim Anda hanya mengizinkan tautan tim.
+**Dropbox** mengenkode tautan berbagi (dibuat baru, atau tautan yang sudah ada dipakai ulang). Siapa pun yang memiliki tautan dapat membukanya, kecuali tim Anda hanya mengizinkan tautan tim.
 
 <IfAvailable integration="onedrive">
 
-**OneDrive** menyandikan tautan berbagi hanya-lihat. Siapa pun yang memiliki tautan dapat membukanya; hanya organisasi Anda yang dapat membukanya jika admin Anda menonaktifkan tautan "Anyone".
+**OneDrive** mengenkode tautan berbagi hanya-lihat. Siapa pun yang memiliki tautan dapat membukanya; hanya organisasi Anda yang bisa jika admin Anda menonaktifkan tautan "Anyone".
 
 </IfAvailable>
 
 <IfAvailable integration="box">
 
-**Box** menyandikan tautan bersama dari item tersebut, yang diatur ke "People with the link". Siapa pun yang memiliki tautan dapat membukanya; hanya perusahaan Anda yang dapat membukanya jika admin Anda mewajibkannya.
+**Box** mengenkode tautan bersama item tersebut, yang diatur ke "People with the link". Siapa pun yang memiliki tautan dapat membukanya; hanya perusahaan Anda yang bisa jika admin Anda mewajibkannya.
 
 </IfAvailable>
 
 <IfAvailable integration="notion">
 
-**Notion** menyandikan tautan "Publish to web" dari halaman. Siapa pun dapat membukanya setelah halaman dipublikasikan.
+**Notion** mengenkode tautan "Publish to web" milik halaman. Siapa pun dapat membukanya setelah halaman dipublikasikan.
 
 </IfAvailable>
 
-Jika tautan tidak dapat dibuka oleh semua orang, QRdx memberi tahu Anda tepat setelah Anda memilih, sehingga kode yang sudah dicetak tidak mengarahkan orang ke halaman masuk.
+Jika tautan tidak dapat dibuka oleh semua orang, QRdx memberi tahu Anda tepat setelah Anda memilih, sehingga kode yang dicetak tidak mengarahkan orang ke halaman masuk.
 
 <IfAvailable integration="notion">
 
-**Halaman Notion.** QRdx hanya melihat halaman yang Anda bagikan kepadanya: Notion menanyakan halaman mana saja saat Anda menghubungkan. Untuk menambah halaman nanti, buka halaman di Notion, klik **•••** → **Connections** dan tambahkan QRdx (atau hubungkan ulang dan pilih halamannya).
-
-API Notion tidak dapat memublikasikan halaman. Publikasikan sendiri (**Share** → **Publish** → **Publish to web**), lalu pilih lagi halaman tersebut agar QRdx memakai tautan publiknya.
+**Halaman Notion.** QRdx hanya melihat halaman yang Anda bagikan kepadanya: Notion menanyakan halaman mana saat Anda menghubungkan. Untuk menambahkan lebih banyak nanti, buka halaman di Notion, klik **•••** → **Connections** lalu tambahkan QRdx (atau hubungkan ulang dan pilih halamannya). API Notion tidak dapat memublikasikan halaman. Publikasikan sendiri (**Share** → **Publish** → **Publish to web**), lalu pilih lagi agar QRdx memakai tautan publiknya.
 
 </IfAvailable>
 
 ### File di halaman yang di-hosting [#files-on-hosted-pages]
 
-Untuk Dropbox<IfAvailable integration="box"> dan Box</IfAvailable>, blok halaman mendapatkan tautan langsung ke file, sehingga pemutar audio dan video serta penampil PDF dapat memuatnya.<IfAvailable integration="onedrive"> Tautan berbagi OneDrive membuka penampil OneDrive, sehingga blok menampilkannya sebagai tautan.</IfAvailable>
+Halaman yang di-hosting juga dapat memakai file cloud: blok PDF, audio, video, dan unduhan mendapat tombol **From Dropbox** di samping tombol unggah jika Dropbox adalah satu-satunya penyimpanan yang terhubung, atau **From cloud storage** jika Anda menghubungkan lebih dari satu<IfAvailable integration="onedrive">, termasuk OneDrive</IfAvailable><IfAvailable integration="box">, termasuk Box</IfAvailable>. Untuk Dropbox<IfAvailable integration="box"> dan Box</IfAvailable>, blok halaman mendapat tautan langsung ke file, sehingga pemutar audio dan video serta penampil PDF dapat memuatnya.<IfAvailable integration="onedrive"> Tautan berbagi OneDrive membuka penampil OneDrive, sehingga blok menampilkannya sebagai tautan.</IfAvailable>
 
 ## Memutuskan koneksi [#disconnecting]
 
-Memutuskan koneksi akan menghapus token yang tersimpan. Untuk Dropbox<IfAvailable integration="box">, Box</IfAvailable><IfAvailable integration="notion">, Notion</IfAvailable>, QRdx juga mencabutnya di layanan tersebut. Untuk Bitly, Rebrandly, dan Short.io, hapus juga kuncinya di layanan itu jika Anda tidak lagi memakainya<IfAvailable integration="onedrive">; untuk OneDrive, hapus QRdx dari izin aplikasi akun Microsoft Anda</IfAvailable>.
+Memutuskan koneksi menghapus token yang tersimpan. Untuk Dropbox<IfAvailable integration="box">, Box</IfAvailable><IfAvailable integration="notion">, Notion</IfAvailable>, QRdx juga mencabutnya di layanan tersebut. Untuk Bitly, Rebrandly, dan Short.io, hapus juga kuncinya di layanan itu jika Anda tidak lagi menggunakannya<IfAvailable integration="onedrive">; untuk OneDrive, hapus QRdx dari izin aplikasi akun Microsoft Anda</IfAvailable>.
 
 Kode QR yang sudah Anda buat tetap berfungsi: kode tersebut menyimpan tautan pendek atau tautan berbagi, bukan token Anda.
 
+## Batas dan paket [#limits-and-plans]
+
+Akun yang terhubung tidak memiliki batas paket tersendiri. Dari sudut pandang QRdx, tautan yang dibuatnya bersifat statis: QRdx tidak menghitung pemindaiannya dan tidak dapat mengubah tujuannya. Paket masing-masing layanan menentukan apa yang dapat Anda lakukan dengan tautan di sana.
+
 ## Hosting mandiri [#self-hosting]
 
-Rebrandly dan Short.io tidak memerlukan apa pun di server. Yang lainnya memerlukan aplikasi di tiap layanan, dengan client ID dan secret-nya di environment; tanpa itu integrasi menampilkan "Not configured". Bitly tetap berfungsi tanpanya, melalui token akses yang ditempel.
+Rebrandly dan Short.io tidak memerlukan apa pun di server. Yang lainnya memerlukan aplikasi di setiap layanan, dengan client ID dan secret-nya di environment; tanpa itu integrasi disembunyikan di produksi (pengembangan lokal menampilkan lencana **Needs setup**). Bitly tetap berfungsi tanpa itu, melalui token akses yang ditempelkan.
 
 | Integrasi | Variabel | Redirect URI |
 | --- | --- | --- |
@@ -85,11 +92,19 @@ Rebrandly dan Short.io tidak memerlukan apa pun di server. Yang lainnya memerluk
 | Box | `BOX_CLIENT_ID`, `BOX_CLIENT_SECRET` | `<app url>/api/integrations/box/callback` |
 | Notion | `NOTION_CLIENT_ID`, `NOTION_CLIENT_SECRET` | `<app url>/api/integrations/notion/callback` |
 
-`<app url>` adalah `http://localhost:3000` saat pengembangan dan URL produksi Anda untuk kondisi lainnya. Setiap integrasi juga memerlukan `INTEGRATION_ENCRYPTION_KEY` di produksi, yang mengenkripsi token dan kunci yang tersimpan.
+`<app url>` adalah `http://localhost:3000` saat pengembangan dan URL produksi Anda untuk selainnya. Setiap integrasi juga memerlukan `INTEGRATION_ENCRYPTION_KEY` di produksi, yang mengenkripsi token dan kunci yang tersimpan.
 
 Scope yang perlu diminta:
 
 - **Dropbox:** `account_info.read`, `files.metadata.read`, `sharing.read`, `sharing.write`
 - **OneDrive:** `offline_access`, `Files.ReadWrite` (Microsoft Graph memerlukan akses tulis untuk membuat tautan berbagi)
 - **Box:** Read and write all files and folders (`root_readwrite`)
-- **Bitly, Notion:** tanpa scope; Notion menanyakan kepada pengguna halaman mana yang akan dibagikan
+- **Bitly, Notion:** tanpa scope; Notion menanyakan kepada pengguna halaman mana yang dibagikan
+
+Lihat [Hosting mandiri](/docs/self-hosting#optional-services).
+
+## Terkait [#related]
+
+- [Kode QR dinamis](/docs/dynamic-qr-codes): tautan yang dapat diedit dan dilacak di dalam QRdx
+- [Pindah dari Bitly, Rebrandly, dan lainnya](/docs/migrate): bawa tautan yang sudah ada sebagai gantinya
+- [File](/docs/files): unggah file ke QRdx sendiri

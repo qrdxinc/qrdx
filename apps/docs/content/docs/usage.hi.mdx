@@ -1,152 +1,149 @@
 ---
-title: "बुनियादी उपयोग"
-description: "QRCode कॉम्पोनेंट से QR कोड बनाएँ, फिर उसके रंग, पैटर्न, लोगो, टेम्पलेट और एरर करेक्शन बदलें।"
+title: "बेसिक उपयोग"
+description: "कौन सा qrdx कंपोनेंट रेंडर करना है, और वे props जो कोड का साइज़, क्वाइट ज़ोन, रंग, शेप, लोगो, फ़्रेम और एरर करेक्शन तय करते हैं।"
 icon: FileCode
 ---
 
-अपनी ज़रूरत के हिसाब से QR कोड बनाएँ और उन्हें कस्टमाइज़ करें।
+`QRCode` वह कंपोनेंट है जिसे आपको सबसे पहले चुनना चाहिए: यह हर स्टाइलिंग ऑप्शन लेता है, इसमें एक सरल `logo` prop है, और यह सर्वर पर रेंडर होता है। इस पेज में वे props बताए गए हैं जिन्हें आप सबसे ज़्यादा सेट करेंगे। हर prop के लिए [लाइब्रेरी API रेफ़रेंस](/docs/api-reference) देखें।
 
 <NpmStatus package="qrdx" />
 
-## बेसिक QR कोड [#basic-qr-code]
+## कंपोनेंट चुनें [#choose-a-component]
 
-```tsx
-import { QRCode } from 'qrdx';
+| कंपोनेंट | क्या बनाता है | कब इस्तेमाल करें |
+| --- | --- | --- |
+| `QRCode` | हर स्टाइल ऑप्शन वाला एक `<svg>`, साथ में `logo`, `logoOptions`, `hideLogo` और `scale`। कोई और attribute नहीं लेता | लगभग हमेशा |
+| `QRCodeSVG` | वही `<svg>`, जिसमें लोगो पिक्सल में raw `imageSettings` के रूप में दिया जाता है। कोई भी और prop (`aria-label`, `className`, `role`) `<svg>` पर लगता है | आपको `<svg>` पर attributes चाहिए, आप लोगो का लेआउट खुद तय करते हैं, या आप किसी दूसरे रेंडरर से कोड पोर्ट कर रहे हैं |
+| `QRCodeCanvas` | सादे चौकोर मॉड्यूल और सॉलिड रंगों वाला एक `<canvas>` | आपको canvas एलिमेंट चाहिए। पैटर्न, आई कलर, ग्रेडिएंट और टेम्पलेट अनदेखे कर दिए जाते हैं |
 
-<QRCode
-  value="https://example.com"
-  size={256}
-/>
+`QRCode` और `QRCodeSVG` कोई browser-only hooks इस्तेमाल नहीं करते, इसलिए ये React Server Components और स्टैटिक HTML में रेंडर होते हैं। `QRCodeCanvas` में `"use client"` शामिल है।
+
+```tsx title="components/menu-code.tsx"
+import { QRCode } from "qrdx";
+
+export function MenuCode() {
+  return (
+    <div role="img" aria-label="QR code for the menu">
+      <QRCode value="https://example.com/menu" size={256} margin={4} />
+    </div>
+  );
+}
 ```
 
-## रंग कस्टमाइज़ करें [#customize-colors]
+`value` को वैसे ही एनकोड किया जाता है जैसा आप देते हैं, इसलिए Wi-Fi पेलोड, vCard, `mailto:` या सादा टेक्स्ट, सब काम करते हैं। `QRCode` सिर्फ़ कोड के अपने props और `style` लेता है, और कुछ नहीं: ऊपर की तरह इसे रैप करके एक accessible नाम दें। `QRCodeSVG` `aria-label`, `className`, `role` और कोई भी दूसरा attribute सीधे `<svg>` पर लगाता है।
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={256}
-  fgColor="#1a56db"
-  bgColor="#ffffff"
-  eyeColor="#0d47a1"
-  dotColor="#3b82f6"
-/>
+## साइज़ और क्वाइट ज़ोन [#size-and-quiet-zone]
+
+- `size` पिक्सल में चौड़ाई और ऊँचाई है (डिफ़ॉल्ट 128)। लगभग 128 px से छोटा होने पर घना कोड स्क्रीन से स्कैन करना मुश्किल हो जाता है।
+- `margin` कोड के चारों ओर का क्वाइट ज़ोन है, मॉड्यूल में (डिफ़ॉल्ट 0)। QR स्टैंडर्ड 4 माँगता है। जब कोड किसी फ़ोटो, पैटर्न या डार्क पेज पर हो तब इसे सेट करें; अपनी padding वाले सफ़ेद कार्ड के अंदर का कोड 0 रख सकता है।
+- `scale`, `QRCode` पर `size` को गुणा करता है।
+
+फ़्रेम या टेम्पलेट आउटपुट का साइज़ बदल देता है। [फ़्रेम या टेम्पलेट](#frame-or-template) देखें।
+
+## रंग [#colors]
+
+```tsx title="components/brand-code.tsx"
+import { QRCode } from "qrdx";
+
+export function BrandCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor="#1d4ed8"
+      bgColor="#f8fafc"
+      eyeColor="#0f172a"
+      dotColor="#1d4ed8"
+    />
+  );
+}
 ```
 
-## पैटर्न जोड़ें [#add-patterns]
+- `fgColor` डेटा मॉड्यूल का रंग तय करता है, `bgColor` बैकग्राउंड का, `eyeColor` तीनों कोने की आईज़ का और `dotColor` हर आई के अंदर के डॉट का। आई कलर का डिफ़ॉल्ट `fgColor` है।
+- हर एक कोई भी CSS कलर (`#1d4ed8`, `rgb(29 78 216)`, कोई नामित रंग) या ग्रेडिएंट ऑब्जेक्ट ले सकता है। [रंग और ग्रेडिएंट सेट करें](/docs/features/colors-gradients) में ग्रेडिएंट, पारदर्शी रंग और इमेज फ़िल की जानकारी है।
+- मॉड्यूल को बैकग्राउंड से गहरा रखें। स्कैनर हल्के पर गहरा पढ़ते हैं; गहरे बैकग्राउंड पर हल्का कोड ज़्यादातर फ़ोन कैमरों में चलता है, लेकिन कुछ पुराने ऐप्स में नहीं।
 
-{facts.bodyPatterns} बॉडी पैटर्न, {facts.eyeShapes} कॉर्नर आई पैटर्न और {facts.eyeCentres} कॉर्नर आई डॉट पैटर्न में से चुनें:
+## शेप [#shapes]
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={256}
-  bodyPattern="rounded"
-  cornerEyePattern="circle"
-/>
+```tsx title="components/rounded-code.tsx"
+import { QRCode } from "qrdx";
+
+export function RoundedCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      bodyPattern="rounded"
+      cornerEyePattern="extra-rounded"
+      cornerEyeDotPattern="rounded"
+    />
+  );
+}
 ```
 
-यहाँ {facts.bodyPatterns} बॉडी पैटर्न हैं, जिनमें `square`, `rounded` और `circle` से लेकर आपस में जुड़े `liquid` और `classy` स्टाइल, और मज़ेदार `star` या `heart` डॉट तक शामिल हैं। पूरी सूची और कॉर्नर आई व आई डॉट के विकल्प [पैटर्न](/docs/features/patterns) में देखें, और सभी को एक साथ देखने के लिए [शेप, आई और फ़्रेम](/docs/styles) देखें।
+- `bodyPattern` डेटा मॉड्यूल की शेप तय करता है (डिफ़ॉल्ट `circle`)। चुनने के लिए {facts.bodyPatterns} हैं।
+- `cornerEyePattern` तीनों कोने की आईज़ की शेप तय करता है (डिफ़ॉल्ट `gear`), इनमें से एक: {facts.eyeShapes}।
+- `cornerEyeDotPattern` हर आई के अंदर के डॉट की शेप तय करता है (डिफ़ॉल्ट `circle`), इनमें से एक: {facts.eyeCentres}।
 
-## लोगो जोड़ें [#add-a-logo]
+[शेप, आईज़ और फ़्रेम](/docs/styles) हर वैल्यू को लाइव दिखाता है। [मॉड्यूल और आई शेप चुनें](/docs/features/patterns) में मॉड्यूल स्केल, शेप वाले कोड और वे कुछ जोड़े समझाए गए हैं जो साथ में ठीक से स्कैन नहीं होते।
 
-```tsx
-<QRCode
-  value="https://example.com"
-  size={512}
-  hideLogo={false}
-  logo="https://example.com/logo.png"
-  level="Q"
-/>
+## लोगो [#logo]
+
+```tsx title="components/logo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function LogoCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      level="H"
+      logo="/logo.png"
+      logoOptions={{ size: 0.2, padding: 1 }}
+    />
+  );
+}
 ```
 
-लोगो जोड़ते समय ऊँचा एरर करेक्शन (`Q` या `H`) इस्तेमाल करें।
+`logo` आपके ऐप का कोई पाथ, URL या data URL लेता है। इसके पीछे के मॉड्यूल हटा दिए जाते हैं, इसलिए कोड स्कैन होने के लिए एरर करेक्शन पर निर्भर करता है: `level="H"` इस्तेमाल करें। `logoOptions` लोगो की चौड़ाई (कोड के हिस्से के रूप में, 0.1 से 0.3, डिफ़ॉल्ट 0.25), मॉड्यूल में उसकी खाली जगह, उसकी पोज़िशन और उसका क्रॉप तय करता है। कंपोनेंट कभी भी कोड की मरम्मत क्षमता से बड़ा लोगो नहीं बनाता। [कोड में लोगो जोड़ें](/docs/features/logos) में पूरा ब्योरा है।
 
-## टेम्पलेट इस्तेमाल करें [#use-templates]
+## फ़्रेम या टेम्पलेट [#frame-or-template]
 
-```tsx
-<QRCode
-  value="https://example.com"
-  templateId="Arrow"
-  size={256}
-/>
+```tsx title="components/framed-code.tsx"
+import { QRCode } from "qrdx";
+
+export function FramedCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      frame={{ style: "banner-bottom", text: "Scan me", color: "#0f172a" }}
+    />
+  );
+}
 ```
 
-उपलब्ध टेम्पलेट: `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`
+- `frame` कोड के चारों ओर कॉल-टू-एक्शन फ़्रेम बनाता है। कोड की चौड़ाई `size` ही रहती है और आउटपुट फ़्रेम के हिसाब से बढ़ जाता है। {facts.frameStyles} बिल्ट-इन स्टाइल हैं, साथ में आधिकारिक फ़्रेम लाइब्रेरी और आपके अपने फ़्रेम स्पेक भी। [फ़्रेम, स्कैन स्कोर और प्रिंट फ़ाइलें](/docs/features/frames) देखें।
+- `templateId` इसके बजाय `Arrow` या `StandardBox` जैसा टेम्पलेट बनाता है। टेम्पलेट अपना पूरा आर्टवर्क `size` पर बनाता है, और कोड उसके अंदर छोटा होता है। [फ़्रेम टेम्पलेट इस्तेमाल करें](/docs/features/templates) देखें।
+
+दोनों सेट होने पर फ़्रेम टेम्पलेट के आर्टवर्क के चारों ओर बनता है।
 
 ## एरर करेक्शन [#error-correction]
 
-अपने उपयोग के हिसाब से चुनें:
+| `level` | कितना खराब हो सकता है | कब इस्तेमाल करें |
+| --- | --- | --- |
+| `L` | लगभग 7% | साफ़ स्क्रीन, छोटे लिंक, सबसे छोटा कोड |
+| `M` | लगभग 15% | vCard जैसे लंबे पेलोड, जहाँ छोटा कोड ज़्यादा मायने रखता है |
+| `Q` | लगभग 25% | डिफ़ॉल्ट। सामान्य इस्तेमाल |
+| `H` | लगभग 30% | लोगो, आर्ट, प्रिंट जो खरोंचा या मोड़ा जा सकता है |
 
-- **L (Low)** — ~7% करेक्शन, साफ़ माहौल के लिए
-- **M (Medium)** — ~15% करेक्शन, सामान्य उपयोग के लिए
-- **Q (Quartile)** — ~25% करेक्शन, लोगो के साथ
-- **H (High)** — ~30% करेक्शन, सबसे ज़्यादा मज़बूती
+ऊँचा लेवल ज़्यादा मॉड्यूल जोड़ता है, इसलिए उसी साइज़ पर कोड घना हो जाता है। जब लोगो कोड के 7% से ज़्यादा हिस्से को ढकता है, तब `autoLevel` अपने आप लेवल को `H` कर देता है; यह डिफ़ॉल्ट रूप से बंद है ताकि मौजूदा कोड का लुक न बदले।
 
-```tsx
-<QRCode
-  value="https://example.com"
-  level="Q"
-/>
-```
+## संबंधित [#related]
 
-## कॉम्पोनेंट वेरिएंट [#component-variants]
-
-### QRCodeCanvas [#qrcodecanvas]
-
-ग्रेडिएंट के साथ एडवांस्ड कस्टमाइज़ेशन के लिए:
-
-```tsx
-import { QRCodeCanvas } from 'qrdx';
-
-<QRCodeCanvas
-  value="https://example.com"
-  size={512}
-  fgColor={{
-    type: 'linear',
-    stops: [
-      { offset: 0, color: '#667eea' },
-      { offset: 1, color: '#764ba2' }
-    ],
-    x1: 0, y1: 0, x2: 1, y2: 1
-  }}
-/>
-```
-
-### QRCodeSVG [#qrcodesvg]
-
-स्केलेबल वेक्टर ग्राफ़िक्स के लिए:
-
-```tsx
-import { QRCodeSVG } from 'qrdx';
-
-<QRCodeSVG
-  value="https://example.com"
-  size={512}
-/>
-```
-
-## सर्वोत्तम तरीके [#best-practices]
-
-### साइज़ के दिशानिर्देश [#size-guidelines]
-
-- **128px** — स्कैन करने के लिए न्यूनतम
-- **256-512px** — वेब के लिए अनुशंसित
-- **1024px+** — उच्च क्वालिटी प्रिंट
-
-### एरर करेक्शन [#error-correction-1]
-
-- लोगो जोड़ते समय `Q` या `H` इस्तेमाल करें
-- सामान्य एप्लिकेशन के लिए `M` इस्तेमाल करें
-- `L` केवल साफ़ माहौल में इस्तेमाल करें
-
-### परफ़ॉर्मेंस [#performance]
-
-- जहाँ संभव हो, ग्रेडिएंट की जगह सॉलिड रंग इस्तेमाल करें
-- बेहतर परफ़ॉर्मेंस के लिए सरल पैटर्न चुनें
-- जहाँ संभव हो, QR कोड को सर्वर-साइड कैश करें
-
-## अगले चरण [#next-steps]
-
-- [रंग और ग्रेडिएंट](/docs/features/colors-gradients) — एडवांस्ड रंग विकल्प
-- [टेम्पलेट](/docs/features/templates) — पहले से बने स्टाइल
-- [डाउनलोड](/docs/features/downloads) — एक्सपोर्ट विकल्प
+<Cards>
+  <Card href="/docs/features/colors-gradients" title="रंग और ग्रेडिएंट सेट करें" description="सॉलिड रंग, लीनियर, रेडियल और एंगुलर ग्रेडिएंट, पारदर्शी रंग और इमेज फ़िल।" />
+  <Card href="/docs/features/logos" title="कोड में लोगो जोड़ें" description="साइज़, खाली जगह, पोज़िशन, क्रॉप और एरर-करेक्शन बजट।" />
+  <Card href="/docs/features/downloads" title="एक्सपोर्ट और डाउनलोड" description="PNG, JPG, WebP, SVG, PDF और EPS, क्लिपबोर्ड और Node में PNG।" />
+  <Card href="/docs/api-reference" title="लाइब्रेरी API रेफ़रेंस" description="हर prop, उसके टाइप और डिफ़ॉल्ट के साथ।" />
+</Cards>

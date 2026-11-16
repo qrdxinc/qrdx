@@ -1,152 +1,135 @@
 ---
 title: "Deteksi QR"
-description: "Baca dan dekode kode QR dari gambar di browser."
+description: "Baca dan dekode kode QR dari gambar di browser dengan handleImageLoad, dapatkan posisi kode, dan beri skor pada gambar dengan getImageScanScore."
 icon: Scan
 ---
 
-Baca dan dekode kode QR dari gambar yang diunggah.
+`handleImageLoad` mendekode kode QR dari elemen gambar di browser dan mengembalikan teksnya. Gunakan fungsi ini untuk membaca kode dari unggahan, tangkapan layar, atau foto tanpa mengirim gambar ke mana pun. Untuk area tarik-dan-lepas siap pakai, pasang komponen [QR Code Scanner](/docs/components/qr-code-scanner) yang dibangun di atasnya.
 
-## Deteksi Dasar [#basic-detection]
+| Fungsi | Hasil | Catatan |
+| --- | --- | --- |
+| `handleImageLoad(img, size, returnFullData?)` | `Promise<string \| QRCode \| "NO_QR">` | Teks hasil dekode, atau hasil lengkap dari dekoder jika `returnFullData` diaktifkan. `"NO_QR"` jika tidak ada kode yang ditemukan. Hanya untuk browser |
+| `downloadImageWithBoundingBox(img, corners, filename)` | `void` | Menyimpan gambar sebagai PNG dengan kode yang ditemukan diberi garis tepi merah |
+| `getImageScanScore(imageOrBlob, options?)` | `Promise<ImageScanScoreResult>` | Mendekode dan memberi skor pada gambar yang sudah ada. Lihat [Apakah bisa dipindai?](/docs/features/frames#will-it-scan) |
+| `scanQRPixels(pixels, expected, options?)` | `Promise<PixelScanResult>` | Memeriksa apakah piksel RGBA terdekode menjadi `expected`, di Node |
 
-```tsx
-import { handleImageLoad } from 'qrdx';
+## Mendekode gambar yang diunggah [#decode-an-uploaded-image]
 
-async function detectQR(file: File) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const img = new Image();
-      img.onload = async () => {
-        try {
-          const result = await handleImageLoad(img, 400, false);
-          if (result === "NO_QR") {
-            resolve("No QR code found");
-          } else {
-            resolve(result);
-          }
-        } catch (error) {
-          reject(error);
-        }
-      };
-      img.src = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  });
+```tsx title="components/qr-reader.tsx"
+"use client";
+
+import { handleImageLoad } from "qrdx";
+import { useState } from "react";
+
+async function decodeFile(file: File): Promise<string | null> {
+  const url = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+    const result = await handleImageLoad(image, image.naturalWidth);
+    return typeof result === "string" && result !== "NO_QR" ? result : null;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
-```
 
-## Komponen React [#react-component]
+export function QrReader() {
+  const [result, setResult] = useState("");
 
-```tsx
-import { useState } from 'react';
-import { handleImageLoad } from 'qrdx';
-
-export default function QRDetector() {
-  const [result, setResult] = useState('');
-
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  async function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
     if (!file) return;
-
     try {
-      const qrData = await detectQR(file);
-      setResult(qrData);
-    } catch (error) {
-      setResult(`Error: ${error.message}`);
+      setResult((await decodeFile(file)) ?? "No QR code found");
+    } catch {
+      setResult("Could not read that image");
     }
-  };
+  }
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleFile} />
-      {result && <p>{result}</p>}
+      <input
+        accept="image/*"
+        aria-label="Image with a QR code"
+        type="file"
+        onChange={onChange}
+      />
+      {result ? <p>{result}</p> : null}
     </div>
   );
 }
 ```
 
-## Parameter Deteksi [#detection-parameters]
+Pilih tangkapan layar sebuah kode, lalu tautannya muncul di bawah input. `image.decode()` menunggu file selesai dimuat; `handleImageLoad` kemudian menggambar gambar pada kanvas dan menjalankan jsQR, yang dimuat sesuai kebutuhan sehingga tidak ikut masuk ke bundel yang tidak pernah melakukan pemindaian.
 
-```tsx
-handleImageLoad(
-  imgElement: HTMLImageElement,
-  size: number,              // Processing size (recommended: 400)
-  returnFullData?: boolean   // Return full data or just text
-)
-```
+## Cara kerja deteksi [#how-detection-works]
 
-### Parameter Ukuran [#size-parameter]
+`handleImageLoad(img, size, returnFullData)` mencoba seluruh gambar terlebih dahulu, lalu empat potongan (area kiri bawah, kanan bawah, kanan atas, dan tengah pada 65% dari gambar), masing-masing pada enam skala dari 100% hingga 10%. Fungsi ini mengembalikan dekode pertama yang berhasil, sehingga kode yang hanya menempati sebagian kecil tangkapan layar tetap ditemukan. Gambar yang sangat lebar atau tinggi diperkecil terlebih dahulu.
 
-- **200-400** — Lebih cepat, cocok untuk gambar yang jelas
-- **600+** — Lebih baik untuk kode QR yang kecil atau rusak
-- **Direkomendasikan** — 400 untuk sebagian besar kasus
+- `img` harus berupa `<img>` yang sudah dimuat. Tunggu `decode()` atau peristiwa `load`.
+- `size` dipertahankan demi kompatibilitas dengan rilis sebelumnya dan diabaikan: skala diambil dari dimensi gambar itu sendiri. Berikan lebar gambar.
+- `returnFullData` mengembalikan objek hasil jsQR, bukan teksnya.
 
-## Respons Data Lengkap [#full-data-response]
+Kode yang buram, terpotong di tepi, atau lebih terang daripada latar belakangnya (modul terang pada latar gelap) dilaporkan sebagai `"NO_QR"`.
 
-Dapatkan informasi deteksi yang lengkap:
+## Posisi dan data mentah [#position-and-raw-data]
 
-```tsx
-const fullData = await handleImageLoad(img, 400, true);
-// Returns:
-// {
-//   data: "https://example.com",
-//   binaryData: Uint8ClampedArray,
-//   location: { topLeftCorner, topRightCorner, ... },
-//   chunks: [...]
-// }
-```
+Dengan `returnFullData` diaktifkan, hasilnya adalah objek asli dari dekoder:
 
-## Visualisasi Debug [#debug-visualization]
+```ts title="lib/decode-full.ts"
+import { handleImageLoad } from "qrdx";
 
-Unduh gambar dengan kotak pembatas:
-
-```tsx
-import { downloadImageWithBoundingBox } from 'qrdx';
-
-const fullData = await handleImageLoad(img, 400, true);
-if (fullData?.location) {
-  const boundingBox = [
-    fullData.location.topLeftCorner,
-    fullData.location.topRightCorner,
-    fullData.location.bottomRightCorner,
-    fullData.location.bottomLeftCorner,
-  ];
-  downloadImageWithBoundingBox(img, boundingBox, "debug.png");
+const found = await handleImageLoad(image, image.naturalWidth, true);
+if (found !== "NO_QR") {
+  found.data; // "https://example.com"
+  found.version; // 1 to 40
+  found.binaryData; // the raw bytes, as number[]
+  found.chunks; // the encoded segments and their modes
+  found.location.topLeftCorner; // { x, y } in the image's pixels, and the other three corners
 }
 ```
 
-## Penanganan Error [#error-handling]
+`downloadImageWithBoundingBox` menggambar garis tepi kode pada gambar asli lalu menyimpannya, yang membantu saat sebuah foto terdekode menjadi hasil yang tidak terduga. Sudut diberikan dengan urutan kiri atas, kanan atas, kiri bawah, kanan bawah:
 
-```tsx
-try {
-  const result = await handleImageLoad(img, 400, false);
-  if (result === "NO_QR") {
-    console.log("No QR code found");
-  } else {
-    console.log("QR data:", result);
-  }
-} catch (error) {
-  console.error("Detection failed:", error);
+```ts title="lib/debug-detection.ts"
+import { downloadImageWithBoundingBox, handleImageLoad } from "qrdx";
+
+const found = await handleImageLoad(image, image.naturalWidth, true);
+if (found !== "NO_QR") {
+  const { topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner } = found.location;
+  downloadImageWithBoundingBox(
+    image,
+    [topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner],
+    "found-code.png"
+  );
 }
 ```
 
-## Kapan Digunakan [#when-to-use]
+## Beri skor pada gambar, bukan hanya mendekodenya [#score-an-image-instead-of-only-decoding-it]
 
-- Memproses gambar kode QR yang diunggah
-- Mengekstrak data dari tangkapan layar
-- Membangun pemindai kode QR
-- Memverifikasi isi kode QR
-- Men-debug masalah kode QR
+`getImageScanScore` mendekode gambar yang sudah ada dan juga melaporkan seberapa andal gambar tersebut dapat dipindai: dekode pada tiga ukuran dengan keburaman seperti kamera, kontras, polaritas, zona tenang, dan resolusi. Fungsi ini menerima `File`, `Blob`, atau `<img>`.
 
-## Persyaratan Browser [#browser-requirements]
+```ts title="lib/score-image.ts"
+import { getImageScanScore } from "qrdx";
 
-- FileReader API
-- HTMLCanvasElement
-- ImageData dan getImageData
-- Fitur ES6+
+const { data, score, grade, checks } = await getImageScanScore(file);
+// data: "https://example.com" or null
+// score: 0 to 100, grade: "great" | "ok" | "risky" | "fails"
+```
 
-## Langkah Berikutnya [#next-steps]
+[Pemeriksa pemindaian](/tools/scan-checker) dibangun di atasnya. Di Node, `scanQRPixels(pixels, expected)` memeriksa apakah piksel RGBA (dari `decodePNGPixels` atau `sharp().raw()`) terdekode menjadi nilai yang diketahui.
 
-- [Utilitas](/docs/utilities) — Utilitas deteksi
-- [Unduhan](/docs/features/downloads) — Ekspor data yang terdeteksi
-- [Referensi API](/docs/api-reference) — API deteksi yang lengkap
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+- **Setiap gambar mengembalikan `"NO_QR"`.** Gambar belum dimuat saat Anda memanggil fungsi. Gunakan await pada `image.decode()` terlebih dahulu. Jika sudah dimuat, kode mungkin terlalu kecil, buram, terpotong, atau terbalik; coba gambar yang lebih tajam dengan seluruh kode dan sedikit margin di sekelilingnya.
+- **`handleImageLoad` dipanggil di server.** Fungsi ini memerlukan kanvas. Panggil dari Client Component atau event handler, atau gunakan `scanQRPixels` di Node.
+- **Garis tepi dari `downloadImageWithBoundingBox` berbentuk pita (bow tie).** Urutan sudut salah. Berikan kiri atas, kanan atas, kiri bawah, kanan bawah.
+
+## Terkait [#related]
+
+<Cards>
+  <Card href="/docs/components/qr-code-scanner" title="QR Code Scanner" description="Area tarik-dan-lepas yang melakukan semua ini, untuk proyek shadcn/ui." />
+  <Card href="/docs/features/frames" title="Bingkai, skor pemindaian, dan file cetak" description="Beri skor pada desain sebelum Anda mencetaknya." />
+  <Card href="/docs/api-reference" title="Referensi API pustaka" description="Setiap ekspor, berdasarkan titik masuk." />
+</Cards>

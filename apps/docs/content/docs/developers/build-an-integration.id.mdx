@@ -1,39 +1,48 @@
 ---
 title: "Membangun integrasi"
-description: "Buat aplikasi OAuth, biarkan pengguna menghubungkan akun QRdx mereka dengan OAuth 2.0 dan PKCE, panggil REST API atas nama mereka, dan masuk ke direktori integrasi."
+description: "Buat aplikasi OAuth, arahkan pengguna ke layar persetujuan QRdx dengan OAuth 2.0 dan PKCE, panggil REST API atas nama mereka, terima event mereka, dan tampil di direktori integrasi."
 icon: Rocket
 ---
 
-Integrasi adalah aplikasi OAuth. Pengguna mengklik **Connect QRdx** di produk Anda, menyetujui aplikasi Anda di layar persetujuan QRdx, lalu server Anda mendapatkan token akses yang memanggil `https://api.qrdx.dev/v1` atas nama mereka, terbatas pada scope yang mereka setujui.
+Setelah membaca halaman ini, pengguna dapat mengklik **Connect QRdx** di produk Anda, menyetujui aplikasi Anda di layar persetujuan QRdx, dan server Anda akan memegang token akses yang memanggil `https://api.qrdx.dev/v1` atas nama mereka, terbatas pada cakupan (scope) yang mereka setujui.
 
-Panduan ini mencakup seluruh alurnya: membuat aplikasi, mengarahkan pengguna ke QRdx, menukar kode dengan token, memanggil API, menerima event, dan masuk ke daftar.
+Integrasi adalah aplikasi OAuth. Berbeda dengan [kunci API](/docs/developers/api-keys) yang bertindak sebagai Anda di satu workspace, token bertindak sebagai orang yang menyetujui aplikasi Anda, di workspace milik mereka sendiri, dan mereka dapat mencabut akses itu kapan saja.
+
+## Sebelum memulai [#before-you-start]
+
+- Akun QRdx. Workspace Gratis dapat memiliki 1 aplikasi OAuth, Pro 5, dan Business 25; sebuah workspace menggunakan paket terbaik di antara para pemiliknya.
+- Server yang dapat menyimpan rahasia dan menerima pengalihan. Contoh kode menggunakan Node.js dengan Fetch API; bahasa apa pun yang mendukung HTTPS dan SHA-256 dapat digunakan.
+- Dua URI pengalihan `https://` yang akan Anda gunakan: satu untuk produksi, satu untuk pengembangan (`http://localhost` diizinkan untuk itu).
 
 ## 1. Buat aplikasi OAuth [#1-create-an-oauth-app]
 
-Buka [Pengaturan → Kunci API & aplikasi](/dashboard?to=settings/developers) lalu klik **New app**. Aplikasi menjadi milik workspace yang sedang terbuka, yaitu yang dipilih di pengalih workspace. Hanya pemilik workspace yang dapat membuat dan mengubah aplikasi; admin dan anggota hanya dapat melihatnya.
+Buka [Settings → API keys & apps](/dashboard?to=settings/developers) dan pilih **New app**. Aplikasi menjadi milik workspace yang sedang terbuka. Hanya pemilik workspace yang dapat membuat dan mengubah aplikasi; admin dan anggota dapat melihatnya.
+
+<Shot id="oauth-new-app-form" />
 
 | Kolom | Fungsinya |
 | --- | --- |
-| Nama, deskripsi, logo, situs web | Ditampilkan di layar persetujuan. Unggah logo persegi atau tempel tautan `https://` ke logo tersebut |
-| Redirect URI | Tujuan QRdx mengarahkan pengguna kembali, maksimal 10. Hanya `https://`, ditambah `http://localhost` (atau `127.0.0.1`) untuk pengembangan. Tanpa wildcard atau `#fragments`: setiap permintaan harus menggunakan salah satunya persis sama |
-| Scope | Batas maksimal yang boleh diminta aplikasi Anda. Setiap otorisasi meminta sebagian atau seluruhnya |
-| Require PKCE | Setiap otorisasi harus mengirim code challenge `S256`. Disarankan, dan aktif secara default |
+| **Name**, **Description**, **Logo**, **Website** | Ditampilkan di layar persetujuan. Unggah logo persegi minimal 128 × 128 px, atau tempel tautan `https://` ke logo tersebut |
+| **Redirect URIs** | Tujuan QRdx mengembalikan pengguna, satu per baris, maksimal 10. Hanya `https://`, ditambah `http://localhost` untuk pengembangan. Tanpa wildcard atau `#fragments`: setiap permintaan harus mengirim salah satunya persis sama |
+| **Scopes** | Batas maksimum yang boleh diminta aplikasi Anda. Setiap otorisasi meminta sebagian atau semuanya |
+| **Require PKCE** | Setiap otorisasi harus mengirim code challenge `S256`. Disarankan, dan aktif secara default |
 
-Setelah aplikasi dibuat, QRdx menampilkan **client ID** dan **client secret**. Salin secret saat itu juga: QRdx hanya menyimpan hash-nya dan tidak dapat menampilkannya lagi. Jika hilang atau bocor, klik **Regenerate secret** di halaman aplikasi. Secret lama langsung berhenti berfungsi; pengguna yang sudah terhubung tetap terhubung. Membuat aplikasi dan membuat ulang secret-nya sama-sama meminta Anda [mengonfirmasi bahwa ini Anda](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) terlebih dahulu, kecuali Anda sudah melakukannya di browser itu dalam 10 menit terakhir.
+Setelah Anda menyimpan, QRdx menampilkan **Client ID** dan **Client secret**. Salin secret saat itu juga: QRdx hanya menyimpan hash-nya dan tidak dapat menampilkannya lagi. Jika hilang atau bocor, pilih **Regenerate secret** di halaman aplikasi. Secret lama langsung berhenti berfungsi; pengguna yang sudah terhubung tetap terhubung. Membuat aplikasi dan membuat ulang secret-nya meminta Anda [mengonfirmasi bahwa ini Anda](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) terlebih dahulu, kecuali Anda sudah melakukannya di browser itu dalam 10 menit terakhir.
 
-| Paket | Aplikasi OAuth per workspace |
-| --- | --- |
-| Gratis | 1 |
-| Pro | 5 |
-| Business | 25 |
+<Shot id="oauth-app-credentials" />
 
-Workspace menggunakan paket terbaik di antara para pemiliknya, seperti pada [batas](/docs/plans-and-limits) lainnya.
+Simpan kedua nilai di server Anda:
+
+```bash title=".env"
+QRDX_CLIENT_ID=qrdx_app_...
+QRDX_CLIENT_SECRET=qrdx_secret_...
+```
 
 ## 2. Arahkan pengguna ke QRdx [#2-send-people-to-qrdx]
 
 Buat `state` acak dan `code_verifier` PKCE, simpan keduanya di sesi pengguna, lalu alihkan ke URL otorisasi:
 
-```txt
+```txt title="Authorize URL"
 https://qrdx.dev/api/oauth/authorize
   ?response_type=code
   &client_id=<client id>
@@ -48,12 +57,12 @@ https://qrdx.dev/api/oauth/authorize
 | --- | --- | --- |
 | `response_type` | Ya | `code` |
 | `client_id` | Ya | Client ID aplikasi Anda |
-| `redirect_uri` | Ya | Salah satu redirect URI aplikasi, persis karakter demi karakter |
-| `scope` | Ya | Dipisahkan spasi atau koma; hanya scope yang dimiliki aplikasi |
-| `state` | Disarankan | Nilai apa pun; QRdx mengirimkannya kembali tanpa perubahan. Periksa untuk mencegah CSRF |
-| `code_challenge` | Jika aplikasi mewajibkan PKCE | 43–128 karakter: SHA-256 base64url dari `code_verifier` Anda |
+| `redirect_uri` | Ya | Salah satu URI pengalihan aplikasi, persis karakter demi karakter |
+| `scope` | Ya | Dipisahkan spasi atau koma; hanya cakupan yang dimiliki aplikasi |
+| `state` | Disarankan | Nilai apa pun; QRdx mengirimkannya kembali tanpa perubahan. Periksa saat kembali untuk mencegah pemalsuan permintaan lintas situs |
+| `code_challenge` | Jika aplikasi mewajibkan PKCE | 43 hingga 128 karakter: SHA-256 base64url dari `code_verifier` Anda |
 | `code_challenge_method` | Tidak | `S256`, default dan satu-satunya metode yang diterima. `plain` ditolak dengan `invalid_request` |
-| `prompt` | Tidak | `consent` menampilkan layar persetujuan meskipun pengguna pernah menyetujui scope ini sebelumnya |
+| `prompt` | Tidak | `consent` menampilkan layar persetujuan meskipun pengguna pernah menyetujui cakupan ini sebelumnya |
 
 ```ts title="lib/qrdx-oauth.ts"
 import { createHash, randomBytes } from "node:crypto";
@@ -66,13 +75,7 @@ export function createPkce() {
   return { verifier, challenge };
 }
 
-export function authorizeUrl({
-  state,
-  challenge,
-}: {
-  state: string;
-  challenge: string;
-}) {
+export function authorizeUrl({ state, challenge }: { state: string; challenge: string }) {
   const url = new URL(QRDX_AUTHORIZE_URL);
   url.search = new URLSearchParams({
     response_type: "code",
@@ -87,20 +90,26 @@ export function authorizeUrl({
 }
 ```
 
-Pengguna yang belum masuk ke QRdx harus masuk dahulu. Setelah itu mereka melihat layar persetujuan: logo, nama, situs web aplikasi Anda dan siapa pembuatnya, izin yang Anda minta, serta akun yang sedang mereka gunakan. Aplikasi yang belum diverifikasi QRdx diberi catatan **Unverified app**. **Authorize** meminta mereka [mengonfirmasi bahwa ini mereka](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) kecuali sudah dilakukan dalam 10 menit terakhir (masuk barusan biasanya dihitung). Pengguna yang sudah menyetujui scope yang sama untuk aplikasi Anda langsung dikembalikan ke Anda.
+Pengguna yang belum masuk ke QRdx akan masuk terlebih dahulu. Lalu mereka melihat layar persetujuan: logo, nama, situs web aplikasi Anda, siapa pembuatnya, izin yang Anda minta, dan akun yang sedang mereka gunakan. Aplikasi yang belum ditinjau QRdx diberi catatan **Unverified app.** Tombol **Authorize** meminta mereka [mengonfirmasi bahwa ini mereka](/docs/help/privacy-and-security/two-step-verification#confirm-its-you) kecuali mereka sudah melakukannya dalam 10 menit terakhir (masuk beberapa saat sebelumnya juga dihitung). Pengguna yang sudah menyetujui cakupan yang sama untuk aplikasi Anda langsung dikembalikan kepada Anda.
 
-QRdx kemudian mengalihkan ke `redirect_uri` Anda:
+<Shot id="oauth-consent-screen" />
+
+Setelah itu QRdx mengalihkan ke `redirect_uri` Anda:
 
 - Disetujui: `?code=<authorization code>&state=<your state>`. Kode hanya berlaku sekali, dalam 10 menit.
 - Dibatalkan: `?error=access_denied&error_description=...&state=<your state>`.
 
-Permintaan yang tidak valid (`client_id` tidak dikenal, `redirect_uri` yang tidak terdaftar, scope yang tidak dimiliki aplikasi, challenge yang hilang saat PKCE diwajibkan, `code_challenge_method=plain`) tidak pernah dialihkan. Permintaan tersebut mengembalikan error JSON seperti `{ "error": "invalid_scope", "error_description": "..." }`.
+Permintaan yang tidak valid tidak pernah dialihkan; permintaan itu dijawab dengan JSON dalam format OAuth 2.0. `client_id` yang tidak dikenal menghasilkan `invalid_client`, `redirect_uri` yang tidak terdaftar atau challenge `plain` menghasilkan `invalid_request`, dan cakupan yang tidak dimiliki aplikasi menghasilkan `invalid_scope`:
+
+```json title="400 Bad Request"
+{"error":"invalid_scope","error_description":"Invalid or unsupported scope"}
+```
 
 ## 3. Tukar kode dengan token [#3-exchange-the-code-for-tokens]
 
-Dari server Anda, kirim kode ke endpoint token dengan POST. Body berformat form-encoded, dan `redirect_uri` harus sama dengan yang Anda gunakan di langkah 2.
+Dari server Anda, kirim kode ke endpoint token. Isi permintaan berformat form-encoded, dan `redirect_uri` harus sama dengan yang Anda gunakan di langkah 2.
 
-```bash
+```bash title="Terminal"
 curl -X POST https://qrdx.dev/api/oauth/token \
   -d grant_type=authorization_code \
   -d client_id=$QRDX_CLIENT_ID \
@@ -118,7 +127,7 @@ export async function GET(req: Request) {
     return new Response("Invalid state", { status: 400 });
   }
   if (params.get("error")) {
-    return Response.redirect("https://acme.example/settings?qrdx=cancelled");
+    return Response.redirect("https://acme.example/settings?qrdx=canceled");
   }
 
   const response = await fetch("https://qrdx.dev/api/oauth/token", {
@@ -149,23 +158,27 @@ export async function GET(req: Request) {
 }
 ```
 
-```json
+```json title="Response fields"
 {
-  "access_token": "...",
+  "access_token": "<send as Authorization: Bearer>",
   "token_type": "Bearer",
   "expires_in": 3600,
-  "refresh_token": "...",
+  "refresh_token": "<store encrypted; it rotates on each refresh>",
   "scope": "profile:read codes:read codes:write"
 }
 ```
 
-`scope` mencantumkan apa yang diberikan, dipisahkan spasi. Token akses berlaku 1 jam dan refresh token 30 hari. Kirim `code_verifier` tepat ketika otorisasi memiliki `code_challenge`; verifier untuk kode yang diterbitkan tanpa challenge akan ditolak.
+`scope` mencantumkan apa yang diberikan, dipisahkan spasi. Token akses berlaku 1 jam dan token refresh 30 hari. Kirim `code_verifier` tepat ketika otorisasi memiliki `code_challenge`; verifier untuk kode yang diterbitkan tanpa challenge akan ditolak. Secret yang salah atau kode yang sudah digunakan dijawab dengan `invalid_client` atau `invalid_grant`, dan jenis grant selain dua yang didukung dijawab dengan:
 
-### Refresh token [#refresh-tokens]
+```json title="400 Bad Request"
+{"error":"unsupported_grant_type","error_description":"Supported: authorization_code, refresh_token"}
+```
 
-Sebelum token akses kedaluwarsa, tukarkan refresh token dengan sepasang token baru. Refresh token berotasi: masing-masing hanya berlaku sekali, jadi simpan yang baru setiap kali.
+## 4. Menyegarkan token [#4-refresh-tokens]
 
-```bash
+Sebelum token akses kedaluwarsa, tukar token refresh dengan sepasang token baru. Token refresh berotasi: masing-masing hanya berlaku sekali, jadi simpan yang baru setiap kali.
+
+```bash title="Terminal"
 curl -X POST https://qrdx.dev/api/oauth/token \
   -d grant_type=refresh_token \
   -d client_id=$QRDX_CLIENT_ID \
@@ -173,7 +186,7 @@ curl -X POST https://qrdx.dev/api/oauth/token \
   -d refresh_token=$REFRESH_TOKEN
 ```
 
-```ts
+```ts title="lib/qrdx-oauth.ts"
 export async function refreshQrdxTokens(refreshToken: string) {
   const response = await fetch("https://qrdx.dev/api/oauth/token", {
     method: "POST",
@@ -190,29 +203,20 @@ export async function refreshQrdxTokens(refreshToken: string) {
 }
 ```
 
-Endpoint token mengizinkan 30 permintaan per menit per alamat IP.
+Endpoint token mengizinkan 30 permintaan per menit untuk setiap alamat IP.
 
-## 4. Scope [#4-scopes]
+## 5. Memanggil API [#5-call-the-api]
 
-| Scope | Mengizinkan |
+Kirim token akses sebagai Bearer token ke `https://api.qrdx.dev/v1`. Permintaan dengan token bertindak pada workspace milik orang yang mengotorisasi aplikasi Anda (setiap akun memilikinya), sesuai paket dan [kuota harian](/docs/developers/rest-api#rate-limits) workspace tersebut. Mintalah seminimal yang dibutuhkan integrasi Anda; pengguna melihat setiap cakupan di layar persetujuan.
+
+| Cakupan | Mengizinkan |
 | --- | --- |
 | `profile:read` | ID, nama, email, dan avatar pengguna: `GET /v1/me` dan `GET /api/oauth/userinfo` |
 | `themes:read` | Tema QR tersimpan milik mereka: `GET /v1/themes`, `GET /v1/themes/{id}` |
-| `codes:read` | Kode dinamis dan analitik pemindaian mereka; menampilkan daftar langganan webhook |
-| `codes:write` | Semua yang diizinkan `codes:read`, ditambah membuat, mengedit, dan menghapus kode, melaporkan konversi, dan berlangganan webhook |
+| `codes:read` | Kode dinamis mereka, analitik pemindaian, dan barcode tersimpan; daftar hook |
+| `codes:write` | Semua yang diizinkan `codes:read`, ditambah membuat, mengedit, dan menghapus kode serta barcode, melaporkan konversi, dan berlangganan event |
 
-Minta seminimal yang dibutuhkan integrasi Anda: pengguna melihat setiap scope di layar persetujuan.
-
-## 5. Panggil API [#5-call-the-api]
-
-Kirim token akses sebagai Bearer token ke `https://api.qrdx.dev/v1`. Permintaan dengan token bertindak pada workspace milik pengguna yang mengotorisasi aplikasi Anda (setiap akun memilikinya), sesuai paket workspace tersebut.
-
-```bash
-curl https://api.qrdx.dev/v1/codes \
-  -H "Authorization: Bearer $ACCESS_TOKEN"
-```
-
-```ts
+```ts title="lib/qrdx.ts"
 const response = await fetch("https://api.qrdx.dev/v1/codes", {
   method: "POST",
   headers: {
@@ -227,72 +231,81 @@ const response = await fetch("https://api.qrdx.dev/v1/codes", {
 const { data: code } = await response.json(); // code.shortLink is what the QR encodes
 ```
 
-Respons `401` dengan `invalid_token` berarti token kedaluwarsa atau dicabut: segarkan token, atau minta pengguna menghubungkan ulang. Respons `403` dengan `insufficient_scope` berarti token tidak memiliki scope yang dibutuhkan. Semua endpoint, scope, dan error-nya tercantum di [REST API dan OAuth](/docs/developers/rest-api).
+`401 INVALID_TOKEN` berarti token kedaluwarsa atau dicabut: segarkan, atau minta pengguna menghubungkan ulang. `403 INSUFFICIENT_SCOPE` berarti token tidak memiliki cakupan yang dibutuhkan. [Referensi API](/docs/developers/api) mencantumkan setiap endpoint beserta cakupan dan kesalahannya.
 
-## 6. Terima event dengan webhook [#6-receive-events-with-webhooks]
+## 6. Menerima event dengan webhook [#6-receive-events-with-webhooks]
 
 Berlangganan atas nama pengguna dengan REST Hooks API, alih-alih meminta mereka menempelkan URL. Ini membutuhkan `codes:write`, dan paket pengguna harus menyertakan [webhook](/docs/webhooks) (Business); jika tidak, hasilnya `402 PLAN_REQUIRED`.
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/hooks \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"target_url": "https://acme.example/webhooks/qrdx", "events": ["scan.created", "form.submitted"]}'
 ```
 
-Respons `201` memuat `id` langganan dan `secret` penandatanganan, yang hanya ditampilkan sekali. Setiap pengiriman ditandatangani dengannya di `X-QRdx-Signature`; lihat [Verifikasi tanda tangan](/docs/webhooks#verify-signatures). Berhenti berlangganan dengan `DELETE /v1/hooks/{id}` saat pengguna memutuskan koneksi. Langganan juga muncul di Pengaturan → Webhook pada workspace mereka sendiri, tempat mereka dapat menghapusnya.
+Respons `201` memuat `id` langganan dan `secret` penandatanganan, yang hanya ditampilkan sekali. Setiap pengiriman ditandatangani dengannya di `X-QRdx-Signature`; lihat [Verifikasi tanda tangan](/docs/webhooks#verify-signatures). Berhenti berlangganan dengan `DELETE /v1/hooks/{id}` ketika pengguna memutus koneksi. Langganan juga muncul di **Settings → Webhooks** pada workspace mereka sendiri, tempat mereka dapat menghapusnya.
 
-## 7. Cabut akses dan userinfo [#7-revoke-and-userinfo]
+## 7. Memutus koneksi dan mengidentifikasi pengguna [#7-disconnect-and-identify-people]
 
-Saat seseorang memutuskan koneksi QRdx di produk Anda, cabut token mereka. Mencabut salah satu token dari sepasang akan mencabut keduanya; endpoint menjawab `200` bahkan untuk token yang tidak dikenal.
+Ketika seseorang memutus koneksi QRdx di produk Anda, cabut token mereka. Mencabut salah satu token dalam pasangan akan mencabut keduanya; endpoint menjawab `200` bahkan untuk token yang tidak dikenal.
 
-```bash
+```bash title="Terminal"
 curl -X POST https://qrdx.dev/api/oauth/revoke -d token=$REFRESH_TOKEN
 ```
 
-```ts
-await fetch("https://qrdx.dev/api/oauth/revoke", {
-  method: "POST",
-  body: new URLSearchParams({ token: refreshToken }),
-});
-```
+Pengguna dapat mencabut akses sendiri kapan saja, di **Settings → Authorized apps** pada QRdx, dengan **Revoke access**. Setiap token yang dipegang aplikasi Anda untuk akun mereka langsung berhenti berfungsi: panggilan API dijawab `401` dengan `invalid_token` dan penyegaran dijawab `invalid_grant`. Perlakukan keduanya sebagai "terputus" dan minta mereka menghubungkan lagi; mereka akan melihat layar persetujuan lagi.
 
-### Mencabut akses [#revoking-access]
+Untuk mengetahui siapa yang terhubung, panggil `GET /api/oauth/userinfo` dengan token `profile:read`. Endpoint ini mengembalikan klaim bergaya OpenID, yaitu `sub`, `name`, `email`, dan `picture`; gunakan `sub` sebagai ID akun yang stabil, karena email dapat berubah.
 
-Pengguna dapat menarik kembali akses sendiri kapan saja, di **Settings → Authorized apps** pada QRdx. Setiap token yang dipegang aplikasi Anda untuk akun mereka langsung berhenti berfungsi: panggilan API dijawab `401` dengan `invalid_token` dan penyegaran dijawab `invalid_grant`. Anggap keduanya sebagai "terputus" dan minta mereka menghubungkan lagi; mereka akan melihat layar persetujuan lagi.
-
-Untuk mengetahui siapa yang terhubung, panggil `GET /api/oauth/userinfo` dengan token `profile:read`. Endpoint ini mengembalikan klaim bergaya OpenID:
-
-```bash
+```bash title="Terminal"
 curl https://qrdx.dev/api/oauth/userinfo -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
-```json
-{
-  "sub": "user id",
-  "name": "Ada Lovelace",
-  "email": "ada@example.com",
-  "picture": "https://..."
-}
+```json title="401 Unauthorized: an expired or revoked token"
+{"error":"invalid_token","error_description":"Invalid or expired token"}
 ```
 
-Gunakan `sub` sebagai ID akun yang stabil; email dapat berubah.
+## 8. Tampil di direktori [#8-get-listed]
 
-## 8. Masuk ke daftar [#8-get-listed]
-
-Saat integrasi Anda berfungsi dari ujung ke ujung, ajukan permintaan agar ditambahkan ke [direktori integrasi](/integrations), tempat integrasi tampil sebagai integrasi **Community** buatan Anda. Kirim email ke [support@qrdx.dev](mailto:support@qrdx.dev?subject=List%20my%20integration) (tombol **Get listed** di halaman aplikasi Anda mengisi detailnya) dengan:
+Jika integrasi Anda sudah berfungsi dari ujung ke ujung, ajukan permintaan agar ditambahkan ke [direktori integrasi](/integrations), tempat integrasi Anda muncul sebagai integrasi komunitas yang Anda buat. Di halaman aplikasi Anda, **Get listed** membuka email ke [support@qrdx.dev](mailto:support@qrdx.dev?subject=List%20my%20integration) dengan detail yang sudah terisi:
 
 - nama aplikasi dan client ID Anda;
 - satu baris tentang fungsinya dan untuk siapa;
 - langkah penyiapan, atau tautan ke langkah tersebut;
 - kontak dukungan.
 
-Tim QRdx meninjau aplikasi yang terdaftar dan menandainya **verified**, yang menghapus catatan "Unverified app" dari layar persetujuan. Mengubah nama, logo, atau situs web aplikasi yang sudah diverifikasi akan menghapus lencananya sampai ditinjau lagi.
+Tim QRdx meninjau aplikasi yang diajukan dan menandainya **Verified**, yang menghapus catatan **Unverified app.** dari layar persetujuan. Mengubah nama, logo, atau situs web aplikasi yang terverifikasi akan menghapus lencana hingga ditinjau ulang.
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+### `invalid_request: redirect_uri not registered` [#invalid_request-redirect_uri-not-registered]
+
+`redirect_uri` pada URL otorisasi tidak sama persis, karakter demi karakter, dengan salah satu URI pengalihan aplikasi, termasuk skema dan garis miring di akhir. Tambahkan URI tersebut ke aplikasi, atau perbaiki URL-nya.
+
+### `invalid_scope` [#invalid_scope]
+
+URL otorisasi meminta scope yang tidak dimiliki aplikasi. Tambahkan scope tersebut ke aplikasi di **Settings → API keys & apps**, lalu minta lagi.
+
+### `invalid_grant` saat refresh [#invalid_grant-on-refresh]
+
+Refresh token sudah digunakan (setiap refresh menghasilkan token baru), kedaluwarsa setelah 30 hari, atau pengguna telah mencabut akses aplikasi Anda. Arahkan mereka untuk melakukan otorisasi lagi.
+
+### Token berhenti berfungsi setelah Anda membuat ulang secret [#tokens-stop-working-after-you-regenerated-the-secret]
+
+Hanya permintaan token baru yang menggunakan secret baru; access token dan refresh token yang sudah ada tetap valid. Pastikan setiap instance server membaca `QRDX_CLIENT_SECRET` yang baru.
 
 ## Daftar periksa keamanan [#security-checklist]
 
-- Simpan client secret di server Anda. Kode browser dan seluler tidak boleh melihatnya.
-- Gunakan PKCE (`S256`) dan `state` baru untuk setiap otorisasi, lalu periksa `state` saat kembali.
-- Daftarkan redirect URI yang persis; QRdx membandingkannya karakter demi karakter.
-- Simpan token akses dan refresh token dalam keadaan terenkripsi, dan simpan refresh token baru setelah setiap penyegaran.
-- Cabut token saat pengguna memutuskan koneksi. Menghapus aplikasi Anda di Pengaturan → Kunci API & aplikasi akan mencabut semua token yang diterbitkannya; menjedanya akan menolak token tersebut sampai Anda melanjutkannya.
+- Simpan client secret di server Anda. Kode browser dan aplikasi seluler tidak boleh pernah melihatnya.
+- Gunakan PKCE (`S256`) dan `state` baru untuk setiap otorisasi, lalu periksa `state` saat pengguna kembali.
+- Daftarkan URI pengalihan yang persis sama; QRdx membandingkannya karakter demi karakter.
+- Simpan access token dan refresh token dalam keadaan terenkripsi, dan simpan refresh token baru setiap kali selesai refresh.
+- Cabut token saat pengguna memutuskan koneksi. Menghapus aplikasi Anda di **Settings → API keys & apps** akan mencabut semua token yang pernah diterbitkannya; menjeda aplikasi akan membuat token ditolak sampai Anda melanjutkannya.
+
+## Terkait [#related]
+
+- [REST API dan OAuth](/docs/developers/rest-api): endpoint, scope, masa berlaku, dan batas dalam satu tempat
+- [Webhook](/docs/webhooks): payload, tanda tangan, dan percobaan ulang untuk event yang Anda langgani
+- [Referensi API](/docs/developers/api): setiap endpoint yang dapat dipanggil token Anda
+- [Direktori integrasi](/integrations): tempat aplikasi yang terdaftar ditampilkan

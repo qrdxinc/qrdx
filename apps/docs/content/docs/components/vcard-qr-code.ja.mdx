@@ -1,8 +1,10 @@
 ---
 title: "vCard QRコード"
-description: "スキャンすると連絡先カードを保存できるQRコードです。型付きのvCard 3.0ビルダーを備えています。"
+description: "スキャンすると連絡先カードを保存できる、shadcn/ui プロジェクト向けのQRコードです。型付きの vCard 3.0 ビルダーも付属しています。"
 icon: Users
 ---
+
+`VCardQrCode` は、スマートフォンのカメラでスキャンすると連絡先を保存できるコードを表示し、その下に名前と役職を表示します。名刺、社員名簿、カンファレンスのバッジ、メール署名のページなどにお使いください。
 
 <ComponentLinks name="vcard-qr-code" />
 
@@ -14,11 +16,11 @@ icon: Users
 
 ## 使い方 [#usage]
 
-```tsx
+```tsx title="components/example.tsx"
 import { VCardQrCode } from "@/components/vcard-qr-code";
 ```
 
-```tsx
+```tsx title="components/example.tsx"
 <VCardQrCode
   contact={{
     firstName: "Ada",
@@ -29,24 +31,40 @@ import { VCardQrCode } from "@/components/vcard-qr-code";
 />
 ```
 
-スマートフォンのカメラでコードをスキャンすると、連絡先の保存を促す表示が出ます。空のフィールドは省かれるため、コードが小さくなり、スキャンも速くなります。
+コードをスキャンすると、スマートフォンのカメラが連絡先の保存を提案します。空のフィールドは含まれないため、コードが小さくなり、スキャンも速くなります。
 
 ## 例 [#examples]
 
 ### vCardビルダー [#vcard-builder]
 
-`buildVCard` は、コードにエンコードされるvCard 3.0のテキストを返します。カンマ、セミコロン、バックスラッシュ、改行はエスケープされます。任意のQRレンダラーで使えるほか、同じ連絡先を `.vcf` ファイルのダウンロードとして提供する際にも使えます。
+`buildVCard` は、コードにエンコードされる vCard 3.0 のテキストを返します。カンマ、セミコロン、バックスラッシュ、改行はエスケープされます。任意のQRレンダラーと組み合わせて使えるほか、同じ連絡先を `.vcf` ファイルとしてダウンロードできるようにする際にも使えます。
 
 <ComponentPreview name="vcard-qr-code-payload" />
 
-連絡先カードにはリンクよりも多くのテキストが含まれるため、このコンポーネントはモジュールを大きく保つために誤り訂正レベル `M` を使用します。必要なフィールドだけを追加し、印刷サイズの目安は[印刷サイズ計算ツール](/tools/print-size)で確認してください。
+連絡先カードはリンクよりも多くのテキストを保持するため、このコンポーネントではモジュールを大きく保てるよう、誤り訂正レベル `M` を使用します。必要なフィールドだけを追加し、印刷サイズの目安は[印刷サイズ計算ツール](/tools/print-size)で確認してください。
+
+## アクセシビリティとレンダリング [#accessibility-and-rendering]
+
+- コードには `aria-label="QR code with the contact card for <name>"` が設定されています。カードの各フィールドは読み上げられません。
+- コードの下にある名前、役職、組織名は、figure の `<figcaption>` です。コードだけを表示するには `showDetails={false}` を設定します。
+- このコンポーネントは Client Component ですが、コードはサーバー上でレンダリングされます。
 
 ## APIリファレンス [#api-reference]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/vcard-qr-code.tsx" type="{ [K in keyof VCardQrCodeProps as K extends keyof ComponentProps<'figure'> ? never : K]: VCardQrCodeProps[K] }" />
 
-`className` などその他のプロパティは、外側の `<figure>` に渡されます。
+`className` などその他のプロパティは、外側の `<figure>` にそのまま渡されます。
 
 ### VCardContact [#vcardcontact]
 
 <auto-type-table path="../../../../../packages/docs-assets/registry/qrdx/vcard-qr-code.tsx" name="VCardContact" />
+
+`buildVCard(contact: VCardContact): string` は、`N`、`FN`、`ORG`、`TITLE`、`TEL`（勤務先と携帯）、`EMAIL`、`URL`、`ADR`、`NOTE` の各行を出力します。いずれも、そのフィールドが設定されている場合のみです。
+
+## 関連ページ [#related]
+
+<Cards>
+  <Card href="/docs/components/wifi-qr-code" title="Wi-Fi QRコード" description="Wi-Fiネットワーク向けの同様のコンポーネントです。" />
+  <Card href="/docs/components/qr-code" title="QRコード" description="任意のペイロードに対応し、ダウンロードボタンも備えたコードです。" />
+  <Card href="/docs/nfc" title="NFCタグと名刺" description="同じ連絡先をNFCタグに登録します。" />
+</Cards>

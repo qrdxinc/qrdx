@@ -1,39 +1,48 @@
 ---
 title: "构建集成"
-description: "创建 OAuth 应用，让用户通过 OAuth 2.0 和 PKCE 连接自己的 QRdx 账户，代表他们调用 REST API，并上架集成目录。"
+description: "创建 OAuth 应用，通过 OAuth 2.0 和 PKCE 将用户引导至 QRdx 授权页面，代表用户调用 REST API，接收用户的事件，并上架到集成目录。"
 icon: Rocket
 ---
 
-集成就是一个 OAuth 应用。用户在你的产品中点击 **Connect QRdx**，在 QRdx 授权页面批准你的应用，你的服务器就会获得一个访问令牌，用它代表用户调用 `https://api.qrdx.dev/v1`，权限仅限于用户批准的范围。
+读完本页后，用户可以在你的产品中点击 **Connect QRdx**，在 QRdx 授权页面上批准你的应用，而你的服务器会持有一个访问令牌，用它代表用户调用 `https://api.qrdx.dev/v1`，权限仅限于用户批准的范围。
 
-本指南涵盖完整流程：创建应用、将用户引导至 QRdx、用授权码换取令牌、调用 API、接收事件以及上架。
+集成就是一个 OAuth 应用。[API 密钥](/docs/developers/api-keys)以你本人的身份在单个工作区中操作，而令牌则以批准你的应用的用户的身份，在其自己的工作区中操作，并且用户可以随时收回这一访问权限。
+
+## 开始之前 [#before-you-start]
+
+- 一个 QRdx 账户。免费版工作区可以有 1 个 OAuth 应用，Pro 可以有 5 个，Business 可以有 25 个；工作区按其所有者中最高的套餐计算。
+- 一台能够保管密钥并接收重定向的服务器。代码示例使用 Node.js 和 Fetch API；任何支持 HTTPS 和 SHA-256 的语言都可以。
+- 你将使用的两个 `https://` 重定向 URI：一个用于生产环境，一个用于开发环境（开发环境允许使用 `http://localhost`）。
 
 ## 1. 创建 OAuth 应用 [#1-create-an-oauth-app]
 
-打开[设置 → API 密钥与应用](/dashboard?to=settings/developers)，点击 **New app**。应用属于当前打开的工作区，也就是在工作区切换器中选中的那个。只有工作区所有者可以创建和修改应用；管理员和成员可以查看。
+打开[设置 → API 密钥与应用](/dashboard?to=settings/developers)，选择 **New app**。应用属于当前打开的工作区。只有工作区所有者可以创建和修改应用；管理员和成员可以查看。
+
+<Shot id="oauth-new-app-form" />
 
 | 字段 | 用途 |
 | --- | --- |
-| 名称、描述、徽标、网站 | 显示在授权页面上。上传方形徽标，或粘贴指向徽标的 `https://` 链接 |
-| 重定向 URI | QRdx 将用户送回的地址，最多 10 个。仅支持 `https://`，开发时可使用 `http://localhost`（或 `127.0.0.1`）。不支持通配符或 `#fragments`：每个请求都必须与其中一个完全一致 |
-| 权限范围 | 你的应用最多可以请求的范围。每次授权会请求其中的部分或全部 |
-| 要求 PKCE | 每次授权都必须发送 `S256` 的 code challenge。建议开启，默认已开启 |
+| **Name**、**Description**、**Logo**、**Website** | 显示在授权页面上。请上传至少 128 × 128 px 的方形 Logo，或粘贴指向它的 `https://` 链接 |
+| **Redirect URIs** | QRdx 将用户送回的地址，每行一个，最多 10 个。仅支持 `https://`，开发时可用 `http://localhost`。不支持通配符或 `#fragments`：每个请求都必须原样发送其中之一 |
+| **Scopes** | 你的应用最多可以请求的权限范围。每次授权会请求其中的部分或全部 |
+| **Require PKCE** | 每次授权都必须发送 `S256` 代码质询。建议开启，默认开启 |
 
-创建应用后，QRdx 会显示它的 **client ID** 和 **client secret**。请当场复制密钥：QRdx 只保存其哈希值，之后无法再次显示。如果密钥丢失或泄露，请在应用页面点击 **Regenerate secret**。旧密钥会立即失效；已经连接的用户保持连接。创建应用和重新生成密钥都需要先[确认是你本人](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)，除非你在该浏览器中 10 分钟内已确认过。
+保存后，QRdx 会显示 **Client ID** 和 **Client secret**。请当场复制密钥：QRdx 只保存它的哈希值，无法再次显示。如果密钥丢失或泄露，请在应用页面选择 **Regenerate secret**。旧密钥会立即失效；已经连接的用户仍保持连接。创建应用和重新生成密钥时，会先要求你[确认是本人操作](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)，但如果你在该浏览器中 10 分钟内已确认过则无需再次确认。
 
-| 套餐 | 每个工作区的 OAuth 应用数 |
-| --- | --- |
-| 免费版 | 1 |
-| Pro | 5 |
-| Business | 25 |
+<Shot id="oauth-app-credentials" />
 
-与其他[限制](/docs/plans-and-limits)一样，工作区采用其所有者中最高的套餐。
+请将这两个值都保存在你的服务器上：
+
+```bash title=".env"
+QRDX_CLIENT_ID=qrdx_app_...
+QRDX_CLIENT_SECRET=qrdx_secret_...
+```
 
 ## 2. 将用户引导至 QRdx [#2-send-people-to-qrdx]
 
-生成随机的 `state` 和 PKCE 的 `code_verifier`，把两者保存在用户会话中，然后重定向到授权 URL：
+生成一个随机的 `state` 和一个 PKCE `code_verifier`，把两者都保存在用户的会话中，然后重定向到授权 URL：
 
-```txt
+```txt title="Authorize URL"
 https://qrdx.dev/api/oauth/authorize
   ?response_type=code
   &client_id=<client id>
@@ -48,10 +57,10 @@ https://qrdx.dev/api/oauth/authorize
 | --- | --- | --- |
 | `response_type` | 是 | `code` |
 | `client_id` | 是 | 你的应用的 client ID |
-| `redirect_uri` | 是 | 应用的重定向 URI 之一，逐字符一致 |
+| `redirect_uri` | 是 | 应用的重定向 URI 之一，须逐字符一致 |
 | `scope` | 是 | 以空格或逗号分隔；只能包含应用拥有的权限范围 |
-| `state` | 建议 | 任意值；QRdx 会原样返回。请校验它以防范 CSRF |
-| `code_challenge` | 应用要求 PKCE 时必填 | 43–128 个字符：`code_verifier` 的 SHA-256 的 base64url 编码 |
+| `state` | 建议 | 任意值；QRdx 会原样返回。返回时请检查它，以防止跨站请求伪造 |
+| `code_challenge` | 应用要求 PKCE 时 | 43 到 128 个字符：`code_verifier` 的 SHA-256 的 base64url 编码 |
 | `code_challenge_method` | 否 | `S256`，为默认值，也是唯一接受的方法。`plain` 会被拒绝，并返回 `invalid_request` |
 | `prompt` | 否 | `consent` 会显示授权页面，即使用户之前已批准过这些权限范围 |
 
@@ -66,13 +75,7 @@ export function createPkce() {
   return { verifier, challenge };
 }
 
-export function authorizeUrl({
-  state,
-  challenge,
-}: {
-  state: string;
-  challenge: string;
-}) {
+export function authorizeUrl({ state, challenge }: { state: string; challenge: string }) {
   const url = new URL(QRDX_AUTHORIZE_URL);
   url.search = new URLSearchParams({
     response_type: "code",
@@ -87,20 +90,26 @@ export function authorizeUrl({
 }
 ```
 
-尚未登录 QRdx 的用户需要先登录。然后他们会看到授权页面：你的应用的徽标、名称、网站和开发者、你请求的权限，以及他们当前登录的账户。QRdx 尚未验证的应用会带有 **Unverified app** 提示。点击 **Authorize** 时会要求用户[确认是本人](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)，除非他们在 10 分钟内已确认过（刚刚登录通常也算）。如果用户已批准过你的应用的相同权限范围，则会直接返回你的应用。
+尚未登录 QRdx 的用户会先登录。然后他们会看到授权页面：你的应用的 Logo、名称、网站和开发者，你所请求的权限，以及他们当前登录的账户。QRdx 尚未审核的应用会带有 **Unverified app.** 提示。点击 **Authorize** 时会要求他们[确认是本人操作](/docs/help/privacy-and-security/two-step-verification#confirm-its-you)，除非他们在最近 10 分钟内已确认过（刚刚登录也算）。如果用户已为你的应用批准过相同的权限范围，则会直接返回你的应用。
+
+<Shot id="oauth-consent-screen" />
 
 随后 QRdx 会重定向到你的 `redirect_uri`：
 
-- 已批准：`?code=<authorization code>&state=<your state>`。授权码只能使用一次，有效期 10 分钟。
+- 已批准：`?code=<authorization code>&state=<your state>`。该授权码只能使用一次，有效期 10 分钟。
 - 已取消：`?error=access_denied&error_description=...&state=<your state>`。
 
-无效请求（未知的 `client_id`、未注册的 `redirect_uri`、应用不具备的权限范围、要求 PKCE 时缺少 challenge、`code_challenge_method=plain`）不会发生重定向，而是返回 JSON 错误，例如 `{ "error": "invalid_scope", "error_description": "..." }`。
+无效请求不会重定向，而是以 OAuth 2.0 格式返回 JSON。未知的 `client_id` 返回 `invalid_client`，未注册的 `redirect_uri` 或 `plain` 质询返回 `invalid_request`，应用没有的权限范围返回 `invalid_scope`：
+
+```json title="400 Bad Request"
+{"error":"invalid_scope","error_description":"Invalid or unsupported scope"}
+```
 
 ## 3. 用授权码换取令牌 [#3-exchange-the-code-for-tokens]
 
-从你的服务器将授权码提交到令牌端点。请求体为表单编码，`redirect_uri` 必须与第 2 步中使用的一致。
+从你的服务器将授权码 POST 到令牌端点。请求体为表单编码，且 `redirect_uri` 必须与第 2 步中使用的一致。
 
-```bash
+```bash title="Terminal"
 curl -X POST https://qrdx.dev/api/oauth/token \
   -d grant_type=authorization_code \
   -d client_id=$QRDX_CLIENT_ID \
@@ -118,7 +127,7 @@ export async function GET(req: Request) {
     return new Response("Invalid state", { status: 400 });
   }
   if (params.get("error")) {
-    return Response.redirect("https://acme.example/settings?qrdx=cancelled");
+    return Response.redirect("https://acme.example/settings?qrdx=canceled");
   }
 
   const response = await fetch("https://qrdx.dev/api/oauth/token", {
@@ -149,23 +158,27 @@ export async function GET(req: Request) {
 }
 ```
 
-```json
+```json title="Response fields"
 {
-  "access_token": "...",
+  "access_token": "<send as Authorization: Bearer>",
   "token_type": "Bearer",
   "expires_in": 3600,
-  "refresh_token": "...",
+  "refresh_token": "<store encrypted; it rotates on each refresh>",
   "scope": "profile:read codes:read codes:write"
 }
 ```
 
-`scope` 列出已授予的权限，以空格分隔。访问令牌有效期为 1 小时，刷新令牌为 30 天。仅当授权时带有 `code_challenge` 时才发送 `code_verifier`；如果授权码签发时没有 challenge，却附带了 verifier，请求会被拒绝。
+`scope` 列出已授予的权限，以空格分隔。访问令牌有效期 1 小时，刷新令牌有效期 30 天。只有当授权时带有 `code_challenge` 时才发送 `code_verifier`；如果授权码签发时没有质询却带了 verifier，则会被拒绝。密钥错误或授权码已被使用时，返回 `invalid_client` 或 `invalid_grant`；使用这两种之外的授权类型：
 
-### 刷新令牌 [#refresh-tokens]
+```json title="400 Bad Request"
+{"error":"unsupported_grant_type","error_description":"Supported: authorization_code, refresh_token"}
+```
 
-在访问令牌过期之前，用刷新令牌换取新的一对令牌。刷新令牌会轮换：每个只能使用一次，所以每次都要保存新的令牌。
+## 4. 刷新令牌 [#4-refresh-tokens]
 
-```bash
+在访问令牌过期之前，用刷新令牌换取一对新令牌。刷新令牌会轮换：每个只能使用一次，因此每次都要保存新的那个。
+
+```bash title="Terminal"
 curl -X POST https://qrdx.dev/api/oauth/token \
   -d grant_type=refresh_token \
   -d client_id=$QRDX_CLIENT_ID \
@@ -173,7 +186,7 @@ curl -X POST https://qrdx.dev/api/oauth/token \
   -d refresh_token=$REFRESH_TOKEN
 ```
 
-```ts
+```ts title="lib/qrdx-oauth.ts"
 export async function refreshQrdxTokens(refreshToken: string) {
   const response = await fetch("https://qrdx.dev/api/oauth/token", {
     method: "POST",
@@ -192,27 +205,18 @@ export async function refreshQrdxTokens(refreshToken: string) {
 
 令牌端点限制每个 IP 地址每分钟 30 次请求。
 
-## 4. 权限范围 [#4-scopes]
+## 5. 调用 API [#5-call-the-api]
+
+将访问令牌作为 Bearer 令牌发送到 `https://api.qrdx.dev/v1`。令牌请求作用于授权你的应用的用户自己的工作区（每个账户都有一个），并遵循该工作区的套餐和[每日配额](/docs/developers/rest-api#rate-limits)。请只申请你的集成所需的最小权限；用户会在授权页面上看到每个权限范围。
 
 | 权限范围 | 允许的操作 |
 | --- | --- |
-| `profile:read` | 用户的 id、名称、邮箱和头像：`GET /v1/me` 和 `GET /api/oauth/userinfo` |
+| `profile:read` | 用户的 id、姓名、邮箱和头像：`GET /v1/me` 和 `GET /api/oauth/userinfo` |
 | `themes:read` | 他们保存的二维码主题：`GET /v1/themes`、`GET /v1/themes/{id}` |
-| `codes:read` | 他们的动态二维码和扫描分析；列出 webhook 订阅 |
-| `codes:write` | `codes:read` 允许的全部操作，另加创建、编辑和删除二维码、上报转化以及订阅 webhook |
+| `codes:read` | 他们的动态二维码、扫描分析和已保存的条形码；列出 hook |
+| `codes:write` | `codes:read` 允许的一切操作，外加创建、编辑和删除二维码与条形码、上报转化以及订阅事件 |
 
-只请求集成所需的最小权限：用户会在授权页面上看到每一项权限范围。
-
-## 5. 调用 API [#5-call-the-api]
-
-将访问令牌作为 Bearer 令牌发送到 `https://api.qrdx.dev/v1`。令牌请求作用于授权你的应用的用户自己的工作区（每个账户都有一个），并遵循该工作区的套餐。
-
-```bash
-curl https://api.qrdx.dev/v1/codes \
-  -H "Authorization: Bearer $ACCESS_TOKEN"
-```
-
-```ts
+```ts title="lib/qrdx.ts"
 const response = await fetch("https://api.qrdx.dev/v1/codes", {
   method: "POST",
   headers: {
@@ -227,72 +231,81 @@ const response = await fetch("https://api.qrdx.dev/v1/codes", {
 const { data: code } = await response.json(); // code.shortLink is what the QR encodes
 ```
 
-返回 `401` 且错误为 `invalid_token`，表示令牌已过期或被撤销：请刷新令牌，或请用户重新连接。返回 `403` 且错误为 `insufficient_scope`，表示令牌缺少所需的权限范围。所有端点、对应的权限范围和错误都列在 [REST API 和 OAuth](/docs/developers/rest-api) 中。
+`401 INVALID_TOKEN` 表示令牌已过期或被撤销：请刷新令牌，或请用户重新连接。`403 INSUFFICIENT_SCOPE` 表示令牌缺少所需的权限范围。[API 参考](/docs/developers/api)列出了每个端点及其权限范围和错误。
 
 ## 6. 通过 webhook 接收事件 [#6-receive-events-with-webhooks]
 
 使用 REST Hooks API 代表用户订阅，而不是让他们粘贴 URL。这需要 `codes:write`，并且用户的套餐必须包含 [webhook](/docs/webhooks)（Business）；否则会返回 `402 PLAN_REQUIRED`。
 
-```bash
+```bash title="Terminal"
 curl https://api.qrdx.dev/v1/hooks \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"target_url": "https://acme.example/webhooks/qrdx", "events": ["scan.created", "form.submitted"]}'
 ```
 
-`201` 响应包含订阅的 `id` 和签名用的 `secret`，该密钥只显示一次。每次推送都会用它签名，并放在 `X-QRdx-Signature` 中；参见[验证签名](/docs/webhooks#verify-signatures)。用户断开连接时，用 `DELETE /v1/hooks/{id}` 取消订阅。订阅也会出现在用户自己工作区的“设置 → Webhooks”中，他们可以在那里删除。
+`201` 响应包含订阅的 `id` 和用于签名的 `secret`，该密钥只显示一次。每次投递都会用它签名并放在 `X-QRdx-Signature` 中；参见[验证签名](/docs/webhooks#verify-signatures)。当用户断开连接时，使用 `DELETE /v1/hooks/{id}` 取消订阅。这些订阅也会显示在他们自己工作区的 **Settings → Webhooks** 中，用户可以在那里删除它们。
 
-## 7. 撤销与 userinfo [#7-revoke-and-userinfo]
+## 7. 断开连接与识别用户 [#7-disconnect-and-identify-people]
 
-当用户在你的产品中断开 QRdx 时，请撤销他们的令牌。撤销一对令牌中的任意一个，整对令牌都会被撤销；即使令牌未知，该端点也会返回 `200`。
+当有人在你的产品中断开 QRdx 时，请撤销他们的令牌。撤销一对令牌中的任意一个，就会撤销整对；即使令牌未知，该端点也会返回 `200`。
 
-```bash
+```bash title="Terminal"
 curl -X POST https://qrdx.dev/api/oauth/revoke -d token=$REFRESH_TOKEN
 ```
 
-```ts
-await fetch("https://qrdx.dev/api/oauth/revoke", {
-  method: "POST",
-  body: new URLSearchParams({ token: refreshToken }),
-});
-```
+用户也可以随时自行收回访问权限：在 QRdx 的 **Settings → Authorized apps** 中点击 **Revoke access**。你的应用持有的、对应其账户的所有令牌会立即失效：API 调用返回 `401` 和 `invalid_token`，刷新则返回 `invalid_grant`。请将这两种情况都视为“已断开连接”，并请用户重新连接；他们会再次看到授权页面。
 
-### 撤销访问权限 [#revoking-access]
+要识别是谁连接了你的应用，请使用带有 `profile:read` 的令牌调用 `GET /api/oauth/userinfo`。它会返回 OpenID 风格的声明：`sub`、`name`、`email` 和 `picture`；请使用 `sub` 作为稳定的账户 id，因为邮箱可能会变。
 
-用户可以随时自行收回访问权限，方式是在 QRdx 的 **Settings → Authorized apps** 中操作。你的应用持有的、属于他们账户的所有令牌会立即失效：API 调用返回 `401` 且错误为 `invalid_token`，刷新则返回 `invalid_grant`。请把这两种情况都视为“已断开连接”，并请用户重新连接；他们会再次看到授权页面。
-
-要识别是谁连接的，请使用带 `profile:read` 的令牌调用 `GET /api/oauth/userinfo`。它会返回 OpenID 风格的声明：
-
-```bash
+```bash title="Terminal"
 curl https://qrdx.dev/api/oauth/userinfo -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
-```json
-{
-  "sub": "user id",
-  "name": "Ada Lovelace",
-  "email": "ada@example.com",
-  "picture": "https://..."
-}
+```json title="401 Unauthorized: an expired or revoked token"
+{"error":"invalid_token","error_description":"Invalid or expired token"}
 ```
-
-请使用 `sub` 作为稳定的账户 id；邮箱可能会变。
 
 ## 8. 上架 [#8-get-listed]
 
-当你的集成端到端运行正常后，可以申请将它加入[集成目录](/integrations)，它会作为你构建的 **Community** 集成显示。请发送邮件至 [support@qrdx.dev](mailto:support@qrdx.dev?subject=List%20my%20integration)（应用页面上的 **Get listed** 按钮会自动填好详细信息），内容包括：
+当你的集成完整跑通后，可以申请将其添加到[集成目录](/integrations)，它会作为由你构建的社区集成显示在其中。在你的应用页面上，点击 **Get listed** 会打开一封发往 [support@qrdx.dev](mailto:support@qrdx.dev?subject=List%20my%20integration) 的邮件，并已填好详细信息：
 
-- 应用的名称和 client ID；
+- 你的应用名称和 client ID；
 - 一句话说明它的功能和面向的用户；
-- 设置步骤，或步骤的链接；
+- 设置步骤，或其链接；
 - 支持联系方式。
 
-QRdx 团队会审核已上架的应用，并将其标记为**已验证**，授权页面上的“Unverified app”提示也会随之消失。修改已验证应用的名称、徽标或网站后，该标记会被移除，直到再次通过审核。
+QRdx 团队会审核上架的应用，并将其标记为 **Verified**，这会移除授权页面上的 **Unverified app.** 提示。更改已验证应用的名称、Logo 或网站后，徽章会被移除，直到重新通过审核。
+
+## 出现问题时 [#if-something-goes-wrong]
+
+### `invalid_request: redirect_uri not registered` [#invalid_request-redirect_uri-not-registered]
+
+授权 URL 中的 `redirect_uri` 与应用已注册的重定向 URI 没有逐字符完全匹配，协议和末尾的斜杠也包括在内。请把它添加到应用中，或者修正该 URL。
+
+### `invalid_scope` [#invalid_scope]
+
+授权 URL 请求了应用不具备的权限范围。请在 **Settings → API keys & apps** 中为应用添加该权限范围，然后重新请求。
+
+### 刷新时出现 `invalid_grant` [#invalid_grant-on-refresh]
+
+刷新令牌已被使用过（每次刷新都会返回新的刷新令牌）、已在 30 天后过期，或者用户已撤销你的应用。请让用户重新走一遍授权流程。
+
+### 重新生成密钥后令牌失效 [#tokens-stop-working-after-you-regenerated-the-secret]
+
+只有新的令牌请求才会使用新密钥；现有的访问令牌和刷新令牌仍然有效。请确认每个服务器实例读取的都是新的 `QRDX_CLIENT_SECRET`。
 
 ## 安全检查清单 [#security-checklist]
 
-- 将 client secret 保存在你的服务器上。浏览器和移动端代码绝不能接触到它。
-- 使用 PKCE（`S256`），并为每次授权使用新的 `state`，返回时校验 `state`。
-- 注册精确的重定向 URI；QRdx 会逐字符比较。
+- 把客户端密钥保存在你的服务器上。浏览器和移动端代码绝不能接触到它。
+- 使用 PKCE（`S256`），并在每次授权时使用全新的 `state`，返回时校验 `state`。
+- 注册精确的重定向 URI；QRdx 会逐字符比较它们。
 - 加密存储访问令牌和刷新令牌，并在每次刷新后保存新的刷新令牌。
-- 用户断开连接时撤销令牌。在“设置 → API 密钥与应用”中删除应用会撤销它签发的所有令牌；暂停应用则会拒绝这些令牌，直到你恢复为止。
+- 用户断开连接时撤销令牌。在 **Settings → API keys & apps** 中删除应用，会撤销它签发的所有令牌；暂停应用则会拒绝这些令牌，直到你恢复应用。
+
+## 相关内容 [#related]
+
+- [REST API 与 OAuth](/docs/developers/rest-api)：端点、权限范围、有效期和限制汇总
+- [Webhooks](/docs/webhooks)：你所订阅事件的负载、签名和重试机制
+- [API 参考](/docs/developers/api)：你的令牌可以调用的所有端点
+- [集成目录](/integrations)：已上架的应用显示的位置

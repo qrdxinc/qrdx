@@ -1,58 +1,145 @@
 ---
-title: "Instal pustaka React"
-description: "Instal pustaka React qrdx dan tampilkan kode QR pertama Anda hanya dengan beberapa baris."
+title: "Mulai menggunakan library React"
+description: "Instal qrdx, tampilkan kode QR bergaya di komponen React, lalu simpan sebagai file, hanya dalam beberapa menit."
 icon: Rocket
 ---
 
-Instal `qrdx` dan buat kode QR pertama Anda dalam hitungan menit.
+Setelah menyelesaikan halaman ini, Anda akan memiliki kode QR bergaya yang ditampilkan oleh komponen React, beserta tombol yang menyimpannya sebagai SVG. Library ini menggambar kodenya sendiri, jadi Anda tidak memerlukan akun maupun kunci API.
 
 <NpmStatus package="qrdx" />
 
-## Instal paket [#install-the-package]
+## Sebelum memulai [#before-you-start]
+
+- Aplikasi React dengan React 18 atau yang lebih baru. Next.js, Vite, Remix, dan lainnya semuanya bisa dipakai.
+- Node.js 18 atau yang lebih baru.
+
+Ingin melihat opsinya sebelum menulis kode? Atur gaya kode di [Playground](/playground?open=code&lang=react) dan salin sebagai komponen React.
+
+## Membangunnya [#build-it]
+
+### 1. Instal qrdx [#1-install-qrdx]
 
 ```package-install
-qrdx@latest
+qrdx
 ```
 
-`react` dan `react-dom` (versi 18 atau lebih baru) adalah peer dependency, sehingga `qrdx` memakai versi yang sudah ada di aplikasi Anda. Ekspor PDF bersifat opsional: instal `jspdf` hanya jika Anda membutuhkannya.
+`react` dan `react-dom` adalah peer dependency, jadi paket ini memakai versi yang sudah ada di aplikasi Anda. Tidak ada yang lain yang diinstal: ekspor PDF memerlukan paket opsional `jspdf`, dan hanya saat Anda menggunakannya.
 
-## Mulai Cepat [#quick-start]
+### 2. Tampilkan kode [#2-render-a-code]
 
-Buat kode QR pertama Anda:
+```tsx title="components/first-qr-code.tsx"
+import { QRCode } from "qrdx";
 
-```tsx
-import { QRCode } from 'qrdx';
+export function FirstQrCode() {
+  return <QRCode value="https://example.com" size={256} />;
+}
+```
 
-export default function App() {
+Letakkan komponen ini di sebuah halaman. Anda akan melihat kode berukuran 256 px dengan tampilan bawaan library: modul bulat, mata sudut berbentuk roda gigi, serta hitam di atas putih. Arahkan kamera ponsel ke layar dan kode ini akan membuka example.com.
+
+<Shot id="lib-first-code" />
+
+`QRCode` merender `<svg>` dan tidak memakai hook khusus browser, sehingga bisa berjalan di React Server Components dan dirender di HTML halaman sebelum JavaScript apa pun berjalan. Pembaca layar tidak mendapat informasi apa pun darinya jika dibiarkan sendiri: langkah 3 menunjukkan cara memberinya label.
+
+### 3. Atur gayanya [#3-style-it]
+
+```tsx title="components/styled-qr-code.tsx"
+import { QRCode } from "qrdx";
+
+export function StyledQrCode() {
   return (
     <QRCode
-      value="https://example.com"
+      value="https://example.com/menu"
       size={256}
+      margin={4}
+      fgColor="#1d4ed8"
+      bodyPattern="rounded"
+      cornerEyePattern="extra-rounded"
+      cornerEyeDotPattern="rounded"
+      frame={{ style: "banner-bottom", text: "Scan for the menu" }}
     />
   );
 }
 ```
 
-Selesai. Sekarang Anda sudah memiliki kode QR yang berfungsi.
+Kode kini berwarna biru dengan modul membulat, dan di bawahnya ada banner bertuliskan "Scan for the menu". Hasilnya lebih tinggi dari 256 px, karena bingkai ditambahkan di sekeliling kode, bukan digambar di atasnya, sehingga kode tetap bisa dipindai.
 
-Ingin mendesainnya terlebih dahulu? [Coba di Playground](/playground?open=code&lang=react): atur gaya kode di sana, lalu salin sebagai komponen React.
+<Shot id="lib-styled-code" />
 
-## Langkah Berikutnya [#next-steps]
+Fungsi masing-masing prop:
+
+- `margin` adalah quiet zone di sekeliling kode, dalam satuan modul. Nilai bawaannya 0, yang cocok untuk kode di dalam kartu yang punya padding sendiri. Gunakan 4 pada latar belakang yang ramai atau gelap.
+- `fgColor` menerima warna CSS apa pun atau gradien. `bgColor`, `eyeColor`, dan `dotColor` bekerja dengan cara yang sama.
+- `bodyPattern`, `cornerEyePattern`, dan `cornerEyeDotPattern` membentuk modul, mata sudut, dan titik di dalamnya. Tersedia {facts.bodyPatterns} pola badan, {facts.eyeShapes} bentuk mata, dan {facts.eyeCentres} pusat mata, semuanya digambar langsung di [Bentuk, mata, dan bingkai](/docs/styles).
+- `frame` menambahkan salah satu dari {facts.frameStyles} bingkai ajakan bertindak bawaan, atau bingkai buatan Anda sendiri.
+- `QRCode` hanya menerima prop milik kode itu sendiri dan `style`, tidak ada yang lain. Untuk memberi nama yang dapat diakses atau class pada kode, bungkus dalam sebuah elemen (`<div role="img" aria-label="QR code for the menu">`), atau render `QRCodeSVG`, yang menempatkan `aria-label`, `className`, dan atribut lain pada `<svg>`.
+
+### 4. Simpan sebagai file [#4-save-it-as-a-file]
+
+```tsx title="components/download-svg-button.tsx"
+"use client";
+
+import { downloadQRCode } from "qrdx";
+
+const menuCode = {
+  value: "https://example.com/menu",
+  margin: 4,
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+  frame: { style: "banner-bottom", text: "Scan for the menu" },
+} as const;
+
+export function DownloadSvgButton() {
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        downloadQRCode(menuCode, {
+          format: "svg",
+          size: { width: 1024, height: 1024 },
+          filename: "menu.svg",
+        })
+      }
+    >
+      Download SVG
+    </button>
+  );
+}
+```
+
+Mengklik tombol akan menyimpan `menu.svg`: kode yang sama seperti di layar, digambar pada 1024 px dan tetap tajam di ukuran berapa pun, yaitu file yang diminta oleh percetakan. Atur `format` ke `png`, `jpg`, atau `webp` untuk gambar, `eps` untuk file vektor bagi alat desain, atau `pdf` (memerlukan paket opsional `jspdf`).
+
+`downloadQRCode` memakai DOM browser, jadi tombolnya berada di Client Component. Server Component tetap dapat merendernya. Simpan opsi kode dalam satu objek, seperti di atas, agar file sesuai dengan pratinjau.
+
+### 5. Pastikan kode bisa dipindai [#5-check-that-it-scans]
+
+Lakukan pemindaian kode dengan dua atau tiga ponsel sebelum Anda mencetaknya. Untuk desain dengan warna tidak lazim atau logo, `getScanScore` menjalankan pemeriksaan yang sama di browser dan mengembalikan skor, nilai, serta hal yang perlu diperbaiki:
+
+```tsx title="lib/check-code.ts"
+import { getScanScore } from "qrdx";
+
+const { score, grade, checks } = await getScanScore({
+  value: "https://example.com/menu",
+  fgColor: "#1d4ed8",
+  bodyPattern: "rounded",
+});
+// score: 0 to 100, grade: "great" | "ok" | "risky" | "fails"
+// checks: [{ id, passed, message, fix? }]
+```
+
+Anda juga dapat mengunggah tangkapan layar atau foto kode yang sudah dicetak ke [pemeriksa pemindaian](/tools/scan-checker).
+
+## Jika terjadi masalah [#if-something-goes-wrong]
+
+- **`Module not found: Can't resolve 'qrdx'`.** Instal paket di workspace atau aplikasi yang mengimpornya, lalu mulai ulang server pengembangan.
+- **Kode tampil tetapi ponsel tidak dapat membacanya.** Tambahkan `margin={4}`, pertahankan modul gelap di latar terang, dan render dengan lebar minimal 128 px di layar. [Kode tidak bisa dipindai](/docs/help/troubleshooting/wont-scan) mencantumkan penyebab lainnya.
+- **`PDF export needs the optional "jspdf" package`.** Jalankan `npm install jspdf` di paket yang sama. SVG, PNG, JPG, WebP, dan EPS tidak memerlukan tambahan apa pun.
+
+## Terkait [#related]
 
 <Cards>
-  <Card
-    href="/docs/usage"
-    title="Pelajari Penggunaan"
-    description="Sesuaikan warna, pola, dan lainnya"
-  />
-  <Card
-    href="/docs/features/templates"
-    title="Gunakan Templat"
-    description="Terapkan gaya siap pakai secara instan"
-  />
-  <Card
-    href="/docs/api-reference"
-    title="Referensi API"
-    description="Dokumentasi lengkap semua prop"
-  />
+  <Card href="/docs/usage" title="Penggunaan dasar" description="Komponen mana yang dipakai, dan setiap prop yang mengatur tampilan kode." />
+  <Card href="/docs/nextjs" title="Kode QR di Next.js" description="Server Components, parameter rute, input langsung, dan unduhan di App Router." />
+  <Card href="/docs/features/patterns" title="Pilih bentuk modul dan mata" description="Setiap bentuk, dan pasangan yang sebaiknya dihindari." />
+  <Card href="/docs/api-reference" title="Referensi API library" description="Setiap komponen, fungsi, dan tipe yang diekspor oleh paket." />
 </Cards>

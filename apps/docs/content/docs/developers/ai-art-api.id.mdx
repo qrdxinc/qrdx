@@ -1,95 +1,82 @@
 ---
 title: "API seni AI"
-description: "Lukis kode QR ke dalam karya seni AI dengan satu panggilan REST atau satu alat MCP. QRdx memastikan setiap gambar dapat dipindai, dan setiap gambar memakai gambar seni AI bulanan di workspace Anda."
+description: "Lukis kode QR ke dalam karya seni AI dengan satu panggilan REST atau tool MCP generate_ai_art. QRdx memeriksa bahwa setiap gambar dapat dipindai, dan setiap gambar menggunakan satu dari gambar seni AI bulanan di workspace Anda."
 icon: Sparkles
 ---
 
-`POST https://api.qrdx.dev/v1/art` melukis kode QR ke dalam karya seni AI berdasarkan deskripsi dan mengembalikan gambarnya. Ini adalah [seni QR AI](/ai/art) yang sama seperti tab Art di Playground dan studio: {facts.artModel} melukis gambarnya, lalu QRdx memeriksa bahwa gambar itu dipindai ke konten Anda sebelum Anda menerimanya. Jika gambar dari model tidak dapat dipindai apa adanya, QRdx memperkuat kode secukupnya, pada piksel milik model itu sendiri.
+Di akhir halaman ini, Anda akan memiliki PNG 1024 px berisi kode QR di dalam sebuah gambar lukisan, yang sudah didekode oleh QRdx sebelum sampai ke Anda. Anda juga akan tahu cara menyandikan kode dinamis, bukan teks tetap, mode mana yang dipilih, dan arti setiap error.
 
-Anda memerlukan [kunci API](/docs/developers/api-keys) dengan cakupan `codes:write` (kunci **Akses penuh** memilikinya). Setiap gambar memakai satu dari gambar seni AI bulanan milik workspace kunci tersebut, yaitu jatah yang sama dengan yang dipakai aplikasi.
+`POST https://api.qrdx.dev/v1/art` melukis kode QR ke dalam karya seni AI berdasarkan deskripsi, lalu mengembalikan gambarnya. Fungsinya sama dengan [seni QR AI](/ai/art) di tab Art Playground dan di studio: {facts.artModel} melukis gambarnya, lalu QRdx memeriksa bahwa gambar itu dapat dipindai ke konten Anda sebelum diberikan. Jika gambar dari model tidak dapat dipindai apa adanya, QRdx memperkuat kode hanya sebatas yang diperlukan, pada piksel milik model itu sendiri.
 
-```bash
-curl https://api.qrdx.dev/v1/art \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
-  --max-time 90 -o art.json
-```
+<Callout type="info" title="Kunci API dan gambar bulanan">
+Endpoint ini memerlukan [kunci API](/docs/developers/api-keys) dengan cakupan `codes:write` (kunci **Full access** memilikinya). Setiap gambar menggunakan satu dari gambar seni AI bulanan di workspace pemilik kunci, yaitu jatah yang sama dengan yang dipakai aplikasi; [Paket dan batas](/docs/plans-and-limits) memuat angkanya per paket. Panggilan yang gagal, atau yang gambarnya tidak dapat dibuat agar bisa dipindai, tidak menggunakan gambar.
+</Callout>
 
-Satu panggilan memerlukan sekitar 15 hingga 45 detik dalam mode code, sekitar 25 hingga 45 detik dalam mode photo, dan sekitar 40 hingga 55 detik dalam mode scene, yang membuat gambarnya terlebih dahulu. Atur batas waktu klien HTTP Anda minimal 60 detik. Scene yang kehabisan waktu menjawab `504 AI_ART_TIMEOUT` dan tidak memakai gambar: coba lagi, atau gunakan mode code.
+## Sebelum memulai [#before-you-start]
 
-## Mengodekan tautan atau kode dinamis [#encode]
+- Kunci API dengan `codes:write`, diekspor sebagai `QRDX_API_KEY`.
+- Klien HTTP dengan batas waktu (timeout) minimal 60 detik. Satu panggilan memerlukan sekitar 15 hingga 45 detik dalam mode code, 25 hingga 45 detik dalam mode photo, dan 40 hingga 55 detik dalam mode scene, yang melukis gambarnya terlebih dahulu.
+- Untuk kode dinamis, `id`-nya dari [`GET /v1/codes`](/docs/developers/api/list-codes) atau dari respons yang [membuatnya](/docs/developers/api/create-codes).
 
-Kirim tepat satu dari berikut:
+## 1. Lukis kode untuk sebuah tautan [#1-paint-a-code-for-a-link]
 
-- `text`: tautan atau teks yang dimuat kode, maksimal 300 karakter. Seni ini berupa gambar, sehingga isinya tidak dapat diubah setelah Anda mencetaknya.
-- `code`: `id` salah satu [kode QR dinamis](/docs/dynamic-qr-codes) milik workspace. Seni ini mengodekan tautan pendek dari kode tersebut, sehingga Anda dapat mengubah tujuannya setelah dicetak, dan pemindaiannya muncul di analitik. Kode dari workspace lain, atau yang ada di tempat sampah, menghasilkan `404`.
+<Tabs groupId="language" persist items={["curl", "JavaScript", "Python"]}>
+  <Tab value="curl">
+    ```bash title="Terminal"
+    curl https://api.qrdx.dev/v1/art \
+      -H "Authorization: Bearer $QRDX_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"}' \
+      --max-time 90 -o art.json
+    ```
+  </Tab>
+  <Tab value="JavaScript">
+    ```js title="art.mjs"
+    import { writeFile } from "node:fs/promises";
 
-```bash
-curl https://api.qrdx.dev/v1/art \
-  -H "Authorization: Bearer $QRDX_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"code": "cm5code0spring0menu00001", "prompt": "a bistro chalkboard menu on a brick wall", "mode": "scene"}' \
-  --max-time 90
-```
+    const response = await fetch("https://api.qrdx.dev/v1/art", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.QRDX_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: "https://qrdx.dev",
+        prompt: "a koi pond at dusk, ink and watercolor",
+      }),
+      signal: AbortSignal.timeout(90_000),
+    });
+    const { data, credits } = await response.json();
+    // data.imageUrl is a data: URL; save the PNG bytes
+    const base64 = data.imageUrl.split(",")[1];
+    await writeFile("art.png", Buffer.from(base64, "base64"));
+    console.log(data.text, data.blend, credits.remaining);
+    ```
+  </Tab>
+  <Tab value="Python">
+    ```python title="art.py"
+    import base64
+    import os
+    import requests
 
-Dapatkan `id` kode dari [`GET /v1/codes`](/docs/developers/api/list-codes) atau saat Anda [membuatnya](/docs/developers/api/create-codes).
+    response = requests.post(
+        "https://api.qrdx.dev/v1/art",
+        headers={"Authorization": f"Bearer {os.environ['QRDX_API_KEY']}"},
+        json={"text": "https://qrdx.dev", "prompt": "a koi pond at dusk, ink and watercolor"},
+        timeout=90,
+    )
+    response.raise_for_status()
+    body = response.json()
+    png = base64.b64decode(body["data"]["imageUrl"].split(",", 1)[1])
+    open("art.png", "wb").write(png)
+    print(body["data"]["text"], body["data"]["blend"], body["credits"]["remaining"])
+    ```
+  </Tab>
+</Tabs>
 
-## Permintaan [#request]
+Responsnya berupa JSON dengan gambar sebagai URL `data:`:
 
-| Kolom | Default | Deskripsi |
-| --- | --- | --- |
-| `text` | | Yang dikodekan oleh kode. Kirim ini atau `code` |
-| `code` | | `id` kode dinamis, sebagai pengganti `text` |
-| `prompt` | ditulis untuk Anda | Karya seni yang dilukis, dalam kata-kata sederhana; lihat [Prompt yang ditulis untuk Anda](#written-prompt) |
-| `mode` | `code` | Bagaimana kode berada di dalam seni; lihat [Mode](#modes) |
-| `style` | | Id tampilan cepat, digabungkan dengan prompt Anda; lihat [Tampilan cepat](#quick-looks) |
-| `negativePrompt` | | Apa yang tidak boleh ada di gambar |
-| `visibility` | `50` | Visibilitas QR, `0` hingga `100`: semakin tinggi kode semakin jelas terlihat, semakin rendah gambar lebih diutamakan |
-| `creativity` | `45` | `0` mengikuti prompt secara harfiah, `100` menafsirkannya secara bebas |
-| `seed` | acak | Kirim seed dari respons sebelumnya untuk mendapatkan gambar yang mirip |
-| `reference` | | Gambar referensi untuk warna dan bentuk, seperti logo atau palet |
-| `photo` | | Hanya untuk mode photo: gambar tempat kode dilukis |
-
-`reference` dan `photo` adalah URL `data:` PNG atau JPEG (`data:image/jpeg;base64,…`). Perkecil `reference` hingga sekitar 512 px pada sisi terpanjang (maksimal 600 KB), dan potong `photo` menjadi persegi sekitar 1024 px (maksimal 1 MB), yaitu ukuran pembuatan seni. Keduanya dikirim ke model lalu dibuang: QRdx tidak pernah menyimpan atau mencatatnya. Gambar yang lebih besar ditolak dengan `413 AI_ART_IMAGE_TOO_LARGE`.
-
-[Referensi API](/docs/developers/api/create-art) memuat skema lengkapnya.
-
-## Mode [#modes]
-
-| `mode` | Hasil yang Anda dapatkan |
-| --- | --- |
-| `code` | Kode adalah keseluruhan gambar: karya seni Anda dilukis ke dalam modulnya, dengan kotak pencari polos dan zona tenang yang terang di sekelilingnya. Paling andal dipindai |
-| `scene` | Gambar dilukis lebih dulu dari deskripsi, lalu kode dilukis di bagian tengahnya, sehingga gambar menyatu hingga ke dan melewati kode, dengan modul yang dibuat dari warna dan cahayanya |
-| `photo` | Sama, tetapi dengan `photo` Anda sendiri sebagai gambarnya: subjek, warna, dan cahayanya tetap ada di sekitar dan melewati kode. Kirim foto hanya dengan mode ini |
-
-## Tampilan cepat [#quick-looks]
-
-Tampilan cepat adalah gaya siap pakai, seperti medium atau suasana, yang ditambahkan QRdx ke `prompt` Anda sendiri: `"a koi pond in the rain"` dengan `"style": "watercolor"` melukis kolam koi sebagai cat air. Kirim id-nya sebagai `style`; nilai lain menghasilkan `400 VALIDATION_ERROR`. Tampilan ini sama dengan yang ditawarkan sebagai chip di [studio seni AI](/ai/art) dan tab Art di Playground, dan berfungsi di semua mode.
-
-| `style` | Tampilan |
-| --- | --- |
-| `watercolor` | Cat air |
-| `oil-painting` | Lukisan cat minyak |
-| `anime` | Anime |
-| `cartoon` | Kartun |
-| `pixel-art` | Seni piksel |
-| `pop-art` | Seni pop |
-| `charcoal` | Arang |
-| `ink` | Tinta |
-| `cyberpunk` | Cyberpunk |
-| `fantasy` | Fantasi |
-| `photographic` | Fotografis |
-| `low-poly` | Low poly |
-| `papercut` | Potongan kertas |
-
-## Prompt yang ditulis untuk Anda [#written-prompt]
-
-`prompt` bersifat opsional. Jika dihilangkan, QRdx lebih dulu menulis satu untuk `mode`, `style`, dan `photo` yang Anda kirim: satu adegan konkret dengan subjek, latar, dan cahaya, atau dalam mode photo, deskripsi isi foto Anda agar seni mempertahankannya. Penulisan ini tidak memakai gambar seni AI tambahan. Respons kemudian menyertakan hasil tulisan itu sebagai `writtenPrompt`, sehingga Anda dapat mengirimnya lagi, setelah diedit, di lain waktu. Jika penulisan gagal, Anda mendapat `502 AI_ART_DESCRIBE_FAILED` dan tidak ada gambar yang terpakai.
-
-## Respons [#response]
-
-```json
+```json title="200 OK (fields)"
 {
   "data": {
     "imageUrl": "data:image/png;base64,iVBORw0KGgo…",
@@ -99,31 +86,22 @@ Tampilan cepat adalah gaya siap pakai, seperti medium atau suasana, yang ditamba
     "mode": "code",
     "blend": "least",
     "blendStrength": 0.35,
-    "text": "https://qrdx.dev/q/aB3dE5f",
-    "code": { "id": "cm5code0spring0menu00001", "shortLink": "https://qrdx.dev/q/aB3dE5f" },
+    "text": "https://qrdx.dev",
     "visibility": 50,
     "creativity": 45
   },
-  "credits": {
-    "plan": "pro",
-    "limit": 30,
-    "used": 7,
-    "remaining": 23,
-    "pooled": false,
-    "resetsAt": "2026-02-01T00:00:00.000Z"
-  }
+  "credits": { "plan": "pro", "limit": 30, "used": 7, "remaining": 23, "pooled": false, "resetsAt": "2026-12-01T00:00:00.000Z" }
 }
 ```
 
-- `imageUrl` adalah PNG persegi 1024 px dalam bentuk URL `data:`. QRdx tidak menyimpan salinannya, jadi simpanlah.
-- `text` adalah persis hasil pemindaian gambar. QRdx telah mendekodenya sebelum menjawab.
-- `blend` menyatakan bagaimana gambar dibuat agar dapat dipindai: `none` (gambar model apa adanya), `least` (kotak pencari, zona tenang, dan modul diperkuat secukupnya, pada gambar model) atau `image-qr` (digambar ulang sebagai kode Image QR, pilihan terakhir). `blendStrength` bernilai dari `0` (apa adanya) hingga `1` (Image QR).
-- `writtenPrompt` hanya ada jika Anda menghilangkan `prompt`: deskripsi yang ditulis QRdx untuk Anda.
-- `credits` adalah jatah workspace setelah gambar ini.
+- `imageUrl` adalah PNG persegi 1024 px sebagai URL `data:`. QRdx tidak menyimpan salinannya, jadi simpanlah.
+- `text` adalah persis hasil pemindaian gambar. QRdx sudah mendekodenya sebelum menjawab.
+- `blend` menyatakan bagaimana gambar dibuat agar dapat dipindai: `none` (gambar model apa adanya), `least` (kotak finder, quiet zone, dan modul diperkuat hanya sebatas yang diperlukan, pada gambar model) atau `image-qr` (digambar ulang sebagai kode Image QR, pilihan terakhir). `blendStrength` bernilai dari `0` (apa adanya) sampai `1` (Image QR).
+- `credits` adalah sisa jatah workspace setelah gambar ini.
 
-Untuk mendapatkan PNG-nya langsung, bukan JSON, tambahkan `?format=png` atau kirim `Accept: image/png`. Seed, mode, blend, dan sisa gambar kemudian dikirim sebagai header `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength`, dan `X-QRdx-Credits-Remaining`.
+Untuk mendapatkan PNG-nya langsung, bukan JSON, tambahkan `?format=png` atau kirim `Accept: image/png`. Seed, mode, blend, dan sisa gambar kemudian dikirim lewat header `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength`, dan `X-QRdx-Credits-Remaining`:
 
-```bash
+```bash title="Terminal"
 curl "https://api.qrdx.dev/v1/art?format=png" \
   -H "Authorization: Bearer $QRDX_API_KEY" \
   -H "Content-Type: application/json" \
@@ -131,46 +109,120 @@ curl "https://api.qrdx.dev/v1/art?format=png" \
   --max-time 90 -o art.png
 ```
 
-## Kredit [#credits]
+## 2. Sandikan kode dinamis [#encode]
 
-API ini memakai gambar seni AI bulanan yang sama dengan aplikasi, dihitung untuk workspace tempat kunci berada. Gratis, Pro, dan Business masing-masing menyertakan sejumlah gambar per bulan, dan Business membagikannya ke seluruh tim; [Paket dan batas](/docs/plans-and-limits) memuat angkanya. Jatah direset pada tanggal 1 setiap bulan (UTC).
+Kirim tepat salah satu dari `text` dan `code`:
 
-- Panggilan yang gagal, atau yang gambarnya tidak dapat dibuat agar dapat dipindai, tidak memakai gambar.
-- Saat gambar bulan ini habis, API menjawab `AI_ART_CREDITS_EXHAUSTED`: `402` di Gratis dan Pro, tempat peningkatan paket menambah jatah, dan `429` di Business.
-- Setiap orang dapat membuat paling banyak 25 gambar per hari, di luar jatah bulanan (`429 AI_ART_DAILY_LIMIT`).
-- Setiap orang dapat memulai hingga 12 gambar per menit.
-- Setiap panggilan juga dihitung dalam kuota API harian workspace dan batas penulisan per menit ([Batas laju](/docs/developers/rest-api#rate-limits)).
+- `text`: tautan atau teks yang dimuat kode, hingga 300 karakter. Seni ini berupa gambar, sehingga kontennya tidak dapat diubah setelah dicetak.
+- `code`: `id` salah satu [kode dinamis](/docs/dynamic-qr-codes) di workspace. Seni ini menyandikan tautan pendek kode tersebut, sehingga Anda dapat mengubah tujuannya setelah dicetak, dan pemindaiannya tampil di analitik. Kode dari workspace lain, atau yang ada di tempat sampah, menghasilkan `404`.
 
-## Kesalahan [#errors]
+```bash title="Terminal"
+curl https://api.qrdx.dev/v1/art \
+  -H "Authorization: Bearer $QRDX_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"code": "cm5code0spring0menu00001", "prompt": "a bistro chalkboard menu on a brick wall", "mode": "scene"}' \
+  --max-time 90 -o art.json
+```
 
-Kesalahan memiliki bentuk yang umum untuk API ini (`code`, `message`, `status`); halaman [Kesalahan](/docs/developers/errors) mencantumkan semuanya. Berikut yang khusus untuk seni AI:
+Respons kemudian juga memuat `"code": { "id", "shortLink" }`, dan `text` adalah tautan pendeknya.
+
+## 3. Pilih mode dan tampilan [#modes]
+
+| `mode` | Yang Anda dapatkan |
+| --- | --- |
+| `code` (default) | Kode adalah keseluruhan gambar: karya seni Anda dilukis ke dalam modulnya, dengan kotak finder polos dan quiet zone terang di sekelilingnya. Paling andal dipindai |
+| `scene` | Gambar dilukis dahulu dari deskripsi, lalu kode dilukis di tengahnya, sehingga gambar menjangkau hingga ke dan menembus kode, dengan modul yang dibuat dari warna dan cahayanya |
+| `photo` | Sama, tetapi dengan `photo` Anda sendiri sebagai gambarnya: subjek, warna, dan cahayanya tetap ada di sekitar dan menembus kode. Kirim foto hanya dengan mode ini |
+
+### Tampilan cepat [#quick-looks]
+
+Tampilan cepat adalah gaya siap pakai, seperti medium atau suasana, yang ditambahkan QRdx ke `prompt` Anda: `"a koi pond in the rain"` dengan `"style": "watercolor"` melukis kolam koi sebagai cat air. Kirim id-nya sebagai `style`; nilai lain menghasilkan `400 VALIDATION_ERROR`. Tampilan ini sama dengan yang ditawarkan sebagai chip di [studio seni AI](/ai/art) dan tab Art Playground, dan berfungsi di semua mode.
+
+| `style` | Tampilan |
+| --- | --- |
+| `watercolor` | Cat air |
+| `oil-painting` | Lukisan cat minyak |
+| `anime` | Anime |
+| `cartoon` | Kartun |
+| `pixel-art` | Pixel art |
+| `pop-art` | Pop art |
+| `charcoal` | Arang |
+| `ink` | Tinta |
+| `cyberpunk` | Cyberpunk |
+| `fantasy` | Fantasi |
+| `photographic` | Fotografis |
+| `low-poly` | Low poly |
+| `papercut` | Potongan kertas |
+
+`prompt` bersifat opsional. Jika dihilangkan, QRdx lebih dahulu menuliskannya untuk `mode`, `style`, dan `photo` yang Anda kirim: satu adegan konkret dengan subjek, latar, dan cahaya, atau dalam mode photo, deskripsi isi foto Anda agar seninya mempertahankannya. Penulisan ini tidak menggunakan gambar seni AI tambahan. Respons kemudian menyertakan teks yang ditulis sebagai `writtenPrompt`, sehingga Anda dapat mengirimnya lagi, setelah diedit, di lain waktu. Jika penulisan gagal, Anda mendapat `502 AI_ART_DESCRIBE_FAILED` dan tidak ada gambar yang digunakan.
+
+## Kolom permintaan [#request-fields]
+
+| Kolom | Default | Deskripsi |
+| --- | --- | --- |
+| `text` | | Yang disandikan kode, hingga 300 karakter. Kirim ini atau `code` |
+| `code` | | `id` kode dinamis, sebagai pengganti `text` |
+| `prompt` | ditulis untuk Anda | Karya seni yang akan dilukis, dengan kata-kata biasa, minimal 3 karakter jika dikirim |
+| `mode` | `code` | `code`, `scene`, atau `photo`; lihat di atas |
+| `style` | | Id tampilan cepat, digabungkan dengan prompt Anda |
+| `negativePrompt` | | Hal yang tidak boleh ada di gambar |
+| `visibility` | `50` | Visibilitas QR, `0` sampai `100`: makin tinggi, kode makin jelas terlihat; makin rendah, gambar lebih diutamakan |
+| `creativity` | `45` | `0` mengikuti prompt secara harfiah, `100` menafsirkannya dengan bebas |
+| `seed` | acak | Kirim seed dari respons sebelumnya untuk gambar yang mirip |
+| `reference` | | Gambar referensi untuk warna dan bentuk, seperti logo atau palet |
+| `photo` | | Hanya mode photo: gambar tempat kode dilukis |
+
+`reference` dan `photo` berupa URL `data:` PNG atau JPEG (`data:image/jpeg;base64,…`). Perkecil `reference` hingga sekitar 512 px pada sisi terpanjangnya (maksimal 600 KB), dan potong `photo` menjadi persegi sekitar 1024 px (maksimal 1 MB), yaitu ukuran pembuatan seninya. Keduanya dikirim ke model lalu dibuang: QRdx tidak pernah menyimpan atau mencatatnya di log. Gambar yang lebih besar ditolak dengan `413 AI_ART_IMAGE_TOO_LARGE`. [Halaman referensi](/docs/developers/api/create-art) memuat skema lengkap dan panel Try it.
+
+## Kredit dan batas [#credits-and-limits]
+
+API menggunakan gambar seni AI bulanan yang sama dengan aplikasi, dihitung untuk workspace tempat kunci berada. Gratis, Pro, dan Business masing-masing menyertakan sejumlah gambar per bulan, dan Business membagikannya ke seluruh tim; [Paket dan batas](/docs/plans-and-limits) memuat angkanya. Jatah ini direset pada tanggal 1 setiap bulan (UTC).
+
+- Saat gambar bulan ini habis, API menjawab `AI_ART_CREDITS_EXHAUSTED`: `402` pada Gratis dan Pro, yang dapat menambah jatah lewat peningkatan paket, dan `429` pada Business.
+- Setiap orang dapat membuat paling banyak 25 gambar per hari, di luar jatah bulanan (`429 AI_ART_DAILY_LIMIT`), dan memulai hingga 12 gambar per menit.
+- Setiap panggilan juga dihitung terhadap kuota API harian workspace dan batas penulisan per menit ([Batas laju](/docs/developers/rest-api#rate-limits)).
+
+## Jika terjadi kesalahan [#if-something-goes-wrong]
+
+Kesalahan memiliki bentuk yang biasa dipakai API (`code`, `message`, `status`); [Kesalahan](/docs/developers/errors) mencantumkan semuanya. Tidak ada satu pun kesalahan `5xx` yang menggunakan gambar.
 
 | Status | `code` | Yang perlu dilakukan |
 | --- | --- | --- |
-| 400 | `AI_ART_TEXT_TOO_LONG` | Persingkat `text`, atau kirim `code` milik kode dinamis |
+| 400 | `AI_ART_TEXT_TOO_LONG` | Persingkat `text`, atau kirim `code` dari kode dinamis |
 | 402 | `AI_ART_CREDITS_EXHAUSTED` | Tunggu hingga tanggal 1 bulan berikutnya, atau tingkatkan paket |
 | 413 | `AI_ART_IMAGE_TOO_LARGE` | Perkecil ukuran `photo` atau `reference` |
 | 429 | `AI_ART_CREDITS_EXHAUSTED` | Business: tunggu hingga tanggal 1 bulan berikutnya |
 | 429 | `AI_ART_DAILY_LIMIT` | Coba lagi besok (UTC) |
-| 502 | `AI_ART_FAILED` | Model gagal atau menolak prompt. Coba lagi atau ubah susunan kalimatnya |
+| 502 | `AI_ART_FAILED` | Model gagal atau menolak prompt. Coba lagi atau ubah kata-katanya |
 | 502 | `AI_ART_UNSCANNABLE` | Coba lagi dengan `visibility` yang lebih tinggi atau seed lain |
-| 502 | `AI_ART_DESCRIBE_FAILED` | Tidak ada `prompt` yang dikirim dan pembuatan prompt otomatis gagal. Coba lagi atau kirim prompt Anda sendiri |
+| 502 | `AI_ART_DESCRIBE_FAILED` | Tidak ada `prompt` yang dikirim dan pembuatannya gagal. Coba lagi atau kirim prompt Anda sendiri |
 | 503 | `AI_ART_BUSY` | Model sedang sibuk. Tunggu semenit lalu coba lagi |
 | 503 | `AI_NOT_CONFIGURED` | Seni AI belum disiapkan di server ini (self-hosted) |
-| 504 | `AI_ART_TIMEOUT` | Model terlalu lama merespons (pada mode scene, gambar menyisakan terlalu sedikit waktu untuk melukis kode). Tidak ada gambar yang dipakai. Coba lagi, atau gunakan mode code |
+| 504 | `AI_ART_TIMEOUT` | Model terlalu lama (pada mode scene, gambar menyisakan terlalu sedikit waktu untuk melukis kode). Coba lagi, atau gunakan mode code |
 
-Tidak ada galat `5xx` yang memakai kuota gambar.
+Instance self-hosted tanpa Vercel AI Gateway menjawab setiap panggilan dengan:
+
+```json title="503 Service Unavailable"
+{"code":"AI_NOT_CONFIGURED","message":"AI QR art is not configured on this server","status":503}
+```
 
 ## MCP [#mcp]
 
-Dengan kunci API QRdx pada koneksi, [server MCP](/docs/developers/mcp) memiliki alat `generate_ai_art`. Alat ini menerima kolom yang sama dengan isi permintaan dan mengembalikan PNG, tujuan hasil pemindaian, serta sisa gambar bulan ini. Minta asisten Anda dengan kata-kata biasa:
+Dengan kunci API QRdx pada koneksi, [server MCP](/docs/developers/mcp) memiliki alat `generate_ai_art`. Alat ini menerima kolom yang sama dengan isi permintaan dan mengembalikan PNG, tujuan pemindaiannya, serta sisa gambar bulan ini. Minta asisten Anda dengan kata-kata biasa:
 
-```txt
+```txt title="Prompt"
 Make AI QR art for my code cm5code0spring0menu00001: a bistro chalkboard menu on a brick wall, as a scene.
 ```
 
-Tanpa kunci, alat ini menjawab dengan cara menambahkannya. Pemanggilan memakan waktu hingga satu menit, sama seperti REST API.
+Tanpa kunci, alat ini menjawab dengan cara menambahkannya. Panggilan ini memakan waktu hingga satu menit, seperti REST API.
 
 ## Self-hosting [#self-hosting]
 
-Seni AI berjalan melalui Vercel AI Gateway. Pada instans Anda sendiri, atur `AI_GATEWAY_API_KEY`; tanpa itu, `POST /v1/art` dan `generate_ai_art` menjawab `503 AI_NOT_CONFIGURED`.
+Seni AI berjalan melalui Vercel AI Gateway. Pada instance Anda sendiri, atur `AI_GATEWAY_API_KEY`; tanpanya, `POST /v1/art` dan `generate_ai_art` menjawab `503 AI_NOT_CONFIGURED`.
+
+## Terkait [#related]
+
+- [Buat seni QR AI](/docs/developers/api/create-art): halaman referensi dengan skema lengkap dan panel Try it
+- [Buat kode](/docs/developers/api/create-codes): buat kode dinamis yang harus dikodekan oleh seni tersebut
+- [Server MCP](/docs/developers/mcp): alat `generate_ai_art` untuk asisten
+- [Paket dan batas](/docs/plans-and-limits): jumlah gambar seni AI bulanan per paket

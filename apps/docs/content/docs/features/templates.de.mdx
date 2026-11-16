@@ -1,161 +1,189 @@
 ---
-title: "Templates"
-description: "Rahmen, die den Code in eine Grafik mit fester Größe einpassen, und die TemplateDefinition API für Rahmen, die du im Code zeichnest."
+title: "Eine Rahmenvorlage verwenden"
+description: "Zeichne einen Code in Arrow, Standard Box, Square Border, Striked Box, Halloween oder Dot Ring mit templateId, lege Text und Ring von Dot Ring fest und schreibe eine eigene Vorlage als TemplateDefinition."
 icon: LayoutTemplate
 ---
 
-Ein Template ist ein Rahmen, der den Code in seine eigene Grafik einpasst. Im Playground gibt es keine separate Liste für Templates. Arrow, Standard Box, Square Border, Striked Box, Halloween und Dot Ring sind Kacheln in der Gruppe **Classic** der Rahmenauswahl, neben den anderen [Rahmen](/docs/features/frames). Wenn du einen Rahmen wählst, ersetzt er den vorherigen.
+Eine Vorlage ist ein Rahmen, der den Code in ein Artwork mit fester Größe einpasst. Du übergibst ihre ID als `templateId`, und die Komponente zeichnet das gesamte Artwork in `size`, wobei der Code darin kleiner ist. Diese Seite listet die integrierten Vorlagen, die Optionen von Dot Ring und das Zeichnen einer Vorlage im Code auf.
 
-Templates unterscheiden sich in einem Punkt von den anderen Rahmen: der Größe. Ein Rahmen fügt Platz um den Code hinzu, also ist `size` die Breite des Codes und das Bild wächst. Ein Template zeichnet seine gesamte Grafik in `size`, und der Code ist darin kleiner.
+Gestaltest du stattdessen im Playground oder im Dashboard? Vorlagen sind Kacheln in der Gruppe **Classic** der Rahmenauswahl; siehe [Rahmen und Call-to-Action hinzufügen](/docs/help/designing/frames) in der Hilfe.
 
-## Integrierte Templates [#built-in-templates]
+Vorlagen unterscheiden sich in einem Punkt von den anderen [Rahmen](/docs/features/frames): der Größe. Ein Rahmen fügt Platz um den Code hinzu, also ist `size` die Breite des Codes und das Bild wächst. Eine Vorlage zeichnet ihr gesamtes Artwork in `size`, wobei der Code darin kleiner ist.
 
-Übergib die ID als `templateId`. Die Image API nimmt sie als `template`, die CLI als `--template`.
+## Integrierte Vorlagen [#built-in-templates]
 
 | `templateId` | Name | Farbe |
-|--------------|------|-------|
+| --- | --- | --- |
 | `Arrow` | Arrow | Die dunkle Farbe des Codes (`fgColor`) |
 | `StandardBox` | Standard Box | `fgColor` |
 | `SquareBorder` | Square Border | `fgColor` |
 | `StrikedBox` | Striked Box | Eigene dunkle Farbe |
 | `Halloween` | Halloween | Eigenes Orange, Grün und Schwarz |
-| `DotRing` | Dot Ring | Ring in `fgColor`, Text in Weiß; beides lässt sich ändern (unten) |
+| `DotRing` | Dot Ring | Ring in `fgColor`, Text in Weiß; beides lässt sich ändern (siehe unten) |
 
-`default` zeichnet keine Grafik. Es rückt den Code nur ein wenig ein, auf 95 % von `size`.
+`default` zeichnet kein Artwork. Es rückt den Code nur ein wenig ein, auf 95 % von `size`. Ohne `templateId` füllt der Code `size` aus.
 
-```tsx
-import { QRCode } from 'qrdx';
+```tsx title="components/arrow-code.tsx"
+import { QRCode } from "qrdx";
 
-<QRCode value="https://example.com" templateId="Arrow" fgColor="#1a56db" size={256} />
+export function ArrowCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      templateId="Arrow"
+      fgColor="#1a56db"
+    />
+  );
+}
 ```
 
-Farben, Muster und ein Logo bleiben bei den eigenen Props des Codes, sodass ein Template mit jedem Stil funktioniert:
+<Shot id="lib-templates" />
 
-```tsx
-<QRCode
-  value="https://example.com"
-  templateId="StandardBox"
-  fgColor="#1a56db"
-  imageSettings={{
-    src: "/your-logo.png",
-    width: 48,
-    height: 48,
-    excavate: true,
-  }}
-  size={512}
-/>
+Farben, Muster und ein Logo bleiben bei den eigenen Props des Codes, daher funktioniert eine Vorlage mit jedem Stil:
+
+```tsx title="components/boxed-logo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function BoxedLogoCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={512}
+      templateId="StandardBox"
+      fgColor="#1a56db"
+      level="H"
+      logo="/logo.png"
+    />
+  );
+}
 ```
+
+Die Image API nimmt eine Vorlage als `template` entgegen, die CLI als `--template`.
 
 ## Dot Ring [#dot-ring]
 
-Ein runder Code. Der Code sitzt in einer Scheibe aus Punkten innerhalb eines dunklen Rings, mit einer Textzeile entlang des Rings. Welche Punkte angezeigt werden, ergibt sich aus einem Hash des Code-Inhalts. So bekommt jeder Link seinen eigenen Ring, und derselbe Link bekommt immer denselben.
+Ein runder Code. Der Code sitzt in einer Scheibe aus Punkten innerhalb eines dunklen Rings, mit einer Textzeile entlang des Rings. Welche Punkte sichtbar sind, ergibt sich aus einem Hash des Code-Inhalts. So bekommt jeder Link seinen eigenen Ring, und derselbe Link bekommt immer denselben.
 
-```tsx
-<QRCode
-  value="https://example.com"
-  templateId="DotRing"
-  bodyPattern="circle-large"
-  size={512}
-/>
+```tsx title="components/dot-ring-code.tsx"
+import { QRCode } from "qrdx";
+
+export function DotRingCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={512}
+      templateId="DotRing"
+      bodyPattern="circle-large"
+      customProps={{
+        customText: "Scan for the menu",
+        textPosition: "bottom",
+        textColor: "#fde047",
+        outerCircleColor: "#1e3a8a",
+      }}
+    />
+  );
+}
 ```
 
-Die Einstellungen kommen in `customProps` (typisiert als `DotRingProps`):
-
-```tsx
-<QRCode
-  value="https://example.com"
-  templateId="DotRing"
-  customProps={{
-    customText: "Scan for the menu",
-    textPosition: "bottom",
-    textColor: "#fde047",
-    outerCircleColor: "#1e3a8a",
-  }}
-  size={512}
-/>
-```
+Die Einstellungen kommen in `customProps`, typisiert als `DotRingProps`:
 
 | Prop | Standard | Hinweise |
 | --- | --- | --- |
-| `customText` | „Scan the QR code“ viermal rund um den Ring | Text entlang des Rings; `""` lässt den Ring leer. Zu langer Text wird angepasst (unten) |
-| `textFill` | `"none"` | `"repeat"` wiederholt den Text rund um den ganzen Ring (unten) |
+| `customText` | „Scan the QR code *“ viermal rund um den Ring | Text entlang des Rings; `""` lässt den Ring leer. Zu langer Text wird angepasst (siehe unten) |
+| `textFill` | `"none"` | `"repeat"` wiederholt den Text rund um den ganzen Ring (siehe unten) |
 | `textPosition` | `"top"` | `"top"`: oben zentriert, im Uhrzeigersinn gelesen. `"bottom"`: unten zentriert entlang des Rings, von links nach rechts gelesen |
-| `textRotation` | `0` | Dreht den Text um die Mitte, in Grad |
+| `textRotation` | `0` | Dreht den Text um die Mitte, in Grad im Uhrzeigersinn |
 | `textColor` | `#ffffff` | Textfarbe |
-| `fontFamily` | Systemschriften-Stack | CSS-Schriftfamilie des Texts |
+| `fontFamily` | System-Schriftstapel | CSS-Schriftfamilie des Textes |
 | `fontWeight` | `900` | Schriftstärke |
-| `fontSize` | `32` | In der 593 Einheiten großen Zeichnung des Templates, in der der Code 300 breit ist. Langer Text wird eventuell kleiner gezeichnet |
+| `fontSize` | `32` | In der 593 Einheiten großen Zeichnung der Vorlage, in der der Code 300 breit ist. Langer Text kann kleiner gezeichnet werden |
 | `fontLetterSpacing` | `3.5` | Zusätzlicher Abstand zwischen den Buchstaben, in denselben Einheiten. Langer Text und `textFill` passen ihn an |
 | `outerCircleColor` | `fgColor` | Ringfarbe |
-| `strokeWidth`, `strokeColor` | `0`, `#000000` | Eine Kontur entlang beider Kanten des Rings |
-| `outerStrokeWidth`, `outerStrokeColor` | `strokeWidth`, `strokeColor` | Nur die Außenkante des Rings |
-| `innerStrokeWidth`, `innerStrokeColor` | `strokeWidth`, `strokeColor` | Nur die Innenkante des Rings |
+| `strokeWidth`, `strokeColor` | `0`, `#000000` | Eine Kontur an beiden Rändern des Rings |
+| `outerStrokeWidth`, `outerStrokeColor` | `strokeWidth`, `strokeColor` | Nur der äußere Rand des Rings |
+| `innerStrokeWidth`, `innerStrokeColor` | `strokeWidth`, `strokeColor` | Nur der innere Rand des Rings |
 
-Text, der auf den Ring passt, wird wie angegeben gesetzt, oben zentriert oder unten entlang des Rings. Zu langer Text läuft nie in seinen eigenen Anfang hinein. Zuerst rücken die Buchstaben näher zusammen, dann wird die Schrift kleiner, bis auf die Hälfte der Standardgröße (die kleinste Größe für Rahmenbeschriftungen). Danach schließt der Text den Ring mit einem Wortabstand dort, wo er auf seinen Anfang trifft. Passt er bei dieser Größe immer noch nicht, behält Text, der eine Phrase wiederholt, so viele ganze Wiederholungen, wie passen. Anderer Text wird nach dem letzten ganzen Wort abgeschnitten, das noch passt, und endet mit „…“.
+Text, der auf den Ring passt, wird wie angegeben gesetzt, oben zentriert oder unten entlang des Rings. Zu langer Text läuft nie in seinen eigenen Anfang: Zuerst rücken die Buchstaben näher zusammen, dann wird die Schrift kleiner, bis auf die halbe Standardgröße. Der Text schließt den Ring dann mit einem Wortabstand, wo er auf seinen Anfang trifft. Passt er immer noch nicht, behält Text, der eine Phrase wiederholt, so viele ganze Kopien, wie passen, und anderer Text wird nach dem letzten ganzen Wort, das passt, abgeschnitten und endet mit einem Auslassungszeichen.
 
 Ein Logo kommt wie bei jedem Code in die Mitte. Lange Links (Codes mit mehr als 49 Modulen Breite) behalten ein helles Band zwischen dem Code und den Punkten, damit sie auch klein gedruckt noch scannen.
 
-Der Text ist SVG-Text in der Schrift, die du wählst. Standard ist der Systemschriften-Stack, es wird also nichts heruntergeladen. SVG- und PNG-Downloads im Browser verwenden die Schriften des Betrachters. PDF und EPS drucken ihn in Helvetica Bold, verwende dort also Latin-1-Text. `getQRAsPNG` aus `qrdx/node` braucht eine auf dem Server installierte Schrift, genau wie Rahmenbeschriftungen.
+Der Text ist SVG-Text in der Schrift, die du wählst; der Standard ist der System-Schriftstapel, also wird nichts heruntergeladen. SVG- und PNG-Downloads im Browser verwenden die Schriften des Betrachters. PDF und EPS drucken ihn in Helvetica Bold, verwende dort also Latin-1-Text. `getQRAsPNG` aus `qrdx/node` braucht eine auf dem Server installierte Schrift, genau wie Rahmenbeschriftungen.
 
-### Den Ring füllen [#filling-the-ring]
+### Den Ring füllen [#fill-the-ring]
 
-Ein kurzer Satz lässt einen Teil des Rings leer. Setze `textFill: "repeat"`, um ihn so oft zu wiederholen, wie er passt. Der Abstand wird ausgeglichen, sodass sich der Ring mit demselben Abstand schließt wie zwischen den Kopien:
+Eine kurze Phrase lässt einen Teil des Rings leer. Setze `textFill: "repeat"`, um sie so oft zu wiederholen, wie sie passt, wobei der Abstand ausgeglichen wird, damit der Ring mit derselben Lücke schließt wie zwischen den Kopien:
 
-```tsx
-<QRCode
-  value="https://example.com/docs"
-  templateId="DotRing"
-  customProps={{ customText: "Read the docs *", textFill: "repeat" }}
-  size={512}
-/>
+```tsx title="components/docs-ring-code.tsx"
+import { QRCode } from "qrdx";
+
+export function DocsRingCode() {
+  return (
+    <QRCode
+      value="https://example.com/docs"
+      size={512}
+      templateId="DotRing"
+      customProps={{ customText: "Read the docs *", textFill: "repeat" }}
+    />
+  );
+}
 ```
 
-Gib den Satz nur einmal an. Text, der einen Satz bereits wiederholt, etwa `"Make your own * Make your own *"`, wird als dieser Satz gelesen und füllt den Ring genauso.
+Gib die Phrase nur einmal an. Text, der bereits eine Phrase wiederholt, etwa `"Make your own * Make your own *"`, wird als diese Phrase gelesen und füllt den Ring daher genauso.
 
-## Templates sind Frame-Specs [#templates-are-frame-specs]
+## Vorlagen sind Rahmen-Spezifikationen [#templates-are-frame-specs]
 
-Die Grafik von Arrow, Standard Box, Square Border, Striked Box und Halloween ist eine [Frame-Spec](/docs/features/frames#frame-specs), im selben JSON-Format wie jeder andere Rahmen und von derselben Engine gezeichnet. `getTemplate(id).spec` gibt sie zurück. Nutze sie als Rahmen, wenn du die Größenlogik eines Rahmens willst (der Code behält seine Größe und die Grafik wächst um ihn herum) und die Farboption des Rahmens:
+Das Artwork von Arrow, Standard Box, Square Border, Striked Box und Halloween ist eine [Rahmen-Spezifikation](/docs/features/frames#frame-specs), im selben JSON-Format wie jeder andere Rahmen und von derselben Engine gezeichnet. `getTemplate(id).spec` gibt sie zurück. Verwende sie als Rahmen, wenn du die Größenlogik eines Rahmens willst (der Code behält seine Größe und das Artwork wächst um ihn herum) und die Farboption des Rahmens:
 
-```tsx
-import { getTemplate, QRCode } from 'qrdx';
+```tsx title="components/arrow-frame-code.tsx"
+import { getTemplate, QRCode } from "qrdx";
 
-const spec = getTemplate('Arrow')?.spec;
+const spec = getTemplate("Arrow")?.spec;
 
-<QRCode
-  value="https://example.com"
-  frame={spec && { style: 'custom', spec, color: '#1a56db' }}
-  size={256}
-/>
+export function ArrowFrameCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      frame={spec && { style: "custom", spec, color: "#1a56db" }}
+    />
+  );
+}
 ```
 
-Dot Ring hat keine Spec: Seine Punkte ergeben sich aus dem Inhalt des Codes, deshalb zeichnet er sie im Code (siehe [Rahmen, die du im Code zeichnest](#frames-you-draw-in-code)).
+Dot Ring hat keine Spezifikation: Seine Punkte ergeben sich aus dem Inhalt des Codes, deshalb zeichnet er sie im Code (siehe [Eine Vorlage im Code zeichnen](#draw-a-template-in-code)).
 
-`templateId` zeichnet dieselbe Grafik wie zuvor. Gespeicherte Designs, Bild-URLs, CLI-Befehle und Code mit einer Template-ID sehen aus wie immer.
+`templateId` zeichnet dasselbe Artwork wie zuvor. Gespeicherte Designs, Bild-URLs, CLI-Befehle und Code, die eine Vorlagen-ID verwenden, sehen aus wie immer.
 
-## Template-Registry [#template-registry]
+## Vorlagen-Registry [#template-registry]
 
-```tsx
-import { getAllTemplates, getTemplate, getTemplateIds } from 'qrdx';
+```ts title="lib/templates.ts"
+import { getAllTemplates, getTemplate, getTemplateIds } from "qrdx";
 
-getTemplateIds(); // ['default', 'Arrow', 'StandardBox', ...]
+getTemplateIds(); // ["default", "Arrow", "StandardBox", "SquareBorder", "StrikedBox", "Halloween", "DotRing"]
 getAllTemplates(); // every TemplateDefinition, with its id and name
-getTemplate('Halloween'); // one by id
+getTemplate("Halloween"); // one by id, or undefined
 ```
 
-## Rahmen, die du im Code zeichnest [#frames-you-draw-in-code]
+## Eine Vorlage im Code zeichnen [#draw-a-template-in-code]
 
-Eine Frame-Spec beschreibt eine feste Grafik. Wenn die Grafik berechnet werden muss, schreibe eine `TemplateDefinition` und übergib sie als `customTemplate`. Ihr `wrapper` erhält den Code als `children` und gibt das zu zeichnende SVG zurück. Er zeichnet auf einer Leinwand von 300 mal 300, und der Code kommt ebenfalls in dieser Größe an, verkleinere ihn also, um Platz für deine Grafik zu lassen. `props` enthält `fgColor` und `bgColor` des Codes, und das dritte Argument enthält `url` und `pixelSize` des Codes.
+Eine Rahmen-Spezifikation beschreibt festes Artwork. Muss das Artwork berechnet werden, schreibe eine `TemplateDefinition` und übergib sie als `customTemplate`. Ihr `wrapper` erhält den Code als `children` und gibt das zu zeichnende SVG zurück. Er zeichnet auf einer Fläche von 300 mal 300, und der Code kommt ebenfalls in dieser Größe an, verkleinere ihn also, um Platz für dein Artwork zu lassen. `props` enthält `fgColor` und `bgColor` des Codes, und das dritte Argument enthält `url` und `pixelSize` des Codes.
 
 Dieses Beispiel zeichnet einen Ring um den Code:
 
-```tsx
+```tsx title="components/ring-template-code.tsx"
 import { QRCode, type TemplateDefinition } from "qrdx";
 
 const ringTemplate: TemplateDefinition = {
   id: "ring",
   name: "Ring",
   wrapper: (children, props) => (
-    <svg viewBox="0 0 300 300" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      viewBox="0 0 300 300"
+      width="300"
+      height="300"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <circle
         cx="150"
         cy="150"
@@ -170,18 +198,25 @@ const ringTemplate: TemplateDefinition = {
   ),
 };
 
-<QRCode
-  value="https://example.com"
-  customTemplate={ringTemplate}
-  fgColor="#1a56db"
-  size={256}
-/>
+export function RingTemplateCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      customTemplate={ringTemplate}
+      fgColor="#1a56db"
+    />
+  );
+}
 ```
 
-Halte den Code groß genug, damit er aus dem Abstand scannt, in dem Leute ihr Handy halten, und lass zwischen ihm und deiner Grafik einen hellen Abstand. Prüfe das Ergebnis mit dem [Scan-Score](/docs/features/frames#will-it-scan).
+`customTemplate` hat Vorrang vor `templateId`, wenn beide gesetzt sind. Halte den Code groß genug, damit er von dort scannt, wo Leute ihre Handys halten, und lasse zwischen ihm und deinem Artwork eine helle Lücke. Prüfe das Ergebnis mit dem [Scan-Score](/docs/features/frames#will-it-scan). Ohne JSX schreibst du den Wrapper mit `h` aus `qrdx/core`; siehe [Vanilla JavaScript](/docs/vanilla-js#custom-templates-without-jsx).
 
-## Nächste Schritte [#next-steps]
+## Verwandte Themen [#related]
 
-- [Rahmen](/docs/features/frames): alle Rahmen und das Frame-Spec-Format
-- [Muster](/docs/features/patterns): detaillierte Anpassung von Mustern
-- [Logos](/docs/features/logos): ein Logo zum Code hinzufügen
+<Cards>
+  <Card href="/docs/features/frames" title="Rahmen, Scan-Score und Druckdateien" description="Alle Rahmen und das Format der Rahmen-Spezifikation, das Vorlagen mitverwenden." />
+  <Card href="/docs/features/logos" title="Ein Logo im Code hinzufügen" description="Ein Logo in einem Code mit Vorlage." />
+  <Card href="/docs/styles" title="Formen, Augen und Rahmen" description="Jeder integrierte Rahmen live gezeichnet." />
+  <Card href="/docs/api-reference" title="Referenz der Bibliotheks-API" description="TemplateDefinition und die Vorlagenfunktionen." />
+</Cards>

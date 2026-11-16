@@ -1,137 +1,172 @@
 ---
-title: "Panduan self-hosting"
-description: "Jalankan aplikasi web QRdx Anda sendiri, termasuk kode QR dinamis dan halaman yang di-hosting, dengan Docker Compose atau Node.js."
+title: "Self-hosting QRdx"
+description: "Jalankan aplikasi web QRdx di server Anda sendiri dengan Docker Compose atau Node.js, lengkap dengan akun, kode QR dinamis, analitik, dan halaman yang di-hosting."
 icon: Server
 ---
 
-QRdx berlisensi AGPL-3.0, dan Anda dapat menjalankan aplikasi web (editor QR, akun, verifikasi dua langkah dan passkey, kode dinamis dan halaman yang di-hosting, tim, tema tersimpan, galeri komunitas, serta dokumentasi ini) di server Anda sendiri. Single sign-on workspace dan log audit workspace adalah pengecualian: keduanya berada di folder `ee/` yang berlisensi komersial dan tetap nonaktif kecuali Anda mengatur kunci lisensi (`QRDX_EE_LICENSE`). Menggunakannya di produksi memerlukan perjanjian tertulis dengan QRdx; lihat [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md). Anda tidak memerlukan semua ini untuk menggunakan [pustaka `qrdx` React](/docs/getting-started) atau CLI. Keduanya berjalan di mana saja tanpa backend, di bawah lisensi MIT. [Open source di QRdx](/open-source-qr-code-generator) mencantumkan setiap bagian repositori beserta lisensinya.
+Di akhir panduan ini, QRdx akan berjalan di URL Anda sendiri: editor QR, akun, kode QR dinamis dengan analitik pemindaian, halaman yang di-hosting, workspace, dan tema tersimpan, dengan database Postgres yang Anda kendalikan. Jalur Docker Compose memakan waktu sekitar setengah jam, sebagian besar untuk build image pertama.
 
-<Callout type="warn">
-  Penyiapan Docker ini masih baru. Jika ada yang tidak berfungsi, silakan [buka issue](https://github.com/qrdxinc/qrdx/issues).
+Aplikasi web ini bersifat open source di bawah lisensi AGPL-3.0. Dua bagian tidak termasuk: single sign-on workspace dan log audit berada di folder `ee/` di bawah lisensi komersial QRdx, dan tetap nonaktif kecuali Anda mengatur kunci lisensi (`QRDX_EE_LICENSE`). Penggunaannya di produksi memerlukan perjanjian tertulis dengan QRdx; lihat [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md). Anda tidak memerlukan semua ini untuk memakai [pustaka React `qrdx`](/docs/getting-started) atau [CLI](/docs/developers/cli): keduanya berjalan di mana saja tanpa backend, di bawah lisensi MIT. [Open source di QRdx](/open-source-qr-code-generator) mencantumkan setiap bagian repositori beserta lisensinya.
+
+<Callout type="warn" title="Pengaturan Docker masih baru">
+  Jika suatu langkah tidak berfungsi seperti yang tertulis, [buat issue](https://github.com/qrdxinc/qrdx/issues) beserta perintah yang Anda jalankan dan outputnya.
 </Callout>
 
-## Persyaratan [#requirements]
+## Sebelum memulai [#before-you-start]
 
-- Docker dengan Compose v2 dan BuildKit (Docker Desktop dan Docker Engine terbaru sudah menyertakan keduanya), atau Node.js 22 (22.22.3 atau lebih baru) dan [Bun](https://bun.com/docs/installation) 1.4 untuk penyiapan manual
-- Memori minimal 8 GB untuk Docker saat image dibuild
-- Cara untuk masuk agar akun dapat dibuat: aplikasi OAuth GitHub atau Google, atau [Resend](https://resend.com) untuk kode masuk lewat email. Kode dikirim lewat email hanya jika `NEXT_PUBLIC_APP_URL` bukan `localhost`. `bun run dev` mencetaknya di terminal, tetapi image Docker tidak melakukannya, sehingga pengujian Docker lokal memerlukan login GitHub atau Google.
-- Postgres: container yang disertakan di `docker-compose.yml`, atau database [Neon](https://neon.tech)
+- Docker dengan Compose v2 dan BuildKit (Docker Desktop dan Docker Engine terbaru sudah menyertakan keduanya), atau Node.js 22 (22.22.3 atau lebih baru) dan [Bun](https://bun.com/docs/installation) 1.4 untuk pengaturan manual.
+- Memori minimal 8 GB untuk Docker selama image di-build.
+- Cara untuk masuk, agar akun dapat dibuat: aplikasi OAuth GitHub atau Google, atau [Resend](https://resend.com) untuk kode masuk lewat email. Kode masuk hanya dikirim lewat email jika `NEXT_PUBLIC_APP_URL` bukan `localhost`. `bun run dev` menampilkannya di terminal, tetapi image Docker tidak, jadi uji coba Docker lokal memerlukan masuk lewat GitHub atau Google.
+- Postgres: container yang disertakan di `docker-compose.yml`, atau database [Neon](https://neon.tech).
+- Untuk penggunaan selain uji coba lokal, diperlukan domain dan reverse proxy yang mengakhiri HTTPS.
+
+Dokumentasi bukan bagian dari instance self-hosted. Instance Anda mengarahkan setiap tautan dokumentasi (`/docs` dan halaman di bawahnya, salinan Markdown-nya, dan `/llms-full.txt`) ke halaman yang sama di qrdx.dev.
 
 ### Cara kerja koneksi database [#how-the-database-connection-works]
 
-Aplikasi berkomunikasi dengan Postgres melalui driver HTTP serverless Neon.
+Aplikasi berkomunikasi dengan Postgres melalui driver HTTP serverless milik Neon.
 
 - **Neon:** langsung berfungsi. Atur `DATABASE_URL` ke connection string Neon Anda.
-- **Postgres biasa:** memerlukan proxy HTTP yang kompatibel dengan Neon di depannya. `docker-compose.yml` menjalankannya ([local-neon-http-proxy](https://github.com/TimoWilhelm/local-neon-http-proxy)) dan mengatur `DATABASE_HTTP_ENDPOINT` agar aplikasi mengirim query ke sana.
+- **Postgres biasa:** memerlukan proxy HTTP yang kompatibel dengan Neon di depannya. `docker-compose.yml` menjalankan satu ([local-neon-http-proxy](https://github.com/TimoWilhelm/local-neon-http-proxy)) dan mengatur `DATABASE_HTTP_ENDPOINT` agar aplikasi mengirim kuerinya ke sana.
 
-Skema berasal dari `packages/database/schema.ts` dan diterapkan dengan `drizzle-kit push`.
+Skema berasal dari `packages/database/schema.ts` dan diterapkan dengan `drizzle-kit push`. Tidak ada file migrasi yang perlu dijalankan secara manual.
+
+<Diagram id="self-hosting-stack" />
 
 ## Mulai cepat dengan Docker Compose [#quick-start-with-docker-compose]
 
 ### 1. Clone repositori [#1-clone-the-repository]
 
-```bash
+```bash title="Terminal"
 git clone https://github.com/qrdxinc/qrdx.git
 cd qrdx
 ```
 
 ### 2. Konfigurasikan environment [#2-configure-the-environment]
 
-```bash
+Salin file contoh ke root repositori, tempat Compose membacanya, lalu buat session secret:
+
+```bash title="Terminal"
 cp apps/app/.env.example .env
+openssl rand -base64 32
+# prints a 44-character string: paste it as BETTER_AUTH_SECRET below
 ```
 
-Edit `.env`:
+Buka `.env` dan atur nilai-nilai berikut. Baris lainnya boleh tetap dijadikan komentar.
 
-- `BETTER_AUTH_SECRET`: buat dengan `openssl rand -base64 32`
-- `NEXT_PUBLIC_APP_URL`: URL publik instans Anda, misalnya `https://qr.example.com`. Gunakan `http://localhost:3000` untuk pengujian lokal.
-- `BETTER_AUTH_URL`: hapus tanda komentarnya dan gunakan nilai yang sama
-- `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`: dari [aplikasi OAuth GitHub](https://github.com/settings/developers) dengan callback URL `<your url>/api/auth/callback/github`
-- atau `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`: dari [klien OAuth Google](https://console.cloud.google.com/apis/credentials) dengan redirect URI `<your url>/api/auth/callback/google`
+```bash title=".env"
+NEXT_PUBLIC_APP_URL=https://qr.example.com
+BETTER_AUTH_URL=https://qr.example.com
+BETTER_AUTH_SECRET=<the string openssl printed>
 
-Anda tidak perlu mengatur `DATABASE_URL`. Compose mengarahkan aplikasi ke container Postgres miliknya sendiri. Untuk mengubah kata sandi database, atur `POSTGRES_PASSWORD` sebelum start pertama.
+# One sign-in provider. The callback URL for GitHub is
+# <NEXT_PUBLIC_APP_URL>/api/auth/callback/github
+GITHUB_CLIENT_ID=<client ID of your GitHub OAuth app>
+GITHUB_CLIENT_SECRET=<its client secret>
+```
+
+Asal setiap nilai:
+
+| Variabel | Dari mana mendapatkannya |
+| --- | --- |
+| `NEXT_PUBLIC_APP_URL` | URL publik instance Anda, tanpa garis miring di akhir. Gunakan `http://localhost:3000` untuk uji coba lokal. |
+| `BETTER_AUTH_URL` | Nilai yang sama. Hapus tanda komentar pada baris ini. |
+| `BETTER_AUTH_SECRET` | Output dari `openssl rand -base64 32`. |
+| `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | [Aplikasi OAuth GitHub](https://github.com/settings/developers) dengan callback URL `<your url>/api/auth/callback/github`. |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Sebagai pengganti GitHub: [klien OAuth Google](https://console.cloud.google.com/apis/credentials) dengan redirect URI `<your url>/api/auth/callback/google`. |
+
+Biarkan `DATABASE_URL` apa adanya: Compose mengarahkan aplikasi ke container Postgres miliknya sendiri dan mengabaikan nilai di `.env`. Untuk mengubah kata sandi database, atur `POSTGRES_PASSWORD` sebelum start pertama.
 
 ### 3. Jalankan stack [#3-start-the-stack]
 
-```bash
+```bash title="Terminal"
 docker compose up -d --build
 ```
 
-Perintah ini membuild image, menjalankan Postgres dan proxy, menjalankan layanan sekali jalan `migrate` (`drizzle-kit push`), lalu menjalankan aplikasi di port 3000. Build pertama memakan waktu beberapa menit.
+Perintah ini membangun image, menjalankan Postgres dan proxy, menjalankan layanan sekali jalan `migrate` (`drizzle-kit push`), lalu menjalankan aplikasi di port 3000. Build pertama memakan waktu beberapa menit. Setelah selesai, keempat layanan terlihat seperti ini:
 
-```bash
-docker compose ps                    # migrate should show "exited (0)"
-docker compose logs -f migrate app   # follow the schema sync and the app
+```text title="docker compose ps (columns trimmed)"
+NAME              SERVICE    STATUS
+qrdx-db-1         db         running (healthy)
+qrdx-db-proxy-1   db-proxy   running
+qrdx-migrate-1    migrate    exited (0)
+qrdx-app-1        app        running
 ```
 
-### 4. Buat pengguna pertama Anda [#4-create-your-first-user]
+`migrate` memang dirancang untuk berhenti: ia menyinkronkan skema lalu berhenti. Untuk melihat sinkronisasi skema dan proses start aplikasi:
 
-Buka `NEXT_PUBLIC_APP_URL` di browser dan masuk dengan GitHub, Google, atau kode email. Akun Anda dibuat saat masuk pertama kali.
+```bash title="Terminal"
+docker compose logs -f migrate app
+```
 
-### 5. Buat admin pertama Anda [#5-create-your-first-admin]
+### 4. Masuk [#4-sign-in]
 
-Tambahkan alamat email akun yang baru Anda buat ke `.env`:
+Buka `NEXT_PUBLIC_APP_URL` di browser dan masuk dengan GitHub, Google, atau kode email. Akun Anda dibuat saat pertama kali masuk.
 
-```bash
+### 5. Jadikan diri Anda admin [#5-make-yourself-an-admin]
+
+Tambahkan alamat email akun yang Anda buat di langkah 4 ke `.env`:
+
+```bash title=".env"
 ADMIN_EMAILS=you@example.com
 ```
 
-Buat ulang container aplikasi agar perubahan terbaca, lalu masuk dan buka `/admin`:
+Buat ulang container aplikasi agar membaca perubahan tersebut, lalu masuk dan buka `/admin`:
 
-```bash
+```bash title="Terminal"
 docker compose up -d app
 ```
 
-`ADMIN_USER_IDS` bekerja dengan cara yang sama menggunakan ID pengguna.
+Alamat tersebut menjadi admin saat pertama kali membuka `/admin`. `ADMIN_USER_IDS` bekerja dengan cara yang sama menggunakan ID pengguna.
 
-## Menggunakan Neon atau database terkelola lainnya [#using-neon-or-another-managed-database]
+## Gunakan Neon atau Postgres terkelola lainnya [#use-neon-or-another-managed-postgres]
 
-Anda dapat melewati Postgres bawaan dan hanya menjalankan image aplikasi:
+Anda dapat melewati Postgres bawaan dan hanya menjalankan image aplikasi. Atur `DATABASE_URL` di `.env` ke connection string Neon Anda dan biarkan `DATABASE_HTTP_ENDPOINT` tidak diatur.
 
-```bash
+```bash title="Terminal"
 docker build -t qrdx --build-arg NEXT_PUBLIC_APP_URL=https://qr.example.com .
 docker run -d --env-file .env -p 3000:3000 qrdx
 ```
 
-Atur `DATABASE_URL` di `.env` ke connection string Neon Anda dan biarkan `DATABASE_HTTP_ENDPOINT` tidak diatur. Terapkan skema sekali (dan lagi setelah setiap pembaruan) dengan image migrator:
+Terapkan skema sekali, dan lagi setelah setiap pembaruan, dengan image migrator:
 
-```bash
+```bash title="Terminal"
 docker build --target migrator -t qrdx-migrate .
 docker run --rm -e DATABASE_URL="<your connection string>" qrdx-migrate
 ```
 
-## Penyiapan manual (Node.js) [#manual-setup-nodejs]
+## Pengaturan manual dengan Node.js [#manual-setup-with-nodejs]
 
-```bash
+```bash title="Terminal"
 git clone https://github.com/qrdxinc/qrdx.git
 cd qrdx
 bun install
 
-cp apps/app/.env.example apps/app/.env.local            # then edit it
+cp apps/app/.env.example apps/app/.env.local   # then edit it as in step 2
 
-bun run db:push                                          # apply the schema
-bun run --filter app dev                                 # http://localhost:3000
+bun run db:push                                # apply the schema
+bun run --filter app dev                       # http://localhost:3000
 ```
 
 Untuk produksi, build dan jalankan aplikasi:
 
-```bash
+```bash title="Terminal"
 bun x turbo build --filter=app
 bun run --filter app start
 ```
 
-`bun run db:push` terhubung dengan driver Neon, sehingga memerlukan database Neon. Untuk memakai Postgres Docker sebagai gantinya dalam pengembangan lokal, jalankan dengan `docker compose up -d db db-proxy`, terapkan skema dengan `docker compose run --rm migrate`, dan atur nilai berikut di `apps/app/.env.local`:
+`bun run db:push` terhubung dengan driver Neon, jadi memerlukan database Neon. Untuk memakai Postgres Docker bagi pengembangan lokal, jalankan dengan `docker compose up -d db db-proxy`, terapkan skema dengan `docker compose run --rm migrate`, lalu atur nilai berikut di `apps/app/.env.local`:
 
-```bash
+```bash title="apps/app/.env.local"
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/qrdx
 DATABASE_HTTP_ENDPOINT=http://localhost:4444/sql
 ```
 
 ## Variabel lingkungan [#environment-variables]
 
-[`apps/app/.env.example`](https://github.com/qrdxinc/qrdx/blob/main/apps/app/.env.example) mencantumkan setiap variabel beserta catatan singkat tentang cara mendapatkannya.
+[`apps/app/.env.example`](https://github.com/qrdxinc/qrdx/blob/main/apps/app/.env.example) mencantumkan setiap variabel beserta catatan tentang cara mendapatkannya. Aplikasi memeriksa setiap nilai saat dimulai, dan menolak untuk berjalan jika ada nilai wajib yang hilang atau nilai yang tidak valid, dengan menyebutkan nama variabelnya.
 
-### Minimum [#minimum]
+### Wajib [#required]
 
 | Variabel | Fungsi |
 | --- | --- |
@@ -139,87 +174,175 @@ DATABASE_HTTP_ENDPOINT=http://localhost:4444/sql
 | `DATABASE_URL` | String koneksi Postgres (diatur oleh Compose) |
 | `BETTER_AUTH_SECRET` | Menandatangani sesi dan cookie |
 
-Tambahkan satu penyedia OAuth (GitHub atau Google), atau Resend untuk kode masuk lewat email, agar pengguna bisa masuk.
+Tambahkan satu penyedia OAuth (GitHub atau Google), atau Resend untuk kode masuk lewat email, agar pengguna dapat masuk.
 
 ### Layanan opsional [#optional-services]
 
-| Layanan | Variabel | Jika tidak diatur |
+Setiap variabel hanya mengaktifkan fiturnya sendiri. Nilai kosong dianggap tidak diatur; nilai yang diatur tetapi tidak valid (URL yang bukan URL, kunci yang terlalu pendek) akan menghentikan aplikasi dengan menyebutkan nama variabelnya.
+
+| Layanan | Variabel | Tanpa variabel ini |
 | --- | --- | --- |
 | Masuk dengan GitHub | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | Masuk dengan GitHub tidak tersedia |
 | Masuk dengan Google | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Masuk dengan Google tidak tersedia |
 | URL dasar autentikasi | `BETTER_AUTH_URL` | Disimpulkan dari setiap permintaan, dengan peringatan di log |
-| Panel admin | `ADMIN_EMAILS`, `ADMIN_USER_IDS` | Tidak ada yang bisa membuka `/admin` |
+| Panel admin | `ADMIN_EMAILS`, `ADMIN_USER_IDS` | Tidak ada yang dapat membuka `/admin` |
 | Single sign-on workspace | `QRDX_EE_LICENSE` | Single sign-on tetap nonaktif: tidak ada **Sign in with SSO**, tidak ada pengaturan SSO, dan rute masuknya tidak tersedia. SSO berada di folder `ee/` di bawah lisensi komersial QRdx, sehingga penggunaan produksi memerlukan perjanjian tertulis dengan QRdx. Lihat [Single sign-on](/docs/help/teams/single-sign-on) |
-| Log audit workspace | `QRDX_EE_LICENSE` | Log audit tetap nonaktif: tidak ada yang dicatat dan tidak ada **Settings** → **Audit log**. Seperti single sign-on, fitur ini berada di folder `ee/` di bawah lisensi komersial QRdx. Barisnya disimpan selama {facts.auditLogRetentionDays} hari; proses harian `/api/cron/webhooks` menghapus baris yang lebih lama. Lihat [Log audit](/docs/help/teams/audit-log) |
-| Tema AI, penyempurnaan prompt, dan seni QR AI (Vercel AI Gateway) | `AI_GATEWAY_API_KEY` | Permintaan AI gagal dan halaman AI hilang dari navigasi dan sitemap. Editor tetap berfungsi normal. Buat kuncinya di akun Vercel Anda sendiri (AI Gateway, API keys); penggunaan ditagihkan ke kredit AI Gateway akun tersebut, dan aplikasi Anda tidak harus berjalan di Vercel. Model untuk setiap tugas diatur di `apps/app/lib/ai/models.ts` |
-| Asal tautan pendek | `NEXT_PUBLIC_SHORT_LINK_BASE_URL` | [Kode dinamis](/docs/dynamic-qr-codes#self-hosting) memakai `NEXT_PUBLIC_APP_URL` |
+| Log audit workspace | `QRDX_EE_LICENSE` | Log audit tetap nonaktif: tidak ada yang dicatat dan tidak ada **Settings** → **Audit log**. Seperti single sign-on, fitur ini berada di folder `ee/` di bawah lisensi komersial QRdx. Barisnya disimpan selama {facts.auditLogRetentionDays} hari; [job webhook terjadwal](#scheduled-jobs) menghapus baris yang lebih lama. Lihat [Log audit](/docs/help/teams/audit-log) |
+| Tema AI, penyempurnaan prompt, dan seni QR AI (Vercel AI Gateway) | `AI_GATEWAY_API_KEY` | Permintaan AI gagal dan halaman AI hilang dari navigasi dan sitemap. Editor tetap berfungsi normal. Buat kunci di akun Vercel Anda sendiri (AI Gateway, API keys); penggunaan ditagihkan ke kredit AI Gateway akun tersebut, dan aplikasi Anda tidak harus berjalan di Vercel. Model untuk setiap tugas diatur di `apps/app/lib/ai/models.ts` |
+| Origin tautan pendek | `NEXT_PUBLIC_SHORT_LINK_BASE_URL` | [Kode dinamis](/docs/dynamic-qr-codes#self-hosting) menggunakan `NEXT_PUBLIC_APP_URL` |
 | Salt privasi pemindaian | `SCAN_HASH_SALT` | Diturunkan dari `BETTER_AUTH_SECRET` |
-| Penyimpanan file (Cloudflare R2) | `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `R2_PUBLIC_BASE_URL` | Unggahan nonaktif; halaman tetap bisa menautkan ke file yang di-hosting di tempat lain. Lihat [File](/docs/files#set-up-storage-self-hosting) |
-| Email (Resend) | `RESEND_API_KEY`, `EMAIL_FROM` | Email dilewati dan dicatat di log, sehingga kode masuk lewat email tidak dapat dikirim; undangan tim memakai tautan yang bisa disalin. Lihat [Notifikasi](/docs/notifications#self-hosting) |
-| Domain kustom di Vercel | `VERCEL_API_TOKEN`, `VERCEL_PROJECT_ID`, `VERCEL_TEAM_ID` | Biarkan kosong jika tidak memakai Vercel: domain kemudian diverifikasi dengan record DNS `TXT`. Lihat [Domain kustom](/docs/custom-domains#self-hosting) |
-| Pengaturan DNS sekali klik (Domain Connect) | `DOMAIN_CONNECT_PROVIDER_ID`, `DOMAIN_CONNECT_SERVICE_ID`, `DOMAIN_CONNECT_PRIVATE_KEY` | Tidak ada tombol **Set up with …**: pengguna menambahkan record DNS sendiri. Memerlukan template Domain Connect milik Anda yang diterima oleh setiap penyedia DNS, dan kunci publiknya di DNS. Lihat [Domain kustom](/docs/custom-domains#self-hosting) |
-| Tugas terjadwal | `CRON_SECRET` | Di produksi, tugas ringkasan mingguan dan percobaan ulang webhook menolak berjalan, dan baris log audit yang lebih lama dari {facts.auditLogRetentionDays} hari tidak dihapus |
-| Keamanan tautan (Google Web Risk) | `WEB_RISK_API_KEY` | Tujuan hanya diperiksa dengan aturan offline. Lihat [Kontrol kode](/docs/code-controls) |
-| Pemeriksaan spam formulir (Cloudflare Turnstile) | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Formulir mengandalkan honeypot bawaan dan pembatasan laju |
-| Pembayaran (Polar) | `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `NEXT_PUBLIC_QRDX_PRO_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_PRO_YEARLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_YEARLY_PRODUCT_ID` | Peningkatan paket tidak berfungsi (paket tanpa product id menampilkan "Coming soon"), dan setiap akun memakai batas paket Gratis |
-| Harga euro | `NEXT_PUBLIC_QRDX_EUR_PRICES=1`, atur hanya setelah setiap produk di atas memiliki harga EUR di Polar | Pengunjung dari UE dan EEA melihat, dan ditagih, harga dalam US$ |
-| Program afiliasi | Tidak ada: hanya berjalan di qrdx.dev | Nonaktif: program afiliasi QRdx dan [ketentuannya](/legal/affiliate-terms) ditulis untuk qrdx.dev, sehingga salinan self-hosted tidak memiliki halaman **/affiliates**, tidak ada pendaftaran, tidak ada **Settings** → **Affiliate program**, dan tautan referral mengarah ke beranda. |
+| Penyimpanan file (Cloudflare R2) | `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `R2_PUBLIC_BASE_URL` | Unggahan nonaktif; halaman tetap dapat menautkan ke file yang di-hosting di tempat lain. Lihat [File](/docs/files#set-up-storage-self-hosting) |
+| Email (Resend) | `RESEND_API_KEY`, `EMAIL_FROM` | Email dilewati dan dicatat di log, sehingga kode masuk lewat email tidak dapat dikirim; undangan tim menggunakan tautan yang dapat disalin. Lihat [Notifikasi](/docs/notifications#self-hosting) |
+| Domain kustom di Vercel | `VERCEL_API_TOKEN`, `VERCEL_PROJECT_ID`, `VERCEL_TEAM_ID` | Biarkan tidak diatur di luar Vercel: domain kemudian diverifikasi dengan rekaman DNS `TXT`. Lihat [Domain kustom](/docs/custom-domains#self-hosting) |
+| Pengaturan DNS satu klik (Domain Connect) | `DOMAIN_CONNECT_PROVIDER_ID`, `DOMAIN_CONNECT_SERVICE_ID`, `DOMAIN_CONNECT_PRIVATE_KEY` | Tidak ada tombol **Set up with …**: pengguna menambahkan rekaman DNS sendiri. Memerlukan template Domain Connect Anda sendiri yang diterima oleh setiap penyedia DNS, dan kunci publiknya di DNS. Lihat [Domain kustom](/docs/custom-domains#self-hosting) |
+| Job terjadwal | `CRON_SECRET` | Di produksi, [rute ringkasan mingguan dan percobaan ulang webhook](#scheduled-jobs) menjawab `401`, sehingga ringkasan tidak dikirim, webhook yang gagal tidak dicoba ulang, dan baris log audit yang lebih lama dari {facts.auditLogRetentionDays} hari tidak dihapus |
+| Keamanan tautan (Google Web Risk) | `WEB_RISK_API_KEY` | Tujuan hanya diperiksa dengan aturan offline. Lihat [Kontrol kode](/docs/code-controls#safety-checks-on-links) |
+| Batas penyalahgunaan | `SAFETY_YOUNG_ACCOUNT_DAYS`, `SAFETY_YOUNG_ACCOUNT_DYNAMIC_PER_HOUR`, `SAFETY_RECHECK_BATCH` | Nilai bawaan di `apps/app/lib/safety/limits.ts` berlaku (7 hari, 30 kode per jam, 500 tujuan per pemeriksaan ulang) |
+| Pemeriksaan spam formulir (Cloudflare Turnstile) | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Formulir mengandalkan honeypot bawaan dan pembatasan laju. Lihat [Menu, kupon, acara, dan formulir](/docs/forms-and-pages#self-hosting) |
+| Pembayaran (Polar) | `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `NEXT_PUBLIC_QRDX_PRO_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_PRO_YEARLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_YEARLY_PRODUCT_ID` | Upgrade tidak berfungsi (paket tanpa ID produk menampilkan "Coming soon"), dan setiap akun menggunakan batas Gratis |
+| Harga Euro | `NEXT_PUBLIC_QRDX_EUR_PRICES=1`, diatur hanya setelah setiap produk di atas memiliki harga EUR di Polar | Pengunjung dari UE dan EEA melihat, dan ditagih, harga dalam US$ |
+| Program afiliasi | Tidak ada: hanya berjalan di tempat QRdx sendiri berjalan | Nonaktif pada salinan self-hosted: tidak ada halaman **/affiliates**, tidak ada pendaftaran, tidak ada **Settings** → **Affiliate program**, dan tautan referral mengarah ke halaman beranda |
 | Tautan pendek Dub | `DUB_CLIENT_ID`, `DUB_CLIENT_SECRET`, `DUB_REDIRECT_URI`, `INTEGRATION_ENCRYPTION_KEY` | Integrasi Dub tidak dapat dihubungkan |
 | Google Drive | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_DRIVE_REDIRECT_URI`, `INTEGRATION_ENCRYPTION_KEY` | Integrasi Google Drive tidak dapat dihubungkan |
-| Bitly, Dropbox, OneDrive, Box, Notion | `BITLY_CLIENT_ID`/`_SECRET`, `DROPBOX_CLIENT_ID`/`_SECRET`, `MICROSOFT_CLIENT_ID`/`_SECRET`, `BOX_CLIENT_ID`/`_SECRET`, `NOTION_CLIENT_ID`/`_SECRET`, `INTEGRATION_ENCRYPTION_KEY` | Integrasi tersebut menampilkan "Not configured" (Bitly tetap dapat terhubung dengan token akses yang ditempel). Rebrandly dan Short.io tidak memerlukan variabel. Lihat [Tautan pendek dan pemilih file](/docs/short-links-and-file-pickers#self-hosting) |
-| Bot Slack | `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`, ditambah `INTEGRATION_ENCRYPTION_KEY` di produksi | Tidak ada bot Slack: rute dan halaman tautannya menjawab 404 dan Settings tidak menawarkannya. Buat aplikasi Slack Anda sendiri dari [`plugins/slack/manifest.json`](https://github.com/qrdxinc/qrdx/tree/main/plugins/slack) seperti yang dijelaskan di README-nya. Lihat [Bot Slack](/docs/slack-bot#self-hosting) |
-| Bot Discord | `DISCORD_APPLICATION_ID`, `DISCORD_PUBLIC_KEY` | Tidak ada bot Discord: endpoint interaksinya menjawab `404` dan bot tidak dimasukkan ke direktori integrasi. Daftarkan aplikasi Discord Anda sendiri seperti yang dijelaskan di [`plugins/discord/README.md`](https://github.com/qrdxinc/qrdx/tree/main/plugins/discord) |
-| Bot Telegram | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_WEBHOOK_SECRET`, `TELEGRAM_BOT_USERNAME` | Tidak ada bot Telegram: rutenya menjawab 404 dan situs tidak mencantumkannya. Buat bot Anda sendiri dengan @BotFather lalu jalankan `plugins/telegram/scripts/setup.mjs`. Lihat [Bot Telegram](/docs/telegram-bot#self-hosting) |
-| Pembatasan laju (Upstash) | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (atau nama Vercel KV `KV_REST_API_URL`, `KV_REST_API_TOKEN`) | Tanpa pembatasan laju. Disarankan di produksi. |
-| Analitik (PostHog, setelah persetujuan cookie) | `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST` | Tanpa analitik produk |
-| Analitik (Umami, tanpa cookie) | `NEXT_PUBLIC_UMAMI_WEBSITE_ID`, `NEXT_PUBLIC_UMAMI_SCRIPT_URL` | Tanpa penghitungan kunjungan |
-| Widget masukan | `NEXT_PUBLIC_FEATUREBASE_APP_ID` | Widget tidak dimuat |
-| Tambahan dokumentasi | `GITHUB_TOKEN` | Jumlah bintang bisa terkena batas laju GitHub |
+| Bitly, Dropbox, OneDrive, Box, Notion | `BITLY_CLIENT_ID`/`_SECRET`, `DROPBOX_CLIENT_ID`/`_SECRET`, `MICROSOFT_CLIENT_ID`/`_SECRET`, `BOX_CLIENT_ID`/`_SECRET`, `NOTION_CLIENT_ID`/`_SECRET`, `INTEGRATION_ENCRYPTION_KEY` | Integrasi tersebut menampilkan "Not configured" (Bitly tetap dapat terhubung dengan access token yang ditempel). Rebrandly dan Short.io tidak memerlukan variabel. Lihat [Tautan pendek dan pemilih file](/docs/short-links-and-file-pickers#self-hosting) |
+| Calendly, Google Sheets, HubSpot, Mailchimp | `CALENDLY_CLIENT_ID`/`_SECRET`, `HUBSPOT_CLIENT_ID`/`_SECRET`, `MAILCHIMP_CLIENT_ID`/`_SECRET`, `INTEGRATION_ENCRYPTION_KEY`; Google Sheets menggunakan `GOOGLE_CLIENT_ID`/`_SECRET` | Integrasi tersebut menampilkan "Not configured". Stripe, Cal.com, dan Shopify tidak memerlukan variabel: pengguna menempelkan kunci mereka sendiri |
+| Pemilih YouTube dan Spotify | `YOUTUBE_API_KEY`; `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET` | Menempelkan tautan YouTube atau Spotify berfungsi; memilih dari kanal atau playlist Anda tidak berfungsi |
+| Bot Slack | `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`, ditambah `INTEGRATION_ENCRYPTION_KEY` di produksi | Tidak ada bot Slack: rute dan halaman tautannya menjawab 404 dan Settings tidak menawarkannya. Buat aplikasi Slack Anda sendiri dari [`plugins/slack/manifest.json`](https://github.com/qrdxinc/qrdx/tree/main/plugins/slack) seperti dijelaskan di README-nya. Lihat [Bot Slack](/docs/slack-bot#self-hosting) |
+| Bot Discord | `DISCORD_APPLICATION_ID`, `DISCORD_PUBLIC_KEY` | Tidak ada bot Discord: endpoint interaksinya menjawab 404 dan bot ini tidak dimasukkan ke direktori integrasi. Daftarkan aplikasi Discord Anda sendiri seperti dijelaskan di [`plugins/discord/README.md`](https://github.com/qrdxinc/qrdx/tree/main/plugins/discord). Lihat [Bot Discord](/docs/discord-bot#self-hosting) |
+| Bot Telegram | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_WEBHOOK_SECRET`, `TELEGRAM_BOT_USERNAME` | Tidak ada bot Telegram: rutenya menjawab 404 dan situs tidak mencantumkannya. Buat bot Anda sendiri dengan @BotFather dan jalankan `plugins/telegram/scripts/setup.mjs`. Lihat [Bot Telegram](/docs/telegram-bot#self-hosting) |
+| Pembatasan laju (Upstash) | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (atau nama Vercel KV `KV_REST_API_URL`, `KV_REST_API_TOKEN`) | Tidak ada pembatasan laju. Direkomendasikan di produksi |
+| Analitik (PostHog, setelah persetujuan cookie) | `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST` | Tidak ada analitik produk |
+| Analitik (Umami, tanpa cookie) | `NEXT_PUBLIC_UMAMI_WEBSITE_ID`, `NEXT_PUBLIC_UMAMI_SCRIPT_URL` | Tidak ada hitungan kunjungan |
+| Widget umpan balik | `NEXT_PUBLIC_FEATUREBASE_APP_ID` | Widget tidak dimuat |
+| Angka di halaman beranda | `QRDX_HOME_NUMBERS=1` | Bagian "QRdx in numbers" tetap nonaktif. Nilai ini dibaca saat aplikasi di-build, dan image Docker tidak meneruskannya ke proses build-nya |
+| Sakelar Content-Security-Policy | `CSP_REPORT_ONLY`, `CSP_HTTPS` | Kebijakan diterapkan apa adanya. Lihat [Content-Security-Policy](#content-security-policy) |
+| Dokumentasi, konsol, dan direktori OpenAI | `DOCS_ZONE_URL`, `CONSOLE_ORIGIN`, `CONSOLE_ZONE_KEY`, `OPENAI_APPS_CHALLENGE`, `GSC_SERVICE_ACCOUNT_JSON` | Biarkan tidak diatur saat self-hosting. Variabel ini menghubungkan qrdx.dev ke situs dokumentasi, konsol, dan listing direktorinya sendiri; tanpanya tautan dokumentasi mengarah ke qrdx.dev dan halaman admin dilayani oleh aplikasi itu sendiri |
 
-`INTEGRATION_ENCRYPTION_KEY` harus diatur di produksi begitu Anda mengaktifkan integrasi, karena kunci ini mengenkripsi token yang tersimpan.
+`INTEGRATION_ENCRYPTION_KEY` harus diatur di produksi begitu Anda mengaktifkan integrasi, karena variabel ini mengenkripsi token yang tersimpan. Buat dengan `openssl rand -hex 32`.
 
-<Callout>
-  Nilai `NEXT_PUBLIC_*` disisipkan ke bundel browser saat build. Setelah mengubahnya, build ulang dengan `docker compose up -d --build`.
+<Callout type="info" title="Nilai NEXT_PUBLIC_* ditetapkan saat build">
+  Nilai `NEXT_PUBLIC_*` disisipkan ke dalam bundel browser saat aplikasi di-build, sehingga mengubahnya berarti harus build ulang. Build Docker hanya membaca `.env` untuk enam di antaranya, yang diteruskan sebagai build argument di `docker-compose.yml`: `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST`, `NEXT_PUBLIC_FEATUREBASE_APP_ID`, dan dua ID produk Pro. Untuk mengatur yang lain di image Docker (ID produk Business, `NEXT_PUBLIC_QRDX_EUR_PRICES`, `NEXT_PUBLIC_SHORT_LINK_BASE_URL`, site key Turnstile, atau ID Umami), tambahkan ke `build.args` layanan `app` di `docker-compose.yml` dan sebagai `ARG` di tahap build pada Dockerfile, lalu jalankan `docker compose up -d --build`. Penyiapan manual membaca semuanya dari `apps/app/.env.local`.
 </Callout>
+
+### Job terjadwal [#scheduled-jobs]
+
+Dua rute menjalankan pekerjaan berkala: `/api/cron/webhooks` mencoba ulang pengiriman webhook yang gagal dan menghapus baris log audit lama, dan `/api/cron/digest` mengirim ringkasan mingguan. Di Vercel, `apps/app/vercel.json` menjadwalkannya. Di tempat lain, tidak ada yang memanggilnya sampai Anda melakukannya. Atur `CRON_SECRET` dan panggil keduanya dari penjadwal Anda dengan nilai tersebut:
+
+```text title="crontab (times in UTC)"
+0 4 * * *  curl -fsS -H "Authorization: Bearer $CRON_SECRET" https://qr.example.com/api/cron/webhooks
+0 9 * * 1  curl -fsS -H "Authorization: Bearer $CRON_SECRET" "https://qr.example.com/api/cron/digest?shard=all"
+```
+
+Tanpa header tersebut, rute menjawab `401` di produksi. [Notifikasi](/docs/notifications#self-hosting) menjelaskan parameter `shard` pada ringkasan.
 
 ## Reverse proxy dan HTTPS [#reverse-proxy-and-https]
 
-Letakkan aplikasi di belakang reverse proxy seperti Caddy, nginx, atau Traefik yang mengakhiri TLS, dan jangan membuka port 3000 langsung ke internet. Pembatasan laju, email keamanan, dan [log audit](/docs/help/teams/audit-log) membaca IP klien dari `X-Real-IP` lalu alamat pertama di `X-Forwarded-For`, jadi proxy harus mengatur header ini dan aplikasi hanya boleh dapat dijangkau melalui proxy. Atur proxy agar menetapkan `X-Real-IP` ke alamat tempat koneksi diterima (di nginx, `proxy_set_header X-Real-IP $remote_addr;`). Proxy yang hanya menambahkan ke `X-Forwarded-For` memungkinkan klien menaruh alamat apa pun di urutan pertama.
+Tempatkan aplikasi di belakang reverse proxy seperti Caddy, nginx, atau Traefik yang menangani terminasi TLS, dan jangan membuka port 3000 langsung ke internet. Pembatasan laju, email keamanan, dan [log audit](/docs/help/teams/audit-log) membaca IP klien dari `X-Real-IP` terlebih dahulu, lalu dari alamat pertama di `X-Forwarded-For` (di Vercel, `X-Vercel-Forwarded-For` berada di antara keduanya), sehingga proxy harus mengatur header ini dan aplikasi hanya boleh dapat dijangkau melalui proxy tersebut. Atur proxy agar mengisi `X-Real-IP` dengan alamat asal koneksi yang diterimanya. Proxy yang hanya menambahkan ke `X-Forwarded-For` memungkinkan klien menaruh alamat apa pun di urutan pertama.
 
-Setelah HTTPS siap, ubah `NEXT_PUBLIC_APP_URL` dan `BETTER_AUTH_URL` ke URL `https://`, perbarui URL callback OAuth, lalu build ulang.
+```nginx title="nginx server block (the relevant lines)"
+location / {
+  proxy_pass http://127.0.0.1:3000;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+Caddy mengatur header ini secara default. Setelah HTTPS berfungsi, ubah `NEXT_PUBLIC_APP_URL` dan `BETTER_AUTH_URL` ke URL `https://`, perbarui URL callback OAuth, lalu build ulang.
 
 ### Content-Security-Policy [#content-security-policy]
 
-Build produksi mengirim Content-Security-Policy pada halaman milik QRdx sendiri: halaman untuk pengguna yang sudah masuk mendapat nonce skrip baru untuk setiap permintaan, sedangkan halaman yang dirender sebelumnya mendapat daftar izin host skrip. Halaman yang di-hosting (`/p`) mendapat kebijakan yang longgar, karena halaman tersebut menjalankan piksel milik pemiliknya dan menyematkan media dari mana saja. Jika reverse proxy Anda juga mengatur `Content-Security-Policy`, browser akan menerapkan keduanya, jadi jangan atur di sana. Atur `CSP_REPORT_ONLY=1` (saat build dan saat dijalankan) untuk mengirim kebijakan sebagai report-only sambil Anda memeriksa pengaturan baru; pelanggaran dicatat oleh `/api/csp-report`. Tambahkan `CSP_HTTPS=1` jika Anda melayani lewat HTTPS di luar Vercel, agar browser meningkatkan setiap sumber daya `http://`.
+Build produksi mengirim Content-Security-Policy pada halaman QRdx sendiri: halaman untuk pengguna yang sudah masuk mendapat nonce skrip baru pada setiap permintaan, sedangkan halaman yang di-prerender mendapat daftar host skrip yang diizinkan. Halaman yang di-hosting (`/p`) mendapat kebijakan yang longgar, karena halaman tersebut menjalankan piksel milik pemiliknya dan menyematkan media dari mana saja. Jika reverse proxy Anda juga mengatur `Content-Security-Policy`, browser akan menerapkan keduanya, jadi jangan atur di sana. Setel `CSP_REPORT_ONLY=1` untuk mengirim kebijakan sebagai report-only saat Anda memeriksa pengaturan baru; pelanggaran dicatat oleh `/api/csp-report`. Tambahkan `CSP_HTTPS=1` saat Anda melayani lewat HTTPS di luar Vercel, agar browser meningkatkan setiap resource `http://`. Keduanya dibaca di tempat aplikasi berjalan dan, untuk header halaman yang di-prerender, di tempat aplikasi di-build; Dockerfile tidak meneruskannya ke build, jadi tambahkan juga sebagai build argument jika halaman yang di-prerender membutuhkannya.
 
-## Memperbarui [#updating]
+## Memperbarui QRdx [#update-qrdx]
 
-Cadangkan database terlebih dahulu:
+Cadangkan database terlebih dahulu (lihat di bawah). Lalu tarik kode dan build ulang. Layanan `migrate` menyinkronkan skema lagi sebelum aplikasi dimulai.
 
-```bash
-docker compose exec db pg_dump -U postgres qrdx > qrdx-backup.sql
-```
-
-Lalu tarik pembaruan dan build ulang. Layanan `migrate` menyinkronkan skema lagi sebelum aplikasi dimulai.
-
-```bash
+```bash title="Terminal"
 git pull
 docker compose up -d --build
 ```
 
-Untuk pengaturan manual, jalankan `git pull`, `bun install`, dan `bun run db:push`, lalu build ulang.
+Untuk pengaturan manual, jalankan `git pull`, `bun install`, dan `bun run db:push`, lalu build ulang dan mulai ulang.
 
-Jika perubahan skema akan menghapus data, `drizzle-kit push` meminta konfirmasi. Dalam kasus itu, jalankan `docker compose run --rm migrate` di terminal untuk meninjau dan mengonfirmasi perubahan.
+Jika perubahan skema akan menghapus data, `drizzle-kit push` meminta konfirmasi dan layanan `migrate` menunggu jawaban yang tidak bisa diberikan. Dalam kasus itu, jalankan di terminal untuk meninjau dan mengonfirmasi perubahan:
+
+```bash title="Terminal"
+docker compose run --rm migrate
+```
+
+## Pencadangan dan pemulihan [#back-up-and-restore]
+
+Semua yang disimpan QRdx ada di Postgres, kecuali file yang diunggah, yang ada di bucket R2 Anda. Buat dump database sebelum setiap pembaruan dan secara terjadwal:
+
+```bash title="Terminal"
+docker compose exec db pg_dump -U postgres qrdx > qrdx-backup.sql
+```
+
+Untuk memulihkan ke database kosong:
+
+```bash title="Terminal"
+docker compose exec -T db psql -U postgres qrdx < qrdx-backup.sql
+```
+
+Dengan Neon, gunakan backup dan branching bawaannya.
+
+## Perbedaan dengan qrdx.dev [#what-is-different-from-qrdxdev]
+
+- **Dokumentasi** dibuka di qrdx.dev. Instans Anda mengalihkan setiap URL dokumentasi ke sana.
+- **Pembayaran dan paket** memerlukan Polar. Tanpa Polar, setiap akun memiliki batas paket Gratis, dan tidak ada yang bisa melakukan upgrade. Batas itu sendiri ada di `apps/app/lib/plans.ts`, yang dapat Anda ubah untuk instans Anda.
+- **Program afiliasi, permintaan pembayaran dengan faktur, diskon nirlaba, dan formulir kontak enterprise** adalah penjualan milik QRdx sendiri dan hanya berjalan di tempat QRdx sendiri berjalan. Salinan self-hosted tidak memilikinya.
+- **Lokasi pemindaian:** negara, wilayah, dan kota berasal dari header geo Vercel. Di belakang Cloudflare hanya negara yang dibaca (`CF-IPCountry`); di tempat lain lokasi tampil sebagai tidak diketahui, dan [aturan area](/docs/precise-location#route-scans-by-area) hanya cocok dengan pemindaian yang membagikan lokasi.
+- **Domain kustom** diverifikasi dengan record DNS `TXT` dan dirutekan oleh reverse proxy Anda, kecuali Anda berjalan di Vercel dengan variabel Domains API yang sudah diatur. Tombol **Set up with …** memerlukan template Domain Connect milik Anda sendiri: template QRdx hanya berfungsi untuk qrdx.dev.
+- **Bot obrolan dan integrasi** masing-masing memerlukan aplikasi yang Anda daftarkan di layanan tersebut (lihat tabel di atas).
+- **Halaman admin** dilayani oleh aplikasi itu sendiri; qrdx.dev memproksikan sebagian di antaranya ke konsol terpisah.
 
 ## Pemecahan masalah [#troubleshooting]
 
-- **"Invalid environment variables" saat startup:** log menyebutkan setiap variabel yang hilang atau tidak valid. Variabel opsional harus dijadikan komentar, bukan diisi dengan nilai kosong.
-- **"BETTER_AUTH_SECRET is missing" atau "You are using the default secret":** atur `BETTER_AUTH_SECRET` lalu buat ulang container.
-- **`redirect_uri` OAuth tidak cocok:** URL callback di aplikasi OAuth Anda harus persis `<NEXT_PUBLIC_APP_URL>/api/auth/callback/<github|google>`. Atur `BETTER_AUTH_URL` ke URL dasar yang sama.
-- **Aplikasi tidak dapat menjangkau database (`fetch failed`):** dengan Postgres biasa, `DATABASE_HTTP_ENDPOINT` harus mengarah ke proxy yang sedang berjalan. Periksa `docker compose ps db-proxy`.
-- **`migrate` tidak pernah selesai:** `drizzle-kit push` sedang menunggu konfirmasi. Lihat [Memperbarui](#updating).
-- **Perubahan nilai `NEXT_PUBLIC_*` tidak berpengaruh:** build ulang image.
-- **Port 4444 sudah digunakan:** ubah pemetaan port `db-proxy` di `docker-compose.yml`. Port ini hanya dipakai untuk pengembangan lokal di host.
-- **"the --mount option requires BuildKit":** Docker Anda tidak memiliki BuildKit. Pasang plugin `buildx`, atau perbarui Docker.
-- **Build berhenti dengan `Killed` atau kode keluar 137:** Docker kehabisan memori. Berikan setidaknya 8 GB (Docker Desktop: Settings → Resources) lalu jalankan `docker compose up -d --build` lagi.
-- **"sign-in code email is off for this deployment":** email kode tidak dikirim selama `NEXT_PUBLIC_APP_URL` adalah `localhost`. Gunakan masuk dengan GitHub atau Google untuk uji coba lokal.
+### "Invalid environment variables" saat startup [#invalid-environment-variables-on-startup]
+
+Log menyebutkan setiap variabel yang hilang atau tidak valid, lalu menjelaskan tempat mengaturnya. Ada nilai wajib yang hilang, atau nilai opsional diatur ke sesuatu yang tidak valid: URL yang bukan alamat lengkap `http://` atau `https://`, atau secret yang terlalu pendek. Nilai kosong dianggap tidak diatur dan tidak masalah. Perbaiki variabel yang disebutkan di `.env` dan buat ulang container dengan `docker compose up -d app`.
+
+### `redirect_uri` OAuth tidak cocok [#oauth-redirect_uri-mismatch]
+
+URL callback di aplikasi OAuth Anda harus persis `<NEXT_PUBLIC_APP_URL>/api/auth/callback/github` atau `/api/auth/callback/google`. Atur `BETTER_AUTH_URL` ke base URL yang sama dengan `NEXT_PUBLIC_APP_URL`.
+
+### Aplikasi tidak dapat menjangkau database (`fetch failed`) [#the-app-cant-reach-the-database-fetch-failed]
+
+Dengan Postgres biasa, `DATABASE_HTTP_ENDPOINT` harus mengarah ke proxy yang sedang berjalan. Periksa bahwa `docker compose ps db-proxy` menunjukkan proxy berjalan.
+
+### `migrate` tidak pernah selesai [#migrate-never-finishes]
+
+`drizzle-kit push` sedang menunggu konfirmasi. Jalankan `docker compose run --rm migrate` di terminal dan jawab konfirmasinya; lihat [Memperbarui QRdx](#update-qrdx).
+
+### Perubahan nilai `NEXT_PUBLIC_*` tidak berpengaruh [#a-changed-next_public_-value-has-no-effect]
+
+Build ulang image: `docker compose up -d --build`.
+
+### Port 4444 sudah digunakan [#port-4444-is-already-in-use]
+
+Ubah pemetaan port `db-proxy` di `docker-compose.yml`. Hanya pengembangan lokal di host yang menggunakannya.
+
+### "the --mount option requires BuildKit" [#the---mount-option-requires-buildkit]
+
+Docker Anda tidak memiliki BuildKit. Instal plugin `buildx`, atau perbarui Docker.
+
+### Build berhenti dengan `Killed` atau kode keluar 137 [#the-build-stops-with-killed-or-exit-code-137]
+
+Docker kehabisan memori. Berikan setidaknya 8 GB (Docker Desktop: **Settings** → **Resources**) dan jalankan `docker compose up -d --build` lagi.
+
+### "sign-in code email is off for this deployment" [#sign-in-code-email-is-off-for-this-deployment]
+
+Email kode tidak dikirim selama `NEXT_PUBLIC_APP_URL` adalah `localhost`. Gunakan masuk dengan GitHub atau Google untuk uji coba lokal.
+
+Masih buntu? [Buka issue](https://github.com/qrdxinc/qrdx/issues) beserta output `docker compose logs app`, dengan secret yang sudah dihapus.
+
+## Terkait [#related]
+
+<Cards>
+  <Card title="File: menyiapkan penyimpanan" href="/docs/files#set-up-storage-self-hosting" description="Cloudflare R2 untuk unggahan, dengan kebijakan CORS yang dibutuhkan bucket." />
+  <Card title="Domain kustom: self-hosting" href="/docs/custom-domains#self-hosting" description="Rutekan domain pelanggan melalui reverse proxy Anda dan verifikasi dengan record TXT." />
+  <Card title="Notifikasi: self-hosting" href="/docs/notifications#self-hosting" description="Resend untuk email dan cron job ringkasan mingguan." />
+  <Card title="REST API" href="/docs/developers/rest-api" description="Instans Anda melayani API yang sama di bawah URL-nya sendiri." />
+</Cards>

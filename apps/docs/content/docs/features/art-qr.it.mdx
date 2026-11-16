@@ -1,106 +1,115 @@
 ---
-title: "QR code artistici"
-description: "Fondi un logo o una foto nei moduli di un QR code leggibile (vettoriale, senza AI), oppure genera un'illustrazione AI attorno a uno."
+title: "Fondere un'immagine nei moduli"
+description: "Disegna QR code Logo QR e Image QR con la prop art, campiona un logo o una foto con loadQRArtImage o createQRArtImage, mantieni il risultato leggibile ed esportalo come file vettoriali."
 icon: Sparkles
 ---
 
-QRdx offre tre modi per trasformare un QR code in un'opera d'arte:
+La prop `art` fonde un logo o una foto nei moduli di un codice, come forme vettoriali e senza AI: Logo QR ricolora i moduli all'interno della forma del tuo logo, mentre Image QR mostra la tua foto attraverso ogni modulo. Entrambi sono disegnati dalla libreria stessa, quindi funzionano offline, sul server e in Node, e il risultato è sempre un vero QR code. Questa pagina spiega la prop, come viene campionata l'immagine e come si mantiene la leggibilità della scansione.
+
+Stai progettando nel Playground o nella dashboard? Vedi [Fondere un logo o una foto nel codice](/docs/help/designing/art) nella Guida.
+
+QRdx offre tre modi per trasformare un codice in un'opera grafica:
 
 | | Come funziona | Output | Costo |
-|---|---|---|---|
-| **Logo QR** | I moduli all'interno della forma del tuo logo ne prendono i colori; gli altri sfumano verso un tono più chiaro | Vettoriale (SVG, PDF, EPS, PNG) | Gratuito |
-| **Image QR** | Ogni modulo mostra la tua foto attorno a un quadrato centrale che mantiene il valore reale (mezzitoni) | Vettoriale (SVG, PDF, EPS, PNG) | Gratuito |
-| **Arte AI** | Un modello di immagini AI ridisegna il codice come una scena, e ogni immagine viene verificata per assicurarsi che si possa scansionare | Immagine da 1024 px, copia per la stampa da 2048 px | Crediti arte AI |
+| --- | --- | --- | --- |
+| **Logo QR** (`mode: "logo"`) | I moduli all'interno della forma del tuo logo ne assumono i colori; gli altri sfumano verso un tono più chiaro | Vettoriale (SVG, PDF, EPS, PNG) | Gratuito |
+| **Image QR** (`mode: "halftone"`) | Ogni modulo mostra la tua foto attorno a un quadrato centrale che mantiene il valore reale | Vettoriale (SVG, PDF, EPS, PNG) | Gratuito |
+| **Arte AI** | Un modello di immagini AI ridisegna il codice come una scena e ogni immagine viene verificata per assicurarsi che si scansioni | Immagine da 1024 px, copia per la stampa da 2048 px | Immagini di arte AI incluse nel piano |
 
-Logo QR e Image QR sono disegnati dalla libreria `qrdx` stessa, quindi funzionano offline, nell'editor, sul server e in Node, e il risultato è sempre un vero QR code: i pattern di ricerca, di sincronizzazione e di allineamento non vengono mai toccati.
+## Disegnare un codice artistico [#draw-an-art-code]
 
-## Nell'editor [#in-the-editor]
+Passa una prop `art` con una modalità, un'immagine campionata e un'intensità opzionale:
 
-Apri il [Playground](/playground?tab=art), vai alla scheda **Art** e scegli **Logo QR** o **Image QR**:
-
-1. Carica un logo o una foto (PNG, JPG, WebP o SVG, fino a 1 MB). Un PNG trasparente o un SVG dà il Logo QR più pulito.
-2. Imposta l'**intensità**: un valore basso mantiene un codice dall'aspetto semplice, uno alto mostra più dell'immagine.
-3. Controlla il **controllo scansione** accanto al cursore. Decodifica il QR code artistico nel tuo browser a tre dimensioni, come il [punteggio di scansione](/docs/qr-detection) nell'anteprima.
-
-Caricando un'immagine artistica la correzione degli errori viene impostata su `H`, che lascia all'immagine il maggior margine possibile. L'immagine non lascia mai il tuo browser: con il design viene salvata solo una piccola griglia di colori (64 o 96 pixel di lato).
-
-## Nel codice [#in-code]
-
-Passa una prop `art` con una modalità, un'immagine campionata e un'intensità opzionale (da 0 a 1, predefinita 0.6):
-
-```tsx
-import { QRCodeSVG, loadQRArtImage } from 'qrdx';
+```tsx title="components/logo-art-code.tsx"
+import { loadQRArtImage, type QRArtImage, QRCode } from "qrdx";
 
 // Browser: sample an uploaded file, a data URL or an <img>
-const image = await loadQRArtImage(file, { mode: 'logo' });
+export async function sampleLogo(file: File): Promise<QRArtImage> {
+  return await loadQRArtImage(file, { mode: "logo" });
+}
 
-<QRCodeSVG
-  value="https://example.com"
-  size={512}
-  level="H"
-  art={{ mode: 'logo', image, intensity: 0.7 }}
-/>;
+export function LogoArtCode({ image }: { image: QRArtImage }) {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={512}
+      level="H"
+      art={{ mode: "logo", image, intensity: 0.7 }}
+    />
+  );
+}
 ```
 
-Sul server o in Node, decodifica l'immagine da solo e passa i pixel RGBA a `createQRArtImage`:
+<Shot id="lib-art-codes" />
 
-```ts
-import sharp from 'sharp';
-import { createQRArtImage } from 'qrdx';
+Sul server o in Node, decodifica tu stesso l'immagine e passa i pixel RGBA a `createQRArtImage`:
 
-const { data, info } = await sharp('photo.jpg')
+```ts title="lib/sample-photo.ts"
+import { createQRArtImage } from "qrdx";
+import sharp from "sharp";
+
+const { data, info } = await sharp("photo.jpg")
   .ensureAlpha()
   .raw()
   .toBuffer({ resolveWithObject: true });
 
-const image = createQRArtImage(
+export const image = createQRArtImage(
   { data, width: info.width, height: info.height },
-  { maxSize: 96 }
+  { maxSize: 96, square: true }
 );
-// art={{ mode: 'halftone', image, intensity: 0.8 }}
+// art={{ mode: "halftone", image, intensity: 0.8 }}
 ```
 
-`art.image` è semplice JSON (`{ width, height, data }` con RGBA in base64), quindi puoi salvarlo insieme a un design e renderizzare lo stesso codice ovunque, in modo sincrono, senza recuperare di nuovo l'immagine.
+`art.image` è semplice JSON (`{ width, height, data }` con RGBA in base64), quindi puoi salvarlo insieme a un design salvato e renderizzare lo stesso codice ovunque, in modo sincrono, senza scaricare di nuovo l'immagine.
 
 | Opzione | Valori | Note |
-|---|---|---|
-| `mode` | `logo`, `halftone` | `halftone` è "Image QR" nell'editor |
-| `image` | da `loadQRArtImage` o `createQRArtImage` | al massimo 192 × 192 campioni |
-| `intensity` | da `0` a `1` | predefinito `0.6`; `0` appare come un codice semplice |
+| --- | --- | --- |
+| `mode` | `logo`, `halftone` | `halftone` è Image QR nell'editor |
+| `image` | da `loadQRArtImage` o `createQRArtImage` | Al massimo 192 per 192 campioni. `loadQRArtImage` campiona 160 in larghezza per impostazione predefinita |
+| `intensity` | da `0` a `1` | Predefinito `0.6`; con `0` sembra un codice semplice |
+| `variant` | `blend`, `badge` (logo); `color`, `mono` (halftone) | L'aspetto all'interno della modalità. `badge` colloca il logo tracciato su una placca arrotondata al centro di un codice colorato; `mono` è un mezzatinta in bianco e nero. Il primo valore è quello predefinito di ogni modalità |
+| `matchEyes` | `true`, `false` | Solo modalità Logo: colora gli occhi degli angoli a partire dal logo (predefinito `true`). I valori `eyeColors` per singolo occhio hanno comunque la precedenza |
 
-L'arte sostituisce il pattern del corpo; gli occhi degli angoli mantengono `cornerEyePattern`, `cornerEyeDotPattern` e i colori. L'arte usa il primo colore di un `fgColor`/`bgColor` con gradiente e richiede un primo piano scuro su uno sfondo chiaro (con i colori invertiti ripiega su un aspetto semplice).
+L'arte sostituisce il motivo del corpo; gli occhi degli angoli mantengono i loro `cornerEyePattern`, `cornerEyeDotPattern` e i colori. L'arte usa il primo colore di un `fgColor` o `bgColor` con gradiente e richiede un primo piano scuro su uno sfondo chiaro; con i colori invertiti ricade su un aspetto semplice. Usa `level="H"`, che offre all'arte il massimo spazio.
 
-### Come si mantiene la leggibilità [#how-scannability-is-kept]
+## Come si mantiene la leggibilità della scansione [#how-scannability-is-kept]
 
-- **Logo QR**: i moduli scuri all'interno del logo vengono ricolorati, ma solo scuriti fino a una luminanza che uno scanner legge ancora come scura; i moduli chiari all'interno del logo ricevono una tinta pallida che resta sopra la soglia di chiaro. I moduli scuri fuori dal logo sfumano verso il grigio, mai più chiaro della soglia di scuro.
-- **Badge Logo QR**: ogni modulo sotto la placca può rovinare una codeword. La placca ha una dimensione tale che nessun blocco di correzione degli errori perda più del 60% delle codeword che può riparare, lasciando il resto alla fotocamera. L'intensità ingrandisce la placca fino a quella dimensione. I codici piccoli hanno un logo più piccolo, e i più piccoli (versione 1, versione 2 a L o M, versione 3 a L) non disegnano alcuna placca.
-- **Image QR**: ogni modulo è diviso in una griglia 3 × 3. Le celle esterne mostrano la foto, schiarita o scurita per corrispondere al valore del modulo, e il centro mantiene l'esatto colore di primo piano o di sfondo, che è dove gli scanner campionano.
-- I moduli di ricerca, sincronizzazione, allineamento, formato e versione sono sempre disegnati pieni.
+- **Logo QR**: i moduli scuri all'interno del logo vengono ricolorati, ma scuriti solo fino a una luminanza che lo scanner legge ancora come scura; i moduli chiari all'interno del logo ricevono una tinta pallida che resta sopra la soglia di chiarezza. I moduli scuri all'esterno del logo sfumano verso il grigio, mai più chiaro della soglia di scuro.
+- **Logo QR badge**: ogni modulo sotto la placca può compromettere una parola di codice. La placca è dimensionata in modo che nessun blocco di correzione degli errori perda più del 60% delle parole di codice che può riparare, lasciando il resto alla fotocamera. L'intensità ingrandisce la placca fino a quella dimensione. I codici piccoli ricevono un logo più piccolo e i più piccoli (versione 1, versione 2 a L o M, versione 3 a L) non disegnano alcuna placca.
+- **Image QR**: ogni modulo è diviso in una griglia 3 per 3. Le celle esterne mostrano la foto, resa più scura o più chiara in base al valore del modulo, mentre quella centrale mantiene l'esatto colore di primo piano o di sfondo, che è il punto in cui gli scanner campionano.
+- I moduli di ricerca, di temporizzazione, di allineamento, di formato e di versione sono sempre disegnati pieni.
 
 Controlla qualsiasi design con `getScanScore(props)` prima di stampare e provalo con la fotocamera di un vero telefono.
 
-## Esportare i QR code artistici [#exporting-art-codes]
+## Esportare i codici artistici [#export-art-codes]
 
-I QR code artistici sono forme vettoriali, quindi ogni esportazione li mantiene nitidi:
+I codici artistici sono forme vettoriali, quindi ogni esportazione li mantiene nitidi:
 
-```ts
-import { downloadQRCode, getQRAsEPS, getQRAsPrintPDF } from 'qrdx';
+```ts title="lib/export-art.ts"
+import { downloadQRCode, getQRAsEPS, getQRAsPrintPDF } from "qrdx";
 
-await downloadQRCode(props, { format: 'svg', size: { width: 1024, height: 1024 } });
-const pdf = await getQRAsPrintPDF(props, { size: 40, unit: 'mm', colorMode: 'cmyk' });
-const eps = await getQRAsEPS(props, { sizeMm: 40, bleedMm: 3, colorMode: 'cmyk' });
+await downloadQRCode(props, { format: "svg", size: { width: 1024, height: 1024 } });
+const pdf = await getQRAsPrintPDF(props, { size: 40, unit: "mm", colorMode: "cmyk" });
+const eps = await getQRAsEPS(props, { sizeMm: 40, bleedMm: 3, colorMode: "cmyk" });
 ```
 
-`getQRAsEPS` scrive un file EPSF-3.0 con un `%%BoundingBox` in punti e ogni modulo, occhio e cornice come tracciato PostScript. Come il PDF per la stampa mantiene i gradienti lineari e radiali (come sfumature PostScript Level 3) e non ha trasparenza. I loghi PNG e JPEG vengono incorporati come immagini; gli altri formati di logo vengono convertiti nel browser e omessi sul server. Il testo della cornice usa Helvetica, quindi i caratteri fuori da Latin-1 vengono stampati come `?`. `svgToEPS(svg, { width })` converte qualsiasi SVG renderizzato da questa libreria.
-
-Anche la CLI scrive EPS: `qrdx generate "https://example.com" -o qr.eps`.
+`getQRAsEPS` scrive un file EPSF-3.0 con un `%%BoundingBox` in punti e ogni modulo, occhio e cornice come tracciato PostScript. Come il PDF per la stampa, mantiene i gradienti lineari e radiali (come sfumature PostScript Level 3) e non ha trasparenza. I loghi PNG e JPEG vengono incorporati come immagini; gli altri formati di logo vengono convertiti nel browser e omessi sul server. Il testo della cornice usa Helvetica, quindi i caratteri al di fuori di Latin-1 vengono stampati come `?`. `svgToEPS(svg, { width })` converte qualsiasi SVG renderizzato da questa libreria. Anche la CLI scrive EPS: `qrdx generate "https://example.com" -o qr.eps`.
 
 <IfAvailable feature="aiArt" id="ai-art" title="Arte AI">
 
-[L'arte QR AI](/ai/art) trasforma il tuo codice in una scena con {facts.artModel}, tramite Vercel AI Gateway. Hai a disposizione {facts.aiArtStyles} stili predefiniti da sfogliare per categoria o cercare, ciascuno con un'anteprima che ha superato il controllo di scansione. Ci sono anche gli elementi da evitare, un cursore **visibilità del QR** (quanto il modello favorisce il codice) e un cursore **creatività** (quanto liberamente interpreta il tuo prompt), da 1 a 4 varianti per esecuzione e un'immagine di riferimento opzionale, come un logo o una palette, di cui vengono riprese i colori e le forme.
+[L'arte QR con AI](/ai/art) trasforma il tuo codice in una scena con {facts.artModel}, tramite Vercel AI Gateway. Hai a disposizione {facts.aiArtStyles} stili predefiniti da sfogliare per categoria o cercare, ciascuno con un'anteprima che ha superato il controllo di scansione, cose da evitare, un cursore **Visibilità del QR** (quanto il modello favorisce il codice), un cursore **creatività** (quanto liberamente interpreta il tuo prompt), da 1 a 4 variazioni per esecuzione e un'immagine di riferimento opzionale, come un logo o una palette, di cui vengono riprese i colori e le forme.
 
-Ogni immagine viene controllata sul server prima che tu la veda. QRdx invia al modello un codice semplice in bianco e nero (correzione degli errori H, moduli quadrati, un'ampia zona di rispetto) e gli chiede di mantenere la griglia dei moduli, gli occhi di ricerca e la zona di rispetto. Poi decodifica l'immagine del modello con jsQR, così com'è e attraverso un modello di fotocamera del telefono. Se fallisce, trova la griglia dei moduli dove il modello l'ha disegnata e rinforza il codice sull'immagine stessa del modello il meno possibile: prima gli occhi di ricerca e la zona di rispetto, poi i moduli, aumentando la forza passo dopo passo finché l'immagine non si scansiona, anche quando il codice è più piccolo nell'inquadratura della fotocamera. La visibilità del QR stabilisce fin dove può spingersi. Solo se non basta, ridisegna l'immagine come QR code Image QR. Un'immagine che ancora non si decodifica nel tuo contenuto esatto non viene consegnata. Il tuo browser poi assegna un punteggio alle varianti e sceglie la migliore; scaricala a 1024 px o come copia per la stampa da 2048 px (ricampionata e controllata di nuovo).
+Ogni immagine viene controllata sul server prima che tu la veda. QRdx invia al modello un semplice codice in bianco e nero (correzione degli errori H, moduli quadrati, un'ampia zona di quiete) e gli chiede di mantenere la griglia dei moduli, gli occhi di ricerca e la zona di quiete. Poi decodifica l'immagine del modello con jsQR, così com'è e attraverso un modello di fotocamera del telefono. Se la decodifica fallisce, individua la griglia dei moduli dove il modello l'ha disegnata e rinforza il codice sull'immagine del modello il meno possibile: prima gli occhi di ricerca e la zona di quiete, poi i moduli, aumentando la forza passo dopo passo finché l'immagine si scansiona, anche quando il codice appare più piccolo nella vista della fotocamera. La visibilità del QR stabilisce fin dove può spingersi. Solo se non basta, ridisegna l'immagine come QR code Image QR. Un'immagine che continua a non decodificarsi nel tuo contenuto esatto non viene consegnata. Il tuo browser poi valuta le variazioni e sceglie la migliore; scaricala a 1024 px o come copia per la stampa da 2048 px (ricampionata e controllata di nuovo).
 
-Ogni immagine consegnata usa un credito arte AI: gli account Gratuito ne hanno 3 al mese, Pro 30, e Business 150 condivisi da tutti nello spazio di lavoro. Le immagini che falliscono o non superano il controllo di scansione non usano alcun credito, e la copia per la stampa è gratuita. L'arte AI è un'immagine raster e il suo contenuto è fisso, quindi per un link modificabile inserisci al suo interno il link breve di un [QR code dinamico](/docs/dynamic-qr-codes).
+Ogni immagine consegnata usa una delle immagini di arte AI mensili del piano: gli account Gratuito ne hanno 3 al mese, Pro 30 e Business 150 condivise da tutti nel workspace. Le immagini che falliscono o non superano il controllo di scansione non ne consumano nessuna, e la copia per la stampa è gratuita. L'arte AI è un'immagine raster e il suo contenuto è fisso, quindi, per avere un link modificabile, inserisci in essa il link breve di un [QR code dinamico](/docs/dynamic-qr-codes). Gli sviluppatori possono generarla dalla [API per l'arte AI](/docs/developers/ai-art-api).
 
 </IfAvailable>
+
+## Correlati [#related]
+
+<Cards>
+  <Card href="/docs/features/logos" title="Aggiungere un logo nel codice" description="Un logo che si appoggia sul codice invece di riempirlo." />
+  <Card href="/docs/features/frames" title="Cornici, punteggio di scansione e file per la stampa" description="Controlla un codice artistico prima di stamparlo." />
+  <Card href="/docs/features/downloads" title="Esportare e scaricare" description="Tutti i formati in cui si può esportare un codice artistico." />
+  <Card href="/docs/api-reference" title="Riferimento dell'API della libreria" description="QRArt, QRArtImage e le funzioni per l'arte." />
+</Cards>
