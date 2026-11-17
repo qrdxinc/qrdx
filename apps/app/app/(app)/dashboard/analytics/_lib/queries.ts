@@ -1,12 +1,6 @@
 import "server-only";
 
-import {
-  conversion,
-  database as db,
-  landingEvent,
-  qrCode,
-  qrScan,
-} from "@repo/database";
+import { database as db, landingEvent, qrCode, qrScan } from "@repo/database";
 import {
   and,
   asc,
@@ -25,7 +19,6 @@ import {
   or,
   type SQL,
   sql,
-  sum,
 } from "drizzle-orm";
 import { fillSeries, type SeriesInterval } from "@/lib/scan-ranges";
 import {
@@ -277,58 +270,6 @@ export async function getCodeTotals(
   for (const row of rows)
     result.set(row.id, { scans: row.scans, unique: row.unique });
   return result;
-}
-
-// ─── Conversions ─────────────────────────────────────────────────────────────
-
-export interface ConversionSummary {
-  count: number;
-  /** Revenue per currency (decimal strings) */
-  revenue: { currency: string | null; total: string; count: number }[];
-  names: { name: string; count: number }[];
-}
-
-/** Conversions of one code, or of every code of the workspace. */
-export async function getConversionSummary(
-  target: { qrCodeId: string } | { scope: ActiveScope },
-  from: Date,
-): Promise<ConversionSummary> {
-  const where = and(
-    "qrCodeId" in target
-      ? eq(conversion.qrCodeId, target.qrCodeId)
-      : inArray(
-          conversion.qrCodeId,
-          db
-            .select({ id: qrCode.id })
-            .from(qrCode)
-            .where(scopeCodesWhere(target.scope)),
-        ),
-    gte(conversion.createdAt, from),
-  );
-  const [revenue, names] = await db.batch([
-    db
-      .select({
-        currency: conversion.currency,
-        total: sql<string>`coalesce(${sum(conversion.value)}, 0)::text`,
-        count: count(),
-      })
-      .from(conversion)
-      .where(where)
-      .groupBy(conversion.currency)
-      .orderBy(desc(count())),
-    db
-      .select({ name: conversion.name, count: count() })
-      .from(conversion)
-      .where(where)
-      .groupBy(conversion.name)
-      .orderBy(desc(count()), asc(conversion.name))
-      .limit(10),
-  ]);
-  return {
-    count: revenue.reduce((total, row) => total + row.count, 0),
-    revenue,
-    names,
-  };
 }
 
 // ─── Hosted page interactions ────────────────────────────────────────────────

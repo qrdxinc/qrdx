@@ -67,8 +67,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 /**
  * The docs' entries, from the docs site's manifest when DOCS_ZONE_URL is set
  * (that fetch makes this sitemap regenerate hourly; lib/docs-zone-manifest.ts).
- * The docs site decides them: the pages this deployment offers, and the
- * translations a native reviewer signed off. Without a docs site there are
+ * The docs site decides them: the pages this deployment offers, in English
+ * (the docs' one language). Without a docs site there are
  * none: the docs URLs redirect to qrdx.dev, whose sitemap lists them.
  */
 async function docsEntries(): Promise<Entry[]> {
@@ -81,7 +81,12 @@ function entries(docs: Entry[]): Entry[] {
 
   // TypeScript-written pages: the last change to the file that holds the
   // copy (git, or the recorded date when the build's clone is shallow).
-  const collections = [industries, placements];
+  // Groups the marketing site serves (lib/site-zone-on.ts) are listed in its
+  // own sitemaps (robots.txt names them), so they're left out here.
+  const collections = [
+    ...(siteServes("industries") ? [] : [industries]),
+    ...(siteServes("placements") ? [] : [placements]),
+  ];
   const groupFiles = collections.flatMap((collection) =>
     collection.groups.map((group) => seoGroupSource(collection, group.id)),
   );
@@ -120,7 +125,8 @@ function entries(docs: Entry[]): Entry[] {
   const stories = customersSource.getPages();
   const storyDate = (p: (typeof stories)[number]) =>
     latest([p.data.updated, p.data.date]);
-  const compares = compareSource.getPages();
+  const compareOnSite = siteServes("compare");
+  const compares = compareOnSite ? [] : compareSource.getPages();
   // `lastVerified` is when the competitor facts were last checked.
   const compareDate = (p: (typeof compares)[number]) =>
     latest([
@@ -438,12 +444,16 @@ function entries(docs: Entry[]): Entry[] {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    {
-      url: url("/compare"),
-      lastModified: latest(compares.map(compareDate)),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+    ...(compareOnSite
+      ? []
+      : [
+          {
+            url: url("/compare"),
+            lastModified: latest(compares.map(compareDate)),
+            changeFrequency: "monthly",
+            priority: 0.7,
+          } satisfies Entry,
+        ]),
     ...compares.map(
       (page) =>
         ({

@@ -10,7 +10,7 @@ const features = computeFeatures({ env, onVercel, production });
 
 | Module | What it holds |
 | --- | --- |
-| `rules.ts` (`@repo/availability`) | `FEATURE_IDS`, `FEATURE_RULES` (what each feature needs, the pages and catalog entries that only offer it), `computeFeatures`, `missingFeatureSetup`, `customDomainMode`, the catalog helpers, and what the app tells others: `PublicAvailability` (sent to browsers by the root layout), `PublishedAvailability` (served at `PUBLISHED_AVAILABILITY_PATH`), `isPathShown` |
+| `rules.ts` (`@repo/availability`) | `FEATURE_IDS`, `FEATURE_RULES` (what each feature needs, the pages and catalog entries that only offer it), `computeFeatures`, `missingFeatureSetup`, `customDomainMode`, `eeOnEveryPlan` (the ee features on every plan of a licensed self-hosted server that sells no plans), the catalog helpers, and what the app tells others: `PublicAvailability` (sent to browsers by the root layout), `PublishedAvailability` (served at `PUBLISHED_AVAILABILITY_PATH`), `isPathShown` |
 | `deployment.ts` (`@repo/availability/deployment`) | `isQrdxDeployment` and `isLocalHost`: whether a deployment is QRdx itself (qrdx.dev, its previews, local dev) or a self-hosted copy on its own domain |
 | `flags.ts` (`@repo/availability/flags`) | `isFlagOn`: "1" or "true" turns a flag on |
 | `workspace-pattern.ts` (`@repo/availability/workspace-pattern`) | Reading a workspace from a `/dashboard/<slug>/…` path, and the `/dashboard/[workspace]/…` pattern rules use to name every workspace's page at once |

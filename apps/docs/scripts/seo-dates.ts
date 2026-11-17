@@ -11,7 +11,6 @@
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import path from "node:path";
-import { translationLocale } from "@repo/i18n/docs";
 import { gitLastModified, withoutGitEnv } from "@/lib/seo-dates";
 
 const app = path.resolve(import.meta.dirname, "..");
@@ -33,7 +32,7 @@ if (git(["rev-parse", "--is-shallow-repository"]) !== "false") {
 
 const files = git(["ls-files", "content/docs"])
   .split("\n")
-  .filter((file) => file.endsWith(".mdx") && !translationLocale(file));
+  .filter((file) => file.endsWith(".mdx"));
 const dates = gitLastModified(files, app);
 const sorted = Object.fromEntries(
   [...dates]

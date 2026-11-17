@@ -1,5 +1,6 @@
 import "server-only";
 
+import { eeLicenseState } from "@repo/auth/license";
 import { FEATURE_IDS, FEATURE_RULES } from "@repo/availability";
 import { database as db, webhookDelivery } from "@repo/database";
 import { getCatalogBySurface } from "@repo/integrations/src/catalog";
@@ -13,6 +14,7 @@ import { featureContext, getFeatures } from "@/lib/feature-availability";
 import { getIntegrationAvailability } from "@/lib/integration-availability";
 import { headObject, isStorageConfigured } from "@/lib/storage/r2";
 import { cached, withTimeout } from "./cache";
+import { licenceProbe } from "./licence";
 import { probePolar } from "./polar";
 
 // /admin/health: one cheap, read-only probe per service, each with a
@@ -113,6 +115,14 @@ function probeBilling() {
   });
 }
 
+function probeLicence() {
+  return probe("ee-license", "QRdx licence (ee/)", async () =>
+    licenceProbe(
+      eeLicenseState(env as Readonly<Record<string, string | undefined>>),
+    ),
+  );
+}
+
 function probeAiGateway() {
   return probe("ai-gateway", "AI (Vercel AI Gateway)", async (signal) => {
     if (!env.AI_GATEWAY_API_KEY) {
@@ -152,6 +162,7 @@ export function getServiceProbes(): Promise<Probe[]> {
     probeEmail(),
     probeBilling(),
     probeAiGateway(),
+    probeLicence(),
   ]);
 }
 

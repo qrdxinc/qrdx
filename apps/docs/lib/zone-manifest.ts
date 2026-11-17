@@ -5,9 +5,9 @@ import type {
   DocsManifestEntry,
 } from "@repo/next-config/docs-zone";
 import { docsSections } from "@/lib/agents/docs-pages";
-import { docsIndex, docsPageLocales } from "@/lib/docs-index";
+import { docsIndex } from "@/lib/docs-index";
 import { isPathAvailable } from "@/lib/feature-availability";
-import { docsSitemapEntries } from "@/lib/i18n/docs-seo";
+import { baseUrl } from "@/lib/metadata";
 import { contentLastModified } from "@/lib/seo-dates";
 
 /**
@@ -17,29 +17,24 @@ import { contentLastModified } from "@/lib/seo-dates";
  */
 export function docsManifest(): DocsManifest {
   // Docs for features the main app can't offer (custom domains) are left
-  // out; the pages stay up for existing users. Translations a native
-  // reviewer signed off follow their English page (lib/i18n/docs-seo.ts).
+  // out; the pages stay up for existing users.
   const sitemap = docsIndex()
     .getPages()
     .filter((page) => isPathAvailable(page.url))
-    .flatMap((page) =>
-      docsSitemapEntries(page.slugs, docsPageLocales(page.slugs), {
-        lastModified: contentLastModified(
-          `content/docs/${page.path}`,
-          page.data.lastModified,
-        ),
-        changeFrequency: "weekly",
-        priority: page.url === "/docs" ? 0.8 : 0.5,
-      }),
-    )
-    .map(
-      ({ lastModified, ...entry }): DocsManifestEntry => ({
-        ...(entry as Omit<DocsManifestEntry, "lastModified">),
+    .map((page): DocsManifestEntry => {
+      const lastModified = contentLastModified(
+        `content/docs/${page.path}`,
+        page.data.lastModified,
+      );
+      return {
+        url: new URL(page.url, baseUrl).toString(),
         ...(lastModified && {
           lastModified: new Date(lastModified).toISOString(),
         }),
-      }),
-    );
+        changeFrequency: "weekly",
+        priority: page.url === "/docs" ? 0.8 : 0.5,
+      };
+    });
 
   const sections = docsSections().map((section) => ({
     title: section.title,

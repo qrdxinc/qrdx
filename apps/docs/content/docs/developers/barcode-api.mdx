@@ -129,6 +129,7 @@ Write colors without the `#`, or encode it as `%23`.
 | `gs1-128` | GS1-128 | Application Identifiers in brackets with their values; GTIN and SSCC check digits added or checked; up to 48 characters of data |
 | `code128` | Code 128 | Up to 80 printable ASCII characters |
 | `code39` | Code 39 | Up to 40 capitals, digits, spaces and `- . $ / + %` |
+| `codabar` | Codabar | Start and stop letter A to D around up to 38 digits and `- $ : / . +` |
 | `datamatrix` | Data Matrix | Any text up to 1,000 characters |
 | `pdf417` | PDF417 | Any text up to 1,000 characters |
 | `aztec` | Aztec | Any text up to 1,000 characters |
@@ -216,7 +217,7 @@ The value breaks the format's rules. The message says exactly what, with a check
 
 ### `400` with `"param": "format"`
 
-`format` is missing or not one of the eleven ids in [Formats](#formats). The message lists them.
+`format` is missing or not one of the twelve ids in [Formats](#formats). The message lists them.
 
 ### The raster image is refused or cut
 

@@ -75,7 +75,7 @@ The editor has three tabs and a live phone preview. Tap a block in the preview t
 
 - **Blocks**: add blocks with **Add block**, reorder them by dragging (or with the arrow buttons), hide a block without deleting it, duplicate or remove it. Each block has its own form; problems (for example a link without `https://`) are flagged on the block and must be fixed before publishing.
 - **Design**: use the colors of one of your [saved QR themes](/dashboard?to=themes) so the page matches the printed code, pick a preset palette or set each color yourself. Choose a font, corner radius, a solid, gradient or image background and an optional logo. **Match colors** derives readable text and card colors from your background and accent, and a warning appears when text contrast is low.
-- **Settings**: the share preview description and image, **Show in search engines** (off by default), and **Custom CSS** on Business.
+- **Settings**: <IfAvailable feature="whiteLabel">the share preview description and image, **Show in search engines** (off by default), and **Custom CSS** on Business.</IfAvailable><IfAvailable feature="whiteLabel" unavailable>the share preview description and image, and **Show in search engines** (off by default).</IfAvailable>
 
 <Shot id="page-editor" />
 
@@ -115,7 +115,7 @@ Click **Publish** (or press <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>) to pu
 - Fast, server-rendered pages built for phones. The only QRdx script on the page counts views and taps for your **Page activity** card; there is no product analytics and no support widget. Your own [tracking pixels](/docs/tracking-and-conversions#tracking-pixels-on-hosted-pages-pro) load only if you add them to the code.
 - Hidden from search engines unless you turn on **Show in search engines**.
 - Share previews (title, description, image) for chat apps and social networks. Password-protected codes never reveal page details in previews.
-- A small **Report abuse** link on every page, including white-label pages.
+- A small **Report abuse** link on every page<IfAvailable feature="whiteLabel">, including white-label pages</IfAvailable>.
 
 Password protection, start and end dates, scan limits and pausing from [code controls](/docs/code-controls) apply to the page and its **Save contact** file too, also when someone opens the page link directly.
 
@@ -128,11 +128,17 @@ Password protection, start and end dates, scan limits and pausing from [code con
 | White-label (your logo as the browser icon, no QRdx branding) | No | No | Yes |
 | Custom CSS | No | No | Yes |
 
-Limits only stop you from creating new pages. Pages you already have keep working on every plan, including after a downgrade. After a downgrade from Business, a page's custom CSS is no longer applied, and the editor refuses to publish that page again until you remove the CSS in its **Settings**.
+White-label and custom CSS are under the QRdx commercial license. A self-hosted QRdx server needs a license key that QRdx issues with an enterprise agreement (`QRDX_EE_LICENSE`) to turn them on; see [Self-hosting](/docs/self-hosting#optional-services). Without one, every page shows QRdx's default branding and no custom CSS, and keeps working.
+
+Limits only stop you from creating new pages. Pages you already have keep working on every plan, including after a downgrade.<IfAvailable feature="whiteLabel"> After a downgrade from Business, a page's custom CSS is no longer applied, and the editor refuses to publish that page again until you remove the CSS in its **Settings**.</IfAvailable>
+
+<IfAvailable feature="whiteLabel">
 
 ### Custom CSS
 
 On Business, write plain CSS in **Settings** → **Custom CSS**. Rules only apply inside your page: every selector is scoped to the page content, and each block can be targeted with `.lp-block-<type>`, for example `.lp-block-links a` or `.lp-block-contact h1`. For safety, CSS can't load files (`url()`, `@import`, `@font-face`), can't use backslash escapes, and supports the `@media`, `@supports`, `@container` and `@keyframes` at-rules only.
+
+</IfAvailable>
 
 ## For developers
 

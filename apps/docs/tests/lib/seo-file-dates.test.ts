@@ -4,7 +4,6 @@
 // lib/zone-manifest.ts looks up ("content/docs/<page>.mdx").
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { translationLocale } from "@repo/i18n/docs";
 import { describe, expect, it } from "vitest";
 import recorded from "@/lib/seo-file-dates.json";
 
@@ -17,15 +16,11 @@ describe("recorded docs page dates", () => {
     expect(recorded).toHaveProperty(["content/docs/index.mdx"]);
   });
 
-  it.each(entries)(
-    "%s is an English page here, with a real past date",
-    (file, date) => {
-      expect(file).toMatch(/^content\/docs\/.+\.mdx$/);
-      expect(translationLocale(file)).toBeUndefined();
-      expect(existsSync(join(APP, file))).toBe(true);
-      const time = Date.parse(date);
-      expect(Number.isNaN(time)).toBe(false);
-      expect(time).toBeLessThanOrEqual(Date.now());
-    },
-  );
+  it.each(entries)("%s is a page here, with a real past date", (file, date) => {
+    expect(file).toMatch(/^content\/docs\/.+\.mdx$/);
+    expect(existsSync(join(APP, file))).toBe(true);
+    const time = Date.parse(date);
+    expect(Number.isNaN(time)).toBe(false);
+    expect(time).toBeLessThanOrEqual(Date.now());
+  });
 });

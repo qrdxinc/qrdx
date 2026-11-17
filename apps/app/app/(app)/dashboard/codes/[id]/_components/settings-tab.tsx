@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { CodeOptionPlans } from "@/app/(app)/dashboard/codes/_lib/code-options";
 import type { QrCodeView } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { cheapestPlanWith } from "@/lib/plans";
 import type { PaidPlan } from "@/lib/pricing";
 import { HistoryPanel } from "./history-panel";
@@ -51,15 +52,19 @@ export function SettingsTab({
           </section>
         </>
       )}
-      <section className="scroll-mt-20" id="tracking">
-        <PixelsPanel
-          plans={{
-            pixels: required.pixels.requiredPlan,
-            conversions: required.conversions.requiredPlan,
-          }}
-          settings={marketing}
-        />
-      </section>
+      {/* Website links only offer conversion tracking (ee/conversions, QRdx
+          licence key). */}
+      {(code.kind === "page" || isFeatureAvailable("conversions")) && (
+        <section className="scroll-mt-20" id="tracking">
+          <PixelsPanel
+            plans={{
+              pixels: required.pixels.requiredPlan,
+              conversions: required.conversions.requiredPlan,
+            }}
+            settings={marketing}
+          />
+        </section>
+      )}
       {/* Precise scan location (lib/scan-location), redirects and pages alike. */}
       <section className="scroll-mt-20" id="location">
         <PreciseLocationPanel

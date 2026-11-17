@@ -412,6 +412,58 @@ describe("features this deployment can't offer", () => {
     assert.ok(off.includes("Unlimited team members"));
   });
 
+  it("sells the ee/ business features only where the server has the licence", () => {
+    // With the licence (qrdx.dev) nothing changes; without it the client
+    // portal, client reports, white-label and conversions aren't sold.
+    const off = {
+      clientPortal: false,
+      whiteLabel: false,
+      conversions: false,
+    } as const;
+    const pages = (options: Parameters<typeof buildComparison>[2]) =>
+      rows(options).find((row) => row.feature === "Hosted landing pages")
+        ?.values;
+    assert.deepEqual(
+      features({}),
+      features({ clientPortal: true, whiteLabel: true, conversions: true }),
+    );
+    for (const feature of [
+      "Conversion tracking",
+      "Client-branded stats pages",
+      "Client portal",
+    ]) {
+      assert.ok(features({}).includes(feature), feature);
+      assert.ok(!features(off).includes(feature), feature);
+    }
+    assert.deepEqual(pages(off), {
+      ...pages({}),
+      business: pages({})?.pro,
+    });
+    const on = buildHighlights(LIMITS);
+    const without = buildHighlights(LIMITS, off);
+    assert.ok(on.business.some((line) => /white-label/i.test(line)));
+    assert.ok(on.business.some((line) => /conversion/i.test(line)));
+    assert.ok(on.pro.some((line) => /client/i.test(line)));
+    const lines = Object.values(without).flat();
+    assert.ok(
+      lines.every((line) => !/white-label|conversion|client/i.test(line)),
+    );
+    assert.equal(
+      without.business.length,
+      on.business.length - 3,
+      "white-label, conversions and client work",
+    );
+    const dialog = Object.values(
+      buildUpgradeHighlights({ whiteLabel: false, conversions: false }),
+    ).flat();
+    assert.ok(dialog.every((line) => !/white-label|conversion/i.test(line)));
+    assert.ok(dialog.includes("Webhooks"));
+    assert.deepEqual(
+      buildUpgradeHighlights({ whiteLabel: true, conversions: true }),
+      buildUpgradeHighlights(),
+    );
+  });
+
   it("names Pro's scan history in the upgrade dialog", () => {
     assert.ok(
       buildUpgradeHighlights().pro.includes("Unlimited analytics history"),

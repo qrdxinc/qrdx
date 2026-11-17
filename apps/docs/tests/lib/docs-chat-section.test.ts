@@ -1,5 +1,5 @@
 // The docs assistant's empty state (components/chat): which tab a page is
-// in, decided from the tabs' URLs so translated titles don't matter, and a
+// in, decided from the tabs' URLs so their titles don't matter, and a
 // full set of suggested questions for every tab in the English catalog the
 // docs read (packages/i18n/messages/en.json, written by zone-inputs).
 import { readFileSync } from "node:fs";
@@ -30,15 +30,9 @@ describe("docsSectionOf", () => {
     expect(docsSectionOf("/docs/self-hosting", TABS)).toBe("selfHosting");
   });
 
-  it("works for translated URLs, whose tabs list translated pages", () => {
-    const spanish = [
-      tab("/es/docs/help", "/es/docs/help/contact"),
-      tab("/es/docs/developers", "/es/docs/developers/mcp"),
-    ];
-    expect(docsSectionOf("/es/docs/help/contact?x=1", spanish)).toBe("help");
-    expect(docsSectionOf("/es/docs/developers/mcp#top", spanish)).toBe(
-      "developers",
-    );
+  it("ignores a query or a hash", () => {
+    expect(docsSectionOf("/docs/help/contact?x=1", TABS)).toBe("help");
+    expect(docsSectionOf("/docs/developers/mcp#top", TABS)).toBe("developers");
   });
 
   it("falls back to home for /docs and pages no tab lists", () => {

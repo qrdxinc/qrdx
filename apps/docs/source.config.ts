@@ -22,8 +22,8 @@ import { gitFileDate } from "./lib/seo-dates";
 // see https://fumadocs.dev/docs/mdx/collections
 // `.transform(fillFactsDeep)`: frontmatter strings can quote product counts as
 // `{facts.bodyPatterns}` (lib/product-facts.ts), filled in at build time.
-// The docs' content (content/docs). The main app's translation and OpenAPI
-// scripts write into it too.
+// The docs' content (content/docs). The main app's OpenAPI script writes the
+// API reference into it.
 export const docs = defineDocs({
   dir: "content/docs",
   docs: {

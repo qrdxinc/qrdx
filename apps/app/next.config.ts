@@ -1,4 +1,8 @@
 import {
+  assertLicensePublicKey,
+  QRDX_LICENSE_PUBLIC_KEY,
+} from "@repo/auth/ee/license-public-key";
+import {
   API_HOST,
   CANONICAL_HOST,
   CANONICAL_ORIGIN,
@@ -6,7 +10,11 @@ import {
 } from "@repo/config";
 import { OG_FONT_GLOB } from "@repo/design-system/og/font-files";
 import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
-import { docsOriginRedirects, docsZoneRewrites } from "@repo/i18n/docs";
+import {
+  docsOriginRedirects,
+  docsZoneRewrites,
+  translatedDocsRedirects,
+} from "@repo/i18n/docs";
 import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
@@ -94,6 +102,16 @@ const docsElsewhere = env.DOCS_ZONE_URL
       // QRdx's own hosts: on a custom domain those paths are short links.
       has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
     });
+// The docs are English only. The docs URLs the other languages had
+// (/es/docs/..., /pt-br/docs/....md, /docs-md/es/...) redirect to the English
+// page, 307 for now (@repo/i18n/docs). Redirects run before the rewrites
+// above, so these requests are answered here, once, and never proxied to
+// the docs site. Without a docs site they go straight to the English page
+// on qrdx.dev.
+const translatedDocs = translatedDocsRedirects({
+  ...(!env.DOCS_ZONE_URL && { origin: CANONICAL_ORIGIN }),
+  has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
+});
 
 // The back-office console at CONSOLE_ORIGIN serves five /admin sections and
 // its build assets (@repo/next-config/console-zone), on QRdx's own hosts
@@ -146,6 +164,18 @@ if (siteZone.length > 0 && !env.SITE_ZONE_KEY) {
   console.warn(
     "⚠ SITE_ORIGIN is set but SITE_ZONE_KEY isn't: the site can't tell requests that came through this app. Set the same SITE_ZONE_KEY on both.",
   );
+}
+
+// QRDX_EE_LICENSE is checked against QRdx's licence public key, compiled into
+// the build (packages/auth/ee/license-public-key.ts). A production build
+// without it would turn every licence key down, so `next build` and
+// `next start` stop here instead. `next typegen` loads this file the same
+// way but builds nothing (the typechecks run it), so it goes on.
+if (
+  process.env.NODE_ENV === "production" &&
+  !process.argv.includes("typegen")
+) {
+  assertLicensePublicKey(QRDX_LICENSE_PUBLIC_KEY);
 }
 
 // Another zone's build assets aren't pages: no page policy on them while
@@ -262,8 +292,11 @@ let nextConfig: NextConfig = {
   // Geist (@repo/design-system/og/font-files) for server images: OG cards,
   // and frame labels drawn from its glyph outlines (lib/qr-text-outline.ts),
   // read at runtime wherever a PNG is rasterized.
+  // The conversion tracking script (ee/conversions/script.ts) is read from
+  // disk when /conversions.js is built; traced in case it's ever rebuilt.
   outputFileTracingIncludes: {
     "/**": [OG_FONT_GLOB],
+    "/conversions.js": ["./ee/conversions/conversions.js"],
   },
   serverExternalPackages: ["shiki", "@takumi-rs/core"],
   // When rules set the same header, the later one wins.
@@ -407,6 +440,8 @@ let nextConfig: NextConfig = {
         ...redirect,
         has: [{ type: "host" as const, value: `(?:${PLATFORM_HOSTS})` }],
       })),
+      // The other languages' old docs URLs, to the English page.
+      ...translatedDocs,
       // No docs site here: the docs are read on qrdx.dev (docsElsewhere).
       ...docsElsewhere,
       // Site pages that moved (lib/moved-pages.ts), also on QRdx's own hosts.

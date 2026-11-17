@@ -14,7 +14,7 @@ import { clipSources, getClip, getShot } from "@/lib/shots";
 // it shows: the other has no layout box, so lazy loading never reaches it.
 //
 //   <Shot id="codes-list" />
-//   <Shot id="codes-list" alt="…" caption="…" />   (translated pages)
+//   <Shot id="codes-list" alt="…" caption="…" />
 //   <Clip id="first-code" />
 //
 // An id nobody captured throws, which fails the build with the fix in the
@@ -28,7 +28,7 @@ export function Shot({
   className,
 }: {
   id: string;
-  /** Overrides the manifest's English alt text (translated pages). */
+  /** Overrides the manifest's alt text. */
   alt?: string;
   caption?: ReactNode;
   className?: string;

@@ -11,8 +11,10 @@ import {
   type CodeKind,
   type CodeOptionId,
   type CodeOptionState,
+  type CodeOptionsOffered,
   codeOptionStatus,
   codeOptionsFor,
+  isCodeOptionOffered,
 } from "./code-options";
 
 /**
@@ -30,15 +32,19 @@ export const KIND_LABELS: Record<CodeKind, string> = {
  * Options set up on a code that a code of `kind` doesn't use: routing, A/B
  * tests, UTM and conversions on a hosted page; tracking pixels on a website
  * link. They stay saved and work again after switching back. Password and
- * schedule apply to both types.
+ * schedule apply to both types. Options this deployment doesn't offer at
+ * all (conversions without the licence key) aren't listed.
  */
 export function inactiveOptions(
   kind: CodeKind,
   marketing: CodeOptionState | null,
+  offered?: CodeOptionsOffered,
 ): CodeOptionId[] {
   const status = codeOptionStatus(marketing, null);
-  const offered = new Set<CodeOptionId>(codeOptionsFor(kind));
-  return CODE_OPTION_IDS.filter((id) => status[id] && !offered.has(id));
+  const used = new Set<CodeOptionId>(codeOptionsFor(kind));
+  return CODE_OPTION_IDS.filter(
+    (id) => status[id] && !used.has(id) && isCodeOptionOffered(id, offered),
+  );
 }
 
 // ─── Carrying a page's content into another page type ───────────────────────
