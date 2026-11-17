@@ -53,7 +53,9 @@ ARG NEXT_PUBLIC_QRDX_PRO_YEARLY_PRODUCT_ID
 # Placeholders only satisfy env validation during `next build`. They stay in
 # this stage and are never copied into the runtime image. There's no database
 # here, so QRDX_BUILD_WITHOUT_DATABASE moves pages that read it to request
-# time (lib/build-without-database.ts).
+# time (lib/build-without-database.ts). It also makes next.config.ts build the
+# way Vercel does: no in-build type check (CI already ran it; Node's heap ran
+# out on it here), no Turbopack build cache and no source maps.
 ENV NEXT_OUTPUT=standalone \
     DATABASE_URL=postgresql://build:build@localhost:5432/build \
     BETTER_AUTH_SECRET=build-time-placeholder-not-used-at-runtime \
