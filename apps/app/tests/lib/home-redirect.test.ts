@@ -3,17 +3,14 @@
 // session lookup; a stale cookie gets the page too.
 //
 // The home page is English only: /es, /pt-br and the other languages' roots
-// redirect to / in next.config.ts before the proxy runs, so a signed-in
-// visitor there still ends up on the dashboard, in the language the app
-// already uses for them (their saved choice, else the language cookie,
-// which no step on the way touches).
+// redirect to / in next.config.ts before the proxy runs
+// (tests/lib/home-rewrite.test.ts), so a signed-in visitor there still ends
+// up on the dashboard, in the language the app already uses for them (their
+// saved choice, else the language cookie, which no step on the way touches).
+// The two halves are tested in separate files: loading next.config.ts and
+// proxy.ts in one module graph leaves Next's AsyncLocalStorage invariant
+// failing as an unhandled rejection.
 
-import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
-import type { NextConfig } from "next";
-import {
-  getRedirectUrl,
-  unstable_getResponseFromNextConfig,
-} from "next/experimental/testing/server";
 import { NextRequest } from "next/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { isHomePath, isLandingPath, LANDING_PATH } from "@/lib/home-path";
@@ -72,10 +69,8 @@ describe("the proxy's matcher", () => {
 describe("signed-in visitors on the home page", () => {
   const state = { lookups: 0, signedIn: true };
   let proxy: (request: NextRequest) => Promise<Response>;
-  let nextConfig: NextConfig;
 
   beforeAll(async () => {
-    process.env.CSP_DEV = "1";
     vi.resetModules();
     vi.doMock("@/lib/account/session-origin-server", () => ({
       getSessionAllowingHold: async () => {
@@ -90,21 +85,13 @@ describe("signed-in visitors on the home page", () => {
     vi.doMock("@/app/(app)/dashboard/domains/_lib/host-routing", () => ({
       routeCustomDomain: async () => null,
     }));
-    // createMDX() rewrites .source/*.ts in the background; the routes don't
-    // depend on MDX (tests/lib/csp.test.ts explains the race).
-    vi.doMock("fumadocs-mdx/next", () => ({
-      createMDX: () => (config: unknown) => config,
-    }));
     proxy = (await import("@/proxy")).default;
-    nextConfig = (await import("@/next.config"))
-      .default as unknown as NextConfig;
-  }, 120_000);
+  });
 
   afterAll(() => {
     vi.doUnmock("@/lib/account/session-origin-server");
     vi.doUnmock("next/headers");
     vi.doUnmock("@/app/(app)/dashboard/domains/_lib/host-routing");
-    vi.doUnmock("fumadocs-mdx/next");
   });
 
   const request = (path: string, cookie?: string) =>
@@ -121,26 +108,16 @@ describe("signed-in visitors on the home page", () => {
     expect(response.headers.get("location")).toBe("https://qrdx.dev/dashboard");
   });
 
-  it.each(
-    TRANSLATED_LOCALES.map((locale) => `/${LOCALE_INFO[locale].segment}`),
-  )("go to /dashboard from %s, by way of /", async (path) => {
+  it("go to /dashboard from / after /es redirected there, language cookie untouched", async () => {
     state.signedIn = true;
-    // next.config.ts first (redirects run before the proxy)...
-    const first = await unstable_getResponseFromNextConfig({
-      url: `https://qrdx.dev${path}`,
-      nextConfig,
-      cookies: { NEXT_LOCALE: "es" },
-    });
-    expect(first.status).toBe(307);
-    expect(getRedirectUrl(first)).toBe("https://qrdx.dev/");
-    // ...then the proxy on /, with the visitor's cookies as they were.
-    const second = await proxy(request("/", SPANISH));
-    expect(second.status).toBe(307);
-    expect(second.headers.get("location")).toBe("https://qrdx.dev/dashboard");
-    // Neither step sets a cookie: the app's language (lib/i18n/app-locale.ts:
-    // the saved choice, else NEXT_LOCALE) stays what it was.
-    expect(first.headers.get("set-cookie")).toBeNull();
-    expect(second.headers.get("set-cookie")).toBeNull();
+    // /es → / is next.config.ts's step (tests/lib/home-rewrite.test.ts,
+    // which checks it sets no cookie either); this is the proxy's on /.
+    const response = await proxy(request("/", SPANISH));
+    expect(response.status).toBe(307);
+    expect(response.headers.get("location")).toBe("https://qrdx.dev/dashboard");
+    // The app's language (lib/i18n/app-locale.ts: the saved choice, else
+    // NEXT_LOCALE) stays what it was.
+    expect(response.headers.get("set-cookie")).toBeNull();
   });
 
   it("cost signed-out visitors no session lookup", async () => {

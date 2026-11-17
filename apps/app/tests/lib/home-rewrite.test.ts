@@ -52,9 +52,17 @@ describe("next.config.ts", () => {
   });
 
   it.each(SEGMENTS)("redirects /%s to /", async (segment) => {
-    const response = await respond(`https://qrdx.dev/${segment}`);
+    // A signed-in visitor goes on from / to the dashboard (proxy.ts,
+    // tests/lib/home-redirect.test.ts); this step leaves their language
+    // cookie alone, so the app keeps its language.
+    const response = await unstable_getResponseFromNextConfig({
+      url: `https://qrdx.dev/${segment}`,
+      nextConfig,
+      cookies: { NEXT_LOCALE: "es" },
+    });
     expect(response.status).toBe(307);
     expect(getRedirectUrl(response)).toBe("https://qrdx.dev/");
+    expect(response.headers.get("set-cookie")).toBeNull();
   });
 
   it("redirects /en and /en/home permanently, as before", async () => {
