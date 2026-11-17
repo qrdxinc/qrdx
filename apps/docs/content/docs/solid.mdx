@@ -55,7 +55,7 @@ The page shows a dark code with a "Scan me" banner. Click **Blue** and the code 
 
 `QRCodeSVG` takes every option the React `QRCodeSVG` takes: patterns, colors and gradients, logos (`imageSettings`), frames, shapes, templates and art. Attributes such as `class`, `style` or `aria-label` go on the `<svg>`, or on the frame's outer `<svg>` when there is a frame.
 
-`QRCode` adds the React `QRCode`'s logo shortcut: `logo`, `logoOptions`, `hideLogo` and `scale`. It takes the code's props and `style` only; put `class` or `aria-label` on an element around it, or use `QRCodeSVG`.
+`QRCode` adds the React `QRCode`'s logo shortcut: `logo`, `logoOptions`, `hideLogo` and `scale`. From qrdx 0.0.56 it puts `class`, `aria-label` and any other attribute on the `<svg>`, as `QRCodeSVG` does; older versions drop them.
 
 ```tsx title="src/components/logo-code.tsx"
 import { QRCode } from "qrdx/solid";

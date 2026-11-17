@@ -2,6 +2,12 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.56
+
+- **`QRCode` forwards other props to the `<svg>`.** React's `QRCode`, and the Preact and Solid `QRCode`, used to drop every prop that isn't one of the code's own. `aria-label`, `className` (`class`), `role`, `id`, `title` and `data-*` now land on the `<svg>`, or on the frame's outer `<svg>` when there is a frame, as they always have with `QRCodeSVG`, the Vue `QRCode` and `createQRCode`. Nothing is renamed or removed, and codes that pass no such props draw the same markup as before.
+- **New types.** `QRCodePropsSVG` (`QRCodeProps` plus React's SVG attributes) types the React component, and `QRCodeOptions` (`QRCodeProps` plus root attributes) the Preact and Solid ones. `QRCodeProps` is unchanged.
+- **The scan score is faster.** Its camera model does less work for the same scores.
+
 ## 0.0.55
 
 ### Rendering without zod

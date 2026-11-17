@@ -35,7 +35,7 @@ export function englishDocsPath(url: string): string {
 export interface DocsRedirect {
   source: string;
   destination: string;
-  permanent: false;
+  permanent: boolean;
   has?: RouteCondition[];
 }
 
@@ -48,10 +48,12 @@ export interface DocsRedirect {
  *   /zh-hans/docs/angular.md  → /docs/angular.md   (.mdx too, and /es/docs.md)
  *   /docs-md/es/teams         → /docs/teams.md     (the old Markdown route)
  *
- * Temporary (307) while the change is watched; a later change makes them
- * permanent. Redirects run before rewrites, so the main app answers these
- * itself and never proxies them to the docs site. `origin` sends them to
- * another site's docs (qrdx.dev, for a deployment without a docs site).
+ * Permanent (308) on a site that serves the docs itself: the translated
+ * docs are gone for good. Redirects run before rewrites, so the main app
+ * answers these itself and never proxies them to the docs site. `origin`
+ * sends them to another site's docs (qrdx.dev, for a deployment without a
+ * docs site); those stay temporary (307), like docsOriginRedirects(), so a
+ * deployment that later gets a docs site serves them itself.
  */
 export function translatedDocsRedirects(
   options: {
@@ -77,7 +79,7 @@ export function translatedDocsRedirects(
   ].map(({ source, destination }) => ({
     source,
     destination: `${target}${destination}`,
-    permanent: false,
+    permanent: !options.origin,
     ...(options.has && { has: options.has }),
   }));
 }

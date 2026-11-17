@@ -72,7 +72,7 @@ What each prop does:
 - `fgColor` takes any CSS color or a gradient. `bgColor`, `eyeColor` and `dotColor` work the same way.
 - `bodyPattern`, `cornerEyePattern` and `cornerEyeDotPattern` shape the modules, the corner eyes and the dots inside them. There are {facts.bodyPatterns} body patterns, {facts.eyeShapes} eye shapes and {facts.eyeCentres} eye centers, all drawn live in [Shapes, eyes and frames](/docs/styles).
 - `frame` adds one of {facts.frameStyles} built-in call-to-action frames, or a frame of your own.
-- `QRCode` takes the code's own props and `style`, nothing else. To give the code an accessible name or a class, wrap it in an element (`<div role="img" aria-label="QR code for the menu">`), or render `QRCodeSVG`, which puts `aria-label`, `className` and any other attribute on the `<svg>`.
+- Any other prop goes on the `<svg>`, so `role="img"` with `aria-label="QR code for the menu"` gives the code an accessible name, and `className` gives it a class. This needs qrdx 0.0.56 or later; older versions drop these props, so there you wrap the code in an element that carries them.
 
 ### 4. Save it as a file
 

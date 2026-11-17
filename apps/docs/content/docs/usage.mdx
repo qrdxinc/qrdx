@@ -12,8 +12,8 @@ icon: FileCode
 
 | Component | What it draws | Use it when |
 | --- | --- | --- |
-| `QRCode` | An `<svg>` with every style option, plus `logo`, `logoOptions`, `hideLogo` and `scale`. Takes no other attributes | Almost always |
-| `QRCodeSVG` | The same `<svg>`, with the logo given as raw `imageSettings` in pixels. Any other prop (`aria-label`, `className`, `role`) goes on the `<svg>` | You need attributes on the `<svg>`, you lay the logo out yourself, or you port code from another renderer |
+| `QRCode` | An `<svg>` with every style option, plus `logo`, `logoOptions`, `hideLogo` and `scale`. Any other prop (`aria-label`, `className`, `role`) goes on the `<svg>` | Almost always |
+| `QRCodeSVG` | The same `<svg>`, with the logo given as raw `imageSettings` in pixels. Any other prop goes on the `<svg>` too | You lay the logo out yourself, or you port code from another renderer |
 | `QRCodeCanvas` | A `<canvas>` with plain square modules and solid colors | You need a canvas element. Patterns, eye colors, gradients and templates are ignored |
 
 `QRCode` and `QRCodeSVG` use no browser-only hooks, so they render in React Server Components and in static HTML. `QRCodeCanvas` ships with `"use client"`.
@@ -30,7 +30,7 @@ export function MenuCode() {
 }
 ```
 
-`value` is encoded exactly as you pass it, so a Wi-Fi payload, a vCard, `mailto:` or plain text all work. `QRCode` takes the code's own props and `style`, nothing else: give it an accessible name by wrapping it, as above. `QRCodeSVG` puts `aria-label`, `className`, `role` and any other attribute on the `<svg>` itself.
+`value` is encoded exactly as you pass it, so a Wi-Fi payload, a vCard, `mailto:` or plain text all work. The wrapper gives the code an accessible name. From qrdx 0.0.56, `QRCode` also puts `aria-label`, `className`, `role` and any other attribute on the `<svg>` itself, as `QRCodeSVG` always has, so you can label the code without a wrapper. Older versions of `QRCode` drop those props.
 
 ## Size and quiet zone
 
