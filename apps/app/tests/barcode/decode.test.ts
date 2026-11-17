@@ -87,6 +87,7 @@ const EXTRA_VALUES: Partial<Record<BarcodeFormatId, string[]>> = {
   upce: ["654321", "01234558", "065100004327"],
   code128: ["12345678", "abc DEF 123 !#%", "QRDX 0042-ALPHA/beta"],
   code39: ["ABC-123 $/+%."],
+  code93: ["ABC-123 $/+%.", "1234567890", "Q".repeat(40)],
   codabar: ["C12-$:/.+34D"],
   itf14: ["1001234567890"],
   "gs1-128": [

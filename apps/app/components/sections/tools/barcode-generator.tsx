@@ -119,7 +119,12 @@ const SCAN_CHECK_DELAY_MS = 400;
 const LINEAR = BARCODE_FORMATS.filter((format) => format.kind === "linear");
 const MATRIX = BARCODE_FORMATS.filter((format) => format.kind === "2d");
 /** Linear formats that print text rather than a number under the bars */
-const TEXT_FORMATS = new Set<BarcodeFormatId>(["code128", "code39", "gs1-128"]);
+const TEXT_FORMATS = new Set<BarcodeFormatId>([
+  "code128",
+  "code39",
+  "code93",
+  "gs1-128",
+]);
 
 function ColorField({
   label,
