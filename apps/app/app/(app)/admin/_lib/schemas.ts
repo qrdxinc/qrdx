@@ -51,3 +51,5 @@ export const blockFileSchema = z.object({
   fileId: adminId,
   reason: optionalReason,
 });
+
+export const importSchema = userReasonSchema.extend({ jobId: adminId });

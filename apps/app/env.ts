@@ -208,8 +208,11 @@ export const env = validateTogether(() =>
       // Signs the back-office console's calls to /api/internal/console/*
       // (lib/console-internal): the console holds the same value, and the
       // endpoints answer only requests signed with it. Its own secret, not
-      // CONSOLE_ZONE_KEY. 32 characters or more (openssl rand -hex 32);
-      // unset or shorter, those endpoints are off (404).
+      // CONSOLE_ZONE_KEY. 32 characters or more (openssl rand -hex 32).
+      // Unset, those endpoints are off (404); set but shorter, the app
+      // refuses to start, rather than run with a guessable key. They also
+      // need Upstash (KV_REST_API_*), for the replay check: without it
+      // they answer 503.
       CONSOLE_INTERNAL_SECRET: z.string().min(32).optional(),
 
       // The marketing site (a separate app, @repo/next-config/site-zone),

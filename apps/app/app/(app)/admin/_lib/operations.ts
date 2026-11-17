@@ -38,15 +38,20 @@ import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import { isEmailConfigured } from "@/lib/email/send";
 import { claimDueDeliveries, processClaimed } from "@/lib/events/deliveries";
 import { setFileBlocked } from "@/lib/files/admin";
+import { importJobSchema, jobStoreSchema } from "@/lib/migrate/jobs";
 import { JOB_STORE_PROVIDER } from "@/lib/migrate/server/repo";
+import type { ImportJob } from "@/lib/migrate/types";
 import {
   type AdminActionOutcome,
   type AdminActor,
   adminError,
 } from "./action-runner";
 import {
+  cancelImportJob,
   canUnlinkSignInMethod,
   confirmsEmail,
+  isStuckImport,
+  requeueImportJob,
   resentInvitationExpiry,
   signInMethodLabel,
 } from "./rules";
@@ -108,6 +113,7 @@ async function findSupportTarget(userId: string) {
       id: user.id,
       email: user.email,
       emailVerified: user.emailVerified,
+      role: user.role,
     })
     .from(user)
     .where(eq(user.id, userId))
@@ -116,13 +122,20 @@ async function findSupportTarget(userId: string) {
   return found;
 }
 
-/** For people who can't receive the code but proved ownership another way. */
+/**
+ * For people who can't receive the code but proved ownership another way.
+ * A verified address on ADMIN_EMAILS (or an account with the admin role or
+ * on ADMIN_USER_IDS) is an admin, so when verifying would make this account
+ * one, it takes the admin's strong confirmation, as granting the role does.
+ */
 export async function markEmailVerified(
   _admin: AdminActor,
   { userId }: { userId: string },
+  { requireStrong }: StrongCheck,
 ): Promise<AdminActionOutcome<undefined> | null> {
   const target = await findSupportTarget(userId);
   if (target.emailVerified) return null;
+  if (isAdmin({ ...target, emailVerified: true })) await requireStrong();
   await db
     .update(user)
     .set({ emailVerified: true, updatedAt: new Date() })
@@ -538,7 +551,12 @@ export async function deleteUserAccount(
     throw adminError("Delete your own account from Settings → Account.");
   }
   const [target] = await db
-    .select({ id: user.id, email: user.email, role: user.role })
+    .select({
+      id: user.id,
+      email: user.email,
+      emailVerified: user.emailVerified,
+      role: user.role,
+    })
     .from(user)
     .where(eq(user.id, userId))
     .limit(1);
@@ -546,8 +564,14 @@ export async function deleteUserAccount(
   if (!confirmsEmail(confirmation, target.email)) {
     throw adminError("Type the user's email exactly to confirm.");
   }
+  // The role, or ADMIN_EMAILS / ADMIN_USER_IDS: never an admin's account.
   if (hasAdminRole(target.role)) {
     throw adminError("Remove their admin role first.");
+  }
+  if (isAdmin(target)) {
+    throw adminError(
+      "They're an admin through ADMIN_EMAILS or ADMIN_USER_IDS. Take them off the list first.",
+    );
   }
 
   const { AccountDeletionError, executeAccountDeletion, loadDeletionFacts } =
@@ -665,4 +689,105 @@ export async function blockReportedFile(
       metadata: { fileId },
     },
   };
+}
+
+// ─── Imports ─────────────────────────────────────────────────────────────────
+
+/**
+ * Rewrites one job in the user's import store, keeping every other entry
+ * exactly as stored (even ones this version can't read).
+ */
+async function updateImportJob(
+  userId: string,
+  jobId: string,
+  change: (job: ImportJob) => ImportJob,
+): Promise<{ before: ImportJob; after: ImportJob }> {
+  const [row] = await db
+    .select({ id: integration.id, metadata: integration.metadata })
+    .from(integration)
+    .where(
+      and(
+        eq(integration.userId, userId),
+        eq(integration.provider, JOB_STORE_PROVIDER),
+      ),
+    )
+    .limit(1);
+  const store = jobStoreSchema.safeParse(row?.metadata);
+  if (!(row && store.success)) throw adminError("Import not found", 404);
+
+  const index = store.data.jobs.findIndex(
+    (entry) => (entry as { id?: unknown })?.id === jobId,
+  );
+  const parsed = importJobSchema.safeParse(store.data.jobs[index]);
+  if (index === -1 || !parsed.success) {
+    throw adminError("Import not found", 404);
+  }
+  const before = parsed.data;
+  const after = change(before);
+  const jobs = [...store.data.jobs];
+  jobs[index] = after;
+  await db
+    .update(integration)
+    .set({ metadata: { ...store.data, jobs }, updatedAt: new Date() })
+    .where(eq(integration.id, row.id));
+  return { before, after };
+}
+
+const importAudit = (
+  userId: string,
+  jobId: string,
+  before: ImportJob,
+  after: ImportJob,
+) => ({
+  audit: {
+    targetType: "import_job",
+    targetId: jobId,
+    subjectUserId: userId,
+    metadata: {
+      provider: before.provider,
+      fromStatus: before.status,
+      toStatus: after.status,
+      failedBefore: before.items.filter((item) => item.status === "failed")
+        .length,
+      pendingAfter: after.items.filter((item) => item.status === "pending")
+        .length,
+    },
+  },
+});
+
+/**
+ * Puts the failed links of an import back in the queue. The import itself
+ * runs from the user's browser (it needs their provider connection), so the
+ * user's import dialog resumes it next time they open it.
+ */
+export async function requeueImport(
+  _admin: AdminActor,
+  { userId, jobId }: { userId: string; jobId: string },
+): Promise<AdminActionOutcome<undefined>> {
+  const now = new Date();
+  const { before, after } = await updateImportJob(userId, jobId, (job) => {
+    const failed = job.items.some((item) => item.status === "failed");
+    if (job.status === "running" && !isStuckImport(job, now)) {
+      throw adminError("This import is still running. Wait for it.");
+    }
+    if (!(failed || job.status === "running")) {
+      throw adminError("Nothing to re-run: no links failed.");
+    }
+    return requeueImportJob(job, now);
+  });
+  return importAudit(userId, jobId, before, after);
+}
+
+/** Stops a stuck import; links already created stay. */
+export async function cancelImport(
+  _admin: AdminActor,
+  { userId, jobId }: { userId: string; jobId: string },
+): Promise<AdminActionOutcome<undefined>> {
+  const { before, after } = await updateImportJob(userId, jobId, (job) => {
+    if (job.status !== "running") {
+      throw adminError("This import already finished.");
+    }
+    return cancelImportJob(job, new Date());
+  });
+  return importAudit(userId, jobId, before, after);
 }

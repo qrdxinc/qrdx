@@ -8,6 +8,7 @@ import { unbanUserForConsole } from "@/lib/console-internal/users";
 export const dynamic = "force-dynamic";
 
 export const POST = consoleInternalRoute({
+  action: "user.unban",
   schema: userReasonSchema,
   run: (input, { actor }) => unbanUserForConsole(actor, input),
 });

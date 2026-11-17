@@ -21,23 +21,32 @@ const state = vi.hoisted(() => ({
   results: [] as unknown[],
   seen: new Set<string>(),
   redisDown: false,
+  redisMissing: false,
   strongConfirmed: true,
 }));
 
 vi.mock("@/env", () => ({ env: state.env }));
 
+const replayStore = vi.hoisted(() => ({
+  set: async (key: string) => {
+    if (state.redisDown) throw new Error("redis down");
+    if (state.seen.has(key)) return null;
+    state.seen.add(key);
+    return "OK";
+  },
+}));
 vi.mock("@repo/rate-limit", () => ({
-  redis: {
-    set: vi.fn(async (key: string) => {
-      if (state.redisDown) throw new Error("redis down");
-      if (state.seen.has(key)) return null;
-      state.seen.add(key);
-      return "OK";
-    }),
+  // Read on every request, so a test can take Upstash away.
+  get redis() {
+    return state.redisMissing ? null : replayStore;
   },
   createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
   slidingWindow: () => ({}),
 }));
+const audit = vi.hoisted(() => ({
+  writeAuditLog: vi.fn(async (_entry: Record<string, unknown>) => undefined),
+}));
+vi.mock("@/app/(app)/admin/_lib/audit", () => audit);
 
 vi.mock("@repo/database", () => {
   const tableName = (value: unknown) =>
@@ -156,6 +165,7 @@ function signedRequest(
 
 const run = vi.fn();
 const POST = consoleInternalRoute({
+  action: "test.run",
   schema: z.object({
     n: z.number().int({ error: "n must be a whole number" }),
   }),
@@ -183,6 +193,8 @@ beforeEach(() => {
   state.results = [];
   state.seen.clear();
   state.redisDown = false;
+  state.redisMissing = false;
+  audit.writeAuditLog.mockClear();
   run.mockReset();
   run.mockResolvedValue({
     audit: { targetType: "user", targetId: "u_1", metadata: { a: 1 } },
@@ -278,6 +290,40 @@ describe("the signature", () => {
     expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
       503,
     );
+    expect(run).not.toHaveBeenCalled();
+  });
+
+  it("answers 503 without Upstash, before any check of the actor", async () => {
+    state.redisMissing = true;
+    const { status, body } = await answer(
+      await POST(signedRequest({ actor: ACTOR, n: 1 })),
+    );
+    expect(status).toBe(503);
+    expect(body).toEqual({ ok: false, error: "unavailable" });
+    expect(state.calls).toEqual([]);
+    expect(run).not.toHaveBeenCalled();
+  });
+
+  it("reads a chunked body as a stream and stops past 64 KiB", async () => {
+    const chunk = new TextEncoder().encode("x".repeat(16 * 1024));
+    let pulled = 0;
+    const endless = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        pulled += 1;
+        controller.enqueue(chunk);
+      },
+    });
+    const request = new NextRequest(`https://qrdx.test${PATH}`, {
+      method: "POST",
+      body: endless,
+      // Node's fetch needs this for a stream body.
+      duplex: "half",
+    });
+    expect(request.headers.get("content-length")).toBeNull();
+    const { status } = await answer(await POST(request));
+    expect(status).toBe(413);
+    // It stopped reading soon after the limit, not at the end of the stream.
+    expect(pulled).toBeLessThan(10);
     expect(run).not.toHaveBeenCalled();
   });
 
@@ -405,30 +451,107 @@ describe("strong endpoints", () => {
   });
 });
 
-describe("answers", () => {
-  it("send the audit record and data", async () => {
+describe("answers and the audit log", () => {
+  const CHECKED = {
+    id: "u_admin",
+    email: "admin@qrdx.test",
+    name: "Admin",
+    role: "admin",
+    sessionId: "sess_admin",
+    twoFactorEnabled: true,
+  };
+
+  it("write the audit entry here, with the checked admin, and send the data", async () => {
     actorRows(adminRow());
     const { status, body, cache } = await answer(
       await POST(signedRequest({ actor: ACTOR, n: 1 })),
     );
     expect(status).toBe(200);
     expect(cache).toBe("no-store");
-    expect(body).toEqual({
-      ok: true,
-      data: { done: true },
-      audit: { targetType: "user", targetId: "u_1", metadata: { a: 1 } },
+    expect(body).toEqual({ ok: true, data: { done: true } });
+    expect(audit.writeAuditLog).toHaveBeenCalledWith({
+      actor: CHECKED,
+      action: "test.run",
+      targetType: "user",
+      targetId: "u_1",
+      metadata: { a: 1, reason: null, via: "console" },
     });
   });
 
-  it("send audit null when nothing changed", async () => {
+  it("record the reason from the signed body, and the subject", async () => {
+    const withReason = consoleInternalRoute({
+      action: "test.reason",
+      schema: z.object({ reason: z.string() }),
+      run: async () => ({
+        audit: {
+          targetType: "user",
+          targetId: "u_1",
+          subjectUserId: "u_1",
+          metadata: { targetEmail: "t@example.com" },
+        },
+      }),
+    });
+    actorRows(adminRow());
+    await withReason(signedRequest({ actor: ACTOR, reason: "Ticket 9" }));
+    expect(audit.writeAuditLog).toHaveBeenCalledWith(
+      expect.objectContaining({
+        action: "test.reason",
+        metadata: {
+          targetEmail: "t@example.com",
+          reason: "Ticket 9",
+          subjectUserId: "u_1",
+          via: "console",
+        },
+      }),
+    );
+  });
+
+  it("still record an effect the console stopped waiting for", async () => {
+    // The console gives up (its timeout aborts the request) while the work
+    // is still running; the work finishes, and its entry is written anyway.
+    const controller = new AbortController();
+    run.mockImplementation(async () => {
+      controller.abort();
+      await new Promise((resolve) => setTimeout(resolve, 5));
+      return { audit: { targetType: "user", targetId: "u_slow" } };
+    });
+    actorRows(adminRow());
+    const signed = signedRequest({ actor: ACTOR, n: 1 });
+    const request = new NextRequest(signed, { signal: controller.signal });
+    await POST(request);
+    expect(controller.signal.aborted).toBe(true);
+    expect(audit.writeAuditLog).toHaveBeenCalledWith(
+      expect.objectContaining({ action: "test.run", targetId: "u_slow" }),
+    );
+  });
+
+  it("write nothing when nothing changed, or the work failed", async () => {
     run.mockResolvedValue(null);
     actorRows(adminRow());
     expect(
       (await answer(await POST(signedRequest({ actor: ACTOR, n: 1 })))).body,
-    ).toEqual({
-      ok: true,
-      audit: null,
+    ).toEqual({ ok: true });
+    run.mockRejectedValue(new HttpError(400, "ADMIN_ACTION", "No"));
+    actorRows(adminRow());
+    expect(
+      (await answer(await POST(signedRequest({ actor: ACTOR, n: 1 })))).status,
+    ).toBe(400);
+    expect(audit.writeAuditLog).not.toHaveBeenCalled();
+  });
+
+  it("refuse an audit record without an action name, rather than log it unnamed", async () => {
+    const unnamed = consoleInternalRoute({
+      schema: z.object({}),
+      run: async () => ({ audit: { targetType: "user", targetId: "u_1" } }),
     });
+    actorRows(adminRow());
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const { status } = await answer(
+      await unnamed(signedRequest({ actor: ACTOR })),
+    );
+    log.mockRestore();
+    expect(status).toBe(500);
+    expect(audit.writeAuditLog).not.toHaveBeenCalled();
   });
 
   it("send the input's first problem", async () => {

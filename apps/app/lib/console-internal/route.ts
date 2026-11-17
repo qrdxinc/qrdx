@@ -4,6 +4,7 @@ import { redis } from "@repo/rate-limit";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import type { AdminAuditRecord } from "@/app/(app)/admin/_lib/action-runner";
+import { writeAuditLog } from "@/app/(app)/admin/_lib/audit";
 import { env } from "@/env";
 import { HttpError } from "@/lib/http-error";
 import {
@@ -21,16 +22,21 @@ import {
 } from "./signature";
 
 // The steps every /api/internal/console/* endpoint runs, in this order:
-// 1. off (404) unless CONSOLE_INTERNAL_SECRET is set and long enough;
-// 2. the signature (./signature.ts): well-formed, fresh, matching;
-// 3. a request id seen before is refused (Upstash, when configured);
-// 4. the body: JSON with `actor` and the endpoint's own fields;
-// 5. the actor checked again here (./actor.ts), 403 for anyone else;
-// 6. for strong endpoints, the admin's own second factor and a recent
+// 1. off (404) unless CONSOLE_INTERNAL_SECRET is set (env.ts refuses to
+//    start with a shorter one);
+// 2. the body, read as a stream and cut off past MAX_BODY_BYTES (413);
+// 3. the signature (./signature.ts): well-formed, fresh, matching;
+// 4. a request id seen before is refused (Upstash). Without Upstash the
+//    endpoints answer 503: a replay store is required, never skipped;
+// 5. the body: JSON with `actor` and the endpoint's own fields;
+// 6. the actor checked again here (./actor.ts), 403 for anyone else;
+// 7. for strong endpoints, the admin's own second factor and a recent
 //    strong confirmation by that session (CONFIRMATION_REQUIRED);
-// 7. the endpoint's work. It answers what the admin action would hand its
-//    runner: `audit` (null when nothing changed) and `data`. The console
-//    writes the audit entry; nothing here does.
+// 8. the endpoint's work, then its entry in the admin audit log, written
+//    here with the admin checked above and the `reason` in the signed body,
+//    as the admin pages' runner writes it. So an effect that finishes after
+//    the console stopped waiting is still on record. The answer carries the
+//    endpoint's `data` only.
 
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 const REPLAY_TTL_SECONDS = 600;
@@ -57,8 +63,9 @@ const actorSchema = z.object({
 });
 
 /**
- * What an endpoint answers: the audit record the admin action would hand
- * its runner (absent or null when nothing changed, and for reads), and data.
+ * What an endpoint's work returns: the audit record the admin action would
+ * hand its runner (absent or null when nothing changed, and for reads),
+ * which the wrapper writes, and the data it answers with.
  */
 export interface ConsoleOutcome<T> {
   audit?: AdminAuditRecord | null;
@@ -71,6 +78,12 @@ export interface ConsoleInternalContext {
 }
 
 export interface ConsoleInternalOptions<S extends z.ZodType, T> {
+  /**
+   * The audit log's action name, as the admin page's action uses it
+   * ("user.ban"). Endpoints that change nothing (reads, cache refreshes)
+   * leave it out and must return no audit record.
+   */
+  action?: string;
   /** The endpoint's own fields (`actor` is checked separately). */
   schema: S;
   /** True, or a rule on the input, for actions that need strong confirmation. */
@@ -81,9 +94,12 @@ export interface ConsoleInternalOptions<S extends z.ZodType, T> {
   ) => Promise<ConsoleOutcome<T> | null | Response>;
 }
 
+/** Thrown when there's no replay store: the endpoints refuse to run. */
+class ReplayStoreMissing extends Error {}
+
 /** The request id, once; false when it was seen before. */
 async function firstUse(requestId: string): Promise<boolean> {
-  if (!redis) return true;
+  if (!redis) throw new ReplayStoreMissing("Upstash isn't configured");
   const set = await redis.set(`qrdx:console-internal:${requestId}`, "1", {
     nx: true,
     ex: REPLAY_TTL_SECONDS,
@@ -113,8 +129,35 @@ function failure(error: unknown, path: string): Response {
   return json(500, { ok: false, error: "Action failed" });
 }
 
+/**
+ * The body as text, read from the stream and refused past `limit` bytes,
+ * whatever Content-Length said (or didn't, for a chunked request). Null
+ * when it's too large.
+ */
+export async function readCappedBody(
+  request: Request,
+  limit: number = MAX_BODY_BYTES,
+): Promise<string | null> {
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > limit) {
+      await reader.cancel().catch(() => undefined);
+      return null;
+    }
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks).toString("utf8");
+}
+
 /** A POST handler for one console endpoint. */
 export function consoleInternalRoute<S extends z.ZodType, T = undefined>({
+  action,
   schema,
   strong,
   run,
@@ -130,8 +173,8 @@ export function consoleInternalRoute<S extends z.ZodType, T = undefined>({
     if (declared > MAX_BODY_BYTES) {
       return refuse(413, "too_large", { reason: "too_large", path });
     }
-    const body = await request.text();
-    if (Buffer.byteLength(body) > MAX_BODY_BYTES) {
+    const body = await readCappedBody(request);
+    if (body === null) {
       return refuse(413, "too_large", { reason: "too_large", path });
     }
 
@@ -151,8 +194,14 @@ export function consoleInternalRoute<S extends z.ZodType, T = undefined>({
       if (!(await firstUse(signed.requestId))) {
         return refuse(409, "replayed", { reason: "replayed", path });
       }
-    } catch {
-      return refuse(503, "unavailable", { reason: "replay_store", path });
+    } catch (error) {
+      return refuse(503, "unavailable", {
+        reason:
+          error instanceof ReplayStoreMissing
+            ? "replay_store_missing"
+            : "replay_store",
+        path,
+      });
     }
 
     let parsedBody: unknown;
@@ -185,10 +234,28 @@ export function consoleInternalRoute<S extends z.ZodType, T = undefined>({
         outcome.headers.set("Cache-Control", "no-store");
         return outcome;
       }
+      if (outcome?.audit) {
+        const name = outcome.audit.action ?? action;
+        if (!name) throw new Error(`No audit action for ${path}`);
+        const reason = (input.data as { reason?: unknown })?.reason;
+        await writeAuditLog({
+          actor,
+          action: name,
+          targetType: outcome.audit.targetType,
+          targetId: outcome.audit.targetId,
+          metadata: {
+            ...outcome.audit.metadata,
+            reason: typeof reason === "string" ? reason : null,
+            ...(outcome.audit.subjectUserId
+              ? { subjectUserId: outcome.audit.subjectUserId }
+              : {}),
+            via: "console",
+          },
+        });
+      }
       return json(200, {
         ok: true,
         ...(outcome?.data === undefined ? {} : { data: outcome.data }),
-        audit: outcome?.audit ?? null,
       });
     } catch (error) {
       return failure(error, path);

@@ -1,5 +1,6 @@
 import { ADMIN_ROLE } from "@repo/auth/admin";
 import { roleSchema } from "@/app/(app)/admin/_lib/schemas";
+import { requireStrongConsoleActor } from "@/lib/console-internal/actor";
 import { consoleInternalRoute } from "@/lib/console-internal/route";
 import { setUserRoleForConsole } from "@/lib/console-internal/users";
 
@@ -11,7 +12,11 @@ import { setUserRoleForConsole } from "@/lib/console-internal/users";
 export const dynamic = "force-dynamic";
 
 export const POST = consoleInternalRoute({
+  action: "user.set_role",
   schema: roleSchema,
   strong: (input) => input.role === ADMIN_ROLE,
-  run: (input, { actor }) => setUserRoleForConsole(actor, input),
+  run: (input, { actor }) =>
+    setUserRoleForConsole(actor, input, {
+      requireStrong: () => requireStrongConsoleActor(actor),
+    }),
 });

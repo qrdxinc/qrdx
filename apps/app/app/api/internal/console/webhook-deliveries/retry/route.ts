@@ -9,6 +9,7 @@ import { consoleInternalRoute } from "@/lib/console-internal/route";
 export const dynamic = "force-dynamic";
 
 export const POST = consoleInternalRoute({
+  action: "webhook_delivery.retry",
   schema: deliverySchema,
   run: (input, { actor }) => retryWebhookDelivery(actor, input),
 });

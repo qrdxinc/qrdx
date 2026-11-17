@@ -9,6 +9,7 @@ import { consoleInternalRoute } from "@/lib/console-internal/route";
 export const dynamic = "force-dynamic";
 
 export const POST = consoleInternalRoute({
+  action: "abuse_report.block_file",
   schema: blockFileSchema,
   run: (input, { actor }) => blockReportedFile(actor, input),
 });

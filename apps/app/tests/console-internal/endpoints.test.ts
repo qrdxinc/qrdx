@@ -1,9 +1,9 @@
 // Each /api/internal/console/* endpoint runs the same work as the admin
 // action it stands for (app/(app)/admin/_lib/operations.ts, or Better Auth's
 // admin routes through its internal adapter for ban, unban, role and
-// sign-out), with the admin the route checked, answers the audit record that
-// action's runner would write, and asks for strong confirmation exactly
-// where it must. The signature, replay and actor checks themselves are in
+// sign-out), with the admin the route checked, writes the audit entry that
+// action's runner would write (with the signed reason), and asks for strong
+// confirmation exactly where it must. The signature, replay and actor checks themselves are in
 // route.test.ts; here the actor check is a stub.
 import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -30,8 +30,13 @@ const state = vi.hoisted(() => ({
 }));
 
 vi.mock("@/env", () => ({ env: state.env }));
+const audit = vi.hoisted(() => ({
+  writeAuditLog: vi.fn(async (_entry: Record<string, unknown>) => undefined),
+}));
+vi.mock("@/app/(app)/admin/_lib/audit", () => audit);
 vi.mock("@repo/rate-limit", () => ({
-  redis: null,
+  // Every request id is new here; replay is route.test.ts's.
+  redis: { set: async () => "OK" },
   createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
   slidingWindow: () => ({}),
 }));
@@ -64,6 +69,8 @@ const ops = vi.hoisted(() => ({
   retryWebhookDelivery: vi.fn(),
   disconnectIntegration: vi.fn(),
   blockReportedFile: vi.fn(),
+  requeueImport: vi.fn(),
+  cancelImport: vi.fn(),
   refreshCommunity: vi.fn(),
   refreshCommunityAll: vi.fn(),
 }));
@@ -205,6 +212,10 @@ const routes = {
   "integrations/disconnect": () =>
     import("@/app/api/internal/console/integrations/disconnect/route"),
   "files/block": () => import("@/app/api/internal/console/files/block/route"),
+  "imports/requeue": () =>
+    import("@/app/api/internal/console/imports/requeue/route"),
+  "imports/cancel": () =>
+    import("@/app/api/internal/console/imports/cancel/route"),
   "community/revalidate": () =>
     import("@/app/api/internal/console/community/revalidate/route"),
   health: () => import("@/app/api/internal/console/health/route"),
@@ -257,7 +268,28 @@ beforeEach(() => {
   }
   adapter.updateUser.mockClear();
   adapter.deleteUserSessions.mockClear();
+  audit.writeAuditLog.mockClear();
 });
+
+/** The audit entries the endpoints wrote, in order. */
+const written = () =>
+  audit.writeAuditLog.mock.calls.map(([entry]) => entry as Record<string, any>);
+
+/** The audit action each endpoint records, as the admin page's action does. */
+const ACTIONS: Partial<Record<RoutePath, string>> = {
+  "users/mark-email-verified": "user.mark_email_verified",
+  "users/unlink-sign-in": "user.unlink_sign_in",
+  "users/two-factor-reset": "user.reset_two_factor",
+  "users/two-factor-reset/cancel": "user.reset_two_factor_cancel",
+  "users/change-email": "user.change_email",
+  "users/delete": "user.delete",
+  "invitations/resend": "invitation.resend",
+  "webhook-deliveries/retry": "webhook_delivery.retry",
+  "integrations/disconnect": "integration.disconnect",
+  "files/block": "abuse_report.block_file",
+  "imports/requeue": "import_job.requeue",
+  "imports/cancel": "import_job.cancel",
+};
 
 // Endpoints whose work is a shared operation: the operation gets the checked
 // admin and the parsed input (and, for the strong ones, a check that asks
@@ -328,15 +360,36 @@ const SHARED: [
     { reportId: "rep_1", fileId: "file_1", reason },
     false,
   ],
+  [
+    "imports/requeue",
+    "requeueImport",
+    { userId: "u_target", jobId: "job_1", reason },
+    false,
+  ],
+  [
+    "imports/cancel",
+    "cancelImport",
+    { userId: "u_target", jobId: "job_1", reason },
+    false,
+  ],
 ];
 
 describe("endpoints on the shared operations", () => {
   it.each(SHARED)(
-    "%s runs %s and answers its audit record",
+    "%s runs %s and writes its audit entry",
     async (path, name, fields, strong) => {
       const [status, body] = await json(await call(path, fields));
       expect(status).toBe(200);
-      expect(body).toEqual({ ok: true, ...outcome(name) });
+      expect(body).toEqual({ ok: true, data: outcome(name).data });
+      expect(written()).toEqual([
+        {
+          actor: ACTOR,
+          action: ACTIONS[path],
+          targetType: "test",
+          targetId: name,
+          metadata: { by: name, reason, via: "console" },
+        },
+      ]);
       const fn = ops[name];
       expect(fn).toHaveBeenCalledTimes(1);
       expect(fn.mock.calls[0]?.[0]).toEqual(ACTOR);
@@ -354,6 +407,7 @@ describe("endpoints on the shared operations", () => {
       expect(status).toBe(403);
       expect(body).toEqual({ ok: false, error: "CONFIRMATION_REQUIRED" });
       expect(ops[name]).not.toHaveBeenCalled();
+      expect(written()).toEqual([]);
     },
   );
 
@@ -432,7 +486,34 @@ describe("endpoints on the shared operations", () => {
       await json(
         await call("users/mark-email-verified", { userId: "u_target", reason }),
       ),
-    ).toEqual([200, { ok: true, audit: null }]);
+    ).toEqual([200, { ok: true }]);
+    expect(written()).toEqual([]);
+  });
+
+  it("records nothing when the operation refused", async () => {
+    const { adminError } = await import("@/app/(app)/admin/_lib/action-runner");
+    ops.disconnectIntegration.mockRejectedValue(adminError("Nope"));
+    expect(
+      (await call("integrations/disconnect", { integrationId: "i", reason }))
+        .status,
+    ).toBe(400);
+    expect(written()).toEqual([]);
+  });
+
+  it("mark-email-verified hands the operation a strong check, for an account it would make an admin", async () => {
+    ops.markEmailVerified.mockImplementation(
+      async (_admin, _input, check: { requireStrong: () => Promise<void> }) => {
+        await check.requireStrong();
+        return outcome("markEmailVerified");
+      },
+    );
+    state.strong = false;
+    expect(
+      await json(
+        await call("users/mark-email-verified", { userId: "u_target", reason }),
+      ),
+    ).toEqual([403, { ok: false, error: "CONFIRMATION_REQUIRED" }]);
+    expect(written()).toEqual([]);
   });
 });
 
@@ -456,26 +537,70 @@ describe("ban, unban, role and sign-out (Better Auth's admin routes)", () => {
     expect(Math.abs(fields.banExpires.getTime() - expected)).toBeLessThan(5000);
     expect(adapter.deleteUserSessions).toHaveBeenCalledWith("u_target");
     expect(ops.refreshCommunity).toHaveBeenCalledTimes(1);
-    expect(body.audit).toEqual({
-      targetType: "user",
-      targetId: "u_target",
-      subjectUserId: "u_target",
-      metadata: { targetEmail: "target@example.com", expiresInDays: 7 },
-    });
+    expect(body).toEqual({ ok: true });
+    expect(written()).toEqual([
+      {
+        actor: ACTOR,
+        action: "user.ban",
+        targetType: "user",
+        targetId: "u_target",
+        metadata: {
+          targetEmail: "target@example.com",
+          expiresInDays: 7,
+          reason,
+          subjectUserId: "u_target",
+          via: "console",
+        },
+      },
+    ]);
     expect(state.strongCalls).toBe(0);
   });
 
   it("bans without an end", async () => {
-    const [, body] = await json(
-      await call("users/ban", { userId: "u_target", reason }),
-    );
+    await call("users/ban", { userId: "u_target", reason });
     expect(adapter.updateUser.mock.calls[0]?.[1]).toMatchObject({
       banExpires: null,
     });
-    expect(body.audit.metadata).toEqual({
+    expect(written()[0]?.metadata).toMatchObject({
       targetEmail: "target@example.com",
       expiresInDays: null,
     });
+  });
+
+  it("bans another admin only with a strong confirmation", async () => {
+    // The target's own row says admin (the role here; ADMIN_EMAILS and
+    // ADMIN_USER_IDS count the same through isAdmin).
+    state.results = [
+      [
+        {
+          id: "u_target",
+          email: "t@example.com",
+          emailVerified: true,
+          role: "admin",
+        },
+      ],
+    ];
+    state.strong = false;
+    expect(
+      await json(await call("users/ban", { userId: "u_target", reason })),
+    ).toEqual([403, { ok: false, error: "CONFIRMATION_REQUIRED" }]);
+    expect(adapter.updateUser).not.toHaveBeenCalled();
+    expect(written()).toEqual([]);
+    state.strong = true;
+    state.results = [
+      [
+        {
+          id: "u_target",
+          email: "t@example.com",
+          emailVerified: true,
+          role: "admin",
+        },
+      ],
+    ];
+    expect(
+      (await call("users/ban", { userId: "u_target", reason })).status,
+    ).toBe(200);
+    expect(state.strongCalls).toBe(2);
   });
 
   it("never bans the admin themselves, or a user that doesn't exist", async () => {
@@ -501,28 +626,43 @@ describe("ban, unban, role and sign-out (Better Auth's admin routes)", () => {
       updatedAt: expect.any(Date),
     });
     expect(ops.refreshCommunity).toHaveBeenCalledTimes(1);
-    expect(body.audit.metadata).toEqual({ targetEmail: "target@example.com" });
+    expect(body).toEqual({ ok: true });
+    expect(written()[0]).toMatchObject({
+      action: "user.unban",
+      metadata: { targetEmail: "target@example.com", reason },
+    });
   });
 
-  it("removes the admin role without asking for a confirmation", async () => {
+  it("removes another admin's role only with a strong confirmation", async () => {
     state.target = {
       id: "u_target",
       email: "target@example.com",
       role: "admin",
     };
-    const [status, body] = await json(
+    state.strong = false;
+    expect(
+      await json(
+        await call("users/role", { userId: "u_target", role: "user", reason }),
+      ),
+    ).toEqual([403, { ok: false, error: "CONFIRMATION_REQUIRED" }]);
+    expect(adapter.updateUser).not.toHaveBeenCalled();
+    state.strong = true;
+    const [status] = await json(
       await call("users/role", { userId: "u_target", role: "user", reason }),
     );
     expect(status).toBe(200);
     expect(adapter.updateUser).toHaveBeenCalledWith("u_target", {
       role: "user",
     });
-    expect(body.audit.metadata).toEqual({
-      targetEmail: "target@example.com",
-      from: "admin",
-      to: "user",
+    expect(written()[0]).toMatchObject({
+      action: "user.set_role",
+      metadata: {
+        targetEmail: "target@example.com",
+        from: "admin",
+        to: "user",
+        reason,
+      },
     });
-    expect(state.strongCalls).toBe(0);
   });
 
   it("grants the admin role only with a strong confirmation", async () => {
@@ -548,7 +688,8 @@ describe("ban, unban, role and sign-out (Better Auth's admin routes)", () => {
       await json(
         await call("users/role", { userId: "u_target", role: "user", reason }),
       ),
-    ).toEqual([200, { ok: true, audit: null }]);
+    ).toEqual([200, { ok: true }]);
+    expect(written()).toEqual([]);
     expect(
       (
         await json(
@@ -565,7 +706,11 @@ describe("ban, unban, role and sign-out (Better Auth's admin routes)", () => {
     );
     expect(status).toBe(200);
     expect(adapter.deleteUserSessions).toHaveBeenCalledWith("u_target");
-    expect(body.audit.targetId).toBe("u_target");
+    expect(body).toEqual({ ok: true });
+    expect(written()[0]).toMatchObject({
+      action: "user.revoke_sessions",
+      targetId: "u_target",
+    });
   });
 });
 
@@ -577,7 +722,6 @@ describe("reads", () => {
     expect(status).toBe(200);
     expect(body).toEqual({
       ok: true,
-      audit: null,
       data: {
         deployment: "https://qrdx.test",
         build: { environment: "production", commit: "abc1234" },
@@ -614,7 +758,6 @@ describe("reads", () => {
       200,
       {
         ok: true,
-        audit: null,
         data: { url: "https://polar.sh/dashboard/qrdx/customers/cus_1" },
       },
     ]);
@@ -624,14 +767,15 @@ describe("reads", () => {
   it("community lists refreshed", async () => {
     expect(await json(await call("community/revalidate"))).toEqual([
       200,
-      { ok: true, audit: null },
+      { ok: true },
     ]);
     expect(ops.refreshCommunityAll).toHaveBeenCalledTimes(1);
+    expect(written()).toEqual([]);
   });
 
   it("a user's export, streamed as a ZIP", async () => {
     state.results = [[{ id: "u_target", email: "target@example.com" }]];
-    const response = await call("users/export", { userId: "u_target" });
+    const response = await call("users/export", { userId: "u_target", reason });
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toBe("application/zip");
     expect(response.headers.get("cache-control")).toBe("no-store");
@@ -640,12 +784,35 @@ describe("reads", () => {
     );
     expect(await response.text()).toBe("PK");
     expect(exporter.exportEntries).toHaveBeenCalledWith("u_target");
+    // On record, with the reason, before the stream.
+    expect(written()).toEqual([
+      {
+        actor: ACTOR,
+        action: "user.export",
+        targetType: "user",
+        targetId: "u_target",
+        metadata: {
+          targetEmail: "target@example.com",
+          subjectUserId: "u_target",
+          reason,
+          via: "console",
+        },
+      },
+    ]);
+  });
+
+  it("no export without a reason", async () => {
+    expect((await call("users/export", { userId: "u_target" })).status).toBe(
+      400,
+    );
+    expect(exporter.exportEntries).not.toHaveBeenCalled();
   });
 
   it("no export for a user that doesn't exist", async () => {
     state.results = [[]];
     expect(
-      await json(await call("users/export", { userId: "u_missing" })),
+      await json(await call("users/export", { userId: "u_missing", reason })),
     ).toEqual([404, { ok: false, error: "User not found" }]);
+    expect(written()).toEqual([]);
   });
 });

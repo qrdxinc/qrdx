@@ -418,6 +418,55 @@ describe("with an admin", () => {
     ]);
   });
 
+  it("asks for a strong confirmation before verifying an address that makes an admin", async () => {
+    const { markEmailVerifiedAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    vi.stubEnv("ADMIN_EMAILS", "listed@example.com");
+    state.admin = {
+      id: "admin_1",
+      email: "admin@example.com",
+      name: "Admin",
+      role: "admin",
+    };
+    state.adminStrongConfirmation = false;
+    const unverified = [
+      {
+        id: "user_target",
+        email: "Listed@example.com",
+        emailVerified: false,
+        role: null,
+      },
+    ];
+    state.results = [unverified];
+    expect(
+      await markEmailVerifiedAction({
+        userId: "user_target",
+        reason: "Ticket 1234",
+      }),
+    ).toEqual({ ok: false, error: "CONFIRMATION_REQUIRED" });
+    expect(state.calls.some((call) => call.root === "update")).toBe(false);
+    // The admin role counts the same way.
+    vi.stubEnv("ADMIN_EMAILS", "");
+    state.results = [[{ ...unverified[0], role: "admin" }]];
+    expect(
+      await markEmailVerifiedAction({
+        userId: "user_target",
+        reason: "Ticket 1234",
+      }),
+    ).toEqual({ ok: false, error: "CONFIRMATION_REQUIRED" });
+    // Confirmed, it goes ahead.
+    state.adminStrongConfirmation = true;
+    state.results = [[{ ...unverified[0], role: "admin" }], [], []];
+    expect(
+      await markEmailVerifiedAction({
+        userId: "user_target",
+        reason: "Ticket 1234",
+      }),
+    ).toEqual({ ok: true });
+    vi.unstubAllEnvs();
+  });
+
   it("writes no entry when nothing changed", async () => {
     const { markEmailVerifiedAction } = await import(
       "@/app/(app)/admin/users/support-actions"
@@ -748,6 +797,50 @@ describe("with an admin", () => {
       reason: "GDPR request 77",
     });
     expect(result.ok).toBe(false);
+    expect(state.calls.some((call) => call.root === "delete")).toBe(false);
+  });
+
+  it("never deletes an admin, by role or by ADMIN_EMAILS / ADMIN_USER_IDS", async () => {
+    const { deleteUserAccountAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    const target = {
+      id: "user_target",
+      email: "target@example.com",
+      emailVerified: true,
+      role: null,
+    };
+    state.results = [[{ ...target, role: "admin" }]];
+    expect(
+      await deleteUserAccountAction({
+        userId: "user_target",
+        confirmation: "target@example.com",
+        reason: "GDPR request 77",
+      }),
+    ).toEqual({ ok: false, error: "Remove their admin role first." });
+    vi.stubEnv("ADMIN_USER_IDS", "user_target");
+    state.results = [[target]];
+    const listed = await deleteUserAccountAction({
+      userId: "user_target",
+      confirmation: "target@example.com",
+      reason: "GDPR request 77",
+    });
+    vi.stubEnv("ADMIN_USER_IDS", "");
+    vi.stubEnv("ADMIN_EMAILS", "target@example.com");
+    state.results = [[target]];
+    const byEmail = await deleteUserAccountAction({
+      userId: "user_target",
+      confirmation: "target@example.com",
+      reason: "GDPR request 77",
+    });
+    vi.unstubAllEnvs();
+    for (const result of [listed, byEmail]) {
+      expect(result).toEqual({
+        ok: false,
+        error:
+          "They're an admin through ADMIN_EMAILS or ADMIN_USER_IDS. Take them off the list first.",
+      });
+    }
     expect(state.calls.some((call) => call.root === "delete")).toBe(false);
   });
 

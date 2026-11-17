@@ -9,6 +9,7 @@ import { revokeUserSessionsForConsole } from "@/lib/console-internal/users";
 export const dynamic = "force-dynamic";
 
 export const POST = consoleInternalRoute({
+  action: "user.revoke_sessions",
   schema: userReasonSchema,
   run: (input, { actor }) => revokeUserSessionsForConsole(actor, input),
 });

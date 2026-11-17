@@ -1,39 +1,33 @@
 "use server";
 
-import { database as db, integration, oauthApp } from "@repo/database";
-import { and, eq } from "drizzle-orm";
+import { database as db, oauthApp } from "@repo/database";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { z } from "zod";
-import { importJobSchema, jobStoreSchema } from "@/lib/migrate/jobs";
-import { JOB_STORE_PROVIDER } from "@/lib/migrate/server/repo";
-import type { ImportJob } from "@/lib/migrate/types";
 import {
   type AdminActionResult,
   adminError,
   runAdminAction,
 } from "../_lib/action";
 import {
+  cancelImport,
   cancelPendingTwoFactorReset,
   changeAccountEmail,
   deleteUserAccount,
   disconnectIntegration,
   markEmailVerified,
+  requeueImport,
   resendTeamInvitation,
   retryWebhookDelivery,
   startTwoFactorReset,
   unlinkSignInMethod,
 } from "../_lib/operations";
-import {
-  adminId,
-  cancelImportJob,
-  isStuckImport,
-  requeueImportJob,
-  requiredReason,
-} from "../_lib/rules";
+import { adminId, requiredReason } from "../_lib/rules";
 import {
   changeEmailSchema,
   deleteSchema,
   deliverySchema,
+  importSchema,
   integrationSchema,
   invitationSchema,
   unlinkSchema,
@@ -55,7 +49,10 @@ export async function markEmailVerifiedAction(
   return runAdminAction(
     { action: "user.mark_email_verified", schema: userReason },
     input,
-    (admin, data) => markEmailVerified(admin, data),
+    (admin, data) =>
+      markEmailVerified(admin, data, {
+        requireStrong: () => requireStrongAdmin(admin),
+      }),
   );
 }
 
@@ -172,95 +169,14 @@ export async function retryWebhookDeliveryAction(
 
 // ─── Imports ─────────────────────────────────────────────────────────────────
 
-const importSchema = userReason.extend({ jobId: adminId });
-
-/**
- * Rewrites one job in the user's import store, keeping every other entry
- * exactly as stored (even ones this version can't read).
- */
-async function updateImportJob(
-  userId: string,
-  jobId: string,
-  change: (job: ImportJob) => ImportJob,
-): Promise<{ before: ImportJob; after: ImportJob }> {
-  const [row] = await db
-    .select({ id: integration.id, metadata: integration.metadata })
-    .from(integration)
-    .where(
-      and(
-        eq(integration.userId, userId),
-        eq(integration.provider, JOB_STORE_PROVIDER),
-      ),
-    )
-    .limit(1);
-  const store = jobStoreSchema.safeParse(row?.metadata);
-  if (!(row && store.success)) throw adminError("Import not found", 404);
-
-  const index = store.data.jobs.findIndex(
-    (entry) => (entry as { id?: unknown })?.id === jobId,
-  );
-  const parsed = importJobSchema.safeParse(store.data.jobs[index]);
-  if (index === -1 || !parsed.success) {
-    throw adminError("Import not found", 404);
-  }
-  const before = parsed.data;
-  const after = change(before);
-  const jobs = [...store.data.jobs];
-  jobs[index] = after;
-  await db
-    .update(integration)
-    .set({ metadata: { ...store.data, jobs }, updatedAt: new Date() })
-    .where(eq(integration.id, row.id));
-  return { before, after };
-}
-
-const importAudit = (
-  userId: string,
-  jobId: string,
-  before: ImportJob,
-  after: ImportJob,
-) => ({
-  audit: {
-    targetType: "import_job",
-    targetId: jobId,
-    subjectUserId: userId,
-    metadata: {
-      provider: before.provider,
-      fromStatus: before.status,
-      toStatus: after.status,
-      failedBefore: before.items.filter((item) => item.status === "failed")
-        .length,
-      pendingAfter: after.items.filter((item) => item.status === "pending")
-        .length,
-    },
-  },
-});
-
-/**
- * Puts the failed links of an import back in the queue. The import itself
- * runs from the user's browser (it needs their provider connection), so the
- * user's import dialog resumes it next time they open it.
- */
+/** Puts the failed links of an import back in the queue (../_lib/operations.ts). */
 export async function requeueImportAction(
   input: z.input<typeof importSchema>,
 ): Promise<AdminActionResult> {
   return runAdminAction(
     { action: "import_job.requeue", schema: importSchema },
     input,
-    async (_admin, { userId, jobId }) => {
-      const now = new Date();
-      const { before, after } = await updateImportJob(userId, jobId, (job) => {
-        const failed = job.items.some((item) => item.status === "failed");
-        if (job.status === "running" && !isStuckImport(job, now)) {
-          throw adminError("This import is still running. Wait for it.");
-        }
-        if (!(failed || job.status === "running")) {
-          throw adminError("Nothing to re-run: no links failed.");
-        }
-        return requeueImportJob(job, now);
-      });
-      return importAudit(userId, jobId, before, after);
-    },
+    (admin, data) => requeueImport(admin, data),
   );
 }
 
@@ -271,15 +187,7 @@ export async function cancelImportAction(
   return runAdminAction(
     { action: "import_job.cancel", schema: importSchema },
     input,
-    async (_admin, { userId, jobId }) => {
-      const { before, after } = await updateImportJob(userId, jobId, (job) => {
-        if (job.status !== "running") {
-          throw adminError("This import already finished.");
-        }
-        return cancelImportJob(job, new Date());
-      });
-      return importAudit(userId, jobId, before, after);
-    },
+    (admin, data) => cancelImport(admin, data),
   );
 }
 

@@ -9,6 +9,7 @@ import { consoleInternalRoute } from "@/lib/console-internal/route";
 export const dynamic = "force-dynamic";
 
 export const POST = consoleInternalRoute({
+  action: "integration.disconnect",
   schema: integrationSchema,
   run: (input, { actor }) => disconnectIntegration(actor, input),
 });

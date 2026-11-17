@@ -10,8 +10,11 @@ import { consoleInternalRoute } from "@/lib/console-internal/route";
 // Signed, with the admin checked again here (lib/console-internal/route.ts).
 
 export const dynamic = "force-dynamic";
+// A large account (many files, teams handed over) can take minutes.
+export const maxDuration = 300;
 
 export const POST = consoleInternalRoute({
+  action: "user.delete",
   schema: deleteSchema,
   strong: true,
   run: (input, { actor }) =>

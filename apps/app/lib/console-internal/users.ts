@@ -1,7 +1,9 @@
 import "server-only";
 
-import { ADMIN_ROLE } from "@repo/auth/admin";
+import { ADMIN_ROLE, isAdmin } from "@repo/auth/admin";
 import { auth } from "@repo/auth/server";
+import { database as db, user } from "@repo/database";
+import { eq } from "drizzle-orm";
 import type {
   AdminActionOutcome,
   AdminActor,
@@ -10,6 +12,7 @@ import { adminError } from "@/app/(app)/admin/_lib/action-runner";
 import {
   findAdminTarget,
   refreshCommunity,
+  type StrongCheck,
   userAudit,
 } from "@/app/(app)/admin/_lib/operations";
 
@@ -25,6 +28,26 @@ const DAY_SECONDS = 24 * 60 * 60;
 
 const adapter = async () => (await auth.$context).internalAdapter;
 
+/**
+ * Whether the target is an admin now: the role, or ADMIN_EMAILS (verified
+ * addresses) / ADMIN_USER_IDS. Banning or demoting one takes the acting
+ * admin's strong confirmation here, which the admin pages don't ask for: a
+ * stolen console cookie alone must not lock the other admins out.
+ */
+async function targetIsAdmin(userId: string): Promise<boolean> {
+  const [found] = await db
+    .select({
+      id: user.id,
+      email: user.email,
+      emailVerified: user.emailVerified,
+      role: user.role,
+    })
+    .from(user)
+    .where(eq(user.id, userId))
+    .limit(1);
+  return found ? isAdmin(found) : false;
+}
+
 /** As banUserAction: signs them out everywhere and blocks new sign-ins. */
 export async function banUserForConsole(
   admin: AdminActor,
@@ -33,9 +56,11 @@ export async function banUserForConsole(
     reason,
     expiresInDays,
   }: { userId: string; reason: string; expiresInDays?: number },
+  { requireStrong }: StrongCheck,
 ): Promise<AdminActionOutcome<undefined>> {
   if (userId === admin.id) throw adminError("You cannot ban yourself");
   const target = await findAdminTarget(userId);
+  if (await targetIsAdmin(userId)) await requireStrong();
   const internal = await adapter();
   await internal.updateUser(userId, {
     banned: true,
@@ -72,12 +97,16 @@ export async function unbanUserForConsole(
 export async function setUserRoleForConsole(
   admin: AdminActor,
   { userId, role }: { userId: string; role: "user" | typeof ADMIN_ROLE },
+  { requireStrong }: StrongCheck,
 ): Promise<AdminActionOutcome<undefined> | null> {
   if (userId === admin.id && role !== ADMIN_ROLE) {
     throw adminError("You cannot remove your own admin role");
   }
   const target = await findAdminTarget(userId);
   if ((target.role ?? "user") === role) return null;
+  // Granting the role hands over the console; removing it from another
+  // admin locks them out. Both take a strong confirmation.
+  await requireStrong();
   await (await adapter()).updateUser(userId, { role });
   return userAudit(target, { from: target.role, to: role });
 }

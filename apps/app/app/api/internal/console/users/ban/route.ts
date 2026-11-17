@@ -1,4 +1,5 @@
 import { banSchema } from "@/app/(app)/admin/_lib/schemas";
+import { requireStrongConsoleActor } from "@/lib/console-internal/actor";
 import { consoleInternalRoute } from "@/lib/console-internal/route";
 import { banUserForConsole } from "@/lib/console-internal/users";
 
@@ -9,6 +10,10 @@ import { banUserForConsole } from "@/lib/console-internal/users";
 export const dynamic = "force-dynamic";
 
 export const POST = consoleInternalRoute({
+  action: "user.ban",
   schema: banSchema,
-  run: (input, { actor }) => banUserForConsole(actor, input),
+  run: (input, { actor }) =>
+    banUserForConsole(actor, input, {
+      requireStrong: () => requireStrongConsoleActor(actor),
+    }),
 });

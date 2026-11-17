@@ -1,3 +1,5 @@
+"use server";
+
 import { ADMIN_ROLE } from "@repo/auth/admin";
 import { auth } from "@repo/auth/server";
 import {
