@@ -1,4 +1,8 @@
 import {
+  assertLicensePublicKey,
+  QRDX_LICENSE_PUBLIC_KEY,
+} from "@repo/auth/ee/license-public-key";
+import {
   API_HOST,
   CANONICAL_HOST,
   CANONICAL_ORIGIN,
@@ -148,6 +152,18 @@ if (siteZone.length > 0 && !env.SITE_ZONE_KEY) {
   );
 }
 
+// QRDX_EE_LICENSE is checked against QRdx's licence public key, compiled into
+// the build (packages/auth/ee/license-public-key.ts). A production build
+// without it would turn every licence key down, so `next build` and
+// `next start` stop here instead. `next typegen` loads this file the same
+// way but builds nothing (the typechecks run it), so it goes on.
+if (
+  process.env.NODE_ENV === "production" &&
+  !process.argv.includes("typegen")
+) {
+  assertLicensePublicKey(QRDX_LICENSE_PUBLIC_KEY);
+}
+
 // Another zone's build assets aren't pages: no page policy on them while
 // that zone is on (its pages keep this app's rules, as the docs' do).
 const zoneAssetPrefixes = [
@@ -262,8 +278,11 @@ let nextConfig: NextConfig = {
   // Geist (@repo/design-system/og/font-files) for server images: OG cards,
   // and frame labels drawn from its glyph outlines (lib/qr-text-outline.ts),
   // read at runtime wherever a PNG is rasterized.
+  // The conversion tracking script (ee/conversions/script.ts) is read from
+  // disk when /conversions.js is built; traced in case it's ever rebuilt.
   outputFileTracingIncludes: {
     "/**": [OG_FONT_GLOB],
+    "/conversions.js": ["./ee/conversions/conversions.js"],
   },
   serverExternalPackages: ["shiki", "@takumi-rs/core"],
   // When rules set the same header, the later one wins.

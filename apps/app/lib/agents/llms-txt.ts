@@ -118,7 +118,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       ? ` npm's latest is ${name}@${published}; these docs describe ${repo}, which isn't on npm yet.`
       : "";
 
-  const summary = `> QRdx (qrdx.dev) is an open-source QR code platform, built open core: the app is AGPL-3.0, the library and developer tools are MIT, and the business features in the ee/ folders (today workspace single sign-on and the audit log) are under the QRdx Commercial License. Anyone can design static QR codes in the browser with no signup or watermark (${STYLE_SUMMARY}, ${PRODUCT_FACTS.frames} frames, gradients, logos, and Logo QR or Image QR art) and download PNG, JPG, WebP, SVG, PDF or EPS files. A free account adds dynamic QR codes you can change after printing, with scan analytics and hosted mobile pages; paid plans add smart routing, link controls, ${on("customDomains") ? "custom domains, " : ""}teams and webhooks. Developers get a REST API, a keyless QR image API, a remote MCP server, a CLI, a React library and a shadcn/ui registry.`;
+  const summary = `> QRdx (qrdx.dev) is an open-source QR code platform, built open core: the app is AGPL-3.0, the library and developer tools are MIT, and the business features in the ee/ folders (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) are under the QRdx Commercial License. Anyone can design static QR codes in the browser with no signup or watermark (${STYLE_SUMMARY}, ${PRODUCT_FACTS.frames} frames, gradients, logos, and Logo QR or Image QR art) and download PNG, JPG, WebP, SVG, PDF or EPS files. A free account adds dynamic QR codes you can change after printing, with scan analytics and hosted mobile pages; paid plans add smart routing, link controls, ${on("customDomains") ? "custom domains, " : ""}teams and webhooks. Developers get a REST API, a keyless QR image API, a remote MCP server, a CLI, a React library and a shadcn/ui registry.`;
 
   const facts = [
     "Key facts:",
@@ -181,7 +181,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "Analytics and conversions",
       url: "/docs/tracking-and-conversions",
-      description: "Scan analytics, retargeting pixels and conversion tracking",
+      description: `Scan analytics, retargeting pixels${on("conversions") ? " and conversion tracking" : ""}`,
     },
     // NFC (feat/nfc)
     {
@@ -266,7 +266,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       title: "Source code",
       url: GITHUB_REPO_URL,
       description:
-        "The AGPL-3.0 app, the MIT library and tools, and the commercial ee/ folders. Self-hostable; the ee/ features (single sign-on, audit log) need an enterprise agreement in production",
+        "The AGPL-3.0 app, the MIT library and tools, and the commercial ee/ folders. Self-hostable; the ee/ features (single sign-on, audit log, client portal, white-label pages, conversion tracking) need an enterprise agreement in production",
     },
     {
       title: "Open source",
@@ -331,7 +331,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "REST API",
       url: "/docs/developers/rest-api",
-      description: `Dynamic codes, scan analytics, conversions, webhook subscriptions and themes under ${api}, with a workspace API key or an OAuth 2.0 access token (authorization code with PKCE)`,
+      description: `Dynamic codes, scan analytics, ${on("conversions") ? "conversions, " : ""}webhook subscriptions and themes under ${api}, with a workspace API key or an OAuth 2.0 access token (authorization code with PKCE)`,
     },
     {
       title: "API keys",

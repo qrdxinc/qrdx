@@ -3,11 +3,13 @@
 // a fake placeholder, and only "is it set" is ever read (except the app URL,
 // which passkeys need to be HTTPS).
 
+import { EE_FEATURES, type EeFeature } from "@repo/auth/ee-license";
 import {
   catalogParagraphs,
   computeFeatures,
   configuredEntry,
   customDomainMode,
+  eeOnEveryPlan,
   FEATURE_IDS,
   type FeatureContext,
   type FeatureId,
@@ -32,10 +34,30 @@ import { toAvailabilityView } from "@/lib/integration-availability-view";
 
 const FAKE = "set";
 
+/**
+ * `eeFeatures` is what the server's check of QRDX_EE_LICENSE found
+ * (packages/auth/ee/license.ts; tests/auth/ee-license.test.ts checks real
+ * keys). Here a set key is taken as a valid one for every ee feature, unless
+ * a test says otherwise.
+ */
 const ctx = (
   env: Record<string, string | undefined>,
-  { onVercel = false, production = false } = {},
-): FeatureContext => ({ env, onVercel, production });
+  {
+    onVercel = false,
+    production = false,
+    eeFeatures,
+  }: {
+    onVercel?: boolean;
+    production?: boolean;
+    eeFeatures?: readonly EeFeature[];
+  } = {},
+): FeatureContext => ({
+  env,
+  onVercel,
+  production,
+  eeFeatures:
+    eeFeatures ?? (env.QRDX_EE_LICENSE?.trim() ? [...EE_FEATURES] : []),
+});
 
 /** Every variable any feature reads, set. */
 const EVERYTHING: Record<string, string> = {
@@ -73,6 +95,7 @@ const EVERYTHING: Record<string, string> = {
   TELEGRAM_WEBHOOK_SECRET: FAKE,
   TELEGRAM_BOT_USERNAME: FAKE,
   POLAR_WEBHOOK_SECRET: FAKE,
+  POLAR_ACCESS_TOKEN: FAKE,
   // A flag, not a secret: euro prices show only when it's "1" or "true".
   NEXT_PUBLIC_QRDX_EUR_PRICES: "1",
 };
@@ -105,6 +128,9 @@ const NEEDS: Record<FeatureId, string[]> = {
   passkeys: ["NEXT_PUBLIC_APP_URL"],
   sso: ["QRDX_EE_LICENSE"],
   auditLog: ["QRDX_EE_LICENSE"],
+  clientPortal: ["QRDX_EE_LICENSE"],
+  whiteLabel: ["QRDX_EE_LICENSE"],
+  conversions: ["QRDX_EE_LICENSE"],
   slackBot: [
     "SLACK_CLIENT_ID",
     "SLACK_CLIENT_SECRET",
@@ -118,6 +144,7 @@ const NEEDS: Record<FeatureId, string[]> = {
     "TELEGRAM_BOT_USERNAME",
   ],
   affiliates: ["POLAR_WEBHOOK_SECRET"],
+  billing: ["POLAR_ACCESS_TOKEN"],
   invoiceRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
   enterpriseRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
   eurPrices: ["NEXT_PUBLIC_QRDX_EUR_PRICES"],
@@ -359,11 +386,31 @@ describe("workspace SSO", () => {
   const on = (env: Record<string, string | undefined>) =>
     computeFeatures(ctx(env)).sso;
 
-  it("runs only with a licence key, whatever its value", () => {
-    expect(on({ QRDX_EE_LICENSE: "local-dev" })).toBe(true);
+  it("runs only with a valid licence key that covers it", () => {
+    expect(on({ QRDX_EE_LICENSE: FAKE })).toBe(true);
     expect(on({})).toBe(false);
     expect(on({ QRDX_EE_LICENSE: "  " })).toBe(false);
     expect(missingFeatureSetup("sso", ctx({}))).toEqual(["QRDX_EE_LICENSE"]);
+  });
+
+  it("counts a key the server turned down as no key", () => {
+    const invalid = ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: [] });
+    expect(computeFeatures(invalid)).toMatchObject({
+      sso: false,
+      auditLog: false,
+    });
+    expect(missingFeatureSetup("sso", invalid)).toEqual(["QRDX_EE_LICENSE"]);
+    expect(missingFeatureSetup("auditLog", invalid)).toEqual([
+      "QRDX_EE_LICENSE",
+    ]);
+  });
+
+  it("turns on only the features the licence lists", () => {
+    const ssoOnly = ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: ["sso"] });
+    expect(computeFeatures(ssoOnly)).toMatchObject({
+      sso: true,
+      auditLog: false,
+    });
   });
 
   it("hides its settings page and help page without one", () => {
@@ -378,6 +425,120 @@ describe("workspace SSO", () => {
     expect(isPathShown(view.hiddenPaths, "/dashboard/acme/settings/sso")).toBe(
       false,
     );
+  });
+});
+
+describe("client portal, white-label and conversions (ee/)", () => {
+  const ids = ["clientPortal", "whiteLabel", "conversions"] as const;
+
+  it("run only with a valid licence key that covers them, like SSO and the audit log", () => {
+    for (const id of ids) {
+      expect(computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE }))[id]).toBe(true);
+      expect(
+        computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: [] }))[id],
+        id,
+      ).toBe(false);
+      expect(
+        computeFeatures(
+          ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: ["sso", "auditLog"] }),
+        )[id],
+        id,
+      ).toBe(false);
+      expect(computeFeatures(ctx({}))[id], id).toBe(false);
+      expect(computeFeatures(ctx({ QRDX_EE_LICENSE: " " }))[id], id).toBe(
+        false,
+      );
+      expect(missingFeatureSetup(id, ctx({})), id).toEqual(["QRDX_EE_LICENSE"]);
+    }
+  });
+
+  it("hide the client portal's pages without one", () => {
+    const view = toPublicAvailability(computeFeatures(ctx({})));
+    expect(view.unavailable).toEqual(expect.arrayContaining([...ids]));
+    expect(
+      isPathShown(view.hiddenPaths, "/dashboard/acme/settings/clients"),
+    ).toBe(false);
+    expect(isPathShown(view.hiddenPaths, "/docs/client-portal")).toBe(false);
+    expect(
+      isPathShown(view.hiddenPaths, "/docs/developers/api/create-conversion"),
+    ).toBe(false);
+    // Shared stats pages and the tracking docs stay: only their ee/ parts go.
+    expect(isPathShown(view.hiddenPaths, "/docs/client-reports")).toBe(true);
+    expect(
+      isPathShown(view.hiddenPaths, "/docs/tracking-and-conversions"),
+    ).toBe(true);
+    const licensed = toPublicAvailability(
+      computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE })),
+    );
+    expect(
+      isPathShown(licensed.hiddenPaths, "/dashboard/acme/settings/clients"),
+    ).toBe(true);
+  });
+});
+
+describe("billing", () => {
+  it("is Polar's access token, whatever its value", () => {
+    expect(computeFeatures(ctx({ POLAR_ACCESS_TOKEN: FAKE })).billing).toBe(
+      true,
+    );
+    expect(computeFeatures(ctx({})).billing).toBe(false);
+    expect(computeFeatures(ctx({ POLAR_ACCESS_TOKEN: " " })).billing).toBe(
+      false,
+    );
+    // The webhook secret alone sells nothing.
+    expect(computeFeatures(ctx({ POLAR_WEBHOOK_SECRET: FAKE })).billing).toBe(
+      false,
+    );
+  });
+});
+
+describe("the ee features on every plan", () => {
+  const SELF_HOSTED = {
+    NEXT_PUBLIC_APP_URL: "https://qr.example.org",
+    QRDX_EE_LICENSE: FAKE,
+  };
+  const on = (
+    env: Record<string, string | undefined>,
+    flags: Parameters<typeof ctx>[1] = {},
+  ) => eeOnEveryPlan(ctx(env, flags));
+
+  it("only on a self-hosted copy with the licence key and no billing", () => {
+    expect(on(SELF_HOSTED)).toBe(true);
+    expect(on(SELF_HOSTED, vercelProd)).toBe(true);
+    expect(on({ ...SELF_HOSTED, NEXT_PUBLIC_APP_URL: "http://qr.lan" })).toBe(
+      true,
+    );
+  });
+
+  it("never without a valid key", () => {
+    expect(on({ ...SELF_HOSTED, QRDX_EE_LICENSE: undefined })).toBe(false);
+    expect(on({ ...SELF_HOSTED, QRDX_EE_LICENSE: "  " })).toBe(false);
+    expect(on(SELF_HOSTED, { eeFeatures: [] })).toBe(false);
+  });
+
+  it("never where plans are sold", () => {
+    expect(on({ ...SELF_HOSTED, POLAR_ACCESS_TOKEN: FAKE })).toBe(false);
+  });
+
+  it("never on QRdx itself: qrdx.dev, its previews and local dev", () => {
+    for (const appUrl of [
+      "https://qrdx.dev",
+      "https://www.qrdx.dev",
+      "http://localhost:3000",
+    ]) {
+      expect(on({ ...SELF_HOSTED, NEXT_PUBLIC_APP_URL: appUrl }), appUrl).toBe(
+        false,
+      );
+    }
+    expect(
+      on({
+        ...SELF_HOSTED,
+        NEXT_PUBLIC_APP_URL: "https://qrdx-git-branch.vercel.app",
+        VERCEL_PROJECT_PRODUCTION_URL: "qrdx.dev",
+      }),
+    ).toBe(false);
+    // Even if qrdx.dev ever ran without its Polar token.
+    expect(on({ ...EVERYTHING, POLAR_ACCESS_TOKEN: undefined })).toBe(false);
   });
 });
 

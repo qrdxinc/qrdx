@@ -26,6 +26,7 @@ import {
 } from "@/app/(app)/dashboard/codes/_lib/code-options";
 import { codeTabHref } from "@/app/(app)/dashboard/codes/_lib/code-tabs";
 import type { QrCodeView } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { getScanSparklines } from "@/lib/scans";
 import { requestWorkspaceSlug } from "@/lib/scope";
@@ -79,7 +80,9 @@ export async function OverviewTab({
     lifecycle.success ? lifecycle.data : null,
   );
   const hrefs = Object.fromEntries(
-    codeOptionsFor(kind).map((id) => [
+    codeOptionsFor(kind, {
+      conversions: isFeatureAvailable("conversions"),
+    }).map((id) => [
       id,
       codeTabHref(slug, code.id, "settings", {
         hash: CODE_OPTION_ANCHORS[id],

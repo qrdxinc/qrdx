@@ -111,7 +111,7 @@ Upgrade from the [pricing page](/pricing). To change plans, switch between month
 
 ## Self-hosting
 
-A [self-hosted](/docs/self-hosting) instance uses the same plans. The limits are defined in one file, `apps/app/lib/plans.ts`, which you can change for your instance. Without Polar configured, upgrades are unavailable and every account uses the Free limits. Without Upstash Redis, the daily API allowance isn't counted and the `X-RateLimit-*` headers aren't sent.
+A [self-hosted](/docs/self-hosting) instance uses the same plans. The limits are defined in one file, `apps/app/lib/plans.ts`, which you can change for your instance. That file also decides who can create more workspaces, how many members a workspace can have and whether it can require two-step verification. Without Polar configured, upgrades are unavailable and every account uses the Free limits, so raise Free's limits there to use teams. With a valid license key from QRdx (`QRDX_EE_LICENSE`) and no Polar, every workspace on a server with its own domain also has the `ee/` features its key covers: single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking. Without the key those features are off on every plan. See [Plans and limits](/docs/self-hosting#plans-and-limits). Without Upstash Redis, the daily API allowance isn't counted and the `X-RateLimit-*` headers aren't sent.
 
 ## Related
 

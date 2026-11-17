@@ -2,7 +2,9 @@
 // server and a THROWAWAY local database, driven over the Chrome DevTools
 // Protocol. It writes to the database (test users, a Business subscription),
 // so it refuses to run unless DATABASE_URL in .env.local points at localhost.
-// The server needs QRDX_EE_LICENSE set (any value) for the audit log to exist.
+// The server needs a valid QRDX_EE_LICENSE for the audit log to exist: a key
+// QRdx issued (packages/auth/ee/scripts/license.mjs), checked against the
+// public key in packages/auth/ee/license-public-key.ts.
 //
 //   AUDIT_E2E_BASE_URL=http://localhost:<port> AUDIT_E2E_DEV_LOG=<dev.log> \
 //   AUDIT_E2E_PSQL="psql -h localhost -p <pg> -U postgres qrdx" \
