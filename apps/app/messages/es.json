@@ -1380,7 +1380,7 @@
       },
       "products": {
         "name": "Códigos de producto",
-        "detail": "Números EAN/UPC y datos GS1 (GTIN, lote, caducidad), incluido GS1 Digital Link."
+        "detail": "Números EAN, UPC e ITF-14 y datos GS1 (GTIN, lote, caducidad), incluido GS1 Digital Link."
       },
       "text": {
         "name": "Texto sin formato",
@@ -2032,6 +2032,10 @@
       "code128Chars": "Code 128 admite aquí letras ASCII básicas, dígitos, espacios y símbolos. No permitidos: {chars}",
       "code39Chars": "Code 39 solo admite letras mayúsculas, dígitos, espacios y - . $ / + %. No permitidos: {chars}",
       "code39Lowercase": "Code 39 no admite letras minúsculas. Usa mayúsculas, o Code 128 para combinar mayúsculas y minúsculas.",
+      "code93Chars": "Code 93 solo admite letras mayúsculas, dígitos, espacios y - . $ / + %. No permitidos: {chars}",
+      "code93Lowercase": "Code 93 aquí no admite letras minúsculas. Usa mayúsculas, o Code 128 si necesitas mezclar mayúsculas y minúsculas.",
+      "codabarStartStop": "Codabar empieza y termina con A, B, C o D, con al menos un carácter entre ellas, por ejemplo A40156B.",
+      "codabarChars": "Codabar admite dígitos y - $ : / . + entre sus letras de inicio y fin. No permitidos: {chars}",
       "gs1Enter": "Introduce los identificadores de aplicación entre paréntesis con sus valores, p. ej. (01)09501101530003.",
       "gs1Start": "Empieza con un identificador de aplicación entre paréntesis, p. ej. (01) para un GTIN, y después su valor.",
       "gs1Brackets": "Los paréntesis no coinciden: escribe cada AI como (dígitos), seguido de su valor.",

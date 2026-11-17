@@ -26,7 +26,9 @@ import {
   SITE_GROUP_NAMES,
   SITE_GROUPS,
   SITE_KEY_HEADER,
+  type SitePath,
   siteGroup,
+  siteMatcherPrefixes,
   siteZoneGroups,
   siteZoneRewrites,
 } from "@repo/next-config/site-zone";
@@ -57,6 +59,13 @@ const DOCS = "https://docs.qrdx.dev";
 const HOSTS = "(?:qrdx\\.dev|localhost)";
 
 /** The site's pages, as this app still serves them for deployments without a site. */
+/** Every group's prefixes and paths, in list order. */
+const SITE_ENTRIES: SitePath[] = SITE_GROUP_NAMES.flatMap((group) => [
+  ...(SITE_GROUPS[group] as readonly SitePath[]),
+]);
+const entryPath = (entry: SitePath) =>
+  typeof entry === "string" ? entry : entry.path;
+
 const BLOG_DIR = path.resolve(
   import.meta.dirname,
   "../../app/(app)/(home)/blog",
@@ -134,22 +143,14 @@ describe("siteZoneRewrites", () => {
     expect(
       siteZoneRewrites(ORIGIN, {
         hosts: HOSTS,
-        groups: [
-          "barcodes",
-          "placements",
-          "generators",
-          "compare",
-          "blog",
-          "industries",
-        ],
+        groups: [...SITE_GROUP_NAMES].reverse(),
       }),
     ).toEqual(siteZoneRewrites(ORIGIN, { hosts: HOSTS }));
   });
 
-  it("gives every group its exact page, then everything below it", () => {
-    expect(
-      siteZoneRewrites(ORIGIN, { hosts: HOSTS }).map((rule) => rule.source),
-    ).toEqual([
+  it("gives every prefix its exact page, then everything below it, and every path itself alone", () => {
+    const rules = siteZoneRewrites(ORIGIN, { hosts: HOSTS });
+    expect(rules.map((rule) => rule.source)).toEqual([
       "/blog",
       "/blog/:path+",
       "/compare",
@@ -162,8 +163,45 @@ describe("siteZoneRewrites", () => {
       "/qr-code-generator/:path+",
       "/barcode-generator",
       "/barcode-generator/:path+",
+      "/security",
+      "/security/:path+",
+      "/guarantee",
+      "/guarantee/:path+",
+      "/plugins",
+      "/plugins/:path+",
+      "/legal",
+      "/legal/:path+",
+      "/changelogs",
+      "/changelogs/:path+",
+      "/tools",
+      "/tools/:path+",
+      "/dynamic-qr-code",
+      "/dynamic-qr-code/:path+",
+      "/qr-code-api",
+      "/qr-code-api/:path+",
+      "/open-source-qr-code-generator",
+      "/open-source-qr-code-generator/:path+",
+      "/enterprise",
+      "/enterprise/:path+",
+      "/pricing",
+      "/pricing/:path+",
+      "/integrations",
+      "/integrations/:p1([^/.]+)",
+      "/integrations/:p1([^/.]+)/:p2(opengraph-image[^/.]*)",
+      "/integrations/:p1([^/.]+)/:p2(twitter-image[^/.]*)",
+      "/templates",
+      "/templates/:p1(opengraph-image[^/.]*)",
+      "/templates/:p1(twitter-image[^/.]*)",
       "/site-static/:path*",
     ]);
+    // A path's parameters go on as they came, without their patterns.
+    expect(
+      rules.find((rule) => rule.source.includes(":p2(opengraph-image"))
+        ?.destination,
+    ).toBe(`${ORIGIN}/integrations/:p1/:p2`);
+    expect(
+      rules.find((rule) => rule.source === "/templates")?.destination,
+    ).toBe(`${ORIGIN}/templates`);
   });
 
   it("uses the origin alone, whatever else the value has", () => {
@@ -251,7 +289,7 @@ describe("SITE_ZONE_GROUPS", () => {
     expect(isSiteZoneGroups("blog")).toBe(true);
   });
 
-  it.each(["pricing", "blog,", "Blog", "blog;compare", ","])(
+  it.each(["careers", "blog,", "Blog", "blog;compare", ","])(
     "refuses %s",
     (value) => {
       expect(parseSiteZoneGroups(value)).toBeNull();
@@ -264,7 +302,7 @@ describe("SITE_ZONE_GROUPS", () => {
     const errors = vi.spyOn(console, "error").mockImplementation(() => {});
     try {
       vi.resetModules();
-      vi.stubEnv("SITE_ZONE_GROUPS", "blog,pricing");
+      vi.stubEnv("SITE_ZONE_GROUPS", "blog,careers");
       await expect(import("@/env")).rejects.toThrow("SITE_ZONE_GROUPS");
       vi.resetModules();
       vi.stubEnv("SITE_ZONE_GROUPS", "blog");
@@ -290,6 +328,25 @@ describe("site paths", () => {
     // Next matches rewrite sources without regard to case.
     ["/Blog/x", "blog"],
     ["/BLOG", "blog"],
+    ["/security", "trust"],
+    ["/guarantee/opengraph-image-1abc", "trust"],
+    ["/legal/privacy", "legal"],
+    ["/changelogs", "changelog"],
+    ["/tools/bulk", "tools"],
+    ["/qr-code-api", "products"],
+    ["/open-source-qr-code-generator", "products"],
+    ["/enterprise", "enterprise"],
+    ["/pricing", "pricing"],
+    ["/pricing/x", "pricing"],
+    ["/integrations", "integrations"],
+    ["/integrations/slack", "integrations"],
+    ["/integrations/opengraph-image-1s1u8p", "integrations"],
+    ["/integrations/slack/opengraph-image-1ulwde", "integrations"],
+    ["/integrations/slack/opengraph-image", "integrations"],
+    ["/Integrations/Slack", "integrations"],
+    ["/templates", "templates"],
+    ["/templates/opengraph-image-1r9j8v", "templates"],
+    ["/TEMPLATES", "templates"],
   ])("%s is the site's %s group", (pathname, group) => {
     expect(siteGroup(pathname)).toBe(group);
     expect(isSitePath(pathname)).toBe(true);
@@ -302,7 +359,17 @@ describe("site paths", () => {
     "/blo",
     "/customers",
     "/customers/flam",
-    "/pricing/x",
+    "/pricing.md",
+    "/pricingx",
+    "/changelog/new-editor.png",
+    "/integrations/slack/link",
+    "/integrations/slack.svg",
+    "/integrations/slack/link/x",
+    "/integrations/slack/opengraph-image.png",
+    "/integrations/a/b",
+    "/templates/url",
+    "/templates/url/menu",
+    "/templates/opengraph-image/x",
     "/docs",
     "/admin",
     "/dashboard/blog",
@@ -319,6 +386,9 @@ describe("site paths", () => {
       "/blog/dynamic-vs-static-qr-codes",
       "/blog/category/education?page=2#top",
       "/blog/rss.xml",
+      "/pricing?plan=pro",
+      "/templates#gallery",
+      "/integrations/zapier",
     ]) {
       expect(isSitePagePath(href), href).toBe(true);
     }
@@ -327,6 +397,8 @@ describe("site paths", () => {
       "/blogx",
       "/blog.md",
       "/customers",
+      "/templates/wifi",
+      "/integrations/slack/link",
       "/docs",
       "/site-static/_next/static/x.js",
       "https://qrdx.dev/blog",
@@ -357,6 +429,13 @@ describe("lowerCasedSitePrefix (proxy.ts)", () => {
     ["/Blog", "/blog"],
     ["/bLoG/rss.xml", "/blog/rss.xml"],
     ["/SITE-STATIC/_next/x.js", "/site-static/_next/x.js"],
+    ["/Pricing", "/pricing"],
+    ["/TEMPLATES", "/templates"],
+    ["/Integrations/Slack", "/integrations/Slack"],
+    [
+      "/INTEGRATIONS/Slack/OpenGraph-Image-AbC",
+      "/integrations/Slack/opengraph-image-AbC",
+    ],
   ])("sends %s to %s", (pathname, expected) => {
     expect(lowerCasedSitePrefix(pathname)).toBe(expected);
   });
@@ -369,18 +448,38 @@ describe("lowerCasedSitePrefix (proxy.ts)", () => {
     "/x/BLOG",
     "/",
     "/ADMIN/growth",
+    "/integrations/Slack",
+    "/TEMPLATES/url",
+    "/Integrations/slack/link",
   ])("leaves %s alone", (pathname) => {
     expect(lowerCasedSitePrefix(pathname)).toBeNull();
   });
 });
 
 describe("the groups and this app's own paths", () => {
-  it("names each group once, with well-formed prefixes", () => {
+  it("names each group once, with well-formed prefixes and paths", () => {
     expect(new Set(SITE_GROUP_NAMES).size).toBe(SITE_GROUP_NAMES.length);
     for (const group of SITE_GROUP_NAMES) {
       expect(SITE_GROUPS[group].length, group).toBeGreaterThan(0);
-      for (const prefix of SITE_GROUPS[group]) {
-        expect(prefix, prefix).toMatch(/^\/(?:[a-z0-9-]+(?:\/[a-z0-9-]+)*)?$/);
+    }
+    for (const entry of SITE_ENTRIES) {
+      if (typeof entry === "string") {
+        expect(entry, entry).toMatch(/^\/(?:[a-z0-9-]+(?:\/[a-z0-9-]+)*)?$/);
+      } else {
+        // A literal first segment (proxy.ts's matcher lists it), then
+        // literals, `*`, or literals ending in `*`.
+        expect(entry.path, entry.path).toMatch(
+          /^\/[a-z0-9-]+(?:\/(?:[a-z0-9-]+\*?|\*))*$/,
+        );
+      }
+    }
+    // No two entries alike, and no path below one of the prefixes.
+    const paths = SITE_ENTRIES.map(entryPath);
+    expect(new Set(paths).size).toBe(paths.length);
+    for (const entry of SITE_ENTRIES) {
+      if (typeof entry === "string") continue;
+      for (const prefix of SITE_ENTRIES.filter((e) => typeof e === "string")) {
+        expect(entry.path.startsWith(`${prefix}/`), entry.path).toBe(false);
       }
     }
     expect(SITE_ASSET_PREFIX).toMatch(/^\/[a-z-]+$/);
@@ -395,25 +494,38 @@ describe("the groups and this app's own paths", () => {
       expect(isSitePath(sample), sample).toBe(false);
       expect(lowerCasedSitePrefix(sample.toUpperCase()), sample).toBeNull();
     }
+    // A prefix takes over everything under it, so none may be at or under
+    // one of this app's paths. A path takes over itself alone: the
+    // samples above cover those (/templates may move, /templates/<type>
+    // may not), and so do the cases below.
     for (const prefix of [
-      ...SITE_GROUP_NAMES.flatMap((group) => SITE_GROUPS[group]),
+      ...SITE_ENTRIES.filter((entry) => typeof entry === "string"),
       SITE_ASSET_PREFIX,
     ]) {
       for (const core of CORE_PATHS) {
         const root = core.endsWith("/*") ? core.slice(0, -2) : core;
         expect(
-          prefix === root || prefix.startsWith(`${root}/`),
-          `${prefix} is under ${core}`,
+          prefix === root ||
+            prefix.startsWith(`${root}/`) ||
+            root.startsWith(`${prefix}/`),
+          `${prefix} and ${core}`,
         ).toBe(false);
       }
+    }
+    for (const pathname of [
+      "/templates/url",
+      "/templates/wifi/restaurant-menu",
+      "/integrations/slack/link",
+      "/integrations/zapier.svg",
+      "/changelog/new-editor.png",
+    ]) {
+      expect(isSitePath(pathname), pathname).toBe(false);
+      expect(lowerCasedSitePrefix(pathname.toUpperCase()), pathname).toBeNull();
     }
   });
 
   it("never lists an /admin path: the console's and this app's alone", () => {
-    for (const prefix of [
-      ...SITE_GROUP_NAMES.flatMap((group) => SITE_GROUPS[group]),
-      SITE_ASSET_PREFIX,
-    ]) {
+    for (const prefix of [...SITE_ENTRIES.map(entryPath), SITE_ASSET_PREFIX]) {
       expect(prefix === "/admin" || prefix.startsWith("/admin/"), prefix).toBe(
         false,
       );
@@ -527,14 +639,18 @@ describe("next.config.ts", () => {
 
   const CORE = [
     "/",
-    "/pricing",
+    "/pricing.md",
+    "/index.md",
     "/blogx",
     "/blog.md",
     "/customers",
     "/customers/flam",
-    "/tools",
-    "/tools/bulk",
-    "/changelogs",
+    "/changelog/new-editor.png",
+    "/integrations/slack/link",
+    "/integrations/slack.svg",
+    "/integrations/a/b",
+    "/templates/url",
+    "/templates/url/menu",
     "/es/blog",
     "/admin/growth",
     "/console-static/x.js",
@@ -575,6 +691,18 @@ describe("next.config.ts", () => {
     ["/blog/category/education", "/blog/category/education"],
     ["/blog/authors/ritesh-bucha", "/blog/authors/ritesh-bucha"],
     ["/blog/some-post.md", "/blog/some-post.md"],
+    ["/pricing", "/pricing"],
+    ["/tools/bulk", "/tools/bulk"],
+    ["/changelogs", "/changelogs"],
+    ["/legal/privacy", "/legal/privacy"],
+    ["/integrations", "/integrations"],
+    ["/integrations/slack", "/integrations/slack"],
+    [
+      "/integrations/slack/opengraph-image-1ulwde",
+      "/integrations/slack/opengraph-image-1ulwde",
+    ],
+    ["/templates", "/templates"],
+    ["/templates/opengraph-image-1r9j8v", "/templates/opengraph-image-1r9j8v"],
     ["/site-static/_next/static/x.js", "/site-static/_next/static/x.js"],
   ])("sends %s to the site", async (pathname, target) => {
     expect(await siteTarget(on, `https://qrdx.dev${pathname}`)).toBe(
@@ -624,9 +752,9 @@ describe("next.config.ts", () => {
     return phases?.beforeFiles ?? [];
   };
 
-  it("adds exactly two rules per group plus the assets' (every group on)", async () => {
+  it("adds exactly the zone's rules (every group on)", async () => {
     const rules = await beforeFiles(on);
-    const expected = SITE_GROUP_NAMES.length * 2 + 1;
+    const expected = siteZoneRewrites(ORIGIN, { hosts: HOSTS }).length;
     expect(rules.filter((rule) => onSite(rule.destination))).toHaveLength(
       expected,
     );
@@ -766,6 +894,12 @@ describe("next.config.ts", () => {
       "/site-static/_next/static/x.js",
       "/SITE-STATIC/_next/static/x.js",
       "/Site-Static/x.js",
+      "/Pricing",
+      "/Legal/privacy",
+      "/TEMPLATES",
+      "/templates/OpenGraph-Image-1r9j8v",
+      "/Integrations/Slack",
+      "/integrations/slack/OpenGraph-Image-1ulwde",
     ];
 
     it.each(CASINGS)(
@@ -776,20 +910,37 @@ describe("next.config.ts", () => {
       },
     );
 
-    it("covers every prefix of every group, on or off", () => {
-      for (const prefix of [
-        ...SITE_GROUP_NAMES.flatMap((group) => SITE_GROUPS[group]),
-        SITE_ASSET_PREFIX,
-      ]) {
+    it("covers every prefix and path of every group, on or off", () => {
+      const prefixes = siteMatcherPrefixes();
+      expect(prefixes).toContain(SITE_ASSET_PREFIX);
+      for (const entry of SITE_ENTRIES) {
+        const first = `/${entryPath(entry).split("/")[1]}`;
+        expect(prefixes, entryPath(entry)).toContain(first);
+      }
+      for (const prefix of prefixes) {
         for (const casing of [prefix, prefix.toUpperCase()]) {
           expect(proxyMatches(casing), casing).toBe(true);
           expect(proxyMatches(`${casing}/x`), casing).toBe(true);
+          expect(proxyMatches(`${casing}/x/opengraph-image-1a`), casing).toBe(
+            true,
+          );
         }
       }
     });
 
     it("never rewrites other paths, in any case", async () => {
-      for (const pathname of ["/", "/BLOGX", "/Blog.md", "/x/blog"]) {
+      for (const pathname of [
+        "/",
+        "/BLOGX",
+        "/Blog.md",
+        "/x/blog",
+        "/Pricing.md",
+        "/TEMPLATES/url",
+        "/Templates/OpenGraph-Image/x",
+        "/INTEGRATIONS/slack/link",
+        "/Integrations/Slack.svg",
+        "/integrations/a/b",
+      ]) {
         expect(await rewriteMatches(pathname), pathname).toBe(false);
       }
     });

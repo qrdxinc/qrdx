@@ -1,5 +1,4 @@
 import { ArrowRight } from "iconsax-reactjs";
-import Link from "next/link";
 import { CompareCard } from "@/components/sections/compare/compare-card";
 import { pickCompareSiblings } from "@/lib/compare-siblings";
 import { compareSource } from "@/lib/content-source";
@@ -46,7 +45,7 @@ export function CompareOthers({ currentSlug }: CompareOthersProps) {
               code libraries.
             </p>
           </div>
-          <Link
+          <a
             className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
             href="/compare"
           >
@@ -55,7 +54,7 @@ export function CompareOthers({ currentSlug }: CompareOthersProps) {
               aria-hidden
               className="size-4 transition-transform group-hover:translate-x-0.5"
             />
-          </Link>
+          </a>
         </div>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {others.map((page) => {

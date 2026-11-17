@@ -109,11 +109,17 @@ export const KIND_LABELS: Record<ScanKind, string> = {
 
 const PRODUCT_FORMATS = new Set(["ean_13", "ean_8", "upc_a", "upc_e"]);
 
+/** A product number: EAN/UPC, or the GTIN-14 an ITF-14 carton barcode holds. */
+function isProductScan(value: string, format?: string): boolean {
+  if (format === "itf") return /^\d{14}$/.test(value);
+  return !!format && PRODUCT_FORMATS.has(format) && /^\d{6,14}$/.test(value);
+}
+
 export function parseScan(raw: string, format?: string): ParsedScan {
   const value = raw.trim();
   const lower = value.toLowerCase();
 
-  if (format && PRODUCT_FORMATS.has(format) && /^\d{6,14}$/.test(value)) {
+  if (isProductScan(value, format)) {
     return {
       kind: "product",
       code: value,

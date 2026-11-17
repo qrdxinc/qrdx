@@ -26,7 +26,7 @@ export async function register() {
   registerAppSessionOriginReader();
   await import("./lib/plans");
   // Checks the ee licence key once at start-up, so the log says straight away
-  // whether single sign-on and the audit log are on (never the key itself).
+  // which ee features are on (never the key itself).
   const { eeLicenseState } = await import("@repo/auth/license");
   eeLicenseState();
 }

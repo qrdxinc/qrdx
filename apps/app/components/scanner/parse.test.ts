@@ -262,6 +262,18 @@ describe("GS1 and product codes", () => {
     // Digits from a QR code are just text.
     assert.equal(parseScan("4006381333931", "qr_code").kind, "text");
   });
+
+  it("reads an ITF-14 carton code as a GTIN-14, other ITF lengths as text", () => {
+    const carton = expectKind(parseScan("15400141288763", "itf"), "product");
+    assert.equal(carton.code, "15400141288763");
+    assert.equal(carton.checkDigitValid, true);
+    assert.equal(
+      expectKind(parseScan("15400141288764", "itf"), "product").checkDigitValid,
+      false,
+    );
+    assert.equal(parseScan("123456", "itf").kind, "text");
+    assert.equal(parseScan("A40156B", "codabar").kind, "text");
+  });
 });
 
 describe("helpers", () => {

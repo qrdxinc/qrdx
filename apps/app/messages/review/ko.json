@@ -3936,7 +3936,7 @@
     "status": "machine"
   },
   "scan.types.products.detail": {
-    "source": "9687676a3d7d",
+    "source": "36c7184d0b5b",
     "status": "machine"
   },
   "scan.types.text.name": {
@@ -6041,6 +6041,22 @@
   },
   "barcodeTool.issues.code39Lowercase": {
     "source": "96f655f4da3d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.code93Chars": {
+    "source": "0bd9c0fbac81",
+    "status": "machine"
+  },
+  "barcodeTool.issues.code93Lowercase": {
+    "source": "4eb559dbdc63",
+    "status": "machine"
+  },
+  "barcodeTool.issues.codabarStartStop": {
+    "source": "32a30721c44d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.codabarChars": {
+    "source": "be4879106127",
     "status": "machine"
   },
   "barcodeTool.issues.gs1Enter": {

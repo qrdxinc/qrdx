@@ -22625,6 +22625,24 @@
     "status": "machine",
     "context": "barcodes.formats.code39.inputHint"
   },
+  "72696df700c2": {
+    "source": "Code 39's characters in a shorter barcode",
+    "text": "Code 39의 문자를 더 짧은 바코드로",
+    "status": "machine",
+    "context": "barcodes.formats.code93.summary"
+  },
+  "1268c9b1de31": {
+    "source": "Digits for libraries, blood banks and older labels",
+    "text": "도서관, 혈액은행, 오래된 라벨에 쓰는 숫자 바코드",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.summary"
+  },
+  "b2c2db8e248a": {
+    "source": "Start and end with A, B, C or D; between them up to 38 digits and - $ : / . +.",
+    "text": "A, B, C, D 중 하나로 시작하고 끝나야 해요. 그 사이에는 숫자와 - $ : / . + 를 최대 38자까지 넣을 수 있어요.",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.inputHint"
+  },
   "589227c3ced5": {
     "source": "Shipping cartons holding retail products",
     "text": "소매 상품이 들어 있는 배송 상자용",
@@ -22751,6 +22769,18 @@
     "status": "machine",
     "context": "barcodes.uses.code39"
   },
+  "5d7174c9e84a": {
+    "source": "Code 39's characters in a shorter barcode, with two check characters that readers verify. Use it when a system asks for Code 93; otherwise Code 128 does the same job and more.",
+    "text": "Code 39의 문자를 더 짧은 바코드로 나타내며, 리더가 검증하는 체크 문자가 2개 들어 있어요. 시스템에서 Code 93을 요구할 때 사용하세요. 그 외에는 Code 128이 같은 역할을 하고 더 많은 기능도 제공해요.",
+    "status": "machine",
+    "context": "barcodes.uses.code93"
+  },
+  "ec05c52f5ac8": {
+    "source": "An older barcode of digits with a start and stop letter (A to D), still used by libraries, blood banks and some shipping labels. Use it when a system asks for Codabar; otherwise Code 128 is shorter.",
+    "text": "시작 문자와 정지 문자(A~D)가 있는 숫자용 구형 바코드로, 도서관, 혈액은행, 일부 배송 라벨에서 지금도 사용해요. 시스템에서 Codabar를 요구할 때 사용하세요. 그 외에는 Code 128이 더 짧아요.",
+    "status": "machine",
+    "context": "barcodes.uses.codabar"
+  },
   "78b5bd23193b": {
     "source": "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
     "text": "소매 상품이 들어 있는 골판지 상자에 인쇄합니다. 박스의 14자리 GTIN을 담고 있으며, 두꺼운 테두리(bearer bar)가 인쇄 압력을 고르게 해 주고 스캐너가 일부만 읽는 것을 막아 줍니다.",
@@ -22823,9 +22853,9 @@
     "status": "machine",
     "context": "barcodes.faqs.1.question"
   },
-  "354487504d93": {
-    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128 and Code 39 need no registration.",
-    "text": "매장에서 판매하는 상품이라면 등록해야 합니다. EAN, UPC, ITF-14, GS1-128은 GTIN을 담고 있으며, GTIN은 GS1(또는 해당 국가의 GS1 기관)에서 회사에 사용권을 부여합니다. 소매업체 시스템은 임의로 만든 번호를 인식하지 못해요. 이 생성기는 유효한 번호라면 무엇이든 그려 주지만 번호를 발급하거나 등록하지는 않습니다. 자체 재고, 자산, 티켓에 쓰는 Code 128과 Code 39는 등록이 필요 없어요.",
+  "aca907b86c08": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "매장에서 판매하는 제품이라면 그렇습니다. EAN, UPC, ITF-14, GS1-128은 GTIN을 담고 있으며, GTIN은 GS1(또는 해당 국가의 GS1 기관)이 회사에 사용권을 부여해요. 소매업체의 시스템은 임의로 만든 번호를 인식하지 못합니다. 이 생성기는 유효한 번호라면 무엇이든 그려 주지만, 번호를 발급하거나 등록하지는 않아요. 자체 재고, 자산, 티켓에는 등록이 필요 없는 Code 128, Code 39, Code 93을 쓸 수 있습니다.",
     "status": "machine",
     "context": "barcodes.faqs.1.answer"
   },
@@ -23908,6 +23938,174 @@
     "text": "아니요. 시작 문자와 종료 문자는 자동으로 추가돼요. 별표는 텍스트에 포함할 수 없어요.",
     "status": "machine",
     "context": "barcodeFormats.pages.code-39.faqs.1.answer"
+  },
+  "2710ebb603a0": {
+    "source": "Free Code 93 Barcode Generator",
+    "text": "무료 Code 93 바코드 생성기",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.title"
+  },
+  "18b303bbca65": {
+    "source": "Make a Code 93 barcode with capital letters, digits and - . $ / + %, up to 40 characters. Check characters added. Scan-checked. SVG, PDF, PNG. Free.",
+    "text": "대문자, 숫자, - . $ / + % 를 사용해 최대 40자까지 Code 93 바코드를 만들어요. 체크 문자가 자동으로 추가돼요. 스캔 확인 완료. SVG, PDF, PNG. 무료.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.metaDescription"
+  },
+  "e219e5513bd8": {
+    "source": "Code 93 holds the same characters as Code 39, capital letters, digits and a few symbols, in a shorter barcode with two built-in check characters. Type up to 40 characters, check that it scans and download it.",
+    "text": "Code 93은 대문자, 숫자, 몇 가지 기호까지 Code 39와 같은 문자를 담으면서도 바코드가 더 짧고, 체크 문자가 2개 내장되어 있어요. 최대 40자까지 입력하고, 스캔되는지 확인한 뒤 다운로드하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.intro"
+  },
+  "7bee63c8a9a6": {
+    "source": "Labels in logistics and inventory systems that specify Code 93.",
+    "text": "Code 93을 지정하는 물류 및 재고 관리 시스템의 라벨.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.0"
+  },
+  "8d204ecd0aaf": {
+    "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
+    "text": "Code 93이 꼭 필요한 게 아니라면 Code 128을 사용하세요. 소문자도 담을 수 있고, 이 방식을 켜 둔 스캐너가 더 많아요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
+  "d2fb97a99a0a": {
+    "source": "Do I need to register a Code 93 barcode?",
+    "text": "Code 93 바코드를 등록해야 하나요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.title"
+  },
+  "cebbfa59e3ae": {
+    "source": "No. Code 93 carries your own text: serial numbers, part numbers, IDs. There's nothing to license.",
+    "text": "아니요. Code 93에는 일련번호, 부품 번호, ID처럼 직접 정한 텍스트를 담아요. 따로 라이선스를 받을 필요가 없어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.paragraphs.0"
+  },
+  "74ac9841bdd6": {
+    "source": "Every Code 93 barcode ends with two check characters, C and K, worked out from the text (modulo 47). They're required, so the generator always adds them, and readers check them and leave them out of what they return. The start and stop characters are added for you too.",
+    "text": "모든 Code 93 바코드는 텍스트로 계산한(모듈로 47) 체크 문자 C와 K 두 개로 끝나요. 필수 요소라서 생성기가 항상 추가하고, 리더는 이를 검사한 뒤 결과값에서는 제외해요. 시작 문자와 종료 문자도 자동으로 추가돼요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.rules.1"
+  },
+  "77496524eafa": {
+    "source": "Each Code 93 character is 9 modules wide, against Code 39's 13 to 16, so the same text makes a shorter barcode: ABCDEFGHIJ is 51.9 mm in the downloads, 74.4 mm as Code 39 and 58.2 mm as Code 128.",
+    "text": "Code 93 문자 하나의 너비는 9모듈이에요. Code 39는 13~16모듈이라서 같은 텍스트라도 바코드가 더 짧아져요. ABCDEFGHIJ는 다운로드 파일 기준으로 51.9 mm이고, Code 39로는 74.4 mm, Code 128로는 58.2 mm예요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.sizing.0"
+  },
+  "272ae0dd2556": {
+    "source": "Can Code 93 do lowercase?",
+    "text": "Code 93에서 소문자를 쓸 수 있나요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.question"
+  },
+  "49f94a9600a4": {
+    "source": "Only in an extended mode (Full ASCII) that adds shift characters, which this generator doesn't offer. Use Code 128 for lowercase.",
+    "text": "시프트 문자를 추가하는 확장 모드(Full ASCII)에서만 가능한데, 이 생성기는 해당 모드를 지원하지 않아요. 소문자는 Code 128을 사용하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.answer"
+  },
+  "9610fa0dc484": {
+    "source": "Will my scanner read Code 93?",
+    "text": "내 스캐너가 Code 93을 읽을까요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.question"
+  },
+  "c883cdcae324": {
+    "source": "Most barcode scanners can, but some handheld scanners let you switch symbologies off, and Code 93 is one that's sometimes off. Scan a test print with the scanners you'll use before printing a batch.",
+    "text": "대부분의 바코드 스캐너는 읽을 수 있어요. 다만 일부 핸드헬드 스캐너는 바코드 종류를 끌 수 있고, Code 93이 꺼져 있는 경우가 가끔 있어요. 대량으로 인쇄하기 전에 사용할 스캐너로 시험 인쇄본을 스캔해 보세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.answer"
+  },
+  "f47fc8d29ec5": {
+    "source": "Free Codabar Barcode Generator",
+    "text": "무료 Codabar 바코드 생성기",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.title"
+  },
+  "da432fa0e742": {
+    "source": "Make a Codabar barcode: digits and - $ : / . + between a start and stop letter A to D, up to 40 characters. Scan-checked. SVG, PDF, PNG. Free, no signup.",
+    "text": "Codabar 바코드를 만들어요. 시작·종료 문자 A~D 사이에 숫자와 - $ : / . + 를 넣어 최대 40자까지 가능해요. 스캔 확인 완료. SVG, PDF, PNG. 무료, 가입 불필요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.metaDescription"
+  },
+  "dd54414779bc": {
+    "source": "Codabar is an older barcode of digits and a few symbols, framed by a start and a stop letter. Libraries, blood banks and some shipping labels still use it. Type your value, check that it scans and download it.",
+    "text": "Codabar는 숫자와 몇 가지 기호를 시작 문자와 종료 문자로 감싼 오래된 바코드예요. 도서관, 혈액은행, 일부 배송 라벨에서 아직도 사용해요. 값을 입력하고, 스캔되는지 확인한 뒤 다운로드하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.intro"
+  },
+  "ea77d1fdc0be": {
+    "source": "Library and loan systems, blood bank labels and some shipping and lab labels, wherever an existing system or scanner is set up for Codabar.",
+    "text": "도서관과 대출 시스템, 혈액은행 라벨, 일부 배송 및 실험실 라벨 등 기존 시스템이나 스캐너가 Codabar에 맞춰져 있는 곳.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.0"
+  },
+  "fa9e8da77e53": {
+    "source": "If nothing asks for Codabar, use Code 128: it holds letters and makes a shorter barcode for the same text.",
+    "text": "Codabar가 꼭 필요한 게 아니라면 Code 128을 사용하세요. 문자를 담을 수 있고, 같은 텍스트로 더 짧은 바코드를 만들 수 있어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.1"
+  },
+  "4c3b5b55e7e9": {
+    "source": "Do I need to register a Codabar barcode?",
+    "text": "Codabar 바코드를 등록해야 하나요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.title"
+  },
+  "d0209ed07811": {
+    "source": "No. Codabar carries your own numbers, such as a membership, item or sample number. There's nothing to license. Check with the system that reads it which start and stop letters it expects.",
+    "text": "아니요. Codabar에는 회원 번호, 물품 번호, 샘플 번호처럼 직접 정한 숫자를 담아요. 따로 라이선스를 받을 필요가 없어요. 어떤 시작·종료 문자를 요구하는지는 바코드를 읽는 시스템에 확인하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.paragraphs.0"
+  },
+  "9b20883f5d9b": {
+    "source": "Start and end with one of A, B, C or D, with at least one character between them: digits and - $ : / . + only, up to 40 characters in all, for example A40156B.",
+    "text": "A, B, C, D 중 하나로 시작하고 끝나야 하며, 그 사이에 문자가 1개 이상 있어야 해요. 숫자와 - $ : / . + 만 쓸 수 있고, 전체 최대 40자까지예요. 예: A40156B.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.0"
+  },
+  "0934d84635a2": {
+    "source": "The start and stop letters are part of what you type and what a scanner reports; some systems use the choice of letter to tell kinds of labels apart. This generator adds no check digit; if your system needs one, add it to your number yourself.",
+    "text": "시작 문자와 종료 문자는 직접 입력하는 값의 일부이며 스캐너가 읽어 주는 값에도 포함돼요. 일부 시스템은 문자 선택으로 라벨 종류를 구분해요. 이 생성기는 체크 디지트를 추가하지 않아요. 시스템에 필요하다면 번호에 직접 추가하세요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.1"
+  },
+  "643068ad3651": {
+    "source": "Codabar characters aren't all the same width, so the width depends on what you type: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Digits, - and $ are the narrow ones; : / . + and the start and stop letters take a little more room.",
+    "text": "Codabar 문자는 너비가 모두 같지 않아서 입력한 내용에 따라 전체 너비가 달라져요. 샘플 A40156B는 다운로드 파일 기준으로 37.7 × 19.2 mm예요. 숫자, - 와 $ 는 폭이 좁고, : / . + 와 시작·종료 문자는 공간을 조금 더 차지해요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.0"
+  },
+  "6ebe2b720e05": {
+    "source": "Keep 10 modules of blank space each side, and make the bars tall enough to sweep easily: the generator starts at 15 mm.",
+    "text": "양쪽에 10모듈 크기의 여백을 두고, 쉽게 훑을 수 있도록 막대 높이를 충분히 확보하세요. 생성기는 15 mm부터 시작해요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.1"
+  },
+  "868c623a9331": {
+    "source": "Which start and stop letters should I use?",
+    "text": "어떤 시작·종료 문자를 써야 하나요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.question"
+  },
+  "339e22c067b9": {
+    "source": "Use the ones your system expects. Some systems use the letters to mark different label types. The letters can differ at each end.",
+    "text": "사용하는 시스템이 요구하는 문자를 쓰세요. 일부 시스템은 문자로 라벨 종류를 구분해요. 양쪽 끝의 문자는 서로 달라도 돼요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.answer"
+  },
+  "a426c1c105c7": {
+    "source": "Can Codabar hold letters?",
+    "text": "Codabar에 문자를 담을 수 있나요?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.question"
+  },
+  "6efd6d4d07ab": {
+    "source": "Only A to D, as start and stop characters. For other letters use Code 128, or Code 39 for capitals.",
+    "text": "시작·종료 문자로 쓰는 A~D만 가능해요. 다른 문자는 Code 128을 쓰고, 대문자라면 Code 39도 쓸 수 있어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.answer"
   },
   "d3ff2381a9b5": {
     "source": "Free PDF417 Barcode Generator",
@@ -29735,9 +29933,9 @@
     "status": "machine",
     "context": "mcp.tools.6.title"
   },
-  "018b7893a107": {
-    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
-    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 또는 Aztec을 지원합니다. 값(체크 디지트, 길이, 문자)을 확인하고 PNG와 공개 SVG, PNG, PDF 등의 이미지 URL을 반환합니다.",
+  "26e9ed7d6f36": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417, Aztec 바코드를 만들어요. 값(체크 디지트, 길이, 문자)을 검사한 뒤 PNG 이미지와 공개 SVG, PNG, PDF 등의 이미지 URL을 반환해요.",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },

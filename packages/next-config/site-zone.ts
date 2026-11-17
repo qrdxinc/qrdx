@@ -18,9 +18,19 @@
 // come through qrdx.dev and keep its own address out of search results.
 
 /**
- * The groups of pages the site serves, each a list of path prefixes: the
- * page at the prefix and everything under it (its Open Graph images, feeds,
- * Markdown copies and child pages). "/" would mean the home page alone.
+ * Where a group's pages are. A string is a prefix: the page at it and
+ * everything under it (its Open Graph images, feeds, Markdown copies and
+ * child pages); "/" would mean the home page alone. `{ path }` is that one
+ * path and nothing under it, for a group that shares its first segment with
+ * this app's own pages (/templates/<type> stays here while /templates
+ * moves). A segment of `path` may be `*`, any one segment without a dot,
+ * or end in `*`, as in `opengraph-image*`: that text, then anything but a
+ * slash or a dot (Next adds a hash to Open Graph image URLs).
+ */
+export type SitePath = string | { readonly path: string };
+
+/**
+ * The groups of pages the site serves, each a list of SitePaths.
  *
  * Adding a group here is what moves its pages; the shape stays the same.
  */
@@ -37,9 +47,66 @@ export const SITE_GROUPS = {
   generators: ["/qr-code-generator"],
   /** The barcode generator: /barcode-generator and its format pages. */
   barcodes: ["/barcode-generator"],
-} as const satisfies Record<string, readonly string[]>;
+  /** How QRdx keeps codes safe and working: /security and /guarantee. */
+  trust: ["/security", "/guarantee"],
+  /** The browser and design-tool plugins: /plugins. */
+  plugins: ["/plugins"],
+  /** The legal pages: /legal/<page>. */
+  legal: ["/legal"],
+  /** What's new: /changelogs (its pictures stay here, at /changelog/…). */
+  changelog: ["/changelogs"],
+  /** The free tools: /tools and its tools (bulk, print size, scan checker). */
+  tools: ["/tools"],
+  /** The product pages. */
+  products: [
+    "/dynamic-qr-code",
+    "/qr-code-api",
+    "/open-source-qr-code-generator",
+  ],
+  /** /enterprise and its contact form (which posts to this app's API). */
+  enterprise: ["/enterprise"],
+  /** /pricing (/pricing.md, its Markdown copy, stays here). */
+  pricing: ["/pricing"],
+  /**
+   * The integrations directory and each integration's page, with their
+   * Open Graph images. /integrations/slack/link (an app page) and the
+   * integrations' logos (/integrations/<name>.svg) stay here.
+   */
+  integrations: [
+    { path: "/integrations" },
+    { path: "/integrations/*" },
+    { path: "/integrations/*/opengraph-image*" },
+    { path: "/integrations/*/twitter-image*" },
+  ],
+  /**
+   * The templates gallery and its Open Graph images. The templates' own
+   * pages (/templates/<type>/…) stay here.
+   */
+  templates: [
+    { path: "/templates" },
+    { path: "/templates/opengraph-image*" },
+    { path: "/templates/twitter-image*" },
+  ],
+} as const satisfies Record<string, readonly SitePath[]>;
 
 export type SiteGroup = keyof typeof SITE_GROUPS;
+
+/**
+ * The site's own sitemaps, for the groups whose pages it lists itself (it
+ * decides which of them exist: posts, comparisons, topics, generator and
+ * barcode types). While the site serves one of these groups, the main
+ * app's sitemap leaves its pages out and robots.txt names this one. Every
+ * other group's pages stay in the main app's sitemap, at the same URLs,
+ * whichever app serves them.
+ */
+export const SITE_SITEMAPS: Partial<Record<SiteGroup, string>> = {
+  blog: "/blog/sitemap.xml",
+  compare: "/compare/sitemap.xml",
+  industries: "/qr-codes-for/sitemap.xml",
+  placements: "/qr-codes-on/sitemap.xml",
+  generators: "/qr-code-generator/sitemap.xml",
+  barcodes: "/barcode-generator/sitemap.xml",
+};
 
 /** Every group, in the order their rewrites are listed. */
 export const SITE_GROUP_NAMES = Object.keys(
@@ -176,6 +243,82 @@ function pageSourcesFor(prefix: string): string[] {
   return prefix === "/" ? ["/"] : [prefix, `${prefix}/:path+`];
 }
 
+/** What a wildcard matches: anything but a slash or a dot. */
+const WILDCARD = "[^/.]";
+
+/** One segment of a `{ path }` entry: its literal text, and whether a wildcard follows. */
+interface PathSegment {
+  literal: string;
+  wild: boolean;
+}
+
+function segmentsOf(path: string): PathSegment[] {
+  return path
+    .split("/")
+    .slice(1)
+    .map((segment) =>
+      segment.endsWith("*")
+        ? { literal: segment.slice(0, -1), wild: true }
+        : { literal: segment, wild: false }
+    );
+}
+
+/** A wildcard segment's pattern: its literal text, then the wildcard. */
+function wildPattern({ literal }: PathSegment): string {
+  return literal === "" ? `${WILDCARD}+` : `${literal}${WILDCARD}*`;
+}
+
+/**
+ * A `{ path }` entry's rewrite source and destination path: each wildcard
+ * segment becomes a named parameter (:p1, :p2, …) with its pattern, and the
+ * destination passes it on as it came. Segments are lower-case letters,
+ * digits and hyphens (tests/lib/site-zone.test.ts), so nothing needs
+ * escaping.
+ */
+function pathRule(path: string): { source: string; destination: string } {
+  let count = 0;
+  const source: string[] = [];
+  const destination: string[] = [];
+  for (const segment of segmentsOf(path)) {
+    if (!segment.wild) {
+      source.push(segment.literal);
+      destination.push(segment.literal);
+      continue;
+    }
+    count++;
+    source.push(`:p${count}(${wildPattern(segment)})`);
+    destination.push(`:p${count}`);
+  }
+  return {
+    source: `/${source.join("/")}`,
+    destination: `/${destination.join("/")}`,
+  };
+}
+
+/**
+ * Whether `pathname` is a `{ path }` entry's path, without regard to case
+ * (as Next matches rewrites), segment by segment.
+ */
+function atPath(pathname: string, path: string): boolean {
+  const segments = segmentsOf(path);
+  const parts = pathname.split("/").slice(1);
+  if (parts.length !== segments.length) return false;
+  return segments.every((segment, index) => {
+    const part = parts[index] ?? "";
+    if (!segment.wild) return part.toLowerCase() === segment.literal;
+    return new RegExp(`^${wildPattern(segment)}$`, "i").test(part);
+  });
+}
+
+/** The rewrites one SitePath needs: its sources, each with its destination path. */
+function rulesFor(entry: SitePath): { source: string; destination: string }[] {
+  if (typeof entry !== "string") return [pathRule(entry.path)];
+  return pageSourcesFor(entry).map((source) => ({
+    source,
+    destination: source,
+  }));
+}
+
 /**
  * The main app's beforeFiles rewrites that send the groups' pages and the
  * site's build assets to the site at `origin` (its origin is used, so a
@@ -193,15 +336,18 @@ export function siteZoneRewrites(
   if (!origin || groups.length === 0) return [];
   const zone = new URL(origin).origin;
   const has = [{ type: "host" as const, value: hosts }];
-  const sources = [
+  const rules = [
     ...SITE_GROUP_NAMES.filter((group) => groups.includes(group)).flatMap(
-      (group) => SITE_GROUPS[group].flatMap(pageSourcesFor)
+      (group) => (SITE_GROUPS[group] as readonly SitePath[]).flatMap(rulesFor)
     ),
-    sourceFor(SITE_ASSET_PREFIX),
+    {
+      source: sourceFor(SITE_ASSET_PREFIX),
+      destination: sourceFor(SITE_ASSET_PREFIX),
+    },
   ];
-  return sources.map((source) => ({
+  return rules.map(({ source, destination }) => ({
     source,
-    destination: `${zone}${source}`,
+    destination: `${zone}${destination}`,
     has,
   }));
 }
@@ -220,9 +366,16 @@ function underPrefix(pathname: string, prefix: string): boolean {
   return next === undefined || next === "/";
 }
 
+/** Whether a SitePath covers `pathname`, without regard to case. */
+function covers(entry: SitePath, pathname: string): boolean {
+  return typeof entry === "string"
+    ? underPrefix(pathname, entry)
+    : atPath(pathname, entry.path);
+}
+
 /**
- * The group `pathname` belongs to (a page at one of its prefixes or below),
- * or null. `groups` narrows it to the groups that are on.
+ * The group `pathname` belongs to (a page at one of its paths or below a
+ * prefix), or null. `groups` narrows it to the groups that are on.
  */
 export function siteGroup(
   pathname: string,
@@ -230,7 +383,8 @@ export function siteGroup(
 ): SiteGroup | null {
   for (const group of SITE_GROUP_NAMES) {
     if (!groups.includes(group)) continue;
-    if (SITE_GROUPS[group].some((prefix) => underPrefix(pathname, prefix))) {
+    const entries: readonly SitePath[] = SITE_GROUPS[group];
+    if (entries.some((entry) => covers(entry, pathname))) {
       return group;
     }
   }
@@ -257,11 +411,11 @@ export function isSitePath(
 }
 
 /**
- * Whether `href` is a page the site serves: a group's prefix or anything
- * under it (/blog, /blog/…), with any query or hash. External and relative
- * hrefs never are. Links into the site must be plain <a> elements (a full
- * page load): next/link would try to load the site's page in this app. Both
- * apps serve these URLs, so that holds with SITE_ORIGIN set or not.
+ * Whether `href` is a page the site serves: a group's page (/blog, /blog/…,
+ * /templates), with any query or hash. External and relative hrefs never
+ * are. Links into the site must be plain <a> elements (a full page load):
+ * next/link would try to load the site's page in this app. Both apps serve
+ * these URLs, so that holds with SITE_ORIGIN set or not.
  */
 export function isSitePagePath(href: string): boolean {
   if (!href.startsWith("/") || href.startsWith("//")) return false;
@@ -270,21 +424,59 @@ export function isSitePagePath(href: string): boolean {
 }
 
 /**
- * `pathname` with its site prefix (/blog, /site-static, …) lower-cased, or
- * null when the prefix already is (or there's none). The rewrites match
- * /BLOG/… too, but proxy.ts matchers and the pages don't, so the proxy
- * sends any other casing to the lower-case path before anything reaches
- * the site. Every group's prefixes, on or off: the paths were 404s before.
+ * The first segment of every SitePath, and the site's asset prefix: what
+ * proxy.ts's matcher lists in any casing (tests/lib/site-zone.test.ts
+ * checks it does).
+ */
+export function siteMatcherPrefixes(): string[] {
+  const firsts = SITE_GROUP_NAMES.flatMap((group) =>
+    (SITE_GROUPS[group] as readonly SitePath[]).map((entry) => {
+      const path = typeof entry === "string" ? entry : entry.path;
+      return `/${path.split("/")[1] ?? ""}`;
+    })
+  );
+  return [...new Set([...firsts, SITE_ASSET_PREFIX])].filter(
+    (prefix) => prefix !== "/"
+  );
+}
+
+/**
+ * `pathname` with a `{ path }` entry's literal text lower-cased (a
+ * wildcard's own part keeps its case), when the entry covers it.
+ */
+function lowerCasedAtPath(pathname: string, path: string): string {
+  const segments = segmentsOf(path);
+  const parts = pathname.split("/").slice(1);
+  return `/${parts
+    .map((part, index) => {
+      const literal = segments[index]?.literal ?? "";
+      return `${part.slice(0, literal.length).toLowerCase()}${part.slice(literal.length)}`;
+    })
+    .join("/")}`;
+}
+
+/**
+ * `pathname` with its site prefix or path (/blog, /templates,
+ * /site-static, …) lower-cased, or null when it already is (or there's
+ * none). The rewrites match /BLOG/… too, but proxy.ts matchers and the
+ * pages don't, so the proxy sends any other casing to the lower-case path
+ * before anything reaches the site. Every group's paths, on or off: they
+ * were 404s before.
  */
 export function lowerCasedSitePrefix(pathname: string): string | null {
-  const prefixes = [
-    ...SITE_GROUP_NAMES.flatMap((group) => SITE_GROUPS[group]),
+  const entries: SitePath[] = [
+    ...SITE_GROUP_NAMES.flatMap(
+      (group) => SITE_GROUPS[group] as readonly SitePath[]
+    ),
     SITE_ASSET_PREFIX,
-  ].filter((prefix) => prefix !== "/");
-  for (const prefix of prefixes) {
-    if (!underPrefix(pathname, prefix)) continue;
-    const head = pathname.slice(0, prefix.length);
-    return head === prefix ? null : `${prefix}${pathname.slice(prefix.length)}`;
+  ].filter((entry) => entry !== "/");
+  for (const entry of entries) {
+    if (!covers(entry, pathname)) continue;
+    const lowered =
+      typeof entry === "string"
+        ? `${entry}${pathname.slice(entry.length)}`
+        : lowerCasedAtPath(pathname, entry.path);
+    return lowered === pathname ? null : lowered;
   }
   return null;
 }

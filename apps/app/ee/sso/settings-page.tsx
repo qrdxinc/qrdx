@@ -51,9 +51,9 @@ export default async function SsoSettingsPage() {
             ? "This workspace's plan no longer includes single sign-on, so nobody can sign in with it. Members can still use an email code, Google or GitHub. You can remove the connection below."
             : `Single sign-on comes with the ${ssoPlan ? PLAN_NAMES[ssoPlan] : "Business"} plan.`}{" "}
           {/* Inline padding widens the tap target without moving the text. */}
-          <Link className="py-3 underline" href="/pricing">
+          <a className="py-3 underline" href="/pricing">
             See plans
-          </Link>
+          </a>
         </p>
       )}
 
