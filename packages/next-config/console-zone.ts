@@ -1,17 +1,24 @@
-// The console zone: QRdx's back office, a separate Next.js app that serves
-// five /admin sections. Two ways to reach it, both off until their variable
-// is set (self-hosting, and qrdx.dev until the cutover):
-// - ADMIN_CONSOLE_URL: the console at its own address (https://admin.qrdx.dev)
-//   with clean URLs (/growth, /affiliates/<id>) and its own sign-in through
-//   this app's OAuth provider (lib/admin-console). The main app redirects
-//   /admin/<section> there, and the admin menu links there.
-// - CONSOLE_ORIGIN: the console proxied behind /admin/<section> on qrdx.dev
-//   (the first design; its code stays until the clean-up).
+// The console: QRdx's back office, a separate Next.js app. Two ways to
+// reach it, both off until their variable is set (self-hosting, and qrdx.dev
+// until the cutover):
+// - ADMIN_CONSOLE_URL: the console at its own address
+//   (https://console.qrdx.dev) with clean URLs (/users/<id>, /growth) and its
+//   own sign-in through this app's OAuth provider (lib/admin-console). It
+//   serves every admin section (ADMIN_CONSOLE_SECTIONS): the main app
+//   redirects all of /admin there, links there instead of to /admin, and
+//   confirms the console's sensitive actions on /oauth/confirm.
+// - CONSOLE_ORIGIN: five sections proxied behind /admin/<section> on
+//   qrdx.dev (the first design, CONSOLE_SECTIONS; its code stays until the
+//   clean-up).
 // Unset, nothing changes and the main app serves its own pages. Both apps
-// import this one list. Pure: next.config.ts, proxy.ts, client components
-// and tests import it.
+// import these lists. Pure: next.config.ts, proxy.ts, client components and
+// tests import it.
 
-/** The /admin sections the console serves: /admin/<section> and below. */
+/**
+ * The /admin sections the proxied console (CONSOLE_ORIGIN) serves:
+ * /admin/<section> and below. The console at its own address serves all of
+ * them: ADMIN_CONSOLE_SECTIONS.
+ */
 export const CONSOLE_SECTIONS = [
   "growth",
   "numbers",
@@ -212,7 +219,8 @@ export const ADMIN_CONSOLE_SECRET_MIN_LENGTH = 32;
  * with a CONSOLE_ZONE_KEY of 32 characters or more (the console's OAuth
  * client secret), since without it the console can't sign anyone in and
  * sending admins there would strand them. Undefined otherwise. The
- * redirects, the menu, the overview and /admin/confirm all read this one.
+ * redirects, the admin menus, the overview, the user menu's Admin link and
+ * /oauth/confirm all read this one.
  */
 export function adminConsoleAddress({
   adminConsoleUrl,
@@ -227,15 +235,50 @@ export function adminConsoleAddress({
 }
 
 /**
- * The main app's redirects that send /admin/<section>[/…] (the query kept,
- * as Next does by default) to the same section at the console's own
- * address, `adminConsoleUrl` (from adminConsoleAddress): /admin/growth →
- * https://admin.qrdx.dev/growth, /admin/affiliates/abc → …/affiliates/abc.
- * None while it's unset: this app serves its own pages. One rule per
- * section with a literal, lower-case destination: Next matches sources
- * without regard to case, so /admin/Growth lands on /growth, not /Growth.
- * Only the five sections match, each as a whole segment; /admin, the other
- * sections and /admin/growthx never do.
+ * Every section of the main app's admin (app/(app)/admin/<section>), which
+ * the console at its own address serves at /<section>: the five it started
+ * with, then the rest. /admin itself is the console's front page (/), and
+ * /admin/confirm isn't a section: the console confirms on /oauth/confirm.
+ */
+export const ADMIN_CONSOLE_SECTIONS = [
+  ...CONSOLE_SECTIONS,
+  "users",
+  "themes",
+  "community",
+  "codes",
+  "abuse",
+  "integrations",
+  "audit-log",
+  "health",
+  "search",
+] as const;
+
+export type AdminConsoleSection = (typeof ADMIN_CONSOLE_SECTIONS)[number];
+
+/**
+ * The main app's "Confirm it's you" page for the console's sensitive
+ * actions, outside /admin (app/(app)/oauth/confirm): ?next= is a page at the
+ * console's own address (adminConsoleReturnUrl).
+ */
+export const ADMIN_CONSOLE_CONFIRM_PATH = "/oauth/confirm";
+
+/**
+ * The main app's redirects while the console is at its own address
+ * (`adminConsoleUrl`, from adminConsoleAddress): every /admin URL goes there,
+ * the query kept (as Next does by default).
+ * - /admin → https://console.qrdx.dev/
+ * - /admin/<section>[/…] → …/<section>[/…], for every ADMIN_CONSOLE_SECTIONS
+ *   entry: /admin/users/abc/export → …/users/abc/export, /admin/search?q=a →
+ *   …/search?q=a. One pair of rules per section with literal, lower-case
+ *   destinations: Next matches sources without regard to case, so
+ *   /admin/Users/abc lands on /users/abc, not /Users/abc. The bare section
+ *   has a rule of its own because Vercel writes an empty :path* as a
+ *   trailing slash (/growth/), an extra hop at the console.
+ * - /admin/confirm → /oauth/confirm here (ADMIN_CONSOLE_CONFIRM_PATH): a
+ *   console still sending admins to the old page reaches the new one, rather
+ *   than a page the console doesn't have.
+ * - anything else under /admin → the same path there (the console's 404).
+ * None while it's unset: this app serves its own pages.
  *
  * Temporary (307) for now, so browsers don't cache the move and a rollback
  * (unsetting ADMIN_CONSOLE_URL) takes effect at once. After the seven-day
@@ -247,19 +290,34 @@ export function adminConsoleRedirects(
 ): ConsoleRedirect[] {
   if (!adminConsoleUrl) return [];
   const origin = new URL(adminConsoleUrl).origin;
-  return CONSOLE_SECTIONS.map((section) => ({
-    source: `/admin/${section}/:path*`,
-    destination: `${origin}/${section}/:path*`,
+  const rule = (source: string, destination: string): ConsoleRedirect => ({
+    source,
+    destination,
     permanent: false,
     has: [{ type: "host", value: hosts }],
-  }));
+  });
+  return [
+    rule("/admin", `${origin}/`),
+    rule("/admin/confirm", ADMIN_CONSOLE_CONFIRM_PATH),
+    ...ADMIN_CONSOLE_SECTIONS.flatMap((section) => [
+      rule(`/admin/${section}`, `${origin}/${section}`),
+      rule(`/admin/${section}/:path+`, `${origin}/${section}/:path+`),
+    ]),
+    rule("/admin/:path+", `${origin}/:path+`),
+  ];
 }
 
+// /admin/<section> for any of the console's sections, in any case.
+const ADMIN_CONSOLE_SECTION_PATH = new RegExp(
+  `^/admin/(${ADMIN_CONSOLE_SECTIONS.join("|")})(?=/|$)`,
+  "i"
+);
+
 /**
- * The console's own URL for one of its pages named the way this app names
- * them (/admin/growth, /admin/subscriptions?status=active): the same path
- * without /admin, with its query, on `adminConsoleUrl`. Null while that's
- * unset, and for any href that isn't a console section.
+ * The console's own URL for an admin page named the way this app names it
+ * (/admin, /admin/users/abc, /admin/subscriptions?status=active): the same
+ * path without /admin, with its query, on `adminConsoleUrl`. Null while
+ * that's unset, and for any href that isn't /admin or one of its sections.
  */
 export function adminConsoleHref(
   href: string,
@@ -272,48 +330,78 @@ export function adminConsoleHref(
   } catch {
     return null;
   }
-  const section = consoleSection(url.pathname);
-  if (url.origin !== RETURN_BASE || section === null) return null;
+  if (url.origin !== RETURN_BASE) return null;
+  const origin = new URL(adminConsoleUrl).origin;
+  if (url.pathname === "/admin" || url.pathname === "/admin/") {
+    return `${origin}/${url.search}`;
+  }
+  const section = ADMIN_CONSOLE_SECTION_PATH.exec(url.pathname)?.[1];
+  if (!section) return null;
   const rest = url.pathname.slice("/admin/".length + section.length);
-  return `${new URL(adminConsoleUrl).origin}/${section}${rest}${url.search}`;
+  return `${origin}/${section.toLowerCase()}${rest}${url.search}`;
 }
 
-// The console's clean paths: /<section>, or /<section>/…, lower case.
-const CONSOLE_CLEAN_PATH = new RegExp(
-  `^/(?:${CONSOLE_SECTIONS.join("|")})(?:/|$)`
-);
+const MAX_RETURN_LENGTH = 2048;
 
 /**
- * Where /admin/confirm may send an admin back to, or null: a console page
- * on this site (consoleReturnPath), or, while ADMIN_CONSOLE_URL is set, a
- * page at the console's own address: an absolute URL on exactly that origin
- * whose path is one of the console's sections (/growth, /affiliates/abc?x=1).
- * Never another origin, credentials, a backslash, a dot segment or a hash.
+ * The query parameter the console adds to the page it sends to
+ * /oauth/confirm, so it can tell, once back, that the admin has just
+ * confirmed (`?confirmed=1`). Going back without confirming drops it
+ * (adminConsoleCancelUrl).
  */
-export function consoleReturnTarget(
+export const ADMIN_CONSOLE_CONFIRMED_PARAM = "confirmed";
+
+/**
+ * Where /oauth/confirm may send an admin back to, or null: a page at exactly
+ * the console's own address (`adminConsoleUrl`), as an absolute URL, without
+ * its hash. Never another origin (scheme, host or port), credentials, a
+ * relative or protocol-relative URL, a backslash, whitespace or a control
+ * character (browsers rewrite those), a path with an empty segment (//) or
+ * any percent-encoding (so what's checked is what the console routes), a dot
+ * segment, the console's sign-in routes (/auth…), or anything longer than
+ * 2,048 characters. The query may hold anything.
+ */
+export function adminConsoleReturnUrl(
   next: string | null | undefined,
   adminConsoleUrl: string | undefined
 ): string | null {
-  const onThisSite = consoleReturnPath(next);
-  if (onThisSite !== null) return onThisSite;
-  if (!(adminConsoleUrl && next)) return null;
-  // Backslashes, whitespace and control characters: browsers rewrite them.
+  if (!(adminConsoleUrl && next) || next.length > MAX_RETURN_LENGTH) {
+    return null;
+  }
   // biome-ignore lint/suspicious/noControlCharactersInRegex: rejecting them is the point
   if (/[\\\s\u0000-\u001f\u007f]/.test(next)) return null;
+  // Absolute only: no base, so "/users" and "//host/users" don't parse.
   let url: URL;
   try {
     url = new URL(next);
   } catch {
     return null;
   }
+  const path = url.pathname;
   if (
     url.origin !== new URL(adminConsoleUrl).origin ||
     url.username ||
     url.password ||
-    !CONSOLE_CLEAN_PATH.test(url.pathname) ||
-    hasDotSegment(url.pathname)
+    // The console's ids and section names are plain: an encoded character
+    // (%61uth, auth%2flogin) or an empty segment (//auth) is never needed,
+    // and could hide a path the checks below would refuse.
+    path.includes("%") ||
+    path.includes("//") ||
+    hasDotSegment(path) ||
+    /^\/auth(?:\/|$)/i.test(path)
   ) {
     return null;
   }
-  return `${url.origin}${url.pathname}${url.search}`;
+  return `${url.origin}${path}${url.search}`;
+}
+
+/**
+ * The console page `back` (from adminConsoleReturnUrl) without the console's
+ * "just confirmed" marker: where "Go back" on /oauth/confirm goes, so a
+ * return without confirming isn't read as one after confirming.
+ */
+export function adminConsoleCancelUrl(back: string): string {
+  const url = new URL(back);
+  url.searchParams.delete(ADMIN_CONSOLE_CONFIRMED_PARAM);
+  return url.toString();
 }
