@@ -8,6 +8,7 @@ import {
 import { revalidatePath } from "next/cache";
 import type { z } from "zod";
 import { HttpError } from "@/lib/http-error";
+import { errorSummary } from "@/lib/log-error";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { writeAuditLog } from "./audit";
 
@@ -46,19 +47,36 @@ export interface AdminActionOptions<S extends z.ZodType> {
   /** Audit action name, e.g. "user.ban" */
   action: string;
   schema: S;
-  limit?: "standard" | "sensitive";
+  limit?: AdminLimitTier;
   /** Defaults to the whole admin panel */
   revalidate?: string[];
 }
 
-/** Per admin and action: 30 a minute, or 5 an hour for the heavy ones. */
-const limiters: Record<"standard" | "sensitive", RateLimiter> = {
+export type AdminLimitTier = "standard" | "sensitive";
+
+/**
+ * Per admin and action: 30 a minute, or 5 an hour for the heavy ones. The
+ * back-office console's signed endpoints apply the same tiers
+ * (lib/console-internal/limits.ts).
+ */
+export const ADMIN_LIMITS = {
+  standard: { tokens: 30, window: "60 s" },
+  sensitive: { tokens: 5, window: "1 h" },
+} as const satisfies Record<AdminLimitTier, unknown>;
+
+const limiters: Record<AdminLimitTier, RateLimiter> = {
   standard: createRateLimiter({
-    limiter: slidingWindow(30, "60 s"),
+    limiter: slidingWindow(
+      ADMIN_LIMITS.standard.tokens,
+      ADMIN_LIMITS.standard.window,
+    ),
     prefix: "qrdx:admin",
   }),
   sensitive: createRateLimiter({
-    limiter: slidingWindow(5, "1 h"),
+    limiter: slidingWindow(
+      ADMIN_LIMITS.sensitive.tokens,
+      ADMIN_LIMITS.sensitive.window,
+    ),
     prefix: "qrdx:admin-sensitive",
   }),
 };
@@ -153,11 +171,13 @@ function failure(error: unknown, action: string): AdminActionResult<never> {
   if (error instanceof Error && "statusCode" in error && error.message) {
     return { ok: false, error: error.message };
   }
+  // The error's kind and code only: a database error's message lists the
+  // query's values (a new address, a session id).
   console.error(
     JSON.stringify({
       event: "admin.action_failed",
       action,
-      error: error instanceof Error ? error.message : String(error),
+      error: errorSummary(error),
     }),
   );
   return { ok: false, error: "Action failed" };

@@ -5,7 +5,9 @@ import {
   createMemoryLimiter,
   type LimitResult,
   parseDuration,
+  RateLimitUnavailableError,
   withFallback,
+  withoutFallback,
 } from "./fallback";
 import { keys } from "./keys";
 
@@ -13,7 +15,9 @@ export {
   createCircuitBreaker,
   createMemoryLimiter,
   parseDuration,
+  RateLimitUnavailableError,
   withFallback,
+  withoutFallback,
 } from "./fallback";
 
 type RateLimitResponse = Awaited<ReturnType<Ratelimit["limit"]>>;
@@ -100,10 +104,29 @@ export const fixedWindow = (
 const DEFAULT_TOKENS = 10;
 const DEFAULT_WINDOW = "10 s";
 
-export const createRateLimiter = (
-  props: Omit<RatelimitConfig, "redis">
-): RateLimiter => {
+/** A limiter that refuses rather than allows when Upstash can't judge. */
+const unavailableRateLimiter: RateLimiter = {
+  limit: () =>
+    Promise.reject(new RateLimitUnavailableError("Upstash isn't configured")),
+};
+
+export type CreateRateLimiterOptions = Omit<RatelimitConfig, "redis"> & {
+  /**
+   * Throw RateLimitUnavailableError, instead of allowing (no Upstash) or
+   * judging in this instance's memory (Upstash down or slow), whenever
+   * Upstash can't judge the request. The caller refuses the request.
+   */
+  failClosed?: boolean;
+};
+
+export const createRateLimiter = ({
+  failClosed = false,
+  ...props
+}: CreateRateLimiterOptions): RateLimiter => {
   if (!redis) {
+    if (failClosed) {
+      return unavailableRateLimiter;
+    }
     if (process.env.NODE_ENV === "production" && !warnedNoopInProduction) {
       warnedNoopInProduction = true;
       console.warn(
@@ -120,24 +143,29 @@ export const createRateLimiter = (
     limiter,
     prefix: props.prefix ?? "qrdx",
     // Upstash allows the request itself when a check takes longer than
-    // this; the fallback judges it in memory instead.
+    // this; the fallback judges it in memory instead (or, failing closed,
+    // the request is refused).
     timeout: 1000,
   });
+  const upstash = (identifier: string, rate?: number) =>
+    ratelimit.limit(
+      identifier,
+      rate === undefined ? undefined : { rate }
+    ) as Promise<LimitResult>;
+  if (failClosed) {
+    const strict = withoutFallback(upstash);
+    return {
+      limit: (identifier, rate) =>
+        strict(identifier, rate) as Promise<RateLimitResponse>,
+    };
+  }
   const memory = createMemoryLimiter(
     windows.get(limiter) ?? {
       tokens: DEFAULT_TOKENS,
       windowMs: parseDuration(DEFAULT_WINDOW),
     }
   );
-  const limit = withFallback(
-    (identifier, rate) =>
-      ratelimit.limit(
-        identifier,
-        rate === undefined ? undefined : { rate }
-      ) as Promise<LimitResult>,
-    memory,
-    breaker
-  );
+  const limit = withFallback(upstash, memory, breaker);
 
   return {
     limit: (identifier, rate) =>
