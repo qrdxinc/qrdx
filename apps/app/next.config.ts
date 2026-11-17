@@ -113,10 +113,10 @@ const docsElsewhere = env.DOCS_ZONE_URL
     });
 // The docs are English only. The docs URLs the other languages had
 // (/es/docs/..., /pt-br/docs/....md, /docs-md/es/...) redirect to the English
-// page, 307 for now (@repo/i18n/docs). Redirects run before the rewrites
-// above, so these requests are answered here, once, and never proxied to
-// the docs site. Without a docs site they go straight to the English page
-// on qrdx.dev.
+// page for good, with a 308 (@repo/i18n/docs). Redirects run before the
+// rewrites above, so these requests are answered here, once, and never
+// proxied to the docs site. Without a docs site they go straight to the
+// English page on qrdx.dev, with a 307.
 const translatedDocs = translatedDocsRedirects({
   ...(!env.DOCS_ZONE_URL && { origin: CANONICAL_ORIGIN }),
   has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
