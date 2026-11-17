@@ -36,8 +36,12 @@ export const DOCS_CHAT = {
   /** Fetched docs pages and searches stay this long in memory. */
   cacheTtlMs: 10 * 60_000,
   cacheMaxEntries: 300,
-  /** One call to the docs site. */
-  fetchTimeoutMs: 8000,
+  /**
+   * One call to the docs site. Its first search after a deploy or an idle
+   * spell builds the index and has taken over 10 seconds; 8 seconds made
+   * that first question fail. The route itself may run for 60.
+   */
+  fetchTimeoutMs: 20_000,
   /** The request body (a few short messages). */
   maxBodyBytes: 64 * 1024,
 } as const;
