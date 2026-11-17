@@ -11,9 +11,10 @@ import { logError } from "@/lib/log-error";
 
 // POST from the back-office console: one user's data export, the same ZIP
 // the user gets from Settings → Account and the admin page's export
-// (app/(app)/admin/users/[userId]/export/route.ts), streamed back. The
-// console limits exports; the audit entry, with the reason, is written here
-// before the first byte. Signed, with the admin checked again here
+// (app/(app)/admin/users/[userId]/export/route.ts), streamed back. Limited
+// here to 5 an hour per admin (the sensitive tier, whatever the console
+// limits); the audit entry, with the reason, is written here before the
+// first byte. Signed, with the admin checked again here
 // (lib/console-internal/route.ts).
 
 export const dynamic = "force-dynamic";
@@ -25,6 +26,7 @@ const BUILD_BUDGET_MS = 240_000;
 export const POST = consoleInternalRoute({
   action: "user.export",
   schema: z.object({ userId: adminId, reason: requiredReason }),
+  limit: "sensitive",
   run: async ({ userId, reason }, { actor }) => {
     const [target] = await db
       .select({ id: user.id, email: user.email })

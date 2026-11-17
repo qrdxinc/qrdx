@@ -13,6 +13,7 @@ export const POST = consoleInternalRoute({
   action: "user.reset_two_factor",
   schema: userReasonSchema,
   strong: true,
+  limit: "sensitive",
   run: (input, { actor }) =>
     startTwoFactorReset(actor, input, {
       requireStrong: () => requireStrongConsoleActor(actor),

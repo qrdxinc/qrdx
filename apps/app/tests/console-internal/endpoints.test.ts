@@ -34,11 +34,20 @@ const audit = vi.hoisted(() => ({
   writeAuditLog: vi.fn(async (_entry: Record<string, unknown>) => undefined),
 }));
 vi.mock("@/app/(app)/admin/_lib/audit", () => audit);
+/** Each limit check: the limiter's prefix and the key it counted. */
+const limitChecks = vi.hoisted(() => [] as { prefix?: string; key: string }[]);
 vi.mock("@repo/rate-limit", () => ({
   // Every request id is new here; replay is route.test.ts's.
   redis: { set: async () => "OK" },
-  createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
+  // Never over the limit here; the limits themselves are route.test.ts's.
+  createRateLimiter: ({ prefix }: { prefix?: string }) => ({
+    limit: async (key: string) => {
+      limitChecks.push({ prefix, key });
+      return { success: true, limit: 1, remaining: 1, reset: 0 };
+    },
+  }),
   slidingWindow: () => ({}),
+  RateLimitUnavailableError: class extends Error {},
 }));
 
 vi.mock("@/lib/console-internal/actor", async () => {
@@ -48,7 +57,11 @@ vi.mock("@/lib/console-internal/actor", async () => {
     requireStrongConsoleActor: vi.fn(async () => {
       state.strongCalls += 1;
       if (!state.strong) {
-        throw new HttpError(403, "ADMIN_ACTION", "CONFIRMATION_REQUIRED");
+        throw new HttpError(
+          403,
+          "CONFIRMATION_REQUIRED",
+          "CONFIRMATION_REQUIRED",
+        );
       }
     }),
   };
@@ -178,7 +191,10 @@ vi.mock("@/lib/account/export/entries", () => ({
   EXPORT_INTRO: "intro",
   exportEntries: exporter.exportEntries,
 }));
-vi.mock("@/lib/log-error", () => ({ logError: vi.fn() }));
+vi.mock("@/lib/log-error", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/lib/log-error")>()),
+  logError: vi.fn(),
+}));
 
 const {
   consoleSignature,
@@ -258,6 +274,11 @@ const json = async (response: Response) =>
 const reason = "Ticket 1234";
 
 beforeEach(() => {
+  limitChecks.length = 0;
+  // Each request's outcome line; checked in route.test.ts.
+  for (const level of ["info", "warn", "error"] as const) {
+    vi.spyOn(console, level).mockImplementation(() => undefined);
+  }
   state.strong = true;
   state.strongCalls = 0;
   state.target = { id: "u_target", email: "target@example.com", role: "user" };
@@ -815,4 +836,59 @@ describe("reads", () => {
     ).toEqual([404, { ok: false, error: "User not found" }]);
     expect(written()).toEqual([]);
   });
+});
+
+describe("rate limits", () => {
+  // What each endpoint counts against (per admin): its audit action, or its
+  // path for the reads, and the sensitive tier (5 an hour) where the admin
+  // pages use it, plus the export and the reset's cancel.
+  const LIMITS: Record<RoutePath, [string, "standard" | "sensitive"]> = {
+    "users/ban": ["user.ban", "standard"],
+    "users/unban": ["user.unban", "standard"],
+    "users/role": ["user.set_role", "standard"],
+    "users/revoke-sessions": ["user.revoke_sessions", "standard"],
+    "users/mark-email-verified": ["user.mark_email_verified", "standard"],
+    "users/unlink-sign-in": ["user.unlink_sign_in", "standard"],
+    "users/two-factor-reset": ["user.reset_two_factor", "sensitive"],
+    "users/two-factor-reset/cancel": [
+      "user.reset_two_factor_cancel",
+      "sensitive",
+    ],
+    "users/change-email": ["user.change_email", "sensitive"],
+    "users/delete": ["user.delete", "sensitive"],
+    "users/export": ["user.export", "sensitive"],
+    "invitations/resend": ["invitation.resend", "standard"],
+    "webhook-deliveries/retry": ["webhook_delivery.retry", "standard"],
+    "integrations/disconnect": ["integration.disconnect", "standard"],
+    "files/block": ["abuse_report.block_file", "standard"],
+    "imports/requeue": ["import_job.requeue", "standard"],
+    "imports/cancel": ["import_job.cancel", "standard"],
+    "community/revalidate": [
+      "/api/internal/console/community/revalidate",
+      "standard",
+    ],
+    health: ["/api/internal/console/health", "standard"],
+    "billing/polar-customer-url": [
+      "/api/internal/console/billing/polar-customer-url",
+      "standard",
+    ],
+  };
+
+  it.each(Object.keys(routes) as RoutePath[])(
+    "%s counts once, per admin, in its tier, before its work",
+    async (path) => {
+      const [name, tier] = LIMITS[path];
+      // No fields: the limit comes before the input check.
+      await call(path);
+      expect(limitChecks).toEqual([
+        {
+          prefix:
+            tier === "sensitive"
+              ? "qrdx:console-internal-sensitive"
+              : "qrdx:console-internal",
+          key: `${name}:${ACTOR.id}`,
+        },
+      ]);
+    },
+  );
 });

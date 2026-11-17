@@ -13,6 +13,7 @@ export const POST = consoleInternalRoute({
   action: "user.reset_two_factor_cancel",
   schema: userReasonSchema,
   strong: true,
+  limit: "sensitive",
   run: (input, { actor }) =>
     cancelPendingTwoFactorReset(actor, input, {
       requireStrong: () => requireStrongConsoleActor(actor),

@@ -211,8 +211,8 @@ export const env = validateTogether(() =>
       // CONSOLE_ZONE_KEY. 32 characters or more (openssl rand -hex 32).
       // Unset, those endpoints are off (404); set but shorter, the app
       // refuses to start, rather than run with a guessable key. They also
-      // need Upstash (KV_REST_API_*), for the replay check: without it
-      // they answer 503.
+      // need Upstash (KV_REST_API_*), for the replay check and the rate
+      // limits: without it they answer 503.
       CONSOLE_INTERNAL_SECRET: z.string().min(32).optional(),
 
       // The marketing site (a separate app, @repo/next-config/site-zone),

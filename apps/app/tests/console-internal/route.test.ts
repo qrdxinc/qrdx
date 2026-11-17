@@ -4,8 +4,12 @@
 // checked again against this app's database (role, verified email, no ban,
 // the named qrdx.dev session alive and theirs), and for strong endpoints the
 // admin's own second factor and a recent strong confirmation by that session.
+// Then the rate limit per admin and endpoint, failing closed, and one log
+// line per signed request that never carries the secret, the signature,
+// headers, the body, an address or a database error's message.
 //
-// The database is a scripted fake; nothing connects anywhere.
+// The database is a scripted fake (a scripted Error makes that query fail);
+// the limiter counts in memory. Nothing connects anywhere.
 import { NextRequest } from "next/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
@@ -23,6 +27,17 @@ const state = vi.hoisted(() => ({
   redisDown: false,
   redisMissing: false,
   strongConfirmed: true,
+  /** The rate limit store can't answer (the replay store still can). */
+  limiterDown: false,
+  /** Calls counted so far, by limiter prefix and key. */
+  counts: new Map<string, number>(),
+  /** Every limiter created: its prefix, window and failClosed. */
+  limiters: [] as {
+    prefix?: string;
+    tokens: number;
+    window: string;
+    failClosed?: boolean;
+  }[],
 }));
 
 vi.mock("@/env", () => ({ env: state.env }));
@@ -35,13 +50,49 @@ const replayStore = vi.hoisted(() => ({
     return "OK";
   },
 }));
+const limits = vi.hoisted(() => {
+  class RateLimitUnavailableError extends Error {}
+  return {
+    RateLimitUnavailableError,
+    // A fixed window that never ends: every call in a test is "in the
+    // same minute" (or hour).
+    createRateLimiter: ({
+      limiter,
+      prefix,
+      failClosed,
+    }: {
+      limiter: { tokens: number; window: string };
+      prefix?: string;
+      failClosed?: boolean;
+    }) => {
+      state.limiters.push({ ...limiter, prefix, failClosed });
+      return {
+        limit: async (key: string) => {
+          if (state.limiterDown) {
+            throw new RateLimitUnavailableError("Upstash failed");
+          }
+          const id = `${prefix}|${key}`;
+          const used = (state.counts.get(id) ?? 0) + 1;
+          state.counts.set(id, used);
+          return {
+            success: used <= limiter.tokens,
+            limit: limiter.tokens,
+            remaining: Math.max(0, limiter.tokens - used),
+            reset: Date.now() + 42_000,
+            pending: Promise.resolve(),
+          };
+        },
+      };
+    },
+    slidingWindow: (tokens: number, window: string) => ({ tokens, window }),
+  };
+});
 vi.mock("@repo/rate-limit", () => ({
   // Read on every request, so a test can take Upstash away.
   get redis() {
     return state.redisMissing ? null : replayStore;
   },
-  createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
-  slidingWindow: () => ({}),
+  ...limits,
 }));
 const audit = vi.hoisted(() => ({
   writeAuditLog: vi.fn(async (_entry: Record<string, unknown>) => undefined),
@@ -58,7 +109,10 @@ vi.mock("@repo/database", () => {
       get: (_target, key) => {
         if (key === "then") {
           const result = state.results.length ? state.results.shift() : [];
-          return (resolve: (value: unknown) => void) => resolve(result);
+          return (
+            resolve: (value: unknown) => void,
+            reject: (error: unknown) => void,
+          ) => (result instanceof Error ? reject(result) : resolve(result));
         }
         return (...args: unknown[]) => {
           call.steps.push([String(key), args]);
@@ -109,6 +163,8 @@ const {
   TIMESTAMP_HEADER,
 } = await import("@/lib/console-internal/signature");
 const { HttpError } = await import("@/lib/http-error");
+// Drizzle's real query error (only "drizzle-orm" itself is faked above).
+const { DrizzleQueryError } = await import("drizzle-orm/errors");
 
 const SECRET = "k".repeat(48);
 const PATH = "/api/internal/console/test";
@@ -187,13 +243,31 @@ const answer = async (response: Response) => ({
   cache: response.headers.get("cache-control"),
 });
 
+/** The log lines written so far, by level. */
+const logged = {
+  info: vi.spyOn(console, "info"),
+  warn: vi.spyOn(console, "warn"),
+  error: vi.spyOn(console, "error"),
+  log: vi.spyOn(console, "log"),
+};
+const allLines = () =>
+  Object.values(logged).flatMap((spy) =>
+    spy.mock.calls.map((args) => args.map(String).join(" ")),
+  );
+
 beforeEach(() => {
+  for (const spy of Object.values(logged)) {
+    spy.mockReset();
+    spy.mockImplementation(() => undefined);
+  }
   state.env.CONSOLE_INTERNAL_SECRET = SECRET;
   state.calls = [];
   state.results = [];
   state.seen.clear();
   state.redisDown = false;
   state.redisMissing = false;
+  state.limiterDown = false;
+  state.counts.clear();
   audit.writeAuditLog.mockClear();
   run.mockReset();
   run.mockResolvedValue({
@@ -545,11 +619,9 @@ describe("answers and the audit log", () => {
       run: async () => ({ audit: { targetType: "user", targetId: "u_1" } }),
     });
     actorRows(adminRow());
-    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
     const { status } = await answer(
       await unnamed(signedRequest({ actor: ACTOR })),
     );
-    log.mockRestore();
     expect(status).toBe(500);
     expect(audit.writeAuditLog).not.toHaveBeenCalled();
   });
@@ -574,8 +646,7 @@ describe("answers and the audit log", () => {
     });
   });
 
-  it("hide anything else", async () => {
-    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+  it("hide anything else, in the answer and in the log", async () => {
     run.mockRejectedValue(new Error("connection refused at 10.0.0.1"));
     actorRows(adminRow());
     expect(
@@ -584,7 +655,7 @@ describe("answers and the audit log", () => {
       status: 500,
       body: { ok: false, error: "Action failed" },
     });
-    log.mockRestore();
+    expect(allLines().join("\n")).not.toContain("10.0.0.1");
   });
 
   it("pass a streamed response through, uncached", async () => {
@@ -596,5 +667,372 @@ describe("answers and the audit log", () => {
     expect(response.headers.get("content-type")).toBe("application/zip");
     expect(response.headers.get("cache-control")).toBe("no-store");
     expect(await response.text()).toBe("zip");
+  });
+});
+
+describe("rate limits", () => {
+  const sensitive = vi.fn(async () => ({
+    audit: { targetType: "user", targetId: "u_1" },
+  }));
+  const SENSITIVE = consoleInternalRoute({
+    action: "test.sensitive",
+    schema: z.object({}),
+    limit: "sensitive",
+    run: sensitive,
+  });
+  const ADMIN_2 = { userId: "u_admin_2", sessionId: "sess_admin_2" };
+
+  /** One signed call by `actor`, with the actor check scripted to pass. */
+  const by = async (
+    route: (request: NextRequest) => Promise<Response>,
+    actor: { userId: string; sessionId: string } = ACTOR,
+    fields: Record<string, unknown> = { n: 1 },
+  ) => {
+    actorRows(adminRow({ id: actor.userId }));
+    return route(signedRequest({ actor, ...fields }));
+  };
+
+  it("use the admin pages' tiers, failing closed, under their own keys", () => {
+    const admin = state.limiters.filter(({ prefix }) =>
+      prefix?.startsWith("qrdx:admin"),
+    );
+    // The same numbers as the admin pages' runner…
+    expect(admin).toEqual([
+      {
+        tokens: 30,
+        window: "60 s",
+        prefix: "qrdx:admin",
+        failClosed: undefined,
+      },
+      {
+        tokens: 5,
+        window: "1 h",
+        prefix: "qrdx:admin-sensitive",
+        failClosed: undefined,
+      },
+    ]);
+    // …under other keys (the console's runner counts under the admin
+    // pages' keys before it calls), and never judged in memory.
+    expect(
+      state.limiters.filter(({ prefix }) =>
+        prefix?.startsWith("qrdx:console-internal"),
+      ),
+    ).toEqual([
+      {
+        tokens: 30,
+        window: "60 s",
+        prefix: "qrdx:console-internal",
+        failClosed: true,
+      },
+      {
+        tokens: 5,
+        window: "1 h",
+        prefix: "qrdx:console-internal-sensitive",
+        failClosed: true,
+      },
+    ]);
+  });
+
+  it("refuse the 31st call in a minute with 429 rate_limited, before the work", async () => {
+    for (let i = 0; i < 30; i++) {
+      expect((await by(POST)).status).toBe(200);
+    }
+    const limited = await by(POST);
+    expect(limited.status).toBe(429);
+    expect(limited.headers.get("retry-after")).toBe("42");
+    expect(limited.headers.get("cache-control")).toBe("no-store");
+    expect(await limited.json()).toEqual({
+      ok: false,
+      error: "rate_limited",
+      retryAfter: 42,
+    });
+    expect(run).toHaveBeenCalledTimes(30);
+    expect(audit.writeAuditLog).toHaveBeenCalledTimes(30);
+    expect(state.counts.get("qrdx:console-internal|test.run:u_admin")).toBe(31);
+  });
+
+  it("refuse the 6th sensitive call in an hour", async () => {
+    for (let i = 0; i < 5; i++) {
+      expect((await by(SENSITIVE, ACTOR, {})).status).toBe(200);
+    }
+    const limited = await by(SENSITIVE, ACTOR, {});
+    expect(limited.status).toBe(429);
+    expect((await limited.json()).error).toBe("rate_limited");
+    expect(sensitive).toHaveBeenCalledTimes(5);
+    expect(
+      state.counts.get(
+        "qrdx:console-internal-sensitive|test.sensitive:u_admin",
+      ),
+    ).toBe(6);
+  });
+
+  it("count per admin and per endpoint", async () => {
+    for (let i = 0; i < 30; i++) await by(POST);
+    expect((await by(POST)).status).toBe(429);
+    // Another admin, same endpoint: their own budget.
+    expect((await by(POST, ADMIN_2)).status).toBe(200);
+    // Same admin, another endpoint: its own budget.
+    expect((await by(SENSITIVE, ACTOR, {})).status).toBe(200);
+    // Endpoints without an audit action are counted by their path.
+    const read = consoleInternalRoute({
+      schema: z.object({}),
+      run: async () => ({ data: { read: true } }),
+    });
+    expect((await by(read, ACTOR, {})).status).toBe(200);
+    expect(state.counts.get(`qrdx:console-internal|${PATH}:u_admin`)).toBe(1);
+  });
+
+  it("come after the actor check: a refused actor uses no budget", async () => {
+    actorRows(adminRow({ role: "user" }));
+    expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
+      403,
+    );
+    expect(state.counts.size).toBe(0);
+  });
+
+  it("come before the strong check and the input check", async () => {
+    for (let i = 0; i < 30; i++) await by(POST);
+    strongCheck.mockClear();
+    // n: 2 needs the strong check; n: 1.5 is invalid. Neither is reached.
+    expect((await by(POST, ACTOR, { n: 2 })).status).toBe(429);
+    expect((await by(POST, ACTOR, { n: 1.5 })).status).toBe(429);
+    expect(strongCheck).not.toHaveBeenCalled();
+  });
+
+  it("answer 503 when the limit store can't answer, and do nothing", async () => {
+    state.limiterDown = true;
+    const response = await by(POST);
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({
+      ok: false,
+      error: "unavailable",
+    });
+    expect(run).not.toHaveBeenCalled();
+    expect(strongCheck).not.toHaveBeenCalled();
+    expect(audit.writeAuditLog).not.toHaveBeenCalled();
+  });
+});
+
+describe("the log line", () => {
+  /** The single outcome line, parsed; fails unless there's exactly one. */
+  const onlyLine = () => {
+    const lines = allLines();
+    expect(lines).toHaveLength(1);
+    return JSON.parse(lines[0] ?? "") as Record<string, unknown>;
+  };
+
+  /** Nothing the request carried beyond the path and the admin's id. */
+  const expectNoSecrets = (request: NextRequest) => {
+    const text = allLines().join("\n");
+    for (const secret of [
+      SECRET,
+      request.headers.get(SIGNATURE_HEADER) ?? "",
+      request.headers.get(SIGNATURE_HEADER)?.slice(3) ?? "",
+      request.headers.get(REQUEST_ID_HEADER) ?? "",
+      "sess_admin",
+      "admin@qrdx.test",
+      "@",
+      "Ticket",
+    ]) {
+      expect(text).not.toContain(secret);
+    }
+  };
+
+  it("is one line for a CONFIRMATION_REQUIRED refusal: path, admin, status, code", async () => {
+    state.strongConfirmed = false;
+    actorRows(adminRow());
+    const request = signedRequest({ actor: ACTOR, n: 2, reason: "Ticket 9" });
+    expect((await POST(request)).status).toBe(403);
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      status: 403,
+      code: "confirmation_required",
+    });
+    expect(logged.warn).toHaveBeenCalledTimes(1);
+    expectNoSecrets(request);
+  });
+
+  it("is one line for an operation's refusal, without its message", async () => {
+    run.mockRejectedValue(
+      new HttpError(400, "ADMIN_ACTION", "Remove their admin role first."),
+    );
+    actorRows(adminRow());
+    const request = signedRequest({ actor: ACTOR, n: 1 });
+    const response = await POST(request);
+    expect(await response.json()).toEqual({
+      ok: false,
+      error: "Remove their admin role first.",
+    });
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      status: 400,
+      code: "admin_action",
+    });
+    expectNoSecrets(request);
+  });
+
+  it.each([
+    [
+      "the actor isn't an admin",
+      () => actorRows(adminRow({ role: "user" })),
+      1,
+      403,
+      "not_admin",
+    ],
+    [
+      "the admin is over the limit",
+      () => {
+        state.counts.set("qrdx:console-internal|test.run:u_admin", 30);
+        actorRows(adminRow());
+      },
+      1,
+      429,
+      "rate_limited",
+    ],
+    [
+      "the input is invalid",
+      () => actorRows(adminRow()),
+      1.5,
+      400,
+      "invalid_input",
+    ],
+    [
+      "the admin has no two-step verification of their own",
+      () => actorRows(adminRow({ twoFactorEnabled: false })),
+      2,
+      400,
+      "two_factor_required",
+    ],
+  ])("is one line when %s", async (_label, setUp, n, status, code) => {
+    setUp();
+    const request = signedRequest({ actor: ACTOR, n });
+    expect((await POST(request)).status).toBe(status);
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      status,
+      code,
+    });
+    expectNoSecrets(request);
+  });
+
+  it("is one line for a replay and for a store that can't answer, before any admin is read", async () => {
+    const requestId = "cd".repeat(16);
+    actorRows(adminRow());
+    await POST(signedRequest({ actor: ACTOR, n: 1 }, { requestId }));
+    for (const spy of Object.values(logged)) spy.mockClear();
+    await POST(signedRequest({ actor: ACTOR, n: 1 }, { requestId }));
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: null,
+      status: 409,
+      code: "replayed",
+    });
+    for (const spy of Object.values(logged)) spy.mockClear();
+    state.limiterDown = true;
+    actorRows(adminRow());
+    await POST(signedRequest({ actor: ACTOR, n: 1 }));
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      status: 503,
+      code: "unavailable",
+      reason: "rate_limit_store",
+    });
+  });
+
+  it("is one info line for a success", async () => {
+    actorRows(adminRow());
+    const request = signedRequest({ actor: ACTOR, n: 1, reason: "Ticket 9" });
+    expect((await POST(request)).status).toBe(200);
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      status: 200,
+      code: "ok",
+    });
+    expect(logged.info).toHaveBeenCalledTimes(1);
+    expectNoSecrets(request);
+  });
+
+  it("names a database error in the admin check by its kind and code, never the query's values", async () => {
+    const cause = Object.assign(
+      new Error('terminating connection: user "u_admin" session "sess_admin"'),
+      { name: "NeonDbError", code: "57P01" },
+    );
+    state.results.push(
+      new DrizzleQueryError(
+        'select "id" from "session" where "id" = $1 and "user_id" = $2',
+        ["sess_admin", "u_admin"],
+        cause,
+      ),
+      [],
+    );
+    const request = signedRequest({ actor: ACTOR, n: 1 });
+    const response = await POST(request);
+    expect(await response.json()).toEqual({
+      ok: false,
+      error: "Action failed",
+    });
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      status: 500,
+      code: "failed",
+      error: { name: "DrizzleQueryError", code: "57P01" },
+    });
+    const text = allLines().join("\n");
+    for (const leaked of ["Failed query", "params", "$1", "terminating"]) {
+      expect(text).not.toContain(leaked);
+    }
+    expectNoSecrets(request);
+    expect(run).not.toHaveBeenCalled();
+  });
+
+  it("names a database error in the work the same way (a new address in its params)", async () => {
+    run.mockRejectedValue(
+      new DrizzleQueryError(
+        'update "user" set "email" = $1',
+        ["new.owner@example.com"],
+        Object.assign(new Error("Key (email)=(new.owner@example.com)"), {
+          code: "23505",
+        }),
+      ),
+    );
+    actorRows(adminRow());
+    const request = signedRequest({ actor: ACTOR, n: 1 });
+    expect((await POST(request)).status).toBe(500);
+    expect(onlyLine()).toMatchObject({
+      status: 500,
+      code: "failed",
+      error: { name: "DrizzleQueryError", code: "23505" },
+    });
+    expect(allLines().join("\n")).not.toContain("new.owner");
+    expectNoSecrets(request);
+  });
+
+  it("keeps the refusals before the signature to their own line, with no admin", async () => {
+    const request = signedRequest(
+      { actor: ACTOR, n: 1 },
+      { secret: "x".repeat(48) },
+    );
+    expect((await POST(request)).status).toBe(401);
+    const line = onlyLine();
+    expect(line).toMatchObject({
+      event: "console_internal.refused",
+      path: PATH,
+      status: 401,
+    });
+    expect(line).not.toHaveProperty("actorId");
+    expectNoSecrets(request);
   });
 });

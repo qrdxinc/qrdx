@@ -17,6 +17,7 @@ export const POST = consoleInternalRoute({
   action: "user.delete",
   schema: deleteSchema,
   strong: true,
+  limit: "sensitive",
   run: (input, { actor }) =>
     deleteUserAccount(actor, input, { requestHeaders: new Headers() }),
 });

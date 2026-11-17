@@ -13,6 +13,7 @@ export const POST = consoleInternalRoute({
   action: "user.change_email",
   schema: changeEmailSchema,
   strong: true,
+  limit: "sensitive",
   run: (input, { actor }) =>
     changeAccountEmail(actor, input, {
       requireStrong: () => requireStrongConsoleActor(actor),

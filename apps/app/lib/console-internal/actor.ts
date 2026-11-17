@@ -81,10 +81,12 @@ export async function loadConsoleActor(
 export async function requireStrongConsoleActor(
   actor: Pick<ConsoleActor, "id" | "sessionId" | "twoFactorEnabled">,
 ): Promise<void> {
+  // The codes name these refusals in the endpoint's log line; the answer
+  // carries the message, as the admin pages' strong check does.
   if (!actor.twoFactorEnabled) {
     throw new HttpError(
       400,
-      "ADMIN_ACTION",
+      "TWO_FACTOR_REQUIRED",
       "Turn on two-step verification for your own account first.",
     );
   }
@@ -94,6 +96,6 @@ export async function requireStrongConsoleActor(
     held: false,
   });
   if (!confirmed) {
-    throw new HttpError(403, "ADMIN_ACTION", CONFIRMATION_REQUIRED);
+    throw new HttpError(403, CONFIRMATION_REQUIRED, CONFIRMATION_REQUIRED);
   }
 }

@@ -253,8 +253,9 @@ export async function cancelPendingTwoFactorReset(
 /**
  * Moves an account to a new address (the lost-email policy, see
  * ../users/support-actions.ts changeEmailAction): marked verified, every
- * session signed out, the old address told. Never an admin's account or
- * the admin's own; strong confirmation required.
+ * session signed out, the old address told. Never an admin's account, the
+ * admin's own, or onto an address that would make the account an admin;
+ * strong confirmation required.
  */
 export async function changeAccountEmail(
   admin: AdminActor,
@@ -279,6 +280,14 @@ export async function changeAccountEmail(
   if (!target) throw adminError("User not found", 404);
   if (isAdmin(target)) {
     throw adminError("An admin's account can't be moved here.");
+  }
+  // The new address is marked verified, so one on ADMIN_EMAILS would make
+  // the account an admin with only a change_email entry to show for it.
+  // That takes the admin role, granted on its own.
+  if (isAdmin({ ...target, email: newEmail, emailVerified: true })) {
+    throw adminError(
+      "That address is on the admin list, so the account would become an admin. Grant the admin role instead.",
+    );
   }
   await requireStrong();
   if (isSameEmail(target.email, newEmail)) {

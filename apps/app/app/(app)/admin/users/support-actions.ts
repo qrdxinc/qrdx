@@ -120,7 +120,8 @@ export async function cancelTwoFactorResetAction(
  * admin cookie must not be enough: the admin needs two-step verification
  * on their own account and a confirmation in the last 10 minutes with a
  * passkey, an authenticator code or a backup code (CONFIRMATION_REQUIRED
- * opens that dialog). Never for an admin's account or the admin's own.
+ * opens that dialog). Never for an admin's account or the admin's own, and
+ * never onto an ADMIN_EMAILS address (the account would become an admin).
  */
 export async function changeEmailAction(
   input: z.input<typeof changeEmailSchema>,

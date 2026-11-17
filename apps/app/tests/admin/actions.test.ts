@@ -59,7 +59,11 @@ vi.mock("@repo/database", () => {
       get: (_target, key) => {
         if (key === "then") {
           const result = state.results.length ? state.results.shift() : [];
-          return (resolve: (value: unknown) => void) => resolve(result);
+          // A scripted Error makes the query fail.
+          return (
+            resolve: (value: unknown) => void,
+            reject: (error: unknown) => void,
+          ) => (result instanceof Error ? reject(result) : resolve(result));
         }
         return (...args: unknown[]) => {
           call.steps.push([String(key), args]);
@@ -627,6 +631,76 @@ describe("with an admin", () => {
         (call) => call.root === "update" || call.root === "batch",
       ),
     ).toBe(false);
+  });
+
+  it("never moves an account onto an ADMIN_EMAILS address, which would make it an admin", async () => {
+    const { changeEmailAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    vi.stubEnv("ADMIN_EMAILS", "boss@example.com");
+    state.results = [
+      [
+        {
+          id: "user_target",
+          email: "lost@example.com",
+          emailVerified: true,
+          role: "user",
+        },
+      ],
+    ];
+    // Refused outright, with a fresh strong confirmation and whatever case
+    // the address is typed in: granting the role is the way to do that.
+    const result = await changeEmailAction({
+      userId: "user_target",
+      newEmail: "Boss@Example.com",
+      reason: "Ticket 1",
+    });
+    vi.unstubAllEnvs();
+    expect(result).toEqual({
+      ok: false,
+      error:
+        "That address is on the admin list, so the account would become an admin. Grant the admin role instead.",
+    });
+    expect(
+      state.calls.some(
+        (call) => call.root === "update" || call.root === "batch",
+      ),
+    ).toBe(false);
+    expect(auditInserts()).toEqual([]);
+  });
+
+  it("logs a database error in a move by its kind and code, never the new address", async () => {
+    const { changeEmailAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    const { DrizzleQueryError } = await import("drizzle-orm/errors");
+    state.results = [
+      [{ id: "user_target", email: "lost@example.com", emailVerified: true }],
+      new DrizzleQueryError(
+        'select "id" from "user" where lower("email") = $1',
+        ["new.owner@example.com"],
+        Object.assign(new Error("canceling statement due to timeout"), {
+          code: "57014",
+        }),
+      ),
+    ];
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const result = await changeEmailAction({
+      userId: "user_target",
+      newEmail: "new.owner@example.com",
+      reason: "Ticket 1",
+    });
+    const lines = log.mock.calls.map((args) => args.map(String).join(" "));
+    log.mockRestore();
+    expect(result).toEqual({ ok: false, error: "Action failed" });
+    expect(lines).toEqual([
+      JSON.stringify({
+        event: "admin.action_failed",
+        action: "user.change_email",
+        error: { name: "DrizzleQueryError", code: "57014" },
+      }),
+    ]);
+    expect(lines.join("\n")).not.toContain("new.owner");
   });
 
   it("won't move an account to its own address or one another account has", async () => {
