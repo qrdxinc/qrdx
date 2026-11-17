@@ -14,7 +14,7 @@ import {
 import { Textarea } from "@repo/design-system/components/ui/textarea";
 import { TickCircle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import { TurnstileWidget } from "@/components/safety/turnstile-widget";
 import {
@@ -103,8 +103,20 @@ export function EnterpriseContactForm({
 
   return (
     <form
+      // Kept so React renders an inert action before hydration (a submit
+      // then goes nowhere, never a GET with the answers in the URL).
       action={formAction}
       className="flex flex-col gap-5 rounded-xl border border-border bg-card p-6 shadow-sm"
+      // Sent from here rather than by the `action`: React resets a form after
+      // its action runs, and Radix's Select answers a reset by clearing the
+      // team size, so after an error the size was gone and Send was blocked
+      // until it was picked again. Sent this way, every field keeps its value.
+      // The browser has already checked the required fields.
+      onSubmit={(event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        startTransition(() => formAction(data));
+      }}
     >
       <input name="locale" type="hidden" value={locale} />
       {/* Off-screen and skipped by keyboards and password managers: only
