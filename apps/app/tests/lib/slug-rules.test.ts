@@ -75,6 +75,18 @@ describe("custom back-halves", () => {
     expect(isReservedSlug("Settings")).toBe(true);
   });
 
+  it("reserve the sample short link QRdx prints, so no one can own it", () => {
+    // qrdx.dev/q/aB3dE5f appears in the docs, product pages and the blog's
+    // scannable figures. A back-half is chosen case-sensitively, but reserved
+    // words are compared in any case, so every spelling is refused.
+    for (const slug of ["aB3dE5f", "ab3de5f", "AB3DE5F"]) {
+      expect(shared(slug), slug).toBe("reserved");
+      expect(isReservedSlug(slug), slug).toBe(true);
+    }
+    // Only on the shared domain: a customer's own domain is theirs to name.
+    expect(onDomain("aB3dE5f")).toBeNull();
+  });
+
   it("reserve only the domain's own paths on a custom domain", () => {
     expect([...DOMAIN_RESERVED_SLUGS].sort()).toEqual(
       ["_next", "api", "null", "p", "q", "undefined"].sort(),

@@ -11,7 +11,7 @@ import { FormSubmissionEmail } from "@/lib/email/templates/form-submission";
 import { codeLabel, formatCount } from "@/lib/email/templates/parts";
 import { ScanMilestoneEmail } from "@/lib/email/templates/scan-milestone";
 import type { EmailIntl } from "@/lib/i18n/email";
-import { emailIntlForAddress } from "@/lib/i18n/email-locale";
+import { emailIntlForUser } from "@/lib/i18n/email-locale";
 import { baseUrl } from "@/lib/metadata";
 import { workspaceLink } from "@/lib/workspace-paths";
 import { workspaceSlug } from "@/lib/workspaces";
@@ -331,10 +331,12 @@ export async function notifyTargets<T extends AlertEvent>(
         if (!(await withinAlertLimit(target.id, envelope.type))) return;
         if (target.channel === "email") {
           const unsubscribe = unsubscribeUrl(target.id, envelope.type);
-          // The account with this address picks the language, else English.
+          // The recipient's saved language, else English. Not the request's
+          // cookie: alerts run after someone else's request (a scan, a form
+          // response, a teammate's edit), which can still be read here.
           const { subject, react } = alert.email(
             unsubscribe,
-            await emailIntlForAddress(target.target),
+            await emailIntlForUser(target.userId),
           );
           await sendEmail({
             to: target.target,
