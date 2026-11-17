@@ -162,7 +162,7 @@ describe("translatedDocsRedirects", () => {
   });
 
   it.each(SEGMENTS)(
-    "/%s/docs and its pages go to the English page, for now (307)",
+    "/%s/docs and its pages go to the English page for good (308)",
     (segment) => {
       for (const [path, to] of [
         [`/${segment}/docs`, "/docs"],
@@ -180,8 +180,8 @@ describe("translatedDocsRedirects", () => {
       ] as const) {
         const found = follow(rules, "qrdx.dev", path);
         expect(found?.target, path).toBe(to);
-        // `permanent: false` is a 307 in Next.
-        expect(found?.rule.permanent, path).toBe(false);
+        // `permanent: true` is a 308 in Next.
+        expect(found?.rule.permanent, path).toBe(true);
       }
     },
   );
@@ -227,6 +227,9 @@ describe("translatedDocsRedirects", () => {
     expect(follow(elsewhere, "localhost", "/docs-md/ja")?.target).toBe(
       "https://qrdx.dev/docs.md",
     );
+    // Temporary (307): a deployment that later gets a docs site serves
+    // these itself.
+    expect(elsewhere.every((rule) => rule.permanent === false)).toBe(true);
   });
 
   it("has nothing to do without languages", () => {
@@ -466,7 +469,7 @@ describe("next.config.ts with and without a docs site", () => {
       // A redirect on this site (Next answers redirects before rewrites)…
       const found = follow(withZone.redirects, "localhost", path);
       expect(found?.target, path).toBe(to);
-      expect(found?.rule.permanent, path).toBe(false);
+      expect(found?.rule.permanent, path).toBe(true);
       // …never proxied to the docs site, which has no such page any more…
       expect(
         follow(withZone.rewrites, "localhost", path),

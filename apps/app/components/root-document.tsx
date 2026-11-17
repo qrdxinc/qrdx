@@ -5,9 +5,11 @@ import { CHROME_NAMESPACES, pickMessages } from "@repo/i18n/messages";
 import { getLocale, getMessages } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Provider } from "@/app/providers";
+import { AdminHrefProvider } from "@/components/admin-href";
 import { ConsentEarlyScript } from "@/components/consent/consent-early-script";
 import { RootIntlProvider } from "@/components/i18n/root-intl-provider";
 import { ThemeScript } from "@/components/theme-script";
+import { adminHomeHref } from "@/lib/admin-console/admin-home";
 import { fonts } from "@/lib/fonts";
 import { getPublicAvailability } from "@/lib/integration-availability";
 
@@ -55,7 +57,12 @@ export async function RootDocument({
         >
           {/* PostHog and Featurebase load from the consent manager in Provider, after consent. */}
           {/* Features, pages and integrations this deployment can't offer (ids only). */}
-          <Provider availability={getPublicAvailability()}>{children}</Provider>
+          <Provider availability={getPublicAvailability()}>
+            {/* The user menu's Admin link: /admin, or the console's address. */}
+            <AdminHrefProvider value={adminHomeHref()}>
+              {children}
+            </AdminHrefProvider>
+          </Provider>
         </RootIntlProvider>
       </body>
     </html>

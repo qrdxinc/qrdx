@@ -13,6 +13,14 @@ export function hasMedia(path: string): boolean {
   return Object.hasOwn(files, path);
 }
 
+/**
+ * A picture's URL: an uploaded media key's, else the site path as it is
+ * (changelog pictures, which live in either place).
+ */
+export function pictureUrl(path: string): string {
+  return hasMedia(path) ? mediaUrl(path) : path;
+}
+
 export function mediaUrl(path: string): string {
   const key = files[path];
   if (!key) {

@@ -87,7 +87,7 @@ const config: ViteUserConfig = {
       R2_BUCKET: "test-bucket",
       RESEND_API_KEY: "",
     },
-    // Workspace SSO and the audit log (ee/) are on, as on qrdx.dev: the setup
+    // The ee/ features are on, as on qrdx.dev: the setup
     // signs a licence key with a throwaway key pair it trusts. tests/auth/
     // sso-off.test.ts loads the auth server without one.
     setupFiles: ["tests/support/ee-license-setup.ts"],

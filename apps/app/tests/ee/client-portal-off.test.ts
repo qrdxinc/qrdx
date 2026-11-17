@@ -197,7 +197,6 @@ describe("without a valid QRDX_EE_LICENSE", () => {
         name: null,
         folderIds: [],
       }),
-      await app.portalActions.removePortalClientAction({ id: "pc_1" }),
     ]) {
       expect(result).toMatchObject({ ok: false, code: "NOT_FOUND" });
     }
@@ -222,15 +221,20 @@ describe("without a valid QRDX_EE_LICENSE", () => {
         logo: keep,
       }),
     ).rejects.toMatchObject(notFound);
-    await expect(app.manage.listPortalClients(owner)).rejects.toMatchObject(
-      notFound,
+    // Listing and removing clients never need the licence: what was stored
+    // while the server had one can still be taken away.
+    await expect(app.manage.listPortalClients(owner)).resolves.toEqual(
+      expect.any(Array),
     );
+    expect(
+      await app.portalActions.removePortalClientAction({ id: "pc_1" }),
+    ).not.toMatchObject({ code: "NOT_FOUND" });
     await expect(
       app.stats.getStatsBranding(owner, "c_menu"),
     ).rejects.toMatchObject(notFound);
   });
 
-  it("serves a branded share plain, on QRdx's host only", async () => {
+  it("serves a branded share plain, and keeps its custom-domain link open", async () => {
     state.plans = { org_agency: "business" };
     const app = await load(undefined);
     expect(await app.loadPublicStats(TOKEN, "30d")).toMatchObject({
@@ -239,10 +243,11 @@ describe("without a valid QRDX_EE_LICENSE", () => {
       hideQrdx: false,
       hideShortLink: false,
     });
-    // Like a downgrade: the custom domain stops serving it.
+    // Like a downgrade: a link already sent on the custom domain still
+    // opens, plain; new links are made on QRdx's host.
     expect(
       await app.loadPublicStats(TOKEN, "30d", { customDomainId: "d_links" }),
-    ).toBeNull();
+    ).toMatchObject({ brand: null, hideQrdx: false });
     const share = await app.getPublicStatsShare(owner, "c_menu");
     expect(share.url).toBe(`http://localhost:3000/stats/${TOKEN}`);
   });
@@ -271,9 +276,10 @@ describe("with a valid QRDX_EE_LICENSE", () => {
       brand: { name: "Bloom Cafe", accent: "#1f6feb" },
       hideQrdx: false,
     });
+    // On Pro the custom domain serves the share with QRdx's marks.
     expect(
       await app.loadPublicStats(TOKEN, "30d", { customDomainId: "d_links" }),
-    ).toBeNull();
+    ).toMatchObject({ brand: { name: "Bloom Cafe" }, hideQrdx: false });
     expect(
       await app.brands.saveClientBrand(owner, null, {
         name: "Rosa",

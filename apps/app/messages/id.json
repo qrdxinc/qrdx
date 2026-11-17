@@ -286,7 +286,8 @@
   },
   "localeSwitcher": {
     "label": "Bahasa",
-    "englishOnly": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lain akan membuka halaman utamanya."
+    "englishOnly": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lain akan membuka halaman utamanya.",
+    "englishOnlyDesigner": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lainnya akan membuka desainer kode QR."
   },
   "cta": {
     "title": "Buat kode QR berikutnya",
@@ -471,7 +472,7 @@
       "developers": {
         "eyebrow": "Developer",
         "title": "Dibuat untuk developer",
-        "description": "Render kode dengan pustaka React qrdx, dapatkan gambar dari URL dengan Image API, atau biarkan Claude, Cursor, dan VS Code membuatnya lewat MCP server. Anda juga bisa melakukan self-hosting untuk seluruh aplikasinya.",
+        "description": "Render kode dengan library qrdx React, ambil gambar dari sebuah URL dengan image API, atau biarkan Claude, Cursor, dan VS Code membuatnya melalui server MCP. Anda juga dapat melakukan self-host aplikasinya.",
         "link": "Dokumentasi developer"
       }
     },
@@ -526,7 +527,8 @@
           "answer": "Ya. Overlay logo tersedia di paket gratis. Unggah gambar (PNG dengan latar belakang transparan hasilnya paling baik) dan QRdx akan menempatkannya di tengah serta mengosongkan modul di bawahnya. Kode QR menggunakan koreksi kesalahan Reed-Solomon (ISO/IEC 18004); QRdx menggunakan level Q secara default, yang dapat memulihkan sekitar 25% kode, sehingga logo di tengah tetap dapat dipindai. Uji dengan beberapa ponsel sebelum mencetak."
         },
         "openSource": {
-          "question": "Apakah QRdx open source?"
+          "question": "Apakah QRdx open source?",
+          "answer": "Ya. QRdx dikembangkan secara terbuka di GitHub. Aplikasi web ini bersifat open source di bawah GNU AGPL-3.0 (atau versi yang lebih baru): Anda dapat meninjau kodenya, membuat issue, berkontribusi, atau melakukan self-host instans Anda sendiri, termasuk kode dinamis dan halaman yang di-hosting. Library qrdx React di npm dan alat baris perintah @qrdx/cli berlisensi MIT, sehingga perangkat lunak closed-source juga dapat menggunakannya. Fitur bisnis di folder ee (single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, dan pelacakan konversi) berada di bawah QRdx Commercial License."
         },
         "api": {
           "question": "Bisakah developer membuat kode QR dengan API?",
@@ -801,7 +803,7 @@
         },
         "selfHost": {
           "question": "Bisakah saya hosting sendiri?",
-          "answer": "Bisa. QRdx bersumber terbuka di bawah AGPL-3.0. Jalankan dengan database Postgres Anda sendiri dengan mengikuti panduan self-hosting; batas paket didefinisikan dalam satu file yang dapat Anda ubah untuk instans Anda."
+          "answer": "Ya. QRdx bersumber terbuka di bawah AGPL-3.0. Jalankan dengan database Postgres Anda sendiri dengan mengikuti panduan self-hosting; batas paket didefinisikan dalam satu file yang dapat Anda ubah untuk instans Anda. Fitur bisnis di folder ee (single sign-on, log audit, portal klien, halaman white-label, dan pelacakan konversi) memerlukan perjanjian enterprise."
         },
         "nonprofit": {
           "question": "Apakah ada diskon untuk organisasi nirlaba?",
@@ -843,7 +845,7 @@
         "contract": "Kontrak tahunan, dibayar dengan faktur",
         "replies": "Balasan dalam {hours, plural, other {# jam kerja}} saat kode berhenti berfungsi",
         "review": "Jawaban untuk tinjauan keamanan Anda",
-        "selfHost": "SSO dan log audit di server Anda sendiri"
+        "selfHost": "SSO, log audit, portal klien, white-label, dan konversi di server Anda sendiri"
       },
       "security": "Keamanan di QRdx"
     },
@@ -1380,7 +1382,7 @@
       },
       "products": {
         "name": "Kode produk",
-        "detail": "Nomor EAN/UPC dan data GS1 (GTIN, batch, kedaluwarsa), termasuk GS1 Digital Link."
+        "detail": "Nomor EAN, UPC, dan ITF-14 serta data GS1 (GTIN, batch, kedaluwarsa), termasuk GS1 Digital Link."
       },
       "text": {
         "name": "Teks biasa",
@@ -2032,6 +2034,10 @@
       "code128Chars": "Code 128 di sini menerima huruf ASCII biasa, angka, spasi, dan simbol. Tidak diizinkan: {chars}",
       "code39Chars": "Code 39 hanya menerima huruf kapital, angka, spasi, dan - . $ / + %. Tidak diizinkan: {chars}",
       "code39Lowercase": "Code 39 tidak mendukung huruf kecil. Gunakan huruf kapital, atau Code 128 untuk campuran huruf besar dan kecil.",
+      "code93Chars": "Code 93 hanya menerima huruf kapital, angka, spasi, dan - . $ / + %. Tidak diizinkan: {chars}",
+      "code93Lowercase": "Code 93 di sini tidak mendukung huruf kecil. Gunakan huruf kapital, atau Code 128 untuk campuran huruf besar dan kecil.",
+      "codabarStartStop": "Codabar diawali dan diakhiri dengan A, B, C, atau D, dengan setidaknya satu karakter di antaranya, misalnya A40156B.",
+      "codabarChars": "Codabar menerima angka dan - $ : / . + di antara huruf awal dan akhirnya. Tidak diizinkan: {chars}",
       "gs1Enter": "Masukkan Application Identifier dalam tanda kurung beserta nilainya, mis. (01)09501101530003.",
       "gs1Start": "Mulailah dengan Application Identifier dalam tanda kurung, mis. (01) untuk GTIN, lalu nilainya.",
       "gs1Brackets": "Tanda kurung tidak berpasangan: tulis setiap AI sebagai (angka), diikuti nilainya.",
@@ -2169,8 +2175,8 @@
         "body": "Kami mengisi kuesioner keamanan Anda dan mengirimkan salinan Data Processing Addendum yang sudah ditandatangani."
       },
       "selfHost": {
-        "title": "Single sign-on dan log audit saat Anda hosting sendiri",
-        "body": "QRdx bersifat open source, tetapi single sign-on dan log audit berada di bawah lisensi komersial QRdx. Perjanjian Enterprise memungkinkan Anda menjalankannya di server sendiri dengan kunci lisensi."
+        "title": "Fitur Business saat Anda hosting sendiri",
+        "body": "QRdx bersifat open source, tetapi single sign-on, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi berada di bawah lisensi komersial QRdx. Perjanjian Enterprise memungkinkan Anda menjalankannya di server Anda sendiri dengan kunci lisensi."
       }
     },
     "limitsNote": "Di qrdx.dev, workspace Enterprise memiliki batas yang sama dengan paket Business. Jika Anda membutuhkan lebih banyak untuk sesuatu, sampaikan di formulir.",
@@ -2197,7 +2203,7 @@
       },
       "sign": {
         "title": "Tanda tangani dan bayar dengan faktur",
-        "body": "Setelah kontrak ditandatangani, kami memindahkan workspace Anda ke paket Business dan mengirimkan faktur."
+        "body": "Setelah kontrak ditandatangani, kami mengirimkan faktur dan memindahkan workspace Anda di qrdx.dev ke paket Business. Jika Anda hosting sendiri, kontrak juga mencakup single sign-on, log audit, portal klien, halaman white-label, dan pelacakan konversi di server Anda sendiri: kami mengirimkan kunci lisensi untuk QRDX_EE_LICENSE. Kunci ini memiliki masa berlaku, dan server Anda memeriksanya secara offline."
       }
     },
     "formTitle": "Hubungi kami",
@@ -2943,7 +2949,7 @@
     "guaranteeTitle": "Kode yang dicetak tetap berfungsi",
     "guaranteeBody": "Berdasarkan Jaminan Never-Hostage, setiap kode dinamis tetap mengalihkan di semua paket, termasuk setelah downgrade, pembayaran gagal, atau pembatalan. Pemindaian tidak pernah dijeda, dan pemindai tidak pernah melihat iklan atau halaman pendaftaran QRdx. Melewati batas hanya menghentikan Anda membuat kode baru.",
     "guaranteeLink": "Baca jaminannya",
-    "openSourceBody": "Pengalihan, analitik, dan bagian aplikasi lainnya bersifat open source, sehingga Anda dapat melihat apa yang terjadi pada setiap pemindaian atau menjalankannya di server Anda sendiri.",
+    "openSourceBody": "Pengalihan dan analitiknya bersumber terbuka, sehingga Anda dapat membaca apa yang terjadi pada setiap pemindaian atau menjalankannya di server Anda sendiri.",
     "openSourceLink": "Open source dan self-hosting",
     "staticTitle": "Kapan kode statis menjadi pilihan yang lebih baik",
     "staticBody": "Hanya tautan yang bisa dinamis: kode dinamis membuka situs web atau halaman yang di-hosting. Login Wi-Fi, kartu kontak yang langsung disimpan ke ponsel, dan kode pembayaran bank harus statis, karena ponsel membacanya dari pola kode itu sendiri. Kode statis gratis dan tanpa batas, serta tidak memerlukan akun.",
@@ -2989,8 +2995,8 @@
     "metaDescription": "QRdx adalah generator kode QR open source di GitHub. Aplikasinya berlisensi AGPL-3.0, sedangkan library React dan CLI-nya berlisensi MIT. Gunakan qrdx.dev secara gratis atau jalankan salinan Anda sendiri.",
     "crumb": "Open source",
     "title": "Generator kode QR open source",
-    "intro1": "QRdx dibangun secara terbuka di GitHub. Aplikasi web yang menjalankan qrdx.dev, lengkap dengan editor, kode dinamis, halaman yang di-hosting, dan analitik pemindaian, berlisensi AGPL-3.0. Library React, CLI, dan plugin-nya berlisensi MIT.",
-    "intro2": "Anda dapat menggunakannya secara gratis di qrdx.dev, menjalankan salinan sendiri, atau menyematkan kode QR ke aplikasi Anda dengan library-nya.",
+    "intro1": "QRdx dibangun secara terbuka di GitHub. Aplikasi web yang menjalankan qrdx.dev, lengkap dengan editor, kode dinamis, halaman yang di-hosting, dan analitik pemindaian, dilisensikan di bawah AGPL-3.0. Pustaka React, CLI, plugin, agent skill, dan komponen shadcn/ui berlisensi MIT. Fitur bisnis (single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi) berada di bawah QRdx Commercial License.",
+    "intro2": "Anda dapat menggunakannya secara gratis di qrdx.dev, menjalankan salinan sendiri, atau menyematkan kode QR ke dalam aplikasi Anda dengan pustakanya. Membuat kode QR tetap gratis untuk semua orang. Proyek ini memperoleh pendapatan dari paket Pro dan Business serta dari perjanjian enterprise.",
     "facts": {
       "agpl": "Aplikasi AGPL-3.0",
       "mit": "Library dan CLI MIT",
@@ -3016,11 +3022,16 @@
       "cliBody": "Kode QR bergaya dari terminal atau tugas CI",
       "pluginsName": "Plugin",
       "pluginsBody": "Ekstensi Chrome, plugin Figma, Raycast, dan Canva, serta plugin lain di folder plugins",
+      "skillName": "Agent skill",
+      "skillBody": "generate-qr, yang mengajarkan agen pemrograman membuat kode QR dengan CLI",
+      "registryName": "Komponen shadcn/ui",
+      "registryBody": "Komponen kode QR, pemindai, dan komponen lain yang dipasang npx shadcn add ke proyek Anda",
       "eeName": "Fitur Business",
-      "eeBody": "Single sign-on workspace dan log audit workspace"
+      "eeBody": "Single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi"
     },
     "eeLicense": "Lisensi Komersial QRdx",
-    "eeNote": "Anda dapat membaca, menguji, dan berkontribusi pada kode di folder ee, tetapi penggunaannya di produksi memerlukan perjanjian tertulis dengan QRdx. Pada instans yang di-host sendiri, kedua fitur tersebut tetap nonaktif kecuali QRDX_EE_LICENSE diatur, dan semua fitur lainnya berfungsi tanpa keduanya.",
+    "eeNote": "Anda dapat membaca, menguji, dan berkontribusi pada kode di folder ee, tetapi penggunaannya di lingkungan produksi memerlukan perjanjian tertulis dengan QRdx. Pada instans yang dihosting sendiri, fitur-fitur tersebut tetap nonaktif kecuali QRDX_EE_LICENSE berisi kunci yang valid, yang diterbitkan QRdx bersama perjanjian dan diperiksa server Anda secara offline. Semua fitur lainnya berfungsi tanpa itu.",
+    "eeAgreement": "Perjanjian enterprise mencakup penggunaannya di server Anda sendiri: <link>hubungi kami lewat halaman enterprise</link> atau kirim email ke {email}.",
     "waysEyebrow": "Cara menggunakannya",
     "waysTitle": "Pilih cara menjalankannya",
     "ways": {
@@ -3054,8 +3065,10 @@
     "licenses": {
       "agplTitle": "Aplikasi (AGPL-3.0)",
       "agplBody": "Anda dapat menjalankan, mengubah, dan menghosting-nya. Jika Anda menjalankan versi yang dimodifikasi sebagai layanan jaringan, Anda wajib menyediakan kode sumbernya kepada penggunanya dengan lisensi yang sama.",
-      "mitTitle": "Pustaka, CLI, dan plugin (MIT)",
-      "mitBody": "Gunakan di proyek apa pun, termasuk closed-source, selama pemberitahuan hak cipta dan lisensi tetap menyertai kode. Rilis sebelum qrdx 0.0.47 dan @qrdx/cli 0.0.5 berlisensi AGPL-3.0-or-later.",
+      "mitTitle": "Pustaka dan alat (MIT)",
+      "mitBody": "Pustaka qrdx, CLI, plugin, agent skill, dan komponen shadcn/ui. Gunakan di proyek apa pun, termasuk yang bersifat closed source, selama pemberitahuan hak cipta dan lisensi tetap menyertai kode. Rilis sebelum qrdx 0.0.47 dan @qrdx/cli 0.0.5 berlisensi AGPL-3.0-or-later.",
+      "eeTitle": "Fitur bisnis (QRdx Commercial License)",
+      "eeBody": "Anda dapat membaca, mengubah, dan menguji kode di folder ee. Menggunakan fitur bisnis tersebut di lingkungan produksi pada server Anda sendiri memerlukan perjanjian tertulis dengan QRdx.",
       "trademarkTitle": "Nama dan logo",
       "trademarkBody": "Nama dan logo QRdx adalah merek dagang. Fork atau layanan publik yang dibuat dari kode ini memerlukan nama dan logo sendiri; <link>kebijakan merek dagang</link> menjelaskan detailnya."
     },
@@ -3087,11 +3100,11 @@
     "faqTitle": "Pertanyaan seputar open source",
     "faq": {
       "openQuestion": "Apakah QRdx benar-benar open source?",
-      "openAnswer": "Ya. Kode sumbernya ada di GitHub, aplikasi webnya dilisensikan di bawah AGPL-3.0-or-later, dan pustaka qrdx, @qrdx/cli, serta plugin-nya berlisensi MIT. Dua fitur bisnis, single sign-on workspace dan log audit, berada di folder ee di bawah QRdx Commercial License: Anda dapat membaca kodenya, tetapi penggunaan di produksi memerlukan perjanjian dengan QRdx.",
+      "openAnswer": "Ya. Kode sumbernya ada di GitHub, aplikasi web dilisensikan di bawah AGPL-3.0-or-later, dan pustaka qrdx, @qrdx/cli, plugin, agent skill, serta komponen shadcn/ui berlisensi MIT. Fitur bisnis (single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi) berada di folder ee di bawah QRdx Commercial License: Anda dapat membaca kodenya, tetapi penggunaan di lingkungan produksi memerlukan perjanjian dengan QRdx.",
       "githubQuestion": "Di mana kode sumber QRdx di GitHub?",
       "githubAnswer": "Di github.com/qrdxinc/qrdx. Semuanya ada dalam satu monorepo berisi aplikasi web, pustaka qrdx, CLI, plugin, dan dokumentasi.",
       "freeQuestion": "Apakah QRdx gratis untuk di-host sendiri?",
-      "freeAnswer": "Ya. Tidak ada biaya lisensi; Anda hanya membayar server dan basis data Anda sendiri. Instans yang di-host sendiri menjalankan kode dinamis, halaman yang di-hosting, dan analitik pemindaian. Single sign-on dan log audit tetap nonaktif kecuali Anda memiliki kunci lisensi QRdx.",
+      "freeAnswer": "Ya. Tidak ada biaya lisensi untuk aplikasinya; Anda hanya membayar server dan database Anda sendiri. Instans yang dihosting sendiri menjalankan kode dinamis, halaman yang di-hosting, dan analitik pemindaian. Fitur bisnis di folder ee adalah pengecualian: single sign-on, log audit, portal klien, halaman white-label, dan pelacakan konversi tetap nonaktif kecuali QRDX_EE_LICENSE berisi kunci yang valid, yang diterbitkan QRdx bersama perjanjian enterprise dan diperiksa server Anda secara offline. Penggunaannya di lingkungan produksi memerlukan perjanjian tersebut.",
       "needQuestion": "Apa yang saya butuhkan untuk meng-host QRdx sendiri?",
       "needAnswer": "Anda memerlukan Docker dengan Compose v2, atau Node.js 22 dan Bun 1.4 untuk pengaturan manual, serta basis data Postgres: yang dijalankan docker-compose.yml, atau Neon. Atur NEXT_PUBLIC_APP_URL, DATABASE_URL, dan BETTER_AUTH_SECRET, lalu sediakan cara bagi pengguna untuk masuk dengan aplikasi OAuth GitHub atau Google, atau dengan kode email melalui Resend.",
       "closedQuestion": "Bolehkah saya memakai pustaka kode QR ini di aplikasi closed-source?",
@@ -7864,6 +7877,7 @@
         "clients": {
           "page": {
             "theClientPortalIsntAvailable": "Portal klien belum tersedia di server ini.",
+            "theClientPortalIsOff": "Portal klien tidak tersedia di server ini, sehingga klien tidak dapat membukanya. Anda tetap dapat menghapus mereka.",
             "theClientPortalIsPart": "Portal klien merupakan bagian dari {business}",
             "inviteAClientByEmail": "Undang klien melalui email dan pilih folder yang dapat mereka lihat: kode, analitik pemindaian, dan halaman yang di-hosting milik mereka, hanya-baca, dengan nama, logo, dan warna Anda.",
             "askAWorkspaceOwnerOr": "Minta pemilik workspace atau anggota penagihan untuk melakukan upgrade.",

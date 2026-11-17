@@ -8,7 +8,11 @@ type Row = Record<string, unknown>;
 type Predicate = (row: Row) => boolean;
 type Column = { table: string; name: string };
 
-const store = vi.hoisted(() => ({ tables: new Map<string, Row[]>() }));
+const store = vi.hoisted(() => ({
+  tables: new Map<string, Row[]>(),
+  /** The table of every select, in order */
+  reads: [] as string[],
+}));
 
 vi.mock("drizzle-orm", () => {
   const value = (row: Row, column: Column) => row[column.name];
@@ -51,6 +55,7 @@ vi.mock("@repo/database", () => {
   const database = {
     select: (shape?: Record<string, unknown>) => ({
       from: (t: { __table: string }) => {
+        store.reads.push(t.__table);
         let where: Predicate = () => true;
         const run = (limit?: number) => {
           const matched = rows(t).filter(where);
@@ -121,6 +126,7 @@ const {
   finalizeAIRequest,
   releaseAIRequest,
   reserveAIRequest,
+  subscriptionAndUsage,
   validateSubscriptionAndUsage,
 } = await import("@/lib/subscription");
 const { AI_REQUEST_FREE_TIER_LIMIT } = await import("@repo/config");
@@ -140,6 +146,30 @@ const subscribe = (status: string, userId = USER) => {
 beforeEach(() => {
   store.tables.clear();
   store.tables.set("ai_usage", []);
+  store.reads = [];
+});
+
+describe("subscriptionAndUsage (GET /api/subscription)", () => {
+  it("reads the subscription and the usage once each, and answers the same check", async () => {
+    subscribe("active");
+    addUsage("gemini-2.5-flash");
+    const both = await subscriptionAndUsage(USER);
+    expect(store.reads.filter((table) => table === "subscription")).toEqual([
+      "subscription",
+    ]);
+    expect(store.reads.filter((table) => table === "ai_usage")).toEqual([
+      "ai_usage",
+    ]);
+    expect(both.subscription).toMatchObject({ userId: USER, status: "active" });
+    expect(both.check).toEqual(await validateSubscriptionAndUsage(USER));
+  });
+
+  it("answers no subscription for a free user", async () => {
+    subscribe("canceled");
+    const both = await subscriptionAndUsage(USER);
+    expect(both.subscription).toBeNull();
+    expect(both.check).toMatchObject({ isSubscribed: false });
+  });
 });
 
 describe("validateSubscriptionAndUsage", () => {

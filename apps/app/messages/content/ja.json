@@ -22625,6 +22625,24 @@
     "status": "machine",
     "context": "barcodes.formats.code39.inputHint"
   },
+  "72696df700c2": {
+    "source": "Code 39's characters in a shorter barcode",
+    "text": "Code 39の文字を、より短いバーコードで表現",
+    "status": "machine",
+    "context": "barcodes.formats.code93.summary"
+  },
+  "1268c9b1de31": {
+    "source": "Digits for libraries, blood banks and older labels",
+    "text": "図書館や血液銀行、古いラベルで使われる数字用バーコード",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.summary"
+  },
+  "b2c2db8e248a": {
+    "source": "Start and end with A, B, C or D; between them up to 38 digits and - $ : / . +.",
+    "text": "先頭と末尾はA、B、C、Dのいずれかにし、その間に最大38桁の数字と - $ : / . + を入力できます。",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.inputHint"
+  },
   "589227c3ced5": {
     "source": "Shipping cartons holding retail products",
     "text": "小売商品を入れた出荷用カートン向け",
@@ -22751,6 +22769,18 @@
     "status": "machine",
     "context": "barcodes.uses.code39"
   },
+  "5d7174c9e84a": {
+    "source": "Code 39's characters in a shorter barcode, with two check characters that readers verify. Use it when a system asks for Code 93; otherwise Code 128 does the same job and more.",
+    "text": "Code 39の文字をより短いバーコードで表現でき、リーダーが検証する2つのチェック文字が付きます。システムからCode 93を求められたときに使用してください。それ以外の場合は、Code 128で同じことができ、さらに多くのことができます。",
+    "status": "machine",
+    "context": "barcodes.uses.code93"
+  },
+  "ec05c52f5ac8": {
+    "source": "An older barcode of digits with a start and stop letter (A to D), still used by libraries, blood banks and some shipping labels. Use it when a system asks for Codabar; otherwise Code 128 is shorter.",
+    "text": "開始文字と終了文字(AからD)が付いた数字用の古いバーコードで、図書館や血液銀行、一部の配送ラベルで今も使われています。システムからCodabarを求められたときに使用してください。それ以外の場合は、Code 128のほうが短くなります。",
+    "status": "machine",
+    "context": "barcodes.uses.codabar"
+  },
   "78b5bd23193b": {
     "source": "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
     "text": "小売商品を入れる段ボール箱に印刷します。ケースの14桁のGTINを持ち、太い枠(ベアラバー)が印刷圧を均一にして、スキャナーが一部だけを読み取るのを防ぎます。",
@@ -22823,9 +22853,9 @@
     "status": "machine",
     "context": "barcodes.faqs.1.question"
   },
-  "354487504d93": {
-    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128 and Code 39 need no registration.",
-    "text": "店舗で販売する商品の場合は必要です。EAN、UPC、ITF-14、GS1-128はGTINを持ち、GTINはGS1(またはお住まいの国のGS1機関)から会社に対してライセンスされます。作り上げた番号は小売店のシステムで認識されません。このジェネレーターは有効な番号であれば描画できますが、番号の発行や登録は行いません。自社の在庫、資産、チケットなどに使う場合、Code 128とCode 39は登録不要です。",
+  "aca907b86c08": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "店舗で販売する商品の場合は、はい、必要です。EAN、UPC、ITF-14、GS1-128にはGTINが含まれ、GTINはGS1(またはお住まいの国のGS1機関)から貴社にライセンスされるものです。小売店のシステムは、適当に作った番号を認識しません。このジェネレーターは有効な番号であればどれでも描画しますが、番号の発行や登録は行いません。自社の在庫や資産、チケットに使う場合、Code 128、Code 39、Code 93は登録が不要です。",
     "status": "machine",
     "context": "barcodes.faqs.1.answer"
   },
@@ -23908,6 +23938,174 @@
     "text": "いいえ。スタート文字とストップ文字は自動で追加されます。アスタリスクはテキストに含められません。",
     "status": "machine",
     "context": "barcodeFormats.pages.code-39.faqs.1.answer"
+  },
+  "2710ebb603a0": {
+    "source": "Free Code 93 Barcode Generator",
+    "text": "無料のCode 93バーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.title"
+  },
+  "18b303bbca65": {
+    "source": "Make a Code 93 barcode with capital letters, digits and - . $ / + %, up to 40 characters. Check characters added. Scan-checked. SVG, PDF, PNG. Free.",
+    "text": "大文字、数字、- . $ / + % を使って、最大40文字のCode 93バーコードを作成できます。チェック文字を自動で追加し、スキャン確認もできます。SVG、PDF、PNGに対応。無料です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.metaDescription"
+  },
+  "e219e5513bd8": {
+    "source": "Code 93 holds the same characters as Code 39, capital letters, digits and a few symbols, in a shorter barcode with two built-in check characters. Type up to 40 characters, check that it scans and download it.",
+    "text": "Code 93は、Code 39と同じ大文字、数字、いくつかの記号を扱えます。バーコードはより短く、2つのチェック文字が組み込まれています。最大40文字まで入力し、スキャンできるか確認してからダウンロードしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.intro"
+  },
+  "7bee63c8a9a6": {
+    "source": "Labels in logistics and inventory systems that specify Code 93.",
+    "text": "Code 93を指定している物流や在庫管理システムのラベル。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.0"
+  },
+  "8d204ecd0aaf": {
+    "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
+    "text": "Code 93が必須でなければ、Code 128をお使いください。小文字も扱え、対応しているスキャナーも多くあります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
+  "d2fb97a99a0a": {
+    "source": "Do I need to register a Code 93 barcode?",
+    "text": "Code 93バーコードは登録が必要ですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.title"
+  },
+  "cebbfa59e3ae": {
+    "source": "No. Code 93 carries your own text: serial numbers, part numbers, IDs. There's nothing to license.",
+    "text": "いいえ。Code 93にはシリアル番号、部品番号、IDなど、独自のテキストを入れます。ライセンスは不要です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.paragraphs.0"
+  },
+  "74ac9841bdd6": {
+    "source": "Every Code 93 barcode ends with two check characters, C and K, worked out from the text (modulo 47). They're required, so the generator always adds them, and readers check them and leave them out of what they return. The start and stop characters are added for you too.",
+    "text": "Code 93バーコードは必ず、テキストから算出（modulo 47）した2つのチェック文字CとKで終わります。これらは必須のため、ジェネレーターが常に追加します。リーダーはこれらを検証し、読み取り結果には含めません。スタート文字とストップ文字も自動で追加されます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.rules.1"
+  },
+  "77496524eafa": {
+    "source": "Each Code 93 character is 9 modules wide, against Code 39's 13 to 16, so the same text makes a shorter barcode: ABCDEFGHIJ is 51.9 mm in the downloads, 74.4 mm as Code 39 and 58.2 mm as Code 128.",
+    "text": "Code 93の1文字の幅は9モジュールで、Code 39の13〜16モジュールより狭いため、同じテキストでもバーコードは短くなります。ABCDEFGHIJ の場合、ダウンロードでは51.9 mm、Code 39では74.4 mm、Code 128では58.2 mmです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.sizing.0"
+  },
+  "272ae0dd2556": {
+    "source": "Can Code 93 do lowercase?",
+    "text": "Code 93で小文字は使えますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.question"
+  },
+  "49f94a9600a4": {
+    "source": "Only in an extended mode (Full ASCII) that adds shift characters, which this generator doesn't offer. Use Code 128 for lowercase.",
+    "text": "シフト文字を加える拡張モード（Full ASCII）でのみ使えますが、このジェネレーターには用意されていません。小文字にはCode 128をお使いください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.answer"
+  },
+  "9610fa0dc484": {
+    "source": "Will my scanner read Code 93?",
+    "text": "お使いのスキャナーでCode 93を読み取れますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.question"
+  },
+  "c883cdcae324": {
+    "source": "Most barcode scanners can, but some handheld scanners let you switch symbologies off, and Code 93 is one that's sometimes off. Scan a test print with the scanners you'll use before printing a batch.",
+    "text": "ほとんどのバーコードスキャナーは読み取れますが、ハンディスキャナーには読み取る方式をオフにできるものがあり、Code 93はオフになっていることがあります。まとめて印刷する前に、実際に使うスキャナーでテスト印刷をスキャンしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.answer"
+  },
+  "f47fc8d29ec5": {
+    "source": "Free Codabar Barcode Generator",
+    "text": "無料のCodabarバーコードジェネレーター",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.title"
+  },
+  "da432fa0e742": {
+    "source": "Make a Codabar barcode: digits and - $ : / . + between a start and stop letter A to D, up to 40 characters. Scan-checked. SVG, PDF, PNG. Free, no signup.",
+    "text": "Codabarバーコードを作成できます。AからDのスタート文字とストップ文字の間に、数字と - $ : / . + を最大40文字まで入れられます。スキャン確認つき。SVG、PDF、PNGに対応。無料、登録不要です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.metaDescription"
+  },
+  "dd54414779bc": {
+    "source": "Codabar is an older barcode of digits and a few symbols, framed by a start and a stop letter. Libraries, blood banks and some shipping labels still use it. Type your value, check that it scans and download it.",
+    "text": "Codabarは、数字といくつかの記号を、スタート文字とストップ文字で挟む古いバーコードです。図書館や血液センター、一部の配送ラベルで今も使われています。値を入力し、スキャンできるか確認してからダウンロードしてください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.intro"
+  },
+  "ea77d1fdc0be": {
+    "source": "Library and loan systems, blood bank labels and some shipping and lab labels, wherever an existing system or scanner is set up for Codabar.",
+    "text": "図書館や貸出システム、血液センターのラベル、一部の配送ラベルや検査ラベルなど、既存のシステムやスキャナーがCodabar向けに設定されている場面で使われます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.0"
+  },
+  "fa9e8da77e53": {
+    "source": "If nothing asks for Codabar, use Code 128: it holds letters and makes a shorter barcode for the same text.",
+    "text": "Codabarが必須でなければ、Code 128をお使いください。文字も扱え、同じテキストでもバーコードが短くなります。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.1"
+  },
+  "4c3b5b55e7e9": {
+    "source": "Do I need to register a Codabar barcode?",
+    "text": "Codabarバーコードは登録が必要ですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.title"
+  },
+  "d0209ed07811": {
+    "source": "No. Codabar carries your own numbers, such as a membership, item or sample number. There's nothing to license. Check with the system that reads it which start and stop letters it expects.",
+    "text": "いいえ。Codabarには会員番号、商品番号、サンプル番号など、独自の数字を入れます。ライセンスは不要です。どのスタート文字とストップ文字が必要かは、読み取るシステムに確認してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.paragraphs.0"
+  },
+  "9b20883f5d9b": {
+    "source": "Start and end with one of A, B, C or D, with at least one character between them: digits and - $ : / . + only, up to 40 characters in all, for example A40156B.",
+    "text": "A、B、C、Dのいずれかで始まり、いずれかで終わります。その間には1文字以上が必要で、使えるのは数字と - $ : / . + のみ、全体で最大40文字です。例：A40156B。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.0"
+  },
+  "0934d84635a2": {
+    "source": "The start and stop letters are part of what you type and what a scanner reports; some systems use the choice of letter to tell kinds of labels apart. This generator adds no check digit; if your system needs one, add it to your number yourself.",
+    "text": "スタート文字とストップ文字は、入力する内容にも、スキャナーが返す内容にも含まれます。システムによっては、この文字でラベルの種類を区別します。このジェネレーターはチェックディジットを追加しません。必要な場合は、ご自身で番号に追加してください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.1"
+  },
+  "643068ad3651": {
+    "source": "Codabar characters aren't all the same width, so the width depends on what you type: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Digits, - and $ are the narrow ones; : / . + and the start and stop letters take a little more room.",
+    "text": "Codabarは文字ごとに幅が異なるため、全体の幅は入力内容によって変わります。サンプルのA40156Bは、ダウンロードでは37.7 × 19.2 mmになります。数字と - $ は幅が狭く、: / . + とスタート文字、ストップ文字はやや幅が必要です。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.0"
+  },
+  "6ebe2b720e05": {
+    "source": "Keep 10 modules of blank space each side, and make the bars tall enough to sweep easily: the generator starts at 15 mm.",
+    "text": "左右に10モジュール分の余白を確保し、スキャナーでなぞりやすいようバーの高さを十分にとってください。ジェネレーターの初期値は15 mmです。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.1"
+  },
+  "868c623a9331": {
+    "source": "Which start and stop letters should I use?",
+    "text": "どのスタート文字とストップ文字を使えばよいですか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.question"
+  },
+  "339e22c067b9": {
+    "source": "Use the ones your system expects. Some systems use the letters to mark different label types. The letters can differ at each end.",
+    "text": "お使いのシステムが求める文字を使ってください。システムによっては、文字でラベルの種類を区別します。両端で異なる文字にすることもできます。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.answer"
+  },
+  "a426c1c105c7": {
+    "source": "Can Codabar hold letters?",
+    "text": "Codabarで文字は使えますか？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.question"
+  },
+  "6efd6d4d07ab": {
+    "source": "Only A to D, as start and stop characters. For other letters use Code 128, or Code 39 for capitals.",
+    "text": "スタート文字とストップ文字としてのAからDのみです。それ以外の文字にはCode 128、大文字ならCode 39をお使いください。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.answer"
   },
   "d3ff2381a9b5": {
     "source": "Free PDF417 Barcode Generator",
@@ -29735,9 +29933,9 @@
     "status": "machine",
     "context": "mcp.tools.6.title"
   },
-  "018b7893a107": {
-    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
-    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Data Matrix、PDF417、Aztecに対応します。値（チェックディジット、桁数、文字）を検証し、PNGと、SVG、PNG、PDFなどの公開画像URLを返します。",
+  "26e9ed7d6f36": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417、Aztecに対応しています。値（チェックディジット、桁数、文字）を検証し、PNGと、公開されているSVG、PNG、PDFなどの画像URLを返します。",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
@@ -29764,6 +29962,30 @@
     "text": "説明文、シーン、または写真をもとに、QRコードをAIアートとして描き、スキャンできるかを確認します。画像1枚につき、ワークスペースの月間AIアート画像を1枚使用し、最大で1分ほどかかります。接続にQRdx APIキーが必要です。",
     "status": "machine",
     "context": "mcp.tools.8.description"
+  },
+  "3c1004b71f0f": {
+    "source": "Search the docs",
+    "text": "ドキュメントを検索",
+    "status": "machine",
+    "context": "mcp.tools.9.title"
+  },
+  "82ae342a90f8": {
+    "source": "Finds QRdx docs pages for a question: how a feature works, API endpoints and fields, limits and plans, the React library. Returns titles, links and matching snippets, best first.",
+    "text": "質問に合ったQRdxのドキュメントページを探します。機能の仕組み、API のエンドポイントとフィールド、制限とプラン、React ライブラリなどが対象です。タイトル、リンク、該当する抜粋を関連度の高い順に返します。",
+    "status": "machine",
+    "context": "mcp.tools.9.description"
+  },
+  "13be09937478": {
+    "source": "Read a docs page",
+    "text": "ドキュメントページを読む",
+    "status": "machine",
+    "context": "mcp.tools.10.title"
+  },
+  "24dd1fdfc3d8": {
+    "source": "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
+    "text": "search_docs が返したパスまたはURLを指定して、1ページ分のドキュメントをMarkdownで取得します。長いページは途中で切り詰められ、続きへのリンクが付きます。",
+    "status": "machine",
+    "context": "mcp.tools.10.description"
   },
   "abb9f9118ecf": {
     "source": "List styles",

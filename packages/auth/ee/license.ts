@@ -314,7 +314,16 @@ export function describeEeLicenseForLog(
   return { ...fields, message };
 }
 
-const logged = new Set<string>();
+// Kept on globalThis: Next bundles instrumentation.ts apart from the pages and
+// routes, so each gets its own copy of this module, and a Set in the module
+// would log the same state once per copy.
+const LOGGED = Symbol.for("@repo/auth/ee-license-logged");
+const logSlot = globalThis as unknown as Record<
+  symbol,
+  Set<string> | undefined
+>;
+logSlot[LOGGED] ??= new Set<string>();
+const logged = logSlot[LOGGED];
 
 // Once per state per process: at start-up (apps/app/instrumentation.ts), and
 // again when the licence enters its grace period or runs out. Not while

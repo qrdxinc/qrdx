@@ -151,3 +151,74 @@ describe("before the site serves the SEO collections", () => {
     expect(urls.filter(under("/qr-codes-on")).length).toBeGreaterThan(1);
   });
 });
+
+describe("while the marketing site serves the generators and barcodes", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set(["generators", "barcodes"]);
+  });
+
+  it("the sitemap leaves their pages out, hosted types included", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    for (const prefix of ["/qr-code-generator", "/barcode-generator"]) {
+      expect(urls.filter(under(prefix)), prefix).toEqual([]);
+    }
+  });
+
+  it("robots.txt names their sitemaps", () => {
+    expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
+      "/sitemap.xml",
+      "/qr-code-generator/sitemap.xml",
+      "/barcode-generator/sitemap.xml",
+    ]);
+  });
+});
+
+describe("before the site serves the generators and barcodes", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set();
+  });
+
+  it("the sitemap lists them", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    expect(urls.filter(under("/qr-code-generator")).length).toBeGreaterThan(1);
+    expect(urls.filter(under("/barcode-generator")).length).toBeGreaterThan(1);
+  });
+});
+
+// Stage two's groups keep their URLs whichever app serves them, so this
+// app's sitemap goes on listing them and robots.txt names no sitemap of
+// theirs (SITE_SITEMAPS has none).
+describe("while the marketing site serves pages without a sitemap of their own", () => {
+  const groups = [
+    "trust",
+    "plugins",
+    "tools",
+    "products",
+    "enterprise",
+    "pricing",
+    "integrations",
+    "templates",
+  ];
+
+  it("the sitemap still lists their pages", async () => {
+    zone.blog = false;
+    zone.groups = new Set();
+    const before = (await sitemap()).map((entry) => entry.url);
+    zone.groups = new Set(groups);
+    const after = (await sitemap()).map((entry) => entry.url);
+    expect(after).toEqual(before);
+    for (const path of ["/pricing", "/integrations", "/security"]) {
+      expect(after, path).toContain(new URL(path, after[0]).toString());
+    }
+  });
+
+  it("robots.txt names this app's sitemap only", () => {
+    zone.blog = false;
+    zone.groups = new Set(groups);
+    expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
+      "/sitemap.xml",
+    ]);
+  });
+});

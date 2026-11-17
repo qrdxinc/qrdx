@@ -15,21 +15,19 @@ import { type BillingInterval, type PaidPlan, PRICING } from "@/lib/pricing";
 import { checkoutCurrency } from "@/lib/region";
 import { getCurrentUser, logError } from "@/lib/shared";
 import { getMyActiveSubscription } from "@/lib/subscription";
+import type { CheckoutResult } from "@/types/action-results";
 import { UnauthorizedError } from "@/types/errors";
 import { getOrCreateCustomer } from "./customer";
+
+// The pricing page's paid plan buttons, through POST /api/subscription/checkout
+// (app/api/subscription/checkout/route.ts), so any zone on this origin can
+// start one. The result type lives in types/action-results.ts.
+export type { CheckoutResult } from "@/types/action-results";
 
 const checkoutSchema = z.object({
   plan: z.enum(["pro", "business"]),
   interval: z.enum(["month", "year"]),
 });
-
-export type CheckoutResult =
-  | { url: string }
-  | {
-      error: string;
-      /** sign_in: no session; subscribed: change plans in the billing portal */
-      reason?: "sign_in" | "subscribed" | "unavailable";
-    };
 
 // Each attempt creates a Polar checkout session.
 const checkoutLimiter = createRateLimiter({
@@ -49,7 +47,9 @@ export async function createCheckout(input: {
   interval: BillingInterval;
 }): Promise<CheckoutResult> {
   const parsed = checkoutSchema.safeParse(input);
-  if (!parsed.success) return { error: "Choose a plan and billing period." };
+  if (!parsed.success) {
+    return { error: "Choose a plan and billing period.", reason: "invalid" };
+  }
   const { plan, interval } = parsed.data;
 
   // The same product for every region: each one has a USD and an INR price
@@ -66,6 +66,7 @@ export async function createCheckout(input: {
     if (!success) {
       return {
         error: "Too many checkout attempts. Please try again in a few minutes.",
+        reason: "rate_limited",
       };
     }
 
@@ -125,6 +126,6 @@ export async function createCheckout(input: {
       return { error: "Sign in to upgrade.", reason: "sign_in" };
     }
     logError(error as Error, { action: "createCheckout", plan, interval });
-    return { error: "Failed to create checkout" };
+    return { error: "Failed to create checkout", reason: "failed" };
   }
 }

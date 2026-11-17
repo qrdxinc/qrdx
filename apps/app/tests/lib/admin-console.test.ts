@@ -1,12 +1,16 @@
 // The back-office console at its own address (ADMIN_CONSOLE_URL): the pure
 // rules in @repo/next-config/console-zone and lib/admin-console/client that
-// the redirects, the admin menu, /admin/confirm and the OAuth routes share.
+// the redirects, the admin menu, /oauth/confirm and the OAuth routes share.
 // Nothing here touches a database.
+import { readdirSync } from "node:fs";
+import path from "node:path";
 import {
+  ADMIN_CONSOLE_SECTIONS,
   adminConsoleAddress,
+  adminConsoleCancelUrl,
   adminConsoleHref,
   adminConsoleRedirects,
-  consoleReturnTarget,
+  adminConsoleReturnUrl,
 } from "@repo/next-config/console-zone";
 import { describe, expect, it } from "vitest";
 import { adminNavLinks } from "@/app/(app)/admin/_lib/nav";
@@ -19,11 +23,33 @@ import {
 } from "@/lib/admin-console/client";
 import { readAuthorizeParams } from "@/lib/oauth-apps/authorize";
 
-const URL_ = "https://admin.qrdx.dev";
+const URL_ = "https://console.qrdx.dev";
 const KEY = "k".repeat(32);
 const HOSTS = "(?:qrdx\\.dev|localhost)";
 // RFC 7636 appendix B
 const CHALLENGE = "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM";
+
+const ADMIN_DIR = path.resolve(import.meta.dirname, "../../app/(app)/admin");
+
+describe("ADMIN_CONSOLE_SECTIONS", () => {
+  it("is every section of this app's admin, once, except the old confirm page", () => {
+    const folders = readdirSync(ADMIN_DIR, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"))
+      .map((entry) => entry.name)
+      .filter((name) => name !== "confirm")
+      .sort();
+    expect([...ADMIN_CONSOLE_SECTIONS].sort()).toEqual(folders);
+    expect(new Set(ADMIN_CONSOLE_SECTIONS).size).toBe(
+      ADMIN_CONSOLE_SECTIONS.length,
+    );
+  });
+
+  it("covers every entry of the admin menu", () => {
+    for (const { href } of adminNavLinks(false)) {
+      expect(adminConsoleHref(href, URL_), href).not.toBeNull();
+    }
+  });
+});
 
 describe("adminConsoleRedirects", () => {
   it("adds nothing while ADMIN_CONSOLE_URL is unset or empty", () => {
@@ -31,17 +57,53 @@ describe("adminConsoleRedirects", () => {
     expect(adminConsoleRedirects("", { hosts: HOSTS })).toEqual([]);
   });
 
-  it("sends each section to its own lower-case section at the console, for now temporarily", () => {
-    expect(adminConsoleRedirects(`${URL_}/`, { hosts: HOSTS })).toEqual(
-      ["growth", "numbers", "subscriptions", "ai-usage", "affiliates"].map(
-        (section) => ({
-          source: `/admin/${section}/:path*`,
-          destination: `${URL_}/${section}/:path*`,
-          permanent: false,
-          has: [{ type: "host", value: HOSTS }],
-        }),
-      ),
-    );
+  it("sends all of /admin to the console, each section to its lower-case path, for now temporarily", () => {
+    const has = [{ type: "host", value: HOSTS }];
+    const rule = (source: string, destination: string) => ({
+      source,
+      destination,
+      permanent: false,
+      has,
+    });
+    expect(adminConsoleRedirects(`${URL_}/`, { hosts: HOSTS })).toEqual([
+      rule("/admin", `${URL_}/`),
+      rule("/admin/confirm", "/oauth/confirm"),
+      ...[
+        "growth",
+        "numbers",
+        "subscriptions",
+        "ai-usage",
+        "affiliates",
+        "users",
+        "themes",
+        "community",
+        "codes",
+        "abuse",
+        "integrations",
+        "audit-log",
+        "health",
+        "search",
+      ].flatMap((section) => [
+        rule(`/admin/${section}`, `${URL_}/${section}`),
+        rule(`/admin/${section}/:path+`, `${URL_}/${section}/:path+`),
+      ]),
+      rule("/admin/:path+", `${URL_}/:path+`),
+    ]);
+  });
+
+  it("uses the origin alone, whatever else the value has", () => {
+    for (const value of [`${URL_}/x`, `${URL_}?a=1`, `${URL_}#h`]) {
+      for (const { destination } of adminConsoleRedirects(value, {
+        hosts: HOSTS,
+      })) {
+        expect(
+          destination.startsWith(`${URL_}/`) ||
+            destination === "/oauth/confirm",
+          destination,
+        ).toBe(true);
+        expect(destination).not.toMatch(/[?#]|\/x\//);
+      }
+    }
   });
 });
 
@@ -70,8 +132,10 @@ describe("adminConsoleAddress (what the redirects, the menu and /admin/confirm r
   });
 });
 
-describe("adminConsoleHref (the admin menu and the overview's cards)", () => {
+describe("adminConsoleHref (the admin menus and the overview's cards)", () => {
   it.each([
+    ["/admin", `${URL_}/`],
+    ["/admin?x=1", `${URL_}/?x=1`],
     ["/admin/growth", `${URL_}/growth`],
     [
       "/admin/subscriptions?status=active",
@@ -79,81 +143,174 @@ describe("adminConsoleHref (the admin menu and the overview's cards)", () => {
     ],
     ["/admin/affiliates/abc?page=2", `${URL_}/affiliates/abc?page=2`],
     ["/admin/ai-usage", `${URL_}/ai-usage`],
+    ["/admin/users", `${URL_}/users`],
+    ["/admin/users/u_1/export", `${URL_}/users/u_1/export`],
+    ["/admin/search?q=maria", `${URL_}/search?q=maria`],
+    ["/admin/codes?kind=page", `${URL_}/codes?kind=page`],
+    ["/admin/audit-log", `${URL_}/audit-log`],
+    ["/admin/Users/AbC", `${URL_}/users/AbC`],
   ])("turns %s into %s", (href, expected) => {
     expect(adminConsoleHref(href, URL_)).toBe(expected);
     expect(adminConsoleHref(href, `${URL_}/`)).toBe(expected);
   });
 
-  it("leaves this app's own pages, and everything while unset", () => {
-    for (const href of ["/admin", "/admin/users", "/admin/growthx", "/x"]) {
+  it("leaves anything else, and everything while unset", () => {
+    for (const href of [
+      "/admin/confirm",
+      "/admin/growthx",
+      "/admin/userss",
+      "/administrator",
+      "/x",
+      "https://evil.example/admin/users",
+      "//evil.example/admin/users",
+    ]) {
       expect(adminConsoleHref(href, URL_), href).toBeNull();
     }
     expect(adminConsoleHref("/admin/growth", undefined)).toBeNull();
+    expect(adminConsoleHref("/admin", undefined)).toBeNull();
   });
 });
 
-describe("consoleReturnTarget (/admin/confirm's ?next=)", () => {
+describe("adminConsoleReturnUrl (/oauth/confirm's ?next=)", () => {
   it.each([
+    [`${URL_}`, `${URL_}/`],
+    [`${URL_}/`, `${URL_}/`],
     [`${URL_}/growth`, `${URL_}/growth`],
-    [`${URL_}/affiliates/abc?page=2`, `${URL_}/affiliates/abc?page=2`],
+    [
+      `${URL_}/affiliates/abc?page=2&confirmed=1`,
+      `${URL_}/affiliates/abc?page=2&confirmed=1`,
+    ],
+    [`${URL_}/users/u_1?confirmed=1`, `${URL_}/users/u_1?confirmed=1`],
     [`${URL_}/numbers#x`, `${URL_}/numbers`],
-    ["/admin/growth", "/admin/growth"],
+    // Anything in the query, encoded or not.
+    [
+      `${URL_}/search?q=caf%C3%A9&next=%2F%2Fx&confirmed=1`,
+      `${URL_}/search?q=caf%C3%A9&next=%2F%2Fx&confirmed=1`,
+    ],
+    // The same origin, written differently: given back as the URL parser has it.
+    ["HTTPS://CONSOLE.QRDX.DEV/growth", `${URL_}/growth`],
+    ["https://console.qrdx.dev:443/growth", `${URL_}/growth`],
   ])("accepts %s", (next, expected) => {
-    expect(consoleReturnTarget(next, URL_)).toBe(expected);
+    expect(adminConsoleReturnUrl(next, URL_)).toBe(expected);
+    expect(adminConsoleReturnUrl(next, `${URL_}/`)).toBe(expected);
   });
 
   it.each([
-    `${URL_}`,
-    `${URL_}/`,
-    `${URL_}/users/u1`,
-    `${URL_}/auth/login`,
-    `${URL_}/Growth`,
-    `${URL_}/growthx`,
+    // Other hosts, look-alikes and other schemes or ports.
+    "https://evil.example/growth",
+    "https://console.qrdx.dev.evil.example/growth",
+    "https://evilconsole.qrdx.dev/growth",
+    "https://console.qrdx.dev./growth",
+    "https://xn--cnsole-8sf.qrdx.dev/growth",
+    "https://cоnsole.qrdx.dev/growth",
+    "http://console.qrdx.dev/growth",
+    "https://console.qrdx.dev:8443/growth",
+    "https://console.qrdx.dev:80/growth",
+    "wss://console.qrdx.dev/growth",
+    "https://qrdx.dev/admin/users",
+    "https://api.qrdx.dev/growth",
+    // Userinfo, and userinfo that hides another host.
+    "https://user@console.qrdx.dev/growth",
+    "https://user:pass@console.qrdx.dev/growth",
+    "https://console.qrdx.dev@evil.example/growth",
+    "https://console.qrdx.dev%40evil.example/growth",
+    // Relative and protocol-relative.
+    "//console.qrdx.dev/growth",
+    "//evil.example/growth",
+    "///evil.example/growth",
+    "/growth",
+    "growth",
+    // Backslashes, whitespace and control characters browsers rewrite.
+    "https:\\\\evil.example/growth",
+    "https://console.qrdx.dev\\@evil.example/",
+    `${URL_}/growth\\x`,
+    " https://evil.example/",
+    "https://console.qrdx.dev/\tgrowth",
+    "\nhttps://evil.example/",
+    "https://console.qrdx.dev/\u0000growth",
+    // Dot segments, encoded or not, and the console's sign-in routes,
+    // however the path hides them: an empty segment, an encoded letter or
+    // an encoded slash.
     `${URL_}/growth/../auth/login`,
     `${URL_}/growth/%2e%2e/auth`,
-    `${URL_}/growth\\x`,
-    "https://admin.qrdx.dev.evil.example/growth",
-    "https://evil.example/growth",
-    "http://admin.qrdx.dev/growth",
-    "https://admin.qrdx.dev:8443/growth",
-    "https://user@admin.qrdx.dev/growth",
-    "//admin.qrdx.dev/growth",
+    `${URL_}/auth`,
+    `${URL_}/auth/login`,
+    `${URL_}/auth/logout`,
+    `${URL_}/auth/callback?code=x`,
+    `${URL_}/AUTH`,
+    `${URL_}//auth/logout`,
+    `${URL_}///auth/login`,
+    `${URL_}/%61uth/login`,
+    `${URL_}/%41UTH/login`,
+    `${URL_}/auth%2flogin`,
+    `${URL_}/auth%2Flogout`,
+    `${URL_}/%2fauth/login`,
+    // Any empty segment or encoding in the path, which the console's own
+    // pages never need.
+    `${URL_}/growth//x`,
+    `${URL_}/users/%75_1`,
+    `${URL_}/users/café`,
+    // Not a web page at all.
     "javascript:alert(1)",
+    "data:text/html,hi",
+    `${URL_}/${"x".repeat(2048)}`,
     "",
     null,
     undefined,
-  ])("refuses %s", (next) => {
-    expect(consoleReturnTarget(next, URL_)).toBeNull();
+  ])("refuses %j", (next) => {
+    expect(adminConsoleReturnUrl(next, URL_)).toBeNull();
   });
 
-  it("accepts only this site's console paths while unset", () => {
-    expect(consoleReturnTarget(`${URL_}/growth`, undefined)).toBeNull();
-    expect(consoleReturnTarget("/admin/growth", undefined)).toBe(
-      "/admin/growth",
-    );
+  it("never lets a hidden /auth path through, however it's written", () => {
+    for (const path of [
+      "//auth/logout",
+      "/%61uth/login",
+      "/auth%2flogin",
+      "/a%75th",
+      "/./auth/login",
+      "/x/../auth/login",
+    ]) {
+      expect(adminConsoleReturnUrl(`${URL_}${path}`, URL_), path).toBeNull();
+    }
+  });
+
+  it("refuses everything while the console isn't set up", () => {
+    expect(adminConsoleReturnUrl(`${URL_}/growth`, undefined)).toBeNull();
+    expect(adminConsoleReturnUrl(`${URL_}/growth`, "")).toBeNull();
+  });
+});
+
+describe("adminConsoleCancelUrl (/oauth/confirm's Go back)", () => {
+  it.each([
+    [`${URL_}/affiliates/a?page=2&confirmed=1`, `${URL_}/affiliates/a?page=2`],
+    [`${URL_}/growth?confirmed=1`, `${URL_}/growth`],
+    [`${URL_}/users/u_1?confirmed=0&x=1`, `${URL_}/users/u_1?x=1`],
+    [`${URL_}/`, `${URL_}/`],
+    [`${URL_}/search?q=a`, `${URL_}/search?q=a`],
+  ])("turns %s into %s", (back, expected) => {
+    expect(adminConsoleCancelUrl(back)).toBe(expected);
   });
 });
 
 describe("the admin menu with the console at its own address", () => {
-  it("links its sections there as new pages, and keeps the rest", () => {
+  it("links every entry there as a new page", () => {
     const links = adminNavLinks(false, URL_);
-    expect(links.filter((link) => link.crossZone).map((l) => l.href)).toEqual([
+    expect(links.every((link) => link.crossZone)).toBe(true);
+    expect(links.map((link) => link.href)).toEqual([
+      `${URL_}/`,
       `${URL_}/growth`,
+      `${URL_}/users`,
+      `${URL_}/themes`,
+      `${URL_}/community`,
+      `${URL_}/codes`,
+      `${URL_}/abuse`,
       `${URL_}/ai-usage`,
       `${URL_}/subscriptions`,
       `${URL_}/numbers`,
       `${URL_}/affiliates`,
-    ]);
-    expect(links.filter((link) => !link.crossZone).map((l) => l.href)).toEqual([
-      "/admin",
-      "/admin/users",
-      "/admin/themes",
-      "/admin/community",
-      "/admin/codes",
-      "/admin/abuse",
-      "/admin/integrations",
-      "/admin/audit-log",
-      "/admin/health",
+      `${URL_}/integrations`,
+      `${URL_}/audit-log`,
+      `${URL_}/health`,
     ]);
   });
 

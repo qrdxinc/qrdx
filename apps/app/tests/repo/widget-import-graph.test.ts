@@ -1,7 +1,11 @@
-// The public generator widgets are pure client code. The marketing site, a
-// separate app served on the same origin (qrdx.dev), renders them, and it can
-// neither call this app's server actions nor reach its database; the widgets
-// call same-origin routes instead (lib/widget-routes).
+// The public widgets are pure client code: the generators, the pricing cards
+// and their dialogs, the enterprise form, the bulk tool and the home page's
+// MCP terminal. The marketing site, a separate app served on the same origin
+// (qrdx.dev), renders them, and it can neither call this app's server
+// actions nor reach its database; the widgets call same-origin routes
+// instead (lib/widget-routes). The small modules the marketing pages read
+// limits and URLs from (the last entries of WIDGETS) are held to the same
+// rules.
 //
 // This walks each widget's imports: value imports, re-exports, import() and
 // require(), which a bundler follows, and type-only imports, which the
@@ -11,7 +15,11 @@
 //   - any import of @repo/database, value or type,
 //   - an app or workspace import it can't resolve (so a broken resolver can't
 //     pass by finding nothing).
-// TYPE_DEBT lists the type-only imports it doesn't follow yet.
+// TYPE_DEBT lists the type-only imports it doesn't follow yet. `@/env` isn't
+// followed either: a zone that renders these widgets brings its own env
+// module under that name (the site maps it to its own env.ts, declaring only
+// the public variables it has), while this app's env.ts declares the
+// database's keys.
 import { readFileSync, realpathSync } from "node:fs";
 import { join, relative } from "node:path";
 import ts from "typescript";
@@ -25,6 +33,19 @@ const WIDGETS = {
   TypeGenerator: "components/sections/tools/type-generator.tsx",
   // /barcode-generator and /barcode-generator/<format>
   PublicBarcodeGenerator: "components/sections/tools/save-barcode.tsx",
+  // /pricing: the plan cards, checkout, and the invoice and non-profit dialogs
+  PricingSection: "components/sections/pricing-section.tsx",
+  // /enterprise
+  EnterpriseContactForm: "app/[lang]/(home)/enterprise/contact-form.tsx",
+  // /tools/bulk
+  BulkGenerator: "components/sections/tools/bulk-generator.tsx",
+  // The home page's feature rows
+  McpTerminal: "components/mockups/mcp-terminal.tsx",
+  // What marketing pages read limits, prices and URLs from
+  QrImageUrl: "lib/qr-image-url.ts",
+  RoutingLimits: "lib/redirect/routing-limits.ts",
+  Media: "lib/media.ts",
+  Region: "lib/region.ts",
 };
 
 /**
@@ -168,6 +189,9 @@ function read(file: string): ModuleInfo {
   return info;
 }
 
+/** Each zone's own environment module (see the top of this file). */
+const ZONE_ENV = "@/env";
+
 const OWN = /^(?:\.{1,2}\/|@\/|@repo\/)/;
 const ASSET = /\.(?:css|scss|svg|png|jpe?g|gif|webp|avif|ico|woff2?|txt|md)$/;
 
@@ -237,6 +261,7 @@ function walk(entry: string): Walk {
       continue;
     }
     for (const { specifier, typeOnly } of info.imports) {
+      if (specifier === ZONE_ENV) continue;
       if (/^@repo\/database(?:\/|$)/.test(specifier)) {
         const kind = typeOnly ? "type import" : "import";
         problems.push(`${kind} of ${specifier}: ${chain(file)}`);
@@ -260,7 +285,7 @@ function walk(entry: string): Walk {
   return { files: [...parent.keys()].map(rel), problems, debt };
 }
 
-describe("public generator widgets are pure client code", () => {
+describe("public widgets are pure client code", () => {
   const walks = Object.fromEntries(
     Object.entries(WIDGETS).map(([name, entry]) => [name, walk(entry)]),
   ) as Record<keyof typeof WIDGETS, Walk>;
@@ -298,6 +323,28 @@ describe("public generator widgets are pure client code", () => {
     ]) {
       expect(walks.PublicBarcodeGenerator.files, file).toContain(file);
     }
+    // /pricing: checkout, the two dialogs and the plan, through fetch.
+    for (const file of [
+      "components/sections/pricing/invoice-request-dialog.tsx",
+      "components/sections/pricing/nonprofit-request-dialog.tsx",
+      "components/sections/pricing/pricing-offers.tsx",
+      "lib/hooks/use-subscription.ts",
+      "lib/widget-routes/client.ts",
+      "types/action-results.ts",
+    ]) {
+      expect(walks.PricingSection.files, file).toContain(file);
+    }
+    expect(walks.EnterpriseContactForm.files).toContain(
+      "lib/widget-routes/client.ts",
+    );
+    for (const file of [
+      "lib/hooks/use-themes.ts",
+      "lib/widget-routes/client.ts",
+    ]) {
+      expect(walks.BulkGenerator.files, file).toContain(file);
+    }
+    expect(walks.McpTerminal.files).toContain("lib/qr-image-url.ts");
+    expect(walks.McpTerminal.files).not.toContain("lib/qr-render.ts");
   });
 
   it("and catches each kind of problem", () => {
@@ -313,6 +360,17 @@ describe("public generator widgets are pure client code", () => {
     );
     expect(walk("lib/widget-routes/server.ts").problems).toContain(
       'imports "server-only": lib/widget-routes/server.ts',
+    );
+    // The routes themselves run the actions; the renderer and the redirect
+    // engine stay server code.
+    expect(walk("app/api/subscription/checkout/route.ts").problems).toContain(
+      "server action module: app/api/subscription/checkout/route.ts -> actions/checkout.ts",
+    );
+    expect(walk("lib/qr-render.ts").problems).toContain(
+      'imports "server-only": lib/qr-render.ts',
+    );
+    expect(walk("lib/redirect/routing.ts").problems).toContain(
+      'imports "server-only": lib/redirect/routing.ts',
     );
   });
 });

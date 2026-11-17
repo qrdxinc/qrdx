@@ -82,6 +82,9 @@ const FORMATS = [
   "formatUpc",
   "Code 128",
   "Code 39",
+  "Code 93",
+  "Codabar",
+  "ITF-14",
 ] as const;
 
 const CONTENT_TYPES: {

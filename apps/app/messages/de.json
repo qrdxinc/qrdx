@@ -286,7 +286,8 @@
   },
   "localeSwitcher": {
     "label": "Sprache",
-    "englishOnly": "Diese Seite gibt es nur auf Englisch. Andere Sprachen öffnen ihre Startseite."
+    "englishOnly": "Diese Seite gibt es nur auf Englisch. Andere Sprachen öffnen ihre Startseite.",
+    "englishOnlyDesigner": "Diese Seite gibt es nur auf Englisch. Andere Sprachen öffnen den QR-Code-Designer."
   },
   "cta": {
     "title": "Erstelle deinen nächsten QR-Code",
@@ -471,7 +472,7 @@
       "developers": {
         "eyebrow": "Entwickler",
         "title": "Für Entwickler gebaut",
-        "description": "Rendere Codes mit der qrdx React-Bibliothek, hole Bilder per URL über die Image API oder lass sie von Claude, Cursor und VS Code über den MCP server erstellen. Du kannst die ganze App auch selbst hosten.",
+        "description": "Rendere Codes mit der qrdx React-Bibliothek, hol dir Bilder per URL über die Image API oder lass Claude, Cursor und VS Code sie über den MCP-Server erstellen. Du kannst die App auch selbst hosten.",
         "link": "Entwickler-Doku"
       }
     },
@@ -526,7 +527,8 @@
           "answer": "Ja. Das Logo-Overlay ist im kostenlosen Tarif enthalten. Lade ein Bild hoch (am besten eine PNG-Datei mit transparentem Hintergrund), und QRdx zentriert es und räumt die Module darunter frei. QR-Codes nutzen die Reed-Solomon-Fehlerkorrektur (ISO/IEC 18004); QRdx verwendet standardmäßig Stufe Q, die etwa 25 % des Codes wiederherstellen kann, sodass ein zentriertes Logo scanbar bleibt. Teste vor dem Druck mit einigen Handys."
         },
         "openSource": {
-          "question": "Ist QRdx Open Source?"
+          "question": "Ist QRdx Open Source?",
+          "answer": "Ja. QRdx wird öffentlich auf GitHub entwickelt. Die Web-App ist Open Source unter der GNU AGPL-3.0 (oder später): Du kannst den Code prüfen, Issues melden, mitentwickeln oder deine eigene Instanz selbst hosten, einschließlich dynamischer QR-Codes und gehosteter Seiten. Die qrdx React-Bibliothek auf npm und das Kommandozeilen-Tool @qrdx/cli stehen unter der MIT-Lizenz, sodass auch Closed-Source-Software sie nutzen kann. Die Business-Funktionen in den ee-Ordnern (Single Sign-on für Workspaces, das Audit-Log, das Kundenportal und Kundenberichte, White-Label-Seiten mit eigenem CSS sowie Conversion-Tracking) stehen unter der QRdx Commercial License."
         },
         "api": {
           "question": "Können Entwickler QR-Codes mit einer API generieren?",
@@ -801,7 +803,7 @@
         },
         "selfHost": {
           "question": "Kann ich QRdx selbst hosten?",
-          "answer": "Ja. QRdx ist Open Source unter der AGPL-3.0. Betreibe es mit deiner eigenen Postgres-Datenbank, indem du der Self-Hosting-Anleitung folgst. Die Tarif-Limits sind in einer einzigen Datei definiert, die du für deine Instanz ändern kannst."
+          "answer": "Ja. QRdx ist Open Source unter der AGPL-3.0. Betreibe es mit deiner eigenen Postgres-Datenbank, indem du dem Self-Hosting-Leitfaden folgst; die Plan-Limits sind in einer einzigen Datei definiert, die du für deine Instanz ändern kannst. Die Business-Funktionen in den ee-Ordnern (Single Sign-on, das Audit-Log, das Kundenportal, White-Label-Seiten und Conversion-Tracking) erfordern einen Enterprise-Vertrag."
         },
         "nonprofit": {
           "question": "Gibt es einen Rabatt für Non-Profit-Organisationen?",
@@ -843,7 +845,7 @@
         "contract": "Ein Jahresvertrag, Zahlung per Rechnung",
         "replies": "Antwort innerhalb von {hours, plural, one {# Geschäftsstunde} other {# Geschäftsstunden}}, wenn Codes nicht mehr funktionieren",
         "review": "Antworten für deine Sicherheitsprüfung",
-        "selfHost": "SSO und Audit-Log auf deinem eigenen Server"
+        "selfHost": "SSO, Audit-Log, Kundenportal, White-Label und Conversions auf deinem eigenen Server"
       },
       "security": "Sicherheit bei QRdx"
     },
@@ -1380,7 +1382,7 @@
       },
       "products": {
         "name": "Produktcodes",
-        "detail": "EAN/UPC-Nummern und GS1-Daten (GTIN, Charge, Ablaufdatum), einschließlich GS1 Digital Link."
+        "detail": "EAN-, UPC- und ITF-14-Nummern sowie GS1-Daten (GTIN, Charge, Ablaufdatum), einschließlich GS1 Digital Link."
       },
       "text": {
         "name": "Reiner Text",
@@ -2032,6 +2034,10 @@
       "code128Chars": "Code 128 erlaubt hier nur einfache ASCII-Buchstaben, Ziffern, Leerzeichen und Symbole. Nicht erlaubt: {chars}",
       "code39Chars": "Code 39 erlaubt nur Großbuchstaben, Ziffern, Leerzeichen und - . $ / + %. Nicht erlaubt: {chars}",
       "code39Lowercase": "Code 39 hat keine Kleinbuchstaben. Verwende Großbuchstaben oder Code 128 für gemischte Schreibweise.",
+      "code93Chars": "Code 93 akzeptiert nur Großbuchstaben, Ziffern, Leerzeichen und - . $ / + %. Nicht erlaubt: {chars}",
+      "code93Lowercase": "Code 93 kennt hier keine Kleinbuchstaben. Nutze Großbuchstaben oder Code 128 für gemischte Schreibweise.",
+      "codabarStartStop": "Codabar beginnt und endet mit A, B, C oder D, dazwischen muss mindestens ein Zeichen stehen, z. B. A40156B.",
+      "codabarChars": "Codabar akzeptiert zwischen Start- und Stoppbuchstabe nur Ziffern und - $ : / . +. Nicht erlaubt: {chars}",
       "gs1Enter": "Gib Application Identifier in Klammern mit ihren Werten ein, z. B. (01)09501101530003.",
       "gs1Start": "Beginne mit einem Application Identifier in Klammern, z. B. (01) für eine GTIN, gefolgt von seinem Wert.",
       "gs1Brackets": "Die Klammern passen nicht zusammen: Schreibe jeden AI als (Ziffern), gefolgt von seinem Wert.",
@@ -2169,8 +2175,8 @@
         "body": "Wir füllen deinen Sicherheitsfragebogen aus und schicken dir eine unterschriebene Kopie des Auftragsverarbeitungsvertrags."
       },
       "selfHost": {
-        "title": "Single Sign-on und Audit-Log beim Self-Hosting",
-        "body": "QRdx ist Open Source, aber Single Sign-on und das Audit-Log stehen unter der kommerziellen QRdx-Lizenz. Mit einer Enterprise-Vereinbarung betreibst du sie mit einem Lizenzschlüssel auf deinem eigenen Server."
+        "title": "Business-Funktionen beim Self-Hosting",
+        "body": "QRdx ist Open Source, aber Single Sign-on, das Audit-Log, das Kundenportal und Kundenberichte, White-Label-Seiten mit eigenem CSS und das Conversion-Tracking fallen unter die kommerzielle QRdx-Lizenz. Mit einem Enterprise-Vertrag kannst du sie mit einem Lizenzschlüssel auf deinem eigenen Server betreiben."
       }
     },
     "limitsNote": "Auf qrdx.dev gelten für Enterprise-Workspaces die Limits des Business-Plans. Wenn du von etwas mehr brauchst, schreib es ins Formular.",
@@ -2197,7 +2203,7 @@
       },
       "sign": {
         "title": "Unterschreiben und per Rechnung zahlen",
-        "body": "Sobald der Vertrag unterschrieben ist, stellen wir deinen Workspace auf den Business-Plan um und schicken die Rechnung."
+        "body": "Sobald der Vertrag unterschrieben ist, schicken wir dir die Rechnung und stellen deinen Workspace auf qrdx.dev auf den Business-Plan um. Wenn du selbst hostest, deckt der Vertrag auch Single Sign-on, das Audit-Log, das Kundenportal, White-Label-Seiten und das Conversion-Tracking auf deinem eigenen Server ab: Wir schicken dir einen Lizenzschlüssel für QRDX_EE_LICENSE. Er hat ein Ablaufdatum, und dein Server prüft ihn offline."
       }
     },
     "formTitle": "Sprich mit uns",
@@ -2943,7 +2949,7 @@
     "guaranteeTitle": "Gedruckte Codes funktionieren weiter",
     "guaranteeBody": "Mit der Never-Hostage-Garantie leitet jeder dynamische QR-Code in jedem Tarif weiter, auch nach einem Downgrade, einer fehlgeschlagenen Zahlung oder einer Kündigung. Scans werden nie pausiert, und wer scannt, sieht nie Werbung oder eine Anmeldeseite von QRdx. Wenn du ein Limit überschreitest, kannst du lediglich keine neuen Codes mehr erstellen.",
     "guaranteeLink": "Garantie lesen",
-    "openSourceBody": "Die Weiterleitung, die Analysen und der Rest der App sind Open Source. So kannst du nachlesen, was bei jedem Scan passiert, oder die App auf deinem eigenen Server betreiben.",
+    "openSourceBody": "Die Weiterleitung und die Analytics sind Open Source. So kannst du nachlesen, was bei jedem Scan passiert, oder beides auf deinem eigenen Server betreiben.",
     "openSourceLink": "Open Source und Self-Hosting",
     "staticTitle": "Wann ein statischer QR-Code die bessere Wahl ist",
     "staticBody": "Nur Links können dynamisch sein: Ein dynamischer QR-Code öffnet eine Website oder eine gehostete Seite. Wi-Fi-Zugangsdaten, direkt auf dem Handy gespeicherte Visitenkarten und Bankzahlungscodes müssen statisch sein, weil das Handy sie direkt aus dem Muster liest. Statische QR-Codes sind kostenlos und unbegrenzt, und du brauchst dafür kein Konto.",
@@ -2989,8 +2995,8 @@
     "metaDescription": "QRdx ist ein Open-Source-QR-Code-Generator auf GitHub. Die App steht unter AGPL-3.0, die React-Bibliothek und die CLI unter MIT. Nutze qrdx.dev kostenlos oder betreibe deine eigene Kopie.",
     "crumb": "Open Source",
     "title": "Open-Source-QR-Code-Generator",
-    "intro1": "QRdx wird öffentlich auf GitHub entwickelt. Die Web-App hinter qrdx.dev mit Editor, dynamischen QR-Codes, gehosteten Seiten und Scan-Analysen steht unter der AGPL-3.0. Die React-Bibliothek, die CLI und die Plugins stehen unter MIT.",
-    "intro2": "Du kannst QRdx kostenlos auf qrdx.dev nutzen, eine eigene Kopie betreiben oder mit der Bibliothek QR-Codes in deine App einbauen.",
+    "intro1": "QRdx wird öffentlich auf GitHub entwickelt. Die Web-App, auf der qrdx.dev läuft, mit Editor, dynamischen QR-Codes, gehosteten Seiten und Scan-Analysen, steht unter der AGPL-3.0. Die React-Bibliothek, die CLI, die Plugins, der Agent-Skill und die shadcn/ui-Komponenten stehen unter der MIT-Lizenz. Die Business-Funktionen (Single Sign-on für Workspaces, das Audit-Log, das Kundenportal und Kundenberichte, White-Label-Seiten mit eigenem CSS und Conversion-Tracking) fallen unter die QRdx Commercial License.",
+    "intro2": "Du kannst QRdx kostenlos auf qrdx.dev nutzen, eine eigene Kopie betreiben oder QR-Codes mit der Bibliothek in deine App einbauen. QR-Codes zu erstellen bleibt für alle kostenlos. Das Projekt finanziert sich über die Pro- und Business-Pläne und über Enterprise-Verträge.",
     "facts": {
       "agpl": "App unter AGPL-3.0",
       "mit": "Bibliothek und CLI unter MIT",
@@ -3016,11 +3022,16 @@
       "cliBody": "Gestaltete QR-Codes aus dem Terminal oder einem CI-Job",
       "pluginsName": "Plugins",
       "pluginsBody": "Die Chrome-Erweiterung, die Plugins für Figma, Raycast und Canva und der Rest des Plugin-Ordners",
+      "skillName": "Agent-Skill",
+      "skillBody": "generate-qr, das Coding-Agents beibringt, QR-Codes mit der CLI zu erstellen",
+      "registryName": "shadcn/ui-Komponenten",
+      "registryBody": "Der QR-Code, der Scanner und weitere Komponenten, die npx shadcn add in dein Projekt installiert",
       "eeName": "Business-Funktionen",
-      "eeBody": "Single Sign-on für Workspaces und das Audit-Log des Workspaces"
+      "eeBody": "Single Sign-on für Workspaces, das Audit-Log, das Kundenportal und Kundenberichte, White-Label-Seiten mit eigenem CSS und Conversion-Tracking"
     },
     "eeLicense": "QRdx Commercial License",
-    "eeNote": "Du kannst den Code in den ee-Ordnern lesen, testen und dazu beitragen, für den Einsatz in der Produktion brauchst du aber eine schriftliche Vereinbarung mit QRdx. Auf einer selbst gehosteten Instanz bleiben diese beiden Funktionen deaktiviert, solange QRDX_EE_LICENSE nicht gesetzt ist, und alles andere funktioniert auch ohne sie.",
+    "eeNote": "Du kannst den Code in den ee-Ordnern lesen, testen und dazu beitragen. Für den Einsatz in Produktion brauchst du aber eine schriftliche Vereinbarung mit QRdx. Auf einer selbst gehosteten Instanz bleiben diese Funktionen deaktiviert, solange QRDX_EE_LICENSE keinen gültigen Schlüssel enthält. Den stellt QRdx mit der Vereinbarung aus, und dein Server prüft ihn offline. Alles andere funktioniert auch ohne sie.",
+    "eeAgreement": "Enterprise-Verträge decken den Betrieb auf deinem eigenen Server ab: <link>Frag auf der Enterprise-Seite nach</link> oder schreib an {email}.",
     "waysEyebrow": "So nutzt du es",
     "waysTitle": "Wähle, wie du es betreibst",
     "ways": {
@@ -3054,8 +3065,10 @@
     "licenses": {
       "agplTitle": "Die App (AGPL-3.0)",
       "agplBody": "Du kannst sie ausführen, verändern und hosten. Wenn du eine veränderte Version als Netzwerkdienst betreibst, musst du ihren Quellcode den Nutzern unter derselben Lizenz anbieten.",
-      "mitTitle": "Bibliothek, CLI und Plugins (MIT)",
-      "mitBody": "Nutze sie in jedem Projekt, auch mit Closed Source, solange der Copyright- und Lizenzhinweis beim Code bleibt. Releases vor qrdx 0.0.47 und @qrdx/cli 0.0.5 standen unter AGPL-3.0-or-later.",
+      "mitTitle": "Die Bibliothek und Tools (MIT)",
+      "mitBody": "Die qrdx-Bibliothek, die CLI, die Plugins, der Agent-Skill und die shadcn/ui-Komponenten. Du kannst sie in jedem Projekt nutzen, auch in Closed-Source-Projekten, solange der Copyright- und Lizenzhinweis beim Code bleibt. Releases vor qrdx 0.0.47 und @qrdx/cli 0.0.5 standen unter AGPL-3.0-or-later.",
+      "eeTitle": "Business-Funktionen (QRdx Commercial License)",
+      "eeBody": "Du kannst den Code in den ee-Ordnern lesen, ändern und testen. Für den Einsatz dieser Business-Funktionen in Produktion auf deinem eigenen Server brauchst du eine schriftliche Vereinbarung mit QRdx.",
       "trademarkTitle": "Name und Logo",
       "trademarkBody": "Der Name QRdx und das Logo sind Marken. Ein Fork oder ein öffentlicher Dienst, der aus dem Code entsteht, braucht einen eigenen Namen und ein eigenes Logo; die <link>Markenrichtlinie</link> nennt die Details."
     },
@@ -3087,11 +3100,11 @@
     "faqTitle": "Fragen zu Open Source",
     "faq": {
       "openQuestion": "Ist QRdx wirklich Open Source?",
-      "openAnswer": "Ja. Der Quellcode liegt auf GitHub, die Web-App steht unter der AGPL-3.0-or-later, und die qrdx-Bibliothek, @qrdx/cli und die Plugins stehen unter MIT. Zwei Business-Funktionen, Single Sign-on für Workspaces und das Audit-Log, liegen in ee-Ordnern unter der QRdx Commercial License: Du kannst diesen Code lesen, für den Produktiveinsatz brauchst du aber eine Vereinbarung mit QRdx.",
+      "openAnswer": "Ja. Der Quellcode liegt auf GitHub, die Web-App steht unter der AGPL-3.0-or-later, und die qrdx-Bibliothek, @qrdx/cli, die Plugins, der Agent-Skill und die shadcn/ui-Komponenten stehen unter der MIT-Lizenz. Die Business-Funktionen (Single Sign-on für Workspaces, das Audit-Log, das Kundenportal und Kundenberichte, White-Label-Seiten mit eigenem CSS und Conversion-Tracking) liegen in ee-Ordnern unter der QRdx Commercial License: Du kannst diesen Code lesen, für den Einsatz in Produktion brauchst du aber eine Vereinbarung mit QRdx.",
       "githubQuestion": "Wo finde ich den QRdx-Quellcode auf GitHub?",
       "githubAnswer": "Unter github.com/qrdxinc/qrdx. Es ist ein einziges Monorepo mit der Web-App, der qrdx-Bibliothek, dem CLI, den Plugins und der Dokumentation.",
       "freeQuestion": "Kann ich QRdx kostenlos selbst hosten?",
-      "freeAnswer": "Ja. Es fällt keine Lizenzgebühr an, du zahlst nur für deinen eigenen Server und deine Datenbank. Eine selbst gehostete Instanz unterstützt dynamische QR-Codes, gehostete Seiten und Scan-Analysen. Single Sign-on und das Audit-Log bleiben deaktiviert, solange du keinen QRdx-Lizenzschlüssel hast.",
+      "freeAnswer": "Ja. Für die App fällt keine Lizenzgebühr an, du zahlst nur für deinen eigenen Server und deine Datenbank. Eine selbst gehostete Instanz betreibt dynamische QR-Codes, gehostete Seiten und Scan-Analysen. Die Business-Funktionen in den ee-Ordnern sind die Ausnahme: Single Sign-on, das Audit-Log, das Kundenportal, White-Label-Seiten und Conversion-Tracking bleiben deaktiviert, solange QRDX_EE_LICENSE keinen gültigen Schlüssel enthält. Den stellt QRdx mit einem Enterprise-Vertrag aus, und dein Server prüft ihn offline. Für den Einsatz in Produktion brauchst du diese Vereinbarung.",
       "needQuestion": "Was brauche ich, um QRdx selbst zu hosten?",
       "needAnswer": "Du brauchst Docker mit Compose v2 oder für die manuelle Einrichtung Node.js 22 und Bun 1.4 sowie eine Postgres-Datenbank: die, die docker-compose.yml startet, oder Neon. Setze NEXT_PUBLIC_APP_URL, DATABASE_URL und BETTER_AUTH_SECRET und richte eine Anmeldemöglichkeit ein, mit einer GitHub- oder Google-OAuth-App oder per E-Mail-Code über Resend.",
       "closedQuestion": "Kann ich die QR-Code-Bibliothek in einer Closed-Source-App verwenden?",
@@ -7864,6 +7877,7 @@
         "clients": {
           "page": {
             "theClientPortalIsntAvailable": "Das Kundenportal ist auf diesem Server noch nicht verfügbar.",
+            "theClientPortalIsOff": "Das Kundenportal ist auf diesem Server nicht verfügbar, deshalb können Kunden es nicht öffnen. Du kannst sie trotzdem entfernen.",
             "theClientPortalIsPart": "Das Kundenportal ist Teil von {business}",
             "inviteAClientByEmail": "Lade einen Kunden per E-Mail ein und wähle die Ordner aus, die er sieht: seine Codes, Scan-Analysen und gehosteten Seiten, schreibgeschützt, unter deinem Namen, Logo und deiner Farbe.",
             "askAWorkspaceOwnerOr": "Bitte einen Workspace-Inhaber oder ein Mitglied mit Abrechnungsrechten, das Upgrade durchzuführen.",

@@ -20,6 +20,7 @@ import {
 import {
   isSitePath,
   lowerCasedSitePrefix,
+  SITE_COUNTRY_HEADER,
   SITE_KEY_HEADER,
   siteZoneGroups,
 } from "@repo/next-config/site-zone";
@@ -33,6 +34,7 @@ import {
   isSessionHeld,
 } from "@/lib/account/session-origin-server";
 import { isHomePath } from "@/lib/home-path";
+import { countryFromHeaders } from "@/lib/region";
 import { signInPath } from "@/lib/safe-redirect";
 import { cspOptionsFromEnv } from "@/lib/security/csp";
 import { WORKSPACE_HEADER } from "@/lib/workspace-paths";
@@ -108,21 +110,35 @@ const forSite = (request: NextRequest) =>
   isSitePath(request.nextUrl.pathname, SITE_GROUPS_ON) &&
   onPlatformHost(request.headers.get("host"));
 
+/** A country as the geo headers name it: two capital letters, not "XX" (unknown). */
+const COUNTRY_CODE = /^(?!XX$)[A-Z]{2}$/;
+
 /**
  * A site page or asset: public, so no session is read and no policy is
  * set here (its pages keep this app's prerendered-page rules from
  * next.config.ts, as the docs' do). It gets the site's key, so the site can
  * tell requests that came through this app; any copy the browser sent is
  * dropped, and so are the console's key header and the workspace header.
+ * It also gets the visitor's country from this request's geo headers
+ * (lib/region.ts, as /pricing reads them here), for the site's currency;
+ * a copy the browser sent is dropped.
  */
 function toSite(request: NextRequest): NextResponse {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.delete(SITE_KEY_HEADER);
+  requestHeaders.delete(SITE_COUNTRY_HEADER);
   // Never the console's key on a site request.
   requestHeaders.delete(CONSOLE_KEY_HEADER);
   requestHeaders.delete(WORKSPACE_HEADER);
   if (env.SITE_ZONE_KEY) {
     requestHeaders.set(SITE_KEY_HEADER, env.SITE_ZONE_KEY);
+  }
+  // For the site only. This app must never read or trust it: a browser's
+  // copy is replaced here, on site requests, and nowhere else
+  // (tests/repo/visitor-country-header.test.ts).
+  const country = countryFromHeaders(request.headers);
+  if (country && COUNTRY_CODE.test(country)) {
+    requestHeaders.set(SITE_COUNTRY_HEADER, country);
   }
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
@@ -300,6 +316,21 @@ export const config = {
     "/:prefix([cC][oO][mM][pP][aA][rR][eE])/:path*",
     "/:prefix([qQ][rR]-[cC][oO][dD][eE][sS]-[fF][oO][rR])/:path*",
     "/:prefix([qQ][rR]-[cC][oO][dD][eE][sS]-[oO][nN])/:path*",
+    "/:prefix([qQ][rR]-[cC][oO][dD][eE]-[gG][eE][nN][eE][rR][aA][tT][oO][rR])/:path*",
+    "/:prefix([bB][aA][rR][cC][oO][dD][eE]-[gG][eE][nN][eE][rR][aA][tT][oO][rR])/:path*",
+    "/:prefix([sS][eE][cC][uU][rR][iI][tT][yY])/:path*",
+    "/:prefix([gG][uU][aA][rR][aA][nN][tT][eE][eE])/:path*",
+    "/:prefix([pP][lL][uU][gG][iI][nN][sS])/:path*",
+    "/:prefix([lL][eE][gG][aA][lL])/:path*",
+    "/:prefix([cC][hH][aA][nN][gG][eE][lL][oO][gG][sS])/:path*",
+    "/:prefix([tT][oO][oO][lL][sS])/:path*",
+    "/:prefix([dD][yY][nN][aA][mM][iI][cC]-[qQ][rR]-[cC][oO][dD][eE])/:path*",
+    "/:prefix([qQ][rR]-[cC][oO][dD][eE]-[aA][pP][iI])/:path*",
+    "/:prefix([oO][pP][eE][nN]-[sS][oO][uU][rR][cC][eE]-[qQ][rR]-[cC][oO][dD][eE]-[gG][eE][nN][eE][rR][aA][tT][oO][rR])/:path*",
+    "/:prefix([eE][nN][tT][eE][rR][pP][rR][iI][sS][eE])/:path*",
+    "/:prefix([pP][rR][iI][cC][iI][nN][gG])/:path*",
+    "/:prefix([iI][nN][tT][eE][gG][rR][aA][tT][iI][oO][nN][sS])/:path*",
+    "/:prefix([tT][eE][mM][pP][lL][aA][tT][eE][sS])/:path*",
     "/:prefix([sS][iI][tT][eE]-[sS][tT][aA][tT][iI][cC])/:path*",
     // The home page (lib/home-path.ts): signed-in visitors go to their
     // dashboard. It's English only: /en and /es, /pt-br and the other

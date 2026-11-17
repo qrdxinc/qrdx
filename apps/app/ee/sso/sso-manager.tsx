@@ -542,12 +542,15 @@ function UpdateDialog({
 function ConnectionCard({
   connection,
   canManage,
+  licensed,
   allowed,
   required,
   report,
 }: {
   connection: SsoConnectionView;
   canManage: boolean;
+  /** The server has the licence for SSO */
+  licensed: boolean;
   allowed: boolean;
   /** "Require single sign-on" is on */
   required: boolean;
@@ -595,7 +598,9 @@ function ConnectionCard({
                   ? required
                     ? `People at ${connection.domain} sign in with ${PROTOCOL_NAMES[connection.protocol]} only.`
                     : `People at ${connection.domain} can sign in with ${PROTOCOL_NAMES[connection.protocol]}.`
-                  : "Paused: the workspace's plan doesn't include single sign-on."
+                  : licensed
+                    ? "Paused: the workspace's plan doesn't include single sign-on."
+                    : "Paused: single sign-on isn't available on this server."
                 : "Nobody can sign in with it until the domain is verified."}
             </CardDescription>
           </div>
@@ -938,8 +943,15 @@ function JoinRoleCard({
 
 /** Settings → Single sign-on, below the header. */
 export function SsoManager({ overview }: { overview: SsoOverview }) {
-  const { connection, canManage, allowed, joinRole, draft, requirement } =
-    overview;
+  const {
+    connection,
+    canManage,
+    licensed,
+    allowed,
+    joinRole,
+    draft,
+    requirement,
+  } = overview;
   const report: Reporter = (result) => {
     if (result.success) return result.data;
     return null;
@@ -969,6 +981,7 @@ export function SsoManager({ overview }: { overview: SsoOverview }) {
           allowed={allowed}
           canManage={canManage}
           connection={connection}
+          licensed={licensed}
           report={report}
           required={requirement.on}
         />

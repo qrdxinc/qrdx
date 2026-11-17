@@ -12,11 +12,7 @@ import {
   WHATS_NEW_LIMIT,
 } from "@/lib/changelog-feed";
 import { changelogSource } from "@/lib/content-source";
-import { hasMedia, mediaUrl } from "@/lib/media";
-
-/** A changelog picture's URL: an uploaded media key's, else the site path. */
-export const changelogPictureUrl = (path: string) =>
-  hasMedia(path) ? mediaUrl(path) : path;
+import { mediaUrl, pictureUrl } from "@/lib/media";
 
 /**
  * Every changelog entry, newest first, for the app's "What's new" panel.
@@ -38,10 +34,9 @@ export function getChangelogFeed(limit = WHATS_NEW_LIMIT): ChangelogItem[] {
         ...(entry.data.version ? { version: entry.data.version } : {}),
         tags: entry.data.tags ?? [],
         href: `/changelogs#${slug}`,
-        ...(image ? { image: changelogPictureUrl(image) } : {}),
-        ...(image && imageDark
-          ? { imageDark: changelogPictureUrl(imageDark) }
-          : {}),
+        // Pictures: an uploaded media key's URL, else the site path.
+        ...(image ? { image: pictureUrl(image) } : {}),
+        ...(image && imageDark ? { imageDark: pictureUrl(imageDark) } : {}),
         ...(image && imageAlt ? { imageAlt } : {}),
         // Clips are never served from public/ (lib/media.ts).
         ...(video ? { video: mediaUrl(video) } : {}),

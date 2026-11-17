@@ -1,6 +1,6 @@
 // The docs are English only. The docs URLs of the other languages
 // (/es/docs/..., their .md copies, the old /docs-md route) redirect to the
-// English page, 307 for now, in this app's own next.config.ts: on qrdx.dev
+// English page for good (308), in this app's own next.config.ts: on qrdx.dev
 // the main app answers them first (apps/app/tests/lib/docs-zone.test.ts).
 import { createRequire } from "node:module";
 import { TRANSLATED_LOCALES } from "@repo/i18n/config";
@@ -74,7 +74,7 @@ describe("next.config.ts redirects", () => {
   });
 
   it.each(formerDocsSegments())(
-    "/%s/docs and its pages go to the English page, for now (307)",
+    "/%s/docs and its pages go to the English page for good (308)",
     (segment) => {
       for (const [path, to] of [
         [`/${segment}/docs`, "/docs"],
@@ -86,8 +86,8 @@ describe("next.config.ts redirects", () => {
       ] as const) {
         const found = follow(redirects, path);
         expect(found?.target, path).toBe(to);
-        // `permanent: false` is a 307 in Next.
-        expect(found?.rule.permanent, path).toBe(false);
+        // `permanent: true` is a 308 in Next.
+        expect(found?.rule.permanent, path).toBe(true);
         expect(found?.rule.has, path).toBeUndefined();
       }
     },
@@ -104,7 +104,7 @@ describe("next.config.ts redirects", () => {
   ])("the Markdown copy %s goes to %s", (path, to) => {
     const found = follow(redirects, path);
     expect(found?.target).toBe(to);
-    expect(found?.rule.permanent).toBe(false);
+    expect(found?.rule.permanent).toBe(true);
   });
 
   it("leaves the English docs and their Markdown copies alone", () => {

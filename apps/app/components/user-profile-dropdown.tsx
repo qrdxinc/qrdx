@@ -27,6 +27,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { markSignOutIntent } from "@/app/(app)/(auth)/sign-out/_lib/intent";
+import { useAdminHref } from "@/components/admin-href";
 import { hasAdminRole } from "@/components/app-shell/nav-config";
 import {
   LocaleLink as Link,
@@ -74,6 +75,8 @@ export function UserProfileDropdown({
   const { openAuthDialog } = useAuthStore();
   const router = useRouter();
   const { subscriptionStatus } = useSubscription();
+  // /admin, or the console at its own address (another host: a plain link).
+  const adminHref = useAdminHref();
   const isPro = plan
     ? plan !== "free"
     : subscriptionStatus?.isSubscribed === true;
@@ -202,9 +205,15 @@ export function UserProfileDropdown({
             ))}
           {hasAdminRole(session.user.role) && (
             <DropdownMenuItem asChild>
-              <Link href="/admin">
-                <Lock /> {t("admin")}
-              </Link>
+              {adminHref.startsWith("/") ? (
+                <Link href={adminHref}>
+                  <Lock /> {t("admin")}
+                </Link>
+              ) : (
+                <a href={adminHref}>
+                  <Lock /> {t("admin")}
+                </a>
+              )}
             </DropdownMenuItem>
           )}
           <DropdownMenuSeparator className="bg-border opacity-80" />

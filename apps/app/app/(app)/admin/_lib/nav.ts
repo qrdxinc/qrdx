@@ -97,9 +97,10 @@ export interface AdminNavLink extends AdminNavItem {
 /**
  * The menu as this app shows it. With the console on, its sections are
  * served there whichever app has a copy, so their links load a new page:
- * at the same path (proxied, `consoleEnabled`), or at the console's own
- * address (`adminConsoleUrl`, ADMIN_CONSOLE_URL), where the href becomes
- * https://admin.qrdx.dev/growth and the like.
+ * at the same path (proxied, `consoleEnabled`, its five sections), or at
+ * the console's own address (`adminConsoleUrl`, ADMIN_CONSOLE_URL, every
+ * entry), where the href becomes https://console.qrdx.dev/growth and the
+ * like. (With ADMIN_CONSOLE_URL set, /admin itself redirects there too.)
  */
 export function adminNavLinks(
   consoleEnabled: boolean,

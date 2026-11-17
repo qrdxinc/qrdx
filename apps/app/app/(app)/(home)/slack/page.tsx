@@ -8,7 +8,6 @@ import {
   Mouse,
 } from "iconsax-reactjs";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   type BotCommand,
@@ -170,9 +169,9 @@ export default function SlackBotPage() {
         description: (
           <>
             The same Slack app can also post{" "}
-            <Link href="/integrations/slack" className={textLinkClass}>
+            <a href="/integrations/slack" className={textLinkClass}>
               QRdx alerts
-            </Link>{" "}
+            </a>{" "}
             to a channel on the Business plan. Each is added on its own.
           </>
         ),

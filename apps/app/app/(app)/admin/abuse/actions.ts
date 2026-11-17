@@ -3,14 +3,18 @@
 import { abuseReport, database as db, qrCode } from "@repo/database";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
-import { setFileBlocked } from "@/lib/files/admin";
 import { ABUSE_REPORT_STATUSES } from "@/lib/safety/abuse-reasons";
 import {
   type AdminActionResult,
   adminError,
   runAdminAction,
 } from "../_lib/action";
+import {
+  blockReportedFile,
+  findAbuseReport as findReport,
+} from "../_lib/operations";
 import { adminId, optionalReason } from "../_lib/rules";
+import { blockFileSchema as fileSchema } from "../_lib/schemas";
 
 const statusSchema = z.object({
   reportId: adminId,
@@ -18,21 +22,6 @@ const statusSchema = z.object({
   reason: optionalReason,
 });
 const codeSchema = z.object({ reportId: adminId, reason: optionalReason });
-const fileSchema = z.object({
-  reportId: adminId,
-  fileId: adminId,
-  reason: optionalReason,
-});
-
-async function findReport(reportId: string) {
-  const [report] = await db
-    .select()
-    .from(abuseReport)
-    .where(eq(abuseReport.id, reportId))
-    .limit(1);
-  if (!report) throw adminError("Report not found", 404);
-  return report;
-}
 
 /** Marks a report actioned, dismissed or open again. */
 export async function setAbuseReportStatusAction(
@@ -165,7 +154,7 @@ export async function restoreReportedCodeAction(
 /**
  * Blocks a file named by the report (takedown); the report is actioned.
  * setFileBlocked writes its own "file.block" audit entry; this one records
- * the report it came from.
+ * the report it came from (../_lib/operations.ts).
  */
 export async function blockReportedFileAction(
   input: z.input<typeof fileSchema>,
@@ -173,22 +162,6 @@ export async function blockReportedFileAction(
   return runAdminAction(
     { action: "abuse_report.block_file", schema: fileSchema },
     input,
-    async (admin, { reportId, fileId, reason }) => {
-      await findReport(reportId);
-      await setFileBlocked(admin, fileId, true, {
-        reason: reason || `Abuse report ${reportId}`,
-      });
-      await db
-        .update(abuseReport)
-        .set({ status: "actioned" })
-        .where(eq(abuseReport.id, reportId));
-      return {
-        audit: {
-          targetType: "abuse_report",
-          targetId: reportId,
-          metadata: { fileId },
-        },
-      };
-    },
+    (admin, data) => blockReportedFile(admin, data),
   );
 }

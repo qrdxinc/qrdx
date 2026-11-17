@@ -368,13 +368,20 @@ export function planForSubscriptionProduct(productId: string): Plan {
   return planForProductId(productId) ?? "pro";
 }
 
-/** A user's own plan, from their entitled Polar subscription. */
-export const getPlan = cache(async (userId: string): Promise<Plan> => {
-  const subscription = await getMyActiveSubscription(userId);
+/** The plan an entitled subscription grants; Free without one. */
+export function planForSubscription(
+  subscription: { productId: string } | null,
+): Plan {
   return subscription
     ? planForSubscriptionProduct(subscription.productId)
     : "free";
-});
+}
+
+/** A user's own plan, from their entitled Polar subscription. */
+export const getPlan = cache(
+  async (userId: string): Promise<Plan> =>
+    planForSubscription(await getMyActiveSubscription(userId)),
+);
 
 /**
  * Plan for resources owned by an organization: the best plan among the

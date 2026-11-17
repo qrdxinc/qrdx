@@ -1781,7 +1781,7 @@
       },
       "products": {
         "name": "Product codes",
-        "detail": "EAN/UPC numbers and GS1 data (GTIN, batch, expiry), including GS1 Digital Link."
+        "detail": "EAN, UPC and ITF-14 numbers and GS1 data (GTIN, batch, expiry), including GS1 Digital Link."
       },
       "text": {
         "name": "Plain text",
@@ -8276,6 +8276,7 @@
         "clients": {
           "page": {
             "theClientPortalIsntAvailable": "The client portal isn't available on this server yet.",
+            "theClientPortalIsOff": "The client portal isn't available on this server, so clients can't open it. You can still remove them.",
             "theClientPortalIsPart": "The client portal is part of {business}",
             "inviteAClientByEmail": "Invite a client by email and choose the folders they see: their codes, scan analytics and hosted pages, read-only, under your name, logo and color.",
             "askAWorkspaceOwnerOr": "Ask a workspace owner or billing member to upgrade.",

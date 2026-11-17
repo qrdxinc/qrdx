@@ -192,6 +192,43 @@ export function createCircuitBreaker({
 export type CircuitBreaker = ReturnType<typeof createCircuitBreaker>;
 export type MemoryLimiter = ReturnType<typeof createMemoryLimiter>;
 
+// ─── Fail closed ────────────────────────────────────────────────────────────
+
+/**
+ * Thrown by a fail-closed limiter (createRateLimiter's `failClosed`) when
+ * Upstash can't judge the request: not configured, an error, or a timeout.
+ * The caller refuses the request (a 503) instead of letting it through.
+ */
+export class RateLimitUnavailableError extends Error {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(message, options);
+    this.name = "RateLimitUnavailableError";
+  }
+}
+
+/**
+ * One limiter that only Upstash may judge: an error, or a timeout (where
+ * Upstash itself would allow the request), throws RateLimitUnavailableError
+ * instead of falling back to memory. For the few endpoints that must not run
+ * at all without their global limit.
+ */
+export function withoutFallback(
+  upstash: (identifier: string, rate?: number) => Promise<LimitResult>
+): (identifier: string, rate?: number) => Promise<LimitResult> {
+  return async (identifier, rate) => {
+    let result: LimitResult;
+    try {
+      result = await upstash(identifier, rate);
+    } catch (error) {
+      throw new RateLimitUnavailableError("Upstash failed", { cause: error });
+    }
+    if (result.reason === "timeout") {
+      throw new RateLimitUnavailableError("Upstash timed out");
+    }
+    return result;
+  };
+}
+
 /**
  * One limiter: Upstash while the breaker allows it, the in-memory window
  * otherwise. An Upstash timeout (Upstash itself allows the request) or error

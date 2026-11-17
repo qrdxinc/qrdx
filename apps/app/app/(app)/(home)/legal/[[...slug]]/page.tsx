@@ -21,7 +21,8 @@ export default async function LegalPage(
     notFound();
   }
 
-  const { body: Mdx, lastModified } = page.data;
+  // The day the page last changed in substance, from its frontmatter.
+  const { body: Mdx, lastUpdated } = page.data;
   // The page tree keeps the order from content/legal/meta.json.
   const pages = legalSource.pageTree.children.flatMap((node) =>
     node.type === "page" && isPathAvailable(node.url) ? [node] : [],
@@ -60,18 +61,20 @@ export default async function LegalPage(
           <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
             {page.data.title}
           </h1>
-          {lastModified && (
-            <p className="text-sm text-muted-foreground">
-              Last updated{" "}
-              <time dateTime={new Date(lastModified).toISOString()}>
-                {new Date(lastModified).toLocaleDateString("en-US", {
+          <p className="text-sm text-muted-foreground">
+            Last updated{" "}
+            <time dateTime={lastUpdated}>
+              {new Date(`${lastUpdated}T00:00:00Z`).toLocaleDateString(
+                "en-US",
+                {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
-                })}
-              </time>
-            </p>
-          )}
+                  timeZone: "UTC",
+                },
+              )}
+            </time>
+          </p>
         </header>
 
         <div className="prose prose-neutral dark:prose-invert max-w-none">

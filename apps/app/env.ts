@@ -191,10 +191,11 @@ export const env = validateTogether(() =>
       // (lib/admin-console), and then must be 32 characters or more
       // (openssl rand -hex 32): next.config.ts fails the build otherwise.
       CONSOLE_ZONE_KEY: z.string().min(1).optional(),
-      // The console at its own address, e.g. https://admin.qrdx.dev: when
-      // set (it needs CONSOLE_ZONE_KEY, above, or the build fails),
-      // /admin/<section> for its five sections redirects there, the admin
-      // menu links there, and the console signs admins in through this app's
+      // The console at its own address, e.g. https://console.qrdx.dev: when
+      // set (it needs CONSOLE_ZONE_KEY, above, or the build fails), every
+      // /admin URL redirects there (/admin/<section>… to /<section>…), the
+      // user menu's Admin link points there, the console confirms sensitive
+      // actions on /oauth/confirm, and it signs admins in through this app's
       // OAuth provider as a first-party client (lib/admin-console).
       // Decided at build time like CONSOLE_ORIGIN (next.config.ts inlines
       // it). An origin only: https, or http on localhost for development.
@@ -205,6 +206,15 @@ export const env = validateTogether(() =>
             "must be an origin only (https://host, or http://localhost:port), with no path or query",
         })
         .optional(),
+      // Signs the back-office console's calls to /api/internal/console/*
+      // (lib/console-internal): the console holds the same value, and the
+      // endpoints answer only requests signed with it. Its own secret, not
+      // CONSOLE_ZONE_KEY. 32 characters or more (openssl rand -hex 32).
+      // Unset, those endpoints are off (404); set but shorter, the app
+      // refuses to start, rather than run with a guessable key. They also
+      // need Upstash (KV_REST_API_*), for the replay check and the rate
+      // limits: without it they answer 503.
+      CONSOLE_INTERNAL_SECRET: z.string().min(32).optional(),
 
       // The marketing site (a separate app, @repo/next-config/site-zone),
       // e.g. https://qrdx-site.vercel.app: when set, next.config.ts proxies
@@ -328,6 +338,7 @@ export const env = validateTogether(() =>
       SITE_ZONE_KEY: process.env.SITE_ZONE_KEY,
       SITE_ZONE_GROUPS: process.env.SITE_ZONE_GROUPS,
       ADMIN_CONSOLE_URL: process.env.ADMIN_CONSOLE_URL,
+      CONSOLE_INTERNAL_SECRET: process.env.CONSOLE_INTERNAL_SECRET,
       OPENAI_APPS_CHALLENGE: process.env.OPENAI_APPS_CHALLENGE,
       NODE_ENV: process.env.NODE_ENV,
       NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,

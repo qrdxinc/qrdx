@@ -69,7 +69,7 @@ import { QRCode } from "qrdx";
 | `partMarkers` | `boolean` | `false` | For editors: marks the drawn parts with `data-qrdx-part`. Exports never include it |
 | `isOGContext` | `boolean` | `false` | Draws the logo as a positioned `<img>` for Open Graph image renderers |
 
-`QRCode` takes these props only; any other prop is dropped. `QRCodeSVG` puts any other prop (`className`, `aria-label`, `role`, `data-*`, …) on the `<svg>`, or on the frame's outer `<svg>` when there is a frame. Event handlers are left out of the markup.
+`QRCode` and `QRCodeSVG` put any other prop (`className`, `aria-label`, `role`, `data-*`, …) on the `<svg>`, or on the frame's outer `<svg>` when there is a frame. `QRCode` does this from qrdx 0.0.56; older versions drop those props. Event handlers are left out of the markup.
 
 ### QRCodeSVG
 

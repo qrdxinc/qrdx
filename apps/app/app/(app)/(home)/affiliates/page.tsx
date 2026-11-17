@@ -107,7 +107,7 @@ export default function AffiliatesPage() {
             </Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/legal/affiliate-terms">Read the terms</Link>
+            <a href="/legal/affiliate-terms">Read the terms</a>
           </Button>
         </div>
       </ToolHero>
@@ -163,12 +163,12 @@ export default function AffiliatesPage() {
           </h2>
           <p className="text-sm text-muted-foreground">
             The full text is in the{" "}
-            <Link
+            <a
               className="font-medium text-foreground underline underline-offset-4"
               href="/legal/affiliate-terms"
             >
               affiliate terms
-            </Link>
+            </a>
             .
           </p>
         </div>
