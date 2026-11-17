@@ -1,6 +1,6 @@
 import { cn } from "@repo/design-system/lib/utils";
 import { easterEggUrl } from "@/lib/easter-eggs";
-import { buildQrImageUrl, qrOptionsSchema } from "@/lib/qr-render";
+import { buildQrImageUrl, qrOptionsSchema } from "@/lib/qr-image-url";
 
 const PROMPT =
   "Make a QR code for https://example.com in our brand blue, #155dfc, with rounded modules.";

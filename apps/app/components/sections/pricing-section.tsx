@@ -12,7 +12,6 @@ import { cn } from "@repo/design-system/lib/utils";
 import { Book1, Code1, Driver } from "iconsax-reactjs";
 import { useLocale, useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import { createCheckout } from "@/actions/checkout";
 import { useAvailability } from "@/components/availability-provider";
 import { AsciiField, RadialHalo } from "@/components/fx";
 import { LocaleLink } from "@/components/i18n/locale-link";
@@ -25,6 +24,7 @@ import { PricingOffers } from "@/components/sections/pricing/pricing-offers";
 import { maxYearlySavingsPercent } from "@/components/sections/pricing/savings";
 import { siteConfig } from "@/config/site";
 import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
+import { useSubscription } from "@/lib/hooks/use-subscription";
 import {
   BILLING_INTERVALS,
   type BillingInterval,
@@ -38,13 +38,19 @@ import {
   type PricingCurrency,
 } from "@/lib/pricing";
 import { DEFAULT_NEXT_PATH } from "@/lib/safe-redirect";
+import { startCheckout as requestCheckout } from "@/lib/widget-routes/client";
 import { useAuthStore } from "@/store/auth-store";
 
 interface PricingSectionProps {
   /** Display currency (lib/region); checkout currency is Polar's choice. */
   currency: PricingCurrency;
-  /** The signed-in user's own plan; null when signed out. */
-  currentPlan: Plan | null;
+  /**
+   * The signed-in user's own plan as the server read it; null when signed
+   * out. Left out (a page that can't read the session on the server), the
+   * cards read it in the browser: the session, then GET /api/subscription.
+   * Given, it shows at once and the browser's answer replaces it.
+   */
+  currentPlan?: Plan | null;
   /** The intro under the title (buildPricingIntro: only what's offered here). */
   description: string;
   /** Card feature lists, built from lib/plans on the server. */
@@ -211,7 +217,7 @@ function PriceLine({
 
 export function PricingSection({
   currency,
-  currentPlan,
+  currentPlan: serverPlan,
   description,
   highlights,
 }: PricingSectionProps) {
@@ -229,6 +235,14 @@ export function PricingSection({
   const [pendingPlan, setPendingPlan] = useState<PaidPlan | null>(null);
   const [isPending, startTransition] = useTransition();
   const { data: session } = authClient.useSession();
+  // The visitor's plan from GET /api/subscription (signed in only; the
+  // header's account menu asks for the same query, so it's one request).
+  const { subscriptionStatus, isLoading: planLoading } = useSubscription();
+  const currentPlan: Plan | null =
+    subscriptionStatus?.plan ?? serverPlan ?? null;
+  // Signed in, with no plan from the server, until the browser has it: the
+  // paid buttons wait rather than offer an upgrade to someone who has one.
+  const planPending = serverPlan === undefined && planLoading;
   const { openAuthDialog } = useAuthStore();
   const isSignedIn = Boolean(session?.user) || currentPlan !== null;
   // Agency tools: Business yearly can be paid by invoice where QRdx offers it.
@@ -238,7 +252,7 @@ export function PricingSection({
   const startCheckout = (plan: PaidPlan, billing: BillingInterval) => {
     setPendingPlan(plan);
     startTransition(async () => {
-      const result = await createCheckout({ plan, interval: billing });
+      const result = await requestCheckout({ plan, interval: billing });
       if ("url" in result) {
         track("checkout_started", { plan, interval: billing });
         window.location.assign(result.url);
@@ -350,7 +364,7 @@ export function PricingSection({
       button: (
         <Button
           className="w-full"
-          disabled={isPending}
+          disabled={isPending || planPending}
           onClick={() => onUpgrade(plan)}
           variant={plan === "pro" ? "default" : "outline"}
         >

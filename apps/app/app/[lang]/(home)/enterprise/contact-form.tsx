@@ -15,10 +15,6 @@ import { Textarea } from "@repo/design-system/components/ui/textarea";
 import { TickCircle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useActionState, useEffect, useState } from "react";
-import {
-  type EnterpriseFormState,
-  submitEnterpriseRequest,
-} from "@/actions/enterprise-requests";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import { TurnstileWidget } from "@/components/safety/turnstile-widget";
 import {
@@ -27,9 +23,12 @@ import {
   TEAM_SIZES,
 } from "@/lib/enterprise";
 import { soundEvent } from "@/lib/sound/emit";
+import { sendEnterpriseRequest } from "@/lib/widget-routes/client";
+import type { EnterpriseFormState } from "@/types/action-results";
 
-// The contact form on /enterprise (actions/enterprise-requests.ts). Shown
-// only where the form is offered; the page shows the plain address too.
+// The contact form on /enterprise (actions/enterprise-requests.ts, through
+// POST /api/enterprise-requests, so any zone on this origin can render it).
+// Shown only where the form is offered; the page shows the plain address too.
 
 const initialState: EnterpriseFormState = { status: "idle" };
 
@@ -49,7 +48,7 @@ export function EnterpriseContactForm({
 }) {
   const t = useTranslations("enterprise.form");
   const [state, formAction, isPending] = useActionState(
-    submitEnterpriseRequest,
+    sendEnterpriseRequest,
     initialState,
   );
   // Controlled, so React's automatic form reset keeps them after an error.

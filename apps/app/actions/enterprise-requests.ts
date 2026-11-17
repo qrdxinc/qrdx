@@ -5,7 +5,6 @@ import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { headers } from "next/headers";
 import { ENTERPRISE_HONEYPOT_FIELD } from "@/lib/enterprise";
 import {
-  type EnterpriseRequestField,
   EnterpriseRequestInvalid,
   sendEnterpriseRequest,
 } from "@/lib/enterprise-requests";
@@ -13,26 +12,17 @@ import { HttpError } from "@/lib/error-response";
 import { enforceRateLimits, getClientIp } from "@/lib/request-guards";
 import { TURNSTILE_FIELD, verifyTurnstile } from "@/lib/safety/turnstile";
 import { logError } from "@/lib/shared";
+import type { EnterpriseFormState } from "@/types/action-results";
 
 // The contact form on /enterprise. Anyone can send it, signed in or not, so
 // on top of what pay-by-invoice requests do (an email to QRdx, a few a day)
 // it has the public forms' protections: per-IP limits, Cloudflare Turnstile
 // where it's set up (lib/safety/turnstile.ts) and a field only bots fill in.
+// The form sends it through POST /api/enterprise-requests
+// (app/api/enterprise-requests/route.ts); the state type lives in
+// types/action-results.ts.
 
-export type EnterpriseFormState =
-  | { status: "idle" }
-  | { status: "sent"; email: string }
-  | {
-      status: "error";
-      code:
-        | "invalid"
-        | "rateLimited"
-        | "check"
-        | "notSent"
-        | "unavailable"
-        | "unknown";
-      field?: EnterpriseRequestField;
-    };
+export type { EnterpriseFormState } from "@/types/action-results";
 
 const shortLimiter = createRateLimiter({
   limiter: slidingWindow(3, "10 m"),

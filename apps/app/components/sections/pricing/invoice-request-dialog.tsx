@@ -2,8 +2,9 @@
 
 // "Pay by invoice instead" on the Business card, yearly (agency tools).
 // Polar's checkout takes cards and wallets only, so this sends QRdx the
-// billing details (actions/invoice-requests.ts) and the invoice is arranged
-// by hand. Shown only where invoice requests are offered (qrdx.dev).
+// billing details (actions/invoice-requests.ts, through POST
+// /api/invoice-requests) and the invoice is arranged by hand. Shown only
+// where invoice requests are offered (qrdx.dev).
 
 import { ENTERPRISE_EMAIL } from "@repo/config";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
@@ -22,8 +23,8 @@ import { Textarea } from "@repo/design-system/components/ui/textarea";
 import { TickCircle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useId, useState } from "react";
-import { requestInvoiceAction } from "@/actions/invoice-requests";
 import { soundEvent } from "@/lib/sound/emit";
+import { requestInvoice } from "@/lib/widget-routes/client";
 
 export function InvoiceRequestDialog({
   open,
@@ -68,7 +69,7 @@ export function InvoiceRequestDialog({
     setBusy(true);
     setError(null);
     try {
-      const result = await requestInvoiceAction(fields);
+      const result = await requestInvoice(fields);
       if (!result.ok) {
         setError(result.error);
         soundEvent("error");

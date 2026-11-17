@@ -18,7 +18,7 @@ import { AsciiField } from "@/components/fx";
 import { NpmLagNotice } from "@/components/mdx/npm-status";
 import { IconTile } from "@/components/sections/tools/cards";
 import { changelogAnchor } from "@/lib/changelog-feed";
-import { changelogPictureUrl } from "@/lib/changelog-feed-server";
+import { pictureUrl as changelogPictureUrl } from "@/lib/media";
 import { createMetadata } from "@/lib/metadata";
 import { getNpmLag, type NpmLag } from "@/lib/npm-version";
 import { changelogEntries } from "./entries";

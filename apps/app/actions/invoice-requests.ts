@@ -10,24 +10,14 @@ import {
 import { enforceRateLimits } from "@/lib/request-guards";
 import { getActiveWorkspace } from "@/lib/scope";
 import { getCurrentUser, logError } from "@/lib/shared";
+import type { PricingRequestResult } from "@/types/action-results";
 import { UnauthorizedError } from "@/types/errors";
 
 // "Pay by invoice" on the pricing page (agency tools): signed-in people only,
-// a few requests a day each.
+// a few requests a day each. The dialog sends it through
+// POST /api/invoice-requests (app/api/invoice-requests/route.ts).
 
-export type InvoiceRequestResult =
-  | { ok: true }
-  | {
-      ok: false;
-      code:
-        | "UNAUTHORIZED"
-        | "VALIDATION_ERROR"
-        | "UNAVAILABLE"
-        | "NOT_SENT"
-        | "RATE_LIMITED"
-        | "UNKNOWN_ERROR";
-      error: string;
-    };
+export type InvoiceRequestResult = PricingRequestResult;
 
 const limiter = createRateLimiter({ limiter: slidingWindow(3, "1 d") });
 

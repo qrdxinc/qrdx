@@ -12,11 +12,13 @@ import {
   WHATS_NEW_LIMIT,
 } from "@/lib/changelog-feed";
 import { changelogSource } from "@/lib/content-source";
-import { hasMedia, mediaUrl } from "@/lib/media";
+import { mediaUrl, pictureUrl } from "@/lib/media";
 
-/** A changelog picture's URL: an uploaded media key's, else the site path. */
-export const changelogPictureUrl = (path: string) =>
-  hasMedia(path) ? mediaUrl(path) : path;
+/**
+ * A changelog picture's URL: an uploaded media key's, else the site path
+ * (lib/media.ts pictureUrl, which /changelogs imports directly).
+ */
+export const changelogPictureUrl = pictureUrl;
 
 /**
  * Every changelog entry, newest first, for the app's "What's new" panel.

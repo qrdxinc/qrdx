@@ -10,24 +10,15 @@ import {
 import { enforceRateLimits } from "@/lib/request-guards";
 import { getActiveWorkspace } from "@/lib/scope";
 import { getCurrentUser, logError } from "@/lib/shared";
+import type { PricingRequestResult } from "@/types/action-results";
 import { UnauthorizedError } from "@/types/errors";
 
 // "Ask for a code" on the pricing page (non-profit discount): signed-in
-// people only, a few requests a day each, like pay-by-invoice requests.
+// people only, a few requests a day each, like pay-by-invoice requests. The
+// dialog sends it through POST /api/nonprofit-requests
+// (app/api/nonprofit-requests/route.ts).
 
-export type NonprofitRequestResult =
-  | { ok: true }
-  | {
-      ok: false;
-      code:
-        | "UNAUTHORIZED"
-        | "VALIDATION_ERROR"
-        | "UNAVAILABLE"
-        | "NOT_SENT"
-        | "RATE_LIMITED"
-        | "UNKNOWN_ERROR";
-      error: string;
-    };
+export type NonprofitRequestResult = PricingRequestResult;
 
 const limiter = createRateLimiter({ limiter: slidingWindow(3, "1 d") });
 

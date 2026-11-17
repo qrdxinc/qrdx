@@ -1,9 +1,9 @@
 import { authClient } from "@repo/auth/client";
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api-fetch";
-import type { SubscriptionStatus } from "@/types/subscription";
+import type { SubscriptionSummary } from "@/types/subscription";
 
-async function fetchSubscriptionStatus(): Promise<SubscriptionStatus> {
+async function fetchSubscriptionStatus(): Promise<SubscriptionSummary> {
   const res = await apiFetch("/api/subscription", { method: "GET" });
 
   if (!res.ok) {
@@ -15,6 +15,10 @@ async function fetchSubscriptionStatus(): Promise<SubscriptionStatus> {
 
 export const SUBSCRIPTION_STATUS_QUERY_KEY = "subscriptionStatus";
 
+/**
+ * The signed-in visitor's subscription (GET /api/subscription): the AI
+ * request allowance and their plan. Nothing is fetched while signed out.
+ */
 export function useSubscription() {
   const { data: session } = authClient.useSession();
   const isLoggedIn = !!session?.user.id;

@@ -2,8 +2,9 @@
 
 // "Ask for a code" under the plans: registered non-profits and charities get
 // a discount on Pro or Business. The form emails QRdx (actions/
-// nonprofit-requests.ts), who replies with a Polar discount code. Shown only
-// where the discount is offered (qrdx.dev, feature nonprofitDiscounts).
+// nonprofit-requests.ts, through POST /api/nonprofit-requests), who replies
+// with a Polar discount code. Shown only where the discount is offered
+// (qrdx.dev, feature nonprofitDiscounts).
 
 import { SUPPORT_EMAIL } from "@repo/config";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
@@ -28,7 +29,6 @@ import {
 import { TickCircle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useId, useState } from "react";
-import { requestNonprofitDiscountAction } from "@/actions/nonprofit-requests";
 import {
   NONPROFIT_DISCOUNT_PERCENT,
   PAID_PLANS,
@@ -36,6 +36,7 @@ import {
   PLAN_NAMES,
 } from "@/lib/pricing";
 import { soundEvent } from "@/lib/sound/emit";
+import { requestNonprofitDiscount } from "@/lib/widget-routes/client";
 
 export function NonprofitRequestDialog({
   open,
@@ -78,7 +79,7 @@ export function NonprofitRequestDialog({
     setBusy(true);
     setError(null);
     try {
-      const result = await requestNonprofitDiscountAction(fields);
+      const result = await requestNonprofitDiscount(fields);
       if (!result.ok) {
         setError(result.error);
         soundEvent("error");

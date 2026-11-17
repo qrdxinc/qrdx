@@ -22,6 +22,7 @@ import {
   lowerCasedSitePrefix,
   parseSiteZoneGroups,
   SITE_ASSET_PREFIX,
+  SITE_COUNTRY_HEADER,
   SITE_GROUP_NAMES,
   SITE_GROUPS,
   SITE_KEY_HEADER,
@@ -632,6 +633,40 @@ describe("next.config.ts", () => {
     expect(rules.length - (await beforeFiles(off)).length).toBe(expected);
   });
 
+  it("answers agents' Markdown for / and /pricing ahead of every site rule", async () => {
+    for (const nextConfig of [on, all]) {
+      const rules = await beforeFiles(nextConfig);
+      const firstSite = rules.findIndex((rule) => onSite(rule.destination));
+      expect(firstSite).toBeGreaterThan(-1);
+      for (const [source, destination] of [
+        ["/", "/index.md"],
+        ["/pricing", "/pricing.md"],
+      ]) {
+        const at = rules.findIndex(
+          (rule) => rule.source === source && rule.destination === destination,
+        );
+        expect(at, source).toBeGreaterThan(-1);
+        expect(at, source).toBeLessThan(firstSite);
+      }
+    }
+    // And they still only answer requests that ask for Markdown.
+    expect(
+      getRewrittenUrl(
+        await resolve(on, "https://qrdx.dev/pricing", {
+          accept: "text/markdown",
+        }),
+      ),
+    ).toBe("https://qrdx.dev/pricing.md");
+    expect(
+      getRewrittenUrl(
+        await resolve(on, "https://qrdx.dev/", { accept: "text/markdown" }),
+      ),
+    ).toBe("https://qrdx.dev/index.md");
+    expect(
+      await siteTarget(on, "https://qrdx.dev/pricing", { accept: "text/html" }),
+    ).toBeNull();
+  });
+
   it("sends /blog as /blog, never /blog/ (a zone's slash redirect would loop)", async () => {
     expect(await siteTarget(on, "https://qrdx.dev/blog")).toBe(
       `${ORIGIN}/blog`,
@@ -881,6 +916,44 @@ describe("proxy.ts", () => {
       expect(sent("content-security-policy")).toBeUndefined();
     },
   );
+
+  it("passes the visitor's country on to the site, from this app's geo headers only", async () => {
+    const country = async (headers: Record<string, string>, url?: string) =>
+      forwarded(await on(request(url ?? "https://qrdx.dev/blog", headers)))(
+        SITE_COUNTRY_HEADER,
+      );
+    expect(await country({ "x-vercel-ip-country": "IN" })).toBe("IN");
+    expect(await country({ "cf-ipcountry": "de" })).toBe("DE");
+    // A copy the browser sent never gets through, with or without a country.
+    expect(
+      await country({
+        "x-vercel-ip-country": "US",
+        [SITE_COUNTRY_HEADER]: "IN",
+      }),
+    ).toBe("US");
+    expect(await country({ [SITE_COUNTRY_HEADER]: "IN" })).toBeUndefined();
+    // Unknown or malformed: none at all.
+    for (const value of ["XX", "", "IND", "I1", "in-IN"]) {
+      expect(await country({ "x-vercel-ip-country": value }), value).toBe(
+        undefined,
+      );
+    }
+    // Only on requests it proxies to the site.
+    expect(
+      await country(
+        { "x-vercel-ip-country": "IN" },
+        "https://qrdx.dev/admin/users/u1",
+      ),
+    ).toBeUndefined();
+    expect(
+      forwarded(
+        await off(
+          request("https://qrdx.dev/blog", { "x-vercel-ip-country": "IN" }),
+        ),
+      )(SITE_COUNTRY_HEADER),
+    ).toBeUndefined();
+    expect(SITE_COUNTRY_HEADER).toBe("x-qrdx-visitor-country");
+  });
 
   it("drops the workspace header the browser sent", async () => {
     const response = await on(

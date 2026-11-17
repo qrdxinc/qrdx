@@ -92,6 +92,12 @@ const MARKDOWN_REQUEST = {
   missing: [{ type: "host" as const, value: "(?:api|mcp)\\.qrdx\\.dev" }],
 };
 
+/** The pages this app answers in Markdown for MARKDOWN_REQUEST (before any zone). */
+const MARKDOWN_PAGES = [
+  { source: "/", destination: "/index.md" },
+  { source: "/pricing", destination: "/pricing.md" },
+];
+
 // The docs site (apps/docs) at DOCS_ZONE_URL serves the docs: their
 // URLs are proxied there, ahead of every rule below (@repo/i18n/docs).
 // Unset (self-hosting, local development without the docs site), they
@@ -476,6 +482,12 @@ let nextConfig: NextConfig = {
         // The console's sections, when CONSOLE_ORIGIN is set (above): ahead
         // of this app's own copies of those pages.
         ...consoleZone,
+        // Markdown for agents that ask for it (Accept: text/markdown): the
+        // home page and pricing. Browsers never send text/markdown, so they
+        // keep getting HTML. Ahead of the site's rules, so agents get this
+        // app's Markdown (app/index.md, app/pricing.md) whichever zone
+        // serves those pages' HTML.
+        ...MARKDOWN_PAGES.map((rule) => ({ ...rule, ...MARKDOWN_REQUEST })),
         // The site's groups of pages, when SITE_ORIGIN is set (above): ahead
         // of this app's own copies of those pages too.
         ...siteZone,
@@ -513,14 +525,13 @@ let nextConfig: NextConfig = {
           has: [{ type: "host", value: API_HOST }],
           destination: "/api/v1/:path*",
         },
-        // Markdown for agents that ask for it (Accept: text/markdown): the
-        // home page, pricing and the MCP page (the docs site answers for the
-        // docs). Browsers never send text/markdown, so they keep getting HTML.
-        ...[
-          { source: "/", destination: "/index.md" },
-          { source: "/pricing", destination: "/pricing.md" },
-          { source: "/mcp", destination: "/mcp.md" },
-        ].map((rule) => ({ ...rule, ...MARKDOWN_REQUEST })),
+        // The MCP page as Markdown, likewise (the docs site answers for the
+        // docs), after mcp.qrdx.dev's own /mcp rule above.
+        {
+          source: "/mcp",
+          destination: "/mcp.md",
+          ...MARKDOWN_REQUEST,
+        },
         // Translated pages live in app/[lang]; English is [lang]=en behind
         // its unprefixed URL (packages/i18n/routing.ts). After the Markdown
         // rewrites, which answer agents for / and /pricing first.
