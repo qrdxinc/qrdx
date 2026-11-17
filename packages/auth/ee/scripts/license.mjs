@@ -18,12 +18,18 @@
 
 import {
   createPrivateKey,
+  createPublicKey,
   generateKeyPairSync,
   randomBytes,
   sign,
 } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
+import { dirname, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = resolve(HERE, "../../../..");
 
 const PREFIX = "qrdx-ee-1";
 // The names in ../../ee-license.ts EE_FEATURES.
@@ -40,9 +46,31 @@ function fail(message) {
   process.exit(1);
 }
 
+/** The public key production builds trust, or null when it can't be read. */
+function trustedPublicKey() {
+  try {
+    const source = readFileSync(
+      resolve(HERE, "../license-public-key.ts"),
+      "utf8"
+    );
+    return (
+      /QRDX_LICENSE_PUBLIC_KEY\s*=\s*"([A-Za-z0-9_-]+)"/.exec(source)?.[1] ??
+      null
+    );
+  } catch {
+    return null;
+  }
+}
+
 function keygen(args) {
   const { values } = parseArgs({ args, options: { out: { type: "string" } } });
   if (!values.out) fail("keygen needs --out <private key file>");
+  const inRepo = relative(REPO_ROOT, resolve(values.out));
+  if (!(inRepo.startsWith("..") || resolve(inRepo) === inRepo)) {
+    fail(
+      `${values.out} is inside this repository; write the private key somewhere outside it`
+    );
+  }
   const { privateKey, publicKey } = generateKeyPairSync("ed25519");
   try {
     writeFileSync(
@@ -85,12 +113,17 @@ function issue(args) {
     fail("issue needs --expires as YYYY-MM-DD");
   }
   const expiresAt = new Date(`${values.expires}T23:59:59.999Z`);
-  if (Number.isNaN(expiresAt.getTime()))
+  // 2027-02-30 parses, as 2 March: the key would outlive the date printed.
+  if (
+    Number.isNaN(expiresAt.getTime()) ||
+    expiresAt.toISOString().slice(0, 10) !== values.expires
+  )
     fail(`--expires ${values.expires} isn't a date`);
   if (expiresAt.getTime() <= Date.now())
     fail("--expires must be in the future");
 
-  const id = values.id ?? `lic_${randomBytes(6).toString("hex")}`;
+  // A blank id (an unset shell variable) would make a key servers turn down.
+  const id = values.id?.trim() || `lic_${randomBytes(6).toString("hex")}`;
   if (id.length > 100) fail("--id is at most 100 characters");
   const payload = {
     id,
@@ -124,6 +157,12 @@ function issue(args) {
   }
   if (privateKey.asymmetricKeyType !== "ed25519")
     fail("the private key isn't an Ed25519 key");
+  const trusted = trustedPublicKey();
+  if (createPublicKey(privateKey).export({ format: "jwk" }).x !== trusted) {
+    console.error(
+      "license: warning: this private key doesn't match QRDX_LICENSE_PUBLIC_KEY (../license-public-key.ts). Production servers will turn this key down; it only works where the matching public key is trusted (tests, development)."
+    );
+  }
 
   const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");
   const signed = `${PREFIX}.${encoded}`;

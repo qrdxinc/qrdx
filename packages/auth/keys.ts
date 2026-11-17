@@ -18,8 +18,9 @@ export const keys = () =>
       // Comma-separated bootstrap admins for the /admin panel
       ADMIN_EMAILS: z.string().optional(),
       ADMIN_USER_IDS: z.string().optional(),
-      // Licence key for the ee/ features (workspace SSO, the audit log), as
-      // QRdx issues it: signed and expiring, checked offline (./ee/license.ts)
+      // Licence key for the ee/ features (workspace SSO, the audit log, the
+      // client portal, white-label, conversion tracking), as QRdx issues it:
+      // signed and expiring, checked offline (./ee/license.ts)
       QRDX_EE_LICENSE: z.string().min(1).optional(),
     },
     client: {},
