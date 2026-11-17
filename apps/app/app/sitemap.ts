@@ -81,7 +81,12 @@ function entries(docs: Entry[]): Entry[] {
 
   // TypeScript-written pages: the last change to the file that holds the
   // copy (git, or the recorded date when the build's clone is shallow).
-  const collections = [industries, placements];
+  // Groups the marketing site serves (lib/site-zone-on.ts) are listed in its
+  // own sitemaps (robots.txt names them), so they're left out here.
+  const collections = [
+    ...(siteServes("industries") ? [] : [industries]),
+    ...(siteServes("placements") ? [] : [placements]),
+  ];
   const groupFiles = collections.flatMap((collection) =>
     collection.groups.map((group) => seoGroupSource(collection, group.id)),
   );
@@ -120,7 +125,8 @@ function entries(docs: Entry[]): Entry[] {
   const stories = customersSource.getPages();
   const storyDate = (p: (typeof stories)[number]) =>
     latest([p.data.updated, p.data.date]);
-  const compares = compareSource.getPages();
+  const compareOnSite = siteServes("compare");
+  const compares = compareOnSite ? [] : compareSource.getPages();
   // `lastVerified` is when the competitor facts were last checked.
   const compareDate = (p: (typeof compares)[number]) =>
     latest([
@@ -438,12 +444,16 @@ function entries(docs: Entry[]): Entry[] {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    {
-      url: url("/compare"),
-      lastModified: latest(compares.map(compareDate)),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+    ...(compareOnSite
+      ? []
+      : [
+          {
+            url: url("/compare"),
+            lastModified: latest(compares.map(compareDate)),
+            changeFrequency: "monthly",
+            priority: 0.7,
+          } satisfies Entry,
+        ]),
     ...compares.map(
       (page) =>
         ({

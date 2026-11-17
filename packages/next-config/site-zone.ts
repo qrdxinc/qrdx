@@ -27,6 +27,12 @@
 export const SITE_GROUPS = {
   /** /blog, its feed (/blog/rss.xml), categories, authors and posts. */
   blog: ["/blog"],
+  /** /compare and /compare/<slug>, their Open Graph images and sitemap. */
+  compare: ["/compare"],
+  /** QR codes by industry: /qr-codes-for and its topic pages. */
+  industries: ["/qr-codes-for"],
+  /** QR codes by placement: /qr-codes-on and its topic pages. */
+  placements: ["/qr-codes-on"],
 } as const satisfies Record<string, readonly string[]>;
 
 export type SiteGroup = keyof typeof SITE_GROUPS;
