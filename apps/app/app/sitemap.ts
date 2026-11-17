@@ -47,9 +47,10 @@ type Entry = MetadataRoute.Sitemap[number];
 
 // lastmod is a real date or absent, never the build time (lib/seo-dates.ts).
 /**
- * Every translated page (packages/i18n/localized-paths.json) as its languages:
- * one entry per indexable language, with hreflang alternates (lib/i18n/
- * sitemap.ts). Languages a native reviewer hasn't signed off stay out.
+ * Every translated page (packages/i18n/localized-paths.json `paths`) as its
+ * languages: one entry per indexable language, with hreflang alternates
+ * (lib/i18n/sitemap.ts). Languages a native reviewer hasn't signed off stay
+ * out. The English-only marketing pages stay one English entry each.
  */
 function withTranslations(entries: Entry[]): Entry[] {
   return entries.flatMap((entry) => {
@@ -67,8 +68,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 /**
  * The docs' entries, from the docs site's manifest when DOCS_ZONE_URL is set
  * (that fetch makes this sitemap regenerate hourly; lib/docs-zone-manifest.ts).
- * The docs site decides them: the pages this deployment offers, and the
- * translations a native reviewer signed off. Without a docs site there are
+ * The docs site decides them: the pages this deployment offers, in English
+ * (the docs' one language). Without a docs site there are
  * none: the docs URLs redirect to qrdx.dev, whose sitemap lists them.
  */
 async function docsEntries(): Promise<Entry[]> {
@@ -81,7 +82,12 @@ function entries(docs: Entry[]): Entry[] {
 
   // TypeScript-written pages: the last change to the file that holds the
   // copy (git, or the recorded date when the build's clone is shallow).
-  const collections = [industries, placements];
+  // Groups the marketing site serves (lib/site-zone-on.ts) are listed in its
+  // own sitemaps (robots.txt names them), so they're left out here.
+  const collections = [
+    ...(siteServes("industries") ? [] : [industries]),
+    ...(siteServes("placements") ? [] : [placements]),
+  ];
   const groupFiles = collections.flatMap((collection) =>
     collection.groups.map((group) => seoGroupSource(collection, group.id)),
   );
@@ -120,7 +126,8 @@ function entries(docs: Entry[]): Entry[] {
   const stories = customersSource.getPages();
   const storyDate = (p: (typeof stories)[number]) =>
     latest([p.data.updated, p.data.date]);
-  const compares = compareSource.getPages();
+  const compareOnSite = siteServes("compare");
+  const compares = compareOnSite ? [] : compareSource.getPages();
   // `lastVerified` is when the competitor facts were last checked.
   const compareDate = (p: (typeof compares)[number]) =>
     latest([
@@ -168,39 +175,44 @@ function entries(docs: Entry[]): Entry[] {
     } satisfies Entry;
   });
 
+  // The marketing pages are English only: one entry each, no alternates.
+  // Translated pages (the playground, /ai, /ai/art, /mcp, /scan) get their
+  // languages from withTranslations.
   return [
-    // Translated pages: one entry per indexable language, each listing the
-    // others as alternates (lib/i18n/sitemap.ts).
-    ...localizedEntries("/", {
+    {
+      url: url("/"),
       changeFrequency: "monthly",
       priority: 1,
-    }),
+    },
     {
       url: url("/playground"),
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    ...localizedEntries("/pricing", {
+    {
+      url: url("/pricing"),
       lastModified: pageDate("/pricing"),
       changeFrequency: "monthly",
       priority: 0.9,
-    }),
+    },
     {
       url: url("/guarantee"),
       lastModified: pageDate("/guarantee"),
       changeFrequency: "yearly",
       priority: 0.6,
     },
-    ...localizedEntries("/enterprise", {
+    {
+      url: url("/enterprise"),
       lastModified: pageDate("/enterprise"),
       changeFrequency: "monthly",
       priority: 0.7,
-    }),
-    ...localizedEntries("/security", {
+    },
+    {
+      url: url("/security"),
       lastModified: pageDate("/security"),
       changeFrequency: "monthly",
       priority: 0.6,
-    }),
+    },
     ...(isPathAvailable("/affiliates")
       ? [
           {
@@ -438,12 +450,16 @@ function entries(docs: Entry[]): Entry[] {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    {
-      url: url("/compare"),
-      lastModified: latest(compares.map(compareDate)),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+    ...(compareOnSite
+      ? []
+      : [
+          {
+            url: url("/compare"),
+            lastModified: latest(compares.map(compareDate)),
+            changeFrequency: "monthly",
+            priority: 0.7,
+          } satisfies Entry,
+        ]),
     ...compares.map(
       (page) =>
         ({

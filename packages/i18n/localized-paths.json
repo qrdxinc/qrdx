@@ -1,6 +1,7 @@
 {
-  "$comment": "Public pages that live under app/[lang] and exist in every locale. scripts/i18n-split-roots.mjs moves each one from app/(app)/(home) to app/[lang]/(home); packages/i18n/paths.ts reads the same list for links, rewrites, hreflang and the sitemap. A dynamic segment is written like its folder: /compare/[slug] covers every slug.",
-  "paths": [
+  "$comment": "Public pages that live under app/[lang]. `paths` exist in every locale: scripts/i18n-split-roots.mjs moves each one from app/(app)/(home) to app/[lang]/(home); packages/i18n/paths.ts reads the same list for links, rewrites, hreflang and the sitemap. `englishOnly` are marketing pages that stay under app/[lang] but exist in English only (owner decision, 17 Nov 2026): English serves them at their unprefixed URLs, and their old translated URLs redirect there (routing.ts). A dynamic segment is written like its folder: /compare/[slug] covers every slug. /scan stays translated until the owner decides: each language's scanner installs as its own app, scoped to /<lang>/scan (apps/app/lib/scanner-app.ts), and a redirect would move installed apps out of their scope.",
+  "paths": ["/scan", "/mcp", "/ai", "/ai/art", "/playground"],
+  "englishOnly": [
     "/",
     "/pricing",
     "/guarantee",
@@ -10,7 +11,6 @@
     "/tools/bulk",
     "/tools/print-size",
     "/tools/scan-checker",
-    "/scan",
     "/barcode-generator",
     "/barcode-generator/[format]",
     "/qr-code-generator",
@@ -23,13 +23,9 @@
     "/integrations",
     "/integrations/[slug]",
     "/plugins",
-    "/mcp",
     "/qr-code-api",
     "/dynamic-qr-code",
     "/open-source-qr-code-generator",
-    "/ai",
-    "/ai/art",
-    "/compare",
-    "/playground"
+    "/compare"
   ]
 }

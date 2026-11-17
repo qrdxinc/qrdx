@@ -11,12 +11,15 @@ import { RootDocument } from "@/components/root-document";
 import { localeParams } from "@/lib/i18n/static-params";
 import { rootMetadata, rootViewport } from "@/lib/root-metadata";
 
-// The root layout for translated public pages
-// (packages/i18n/localized-paths.json). Builds prerender them in English: next.config.ts rewrites /pricing to
-// /en/pricing, and /en/... redirects to the unprefixed URL. The other
-// languages render on their first request and are cached from then on
-// (lib/i18n/static-params.ts). Anything else in the first segment is a 404
-// from the pages (lib/static-params.ts: dynamic params stay on).
+// The root layout for translated public pages and the English-only
+// marketing pages (packages/i18n/localized-paths.json). Builds prerender
+// them in English: next.config.ts rewrites /pricing to /en/pricing, and
+// /en/... redirects to the unprefixed URL. The other languages of the
+// translated pages render on their first request and are cached from then
+// on (lib/i18n/static-params.ts); those of the English-only pages redirect
+// to the English URL (/es/pricing → /pricing). Anything else in the first
+// segment is a 404 from the pages (lib/static-params.ts: dynamic params
+// stay on).
 export function generateStaticParams() {
   return localeParams();
 }

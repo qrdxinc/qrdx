@@ -13,6 +13,10 @@ export const BARCODE_USES: Record<BarcodeFormatId, string> = {
     "The general-purpose barcode: letters, digits and symbols for asset tags, stock labels, tickets and shipping labels. It's compact and needs no registration, so use it whenever no retail standard applies.",
   code39:
     "Older and wider than Code 128, with capital letters, digits and a few symbols. Some industries and older systems still require it, and nearly every scanner reads it.",
+  code93:
+    "Code 39's characters in a shorter barcode, with two check characters that readers verify. Use it when a system asks for Code 93; otherwise Code 128 does the same job and more.",
+  codabar:
+    "An older barcode of digits with a start and stop letter (A to D), still used by libraries, blood banks and some shipping labels. Use it when a system asks for Codabar; otherwise Code 128 is shorter.",
   itf14:
     "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
   "gs1-128":
@@ -35,7 +39,7 @@ export const BARCODE_FAQS: { question: string; answer: string }[] = [
   {
     question: "Do I need to register my barcode number?",
     answer:
-      "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128 and Code 39 need no registration.",
+      "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
   },
   {
     question: "Does it add the check digit?",

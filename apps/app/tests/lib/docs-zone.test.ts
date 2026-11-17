@@ -1,13 +1,18 @@
 // The docs zone (@repo/i18n/docs, @repo/next-config/docs-zone): with
 // DOCS_ZONE_URL set, the main app proxies the docs' URLs to the docs site
-// (apps/docs); unset, it redirects them to the same paths on qrdx.dev. Also
-// the manifest the sitemap and llms.txt read from it.
+// (apps/docs); unset, it redirects them to the same paths on qrdx.dev. The
+// docs are English only: the other languages' old docs URLs (/es/docs/...)
+// redirect to the English page either way. Also the manifest the sitemap
+// and llms.txt read from it.
 import { createRequire } from "node:module";
+import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import {
   docsOriginRedirects,
   docsZoneRewrites,
+  englishDocsPath,
+  formerDocsSegments,
   isDocsPagePath,
-  translatedDocsSegments,
+  translatedDocsRedirects,
 } from "@repo/i18n/docs";
 import {
   DOCS_MANIFEST_PATH,
@@ -23,8 +28,7 @@ import {
   vi,
 } from "vitest";
 
-const SEGMENTS = translatedDocsSegments();
-const LANG = `:lang(${SEGMENTS.join("|")})`;
+const SEGMENTS = formerDocsSegments();
 const MARKDOWN = {
   has: [
     { type: "header" as const, key: "accept", value: "markdown" },
@@ -32,7 +36,7 @@ const MARKDOWN = {
   ],
   missing: [{ type: "host" as const, value: "api\\.qrdx\\.dev" }],
 };
-const options = { translatedSegments: SEGMENTS, markdown: MARKDOWN };
+const options = { markdown: MARKDOWN };
 
 // Next's own copy of the matcher it applies to next.config.ts (no types).
 const pathToRegexp = createRequire(import.meta.url)(
@@ -94,16 +98,6 @@ describe("docsZoneRewrites", () => {
         destination: "https://docs.qrdx.dev/llms.mdx/:path+",
         markdown: true,
       },
-      {
-        source: `/${LANG}/docs`,
-        destination: "https://docs.qrdx.dev/docs-md/:lang",
-        markdown: true,
-      },
-      {
-        source: `/${LANG}/docs/:path+`,
-        destination: "https://docs.qrdx.dev/docs-md/:lang/:path+",
-        markdown: true,
-      },
       // The pages, and their .md and .mdx versions (the zone maps those).
       {
         source: "/docs",
@@ -125,30 +119,9 @@ describe("docsZoneRewrites", () => {
         destination: "https://docs.qrdx.dev/docs/:path*",
         markdown: false,
       },
-      {
-        source: `/${LANG}/docs`,
-        destination: "https://docs.qrdx.dev/:lang/docs",
-        markdown: false,
-      },
-      {
-        source: `/${LANG}/docs.md`,
-        destination: "https://docs.qrdx.dev/:lang/docs.md",
-        markdown: false,
-      },
-      {
-        source: `/${LANG}/docs.mdx`,
-        destination: "https://docs.qrdx.dev/:lang/docs.mdx",
-        markdown: false,
-      },
-      {
-        source: `/${LANG}/docs/:path*`,
-        destination: "https://docs.qrdx.dev/:lang/docs/:path*",
-        markdown: false,
-      },
       // The docs' routes and the zone's build assets.
       ...[
         "/llms.mdx/:path*",
-        "/docs-md/:path*",
         "/og/docs/:path*",
         "/api/search",
         "/llms-full.txt",
@@ -161,18 +134,118 @@ describe("docsZoneRewrites", () => {
     ]);
   });
 
-  it("lists every language with translated docs", () => {
-    expect(SEGMENTS).toContain("pt-br");
+  it("proxies no other language's docs URL: those redirect", () => {
+    const rules = docsZoneRewrites("https://docs.example.com", options);
+    expect(rules).toHaveLength(11);
+    for (const rule of rules) {
+      expect(rule.source, rule.source).not.toMatch(/:lang|docs-md/);
+      expect(rule.destination, rule.source).not.toMatch(/:lang|docs-md/);
+    }
+    for (const path of ["/es/docs", "/pt-br/docs/help/faq", "/docs-md/es/x"]) {
+      expect(follow(rules, "qrdx.dev", path), path).toBeUndefined();
+    }
+  });
+});
+
+describe("translatedDocsRedirects", () => {
+  const HOST = { type: "host" as const, value: "(?:qrdx\\.dev|localhost)" };
+  const rules = translatedDocsRedirects({ has: [HOST] });
+
+  it("covers every language's segment but English's", () => {
+    expect(SEGMENTS).toEqual(
+      TRANSLATED_LOCALES.map((locale) => LOCALE_INFO[locale].segment),
+    );
+    expect(SEGMENTS).toEqual(
+      expect.arrayContaining(["es", "pt-br", "zh-hans", "hi"]),
+    );
     expect(SEGMENTS).not.toContain("en");
   });
 
-  it("works with no translated docs", () => {
-    const rules = docsZoneRewrites("https://docs.example.com", {
-      ...options,
-      translatedSegments: [],
-    });
-    expect(rules.some((rule) => rule.source.includes(":lang"))).toBe(false);
-    expect(rules).toHaveLength(12);
+  it.each(SEGMENTS)(
+    "/%s/docs and its pages go to the English page, for now (307)",
+    (segment) => {
+      for (const [path, to] of [
+        [`/${segment}/docs`, "/docs"],
+        [`/${segment}/docs/angular`, "/docs/angular"],
+        [
+          `/${segment}/docs/help/dynamic-codes/password`,
+          "/docs/help/dynamic-codes/password",
+        ],
+        [`/${segment}/docs.md`, "/docs.md"],
+        [`/${segment}/docs.mdx`, "/docs.mdx"],
+        [`/${segment}/docs/angular.md`, "/docs/angular.md"],
+        [`/${segment}/docs/developers/mcp.mdx`, "/docs/developers/mcp.mdx"],
+        [`/docs-md/${segment}`, "/docs.md"],
+        [`/docs-md/${segment}/help/faq`, "/docs/help/faq.md"],
+      ] as const) {
+        const found = follow(rules, "qrdx.dev", path);
+        expect(found?.target, path).toBe(to);
+        // `permanent: false` is a 307 in Next.
+        expect(found?.rule.permanent, path).toBe(false);
+      }
+    },
+  );
+
+  it("keeps the query string: Next carries it over when the destination has none", () => {
+    // /de/docs/developers/quickstart?x=1 → /docs/developers/quickstart?x=1.
+    for (const rule of rules) {
+      expect(rule.destination, rule.source).not.toContain("?");
+    }
+  });
+
+  it("leaves English docs, other pages and look-alikes alone", () => {
+    for (const path of [
+      "/docs",
+      "/docs/angular",
+      "/docs/angular.md",
+      "/docs.md",
+      "/en/docs",
+      "/es",
+      "/es/pricing",
+      "/es/documentation",
+      "/es/x/docs",
+      "/xx/docs",
+      "/docs-md/xx/teams",
+      "/llms.mdx/teams",
+    ]) {
+      expect(follow(rules, "qrdx.dev", path), path).toBeUndefined();
+    }
+  });
+
+  it("only on the hosts it's given (a custom domain's paths are short links)", () => {
+    expect(rules.every((rule) => rule.has?.[0] === HOST)).toBe(true);
+    expect(follow(rules, "go.example.com", "/es/docs")).toBeUndefined();
+    // Without hosts (the docs site's own next.config.ts): every host.
+    expect(translatedDocsRedirects().every((rule) => !rule.has)).toBe(true);
+  });
+
+  it("can send them to another site's English docs", () => {
+    const elsewhere = translatedDocsRedirects({ origin: "https://qrdx.dev//" });
+    expect(follow(elsewhere, "localhost", "/ja/docs/teams.md")?.target).toBe(
+      "https://qrdx.dev/docs/teams.md",
+    );
+    expect(follow(elsewhere, "localhost", "/docs-md/ja")?.target).toBe(
+      "https://qrdx.dev/docs.md",
+    );
+  });
+
+  it("has nothing to do without languages", () => {
+    expect(translatedDocsRedirects({ segments: [] })).toEqual([]);
+  });
+});
+
+describe("englishDocsPath", () => {
+  it("names the English page of a path from the translated docs", () => {
+    expect(englishDocsPath("/es/docs")).toBe("/docs");
+    expect(englishDocsPath("/pt-br/docs/help/faq")).toBe("/docs/help/faq");
+    for (const path of [
+      "/docs/help",
+      "/xx/docs/help",
+      "/es/pricing",
+      "/en/docs",
+    ]) {
+      expect(englishDocsPath(path)).toBe(path);
+    }
   });
 });
 
@@ -181,10 +254,8 @@ describe("isDocsPagePath", () => {
     "/docs",
     "/docs/dynamic-qr-codes",
     "/docs/developers/rest-api?x=1#auth",
-    "/es/docs",
-    "/pt-br/docs/help/faq",
   ])("%s is a docs page", (href) => {
-    expect(isDocsPagePath(href, SEGMENTS)).toBe(true);
+    expect(isDocsPagePath(href)).toBe(true);
   });
 
   it.each([
@@ -193,6 +264,9 @@ describe("isDocsPagePath", () => {
     "/es/pricing",
     "/docs.md",
     "/docs/dynamic-qr-codes.md",
+    // The other languages' docs URLs redirect: the main app answers them.
+    "/es/docs",
+    "/pt-br/docs/help/faq",
     "/es/docs/x.mdx",
     "/docsy",
     "/en/docs",
@@ -201,7 +275,7 @@ describe("isDocsPagePath", () => {
     "//qrdx.dev/docs",
     "docs/relative",
   ])("%s isn't", (href) => {
-    expect(isDocsPagePath(href, SEGMENTS)).toBe(false);
+    expect(isDocsPagePath(href)).toBe(false);
   });
 });
 
@@ -229,21 +303,18 @@ describe("long runs of slashes", () => {
 
   it("isDocsPagePath answers fast for any run of slashes", () => {
     within(200, () => {
-      expect(isDocsPagePath(run, SEGMENTS)).toBe(false);
-      expect(isDocsPagePath(`/docs${run}x`, SEGMENTS)).toBe(true);
-      expect(isDocsPagePath(`/es${run}`, SEGMENTS)).toBe(false);
-      expect(isDocsPagePath(`/x${run}docs`, SEGMENTS)).toBe(false);
-      expect(isDocsPagePath(`/docs/x${run}.md`, SEGMENTS)).toBe(false);
+      expect(isDocsPagePath(run)).toBe(false);
+      expect(isDocsPagePath(`/docs${run}x`)).toBe(true);
+      expect(isDocsPagePath(`/es${run}`)).toBe(false);
+      expect(isDocsPagePath(`/x${run}docs`)).toBe(false);
+      expect(isDocsPagePath(`/docs/x${run}.md`)).toBe(false);
     });
   });
 });
 
 describe("docsOriginRedirects", () => {
   const HOST = { type: "host" as const, value: "(?:qrdx\\.dev|localhost)" };
-  const rules = docsOriginRedirects("https://qrdx.dev//", {
-    translatedSegments: SEGMENTS,
-    has: [HOST],
-  });
+  const rules = docsOriginRedirects("https://qrdx.dev//", { has: [HOST] });
 
   it.each([
     ["/docs", "https://qrdx.dev/docs"],
@@ -251,12 +322,7 @@ describe("docsOriginRedirects", () => {
     ["/docs/dynamic-qr-codes", "https://qrdx.dev/docs/dynamic-qr-codes"],
     ["/docs/developers/mcp.md", "https://qrdx.dev/docs/developers/mcp.md"],
     ["/docs/developers/mcp.mdx", "https://qrdx.dev/docs/developers/mcp.mdx"],
-    ["/es/docs", "https://qrdx.dev/es/docs"],
-    ["/es/docs.md", "https://qrdx.dev/es/docs.md"],
-    ["/pt-br/docs/help/contact", "https://qrdx.dev/pt-br/docs/help/contact"],
-    ["/zh-hans/docs/teams.md", "https://qrdx.dev/zh-hans/docs/teams.md"],
     ["/llms.mdx/teams", "https://qrdx.dev/llms.mdx/teams"],
-    ["/docs-md/es/teams", "https://qrdx.dev/docs-md/es/teams"],
     ["/og/docs/teams/image.png", "https://qrdx.dev/og/docs/teams/image.png"],
     ["/llms-full.txt", "https://qrdx.dev/llms-full.txt"],
   ])("sends %s to the same path on qrdx.dev, for now (307)", (path, to) => {
@@ -273,6 +339,9 @@ describe("docsOriginRedirects", () => {
       "/es/pricing",
       "/documentation",
       "/fr/x/docs",
+      // The other languages' docs URLs: translatedDocsRedirects' job.
+      "/es/docs",
+      "/docs-md/es/teams",
     ]) {
       expect(follow(rules, "localhost", path), path).toBeUndefined();
     }
@@ -335,12 +404,23 @@ describe("next.config.ts with and without a docs site", () => {
       "/docs",
       "/docs/dynamic-qr-codes",
       "/docs/developers/mcp.md",
-      "/es/docs/dynamic-qr-codes",
       "/llms-full.txt",
       "/og/docs/teams/image.png",
     ]) {
       const found = follow(without.redirects, "localhost", path);
       expect(found?.target, path).toBe(`https://qrdx.dev${path}`);
+      expect(found?.rule.permanent, path).toBe(false);
+      expect(follow(without.rewrites, "localhost", path), path).toBeUndefined();
+    }
+    // Another language's docs URL: straight to the English page there, in
+    // one redirect.
+    for (const [path, to] of [
+      ["/es/docs/dynamic-qr-codes", "/docs/dynamic-qr-codes"],
+      ["/zh-hans/docs/angular.md", "/docs/angular.md"],
+      ["/docs-md/de/teams", "/docs/teams.md"],
+    ] as const) {
+      const found = follow(without.redirects, "localhost", path);
+      expect(found?.target, path).toBe(`https://qrdx.dev${to}`);
       expect(found?.rule.permanent, path).toBe(false);
       expect(follow(without.rewrites, "localhost", path), path).toBeUndefined();
     }
@@ -358,11 +438,7 @@ describe("next.config.ts with and without a docs site", () => {
   });
 
   it("with one, proxies the docs there and redirects none of them", () => {
-    for (const path of [
-      "/docs/dynamic-qr-codes",
-      "/es/docs/x",
-      "/llms-full.txt",
-    ]) {
+    for (const path of ["/docs/dynamic-qr-codes", "/llms-full.txt"]) {
       expect(
         follow(withZone.redirects, "localhost", path),
         path,
@@ -374,6 +450,52 @@ describe("next.config.ts with and without a docs site", () => {
     expect(follow(withZone.rewrites, "localhost", "/api/search")?.target).toBe(
       "http://localhost:3290/api/search",
     );
+  });
+
+  it("with one, redirects the other languages' docs URLs itself, once", () => {
+    for (const [path, to] of [
+      ["/es/docs", "/docs"],
+      [
+        "/pt-br/docs/help/dynamic-codes/password",
+        "/docs/help/dynamic-codes/password",
+      ],
+      ["/zh-hans/docs/angular.md", "/docs/angular.md"],
+      ["/de/docs/developers/quickstart", "/docs/developers/quickstart"],
+      ["/docs-md/es/teams", "/docs/teams.md"],
+    ] as const) {
+      // A redirect on this site (Next answers redirects before rewrites)…
+      const found = follow(withZone.redirects, "localhost", path);
+      expect(found?.target, path).toBe(to);
+      expect(found?.rule.permanent, path).toBe(false);
+      // …never proxied to the docs site, which has no such page any more…
+      expect(
+        follow(withZone.rewrites, "localhost", path),
+        path,
+      ).toBeUndefined();
+      // …and the English URL it lands on isn't redirected again.
+      expect(follow(withZone.redirects, "localhost", to), to).toBeUndefined();
+    }
+    // The translated pages of this app are untouched.
+    for (const path of ["/pt-br/playground", "/es/ai/art"]) {
+      expect(
+        follow(withZone.redirects, "localhost", path),
+        path,
+      ).toBeUndefined();
+    }
+    // The marketing pages are English only too: their own rules send /es
+    // and /es/pricing to the English page, never to the docs.
+    for (const [path, to] of [
+      ["/es", "/"],
+      ["/es/pricing", "/pricing"],
+    ] as const) {
+      expect(follow(withZone.redirects, "localhost", path)?.target, path).toBe(
+        to,
+      );
+    }
+    // A customer's domain: /es/docs is a short link there.
+    expect(
+      follow(withZone.redirects, "go.example.com", "/es/docs"),
+    ).toBeUndefined();
   });
 
   it("keeps no docs rules of its own either way", () => {

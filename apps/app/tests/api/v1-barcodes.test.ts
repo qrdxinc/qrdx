@@ -240,6 +240,7 @@ describe("GET /v1/barcode", () => {
     }
     expect((await getImage("format=Code-128&data=x")).status).toBe(200);
     expect((await getImage("format=azteccode&data=x")).status).toBe(200);
+    expect((await getImage("format=codabar&data=A40156B")).status).toBe(200);
   });
 
   it("applies the style parameters", async () => {
@@ -272,7 +273,12 @@ describe("GET /v1/barcode", () => {
     ["code128", "café", /plain ASCII.*Not allowed: é/],
     ["code128", "A".repeat(81), /up to 80 characters; this has 81/],
     ["code39", "qrdx", /no lowercase letters/],
+    ["codabar", "40156", /starts and ends with A, B, C or D/],
+    ["codabar", "A12*B", /Not allowed: \*/],
     ["code39", "QRDX#1", /Not allowed: #/],
+    ["code93", "QRDX-93", undefined],
+    ["code93", "qrdx", /Code 93 here has no lowercase letters/],
+    ["code93", "QRDX#1", /Not allowed: #/],
     ["datamatrix", "x".repeat(1001), /at most 1000 characters/],
   ])("%s %j", async (format, data, error) => {
     const response = await getImage(

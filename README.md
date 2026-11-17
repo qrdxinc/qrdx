@@ -1,7 +1,7 @@
 <h1 align="center">QRdx</h1>
 
 <p align="center">
-  An open-source QR code generator. Static codes are free with no sign-up or watermark. Dynamic codes come with hosted pages and scan analytics. Developers get an image API, an MCP server, a REST API, a CLI and a React library. You can self-host all of it.
+  An open-source QR code platform. Making QR codes is free for everyone, with no sign-up, watermark or limit. Dynamic codes come with hosted pages and scan analytics. Developers get an image API, an MCP server, a REST API, a CLI and a React library. You can run it on your own server.
 </p>
 
 <p align="center">
@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="LICENSING.md"><img src="https://img.shields.io/badge/license-AGPL--3.0%20%2B%20MIT-blue" alt="License: AGPL-3.0 app, MIT library, CLI and plugins" /></a>
+  <a href="LICENSING.md"><img src="https://img.shields.io/badge/license-AGPL--3.0%20%2B%20MIT%20%2B%20commercial-blue" alt="License: AGPL-3.0-or-later app; MIT library, CLI, plugins, agent skill and registry components; commercial ee/ folders" /></a>
   <a href="https://www.npmjs.com/package/qrdx"><img src="https://img.shields.io/npm/v/qrdx?label=qrdx%20on%20npm&color=f80" alt="qrdx version on npm" /></a>
   <a href="https://github.com/qrdxinc/qrdx"><img src="https://img.shields.io/github/stars/qrdxinc/qrdx" alt="GitHub stars" /></a>
 </p>
@@ -149,7 +149,7 @@ npx @qrdx/cli generate "https://qrdx.dev" -o qr.png --body circle --eye rounded 
 
 ## Self-hosting
 
-You can run the whole web app yourself, dynamic codes and hosted pages included, with Docker Compose (Postgres included) or with Node.js. It needs three environment variables (`NEXT_PUBLIC_APP_URL`, `DATABASE_URL` and `BETTER_AUTH_SECRET`) and one way to sign in: a GitHub or Google OAuth app, or Resend for email sign-in codes. AI, payments, file storage, custom domains and the integrations are optional.
+You can run the web app yourself, dynamic codes and hosted pages included, with Docker Compose (Postgres included) or with Node.js. That covers everything except the `ee/` features (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking): using those in production needs an enterprise agreement, and [Open core](#open-core) says how to get one. It needs three environment variables (`NEXT_PUBLIC_APP_URL`, `DATABASE_URL` and `BETTER_AUTH_SECRET`) and one way to sign in: a GitHub or Google OAuth app, or Resend for email sign-in codes. AI, payments, file storage, custom domains and the integrations are optional.
 
 ```bash
 git clone https://github.com/qrdxinc/qrdx.git && cd qrdx
@@ -159,11 +159,17 @@ docker compose up -d --build
 
 Read the [self-hosting guide](https://qrdx.dev/docs/self-hosting) before you run it in production. A self-hosted instance doesn't serve the docs: its docs links go to the same pages on qrdx.dev.
 
+## Open core
+
+Making QR codes is free for everyone, with no account, watermark or limit, and it stays free. QRdx is open core: the web app is open source under the AGPL, the library and the other developer tools are MIT, and the business features in the `ee/` folders (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) are under the QRdx Commercial License.
+
+QRdx earns from the paid plans on qrdx.dev (Pro and Business) and from enterprise agreements. An enterprise agreement also covers running the `ee/` features on your own server. To get one, use the [enterprise page](https://qrdx.dev/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
+
 ## License
 
 - The web app and everything else in this repository outside the folders below are licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). If you run a modified version as a network service, you have to offer its source code to its users under the same license.
-- The React library ([`packages/qrdx`](packages/qrdx), from 0.0.47), the CLI ([`packages/cli`](packages/cli), from 0.0.5) and the plugins in [`plugins/`](plugins) are MIT-licensed, each with its own `LICENSE` file. Earlier npm releases of the library and the CLI were AGPL-3.0-or-later.
-- The `ee/` folders ([`apps/app/ee`](apps/app/ee), [`packages/auth/ee`](packages/auth/ee)) hold business features, today workspace single sign-on and the workspace audit log, under the QRdx Commercial License in each folder's `LICENSE.md`. You can read, test and contribute to that code; using it in production needs a written agreement with QRdx. On a self-hosted instance these features stay off unless `QRDX_EE_LICENSE` is set.
+- The React library ([`packages/qrdx`](packages/qrdx), from 0.0.47), the CLI ([`packages/cli`](packages/cli), from 0.0.5), the plugins in [`plugins/`](plugins), the agent skill in [`skills/generate-qr`](skills/generate-qr) and the shadcn/ui registry components in [`packages/docs-assets/registry/qrdx`](packages/docs-assets/registry/qrdx) are MIT-licensed, each with its own `LICENSE` file. Earlier npm releases of the library and the CLI were AGPL-3.0-or-later.
+- The `ee/` folders ([`apps/app/ee`](apps/app/ee), [`packages/auth/ee`](packages/auth/ee)) hold business features (workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking) under the QRdx Commercial License in each folder's `LICENSE.md`. You can read, test and contribute to that code; using it in production needs a written agreement with QRdx. On a self-hosted instance these features stay off unless `QRDX_EE_LICENSE` holds a valid key, which QRdx issues with the agreement, with an expiry, and which your server checks offline.
 
 [LICENSING.md](LICENSING.md) has the details.
 

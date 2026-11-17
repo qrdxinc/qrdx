@@ -28,7 +28,9 @@ _openapi:
           digit short and it's added, the full length and it's checked. A wrong
           check digit, a wrong length or a character the format can't hold is a
           `400` that says what's wrong. Code 128 takes printable ASCII, Code 39
-          capitals, digits and `- . $ / + %`, and Data Matrix, PDF417 and Aztec
+          and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check
+          characters are added for you), Codabar a start and stop letter (A to
+          D) around digits and `- $ : / . +`, and Data Matrix, PDF417 and Aztec
           any text up to 1,000 characters.
 
 
@@ -45,7 +47,7 @@ _openapi:
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.
 
-**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. Code 128 takes printable ASCII, Code 39 capitals, digits and `- . $ / + %`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.
+**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.
 
 **Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall.
 

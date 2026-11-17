@@ -83,7 +83,7 @@ export interface JobBase {
   id: string;
   /** What it shows, one line, for the manifest and the review list. */
   title: string;
-  /** The alt text readers of the docs get (English; translated pages pass their own). */
+  /** The alt text readers of the docs get. */
   alt: string;
   /** Docs pages that use it (their URLs), so a change to a screen can be traced to pages. */
   pages: string[];

@@ -14,8 +14,8 @@ import {
 } from "@/components/header-account-link";
 import { HeaderMobileNav } from "@/components/header-mobile-nav";
 import { HeaderNav } from "@/components/header-nav";
-import { LocaleLink, useLocalizeHref } from "@/components/i18n/locale-link";
-import { landingHref } from "@/lib/home-path";
+import { LocaleLink } from "@/components/i18n/locale-link";
+import { LANDING_PATH } from "@/lib/home-path";
 import styles from "./navbar.module.css";
 
 /** Where the desktop menus take over from the mobile one (Tailwind `lg`). */
@@ -83,10 +83,6 @@ export function Navbar() {
 
   const close = () => setMenuOpen(false);
 
-  // The home page's /home address, which a signed-in visitor can open too
-  // (/ sends them to the dashboard).
-  const landing = landingHref(useLocalizeHref()("/"));
-
   return (
     // z-30 over the page; with the menu open, over page-level layers too
     // (the cookie banner is z-50).
@@ -104,8 +100,10 @@ export function Navbar() {
       />
       <div className="relative h-full px-10">
         <div className="relative grid h-full grid-cols-[1fr_auto] items-center gap-3 lg:grid-cols-[1fr_auto_1fr] lg:gap-4">
+          {/* The home page's /home address, which a signed-in visitor can
+              open too (/ sends them to the dashboard). English only. */}
           <LocaleLink
-            href={landing}
+            href={LANDING_PATH}
             onClick={close}
             className="flex w-fit items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >

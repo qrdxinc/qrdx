@@ -15,7 +15,6 @@ import {
   enforceDocsChatLimits,
 } from "@/lib/docs-chat/guards";
 import { docsChatSystemPrompt } from "@/lib/docs-chat/prompt";
-import { docsLang } from "@/lib/docs-chat/retrieval";
 import { docsRetriever } from "@/lib/docs-chat/server";
 import { docsChatTools } from "@/lib/docs-chat/tools";
 import { handleError } from "@/lib/error-response";
@@ -24,7 +23,8 @@ import { logError } from "@/lib/shared";
 
 // The docs assistant ("Ask AI" in the docs, apps/docs/components/chat): a
 // reader asks a question on a docs page and gets a short answer grounded in
-// the docs, with links to the pages used. The model (lib/ai/models.ts
+// the docs, with links to the pages used, in the language the question is
+// in (the docs themselves are English only). The model (lib/ai/models.ts
 // "docs-chat") must search the docs first and read the pages it answers
 // from (lib/docs-chat/tools.ts); it reads them from the docs site itself
 // (lib/docs-chat/retrieval.ts). Anyone can ask, signed in or not, within
@@ -43,14 +43,13 @@ export async function POST(req: NextRequest) {
       docsChatRequestSchema,
       await readJsonBody(req, DOCS_CHAT.maxBodyBytes),
     );
-    const lang = docsLang(body.lang);
-    const tools = docsChatTools(docsRetriever(), lang);
+    const tools = docsChatTools(docsRetriever());
 
     const result = streamText({
       abortSignal: req.signal,
       model: languageModel("docs-chat"),
       providerOptions: textProviderOptions("docs-chat"),
-      instructions: docsChatSystemPrompt({ lang, page: body.page }),
+      instructions: docsChatSystemPrompt({ page: body.page }),
       messages: body.messages.map((message) => ({
         role: message.role,
         content: message.content,

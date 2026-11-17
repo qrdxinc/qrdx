@@ -1,32 +1,26 @@
 // How the docs assistant and the MCP docs tools read the docs: through the
 // docs site's own public endpoints, fetched from the server. A search is
-// GET <docs>/api/search?query=…&locale=… (fumadocs' search route, one index
-// per language); a page is its Markdown copy, GET <docs>/docs/<path>.md
-// (or /<lang>/docs/<path>.md), the same text "Copy Markdown" gives readers.
-// No index of our own, no vector store: the docs app already keeps both.
+// GET <docs>/api/search?query=… (fumadocs' search route); a page is its
+// Markdown copy, GET <docs>/docs/<path>.md, the same text "Copy Markdown"
+// gives readers. No index of our own, no vector store: the docs app already
+// keeps both. The docs are English only, so retrieval is too, whatever
+// language the question is in.
 //
 // Pure apart from `fetch`: the docs origin, the public origin, `fetch` and
 // the availability check are passed in, so the tests run on fakes and
 // nothing here reads the environment (lib/docs-chat/server.ts does).
 
-import {
-  DEFAULT_LOCALE,
-  isLocale,
-  LOCALE_INFO,
-  type Locale,
-} from "@repo/i18n/config";
-import {
-  docsLocaleFromSegment,
-  englishDocsPath,
-  hasDocs,
-} from "@repo/i18n/docs";
+import { englishDocsPath } from "@repo/i18n/docs";
 import { DOCS_CHAT } from "./config";
+
+/** The language of every docs page, as the tools report it. */
+export const DOCS_LANGUAGE = "en";
 
 /** One page a search found, with the best snippet the index had for it. */
 export interface DocsSearchHit {
   /** The page's title. */
   title: string;
-  /** Its docs path as served in the searched language: /docs/a, /es/docs/a. */
+  /** Its docs path: /docs/a. */
   path: string;
   /** Its public URL. */
   url: string;
@@ -38,18 +32,14 @@ export interface DocsSearchHit {
 
 export interface DocsSearchResult {
   hits: DocsSearchHit[];
-  /** The language the hits came from: English when the asked one had none. */
-  lang: Locale;
 }
 
 /** A docs page as Markdown, cut to the size the model may read. */
 export interface DocsPage {
   title: string;
-  /** The path it was read from (with its language prefix, if any). */
+  /** Its docs path: /docs/a. */
   path: string;
   url: string;
-  /** The language of the text: English when the page isn't translated. */
-  lang: Locale;
   markdown: string;
   /** True when the text was cut at DOCS_CHAT.maxPageChars. */
   truncated: boolean;
@@ -79,10 +69,10 @@ export interface DocsRetrieverOptions {
   fetch?: typeof fetch;
   /**
    * False for a docs page this deployment hides because its feature isn't
-   * set up (lib/feature-availability.ts isPathAvailable, by English path).
+   * set up (lib/feature-availability.ts isPathAvailable, by its path).
    * Such pages are never returned or read. Defaults to everything shown.
    */
-  isPathAvailable?: (englishPath: string) => boolean;
+  isPathAvailable?: (path: string) => boolean;
   now?: () => number;
   cacheTtlMs?: number;
   cacheMaxEntries?: number;
@@ -102,15 +92,17 @@ const DOCS_PATH = /^\/docs(?:\/[a-z0-9]+(?:[-.][a-z0-9]+)*)*$/;
 
 /**
  * A docs path the retriever accepts, from what a model or an agent passed:
- * "/docs/developers/mcp", "docs/developers/mcp.md", a full URL on
- * `publicOrigin` or `docsOrigin`, with or without a language prefix. Query
- * strings, hashes and the .md/.mdx suffix are dropped. Null for anything
- * else (another site, a path outside the docs, odd characters).
+ * "/docs/developers/mcp", "docs/developers/mcp.md", or a full URL on
+ * `publicOrigin` or `docsOrigin`. Query strings, hashes and the .md/.mdx
+ * suffix are dropped. A language prefix from when the docs had translations
+ * ("/es/docs/help/contact", a link someone kept) names the English page.
+ * Null for anything else (another site, a path outside the docs, odd
+ * characters).
  */
 export function normalizeDocsPath(
   input: string,
   origins: readonly string[] = [],
-): { path: string; lang: Locale } | null {
+): string | null {
   let raw = input.trim();
   if (!raw) return null;
   if (/^https?:\/\//i.test(raw)) {
@@ -126,18 +118,11 @@ export function normalizeDocsPath(
   raw = raw.split(/[?#]/, 1)[0] ?? raw;
   if (!raw.startsWith("/")) raw = `/${raw}`;
   raw = raw.replace(/\/+$/, "").replace(/\.mdx?$/, "");
-  // A language prefix: /es/docs/a.
-  let lang: Locale = DEFAULT_LOCALE;
-  const prefixed = /^\/([^/]+)(\/docs(?:\/.*)?)$/.exec(raw);
-  if (prefixed) {
-    const locale = docsLocaleFromSegment(prefixed[1]);
-    if (!locale) return null;
-    lang = locale;
-    raw = prefixed[2] as string;
-  }
+  // /es/docs/a, from before the docs were English only: /docs/a.
+  raw = englishDocsPath(raw);
   if (raw === "/docs/index") raw = "/docs";
   if (!DOCS_PATH.test(raw)) return null;
-  return { path: raw, lang };
+  return raw;
 }
 
 function sameOrigin(a: string, b: string): boolean {
@@ -148,15 +133,9 @@ function sameOrigin(a: string, b: string): boolean {
   }
 }
 
-/** The path of a docs page in `lang`: /docs/a in English, /pt-br/docs/a in Portuguese. */
-export function localizedDocsPath(englishPath: string, lang: Locale): string {
-  if (lang === DEFAULT_LOCALE) return englishPath;
-  return `/${LOCALE_INFO[lang].segment}${englishPath}`;
-}
-
 /** "/docs/developers/mcp" → "Developers"; "/docs" and one-level pages have none. */
-function sectionOf(englishPath: string): string | undefined {
-  const parts = englishPath.split("/").filter(Boolean);
+function sectionOf(path: string): string | undefined {
+  const parts = path.split("/").filter(Boolean);
   if (parts.length < 3) return undefined;
   const folder = parts[1] as string;
   return folder.charAt(0).toUpperCase() + folder.slice(1).replaceAll("-", " ");
@@ -179,7 +158,7 @@ export function groupSearchResults(
   options: {
     publicOrigin: string;
     limit: number;
-    isPathAvailable: (englishPath: string) => boolean;
+    isPathAvailable: (path: string) => boolean;
   },
 ): DocsSearchHit[] {
   const byPath = new Map<string, DocsSearchHit & { hasSnippet: boolean }>();
@@ -188,11 +167,9 @@ export function groupSearchResults(
       /\/+$/,
       "",
     );
-    const normalized = normalizeDocsPath(pathname);
-    if (!normalized) continue;
-    const path = localizedDocsPath(normalized.path, normalized.lang);
-    const english = englishDocsPath(path);
-    if (!options.isPathAvailable(english)) continue;
+    const path = normalizeDocsPath(pathname);
+    if (!path) continue;
+    if (!options.isPathAvailable(path)) continue;
     let hit = byPath.get(path);
     if (!hit) {
       if (byPath.size >= options.limit) continue;
@@ -201,7 +178,7 @@ export function groupSearchResults(
         path,
         url: `${options.publicOrigin}${path}`,
         snippet: "",
-        section: sectionOf(english),
+        section: sectionOf(path),
         hasSnippet: false,
       };
       byPath.set(path, hit);
@@ -295,31 +272,38 @@ class SmallCache<T> {
 }
 
 export interface DocsRetriever {
-  /** Search the docs in `lang`; falls back to English when nothing matches. */
-  search(
-    query: string,
-    lang?: Locale,
-    limit?: number,
-  ): Promise<DocsSearchResult>;
+  /** Search the docs (an English index: English words find the most). */
+  search(query: string, limit?: number): Promise<DocsSearchResult>;
   /**
-   * A docs page as Markdown, in `lang` when it's translated, else English.
-   * `input` is a path or URL as normalizeDocsPath takes it; its own
-   * language prefix wins over `lang`.
+   * A docs page as Markdown. `input` is a path or URL as normalizeDocsPath
+   * takes it.
    */
-  readPage(input: string, lang?: Locale): Promise<DocsPage>;
+  readPage(input: string): Promise<DocsPage>;
   /** The origins readPage accepts URLs on. */
   readonly origins: readonly string[];
 }
 
 /**
- * The language of a docs request, as a locale ("pt-BR", what next-intl's
- * useLocale gives the client) or a URL segment ("pt-br"): a language with
- * docs, else English.
+ * How long each search may take. Until one has answered, the docs site may
+ * be cold (its first search builds the index), so a search waits
+ * DOCS_CHAT.coldSearchTimeoutMs; but only one such wait per
+ * DOCS_CHAT.coldSearchRetryMs, so a site that is down doesn't hold every
+ * call of an answer that long.
  */
-export function docsLang(value: string | undefined | null): Locale {
-  if (!value) return DEFAULT_LOCALE;
-  if (isLocale(value) && hasDocs(value)) return value;
-  return docsLocaleFromSegment(value.toLowerCase()) ?? DEFAULT_LOCALE;
+export function createSearchWait(now: () => number, base: number) {
+  let hasAnswered = false;
+  let longWaitAt = Number.NEGATIVE_INFINITY;
+  return {
+    next(): number {
+      if (hasAnswered) return base;
+      if (now() - longWaitAt < DOCS_CHAT.coldSearchRetryMs) return base;
+      longWaitAt = now();
+      return Math.max(base, DOCS_CHAT.coldSearchTimeoutMs);
+    },
+    answered(): void {
+      hasAnswered = true;
+    },
+  };
 }
 
 export function createDocsRetriever(
@@ -342,12 +326,17 @@ export function createDocsRetriever(
     now,
   );
   const origins = [publicOrigin, docsOrigin];
+  const searchWait = createSearchWait(now, timeout);
 
-  async function get(url: string, accept: string): Promise<Response> {
+  async function get(
+    url: string,
+    accept: string,
+    timeoutMs = timeout,
+  ): Promise<Response> {
     try {
       return await doFetch(url, {
         headers: { accept },
-        signal: AbortSignal.timeout(timeout),
+        signal: AbortSignal.timeout(timeoutMs),
       });
     } catch (error) {
       throw new DocsRetrievalError(
@@ -359,14 +348,15 @@ export function createDocsRetriever(
 
   async function searchOnce(
     query: string,
-    lang: Locale,
     limit: number,
   ): Promise<DocsSearchHit[]> {
-    const params = new URLSearchParams({ query, locale: lang });
+    const params = new URLSearchParams({ query });
     const response = await get(
       `${docsOrigin}/api/search?${params}`,
       "application/json",
+      searchWait.next(),
     );
+    searchWait.answered();
     if (!response.ok) {
       throw new DocsRetrievalError(
         "fetch_failed",
@@ -385,70 +375,50 @@ export function createDocsRetriever(
   return {
     origins,
 
-    async search(rawQuery, langInput = DEFAULT_LOCALE, limitInput) {
+    async search(rawQuery, limitInput) {
       const query = oneLine(rawQuery).slice(0, DOCS_CHAT.maxQueryChars);
       const limit = Math.max(
         1,
         Math.min(limitInput ?? DOCS_CHAT.searchLimit, DOCS_CHAT.searchLimit),
       );
-      const lang = langInput;
-      if (!query) return { hits: [], lang };
-      const key = `${lang}\u0000${limit}\u0000${query.toLowerCase()}`;
+      if (!query) return { hits: [] };
+      const key = `${limit}\u0000${query.toLowerCase()}`;
       const cached = searches.get(key);
       if (cached) return cached;
-      let hits = await searchOnce(query, lang, limit);
-      let from = lang;
-      if (hits.length === 0 && lang !== DEFAULT_LOCALE) {
-        hits = await searchOnce(query, DEFAULT_LOCALE, limit);
-        from = DEFAULT_LOCALE;
-      }
-      const result = { hits, lang: from };
+      const result = { hits: await searchOnce(query, limit) };
       searches.set(key, result);
       return result;
     },
 
-    async readPage(input, langInput = DEFAULT_LOCALE) {
-      const normalized = normalizeDocsPath(input, origins);
-      if (!normalized) {
+    async readPage(input) {
+      const path = normalizeDocsPath(input, origins);
+      if (!path) {
         throw new DocsRetrievalError(
           "invalid_path",
           "Not a docs page. Pass a path like /docs/developers/mcp (from search_docs), or its URL.",
         );
       }
-      const english = normalized.path;
-      if (!isPathAvailable(english)) {
+      if (!isPathAvailable(path)) {
         throw new DocsRetrievalError(
           "unavailable",
           "This page describes a feature that isn't set up on this deployment, so the docs don't offer it.",
         );
       }
-      const wanted =
-        normalized.lang !== DEFAULT_LOCALE ? normalized.lang : langInput;
-      const langs: Locale[] =
-        wanted === DEFAULT_LOCALE ? [DEFAULT_LOCALE] : [wanted, DEFAULT_LOCALE];
-      for (const lang of langs) {
-        const path = localizedDocsPath(english, lang);
-        const key = `${lang}\u0000${english}`;
-        let page = pages.get(key);
-        if (page === undefined) {
-          page = await fetchPage(path, english, lang);
-          pages.set(key, page);
-        }
-        if (page) return page;
+      let page = pages.get(path);
+      if (page === undefined) {
+        page = await fetchPage(path);
+        pages.set(path, page);
       }
+      if (page) return page;
       throw new DocsRetrievalError(
         "not_found",
-        `No docs page at ${english}. Use a path from search_docs.`,
+        `No docs page at ${path}. Use a path from search_docs.`,
       );
     },
   };
 
-  /** The page at `path` in `lang`, or null when the docs site has none. */
-  async function fetchPage(
-    path: string,
-    english: string,
-    lang: Locale,
-  ): Promise<DocsPage | null> {
+  /** The page at `path`, or null when the docs site has none. */
+  async function fetchPage(path: string): Promise<DocsPage | null> {
     const response = await get(`${docsOrigin}${path}.md`, "text/markdown");
     if (response.status === 404) return null;
     if (!response.ok) {
@@ -457,27 +427,17 @@ export function createDocsRetriever(
         `The docs site answered ${response.status} for ${path}.`,
       );
     }
-    // A translation that isn't done yet comes back in English, with a
-    // Content-Language header saying so (the docs app's docs-md route).
-    const contentLanguage = response.headers.get("content-language") ?? "";
-    const actual: Locale =
-      lang !== DEFAULT_LOCALE && /^en\b/i.test(contentLanguage)
-        ? DEFAULT_LOCALE
-        : lang;
     const text = await response.text();
     const { title, body } = parseMarkdownPage(text);
     const truncated = body.length > DOCS_CHAT.maxPageChars;
-    const servedPath =
-      actual === lang ? path : localizedDocsPath(english, actual);
-    const url = `${publicOrigin}${servedPath}`;
+    const url = `${publicOrigin}${path}`;
     const markdown = truncated
       ? `${body.slice(0, DOCS_CHAT.maxPageChars).trimEnd()}\n\n[The page continues; the rest is at ${url}]`
       : body;
     return {
-      title: title || english.split("/").pop() || english,
-      path: servedPath,
+      title: title || path.split("/").pop() || path,
+      path,
       url,
-      lang: actual,
       markdown,
       truncated,
     };

@@ -9,15 +9,6 @@ import type { Node, Root } from "fumadocs-core/page-tree";
 import { loader, type VirtualFile } from "fumadocs-core/source";
 import { describe, expect, it } from "vitest";
 import { docsTabs, filterPageTree } from "@/lib/docs-tree";
-import type { Locale } from "@/lib/i18n/config";
-import {
-  DOCS_LOCALES,
-  docsI18n,
-  docsUrl,
-  englishDocsPath,
-  translationLocale,
-} from "@/lib/i18n/docs";
-import { withEnglishStructure } from "@/lib/i18n/docs-meta";
 // The redirects stay in the main app, which answers them on qrdx.dev before
 // it proxies the docs here: their destinations must be pages here.
 import { DOCS_REDIRECTS } from "../../../app/lib/docs-redirects";
@@ -95,20 +86,9 @@ function contentFiles(): VirtualFile[] {
   });
 }
 
-/** The English docs, as lib/source.ts builds them (translations left out). */
+/** The docs, as lib/source.ts builds them. */
 function buildSource() {
-  const files = contentFiles().filter((file) => !translationLocale(file.path));
-  return loader({ baseUrl: "/docs", source: { files } });
-}
-
-/** Every language, as lib/source.ts `localizedSource` builds them. */
-function buildLocalizedSource() {
-  return loader({
-    baseUrl: "/docs",
-    source: { files: withEnglishStructure(contentFiles()) },
-    i18n: docsI18n,
-    url: (slugs, locale) => docsUrl(slugs, (locale ?? "en") as Locale),
-  });
+  return loader({ baseUrl: "/docs", source: { files: contentFiles() } });
 }
 
 const source = buildSource();
@@ -211,74 +191,16 @@ describe("docs tabs", () => {
   });
 });
 
-describe("docs in other languages", () => {
-  const localized = buildLocalizedSource();
-
-  it("show a page added to the English sidebar at once, in the same tab", () => {
-    // A new English page that no language has a translation or meta entry for.
-    const files = contentFiles().map(
-      (file): VirtualFile =>
-        file.type === "meta" && file.path === "(guides)/meta.json"
-          ? {
-              ...file,
-              data: {
-                ...file.data,
-                pages: [...(file.data.pages ?? []), "../zz-new"],
-              },
-            }
-          : file,
-    );
-    files.push({ type: "page", path: "zz-new.mdx", data: { title: "New" } });
-    const docs = loader({
-      baseUrl: "/docs",
-      source: { files: withEnglishStructure(files) },
-      i18n: docsI18n,
-      url: (slugs, locale) => docsUrl(slugs, (locale ?? "en") as Locale),
-    });
-    for (const locale of DOCS_LOCALES) {
-      const guides = tabFolders(docs.getPageTree(locale))[1];
-      const urls = JSON.stringify(guides);
-      expect(urls, locale).toContain(`"${docsUrl(["zz-new"], locale)}"`);
-    }
+describe("docs content files", () => {
+  // The docs are English only. A file named <page>.<language>.mdx or
+  // meta.<language>.json would be read as one more English page or ignored,
+  // so none may come back.
+  it("holds no translated copies", () => {
+    const translated = walk(CONTENT)
+      .map((file) => relative(CONTENT, file))
+      .filter((file) =>
+        /\.(?:es|pt-BR|fr|de|it|ja|ko|zh-Hans|id|hi)\.(?:mdx|json)$/.test(file),
+      );
+    expect(translated).toEqual([]);
   });
-  const translated = DOCS_LOCALES.filter((locale) => locale !== "en");
-
-  it.each(translated)(
-    "%s has every English page at its own URL, in the same tabs",
-    (locale) => {
-      const tree = localized.getPageTree(locale);
-      const prefix = docsUrl([], locale);
-      const urls = new Set(localized.getPages(locale).map((page) => page.url));
-      // Untranslated pages fall back to English, so nothing is missing.
-      expect(new Set([...urls].map((url) => englishDocsPath(url)))).toEqual(
-        pageUrls,
-      );
-      // The same tree as English once its URLs lose the prefix.
-      const english = (nodes: Node[]): Node[] =>
-        nodes.map((node): Node => {
-          if (node.type === "page") {
-            return { ...node, url: englishDocsPath(node.url) };
-          }
-          if (node.type !== "folder") return node;
-          return {
-            ...node,
-            index: node.index && {
-              ...node.index,
-              url: englishDocsPath(node.index.url),
-            },
-            children: english(node.children),
-          };
-        });
-      expect(tabFolders(tree)).toHaveLength(TABS.length);
-      expect(urlsIn(english(tree.fallback?.children ?? []))).toEqual([]);
-      const listed = tabFolders(tree).flatMap((tab) =>
-        urlsIn(english(tab.children)),
-      );
-      expect(new Set(listed).size).toBe(listed.length);
-      expect(new Set([...listed, "/docs"])).toEqual(pageUrls);
-      expect(tree.children[0]).toMatchObject({ type: "page", url: prefix });
-      // The tabs are named in the language (meta.<locale>.json).
-      expect(tabFolders(tree).map((tab) => tab.name)).not.toEqual(TABS);
-    },
-  );
 });

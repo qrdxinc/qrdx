@@ -40,11 +40,6 @@ export interface LocaleDefinition {
   dir: "ltr" | "rtl";
   /** Whether search engines may index it (review.ts). */
   review: ReviewState;
-  /**
-   * The docs are translated into it (content/docs/<page>.<locale>.mdx,
-   * docs.ts). Without it, its pages link to the English docs.
-   */
-  docs?: boolean;
 }
 
 export const DEFAULT_LOCALE = "en";
@@ -59,7 +54,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "en_US",
     dir: "ltr",
     review: "reviewed",
-    docs: true,
   },
   es: {
     segment: "es",
@@ -69,7 +63,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "es_ES",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   "pt-BR": {
     segment: "pt-br",
@@ -79,7 +72,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "pt_BR",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   fr: {
     segment: "fr",
@@ -89,7 +81,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "fr_FR",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   de: {
     segment: "de",
@@ -99,7 +90,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "de_DE",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   it: {
     segment: "it",
@@ -109,7 +99,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "it_IT",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   ja: {
     segment: "ja",
@@ -119,7 +108,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "ja_JP",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   ko: {
     segment: "ko",
@@ -129,7 +117,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "ko_KR",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   "zh-Hans": {
     segment: "zh-hans",
@@ -139,7 +126,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "zh_CN",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   id: {
     segment: "id",
@@ -149,7 +135,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "id_ID",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
   hi: {
     segment: "hi",
@@ -159,7 +144,6 @@ export const LOCALE_CONFIG = {
     ogLocale: "hi_IN",
     dir: "ltr",
     review: "machine",
-    docs: true,
   },
 } as const satisfies Record<string, LocaleDefinition>;
 

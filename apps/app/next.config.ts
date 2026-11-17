@@ -1,13 +1,24 @@
 import {
+  assertLicensePublicKey,
+  QRDX_LICENSE_PUBLIC_KEY,
+} from "@repo/auth/ee/license-public-key";
+import {
   API_HOST,
   CANONICAL_HOST,
   CANONICAL_ORIGIN,
   MCP_HOST,
 } from "@repo/config";
 import { OG_FONT_GLOB } from "@repo/design-system/og/font-files";
-import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
-import { docsOriginRedirects, docsZoneRewrites } from "@repo/i18n/docs";
-import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
+import {
+  docsOriginRedirects,
+  docsZoneRewrites,
+  translatedDocsRedirects,
+} from "@repo/i18n/docs";
+import {
+  englishOnlyRedirects,
+  englishRedirects,
+  englishRewrites,
+} from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
   ADMIN_CONSOLE_SECRET_MIN_LENGTH,
@@ -94,6 +105,16 @@ const docsElsewhere = env.DOCS_ZONE_URL
       // QRdx's own hosts: on a custom domain those paths are short links.
       has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
     });
+// The docs are English only. The docs URLs the other languages had
+// (/es/docs/..., /pt-br/docs/....md, /docs-md/es/...) redirect to the English
+// page, 307 for now (@repo/i18n/docs). Redirects run before the rewrites
+// above, so these requests are answered here, once, and never proxied to
+// the docs site. Without a docs site they go straight to the English page
+// on qrdx.dev.
+const translatedDocs = translatedDocsRedirects({
+  ...(!env.DOCS_ZONE_URL && { origin: CANONICAL_ORIGIN }),
+  has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
+});
 
 // The back-office console at CONSOLE_ORIGIN serves five /admin sections and
 // its build assets (@repo/next-config/console-zone), on QRdx's own hosts
@@ -146,6 +167,18 @@ if (siteZone.length > 0 && !env.SITE_ZONE_KEY) {
   console.warn(
     "⚠ SITE_ORIGIN is set but SITE_ZONE_KEY isn't: the site can't tell requests that came through this app. Set the same SITE_ZONE_KEY on both.",
   );
+}
+
+// QRDX_EE_LICENSE is checked against QRdx's licence public key, compiled into
+// the build (packages/auth/ee/license-public-key.ts). A production build
+// without it would turn every licence key down, so `next build` and
+// `next start` stop here instead. `next typegen` loads this file the same
+// way but builds nothing (the typechecks run it), so it goes on.
+if (
+  process.env.NODE_ENV === "production" &&
+  !process.argv.includes("typegen")
+) {
+  assertLicensePublicKey(QRDX_LICENSE_PUBLIC_KEY);
 }
 
 // Another zone's build assets aren't pages: no page policy on them while
@@ -262,8 +295,11 @@ let nextConfig: NextConfig = {
   // Geist (@repo/design-system/og/font-files) for server images: OG cards,
   // and frame labels drawn from its glyph outlines (lib/qr-text-outline.ts),
   // read at runtime wherever a PNG is rasterized.
+  // The conversion tracking script (ee/conversions/script.ts) is read from
+  // disk when /conversions.js is built; traced in case it's ever rebuilt.
   outputFileTracingIncludes: {
     "/**": [OG_FONT_GLOB],
+    "/conversions.js": ["./ee/conversions/conversions.js"],
   },
   serverExternalPackages: ["shiki", "@takumi-rs/core"],
   // When rules set the same header, the later one wins.
@@ -407,6 +443,8 @@ let nextConfig: NextConfig = {
         ...redirect,
         has: [{ type: "host" as const, value: `(?:${PLATFORM_HOSTS})` }],
       })),
+      // The other languages' old docs URLs, to the English page.
+      ...translatedDocs,
       // No docs site here: the docs are read on qrdx.dev (docsElsewhere).
       ...docsElsewhere,
       // Site pages that moved (lib/moved-pages.ts), also on QRdx's own hosts.
@@ -416,6 +454,9 @@ let nextConfig: NextConfig = {
       })),
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
+      // The marketing pages are English only: /es/pricing → /pricing, /es →
+      // /, /es/home → /home, query kept (307 for now; packages/i18n/routing.ts).
+      ...englishOnlyRedirects(`(?:${PLATFORM_HOSTS})`),
       // The console's sections, when ADMIN_CONSOLE_URL is set (above).
       ...adminConsole,
     ];
@@ -438,18 +479,14 @@ let nextConfig: NextConfig = {
         // The site's groups of pages, when SITE_ORIGIN is set (above): ahead
         // of this app's own copies of those pages too.
         ...siteZone,
-        // The home page at /home and /<language>/home too (lib/home-path.ts):
-        // the logo links there, and unlike / it never sends a signed-in
-        // visitor to the dashboard (proxy.ts). Canonical stays /.
+        // The home page at /home too (lib/home-path.ts): the logo links
+        // there, and unlike / it never sends a signed-in visitor to the
+        // dashboard (proxy.ts). Canonical stays /. The home page is English
+        // only: /<language>/home redirects here (englishOnlyRedirects).
         {
           source: "/home",
           has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
           destination: "/en",
-        },
-        {
-          source: `/:locale(${TRANSLATED_LOCALES.map((locale) => LOCALE_INFO[locale].segment).join("|")})/home`,
-          has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
-          destination: "/:locale",
         },
         // Community profiles live at /community/@handle; a folder named
         // @handle would be a parallel route slot, so they render from

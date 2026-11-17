@@ -146,7 +146,7 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | `search_community` | Finds published [community](/community) frames, themes and collections by words, type or tag |
 | `get_community_item` | One community item with the style it applies, ready for `design_qr` or `generate_qr_code` |
 | `save_template` | Saves a design as a theme in your workspace. Needs an [API key](#use-an-api-key) |
-| `generate_barcode` | Draws an EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 or Aztec barcode after checking the value (check digits, lengths, characters). Returns a PNG and public [barcode API](/docs/developers/barcode-api) URLs |
+| `generate_barcode` | Draws an EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec barcode after checking the value (check digits, lengths, characters). Returns a PNG and public [barcode API](/docs/developers/barcode-api) URLs |
 | `save_barcode` | Saves a barcode to your workspace's Barcodes. Needs an [API key](#use-an-api-key) |
 | `generate_ai_art` | Paints a QR code into AI artwork and checks that it scans. Uses one of the workspace's monthly AI art images and takes up to a minute. Needs an [API key](#use-an-api-key). See [AI art API](/docs/developers/ai-art-api) |
 | `qr_payload_wifi` | Builds a `WIFI:` network payload (WPA, WEP or open, optionally hidden) with special characters escaped |
@@ -155,6 +155,8 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | `qr_payload_sms` | Builds an `sms:` link (RFC 5724) with an optional message, or the older `SMSTO:` form |
 | `qr_payload_geo` | Builds a `geo:` location (RFC 5870) from latitude and longitude |
 | `qr_payload_payment` | Builds a bank payment code: a Pix BR Code, a SEPA credit transfer (EPC069-12), or a PayNow, PromptPay or VietQR code (EMV, with its CRC). It checks the fields like the playground's forms do |
+| `search_docs` | Finds QRdx docs pages for a question or key words. Returns up to 8 pages with their titles, paths and a short excerpt. Takes an optional language |
+| `read_docs_page` | Returns one docs page as Markdown, by its path from `search_docs` or its URL. Long pages are cut at 12,000 characters, and a page with no translation comes back in English |
 
 The payload tools return a plain string. Your assistant then passes it as `data` to `generate_qr_code`.
 
@@ -300,7 +302,7 @@ The server allows {facts.mcpPerMinute} requests a minute per IP address, and `de
 
 ## Privacy and limits [#privacy-and-limits]
 
-- The tools render images, check designs, format text and read the public community. Only `save_template` and `save_barcode` write anything: the theme or barcode you ask them to save, in the API key's workspace. `generate_ai_art` uses one of the workspace's monthly AI art images, and keeps neither the image nor a photo you send. The server doesn't save the codes you generate.
+- The tools render images, check designs, format text, and read the public community and these docs. Only `save_template` and `save_barcode` write anything: the theme or barcode you ask them to save, in the API key's workspace. `generate_ai_art` uses one of the workspace's monthly AI art images, and keeps neither the image nor a photo you send. The server doesn't save the codes you generate.
 - The image URLs that `generate_qr_code` and `generate_barcode` return contain the encoded data. Don't share them if the data is private, such as a Wi-Fi password.
 - Requests are limited to {facts.mcpPerMinute} a minute per IP address, and `design_qr` to {facts.designQrPerMinute}.
 

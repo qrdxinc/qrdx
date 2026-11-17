@@ -16,10 +16,10 @@ import {
 } from "fumadocs-ui/components/dialog/search";
 import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { ArrowRight } from "iconsax-reactjs";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef } from "react";
 import { DocsChatSearchEntry } from "@/components/chat/slot";
-import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
+import { useZoneRouter as useRouter } from "@/components/zone-router";
 import { track } from "@/lib/analytics";
 
 /** docs_search once a query settles: its length and result count, never the text. */
@@ -40,13 +40,8 @@ function useTrackDocsSearch(search: string, loading: boolean, results: number) {
 }
 
 export default function CustomSearchDialog(props: SharedProps) {
-  // The docs' language (app/api/search keeps an index per language).
-  const locale = useLocale();
   const t = useTranslations("docs.client.search");
-  const { search, setSearch, query } = useDocsSearch({
-    type: "fetch",
-    locale,
-  });
+  const { search, setSearch, query } = useDocsSearch({ type: "fetch" });
   const { full } = useTreeContext();
   const router = useRouter();
   useTrackDocsSearch(

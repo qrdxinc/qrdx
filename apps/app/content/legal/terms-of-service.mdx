@@ -10,7 +10,7 @@ lastUpdated: 2026-11-23
 - Don't use QRdx for phishing, malware, scams or anything else in the [Acceptable Use Policy](/legal/acceptable-use-policy). Breaking it is the one reason we switch codes off or suspend accounts.
 - Data your pages and forms collect from your visitors is yours to look after. We process it for you under the [Data Processing Addendum](/legal/dpa).
 - Paid plans are sold through Polar, our merchant of record. Your first payment for a paid plan comes with a {facts.moneyBackDays}-day money-back guarantee. Cancel any time; your plan runs to the end of the period you paid for. See [Refunds & Cancellations](/legal/refunds).
-- The code is open source under AGPL-3.0. These Terms cover the hosted Service at qrdx.dev, not copies you run yourself.
+- The app's code is open source under AGPL-3.0-or-later, the library and developer tools are MIT, and the `ee/` folders are under the QRdx Commercial License. These Terms cover the hosted Service at qrdx.dev, not copies you run yourself.
 
 </Callout>
 
@@ -118,7 +118,13 @@ Follow the [Acceptable Use Policy](/legal/acceptable-use-policy). In short: no p
 
 ## Open source and the hosted Service
 
-QRdx's source code is published under the [GNU Affero General Public License v3.0](https://github.com/qrdxinc/qrdx/blob/main/LICENSE). That licence governs your use of the code, including running your own copy. These Terms govern the hosted Service we run at qrdx.dev and do not limit the rights the licence gives you. The QRdx name and logo identify our Service; the licence doesn't give you the right to use them in a way that suggests your copy is ours or is endorsed by us.
+QRdx's source code is published on GitHub under three licences, set out in [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md):
+
+- **The web app** and everything not listed below: the [GNU Affero General Public License, version 3 or later](https://github.com/qrdxinc/qrdx/blob/main/LICENSE) (AGPL-3.0-or-later).
+- **The `qrdx` library, the CLI, the plugins, the agent skill and the shadcn/ui registry components:** the MIT licence.
+- **The `ee/` folders,** which hold some Business features: the QRdx Commercial License. You can read and test that code, but using it in production on your own server needs a written agreement with us.
+
+Those licences govern your use of the code, including running your own copy. These Terms govern the hosted Service we run at qrdx.dev, including the features from the `ee/` folders, and do not limit the rights those licences give you. The QRdx name and logo identify our Service; no licence gives you the right to use them in a way that suggests your copy is ours or is endorsed by us.
 
 ## Suspension and termination
 
@@ -184,4 +190,4 @@ Ritesh Bucha, India. Email: [support@qrdx.dev](mailto:support@qrdx.dev).
 
 ---
 
-**Changes:** 23 November 2026. Plans, billing and refunds now mentions the longer money-back window for customers moving from another QR code provider. 13 November 2026. Added the money-back guarantee on the first payment for a paid plan to Plans, billing and refunds. 1 November 2026. Rewritten to cover dynamic codes, hosted pages, teams, custom domains, integrations and imports, the API, CLI and MCP server, AI features, billing through Polar, the open-source licence, suspension and what happens to data on termination.
+**Changes:** 23 November 2026. Plans, billing and refunds now mentions the longer money-back window for customers moving from another QR code provider. 15 November 2026. Open source and the hosted Service now names all three licences of the code (AGPL-3.0-or-later, MIT, and the QRdx Commercial License for the `ee/` folders) and links LICENSING.md. 13 November 2026. Added the money-back guarantee on the first payment for a paid plan to Plans, billing and refunds. 1 November 2026. Rewritten to cover dynamic codes, hosted pages, teams, custom domains, integrations and imports, the API, CLI and MCP server, AI features, billing through Polar, the open-source licence, suspension and what happens to data on termination.

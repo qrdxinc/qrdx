@@ -9,13 +9,7 @@ import {
   type StaticSource,
   type VirtualFile,
 } from "fumadocs-core/source";
-import {
-  docsLoaderOptions,
-  localizedDocsLoaderOptions,
-  pageLocales,
-} from "@/lib/docs-common";
-import { translationLocale } from "@/lib/i18n/docs";
-import { withEnglishStructure } from "@/lib/i18n/docs-meta";
+import { docsLoaderOptions } from "@/lib/docs-common";
 import type { Page as CompiledPage } from "@/lib/source";
 
 // The docs for route handlers: the .md and llms routes, search, the sitemap
@@ -28,7 +22,7 @@ import type { Page as CompiledPage } from "@/lib/source";
 // Keep it that way: a route handler that imports lib/source.ts (or anything
 // that does) brings every compiled docs page back into the routes' build.
 
-export { getPageImage, isTranslatedPage } from "@/lib/docs-common";
+export { getPageImage } from "@/lib/docs-common";
 
 /** A page's data here: the compiled page's, without the MDX. */
 export type DocsIndexPageData = Omit<
@@ -125,44 +119,22 @@ function toVirtualFile(file: IndexedFile): IndexVirtualFile {
   };
 }
 
-function createSources(files: IndexedFile[]) {
-  const all = files.map(toVirtualFile);
-  const english: StaticSource<IndexConfig> = {
-    files: all.filter((file) => !translationLocale(file.path)),
+function createSource(files: IndexedFile[]) {
+  const source: StaticSource<IndexConfig> = {
+    files: files.map(toVirtualFile),
   };
-  const localized: StaticSource<IndexConfig> = {
-    files: withEnglishStructure(all),
-  };
-  return {
-    english: loader({ ...docsLoaderOptions, source: english }),
-    localized: loader({ ...localizedDocsLoaderOptions, source: localized }),
-  };
+  return loader({ ...docsLoaderOptions, source });
 }
 
-let sources: { files: IndexedFile[]; value: ReturnType<typeof createSources> };
+let cached: { files: IndexedFile[]; value: ReturnType<typeof createSource> };
 
-function current() {
-  const { files } = pagesFile();
-  if (sources?.files !== files)
-    sources = { files, value: createSources(files) };
-  return sources.value;
-}
-
-/** The English docs (lib/source.ts `source`). */
+/** The docs (lib/source.ts `source`). */
 export function docsIndex() {
-  return current().english;
-}
-
-/** The docs in every language with docs (lib/source.ts `localizedSource`). */
-export function localizedDocsIndex() {
-  return current().localized;
+  const { files } = pagesFile();
+  if (cached?.files !== files) cached = { files, value: createSource(files) };
+  return cached.value;
 }
 
 export type DocsIndexPage = ReturnType<
   ReturnType<typeof docsIndex>["getPages"]
 >[number];
-
-/** The languages a docs page is translated into, English first. */
-export function docsPageLocales(slugs: string[]) {
-  return pageLocales(localizedDocsIndex(), slugs);
-}

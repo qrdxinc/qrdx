@@ -15,7 +15,7 @@
 // features. Paths in the comments below (lib/…, components/…, proxy.ts) are
 // the app's, under apps/app.
 
-import { EE_LICENSE_ENV } from "@repo/auth/ee-license";
+import { EE_LICENSE_ENV, type EeFeature } from "@repo/auth/ee-license";
 import { passkeyRelyingParty } from "@repo/auth/passkey-rp";
 import { isQrdxDeployment } from "./deployment";
 import { isFlagOn } from "./flags";
@@ -41,10 +41,15 @@ export const FEATURE_IDS = [
   "passkeys",
   "sso",
   "auditLog",
+  "clientPortal",
+  "whiteLabel",
+  "conversions",
   "slackBot",
   "discordBot",
   "telegramBot",
   "affiliates",
+  // Paid plans (Polar)
+  "billing",
   // Agency tools: "Pay by invoice" requests for Business yearly
   "invoiceRequests",
   // Enterprise pages: the contact form on /enterprise
@@ -55,6 +60,9 @@ export const FEATURE_IDS = [
 ] as const;
 
 export type FeatureId = (typeof FEATURE_IDS)[number];
+
+/** The variable that turns billing on (FEATURE_RULES.billing). */
+export const BILLING_ENV = "POLAR_ACCESS_TOKEN";
 
 export interface FeatureContext {
   /** Environment variables by name. Only whether each is set is read. */
@@ -67,6 +75,13 @@ export interface FeatureContext {
   onVercel: boolean;
   /** Production and preview builds (NODE_ENV === "production"). */
   production: boolean;
+  /**
+   * The ee features a valid QRDX_EE_LICENSE turns on now: signed by QRdx and
+   * not past its expiry and grace period. The server checks the key
+   * (packages/auth/ee/license.ts, server-only) and passes the result in, so
+   * these rules stay pure. Absent or empty: none.
+   */
+  eeFeatures?: readonly EeFeature[];
 }
 
 interface FeatureRule {
@@ -201,10 +216,12 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
   },
   sso: {
     // Workspace single sign-on is in ee/ under the QRdx commercial licence
-    // and runs only with a licence key (packages/auth/ee-license.ts): without
-    // one the server doesn't register it at all.
+    // and runs only with a valid licence key that covers it
+    // (packages/auth/ee/license.ts): without one the server doesn't register
+    // it at all. A key that is invalid or expired counts as none.
     name: "Workspace SSO (QRdx license key)",
     requires: () => [EE_LICENSE_ENV],
+    usable: (ctx) => Boolean(ctx.eeFeatures?.includes("sso")),
     paths: [
       `${WORKSPACE_PATTERN_PREFIX}/settings/sso`,
       "/docs/help/teams/single-sign-on",
@@ -212,13 +229,45 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
   },
   auditLog: {
     // The workspace audit log is in ee/ under the same licence: without a
-    // key nothing is recorded and Settings → Audit log doesn't exist.
+    // valid key that covers it nothing is recorded and Settings → Audit log
+    // doesn't exist.
     name: "Workspace audit log (QRdx license key)",
     requires: () => [EE_LICENSE_ENV],
+    usable: (ctx) => Boolean(ctx.eeFeatures?.includes("auditLog")),
     paths: [
       `${WORKSPACE_PATTERN_PREFIX}/settings/audit-log`,
       "/docs/help/teams/audit-log",
     ],
+  },
+  clientPortal: {
+    // The client portal and client-branded stats pages (agency tools) are in
+    // ee/client-portal under the same licence: without a valid key there is no
+    // Settings → Client portal, no portal, and shared stats pages carry no
+    // client brand (they keep working, plain).
+    name: "Client portal and client reports (QRdx license key)",
+    requires: () => [EE_LICENSE_ENV],
+    usable: (ctx) => Boolean(ctx.eeFeatures?.includes("clientPortal")),
+    paths: [
+      `${WORKSPACE_PATTERN_PREFIX}/settings/clients`,
+      "/docs/client-portal",
+    ],
+  },
+  whiteLabel: {
+    // White-label and custom CSS on hosted pages are in ee/white-label under
+    // the same licence: without a valid key every hosted page shows QRdx's default
+    // branding and no custom CSS. Pages keep serving either way.
+    name: "White-label and custom CSS on hosted pages (QRdx license key)",
+    requires: () => [EE_LICENSE_ENV],
+    usable: (ctx) => Boolean(ctx.eeFeatures?.includes("whiteLabel")),
+  },
+  conversions: {
+    // Conversion tracking is in ee/conversions under the same licence:
+    // without a valid key scans get no qrdx_sid and POST /api/v1/conversions
+    // answers 404. Conversions already recorded stay in the data export.
+    name: "Conversion tracking (QRdx license key)",
+    requires: () => [EE_LICENSE_ENV],
+    usable: (ctx) => Boolean(ctx.eeFeatures?.includes("conversions")),
+    paths: ["/docs/developers/api/create-conversion"],
   },
   slackBot: {
     // The QRdx bot for Slack (lib/slack-bot): the same Slack app as "Add to
@@ -280,6 +329,14 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
       "/docs/help/account-and-billing/affiliate-program",
     ],
   },
+  billing: {
+    // Selling plans through Polar (lib/polar.ts): checkout, the billing
+    // portal and the subscriptions the webhook records. Without it nothing
+    // is sold, and every account keeps the plan its subscription rows give
+    // it: Free on a new self-hosted server (lib/plans.ts).
+    name: "Billing (Polar)",
+    requires: () => [BILLING_ENV],
+  },
   invoiceRequests: {
     // Paying Business yearly by invoice (lib/invoice-requests.ts). Polar's
     // checkout takes cards and wallets only, so a request is emailed to
@@ -330,6 +387,28 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
     paths: ["/docs/help/account-and-billing/nonprofit-discount"],
   },
 };
+
+/**
+ * Whether the ee features (workspace SSO, the audit log, the client portal
+ * and client reports, white-label pages with custom CSS, conversion
+ * tracking) come with every plan here: a self-hosted copy on its own domain
+ * (./deployment.ts) with a valid licence key (`eeFeatures`) that sells no
+ * plans (no "billing", so every account is on Free). Its enterprise
+ * agreement covers them, so no plan is asked for.
+ * Where plans are sold, and always on QRdx itself (qrdx.dev, its previews,
+ * local dev), they stay with the plans that include them
+ * (apps/app/lib/plans.ts).
+ */
+export function eeOnEveryPlan(ctx: FeatureContext): boolean {
+  return (
+    (ctx.eeFeatures?.length ?? 0) > 0 &&
+    missingFeatureSetup("billing", ctx).length > 0 &&
+    !isQrdxDeployment({
+      appUrl: ctx.env.NEXT_PUBLIC_APP_URL,
+      productionUrl: ctx.env.VERCEL_PROJECT_PRODUCTION_URL,
+    })
+  );
+}
 
 /**
  * The docs assistant's switch: on unless DOCS_CHAT_ENABLED is "0" or
