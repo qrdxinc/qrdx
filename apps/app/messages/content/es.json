@@ -22625,6 +22625,24 @@
     "status": "machine",
     "context": "barcodes.formats.code39.inputHint"
   },
+  "72696df700c2": {
+    "source": "Code 39's characters in a shorter barcode",
+    "text": "Los caracteres de Code 39 en un código de barras más corto",
+    "status": "machine",
+    "context": "barcodes.formats.code93.summary"
+  },
+  "1268c9b1de31": {
+    "source": "Digits for libraries, blood banks and older labels",
+    "text": "Dígitos para bibliotecas, bancos de sangre y etiquetas antiguas",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.summary"
+  },
+  "b2c2db8e248a": {
+    "source": "Start and end with A, B, C or D; between them up to 38 digits and - $ : / . +.",
+    "text": "Empieza y termina con A, B, C o D; entre ambas, hasta 38 dígitos y - $ : / . +.",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.inputHint"
+  },
   "589227c3ced5": {
     "source": "Shipping cartons holding retail products",
     "text": "Cajas de envío con productos minoristas",
@@ -22751,6 +22769,18 @@
     "status": "machine",
     "context": "barcodes.uses.code39"
   },
+  "5d7174c9e84a": {
+    "source": "Code 39's characters in a shorter barcode, with two check characters that readers verify. Use it when a system asks for Code 93; otherwise Code 128 does the same job and more.",
+    "text": "Los caracteres de Code 39 en un código de barras más corto, con dos caracteres de control que los lectores verifican. Úsalo cuando un sistema pida Code 93; si no, Code 128 hace lo mismo y más.",
+    "status": "machine",
+    "context": "barcodes.uses.code93"
+  },
+  "ec05c52f5ac8": {
+    "source": "An older barcode of digits with a start and stop letter (A to D), still used by libraries, blood banks and some shipping labels. Use it when a system asks for Codabar; otherwise Code 128 is shorter.",
+    "text": "Un código de barras antiguo de dígitos con una letra de inicio y otra de final (de A a D), que aún usan bibliotecas, bancos de sangre y algunas etiquetas de envío. Úsalo cuando un sistema pida Codabar; si no, Code 128 es más corto.",
+    "status": "machine",
+    "context": "barcodes.uses.codabar"
+  },
   "78b5bd23193b": {
     "source": "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
     "text": "Se imprime en cajas de cartón corrugado que contienen productos de venta al por menor. Lleva el GTIN de 14 dígitos de la caja, y su marco grueso (barras de protección) uniformiza la presión de impresión e impide que los escáneres lean solo una parte.",
@@ -22823,9 +22853,9 @@
     "status": "machine",
     "context": "barcodes.faqs.1.question"
   },
-  "354487504d93": {
-    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128 and Code 39 need no registration.",
-    "text": "Para productos que se venden en tiendas, sí. EAN, UPC, ITF-14 y GS1-128 llevan un GTIN, y los GTIN los asigna con licencia a tu empresa GS1 (o la organización de GS1 de tu país); los sistemas de los comercios no reconocerán un número inventado. Este generador dibuja cualquier número válido, pero no emite ni registra números. Para tu propio inventario, activos o entradas, Code 128 y Code 39 no necesitan registro.",
+  "aca907b86c08": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "Para productos que se venden en tiendas, sí. EAN, UPC, ITF-14 y GS1-128 llevan un GTIN, y los GTIN se licencian a tu empresa a través de GS1 (o de la organización de GS1 de tu país); los sistemas de los comercios no reconocerán un número inventado. Este generador dibuja cualquier número válido, pero no emite ni registra números. Para tu propio inventario, activos o entradas, Code 128, Code 39 y Code 93 no necesitan registro.",
     "status": "machine",
     "context": "barcodes.faqs.1.answer"
   },
@@ -23908,6 +23938,174 @@
     "text": "No. Los caracteres de inicio y de fin se añaden por ti, y el asterisco no puede formar parte del texto.",
     "status": "machine",
     "context": "barcodeFormats.pages.code-39.faqs.1.answer"
+  },
+  "2710ebb603a0": {
+    "source": "Free Code 93 Barcode Generator",
+    "text": "Generador de códigos de barras Code 93 gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.title"
+  },
+  "18b303bbca65": {
+    "source": "Make a Code 93 barcode with capital letters, digits and - . $ / + %, up to 40 characters. Check characters added. Scan-checked. SVG, PDF, PNG. Free.",
+    "text": "Crea un código de barras Code 93 con mayúsculas, dígitos y - . $ / + %, hasta 40 caracteres. Con caracteres de control añadidos. Escaneo verificado. SVG, PDF, PNG. Gratis.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.metaDescription"
+  },
+  "e219e5513bd8": {
+    "source": "Code 93 holds the same characters as Code 39, capital letters, digits and a few symbols, in a shorter barcode with two built-in check characters. Type up to 40 characters, check that it scans and download it.",
+    "text": "Code 93 admite los mismos caracteres que Code 39, mayúsculas, dígitos y algunos símbolos, en un código de barras más corto con dos caracteres de control integrados. Escribe hasta 40 caracteres, comprueba que se escanea y descárgalo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.intro"
+  },
+  "7bee63c8a9a6": {
+    "source": "Labels in logistics and inventory systems that specify Code 93.",
+    "text": "Etiquetas en sistemas de logística e inventario que especifican Code 93.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.0"
+  },
+  "8d204ecd0aaf": {
+    "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
+    "text": "Si nada exige Code 93, usa Code 128: admite también minúsculas y más escáneres lo tienen activado.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
+  "d2fb97a99a0a": {
+    "source": "Do I need to register a Code 93 barcode?",
+    "text": "¿Necesito registrar un código de barras Code 93?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.title"
+  },
+  "cebbfa59e3ae": {
+    "source": "No. Code 93 carries your own text: serial numbers, part numbers, IDs. There's nothing to license.",
+    "text": "No. Code 93 lleva tu propio texto: números de serie, números de pieza, identificadores. No hay nada que licenciar.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.paragraphs.0"
+  },
+  "74ac9841bdd6": {
+    "source": "Every Code 93 barcode ends with two check characters, C and K, worked out from the text (modulo 47). They're required, so the generator always adds them, and readers check them and leave them out of what they return. The start and stop characters are added for you too.",
+    "text": "Todo código de barras Code 93 termina con dos caracteres de control, C y K, calculados a partir del texto (módulo 47). Son obligatorios, así que el generador siempre los añade, y los lectores los comprueban y no los incluyen en lo que devuelven. Los caracteres de inicio y de parada también se añaden por ti.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.rules.1"
+  },
+  "77496524eafa": {
+    "source": "Each Code 93 character is 9 modules wide, against Code 39's 13 to 16, so the same text makes a shorter barcode: ABCDEFGHIJ is 51.9 mm in the downloads, 74.4 mm as Code 39 and 58.2 mm as Code 128.",
+    "text": "Cada carácter de Code 93 mide 9 módulos de ancho, frente a los 13 a 16 de Code 39, así que el mismo texto da un código de barras más corto: ABCDEFGHIJ mide 51.9 mm en las descargas, 74.4 mm como Code 39 y 58.2 mm como Code 128.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.sizing.0"
+  },
+  "272ae0dd2556": {
+    "source": "Can Code 93 do lowercase?",
+    "text": "¿Puede Code 93 usar minúsculas?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.question"
+  },
+  "49f94a9600a4": {
+    "source": "Only in an extended mode (Full ASCII) that adds shift characters, which this generator doesn't offer. Use Code 128 for lowercase.",
+    "text": "Solo en un modo extendido (Full ASCII) que añade caracteres de cambio, algo que este generador no ofrece. Usa Code 128 para minúsculas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.answer"
+  },
+  "9610fa0dc484": {
+    "source": "Will my scanner read Code 93?",
+    "text": "¿Mi escáner leerá Code 93?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.question"
+  },
+  "c883cdcae324": {
+    "source": "Most barcode scanners can, but some handheld scanners let you switch symbologies off, and Code 93 is one that's sometimes off. Scan a test print with the scanners you'll use before printing a batch.",
+    "text": "La mayoría de los escáneres de códigos de barras pueden, pero algunos escáneres de mano permiten desactivar simbologías, y Code 93 es una de las que a veces están desactivadas. Escanea una impresión de prueba con los escáneres que vayas a usar antes de imprimir un lote.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.answer"
+  },
+  "f47fc8d29ec5": {
+    "source": "Free Codabar Barcode Generator",
+    "text": "Generador de códigos de barras Codabar gratis",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.title"
+  },
+  "da432fa0e742": {
+    "source": "Make a Codabar barcode: digits and - $ : / . + between a start and stop letter A to D, up to 40 characters. Scan-checked. SVG, PDF, PNG. Free, no signup.",
+    "text": "Crea un código de barras Codabar: dígitos y - $ : / . + entre una letra de inicio y una de parada de la A a la D, hasta 40 caracteres. Escaneo verificado. SVG, PDF, PNG. Gratis, sin registro.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.metaDescription"
+  },
+  "dd54414779bc": {
+    "source": "Codabar is an older barcode of digits and a few symbols, framed by a start and a stop letter. Libraries, blood banks and some shipping labels still use it. Type your value, check that it scans and download it.",
+    "text": "Codabar es un código de barras antiguo de dígitos y unos pocos símbolos, enmarcados por una letra de inicio y una de parada. Bibliotecas, bancos de sangre y algunas etiquetas de envío aún lo usan. Escribe tu valor, comprueba que se escanea y descárgalo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.intro"
+  },
+  "ea77d1fdc0be": {
+    "source": "Library and loan systems, blood bank labels and some shipping and lab labels, wherever an existing system or scanner is set up for Codabar.",
+    "text": "Sistemas de bibliotecas y préstamos, etiquetas de bancos de sangre y algunas etiquetas de envío y de laboratorio, siempre que un sistema o escáner existente esté configurado para Codabar.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.0"
+  },
+  "fa9e8da77e53": {
+    "source": "If nothing asks for Codabar, use Code 128: it holds letters and makes a shorter barcode for the same text.",
+    "text": "Si nada pide Codabar, usa Code 128: admite letras y genera un código de barras más corto para el mismo texto.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.1"
+  },
+  "4c3b5b55e7e9": {
+    "source": "Do I need to register a Codabar barcode?",
+    "text": "¿Necesito registrar un código de barras Codabar?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.title"
+  },
+  "d0209ed07811": {
+    "source": "No. Codabar carries your own numbers, such as a membership, item or sample number. There's nothing to license. Check with the system that reads it which start and stop letters it expects.",
+    "text": "No. Codabar lleva tus propios números, como un número de socio, de artículo o de muestra. No hay nada que licenciar. Consulta con el sistema que lo lee qué letras de inicio y de parada espera.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.paragraphs.0"
+  },
+  "9b20883f5d9b": {
+    "source": "Start and end with one of A, B, C or D, with at least one character between them: digits and - $ : / . + only, up to 40 characters in all, for example A40156B.",
+    "text": "Empieza y termina con una de A, B, C o D, con al menos un carácter entre ellas: solo dígitos y - $ : / . +, hasta 40 caracteres en total, por ejemplo A40156B.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.0"
+  },
+  "0934d84635a2": {
+    "source": "The start and stop letters are part of what you type and what a scanner reports; some systems use the choice of letter to tell kinds of labels apart. This generator adds no check digit; if your system needs one, add it to your number yourself.",
+    "text": "Las letras de inicio y de parada forman parte de lo que escribes y de lo que informa un escáner; algunos sistemas usan la letra elegida para distinguir tipos de etiquetas. Este generador no añade dígito de control; si tu sistema lo necesita, añádelo tú mismo a tu número.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.1"
+  },
+  "643068ad3651": {
+    "source": "Codabar characters aren't all the same width, so the width depends on what you type: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Digits, - and $ are the narrow ones; : / . + and the start and stop letters take a little more room.",
+    "text": "Los caracteres de Codabar no tienen todos el mismo ancho, así que el ancho depende de lo que escribas: el ejemplo A40156B resulta de 37.7 × 19.2 mm en las descargas. Los dígitos, - y $ son los más estrechos; : / . + y las letras de inicio y de parada ocupan un poco más.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.0"
+  },
+  "6ebe2b720e05": {
+    "source": "Keep 10 modules of blank space each side, and make the bars tall enough to sweep easily: the generator starts at 15 mm.",
+    "text": "Deja 10 módulos de espacio en blanco a cada lado y haz las barras lo bastante altas para que se barran con facilidad: el generador empieza en 15 mm.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.1"
+  },
+  "868c623a9331": {
+    "source": "Which start and stop letters should I use?",
+    "text": "¿Qué letras de inicio y de parada debo usar?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.question"
+  },
+  "339e22c067b9": {
+    "source": "Use the ones your system expects. Some systems use the letters to mark different label types. The letters can differ at each end.",
+    "text": "Usa las que espera tu sistema. Algunos sistemas usan las letras para marcar distintos tipos de etiqueta. Las letras pueden ser distintas en cada extremo.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.answer"
+  },
+  "a426c1c105c7": {
+    "source": "Can Codabar hold letters?",
+    "text": "¿Puede Codabar contener letras?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.question"
+  },
+  "6efd6d4d07ab": {
+    "source": "Only A to D, as start and stop characters. For other letters use Code 128, or Code 39 for capitals.",
+    "text": "Solo de la A a la D, como caracteres de inicio y de parada. Para otras letras usa Code 128, o Code 39 para mayúsculas.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.answer"
   },
   "d3ff2381a9b5": {
     "source": "Free PDF417 Barcode Generator",
@@ -29735,9 +29933,9 @@
     "status": "machine",
     "context": "mcp.tools.6.title"
   },
-  "018b7893a107": {
-    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
-    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 o Aztec. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URL públicas de imagen SVG, PNG, PDF y otras.",
+  "26e9ed7d6f36": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 o Aztec. Comprueba el valor (dígitos de control, longitudes, caracteres) y devuelve un PNG junto con URLs públicas de imagen en SVG, PNG, PDF y otros formatos.",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },

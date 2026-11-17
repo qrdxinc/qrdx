@@ -22625,6 +22625,24 @@
     "status": "machine",
     "context": "barcodes.formats.code39.inputHint"
   },
+  "72696df700c2": {
+    "source": "Code 39's characters in a shorter barcode",
+    "text": "Code 39 के ही कैरेक्टर, लेकिन छोटे बारकोड में",
+    "status": "machine",
+    "context": "barcodes.formats.code93.summary"
+  },
+  "1268c9b1de31": {
+    "source": "Digits for libraries, blood banks and older labels",
+    "text": "लाइब्रेरी, ब्लड बैंक और पुराने लेबल के लिए अंक",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.summary"
+  },
+  "b2c2db8e248a": {
+    "source": "Start and end with A, B, C or D; between them up to 38 digits and - $ : / . +.",
+    "text": "A, B, C या D से शुरू और खत्म करें; बीच में 38 तक अंक और - $ : / . + डालें।",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.inputHint"
+  },
   "589227c3ced5": {
     "source": "Shipping cartons holding retail products",
     "text": "रिटेल प्रोडक्ट वाले शिपिंग कार्टन के लिए",
@@ -22751,6 +22769,18 @@
     "status": "machine",
     "context": "barcodes.uses.code39"
   },
+  "5d7174c9e84a": {
+    "source": "Code 39's characters in a shorter barcode, with two check characters that readers verify. Use it when a system asks for Code 93; otherwise Code 128 does the same job and more.",
+    "text": "Code 39 के ही कैरेक्टर, छोटे बारकोड में, साथ में दो चेक कैरेक्टर जिन्हें रीडर जाँचते हैं। इसे तब इस्तेमाल करें जब कोई सिस्टम Code 93 माँगे; वरना Code 128 यही काम करता है और उससे ज़्यादा भी।",
+    "status": "machine",
+    "context": "barcodes.uses.code93"
+  },
+  "ec05c52f5ac8": {
+    "source": "An older barcode of digits with a start and stop letter (A to D), still used by libraries, blood banks and some shipping labels. Use it when a system asks for Codabar; otherwise Code 128 is shorter.",
+    "text": "अंकों वाला एक पुराना बारकोड, जिसमें शुरू और अंत का एक अक्षर (A से D) होता है। यह आज भी लाइब्रेरी, ब्लड बैंक और कुछ शिपिंग लेबल में इस्तेमाल होता है। इसे तब इस्तेमाल करें जब कोई सिस्टम Codabar माँगे; वरना Code 128 छोटा पड़ता है।",
+    "status": "machine",
+    "context": "barcodes.uses.codabar"
+  },
   "78b5bd23193b": {
     "source": "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
     "text": "रिटेल प्रोडक्ट रखने वाले कोरुगेटेड कार्टन पर छपता है। इसमें केस का 14 अंकों का GTIN होता है, और इसका मोटा फ़्रेम (bearer bars) छपाई के दबाव को बराबर करता है और स्कैनर को सिर्फ़ आधा हिस्सा पढ़ने से रोकता है।",
@@ -22823,9 +22853,9 @@
     "status": "machine",
     "context": "barcodes.faqs.1.question"
   },
-  "354487504d93": {
-    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128 and Code 39 need no registration.",
-    "text": "दुकानों में बिकने वाले प्रोडक्ट के लिए हाँ। EAN, UPC, ITF-14 और GS1-128 में GTIN होता है, और GTIN आपकी कंपनी को GS1 (या आपके देश के GS1 संगठन) से लाइसेंस पर मिलते हैं; रिटेलर के सिस्टम मनगढ़ंत नंबर नहीं पहचानेंगे। यह जनरेटर कोई भी वैध नंबर बना देता है, लेकिन नंबर जारी या रजिस्टर नहीं करता। अपने स्टॉक, asset या टिकट के लिए Code 128 और Code 39 को रजिस्ट्रेशन की ज़रूरत नहीं होती।",
+  "aca907b86c08": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "दुकानों में बिकने वाले प्रोडक्ट के लिए, हाँ। EAN, UPC, ITF-14 और GS1-128 में GTIN होता है, और GTIN आपकी कंपनी को GS1 (या आपके देश में GS1 के संगठन) से लाइसेंस पर मिलते हैं; रिटेलर के सिस्टम अपनी मर्ज़ी से बनाए नंबर को नहीं पहचानेंगे। यह जनरेटर कोई भी वैध नंबर बना देता है, लेकिन नंबर जारी या रजिस्टर नहीं करता। अपने स्टॉक, एसेट या टिकट के लिए Code 128, Code 39 और Code 93 में किसी रजिस्ट्रेशन की ज़रूरत नहीं है।",
     "status": "machine",
     "context": "barcodes.faqs.1.answer"
   },
@@ -23908,6 +23938,174 @@
     "text": "नहीं। स्टार्ट और स्टॉप कैरेक्टर आपके लिए अपने-आप जुड़ जाते हैं, और तारा (*) टेक्स्ट का हिस्सा नहीं हो सकता।",
     "status": "machine",
     "context": "barcodeFormats.pages.code-39.faqs.1.answer"
+  },
+  "2710ebb603a0": {
+    "source": "Free Code 93 Barcode Generator",
+    "text": "फ़्री Code 93 बारकोड जनरेटर",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.title"
+  },
+  "18b303bbca65": {
+    "source": "Make a Code 93 barcode with capital letters, digits and - . $ / + %, up to 40 characters. Check characters added. Scan-checked. SVG, PDF, PNG. Free.",
+    "text": "बड़े अक्षरों, अंकों और - . $ / + % के साथ Code 93 बारकोड बनाएँ, 40 अक्षरों तक। चेक कैरेक्टर अपने-आप जुड़ते हैं। स्कैन-चेक किया हुआ। SVG, PDF, PNG। फ़्री।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.metaDescription"
+  },
+  "e219e5513bd8": {
+    "source": "Code 93 holds the same characters as Code 39, capital letters, digits and a few symbols, in a shorter barcode with two built-in check characters. Type up to 40 characters, check that it scans and download it.",
+    "text": "Code 93 में Code 39 जैसे ही कैरेक्टर आते हैं: बड़े अक्षर, अंक और कुछ चिह्न। फ़र्क़ यह है कि बारकोड छोटा होता है और उसमें दो चेक कैरेक्टर पहले से जुड़े होते हैं। 40 अक्षरों तक टाइप करें, जाँच लें कि वह स्कैन होता है और डाउनलोड करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.intro"
+  },
+  "7bee63c8a9a6": {
+    "source": "Labels in logistics and inventory systems that specify Code 93.",
+    "text": "लॉजिस्टिक्स और इन्वेंटरी सिस्टम के वे लेबल, जिनमें Code 93 तय किया गया है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.0"
+  },
+  "8d204ecd0aaf": {
+    "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
+    "text": "अगर Code 93 की ज़रूरत नहीं है, तो Code 128 इस्तेमाल करें: उसमें छोटे अक्षर भी आते हैं और ज़्यादा स्कैनरों में वह चालू रहता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
+  "d2fb97a99a0a": {
+    "source": "Do I need to register a Code 93 barcode?",
+    "text": "क्या Code 93 बारकोड को रजिस्टर कराना ज़रूरी है?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.title"
+  },
+  "cebbfa59e3ae": {
+    "source": "No. Code 93 carries your own text: serial numbers, part numbers, IDs. There's nothing to license.",
+    "text": "नहीं। Code 93 में आपका अपना टेक्स्ट होता है: सीरियल नंबर, पार्ट नंबर, ID। इसके लिए किसी लाइसेंस की ज़रूरत नहीं है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.paragraphs.0"
+  },
+  "74ac9841bdd6": {
+    "source": "Every Code 93 barcode ends with two check characters, C and K, worked out from the text (modulo 47). They're required, so the generator always adds them, and readers check them and leave them out of what they return. The start and stop characters are added for you too.",
+    "text": "हर Code 93 बारकोड के अंत में दो चेक कैरेक्टर, C और K, होते हैं, जो टेक्स्ट से निकाले जाते हैं (modulo 47)। ये ज़रूरी हैं, इसलिए जनरेटर इन्हें हमेशा जोड़ता है। रीडर इन्हें जाँचते हैं और नतीजे में नहीं दिखाते। स्टार्ट और स्टॉप कैरेक्टर भी आपके लिए अपने-आप जुड़ जाते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.rules.1"
+  },
+  "77496524eafa": {
+    "source": "Each Code 93 character is 9 modules wide, against Code 39's 13 to 16, so the same text makes a shorter barcode: ABCDEFGHIJ is 51.9 mm in the downloads, 74.4 mm as Code 39 and 58.2 mm as Code 128.",
+    "text": "Code 93 का हर कैरेक्टर 9 मॉड्यूल चौड़ा होता है, जबकि Code 39 का 13 से 16। इसलिए वही टेक्स्ट छोटा बारकोड बनाता है: ABCDEFGHIJ डाउनलोड में 51.9 mm का है, Code 39 में 74.4 mm और Code 128 में 58.2 mm का।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.sizing.0"
+  },
+  "272ae0dd2556": {
+    "source": "Can Code 93 do lowercase?",
+    "text": "क्या Code 93 में छोटे अक्षर आ सकते हैं?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.question"
+  },
+  "49f94a9600a4": {
+    "source": "Only in an extended mode (Full ASCII) that adds shift characters, which this generator doesn't offer. Use Code 128 for lowercase.",
+    "text": "सिर्फ़ एक्सटेंडेड मोड (Full ASCII) में, जिसमें शिफ़्ट कैरेक्टर जुड़ते हैं। यह जनरेटर उसे नहीं देता। छोटे अक्षरों के लिए Code 128 इस्तेमाल करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.answer"
+  },
+  "9610fa0dc484": {
+    "source": "Will my scanner read Code 93?",
+    "text": "क्या मेरा स्कैनर Code 93 पढ़ लेगा?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.question"
+  },
+  "c883cdcae324": {
+    "source": "Most barcode scanners can, but some handheld scanners let you switch symbologies off, and Code 93 is one that's sometimes off. Scan a test print with the scanners you'll use before printing a batch.",
+    "text": "ज़्यादातर बारकोड स्कैनर पढ़ लेते हैं, लेकिन कुछ हैंडहेल्ड स्कैनरों में सिम्बोलॉजी बंद की जा सकती है, और Code 93 उनमें से है जो कभी-कभी बंद रहती है। पूरा बैच प्रिंट करने से पहले जिन स्कैनरों का इस्तेमाल करेंगे, उनसे एक टेस्ट प्रिंट स्कैन करके देख लें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.answer"
+  },
+  "f47fc8d29ec5": {
+    "source": "Free Codabar Barcode Generator",
+    "text": "फ़्री Codabar बारकोड जनरेटर",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.title"
+  },
+  "da432fa0e742": {
+    "source": "Make a Codabar barcode: digits and - $ : / . + between a start and stop letter A to D, up to 40 characters. Scan-checked. SVG, PDF, PNG. Free, no signup.",
+    "text": "Codabar बारकोड बनाएँ: A से D तक के स्टार्ट और स्टॉप अक्षर के बीच अंक और - $ : / . +, 40 अक्षरों तक। स्कैन-चेक किया हुआ। SVG, PDF, PNG। फ़्री, साइनअप के बिना।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.metaDescription"
+  },
+  "dd54414779bc": {
+    "source": "Codabar is an older barcode of digits and a few symbols, framed by a start and a stop letter. Libraries, blood banks and some shipping labels still use it. Type your value, check that it scans and download it.",
+    "text": "Codabar एक पुराना बारकोड है, जिसमें अंक और कुछ चिह्न होते हैं और दोनों सिरों पर एक स्टार्ट और एक स्टॉप अक्षर होता है। लाइब्रेरी, ब्लड बैंक और कुछ शिपिंग लेबल आज भी इसका इस्तेमाल करते हैं। अपनी वैल्यू टाइप करें, जाँच लें कि वह स्कैन होती है और डाउनलोड करें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.intro"
+  },
+  "ea77d1fdc0be": {
+    "source": "Library and loan systems, blood bank labels and some shipping and lab labels, wherever an existing system or scanner is set up for Codabar.",
+    "text": "लाइब्रेरी और उधार-लेन-देन के सिस्टम, ब्लड बैंक के लेबल और कुछ शिपिंग और लैब लेबल, जहाँ भी कोई मौजूदा सिस्टम या स्कैनर Codabar के लिए सेट है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.0"
+  },
+  "fa9e8da77e53": {
+    "source": "If nothing asks for Codabar, use Code 128: it holds letters and makes a shorter barcode for the same text.",
+    "text": "अगर Codabar की माँग नहीं है, तो Code 128 इस्तेमाल करें: उसमें अक्षर भी आते हैं और उसी टेक्स्ट के लिए बारकोड छोटा बनता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.1"
+  },
+  "4c3b5b55e7e9": {
+    "source": "Do I need to register a Codabar barcode?",
+    "text": "क्या Codabar बारकोड को रजिस्टर कराना ज़रूरी है?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.title"
+  },
+  "d0209ed07811": {
+    "source": "No. Codabar carries your own numbers, such as a membership, item or sample number. There's nothing to license. Check with the system that reads it which start and stop letters it expects.",
+    "text": "नहीं। Codabar में आपके अपने नंबर होते हैं, जैसे सदस्यता, आइटम या सैंपल नंबर। इसके लिए किसी लाइसेंस की ज़रूरत नहीं है। जो सिस्टम इसे पढ़ेगा, उससे पूछ लें कि वह कौन-से स्टार्ट और स्टॉप अक्षर चाहता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.paragraphs.0"
+  },
+  "9b20883f5d9b": {
+    "source": "Start and end with one of A, B, C or D, with at least one character between them: digits and - $ : / . + only, up to 40 characters in all, for example A40156B.",
+    "text": "A, B, C या D में से किसी एक से शुरू करें और किसी एक पर ख़त्म करें, दोनों के बीच कम से कम एक कैरेक्टर हो: सिर्फ़ अंक और - $ : / . +, कुल मिलाकर 40 अक्षरों तक, जैसे A40156B।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.0"
+  },
+  "0934d84635a2": {
+    "source": "The start and stop letters are part of what you type and what a scanner reports; some systems use the choice of letter to tell kinds of labels apart. This generator adds no check digit; if your system needs one, add it to your number yourself.",
+    "text": "स्टार्ट और स्टॉप अक्षर उसी का हिस्सा हैं जो आप टाइप करते हैं और जो स्कैनर बताता है। कुछ सिस्टम अक्षर के चुनाव से लेबल की किस्में पहचानते हैं। यह जनरेटर कोई चेक डिजिट नहीं जोड़ता। अगर आपके सिस्टम को चाहिए, तो उसे अपने नंबर में ख़ुद जोड़ें।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.1"
+  },
+  "643068ad3651": {
+    "source": "Codabar characters aren't all the same width, so the width depends on what you type: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Digits, - and $ are the narrow ones; : / . + and the start and stop letters take a little more room.",
+    "text": "Codabar के सारे कैरेक्टर एक जितने चौड़े नहीं होते, इसलिए चौड़ाई इस पर निर्भर करती है कि आप क्या टाइप करते हैं: सैंपल A40156B डाउनलोड में 37.7 × 19.2 mm का बनता है। अंक, - और $ सबसे पतले हैं। : / . + और स्टार्ट-स्टॉप अक्षर थोड़ी ज़्यादा जगह लेते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.0"
+  },
+  "6ebe2b720e05": {
+    "source": "Keep 10 modules of blank space each side, and make the bars tall enough to sweep easily: the generator starts at 15 mm.",
+    "text": "दोनों तरफ़ 10 मॉड्यूल की खाली जगह रखें और बार इतने ऊँचे रखें कि आसानी से स्वाइप किए जा सकें: जनरेटर 15 mm से शुरू करता है।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.1"
+  },
+  "868c623a9331": {
+    "source": "Which start and stop letters should I use?",
+    "text": "मुझे कौन-से स्टार्ट और स्टॉप अक्षर इस्तेमाल करने चाहिए?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.question"
+  },
+  "339e22c067b9": {
+    "source": "Use the ones your system expects. Some systems use the letters to mark different label types. The letters can differ at each end.",
+    "text": "वही इस्तेमाल करें जो आपका सिस्टम चाहता है। कुछ सिस्टम अक्षरों से अलग-अलग लेबल किस्में पहचानते हैं। दोनों सिरों पर अक्षर अलग-अलग हो सकते हैं।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.answer"
+  },
+  "a426c1c105c7": {
+    "source": "Can Codabar hold letters?",
+    "text": "क्या Codabar में अक्षर आ सकते हैं?",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.question"
+  },
+  "6efd6d4d07ab": {
+    "source": "Only A to D, as start and stop characters. For other letters use Code 128, or Code 39 for capitals.",
+    "text": "सिर्फ़ A से D, स्टार्ट और स्टॉप कैरेक्टर के रूप में। दूसरे अक्षरों के लिए Code 128 इस्तेमाल करें, या बड़े अक्षरों के लिए Code 39।",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.answer"
   },
   "d3ff2381a9b5": {
     "source": "Free PDF417 Barcode Generator",
@@ -29735,9 +29933,9 @@
     "status": "machine",
     "context": "mcp.tools.6.title"
   },
-  "018b7893a107": {
-    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
-    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 या Aztec। वैल्यू की जाँच करता है (चेक डिजिट, लंबाई, अक्षर) और PNG के साथ सार्वजनिक SVG, PNG, PDF और दूसरे इमेज URL लौटाता है।",
+  "26e9ed7d6f36": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 या Aztec। यह वैल्यू (चेक डिजिट, लंबाई, कैरेक्टर) जाँचता है और एक PNG के साथ SVG, PNG, PDF और दूसरे फ़ॉर्मैट के पब्लिक इमेज URL लौटाता है।",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },
