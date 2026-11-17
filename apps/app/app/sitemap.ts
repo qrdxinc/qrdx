@@ -359,33 +359,39 @@ function entries(docs: Entry[]): Entry[] {
           priority: 0.7,
         }) satisfies Entry,
     ),
-    {
-      url: url("/qr-code-generator"),
-      lastModified: typesDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    ...QR_TYPE_SLUGS.map(
-      (type) =>
-        ({
-          url: url(`/qr-code-generator/${type}`),
-          lastModified: typesDate,
-          changeFrequency: "monthly",
-          priority: 0.7,
-        }) satisfies Entry,
-    ),
-    // Codes that open a hosted page; the PDF one needs file storage.
-    ...HOSTED_TYPE_SLUGS.filter((slug) =>
-      isPathAvailable(hostedTypePath(slug)),
-    ).map(
-      (slug) =>
-        ({
-          url: url(hostedTypePath(slug)),
-          lastModified: fileDates.get(HOSTED_TYPES_SOURCE),
-          changeFrequency: "monthly",
-          priority: 0.7,
-        }) satisfies Entry,
-    ),
+    // The generators by type (and the hosted types' pages under them), unless
+    // the marketing site serves them (its own sitemap lists them then).
+    ...(siteServes("generators")
+      ? []
+      : [
+          {
+            url: url("/qr-code-generator"),
+            lastModified: typesDate,
+            changeFrequency: "monthly",
+            priority: 0.8,
+          } satisfies Entry,
+          ...QR_TYPE_SLUGS.map(
+            (type) =>
+              ({
+                url: url(`/qr-code-generator/${type}`),
+                lastModified: typesDate,
+                changeFrequency: "monthly",
+                priority: 0.7,
+              }) satisfies Entry,
+          ),
+          // Codes that open a hosted page; the PDF one needs file storage.
+          ...HOSTED_TYPE_SLUGS.filter((slug) =>
+            isPathAvailable(hostedTypePath(slug)),
+          ).map(
+            (slug) =>
+              ({
+                url: url(hostedTypePath(slug)),
+                lastModified: fileDates.get(HOSTED_TYPES_SOURCE),
+                changeFrequency: "monthly",
+                priority: 0.7,
+              }) satisfies Entry,
+          ),
+        ]),
     ...collections.flatMap((collection) => [
       {
         url: url(collection.basePath),
@@ -429,21 +435,27 @@ function entries(docs: Entry[]): Entry[] {
       changeFrequency: "monthly",
       priority: 0.7,
     },
-    {
-      url: url("/barcode-generator"),
-      lastModified: pageDate("/barcode-generator"),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    ...BARCODE_FORMAT_PAGES.map(
-      (page) =>
-        ({
-          url: url(`/barcode-generator/${page.slug}`),
-          lastModified: pageDate("/barcode-generator/[format]"),
-          changeFrequency: "monthly",
-          priority: 0.6,
-        }) satisfies Entry,
-    ),
+    // The barcode generator and its format pages, unless the marketing site
+    // serves them.
+    ...(siteServes("barcodes")
+      ? []
+      : [
+          {
+            url: url("/barcode-generator"),
+            lastModified: pageDate("/barcode-generator"),
+            changeFrequency: "monthly",
+            priority: 0.7,
+          } satisfies Entry,
+          ...BARCODE_FORMAT_PAGES.map(
+            (page) =>
+              ({
+                url: url(`/barcode-generator/${page.slug}`),
+                lastModified: pageDate("/barcode-generator/[format]"),
+                changeFrequency: "monthly",
+                priority: 0.6,
+              }) satisfies Entry,
+          ),
+        ]),
     {
       url: url("/scan"),
       lastModified: pageDate("/scan"),

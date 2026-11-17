@@ -300,6 +300,8 @@ export const config = {
     "/:prefix([cC][oO][mM][pP][aA][rR][eE])/:path*",
     "/:prefix([qQ][rR]-[cC][oO][dD][eE][sS]-[fF][oO][rR])/:path*",
     "/:prefix([qQ][rR]-[cC][oO][dD][eE][sS]-[oO][nN])/:path*",
+    "/:prefix([qQ][rR]-[cC][oO][dD][eE]-[gG][eE][nN][eE][rR][aA][tT][oO][rR])/:path*",
+    "/:prefix([bB][aA][rR][cC][oO][dD][eE]-[gG][eE][nN][eE][rR][aA][tT][oO][rR])/:path*",
     "/:prefix([sS][iI][tT][eE]-[sS][tT][aA][tT][iI][cC])/:path*",
     // The home page (lib/home-path.ts): signed-in visitors go to their
     // dashboard. It's English only: /en and /es, /pt-br and the other
