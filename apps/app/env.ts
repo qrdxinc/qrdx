@@ -205,6 +205,15 @@ export const env = validateTogether(() =>
             "must be an origin only (https://host, or http://localhost:port), with no path or query",
         })
         .optional(),
+      // Signs the back-office console's calls to /api/internal/console/*
+      // (lib/console-internal): the console holds the same value, and the
+      // endpoints answer only requests signed with it. Its own secret, not
+      // CONSOLE_ZONE_KEY. 32 characters or more (openssl rand -hex 32).
+      // Unset, those endpoints are off (404); set but shorter, the app
+      // refuses to start, rather than run with a guessable key. They also
+      // need Upstash (KV_REST_API_*), for the replay check and the rate
+      // limits: without it they answer 503.
+      CONSOLE_INTERNAL_SECRET: z.string().min(32).optional(),
 
       // The marketing site (a separate app, @repo/next-config/site-zone),
       // e.g. https://qrdx-site.vercel.app: when set, next.config.ts proxies
@@ -328,6 +337,7 @@ export const env = validateTogether(() =>
       SITE_ZONE_KEY: process.env.SITE_ZONE_KEY,
       SITE_ZONE_GROUPS: process.env.SITE_ZONE_GROUPS,
       ADMIN_CONSOLE_URL: process.env.ADMIN_CONSOLE_URL,
+      CONSOLE_INTERNAL_SECRET: process.env.CONSOLE_INTERNAL_SECRET,
       OPENAI_APPS_CHALLENGE: process.env.OPENAI_APPS_CHALLENGE,
       NODE_ENV: process.env.NODE_ENV,
       NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,

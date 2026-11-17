@@ -59,7 +59,11 @@ vi.mock("@repo/database", () => {
       get: (_target, key) => {
         if (key === "then") {
           const result = state.results.length ? state.results.shift() : [];
-          return (resolve: (value: unknown) => void) => resolve(result);
+          // A scripted Error makes the query fail.
+          return (
+            resolve: (value: unknown) => void,
+            reject: (error: unknown) => void,
+          ) => (result instanceof Error ? reject(result) : resolve(result));
         }
         return (...args: unknown[]) => {
           call.steps.push([String(key), args]);
@@ -418,6 +422,55 @@ describe("with an admin", () => {
     ]);
   });
 
+  it("asks for a strong confirmation before verifying an address that makes an admin", async () => {
+    const { markEmailVerifiedAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    vi.stubEnv("ADMIN_EMAILS", "listed@example.com");
+    state.admin = {
+      id: "admin_1",
+      email: "admin@example.com",
+      name: "Admin",
+      role: "admin",
+    };
+    state.adminStrongConfirmation = false;
+    const unverified = [
+      {
+        id: "user_target",
+        email: "Listed@example.com",
+        emailVerified: false,
+        role: null,
+      },
+    ];
+    state.results = [unverified];
+    expect(
+      await markEmailVerifiedAction({
+        userId: "user_target",
+        reason: "Ticket 1234",
+      }),
+    ).toEqual({ ok: false, error: "CONFIRMATION_REQUIRED" });
+    expect(state.calls.some((call) => call.root === "update")).toBe(false);
+    // The admin role counts the same way.
+    vi.stubEnv("ADMIN_EMAILS", "");
+    state.results = [[{ ...unverified[0], role: "admin" }]];
+    expect(
+      await markEmailVerifiedAction({
+        userId: "user_target",
+        reason: "Ticket 1234",
+      }),
+    ).toEqual({ ok: false, error: "CONFIRMATION_REQUIRED" });
+    // Confirmed, it goes ahead.
+    state.adminStrongConfirmation = true;
+    state.results = [[{ ...unverified[0], role: "admin" }], [], []];
+    expect(
+      await markEmailVerifiedAction({
+        userId: "user_target",
+        reason: "Ticket 1234",
+      }),
+    ).toEqual({ ok: true });
+    vi.unstubAllEnvs();
+  });
+
   it("writes no entry when nothing changed", async () => {
     const { markEmailVerifiedAction } = await import(
       "@/app/(app)/admin/users/support-actions"
@@ -578,6 +631,76 @@ describe("with an admin", () => {
         (call) => call.root === "update" || call.root === "batch",
       ),
     ).toBe(false);
+  });
+
+  it("never moves an account onto an ADMIN_EMAILS address, which would make it an admin", async () => {
+    const { changeEmailAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    vi.stubEnv("ADMIN_EMAILS", "boss@example.com");
+    state.results = [
+      [
+        {
+          id: "user_target",
+          email: "lost@example.com",
+          emailVerified: true,
+          role: "user",
+        },
+      ],
+    ];
+    // Refused outright, with a fresh strong confirmation and whatever case
+    // the address is typed in: granting the role is the way to do that.
+    const result = await changeEmailAction({
+      userId: "user_target",
+      newEmail: "Boss@Example.com",
+      reason: "Ticket 1",
+    });
+    vi.unstubAllEnvs();
+    expect(result).toEqual({
+      ok: false,
+      error:
+        "That address is on the admin list, so the account would become an admin. Grant the admin role instead.",
+    });
+    expect(
+      state.calls.some(
+        (call) => call.root === "update" || call.root === "batch",
+      ),
+    ).toBe(false);
+    expect(auditInserts()).toEqual([]);
+  });
+
+  it("logs a database error in a move by its kind and code, never the new address", async () => {
+    const { changeEmailAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    const { DrizzleQueryError } = await import("drizzle-orm/errors");
+    state.results = [
+      [{ id: "user_target", email: "lost@example.com", emailVerified: true }],
+      new DrizzleQueryError(
+        'select "id" from "user" where lower("email") = $1',
+        ["new.owner@example.com"],
+        Object.assign(new Error("canceling statement due to timeout"), {
+          code: "57014",
+        }),
+      ),
+    ];
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const result = await changeEmailAction({
+      userId: "user_target",
+      newEmail: "new.owner@example.com",
+      reason: "Ticket 1",
+    });
+    const lines = log.mock.calls.map((args) => args.map(String).join(" "));
+    log.mockRestore();
+    expect(result).toEqual({ ok: false, error: "Action failed" });
+    expect(lines).toEqual([
+      JSON.stringify({
+        event: "admin.action_failed",
+        action: "user.change_email",
+        error: { name: "DrizzleQueryError", code: "57014" },
+      }),
+    ]);
+    expect(lines.join("\n")).not.toContain("new.owner");
   });
 
   it("won't move an account to its own address or one another account has", async () => {
@@ -748,6 +871,50 @@ describe("with an admin", () => {
       reason: "GDPR request 77",
     });
     expect(result.ok).toBe(false);
+    expect(state.calls.some((call) => call.root === "delete")).toBe(false);
+  });
+
+  it("never deletes an admin, by role or by ADMIN_EMAILS / ADMIN_USER_IDS", async () => {
+    const { deleteUserAccountAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    const target = {
+      id: "user_target",
+      email: "target@example.com",
+      emailVerified: true,
+      role: null,
+    };
+    state.results = [[{ ...target, role: "admin" }]];
+    expect(
+      await deleteUserAccountAction({
+        userId: "user_target",
+        confirmation: "target@example.com",
+        reason: "GDPR request 77",
+      }),
+    ).toEqual({ ok: false, error: "Remove their admin role first." });
+    vi.stubEnv("ADMIN_USER_IDS", "user_target");
+    state.results = [[target]];
+    const listed = await deleteUserAccountAction({
+      userId: "user_target",
+      confirmation: "target@example.com",
+      reason: "GDPR request 77",
+    });
+    vi.stubEnv("ADMIN_USER_IDS", "");
+    vi.stubEnv("ADMIN_EMAILS", "target@example.com");
+    state.results = [[target]];
+    const byEmail = await deleteUserAccountAction({
+      userId: "user_target",
+      confirmation: "target@example.com",
+      reason: "GDPR request 77",
+    });
+    vi.unstubAllEnvs();
+    for (const result of [listed, byEmail]) {
+      expect(result).toEqual({
+        ok: false,
+        error:
+          "They're an admin through ADMIN_EMAILS or ADMIN_USER_IDS. Take them off the list first.",
+      });
+    }
     expect(state.calls.some((call) => call.root === "delete")).toBe(false);
   });
 

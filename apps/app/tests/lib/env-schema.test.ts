@@ -124,6 +124,24 @@ describe("required variables", () => {
     expect((error as Error).message).toContain("apps/app/.env.example");
   });
 
+  it("refuses to start with a CONSOLE_INTERNAL_SECRET shorter than 32 characters", async () => {
+    const errors = quietErrors();
+    const short = "s".repeat(31);
+    await expect(
+      load({ ...REQUIRED_VALUES, CONSOLE_INTERNAL_SECRET: short }),
+    ).rejects.toThrow("CONSOLE_INTERNAL_SECRET");
+    expect(errors.mock.calls.flat().join("\n")).not.toContain(short);
+    const env = await load({
+      ...REQUIRED_VALUES,
+      CONSOLE_INTERNAL_SECRET: "s".repeat(32),
+    });
+    expect(env.CONSOLE_INTERNAL_SECRET).toHaveLength(32);
+    // Unset is fine: the console's endpoints are simply off (404).
+    expect(
+      (await load(REQUIRED_VALUES)).CONSOLE_INTERNAL_SECRET,
+    ).toBeUndefined();
+  });
+
   it("names an invalid optional variable without printing its value", async () => {
     const errors = quietErrors();
     await expect(
