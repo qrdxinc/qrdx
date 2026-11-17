@@ -338,7 +338,7 @@ describe("links to the docs", () => {
   });
 
   it("leave every other page to next/link", async () => {
-    expect(await render("/pricing")).toContain("data-next-link");
+    expect(await render("/customers")).toContain("data-next-link");
     expect(await render("/playground")).toContain("data-next-link");
     // A docs page's Markdown is a file, not a page of either app.
     expect(await render("/docs/dynamic-qr-codes.md")).toContain(
@@ -373,6 +373,9 @@ describe("links to the site's pages", () => {
       "/blog",
       "/blog/dynamic-vs-static-qr-codes",
       "/blog/category/education?page=2#top",
+      "/pricing",
+      "/templates",
+      "/integrations/zapier",
     ]) {
       expect(await render(href, { prefetch: false })).toBe(
         `<a href="${href}">x</a>`,
@@ -383,6 +386,11 @@ describe("links to the site's pages", () => {
   it("leave neighbouring pages to next/link", async () => {
     expect(await render("/customers")).toContain("data-next-link");
     expect(await render("/blogx")).toContain("data-next-link");
+    // The templates' own pages and Slack's linking page stay in this app.
+    expect(await render("/templates/wifi")).toContain("data-next-link");
+    expect(await render("/integrations/slack/link")).toContain(
+      "data-next-link",
+    );
   });
 
   it("hold for the header and footer entries that point at the blog", async () => {

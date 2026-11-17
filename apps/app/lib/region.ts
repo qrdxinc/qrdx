@@ -10,6 +10,7 @@ import {
   EUR_PRICES,
   type PricingCurrency,
 } from "./pricing";
+import { type GeoPlatform, geoPlatform } from "./request-geo";
 
 export type Region = "IN" | "EU" | "default";
 
@@ -25,6 +26,18 @@ export const CURRENCY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 /** Geo headers set by Vercel and Cloudflare, in order of preference. */
 const COUNTRY_HEADERS = ["x-vercel-ip-country", "cf-ipcountry"] as const;
+
+/**
+ * The headers to read on each platform (lib/request-geo.ts geoPlatform). On
+ * Vercel only Vercel's own: Vercel replaces a client's copy of it but passes
+ * Cloudflare's through, and qrdx.dev uses Cloudflare for DNS only, so there
+ * cf-ipcountry is whatever the client sent (and would pick checkout's
+ * currency when Vercel sends no country). Elsewhere both, as before.
+ */
+const COUNTRY_HEADERS_ON: Record<GeoPlatform, readonly string[]> = {
+  vercel: ["x-vercel-ip-country"],
+  cloudflare: COUNTRY_HEADERS,
+};
 
 /** Whether euro prices are on; tests pass it, everything else uses EUR_PRICES. */
 interface EurOption {
@@ -87,11 +100,15 @@ export interface RegionSources {
   headers?: Pick<Headers, "get"> | null;
 }
 
-/** The visitor's country from the geo headers, or null when none is set. */
+/**
+ * The visitor's country from the geo headers this platform sets, or null
+ * when none is set (COUNTRY_HEADERS_ON).
+ */
 export function countryFromHeaders(
   headers: Pick<Headers, "get"> | null | undefined,
+  platform: GeoPlatform = geoPlatform(),
 ): string | null {
-  for (const name of COUNTRY_HEADERS) {
+  for (const name of COUNTRY_HEADERS_ON[platform]) {
     const country = headers?.get(name)?.trim();
     if (country) return country.toUpperCase();
   }

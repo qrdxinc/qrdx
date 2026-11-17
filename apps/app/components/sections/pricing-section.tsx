@@ -12,7 +12,6 @@ import { cn } from "@repo/design-system/lib/utils";
 import { Book1, Code1, Driver } from "iconsax-reactjs";
 import { useLocale, useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import { createCheckout } from "@/actions/checkout";
 import { useAvailability } from "@/components/availability-provider";
 import { AsciiField, RadialHalo } from "@/components/fx";
 import { LocaleLink } from "@/components/i18n/locale-link";
@@ -25,6 +24,7 @@ import { PricingOffers } from "@/components/sections/pricing/pricing-offers";
 import { maxYearlySavingsPercent } from "@/components/sections/pricing/savings";
 import { siteConfig } from "@/config/site";
 import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
+import { useSubscription } from "@/lib/hooks/use-subscription";
 import {
   BILLING_INTERVALS,
   type BillingInterval,
@@ -38,13 +38,20 @@ import {
   type PricingCurrency,
 } from "@/lib/pricing";
 import { DEFAULT_NEXT_PATH } from "@/lib/safe-redirect";
+import { startCheckout as requestCheckout } from "@/lib/widget-routes/client";
 import { useAuthStore } from "@/store/auth-store";
 
 interface PricingSectionProps {
   /** Display currency (lib/region); checkout currency is Polar's choice. */
   currency: PricingCurrency;
-  /** The signed-in user's own plan; null when signed out. */
-  currentPlan: Plan | null;
+  /**
+   * The signed-in user's own plan as the server read it; null when signed
+   * out. Given, the cards use it and ask the browser for nothing. Left out
+   * (a page that can't read the session on the server, like the marketing
+   * site's), they read it in the browser: the session, then
+   * GET /api/subscription.
+   */
+  currentPlan?: Plan | null;
   /** The intro under the title (buildPricingIntro: only what's offered here). */
   description: string;
   /** Card feature lists, built from lib/plans on the server. */
@@ -211,7 +218,7 @@ function PriceLine({
 
 export function PricingSection({
   currency,
-  currentPlan,
+  currentPlan: serverPlan,
   description,
   highlights,
 }: PricingSectionProps) {
@@ -228,7 +235,23 @@ export function PricingSection({
   };
   const [pendingPlan, setPendingPlan] = useState<PaidPlan | null>(null);
   const [isPending, startTransition] = useTransition();
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending: sessionPending } = authClient.useSession();
+  // Without the server's plan: the visitor's plan from GET /api/subscription
+  // (signed in only). With it, nothing is fetched.
+  const readPlan = serverPlan === undefined;
+  const { subscriptionStatus, isPending: planUnanswered } = useSubscription({
+    enabled: readPlan,
+  });
+  const currentPlan: Plan | null = readPlan
+    ? (subscriptionStatus?.plan ?? null)
+    : serverPlan;
+  // Without the server's plan, until the browser knows who this is and what
+  // they pay for (the session, then the plan's first answer): the buttons
+  // wait rather than offer sign-up or an upgrade to someone who has one. A
+  // failed plan request ends the wait: the cards then show no plan, and
+  // checkout itself refuses a second subscription.
+  const planPending =
+    readPlan && (sessionPending || (Boolean(session?.user) && planUnanswered));
   const { openAuthDialog } = useAuthStore();
   const isSignedIn = Boolean(session?.user) || currentPlan !== null;
   // Agency tools: Business yearly can be paid by invoice where QRdx offers it.
@@ -238,7 +261,7 @@ export function PricingSection({
   const startCheckout = (plan: PaidPlan, billing: BillingInterval) => {
     setPendingPlan(plan);
     startTransition(async () => {
-      const result = await createCheckout({ plan, interval: billing });
+      const result = await requestCheckout({ plan, interval: billing });
       if ("url" in result) {
         track("checkout_started", { plan, interval: billing });
         window.location.assign(result.url);
@@ -311,7 +334,7 @@ export function PricingSection({
     }
     // Agency tools: anyone not on Business yet can ask to pay a year by invoice.
     const invoiceLink =
-      plan === "business" && interval === "year" && invoices ? (
+      plan === "business" && interval === "year" && invoices && !planPending ? (
         <button
           className="text-muted-foreground hover:text-foreground focus-visible:ring-ring rounded-sm text-xs underline-offset-4 transition-colors hover:underline focus-visible:ring-2 focus-visible:outline-none"
           onClick={() => {
@@ -350,7 +373,7 @@ export function PricingSection({
       button: (
         <Button
           className="w-full"
-          disabled={isPending}
+          disabled={isPending || planPending}
           onClick={() => onUpgrade(plan)}
           variant={plan === "pro" ? "default" : "outline"}
         >
@@ -376,7 +399,12 @@ export function PricingSection({
     {
       plan: "free",
       action: {
-        button: (
+        button: planPending ? (
+          // Not known yet whether this is a sign-up or the dashboard.
+          <Button className="w-full" disabled variant="outline">
+            {t("tiers.free.cta")}
+          </Button>
+        ) : (
           <Button asChild className="w-full" variant="outline">
             {/* Signed out: a free account (sign-up, or sign-in for someone
                 who has one), then the dashboard. */}

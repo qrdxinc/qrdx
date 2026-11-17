@@ -21,6 +21,12 @@ import {
   visitorHash,
 } from "@/lib/scans";
 import type { Awaitable, RedirectCode } from "./code";
+import {
+  MAX_CONDITIONS,
+  MAX_CUSTOM_PARAMS,
+  MAX_RULES,
+  MAX_VARIANTS,
+} from "./routing-limits";
 
 /**
  * Marketing settings of a dynamic code, stored as JSON on qr_code:
@@ -38,10 +44,10 @@ import type { Awaitable, RedirectCode } from "./code";
 
 // ─── Schemas ─────────────────────────────────────────────────────────────────
 
-export const MAX_RULES = 20;
-export const MAX_CONDITIONS = 8;
-export const MAX_VARIANTS = 5;
-export const MAX_CUSTOM_PARAMS = 10;
+// The limits live in ./routing-limits.ts (pure); importers of this module
+// keep getting them here.
+export { MAX_CONDITIONS, MAX_CUSTOM_PARAMS, MAX_RULES, MAX_VARIANTS };
+
 const MAX_URL_LENGTH = 2048;
 
 /** OS names as lib/scans.ts parseUserAgent reports them. */

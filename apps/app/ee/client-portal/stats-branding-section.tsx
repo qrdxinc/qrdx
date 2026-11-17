@@ -134,7 +134,7 @@ export function StatsBrandingSection({
 
       {!branding.allowed ? (
         <Button asChild size="sm" variant="outline">
-          <Link href="/pricing">See plans</Link>
+          <a href="/pricing">See plans</a>
         </Button>
       ) : editing ? (
         <BrandFields

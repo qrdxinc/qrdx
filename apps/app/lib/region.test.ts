@@ -149,4 +149,35 @@ describe("checkoutCurrency", () => {
     assert.equal(countryFromHeaders(headers({ "cf-ipcountry": "in" })), "IN");
     assert.equal(countryFromHeaders(headers({})), null);
   });
+
+  it("on Vercel reads only Vercel's header: a client's cf-ipcountry picks nothing", () => {
+    const forged = headers({ "cf-ipcountry": "IN" });
+    assert.equal(countryFromHeaders(forged, "vercel"), null);
+    assert.equal(
+      countryFromHeaders(
+        headers({ "x-vercel-ip-country": "us", "cf-ipcountry": "IN" }),
+        "vercel",
+      ),
+      "US",
+    );
+    // Elsewhere (behind Cloudflare, self-hosted): both, as before.
+    assert.equal(countryFromHeaders(forged, "cloudflare"), "IN");
+  });
+
+  it("on Vercel, checkout and the page ignore a client's cf-ipcountry", () => {
+    const saved = process.env.VERCEL;
+    process.env.VERCEL = "1";
+    try {
+      const forged = headers({ "cf-ipcountry": "IN" });
+      assert.equal(checkoutCurrency(forged), "usd");
+      assert.equal(resolveRegion({ headers: forged }), "default");
+      assert.equal(
+        checkoutCurrency(headers({ "x-vercel-ip-country": "IN" })),
+        "inr",
+      );
+    } finally {
+      if (saved === undefined) delete process.env.VERCEL;
+      else process.env.VERCEL = saved;
+    }
+  });
 });

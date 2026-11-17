@@ -22,6 +22,16 @@ import { gitFileDate } from "./lib/seo-dates";
 // `{facts.bodyPatterns}` (lib/product-facts.ts), filled in at build time.
 export const legal = defineDocs({
   dir: "content/legal",
+  docs: {
+    schema: frontmatterSchema.extend({
+      /**
+       * The page's "Last updated" day (YYYY-MM-DD): its last substantive
+       * change, set by hand with it. Not git's date: a shallow clone (as on
+       * Vercel) dates every file by the clone.
+       */
+      lastUpdated: z.iso.date(),
+    }),
+  },
 });
 
 export const changelog = defineDocs({
