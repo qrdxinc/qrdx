@@ -34,6 +34,10 @@ export const SHARED_SLUG_SCOPE = "";
 export const RESERVED_SLUGS: ReadonlySet<string> = new Set([
   ".well-known",
   "_next",
+  // QRdx's sample short link, qrdx.dev/q/aB3dE5f: the docs, product pages
+  // and blog print it, some of them as scannable QR codes, so no one may
+  // own it.
+  "ab3de5f",
   "about",
   "account",
   "admin",
