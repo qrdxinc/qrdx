@@ -1,3 +1,4 @@
+import { SHADCN_REGISTRY_URL } from "@repo/config";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { isbot } from "isbot";
 import { recordReferralClick } from "@/lib/affiliates/program";
@@ -25,6 +26,37 @@ async function withinCountLimit(code: string, request: Request) {
   }
 }
 
+// The shadcn registry (public/r/*.json) shares /r with referral links. Its
+// items are static files, so a .json name that gets here isn't one; a
+// referral code has no dot, so this never hides one.
+const REGISTRY_ITEM = /\.json$/i;
+// shadcn's tools look for a registry's index at /r/registry.json or
+// /r/registry. "registry" is reserved as a referral code (lib/affiliates/rules.ts).
+const REGISTRY_INDEX = "registry";
+
+const registryHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Cache-Control": "public, max-age=0, must-revalidate",
+  "X-Robots-Tag": "noindex",
+};
+
+function registryItemNotFound(file: string) {
+  const name = file.slice(0, -".json".length);
+  return Response.json(
+    {
+      error: "Not found",
+      message: `No registry item named ${name}. The QRdx registry index is ${SHADCN_REGISTRY_URL}/${REGISTRY_INDEX}.json`,
+    },
+    {
+      status: 404,
+      headers: {
+        ...registryHeaders,
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    },
+  );
+}
+
 type Context = { params: Promise<{ code: string }> };
 
 /**
@@ -36,10 +68,25 @@ type Context = { params: Promise<{ code: string }> };
  * minute from one IP). Unknown,
  * pending, rejected or suspended codes, and a server where the program is
  * off, go to the home page without a code.
+ *
+ * It also answers the shadcn registry's misses, without touching the
+ * referral program: /r/<name>.json for an item that doesn't exist is a 404
+ * in JSON (not a redirect to the home page), and /r/registry goes on to
+ * /r/registry.json.
  */
 export async function GET(request: Request, { params }: Context) {
   const { code: raw } = await params;
+  if (REGISTRY_ITEM.test(raw)) return registryItemNotFound(raw);
   const code = parseReferralCode(raw);
+  if (code === REGISTRY_INDEX) {
+    return new Response(null, {
+      status: 308,
+      headers: {
+        ...registryHeaders,
+        Location: `/r/${REGISTRY_INDEX}.json`,
+      },
+    });
+  }
   let current: string | null = null;
   if (code && isFeatureAvailable("affiliates")) {
     const userAgent = request.headers.get("user-agent") ?? "";

@@ -326,6 +326,7 @@ describe("referral codes", () => {
       "qrdx-team",
       "qrdxdeals",
       "paypal",
+      "registry",
     ]) {
       expect(checkChosenCode(word)).toEqual({ ok: false, problem: "reserved" });
     }
