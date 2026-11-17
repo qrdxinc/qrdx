@@ -16,19 +16,28 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
  * The sign-in page: the same panel as the dialog, on a page of its own. It's
  * where proxy.ts and page guards send signed-out visitors (/sign-in?next=…),
  * where /sign-out lands (?signedOut=1), and the fallback when the dialog
- * can't open. Signed-in visitors go straight to `next`.
+ * can't open; ?mode=signup opens it as the dialog's sign-up does. Signed-in
+ * visitors go straight to `next`.
  */
 export default async function Page({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const { next, signedOut, error, via } = readSignInParams(await searchParams);
+  const { next, signedOut, error, via, mode } = readSignInParams(
+    await searchParams,
+  );
 
   const session = await auth.api.getSession({ headers: await headers() });
   if (session?.user) redirect(next);
 
   return (
-    <SignInPage error={error} next={next} signedOut={signedOut} via={via} />
+    <SignInPage
+      error={error}
+      mode={mode}
+      next={next}
+      signedOut={signedOut}
+      via={via}
+    />
   );
 }
