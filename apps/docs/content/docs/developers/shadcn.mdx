@@ -67,7 +67,7 @@ List everything in the registry, or look at an item before you add it:
 
 ### By URL, or with an older CLI
 
-The full URL, `https://qrdx.dev/r/<name>.json`, doesn't go through the directory, so it also works with versions of the CLI before 3.7.0, which can't read the directory and don't know `@qrdx`. To use the short names with one of those, add the registry to your `components.json`:
+The full URL, `https://qrdx.dev/r/<name>.json`, doesn't go through the directory, so it also works with versions of the CLI before 3.7.0, which can't read the directory and don't know `@qrdx`. To use the short names on versions 3.0 to 3.6, add the registry to your `components.json` (versions before 3.0 have no namespaces, so use the URL there):
 
 ```json title="components.json"
 {
