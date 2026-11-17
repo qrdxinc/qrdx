@@ -151,6 +151,58 @@ describe("generate command", () => {
     });
   });
 
+  describe("BMP file output", () => {
+    it("-o file.bmp writes a 24-bit BMP", () => {
+      const out = tmp("output.bmp");
+      cleanups.push(out);
+      const { exitCode } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--size",
+        "300",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      const buf = readFileSync(out);
+      expect(buf.toString("latin1", 0, 2)).toBe("BM");
+      expect(buf.readUInt32LE(2)).toBe(buf.length);
+      expect(buf.readInt32LE(18)).toBe(300);
+      expect(buf.readUInt16LE(28)).toBe(24);
+    });
+
+    it("--format bmp applies to a file name without an extension", () => {
+      const out = tmp("cli-noext-bmp");
+      cleanups.push(out);
+      const { exitCode } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--format",
+        "bmp",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      expect(readFileSync(out).toString("latin1", 0, 2)).toBe("BM");
+    });
+
+    it("caps the BMP size like PNG", () => {
+      const out = tmp("too-big.bmp");
+      cleanups.push(out);
+      const { exitCode, stdout, stderr } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--size",
+        "20000",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(1);
+      expect(stdout + stderr).toContain("BMP output is at most 10000 px");
+      expect(existsSync(out)).toBe(false);
+    });
+  });
+
   describe("flags", () => {
     it("--level flag is accepted", () => {
       const out = tmp("flag-level.svg");
