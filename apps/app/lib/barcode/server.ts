@@ -9,6 +9,7 @@ import "server-only";
 import {
   azteccode,
   code39,
+  code93,
   code128,
   datamatrix,
   drawingSVG,
@@ -18,6 +19,7 @@ import {
   itf14,
   pdf417,
   type RenderOptions,
+  rationalizedCodabar,
   upca,
   upce,
 } from "bwip-js/node";
@@ -51,6 +53,8 @@ const NODE_BUILD: BwipBuild<Drawing> = {
     upce: encoder(upce as Encoder),
     code128: encoder(code128 as Encoder),
     code39: encoder(code39 as Encoder),
+    code93: encoder(code93 as Encoder),
+    codabar: encoder(rationalizedCodabar as Encoder),
     itf14: encoder(itf14 as Encoder),
     "gs1-128": encoder(gs1_128 as Encoder),
     datamatrix: encoder(datamatrix as Encoder),

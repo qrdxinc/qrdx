@@ -104,7 +104,7 @@ export const MCP_TOOLS: {
     name: "generate_barcode",
     title: "Generate a barcode",
     description:
-      "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+      "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
     icon: Barcode,
   },
   {
@@ -134,7 +134,7 @@ export const MCP_TOOLS: {
     name: "read_docs_page",
     title: "Read a docs page",
     description:
-      "One docs page as Markdown, by the path search_docs returned or its URL, in English or any docs language. Long pages are cut with a link to the rest.",
+      "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
     icon: DocumentText,
   },
   {

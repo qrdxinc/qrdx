@@ -1,6 +1,6 @@
 // lib/docs-index.ts: the docs as the route handlers see them, built from
 // .source/docs-index (lib/docs-index-plugin.ts) instead of compiled MDX.
-// Same URLs and fallbacks as lib/source.ts, Markdown and search data read
+// Same URLs as lib/source.ts, Markdown and search data read
 // from the index, dates revived.
 
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -26,7 +26,6 @@ writeFileSync(
         lastModified: "2026-11-01T10:00:00.000Z",
       }),
       page("guides/start.mdx", "Start"),
-      page("guides/start.es.mdx", "Empezar"),
       page("guides/other.mdx", "Other"),
       {
         type: "meta",
@@ -42,7 +41,6 @@ writeFileSync(
   JSON.stringify({
     "index.mdx": "Welcome.\n",
     "guides/start.mdx": "Start here.\n",
-    "guides/start.es.mdx": "Empieza aquí.\n",
     "guides/other.mdx": "Other.\n",
   }),
 );
@@ -54,24 +52,17 @@ writeFileSync(
       headings: [],
       contents: [{ heading: undefined, content: "Start here." }],
     },
-    "guides/start.es.mdx": { headings: [], contents: [] },
     "guides/other.mdx": { headings: [], contents: [] },
   }),
 );
 
 vi.spyOn(process, "cwd").mockReturnValue(root);
-const {
-  docsIndex,
-  docsPageLocales,
-  getPageImage,
-  isTranslatedPage,
-  localizedDocsIndex,
-} = await import("@/lib/docs-index");
+const { docsIndex, getPageImage } = await import("@/lib/docs-index");
 
 afterAll(() => rmSync(root, { recursive: true, force: true }));
 
 describe("docs index", () => {
-  it("lists the English pages at their URLs", () => {
+  it("lists the pages at their URLs", () => {
     const urls = docsIndex()
       .getPages()
       .map((p) => p.url)
@@ -79,29 +70,10 @@ describe("docs index", () => {
     expect(urls).toEqual(["/docs", "/docs/guides/other", "/docs/guides/start"]);
   });
 
-  it("gives each language its URLs, with English where untranslated", () => {
-    const start = localizedDocsIndex().getPage(["guides", "start"], "es");
-    expect(start?.url).toBe("/es/docs/guides/start");
-    expect(start?.data.title).toBe("Empezar");
-    expect(start && isTranslatedPage(start)).toBe(true);
-
-    const other = localizedDocsIndex().getPage(["guides", "other"], "es");
-    expect(other?.url).toBe("/es/docs/guides/other");
-    expect(other?.data.title).toBe("Other");
-    expect(other && isTranslatedPage(other)).toBe(false);
-  });
-
-  it("knows which languages a page is translated into", () => {
-    expect(docsPageLocales(["guides", "start"])).toEqual(["en", "es"]);
-    expect(docsPageLocales(["guides", "other"])).toEqual(["en"]);
-  });
-
   it("reads the Markdown and search data from the index", async () => {
     const start = docsIndex().getPage(["guides", "start"]);
     expect(await start?.data.getText("processed")).toBe("Start here.\n");
     expect((await start?.data.structuredData())?.contents).toHaveLength(1);
-    const es = localizedDocsIndex().getPage(["guides", "start"], "es");
-    expect(await es?.data.getText("processed")).toBe("Empieza aquí.\n");
   });
 
   it("keeps the sidebar order and folder names from meta.json", () => {

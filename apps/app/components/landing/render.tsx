@@ -40,7 +40,7 @@ function leadImageBlockId(
 /**
  * Renders hosted page content: theme, blocks and an optional footer.
  * Server-renderable (no hooks): used by /p/<slug> and the editor preview.
- * Owner CSS must already be validated + scoped (components/landing/custom-css).
+ * Owner CSS must already be validated + scoped (ee/white-label/custom-css).
  */
 export function LandingRender({
   content,

@@ -8,8 +8,10 @@
 //    next/navigation useRouter except through LocaleLink/useLocaleRouter,
 //    and no plain <a href="/…"> or location change to a translated page.
 // 2. The shared chrome and the home page's sections, rendered in Hindi: no
-//    href to a page that exists in Hindi without the /hi prefix. This
-//    catches hrefs built from data, which the source rules can't see.
+//    href to a page that exists in Hindi without the /hi prefix, and none
+//    with the prefix to a page that's English only (the marketing pages,
+//    since 17 Nov 2026), which would only redirect back. This catches hrefs
+//    built from data, which the source rules can't see.
 //
 // A crawl of a production build found these bugs; a build-output scan was
 // the alternative, but CI doesn't build the app (Vercel does) and closed
@@ -17,7 +19,11 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { isPathIn, localizeHref } from "@repo/i18n/paths";
+import {
+  isEnglishOnlyPath,
+  isLocalizedPath,
+  localizeHref,
+} from "@repo/i18n/paths";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NextIntlClientProvider } from "next-intl";
 import type { ComponentProps, ReactNode } from "react";
@@ -77,10 +83,12 @@ function translatedPageGraph(): Map<string, string> {
   return sources;
 }
 
-/** A path a translated page has in some language ("/pricing", "/docs/…"). */
+/** A path a translated page has in some language ("/pricing"). */
 const isTranslatedPath = (href: string) => {
   const path = href.split(/[?#]/)[0] ?? "";
-  return path.startsWith("/") && !path.startsWith("//") && isPathIn(path, "ja");
+  return (
+    path.startsWith("/") && !path.startsWith("//") && isLocalizedPath(path)
+  );
 };
 
 describe("links in code that translated pages import", () => {
@@ -161,15 +169,31 @@ vi.mock("next/link", async (importOriginal) => {
   };
 });
 
-/** Every internal href in `html` that should carry the /hi prefix but doesn't. */
-function unprefixed(html: string): string[] {
-  const hrefs = [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((match) =>
+const hrefsIn = (html: string) =>
+  [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((match) =>
     (match[1] ?? "").replaceAll("&amp;", "&"),
   );
-  return hrefs.filter((href) => {
+
+/** Every internal href in `html` that should carry the /hi prefix but doesn't. */
+function unprefixed(html: string): string[] {
+  return hrefsIn(html).filter((href) => {
     const path = href.split(/[?#]/)[0] ?? "";
     if (!path.startsWith("/") || path.startsWith("//")) return false;
     return localizeHref(href, "hi") !== href;
+  });
+}
+
+/**
+ * Every href in `html` to an English-only page with the /hi prefix, the home
+ * page (/hi, /hi/home) included: each would redirect to the English URL.
+ */
+function redirecting(html: string): string[] {
+  return hrefsIn(html).filter((href) => {
+    const path = href.split(/[?#]/)[0] ?? "";
+    const rest = /^\/hi(\/.*)?$/.exec(path);
+    if (!rest) return false;
+    const english = rest[1] ?? "/";
+    return english === "/home" || isEnglishOnlyPath(english);
   });
 }
 
@@ -183,14 +207,16 @@ const renderHindi = (node: ReactNode) =>
   );
 
 describe("translated chrome and home sections, rendered in Hindi", () => {
-  // Each section and links it must render prefixed (the owner's report and
+  // Each section and links it must render as given (the owner's report and
   // the crawl of /hi: sample codes open /playground?type=…&sample=1, the
-  // wall's generator pages, the use-case cards' tools).
+  // wall's generator pages, the use-case cards' tools). The marketing pages
+  // are English only, so their links stay unprefixed; the logo goes to the
+  // English home page's /home address.
   it.each([
     [
       "navbar",
       () => import("@/components/sections/navbar").then((m) => <m.Navbar />),
-      ["/hi/playground"],
+      ["/hi/playground", "/home", "/pricing"],
     ],
     [
       "footer",
@@ -198,7 +224,14 @@ describe("translated chrome and home sections, rendered in Hindi", () => {
         import("@/components/sections/footer-section").then((m) => (
           <m.FooterSection />
         )),
-      ["/hi/pricing"],
+      [
+        "/hi/playground",
+        "/hi/ai/art",
+        "/hi/mcp",
+        "/home",
+        "/pricing",
+        "/qr-codes-for/restaurants",
+      ],
     ],
     [
       "call to action",
@@ -222,7 +255,7 @@ describe("translated chrome and home sections, rendered in Hindi", () => {
         import("@/components/sections/home/feature-rows-section").then((m) => (
           <m.FeatureRowsSection />
         )),
-      ["/hi/tools/bulk"],
+      ["/tools/bulk"],
     ],
     [
       "gallery wall",
@@ -232,7 +265,7 @@ describe("translated chrome and home sections, rendered in Hindi", () => {
         )),
       [
         "/hi/playground?type=wifi&sample=1",
-        "/hi/qr-code-generator/wifi",
+        "/qr-code-generator/wifi",
         "/hi/playground?tab=art",
       ],
     ],
@@ -244,26 +277,29 @@ describe("translated chrome and home sections, rendered in Hindi", () => {
         )),
       [
         "/hi/playground?type=vcard&sample=1&style=",
-        "/hi/tools/print-size",
-        "/hi/tools/bulk",
+        "/tools/print-size",
+        "/tools/bulk",
       ],
     ],
-  ] as const)("%s keeps /hi on every link", async (_name, load, expected) => {
-    const html = renderHindi(await load()).replaceAll("&amp;", "&");
-    expect(html).toContain('href="/hi');
-    for (const href of expected) expect(html).toContain(`href="${href}`);
-    expect(unprefixed(html)).toEqual([]);
-  });
+  ] as const)(
+    "%s keeps /hi where the page has it",
+    async (_name, load, expected) => {
+      const html = renderHindi(await load()).replaceAll("&amp;", "&");
+      for (const href of expected) expect(html).toContain(`href="${href}`);
+      expect(unprefixed(html)).toEqual([]);
+      expect(redirecting(html)).toEqual([]);
+    },
+  );
 
   it("prefixes query-string and hash links, and leaves pages hi doesn't have alone", () => {
     expect(
       localizeHref("/playground?type=url&sample=1&preset=orchid", "hi"),
     ).toBe("/hi/playground?type=url&sample=1&preset=orchid");
-    expect(localizeHref("/pricing#faq", "hi")).toBe("/hi/pricing#faq");
-    expect(localizeHref("/qr-code-generator/upi", "hi")).toBe(
-      "/hi/qr-code-generator/upi",
-    );
+    expect(localizeHref("/ai/art#examples", "hi")).toBe("/hi/ai/art#examples");
     for (const href of [
+      "/",
+      "/pricing#faq",
+      "/qr-code-generator/upi",
       "/community",
       "/legal/privacy-policy",
       "/templates/menu/cafe",
@@ -288,19 +324,21 @@ describe("links to the docs", () => {
     );
   };
 
-  it("are plain <a> elements, in the reader's language", async () => {
-    for (const [href, expected] of [
-      ["/docs", "/hi/docs"],
-      ["/docs/dynamic-qr-codes", "/hi/docs/dynamic-qr-codes"],
-      ["/docs/developers/rest-api#auth", "/hi/docs/developers/rest-api#auth"],
+  it("are plain <a> elements to the English page, on a translated page too", async () => {
+    // The docs are English only: the link goes straight to /docs/..., not
+    // through the redirect from /hi/docs/....
+    for (const href of [
+      "/docs",
+      "/docs/dynamic-qr-codes",
+      "/docs/developers/rest-api#auth",
     ]) {
-      const html = await render(href as string, { prefetch: false });
-      expect(html).toBe(`<a href="${expected}">x</a>`);
+      const html = await render(href, { prefetch: false });
+      expect(html).toBe(`<a href="${href}">x</a>`);
     }
   });
 
   it("leave every other page to next/link", async () => {
-    expect(await render("/pricing")).toContain("data-next-link");
+    expect(await render("/customers")).toContain("data-next-link");
     expect(await render("/playground")).toContain("data-next-link");
     // A docs page's Markdown is a file, not a page of either app.
     expect(await render("/docs/dynamic-qr-codes.md")).toContain(
@@ -335,6 +373,9 @@ describe("links to the site's pages", () => {
       "/blog",
       "/blog/dynamic-vs-static-qr-codes",
       "/blog/category/education?page=2#top",
+      "/pricing",
+      "/templates",
+      "/integrations/zapier",
     ]) {
       expect(await render(href, { prefetch: false })).toBe(
         `<a href="${href}">x</a>`,
@@ -345,6 +386,11 @@ describe("links to the site's pages", () => {
   it("leave neighbouring pages to next/link", async () => {
     expect(await render("/customers")).toContain("data-next-link");
     expect(await render("/blogx")).toContain("data-next-link");
+    // The templates' own pages and Slack's linking page stay in this app.
+    expect(await render("/templates/wifi")).toContain("data-next-link");
+    expect(await render("/integrations/slack/link")).toContain(
+      "data-next-link",
+    );
   });
 
   it("hold for the header and footer entries that point at the blog", async () => {

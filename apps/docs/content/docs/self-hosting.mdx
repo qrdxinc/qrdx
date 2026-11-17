@@ -6,9 +6,9 @@ icon: Server
 
 By the end of this guide you will have QRdx running at your own URL: the QR editor, accounts, dynamic QR codes with scan analytics, hosted pages, workspaces and saved themes, on a Postgres database you control. The Docker Compose path takes about half an hour, most of it the first image build.
 
-The web app is open source under the AGPL-3.0 license. Two parts are not: workspace single sign-on and the audit log live in the `ee/` folders under the QRdx commercial license and stay off unless you set a license key (`QRDX_EE_LICENSE`). Using them in production needs a written agreement with QRdx; see [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md). You don't need any of this to use the [`qrdx` React library](/docs/getting-started) or the [CLI](/docs/developers/cli): they run anywhere without a backend, under the MIT license. [Open source at QRdx](/open-source-qr-code-generator) lists each part of the repository and its license.
+The web app is open source under the AGPL-3.0 license. The business features are not: workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking live in the `ee/` folders under the QRdx commercial license and stay off unless you set a license key (`QRDX_EE_LICENSE`). Using them in production needs a written agreement with QRdx; see [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md). You don't need any of this to use the [`qrdx` React library](/docs/getting-started) or the [CLI](/docs/developers/cli): they run anywhere without a backend, under the MIT license. [Open source at QRdx](/open-source-qr-code-generator) lists each part of the repository and its license.
 
-The license key switches single sign-on and the audit log on. QRdx issues it with the agreement, and it has an expiry date. Today the app accepts any value, but using those features in production still needs the agreement and its key. To get one, use the [enterprise page](/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
+QRdx issues the license key with the agreement. To get one, use the [enterprise page](/enterprise) or email [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev). The key has an expiry, and your server checks it offline against QRdx's public key, without calling QRdx. A value QRdx didn't sign, or a key more than 14 days past its expiry, leaves all of these features off, as if no key were set; the rest of QRdx, sign-in included, works as before. **Admin** → **Health** shows when your key expires, and the server log says at start-up whether it's valid.
 
 <Callout type="warn" title="The Docker setup is new">
   If a step doesn't work as written, [open an issue](https://github.com/qrdxinc/qrdx/issues) with the command you ran and its output.
@@ -188,8 +188,11 @@ Each variable switches on only its own feature. An empty value counts as unset; 
 | Google sign-in | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google sign-in is unavailable |
 | Auth base URL | `BETTER_AUTH_URL` | Inferred from each request, with a warning in the logs |
 | Admin panel | `ADMIN_EMAILS`, `ADMIN_USER_IDS` | Nobody can open `/admin` |
-| Workspace single sign-on | `QRDX_EE_LICENSE` | Single sign-on stays off: no **Sign in with SSO**, no SSO settings, and its sign-in routes don't exist. SSO is in the `ee/` folders under the QRdx commercial license, so production use needs a written agreement with QRdx. See [Single sign-on](/docs/help/teams/single-sign-on) |
-| Workspace audit log | `QRDX_EE_LICENSE` | The audit log stays off: nothing is recorded and there's no **Settings** → **Audit log**. Like single sign-on, it's in the `ee/` folders under the QRdx commercial license. Its rows are kept {facts.auditLogRetentionDays} days; the [scheduled webhook job](#scheduled-jobs) deletes older ones. See [Audit log](/docs/help/teams/audit-log) |
+| Workspace single sign-on | `QRDX_EE_LICENSE`, a key QRdx issues | Without a valid key, single sign-on stays off: no **Sign in with SSO**, no SSO settings, and its sign-in routes don't exist. SSO is in the `ee/` folders under the QRdx commercial license, so production use needs a written agreement with QRdx. See [Single sign-on](/docs/help/teams/single-sign-on) |
+| Workspace audit log | `QRDX_EE_LICENSE`, a key QRdx issues | Without a valid key, the audit log stays off: nothing is recorded and there's no **Settings** → **Audit log**. Like single sign-on, it's in the `ee/` folders under the QRdx commercial license. Its rows are kept {facts.auditLogRetentionDays} days; the [scheduled webhook job](#scheduled-jobs) deletes older ones. See [Audit log](/docs/help/teams/audit-log) |
+| Client portal and client reports | `QRDX_EE_LICENSE`, a key QRdx issues | Without a valid key, there's no client portal and no **Settings** → **Client portal**, and shared stats pages show no client brand. They're in the `ee/` folders under the QRdx commercial license. See [Client portal](/docs/client-portal) |
+| White-label pages and custom CSS | `QRDX_EE_LICENSE`, a key QRdx issues | Without a valid key, hosted pages show QRdx's default branding and apply no custom CSS; the editor doesn't offer either. Every page keeps working. In the `ee/` folders under the QRdx commercial license. See [Landing pages](/docs/landing-pages#limits-and-plans) |
+| Conversion tracking | `QRDX_EE_LICENSE`, a key QRdx issues | Without a valid key, scans carry no `qrdx_sid`, `POST /api/v1/conversions` and `/conversions.js` answer 404, and the dashboard doesn't offer conversion tracking. Conversions already recorded stay in the data export. In the `ee/` folders under the QRdx commercial license. See [Tracking and conversions](/docs/tracking-and-conversions) |
 | AI themes, prompt enhancement and AI QR art (Vercel AI Gateway) | `AI_GATEWAY_API_KEY` | AI requests fail and the AI pages leave the navigation and sitemap. The editor works normally. Create the key in your own Vercel account (AI Gateway, API keys); usage is billed to that account's AI Gateway credits, and your app doesn't have to run on Vercel. The model for each task is set in `apps/app/lib/ai/models.ts` |
 | Short-link origin | `NEXT_PUBLIC_SHORT_LINK_BASE_URL` | [Dynamic codes](/docs/dynamic-qr-codes#self-hosting) use `NEXT_PUBLIC_APP_URL` |
 | Scan privacy salt | `SCAN_HASH_SALT` | Derived from `BETTER_AUTH_SECRET` |
@@ -201,7 +204,7 @@ Each variable switches on only its own feature. An empty value counts as unset; 
 | Link safety (Google Web Risk) | `WEB_RISK_API_KEY` | Destinations are checked by the offline rules only. See [Code controls](/docs/code-controls#safety-checks-on-links) |
 | Abuse limits | `SAFETY_YOUNG_ACCOUNT_DAYS`, `SAFETY_YOUNG_ACCOUNT_DYNAMIC_PER_HOUR`, `SAFETY_RECHECK_BATCH` | The defaults in `apps/app/lib/safety/limits.ts` apply (7 days, 30 codes an hour, 500 destinations per recheck) |
 | Form spam check (Cloudflare Turnstile) | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Forms rely on the built-in honeypot and rate limits. See [Menus, coupons, events and forms](/docs/forms-and-pages#self-hosting) |
-| Payments (Polar) | `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `NEXT_PUBLIC_QRDX_PRO_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_PRO_YEARLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_YEARLY_PRODUCT_ID` | Upgrading doesn't work (plans without a product id show "Coming soon"), and every account uses the Free limits |
+| Payments (Polar) | `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `NEXT_PUBLIC_QRDX_PRO_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_PRO_YEARLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_MONTHLY_PRODUCT_ID`, `NEXT_PUBLIC_QRDX_BUSINESS_YEARLY_PRODUCT_ID` | Nothing is sold: upgrading doesn't work (plans without a product id show "Coming soon") and every account is on Free. See [Plans and limits](#plans-and-limits) |
 | Euro prices | `NEXT_PUBLIC_QRDX_EUR_PRICES=1`, set only once every product above has a EUR price in Polar | Visitors from the EU and EEA see, and are charged, US$ prices |
 | Affiliate program | None: it runs only where QRdx itself runs | Off on a self-hosted copy: no **/affiliates** page, no applications, no **Settings** → **Affiliate program**, and referral links go to the home page |
 | Dub short links | `DUB_CLIENT_ID`, `DUB_CLIENT_SECRET`, `DUB_REDIRECT_URI`, `INTEGRATION_ENCRYPTION_KEY` | The Dub integration can't be connected |
@@ -236,6 +239,24 @@ Two routes do the recurring work: `/api/cron/webhooks` retries failed webhook de
 ```
 
 Without the header, the routes answer `401` in production. [Notifications](/docs/notifications#self-hosting) explains the digest's `shard` parameter.
+
+## Plans and limits
+
+Each plan's limits are defined in one file, `apps/app/lib/plans.ts` (`PLAN_LIMITS`). The app and sign-in both read it, so a change there applies everywhere: what each plan can create, who can make more workspaces, how many members a workspace can have, and whether a workspace can require two-step verification. Rebuild and restart after changing it.
+
+Without Polar (`POLAR_ACCESS_TOKEN` unset), nothing is sold and every account is on Free. As shipped, Free gives each person one workspace and no other members. To use teams, raise Free's limits, for example:
+
+```ts title="apps/app/lib/plans.ts"
+free: {
+  // ...
+  teams: true, // people can create more workspaces
+  teamMembers: 10, // members per workspace, owner included (UNLIMITED for no cap)
+  requireTwoFactor: true, // a workspace can require two-step verification
+  // ...
+},
+```
+
+The `ee/` features work differently: single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS (without the "Made with QRdx" footer), and conversion tracking. With a valid `QRDX_EE_LICENSE` and `POLAR_ACCESS_TOKEN` unset, every workspace has the ones its key covers (all of them, unless QRdx issued it for fewer), whatever its plan. That applies when `NEXT_PUBLIC_APP_URL` is your own domain. On `localhost`, and on any server where Polar is set up, they follow each plan's limits (`sso`, `auditLog`, `clientReports`, `clientReportsWhiteLabel`, `clientPortal`, `whiteLabel`, `customCss` and `conversions`; as shipped, client reports from Pro and the rest on Business). Production use of any of them still needs a written agreement with QRdx.
 
 ## Reverse proxy and HTTPS
 
@@ -293,7 +314,7 @@ With Neon, use its own backups and branching instead.
 ## What is different from qrdx.dev
 
 - **Docs** open on qrdx.dev. Your instance redirects every docs URL there.
-- **Payments and plans** need Polar. Without it, every account has the Free limits, and nobody can upgrade. The limits themselves are in `apps/app/lib/plans.ts`, which you can change for your instance.
+- **Payments and plans** need Polar. Without it, every account has the Free limits, and nobody can upgrade. The limits themselves are in `apps/app/lib/plans.ts`, which you can change for your instance; see [Plans and limits](#plans-and-limits).
 - **The affiliate program, pay-by-invoice requests, non-profit discounts and the enterprise contact form** are QRdx's own sales and run only where QRdx itself runs. A self-hosted copy has none of them.
 - **Scan locations:** country, region and city come from Vercel's geo headers. Behind Cloudflare only the country is read (`CF-IPCountry`); elsewhere locations show as unknown, and [area rules](/docs/precise-location#route-scans-by-area) only match scans with a shared location.
 - **Custom domains** are verified with a DNS `TXT` record and routed by your reverse proxy, unless you run on Vercel with the Domains API variables set. The **Set up with …** button needs your own Domain Connect template: QRdx's works only for qrdx.dev.

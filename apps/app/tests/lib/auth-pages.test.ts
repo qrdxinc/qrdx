@@ -37,6 +37,56 @@ describe("readSignInParams", () => {
     expect(readSignInParams({ signedOut: "true" }).signedOut).toBe(false);
   });
 
+  it("opens as a sign-up only for exactly mode=signup", () => {
+    expect(readSignInParams({ mode: "signup" }).mode).toBe("signup");
+    expect(readSignInParams({ mode: ["signup", "signin"] }).mode).toBe(
+      "signup",
+    );
+    for (const mode of [
+      undefined,
+      "signin",
+      "",
+      "SIGNUP",
+      "sign-up",
+      "auto",
+      "signup ",
+      " signup",
+      "signup,signin",
+    ]) {
+      expect(readSignInParams({ mode }).mode, String(mode)).toBe("signin");
+    }
+    expect(readSignInParams({ mode: ["signin", "signup"] }).mode).toBe(
+      "signin",
+    );
+    expect(readSignInParams({}).mode).toBe("signin");
+  });
+
+  it("keeps `next` the same with or without the mode", () => {
+    for (const next of [
+      "/dashboard?to=pages&new=menu&template=cafe",
+      "/settings/usage?x=1",
+      "https://evil.example",
+      "/sign-in?mode=signup",
+      undefined,
+    ]) {
+      expect(readSignInParams({ next, mode: "signup" }).next, next).toBe(
+        readSignInParams({ next }).next,
+      );
+    }
+    expect(
+      readSignInParams({
+        next: "/dashboard?to=pages&new=menu&template=cafe",
+        mode: "signup",
+      }),
+    ).toEqual({
+      next: "/dashboard?to=pages&new=menu&template=cafe",
+      signedOut: false,
+      error: null,
+      via: null,
+      mode: "signup",
+    });
+  });
+
   it("lands sign-out on the page with the notice", () => {
     const url = new URL(SIGNED_OUT_PATH, "https://qrdx.dev");
     expect(url.pathname).toBe("/sign-in");

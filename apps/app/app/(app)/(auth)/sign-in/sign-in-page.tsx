@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { SignInPanel } from "../components/sign-in-panel";
 import { type SocialSignIn, signInErrorMessage } from "./_lib/error-message";
+import type { SignInPageMode } from "./_lib/params";
 
 function Heading({
   className,
@@ -29,16 +30,20 @@ function Lead({
 /**
  * The sign-in panel on a page: centered, with a way back to the site.
  * Google, GitHub and the email code all land on `next` (already checked by
- * lib/safe-redirect on the server).
+ * lib/safe-redirect on the server). `mode` "signup" shows it as the dialog's
+ * sign-up (?mode=signup).
  */
 export function SignInPage({
   next,
   signedOut,
   error = null,
   via = null,
+  mode = "signin",
 }: {
   next: string;
   signedOut: boolean;
+  /** "signup" for ?mode=signup; a sign-in otherwise. */
+  mode?: SignInPageMode;
   /** Code from a failed sign-in; its description isn't shown (it's from the URL). */
   error?: string | null;
   /** Google or GitHub; otherwise single sign-on. */
@@ -51,6 +56,7 @@ export function SignInPage({
         <SignInPanel
           callbackURL={() => next}
           Description={Lead}
+          mode={mode}
           notice={
             error
               ? signInErrorMessage(error, via)

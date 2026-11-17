@@ -2,8 +2,8 @@ import "server-only";
 
 import { API_BASE_URL } from "@repo/config";
 import type { ReactNode } from "react";
-import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { Callout } from "@/components/mdx/callout";
+import { ZoneLink as Link } from "@/components/zone-link";
 import {
   compareVersions,
   getNpmLag,

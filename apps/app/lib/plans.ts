@@ -1,9 +1,13 @@
 import "server-only";
 
+import type { EeFeature } from "@repo/auth/ee-license";
+import { registerPlanLimits } from "@repo/auth/plan-limits";
+import { eeOnEveryPlan, type FeatureContext } from "@repo/availability";
 import { MAX_FREE_THEMES } from "@repo/config";
 import { database as db, member } from "@repo/database";
 import { and, eq, like, or } from "drizzle-orm";
 import { cache } from "react";
+import { featureContext } from "./feature-context";
 import { holdsPlanRole } from "./permissions";
 import { type Plan, planForProductId } from "./pricing";
 import { SCAN_HISTORY_DAYS } from "./scan-history";
@@ -12,6 +16,10 @@ import { getMyActiveSubscription } from "./subscription";
 /**
  * Plans and their limits — the single source of truth for feature gating
  * (prices and display names live in the client-safe lib/pricing.ts).
+ * packages/auth reads them too (registered at the end of this file): who may
+ * create more workspaces, seats, workspace SSO and required two-step
+ * verification. A self-hosted server changes PLAN_LIMITS below; without
+ * billing (Polar) every account is on Free.
  *
  * Never-Hostage Guarantee: limits only block creating new things. Existing
  * dynamic codes keep redirecting on every plan, including after a downgrade,
@@ -63,14 +71,17 @@ export interface PlanLimits {
   teamMembers: number;
   /** Per-folder access rules for team members */
   folderPermissions: boolean;
-  /** Workspace single sign-on, OIDC and SAML (packages/auth/ee/sso.ts) */
+  /**
+   * Workspace single sign-on, OIDC and SAML (packages/auth/ee/sso.ts). An
+   * ee feature: see getPlanLimits.
+   */
   sso: boolean;
   /**
    * The workspace may require two-step verification of its members
-   * (packages/auth/workspace-two-factor.ts, which checks the same plan as
-   * workspacePlanTier "business").
+   * (packages/auth/workspace-two-factor.ts reads this).
    */
   requireTwoFactor: boolean;
+  /** The workspace audit log (ee/audit-log). An ee feature: see getPlanLimits. */
   auditLog: boolean;
   /** Password, start/expiry dates and scan limits (lib/redirect/lifecycle.ts) */
   linkControls: boolean;
@@ -117,7 +128,8 @@ export interface PlanLimits {
   // ─── Agency tools (feat/agency-tools) ──────────────────────────────────────
   /**
    * Shared stats pages (/stats/<token>) can carry a client's name, logo and
-   * accent color (lib/client-brands.ts). Pro keeps a small "Made with QRdx".
+   * accent color (ee/client-portal/brands.ts). Pro keeps a small "Made with
+   * QRdx".
    */
   clientReports: boolean;
   /**
@@ -126,8 +138,9 @@ export interface PlanLimits {
    */
   clientReportsWhiteLabel: boolean;
   /**
-   * The read-only client portal (/portal/<workspace>, lib/portal): invited
-   * clients see the folders shared with them, under the workspace's branding.
+   * The read-only client portal (/portal/<workspace>, ee/client-portal):
+   * invited clients see the folders shared with them, under the workspace's
+   * branding.
    */
   clientPortal: boolean;
   /**
@@ -267,8 +280,58 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
   },
 };
 
+/**
+ * The plan limits each ee feature stands for (the names a licence key can
+ * list: packages/auth/ee-license.ts EE_FEATURES).
+ */
+const EE_LIMITS: Record<EeFeature, Partial<PlanLimits>> = {
+  // packages/auth/ee/sso.ts
+  sso: { sso: true },
+  // ee/audit-log
+  auditLog: { auditLog: true },
+  // ee/client-portal
+  clientPortal: {
+    clientReports: true,
+    clientReportsWhiteLabel: true,
+    clientPortal: true,
+  },
+  // ee/white-label: no QRdx branding, so no "Made with QRdx" footer either
+  whiteLabel: { whiteLabel: true, customCss: true, landingPageBadge: false },
+  // ee/conversions
+  conversions: { conversions: true },
+};
+
+// A self-hosted server with a valid ee licence key that sells no plans gives
+// every plan the ee features its licence covers (@repo/availability
+// eeOnEveryPlan). Worked out once per feature context, which only changes
+// when the licence expires or its grace period ends (lib/feature-context.ts).
+const eeLimitsIn = new WeakMap<FeatureContext, Partial<PlanLimits> | null>();
+
+function eeLimitsOnEveryPlan(): Partial<PlanLimits> | null {
+  const context = featureContext();
+  const known = eeLimitsIn.get(context);
+  if (known !== undefined) return known;
+  const extra: Partial<PlanLimits> | null = eeOnEveryPlan(context)
+    ? Object.assign(
+        {},
+        ...(context.eeFeatures ?? []).map((feature) => EE_LIMITS[feature]),
+      )
+    : null;
+  eeLimitsIn.set(context, extra);
+  return extra;
+}
+
+/**
+ * The limits a scope on `plan` gets here: PLAN_LIMITS, plus the limits of
+ * each ee feature its licence covers (EE_LIMITS) on every plan where the
+ * licence covers them without a plan (a self-hosted server with a valid key
+ * and no billing). On qrdx.dev and anywhere that sells plans, exactly
+ * PLAN_LIMITS.
+ */
 export function getPlanLimits(plan: Plan): PlanLimits {
-  return PLAN_LIMITS[plan];
+  const limits = PLAN_LIMITS[plan];
+  const extra = eeLimitsOnEveryPlan();
+  return extra ? { ...limits, ...extra } : limits;
 }
 
 /**
@@ -305,13 +368,20 @@ export function planForSubscriptionProduct(productId: string): Plan {
   return planForProductId(productId) ?? "pro";
 }
 
-/** A user's own plan, from their entitled Polar subscription. */
-export const getPlan = cache(async (userId: string): Promise<Plan> => {
-  const subscription = await getMyActiveSubscription(userId);
+/** The plan an entitled subscription grants; Free without one. */
+export function planForSubscription(
+  subscription: { productId: string } | null,
+): Plan {
   return subscription
     ? planForSubscriptionProduct(subscription.productId)
     : "free";
-});
+}
+
+/** A user's own plan, from their entitled Polar subscription. */
+export const getPlan = cache(
+  async (userId: string): Promise<Plan> =>
+    planForSubscription(await getMyActiveSubscription(userId)),
+);
 
 /**
  * Plan for resources owned by an organization: the best plan among the
@@ -347,3 +417,9 @@ export function getPlanForScope(scope: {
     ? getOwnerPlanForOrganization(scope.organizationId)
     : getPlan(scope.userId);
 }
+
+// packages/auth decides who may create more workspaces, seats, workspace SSO
+// and required two-step verification from these limits
+// (packages/auth/plan-limits.ts). Every server that loads this module hands
+// them over; instrumentation.ts and the auth route load it at start-up.
+registerPlanLimits(getPlanLimits);

@@ -13,6 +13,9 @@ export const SCAN_FORMATS = [
   "upc_e",
   "code_128",
   "code_39",
+  "code_93",
+  "codabar",
+  "itf",
 ] as const;
 
 export type ScanFormat = (typeof SCAN_FORMATS)[number];
@@ -30,6 +33,9 @@ export const FORMAT_LABELS: Record<string, string> = {
   upc_e: "UPC-E",
   code_128: "Code 128",
   code_39: "Code 39",
+  code_93: "Code 93",
+  codabar: "Codabar",
+  itf: "ITF",
 };
 
 export function formatLabel(format: string): string {

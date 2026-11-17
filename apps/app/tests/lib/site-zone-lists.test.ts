@@ -5,10 +5,11 @@
 // site, all three list this app's blog as before.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const zone = vi.hoisted(() => ({ blog: false }));
+const zone = vi.hoisted(() => ({ blog: false, groups: new Set<string>() }));
 
 vi.mock("@/lib/site-zone-on", () => ({
-  siteServes: (group: string) => group === "blog" && zone.blog,
+  siteServes: (group: string) =>
+    (group === "blog" && zone.blog) || zone.groups.has(group),
 }));
 vi.mock("@/lib/docs-zone-manifest", () => ({
   docsZoneManifest: async () => null,
@@ -59,6 +60,7 @@ const sitemaps = (): string[] => {
 describe("without the marketing site", () => {
   beforeEach(() => {
     zone.blog = false;
+    zone.groups = new Set();
   });
 
   it("the sitemap lists this app's blog", async () => {
@@ -86,6 +88,7 @@ describe("without the marketing site", () => {
 describe("while the marketing site serves the blog", () => {
   beforeEach(() => {
     zone.blog = true;
+    zone.groups = new Set();
   });
 
   it("the sitemap leaves the blog out", async () => {
@@ -105,5 +108,117 @@ describe("while the marketing site serves the blog", () => {
     const text = await llmsTxt();
     expect(text).toMatch(/\[Blog\]\([^)]*\/blog\)/);
     expect(text).not.toContain("/blog/old-post");
+  });
+});
+
+// The industry and placement pages come from lib/seo-content (real data).
+const under = (prefix: string) => (url: string) =>
+  new URL(url).pathname === prefix ||
+  new URL(url).pathname.startsWith(`${prefix}/`);
+
+describe("while the marketing site serves compare and the SEO collections", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set(["compare", "industries", "placements"]);
+  });
+
+  it("the sitemap leaves those pages out", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    for (const prefix of ["/compare", "/qr-codes-for", "/qr-codes-on"]) {
+      expect(urls.filter(under(prefix)), prefix).toEqual([]);
+    }
+  });
+
+  it("robots.txt names each group's own sitemap", () => {
+    expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
+      "/sitemap.xml",
+      "/compare/sitemap.xml",
+      "/qr-codes-for/sitemap.xml",
+      "/qr-codes-on/sitemap.xml",
+    ]);
+  });
+});
+
+describe("before the site serves the SEO collections", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set();
+  });
+
+  it("the sitemap lists them", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    expect(urls.filter(under("/qr-codes-for")).length).toBeGreaterThan(1);
+    expect(urls.filter(under("/qr-codes-on")).length).toBeGreaterThan(1);
+  });
+});
+
+describe("while the marketing site serves the generators and barcodes", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set(["generators", "barcodes"]);
+  });
+
+  it("the sitemap leaves their pages out, hosted types included", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    for (const prefix of ["/qr-code-generator", "/barcode-generator"]) {
+      expect(urls.filter(under(prefix)), prefix).toEqual([]);
+    }
+  });
+
+  it("robots.txt names their sitemaps", () => {
+    expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
+      "/sitemap.xml",
+      "/qr-code-generator/sitemap.xml",
+      "/barcode-generator/sitemap.xml",
+    ]);
+  });
+});
+
+describe("before the site serves the generators and barcodes", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set();
+  });
+
+  it("the sitemap lists them", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    expect(urls.filter(under("/qr-code-generator")).length).toBeGreaterThan(1);
+    expect(urls.filter(under("/barcode-generator")).length).toBeGreaterThan(1);
+  });
+});
+
+// Stage two's groups keep their URLs whichever app serves them, so this
+// app's sitemap goes on listing them and robots.txt names no sitemap of
+// theirs (SITE_SITEMAPS has none).
+describe("while the marketing site serves pages without a sitemap of their own", () => {
+  const groups = [
+    "trust",
+    "plugins",
+    "tools",
+    "products",
+    "enterprise",
+    "pricing",
+    "integrations",
+    "templates",
+  ];
+
+  it("the sitemap still lists their pages", async () => {
+    zone.blog = false;
+    zone.groups = new Set();
+    const before = (await sitemap()).map((entry) => entry.url);
+    zone.groups = new Set(groups);
+    const after = (await sitemap()).map((entry) => entry.url);
+    expect(after).toEqual(before);
+    for (const path of ["/pricing", "/integrations", "/security"]) {
+      expect(after, path).toContain(new URL(path, after[0]).toString());
+    }
+  });
+
+  it("robots.txt names this app's sitemap only", () => {
+    zone.blog = false;
+    zone.groups = new Set(groups);
+    expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
+      "/sitemap.xml",
+    ]);
   });
 });

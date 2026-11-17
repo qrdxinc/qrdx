@@ -9,12 +9,11 @@ import { env } from "@/env";
  * searchParams or an uncached fetch). Unknown params call notFound(), so
  * they answer 404 either way.
  *
- * - "english": production, staging, local and CI builds. The English pages
- *   and every route's own list (buildTimeParams); the other languages under
- *   app/[lang] (localeParams), the OG images, the Markdown copies and the
- *   generated image files (onDemandParams) render on request. Prerendering
- *   all of them (about 8,500 paths) ran Vercel's 8 GB Hobby build machine
- *   out of memory.
+ * - "english": production, staging, local and CI builds. Every route's own
+ *   list (buildTimeParams): the docs pages. The OG images and the Markdown
+ *   copies (onDemandParams) render on request. The name is the main app's,
+ *   which shares this module's rules: there it means the English pages
+ *   only.
  * - "minimal": Vercel preview builds other than staging (the preview/*
  *   branches, apps/app/vercel.json). Only the pages without a dynamic
  *   segment of their own, in English (the home page, /pricing, /blog...):

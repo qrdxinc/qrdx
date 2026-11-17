@@ -94,12 +94,17 @@ async function mutate<T>(
     requestHeaders: Headers,
     session: ConfirmableSession | null,
   ) => Promise<T>,
-  { confirm = false }: { confirm?: boolean } = {},
+  {
+    confirm = false,
+    needsLicence = true,
+  }: { confirm?: boolean; needsLicence?: boolean } = {},
 ): Promise<SsoActionResult<T>> {
   try {
-    // Without a licence key the SSO plugin isn't registered (packages/auth/
-    // ee-license.ts), so there's nothing to manage.
-    if (!isFeatureAvailable("sso")) {
+    // Without a valid licence key the SSO plugin isn't registered
+    // (packages/auth/ee/license.ts), so there's nothing to set up or change.
+    // Removing a stored connection and turning the requirement off still
+    // work: they only take things away.
+    if (needsLicence && !isFeatureAvailable("sso")) {
       throw new HttpError(
         404,
         "NOT_FOUND",
@@ -192,7 +197,10 @@ export async function updateSso(
 export async function removeSso(): Promise<
   SsoActionResult<{ domain: string }>
 > {
-  return mutate("removeSso", deleteSsoConnection, { confirm: true });
+  return mutate("removeSso", deleteSsoConnection, {
+    confirm: true,
+    needsLicence: false,
+  });
 }
 
 export async function setSsoRole(
@@ -228,6 +236,6 @@ export async function setSsoRequirement(
         on,
       );
     },
-    { confirm: true },
+    { confirm: true, needsLicence: on !== false },
   );
 }

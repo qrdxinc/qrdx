@@ -34,6 +34,8 @@ describe("BARCODE_FORMATS", () => {
       "UPC-E",
       "Code 128",
       "Code 39",
+      "Code 93",
+      "Codabar",
       "ITF-14",
       "GS1-128",
       "Data Matrix",
@@ -177,6 +179,58 @@ describe("Code 128 and Code 39", () => {
     expect(error("code39", "qrdx")).toMatch(/no lowercase letters/);
     expect(error("code39", "AB*C")).toMatch(/Not allowed: \*/);
   });
+
+  it("takes the same 43 characters in Code 93 and points lowercase to Code 128", () => {
+    expect(ok("code93", "QRDX-93 $/+%.").value).toBe("QRDX-93 $/+%.");
+    expect(ok("code93", "1234567890").value).toBe("1234567890");
+    expect(error("code93", "qrdx")).toBe(
+      "Code 93 here has no lowercase letters. Use capitals, or Code 128 for mixed case.",
+    );
+    expect(error("code93", "AB*C#")).toBe(
+      "Code 93 takes capital letters, digits, spaces and - . $ / + % only. Not allowed: * #",
+    );
+    // Mixed: lowercase plus a character no case change fixes is a character error.
+    expect(error("code93", "ab#")).toMatch(/Not allowed: a b #/);
+    expect(error("code93", "A".repeat(41))).toMatch(
+      /Code 93 here takes up to 40 characters; this has 41/,
+    );
+    expect(error("code93", "")).toBe("Enter the text to encode.");
+  });
+});
+
+describe("Codabar", () => {
+  it("takes a start and stop letter around digits and - $ : / . +", () => {
+    expect(ok("codabar", "A40156B").value).toBe("A40156B");
+    expect(ok("codabar", "C12-$:/.+34D").value).toBe("C12-$:/.+34D");
+    expect(ok("codabar", `A${"1".repeat(38)}A`).value).toHaveLength(40);
+  });
+
+  it("needs A to D at both ends and something between them", () => {
+    for (const raw of [
+      "40156",
+      "A40156",
+      "40156B",
+      "E40156B",
+      "a40156b",
+      "AB",
+      "A",
+    ]) {
+      expect(error("codabar", raw), raw).toMatch(
+        /starts and ends with A, B, C or D/,
+      );
+    }
+  });
+
+  it("lists characters it can't hold, and caps the length", () => {
+    expect(error("codabar", "A12*45B")).toBe(
+      "Codabar takes digits and - $ : / . + between its start and stop letters. Not allowed: *",
+    );
+    expect(error("codabar", "A1B2B")).toMatch(/Not allowed: B/);
+    expect(error("codabar", `A${"1".repeat(39)}A`)).toMatch(
+      /up to 40 characters; this has 41/,
+    );
+    expect(error("codabar", "")).toBe("Enter the text to encode.");
+  });
 });
 
 describe("GS1-128", () => {
@@ -252,6 +306,10 @@ describe("issue codes (the generator translates by code)", () => {
       ["upce", "123456789"],
       ["upce", "2123456"],
       ["code39", "abc"],
+      ["code93", "abc"],
+      ["code93", "A*B"],
+      ["codabar", "123"],
+      ["codabar", "A1*B"],
       ["code128", "naïve"],
       ["gs1-128", "01)09501101530003"],
       ["gs1-128", "(01)0950"],

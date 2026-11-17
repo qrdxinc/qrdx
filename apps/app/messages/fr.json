@@ -286,7 +286,8 @@
   },
   "localeSwitcher": {
     "label": "Langue",
-    "englishOnly": "Cette page n’est disponible qu’en anglais. Les autres langues ouvrent leur page d’accueil."
+    "englishOnly": "Cette page n’est disponible qu’en anglais. Les autres langues ouvrent leur page d’accueil.",
+    "englishOnlyDesigner": "Cette page n’est disponible qu’en anglais. Les autres langues ouvrent l’éditeur de QR code."
   },
   "cta": {
     "title": "Créez votre prochain QR code",
@@ -471,7 +472,7 @@
       "developers": {
         "eyebrow": "Développeurs",
         "title": "Conçu pour les développeurs",
-        "description": "Générez des codes avec la bibliothèque React qrdx, obtenez des images depuis une URL avec l'Image API, ou laissez Claude, Cursor et VS Code les créer via le MCP server. Vous pouvez aussi héberger toute l'application vous-même.",
+        "description": "Générez des codes avec la bibliothèque React qrdx, obtenez des images depuis une URL avec l’Image API, ou laissez Claude, Cursor et VS Code en créer via le serveur MCP. Vous pouvez aussi héberger l’application vous-même.",
         "link": "Docs développeurs"
       }
     },
@@ -526,7 +527,8 @@
           "answer": "Oui. La superposition de logo est incluse dans l'offre gratuite. Importez une image (un PNG à fond transparent donne les meilleurs résultats) et QRdx la centre et dégage les modules situés dessous. Les QR codes utilisent la correction d'erreurs Reed-Solomon (ISO/IEC 18004) ; QRdx utilise par défaut le niveau Q, qui peut récupérer environ 25 % du code, de sorte qu'un logo centré reste scannable. Testez avec plusieurs téléphones avant d'imprimer."
         },
         "openSource": {
-          "question": "QRdx est-il open source ?"
+          "question": "QRdx est-il open source ?",
+          "answer": "Oui. QRdx est développé en public sur GitHub. L’application web est open source sous licence GNU AGPL-3.0 (ou ultérieure) : vous pouvez consulter le code, signaler des problèmes, contribuer ou héberger votre propre instance, QR codes dynamiques et pages hébergées compris. La bibliothèque React qrdx sur npm et l’outil en ligne de commande @qrdx/cli sont sous licence MIT, des logiciels propriétaires peuvent donc aussi les utiliser. Les fonctionnalités professionnelles des dossiers ee (authentification unique pour l’espace de travail, journal d’audit, portail client et rapports clients, pages en marque blanche avec CSS personnalisé, et suivi des conversions) sont sous licence commerciale QRdx."
         },
         "api": {
           "question": "Les développeurs peuvent-ils générer des QR codes avec une API ?",
@@ -801,7 +803,7 @@
         },
         "selfHost": {
           "question": "Puis-je l'héberger moi-même ?",
-          "answer": "Oui. QRdx est open source sous licence AGPL-3.0. Exécutez-le avec votre propre base de données Postgres en suivant le guide d'auto-hébergement ; les limites des plans sont définies dans un seul fichier que vous pouvez modifier pour votre instance."
+          "answer": "Oui. QRdx est open source sous licence AGPL-3.0. Exécutez-le avec votre propre base de données Postgres en suivant le guide d’auto-hébergement ; les limites des offres sont définies dans un seul fichier que vous pouvez modifier pour votre instance. Les fonctionnalités business des dossiers ee (authentification unique, journal d’audit, portail client, pages en marque blanche et suivi des conversions) nécessitent un contrat entreprise."
         },
         "nonprofit": {
           "question": "Proposez-vous une réduction pour les associations ?",
@@ -843,7 +845,7 @@
         "contract": "Un contrat annuel, payé sur facture",
         "replies": "Réponse sous {hours, plural, one {# heure ouvrée} other {# heures ouvrées}} quand des codes cessent de fonctionner",
         "review": "Des réponses pour votre revue de sécurité",
-        "selfHost": "SSO et journal d’audit sur votre propre serveur"
+        "selfHost": "SSO, journal d’audit, portail client, marque blanche et conversions sur votre propre serveur"
       },
       "security": "La sécurité chez QRdx"
     },
@@ -863,393 +865,6 @@
       "sent": "Nous répondrons à {email}, généralement sous quelques jours. Si votre organisation est éligible, la réponse contiendra un code de réduction à saisir au moment du paiement.",
       "close": "Fermer",
       "failed": "Une erreur s’est produite. Écrivez plutôt à {email}."
-    }
-  },
-  "docs": {
-    "meta": {
-      "titleSuffix": "Docs QRdx"
-    },
-    "breadcrumb": {
-      "home": "Accueil",
-      "docs": "Docs"
-    },
-    "untranslated": {
-      "title": "Cette page n’est pas encore traduite",
-      "body": "Vous lisez la version anglaise."
-    },
-    "client": {
-      "actions": {
-        "copyMarkdown": "Copier en Markdown",
-        "open": "Ouvrir",
-        "openIn": "Ouvrir dans {app}",
-        "askPrompt": "Lis {url}, je veux poser des questions à ce sujet."
-      },
-      "search": {
-        "jumpTo": "Aller à <page>{name}</page>"
-      },
-      "language": {
-        "label": "Langue des docs",
-        "note": "La documentation est disponible dans ces langues. Les autres langues affichent la documentation en anglais."
-      }
-    },
-    "help": {
-      "search": "Rechercher dans l’aide et les docs",
-      "stillStuck": {
-        "title": "Toujours bloqué ?",
-        "body": "Dites-nous ce que vous essayiez de faire et ce qui s’est passé. Indiquez le lien court du code si cela concerne un code.",
-        "widget": "Le widget d’assistance sur qrdx.dev, une fois les cookies de fonctionnalité autorisés.",
-        "github": "Signaler un bug sur GitHub",
-        "contact": "Toutes les façons de nous contacter"
-      }
-    },
-    "notFound": {
-      "title": "Cette page n’existe pas dans les docs",
-      "body": "Elle a peut-être été déplacée ou renommée. Recherchez dans les docs ou partez de l’une de ces pages.",
-      "places": {
-        "gettingStarted": {
-          "title": "Prise en main",
-          "description": "Créez et téléchargez votre premier code."
-        },
-        "dynamic": {
-          "title": "QR codes dynamiques",
-          "description": "Des liens courts modifiables après l’impression."
-        },
-        "restApi": {
-          "title": "REST API",
-          "description": "Créez et gérez des codes depuis votre propre application."
-        },
-        "components": {
-          "title": "Composants",
-          "description": "Composants React et shadcn/ui pour les QR codes."
-        }
-      }
-    },
-    "shell": {
-      "header": {
-        "docs": "Docs",
-        "dashboard": "Tableau de bord",
-        "github": "QRdx sur GitHub"
-      },
-      "actions": {
-        "copyPage": "Copier la page",
-        "copied": "Copié",
-        "more": "Autres façons d’utiliser cette page",
-        "copyMarkdown": "Copier la page en Markdown",
-        "viewMarkdown": "Voir en Markdown",
-        "mcp": "Connecter le serveur MCP de QRdx"
-      },
-      "feedback": {
-        "question": "Cette page vous a-t-elle été utile ?",
-        "yes": "Oui",
-        "no": "Non",
-        "thanks": "Merci. Les retours sont anonymes : seuls les nombres de oui et de non sont conservés.",
-        "edit": "Modifier cette page sur GitHub",
-        "report": "Signaler un problème",
-        "issueTitle": "Docs : {title}",
-        "issueBody": "Page : {url}\n\nCe qui est incorrect ou manquant :\n"
-      },
-      "notFound": {
-        "search": "Rechercher dans la doc",
-        "sections": "Ou commencez par une section"
-      },
-      "code": {
-        "copy": "Copier le code",
-        "copied": "Copié"
-      },
-      "video": {
-        "play": "Lire {title}",
-        "pause": "Mettre {title} en pause",
-        "reducedMotion": "La vidéo attend votre action, car votre système demande moins d’animations."
-      },
-      "plan": {
-        "title": "Nécessite {plans}",
-        "or": "{a} ou {b}",
-        "body": "Le contenu de chaque offre est détaillé sur",
-        "link": "Offres et limites",
-        "pro": "Pro",
-        "business": "Business",
-        "enterprise": "Enterprise"
-      }
-    },
-    "ui": {
-      "search": "Rechercher",
-      "searchPlaceholder": "Rechercher",
-      "openSearch": "Ouvrir la recherche",
-      "closeSearch": "Fermer la recherche",
-      "noResults": "Aucun résultat",
-      "searchFailed": "Échec de la recherche",
-      "onThisPage": "Sur cette page",
-      "noHeadings": "Aucun titre",
-      "tableOfContents": "Table des matières",
-      "lastUpdated": "Dernière mise à jour le",
-      "previousPage": "Page précédente",
-      "nextPage": "Page suivante",
-      "copyCode": "Copier le texte",
-      "copiedCode": "Texte copié",
-      "copyAnchor": "Copier le lien d’ancre",
-      "copiedAnchor": "Lien d’ancre copié",
-      "copyLink": "Copier le lien",
-      "copiedLink": "Lien copié",
-      "toggleMenu": "Afficher le menu",
-      "toggleTheme": "Changer de thème",
-      "themeLight": "Clair",
-      "themeDark": "Sombre",
-      "themeSystem": "Système",
-      "openSidebar": "Ouvrir la barre latérale",
-      "closeSidebar": "Fermer la barre latérale",
-      "collapseSidebar": "Réduire la barre latérale",
-      "typeTableProp": "Propriété",
-      "typeTableType": "Type",
-      "typeTableDefault": "Défaut",
-      "typeTableParameters": "Paramètres",
-      "typeTableReturns": "Retourne"
-    },
-    "shots": {
-      "diagrams": {
-        "dynamic-redirect": {
-          "title": "Comment un code dynamique redirige : le scan ouvre un lien court, QRdx applique les règles du code, envoie le téléphone vers la destination et enregistre le scan au passage.",
-          "scan": "Scan",
-          "scanNote": "un téléphone lit le code",
-          "shortLink": "Lien court",
-          "shortLinkNote": "ce que contient le motif",
-          "rules": "Règles",
-          "rulesNote": "appareil, lieu, heure, répartition",
-          "destination": "Destination",
-          "destinationNote": "modifiable à tout moment",
-          "recorded": "Scan enregistré",
-          "recordedNote": "pays, appareil, heure ; jamais la personne"
-        },
-        "static-vs-dynamic": {
-          "title": "QR code statique et QR code dynamique : un QR code statique contient son contenu dans le motif, un QR code dynamique contient un lien court que QRdx résout vers une destination que vous pouvez modifier.",
-          "static": "QR code statique",
-          "dynamic": "QR code dynamique",
-          "printed": "Code imprimé",
-          "printedNote": "le motif sur papier ou à l’écran",
-          "content": "Le contenu lui-même",
-          "contentNote": "un lien, des infos Wi-Fi, un contact",
-          "staticEnd": "Figé une fois imprimé. Aucun comptage des scans.",
-          "shortLink": "Lien court",
-          "shortLinkNote": "qrdx.dev/q/… ou votre domaine",
-          "destination": "Destination",
-          "destinationNote": "modifiable ; chaque scan est compté"
-        },
-        "smart-routing": {
-          "title": "Comment le routage intelligent décide : les règles sont lues de haut en bas, la première règle dont les conditions correspondent au scan l’envoie vers la destination de cette règle, et un scan qui ne correspond à aucune règle va vers la destination par défaut du code.",
-          "scan": "Un scan arrive",
-          "scanNote": "appareil, OS, pays, langue, heure",
-          "rule1": "iPhone ou iPad → page iOS",
-          "rule2": "Langue espagnole → page en espagnol",
-          "rule3": "Week-ends 08:00–14:00 → offre brunch",
-          "firstMatch": "La première règle gagne",
-          "firstMatchNote": "la destination de la règle",
-          "noMatch": "Aucune règle ne correspond",
-          "noMatchNote": "la destination par défaut du code",
-          "footnote": "Les règles sont vérifiées dans l’ordre affiché dans le panneau Routage ; faites-les glisser pour le modifier."
-        },
-        "custom-domain": {
-          "title": "Fonctionnement d’un domaine personnalisé : un enregistrement CNAME chez votre fournisseur DNS pointe le nom d’hôte vers QRdx, qui sert vos liens courts sur ce domaine et redirige chaque scan vers sa destination.",
-          "scan": "Scan",
-          "scanNote": "ouvre le lien court de votre domaine",
-          "dns": "Votre DNS",
-          "dnsNote": "un enregistrement CNAME",
-          "record": "qr.example.com  CNAME → QRdx",
-          "qrdx": "QRdx",
-          "qrdxNote": "répond pour votre domaine, en HTTPS",
-          "destination": "Destination",
-          "destinationNote": "les règles du code s’appliquent comme d’habitude",
-          "footnote": "Configurez l’enregistrement une seule fois ; QRdx le vérifie, puis tous les codes de ce domaine fonctionnent."
-        },
-        "webhook-delivery": {
-          "title": "Fonctionnement de l’envoi d’un webhook : QRdx envoie l’événement par POST à votre endpoint avec une signature ; une réponse 2xx le marque comme livré, toute autre réponse entraîne de nouvelles tentatives selon un calendrier espacé, puis il est marqué comme échoué après huit tentatives.",
-          "event": "Événement",
-          "eventNote": "scan.created, form.submitted…",
-          "post": "POST vers votre endpoint",
-          "postNote": "corps JSON, en-tête X-QRdx-Signature",
-          "delivered": "Livré",
-          "deliveredNote": "toute réponse 2xx",
-          "retry": "Réessayé",
-          "retryNote": "délai dépassé ou autre réponse",
-          "schedule": "1 min · 4 min · 16 min · 1 h · 4 h · 17 h · 24 h",
-          "failed": "Échoué",
-          "failedNote": "après 8 tentatives ; relancez-le à la main",
-          "footnote": "Chaque tentative est listée sur la page de l’endpoint, avec la réponse reçue."
-        },
-        "image-api": {
-          "title": "Fonctionnement de l’Image API pour créer un code : une requête GET avec le contenu et le style, QRdx encode les données, génère le design et répond avec une image SVG, PNG, WebP ou EPS que n’importe quelle page peut intégrer.",
-          "request": "GET /v1/qr",
-          "requestNote": "données, taille, couleurs, style…",
-          "encode": "Encodage",
-          "encodeNote": "correction d’erreur, version",
-          "render": "Rendu",
-          "renderNote": "motifs, yeux, cadre, logo",
-          "response": "Image",
-          "responseNote": "SVG, PNG, WebP ou EPS",
-          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
-          "noKey": "Pas de clé, pas de quota : l’URL se place directement dans une balise image, sur n’importe quelle page.",
-          "footnote": "La même requête renvoie toujours les mêmes octets, les réponses sont donc mises en cache pendant un an."
-        },
-        "hosted-page-anatomy": {
-          "title": "Fonctionnement d’une page hébergée : vous disposez les blocs dans l’éditeur et vous publiez, QRdx sert la page, et le lien court du code imprimé ouvre la dernière version publiée sur un téléphone.",
-          "editor": "Éditeur",
-          "editorNote": "disposez les blocs de la page",
-          "publish": "Publier",
-          "page": "Page hébergée",
-          "pageNote": "servie par QRdx sur qrdx.dev/p/…",
-          "code": "QR code imprimé",
-          "codeNote": "contient le lien court de la page",
-          "scan": "un scan ouvre la page",
-          "block1": "En-tête",
-          "block2": "Liens",
-          "block3": "Menu",
-          "block4": "Formulaire",
-          "footnote": "Publiez à nouveau et chaque code déjà imprimé ouvre la nouvelle version."
-        },
-        "import-flow": {
-          "title": "Fonctionnement d’un import : les liens chez votre ancien fournisseur deviennent des QR codes dynamiques dans QRdx, et une étape facultative redirige chaque ancien lien vers son nouveau lien QRdx pour que les codes déjà imprimés continuent de fonctionner.",
-          "importing": "L’import",
-          "source": "Votre ancien fournisseur",
-          "sourceNote": "un compte connecté ou un fichier",
-          "import": "Importer",
-          "importNote": "choisir, prévisualiser, importer",
-          "codes": "QR codes dynamiques dans QRdx",
-          "codesNote": "destination, titre, tags, dossier",
-          "keeping": "Garder les codes imprimés fonctionnels (facultatif)",
-          "printed": "Un code que vous avez imprimé",
-          "printedNote": "contient l’ancien lien court",
-          "newLink": "Son nouveau lien QRdx",
-          "newLinkNote": "l’ancien lien pointe ici",
-          "destination": "Destination",
-          "destinationNote": "modifiée et comptée dans QRdx",
-          "footnote": "L’ancien compte doit rester actif pour que ses liens continuent de rediriger."
-        },
-        "precise-location-flow": {
-          "title": "Fonctionnement de la localisation précise : après un scan, la personne qui scanne est invitée à partager sa position ; une position partagée est arrondie à environ 100 m, enregistrée avec le scan et utilisée par les règles de zone, et la personne arrive à la destination qu’elle autorise ou non le partage.",
-          "scan": "Scan",
-          "scanNote": "ouvre le lien court",
-          "ask": "Partager votre position ?",
-          "askNote": "la personne choisit",
-          "skip": "Ignorer",
-          "allow": "Autoriser",
-          "destination": "Destination",
-          "destinationNote": "s’ouvre dans les deux cas",
-          "stored": "Point enregistré avec le scan",
-          "storedNote": "arrondi à environ 100 m",
-          "rule": "Règles de zone",
-          "ruleNote": "le routage intelligent peut l’utiliser",
-          "footnote": "Une personne qui ignore ou refuse le partage est tout de même comptée, avec le pays, la région et la ville issus du réseau."
-        },
-        "nfc-link": {
-          "title": "Fonctionnement d’un tag NFC avec un code : le tag contient le lien court du code suivi de ?nfc, de sorte qu’un contact passe par la même redirection qu’un scan et soit compté comme un contact.",
-          "tap": "Le téléphone touche le tag",
-          "tapNote": "y ouvre le lien",
-          "tag": "Tag NFC",
-          "tagNote": "contient le lien NFC",
-          "link": "Lien court avec ?nfc",
-          "linkNote": "la même redirection qu’un scan",
-          "example": "qrdx.dev/q/aB3dE5f?nfc",
-          "counted": "Compté comme un contact",
-          "countedNote": "avec les scans dans Analytics",
-          "destination": "Destination",
-          "destinationNote": "comme pour un scan",
-          "footnote": "Le QR code garde son propre lien : les codes déjà imprimés fonctionnent donc comme avant."
-        },
-        "file-delivery": {
-          "title": "Comment un fichier est stocké et servi : votre navigateur l’envoie directement dans le bucket de stockage, QRdx le vérifie et lui attribue son propre lien, que les pages, les codes et les visiteurs utilisent.",
-          "browser": "Votre navigateur",
-          "browserNote": "envoie le fichier directement",
-          "bucket": "Bucket de stockage",
-          "bucketNote": "reçoit le fichier envoyé",
-          "check": "QRdx vérifie le fichier",
-          "checkNote": "sa taille et son vrai type",
-          "link": "Le lien QRdx du fichier",
-          "linkNote": "qrdx.dev/api/files/…",
-          "visitor": "Pages, codes et visiteurs",
-          "visitorNote": "ouvrent le fichier via son lien",
-          "footnote": "Remplacer le fichier conserve le lien : rien de ce qui l’utilise n’a besoin de changer."
-        },
-        "tracking-paths": {
-          "title": "Les deux façons de suivre ce qui se passe après un scan : une page hébergée charge vos pixels une fois le consentement du visiteur demandé lorsque la loi l’exige, et une visite sur votre propre site web transporte un identifiant de scan signé que votre site renvoie à QRdx lorsque le visiteur convertit.",
-          "scan": "Scan",
-          "scanNote": "toujours compté",
-          "pagePath": "Un code qui ouvre une page hébergée",
-          "sitePath": "Un code qui ouvre votre site web",
-          "page": "Ouverture de la page",
-          "pageNote": "servie par QRdx",
-          "consent": "Consentement",
-          "consentNote": "demandé si nécessaire",
-          "pixels": "Vos pixels",
-          "pixelsNote": "se charge ensuite",
-          "site": "Ouverture du lien",
-          "siteNote": "qrdx_sid est ajouté",
-          "convert": "Le visiteur convertit",
-          "convertNote": "un achat, une inscription",
-          "report": "Conversion",
-          "reportNote": "envoyée à QRdx",
-          "footnote": "Les pixels font partie de Pro et Business ; le suivi des conversions fait partie de Business."
-        },
-        "client-portal-access": {
-          "title": "Comment le portail client limite ce que voit un client : vous cochez des dossiers dans l’invitation du client, et le portail ne lui montre que ces dossiers, en lecture seule, sous votre nom.",
-          "workspace": "Les dossiers de votre espace de travail",
-          "folder1": "Client A : menus",
-          "folder2": "Client A : événements",
-          "folder3": "Client B",
-          "folder4": "Interne",
-          "invite": "Invitation",
-          "inviteNote": "e-mail et dossiers cochés",
-          "portal": "Ce que voit le client",
-          "portalName": "Votre portail",
-          "readOnly": "Lecture seule, avec statistiques de scan",
-          "footnote": "Les clients ne sont pas membres de votre espace de travail et n’occupent pas de siège."
-        },
-        "self-hosting-stack": {
-          "title": "Les quatre services Docker Compose : une requête du navigateur atteint l’application, l’application envoie ses requêtes au proxy HTTP compatible Neon, le proxy dialogue avec Postgres, et une tâche de migration ponctuelle applique le schéma.",
-          "browser": "Navigateur",
-          "browserNote": "vos visiteurs",
-          "compose": "docker compose",
-          "app": "app",
-          "appNote": "le serveur QRdx",
-          "proxy": "db-proxy",
-          "proxyNote": "HTTP vers Postgres",
-          "db": "db",
-          "dbNote": "Postgres 16",
-          "migrate": "migrer",
-          "migrateNote": "applique le schéma une fois",
-          "footnote": "Avec Neon plutôt qu’un Postgres classique, l’application se connecte directement et n’a pas besoin de proxy."
-        },
-        "wont-scan-contrast": {
-          "title": "Le même QR code en double : foncé sur fond blanc, qui se scanne, et gris clair sur blanc, qui ne se scanne pas.",
-          "good": "Foncé sur clair : se scanne",
-          "bad": "Gris sur blanc : ne se scanne pas",
-          "ratio": "Contraste de {ratio}:1"
-        },
-        "wont-scan-quiet-zone": {
-          "title": "Le même QR code sur un visuel, en double : avec le visuel qui touche ses bords, ce que les scanners peuvent manquer, et avec quatre modules d’espace vide autour, qui se scanne.",
-          "bad": "Le visuel touche le code",
-          "badNote": "les scanners ne trouvent pas ses bords",
-          "good": "Espace vide autour",
-          "goodNote": "une zone de silence de quatre modules"
-        },
-        "wont-scan-print-size": {
-          "title": "Un QR code se scanne à environ dix fois sa largeur : un code de 2 cm à environ 20 cm, un code de 10 cm à environ 1 m.",
-          "cardWidth": "2 cm",
-          "cardDistance": "environ 20 cm",
-          "cardNote": "une carte tenue en main",
-          "posterWidth": "10 cm",
-          "posterDistance": "environ 1 m",
-          "posterNote": "une affiche sur un mur",
-          "footnote": "La distance de scan est d’environ dix fois la largeur du code."
-        },
-        "wont-scan-eyes": {
-          "title": "Formes des yeux d’angle : les yeux carrés, arrondis et en engrenage se scannent dans toutes les applications ; les yeux en cercle et en boucles ne sont pas reconnus par certaines applications de scan.",
-          "good": "Se scannent partout",
-          "bad": "Échouent dans certaines apps",
-          "square": "Carré",
-          "rounded": "Arrondi",
-          "gear": "Engrenage",
-          "circle": "Cercle",
-          "curly": "Bouclé"
-        }
-      }
     }
   },
   "common": {
@@ -1767,7 +1382,7 @@
       },
       "products": {
         "name": "Codes produit",
-        "detail": "Numéros EAN/UPC et données GS1 (GTIN, lot, péremption), y compris GS1 Digital Link."
+        "detail": "Numéros EAN, UPC et ITF-14 et données GS1 (GTIN, lot, date de péremption), y compris GS1 Digital Link."
       },
       "text": {
         "name": "Texte brut",
@@ -2419,6 +2034,10 @@
       "code128Chars": "Code 128 accepte ici les lettres ASCII simples, les chiffres, les espaces et les symboles. Non autorisés : {chars}",
       "code39Chars": "Code 39 n’accepte que les lettres majuscules, les chiffres, les espaces et - . $ / + % . Non autorisés : {chars}",
       "code39Lowercase": "Code 39 n’a pas de lettres minuscules. Utilisez des majuscules, ou Code 128 pour mélanger majuscules et minuscules.",
+      "code93Chars": "Code 93 n’accepte que les majuscules, les chiffres, les espaces et les caractères - . $ / + %. Caractères non autorisés : {chars}",
+      "code93Lowercase": "Ici, Code 93 n’accepte pas les minuscules. Utilisez des majuscules, ou Code 128 pour mélanger majuscules et minuscules.",
+      "codabarStartStop": "Codabar commence et se termine par A, B, C ou D, avec au moins un caractère entre les deux, par exemple A40156B.",
+      "codabarChars": "Codabar accepte les chiffres et les caractères - $ : / . + entre ses lettres de début et de fin. Caractères non autorisés : {chars}",
       "gs1Enter": "Saisissez les identifiants d’application entre parenthèses avec leurs valeurs, par ex. (01)09501101530003.",
       "gs1Start": "Commencez par un identifiant d’application entre parenthèses, par ex. (01) pour un GTIN, puis sa valeur.",
       "gs1Brackets": "Les parenthèses ne correspondent pas : écrivez chaque AI sous la forme (chiffres), suivi de sa valeur.",
@@ -2556,8 +2175,8 @@
         "body": "Nous remplissons votre questionnaire de sécurité et vous envoyons un exemplaire signé de l’avenant relatif au traitement des données."
       },
       "selfHost": {
-        "title": "Authentification unique et journal d’audit en auto-hébergement",
-        "body": "QRdx est open source, mais l’authentification unique et le journal d’audit relèvent de la licence commerciale QRdx. Un contrat Enterprise vous permet de les exécuter sur votre propre serveur avec une clé de licence."
+        "title": "Fonctions Business en auto-hébergement",
+        "body": "QRdx est open source, mais l’authentification unique, le journal d’audit, le portail client et les rapports clients, les pages en marque blanche avec CSS personnalisé et le suivi des conversions relèvent de la licence commerciale QRdx. Un contrat Enterprise vous permet de les exécuter sur votre propre serveur avec une clé de licence."
       }
     },
     "limitsNote": "Sur qrdx.dev, les espaces de travail Enterprise ont les limites du forfait Business. Si vous avez besoin de plus dans un domaine, indiquez-le dans le formulaire.",
@@ -2584,7 +2203,7 @@
       },
       "sign": {
         "title": "Signez et payez sur facture",
-        "body": "Une fois le contrat signé, nous faisons passer votre espace de travail au forfait Business et vous envoyons la facture."
+        "body": "Une fois le contrat signé, nous envoyons la facture et faisons passer votre espace de travail sur qrdx.dev au plan Business. Si vous auto-hébergez QRdx, le contrat couvre aussi l’authentification unique, le journal d’audit, le portail client, les pages en marque blanche et le suivi des conversions sur votre propre serveur : nous vous envoyons une clé de licence pour QRDX_EE_LICENSE. Elle a une date d’expiration, et votre serveur la vérifie hors ligne."
       }
     },
     "formTitle": "Contactez-nous",
@@ -3330,7 +2949,7 @@
     "guaranteeTitle": "Les codes imprimés continuent de fonctionner",
     "guaranteeBody": "Avec la Garantie Never-Hostage, chaque QR code dynamique continue de rediriger sur tous les forfaits, y compris après une rétrogradation, un paiement échoué ou une résiliation. Les scans ne sont jamais mis en pause, et les personnes qui scannent ne voient jamais de publicité ni de page d’inscription QRdx. Dépasser une limite vous empêche seulement de créer de nouveaux codes.",
     "guaranteeLink": "Lire la garantie",
-    "openSourceBody": "La redirection, les statistiques et le reste de l’application sont open source : vous pouvez lire ce qui se passe à chaque scan ou l’exécuter sur votre propre serveur.",
+    "openSourceBody": "La redirection et les statistiques sont open source : vous pouvez lire ce qui se passe à chaque scan ou les exécuter sur votre propre serveur.",
     "openSourceLink": "Open source et auto-hébergement",
     "staticTitle": "Quand un QR code statique est le meilleur choix",
     "staticBody": "Seuls les liens peuvent être dynamiques : un QR code dynamique ouvre un site web ou une page hébergée. Les identifiants Wi-Fi, les cartes de contact enregistrées directement sur le téléphone et les codes de paiement bancaire doivent être des QR codes statiques, car le téléphone les lit à partir du motif lui-même. Les QR codes statiques sont gratuits et illimités, et ne nécessitent aucun compte.",
@@ -3376,8 +2995,8 @@
     "metaDescription": "QRdx est un générateur de QR code open source disponible sur GitHub. L’application est sous licence AGPL-3.0, et la bibliothèque React ainsi que la CLI sont sous licence MIT. Utilisez qrdx.dev gratuitement ou lancez votre propre copie.",
     "crumb": "Open source",
     "title": "Générateur de QR code open source",
-    "intro1": "QRdx est développé en public sur GitHub. L’application web qui fait tourner qrdx.dev, avec son éditeur, ses codes dynamiques, ses pages hébergées et ses statistiques de scan, est sous licence AGPL-3.0. La bibliothèque React, la CLI et les plugins sont sous licence MIT.",
-    "intro2": "Vous pouvez l’utiliser gratuitement sur qrdx.dev, lancer votre propre copie ou intégrer des QR codes à votre application grâce à la bibliothèque.",
+    "intro1": "QRdx est développé en public sur GitHub. L’application web qui fait tourner qrdx.dev, avec son éditeur, ses codes dynamiques, ses pages hébergées et ses statistiques de scan, est sous licence AGPL-3.0. La bibliothèque React, la CLI, les plugins, la skill d’agent et les composants shadcn/ui sont sous licence MIT. Les fonctionnalités Business (authentification unique de l’espace de travail, journal d’audit, portail client et rapports client, pages en marque blanche avec CSS personnalisé, et suivi des conversions) sont sous la licence commerciale QRdx.",
+    "intro2": "Vous pouvez l’utiliser gratuitement sur qrdx.dev, faire tourner votre propre copie ou intégrer des QR codes à votre application grâce à la bibliothèque. Créer des QR codes reste gratuit pour tous. Le projet se finance grâce aux plans Pro et Business et aux accords entreprise.",
     "facts": {
       "agpl": "Application AGPL-3.0",
       "mit": "Bibliothèque et CLI MIT",
@@ -3403,11 +3022,16 @@
       "cliBody": "Des QR codes stylisés depuis un terminal ou une tâche CI",
       "pluginsName": "Plugins",
       "pluginsBody": "L’extension Chrome, les plugins Figma, Raycast et Canva, et le reste du dossier des plugins",
+      "skillName": "Skill d’agent",
+      "skillBody": "generate-qr, qui apprend aux agents de code à créer des QR codes avec la CLI",
+      "registryName": "Composants shadcn/ui",
+      "registryBody": "Le QR code, le scanner et d’autres composants que npx shadcn add installe dans votre projet",
       "eeName": "Fonctions Business",
-      "eeBody": "Authentification unique de l’espace de travail et journal d’audit de l’espace de travail"
+      "eeBody": "Authentification unique de l’espace de travail, journal d’audit, portail client et rapports client, pages en marque blanche avec CSS personnalisé, et suivi des conversions"
     },
     "eeLicense": "Licence commerciale QRdx",
-    "eeNote": "Vous pouvez lire, tester et contribuer au code des dossiers ee, mais l’utiliser en production nécessite un accord écrit avec QRdx. Sur une instance auto-hébergée, ces deux fonctions restent désactivées tant que QRDX_EE_LICENSE n’est pas défini, et tout le reste fonctionne sans elles.",
+    "eeNote": "Vous pouvez lire le code des dossiers ee, le tester et y contribuer, mais l’utiliser en production nécessite un accord écrit avec QRdx. Sur une instance auto-hébergée, ces fonctionnalités restent désactivées tant que QRDX_EE_LICENSE ne contient pas une clé valide, que QRdx délivre avec l’accord et que votre serveur vérifie hors ligne. Tout le reste fonctionne sans elles.",
+    "eeAgreement": "Les accords entreprise couvrent leur exécution sur votre propre serveur : <link>contactez-nous via la page entreprise</link> ou écrivez à {email}.",
     "waysEyebrow": "Façons de l’utiliser",
     "waysTitle": "Choisissez comment l’exécuter",
     "ways": {
@@ -3441,8 +3065,10 @@
     "licenses": {
       "agplTitle": "L’application (AGPL-3.0)",
       "agplBody": "Vous pouvez l’exécuter, la modifier et l’héberger. Si vous exploitez une version modifiée comme service en réseau, vous devez en proposer le code source à ses utilisateurs sous la même licence.",
-      "mitTitle": "La bibliothèque, la CLI et les plugins (MIT)",
-      "mitBody": "Utilisez-les dans n’importe quel projet, y compris à code source fermé, tant que la mention de copyright et de licence reste avec le code. Les versions antérieures à qrdx 0.0.47 et @qrdx/cli 0.0.5 étaient sous AGPL-3.0-or-later.",
+      "mitTitle": "La bibliothèque et les outils (MIT)",
+      "mitBody": "La bibliothèque qrdx, la CLI, les plugins, la skill d’agent et les composants shadcn/ui. Utilisez-les dans n’importe quel projet, y compris à code source fermé, tant que la mention de copyright et de licence reste avec le code. Les versions antérieures à qrdx 0.0.47 et à @qrdx/cli 0.0.5 étaient sous AGPL-3.0-or-later.",
+      "eeTitle": "Fonctionnalités Business (licence commerciale QRdx)",
+      "eeBody": "Vous pouvez lire, modifier et tester le code des dossiers ee. Utiliser ces fonctionnalités Business en production sur votre propre serveur nécessite un accord écrit avec QRdx.",
       "trademarkTitle": "Le nom et le logo",
       "trademarkBody": "Le nom et le logo QRdx sont des marques. Un fork ou un service public créé à partir du code doit avoir son propre nom et son propre logo ; la <link>politique de marque</link> donne les détails."
     },
@@ -3474,11 +3100,11 @@
     "faqTitle": "Questions sur l’open source",
     "faq": {
       "openQuestion": "QRdx est-il vraiment open source ?",
-      "openAnswer": "Oui. Le code source est sur GitHub, l’application web est sous licence AGPL-3.0-or-later, et la bibliothèque qrdx, @qrdx/cli et les plugins sont sous licence MIT. Deux fonctionnalités Business, l’authentification unique de l’espace de travail et le journal d’audit, se trouvent dans des dossiers ee sous la QRdx Commercial License : vous pouvez lire ce code, mais l’utiliser en production nécessite un accord avec QRdx.",
+      "openAnswer": "Oui. Le code source est sur GitHub, l’application web est sous licence AGPL-3.0-or-later, et la bibliothèque qrdx, @qrdx/cli, les plugins, la skill d’agent et les composants shadcn/ui sont sous licence MIT. Les fonctionnalités Business (authentification unique de l’espace de travail, journal d’audit, portail client et rapports client, pages en marque blanche avec CSS personnalisé, et suivi des conversions) se trouvent dans des dossiers ee sous la licence commerciale QRdx : vous pouvez lire ce code, mais son utilisation en production nécessite un accord avec QRdx.",
       "githubQuestion": "Où trouver le code source de QRdx sur GitHub ?",
       "githubAnswer": "Sur github.com/qrdxinc/qrdx. C’est un seul monorepo avec l’application web, la bibliothèque qrdx, la CLI, les plugins et la documentation.",
       "freeQuestion": "QRdx est-il gratuit à auto-héberger ?",
-      "freeAnswer": "Oui. Il n’y a aucuns frais de licence ; vous ne payez que votre propre serveur et votre base de données. Une instance auto-hébergée gère les QR codes dynamiques, les pages hébergées et les statistiques de scan. L’authentification unique et le journal d’audit restent désactivés sans clé de licence QRdx.",
+      "freeAnswer": "Oui. L’application n’entraîne aucuns frais de licence ; vous ne payez que votre propre serveur et votre base de données. Une instance auto-hébergée gère les codes dynamiques, les pages hébergées et les statistiques de scan. Les fonctionnalités Business des dossiers ee font exception : l’authentification unique, le journal d’audit, le portail client, les pages en marque blanche et le suivi des conversions restent désactivés tant que QRDX_EE_LICENSE ne contient pas une clé valide, que QRdx délivre avec un accord entreprise et que votre serveur vérifie hors ligne. Les utiliser en production nécessite cet accord.",
       "needQuestion": "De quoi ai-je besoin pour auto-héberger QRdx ?",
       "needAnswer": "Il vous faut Docker avec Compose v2, ou Node.js 22 et Bun 1.4 pour l’installation manuelle, ainsi qu’une base de données Postgres : celle que lance docker-compose.yml, ou Neon. Définissez NEXT_PUBLIC_APP_URL, DATABASE_URL et BETTER_AUTH_SECRET, puis offrez un moyen de se connecter avec une application OAuth GitHub ou Google, ou avec des codes envoyés par e-mail via Resend.",
       "closedQuestion": "Puis-je utiliser la bibliothèque de QR codes dans une application propriétaire ?",
@@ -8251,6 +7877,7 @@
         "clients": {
           "page": {
             "theClientPortalIsntAvailable": "Le portail client n’est pas encore disponible sur ce serveur.",
+            "theClientPortalIsOff": "Le portail client n’est pas disponible sur ce serveur : vos clients ne peuvent donc pas y accéder. Vous pouvez toujours les supprimer.",
             "theClientPortalIsPart": "Le portail client fait partie de {business}",
             "inviteAClientByEmail": "Invitez un client par e-mail et choisissez les dossiers qu’il voit : ses codes, ses statistiques de scan et ses pages hébergées, en lecture seule, à votre nom, avec votre logo et votre couleur.",
             "askAWorkspaceOwnerOr": "Demandez à un propriétaire de l’espace de travail ou à un membre chargé de la facturation de passer à l’offre supérieure.",

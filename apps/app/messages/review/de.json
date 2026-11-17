@@ -763,6 +763,10 @@
     "source": "f68c974d682c",
     "status": "machine"
   },
+  "localeSwitcher.englishOnlyDesigner": {
+    "source": "6d0ede01c088",
+    "status": "machine"
+  },
   "cta.title": {
     "source": "97faf67ad6ce",
     "status": "machine"
@@ -1228,7 +1232,7 @@
     "status": "machine"
   },
   "home.features.developers.description": {
-    "source": "846fbd914726",
+    "source": "7302321a694e",
     "status": "machine"
   },
   "home.features.developers.link": {
@@ -1341,6 +1345,10 @@
   },
   "home.faq.items.openSource.question": {
     "source": "93fd8efdb92f",
+    "status": "machine"
+  },
+  "home.faq.items.openSource.answer": {
+    "source": "3067b8fcafc4",
     "status": "machine"
   },
   "home.faq.items.api.question": {
@@ -2104,7 +2112,7 @@
     "status": "machine"
   },
   "pricing.faq.items.selfHost.answer": {
-    "source": "8c5477b33a21",
+    "source": "0eee0292bbac",
     "status": "machine"
   },
   "pricing.faq.items.nonprofit.question": {
@@ -2228,7 +2236,7 @@
     "status": "machine"
   },
   "pricing.enterprise.adds.selfHost": {
-    "source": "c13894e74f3b",
+    "source": "b66df2df53ae",
     "status": "machine"
   },
   "pricing.enterprise.security": {
@@ -2293,1194 +2301,6 @@
   },
   "pricing.nonprofit.failed": {
     "source": "1342d6313653",
-    "status": "machine"
-  },
-  "docs.meta.titleSuffix": {
-    "source": "fe4691e307c7",
-    "status": "machine"
-  },
-  "docs.breadcrumb.home": {
-    "source": "3a78695388b3",
-    "status": "machine"
-  },
-  "docs.breadcrumb.docs": {
-    "source": "7af023c43013",
-    "status": "machine"
-  },
-  "docs.untranslated.title": {
-    "source": "c8dbd7a8cabe",
-    "status": "machine"
-  },
-  "docs.untranslated.body": {
-    "source": "adc86b84c4ea",
-    "status": "machine"
-  },
-  "docs.client.actions.copyMarkdown": {
-    "source": "47ffe39e7556",
-    "status": "machine"
-  },
-  "docs.client.actions.open": {
-    "source": "ed077f3d8125",
-    "status": "machine"
-  },
-  "docs.client.actions.openIn": {
-    "source": "f30fd61ae722",
-    "status": "machine"
-  },
-  "docs.client.actions.askPrompt": {
-    "source": "619e3673b5ff",
-    "status": "machine"
-  },
-  "docs.client.search.jumpTo": {
-    "source": "af52001d68d3",
-    "status": "machine"
-  },
-  "docs.client.language.label": {
-    "source": "f6b558b05684",
-    "status": "machine"
-  },
-  "docs.client.language.note": {
-    "source": "03ef886d4fb4",
-    "status": "machine"
-  },
-  "docs.help.search": {
-    "source": "b706ef91638d",
-    "status": "machine"
-  },
-  "docs.help.stillStuck.title": {
-    "source": "834c08cbe8b2",
-    "status": "machine"
-  },
-  "docs.help.stillStuck.body": {
-    "source": "fafd93b01e8e",
-    "status": "machine"
-  },
-  "docs.help.stillStuck.widget": {
-    "source": "8732a1194302",
-    "status": "machine"
-  },
-  "docs.help.stillStuck.github": {
-    "source": "d20c2ea01cb2",
-    "status": "machine"
-  },
-  "docs.help.stillStuck.contact": {
-    "source": "53a6bccefa78",
-    "status": "machine"
-  },
-  "docs.notFound.title": {
-    "source": "fc2df991dde0",
-    "status": "machine"
-  },
-  "docs.notFound.body": {
-    "source": "fb5d44895901",
-    "status": "machine"
-  },
-  "docs.notFound.places.gettingStarted.title": {
-    "source": "831d0f72d242",
-    "status": "machine"
-  },
-  "docs.notFound.places.gettingStarted.description": {
-    "source": "49a20b634f66",
-    "status": "machine"
-  },
-  "docs.notFound.places.dynamic.title": {
-    "source": "6089067b0798",
-    "status": "machine"
-  },
-  "docs.notFound.places.dynamic.description": {
-    "source": "1fe60eeb86d0",
-    "status": "machine"
-  },
-  "docs.notFound.places.restApi.title": {
-    "source": "41a52587276c",
-    "status": "machine"
-  },
-  "docs.notFound.places.restApi.description": {
-    "source": "1cc1f70ae2bc",
-    "status": "machine"
-  },
-  "docs.notFound.places.components.title": {
-    "source": "a150ce221602",
-    "status": "machine"
-  },
-  "docs.notFound.places.components.description": {
-    "source": "c02a102cb413",
-    "status": "machine"
-  },
-  "docs.shell.header.docs": {
-    "source": "7af023c43013",
-    "status": "machine"
-  },
-  "docs.shell.header.dashboard": {
-    "source": "67b696468610",
-    "status": "machine"
-  },
-  "docs.shell.header.github": {
-    "source": "31da14f57884",
-    "status": "machine"
-  },
-  "docs.shell.actions.copyPage": {
-    "source": "4104018941ae",
-    "status": "machine"
-  },
-  "docs.shell.actions.copied": {
-    "source": "8d525e5f158b",
-    "status": "machine"
-  },
-  "docs.shell.actions.more": {
-    "source": "4ac01872c246",
-    "status": "machine"
-  },
-  "docs.shell.actions.copyMarkdown": {
-    "source": "0d998dc31617",
-    "status": "machine"
-  },
-  "docs.shell.actions.viewMarkdown": {
-    "source": "17d36a505f97",
-    "status": "machine"
-  },
-  "docs.shell.actions.mcp": {
-    "source": "48d9ecf40dc1",
-    "status": "machine"
-  },
-  "docs.shell.feedback.question": {
-    "source": "c8f62fcc6b3a",
-    "status": "machine"
-  },
-  "docs.shell.feedback.yes": {
-    "source": "85a39ab345d6",
-    "status": "machine"
-  },
-  "docs.shell.feedback.no": {
-    "source": "1ea442a134b2",
-    "status": "machine"
-  },
-  "docs.shell.feedback.thanks": {
-    "source": "bc4c044ea84c",
-    "status": "machine"
-  },
-  "docs.shell.feedback.edit": {
-    "source": "073fd1036ab1",
-    "status": "machine"
-  },
-  "docs.shell.feedback.report": {
-    "source": "53de38dec81e",
-    "status": "machine"
-  },
-  "docs.shell.feedback.issueTitle": {
-    "source": "e88050663a26",
-    "status": "machine"
-  },
-  "docs.shell.feedback.issueBody": {
-    "source": "b26edd625f2a",
-    "status": "machine"
-  },
-  "docs.shell.notFound.search": {
-    "source": "3c1004b71f0f",
-    "status": "machine"
-  },
-  "docs.shell.notFound.sections": {
-    "source": "e0282060ed09",
-    "status": "machine"
-  },
-  "docs.shell.code.copy": {
-    "source": "49a0053f3b0d",
-    "status": "machine"
-  },
-  "docs.shell.code.copied": {
-    "source": "8d525e5f158b",
-    "status": "machine"
-  },
-  "docs.shell.video.play": {
-    "source": "64010fec3cf5",
-    "status": "machine"
-  },
-  "docs.shell.video.pause": {
-    "source": "276c419a574f",
-    "status": "machine"
-  },
-  "docs.shell.video.reducedMotion": {
-    "source": "e285fa12b655",
-    "status": "machine"
-  },
-  "docs.shell.plan.title": {
-    "source": "0bf0fb69b7c0",
-    "status": "machine"
-  },
-  "docs.shell.plan.or": {
-    "source": "8705becfbed6",
-    "status": "machine"
-  },
-  "docs.shell.plan.body": {
-    "source": "0012b63de521",
-    "status": "machine"
-  },
-  "docs.shell.plan.link": {
-    "source": "eafe3bbcbe19",
-    "status": "machine"
-  },
-  "docs.shell.plan.pro": {
-    "source": "957b0b874524",
-    "status": "machine"
-  },
-  "docs.shell.plan.business": {
-    "source": "76f68a75f01e",
-    "status": "machine"
-  },
-  "docs.shell.plan.enterprise": {
-    "source": "3fbe5ed156f1",
-    "status": "machine"
-  },
-  "docs.ui.search": {
-    "source": "49c266baaaa7",
-    "status": "machine"
-  },
-  "docs.ui.searchPlaceholder": {
-    "source": "49c266baaaa7",
-    "status": "machine"
-  },
-  "docs.ui.openSearch": {
-    "source": "9c3451e933c5",
-    "status": "machine"
-  },
-  "docs.ui.closeSearch": {
-    "source": "713e7816521d",
-    "status": "machine"
-  },
-  "docs.ui.noResults": {
-    "source": "7d7e36058609",
-    "status": "machine"
-  },
-  "docs.ui.searchFailed": {
-    "source": "01ee45e5e189",
-    "status": "machine"
-  },
-  "docs.ui.onThisPage": {
-    "source": "b5658fc8edda",
-    "status": "machine"
-  },
-  "docs.ui.noHeadings": {
-    "source": "877e7e5d5975",
-    "status": "machine"
-  },
-  "docs.ui.tableOfContents": {
-    "source": "a9360e0212a4",
-    "status": "machine"
-  },
-  "docs.ui.lastUpdated": {
-    "source": "103e2a9f3f94",
-    "status": "machine"
-  },
-  "docs.ui.previousPage": {
-    "source": "a163aaa22cf7",
-    "status": "machine"
-  },
-  "docs.ui.nextPage": {
-    "source": "6ead5dfdc11e",
-    "status": "machine"
-  },
-  "docs.ui.copyCode": {
-    "source": "8195c1caa503",
-    "status": "machine"
-  },
-  "docs.ui.copiedCode": {
-    "source": "75a5d50a9fe9",
-    "status": "machine"
-  },
-  "docs.ui.copyAnchor": {
-    "source": "6999a51263ff",
-    "status": "machine"
-  },
-  "docs.ui.copiedAnchor": {
-    "source": "2576ae8fb339",
-    "status": "machine"
-  },
-  "docs.ui.copyLink": {
-    "source": "724e78a3254c",
-    "status": "machine"
-  },
-  "docs.ui.copiedLink": {
-    "source": "b9173920bbf8",
-    "status": "machine"
-  },
-  "docs.ui.toggleMenu": {
-    "source": "f2fca5f98405",
-    "status": "machine"
-  },
-  "docs.ui.toggleTheme": {
-    "source": "de148bf17210",
-    "status": "machine"
-  },
-  "docs.ui.themeLight": {
-    "source": "dbcd5e7bb7a0",
-    "status": "machine"
-  },
-  "docs.ui.themeDark": {
-    "source": "60acc53f13a5",
-    "status": "machine"
-  },
-  "docs.ui.themeSystem": {
-    "source": "6725e7bbcd28",
-    "status": "machine"
-  },
-  "docs.ui.openSidebar": {
-    "source": "ef84dd64b90f",
-    "status": "machine"
-  },
-  "docs.ui.closeSidebar": {
-    "source": "8896c14d09e7",
-    "status": "machine"
-  },
-  "docs.ui.collapseSidebar": {
-    "source": "9da0bf42ad07",
-    "status": "machine"
-  },
-  "docs.ui.typeTableProp": {
-    "source": "57d968860fab",
-    "status": "machine"
-  },
-  "docs.ui.typeTableType": {
-    "source": "baaddf70fb5d",
-    "status": "machine"
-  },
-  "docs.ui.typeTableDefault": {
-    "source": "21b111cbfe6e",
-    "status": "machine"
-  },
-  "docs.ui.typeTableParameters": {
-    "source": "e68b36b17cbd",
-    "status": "machine"
-  },
-  "docs.ui.typeTableReturns": {
-    "source": "16dcaa923f16",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.title": {
-    "source": "8b9202b73da3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.scan": {
-    "source": "ea1c510d1ddb",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.scanNote": {
-    "source": "944ac5dcaa45",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.shortLink": {
-    "source": "f44e613ad8ad",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.shortLinkNote": {
-    "source": "db4b2deb9712",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.rules": {
-    "source": "4228aeb07c41",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.rulesNote": {
-    "source": "40d035859db6",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.destination": {
-    "source": "293d404a500f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.destinationNote": {
-    "source": "2a5adbdae891",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.recorded": {
-    "source": "97f0d8762a55",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.dynamic-redirect.recordedNote": {
-    "source": "771a354d1361",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.title": {
-    "source": "80b3cefd65b4",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.static": {
-    "source": "eb169d5fd4a0",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.dynamic": {
-    "source": "92c3278451d4",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.printed": {
-    "source": "a8cbee2f834f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.printedNote": {
-    "source": "083c23eb998a",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.content": {
-    "source": "94e55bf68090",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.contentNote": {
-    "source": "420fb7be6728",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.staticEnd": {
-    "source": "0155b73c1388",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.shortLink": {
-    "source": "f44e613ad8ad",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.shortLinkNote": {
-    "source": "567b15d458af",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.destination": {
-    "source": "293d404a500f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.static-vs-dynamic.destinationNote": {
-    "source": "8a728698b53b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.title": {
-    "source": "0c9486aedd1a",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.scan": {
-    "source": "d2f1dc5a6ead",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.scanNote": {
-    "source": "76f6616fc7f0",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.rule1": {
-    "source": "ca5877abe462",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.rule2": {
-    "source": "76cca9e13121",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.rule3": {
-    "source": "c0b0c6c44c37",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.firstMatch": {
-    "source": "c0556de83c71",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.firstMatchNote": {
-    "source": "b02f939aed9b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.noMatch": {
-    "source": "47619bea13d4",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.noMatchNote": {
-    "source": "7d6ccff785c4",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.smart-routing.footnote": {
-    "source": "cd4bd38f3b66",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.title": {
-    "source": "472c5430a6c9",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.scan": {
-    "source": "ea1c510d1ddb",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.scanNote": {
-    "source": "c964251d7880",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.dns": {
-    "source": "c82110d993ff",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.dnsNote": {
-    "source": "d350ba9ad9f0",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.record": {
-    "source": "4a8e1434c657",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.qrdx": {
-    "source": "fbb7e1cb8111",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.qrdxNote": {
-    "source": "6311a10df80a",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.destination": {
-    "source": "293d404a500f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.destinationNote": {
-    "source": "23117f4f49f6",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.custom-domain.footnote": {
-    "source": "d462f065489b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.title": {
-    "source": "18cacf5a7c8d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.event": {
-    "source": "4e1f49a9c8ae",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.eventNote": {
-    "source": "a35e0981b64e",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.post": {
-    "source": "7b0068a03b17",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.postNote": {
-    "source": "933d3d72b947",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.delivered": {
-    "source": "906115657390",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.deliveredNote": {
-    "source": "c02cf70e5ce8",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.retry": {
-    "source": "2146f24a9115",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.retryNote": {
-    "source": "d1f4974c42e3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.schedule": {
-    "source": "f7cec5b11603",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.failed": {
-    "source": "031a8f0f659d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.failedNote": {
-    "source": "4ca5bd897230",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.webhook-delivery.footnote": {
-    "source": "47c8cd3d0ffc",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.title": {
-    "source": "20c5e08a7537",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.request": {
-    "source": "2ff551289b10",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.requestNote": {
-    "source": "25d42fefcf9a",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.encode": {
-    "source": "23389a1f5476",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.encodeNote": {
-    "source": "bcffce847511",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.render": {
-    "source": "6d89eb7d0938",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.renderNote": {
-    "source": "2182f6045aed",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.response": {
-    "source": "1aa4cb0bcca7",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.responseNote": {
-    "source": "d5b404dd94d3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.example": {
-    "source": "da0bb5dde1a8",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.noKey": {
-    "source": "ee7c659c4478",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.image-api.footnote": {
-    "source": "1874bf1c43a0",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.title": {
-    "source": "93c0dd9de2ac",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.editor": {
-    "source": "936a161c3931",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.editorNote": {
-    "source": "b7f5321981ed",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.publish": {
-    "source": "859390eb495b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.page": {
-    "source": "26b569e208d6",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.pageNote": {
-    "source": "4cb3279125ab",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.code": {
-    "source": "d970bf1a0d99",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.codeNote": {
-    "source": "12d694ec488f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.scan": {
-    "source": "f94b986738a7",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.block1": {
-    "source": "ba5caa4285a8",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.block2": {
-    "source": "9024c197d849",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.block3": {
-    "source": "99af6606ff9d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.block4": {
-    "source": "2e0e960ab320",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.hosted-page-anatomy.footnote": {
-    "source": "ba600acf169b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.title": {
-    "source": "e998efe09bd1",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.importing": {
-    "source": "5cddfe2bcac9",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.source": {
-    "source": "5ae0c96060fb",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.sourceNote": {
-    "source": "e3864bbec85a",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.import": {
-    "source": "2cff9baabf56",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.importNote": {
-    "source": "a51dfbf49b45",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.codes": {
-    "source": "9abc98b72579",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.codesNote": {
-    "source": "073118311839",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.keeping": {
-    "source": "986b40196760",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.printed": {
-    "source": "6fc5d6217932",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.printedNote": {
-    "source": "893b0adff969",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.newLink": {
-    "source": "33bfd64f8bc7",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.newLinkNote": {
-    "source": "edb794a602ee",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.destination": {
-    "source": "293d404a500f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.destinationNote": {
-    "source": "b617fefef502",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.import-flow.footnote": {
-    "source": "42b10c7e0123",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.title": {
-    "source": "dae38b64c032",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.scan": {
-    "source": "ea1c510d1ddb",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.scanNote": {
-    "source": "115794794596",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.ask": {
-    "source": "7b356f0145e7",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.askNote": {
-    "source": "022cb53f1cd3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.skip": {
-    "source": "28d03596d24e",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.allow": {
-    "source": "e213c161d5ce",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.destination": {
-    "source": "293d404a500f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.destinationNote": {
-    "source": "fe7adad0c49c",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.stored": {
-    "source": "c0ffa6a5be89",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.storedNote": {
-    "source": "6cd47ee5bf59",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.rule": {
-    "source": "15aec128dd00",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.ruleNote": {
-    "source": "b588f37c30b7",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.precise-location-flow.footnote": {
-    "source": "f9ed2812d969",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.title": {
-    "source": "1432a3c68dc2",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.tap": {
-    "source": "0bbdb0f3b99c",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.tapNote": {
-    "source": "5c05b68f11ac",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.tag": {
-    "source": "171b1a3125b0",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.tagNote": {
-    "source": "0f7efe5ced03",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.link": {
-    "source": "3732912142f5",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.linkNote": {
-    "source": "874aaf4d67b5",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.example": {
-    "source": "12ee381c417b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.counted": {
-    "source": "e62cfc55559b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.countedNote": {
-    "source": "e11096537686",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.destination": {
-    "source": "293d404a500f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.destinationNote": {
-    "source": "8028dec1e39d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.nfc-link.footnote": {
-    "source": "b2c2af72aaca",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.title": {
-    "source": "df311f077fee",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.browser": {
-    "source": "42d3cbd0ef8d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.browserNote": {
-    "source": "f7804165371e",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.bucket": {
-    "source": "ad9f53d86d6e",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.bucketNote": {
-    "source": "1fcb746d391f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.check": {
-    "source": "41781ab2d075",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.checkNote": {
-    "source": "735cb71b14d2",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.link": {
-    "source": "6b8be5cc6cda",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.linkNote": {
-    "source": "00c0368bb713",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.visitor": {
-    "source": "6904825c6d32",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.visitorNote": {
-    "source": "7f7d3c6cbcd4",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.file-delivery.footnote": {
-    "source": "8e163f295326",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.title": {
-    "source": "89203a9a817d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.scan": {
-    "source": "ea1c510d1ddb",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.scanNote": {
-    "source": "98ee647efc58",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.pagePath": {
-    "source": "7f84e32bead1",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.sitePath": {
-    "source": "faf0f6b0b5de",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.page": {
-    "source": "4c6c9f09145d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.pageNote": {
-    "source": "a3e34a375712",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.consent": {
-    "source": "d37e0cd00f18",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.consentNote": {
-    "source": "36b4c3a8a505",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.pixels": {
-    "source": "35c2ee910e9f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.pixelsNote": {
-    "source": "e8768932345c",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.site": {
-    "source": "d3a75962d980",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.siteNote": {
-    "source": "e5c23b54dba5",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.convert": {
-    "source": "cf19ad427969",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.convertNote": {
-    "source": "8c3d028769a2",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.report": {
-    "source": "1f04a8531a46",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.reportNote": {
-    "source": "c008af655caa",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.tracking-paths.footnote": {
-    "source": "8533b2b184a0",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.title": {
-    "source": "d74513420612",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.workspace": {
-    "source": "159a6629546f",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.folder1": {
-    "source": "7e5c7b9b77c7",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.folder2": {
-    "source": "6fedbf565e98",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.folder3": {
-    "source": "4d34e9db92b3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.folder4": {
-    "source": "2ea1842b445b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.invite": {
-    "source": "af4ea02852eb",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.inviteNote": {
-    "source": "768368c9814d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.portal": {
-    "source": "6879433990b3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.portalName": {
-    "source": "39fe467fd6d2",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.readOnly": {
-    "source": "aa05d1a165d2",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.client-portal-access.footnote": {
-    "source": "ae3d57567041",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.title": {
-    "source": "69b5db2fe477",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.browser": {
-    "source": "d31de1a5c5c8",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.browserNote": {
-    "source": "0df095a85cb8",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.compose": {
-    "source": "75ddf920195c",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.app": {
-    "source": "a172cedcae47",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.appNote": {
-    "source": "4babaa556bde",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.proxy": {
-    "source": "599b6b79f991",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.proxyNote": {
-    "source": "8e8908e1b0a6",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.db": {
-    "source": "7bdc25d1694e",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.dbNote": {
-    "source": "eec7e169d5b3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.migrate": {
-    "source": "3bc801a33ea8",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.migrateNote": {
-    "source": "8f0a4dc7719a",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.self-hosting-stack.footnote": {
-    "source": "18c142776e1e",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-contrast.title": {
-    "source": "133f5265891c",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-contrast.good": {
-    "source": "91448ef731b1",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-contrast.bad": {
-    "source": "9e5cbe13fb36",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-contrast.ratio": {
-    "source": "0d3441bb3673",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-quiet-zone.title": {
-    "source": "ffa93d940255",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-quiet-zone.bad": {
-    "source": "139720d56e49",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-quiet-zone.badNote": {
-    "source": "c49717036555",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-quiet-zone.good": {
-    "source": "d4b69dae6014",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-quiet-zone.goodNote": {
-    "source": "0d30c799010d",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.title": {
-    "source": "ce63c3d60fae",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.cardWidth": {
-    "source": "b79f6c641c3b",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.cardDistance": {
-    "source": "c0db18a498b9",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.cardNote": {
-    "source": "de22f64e1518",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.posterWidth": {
-    "source": "5a8bb84c72fb",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.posterDistance": {
-    "source": "54d9ca2cf569",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.posterNote": {
-    "source": "4900709479a8",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-print-size.footnote": {
-    "source": "e60d3248854c",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.title": {
-    "source": "32be03b621b7",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.good": {
-    "source": "a8d6844b0ec3",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.bad": {
-    "source": "dd87cefcf260",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.square": {
-    "source": "c11092bc0861",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.rounded": {
-    "source": "0a62cd800f27",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.gear": {
-    "source": "d6eaec65e742",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.circle": {
-    "source": "b93d3bcecff5",
-    "status": "machine"
-  },
-  "docs.shots.diagrams.wont-scan-eyes.curly": {
-    "source": "71142c83f114",
     "status": "machine"
   },
   "common.breadcrumb": {
@@ -5124,7 +3944,7 @@
     "status": "machine"
   },
   "scan.types.products.detail": {
-    "source": "9687676a3d7d",
+    "source": "36c7184d0b5b",
     "status": "machine"
   },
   "scan.types.text.name": {
@@ -7231,6 +6051,22 @@
     "source": "96f655f4da3d",
     "status": "machine"
   },
+  "barcodeTool.issues.code93Chars": {
+    "source": "0bd9c0fbac81",
+    "status": "machine"
+  },
+  "barcodeTool.issues.code93Lowercase": {
+    "source": "4eb559dbdc63",
+    "status": "machine"
+  },
+  "barcodeTool.issues.codabarStartStop": {
+    "source": "32a30721c44d",
+    "status": "machine"
+  },
+  "barcodeTool.issues.codabarChars": {
+    "source": "be4879106127",
+    "status": "machine"
+  },
   "barcodeTool.issues.gs1Enter": {
     "source": "389cb8feffc5",
     "status": "machine"
@@ -7560,11 +6396,11 @@
     "status": "machine"
   },
   "enterprise.contract.selfHost.title": {
-    "source": "5b4655e8e804",
+    "source": "bad17af3d27c",
     "status": "machine"
   },
   "enterprise.contract.selfHost.body": {
-    "source": "42e6f874036d",
+    "source": "801224e1f60a",
     "status": "machine"
   },
   "enterprise.limitsNote": {
@@ -7632,7 +6468,7 @@
     "status": "machine"
   },
   "enterprise.buy.sign.body": {
-    "source": "071331f7eb5b",
+    "source": "aaf851a6e6d5",
     "status": "machine"
   },
   "enterprise.formTitle": {
@@ -9744,7 +8580,7 @@
     "status": "machine"
   },
   "dynamicQrCode.openSourceBody": {
-    "source": "52ea01bfa591",
+    "source": "82e34ca96e7a",
     "status": "machine"
   },
   "dynamicQrCode.openSourceLink": {
@@ -9904,11 +8740,11 @@
     "status": "machine"
   },
   "openSource.intro1": {
-    "source": "987b6782a46a",
+    "source": "fc8ad0d2c4fc",
     "status": "machine"
   },
   "openSource.intro2": {
-    "source": "246de1afcab9",
+    "source": "3816c063b4bd",
     "status": "machine"
   },
   "openSource.facts.agpl": {
@@ -9991,12 +8827,28 @@
     "source": "83fa6a36f67c",
     "status": "machine"
   },
+  "openSource.parts.skillName": {
+    "source": "fa3b8f53763d",
+    "status": "machine"
+  },
+  "openSource.parts.skillBody": {
+    "source": "19c60c708ef9",
+    "status": "machine"
+  },
+  "openSource.parts.registryName": {
+    "source": "2cd4f6bdf177",
+    "status": "machine"
+  },
+  "openSource.parts.registryBody": {
+    "source": "0692a6937c54",
+    "status": "machine"
+  },
   "openSource.parts.eeName": {
     "source": "a2bb3445855d",
     "status": "machine"
   },
   "openSource.parts.eeBody": {
-    "source": "1eeff098c7c5",
+    "source": "91849669e756",
     "status": "machine"
   },
   "openSource.eeLicense": {
@@ -10004,7 +8856,11 @@
     "status": "machine"
   },
   "openSource.eeNote": {
-    "source": "4a6fedd7f2d1",
+    "source": "61a81b01dc71",
+    "status": "machine"
+  },
+  "openSource.eeAgreement": {
+    "source": "dce9d03ef5f9",
     "status": "machine"
   },
   "openSource.waysEyebrow": {
@@ -10112,11 +8968,19 @@
     "status": "machine"
   },
   "openSource.licenses.mitTitle": {
-    "source": "dc2d09c52ac3",
+    "source": "0f5400d2bd37",
     "status": "machine"
   },
   "openSource.licenses.mitBody": {
-    "source": "10218abbcede",
+    "source": "dab226ecd857",
+    "status": "machine"
+  },
+  "openSource.licenses.eeTitle": {
+    "source": "8849c7ccf9a3",
+    "status": "machine"
+  },
+  "openSource.licenses.eeBody": {
+    "source": "e6d348f4784e",
     "status": "machine"
   },
   "openSource.licenses.trademarkTitle": {
@@ -10220,7 +9084,7 @@
     "status": "machine"
   },
   "openSource.faq.openAnswer": {
-    "source": "703ac6c32b02",
+    "source": "b699db1198f2",
     "status": "machine"
   },
   "openSource.faq.githubQuestion": {
@@ -10236,7 +9100,7 @@
     "status": "machine"
   },
   "openSource.faq.freeAnswer": {
-    "source": "4d30724fc751",
+    "source": "7fccca5fa8e2",
     "status": "machine"
   },
   "openSource.faq.needQuestion": {
@@ -25857,6 +24721,10 @@
   },
   "app.dashboard.settings.clients.page.theClientPortalIsntAvailable": {
     "source": "a36470b7e4de",
+    "status": "machine"
+  },
+  "app.dashboard.settings.clients.page.theClientPortalIsOff": {
+    "source": "5794745bfe8d",
     "status": "machine"
   },
   "app.dashboard.settings.clients.page.theClientPortalIsPart": {

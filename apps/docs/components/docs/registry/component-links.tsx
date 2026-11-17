@@ -1,17 +1,14 @@
 import { Badge } from "@repo/design-system/components/ui/badge";
 import Link from "fumadocs-core/link";
 import { ArrowRight2, Code, ExportSquare } from "iconsax-reactjs";
-import { getLocale } from "next-intl/server";
-import { localizeHref } from "@/lib/i18n/paths";
 import { REGISTRY_URL } from "./registry-data";
 
-/** Small links under a component page title, in the docs' language. */
-export async function ComponentLinks({ name }: { name: string }) {
-  const locale = await getLocale();
+/** Small links under a component page title. */
+export function ComponentLinks({ name }: { name: string }) {
   return (
     <div className="not-prose flex flex-wrap items-center gap-2">
       <Badge asChild variant="outline">
-        <Link href={localizeHref("/docs/api-reference", locale)}>
+        <Link href="/docs/api-reference">
           qrdx library
           <ArrowRight2 aria-hidden="true" />
         </Link>

@@ -1,12 +1,12 @@
 // The docs assistant's instructions (lib/docs-chat/prompt.ts): grounded in
-// the docs, in the reader's language, short, sourced, and deaf to
-// instructions inside pages or messages.
+// the docs (English only), answered in the language the reader writes in,
+// short, sourced, and deaf to instructions inside pages or messages.
 import { describe, expect, it } from "vitest";
 import { DOCS_CHAT } from "@/lib/docs-chat/config";
 import { docsChatSystemPrompt } from "@/lib/docs-chat/prompt";
 
 describe("docsChatSystemPrompt", () => {
-  const english = docsChatSystemPrompt({ lang: "en" });
+  const english = docsChatSystemPrompt();
 
   it("tells the model to search first and read before answering", () => {
     expect(english).toContain("search_docs");
@@ -47,20 +47,29 @@ describe("docsChatSystemPrompt", () => {
     expect(english).toContain("# Before you send");
   });
 
-  it("answers in the docs language, even over English pages", () => {
-    expect(english).toContain("Answer in English.");
-    const spanish = docsChatSystemPrompt({ lang: "es" });
-    expect(spanish).toContain(
-      "Answer in Spanish, even when the docs you read are in English",
+  it("answers in the language of the question, over English pages", () => {
+    expect(english).toContain(
+      "Answer in the language of the reader's latest question",
     );
-    expect(docsChatSystemPrompt({ lang: "pt-BR" })).toContain(
-      "Answer in Brazilian Portuguese",
+    expect(english).toContain("The docs you read are in English");
+    expect(english).toContain(
+      "in the language of the reader's latest question, and contains nothing",
     );
+    // No language is named: the same prompt serves every reader.
+    for (const name of ["Spanish", "Portuguese", "Japanese", "Hindi"]) {
+      expect(english).not.toContain(name);
+    }
+  });
+
+  it("searches in English and never adds a language to a link", () => {
+    expect(english).toContain("search in English");
+    expect(english).toContain("translated into English");
+    expect(english).toContain("never add a language to a URL");
+    expect(english).toMatch(/Keep UI labels.* in English\./);
   });
 
   it("names the page the reader is on, cleaned to one line", () => {
     const prompt = docsChatSystemPrompt({
-      lang: "en",
       page: { path: "/docs/developers/mcp", title: "MCP\n  server" },
     });
     expect(prompt).toContain(

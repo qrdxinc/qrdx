@@ -27,7 +27,7 @@ import {
   FOOTER_LEGAL,
   type FooterLink,
 } from "@/config/navigation";
-import { landingHref } from "@/lib/home-path";
+import { LANDING_PATH } from "@/lib/home-path";
 
 const LINK =
   "rounded-sm text-sm leading-5 text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
@@ -106,17 +106,15 @@ export function FooterSection() {
   const year = String(new Date().getFullYear());
   // No links to pages for features this deployment can't offer.
   const { showsPath } = useAvailability();
-  // The official site's home in this page's language (qrdx.dev/hi).
-  const localizeHref = useLocalizeHref();
-  const home = localizeHref("/");
 
   return (
     <footer id="footer" className="w-full border-t">
       <div className="flex flex-col gap-12 px-10 pt-14 pb-12">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            {/* The home page (English only) at its /home address. */}
             <LocaleLink
-              href={landingHref(home)}
+              href={LANDING_PATH}
               className="flex w-fit items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
             >
               <QrdxLogo className="size-5 text-foreground" />
@@ -193,7 +191,7 @@ export function FooterSection() {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <LocaleSwitcher />
           <a
-            href={`${CANONICAL_ORIGIN}${home === "/" ? "" : home}`}
+            href={CANONICAL_ORIGIN}
             className="w-fit font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             {CANONICAL_HOST}

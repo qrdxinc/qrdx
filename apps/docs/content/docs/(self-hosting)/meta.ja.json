@@ -1,8 +1,0 @@
-{
-  "$schema": "../../../.source/json-schema/docs.meta.json",
-  "title": "セルフホスティング",
-  "description": "QRdxを自社サーバーで運用",
-  "icon": "Server",
-  "root": true,
-  "pages": ["../self-hosting"]
-}

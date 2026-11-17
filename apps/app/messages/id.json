@@ -286,7 +286,8 @@
   },
   "localeSwitcher": {
     "label": "Bahasa",
-    "englishOnly": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lain akan membuka halaman utamanya."
+    "englishOnly": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lain akan membuka halaman utamanya.",
+    "englishOnlyDesigner": "Halaman ini hanya tersedia dalam bahasa Inggris. Bahasa lainnya akan membuka desainer kode QR."
   },
   "cta": {
     "title": "Buat kode QR berikutnya",
@@ -471,7 +472,7 @@
       "developers": {
         "eyebrow": "Developer",
         "title": "Dibuat untuk developer",
-        "description": "Render kode dengan pustaka React qrdx, dapatkan gambar dari URL dengan Image API, atau biarkan Claude, Cursor, dan VS Code membuatnya lewat MCP server. Anda juga bisa melakukan self-hosting untuk seluruh aplikasinya.",
+        "description": "Render kode dengan library qrdx React, ambil gambar dari sebuah URL dengan image API, atau biarkan Claude, Cursor, dan VS Code membuatnya melalui server MCP. Anda juga dapat melakukan self-host aplikasinya.",
         "link": "Dokumentasi developer"
       }
     },
@@ -526,7 +527,8 @@
           "answer": "Ya. Overlay logo tersedia di paket gratis. Unggah gambar (PNG dengan latar belakang transparan hasilnya paling baik) dan QRdx akan menempatkannya di tengah serta mengosongkan modul di bawahnya. Kode QR menggunakan koreksi kesalahan Reed-Solomon (ISO/IEC 18004); QRdx menggunakan level Q secara default, yang dapat memulihkan sekitar 25% kode, sehingga logo di tengah tetap dapat dipindai. Uji dengan beberapa ponsel sebelum mencetak."
         },
         "openSource": {
-          "question": "Apakah QRdx open source?"
+          "question": "Apakah QRdx open source?",
+          "answer": "Ya. QRdx dikembangkan secara terbuka di GitHub. Aplikasi web ini bersifat open source di bawah GNU AGPL-3.0 (atau versi yang lebih baru): Anda dapat meninjau kodenya, membuat issue, berkontribusi, atau melakukan self-host instans Anda sendiri, termasuk kode dinamis dan halaman yang di-hosting. Library qrdx React di npm dan alat baris perintah @qrdx/cli berlisensi MIT, sehingga perangkat lunak closed-source juga dapat menggunakannya. Fitur bisnis di folder ee (single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, dan pelacakan konversi) berada di bawah QRdx Commercial License."
         },
         "api": {
           "question": "Bisakah developer membuat kode QR dengan API?",
@@ -801,7 +803,7 @@
         },
         "selfHost": {
           "question": "Bisakah saya hosting sendiri?",
-          "answer": "Bisa. QRdx bersumber terbuka di bawah AGPL-3.0. Jalankan dengan database Postgres Anda sendiri dengan mengikuti panduan self-hosting; batas paket didefinisikan dalam satu file yang dapat Anda ubah untuk instans Anda."
+          "answer": "Ya. QRdx bersumber terbuka di bawah AGPL-3.0. Jalankan dengan database Postgres Anda sendiri dengan mengikuti panduan self-hosting; batas paket didefinisikan dalam satu file yang dapat Anda ubah untuk instans Anda. Fitur bisnis di folder ee (single sign-on, log audit, portal klien, halaman white-label, dan pelacakan konversi) memerlukan perjanjian enterprise."
         },
         "nonprofit": {
           "question": "Apakah ada diskon untuk organisasi nirlaba?",
@@ -843,7 +845,7 @@
         "contract": "Kontrak tahunan, dibayar dengan faktur",
         "replies": "Balasan dalam {hours, plural, other {# jam kerja}} saat kode berhenti berfungsi",
         "review": "Jawaban untuk tinjauan keamanan Anda",
-        "selfHost": "SSO dan log audit di server Anda sendiri"
+        "selfHost": "SSO, log audit, portal klien, white-label, dan konversi di server Anda sendiri"
       },
       "security": "Keamanan di QRdx"
     },
@@ -863,393 +865,6 @@
       "sent": "Kami akan membalas ke {email}, biasanya dalam beberapa hari. Jika organisasi Anda memenuhi syarat, balasan tersebut berisi kode diskon untuk dimasukkan saat pembayaran.",
       "close": "Tutup",
       "failed": "Terjadi kesalahan. Kirim email ke {email} saja."
-    }
-  },
-  "docs": {
-    "meta": {
-      "titleSuffix": "Dokumen QRdx"
-    },
-    "breadcrumb": {
-      "home": "Beranda",
-      "docs": "Dokumen"
-    },
-    "untranslated": {
-      "title": "Halaman ini belum diterjemahkan",
-      "body": "Anda sedang membaca versi bahasa Inggris."
-    },
-    "client": {
-      "actions": {
-        "copyMarkdown": "Salin Markdown",
-        "open": "Buka",
-        "openIn": "Buka di {app}",
-        "askPrompt": "Baca {url}, saya ingin mengajukan pertanyaan tentang isinya."
-      },
-      "search": {
-        "jumpTo": "Langsung ke <page>{name}</page>"
-      },
-      "language": {
-        "label": "Bahasa dokumen",
-        "note": "Dokumen tersedia dalam bahasa-bahasa ini. Bahasa lainnya akan membaca dokumen berbahasa Inggris."
-      }
-    },
-    "help": {
-      "search": "Cari bantuan dan dokumen",
-      "stillStuck": {
-        "title": "Masih kesulitan?",
-        "body": "Ceritakan apa yang ingin Anda lakukan dan apa yang terjadi. Sertakan tautan pendek kode tersebut jika terkait dengan sebuah kode.",
-        "widget": "Widget dukungan di qrdx.dev, setelah Anda mengizinkan cookie Fungsionalitas.",
-        "github": "Laporkan bug di GitHub",
-        "contact": "Semua cara menghubungi kami"
-      }
-    },
-    "notFound": {
-      "title": "Halaman ini tidak ada di dokumen",
-      "body": "Halaman ini mungkin telah dipindahkan atau diganti namanya. Cari di dokumen, atau mulai dari salah satu berikut.",
-      "places": {
-        "gettingStarted": {
-          "title": "Memulai",
-          "description": "Desain dan unduh kode pertama Anda."
-        },
-        "dynamic": {
-          "title": "Kode QR dinamis",
-          "description": "Tautan pendek yang bisa diubah setelah dicetak."
-        },
-        "restApi": {
-          "title": "REST API",
-          "description": "Buat dan kelola kode dari aplikasi Anda sendiri."
-        },
-        "components": {
-          "title": "Komponen",
-          "description": "Komponen React dan shadcn/ui untuk kode QR."
-        }
-      }
-    },
-    "shell": {
-      "header": {
-        "docs": "Dokumen",
-        "dashboard": "Dasbor",
-        "github": "QRdx di GitHub"
-      },
-      "actions": {
-        "copyPage": "Salin halaman",
-        "copied": "Disalin",
-        "more": "Cara lain memakai halaman ini",
-        "copyMarkdown": "Salin halaman sebagai Markdown",
-        "viewMarkdown": "Lihat sebagai Markdown",
-        "mcp": "Hubungkan server MCP QRdx"
-      },
-      "feedback": {
-        "question": "Apakah halaman ini membantu?",
-        "yes": "Ya",
-        "no": "Tidak",
-        "thanks": "Terima kasih. Masukan bersifat anonim: hanya jumlah jawaban ya dan tidak yang disimpan.",
-        "edit": "Edit halaman ini di GitHub",
-        "report": "Laporkan masalah",
-        "issueTitle": "Dokumen: {title}",
-        "issueBody": "Halaman: {url}\n\nApa yang salah atau kurang:\n"
-      },
-      "notFound": {
-        "search": "Cari di dokumen",
-        "sections": "Atau mulai dari satu bagian"
-      },
-      "code": {
-        "copy": "Salin kode",
-        "copied": "Disalin"
-      },
-      "video": {
-        "play": "Putar {title}",
-        "pause": "Jeda {title}",
-        "reducedMotion": "Klip menunggu Anda karena sistem Anda meminta gerakan yang lebih sedikit."
-      },
-      "plan": {
-        "title": "Perlu {plans}",
-        "or": "{a} atau {b}",
-        "body": "Isi setiap paket ada di",
-        "link": "Paket dan batasan",
-        "pro": "Pro",
-        "business": "Business",
-        "enterprise": "Enterprise"
-      }
-    },
-    "ui": {
-      "search": "Cari",
-      "searchPlaceholder": "Cari",
-      "openSearch": "Buka Pencarian",
-      "closeSearch": "Tutup Pencarian",
-      "noResults": "Tidak ada hasil",
-      "searchFailed": "Pencarian gagal",
-      "onThisPage": "Di halaman ini",
-      "noHeadings": "Tanpa Judul",
-      "tableOfContents": "Daftar Isi",
-      "lastUpdated": "Terakhir diperbarui pada",
-      "previousPage": "Halaman Sebelumnya",
-      "nextPage": "Halaman Berikutnya",
-      "copyCode": "Salin Teks",
-      "copiedCode": "Teks Disalin",
-      "copyAnchor": "Salin Tautan Anchor",
-      "copiedAnchor": "Tautan Anchor Disalin",
-      "copyLink": "Salin Tautan",
-      "copiedLink": "Tautan Disalin",
-      "toggleMenu": "Buka/Tutup Menu",
-      "toggleTheme": "Ganti Tema",
-      "themeLight": "Terang",
-      "themeDark": "Gelap",
-      "themeSystem": "Sistem",
-      "openSidebar": "Buka Sidebar",
-      "closeSidebar": "Tutup Sidebar",
-      "collapseSidebar": "Ciutkan Sidebar",
-      "typeTableProp": "Prop",
-      "typeTableType": "Tipe",
-      "typeTableDefault": "Default",
-      "typeTableParameters": "Parameter",
-      "typeTableReturns": "Nilai Kembali"
-    },
-    "shots": {
-      "diagrams": {
-        "dynamic-redirect": {
-          "title": "Cara kode dinamis mengalihkan: pemindaian membuka tautan pendek, QRdx menerapkan aturan kode, mengarahkan ponsel ke tujuan, dan mencatat pemindaian di tengah jalan.",
-          "scan": "Pemindaian",
-          "scanNote": "ponsel membaca kode",
-          "shortLink": "Tautan pendek",
-          "shortLinkNote": "isi dari pola kode",
-          "rules": "Aturan",
-          "rulesNote": "perangkat, lokasi, waktu, pembagian",
-          "destination": "Tujuan",
-          "destinationNote": "ubah kapan saja",
-          "recorded": "Pemindaian tercatat",
-          "recordedNote": "negara, perangkat, waktu; bukan orangnya"
-        },
-        "static-vs-dynamic": {
-          "title": "Statis dan dinamis: kode statis membawa isinya di dalam pola, sedangkan kode dinamis membawa tautan pendek yang diarahkan QRdx ke tujuan yang dapat Anda ubah.",
-          "static": "Kode statis",
-          "dynamic": "Kode dinamis",
-          "printed": "Kode tercetak",
-          "printedNote": "pola di kertas atau layar",
-          "content": "Isi itu sendiri",
-          "contentNote": "tautan, detail Wi-Fi, kontak",
-          "staticEnd": "Tetap setelah dicetak. Tanpa hitungan pemindaian.",
-          "shortLink": "Tautan pendek",
-          "shortLinkNote": "qrdx.dev/q/… atau domain Anda",
-          "destination": "Tujuan",
-          "destinationNote": "dapat diedit; setiap pemindaian dihitung"
-        },
-        "smart-routing": {
-          "title": "Cara smart routing memutuskan: aturan dibaca dari atas, aturan pertama yang kondisinya cocok dengan pemindaian mengarahkannya ke tujuan aturan itu, dan pemindaian yang tidak cocok dengan aturan mana pun menuju tujuan default kode.",
-          "scan": "Pemindaian masuk",
-          "scanNote": "perangkat, OS, negara, bahasa, waktu",
-          "rule1": "iPhone atau iPad → halaman iOS",
-          "rule2": "Bahasa Spanyol → halaman Spanyol",
-          "rule3": "Akhir pekan 08:00–14:00 → penawaran brunch",
-          "firstMatch": "Kecocokan pertama menang",
-          "firstMatchNote": "tujuan aturan tersebut",
-          "noMatch": "Tidak ada aturan cocok",
-          "noMatchNote": "tujuan bawaan kode tersebut",
-          "footnote": "Aturan diperiksa sesuai urutan yang ditampilkan di panel Routing; seret untuk mengubahnya."
-        },
-        "custom-domain": {
-          "title": "Cara kerja domain kustom: sebuah rekaman CNAME di penyedia DNS Anda mengarahkan hostname ke QRdx, yang melayani tautan pendek Anda di domain tersebut dan mengarahkan setiap pemindaian ke tujuannya.",
-          "scan": "Pemindaian",
-          "scanNote": "membuka tautan pendek domain Anda",
-          "dns": "DNS Anda",
-          "dnsNote": "satu rekaman CNAME",
-          "record": "qr.example.com  CNAME → QRdx",
-          "qrdx": "QRdx",
-          "qrdxNote": "menjawab untuk domain Anda, dengan HTTPS",
-          "destination": "Tujuan",
-          "destinationNote": "aturan kode berlaku seperti biasa",
-          "footnote": "Atur rekaman satu kali; QRdx akan memeriksanya, lalu setiap kode di domain itu langsung berfungsi."
-        },
-        "webhook-delivery": {
-          "title": "Cara webhook dikirim: QRdx mengirim (POST) peristiwa ke endpoint Anda beserta tanda tangan; balasan 2xx menandainya terkirim, selain itu dicoba ulang dengan jeda yang makin panjang dan ditandai gagal setelah delapan kali percobaan.",
-          "event": "Peristiwa",
-          "eventNote": "scan.created, form.submitted…",
-          "post": "POST ke endpoint Anda",
-          "postNote": "Isi JSON, header X-QRdx-Signature",
-          "delivered": "Terkirim",
-          "deliveredNote": "balasan 2xx apa pun",
-          "retry": "Diulang",
-          "retryNote": "timeout atau balasan lainnya",
-          "schedule": "1 mnt · 4 mnt · 16 mnt · 1 jam · 4 jam · 17 jam · 24 jam",
-          "failed": "Gagal",
-          "failedNote": "setelah 8 percobaan; coba ulang secara manual",
-          "footnote": "Setiap percobaan tercantum di halaman endpoint, beserta balasan yang diterima."
-        },
-        "image-api": {
-          "title": "Cara Image API membuat kode: satu permintaan GET berisi konten dan gaya, QRdx mengodekan data, merender desain, lalu menjawab dengan gambar SVG, PNG, WebP, atau EPS yang bisa disematkan di halaman mana pun.",
-          "request": "GET /v1/qr",
-          "requestNote": "data, ukuran, warna, gaya…",
-          "encode": "Enkode",
-          "encodeNote": "koreksi galat, versi",
-          "render": "Render",
-          "renderNote": "pola, mata, bingkai, logo",
-          "response": "Gambar",
-          "responseNote": "SVG, PNG, WebP, atau EPS",
-          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
-          "noKey": "Tanpa kunci, tanpa kuota: URL langsung dimasukkan ke tag gambar di halaman mana pun.",
-          "footnote": "Kueri yang sama selalu menghasilkan byte yang sama, sehingga respons di-cache selama satu tahun."
-        },
-        "hosted-page-anatomy": {
-          "title": "Cara kerja halaman yang di-hosting: Anda menyusun blok di editor lalu memublikasikannya, QRdx menyajikan halaman tersebut, dan tautan pendek pada kode yang dicetak membuka versi terbaru yang dipublikasikan di ponsel.",
-          "editor": "Editor",
-          "editorNote": "susun blok halaman",
-          "publish": "Publikasikan",
-          "page": "Halaman yang di-hosting",
-          "pageNote": "disajikan QRdx di qrdx.dev/p/…",
-          "code": "Kode QR cetak",
-          "codeNote": "berisi tautan pendek halaman",
-          "scan": "satu pemindaian membuka halaman",
-          "block1": "Header",
-          "block2": "Tautan",
-          "block3": "Menu",
-          "block4": "Formulir",
-          "footnote": "Publikasikan lagi, dan setiap kode yang sudah dicetak akan membuka versi barunya."
-        },
-        "import-flow": {
-          "title": "Cara kerja impor: tautan di penyedia lama Anda menjadi kode QR dinamis di QRdx, dan satu langkah opsional mengarahkan setiap tautan lama ke tautan QRdx barunya agar kode yang sudah Anda cetak tetap berfungsi.",
-          "importing": "Impor",
-          "source": "Penyedia lama Anda",
-          "sourceNote": "akun yang terhubung atau file",
-          "import": "Impor",
-          "importNote": "pilih, pratinjau, impor",
-          "codes": "Kode dinamis di QRdx",
-          "codesNote": "tujuan, judul, tag, folder",
-          "keeping": "Jaga kode cetak tetap berfungsi (opsional)",
-          "printed": "Kode yang Anda cetak",
-          "printedNote": "berisi tautan pendek lama",
-          "newLink": "Tautan QRdx barunya",
-          "newLinkNote": "tautan lama mengarah ke sini",
-          "destination": "Tujuan",
-          "destinationNote": "diedit dan dihitung di QRdx",
-          "footnote": "Akun lama harus tetap aktif agar tautannya terus mengalihkan."
-        },
-        "precise-location-flow": {
-          "title": "Cara kerja lokasi presisi: setelah pemindaian, pemindai diminta membagikan lokasinya; posisi yang dibagikan dibulatkan hingga sekitar 100 m, disimpan bersama pemindaian, dan digunakan oleh aturan area, dan pemindai tetap sampai ke tujuan, baik mengizinkan maupun melewati.",
-          "scan": "Pemindaian",
-          "scanNote": "membuka tautan pendek",
-          "ask": "Bagikan lokasi Anda?",
-          "askNote": "pemindai yang memilih",
-          "skip": "Lewati",
-          "allow": "Izinkan",
-          "destination": "Tujuan",
-          "destinationNote": "terbuka dalam kedua kasus",
-          "stored": "Titik disimpan bersama pemindaian",
-          "storedNote": "dibulatkan hingga sekitar 100 m",
-          "rule": "Aturan area",
-          "ruleNote": "dapat dipakai perutean cerdas",
-          "footnote": "Pemindai yang melewati atau menolak tetap dihitung, dengan negara, wilayah, dan kota dari jaringan."
-        },
-        "nfc-link": {
-          "title": "Cara kerja tag NFC dengan kode: tag menyimpan tautan pendek kode dengan ?nfc di bagian akhir, sehingga satu ketukan melewati pengalihan yang sama seperti pemindaian dan dihitung sebagai ketukan.",
-          "tap": "Ponsel mengetuk tag",
-          "tapNote": "membuka tautan di dalamnya",
-          "tag": "Tag NFC",
-          "tagNote": "menyimpan tautan NFC",
-          "link": "Tautan pendek dengan ?nfc",
-          "linkNote": "pengalihan sama seperti pemindaian",
-          "example": "qrdx.dev/q/aB3dE5f?nfc",
-          "counted": "Dihitung sebagai ketukan",
-          "countedNote": "di samping pemindaian QR di Analytics",
-          "destination": "Tujuan",
-          "destinationNote": "seperti pemindaian",
-          "footnote": "Kode QR tetap memiliki tautannya sendiri, sehingga kode yang sudah Anda cetak berfungsi seperti sebelumnya."
-        },
-        "file-delivery": {
-          "title": "Cara file disimpan dan disajikan: browser Anda mengunggahnya langsung ke bucket penyimpanan, QRdx memeriksanya dan memberinya tautan tersendiri, lalu halaman, kode, dan pengunjung menggunakan tautan tersebut.",
-          "browser": "Browser Anda",
-          "browserNote": "mengunggah file secara langsung",
-          "bucket": "Bucket penyimpanan",
-          "bucketNote": "menerima unggahan",
-          "check": "QRdx memeriksa file",
-          "checkNote": "ukuran dan tipe aslinya",
-          "link": "Tautan QRdx file",
-          "linkNote": "qrdx.dev/api/files/…",
-          "visitor": "Halaman, kode, dan pengunjung",
-          "visitorNote": "membuka file lewat tautannya",
-          "footnote": "Mengganti file tidak mengubah tautannya, jadi semua yang menggunakannya tidak perlu diubah."
-        },
-        "tracking-paths": {
-          "title": "Dua cara melacak apa yang terjadi setelah pemindaian: halaman yang di-hosting memuat piksel Anda setelah pengunjung dimintai persetujuan jika diwajibkan oleh hukum, dan kunjungan ke situs web Anda sendiri membawa ID pemindaian bertanda tangan yang dilaporkan kembali oleh situs Anda ke QRdx saat pengunjung melakukan konversi.",
-          "scan": "Pemindaian",
-          "scanNote": "selalu dihitung",
-          "pagePath": "Kode yang membuka halaman yang di-hosting",
-          "sitePath": "Kode yang membuka situs web Anda",
-          "page": "Halaman terbuka",
-          "pageNote": "disajikan oleh QRdx",
-          "consent": "Persetujuan",
-          "consentNote": "diminta jika diwajibkan",
-          "pixels": "Piksel Anda",
-          "pixelsNote": "dimuat setelahnya",
-          "site": "Tautan dibuka",
-          "siteNote": "qrdx_sid ditambahkan",
-          "convert": "Pengunjung berkonversi",
-          "convertNote": "pembelian, pendaftaran",
-          "report": "Konversi",
-          "reportNote": "dikirim ke QRdx",
-          "footnote": "Pixel termasuk dalam Pro dan Business; pelacakan konversi termasuk dalam Business."
-        },
-        "client-portal-access": {
-          "title": "Cara portal klien membatasi apa yang dilihat klien: Anda mencentang folder di undangan klien, lalu portal hanya menampilkan folder tersebut kepada klien itu, bersifat hanya-baca, atas nama Anda.",
-          "workspace": "Folder di workspace Anda",
-          "folder1": "Klien A: menu",
-          "folder2": "Klien A: acara",
-          "folder3": "Klien B",
-          "folder4": "Internal",
-          "invite": "Undangan",
-          "inviteNote": "email dan folder terpilih",
-          "portal": "Yang dilihat klien",
-          "portalName": "Portal Anda",
-          "readOnly": "Hanya-baca, dengan analitik pemindaian",
-          "footnote": "Klien bukan anggota workspace Anda dan tidak memakai kursi."
-        },
-        "self-hosting-stack": {
-          "title": "Empat layanan Docker Compose: permintaan dari browser masuk ke app, app mengirim kuerinya ke proxy HTTP yang kompatibel dengan Neon, proxy berkomunikasi dengan Postgres, dan satu tugas migrate sekali jalan menerapkan skema.",
-          "browser": "Browser",
-          "browserNote": "pengunjung Anda",
-          "compose": "docker compose",
-          "app": "app",
-          "appNote": "server QRdx",
-          "proxy": "db-proxy",
-          "proxyNote": "HTTP ke Postgres",
-          "db": "db",
-          "dbNote": "Postgres 16",
-          "migrate": "migrasi",
-          "migrateNote": "menerapkan skema satu kali",
-          "footnote": "Dengan Neon, bukan Postgres biasa, aplikasi terhubung langsung dan tidak memerlukan proxy."
-        },
-        "wont-scan-contrast": {
-          "title": "Kode QR yang sama dua kali: gelap di atas latar putih, yang bisa dipindai, dan abu-abu muda di atas putih, yang tidak bisa dipindai.",
-          "good": "Gelap di atas terang: terpindai",
-          "bad": "Abu-abu di atas putih: tidak terpindai",
-          "ratio": "Kontras {ratio}:1"
-        },
-        "wont-scan-quiet-zone": {
-          "title": "Kode QR yang sama pada sebuah karya desain, dua kali: dengan desain yang menyentuh tepinya, yang mungkin tidak terbaca pemindai, dan dengan ruang kosong selebar empat modul di sekelilingnya, yang bisa dipindai.",
-          "bad": "Desain menyentuh kode",
-          "badNote": "pemindai tidak menemukan tepinya",
-          "good": "Ruang kosong di sekitarnya",
-          "goodNote": "quiet zone selebar empat modul"
-        },
-        "wont-scan-print-size": {
-          "title": "Kode QR terpindai dari jarak sekitar sepuluh kali lebarnya: kode 2 cm dari sekitar 20 cm, kode 10 cm dari sekitar 1 m.",
-          "cardWidth": "2 cm",
-          "cardDistance": "sekitar 20 cm",
-          "cardNote": "kartu yang dipegang di tangan",
-          "posterWidth": "10 cm",
-          "posterDistance": "sekitar 1 m",
-          "posterNote": "poster di dinding",
-          "footnote": "Jarak pemindaian sekitar sepuluh kali lebar kode."
-        },
-        "wont-scan-eyes": {
-          "title": "Bentuk mata di sudut: mata persegi, membulat, dan gerigi terpindai di semua aplikasi; mata lingkaran dan keriting tidak dikenali oleh sebagian aplikasi pemindai.",
-          "good": "Terpindai di mana saja",
-          "bad": "Gagal di beberapa aplikasi",
-          "square": "Persegi",
-          "rounded": "Membulat",
-          "gear": "Gerigi",
-          "circle": "Lingkaran",
-          "curly": "Keriting"
-        }
-      }
     }
   },
   "common": {
@@ -1767,7 +1382,7 @@
       },
       "products": {
         "name": "Kode produk",
-        "detail": "Nomor EAN/UPC dan data GS1 (GTIN, batch, kedaluwarsa), termasuk GS1 Digital Link."
+        "detail": "Nomor EAN, UPC, dan ITF-14 serta data GS1 (GTIN, batch, kedaluwarsa), termasuk GS1 Digital Link."
       },
       "text": {
         "name": "Teks biasa",
@@ -2419,6 +2034,10 @@
       "code128Chars": "Code 128 di sini menerima huruf ASCII biasa, angka, spasi, dan simbol. Tidak diizinkan: {chars}",
       "code39Chars": "Code 39 hanya menerima huruf kapital, angka, spasi, dan - . $ / + %. Tidak diizinkan: {chars}",
       "code39Lowercase": "Code 39 tidak mendukung huruf kecil. Gunakan huruf kapital, atau Code 128 untuk campuran huruf besar dan kecil.",
+      "code93Chars": "Code 93 hanya menerima huruf kapital, angka, spasi, dan - . $ / + %. Tidak diizinkan: {chars}",
+      "code93Lowercase": "Code 93 di sini tidak mendukung huruf kecil. Gunakan huruf kapital, atau Code 128 untuk campuran huruf besar dan kecil.",
+      "codabarStartStop": "Codabar diawali dan diakhiri dengan A, B, C, atau D, dengan setidaknya satu karakter di antaranya, misalnya A40156B.",
+      "codabarChars": "Codabar menerima angka dan - $ : / . + di antara huruf awal dan akhirnya. Tidak diizinkan: {chars}",
       "gs1Enter": "Masukkan Application Identifier dalam tanda kurung beserta nilainya, mis. (01)09501101530003.",
       "gs1Start": "Mulailah dengan Application Identifier dalam tanda kurung, mis. (01) untuk GTIN, lalu nilainya.",
       "gs1Brackets": "Tanda kurung tidak berpasangan: tulis setiap AI sebagai (angka), diikuti nilainya.",
@@ -2556,8 +2175,8 @@
         "body": "Kami mengisi kuesioner keamanan Anda dan mengirimkan salinan Data Processing Addendum yang sudah ditandatangani."
       },
       "selfHost": {
-        "title": "Single sign-on dan log audit saat Anda hosting sendiri",
-        "body": "QRdx bersifat open source, tetapi single sign-on dan log audit berada di bawah lisensi komersial QRdx. Perjanjian Enterprise memungkinkan Anda menjalankannya di server sendiri dengan kunci lisensi."
+        "title": "Fitur Business saat Anda hosting sendiri",
+        "body": "QRdx bersifat open source, tetapi single sign-on, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi berada di bawah lisensi komersial QRdx. Perjanjian Enterprise memungkinkan Anda menjalankannya di server Anda sendiri dengan kunci lisensi."
       }
     },
     "limitsNote": "Di qrdx.dev, workspace Enterprise memiliki batas yang sama dengan paket Business. Jika Anda membutuhkan lebih banyak untuk sesuatu, sampaikan di formulir.",
@@ -2584,7 +2203,7 @@
       },
       "sign": {
         "title": "Tanda tangani dan bayar dengan faktur",
-        "body": "Setelah kontrak ditandatangani, kami memindahkan workspace Anda ke paket Business dan mengirimkan faktur."
+        "body": "Setelah kontrak ditandatangani, kami mengirimkan faktur dan memindahkan workspace Anda di qrdx.dev ke paket Business. Jika Anda hosting sendiri, kontrak juga mencakup single sign-on, log audit, portal klien, halaman white-label, dan pelacakan konversi di server Anda sendiri: kami mengirimkan kunci lisensi untuk QRDX_EE_LICENSE. Kunci ini memiliki masa berlaku, dan server Anda memeriksanya secara offline."
       }
     },
     "formTitle": "Hubungi kami",
@@ -3330,7 +2949,7 @@
     "guaranteeTitle": "Kode yang dicetak tetap berfungsi",
     "guaranteeBody": "Berdasarkan Jaminan Never-Hostage, setiap kode dinamis tetap mengalihkan di semua paket, termasuk setelah downgrade, pembayaran gagal, atau pembatalan. Pemindaian tidak pernah dijeda, dan pemindai tidak pernah melihat iklan atau halaman pendaftaran QRdx. Melewati batas hanya menghentikan Anda membuat kode baru.",
     "guaranteeLink": "Baca jaminannya",
-    "openSourceBody": "Pengalihan, analitik, dan bagian aplikasi lainnya bersifat open source, sehingga Anda dapat melihat apa yang terjadi pada setiap pemindaian atau menjalankannya di server Anda sendiri.",
+    "openSourceBody": "Pengalihan dan analitiknya bersumber terbuka, sehingga Anda dapat membaca apa yang terjadi pada setiap pemindaian atau menjalankannya di server Anda sendiri.",
     "openSourceLink": "Open source dan self-hosting",
     "staticTitle": "Kapan kode statis menjadi pilihan yang lebih baik",
     "staticBody": "Hanya tautan yang bisa dinamis: kode dinamis membuka situs web atau halaman yang di-hosting. Login Wi-Fi, kartu kontak yang langsung disimpan ke ponsel, dan kode pembayaran bank harus statis, karena ponsel membacanya dari pola kode itu sendiri. Kode statis gratis dan tanpa batas, serta tidak memerlukan akun.",
@@ -3376,8 +2995,8 @@
     "metaDescription": "QRdx adalah generator kode QR open source di GitHub. Aplikasinya berlisensi AGPL-3.0, sedangkan library React dan CLI-nya berlisensi MIT. Gunakan qrdx.dev secara gratis atau jalankan salinan Anda sendiri.",
     "crumb": "Open source",
     "title": "Generator kode QR open source",
-    "intro1": "QRdx dibangun secara terbuka di GitHub. Aplikasi web yang menjalankan qrdx.dev, lengkap dengan editor, kode dinamis, halaman yang di-hosting, dan analitik pemindaian, berlisensi AGPL-3.0. Library React, CLI, dan plugin-nya berlisensi MIT.",
-    "intro2": "Anda dapat menggunakannya secara gratis di qrdx.dev, menjalankan salinan sendiri, atau menyematkan kode QR ke aplikasi Anda dengan library-nya.",
+    "intro1": "QRdx dibangun secara terbuka di GitHub. Aplikasi web yang menjalankan qrdx.dev, lengkap dengan editor, kode dinamis, halaman yang di-hosting, dan analitik pemindaian, dilisensikan di bawah AGPL-3.0. Pustaka React, CLI, plugin, agent skill, dan komponen shadcn/ui berlisensi MIT. Fitur bisnis (single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi) berada di bawah QRdx Commercial License.",
+    "intro2": "Anda dapat menggunakannya secara gratis di qrdx.dev, menjalankan salinan sendiri, atau menyematkan kode QR ke dalam aplikasi Anda dengan pustakanya. Membuat kode QR tetap gratis untuk semua orang. Proyek ini memperoleh pendapatan dari paket Pro dan Business serta dari perjanjian enterprise.",
     "facts": {
       "agpl": "Aplikasi AGPL-3.0",
       "mit": "Library dan CLI MIT",
@@ -3403,11 +3022,16 @@
       "cliBody": "Kode QR bergaya dari terminal atau tugas CI",
       "pluginsName": "Plugin",
       "pluginsBody": "Ekstensi Chrome, plugin Figma, Raycast, dan Canva, serta plugin lain di folder plugins",
+      "skillName": "Agent skill",
+      "skillBody": "generate-qr, yang mengajarkan agen pemrograman membuat kode QR dengan CLI",
+      "registryName": "Komponen shadcn/ui",
+      "registryBody": "Komponen kode QR, pemindai, dan komponen lain yang dipasang npx shadcn add ke proyek Anda",
       "eeName": "Fitur Business",
-      "eeBody": "Single sign-on workspace dan log audit workspace"
+      "eeBody": "Single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi"
     },
     "eeLicense": "Lisensi Komersial QRdx",
-    "eeNote": "Anda dapat membaca, menguji, dan berkontribusi pada kode di folder ee, tetapi penggunaannya di produksi memerlukan perjanjian tertulis dengan QRdx. Pada instans yang di-host sendiri, kedua fitur tersebut tetap nonaktif kecuali QRDX_EE_LICENSE diatur, dan semua fitur lainnya berfungsi tanpa keduanya.",
+    "eeNote": "Anda dapat membaca, menguji, dan berkontribusi pada kode di folder ee, tetapi penggunaannya di lingkungan produksi memerlukan perjanjian tertulis dengan QRdx. Pada instans yang dihosting sendiri, fitur-fitur tersebut tetap nonaktif kecuali QRDX_EE_LICENSE berisi kunci yang valid, yang diterbitkan QRdx bersama perjanjian dan diperiksa server Anda secara offline. Semua fitur lainnya berfungsi tanpa itu.",
+    "eeAgreement": "Perjanjian enterprise mencakup penggunaannya di server Anda sendiri: <link>hubungi kami lewat halaman enterprise</link> atau kirim email ke {email}.",
     "waysEyebrow": "Cara menggunakannya",
     "waysTitle": "Pilih cara menjalankannya",
     "ways": {
@@ -3441,8 +3065,10 @@
     "licenses": {
       "agplTitle": "Aplikasi (AGPL-3.0)",
       "agplBody": "Anda dapat menjalankan, mengubah, dan menghosting-nya. Jika Anda menjalankan versi yang dimodifikasi sebagai layanan jaringan, Anda wajib menyediakan kode sumbernya kepada penggunanya dengan lisensi yang sama.",
-      "mitTitle": "Pustaka, CLI, dan plugin (MIT)",
-      "mitBody": "Gunakan di proyek apa pun, termasuk closed-source, selama pemberitahuan hak cipta dan lisensi tetap menyertai kode. Rilis sebelum qrdx 0.0.47 dan @qrdx/cli 0.0.5 berlisensi AGPL-3.0-or-later.",
+      "mitTitle": "Pustaka dan alat (MIT)",
+      "mitBody": "Pustaka qrdx, CLI, plugin, agent skill, dan komponen shadcn/ui. Gunakan di proyek apa pun, termasuk yang bersifat closed source, selama pemberitahuan hak cipta dan lisensi tetap menyertai kode. Rilis sebelum qrdx 0.0.47 dan @qrdx/cli 0.0.5 berlisensi AGPL-3.0-or-later.",
+      "eeTitle": "Fitur bisnis (QRdx Commercial License)",
+      "eeBody": "Anda dapat membaca, mengubah, dan menguji kode di folder ee. Menggunakan fitur bisnis tersebut di lingkungan produksi pada server Anda sendiri memerlukan perjanjian tertulis dengan QRdx.",
       "trademarkTitle": "Nama dan logo",
       "trademarkBody": "Nama dan logo QRdx adalah merek dagang. Fork atau layanan publik yang dibuat dari kode ini memerlukan nama dan logo sendiri; <link>kebijakan merek dagang</link> menjelaskan detailnya."
     },
@@ -3474,11 +3100,11 @@
     "faqTitle": "Pertanyaan seputar open source",
     "faq": {
       "openQuestion": "Apakah QRdx benar-benar open source?",
-      "openAnswer": "Ya. Kode sumbernya ada di GitHub, aplikasi webnya dilisensikan di bawah AGPL-3.0-or-later, dan pustaka qrdx, @qrdx/cli, serta plugin-nya berlisensi MIT. Dua fitur bisnis, single sign-on workspace dan log audit, berada di folder ee di bawah QRdx Commercial License: Anda dapat membaca kodenya, tetapi penggunaan di produksi memerlukan perjanjian dengan QRdx.",
+      "openAnswer": "Ya. Kode sumbernya ada di GitHub, aplikasi web dilisensikan di bawah AGPL-3.0-or-later, dan pustaka qrdx, @qrdx/cli, plugin, agent skill, serta komponen shadcn/ui berlisensi MIT. Fitur bisnis (single sign-on workspace, log audit, portal klien dan laporan klien, halaman white-label dengan CSS kustom, serta pelacakan konversi) berada di folder ee di bawah QRdx Commercial License: Anda dapat membaca kodenya, tetapi penggunaan di lingkungan produksi memerlukan perjanjian dengan QRdx.",
       "githubQuestion": "Di mana kode sumber QRdx di GitHub?",
       "githubAnswer": "Di github.com/qrdxinc/qrdx. Semuanya ada dalam satu monorepo berisi aplikasi web, pustaka qrdx, CLI, plugin, dan dokumentasi.",
       "freeQuestion": "Apakah QRdx gratis untuk di-host sendiri?",
-      "freeAnswer": "Ya. Tidak ada biaya lisensi; Anda hanya membayar server dan basis data Anda sendiri. Instans yang di-host sendiri menjalankan kode dinamis, halaman yang di-hosting, dan analitik pemindaian. Single sign-on dan log audit tetap nonaktif kecuali Anda memiliki kunci lisensi QRdx.",
+      "freeAnswer": "Ya. Tidak ada biaya lisensi untuk aplikasinya; Anda hanya membayar server dan database Anda sendiri. Instans yang dihosting sendiri menjalankan kode dinamis, halaman yang di-hosting, dan analitik pemindaian. Fitur bisnis di folder ee adalah pengecualian: single sign-on, log audit, portal klien, halaman white-label, dan pelacakan konversi tetap nonaktif kecuali QRDX_EE_LICENSE berisi kunci yang valid, yang diterbitkan QRdx bersama perjanjian enterprise dan diperiksa server Anda secara offline. Penggunaannya di lingkungan produksi memerlukan perjanjian tersebut.",
       "needQuestion": "Apa yang saya butuhkan untuk meng-host QRdx sendiri?",
       "needAnswer": "Anda memerlukan Docker dengan Compose v2, atau Node.js 22 dan Bun 1.4 untuk pengaturan manual, serta basis data Postgres: yang dijalankan docker-compose.yml, atau Neon. Atur NEXT_PUBLIC_APP_URL, DATABASE_URL, dan BETTER_AUTH_SECRET, lalu sediakan cara bagi pengguna untuk masuk dengan aplikasi OAuth GitHub atau Google, atau dengan kode email melalui Resend.",
       "closedQuestion": "Bolehkah saya memakai pustaka kode QR ini di aplikasi closed-source?",
@@ -8251,6 +7877,7 @@
         "clients": {
           "page": {
             "theClientPortalIsntAvailable": "Portal klien belum tersedia di server ini.",
+            "theClientPortalIsOff": "Portal klien tidak tersedia di server ini, sehingga klien tidak dapat membukanya. Anda tetap dapat menghapus mereka.",
             "theClientPortalIsPart": "Portal klien merupakan bagian dari {business}",
             "inviteAClientByEmail": "Undang klien melalui email dan pilih folder yang dapat mereka lihat: kode, analitik pemindaian, dan halaman yang di-hosting milik mereka, hanya-baca, dengan nama, logo, dan warna Anda.",
             "askAWorkspaceOwnerOr": "Minta pemilik workspace atau anggota penagihan untuk melakukan upgrade.",

@@ -11,6 +11,8 @@ export type BarcodeFormatId =
   | "upce"
   | "code128"
   | "code39"
+  | "code93"
+  | "codabar"
   | "itf14"
   | "gs1-128"
   | "datamatrix"
@@ -121,6 +123,31 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     detectorFormats: ["code_39"],
   },
   {
+    id: "code93",
+    label: "Code 93",
+    kind: "linear",
+    summary: "Code 39's characters in a shorter barcode",
+    example: "QRDX-93",
+    inputHint: "Up to 40 capital letters, digits, spaces and - . $ / + %.",
+    quietZone: { min: 10, default: 10 },
+    barHeightMm: 15,
+    maxLength: 40,
+    detectorFormats: ["code_93"],
+  },
+  {
+    id: "codabar",
+    label: "Codabar",
+    kind: "linear",
+    summary: "Digits for libraries, blood banks and older labels",
+    example: "A40156B",
+    inputHint:
+      "Start and end with A, B, C or D; between them up to 38 digits and - $ : / . +.",
+    quietZone: { min: 10, default: 10 },
+    barHeightMm: 15,
+    maxLength: 40,
+    detectorFormats: ["codabar"],
+  },
+  {
     id: "itf14",
     label: "ITF-14",
     kind: "linear",
@@ -217,6 +244,10 @@ export const BARCODE_ISSUE_CODES = [
   "code128Chars",
   "code39Chars",
   "code39Lowercase",
+  "code93Chars",
+  "code93Lowercase",
+  "codabarStartStop",
+  "codabarChars",
   "gs1Enter",
   "gs1Start",
   "gs1Brackets",
@@ -299,6 +330,14 @@ export function barcodeIssueText(issue: BarcodeIssue): string {
       return `Code 39 takes capital letters, digits, spaces and - . $ / + % only. Not allowed: ${englishChars(issue.chars)}`;
     case "code39Lowercase":
       return "Code 39 has no lowercase letters. Use capitals, or Code 128 for mixed case.";
+    case "code93Chars":
+      return `Code 93 takes capital letters, digits, spaces and - . $ / + % only. Not allowed: ${englishChars(issue.chars)}`;
+    case "code93Lowercase":
+      return "Code 93 here has no lowercase letters. Use capitals, or Code 128 for mixed case.";
+    case "codabarStartStop":
+      return "Codabar starts and ends with A, B, C or D, with at least one character between them, e.g. A40156B.";
+    case "codabarChars":
+      return `Codabar takes digits and - $ : / . + between its start and stop letters. Not allowed: ${englishChars(issue.chars)}`;
     case "gs1Enter":
       return "Enter Application Identifiers in brackets with their values, e.g. (01)09501101530003.";
     case "gs1Start":
@@ -488,11 +527,18 @@ function offending(text: string, allowed: RegExp): string[] {
 
 const CODE128_CHAR = /^[\x20-\x7e]$/;
 const CODE39_CHAR = /^[0-9A-Z \-.$/+%]$/;
+/** Code 93's data characters are Code 39's 43; its four shift characters aren't typed. */
+const CODE93_CHAR = CODE39_CHAR;
+const CODABAR_START_STOP = /^[A-D]$/;
+const CODABAR_BODY = /^[0-9\-$:/.+]$/;
 
 function textInput(
   format: BarcodeFormat,
   raw: string,
-  allowed: { chars: RegExp; code: "code128Chars" | "code39Chars" } | null,
+  allowed: {
+    chars: RegExp;
+    code: "code128Chars" | "code39Chars" | "code93Chars";
+  } | null,
 ): BarcodeInput {
   if (!raw) return fail({ code: "enterText" });
   const length = [...raw].length;
@@ -504,6 +550,40 @@ function textInput(
   }
   if (allowed && [...raw].some((char) => !allowed.chars.test(char))) {
     return fail({ code: allowed.code, chars: offending(raw, allowed.chars) });
+  }
+  return done(raw);
+}
+
+/**
+ * Codabar: a start and a stop letter (A to D) around digits and - $ : / . +.
+ * The letters are part of what the encoder takes and what's printed, so the
+ * visitor types them.
+ */
+function codabarInput(format: BarcodeFormat, raw: string): BarcodeInput {
+  if (!raw) return fail({ code: "enterText" });
+  const chars = [...raw];
+  if (chars.length > format.maxLength) {
+    return fail({
+      code: "tooLong",
+      values: {
+        label: format.label,
+        max: format.maxLength,
+        count: chars.length,
+      },
+    });
+  }
+  const first = chars[0] ?? "";
+  const last = chars.at(-1) ?? "";
+  if (
+    chars.length < 3 ||
+    !CODABAR_START_STOP.test(first) ||
+    !CODABAR_START_STOP.test(last)
+  ) {
+    return fail({ code: "codabarStartStop" });
+  }
+  const body = raw.slice(first.length, raw.length - last.length);
+  if ([...body].some((char) => !CODABAR_BODY.test(char))) {
+    return fail({ code: "codabarChars", chars: offending(body, CODABAR_BODY) });
   }
   return done(raw);
 }
@@ -619,6 +699,20 @@ export function validateBarcodeInput(
         code: "code39Chars",
       });
     }
+    case "code93": {
+      const onlyCaseIsWrong =
+        /[a-z]/.test(raw) &&
+        [...raw.toUpperCase()].every((char) => CODE93_CHAR.test(char));
+      if (onlyCaseIsWrong) {
+        return fail({ code: "code93Lowercase" });
+      }
+      return textInput(format, raw, {
+        chars: CODE93_CHAR,
+        code: "code93Chars",
+      });
+    }
+    case "codabar":
+      return codabarInput(format, raw);
     case "gs1-128":
       return gs1Input(raw);
     case "datamatrix":

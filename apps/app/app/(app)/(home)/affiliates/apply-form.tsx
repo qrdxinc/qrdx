@@ -159,9 +159,9 @@ export function ApplyForm() {
           htmlFor={`${id}-agree`}
         >
           I've read and accept the{" "}
-          <Link className={TEXT_LINK} href="/legal/affiliate-terms">
+          <a className={TEXT_LINK} href="/legal/affiliate-terms">
             affiliate terms
-          </Link>
+          </a>
           .
         </Label>
       </div>

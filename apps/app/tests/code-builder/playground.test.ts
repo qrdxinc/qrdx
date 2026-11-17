@@ -27,6 +27,13 @@ const actions = vi.hoisted(() => ({
   updateQrCode: vi.fn(),
 }));
 vi.mock("@/actions/qr-codes", () => actions);
+// The one-click Dynamic toggle posts to /api/playground/codes, which runs
+// createQrCode via "playground" (tests/api/widget-routes.test.ts): fakes too.
+const routes = vi.hoisted(() => ({
+  createDynamicCode: vi.fn(),
+  updateDynamicCode: vi.fn(),
+}));
+vi.mock("@/lib/widget-routes/client", () => routes);
 vi.mock("@/actions/qr-themes", () => ({ getThemes: vi.fn() }));
 const toast = vi.hoisted(() =>
   Object.assign(vi.fn(), { error: vi.fn(), success: vi.fn() }),
@@ -156,6 +163,8 @@ beforeEach(() => {
   useCodeBuilderStore.setState({ request: null, hosts: [] });
   actions.createQrCode.mockReset();
   actions.updateQrCode.mockReset();
+  routes.createDynamicCode.mockReset();
+  routes.updateDynamicCode.mockReset();
   toast.mockClear();
   toast.error.mockClear();
 });
@@ -282,19 +291,16 @@ describe("opening it", () => {
 
 describe("one-click Dynamic (the toggle)", () => {
   it("creates the code with the playground's design", async () => {
-    actions.createQrCode.mockResolvedValue({ success: true, data: view() });
+    routes.createDynamicCode.mockResolvedValue({ success: true, data: view() });
     const outcome = await makeDynamic({
       destination: "https://example.com/menu",
       styles: MY_STYLE,
       userId: "u_alice",
     });
-    expect(actions.createQrCode).toHaveBeenCalledWith(
-      {
-        destinationUrl: "https://example.com/menu",
-        style: MY_STYLE,
-      },
-      { via: "playground" },
-    );
+    expect(routes.createDynamicCode).toHaveBeenCalledWith({
+      destinationUrl: "https://example.com/menu",
+      style: MY_STYLE,
+    });
     expect(outcome).toEqual({
       kind: "linked",
       trimmed: false,
@@ -308,7 +314,7 @@ describe("one-click Dynamic (the toggle)", () => {
   });
 
   it("LIMIT_REACHED shows the limit card", async () => {
-    actions.createQrCode.mockResolvedValue({
+    routes.createDynamicCode.mockResolvedValue({
       success: false,
       error: {
         code: "LIMIT_REACHED",
@@ -337,7 +343,7 @@ describe("one-click Dynamic (the toggle)", () => {
   });
 
   it("a lost session asks for sign-in; a network failure says so", async () => {
-    actions.createQrCode.mockResolvedValueOnce({
+    routes.createDynamicCode.mockResolvedValueOnce({
       success: false,
       error: { code: "UNAUTHORIZED", message: "Sign in" },
     });
@@ -348,7 +354,7 @@ describe("one-click Dynamic (the toggle)", () => {
         userId: "u",
       }),
     ).resolves.toEqual({ kind: "signin" });
-    actions.createQrCode.mockRejectedValueOnce(new Error("offline"));
+    routes.createDynamicCode.mockRejectedValueOnce(new Error("offline"));
     await expect(
       makeDynamic({
         destination: "https://a.com",

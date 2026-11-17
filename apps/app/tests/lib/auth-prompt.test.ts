@@ -101,7 +101,9 @@ describe("auth prompt reasons", () => {
     expect(authPromptSurface("/")).toBe("home");
     expect(authPromptSurface("/playground")).toBe("playground");
     expect(authPromptSurface("/playground/theme_abc123")).toBe("playground");
-    expect(authPromptSurface("/es/pricing")).toBe("pricing");
+    expect(authPromptSurface("/pricing")).toBe("pricing");
+    expect(authPromptSurface("/es/playground")).toBe("playground");
+    expect(authPromptSurface("/ja/ai/art")).toBe("ai/art");
     expect(authPromptSurface("/tools/bulk")).toBe("tools/bulk");
     expect(authPromptSurface("/ai/art")).toBe("ai/art");
     expect(authPromptSurface("/community/frames/my-frame")).toBe("community");

@@ -23,11 +23,6 @@ import {
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import {
-  createQrCode,
-  type QrCodeActionResult,
-  updateQrCode,
-} from "@/actions/qr-codes";
-import {
   currentBuilderRequest,
   openPlaygroundBuilder,
 } from "@/components/code-builder/in-place";
@@ -36,10 +31,15 @@ import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { markProgrammaticQrContent } from "@/lib/analytics/react";
 import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
+import {
+  createDynamicCode,
+  updateDynamicCode,
+} from "@/lib/widget-routes/client";
 import { dashboardEntry } from "@/lib/workspace-paths";
 import { useAuthStore } from "@/store/auth-store";
 import { useQREditorStore } from "@/store/editor-store";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
+import type { QrCodeActionResult } from "@/types/action-results";
 import type { UrlContent } from "@/types/qr-content";
 import type { ThemeStyles } from "@/types/theme";
 import { makeDynamicIntent, shouldResumeDynamic } from "./dynamic-resume";
@@ -113,7 +113,8 @@ export function normalizeDestination(raw: string): string | null {
   }
 }
 
-// Server actions accept up to 1MB; a very large inline logo is left out of the saved design.
+// The routes (and the server actions behind them) take up to 2MB; a very
+// large inline logo is left out of the saved design.
 const MAX_SAVED_STYLE_LENGTH = 900_000;
 
 function styleForCode(styles: ThemeStyles): {
@@ -152,15 +153,16 @@ export type MakeDynamicOutcome =
 
 /**
  * The one-click "Dynamic": saves a dynamic code for the address in this
- * design. `create` is the createQrCode server action (a fake in tests).
+ * design. `create` posts it to /api/playground/codes, which runs the
+ * createQrCode server action via "playground" (a fake in tests).
  */
 export async function makeDynamic(
   input: { destination: string; styles: ThemeStyles; userId: string },
-  create: typeof createQrCode = createQrCode,
+  create: typeof createDynamicCode = createDynamicCode,
 ): Promise<MakeDynamicOutcome> {
   const { style, trimmed } = styleForCode(input.styles);
   const result = await safely(() =>
-    create({ destinationUrl: input.destination, style }, { via: "playground" }),
+    create({ destinationUrl: input.destination, style }),
   );
   if (!result.success) {
     if (result.error.code === "LIMIT_REACHED") {
@@ -366,7 +368,7 @@ export function DynamicLinkToggle() {
     if (!(linked && destination)) return;
     startTransition(async () => {
       const result = await safely(() =>
-        updateQrCode({ id: linked.id, destinationUrl: destination }),
+        updateDynamicCode({ id: linked.id, destinationUrl: destination }),
       );
       if (!result.success) {
         if (result.error.code === "NOT_FOUND") forgetMissingCode();
@@ -387,7 +389,9 @@ export function DynamicLinkToggle() {
       useQREditorStore.getState().themeState.styles,
     );
     startTransition(async () => {
-      const result = await safely(() => updateQrCode({ id: linked.id, style }));
+      const result = await safely(() =>
+        updateDynamicCode({ id: linked.id, style }),
+      );
       if (!result.success) {
         if (result.error.code === "NOT_FOUND") forgetMissingCode();
         else toast.error(result.error.message);

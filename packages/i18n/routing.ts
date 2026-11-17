@@ -4,11 +4,15 @@
 // as is. /en and /en/... redirect to the unprefixed URL, so English has one
 // address. Short links (/q, /p, /m), the API and docs are never localized.
 //
+// The marketing pages under app/[lang] that are English only (paths.ts
+// ENGLISH_ONLY_PATHS) keep their English rewrites, and their translated URLs
+// redirect to the English page (englishOnlyRedirects).
+//
 // next.config.ts imports this module (and docs.ts) from the package itself:
 // Next compiles the config with the app's tsconfig paths, and a file in a
 // subfolder of the app that imports @repo/* can't be resolved there.
-import { LOCALE_INFO } from "./config";
-import { LOCALIZED_PATHS } from "./paths";
+import { LOCALE_INFO, TRANSLATED_LOCALES } from "./config";
+import { ENGLISH_ONLY_PATHS, LOCALIZED_PATHS } from "./paths";
 
 const EN = `/${LOCALE_INFO.en.segment}`;
 
@@ -26,12 +30,17 @@ export function rewriteSource(route: string): string {
     .replace(/\[([^/[\]]+)\]/g, ":$1([^/.]+)");
 }
 
-/** /pricing → /en/pricing, /compare/:slug → /en/compare/:slug (beforeFiles). */
+/** A rule's destination: the source's params by name, without their patterns. */
+const destinationOf = (source: string) => source.replace(/\([^)]*\)/g, "");
+
+/**
+ * /pricing → /en/pricing, /compare/:slug → /en/compare/:slug (beforeFiles):
+ * every page under app/[lang], translated or English only.
+ */
 export function englishRewrites(): { source: string; destination: string }[] {
-  return LOCALIZED_PATHS.map((path) => {
+  return [...LOCALIZED_PATHS, ...ENGLISH_ONLY_PATHS].map((path) => {
     const source = rewriteSource(path);
-    // The destination names the params; their patterns belong to the source.
-    const target = source.replace(/\([^)]*\)/g, "");
+    const target = destinationOf(source);
     return { source, destination: target === "/" ? EN : `${EN}${target}` };
   });
 }
@@ -49,6 +58,50 @@ export function englishRedirects(platformHosts: string) {
       source: `${EN}/:path((?!.*(?:opengraph|twitter)-image).*)`,
       destination: "/:path",
       permanent: true,
+      has,
+    },
+  ];
+}
+
+/** The translated languages' first segments, as one next.config.ts param. */
+const TRANSLATED_SEGMENT = `:locale(${TRANSLATED_LOCALES.map(
+  (locale) => LOCALE_INFO[locale].segment
+).join("|")})`;
+
+/**
+ * The English-only pages' old translated URLs, to the English page with the
+ * query kept: /es/pricing → /pricing, /ja/qr-code-generator/wifi?x=1 →
+ * /qr-code-generator/wifi?x=1. The home page too: /es → / (where a
+ * signed-in visitor goes on to the dashboard, as /es did) and /es/home →
+ * /home (the logo's address, which never does).
+ *
+ * On QRdx's own hosts only: on a customer's domain /es is a short link.
+ * Only the page URLs themselves; their Open Graph images under them aren't
+ * linked from anywhere once the pages redirect.
+ *
+ * 307 for now: after a 7-day watch with no surprises, switch `permanent`
+ * to true (308), as englishRedirects are.
+ */
+export function englishOnlyRedirects(platformHosts: string) {
+  const has = [{ type: "host" as const, value: platformHosts }];
+  const pages = ENGLISH_ONLY_PATHS.map((path) => {
+    const source = rewriteSource(path);
+    return {
+      source:
+        path === "/"
+          ? `/${TRANSLATED_SEGMENT}`
+          : `/${TRANSLATED_SEGMENT}${source}`,
+      destination: destinationOf(source),
+      permanent: false,
+      has,
+    };
+  });
+  return [
+    ...pages,
+    {
+      source: `/${TRANSLATED_SEGMENT}/home`,
+      destination: "/home",
+      permanent: false,
       has,
     },
   ];

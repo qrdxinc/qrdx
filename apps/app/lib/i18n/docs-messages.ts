@@ -1,9 +1,10 @@
 // Writes the copy of the docs' namespaces that @repo/i18n loads
-// (packages/i18n/messages/<locale>.json) for an app that can't import this
-// one (the docs site). This app's catalogs (messages/<locale>.json) stay the
-// only place anyone edits; the copy isn't committed, and that app writes it
-// right before it builds or starts (`bun run --filter app
-// i18n:docs-messages`), so it can't go stale between merges.
+// (packages/i18n/messages/en.json) for an app that can't import this one
+// (the docs site, which is English only). This app's catalog
+// (messages/en.json) stays the only place anyone edits; the copy isn't
+// committed, and that app writes it right before it builds or starts
+// (`bun run --filter app i18n:docs-messages`), so it can't go stale between
+// merges.
 //
 // Node only (the script and tests).
 import {
@@ -15,35 +16,34 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import { LOCALES } from "@repo/i18n/config";
-import { DOCS_MESSAGES_DIR, docsMessages } from "@repo/i18n/messages";
+import {
+  DOCS_MESSAGES_DIR,
+  DOCS_MESSAGES_FILE,
+  docsMessages,
+} from "@repo/i18n/messages";
 
 const REPO = path.resolve(import.meta.dirname, "../../../..");
 const SOURCE = path.join(REPO, "apps/app/messages");
 const TARGET = path.join(REPO, DOCS_MESSAGES_DIR);
 
 /**
- * Each file of the copy and its contents: the docs' namespaces of each
- * language's catalog, as two-space JSON with a trailing newline. A language
- * without a catalog gets `{}` (English shows), so a missing file always
- * means the copy wasn't written.
+ * The copy's file and its contents: the docs' namespaces of the English
+ * catalog, as two-space JSON with a trailing newline.
  */
 export function docsMessagesFiles(): Map<string, string> {
-  const files = new Map<string, string>();
-  for (const locale of LOCALES) {
-    const source = path.join(SOURCE, `${locale}.json`);
-    const catalog = existsSync(source)
-      ? (JSON.parse(readFileSync(source, "utf8")) as Record<string, unknown>)
-      : {};
-    files.set(
-      `${locale}.json`,
-      `${JSON.stringify(docsMessages(catalog), null, 2)}\n`,
-    );
-  }
-  return files;
+  const catalog = JSON.parse(
+    readFileSync(path.join(SOURCE, DOCS_MESSAGES_FILE), "utf8"),
+  ) as Record<string, unknown>;
+  return new Map([
+    [DOCS_MESSAGES_FILE, `${JSON.stringify(docsMessages(catalog), null, 2)}\n`],
+  ]);
 }
 
-/** Writes the copy and removes files no language has any more. Returns what changed. */
+/**
+ * Writes the copy and removes any other file left there (the other
+ * languages' copies, from before the docs were English only). Returns what
+ * changed.
+ */
 export function writeDocsMessages(): string[] {
   const files = docsMessagesFiles();
   const changed: string[] = [];
