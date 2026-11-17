@@ -46,7 +46,7 @@ import {
   QR_SIZE_MAX,
   QR_SIZE_MIN,
   qrImageFormats,
-} from "@/lib/qr-render";
+} from "@/lib/qr-image-url";
 import { API_DEFAULTS } from "./snippets";
 import { UrlBuilder } from "./url-builder";
 

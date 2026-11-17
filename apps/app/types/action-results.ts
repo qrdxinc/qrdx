@@ -1,7 +1,10 @@
-// What the QR code and barcode server actions (actions/qr-codes.ts,
-// actions/barcodes.ts) answer, and the same-origin routes in front of them
-// (lib/widget-routes) with them. Declared here, in no server module, so
-// client code that reads these results imports no server action.
+// What the server actions behind the public widgets answer (QR codes,
+// barcodes, checkout, invoice and non-profit requests, the enterprise
+// form), and the same-origin routes in front of them (lib/widget-routes)
+// with them. Declared here, in no server module, so client code that reads
+// these results imports no server action.
+
+import type { EnterpriseRequestField } from "@/lib/enterprise";
 
 export type QrCodeErrorCode =
   | "UNAUTHORIZED"
@@ -40,3 +43,62 @@ export interface SavedBarcodeRef {
   /** The workspace it was saved to, for links */
   workspace: { slug: string; name: string };
 }
+
+/** actions/checkout.ts createCheckout (POST /api/subscription/checkout). */
+export type CheckoutResult =
+  | { url: string }
+  | {
+      error: string;
+      /**
+       * sign_in: no session; subscribed: change plans in the billing portal;
+       * unavailable: no product or billing here; invalid: not a plan and
+       * period; rate_limited: too many attempts; failed: Polar or this app
+       * failed.
+       */
+      reason?:
+        | "sign_in"
+        | "subscribed"
+        | "unavailable"
+        | "invalid"
+        | "rate_limited"
+        | "failed";
+    };
+
+/**
+ * The pay-by-invoice and non-profit discount requests on /pricing
+ * (actions/invoice-requests.ts, actions/nonprofit-requests.ts).
+ * FORBIDDEN only comes from their routes (another origin).
+ */
+export type PricingRequestResult =
+  | { ok: true }
+  | {
+      ok: false;
+      code:
+        | "UNAUTHORIZED"
+        | "FORBIDDEN"
+        | "VALIDATION_ERROR"
+        | "UNAVAILABLE"
+        | "NOT_SENT"
+        | "RATE_LIMITED"
+        | "UNKNOWN_ERROR";
+      error: string;
+    };
+
+/** The enterprise contact form's fields (lib/enterprise.ts, which the schema matches). */
+export type { EnterpriseRequestField };
+
+/** actions/enterprise-requests.ts submitEnterpriseRequest. */
+export type EnterpriseFormState =
+  | { status: "idle" }
+  | { status: "sent"; email: string }
+  | {
+      status: "error";
+      code:
+        | "invalid"
+        | "rateLimited"
+        | "check"
+        | "notSent"
+        | "unavailable"
+        | "unknown";
+      field?: EnterpriseRequestField;
+    };

@@ -9,6 +9,7 @@ import {
 import {
   ENTERPRISE_EMAIL,
   ENTERPRISE_FIELD_LIMITS,
+  type EnterpriseRequestField,
   TEAM_SIZE_LABELS,
   TEAM_SIZES,
 } from "@/lib/enterprise";
@@ -22,16 +23,20 @@ import { isFeatureAvailable } from "@/lib/feature-availability";
 // address everywhere. actions/enterprise-requests.ts adds the anti-abuse
 // checks a public form needs.
 
+export type { EnterpriseRequestField } from "@/lib/enterprise";
+
+// `satisfies` keeps the schema's fields and lib/enterprise.ts's
+// EnterpriseRequestField the same: a missing field or an extra one is a
+// type error.
 export const enterpriseRequestSchema = z.object({
   name: z.string().trim().min(1).max(ENTERPRISE_FIELD_LIMITS.name),
   email: z.email().max(ENTERPRISE_FIELD_LIMITS.email),
   company: z.string().trim().min(1).max(ENTERPRISE_FIELD_LIMITS.company),
   teamSize: z.enum(TEAM_SIZES),
   need: z.string().trim().min(1).max(ENTERPRISE_FIELD_LIMITS.need),
-});
+} satisfies Record<EnterpriseRequestField, z.ZodType>);
 
 export type EnterpriseRequestInput = z.input<typeof enterpriseRequestSchema>;
-export type EnterpriseRequestField = keyof EnterpriseRequestInput;
 
 /** The first field that failed, for the form to point at. */
 export class EnterpriseRequestInvalid extends HttpError {

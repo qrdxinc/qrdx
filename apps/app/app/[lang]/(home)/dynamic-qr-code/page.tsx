@@ -37,7 +37,7 @@ import { getPlanLimits, type PlanLimits, plansWith } from "@/lib/plans";
 import { playgroundHref } from "@/lib/playground-links";
 import { PLAN_NAMES } from "@/lib/pricing";
 import { PRODUCT_FACTS } from "@/lib/product-facts";
-import { MAX_RULES } from "@/lib/redirect/routing";
+import { MAX_RULES } from "@/lib/redirect/routing-limits";
 import { scanHistoryLabel } from "@/lib/scan-history";
 import { organizationId } from "@/lib/seo-schema";
 import { SHORT_LINK_BASE } from "@/lib/short-links";
@@ -49,7 +49,7 @@ import { SHORT_LINK_BASE } from "@/lib/short-links";
 // - limits and which plans include what: lib/plans.ts (plansWith, so copy
 //   never names a plan by hand)
 // - the 302 with Cache-Control: no-store: app/q/[slug]/resolve.ts
-// - routing rules per code: lib/redirect/routing.ts MAX_RULES
+// - routing rules per code: lib/redirect/routing-limits.ts MAX_RULES
 // - only URL codes can be dynamic: components/code-builder/playground-request.ts
 // - "Make it dynamic" from a link: lib/playground-apply.ts (open=dynamic)
 // - the guarantee: app/[lang]/(home)/guarantee and lib/plans.ts

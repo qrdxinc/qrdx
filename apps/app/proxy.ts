@@ -20,6 +20,7 @@ import {
 import {
   isSitePath,
   lowerCasedSitePrefix,
+  SITE_COUNTRY_HEADER,
   SITE_KEY_HEADER,
   siteZoneGroups,
 } from "@repo/next-config/site-zone";
@@ -33,6 +34,7 @@ import {
   isSessionHeld,
 } from "@/lib/account/session-origin-server";
 import { isHomePath } from "@/lib/home-path";
+import { countryFromHeaders } from "@/lib/region";
 import { signInPath } from "@/lib/safe-redirect";
 import { cspOptionsFromEnv } from "@/lib/security/csp";
 import { WORKSPACE_HEADER } from "@/lib/workspace-paths";
@@ -108,21 +110,35 @@ const forSite = (request: NextRequest) =>
   isSitePath(request.nextUrl.pathname, SITE_GROUPS_ON) &&
   onPlatformHost(request.headers.get("host"));
 
+/** A country as the geo headers name it: two capital letters, not "XX" (unknown). */
+const COUNTRY_CODE = /^(?!XX$)[A-Z]{2}$/;
+
 /**
  * A site page or asset: public, so no session is read and no policy is
  * set here (its pages keep this app's prerendered-page rules from
  * next.config.ts, as the docs' do). It gets the site's key, so the site can
  * tell requests that came through this app; any copy the browser sent is
  * dropped, and so are the console's key header and the workspace header.
+ * It also gets the visitor's country from this request's geo headers
+ * (lib/region.ts, as /pricing reads them here), for the site's currency;
+ * a copy the browser sent is dropped.
  */
 function toSite(request: NextRequest): NextResponse {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.delete(SITE_KEY_HEADER);
+  requestHeaders.delete(SITE_COUNTRY_HEADER);
   // Never the console's key on a site request.
   requestHeaders.delete(CONSOLE_KEY_HEADER);
   requestHeaders.delete(WORKSPACE_HEADER);
   if (env.SITE_ZONE_KEY) {
     requestHeaders.set(SITE_KEY_HEADER, env.SITE_ZONE_KEY);
+  }
+  // For the site only. This app must never read or trust it: a browser's
+  // copy is replaced here, on site requests, and nowhere else
+  // (tests/repo/visitor-country-header.test.ts).
+  const country = countryFromHeaders(request.headers);
+  if (country && COUNTRY_CODE.test(country)) {
+    requestHeaders.set(SITE_COUNTRY_HEADER, country);
   }
   return NextResponse.next({ request: { headers: requestHeaders } });
 }

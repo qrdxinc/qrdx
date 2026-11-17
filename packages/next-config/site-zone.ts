@@ -126,6 +126,22 @@ export const SITE_ASSET_PREFIX = "/site-static";
  */
 export const SITE_KEY_HEADER = "x-qrdx-site-key";
 
+/**
+ * The request header the main app's proxy.ts sets on the site's pages and
+ * assets with the visitor's country (two capital letters), read from the
+ * main app's own geo headers, after dropping any copy the browser sent. The
+ * site can't count on the hosting platform's geo headers describing the
+ * visitor on a proxied request, so its pages that depend on the country
+ * (/pricing's currency) read this one. Absent when the main app has none
+ * (local development, self-hosting without a geo-aware proxy).
+ *
+ * The main app must never read or trust it: only requests proxied to the
+ * site have a browser's copy replaced, and on every other path a browser can
+ * send any value (apps/app/tests/repo/visitor-country-header.test.ts fails
+ * on a reader).
+ */
+export const SITE_COUNTRY_HEADER = "x-qrdx-visitor-country";
+
 /** A next.config rewrite that only applies on the hosts given. */
 export interface SiteRewrite {
   source: string;
