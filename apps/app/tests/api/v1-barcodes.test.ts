@@ -273,6 +273,9 @@ describe("GET /v1/barcode", () => {
     ["code128", "A".repeat(81), /up to 80 characters; this has 81/],
     ["code39", "qrdx", /no lowercase letters/],
     ["code39", "QRDX#1", /Not allowed: #/],
+    ["code93", "QRDX-93", undefined],
+    ["code93", "qrdx", /Code 93 here has no lowercase letters/],
+    ["code93", "QRDX#1", /Not allowed: #/],
     ["datamatrix", "x".repeat(1001), /at most 1000 characters/],
   ])("%s %j", async (format, data, error) => {
     const response = await getImage(

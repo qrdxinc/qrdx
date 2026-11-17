@@ -44,6 +44,7 @@ export const DOWNLOAD_SIZES_MM: Record<
   upce: { width: 30.3, height: 27.8 },
   code128: { width: 69.9, height: 19.2 },
   code39: { width: 57.5, height: 19.2 },
+  code93: { width: 42.3, height: 19.2 },
   itf14: { width: 60.4, height: 31.7 },
   "gs1-128": { width: 100.9, height: 19.2 },
   datamatrix: { width: 15.5, height: 15.5 },
@@ -465,6 +466,45 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "Should I type the asterisks?",
         answer:
           "No. The start and stop characters are added for you, and the asterisk can't be part of the text.",
+      },
+    ],
+  },
+  {
+    id: "code93",
+    slug: "code-93",
+    title: "Free Code 93 Barcode Generator",
+    metaDescription:
+      "Make a Code 93 barcode with capital letters, digits and - . $ / + %, up to 40 characters. Check characters added. Scan-checked. SVG, PDF, PNG. Free.",
+    intro:
+      "Code 93 holds the same characters as Code 39, capital letters, digits and a few symbols, in a shorter barcode with two built-in check characters. Type up to 40 characters, check that it scans and download it.",
+    usedFor: [
+      "Labels in logistics and inventory systems that specify Code 93.",
+      "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
+    ],
+    numbers: {
+      title: "Do I need to register a Code 93 barcode?",
+      paragraphs: [
+        "No. Code 93 carries your own text: serial numbers, part numbers, IDs. There's nothing to license.",
+      ],
+    },
+    rules: [
+      "Capital letters A to Z, digits, spaces and - . $ / + %, up to 40 characters. Lowercase letters show an error: use capitals, or Code 128 for mixed case.",
+      "Every Code 93 barcode ends with two check characters, C and K, worked out from the text (modulo 47). They're required, so the generator always adds them, and readers check them and leave them out of what they return. The start and stop characters are added for you too.",
+    ],
+    sizing: [
+      "Each Code 93 character is 9 modules wide, against Code 39's 13 to 16, so the same text makes a shorter barcode: ABCDEFGHIJ is 51.9 mm in the downloads, 74.4 mm as Code 39 and 58.2 mm as Code 128.",
+      "Keep 10 modules of blank space each side, and make the bars at least 15% of the length, or 6.35 mm, so they're easy to sweep.",
+    ],
+    faqs: [
+      {
+        question: "Can Code 93 do lowercase?",
+        answer:
+          "Only in an extended mode (Full ASCII) that adds shift characters, which this generator doesn't offer. Use Code 128 for lowercase.",
+      },
+      {
+        question: "Will my scanner read Code 93?",
+        answer:
+          "Most barcode scanners can, but some handheld scanners let you switch symbologies off, and Code 93 is one that's sometimes off. Scan a test print with the scanners you'll use before printing a batch.",
       },
     ],
   },

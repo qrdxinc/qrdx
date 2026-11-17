@@ -11,6 +11,7 @@ export type BarcodeFormatId =
   | "upce"
   | "code128"
   | "code39"
+  | "code93"
   | "itf14"
   | "gs1-128"
   | "datamatrix"
@@ -121,6 +122,18 @@ export const BARCODE_FORMATS: readonly BarcodeFormat[] = [
     detectorFormats: ["code_39"],
   },
   {
+    id: "code93",
+    label: "Code 93",
+    kind: "linear",
+    summary: "Code 39's characters in a shorter barcode",
+    example: "QRDX-93",
+    inputHint: "Up to 40 capital letters, digits, spaces and - . $ / + %.",
+    quietZone: { min: 10, default: 10 },
+    barHeightMm: 15,
+    maxLength: 40,
+    detectorFormats: ["code_93"],
+  },
+  {
     id: "itf14",
     label: "ITF-14",
     kind: "linear",
@@ -217,6 +230,8 @@ export const BARCODE_ISSUE_CODES = [
   "code128Chars",
   "code39Chars",
   "code39Lowercase",
+  "code93Chars",
+  "code93Lowercase",
   "gs1Enter",
   "gs1Start",
   "gs1Brackets",
@@ -299,6 +314,10 @@ export function barcodeIssueText(issue: BarcodeIssue): string {
       return `Code 39 takes capital letters, digits, spaces and - . $ / + % only. Not allowed: ${englishChars(issue.chars)}`;
     case "code39Lowercase":
       return "Code 39 has no lowercase letters. Use capitals, or Code 128 for mixed case.";
+    case "code93Chars":
+      return `Code 93 takes capital letters, digits, spaces and - . $ / + % only. Not allowed: ${englishChars(issue.chars)}`;
+    case "code93Lowercase":
+      return "Code 93 here has no lowercase letters. Use capitals, or Code 128 for mixed case.";
     case "gs1Enter":
       return "Enter Application Identifiers in brackets with their values, e.g. (01)09501101530003.";
     case "gs1Start":
@@ -488,11 +507,16 @@ function offending(text: string, allowed: RegExp): string[] {
 
 const CODE128_CHAR = /^[\x20-\x7e]$/;
 const CODE39_CHAR = /^[0-9A-Z \-.$/+%]$/;
+/** Code 93's data characters are Code 39's 43; its four shift characters aren't typed. */
+const CODE93_CHAR = CODE39_CHAR;
 
 function textInput(
   format: BarcodeFormat,
   raw: string,
-  allowed: { chars: RegExp; code: "code128Chars" | "code39Chars" } | null,
+  allowed: {
+    chars: RegExp;
+    code: "code128Chars" | "code39Chars" | "code93Chars";
+  } | null,
 ): BarcodeInput {
   if (!raw) return fail({ code: "enterText" });
   const length = [...raw].length;
@@ -617,6 +641,18 @@ export function validateBarcodeInput(
       return textInput(format, raw, {
         chars: CODE39_CHAR,
         code: "code39Chars",
+      });
+    }
+    case "code93": {
+      const onlyCaseIsWrong =
+        /[a-z]/.test(raw) &&
+        [...raw.toUpperCase()].every((char) => CODE93_CHAR.test(char));
+      if (onlyCaseIsWrong) {
+        return fail({ code: "code93Lowercase" });
+      }
+      return textInput(format, raw, {
+        chars: CODE93_CHAR,
+        code: "code93Chars",
       });
     }
     case "gs1-128":

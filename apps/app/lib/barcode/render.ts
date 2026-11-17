@@ -9,6 +9,7 @@
 import {
   azteccode,
   code39,
+  code93,
   code128,
   datamatrix,
   drawingSVG,
@@ -55,6 +56,7 @@ const BROWSER_BUILD: BwipBuild<Drawing> = {
     upce: encoder(upce),
     code128: encoder(code128),
     code39: encoder(code39),
+    code93: encoder(code93),
     itf14: encoder(itf14),
     "gs1-128": encoder(gs1_128),
     datamatrix: encoder(datamatrix),
