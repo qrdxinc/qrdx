@@ -48,7 +48,6 @@ import {
   TRANSLATED_LOCALES,
   type TranslatedLocale,
 } from "@repo/i18n/config";
-import { hasDocs } from "@repo/i18n/docs";
 import { createGateway, generateText, Output } from "ai";
 import { z } from "zod";
 import {
@@ -152,7 +151,6 @@ const SURFACES: Record<string, string> = {
   home: "the home page of qrdx.dev, a free QR code generator",
   pricing:
     "the pricing page: plan cards, the comparison table, the guarantee and FAQ",
-  docs: "the documentation site's interface: search, table of contents, page buttons, the language menu, the help center's boxes, the 404 page and a note on pages not translated yet",
   // i18n-site lane (marketing pages), kept in one block.
   common:
     "labels shared by many marketing pages: breadcrumbs, FAQ headings, 'see all' links, card badges",
@@ -545,8 +543,8 @@ function planUi(locale: TranslatedLocale): Run | null {
     if (keyPrefixes.length && !keyPrefixes.some((p) => key.startsWith(p))) {
       return false;
     }
-    // The docs chrome only shows in languages with docs (packages/i18n/docs.ts).
-    if (key.startsWith("docs.") && !hasDocs(locale)) return false;
+    // The docs' own copy stays English: the docs are English only.
+    if (key.startsWith("docs.")) return false;
     const entry = review[key];
     const fresh = entry?.source === sourceHash(source.get(key) ?? "");
     if (!(catalog.has(key) && entry)) return true;

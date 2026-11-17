@@ -178,9 +178,8 @@ Translated so far:
 - **Public pages.** English keeps the unprefixed URLs (`/pricing`), and every other language lives under its own lowercase segment: `/es/pricing`, `/pt-br/pricing`, `/zh-hans`. These pages are under `apps/app/app/[lang]` and are listed in `packages/i18n/localized-paths.json`: the home page, `/pricing`, the guarantee, enterprise and security pages, the playground (`/es/playground`), tools, scanner, generators, industry and placement guides, templates, integrations, plugins, MCP, the API, dynamic QR code and open-source pages, AI and the comparison index. A dynamic route is listed the way its folder is named (`/qr-code-generator/[type]`). The header, the footer, the cookie banner and its dialog, and the sign-in dialog are translated on every one of them. Shared theme links (`/playground/<id>`) keep one URL and show the editor in the language menu's language (its cookie). To translate another marketing page, add its path to that list and run `bun run --filter app i18n:split`, which moves the page from `app/(app)/(home)` to `app/[lang]/(home)` and fixes the imports.
 - **The signed-in app.** The dashboard, settings, sign-in and two-step verification, OAuth consent, invitations and join links. Their URLs carry no language: `/dashboard` is `/dashboard` in every language. The language comes from the person: the one they pick in Settings > General > Language (saved on their account), else the language menu's cookie, else English. Server components there read it with `getAppTranslations()` from `apps/app/lib/i18n/app-locale.ts`, not `getTranslations()`, because the URL doesn't say.
 - **Emails.** The sign-in code, the new-address code and the first scan, scan milestone, form response and code activity alerts go out in the recipient's saved language, else the language the site was in when they asked for a code, else English. Templates take an `intl` (`apps/app/lib/i18n/email.ts`) and default to English.
-- **The docs**, in every one of these languages (see [Docs](#docs) below).
 
-The blog, the legal pages, the comparison pages themselves, admin and the other emails are English only.
+The docs, the blog, the legal pages, the comparison pages themselves, admin and the other emails are English only (see [Docs](#docs) below).
 
 The copy is in `apps/app/messages/`:
 
@@ -196,7 +195,7 @@ Long copy kept in TypeScript (for example `lib/qr-types-content.ts`, `lib/seo-co
 
 New interface copy goes into `en.json` and is read with next-intl's `t()`. `bun run --filter app i18n:extract <files>` (paths from `apps/app`) does most of that for a component: it moves JSX text, copy props such as `aria-label` and `placeholder`, and toast messages into `en.json` and swaps them for `t()` calls. Add `--app` for the signed-in app's server components and `--dry-run` to see the changes first. Copy it can't convert, such as module-level data, is listed for you to move by hand.
 
-An app other than `apps/app` loads the namespaces the docs read (`docs`, `footer`, `localeSwitcher`, `meta` and `consent`) through `@repo/i18n`, from a copy that `bun run --filter app i18n:docs-messages` writes to `packages/i18n/messages` right before that app builds. The copy isn't committed, so there's nothing to refresh by hand.
+The docs site (`apps/docs`) is English only and loads the English namespaces it reads (`docs`, `footer`, `meta` and `consent`) through `@repo/i18n`, from a copy that `bun run --filter app i18n:docs-messages` writes to `packages/i18n/messages/en.json` right before that app builds. The copy isn't committed, so there's nothing to refresh by hand. The `docs` key holds the docs' own interface strings: it stays out of the other catalogs, and the translate script and `i18n:check` skip it.
 
 ### Add a language
 
@@ -247,35 +246,17 @@ It fails on keys that English doesn't have, on placeholders or tags that changed
 
 ### Docs
 
-The docs (`apps/docs/content/docs`) are translated into the languages whose entry in `packages/i18n/config.ts` has `docs: true`: today all of them, `es`, `pt-BR`, `fr`, `de`, `it`, `ja`, `ko`, `zh-Hans`, `id` and `hi`. Their pages live under the language's segment, such as `/es/docs/...`, `/pt-br/docs/...` and `/zh-hans/docs/...`; English keeps `/docs/...`. A language added without `docs: true` links to the English docs.
+The docs (`apps/docs/content/docs`) are English only: one `<page>.mdx` a page and one `meta.json` a folder, served at `/docs/...`. They aren't translated, so don't add `<page>.<code>.mdx` or `meta.<code>.json` files (a test in `apps/docs` fails on them), and there is no docs translation script or review record.
 
-| File | What it holds |
-| --- | --- |
-| `apps/docs/content/docs/<page>.<code>.mdx` | A page's translation, beside the English `<page>.mdx` |
-| `apps/docs/content/docs/<folder>/meta.<code>.json` | The folder's sidebar labels: tab and folder names, separators |
-| `apps/docs/content/review/<code>.json` | For each English file, a hash of the English the translation came from and its status, `machine` or `reviewed` |
-| `apps/app/messages/<code>.json`, key `docs` | The docs interface: search, table of contents, page buttons, the language menu, the 404 page |
+Until 17 November 2026 the docs were also served in the other languages, under `/es/docs/...`, `/pt-br/docs/...` and so on. Those URLs, their `.md` and `.mdx` copies and `/docs-md/<language>/...` now redirect to the same page in English, keeping the path and the query (`translatedDocsRedirects` in `packages/i18n/docs.ts`, used by both apps' `next.config.ts`). The redirect is temporary (307) for now. A new language in `packages/i18n/config.ts` gets the same redirect for its `/<segment>/docs` URLs.
 
-A page that isn't translated shows the English text at the language's URL, with a note saying so. The sidebar's structure always comes from the English `meta.json`; a translated `meta.<code>.json` only supplies labels. So a new English page shows up in every language's sidebar right away, in English, until someone translates it. The API reference (`developers/api`) stays English: it's generated from the OpenAPI document.
+A link to a docs page is written as its English URL (`/docs/...`) everywhere, on translated pages too: `localizeHref` leaves docs paths alone.
 
-The translation tools stay with the main app's (they share its glossary and checks) and write into `apps/docs/content`. Translate missing and stale pages with a model (same key as above):
-
-```bash
-AI_GATEWAY_API_KEY=<your key> bun run --filter app i18n:docs --locale <code>
-bun run --filter app i18n:docs --locale <code> --page help/    # one folder
-```
-
-The script sends prose only. Code blocks, imports and component expressions are swapped out first, and every answer is checked: the same code, inline code, link URLs, `{facts.…}` tokens, components and their props, headings, lists, table rows and numbers, and valid MDX. Headings keep their English anchors (`## Título [#title]`), so links to `#section` work in every language. A page that fails three times stays English, and the script lists it.
-
-By hand: write `<page>.<code>.mdx` with the same frontmatter keys, translating `title` and `description`, and leave code, URLs, `{facts.…}` tokens and component props other than `title`, `description`, `label` and `alt` as they are. Then record it with `bun run --filter app i18n:docs --locale <code> --record`. Links to other docs pages keep their English URL (`/docs/...`): the page points them at the reader's language.
-
-`i18n:check` lists, per language, how many pages are translated, reviewed, machine-made, stale (the English changed since) or still English.
+The docs assistant (Ask AI in the docs) and the MCP server's `search_docs` and `read_docs_page` tools read the English pages. The assistant answers in the language the question is written in.
 
 ### Review and search engines
 
 A language with `review: "machine"` is live on the site but hidden from search engines. Its pages are `noindex`, they're left out of the sitemap, and no page links to them with hreflang. To publish a language, a native speaker reads every string, sets each one's `status` to `"reviewed"` in `review/<code>.json`, and changes the language's `review` to `"reviewed"` in the config. From the next deploy its pages are indexed, listed in the sitemap and linked with hreflang. `i18n:check` then fails on any string in that language that is missing, machine-made or stale. To publish single pages first, set `review` to a list of paths, such as `["/", "/pricing"]`.
-
-Docs pages follow the same `review`: a list can name docs paths (`"/docs/help"`), and `"reviewed"` publishes every translated docs page. Before that, a native speaker sets each page's `status` to `"reviewed"` in `apps/docs/content/review/<code>.json`; `i18n:check` fails on a published docs page that is machine-made or stale. A page that isn't translated is never indexed: it carries `noindex` and a canonical link to the English page.
 
 ## Pull requests
 

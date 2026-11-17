@@ -21,8 +21,7 @@ const slugify = (text: string) =>
  * Docs content for a feature, page or integration this deployment may not
  * offer (lib/feature-availability-rules.ts): rendered only where it works.
  * A section heading goes in `title`, so the table of contents never links a
- * hidden section (such a section isn't listed in it either). Translations
- * keep the English anchor in `id`, so links to `#section` still land.
+ * hidden section (such a section isn't listed in it either).
  * `unavailable` flips it: content that's only true until the feature is on.
  */
 export function IfAvailable({

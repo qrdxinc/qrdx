@@ -10,7 +10,7 @@ import { DocsChatProvider, useDocsChat } from "./provider";
 // floats it over the page on small ones (styles.css makes it a full sheet
 // on phones), and the layout's searchTrigger slot gets the Ask AI button
 // next to the header search (and its icon in the phone header). The layout
-// needs client state (open or closed), so app/[lang]/docs/layout.tsx
+// needs client state (open or closed), so app/docs/layout.tsx
 // imports this in place of fumadocs' DocsLayout, with the same props. The
 // provider that holds that state lives here too; the search dialog hands
 // questions over through a window event (./provider askDocsChat), so

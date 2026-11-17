@@ -36,7 +36,11 @@ export const docsChatRequestSchema = z
       )
       .min(1)
       .max(DOCS_CHAT.maxMessages),
-    /** The docs language of the page ("pt-BR" or "pt-br"); English without. */
+    /**
+     * Ignored: the docs are English only and the answer follows the language
+     * of the question. Still accepted, because pages loaded before that
+     * change send it.
+     */
     lang: z.string().max(12).optional(),
     /** The page the reader is on. */
     page: z

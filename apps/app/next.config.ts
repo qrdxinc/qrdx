@@ -10,7 +10,11 @@ import {
 } from "@repo/config";
 import { OG_FONT_GLOB } from "@repo/design-system/og/font-files";
 import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
-import { docsOriginRedirects, docsZoneRewrites } from "@repo/i18n/docs";
+import {
+  docsOriginRedirects,
+  docsZoneRewrites,
+  translatedDocsRedirects,
+} from "@repo/i18n/docs";
 import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
@@ -98,6 +102,16 @@ const docsElsewhere = env.DOCS_ZONE_URL
       // QRdx's own hosts: on a custom domain those paths are short links.
       has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
     });
+// The docs are English only. The docs URLs the other languages had
+// (/es/docs/..., /pt-br/docs/....md, /docs-md/es/...) redirect to the English
+// page, 307 for now (@repo/i18n/docs). Redirects run before the rewrites
+// above, so these requests are answered here, once, and never proxied to
+// the docs site. Without a docs site they go straight to the English page
+// on qrdx.dev.
+const translatedDocs = translatedDocsRedirects({
+  ...(!env.DOCS_ZONE_URL && { origin: CANONICAL_ORIGIN }),
+  has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
+});
 
 // The back-office console at CONSOLE_ORIGIN serves five /admin sections and
 // its build assets (@repo/next-config/console-zone), on QRdx's own hosts
@@ -426,6 +440,8 @@ let nextConfig: NextConfig = {
         ...redirect,
         has: [{ type: "host" as const, value: `(?:${PLATFORM_HOSTS})` }],
       })),
+      // The other languages' old docs URLs, to the English page.
+      ...translatedDocs,
       // No docs site here: the docs are read on qrdx.dev (docsElsewhere).
       ...docsElsewhere,
       // Site pages that moved (lib/moved-pages.ts), also on QRdx's own hosts.

@@ -1,13 +1,13 @@
 // Message catalogs. apps/app/messages holds every string, in English and
 // each language, and the main app loads those (apps/app/lib/i18n/messages.ts).
-// An app that can't import the main app's files (the docs site) reads a copy
-// of the namespaces the docs use (DOCS_NAMESPACES) from messages/<locale>.json
-// through docs-messages.ts. The copy isn't committed: that app writes it
-// right before it builds or starts (DOCS_MESSAGES_COMMAND), so it can't go
-// stale between merges.
+// An app that can't import the main app's files (the docs site, which is
+// English only) reads a copy of the English namespaces the docs use
+// (DOCS_NAMESPACES) from messages/en.json through docs-messages.ts. The copy
+// isn't committed: that app writes it right before it builds or starts
+// (DOCS_MESSAGES_COMMAND), so it can't go stale between merges.
 //
-// English is the source; a key a translation lacks falls back to English,
-// so a slip never shows a raw key.
+// English is the source; in the main app a key a translation lacks falls
+// back to English, so a slip never shows a raw key.
 
 type Catalog = Record<string, unknown>;
 
@@ -64,28 +64,24 @@ export const CHROME_NAMESPACES = [
 ] as const;
 
 /**
- * The namespaces the docs read, copied into messages/<locale>.json: the
- * docs interface (`docs`), the product links under every docs page
- * (`footer`), the language menu (`localeSwitcher`), the site's title and
- * description (`meta`) and the cookie banner (`consent`).
+ * The namespaces the docs read, copied into messages/en.json: the docs
+ * interface (`docs`), the product links under every docs page (`footer`),
+ * the site's title and description (`meta`) and the cookie banner
+ * (`consent`).
  */
-export const DOCS_NAMESPACES = [
-  "consent",
-  "docs",
-  "footer",
-  "localeSwitcher",
-  "meta",
-] as const;
+export const DOCS_NAMESPACES = ["consent", "docs", "footer", "meta"] as const;
 
-/** Where the docs catalogs are written, from the repository root (not committed). */
+/** Where the docs catalog is written, from the repository root (not committed). */
 export const DOCS_MESSAGES_DIR = "packages/i18n/messages";
+
+/** The copy's one file: the docs are English only. */
+export const DOCS_MESSAGES_FILE = "en.json";
 
 /** Writes the copy (apps/app/scripts/i18n-docs-messages.ts). */
 export const DOCS_MESSAGES_COMMAND = "bun run --filter app i18n:docs-messages";
 
 /**
  * The namespaces of `catalog` the docs read, in the catalog's own order.
- * Copies the catalog's values as they are (a translation stays partial).
  */
 export function docsMessages(catalog: Catalog): Catalog {
   const names = new Set<string>(DOCS_NAMESPACES);

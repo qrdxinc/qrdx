@@ -1,8 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { ZoneLink as Link } from "@/components/zone-link";
 import { isPathAvailable } from "@/lib/feature-availability";
-import type { Locale } from "@/lib/i18n/config";
-import { localizeHref } from "@/lib/i18n/paths";
 
 /** The product pages a docs reader is most likely to want next. */
 const LINKS = [
@@ -23,8 +21,8 @@ const LINKS = [
  * would let its width grow the grid's min-content side columns and squeeze
  * the page on phones.
  */
-export async function DocsProductLinks({ locale }: { locale: Locale }) {
-  const t = await getTranslations({ locale, namespace: "footer" });
+export async function DocsProductLinks() {
+  const t = await getTranslations("footer");
   const links = LINKS.filter(({ href }) => isPathAvailable(href));
 
   return (
@@ -33,16 +31,13 @@ export async function DocsProductLinks({ locale }: { locale: Locale }) {
         aria-label={t("navLabel")}
         className="mx-4 mb-8 flex w-full max-w-[calc(var(--docs-page-width)-2rem)] flex-wrap items-center gap-x-5 gap-y-2 border-t pt-6 text-sm md:mx-6 md:max-w-[calc(var(--docs-page-width)-3rem)] xl:mx-8 xl:max-w-[calc(var(--docs-page-width)-4rem)]"
       >
-        <Link
-          className="font-medium text-fd-foreground"
-          href={localizeHref("/", locale)}
-        >
+        <Link className="font-medium text-fd-foreground" href="/">
           QRdx
         </Link>
         {links.map(({ href, key }) => (
           <Link
             className="text-fd-muted-foreground transition-colors hover:text-fd-foreground"
-            href={localizeHref(href, locale)}
+            href={href}
             key={href}
             prefetch={false}
           >

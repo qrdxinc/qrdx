@@ -6,8 +6,8 @@
 // 1. packages/config/facts.generated.json, the product facts snapshot
 //    (`bun run --filter app facts:snapshot`, from apps/app/lib/
 //    product-facts.ts), which lib/product-facts.ts reads.
-// 2. packages/i18n/messages/<locale>.json, the namespaces of the message
-//    catalogs the docs read (`bun run --filter app i18n:docs-messages`,
+// 2. packages/i18n/messages/en.json, the namespaces of the English message
+//    catalog the docs read (`bun run --filter app i18n:docs-messages`,
 //    DOCS_NAMESPACES in @repo/i18n), which lib/i18n/messages.ts loads.
 // 3. packages/docs-assets/openapi.json, a copy of the main app's OpenAPI
 //    document (`bun run --filter app openapi:export`), which the API
@@ -110,7 +110,7 @@ async function fetchAvailability() {
 }
 
 mainAppScript("facts:snapshot", "the product facts snapshot");
-mainAppScript("i18n:docs-messages", "the docs' message catalogs");
+mainAppScript("i18n:docs-messages", "the docs' message catalog");
 mainAppScript("openapi:export", "the OpenAPI document's copy");
 const file = await fetchAvailability();
 mkdirSync(dirname(OUT), { recursive: true });

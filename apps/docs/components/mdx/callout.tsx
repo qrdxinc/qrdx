@@ -77,7 +77,7 @@ export interface CalloutProps extends Omit<ComponentProps<"div">, "title"> {
  * A quiet note in the flow of a page: an icon, a hairline border and a
  * faint tint in the variant's colour, the text in the foreground. Content
  * writes `<Callout type="info" title="...">`; Markdown blockquotes render
- * through it too (app/[lang]/docs/[[...slug]]/page.tsx).
+ * through it too (app/docs/[[...slug]]/page.tsx).
  */
 export function Callout({
   type,

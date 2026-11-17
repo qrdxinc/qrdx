@@ -3,10 +3,9 @@
 
 import Link from "fumadocs-core/link";
 import { ArrowRight, Messages2, SearchNormal1, Sms } from "iconsax-reactjs";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { HairlineFigure } from "@/components/mockups/hairline";
 import { siteConfig } from "@/config/site";
-import { localizeHref } from "@/lib/i18n/paths";
 import { HelpSearchTrigger } from "./help-search-trigger";
 
 /** Large search box: opens the same search dialog as ⌘K. */
@@ -27,11 +26,7 @@ const githubIssues = `${siteConfig.links.github}/issues`;
 
 /** "Still stuck?": the ways to reach a person, with the help figure. */
 export async function StillStuck() {
-  const locale = await getLocale();
-  const t = await getTranslations({
-    locale,
-    namespace: "docs.help.stillStuck",
-  });
+  const t = await getTranslations("docs.help.stillStuck");
   const email = siteConfig.links.email;
   return (
     <section
@@ -78,7 +73,7 @@ export async function StillStuck() {
         </ul>
         <Link
           className="text-sm font-medium text-fd-foreground underline decoration-fd-foreground/30 underline-offset-4 hover:decoration-fd-foreground"
-          href={localizeHref("/docs/help/contact", locale)}
+          href="/docs/help/contact"
         >
           {t("contact")}
         </Link>

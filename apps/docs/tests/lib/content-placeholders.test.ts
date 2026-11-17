@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-// The docs ship to production as written, in every language: an unfilled
+// The docs ship to production as written: an unfilled
 // "[[PLACEHOLDER]]" must never go live. The main app checks its own content
 // the same way (apps/app/tests/lib/content-placeholders.test.ts).
 const CONTENT = join(__dirname, "..", "..", "content");
