@@ -33,6 +33,10 @@ export const SITE_GROUPS = {
   industries: ["/qr-codes-for"],
   /** QR codes by placement: /qr-codes-on and its topic pages. */
   placements: ["/qr-codes-on"],
+  /** The QR code generators by type: /qr-code-generator and its type pages. */
+  generators: ["/qr-code-generator"],
+  /** The barcode generator: /barcode-generator and its format pages. */
+  barcodes: ["/barcode-generator"],
 } as const satisfies Record<string, readonly string[]>;
 
 export type SiteGroup = keyof typeof SITE_GROUPS;

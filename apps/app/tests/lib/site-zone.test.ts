@@ -133,7 +133,14 @@ describe("siteZoneRewrites", () => {
     expect(
       siteZoneRewrites(ORIGIN, {
         hosts: HOSTS,
-        groups: ["placements", "compare", "blog", "industries"],
+        groups: [
+          "barcodes",
+          "placements",
+          "generators",
+          "compare",
+          "blog",
+          "industries",
+        ],
       }),
     ).toEqual(siteZoneRewrites(ORIGIN, { hosts: HOSTS }));
   });
@@ -150,6 +157,10 @@ describe("siteZoneRewrites", () => {
       "/qr-codes-for/:path+",
       "/qr-codes-on",
       "/qr-codes-on/:path+",
+      "/qr-code-generator",
+      "/qr-code-generator/:path+",
+      "/barcode-generator",
+      "/barcode-generator/:path+",
       "/site-static/:path*",
     ]);
   });
@@ -520,8 +531,8 @@ describe("next.config.ts", () => {
     "/blog.md",
     "/customers",
     "/customers/flam",
-    "/qr-code-generator",
-    "/qr-code-generator/wifi",
+    "/tools",
+    "/tools/bulk",
     "/changelogs",
     "/es/blog",
     "/admin/growth",
