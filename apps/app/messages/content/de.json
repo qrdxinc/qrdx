@@ -29963,6 +29963,30 @@
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
+  "3c1004b71f0f": {
+    "source": "Search the docs",
+    "text": "Docs durchsuchen",
+    "status": "machine",
+    "context": "mcp.tools.9.title"
+  },
+  "82ae342a90f8": {
+    "source": "Finds QRdx docs pages for a question: how a feature works, API endpoints and fields, limits and plans, the React library. Returns titles, links and matching snippets, best first.",
+    "text": "Findet Seiten der QRdx-Docs zu einer Frage: wie eine Funktion arbeitet, API-Endpunkte und Felder, Limits und Pläne, die React-Bibliothek. Liefert Titel, Links und passende Textausschnitte, die besten zuerst.",
+    "status": "machine",
+    "context": "mcp.tools.9.description"
+  },
+  "13be09937478": {
+    "source": "Read a docs page",
+    "text": "Docs-Seite lesen",
+    "status": "machine",
+    "context": "mcp.tools.10.title"
+  },
+  "24dd1fdfc3d8": {
+    "source": "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
+    "text": "Eine Docs-Seite als Markdown, über den Pfad aus search_docs oder ihre URL. Lange Seiten werden gekürzt und enden mit einem Link zum Rest.",
+    "status": "machine",
+    "context": "mcp.tools.10.description"
+  },
   "abb9f9118ecf": {
     "source": "List styles",
     "text": "Stile auflisten",

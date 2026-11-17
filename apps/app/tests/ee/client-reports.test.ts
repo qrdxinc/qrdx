@@ -317,7 +317,7 @@ describe("branding a shared stats page", () => {
     ).toBe("Bloom Cafe");
   });
 
-  it("goes back to plain, on QRdx's host, after a downgrade", async () => {
+  it("goes back to plain after a downgrade, and keeps sent links open", async () => {
     state.plans.org_agency = "business";
     const mine = await brand();
     await enablePublicStats(owner, "c_menu");
@@ -333,9 +333,13 @@ describe("branding a shared stats page", () => {
       brand: { name: "Bloom Cafe" },
       hideQrdx: false,
     });
-    // Business-only: the custom domain stops serving it.
+    // The link already sent on the custom domain still opens, with QRdx's
+    // marks back; another domain never serves it.
     expect(
       await loadPublicStats(token, "30d", { customDomainId: "d_links" }),
+    ).toMatchObject({ brand: { name: "Bloom Cafe" }, hideQrdx: false });
+    expect(
+      await loadPublicStats(token, "30d", { customDomainId: "d_theirs" }),
     ).toBeNull();
     state.plans.org_agency = "free";
     expect(await loadPublicStats(token, "30d")).toMatchObject({

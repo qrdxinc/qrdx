@@ -45,6 +45,19 @@ vi.mock(
   "@repo/database/schema",
   async () => (await import("../support/fake-db")).repoDatabase,
 );
+// The licence, switched off by the tests that check what still works without
+// it (removing what was stored).
+const licence = vi.hoisted(() => ({ off: false }));
+vi.mock("@/lib/feature-availability", async (importOriginal) => {
+  const real =
+    await importOriginal<typeof import("@/lib/feature-availability")>();
+  return {
+    ...real,
+    isFeatureAvailable: (id: Parameters<typeof real.isFeatureAvailable>[0]) =>
+      !licence.off && real.isFeatureAvailable(id),
+  };
+});
+
 vi.mock("next/headers", () => ({
   headers: vi.fn(async () => state.headers),
   cookies: vi.fn(async () => ({ get: () => undefined })),
@@ -745,5 +758,26 @@ describe("managing portal clients", () => {
     expect((await portal.removePortalClientAction({ id: "pc_late" })).ok).toBe(
       true,
     );
+  });
+
+  it("lets a server without the licence only remove the clients it stored", async () => {
+    signIn("u_ana", "agency");
+    licence.off = true;
+    try {
+      expect(
+        await portal.invitePortalClientAction({
+          email: "new@client.example",
+          name: "",
+          folderIds: ["f_bloom"],
+        }),
+      ).toMatchObject({ ok: false, code: "NOT_FOUND" });
+      expect(fakeDb.find("portalClient", { id: "pc_late" })).toBeTruthy();
+      expect(
+        (await portal.removePortalClientAction({ id: "pc_late" })).ok,
+      ).toBe(true);
+      expect(fakeDb.find("portalClient", { id: "pc_late" })).toBeFalsy();
+    } finally {
+      licence.off = false;
+    }
   });
 });

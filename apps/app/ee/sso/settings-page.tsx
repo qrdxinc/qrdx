@@ -28,7 +28,7 @@ export default async function SsoSettingsPage() {
     await headers(),
     session ? { sessionId: session.sessionId, email: session.email } : null,
   );
-  const { plan, allowed, canManage, connection } = overview;
+  const { plan, licensed, allowed, canManage, connection } = overview;
   const ssoPlan = cheapestPlanWith((limits) => limits.sso);
 
   return (
@@ -45,7 +45,15 @@ export default async function SsoSettingsPage() {
         </Button>
       </SettingsHeader>
 
-      {!allowed && (
+      {!licensed && (
+        <p className="text-muted-foreground rounded-lg border p-4 text-sm">
+          Single sign-on isn't available on this server, so nobody can sign in
+          with it. Members can still use an email code, Google or GitHub. You
+          can remove the connection below.
+        </p>
+      )}
+
+      {licensed && !allowed && (
         <p className="text-muted-foreground rounded-lg border p-4 text-sm">
           {connection
             ? "This workspace's plan no longer includes single sign-on, so nobody can sign in with it. Members can still use an email code, Google or GitHub. You can remove the connection below."

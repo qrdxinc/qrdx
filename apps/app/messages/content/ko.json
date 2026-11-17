@@ -29963,6 +29963,30 @@
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
+  "3c1004b71f0f": {
+    "source": "Search the docs",
+    "text": "문서 검색",
+    "status": "machine",
+    "context": "mcp.tools.9.title"
+  },
+  "82ae342a90f8": {
+    "source": "Finds QRdx docs pages for a question: how a feature works, API endpoints and fields, limits and plans, the React library. Returns titles, links and matching snippets, best first.",
+    "text": "질문과 관련된 QRdx 문서 페이지를 찾아요. 기능의 작동 방식, API 엔드포인트와 필드, 제한과 요금제, React 라이브러리 등을 다루며, 제목, 링크, 일치하는 스니펫을 관련도 순으로 반환해요.",
+    "status": "machine",
+    "context": "mcp.tools.9.description"
+  },
+  "13be09937478": {
+    "source": "Read a docs page",
+    "text": "문서 페이지 읽기",
+    "status": "machine",
+    "context": "mcp.tools.10.title"
+  },
+  "24dd1fdfc3d8": {
+    "source": "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
+    "text": "search_docs가 반환한 경로나 URL로 문서 페이지 하나를 Markdown으로 가져와요. 긴 페이지는 잘리며 나머지로 이동하는 링크가 함께 제공돼요.",
+    "status": "machine",
+    "context": "mcp.tools.10.description"
+  },
   "abb9f9118ecf": {
     "source": "List styles",
     "text": "스타일 목록 보기",

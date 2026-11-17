@@ -93,8 +93,10 @@ export async function statsLinkHost(
 /**
  * How a shared page looks: its client brand and whether QRdx's marks go.
  * Null when the page mustn't be served here: a request through a custom
- * domain (`customDomainId`) only gets the shares assigned to that domain,
- * on a plan with white-label pages (Business, with the licence).
+ * domain (`customDomainId`) only gets the shares assigned to that domain.
+ * A link already sent on that domain keeps opening when the plan or the
+ * licence no longer covers white-label pages: it then shows QRdx's marks
+ * again, like the same link on QRdx's own host.
  */
 export async function statsPageBranding({
   token,
@@ -113,12 +115,7 @@ export async function statsPageBranding({
     tools.clientReports || customDomainId
       ? await findShareExtras({ token })
       : null;
-  if (
-    customDomainId &&
-    !(tools.clientReportsWhiteLabel && extras?.domainId === customDomainId)
-  ) {
-    return null;
-  }
+  if (customDomainId && extras?.domainId !== customDomainId) return null;
   const brand =
     tools.clientReports && extras?.brandKitId && organizationId
       ? await loadBrand(organizationId, extras.brandKitId)

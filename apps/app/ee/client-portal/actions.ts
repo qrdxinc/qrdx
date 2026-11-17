@@ -23,7 +23,7 @@ import { getActiveScope } from "@/lib/scope";
 // Settings → Client portal (agency tools, Business): invite clients, choose
 // their folders, remove them, and brand the portal. Owners and admins. On a
 // server without the licence key every action answers NOT_FOUND
-// (./access.ts).
+// (./access.ts), except removing a client, which always works.
 
 const inviteLimiter = createRateLimiter({ limiter: slidingWindow(30, "10 m") });
 const writeLimiter = createRateLimiter({ limiter: slidingWindow(60, "10 m") });
@@ -76,7 +76,7 @@ export async function removePortalClientAction(input: {
   id: string;
 }): Promise<BrandActionResult<null>> {
   try {
-    requireClientPortal();
+    // No licence check: removing works wherever clients are stored.
     const id = typeof input?.id === "string" ? input.id.trim() : "";
     if (!id || id.length > 64) {
       throw new HttpError(404, "NOT_FOUND", "Client not found.");
