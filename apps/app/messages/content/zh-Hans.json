@@ -22625,6 +22625,24 @@
     "status": "machine",
     "context": "barcodes.formats.code39.inputHint"
   },
+  "72696df700c2": {
+    "source": "Code 39's characters in a shorter barcode",
+    "text": "字符集与 Code 39 相同，条码更短",
+    "status": "machine",
+    "context": "barcodes.formats.code93.summary"
+  },
+  "1268c9b1de31": {
+    "source": "Digits for libraries, blood banks and older labels",
+    "text": "适用于图书馆、血库和旧式标签的数字条码",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.summary"
+  },
+  "b2c2db8e248a": {
+    "source": "Start and end with A, B, C or D; between them up to 38 digits and - $ : / . +.",
+    "text": "以 A、B、C 或 D 开头和结尾；中间最多 38 位数字，以及 - $ : / . +。",
+    "status": "machine",
+    "context": "barcodes.formats.codabar.inputHint"
+  },
   "589227c3ced5": {
     "source": "Shipping cartons holding retail products",
     "text": "装有零售商品的运输纸箱",
@@ -22751,6 +22769,18 @@
     "status": "machine",
     "context": "barcodes.uses.code39"
   },
+  "5d7174c9e84a": {
+    "source": "Code 39's characters in a shorter barcode, with two check characters that readers verify. Use it when a system asks for Code 93; otherwise Code 128 does the same job and more.",
+    "text": "字符集与 Code 39 相同，条码更短，并带有两个供读取器校验的校验字符。系统要求使用 Code 93 时再选它；否则 Code 128 能完成同样的工作，功能还更多。",
+    "status": "machine",
+    "context": "barcodes.uses.code93"
+  },
+  "ec05c52f5ac8": {
+    "source": "An older barcode of digits with a start and stop letter (A to D), still used by libraries, blood banks and some shipping labels. Use it when a system asks for Codabar; otherwise Code 128 is shorter.",
+    "text": "一种较老的数字条码，带有起始和终止字母（A 至 D），图书馆、血库和部分物流标签仍在使用。系统要求使用 Codabar 时再选它；否则 Code 128 更短。",
+    "status": "machine",
+    "context": "barcodes.uses.codabar"
+  },
   "78b5bd23193b": {
     "source": "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
     "text": "印在装零售商品的瓦楞纸箱上。它承载整箱的 14 位 GTIN，粗边框（保护条）能均衡印刷压力，避免扫描器只读到一部分。",
@@ -22823,9 +22853,9 @@
     "status": "machine",
     "context": "barcodes.faqs.1.question"
   },
-  "354487504d93": {
-    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128 and Code 39 need no registration.",
-    "text": "在商店销售的商品需要注册。EAN、UPC、ITF-14 和 GS1-128 承载的是 GTIN，而 GTIN 由 GS1（或你所在国家的 GS1 组织）授权给你的公司；零售商的系统不会识别自编的号码。本生成器可以绘制任何有效号码，但不会发放或注册号码。用于自己的库存、资产或票券时，Code 128 和 Code 39 无需注册。",
+  "aca907b86c08": {
+    "source": "For products sold in shops, yes. EAN, UPC, ITF-14 and GS1-128 carry a GTIN, and GTINs are licensed to your company by GS1 (or GS1's organization in your country); retailers' systems won't recognize a made-up number. This generator draws any valid number, but it doesn't issue or register numbers. For your own stock, assets or tickets, Code 128, Code 39 and Code 93 need no registration.",
+    "text": "对于在商店销售的商品，需要。EAN、UPC、ITF-14 和 GS1-128 都承载 GTIN，而 GTIN 由 GS1（或您所在国家的 GS1 组织）授权给贵公司；零售商的系统无法识别随意编造的号码。本生成器可以绘制任何有效的号码，但不会发放或注册号码。如果用于您自己的库存、资产或票券，Code 128、Code 39 和 Code 93 无需注册。",
     "status": "machine",
     "context": "barcodes.faqs.1.answer"
   },
@@ -23908,6 +23938,174 @@
     "text": "不需要。起始和终止字符会自动添加，星号也不能作为文本的一部分。",
     "status": "machine",
     "context": "barcodeFormats.pages.code-39.faqs.1.answer"
+  },
+  "2710ebb603a0": {
+    "source": "Free Code 93 Barcode Generator",
+    "text": "免费 Code 93 条形码生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.title"
+  },
+  "18b303bbca65": {
+    "source": "Make a Code 93 barcode with capital letters, digits and - . $ / + %, up to 40 characters. Check characters added. Scan-checked. SVG, PDF, PNG. Free.",
+    "text": "生成 Code 93 条形码，支持大写字母、数字及 - . $ / + %，最多 40 个字符。自动添加校验字符，已通过扫描检测。支持 SVG、PDF、PNG。免费。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.metaDescription"
+  },
+  "e219e5513bd8": {
+    "source": "Code 93 holds the same characters as Code 39, capital letters, digits and a few symbols, in a shorter barcode with two built-in check characters. Type up to 40 characters, check that it scans and download it.",
+    "text": "Code 93 支持与 Code 39 相同的字符——大写字母、数字和少量符号——条形码更短，并内置两个校验字符。最多输入 40 个字符，检查能否扫描后即可下载。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.intro"
+  },
+  "7bee63c8a9a6": {
+    "source": "Labels in logistics and inventory systems that specify Code 93.",
+    "text": "物流和库存系统中指定使用 Code 93 的标签。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.0"
+  },
+  "8d204ecd0aaf": {
+    "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
+    "text": "如果没有硬性要求使用 Code 93，请选用 Code 128：它也支持小写字母，而且更多扫描器已开启对它的识读。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
+  "d2fb97a99a0a": {
+    "source": "Do I need to register a Code 93 barcode?",
+    "text": "需要注册 Code 93 条形码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.title"
+  },
+  "cebbfa59e3ae": {
+    "source": "No. Code 93 carries your own text: serial numbers, part numbers, IDs. There's nothing to license.",
+    "text": "不需要。Code 93 承载的是你自己的文本：序列号、零件号、ID。无需任何授权。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.numbers.paragraphs.0"
+  },
+  "74ac9841bdd6": {
+    "source": "Every Code 93 barcode ends with two check characters, C and K, worked out from the text (modulo 47). They're required, so the generator always adds them, and readers check them and leave them out of what they return. The start and stop characters are added for you too.",
+    "text": "每个 Code 93 条形码末尾都有两个校验字符 C 和 K，根据文本计算得出（模 47）。它们是必需的，因此生成器总会自动添加，读取时会校验它们，并且不会包含在返回的内容中。起始符和终止符也会自动添加。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.rules.1"
+  },
+  "77496524eafa": {
+    "source": "Each Code 93 character is 9 modules wide, against Code 39's 13 to 16, so the same text makes a shorter barcode: ABCDEFGHIJ is 51.9 mm in the downloads, 74.4 mm as Code 39 and 58.2 mm as Code 128.",
+    "text": "Code 93 每个字符宽 9 个模块，而 Code 39 为 13 到 16 个，因此相同文本生成的条形码更短：ABCDEFGHIJ 在下载文件中为 51.9 mm，用 Code 39 为 74.4 mm，用 Code 128 为 58.2 mm。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.sizing.0"
+  },
+  "272ae0dd2556": {
+    "source": "Can Code 93 do lowercase?",
+    "text": "Code 93 能编码小写字母吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.question"
+  },
+  "49f94a9600a4": {
+    "source": "Only in an extended mode (Full ASCII) that adds shift characters, which this generator doesn't offer. Use Code 128 for lowercase.",
+    "text": "只有在增加移位字符的扩展模式（Full ASCII）下才可以，而本生成器不提供该模式。需要小写字母请使用 Code 128。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.0.answer"
+  },
+  "9610fa0dc484": {
+    "source": "Will my scanner read Code 93?",
+    "text": "我的扫描器能读取 Code 93 吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.question"
+  },
+  "c883cdcae324": {
+    "source": "Most barcode scanners can, but some handheld scanners let you switch symbologies off, and Code 93 is one that's sometimes off. Scan a test print with the scanners you'll use before printing a batch.",
+    "text": "大多数条形码扫描器都可以，但部分手持扫描器允许关闭某些码制，Code 93 就是有时会被关闭的一种。批量打印前，请先用你要使用的扫描器扫描测试打印件。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.faqs.1.answer"
+  },
+  "f47fc8d29ec5": {
+    "source": "Free Codabar Barcode Generator",
+    "text": "免费 Codabar 条形码生成器",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.title"
+  },
+  "da432fa0e742": {
+    "source": "Make a Codabar barcode: digits and - $ : / . + between a start and stop letter A to D, up to 40 characters. Scan-checked. SVG, PDF, PNG. Free, no signup.",
+    "text": "生成 Codabar 条形码：数字及 - $ : / . +，两端为 A 到 D 的起始和终止字母，最多 40 个字符。已通过扫描检测。支持 SVG、PDF、PNG。免费，无需注册。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.metaDescription"
+  },
+  "dd54414779bc": {
+    "source": "Codabar is an older barcode of digits and a few symbols, framed by a start and a stop letter. Libraries, blood banks and some shipping labels still use it. Type your value, check that it scans and download it.",
+    "text": "Codabar 是一种较早的条形码，由数字和少量符号组成，两端分别是起始字母和终止字母。图书馆、血库和部分快递标签仍在使用。输入你的值，检查能否扫描，然后下载。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.intro"
+  },
+  "ea77d1fdc0be": {
+    "source": "Library and loan systems, blood bank labels and some shipping and lab labels, wherever an existing system or scanner is set up for Codabar.",
+    "text": "图书馆和借阅系统、血库标签，以及部分快递和实验室标签，凡是现有系统或扫描器已设置为使用 Codabar 的场合。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.0"
+  },
+  "fa9e8da77e53": {
+    "source": "If nothing asks for Codabar, use Code 128: it holds letters and makes a shorter barcode for the same text.",
+    "text": "如果没有要求使用 Codabar，请选用 Code 128：它支持字母，同样的文本生成的条形码更短。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.usedFor.1"
+  },
+  "4c3b5b55e7e9": {
+    "source": "Do I need to register a Codabar barcode?",
+    "text": "需要注册 Codabar 条形码吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.title"
+  },
+  "d0209ed07811": {
+    "source": "No. Codabar carries your own numbers, such as a membership, item or sample number. There's nothing to license. Check with the system that reads it which start and stop letters it expects.",
+    "text": "不需要。Codabar 承载的是你自己的编号，例如会员号、物品编号或样本编号。无需任何授权。请向读取它的系统确认其要求使用哪种起始和终止字母。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.numbers.paragraphs.0"
+  },
+  "9b20883f5d9b": {
+    "source": "Start and end with one of A, B, C or D, with at least one character between them: digits and - $ : / . + only, up to 40 characters in all, for example A40156B.",
+    "text": "以 A、B、C 或 D 之一开头和结尾，两者之间至少有一个字符：仅限数字和 - $ : / . +，总共最多 40 个字符，例如 A40156B。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.0"
+  },
+  "0934d84635a2": {
+    "source": "The start and stop letters are part of what you type and what a scanner reports; some systems use the choice of letter to tell kinds of labels apart. This generator adds no check digit; if your system needs one, add it to your number yourself.",
+    "text": "起始字母和终止字母是你输入内容的一部分，也会出现在扫描器的读取结果中；有些系统会用字母的选择来区分标签类型。本生成器不会添加校验位；如果你的系统需要，请自行把它加到号码里。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.rules.1"
+  },
+  "643068ad3651": {
+    "source": "Codabar characters aren't all the same width, so the width depends on what you type: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Digits, - and $ are the narrow ones; : / . + and the start and stop letters take a little more room.",
+    "text": "Codabar 的字符宽度并不都相同，因此宽度取决于你输入的内容：示例 A40156B 在下载文件中为 37.7 × 19.2 mm。数字、- 和 $ 最窄；: / . + 以及起始和终止字母占用的空间稍多一些。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.0"
+  },
+  "6ebe2b720e05": {
+    "source": "Keep 10 modules of blank space each side, and make the bars tall enough to sweep easily: the generator starts at 15 mm.",
+    "text": "两侧各留出 10 个模块的空白，并让条形足够高，便于轻松扫过：生成器最低从 15 mm 起。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.sizing.1"
+  },
+  "868c623a9331": {
+    "source": "Which start and stop letters should I use?",
+    "text": "我该用哪种起始和终止字母？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.question"
+  },
+  "339e22c067b9": {
+    "source": "Use the ones your system expects. Some systems use the letters to mark different label types. The letters can differ at each end.",
+    "text": "使用你的系统要求的那些。有些系统用字母标记不同的标签类型。两端的字母可以不同。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.0.answer"
+  },
+  "a426c1c105c7": {
+    "source": "Can Codabar hold letters?",
+    "text": "Codabar 能编码字母吗？",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.question"
+  },
+  "6efd6d4d07ab": {
+    "source": "Only A to D, as start and stop characters. For other letters use Code 128, or Code 39 for capitals.",
+    "text": "只有 A 到 D，且只能作为起始和终止字符。其他字母请使用 Code 128，大写字母也可使用 Code 39。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.codabar.faqs.1.answer"
   },
   "d3ff2381a9b5": {
     "source": "Free PDF417 Barcode Generator",
@@ -29735,9 +29933,9 @@
     "status": "machine",
     "context": "mcp.tools.6.title"
   },
-  "018b7893a107": {
-    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
-    "text": "EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Data Matrix、PDF417 或 Aztec。校验数值（校验位、长度、字符），返回一张 PNG，以及公开的 SVG、PNG、PDF 等图片链接。",
+  "26e9ed7d6f36": {
+    "source": "EAN-13, UPC-A, UPC-E, EAN-8, ITF-14, GS1-128, Code 128, Code 39, Code 93, Codabar, Data Matrix, PDF417 or Aztec. Checks the value (check digits, lengths, characters) and returns a PNG plus public SVG, PNG, PDF and other image URLs.",
+    "text": "支持 EAN-13、UPC-A、UPC-E、EAN-8、ITF-14、GS1-128、Code 128、Code 39、Code 93、Codabar、Data Matrix、PDF417 或 Aztec。会校验输入的值（校验位、长度、字符），并返回 PNG 图片，以及公开的 SVG、PNG、PDF 等图片链接。",
     "status": "machine",
     "context": "mcp.tools.6.description"
   },

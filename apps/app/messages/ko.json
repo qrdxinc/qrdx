@@ -1380,7 +1380,7 @@
       },
       "products": {
         "name": "제품 코드",
-        "detail": "EAN/UPC 번호와 GS1 데이터(GTIN, 배치, 유통기한)를 GS1 Digital Link까지 포함해 읽어요."
+        "detail": "EAN, UPC, ITF-14 번호와 GS1 데이터(GTIN, 배치, 유통기한)를 GS1 Digital Link까지 포함해 읽어 줘요."
       },
       "text": {
         "name": "일반 텍스트",
@@ -2032,6 +2032,10 @@
       "code128Chars": "여기서 Code 128은 일반 ASCII 문자, 숫자, 공백, 기호만 사용할 수 있어요. 허용되지 않는 문자: {chars}",
       "code39Chars": "Code 39는 대문자, 숫자, 공백, - . $ / + % 만 사용할 수 있어요. 허용되지 않는 문자: {chars}",
       "code39Lowercase": "Code 39에는 소문자가 없어요. 대문자를 사용하거나, 대소문자를 섞으려면 Code 128을 사용하세요.",
+      "code93Chars": "Code 93은 대문자, 숫자, 공백, 그리고 - . $ / + % 문자만 사용할 수 있어요. 허용되지 않는 문자: {chars}",
+      "code93Lowercase": "여기서 Code 93은 소문자를 지원하지 않아요. 대문자를 사용하거나, 대소문자가 섞인 경우에는 Code 128을 사용하세요.",
+      "codabarStartStop": "Codabar는 A, B, C 또는 D로 시작하고 끝나야 하며, 그 사이에 문자가 하나 이상 있어야 해요. 예: A40156B.",
+      "codabarChars": "Codabar는 시작 문자와 종료 문자 사이에 숫자와 - $ : / . + 문자를 사용할 수 있어요. 허용되지 않는 문자: {chars}",
       "gs1Enter": "괄호로 묶은 Application Identifier와 값을 입력하세요. 예: (01)09501101530003",
       "gs1Start": "괄호로 묶은 Application Identifier로 시작하고(GTIN은 예: (01)), 이어서 값을 입력하세요.",
       "gs1Brackets": "괄호가 맞지 않아요. 각 AI를 (숫자) 형식으로 쓰고 그 뒤에 값을 입력하세요.",

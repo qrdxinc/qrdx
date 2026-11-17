@@ -1380,7 +1380,7 @@
       },
       "products": {
         "name": "Codici prodotto",
-        "detail": "Numeri EAN/UPC e dati GS1 (GTIN, lotto, scadenza), incluso GS1 Digital Link."
+        "detail": "Numeri EAN, UPC e ITF-14 e dati GS1 (GTIN, lotto, scadenza), compreso GS1 Digital Link."
       },
       "text": {
         "name": "Testo semplice",
@@ -2032,6 +2032,10 @@
       "code128Chars": "Code 128 accetta qui solo lettere ASCII semplici, cifre, spazi e simboli. Non consentiti: {chars}",
       "code39Chars": "Code 39 accetta solo lettere maiuscole, cifre, spazi e - . $ / + %. Non consentiti: {chars}",
       "code39Lowercase": "Code 39 non ha lettere minuscole. Usa le maiuscole, oppure Code 128 per maiuscole e minuscole insieme.",
+      "code93Chars": "Code 93 accetta solo lettere maiuscole, cifre, spazi e - . $ / + %. Non consentiti: {chars}",
+      "code93Lowercase": "Qui Code 93 non supporta le lettere minuscole. Usa le maiuscole, oppure Code 128 per mischiare maiuscole e minuscole.",
+      "codabarStartStop": "Codabar inizia e finisce con A, B, C o D, con almeno un carattere in mezzo, ad esempio A40156B.",
+      "codabarChars": "Codabar accetta cifre e - $ : / . + tra le lettere di inizio e di fine. Non consentiti: {chars}",
       "gs1Enter": "Inserisci gli Application Identifier tra parentesi con i loro valori, ad es. (01)09501101530003.",
       "gs1Start": "Inizia con un Application Identifier tra parentesi, ad es. (01) per un GTIN, poi il suo valore.",
       "gs1Brackets": "Le parentesi non corrispondono: scrivi ogni AI come (cifre), seguito dal suo valore.",

@@ -1380,7 +1380,7 @@
       },
       "products": {
         "name": "商品码",
-        "detail": "EAN/UPC 号码和 GS1 数据（GTIN、批号、有效期），包括 GS1 Digital Link。"
+        "detail": "支持 EAN、UPC 和 ITF-14 编号，以及 GS1 数据（GTIN、批号、有效期），包括 GS1 Digital Link。"
       },
       "text": {
         "name": "纯文本",
@@ -2032,6 +2032,10 @@
       "code128Chars": "此处的 Code 128 支持普通 ASCII 字母、数字、空格和符号。不允许的字符：{chars}",
       "code39Chars": "Code 39 仅支持大写字母、数字、空格以及 - . $ / + % 。不允许的字符：{chars}",
       "code39Lowercase": "Code 39 不支持小写字母。请使用大写字母，或使用 Code 128 来支持大小写混合。",
+      "code93Chars": "Code 93 仅支持大写字母、数字、空格以及 - . $ / + % 这些符号。不支持的字符：{chars}",
+      "code93Lowercase": "这里的 Code 93 不支持小写字母。请使用大写字母，或改用 Code 128 来处理大小写混合的内容。",
+      "codabarStartStop": "Codabar 必须以 A、B、C 或 D 开头和结尾，且两者之间至少有一个字符，例如 A40156B。",
+      "codabarChars": "Codabar 的起始字母与终止字母之间仅支持数字以及 - $ : / . + 这些符号。不支持的字符：{chars}",
       "gs1Enter": "请输入括号括起的应用标识符及其值，例如 (01)09501101530003。",
       "gs1Start": "请以括号括起的应用标识符开头，例如 GTIN 使用 (01)，然后输入它的值。",
       "gs1Brackets": "括号不匹配：请将每个 AI 写成 (数字)，后面紧跟它的值。",

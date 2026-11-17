@@ -1380,7 +1380,7 @@
       },
       "products": {
         "name": "Codes produit",
-        "detail": "Numéros EAN/UPC et données GS1 (GTIN, lot, péremption), y compris GS1 Digital Link."
+        "detail": "Numéros EAN, UPC et ITF-14 et données GS1 (GTIN, lot, date de péremption), y compris GS1 Digital Link."
       },
       "text": {
         "name": "Texte brut",
@@ -2032,6 +2032,10 @@
       "code128Chars": "Code 128 accepte ici les lettres ASCII simples, les chiffres, les espaces et les symboles. Non autorisés : {chars}",
       "code39Chars": "Code 39 n’accepte que les lettres majuscules, les chiffres, les espaces et - . $ / + % . Non autorisés : {chars}",
       "code39Lowercase": "Code 39 n’a pas de lettres minuscules. Utilisez des majuscules, ou Code 128 pour mélanger majuscules et minuscules.",
+      "code93Chars": "Code 93 n’accepte que les majuscules, les chiffres, les espaces et les caractères - . $ / + %. Caractères non autorisés : {chars}",
+      "code93Lowercase": "Ici, Code 93 n’accepte pas les minuscules. Utilisez des majuscules, ou Code 128 pour mélanger majuscules et minuscules.",
+      "codabarStartStop": "Codabar commence et se termine par A, B, C ou D, avec au moins un caractère entre les deux, par exemple A40156B.",
+      "codabarChars": "Codabar accepte les chiffres et les caractères - $ : / . + entre ses lettres de début et de fin. Caractères non autorisés : {chars}",
       "gs1Enter": "Saisissez les identifiants d’application entre parenthèses avec leurs valeurs, par ex. (01)09501101530003.",
       "gs1Start": "Commencez par un identifiant d’application entre parenthèses, par ex. (01) pour un GTIN, puis sa valeur.",
       "gs1Brackets": "Les parenthèses ne correspondent pas : écrivez chaque AI sous la forme (chiffres), suivi de sa valeur.",

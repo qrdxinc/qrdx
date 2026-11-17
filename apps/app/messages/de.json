@@ -1380,7 +1380,7 @@
       },
       "products": {
         "name": "Produktcodes",
-        "detail": "EAN/UPC-Nummern und GS1-Daten (GTIN, Charge, Ablaufdatum), einschließlich GS1 Digital Link."
+        "detail": "EAN-, UPC- und ITF-14-Nummern sowie GS1-Daten (GTIN, Charge, Ablaufdatum), einschließlich GS1 Digital Link."
       },
       "text": {
         "name": "Reiner Text",
@@ -2032,6 +2032,10 @@
       "code128Chars": "Code 128 erlaubt hier nur einfache ASCII-Buchstaben, Ziffern, Leerzeichen und Symbole. Nicht erlaubt: {chars}",
       "code39Chars": "Code 39 erlaubt nur Großbuchstaben, Ziffern, Leerzeichen und - . $ / + %. Nicht erlaubt: {chars}",
       "code39Lowercase": "Code 39 hat keine Kleinbuchstaben. Verwende Großbuchstaben oder Code 128 für gemischte Schreibweise.",
+      "code93Chars": "Code 93 akzeptiert nur Großbuchstaben, Ziffern, Leerzeichen und - . $ / + %. Nicht erlaubt: {chars}",
+      "code93Lowercase": "Code 93 kennt hier keine Kleinbuchstaben. Nutze Großbuchstaben oder Code 128 für gemischte Schreibweise.",
+      "codabarStartStop": "Codabar beginnt und endet mit A, B, C oder D, dazwischen muss mindestens ein Zeichen stehen, z. B. A40156B.",
+      "codabarChars": "Codabar akzeptiert zwischen Start- und Stoppbuchstabe nur Ziffern und - $ : / . +. Nicht erlaubt: {chars}",
       "gs1Enter": "Gib Application Identifier in Klammern mit ihren Werten ein, z. B. (01)09501101530003.",
       "gs1Start": "Beginne mit einem Application Identifier in Klammern, z. B. (01) für eine GTIN, gefolgt von seinem Wert.",
       "gs1Brackets": "Die Klammern passen nicht zusammen: Schreibe jeden AI als (Ziffern), gefolgt von seinem Wert.",

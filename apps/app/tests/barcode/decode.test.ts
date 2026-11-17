@@ -16,6 +16,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import sharp from "sharp";
 import { beforeAll, describe, expect, it } from "vitest";
+import { FORMAT_LABELS, SCAN_FORMATS } from "@/components/scanner/detector";
 import {
   BARCODE_FORMATS,
   type BarcodeFormatId,
@@ -161,6 +162,44 @@ describe("coupon block barcodes decode with the same reader", () => {
       found.map((code) => [code.format, code.rawValue] as const),
     ).toContainEqual([detected, decoded]);
   });
+});
+
+describe("/scan reads every format the generator draws", () => {
+  // The scanner page asks its reader for SCAN_FORMATS only, so a format left
+  // out there scans in the generator's check but not on /scan.
+  let scanner: BarcodeDetector;
+  beforeAll(() => {
+    scanner = new BarcodeDetector({
+      formats: [...SCAN_FORMATS] as DetectorFormat[],
+    });
+  });
+
+  it.each(BARCODE_FORMATS.map((format) => [format.label, format.id] as const))(
+    "%s",
+    async (_, id) => {
+      const format = getBarcodeFormat(id);
+      const checked = validateBarcodeInput(id, format.example);
+      if (!checked.ok) throw new Error(checked.error);
+      const { svg } = renderBarcodeSVG(id, checked.value, BASE);
+      const png = await sharp(Buffer.from(svg), { density: 72 })
+        .flatten({ background: "#ffffff" })
+        .png()
+        .toBuffer();
+      const found = await scanner.detect(
+        new Blob([new Uint8Array(png)], { type: "image/png" }),
+      );
+      const reported = found.map((code) => [code.format, code.rawValue]);
+      // One code in the image, one result: no stray reads from the extra
+      // 1D readers (Codabar and ITF are the ones prone to them).
+      expect(found, `decoded ${JSON.stringify(reported)}`).toHaveLength(1);
+      const [code] = found;
+      expect(format.detectorFormats).toContain(code?.format);
+      expect(decodedMatches(id, checked.value, code?.rawValue ?? "")).toBe(
+        true,
+      );
+      expect(FORMAT_LABELS[code?.format ?? ""]).toBeDefined();
+    },
+  );
 });
 
 describe("SCAN_CHECK_FORMATS", () => {
