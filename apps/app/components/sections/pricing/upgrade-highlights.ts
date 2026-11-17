@@ -13,10 +13,15 @@ function historyLine(days: number): string {
 
 /**
  * The pricing page lists every limit; this is the short version. Custom
- * domains only where they can be added (packages/availability/rules.ts).
+ * domains only where they can be added, white-label and conversion tracking
+ * only where the server has the QRdx licence (packages/availability/rules.ts).
  */
 export function buildUpgradeHighlights(
-  options: { customDomains?: boolean } = {},
+  options: {
+    customDomains?: boolean;
+    whiteLabel?: boolean;
+    conversions?: boolean;
+  } = {},
 ): Record<PaidPlan, string[]> {
   const domains = options.customDomains !== false;
   return {
@@ -29,11 +34,15 @@ export function buildUpgradeHighlights(
     ],
     business: [
       "Everything in Pro",
-      "White-label pages with custom CSS",
+      ...(options.whiteLabel === false
+        ? []
+        : ["White-label pages with custom CSS"]),
       domains
         ? "25 custom domains and unlimited team members"
         : "Unlimited team members",
-      "Conversion tracking and webhooks",
+      options.conversions === false
+        ? "Webhooks"
+        : "Conversion tracking and webhooks",
     ],
   };
 }

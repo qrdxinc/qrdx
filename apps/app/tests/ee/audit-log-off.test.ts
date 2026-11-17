@@ -5,6 +5,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { testLicence } from "../support/ee-license";
 
 vi.mock(
   "drizzle-orm",
@@ -64,7 +65,7 @@ describe("without QRDX_EE_LICENSE", () => {
 
 describe("with QRDX_EE_LICENSE", () => {
   it("records and shows it", async () => {
-    const app = await load("local-dev");
+    const app = await load(testLicence());
     expect(app.isFeatureAvailable("auditLog")).toBe(true);
     expect(app.isPathAvailable("/dashboard/acme/settings/audit-log")).toBe(
       true,

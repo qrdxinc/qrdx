@@ -8,9 +8,9 @@
 // in-memory tables. Better Auth's organization API is replaced by a small fake
 // that records calls and keeps the invitation table, as the plugin does.
 //
-// Not covered here: the plugin's own seat callbacks in packages/auth/server.ts
-// (membershipLimit/invitationLimit), since that package can't be imported
-// under Vitest (it resolves @repo/database through the app's bundler).
+// The plugin's own callbacks in packages/auth/server.ts (who may create a
+// workspace, membershipLimit, invitationLimit) run for real in
+// tests/lib/self-hosted-plans.test.ts.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 

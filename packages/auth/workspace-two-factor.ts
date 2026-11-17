@@ -5,7 +5,7 @@ import {
   createAuthMiddleware,
   getSessionFromCtx,
 } from "better-auth/api";
-import { workspacePlanTier } from "./plan";
+import { workspacePlanLimits } from "./plan";
 import {
   organizationPathActsOnWorkspace,
   TWO_FACTOR_REQUIRED,
@@ -20,9 +20,9 @@ import {
 // read or manage the workspace; the plugin below refuses those requests the
 // same way.
 //
-// The requirement applies while the setting is on and the workspace is on
-// Business: the best plan among its owners and billing members, as for SSO
-// (./plan.ts; apps/app/lib/plans.ts `requireTwoFactor` says the same).
+// The requirement applies while the setting is on and the workspace's plan
+// has `requireTwoFactor` (Business as shipped): the best plan among its
+// owners and billing members, as for SSO (./plan.ts, apps/app/lib/plans.ts).
 
 async function workspaceMetadata(organizationId: string): Promise<unknown> {
   const row = await database.query.organization.findFirst({
@@ -46,8 +46,8 @@ export async function twoFactorOnFor(userId: string): Promise<boolean> {
 
 /**
  * Whether the workspace requires two-step verification right now: its
- * setting is on and it's on Business. `setting` is the setting when the
- * caller has already read the workspace's metadata.
+ * setting is on and its plan includes the requirement. `setting` is the
+ * setting when the caller has already read the workspace's metadata.
  */
 export async function workspaceRequiresTwoFactor(
   organizationId: string,
@@ -56,7 +56,7 @@ export async function workspaceRequiresTwoFactor(
   const on =
     setting ?? twoFactorRequiredIn(await workspaceMetadata(organizationId));
   if (!on) return false;
-  return (await workspacePlanTier(organizationId)) === "business";
+  return (await workspacePlanLimits(organizationId)).requireTwoFactor;
 }
 
 /**

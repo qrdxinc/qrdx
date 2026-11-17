@@ -1,0 +1,32 @@
+---
+title: "Three Business features move to the QRdx Commercial License"
+description: "The client portal and client reports, white-label pages with custom CSS, and conversion tracking now live in the ee/ folders. Nothing changes on qrdx.dev."
+date: "2026-11-15"
+tags: ["Self-hosting"]
+---
+
+From this release on, three Business features are in QRdx's `ee/` folders, under the QRdx Commercial License, next to single sign-on and the audit log:
+
+- the [client portal](/docs/client-portal) and client-branded [client reports](/docs/client-reports);
+- white-label [hosted pages](/docs/landing-pages) and custom CSS;
+- [conversion tracking](/docs/tracking-and-conversions).
+
+## On qrdx.dev
+
+Nothing changes. Plans, prices and features stay as they were.
+
+## On a self-hosted server
+
+These three features now need a QRdx license key (`QRDX_EE_LICENSE`), and running them in production needs an enterprise agreement with QRdx. QRdx issues the key with the agreement. It has an expiry, with 14 days' grace after it, and your server checks it offline. Without a valid key they're off:
+
+- There's no client portal and no **Settings** → **Client portal**. Shared stats pages still work, without a client's brand.
+- Hosted pages show QRdx's default branding and no custom CSS.
+- Scans don't get a `qrdx_sid`, and `POST /api/v1/conversions` answers 404. Conversions already recorded stay in your data export.
+
+No dynamic code or hosted page stops working because of this.
+
+To ask about an agreement, see [Enterprise](/enterprise) or write to [enterprise@qrdx.dev](mailto:enterprise@qrdx.dev).
+
+## Earlier versions
+
+White-label pages and conversion tracking were published under the AGPL from 31 October 2026, and the client portal and client reports from 11 November 2026. Releases v0.2.0 and v0.2.1 have them under the AGPL (the client portal and client reports only v0.2.1). Those versions keep the AGPL's terms for anyone who has them; the change applies to this version and later ones. [LICENSING.md](https://github.com/qrdxinc/qrdx/blob/main/LICENSING.md#earlier-versions) lists the commits and dates.

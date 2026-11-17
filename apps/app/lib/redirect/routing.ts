@@ -5,6 +5,7 @@ import { qrScan, SCAN_DEVICE_TYPES, type ScanDeviceType } from "@repo/database";
 import { and, gte, inArray, lt, type SQL, sql } from "drizzle-orm";
 import { z } from "zod";
 import { env } from "@/env";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { networkCoordinates } from "@/lib/request-geo";
 import { getClientIp } from "@/lib/request-guards";
 import {
@@ -29,7 +30,8 @@ import type { Awaitable, RedirectCode } from "./code";
  * - `utm`: query parameters appended to the final URL (never overriding
  *   parameters the URL already has).
  * - `pixels`: owner's tracking pixels for hosted pages (components/landing/pixels.tsx)
- *   and the conversion-tracking switch (appends `qrdx_sid`).
+ *   and the conversion-tracking switch (appends `qrdx_sid` where the server
+ *   has the QRdx licence key: ee/conversions).
  * Everything is validated on write (actions/code-marketing.ts) and again here
  * on read; invalid stored JSON is ignored so a code always redirects.
  */
@@ -843,8 +845,12 @@ export function resolveDestination(
 ): Awaitable<string> {
   const routing = parseRoutingConfig(code.routing);
   const utm = parseUtmConfig(code.utm);
-  const pixels = parsePixelConfig(code.pixels);
-  if (!(routing?.rules.length || utm || pixels?.conversions)) {
+  // Conversion tracking (ee/conversions) only where the server has the
+  // licence key: without it scans carry no qrdx_sid.
+  const conversions =
+    parsePixelConfig(code.pixels)?.conversions === true &&
+    isFeatureAvailable("conversions");
+  if (!(routing?.rules.length || utm || conversions)) {
     return code.destinationUrl;
   }
 
@@ -862,7 +868,7 @@ export function resolveDestination(
   if (rule && variant) context.variant = scanVariantKey(rule.id, variant.id);
   return finalizeUrl(url, {
     utm,
-    scanToken: pixels?.conversions
+    scanToken: conversions
       ? signScanToken(context.scanId, code.id, context.now)
       : null,
   });

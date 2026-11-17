@@ -35,6 +35,9 @@ export function pricingOptions(): PricingOptions {
     emailAlerts: isFeatureAvailable("email"),
     sso: isFeatureAvailable("sso"),
     auditLog: isFeatureAvailable("auditLog"),
+    clientPortal: isFeatureAvailable("clientPortal"),
+    whiteLabel: isFeatureAvailable("whiteLabel"),
+    conversions: isFeatureAvailable("conversions"),
     invoiceRequests: isFeatureAvailable("invoiceRequests"),
   };
 }
