@@ -26,8 +26,7 @@ import {
 // Concept drawings for the docs: hand-written SVG (components/mdx/
 // shot-diagrams), monochrome with the one accent, theme-aware through CSS
 // variables. Every word in them comes from the messages file
-// (docs.shots.diagrams.<id>.* in apps/app/messages/en.json), so translated
-// pages get translated drawings.
+// (docs.shots.diagrams.<id>.* in apps/app/messages/en.json).
 //
 //   <Diagram id="dynamic-redirect" />
 //   <Diagram id="webhook-delivery" caption="…" />
@@ -330,7 +329,6 @@ export async function Diagram({
       `<Diagram id="${id}" />: no diagram with this id. The ids are ${Object.keys(DIAGRAMS).join(", ")} (components/mdx/shot-diagram.tsx).`,
     );
   }
-  // The docs' catalogs fall back to English for missing keys (lib/i18n/messages.ts).
   const messages = (await getMessages()) as {
     docs?: { shots?: { diagrams?: Record<string, Record<string, string>> } };
   };

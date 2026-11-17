@@ -16,7 +16,7 @@ export const logo = (
  * The header's right-hand items: the Dashboard button (primary, into the
  * main app) and the repository. On wide screens fumadocs' notebook header
  * shows them; below `lg` the Dashboard button sits at the top of the menu
- * and GitHub in its footer, with the language menu and the theme switch.
+ * and GitHub in its footer, with the theme switch.
  */
 export function headerLinks({
   dashboard,

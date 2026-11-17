@@ -1,9 +1,5 @@
 import { OG_FONT_GLOB } from "@repo/design-system/og/font-files";
-import {
-  docsEnglishRewrites,
-  docsMarkdownAcceptRewrites,
-  docsMarkdownRewrites,
-} from "@repo/i18n/docs";
+import { translatedDocsRedirects } from "@repo/i18n/docs";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
   appCsp,
@@ -66,7 +62,7 @@ let nextConfig: NextConfig = {
   ...config,
   // The zone's build assets live under /docs-static/_next/…, so the main
   // app can proxy them without clashing with its own /_next. Not basePath:
-  // the translated docs live at /<lang>/docs.
+  // the Markdown routes and the Open Graph images live outside /docs.
   assetPrefix: "/docs-static",
   // Docs images are plain files from qrdx.dev; nothing here resizes them.
   images: { ...config.images, unoptimized: true },
@@ -83,9 +79,6 @@ let nextConfig: NextConfig = {
       ...(config.experimental?.optimizePackageImports ?? []),
       "iconsax-reactjs",
     ],
-    // The only root layout is app/[lang]: URLs that match no route get
-    // app/global-not-found.tsx.
-    globalNotFound: true,
     // As in the main app (apps/app/next.config.ts): on Vercel the build
     // cache and source maps cost memory and nothing reads them.
     ...(env.VERCEL === "1" && {
@@ -184,6 +177,11 @@ let nextConfig: NextConfig = {
         destination: "/docs/:path*",
         permanent: true,
       },
+      // The docs are English only: the other languages' docs URLs
+      // (/es/docs/..., their .md copies, /docs-md/es/...) go to the English
+      // page (@repo/i18n/docs). The main app answers these on qrdx.dev
+      // before it proxies anything here; this covers this app's own host.
+      ...translatedDocsRedirects(),
     ];
   },
   async rewrites() {
@@ -197,17 +195,12 @@ let nextConfig: NextConfig = {
         ...[
           { source: "/docs", destination: "/llms.mdx" },
           { source: "/docs/:path+", destination: "/llms.mdx/:path+" },
-          // Translated docs pages (/es/docs/...): app/docs-md.
-          ...docsMarkdownAcceptRewrites(),
         ].map((rule) => ({
           ...rule,
           has: [
             { type: "header" as const, key: "accept", value: MARKDOWN_ACCEPT },
           ],
         })),
-        // English docs are [lang]=en behind their unprefixed URLs, apart
-        // from their .md and .mdx versions (afterFiles below).
-        ...docsEnglishRewrites(),
       ],
       afterFiles: [
         ...base.afterFiles,
@@ -216,8 +209,6 @@ let nextConfig: NextConfig = {
         // llmstxt.org's convention: the page URL plus .md.
         { source: "/docs.md", destination: "/llms.mdx" },
         { source: "/docs/:path*.md", destination: "/llms.mdx/:path*" },
-        // A translated docs page as Markdown: /es/docs/x.md (app/docs-md).
-        ...docsMarkdownRewrites(),
       ],
     };
   },
@@ -229,8 +220,8 @@ if (env.ANALYZE === "true") {
 
 const withMDX = createMDX();
 
-// next-intl's catalogs and formatters (i18n/request.ts), without its
-// middleware or navigation. The main app writes the catalogs' type
+// next-intl's catalog and formatters (i18n/request.ts, English only),
+// without its middleware or navigation. The main app writes the catalogs' type
 // declaration next to apps/app/messages/en.json; types/next-intl.d.ts
 // reads it from there.
 const withNextIntl = createNextIntlPlugin({

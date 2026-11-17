@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../.source/json-schema/docs.meta.json",
-  "title": "トラブルシューティング",
-  "icon": "TriangleAlert",
-  "pages": ["wont-scan", "wrong-destination", "error-pages", "emails"]
-}

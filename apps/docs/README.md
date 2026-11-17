@@ -1,10 +1,12 @@
 # apps/docs
 
-The QRdx docs as a Next.js app of their own: the docs zone of qrdx.dev. Readers never see its own host. The main app (`apps/app`) proxies the docs' URLs here once its `DOCS_ZONE_URL` is set, so every URL stays the same: `/docs/...`, `/<lang>/docs/...`, the `.md` and `.mdx` copies, `/llms.mdx/...`, `/docs-md/...`, `/og/docs/...`, `/api/search` and `/llms-full.txt`. The routing rules live in `@repo/i18n/docs` (`docsZoneRewrites`, `isDocsPagePath`), the manifest contract in `@repo/next-config/docs-zone`.
+The QRdx docs as a Next.js app of their own: the docs zone of qrdx.dev. Readers never see its own host. The main app (`apps/app`) proxies the docs' URLs here once its `DOCS_ZONE_URL` is set, so every URL stays the same: `/docs/...`, the `.md` and `.mdx` copies, `/llms.mdx/...`, `/og/docs/...`, `/api/search` and `/llms-full.txt`. The routing rules live in `@repo/i18n/docs` (`docsZoneRewrites`, `isDocsPagePath`), the manifest contract in `@repo/next-config/docs-zone`.
 
-The pages are in `content/docs` (MDX: each English `<page>.mdx` with its translations, `<page>.<locale>.mdx`, beside it), and the review records of the translations in `content/review/<locale>.json`. The main app's scripts write some of them: `bun run --filter app i18n:docs` the translations (CONTRIBUTING.md, "Translating QRdx") and `bun run --filter app openapi:generate` the API reference (`content/docs/developers/api`, `developers/errors.mdx`).
+The docs are English only. Until 17 November 2026 they were also served under each language's segment (`/es/docs/...`, `/pt-br/docs/...`). Those URLs, their `.md` and `.mdx` copies and the old `/docs-md/<language>/...` route now redirect to the English page with the same path and query, 307 for now (`translatedDocsRedirects` in `@repo/i18n/docs`). The main app answers them on qrdx.dev before it proxies anything here; this app's `next.config.ts` has the same rules for its own host.
 
-Without `DOCS_ZONE_URL` (self-hosting, or local development without this app), the main app has no docs: it redirects every docs URL to the same path on qrdx.dev (`docsOriginRedirects` in `@repo/i18n/docs`), lists no docs in its sitemap, links the docs on qrdx.dev from its llms.txt, and leaves docs out of its command menu's search.
+The pages are in `content/docs` (MDX, one `<page>.mdx` a page, with a `meta.json` a folder for the sidebar). Don't add translated copies (`<page>.<locale>.mdx`, `meta.<locale>.json`): `tests/lib/docs-structure.test.ts` fails on them. The main app's `bun run --filter app openapi:generate` writes the API reference (`content/docs/developers/api`, `developers/errors.mdx`).
+
+Without `DOCS_ZONE_URL` (self-hosting, or local development without this app), the main app has no docs: it redirects every docs URL to the same path on qrdx.dev (`docsOriginRedirects` in `@repo/i18n/docs`; another language's docs URL goes straight to the English page there), lists no docs in its sitemap, links the docs on qrdx.dev from its llms.txt, and leaves docs out of its command menu's search.
 
 ## Run it
 
@@ -63,21 +65,21 @@ The sign-in code is read from the app's log (`SHOTS_DEV_LOG`, default `.shots/ap
 `scripts/zone-inputs.mjs` runs before `dev`, `build`, `typecheck` and `test`, and writes every generated input (none of them is committed):
 
 - the product facts snapshot (`bun run --filter app facts:snapshot` writes `packages/config/facts.generated.json` from `apps/app/lib/product-facts.ts`), for `{facts.…}` in the docs;
-- the docs' message catalogs (`bun run --filter app i18n:docs-messages` writes the `DOCS_NAMESPACES` of `apps/app/messages` to `packages/i18n/messages`), which `lib/i18n/messages.ts` loads;
+- the docs' message catalog (`bun run --filter app i18n:docs-messages` writes the `DOCS_NAMESPACES` of `apps/app/messages/en.json` to `packages/i18n/messages/en.json`), which `lib/i18n/messages.ts` loads. next-intl stays for the typed keys and ICU formatting, with English as its only locale (`i18n/request.ts`);
 - the OpenAPI document's copy (`bun run --filter app openapi:export` writes `packages/docs-assets/openapi.json`), for the API reference pages;
 - `${MAIN_ZONE_URL}/zone/availability.json` into `generated/zone-availability.json`, for `<IfAvailable>` and the sidebar (`lib/zone-availability.ts`). When it can't be fetched, every feature that needs setup counts as unavailable; with `DOCS_REQUIRE_AVAILABILITY=1` (the deploy workflow) the build stops instead.
 
-The tests also read the main app's `lib/docs-redirects.ts`, whose redirects must land on docs pages here. The shared code comes from packages: `@repo/i18n` (languages, URLs, docs SEO), `@repo/analytics` (consent and analytics), `@repo/docs-assets` (registry, pattern catalog, catalogue tiles), `@repo/design-system`, `@repo/config` and `@repo/availability`.
+The tests also read the main app's `lib/docs-redirects.ts`, whose redirects must land on docs pages here. The shared code comes from packages: `@repo/i18n` (the docs' URL rules and messages), `@repo/analytics` (consent and analytics), `@repo/docs-assets` (registry, pattern catalog, catalogue tiles), `@repo/design-system`, `@repo/config` and `@repo/availability`.
 
 ## What it gives the main app
 
-`/zone/docs-manifest.json`: the docs' sitemap entries (with hreflang, as `lib/i18n/docs-seo.ts` decides) and the docs sections in sidebar order. With `DOCS_ZONE_URL` set, the main app's `/sitemap.xml`, `/llms.txt` and `/index.md` read it hourly.
+`/zone/docs-manifest.json`: the docs' sitemap entries (one a page, English, so no hreflang) and the docs sections in sidebar order. With `DOCS_ZONE_URL` set, the main app's `/sitemap.xml`, `/llms.txt` and `/index.md` read it hourly.
 
 ## How it differs from the main app
 
 - No database, no auth and no server actions. Analytics and the cookie banner (`@repo/analytics`) work as on the main app's pages, without the plan lookup; the session sync asks the main app (same origin). The docs site records its own pages only (`lib/analytics/privacy.ts`), and its privacy policy links are plain `<a>` elements.
 - `lib/metadata.ts` writes every absolute URL against `NEXT_PUBLIC_APP_URL` (qrdx.dev), never against this project's own domain.
-- `ZoneLink` (`components/zone-link.tsx`): next/link for docs pages, a plain `<a>` for every other page, which belongs to the main app. `LocaleLink` and `useLocaleRouter` go through it.
+- `ZoneLink` (`components/zone-link.tsx`): next/link for docs pages, a plain `<a>` for every other page, which belongs to the main app. `useZoneRouter` (`components/zone-router.tsx`) does the same for navigation in code.
 - `assetPrefix: "/docs-static"`, so the main app can proxy this app's `/_next` files without clashing with its own.
 - `robots.txt` disallows everything: only this app's own host serves it.
 

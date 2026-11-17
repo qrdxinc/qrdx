@@ -1,12 +1,11 @@
 // The docs site is one zone of qrdx.dev: links to docs pages stay in this app
 // (next/link), and every other internal link loads the main app's page in
-// full (components/zone-link.tsx, components/i18n/locale-link.tsx).
-import { NextIntlClientProvider } from "next-intl";
-import type { ComponentProps, ReactNode } from "react";
+// full (components/zone-link.tsx, components/zone-router.tsx).
+import type { ComponentProps } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { LocaleLink, useLocaleRouter } from "@/components/i18n/locale-link";
 import { ZoneLink } from "@/components/zone-link";
+import { useZoneRouter } from "@/components/zone-router";
 
 // next/link marks its anchors, to tell them from plain <a> elements.
 vi.mock("next/link", async (importOriginal) => {
@@ -28,20 +27,13 @@ const router = {
 };
 vi.mock("next/navigation", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/navigation")>()),
-  usePathname: () => "/es/docs",
+  usePathname: () => "/docs",
   useRouter: () => router,
 }));
 
-const inSpanish = (node: ReactNode) =>
-  renderToStaticMarkup(
-    <NextIntlClientProvider locale="es" messages={{}} timeZone="UTC">
-      {node}
-    </NextIntlClientProvider>,
-  );
-
 describe("ZoneLink", () => {
   it("uses next/link for docs pages", () => {
-    for (const href of ["/docs", "/docs/styles", "/es/docs/help"]) {
+    for (const href of ["/docs", "/docs/styles", "/docs/help?x=1#top"]) {
       expect(
         renderToStaticMarkup(<ZoneLink href={href}>x</ZoneLink>),
       ).toContain("data-next-link");
@@ -49,7 +41,15 @@ describe("ZoneLink", () => {
   });
 
   it("uses a plain <a> for the rest of the site, without next/link's props", () => {
-    for (const href of ["/", "/pricing", "/playground?type=wifi", "/docs.md"]) {
+    // /es/docs/help was a docs page while the docs had translations; now it
+    // redirects, which the main app answers.
+    for (const href of [
+      "/",
+      "/pricing",
+      "/playground?type=wifi",
+      "/docs.md",
+      "/es/docs/help",
+    ]) {
       expect(
         renderToStaticMarkup(
           <ZoneLink href={href} prefetch={false} scroll={false}>
@@ -61,26 +61,15 @@ describe("ZoneLink", () => {
   });
 });
 
-describe("LocaleLink", () => {
-  it("keeps the reader's language on both kinds of link", () => {
-    const docs = inSpanish(<LocaleLink href="/docs/styles">x</LocaleLink>);
-    expect(docs).toContain('href="/es/docs/styles"');
-    expect(docs).toContain("data-next-link");
+let zoneRouter: ReturnType<typeof useZoneRouter> | undefined;
 
-    const pricing = inSpanish(<LocaleLink href="/pricing">x</LocaleLink>);
-    expect(pricing).toBe('<a href="/es/pricing">x</a>');
-  });
-});
-
-let localeRouter: ReturnType<typeof useLocaleRouter> | undefined;
-
-/** Keeps the router useLocaleRouter returns while it renders. */
+/** Keeps the router useZoneRouter returns while it renders. */
 function CaptureRouter() {
-  localeRouter = useLocaleRouter();
+  zoneRouter = useZoneRouter();
   return null;
 }
 
-describe("useLocaleRouter", () => {
+describe("useZoneRouter", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
     vi.clearAllMocks();
@@ -89,19 +78,21 @@ describe("useLocaleRouter", () => {
   it("navigates within the docs, and loads other pages in full", () => {
     const location = { assign: vi.fn(), replace: vi.fn() };
     vi.stubGlobal("window", { location });
-    inSpanish(<CaptureRouter />);
+    renderToStaticMarkup(<CaptureRouter />);
 
-    localeRouter?.push("/docs/styles");
-    expect(router.push).toHaveBeenCalledWith("/es/docs/styles", undefined);
+    zoneRouter?.push("/docs/styles");
+    expect(router.push).toHaveBeenCalledWith("/docs/styles", undefined);
 
-    localeRouter?.push("/pricing");
-    expect(location.assign).toHaveBeenCalledWith("/es/pricing");
+    zoneRouter?.push("/pricing");
+    expect(location.assign).toHaveBeenCalledWith("/pricing");
+    expect(router.push).toHaveBeenCalledTimes(1);
 
-    // A page that isn't translated keeps its English URL.
-    localeRouter?.replace("/community");
+    zoneRouter?.replace("/community");
     expect(location.replace).toHaveBeenCalledWith("/community");
 
-    localeRouter?.prefetch("/pricing");
+    zoneRouter?.prefetch("/pricing");
     expect(router.prefetch).not.toHaveBeenCalled();
+    zoneRouter?.prefetch("/docs/help");
+    expect(router.prefetch).toHaveBeenCalledWith("/docs/help", undefined);
   });
 });

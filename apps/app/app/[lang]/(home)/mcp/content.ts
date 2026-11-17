@@ -134,7 +134,7 @@ export const MCP_TOOLS: {
     name: "read_docs_page",
     title: "Read a docs page",
     description:
-      "One docs page as Markdown, by the path search_docs returned or its URL, in English or any docs language. Long pages are cut with a link to the rest.",
+      "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
     icon: DocumentText,
   },
   {

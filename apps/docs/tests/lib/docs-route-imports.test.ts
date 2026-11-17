@@ -1,7 +1,7 @@
 // Route handlers (route.ts, sitemap.ts, Open Graph images, …) never import
 // the compiled docs. `next build` compiles every module once per layer that
 // imports it, so a route that reaches lib/source.ts (or .source/docs.ts,
-// .source/server.ts) compiles every docs page in every language a second
+// .source/server.ts) compiles every docs page a second
 // time, which is what ran the Vercel build out of memory. Routes read the
 // docs from lib/docs-index.ts and other content from lib/content-source.ts.
 
@@ -96,7 +96,7 @@ describe("route handlers and the compiled docs", () => {
 
   it("catches a route that does", () => {
     // The docs page itself imports lib/source.ts: the check sees it.
-    const page = join(app, "app/[lang]/docs/[[...slug]]/page.tsx");
+    const page = join(app, "app/docs/[[...slug]]/page.tsx");
     expect(chainToCompiledDocs(page)?.at(-1)).toBe("lib/source.ts");
   });
 });
