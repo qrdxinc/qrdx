@@ -49,52 +49,72 @@ export async function getMyActiveSubscription(
   return sub[0] ?? null;
 }
 
-export async function validateSubscriptionAndUsage(
-  userId: string,
-): Promise<SubscriptionCheck> {
+/** The free-tier check for `requestsUsed`, with or without a subscription. */
+function usageCheck(
+  isSubscribed: boolean,
+  requestsUsed: number,
+): SubscriptionCheck {
+  if (isSubscribed) {
+    return {
+      canProceed: true,
+      isSubscribed: true,
+      requestsUsed,
+      requestsRemaining: Infinity, // Unlimited for subscribers
+    };
+  }
+
+  const requestsRemaining = Math.max(
+    0,
+    AI_REQUEST_FREE_TIER_LIMIT - requestsUsed,
+  );
+  const canProceed = requestsUsed < AI_REQUEST_FREE_TIER_LIMIT;
+
+  if (!canProceed) {
+    return {
+      canProceed: false,
+      isSubscribed: false,
+      requestsUsed,
+      requestsRemaining: 0,
+      error: FREE_LIMIT_REACHED_MESSAGE,
+    };
+  }
+
+  return {
+    canProceed: true,
+    isSubscribed: false,
+    requestsUsed,
+    requestsRemaining,
+  };
+}
+
+/**
+ * validateSubscriptionAndUsage's check, and the entitled subscription it
+ * read (one read each), for callers that also need the plan
+ * (GET /api/subscription: lib/plans.ts planForSubscription).
+ */
+export async function subscriptionAndUsage(userId: string): Promise<{
+  check: SubscriptionCheck;
+  subscription: typeof subscription.$inferSelect | null;
+}> {
   try {
     const [activeSubscription, requestsUsed] = await Promise.all([
       getMyActiveSubscription(userId),
       getAllTimeRequestCount(userId),
     ]);
-
-    const isSubscribed = !!activeSubscription;
-
-    if (isSubscribed) {
-      return {
-        canProceed: true,
-        isSubscribed: true,
-        requestsUsed,
-        requestsRemaining: Infinity, // Unlimited for subscribers
-      };
-    }
-
-    const requestsRemaining = Math.max(
-      0,
-      AI_REQUEST_FREE_TIER_LIMIT - requestsUsed,
-    );
-    const canProceed = requestsUsed < AI_REQUEST_FREE_TIER_LIMIT;
-
-    if (!canProceed) {
-      return {
-        canProceed: false,
-        isSubscribed: false,
-        requestsUsed,
-        requestsRemaining: 0,
-        error: FREE_LIMIT_REACHED_MESSAGE,
-      };
-    }
-
     return {
-      canProceed: true,
-      isSubscribed: false,
-      requestsUsed,
-      requestsRemaining,
+      check: usageCheck(Boolean(activeSubscription), requestsUsed),
+      subscription: activeSubscription,
     };
   } catch (error) {
     console.error("Error validating subscription:", error);
     throw error;
   }
+}
+
+export async function validateSubscriptionAndUsage(
+  userId: string,
+): Promise<SubscriptionCheck> {
+  return (await subscriptionAndUsage(userId)).check;
 }
 
 /**

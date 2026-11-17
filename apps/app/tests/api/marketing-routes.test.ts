@@ -11,6 +11,8 @@
 // visitor, a rate limit or bad input gets exactly what the action answers.
 // Polar, email, Turnstile, the session and the rate limiter are faked;
 // nothing is created or sent.
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 
@@ -36,6 +38,8 @@ const state = vi.hoisted(() => {
     themes: [] as unknown[],
     themesFail: false,
     requestsUsed: 3,
+    /** Which subscription reads ran, in order */
+    subscriptionReads: [] as string[],
   };
 });
 
@@ -83,13 +87,23 @@ vi.mock("@/lib/analytics/server", () => ({
   hasAnalyticsConsent: async () => false,
 }));
 vi.mock("@/lib/subscription", () => ({
-  getMyActiveSubscription: async () => state.subscription,
-  validateSubscriptionAndUsage: async () => ({
-    canProceed: true,
-    isSubscribed: Boolean(state.subscription),
-    requestsUsed: state.requestsUsed,
-    requestsRemaining: state.subscription ? 0 : 7,
-  }),
+  getMyActiveSubscription: async () => {
+    state.subscriptionReads.push("getMyActiveSubscription");
+    return state.subscription;
+  },
+  subscriptionAndUsage: async () => {
+    state.subscriptionReads.push("subscriptionAndUsage");
+    return {
+      check: {
+        canProceed: true,
+        isSubscribed: Boolean(state.subscription),
+        requestsUsed: state.requestsUsed,
+        // As lib/subscription.ts answers: unlimited for subscribers.
+        requestsRemaining: state.subscription ? Infinity : 7,
+      },
+      subscription: state.subscription,
+    };
+  },
 }));
 vi.mock("@/lib/shared", async () => {
   const { UnauthorizedError } = await import("@/types/errors");
@@ -157,6 +171,7 @@ const enterpriseRoute = await import("@/app/api/enterprise-requests/route");
 const themesRoute = await import("@/app/api/themes/route");
 const subscriptionRoute = await import("@/app/api/subscription/route");
 const { FORM_BODY_BYTES } = await import("@/lib/widget-routes/server");
+const { sendEnterpriseRequest } = await import("@/lib/widget-routes/client");
 
 const ORIGIN = "http://localhost:3000";
 const SAME_ORIGIN = {
@@ -186,6 +201,7 @@ beforeEach(() => {
   state.turnstileTokens = [];
   state.themes = [];
   state.themesFail = false;
+  state.subscriptionReads = [];
 });
 
 /** A request, whose headers next/headers then answers with (as in a route). */
@@ -453,6 +469,54 @@ describe("POST /api/subscription/checkout (the paid plan buttons)", () => {
     expect(state.limitKeys).toEqual(["checkout:u_ana"]);
   });
 
+  it("ignores everything in the body but the plan and period: product, currency and URLs are the server's", async () => {
+    signIn();
+    const response = await checkout(
+      {
+        plan: "pro",
+        interval: "year",
+        currency: "inr",
+        productId: "prod_cheap",
+        products: ["prod_cheap"],
+        customer_id: "cus_someone_else",
+        customer_ip_address: "198.51.100.66",
+        success_url: "https://evil.example/thanks",
+        return_url: "https://evil.example/back",
+        metadata: { plan: "business" },
+      },
+      {
+        ...SAME_ORIGIN,
+        "x-vercel-ip-country": "US",
+        "x-real-ip": "203.0.113.7",
+      },
+    );
+    expect(response.status).toBe(200);
+    expect(state.checkouts).toHaveLength(1);
+    const sent = state.checkouts[0] as Record<string, unknown>;
+    expect(sent).toMatchObject({
+      products: ["prod_pro_year"],
+      customer_id: "cus_1",
+      customer_ip_address: "203.0.113.7",
+      currency: "usd",
+      metadata: { plan: "pro", interval: "year" },
+    });
+    expect(String(sent.success_url)).toMatch(
+      /^http:\/\/localhost:3000\/success/,
+    );
+    expect(String(sent.return_url)).toBe("http://localhost:3000/pricing");
+    expect(Object.keys(sent).sort()).toEqual(
+      [
+        "currency",
+        "customer_id",
+        "customer_ip_address",
+        "metadata",
+        "products",
+        "return_url",
+        "success_url",
+      ].sort(),
+    );
+  });
+
   it("each refusal keeps the action's words, with a status that matches", async () => {
     signIn();
     const cases: [unknown, () => void, number, string | undefined][] = [
@@ -585,6 +649,41 @@ describe("POST /api/enterprise-requests (the contact form)", () => {
     expect(state.emails).toEqual([]);
   });
 
+  it("keeps the Turnstile token from the form, through the browser helper's JSON, to the check", async () => {
+    // The field Cloudflare's widget adds and the server reads.
+    const turnstileSource = readFileSync(
+      join(import.meta.dirname, "..", "..", "lib", "safety", "turnstile.ts"),
+      "utf8",
+    );
+    expect(turnstileSource).toMatch(
+      /export const TURNSTILE_FIELD = "cf-turnstile-response";/,
+    );
+    // The form's FormData, as the widget leaves it, through the client
+    // helper to the route (a browser adds Origin and Sec-Fetch-Site).
+    const fetchMock = vi.fn(async (path: string, init?: RequestInit) =>
+      enterpriseRoute.POST(
+        request("POST", path, { rawBody: String(init?.body) }),
+      ),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    try {
+      const data = new FormData();
+      for (const [name, value] of Object.entries(ENTERPRISE)) {
+        data.set(name, value);
+      }
+      data.set("cf-turnstile-response", "0.token-from-the-widget");
+      expect(await sendEnterpriseRequest({ status: "idle" }, data)).toEqual({
+        status: "sent",
+        email: "mei@north.example",
+      });
+    } finally {
+      vi.unstubAllGlobals();
+    }
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(state.turnstileTokens).toEqual(["0.token-from-the-widget"]);
+    expect(state.emails).toHaveLength(1);
+  });
+
   it("keeps the action's errors, with matching statuses", async () => {
     const invalid = await enterprise({ ...ENTERPRISE, email: "nope" });
     expect(invalid.status).toBe(400);
@@ -703,29 +802,65 @@ describe("GET /api/themes (the bulk tool's saved themes)", () => {
 });
 
 describe("GET /api/subscription (the plan /pricing reads in the browser)", () => {
-  const get = () =>
+  // A browser's same-origin GET: Sec-Fetch-Site, no Origin.
+  const BROWSER = { host: SAME_ORIGIN.host, "sec-fetch-site": "same-origin" };
+  const get = (headers: Record<string, string> = BROWSER) =>
     subscriptionRoute.GET(
-      request("GET", "/api/subscription", {
-        headers: { host: SAME_ORIGIN.host, "sec-fetch-site": "same-origin" },
-      }) as never,
+      request("GET", "/api/subscription", { headers }) as never,
     );
 
-  it("adds the visitor's plan to the allowance it always answered with", async () => {
+  it("adds the visitor's plan to the allowance it always answered with, from one read", async () => {
     signIn();
-    expect(await json(await get())).toEqual({
+    const free = await get();
+    expect(free.status).toBe(200);
+    expect(await json(free)).toEqual({
       isSubscribed: false,
-      requestsUsed: 3,
       requestsRemaining: 7,
+      requestsUsed: 3,
       plan: "free",
     });
+    expect(state.subscriptionReads).toEqual(["subscriptionAndUsage"]);
+
+    state.subscriptionReads = [];
     state.subscription = { productId: "prod_pro_year" };
-    expect(await json(await get())).toMatchObject({
+    expect(await json(await get())).toEqual({
       isSubscribed: true,
+      // Unlimited (Infinity) is null in JSON, as before.
+      requestsRemaining: null,
+      requestsUsed: 3,
       plan: "pro",
     });
+    expect(state.subscriptionReads).toEqual(["subscriptionAndUsage"]);
+
+    // A product it doesn't know (renamed, legacy) counts as Pro, as getPlan says.
+    state.subscription = { productId: "prod_from_2025" };
+    expect((await json(await get())).plan).toBe("pro");
   });
 
-  it("is still a 401 when signed out", async () => {
-    expect((await get()).status).toBe(401);
+  it("is still a 401 when signed out, and no answer is cached", async () => {
+    const response = await get();
+    expect(response.status).toBe(401);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    signIn();
+    expect((await get()).headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("refuses another site's page and sends no CORS headers", async () => {
+    signIn();
+    for (const headers of [
+      { host: SAME_ORIGIN.host, "sec-fetch-site": "cross-site" },
+      { host: SAME_ORIGIN.host, "sec-fetch-site": "same-site" },
+      { host: SAME_ORIGIN.host, origin: "https://evil.example" },
+    ] as Record<string, string>[]) {
+      const response = await get(headers);
+      expect(response.status, JSON.stringify(headers)).toBe(403);
+      for (const name of response.headers.keys()) {
+        expect(name.startsWith("access-control-")).toBe(false);
+      }
+    }
+    expect(state.subscriptionReads).toEqual([]);
+    // This app's own fetches still get through.
+    expect((await get()).status).toBe(200);
+    expect((await get({ ...BROWSER, origin: ORIGIN })).status).toBe(200);
   });
 });

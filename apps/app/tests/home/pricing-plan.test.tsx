@@ -15,6 +15,8 @@ const state = vi.hoisted(() => {
   process.env.NEXT_PUBLIC_QRDX_BUSINESS_YEARLY_PRODUCT_ID = "prod_biz_year";
   return {
     session: null as null | { user: { id: string; email: string } },
+    /** The session hasn't answered yet (Better Auth's isPending) */
+    sessionPending: false,
     /** What the cards passed useSubscription as `enabled`, per render */
     enabled: [] as boolean[],
   };
@@ -22,7 +24,10 @@ const state = vi.hoisted(() => {
 
 vi.mock("@repo/auth/client", () => ({
   authClient: {
-    useSession: () => ({ data: state.session, isPending: false }),
+    useSession: () => ({
+      data: state.session,
+      isPending: state.sessionPending,
+    }),
   },
 }));
 vi.mock("@/lib/hooks/use-subscription", async (importOriginal) => {
@@ -46,18 +51,35 @@ const { SUBSCRIPTION_STATUS_QUERY_KEY } = await import(
 
 beforeEach(() => {
   state.session = null;
+  state.sessionPending = false;
   state.enabled = [];
 });
 
 const HIGHLIGHTS = { free: ["a"], pro: ["b"], business: ["c"] };
 
-/** The cards' markup, with the browser's plan answer already in the cache (or not). */
+/**
+ * The cards' markup, with the browser's plan answer already in the cache,
+ * or "failed": GET /api/subscription failed (after its retries).
+ */
 function render(
   currentPlan: "free" | "pro" | "business" | null | undefined,
-  fetchedPlan?: "free" | "pro" | "business",
+  fetchedPlan?: "free" | "pro" | "business" | "failed",
 ) {
-  const client = new QueryClient();
-  if (fetchedPlan) {
+  // A failed query isn't fetched again on mount here, so the render shows
+  // the state after the failure (React Query would retry it on a remount).
+  const client = new QueryClient({
+    defaultOptions: { queries: { retryOnMount: false } },
+  });
+  if (fetchedPlan === "failed") {
+    client
+      .getQueryCache()
+      .build(client, { queryKey: [SUBSCRIPTION_STATUS_QUERY_KEY] })
+      .setState({
+        status: "error",
+        error: new Error("Failed to fetch subscription status"),
+        fetchStatus: "idle",
+      });
+  } else if (fetchedPlan) {
     client.setQueryData([SUBSCRIPTION_STATUS_QUERY_KEY], {
       isSubscribed: fetchedPlan !== "free",
       requestsUsed: 0,
@@ -81,15 +103,74 @@ const signIn = () => {
   state.session = { user: { id: "u_ana", email: "ana@example.com" } };
 };
 
+/** The button or link whose whole text is `text`: its opening tag, or null. */
+function control(html: string, text: string) {
+  const match = html.match(new RegExp(`<(button|a)\\b([^>]*)>${text}</\\1>`));
+  if (!match) return null;
+  const [, tag, attributes = ""] = match;
+  return {
+    link: tag === "a",
+    href: attributes.match(/\shref="([^"]*)"/)?.[1] ?? null,
+    disabled: /\sdisabled=""/.test(attributes),
+  };
+}
+
 describe("the plan cards", () => {
   it("signed out, with or without a server plan: sign-up and upgrade buttons", () => {
     for (const html of [render(null), render(undefined)]) {
-      expect(html).toContain("Start free");
-      expect(html).toContain("Upgrade to Pro");
-      expect(html).toContain("Upgrade to Business");
+      expect(control(html, "Start free")).toMatchObject({
+        link: true,
+        href: expect.stringContaining("/sign-in?next="),
+      });
+      expect(control(html, "Upgrade to Pro")?.disabled).toBe(false);
+      expect(control(html, "Upgrade to Business")?.disabled).toBe(false);
       expect(html).not.toContain("Manage subscription");
       expect(html).not.toContain("This is your current plan.");
     }
+  });
+
+  it("without the server's plan, while the session hasn't answered: every card waits", () => {
+    state.sessionPending = true;
+    const html = render(undefined);
+    expect(control(html, "Upgrade to Pro")?.disabled).toBe(true);
+    expect(control(html, "Upgrade to Business")?.disabled).toBe(true);
+    // Neither a sign-up link nor the dashboard yet.
+    expect(control(html, "Start free")).toEqual({
+      link: false,
+      href: null,
+      disabled: true,
+    });
+    expect(html).not.toContain("/sign-in?next=");
+    expect(html).not.toContain("Go to dashboard");
+  });
+
+  it("without the server's plan, signed in, until the plan's first answer: the buttons wait", () => {
+    signIn();
+    const html = render(undefined);
+    expect(control(html, "Upgrade to Pro")?.disabled).toBe(true);
+    expect(control(html, "Upgrade to Business")?.disabled).toBe(true);
+    expect(control(html, "Start free")?.disabled).toBe(true);
+  });
+
+  it("without the server's plan, a failed plan request: signed in, no plan, buttons on", () => {
+    signIn();
+    const html = render(undefined, "failed");
+    expect(control(html, "Upgrade to Pro")?.disabled).toBe(false);
+    expect(control(html, "Upgrade to Business")?.disabled).toBe(false);
+    expect(control(html, "Go to dashboard")).toMatchObject({
+      link: true,
+      href: "/dashboard",
+    });
+    expect(html).not.toContain("This is your current plan.");
+    expect(html).not.toContain("Manage subscription");
+  });
+
+  it("this app's page isn't held up by a pending session (as before)", () => {
+    state.sessionPending = true;
+    const html = render(null);
+    expect(control(html, "Upgrade to Pro")?.disabled).toBe(false);
+    expect(control(html, "Start free")?.link).toBe(true);
+    expect(state.enabled).toEqual([false]);
   });
 
   it("this app's page: the server's plan shows at once, and the browser asks for nothing", () => {

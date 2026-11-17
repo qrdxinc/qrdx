@@ -48,6 +48,15 @@ export const TEAM_SIZES = [
 
 export type TeamSize = (typeof TEAM_SIZES)[number];
 
+/**
+ * The contact form's fields: the text answers above and the team size.
+ * lib/enterprise-requests.tsx's schema has exactly these (the compiler
+ * checks both ways), and its errors name the field to point at.
+ */
+export type EnterpriseRequestField =
+  | keyof typeof ENTERPRISE_FIELD_LIMITS
+  | "teamSize";
+
 export function isTeamSize(value: unknown): value is TeamSize {
   return (
     typeof value === "string" &&

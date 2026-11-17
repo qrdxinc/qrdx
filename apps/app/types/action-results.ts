@@ -4,6 +4,8 @@
 // with them. Declared here, in no server module, so client code that reads
 // these results imports no server action.
 
+import type { EnterpriseRequestField } from "@/lib/enterprise";
+
 export type QrCodeErrorCode =
   | "UNAUTHORIZED"
   | "VALIDATION_ERROR"
@@ -82,13 +84,8 @@ export type PricingRequestResult =
       error: string;
     };
 
-/** The enterprise contact form's fields (lib/enterprise-requests.tsx). */
-export type EnterpriseRequestField =
-  | "name"
-  | "email"
-  | "company"
-  | "teamSize"
-  | "need";
+/** The enterprise contact form's fields (lib/enterprise.ts, which the schema matches). */
+export type { EnterpriseRequestField };
 
 /** actions/enterprise-requests.ts submitEnterpriseRequest. */
 export type EnterpriseFormState =

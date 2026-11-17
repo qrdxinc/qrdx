@@ -18,7 +18,7 @@ import { AsciiField } from "@/components/fx";
 import { NpmLagNotice } from "@/components/mdx/npm-status";
 import { IconTile } from "@/components/sections/tools/cards";
 import { changelogAnchor } from "@/lib/changelog-feed";
-import { pictureUrl as changelogPictureUrl } from "@/lib/media";
+import { pictureUrl } from "@/lib/media";
 import { createMetadata } from "@/lib/metadata";
 import { getNpmLag, type NpmLag } from "@/lib/npm-version";
 import { changelogEntries } from "./entries";
@@ -156,10 +156,10 @@ const Page = async () => {
                         alt={entry.data.imageAlt ?? ""}
                         darkSrc={
                           entry.data.imageDark &&
-                          changelogPictureUrl(entry.data.imageDark)
+                          pictureUrl(entry.data.imageDark)
                         }
                         sizes="(min-width: 1024px) 784px, 100vw"
-                        src={changelogPictureUrl(entry.data.image)}
+                        src={pictureUrl(entry.data.image)}
                       />
                     </div>
                   )}

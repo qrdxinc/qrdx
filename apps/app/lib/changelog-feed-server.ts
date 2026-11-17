@@ -15,12 +15,6 @@ import { changelogSource } from "@/lib/content-source";
 import { mediaUrl, pictureUrl } from "@/lib/media";
 
 /**
- * A changelog picture's URL: an uploaded media key's, else the site path
- * (lib/media.ts pictureUrl, which /changelogs imports directly).
- */
-export const changelogPictureUrl = pictureUrl;
-
-/**
  * Every changelog entry, newest first, for the app's "What's new" panel.
  * Built-in content (no database, no network); `entry.url` isn't used
  * because /changelogs/<slug> has no page.
@@ -40,10 +34,9 @@ export function getChangelogFeed(limit = WHATS_NEW_LIMIT): ChangelogItem[] {
         ...(entry.data.version ? { version: entry.data.version } : {}),
         tags: entry.data.tags ?? [],
         href: `/changelogs#${slug}`,
-        ...(image ? { image: changelogPictureUrl(image) } : {}),
-        ...(image && imageDark
-          ? { imageDark: changelogPictureUrl(imageDark) }
-          : {}),
+        // Pictures: an uploaded media key's URL, else the site path.
+        ...(image ? { image: pictureUrl(image) } : {}),
+        ...(image && imageDark ? { imageDark: pictureUrl(imageDark) } : {}),
         ...(image && imageAlt ? { imageAlt } : {}),
         // Clips are never served from public/ (lib/media.ts).
         ...(video ? { video: mediaUrl(video) } : {}),

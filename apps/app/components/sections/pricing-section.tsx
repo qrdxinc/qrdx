@@ -235,19 +235,23 @@ export function PricingSection({
   };
   const [pendingPlan, setPendingPlan] = useState<PaidPlan | null>(null);
   const [isPending, startTransition] = useTransition();
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending: sessionPending } = authClient.useSession();
   // Without the server's plan: the visitor's plan from GET /api/subscription
   // (signed in only). With it, nothing is fetched.
   const readPlan = serverPlan === undefined;
-  const { subscriptionStatus, isLoading: planLoading } = useSubscription({
+  const { subscriptionStatus, isPending: planUnanswered } = useSubscription({
     enabled: readPlan,
   });
   const currentPlan: Plan | null = readPlan
     ? (subscriptionStatus?.plan ?? null)
     : serverPlan;
-  // Signed in, until the browser has the plan: the paid buttons wait rather
-  // than offer an upgrade to someone who has one.
-  const planPending = readPlan && planLoading;
+  // Without the server's plan, until the browser knows who this is and what
+  // they pay for (the session, then the plan's first answer): the buttons
+  // wait rather than offer sign-up or an upgrade to someone who has one. A
+  // failed plan request ends the wait: the cards then show no plan, and
+  // checkout itself refuses a second subscription.
+  const planPending =
+    readPlan && (sessionPending || (Boolean(session?.user) && planUnanswered));
   const { openAuthDialog } = useAuthStore();
   const isSignedIn = Boolean(session?.user) || currentPlan !== null;
   // Agency tools: Business yearly can be paid by invoice where QRdx offers it.
@@ -330,7 +334,7 @@ export function PricingSection({
     }
     // Agency tools: anyone not on Business yet can ask to pay a year by invoice.
     const invoiceLink =
-      plan === "business" && interval === "year" && invoices ? (
+      plan === "business" && interval === "year" && invoices && !planPending ? (
         <button
           className="text-muted-foreground hover:text-foreground focus-visible:ring-ring rounded-sm text-xs underline-offset-4 transition-colors hover:underline focus-visible:ring-2 focus-visible:outline-none"
           onClick={() => {
@@ -395,7 +399,12 @@ export function PricingSection({
     {
       plan: "free",
       action: {
-        button: (
+        button: planPending ? (
+          // Not known yet whether this is a sign-up or the dashboard.
+          <Button className="w-full" disabled variant="outline">
+            {t("tiers.free.cta")}
+          </Button>
+        ) : (
           <Button asChild className="w-full" variant="outline">
             {/* Signed out: a free account (sign-up, or sign-in for someone
                 who has one), then the dashboard. */}

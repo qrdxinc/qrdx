@@ -133,6 +133,9 @@ function toSite(request: NextRequest): NextResponse {
   if (env.SITE_ZONE_KEY) {
     requestHeaders.set(SITE_KEY_HEADER, env.SITE_ZONE_KEY);
   }
+  // For the site only. This app must never read or trust it: a browser's
+  // copy is replaced here, on site requests, and nowhere else
+  // (tests/repo/visitor-country-header.test.ts).
   const country = countryFromHeaders(request.headers);
   if (country && COUNTRY_CODE.test(country)) {
     requestHeaders.set(SITE_COUNTRY_HEADER, country);

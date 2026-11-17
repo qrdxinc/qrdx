@@ -67,6 +67,11 @@ export const SITE_KEY_HEADER = "x-qrdx-site-key";
  * visitor on a proxied request, so its pages that depend on the country
  * (/pricing's currency) read this one. Absent when the main app has none
  * (local development, self-hosting without a geo-aware proxy).
+ *
+ * The main app must never read or trust it: only requests proxied to the
+ * site have a browser's copy replaced, and on every other path a browser can
+ * send any value (apps/app/tests/repo/visitor-country-header.test.ts fails
+ * on a reader).
  */
 export const SITE_COUNTRY_HEADER = "x-qrdx-visitor-country";
 
