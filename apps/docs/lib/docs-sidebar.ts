@@ -1,11 +1,8 @@
 import type { Node, Root } from "fumadocs-core/page-tree";
 import { getSidebarTabs } from "fumadocs-ui/components/sidebar/tabs";
-import { docsTabs, filterPageTree, mapLinkNodes } from "@/lib/docs-tree";
+import { docsTabs, filterPageTree } from "@/lib/docs-tree";
 import { isPathAvailable } from "@/lib/feature-availability";
-import type { Locale } from "@/lib/i18n/config";
-import { englishDocsPath } from "@/lib/i18n/docs";
-import { localizeHref } from "@/lib/i18n/paths";
-import { localizedSource } from "@/lib/source";
+import { source } from "@/lib/source";
 
 /**
  * The sidebar shows icons on folders (sections and their groups) only:
@@ -26,31 +23,20 @@ function withoutPageIcons(root: Root): Root {
   return { ...root, children: visit(root.children) };
 }
 
-const trees = new Map<Locale, Root>();
+let tree: Root | undefined;
 
 /**
- * The sidebar in `locale`: no entry for docs of features this deployment
- * can't offer, and links out of the docs to that language's pages. Shared
- * by the docs layout and the docs 404 (its section cards).
+ * The sidebar: no entry for docs of features this deployment can't offer.
+ * Shared by the docs layout and the docs 404 (its section cards).
  */
-export function sidebarTree(locale: Locale): Root {
-  const cached = trees.get(locale);
-  if (cached) return cached;
-  const tree = withoutPageIcons(
-    mapLinkNodes(
-      filterPageTree(localizedSource.getPageTree(locale), (url) =>
-        isPathAvailable(englishDocsPath(url)),
-      ),
-      (url) => localizeHref(url, locale),
-    ),
-  );
-  trees.set(locale, tree);
+export function sidebarTree(): Root {
+  tree ??= withoutPageIcons(filterPageTree(source.pageTree, isPathAvailable));
   return tree;
 }
 
-/** The docs' sections (Help, Guides, Developers, React library, Self-hosting) in `locale`, as the layout's tabs. */
-export function sidebarTabs(locale: Locale) {
-  return docsTabs(sidebarTree(locale));
+/** The docs' sections (Help, Guides, Developers, React library, Self-hosting), as the layout's tabs. */
+export function sidebarTabs() {
+  return docsTabs(sidebarTree());
 }
 
 /**
@@ -58,8 +44,8 @@ export function sidebarTabs(locale: Locale) {
  * tabs wrap each icon for its own switcher (full size, a border on phones),
  * which is wrong inside a card's icon tile (the docs 404).
  */
-export function sidebarSections(locale: Locale) {
-  return getSidebarTabs(sidebarTree(locale), {
+export function sidebarSections() {
+  return getSidebarTabs(sidebarTree(), {
     transform: (option) => option,
   }).filter((tab) => !tab.unlisted);
 }

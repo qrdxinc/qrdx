@@ -1,12 +1,12 @@
 import { Button } from "@repo/design-system/components/ui/button";
 import { ArrowRight, Book1, Home2 } from "iconsax-reactjs";
 import { AsciiField } from "@/components/fx/ascii-field";
-import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { NotFoundCode } from "@/components/not-found-code";
+import { ZoneLink as Link } from "@/components/zone-link";
 import { TrackOnMount } from "@/lib/analytics/react";
 import { playgroundHref, withHandoffRef } from "@/lib/playground-links";
 
-/** The 404 screen: app/(app)/not-found.tsx and app/global-not-found.tsx. */
+/** The 404 screen for URLs outside the docs (app/not-found.tsx). */
 export function NotFoundScreen() {
   return (
     <main className="relative isolate flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden px-6 py-16">

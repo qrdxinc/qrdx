@@ -25,7 +25,6 @@ export interface DocsManifestEntry {
     | "yearly"
     | "never";
   priority?: number;
-  alternates?: { languages?: Record<string, string> };
 }
 
 /** A docs page as llms.txt links it. */
@@ -44,7 +43,7 @@ export interface DocsManifestSection {
 
 export interface DocsManifest {
   version: 1;
-  /** The docs' sitemap entries: each page that may be indexed, with hreflang. */
+  /** The docs' sitemap entries: each page that may be indexed (English only). */
   sitemap: DocsManifestEntry[];
   /** The docs pages in sidebar order, grouped by tab. */
   sections: DocsManifestSection[];

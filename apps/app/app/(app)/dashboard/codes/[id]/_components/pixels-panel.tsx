@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@repo/design-system/components/ui/select";
-import { Switch } from "@repo/design-system/components/ui/switch";
 import { useTranslations } from "next-intl";
 import { Suspense, useId, useState, useTransition } from "react";
 import {
@@ -19,8 +18,8 @@ import {
   saveCodePixels,
 } from "@/actions/code-marketing";
 import { useAvailability } from "@/components/availability-provider";
-import { CopyButton } from "@/components/copy-button";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { ConversionsSection } from "@/ee/conversions/conversions-section";
 import { type PaidPlan, PLAN_NAMES } from "@/lib/pricing";
 import type { PixelConfig, PixelProvider } from "@/lib/redirect/routing";
 import {
@@ -102,105 +101,6 @@ const fromDraft = (draft: Draft) => ({
   conversions: draft.conversions,
 });
 
-function Snippet({ code, label }: { code: string; label: string }) {
-  const t = useTranslations("app.dashboard.codes.pixelsPanel");
-  return (
-    <div className="relative">
-      <pre className="bg-muted max-h-64 overflow-auto rounded-md p-3 pr-10 font-mono text-xs leading-relaxed">
-        {code}
-      </pre>
-      <CopyButton
-        aria-label={t("copyLabel", { label: label.toLowerCase() })}
-        className="absolute top-2 right-2"
-        textToCopy={code}
-      />
-    </div>
-  );
-}
-
-function ConversionsSection({
-  settings,
-  draft,
-  setDraft,
-  plan,
-}: {
-  settings: CodeMarketingSettings;
-  draft: Draft;
-  setDraft: (patch: Partial<Draft>) => void;
-  plan: PaidPlan | null;
-}) {
-  const t = useTranslations("app.dashboard.codes.pixelsPanel");
-  const id = useId();
-  const locked = !settings.features.conversions;
-  const browserSnippet = `<script async src="${settings.origin}/conversions.js"></script>
-<script>
-  window.qrdx = window.qrdx || function () {
-    (window.qrdx.q = window.qrdx.q || []).push(arguments);
-  };
-  // Where the conversion happens, e.g. your order confirmation page:
-  qrdx("conversion", { name: "purchase", value: 49.99, currency: "USD", id: "ORDER-1234" });
-</script>`;
-  const serverSnippet = `curl -X POST ${settings.origin}/api/v1/conversions \\
-  -H "Authorization: Bearer $QRDX_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -d '{"sid": "<qrdx_sid>", "name": "purchase", "value": 49.99, "currency": "USD", "id": "ORDER-1234"}'`;
-
-  return (
-    <div className="space-y-3 border-t pt-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="space-y-1">
-          <p className="text-sm font-medium">
-            {t("conversionTracking")}
-            {plan && ` (${PLAN_NAMES[plan]})`}
-          </p>
-          <p className="text-muted-foreground text-sm">
-            {t.rich("addsASignedQrdxSid", {
-              code: (chunks) => (
-                <code className="font-mono text-xs">{chunks}</code>
-              ),
-            })}
-          </p>
-        </div>
-        <Label
-          className="flex items-center gap-2 text-sm font-normal"
-          htmlFor={`${id}-on`}
-        >
-          <Switch
-            checked={draft.conversions}
-            disabled={locked && !draft.conversions}
-            id={`${id}-on`}
-            onCheckedChange={(conversions) => setDraft({ conversions })}
-          />
-          {draft.conversions ? t("on") : t("off")}
-        </Label>
-      </div>
-      {locked && plan && !settings.pixels?.conversions && (
-        <PlanLock plan={plan}>
-          {t("conversionTrackingAndRevenueAttribution", {
-            value: PLAN_NAMES[plan],
-          })}
-        </PlanLock>
-      )}
-      {draft.conversions && (
-        <div className="space-y-3">
-          <p className="text-muted-foreground text-xs">
-            {t.rich("n1AddThisToThe", {
-              code: (chunks) => <code className="font-mono">{chunks}</code>,
-            })}
-          </p>
-          <Snippet code={browserSnippet} label={t("browserSnippet")} />
-          <p className="text-muted-foreground text-xs">
-            {t.rich("n2OrReportFromYour", {
-              code: (chunks) => <code className="font-mono">{chunks}</code>,
-            })}
-          </p>
-          <Snippet code={serverSnippet} label={t("serverExample")} />
-        </div>
-      )}
-    </div>
-  );
-}
-
 function PixelsEditor({
   initial,
   plans,
@@ -230,6 +130,9 @@ function PixelsEditor({
       has("customDomains") ||
       Boolean(settings.pixels?.gtm),
   );
+  // Website links only offer conversion tracking (ee/conversions), which
+  // needs the QRdx licence key on the server: without it, no panel at all.
+  const conversions = has("conversions");
 
   const save = () => {
     setError(null);
@@ -248,6 +151,7 @@ function PixelsEditor({
     });
   };
 
+  if (!(isPage || conversions)) return null;
   return (
     <PanelCard
       badge={isPage ? plans.pixels : plans.conversions}
@@ -335,9 +239,9 @@ function PixelsEditor({
 
       {!isPage && (
         <ConversionsSection
-          draft={draft}
+          enabled={draft.conversions}
+          onEnabledChange={(on) => setDraft({ conversions: on })}
           plan={plans.conversions}
-          setDraft={setDraft}
           settings={settings}
         />
       )}

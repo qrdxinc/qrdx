@@ -7,6 +7,9 @@ import "@/ee/audit-log/auth-changes";
 // And the recorder for new accounts: an affiliate referral and how the
 // sign-up's visit started.
 import "@/lib/analytics/sign-up-hook";
+// And the plan limits for seats, more workspaces, workspace SSO and required
+// two-step verification (lib/plans.ts hands them over when it loads).
+import "@/lib/plans";
 import { notifyNewSignIn } from "@/lib/account/new-sign-in-notice-server";
 import { registerAppSessionOriginReader } from "@/lib/account/session-origin";
 import { notifyBackupCodeUsed } from "@/lib/account/two-factor-notice-server";

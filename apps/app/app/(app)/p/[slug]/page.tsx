@@ -7,11 +7,11 @@ import {
   CUSTOM_DOMAIN_HEADER,
   isCustomDomainRequest,
 } from "@/app/(app)/dashboard/domains/_lib/hostname";
-import { scopeCustomCss } from "@/components/landing/custom-css";
 import { LandingPageFooter } from "@/components/landing/page-footer";
 import { Pixels } from "@/components/landing/pixels";
 import { PreciseLocationPrompt } from "@/components/landing/precise-location";
 import { LandingRender } from "@/components/landing/render";
+import { hostedPageCss } from "@/ee/white-label/access";
 import { negotiateLocale } from "@/lib/i18n/accept-language";
 import { requestAppLocale } from "@/lib/i18n/request-locale";
 import { scanPagesIntl } from "@/lib/i18n/scan-pages";
@@ -89,7 +89,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: description || undefined,
       images,
     },
-    // White-label (Business): the page's own logo instead of the QRdx favicon.
+    // White-label (Business, ee/white-label): the page's own logo instead of
+    // the QRdx favicon.
     ...(page.branding.whiteLabel && icon && { icons: { icon, apple: icon } }),
   };
 }
@@ -114,11 +115,9 @@ export default async function LandingPage({ params }: Props) {
     userAgent: requestHeaders.get("user-agent"),
   };
 
-  // Business only; on a downgrade the page keeps rendering without it.
-  const css =
-    page.branding.customCss && page.settings.customCss.trim()
-      ? scopeCustomCss(page.settings.customCss)
-      : null;
+  // Business with the licence (ee/white-label); on a downgrade, or on a
+  // server without the licence key, the page keeps rendering without it.
+  const css = hostedPageCss(page.branding, page.settings.customCss);
 
   const reportHref = new URL(
     `/report-abuse?slug=${encodeURIComponent(slug)}`,
@@ -135,7 +134,7 @@ export default async function LandingPage({ params }: Props) {
       <LandingRender
         content={page.content}
         context={context}
-        customCss={css?.ok ? css.css : null}
+        customCss={css}
         footer={
           <LandingPageFooter
             badge={page.branding.badge}

@@ -7,9 +7,7 @@
 // stack or aren't offered on qrdx.dev), and leaves the rest for a later pass.
 //
 //   bun run --filter docs shots:markers            # list, grouped by id
-//   bun run --filter docs shots:markers -- --apply # rewrite the English pages
-//
-// Translated pages are never touched: the translation pass regenerates them.
+//   bun run --filter docs shots:markers -- --apply # rewrite the pages
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";

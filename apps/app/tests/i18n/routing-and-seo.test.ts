@@ -184,20 +184,14 @@ describe("paths", () => {
     }
   });
 
-  it("prefix docs pages in the languages with docs only", () => {
-    expect(localizePath("/docs", "ja")).toBe("/ja/docs");
+  it("never prefix docs pages: the docs are English only", () => {
+    expect(localizePath("/docs", "ja")).toBe("/docs");
     expect(localizePath("/docs/developers/mcp", "pt-BR")).toBe(
-      "/pt-br/docs/developers/mcp",
+      "/docs/developers/mcp",
     );
-    expect(localizeHref("/docs/help#faq", "zh-Hans")).toBe(
-      "/zh-hans/docs/help#faq",
-    );
-    expect(localizePath("/docs", "fr")).toBe("/fr/docs");
-    expect(localizeHref("/docs/help", "hi")).toBe("/hi/docs/help");
-    // English keeps the unprefixed docs.
+    expect(localizeHref("/docs/help#faq", "zh-Hans")).toBe("/docs/help#faq");
+    expect(localizeHref("/docs/help?x=1", "hi")).toBe("/docs/help?x=1");
     expect(localizePath("/docs/help", "en")).toBe("/docs/help");
-    // Not a docs path, only a prefix of one.
-    expect(localizePath("/docsearch", "ja")).toBe("/docsearch");
   });
 
   it("keep queries and hashes, and leave external links alone", () => {
@@ -234,16 +228,12 @@ describe("paths", () => {
       path: "/es/pricing",
     });
     expect(splitLocale("/ja")).toEqual({ locale: "en", path: "/ja" });
-    // Docs pages, in a language with docs.
-    expect(splitLocale("/es/docs")).toEqual({ locale: "es", path: "/docs" });
-    expect(splitLocale("/zh-hans/docs/help")).toEqual({
-      locale: "zh-Hans",
+    // The docs have no translated URLs (/es/docs redirects to /docs).
+    expect(splitLocale("/docs/help")).toEqual({
+      locale: "en",
       path: "/docs/help",
     });
-    expect(splitLocale("/ko/docs/help")).toEqual({
-      locale: "ko",
-      path: "/docs/help",
-    });
+    expect(splitLocale("/es/docs")).toEqual({ locale: "en", path: "/es/docs" });
     // What an English page prerenders as (usePathname() says /en/pricing
     // there): the same English path as the browser's /pricing, for
     // translated and English-only pages alike.

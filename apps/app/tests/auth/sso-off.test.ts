@@ -1,8 +1,14 @@
 // Workspace SSO (ee/, QRdx commercial licence) runs only on servers with a
-// licence key (packages/auth/ee-license.ts). Without QRDX_EE_LICENSE the auth
-// server must not register any of it, and the app must not offer it; with
-// the key, all of it is back. The browser side is e2e/sso-off.e2e.mts.
+// valid licence key (packages/auth/ee/license.ts). Without one (no
+// QRDX_EE_LICENSE, a value that isn't a key, a key QRdx didn't sign, or one
+// past its expiry and grace period) the auth server must not register any of
+// it, and the app must not offer it; with a valid key, all of it is back. The
+// browser side is e2e/sso-off.e2e.mts.
+import { generateKeyPairSync } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { signLicence, testLicence } from "../support/ee-license";
+
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 type Auth = {
   api: Record<string, { path?: string }>;
@@ -38,10 +44,25 @@ afterEach(() => {
   vi.resetModules();
 });
 
-describe("without QRDX_EE_LICENSE", () => {
+describe("without a valid QRDX_EE_LICENSE", () => {
+  const otherKey = generateKeyPairSync("ed25519").privateKey;
   for (const [label, value] of [
     ["unset", undefined],
     ["blank", "   "],
+    ["any old value", "local-dev"],
+    [
+      "signed by another key",
+      signLicence(
+        {
+          id: "lic_forged",
+          customer: "Someone",
+          issuedAt: new Date(Date.now() - DAY_MS).toISOString(),
+          expiresAt: new Date(Date.now() + 365 * DAY_MS).toISOString(),
+        },
+        otherKey,
+      ),
+    ],
+    ["expired past its grace period", testLicence({}, { days: -15 })],
   ] as const) {
     it(`registers no SSO endpoint, plugin, blocked path or rate limit (${label})`, async () => {
       const { auth, paths } = await load(value);
@@ -125,9 +146,9 @@ describe("without QRDX_EE_LICENSE", () => {
   });
 });
 
-describe("with QRDX_EE_LICENSE", () => {
+describe("with a valid QRDX_EE_LICENSE", () => {
   it("registers the SSO plugin, its endpoints, blocked paths and rate limits", async () => {
-    const { auth, paths } = await load("local-dev");
+    const { auth, paths } = await load(testLicence());
     const ids = (auth.options.plugins ?? []).map((plugin) => plugin.id);
     expect(ids).toEqual(expect.arrayContaining(["sso", "qrdx-sso-gate"]));
     expect(paths).toEqual(
@@ -151,7 +172,7 @@ describe("with QRDX_EE_LICENSE", () => {
   });
 
   it("offers SSO in the app", async () => {
-    const { isFeatureAvailable, isPathAvailable } = await load("local-dev");
+    const { isFeatureAvailable, isPathAvailable } = await load(testLicence());
     expect(isFeatureAvailable("sso")).toBe(true);
     expect(isPathAvailable("/dashboard/acme/settings/sso")).toBe(true);
     expect(isPathAvailable("/docs/help/teams/single-sign-on")).toBe(true);

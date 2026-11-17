@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../.source/json-schema/docs.meta.json",
-  "title": "Dominios",
-  "icon": "Globe",
-  "pages": ["custom-domains"]
-}

@@ -13,6 +13,8 @@ export const BARCODE_USES: Record<BarcodeFormatId, string> = {
     "The general-purpose barcode: letters, digits and symbols for asset tags, stock labels, tickets and shipping labels. It's compact and needs no registration, so use it whenever no retail standard applies.",
   code39:
     "Older and wider than Code 128, with capital letters, digits and a few symbols. Some industries and older systems still require it, and nearly every scanner reads it.",
+  codabar:
+    "An older barcode of digits with a start and stop letter (A to D), still used by libraries, blood banks and some shipping labels. Use it when a system asks for Codabar; otherwise Code 128 is shorter.",
   itf14:
     "Printed on corrugated cartons that hold retail products. It carries the 14-digit GTIN of the case, and its thick frame (bearer bars) evens out printing pressure and stops scanners reading only part of it.",
   "gs1-128":

@@ -44,6 +44,7 @@ export const DOWNLOAD_SIZES_MM: Record<
   upce: { width: 30.3, height: 27.8 },
   code128: { width: 69.9, height: 19.2 },
   code39: { width: 57.5, height: 19.2 },
+  codabar: { width: 37.7, height: 19.2 },
   itf14: { width: 60.4, height: 31.7 },
   "gs1-128": { width: 100.9, height: 19.2 },
   datamatrix: { width: 15.5, height: 15.5 },
@@ -465,6 +466,45 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
         question: "Should I type the asterisks?",
         answer:
           "No. The start and stop characters are added for you, and the asterisk can't be part of the text.",
+      },
+    ],
+  },
+  {
+    id: "codabar",
+    slug: "codabar",
+    title: "Free Codabar Barcode Generator",
+    metaDescription:
+      "Make a Codabar barcode: digits and - $ : / . + between a start and stop letter A to D, up to 40 characters. Scan-checked. SVG, PDF, PNG. Free, no signup.",
+    intro:
+      "Codabar is an older barcode of digits and a few symbols, framed by a start and a stop letter. Libraries, blood banks and some shipping labels still use it. Type your value, check that it scans and download it.",
+    usedFor: [
+      "Library and loan systems, blood bank labels and some shipping and lab labels, wherever an existing system or scanner is set up for Codabar.",
+      "If nothing asks for Codabar, use Code 128: it holds letters and makes a shorter barcode for the same text.",
+    ],
+    numbers: {
+      title: "Do I need to register a Codabar barcode?",
+      paragraphs: [
+        "No. Codabar carries your own numbers, such as a membership, item or sample number. There's nothing to license. Check with the system that reads it which start and stop letters it expects.",
+      ],
+    },
+    rules: [
+      "Start and end with one of A, B, C or D, with at least one character between them: digits and - $ : / . + only, up to 40 characters in all, for example A40156B.",
+      "The start and stop letters are part of what you type and what a scanner reports; some systems use the choice of letter to tell kinds of labels apart. This generator adds no check digit; if your system needs one, add it to your number yourself.",
+    ],
+    sizing: [
+      "Codabar characters aren't all the same width, so the width depends on what you type: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Digits, - and $ are the narrow ones; : / . + and the start and stop letters take a little more room.",
+      "Keep 10 modules of blank space each side, and make the bars tall enough to sweep easily: the generator starts at 15 mm.",
+    ],
+    faqs: [
+      {
+        question: "Which start and stop letters should I use?",
+        answer:
+          "Use the ones your system expects. Some systems use the letters to mark different label types. The letters can differ at each end.",
+      },
+      {
+        question: "Can Codabar hold letters?",
+        answer:
+          "Only A to D, as start and stop characters. For other letters use Code 128, or Code 39 for capitals.",
       },
     ],
   },

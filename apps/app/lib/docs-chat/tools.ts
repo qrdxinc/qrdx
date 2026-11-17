@@ -3,7 +3,6 @@
 // (toModelOutput); the browser sees only titles and links (the tools'
 // outputs), so the stream stays small and the Sources list under each
 // answer comes straight from the read_docs_page parts.
-import type { Locale } from "@repo/i18n/config";
 import { type Tool, tool } from "ai";
 import { z } from "zod";
 import { DOCS_CHAT } from "./config";
@@ -17,15 +16,14 @@ import {
 /** What the browser gets for a search: titles and links only. */
 export interface SearchDocsOutput {
   results: Pick<DocsSearchHit, "title" | "path" | "url">[];
-  lang: Locale;
 }
 
 /** What the browser gets for a page read: a source to list, or why there is none. */
 export type ReadDocsPageOutput =
-  | { title: string; path: string; url: string; lang: Locale }
+  | { title: string; path: string; url: string }
   | { error: string };
 
-/** Pages read in one request, by served path, for the model's eyes. */
+/** Pages read in one request, by path, for the model's eyes. */
 export type PageStore = Map<string, DocsPage>;
 
 // Annotated because ai 7's inferred tool types name @ai-sdk/provider types,
@@ -43,7 +41,7 @@ const searchInput = z.object({
     .min(1)
     .max(DOCS_CHAT.maxQueryChars)
     .describe(
-      "Words to search the docs for: the reader's question or its key terms.",
+      "English words to search the docs for: the reader's question or its key terms, translated into English if needed.",
     ),
 });
 
@@ -53,18 +51,16 @@ const readInput = z.object({
     .min(1)
     .max(DOCS_CHAT.maxPathChars)
     .describe(
-      "A docs path from search_docs, such as /docs/developers/mcp or /es/docs/help/contact.",
+      "A docs path from search_docs, such as /docs/developers/mcp or /docs/help/contact.",
     ),
 });
 
 /**
- * The tools for one request: `lang` is the reader's docs language, `pages`
- * collects what was read, so the model gets each page's text while the
- * browser gets its title and link.
+ * The tools for one request: `pages` collects what was read, so the model
+ * gets each page's text while the browser gets its title and link.
  */
 export function docsChatTools(
   retriever: DocsRetriever,
-  lang: Locale,
   pages: PageStore = new Map(),
 ): DocsChatTools {
   /** Every hit any search in this request returned, by path (for snippets). */
@@ -73,10 +69,10 @@ export function docsChatTools(
 
   const search_docs = tool({
     description:
-      "Search the QRdx docs. Returns the matching pages (title, path, snippet), best first. Call this before answering.",
+      "Search the QRdx docs, which are in English. Returns the matching pages (title, path, snippet), best first. Call this before answering.",
     inputSchema: searchInput,
     execute: async ({ query }): Promise<SearchDocsOutput> => {
-      const result = await retriever.search(query, lang);
+      const result = await retriever.search(query);
       for (const hit of result.hits) hits.set(hit.path, hit);
       return {
         results: result.hits.map(({ title, path, url }) => ({
@@ -84,7 +80,6 @@ export function docsChatTools(
           path,
           url,
         })),
-        lang: result.lang,
       };
     },
     toModelOutput: ({ output }) => {
@@ -116,15 +111,10 @@ export function docsChatTools(
         };
       }
       try {
-        const page = await retriever.readPage(path, lang);
+        const page = await retriever.readPage(path);
         reads++;
         pages.set(page.path, page);
-        return {
-          title: page.title,
-          path: page.path,
-          url: page.url,
-          lang: page.lang,
-        };
+        return { title: page.title, path: page.path, url: page.url };
       } catch (error) {
         if (error instanceof DocsRetrievalError)
           return { error: error.message };

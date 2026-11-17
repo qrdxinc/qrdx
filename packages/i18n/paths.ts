@@ -2,12 +2,11 @@
 //
 // A page is translated once it lives under apps/app/app/[lang] and its path
 // is in localized-paths.json (apps/app/scripts/i18n-split-roots.mjs moves it
-// there). Links to any other page stay unprefixed in every language. The
-// docs are the exception: in a language with docs (docs.ts) every /docs page
-// has a prefixed URL; French visitors reach the English docs at /docs.
+// there). Links to any other page stay unprefixed in every language: the
+// docs (/docs/...), for one, are English only.
 //
-// The marketing pages are English only (owner decision, 17 Nov 2026): they
-// still live under app/[lang], listed as `englishOnly`, and render in
+// The marketing pages are English only too (owner decision, 17 Nov 2026):
+// they still live under app/[lang], listed as `englishOnly`, and render in
 // English at their unprefixed URLs; their old translated URLs redirect there
 // (routing.ts). Links to them never gain a prefix.
 
@@ -17,7 +16,6 @@ import {
   type Locale,
   localeFromSegment,
 } from "./config";
-import { hasDocs, isDocsPath } from "./docs";
 import localized from "./localized-paths.json";
 
 /**
@@ -69,18 +67,9 @@ export function isEnglishOnlyPath(path: string): boolean {
   return ENGLISH_ONLY_MATCHERS.some((matches) => matches(path));
 }
 
-/**
- * Whether `path` has its own URL in `locale`: a translated page, or a docs
- * page in a language with docs (docs.ts). Docs pages that aren't
- * translated yet show the English text at that URL, with a note.
- */
-export function isPathIn(path: string, locale: Locale): boolean {
-  return isLocalizedPath(path) || (isDocsPath(path) && hasDocs(locale));
-}
-
-/** "/pricing" in Spanish → "/es/pricing"; "/" → "/es". English is unprefixed. */
+/** "/playground" in Spanish → "/es/playground". English is unprefixed. */
 export function localizePath(path: string, locale: Locale): string {
-  if (locale === DEFAULT_LOCALE || !isPathIn(path, locale)) return path;
+  if (locale === DEFAULT_LOCALE || !isLocalizedPath(path)) return path;
   const prefix = `/${LOCALE_INFO[locale].segment}`;
   return path === "/" ? prefix : `${prefix}${path}`;
 }
@@ -106,8 +95,8 @@ export function localizeHref(href: string, locale: Locale): string {
 
 /**
  * Splits a pathname into its language and the page's English path:
- * "/es/pricing" → { locale: "es", path: "/pricing" }, "/docs" → English.
- * Only translated pages carry a prefix (docs pages: in languages with docs).
+ * "/es/playground" → { locale: "es", path: "/playground" }, "/docs" →
+ * English. Only translated pages carry a prefix.
  */
 export function splitLocale(pathname: string): {
   locale: Locale;
@@ -120,7 +109,7 @@ export function splitLocale(pathname: string): {
   // only pages prerender under /en as well ("/en" is the home page).
   if (match && locale) {
     const path = match[2] ?? "/";
-    if (isPathIn(path, locale)) return { locale, path };
+    if (isLocalizedPath(path)) return { locale, path };
     if (locale === DEFAULT_LOCALE && isEnglishOnlyPath(path)) {
       return { locale, path };
     }

@@ -19,7 +19,11 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { isEnglishOnlyPath, isPathIn, localizeHref } from "@repo/i18n/paths";
+import {
+  isEnglishOnlyPath,
+  isLocalizedPath,
+  localizeHref,
+} from "@repo/i18n/paths";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NextIntlClientProvider } from "next-intl";
 import type { ComponentProps, ReactNode } from "react";
@@ -79,10 +83,12 @@ function translatedPageGraph(): Map<string, string> {
   return sources;
 }
 
-/** A path a translated page has in some language ("/pricing", "/docs/…"). */
+/** A path a translated page has in some language ("/pricing"). */
 const isTranslatedPath = (href: string) => {
   const path = href.split(/[?#]/)[0] ?? "";
-  return path.startsWith("/") && !path.startsWith("//") && isPathIn(path, "ja");
+  return (
+    path.startsWith("/") && !path.startsWith("//") && isLocalizedPath(path)
+  );
 };
 
 describe("links in code that translated pages import", () => {
@@ -318,14 +324,16 @@ describe("links to the docs", () => {
     );
   };
 
-  it("are plain <a> elements, in the reader's language", async () => {
-    for (const [href, expected] of [
-      ["/docs", "/hi/docs"],
-      ["/docs/dynamic-qr-codes", "/hi/docs/dynamic-qr-codes"],
-      ["/docs/developers/rest-api#auth", "/hi/docs/developers/rest-api#auth"],
+  it("are plain <a> elements to the English page, on a translated page too", async () => {
+    // The docs are English only: the link goes straight to /docs/..., not
+    // through the redirect from /hi/docs/....
+    for (const href of [
+      "/docs",
+      "/docs/dynamic-qr-codes",
+      "/docs/developers/rest-api#auth",
     ]) {
-      const html = await render(href as string, { prefetch: false });
-      expect(html).toBe(`<a href="${expected}">x</a>`);
+      const html = await render(href, { prefetch: false });
+      expect(html).toBe(`<a href="${href}">x</a>`);
     }
   });
 

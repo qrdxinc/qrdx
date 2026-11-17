@@ -73,5 +73,5 @@ export const ENTERPRISE_ADDS = [
   "A yearly contract with your company, paid by invoice",
   `Written reply times: within ${ENTERPRISE_REPLY.outageBusinessHours} business hours when codes or hosted pages stop working, within ${ENTERPRISE_REPLY.otherBusinessDays} business day for everything else`,
   "Answers for your security review and questionnaires",
-  "Single sign-on and the audit log on your own server, under the QRdx commercial license",
+  "Single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking on your own server, under the QRdx commercial license",
 ] as const;

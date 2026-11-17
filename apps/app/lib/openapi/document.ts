@@ -16,7 +16,6 @@ import {
   communityItemIdSchema,
   communityItemsQuerySchema,
 } from "@/app/api/v1/community/_lib/schemas";
-import { conversionBodySchema } from "@/app/api/v1/conversions/_lib/schemas";
 import {
   hookIdSchema,
   hookSampleQuerySchema,
@@ -30,6 +29,7 @@ import {
   ART_TEXT_MAX_LENGTH,
   aiArtRequestSchema,
 } from "@/components/sections/ai-art/config";
+import { conversionBodySchema } from "@/ee/conversions/schemas";
 import { AI_ART_DAILY_LIMIT } from "@/lib/ai/art";
 import {
   insufficientKeyScopeError,
@@ -1108,6 +1108,8 @@ On Pro and Business, \`preciseLocations\` lists the locations scanners chose to 
         security: [...security("codes:write"), {}],
         description: `Attributes a sale, sign-up or other conversion to the scan that brought the visitor (Business).
 
+Conversion tracking is under the QRdx commercial license. qrdx.dev has it; a self-hosted server has this endpoint only where a valid license key from QRdx (\`QRDX_EE_LICENSE\`: issued with an enterprise agreement, checked offline, not past its expiry and grace period) switches conversion tracking on, and answers 404 \`NOT_FOUND\` everywhere else.
+
 From your server, send an API key (or token) and the scan's \`sid\`, or the code id as \`code\`. From the browser, \`conversions.js\` sends \`sid\` with no key, for codes with conversion tracking turned on. An \`id\`, such as your order id, makes retries safe: a repeat returns 200 with \`duplicate: true\`. More in [Tracking and conversions](${docs("tracking-and-conversions")}).`,
         requestBody: {
           required: true,
@@ -1500,7 +1502,7 @@ function barcodeOperations(c: SchemaCollector): Record<string, JsonSchema> {
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like \`GET /qr\`.
 
-**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a \`400\` that says what's wrong. Code 128 takes printable ASCII, Code 39 capitals, digits and \`- . $ / + %\`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.
+**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a \`400\` that says what's wrong. Code 128 takes printable ASCII, Code 39 capitals, digits and \`- . $ / + %\`, Codabar a start and stop letter (A to D) around digits and \`- $ : / . +\`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.
 
 **Sizes.** Raster images are \`scale\` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars \`height\` millimetres tall.
 
@@ -2020,7 +2022,8 @@ export function buildOpenApiDocument(): Document {
       { name: "Scans", description: "Scan analytics of a code." },
       {
         name: "Conversions",
-        description: "Sales and sign-ups attributed to the scan behind them.",
+        description:
+          "Sales and sign-ups attributed to the scan behind them. Under the QRdx commercial license: on a self-hosted server only where a valid license key from QRdx turns conversion tracking on.",
       },
       {
         name: "Hooks",

@@ -6,7 +6,7 @@ import { DOCS_CHAT_ENABLED } from "./enabled";
 import { askDocsChat } from "./provider";
 
 // Where the docs' AI chat plugs into the Shell lane's files. The rest of
-// the docs only import these two names (app/[lang]/docs/layout.tsx and
+// the docs only import these two names (app/docs/layout.tsx and
 // components/search.tsx), so the chat lands without touching them.
 //
 // The panel itself is not mounted here: it is docked beside the page by

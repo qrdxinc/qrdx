@@ -15,11 +15,11 @@ on:
     branches:
       - main
     paths:
-      # The docs site: its code, content (content/docs), translation review
-      # records and recorded dates
+      # The docs site: its code, content (content/docs) and recorded dates
       - apps/docs/**
       - .github/workflows/docs-deploy.yml
-      # The message catalogs, which stay with the main app's
+      # The message catalogs, which stay with the main app's (the docs read
+      # the English one)
       - apps/app/messages/**
       # The generated inputs' sources: the docs' message subset and the OpenAPI
       # document's copy (apps/docs/scripts/zone-inputs.mjs)
@@ -168,3 +168,14 @@ jobs:
           [ "$TARGET" = "production" ] && prod=(--prod)
           url="$(bun x "$VERCEL_CLI" deploy --prebuilt "${prod[@]}" --token="$VERCEL_TOKEN")"
           echo "Deployed the docs site ($TARGET): $url" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # The first search on a new deployment builds the index and is slow;
+      # the docs assistant and the search dialog shouldn't be the ones to
+      # pay for it. A failure here doesn't fail the deploy.
+      - name: Warm the search index
+        if: env.TARGET == 'production'
+        continue-on-error: true
+        run: |
+          curl --silent --show-error --max-time 60 --output /dev/null \
+            --write-out "search: %{http_code} in %{time_total}s\n" \
+            "https://docs.qrdx.dev/api/search?query=qr"

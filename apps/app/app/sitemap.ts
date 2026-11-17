@@ -68,8 +68,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 /**
  * The docs' entries, from the docs site's manifest when DOCS_ZONE_URL is set
  * (that fetch makes this sitemap regenerate hourly; lib/docs-zone-manifest.ts).
- * The docs site decides them: the pages this deployment offers, and the
- * translations a native reviewer signed off. Without a docs site there are
+ * The docs site decides them: the pages this deployment offers, in English
+ * (the docs' one language). Without a docs site there are
  * none: the docs URLs redirect to qrdx.dev, whose sitemap lists them.
  */
 async function docsEntries(): Promise<Entry[]> {

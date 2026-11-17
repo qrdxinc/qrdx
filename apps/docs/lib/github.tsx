@@ -56,9 +56,8 @@ export const DOCS_CONTENT_DIR = "apps/docs/content/docs";
 
 /**
  * GitHub's editor for a docs page, from the page's file path inside
- * content/docs ("help/index.mdx", "developers/mcp.es.mdx"): the file that
- * rendered, so an index page edits its index.mdx and a translated page its
- * translation. The old helper built the path from the page URL and so
+ * content/docs ("help/index.mdx", "developers/mcp.mdx"): the file that
+ * rendered, so an index page edits its index.mdx. The old helper built the path from the page URL and so
  * pointed index pages at a file that doesn't exist.
  */
 export function getGithubEditUrl(filePath: string): string {

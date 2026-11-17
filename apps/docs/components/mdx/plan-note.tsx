@@ -1,11 +1,9 @@
 import "server-only";
 
 import Link from "fumadocs-core/link";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Callout } from "@/components/mdx/callout";
-import type { Locale } from "@/lib/i18n/config";
-import { localizeHref } from "@/lib/i18n/paths";
 
 type PlanId = "pro" | "business" | "enterprise";
 const PLAN_IDS: readonly PlanId[] = ["pro", "business", "enterprise"];
@@ -26,8 +24,7 @@ export async function PlanNote({
   plans: string;
   children?: ReactNode;
 }) {
-  const locale = (await getLocale()) as Locale;
-  const t = await getTranslations({ locale, namespace: "docs.shell.plan" });
+  const t = await getTranslations("docs.shell.plan");
   const names = plans
     .split(",")
     .map((plan) => plan.trim().toLowerCase())
@@ -42,11 +39,7 @@ export async function PlanNote({
     <Callout title={t("title", { plans: list })} type="plan">
       {children ?? (
         <p>
-          {t("body")}{" "}
-          <Link href={localizeHref("/docs/plans-and-limits", locale)}>
-            {t("link")}
-          </Link>
-          .
+          {t("body")} <Link href="/docs/plans-and-limits">{t("link")}</Link>.
         </p>
       )}
     </Callout>

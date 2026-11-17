@@ -30,6 +30,7 @@ import {
   confirmSignIn,
   confirmSignInRefused,
 } from "./confirm-sign-in";
+import { eeFeatureLicensed } from "./ee/license";
 import {
   SSO_SERVER_ONLY_PATHS,
   SSO_SIGN_IN_PATH,
@@ -39,7 +40,6 @@ import {
   validateSsoUserInfo,
 } from "./ee/sso";
 import { ssoRequirementGate } from "./ee/sso-required";
-import { eeLicensed } from "./ee-license";
 import { sendVerificationOTP } from "./email-otp";
 import { keys } from "./keys";
 import { newSignIn } from "./new-sign-in";
@@ -51,7 +51,7 @@ import {
   SERVER_ONLY_PASSKEY_PATHS,
 } from "./passkey";
 import { passkeyRelyingParty } from "./passkey-rp";
-import { hasEntitledSubscription, workspacePlanTier } from "./plan";
+import { userPlanLimits, workspacePlanLimits } from "./plan";
 import { noteSignUpState, recordNewUser } from "./referral";
 import { sessionLifetime } from "./session-lifetime";
 import { sessionOriginGuard } from "./session-origin";
@@ -86,19 +86,15 @@ import {
 import { workspaceRoleGate, workspaceRoleHooks } from "./workspace-roles";
 import { workspaceTwoFactorGate } from "./workspace-two-factor";
 
-// Members per team, owner included, by the best plan among its owners and
-// billing members (workspacePlanTier in ./plan.ts). Keep in sync with
-// `teamMembers` in apps/app/lib/plans.ts.
-const TEAM_MEMBER_LIMITS = {
-  free: 1,
-  pro: 3,
-  business: Number.POSITIVE_INFINITY,
-};
 // Better Auth's default invitation cap, kept for teams without a member limit.
 const MAX_PENDING_INVITATIONS = 100;
 
+/**
+ * Members per team, owner included: `teamMembers` of the best plan among its
+ * owners and billing members (apps/app/lib/plans.ts, through ./plan.ts).
+ */
 async function teamMemberLimit(organizationId: string): Promise<number> {
-  return TEAM_MEMBER_LIMITS[await workspacePlanTier(organizationId)];
+  return (await workspacePlanLimits(organizationId)).teamMembers;
 }
 
 /** Pending invitations allowed: the seats left after current members. */
@@ -194,9 +190,11 @@ const twoFactorPlugin = twoFactor({
 });
 
 // Workspace single sign-on (./ee/sso.ts, QRdx commercial licence) only runs
-// with a licence key (./ee-license.ts). Without one its plugin, endpoints,
-// blocked paths and rate limits are left out entirely.
-const ssoLicensed = eeLicensed(process.env);
+// with a valid licence key that covers it (./ee/license.ts: signed by QRdx,
+// not past its expiry and grace period). Without one its plugin, endpoints,
+// blocked paths and rate limits are left out entirely. A licence that runs
+// out while the server is up turns SSO off through ./ee/sso.ts's checks.
+const ssoLicensed = eeFeatureLicensed("sso");
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -338,8 +336,8 @@ export const auth = betterAuth({
     admin({ adminUserIds: getAdminUserIds() }),
     // And any other path under /admin/ (a future endpoint) over HTTP.
     adminHttpOff(),
-    // Workspaces. Everyone has their own (made at sign-up, above); Pro and
-    // Business users can create more (any entitled subscription, ./plan.ts).
+    // Workspaces. Everyone has their own (made at sign-up, above); more need
+    // a plan with `teams` (Pro and Business as shipped; ./plan.ts).
     organization({
       creatorRole: "owner",
       // QRdx's five roles (apps/app/lib/permissions.ts decides what each
@@ -348,9 +346,11 @@ export const auth = betterAuth({
       // the plugin. Registering them lets invitations and role changes use
       // them (the plugin refuses roles it doesn't know).
       roles: { ...defaultRoles, viewer: memberAc, billing: memberAc },
-      allowUserToCreateOrganization: (user) => hasEntitledSubscription(user.id),
-      // Seats follow the owners' plan: Pro 3, Business unlimited. Checked when
-      // an invitation is accepted; pending invitations can't exceed free seats.
+      allowUserToCreateOrganization: async (user) =>
+        (await userPlanLimits(user.id)).teams,
+      // Seats follow the owners' plan (`teamMembers`: Pro 3, Business
+      // unlimited as shipped). Checked when an invitation is accepted;
+      // pending invitations can't exceed free seats.
       membershipLimit: (_user, org) => teamMemberLimit(org.id),
       invitationLimit: ({ organization: org }) => teamInvitationLimit(org.id),
       // Invite emails are sent by apps/app/actions/organizations.ts; the
@@ -417,10 +417,10 @@ export const auth = betterAuth({
     // before the plugin trims what was sent, and only owners give or take
     // away owner and billing (./workspace-roles.ts).
     workspaceRoleGate(),
-    // Workspace single sign-on, Business plan only, licensed servers only
-    // (above). ./ee/sso.ts adds QRdx's checks (plan, verified domain, who
-    // joins the workspace); ./ee/sso-required.ts enforces "Require single
-    // sign-on" for a domain.
+    // Workspace single sign-on, on plans with `sso` (Business), licensed
+    // servers only (above). ./ee/sso.ts adds QRdx's checks (plan, verified
+    // domain, who joins the workspace); ./ee/sso-required.ts enforces
+    // "Require single sign-on" for a domain.
     ...(ssoLicensed ? [sso(ssoOptions), ssoGate(), ssoRequirementGate()] : []),
     // Proving an unproven account's address clears what an earlier holder
     // left behind (./unproven-access.ts).

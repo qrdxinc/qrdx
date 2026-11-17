@@ -9,7 +9,7 @@ import { useTreeContext } from "fumadocs-ui/contexts/tree";
 import { useNotebookLayout } from "fumadocs-ui/layouts/notebook";
 import { Add, Dislike, Like1, Send2, Stop } from "iconsax-reactjs";
 import { usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   type ComponentProps,
   type FormEvent,
@@ -22,7 +22,6 @@ import {
   useState,
 } from "react";
 import { Streamdown } from "streamdown";
-import { LocaleLink } from "@/components/i18n/locale-link";
 import { DocsPre } from "@/components/mdx/code-block";
 import { isDocsPage, ZoneLink } from "@/components/zone-link";
 import { track } from "@/lib/analytics";
@@ -198,7 +197,6 @@ const answerComponents = { a: AnswerLink, pre: AnswerPre, code: AnswerCode };
 
 export function DocsChatPanel() {
   const t = useTranslations("docs.chat");
-  const locale = useLocale();
   const pathname = usePathname();
   const { open, setOpen, pending, consume } = useDocsChat();
   const {
@@ -234,12 +232,11 @@ export function DocsChatPanel() {
         prepareSendMessagesRequest: ({ messages }) => ({
           body: {
             messages: compactMessages(messages),
-            lang: locale,
             ...(pageRef.current ? { page: pageRef.current } : {}),
           },
         }),
       }),
-    [locale],
+    [],
   );
 
   const outcomeSent = useRef(false);
@@ -571,12 +568,12 @@ export function DocsChatPanel() {
         <p className="mt-2 text-[11px] leading-snug text-fd-muted-foreground">
           {t.rich("privacy", {
             link: (chunks) => (
-              <LocaleLink
+              <ZoneLink
                 className="underline underline-offset-2 hover:text-fd-foreground"
                 href="/legal/ai-features"
               >
                 {chunks}
-              </LocaleLink>
+              </ZoneLink>
             ),
           })}
         </p>

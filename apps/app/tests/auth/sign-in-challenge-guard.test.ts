@@ -16,6 +16,7 @@ import {
   UNUSED_TWO_FACTOR_PATHS,
 } from "@repo/auth/sign-in-challenge-rules";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { testLicence } from "../support/ee-license";
 
 type Kind =
   /** Signs someone in (creates a session): challenged when 2FA is on. */
@@ -173,7 +174,7 @@ const PATHS: Record<string, [Kind, string]> = {
 };
 
 // Workspace SSO (packages/auth/ee/sso.ts): registered only on servers with a
-// licence key (packages/auth/ee-license.ts), so only expected there.
+// valid licence key (packages/auth/ee/license.ts), so only expected there.
 const SSO_PATHS: Record<string, [Kind, string]> = {
   "/sign-in/sso": ["no-session", "starts SSO; the callback signs in"],
   "/sso/callback": ["challenged", "workspace SSO, OIDC shared callback"],
@@ -218,7 +219,7 @@ describe("sign-in challenge coverage", () => {
   });
 
   it.each([
-    ["with", "test-license"],
+    ["with", testLicence()],
     ["without", undefined],
   ])(
     "classifies every endpoint path QRdx's auth registers %s a licence key",

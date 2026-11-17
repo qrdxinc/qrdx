@@ -5,9 +5,9 @@
 // docs pages need the compiled MDX; the route handlers (the .md and llms
 // routes, search, the sitemap, Open Graph images) only need each page's
 // frontmatter, date, search data and Markdown. When they read those from the
-// compiled modules too, every docs page in every language is compiled a
-// second time, and the build machine runs out of memory as languages are
-// added. So, next to fumadocs' own files in .source, this writes:
+// compiled modules too, every docs page is compiled a second time, and the
+// build machine runs short of memory. So, next to fumadocs' own files in
+// .source, this writes:
 //
 // - docs.ts: the docs collection, compiled (lib/source.ts, for the pages);
 // - content.ts: every other collection, compiled (lib/content-source.ts);
@@ -44,9 +44,9 @@ type DocCollection = DocsCollection["docs"];
 
 interface IndexedFile {
   type: "page" | "meta";
-  /** Relative to the collection's folder: "developers/mcp.es.mdx". */
+  /** Relative to the collection's folder: "developers/mcp.mdx". */
   path: string;
-  /** Relative to the app: "content/docs/developers/mcp.es.mdx". */
+  /** Relative to the app: "content/docs/developers/mcp.mdx". */
   absolutePath: string;
   data: Record<string, unknown>;
 }

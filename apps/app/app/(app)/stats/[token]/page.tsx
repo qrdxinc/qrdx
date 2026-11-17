@@ -9,10 +9,11 @@ import {
   isCustomDomainRequest,
   requestHostname,
 } from "@/app/(app)/dashboard/domains/_lib/hostname";
-import { brandIconUrl } from "@/lib/client-brand-icon";
+// Client branding (ee/client-portal, QRdx commercial licence): a page only
+// has a brand where the server has the licence.
+import { brandedStatsMetadata } from "@/ee/client-portal/stats-metadata";
 import { loadPublicStats } from "@/lib/public-stats";
 import {
-  type PublicStats,
   type PublicStatsRange,
   parsePublicStatsRange,
   publicStatsPath,
@@ -64,42 +65,13 @@ export async function generateMetadata({
     ? requestHostname(requestHeaders.get("host"))
     : null;
   const path = `${publicStatsPath(token)}/og`;
-  return brandedMetadata(stats, name, host ? `https://${host}${path}` : path);
-}
-
-/**
- * A client-branded page (agency tools): the client's name in the title and
- * the link preview. Without QRdx marks (Business) the site name, icons and
- * the " | QRdx" title suffix give way to the client's.
- */
-function brandedMetadata(
-  stats: PublicStats,
-  name: string,
-  image: string,
-): Metadata {
-  const brand = stats.brand as NonNullable<PublicStats["brand"]>;
-  const title = `${brand.name} · ${name} scan report`;
-  const metadata: Metadata = {
-    ...NO_INDEX,
-    title: stats.hideQrdx ? { absolute: title } : title,
-    description: `Scans of ${name}, prepared for ${brand.name}.`,
-    openGraph: {
-      title,
-      description: `Scans of ${name}, prepared for ${brand.name}.`,
-      images: [{ url: image, width: 1200, height: 630 }],
-      ...(stats.hideQrdx ? { siteName: brand.name } : {}),
-    },
-    twitter: { card: "summary_large_image", title, images: [image] },
-  };
-  if (!stats.hideQrdx) return metadata;
   return {
-    ...metadata,
-    applicationName: brand.name,
-    authors: null,
-    creator: null,
-    keywords: null,
-    manifest: null,
-    icons: { icon: brandIconUrl(brand) },
+    ...NO_INDEX,
+    ...brandedStatsMetadata(
+      stats,
+      name,
+      host ? `https://${host}${path}` : path,
+    ),
   };
 }
 
