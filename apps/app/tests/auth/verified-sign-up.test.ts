@@ -12,13 +12,25 @@ import {
   unverifiedSignUpError,
   validateSocialSignUp,
 } from "@repo/auth/verified-sign-up";
+import { createTranslator } from "next-intl";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
-  signInErrorMessage,
+  type SocialSignIn,
+  signInErrorMessage as signInErrorMessageIn,
   socialSignInErrorPath,
 } from "@/app/(app)/(auth)/sign-in/_lib/error-message";
 import { readSignInParams } from "@/app/(app)/(auth)/sign-in/_lib/params";
 import { confirmSignInErrorMessage } from "@/lib/account/confirmation";
+import en from "@/messages/en.json";
+
+// In English, from the catalog (auth.signInErrors).
+const tErrors = createTranslator({
+  locale: "en",
+  messages: en,
+  namespace: "auth.signInErrors",
+});
+const signInErrorMessage = (code: string, via: SocialSignIn | null) =>
+  signInErrorMessageIn(code, via, tErrors);
 
 type Check = Parameters<typeof validateSocialSignUp>[0];
 

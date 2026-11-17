@@ -8943,7 +8943,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "Back to QRdx"
+        "backToQrdx": "Back to QRdx",
+        "signedOut": "You're signed out.",
+        "pageTitle": "Sign in"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -9010,6 +9012,20 @@
           "authorize": "Authorize",
           "somethingWentWrongCheckYour": "Something went wrong. Check your connection and try again."
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "Sign out of QRdx?",
+        "signOut": "Sign out",
+        "cancel": "Cancel",
+        "youreStillSignedIn": "You're still signed in",
+        "signingOutDidntWorkCheck": "Signing out didn't work. Check your connection and try again.",
+        "tryAgain": "Try again",
+        "backToDashboard": "Back to dashboard",
+        "signingYouOut": "Signing you out…",
+        "oneMoment": "One moment…",
+        "pageTitle": "Sign out"
       }
     }
   },
@@ -9106,11 +9122,22 @@
       "thatCodeHasExpiredSend": "That code has expired. Send a new one.",
       "tooManyWrongTriesSend": "Too many wrong tries. Send a new code.",
       "thisAccountIsSuspendedContact": "This account is suspended. Contact support if you think that's a mistake.",
-      "somethingWentWrongTryAgain": "Something went wrong. Try again."
+      "somethingWentWrongTryAgain": "Something went wrong. Try again.",
+      "newCodeSent": "New code sent. The old one no longer works.",
+      "connectionFailed": "Something went wrong. Check your connection and try again."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continue with passkey",
-      "lastUsed": "Last used"
+      "lastUsed": "Last used",
+      "errors": {
+        "rateLimited": "Too many tries. Wait a minute, then try again.",
+        "userVerification": "That passkey didn't ask for your PIN, fingerprint or face. Use one that does, or sign in another way.",
+        "notFound": "That passkey isn't linked to a QRdx account anymore. Sign in another way.",
+        "banned": "This account is suspended. Contact support if you think that's a mistake.",
+        "ssoRequired": "Your company requires single sign-on for this account. Sign in with SSO.",
+        "failed": "That passkey didn't work. Try again, or sign in another way.",
+        "connection": "Something went wrong. Check your connection and try again."
+      }
     },
     "signInPanel": {
       "codeSentTo": "Code sent to <strong>{email}</strong>",
@@ -9216,7 +9243,21 @@
       "resendInSecondsleftS": "Resend in {secondsLeft, number}s",
       "resendCode": "Resend code",
       "whyAmIAsked": "Why am I asked?",
-      "whyAmIAskedAgain": "Why am I asked again?"
+      "whyAmIAskedAgain": "Why am I asked again?",
+      "switchTo": {
+        "passkey": "Use your passkey",
+        "totp": "Use an authenticator code",
+        "backup": "Use a backup code",
+        "email": "Email me a code",
+        "signInWith": "Sign in with {provider}",
+        "sign-in-again": "Sign in again"
+      },
+      "signInWithSsoAgain": "Sign in with your company's SSO again. You'll come back to this page, then make your change once more.",
+      "newCodeSent": "New code sent. The old one no longer works.",
+      "reasons": {
+        "continue-session": "This sign-in is being used from a different country and a different browser than where it started, so we check it's you before anything else.",
+        "link-slack-account": "Once linked, whoever uses that Slack account can make tracked codes in your workspace with /qr track, so we check it's you first."
+      }
     },
     "dialogCloseButton": {
       "close": "Close"
@@ -9238,6 +9279,112 @@
     },
     "nudge": {
       "dismiss": "Don't show this again"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "Sign in with SSO",
+      "lastUsed": "Last used",
+      "workEmail": "Work email",
+      "continue": "Continue",
+      "ifYourCompanySetIt": "If your company set it up for QRdx.",
+      "cancel": "Cancel",
+      "youCompanyCom": "you@company.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "Continue with SSO",
+      "lastUsed": "Last used",
+      "useADifferentEmail": "Use a different email",
+      "yourCompanyRequiresItFor": "Your company requires it for this address. You'll continue on its sign-in page.",
+      "youllContinueOnYourCompanys": "You'll continue on your company's sign-in page.",
+      "sending": "Sending…",
+      "emailMeACode": "Email me a code"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "Use your passkey",
+        "totp": "Open your authenticator app",
+        "backup": "Enter a backup code"
+      },
+      "switchTo": {
+        "passkey": "Use your passkey",
+        "totp": "Use an authenticator code",
+        "backup": "Use a backup code"
+      },
+      "hints": {
+        "passkey": "Use Touch ID, Face ID, Windows Hello or a security key.",
+        "totp": "Enter the 6-digit code from your authenticator app.",
+        "backup": "Enter one of your backup codes. Each works once."
+      },
+      "passkey": {
+        "waiting": "Waiting for your passkey…",
+        "checking": "Checking your passkey…",
+        "failed": "Couldn't verify your passkey. Try again.",
+        "closed": "The passkey prompt was closed or timed out. Try again or use another method.",
+        "expiredRequest": "That passkey request expired. Try again.",
+        "userVerification": "That passkey didn't ask for your PIN, fingerprint or face. Use one that does, or use another method.",
+        "unavailable": "There's no passkey for this account here. Use another method.",
+        "tooManyTries": "Too many failed tries. Sign in again to try again.",
+        "locked": "Too many failed tries in a row. Try again in {minutes, number} minutes.",
+        "expired": "This sign-in timed out. Sign in again.",
+        "rateLimited": "Too many tries. Wait a moment, then try again.",
+        "connection": "Something went wrong. Check your connection and try again.",
+        "ssoRequired": "Your company now requires single sign-on for this address. Start again and sign in with SSO."
+      },
+      "noStepHere": "This browser can't use your passkey, and there's no other way to finish signing in here. Use a device with your passkey.",
+      "noAuthenticatorApp": "Your account doesn't use an authenticator app. Use another method.",
+      "backupCode": {
+        "empty": "Enter one of your backup codes.",
+        "strange": "Backup codes only have letters and digits. Remove {chars}.",
+        "length": "Backup codes have 10 characters, like ABCDE-FGH23. This has {count, number}.",
+        "lookalikes": "Backup codes never use {chars}. Check for a look-alike letter or digit.",
+        "or": "{first} or {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "That code isn't right. Check your authenticator app and try again.",
+      "wrongBackupCode": "That backup code isn't right, or it was already used.",
+      "invalidCode": "Enter the 6-digit code from your authenticator app.",
+      "invalidBackupCode": "That isn't a backup code. They look like ABCDE-FGH23: capital letters and the digits 2 to 9.",
+      "tooManyAttempts": "Too many wrong codes. Sign in again to try again.",
+      "locked": "Too many wrong codes in a row. Try again in {minutes, number} minutes.",
+      "expired": "This sign-in timed out. Sign in again.",
+      "rateLimited": "Too many tries. Wait a moment, then try again.",
+      "failed": "Something went wrong. Check your connection and try again.",
+      "ssoRequired": "Your company now requires single sign-on for this address. Start again and sign in with SSO."
+    },
+    "confirmationMessages": {
+      "failed": "Something went wrong. Check your connection and try again.",
+      "passkeyFailed": "Couldn't verify your passkey. Try again.",
+      "passkeyClosed": "The passkey prompt was closed or timed out. Try again or use another method.",
+      "passkeyUnavailable": "Passkeys don't work in this browser. Use another method.",
+      "signInAgain": "For your security, sign out and sign in again, then try again within 10 minutes.",
+      "stillRequired": "We couldn't confirm it's you. Try again.",
+      "signInFailed": "That sign-in didn't go through, so nothing changed. Try again or use another method.",
+      "signInConfirmed": "Thanks, that's confirmed. You can make your change in the next 10 minutes."
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} hasn't verified this email address, so QRdx can't create an account with it. Verify it in your {provider} email settings and try again, or sign in with an email code.",
+      "googleUnverified": "{provider} hasn't verified this email address, so QRdx can't create an account with it. Sign in with an email code instead.",
+      "otherUnverified": "That account's email address isn't verified, so QRdx can't create an account with it. Sign in with an email code instead.",
+      "cancelled": "Sign-in was cancelled.",
+      "accountNotLinked": "An account with this address already exists and isn't linked to {provider}. Sign in with an email code instead.",
+      "emailNotShared": "{provider} didn't share an email address, so QRdx can't sign you in with it. Sign in with an email code instead.",
+      "tookTooLong": "That sign-in took too long or was started elsewhere. Try again.",
+      "providerFailed": "{provider} sign-in didn't work. Try again, or sign in another way.",
+      "sso": {
+        "emailRequired": "Enter your work email.",
+        "notFound": "SSO isn't set up for that address.",
+        "required": "Your company requires single sign-on for this address. Sign in with SSO.",
+        "unavailable": "Single sign-on isn't available for this workspace right now. Sign in another way.",
+        "emailOutsideDomain": "Your identity provider sent an address outside your company's domain, so QRdx can't sign you in with it. Ask your workspace admin.",
+        "emailUnverified": "Your company's sign-in system hasn't confirmed this email address, so QRdx can't sign you in with it. Its admin needs to verify email addresses there.",
+        "emailMissing": "Your company's sign-in system didn't send an email address, so QRdx can't sign you in. Ask your workspace admin.",
+        "weakSignature": "Your company's sign-in system signed this sign-in with SHA-1 or another outdated algorithm, which QRdx doesn't accept. Its admin needs to switch the QRdx app's signature algorithm to SHA-256.",
+        "unsolicitedResponse": "QRdx couldn't accept this sign-in from your company's app list. Start from QRdx's sign-in page: choose Sign in with SSO and enter your work email. If it keeps happening, ask your workspace admin.",
+        "replayDetected": "That sign-in has already been used. Sign in again.",
+        "accountNotLinked": "An account with this address already exists and couldn't be linked. Sign in with an email code instead.",
+        "failed": "Single sign-on didn't work. Try again, or sign in another way.",
+        "rateLimited": "Too many tries. Wait a minute, then try again."
+      }
     }
   },
   "codeBuilder": {

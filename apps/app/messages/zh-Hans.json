@@ -8544,7 +8544,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "返回 QRdx"
+        "backToQrdx": "返回 QRdx",
+        "signedOut": "你已退出登录。",
+        "pageTitle": "登录"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8611,6 +8613,20 @@
           "authorize": "授权",
           "somethingWentWrongCheckYour": "出了点问题。请检查网络连接后重试。"
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "退出 QRdx 登录？",
+        "signOut": "退出登录",
+        "cancel": "取消",
+        "youreStillSignedIn": "你仍处于登录状态",
+        "signingOutDidntWorkCheck": "退出登录失败。请检查网络连接后重试。",
+        "tryAgain": "重试",
+        "backToDashboard": "返回控制台",
+        "signingYouOut": "正在退出登录…",
+        "oneMoment": "请稍候…",
+        "pageTitle": "退出登录"
       }
     }
   },
@@ -8707,11 +8723,22 @@
       "thatCodeHasExpiredSend": "验证码已过期。请重新发送一个。",
       "tooManyWrongTriesSend": "错误次数过多。请重新发送验证码。",
       "thisAccountIsSuspendedContact": "此账号已被暂停。如果你认为这是误判，请联系支持团队。",
-      "somethingWentWrongTryAgain": "出了点问题。请重试。"
+      "somethingWentWrongTryAgain": "出了点问题。请重试。",
+      "newCodeSent": "新验证码已发送，旧验证码已失效。",
+      "connectionFailed": "出了点问题。请检查网络连接后重试。"
     },
     "passkeySignIn": {
       "continueWithPasskey": "使用通行密钥继续",
-      "lastUsed": "上次使用"
+      "lastUsed": "上次使用",
+      "errors": {
+        "rateLimited": "尝试次数过多。请等待一分钟后再试。",
+        "userVerification": "该通行密钥没有要求输入 PIN、指纹或面部验证。请使用会要求验证的通行密钥，或换一种方式登录。",
+        "notFound": "该通行密钥已不再关联任何 QRdx 账户。请换一种方式登录。",
+        "banned": "此账户已被停用。如果你认为这是误判，请联系支持团队。",
+        "ssoRequired": "你的公司要求此账户使用单点登录。请通过 SSO 登录。",
+        "failed": "该通行密钥无法使用。请重试，或换一种方式登录。",
+        "connection": "出了点问题。请检查网络连接后重试。"
+      }
     },
     "signInPanel": {
       "codeSentTo": "验证码已发送至 <strong>{email}</strong>",
@@ -8817,7 +8844,21 @@
       "resendInSecondsleftS": "{secondsLeft, number} 秒后可重新发送",
       "resendCode": "重新发送验证码",
       "whyAmIAsked": "为什么需要确认？",
-      "whyAmIAskedAgain": "为什么又要确认？"
+      "whyAmIAskedAgain": "为什么又要确认？",
+      "switchTo": {
+        "passkey": "使用通行密钥",
+        "totp": "使用验证器验证码",
+        "backup": "使用备用验证码",
+        "email": "通过邮件发送验证码",
+        "signInWith": "使用 {provider} 登录",
+        "sign-in-again": "重新登录"
+      },
+      "signInWithSsoAgain": "请重新通过公司的 SSO 登录。你将回到此页面，然后再次进行更改。",
+      "newCodeSent": "新验证码已发送，旧验证码已失效。",
+      "reasons": {
+        "continue-session": "此登录正在与最初登录时不同的国家和浏览器中使用，因此我们会先确认是你本人操作。",
+        "link-slack-account": "关联后，任何使用该 Slack 账号的人都可以通过 /qr track 在你的工作区创建带追踪的二维码，因此我们会先确认是你本人操作。"
+      }
     },
     "dialogCloseButton": {
       "close": "关闭"
@@ -8839,6 +8880,112 @@
     },
     "nudge": {
       "dismiss": "不再显示此提示"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "使用 SSO 登录",
+      "lastUsed": "上次使用",
+      "workEmail": "工作邮箱",
+      "continue": "继续",
+      "ifYourCompanySetIt": "前提是你的公司已为 QRdx 配置了 SSO。",
+      "cancel": "取消",
+      "youCompanyCom": "you@company.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "继续使用 SSO",
+      "lastUsed": "上次使用",
+      "useADifferentEmail": "使用其他邮箱",
+      "yourCompanyRequiresItFor": "你的公司要求此邮箱地址使用 SSO。你将前往其登录页面继续。",
+      "youllContinueOnYourCompanys": "你将跳转到贵公司的登录页面继续。",
+      "sending": "发送中…",
+      "emailMeACode": "通过邮件发送验证码"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "使用通行密钥",
+        "totp": "打开你的身份验证器应用",
+        "backup": "输入备用码"
+      },
+      "switchTo": {
+        "passkey": "使用通行密钥",
+        "totp": "使用身份验证器验证码",
+        "backup": "使用备用码"
+      },
+      "hints": {
+        "passkey": "使用 Touch ID、Face ID、Windows Hello 或安全密钥。",
+        "totp": "输入身份验证器应用中的 6 位验证码。",
+        "backup": "输入任意一个备用码。每个备用码只能使用一次。"
+      },
+      "passkey": {
+        "waiting": "正在等待你的通行密钥…",
+        "checking": "正在检查你的通行密钥…",
+        "failed": "无法验证你的通行密钥，请重试。",
+        "closed": "通行密钥提示已关闭或已超时。请重试，或使用其他方式。",
+        "expiredRequest": "该通行密钥请求已过期，请重试。",
+        "userVerification": "该通行密钥没有要求输入 PIN、指纹或面容。请使用会要求验证的通行密钥，或使用其他方式。",
+        "unavailable": "此处没有该账户的通行密钥。请使用其他方式。",
+        "tooManyTries": "失败次数过多。请重新登录后再试。",
+        "locked": "连续失败次数过多。请在 {minutes, number} 分钟后重试。",
+        "expired": "此次登录已超时，请重新登录。",
+        "rateLimited": "尝试次数过多。请稍等片刻后重试。",
+        "connection": "出了点问题。请检查网络连接后重试。",
+        "ssoRequired": "贵公司现已要求此地址使用单点登录。请重新开始，并通过 SSO 登录。"
+      },
+      "noStepHere": "此浏览器无法使用你的通行密钥，这里也没有其他方式可以完成登录。请使用存有该通行密钥的设备。",
+      "noAuthenticatorApp": "你的账户未使用身份验证器应用。请使用其他方式。",
+      "backupCode": {
+        "empty": "请输入任意一个备用码。",
+        "strange": "备用码只包含字母和数字。请删除 {chars}。",
+        "length": "备用码为 10 个字符，例如 ABCDE-FGH23。当前输入为 {count, number} 个。",
+        "lookalikes": "备份码中不会出现 {chars}。请检查是否输错了外形相近的字母或数字。",
+        "or": "{first} 或 {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "验证码不正确。请检查您的验证器应用后重试。",
+      "wrongBackupCode": "备份码不正确，或已被使用过。",
+      "invalidCode": "请输入验证器应用中的 6 位验证码。",
+      "invalidBackupCode": "这不是备份码。备份码的格式类似 ABCDE-FGH23：由大写字母和数字 2 至 9 组成。",
+      "tooManyAttempts": "验证码错误次数过多。请重新登录后再试。",
+      "locked": "连续输错验证码次数过多。请在 {minutes, number} 分钟后重试。",
+      "expired": "本次登录已超时。请重新登录。",
+      "rateLimited": "尝试次数过多。请稍候片刻后再试。",
+      "failed": "出了点问题。请检查网络连接后重试。",
+      "ssoRequired": "贵公司现已要求此地址使用单点登录。请重新开始，并通过 SSO 登录。"
+    },
+    "confirmationMessages": {
+      "failed": "出了点问题。请检查网络连接后重试。",
+      "passkeyFailed": "无法验证您的通行密钥。请重试。",
+      "passkeyClosed": "通行密钥提示已关闭或已超时。请重试，或使用其他方式。",
+      "passkeyUnavailable": "此浏览器不支持通行密钥。请使用其他方式。",
+      "signInAgain": "为了您的账户安全，请先退出登录并重新登录，然后在 10 分钟内再试一次。",
+      "stillRequired": "我们无法确认是您本人操作。请重试。",
+      "signInFailed": "此次登录未成功，因此没有任何更改。请重试，或使用其他方式。",
+      "signInConfirmed": "谢谢，已确认。您可以在接下来的 10 分钟内进行更改。"
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法使用它创建账户。请在 {provider} 的邮箱设置中完成验证后重试，或使用邮箱验证码登录。",
+      "googleUnverified": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法使用它创建账户。请改用邮箱验证码登录。",
+      "otherUnverified": "该账户的邮箱地址尚未验证，因此 QRdx 无法使用它创建账户。请改用邮箱验证码登录。",
+      "cancelled": "登录已取消。",
+      "accountNotLinked": "使用此地址的账户已存在，且未关联 {provider}。请改用邮箱验证码登录。",
+      "emailNotShared": "{provider} 未提供邮箱地址，因此 QRdx 无法通过它让您登录。请改用邮箱验证码登录。",
+      "tookTooLong": "此次登录耗时过长，或是在其他地方发起的。请重试。",
+      "providerFailed": "{provider} 登录未成功。请重试，或使用其他方式登录。",
+      "sso": {
+        "emailRequired": "请输入您的工作邮箱。",
+        "notFound": "该地址尚未设置 SSO。",
+        "required": "贵公司要求此地址使用单点登录。请通过 SSO 登录。",
+        "unavailable": "此工作区目前无法使用单点登录。请改用其他方式登录。",
+        "emailOutsideDomain": "您的身份提供商发送的邮箱地址不属于贵公司的域名，因此 QRdx 无法使用该地址让您登录。请联系工作区管理员。",
+        "emailUnverified": "贵公司的登录系统尚未确认此邮箱地址，因此 QRdx 无法使用该地址让您登录。需要由其管理员在该系统中验证邮箱地址。",
+        "emailMissing": "贵公司的登录系统没有发送邮箱地址，因此 QRdx 无法让您登录。请联系工作区管理员。",
+        "weakSignature": "贵公司的登录系统使用 SHA-1 或其他已过时的算法对本次登录进行了签名，QRdx 不接受这种签名。其管理员需要将 QRdx 应用的签名算法改为 SHA-256。",
+        "unsolicitedResponse": "QRdx 无法接受来自贵公司应用列表的这次登录。请从 QRdx 的登录页面开始：选择“通过 SSO 登录”，然后输入您的工作邮箱。如果问题仍然出现，请联系工作区管理员。",
+        "replayDetected": "该登录请求已被使用过。请重新登录。",
+        "accountNotLinked": "使用此地址的账户已经存在，无法完成关联。请改用邮箱验证码登录。",
+        "failed": "单点登录未能成功。请重试，或改用其他方式登录。",
+        "rateLimited": "尝试次数过多。请等待一分钟后再试。"
+      }
     }
   },
   "codeBuilder": {

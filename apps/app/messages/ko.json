@@ -8544,7 +8544,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "QRdx로 돌아가기"
+        "backToQrdx": "QRdx로 돌아가기",
+        "signedOut": "로그아웃되었어요.",
+        "pageTitle": "로그인"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8611,6 +8613,20 @@
           "authorize": "승인",
           "somethingWentWrongCheckYour": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요."
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "QRdx에서 로그아웃할까요?",
+        "signOut": "로그아웃",
+        "cancel": "취소",
+        "youreStillSignedIn": "아직 로그인된 상태예요",
+        "signingOutDidntWorkCheck": "로그아웃하지 못했어요. 연결 상태를 확인하고 다시 시도해 주세요.",
+        "tryAgain": "다시 시도",
+        "backToDashboard": "대시보드로 돌아가기",
+        "signingYouOut": "로그아웃하는 중…",
+        "oneMoment": "잠시만 기다려 주세요…",
+        "pageTitle": "로그아웃"
       }
     }
   },
@@ -8707,11 +8723,22 @@
       "thatCodeHasExpiredSend": "코드가 만료되었어요. 새 코드를 보내 주세요.",
       "tooManyWrongTriesSend": "잘못 입력한 횟수가 너무 많아요. 새 코드를 보내 주세요.",
       "thisAccountIsSuspendedContact": "이 계정은 정지되었어요. 잘못된 조치라고 생각되면 지원팀에 문의해 주세요.",
-      "somethingWentWrongTryAgain": "문제가 발생했어요. 다시 시도해 주세요."
+      "somethingWentWrongTryAgain": "문제가 발생했어요. 다시 시도해 주세요.",
+      "newCodeSent": "새 코드를 보냈어요. 이전 코드는 더 이상 사용할 수 없어요.",
+      "connectionFailed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요."
     },
     "passkeySignIn": {
       "continueWithPasskey": "패스키로 계속하기",
-      "lastUsed": "마지막 사용"
+      "lastUsed": "마지막 사용",
+      "errors": {
+        "rateLimited": "시도 횟수가 너무 많아요. 1분 후에 다시 시도해 주세요.",
+        "userVerification": "해당 패스키가 PIN, 지문 또는 얼굴 인식을 요구하지 않았어요. 이를 요구하는 패스키를 사용하거나 다른 방법으로 로그인해 주세요.",
+        "notFound": "해당 패스키는 더 이상 QRdx 계정에 연결되어 있지 않아요. 다른 방법으로 로그인해 주세요.",
+        "banned": "이 계정은 정지되었어요. 오류라고 생각되면 지원팀에 문의해 주세요.",
+        "ssoRequired": "회사에서 이 계정에 SSO를 필수로 설정했어요. SSO로 로그인해 주세요.",
+        "failed": "패스키가 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
+        "connection": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요."
+      }
     },
     "signInPanel": {
       "codeSentTo": "<strong>{email}</strong>로 코드를 보냈어요",
@@ -8817,7 +8844,21 @@
       "resendInSecondsleftS": "{secondsLeft, number}초 후 재전송",
       "resendCode": "코드 재전송",
       "whyAmIAsked": "왜 확인하나요?",
-      "whyAmIAskedAgain": "왜 또 확인하나요?"
+      "whyAmIAskedAgain": "왜 또 확인하나요?",
+      "switchTo": {
+        "passkey": "패스키 사용",
+        "totp": "인증 앱 코드 사용",
+        "backup": "백업 코드 사용",
+        "email": "이메일로 코드 받기",
+        "signInWith": "{provider}(으)로 로그인",
+        "sign-in-again": "다시 로그인"
+      },
+      "signInWithSsoAgain": "회사 SSO로 다시 로그인해 주세요. 이 페이지로 돌아오면 변경을 한 번 더 진행해 주세요.",
+      "newCodeSent": "새 코드를 보냈어요. 이전 코드는 더 이상 사용할 수 없어요.",
+      "reasons": {
+        "continue-session": "이 로그인이 처음 시작된 곳과 다른 국가, 다른 브라우저에서 사용되고 있어서 다른 작업을 하기 전에 본인인지 확인해요.",
+        "link-slack-account": "연결하면 해당 Slack 계정을 쓰는 누구나 /qr track으로 워크스페이스에서 추적 코드를 만들 수 있어서 먼저 본인인지 확인해요."
+      }
     },
     "dialogCloseButton": {
       "close": "닫기"
@@ -8839,6 +8880,112 @@
     },
     "nudge": {
       "dismiss": "다시 표시하지 않기"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "SSO로 로그인",
+      "lastUsed": "마지막 사용",
+      "workEmail": "회사 이메일",
+      "continue": "계속",
+      "ifYourCompanySetIt": "회사에서 QRdx용으로 설정한 경우에 사용해요.",
+      "cancel": "취소",
+      "youCompanyCom": "you@company.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "SSO로 계속",
+      "lastUsed": "마지막 사용",
+      "useADifferentEmail": "다른 이메일 사용",
+      "yourCompanyRequiresItFor": "회사에서 이 주소에 SSO를 필수로 설정했어요. SSO 로그인 페이지에서 계속 진행해요.",
+      "youllContinueOnYourCompanys": "회사 로그인 페이지에서 계속 진행해요.",
+      "sending": "보내는 중…",
+      "emailMeACode": "이메일로 코드 받기"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "패스키 사용하기",
+        "totp": "인증 앱을 열어 주세요",
+        "backup": "백업 코드를 입력하세요"
+      },
+      "switchTo": {
+        "passkey": "패스키 사용하기",
+        "totp": "인증 앱 코드 사용하기",
+        "backup": "백업 코드 사용하기"
+      },
+      "hints": {
+        "passkey": "Touch ID, Face ID, Windows Hello 또는 보안 키를 사용하세요.",
+        "totp": "인증 앱에 표시된 6자리 코드를 입력하세요.",
+        "backup": "백업 코드 중 하나를 입력하세요. 각 코드는 한 번만 사용할 수 있어요."
+      },
+      "passkey": {
+        "waiting": "패스키를 기다리는 중…",
+        "checking": "패스키 확인 중…",
+        "failed": "패스키를 확인하지 못했어요. 다시 시도해 주세요.",
+        "closed": "패스키 창이 닫혔거나 시간이 초과되었어요. 다시 시도하거나 다른 방법을 사용해 주세요.",
+        "expiredRequest": "패스키 요청이 만료되었어요. 다시 시도해 주세요.",
+        "userVerification": "해당 패스키는 PIN, 지문 또는 얼굴 인증을 요청하지 않았어요. 인증을 요청하는 패스키를 사용하거나 다른 방법을 사용해 주세요.",
+        "unavailable": "여기에는 이 계정의 패스키가 없어요. 다른 방법을 사용해 주세요.",
+        "tooManyTries": "실패한 시도가 너무 많아요. 다시 로그인한 후 시도해 주세요.",
+        "locked": "연속으로 실패한 시도가 너무 많아요. {minutes, number}분 후에 다시 시도해 주세요.",
+        "expired": "로그인 시간이 초과되었어요. 다시 로그인해 주세요.",
+        "rateLimited": "시도가 너무 많아요. 잠시 기다린 후 다시 시도해 주세요.",
+        "connection": "문제가 발생했어요. 연결 상태를 확인한 후 다시 시도해 주세요.",
+        "ssoRequired": "회사에서 이 주소에 대해 SSO 로그인을 필수로 설정했어요. 처음부터 다시 시작해서 SSO로 로그인해 주세요."
+      },
+      "noStepHere": "이 브라우저에서는 패스키를 사용할 수 없고, 여기서 로그인을 마칠 다른 방법도 없어요. 패스키가 있는 기기를 사용해 주세요.",
+      "noAuthenticatorApp": "이 계정은 인증 앱을 사용하지 않아요. 다른 방법을 사용해 주세요.",
+      "backupCode": {
+        "empty": "백업 코드 중 하나를 입력하세요.",
+        "strange": "백업 코드에는 문자와 숫자만 있어요. {chars}을(를) 지워 주세요.",
+        "length": "백업 코드는 ABCDE-FGH23처럼 10자예요. 지금은 {count, number}자예요.",
+        "lookalikes": "백업 코드에는 {chars}이(가) 사용되지 않아요. 비슷하게 생긴 문자나 숫자가 아닌지 확인해 주세요.",
+        "or": "{first} 또는 {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "코드가 올바르지 않아요. 인증 앱을 확인하고 다시 시도해 주세요.",
+      "wrongBackupCode": "백업 코드가 올바르지 않거나 이미 사용된 코드예요.",
+      "invalidCode": "인증 앱에 표시된 6자리 코드를 입력해 주세요.",
+      "invalidBackupCode": "백업 코드가 아니에요. 백업 코드는 ABCDE-FGH23처럼 대문자와 2부터 9까지의 숫자로 이루어져 있어요.",
+      "tooManyAttempts": "잘못된 코드를 너무 많이 입력했어요. 다시 로그인한 후 시도해 주세요.",
+      "locked": "잘못된 코드를 연속으로 너무 많이 입력했어요. {minutes, number}분 후에 다시 시도해 주세요.",
+      "expired": "로그인 시간이 초과되었어요. 다시 로그인해 주세요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 잠시 기다린 후 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요.",
+      "ssoRequired": "회사에서 이 주소에 대해 SSO(싱글 사인온) 로그인을 필수로 설정했어요. 처음부터 다시 시작해서 SSO로 로그인해 주세요."
+    },
+    "confirmationMessages": {
+      "failed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요.",
+      "passkeyFailed": "패스키를 확인하지 못했어요. 다시 시도해 주세요.",
+      "passkeyClosed": "패스키 창이 닫혔거나 시간이 초과되었어요. 다시 시도하거나 다른 방법을 사용해 주세요.",
+      "passkeyUnavailable": "이 브라우저에서는 패스키를 사용할 수 없어요. 다른 방법을 사용해 주세요.",
+      "signInAgain": "보안을 위해 로그아웃한 후 다시 로그인하고, 10분 이내에 다시 시도해 주세요.",
+      "stillRequired": "본인 확인을 하지 못했어요. 다시 시도해 주세요.",
+      "signInFailed": "로그인이 완료되지 않아 변경된 내용은 없어요. 다시 시도하거나 다른 방법을 사용해 주세요.",
+      "signInConfirmed": "확인되었어요. 지금부터 10분 이내에 변경할 수 있어요."
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider}에서 이 이메일 주소를 확인하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {provider} 이메일 설정에서 주소를 인증한 후 다시 시도하거나 이메일 코드로 로그인해 주세요.",
+      "googleUnverified": "{provider}에서 이 이메일 주소를 확인하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "otherUnverified": "해당 계정의 이메일 주소가 확인되지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "cancelled": "로그인이 취소되었어요.",
+      "accountNotLinked": "이 주소로 만든 계정이 이미 있으며 {provider}와(과) 연결되어 있지 않아요. 대신 이메일 코드로 로그인해 주세요.",
+      "emailNotShared": "{provider}에서 이메일 주소를 공유하지 않아 QRdx에서 해당 방법으로 로그인할 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "tookTooLong": "로그인 시간이 너무 오래 걸렸거나 다른 곳에서 시작되었어요. 다시 시도해 주세요.",
+      "providerFailed": "{provider} 로그인이 되지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
+      "sso": {
+        "emailRequired": "업무용 이메일을 입력해 주세요.",
+        "notFound": "해당 주소에는 SSO가 설정되어 있지 않아요.",
+        "required": "회사에서 이 주소에는 SSO 로그인을 필수로 설정했어요. SSO로 로그인해 주세요.",
+        "unavailable": "지금은 이 워크스페이스에서 SSO를 사용할 수 없어요. 다른 방법으로 로그인해 주세요.",
+        "emailOutsideDomain": "ID 공급자가 회사 도메인이 아닌 주소를 보냈기 때문에 QRdx에서 이 주소로 로그인할 수 없어요. 워크스페이스 관리자에게 문의해 주세요.",
+        "emailUnverified": "회사 로그인 시스템에서 이 이메일 주소를 확인하지 않아 QRdx에서 이 주소로 로그인할 수 없어요. 해당 시스템의 관리자가 이메일 주소를 인증해야 해요.",
+        "emailMissing": "회사 로그인 시스템에서 이메일 주소를 보내지 않아 QRdx에서 로그인할 수 없어요. 워크스페이스 관리자에게 문의해 주세요.",
+        "weakSignature": "회사 로그인 시스템이 이 로그인에 SHA-1 또는 오래된 다른 알고리즘으로 서명했는데, QRdx에서는 이를 허용하지 않아요. 해당 시스템의 관리자가 QRdx 앱의 서명 알고리즘을 SHA-256으로 변경해야 해요.",
+        "unsolicitedResponse": "회사 앱 목록에서 시작된 이 로그인을 QRdx에서 받아들일 수 없었어요. QRdx 로그인 페이지에서 시작해 주세요. SSO로 로그인을 선택하고 회사 이메일을 입력하면 돼요. 계속 같은 문제가 생기면 워크스페이스 관리자에게 문의해 주세요.",
+        "replayDetected": "이미 사용된 로그인이에요. 다시 로그인해 주세요.",
+        "accountNotLinked": "이 주소로 만든 계정이 이미 있어서 연결할 수 없었어요. 대신 이메일 코드로 로그인해 주세요.",
+        "failed": "SSO가 제대로 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
+        "rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요."
+      }
     }
   },
   "codeBuilder": {

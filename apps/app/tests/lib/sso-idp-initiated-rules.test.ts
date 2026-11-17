@@ -9,10 +9,23 @@ import {
   samlIdpInitiated,
   samlIdpInitiatedProblem,
 } from "@repo/auth/sso-rules";
+import { createTranslator } from "next-intl";
 import { describe, expect, it } from "vitest";
-import { signInErrorMessage } from "@/app/(app)/(auth)/sign-in/_lib/error-message";
-import { ssoSignInErrorMessage } from "@/ee/sso/messages";
+import { signInErrorMessage as signInErrorMessageIn } from "@/app/(app)/(auth)/sign-in/_lib/error-message";
+import { ssoSignInErrorMessage as ssoSignInErrorMessageIn } from "@/ee/sso/messages";
+import en from "@/messages/en.json";
 import { createTestIdp } from "../support/saml-idp";
+
+// In English, from the catalog (auth.signInErrors).
+const tErrors = createTranslator({
+  locale: "en",
+  messages: en,
+  namespace: "auth.signInErrors",
+});
+const ssoSignInErrorMessage = (code: string) =>
+  ssoSignInErrorMessageIn(code, tErrors);
+const signInErrorMessage = (code: string, via: null) =>
+  signInErrorMessageIn(code, via, tErrors);
 
 const ACS = "http://localhost:3000/api/auth/sso/saml2/sp/acs/sso-abcdefabcdef";
 const AUDIENCE =
