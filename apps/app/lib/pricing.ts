@@ -40,7 +40,7 @@ export const MONEY_BACK_DAYS = 30;
 /**
  * The money-back window for switchers: customers who import codes from
  * another QR code provider around their first payment (content/legal/refunds.mdx).
- * An offer from 23 November 2026 that may end.
+ * An offer from 18 November 2026 that may end.
  */
 export const SWITCHER_MONEY_BACK_DAYS = 60;
 
