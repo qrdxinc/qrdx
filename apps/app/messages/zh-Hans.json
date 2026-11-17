@@ -3487,6 +3487,7 @@
         "pasteThisIntoAnyPage": "将以下代码粘贴到任意页面：该脚本会从 CDN 加载 <code>qrdx-code</code> 元素。如果使用打包工具，请改为安装 <code>qrdx</code> 并导入 <code>qrdx/element/define</code>。",
         "withoutABundlerImportIt": "如果不使用打包工具，请从以下地址导入",
         "addTheQrCodeComponent": "从 QRdx 注册表中添加二维码组件，然后配合此设计使用。",
+        "orByUrlWhichWorks": "也可以通过 URL 添加，旧版 shadcn CLI 同样适用",
         "aPublicImageOfThis": "此二维码的公开图片，可嵌入到任何地方，无需 API 密钥。",
         "createsADynamicCodeWith": "使用此设计创建动态二维码，需要 <link>API 密钥</link>。",
         "addThisServerToYour": "将此服务器添加到你的 AI 助手，无需密钥。<link>查看设置方法</link>",
