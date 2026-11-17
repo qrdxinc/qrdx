@@ -1,7 +1,6 @@
 import { SUPPORT_EMAIL } from "@repo/config";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import Link from "next/link";
 import { baseUrl, createMetadata } from "@/lib/metadata";
 import { turnstileSiteKey } from "@/lib/safety/turnstile";
 import { isWebRiskConfigured } from "@/lib/safety/web-risk";
@@ -105,12 +104,12 @@ export default async function ReportAbusePage({
             </a>{" "}
             for copyright (DMCA) notices or anything the form doesn't cover.
             Read the{" "}
-            <Link
+            <a
               className="font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground"
               href="/legal/report-abuse"
             >
               abuse policy
-            </Link>{" "}
+            </a>{" "}
             for what we don't allow.
           </p>
         </section>

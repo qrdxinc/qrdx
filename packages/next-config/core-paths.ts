@@ -29,6 +29,10 @@ export const CORE_PATHS = [
   "/mcp",
   "/report-abuse",
   "/templates/*",
+  // Slack's account-linking page, under the integrations' pages.
+  "/integrations/slack/link",
+  // The changelog's pictures (the site serves /changelogs, the page).
+  "/changelog",
   "/og/docs",
   "/llms-full.txt",
   "/llms.mdx",
