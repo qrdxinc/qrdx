@@ -23963,6 +23963,12 @@
     "status": "machine",
     "context": "barcodeFormats.pages.code-93.usedFor.0"
   },
+  "24c8566504c9": {
+    "source": "Your own barcode on mail: Canada Post lists Code 93 among the barcodes it accepts next to the address on Personalized Mail.",
+    "text": "Tu propio código de barras en el correo: Canada Post incluye Code 93 entre los códigos de barras que acepta junto a la dirección en Personalized Mail.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
   "8d204ecd0aaf": {
     "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
     "text": "Si nada exige Code 93, usa Code 128: admite también minúsculas y más escáneres lo tienen activado.",

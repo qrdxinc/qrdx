@@ -480,6 +480,7 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
       "Code 93 holds the same characters as Code 39, capital letters, digits and a few symbols, in a shorter barcode with two built-in check characters. Type up to 40 characters, check that it scans and download it.",
     usedFor: [
       "Labels in logistics and inventory systems that specify Code 93.",
+      "Your own barcode on mail: Canada Post lists Code 93 among the barcodes it accepts next to the address on Personalized Mail.",
       "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
     ],
     numbers: {
