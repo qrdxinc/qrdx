@@ -1,7 +1,10 @@
 // Translated pages: URLs, the review gate (noindex, sitemap, hreflang) in
-// both states, the English rewrites and redirects in next.config.ts.
+// both states, the English rewrites and redirects in next.config.ts. The
+// marketing pages are English only (owner, 17 Nov 2026): no prefix, no
+// hreflang and no translated sitemap entries for them, in either state
+// (tests/i18n/english-only.test.ts runs their redirects through Next).
 
-import { readdirSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import {
@@ -11,6 +14,8 @@ import {
   TRANSLATED_LOCALES,
 } from "@repo/i18n/config";
 import {
+  ENGLISH_ONLY_PATHS,
+  isEnglishOnlyPath,
   isLocalizedPath,
   LOCALIZED_PATHS,
   localizeHref,
@@ -25,6 +30,7 @@ import {
   type ReviewTable,
 } from "@repo/i18n/review";
 import {
+  englishOnlyRedirects,
   englishRedirects,
   englishRewrites,
   rewriteSource,
@@ -98,16 +104,81 @@ describe("locales", () => {
   });
 });
 
+/**
+ * The marketing pages the owner made English only (17 Nov 2026). Not /scan
+ * yet: each language's scanner is its own installed app, scoped to
+ * /<lang>/scan (lib/scanner-app.ts), so the owner decides that one apart.
+ */
+const MARKETING = [
+  "/",
+  "/pricing",
+  "/guarantee",
+  "/enterprise",
+  "/security",
+  "/tools",
+  "/tools/bulk",
+  "/tools/print-size",
+  "/tools/scan-checker",
+  "/barcode-generator",
+  "/barcode-generator/[format]",
+  "/qr-code-generator",
+  "/qr-code-generator/[type]",
+  "/qr-codes-for",
+  "/qr-codes-for/[slug]",
+  "/qr-codes-on",
+  "/qr-codes-on/[slug]",
+  "/templates",
+  "/integrations",
+  "/integrations/[slug]",
+  "/plugins",
+  "/qr-code-api",
+  "/dynamic-qr-code",
+  "/open-source-qr-code-generator",
+  "/compare",
+];
+
 describe("paths", () => {
+  it("translate the playground, AI, MCP and scanner pages only", () => {
+    expect([...LOCALIZED_PATHS].sort()).toEqual([
+      "/ai",
+      "/ai/art",
+      "/mcp",
+      "/playground",
+      "/scan",
+    ]);
+    expect([...ENGLISH_ONLY_PATHS].sort()).toEqual([...MARKETING].sort());
+    for (const path of LOCALIZED_PATHS) {
+      expect(isEnglishOnlyPath(path), path).toBe(false);
+    }
+  });
+
+  it("keep every English-only page under app/[lang], where it renders", () => {
+    for (const path of ENGLISH_ONLY_PATHS) {
+      expect(
+        existsSync(join(APP, "[lang]", "(home)", path, "page.tsx")),
+        path,
+      ).toBe(true);
+    }
+  });
+
   it("prefix translated pages only", () => {
-    expect(LOCALIZED_PATHS).toEqual(expect.arrayContaining(["/", "/pricing"]));
-    expect(localizePath("/", "es")).toBe("/es");
-    expect(localizePath("/pricing", "pt-BR")).toBe("/pt-br/pricing");
-    expect(localizePath("/pricing", "zh-Hans")).toBe("/zh-hans/pricing");
-    expect(localizePath("/pricing", "en")).toBe("/pricing");
-    // The playground is translated; its shared theme links and short
-    // links keep one URL in every language.
-    expect(localizePath("/playground", "ja")).toBe("/ja/playground");
+    expect(localizePath("/playground", "es")).toBe("/es/playground");
+    expect(localizePath("/ai/art", "pt-BR")).toBe("/pt-br/ai/art");
+    expect(localizePath("/mcp", "zh-Hans")).toBe("/zh-hans/mcp");
+    expect(localizePath("/playground", "en")).toBe("/playground");
+    // The marketing pages are English only, the home page too: one URL in
+    // every language, so no link leads to a redirect.
+    for (const path of [
+      "/",
+      "/pricing",
+      "/qr-code-generator/wifi",
+      "/integrations/zapier",
+    ]) {
+      expect(localizePath(path, "ja"), path).toBe(path);
+      expect(isEnglishOnlyPath(path), path).toBe(true);
+    }
+    // The playground's shared theme links and short links keep one URL in
+    // every language.
     for (const path of ["/playground/abc", "/q/abc", "/p/abc", "/m/abc"]) {
       expect(localizePath(path, "ja")).toBe(path);
     }
@@ -124,8 +195,11 @@ describe("paths", () => {
   });
 
   it("keep queries and hashes, and leave external links alone", () => {
+    expect(localizeHref("/playground?type=wifi#preview", "de")).toBe(
+      "/de/playground?type=wifi#preview",
+    );
     expect(localizeHref("/pricing?currency=inr#faq", "de")).toBe(
-      "/de/pricing?currency=inr#faq",
+      "/pricing?currency=inr#faq",
     );
     expect(localizeHref("https://github.com/qrdxinc/qrdx", "de")).toBe(
       "https://github.com/qrdxinc/qrdx",
@@ -139,12 +213,21 @@ describe("paths", () => {
   });
 
   it("split a pathname into its language and English path", () => {
-    expect(splitLocale("/es/pricing")).toEqual({
+    expect(splitLocale("/es/playground")).toEqual({
       locale: "es",
-      path: "/pricing",
+      path: "/playground",
     });
-    expect(splitLocale("/ja")).toEqual({ locale: "ja", path: "/" });
+    expect(splitLocale("/ja/ai/art")).toEqual({
+      locale: "ja",
+      path: "/ai/art",
+    });
     expect(splitLocale("/pricing")).toEqual({ locale: "en", path: "/pricing" });
+    // English-only pages have no other language: those URLs redirect.
+    expect(splitLocale("/es/pricing")).toEqual({
+      locale: "en",
+      path: "/es/pricing",
+    });
+    expect(splitLocale("/ja")).toEqual({ locale: "en", path: "/ja" });
     // The docs have no translated URLs (/es/docs redirects to /docs).
     expect(splitLocale("/docs/help")).toEqual({
       locale: "en",
@@ -152,10 +235,20 @@ describe("paths", () => {
     });
     expect(splitLocale("/es/docs")).toEqual({ locale: "en", path: "/es/docs" });
     // What an English page prerenders as (usePathname() says /en/pricing
-    // there): the same English path as the browser's /pricing.
+    // there): the same English path as the browser's /pricing, for
+    // translated and English-only pages alike.
     expect(splitLocale("/en/pricing")).toEqual({
       locale: "en",
       path: "/pricing",
+    });
+    expect(splitLocale("/en")).toEqual({ locale: "en", path: "/" });
+    expect(splitLocale("/en/qr-code-generator/wifi")).toEqual({
+      locale: "en",
+      path: "/qr-code-generator/wifi",
+    });
+    expect(splitLocale("/en/playground")).toEqual({
+      locale: "en",
+      path: "/playground",
     });
     expect(splitLocale("/en/q/abc")).toEqual({
       locale: "en",
@@ -167,19 +260,19 @@ describe("paths", () => {
 
 describe("review gate, before review (every locale machine-made)", () => {
   it("indexes English only", () => {
-    expect(publishedLocales("/pricing", MACHINE)).toEqual(["en"]);
-    expect(isPublished("es", "/pricing", MACHINE)).toBe(false);
+    expect(publishedLocales("/playground", MACHINE)).toEqual(["en"]);
+    expect(isPublished("es", "/playground", MACHINE)).toBe(false);
   });
 
   it("makes translated pages noindex, self-canonical, with no hreflang", () => {
     const es = localizedMetadata({
       locale: "es",
-      path: "/pricing",
-      title: "Precios",
+      path: "/playground",
+      title: "Diseñador",
       review: MACHINE,
     });
     expect(es.robots).toEqual({ index: false, follow: true });
-    expect(es.alternates?.canonical).toBe(abs("/es/pricing"));
+    expect(es.alternates?.canonical).toBe(abs("/es/playground"));
     expect(es.alternates?.languages).toBeUndefined();
     expect(es.openGraph?.locale).toBe("es_ES");
   });
@@ -187,51 +280,51 @@ describe("review gate, before review (every locale machine-made)", () => {
   it("keeps the English page indexable and claiming no translations", () => {
     const en = localizedMetadata({
       locale: "en",
-      path: "/pricing",
-      title: "Pricing",
+      path: "/playground",
+      title: "Designer",
       review: MACHINE,
     });
     expect(en.robots).toBeUndefined();
-    expect(en.alternates?.canonical).toBe(abs("/pricing"));
+    expect(en.alternates?.canonical).toBe(abs("/playground"));
     expect(en.alternates?.languages).toBeUndefined();
-    expect(alternateLanguages("/", MACHINE)).toBeUndefined();
+    expect(alternateLanguages("/mcp", MACHINE)).toBeUndefined();
   });
 
   it("lists only English in the sitemap, without alternates", () => {
-    const entries = localizedEntries("/pricing", { priority: 0.9 }, MACHINE);
-    expect(entries).toEqual([{ url: abs("/pricing"), priority: 0.9 }]);
+    const entries = localizedEntries("/playground", { priority: 0.9 }, MACHINE);
+    expect(entries).toEqual([{ url: abs("/playground"), priority: 0.9 }]);
   });
 });
 
 describe("review gate, after review (one config change)", () => {
   it("indexes the reviewed languages", () => {
-    expect(publishedLocales("/pricing", SIGNED_OFF)).toEqual([
+    expect(publishedLocales("/playground", SIGNED_OFF)).toEqual([
       "en",
       "es",
       "zh-Hans",
     ]);
     const es = localizedMetadata({
       locale: "es",
-      path: "/pricing",
-      title: "Precios",
+      path: "/playground",
+      title: "Diseñador",
       review: SIGNED_OFF,
     });
     expect(es.robots).toBeUndefined();
-    expect(es.alternates?.canonical).toBe(abs("/es/pricing"));
+    expect(es.alternates?.canonical).toBe(abs("/es/playground"));
   });
 
   it("links every indexable version with hreflang and x-default, never an unreviewed one", () => {
     const languages = {
-      en: abs("/pricing"),
-      es: abs("/es/pricing"),
-      "zh-CN": abs("/zh-hans/pricing"),
-      "zh-SG": abs("/zh-hans/pricing"),
-      "x-default": abs("/pricing"),
+      en: abs("/playground"),
+      es: abs("/es/playground"),
+      "zh-CN": abs("/zh-hans/playground"),
+      "zh-SG": abs("/zh-hans/playground"),
+      "x-default": abs("/playground"),
     };
     for (const locale of ["en", "es", "zh-Hans"] as const) {
       const metadata = localizedMetadata({
         locale,
-        path: "/pricing",
+        path: "/playground",
         title: "x",
         review: SIGNED_OFF,
       });
@@ -239,8 +332,8 @@ describe("review gate, after review (one config change)", () => {
     }
     const en = localizedMetadata({
       locale: "en",
-      path: "/pricing",
-      title: "Pricing",
+      path: "/playground",
+      title: "Designer",
       review: SIGNED_OFF,
     });
     expect(en.openGraph).toMatchObject({
@@ -250,8 +343,8 @@ describe("review gate, after review (one config change)", () => {
     // German is still machine-made: noindex, and no hreflang from it.
     const de = localizedMetadata({
       locale: "de",
-      path: "/pricing",
-      title: "Preise",
+      path: "/playground",
+      title: "Designer",
       review: SIGNED_OFF,
     });
     expect(de.robots).toEqual({ index: false, follow: true });
@@ -259,28 +352,71 @@ describe("review gate, after review (one config change)", () => {
   });
 
   it("puts each reviewed version in the sitemap with every alternate", () => {
-    const entries = localizedEntries("/", { priority: 1 }, SIGNED_OFF);
+    const entries = localizedEntries("/ai", { priority: 1 }, SIGNED_OFF);
     expect(entries.map((entry) => entry.url)).toEqual([
-      abs("/"),
-      abs("/es"),
-      abs("/zh-hans"),
+      abs("/ai"),
+      abs("/es/ai"),
+      abs("/zh-hans/ai"),
     ]);
     expect(entries.map((entry) => entry.priority)).toEqual([1, 0.9, 0.9]);
     for (const entry of entries) {
       expect(entry.alternates?.languages).toEqual({
-        en: abs("/"),
-        es: abs("/es"),
-        "zh-CN": abs("/zh-hans"),
-        "zh-SG": abs("/zh-hans"),
-        "x-default": abs("/"),
+        en: abs("/ai"),
+        es: abs("/es/ai"),
+        "zh-CN": abs("/zh-hans/ai"),
+        "zh-SG": abs("/zh-hans/ai"),
+        "x-default": abs("/ai"),
       });
     }
   });
 
   it("can open single pages of a locale", () => {
-    const review: ReviewTable = { ...MACHINE, ja: ["/"] };
-    expect(isPublished("ja", "/", review)).toBe(true);
-    expect(isPublished("ja", "/pricing", review)).toBe(false);
+    const review: ReviewTable = { ...MACHINE, ja: ["/mcp"] };
+    expect(isPublished("ja", "/mcp", review)).toBe(true);
+    expect(isPublished("ja", "/playground", review)).toBe(false);
+  });
+});
+
+describe("English-only marketing pages, in either review state", () => {
+  it.each([
+    ["machine-made", MACHINE],
+    ["signed off", SIGNED_OFF],
+  ] as const)("claim no translations when %s", (_state, review) => {
+    for (const path of ["/", "/pricing", "/qr-code-generator/wifi"]) {
+      const en = localizedMetadata({ locale: "en", path, title: "x", review });
+      expect(en.robots, path).toBeUndefined();
+      expect(en.alternates?.canonical, path).toBe(abs(path));
+      expect(en.alternates?.languages, path).toBeUndefined();
+      expect(en.openGraph?.locale, path).toBe("en_US");
+      expect(en.openGraph, path).not.toHaveProperty("alternateLocale");
+      expect(alternateLanguages(path, review), path).toBeUndefined();
+    }
+  });
+
+  it.each([
+    ["machine-made", MACHINE],
+    ["signed off", SIGNED_OFF],
+  ] as const)("are one English sitemap entry when %s", (_state, review) => {
+    expect(localizedEntries("/", { priority: 1 }, review)).toEqual([
+      { url: abs("/"), priority: 1 },
+    ]);
+    expect(localizedEntries("/pricing", { priority: 0.9 }, review)).toEqual([
+      { url: abs("/pricing"), priority: 0.9 },
+    ]);
+  });
+
+  it("are never indexed in another language, where the redirect didn't run", () => {
+    // Only on a host that isn't QRdx's: the redirect sends /es/pricing to
+    // /pricing everywhere else.
+    const es = localizedMetadata({
+      locale: "es",
+      path: "/pricing",
+      title: "Precios",
+      review: SIGNED_OFF,
+    });
+    expect(es.robots).toEqual({ index: false, follow: true });
+    expect(es.alternates?.canonical).toBe(abs("/pricing"));
+    expect(es.alternates?.languages).toBeUndefined();
   });
 });
 
@@ -288,9 +424,9 @@ describe("next.config.ts routing", () => {
   const matches = (source: string, path: string) =>
     pathToRegexp(source, [], { strict: true }).test(path);
 
-  it("rewrites English URLs to [lang]=en", () => {
+  it("rewrites English URLs to [lang]=en, translated or English only", () => {
     expect(englishRewrites()).toEqual(
-      LOCALIZED_PATHS.map((path) => {
+      [...LOCALIZED_PATHS, ...ENGLISH_ONLY_PATHS].map((path) => {
         const source = rewriteSource(path);
         const target = source.replace(/\([^)]*\)/g, "");
         return {
@@ -329,15 +465,14 @@ describe("next.config.ts routing", () => {
     expect(any("/docs/a/b")).toBe(true);
     expect(any("/docsx")).toBe(false);
     expect(routeMatcher("/pricing")("/pricing/x")).toBe(false);
-    // Generator pages are translated; their links follow the language.
-    expect(isLocalizedPath("/qr-code-generator/wifi")).toBe(true);
+    // Generator pages are English only; links to them keep that URL.
+    expect(isLocalizedPath("/qr-code-generator/wifi")).toBe(false);
+    expect(isEnglishOnlyPath("/qr-code-generator/wifi")).toBe(true);
+    expect(isEnglishOnlyPath("/qr-code-generator/wifi/x")).toBe(false);
     expect(localizeHref("/qr-codes-on/menus#sizing", "ja")).toBe(
-      "/ja/qr-codes-on/menus#sizing",
+      "/qr-codes-on/menus#sizing",
     );
-    expect(splitLocale("/es/qr-code-generator/wifi")).toEqual({
-      locale: "es",
-      path: "/qr-code-generator/wifi",
-    });
+    expect(localizeHref("/ai/art#examples", "ja")).toBe("/ja/ai/art#examples");
     // Short links and app routes never are.
     for (const path of ["/q/abc", "/p/abc", "/m/abc", "/dashboard", "/docs"]) {
       expect(isLocalizedPath(path), path).toBe(false);
@@ -361,5 +496,44 @@ describe("next.config.ts routing", () => {
     expect(matches(pages?.source ?? "", "/en/pricing/twitter-image")).toBe(
       false,
     );
+  });
+
+  it("redirects the English-only pages' translated URLs, for now as 307", () => {
+    const rules = englishOnlyRedirects("(?:qrdx\\.dev)");
+    // One per page, and /<language>/home.
+    expect(rules).toHaveLength(ENGLISH_ONLY_PATHS.length + 1);
+    for (const rule of rules) {
+      expect(rule.permanent, rule.source).toBe(false);
+      expect(rule.has).toEqual([{ type: "host", value: "(?:qrdx\\.dev)" }]);
+    }
+    const target = (path: string) =>
+      rules.find((rule) => matches(rule.source, path))?.destination;
+    expect(target("/es")).toBe("/");
+    expect(target("/es/home")).toBe("/home");
+    expect(target("/pt-br/pricing")).toBe("/pricing");
+    expect(target("/zh-hans/qr-code-generator/wifi")).toBe(
+      "/qr-code-generator/:type",
+    );
+    // Every translated language, never English (englishRedirects, 308).
+    for (const locale of TRANSLATED_LOCALES) {
+      expect(target(`/${LOCALE_INFO[locale].segment}/tools`), locale).toBe(
+        "/tools",
+      );
+    }
+    expect(target("/en/pricing")).toBeUndefined();
+    // Translated pages, other paths and files keep their URLs.
+    for (const path of [
+      "/es/playground",
+      "/es/ai",
+      "/es/ai/art",
+      "/es/mcp",
+      "/es/docs",
+      "/es/community",
+      "/es/pricing/opengraph-image-whxmcp",
+      "/es/integrations/zapier.svg",
+      "/esx/pricing",
+    ]) {
+      expect(target(path), path).toBeUndefined();
+    }
   });
 });

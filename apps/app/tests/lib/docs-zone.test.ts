@@ -476,11 +476,21 @@ describe("next.config.ts with and without a docs site", () => {
       expect(follow(withZone.redirects, "localhost", to), to).toBeUndefined();
     }
     // The translated pages of this app are untouched.
-    for (const path of ["/es", "/es/pricing", "/pt-br/playground"]) {
+    for (const path of ["/pt-br/playground", "/es/ai/art"]) {
       expect(
         follow(withZone.redirects, "localhost", path),
         path,
       ).toBeUndefined();
+    }
+    // The marketing pages are English only too: their own rules send /es
+    // and /es/pricing to the English page, never to the docs.
+    for (const [path, to] of [
+      ["/es", "/"],
+      ["/es/pricing", "/pricing"],
+    ] as const) {
+      expect(follow(withZone.redirects, "localhost", path)?.target, path).toBe(
+        to,
+      );
     }
     // A customer's domain: /es/docs is a short link there.
     expect(

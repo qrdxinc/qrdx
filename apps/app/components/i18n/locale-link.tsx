@@ -37,8 +37,9 @@ function anchorProps({
 
 /**
  * next/link that keeps the visitor's language: on /es pages, a link to
- * /pricing goes to /es/pricing. Pages that aren't translated keep their
- * English URL (packages/i18n/paths.ts).
+ * /playground goes to /es/playground. Pages that aren't translated, the
+ * English-only marketing pages among them (/pricing), keep their English
+ * URL (packages/i18n/paths.ts).
  *
  * Docs pages get a plain <a>: another app serves them behind the same URLs
  * (the docs site, @repo/i18n/docs), or qrdx.dev does when this deployment

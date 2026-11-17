@@ -17,7 +17,8 @@
 //           answers in each language with its <html lang>, a self canonical
 //           and noindex while unreviewed; a sample loads in Chrome without
 //           console errors or hydration warnings; /en/... redirects to the
-//           English URL
+//           English URL, and the English-only marketing pages' translated
+//           URLs (/es/pricing) to theirs
 //
 //   bun run --filter app test:e2e:site           (E2E_BASE_URL defaults to :3000)
 //   E2E_SUITES=image,mcp bun run --filter app test:e2e:site
@@ -35,7 +36,11 @@ import { request as httpsRequest } from "node:https";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LOCALE_INFO, type Locale } from "@repo/i18n/config";
-import { LOCALIZED_PATHS, localizePath } from "@repo/i18n/paths";
+import {
+  ENGLISH_ONLY_PATHS,
+  LOCALIZED_PATHS,
+  localizePath,
+} from "@repo/i18n/paths";
 import { REVIEW } from "@repo/i18n/review";
 import { decodePng } from "../../../packages/qrdx/src/utils/png";
 import {
@@ -1306,6 +1311,7 @@ async function testLegal() {
 
 /** A real page for each dynamic route in localized-paths.json. */
 const I18N_SAMPLES: Record<string, string> = {
+  "/barcode-generator/[format]": "/barcode-generator/ean-13",
   "/qr-code-generator/[type]": "/qr-code-generator/wifi",
   "/qr-codes-for/[slug]": "/qr-codes-for/restaurants",
   "/qr-codes-on/[slug]": "/qr-codes-on/business-cards",
@@ -1314,10 +1320,13 @@ const I18N_SAMPLES: Record<string, string> = {
 
 const I18N_LOCALES: Locale[] = ["es", "ja", "de", "hi"];
 
-async function testI18n(page: Page) {
-  const paths = LOCALIZED_PATHS.flatMap((path) =>
+const samples = (routes: readonly string[]) =>
+  routes.flatMap((path) =>
     path.includes("[") ? (I18N_SAMPLES[path] ?? []) : [path],
   );
+
+async function testI18n(page: Page) {
+  const paths = samples(LOCALIZED_PATHS);
   const pages = I18N_LOCALES.flatMap((locale) =>
     paths.map((path) => ({ locale, path, href: localizePath(path, locale) })),
   );
@@ -1346,14 +1355,32 @@ async function testI18n(page: Page) {
       `${response.status} ${response.headers.get("location")}`,
     ];
   });
+  // The marketing pages are English only: their old translated URLs
+  // redirect to the English page, query kept (307 until the 7-day watch).
+  const englishOnly = [
+    ...samples(ENGLISH_ONLY_PATHS).map((path) => ({
+      from: path === "/" ? "/es" : `/es${path}?from=e2e`,
+      to: path === "/" ? "/" : `${path}?from=e2e`,
+    })),
+    { from: "/ja/home", to: "/home" },
+  ];
+  await pool(englishOnly, HTTP_CONCURRENCY, async ({ from, to }) => {
+    await check("i18n", `${from} redirects to ${to}`, async () => {
+      const response = await get(from);
+      const location = response.headers.get("location");
+      return [
+        response.status === 307 && location === to,
+        `${response.status} ${location}`,
+      ];
+    });
+  });
 
   // Every translated page in Spanish, and a few in the others, in Chrome.
   const watch = watchConsole(page);
   await page.cdp.send("Log.enable");
   const browse = pages.filter(
     ({ locale, path }) =>
-      locale === "es" ||
-      ["/", "/tools", "/qr-code-generator/wifi"].includes(path),
+      locale === "es" || ["/playground", "/mcp"].includes(path),
   );
   for (const { href, locale } of browse) {
     watch.reset();

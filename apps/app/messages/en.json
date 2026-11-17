@@ -286,7 +286,8 @@
   },
   "localeSwitcher": {
     "label": "Language",
-    "englishOnly": "This page is in English only. Other languages open their home page."
+    "englishOnly": "This page is in English only. Other languages open their home page.",
+    "englishOnlyDesigner": "This page is in English only. Other languages open the QR code designer."
   },
   "cta": {
     "title": "Make your next QR code",

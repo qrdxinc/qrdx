@@ -47,9 +47,10 @@ type Entry = MetadataRoute.Sitemap[number];
 
 // lastmod is a real date or absent, never the build time (lib/seo-dates.ts).
 /**
- * Every translated page (packages/i18n/localized-paths.json) as its languages:
- * one entry per indexable language, with hreflang alternates (lib/i18n/
- * sitemap.ts). Languages a native reviewer hasn't signed off stay out.
+ * Every translated page (packages/i18n/localized-paths.json `paths`) as its
+ * languages: one entry per indexable language, with hreflang alternates
+ * (lib/i18n/sitemap.ts). Languages a native reviewer hasn't signed off stay
+ * out. The English-only marketing pages stay one English entry each.
  */
 function withTranslations(entries: Entry[]): Entry[] {
   return entries.flatMap((entry) => {
@@ -174,39 +175,44 @@ function entries(docs: Entry[]): Entry[] {
     } satisfies Entry;
   });
 
+  // The marketing pages are English only: one entry each, no alternates.
+  // Translated pages (the playground, /ai, /ai/art, /mcp, /scan) get their
+  // languages from withTranslations.
   return [
-    // Translated pages: one entry per indexable language, each listing the
-    // others as alternates (lib/i18n/sitemap.ts).
-    ...localizedEntries("/", {
+    {
+      url: url("/"),
       changeFrequency: "monthly",
       priority: 1,
-    }),
+    },
     {
       url: url("/playground"),
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    ...localizedEntries("/pricing", {
+    {
+      url: url("/pricing"),
       lastModified: pageDate("/pricing"),
       changeFrequency: "monthly",
       priority: 0.9,
-    }),
+    },
     {
       url: url("/guarantee"),
       lastModified: pageDate("/guarantee"),
       changeFrequency: "yearly",
       priority: 0.6,
     },
-    ...localizedEntries("/enterprise", {
+    {
+      url: url("/enterprise"),
       lastModified: pageDate("/enterprise"),
       changeFrequency: "monthly",
       priority: 0.7,
-    }),
-    ...localizedEntries("/security", {
+    },
+    {
+      url: url("/security"),
       lastModified: pageDate("/security"),
       changeFrequency: "monthly",
       priority: 0.6,
-    }),
+    },
     ...(isPathAvailable("/affiliates")
       ? [
           {

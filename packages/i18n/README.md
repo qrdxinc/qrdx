@@ -6,14 +6,15 @@ The languages QRdx is translated into, which pages exist in each one and at what
 import { LOCALES, localeFromSegment } from "@repo/i18n/config";
 import { localizeHref } from "@repo/i18n/paths";
 
-localizeHref("/pricing", "es"); // "/es/pricing"
+localizeHref("/playground", "es"); // "/es/playground"
+localizeHref("/pricing", "es"); // "/pricing" (English only)
 ```
 
 | Module | What it holds |
 | --- | --- |
 | `config.ts` (`@repo/i18n/config`) | `LOCALE_CONFIG`, the languages: URL segment, names, hreflang, `og:locale`, direction, and review state. Adding a language starts here (CONTRIBUTING.md, "Translating QRdx") |
-| `paths.ts` (`@repo/i18n/paths`), `localized-paths.json` | The translated pages (`localized-paths.json`, by route path) and `localizePath`, `localizeHref`, `splitLocale` |
-| `routing.ts` (`@repo/i18n/routing`) | The `next.config.ts` rewrites and redirects that give English its unprefixed URLs |
+| `paths.ts` (`@repo/i18n/paths`), `localized-paths.json` | The translated pages (`paths` in `localized-paths.json`, by route path), the English-only marketing pages under `app/[lang]` (`englishOnly`), and `localizePath`, `localizeHref`, `splitLocale` |
+| `routing.ts` (`@repo/i18n/routing`) | The `next.config.ts` rewrites and redirects that give English its unprefixed URLs, and the redirects from the English-only pages' old translated URLs (`/es/pricing` → `/pricing`) |
 | `review.ts` (`@repo/i18n/review`) | The native review gate: which pages search engines may index in each language |
 | `docs.ts` (`@repo/i18n/docs`) | The docs' URLs: `isDocsPath()`, `translatedDocsRedirects()` (the redirects from the other languages' old docs URLs, such as `/es/docs/...`, to the English page), and the docs zone's routing: `docsZoneRewrites()` (the main app's rewrites to the docs site at `DOCS_ZONE_URL`), `docsOriginRedirects()` (its redirects to qrdx.dev without one) and `isDocsPagePath()` (which links stay inside the docs site) |
 | `messages.ts` (`@repo/i18n/messages`) | `mergeMessages`, `pickMessages`, `CHROME_NAMESPACES`, and `DOCS_NAMESPACES`, the English namespaces copied for the docs, with `DOCS_MESSAGES_COMMAND`, which writes the copy |

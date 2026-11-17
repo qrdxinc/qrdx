@@ -12,8 +12,9 @@ import { organizationSchema } from "@/lib/seo-schema";
 /**
  * The frame every marketing page sits in: the header, the page, the closing
  * band and the footer, between two ruled edges. Both (home) layouts use it:
- * app/[lang]/(home) for translated pages, app/(app)/(home) for the pages
- * that are English only so far.
+ * app/[lang]/(home) for the pages under [lang] (/ai, /mcp and /scan
+ * translated, the rest English only, packages/i18n/localized-paths.json), app/(app)/(home)
+ * for the other public pages, in English.
  */
 export function MarketingShell({ children }: { children: ReactNode }) {
   return (
