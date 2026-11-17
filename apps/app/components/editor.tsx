@@ -22,7 +22,8 @@ import {
   usePlaygroundParams,
 } from "@/lib/hooks/use-playground-params";
 import { useQREditorStore } from "@/store/editor-store";
-import type { Theme, ThemeStyles } from "@/types/theme";
+import type { ThemeStyles } from "@/types/theme";
+import type { Theme } from "@/types/theme-row";
 import { PlaygroundCodeBuilder } from "./code-builder/playground-host";
 import { ActionBar, MobileActionBar } from "./editor/action-bar";
 import { AIWorkingGlow } from "./editor/ai/ai-working-glow";

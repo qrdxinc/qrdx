@@ -1,5 +1,3 @@
-import type { qrPreset } from "@repo/database";
-import type { InferSelectModel } from "drizzle-orm";
 import {
   anyFrameSchema,
   bodyPatternSchema,
@@ -119,13 +117,6 @@ export interface ThemeEditorPreviewProps {
   styles: ThemeStyles;
 }
 
-export interface ThemeEditorControlsProps {
-  styles: ThemeStyles;
-  currentMode: "light" | "dark";
-  onChange: (styles: ThemeStyles) => void;
-  themePromise: Promise<Theme | null>;
-}
-
 /** Shelf a built-in theme sits on in the theme gallery. */
 export type ThemeCategory =
   | "essentials"
@@ -153,8 +144,6 @@ export type ThemePreset = {
 // Type alias for backward compatibility
 export type QRPreset = ThemePreset;
 export type QRStyle = ThemeStyles;
-
-export type Theme = InferSelectModel<typeof qrPreset>;
 
 /**
  * Download Format Options

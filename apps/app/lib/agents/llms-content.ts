@@ -131,7 +131,10 @@ export async function llmsTxt(): Promise<string> {
     docs: docsZone?.sections ?? DOCS_ON_QRDX,
     blog,
     customers,
-    compare: compareSource.getPages().map(pageLink),
+    // Served by the marketing site when it's on: only "All comparisons" stays.
+    compare: siteServes("compare")
+      ? []
+      : compareSource.getPages().map(pageLink),
     legal: legalPages().map(pageLink),
     integrations,
     plugins,

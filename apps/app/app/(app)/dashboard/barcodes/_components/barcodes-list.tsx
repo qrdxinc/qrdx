@@ -54,7 +54,6 @@ import {
   useTransition,
 } from "react";
 import {
-  type BarcodeActionResult,
   duplicateSavedBarcode,
   emptySavedBarcodeTrash,
   moveSavedBarcodes,
@@ -81,6 +80,7 @@ import { useCan } from "@/components/workspace-provider";
 import { BARCODE_FILE_TYPES, BARCODE_FILES } from "@/lib/barcode/files";
 import type { BarcodeStatus } from "@/lib/barcodes/schema";
 import { soundEvent } from "@/lib/sound/emit";
+import type { BarcodeActionResult } from "@/types/action-results";
 import type { BarcodeCard, FolderOption } from "../_lib/filters";
 
 interface ListContextValue {

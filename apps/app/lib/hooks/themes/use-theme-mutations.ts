@@ -8,7 +8,8 @@ import { isUnauthorized } from "@/lib/handle-unauthorized";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 import { ErrorCode } from "@/types/errors";
-import type { Theme, ThemeStyles } from "@/types/theme";
+import type { ThemeStyles } from "@/types/theme";
+import type { Theme } from "@/types/theme-row";
 import { themeKeys } from "./use-themes-data";
 
 type Translate = ReturnType<
