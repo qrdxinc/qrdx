@@ -11,7 +11,7 @@ import { consumeAdminConsoleAccessToken } from "./tickets";
  * (./client.ts, ADMIN_CONSOLE_TOKEN_PREFIX): OpenID Connect's claims for
  * the scopes granted, plus `sid`, this app's session that signed in. The
  * console keeps `sid` in its own session: strong confirmations
- * (/admin/confirm) belong to that session, and so does the console's right
+ * (/oauth/confirm) belong to that session, and so does the console's right
  * to act. The token is good once; the console asks once per sign-in.
  */
 export async function adminConsoleUserinfo(token: string): Promise<Response> {

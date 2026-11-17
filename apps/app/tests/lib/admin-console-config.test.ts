@@ -1,10 +1,12 @@
 // The console at its own address, as next.config.ts sees it, through Next's
-// own matcher: with ADMIN_CONSOLE_URL set, qrdx.dev's five console sections
-// answer a 307 to the same lower-case section there (query kept), nothing
-// else moves, and the value is inlined into server code; unset, nothing
-// changes; set without a usable CONSOLE_ZONE_KEY, the build fails. Nothing
-// here reaches a database or a service. (/admin/confirm:
-// tests/admin/confirm-page.test.tsx.)
+// own matcher: with ADMIN_CONSOLE_URL set, every qrdx.dev/admin URL answers
+// a 307 to the console (/admin to its front page, each section to the same
+// lower-case section there, the query kept), /admin/confirm goes to
+// /oauth/confirm here, nothing outside /admin moves, no redirect leaves the
+// console's origin, and the value is inlined into server code; unset,
+// nothing changes; set without a usable CONSOLE_ZONE_KEY, the build fails.
+// Nothing here reaches a database or a service. (/oauth/confirm:
+// tests/oauth/console-confirm-page.test.tsx.)
 import { adminConsoleRedirects } from "@repo/next-config/console-zone";
 import type { NextConfig } from "next";
 import { getRedirectStatus } from "next/dist/lib/redirect-status";
@@ -20,7 +22,7 @@ import {
 } from "next/experimental/testing/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
-const CONSOLE = "https://admin.qrdx.dev";
+const CONSOLE = "https://console.qrdx.dev";
 
 describe("next.config.ts", () => {
   const saved = { ...process.env };
@@ -117,9 +119,12 @@ describe("next.config.ts", () => {
         params,
         query,
       });
+      // A destination without a host stays on the request's.
       const location = new URL(
         parsedDestination.pathname ?? "/",
-        `${parsedDestination.protocol}//${parsedDestination.hostname}${parsedDestination.port ? `:${parsedDestination.port}` : ""}`,
+        parsedDestination.hostname
+          ? `${parsedDestination.protocol}//${parsedDestination.hostname}${parsedDestination.port ? `:${parsedDestination.port}` : ""}`
+          : parsed.origin,
       );
       for (const [name, value] of Object.entries(parsedDestination.query)) {
         location.searchParams.set(name, String(value));
@@ -132,26 +137,63 @@ describe("next.config.ts", () => {
     return null;
   }
 
-  it.each([
+  // Every section, its pages below it, and /admin itself.
+  const SENT = [
+    ["/admin", "/"],
+    ["/admin?tab=x", "/?tab=x"],
     ["/admin/growth", "/growth"],
     ["/admin/numbers", "/numbers"],
     ["/admin/subscriptions?status=active", "/subscriptions?status=active"],
     ["/admin/ai-usage", "/ai-usage"],
     ["/admin/affiliates", "/affiliates"],
     ["/admin/affiliates/abc?page=2", "/affiliates/abc?page=2"],
-  ])("sends %s to the console with a 307", async (pathname, target) => {
-    const response = await resolve(on, `https://qrdx.dev${pathname}`);
-    // Temporary until the seven-day watch, so a rollback isn't cached.
-    expect(response.status).toBe(307);
-    expect(getRedirectUrl(response)).toBe(`${CONSOLE}${target}`);
-  });
+    ["/admin/users", "/users"],
+    ["/admin/users?q=maria&page=2", "/users?q=maria&page=2"],
+    ["/admin/users/u_1", "/users/u_1"],
+    ["/admin/users/u_1/export", "/users/u_1/export"],
+    ["/admin/themes", "/themes"],
+    ["/admin/community", "/community"],
+    ["/admin/codes", "/codes"],
+    ["/admin/codes?q=summer&kind=page", "/codes?q=summer&kind=page"],
+    ["/admin/abuse", "/abuse"],
+    ["/admin/integrations", "/integrations"],
+    ["/admin/audit-log", "/audit-log"],
+    ["/admin/health", "/health"],
+    ["/admin/search?q=a", "/search?q=a"],
+    // Not a section: the console's own 404.
+    ["/admin/growthx", "/growthx"],
+    ["/admin/a/b", "/a/b"],
+  ] as const;
+
+  it.each(SENT)(
+    "sends %s to the console with a 307",
+    async (pathname, target) => {
+      const response = await resolve(on, `https://qrdx.dev${pathname}`);
+      // Temporary until the seven-day watch, so a rollback isn't cached.
+      expect(response.status).toBe(307);
+      expect(getRedirectUrl(response)).toBe(`${CONSOLE}${target}`);
+    },
+  );
+
+  it.each(SENT)(
+    "sends %s there as the server matches it too",
+    async (pathname, target) => {
+      expect(await serverRedirect(on, `https://qrdx.dev${pathname}`)).toEqual({
+        status: 307,
+        location: `${CONSOLE}${target}`,
+      });
+    },
+  );
 
   it.each([
-    ["/admin/growth", "/growth"],
     ["/admin/Growth", "/growth"],
     ["/ADMIN/growth", "/growth"],
+    ["/ADMIN", "/"],
     ["/admin/AI-Usage", "/ai-usage"],
     ["/Admin/Affiliates/AbC?page=2", "/affiliates/AbC?page=2"],
+    ["/admin/Users/U_1/Export", "/users/U_1/Export"],
+    ["/ADMIN/SEARCH?q=Maria", "/search?q=Maria"],
+    ["/admin/Audit-Log", "/audit-log"],
   ])(
     "sends %s to the lower-case section, as the server matches it",
     async (pathname, target) => {
@@ -162,49 +204,119 @@ describe("next.config.ts", () => {
     },
   );
 
+  it.each([
+    ["/admin/confirm", "/oauth/confirm"],
+    [
+      `/admin/confirm?next=${encodeURIComponent(`${CONSOLE}/affiliates/a?confirmed=1`)}`,
+      `/oauth/confirm?next=${encodeURIComponent(`${CONSOLE}/affiliates/a?confirmed=1`)}`,
+    ],
+    ["/admin/Confirm?next=x", "/oauth/confirm?next=x"],
+  ])(
+    "sends %s to this app's /oauth/confirm, query kept",
+    async (pathname, target) => {
+      const response = await resolve(on, `https://qrdx.dev${pathname}`);
+      if (pathname === pathname.toLowerCase()) {
+        expect(response.status).toBe(307);
+        expect(
+          new URL(
+            getRedirectUrl(response) ?? "",
+            "https://qrdx.dev",
+          ).toString(),
+        ).toBe(`https://qrdx.dev${target}`);
+      }
+      expect(await serverRedirect(on, `https://qrdx.dev${pathname}`)).toEqual({
+        status: 307,
+        location: `https://qrdx.dev${target}`,
+      });
+    },
+  );
+
+  it.each([
+    "/admin//evil.example",
+    "/admin/%2F%2Fevil.example",
+    "/admin/users/%2F%2Fevil.example",
+    "/admin/@evil.example",
+    "/admin/users/@evil.example",
+    "/admin/users/..%2F..%2Fx",
+    "/admin/%5Cevil.example",
+    "/admin/https:%2F%2Fevil.example",
+    "/admin/users/x?next=https://evil.example",
+    "/admin?redirect=//evil.example",
+  ])(
+    "never sends %s anywhere but the console or this site",
+    async (pathname) => {
+      for (const found of [
+        getRedirectUrl(await resolve(on, `https://qrdx.dev${pathname}`)),
+        (await serverRedirect(on, `https://qrdx.dev${pathname}`))?.location,
+      ]) {
+        if (found === null || found === undefined) continue;
+        const { origin } = new URL(found, "https://qrdx.dev");
+        expect(
+          [CONSOLE, "https://qrdx.dev"],
+          `${pathname} → ${found}`,
+        ).toContain(origin);
+      }
+    },
+  );
+
   it("matches nothing the server would send there while unset", async () => {
-    expect(
-      await serverRedirect(off, "https://qrdx.dev/admin/Growth"),
-    ).toBeNull();
+    for (const pathname of ["/admin", "/admin/Growth", "/admin/users/u_1"]) {
+      expect(
+        await serverRedirect(off, `https://qrdx.dev${pathname}`),
+        pathname,
+      ).toBeNull();
+    }
   });
 
   it.each([
-    "/admin",
-    "/admin/users",
-    "/admin/users/x",
-    "/admin/search?q=a",
-    "/admin/confirm",
-    "/admin/confirm?next=https://admin.qrdx.dev/growth",
-    "/admin/growthx",
-    "/admin/audit-log",
-    "/admin/health",
+    "/administrator",
+    "/adminx/growth",
     "/api/oauth/authorize?client_id=qrdx_admin_console",
     "/api/auth/get-session",
+    "/api/auth/admin/list-users",
+    "/oauth/confirm?next=https://console.qrdx.dev/growth",
+    "/q/admin",
     "/q/x",
     "/p/x",
     "/docs",
     "/dashboard",
+    "/dashboard/admin",
+    "/settings/account",
     "/sign-in",
     "/",
   ])("leaves %s here", async (pathname) => {
     const response = await resolve(on, `https://qrdx.dev${pathname}`);
     const target = getRedirectUrl(response) ?? getRewrittenUrl(response);
     expect(target === null || !target.startsWith(`${CONSOLE}/`)).toBe(true);
+    const served = await serverRedirect(on, `https://qrdx.dev${pathname}`);
+    expect(served?.location ?? "").not.toContain(CONSOLE);
   });
 
   it("only on QRdx's own hosts", async () => {
     expect(
       getRedirectUrl(await resolve(on, "http://localhost:3000/admin/growth")),
     ).toBe(`${CONSOLE}/growth`);
-    const customer = await resolve(
-      on,
-      "https://links.customer.com/admin/growth",
-    );
-    expect(getRedirectUrl(customer)).not.toBe(`${CONSOLE}/growth`);
+    for (const pathname of ["/admin", "/admin/growth", "/admin/users/u_1"]) {
+      const customer = await resolve(
+        on,
+        `https://links.customer.com${pathname}`,
+      );
+      expect(getRedirectUrl(customer) ?? "", pathname).not.toContain(CONSOLE);
+      expect(
+        await serverRedirect(on, `https://links.customer.com${pathname}`),
+        pathname,
+      ).toBeNull();
+    }
   });
 
   it("changes nothing while unset", async () => {
-    for (const pathname of ["/admin/growth", "/admin/affiliates/abc?page=2"]) {
+    for (const pathname of [
+      "/admin",
+      "/admin/growth",
+      "/admin/affiliates/abc?page=2",
+      "/admin/users/u_1",
+      "/admin/confirm?next=/admin/growth",
+    ]) {
       const response = await resolve(off, `https://qrdx.dev${pathname}`);
       expect(getRedirectUrl(response), pathname).toBeNull();
       expect(getRewrittenUrl(response), pathname).toBeNull();
