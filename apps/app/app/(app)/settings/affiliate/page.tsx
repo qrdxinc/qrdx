@@ -412,12 +412,12 @@ function Dashboard({ dashboard }: { dashboard: AffiliateDashboard }) {
       <p className="text-muted-foreground text-sm">
         {t.rich("theFullTermsAreIn", {
           link: (chunks) => (
-            <Link
+            <a
               className="underline underline-offset-4"
               href="/legal/affiliate-terms"
             >
               {chunks}
-            </Link>
+            </a>
           ),
           link2: (chunks) => (
             <a

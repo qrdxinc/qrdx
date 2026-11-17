@@ -155,12 +155,12 @@ export function CompareAlternatives({
                 </span>
                 {qrdx.name}
               </span>
-              <Link
+              <a
                 className="text-xs font-medium text-muted-foreground underline decoration-foreground/20 underline-offset-4 hover:text-foreground hover:decoration-foreground"
                 href="/pricing"
               >
                 QRdx plans and limits
-              </Link>
+              </a>
             </div>
             <dl className="contents">
               <Fact label={COLUMNS[1]}>{qrdx.bestFor}</Fact>
