@@ -246,7 +246,7 @@ describe("/oauth/confirm", () => {
       ["/\\evil.example/growth"],
       ["/admin/growth"],
       ["/growth"],
-      ["https://admin.qrdx.dev/growth"],
+      ["https://api.qrdx.dev/growth"],
       ["https://qrdx.dev/settings/account"],
       [`${CONSOLE}/auth/logout`],
       [`${CONSOLE}/growth/../auth/login`],

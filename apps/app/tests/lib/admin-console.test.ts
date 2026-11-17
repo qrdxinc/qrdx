@@ -208,7 +208,7 @@ describe("adminConsoleReturnUrl (/oauth/confirm's ?next=)", () => {
     "https://console.qrdx.dev:80/growth",
     "wss://console.qrdx.dev/growth",
     "https://qrdx.dev/admin/users",
-    "https://admin.qrdx.dev/growth",
+    "https://api.qrdx.dev/growth",
     // Userinfo, and userinfo that hides another host.
     "https://user@console.qrdx.dev/growth",
     "https://user:pass@console.qrdx.dev/growth",
