@@ -249,7 +249,7 @@ It fails on keys that English doesn't have, on placeholders or tags that changed
 
 The docs (`apps/docs/content/docs`) are English only: one `<page>.mdx` a page and one `meta.json` a folder, served at `/docs/...`. They aren't translated, so don't add `<page>.<code>.mdx` or `meta.<code>.json` files (a test in `apps/docs` fails on them), and there is no docs translation script or review record.
 
-Until 17 November 2026 the docs were also served in the other languages, under `/es/docs/...`, `/pt-br/docs/...` and so on. Those URLs, their `.md` and `.mdx` copies and `/docs-md/<language>/...` now redirect to the same page in English, keeping the path and the query (`translatedDocsRedirects` in `packages/i18n/docs.ts`, used by both apps' `next.config.ts`). The redirect is temporary (307) for now. A new language in `packages/i18n/config.ts` gets the same redirect for its `/<segment>/docs` URLs.
+Until 17 November 2026 the docs were also served in the other languages, under `/es/docs/...`, `/pt-br/docs/...` and so on. Those URLs, their `.md` and `.mdx` copies and `/docs-md/<language>/...` now redirect to the same page in English, keeping the path and the query (`translatedDocsRedirects` in `packages/i18n/docs.ts`, used by both apps' `next.config.ts`). The redirect is permanent (308) on a deployment that serves the docs itself, and temporary (307) on one that sends them to qrdx.dev. A new language in `packages/i18n/config.ts` gets the same redirect for its `/<segment>/docs` URLs.
 
 A link to a docs page is written as its English URL (`/docs/...`) everywhere, on translated pages too: `localizeHref` leaves docs paths alone.
 

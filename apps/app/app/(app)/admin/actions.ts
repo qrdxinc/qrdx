@@ -7,7 +7,6 @@ import {
   communityTheme,
   database as db,
   qrPreset,
-  user,
 } from "@repo/database";
 import { and, eq, ne, type SQL } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
@@ -19,21 +18,20 @@ import {
   adminError,
   runAdminAction,
 } from "./_lib/action";
+import {
+  findAdminTarget as findUser,
+  refreshCommunity,
+  userAudit,
+} from "./_lib/operations";
 import { adminId, optionalReason, requiredReason } from "./_lib/rules";
+import {
+  banSchema,
+  roleSchema,
+  userReasonSchema as userSchema,
+} from "./_lib/schemas";
 
 export type { AdminActionResult } from "./_lib/action";
 
-const banSchema = z.object({
-  userId: adminId,
-  reason: requiredReason,
-  expiresInDays: z.number().int().min(1).max(3650).optional(),
-});
-const userSchema = z.object({ userId: adminId, reason: requiredReason });
-const roleSchema = z.object({
-  userId: adminId,
-  role: z.enum(["user", ADMIN_ROLE]),
-  reason: requiredReason,
-});
 const removeThemeSchema = z.object({
   communityThemeId: adminId,
   reason: optionalReason,
@@ -42,34 +40,6 @@ const removeItemSchema = z.object({
   itemId: adminId,
   reason: requiredReason,
 });
-
-async function findUser(userId: string) {
-  const [found] = await db
-    .select({ id: user.id, email: user.email, role: user.role })
-    .from(user)
-    .where(eq(user.id, userId))
-    .limit(1);
-  if (!found) throw adminError("User not found", 404);
-  return found;
-}
-
-const userAudit = (
-  target: { id: string; email: string },
-  metadata: Record<string, unknown> = {},
-) => ({
-  audit: {
-    targetType: "user",
-    targetId: target.id,
-    subjectUserId: target.id,
-    metadata: { targetEmail: target.email, ...metadata },
-  },
-});
-
-/** Community lists are cached; a ban or unban shows at once. */
-function refreshCommunity() {
-  revalidateTag("community-themes", "max");
-  revalidateTag("community-tag-counts", "max");
-}
 
 export async function banUserAction(
   input: z.input<typeof banSchema>,
