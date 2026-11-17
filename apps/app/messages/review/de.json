@@ -763,6 +763,10 @@
     "source": "f68c974d682c",
     "status": "machine"
   },
+  "localeSwitcher.englishOnlyDesigner": {
+    "source": "6d0ede01c088",
+    "status": "machine"
+  },
   "cta.title": {
     "source": "97faf67ad6ce",
     "status": "machine"
@@ -1228,7 +1232,7 @@
     "status": "machine"
   },
   "home.features.developers.description": {
-    "source": "846fbd914726",
+    "source": "7302321a694e",
     "status": "machine"
   },
   "home.features.developers.link": {
@@ -1341,6 +1345,10 @@
   },
   "home.faq.items.openSource.question": {
     "source": "93fd8efdb92f",
+    "status": "machine"
+  },
+  "home.faq.items.openSource.answer": {
+    "source": "3067b8fcafc4",
     "status": "machine"
   },
   "home.faq.items.api.question": {
@@ -2104,7 +2112,7 @@
     "status": "machine"
   },
   "pricing.faq.items.selfHost.answer": {
-    "source": "8c5477b33a21",
+    "source": "0eee0292bbac",
     "status": "machine"
   },
   "pricing.faq.items.nonprofit.question": {
@@ -2228,7 +2236,7 @@
     "status": "machine"
   },
   "pricing.enterprise.adds.selfHost": {
-    "source": "c13894e74f3b",
+    "source": "b66df2df53ae",
     "status": "machine"
   },
   "pricing.enterprise.security": {
@@ -6388,11 +6396,11 @@
     "status": "machine"
   },
   "enterprise.contract.selfHost.title": {
-    "source": "5b4655e8e804",
+    "source": "bad17af3d27c",
     "status": "machine"
   },
   "enterprise.contract.selfHost.body": {
-    "source": "42e6f874036d",
+    "source": "801224e1f60a",
     "status": "machine"
   },
   "enterprise.limitsNote": {
@@ -6460,7 +6468,7 @@
     "status": "machine"
   },
   "enterprise.buy.sign.body": {
-    "source": "071331f7eb5b",
+    "source": "aaf851a6e6d5",
     "status": "machine"
   },
   "enterprise.formTitle": {
@@ -8572,7 +8580,7 @@
     "status": "machine"
   },
   "dynamicQrCode.openSourceBody": {
-    "source": "52ea01bfa591",
+    "source": "82e34ca96e7a",
     "status": "machine"
   },
   "dynamicQrCode.openSourceLink": {
@@ -8732,11 +8740,11 @@
     "status": "machine"
   },
   "openSource.intro1": {
-    "source": "987b6782a46a",
+    "source": "fc8ad0d2c4fc",
     "status": "machine"
   },
   "openSource.intro2": {
-    "source": "246de1afcab9",
+    "source": "3816c063b4bd",
     "status": "machine"
   },
   "openSource.facts.agpl": {
@@ -8819,12 +8827,28 @@
     "source": "83fa6a36f67c",
     "status": "machine"
   },
+  "openSource.parts.skillName": {
+    "source": "fa3b8f53763d",
+    "status": "machine"
+  },
+  "openSource.parts.skillBody": {
+    "source": "19c60c708ef9",
+    "status": "machine"
+  },
+  "openSource.parts.registryName": {
+    "source": "2cd4f6bdf177",
+    "status": "machine"
+  },
+  "openSource.parts.registryBody": {
+    "source": "0692a6937c54",
+    "status": "machine"
+  },
   "openSource.parts.eeName": {
     "source": "a2bb3445855d",
     "status": "machine"
   },
   "openSource.parts.eeBody": {
-    "source": "1eeff098c7c5",
+    "source": "91849669e756",
     "status": "machine"
   },
   "openSource.eeLicense": {
@@ -8832,7 +8856,11 @@
     "status": "machine"
   },
   "openSource.eeNote": {
-    "source": "4a6fedd7f2d1",
+    "source": "61a81b01dc71",
+    "status": "machine"
+  },
+  "openSource.eeAgreement": {
+    "source": "dce9d03ef5f9",
     "status": "machine"
   },
   "openSource.waysEyebrow": {
@@ -8940,11 +8968,19 @@
     "status": "machine"
   },
   "openSource.licenses.mitTitle": {
-    "source": "dc2d09c52ac3",
+    "source": "0f5400d2bd37",
     "status": "machine"
   },
   "openSource.licenses.mitBody": {
-    "source": "10218abbcede",
+    "source": "dab226ecd857",
+    "status": "machine"
+  },
+  "openSource.licenses.eeTitle": {
+    "source": "8849c7ccf9a3",
+    "status": "machine"
+  },
+  "openSource.licenses.eeBody": {
+    "source": "e6d348f4784e",
     "status": "machine"
   },
   "openSource.licenses.trademarkTitle": {
@@ -9048,7 +9084,7 @@
     "status": "machine"
   },
   "openSource.faq.openAnswer": {
-    "source": "703ac6c32b02",
+    "source": "b699db1198f2",
     "status": "machine"
   },
   "openSource.faq.githubQuestion": {
@@ -9064,7 +9100,7 @@
     "status": "machine"
   },
   "openSource.faq.freeAnswer": {
-    "source": "4d30724fc751",
+    "source": "7fccca5fa8e2",
     "status": "machine"
   },
   "openSource.faq.needQuestion": {
@@ -24685,6 +24721,10 @@
   },
   "app.dashboard.settings.clients.page.theClientPortalIsntAvailable": {
     "source": "a36470b7e4de",
+    "status": "machine"
+  },
+  "app.dashboard.settings.clients.page.theClientPortalIsOff": {
+    "source": "5794745bfe8d",
     "status": "machine"
   },
   "app.dashboard.settings.clients.page.theClientPortalIsPart": {

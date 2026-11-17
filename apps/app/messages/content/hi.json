@@ -29963,6 +29963,30 @@
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
+  "3c1004b71f0f": {
+    "source": "Search the docs",
+    "text": "डॉक्स में खोजें",
+    "status": "machine",
+    "context": "mcp.tools.9.title"
+  },
+  "82ae342a90f8": {
+    "source": "Finds QRdx docs pages for a question: how a feature works, API endpoints and fields, limits and plans, the React library. Returns titles, links and matching snippets, best first.",
+    "text": "किसी सवाल के लिए QRdx के डॉक्स पेज ढूंढता है: कोई फ़ीचर कैसे काम करता है, API endpoints और फ़ील्ड, लिमिट और प्लान, React लाइब्रेरी। टाइटल, लिंक और मिलते-जुलते अंश देता है, सबसे सही पहले।",
+    "status": "machine",
+    "context": "mcp.tools.9.description"
+  },
+  "13be09937478": {
+    "source": "Read a docs page",
+    "text": "डॉक्स पेज पढ़ें",
+    "status": "machine",
+    "context": "mcp.tools.10.title"
+  },
+  "24dd1fdfc3d8": {
+    "source": "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
+    "text": "एक डॉक्स पेज Markdown में, search_docs से मिले पाथ या उसके URL से। लंबे पेज बीच में काट दिए जाते हैं और बाकी हिस्से का लिंक दिया जाता है।",
+    "status": "machine",
+    "context": "mcp.tools.10.description"
+  },
   "abb9f9118ecf": {
     "source": "List styles",
     "text": "स्टाइल की सूची",

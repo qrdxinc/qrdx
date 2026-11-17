@@ -29963,6 +29963,30 @@
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
+  "3c1004b71f0f": {
+    "source": "Search the docs",
+    "text": "搜索文档",
+    "status": "machine",
+    "context": "mcp.tools.9.title"
+  },
+  "82ae342a90f8": {
+    "source": "Finds QRdx docs pages for a question: how a feature works, API endpoints and fields, limits and plans, the React library. Returns titles, links and matching snippets, best first.",
+    "text": "根据问题查找 QRdx 文档页面，例如功能的工作方式、API 端点和字段、限制与方案、React 库。返回标题、链接和匹配的片段，最相关的排在前面。",
+    "status": "machine",
+    "context": "mcp.tools.9.description"
+  },
+  "13be09937478": {
+    "source": "Read a docs page",
+    "text": "阅读文档页面",
+    "status": "machine",
+    "context": "mcp.tools.10.title"
+  },
+  "24dd1fdfc3d8": {
+    "source": "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
+    "text": "以 Markdown 格式返回一个文档页面，可通过 search_docs 返回的路径或页面 URL 获取。过长的页面会被截断，并附上指向其余内容的链接。",
+    "status": "machine",
+    "context": "mcp.tools.10.description"
+  },
   "abb9f9118ecf": {
     "source": "List styles",
     "text": "列出样式",

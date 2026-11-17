@@ -26,7 +26,7 @@ import {
   ssoServiceProviderUrls,
   ssoVerificationRecord,
 } from "@repo/auth/sso-rules";
-import { database as db } from "@repo/database";
+import { and, database as db, eq, ssoProvider } from "@repo/database";
 import {
   auditSso,
   auditSsoJoinRole,
@@ -36,6 +36,7 @@ import { endSessionsWithoutSso, sessionCameFromSso } from "@/ee/sso/required";
 import { env } from "@/env";
 import { HttpError } from "@/lib/error-response";
 import { checkWebhookUrl, isBlockedAddress } from "@/lib/events/url-safety";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { can } from "@/lib/permissions";
 import { assertCan } from "@/lib/permissions-server";
 import {
@@ -91,7 +92,9 @@ export interface SsoViewer {
 
 export interface SsoOverview {
   plan: Plan;
-  /** The workspace's plan includes SSO */
+  /** The server has the licence for SSO; without it only removing works */
+  licensed: boolean;
+  /** The server has the licence and the workspace's plan includes SSO */
   allowed: boolean;
   /** The viewer may change SSO (owner or admin) */
   canManage: boolean;
@@ -252,6 +255,13 @@ async function findConnection(
   return row ?? null;
 }
 
+/** The workspace has a stored SSO connection (whatever the licence or plan). */
+export async function hasSsoConnection(
+  organizationId: string,
+): Promise<boolean> {
+  return (await findConnection(organizationId)) !== null;
+}
+
 async function workspaceMetadata(organizationId: string) {
   const row = await db.query.organization.findFirst({
     columns: { metadata: true },
@@ -330,8 +340,11 @@ export async function getSsoOverview(
   ]);
   const canManage = can(scope.role, "sso.manage");
   const draftId = newSsoProviderId();
+  // Without the licence the SSO plugin isn't registered: nothing here may
+  // call it, and all that's left to do with a stored connection is remove it.
+  const licensed = isFeatureAvailable("sso");
   const token =
-    row && canManage && !row.domainVerified
+    licensed && row && canManage && !row.domainVerified
       ? await verificationToken(row.providerId, requestHeaders)
       : null;
   const requirementOn = Boolean(
@@ -339,14 +352,15 @@ export async function getSsoOverview(
   );
   return {
     plan,
-    allowed: getPlanLimits(plan).sso,
+    licensed,
+    allowed: licensed && getPlanLimits(plan).sso,
     canManage,
     joinRole: ssoJoinRoleFromMetadata(metadata),
     connection: row ? toView(row, token) : null,
     requirement: {
       on: requirementOn,
       blocked:
-        row && canManage && !requirementOn
+        licensed && row && canManage && !requirementOn
           ? await requirementBlockedFor(scope, viewer, row)
           : null,
     },
@@ -793,10 +807,23 @@ export async function deleteSsoConnection(
   await guard(scope, { needsPlan: false });
   const row = existingOrThrow(await findConnection(scope.organizationId));
   try {
-    await auth.api.deleteSSOProvider({
-      body: { providerId: row.providerId },
-      headers: requestHeaders,
-    });
+    if (isFeatureAvailable("sso")) {
+      await auth.api.deleteSSOProvider({
+        body: { providerId: row.providerId },
+        headers: requestHeaders,
+      });
+    } else {
+      // No licence, so no SSO plugin to ask: the stored connection (with its
+      // secret) is deleted directly. Removing never needs the licence.
+      await db
+        .delete(ssoProvider)
+        .where(
+          and(
+            eq(ssoProvider.providerId, row.providerId),
+            eq(ssoProvider.organizationId, scope.organizationId),
+          ),
+        );
+    }
   } catch (error) {
     throw pluginFailure(error, "We couldn't remove the connection.");
   }

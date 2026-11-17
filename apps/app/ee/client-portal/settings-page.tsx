@@ -27,7 +27,10 @@ import { getTeam } from "@/app/(app)/dashboard/team/_lib/queries";
 import { UpgradePlanButton } from "@/app/(app)/dashboard/webhooks/_components/upgrade-plan-button";
 import { SettingsHeader } from "@/app/(app)/settings/components/settings-header";
 import { CopyButton } from "@/components/copy-button";
-import { clientTools } from "@/ee/client-portal/access";
+import {
+  clientTools,
+  isClientPortalAvailable,
+} from "@/ee/client-portal/access";
 import {
   ClientBrandsUnavailableError,
   findPortalBrand,
@@ -54,9 +57,10 @@ const DOCS_HREF = "/docs/client-portal";
 
 /**
  * Settings → Client portal (agency tools, Business): the portal's address
- * and branding, and the clients invited to it with their folders. The
- * route (app/(app)/dashboard/[workspace]/settings/clients) is not found on
- * servers without the licence key.
+ * and branding, and the clients invited to it with their folders. On a
+ * server without the licence key the page is not found, unless the workspace
+ * still has clients stored from when it had one: it then lists them so they
+ * can be removed, and nothing else.
  */
 export default async function ClientPortalSettingsPage() {
   const t = await getAppTranslations("app.dashboard.settings.clients.page");
@@ -66,6 +70,7 @@ export default async function ClientPortalSettingsPage() {
     getOwnerPlanForOrganization(scope.organizationId),
   ]);
   if (!team) notFound();
+  const licensed = isClientPortalAvailable();
   const allowed = clientTools(getPlanLimits(plan)).clientPortal;
   const canManage = can(scope.role, "members.manage");
 
@@ -104,6 +109,35 @@ export default async function ClientPortalSettingsPage() {
         <p className="text-muted-foreground rounded-lg border p-4 text-sm">
           {t("theClientPortalIsntAvailable")}
         </p>
+      </div>
+    );
+  }
+
+  if (!licensed) {
+    // Nothing stored (or nothing this person may manage): no page at all.
+    if (clients.length === 0) notFound();
+    const stored = flattenFolderTree(
+      buildFolderTree(await listFolders(scope)),
+    ).map((row) => ({ id: row.id, name: row.name, depth: row.depth }));
+    return (
+      <div className="space-y-6">
+        {header}
+        <p className="bg-muted/40 rounded-lg border p-4 text-sm text-pretty">
+          {t("theClientPortalIsOff")}
+        </p>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("clients")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PortalClientsManager
+              canEdit={false}
+              canInvite={false}
+              clients={clients}
+              folders={stored}
+            />
+          </CardContent>
+        </Card>
       </div>
     );
   }

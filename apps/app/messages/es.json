@@ -286,7 +286,8 @@
   },
   "localeSwitcher": {
     "label": "Idioma",
-    "englishOnly": "Esta página solo está en inglés. Los demás idiomas abren su página de inicio."
+    "englishOnly": "Esta página solo está en inglés. Los demás idiomas abren su página de inicio.",
+    "englishOnlyDesigner": "Esta página solo está disponible en inglés. Los demás idiomas abren el diseñador de códigos QR."
   },
   "cta": {
     "title": "Crea tu próximo código QR",
@@ -471,7 +472,7 @@
       "developers": {
         "eyebrow": "Desarrolladores",
         "title": "Hecho para desarrolladores",
-        "description": "Genera códigos con la librería qrdx para React, obtén imágenes desde una URL con la Image API o deja que Claude, Cursor y VS Code los creen mediante el MCP server. También puedes alojar toda la aplicación tú mismo.",
+        "description": "Renderiza códigos con la biblioteca qrdx de React, obtén imágenes desde una URL con la Image API o deja que Claude, Cursor y VS Code los creen mediante el servidor MCP. También puedes alojar la app por tu cuenta.",
         "link": "Docs para desarrolladores"
       }
     },
@@ -526,7 +527,8 @@
           "answer": "Sí. La superposición de logo está incluida en el plan gratuito. Sube una imagen (un PNG con fondo transparente funciona mejor) y QRdx la centra y despeja los módulos que quedan debajo. Los códigos QR usan corrección de errores Reed-Solomon (ISO/IEC 18004); QRdx usa por defecto el nivel Q, que puede recuperar aproximadamente el 25% del código, así que un logo centrado sigue siendo escaneable. Prueba con varios teléfonos antes de imprimir."
         },
         "openSource": {
-          "question": "¿QRdx es de código abierto?"
+          "question": "¿QRdx es de código abierto?",
+          "answer": "Sí. QRdx se desarrolla de forma pública en GitHub. La app web es de código abierto bajo la GNU AGPL-3.0 (o posterior): puedes revisar el código, abrir incidencias, contribuir o alojar tu propia instancia, con códigos dinámicos y páginas alojadas incluidos. La biblioteca qrdx de React en npm y la herramienta de línea de comandos @qrdx/cli son MIT, así que el software de código cerrado también puede usarlas. Las funciones para empresas de las carpetas ee (inicio de sesión único del espacio de trabajo, el registro de auditoría, el portal de clientes y los informes de clientes, las páginas de marca blanca con CSS personalizado y el seguimiento de conversiones) están bajo la Licencia Comercial de QRdx."
         },
         "api": {
           "question": "¿Pueden los desarrolladores generar códigos QR con una API?",
@@ -801,7 +803,7 @@
         },
         "selfHost": {
           "question": "¿Puedo alojarlo yo mismo?",
-          "answer": "Sí. QRdx es de código abierto bajo la licencia AGPL-3.0. Ejecútalo con tu propia base de datos Postgres siguiendo la guía de autoalojamiento; los límites de los planes se definen en un solo archivo que puedes modificar para tu instancia."
+          "answer": "Sí. QRdx es de código abierto bajo la licencia AGPL-3.0. Ejecútalo con tu propia base de datos Postgres siguiendo la guía de autoalojamiento; los límites de los planes se definen en un único archivo que puedes modificar para tu instancia. Las funciones empresariales de las carpetas ee (inicio de sesión único, registro de auditoría, portal de clientes, páginas de marca blanca y seguimiento de conversiones) requieren un acuerdo enterprise."
         },
         "nonprofit": {
           "question": "¿Tenéis descuento para organizaciones sin ánimo de lucro?",
@@ -843,7 +845,7 @@
         "contract": "Un contrato anual, pagado con factura",
         "replies": "Respuesta en {hours, plural, one {# hora laborable} other {# horas laborables}} cuando los códigos dejan de funcionar",
         "review": "Respuestas para tu revisión de seguridad",
-        "selfHost": "SSO y registro de auditoría en tu propio servidor"
+        "selfHost": "SSO, registro de auditoría, portal de clientes, marca blanca y conversiones en tu propio servidor"
       },
       "security": "Seguridad en QRdx"
     },
@@ -2173,8 +2175,8 @@
         "body": "Completamos tu cuestionario de seguridad y te enviamos una copia firmada del Anexo de Tratamiento de Datos."
       },
       "selfHost": {
-        "title": "Inicio de sesión único y registro de auditoría si alojas tú mismo",
-        "body": "QRdx es de código abierto, pero el inicio de sesión único y el registro de auditoría están bajo la licencia comercial de QRdx. Un acuerdo Enterprise te permite ejecutarlos en tu propio servidor con una clave de licencia."
+        "title": "Funciones Business si alojas QRdx tú mismo",
+        "body": "QRdx es de código abierto, pero el inicio de sesión único, el registro de auditoría, el portal de clientes y los informes para clientes, las páginas de marca blanca con CSS personalizado y el seguimiento de conversiones están bajo la licencia comercial de QRdx. Un acuerdo Enterprise te permite ejecutarlos en tu propio servidor con una clave de licencia."
       }
     },
     "limitsNote": "En qrdx.dev, los espacios de trabajo Enterprise tienen los límites del plan Business. Si necesitas más de algo, indícalo en el formulario.",
@@ -2201,7 +2203,7 @@
       },
       "sign": {
         "title": "Firma y paga con factura",
-        "body": "Cuando se firma el contrato, pasamos tu espacio de trabajo al plan Business y te enviamos la factura."
+        "body": "Una vez firmado el contrato, te enviamos la factura y pasamos tu espacio de trabajo en qrdx.dev al plan Business. Si alojas QRdx tú mismo, el contrato también cubre el inicio de sesión único, el registro de auditoría, el portal de clientes, las páginas de marca blanca y el seguimiento de conversiones en tu propio servidor: te enviamos una clave de licencia para QRDX_EE_LICENSE. Tiene una fecha de caducidad y tu servidor la comprueba sin conexión."
       }
     },
     "formTitle": "Habla con nosotros",
@@ -2947,7 +2949,7 @@
     "guaranteeTitle": "Los códigos impresos siguen funcionando",
     "guaranteeBody": "Con la Garantía Never-Hostage, todos los códigos dinámicos siguen redirigiendo en todos los planes, incluso tras una rebaja de plan, un pago fallido o una cancelación. Los escaneos nunca se pausan y quienes escanean nunca ven un anuncio ni una página de registro de QRdx. Superar un límite solo te impide crear códigos nuevos.",
     "guaranteeLink": "Lee la garantía",
-    "openSourceBody": "La redirección, la analítica y el resto de la aplicación son de código abierto, así que puedes leer qué ocurre en cada escaneo o ejecutarla en tu propio servidor.",
+    "openSourceBody": "La redirección y las analíticas son de código abierto, así que puedes leer qué ocurre en cada escaneo o ejecutarlas en tu propio servidor.",
     "openSourceLink": "Código abierto y autoalojamiento",
     "staticTitle": "Cuándo es mejor un código estático",
     "staticBody": "Solo los enlaces pueden ser dinámicos: un código dinámico abre un sitio web o una página alojada. Los datos de acceso Wi-Fi, las tarjetas de contacto que se guardan directamente en el teléfono y los códigos de pago bancario tienen que ser estáticos, porque el teléfono los lee del propio patrón. Los códigos estáticos son gratuitos e ilimitados, y no requieren una cuenta.",
@@ -2993,8 +2995,8 @@
     "metaDescription": "QRdx es un generador de códigos QR de código abierto en GitHub. La app tiene licencia AGPL-3.0 y la biblioteca de React y la CLI son MIT. Usa qrdx.dev gratis o ejecuta tu propia copia.",
     "crumb": "Código abierto",
     "title": "Generador de códigos QR de código abierto",
-    "intro1": "QRdx se desarrolla de forma pública en GitHub. La aplicación web que funciona en qrdx.dev, con su editor, códigos dinámicos, páginas alojadas y analíticas de escaneo, tiene licencia AGPL-3.0. La biblioteca de React, la CLI y los plugins son MIT.",
-    "intro2": "Puedes usarlo gratis en qrdx.dev, ejecutar tu propia copia o integrar códigos QR en tu app con la biblioteca.",
+    "intro1": "QRdx se desarrolla en abierto en GitHub. La aplicación web que funciona en qrdx.dev, con su editor, códigos dinámicos, páginas alojadas y analíticas de escaneo, tiene licencia AGPL-3.0. La biblioteca de React, la CLI, los plugins, la skill para agentes y los componentes de shadcn/ui son MIT. Las funciones para empresas (inicio de sesión único del espacio de trabajo, el registro de auditoría, el portal de clientes y los informes para clientes, páginas de marca blanca con CSS personalizado y seguimiento de conversiones) están bajo la QRdx Commercial License.",
+    "intro2": "Puedes usarlo gratis en qrdx.dev, ejecutar tu propia copia o integrar códigos QR en tu aplicación con la biblioteca. Crear códigos QR sigue siendo gratis para todos. El proyecto se financia con los planes Pro y Business y con acuerdos empresariales.",
     "facts": {
       "agpl": "App AGPL-3.0",
       "mit": "Biblioteca y CLI MIT",
@@ -3020,11 +3022,16 @@
       "cliBody": "Códigos QR con estilo desde una terminal o un trabajo de CI",
       "pluginsName": "Plugins",
       "pluginsBody": "La extensión de Chrome, los plugins de Figma, Raycast y Canva y el resto de la carpeta de plugins",
+      "skillName": "Skill para agentes",
+      "skillBody": "generate-qr, que enseña a los agentes de programación a crear códigos QR con la CLI",
+      "registryName": "Componentes de shadcn/ui",
+      "registryBody": "El código QR, el escáner y otros componentes que npx shadcn add instala en tu proyecto",
       "eeName": "Funciones Business",
-      "eeBody": "Inicio de sesión único del espacio de trabajo y registro de auditoría del espacio de trabajo"
+      "eeBody": "Inicio de sesión único del espacio de trabajo, registro de auditoría, portal de clientes e informes para clientes, páginas de marca blanca con CSS personalizado y seguimiento de conversiones"
     },
     "eeLicense": "Licencia comercial de QRdx",
-    "eeNote": "Puedes leer, probar y contribuir al código de las carpetas ee, pero usarlo en producción requiere un acuerdo por escrito con QRdx. En una instancia autoalojada esas dos funciones permanecen desactivadas a menos que se defina QRDX_EE_LICENSE, y todo lo demás funciona sin ellas.",
+    "eeNote": "Puedes leer, probar y contribuir al código de las carpetas ee, pero usarlo en producción requiere un acuerdo por escrito con QRdx. En una instancia autoalojada, esas funciones permanecen desactivadas a menos que QRDX_EE_LICENSE contenga una clave válida, que QRdx emite con el acuerdo y que tu servidor comprueba sin conexión; todo lo demás funciona sin ellas.",
+    "eeAgreement": "Los acuerdos empresariales cubren su ejecución en tu propio servidor: <link>consúltalo en la página para empresas</link> o escribe a {email}.",
     "waysEyebrow": "Formas de usarlo",
     "waysTitle": "Elige cómo ejecutarlo",
     "ways": {
@@ -3058,8 +3065,10 @@
     "licenses": {
       "agplTitle": "La aplicación (AGPL-3.0)",
       "agplBody": "Puedes ejecutarla, modificarla y alojarla. Si ejecutas una versión modificada como servicio en red, debes ofrecer su código fuente a sus usuarios bajo la misma licencia.",
-      "mitTitle": "La biblioteca, la CLI y los plugins (MIT)",
-      "mitBody": "Úsalos en cualquier proyecto, incluido el de código cerrado, siempre que el aviso de copyright y de licencia permanezca junto al código. Las versiones anteriores a qrdx 0.0.47 y @qrdx/cli 0.0.5 eran AGPL-3.0-or-later.",
+      "mitTitle": "La biblioteca y las herramientas (MIT)",
+      "mitBody": "La biblioteca qrdx, la CLI, los plugins, la skill para agentes y los componentes de shadcn/ui. Úsalos en cualquier proyecto, incluido el de código cerrado, siempre que el aviso de copyright y de licencia permanezca con el código. Las versiones anteriores a qrdx 0.0.47 y @qrdx/cli 0.0.5 tenían licencia AGPL-3.0-or-later.",
+      "eeTitle": "Funciones para empresas (QRdx Commercial License)",
+      "eeBody": "Puedes leer, modificar y probar el código de las carpetas ee. Usar esas funciones para empresas en producción en tu propio servidor requiere un acuerdo por escrito con QRdx.",
       "trademarkTitle": "El nombre y el logo",
       "trademarkBody": "El nombre y el logo de QRdx son marcas registradas. Un fork o un servicio público creado a partir del código necesita su propio nombre y logo; la <link>política de marca</link> tiene los detalles."
     },
@@ -3091,11 +3100,11 @@
     "faqTitle": "Preguntas sobre código abierto",
     "faq": {
       "openQuestion": "¿QRdx es realmente de código abierto?",
-      "openAnswer": "Sí. El código fuente está en GitHub, la aplicación web tiene licencia AGPL-3.0-or-later, y la biblioteca qrdx, @qrdx/cli y los plugins son MIT. Dos funciones para empresas, el inicio de sesión único del espacio de trabajo y el registro de auditoría, están en carpetas ee bajo la QRdx Commercial License: puedes leer ese código, pero para usarlo en producción necesitas un acuerdo con QRdx.",
+      "openAnswer": "Sí. El código fuente está en GitHub, la aplicación web tiene licencia AGPL-3.0-or-later, y la biblioteca qrdx, @qrdx/cli, los plugins, la skill para agentes y los componentes de shadcn/ui son MIT. Las funciones para empresas (inicio de sesión único del espacio de trabajo, registro de auditoría, portal de clientes e informes para clientes, páginas de marca blanca con CSS personalizado y seguimiento de conversiones) están en carpetas ee bajo la QRdx Commercial License: puedes leer ese código, pero su uso en producción requiere un acuerdo con QRdx.",
       "githubQuestion": "¿Dónde está el código fuente de QRdx en GitHub?",
       "githubAnswer": "En github.com/qrdxinc/qrdx. Es un único monorepo con la aplicación web, la biblioteca qrdx, la CLI, los plugins y la documentación.",
       "freeQuestion": "¿Se puede alojar QRdx por cuenta propia gratis?",
-      "freeAnswer": "Sí. No hay cuota de licencia; solo pagas tu propio servidor y tu base de datos. Una instancia autoalojada ejecuta códigos dinámicos, páginas alojadas y analítica de escaneos. El inicio de sesión único y el registro de auditoría permanecen desactivados salvo que tengas una clave de licencia de QRdx.",
+      "freeAnswer": "Sí. No hay cuota de licencia por la aplicación; solo pagas tu propio servidor y tu base de datos. Una instancia autoalojada ejecuta códigos dinámicos, páginas alojadas y analíticas de escaneo. Las funciones para empresas de las carpetas ee son la excepción: el inicio de sesión único, el registro de auditoría, el portal de clientes, las páginas de marca blanca y el seguimiento de conversiones permanecen desactivados a menos que QRDX_EE_LICENSE contenga una clave válida, que QRdx emite con un acuerdo empresarial y que tu servidor comprueba sin conexión. Usarlas en producción requiere ese acuerdo.",
       "needQuestion": "¿Qué necesito para alojar QRdx por mi cuenta?",
       "needAnswer": "Necesitas Docker con Compose v2, o Node.js 22 y Bun 1.4 para la instalación manual, y una base de datos Postgres: la que inicia docker-compose.yml, o Neon. Define NEXT_PUBLIC_APP_URL, DATABASE_URL y BETTER_AUTH_SECRET, y ofrece a los usuarios una forma de iniciar sesión con una app OAuth de GitHub o Google, o con códigos por correo mediante Resend.",
       "closedQuestion": "¿Puedo usar la biblioteca de códigos QR en una app de código cerrado?",
@@ -7868,6 +7877,7 @@
         "clients": {
           "page": {
             "theClientPortalIsntAvailable": "El portal de clientes aún no está disponible en este servidor.",
+            "theClientPortalIsOff": "El portal de clientes no está disponible en este servidor, así que los clientes no pueden abrirlo. Aun así, puedes eliminarlos.",
             "theClientPortalIsPart": "El portal de clientes forma parte de {business}",
             "inviteAClientByEmail": "Invita a un cliente por correo electrónico y elige las carpetas que ve: sus códigos, analíticas de escaneo y páginas alojadas, en solo lectura, con tu nombre, logo y color.",
             "askAWorkspaceOwnerOr": "Pide a un propietario del espacio de trabajo o a un miembro de facturación que actualice el plan.",
