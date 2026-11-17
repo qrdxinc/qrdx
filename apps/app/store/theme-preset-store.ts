@@ -1,6 +1,8 @@
 import { create } from "zustand";
-import { getThemes } from "@/actions/qr-themes";
-import type { ThemeScopeKind } from "@/app/(app)/dashboard/themes/_lib/theme";
+import type {
+  SavedTheme,
+  ThemeScopeKind,
+} from "@/app/(app)/dashboard/themes/_lib/theme";
 import type { ThemePreset } from "@/types/theme";
 import { defaultPresets } from "@/utils/qr-presets";
 
@@ -19,7 +21,13 @@ interface ThemePresetStore {
   updatePreset: (name: string, preset: StoredPreset) => void;
   getPreset: (name: string) => StoredPreset | undefined;
   getAllPresets: () => Record<string, StoredPreset>;
-  loadSavedPresets: () => Promise<void>;
+  /**
+   * Adds the saved themes `load` returns (the getThemes server action, passed
+   * in by components/editor/use-saved-themes.ts), so this store, which the
+   * public generator widgets reach through the editor store, imports no
+   * server action.
+   */
+  loadSavedPresets: (load: () => Promise<SavedTheme[]>) => Promise<void>;
   unloadSavedPresets: () => void;
 }
 
@@ -52,10 +60,10 @@ export const useThemePresetStore = create<ThemePresetStore>()((set, get) => ({
       };
     });
   },
-  loadSavedPresets: async () => {
+  loadSavedPresets: async (load) => {
     const id = ++loadId;
     try {
-      const savedThemes = await getThemes();
+      const savedThemes = await load();
       if (id !== loadId) return;
 
       const savedPresets: Record<string, StoredPreset> = {};

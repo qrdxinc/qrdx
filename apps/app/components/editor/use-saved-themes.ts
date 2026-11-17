@@ -2,6 +2,7 @@
 
 import { authClient } from "@repo/auth/client";
 import { useEffect } from "react";
+import { getThemes } from "@/actions/qr-themes";
 import { useQREditorStore } from "@/store/editor-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 
@@ -46,7 +47,7 @@ export function useSavedThemes() {
     }
 
     let cancelled = false;
-    loadSavedPresets().then(() => {
+    loadSavedPresets(getThemes).then(() => {
       if (!cancelled) applyDefaultTheme(`${userId}:${workspace}`);
     });
     return () => {
