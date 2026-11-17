@@ -329,6 +329,7 @@ async function generateQrCode(input: GenerateInput, ctx: ToolContext) {
         `SVG URL: ${url}`,
         `PNG URL: ${pngUrl}`,
         `WebP URL (lossless, smaller than PNG): ${buildQrImageUrl(options, "webp")}`,
+        `BMP URL (24-bit, for legacy systems; a transparent background comes out white): ${buildQrImageUrl(options, "bmp")}`,
         `EPS URL (vector, for print; ${options.size} pt wide): ${buildQrImageUrl(options, "eps")}`,
         `Markdown: ![QR code](${url})`,
       ].join("\n"),
@@ -435,6 +436,7 @@ async function generateQrCode(input: GenerateInput, ctx: ToolContext) {
       `SVG URL: ${svgUrl}`,
       `PNG URL: ${pngUrl}`,
       `WebP URL (lossless, smaller than PNG): ${styledImageUrl(input, given, "webp")}`,
+      `BMP URL (24-bit, for legacy systems; a transparent background comes out white): ${styledImageUrl(input, given, "bmp")}`,
       `EPS URL (vector, for print): ${styledImageUrl(input, given, "eps")}`,
       `Markdown: ![QR code](${svgUrl})`,
     );

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+QR Image → Generate can return BMP (24-bit; a transparent background comes out white).
+
 Scan → Range has All Time: the whole history, from the code's first scan (Pro and Business; other plans get 30 days).
 
 ## 0.1.1

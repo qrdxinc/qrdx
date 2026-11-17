@@ -191,7 +191,7 @@ export async function renderStyledPng(
   }
 }
 
-/** The PNG render converted, such as to lossless WebP. */
+/** The PNG render converted, such as to lossless WebP or BMP. */
 export async function renderStyledImage(
   render: ResolvedRender,
   format: ConvertedFormat,

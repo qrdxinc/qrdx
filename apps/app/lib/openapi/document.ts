@@ -567,7 +567,7 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
         summary: "Render a QR code image",
         tags: ["QR images"],
         security: [],
-        description: `A QR code image as SVG (default), PNG, WebP or EPS, with no key.
+        description: `A QR code image as SVG (default), PNG, WebP, BMP or EPS, with no key.
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Colors are hex without \`#\` (or with \`#\` encoded as \`%23\`). Limit: 300 requests a minute per IP address. More in the [Image API guide](${docs("developers/image-api")}).
 
@@ -577,7 +577,9 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
 
 **Caching.** Renders with \`item\` are cached for 5 minutes (10 at the CDN), since an item can change; renders with \`logoFileId\` aren't cached.
 
-**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.`,
+**WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.
+
+**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.`,
         parameters: c.parameters(
           qrImage,
           "query",
@@ -605,6 +607,9 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
               },
               "image/webp": {
                 schema: { type: "string", contentMediaType: "image/webp" },
+              },
+              "image/bmp": {
+                schema: { type: "string", contentMediaType: "image/bmp" },
               },
               "application/postscript": {
                 schema: {
