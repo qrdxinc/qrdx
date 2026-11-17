@@ -151,3 +151,38 @@ describe("before the site serves the SEO collections", () => {
     expect(urls.filter(under("/qr-codes-on")).length).toBeGreaterThan(1);
   });
 });
+
+describe("while the marketing site serves the generators and barcodes", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set(["generators", "barcodes"]);
+  });
+
+  it("the sitemap leaves their pages out, hosted types included", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    for (const prefix of ["/qr-code-generator", "/barcode-generator"]) {
+      expect(urls.filter(under(prefix)), prefix).toEqual([]);
+    }
+  });
+
+  it("robots.txt names their sitemaps", () => {
+    expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
+      "/sitemap.xml",
+      "/qr-code-generator/sitemap.xml",
+      "/barcode-generator/sitemap.xml",
+    ]);
+  });
+});
+
+describe("before the site serves the generators and barcodes", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set();
+  });
+
+  it("the sitemap lists them", async () => {
+    const urls = (await sitemap()).map((entry) => entry.url);
+    expect(urls.filter(under("/qr-code-generator")).length).toBeGreaterThan(1);
+    expect(urls.filter(under("/barcode-generator")).length).toBeGreaterThan(1);
+  });
+});
