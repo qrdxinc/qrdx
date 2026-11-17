@@ -30,25 +30,17 @@ import { assertCan } from "@/lib/permissions-server";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { type ActiveWorkspace, getActiveWorkspace } from "@/lib/scope";
 import { logError } from "@/lib/shared";
+import type {
+  BarcodeActionResult,
+  BarcodeErrorCode,
+  SavedBarcodeRef,
+} from "@/types/action-results";
 import { UnauthorizedError, ValidationError } from "@/types/errors";
 
 // Saved barcodes from the dashboard and from /barcode-generator's "Save to
 // dashboard". Every action resolves the caller's workspace itself (the one
 // in the URL, else their default); nothing scope-related comes from the
 // client.
-
-export type BarcodeErrorCode =
-  | "UNAUTHORIZED"
-  | "VALIDATION_ERROR"
-  | "NOT_FOUND"
-  | "FORBIDDEN"
-  | "LIMIT_REACHED"
-  | "RATE_LIMITED"
-  | "UNKNOWN_ERROR";
-
-export type BarcodeActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: { code: BarcodeErrorCode; message: string } };
 
 const KNOWN = new Set<string>([
   "VALIDATION_ERROR",
@@ -120,13 +112,6 @@ async function run<T>(
   } catch (error) {
     return failure(error, action);
   }
-}
-
-export interface SavedBarcodeRef {
-  id: string;
-  title: string | null;
-  /** The workspace it was saved to, for links */
-  workspace: { slug: string; name: string };
 }
 
 const ref = (view: BarcodeView, active: ActiveWorkspace): SavedBarcodeRef => ({

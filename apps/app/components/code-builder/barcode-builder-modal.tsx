@@ -30,11 +30,7 @@ import {
   useState,
   useTransition,
 } from "react";
-import {
-  listBarcodeFolders,
-  type SavedBarcodeRef,
-  saveBarcode,
-} from "@/actions/barcodes";
+import { listBarcodeFolders, saveBarcode } from "@/actions/barcodes";
 import {
   BarcodeContentFields,
   BarcodeDetailsFields,
@@ -54,6 +50,7 @@ import {
 import { getBarcodeFormat } from "@/lib/barcode/formats";
 import { soundEvent } from "@/lib/sound/emit";
 import { workspaceHref } from "@/lib/workspace-paths";
+import type { SavedBarcodeRef } from "@/types/action-results";
 import {
   addressAfterClose,
   type BarcodeBuilderRequest,

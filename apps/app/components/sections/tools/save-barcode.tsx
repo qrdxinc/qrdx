@@ -1,8 +1,9 @@
 "use client";
 
 // /barcode-generator's "Save to dashboard": signed in, the barcode goes to
-// the workspace's Barcodes (actions/barcodes.ts saveBarcode); signed out, a
-// quiet line offers sign-in and the generator keeps working without one.
+// the workspace's Barcodes (POST /api/barcodes, which runs the saveBarcode
+// server action); signed out, a quiet line offers sign-in and the generator
+// keeps working without one. The session is the browser's (authClient).
 
 import { track } from "@repo/analytics";
 import { authClient } from "@repo/auth/client";
@@ -12,7 +13,6 @@ import { Button } from "@repo/design-system/components/ui/button";
 import { ArchiveAdd } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { saveBarcode } from "@/actions/barcodes";
 import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
 import {
   BarcodeGenerator,
@@ -21,6 +21,7 @@ import {
 import { type BarcodeFormatId, getBarcodeFormat } from "@/lib/barcode/formats";
 import { styleChanges } from "@/lib/barcode/style";
 import { soundEvent } from "@/lib/sound/emit";
+import { saveGeneratorBarcode } from "@/lib/widget-routes/client";
 import { workspaceHref } from "@/lib/workspace-paths";
 import { useAuthStore } from "@/store/auth-store";
 
@@ -75,7 +76,7 @@ export function SaveBarcode({ current }: { current: CurrentBarcode | null }) {
     if (!current) return;
     setSaving(true);
     try {
-      const result = await saveBarcode({
+      const result = await saveGeneratorBarcode({
         format: current.format,
         value: current.value,
         options: styleChanges(current.format, current.style),

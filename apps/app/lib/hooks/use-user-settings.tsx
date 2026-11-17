@@ -1,55 +1,33 @@
 "use client";
 
-import type { UserSettings } from "@repo/database/schema";
-import {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { getUserSettings } from "@/actions/user-settings";
+import { createContext, useContext } from "react";
 
-interface UserSettingsContextType {
-  settings: UserSettings | null;
+/**
+ * What the UI reads of the person's settings: the `settings` of their user
+ * row (@repo/database/schema UserSettings), as far as these components use
+ * it. Declared here so components that show shortcuts (tooltips, menus) and
+ * the public generator widgets that use them never name the database package.
+ */
+export interface ShortcutSettings {
+  keyboardShortcuts: boolean;
+}
+
+export interface UserSettingsContextType {
+  settings: ShortcutSettings | null;
   isLoading: boolean;
   refreshSettings: () => Promise<void>;
 }
 
-const UserSettingsContext = createContext<UserSettingsContextType>({
+/**
+ * Filled by UserSettingsProvider (./user-settings-provider.tsx) in the
+ * playground and settings. Without it (the public generator pages) there are
+ * no settings, and shortcuts show by default.
+ */
+export const UserSettingsContext = createContext<UserSettingsContextType>({
   settings: null,
   isLoading: true,
   refreshSettings: async () => {},
 });
-
-export function UserSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<UserSettings | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const refreshSettings = useCallback(async () => {
-    try {
-      const userSettings = await getUserSettings();
-      setSettings(userSettings);
-    } catch (error) {
-      console.error("Error fetching user settings:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    refreshSettings();
-  }, [refreshSettings]);
-
-  return (
-    <UserSettingsContext.Provider
-      value={{ settings, isLoading, refreshSettings }}
-    >
-      {children}
-    </UserSettingsContext.Provider>
-  );
-}
 
 export function useUserSettings() {
   const context = useContext(UserSettingsContext);

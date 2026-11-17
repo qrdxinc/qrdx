@@ -26,25 +26,11 @@ import {
 import { HttpError } from "@/lib/error-response";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
+import type {
+  QrCodeActionResult,
+  QrCodeErrorCode,
+} from "@/types/action-results";
 import { UnauthorizedError, ValidationError } from "@/types/errors";
-
-export type QrCodeErrorCode =
-  | "UNAUTHORIZED"
-  | "VALIDATION_ERROR"
-  | "NOT_FOUND"
-  | "FORBIDDEN"
-  | "LIMIT_REACHED"
-  | "PLAN_REQUIRED"
-  | "RATE_LIMITED"
-  | "DOMAIN_NOT_VERIFIED"
-  | "UNSAFE_DESTINATION"
-  | "INVALID_SLUG"
-  | "SLUG_TAKEN"
-  | "UNKNOWN_ERROR";
-
-export type QrCodeActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: { code: QrCodeErrorCode; message: string } };
 
 const KNOWN_CODES = new Set<string>([
   "NOT_FOUND",
