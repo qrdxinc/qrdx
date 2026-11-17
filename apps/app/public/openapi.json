@@ -46,7 +46,7 @@
     },
     {
       "name": "Conversions",
-      "description": "Sales and sign-ups attributed to the scan behind them."
+      "description": "Sales and sign-ups attributed to the scan behind them. Under the QRdx commercial license: on a self-hosted server only where a valid license key from QRdx turns conversion tracking on."
     },
     {
       "name": "Hooks",
@@ -1745,7 +1745,7 @@
           },
           {}
         ],
-        "description": "Attributes a sale, sign-up or other conversion to the scan that brought the visitor (Business).\n\nFrom your server, send an API key (or token) and the scan's `sid`, or the code id as `code`. From the browser, `conversions.js` sends `sid` with no key, for codes with conversion tracking turned on. An `id`, such as your order id, makes retries safe: a repeat returns 200 with `duplicate: true`. More in [Tracking and conversions](https://qrdx.dev/docs/tracking-and-conversions).\n\n**Scope:** `codes:write`, for API keys and OAuth tokens alike (when you send a key or token).",
+        "description": "Attributes a sale, sign-up or other conversion to the scan that brought the visitor (Business).\n\nConversion tracking is under the QRdx commercial license. qrdx.dev has it; a self-hosted server has this endpoint only where a valid license key from QRdx (`QRDX_EE_LICENSE`: issued with an enterprise agreement, checked offline, not past its expiry and grace period) switches conversion tracking on, and answers 404 `NOT_FOUND` everywhere else.\n\nFrom your server, send an API key (or token) and the scan's `sid`, or the code id as `code`. From the browser, `conversions.js` sends `sid` with no key, for codes with conversion tracking turned on. An `id`, such as your order id, makes retries safe: a repeat returns 200 with `duplicate: true`. More in [Tracking and conversions](https://qrdx.dev/docs/tracking-and-conversions).\n\n**Scope:** `codes:write`, for API keys and OAuth tokens alike (when you send a key or token).",
         "requestBody": {
           "required": true,
           "content": {
@@ -2803,13 +2803,13 @@
         "summary": "Render a barcode image",
         "tags": ["Barcodes"],
         "security": [],
-        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
+        "description": "A static barcode as SVG (default), PNG, JPG, WebP, AVIF, PDF or EPS, with no key.\n\n**No key or token needed**, and it doesn't use your daily quota: put the URL straight into an `<img>` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like `GET /qr`.\n\n**Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a `400` that says what's wrong. Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and `- . $ / + %` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and `- $ : / . +`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.\n\n**Sizes.** Raster images are `scale` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars `height` millimetres tall.\n\nValues that shouldn't sit in a URL can go in a `POST` body instead.",
         "parameters": [
           {
             "name": "format",
             "in": "query",
             "required": true,
-            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `itf14` (ITF-14), `gs1-128` (GS1-128), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)",
+            "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)",
             "schema": {
               "type": "string",
               "enum": [
@@ -2820,6 +2820,7 @@
                 "code128",
                 "code39",
                 "code93",
+                "codabar",
                 "itf14",
                 "gs1-128",
                 "datamatrix",
@@ -3043,13 +3044,14 @@
                       "code128",
                       "code39",
                       "code93",
+                      "codabar",
                       "itf14",
                       "gs1-128",
                       "datamatrix",
                       "pdf417",
                       "aztec"
                     ],
-                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `itf14` (ITF-14), `gs1-128` (GS1-128), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)"
+                    "description": "The symbology: `ean13` (EAN-13), `ean8` (EAN-8), `upca` (UPC-A), `upce` (UPC-E), `code128` (Code 128), `code39` (Code 39), `code93` (Code 93), `codabar` (Codabar), `itf14` (ITF-14), `gs1-128` (GS1-128), `datamatrix` (Data Matrix), `pdf417` (PDF417), `aztec` (Aztec)"
                   },
                   "data": {
                     "type": "string",
@@ -3288,6 +3290,7 @@
                 "code128",
                 "code39",
                 "code93",
+                "codabar",
                 "itf14",
                 "gs1-128",
                 "datamatrix",
@@ -3478,13 +3481,14 @@
                       "code128",
                       "code39",
                       "code93",
+                      "codabar",
                       "itf14",
                       "gs1-128",
                       "datamatrix",
                       "pdf417",
                       "aztec"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, code93, itf14, gs1-128, datamatrix, pdf417 or aztec"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, code93, codabar, itf14, gs1-128, datamatrix, pdf417 or aztec"
                   },
                   "value": {
                     "type": "string",
@@ -3818,13 +3822,14 @@
                       "code128",
                       "code39",
                       "code93",
+                      "codabar",
                       "itf14",
                       "gs1-128",
                       "datamatrix",
                       "pdf417",
                       "aztec"
                     ],
-                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, code93, itf14, gs1-128, datamatrix, pdf417 or aztec"
+                    "description": "The symbology, as GET /barcode takes it: ean13, ean8, upca, upce, code128, code39, code93, codabar, itf14, gs1-128, datamatrix, pdf417 or aztec"
                   },
                   "value": {
                     "type": "string",
@@ -5738,6 +5743,7 @@
               "code128",
               "code39",
               "code93",
+              "codabar",
               "itf14",
               "gs1-128",
               "datamatrix",

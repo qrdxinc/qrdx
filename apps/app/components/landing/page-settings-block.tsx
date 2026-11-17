@@ -3,7 +3,7 @@ import { z } from "zod";
 import { registerBlock } from "@/lib/landing/registry";
 import type { LandingPageContent } from "@/types/landing";
 import { imageSchema, lineText } from "./block-kit";
-import { MAX_CUSTOM_CSS_LENGTH, scopeCustomCss } from "./custom-css";
+import { MAX_CUSTOM_CSS_LENGTH } from "./custom-css-limit";
 import { PageSettingsEditor } from "./editor/page-settings-editor";
 
 /**
@@ -21,16 +21,12 @@ export const pageSettingsSchema = z.object({
   shareImage: imageSchema.optional(),
   /** Let search engines index the page (off by default) */
   indexable: z.boolean().default(false),
-  /** Business: validated + scoped by components/landing/custom-css */
-  customCss: z
-    .string()
-    .max(MAX_CUSTOM_CSS_LENGTH)
-    .default("")
-    .superRefine((css, ctx) => {
-      if (!css.trim()) return;
-      const result = scopeCustomCss(css);
-      if (!result.ok) ctx.addIssue({ code: "custom", message: result.error });
-    }),
+  /**
+   * Business custom CSS, stored as written. Checked when it's saved and
+   * scoped when it's applied, both by ee/white-label (access.ts); kept as it
+   * is where it isn't applied (another plan, or no licence key here).
+   */
+  customCss: z.string().max(MAX_CUSTOM_CSS_LENGTH).default(""),
 });
 
 export type PageSettings = z.output<typeof pageSettingsSchema>;

@@ -102,7 +102,9 @@ describe("siteZoneRewrites", () => {
   });
 
   it("proxies the blog and the assets, on the given hosts only", () => {
-    expect(siteZoneRewrites(`${ORIGIN}//`, { hosts: HOSTS })).toEqual([
+    expect(
+      siteZoneRewrites(`${ORIGIN}//`, { hosts: HOSTS, groups: ["blog"] }),
+    ).toEqual([
       // The group's own page first, exactly: one /blog/:path* rule sent
       // /blog as /blog/ on Vercel, and the zone's trailing-slash redirect
       // looped it (2026-11-15).
@@ -127,13 +129,35 @@ describe("siteZoneRewrites", () => {
   it("lists each group once, in list order, whatever the groups option says", () => {
     expect(
       siteZoneRewrites(ORIGIN, { hosts: HOSTS, groups: ["blog", "blog"] }),
+    ).toEqual(siteZoneRewrites(ORIGIN, { hosts: HOSTS, groups: ["blog"] }));
+    expect(
+      siteZoneRewrites(ORIGIN, {
+        hosts: HOSTS,
+        groups: ["placements", "compare", "blog", "industries"],
+      }),
     ).toEqual(siteZoneRewrites(ORIGIN, { hosts: HOSTS }));
+  });
+
+  it("gives every group its exact page, then everything below it", () => {
+    expect(
+      siteZoneRewrites(ORIGIN, { hosts: HOSTS }).map((rule) => rule.source),
+    ).toEqual([
+      "/blog",
+      "/blog/:path+",
+      "/compare",
+      "/compare/:path+",
+      "/qr-codes-for",
+      "/qr-codes-for/:path+",
+      "/qr-codes-on",
+      "/qr-codes-on/:path+",
+      "/site-static/:path*",
+    ]);
   });
 
   it("uses the origin alone, whatever else the value has", () => {
     for (const value of [`${ORIGIN}/base`, `${ORIGIN}/?x=1`, `${ORIGIN}#x`]) {
       expect(
-        siteZoneRewrites(value, { hosts: HOSTS }).map(
+        siteZoneRewrites(value, { hosts: HOSTS, groups: ["blog"] }).map(
           (rule) => rule.destination,
         ),
         value,
@@ -148,7 +172,10 @@ describe("siteZoneRewrites", () => {
   it("trims any number of trailing slashes, fast", () => {
     const run = "/".repeat(200_000);
     const start = performance.now();
-    const [rule] = siteZoneRewrites(`${ORIGIN}${run}`, { hosts: HOSTS });
+    const [rule] = siteZoneRewrites(`${ORIGIN}${run}`, {
+      hosts: HOSTS,
+      groups: ["blog"],
+    });
     expect(rule?.destination).toBe(`${ORIGIN}/blog`);
     expect(performance.now() - start).toBeLessThan(200);
   });
@@ -212,7 +239,7 @@ describe("SITE_ZONE_GROUPS", () => {
     expect(isSiteZoneGroups("blog")).toBe(true);
   });
 
-  it.each(["compare", "blog,", "Blog", "blog;compare", ","])(
+  it.each(["pricing", "blog,", "Blog", "blog;compare", ","])(
     "refuses %s",
     (value) => {
       expect(parseSiteZoneGroups(value)).toBeNull();
@@ -225,7 +252,7 @@ describe("SITE_ZONE_GROUPS", () => {
     const errors = vi.spyOn(console, "error").mockImplementation(() => {});
     try {
       vi.resetModules();
-      vi.stubEnv("SITE_ZONE_GROUPS", "blog,compare");
+      vi.stubEnv("SITE_ZONE_GROUPS", "blog,pricing");
       await expect(import("@/env")).rejects.toThrow("SITE_ZONE_GROUPS");
       vi.resetModules();
       vi.stubEnv("SITE_ZONE_GROUPS", "blog");
@@ -263,7 +290,7 @@ describe("site paths", () => {
     "/blo",
     "/customers",
     "/customers/flam",
-    "/compare/x",
+    "/pricing/x",
     "/docs",
     "/admin",
     "/dashboard/blog",
@@ -493,8 +520,8 @@ describe("next.config.ts", () => {
     "/blog.md",
     "/customers",
     "/customers/flam",
-    "/compare",
-    "/compare/x",
+    "/qr-code-generator",
+    "/qr-code-generator/wifi",
     "/changelogs",
     "/es/blog",
     "/admin/growth",
@@ -585,10 +612,13 @@ describe("next.config.ts", () => {
     return phases?.beforeFiles ?? [];
   };
 
-  it("adds exactly those three rules", async () => {
+  it("adds exactly two rules per group plus the assets' (every group on)", async () => {
     const rules = await beforeFiles(on);
-    expect(rules.filter((rule) => onSite(rule.destination))).toHaveLength(3);
-    expect(rules.length - (await beforeFiles(off)).length).toBe(3);
+    const expected = SITE_GROUP_NAMES.length * 2 + 1;
+    expect(rules.filter((rule) => onSite(rule.destination))).toHaveLength(
+      expected,
+    );
+    expect(rules.length - (await beforeFiles(off)).length).toBe(expected);
   });
 
   it("sends /blog as /blog, never /blog/ (a zone's slash redirect would loop)", async () => {

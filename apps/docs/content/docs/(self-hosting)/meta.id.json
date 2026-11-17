@@ -1,8 +1,0 @@
-{
-  "$schema": "../../../.source/json-schema/docs.meta.json",
-  "title": "Self-hosting",
-  "description": "Jalankan QRdx di server Anda sendiri",
-  "icon": "Server",
-  "root": true,
-  "pages": ["../self-hosting"]
-}

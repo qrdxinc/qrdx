@@ -198,7 +198,6 @@ async function events(response: Response): Promise<Record<string, any>[]> {
 
 const question = (content = "How do I connect the MCP server?") => ({
   messages: [{ role: "user", content }],
-  lang: "en",
   page: { path: "/docs/developers/mcp", title: "MCP server" },
 });
 
@@ -229,7 +228,6 @@ describe("POST /api/docs-chat", () => {
     );
     expect(outputs).toHaveLength(2);
     expect(outputs[0]?.output).toEqual({
-      lang: "en",
       results: [
         {
           title: "MCP server",
@@ -247,7 +245,6 @@ describe("POST /api/docs-chat", () => {
       title: "MCP server",
       path: "/docs/developers/mcp",
       url: "http://localhost:3000/docs/developers/mcp",
-      lang: "en",
     });
     const raw = JSON.stringify(all);
     expect(raw).not.toContain("SECRET-PAGE-TEXT-FOR-THE-MODEL");
@@ -283,9 +280,9 @@ describe("POST /api/docs-chat", () => {
     const thirdPrompt = JSON.stringify(gateway.calls[2]?.body.prompt);
     expect(thirdPrompt).toContain("SECRET-PAGE-TEXT-FOR-THE-MODEL");
 
-    // The docs site: one search in the reader's language, one page.
+    // The docs site: one search (the docs have one language), one page.
     expect(docsCalls).toEqual([
-      "/api/search?query=connect+MCP+server&locale=en",
+      "/api/search?query=connect+MCP+server",
       "/docs/developers/mcp.md",
     ]);
     // Three counters: the visitor's minute and day, and everyone's day.
@@ -296,20 +293,26 @@ describe("POST /api/docs-chat", () => {
     ]);
   });
 
-  it("searches in the page's language and falls back to English pages", async () => {
+  it("reads the English docs for a question in another language, and answers in it", async () => {
     gatewayReplies = [
       () => toolCall("c1", "search_docs", { query: "mcp" }),
       () => textReply("Respuesta. Sources: ninguna"),
     ];
+    // `lang` is what a page loaded before the docs were English only still
+    // sends: accepted and ignored.
     const response = await post({
       messages: [{ role: "user", content: "¿Cómo conecto el servidor MCP?" }],
       lang: "es",
     });
     expect(response.status).toBe(200);
     await response.text();
-    expect(docsCalls[0]).toBe("/api/search?query=mcp&locale=es");
+    expect(docsCalls).toEqual(["/api/search?query=mcp"]);
     const system = gateway.calls[0]?.body.prompt[0].content as string;
-    expect(system).toContain("Answer in Spanish");
+    expect(system).toContain(
+      "Answer in the language of the reader's latest question",
+    );
+    expect(system).toContain("search in English");
+    expect(system).not.toContain("Spanish");
     expect(system).toContain("The reader is on the docs home.");
   });
 

@@ -1,5 +1,5 @@
 // Workspace SSO switched off: a dev server WITHOUT QRDX_EE_LICENSE must not
-// serve or offer any of it (packages/auth/ee-license.ts). Checks, over HTTP
+// serve or offer any of it (packages/auth/ee/license.ts). Checks, over HTTP
 // and in headless Chrome (CDP, ./cdp.mjs):
 //   - the SSO sign-in routes (/api/auth/sign-in/sso, /api/auth/sso/*) are
 //     404 with no answer from the plugin;

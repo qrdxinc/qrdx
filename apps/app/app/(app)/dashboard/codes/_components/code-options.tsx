@@ -49,6 +49,7 @@ import {
   RoutingPanel,
 } from "@/app/(app)/dashboard/codes/[id]/_components/routing-panel";
 import { UtmPanel } from "@/app/(app)/dashboard/codes/[id]/_components/utm-panel";
+import { useAvailability } from "@/components/availability-provider";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { PLAN_NAMES } from "@/lib/pricing";
 
@@ -64,6 +65,16 @@ export const OPTION_ICONS: Record<CodeOptionId, Icon> = {
 };
 
 type OptionStatus = Partial<Record<CodeOptionId, boolean>>;
+
+/**
+ * The options a code of `kind` offers on this deployment (codeOptionsFor):
+ * conversion tracking only where the server has the QRdx licence key
+ * (ee/conversions).
+ */
+export function useOfferedCodeOptions(kind: CodeKind): CodeOptionId[] {
+  const { has } = useAvailability();
+  return codeOptionsFor(kind, { conversions: has("conversions") });
+}
 
 function OptionBody({
   id,
@@ -144,9 +155,10 @@ export function CodeOptionGrid({
   disabled?: boolean;
   className?: string;
 }) {
+  const offered = useOfferedCodeOptions(kind);
   return (
     <ul className={cn("grid gap-2 sm:grid-cols-2", className)}>
-      {codeOptionsFor(kind).map((id) => {
+      {offered.map((id) => {
         const body = (
           <OptionBody id={id} on={Boolean(status[id])} plans={plans} />
         );
@@ -391,10 +403,10 @@ export function CodeOptionsField({
   disabled?: boolean;
 }) {
   const t = useTranslations("app.dashboard.codes.codeOptions");
+  const offered = useOfferedCodeOptions(kind);
   // Only options on the plan create the code; the others explain the plan.
   const createsCode =
-    creating &&
-    codeOptionsFor(kind).some((id) => options.plans?.options[id].included);
+    creating && offered.some((id) => options.plans?.options[id].included);
   return (
     <div className="space-y-2">
       <div className="space-y-0.5">

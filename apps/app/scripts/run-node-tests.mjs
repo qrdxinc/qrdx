@@ -70,8 +70,17 @@ for (const [name, list] of Object.entries(groups)) {
   if (list.length === 0) continue;
   // Brackets in paths like app/api/vcard/[slug] are glob syntax to node --test;
   // backslashes are its escape character, so they're escaped too.
+  // The server-side suites run with the ee/ features on, as on qrdx.dev: the
+  // same setup as vitest.config.ts signs a licence key with a throwaway key
+  // pair it trusts (tests/support/ee-license-setup.ts).
   const args = [
-    ...(name === "reactServer" ? ["--conditions=react-server"] : []),
+    ...(name === "reactServer"
+      ? [
+          "--conditions=react-server",
+          "--import",
+          "./tests/support/ee-license-setup.ts",
+        ]
+      : []),
     "--test",
     "--test-reporter=dot",
     ...list.map((file) => file.replace(/[\\[\]]/g, "\\$&")),

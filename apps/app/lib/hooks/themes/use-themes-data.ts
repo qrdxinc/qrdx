@@ -3,7 +3,7 @@
 import { authClient } from "@repo/auth/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTheme, getThemes } from "@/actions/qr-themes";
-import type { Theme } from "@/types/theme";
+import type { Theme } from "@/types/theme-row";
 
 export type ThemeWithPublished = Awaited<ReturnType<typeof getThemes>>[number];
 

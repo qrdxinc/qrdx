@@ -47,6 +47,7 @@ export const BCID: Record<BarcodeFormatId, string> = {
   code128: "code128",
   code39: "code39",
   code93: "code93",
+  codabar: "rationalizedCodabar",
   itf14: "itf14",
   "gs1-128": "gs1-128",
   datamatrix: "datamatrix",
@@ -66,6 +67,7 @@ export const MODULE_UNITS: Record<BarcodeFormatId, number> = {
   code128: 1,
   code39: 1,
   code93: 1,
+  codabar: 1,
   itf14: 1,
   "gs1-128": 1,
   datamatrix: 2,
@@ -126,6 +128,7 @@ export function drawOptions(
       id === "code128" ||
       id === "code39" ||
       id === "code93" ||
+      id === "codabar" ||
       id === "gs1-128"
     ) {
       options.textxalign = "center";

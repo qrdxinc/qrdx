@@ -1,23 +1,20 @@
 import { SearchNormal1 } from "iconsax-reactjs";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { HelpSearchTrigger } from "@/components/docs/help-search-trigger";
 import { Card, Cards } from "@/components/mdx/card";
 import { HairlineFigure } from "@/components/mockups/hairline";
 import { sidebarSections } from "@/lib/docs-sidebar";
-import type { Locale } from "@/lib/i18n/config";
 
 /**
  * Docs 404, shown inside the docs layout so the header, sidebar and search
- * stay: search first, then the five sections as cards, in the docs'
- * language with links to that language's pages.
+ * stay: search first, then the five sections as cards.
  */
 export async function DocsNotFound() {
-  const locale = (await getLocale()) as Locale;
   const [t, ts] = await Promise.all([
-    getTranslations({ locale, namespace: "docs.notFound" }),
-    getTranslations({ locale, namespace: "docs.shell.notFound" }),
+    getTranslations("docs.notFound"),
+    getTranslations("docs.shell.notFound"),
   ]);
-  const sections = sidebarSections(locale);
+  const sections = sidebarSections();
   return (
     // [grid-area:main] places it in the docs layout grid, like DocsPage does.
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-8 px-4 py-12 [grid-area:main] md:px-6 md:py-16">

@@ -27,6 +27,7 @@ describe("parseBarcodeFormat", () => {
     expect(parseBarcodeFormat("ean_13")).toBe("ean13");
     expect(parseBarcodeFormat("UCC-128")).toBe("gs1-128");
     expect(parseBarcodeFormat("azteccode")).toBe("aztec");
+    expect(parseBarcodeFormat("Codabar")).toBe("codabar");
     expect(parseBarcodeFormat("qr")).toBeNull();
   });
 });

@@ -38,8 +38,6 @@ vi.stubGlobal(
     docsCalls.push(`${url.pathname}${url.search}`);
     if (docsDown) throw new DOMException("timeout", "TimeoutError");
     if (url.pathname === "/api/search") {
-      const locale = url.searchParams.get("locale");
-      if (locale === "es") return Response.json([]);
       return Response.json([
         { id: "1", url: "/docs/webhooks", type: "page", content: "Webhooks" },
         {
@@ -145,21 +143,7 @@ describe("the MCP docs tools", () => {
         },
       ],
     });
-    expect(docsCalls).toEqual(["/api/search?query=webhooks&locale=en"]);
-  });
-
-  it("search_docs searches the asked language and falls back to English", async () => {
-    const { result } = await call("search_docs", {
-      query: "webhooks",
-      language: "es",
-    });
-    const body = JSON.parse(result.content[0].text);
-    expect(body.language).toBe("en");
-    expect(body.total).toBe(1);
-    expect(docsCalls).toEqual([
-      "/api/search?query=webhooks&locale=es",
-      "/api/search?query=webhooks&locale=en",
-    ]);
+    expect(docsCalls).toEqual(["/api/search?query=webhooks"]);
   });
 
   it("read_docs_page returns the page as Markdown with its title and URL", async () => {
@@ -181,6 +165,33 @@ describe("the MCP docs tools", () => {
     });
     expect(again.result.isError).toBeFalsy();
     expect(docsCalls).toEqual(["/docs/webhooks.md"]);
+  });
+
+  it("still takes `language`, and ignores it: the docs are English only", async () => {
+    const { result } = await call("search_docs", {
+      query: "webhook events",
+      language: "es",
+    });
+    expect(result.isError).toBeFalsy();
+    const body = JSON.parse(result.content[0].text);
+    expect(body.language).toBe("en");
+    expect(body.total).toBe(1);
+    expect(body.results[0].url).toBe("http://localhost:3000/docs/webhooks");
+    expect(docsCalls).toEqual(["/api/search?query=webhook+events"]);
+
+    docsCalls.length = 0;
+    const read = await call("read_docs_page", {
+      path: "/es/docs/webhooks",
+      language: "es",
+    });
+    expect(read.result.isError).toBeFalsy();
+    expect(read.result.structuredContent).toMatchObject({
+      url: "http://localhost:3000/docs/webhooks",
+      path: "/docs/webhooks",
+      language: "en",
+    });
+    // The English page, already read above: nothing asked for /es/docs/….
+    expect(docsCalls).toEqual([]);
   });
 
   it("read_docs_page refuses paths outside the docs, hidden pages and missing pages", async () => {

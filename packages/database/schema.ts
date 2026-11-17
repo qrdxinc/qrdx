@@ -1528,7 +1528,7 @@ export const brandKit = pgTable(
     // NULL: an older QR design kit (merged into saved themes, unused);
     // "client": a client's name, logo and accent (colors.accent) for shared
     // stats pages; "portal": the workspace's client-portal branding, one per
-    // workspace (apps/app/lib/client-brands.ts).
+    // workspace (apps/app/ee/client-portal/brands.ts).
     purpose: text("purpose", { enum: BRAND_KIT_PURPOSES }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at")
@@ -1975,7 +1975,7 @@ export const codePublicStats = pgTable(
   ]
 );
 
-// ─── Client portal (apps/app/lib/portal, agency tools) ─────────────────────
+// ─── Client portal (apps/app/ee/client-portal, agency tools) ───────────────
 // People outside a workspace (an agency's clients) invited to a read-only
 // view of some of its folders at /portal/<workspace-slug>. They are never
 // workspace members: nothing in the dashboard or the API knows them. A row

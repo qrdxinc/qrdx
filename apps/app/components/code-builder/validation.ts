@@ -3,10 +3,10 @@
 // authority; these mirror its rules and messages so the form can say the
 // same thing before you press Create.
 
-import type { QrCodeErrorCode } from "@/actions/qr-codes";
 import { baseUrl } from "@/lib/metadata";
 import { withoutImageFills } from "@/lib/paint/image-fills";
 import { SHORT_LINK_BASE } from "@/lib/short-links";
+import type { QrCodeErrorCode } from "@/types/action-results";
 import type { QRStyle } from "@/types/theme";
 import type { BuilderFields } from "./types";
 

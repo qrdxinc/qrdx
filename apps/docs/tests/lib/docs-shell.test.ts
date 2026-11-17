@@ -120,8 +120,8 @@ describe("GitHub links under a page", () => {
     expect(getGithubEditUrl("help/index.mdx")).toBe(
       "https://github.com/qrdxinc/qrdx/edit/main/apps/docs/content/docs/help/index.mdx",
     );
-    expect(getGithubEditUrl("developers/mcp.es.mdx")).toBe(
-      "https://github.com/qrdxinc/qrdx/edit/main/apps/docs/content/docs/developers/mcp.es.mdx",
+    expect(getGithubEditUrl("developers/mcp.mdx")).toBe(
+      "https://github.com/qrdxinc/qrdx/edit/main/apps/docs/content/docs/developers/mcp.mdx",
     );
     expect(getGithubEditUrl("(guides)/../teams.mdx")).toBe(
       "https://github.com/qrdxinc/qrdx/edit/main/apps/docs/content/docs/(guides)/../teams.mdx",

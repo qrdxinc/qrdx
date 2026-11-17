@@ -16,10 +16,9 @@ import {
   ExportSquare,
   Hierarchy3,
 } from "iconsax-reactjs";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LocaleLink } from "@/components/i18n/locale-link";
-import { localizeHref } from "@/lib/i18n/paths";
+import { ZoneLink } from "@/components/zone-link";
 import { soundEvent } from "@/lib/sound/emit";
 
 const cache = new Map<string, string>();
@@ -71,7 +70,6 @@ export function PageActions({
 }) {
   const t = useTranslations("docs.shell.actions");
   const tc = useTranslations("docs.client.actions");
-  const locale = useLocale();
   const [isLoading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -158,10 +156,10 @@ export function PageActions({
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className={ITEM}>
-            <LocaleLink href={localizeHref("/docs/developers/mcp", locale)}>
+            <ZoneLink href="/docs/developers/mcp">
               <Hierarchy3 />
               {t("mcp")}
-            </LocaleLink>
+            </ZoneLink>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

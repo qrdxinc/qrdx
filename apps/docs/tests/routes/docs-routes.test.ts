@@ -25,7 +25,6 @@ writeFileSync(
     files: [
       page("index.mdx", "Introduction"),
       page("guides/start.mdx", "Start"),
-      page("guides/start.es.mdx", "Empezar"),
       page("guides/domains.mdx", "Custom domains"),
       {
         type: "meta",
@@ -47,7 +46,6 @@ writeFileSync(
   JSON.stringify({
     "index.mdx": "Welcome.\n",
     "guides/start.mdx": "Start here.\n",
-    "guides/start.es.mdx": "Empieza aquí.\n",
     "guides/domains.mdx": "Domains.\n",
   }),
 );
@@ -68,7 +66,7 @@ afterAll(() => rmSync(root, { recursive: true, force: true }));
 const params = <T>(value: T) => ({ params: Promise.resolve(value) });
 
 describe("Markdown copies", () => {
-  it("serves an English page (app/llms.mdx)", async () => {
+  it("serves a page (app/llms.mdx)", async () => {
     const { GET } = await import("@/app/llms.mdx/[[...slug]]/route");
     const response = await GET(
       new Request("http://x/llms.mdx/guides/start"),
@@ -84,23 +82,6 @@ describe("Markdown copies", () => {
       `Source: https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/main/apps/docs/content/docs/guides/start.mdx`,
     );
     expect(text).toContain("Start here.");
-  });
-
-  it("serves a translation, and the English text where there's none (app/docs-md)", async () => {
-    const { GET } = await import("@/app/docs-md/[lang]/[[...slug]]/route");
-    const es = await GET(
-      new Request("http://x"),
-      params({ lang: "es", slug: ["guides", "start"] }),
-    );
-    expect(es.headers.get("content-language")).toBe("es");
-    expect(await es.text()).toContain("Empieza aquí.");
-
-    const fallback = await GET(
-      new Request("http://x"),
-      params({ lang: "es", slug: ["guides", "domains.md"] }),
-    );
-    expect(fallback.headers.get("content-language")).toBe("en");
-    expect(await fallback.text()).toContain("Domains.");
   });
 
   it("answers 404 for pages that don't exist", async () => {
@@ -138,8 +119,8 @@ describe("the docs manifest", () => {
       changeFrequency: "weekly",
       priority: 0.8,
     });
-    // Machine translations stay out of the sitemap and hreflang.
-    expect(manifest.sitemap.some((entry) => entry.alternates)).toBe(false);
+    // English only: one entry a page, no hreflang alternates.
+    expect(manifest.sitemap.some((entry) => "alternates" in entry)).toBe(false);
     expect(manifest.sections).toEqual([
       {
         title: "",

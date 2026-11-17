@@ -93,7 +93,7 @@ const saveInput = createBarcodeSchema.omit({ format: true }).extend({
 const FREE_SAVED_BARCODES = getPlanLimits("free").savedBarcodes;
 
 export const BARCODE_MCP_INSTRUCTIONS =
-  " For barcodes (EAN-13, UPC-A, UPC-E, EAN-8, Code 128, Code 39, Code 93, ITF-14, GS1-128, Data Matrix, PDF417, Aztec), call generate_barcode: it checks the value (check digits, lengths, characters) and returns a PNG plus public image URLs; with an API key, save_barcode keeps one in the workspace's Barcodes.";
+  " For barcodes (EAN-13, UPC-A, UPC-E, EAN-8, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, Data Matrix, PDF417, Aztec), call generate_barcode: it checks the value (check digits, lengths, characters) and returns a PNG plus public image URLs; with an API key, save_barcode keeps one in the workspace's Barcodes.";
 
 export function registerBarcodeTools(server: McpServer) {
   server.registerTool(
@@ -101,7 +101,7 @@ export function registerBarcodeTools(server: McpServer) {
     {
       title: "Generate a barcode",
       description:
-        "Draw a static barcode: EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (check digits added or verified), Code 128, Code 39, Code 93 (its check characters added), or the 2D Data Matrix, PDF417 and Aztec. Checks the value against the format's rules (characters, length, check digit) and says what it added. Options: bar and background colors, bar height, quiet zone, scale, the text under the bars and rotation. Returns a PNG and public image URLs (SVG, PNG, JPG, WebP, AVIF, PDF and EPS) for embedding or printing. No account needed.",
+        "Draw a static barcode: EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (check digits added or verified), Code 128, Code 39, Code 93 (its check characters added), Codabar, or the 2D Data Matrix, PDF417 and Aztec. Checks the value against the format's rules (characters, length, check digit) and says what it added. Options: bar and background colors, bar height, quiet zone, scale, the text under the bars and rotation. Returns a PNG and public image URLs (SVG, PNG, JPG, WebP, AVIF, PDF and EPS) for embedding or printing. No account needed.",
       inputSchema: generateInput,
       annotations: {
         readOnlyHint: true,
