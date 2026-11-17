@@ -46,9 +46,10 @@ interface PricingSectionProps {
   currency: PricingCurrency;
   /**
    * The signed-in user's own plan as the server read it; null when signed
-   * out. Left out (a page that can't read the session on the server), the
-   * cards read it in the browser: the session, then GET /api/subscription.
-   * Given, it shows at once and the browser's answer replaces it.
+   * out. Given, the cards use it and ask the browser for nothing. Left out
+   * (a page that can't read the session on the server, like the marketing
+   * site's), they read it in the browser: the session, then
+   * GET /api/subscription.
    */
   currentPlan?: Plan | null;
   /** The intro under the title (buildPricingIntro: only what's offered here). */
@@ -235,14 +236,18 @@ export function PricingSection({
   const [pendingPlan, setPendingPlan] = useState<PaidPlan | null>(null);
   const [isPending, startTransition] = useTransition();
   const { data: session } = authClient.useSession();
-  // The visitor's plan from GET /api/subscription (signed in only; the
-  // header's account menu asks for the same query, so it's one request).
-  const { subscriptionStatus, isLoading: planLoading } = useSubscription();
-  const currentPlan: Plan | null =
-    subscriptionStatus?.plan ?? serverPlan ?? null;
-  // Signed in, with no plan from the server, until the browser has it: the
-  // paid buttons wait rather than offer an upgrade to someone who has one.
-  const planPending = serverPlan === undefined && planLoading;
+  // Without the server's plan: the visitor's plan from GET /api/subscription
+  // (signed in only). With it, nothing is fetched.
+  const readPlan = serverPlan === undefined;
+  const { subscriptionStatus, isLoading: planLoading } = useSubscription({
+    enabled: readPlan,
+  });
+  const currentPlan: Plan | null = readPlan
+    ? (subscriptionStatus?.plan ?? null)
+    : serverPlan;
+  // Signed in, until the browser has the plan: the paid buttons wait rather
+  // than offer an upgrade to someone who has one.
+  const planPending = readPlan && planLoading;
   const { openAuthDialog } = useAuthStore();
   const isSignedIn = Boolean(session?.user) || currentPlan !== null;
   // Agency tools: Business yearly can be paid by invoice where QRdx offers it.

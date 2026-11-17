@@ -17,16 +17,21 @@ export const SUBSCRIPTION_STATUS_QUERY_KEY = "subscriptionStatus";
 
 /**
  * The signed-in visitor's subscription (GET /api/subscription): the AI
- * request allowance and their plan. Nothing is fetched while signed out.
+ * request allowance and their plan. Nothing is fetched while signed out,
+ * or with `enabled: false` (a caller that already has what it needs).
  */
-export function useSubscription() {
+export function useSubscription({
+  enabled = true,
+}: {
+  enabled?: boolean;
+} = {}) {
   const { data: session } = authClient.useSession();
   const isLoggedIn = !!session?.user.id;
 
   const { data: subscriptionStatus, ...query } = useQuery({
     queryKey: [SUBSCRIPTION_STATUS_QUERY_KEY],
     queryFn: fetchSubscriptionStatus,
-    enabled: isLoggedIn,
+    enabled: enabled && isLoggedIn,
     staleTime: 1000 * 60 * 5, // 5 minutes
     refetchOnWindowFocus: false,
   });
