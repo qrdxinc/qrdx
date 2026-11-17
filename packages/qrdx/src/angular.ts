@@ -42,7 +42,7 @@ export interface QRCodeExportOptions {
 }
 
 export interface QRCodeDownloadOptions extends QRCodeExportOptions {
-  /** "png" (default), "jpg", "webp", "svg", "pdf" (needs jspdf) or "eps" */
+  /** "png" (default), "jpg", "webp", "bmp", "svg", "pdf" (needs jspdf) or "eps" */
   format?: DownloadFormat;
   /** File name; defaults to one with the format and pixel size */
   filename?: string;
@@ -171,7 +171,7 @@ export class QRCode implements QRCodeInputs {
     return this.element;
   }
 
-  /** The code as a data URL: "png" (default), "jpg", "webp", "svg", "pdf" or "eps" */
+  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "svg", "pdf" or "eps" */
   toDataURL(
     format: DownloadFormat = "png",
     options: QRCodeExportOptions = {}
