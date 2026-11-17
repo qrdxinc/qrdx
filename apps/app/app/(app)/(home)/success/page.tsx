@@ -137,3 +137,7 @@ export default function SuccessPage() {
     </main>
   );
 }
+
+// TEMPORARY, to be reverted: proves CI's build job catches a value Next
+// rejects that tsc, the tests and the lint all accept.
+export const dynamic = "sometimes";
