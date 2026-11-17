@@ -231,6 +231,8 @@ let nextConfig: NextConfig = {
   // after compiling (2026-11-11). The required "Typecheck, test, lint" CI job
   // type-checks every pull request and release before anything reaches main,
   // so Vercel would only repeat it. Docker and local builds still check.
+  // CI's "Build the main app" job sets VERCEL=1 to build the way Vercel does
+  // (this and the experimental settings below).
   typescript: {
     tsconfigPath: "tsconfig.build.json",
     ignoreBuildErrors: env.VERCEL === "1",

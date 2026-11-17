@@ -128,6 +128,18 @@ bun run lint:ci                     # ultracite check: Biome's lint and format r
 
 A pull request into `staging` tests only the packages it changes and the packages that depend on them (`turbo test --affected`). A change to the docs' pages (`apps/docs/content`) runs the docs site's tests and the main app's, which check the app against them, and skips the engine's; a change to `packages/qrdx` runs the engine, the CLI and the main app. Pushes to `staging` and `main`, release pull requests into `main` and manual runs test everything, unless an earlier full run already passed on the identical code (see above). Turbo's cache (`.turbo/cache`, kept between runs with `actions/cache`) replays any task whose inputs haven't changed, and the job's summary lists what was replayed and what ran.
 
+A second job, "Build the main app", runs `next build` in `apps/app` at the same time, so a change that only breaks the build (an export Next rejects, a client component importing server code, a page that can't be prerendered) fails CI instead of the production deploy. A pull request into `staging` gets it when it changes the app or a package the app uses; everything else always does, unless an earlier full run of the same code passed. It builds the way Vercel does (`VERCEL=1`: no type check inside the build), offline: the pages that read the database while they render are rendered at request time instead (`QRDX_BUILD_WITHOUT_DATABASE=1`, as in the Dockerfile), and `scripts/block-network.mjs` blocks every connection off the machine. To run it yourself, build the engine (`bun run --filter qrdx build:inplace`), then, with CI's placeholders:
+
+```bash
+cd apps/app
+DATABASE_URL=postgresql://ci:ci@localhost:5432/ci NEXT_PUBLIC_APP_URL=http://localhost:3000 \
+BETTER_AUTH_SECRET=ci-placeholder-secret-not-used-for-anything-real \
+VERCEL=1 QRDX_BUILD_WITHOUT_DATABASE=1 NODE_OPTIONS="--import=$PWD/../../scripts/block-network.mjs" \
+bun x next build
+```
+
+Variables set in the shell win over `apps/app/.env.local`, but `next build` still reads the rest of that file, so move it aside to build with exactly CI's settings. It can run while `next dev` does: dev keeps its files in `.next/dev`.
+
 The official frames (`packages/qrdx/src/frames/official`, hundreds of them) all get their spec, color, layout and generator checks and one crisp decode on every run, but the slow scan checks (the phone-camera model at three distances, 160 and 320 px, the scan score, zbar, PDF and EPS) only go to a sample: the hand-made frames, one frame per layout, and a set that rotates daily so every frame comes round (`packages/qrdx/scripts/official-frames/sample.mjs`). To scan every frame, as the weekly and release `Frame scan` workflow does, set `QRDX_FULL_FRAME_SCAN=1`:
 
 ```bash

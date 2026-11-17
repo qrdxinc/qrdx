@@ -7,7 +7,8 @@ name: CI
 # code. A release pull request (staging -> main) and the push to main it
 # creates then reuse that result instead of testing the same tree again
 # (scripts/ci-reuse-check.sh); if the staging run is still going they wait
-# for it, and if nothing matches they run the full suite as before.
+# for it, and if nothing matches they run the full suite as before. A second
+# job builds the main app alongside, on the same terms (see "build" below).
 on:
   pull_request:
   push:
@@ -26,8 +27,9 @@ permissions:
   actions: read
 
 env:
-  # Placeholders so env validation passes during type generation and tests.
-  # Nothing in this workflow connects to a database or any external service.
+  # Placeholders so env validation passes during type generation, tests and
+  # the app build. Nothing in this workflow connects to a database or any
+  # external service.
   DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
   NEXT_PUBLIC_APP_URL: http://localhost:3000
   BETTER_AUTH_SECRET: ci-placeholder-secret-not-used-for-anything-real
@@ -189,3 +191,152 @@ jobs:
       - name: Lint (Ultracite)
         if: steps.reuse.outputs.hit != 'true'
         run: bun run lint:ci --reporter=github
+
+  # `next build` of the main app (apps/app). The job above never builds it,
+  # so a change could pass the typecheck, tests and lint and still fail the
+  # build, which only the production deploy on Vercel would then find (and
+  # keep the old version live): an export Next rejects, a client component
+  # that imports server code, a page that can't be prerendered, an import
+  # that only breaks when bundled. A job of its own, in parallel with the one
+  # above, so the build adds no time to a run that's waiting on the tests.
+  #
+  # The whole `next build`, not `--experimental-build-mode compile`: compile
+  # mode stops before Next collects page data and prerenders, so it lets a
+  # page that can't be prerendered through. The build is offline and uses
+  # placeholder settings (the env above):
+  # - VERCEL=1 builds with the settings next.config.ts gives Vercel's build:
+  #   no type check inside the build (tsc runs in the job above), no
+  #   Turbopack build cache, no source maps. `next build` doesn't lint.
+  # - QRDX_BUILD_WITHOUT_DATABASE=1, as in the Dockerfile: the pages that
+  #   read the database while they render are rendered at request time
+  #   instead (lib/build-without-database.ts). Vercel's build has the
+  #   database and prerenders them.
+  # - scripts/block-network.mjs fails every connection the build's Node
+  #   processes try to make off the runner, so nothing reaches a database or
+  #   an outside service. The pages that read GitHub's or npm's API while
+  #   prerendering show their fallbacks; Vercel's build fetches the values.
+  #   Turbopack (native code) still downloads the Google Fonts it compiles
+  #   in, as on Vercel.
+  #
+  # Same scope as the tests: a pull request into staging builds the app when
+  # it changes the app or a package the app uses (turbo --affected), or this
+  # workflow or the network block; release pull requests, pushes and manual
+  # runs always build, unless an earlier full run of the same code passed
+  # (scripts/ci-reuse-check.sh, as above; a run passes only when both jobs
+  # do). .next/cache isn't kept between runs: with Vercel's settings there's
+  # no Turbopack cache in it to reuse.
+  build:
+    name: Build the main app
+    runs-on: ubuntu-latest
+    # Up to 20 minutes waiting for a staging run (as above), then the build.
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Reuse an earlier run of the same code
+        id: reuse
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CI_REUSE_WAIT_SECONDS: ${{ ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'pull_request' && github.base_ref == 'main')) && '1200' || '0' }}
+        run: bash scripts/ci-reuse-check.sh
+
+      - name: Setup Bun
+        if: steps.reuse.outputs.hit != 'true'
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - name: Setup Node
+        if: steps.reuse.outputs.hit != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The job above saves this cache; this one only reads it.
+      - name: Restore Bun cache
+        if: steps.reuse.outputs.hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock', 'apps/native/bun.lock') }}
+          restore-keys: |
+            bun-${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.reuse.outputs.hit != 'true'
+        run: bun install --frozen-lockfile
+
+      - name: Decide whether to build
+        id: scope
+        if: steps.reuse.outputs.hit != 'true'
+        env:
+          TURBO_SCM_BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+          AFFECTED: ${{ github.event_name == 'pull_request' && github.base_ref != 'main' }}
+        run: |
+          if [ "$AFFECTED" != "true" ]; then
+            reason="Building the main app."
+            build=true
+          else
+            # Either command failing fails the step (bash -e), never skips the build.
+            affected="$(bun x turbo ls --affected --output=json)"
+            app_affected="$(jq '.packages.items | any(.name == "app")' <<<"$affected")"
+            if [ "$app_affected" = "true" ]; then
+              reason="This pull request changes the main app or a package it uses, so the app is built."
+              build=true
+            elif ! git diff --quiet "$TURBO_SCM_BASE"...HEAD -- .github/workflows/ci.yml scripts/block-network.mjs; then
+              reason="This pull request changes how the app is built, so the app is built."
+              build=true
+            else
+              reason="This pull request changes nothing the main app uses, so there's nothing to build."
+              build=false
+            fi
+          fi
+          echo "$reason" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "build=$build" >>"$GITHUB_OUTPUT"
+
+      - name: Build qrdx
+        if: steps.scope.outputs.build == 'true'
+        run: bun run --filter qrdx build:inplace
+
+      - name: Build the main app
+        if: steps.scope.outputs.build == 'true'
+        working-directory: apps/app
+        env:
+          VERCEL: "1"
+          QRDX_BUILD_WITHOUT_DATABASE: "1"
+          NODE_OPTIONS: --import=${{ github.workspace }}/scripts/block-network.mjs
+          BLOCK_NETWORK_LOG: ${{ runner.temp }}/network.log
+        run: |
+          # Memory in use on the runner, every 2 seconds, for the summary.
+          (while sleep 2; do free -m | awk '/^Mem:/ { print $3 }'; done) >"$RUNNER_TEMP/memory.log" &
+          sampler=$!
+          trap 'kill "$sampler" 2>/dev/null || true' EXIT
+          bun x next build
+
+      - name: Build report
+        if: always() && steps.scope.outputs.build == 'true'
+        env:
+          BLOCK_NETWORK_LOG: ${{ runner.temp }}/network.log
+        run: |
+          {
+            echo "### Main app build"
+            if [ -s "$RUNNER_TEMP/memory.log" ]; then
+              peak="$(sort -n "$RUNNER_TEMP/memory.log" | tail -1)"
+              total="$(free -m | awk '/^Mem:/ { print $2 }')"
+              echo "Peak memory in use on the runner during the build: ${peak} MB of ${total} MB."
+            fi
+            if grep -q ' blocked ' "$BLOCK_NETWORK_LOG" 2>/dev/null; then
+              echo
+              echo "Connections the build tried to make off the runner, all blocked (scripts/block-network.mjs):"
+              echo '```'
+              awk '$2 == "blocked" { print $3 }' "$BLOCK_NETWORK_LOG" | sort | uniq -c
+              echo '```'
+            fi
+          } >>"$GITHUB_STEP_SUMMARY"
