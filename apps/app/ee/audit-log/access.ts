@@ -12,10 +12,11 @@ import type { ActiveScope } from "@/lib/scope";
 
 // Who gets the workspace audit log. A workspace has it under the same rule
 // as single sign-on: an owner or billing member is on a plan with `auditLog`
-// (Business; lib/plans.ts getOwnerPlanForOrganization). On a self-hosted
-// server it also needs the QRdx licence key (packages/availability/rules.ts
-// `auditLog`). Reading and exporting it is for owners and admins
-// (lib/permissions.ts `auditLog.view`).
+// (Business; lib/plans.ts getOwnerPlanForOrganization). Any server also needs
+// the QRdx licence key (packages/availability/rules.ts `auditLog`); a
+// self-hosted one with the key that sells no plans gives it to every plan
+// (lib/plans.ts getPlanLimits). Reading and exporting it is for owners and
+// admins (lib/permissions.ts `auditLog.view`).
 
 /** The plan includes the audit log. */
 export const planHasAuditLog = (plan: Plan) => getPlanLimits(plan).auditLog;

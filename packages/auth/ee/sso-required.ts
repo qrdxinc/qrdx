@@ -5,7 +5,7 @@ import { APIError, createAuthMiddleware, isAPIError } from "better-auth/api";
 import { deleteSessionCookie } from "better-auth/cookies";
 import { cookieFrom } from "../confirm-sign-in";
 import { isPasskeyCheckWithoutSignIn } from "../passkey-check";
-import { workspacePlanTier } from "../plan";
+import { workspacePlanLimits } from "../plan";
 import { CHALLENGE_COMPLETION_PATHS } from "../sign-in-challenge-rules";
 import { TWO_FACTOR_COOKIE } from "../sign-in-challenge-session";
 import { SSO_CALLBACK_PATHS } from "./sso";
@@ -140,8 +140,9 @@ async function verifiedConnections(
   }));
 }
 
+// The workspace's plan includes SSO (Business; ../plan.ts).
 const onBusiness = async (organizationId: string) =>
-  (await workspacePlanTier(organizationId)) === "business";
+  (await workspacePlanLimits(organizationId)).sso;
 
 async function isOwner(organizationId: string, userId: string) {
   const row = await db.query.member.findFirst({

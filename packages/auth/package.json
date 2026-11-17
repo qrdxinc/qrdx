@@ -22,6 +22,7 @@
     "./passkey-check": "./passkey-check.ts",
     "./passkey-client": "./passkey-client.ts",
     "./passkey-rp": "./passkey-rp.ts",
+    "./plan-limits": "./plan-limits.ts",
     "./referral": "./referral.ts",
     "./referral-keys": "./referral-keys.ts",
     "./session-lifetime": "./session-lifetime.ts",

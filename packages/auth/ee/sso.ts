@@ -6,7 +6,7 @@ import { and, database as db, eq } from "@repo/database";
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware, isAPIError } from "better-auth/api";
 import { eeLicensed } from "../ee-license";
-import { workspacePlanTier } from "../plan";
+import { workspacePlanLimits } from "../plan";
 import { markUnsolicitedSignIn } from "../unsolicited-sign-in";
 import { emitWorkspaceChange } from "../workspace-audit";
 import {
@@ -38,9 +38,11 @@ import {
   ssoJoinRoleFromMetadata,
 } from "./sso-rules";
 
-// Workspace single sign-on (Business plan). The @better-auth/sso plugin does
-// the protocols (OIDC, SAML 2.0), domain verification and account linking;
-// this file adds what QRdx needs on top:
+// Workspace single sign-on (Business plan). "On Business" below means the
+// workspace's plan has `sso` (apps/app/lib/plans.ts, through ../plan.ts): on
+// a licensed server that sells no plans, every workspace's does. The
+// @better-auth/sso plugin does the protocols (OIDC, SAML 2.0), domain
+// verification and account linking; this file adds what QRdx needs on top:
 // - sign-in only through a verified connection of a workspace on Business,
 //   found from the person's work email (never a provider id from the client);
 // - a new account only for an address inside the connection's domain;
@@ -151,7 +153,7 @@ export async function ssoProviderUsable(provider: {
   domainVerified: boolean | null;
 }): Promise<boolean> {
   if (!(provider.domainVerified && provider.organizationId)) return false;
-  return (await workspacePlanTier(provider.organizationId)) === "business";
+  return (await workspacePlanLimits(provider.organizationId)).sso;
 }
 
 /**
@@ -341,7 +343,7 @@ export async function ssoRejoinDomains(
   });
   const usable = providers.filter((p) => p.domainVerified);
   if (usable.length === 0) return [];
-  if ((await workspacePlanTier(organizationId)) !== "business") return [];
+  if (!(await workspacePlanLimits(organizationId)).sso) return [];
   return usable.map((p) => p.domain);
 }
 
