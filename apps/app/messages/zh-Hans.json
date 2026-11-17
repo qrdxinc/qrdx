@@ -286,7 +286,8 @@
   },
   "localeSwitcher": {
     "label": "语言",
-    "englishOnly": "此页面仅提供英文版本。选择其他语言将打开对应语言的首页。"
+    "englishOnly": "此页面仅提供英文版本。选择其他语言将打开对应语言的首页。",
+    "englishOnlyDesigner": "本页面仅提供英文版本。选择其他语言将打开二维码设计器。"
   },
   "cta": {
     "title": "制作你的下一个二维码",
@@ -471,7 +472,7 @@
       "developers": {
         "eyebrow": "开发者",
         "title": "为开发者打造",
-        "description": "用 qrdx React 库渲染二维码，通过 Image API 从 URL 获取图片，或让 Claude、Cursor 和 VS Code 通过 MCP server 生成。你也可以自行部署整个应用。",
+        "description": "使用 qrdx React 库渲染二维码，通过 Image API 以 URL 获取图片，或者让 Claude、Cursor 和 VS Code 借助 MCP 服务器来生成。你也可以自行托管该应用。",
         "link": "开发者文档"
       }
     },
@@ -526,7 +527,8 @@
           "answer": "可以。免费版包含 Logo 叠加功能。上传图片（背景透明的 PNG 效果最佳），QRdx 会将其居中并清除下方的模块。二维码采用 Reed-Solomon 纠错（ISO/IEC 18004）；QRdx 默认使用 Q 级，大约可恢复 25% 的码内容，因此居中的 Logo 仍可被扫描。打印前请用几部手机测试。"
         },
         "openSource": {
-          "question": "QRdx 是开源的吗？"
+          "question": "QRdx 是开源的吗？",
+          "answer": "是的。QRdx 在 GitHub 上公开开发。网页应用以 GNU AGPL-3.0（或更高版本）开源：你可以查看代码、提交问题、参与贡献，也可以自行托管自己的实例，其中包括动态二维码和托管页面。npm 上的 qrdx React 库和 @qrdx/cli 命令行工具采用 MIT 许可，因此闭源软件也可以使用。ee 文件夹中的商业功能（工作区单点登录、审计日志、客户门户和客户报告、支持自定义 CSS 的白标页面，以及转化跟踪）采用 QRdx 商业许可。"
         },
         "api": {
           "question": "开发者可以通过 API 生成二维码吗？",
@@ -801,7 +803,7 @@
         },
         "selfHost": {
           "question": "可以自行托管吗？",
-          "answer": "可以。QRdx 以 AGPL-3.0 协议开源。按照自托管指南，搭配您自己的 Postgres 数据库即可运行；套餐限制集中定义在一个文件中，您可以为自己的实例修改。"
+          "answer": "可以。QRdx 以 AGPL-3.0 协议开源。按照自托管指南，使用您自己的 Postgres 数据库即可运行；套餐限制集中定义在一个文件中，您可以针对自己的实例进行修改。ee 文件夹中的商业功能（单点登录、审计日志、客户门户、白标页面和转化跟踪）需要签订企业协议。"
         },
         "nonprofit": {
           "question": "非营利组织有折扣吗？",
@@ -843,7 +845,7 @@
         "contract": "按年签约，凭发票付款",
         "replies": "二维码失效时，{hours, plural, other {# 个工作小时内回复}}",
         "review": "解答您的安全评审问题",
-        "selfHost": "在您自己的服务器上使用 SSO 和审计日志"
+        "selfHost": "在您自己的服务器上使用 SSO、审计日志、客户门户、白标和转化跟踪"
       },
       "security": "QRdx 的安全措施"
     },
@@ -2173,8 +2175,8 @@
         "body": "我们会填写您的安全问卷，并提供已签署的数据处理附录副本。"
       },
       "selfHost": {
-        "title": "自托管时也能使用单点登录和审计日志",
-        "body": "QRdx 是开源的，但单点登录和审计日志属于 QRdx 商业许可范围。签订 Enterprise 协议后，您可以凭许可证密钥在自己的服务器上运行它们。"
+        "title": "自托管也能使用 Business 功能",
+        "body": "QRdx 是开源的，但单点登录、审计日志、客户门户和客户报告、支持自定义 CSS 的白标页面以及转化追踪，均受 QRdx 商业许可约束。签订 Enterprise 协议后，您可以凭许可证密钥在自己的服务器上运行这些功能。"
       }
     },
     "limitsNote": "在 qrdx.dev 上，Enterprise 工作区适用 Business 套餐的限额。如果您在某方面需要更多，请在表单中说明。",
@@ -2201,7 +2203,7 @@
       },
       "sign": {
         "title": "签订合同，凭发票付款",
-        "body": "合同签署后，我们会将您的工作区转至 Business 套餐，并发送发票。"
+        "body": "合同签署后，我们会发送发票，并将您在 qrdx.dev 上的工作区升级为 Business 方案。如果您选择自托管，合同还涵盖在您自己服务器上使用单点登录、审计日志、客户门户、白标页面和转化追踪：我们会发送用于 QRDX_EE_LICENSE 的许可证密钥。该密钥设有有效期，您的服务器会离线校验。"
       }
     },
     "formTitle": "联系我们",
@@ -2947,7 +2949,7 @@
     "guaranteeTitle": "已印刷的二维码仍可使用",
     "guaranteeBody": "根据 Never-Hostage 保障，所有套餐中的每个动态二维码都会持续跳转，即使降级、付款失败或取消订阅也一样。扫描不会被暂停，扫描者也不会看到广告或 QRdx 注册页面。超出限额只会使你无法创建新的二维码。",
     "guaranteeLink": "阅读保障条款",
-    "openSourceBody": "跳转、数据分析以及应用的其余部分均为开源，你可以查看每次扫描时发生了什么，也可以在自己的服务器上运行。",
+    "openSourceBody": "重定向和数据分析均为开源，你可以查看每次扫描时发生了什么，也可以在自己的服务器上运行它们。",
     "openSourceLink": "开源与自托管",
     "staticTitle": "何时静态二维码是更好的选择",
     "staticBody": "只有链接可以做成动态的：动态二维码会打开网站或托管页面。Wi-Fi 登录信息、直接保存到手机的联系人名片以及银行付款码必须使用静态二维码，因为手机是直接从图案本身读取这些内容的。静态二维码免费且不限数量，也无需账户。",
@@ -2993,8 +2995,8 @@
     "metaDescription": "QRdx 是托管在 GitHub 上的开源二维码生成器。应用采用 AGPL-3.0 许可,React 库和 CLI 采用 MIT 许可。可免费使用 qrdx.dev,也可以自行部署一份。",
     "crumb": "开源",
     "title": "开源二维码生成器",
-    "intro1": "QRdx 在 GitHub 上公开开发。运行 qrdx.dev 的网页应用包含编辑器、动态二维码、托管页面和扫描分析,采用 AGPL-3.0 许可。React 库、CLI 和插件采用 MIT 许可。",
-    "intro2": "你可以在 qrdx.dev 上免费使用,也可以自行部署一份,或者用这个库把二维码功能集成到你的应用中。",
+    "intro1": "QRdx 在 GitHub 上公开开发。运行 qrdx.dev 的 Web 应用，包括编辑器、动态二维码、托管页面和扫描分析，采用 AGPL-3.0 许可。React 库、CLI、插件、Agent 技能和 shadcn/ui 组件采用 MIT 许可。商业功能（工作区单点登录、审计日志、客户门户和客户报告、支持自定义 CSS 的白标页面，以及转化追踪）则适用 QRdx 商业许可。",
+    "intro2": "你可以在 qrdx.dev 上免费使用，也可以运行自己的副本，或通过这个库把二维码功能集成到你的应用中。生成二维码对所有人始终免费。项目的收入来自 Pro 和 Business 套餐，以及企业协议。",
     "facts": {
       "agpl": "AGPL-3.0 应用",
       "mit": "MIT 许可的库和 CLI",
@@ -3020,11 +3022,16 @@
       "cliBody": "在终端或 CI 任务中生成带样式的二维码",
       "pluginsName": "插件",
       "pluginsBody": "Chrome 扩展、Figma、Raycast 和 Canva 插件,以及 plugins 文件夹中的其他插件",
+      "skillName": "Agent 技能",
+      "skillBody": "generate-qr，教编程 Agent 使用 CLI 生成二维码",
+      "registryName": "shadcn/ui 组件",
+      "registryBody": "二维码、扫描器及其他组件，通过 npx shadcn add 安装到你的项目中",
       "eeName": "Business 功能",
-      "eeBody": "工作区单点登录和工作区审计日志"
+      "eeBody": "工作区单点登录、审计日志、客户门户和客户报告、支持自定义 CSS 的白标页面，以及转化追踪"
     },
     "eeLicense": "QRdx 商业许可",
-    "eeNote": "你可以阅读、测试 ee 文件夹中的代码并为其贡献代码,但要在生产环境中使用,需要与 QRdx 签订书面协议。在自托管实例上,除非设置了 QRDX_EE_LICENSE,否则这两项功能保持关闭,其余功能不受影响。",
+    "eeNote": "你可以阅读、测试 ee 文件夹中的代码并为其贡献代码，但要在生产环境中使用，需要与 QRdx 签订书面协议。在自托管实例上，这些功能默认关闭，除非 QRDX_EE_LICENSE 中填有有效密钥。该密钥由 QRdx 随协议签发，由你的服务器离线校验，其余所有功能无需它们也能正常使用。",
+    "eeAgreement": "在你自己的服务器上运行这些功能须签订企业协议：<link>请前往企业版页面咨询</link>，或发送邮件至 {email}。",
     "waysEyebrow": "使用方式",
     "waysTitle": "选择你的运行方式",
     "ways": {
@@ -3058,8 +3065,10 @@
     "licenses": {
       "agplTitle": "应用（AGPL-3.0）",
       "agplBody": "你可以运行、修改和托管它。如果你把修改后的版本作为网络服务运行，就必须按相同的许可证向其用户提供源代码。",
-      "mitTitle": "库、CLI 和插件（MIT）",
-      "mitBody": "可用于任何项目，包括闭源项目，前提是代码中保留版权和许可声明。qrdx 0.0.47 和 @qrdx/cli 0.0.5 之前的版本采用 AGPL-3.0-or-later 许可。",
+      "mitTitle": "库与工具（MIT）",
+      "mitBody": "qrdx 库、CLI、插件、Agent 技能和 shadcn/ui 组件。只要代码中保留版权和许可声明，就可以在任何项目中使用，包括闭源项目。qrdx 0.0.47 和 @qrdx/cli 0.0.5 之前的版本采用 AGPL-3.0-or-later 许可。",
+      "eeTitle": "商业功能（QRdx 商业许可）",
+      "eeBody": "你可以阅读、修改和测试 ee 文件夹中的代码。要在你自己的服务器上将这些商业功能用于生产环境，需要与 QRdx 签订书面协议。",
       "trademarkTitle": "名称与标志",
       "trademarkBody": "QRdx 的名称和标志是商标。基于该代码构建的分支或公共服务需要使用自己的名称和标志；详情请见<link>商标政策</link>。"
     },
@@ -3091,11 +3100,11 @@
     "faqTitle": "开源常见问题",
     "faq": {
       "openQuestion": "QRdx 真的是开源的吗？",
-      "openAnswer": "是的。源代码在 GitHub 上，Web 应用采用 AGPL-3.0-or-later 许可，qrdx 库、@qrdx/cli 和插件采用 MIT 许可。两项商业功能，即工作区单点登录和审计日志，位于 ee 文件夹中，适用 QRdx Commercial License：你可以阅读这部分代码，但用于生产环境需要与 QRdx 签订协议。",
+      "openAnswer": "是的。源代码在 GitHub 上，Web 应用采用 AGPL-3.0-or-later 许可，qrdx 库、@qrdx/cli、插件、Agent 技能和 shadcn/ui 组件采用 MIT 许可。商业功能（工作区单点登录、审计日志、客户门户和客户报告、支持自定义 CSS 的白标页面，以及转化追踪）位于 ee 文件夹中，适用 QRdx 商业许可：你可以阅读这些代码，但用于生产环境需要与 QRdx 签订协议。",
       "githubQuestion": "QRdx 在 GitHub 上的源代码在哪里？",
       "githubAnswer": "在 github.com/qrdxinc/qrdx。这是一个 monorepo，包含 Web 应用、qrdx 库、CLI、插件和文档。",
       "freeQuestion": "QRdx 可以免费自托管吗？",
-      "freeAnswer": "可以。无需支付许可费用，你只需承担自己的服务器和数据库成本。自托管实例可以运行动态二维码、托管页面和扫描分析。除非你拥有 QRdx 许可密钥，否则单点登录和审计日志不会启用。",
+      "freeAnswer": "是的。应用本身没有许可费用，你只需为自己的服务器和数据库付费。自托管实例可运行动态二维码、托管页面和扫描分析。ee 文件夹中的商业功能除外：单点登录、审计日志、客户门户、白标页面和转化追踪默认关闭，除非 QRDX_EE_LICENSE 中填有有效密钥。该密钥由 QRdx 随企业协议签发，由你的服务器离线校验。在生产环境中使用这些功能需要签订该协议。",
       "needQuestion": "自托管 QRdx 需要准备什么？",
       "needAnswer": "你需要 Docker 和 Compose v2，或者手动安装所需的 Node.js 22 和 Bun 1.4，以及一个 Postgres 数据库：可以使用 docker-compose.yml 启动的那个，也可以使用 Neon。请设置 NEXT_PUBLIC_APP_URL、DATABASE_URL 和 BETTER_AUTH_SECRET，并通过 GitHub 或 Google OAuth 应用，或通过 Resend 发送邮箱验证码，为用户提供登录方式。",
       "closedQuestion": "可以在闭源应用中使用这个二维码库吗？",
@@ -7868,6 +7877,7 @@
         "clients": {
           "page": {
             "theClientPortalIsntAvailable": "此服务器暂不支持客户门户。",
+            "theClientPortalIsOff": "此服务器未开放客户门户，客户无法打开。您仍然可以移除这些客户。",
             "theClientPortalIsPart": "客户门户属于 {business} 的功能",
             "inviteAClientByEmail": "通过电子邮件邀请客户，并选择他们可查看的文件夹：包括其二维码、扫描分析和托管页面，仅可只读查看，并以你的名称、标志和颜色呈现。",
             "askAWorkspaceOwnerOr": "请联系工作区所有者或账单成员升级。",

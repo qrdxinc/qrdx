@@ -13,6 +13,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 
 const state = vi.hoisted(() => ({
+  /** False: a server without the licence, where the SSO plugin isn't there */
+  licensed: true,
   plan: "business" as "business" | "pro",
   updates: [] as Record<string, unknown>[],
   deleted: [] as string[],
@@ -26,6 +28,9 @@ vi.mock(
   "@repo/database",
   async () => (await import("../support/fake-db")).repoDatabase,
 );
+vi.mock("@/lib/feature-availability", () => ({
+  isFeatureAvailable: () => state.licensed,
+}));
 vi.mock("@/lib/plans", () => ({
   getOwnerPlanForOrganization: async () => state.plan,
   getPlanLimits: (plan: string) => ({ sso: plan === "business" }),
@@ -374,6 +379,38 @@ describe("turning it off", () => {
     await deleteSsoConnection(scope("u_owner", "owner"), headers);
     expect(state.deleted).toEqual([PROVIDER]);
     expect(metadata()).toEqual({ ssoJoinRole: "viewer" });
+  });
+  it("works on a server without the licence, where only removing is left", async () => {
+    seed({
+      metadata: {
+        ssoJoinRole: "viewer",
+        [SSO_REQUIRED_METADATA_KEY]: PROVIDER,
+      },
+    });
+    state.licensed = false;
+    try {
+      const overview = await getSsoOverview(
+        scope("u_owner", "owner"),
+        headers,
+        null,
+      );
+      expect(overview).toMatchObject({ licensed: false, allowed: false });
+      expect(overview.connection).not.toBeNull();
+      await expect(
+        setSsoRequired(
+          scope("u_owner", "owner"),
+          headers,
+          { sessionId: "s_owner", email: "owner@acme.example" },
+          false,
+        ),
+      ).resolves.toMatchObject({ on: false });
+      await deleteSsoConnection(scope("u_owner", "owner"), headers);
+      // Deleted directly: the plugin was never asked.
+      expect(state.deleted).toEqual([]);
+      expect(fakeDb.rows("ssoProvider")).toEqual([]);
+    } finally {
+      state.licensed = true;
+    }
   });
 });
 

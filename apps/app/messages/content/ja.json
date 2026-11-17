@@ -29963,6 +29963,30 @@
     "status": "machine",
     "context": "mcp.tools.8.description"
   },
+  "3c1004b71f0f": {
+    "source": "Search the docs",
+    "text": "ドキュメントを検索",
+    "status": "machine",
+    "context": "mcp.tools.9.title"
+  },
+  "82ae342a90f8": {
+    "source": "Finds QRdx docs pages for a question: how a feature works, API endpoints and fields, limits and plans, the React library. Returns titles, links and matching snippets, best first.",
+    "text": "質問に合ったQRdxのドキュメントページを探します。機能の仕組み、API のエンドポイントとフィールド、制限とプラン、React ライブラリなどが対象です。タイトル、リンク、該当する抜粋を関連度の高い順に返します。",
+    "status": "machine",
+    "context": "mcp.tools.9.description"
+  },
+  "13be09937478": {
+    "source": "Read a docs page",
+    "text": "ドキュメントページを読む",
+    "status": "machine",
+    "context": "mcp.tools.10.title"
+  },
+  "24dd1fdfc3d8": {
+    "source": "One docs page as Markdown, by the path search_docs returned or its URL. Long pages are cut with a link to the rest.",
+    "text": "search_docs が返したパスまたはURLを指定して、1ページ分のドキュメントをMarkdownで取得します。長いページは途中で切り詰められ、続きへのリンクが付きます。",
+    "status": "machine",
+    "context": "mcp.tools.10.description"
+  },
   "abb9f9118ecf": {
     "source": "List styles",
     "text": "スタイルの一覧",

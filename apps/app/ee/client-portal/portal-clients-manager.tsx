@@ -86,11 +86,13 @@ function FolderChecklist({
 function ClientRow({
   client,
   folders,
+  canEdit,
   onChange,
   onRemove,
 }: {
   client: PortalClientView;
   folders: PortalFolderOption[];
+  canEdit: boolean;
   onChange: (client: PortalClientView) => void;
   onRemove: (id: string) => void;
 }) {
@@ -167,18 +169,20 @@ function ClientRow({
         </div>
         {!(editing || confirming) && (
           <div className="flex gap-1">
-            <Button
-              onClick={() => {
-                setSelected(client.folderIds);
-                setEditing(true);
-              }}
-              size="sm"
-              type="button"
-              variant="ghost"
-            >
-              <Edit2 aria-hidden />
-              Folders
-            </Button>
+            {canEdit && (
+              <Button
+                onClick={() => {
+                  setSelected(client.folderIds);
+                  setEditing(true);
+                }}
+                size="sm"
+                type="button"
+                variant="ghost"
+              >
+                <Edit2 aria-hidden />
+                Folders
+              </Button>
+            )}
             <Button
               aria-label={`Remove ${client.email}`}
               onClick={() => setConfirming(true)}
@@ -262,11 +266,14 @@ export function PortalClientsManager({
   clients: initialClients,
   folders,
   canInvite,
+  canEdit = true,
 }: {
   clients: PortalClientView[];
   folders: PortalFolderOption[];
   /** The plan includes the portal (removing works either way) */
   canInvite: boolean;
+  /** False on a server without the licence: clients can only be removed */
+  canEdit?: boolean;
 }) {
   const id = useId();
   const [clients, setClients] = useState(initialClients);
@@ -385,6 +392,7 @@ export function PortalClientsManager({
           <ul className="divide-y">
             {clients.map((client) => (
               <ClientRow
+                canEdit={canEdit}
                 client={client}
                 folders={folders}
                 key={client.id}

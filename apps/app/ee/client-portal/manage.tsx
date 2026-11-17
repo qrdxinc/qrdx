@@ -131,7 +131,7 @@ async function checkFolders(scope: ActiveScope, folderIds: string[]) {
 export async function listPortalClients(
   scope: ActiveScope,
 ): Promise<PortalClientView[]> {
-  requireClientPortal();
+  // Listed without the licence too, so the clients can still be removed.
   assertCan(scope, "members.manage");
   const [clients, links] = await guarded(() =>
     Promise.all([
@@ -357,8 +357,8 @@ export async function removePortalClient(
   scope: ActiveScope,
   id: string,
 ): Promise<void> {
-  // Removing always works, whatever the plan: it only takes access away.
-  requireClientPortal();
+  // Removing always works, whatever the plan or the licence: it only takes
+  // access away.
   assertCan(scope, "members.manage");
   await findClient(scope, id);
   await guarded(() =>
