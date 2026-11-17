@@ -497,6 +497,8 @@ let nextConfig: NextConfig = {
         // there, and unlike / it never sends a signed-in visitor to the
         // dashboard (proxy.ts). Canonical stays /. The home page is English
         // only: /<language>/home redirects here (englishOnlyRedirects).
+        // After the site's rules: while its home group is on, the site
+        // serves /home and / instead.
         {
           source: "/home",
           has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],

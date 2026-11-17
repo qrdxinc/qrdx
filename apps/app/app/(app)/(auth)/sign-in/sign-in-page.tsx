@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { SignInPanel } from "../components/sign-in-panel";
@@ -69,12 +68,12 @@ export function SignInPage({
           Title={Heading}
         />
       </div>
-      <Link
+      <a
         className="text-muted-foreground hover:text-foreground inline-flex min-h-10 items-center rounded-sm px-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         href="/"
       >
         {t("backToQrdx")}
-      </Link>
+      </a>
     </main>
   );
 }

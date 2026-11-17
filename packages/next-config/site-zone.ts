@@ -23,9 +23,12 @@
  * child pages); "/" would mean the home page alone. `{ path }` is that one
  * path and nothing under it, for a group that shares its first segment with
  * this app's own pages (/templates/<type> stays here while /templates
- * moves). A segment of `path` may be `*`, any one segment without a dot,
- * or end in `*`, as in `opengraph-image*`: that text, then anything but a
- * slash or a dot (Next adds a hash to Open Graph image URLs).
+ * moves); `{ path: "/" }` is the home page and nothing else at the root. A
+ * segment of `path` may be `*`, any one segment without a dot, or end in
+ * `*`, as in `opengraph-image*`: that text, then anything but a slash or a
+ * dot (Next adds a hash to Open Graph image URLs). The first segment is
+ * always literal (tests/lib/site-zone.test.ts), so no entry reaches every
+ * path.
  */
 export type SitePath = string | { readonly path: string };
 
@@ -87,6 +90,15 @@ export const SITE_GROUPS = {
     { path: "/templates/opengraph-image*" },
     { path: "/templates/twitter-image*" },
   ],
+  /**
+   * The home page, at / and at /home (where the logo links), those two
+   * paths exactly. Everything else at the root stays here: the default
+   * Open Graph and Twitter images every page without its own uses, the
+   * icons, the manifest, robots.txt, the sitemap and /index.md (the home
+   * page's Markdown). The proxy still sends a signed-in visitor on / to
+   * the dashboard before anything reaches the site; /home never redirects.
+   */
+  home: [{ path: "/" }, { path: "/home" }],
 } as const satisfies Record<string, readonly SitePath[]>;
 
 export type SiteGroup = keyof typeof SITE_GROUPS;
@@ -252,6 +264,11 @@ interface PathSegment {
   wild: boolean;
 }
 
+/**
+ * A `{ path }` entry's segments, after its leading slash. The root, "/",
+ * has one empty literal segment: pathRule makes it the source "/" alone,
+ * and atPath matches "/" alone.
+ */
 function segmentsOf(path: string): PathSegment[] {
   return path
     .split("/")
@@ -461,7 +478,7 @@ function lowerCasedAtPath(pathname: string, path: string): string {
  * none). The rewrites match /BLOG/… too, but proxy.ts matchers and the
  * pages don't, so the proxy sends any other casing to the lower-case path
  * before anything reaches the site. Every group's paths, on or off: they
- * were 404s before.
+ * were 404s before, or (/HOME) the same page.
  */
 export function lowerCasedSitePrefix(pathname: string): string | null {
   const entries: SitePath[] = [

@@ -228,7 +228,8 @@ export default async function proxy(request: NextRequest) {
   // Signed-in visitors on the home page go straight to their dashboard (from
   // /es too: next.config.ts redirects it to / first). Only a request with a
   // session cookie pays for the session lookup; everyone else, crawlers
-  // included, gets the page.
+  // included, gets the page: next() sends it on to the site while the home
+  // group is on, so this check comes first.
   if (isHomePath(request.nextUrl.pathname)) {
     if (hasSessionCookie(request)) {
       const session = await getSessionAllowingHold(await headers());
@@ -332,10 +333,13 @@ export const config = {
     "/:prefix([iI][nN][tT][eE][gG][rR][aA][tT][iI][oO][nN][sS])/:path*",
     "/:prefix([tT][eE][mM][pP][lL][aA][tT][eE][sS])/:path*",
     "/:prefix([sS][iI][tT][eE]-[sS][tT][aA][tT][iI][cC])/:path*",
+    // The home group's /home: that path alone, as the site serves it
+    // (/home/x stays this app's 404).
+    "/:prefix([hH][oO][mM][eE])",
     // The home page (lib/home-path.ts): signed-in visitors go to their
-    // dashboard. It's English only: /en and /es, /pt-br and the other
-    // languages' roots redirect to / in next.config.ts before this runs
-    // (tests/lib/home-redirect.test.ts).
+    // dashboard, before the site's home group gets it. It's English only:
+    // /en and /es, /pt-br and the other languages' roots redirect to / in
+    // next.config.ts before this runs (tests/lib/home-redirect.test.ts).
     "/",
     "/oauth/:path*",
     "/invite/:path*",
