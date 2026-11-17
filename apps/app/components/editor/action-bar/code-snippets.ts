@@ -23,7 +23,12 @@
 // Never in a snippet: an uploaded logo (a data URL) or art pixels. Each
 // serializer lists what its tab can't express in `omitted`, in plain English.
 
-import { API_BASE_URL, MCP_ENDPOINT, SHADCN_REGISTRY_URL } from "@repo/config";
+import {
+  API_BASE_URL,
+  MCP_ENDPOINT,
+  SHADCN_REGISTRY_NAMESPACE,
+  SHADCN_REGISTRY_URL,
+} from "@repo/config";
 import {
   DEFAULT_SIZE,
   getTemplate,
@@ -171,8 +176,9 @@ const QRDX_CDN = `https://cdn.jsdelivr.net/npm/qrdx@${QRDX_NPM_VERSION}/dist`;
 export const VANILLA_CDN_URL = `${QRDX_CDN}/vanilla.browser.mjs`;
 /** Registers <qrdx-code>, for pages without a bundler. */
 export const ELEMENT_CDN_URL = `${QRDX_CDN}/element-define.browser.mjs`;
-export const SHADCN_ITEM_URL = `${SHADCN_REGISTRY_URL}/qr-code.json`;
-export const SHADCN_INSTALL = `npx shadcn@latest add ${SHADCN_ITEM_URL}`;
+export const SHADCN_INSTALL = `npx shadcn@latest add ${SHADCN_REGISTRY_NAMESPACE}/qr-code`;
+/** The same item by URL, which shadcn CLIs before 3.7.0 also take. */
+export const SHADCN_INSTALL_URL = `npx shadcn@latest add ${SHADCN_REGISTRY_URL}/qr-code.json`;
 export const IMAGE_API_URL = `${API_BASE_URL}/qr`;
 export const CODES_API_URL = `${API_BASE_URL}/codes`;
 export const MCP_SERVER_URL = MCP_ENDPOINT;

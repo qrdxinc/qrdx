@@ -143,7 +143,7 @@ npx @qrdx/cli generate "https://qrdx.dev" -o qr.png --body circle --eye rounded 
 
 **More**
 
-- [shadcn/ui components](https://qrdx.dev/docs/developers/shadcn): `npx shadcn@latest add https://qrdx.dev/r/qr-code.json` adds a QR code with PNG and SVG downloads, and `qr-code-scanner.json` adds a scanner.
+- [shadcn/ui components](https://qrdx.dev/docs/developers/shadcn): `npx shadcn@latest add @qrdx/qr-code` adds a QR code with PNG and SVG downloads, and `@qrdx/qr-code-scanner` adds a scanner. Older versions of the CLI take the full URL instead, such as `https://qrdx.dev/r/qr-code.json`.
 - [Agent skill](skills): `generate-qr` teaches coding agents to make QR codes with the CLI.
 - Plugins: the [Chrome extension](https://chromewebstore.google.com/detail/bpepiomjdoicpmbihlohodghdglkhicc) is in the Chrome Web Store. The [Figma](plugins/figma), [Raycast](plugins/raycast) and [Canva](plugins/canva) plugins install from source.
 

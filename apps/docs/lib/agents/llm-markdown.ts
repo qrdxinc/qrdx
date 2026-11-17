@@ -13,6 +13,7 @@
 // - Root-relative links become absolute.
 //
 // Code blocks and inline code are masked first and never touched.
+import { SHADCN_REGISTRY_NAMESPACE, SHADCN_REGISTRY_URL } from "@repo/config";
 import { stripMdxComments } from "@/lib/mdx-comments";
 import {
   BODY_CATALOG,
@@ -23,7 +24,7 @@ import {
 import { shotMarkdown } from "@/lib/shots";
 
 export interface LlmMarkdownOptions {
-  /** Origin for root-relative links and the shadcn registry, e.g. https://qrdx.dev */
+  /** Origin for root-relative links, e.g. https://qrdx.dev */
   origin?: string;
   /**
    * Whether an <IfAvailable> block is shown on this deployment, from its
@@ -391,11 +392,10 @@ const HANDLERS: Record<string, Handler> = {
   },
   Accordion: (attributes, children) =>
     `\n\n${attributes.title ? `**${attributes.title}**\n\n` : ""}${dedent(children).trim()}\n\n`,
-  InstallationTabs: (attributes, _, options) =>
+  // The @qrdx name first, then the full URL, which older CLIs also take.
+  InstallationTabs: (attributes) =>
     attributes.name
-      ? shell(
-          `npx shadcn@latest add ${options.origin}/r/${attributes.name}.json`,
-        )
+      ? `${shell(`npx shadcn@latest add ${SHADCN_REGISTRY_NAMESPACE}/${attributes.name}`)}Or by URL, which works with older versions of the CLI too:${shell(`npx shadcn@latest add ${SHADCN_REGISTRY_URL}/${attributes.name}.json`)}`
       : "",
   PackageManagerTabs: (attributes) =>
     attributes.command ? shell(attributes.command) : "",

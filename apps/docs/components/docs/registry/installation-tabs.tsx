@@ -1,3 +1,4 @@
+import { SHADCN_REGISTRY_NAMESPACE } from "@repo/config";
 import {
   Tabs,
   TabsContent,
@@ -29,7 +30,10 @@ function StepBlock({
   );
 }
 
-/** CLI | Manual installation for a registry item, read from registry.json. */
+/**
+ * CLI | Manual installation for a registry item, read from registry.json. The
+ * CLI tab gives the @qrdx name, then the full URL for CLIs before 3.7.0.
+ */
 export function InstallationTabs({ name }: { name: string }) {
   const item = getRegistryItem(name);
   const dependencies = item.dependencies ?? [];
@@ -43,7 +47,14 @@ export function InstallationTabs({ name }: { name: string }) {
         <TabsTrigger value="cli">CLI</TabsTrigger>
         <TabsTrigger value="manual">Manual</TabsTrigger>
       </TabsList>
-      <TabsContent value="cli">
+      <TabsContent className="space-y-3" value="cli">
+        <PackageManagerTabs
+          className="my-0"
+          command={`npx shadcn@latest add ${SHADCN_REGISTRY_NAMESPACE}/${name}`}
+        />
+        <p className="text-fd-muted-foreground text-sm">
+          Or by URL, which works with older versions of the CLI too:
+        </p>
         <PackageManagerTabs
           className="my-0"
           command={`npx shadcn@latest add ${REGISTRY_URL}/${name}.json`}
