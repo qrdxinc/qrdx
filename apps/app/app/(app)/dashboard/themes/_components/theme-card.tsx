@@ -42,7 +42,6 @@ import {
   Lock as GlobeLock,
   More as MoreVertical,
   Edit2 as Pencil,
-  StarSlash as StarOff,
   Tag,
   Trash as Trash2,
   Profile2User as Users,
@@ -265,7 +264,7 @@ export function ThemeCard({ theme, workspace, canCopyToTeam }: ThemeCardProps) {
             {canSetDefault && (
               <DropdownMenuItem onSelect={toggleDefault}>
                 {theme.isDefault ? (
-                  <StarOff className="size-4" />
+                  <Star className="size-4" variant="Bold" />
                 ) : (
                   <Star className="size-4" />
                 )}

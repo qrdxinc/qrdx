@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.0.0",
   "private": true,
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -26,7 +27,8 @@
     "i18n:translate": "tsx scripts/i18n-translate.ts",
     "i18n:docs-messages": "tsx scripts/i18n-docs-messages.ts",
     "i18n:split": "node scripts/i18n-split-roots.mjs",
-    "seo:dates": "tsx scripts/seo-dates.ts"
+    "seo:dates": "tsx scripts/seo-dates.ts",
+    "icons:build": "tsx scripts/icons/build-icons.ts"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.163",

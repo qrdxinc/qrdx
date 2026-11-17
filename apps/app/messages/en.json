@@ -471,7 +471,7 @@
       "developers": {
         "eyebrow": "Developers",
         "title": "Built for developers",
-        "description": "Render codes with the qrdx React library, get images from a URL with the image API, or let Claude, Cursor and VS Code make them through the MCP server. You can also self-host the whole app.",
+        "description": "Render codes with the qrdx React library, get images from a URL with the image API, or let Claude, Cursor and VS Code make them through the MCP server. You can also self-host the app.",
         "link": "Developer docs"
       }
     },
@@ -527,7 +527,7 @@
         },
         "openSource": {
           "question": "Is QRdx open source?",
-          "answer": "Yes. QRdx is open source under the GNU AGPL-3.0 (or later) and developed in public on GitHub. You can review the code, file issues, contribute, or self-host your own instance, dynamic codes and hosted pages included. The QR library is published on npm as qrdx for React apps. AGPL is a copyleft license, so check that it fits your project before embedding it in closed-source software."
+          "answer": "Yes. QRdx is developed in public on GitHub. The web app is open source under the GNU AGPL-3.0 (or later): you can review the code, file issues, contribute, or self-host your own instance, dynamic codes and hosted pages included. The qrdx React library on npm and the @qrdx/cli command-line tool are MIT, so closed-source software can use them too. The business features in the ee folders, today workspace single sign-on and the audit log, are under the QRdx Commercial License."
         },
         "api": {
           "question": "Can developers generate QR codes with an API?",
@@ -2597,7 +2597,7 @@
       },
       "sign": {
         "title": "Sign and pay by invoice",
-        "body": "Once the contract is signed, we move your workspace to the Business plan and send the invoice."
+        "body": "Once the contract is signed, we send the invoice and move your workspace on qrdx.dev to the Business plan. If you self-host, the contract also covers single sign-on and the audit log on your own server, switched on with QRDX_EE_LICENSE."
       }
     },
     "formTitle": "Talk to us",
@@ -3343,7 +3343,7 @@
     "guaranteeTitle": "Printed codes keep working",
     "guaranteeBody": "Under the Never-Hostage Guarantee, every dynamic code keeps redirecting on every plan, including after a downgrade, a failed payment or a cancellation. Scans are never paused, and scanners never see an ad or a QRdx sign-up page. Going over a limit only stops you from creating new codes.",
     "guaranteeLink": "Read the guarantee",
-    "openSourceBody": "The redirect, the analytics and the rest of the app are open source, so you can read what happens on each scan or run it on your own server.",
+    "openSourceBody": "The redirect and the analytics are open source, so you can read what happens on each scan or run them on your own server.",
     "openSourceLink": "Open source and self-hosting",
     "staticTitle": "When a static code is the better choice",
     "staticBody": "Only links can be dynamic: a dynamic code opens a website or a hosted page. Wi-Fi logins, contact cards saved straight to the phone and bank payment codes have to be static, because the phone reads them from the pattern itself. Static codes are free and unlimited, and they need no account.",
@@ -3389,8 +3389,8 @@
     "metaDescription": "QRdx is an open-source QR code generator on GitHub. The app is AGPL-3.0 and the React library and CLI are MIT. Use qrdx.dev free or run your own copy.",
     "crumb": "Open source",
     "title": "Open source QR code generator",
-    "intro1": "QRdx is built in public on GitHub. The web app that runs qrdx.dev, with its editor, dynamic codes, hosted pages and scan analytics, is licensed under the AGPL-3.0. The React library, the CLI and the plugins are MIT.",
-    "intro2": "You can use it free on qrdx.dev, run your own copy, or build QR codes into your app with the library.",
+    "intro1": "QRdx is built in public on GitHub. The web app that runs qrdx.dev, with its editor, dynamic codes, hosted pages and scan analytics, is licensed under the AGPL-3.0. The React library, the CLI, the plugins, the agent skill and the shadcn/ui components are MIT. Workspace single sign-on and the audit log are under the QRdx Commercial License.",
+    "intro2": "You can use it free on qrdx.dev, run your own copy, or build QR codes into your app with the library. Making QR codes stays free for everyone. The project earns from the Pro and Business plans and from enterprise agreements.",
     "facts": {
       "agpl": "AGPL-3.0 app",
       "mit": "MIT library and CLI",
@@ -3416,11 +3416,16 @@
       "cliBody": "Styled QR codes from a terminal or a CI job",
       "pluginsName": "Plugins",
       "pluginsBody": "The Chrome extension, the Figma, Raycast and Canva plugins and the rest of the plugins folder",
+      "skillName": "Agent skill",
+      "skillBody": "generate-qr, which teaches coding agents to make QR codes with the CLI",
+      "registryName": "shadcn/ui components",
+      "registryBody": "The QR code, scanner and other components that npx shadcn add installs into your project",
       "eeName": "Business features",
       "eeBody": "Workspace single sign-on and the workspace audit log"
     },
     "eeLicense": "QRdx Commercial License",
     "eeNote": "You can read, test and contribute to the code in the ee folders, but using it in production needs a written agreement with QRdx. On a self-hosted instance those two features stay off unless QRDX_EE_LICENSE is set, and everything else works without them.",
+    "eeAgreement": "Enterprise agreements cover running them on your own server: <link>ask on the enterprise page</link> or email {email}.",
     "waysEyebrow": "Ways to use it",
     "waysTitle": "Pick how you run it",
     "ways": {
@@ -3454,8 +3459,10 @@
     "licenses": {
       "agplTitle": "The app (AGPL-3.0)",
       "agplBody": "You can run it, change it and host it. If you run a modified version as a network service, you have to offer its source code to its users under the same license.",
-      "mitTitle": "The library, CLI and plugins (MIT)",
-      "mitBody": "Use them in any project, closed source included, as long as the copyright and license notice stay with the code. Releases before qrdx 0.0.47 and @qrdx/cli 0.0.5 were AGPL-3.0-or-later.",
+      "mitTitle": "The library and tools (MIT)",
+      "mitBody": "The qrdx library, the CLI, the plugins, the agent skill and the shadcn/ui components. Use them in any project, closed source included, as long as the copyright and license notice stay with the code. Releases before qrdx 0.0.47 and @qrdx/cli 0.0.5 were AGPL-3.0-or-later.",
+      "eeTitle": "Business features (QRdx Commercial License)",
+      "eeBody": "You can read, change and test the code in the ee folders. Using single sign-on or the audit log in production on your own server needs a written agreement with QRdx.",
       "trademarkTitle": "The name and logo",
       "trademarkBody": "The QRdx name and logo are trademarks. A fork or a public service built from the code needs its own name and logo; the <link>trademark policy</link> has the details."
     },
@@ -3487,11 +3494,11 @@
     "faqTitle": "Open source questions",
     "faq": {
       "openQuestion": "Is QRdx really open source?",
-      "openAnswer": "Yes. The source is on GitHub, the web app is licensed under the AGPL-3.0-or-later, and the qrdx library, @qrdx/cli and the plugins are MIT. Two business features, workspace single sign-on and the audit log, are in ee folders under the QRdx Commercial License: you can read that code, but production use needs an agreement with QRdx.",
+      "openAnswer": "Yes. The source is on GitHub, the web app is licensed under the AGPL-3.0-or-later, and the qrdx library, @qrdx/cli, the plugins, the agent skill and the shadcn/ui components are MIT. Two business features, workspace single sign-on and the audit log, are in ee folders under the QRdx Commercial License: you can read that code, but production use needs an agreement with QRdx.",
       "githubQuestion": "Where is the QRdx source code on GitHub?",
       "githubAnswer": "At github.com/qrdxinc/qrdx. It's one monorepo with the web app, the qrdx library, the CLI, the plugins and the docs.",
       "freeQuestion": "Is QRdx free to self-host?",
-      "freeAnswer": "Yes. There's no license fee; you pay only for your own server and database. A self-hosted instance runs dynamic codes, hosted pages and scan analytics. Single sign-on and the audit log stay off unless you have a QRdx license key.",
+      "freeAnswer": "Yes. There's no license fee for the app; you pay only for your own server and database. A self-hosted instance runs dynamic codes, hosted pages and scan analytics. Single sign-on and the audit log are the exception: they stay off unless QRDX_EE_LICENSE is set, and using them in production needs an enterprise agreement.",
       "needQuestion": "What do I need to self-host QRdx?",
       "needAnswer": "You need Docker with Compose v2, or Node.js 22 and Bun 1.4 for the manual setup, and a Postgres database: the one docker-compose.yml starts, or Neon. Set NEXT_PUBLIC_APP_URL, DATABASE_URL and BETTER_AUTH_SECRET, and give people a way to sign in with a GitHub or Google OAuth app, or with email codes through Resend.",
       "closedQuestion": "Can I use the QR code library in a closed-source app?",

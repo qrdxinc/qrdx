@@ -17,13 +17,18 @@ import {
   SUPPORT_EMAIL,
   X_PROFILE_URL,
 } from "@repo/config";
+import type { Locale } from "@repo/i18n/config";
+import { localizePath } from "@repo/i18n/paths";
 import { CHROME_WEB_STORE_URL } from "@repo/integrations/src/catalog/entries/plugins";
-import { baseUrl, siteName } from "@/lib/metadata";
+import { baseUrl, defaultOgImage, siteName } from "@/lib/metadata";
 
 const url = (path: string): string => new URL(path, baseUrl).toString();
 
 /** `@id` other schema nodes use to point at QRdx (publisher, provider). */
 export const organizationId = url("/#organization");
+
+/** `@id` of the home page's WebSite node. */
+export const webSiteId = url("/#website");
 
 export const founderSchema = {
   "@type": "Person",
@@ -39,6 +44,27 @@ export const founderSchema = {
  * tell them apart.
  */
 export const webSiteAlternateNames = ["QRdx QR code generator", CANONICAL_HOST];
+
+/**
+ * The home page's WebPage node in `locale`. Its primaryImageOfPage is the
+ * page's Open Graph image: Google's image guidance names this property (and
+ * og:image) as the way to say which image a page prefers. Google still picks
+ * the thumbnail it shows.
+ */
+export function homeWebPageSchema(locale: Locale) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    url: url(localizePath("/", locale)),
+    isPartOf: { "@id": webSiteId },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: url(defaultOgImage.url),
+      width: defaultOgImage.width,
+      height: defaultOgImage.height,
+    },
+  };
+}
 
 export const organizationSchema = {
   "@context": "https://schema.org",

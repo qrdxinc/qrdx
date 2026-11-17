@@ -39,7 +39,6 @@ import {
   ArrowRotateLeft as RotateCcw,
   Setting2,
   Share,
-  StarSlash as StarOff,
   Tag2 as Tags,
   Trash as Trash2,
 } from "iconsax-reactjs";
@@ -409,7 +408,7 @@ export function CodeActionsMenu({
               <DropdownMenuItem onSelect={toggleFavorite}>
                 {listItem.isFavorite ? (
                   <>
-                    <StarOff /> {t("removeFromFavorites")}
+                    <Star variant="Bold" /> {t("removeFromFavorites")}
                   </>
                 ) : (
                   <>
