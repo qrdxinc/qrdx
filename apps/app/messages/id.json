@@ -1380,7 +1380,7 @@
       },
       "products": {
         "name": "Kode produk",
-        "detail": "Nomor EAN/UPC dan data GS1 (GTIN, batch, kedaluwarsa), termasuk GS1 Digital Link."
+        "detail": "Nomor EAN, UPC, dan ITF-14 serta data GS1 (GTIN, batch, kedaluwarsa), termasuk GS1 Digital Link."
       },
       "text": {
         "name": "Teks biasa",
@@ -2032,6 +2032,10 @@
       "code128Chars": "Code 128 di sini menerima huruf ASCII biasa, angka, spasi, dan simbol. Tidak diizinkan: {chars}",
       "code39Chars": "Code 39 hanya menerima huruf kapital, angka, spasi, dan - . $ / + %. Tidak diizinkan: {chars}",
       "code39Lowercase": "Code 39 tidak mendukung huruf kecil. Gunakan huruf kapital, atau Code 128 untuk campuran huruf besar dan kecil.",
+      "code93Chars": "Code 93 hanya menerima huruf kapital, angka, spasi, dan - . $ / + %. Tidak diizinkan: {chars}",
+      "code93Lowercase": "Code 93 di sini tidak mendukung huruf kecil. Gunakan huruf kapital, atau Code 128 untuk campuran huruf besar dan kecil.",
+      "codabarStartStop": "Codabar diawali dan diakhiri dengan A, B, C, atau D, dengan setidaknya satu karakter di antaranya, misalnya A40156B.",
+      "codabarChars": "Codabar menerima angka dan - $ : / . + di antara huruf awal dan akhirnya. Tidak diizinkan: {chars}",
       "gs1Enter": "Masukkan Application Identifier dalam tanda kurung beserta nilainya, mis. (01)09501101530003.",
       "gs1Start": "Mulailah dengan Application Identifier dalam tanda kurung, mis. (01) untuk GTIN, lalu nilainya.",
       "gs1Brackets": "Tanda kurung tidak berpasangan: tulis setiap AI sebagai (angka), diikuti nilainya.",

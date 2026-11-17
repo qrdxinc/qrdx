@@ -1781,7 +1781,7 @@
       },
       "products": {
         "name": "Product codes",
-        "detail": "EAN/UPC numbers and GS1 data (GTIN, batch, expiry), including GS1 Digital Link."
+        "detail": "EAN, UPC and ITF-14 numbers and GS1 data (GTIN, batch, expiry), including GS1 Digital Link."
       },
       "text": {
         "name": "Plain text",
