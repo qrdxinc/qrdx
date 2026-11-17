@@ -7,7 +7,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { BRAND_BLUE } from "@repo/config";
-import { DEFAULT_LOCALE, LOCALE_INFO, LOCALES } from "@repo/i18n/config";
+import { DEFAULT_LOCALE, LOCALES } from "@repo/i18n/config";
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 import { baseUrl, defaultOgImage, siteDescription } from "@/lib/metadata";
@@ -208,12 +208,11 @@ describe("home page WebPage node", () => {
     });
   });
 
-  it("uses each language's own home URL", () => {
+  it("uses the one home URL in every language: the home page is English only", () => {
     for (const locale of LOCALES.filter((other) => other !== DEFAULT_LOCALE)) {
       const node = homeWebPageSchema(locale);
-      expect(node.url).toBe(
-        new URL(`/${LOCALE_INFO[locale].segment}`, baseUrl).toString(),
-      );
+      // /es and the other roots redirect to / (packages/i18n/routing.ts).
+      expect(node.url).toBe(new URL("/", baseUrl).toString());
       expect(node.primaryImageOfPage.url).toBe(
         new URL(defaultOgImage.url, baseUrl).toString(),
       );

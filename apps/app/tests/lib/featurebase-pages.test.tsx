@@ -90,7 +90,7 @@ describe("Featurebase on the home page only", () => {
   });
 
   it("loads on the home page with its launcher (/home too)", async () => {
-    nav.pathname = "/es/home";
+    nav.pathname = "/home";
     await render();
     expect(scripts.loaded).toEqual(["featurebase-sdk"]);
     const boot = calls()

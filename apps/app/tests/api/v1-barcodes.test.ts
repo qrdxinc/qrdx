@@ -276,6 +276,9 @@ describe("GET /v1/barcode", () => {
     ["codabar", "40156", /starts and ends with A, B, C or D/],
     ["codabar", "A12*B", /Not allowed: \*/],
     ["code39", "QRDX#1", /Not allowed: #/],
+    ["code93", "QRDX-93", undefined],
+    ["code93", "qrdx", /Code 93 here has no lowercase letters/],
+    ["code93", "QRDX#1", /Not allowed: #/],
     ["datamatrix", "x".repeat(1001), /at most 1000 characters/],
   ])("%s %j", async (format, data, error) => {
     const response = await getImage(

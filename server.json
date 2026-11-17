@@ -39,7 +39,7 @@
   ],
   "_meta": {
     "io.modelcontextprotocol.registry/publisher-provided": {
-      "summary": "Design QR codes from any MCP client. design_qr checks the content and style, scores how well the code scans, adjusts the style until the score is Great, and returns SVG, PNG and a link to edit it in the playground. Payload tools build Wi-Fi, contact, email, SMS, location and bank-payment codes (Pix, SEPA, PayNow, PromptPay, VietQR). generate_barcode checks and renders EAN-13, UPC-A, UPC-E, EAN-8, Code 128, Code 39, Codabar, ITF-14, GS1-128, Data Matrix, PDF417 and Aztec. With a QRdx API key it can also save themes and barcodes to your workspace and paint codes into AI artwork that is checked to scan (generate_ai_art, on the workspace's monthly AI art images). search_docs and read_docs_page look up the QRdx docs, so an assistant can answer questions about QRdx from the docs themselves.",
+      "summary": "Design QR codes from any MCP client. design_qr checks the content and style, scores how well the code scans, adjusts the style until the score is Great, and returns SVG, PNG and a link to edit it in the playground. Payload tools build Wi-Fi, contact, email, SMS, location and bank-payment codes (Pix, SEPA, PayNow, PromptPay, VietQR). generate_barcode checks and renders EAN-13, UPC-A, UPC-E, EAN-8, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, Data Matrix, PDF417 and Aztec. With a QRdx API key it can also save themes and barcodes to your workspace and paint codes into AI artwork that is checked to scan (generate_ai_art, on the workspace's monthly AI art images). search_docs and read_docs_page look up the QRdx docs, so an assistant can answer questions about QRdx from the docs themselves.",
       "tags": [
         "qr-code",
         "barcode",

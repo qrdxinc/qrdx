@@ -92,7 +92,7 @@ describe("/q status pages", () => {
   });
 
   it.each(["hi", "ja"] as const)(
-    "speak %s, with <html lang> and a localized home link",
+    "speak %s, with <html lang> and a link to the home page",
     async (locale) => {
       const intl = await scanPagesIntl(locale);
       const response = statusPage("inactive", { intl });
@@ -102,7 +102,9 @@ describe("/q status pages", () => {
       expect(html).toContain(`<html lang="${locale}">`);
       expect(html).toContain(copy.inactive.title);
       expect(html).toContain(copy.makeYourOwn);
-      expect(html).toContain(`/${locale}"`);
+      // The home page is English only: its one URL, never /hi (a redirect).
+      expect(html).toMatch(/<a href="https?:\/\/[^"/]+\/">/);
+      expect(html).not.toContain(`/${locale}"`);
       expect(html).not.toContain("no longer active");
       expect(response.headers.get("Content-Language")).toBe(locale);
     },

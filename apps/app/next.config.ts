@@ -9,13 +9,16 @@ import {
   MCP_HOST,
 } from "@repo/config";
 import { OG_FONT_GLOB } from "@repo/design-system/og/font-files";
-import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import {
   docsOriginRedirects,
   docsZoneRewrites,
   translatedDocsRedirects,
 } from "@repo/i18n/docs";
-import { englishRedirects, englishRewrites } from "@repo/i18n/routing";
+import {
+  englishOnlyRedirects,
+  englishRedirects,
+  englishRewrites,
+} from "@repo/i18n/routing";
 import { config, withAnalyzer } from "@repo/next-config";
 import {
   ADMIN_CONSOLE_SECRET_MIN_LENGTH,
@@ -451,6 +454,9 @@ let nextConfig: NextConfig = {
       })),
       // English has one address: /en/pricing → /pricing (packages/i18n/routing.ts).
       ...englishRedirects(`(?:${PLATFORM_HOSTS})`),
+      // The marketing pages are English only: /es/pricing → /pricing, /es →
+      // /, /es/home → /home, query kept (307 for now; packages/i18n/routing.ts).
+      ...englishOnlyRedirects(`(?:${PLATFORM_HOSTS})`),
       // The console's sections, when ADMIN_CONSOLE_URL is set (above).
       ...adminConsole,
     ];
@@ -473,18 +479,14 @@ let nextConfig: NextConfig = {
         // The site's groups of pages, when SITE_ORIGIN is set (above): ahead
         // of this app's own copies of those pages too.
         ...siteZone,
-        // The home page at /home and /<language>/home too (lib/home-path.ts):
-        // the logo links there, and unlike / it never sends a signed-in
-        // visitor to the dashboard (proxy.ts). Canonical stays /.
+        // The home page at /home too (lib/home-path.ts): the logo links
+        // there, and unlike / it never sends a signed-in visitor to the
+        // dashboard (proxy.ts). Canonical stays /. The home page is English
+        // only: /<language>/home redirects here (englishOnlyRedirects).
         {
           source: "/home",
           has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
           destination: "/en",
-        },
-        {
-          source: `/:locale(${TRANSLATED_LOCALES.map((locale) => LOCALE_INFO[locale].segment).join("|")})/home`,
-          has: [{ type: "host", value: `(?:${PLATFORM_HOSTS})` }],
-          destination: "/:locale",
         },
         // Community profiles live at /community/@handle; a folder named
         // @handle would be a parallel route slot, so they render from

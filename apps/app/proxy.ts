@@ -209,9 +209,10 @@ export default async function proxy(request: NextRequest) {
   ) {
     return new NextResponse("Not found", { status: 404 });
   }
-  // Signed-in visitors on the home page (in any language) go straight to
-  // their dashboard. Only a request with a session cookie pays for the
-  // session lookup; everyone else, crawlers included, gets the page.
+  // Signed-in visitors on the home page go straight to their dashboard (from
+  // /es too: next.config.ts redirects it to / first). Only a request with a
+  // session cookie pays for the session lookup; everyone else, crawlers
+  // included, gets the page.
   if (isHomePath(request.nextUrl.pathname)) {
     if (hasSessionCookie(request)) {
       const session = await getSessionAllowingHold(await headers());
@@ -300,11 +301,11 @@ export const config = {
     "/:prefix([qQ][rR]-[cC][oO][dD][eE][sS]-[fF][oO][rR])/:path*",
     "/:prefix([qQ][rR]-[cC][oO][dD][eE][sS]-[oO][nN])/:path*",
     "/:prefix([sS][iI][tT][eE]-[sS][tT][aA][tT][iI][cC])/:path*",
-    // The home page in every language (lib/home-path.ts): signed-in visitors
-    // go to their dashboard. tests/lib/home-redirect.test.ts checks these
-    // cover every language's segment.
+    // The home page (lib/home-path.ts): signed-in visitors go to their
+    // dashboard. It's English only: /en and /es, /pt-br and the other
+    // languages' roots redirect to / in next.config.ts before this runs
+    // (tests/lib/home-redirect.test.ts).
     "/",
-    "/:locale(en|es|pt-br|fr|de|it|ja|ko|zh-hans|id|hi)",
     "/oauth/:path*",
     "/invite/:path*",
     "/join/:path*",

@@ -16,14 +16,17 @@ import { ArrowDown2, Global } from "iconsax-reactjs";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { rememberLocale } from "@/lib/i18n/locale-cookie";
+import { PLAYGROUND_PATH } from "@/lib/playground-links";
 
 /** Remembers the choice for the signed-in app (lib/i18n/locale-cookie.ts). Never redirects. */
 export const remember = (locale: Locale) => rememberLocale(locale);
 
 /**
  * The only way to change language (no detection, no banner): each language
- * in its own script, as a plain link to the same page in that language. On
- * a page that isn't translated yet, other languages open their home page.
+ * in its own script, as a plain link to the same page in that language. The
+ * marketing pages are English only (packages/i18n/paths.ts), so on a page
+ * that isn't translated the other languages open the QR code designer in
+ * that language, and the menu says so. Never a link that redirects back.
  */
 export function LocaleSwitcher({ className }: { className?: string }) {
   const locale = useLocale();
@@ -33,7 +36,7 @@ export function LocaleSwitcher({ className }: { className?: string }) {
   const hrefFor = (target: Locale) =>
     translated || target === locale
       ? localizePath(path, target)
-      : localizePath("/", target);
+      : localizePath(PLAYGROUND_PATH, target);
 
   return (
     <DropdownMenu modal={false}>
@@ -57,7 +60,7 @@ export function LocaleSwitcher({ className }: { className?: string }) {
         </DropdownMenuLabel>
         {!translated && (
           <p className="max-w-60 px-2 pb-1.5 text-xs text-pretty text-muted-foreground">
-            {t("englishOnly")}
+            {t("englishOnlyDesigner")}
           </p>
         )}
         <DropdownMenuSeparator />
