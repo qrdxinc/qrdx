@@ -777,7 +777,9 @@ describe("next.config.ts", () => {
         expect(at, source).toBeLessThan(firstSite);
       }
     }
-    // And they still only answer requests that ask for Markdown.
+    // With every group on, /pricing's page is the site's, but an agent
+    // asking for Markdown still gets this app's; so does / (the home page
+    // isn't a group yet).
     expect(
       getRewrittenUrl(
         await resolve(on, "https://qrdx.dev/pricing", {
@@ -786,13 +788,13 @@ describe("next.config.ts", () => {
       ),
     ).toBe("https://qrdx.dev/pricing.md");
     expect(
+      await siteTarget(on, "https://qrdx.dev/pricing", { accept: "text/html" }),
+    ).toBe(`${ORIGIN}/pricing`);
+    expect(
       getRewrittenUrl(
         await resolve(on, "https://qrdx.dev/", { accept: "text/markdown" }),
       ),
     ).toBe("https://qrdx.dev/index.md");
-    expect(
-      await siteTarget(on, "https://qrdx.dev/pricing", { accept: "text/html" }),
-    ).toBeNull();
   });
 
   it("sends /blog as /blog, never /blog/ (a zone's slash redirect would loop)", async () => {
