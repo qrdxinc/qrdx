@@ -12,8 +12,6 @@ import { use } from "react";
 import { CountBarChart } from "@/app/(app)/dashboard/analytics/_components/charts";
 import { TimeZoneSwitch } from "@/app/(app)/dashboard/analytics/_components/time-zone-switch";
 import {
-  type ConversionSummary,
-  getConversionSummary,
   getPageEventSummary,
   type PageEventSummary,
 } from "@/app/(app)/dashboard/analytics/_lib/queries";
@@ -22,6 +20,9 @@ import {
   displayUrl,
   formatNumber,
 } from "@/app/(app)/dashboard/codes/_components/format";
+import { ConversionsCard } from "@/ee/conversions/analytics-cards";
+import { getConversionSummary } from "@/ee/conversions/queries";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import {
   parseRoutingConfig,
@@ -70,17 +71,6 @@ function Stat({ label, value }: { label: string; value: string }) {
       <p className="text-xl font-bold tracking-tight tabular-nums">{value}</p>
     </div>
   );
-}
-
-function formatMoney(total: string, currency: string | null): string {
-  const amount = Number(total);
-  if (!currency)
-    return amount.toLocaleString("en-US", { maximumFractionDigits: 2 });
-  try {
-    return amount.toLocaleString("en-US", { style: "currency", currency });
-  } catch {
-    return `${amount.toFixed(2)} ${currency}`;
-  }
 }
 
 export function TimeCard({
@@ -286,43 +276,6 @@ function PageEventsCard({ events }: { events: PageEventSummary }) {
   );
 }
 
-function ConversionsCard({ conversions }: { conversions: ConversionSummary }) {
-  const t = use(getAppTranslations("app.dashboard.codes.analyticsExtra"));
-  return (
-    <div className="grid gap-4 md:grid-cols-2">
-      <Card className="gap-3 py-4">
-        <CardHeader className="px-4">
-          <CardTitle>{t("conversions")}</CardTitle>
-          <CardDescription>{t("attributedToScansOfThis")}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-6 px-4">
-          <Stat
-            label={t("conversions")}
-            value={formatNumber(conversions.count)}
-          />
-          {conversions.revenue
-            .filter((row) => Number(row.total) > 0)
-            .map((row) => (
-              <Stat
-                key={row.currency ?? "none"}
-                label={`Revenue${row.currency ? ` (${row.currency})` : ""}`}
-                value={formatMoney(row.total, row.currency)}
-              />
-            ))}
-        </CardContent>
-      </Card>
-      <BreakdownCard
-        items={conversions.names.map((row) => ({
-          label: row.name,
-          count: row.count,
-        }))}
-        title={t("conversionTypes")}
-        total={conversions.count}
-      />
-    </div>
-  );
-}
-
 /**
  * Extra analytics on the code page: scans by hour and weekday, A/B variant
  * counts, hosted-page activity and conversions. `codeId` must already be
@@ -378,7 +331,10 @@ export async function AnalyticsExtra({
     code.kind === "page" && code.pageId
       ? settle(getPageEventSummary(code.pageId, codeId, from), "page events")
       : Promise.resolve(null),
-    settle(getConversionSummary({ qrCodeId: codeId }, from), "conversions"),
+    // Conversion tracking (ee/conversions) only with the licence key.
+    isFeatureAvailable("conversions")
+      ? settle(getConversionSummary({ qrCodeId: codeId }, from), "conversions")
+      : Promise.resolve(null),
   ]);
 
   const params: Record<string, string> = {};

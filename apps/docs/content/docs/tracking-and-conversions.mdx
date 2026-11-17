@@ -9,6 +9,8 @@ Every [dynamic QR code](/docs/dynamic-qr-codes) records scans without cookies. T
   Tracking pixels are part of Pro and Business; conversion tracking is part of Business. Both are set up on the code's **Settings** tab. See [Plans and limits](/docs/plans-and-limits).
 </Callout>
 
+Conversion tracking is under the QRdx commercial license. A self-hosted QRdx server needs a license key (`QRDX_EE_LICENSE`) to turn it on; see [Self-hosting](/docs/self-hosting#optional-services). Pixels and scan analytics don't need one.
+
 In a hurry? [See your scans](/docs/help/dynamic-codes/scans) covers the analytics every plan has.
 
 ## How it works
@@ -21,11 +23,24 @@ A code either opens a hosted page or redirects to your website, and each path ha
 
 Besides scans over time, countries, cities, devices, operating systems, browsers and referrers, each code's **Analytics** tab shows:
 
+<IfAvailable feature="conversions">
+
 - **When people scan:** scans by hour of day and by weekday, in UTC or in your own time zone.
 - **Languages:** each visitor's preferred browser language ("Unknown" when the browser doesn't send one).
 - **A/B split:** scans per variant for each [A/B split rule](/docs/smart-routing#ab-tests).
 - **Page activity** (hosted pages): page views, unique viewers, taps and the most tapped links and buttons.
 - **Conversions**, when the code has any.
+
+</IfAvailable>
+
+<IfAvailable feature="conversions" unavailable>
+
+- **When people scan:** scans by hour of day and by weekday, in UTC or in your own time zone.
+- **Languages:** each visitor's preferred browser language ("Unknown" when the browser doesn't send one).
+- **A/B split:** scans per variant for each [A/B split rule](/docs/smart-routing#ab-tests).
+- **Page activity** (hosted pages): page views, unique viewers, taps and the most tapped links and buttons.
+
+</IfAvailable>
 
 <Shot id="when-people-scan" />
 
@@ -61,7 +76,7 @@ Pixels never load before the visitor agrees:
 
 You remain responsible for your own privacy policy and for how you use the data your pixels collect. Codes that open your own website go there directly, so add your pixels to your site instead.
 
-## Conversion tracking
+<IfAvailable feature="conversions" title="Conversion tracking">
 
 Conversion tracking tells you which scans led to a sale, sign-up or any other goal, with revenue. It works for codes that open your website.
 
@@ -96,6 +111,8 @@ The script remembers `qrdx_sid` in a first-party cookie on your domain for 30 da
 - Browser reports need conversion tracking to be on for the code, and each scan can report up to 10 conversions an hour. Reports from your server with a token have neither limit.
 - Conversions stop being recorded if the workspace leaves Business; existing ones stay in your analytics, and turning tracking off is always possible.
 
+</IfAvailable>
+
 ## Limits and plans
 
 | | Free | Pro | Business |
@@ -104,7 +121,7 @@ The script remembers `qrdx_sid` in a first-party cookie on your domain for 30 da
 | Tracking pixels on hosted pages | No | Yes | Yes |
 | Conversion tracking | No | No | Yes |
 
-## For developers
+<IfAvailable feature="conversions" title="For developers">
 
 To report conversions from your backend, which is more reliable than the browser, keep `qrdx_sid` with the order and call [`POST /v1/conversions`](/docs/developers/api/create-conversion) with an [API key](/docs/developers/api-keys) or an OAuth token that has the `codes:write` scope:
 
@@ -116,6 +133,8 @@ curl -X POST https://api.qrdx.dev/v1/conversions \
 ```
 
 The API answers `201` for a new conversion and `200` with `"duplicate": true` when the `id` was already recorded. With a token you can also send `"code": "<code id>"` instead of `sid` when the scan isn't known.
+
+</IfAvailable>
 
 ## Related
 

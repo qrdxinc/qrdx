@@ -37,10 +37,13 @@ export function GetProDialog({
   plan = "pro",
 }: GetProDialogProps) {
   const t = useTranslations("nav.getProDialog");
-  // Headline features; nothing this deployment can't offer (custom domains).
+  // Headline features; nothing this deployment can't offer (custom domains,
+  // and the ee/ features without a licence key).
   const { has } = useAvailability();
   const features = buildUpgradeHighlights({
     customDomains: has("customDomains"),
+    whiteLabel: has("whiteLabel"),
+    conversions: has("conversions"),
   });
   return (
     <ResponsiveDialog open={isOpen} onOpenChange={onClose}>

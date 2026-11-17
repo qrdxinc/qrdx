@@ -114,15 +114,39 @@ export const CODE_OPTION_COPY: Record<CodeOptionId, CodeOptionCopy> = {
 };
 
 /**
+ * Options this deployment can offer at all: conversion tracking
+ * (ee/conversions) needs the QRdx licence key on the server
+ * (packages/availability/rules.ts). The server reads isFeatureAvailable,
+ * client components useAvailability().has.
+ */
+export interface CodeOptionsOffered {
+  conversions: boolean;
+}
+
+/** Everything is offered: the default (qrdx.dev). */
+const ALL_OFFERED: CodeOptionsOffered = { conversions: true };
+
+/** Whether this deployment offers `id` at all. */
+export const isCodeOptionOffered = (
+  id: CodeOptionId,
+  offered: CodeOptionsOffered = ALL_OFFERED,
+) => id !== "conversions" || offered.conversions;
+
+/**
  * The options a code of `kind` offers, in builder order. Hosted pages don't
  * redirect, so they have nothing to route or tag; website links open the
  * destination directly, so pixels belong on that site and the code offers
- * conversion tracking instead.
+ * conversion tracking instead (where this deployment offers it).
  */
-export function codeOptionsFor(kind: CodeKind): CodeOptionId[] {
-  return kind === "page"
-    ? ["password", "schedule", "pixels"]
-    : ["utm", "routing", "ab", "password", "schedule", "conversions"];
+export function codeOptionsFor(
+  kind: CodeKind,
+  offered: CodeOptionsOffered = ALL_OFFERED,
+): CodeOptionId[] {
+  const options: CodeOptionId[] =
+    kind === "page"
+      ? ["password", "schedule", "pixels"]
+      : ["utm", "routing", "ab", "password", "schedule", "conversions"];
+  return options.filter((id) => isCodeOptionOffered(id, offered));
 }
 
 export interface CodeOptionAccess {

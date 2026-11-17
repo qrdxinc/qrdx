@@ -8,6 +8,7 @@ import { requireDashboardScope } from "@/app/(app)/dashboard/codes/_lib/qr-codes
 import { getPageForEdit } from "@/app/(app)/dashboard/pages/_lib/landing-pages";
 import { getSavedThemePalettes } from "@/app/(app)/dashboard/pages/_lib/saved-themes";
 import { PageEditor } from "@/components/landing/editor/page-editor";
+import { hostedPageBranding } from "@/ee/white-label/access";
 import { HttpError } from "@/lib/error-response";
 import { getTemplate } from "@/lib/landing/templates";
 import { can } from "@/lib/permissions";
@@ -35,6 +36,9 @@ export default async function EditLandingPage({
     getSavedThemePalettes(scope),
   ]);
   const limits = getPlanLimits(plan);
+  // White-label and custom CSS: Business, and the licence key on a
+  // self-hosted server (ee/white-label).
+  const branding = hostedPageBranding(limits);
   const code =
     page.codes.find((item) => item.status === "active" && !item.inTrash) ??
     page.codes.find((item) => !item.inTrash) ??
@@ -44,9 +48,9 @@ export default async function EditLandingPage({
     <PageEditor
       branding={{
         badge: limits.landingPageBadge,
-        whiteLabel: limits.whiteLabel,
+        whiteLabel: branding.whiteLabel,
       }}
-      canUseCustomCss={limits.customCss}
+      canUseCustomCss={branding.customCss}
       code={
         code
           ? {

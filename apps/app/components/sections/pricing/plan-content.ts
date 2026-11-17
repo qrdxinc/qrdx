@@ -112,7 +112,12 @@ type HintId = Extract<RowKey, `${string}Hint`>;
 interface RowSpec {
   id: RowId;
   hint?: HintId;
-  value: (limits: PlanLimits, plan: Plan, copy: PricingCopy) => CellValue;
+  value: (
+    limits: PlanLimits,
+    plan: Plan,
+    copy: PricingCopy,
+    options: PricingOptions,
+  ) => CellValue;
   /** Left out where this deployment can't offer the feature. */
   feature?: keyof PricingOptions;
 }
@@ -123,15 +128,19 @@ function flag(...keys: (keyof PlanLimits)[]) {
     keys.every((key) => Boolean(limits[key]));
 }
 
-function landingPages(limits: PlanLimits, _: Plan, copy: PricingCopy): string {
+function landingPages(
+  limits: PlanLimits,
+  copy: PricingCopy,
+  whiteLabel: boolean,
+): string {
   const count = formatCount(limits.landingPages, copy);
   if (limits.landingPageBadge) {
     return copy.t("comparison.cells.pagesWithBadge", { count });
   }
-  if (limits.whiteLabel && limits.customCss) {
+  if (whiteLabel && limits.whiteLabel && limits.customCss) {
     return copy.t("comparison.cells.pagesWhiteLabelCss", { count });
   }
-  if (limits.whiteLabel) {
+  if (whiteLabel && limits.whiteLabel) {
     return copy.t("comparison.cells.pagesWhiteLabel", { count });
   }
   return copy.t("comparison.cells.pagesNoFooter", { count });
@@ -181,7 +190,11 @@ const GROUPS: {
         value: (l, _, copy) => formatCount(l.dynamicCodes, copy),
       },
       { id: "scans", hint: "scansHint", value: unlimited },
-      { id: "landingPages", value: landingPages },
+      {
+        id: "landingPages",
+        value: (l, _, copy, options) =>
+          landingPages(l, copy, offered(options, "whiteLabel")),
+      },
       {
         id: "savedThemes",
         value: (l, _, copy) =>
@@ -225,7 +238,11 @@ const GROUPS: {
       },
       { id: "linkControls", value: flag("linkControls") },
       { id: "pixels", value: flag("pixels") },
-      { id: "conversions", value: flag("conversions") },
+      {
+        id: "conversions",
+        feature: "conversions",
+        value: flag("conversions"),
+      },
     ],
   },
   {
@@ -259,6 +276,7 @@ const GROUPS: {
       {
         id: "clientReports",
         hint: "clientReportsHint",
+        feature: "clientPortal",
         value: (l, _, copy) =>
           l.clientReports
             ? copy.t(
@@ -271,6 +289,7 @@ const GROUPS: {
       {
         id: "clientPortal",
         hint: "clientPortalHint",
+        feature: "clientPortal",
         value: flag("clientPortal"),
       },
       {
@@ -361,6 +380,12 @@ export interface PricingOptions {
   sso?: boolean;
   /** The workspace audit log (QRDX_EE_LICENSE). */
   auditLog?: boolean;
+  /** The client portal and client-branded reports (QRDX_EE_LICENSE). */
+  clientPortal?: boolean;
+  /** White-label and custom CSS on hosted pages (QRDX_EE_LICENSE). */
+  whiteLabel?: boolean;
+  /** Conversion tracking (QRDX_EE_LICENSE). */
+  conversions?: boolean;
   /** Pay-by-invoice requests (qrdx.dev with email; agency tools). */
   invoiceRequests?: boolean;
 }
@@ -405,7 +430,10 @@ export function buildComparison(
             feature: copy.t(`comparison.rows.${spec.id}`),
             ...(hint && { hint }),
             values: Object.fromEntries(
-              PLANS.map((plan) => [plan, spec.value(limits[plan], plan, copy)]),
+              PLANS.map((plan) => [
+                plan,
+                spec.value(limits[plan], plan, copy, options),
+              ]),
             ) as Record<Plan, CellValue>,
           };
         }),
@@ -483,6 +511,7 @@ export function buildHighlights(
   const aiArt = offered(options, "aiArt");
   const domains = offered(options, "customDomains");
   const storage = offered(options, "fileStorage");
+  const clients = offered(options, "clientPortal");
   return {
     free: [
       t("highlights.unlimitedStatic"),
@@ -508,11 +537,13 @@ export function buildHighlights(
       pro.teamThemes ? t("highlights.themesShared") : t("highlights.themes"),
       t("highlights.routing"),
       t("highlights.linkControls"),
-      ...(pro.clientReports ? [t("highlights.clientReports")] : []),
+      ...(pro.clientReports && clients ? [t("highlights.clientReports")] : []),
       storageAndForms(pro, storage, copy),
     ],
     business: [
-      t("highlights.whiteLabel"),
+      ...(business.whiteLabel && offered(options, "whiteLabel")
+        ? [t("highlights.whiteLabel")]
+        : []),
       // The card starts "Everything in Pro": only a longer history is news.
       ...(business.analyticsRetentionDays > pro.analyticsRetentionDays
         ? [historyHighlight(business.analyticsRetentionDays, copy)]
@@ -529,9 +560,11 @@ export function buildHighlights(
       ...(business.auditLog && offered(options, "auditLog")
         ? [t("highlights.auditLog")]
         : []),
-      t("highlights.conversions"),
+      ...(business.conversions && offered(options, "conversions")
+        ? [t("highlights.conversions")]
+        : []),
       t("highlights.webhooks"),
-      ...(business.clientPortal && business.clientReportsWhiteLabel
+      ...(business.clientPortal && business.clientReportsWhiteLabel && clients
         ? [t("highlights.clientWork")]
         : []),
       ...(business.invoiceBilling && offered(options, "invoiceRequests")

@@ -300,6 +300,13 @@ describe("a self-hosted server with the licence key and no billing", () => {
       ...app.plans.PLAN_LIMITS.free,
       sso: true,
       auditLog: true,
+      clientReports: true,
+      clientReportsWhiteLabel: true,
+      clientPortal: true,
+      whiteLabel: true,
+      customCss: true,
+      landingPageBadge: false,
+      conversions: true,
     });
   });
 });

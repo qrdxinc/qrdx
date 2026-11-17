@@ -16,7 +16,6 @@ import {
   communityItemIdSchema,
   communityItemsQuerySchema,
 } from "@/app/api/v1/community/_lib/schemas";
-import { conversionBodySchema } from "@/app/api/v1/conversions/_lib/schemas";
 import {
   hookIdSchema,
   hookSampleQuerySchema,
@@ -30,6 +29,7 @@ import {
   ART_TEXT_MAX_LENGTH,
   aiArtRequestSchema,
 } from "@/components/sections/ai-art/config";
+import { conversionBodySchema } from "@/ee/conversions/schemas";
 import { AI_ART_DAILY_LIMIT } from "@/lib/ai/art";
 import {
   insufficientKeyScopeError,
@@ -1108,6 +1108,8 @@ On Pro and Business, \`preciseLocations\` lists the locations scanners chose to 
         security: [...security("codes:write"), {}],
         description: `Attributes a sale, sign-up or other conversion to the scan that brought the visitor (Business).
 
+Conversion tracking is under the QRdx commercial license. qrdx.dev has it; a self-hosted server has this endpoint only where conversion tracking is switched on with a license key (\`QRDX_EE_LICENSE\`), and answers 404 \`NOT_FOUND\` everywhere else.
+
 From your server, send an API key (or token) and the scan's \`sid\`, or the code id as \`code\`. From the browser, \`conversions.js\` sends \`sid\` with no key, for codes with conversion tracking turned on. An \`id\`, such as your order id, makes retries safe: a repeat returns 200 with \`duplicate: true\`. More in [Tracking and conversions](${docs("tracking-and-conversions")}).`,
         requestBody: {
           required: true,
@@ -2020,7 +2022,8 @@ export function buildOpenApiDocument(): Document {
       { name: "Scans", description: "Scan analytics of a code." },
       {
         name: "Conversions",
-        description: "Sales and sign-ups attributed to the scan behind them.",
+        description:
+          "Sales and sign-ups attributed to the scan behind them. Under the QRdx commercial license: on a self-hosted server only where the license key turns conversion tracking on.",
       },
       {
         name: "Hooks",

@@ -3,6 +3,7 @@ import {
   listLabels,
 } from "@/app/(app)/dashboard/codes/_lib/code-kind-shared";
 import { CODE_OPTION_COPY } from "@/app/(app)/dashboard/codes/_lib/code-options";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import type { MarketingSettingsPromise } from "./routing-panel";
 
@@ -21,7 +22,11 @@ export async function InactiveSettingsNotice({
   const result = await settings;
   if (!result.success) return null;
   const { kind, routing, utm, pixels } = result.data;
-  const inactive = inactiveOptions(kind, { routing, utm, pixels });
+  const inactive = inactiveOptions(
+    kind,
+    { routing, utm, pixels },
+    { conversions: isFeatureAvailable("conversions") },
+  );
   if (inactive.length === 0) return null;
   const names = listLabels(inactive.map((id) => CODE_OPTION_COPY[id].label));
   return (

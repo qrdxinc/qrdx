@@ -26,9 +26,10 @@ import {
   resetPublicStatsShareAction,
   setPublicStatsShareAction,
 } from "@/actions/public-stats";
-// Client branding (agency tools)
-import { StatsBrandingSection } from "@/components/agency/stats-branding-section";
+import { useAvailability } from "@/components/availability-provider";
 import { CopyButton } from "@/components/copy-button";
+// Client branding (agency tools, ee/client-portal, QRdx commercial licence)
+import { StatsBrandingSection } from "@/ee/client-portal/stats-branding-section";
 import type { PublicStatsShare } from "@/lib/public-stats-shared";
 
 export function ShareStatsDialog({
@@ -42,6 +43,8 @@ export function ShareStatsDialog({
 }) {
   const t = useTranslations("app.dashboard.codes.shareStatsDialog");
   const id = useId();
+  // Client branding only exists on servers with the licence key.
+  const clientBranding = useAvailability().has("clientPortal");
   const [share, setShare] = useState<PublicStatsShare | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -182,7 +185,7 @@ export function ShareStatsDialog({
               </div>
             )}
             {/* Client branding (agency tools): once the page is on. */}
-            {share.url && (
+            {share.url && clientBranding && (
               <StatsBrandingSection codeId={code.id} onShareChange={setShare} />
             )}
           </div>

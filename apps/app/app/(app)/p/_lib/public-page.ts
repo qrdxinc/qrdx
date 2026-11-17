@@ -7,6 +7,7 @@ import {
   getPageSettings,
   type PageSettings,
 } from "@/components/landing/page-settings-block";
+import { hostedPageBranding } from "@/ee/white-label/access";
 import { parseLandingPageContent } from "@/lib/landing/blocks";
 import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { type RedirectCode, redirectCodeColumns } from "@/lib/redirect/code";
@@ -30,7 +31,10 @@ export interface PublicPage {
   branding: {
     /** "Made with QRdx" footer (Free) */
     badge: boolean;
-    /** No QRdx branding at all (Business) */
+    /**
+     * No QRdx branding at all, and custom CSS applied: Business, and the
+     * licence key on a self-hosted server (ee/white-label/access.ts)
+     */
     whiteLabel: boolean;
     customCss: boolean;
   };
@@ -128,8 +132,7 @@ export const loadPublicPage = cache(
       plan,
       branding: {
         badge: limits.landingPageBadge,
-        whiteLabel: limits.whiteLabel,
-        customCss: limits.customCss,
+        ...hostedPageBranding(limits),
       },
     };
   },
