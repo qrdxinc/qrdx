@@ -8,6 +8,7 @@ import { describe, expect, it, vi } from "vitest";
 import { DOCS_CHAT } from "@/lib/docs-chat/config";
 import {
   createDocsRetriever,
+  createSearchWait,
   DocsRetrievalError,
   groupSearchResults,
   normalizeDocsPath,
@@ -428,5 +429,33 @@ describe("createDocsRetriever", () => {
     now += 600;
     await retriever.readPage("/docs/a");
     expect(docs.calls).toHaveLength(2);
+  });
+});
+
+describe("createSearchWait", () => {
+  it("gives a cold search one long wait, then the usual one", () => {
+    let time = 0;
+    const wait = createSearchWait(() => time, DOCS_CHAT.fetchTimeoutMs);
+    expect(wait.next()).toBe(DOCS_CHAT.coldSearchTimeoutMs);
+    // The site is down: the same answer's next tries don't wait long again.
+    expect(wait.next()).toBe(DOCS_CHAT.fetchTimeoutMs);
+    expect(wait.next()).toBe(DOCS_CHAT.fetchTimeoutMs);
+    // A later question may spend the long wait once more.
+    time += DOCS_CHAT.coldSearchRetryMs;
+    expect(wait.next()).toBe(DOCS_CHAT.coldSearchTimeoutMs);
+  });
+
+  it("uses the usual wait once a search has answered", () => {
+    const wait = createSearchWait(() => 0, DOCS_CHAT.fetchTimeoutMs);
+    wait.next();
+    wait.answered();
+    expect(wait.next()).toBe(DOCS_CHAT.fetchTimeoutMs);
+  });
+
+  it("keeps an answer's calls inside the route's 60 seconds", () => {
+    const worst =
+      DOCS_CHAT.coldSearchTimeoutMs +
+      (DOCS_CHAT.maxSteps - 2) * DOCS_CHAT.fetchTimeoutMs;
+    expect(worst).toBeLessThan(60_000);
   });
 });

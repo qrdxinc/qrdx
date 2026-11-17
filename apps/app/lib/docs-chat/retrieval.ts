@@ -283,6 +283,29 @@ export interface DocsRetriever {
   readonly origins: readonly string[];
 }
 
+/**
+ * How long each search may take. Until one has answered, the docs site may
+ * be cold (its first search builds the index), so a search waits
+ * DOCS_CHAT.coldSearchTimeoutMs; but only one such wait per
+ * DOCS_CHAT.coldSearchRetryMs, so a site that is down doesn't hold every
+ * call of an answer that long.
+ */
+export function createSearchWait(now: () => number, base: number) {
+  let hasAnswered = false;
+  let longWaitAt = Number.NEGATIVE_INFINITY;
+  return {
+    next(): number {
+      if (hasAnswered) return base;
+      if (now() - longWaitAt < DOCS_CHAT.coldSearchRetryMs) return base;
+      longWaitAt = now();
+      return Math.max(base, DOCS_CHAT.coldSearchTimeoutMs);
+    },
+    answered(): void {
+      hasAnswered = true;
+    },
+  };
+}
+
 export function createDocsRetriever(
   options: DocsRetrieverOptions,
 ): DocsRetriever {
@@ -303,12 +326,17 @@ export function createDocsRetriever(
     now,
   );
   const origins = [publicOrigin, docsOrigin];
+  const searchWait = createSearchWait(now, timeout);
 
-  async function get(url: string, accept: string): Promise<Response> {
+  async function get(
+    url: string,
+    accept: string,
+    timeoutMs = timeout,
+  ): Promise<Response> {
     try {
       return await doFetch(url, {
         headers: { accept },
-        signal: AbortSignal.timeout(timeout),
+        signal: AbortSignal.timeout(timeoutMs),
       });
     } catch (error) {
       throw new DocsRetrievalError(
@@ -326,7 +354,9 @@ export function createDocsRetriever(
     const response = await get(
       `${docsOrigin}/api/search?${params}`,
       "application/json",
+      searchWait.next(),
     );
+    searchWait.answered();
     if (!response.ok) {
       throw new DocsRetrievalError(
         "fetch_failed",
