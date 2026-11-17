@@ -492,14 +492,14 @@ export const BARCODE_FORMAT_PAGES: readonly BarcodeFormatPage[] = [
       "The start and stop letters are part of what you type and what a scanner reports; some systems use the choice of letter to tell kinds of labels apart. This generator adds no check digit; if your system needs one, add it to your number yourself.",
     ],
     sizing: [
-      "Codabar has no fixed width per character, so the width depends on the digits: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Wider symbols such as - and $ take more room than digits.",
+      "Codabar characters aren't all the same width, so the width depends on what you type: the sample A40156B comes out 37.7 × 19.2 mm in the downloads. Digits, - and $ are the narrow ones; : / . + and the start and stop letters take a little more room.",
       "Keep 10 modules of blank space each side, and make the bars tall enough to sweep easily: the generator starts at 15 mm.",
     ],
     faqs: [
       {
         question: "Which start and stop letters should I use?",
         answer:
-          "Use the ones your system expects. Many use A at both ends, and some use the letters to mark different label types. The letters can differ at each end.",
+          "Use the ones your system expects. Some systems use the letters to mark different label types. The letters can differ at each end.",
       },
       {
         question: "Can Codabar hold letters?",
