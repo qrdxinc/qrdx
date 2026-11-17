@@ -5,7 +5,6 @@ import * as schema from "@repo/database";
 import { and, database as db, eq } from "@repo/database";
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware, isAPIError } from "better-auth/api";
-import { eeLicensed } from "../ee-license";
 import { workspacePlanLimits } from "../plan";
 import { markUnsolicitedSignIn } from "../unsolicited-sign-in";
 import { emitWorkspaceChange } from "../workspace-audit";
@@ -13,6 +12,7 @@ import {
   isWorkspaceRoleName,
   type WorkspaceRoleName,
 } from "../workspace-role-rules";
+import { eeFeatureLicensed } from "./license";
 import {
   domainCovers,
   domainsOverlap,
@@ -140,18 +140,23 @@ async function signInProviderFor(domain: string): Promise<ProviderRow | null> {
  * without a licence key.
  */
 export async function ssoSignInOffered(domain: string): Promise<boolean> {
-  if (!eeLicensed(process.env)) return false;
+  if (!eeFeatureLicensed("sso")) return false;
   const normalized = normalizeSsoDomain(domain);
   if (!normalized) return false;
   const provider = await signInProviderFor(normalized);
   return provider !== null && (await ssoProviderUsable(provider));
 }
 
-/** True when the connection may sign people in today. */
+/**
+ * True when the connection may sign people in today: the licence still covers
+ * SSO (./license.ts, checked on every call so an expiry takes effect while
+ * the server runs), the domain is verified and the workspace is on Business.
+ */
 export async function ssoProviderUsable(provider: {
   organizationId: string | null;
   domainVerified: boolean | null;
 }): Promise<boolean> {
+  if (!eeFeatureLicensed("sso")) return false;
   if (!(provider.domainVerified && provider.organizationId)) return false;
   return (await workspacePlanLimits(provider.organizationId)).sso;
 }
@@ -342,7 +347,7 @@ export async function ssoRejoinDomains(
       equals(table.organizationId, organizationId),
   });
   const usable = providers.filter((p) => p.domainVerified);
-  if (usable.length === 0) return [];
+  if (usable.length === 0 || !eeFeatureLicensed("sso")) return [];
   if (!(await workspacePlanLimits(organizationId)).sso) return [];
   return usable.map((p) => p.domain);
 }

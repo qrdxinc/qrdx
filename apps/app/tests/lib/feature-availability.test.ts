@@ -3,6 +3,7 @@
 // a fake placeholder, and only "is it set" is ever read (except the app URL,
 // which passkeys need to be HTTPS).
 
+import { EE_FEATURES, type EeFeature } from "@repo/auth/ee-license";
 import {
   catalogParagraphs,
   computeFeatures,
@@ -33,10 +34,30 @@ import { toAvailabilityView } from "@/lib/integration-availability-view";
 
 const FAKE = "set";
 
+/**
+ * `eeFeatures` is what the server's check of QRDX_EE_LICENSE found
+ * (packages/auth/ee/license.ts; tests/auth/ee-license.test.ts checks real
+ * keys). Here a set key is taken as a valid one for every ee feature, unless
+ * a test says otherwise.
+ */
 const ctx = (
   env: Record<string, string | undefined>,
-  { onVercel = false, production = false } = {},
-): FeatureContext => ({ env, onVercel, production });
+  {
+    onVercel = false,
+    production = false,
+    eeFeatures,
+  }: {
+    onVercel?: boolean;
+    production?: boolean;
+    eeFeatures?: readonly EeFeature[];
+  } = {},
+): FeatureContext => ({
+  env,
+  onVercel,
+  production,
+  eeFeatures:
+    eeFeatures ?? (env.QRDX_EE_LICENSE?.trim() ? [...EE_FEATURES] : []),
+});
 
 /** Every variable any feature reads, set. */
 const EVERYTHING: Record<string, string> = {
@@ -365,11 +386,31 @@ describe("workspace SSO", () => {
   const on = (env: Record<string, string | undefined>) =>
     computeFeatures(ctx(env)).sso;
 
-  it("runs only with a licence key, whatever its value", () => {
-    expect(on({ QRDX_EE_LICENSE: "local-dev" })).toBe(true);
+  it("runs only with a valid licence key that covers it", () => {
+    expect(on({ QRDX_EE_LICENSE: FAKE })).toBe(true);
     expect(on({})).toBe(false);
     expect(on({ QRDX_EE_LICENSE: "  " })).toBe(false);
     expect(missingFeatureSetup("sso", ctx({}))).toEqual(["QRDX_EE_LICENSE"]);
+  });
+
+  it("counts a key the server turned down as no key", () => {
+    const invalid = ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: [] });
+    expect(computeFeatures(invalid)).toMatchObject({
+      sso: false,
+      auditLog: false,
+    });
+    expect(missingFeatureSetup("sso", invalid)).toEqual(["QRDX_EE_LICENSE"]);
+    expect(missingFeatureSetup("auditLog", invalid)).toEqual([
+      "QRDX_EE_LICENSE",
+    ]);
+  });
+
+  it("turns on only the features the licence lists", () => {
+    const ssoOnly = ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: ["sso"] });
+    expect(computeFeatures(ssoOnly)).toMatchObject({
+      sso: true,
+      auditLog: false,
+    });
   });
 
   it("hides its settings page and help page without one", () => {
@@ -390,11 +431,19 @@ describe("workspace SSO", () => {
 describe("client portal, white-label and conversions (ee/)", () => {
   const ids = ["clientPortal", "whiteLabel", "conversions"] as const;
 
-  it("run only with a licence key, like SSO and the audit log", () => {
+  it("run only with a valid licence key that covers them, like SSO and the audit log", () => {
     for (const id of ids) {
-      expect(computeFeatures(ctx({ QRDX_EE_LICENSE: "local-dev" }))[id]).toBe(
-        true,
-      );
+      expect(computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE }))[id]).toBe(true);
+      expect(
+        computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: [] }))[id],
+        id,
+      ).toBe(false);
+      expect(
+        computeFeatures(
+          ctx({ QRDX_EE_LICENSE: FAKE }, { eeFeatures: ["sso", "auditLog"] }),
+        )[id],
+        id,
+      ).toBe(false);
       expect(computeFeatures(ctx({}))[id], id).toBe(false);
       expect(computeFeatures(ctx({ QRDX_EE_LICENSE: " " }))[id], id).toBe(
         false,
@@ -419,7 +468,7 @@ describe("client portal, white-label and conversions (ee/)", () => {
       isPathShown(view.hiddenPaths, "/docs/tracking-and-conversions"),
     ).toBe(true);
     const licensed = toPublicAvailability(
-      computeFeatures(ctx({ QRDX_EE_LICENSE: "local-dev" })),
+      computeFeatures(ctx({ QRDX_EE_LICENSE: FAKE })),
     );
     expect(
       isPathShown(licensed.hiddenPaths, "/dashboard/acme/settings/clients"),
@@ -446,10 +495,12 @@ describe("billing", () => {
 describe("the ee features on every plan", () => {
   const SELF_HOSTED = {
     NEXT_PUBLIC_APP_URL: "https://qr.example.org",
-    QRDX_EE_LICENSE: "local-dev",
+    QRDX_EE_LICENSE: FAKE,
   };
-  const on = (env: Record<string, string | undefined>, flags = {}) =>
-    eeOnEveryPlan(ctx(env, flags));
+  const on = (
+    env: Record<string, string | undefined>,
+    flags: Parameters<typeof ctx>[1] = {},
+  ) => eeOnEveryPlan(ctx(env, flags));
 
   it("only on a self-hosted copy with the licence key and no billing", () => {
     expect(on(SELF_HOSTED)).toBe(true);
@@ -459,9 +510,10 @@ describe("the ee features on every plan", () => {
     );
   });
 
-  it("never without the key", () => {
+  it("never without a valid key", () => {
     expect(on({ ...SELF_HOSTED, QRDX_EE_LICENSE: undefined })).toBe(false);
     expect(on({ ...SELF_HOSTED, QRDX_EE_LICENSE: "  " })).toBe(false);
+    expect(on(SELF_HOSTED, { eeFeatures: [] })).toBe(false);
   });
 
   it("never where plans are sold", () => {

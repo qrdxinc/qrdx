@@ -6,6 +6,7 @@
 // plan (client branding on Pro, the rest on Business) they're all back.
 // In-memory tables (tests/support/fake-db); nothing touches a database.
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { testLicence } from "../support/ee-license";
 
 const state = vi.hoisted(() => ({
   plans: {} as Record<string, "free" | "pro" | "business">,
@@ -150,10 +151,13 @@ afterEach(() => {
   vi.resetModules();
 });
 
-describe("without QRDX_EE_LICENSE", () => {
+describe("without a valid QRDX_EE_LICENSE", () => {
   for (const [label, value] of [
     ["unset", undefined],
     ["blank", "  "],
+    ["any old value", "local-dev"],
+    ["expired past its grace period", testLicence({}, { days: -15 })],
+    ["a licence for other features", testLicence({ features: ["sso"] })],
   ] as const) {
     it(`hides the settings page and help page (${label})`, async () => {
       state.plans = { org_agency: "business" };
@@ -244,10 +248,10 @@ describe("without QRDX_EE_LICENSE", () => {
   });
 });
 
-describe("with QRDX_EE_LICENSE", () => {
+describe("with a valid QRDX_EE_LICENSE", () => {
   it("shows the settings page and opens the portal on Business only", async () => {
     state.plans = { org_agency: "business" };
-    const app = await load("local-dev");
+    const app = await load(testLicence());
     expect(app.isFeatureAvailable("clientPortal")).toBe(true);
     expect(app.isPathAvailable("/dashboard/agency/settings/clients")).toBe(
       true,
@@ -262,7 +266,7 @@ describe("with QRDX_EE_LICENSE", () => {
 
   it("brands the share on Pro, drops QRdx and serves the domain on Business", async () => {
     state.plans = { org_agency: "pro" };
-    const app = await load("local-dev");
+    const app = await load(testLicence());
     expect(await app.loadPublicStats(TOKEN, "30d")).toMatchObject({
       brand: { name: "Bloom Cafe", accent: "#1f6feb" },
       hideQrdx: false,

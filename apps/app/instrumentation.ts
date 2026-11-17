@@ -14,7 +14,8 @@
  *
  * The same goes for the plan limits packages/auth decides seats, more
  * workspaces, workspace SSO and required two-step verification from:
- * lib/plans.ts hands them over when it loads.
+ * lib/plans.ts hands them over when it loads. Last, it logs the state of the
+ * ee licence key (packages/auth/ee/license.ts).
  */
 export async function register() {
   if (process.env.NEXT_RUNTIME !== "nodejs") return;
@@ -24,4 +25,8 @@ export async function register() {
   );
   registerAppSessionOriginReader();
   await import("./lib/plans");
+  // Checks the ee licence key once at start-up, so the log says straight away
+  // whether single sign-on and the audit log are on (never the key itself).
+  const { eeLicenseState } = await import("@repo/auth/license");
+  eeLicenseState();
 }

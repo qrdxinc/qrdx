@@ -6,6 +6,7 @@
 import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RedirectCode } from "@/lib/redirect/code";
+import { testLicence } from "../support/ee-license";
 
 const state = vi.hoisted(() => ({
   plan: "business" as "free" | "pro" | "business",
@@ -183,8 +184,17 @@ afterEach(() => {
   vi.resetModules();
 });
 
-describe("without QRDX_EE_LICENSE", () => {
+describe("without a valid QRDX_EE_LICENSE", () => {
   it("isn't offered, and its API reference leaves the navigation", async () => {
+    for (const key of [
+      "local-dev",
+      testLicence({}, { days: -15 }),
+      testLicence({ features: ["sso"] }),
+    ]) {
+      expect((await load(key)).isFeatureAvailable("conversions"), key).toBe(
+        false,
+      );
+    }
     const app = await load(undefined);
     expect(app.isFeatureAvailable("conversions")).toBe(false);
     expect(app.isPathAvailable("/docs/developers/api/create-conversion")).toBe(
@@ -264,9 +274,9 @@ describe("without QRDX_EE_LICENSE", () => {
   });
 });
 
-describe("with QRDX_EE_LICENSE", () => {
+describe("with a valid QRDX_EE_LICENSE", () => {
   it("records reports and appends qrdx_sid to scans", async () => {
-    const app = await load("local-dev");
+    const app = await load(testLicence());
     expect(app.isFeatureAvailable("conversions")).toBe(true);
     const url = await scanDestination(app);
     const sid = url.searchParams.get(app.routing.SCAN_TOKEN_PARAM);
@@ -280,7 +290,7 @@ describe("with QRDX_EE_LICENSE", () => {
   });
 
   it("serves /conversions.js", async () => {
-    const app = await load("local-dev");
+    const app = await load(testLicence());
     const response = app.script.GET();
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toBe(
@@ -292,7 +302,7 @@ describe("with QRDX_EE_LICENSE", () => {
   });
 
   it("is turned on with Business, and offered in the code options", async () => {
-    const app = await load("local-dev");
+    const app = await load(testLicence());
     await app.db.setPixels({ consent: "auto" });
     state.plan = "pro";
     const pro = await app.marketing.saveCodePixels({

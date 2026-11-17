@@ -12,6 +12,7 @@
 // tables (../support/fake-db). Each case loads them afresh with its own
 // environment.
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { testLicence } from "../support/ee-license";
 
 vi.mock(
   "drizzle-orm",
@@ -34,13 +35,13 @@ const BUSINESS = "prod_business_monthly";
 const QRDX_DEV = {
   NEXT_PUBLIC_APP_URL: "https://qrdx.dev",
   POLAR_ACCESS_TOKEN: "test-polar-token",
-  QRDX_EE_LICENSE: "test-license",
+  QRDX_EE_LICENSE: testLicence(),
 };
 /** A self-hosted server on its own domain with the key and no Polar. */
 const SELF_HOSTED = {
   NEXT_PUBLIC_APP_URL: "https://qr.example.org",
   POLAR_ACCESS_TOKEN: undefined,
-  QRDX_EE_LICENSE: "local-dev",
+  QRDX_EE_LICENSE: testLicence(),
 };
 
 type Env = Record<string, string | undefined>;
@@ -308,6 +309,22 @@ describe("a self-hosted server with the licence key and no billing", () => {
       landingPageBadge: false,
       conversions: true,
     });
+  });
+});
+
+describe("a self-hosted server whose key covers only some ee features", () => {
+  it("gives every plan those features' limits and no others", async () => {
+    const app = await load({
+      ...SELF_HOSTED,
+      QRDX_EE_LICENSE: testLicence({ features: ["sso"] }),
+    });
+    expect(app.plans.getPlanLimits("free")).toEqual({
+      ...app.plans.PLAN_LIMITS.free,
+      sso: true,
+    });
+    // No white-label, so hosted pages keep the "Made with QRdx" footer.
+    expect(app.plans.getPlanLimits("free").landingPageBadge).toBe(true);
+    expect(await app.auditRecords("free")).toBe(false);
   });
 });
 

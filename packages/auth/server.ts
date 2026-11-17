@@ -30,6 +30,7 @@ import {
   confirmSignIn,
   confirmSignInRefused,
 } from "./confirm-sign-in";
+import { eeFeatureLicensed } from "./ee/license";
 import {
   SSO_SERVER_ONLY_PATHS,
   SSO_SIGN_IN_PATH,
@@ -39,7 +40,6 @@ import {
   validateSsoUserInfo,
 } from "./ee/sso";
 import { ssoRequirementGate } from "./ee/sso-required";
-import { eeLicensed } from "./ee-license";
 import { sendVerificationOTP } from "./email-otp";
 import { keys } from "./keys";
 import { newSignIn } from "./new-sign-in";
@@ -190,9 +190,11 @@ const twoFactorPlugin = twoFactor({
 });
 
 // Workspace single sign-on (./ee/sso.ts, QRdx commercial licence) only runs
-// with a licence key (./ee-license.ts). Without one its plugin, endpoints,
-// blocked paths and rate limits are left out entirely.
-const ssoLicensed = eeLicensed(process.env);
+// with a valid licence key that covers it (./ee/license.ts: signed by QRdx,
+// not past its expiry and grace period). Without one its plugin, endpoints,
+// blocked paths and rate limits are left out entirely. A licence that runs
+// out while the server is up turns SSO off through ./ee/sso.ts's checks.
+const ssoLicensed = eeFeatureLicensed("sso");
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {

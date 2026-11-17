@@ -2641,7 +2641,7 @@
       },
       "sign": {
         "title": "Sign and pay by invoice",
-        "body": "Once the contract is signed, we send the invoice and move your workspace on qrdx.dev to the Business plan. If you self-host, the contract also covers single sign-on, the audit log, the client portal, white-label pages and conversion tracking on your own server, switched on with QRDX_EE_LICENSE."
+        "body": "Once the contract is signed, we send the invoice and move your workspace on qrdx.dev to the Business plan. If you self-host, the contract also covers single sign-on, the audit log, the client portal, white-label pages and conversion tracking on your own server: we send a license key for QRDX_EE_LICENSE. It has an expiry, and your server checks it offline."
       }
     },
     "formTitle": "Talk to us",
@@ -3468,7 +3468,7 @@
       "eeBody": "Workspace single sign-on, the audit log, the client portal and client reports, white-label pages with custom CSS, and conversion tracking"
     },
     "eeLicense": "QRdx Commercial License",
-    "eeNote": "You can read, test and contribute to the code in the ee folders, but using it in production needs a written agreement with QRdx. On a self-hosted instance those features stay off unless QRDX_EE_LICENSE is set, and everything else works without them.",
+    "eeNote": "You can read, test and contribute to the code in the ee folders, but using it in production needs a written agreement with QRdx. On a self-hosted instance those features stay off unless QRDX_EE_LICENSE holds a valid key, which QRdx issues with the agreement and your server checks offline, and everything else works without them.",
     "eeAgreement": "Enterprise agreements cover running them on your own server: <link>ask on the enterprise page</link> or email {email}.",
     "waysEyebrow": "Ways to use it",
     "waysTitle": "Pick how you run it",
@@ -3542,7 +3542,7 @@
       "githubQuestion": "Where is the QRdx source code on GitHub?",
       "githubAnswer": "At github.com/qrdxinc/qrdx. It's one monorepo with the web app, the qrdx library, the CLI, the plugins and the docs.",
       "freeQuestion": "Is QRdx free to self-host?",
-      "freeAnswer": "Yes. There's no license fee for the app; you pay only for your own server and database. A self-hosted instance runs dynamic codes, hosted pages and scan analytics. The business features in the ee folders are the exception: single sign-on, the audit log, the client portal, white-label pages and conversion tracking stay off unless QRDX_EE_LICENSE is set, and using them in production needs an enterprise agreement.",
+      "freeAnswer": "Yes. There's no license fee for the app; you pay only for your own server and database. A self-hosted instance runs dynamic codes, hosted pages and scan analytics. The business features in the ee folders are the exception: single sign-on, the audit log, the client portal, white-label pages and conversion tracking stay off unless QRDX_EE_LICENSE holds a valid key, which QRdx issues with an enterprise agreement and your server checks offline. Using them in production needs that agreement.",
       "needQuestion": "What do I need to self-host QRdx?",
       "needAnswer": "You need Docker with Compose v2, or Node.js 22 and Bun 1.4 for the manual setup, and a Postgres database: the one docker-compose.yml starts, or Neon. Set NEXT_PUBLIC_APP_URL, DATABASE_URL and BETTER_AUTH_SECRET, and give people a way to sign in with a GitHub or Google OAuth app, or with email codes through Resend.",
       "closedQuestion": "Can I use the QR code library in a closed-source app?",

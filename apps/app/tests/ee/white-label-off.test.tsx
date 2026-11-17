@@ -4,6 +4,7 @@
 // branding and without its CSS (Never-Hostage). Saving such a page still
 // works. With the key, Business has both, as on qrdx.dev; Pro doesn't.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { testLicence } from "../support/ee-license";
 import { fakeDb } from "../support/fake-db";
 import { renderIntl } from "../support/intl";
 
@@ -39,12 +40,19 @@ vi.mock("@/lib/feature-availability", async (importOriginal) => {
   const actual =
     await importOriginal<typeof import("@/lib/feature-availability")>();
   const { computeFeatures } = await import("@repo/availability");
+  const { eeLicensedFeatures, eeLicenseState } = await import(
+    "@repo/auth/license"
+  );
   return {
     ...actual,
     isFeatureAvailable: (id: keyof ReturnType<typeof computeFeatures>) =>
-      computeFeatures({ env: process.env, onVercel: false, production: false })[
-        id
-      ],
+      computeFeatures({
+        env: process.env,
+        onVercel: false,
+        production: false,
+        // The server's check of the key (packages/auth/ee/license.ts).
+        eeFeatures: eeLicensedFeatures(eeLicenseState(process.env)),
+      })[id],
   };
 });
 // next/font only works inside Next's compiler; these pages use no web fonts.
@@ -234,9 +242,15 @@ afterEach(() => {
 const license = (value: string | undefined) =>
   vi.stubEnv("QRDX_EE_LICENSE", value);
 
-describe("without QRDX_EE_LICENSE", () => {
+describe("without a valid QRDX_EE_LICENSE", () => {
   it("gives no workspace white-label or custom CSS, whatever its plan", async () => {
-    for (const value of [undefined, "  "]) {
+    for (const value of [
+      undefined,
+      "  ",
+      "local-dev",
+      testLicence({}, { days: -15 }),
+      testLicence({ features: ["sso"] }),
+    ]) {
       license(value);
       expect(isFeatureAvailable("whiteLabel")).toBe(false);
       expect(hostedPageBranding(BUSINESS)).toEqual(PRO);
@@ -275,9 +289,9 @@ describe("without QRDX_EE_LICENSE", () => {
   });
 });
 
-describe("with QRDX_EE_LICENSE", () => {
+describe("with a valid QRDX_EE_LICENSE", () => {
   it("gives Business white-label and custom CSS, as on qrdx.dev", async () => {
-    license("local-dev");
+    license(testLicence());
     expect(isFeatureAvailable("whiteLabel")).toBe(true);
     expect(hostedPageBranding(BUSINESS)).toEqual(BUSINESS);
     const { page, css, html } = await serve();
@@ -294,7 +308,7 @@ describe("with QRDX_EE_LICENSE", () => {
 
   it("gives Pro neither, and refuses saving custom CSS on Pro as before", async () => {
     state.plan = "pro";
-    license("local-dev");
+    license(testLicence());
     expect(hostedPageBranding(PRO)).toEqual(PRO);
     const { css, html } = await serve();
     expect(css).toBeNull();
@@ -356,7 +370,7 @@ describe("checking custom CSS", () => {
   });
 
   it("refuses unsafe CSS on save with the licence, as before, whatever the plan", async () => {
-    license("local-dev");
+    license(testLicence());
     const refused = {
       status: 400,
       code: "VALIDATION_ERROR",
@@ -368,7 +382,7 @@ describe("checking custom CSS", () => {
   });
 
   it("never applies stored unsafe CSS", async () => {
-    license("local-dev");
+    license(testLicence());
     const row = fakeDb.find("landingPage", { id: "page_1" });
     if (row) row.content = withCss(UNSAFE);
     const { css, html } = await serve();

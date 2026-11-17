@@ -1,4 +1,8 @@
 import {
+  assertLicensePublicKey,
+  QRDX_LICENSE_PUBLIC_KEY,
+} from "@repo/auth/ee/license-public-key";
+import {
   API_HOST,
   CANONICAL_HOST,
   CANONICAL_ORIGIN,
@@ -146,6 +150,18 @@ if (siteZone.length > 0 && !env.SITE_ZONE_KEY) {
   console.warn(
     "⚠ SITE_ORIGIN is set but SITE_ZONE_KEY isn't: the site can't tell requests that came through this app. Set the same SITE_ZONE_KEY on both.",
   );
+}
+
+// QRDX_EE_LICENSE is checked against QRdx's licence public key, compiled into
+// the build (packages/auth/ee/license-public-key.ts). A production build
+// without it would turn every licence key down, so `next build` and
+// `next start` stop here instead. `next typegen` loads this file the same
+// way but builds nothing (the typechecks run it), so it goes on.
+if (
+  process.env.NODE_ENV === "production" &&
+  !process.argv.includes("typegen")
+) {
+  assertLicensePublicKey(QRDX_LICENSE_PUBLIC_KEY);
 }
 
 // Another zone's build assets aren't pages: no page policy on them while
