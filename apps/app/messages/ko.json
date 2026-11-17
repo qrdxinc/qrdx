@@ -526,8 +526,7 @@
           "answer": "네. 로고 오버레이는 무료 요금제에 포함돼요. 이미지를 업로드하면(투명 배경의 PNG가 가장 좋아요) QRdx가 가운데에 배치하고 그 아래 모듈을 비워 줘요. QR 코드는 Reed-Solomon 오류 정정(ISO/IEC 18004)을 사용해요. QRdx의 기본값은 Q 레벨로 코드의 약 25%를 복구할 수 있어서, 가운데에 로고가 있어도 스캔할 수 있어요. 인쇄하기 전에 여러 휴대폰으로 테스트해 보세요."
         },
         "openSource": {
-          "question": "QRdx는 오픈소스인가요?",
-          "answer": "네. QRdx는 GNU AGPL-3.0(또는 그 이후 버전)에 따른 오픈소스이며 GitHub에서 공개적으로 개발돼요. 코드를 살펴보고, 이슈를 등록하고, 기여하거나, 동적 코드와 호스팅 페이지를 포함한 나만의 인스턴스를 직접 호스팅할 수도 있어요. QR 라이브러리는 React 앱용으로 npm에 qrdx라는 이름으로 배포돼 있어요. AGPL은 카피레프트 라이선스이므로, 비공개 소스 소프트웨어에 포함하기 전에 프로젝트에 맞는지 확인하세요."
+          "question": "QRdx는 오픈소스인가요?"
         },
         "api": {
           "question": "개발자가 API로 QR 코드를 생성할 수 있나요?",
@@ -925,6 +924,53 @@
         }
       }
     },
+    "shell": {
+      "header": {
+        "docs": "문서",
+        "dashboard": "대시보드",
+        "github": "GitHub의 QRdx"
+      },
+      "actions": {
+        "copyPage": "페이지 복사",
+        "copied": "복사됨",
+        "more": "이 페이지를 활용하는 다른 방법",
+        "copyMarkdown": "페이지를 Markdown으로 복사",
+        "viewMarkdown": "Markdown으로 보기",
+        "mcp": "QRdx MCP 서버 연결"
+      },
+      "feedback": {
+        "question": "이 페이지가 도움이 되었나요?",
+        "yes": "예",
+        "no": "아니요",
+        "thanks": "감사합니다. 피드백은 익명으로 처리되며 예와 아니요의 횟수만 저장됩니다.",
+        "edit": "GitHub에서 이 페이지 수정",
+        "report": "문제 신고",
+        "issueTitle": "문서: {title}",
+        "issueBody": "페이지: {url}\n\n잘못되었거나 빠진 내용:\n"
+      },
+      "notFound": {
+        "search": "문서 검색",
+        "sections": "또는 섹션에서 시작해 보세요"
+      },
+      "code": {
+        "copy": "코드 복사",
+        "copied": "복사됨"
+      },
+      "video": {
+        "play": "{title} 재생",
+        "pause": "{title} 일시정지",
+        "reducedMotion": "시스템에서 동작 줄이기를 요청해서 클립이 재생을 기다리고 있어요."
+      },
+      "plan": {
+        "title": "{plans} 필요",
+        "or": "{a} 또는 {b}",
+        "body": "플랜별 포함 내용은 다음 페이지에서 확인하세요",
+        "link": "플랜 및 한도",
+        "pro": "Pro",
+        "business": "Business",
+        "enterprise": "엔터프라이즈"
+      }
+    },
     "ui": {
       "search": "검색",
       "searchPlaceholder": "검색",
@@ -957,6 +1003,253 @@
       "typeTableDefault": "기본값",
       "typeTableParameters": "매개변수",
       "typeTableReturns": "반환값"
+    },
+    "shots": {
+      "diagrams": {
+        "dynamic-redirect": {
+          "title": "동적 코드가 리디렉션되는 방식: 스캔하면 짧은 링크가 열리고, QRdx가 코드의 규칙을 적용해 휴대폰을 목적지로 보내며, 그 과정에서 스캔을 기록합니다.",
+          "scan": "스캔",
+          "scanNote": "휴대폰이 코드를 읽어요",
+          "shortLink": "짧은 링크",
+          "shortLinkNote": "패턴에 담긴 내용",
+          "rules": "규칙",
+          "rulesNote": "기기, 위치, 시간, 분할",
+          "destination": "목적지",
+          "destinationNote": "언제든 변경할 수 있어요",
+          "recorded": "스캔 기록됨",
+          "recordedNote": "국가, 기기, 시간만 기록하고 개인은 기록하지 않아요"
+        },
+        "static-vs-dynamic": {
+          "title": "정적 코드와 동적 코드의 차이: 정적 코드는 패턴에 콘텐츠를 직접 담고, 동적 코드는 QRdx가 변경 가능한 목적지로 연결해 주는 짧은 링크를 담습니다.",
+          "static": "정적 코드",
+          "dynamic": "동적 코드",
+          "printed": "인쇄된 코드",
+          "printedNote": "종이나 화면에 표시된 패턴",
+          "content": "콘텐츠 자체",
+          "contentNote": "링크, Wi-Fi 정보, 연락처",
+          "staticEnd": "인쇄하면 고정돼요. 스캔 횟수는 집계되지 않아요.",
+          "shortLink": "짧은 링크",
+          "shortLinkNote": "qrdx.dev/q/… 또는 내 도메인",
+          "destination": "목적지",
+          "destinationNote": "수정 가능, 모든 스캔 집계"
+        },
+        "smart-routing": {
+          "title": "스마트 라우팅이 결정하는 방식: 규칙을 위에서부터 읽고, 조건이 스캔과 처음으로 일치하는 규칙의 목적지로 보냅니다. 일치하는 규칙이 없는 스캔은 코드의 기본 목적지로 이동합니다.",
+          "scan": "스캔이 들어와요",
+          "scanNote": "기기, OS, 국가, 언어, 시간",
+          "rule1": "iPhone 또는 iPad → iOS 페이지",
+          "rule2": "언어가 스페인어 → 스페인어 페이지",
+          "rule3": "주말 08:00–14:00 → 브런치 혜택",
+          "firstMatch": "첫 번째 일치 규칙 적용",
+          "firstMatchNote": "규칙의 목적지",
+          "noMatch": "일치하는 규칙 없음",
+          "noMatchNote": "코드의 기본 목적지",
+          "footnote": "규칙은 라우팅 패널에 표시된 순서대로 확인돼요. 드래그해서 순서를 바꿀 수 있어요."
+        },
+        "custom-domain": {
+          "title": "커스텀 도메인의 라우팅 방식: DNS 제공업체의 CNAME 레코드가 호스트 이름을 QRdx로 연결하면, QRdx가 해당 도메인에서 단축 링크를 제공하고 각 스캔을 목적지로 리디렉션해요.",
+          "scan": "스캔",
+          "scanNote": "내 도메인의 단축 링크를 열어요",
+          "dns": "내 DNS",
+          "dnsNote": "CNAME 레코드 1개",
+          "record": "qr.example.com  CNAME → QRdx",
+          "qrdx": "QRdx",
+          "qrdxNote": "HTTPS로 내 도메인에 응답해요",
+          "destination": "목적지",
+          "destinationNote": "코드의 규칙이 그대로 적용돼요",
+          "footnote": "레코드는 한 번만 설정하면 돼요. QRdx가 확인하면 해당 도메인의 모든 코드가 바로 작동해요."
+        },
+        "webhook-delivery": {
+          "title": "웹훅 전달 방식: QRdx가 서명과 함께 이벤트를 엔드포인트로 POST해요. 2xx 응답이면 전달됨으로 표시하고, 그 외에는 점점 늘어나는 간격으로 재시도하며 8번 시도 후 실패로 표시해요.",
+          "event": "이벤트",
+          "eventNote": "scan.created, form.submitted…",
+          "post": "엔드포인트로 POST",
+          "postNote": "JSON 본문, X-QRdx-Signature 헤더",
+          "delivered": "전달됨",
+          "deliveredNote": "2xx 응답",
+          "retry": "재시도됨",
+          "retryNote": "시간 초과 또는 그 외 응답",
+          "schedule": "1분 · 4분 · 16분 · 1시간 · 4시간 · 17시간 · 24시간",
+          "failed": "실패",
+          "failedNote": "8번 시도 후 실패, 직접 재시도할 수 있어요",
+          "footnote": "모든 시도는 받은 응답과 함께 엔드포인트 페이지에 표시돼요."
+        },
+        "image-api": {
+          "title": "Image API가 코드를 만드는 방식: 콘텐츠와 스타일을 담은 GET 요청 한 번이면 QRdx가 데이터를 인코딩하고 디자인을 렌더링해, 어떤 페이지에서든 삽입할 수 있는 SVG, PNG, WebP 또는 EPS 이미지로 응답해요.",
+          "request": "GET /v1/qr",
+          "requestNote": "데이터, 크기, 색상, 스타일…",
+          "encode": "인코딩",
+          "encodeNote": "오류 정정, 버전",
+          "render": "렌더링",
+          "renderNote": "패턴, 눈, 프레임, 로고",
+          "response": "이미지",
+          "responseNote": "SVG, PNG, WebP 또는 EPS",
+          "example": "api.qrdx.dev/v1/qr?data=https://example.com&format=png",
+          "noKey": "키도 할당량도 없어요. URL을 어떤 페이지의 이미지 태그에든 그대로 넣으면 됩니다.",
+          "footnote": "같은 쿼리는 항상 같은 바이트를 반환하므로 응답은 1년 동안 캐시됩니다."
+        },
+        "hosted-page-anatomy": {
+          "title": "호스팅 페이지가 작동하는 방식: 편집기에서 블록을 배치해 게시하면 QRdx가 페이지를 제공하고, 인쇄된 코드의 짧은 링크는 휴대폰에서 최신 게시 버전을 엽니다.",
+          "editor": "편집기",
+          "editorNote": "페이지 블록 배치",
+          "publish": "게시",
+          "page": "호스팅 페이지",
+          "pageNote": "qrdx.dev/p/…에서 QRdx가 제공",
+          "code": "인쇄된 QR 코드",
+          "codeNote": "페이지의 짧은 링크 포함",
+          "scan": "스캔하면 페이지가 열려요",
+          "block1": "헤더",
+          "block2": "링크",
+          "block3": "메뉴",
+          "block4": "양식",
+          "footnote": "다시 게시하면 이미 인쇄된 모든 코드가 새 버전을 엽니다."
+        },
+        "import-flow": {
+          "title": "가져오기가 작동하는 방식: 이전 제공업체의 링크가 QRdx의 동적 QR 코드가 되고, 선택 단계에서 이전 링크마다 새 QRdx 링크를 가리키도록 설정해 이미 인쇄한 코드도 계속 작동합니다.",
+          "importing": "가져오기",
+          "source": "이전 제공업체",
+          "sourceNote": "연결된 계정 또는 파일",
+          "import": "가져오기",
+          "importNote": "선택, 미리보기, 가져오기",
+          "codes": "QRdx의 동적 QR 코드",
+          "codesNote": "목적지, 제목, 태그, 폴더",
+          "keeping": "인쇄한 코드를 계속 쓰기 (선택)",
+          "printed": "인쇄해 둔 코드",
+          "printedNote": "이전 단축 링크가 담겨 있어요",
+          "newLink": "새 QRdx 링크",
+          "newLinkNote": "이전 링크가 여기로 연결돼요",
+          "destination": "목적지",
+          "destinationNote": "QRdx에서 수정하고 집계해요",
+          "footnote": "이전 계정이 활성 상태여야 해당 링크가 계속 리디렉션돼요."
+        },
+        "precise-location-flow": {
+          "title": "정밀 위치가 작동하는 방식: 스캔 후 스캔한 사람에게 위치 공유를 요청하고, 공유된 위치는 약 100m 단위로 반올림해 스캔과 함께 저장되어 지역 규칙에 쓰이며, 스캔한 사람은 허용하든 건너뛰든 목적지로 이동합니다.",
+          "scan": "스캔",
+          "scanNote": "단축 링크를 열어요",
+          "ask": "위치를 공유할까요?",
+          "askNote": "스캔한 사람이 선택해요",
+          "skip": "건너뛰기",
+          "allow": "허용",
+          "destination": "목적지",
+          "destinationNote": "어느 쪽이든 열려요",
+          "stored": "스캔과 함께 저장된 지점",
+          "storedNote": "약 100m 단위로 반올림해요",
+          "rule": "지역 규칙",
+          "ruleNote": "스마트 라우팅에서 쓸 수 있어요",
+          "footnote": "위치 공유를 건너뛰거나 거부해도 스캔은 집계되며, 국가, 지역, 도시는 네트워크 정보로 파악해요."
+        },
+        "nfc-link": {
+          "title": "NFC 태그가 코드와 함께 작동하는 방식: 태그에는 코드의 단축 링크 끝에 ?nfc가 붙은 주소가 담겨 있어서, 태그를 대면 스캔과 같은 리디렉션을 거치며 탭으로 집계됩니다.",
+          "tap": "휴대폰으로 태그를 대요",
+          "tapNote": "링크가 열려요",
+          "tag": "NFC 태그",
+          "tagNote": "NFC 링크가 담겨 있어요",
+          "link": "?nfc가 붙은 짧은 링크",
+          "linkNote": "스캔과 동일한 리디렉션",
+          "example": "qrdx.dev/q/aB3dE5f?nfc",
+          "counted": "탭으로 집계돼요",
+          "countedNote": "Analytics에서 QR 스캔과 함께 표시",
+          "destination": "이동 위치",
+          "destinationNote": "스캔과 동일",
+          "footnote": "QR 코드는 자체 링크를 그대로 유지하므로 이미 인쇄한 코드도 전과 같이 작동해요."
+        },
+        "file-delivery": {
+          "title": "파일이 저장되고 제공되는 방식: 브라우저가 파일을 스토리지 버킷에 바로 업로드하면 QRdx가 파일을 확인하고 고유한 링크를 부여하며, 페이지와 코드, 방문자는 그 링크를 사용합니다.",
+          "browser": "내 브라우저",
+          "browserNote": "파일을 직접 업로드",
+          "bucket": "스토리지 버킷",
+          "bucketNote": "업로드를 받음",
+          "check": "QRdx가 파일을 확인",
+          "checkNote": "크기와 실제 형식",
+          "link": "파일의 QRdx 링크",
+          "linkNote": "qrdx.dev/api/files/…",
+          "visitor": "페이지, 코드, 방문자",
+          "visitorNote": "링크로 파일을 열어요",
+          "footnote": "파일을 교체해도 링크는 그대로이므로, 이 링크를 쓰는 곳은 아무것도 바꿀 필요가 없어요."
+        },
+        "tracking-paths": {
+          "title": "스캔 이후의 동작을 추적하는 두 가지 방법: 호스팅 페이지는 법에서 요구하는 경우 방문자에게 동의를 받은 뒤 사용자의 픽셀을 로드하고, 사용자의 웹사이트로 연결되는 방문에는 서명된 스캔 ID가 포함되어 방문자가 전환할 때 웹사이트가 이를 QRdx에 다시 알려줍니다.",
+          "scan": "스캔",
+          "scanNote": "항상 집계됨",
+          "pagePath": "호스팅 페이지를 여는 코드",
+          "sitePath": "내 웹사이트를 여는 코드",
+          "page": "페이지 열림",
+          "pageNote": "QRdx에서 제공",
+          "consent": "동의",
+          "consentNote": "필요한 경우에만 요청",
+          "pixels": "내 픽셀",
+          "pixelsNote": "이후에 로드",
+          "site": "링크 열림",
+          "siteNote": "qrdx_sid가 추가됨",
+          "convert": "방문자 전환",
+          "convertNote": "구매, 회원 가입",
+          "report": "전환",
+          "reportNote": "QRdx로 전송됨",
+          "footnote": "픽셀은 Pro와 Business에 포함되며, 전환 추적은 Business에 포함됩니다."
+        },
+        "client-portal-access": {
+          "title": "클라이언트 포털이 클라이언트에게 보이는 범위를 제한하는 방법: 클라이언트 초대장에서 폴더를 선택하면, 포털은 해당 클라이언트에게 그 폴더만 읽기 전용으로 회원님의 이름으로 보여줍니다.",
+          "workspace": "워크스페이스의 폴더",
+          "folder1": "클라이언트 A: 메뉴",
+          "folder2": "클라이언트 A: 이벤트",
+          "folder3": "클라이언트 B",
+          "folder4": "내부용",
+          "invite": "초대장",
+          "inviteNote": "이메일과 선택한 폴더",
+          "portal": "클라이언트에게 보이는 화면",
+          "portalName": "내 포털",
+          "readOnly": "읽기 전용, 스캔 분석 포함",
+          "footnote": "클라이언트는 워크스페이스 멤버가 아니며 좌석을 차지하지 않습니다."
+        },
+        "self-hosting-stack": {
+          "title": "Docker Compose 서비스 4개: 브라우저 요청이 앱에 도달하고, 앱은 쿼리를 Neon 호환 HTTP 프록시로 보내며, 프록시는 Postgres와 통신하고, 일회성 migrate 작업이 스키마를 적용합니다.",
+          "browser": "브라우저",
+          "browserNote": "방문자",
+          "compose": "docker compose",
+          "app": "app",
+          "appNote": "QRdx 서버",
+          "proxy": "db-proxy",
+          "proxyNote": "Postgres로 HTTP",
+          "db": "db",
+          "dbNote": "Postgres 16",
+          "migrate": "마이그레이션",
+          "migrateNote": "스키마를 한 번 적용해요",
+          "footnote": "일반 Postgres 대신 Neon을 사용하면 앱이 직접 연결되므로 프록시가 필요 없어요."
+        },
+        "wont-scan-contrast": {
+          "title": "같은 QR 코드를 두 번 보여줘요. 흰색 배경에 어두운 색은 스캔되고, 흰색 위의 밝은 회색은 스캔되지 않아요.",
+          "good": "밝은 배경에 어두운 색: 스캔돼요",
+          "bad": "흰색 위의 회색: 스캔 안 돼요",
+          "ratio": "명암비 {ratio}:1"
+        },
+        "wont-scan-quiet-zone": {
+          "title": "아트워크 위의 같은 QR 코드를 두 번 보여줘요. 아트워크가 가장자리에 닿으면 스캐너가 인식하지 못할 수 있고, 주변에 4모듈의 빈 공간을 두면 스캔돼요.",
+          "bad": "아트워크가 코드에 닿아 있어요",
+          "badNote": "스캐너가 가장자리를 찾지 못해요",
+          "good": "주변의 빈 공간",
+          "goodNote": "4모듈 크기의 여백"
+        },
+        "wont-scan-print-size": {
+          "title": "QR 코드는 너비의 약 10배 거리에서 스캔돼요. 2cm 코드는 약 20cm, 10cm 코드는 약 1m 거리에서 스캔돼요.",
+          "cardWidth": "2cm",
+          "cardDistance": "약 20cm",
+          "cardNote": "손에 든 카드",
+          "posterWidth": "10cm",
+          "posterDistance": "약 1m",
+          "posterNote": "벽에 붙인 포스터",
+          "footnote": "스캔 거리는 코드 너비의 약 10배예요."
+        },
+        "wont-scan-eyes": {
+          "title": "모서리 눈 모양: 사각형, 둥근형, 톱니형 눈은 모든 앱에서 스캔돼요. 원형과 곱슬형 눈은 일부 스캐너 앱에서 인식되지 않아요.",
+          "good": "어디서나 스캔돼요",
+          "bad": "일부 앱에서는 실패해요",
+          "square": "사각형",
+          "rounded": "둥근형",
+          "gear": "톱니형",
+          "circle": "원형",
+          "curly": "곱슬형"
+        }
+      }
     }
   },
   "common": {
@@ -5395,6 +5688,10 @@
     "browseLayout": {
       "filters": "필터"
     },
+    "cardRail": {
+      "previous": "이전 항목 보기",
+      "next": "더 보기"
+    },
     "communityTabs": {
       "community": "커뮤니티"
     },
@@ -5465,7 +5762,10 @@
       "nameIsNoLongerIn": "\"{name}\"은(는) 더 이상 커뮤니티에 없어요."
     },
     "itemCard": {
-      "empty": "비어 있음"
+      "empty": "비어 있음",
+      "viewAll": "모두 보기",
+      "saves": "저장",
+      "itemCount": "{count, plural, one {#개 항목} other {#개 항목}}"
     },
     "itemPages": {
       "previous": "이전",
@@ -5475,6 +5775,9 @@
       "loadMore": "더 보기",
       "loading": "불러오는 중",
       "failed": "다음 페이지를 불러오지 못했어요."
+    },
+    "makerCard": {
+      "itemsAndSaves": "{items, plural, one {#개 항목} other {#개 항목}} · {saves, plural, one {저장 #회} other {저장 #회}}"
     },
     "more": {
       "load": "더 보기",
@@ -5562,6 +5865,10 @@
     "tryIt": {
       "tryItWithYourLink": "내 링크로 사용해 보기",
       "drawnInYourBrowserNothing": "브라우저에서 그려져요. 전송되는 정보는 없어요."
+    },
+    "search": {
+      "label": "커뮤니티 검색",
+      "placeholder": "프레임, 테마, 페이지 검색"
     }
   },
   "app": {

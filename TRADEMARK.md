@@ -1,9 +1,11 @@
 # QRdx trademark policy
 
-The QRdx code is open source. The QRdx name, logo and the qrdx.dev domain are
-not: they identify the official product, so people can tell what comes from us.
-This policy says how you can and can't use them. It doesn't change the
-licences of the code.
+Most of the QRdx code is open source ([LICENSING.md](LICENSING.md) lists the
+licences). The QRdx name, logo and the qrdx.dev domain are not: they identify
+the official product, so people can tell what comes from us. This policy says
+how you can and can't use them. It doesn't change the licences of the code. In
+this policy, "QRdx", "we" and "us" mean Ritesh Bucha, who operates QRdx, and
+any successor or assignee.
 
 ## You may, without asking
 
@@ -28,7 +30,8 @@ licences of the code.
 
 If you run a modified version or a public service built from this code, give it
 your own name and logo and remove ours from the interface, emails and metadata.
-The AGPL-3.0 (and other) licence notices must stay.
+The licence notices (AGPL-3.0-or-later, MIT and the QRdx Commercial License)
+must stay.
 
 ## Questions
 

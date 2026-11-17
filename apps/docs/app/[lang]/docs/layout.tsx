@@ -1,8 +1,10 @@
 import { TreeContextProvider } from "fumadocs-ui/contexts/tree";
-import { DocsLayout } from "fumadocs-ui/layouts/notebook";
 import { RootProvider } from "fumadocs-ui/provider/base";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
+// fumadocs' notebook DocsLayout with the docs assistant docked beside the
+// page (components/chat/layout.tsx); the same props.
+import { DocsChatLayout as DocsLayout } from "@/components/chat/layout";
 import { DocsChatSlot } from "@/components/chat/slot";
 import { DocsFrameworkProvider } from "@/components/docs/docs-framework-provider";
 import { DocsProductLinks } from "@/components/docs/docs-product-links";
@@ -26,6 +28,7 @@ const DOCS_CLIENT_NAMESPACES = [
   ...CHROME_NAMESPACES,
   "docs.client",
   "docs.shell",
+  "docs.chat",
 ] as const;
 
 export default async function Layout({

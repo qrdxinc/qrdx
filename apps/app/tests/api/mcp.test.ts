@@ -81,7 +81,7 @@ describe("MCP over Streamable HTTP", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
   });
 
-  it("lists the QR, barcode and AI art tools, all read-only but the ones that need a key", async () => {
+  it("lists the QR, barcode, AI art and docs tools, all read-only but the ones that need a key", async () => {
     const { message } = await rpc("tools/list");
     const tools = message?.result.tools as {
       name: string;
@@ -106,6 +106,8 @@ describe("MCP over Streamable HTTP", () => {
         "generate_barcode",
         "save_barcode",
         "generate_ai_art",
+        "search_docs",
+        "read_docs_page",
       ].sort(),
     );
     for (const tool of tools) {

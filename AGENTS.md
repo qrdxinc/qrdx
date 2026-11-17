@@ -68,4 +68,4 @@ The pre-push hook runs the engine build, both typechecks, the lint check (`bun r
 - [CONTRIBUTING.md](CONTRIBUTING.md): setup, project layout, checks and pull requests
 - [SECURITY.md](SECURITY.md): report vulnerabilities privately, never in a public issue
 - [TRADEMARK.md](TRADEMARK.md): the code is open source; the QRdx name and logo are not
-- [LICENSE](LICENSE) and [LICENSING.md](LICENSING.md): AGPL-3.0-or-later for the app; `packages/qrdx`, `packages/cli`, `plugins/*`, `skills/generate-qr` and `apps/app/registry/qrdx` are MIT (their own `LICENSE` files)
+- [LICENSE](LICENSE) and [LICENSING.md](LICENSING.md): AGPL-3.0-or-later for the app; `packages/qrdx`, `packages/cli`, `plugins/*`, `skills/generate-qr` and `packages/docs-assets/registry/qrdx` (the shadcn/ui registry components) are MIT (their own `LICENSE` files); `apps/app/ee` and `packages/auth/ee` are under the QRdx Commercial License (their `LICENSE.md`)

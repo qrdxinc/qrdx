@@ -27,8 +27,10 @@ import {
 import { scanHistoryLabel } from "@/lib/scan-history";
 import {
   founderSchema,
+  homeWebPageSchema,
   organizationId,
   webSiteAlternateNames,
+  webSiteId,
 } from "@/lib/seo-schema";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -161,6 +163,7 @@ const softwareApplicationSchema = {
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": webSiteId,
   name: siteName,
   alternateName: webSiteAlternateNames,
   url: url("/"),
@@ -170,7 +173,7 @@ const webSiteSchema = {
 };
 
 export default async function Home() {
-  await requireLocale();
+  const locale = await requireLocale();
   return (
     <>
       <script
@@ -185,6 +188,13 @@ export default async function Home() {
         // biome-ignore lint/security/noDangerouslySetInnerHtml: schema markup requires raw JSON
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(webSiteSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: schema markup requires raw JSON
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homeWebPageSchema(locale)),
         }}
       />
       <main className="flex flex-col items-center justify-center divide-y divide-border min-h-screen w-full">

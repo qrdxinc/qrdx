@@ -29,6 +29,7 @@ describe("the model map", () => {
         "art",
         "base",
         "code-suggestions",
+        "docs-chat",
         "prompt-enhancement",
         "qr-theme-generation",
       ].sort(),
@@ -40,6 +41,8 @@ describe("the model map", () => {
 
   it("uses Claude Haiku 5.5 for text, Gemini 3 Flash for the theme schema and GPT Image 2 for art", () => {
     expect(AI_MODELS.base.model).toBe("anthropic/claude-haiku-5.5");
+    // The docs assistant: the same small model and pinning as the theme chat.
+    expect(AI_MODELS["docs-chat"]).toEqual(AI_MODELS.base);
     expect(AI_MODELS["prompt-enhancement"].model).toBe(
       "anthropic/claude-haiku-5.5",
     );
@@ -83,6 +86,9 @@ describe("provider options", () => {
       gateway: { disallowPromptTraining: true, only: ["anthropic"] },
     });
     expect(textProviderOptions("code-suggestions")).toEqual({
+      gateway: { disallowPromptTraining: true, only: ["anthropic"] },
+    });
+    expect(textProviderOptions("docs-chat")).toEqual({
       gateway: { disallowPromptTraining: true, only: ["anthropic"] },
     });
     expect(textProviderOptions("qr-theme-generation")).toEqual({

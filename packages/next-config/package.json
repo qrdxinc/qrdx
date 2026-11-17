@@ -2,6 +2,7 @@
   "name": "@repo/next-config",
   "version": "0.0.0",
   "private": true,
+  "license": "AGPL-3.0-or-later",
   "exports": {
     ".": "./index.ts",
     "./csp": "./csp.ts",
@@ -20,10 +21,10 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "next": "16.4.3"
+    "next": "16.4.5"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "16.4.3",
+    "@next/bundle-analyzer": "16.4.5",
     "@t3-oss/env-core": "^0.13.11",
     "@t3-oss/env-nextjs": "^0.13.11",
     "zod": "^4.6.7"
