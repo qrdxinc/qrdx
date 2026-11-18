@@ -8,13 +8,27 @@ export const FILE_PICKER_PROVIDERS = [
   "notion",
 ] as const;
 
+/**
+ * Providers connected only to import from (Codes → Import): an API key, no
+ * editor tools.
+ */
+export const MIGRATION_SOURCE_PROVIDERS = ["uniqode"] as const;
+
 export type ShortLinkProviderSlug = (typeof SHORT_LINK_PROVIDERS)[number];
 export type FilePickerProviderSlug = (typeof FILE_PICKER_PROVIDERS)[number];
+export type MigrationSourceProviderSlug =
+  (typeof MIGRATION_SOURCE_PROVIDERS)[number];
 
 export function isShortLinkProvider(
   slug: string
 ): slug is ShortLinkProviderSlug {
   return (SHORT_LINK_PROVIDERS as readonly string[]).includes(slug);
+}
+
+export function isMigrationSourceProvider(
+  slug: string
+): slug is MigrationSourceProviderSlug {
+  return (MIGRATION_SOURCE_PROVIDERS as readonly string[]).includes(slug);
 }
 
 export function isFilePickerProvider(

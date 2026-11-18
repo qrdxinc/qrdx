@@ -1,13 +1,21 @@
 // Every admin server action: the admin check runs first (a non-admin gets
 // "Not found" before any query or auth call), successful actions write an
-// audit entry with the reason, the rate limit and input checks stop an action
-// before it touches anything, and the last sign-in method is never unlinked.
+// audit entry with the reason (and work that fails unexpectedly an
+// "<action>.failed" one), the rate limit and input checks stop an action
+// before it touches anything (a CONFIRMATION_REQUIRED refusal gives its
+// count back), and the last sign-in method is never unlinked.
 //
 // The database is a scripted fake: every query chain is recorded and resolves
 // to the next scripted result. Nothing connects to a database or a service.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-type Call = { root: string; table?: string; steps: [string, unknown[]][] };
+type Call = {
+  root: string;
+  table?: string;
+  /** What the query was started with: select's columns, insert's table. */
+  args?: unknown[];
+  steps: [string, unknown[]][];
+};
 
 const state = vi.hoisted(() => ({
   admin: null as null | {
@@ -20,6 +28,8 @@ const state = vi.hoisted(() => ({
   results: [] as unknown[],
   auth: [] as string[],
   limited: false,
+  /** Every limit check: the limiter's prefix, the key and the rate. */
+  limitCalls: [] as { prefix?: string; key: string; rate?: number }[],
   /** The signed-in admin's own two-step verification and confirmation */
   adminTwoFactor: true,
   adminStrongConfirmation: true,
@@ -77,7 +87,7 @@ vi.mock("@repo/database", () => {
   const start =
     (root: string) =>
     (...args: unknown[]) => {
-      const call: Call = { root, table: tableName(args[0]), steps: [] };
+      const call: Call = { root, table: tableName(args[0]), args, steps: [] };
       state.calls.push(call);
       return chain(call);
     };
@@ -165,14 +175,17 @@ vi.mock("@repo/auth/server", () => ({
 }));
 
 vi.mock("@repo/rate-limit", () => ({
-  createRateLimiter: () => ({
-    limit: async () => ({
-      success: !state.limited,
-      limit: 30,
-      remaining: state.limited ? 0 : 29,
-      reset: Date.now() + 60_000,
-      pending: Promise.resolve(),
-    }),
+  createRateLimiter: ({ prefix }: { prefix?: string }) => ({
+    limit: async (key: string, rate?: number) => {
+      state.limitCalls.push({ prefix, key, rate });
+      return {
+        success: !state.limited,
+        limit: 30,
+        remaining: state.limited ? 0 : 29,
+        reset: Date.now() + 60_000,
+        pending: Promise.resolve(),
+      };
+    },
   }),
   slidingWindow: () => ({}),
   redis: null,
@@ -320,6 +333,7 @@ beforeEach(() => {
   state.results = [];
   state.auth = [];
   state.limited = false;
+  state.limitCalls = [];
   state.adminTwoFactor = true;
   state.adminStrongConfirmation = true;
 });
@@ -814,6 +828,202 @@ describe("with an admin", () => {
       action: "user.ban",
       metadata: { reason: "Phishing codes", expiresInDays: 7 },
     });
+  });
+
+  it("asks for a strong confirmation before banning, unbanning or signing out an admin", async () => {
+    const { banUserAction, unbanUserAction, revokeUserSessionsAction } =
+      await import("@/app/(app)/admin/actions");
+    const anAdmin = {
+      id: "user_target",
+      email: "other.admin@example.com",
+      emailVerified: true,
+      role: "admin",
+    };
+    const input = { userId: "user_target", reason: "Ticket 1234" };
+    for (const [action, call] of [
+      [banUserAction, "banUser"],
+      [unbanUserAction, "unbanUser"],
+      [revokeUserSessionsAction, "revokeUserSessions"],
+    ] as const) {
+      state.adminStrongConfirmation = false;
+      state.auth = [];
+      state.calls = [];
+      state.results = [[anAdmin]];
+      expect(await action(input), call).toEqual({
+        ok: false,
+        error: "CONFIRMATION_REQUIRED",
+      });
+      expect(state.auth, call).toEqual([]);
+      expect(auditInserts(), call).toEqual([]);
+      // Listed by ADMIN_EMAILS counts the same as the role, so the target's
+      // row is read with whether its address is verified.
+      vi.stubEnv("ADMIN_EMAILS", "other.admin@example.com");
+      state.calls = [];
+      state.results = [[{ ...anAdmin, role: null }]];
+      expect(await action(input), call).toEqual({
+        ok: false,
+        error: "CONFIRMATION_REQUIRED",
+      });
+      expect(Object.keys(state.calls[0]?.args?.[0] ?? {}), call).toEqual([
+        "id",
+        "email",
+        "emailVerified",
+        "role",
+      ]);
+      vi.unstubAllEnvs();
+      // Confirmed, it goes ahead.
+      state.adminStrongConfirmation = true;
+      state.results = [[anAdmin]];
+      expect(await action(input), call).toEqual({ ok: true });
+      expect(state.auth, call).toEqual([call]);
+    }
+  });
+
+  it("asks nothing more to unban or sign out someone who isn't an admin", async () => {
+    const { unbanUserAction, revokeUserSessionsAction } = await import(
+      "@/app/(app)/admin/actions"
+    );
+    state.adminStrongConfirmation = false;
+    state.adminTwoFactor = false;
+    const user = {
+      id: "user_target",
+      email: "target@example.com",
+      emailVerified: true,
+      role: null,
+    };
+    for (const action of [unbanUserAction, revokeUserSessionsAction]) {
+      state.results = [[user]];
+      expect(
+        await action({ userId: "user_target", reason: "Ticket 1234" }),
+      ).toEqual({ ok: true });
+    }
+    expect(state.auth).toEqual(["unbanUser", "revokeUserSessions"]);
+  });
+
+  it("unlinks an admin's sign-in method only with a strong confirmation", async () => {
+    const { unlinkSignInMethodAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    const anAdmin = [
+      {
+        id: "user_target",
+        email: "other.admin@example.com",
+        emailVerified: true,
+        role: "admin",
+      },
+    ];
+    const accounts = [
+      { id: "acct_1", providerId: "github" },
+      { id: "acct_2", providerId: "google" },
+    ];
+    const input = {
+      userId: "user_target",
+      accountId: "acct_1",
+      reason: "Lost access to GitHub",
+    };
+    state.adminStrongConfirmation = false;
+    state.results = [anAdmin, accounts];
+    expect(await unlinkSignInMethodAction(input)).toEqual({
+      ok: false,
+      error: "CONFIRMATION_REQUIRED",
+    });
+    expect(state.calls.some((call) => call.root === "delete")).toBe(false);
+    state.adminStrongConfirmation = true;
+    state.results = [anAdmin, accounts, [], []];
+    expect(await unlinkSignInMethodAction(input)).toEqual({ ok: true });
+    expect(
+      state.calls.some(
+        (call) => call.root === "delete" && call.table === "account",
+      ),
+    ).toBe(true);
+  });
+
+  it("gives the rate limit's count back when an action asks for a strong confirmation", async () => {
+    const { unbanUserAction } = await import("@/app/(app)/admin/actions");
+    state.adminStrongConfirmation = false;
+    state.results = [
+      [
+        {
+          id: "user_target",
+          email: "other.admin@example.com",
+          emailVerified: true,
+          role: "admin",
+        },
+      ],
+    ];
+    await unbanUserAction({ userId: "user_target", reason: "Ticket 1234" });
+    expect(state.limitCalls).toEqual([
+      { prefix: "qrdx:admin", key: "user.unban:admin_1", rate: undefined },
+      { prefix: "qrdx:admin", key: "user.unban:admin_1", rate: -1 },
+    ]);
+    // Any other refusal keeps its count.
+    state.limitCalls = [];
+    state.results = [];
+    expect(
+      (await unbanUserAction({ userId: "user_missing", reason: "Ticket 1" }))
+        .ok,
+    ).toBe(false);
+    expect(state.limitCalls).toEqual([
+      { prefix: "qrdx:admin", key: "user.unban:admin_1", rate: undefined },
+    ]);
+  });
+
+  it("limits cancelling a two-step reset to 5 an hour, as starting one", async () => {
+    const { cancelTwoFactorResetAction, resetTwoFactorAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    await cancelTwoFactorResetAction({ userId: "user_target", reason: "x" });
+    await resetTwoFactorAction({ userId: "user_target", reason: "x" });
+    expect(state.limitCalls.slice(0, 2)).toEqual([
+      {
+        prefix: "qrdx:admin-sensitive",
+        key: "user.reset_two_factor_cancel:admin_1",
+        rate: undefined,
+      },
+      {
+        prefix: "qrdx:admin-sensitive",
+        key: "user.reset_two_factor:admin_1",
+        rate: undefined,
+      },
+    ]);
+  });
+
+  it("records a failed attempt when the work fails part-way, with ids and the error's kind only", async () => {
+    const { unlinkSignInMethodAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    state.results = [
+      [{ id: "user_target", email: "target@example.com", emailVerified: true }],
+      [
+        { id: "acct_1", providerId: "github" },
+        { id: "acct_2", providerId: "google" },
+      ],
+      Object.assign(new Error("deadlock on account acct_1"), {
+        code: "40P01",
+      }),
+    ];
+    const result = await unlinkSignInMethodAction({
+      userId: "user_target",
+      accountId: "acct_1",
+      reason: "Ticket 1234",
+    });
+    expect(result).toEqual({ ok: false, error: "Action failed" });
+    expect(auditValues()).toEqual([
+      expect.objectContaining({
+        actorUserId: "admin_1",
+        action: "user.unlink_sign_in.failed",
+        targetType: "user",
+        targetId: "user_target",
+        metadata: {
+          actorEmail: "admin@example.com",
+          ids: { userId: "user_target", accountId: "acct_1" },
+          reason: "Ticket 1234",
+          error: { name: "Error", code: "40P01" },
+          subjectUserId: "user_target",
+        },
+      }),
+    ]);
+    expect(JSON.stringify(auditValues())).not.toContain("deadlock");
   });
 
   it("refuses to ban yourself", async () => {

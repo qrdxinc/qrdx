@@ -35,6 +35,39 @@ export type EditorSurface =
   | "ai_art"
   | "bulk_tool";
 
+/**
+ * Where an import's links came from: a connected account (the provider's
+ * API) or a file (an export or a spreadsheet).
+ */
+export type ImportSource = "account" | "file";
+
+/**
+ * How the account behind a server event found QRdx (user_acquisition): its
+ * channel ("search", "campaign", "unknown" for accounts with no record) and,
+ * for QRdx's own campaigns only, the campaign ("switch"). Never a host, a
+ * page or any other tag (apps/app/lib/analytics/acquisition.ts).
+ */
+export interface AcquisitionProps {
+  channel?: string;
+  campaign?: string;
+}
+
+/**
+ * An import's provider and counts: the provider id ("bitly", "uniqode",
+ * "csv" for another provider's spreadsheet) or "bulk" (the dashboard's own
+ * CSV import), never a link, domain, back-half or code name.
+ */
+interface ImportProps {
+  provider: string;
+  source: ImportSource;
+  /** Rows (links) in the import */
+  rows: number;
+  /** Rows left alone: invalid, already imported, duplicates, over the limit */
+  skipped: number;
+  /** Back-halves kept on the customer's own domain (the no-reprint move) */
+  own_domain?: boolean;
+}
+
 type NoProps = Record<string, never>;
 
 export interface AnalyticsEvents {
@@ -153,9 +186,40 @@ export interface AnalyticsEvents {
   nfc_tag_written: { result: "written" | "locked" | "failed"; error?: string };
 
   // Imports and integrations
-  import_started: { provider: string; count: number };
-  import_completed: { provider: string; count: number; failed?: number };
+  /**
+   * An import was planned and recorded: on the server for imports from
+   * another provider (apps/app/lib/migrate/server/analytics.ts), in the
+   * browser for the dashboard's CSV import. `to_create`: the codes it will
+   * make.
+   */
+  import_started: ImportProps & AcquisitionProps & { to_create: number };
+  /** Its last row was handled: codes made, rows skipped and rows failed. */
+  import_finished: ImportProps &
+    AcquisitionProps & { created: number; failed: number };
+  /**
+   * The bridge re-pointed an import's old links in the provider's account
+   * (or listed what it would change, or put them back), once per run: the
+   * links of the import pointing at QRdx after an apply, put back after an
+   * undo, or that an apply would change; links the provider refused; and
+   * whether the provider stopped the run (its plan or quota, a rate limit,
+   * a rejected connection).
+   */
+  import_bridge_run: AcquisitionProps & {
+    provider: string;
+    mode: "dry_run" | "apply" | "undo";
+    links_changed: number;
+    refused: number;
+    stopped: boolean;
+  };
   integration_connected: { provider: string };
+
+  // Custom domains
+  /**
+   * A custom domain passed its DNS check for the first time, on the server.
+   * `after_import`: the workspace had imported codes from links on that
+   * domain (the own-domain move). Never the domain.
+   */
+  domain_verified: AcquisitionProps & { after_import: boolean };
 
   // Developers
   oauth_app_created: NoProps;
@@ -205,7 +269,11 @@ export type AnalyticsEventName = keyof AnalyticsEvents;
 export type ServerAnalyticsEventName =
   | "form_submitted"
   | "integration_connected"
-  | "subscription_activated";
+  | "subscription_activated"
+  | "import_started"
+  | "import_finished"
+  | "import_bridge_run"
+  | "domain_verified";
 
 /** `track("sign_out")` for events without required properties. */
 export type AnalyticsPropsArg<E extends AnalyticsEventName> =

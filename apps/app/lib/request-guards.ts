@@ -8,6 +8,7 @@ import {
 import type { z } from "zod";
 import { ValidationError } from "@/types/errors";
 import { HttpError } from "./http-error";
+import { errorSummary } from "./log-error";
 
 const aiUserRateLimiter = createRateLimiter({
   limiter: slidingWindow(10, "10 s"),
@@ -49,6 +50,30 @@ export async function enforceRateLimits(
       { "Retry-After": String(retryAfterSeconds) },
     );
   }
+}
+
+/**
+ * Gives back the request enforceRateLimits counted, for one that was refused
+ * before it did anything and shouldn't use up the budget (an admin action
+ * that first asks for a strong confirmation). A negative rate is Upstash's
+ * refund; the in-memory fallback takes it the same way. Best effort: when
+ * the store can't take it back, the request stays counted.
+ */
+export async function refundRateLimits(
+  checks: Array<{ limiter: RateLimiter; key: string }>,
+): Promise<void> {
+  await Promise.all(
+    checks.map(({ limiter, key }) =>
+      limiter.limit(key, -1).catch((error: unknown) => {
+        console.warn(
+          JSON.stringify({
+            event: "rate_limit.refund_failed",
+            error: errorSummary(error),
+          }),
+        );
+      }),
+    ),
+  );
 }
 
 /** Rate limits an AI route per signed-in user and per client IP. */

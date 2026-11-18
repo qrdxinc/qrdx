@@ -1,7 +1,10 @@
 "use client";
 
 import { toast } from "@repo/design-system";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
@@ -149,7 +152,7 @@ export function WorkspaceLogoField({
                   variant="outline"
                 >
                   {busy === "upload" ? (
-                    <ModuleOrbit aria-hidden />
+                    <FinderTrace aria-hidden />
                   ) : (
                     <GalleryEdit aria-hidden />
                   )}

@@ -7,6 +7,7 @@ import {
   runRedirects,
 } from "@/lib/migrate/importer";
 import { isApiProviderId, isRetiredProvider } from "@/lib/migrate/providers";
+import { trackBridgeRun } from "@/lib/migrate/server/analytics";
 import {
   deps,
   migrateScope,
@@ -53,6 +54,8 @@ export function POST(req: Request, context: Context) {
     if (retry) await resetRedirectErrors(deps, scope, id);
     const source =
       mode === "dry-run" ? null : await getSource(scope.userId, job.provider);
-    return runRedirects(deps, scope, id, mode, source);
+    const result = await runRedirects(deps, scope, id, mode, source);
+    trackBridgeRun(scope, result);
+    return result;
   });
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Info } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { ModuleOrbit, ScanLine } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 import { Progress } from "@repo/design-system/components/ui/progress";
@@ -229,8 +229,7 @@ export function RedirectsStep({
 
         {plan === null && !error ? (
           <div className="text-muted-foreground flex items-center gap-2 py-6 text-sm">
-            <ModuleOrbit aria-hidden className="size-4" />{" "}
-            {t("listingTheChanges")}
+            <ScanLine aria-hidden className="size-4" /> {t("listingTheChanges")}
           </div>
         ) : pending > 0 ? (
           <div className="space-y-2">

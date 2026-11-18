@@ -4,6 +4,10 @@
  * account details saved after connecting, and revoke tokens on disconnect.
  */
 
+import {
+  IntegrationApiError,
+  isIntegrationApiError,
+} from "../core/http-client";
 import { createBitlyClient } from "../integrations/bitly/client";
 import { createBoxClient, revokeBoxToken } from "../integrations/box/client";
 import {
@@ -17,11 +21,13 @@ import {
 import { createOneDriveClient } from "../integrations/onedrive/client";
 import { createRebrandlyClient } from "../integrations/rebrandly/client";
 import { createShortIoClient } from "../integrations/short-io/client";
+import { createUniqodeClient } from "../integrations/uniqode/client";
 import type { FilePickerClient } from "./file-picker";
 import {
   type FilePickerProviderSlug,
   isFilePickerProvider,
   isShortLinkProvider,
+  type MigrationSourceProviderSlug,
   type ShortLinkProviderSlug,
 } from "./providers";
 import type { ShortLinkClient } from "./short-links";
@@ -128,6 +134,41 @@ export async function verifyShortLinkCredentials(
     }
     default:
       throw new Error(`Not a short-link provider: ${provider satisfies never}`);
+  }
+}
+
+/**
+ * Checks a pasted key for an import-only provider (Uniqode) by listing one
+ * code, the call imports depend on, and returns the metadata to store.
+ */
+export async function verifyMigrationSourceCredentials(
+  provider: MigrationSourceProviderSlug,
+  apiKey: string
+): Promise<Record<string, unknown>> {
+  switch (provider) {
+    case "uniqode": {
+      try {
+        const page = await createUniqodeClient(apiKey).listQrCodes({
+          pageSize: 1,
+        });
+        return page.count === undefined ? {} : { codeCount: page.count };
+      } catch (error) {
+        // Uniqode refuses valid keys on plans or roles without the API.
+        if (isIntegrationApiError(error) && error.status === 403) {
+          throw new IntegrationApiError({
+            provider: "uniqode",
+            status: 403,
+            code: "upgrade_required",
+            message:
+              "Uniqode refused the key. Its API comes with the Core plan and above, for Owners and Admins.",
+            body: error.body,
+          });
+        }
+        throw error;
+      }
+    }
+    default:
+      throw new Error(`Not an import source: ${provider satisfies never}`);
   }
 }
 

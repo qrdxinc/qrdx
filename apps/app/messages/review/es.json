@@ -23007,6 +23007,10 @@
     "source": "83637430b403",
     "status": "machine"
   },
+  "app.dashboard.codes.importLinksStep.onlyWebsiteCodesListed": {
+    "source": "c397031883ec",
+    "status": "machine"
+  },
   "app.dashboard.codes.importLinksStep.theNameSignInWas": {
     "source": "74353b2ca4c4",
     "status": "machine"
@@ -23363,16 +23367,24 @@
     "source": "c85034330f4b",
     "status": "machine"
   },
+  "app.dashboard.codes.importRunStep.oldLinksNotFound": {
+    "source": "99a1cb14bd9e",
+    "status": "machine"
+  },
   "app.dashboard.codes.importRunStep.pointYourOldCodesAt": {
     "source": "e7df89e1e148",
     "status": "machine"
   },
   "app.dashboard.codes.importRunStep.oldProviderCodesLiveOnItsDomain": {
-    "source": "7ddce2ff50f4",
+    "source": "47cc093a56bc",
     "status": "machine"
   },
   "app.dashboard.codes.importRunStep.providerCodesLiveOnItsDomain": {
-    "source": "8a87ca7d3613",
+    "source": "61bdf8ed40e2",
+    "status": "machine"
+  },
+  "app.dashboard.codes.importRunStep.ownDomainCodesCanMove": {
+    "source": "de24733b9b3b",
     "status": "machine"
   },
   "app.dashboard.codes.importRunStep.oldLinksPointToQrdx": {

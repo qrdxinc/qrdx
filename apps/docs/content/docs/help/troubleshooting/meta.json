@@ -2,5 +2,11 @@
   "$schema": "../../../../.source/json-schema/docs.meta.json",
   "title": "Troubleshooting",
   "icon": "TriangleAlert",
-  "pages": ["wont-scan", "wrong-destination", "error-pages", "emails"]
+  "pages": [
+    "wont-scan",
+    "stopped-working",
+    "wrong-destination",
+    "error-pages",
+    "emails"
+  ]
 }

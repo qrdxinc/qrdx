@@ -1,6 +1,6 @@
 "use client";
 
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { ModuleWave } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { cn } from "@repo/design-system/lib/utils";
 import { type ReactNode, useCallback, useEffect, useState } from "react";
@@ -164,7 +164,7 @@ export function DeferredButton({
       >
         {status === "loading" ? (
           <>
-            <ModuleOrbit aria-hidden />
+            <ModuleWave aria-hidden />
             {labels.loading}
           </>
         ) : (

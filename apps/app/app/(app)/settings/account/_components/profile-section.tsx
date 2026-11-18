@@ -3,7 +3,10 @@
 import { authClient } from "@repo/auth/client";
 import { toast } from "@repo/design-system";
 import { Tick } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -150,7 +153,7 @@ function AvatarField({ profile }: { profile: ProfileView }) {
                 variant="outline"
               >
                 {busy === "upload" ? (
-                  <ModuleOrbit aria-hidden />
+                  <FinderTrace aria-hidden />
                 ) : (
                   <GalleryEdit aria-hidden />
                 )}

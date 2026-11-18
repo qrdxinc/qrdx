@@ -2,7 +2,7 @@
 
 import { track } from "@repo/analytics";
 import { toast } from "@repo/design-system";
-import { ModuleOrbit, Scanframe } from "@repo/design-system/components/loaders";
+import { ModuleOrbit, ScanLine } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   DropdownMenu,
@@ -47,6 +47,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { BrandLoader } from "@/components/brand-loader";
 import { useContentText } from "@/components/i18n/content-text";
 import { useBarcodeIssueText } from "@/components/sections/tools/barcode-issue-text";
 import {
@@ -257,7 +258,7 @@ function ScanStatus({
   if (checking || !result) {
     return (
       <p className="flex items-center gap-2 text-xs text-muted-foreground">
-        <ModuleOrbit aria-hidden className="size-4" />
+        <ScanLine aria-hidden className="size-4" />
         {t("checking")}
       </p>
     );
@@ -954,7 +955,11 @@ export function BarcodePreview({
             {t("loadFailed")}
           </p>
         ) : !renderer && checked.ok ? (
-          <Scanframe aria-hidden className="text-muted-foreground" size={24} />
+          <BrandLoader
+            aria-hidden
+            className="text-muted-foreground"
+            size={24}
+          />
         ) : (
           <p className="max-w-xs text-center text-sm text-muted-foreground">
             {t("fixInput")}

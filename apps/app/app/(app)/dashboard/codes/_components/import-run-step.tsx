@@ -1,6 +1,5 @@
 "use client";
 
-import { track } from "@repo/analytics";
 import { Info } from "@repo/design-system/components/icons";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -17,6 +16,8 @@ import {
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useAvailability } from "@/components/availability-provider";
+import { LocaleLink } from "@/components/i18n/locale-link";
 import { useWorkspaceHref } from "@/components/workspace-provider";
 import type { Translator } from "@/lib/i18n/translator";
 import {
@@ -24,6 +25,7 @@ import {
   type MigrateClient,
   withRetry,
 } from "@/lib/migrate/client";
+import { missingOldLinks } from "@/lib/migrate/jobs";
 import { mappingCsv, mappingText } from "@/lib/migrate/mapping";
 import {
   API_PROVIDERS,
@@ -68,6 +70,7 @@ export function RunStep({
   const t = useTranslations("app.dashboard.codes.importRunStep");
   const reasonText = useMigrateReasonText();
   const inWorkspace = useWorkspaceHref();
+  const { has } = useAvailability();
   const [job, setJob] = useState<JobSummary | null>(null);
   const [items, setItems] = useState<JobItem[]>([]);
   const [running, setRunning] = useState(false);
@@ -149,17 +152,10 @@ export function RunStep({
   }, [refresh, run]);
 
   const done = job?.status === "done" && !running;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: once, when the run finishes.
   useEffect(() => {
     if (done && !finishedOnce.current) {
       finishedOnce.current = true;
       soundEvent("success");
-      if (job)
-        track("import_completed", {
-          provider: job.provider,
-          count: job.created,
-          failed: job.failed,
-        });
     }
   }, [done]);
 
@@ -168,6 +164,7 @@ export function RunStep({
     () => items.filter((item) => item.newLink),
     [items],
   );
+  const missingLinks = useMemo(() => missingOldLinks({ items }), [items]);
 
   if (!(job && provider)) {
     return (
@@ -359,7 +356,8 @@ export function RunStep({
 
         {!retired &&
           api?.capabilities.updateDestination &&
-          withLinks.length > 0 && (
+          withLinks.length > 0 &&
+          missingLinks === 0 && (
             <div className="flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center">
               <span className="grid size-9 shrink-0 place-items-center rounded-lg border bg-muted/40">
                 <Link21 aria-hidden className="size-4 text-foreground/80" />
@@ -376,6 +374,25 @@ export function RunStep({
                 {job.redirected > 0 ? t("manage") : t("reviewChanges")}
                 <ArrowRight />
               </Button>
+            </div>
+          )}
+
+        {!retired &&
+          api?.capabilities.updateDestination &&
+          job.created > 0 &&
+          missingLinks > 0 && (
+            <div className="flex gap-3 rounded-xl border p-4">
+              <span className="grid size-9 shrink-0 place-items-center rounded-lg border bg-muted/40">
+                <Link21 aria-hidden className="size-4 text-foreground/80" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-sm font-semibold">
+                  {t("keepMyPrintedCodesWorking")}
+                </h3>
+                <p className="text-muted-foreground text-xs">
+                  {t("oldLinksNotFound", { name })}
+                </p>
+              </div>
             </div>
           )}
 
@@ -397,6 +414,20 @@ export function RunStep({
             <p className="text-muted-foreground text-xs">
               {file.keepWorkingNote}
             </p>
+            {has("customDomains") && !job.backHalfDomain && (
+              <p className="text-muted-foreground text-xs">
+                {t.rich("ownDomainCodesCanMove", {
+                  link: (chunks) => (
+                    <LocaleLink
+                      className="underline"
+                      href="/docs/move-your-qr-domain"
+                    >
+                      {chunks}
+                    </LocaleLink>
+                  ),
+                })}
+              </p>
+            )}
           </div>
         )}
 

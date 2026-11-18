@@ -3,7 +3,12 @@ import "server-only";
 import { RateLimitUnavailableError, redis } from "@repo/rate-limit";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import type { AdminAuditRecord } from "@/app/(app)/admin/_lib/action-runner";
+import {
+  type AdminAuditRecord,
+  isAdminReadable,
+  isConfirmationRequired,
+  recordFailedAction,
+} from "@/app/(app)/admin/_lib/action-runner";
 import { writeAuditLog } from "@/app/(app)/admin/_lib/audit";
 import { env } from "@/env";
 import { HttpError } from "@/lib/http-error";
@@ -13,7 +18,11 @@ import {
   loadConsoleActor,
   requireStrongConsoleActor,
 } from "./actor";
-import { type ConsoleLimitTier, enforceConsoleLimit } from "./limits";
+import {
+  type ConsoleLimitTier,
+  enforceConsoleLimit,
+  refundConsoleLimit,
+} from "./limits";
 import {
   isUsableSecret,
   MAX_BODY_BYTES,
@@ -31,22 +40,32 @@ import {
 // 4. a request id seen before is refused (Upstash). Without Upstash the
 //    endpoints answer 503: a replay store is required, never skipped;
 // 5. the body: JSON with `actor` and the endpoint's own fields;
-// 6. the actor checked again here (./actor.ts), 403 for anyone else;
+// 6. the actor checked again here (./actor.ts), 403 for anyone else, and
+//    403 `grant_invalid` for a console sign-in grant this app doesn't hold
+//    for that admin and session (calls without one still pass);
 // 7. the rate limit per admin and endpoint (./limits.ts): the admin pages'
 //    30 a minute, or 5 an hour for sensitive endpoints. Past it, 429
 //    `rate_limited` with Retry-After; when Upstash can't judge, 503;
 // 8. the endpoint's own fields (400 with the first problem);
 // 9. for strong endpoints, the admin's own second factor and a recent
-//    strong confirmation by that session (CONFIRMATION_REQUIRED);
+//    strong confirmation by that session (CONFIRMATION_REQUIRED). That
+//    refusal, here or in the work's own strong check, gives the call's
+//    count back: nothing ran;
 // 10. the endpoint's work, then its entry in the admin audit log, written
 //    here with the admin checked above and the `reason` in the signed body,
 //    as the admin pages' runner writes it. So an effect that finishes after
 //    the console stopped waiting is still on record. The answer carries the
-//    endpoint's `data` only.
+//    endpoint's `data` only. When the work fails unexpectedly (a 500), or
+//    its entry can't be written, part of it may stand: the log gets an
+//    "<action>.failed" entry instead, with the input's ids, the reason and
+//    the error's kind and code (recordFailedAction).
 //
 // Every request that passes the signature check (3) ends with one log line,
-// `console_internal.outcome`: the path, the admin the signed body names, the
-// HTTP status and a short code, and for a 500 the error's kind and code.
+// `console_internal.outcome`: the path, the admin the signed body names,
+// whether it carried a grant, the HTTP status and a short code, and for a
+// 500 the error's kind and code. (`grant: false` lines show which console
+// sessions are from before grants: none may be left before grants are
+// required.)
 // Never the secret, the signature, headers, the body, an address, or an
 // error's message (a database error's lists the query's values). Requests
 // refused before it log `console_internal.refused`.
@@ -72,6 +91,7 @@ const refuse = (
 const actorSchema = z.object({
   userId: z.string().trim().min(1).max(128),
   sessionId: z.string().trim().min(1).max(256),
+  grant: z.string().min(32).max(256).optional(),
 });
 
 /**
@@ -138,13 +158,19 @@ interface SignedOutcome {
   error?: unknown;
 }
 
+/** What the signed body named, once it's read: whether it sent a grant. */
+interface Named {
+  grant?: boolean;
+}
+
 /** One line per signed request (see the steps above for what it holds). */
-function logOutcome(path: string, outcome: SignedOutcome): void {
+function logOutcome(path: string, outcome: SignedOutcome, named: Named): void {
   const { status } = outcome.response;
   const line = JSON.stringify({
     event: "console_internal.outcome",
     path,
     actorId: outcome.actorId,
+    ...(named.grant === undefined ? {} : { grant: named.grant }),
     status,
     code: outcome.code,
     ...(outcome.reason ? { reason: outcome.reason } : {}),
@@ -255,6 +281,7 @@ export function consoleInternalRoute<S extends z.ZodType, T = undefined>(
     }
 
     // From here on the request is the console's: exactly one log line.
+    const named: Named = {};
     let outcome: SignedOutcome;
     try {
       outcome = await handleSigned(options, {
@@ -262,11 +289,12 @@ export function consoleInternalRoute<S extends z.ZodType, T = undefined>(
         path,
         body,
         requestId: signed.requestId,
+        named,
       });
     } catch (error) {
       outcome = failure(error, null);
     }
-    logOutcome(path, outcome);
+    logOutcome(path, outcome, named);
     return outcome.response;
   };
 }
@@ -285,7 +313,15 @@ async function handleSigned<S extends z.ZodType, T>(
     path,
     body,
     requestId,
-  }: { request: NextRequest; path: string; body: string; requestId: string },
+    named,
+  }: {
+    request: NextRequest;
+    path: string;
+    body: string;
+    requestId: string;
+    /** Filled in for the log line once the body is read. */
+    named: Named;
+  },
 ): Promise<SignedOutcome> {
   try {
     if (!(await firstUse(requestId))) {
@@ -321,8 +357,13 @@ async function handleSigned<S extends z.ZodType, T>(
   }
   const claim = z.object({ actor: actorSchema }).safeParse(parsedBody);
   if (!claim.success) return badRequest();
+  named.grant = claim.data.actor.grant !== undefined;
   const actorId = claim.data.actor.userId;
 
+  const limitName = action ?? path;
+  // Set as the steps pass: what the catch below gives back or records.
+  let counted: ConsoleActor | null = null;
+  let started: { actor: ConsoleActor; input: unknown } | null = null;
   try {
     const actor = await loadConsoleActor(claim.data.actor);
     if (!actor) {
@@ -334,7 +375,8 @@ async function handleSigned<S extends z.ZodType, T>(
     }
 
     try {
-      await enforceConsoleLimit(limit, action ?? path, actor.id);
+      await enforceConsoleLimit(limit, limitName, actor.id);
+      counted = actor;
     } catch (error) {
       if (error instanceof HttpError && error.status === 429) {
         const retryAfter = Number(error.headers?.["Retry-After"] ?? 60);
@@ -368,6 +410,7 @@ async function handleSigned<S extends z.ZodType, T>(
       typeof strong === "function" ? strong(input.data) : Boolean(strong);
     if (needsStrong) await requireStrongConsoleActor(actor);
 
+    started = { actor, input: input.data };
     const result = await run(input.data, { actor, request });
     if (result instanceof Response) {
       result.headers.set("Cache-Control", "no-store");
@@ -405,6 +448,18 @@ async function handleSigned<S extends z.ZodType, T>(
       code: "ok",
     };
   } catch (error) {
+    if (counted && isConfirmationRequired(error)) {
+      await refundConsoleLimit(limit, limitName, counted.id);
+    }
+    if (started && action && !isAdminReadable(error)) {
+      await recordFailedAction({
+        actor: started.actor,
+        action,
+        input: started.input,
+        error,
+        extra: { via: "console" },
+      });
+    }
     return failure(error, actorId);
   }
 }

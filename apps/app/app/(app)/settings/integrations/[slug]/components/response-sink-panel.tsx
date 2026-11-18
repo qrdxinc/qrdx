@@ -1,6 +1,9 @@
 "use client";
 
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ModuleWave,
+} from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Checkbox } from "@repo/design-system/components/ui/checkbox";
@@ -393,7 +396,7 @@ export function ResponseSinkPanel({ provider, name }: ResponseSinkPanelProps) {
               placeholder={t("searchPages")}
               value={search}
             />
-            {searching && <ModuleOrbit aria-hidden className="size-4" />}
+            {searching && <ModuleWave aria-hidden className="size-4" />}
           </div>
         )}
         {!allPages && (

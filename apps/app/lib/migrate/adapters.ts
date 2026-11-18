@@ -1,16 +1,21 @@
 // Adapters from the integration clients in packages/integrations (the shared
-// ShortLinkClient of Bitly, Rebrandly and Short.io; Dub's DubClient for undo
-// only) to the importer's MigrationSource, plus plain-words provider errors.
-// No database or env access, so tests can pass fake clients.
+// ShortLinkClient of Bitly, Rebrandly and Short.io; Uniqode's UniqodeClient;
+// Dub's DubClient for undo only) to the importer's MigrationSource, plus
+// plain-words provider errors. No database or env access, so tests can pass
+// fake clients.
 
 import type {
   DubClient,
   ShortLink,
   ShortLinkClient,
   ShortLinkDomain,
+  UniqodeClient,
+  UniqodeQrCode,
 } from "@repo/integrations";
 // The module, not the package index, so tests don't load the database client.
 import { isIntegrationApiError } from "@repo/integrations/src/core/http-client";
+import { uniqodeWebsiteDestination } from "@repo/integrations/src/integrations/uniqode/client";
+import { isSameLink } from "./jobs";
 import { absoluteShortLink, splitShortLink } from "./normalize";
 import { API_PROVIDERS, type ApiProviderId, retiredMessage } from "./providers";
 import type {
@@ -61,7 +66,7 @@ export function fromShortLink(link: ShortLink): SourceLink {
 
 /** Bitly, Rebrandly and Short.io through their shared ShortLinkClient. */
 export function shortLinkSource(
-  provider: Exclude<ApiProviderId, "dub">,
+  provider: Exclude<ApiProviderId, "dub" | "uniqode-api">,
   client: ShortLinkClient,
 ): MigrationSource {
   let domains: Promise<ShortLinkDomain[]> | null = null;
@@ -110,6 +115,118 @@ export function shortLinkSource(
   };
 }
 
+/** Uniqode's `created` timestamp as an ISO date (string or epoch). */
+function isoDate(value: UniqodeQrCode["created"]): string | null {
+  if (value === null || value === undefined || value === "") return null;
+  // Epoch seconds or milliseconds; the reference doesn't say which.
+  const date =
+    typeof value === "number"
+      ? new Date(value < 1e11 ? value * 1000 : value)
+      : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+/**
+ * Fields that may hold the address a printed code opens. Uniqode's reference
+ * documents `url` ("URL of the QR Code"; its CSV export calls the column "QR
+ * Code URL"); the others are read only when a live answer lacks it.
+ */
+const UNIQODE_LINK_FIELDS = ["url", "short_url", "qr_url", "qr_code_url"];
+
+/** The printed code's address (scheme optional); never the destination. */
+function uniqodePrintedLink(
+  code: UniqodeQrCode,
+  destinationUrl: string,
+): string | null {
+  const record = code as unknown as Record<string, unknown>;
+  for (const field of UNIQODE_LINK_FIELDS) {
+    const value = record[field];
+    const link = typeof value === "string" ? absoluteShortLink(value) : null;
+    const { domain, backHalf } = splitShortLink(link);
+    // A host with a dot and a path: "qrcodes.pro/AbC123", not "AbC123".
+    if (
+      link &&
+      domain?.includes(".") &&
+      backHalf &&
+      !isSameLink(link, destinationUrl)
+    ) {
+      return link;
+    }
+  }
+  return null;
+}
+
+/** A dynamic website code as a link; null for every other kind of code. */
+export function fromUniqodeCode(code: UniqodeQrCode): SourceLink | null {
+  const destinationUrl = uniqodeWebsiteDestination(code);
+  if (!destinationUrl) return null;
+  // Without a printed link (none given, or it reads as the destination) the
+  // code still imports, but there is no old link to re-point.
+  const shortLink = uniqodePrintedLink(code, destinationUrl);
+  const parts = splitShortLink(shortLink);
+  return {
+    id: String(code.id),
+    shortLink,
+    domain: parts.domain,
+    backHalf: parts.backHalf,
+    destinationUrl,
+    title: code.name?.trim() || null,
+    tags: (code.tag_data ?? []).flatMap((tag) =>
+      typeof tag?.name === "string" && tag.name.trim() ? [tag.name.trim()] : [],
+    ),
+    clicks: null,
+    createdAt: isoDate(code.created),
+    // Sleeping (deactivated) codes don't redirect until they're reactivated.
+    archived: code.state === "S",
+  };
+}
+
+/** Pages read in one call while they hold no website codes. */
+const UNIQODE_MAX_PAGES = 4;
+
+/**
+ * Uniqode's dynamic website codes through UniqodeClient. Other kinds (PDFs,
+ * vCard Plus, forms…) are pages Uniqode hosts, so they aren't listed.
+ */
+export function uniqodeSource(client: UniqodeClient): MigrationSource {
+  // The code read for the undo record, so the update needn't read it again.
+  const read = new Map<string, UniqodeQrCode>();
+  return {
+    provider: "uniqode-api",
+    async listLinks(cursor, filters): Promise<LinkPage> {
+      let next = cursor ?? undefined;
+      const links: SourceLink[] = [];
+      for (let page = 0; page < UNIQODE_MAX_PAGES; page++) {
+        const result = await client.listQrCodes({
+          cursor: next,
+          pageSize: LIST_PAGE_SIZE,
+        });
+        for (const code of result.codes) {
+          const link = fromUniqodeCode(code);
+          if (link) links.push(link);
+        }
+        next = result.nextCursor;
+        if (links.length > 0 || !next) break;
+      }
+      return {
+        links: filterPage(links, filters, {}),
+        nextCursor: next ?? null,
+        total: null,
+      };
+    },
+    async getLink(id) {
+      const code = await client.getQrCode(id);
+      read.set(id, code);
+      return fromUniqodeCode(code);
+    },
+    async updateDestination(id, url) {
+      const current = read.get(id);
+      read.delete(id);
+      await client.updateDestination(id, url, current);
+    },
+  };
+}
+
 /**
  * Dub no longer takes new imports (RETIRED_PROVIDER_IDS). Its earlier jobs
  * only need undo: putting an old link's recorded destination back.
@@ -134,6 +251,10 @@ export type ProviderErrorKind =
   | "auth"
   | "rate"
   | "not-found"
+  /** The provider wouldn't change this one link (others went through) */
+  | "refused"
+  /** QRdx can't use this code or answer (its message says why) */
+  | "unsupported"
   | "other";
 
 export interface ExplainedError {
@@ -157,12 +278,39 @@ const PLAN_MESSAGES: Record<ApiProviderId, string> = {
   rebrandly:
     "Your Rebrandly plan has no destination edits left (none on Free, 10 a month on Essentials, 50 on Professional, 150 on Growth). The remaining links were left unchanged.",
   "short-io": "Short.io refused to change this link for your plan or role.",
+  "uniqode-api":
+    "Uniqode refused the change for your plan or role: its API comes with the Core plan and above, for Owners and Admins. The remaining codes were left unchanged.",
 };
+
+/** A used-up monthly allowance, where it differs from PLAN_MESSAGES. */
+const QUOTA_MESSAGES: Partial<Record<ApiProviderId, string>> = {
+  "uniqode-api":
+    "Your Uniqode plan's API requests for this month are used up (250,000 a month on Core, 500,000 on Plus, 2 million on Business+). QRdx stopped there and changed nothing more: continue when the allowance renews, or after upgrading in Uniqode.",
+};
+
+/** A 429 asking for a longer wait than this is a monthly allowance, not a rate limit. */
+const QUOTA_WAIT_SECONDS = 300;
+
+/** Seconds a 429 asks to wait: Retry-After, or DRF's "Expected available in N seconds". */
+function waitSeconds(error: unknown, body: string): number {
+  const header = isIntegrationApiError(error)
+    ? (error.retryAfterSeconds ?? 0)
+    : 0;
+  const match = /available in (\d+(?:\.\d+)?) seconds?/i.exec(body);
+  return Math.max(header, match ? Number(match[1]) : 0);
+}
 
 /** A provider failure in plain words, without tokens or URLs. */
 export function explainProviderError(
   provider: ApiProviderId,
   error: unknown,
+  options: {
+    /**
+     * Earlier changes in this run went through, so a 403 is about this one
+     * link (one the account can't change), not the plan or role.
+     */
+    changedBefore?: boolean;
+  } = {},
 ): ExplainedError {
   const name = API_PROVIDERS[provider].name;
   const status = statusOf(error);
@@ -185,14 +333,29 @@ export function explainProviderError(
   ) {
     return { kind: "plan", message: PLAN_MESSAGES[provider], stop: true };
   }
-  if (status === 429 && /MONTHLY_LIMIT|LIMIT_EXCEEDED|quota/i.test(body)) {
-    return { kind: "quota", message: PLAN_MESSAGES[provider], stop: true };
+  if (
+    status === 429 &&
+    (/MONTHLY_LIMIT|LIMIT_EXCEEDED|quota/i.test(body) ||
+      waitSeconds(error, body) > QUOTA_WAIT_SECONDS)
+  ) {
+    return {
+      kind: "quota",
+      message: QUOTA_MESSAGES[provider] ?? PLAN_MESSAGES[provider],
+      stop: true,
+    };
   }
   if (status === 429 || code === "rate_limited") {
     return {
       kind: "rate",
       message: `${name} is limiting requests. Wait a minute, then continue.`,
       stop: true,
+    };
+  }
+  if ((status === 403 || code === "forbidden") && options.changedBefore) {
+    return {
+      kind: "refused",
+      message: `${name} didn't allow changing this link, so QRdx left it unchanged.`,
+      stop: false,
     };
   }
   if (status === 403 || code === "forbidden") {
@@ -204,6 +367,17 @@ export function explainProviderError(
       message: `${name} no longer has this link.`,
       stop: false,
     };
+  }
+  if (status === 400) {
+    // No body: the client's own words (a code QRdx can't change, or an
+    // answer it doesn't recognize). With one: the provider refused the value.
+    return isIntegrationApiError(error) && error.body === undefined
+      ? { kind: "unsupported", message: error.message, stop: false }
+      : {
+          kind: "other",
+          message: `${name} didn't accept the change for this link.`,
+          stop: false,
+        };
   }
   return {
     kind: "other",
