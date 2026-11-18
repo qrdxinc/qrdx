@@ -7842,6 +7842,8 @@
           "storageUsed": "Stockage utilisé",
           "storageUsage": "{used} sur {quota} utilisés · {maxFile} max. par fichier avec {plan}",
           "storageUsageUnlimited": "{used} utilisés sur un stockage illimité · {maxFile} max. par fichier avec {plan}",
+          "upgradeToPro": "Passer à Pro",
+          "upgradeToBusiness": "Passer à Business",
           "overStorage": "Vous avez dépassé le stockage de votre offre. Les fichiers existants continuent de fonctionner\\u00a0; supprimez les fichiers dont vous n’avez plus besoin ou passez à une offre supérieure pour en téléverser de nouveaux.",
           "overStorageTeam": "Vous avez dépassé le stockage de votre offre. Les fichiers existants continuent de fonctionner\\u00a0; supprimez les fichiers dont vous n’avez plus besoin pour en téléverser de nouveaux.",
           "dropFilesHereOrChoose": "Déposez des fichiers ici ou choisissez-les",

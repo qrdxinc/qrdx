@@ -24611,6 +24611,14 @@
     "source": "4f9b2b76887b",
     "status": "machine"
   },
+  "app.dashboard.files.filesManager.upgradeToPro": {
+    "source": "acb320d7f3e3",
+    "status": "machine"
+  },
+  "app.dashboard.files.filesManager.upgradeToBusiness": {
+    "source": "eabe26fccedd",
+    "status": "machine"
+  },
   "app.dashboard.files.filesManager.overStorage": {
     "source": "ede519737d31",
     "status": "machine"

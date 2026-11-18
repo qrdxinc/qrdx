@@ -7842,6 +7842,8 @@
           "storageUsed": "Spazio usato",
           "storageUsage": "{used} di {quota} usati · max {maxFile} per file con {plan}",
           "storageUsageUnlimited": "{used} usati su spazio illimitato · max {maxFile} per file con {plan}",
+          "upgradeToPro": "Passa a Pro",
+          "upgradeToBusiness": "Passa a Business",
           "overStorage": "Hai superato lo spazio di archiviazione del tuo piano. I file esistenti continuano a funzionare; elimina i file che non ti servono più o passa a un piano superiore per caricarne di nuovi.",
           "overStorageTeam": "Hai superato lo spazio di archiviazione del tuo piano. I file esistenti continuano a funzionare; elimina i file che non ti servono più per caricarne di nuovi.",
           "dropFilesHereOrChoose": "Trascina qui i file o scegli dal dispositivo",
