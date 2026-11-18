@@ -25,6 +25,7 @@ import {
 } from "@repo/integrations";
 import { getCatalogBySurface } from "@repo/integrations/src/catalog";
 import { describe, expect, it } from "vitest";
+import { canDeliverSignInCodes } from "@/lib/account/deletion";
 import {
   type AvailabilityContext,
   computeAvailability,
@@ -38,7 +39,9 @@ const FAKE = "set";
  * `eeFeatures` is what the server's check of QRDX_EE_LICENSE found
  * (packages/auth/ee/license.ts; tests/auth/ee-license.test.ts checks real
  * keys). Here a set key is taken as a valid one for every ee feature, unless
- * a test says otherwise.
+ * a test says otherwise. `outboundDelivery` is the delivery guard's answer
+ * (lib/delivery-guard.ts): here a production deployment on its own domain
+ * may send email and local dev may not, unless a test says otherwise.
  */
 const ctx = (
   env: Record<string, string | undefined>,
@@ -46,10 +49,12 @@ const ctx = (
     onVercel = false,
     production = false,
     eeFeatures,
+    outboundDelivery = production,
   }: {
     onVercel?: boolean;
     production?: boolean;
     eeFeatures?: readonly EeFeature[];
+    outboundDelivery?: boolean;
   } = {},
 ): FeatureContext => ({
   env,
@@ -57,6 +62,7 @@ const ctx = (
   production,
   eeFeatures:
     eeFeatures ?? (env.QRDX_EE_LICENSE?.trim() ? [...EE_FEATURES] : []),
+  outboundDelivery,
 });
 
 /** Every variable any feature reads, set. */
@@ -82,6 +88,10 @@ const EVERYTHING: Record<string, string> = {
   YOUTUBE_API_KEY: FAKE,
   SPOTIFY_CLIENT_ID: FAKE,
   SPOTIFY_CLIENT_SECRET: FAKE,
+  GOOGLE_CLIENT_ID: FAKE,
+  GOOGLE_CLIENT_SECRET: FAKE,
+  GITHUB_CLIENT_ID: FAKE,
+  GITHUB_CLIENT_SECRET: FAKE,
   // qrdx.dev: the affiliate program only runs where QRdx itself does.
   NEXT_PUBLIC_APP_URL: "https://qrdx.dev",
   QRDX_EE_LICENSE: FAKE,
@@ -125,6 +135,9 @@ const NEEDS: Record<FeatureId, string[]> = {
   scheduledJobs: ["CRON_SECRET"],
   youtubeChannelPicker: ["YOUTUBE_API_KEY"],
   spotifyPlaylistPicker: ["SPOTIFY_CLIENT_ID", "SPOTIFY_CLIENT_SECRET"],
+  googleSignIn: ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
+  githubSignIn: ["GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET"],
+  emailSignIn: ["RESEND_API_KEY", "EMAIL_FROM", "NEXT_PUBLIC_APP_URL"],
   passkeys: ["NEXT_PUBLIC_APP_URL"],
   sso: ["QRDX_EE_LICENSE"],
   auditLog: ["QRDX_EE_LICENSE"],
@@ -329,6 +342,129 @@ describe("each feature, on and off by env", () => {
     expect(computeFeatures(ctx({}, { production: true })).scheduledJobs).toBe(
       false,
     );
+  });
+});
+
+describe("ways to sign in", () => {
+  const offered = (context: FeatureContext) => {
+    const features = computeFeatures(context);
+    return {
+      google: features.googleSignIn,
+      github: features.githubSignIn,
+      email: features.emailSignIn,
+    };
+  };
+  // A clean-machine self-host test (18 Nov 2026): Docker Compose, the app
+  // URL on localhost, no OAuth app, no Resend. A production build there may
+  // not send email (lib/delivery-guard.ts).
+  const LOCAL_DOCKER = { NEXT_PUBLIC_APP_URL: "http://localhost:3000" };
+  const localBuild = { production: true, outboundDelivery: false };
+  const ownDomain = { NEXT_PUBLIC_APP_URL: "https://qr.example.com" };
+
+  it("offers nothing on a server with no OAuth app and no Resend", () => {
+    expect(offered(ctx(LOCAL_DOCKER, localBuild))).toEqual({
+      google: false,
+      github: false,
+      email: false,
+    });
+  });
+
+  it("offers Google and GitHub each only with both its client id and secret", () => {
+    for (const [env, expected] of [
+      [{ GITHUB_CLIENT_ID: FAKE, GITHUB_CLIENT_SECRET: FAKE }, [false, true]],
+      [{ GITHUB_CLIENT_ID: FAKE }, [false, false]],
+      [{ GITHUB_CLIENT_SECRET: FAKE }, [false, false]],
+      [{ GOOGLE_CLIENT_ID: FAKE, GOOGLE_CLIENT_SECRET: FAKE }, [true, false]],
+      [{ GOOGLE_CLIENT_ID: FAKE, GITHUB_CLIENT_SECRET: FAKE }, [false, false]],
+      [{ GOOGLE_CLIENT_ID: FAKE, GOOGLE_CLIENT_SECRET: "  " }, [false, false]],
+    ] as const) {
+      const result = offered(ctx({ ...LOCAL_DOCKER, ...env }, localBuild));
+      expect([result.google, result.github], JSON.stringify(env)).toEqual(
+        expected,
+      );
+      // Neither turns email codes on.
+      expect(result.email).toBe(false);
+    }
+  });
+
+  it("offers email codes in production only where email can go out, with Resend", () => {
+    const resend = {
+      RESEND_API_KEY: FAKE,
+      EMAIL_FROM: "QRdx <a@qr.example.com>",
+    };
+    // Resend alone, on the localhost Docker test: still no way to email a code.
+    expect(offered(ctx({ ...LOCAL_DOCKER, ...resend }, localBuild)).email).toBe(
+      false,
+    );
+    expect(
+      missingFeatureSetup(
+        "emailSignIn",
+        ctx({ ...LOCAL_DOCKER, ...resend }, localBuild),
+      ),
+    ).toEqual(["RESEND_API_KEY", "EMAIL_FROM", "NEXT_PUBLIC_APP_URL"]);
+    // Resend on its own domain: codes are emailed.
+    expect(
+      offered(ctx({ ...ownDomain, ...resend }, { production: true })).email,
+    ).toBe(true);
+    // Its own domain without Resend: nothing to send them with.
+    expect(offered(ctx(ownDomain, { production: true })).email).toBe(false);
+    expect(
+      missingFeatureSetup("emailSignIn", ctx(ownDomain, { production: true })),
+    ).toEqual(["RESEND_API_KEY", "EMAIL_FROM"]);
+  });
+
+  it("keeps printing codes in the terminal in local dev, with nothing set", () => {
+    expect(offered(ctx(LOCAL_DOCKER)).email).toBe(true);
+    expect(missingFeatureSetup("emailSignIn", ctx(LOCAL_DOCKER))).toEqual([]);
+    // QRDX_ALLOW_DEV_DELIVERY=1 in dev emails them instead, so Resend it is.
+    expect(offered(ctx(LOCAL_DOCKER, { outboundDelivery: true })).email).toBe(
+      false,
+    );
+  });
+
+  it("agrees with canDeliverSignInCodes, the rule the server sends codes by", () => {
+    for (const nodeEnv of ["development", "production"]) {
+      for (const deliveryAllowed of [true, false]) {
+        for (const emailConfigured of [true, false]) {
+          const env = {
+            ...ownDomain,
+            ...(emailConfigured
+              ? { RESEND_API_KEY: FAKE, EMAIL_FROM: "a@qr.example.com" }
+              : {}),
+          };
+          const label = JSON.stringify({
+            nodeEnv,
+            deliveryAllowed,
+            emailConfigured,
+          });
+          expect(
+            offered(
+              ctx(env, {
+                production: nodeEnv === "production",
+                outboundDelivery: deliveryAllowed,
+              }),
+            ).email,
+            label,
+          ).toBe(
+            canDeliverSignInCodes({
+              nodeEnv,
+              deliveryAllowed,
+              emailConfigured,
+            }),
+          );
+        }
+      }
+    }
+  });
+
+  it("tells client components ids only", () => {
+    const view = toPublicAvailability(
+      computeFeatures(ctx(LOCAL_DOCKER, localBuild)),
+    );
+    expect(view.unavailable).toEqual(
+      expect.arrayContaining(["googleSignIn", "githubSignIn", "emailSignIn"]),
+    );
+    expect(JSON.stringify(view)).not.toMatch(/CLIENT_ID|RESEND/);
   });
 });
 
@@ -747,7 +883,7 @@ const PRODUCTION_LIKE: Record<string, string> = {
 describe("a production-like deployment", () => {
   const features = computeFeatures(ctx(PRODUCTION_LIKE, vercelProd));
 
-  it("offers AI themes and art, the docs assistant, storage, email, link safety and cron", () => {
+  it("offers AI themes and art, the docs assistant, storage, email, link safety, cron, and Google and email sign-in", () => {
     for (const id of [
       "aiThemes",
       "aiArt",
@@ -756,18 +892,22 @@ describe("a production-like deployment", () => {
       "email",
       "linkSafety",
       "scheduledJobs",
+      "googleSignIn",
+      "emailSignIn",
     ] as const) {
       expect(features[id], id).toBe(true);
     }
   });
 
-  it("leaves out adding custom domains, the spam check, the media pickers, the chat bots and euro prices", () => {
+  it("leaves out adding custom domains, the spam check, the media pickers, GitHub sign-in, the chat bots and euro prices", () => {
     expect(FEATURE_IDS.filter((id) => !features[id])).toEqual([
       "customDomains",
       "domainConnect",
       "spamCheck",
       "youtubeChannelPicker",
       "spotifyPlaylistPicker",
+      // The list above has no GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET.
+      "githubSignIn",
       "slackBot",
       "discordBot",
       "telegramBot",

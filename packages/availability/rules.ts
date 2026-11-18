@@ -38,6 +38,10 @@ export const FEATURE_IDS = [
   "scheduledJobs",
   "youtubeChannelPicker",
   "spotifyPlaylistPicker",
+  // Ways to sign in: the sign-in panel shows only these where they work
+  "googleSignIn",
+  "githubSignIn",
+  "emailSignIn",
   "passkeys",
   "sso",
   "auditLog",
@@ -82,6 +86,14 @@ export interface FeatureContext {
    * these rules stay pure. Absent or empty: none.
    */
   eeFeatures?: readonly EeFeature[];
+  /**
+   * Whether this deployment may send email and call other services
+   * (lib/delivery-guard.ts): production on its own domain, not a
+   * preview, a localhost build or local dev, unless QRDX_ALLOW_DEV_DELIVERY
+   * says so. The server works it out and passes the answer in, so these
+   * rules stay pure. Absent: not allowed.
+   */
+  outboundDelivery?: boolean;
 }
 
 interface FeatureRule {
@@ -200,6 +212,32 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
     name: "Spotify playlist picker",
     requires: () => ["SPOTIFY_CLIENT_ID", "SPOTIFY_CLIENT_SECRET"],
     extrasOf: "spotify",
+  },
+  // Google and GitHub sign-in: packages/auth/server.ts registers a provider
+  // only when both its client id and secret are set.
+  googleSignIn: {
+    name: "Google sign-in",
+    requires: () => ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
+  },
+  githubSignIn: {
+    name: "GitHub sign-in",
+    requires: () => ["GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET"],
+  },
+  emailSignIn: {
+    // Sign-in codes (lib/auth/sign-in-code-delivery.ts): emailed
+    // through Resend where outbound delivery is allowed, written to the
+    // terminal in local dev. A production build that may not send email (a
+    // localhost app URL, a preview) has no way to get a code to anyone, so
+    // the email form is left out and asking for a code fails
+    // (packages/auth/email-otp.ts). The same rule as canDeliverSignInCodes
+    // in lib/account/deletion.ts; tests/lib/feature-availability.test.ts
+    // checks they agree.
+    name: "Email sign-in codes (Resend; the app URL isn't localhost)",
+    requires: (ctx) =>
+      ctx.production || ctx.outboundDelivery
+        ? ["RESEND_API_KEY", "EMAIL_FROM", "NEXT_PUBLIC_APP_URL"]
+        : [],
+    usable: (ctx) => Boolean(ctx.outboundDelivery) || !ctx.production,
   },
   passkeys: {
     // Passkeys belong to the app's host and browsers only offer them over
