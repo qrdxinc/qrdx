@@ -73,6 +73,7 @@ export {
   type QRArtRenderOptions,
   renderQRArt,
 } from "./art";
+export * from "./bmp";
 export { clampModuleScale, MODULE_SCALE_FLOOR } from "./body-patterns";
 export {
   type CodewordMap,

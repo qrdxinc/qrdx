@@ -125,7 +125,7 @@ export type QrOptions = Omit<
   dot: CornerEyeDotPattern;
 };
 
-export const qrImageFormats = ["svg", "png", "webp", "eps"] as const;
+export const qrImageFormats = ["svg", "png", "webp", "bmp", "eps"] as const;
 export type QrImageFormat = (typeof qrImageFormats)[number];
 
 /** A hex colour with its #, lower case. */

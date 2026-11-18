@@ -6,6 +6,7 @@
 import { NextRequest } from "next/server";
 import { OFFICIAL_FRAMES } from "qrdx";
 import { describe, expect, it, vi } from "vitest";
+import { readBMP } from "../../../../packages/qrdx/tests/support/bmp";
 import {
   decodeQR,
   rasterizeSvg,
@@ -246,5 +247,85 @@ describe("WebP", () => {
     }
     expect(alphas.has(0)).toBe(true);
     expect(alphas.has(255)).toBe(true);
+  });
+});
+
+describe("BMP", () => {
+  const bmpOf = async (response: Response) =>
+    new Uint8Array(await response.arrayBuffer());
+  const pngPixels = async (response: Response) => {
+    const { default: sharp } = await import("sharp");
+    const { data, info } = await sharp(
+      Buffer.from(await response.arrayBuffer()),
+    )
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { data: new Uint8ClampedArray(data), info };
+  };
+
+  it("is the PNG's pixels as a 24-bit BMP, with the same caching", async () => {
+    const query = { data: "https://qrdx.dev/bmp", size: "300", fg: "155dfc" };
+    const [bmp, png] = await Promise.all([
+      get(q({ ...query, format: "bmp" })),
+      get(q({ ...query, format: "png" })),
+    ]);
+    expect(bmp.status).toBe(200);
+    expect(bmp.headers.get("content-type")).toBe("image/bmp");
+    expect(bmp.headers.get("cache-control")).toBe(IMMUTABLE);
+    expect(bmp.headers.get("cdn-cache-control")).toBe(IMMUTABLE);
+    expect(bmp.headers.get("access-control-allow-origin")).toBe("*");
+    const bytes = await bmpOf(bmp);
+    expect(String.fromCharCode(bytes[0] as number, bytes[1] as number)).toBe(
+      "BM",
+    );
+    const decoded = readBMP(bytes);
+    const fromPng = await pngPixels(png);
+    expect([decoded.width, decoded.height]).toEqual([300, 300]);
+    expect(
+      Buffer.compare(Buffer.from(decoded.rgba), Buffer.from(fromPng.data)),
+    ).toBe(0);
+    expect(decodeQR({ data: decoded.rgba, width: 300, height: 300 })).toBe(
+      "https://qrdx.dev/bmp",
+    );
+  });
+
+  it("takes BMP in any case, and styles and frames, sized by the frame", async () => {
+    const response = await get(
+      q({
+        data: "https://qrdx.dev/styled",
+        size: "240",
+        format: "BMP",
+        frame: "border",
+      }),
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe("image/bmp");
+    const { width } = readBMP(await bmpOf(response));
+    // The frame makes it larger than the code.
+    expect(width).toBeGreaterThan(240);
+  });
+
+  it("lays a transparent background over white, since 24-bit BMP has no alpha", async () => {
+    const response = await get(
+      q({
+        data: "https://qrdx.dev/transparent",
+        size: "240",
+        format: "bmp",
+        style: JSON.stringify({ bgColor: "transparent" }),
+      }),
+    );
+    expect(response.status).toBe(200);
+    const { width, height, rgba } = readBMP(await bmpOf(response));
+    expect([width, height]).toEqual([240, 240]);
+    // Both corners are in the quiet zone: white, not black.
+    expect([...rgba.subarray(0, 4)]).toEqual([255, 255, 255, 255]);
+    expect([...rgba.subarray((width * height - 1) * 4)]).toEqual([
+      255, 255, 255, 255,
+    ]);
+    // The modules are still there and the code scans.
+    expect(decodeQR({ data: rgba, width, height })).toBe(
+      "https://qrdx.dev/transparent",
+    );
   });
 });

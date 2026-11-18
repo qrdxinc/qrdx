@@ -14,7 +14,7 @@ curl https://api.qrdx.dev/v1/codes -H "Authorization: Bearer $QRDX_API_KEY"
 
 | Endpoint | Scope | What it does |
 | --- | --- | --- |
-| `GET /v1/qr` | None | A QR code image as SVG, PNG, WebP or EPS, with the editor's styles. See [Image API](/docs/developers/image-api) |
+| `GET /v1/qr` | None | A QR code image as SVG, PNG, WebP, BMP or EPS, with the editor's styles. See [Image API](/docs/developers/image-api) |
 | `GET /v1/barcode`, `POST /v1/barcode` | None | A barcode image in {facts.barcodeFormats} formats. See [Barcode API](/docs/developers/barcode-api) |
 | `GET /v1/community/items`, `GET /v1/community/items/{id}` | None | Published community frames, themes and collections, with the style each applies. See [Community items](#community-items) |
 | `/v1/codes` | `codes:read`, `codes:write` | List, create (one or up to {facts.apiBatchCodes} at a time, with an optional back-half in `slug`), update (including switching `kind` between a website link and a hosted page) and delete dynamic codes |

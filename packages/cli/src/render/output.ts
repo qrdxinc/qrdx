@@ -1,18 +1,22 @@
 import { writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import type { QRProps } from "qrdx";
-import { QRCodeSVG, svgToEPS } from "qrdx";
+import { decodePNGPixels, encodeBMP, QRCodeSVG, svgToEPS } from "qrdx";
 import { getQRAsPNG } from "qrdx/node";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-/** "webp" is lossless: the PNG's pixels in a smaller file. */
-export type OutputFormat = "svg" | "png" | "webp" | "eps";
+/**
+ * "webp" is lossless: the PNG's pixels in a smaller file. "bmp" is an
+ * uncompressed 24-bit bitmap; a transparent background comes out white.
+ */
+export type OutputFormat = "svg" | "png" | "webp" | "bmp" | "eps";
 
 export const OUTPUT_FORMATS: readonly OutputFormat[] = [
   "svg",
   "png",
   "webp",
+  "bmp",
   "eps",
 ];
 
@@ -121,6 +125,20 @@ export async function saveOutput(options: OutputOptions): Promise<void> {
 
   if (format === "png") {
     writeFileSync(outputPath, pngBytes);
+    return;
+  }
+
+  // BMP: the PNG's pixels written by the engine's own encoder, so it needs
+  // no sharp. 24-bit has no alpha: a transparent background comes out white.
+  if (format === "bmp") {
+    const pixels = await decodePNGPixels(pngBytes);
+    if (!pixels) {
+      throw new Error("Could not read the rendered PNG to write a BMP file.");
+    }
+    writeFileSync(
+      outputPath,
+      encodeBMP(pixels.data, pixels.width, pixels.height)
+    );
     return;
   }
 

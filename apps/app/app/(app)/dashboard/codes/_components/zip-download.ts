@@ -17,12 +17,16 @@ import type { ThemeStyles } from "@/types/theme";
 const SIZE = 1024;
 const BATCH = 6;
 
-/** Image files a ZIP of codes can hold (WebP is lossless). */
-export type ZipFormat = "png" | "webp" | "svg";
+/**
+ * Image files a ZIP of codes can hold (WebP is lossless; BMP is an
+ * uncompressed 24-bit bitmap, so the archive compresses it).
+ */
+export type ZipFormat = "png" | "webp" | "bmp" | "svg";
 
 export const ZIP_FORMAT_LABELS: Record<ZipFormat, string> = {
   png: "PNG",
   webp: "WebP",
+  bmp: "BMP",
   svg: "SVG",
 };
 
@@ -122,8 +126,9 @@ export async function downloadCodesZip(
         sanitizeFilename(code.title ?? "") || `qrdx-${code.slug}`,
         format,
       );
-      // PNG and WebP are already compressed; SVG text shrinks a lot.
-      zip.add(name, bytes, format === "svg");
+      // PNG and WebP are already compressed; SVG text and raw BMP pixels
+      // shrink a lot.
+      zip.add(name, bytes, format === "svg" || format === "bmp");
       index.push({
         file: name,
         title: code.title ?? "",

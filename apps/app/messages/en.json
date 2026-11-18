@@ -1573,6 +1573,7 @@
         "format": "Format",
         "formatPng": "PNG (image)",
         "formatWebp": "WebP (image, smaller)",
+        "formatBmp": "BMP (image, uncompressed)",
         "formatSvg": "SVG (vector, for print)",
         "size": "{format} size",
         "quietZone": "Add a {modules, number}-module quiet zone (recommended for print)",
@@ -3810,6 +3811,8 @@
         "cmykUsesASimpleConversion": "CMYK uses a simple conversion without a color profile; ask your printer if exact brand colors matter.",
         "pdfAndEpsDrawEvery": "PDF and EPS draw every dot as a vector shape and keep linear and radial gradients as smooth vector shadings.",
         "jpgCantBeTransparent": "JPG can't be transparent",
+        "bmpCantBeTransparent": "BMP can't be transparent: the background comes out white",
+        "moreFormats": "More formats",
         "vector": " · vector",
         "anySize": "Any size",
         "printbleedMm": "{printBleed, number} mm",
@@ -3831,6 +3834,7 @@
           "png": "Best for web, docs and slides.",
           "jpg": "Best for email and small files.",
           "webp": "Best for fast-loading websites · lossless, usually smaller than PNG.",
+          "bmp": "Best for older systems and embedded tools that only take BMP · uncompressed 24-bit, a transparent background comes out white.",
           "svg": "Best for Figma, Illustrator, websites · stays sharp at any size.",
           "pdf": "Best for documents and quick prints · for a vector PDF, use Print-ready.",
           "eps": "Best for print shops and vector apps · stays sharp at any size."
@@ -7473,6 +7477,8 @@
           "downloadPng": "Download PNG",
           "downloadWebp": "Download WebP",
           "downloadSvg": "Download SVG",
+          "downloadBmp": "Download BMP",
+          "moreFormats": "More formats",
           "editLinkValue": "Edit link",
           "codeSettings": "Code settings",
           "editDesignInPlayground": "Edit design in playground",
@@ -7526,6 +7532,7 @@
           "shortLinkCopied": "Short link copied"
         },
         "codeQr": {
+          "moreFormats": "More",
           "downloadFailedPleaseTryAgain": "Download failed. Please try again."
         },
         "codesCards": {
@@ -7566,6 +7573,7 @@
           "download": "Download",
           "pngImagesZip": "PNG images (ZIP)",
           "webpImagesZip": "WebP images (ZIP)",
+          "bmpImagesZip": "BMP images (ZIP)",
           "svgImagesZip": "SVG images (ZIP)",
           "more": "More",
           "moveToTrash": "Move to trash",
