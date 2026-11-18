@@ -4657,6 +4657,8 @@
       "dynamic": "Dinamico",
       "editLaterCountScans": "Modifica dopo, conta le scansioni",
       "signedOutNote": "Il dinamico richiede un account gratuito. Il tuo codice continua a funzionare qualunque cosa succeda al tuo piano.",
+      "createDynamicCode": "Crea codice dinamico",
+      "addYourAddressFirst": "Aggiungi prima l’indirizzo del tuo sito qui sopra.",
       "linkOptions": "Opzioni del link…",
       "printedCodesStillOpenDestinationurl": "I codici stampati aprono ancora <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Punta al nuovo indirizzo",

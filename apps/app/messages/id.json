@@ -4657,6 +4657,8 @@
       "dynamic": "Dinamis",
       "editLaterCountScans": "Edit nanti, hitung pemindaian",
       "signedOutNote": "Kode dinamis memerlukan akun gratis. Kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
+      "createDynamicCode": "Buat kode dinamis",
+      "addYourAddressFirst": "Tambahkan alamat situs web Anda di atas terlebih dahulu.",
       "linkOptions": "Opsi tautan…",
       "printedCodesStillOpenDestinationurl": "Kode yang sudah dicetak tetap membuka <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Arahkan ke alamat baru",

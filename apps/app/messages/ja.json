@@ -4657,6 +4657,8 @@
       "dynamic": "動的",
       "editLaterCountScans": "後から編集、スキャン数を計測",
       "signedOutNote": "動的QRコードには無料アカウントが必要です。プランがどうなっても、コードはそのまま使い続けられます。",
+      "createDynamicCode": "動的QRコードを作成",
+      "addYourAddressFirst": "先に上のウェブサイトのアドレスを入力してください。",
       "linkOptions": "リンクオプション…",
       "printedCodesStillOpenDestinationurl": "印刷済みのコードは引き続き<span>{destinationUrl}</span>を開きます。",
       "pointItToTheNew": "新しいアドレスに切り替える",

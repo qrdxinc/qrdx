@@ -22,7 +22,6 @@ import {
   stripOneShotParams,
 } from "@/lib/playground-links";
 import { officialFrameIdOfStyleParam } from "@/lib/playground-style";
-import { useAuthStore } from "@/store/auth-store";
 import { useQREditorStore } from "@/store/editor-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 import { getPresetLabel } from "@/utils/qr-presets-helper";
@@ -127,7 +126,8 @@ export function usePlaygroundParams({
     if (params.type && SIGNED_IN_TYPES.has(params.type) && sessionPending) {
       return;
     }
-    // open=dynamic asks for sign-in when signed out; wait until that's known.
+    // open=dynamic opens the builder, or signed out the dynamic pick: wait
+    // until the session is known.
     if (params.open === DYNAMIC_OPEN_TARGET && sessionPending) return;
     // A shared design names an official frame by id: load its spec first
     // (the frame library loads on demand, lib/frames/library.ts).
@@ -162,17 +162,11 @@ export function usePlaygroundParams({
         unlink: () => useDynamicLinkStore.getState().unlink(),
         link: (code) => useDynamicLinkStore.getState().link(code),
       },
-      // open=dynamic: the builder over the editor, or sign-in first.
+      // open=dynamic: the builder over the editor; signed out, the URL
+      // form's "Create dynamic code", which asks for sign-up when pressed.
       codeBuilder: {
         userId: session?.user?.id ?? null,
         open: openPlaygroundBuilder,
-        signIn: (intent) =>
-          useAuthStore
-            .getState()
-            .openAuthDialog(
-              intent.kind === "page" ? "hosted_page" : "make_dynamic",
-              { action: "OPEN_CODE_BUILDER", data: intent },
-            ),
       },
     });
 

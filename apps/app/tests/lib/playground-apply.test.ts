@@ -4,10 +4,16 @@
 // nothing applied twice.
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-// The editor persists to window.localStorage, which Node doesn't have.
+// The editor persists to window.localStorage, which Node doesn't have; the
+// sign-in dialog reads the page's path for analytics.
 vi.hoisted(() => {
   const items = new Map<string, string>();
   vi.stubGlobal("window", {
+    location: {
+      origin: "https://qrdx.dev",
+      href: "https://qrdx.dev/playground",
+      pathname: "/playground",
+    },
     localStorage: {
       clear: () => items.clear(),
       getItem: (key: string) => items.get(key) ?? null,
@@ -38,6 +44,13 @@ const { parsePlaygroundParams, stripOneShotParams, hasOneShotParams } =
   await import("@/lib/playground-links");
 const { encodeStyleParam } = await import("@/lib/playground-style");
 const { useQREditorStore } = await import("@/store/editor-store");
+const { useAuthStore } = await import("@/store/auth-store");
+const { normalizeDestination } = await import(
+  "@/components/editor/dynamic-link-toggle"
+);
+const { shouldResumeDynamic, signInToMakeDynamic } = await import(
+  "@/components/editor/dynamic-resume"
+);
 const { usePlaygroundFocusStore } = await import(
   "@/store/playground-focus-store"
 );
@@ -105,7 +118,7 @@ beforeEach(() => {
   useCodeDialogStore.setState({ open: false, lang: null });
   usePhotoScanDialogStore.setState({ open: false });
   useCommunitySheetStore.setState({ open: false, publishRequested: false });
-  usePlaygroundFocusStore.setState({ section: null });
+  usePlaygroundFocusStore.setState({ section: null, dynamicPick: false });
 });
 
 describe("the look", () => {
@@ -557,23 +570,80 @@ describe("open=dynamic", () => {
   const builder = (userId: string | null) => ({
     userId,
     open: vi.fn(),
-    signIn: vi.fn(),
+  });
+  const authStorage = () =>
+    JSON.parse(window.localStorage.getItem("auth-storage") ?? "null");
+
+  beforeEach(() => {
+    useAuthStore.setState({ isOpen: false, postLoginAction: null });
   });
 
-  it("signed out, asks for sign-in first and opens nothing yet", () => {
+  it("signed out, opens the editor first: no sign-in, the dynamic pick on the content tab", () => {
     const codeBuilder = builder(null);
     const outcome = apply(
       "/playground?open=dynamic#url=https%3A%2F%2Fexample.com%2Fmenu",
       { codeBuilder },
     );
-    expect(codeBuilder.signIn).toHaveBeenCalledWith({
-      kind: "dynamic",
-      at: Date.now(),
-    });
+    expect(useAuthStore.getState().isOpen).toBe(false);
     expect(codeBuilder.open).not.toHaveBeenCalled();
+    expect(usePlaygroundFocusStore.getState().dynamicPick).toBe(true);
     expect(outcome.applied).toEqual(["url", "open"]);
-    // The address is in the editor for when the builder opens.
+    expect(outcome.tab).toBe("content");
+    // The address is in the editor for the "Create dynamic code" button.
     expect(editor().value).toBe("https://example.com/menu");
+  });
+
+  it("signed out from the site's CTA (type=url, no address yet), waits for one", () => {
+    const outcome = apply("/playground?type=url&open=dynamic", {
+      codeBuilder: builder(null),
+    });
+    expect(useAuthStore.getState().isOpen).toBe(false);
+    expect(usePlaygroundFocusStore.getState().dynamicPick).toBe(true);
+    expect(outcome.applied).toEqual(["type", "open"]);
+    expect(outcome.tab).toBe("content");
+    expect(editor().contentType).toBe("url");
+  });
+
+  it("signed out, keeps a tab the link names", () => {
+    const outcome = apply("/playground?tab=design&open=dynamic", {
+      codeBuilder: builder(null),
+    });
+    expect(outcome.tab).toBe("customisations");
+    expect(usePlaygroundFocusStore.getState().dynamicPick).toBe(true);
+  });
+
+  it("signed out, Create keeps the link's address through sign-in and resumes for it", () => {
+    apply("/playground?open=dynamic#url=https%3A%2F%2Fexample.com%2Fmenu", {
+      codeBuilder: builder(null),
+    });
+    // What the URL form's "Create dynamic code" does (dynamic-link-toggle.tsx).
+    const destination = normalizeDestination(
+      (editor().contentConfigs.url as { url: string }).url,
+    );
+    expect(destination).toBe("https://example.com/menu");
+    signInToMakeDynamic(
+      useAuthStore.getState().openAuthDialog,
+      destination as string,
+    );
+    expect(useAuthStore.getState()).toMatchObject({
+      isOpen: true,
+      reason: "make_dynamic",
+      postLoginAction: {
+        type: "MAKE_DYNAMIC",
+        data: { destination: "https://example.com/menu", at: Date.now() },
+      },
+    });
+    // Persisted for the OAuth round trip (a full page load).
+    expect(authStorage()?.state?.postLoginAction).toEqual({
+      type: "MAKE_DYNAMIC",
+      data: { destination: "https://example.com/menu", at: Date.now() },
+    });
+    // Back from sign-in, the editor still holds the address: it resumes.
+    const stored = useAuthStore.getState().postLoginAction?.data;
+    expect(shouldResumeDynamic(stored, destination)).toBe(true);
+    expect(shouldResumeDynamic(stored, "https://example.com/other")).toBe(
+      false,
+    );
   });
 
   it("signed in, opens the builder with the address and the design", () => {
@@ -588,7 +658,9 @@ describe("open=dynamic", () => {
       initial: { destination: "https://example.com/menu", style: MY_STYLE },
       origin: "playground",
     });
-    expect(codeBuilder.signIn).not.toHaveBeenCalled();
+    expect(usePlaygroundFocusStore.getState().dynamicPick).toBe(false);
+    expect(useAuthStore.getState().isOpen).toBe(false);
+    expect(outcome.tab).toBeUndefined();
     expect(outcome.notice).toBeNull();
   });
 
@@ -611,22 +683,27 @@ describe("open=dynamic", () => {
     });
   });
 
-  it("another type opens nothing and says why", () => {
-    const codeBuilder = builder("u_alice");
-    const outcome = apply("/playground?type=wifi&open=dynamic", {
-      signedIn: true,
-      codeBuilder,
-    });
-    expect(codeBuilder.open).not.toHaveBeenCalled();
-    expect(codeBuilder.signIn).not.toHaveBeenCalled();
-    expect(outcome.applied).toEqual(["type"]);
-    expect(outcome.notice).toBe("Wi-Fi details are stored in the code itself.");
+  it("another type opens nothing and says why, signed in or out", () => {
+    for (const userId of ["u_alice", null]) {
+      const codeBuilder = builder(userId);
+      const outcome = apply("/playground?type=wifi&open=dynamic", {
+        signedIn: userId !== null,
+        codeBuilder,
+      });
+      expect(codeBuilder.open).not.toHaveBeenCalled();
+      expect(usePlaygroundFocusStore.getState().dynamicPick).toBe(false);
+      expect(outcome.applied).toEqual(["type"]);
+      expect(outcome.notice).toBe(
+        "Wi-Fi details are stored in the code itself.",
+      );
+    }
   });
 
   it("is ignored where the builder can't open", () => {
     const outcome = apply("/playground?open=dynamic");
     expect(outcome.applied).toEqual([]);
     expect(outcome.notice).toBeNull();
+    expect(usePlaygroundFocusStore.getState().dynamicPick).toBe(false);
   });
 });
 // ─── end open=dynamic ───────────────────────────────────────────────────────

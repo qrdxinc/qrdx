@@ -4657,6 +4657,8 @@
       "dynamic": "动态",
       "editLaterCountScans": "稍后可编辑，统计扫描次数",
       "signedOutNote": "动态二维码需要一个免费账号。无论你的套餐有什么变化，二维码都会继续有效。",
+      "createDynamicCode": "创建动态二维码",
+      "addYourAddressFirst": "请先在上方填写您的网站地址。",
       "linkOptions": "链接选项…",
       "printedCodesStillOpenDestinationurl": "已打印的二维码仍会打开 <span>{destinationUrl}</span>。",
       "pointItToTheNew": "指向新地址",

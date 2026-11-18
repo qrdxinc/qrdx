@@ -39,10 +39,11 @@ import { dashboardEntry } from "@/lib/workspace-paths";
 import { useAuthStore } from "@/store/auth-store";
 import { useQREditorStore } from "@/store/editor-store";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
+import { usePlaygroundFocusStore } from "@/store/playground-focus-store";
 import type { QrCodeActionResult } from "@/types/action-results";
 import type { UrlContent } from "@/types/qr-content";
 import type { ThemeStyles } from "@/types/theme";
-import { makeDynamicIntent, shouldResumeDynamic } from "./dynamic-resume";
+import { shouldResumeDynamic, signInToMakeDynamic } from "./dynamic-resume";
 
 export interface LinkedDynamicCode {
   id: string;
@@ -251,6 +252,8 @@ export function DynamicLinkToggle() {
   const openGetProDialog = useGetProDialogStore(
     (state) => state.openGetProDialog,
   );
+  // Came from a "Create a dynamic QR code" link (open=dynamic) signed out.
+  const dynamicPick = usePlaygroundFocusStore((state) => state.dynamicPick);
 
   const [isPending, startTransition] = useTransition();
   const [limitMessage, setLimitMessage] = useState<string | null>(null);
@@ -297,10 +300,7 @@ export function DynamicLinkToggle() {
   const enable = () => {
     if (!destination) return;
     if (!userId) {
-      openAuthDialog("make_dynamic", {
-        action: "MAKE_DYNAMIC",
-        data: makeDynamicIntent(destination),
-      });
+      signInToMakeDynamic(openAuthDialog, destination);
       return;
     }
 
@@ -317,10 +317,7 @@ export function DynamicLinkToggle() {
         return;
       }
       if (outcome.kind === "signin") {
-        openAuthDialog("make_dynamic", {
-          action: "MAKE_DYNAMIC",
-          data: makeDynamicIntent(destination),
-        });
+        signInToMakeDynamic(openAuthDialog, destination);
         return;
       }
       if (outcome.kind === "error") {
@@ -492,6 +489,24 @@ export function DynamicLinkToggle() {
         </ToggleGroup>
         <InfoHint align="end" className="mt-2.5" id="dynamic-qr" />
       </div>
+
+      {signedOut && dynamicPick && !linked && (
+        <div className="space-y-1.5">
+          <Button
+            className="w-full"
+            disabled={isPending || !destination}
+            onClick={enable}
+          >
+            <Flash variant="Bold" />
+            {t("createDynamicCode")}
+          </Button>
+          {!destination && (
+            <p className="text-muted-foreground text-xs text-pretty">
+              {t("addYourAddressFirst")}
+            </p>
+          )}
+        </div>
+      )}
 
       {signedOut && !linked && (
         <p className="text-muted-foreground text-xs text-pretty">

@@ -4657,6 +4657,8 @@
       "dynamic": "Dynamisch",
       "editLaterCountScans": "Später ändern, Scans zählen",
       "signedOutNote": "Für dynamische Codes brauchst du ein kostenloses Konto. Dein Code funktioniert weiter, egal was mit deinem Tarif passiert.",
+      "createDynamicCode": "Dynamischen Code erstellen",
+      "addYourAddressFirst": "Gib oben zuerst deine Website-Adresse ein.",
       "linkOptions": "Link-Optionen…",
       "printedCodesStillOpenDestinationurl": "Gedruckte Codes öffnen weiterhin <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Auf die neue Adresse verweisen",

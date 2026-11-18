@@ -22,6 +22,27 @@ export function makeDynamicIntent(
   return { destination, at: now };
 }
 
+/** What asking for sign-in needs: store/auth-store's openAuthDialog. */
+type OpenAuthDialog = (
+  reason: "make_dynamic",
+  options: { action: "MAKE_DYNAMIC"; data: MakeDynamicIntent },
+) => void;
+
+/**
+ * Signed out, "Dynamic" or "Create dynamic code" asks for sign-up with the
+ * pick as the post-login action; the URL form makes the code right after.
+ */
+export function signInToMakeDynamic(
+  openAuthDialog: OpenAuthDialog,
+  destination: string,
+  now: number = Date.now(),
+): void {
+  openAuthDialog("make_dynamic", {
+    action: "MAKE_DYNAMIC",
+    data: makeDynamicIntent(destination, now),
+  });
+}
+
 /**
  * True when a stored intent should run now: it is well formed, recent, and
  * the editor still holds the destination it was made for.

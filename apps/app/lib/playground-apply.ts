@@ -11,8 +11,6 @@
 import {
   builderRequestFor,
   dynamicBlockedReason,
-  type OpenCodeBuilderIntent,
-  openCodeBuilderIntent,
   type PlaygroundBuilderRequest,
 } from "@/components/code-builder/playground-request";
 import { useCodeDialogStore } from "@/components/editor/action-bar/code-dialog-store";
@@ -247,6 +245,8 @@ export function applyPlaygroundParams(
   if (params.open === DYNAMIC_OPEN_TARGET) {
     const dynamic = applyDynamicOpen(context);
     if (dynamic.applied) applied.push("open");
+    // Signed out, the address field is where the visit starts.
+    if (dynamic.picked) tab ??= "content";
     notice = dynamic.notice;
   }
 
@@ -379,28 +379,31 @@ export interface CodeBuilderAccess {
   userId: string | null;
   /** Opens the builder (the playground mounts its host once it renders) */
   open: (request: PlaygroundBuilderRequest) => void;
-  /** Signed out: sign-in first; the builder opens afterwards (OPEN_CODE_BUILDER) */
-  signIn: (intent: OpenCodeBuilderIntent) => void;
 }
 
 /**
- * open=dynamic, after the link's type and url: the builder for the URL code
- * (editing the dynamic code it's bound to, else creating one with its
- * address and design). Signed out, it asks for sign-in first. Other types
+ * open=dynamic, after the link's type and url. Signed in: the builder for
+ * the URL code (editing the dynamic code it's bound to, else creating one
+ * with its address and design). Signed out: no sign-in yet. The editor
+ * opens with the address field ready and a "Create dynamic code" button
+ * (`picked`, components/editor/dynamic-link-toggle.tsx); pressing it asks
+ * for sign-up, and the code is made right after (MAKE_DYNAMIC). Other types
  * open nothing and say why.
  */
 function applyDynamicOpen(context: ApplyContext): {
   applied: boolean;
+  /** Signed out: the URL form shows the dynamic pick */
+  picked: boolean;
   notice: string | null;
 } {
   const access = context.codeBuilder;
-  if (!access) return { applied: false, notice: null };
+  if (!access) return { applied: false, picked: false, notice: null };
   const editor = useQREditorStore.getState();
   const blocked = dynamicBlockedReason(editor.contentType);
-  if (blocked) return { applied: false, notice: blocked };
+  if (blocked) return { applied: false, picked: false, notice: blocked };
   if (!(context.signedIn && access.userId)) {
-    access.signIn(openCodeBuilderIntent("dynamic"));
-    return { applied: true, notice: null };
+    usePlaygroundFocusStore.getState().setDynamicPick(true);
+    return { applied: true, picked: true, notice: null };
   }
   const next = builderRequestFor({
     contentType: editor.contentType,
@@ -409,8 +412,8 @@ function applyDynamicOpen(context: ApplyContext): {
     linked: context.dynamicLink.get(),
     userId: access.userId,
   });
-  if (!next.ok) return { applied: false, notice: next.reason };
+  if (!next.ok) return { applied: false, picked: false, notice: next.reason };
   access.open(next.request);
-  return { applied: true, notice: null };
+  return { applied: true, picked: false, notice: null };
 }
 // ─── end open=dynamic ───────────────────────────────────────────────────────

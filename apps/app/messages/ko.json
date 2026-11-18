@@ -4657,6 +4657,8 @@
       "dynamic": "동적",
       "editLaterCountScans": "나중에 수정, 스캔 집계",
       "signedOutNote": "동적 QR 코드는 무료 계정이 필요해요. 요금제에 어떤 일이 생겨도 코드는 계속 작동해요.",
+      "createDynamicCode": "동적 QR 코드 만들기",
+      "addYourAddressFirst": "먼저 위에 웹사이트 주소를 입력해 주세요.",
       "linkOptions": "링크 옵션…",
       "printedCodesStillOpenDestinationurl": "인쇄된 코드는 계속 <span>{destinationUrl}</span>을(를) 열어요.",
       "pointItToTheNew": "새 주소로 연결하기",

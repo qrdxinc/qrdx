@@ -5056,6 +5056,8 @@
       "dynamic": "Dynamic",
       "editLaterCountScans": "Edit later, count scans",
       "signedOutNote": "Dynamic needs a free account. Your code keeps working whatever happens to your plan.",
+      "createDynamicCode": "Create dynamic code",
+      "addYourAddressFirst": "Add your website address above first.",
       "linkOptions": "Link options…",
       "printedCodesStillOpenDestinationurl": "Printed codes still open <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Point it to the new address",
