@@ -1,9 +1,10 @@
 "use client";
 
 import { isDocsPagePath } from "@repo/i18n/docs";
+import { isLangRootPath } from "@repo/i18n/paths";
 import { isSitePagePath } from "@repo/next-config/site-zone";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { type ComponentProps, useMemo } from "react";
 import { useLocalizeHref } from "@/lib/i18n/use-localize-href";
 
@@ -48,17 +49,34 @@ function anchorProps({
  * too: the marketing site serves them behind the same URLs once SITE_ORIGIN
  * is set, and this app does until then, so a full page load is right in
  * both modes and next/link never tries to load the other app's page here.
+ *
+ * So do links between this app's two root layouts, app/[lang] (the
+ * translated and English-only pages) and app/(app) (sign-in, the dashboard,
+ * a shared theme's /playground/<id> …): Next loads such a page in full
+ * anyway, after fetching its payload for nothing, and a plain <a> lets the
+ * visit's start ride along (@repo/analytics/landing, installVisitForwarding).
  */
 export function LocaleLink({ href, ...props }: LinkProps) {
   const localize = useLocalizeHref();
+  const pathname = usePathname();
   const target = typeof href === "string" ? localize(href) : href;
   if (
     typeof target === "string" &&
-    (isDocsPagePath(target) || isSitePagePath(target))
+    (isDocsPagePath(target) ||
+      isSitePagePath(target) ||
+      crossesRootLayout(pathname, target))
   ) {
     return <a href={target} {...anchorProps(props)} />;
   }
   return <Link href={target} {...props} />;
+}
+
+/** Whether a link from `pathname` to `href` goes into the other root layout. */
+function crossesRootLayout(pathname: string | null, href: string): boolean {
+  if (!pathname || !href.startsWith("/") || href.startsWith("//")) {
+    return false;
+  }
+  return isLangRootPath(pathname) !== isLangRootPath(href);
 }
 
 type Router = ReturnType<typeof useRouter>;
