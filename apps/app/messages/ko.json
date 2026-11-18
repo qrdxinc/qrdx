@@ -7730,6 +7730,8 @@
           "storageUsed": "사용한 저장 공간",
           "storageUsage": "{quota} 중 {used} 사용 · {plan}에서 파일당 최대 {maxFile}",
           "storageUsageUnlimited": "무제한 중 {used} 사용 · {plan}에서 파일당 최대 {maxFile}",
+          "upgradeToPro": "Pro로 업그레이드",
+          "upgradeToBusiness": "Business로 업그레이드",
           "overStorage": "플랜의 저장 용량을 초과했어요. 기존 파일은 계속 작동해요. 새 파일을 업로드하려면 필요 없는 파일을 삭제하거나 업그레이드해 주세요.",
           "overStorageTeam": "플랜의 저장 용량을 초과했어요. 기존 파일은 계속 작동해요. 새 파일을 업로드하려면 필요 없는 파일을 삭제해 주세요.",
           "dropFilesHereOrChoose": "파일을 여기에 놓거나 선택하세요",

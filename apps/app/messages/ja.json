@@ -7730,6 +7730,8 @@
           "storageUsed": "使用中のストレージ",
           "storageUsage": "{quota}のうち{used}を使用中・{plan}ではファイルあたり最大{maxFile}",
           "storageUsageUnlimited": "容量無制限のうち{used}を使用中・{plan}ではファイルあたり最大{maxFile}",
+          "upgradeToPro": "Proにアップグレード",
+          "upgradeToBusiness": "Businessにアップグレード",
           "overStorage": "プランのストレージ容量を超えています。既存のファイルは引き続き使えます。新しくアップロードするには、不要なファイルを削除するか、アップグレードしてください。",
           "overStorageTeam": "プランのストレージ容量を超えています。既存のファイルは引き続き使えます。新しくアップロードするには、不要なファイルを削除してください。",
           "dropFilesHereOrChoose": "ファイルをここにドロップするか、選択してください",

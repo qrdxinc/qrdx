@@ -7730,6 +7730,8 @@
           "storageUsed": "Penyimpanan terpakai",
           "storageUsage": "{used} dari {quota} terpakai · maks. {maxFile} per file di {plan}",
           "storageUsageUnlimited": "{used} terpakai dari penyimpanan tanpa batas · maks. {maxFile} per file di {plan}",
+          "upgradeToPro": "Upgrade ke Pro",
+          "upgradeToBusiness": "Upgrade ke Business",
           "overStorage": "Penyimpanan paket Anda sudah terlampaui. File yang ada tetap berfungsi; hapus file yang tidak lagi Anda perlukan atau upgrade untuk mengunggah file baru.",
           "overStorageTeam": "Penyimpanan paket Anda sudah terlampaui. File yang ada tetap berfungsi; hapus file yang tidak lagi Anda perlukan untuk mengunggah file baru.",
           "dropFilesHereOrChoose": "Letakkan file di sini atau pilih file",

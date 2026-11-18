@@ -7730,6 +7730,8 @@
           "storageUsed": "Armazenamento usado",
           "storageUsage": "{used} de {quota} usados · máx. de {maxFile} por arquivo no plano {plan}",
           "storageUsageUnlimited": "{used} usados de armazenamento ilimitado · máx. de {maxFile} por arquivo no plano {plan}",
+          "upgradeToPro": "Fazer upgrade para Pro",
+          "upgradeToBusiness": "Fazer upgrade para Business",
           "overStorage": "Você ultrapassou o armazenamento do seu plano. Os arquivos existentes continuam funcionando; exclua arquivos de que não precisa mais ou faça upgrade para enviar novos.",
           "overStorageTeam": "Você ultrapassou o armazenamento do seu plano. Os arquivos existentes continuam funcionando; exclua arquivos de que não precisa mais para enviar novos.",
           "dropFilesHereOrChoose": "Solte os arquivos aqui ou escolha-os",

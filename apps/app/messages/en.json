@@ -8142,6 +8142,8 @@
           "storageUsed": "Storage used",
           "storageUsage": "{used} of {quota} used · {maxFile} max per file on {plan}",
           "storageUsageUnlimited": "{used} of unlimited used · {maxFile} max per file on {plan}",
+          "upgradeToPro": "Upgrade to Pro",
+          "upgradeToBusiness": "Upgrade to Business",
           "overStorage": "You're over your plan's storage. Existing files keep working; delete files you no longer need or upgrade to upload new ones.",
           "overStorageTeam": "You're over your plan's storage. Existing files keep working; delete files you no longer need to upload new ones.",
           "dropFilesHereOrChoose": "Drop files here or choose them",
