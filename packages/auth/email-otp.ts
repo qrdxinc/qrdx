@@ -97,10 +97,14 @@ export function registerSignInCodeSender(
  * `mayRequest` is the new address's limit, checked there too, before Better
  * Auth looks the address up. `later` runs the send after the answer: Better
  * Auth sends nothing to an address that already has an account, so a send
- * the answer waited for would make a free address answer later than a taken
- * one. Registered on its own: the server actions that ask for these codes
- * may run where the /api/auth route, which registers the sign-in sender,
- * never loaded.
+ * the answer waited for would make a free address answer much later than a
+ * taken one. That isn't all of the difference: Better Auth also deletes the
+ * code it stored for a taken address before answering, which the app's
+ * actions hide by answering no sooner than a fixed minimum
+ * (EMAIL_CHANGE_ANSWER_MS in apps/app/lib/account/email-change.ts).
+ * Registered on its own: the server actions that ask for these codes may run
+ * where the /api/auth route, which registers the sign-in sender, never
+ * loaded.
  */
 export function registerEmailChangeCodeSender(
   sender: EmailChangeCodeSender,
@@ -265,9 +269,9 @@ export const sendVerificationOTP: EmailOTPOptions["sendVerificationOTP"] =
     }
     if (type === "change-email") {
       // Better Auth only gets here for an address with no account. Sending
-      // after the answer keeps it from answering later than a taken address,
-      // and a failure from changing the answer: it's logged, and nobody is
-      // told, as nobody is told about a taken address.
+      // after the answer keeps the email out of the time to answer, and a
+      // failure out of the answer: it's logged, and nobody is told, as nobody
+      // is told about a taken address.
       const later = emailChangeAfterAnswer();
       if (!later) {
         log("error", "auth.email_otp.no_after_answer", { type });
@@ -357,7 +361,8 @@ async function checkCodeLimit(
  * leaves the last code working. Otherwise Better Auth's own "sent" stands:
  * it sends nothing to an address that already has an account, so the code
  * goes out after the answer (sendVerificationOTP) and a failed send never
- * reaches it.
+ * reaches it. The answers are then the same for both; the database work
+ * behind them isn't quite, which the app hides with a minimum answer time.
  */
 export const signInCodeGate = () =>
   ({

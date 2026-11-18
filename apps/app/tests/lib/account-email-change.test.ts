@@ -65,21 +65,21 @@ describe("requestFailureMessage", () => {
 });
 
 describe("confirmFailure", () => {
-  it("keeps the code usable after a wrong guess", () => {
-    expect(confirmFailure(apiError(400, { code: "INVALID_OTP" }))).toEqual({
-      message: EMAIL_CHANGE_MESSAGES.wrongCode,
-      codeDead: false,
-    });
-  });
-
-  it("asks for a new code once the code is used up", () => {
-    expect(confirmFailure(apiError(400, { code: "OTP_EXPIRED" }))).toEqual({
-      message: EMAIL_CHANGE_MESSAGES.expired,
-      codeDead: true,
-    });
-    expect(
-      confirmFailure(apiError(403, { code: "TOO_MANY_ATTEMPTS" }))?.codeDead,
-    ).toBe(true);
+  it("answers a wrong, used-up and expired code alike", () => {
+    // An address with an account never has a code stored, so every code
+    // typed for it is just wrong; only a free address's code runs out of
+    // tries or expires. Telling those apart would tell the addresses apart.
+    const answers = [
+      apiError(400, { code: "INVALID_OTP" }),
+      apiError(403, { code: "TOO_MANY_ATTEMPTS" }),
+      apiError(400, { code: "OTP_EXPIRED" }),
+    ].map(confirmFailure);
+    for (const answer of answers) {
+      expect(answer).toEqual({
+        message: "That code didn't work. Check it, or send a new code.",
+        codeDead: false,
+      });
+    }
   });
 
   it("says when another account took the address meanwhile", () => {

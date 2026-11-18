@@ -14,7 +14,10 @@
  * sent one, so the form doesn't reveal which addresses have accounts, and
  * the confirming step checks again. A send that fails answers the same way
  * (anything else would mark the free addresses), so the dialog only says a
- * code should arrive if no other account uses the address. Where this
+ * code should arrive if no other account uses the address. Codes typed for
+ * either kind of address get the same answers too (confirmFailure), and both
+ * steps answer no sooner than EMAIL_CHANGE_ANSWER_MS, which hides the little
+ * database work Better Auth does for one kind and not the other. Where this
  * deployment can't deliver codes at all, every request is refused alike
  * (EMAIL_CHANGE_UNAVAILABLE) and Settings doesn't offer the change.
  */
@@ -23,6 +26,17 @@ import { EMAIL_CHANGE_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 
 /** RFC 5321's limit on an address. */
 export const MAX_EMAIL_LENGTH = 254;
+
+/**
+ * Both steps answer no sooner than this after they start, whatever the
+ * outcome (lib/no-sooner-than.ts). Better Auth does one more database write
+ * for an address with an account when a code is asked for, and one more for
+ * an address without one after a wrong code, so the time to answer would
+ * otherwise tell them apart. Each step makes about ten database and Upstash
+ * round trips one after another, which this is meant to stay above; the
+ * wait is short next to finding the code in an inbox.
+ */
+export const EMAIL_CHANGE_ANSWER_MS = 750;
 
 /** Addresses are compared (and stored by Better Auth) in lower case. */
 export function normalizeEmail(email: string): string {
@@ -45,9 +59,7 @@ export const EMAIL_CHANGE_MESSAGES = {
   codeRateLimited:
     "Too many codes requested for that address. Wait a few minutes and try again.",
   notSent: "We couldn't send a code right now. Please try again.",
-  wrongCode: "That code isn't right. Check the email and try again.",
-  expired: "That code has expired. Send a new one.",
-  tooManyAttempts: "Too many wrong tries. Send a new code.",
+  codeDidntWork: "That code didn't work. Check it, or send a new code.",
   taken: "That email already belongs to another QRdx account.",
   signedOut: "Sign in to change your email.",
   unavailable:
@@ -96,12 +108,14 @@ export function confirmFailure(
     return { message: EMAIL_CHANGE_MESSAGES.rateLimited, codeDead: false };
   }
   switch (body?.code) {
+    // Better Auth keeps no code for an address that already has an account,
+    // so there every code is just wrong (INVALID_OTP), while a free address
+    // runs out of tries or sees its code expire. One answer for all three,
+    // and the code isn't marked used up (that would show too).
     case "INVALID_OTP":
-      return { message: EMAIL_CHANGE_MESSAGES.wrongCode, codeDead: false };
     case "OTP_EXPIRED":
-      return { message: EMAIL_CHANGE_MESSAGES.expired, codeDead: true };
     case "TOO_MANY_ATTEMPTS":
-      return { message: EMAIL_CHANGE_MESSAGES.tooManyAttempts, codeDead: true };
+      return { message: EMAIL_CHANGE_MESSAGES.codeDidntWork, codeDead: false };
     case "INVALID_EMAIL":
       return { message: EMAIL_CHANGE_MESSAGES.invalidEmail, codeDead: true };
     case "UNAUTHORIZED":

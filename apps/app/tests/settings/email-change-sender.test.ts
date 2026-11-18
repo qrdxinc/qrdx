@@ -2,9 +2,10 @@
 // with @repo/auth (packages/auth/email-otp.ts): the app's sender, the rule
 // for whether codes can be delivered here, the per-address limit the gate
 // checks before Better Auth looks the address up, and Next's after() so the
-// email goes out after the answer. A free address then answers as quickly as
-// a taken one, which is never sent a code. tests/auth/sign-in-code-gate.test.ts
-// runs those pieces inside Better Auth; this checks the app hands them over.
+// email goes out after the answer: a free address's answer doesn't wait for
+// an email a taken one is never sent. The gate test
+// (tests/auth/sign-in-code-gate.test.ts) runs those pieces inside Better
+// Auth; this checks the app hands them over.
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 const registered = vi.hoisted(() => ({ args: [] as unknown[] }));

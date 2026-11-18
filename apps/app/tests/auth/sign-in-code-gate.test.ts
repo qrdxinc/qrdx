@@ -10,7 +10,10 @@
 // codes can, a taken address and a free one get the same answer, even when
 // sending fails, so the request never says which addresses have accounts.
 // Its per-address limit runs before Better Auth looks the address up, and
-// the email goes out after the answer, so both do the same work before it.
+// the email goes out after the answer, so both get the same answer. The
+// database work behind it still differs a little (Better Auth deletes the
+// code it stored for a taken address); the app's actions hide that with a
+// minimum answer time (tests/settings/email-change-answer-time.test.ts).
 // Run inside a real Better Auth (memory adapter) with the real emailOTP
 // plugin; nothing is emailed.
 import { realpathSync } from "node:fs";
@@ -560,8 +563,9 @@ describe("asking to change the email", () => {
     // and answers "sent" all the same, so the dialog can't say a code went
     // out: only that one should arrive if no other account uses the address.
     // And the email goes out after the answer, so a free address doesn't
-    // take longer to answer than a taken one.
-    it("does the same before answering a taken address and a free one; the code goes out after the answer", async () => {
+    // wait for it. (A taken address's answer still waits for one more
+    // delete; the app's minimum answer time hides that.)
+    it("checks the limit, then answers a taken address and a free one alike; the code goes out after the answer", async () => {
       registerEmailChangeCodeSender(
         sendToNewAddress,
         () => true,
