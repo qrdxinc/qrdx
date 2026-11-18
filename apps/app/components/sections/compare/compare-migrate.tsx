@@ -15,6 +15,48 @@ interface CompareMigrateProps {
 const LINK_CLASS =
   "font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground";
 
+/**
+ * Link shapes seen on real codes on customers' own domains (checked 17 Nov
+ * 2026), for the own-domain case. Only providers where we saw them; the
+ * others get the general case, and the docs' "Move your QR domain to QRdx"
+ * lists every provider.
+ */
+const OWN_DOMAIN_SHAPES: Record<string, ReactNode> = {
+  "bitly-qr": (
+    <>
+      On customers&apos; own domains we&apos;ve seen Bitly links like
+      /aB3xYz9?r=qr, and words (checked November 17, 2026). QRdx answers them as
+      they are and ignores the ?r=qr.
+    </>
+  ),
+  flowcode: (
+    <>
+      On customers&apos; own domains we&apos;ve seen Flowcode codes like
+      /r/aB3x, and longer paths (checked November 17, 2026). QRdx answers those
+      with{" "}
+      <LocaleLink className={LINK_CLASS} href="/docs/migrate#path-aliases">
+        path aliases
+      </LocaleLink>
+      .
+    </>
+  ),
+  hovercode: (
+    <>
+      On customers&apos; own domains we&apos;ve seen Hovercode codes of 8
+      letters and digits, and words (checked November 17, 2026). QRdx answers
+      them as they are.
+    </>
+  ),
+  uniqode: (
+    <>
+      On customers&apos; own domains we&apos;ve seen Uniqode codes like /aB3xYz,
+      and words (checked November 17, 2026). QRdx answers them as they are.
+      Codes printed on Uniqode&apos;s own qrcodes.pro don&apos;t move with your
+      domain.
+    </>
+  ),
+};
+
 interface PrintedCase {
   icon: typeof Global;
   title: string;
@@ -52,14 +94,17 @@ export function CompareMigrate({ slug, competitor }: CompareMigrateProps) {
                 on that domain, then point the domain&apos;s DNS at QRdx. The
                 same printed codes then open through QRdx. Links don&apos;t work
                 between the DNS change and QRdx verifying the domain (usually
-                minutes), so do it at a quiet time. The import preview shows any
-                back-half QRdx can&apos;t keep. Custom domains are on Pro and
-                Business.{" "}
+                minutes), so do it at a quiet time.{" "}
+                {OWN_DOMAIN_SHAPES[slug] ? (
+                  <>{OWN_DOMAIN_SHAPES[slug]} </>
+                ) : null}
+                The import preview shows any back-half QRdx can&apos;t keep.
+                Custom domains are on Pro and Business.{" "}
                 <LocaleLink
                   className={LINK_CLASS}
-                  href="/docs/migrate#your-own-domain-go-yourbrand-com"
+                  href="/docs/move-your-qr-domain"
                 >
-                  How to move a domain
+                  How to move your QR domain
                 </LocaleLink>
               </>
             ),

@@ -16,6 +16,8 @@ import {
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useAvailability } from "@/components/availability-provider";
+import { LocaleLink } from "@/components/i18n/locale-link";
 import { useWorkspaceHref } from "@/components/workspace-provider";
 import type { Translator } from "@/lib/i18n/translator";
 import {
@@ -68,6 +70,7 @@ export function RunStep({
   const t = useTranslations("app.dashboard.codes.importRunStep");
   const reasonText = useMigrateReasonText();
   const inWorkspace = useWorkspaceHref();
+  const { has } = useAvailability();
   const [job, setJob] = useState<JobSummary | null>(null);
   const [items, setItems] = useState<JobItem[]>([]);
   const [running, setRunning] = useState(false);
@@ -411,6 +414,20 @@ export function RunStep({
             <p className="text-muted-foreground text-xs">
               {file.keepWorkingNote}
             </p>
+            {has("customDomains") && !job.backHalfDomain && (
+              <p className="text-muted-foreground text-xs">
+                {t.rich("ownDomainCodesCanMove", {
+                  link: (chunks) => (
+                    <LocaleLink
+                      className="underline"
+                      href="/docs/move-your-qr-domain"
+                    >
+                      {chunks}
+                    </LocaleLink>
+                  ),
+                })}
+              </p>
+            )}
           </div>
         )}
 

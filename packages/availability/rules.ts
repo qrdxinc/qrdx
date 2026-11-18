@@ -142,6 +142,7 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
       `${WORKSPACE_PATTERN_PREFIX}/settings/domains`,
       "/docs/custom-domains",
       "/docs/help/domains/custom-domains",
+      "/docs/move-your-qr-domain",
     ],
     // Tag Manager containers run any script, so they only ever load on a
     // customer's own domain (components/landing/pixels.tsx).
