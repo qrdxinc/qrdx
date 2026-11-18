@@ -6,7 +6,7 @@ import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { cn } from "@repo/design-system/lib/utils";
 import { Lock } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { checkQrCodeSlug } from "@/actions/qr-codes";
 import { PLAN_NAMES } from "@/lib/pricing";
@@ -46,6 +46,7 @@ export function useSlugCheck({
   unchanged: boolean;
   enabled: boolean;
 }): SlugStatus {
+  const locale = useLocale();
   const [status, setStatus] = useState<SlugStatus>({ state: "idle" });
   const latest = useRef(0);
 
@@ -63,7 +64,7 @@ export function useSlugCheck({
     }
     setStatus({ state: "checking" });
     const timer = setTimeout(() => {
-      checkQrCodeSlug({ slug: value, domainId, codeId })
+      checkQrCodeSlug({ slug: value, domainId, codeId }, locale)
         .then((result) => {
           if (request !== latest.current) return;
           if (!result.success) {
@@ -94,7 +95,7 @@ export function useSlugCheck({
         });
     }, DEBOUNCE_MS);
     return () => clearTimeout(timer);
-  }, [slug, domainId, codeId, unchanged, enabled]);
+  }, [slug, domainId, codeId, unchanged, enabled, locale]);
 
   return status;
 }

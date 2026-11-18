@@ -5901,6 +5901,98 @@
       "placeholder": "Search frames, themes and pages"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Sign in to continue.",
+      "failed": "Something went wrong. Please try again.",
+      "checkDetails": "Check the details.",
+      "themeNotInWorkspace": "This theme isn't in this workspace.",
+      "noCustomFrame": "This theme has no custom frame.",
+      "pageNotFound": "Page not found.",
+      "pageChanged": "This page changed since you reviewed it. Review it again before publishing.",
+      "svgTooLarge": "SVG files can be up to 200 KB.",
+      "tooManyImports": "Too many imports. Try again in an hour.",
+      "tooManyChanges": "Too many changes. Try again later."
+    },
+    "communityThemes": {
+      "alreadyPublished": "This theme is already published to the community.",
+      "workspaceAdminsOnly": "Only owners and admins of this workspace can publish its themes.",
+      "workspaceUnavailable": "Publishing workspace themes isn't available on this deployment yet.",
+      "tooFast": "You're publishing too fast. Please try again later."
+    },
+    "checks": {
+      "licenceRequired": "Confirm the CC0 licence to publish.",
+      "publishedALot": "You've published a lot today. Try again tomorrow.",
+      "unavailable": "The community update isn't available on this deployment yet.",
+      "itemNotFound": "This item isn't in the community.",
+      "workspacePublishRefusal": "Only owners and admins of this workspace can publish what's in it.",
+      "nameRequired": "Give it a name.",
+      "alreadyPublished": "This design is already in the community.",
+      "themeSettings": "This theme has settings the community can't show. Save it again in the editor.",
+      "pageNothingLeft": "Nothing is left to share once your own details are taken out. Add some blocks people can reuse.",
+      "pageInvalid": "This page can't be shared as a template. Publish it again in the page editor first.",
+      "pageTooLarge": "This page is too large to share as a template. Remove some blocks or shorten long text.",
+      "repeatsDetail": "It repeats a detail taken out elsewhere on the page.",
+      "noEmails": "Leave email addresses out of names, labels and descriptions.",
+      "noLinks": "Leave links out of names, labels and descriptions.",
+      "noHandles": "Leave @handles out of names, labels and descriptions.",
+      "noPhones": "Leave phone numbers out of names, labels and descriptions.",
+      "noStreets": "Leave street addresses out of names, labels and descriptions.",
+      "gateFailed": "Only designs that scan Great ({min, number} or more) can be published. {reasons}.",
+      "gateTooLong": "{sample} won't fit in a code at this error correction level",
+      "gateScore": "with {sample} it scores {score, number}",
+      "gateSampleLink": "a link",
+      "gateSampleWifi": "Wi-Fi details",
+      "handleFormat": "Use {min, number} to {max, number} lowercase letters, numbers, \"_\" or \"-\", starting with a letter or number.",
+      "handleReserved": "That handle is reserved.",
+      "handleTaken": "That handle is taken.",
+      "displayNameRequired": "Enter a display name."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, one {# text} other {# texts}} replaced with sample text",
+      "kept": "{count, plural, one {# text} other {# texts}} kept as you wrote it",
+      "links": "{count, plural, one {# link} other {# links}} replaced with example.com",
+      "emails": "{count, plural, one {# email address} other {# email addresses}} replaced with sample ones",
+      "phones": "{count, plural, one {# phone number} other {# phone numbers}} replaced with sample ones",
+      "emailsAndPhones": "{emails, plural, one {# email address} other {# email addresses}} and {phones, plural, one {# phone number} other {# phone numbers}} replaced with sample ones",
+      "addresses": "{count, plural, one {# address} other {# addresses}} replaced with a sample address",
+      "wifi": "Wi-Fi network name and password replaced with sample ones",
+      "codes": "Coupon code replaced with a sample one",
+      "gtins": "Product GTIN removed: people add their own",
+      "images": "{count, plural, one {# photo} other {# photos}} removed: people add their own",
+      "files": "{count, plural, one {# file} other {# files}} removed",
+      "blocks": "Left out because they need your own files: {blocks}",
+      "hidden": "{count, plural, one {# hidden block} other {# hidden blocks}} left out",
+      "settings": "Share image, description and custom CSS left out"
+    },
+    "qrThemes": {
+      "signIn": "Sign in to manage themes.",
+      "failed": "Something went wrong. Please try again.",
+      "tooMany": "Too many changes. Please wait a minute and try again.",
+      "themeLimit": "You have reached the limit of {limit, number} saved themes on the Free plan. Upgrade to Pro for unlimited themes.",
+      "notFound": "Theme not found.",
+      "defaultAdminsOnly": "Only workspace owners and admins can change its default theme.",
+      "openAnotherWorkspace": "Open another workspace to share themes with it.",
+      "shareAdminsOnly": "Only workspace owners and admins can share themes here.",
+      "sharedThemesPlan": "Shared themes are part of the {plan} plan (based on the workspace owner's plan).",
+      "workspaceThemeLimit": "This workspace's plan includes {count, number} themes."
+    },
+    "codeBuilder": {
+      "signInAgain": "Sign in again to create codes.",
+      "loadFailed": "Couldn't load the builder. Try again.",
+      "themesFailed": "Saved themes didn't load.",
+      "foldersFailed": "Folders didn't load.",
+      "tagsFailed": "Tags didn't load.",
+      "domainsFailed": "Custom domains didn't load, so codes use the default short link."
+    },
+    "search": {
+      "untitledPage": "Untitled page",
+      "landingPage": "Landing page",
+      "tooMany": "Too many searches. Wait a moment.",
+      "signInAgain": "Sign in again to search.",
+      "notWorking": "Search isn't working right now."
+    }
+  },
   "app": {
     "settings": {
       "general": {
@@ -6101,7 +6193,12 @@
           "signInMethods": "Sign-in methods",
           "valueIsLinked": "{value} is linked",
           "valueCantBeLinkedRight": "{value} can't be linked right now.",
-          "labelIsNoLongerLinked": "{label} is no longer linked"
+          "labelIsNoLongerLinked": "{label} is no longer linked",
+          "emailCode": "Email code",
+          "oneTimeCodeSentTo": "A one-time code sent to {email}.",
+          "linkedOn": "Linked {date}.",
+          "linkedOnReason": "Linked {date}. {reason}",
+          "notLinkedUseThe": "Not linked. Use the {provider} account with {email}."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Support will turn this off on {dueDate}",
@@ -6148,7 +6245,9 @@
           "afterYouSignInPasskey": "After you sign in, QRdx asks for your passkey. A backup code works too.",
           "afterYouSignInApp": "After you sign in, QRdx asks for a code from your authenticator app. A backup code works too.",
           "afterYouSignInQrdx2": "After you sign in, QRdx asks for a backup code.",
-          "passkeySpotlight": "A passkey can now be your second step, instead of an authenticator code."
+          "passkeySpotlight": "A passkey can now be your second step, instead of an authenticator code.",
+          "addedOn": "Added {date}",
+          "passkeyName": "Passkey"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Step {stepNumber, number} of {length, number}",
@@ -9080,6 +9179,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "Workspace not found.",
+      "twoFactorRequired": "This workspace requires two-step verification. Turn it on in Settings, under Profile & security, then try again."
+    },
+    "forbidden": {
+      "viewer": "You're a viewer here. {only}",
+      "billingRole": "Your billing role covers the plan only. {only}",
+      "contentWrite": "Only owners, admins and members can create or change things in this workspace.",
+      "workspaceUpdate": "Only owners and admins can change this workspace's settings.",
+      "membersManage": "Only owners and admins can manage this workspace's people."
+    },
+    "organizations": {
+      "nameTooShort": "Workspace name is too short.",
+      "nameTooLong": "Workspace name is too long.",
+      "slugFormat": "Use 3-48 lowercase letters, numbers and dashes.",
+      "slugReserved": "That URL is reserved. Pick another one.",
+      "invalidEmail": "Enter a valid email",
+      "invalidDetails": "Invalid workspace details.",
+      "invalidInvitation": "Invalid invitation.",
+      "invalidRole": "Invalid role.",
+      "invalidMember": "Invalid member.",
+      "invalidWorkspace": "Invalid workspace.",
+      "moreWorkspaces": "More workspaces are part of {pro} and {business}.",
+      "urlTaken": "That workspace URL is already taken.",
+      "alreadyMember": "That person is already a member of this workspace.",
+      "needsOwner": "A workspace needs at least one owner. Make someone else an owner first.",
+      "wrongRecipient": "This invitation was sent to a different email address.",
+      "verifyEmailFirst": "Verify your email address before responding to this invitation.",
+      "invitationGone": "This invitation is no longer valid.",
+      "workspaceFull": "This workspace is full. {pro} workspaces have up to {members} members; {business} workspaces have no limit.",
+      "noFreeSeat": "This workspace has no free seats for another invitation. Revoke a pending invitation or upgrade the workspace's plan.",
+      "signIn": "Sign in to manage workspaces.",
+      "somethingWrong": "Something went wrong. Please try again.",
+      "rateLimited": "Too many requests. Please wait a minute and try again.",
+      "ownerRoleOwnersOnly": "Only owners can make someone an owner, or change an owner's role.",
+      "billingRoleOwnersOnly": "Only owners can give or take away the {billing} role, since it decides who pays for the workspace.",
+      "seatsNeedPaidOwner": "Adding members needs a workspace owner on {pro} or {business}.",
+      "seatsUsed": "This workspace has used all {seats} seats (members plus pending invitations). Revoke an invitation, or upgrade a workspace owner to {business} for unlimited members.",
+      "nothingToSave": "Nothing to save.",
+      "notAMember": "That person isn't a member of this workspace.",
+      "removeOwnerOwnersOnly": "Only owners can remove an owner from the workspace.",
+      "removeBillingOwnersOnly": "Only owners can remove a billing member from the workspace.",
+      "cantLeaveOwn": "You can't leave your own workspace.",
+      "deleteOwnersOnly": "Only owners can delete a workspace.",
+      "ownCantBeDeleted": "Your own workspace can't be deleted. Rename it instead.",
+      "typeUrlToConfirm": "Type the workspace URL exactly to confirm."
+    },
+    "joinLinks": {
+      "signIn": "Sign in to continue.",
+      "somethingWrong": "Something went wrong. Please try again.",
+      "rateLimited": "Too many requests. Please wait a few minutes and try again.",
+      "pickRole": "Pick a role for the link.",
+      "billingLinkOwnersOnly": "Only owners can make a link that gives the {billing} role.",
+      "resetOwnersOnly": "Only owners can reset a link that gives the {role} role.",
+      "changeOwnersOnly": "Only owners can change a link that gives the {role} role.",
+      "linkOff": "The join link is off.",
+      "incomplete": "This join link isn't complete.",
+      "unavailable": "Join links aren't set up on this server yet. Invite people by email for now.",
+      "linkDead": "This join link doesn't work anymore. Ask the workspace for a new one.",
+      "noSeatYet": "This workspace has no seat for another member yet. Ask an owner to upgrade it to {pro} or {business}.",
+      "seatsUsed": "This workspace has used all {seats} seats. Ask an owner to free one or upgrade it to {business}."
+    },
+    "logo": {
+      "signIn": "Sign in to continue.",
+      "somethingWrong": "Something went wrong. Please try again.",
+      "tooManyChanges": "Too many changes. Please wait a few minutes.",
+      "uploadsUnavailable": "Logo uploads aren't set up on this server. Use an image URL.",
+      "choosePicture": "Choose a picture to upload.",
+      "tooLarge": "That picture is too large. Try a smaller one.",
+      "wrongType": "Use a PNG, JPEG or WebP picture.",
+      "url": {
+        "tooLong": "That URL is too long.",
+        "notFull": "Enter a full image URL, starting with https://",
+        "notHttps": "Use an https:// image URL.",
+        "withPassword": "Use a URL without a password.",
+        "notPublic": "Use an image on a public website."
+      }
+    },
+    "moveCode": {
+      "signIn": "Sign in to move codes.",
+      "somethingWrong": "Something went wrong.",
+      "pickWorkspace": "Pick a workspace.",
+      "rateLimited": "Too many moves. Please wait a minute.",
+      "alreadyHere": "The code is already in this workspace.",
+      "codeNotFound": "QR code not found",
+      "cantAddCodes": "You can't add codes to {name}. {reason}",
+      "othersCodes": "Only owners and admins can move codes that other members created.",
+      "pageCode": "Codes that open a hosted page can't move to another workspace: the page stays here.",
+      "domainNotInTarget": "This code's link is on {hostname}, which {name} doesn't have. Its printed link would stop working, so it can't move.",
+      "limitReached": "{name} has used all {limit} active dynamic codes its plan includes. Archive one there, or archive this code first."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "Invalid request.",
+      "rateLimited": "Too many requests. Please wait a minute and try again.",
+      "planRequired": "Requiring two-step verification comes with {plan}.",
+      "ownFirst": "Turn on two-step verification for your own account first, in Settings under Profile & security.",
+      "signIn": "Sign in to change this workspace's settings.",
+      "somethingWrong": "Something went wrong. Please try again."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "Sent for {name} by <link>{host}</link>",
@@ -9364,6 +9564,112 @@
       "countries": "Where people scanned",
       "newCodesLine": "{count, plural, one {# new code} other {# new codes}} this week.",
       "open": "Open your dashboard"
+    }
+  },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Sign in to manage this code.",
+      "failed": "Something went wrong.",
+      "notFound": "QR code not found",
+      "invalidDate": "Enter a valid date and time",
+      "dateRange": "Pick a date between 2000 and 2100",
+      "passwordTooShort": "Use at least {min, number} characters for the password",
+      "passwordTooLong": "Passwords can be up to {max, number} characters",
+      "passwordTooManyBytes": "The password is too long",
+      "scanLimitWhole": "The scan limit must be a whole number",
+      "scanLimitMin": "The scan limit must be at least 1",
+      "scanLimitMax": "The scan limit is too high",
+      "planRequired": "Passwords, schedules, scan limits and fallback URLs are part of Pro.",
+      "endBeforeStart": "The end date must be after the start date"
+    },
+    "marketing": {
+      "signIn": "Sign in to manage this code.",
+      "failed": "Something went wrong.",
+      "notFound": "QR code not found",
+      "countryCode": "Use a 2-letter country code",
+      "regionCode": "Use a region code like CA",
+      "invalidUrl": "invalid URL",
+      "rule": "Rule {rule, number}",
+      "variant": "{label}, variant {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {Smart routing is a Pro feature.} business {Smart routing is a Business feature.} other {Smart routing isn't on your plan.}} You can still turn off or remove what's already set up.",
+        "utm": "{plan, select, pro {UTM parameters are a Pro feature.} business {UTM parameters are a Business feature.} other {UTM parameters aren't on your plan.}} You can still turn off or remove what's already set up.",
+        "pixels": "{plan, select, pro {Tracking pixels are a Pro feature.} business {Tracking pixels are a Business feature.} other {Tracking pixels aren't on your plan.}} You can still turn off or remove what's already set up.",
+        "conversions": "{plan, select, pro {Conversion tracking is a Pro feature.} business {Conversion tracking is a Business feature.} other {Conversion tracking isn't on your plan.}} You can still turn off or remove what's already set up.",
+        "preciseLocation": "{plan, select, pro {Precise scan location is a Pro feature.} business {Precise scan location is a Business feature.} other {Precise scan location isn't on your plan.}} You can still turn off or remove what's already set up."
+      }
+    },
+    "landingPages": {
+      "signIn": "Sign in to manage pages.",
+      "failed": "Something went wrong.",
+      "selectAtLeastOne": "Select at least one page",
+      "selectUpTo": "Select up to {max, number} pages at a time"
+    },
+    "files": {
+      "signIn": "Sign in to manage files.",
+      "failed": "Something went wrong."
+    },
+    "qrCodes": {
+      "signIn": "Sign in to manage dynamic QR codes.",
+      "failed": "Something went wrong.",
+      "nothingToUpdate": "Nothing to update"
+    },
+    "customDomains": {
+      "signIn": "Sign in to manage custom domains.",
+      "failed": "Something went wrong.",
+      "enterDomain": "Enter a domain"
+    },
+    "codeSuggestions": {
+      "signIn": "Sign in to get suggestions.",
+      "rateLimited": "That's a lot of suggestions. Try again in a minute.",
+      "unavailable": "Suggestions aren't available on this server.",
+      "failed": "Couldn't get suggestions right now. Try again."
+    },
+    "tags": {
+      "nothingToUpdate": "Nothing to update",
+      "tooManyTags": "A code can have up to {max, number} tags.",
+      "chooseTag": "Choose a tag to add or remove"
+    },
+    "publicStats": {
+      "signIn": "Sign in to share analytics.",
+      "failed": "Something went wrong.",
+      "notFound": "QR code not found"
+    },
+    "pathAliases": {
+      "signIn": "Sign in again to change this code.",
+      "failed": "Something went wrong. Try again.",
+      "noDomain": "Path aliases are for codes on a custom domain."
+    },
+    "formResponses": {
+      "signIn": "Sign in to manage responses.",
+      "failed": "Something went wrong. Please try again.",
+      "chooseResponses": "Choose responses to delete."
+    },
+    "codeKind": {
+      "signIn": "Sign in to change codes.",
+      "failed": "Something went wrong."
+    },
+    "barcodes": {
+      "signIn": "Sign in to save barcodes.",
+      "failed": "Something went wrong."
+    },
+    "utmTemplates": {
+      "signIn": "Sign in to use templates.",
+      "failed": "Something went wrong."
+    },
+    "codeOptions": {
+      "signIn": "Sign in again to see the options.",
+      "failed": "Couldn't load the options. Try again."
+    },
+    "analytics": {
+      "searchTooLong": "Search is too long.",
+      "signIn": "Sign in to search your codes.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "webhooks": {
+      "signIn": "Sign in to manage webhooks.",
+      "failed": "Something went wrong. Please try again."
     }
   },
   "auth": {
@@ -9697,6 +10003,149 @@
         "failed": "Single sign-on didn't work. Try again, or sign in another way.",
         "rateLimited": "Too many tries. Wait a minute, then try again."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "Too many changes. Wait a few minutes and try again.",
+      "failed": "Something went wrong. Please try again.",
+      "nameMissing": "Enter your name.",
+      "nameTooLong": "Use {max} characters or fewer.",
+      "nameSpecialCharacters": "Remove special characters.",
+      "profileSignedOut": "Sign in to change your profile.",
+      "uploadsUnavailable": "Picture uploads aren't set up on this server.",
+      "pictureMissing": "Choose a picture to upload.",
+      "pictureTooLarge": "That picture is too large. Try a smaller one.",
+      "pictureType": "Use a PNG, JPEG or WebP picture.",
+      "methodsSignedOut": "Sign in to manage sign-in methods.",
+      "linkUnavailable": "{provider} can't be linked right now.",
+      "unlinkBlocked": {
+        "notFound": "That sign-in method isn't linked to your account.",
+        "unsupported": "This sign-in method can't be removed here."
+      },
+      "sessionsSignedOut": "Sign in to manage sessions.",
+      "thisDevice": "That's this device. Use Sign out in the menu instead."
+    },
+    "twoFactor": {
+      "signedOut": "Sign in to change two-step verification.",
+      "alreadyOn": "Two-step verification is already on.",
+      "notOn": "Two-step verification is off.",
+      "appAlreadySetUp": "An authenticator app is already set up.",
+      "noApp": "There's no authenticator app to remove.",
+      "noPasskey": "Add a passkey first.",
+      "restart": "This setup expired. Start again.",
+      "rateLimitedLong": "Too many tries. Wait a few minutes and try again."
+    },
+    "emailChange": {
+      "reauth": "For your security, sign out and sign in again, then change your email within a day.",
+      "sameEmail": "That's already your email.",
+      "invalidEmail": "Enter a valid email address.",
+      "invalidCode": "Enter the 6-digit code from the email.",
+      "rateLimited": "Too many tries. Wait a few minutes and try again.",
+      "codeRateLimited": "Too many codes requested for that address. Wait a few minutes and try again.",
+      "notSent": "We couldn't send a code right now. Please try again.",
+      "codeDidntWork": "That code didn't work. Check it, or send a new code.",
+      "taken": "That email already belongs to another QRdx account.",
+      "signedOut": "Sign in to change your email.",
+      "unavailable": "Email isn't set up on this site, so the address can't be changed here.",
+      "failed": "Something went wrong. Please try again.",
+      "ssoOff": "Your company requires single sign-on for {domain}, so your account can't move to an address elsewhere. Ask your workspace admin.",
+      "ssoOnto": "Your company requires single sign-on for {domain}. To use an address there, sign in with SSO instead."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "Type \"{word}\" to confirm.",
+      "signedOut": "Sign in to delete your account.",
+      "rateLimited": "Too many attempts. Wait 15 minutes and try again.",
+      "failed": "We couldn't delete your account. Please try again.",
+      "subscriptionNotCancelled": "We couldn't cancel your subscription, so your account wasn't deleted. Please try again in a few minutes, or email {email}.",
+      "ownerNotMade": "We couldn't make {person} an owner of {team}, so your account wasn't deleted. Make someone else an owner of the team, then try again."
+    },
+    "affiliate": {
+      "notReady": "The affiliate program isn't available yet.",
+      "signedOut": "Sign in to continue.",
+      "failed": "Something went wrong. Please try again.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "paypalEmailInvalid": "Enter the email address of your PayPal account.",
+      "paypalEmailMissing": "Enter an email address.",
+      "paypalNotApproved": "You can add a PayPal email once your application is approved.",
+      "codeUnchanged": "That's already your code.",
+      "codeNotApproved": "You can choose a code once your application is approved.",
+      "chosenCode": {
+        "format": "Use 3 to 32 lower-case letters, digits and single hyphens, starting and ending with a letter or digit.",
+        "reserved": "That code is reserved. Pick another.",
+        "email": "That's the start of your email address. Pick a code that doesn't publish it.",
+        "taken": "That code is taken. Pick another.",
+        "alreadyChanged": "You've already chosen your code. It can only change once."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "That looks too short",
+      "tooLong": "That looks too long",
+      "noSpaces": "Paste it without spaces",
+      "storeDomainMissing": "Enter your store domain",
+      "stripeSecretKey": "That's a full secret key. Create a restricted key with Payment Links: Read instead; QRdx never stores secret keys.",
+      "stripeRestrictedKey": "Paste a restricted key: it starts with rk_live_ or rk_test_.",
+      "calcomKey": "Paste a Cal.com API key: it starts with cal_live_ (or cal_ for test keys).",
+      "shopifyCredentials": "Paste the app's client ID and secret, or an Admin API access token.",
+      "signedOut": "Sign in to connect an account.",
+      "checkDetails": "Check the details and try again.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "notAccepted": "{name} didn't accept that. Check it and try again.",
+      "stripeForbidden": "That key can't read Payment Links. Set Payment Links to Read on the key.",
+      "shopifyForbidden": "That app can't read products. Add the read_products scope and reinstall it.",
+      "forbidden": "{name} refused access for this key.",
+      "unreachable": "Couldn't reach {name}. Try again."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "That key looks too short",
+      "keyTooLong": "That key looks too long",
+      "keyNoSpaces": "Paste the key without spaces",
+      "signedOut": "Sign in to connect an account.",
+      "checkKey": "Check the key and try again.",
+      "notConfigured": "{name} isn't configured here.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "keyRejected": "{name} didn't accept that {label}. Check it and try again.",
+      "unreachable": "Couldn't reach {name}. Try again.",
+      "domainSignedOut": "Sign in first.",
+      "pickDomain": "Pick a domain.",
+      "connectFirst": "Connect the account first.",
+      "domainNotFound": "That domain isn't in your account.",
+      "domainNotSaved": "Couldn't save the domain. Try again."
+    },
+    "slackBot": {
+      "unavailable": "The QRdx bot for Slack isn't available here.",
+      "signedOut": "Sign in to change this.",
+      "notAvailableYet": "This isn't available yet.",
+      "rateLimited": "Too many tries. Wait a minute.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "oauthApps": {
+      "signedOut": "Sign in to manage OAuth apps.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "apiKeys": {
+      "signedOut": "Sign in to manage API keys.",
+      "unavailable": "API keys aren't available on this deployment yet.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "slackLinks": {
+      "signedOut": "Sign in to manage Slack links.",
+      "notAvailableYet": "This isn't available yet.",
+      "rateLimited": "Too many tries. Wait a minute.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "authorizedApps": {
+      "signedOut": "Sign in to manage app access.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "notifications": {
+      "signedOut": "Sign in to change notifications.",
+      "webhookUrlMissing": "Paste the webhook URL",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
     }
   },
   "codeBuilder": {

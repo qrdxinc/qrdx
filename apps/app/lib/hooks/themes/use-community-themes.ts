@@ -5,7 +5,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   getCommunityTagCounts,
   getCommunityThemes,
@@ -103,6 +103,8 @@ const INLINE_REFUSALS = new Set<ErrorCode>([
 
 export function usePublishTheme() {
   const t = useTranslations("editor.hooks.useCommunityThemes");
+  // Refusals come back in this page's language (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -115,7 +117,10 @@ export function usePublishTheme() {
       tags?: string[];
       acceptLicense: boolean;
     }) => {
-      const result = await publishTheme(themeId, tags, { acceptLicense });
+      const result = await publishTheme(themeId, tags, {
+        acceptLicense,
+        locale,
+      });
       if (!result.success) {
         throw new PublishRefusedError(result.error.code, result.error.message);
       }

@@ -12,6 +12,12 @@ import { z } from "zod";
 import { getPageForEdit } from "@/app/(app)/dashboard/pages/_lib/landing-pages";
 import { findThemeById } from "@/app/(app)/dashboard/themes/_lib/queries";
 import { CHAT_DRAFT_SOURCE } from "@/lib/ai/agent/community";
+import {
+  type CommunityActionText,
+  communityActionText,
+  ENGLISH_COMMUNITY_TEXT,
+  lazyCommunityText,
+} from "@/lib/community/action-text";
 import { publishCollection, publishKit } from "@/lib/community/bundles";
 import {
   CopyRefusedError,
@@ -41,7 +47,6 @@ import {
 import {
   canPublishFromWorkspace,
   themePublishAccess,
-  WORKSPACE_PUBLISH_REFUSAL,
 } from "@/lib/community/publish-access";
 import { savedFrames } from "@/lib/community/queries";
 import {
@@ -62,6 +67,12 @@ import type { ThemeStyles } from "@/types/theme";
 // Server actions for the community pages and the editor's frame tools.
 // Each returns a plain result the client shows as it is; nothing here
 // trusts what the client says a design scores or contains.
+//
+// Messages are in the language of the page that shows them
+// (lib/community/action-text.ts): the actions the editor calls take the
+// page's language from the client (`pageLocale`, its useLocale()), those
+// only app pages call use the app's language, and those only the community
+// pages call (English only) answer in English.
 
 export type CommunityResult<T> =
   | { ok: true; data: T }
@@ -111,31 +122,37 @@ async function limited(
   return !success;
 }
 
-function failure<T>(error: unknown, action: string): CommunityResult<T> {
+/** `error` as a refusal, said in `text`'s language. */
+function failure<T>(
+  error: unknown,
+  action: string,
+  text: CommunityActionText,
+): CommunityResult<T> {
   if (error instanceof UnauthorizedError) {
-    return fail("UNAUTHORIZED", "Sign in to continue.");
+    return fail("UNAUTHORIZED", text.actions.signIn);
   }
   if (error instanceof CommunityUnavailableError) {
-    return fail("UNAVAILABLE", error.message);
+    return fail("UNAVAILABLE", error.messageIn(text.checks));
   }
   if (error instanceof PublishError) {
     return fail(
       error.code,
-      error.message,
+      error.messageIn(text.checks),
       error.slug ? itemPath(error.type ?? "frame", error.slug) : undefined,
     );
   }
   if (error instanceof ProfileInputError) {
-    return fail("VALIDATION_ERROR", error.message);
+    return fail("VALIDATION_ERROR", error.messageIn(text.checks));
   }
   if (error instanceof ItemNotFoundError) {
-    return fail("NOT_FOUND", error.message);
+    return fail("NOT_FOUND", error.messageIn(text.checks));
   }
+  // Only the community pages copy, and they're English.
   if (error instanceof CopyRefusedError) {
     return fail(error.code, error.message);
   }
   logError(error as Error, { action });
-  return fail("UNKNOWN", "Something went wrong. Please try again.");
+  return fail("UNKNOWN", text.actions.failed);
 }
 
 /**
@@ -144,10 +161,7 @@ function failure<T>(error: unknown, action: string): CommunityResult<T> {
  */
 const countPublish = (userId: string) => async () => {
   if (await limited(publishLimiter, `community-publish:${userId}`)) {
-    throw new PublishError(
-      "RATE_LIMITED",
-      "You've published a lot today. Try again tomorrow.",
-    );
+    throw new PublishError("RATE_LIMITED", (m) => m.publishedALot);
   }
 };
 
@@ -159,16 +173,23 @@ const publishFrameSchema = z.object({
   acceptLicense: z.boolean(),
 });
 
-/** Publishes a custom frame (Great scan score, spec limits, CC0). */
+/**
+ * Publishes a custom frame (Great scan score, spec limits, CC0). The editor
+ * calls it, in the page's language (`pageLocale`).
+ */
 export async function publishCommunityFrame(
   input: z.input<typeof publishFrameSchema>,
+  pageLocale?: string,
 ): Promise<CommunityResult<{ href: string }>> {
+  const text = lazyCommunityText(pageLocale, "publishCommunityFrame");
   try {
     const userId = await getCurrentUserId();
     const parsed = publishFrameSchema.safeParse(input);
-    if (!parsed.success) return fail("VALIDATION_ERROR", "Check the details.");
+    if (!parsed.success) {
+      return fail("VALIDATION_ERROR", (await text()).actions.checkDetails);
+    }
     if (parsed.data.acceptLicense !== true) {
-      return fail("LICENSE_REQUIRED", "Confirm the CC0 licence to publish.");
+      return fail("LICENSE_REQUIRED", (await text()).checks.licenceRequired);
     }
     const item = await publishFrame({
       beforeWrite: countPublish(userId),
@@ -182,7 +203,7 @@ export async function publishCommunityFrame(
     });
     return { ok: true, data: { href: itemPath(item.type, item.slug) } };
   } catch (error) {
-    return failure(error, "publishCommunityFrame");
+    return failure(error, "publishCommunityFrame", await text());
   }
 }
 
@@ -203,17 +224,22 @@ const publishDesignSchema = z.object({
  * Publishes a design that isn't a saved theme (the AI chat's): the same
  * checks as a saved theme (lib/community/publish.ts publishStyle), run on
  * the style sent here; nothing the client says about it is trusted. Only a
- * person's click in the publish dialog calls this, never the model.
+ * person's click in the publish dialog calls this, never the model. In the
+ * editor's language (`pageLocale`).
  */
 export async function publishCommunityDesign(
   input: z.input<typeof publishDesignSchema>,
+  pageLocale?: string,
 ): Promise<CommunityResult<{ href: string }>> {
+  const text = lazyCommunityText(pageLocale, "publishCommunityDesign");
   try {
     const userId = await getCurrentUserId();
     const parsed = publishDesignSchema.safeParse(input);
-    if (!parsed.success) return fail("VALIDATION_ERROR", "Check the details.");
+    if (!parsed.success) {
+      return fail("VALIDATION_ERROR", (await text()).actions.checkDetails);
+    }
     if (parsed.data.acceptLicense !== true) {
-      return fail("LICENSE_REQUIRED", "Confirm the CC0 licence to publish.");
+      return fail("LICENSE_REQUIRED", (await text()).checks.licenceRequired);
     }
     const item = await publishStyle({
       beforeWrite: countPublish(userId),
@@ -232,7 +258,7 @@ export async function publishCommunityDesign(
     });
     return { ok: true, data: { href: itemPath(item.type, item.slug) } };
   } catch (error) {
-    return failure(error, "publishCommunityDesign");
+    return failure(error, "publishCommunityDesign", await text());
   }
 }
 
@@ -244,28 +270,35 @@ const publishThemeFrameSchema = publishFrameSchema
  * Publishes the custom frame of a saved theme (the dashboard's Themes page).
  * The frame is read from the saved theme on the server, never taken from the
  * client, and the theme's access rules apply: your themes, or a workspace's
- * as its owner or admin. Then it's the same publish as the editor's.
+ * as its owner or admin. Then it's the same publish as the editor's. In
+ * the page's language (`pageLocale`, the same dialog sends it).
  */
 export async function publishCommunityThemeFrame(
   input: z.input<typeof publishThemeFrameSchema>,
+  pageLocale?: string,
 ): Promise<CommunityResult<{ href: string }>> {
+  const text = lazyCommunityText(pageLocale, "publishCommunityThemeFrame");
   try {
     const userId = await getCurrentUserId();
     const parsed = publishThemeFrameSchema.safeParse(input);
-    if (!parsed.success) return fail("VALIDATION_ERROR", "Check the details.");
+    if (!parsed.success) {
+      return fail("VALIDATION_ERROR", (await text()).actions.checkDetails);
+    }
     if (parsed.data.acceptLicense !== true) {
-      return fail("LICENSE_REQUIRED", "Confirm the CC0 licence to publish.");
+      return fail("LICENSE_REQUIRED", (await text()).checks.licenceRequired);
     }
     const theme = await findThemeById(parsed.data.themeId);
     const access = theme ? await themePublishAccess(userId, theme) : "none";
     if (!theme || access === "none") {
-      return fail("NOT_FOUND", "This theme isn't in this workspace.");
+      return fail("NOT_FOUND", (await text()).actions.themeNotInWorkspace);
     }
-    if (access === "view") return fail("NOT_FOUND", WORKSPACE_PUBLISH_REFUSAL);
+    if (access === "view") {
+      return fail("NOT_FOUND", (await text()).checks.workspacePublishRefusal);
+    }
     const frame = (theme.style as { frame?: { style?: unknown } } | null)
       ?.frame;
     if (frame?.style !== "custom") {
-      return fail("VALIDATION_ERROR", "This theme has no custom frame.");
+      return fail("VALIDATION_ERROR", (await text()).actions.noCustomFrame);
     }
     const item = await publishFrame({
       beforeWrite: countPublish(userId),
@@ -280,14 +313,17 @@ export async function publishCommunityThemeFrame(
     });
     return { ok: true, data: { href: itemPath(item.type, item.slug) } };
   } catch (error) {
-    return failure(error, "publishCommunityThemeFrame");
+    return failure(error, "publishCommunityThemeFrame", await text());
   }
 }
 
 // ── Page templates ─────────────────────────────────────────────────────────
 
 /** A hosted page of the open workspace that `scope` may publish. */
-async function publishablePage(pageId: unknown): Promise<
+async function publishablePage(
+  pageId: unknown,
+  text: () => Promise<CommunityActionText>,
+): Promise<
   | {
       ok: true;
       scope: ActiveScope;
@@ -295,20 +331,23 @@ async function publishablePage(pageId: unknown): Promise<
     }
   | { ok: false; result: CommunityResult<never> }
 > {
+  const notFound = async () => ({
+    ok: false as const,
+    result: fail<never>("NOT_FOUND", (await text()).actions.pageNotFound),
+  });
   const id = idSchema.safeParse(pageId);
-  if (!id.success) {
-    return { ok: false, result: fail("NOT_FOUND", "Page not found.") };
-  }
+  if (!id.success) return notFound();
   const scope = await getActiveScope();
   if (!canPublishFromWorkspace(scope)) {
-    return { ok: false, result: fail("FORBIDDEN", WORKSPACE_PUBLISH_REFUSAL) };
+    return {
+      ok: false,
+      result: fail("FORBIDDEN", (await text()).checks.workspacePublishRefusal),
+    };
   }
   try {
     return { ok: true, scope, page: await getPageForEdit(scope, id.data) };
   } catch (error) {
-    if (error instanceof HttpError && error.status === 404) {
-      return { ok: false, result: fail("NOT_FOUND", "Page not found.") };
-    }
+    if (error instanceof HttpError && error.status === 404) return notFound();
     throw error;
   }
 }
@@ -334,27 +373,31 @@ const keepSchema = z.array(z.string().min(1).max(200)).max(500);
 /**
  * The publish dialog's review step: the page scrubbed as it would be
  * shared (lib/community/page-template.ts) and what was taken out. Nothing
- * is stored.
+ * is stored. Only the dashboard's Pages calls it: the app's language.
  */
 export async function previewCommunityPage(
   pageId: string,
   keep: string[] = [],
 ): Promise<CommunityResult<CommunityPagePreview>> {
+  const text = lazyCommunityText(undefined, "previewCommunityPage");
   try {
     await getCurrentUserId();
     const kept = keepSchema.safeParse(keep);
-    if (!kept.success) return fail("VALIDATION_ERROR", "Check the details.");
-    const found = await publishablePage(pageId);
+    if (!kept.success) {
+      return fail("VALIDATION_ERROR", (await text()).actions.checkDetails);
+    }
+    const found = await publishablePage(pageId, text);
     if (!found.ok) return found.result;
+    const { checks, pageChanges } = await text();
     const { content, report, fields, problems } = scrubPageContent(
       found.page.content,
-      { keep: kept.data },
+      { keep: kept.data, messages: checks },
     );
     return {
       ok: true,
       data: {
         content,
-        changes: scrubSummary(report),
+        changes: scrubSummary(report, pageChanges),
         fields,
         problems,
         pageType: found.page.type,
@@ -363,7 +406,7 @@ export async function previewCommunityPage(
       },
     };
   } catch (error) {
-    return failure(error, "previewCommunityPage");
+    return failure(error, "previewCommunityPage", await text());
   }
 }
 
@@ -381,26 +424,27 @@ const publishPageSchema = z.object({
 /**
  * Publishes a hosted page as a page template: read from the database (never
  * from the client), scrubbed of personal data, then checked and stored. In
- * a shared workspace only owners and admins may.
+ * a shared workspace only owners and admins may. Only the dashboard's Pages
+ * calls it: the app's language.
  */
 export async function publishCommunityPage(
   input: z.input<typeof publishPageSchema>,
 ): Promise<CommunityResult<{ href: string; changes: string[] }>> {
+  const text = lazyCommunityText(undefined, "publishCommunityPage");
   try {
     const userId = await getCurrentUserId();
     const parsed = publishPageSchema.safeParse(input);
-    if (!parsed.success) return fail("VALIDATION_ERROR", "Check the details.");
-    if (parsed.data.acceptLicense !== true) {
-      return fail("LICENSE_REQUIRED", "Confirm the CC0 licence to publish.");
+    if (!parsed.success) {
+      return fail("VALIDATION_ERROR", (await text()).actions.checkDetails);
     }
-    const found = await publishablePage(parsed.data.pageId);
+    if (parsed.data.acceptLicense !== true) {
+      return fail("LICENSE_REQUIRED", (await text()).checks.licenceRequired);
+    }
+    const found = await publishablePage(parsed.data.pageId, text);
     if (!found.ok) return found.result;
     // What's published is what was reviewed.
     if (found.page.version !== parsed.data.version) {
-      return fail(
-        "CONFLICT",
-        "This page changed since you reviewed it. Review it again before publishing.",
-      );
+      return fail("CONFLICT", (await text()).actions.pageChanged);
     }
     const item = await publishPageTemplate({
       keep: parsed.data.keep ?? [],
@@ -421,11 +465,11 @@ export async function publishCommunityPage(
       ok: true,
       data: {
         href: itemPath(item.type, item.slug),
-        changes: scrubSummary(item.report),
+        changes: scrubSummary(item.report, (await text()).pageChanges),
       },
     };
   } catch (error) {
-    return failure(error, "publishCommunityPage");
+    return failure(error, "publishCommunityPage", await text());
   }
 }
 
@@ -438,17 +482,23 @@ export interface ImportedFrame {
 /** Largest SVG sent to the importer (it refuses more than 200 KB itself). */
 const MAX_SVG_CHARS = 210_000;
 
-/** Converts an uploaded SVG into a frame spec on the server. */
+/**
+ * Converts an uploaded SVG into a frame spec on the server. The editor
+ * calls it, in the page's language (`pageLocale`); what the importer itself
+ * says (the qrdx engine) is English.
+ */
 export async function importCommunityFrameSvg(
   svg: string,
+  pageLocale?: string,
 ): Promise<CommunityResult<ImportedFrame>> {
+  const text = lazyCommunityText(pageLocale, "importCommunityFrameSvg");
   try {
     const userId = await getCurrentUserId();
     if (typeof svg !== "string" || svg.length > MAX_SVG_CHARS) {
-      return fail("VALIDATION_ERROR", "SVG files can be up to 200 KB.");
+      return fail("VALIDATION_ERROR", (await text()).actions.svgTooLarge);
     }
     if (await limited(importLimiter, `community-import:${userId}`)) {
-      return fail("RATE_LIMITED", "Too many imports. Try again in an hour.");
+      return fail("RATE_LIMITED", (await text()).actions.tooManyImports);
     }
     const result = importFrameSvg(svg);
     if (!result.ok) return fail("VALIDATION_ERROR", result.error);
@@ -461,43 +511,51 @@ export async function importCommunityFrameSvg(
       },
     };
   } catch (error) {
-    return failure(error, "importCommunityFrameSvg");
+    return failure(error, "importCommunityFrameSvg", await text());
   }
 }
 
 const idSchema = z.string().min(1).max(64);
 
+/**
+ * Likes or unlikes an item: from the community pages (English) and the
+ * editor's community sheet, each in its page's language (`pageLocale`).
+ */
 export async function toggleCommunityLike(
   itemId: string,
+  pageLocale?: string,
 ): Promise<CommunityResult<{ liked: boolean; likeCount: number }>> {
+  const text = lazyCommunityText(pageLocale, "toggleCommunityLike");
   try {
     const userId = await getCurrentUserId();
     const id = idSchema.parse(itemId);
     if (await limited(reactionLimiter, `community-react:${userId}`)) {
-      return fail("RATE_LIMITED", "Too many changes. Try again later.");
+      return fail("RATE_LIMITED", (await text()).actions.tooManyChanges);
     }
     return { ok: true, data: await toggleItemLike(userId, id) };
   } catch (error) {
-    return failure(error, "toggleCommunityLike");
+    return failure(error, "toggleCommunityLike", await text());
   }
 }
 
+/** Saves or unsaves an item: only the community pages (English) call it. */
 export async function toggleCommunitySave(
   itemId: string,
 ): Promise<CommunityResult<{ saved: boolean }>> {
+  const text = ENGLISH_COMMUNITY_TEXT;
   try {
     const userId = await getCurrentUserId();
     const id = idSchema.parse(itemId);
     if (await limited(reactionLimiter, `community-react:${userId}`)) {
-      return fail("RATE_LIMITED", "Too many changes. Try again later.");
+      return fail("RATE_LIMITED", text.actions.tooManyChanges);
     }
     return { ok: true, data: await toggleItemSave(userId, id) };
   } catch (error) {
-    return failure(error, "toggleCommunitySave");
+    return failure(error, "toggleCommunitySave", text);
   }
 }
 
-/** The creator unpublishes their own item. */
+/** The creator unpublishes their own item, on its page (English). */
 export async function unpublishCommunityItem(
   itemId: string,
 ): Promise<CommunityResult<{ removed: true }>> {
@@ -512,7 +570,7 @@ export async function unpublishCommunityItem(
     }
     return { ok: true, data: { removed: true } };
   } catch (error) {
-    return failure(error, "unpublishCommunityItem");
+    return failure(error, "unpublishCommunityItem", ENGLISH_COMMUNITY_TEXT);
   }
 }
 
@@ -521,7 +579,10 @@ const refSchema = z.object({
   slug: z.string().min(1).max(80),
 });
 
-/** Copies a frame or theme into the workspace as a saved theme. */
+/**
+ * Copies a frame or theme into the workspace as a saved theme. Only the
+ * community pages (English) call it, and the copies below.
+ */
 export async function copyCommunityItem(ref: {
   type: CommunityItemType;
   slug: string;
@@ -535,7 +596,7 @@ export async function copyCommunityItem(ref: {
       return fail("NOT_FOUND", "This item isn't in the community.");
     return { ok: true, data: await copyItemToWorkspace(scope, parsed.data) };
   } catch (error) {
-    return failure(error, "copyCommunityItem");
+    return failure(error, "copyCommunityItem", ENGLISH_COMMUNITY_TEXT);
   }
 }
 
@@ -543,7 +604,8 @@ const templateRefSchema = z.object({ slug: z.string().min(1).max(80) });
 
 /**
  * "Use template": copies a page template into the open workspace as a
- * draft page (no QR code yet), within the plan's page limit.
+ * draft page (no QR code yet), within the plan's page limit. Only its
+ * community page (English) calls it.
  */
 export async function copyCommunityTemplate(ref: {
   slug: string;
@@ -559,7 +621,7 @@ export async function copyCommunityTemplate(ref: {
       data: await copyTemplateToWorkspace(scope, parsed.data.slug),
     };
   } catch (error) {
-    return failure(error, "copyCommunityTemplate");
+    return failure(error, "copyCommunityTemplate", ENGLISH_COMMUNITY_TEXT);
   }
 }
 
@@ -575,16 +637,22 @@ const publishCollectionSchema = bundleDetailsSchema.extend({
   itemIds: z.array(z.string().min(1).max(64)).max(60),
 });
 
-/** Publishes a collection of published items (2 to 48, in order). */
+/**
+ * Publishes a collection of published items (2 to 48, in order), from
+ * /community/new (English).
+ */
 export async function publishCommunityCollection(
   input: z.input<typeof publishCollectionSchema>,
 ): Promise<CommunityResult<{ href: string }>> {
+  const text = ENGLISH_COMMUNITY_TEXT;
   try {
     const userId = await getCurrentUserId();
     const parsed = publishCollectionSchema.safeParse(input);
-    if (!parsed.success) return fail("VALIDATION_ERROR", "Check the details.");
+    if (!parsed.success) {
+      return fail("VALIDATION_ERROR", text.actions.checkDetails);
+    }
     if (parsed.data.acceptLicense !== true) {
-      return fail("LICENSE_REQUIRED", "Confirm the CC0 licence to publish.");
+      return fail("LICENSE_REQUIRED", text.checks.licenceRequired);
     }
     const item = await publishCollection({
       beforeWrite: countPublish(userId),
@@ -597,7 +665,7 @@ export async function publishCommunityCollection(
     });
     return { ok: true, data: { href: itemPath(item.type, item.slug) } };
   } catch (error) {
-    return failure(error, "publishCommunityCollection");
+    return failure(error, "publishCommunityCollection", ENGLISH_COMMUNITY_TEXT);
   }
 }
 
@@ -607,16 +675,22 @@ const publishKitSchema = bundleDetailsSchema.extend({
   frame: z.string().min(1).max(64).nullish(),
 });
 
-/** Publishes a kit: a page template with a theme and/or a frame. */
+/**
+ * Publishes a kit: a page template with a theme and/or a frame, from
+ * /community/new (English).
+ */
 export async function publishCommunityKit(
   input: z.input<typeof publishKitSchema>,
 ): Promise<CommunityResult<{ href: string }>> {
+  const text = ENGLISH_COMMUNITY_TEXT;
   try {
     const userId = await getCurrentUserId();
     const parsed = publishKitSchema.safeParse(input);
-    if (!parsed.success) return fail("VALIDATION_ERROR", "Check the details.");
+    if (!parsed.success) {
+      return fail("VALIDATION_ERROR", text.actions.checkDetails);
+    }
     if (parsed.data.acceptLicense !== true) {
-      return fail("LICENSE_REQUIRED", "Confirm the CC0 licence to publish.");
+      return fail("LICENSE_REQUIRED", text.checks.licenceRequired);
     }
     const item = await publishKit({
       beforeWrite: countPublish(userId),
@@ -633,13 +707,14 @@ export async function publishCommunityKit(
     });
     return { ok: true, data: { href: itemPath(item.type, item.slug) } };
   } catch (error) {
-    return failure(error, "publishCommunityKit");
+    return failure(error, "publishCommunityKit", ENGLISH_COMMUNITY_TEXT);
   }
 }
 
 /**
  * "Use kit": its page template as a draft page and its look (the theme
- * with the frame on it) as a saved theme, in the open workspace.
+ * with the frame on it) as a saved theme, in the open workspace. Only its
+ * community page (English) calls it.
  */
 export async function copyCommunityKit(ref: { slug: string }): Promise<
   CommunityResult<{
@@ -660,7 +735,7 @@ export async function copyCommunityKit(ref: { slug: string }): Promise<
       data: await copyKitToWorkspace(scope, parsed.data.slug),
     };
   } catch (error) {
-    return failure(error, "copyCommunityKit");
+    return failure(error, "copyCommunityKit", ENGLISH_COMMUNITY_TEXT);
   }
 }
 
@@ -679,6 +754,7 @@ export async function getSavedCommunityFrames(): Promise<
   }
 }
 
+/** The viewer's community profile, in the app's language. */
 export async function getMyCommunityProfileAction(): Promise<
   CommunityResult<MyCommunityProfile>
 > {
@@ -686,7 +762,11 @@ export async function getMyCommunityProfileAction(): Promise<
     const userId = await getCurrentUserId();
     return { ok: true, data: await getMyCommunityProfile(userId) };
   } catch (error) {
-    return failure(error, "getMyCommunityProfile");
+    return failure(
+      error,
+      "getMyCommunityProfile",
+      await communityActionText(undefined, "getMyCommunityProfile"),
+    );
   }
 }
 
@@ -696,15 +776,19 @@ const profileSchema = z.object({
   showPicture: z.boolean(),
 });
 
+/** Saves the viewer's profile from Settings: in the app's language. */
 export async function saveCommunityProfileAction(
   input: z.input<typeof profileSchema>,
 ): Promise<CommunityResult<{ handle: string | null }>> {
+  const text = lazyCommunityText(undefined, "saveCommunityProfile");
   try {
     const userId = await getCurrentUserId();
     const parsed = profileSchema.safeParse(input);
-    if (!parsed.success) return fail("VALIDATION_ERROR", "Check the details.");
+    if (!parsed.success) {
+      return fail("VALIDATION_ERROR", (await text()).actions.checkDetails);
+    }
     return { ok: true, data: await saveCommunityProfile(userId, parsed.data) };
   } catch (error) {
-    return failure(error, "saveCommunityProfile");
+    return failure(error, "saveCommunityProfile", await text());
   }
 }

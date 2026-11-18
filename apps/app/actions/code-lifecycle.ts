@@ -12,6 +12,12 @@ import {
 } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import { codeEvents, linkControlChanges } from "@/ee/audit-log/code-events";
 import { recordAuditEvent } from "@/ee/audit-log/record";
+import {
+  CODE_ACTION_MESSAGES,
+  CODE_PASSWORD_LENGTH,
+  ownMessage,
+} from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { snapshotCodeVersion } from "@/lib/code-versions";
 import { HttpError } from "@/lib/error-response";
 import { assertCan } from "@/lib/permissions-server";
@@ -70,8 +76,7 @@ const KNOWN_CODES = new Set<string>([
   "UNSAFE_DESTINATION",
 ]);
 
-const MIN_PASSWORD_LENGTH = 4;
-const MAX_PASSWORD_LENGTH = 64;
+const ENGLISH = CODE_ACTION_MESSAGES.lifecycle;
 const MAX_SCAN_LIMIT = 100_000_000;
 const BCRYPT_COST = 10;
 const EARLIEST = Date.UTC(2000, 0, 1);
@@ -82,27 +87,21 @@ const updateLimiter = createRateLimiter({
 });
 
 const dateSchema = z.iso
-  .datetime({ offset: true, error: "Enter a valid date and time" })
+  .datetime({ offset: true, error: ENGLISH.invalidDate })
   .transform((value) => new Date(value))
   .refine(
     (date) => date.getTime() >= EARLIEST && date.getTime() < LATEST,
-    "Pick a date between 2000 and 2100",
+    ENGLISH.dateRange,
   );
 
 const passwordSchema = z
   .string()
-  .min(
-    MIN_PASSWORD_LENGTH,
-    `Use at least ${MIN_PASSWORD_LENGTH} characters for the password`,
-  )
-  .max(
-    MAX_PASSWORD_LENGTH,
-    `Passwords can be up to ${MAX_PASSWORD_LENGTH} characters`,
-  )
+  .min(CODE_PASSWORD_LENGTH.min, ENGLISH.passwordTooShort)
+  .max(CODE_PASSWORD_LENGTH.max, ENGLISH.passwordTooLong)
   // bcrypt only reads the first 72 bytes.
   .refine(
     (value) => new TextEncoder().encode(value).length <= 72,
-    "The password is too long",
+    ENGLISH.passwordTooManyBytes,
   );
 
 /** undefined = leave as is, null = remove. */
@@ -113,9 +112,9 @@ const updateSchema = z.object({
   expiresAt: dateSchema.nullable().optional(),
   scanLimit: z
     .number()
-    .int("The scan limit must be a whole number")
-    .min(1, "The scan limit must be at least 1")
-    .max(MAX_SCAN_LIMIT, "The scan limit is too high")
+    .int(ENGLISH.scanLimitWhole)
+    .min(1, ENGLISH.scanLimitMin)
+    .max(MAX_SCAN_LIMIT, ENGLISH.scanLimitMax)
     .nullable()
     .optional(),
   fallbackUrl: destinationUrlSchema.nullable().optional(),
@@ -125,20 +124,24 @@ const pauseSchema = z.object({ id: codeIdSchema, paused: z.boolean() });
 
 type CodeRow = typeof qrCode.$inferSelect;
 
-function failure(
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
   error: unknown,
   context: Record<string, unknown>,
-): LifecycleActionResult {
+  who: { pageLocale?: string; userId?: string },
+): Promise<LifecycleActionResult> {
+  const text = (await codeActionText(who)).lifecycle;
+  const say = (message: string) => ownMessage(ENGLISH, text, message);
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to manage this code." },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
     return {
       success: false,
-      error: { code: "VALIDATION_ERROR", message: error.message },
+      error: { code: "VALIDATION_ERROR", message: say(error.message) },
     };
   }
   if (error instanceof HttpError) {
@@ -148,14 +151,14 @@ function failure(
         code: KNOWN_CODES.has(error.code)
           ? (error.code as LifecycleErrorCode)
           : "UNKNOWN_ERROR",
-        message: error.message,
+        message: say(error.message),
       },
     };
   }
   logError(error as Error, context);
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -177,7 +180,7 @@ async function findRow(scope: ActiveScope, id: string): Promise<CodeRow> {
     .limit(1);
   // Codes outside the scope look exactly like missing ones.
   if (!(row && isInScope(scope, row) && !row.deletedAt)) {
-    throw new HttpError(404, "NOT_FOUND", "QR code not found");
+    throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
   }
   return row;
 }
@@ -229,16 +232,24 @@ async function run(
   {
     revalidate = false,
     access = "write",
-  }: { revalidate?: boolean; access?: "read" | "write" } = {},
+    pageLocale,
+  }: {
+    revalidate?: boolean;
+    access?: "read" | "write";
+    /** The calling page's useLocale(): the language its messages are in */
+    pageLocale?: string;
+  } = {},
 ): Promise<LifecycleActionResult> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     if (access === "write") assertCan(scope, "content.write");
     const data = await fn(scope);
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, { pageLocale, userId });
   }
 }
 
@@ -247,17 +258,19 @@ const sameTime = (a: Date | null, b: Date | null) =>
 
 export async function getCodeLifecycle(
   id: string,
+  pageLocale?: string,
 ): Promise<LifecycleActionResult> {
   return run(
     "getCodeLifecycle",
     async (scope) =>
       toView(scope, await findRow(scope, parse(codeIdSchema, id))),
-    { access: "read" },
+    { access: "read", pageLocale },
   );
 }
 
 export async function updateCodeLifecycle(
   input: z.input<typeof updateSchema>,
+  pageLocale?: string,
 ): Promise<LifecycleActionResult> {
   return run(
     "updateCodeLifecycle",
@@ -295,11 +308,7 @@ export async function updateCodeLifecycle(
         setsControl &&
         !getPlanLimits(await getPlanForScope(scope)).linkControls
       ) {
-        throw new HttpError(
-          402,
-          "PLAN_REQUIRED",
-          "Passwords, schedules, scan limits and fallback URLs are part of Pro.",
-        );
+        throw new HttpError(402, "PLAN_REQUIRED", ENGLISH.planRequired);
       }
 
       const nextStart =
@@ -307,7 +316,7 @@ export async function updateCodeLifecycle(
       const nextEnd =
         values.expiresAt !== undefined ? values.expiresAt : row.expiresAt;
       if (nextStart && nextEnd && nextEnd <= nextStart) {
-        throw new ValidationError("The end date must be after the start date");
+        throw new ValidationError(ENGLISH.endBeforeStart);
       }
 
       if (
@@ -327,7 +336,7 @@ export async function updateCodeLifecycle(
         .set(values)
         .where(eq(qrCode.id, id))
         .returning();
-      if (!updated) throw new HttpError(404, "NOT_FOUND", "QR code not found");
+      if (!updated) throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
       recordAuditEvent(
         scope,
         codeEvents("code.link_controls_changed", [updated], {
@@ -336,13 +345,14 @@ export async function updateCodeLifecycle(
       );
       return toView(scope, updated);
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }
 
 /** Pausing works on every plan: scans go to the fallback URL or a neutral page. */
 export async function setCodePaused(
   input: z.input<typeof pauseSchema>,
+  pageLocale?: string,
 ): Promise<LifecycleActionResult> {
   return run(
     "setCodePaused",
@@ -360,13 +370,13 @@ export async function setCodePaused(
         .set({ pausedAt: paused ? new Date() : null })
         .where(eq(qrCode.id, id))
         .returning();
-      if (!updated) throw new HttpError(404, "NOT_FOUND", "QR code not found");
+      if (!updated) throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
       recordAuditEvent(
         scope,
         codeEvents(paused ? "code.paused" : "code.resumed", [updated]),
       );
       return toView(scope, updated);
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }

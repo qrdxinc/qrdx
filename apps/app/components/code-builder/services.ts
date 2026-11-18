@@ -14,19 +14,23 @@ import type {
 } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import type { BuilderServices } from "./submit";
 
-/** The builder's writes: the dashboard's existing server actions. */
-export const builderServices: BuilderServices = {
-  createCode: createQrCode,
-  updateCode: updateQrCode,
+/**
+ * The builder's writes: the dashboard's existing server actions, answering
+ * in `locale`, the language of the page the builder is on (its useLocale()).
+ * Moving codes says only organize's own messages, which aren't translated.
+ */
+export const builderServices = (locale: string): BuilderServices => ({
+  createCode: (input) => createQrCode(input, undefined, locale),
+  updateCode: (input) => updateQrCode(input, locale),
   moveCodes: moveQrCodes,
-  setTags: setQrCodeTags,
-};
+  setTags: (input) => setQrCodeTags(input, locale),
+});
 
 /** The same over the playground: new codes are recorded as made there. */
-export const playgroundBuilderServices: BuilderServices = {
-  ...builderServices,
-  createCode: (input) => createQrCode(input, { via: "playground" }),
-};
+export const playgroundBuilderServices = (locale: string): BuilderServices => ({
+  ...builderServices(locale),
+  createCode: (input) => createQrCode(input, { via: "playground" }, locale),
+});
 
 export interface LoadedCode {
   code: QrCodeView;
@@ -40,11 +44,12 @@ const isListItem = (code: QrCodeView): code is QrCodeListItem =>
 /**
  * A code to edit, with its folder and tags. A codes list row already has
  * them; otherwise the list action finds the row by its slug (an exact
- * match there), read-only.
+ * match there), read-only. Messages come in `locale` (the page's).
  */
 export async function loadCodeForEdit(
   codeId: string,
-  hint?: QrCodeView,
+  hint: QrCodeView | undefined,
+  locale: string,
 ): Promise<{ ok: true; loaded: LoadedCode } | { ok: false; message: string }> {
   if (hint && isListItem(hint)) {
     return {
@@ -61,11 +66,11 @@ export async function loadCodeForEdit(
   let code = hint;
   try {
     if (!code) {
-      const result = await getQrCode(codeId);
+      const result = await getQrCode(codeId, locale);
       if (!result.success) return { ok: false, message: result.error.message };
       code = result.data;
     }
-    const list = await listQrCodes({ status: "all", q: code.slug });
+    const list = await listQrCodes({ status: "all", q: code.slug }, locale);
     // The list's rows carry folder and tags (QrCodeListItem) at runtime;
     // checked, not assumed.
     const row = list.success

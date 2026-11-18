@@ -18,6 +18,7 @@ import { parseLandingPageContent } from "@/lib/landing/blocks";
 import type { LandingPageContent } from "@/types/landing";
 import type { ThemeStyles } from "@/types/theme";
 import { COMMUNITY_LICENSE } from "./licence";
+import { CheckError, type CheckMessage } from "./messages";
 import {
   PAGE_TEMPLATE_MAX_LENGTH,
   type ScrubReport,
@@ -46,8 +47,11 @@ import type { CommunityItemType } from "./types";
 // (schema and limits, text, the scan gate, duplicates), then the item, its
 // first immutable version and its tags are written in one batch.
 
-/** A publish refused for a reason the creator can fix. */
-export class PublishError extends Error {
+/**
+ * A publish refused for a reason the creator can fix. Its message is
+ * English; the server actions say it in the page's language (./messages.ts).
+ */
+export class PublishError extends CheckError {
   constructor(
     readonly code:
       | "VALIDATION_ERROR"
@@ -55,13 +59,23 @@ export class PublishError extends Error {
       | "ALREADY_PUBLISHED"
       | "LICENSE_REQUIRED"
       | "RATE_LIMITED",
-    message: string,
+    message: string | CheckMessage,
     readonly slug?: string,
     /** With `slug`: the type of the item that's already there */
     readonly type?: CommunityItemType,
   ) {
     super(message);
     this.name = "PublishError";
+  }
+}
+
+/** Refuses text that carries contact details or links (./text.ts). */
+function checkText(text: string) {
+  if (textProblem(text)) {
+    throw new PublishError(
+      "VALIDATION_ERROR",
+      (messages) => textProblem(text, messages) ?? "",
+    );
   }
 }
 
@@ -92,13 +106,12 @@ export function cleanDetails(
   vocabulary: readonly string[],
 ): { name: string; description: string | null; tags: string[] } {
   const name = cleanText(details.name, NAME_MAX_LENGTH);
-  if (!name) throw new PublishError("VALIDATION_ERROR", "Give it a name.");
+  if (!name) {
+    throw new PublishError("VALIDATION_ERROR", (m) => m.nameRequired);
+  }
   const description =
     cleanText(details.description ?? "", DESCRIPTION_MAX_LENGTH) || null;
-  for (const text of [name, description ?? ""]) {
-    const problem = textProblem(text);
-    if (problem) throw new PublishError("VALIDATION_ERROR", problem);
-  }
+  for (const text of [name, description ?? ""]) checkText(text);
   const tags = [
     ...new Set((details.tags ?? []).filter((tag) => vocabulary.includes(tag))),
   ].slice(0, MAX_TAGS_PER_THEME);
@@ -151,7 +164,7 @@ export async function insertItem(
     if (duplicate) {
       throw new PublishError(
         "ALREADY_PUBLISHED",
-        "This design is already in the community.",
+        (m) => m.alreadyPublished,
         duplicate.slug,
         item.type,
       );
@@ -246,7 +259,7 @@ export async function insertItem(
 async function gateOrThrow(style: ThemeStyles): Promise<ScanGate> {
   const gate = await checkScanGate(style);
   if (!gate.passed) {
-    throw new PublishError("SCAN_GATE", gateFailureMessage(gate));
+    throw new PublishError("SCAN_GATE", (m) => gateFailureMessage(gate, m));
   }
   return gate;
 }
@@ -268,17 +281,11 @@ export async function publishStyle(
 ): Promise<{ id: string; slug: string; type: CommunityItemType }> {
   const built = themePayloadFromStyle(input.style);
   if (!built) {
-    throw new PublishError(
-      "VALIDATION_ERROR",
-      "This theme has settings the community can't show. Save it again in the editor.",
-    );
+    throw new PublishError("VALIDATION_ERROR", (m) => m.themeSettings);
   }
   const details = cleanDetails(input.details, COMMUNITY_THEME_TAGS);
   // A theme's frame text is published too: the same check as a frame's.
-  for (const label of frameTexts(built.payload.style.frame)) {
-    const problem = textProblem(label);
-    if (problem) throw new PublishError("VALIDATION_ERROR", problem);
-  }
+  for (const label of frameTexts(built.payload.style.frame)) checkText(label);
   const gate = await gateOrThrow(
     toPublicStyle(built.payload.style, built.payload.logoIcon),
   );
@@ -362,10 +369,7 @@ export async function publishFrame(
     frame.secondaryText ?? "",
     ...frame.spec.labels.map((label) => label.text),
   ];
-  for (const label of labels) {
-    const problem = textProblem(label);
-    if (problem) throw new PublishError("VALIDATION_ERROR", problem);
-  }
+  for (const label of labels) checkText(label);
   const details = cleanDetails(input.details, FRAME_TAGS);
   const gate = await gateOrThrow(framePreviewStyle(frame));
   return insertItem({
@@ -406,27 +410,26 @@ export async function publishPageTemplate(
     keep: input.keep,
   });
   const [problem] = problems;
-  if (problem) throw new PublishError("VALIDATION_ERROR", problem.message);
-  const visible = content.blocks.length;
-  if (visible === 0) {
+  if (problem) {
+    // In another language: the same scrub, its problems said in that one.
     throw new PublishError(
       "VALIDATION_ERROR",
-      "Nothing is left to share once your own details are taken out. Add some blocks people can reuse.",
+      (messages) =>
+        scrubPageContent(input.page.content, { keep: input.keep, messages })
+          .problems[0]?.message ?? problem.message,
     );
+  }
+  const visible = content.blocks.length;
+  if (visible === 0) {
+    throw new PublishError("VALIDATION_ERROR", (m) => m.pageNothingLeft);
   }
   const checked = parseLandingPageContent(content, { mode: "write" });
   if (!checked.success) {
-    throw new PublishError(
-      "VALIDATION_ERROR",
-      "This page can't be shared as a template. Publish it again in the page editor first.",
-    );
+    throw new PublishError("VALIDATION_ERROR", (m) => m.pageInvalid);
   }
   const payload = { page: { type: input.page.type, content: checked.data } };
   if (JSON.stringify(payload).length > PAGE_TEMPLATE_MAX_LENGTH) {
-    throw new PublishError(
-      "VALIDATION_ERROR",
-      "This page is too large to share as a template. Remove some blocks or shorten long text.",
-    );
+    throw new PublishError("VALIDATION_ERROR", (m) => m.pageTooLarge);
   }
   const details = cleanDetails(input.details, PAGE_TEMPLATE_TAGS);
   const item = await insertItem({

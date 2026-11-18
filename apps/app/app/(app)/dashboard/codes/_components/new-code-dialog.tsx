@@ -23,7 +23,7 @@ import {
   Link2,
   Lock,
 } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   type FormEvent,
   useEffect,
@@ -93,17 +93,18 @@ export function useDemoContent(open: boolean) {
 }
 
 export function usePageUsage(open: boolean) {
+  const locale = useLocale();
   const [usage, setUsage] = useState<PageUsage | null>(null);
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
-    getLandingPageUsage().then((result) => {
+    getLandingPageUsage(locale).then((result) => {
       if (!cancelled && result.success) setUsage(result.data);
     });
     return () => {
       cancelled = true;
     };
-  }, [open]);
+  }, [open, locale]);
   return usage;
 }
 
@@ -278,6 +279,8 @@ export function NewCodeDialog({
   style?: QRStyle | null;
 }) {
   const t = useTranslations("app.dashboard.codes.newCodeDialog");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const inWorkspace = useWorkspaceHref();
   // Pages built on uploads are hidden where file storage is off.
   const fileStorage = useAvailability().has("fileStorage");
@@ -337,12 +340,15 @@ export function NewCodeDialog({
     // saving any code (server actions take up to 1 MB).
     const fitted = style ? fitStyleForSave(style) : null;
     startTransition(async () => {
-      const result = await createLandingPage({
-        type: template.type,
-        variantId: variant.id,
-        title: title.trim() || null,
-        ...(fitted && { style: fitted.style }),
-      });
+      const result = await createLandingPage(
+        {
+          type: template.type,
+          variantId: variant.id,
+          title: title.trim() || null,
+          ...(fitted && { style: fitted.style }),
+        },
+        locale,
+      );
       if (!result.success) {
         setError(result.error);
         return;

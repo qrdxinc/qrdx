@@ -23,6 +23,7 @@
  */
 
 import { EMAIL_CHANGE_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
+import type { Translator } from "@/lib/i18n/translator";
 
 /** RFC 5321's limit on an address. */
 export const MAX_EMAIL_LENGTH = 254;
@@ -69,6 +70,36 @@ export const EMAIL_CHANGE_MESSAGES = {
   failed: "Something went wrong. Please try again.",
 } as const;
 
+/** EMAIL_CHANGE_MESSAGES in any language. */
+export type EmailChangeMessages = Record<
+  keyof typeof EMAIL_CHANGE_MESSAGES,
+  string
+>;
+
+/**
+ * EMAIL_CHANGE_MESSAGES in the person's language
+ * (settingsActions.emailChange in messages/en.json), for the actions'
+ * answers.
+ */
+export function emailChangeMessages(
+  t: Translator<"settingsActions.emailChange">,
+): EmailChangeMessages {
+  return {
+    reauth: t("reauth"),
+    sameEmail: t("sameEmail"),
+    invalidEmail: t("invalidEmail"),
+    invalidCode: t("invalidCode"),
+    rateLimited: t("rateLimited"),
+    codeRateLimited: t("codeRateLimited"),
+    notSent: t("notSent"),
+    codeDidntWork: t("codeDidntWork"),
+    taken: t("taken"),
+    signedOut: t("signedOut"),
+    unavailable: t("unavailable"),
+    failed: t("failed"),
+  };
+}
+
 /** What a Better Auth APIError carries (auth.api throws these). */
 interface AuthErrorLike {
   statusCode?: number;
@@ -78,22 +109,63 @@ interface AuthErrorLike {
 const authError = (error: unknown): AuthErrorLike =>
   error && typeof error === "object" ? (error as AuthErrorLike) : {};
 
-/** Requesting the code: a message for a known failure, else null. */
-export function requestFailureMessage(error: unknown): string | null {
+type EmailChangeMessageKey = keyof typeof EMAIL_CHANGE_MESSAGES;
+
+/** Requesting the code: which message a known failure gets, else null. */
+export function requestFailureKey(
+  error: unknown,
+): EmailChangeMessageKey | null {
   const { statusCode, body } = authError(error);
-  if (statusCode === 429) return EMAIL_CHANGE_MESSAGES.codeRateLimited;
+  if (statusCode === 429) return "codeRateLimited";
   switch (body?.code) {
     case "EMAIL_CHANGE_CODE_NOT_SENT":
-      return EMAIL_CHANGE_MESSAGES.notSent;
+      return "notSent";
     case EMAIL_CHANGE_UNAVAILABLE:
-      return EMAIL_CHANGE_MESSAGES.unavailable;
+      return "unavailable";
     case "INVALID_EMAIL":
-      return EMAIL_CHANGE_MESSAGES.invalidEmail;
+      return "invalidEmail";
     case "UNAUTHORIZED":
-      return EMAIL_CHANGE_MESSAGES.signedOut;
+      return "signedOut";
+  }
+  if (body?.message === "Email is the same") return "sameEmail";
+  return null;
+}
+
+/** Requesting the code: a message for a known failure, else null. */
+export function requestFailureMessage(error: unknown): string | null {
+  const key = requestFailureKey(error);
+  return key ? EMAIL_CHANGE_MESSAGES[key] : null;
+}
+
+/**
+ * Confirming with the code: which message a known failure gets, and whether
+ * the code is used up (send a new one), else null.
+ */
+export function confirmFailureKey(
+  error: unknown,
+): { message: EmailChangeMessageKey; codeDead: boolean } | null {
+  const { statusCode, body } = authError(error);
+  if (statusCode === 429) return { message: "rateLimited", codeDead: false };
+  switch (body?.code) {
+    // Better Auth keeps no code for an address that already has an account,
+    // so there every code is just wrong (INVALID_OTP), while a free address
+    // runs out of tries or sees its code expire. One answer for all three,
+    // and the code isn't marked used up (that would show too).
+    case "INVALID_OTP":
+    case "OTP_EXPIRED":
+    case "TOO_MANY_ATTEMPTS":
+      return { message: "codeDidntWork", codeDead: false };
+    case "INVALID_EMAIL":
+      return { message: "invalidEmail", codeDead: true };
+    case "UNAUTHORIZED":
+      return { message: "signedOut", codeDead: true };
+  }
+  // Only reachable with a valid code, so saying so leaks nothing.
+  if (body?.message === "Email already in use") {
+    return { message: "taken", codeDead: true };
   }
   if (body?.message === "Email is the same") {
-    return EMAIL_CHANGE_MESSAGES.sameEmail;
+    return { message: "sameEmail", codeDead: true };
   }
   return null;
 }
@@ -105,32 +177,13 @@ export function requestFailureMessage(error: unknown): string | null {
 export function confirmFailure(
   error: unknown,
 ): { message: string; codeDead: boolean } | null {
-  const { statusCode, body } = authError(error);
-  if (statusCode === 429) {
-    return { message: EMAIL_CHANGE_MESSAGES.rateLimited, codeDead: false };
-  }
-  switch (body?.code) {
-    // Better Auth keeps no code for an address that already has an account,
-    // so there every code is just wrong (INVALID_OTP), while a free address
-    // runs out of tries or sees its code expire. One answer for all three,
-    // and the code isn't marked used up (that would show too).
-    case "INVALID_OTP":
-    case "OTP_EXPIRED":
-    case "TOO_MANY_ATTEMPTS":
-      return { message: EMAIL_CHANGE_MESSAGES.codeDidntWork, codeDead: false };
-    case "INVALID_EMAIL":
-      return { message: EMAIL_CHANGE_MESSAGES.invalidEmail, codeDead: true };
-    case "UNAUTHORIZED":
-      return { message: EMAIL_CHANGE_MESSAGES.signedOut, codeDead: true };
-  }
-  // Only reachable with a valid code, so saying so leaks nothing.
-  if (body?.message === "Email already in use") {
-    return { message: EMAIL_CHANGE_MESSAGES.taken, codeDead: true };
-  }
-  if (body?.message === "Email is the same") {
-    return { message: EMAIL_CHANGE_MESSAGES.sameEmail, codeDead: true };
-  }
-  return null;
+  const found = confirmFailureKey(error);
+  return found
+    ? {
+        message: EMAIL_CHANGE_MESSAGES[found.message],
+        codeDead: found.codeDead,
+      }
+    : null;
 }
 
 export interface NoticeDeliveryDeps {

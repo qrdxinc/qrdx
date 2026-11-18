@@ -9,6 +9,7 @@ import {
   getCodeMarketing,
   type MarketingActionResult,
 } from "@/actions/code-marketing";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { getPlanForScope } from "@/lib/plans";
 import { getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
@@ -32,32 +33,32 @@ export type CodeOptionsResult =
  * Everything the builder's option buttons need in one round trip: the plans
  * that unlock each option for the active workspace and, for an existing
  * code, its current settings (from the same actions its panels save with).
+ * `pageLocale`: the builder page's useLocale(), the language its messages
+ * are in.
  */
 export async function getCodeOptions(
   codeId: string | null,
+  pageLocale?: string,
 ): Promise<CodeOptionsResult> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     const [plan, marketing, lifecycle] = await Promise.all([
       getPlanForScope(scope),
-      codeId ? getCodeMarketing(codeId) : null,
-      codeId ? getCodeLifecycle(codeId) : null,
+      codeId ? getCodeMarketing(codeId, pageLocale) : null,
+      codeId ? getCodeLifecycle(codeId, pageLocale) : null,
     ]);
     return {
       success: true,
       data: { plans: codeOptionPlansFor(plan), marketing, lifecycle },
     };
   } catch (error) {
+    const text = (await codeActionText({ pageLocale, userId })).codeOptions;
     if (error instanceof UnauthorizedError) {
-      return {
-        success: false,
-        error: { message: "Sign in again to see the options." },
-      };
+      return { success: false, error: { message: text.signIn } };
     }
     logError(error as Error, { action: "getCodeOptions" });
-    return {
-      success: false,
-      error: { message: "Couldn't load the options. Try again." },
-    };
+    return { success: false, error: { message: text.failed } };
   }
 }

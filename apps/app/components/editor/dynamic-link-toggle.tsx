@@ -11,7 +11,7 @@ import {
   ToggleGroupItem,
 } from "@repo/design-system/components/ui/toggle-group";
 import { ArrowRight, Copy, Flash, Setting4 } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   useCallback,
   useEffect,
@@ -157,12 +157,18 @@ export type MakeDynamicOutcome =
  * createQrCode server action via "playground" (a fake in tests).
  */
 export async function makeDynamic(
-  input: { destination: string; styles: ThemeStyles; userId: string },
+  input: {
+    destination: string;
+    styles: ThemeStyles;
+    userId: string;
+    /** The page's language: the server's messages come in it */
+    locale: string;
+  },
   create: typeof createDynamicCode = createDynamicCode,
 ): Promise<MakeDynamicOutcome> {
   const { style, trimmed } = styleForCode(input.styles);
   const result = await safely(() =>
-    create({ destinationUrl: input.destination, style }),
+    create({ destinationUrl: input.destination, style }, input.locale),
   );
   if (!result.success) {
     if (result.error.code === "LIMIT_REACHED") {
@@ -227,6 +233,8 @@ const choiceItemClass =
  */
 export function DynamicLinkToggle() {
   const t = useTranslations("editor.dynamicLinkToggle");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const { data: session, isPending: isSessionPending } =
     authClient.useSession();
   const userId = session?.user?.id ?? null;
@@ -302,6 +310,7 @@ export function DynamicLinkToggle() {
         destination,
         styles: useQREditorStore.getState().themeState.styles,
         userId,
+        locale,
       });
       if (outcome.kind === "limit") {
         setLimitMessage(outcome.message);
@@ -368,7 +377,10 @@ export function DynamicLinkToggle() {
     if (!(linked && destination)) return;
     startTransition(async () => {
       const result = await safely(() =>
-        updateDynamicCode({ id: linked.id, destinationUrl: destination }),
+        updateDynamicCode(
+          { id: linked.id, destinationUrl: destination },
+          locale,
+        ),
       );
       if (!result.success) {
         if (result.error.code === "NOT_FOUND") forgetMissingCode();
@@ -390,7 +402,7 @@ export function DynamicLinkToggle() {
     );
     startTransition(async () => {
       const result = await safely(() =>
-        updateDynamicCode({ id: linked.id, style }),
+        updateDynamicCode({ id: linked.id, style }, locale),
       );
       if (!result.success) {
         if (result.error.code === "NOT_FOUND") forgetMissingCode();

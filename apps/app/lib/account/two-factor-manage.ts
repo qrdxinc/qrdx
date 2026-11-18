@@ -17,7 +17,10 @@ import {
   isTotpCode,
   secretFromUri,
   TWO_FACTOR_MESSAGES,
+  twoFactorMessages,
 } from "@/lib/auth/two-factor";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
+import type { Translator } from "@/lib/i18n/translator";
 import { logError } from "@/lib/shared";
 import {
   type ConfirmableSession,
@@ -64,6 +67,9 @@ export { twoFactorEnabledFor };
 // which then has no session, and the page redirected to /sign-in mid-setup,
 // losing the backup codes. Everything else keeps the session and is a server
 // action (app/(app)/settings/account/_lib/two-factor-actions.ts).
+//
+// Refusals are in the person's language (refuse(), below), which Settings
+// shows as they are.
 
 export type TwoFactorResult<T = Record<never, never>> =
   | ({ ok: true } & T)
@@ -74,7 +80,7 @@ export type TwoFactorResult<T = Record<never, never>> =
       reason?: "restart";
     };
 
-const MESSAGES = {
+export const TWO_FACTOR_MANAGE_MESSAGES = {
   ...TWO_FACTOR_MESSAGES,
   signedOut: "Sign in to change two-step verification.",
   alreadyOn: "Two-step verification is already on.",
@@ -85,6 +91,33 @@ const MESSAGES = {
   restart: "This setup expired. Start again.",
   rateLimitedLong: "Too many tries. Wait a few minutes and try again.",
 } as const;
+
+/** TWO_FACTOR_MANAGE_MESSAGES in any language. */
+export type TwoFactorManageMessages = Record<
+  keyof typeof TWO_FACTOR_MANAGE_MESSAGES,
+  string
+>;
+
+/**
+ * TWO_FACTOR_MANAGE_MESSAGES in the person's language: auth.twoFactorMessages
+ * and settingsActions.twoFactor in messages/en.json.
+ */
+export function twoFactorManageMessages(
+  twoFactor: Translator<"auth.twoFactorMessages">,
+  t: Translator<"settingsActions.twoFactor">,
+): TwoFactorManageMessages {
+  return {
+    ...twoFactorMessages(twoFactor),
+    signedOut: t("signedOut"),
+    alreadyOn: t("alreadyOn"),
+    notOn: t("notOn"),
+    appAlreadySetUp: t("appAlreadySetUp"),
+    noApp: t("noApp"),
+    noPasskey: t("noPasskey"),
+    restart: t("restart"),
+    rateLimitedLong: t("rateLimitedLong"),
+  };
+}
 
 // Per user (auth.api calls skip Better Auth's own HTTP rate limiter). Without
 // Redis these allow everything; the confirmation still applies.
@@ -102,6 +135,21 @@ const fail = (
   reason?: "restart",
 ): { ok: false; error: string; reason?: "restart" } =>
   reason ? { ok: false, error, reason } : { ok: false, error };
+
+/**
+ * A refusal saying `key` of TWO_FACTOR_MANAGE_MESSAGES in the person's
+ * language, read only to refuse (English, logged, when it can't be).
+ */
+async function refuse(
+  key: keyof TwoFactorManageMessages,
+  reason?: "restart",
+): Promise<{ ok: false; error: string; reason?: "restart" }> {
+  const [twoFactor, manage] = await Promise.all([
+    settingsActionText("auth.twoFactorMessages")(),
+    settingsActionText("settingsActions.twoFactor")(),
+  ]);
+  return fail(twoFactorManageMessages(twoFactor, manage)[key], reason);
+}
 
 /** What a Better Auth APIError carries (auth.api throws these). */
 const authErrorCode = (error: unknown): string | undefined =>
@@ -142,7 +190,10 @@ async function signOutElsewhere(
 }
 
 /** Signed in and confirmed in the last 10 minutes, else the failure. */
-const confirmed = () => confirmedSession(MESSAGES.signedOut);
+const confirmed = () =>
+  confirmedSession(async () =>
+    (await settingsActionText("settingsActions.twoFactor")())("signedOut"),
+  );
 
 const refresh = () => revalidatePath("/settings/account");
 
@@ -206,15 +257,15 @@ export async function existingPasskeyOptions(): Promise<
     const allowed = await confirmed();
     if (!allowed.ok) return allowed;
     const facts = await loadTwoFactorFacts(allowed.session.userId);
-    if (facts.on) return fail(MESSAGES.alreadyOn);
-    if (facts.passkeys === 0) return fail(MESSAGES.noPasskey);
+    if (facts.on) return await refuse("alreadyOn");
+    if (facts.passkeys === 0) return await refuse("noPasskey");
     const result = await passkeyAssertionOptions(allowed.session);
-    return result.ok && "options" in result
-      ? { ok: true, options: result.options }
-      : fail(result.ok ? MESSAGES.failed : result.error);
+    if (!result.ok) return fail(result.error);
+    if (!("options" in result)) return await refuse("failed");
+    return { ok: true, options: result.options };
   } catch (error) {
     logError(error as Error, { action: "account.existingPasskeyOptions" });
-    return fail(MESSAGES.failed);
+    return await refuse("failed");
   }
 }
 
@@ -228,27 +279,27 @@ export async function turnOnWithExistingPasskey(
   const parsed = z
     .object({ response: z.record(z.string(), z.unknown()) })
     .safeParse(input);
-  if (!parsed.success) return fail(MESSAGES.failed);
+  if (!parsed.success) return await refuse("failed");
   try {
     const allowed = await confirmed();
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     const facts = await loadTwoFactorFacts(session.userId);
-    if (facts.on) return fail(MESSAGES.alreadyOn);
-    if (facts.passkeys === 0) return fail(MESSAGES.noPasskey);
+    if (facts.on) return await refuse("alreadyOn");
+    if (facts.passkeys === 0) return await refuse("noPasskey");
     if (!(await setupLimiter.limit(session.userId)).success) {
-      return fail(MESSAGES.rateLimitedLong);
+      return await refuse("rateLimitedLong");
     }
     const check = await verifyOwnPasskey(session, parsed.data.response);
     if (!check.ok) return check;
     const turnedOn = await turnOnWithPasskeys(session);
     // Turned on in another tab meanwhile: nothing more to do here.
-    if (turnedOn === null) return fail(MESSAGES.alreadyOn);
+    if (turnedOn === null) return await refuse("alreadyOn");
     refresh();
     return { ok: true, ...turnedOn };
   } catch (error) {
     logError(error as Error, { action: "account.turnOnWithExistingPasskey" });
-    return fail(MESSAGES.failed);
+    return await refuse("failed");
   }
 }
 
@@ -269,11 +320,11 @@ export async function startAuthenticatorSetup(): Promise<
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     if (!(await setupLimiter.limit(session.userId)).success) {
-      return fail(MESSAGES.rateLimitedLong);
+      return await refuse("rateLimitedLong");
     }
     const facts = await loadTwoFactorFacts(session.userId);
     if (hasAuthenticatorApp(facts.row)) {
-      return fail(facts.on ? MESSAGES.appAlreadySetUp : MESSAGES.failed);
+      return await refuse(facts.on ? "appAlreadySetUp" : "failed");
     }
     const keptCodes =
       facts.on && facts.row
@@ -314,10 +365,10 @@ export async function startAuthenticatorSetup(): Promise<
     return { ok: true, totpUri: totpURI, secret };
   } catch (error) {
     if (authErrorCode(error) === "TOTP_ALREADY_ENABLED") {
-      return fail(MESSAGES.appAlreadySetUp);
+      return await refuse("appAlreadySetUp");
     }
     logError(error as Error, { action: "account.startAuthenticatorSetup" });
-    return fail(MESSAGES.failed);
+    return await refuse("failed");
   }
 }
 
@@ -358,7 +409,7 @@ export async function confirmAuthenticatorSetup(input: unknown): Promise<
 > {
   const parsed = z.object({ code: z.string().trim() }).safeParse(input);
   if (!(parsed.success && isTotpCode(parsed.data.code))) {
-    return fail(MESSAGES.invalidCode);
+    return await refuse("invalidCode");
   }
   let session: ConfirmableSession;
   let wasOn: boolean;
@@ -368,15 +419,15 @@ export async function confirmAuthenticatorSetup(input: unknown): Promise<
     if (!allowed.ok) return allowed;
     session = allowed.session;
     if (!(await setupLimiter.limit(session.userId)).success) {
-      return fail(MESSAGES.rateLimitedLong);
+      return await refuse("rateLimitedLong");
     }
     const facts = await loadTwoFactorFacts(session.userId);
     if (hasAuthenticatorApp(facts.row)) {
-      return fail(facts.on ? MESSAGES.appAlreadySetUp : MESSAGES.alreadyOn);
+      return await refuse(facts.on ? "appAlreadySetUp" : "alreadyOn");
     }
     // Only a setup started in step 1 can be confirmed.
     if (!authenticatorSetupStarted(facts.row)) {
-      return fail(MESSAGES.restart, "restart");
+      return await refuse("restart", "restart");
     }
     wasOn = facts.on;
     const confirmedApp = await auth.api.verifyTOTP({
@@ -390,12 +441,12 @@ export async function confirmAuthenticatorSetup(input: unknown): Promise<
   } catch (error) {
     switch (authErrorCode(error)) {
       case "INVALID_CODE":
-        return fail(MESSAGES.wrongCode);
+        return await refuse("wrongCode");
       case "TOTP_NOT_ENABLED":
-        return fail(MESSAGES.restart, "restart");
+        return await refuse("restart", "restart");
     }
     logError(error as Error, { action: "account.confirmAuthenticatorSetup" });
-    return fail(MESSAGES.failed);
+    return await refuse("failed");
   }
 
   if (wasOn) {
@@ -462,11 +513,11 @@ export async function removeAuthenticatorApp(): Promise<
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     if (!(await changeLimiter.limit(session.userId)).success) {
-      return fail(MESSAGES.rateLimitedLong);
+      return await refuse("rateLimitedLong");
     }
     const facts = await loadTwoFactorFacts(session.userId);
     if (!(facts.on && hasAuthenticatorApp(facts.row))) {
-      return fail(MESSAGES.noApp);
+      return await refuse("noApp");
     }
     if (facts.passkeys > 0) {
       await db
@@ -489,7 +540,7 @@ export async function removeAuthenticatorApp(): Promise<
     return { ok: true, turnedOff: true };
   } catch (error) {
     logError(error as Error, { action: "account.removeAuthenticatorApp" });
-    return fail(MESSAGES.failed);
+    return await refuse("failed");
   }
 }
 
@@ -504,9 +555,9 @@ export async function regenerateBackupCodes(): Promise<
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     if (!(await twoFactorEnabledFor(session.userId)))
-      return fail(MESSAGES.notOn);
+      return await refuse("notOn");
     if (!(await changeLimiter.limit(session.userId)).success) {
-      return fail(MESSAGES.rateLimitedLong);
+      return await refuse("rateLimitedLong");
     }
     const { backupCodes } = await auth.api.generateBackupCodes({
       headers: session.requestHeaders,
@@ -517,7 +568,7 @@ export async function regenerateBackupCodes(): Promise<
     return { ok: true, backupCodes };
   } catch (error) {
     logError(error as Error, { action: "account.regenerateBackupCodes" });
-    return fail(MESSAGES.failed);
+    return await refuse("failed");
   }
 }
 
@@ -532,9 +583,9 @@ export async function turnOffTwoFactor(): Promise<TwoFactorResult> {
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     if (!(await twoFactorEnabledFor(session.userId)))
-      return fail(MESSAGES.notOn);
+      return await refuse("notOn");
     if (!(await changeLimiter.limit(session.userId)).success) {
-      return fail(MESSAGES.rateLimitedLong);
+      return await refuse("rateLimitedLong");
     }
     await resetTwoFactor(session.userId);
     notify("off", session.email);
@@ -542,6 +593,6 @@ export async function turnOffTwoFactor(): Promise<TwoFactorResult> {
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.turnOffTwoFactor" });
-    return fail(MESSAGES.failed);
+    return await refuse("failed");
   }
 }

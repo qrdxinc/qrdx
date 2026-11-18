@@ -9,12 +9,13 @@ import { after } from "next/server";
 import { z } from "zod";
 import {
   type ConfirmableSession,
+  confirmationText,
   confirmedSession,
+  refuse,
 } from "@/lib/account/confirmation-server";
+import { newPasskeyName } from "@/lib/account/passkey-name-server";
 import {
-  defaultPasskeyName,
   normalizePasskeyName,
-  PASSKEY_MESSAGES,
   registrationFailure,
 } from "@/lib/account/passkeys";
 import { sendPasskeyNotice } from "@/lib/account/passkeys-server";
@@ -39,6 +40,9 @@ import { logError } from "@/lib/shared";
 // The passkey plugin's own "fresh session" rule (a sign-in within a day) is
 // off for adding passkeys (packages/auth/passkey.ts): confirming it's you
 // covers it. SESSION_NOT_FRESH is still handled, should it ever come back.
+//
+// Refusals are PASSKEY_MESSAGES in the person's language (auth.passkeyMessages,
+// read through confirmationText() only when refusing).
 
 export type PasskeyActionResult<T = undefined> =
   | (T extends undefined ? { ok: true } : { ok: true; data: T })
@@ -63,10 +67,12 @@ const changeLimiter = createRateLimiter({
 
 const PATH = "/settings/account";
 
-const confirmed = () => confirmedSession(PASSKEY_MESSAGES.signedOut);
+const confirmed = () =>
+  confirmedSession(async () => (await confirmationText()).passkey.signedOut);
 
-function failed(error: unknown, action: string) {
-  const known = registrationFailure(error);
+async function failed(error: unknown, action: string) {
+  const messages = (await confirmationText()).passkey;
+  const known = registrationFailure(error, messages);
   if (known) {
     return {
       ok: false as const,
@@ -76,7 +82,7 @@ function failed(error: unknown, action: string) {
     };
   }
   logError(error as Error, { action });
-  return { ok: false as const, error: PASSKEY_MESSAGES.failed };
+  return { ok: false as const, error: messages.failed };
 }
 
 /**
@@ -92,7 +98,7 @@ export async function passkeyRegistrationOptions(): Promise<
     const allowed = await confirmed();
     if (!allowed.ok) return allowed;
     if (!(await registerLimiter.limit(allowed.session.userId)).success) {
-      return { ok: false, error: PASSKEY_MESSAGES.rateLimited };
+      return await refuse((text) => text.passkey.rateLimited);
     }
     const { headers: responseHeaders, response } =
       await auth.api.generatePasskeyRegistrationOptions({
@@ -105,7 +111,7 @@ export async function passkeyRegistrationOptions(): Promise<
     }
     return { ok: true, data: response as Record<string, unknown> };
   } catch (error) {
-    return failed(error, "account.passkeyRegistrationOptions");
+    return await failed(error, "account.passkeyRegistrationOptions");
   }
 }
 
@@ -135,7 +141,7 @@ export async function addPasskey(
   input: unknown,
 ): Promise<PasskeyActionResult<AddedPasskey>> {
   const parsed = verifySchema.safeParse(input);
-  if (!parsed.success) return { ok: false, error: PASSKEY_MESSAGES.failed };
+  if (!parsed.success) return await refuse((text) => text.passkey.failed);
   let session: ConfirmableSession;
   let saved: { id: string; name?: string | null };
   let wasOn: boolean;
@@ -146,13 +152,13 @@ export async function addPasskey(
     wasOn = (await loadTwoFactorFacts(session.userId)).on;
     const name =
       normalizePasskeyName(parsed.data.name) ??
-      defaultPasskeyName(session.requestHeaders.get("user-agent"));
+      (await newPasskeyName(session.requestHeaders.get("user-agent")));
     saved = await auth.api.verifyPasskeyRegistration({
       headers: session.requestHeaders,
       body: { response: parsed.data.response, name },
     });
   } catch (error) {
-    return failed(error, "account.addPasskey");
+    return await failed(error, "account.addPasskey");
   }
 
   const passkeyName = saved.name ?? "Passkey";
@@ -199,17 +205,17 @@ export async function renamePasskey(
     .safeParse(input);
   const name = parsed.success ? normalizePasskeyName(parsed.data.name) : null;
   if (!(parsed.success && name)) {
-    return { ok: false, error: PASSKEY_MESSAGES.invalidName };
+    return await refuse((text) => text.passkey.invalidName);
   }
   try {
     const allowed = await confirmed();
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     if (!(await changeLimiter.limit(session.userId)).success) {
-      return { ok: false, error: PASSKEY_MESSAGES.rateLimited };
+      return await refuse((text) => text.passkey.rateLimited);
     }
     if (!(await ownPasskey(session, parsed.data.id)).passkey) {
-      return { ok: false, error: PASSKEY_MESSAGES.notFound };
+      return await refuse((text) => text.passkey.notFound);
     }
     await auth.api.updatePasskey({
       headers: session.requestHeaders,
@@ -217,7 +223,7 @@ export async function renamePasskey(
     });
   } catch (error) {
     logError(error as Error, { action: "account.renamePasskey" });
-    return { ok: false, error: PASSKEY_MESSAGES.failed };
+    return await refuse((text) => text.passkey.failed);
   }
   revalidatePath(PATH);
   return { ok: true };
@@ -232,7 +238,7 @@ export async function removePasskey(
   input: unknown,
 ): Promise<PasskeyActionResult<{ turnedOff: boolean }>> {
   const parsed = z.object({ id: idSchema }).safeParse(input);
-  if (!parsed.success) return { ok: false, error: PASSKEY_MESSAGES.notFound };
+  if (!parsed.success) return await refuse((text) => text.passkey.notFound);
   let session: ConfirmableSession;
   let passkeyName: string;
   let turnsOff: boolean;
@@ -241,10 +247,10 @@ export async function removePasskey(
     if (!allowed.ok) return allowed;
     session = allowed.session;
     if (!(await changeLimiter.limit(session.userId)).success) {
-      return { ok: false, error: PASSKEY_MESSAGES.rateLimited };
+      return await refuse((text) => text.passkey.rateLimited);
     }
     const { passkey } = await ownPasskey(session, parsed.data.id);
-    if (!passkey) return { ok: false, error: PASSKEY_MESSAGES.notFound };
+    if (!passkey) return await refuse((text) => text.passkey.notFound);
     passkeyName = normalizePasskeyName(passkey.name) ?? "Passkey";
     await auth.api.deletePasskey({
       headers: session.requestHeaders,
@@ -255,7 +261,7 @@ export async function removePasskey(
     turnsOff = await turnOffIfNoMethodLeft(session.userId);
   } catch (error) {
     logError(error as Error, { action: "account.removePasskey" });
-    return { ok: false, error: PASSKEY_MESSAGES.failed };
+    return await refuse((text) => text.passkey.failed);
   }
   after(() =>
     sendPasskeyNotice({ email: session.email, change: "removed", passkeyName }),

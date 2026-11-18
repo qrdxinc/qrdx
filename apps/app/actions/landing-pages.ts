@@ -15,6 +15,12 @@ import {
   publishPage,
   publishPageSchema,
 } from "@/app/(app)/dashboard/pages/_lib/landing-pages";
+import {
+  CODE_ACTION_MESSAGES,
+  MAX_BULK_PAGES,
+  ownMessage,
+} from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { assertCan } from "@/lib/permissions-server";
 import { enforceRateLimits } from "@/lib/request-guards";
@@ -58,20 +64,26 @@ const publishLimiter = createRateLimiter({
   limiter: slidingWindow(30, "60 s"),
 });
 
-function failure(
+const ENGLISH = CODE_ACTION_MESSAGES.landingPages;
+
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
   error: unknown,
   context: Record<string, unknown>,
-): LandingPageActionResult<never> {
+  who: { pageLocale?: string; userId?: string },
+): Promise<LandingPageActionResult<never>> {
+  const text = (await codeActionText(who)).landingPages;
+  const say = (message: string) => ownMessage(ENGLISH, text, message);
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to manage pages." },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
     return {
       success: false,
-      error: { code: "VALIDATION_ERROR", message: error.message },
+      error: { code: "VALIDATION_ERROR", message: say(error.message) },
     };
   }
   if (error instanceof HttpError) {
@@ -81,14 +93,14 @@ function failure(
         code: KNOWN_CODES.has(error.code)
           ? (error.code as LandingPageErrorCode)
           : "UNKNOWN_ERROR",
-        message: error.message,
+        message: say(error.message),
       },
     };
   }
   logError(error as Error, context);
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -113,21 +125,30 @@ async function run<T>(
   {
     revalidate = false,
     access = "write",
-  }: { revalidate?: boolean; access?: "read" | "write" } = {},
+    pageLocale,
+  }: {
+    revalidate?: boolean;
+    access?: "read" | "write";
+    /** The calling page's useLocale(): the language its messages are in */
+    pageLocale?: string;
+  } = {},
 ): Promise<LandingPageActionResult<T>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     if (access === "write") assertCan(scope, "content.write");
     const data = await fn(scope);
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, { pageLocale, userId });
   }
 }
 
 export async function createLandingPage(
   input: z.input<typeof createPageSchema>,
+  pageLocale?: string,
 ): Promise<LandingPageActionResult<{ pageId: string; codeId: string }>> {
   return run(
     "createLandingPage",
@@ -136,7 +157,7 @@ export async function createLandingPage(
       await enforceCreateRateLimit(scope.userId);
       return createPage(scope, data);
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }
 
@@ -171,12 +192,10 @@ export async function deleteLandingPage(input: {
 
 // ─── Bulk delete (the Pages list's selection) ────────────────────────────────
 
-const MAX_BULK_PAGES = 100;
-
 const pageIdsSchema = z
   .array(pageIdSchema)
-  .min(1, "Select at least one page")
-  .max(MAX_BULK_PAGES, `Select up to ${MAX_BULK_PAGES} pages at a time`)
+  .min(1, ENGLISH.selectAtLeastOne)
+  .max(MAX_BULK_PAGES, ENGLISH.selectUpTo)
   .transform((ids) => [...new Set(ids)]);
 
 /**
@@ -235,8 +254,11 @@ export async function createLandingPageCode(input: {
   );
 }
 
-export async function getLandingPageUsage(): Promise<
-  LandingPageActionResult<PageUsage>
-> {
-  return run("getLandingPageUsage", getPageUsage, { access: "read" });
+export async function getLandingPageUsage(
+  pageLocale?: string,
+): Promise<LandingPageActionResult<PageUsage>> {
+  return run("getLandingPageUsage", getPageUsage, {
+    access: "read",
+    pageLocale,
+  });
 }

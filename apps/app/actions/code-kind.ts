@@ -27,6 +27,7 @@ import {
   pageForCodeSchema,
   pageIdSchema,
 } from "@/app/(app)/dashboard/pages/_lib/landing-pages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { getBlock } from "@/lib/landing/blocks";
 import { getTemplate } from "@/lib/landing/templates";
@@ -70,14 +71,17 @@ const KNOWN_CODES = new Set<string>([
   "UNSAFE_DESTINATION",
 ]);
 
-function failure(
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
   error: unknown,
   context: Record<string, unknown>,
-): CodeKindActionResult<never> {
+  userId: string | undefined,
+): Promise<CodeKindActionResult<never>> {
+  const text = (await codeActionText({ userId })).codeKind;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to change codes." },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
@@ -100,7 +104,7 @@ function failure(
   logError(error as Error, context);
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -120,12 +124,15 @@ async function run<T>(
   fn: (scope: ActiveScope) => Promise<T>,
   { revalidate = false } = {},
 ): Promise<CodeKindActionResult<T>> {
+  let userId: string | undefined;
   try {
-    const data = await fn(await getActiveScope());
+    const scope = await getActiveScope();
+    userId = scope.userId;
+    const data = await fn(scope);
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, userId);
   }
 }
 

@@ -10,6 +10,7 @@ import { and, eq, ne } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 import { isUniqueViolation } from "@/lib/slug-claims";
 import { handleProblem, normalizeHandle } from "./handles";
+import { CheckError } from "./messages";
 import { COMMUNITY_TAG, guarded } from "./store";
 import { cleanText, textProblem } from "./text";
 
@@ -37,10 +38,13 @@ export interface MyCommunityProfile {
   exists: boolean;
 }
 
-/** Thrown for a handle or name that can't be saved, with the reason. */
-export class ProfileInputError extends Error {
-  constructor(message: string) {
-    super(message);
+/**
+ * Thrown for a handle or name that can't be saved, with the reason (in
+ * English; the server action says it in the page's language).
+ */
+export class ProfileInputError extends CheckError {
+  constructor(...args: ConstructorParameters<typeof CheckError>) {
+    super(...args);
     this.name = "ProfileInputError";
   }
 }
@@ -130,13 +134,17 @@ export async function saveCommunityProfile(
 ): Promise<{ handle: string | null }> {
   const handle = normalizeHandle(input.handle) || null;
   if (handle) {
-    const problem = handleProblem(handle);
-    if (problem) throw new ProfileInputError(problem);
+    if (handleProblem(handle)) {
+      throw new ProfileInputError((m) => handleProblem(handle, m) ?? "");
+    }
   }
   const displayName = cleanText(input.displayName, DISPLAY_NAME_MAX_LENGTH);
-  if (!displayName) throw new ProfileInputError("Enter a display name.");
-  const nameProblem = textProblem(displayName);
-  if (nameProblem) throw new ProfileInputError(nameProblem);
+  if (!displayName) {
+    throw new ProfileInputError((m) => m.displayNameRequired);
+  }
+  if (textProblem(displayName)) {
+    throw new ProfileInputError((m) => textProblem(displayName, m) ?? "");
+  }
 
   return guarded(async () => {
     const { id } = await ensurePersonProfile(userId);
@@ -150,7 +158,7 @@ export async function saveCommunityProfile(
           and(eq(communityProfile.handle, handle), ne(communityProfile.id, id)),
         )
         .limit(1);
-      if (taken) throw new ProfileInputError("That handle is taken.");
+      if (taken) throw new ProfileInputError((m) => m.handleTaken);
     }
     const now = new Date();
     try {
@@ -166,7 +174,7 @@ export async function saveCommunityProfile(
         .where(eq(communityProfile.id, id));
     } catch (error) {
       if (isUniqueViolation(error)) {
-        throw new ProfileInputError("That handle is taken.");
+        throw new ProfileInputError((m) => m.handleTaken);
       }
       throw error;
     }

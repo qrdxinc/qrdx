@@ -23,7 +23,7 @@ import {
   Heart,
 } from "iconsax-reactjs";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import {
   copyCommunityItem,
@@ -71,6 +71,8 @@ export function ItemActions({
   layout?: "panel" | "bar";
 }) {
   const t = useTranslations("community.itemActions");
+  // The server answers in this page's language (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const router = useRouter();
   const apply = useApplyToEditor();
   const inWorkspace = useWorkspaceHref();
@@ -117,7 +119,7 @@ export function ItemActions({
   const like = async () => {
     if (!(item.id && checkValidSession("community_action"))) return;
     setBusy("like");
-    const result = await toggleCommunityLike(item.id);
+    const result = await toggleCommunityLike(item.id, locale);
     setBusy(null);
     if (!result.ok) {
       toast.error(result.message);

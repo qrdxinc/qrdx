@@ -16515,6 +16515,310 @@
     "source": "ff85aeb387e6",
     "status": "machine"
   },
+  "communityActions.community.signIn": {
+    "source": "73c27c81d398",
+    "status": "machine"
+  },
+  "communityActions.community.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "communityActions.community.checkDetails": {
+    "source": "375dfe68ec1e",
+    "status": "machine"
+  },
+  "communityActions.community.themeNotInWorkspace": {
+    "source": "c91949de3848",
+    "status": "machine"
+  },
+  "communityActions.community.noCustomFrame": {
+    "source": "b2f198bd8aa1",
+    "status": "machine"
+  },
+  "communityActions.community.pageNotFound": {
+    "source": "d53fc6cd3673",
+    "status": "machine"
+  },
+  "communityActions.community.pageChanged": {
+    "source": "5cb375f87239",
+    "status": "machine"
+  },
+  "communityActions.community.svgTooLarge": {
+    "source": "847dfaffe77d",
+    "status": "machine"
+  },
+  "communityActions.community.tooManyImports": {
+    "source": "f5ff19b3ee81",
+    "status": "machine"
+  },
+  "communityActions.community.tooManyChanges": {
+    "source": "a1984da59d94",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.alreadyPublished": {
+    "source": "1d6e553fff43",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.workspaceAdminsOnly": {
+    "source": "6be147003b2e",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.workspaceUnavailable": {
+    "source": "389f41255d26",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.tooFast": {
+    "source": "93fd22d6c7b7",
+    "status": "machine"
+  },
+  "communityActions.checks.licenceRequired": {
+    "source": "1493427d2375",
+    "status": "machine"
+  },
+  "communityActions.checks.publishedALot": {
+    "source": "f20b7da02e33",
+    "status": "machine"
+  },
+  "communityActions.checks.unavailable": {
+    "source": "b60fe2da5900",
+    "status": "machine"
+  },
+  "communityActions.checks.itemNotFound": {
+    "source": "4fd809b4812f",
+    "status": "machine"
+  },
+  "communityActions.checks.workspacePublishRefusal": {
+    "source": "237a5d6c5b08",
+    "status": "machine"
+  },
+  "communityActions.checks.nameRequired": {
+    "source": "9d63f7c904b4",
+    "status": "machine"
+  },
+  "communityActions.checks.alreadyPublished": {
+    "source": "f6250cd6e149",
+    "status": "machine"
+  },
+  "communityActions.checks.themeSettings": {
+    "source": "a46be77a8b85",
+    "status": "machine"
+  },
+  "communityActions.checks.pageNothingLeft": {
+    "source": "fbae9239939b",
+    "status": "machine"
+  },
+  "communityActions.checks.pageInvalid": {
+    "source": "9ba6121c388a",
+    "status": "machine"
+  },
+  "communityActions.checks.pageTooLarge": {
+    "source": "19edf2989914",
+    "status": "machine"
+  },
+  "communityActions.checks.repeatsDetail": {
+    "source": "182d46548c52",
+    "status": "machine"
+  },
+  "communityActions.checks.noEmails": {
+    "source": "8dd6ac014b14",
+    "status": "machine"
+  },
+  "communityActions.checks.noLinks": {
+    "source": "eb0c08b80549",
+    "status": "machine"
+  },
+  "communityActions.checks.noHandles": {
+    "source": "21ea462bd41c",
+    "status": "machine"
+  },
+  "communityActions.checks.noPhones": {
+    "source": "76f2634e7aed",
+    "status": "machine"
+  },
+  "communityActions.checks.noStreets": {
+    "source": "b6ada55ccf82",
+    "status": "machine"
+  },
+  "communityActions.checks.gateFailed": {
+    "source": "3e71851e4c7f",
+    "status": "machine"
+  },
+  "communityActions.checks.gateTooLong": {
+    "source": "9362bdceb4a5",
+    "status": "machine"
+  },
+  "communityActions.checks.gateScore": {
+    "source": "acafc1501a7d",
+    "status": "machine"
+  },
+  "communityActions.checks.gateSampleLink": {
+    "source": "5a3464444d33",
+    "status": "machine"
+  },
+  "communityActions.checks.gateSampleWifi": {
+    "source": "f65f7e029de8",
+    "status": "machine"
+  },
+  "communityActions.checks.handleFormat": {
+    "source": "3c4eaf10ef56",
+    "status": "machine"
+  },
+  "communityActions.checks.handleReserved": {
+    "source": "d6a2b8a0f42d",
+    "status": "machine"
+  },
+  "communityActions.checks.handleTaken": {
+    "source": "52ea5ad9b30d",
+    "status": "machine"
+  },
+  "communityActions.checks.displayNameRequired": {
+    "source": "c9b317208890",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.texts": {
+    "source": "4cd9aad551fe",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.kept": {
+    "source": "2dc2893cee5b",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.links": {
+    "source": "bb794dc3cf63",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.emails": {
+    "source": "76bfb774ee2a",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.phones": {
+    "source": "6d349ccb0826",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.emailsAndPhones": {
+    "source": "57d3e1565fdd",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.addresses": {
+    "source": "57faf2dc9c7c",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.wifi": {
+    "source": "68cfa80299ea",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.codes": {
+    "source": "f7a9b987ad33",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.gtins": {
+    "source": "04a8c4cf6f4f",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.images": {
+    "source": "61e05dbf3f4f",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.files": {
+    "source": "5163e4a591eb",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.blocks": {
+    "source": "c1abfd1f7e44",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.hidden": {
+    "source": "a204c8515b0c",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.settings": {
+    "source": "72685d716228",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.signIn": {
+    "source": "8a036e32bf49",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.tooMany": {
+    "source": "c4563cbd7409",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.themeLimit": {
+    "source": "9d16feb89038",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.notFound": {
+    "source": "3d8f8d0799e6",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.defaultAdminsOnly": {
+    "source": "127297294361",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.openAnotherWorkspace": {
+    "source": "440bdf4628d6",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.shareAdminsOnly": {
+    "source": "a8a22bf12919",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.sharedThemesPlan": {
+    "source": "c8ed7873ab05",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.workspaceThemeLimit": {
+    "source": "9e9163a3d1c7",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.signInAgain": {
+    "source": "12c1438531d6",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.loadFailed": {
+    "source": "9c26b1620abc",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.themesFailed": {
+    "source": "8521fbbe203f",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.foldersFailed": {
+    "source": "e40dce9e2143",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.tagsFailed": {
+    "source": "7f7babc551d1",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.domainsFailed": {
+    "source": "71ed9c9bb513",
+    "status": "machine"
+  },
+  "communityActions.search.untitledPage": {
+    "source": "037c426c0597",
+    "status": "machine"
+  },
+  "communityActions.search.landingPage": {
+    "source": "615e54d4d3a0",
+    "status": "machine"
+  },
+  "communityActions.search.tooMany": {
+    "source": "62628e63fa8f",
+    "status": "machine"
+  },
+  "communityActions.search.signInAgain": {
+    "source": "646c48ad30f3",
+    "status": "machine"
+  },
+  "communityActions.search.notWorking": {
+    "source": "448c8bfa0ef1",
+    "status": "machine"
+  },
   "app.settings.general.language.title": {
     "source": "a4fe65264ef7",
     "status": "machine"
@@ -17135,6 +17439,26 @@
     "source": "8488ea041cb4",
     "status": "machine"
   },
+  "app.settings.account.signInMethodsSection.emailCode": {
+    "source": "0adcdb5d55ec",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.oneTimeCodeSentTo": {
+    "source": "595ef1926619",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkedOn": {
+    "source": "5411bb3af810",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkedOnReason": {
+    "source": "dd26bf6a9f53",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.notLinkedUseThe": {
+    "source": "b72aea42c98e",
+    "status": "machine"
+  },
   "app.settings.account.twoFactorResetNotice.supportWillTurnThisOff": {
     "source": "14a60950efe4",
     "status": "machine"
@@ -17305,6 +17629,14 @@
   },
   "app.settings.account.twoFactorSettings.passkeySpotlight": {
     "source": "7ba7ffc49846",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSettings.addedOn": {
+    "source": "e7bbba62018a",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSettings.passkeyName": {
+    "source": "904c9aa9baae",
     "status": "machine"
   },
   "app.settings.account.twoFactorSetupDialog.stepStepnumberOfLength": {
@@ -27287,6 +27619,338 @@
     "source": "48f0d3d397d4",
     "status": "machine"
   },
+  "workspaceActions.shared.workspaceNotFound": {
+    "source": "55394fa04e23",
+    "status": "machine"
+  },
+  "workspaceActions.shared.twoFactorRequired": {
+    "source": "71161b1a3914",
+    "status": "machine"
+  },
+  "workspaceActions.forbidden.viewer": {
+    "source": "e9ec40c24e0e",
+    "status": "machine"
+  },
+  "workspaceActions.forbidden.billingRole": {
+    "source": "f1d82f488edb",
+    "status": "machine"
+  },
+  "workspaceActions.forbidden.contentWrite": {
+    "source": "76af6a5ef797",
+    "status": "machine"
+  },
+  "workspaceActions.forbidden.workspaceUpdate": {
+    "source": "a550fb9dab1d",
+    "status": "machine"
+  },
+  "workspaceActions.forbidden.membersManage": {
+    "source": "1967b73f3414",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.nameTooShort": {
+    "source": "2b68110de504",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.nameTooLong": {
+    "source": "e09b8c81220e",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.slugFormat": {
+    "source": "773a74850624",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.slugReserved": {
+    "source": "c0f4d35963b2",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.invalidEmail": {
+    "source": "c6e81fdf78b3",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.invalidDetails": {
+    "source": "d735a4b608bc",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.invalidInvitation": {
+    "source": "ba186bde5396",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.invalidRole": {
+    "source": "4a4e576097d0",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.invalidMember": {
+    "source": "38415a3d9210",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.invalidWorkspace": {
+    "source": "f2f36a0ba2be",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.moreWorkspaces": {
+    "source": "81002cada166",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.urlTaken": {
+    "source": "77c9a1a8e68f",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.alreadyMember": {
+    "source": "09d9a3a53f97",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.needsOwner": {
+    "source": "3a94e5eeb2c3",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.wrongRecipient": {
+    "source": "bb20a74a6896",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.verifyEmailFirst": {
+    "source": "b1ca8506655c",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.invitationGone": {
+    "source": "931961dcdf9f",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.workspaceFull": {
+    "source": "353546123867",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.noFreeSeat": {
+    "source": "53998b2952ac",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.signIn": {
+    "source": "d972c6b2e4d8",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.somethingWrong": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.rateLimited": {
+    "source": "3922a6235473",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.ownerRoleOwnersOnly": {
+    "source": "8afaa753c0da",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.billingRoleOwnersOnly": {
+    "source": "8e996a8dd897",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.seatsNeedPaidOwner": {
+    "source": "20ac916f6115",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.seatsUsed": {
+    "source": "666b5996b47f",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.nothingToSave": {
+    "source": "af809a443015",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.notAMember": {
+    "source": "c3e24527a821",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.removeOwnerOwnersOnly": {
+    "source": "a53a94ec9d03",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.removeBillingOwnersOnly": {
+    "source": "dccb553304ec",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.cantLeaveOwn": {
+    "source": "0225ec142e3d",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.deleteOwnersOnly": {
+    "source": "16356e3c4db9",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.ownCantBeDeleted": {
+    "source": "fc4e55565a39",
+    "status": "machine"
+  },
+  "workspaceActions.organizations.typeUrlToConfirm": {
+    "source": "5079259fa498",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.signIn": {
+    "source": "73c27c81d398",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.somethingWrong": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.rateLimited": {
+    "source": "3c06f98a6cc2",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.pickRole": {
+    "source": "29624abaa5ee",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.billingLinkOwnersOnly": {
+    "source": "e645cd3e58dc",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.resetOwnersOnly": {
+    "source": "d4333d4647a4",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.changeOwnersOnly": {
+    "source": "d67eda39bff0",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.linkOff": {
+    "source": "8df8932bb13b",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.incomplete": {
+    "source": "e8672166d0dc",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.unavailable": {
+    "source": "c23e5dfc4c68",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.linkDead": {
+    "source": "c9341bb52472",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.noSeatYet": {
+    "source": "3cf960bf2f65",
+    "status": "machine"
+  },
+  "workspaceActions.joinLinks.seatsUsed": {
+    "source": "ab3e29dc1430",
+    "status": "machine"
+  },
+  "workspaceActions.logo.signIn": {
+    "source": "73c27c81d398",
+    "status": "machine"
+  },
+  "workspaceActions.logo.somethingWrong": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "workspaceActions.logo.tooManyChanges": {
+    "source": "157cd37b3d41",
+    "status": "machine"
+  },
+  "workspaceActions.logo.uploadsUnavailable": {
+    "source": "de6d78d02f63",
+    "status": "machine"
+  },
+  "workspaceActions.logo.choosePicture": {
+    "source": "e8c63d0348a3",
+    "status": "machine"
+  },
+  "workspaceActions.logo.tooLarge": {
+    "source": "77ba27cca03f",
+    "status": "machine"
+  },
+  "workspaceActions.logo.wrongType": {
+    "source": "a0e80a7db53c",
+    "status": "machine"
+  },
+  "workspaceActions.logo.url.tooLong": {
+    "source": "cb2455439b94",
+    "status": "machine"
+  },
+  "workspaceActions.logo.url.notFull": {
+    "source": "5163b585e3da",
+    "status": "machine"
+  },
+  "workspaceActions.logo.url.notHttps": {
+    "source": "f4ee6ed0c1e2",
+    "status": "machine"
+  },
+  "workspaceActions.logo.url.withPassword": {
+    "source": "961a84f1707f",
+    "status": "machine"
+  },
+  "workspaceActions.logo.url.notPublic": {
+    "source": "309929944842",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.signIn": {
+    "source": "bf37017acb28",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.somethingWrong": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.pickWorkspace": {
+    "source": "4a1e51e6450f",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.rateLimited": {
+    "source": "e4b272892a84",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.alreadyHere": {
+    "source": "7b49ad8f7b08",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.codeNotFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.cantAddCodes": {
+    "source": "193264fa93e7",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.othersCodes": {
+    "source": "9dc089fdf955",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.pageCode": {
+    "source": "b61804216147",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.domainNotInTarget": {
+    "source": "aa1409cecd86",
+    "status": "machine"
+  },
+  "workspaceActions.moveCode.limitReached": {
+    "source": "319ddef5a2d4",
+    "status": "machine"
+  },
+  "workspaceActions.twoFactorRequirement.invalidRequest": {
+    "source": "af92524e4c08",
+    "status": "machine"
+  },
+  "workspaceActions.twoFactorRequirement.rateLimited": {
+    "source": "3922a6235473",
+    "status": "machine"
+  },
+  "workspaceActions.twoFactorRequirement.planRequired": {
+    "source": "6669b866964c",
+    "status": "machine"
+  },
+  "workspaceActions.twoFactorRequirement.ownFirst": {
+    "source": "15585990bde2",
+    "status": "machine"
+  },
+  "workspaceActions.twoFactorRequirement.signIn": {
+    "source": "92620604b135",
+    "status": "machine"
+  },
+  "workspaceActions.twoFactorRequirement.somethingWrong": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
   "emails.layout.sentFor": {
     "source": "84116b259e8e",
     "status": "machine"
@@ -28125,6 +28789,278 @@
   },
   "emails.weeklyDigest.open": {
     "source": "a71e9a1f885f",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.signIn": {
+    "source": "4b0dd0c20c78",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.notFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.invalidDate": {
+    "source": "a5e862b5076d",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.dateRange": {
+    "source": "93581c48f80e",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.passwordTooShort": {
+    "source": "90f89f76a2a0",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.passwordTooLong": {
+    "source": "6ce7beec0f2c",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.passwordTooManyBytes": {
+    "source": "1c9fae3f720e",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.scanLimitWhole": {
+    "source": "8d43ad3ca1f4",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.scanLimitMin": {
+    "source": "97126300d68f",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.scanLimitMax": {
+    "source": "9f6b97d3a4d8",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.planRequired": {
+    "source": "803df7a08aa6",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.endBeforeStart": {
+    "source": "b9dce1ea4651",
+    "status": "machine"
+  },
+  "codeActions.marketing.signIn": {
+    "source": "4b0dd0c20c78",
+    "status": "machine"
+  },
+  "codeActions.marketing.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.marketing.notFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "codeActions.marketing.countryCode": {
+    "source": "cc51d4a366aa",
+    "status": "machine"
+  },
+  "codeActions.marketing.regionCode": {
+    "source": "5bd4003c6b02",
+    "status": "machine"
+  },
+  "codeActions.marketing.invalidUrl": {
+    "source": "551eacad7ff5",
+    "status": "machine"
+  },
+  "codeActions.marketing.rule": {
+    "source": "8764032038a9",
+    "status": "machine"
+  },
+  "codeActions.marketing.variant": {
+    "source": "37f16182f2cf",
+    "status": "machine"
+  },
+  "codeActions.marketing.problemIn": {
+    "source": "154e872af7dc",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.routing": {
+    "source": "65e0ca0746b0",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.utm": {
+    "source": "9b7e7bb3ee3c",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.pixels": {
+    "source": "9e6d9d52ed0d",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.conversions": {
+    "source": "21e936e93887",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.preciseLocation": {
+    "source": "518f17912e69",
+    "status": "machine"
+  },
+  "codeActions.landingPages.signIn": {
+    "source": "97d1e1ea3cd5",
+    "status": "machine"
+  },
+  "codeActions.landingPages.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.landingPages.selectAtLeastOne": {
+    "source": "9ce94aa0f925",
+    "status": "machine"
+  },
+  "codeActions.landingPages.selectUpTo": {
+    "source": "ced26be12b02",
+    "status": "machine"
+  },
+  "codeActions.files.signIn": {
+    "source": "60282aa8fea0",
+    "status": "machine"
+  },
+  "codeActions.files.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.qrCodes.signIn": {
+    "source": "c3c2a5d99e92",
+    "status": "machine"
+  },
+  "codeActions.qrCodes.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.qrCodes.nothingToUpdate": {
+    "source": "aeb531150e91",
+    "status": "machine"
+  },
+  "codeActions.customDomains.signIn": {
+    "source": "b6ac37c3557e",
+    "status": "machine"
+  },
+  "codeActions.customDomains.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.customDomains.enterDomain": {
+    "source": "fc95d6f2369c",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.signIn": {
+    "source": "51ca2f404b53",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.rateLimited": {
+    "source": "f14cbf01d29e",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.unavailable": {
+    "source": "8e92eed0ada8",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.failed": {
+    "source": "cc1e58f5ce87",
+    "status": "machine"
+  },
+  "codeActions.tags.nothingToUpdate": {
+    "source": "aeb531150e91",
+    "status": "machine"
+  },
+  "codeActions.tags.tooManyTags": {
+    "source": "6c3d336e18ca",
+    "status": "machine"
+  },
+  "codeActions.tags.chooseTag": {
+    "source": "9dfdf64488d3",
+    "status": "machine"
+  },
+  "codeActions.publicStats.signIn": {
+    "source": "b7685c7282a9",
+    "status": "machine"
+  },
+  "codeActions.publicStats.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.publicStats.notFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "codeActions.pathAliases.signIn": {
+    "source": "5b98222c548f",
+    "status": "machine"
+  },
+  "codeActions.pathAliases.failed": {
+    "source": "4def98c89240",
+    "status": "machine"
+  },
+  "codeActions.pathAliases.noDomain": {
+    "source": "51951b4a9164",
+    "status": "machine"
+  },
+  "codeActions.formResponses.signIn": {
+    "source": "d0e967616b72",
+    "status": "machine"
+  },
+  "codeActions.formResponses.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "codeActions.formResponses.chooseResponses": {
+    "source": "b128f79805ae",
+    "status": "machine"
+  },
+  "codeActions.codeKind.signIn": {
+    "source": "2afc2fdcf52a",
+    "status": "machine"
+  },
+  "codeActions.codeKind.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.barcodes.signIn": {
+    "source": "1c710f9da91e",
+    "status": "machine"
+  },
+  "codeActions.barcodes.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.utmTemplates.signIn": {
+    "source": "f3717805c300",
+    "status": "machine"
+  },
+  "codeActions.utmTemplates.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.codeOptions.signIn": {
+    "source": "476b9b14319d",
+    "status": "machine"
+  },
+  "codeActions.codeOptions.failed": {
+    "source": "c7f72ae219e5",
+    "status": "machine"
+  },
+  "codeActions.analytics.searchTooLong": {
+    "source": "df7064341e1e",
+    "status": "machine"
+  },
+  "codeActions.analytics.signIn": {
+    "source": "dc32cbf386a5",
+    "status": "machine"
+  },
+  "codeActions.analytics.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "codeActions.webhooks.signIn": {
+    "source": "737423fda7bc",
+    "status": "machine"
+  },
+  "codeActions.webhooks.failed": {
+    "source": "3ccd9d6586ef",
     "status": "machine"
   },
   "auth.emailCodeSignIn.checkingCode": {
@@ -29241,6 +30177,450 @@
   },
   "auth.signInErrors.sso.rateLimited": {
     "source": "2c69a672e807",
+    "status": "machine"
+  },
+  "settingsActions.account.rateLimited": {
+    "source": "826942fe5eb0",
+    "status": "machine"
+  },
+  "settingsActions.account.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.account.nameMissing": {
+    "source": "a480220a0f59",
+    "status": "machine"
+  },
+  "settingsActions.account.nameTooLong": {
+    "source": "663b0cf48c2a",
+    "status": "machine"
+  },
+  "settingsActions.account.nameSpecialCharacters": {
+    "source": "131235effa50",
+    "status": "machine"
+  },
+  "settingsActions.account.profileSignedOut": {
+    "source": "cb9e9fd1ed34",
+    "status": "machine"
+  },
+  "settingsActions.account.uploadsUnavailable": {
+    "source": "5407c76b33a1",
+    "status": "machine"
+  },
+  "settingsActions.account.pictureMissing": {
+    "source": "e8c63d0348a3",
+    "status": "machine"
+  },
+  "settingsActions.account.pictureTooLarge": {
+    "source": "77ba27cca03f",
+    "status": "machine"
+  },
+  "settingsActions.account.pictureType": {
+    "source": "a0e80a7db53c",
+    "status": "machine"
+  },
+  "settingsActions.account.methodsSignedOut": {
+    "source": "54cdfe3a08df",
+    "status": "machine"
+  },
+  "settingsActions.account.linkUnavailable": {
+    "source": "6969c39b3ffc",
+    "status": "machine"
+  },
+  "settingsActions.account.unlinkBlocked.notFound": {
+    "source": "8dc3eeb4d853",
+    "status": "machine"
+  },
+  "settingsActions.account.unlinkBlocked.unsupported": {
+    "source": "c7d302318a4d",
+    "status": "machine"
+  },
+  "settingsActions.account.sessionsSignedOut": {
+    "source": "7786baa84406",
+    "status": "machine"
+  },
+  "settingsActions.account.thisDevice": {
+    "source": "9436d22156ca",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.signedOut": {
+    "source": "c570c169d0f3",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.alreadyOn": {
+    "source": "8e567424d19e",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.notOn": {
+    "source": "46ef4bbf21ba",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.appAlreadySetUp": {
+    "source": "8cdee0310412",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.noApp": {
+    "source": "b261f2ba0809",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.noPasskey": {
+    "source": "e9e6388cf1b0",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.restart": {
+    "source": "3200b1611bcf",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.rateLimitedLong": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.reauth": {
+    "source": "d0a3d1d3b4a2",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.sameEmail": {
+    "source": "8e3914536155",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.invalidEmail": {
+    "source": "8a966af884a0",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.invalidCode": {
+    "source": "6fcbaa8c8395",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.rateLimited": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.codeRateLimited": {
+    "source": "8f0b7a35cf62",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.notSent": {
+    "source": "b19037a8d4ff",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.codeDidntWork": {
+    "source": "c485cddda2ad",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.taken": {
+    "source": "6df15e03f233",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.signedOut": {
+    "source": "ec58095c7f11",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.unavailable": {
+    "source": "d4e839333954",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.ssoOff": {
+    "source": "7c0dd7e0dac7",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.ssoOnto": {
+    "source": "8294be1df7ad",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.typeToConfirm": {
+    "source": "b8426e7e9629",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.signedOut": {
+    "source": "fb6936316037",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.rateLimited": {
+    "source": "6a2d7e54b897",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.failed": {
+    "source": "a90c8da677ba",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.subscriptionNotCancelled": {
+    "source": "a66bd5c7379c",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.ownerNotMade": {
+    "source": "c3e5a3e6761a",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.notReady": {
+    "source": "a2ff5d36bc17",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.signedOut": {
+    "source": "73c27c81d398",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.paypalEmailInvalid": {
+    "source": "f8f497dc8e2f",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.paypalEmailMissing": {
+    "source": "3d8fe4c46ff6",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.paypalNotApproved": {
+    "source": "e6975845e975",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.codeUnchanged": {
+    "source": "12afefb98761",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.codeNotApproved": {
+    "source": "3844f75e6506",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.format": {
+    "source": "cff370674eeb",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.reserved": {
+    "source": "1608dbd63459",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.email": {
+    "source": "7ab29a35cab9",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.taken": {
+    "source": "e6c16f40e8d9",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.alreadyChanged": {
+    "source": "b05e2c558111",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.tooShort": {
+    "source": "04adffdbe53e",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.tooLong": {
+    "source": "d43bcf93f425",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.noSpaces": {
+    "source": "dec54101479f",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.storeDomainMissing": {
+    "source": "56efd120388a",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.stripeSecretKey": {
+    "source": "ee55ff100e7f",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.stripeRestrictedKey": {
+    "source": "407d2218463c",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.calcomKey": {
+    "source": "cb2f0c1af072",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.shopifyCredentials": {
+    "source": "349d08370a42",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.signedOut": {
+    "source": "acac47dc5ae2",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.checkDetails": {
+    "source": "f8d3eacd088e",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.notAccepted": {
+    "source": "2ca0b46b0be2",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.stripeForbidden": {
+    "source": "8972db143eb9",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.shopifyForbidden": {
+    "source": "911ff369bd10",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.forbidden": {
+    "source": "c9c73c052ca6",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.unreachable": {
+    "source": "9870f957f4d7",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyTooShort": {
+    "source": "950ac5280e9a",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyTooLong": {
+    "source": "733cf9809653",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyNoSpaces": {
+    "source": "a84f88dce096",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.signedOut": {
+    "source": "acac47dc5ae2",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.checkKey": {
+    "source": "7e751a81bfdc",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.notConfigured": {
+    "source": "f4c8e8dad64b",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyRejected": {
+    "source": "046c1fa89bba",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.unreachable": {
+    "source": "9870f957f4d7",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.domainSignedOut": {
+    "source": "1ba0ae88fee7",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.pickDomain": {
+    "source": "6e353649cba2",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.connectFirst": {
+    "source": "6e59f9431577",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.domainNotFound": {
+    "source": "59a4e69f234d",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.domainNotSaved": {
+    "source": "c7f08aa3513a",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.unavailable": {
+    "source": "a3a7e3dd36ad",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.signedOut": {
+    "source": "034b4c5a9594",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.notAvailableYet": {
+    "source": "26dd7852da78",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.rateLimited": {
+    "source": "2d81c14ad5fa",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.oauthApps.signedOut": {
+    "source": "02c9462797ad",
+    "status": "machine"
+  },
+  "settingsActions.oauthApps.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.oauthApps.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.signedOut": {
+    "source": "db9390b03a67",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.unavailable": {
+    "source": "0b95bdef8470",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.signedOut": {
+    "source": "c806355c3f90",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.notAvailableYet": {
+    "source": "26dd7852da78",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.rateLimited": {
+    "source": "2d81c14ad5fa",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.authorizedApps.signedOut": {
+    "source": "5abc61c8498d",
+    "status": "machine"
+  },
+  "settingsActions.authorizedApps.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.authorizedApps.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.notifications.signedOut": {
+    "source": "8159bac1df6e",
+    "status": "machine"
+  },
+  "settingsActions.notifications.webhookUrlMissing": {
+    "source": "3676f78d65b7",
+    "status": "machine"
+  },
+  "settingsActions.notifications.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.notifications.failed": {
+    "source": "3ccd9d6586ef",
     "status": "machine"
   },
   "codeBuilder.builderOptions.on": {

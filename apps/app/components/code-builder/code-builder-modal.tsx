@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // The dynamic QR code builder: a create and edit modal with the QR design
 // first-class.
@@ -211,6 +211,9 @@ export default function CodeBuilderModal({
   onChoosePageType: (type: string, style: QRStyle | null) => void;
 }) {
   const t = useTranslations("codeBuilder.codeBuilderModal");
+  // The builder's data comes with messages in this page's language
+  // (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const router = useRouter();
   // Links into the dashboard carry the workspace (/dashboard/<workspace>/...).
   const workspaceSlug = useWorkspaceSlug();
@@ -278,7 +281,7 @@ export default function CodeBuilderModal({
   useEffect(() => {
     if (!editCodeId) return;
     let cancelled = false;
-    loadCodeForEdit(editCodeId, editHint).then((result) => {
+    loadCodeForEdit(editCodeId, editHint, locale).then((result) => {
       if (cancelled) return;
       if (!result.ok) {
         setLoadError(result.message);
@@ -295,11 +298,11 @@ export default function CodeBuilderModal({
     return () => {
       cancelled = true;
     };
-  }, [editCodeId, editHint]);
+  }, [editCodeId, editHint, locale]);
 
   useEffect(() => {
     let cancelled = false;
-    getCodeBuilderData()
+    getCodeBuilderData(locale)
       .then((result) => {
         if (cancelled) return;
         if (result.success) setBuilderData(result.data);
@@ -315,7 +318,7 @@ export default function CodeBuilderModal({
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [locale]);
 
   const code = loaded?.code ?? null;
   /** The code options and downloads act on: the edited or the created one */
@@ -672,7 +675,7 @@ export default function CodeBuilderModal({
           code,
           initial,
           fields,
-          builderServices,
+          builderServices(locale),
           { organizationKnown },
         );
         applyResult(result, { optimisticKey });
@@ -680,7 +683,9 @@ export default function CodeBuilderModal({
       }
       const result = await submitCreate(
         fields,
-        fromPlayground ? playgroundBuilderServices : builderServices,
+        fromPlayground
+          ? playgroundBuilderServices(locale)
+          : builderServices(locale),
       );
       applyResult(result, { optimisticKey, thenOpen });
     });

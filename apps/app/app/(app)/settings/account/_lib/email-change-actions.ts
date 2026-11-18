@@ -3,25 +3,25 @@
 import { registerEmailChangeCodeSender } from "@repo/auth/email-otp";
 import { auth } from "@repo/auth/server";
 import { emailChangeSsoProblem } from "@repo/auth/sso-required";
+import type { EmailChangeSsoProblem } from "@repo/auth/sso-required-rules";
 import { database as db, session as sessionTable } from "@repo/database";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { and, eq, ne } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
 import { z } from "zod";
-import { ssoEmailChangeMessage } from "@/ee/sso/messages";
 import {
   currentSession,
   requireRecentConfirmation,
 } from "@/lib/account/confirmation-server";
 import {
-  confirmFailure,
+  confirmFailureKey,
   EMAIL_CHANGE_ANSWER_MS,
-  EMAIL_CHANGE_MESSAGES,
+  emailChangeMessages,
   isSameEmail,
   MAX_EMAIL_LENGTH,
   normalizeEmail,
-  requestFailureMessage,
+  requestFailureKey,
 } from "@/lib/account/email-change";
 import { afterEmailChanged } from "@/lib/account/email-change-server";
 import {
@@ -29,6 +29,8 @@ import {
   sendEmailChangeCode,
 } from "@/lib/auth/email-change-code";
 import { isFeatureAvailable } from "@/lib/feature-availability";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
+import type { Translator } from "@/lib/i18n/translator";
 import { noSoonerThan } from "@/lib/no-sooner-than";
 import { logError } from "@/lib/shared";
 
@@ -50,7 +52,8 @@ import { logError } from "@/lib/shared";
 // database work for one than the other (it deletes the code it stored for a
 // taken address; it writes a free address's code back after a wrong try), so
 // both actions answer on a whole multiple of EMAIL_CHANGE_ANSWER_MS after they
-// start (at least one), whatever the outcome.
+// start (at least one), whatever the outcome. Refusals are in the person's
+// language (settingsActions.emailChange), read only when refusing.
 registerEmailChangeCodeSender(
   sendEmailChangeCode,
   () => isFeatureAvailable("emailSignIn"),
@@ -81,6 +84,21 @@ const confirmLimiter = createRateLimiter({
 const fail = (error: string, reason?: "code-dead"): EmailChangeResult =>
   reason ? { ok: false, error, reason } : { ok: false, error };
 
+const changeText = () => settingsActionText("settingsActions.emailChange");
+
+/**
+ * ssoEmailChangeMessage() (ee/sso/messages.ts, the English) in the person's
+ * language.
+ */
+function ssoProblemText(
+  problem: EmailChangeSsoProblem,
+  t: Translator<"settingsActions.emailChange">,
+): string {
+  return problem.kind === "off"
+    ? t("ssoOff", { domain: problem.domain })
+    : t("ssoOnto", { domain: problem.domain });
+}
+
 const newEmailSchema = z
   .string()
   .trim()
@@ -100,15 +118,16 @@ interface Allowed {
 /** The signed-in user, if they may change their email to `newEmail` now. */
 async function mayChange(
   newEmail: string,
+  text: () => Promise<Translator<"settingsActions.emailChange">>,
 ): Promise<
   { ok: true; user: Allowed } | { ok: false; result: EmailChangeResult }
 > {
   const session = await currentSession();
   if (!session) {
-    return { ok: false, result: fail(EMAIL_CHANGE_MESSAGES.signedOut) };
+    return { ok: false, result: fail((await text())("signedOut")) };
   }
   if (isSameEmail(newEmail, session.email)) {
-    return { ok: false, result: fail(EMAIL_CHANGE_MESSAGES.sameEmail) };
+    return { ok: false, result: fail((await text())("sameEmail")) };
   }
   // Never onto or off a domain whose company requires single sign-on
   // (packages/auth/ee/sso-required.ts); said before "Confirm it's you", which
@@ -120,7 +139,7 @@ async function mayChange(
       newEmail,
     );
     if (problem) {
-      return { ok: false, result: fail(ssoEmailChangeMessage(problem)) };
+      return { ok: false, result: fail(ssoProblemText(problem, await text())) };
     }
   }
   const needed = await requireRecentConfirmation(session);
@@ -144,15 +163,16 @@ export async function requestEmailChange(
 }
 
 async function askForCode(input: unknown): Promise<EmailChangeResult> {
+  const text = changeText();
   const parsed = z.object({ newEmail: newEmailSchema }).safeParse(input);
-  if (!parsed.success) return fail(EMAIL_CHANGE_MESSAGES.invalidEmail);
+  if (!parsed.success) return fail((await text())("invalidEmail"));
   const { newEmail } = parsed.data;
   try {
-    const allowed = await mayChange(newEmail);
+    const allowed = await mayChange(newEmail, text);
     if (!allowed.ok) return allowed.result;
     const { user } = allowed;
     if (!(await requestLimiter.limit(user.userId)).success) {
-      return fail(EMAIL_CHANGE_MESSAGES.rateLimited);
+      return fail((await text())("rateLimited"));
     }
     // Answers the same whether or not the address already has an account
     // (then no code is sent), and whether or not sending worked, so the form
@@ -163,10 +183,11 @@ async function askForCode(input: unknown): Promise<EmailChangeResult> {
     });
     return { ok: true };
   } catch (error) {
-    const message = requestFailureMessage(error);
-    if (message) return fail(message);
+    const messages = emailChangeMessages(await text());
+    const known = requestFailureKey(error);
+    if (known) return fail(messages[known]);
     logError(error as Error, { action: "account.requestEmailChange" });
-    return fail(EMAIL_CHANGE_MESSAGES.failed);
+    return fail(messages.failed);
   }
 }
 
@@ -180,6 +201,7 @@ export async function confirmEmailChange(
 }
 
 async function changeWithCode(input: unknown): Promise<EmailChangeResult> {
+  const text = changeText();
   const parsed = z
     .object({
       newEmail: newEmailSchema,
@@ -188,20 +210,16 @@ async function changeWithCode(input: unknown): Promise<EmailChangeResult> {
     .safeParse(input);
   if (!parsed.success) {
     const codeIssue = parsed.error.issues.some((i) => i.path[0] === "code");
-    return fail(
-      codeIssue
-        ? EMAIL_CHANGE_MESSAGES.invalidCode
-        : EMAIL_CHANGE_MESSAGES.invalidEmail,
-    );
+    return fail((await text())(codeIssue ? "invalidCode" : "invalidEmail"));
   }
   const { newEmail, code } = parsed.data;
   let user: Allowed;
   try {
-    const allowed = await mayChange(newEmail);
+    const allowed = await mayChange(newEmail, text);
     if (!allowed.ok) return allowed.result;
     user = allowed.user;
     if (!(await confirmLimiter.limit(user.userId)).success) {
-      return fail(EMAIL_CHANGE_MESSAGES.rateLimited);
+      return fail((await text())("rateLimited"));
     }
     // Checks and uses up the code, re-checks that no other account has the
     // address, then updates the user (marked verified: the code proves it).
@@ -210,12 +228,16 @@ async function changeWithCode(input: unknown): Promise<EmailChangeResult> {
       body: { newEmail, otp: code },
     });
   } catch (error) {
-    const failure = confirmFailure(error);
+    const messages = emailChangeMessages(await text());
+    const failure = confirmFailureKey(error);
     if (failure) {
-      return fail(failure.message, failure.codeDead ? "code-dead" : undefined);
+      return fail(
+        messages[failure.message],
+        failure.codeDead ? "code-dead" : undefined,
+      );
     }
     logError(error as Error, { action: "account.confirmEmailChange" });
-    return fail(EMAIL_CHANGE_MESSAGES.failed);
+    return fail(messages.failed);
   }
 
   // Changed. Every other session is signed out, so a browser someone else

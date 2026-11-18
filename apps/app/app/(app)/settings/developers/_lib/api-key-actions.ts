@@ -12,11 +12,17 @@ import {
 } from "@/lib/api-keys/service";
 import { apiKeyInputSchema } from "@/lib/api-keys/shared";
 import { HttpError } from "@/lib/error-response";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
 import { can } from "@/lib/permissions";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError } from "@/types/errors";
+
+// Refusals of its own are in the person's language (settingsActions.apiKeys).
+// The service's (lib/api-keys/service.ts: the key limit) and the form's
+// checks (lib/api-keys/shared.ts, which the form runs first) are still
+// English: both modules also serve the REST API.
 
 export type ApiKeyActionResult<T> =
   | { ok: true; data: T }
@@ -30,15 +36,28 @@ const createLimiter = createRateLimiter({ limiter: slidingWindow(10, "1 h") });
 
 const idSchema = z.object({ id: z.string().trim().min(1).max(64) });
 
-function failure(error: unknown, action: string): ApiKeyActionResult<never> {
+async function failure(
+  error: unknown,
+  action: string,
+): Promise<ApiKeyActionResult<never>> {
+  const text = settingsActionText("settingsActions.apiKeys");
   if (error instanceof UnauthorizedError) {
-    return { ok: false, error: "Sign in to manage API keys." };
+    return { ok: false, error: (await text())("signedOut") };
   }
-  if (error instanceof ApiKeysUnavailableError || error instanceof HttpError) {
-    return { ok: false, error: error.message };
+  if (error instanceof ApiKeysUnavailableError) {
+    return { ok: false, error: (await text())("unavailable") };
+  }
+  if (error instanceof HttpError) {
+    return {
+      ok: false,
+      error:
+        error.code === "RATE_LIMITED"
+          ? (await text())("rateLimited")
+          : error.message,
+    };
   }
   logError(error as Error, { action });
-  return { ok: false, error: "Something went wrong. Please try again." };
+  return { ok: false, error: (await text())("failed") };
 }
 
 async function run<T>(
@@ -69,7 +88,7 @@ async function run<T>(
     );
     return { ok: true, data: await body(scope) };
   } catch (error) {
-    return failure(error, `api-keys.${action}`);
+    return await failure(error, `api-keys.${action}`);
   }
 }
 
@@ -102,6 +121,7 @@ export async function revokeApiKeyAction(input: {
   id: string;
 }): Promise<ApiKeyActionResult<{ id: string }>> {
   const parsed = idSchema.safeParse(input);
+  // An id the list never shows (a tampered request): English, as it was.
   if (!parsed.success) return { ok: false, error: "Invalid key." };
   const result = await run("revoke", [mutationLimiter], (scope) =>
     revokeApiKey(scope, parsed.data.id),

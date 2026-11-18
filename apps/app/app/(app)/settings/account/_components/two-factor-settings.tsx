@@ -137,6 +137,7 @@ export function TwoFactorSettings({
   passkeys,
   passkeysHere,
   email,
+  defaultPasskeyName,
   resetDueDate = null,
 }: {
   methods: TwoFactorMethods;
@@ -144,6 +145,8 @@ export function TwoFactorSettings({
   /** The deployment and this page's origin can use passkeys */
   passkeysHere: boolean;
   email: string;
+  /** The name a new passkey is offered (newPasskeyName on the server) */
+  defaultPasskeyName: string;
   /** Support's turn-off is waiting: the day it happens */
   resetDueDate?: string | null;
 }) {
@@ -515,6 +518,7 @@ export function TwoFactorSettings({
       )}
 
       <TwoFactorSetupDialog
+        defaultPasskeyName={defaultPasskeyName}
         email={email}
         onClose={closeSetup}
         passkeysUsable={passkeysUsable}

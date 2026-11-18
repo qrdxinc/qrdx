@@ -12,6 +12,8 @@ import {
   removeDomain,
   verifyDomain,
 } from "@/app/(app)/dashboard/domains/_lib/domains";
+import { CODE_ACTION_MESSAGES, ownMessage } from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
@@ -57,28 +59,37 @@ const mutationLimiter = createRateLimiter({
   limiter: slidingWindow(20, "60 s"),
 });
 
+const ENGLISH = CODE_ACTION_MESSAGES.customDomains;
+
 const hostnameInputSchema = z.object({
-  hostname: z.string().trim().min(1, "Enter a domain").max(MAX_HOSTNAME_INPUT),
+  hostname: z
+    .string()
+    .trim()
+    .min(1, ENGLISH.enterDomain)
+    .max(MAX_HOSTNAME_INPUT),
 });
 const idInputSchema = z.object({ id: z.string().trim().min(1).max(64) });
 
-function failure(
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
   error: unknown,
   action: string,
-): CustomDomainActionResult<never> {
+  who: { pageLocale?: string; userId?: string } = {},
+): Promise<CustomDomainActionResult<never>> {
+  const text = (await codeActionText(who)).customDomains;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: {
-        code: "UNAUTHORIZED",
-        message: "Sign in to manage custom domains.",
-      },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
     return {
       success: false,
-      error: { code: "VALIDATION_ERROR", message: error.message },
+      error: {
+        code: "VALIDATION_ERROR",
+        message: ownMessage(ENGLISH, text, error.message),
+      },
     };
   }
   if (error instanceof HttpError) {
@@ -95,7 +106,7 @@ function failure(
   logError(error as Error, { action });
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -114,8 +125,10 @@ async function mutate<T>(
   action: string,
   fn: (scope: ActiveScope) => Promise<T>,
 ): Promise<CustomDomainActionResult<T>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     await enforceRateLimits([
       {
         limiter: mutationLimiter,
@@ -127,7 +140,7 @@ async function mutate<T>(
     revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, action);
+    return failure(error, action, { userId });
   }
 }
 
@@ -155,16 +168,20 @@ export async function removeCustomDomain(
   );
 }
 
-/** Verified domains of the active scope, for the code dialog's domain picker. */
-export async function getCustomDomainOptions(): Promise<
-  CustomDomainActionResult<DomainOptions>
-> {
+/**
+ * Verified domains of the active scope, for the code dialog's domain picker.
+ * `pageLocale`: the calling page's useLocale(), the language its messages
+ * are in.
+ */
+export async function getCustomDomainOptions(
+  pageLocale?: string,
+): Promise<CustomDomainActionResult<DomainOptions>> {
+  let userId: string | undefined;
   try {
-    return {
-      success: true,
-      data: await getDomainOptions(await getActiveScope()),
-    };
+    const scope = await getActiveScope();
+    userId = scope.userId;
+    return { success: true, data: await getDomainOptions(scope) };
   } catch (error) {
-    return failure(error, "getCustomDomainOptions");
+    return failure(error, "getCustomDomainOptions", { pageLocale, userId });
   }
 }

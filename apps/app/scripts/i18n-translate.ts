@@ -186,6 +186,8 @@ const SURFACES: Record<string, string> = {
     "notices about plan limits (codes, scans, AI uses) and upgrade buttons",
   community:
     "the community gallery of shared themes, frames and page templates: publish dialogs, likes and tabs",
+  communityActions:
+    "messages the server sends back to the QR code editor and the signed-in app, shown as they are in error toasts and dialogs: publishing a theme, frame or page template to the community (licence, scan score 'Great', personal-data checks), saving and sharing themes, importing an SVG frame, the code builder loading, the workspace search; the page template review's list of what was replaced with sample text",
   aiArt:
     "the AI QR art page and studio: generating artistic QR codes, scan checks on the results and monthly image credits",
   codeBuilder:
@@ -194,6 +196,8 @@ const SURFACES: Record<string, string> = {
   auth: "signing in to QRdx (email code, Google, GitHub, passkeys, two-step verification) and the 'Confirm it's you' dialog before sensitive changes",
   emails:
     "emails QRdx sends: sign-in and confirmation codes (keep them short and clear, never ask for the code), scan and form alerts with their subject lines, footers",
+  codeActions:
+    "messages the server sends back to the dynamic QR code builder, the editor and the signed-in app's code, page, file, domain, analytics and webhook screens, shown as they are in error toasts, form errors and dialogs: signing in again, validation (passwords, dates, scan limits, country and region codes, page and tag selections), which plan a feature needs (Pro and Business stay in English), and 'something went wrong'; short and plain",
 };
 
 /** Short strings (labels, buttons) get a length budget. */

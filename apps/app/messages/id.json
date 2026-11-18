@@ -5502,6 +5502,98 @@
       "placeholder": "Cari bingkai, tema, dan halaman"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Masuk untuk melanjutkan.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "checkDetails": "Periksa detailnya.",
+      "themeNotInWorkspace": "Tema ini tidak ada di workspace ini.",
+      "noCustomFrame": "Tema ini tidak memiliki bingkai kustom.",
+      "pageNotFound": "Halaman tidak ditemukan.",
+      "pageChanged": "Halaman ini berubah sejak terakhir Anda tinjau. Tinjau lagi sebelum memublikasikan.",
+      "svgTooLarge": "File SVG maksimal 200 KB.",
+      "tooManyImports": "Terlalu banyak impor. Coba lagi dalam satu jam.",
+      "tooManyChanges": "Terlalu banyak perubahan. Coba lagi nanti."
+    },
+    "communityThemes": {
+      "alreadyPublished": "Tema ini sudah dipublikasikan ke komunitas.",
+      "workspaceAdminsOnly": "Hanya pemilik dan admin workspace ini yang dapat memublikasikan temanya.",
+      "workspaceUnavailable": "Publikasi tema workspace belum tersedia di deployment ini.",
+      "tooFast": "Anda memublikasikan terlalu cepat. Silakan coba lagi nanti."
+    },
+    "checks": {
+      "licenceRequired": "Konfirmasikan lisensi CC0 untuk memublikasikan.",
+      "publishedALot": "Anda sudah banyak memublikasikan hari ini. Coba lagi besok.",
+      "unavailable": "Pembaruan komunitas belum tersedia di deployment ini.",
+      "itemNotFound": "Item ini tidak ada di komunitas.",
+      "workspacePublishRefusal": "Hanya pemilik dan admin workspace ini yang dapat memublikasikan isinya.",
+      "nameRequired": "Berikan nama.",
+      "alreadyPublished": "Desain ini sudah ada di komunitas.",
+      "themeSettings": "Tema ini memiliki pengaturan yang tidak dapat ditampilkan komunitas. Simpan ulang di editor.",
+      "pageNothingLeft": "Tidak ada yang tersisa untuk dibagikan setelah detail pribadi Anda dihapus. Tambahkan beberapa blok yang dapat digunakan ulang orang lain.",
+      "pageInvalid": "Halaman ini tidak dapat dibagikan sebagai templat. Publikasikan ulang dulu di editor halaman.",
+      "pageTooLarge": "Halaman ini terlalu besar untuk dibagikan sebagai templat. Hapus beberapa blok atau persingkat teks yang panjang.",
+      "repeatsDetail": "Ini mengulang detail yang dihapus di bagian lain halaman.",
+      "noEmails": "Jangan cantumkan alamat email pada nama, label, dan deskripsi.",
+      "noLinks": "Jangan cantumkan tautan pada nama, label, dan deskripsi.",
+      "noHandles": "Jangan cantumkan @handle pada nama, label, dan deskripsi.",
+      "noPhones": "Jangan cantumkan nomor telepon pada nama, label, dan deskripsi.",
+      "noStreets": "Jangan cantumkan alamat jalan pada nama, label, dan deskripsi.",
+      "gateFailed": "Hanya desain dengan hasil pemindaian “Bagus” ({min, number} atau lebih) yang dapat dipublikasikan. {reasons}.",
+      "gateTooLong": "{sample} tidak muat dalam kode pada tingkat koreksi kesalahan ini",
+      "gateScore": "dengan {sample} skornya {score, number}",
+      "gateSampleLink": "tautan",
+      "gateSampleWifi": "detail Wi-Fi",
+      "handleFormat": "Gunakan {min, number} hingga {max, number} huruf kecil, angka, \"_\" atau \"-\", diawali huruf atau angka.",
+      "handleReserved": "Handle itu sudah dicadangkan.",
+      "handleTaken": "Handle itu sudah dipakai.",
+      "displayNameRequired": "Masukkan nama tampilan."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, other {# teks}} diganti dengan teks contoh",
+      "kept": "{count, plural, other {# teks}} dipertahankan sesuai tulisan Anda",
+      "links": "{count, plural, other {# tautan}} diganti dengan example.com",
+      "emails": "{count, plural, other {# alamat email}} diganti dengan alamat contoh",
+      "phones": "{count, plural, other {# nomor telepon}} diganti dengan nomor contoh",
+      "emailsAndPhones": "{emails, plural, other {# alamat email}} dan {phones, plural, other {# nomor telepon}} diganti dengan data contoh",
+      "addresses": "{count, plural, other {# alamat}} diganti dengan alamat contoh",
+      "wifi": "Nama jaringan dan kata sandi Wi-Fi diganti dengan contoh",
+      "codes": "Kode kupon diganti dengan kode contoh",
+      "gtins": "GTIN produk dihapus: pengguna menambahkan sendiri",
+      "images": "{count, plural, other {# foto}} dihapus: pengguna menambahkan sendiri",
+      "files": "{count, plural, other {# file}} dihapus",
+      "blocks": "Tidak disertakan karena memerlukan file Anda sendiri: {blocks}",
+      "hidden": "{count, plural, other {# blok tersembunyi}} tidak disertakan",
+      "settings": "Gambar untuk berbagi, deskripsi, dan CSS khusus tidak disertakan"
+    },
+    "qrThemes": {
+      "signIn": "Masuk untuk mengelola tema.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "tooMany": "Terlalu banyak perubahan. Tunggu semenit lalu coba lagi.",
+      "themeLimit": "Anda telah mencapai batas {limit, number} tema tersimpan pada paket Gratis. Upgrade ke Pro untuk tema tanpa batas.",
+      "notFound": "Tema tidak ditemukan.",
+      "defaultAdminsOnly": "Hanya pemilik dan admin workspace yang dapat mengubah tema default-nya.",
+      "openAnotherWorkspace": "Buka workspace lain untuk membagikan tema ke sana.",
+      "shareAdminsOnly": "Hanya pemilik dan admin workspace yang dapat membagikan tema di sini.",
+      "sharedThemesPlan": "Tema bersama termasuk dalam paket {plan} (berdasarkan paket pemilik workspace).",
+      "workspaceThemeLimit": "Paket workspace ini mencakup {count, number} tema."
+    },
+    "codeBuilder": {
+      "signInAgain": "Masuk lagi untuk membuat kode.",
+      "loadFailed": "Pembuat kode tidak dapat dimuat. Coba lagi.",
+      "themesFailed": "Tema tersimpan tidak dapat dimuat.",
+      "foldersFailed": "Folder tidak dapat dimuat.",
+      "tagsFailed": "Tag tidak dapat dimuat.",
+      "domainsFailed": "Domain kustom tidak dapat dimuat, sehingga kode memakai tautan pendek default."
+    },
+    "search": {
+      "untitledPage": "Halaman tanpa judul",
+      "landingPage": "Landing page",
+      "tooMany": "Terlalu banyak pencarian. Tunggu sebentar.",
+      "signInAgain": "Masuk lagi untuk mencari.",
+      "notWorking": "Pencarian sedang tidak berfungsi."
+    }
+  },
   "app": {
     "settings": {
       "general": {
@@ -5702,7 +5794,12 @@
           "signInMethods": "Metode masuk",
           "valueIsLinked": "{value} tertaut",
           "valueCantBeLinkedRight": "{value} tidak dapat ditautkan saat ini.",
-          "labelIsNoLongerLinked": "{label} tidak lagi tertaut"
+          "labelIsNoLongerLinked": "{label} tidak lagi tertaut",
+          "emailCode": "Kode email",
+          "oneTimeCodeSentTo": "Kode sekali pakai dikirim ke {email}.",
+          "linkedOn": "Ditautkan {date}.",
+          "linkedOnReason": "Ditautkan {date}. {reason}",
+          "notLinkedUseThe": "Belum ditautkan. Gunakan akun {provider} dengan {email}."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Dukungan akan menonaktifkannya pada {dueDate}",
@@ -5749,7 +5846,9 @@
           "afterYouSignInPasskey": "Setelah Anda masuk, QRdx akan meminta passkey Anda. Kode cadangan juga dapat digunakan.",
           "afterYouSignInApp": "Setelah Anda masuk, QRdx akan meminta kode dari aplikasi autentikator Anda. Kode cadangan juga dapat digunakan.",
           "afterYouSignInQrdx2": "Setelah Anda masuk, QRdx meminta kode cadangan.",
-          "passkeySpotlight": "Sekarang passkey dapat menjadi langkah kedua Anda, sebagai pengganti kode autentikator."
+          "passkeySpotlight": "Sekarang passkey dapat menjadi langkah kedua Anda, sebagai pengganti kode autentikator.",
+          "addedOn": "Ditambahkan {date}",
+          "passkeyName": "Passkey"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Langkah {stepNumber, number} dari {length, number}",
@@ -8681,6 +8780,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "Workspace tidak ditemukan.",
+      "twoFactorRequired": "Workspace ini mewajibkan verifikasi dua langkah. Aktifkan di Pengaturan, pada Profil & keamanan, lalu coba lagi."
+    },
+    "forbidden": {
+      "viewer": "Anda hanya penampil di sini. {only}",
+      "billingRole": "Peran penagihan Anda hanya mencakup paket. {only}",
+      "contentWrite": "Hanya pemilik, admin, dan anggota yang dapat membuat atau mengubah item di workspace ini.",
+      "workspaceUpdate": "Hanya pemilik dan admin yang dapat mengubah pengaturan workspace ini.",
+      "membersManage": "Hanya pemilik dan admin yang dapat mengelola anggota workspace ini."
+    },
+    "organizations": {
+      "nameTooShort": "Nama workspace terlalu pendek.",
+      "nameTooLong": "Nama workspace terlalu panjang.",
+      "slugFormat": "Gunakan 3-48 huruf kecil, angka, dan tanda hubung.",
+      "slugReserved": "URL tersebut sudah dicadangkan. Pilih URL lain.",
+      "invalidEmail": "Masukkan email yang valid",
+      "invalidDetails": "Detail workspace tidak valid.",
+      "invalidInvitation": "Undangan tidak valid.",
+      "invalidRole": "Peran tidak valid.",
+      "invalidMember": "Anggota tidak valid.",
+      "invalidWorkspace": "Workspace tidak valid.",
+      "moreWorkspaces": "Workspace tambahan tersedia di {pro} dan {business}.",
+      "urlTaken": "URL workspace tersebut sudah digunakan.",
+      "alreadyMember": "Orang tersebut sudah menjadi anggota workspace ini.",
+      "needsOwner": "Workspace memerlukan setidaknya satu pemilik. Jadikan orang lain sebagai pemilik terlebih dahulu.",
+      "wrongRecipient": "Undangan ini dikirim ke alamat email yang berbeda.",
+      "verifyEmailFirst": "Verifikasi alamat email Anda sebelum menanggapi undangan ini.",
+      "invitationGone": "Undangan ini sudah tidak berlaku.",
+      "workspaceFull": "Workspace ini sudah penuh. Workspace {pro} memiliki hingga {members} anggota; workspace {business} tidak memiliki batas.",
+      "noFreeSeat": "Workspace ini tidak memiliki kursi kosong untuk undangan lain. Batalkan undangan yang tertunda atau tingkatkan paket workspace.",
+      "signIn": "Masuk untuk mengelola workspace.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi.",
+      "rateLimited": "Terlalu banyak permintaan. Harap tunggu semenit lalu coba lagi.",
+      "ownerRoleOwnersOnly": "Hanya pemilik yang dapat menjadikan seseorang pemilik, atau mengubah peran pemilik.",
+      "billingRoleOwnersOnly": "Hanya pemilik yang dapat memberikan atau mencabut peran {billing}, karena peran ini menentukan siapa yang membayar workspace.",
+      "seatsNeedPaidOwner": "Menambahkan anggota memerlukan pemilik workspace dengan paket {pro} atau {business}.",
+      "seatsUsed": "Workspace ini telah menggunakan semua {seats} kursi (anggota ditambah undangan yang tertunda). Batalkan undangan, atau upgrade pemilik workspace ke {business} untuk anggota tanpa batas.",
+      "nothingToSave": "Tidak ada yang disimpan.",
+      "notAMember": "Orang tersebut bukan anggota workspace ini.",
+      "removeOwnerOwnersOnly": "Hanya pemilik yang dapat mengeluarkan pemilik dari workspace.",
+      "removeBillingOwnersOnly": "Hanya pemilik yang dapat mengeluarkan anggota penagihan dari workspace.",
+      "cantLeaveOwn": "Anda tidak dapat keluar dari workspace Anda sendiri.",
+      "deleteOwnersOnly": "Hanya pemilik yang dapat menghapus workspace.",
+      "ownCantBeDeleted": "Workspace pribadi Anda tidak dapat dihapus. Ganti namanya saja.",
+      "typeUrlToConfirm": "Ketik URL workspace persis seperti aslinya untuk mengonfirmasi."
+    },
+    "joinLinks": {
+      "signIn": "Masuk untuk melanjutkan.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi.",
+      "rateLimited": "Terlalu banyak permintaan. Harap tunggu beberapa menit lalu coba lagi.",
+      "pickRole": "Pilih peran untuk tautan ini.",
+      "billingLinkOwnersOnly": "Hanya pemilik yang dapat membuat tautan yang memberikan peran {billing}.",
+      "resetOwnersOnly": "Hanya pemilik yang dapat mereset tautan yang memberikan peran {role}.",
+      "changeOwnersOnly": "Hanya pemilik yang dapat mengubah tautan yang memberikan peran {role}.",
+      "linkOff": "Tautan bergabung sedang nonaktif.",
+      "incomplete": "Tautan bergabung ini tidak lengkap.",
+      "unavailable": "Tautan bergabung belum disiapkan di server ini. Untuk saat ini, undang orang melalui email.",
+      "linkDead": "Tautan bergabung ini sudah tidak berfungsi. Minta tautan baru kepada workspace tersebut.",
+      "noSeatYet": "Workspace ini belum memiliki kursi untuk anggota lain. Minta pemilik untuk meng-upgrade-nya ke {pro} atau {business}.",
+      "seatsUsed": "Workspace ini telah menggunakan semua {seats} kursi. Minta pemilik untuk mengosongkan satu kursi atau meng-upgrade-nya ke {business}."
+    },
+    "logo": {
+      "signIn": "Masuk untuk melanjutkan.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi.",
+      "tooManyChanges": "Terlalu banyak perubahan. Harap tunggu beberapa menit.",
+      "uploadsUnavailable": "Unggah logo belum disiapkan di server ini. Gunakan URL gambar.",
+      "choosePicture": "Pilih gambar untuk diunggah.",
+      "tooLarge": "Gambar itu terlalu besar. Coba yang lebih kecil.",
+      "wrongType": "Gunakan gambar PNG, JPEG, atau WebP.",
+      "url": {
+        "tooLong": "URL tersebut terlalu panjang.",
+        "notFull": "Masukkan URL gambar lengkap, diawali dengan https://",
+        "notHttps": "Gunakan URL gambar https://.",
+        "withPassword": "Gunakan URL tanpa kata sandi.",
+        "notPublic": "Gunakan gambar dari situs web publik."
+      }
+    },
+    "moveCode": {
+      "signIn": "Masuk untuk memindahkan kode.",
+      "somethingWrong": "Terjadi kesalahan.",
+      "pickWorkspace": "Pilih ruang kerja.",
+      "rateLimited": "Terlalu banyak pemindahan. Harap tunggu satu menit.",
+      "alreadyHere": "Kode sudah ada di ruang kerja ini.",
+      "codeNotFound": "Kode QR tidak ditemukan",
+      "cantAddCodes": "Anda tidak dapat menambahkan kode ke {name}. {reason}",
+      "othersCodes": "Hanya pemilik dan admin yang dapat memindahkan kode yang dibuat anggota lain.",
+      "pageCode": "Kode yang membuka halaman yang di-hosting tidak dapat dipindahkan ke ruang kerja lain: halaman tetap berada di sini.",
+      "domainNotInTarget": "Tautan kode ini berada di {hostname}, yang tidak dimiliki {name}. Tautan yang sudah dicetak akan berhenti berfungsi, sehingga kode ini tidak dapat dipindahkan.",
+      "limitReached": "{name} telah menggunakan seluruh {limit} kode dinamis aktif yang disertakan dalam paketnya. Arsipkan satu kode di sana, atau arsipkan kode ini terlebih dahulu."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "Permintaan tidak valid.",
+      "rateLimited": "Terlalu banyak permintaan. Harap tunggu satu menit lalu coba lagi.",
+      "planRequired": "Mewajibkan verifikasi dua langkah tersedia di paket {plan}.",
+      "ownFirst": "Aktifkan verifikasi dua langkah untuk akun Anda sendiri terlebih dahulu, di Pengaturan pada bagian Profil & keamanan.",
+      "signIn": "Masuk untuk mengubah pengaturan ruang kerja ini.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "Dikirim untuk {name} oleh <link>{host}</link>",
@@ -8965,6 +9165,112 @@
       "countries": "Dari mana orang memindai",
       "newCodesLine": "{count, plural, other {# kode baru}} minggu ini.",
       "open": "Buka dasbor Anda"
+    }
+  },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Masuk untuk mengelola kode ini.",
+      "failed": "Terjadi kesalahan.",
+      "notFound": "Kode QR tidak ditemukan",
+      "invalidDate": "Masukkan tanggal dan waktu yang valid",
+      "dateRange": "Pilih tanggal antara tahun 2000 dan 2100",
+      "passwordTooShort": "Gunakan minimal {min, number} karakter untuk kata sandi",
+      "passwordTooLong": "Kata sandi maksimal {max, number} karakter",
+      "passwordTooManyBytes": "Kata sandi terlalu panjang",
+      "scanLimitWhole": "Batas pemindaian harus berupa bilangan bulat",
+      "scanLimitMin": "Batas pemindaian minimal 1",
+      "scanLimitMax": "Batas pemindaian terlalu tinggi",
+      "planRequired": "Kata sandi, jadwal, batas pemindaian, dan URL cadangan termasuk dalam Pro.",
+      "endBeforeStart": "Tanggal berakhir harus setelah tanggal mulai"
+    },
+    "marketing": {
+      "signIn": "Masuk untuk mengelola kode ini.",
+      "failed": "Terjadi kesalahan.",
+      "notFound": "Kode QR tidak ditemukan",
+      "countryCode": "Gunakan kode negara 2 huruf",
+      "regionCode": "Gunakan kode wilayah seperti CA",
+      "invalidUrl": "URL tidak valid",
+      "rule": "Aturan {rule, number}",
+      "variant": "{label}, varian {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {Perutean cerdas adalah fitur Pro.} business {Perutean cerdas adalah fitur Business.} other {Perutean cerdas tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "utm": "{plan, select, pro {Parameter UTM adalah fitur Pro.} business {Parameter UTM adalah fitur Business.} other {Parameter UTM tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "pixels": "{plan, select, pro {Piksel pelacakan adalah fitur Pro.} business {Piksel pelacakan adalah fitur Business.} other {Piksel pelacakan tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "conversions": "{plan, select, pro {Pelacakan konversi adalah fitur Pro.} business {Pelacakan konversi adalah fitur Business.} other {Pelacakan konversi tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "preciseLocation": "{plan, select, pro {Lokasi pemindaian yang presisi adalah fitur Pro.} business {Lokasi pemindaian yang presisi adalah fitur Business.} other {Lokasi pemindaian yang presisi tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur."
+      }
+    },
+    "landingPages": {
+      "signIn": "Masuk untuk mengelola halaman.",
+      "failed": "Terjadi kesalahan.",
+      "selectAtLeastOne": "Pilih setidaknya satu halaman",
+      "selectUpTo": "Pilih hingga {max, number} halaman sekaligus"
+    },
+    "files": {
+      "signIn": "Masuk untuk mengelola file.",
+      "failed": "Terjadi kesalahan."
+    },
+    "qrCodes": {
+      "signIn": "Masuk untuk mengelola kode QR dinamis.",
+      "failed": "Terjadi kesalahan.",
+      "nothingToUpdate": "Tidak ada yang diperbarui"
+    },
+    "customDomains": {
+      "signIn": "Masuk untuk mengelola domain khusus.",
+      "failed": "Terjadi kesalahan.",
+      "enterDomain": "Masukkan domain"
+    },
+    "codeSuggestions": {
+      "signIn": "Masuk untuk mendapatkan saran.",
+      "rateLimited": "Terlalu banyak permintaan saran. Coba lagi dalam satu menit.",
+      "unavailable": "Saran tidak tersedia di server ini.",
+      "failed": "Saat ini tidak dapat mengambil saran. Coba lagi."
+    },
+    "tags": {
+      "nothingToUpdate": "Tidak ada yang diperbarui",
+      "tooManyTags": "Satu kode dapat memiliki hingga {max, number} tag.",
+      "chooseTag": "Pilih tag untuk ditambahkan atau dihapus"
+    },
+    "publicStats": {
+      "signIn": "Masuk untuk membagikan analitik.",
+      "failed": "Terjadi kesalahan.",
+      "notFound": "Kode QR tidak ditemukan"
+    },
+    "pathAliases": {
+      "signIn": "Masuk lagi untuk mengubah kode ini.",
+      "failed": "Terjadi kesalahan. Coba lagi.",
+      "noDomain": "Alias jalur hanya untuk kode di domain khusus."
+    },
+    "formResponses": {
+      "signIn": "Masuk untuk mengelola respons.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "chooseResponses": "Pilih respons yang akan dihapus."
+    },
+    "codeKind": {
+      "signIn": "Masuk untuk mengubah kode.",
+      "failed": "Terjadi kesalahan."
+    },
+    "barcodes": {
+      "signIn": "Masuk untuk menyimpan barcode.",
+      "failed": "Terjadi kesalahan."
+    },
+    "utmTemplates": {
+      "signIn": "Masuk untuk menggunakan templat.",
+      "failed": "Terjadi kesalahan."
+    },
+    "codeOptions": {
+      "signIn": "Masuk lagi untuk melihat opsi.",
+      "failed": "Tidak dapat memuat opsi. Coba lagi."
+    },
+    "analytics": {
+      "searchTooLong": "Pencarian terlalu panjang.",
+      "signIn": "Masuk untuk mencari kode Anda.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "webhooks": {
+      "signIn": "Masuk untuk mengelola webhook.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
     }
   },
   "auth": {
@@ -9298,6 +9604,149 @@
         "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
         "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "Terlalu banyak perubahan. Tunggu beberapa menit lalu coba lagi.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "nameMissing": "Masukkan nama Anda.",
+      "nameTooLong": "Gunakan maksimal {max} karakter.",
+      "nameSpecialCharacters": "Hapus karakter khusus.",
+      "profileSignedOut": "Masuk untuk mengubah profil Anda.",
+      "uploadsUnavailable": "Unggah gambar belum disiapkan di server ini.",
+      "pictureMissing": "Pilih gambar untuk diunggah.",
+      "pictureTooLarge": "Gambar itu terlalu besar. Coba yang lebih kecil.",
+      "pictureType": "Gunakan gambar PNG, JPEG, atau WebP.",
+      "methodsSignedOut": "Masuk untuk mengelola metode masuk.",
+      "linkUnavailable": "{provider} tidak dapat ditautkan saat ini.",
+      "unlinkBlocked": {
+        "notFound": "Metode masuk itu tidak tertaut ke akun Anda.",
+        "unsupported": "Metode masuk ini tidak dapat dihapus di sini."
+      },
+      "sessionsSignedOut": "Masuk untuk mengelola sesi.",
+      "thisDevice": "Itu adalah perangkat ini. Gunakan Keluar di menu."
+    },
+    "twoFactor": {
+      "signedOut": "Masuk untuk mengubah verifikasi dua langkah.",
+      "alreadyOn": "Verifikasi dua langkah sudah aktif.",
+      "notOn": "Verifikasi dua langkah nonaktif.",
+      "appAlreadySetUp": "Aplikasi autentikator sudah disiapkan.",
+      "noApp": "Tidak ada aplikasi autentikator untuk dihapus.",
+      "noPasskey": "Tambahkan passkey terlebih dahulu.",
+      "restart": "Penyiapan ini kedaluwarsa. Mulai lagi.",
+      "rateLimitedLong": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi."
+    },
+    "emailChange": {
+      "reauth": "Demi keamanan Anda, keluar lalu masuk lagi, kemudian ubah email Anda dalam waktu satu hari.",
+      "sameEmail": "Itu sudah menjadi email Anda.",
+      "invalidEmail": "Masukkan alamat email yang valid.",
+      "invalidCode": "Masukkan kode 6 digit dari email.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+      "codeRateLimited": "Terlalu banyak kode diminta untuk alamat itu. Tunggu beberapa menit lalu coba lagi.",
+      "notSent": "Kami tidak dapat mengirim kode saat ini. Silakan coba lagi.",
+      "codeDidntWork": "Kode tersebut tidak berhasil. Periksa kembali, atau kirim kode baru.",
+      "taken": "Email tersebut sudah dimiliki akun QRdx lain.",
+      "signedOut": "Masuk untuk mengubah email Anda.",
+      "unavailable": "Email belum diatur di situs ini, sehingga alamat tidak dapat diubah di sini.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "ssoOff": "Perusahaan Anda mewajibkan single sign-on untuk {domain}, sehingga akun Anda tidak dapat dipindahkan ke alamat di domain lain. Hubungi admin workspace Anda.",
+      "ssoOnto": "Perusahaan Anda mewajibkan single sign-on untuk {domain}. Untuk menggunakan alamat di domain tersebut, masuklah dengan SSO."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "Ketik \"{word}\" untuk mengonfirmasi.",
+      "signedOut": "Masuk untuk menghapus akun Anda.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu 15 menit lalu coba lagi.",
+      "failed": "Kami tidak dapat menghapus akun Anda. Silakan coba lagi.",
+      "subscriptionNotCancelled": "Kami tidak dapat membatalkan langganan Anda, sehingga akun Anda tidak dihapus. Silakan coba lagi dalam beberapa menit, atau kirim email ke {email}.",
+      "ownerNotMade": "Kami tidak dapat menjadikan {person} pemilik {team}, sehingga akun Anda tidak dihapus. Jadikan orang lain pemilik tim, lalu coba lagi."
+    },
+    "affiliate": {
+      "notReady": "Program afiliasi belum tersedia.",
+      "signedOut": "Masuk untuk melanjutkan.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "paypalEmailInvalid": "Masukkan alamat email akun PayPal Anda.",
+      "paypalEmailMissing": "Masukkan alamat email.",
+      "paypalNotApproved": "Anda dapat menambahkan email PayPal setelah pendaftaran Anda disetujui.",
+      "codeUnchanged": "Itu sudah menjadi kode Anda.",
+      "codeNotApproved": "Anda dapat memilih kode setelah pendaftaran Anda disetujui.",
+      "chosenCode": {
+        "format": "Gunakan 3 hingga 32 huruf kecil, angka, dan tanda hubung tunggal, diawali dan diakhiri dengan huruf atau angka.",
+        "reserved": "Kode itu sudah dicadangkan. Pilih yang lain.",
+        "email": "Itu adalah awal alamat email Anda. Pilih kode yang tidak menampilkannya.",
+        "taken": "Kode itu sudah dipakai. Pilih yang lain.",
+        "alreadyChanged": "Anda sudah memilih kode Anda. Kode hanya dapat diubah satu kali."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "Sepertinya terlalu pendek",
+      "tooLong": "Sepertinya terlalu panjang",
+      "noSpaces": "Tempel tanpa spasi",
+      "storeDomainMissing": "Masukkan domain toko Anda",
+      "stripeSecretKey": "Itu adalah secret key lengkap. Buat restricted key dengan Payment Links: Read; QRdx tidak pernah menyimpan secret key.",
+      "stripeRestrictedKey": "Tempel restricted key: diawali dengan rk_live_ atau rk_test_.",
+      "calcomKey": "Tempel API key Cal.com: diawali dengan cal_live_ (atau cal_ untuk key uji coba).",
+      "shopifyCredentials": "Tempel client ID dan secret aplikasi, atau token akses Admin API.",
+      "signedOut": "Masuk untuk menghubungkan akun.",
+      "checkDetails": "Periksa detailnya lalu coba lagi.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "notAccepted": "{name} tidak menerimanya. Periksa lalu coba lagi.",
+      "stripeForbidden": "Key tersebut tidak dapat membaca Payment Links. Atur Payment Links ke Read pada key.",
+      "shopifyForbidden": "Aplikasi tersebut tidak dapat membaca produk. Tambahkan scope read_products lalu instal ulang.",
+      "forbidden": "{name} menolak akses untuk key ini.",
+      "unreachable": "Tidak dapat menjangkau {name}. Coba lagi."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "Key tersebut terlalu pendek",
+      "keyTooLong": "Key tersebut terlalu panjang",
+      "keyNoSpaces": "Tempel key tanpa spasi",
+      "signedOut": "Masuk untuk menghubungkan akun.",
+      "checkKey": "Periksa key lalu coba lagi.",
+      "notConfigured": "{name} belum dikonfigurasi di sini.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "keyRejected": "{name} tidak menerima {label} tersebut. Periksa lalu coba lagi.",
+      "unreachable": "Tidak dapat menjangkau {name}. Coba lagi.",
+      "domainSignedOut": "Masuk terlebih dahulu.",
+      "pickDomain": "Pilih domain.",
+      "connectFirst": "Hubungkan akun terlebih dahulu.",
+      "domainNotFound": "Domain tersebut tidak ada di akun Anda.",
+      "domainNotSaved": "Tidak dapat menyimpan domain. Coba lagi."
+    },
+    "slackBot": {
+      "unavailable": "Bot QRdx untuk Slack tidak tersedia di sini.",
+      "signedOut": "Masuk untuk mengubah ini.",
+      "notAvailableYet": "Ini belum tersedia.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu semenit.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "oauthApps": {
+      "signedOut": "Masuk untuk mengelola aplikasi OAuth.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "apiKeys": {
+      "signedOut": "Masuk untuk mengelola kunci API.",
+      "unavailable": "Kunci API belum tersedia di deployment ini.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "slackLinks": {
+      "signedOut": "Masuk untuk mengelola tautan Slack.",
+      "notAvailableYet": "Ini belum tersedia.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu semenit.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "authorizedApps": {
+      "signedOut": "Masuk untuk mengelola akses aplikasi.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "notifications": {
+      "signedOut": "Masuk untuk mengubah notifikasi.",
+      "webhookUrlMissing": "Tempel URL webhook",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
     }
   },
   "codeBuilder": {

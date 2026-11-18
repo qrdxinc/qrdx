@@ -16,6 +16,12 @@ import {
   conversionsAllowed,
   conversionsUnavailable,
 } from "@/ee/conversions/access";
+import {
+  CODE_ACTION_MESSAGES,
+  type CodeActionMessages,
+  ownMessage,
+} from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { snapshotCodeVersion } from "@/lib/code-versions";
 import { HttpError } from "@/lib/error-response";
 import { isFeatureAvailable } from "@/lib/feature-availability";
@@ -27,7 +33,6 @@ import {
   getPlanLimits,
   type Plan,
 } from "@/lib/plans";
-import { PLAN_NAMES } from "@/lib/pricing";
 import {
   evaluateRouting,
   finalizeUrl,
@@ -94,20 +99,41 @@ const KNOWN_CODES = new Set<string>([
   "UNSAFE_DESTINATION",
 ]);
 
-function failure(
+type MarketingText = CodeActionMessages["marketing"];
+
+const ENGLISH = CODE_ACTION_MESSAGES.marketing;
+
+/** Errors whose message is built from parts here: how to say it in `text`. */
+const sayAgain = new WeakMap<Error, (text: MarketingText) => string>();
+
+/** `error` (its message in English), saying `say(text)` in another language. */
+function localized<E extends Error>(
+  error: E,
+  say: (text: MarketingText) => string,
+): E {
+  sayAgain.set(error, say);
+  return error;
+}
+
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
   error: unknown,
   context: Record<string, unknown>,
-): MarketingActionResult<never> {
+  who: { pageLocale?: string; userId?: string },
+): Promise<MarketingActionResult<never>> {
+  const text = (await codeActionText(who)).marketing;
+  const say = (thrown: Error) =>
+    sayAgain.get(thrown)?.(text) ?? ownMessage(ENGLISH, text, thrown.message);
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to manage this code." },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
     return {
       success: false,
-      error: { code: "VALIDATION_ERROR", message: error.message },
+      error: { code: "VALIDATION_ERROR", message: say(error) },
     };
   }
   if (error instanceof HttpError) {
@@ -117,14 +143,14 @@ function failure(
         code: KNOWN_CODES.has(error.code)
           ? (error.code as MarketingErrorCode)
           : "UNKNOWN_ERROR",
-        message: error.message,
+        message: say(error),
       },
     };
   }
   logError(error as Error, context);
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -135,9 +161,13 @@ function parse<T extends z.ZodType>(schema: T, input: unknown): z.infer<T> {
     const message = issue?.message ?? "Invalid input";
     // Routing configs: say which rule (1-based) the problem is in.
     const rule = issue?.path[0] === "rules" ? issue.path[1] : undefined;
-    throw new ValidationError(
-      typeof rule === "number" ? `Rule ${rule + 1}: ${message}` : message,
-    );
+    if (typeof rule !== "number") throw new ValidationError(message);
+    const say = (text: MarketingText) =>
+      text.problemIn({
+        label: text.rule(rule + 1),
+        problem: ownMessage(ENGLISH, text, message),
+      });
+    throw localized(new ValidationError(say(ENGLISH)), say);
   }
   return result.data;
 }
@@ -146,14 +176,23 @@ function parse<T extends z.ZodType>(schema: T, input: unknown): z.infer<T> {
 async function run<T>(
   action: string,
   fn: (scope: ActiveScope) => Promise<T>,
-  { access = "write" }: { access?: "read" | "write" } = {},
+  {
+    access = "write",
+    pageLocale,
+  }: {
+    access?: "read" | "write";
+    /** The calling page's useLocale(): the language its messages are in */
+    pageLocale?: string;
+  } = {},
 ): Promise<MarketingActionResult<T>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     if (access === "write") assertCan(scope, "content.write");
     return { success: true, data: await fn(scope) };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, { pageLocale, userId });
   }
 }
 
@@ -193,7 +232,7 @@ async function loadCode(scope: ActiveScope, id: string) {
     .limit(1);
   // Codes outside the scope look exactly like missing ones.
   if (!(row && isInScope(scope, row))) {
-    throw new HttpError(404, "NOT_FOUND", "QR code not found");
+    throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
   }
   return row;
 }
@@ -227,37 +266,45 @@ async function toSettings(
 
 /** The limit (lib/plans.ts) a feature needs; the message names its cheapest plan. */
 function planRequired(
-  feature: string,
+  feature: keyof MarketingText["planRequired"],
   limit: "routing" | "pixels" | "conversions" | "preciseLocation",
 ): HttpError {
   const plan = cheapestPlanWith((limits) => limits[limit]);
-  return new HttpError(
-    402,
-    "PLAN_REQUIRED",
-    `${feature} ${plan ? `is a ${PLAN_NAMES[plan]} feature` : "isn't on your plan"}. You can still turn off or remove what's already set up.`,
+  return localized(
+    new HttpError(402, "PLAN_REQUIRED", ENGLISH.planRequired[feature](plan)),
+    (text) => text.planRequired[feature](plan),
   );
 }
 
 /** Same rules as the code's main destination (http/https, not another short link). */
-function assertDestination(url: string, label: string) {
+function assertDestination(
+  url: string,
+  label: (text: MarketingText) => string,
+) {
   const result = destinationUrlSchema.safeParse(url);
   if (!result.success) {
-    throw new ValidationError(
-      `${label}: ${result.error.issues[0]?.message ?? "invalid URL"}`,
-    );
+    const problem = result.error.issues[0]?.message;
+    const say = (text: MarketingText) =>
+      text.problemIn({
+        label: label(text),
+        problem: problem ?? text.invalidUrl,
+      });
+    throw localized(new ValidationError(say(ENGLISH)), say);
   }
 }
 
 function assertRoutingUrls(config: RoutingConfig) {
   config.rules.forEach((rule, index) => {
-    const label = rule.name || `Rule ${index + 1}`;
+    const label = (text: MarketingText) => rule.name || text.rule(index + 1);
     if (rule.action.type === "redirect") {
       assertDestination(rule.action.url, label);
     } else {
       for (const variant of rule.action.variants) {
-        assertDestination(
-          variant.url,
-          `${label}, variant ${variant.name || variant.id}`,
+        assertDestination(variant.url, (text) =>
+          text.variant({
+            label: label(text),
+            variant: variant.name || variant.id,
+          }),
         );
       }
     }
@@ -354,7 +401,7 @@ async function saveColumn(
     .set(values)
     .where(and(eq(qrCode.id, row.id), scopeWhere(scope)))
     .returning(codeColumns);
-  if (!updated) throw new HttpError(404, "NOT_FOUND", "QR code not found");
+  if (!updated) throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
   revalidatePath("/dashboard", "layout");
   return toSettings(scope, updated);
 }
@@ -363,46 +410,54 @@ async function saveColumn(
 
 export async function getCodeMarketing(
   id: string,
+  pageLocale?: string,
 ): Promise<MarketingActionResult<CodeMarketingSettings>> {
   return run(
     "getCodeMarketing",
     async (scope) => toSettings(scope, await loadCode(scope, id)),
-    { access: "read" },
+    { access: "read", pageLocale },
   );
 }
 
 const nullable = <T extends z.ZodType>(schema: T) => schema.nullable();
 
-export async function saveCodeRouting(input: {
-  id: string;
-  routing: unknown;
-}): Promise<MarketingActionResult<CodeMarketingSettings>> {
-  return run("saveCodeRouting", async (scope) => {
-    await enforceSaveLimit(scope.userId);
-    const row = await loadCode(scope, input.id);
-    const parsed = parse(nullable(routingConfigSchema), input.routing);
-    const next = parsed && parsed.rules.length > 0 ? parsed : null;
-    const previous = parseRoutingConfig(row.routing);
-    const limits = getPlanLimits(await getPlanForScope(scope));
-    if (!(limits.routing || isRoutingReduction(next, previous))) {
-      throw planRequired("Smart routing", "routing");
-    }
-    if (next) assertRoutingUrls(next);
-    const hold = next
-      ? await screenRoutingUrls(scope, row, next, previous)
-      : false;
-    const saved = await saveColumn(scope, row, {
-      routing: next ? stampSplits(next, previous, new Date()) : null,
-      ...(hold ? { isActive: false } : {}),
-    });
-    recordAuditEvent(scope, () =>
-      codeEventsByIds("code.routing_changed", [row.id], {
-        before: { rules: previous?.rules.length ?? 0 },
-        after: { rules: next?.rules.length ?? 0 },
-      }),
-    );
-    return saved;
-  });
+export async function saveCodeRouting(
+  input: {
+    id: string;
+    routing: unknown;
+  },
+  pageLocale?: string,
+): Promise<MarketingActionResult<CodeMarketingSettings>> {
+  return run(
+    "saveCodeRouting",
+    async (scope) => {
+      await enforceSaveLimit(scope.userId);
+      const row = await loadCode(scope, input.id);
+      const parsed = parse(nullable(routingConfigSchema), input.routing);
+      const next = parsed && parsed.rules.length > 0 ? parsed : null;
+      const previous = parseRoutingConfig(row.routing);
+      const limits = getPlanLimits(await getPlanForScope(scope));
+      if (!(limits.routing || isRoutingReduction(next, previous))) {
+        throw planRequired("routing", "routing");
+      }
+      if (next) assertRoutingUrls(next);
+      const hold = next
+        ? await screenRoutingUrls(scope, row, next, previous)
+        : false;
+      const saved = await saveColumn(scope, row, {
+        routing: next ? stampSplits(next, previous, new Date()) : null,
+        ...(hold ? { isActive: false } : {}),
+      });
+      recordAuditEvent(scope, () =>
+        codeEventsByIds("code.routing_changed", [row.id], {
+          before: { rules: previous?.rules.length ?? 0 },
+          after: { rules: next?.rules.length ?? 0 },
+        }),
+      );
+      return saved;
+    },
+    { pageLocale },
+  );
 }
 
 const isEmptyUtm = (utm: UtmConfig | null) =>
@@ -410,66 +465,81 @@ const isEmptyUtm = (utm: UtmConfig | null) =>
   (!(utm.source || utm.medium || utm.campaign || utm.term || utm.content) &&
     utm.params.length === 0);
 
-export async function saveCodeUtm(input: {
-  id: string;
-  utm: unknown;
-}): Promise<MarketingActionResult<CodeMarketingSettings>> {
-  return run("saveCodeUtm", async (scope) => {
-    await enforceSaveLimit(scope.userId);
-    const row = await loadCode(scope, input.id);
-    const parsed = parse(nullable(utmConfigSchema), input.utm);
-    const next = isEmptyUtm(parsed) ? null : parsed;
-    const limits = getPlanLimits(await getPlanForScope(scope));
-    if (next && !limits.routing) {
-      throw planRequired("UTM parameters", "routing");
-    }
-    return saveColumn(scope, row, { utm: next });
-  });
+export async function saveCodeUtm(
+  input: {
+    id: string;
+    utm: unknown;
+  },
+  pageLocale?: string,
+): Promise<MarketingActionResult<CodeMarketingSettings>> {
+  return run(
+    "saveCodeUtm",
+    async (scope) => {
+      await enforceSaveLimit(scope.userId);
+      const row = await loadCode(scope, input.id);
+      const parsed = parse(nullable(utmConfigSchema), input.utm);
+      const next = isEmptyUtm(parsed) ? null : parsed;
+      const limits = getPlanLimits(await getPlanForScope(scope));
+      if (next && !limits.routing) {
+        throw planRequired("utm", "routing");
+      }
+      return saveColumn(scope, row, { utm: next });
+    },
+    { pageLocale },
+  );
 }
 
-export async function saveCodePixels(input: {
-  id: string;
-  pixels: unknown;
-}): Promise<MarketingActionResult<CodeMarketingSettings>> {
-  return run("saveCodePixels", async (scope) => {
-    await enforceSaveLimit(scope.userId);
-    const row = await loadCode(scope, input.id);
-    const parsed = parse(nullable(pixelConfigSchema), input.pixels);
-    const previous = parsePixelConfig(row.pixels);
-    const limits = getPlanLimits(await getPlanForScope(scope));
+export async function saveCodePixels(
+  input: {
+    id: string;
+    pixels: unknown;
+  },
+  pageLocale?: string,
+): Promise<MarketingActionResult<CodeMarketingSettings>> {
+  return run(
+    "saveCodePixels",
+    async (scope) => {
+      await enforceSaveLimit(scope.userId);
+      const row = await loadCode(scope, input.id);
+      const parsed = parse(nullable(pixelConfigSchema), input.pixels);
+      const previous = parsePixelConfig(row.pixels);
+      const limits = getPlanLimits(await getPlanForScope(scope));
 
-    if (parsed) {
-      // Without the plan, ids may only be removed and conversions turned off.
-      const added = (
-        ["ga4", "gtm", "meta", "tiktok", "linkedin"] as const
-      ).some((key) => parsed[key] && parsed[key] !== previous?.[key]);
-      if (added && !limits.pixels) {
-        throw planRequired("Tracking pixels", "pixels");
-      }
-      // Conversion tracking (ee/conversions) also needs the licence key on
-      // the server; turning it off never needs either.
-      if (parsed.conversions && !previous?.conversions) {
-        if (!isFeatureAvailable("conversions")) throw conversionsUnavailable();
-        if (!limits.conversions) {
-          throw planRequired("Conversion tracking", "conversions");
+      if (parsed) {
+        // Without the plan, ids may only be removed and conversions turned off.
+        const added = (
+          ["ga4", "gtm", "meta", "tiktok", "linkedin"] as const
+        ).some((key) => parsed[key] && parsed[key] !== previous?.[key]);
+        if (added && !limits.pixels) {
+          throw planRequired("pixels", "pixels");
+        }
+        // Conversion tracking (ee/conversions) also needs the licence key on
+        // the server; turning it off never needs either.
+        if (parsed.conversions && !previous?.conversions) {
+          if (!isFeatureAvailable("conversions"))
+            throw conversionsUnavailable();
+          if (!limits.conversions) {
+            throw planRequired("conversions", "conversions");
+          }
+        }
+        if (
+          parsed.preciseLocation &&
+          !previous?.preciseLocation &&
+          !limits.preciseLocation
+        ) {
+          throw planRequired("preciseLocation", "preciseLocation");
         }
       }
-      if (
-        parsed.preciseLocation &&
-        !previous?.preciseLocation &&
-        !limits.preciseLocation
-      ) {
-        throw planRequired("Precise scan location", "preciseLocation");
-      }
-    }
-    // Precise location has its own switch (saveCodePreciseLocation): kept
-    // as it is unless the input sets it.
-    const next = withPreciseLocation(
-      parsed,
-      parsed?.preciseLocation ?? previous?.preciseLocation === true,
-    );
-    return saveColumn(scope, row, { pixels: next });
-  });
+      // Precise location has its own switch (saveCodePreciseLocation): kept
+      // as it is unless the input sets it.
+      const next = withPreciseLocation(
+        parsed,
+        parsed?.preciseLocation ?? previous?.preciseLocation === true,
+      );
+      return saveColumn(scope, row, { pixels: next });
+    },
+    { pageLocale },
+  );
 }
 
 export async function saveCodePreciseLocation(input: {
@@ -484,7 +554,7 @@ export async function saveCodePreciseLocation(input: {
     const limits = getPlanLimits(await getPlanForScope(scope));
     // Turning it off never needs the plan.
     if (enabled && !previous?.preciseLocation && !limits.preciseLocation) {
-      throw planRequired("Precise scan location", "preciseLocation");
+      throw planRequired("preciseLocation", "preciseLocation");
     }
     return saveColumn(scope, row, {
       pixels: withPreciseLocation(previous, enabled),
@@ -501,13 +571,13 @@ const sampleSchema = z.object({
     .string()
     .trim()
     .toUpperCase()
-    .regex(/^(?:[A-Z]{2})?$/, "Use a 2-letter country code")
+    .regex(/^(?:[A-Z]{2})?$/, ENGLISH.countryCode)
     .transform((value) => value || null),
   region: z
     .string()
     .trim()
     .toUpperCase()
-    .regex(/^(?:(?:[A-Z]{2}-)?[A-Z0-9]{1,3})?$/, "Use a region code like CA")
+    .regex(/^(?:(?:[A-Z]{2}-)?[A-Z0-9]{1,3})?$/, ENGLISH.regionCode)
     .transform((value) => value.replace(/^[A-Z]{2}-/, "") || null),
   language: z
     .string()
@@ -547,6 +617,7 @@ export interface RoutingTestResult {
  */
 export async function testCodeRouting(
   input: z.input<typeof testSchema>,
+  pageLocale?: string,
 ): Promise<MarketingActionResult<RoutingTestResult>> {
   return run(
     "testCodeRouting",
@@ -588,6 +659,6 @@ export async function testCodeRouting(
       };
       // Stores nothing: a dry run of unsaved rules.
     },
-    { access: "read" },
+    { access: "read", pageLocale },
   );
 }

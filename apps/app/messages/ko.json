@@ -5502,6 +5502,98 @@
       "placeholder": "프레임, 테마, 페이지 검색"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "계속하려면 로그인해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "checkDetails": "세부 정보를 확인해 주세요.",
+      "themeNotInWorkspace": "이 테마는 이 워크스페이스에 없어요.",
+      "noCustomFrame": "이 테마에는 사용자 지정 프레임이 없어요.",
+      "pageNotFound": "페이지를 찾을 수 없어요.",
+      "pageChanged": "검토한 이후 이 페이지가 변경되었어요. 게시하기 전에 다시 검토해 주세요.",
+      "svgTooLarge": "SVG 파일은 최대 200 KB까지 가능해요.",
+      "tooManyImports": "가져오기 요청이 너무 많아요. 1시간 후에 다시 시도해 주세요.",
+      "tooManyChanges": "변경이 너무 많아요. 나중에 다시 시도해 주세요."
+    },
+    "communityThemes": {
+      "alreadyPublished": "이 테마는 이미 커뮤니티에 게시되어 있어요.",
+      "workspaceAdminsOnly": "이 워크스페이스의 테마는 소유자와 관리자만 게시할 수 있어요.",
+      "workspaceUnavailable": "워크스페이스 테마 게시는 아직 이 배포 환경에서 사용할 수 없어요.",
+      "tooFast": "너무 빠르게 게시하고 있어요. 나중에 다시 시도해 주세요."
+    },
+    "checks": {
+      "licenceRequired": "게시하려면 CC0 라이선스에 동의해 주세요.",
+      "publishedALot": "오늘 게시를 많이 하셨어요. 내일 다시 시도해 주세요.",
+      "unavailable": "커뮤니티 업데이트는 아직 이 배포 환경에서 사용할 수 없어요.",
+      "itemNotFound": "이 항목은 커뮤니티에 없어요.",
+      "workspacePublishRefusal": "이 워크스페이스에 있는 항목은 소유자와 관리자만 게시할 수 있어요.",
+      "nameRequired": "이름을 지어 주세요.",
+      "alreadyPublished": "이 디자인은 이미 커뮤니티에 있어요.",
+      "themeSettings": "이 테마에는 커뮤니티에서 표시할 수 없는 설정이 있어요. 에디터에서 다시 저장해 주세요.",
+      "pageNothingLeft": "내 정보를 제외하면 공유할 내용이 남지 않아요. 다른 사람이 재사용할 수 있는 블록을 추가해 주세요.",
+      "pageInvalid": "이 페이지는 템플릿으로 공유할 수 없어요. 먼저 페이지 에디터에서 다시 게시해 주세요.",
+      "pageTooLarge": "이 페이지는 템플릿으로 공유하기에는 너무 커요. 블록을 일부 삭제하거나 긴 텍스트를 줄여 주세요.",
+      "repeatsDetail": "페이지의 다른 곳에서 제외된 정보가 반복되어 있어요.",
+      "noEmails": "이름, 라벨, 설명에는 이메일 주소를 넣지 마세요.",
+      "noLinks": "이름, 라벨, 설명에는 링크를 넣지 마세요.",
+      "noHandles": "이름, 라벨, 설명에는 @핸들을 넣지 마세요.",
+      "noPhones": "이름, 라벨, 설명에는 전화번호를 넣지 마세요.",
+      "noStreets": "이름, 라벨, 설명에는 도로명 주소를 넣지 마세요.",
+      "gateFailed": "스캔 점수가 “매우 좋음”({min, number}점 이상)인 디자인만 게시할 수 있어요. {reasons}.",
+      "gateTooLong": "이 오류 정정 수준에서는 {sample}을(를) 코드에 담을 수 없어요",
+      "gateScore": "{sample}일 때 점수는 {score, number}점이에요",
+      "gateSampleLink": "링크",
+      "gateSampleWifi": "Wi-Fi 정보",
+      "handleFormat": "소문자, 숫자, \"_\", \"-\"를 {min, number}~{max, number}자로 입력하고 문자나 숫자로 시작해야 해요.",
+      "handleReserved": "이미 예약된 핸들이에요.",
+      "handleTaken": "이미 사용 중인 핸들이에요.",
+      "displayNameRequired": "표시 이름을 입력해 주세요."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, one {텍스트 #개} other {텍스트 #개}}를 샘플 텍스트로 바꿨어요",
+      "kept": "{count, plural, one {텍스트 #개} other {텍스트 #개}}는 작성하신 그대로 두었어요",
+      "links": "{count, plural, one {링크 #개} other {링크 #개}}를 example.com으로 바꿨어요",
+      "emails": "{count, plural, one {이메일 주소 #개} other {이메일 주소 #개}}를 샘플로 바꿨어요",
+      "phones": "{count, plural, one {전화번호 #개} other {전화번호 #개}}를 샘플로 바꿨어요",
+      "emailsAndPhones": "{emails, plural, one {이메일 주소 #개} other {이메일 주소 #개}}와 {phones, plural, one {전화번호 #개} other {전화번호 #개}}를 샘플로 바꿨어요",
+      "addresses": "{count, plural, one {주소 #개} other {주소 #개}}를 샘플 주소로 바꿨어요",
+      "wifi": "Wi-Fi 네트워크 이름과 비밀번호를 샘플로 바꿨어요",
+      "codes": "쿠폰 코드를 샘플로 바꿨어요",
+      "gtins": "제품 GTIN을 삭제했어요. 사용자가 직접 추가해요",
+      "images": "{count, plural, one {사진 #장} other {사진 #장}}을 삭제했어요. 사용자가 직접 추가해요",
+      "files": "{count, plural, one {파일 #개} other {파일 #개}}를 삭제했어요",
+      "blocks": "직접 만든 파일이 필요해서 제외했어요: {blocks}",
+      "hidden": "{count, plural, one {숨겨진 블록 #개} other {숨겨진 블록 #개}}를 제외했어요",
+      "settings": "공유 이미지, 설명, 사용자 지정 CSS는 제외했어요"
+    },
+    "qrThemes": {
+      "signIn": "테마를 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "tooMany": "변경이 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요.",
+      "themeLimit": "무료 플랜에서는 저장 테마를 최대 {limit, number}개까지 만들 수 있어요. Pro로 업그레이드하면 테마를 무제한으로 저장할 수 있어요.",
+      "notFound": "테마를 찾을 수 없어요.",
+      "defaultAdminsOnly": "워크스페이스 소유자와 관리자만 기본 테마를 변경할 수 있어요.",
+      "openAnotherWorkspace": "테마를 공유하려면 다른 워크스페이스를 여세요.",
+      "shareAdminsOnly": "워크스페이스 소유자와 관리자만 여기서 테마를 공유할 수 있어요.",
+      "sharedThemesPlan": "공유 테마는 {plan} 플랜에 포함돼 있어요(워크스페이스 소유자의 플랜 기준).",
+      "workspaceThemeLimit": "이 워크스페이스의 플랜에는 테마 {count, number}개가 포함돼 있어요."
+    },
+    "codeBuilder": {
+      "signInAgain": "코드를 만들려면 다시 로그인하세요.",
+      "loadFailed": "빌더를 불러오지 못했어요. 다시 시도해 주세요.",
+      "themesFailed": "저장된 테마를 불러오지 못했어요.",
+      "foldersFailed": "폴더를 불러오지 못했어요.",
+      "tagsFailed": "태그를 불러오지 못했어요.",
+      "domainsFailed": "사용자 지정 도메인을 불러오지 못해서 코드에 기본 단축 링크가 사용돼요."
+    },
+    "search": {
+      "untitledPage": "제목 없는 페이지",
+      "landingPage": "랜딩 페이지",
+      "tooMany": "검색 횟수가 너무 많아요. 잠시 기다려 주세요.",
+      "signInAgain": "검색하려면 다시 로그인하세요.",
+      "notWorking": "지금은 검색이 작동하지 않아요."
+    }
+  },
   "app": {
     "settings": {
       "general": {
@@ -5702,7 +5794,12 @@
           "signInMethods": "로그인 방법",
           "valueIsLinked": "{value} 연결됨",
           "valueCantBeLinkedRight": "지금은 {value}을(를) 연결할 수 없어요.",
-          "labelIsNoLongerLinked": "{label} 연결이 해제되었어요"
+          "labelIsNoLongerLinked": "{label} 연결이 해제되었어요",
+          "emailCode": "이메일 코드",
+          "oneTimeCodeSentTo": "{email}(으)로 보낸 일회용 코드예요.",
+          "linkedOn": "{date}에 연결됨",
+          "linkedOnReason": "{date}에 연결됨. {reason}",
+          "notLinkedUseThe": "연결되지 않았어요. {email} 이메일의 {provider} 계정을 사용하세요."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "지원팀이 {dueDate}에 이 기능을 끌 예정이에요",
@@ -5749,7 +5846,9 @@
           "afterYouSignInPasskey": "로그인하면 QRdx가 패스키를 요청해요. 백업 코드도 사용할 수 있어요.",
           "afterYouSignInApp": "로그인하면 QRdx가 인증 앱의 코드를 요청해요. 백업 코드도 사용할 수 있어요.",
           "afterYouSignInQrdx2": "로그인하면 QRdx에서 백업 코드를 요청해요.",
-          "passkeySpotlight": "이제 인증 앱 코드 대신 패스키를 두 번째 인증 단계로 사용할 수 있어요."
+          "passkeySpotlight": "이제 인증 앱 코드 대신 패스키를 두 번째 인증 단계로 사용할 수 있어요.",
+          "addedOn": "{date}에 추가됨",
+          "passkeyName": "패스키"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "{length, number}단계 중 {stepNumber, number}단계",
@@ -8681,6 +8780,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "워크스페이스를 찾을 수 없어요.",
+      "twoFactorRequired": "이 워크스페이스는 2단계 인증이 필요해요. 설정의 프로필 및 보안에서 2단계 인증을 켠 다음 다시 시도해 주세요."
+    },
+    "forbidden": {
+      "viewer": "여기서는 뷰어 권한이에요. {only}",
+      "billingRole": "결제 역할은 요금제만 관리할 수 있어요. {only}",
+      "contentWrite": "소유자, 관리자, 멤버만 이 워크스페이스에서 만들거나 변경할 수 있어요.",
+      "workspaceUpdate": "소유자와 관리자만 이 워크스페이스의 설정을 변경할 수 있어요.",
+      "membersManage": "소유자와 관리자만 이 워크스페이스의 구성원을 관리할 수 있어요."
+    },
+    "organizations": {
+      "nameTooShort": "워크스페이스 이름이 너무 짧아요.",
+      "nameTooLong": "워크스페이스 이름이 너무 길어요.",
+      "slugFormat": "영문 소문자, 숫자, 대시를 사용해 3~48자로 입력해 주세요.",
+      "slugReserved": "이미 예약된 URL이에요. 다른 URL을 선택해 주세요.",
+      "invalidEmail": "올바른 이메일을 입력해 주세요",
+      "invalidDetails": "워크스페이스 정보가 올바르지 않아요.",
+      "invalidInvitation": "초대가 올바르지 않아요.",
+      "invalidRole": "올바르지 않은 역할이에요.",
+      "invalidMember": "올바르지 않은 멤버예요.",
+      "invalidWorkspace": "올바르지 않은 워크스페이스예요.",
+      "moreWorkspaces": "더 많은 워크스페이스는 {pro} 및 {business}에 포함돼 있어요.",
+      "urlTaken": "이미 사용 중인 워크스페이스 URL이에요.",
+      "alreadyMember": "이미 이 워크스페이스의 멤버예요.",
+      "needsOwner": "워크스페이스에는 소유자가 최소 1명 필요해요. 먼저 다른 사람을 소유자로 지정해 주세요.",
+      "wrongRecipient": "이 초대는 다른 이메일 주소로 전송되었어요.",
+      "verifyEmailFirst": "이 초대에 응답하기 전에 이메일 주소를 인증해 주세요.",
+      "invitationGone": "더 이상 유효하지 않은 초대예요.",
+      "workspaceFull": "이 워크스페이스는 가득 찼어요. {pro} 워크스페이스는 최대 {members}명까지, {business} 워크스페이스는 제한이 없어요.",
+      "noFreeSeat": "이 워크스페이스에는 다른 초대를 보낼 빈 자리가 없어요. 대기 중인 초대를 취소하거나 워크스페이스의 요금제를 업그레이드해 주세요.",
+      "signIn": "워크스페이스를 관리하려면 로그인해 주세요.",
+      "somethingWrong": "문제가 발생했어요. 다시 시도해 주세요.",
+      "rateLimited": "요청이 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요.",
+      "ownerRoleOwnersOnly": "소유자만 다른 사람을 소유자로 지정하거나 소유자의 역할을 변경할 수 있어요.",
+      "billingRoleOwnersOnly": "{billing} 역할은 워크스페이스 비용을 누가 내는지 결정하기 때문에 소유자만 부여하거나 해제할 수 있어요.",
+      "seatsNeedPaidOwner": "멤버를 추가하려면 워크스페이스 소유자가 {pro} 또는 {business} 플랜을 사용 중이어야 해요.",
+      "seatsUsed": "이 워크스페이스는 {seats}개 좌석(멤버와 대기 중인 초대 포함)을 모두 사용했어요. 초대를 취소하거나 워크스페이스 소유자를 {business}로 업그레이드하면 멤버를 무제한으로 추가할 수 있어요.",
+      "nothingToSave": "저장할 내용이 없어요.",
+      "notAMember": "해당 사용자는 이 워크스페이스의 멤버가 아니에요.",
+      "removeOwnerOwnersOnly": "소유자만 워크스페이스에서 다른 소유자를 제거할 수 있어요.",
+      "removeBillingOwnersOnly": "소유자만 워크스페이스에서 결제 멤버를 제거할 수 있어요.",
+      "cantLeaveOwn": "내 워크스페이스는 나갈 수 없어요.",
+      "deleteOwnersOnly": "소유자만 워크스페이스를 삭제할 수 있어요.",
+      "ownCantBeDeleted": "내 워크스페이스는 삭제할 수 없어요. 대신 이름을 바꿔 주세요.",
+      "typeUrlToConfirm": "확인하려면 워크스페이스 URL을 정확히 입력해 주세요."
+    },
+    "joinLinks": {
+      "signIn": "계속하려면 로그인해 주세요.",
+      "somethingWrong": "문제가 발생했어요. 다시 시도해 주세요.",
+      "rateLimited": "요청이 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "pickRole": "링크의 역할을 선택해 주세요.",
+      "billingLinkOwnersOnly": "소유자만 {billing} 역할을 부여하는 링크를 만들 수 있어요.",
+      "resetOwnersOnly": "소유자만 {role} 역할을 부여하는 링크를 재설정할 수 있어요.",
+      "changeOwnersOnly": "소유자만 {role} 역할을 부여하는 링크를 변경할 수 있어요.",
+      "linkOff": "참여 링크가 꺼져 있어요.",
+      "incomplete": "참여 링크가 완전하지 않아요.",
+      "unavailable": "이 서버에는 아직 참여 링크가 설정되어 있지 않아요. 지금은 이메일로 초대해 주세요.",
+      "linkDead": "이 참여 링크는 더 이상 작동하지 않아요. 워크스페이스에 새 링크를 요청해 주세요.",
+      "noSeatYet": "이 워크스페이스에는 멤버를 더 추가할 좌석이 아직 없어요. 소유자에게 {pro} 또는 {business}로 업그레이드해 달라고 요청해 주세요.",
+      "seatsUsed": "이 워크스페이스는 {seats}개 좌석을 모두 사용했어요. 소유자에게 좌석을 비우거나 {business}로 업그레이드해 달라고 요청해 주세요."
+    },
+    "logo": {
+      "signIn": "계속하려면 로그인해 주세요.",
+      "somethingWrong": "문제가 발생했어요. 다시 시도해 주세요.",
+      "tooManyChanges": "변경이 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "uploadsUnavailable": "이 서버에는 로고 업로드가 설정되어 있지 않아요. 이미지 URL을 사용해 주세요.",
+      "choosePicture": "업로드할 사진을 선택해 주세요.",
+      "tooLarge": "사진이 너무 커요. 더 작은 사진을 사용해 주세요.",
+      "wrongType": "PNG, JPEG 또는 WebP 이미지를 사용해 주세요.",
+      "url": {
+        "tooLong": "URL이 너무 길어요.",
+        "notFull": "https://로 시작하는 전체 이미지 URL을 입력해 주세요.",
+        "notHttps": "https:// 이미지 URL을 사용해 주세요.",
+        "withPassword": "비밀번호가 없는 URL을 사용해 주세요.",
+        "notPublic": "공개 웹사이트에 있는 이미지를 사용해 주세요."
+      }
+    },
+    "moveCode": {
+      "signIn": "코드를 이동하려면 로그인해 주세요.",
+      "somethingWrong": "문제가 발생했어요.",
+      "pickWorkspace": "워크스페이스를 선택해 주세요.",
+      "rateLimited": "이동 요청이 너무 많아요. 1분 후에 다시 시도해 주세요.",
+      "alreadyHere": "이 코드는 이미 이 워크스페이스에 있어요.",
+      "codeNotFound": "QR 코드를 찾을 수 없어요",
+      "cantAddCodes": "{name}에 코드를 추가할 수 없어요. {reason}",
+      "othersCodes": "다른 멤버가 만든 코드는 소유자와 관리자만 이동할 수 있어요.",
+      "pageCode": "호스팅 페이지를 여는 코드는 다른 워크스페이스로 이동할 수 없어요. 페이지는 이곳에 그대로 남아요.",
+      "domainNotInTarget": "이 코드의 링크는 {hostname}에 있는데, {name}에는 이 도메인이 없어요. 인쇄된 링크가 작동하지 않게 되므로 이동할 수 없어요.",
+      "limitReached": "{name}에서 요금제에 포함된 활성 동적 코드 {limit}개를 모두 사용했어요. 그곳에서 코드 하나를 보관하거나, 먼저 이 코드를 보관해 주세요."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "잘못된 요청이에요.",
+      "rateLimited": "요청이 너무 많아요. 1분 후에 다시 시도해 주세요.",
+      "planRequired": "2단계 인증 필수 설정은 {plan}에서 사용할 수 있어요.",
+      "ownFirst": "먼저 설정의 프로필 및 보안에서 내 계정의 2단계 인증을 켜 주세요.",
+      "signIn": "이 워크스페이스의 설정을 변경하려면 로그인해 주세요.",
+      "somethingWrong": "문제가 발생했어요. 다시 시도해 주세요."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "{name}을(를) 위해 <link>{host}</link>에서 보냈어요",
@@ -8965,6 +9165,112 @@
       "countries": "스캔한 지역",
       "newCodesLine": "이번 주 {count, plural, one {새 코드 #개} other {새 코드 #개}}예요.",
       "open": "대시보드 열기"
+    }
+  },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "이 코드를 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요.",
+      "notFound": "QR 코드를 찾을 수 없어요",
+      "invalidDate": "올바른 날짜와 시간을 입력하세요",
+      "dateRange": "2000년에서 2100년 사이의 날짜를 선택하세요",
+      "passwordTooShort": "비밀번호는 {min, number}자 이상으로 입력하세요",
+      "passwordTooLong": "비밀번호는 최대 {max, number}자까지 가능해요",
+      "passwordTooManyBytes": "비밀번호가 너무 길어요",
+      "scanLimitWhole": "스캔 제한은 정수여야 해요",
+      "scanLimitMin": "스캔 제한은 1 이상이어야 해요",
+      "scanLimitMax": "스캔 제한이 너무 높아요",
+      "planRequired": "비밀번호, 일정, 스캔 제한, 대체 URL은 Pro에 포함된 기능이에요.",
+      "endBeforeStart": "종료일은 시작일 이후여야 해요"
+    },
+    "marketing": {
+      "signIn": "이 코드를 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요.",
+      "notFound": "QR 코드를 찾을 수 없어요",
+      "countryCode": "2자리 국가 코드를 입력하세요",
+      "regionCode": "CA와 같은 지역 코드를 입력하세요",
+      "invalidUrl": "잘못된 URL",
+      "rule": "규칙 {rule, number}",
+      "variant": "{label}, 변형 {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {스마트 라우팅은 Pro 기능이에요.} business {스마트 라우팅은 Business 기능이에요.} other {현재 플랜에서는 스마트 라우팅을 사용할 수 없어요.}} 이미 설정된 항목은 계속 끄거나 삭제할 수 있어요.",
+        "utm": "{plan, select, pro {UTM 매개변수는 Pro 기능이에요.} business {UTM 매개변수는 Business 기능이에요.} other {현재 플랜에서는 UTM 매개변수를 사용할 수 없어요.}} 이미 설정된 항목은 계속 끄거나 삭제할 수 있어요.",
+        "pixels": "{plan, select, pro {트래킹 픽셀은 Pro 기능이에요.} business {트래킹 픽셀은 Business 기능이에요.} other {현재 플랜에서는 트래킹 픽셀을 사용할 수 없어요.}} 이미 설정된 항목은 계속 끄거나 삭제할 수 있어요.",
+        "conversions": "{plan, select, pro {전환 추적은 Pro 기능이에요.} business {전환 추적은 Business 기능이에요.} other {현재 플랜에서는 전환 추적을 사용할 수 없어요.}} 이미 설정된 항목은 계속 끄거나 삭제할 수 있어요.",
+        "preciseLocation": "{plan, select, pro {정밀 스캔 위치는 Pro 기능이에요.} business {정밀 스캔 위치는 Business 기능이에요.} other {현재 플랜에서는 정밀 스캔 위치를 사용할 수 없어요.}} 이미 설정된 항목은 계속 끄거나 삭제할 수 있어요."
+      }
+    },
+    "landingPages": {
+      "signIn": "페이지를 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요.",
+      "selectAtLeastOne": "페이지를 하나 이상 선택하세요",
+      "selectUpTo": "한 번에 최대 {max, number}개의 페이지를 선택할 수 있어요"
+    },
+    "files": {
+      "signIn": "파일을 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요."
+    },
+    "qrCodes": {
+      "signIn": "동적 QR 코드를 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요.",
+      "nothingToUpdate": "업데이트할 내용이 없어요"
+    },
+    "customDomains": {
+      "signIn": "사용자 지정 도메인을 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요.",
+      "enterDomain": "도메인을 입력하세요"
+    },
+    "codeSuggestions": {
+      "signIn": "추천을 받으려면 로그인하세요.",
+      "rateLimited": "추천 요청이 너무 많아요. 1분 후에 다시 시도하세요.",
+      "unavailable": "이 서버에서는 추천을 사용할 수 없어요.",
+      "failed": "지금은 추천을 가져올 수 없어요. 다시 시도하세요."
+    },
+    "tags": {
+      "nothingToUpdate": "업데이트할 내용이 없어요",
+      "tooManyTags": "코드 하나에 태그를 최대 {max, number}개까지 추가할 수 있어요.",
+      "chooseTag": "추가하거나 제거할 태그를 선택하세요"
+    },
+    "publicStats": {
+      "signIn": "분석을 공유하려면 로그인하세요.",
+      "failed": "문제가 발생했어요.",
+      "notFound": "QR 코드를 찾을 수 없어요"
+    },
+    "pathAliases": {
+      "signIn": "이 코드를 변경하려면 다시 로그인하세요.",
+      "failed": "문제가 발생했어요. 다시 시도하세요.",
+      "noDomain": "경로 별칭은 사용자 지정 도메인의 코드에서만 사용할 수 있어요."
+    },
+    "formResponses": {
+      "signIn": "응답을 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "chooseResponses": "삭제할 응답을 선택하세요."
+    },
+    "codeKind": {
+      "signIn": "코드를 변경하려면 로그인하세요.",
+      "failed": "문제가 발생했어요."
+    },
+    "barcodes": {
+      "signIn": "바코드를 저장하려면 로그인하세요.",
+      "failed": "문제가 발생했어요."
+    },
+    "utmTemplates": {
+      "signIn": "템플릿을 사용하려면 로그인하세요.",
+      "failed": "문제가 발생했어요."
+    },
+    "codeOptions": {
+      "signIn": "옵션을 보려면 다시 로그인하세요.",
+      "failed": "옵션을 불러올 수 없어요. 다시 시도하세요."
+    },
+    "analytics": {
+      "searchTooLong": "검색어가 너무 길어요.",
+      "signIn": "코드를 검색하려면 로그인하세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "webhooks": {
+      "signIn": "웹훅을 관리하려면 로그인하세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
     }
   },
   "auth": {
@@ -9298,6 +9604,149 @@
         "failed": "SSO가 제대로 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
         "rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "변경 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "nameMissing": "이름을 입력해 주세요.",
+      "nameTooLong": "{max}자 이하로 입력해 주세요.",
+      "nameSpecialCharacters": "특수문자를 삭제해 주세요.",
+      "profileSignedOut": "프로필을 변경하려면 로그인해 주세요.",
+      "uploadsUnavailable": "이 서버에는 사진 업로드가 설정되어 있지 않아요.",
+      "pictureMissing": "업로드할 사진을 선택해 주세요.",
+      "pictureTooLarge": "사진이 너무 커요. 더 작은 사진을 사용해 주세요.",
+      "pictureType": "PNG, JPEG 또는 WebP 사진을 사용해 주세요.",
+      "methodsSignedOut": "로그인 방법을 관리하려면 로그인해 주세요.",
+      "linkUnavailable": "지금은 {provider}을(를) 연결할 수 없어요.",
+      "unlinkBlocked": {
+        "notFound": "해당 로그인 방법은 내 계정에 연결되어 있지 않아요.",
+        "unsupported": "이 로그인 방법은 여기에서 삭제할 수 없어요."
+      },
+      "sessionsSignedOut": "세션을 관리하려면 로그인해 주세요.",
+      "thisDevice": "현재 사용 중인 기기예요. 메뉴의 로그아웃을 이용해 주세요."
+    },
+    "twoFactor": {
+      "signedOut": "2단계 인증을 변경하려면 로그인해 주세요.",
+      "alreadyOn": "2단계 인증이 이미 켜져 있어요.",
+      "notOn": "2단계 인증이 꺼져 있어요.",
+      "appAlreadySetUp": "인증 앱이 이미 설정되어 있어요.",
+      "noApp": "삭제할 인증 앱이 없어요.",
+      "noPasskey": "먼저 패스키를 추가해 주세요.",
+      "restart": "설정 시간이 만료되었어요. 다시 시작해 주세요.",
+      "rateLimitedLong": "시도 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요."
+    },
+    "emailChange": {
+      "reauth": "보안을 위해 로그아웃했다가 다시 로그인한 후, 하루 안에 이메일을 변경해 주세요.",
+      "sameEmail": "지금 쓰고 있는 이메일과 같아요.",
+      "invalidEmail": "올바른 이메일 주소를 입력해 주세요.",
+      "invalidCode": "이메일로 받은 6자리 코드를 입력해 주세요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "codeRateLimited": "해당 주소로 요청한 코드가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "notSent": "지금은 코드를 보낼 수 없어요. 다시 시도해 주세요.",
+      "codeDidntWork": "그 코드는 사용할 수 없었어요. 코드를 확인하거나 새 코드를 보내 주세요.",
+      "taken": "이 이메일은 이미 다른 QRdx 계정에서 사용 중이에요.",
+      "signedOut": "이메일을 변경하려면 로그인하세요.",
+      "unavailable": "이 사이트에는 이메일이 설정되어 있지 않아서 여기서는 주소를 변경할 수 없어요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "ssoOff": "회사에서 {domain}에 단일 로그인(SSO)을 요구하고 있어서 계정을 다른 도메인의 주소로 옮길 수 없어요. 워크스페이스 관리자에게 문의하세요.",
+      "ssoOnto": "회사에서 {domain}에 단일 로그인(SSO)을 요구하고 있어요. 해당 도메인의 주소를 사용하려면 SSO로 로그인하세요."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "확인하려면 \"{word}\"를 입력하세요.",
+      "signedOut": "계정을 삭제하려면 로그인하세요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 15분 후에 다시 시도해 주세요.",
+      "failed": "계정을 삭제하지 못했어요. 다시 시도해 주세요.",
+      "subscriptionNotCancelled": "구독을 취소하지 못해서 계정이 삭제되지 않았어요. 몇 분 후에 다시 시도하거나 {email}로 이메일을 보내 주세요.",
+      "ownerNotMade": "{person} 님을 {team}의 소유자로 지정하지 못해서 계정이 삭제되지 않았어요. 팀의 다른 사람을 소유자로 지정한 후 다시 시도해 주세요."
+    },
+    "affiliate": {
+      "notReady": "제휴 프로그램은 아직 이용할 수 없어요.",
+      "signedOut": "계속하려면 로그인하세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "paypalEmailInvalid": "PayPal 계정의 이메일 주소를 입력하세요.",
+      "paypalEmailMissing": "이메일 주소를 입력하세요.",
+      "paypalNotApproved": "신청이 승인되면 PayPal 이메일을 추가할 수 있어요.",
+      "codeUnchanged": "이미 사용 중인 코드예요.",
+      "codeNotApproved": "신청이 승인되면 코드를 선택할 수 있어요.",
+      "chosenCode": {
+        "format": "소문자, 숫자, 하이픈(연속 불가)을 사용해 3~32자로 입력하세요. 첫 글자와 마지막 글자는 문자나 숫자여야 해요.",
+        "reserved": "예약된 코드예요. 다른 코드를 선택하세요.",
+        "email": "이메일 주소의 앞부분이에요. 이메일이 공개되지 않는 코드를 선택하세요.",
+        "taken": "이미 사용 중인 코드예요. 다른 코드를 선택하세요.",
+        "alreadyChanged": "이미 코드를 선택하셨어요. 코드는 한 번만 변경할 수 있어요."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "너무 짧아 보여요",
+      "tooLong": "너무 길어 보여요",
+      "noSpaces": "공백 없이 붙여넣어 주세요",
+      "storeDomainMissing": "스토어 도메인을 입력해 주세요",
+      "stripeSecretKey": "전체 시크릿 키예요. 대신 Payment Links: Read 권한이 있는 제한된 키를 만들어 주세요. QRdx는 시크릿 키를 저장하지 않습니다.",
+      "stripeRestrictedKey": "rk_live_ 또는 rk_test_로 시작하는 제한된 키를 붙여넣어 주세요.",
+      "calcomKey": "cal_live_로 시작하는 Cal.com API 키를 붙여넣어 주세요(테스트 키는 cal_로 시작해요).",
+      "shopifyCredentials": "앱의 클라이언트 ID와 시크릿 또는 Admin API 액세스 토큰을 붙여넣어 주세요.",
+      "signedOut": "계정을 연결하려면 로그인해 주세요.",
+      "checkDetails": "내용을 확인하고 다시 시도해 주세요.",
+      "rateLimited": "요청 한도를 초과했습니다. 나중에 다시 시도해 주세요.",
+      "notAccepted": "{name}에서 해당 값을 받아들이지 않았어요. 확인한 후 다시 시도해 주세요.",
+      "stripeForbidden": "이 키로는 Payment Links를 읽을 수 없어요. 키에서 Payment Links를 Read로 설정해 주세요.",
+      "shopifyForbidden": "이 앱은 제품을 읽을 수 없어요. read_products 범위를 추가하고 앱을 다시 설치해 주세요.",
+      "forbidden": "{name}에서 이 키의 접근을 거부했어요.",
+      "unreachable": "{name}에 연결할 수 없어요. 다시 시도해 주세요."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "키가 너무 짧은 것 같아요",
+      "keyTooLong": "키가 너무 긴 것 같아요",
+      "keyNoSpaces": "키를 공백 없이 붙여넣어 주세요",
+      "signedOut": "계정을 연결하려면 로그인해 주세요.",
+      "checkKey": "키를 확인하고 다시 시도해 주세요.",
+      "notConfigured": "여기서는 {name}이(가) 설정되어 있지 않아요.",
+      "rateLimited": "요청 한도를 초과했습니다. 나중에 다시 시도해 주세요.",
+      "keyRejected": "{name}에서 해당 {label}을(를) 받아들이지 않았어요. 확인한 후 다시 시도해 주세요.",
+      "unreachable": "{name}에 연결할 수 없어요. 다시 시도해 주세요.",
+      "domainSignedOut": "먼저 로그인해 주세요.",
+      "pickDomain": "도메인을 선택해 주세요.",
+      "connectFirst": "먼저 계정을 연결해 주세요.",
+      "domainNotFound": "이 도메인은 계정에 없어요.",
+      "domainNotSaved": "도메인을 저장하지 못했어요. 다시 시도해 주세요."
+    },
+    "slackBot": {
+      "unavailable": "Slack용 QRdx 봇은 여기서 사용할 수 없습니다.",
+      "signedOut": "변경하려면 로그인해 주세요.",
+      "notAvailableYet": "아직 사용할 수 없어요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 1분 후에 다시 해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "oauthApps": {
+      "signedOut": "OAuth 앱을 관리하려면 로그인하세요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "apiKeys": {
+      "signedOut": "API 키를 관리하려면 로그인하세요.",
+      "unavailable": "이 배포 환경에서는 아직 API 키를 사용할 수 없어요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "slackLinks": {
+      "signedOut": "Slack 링크를 관리하려면 로그인하세요.",
+      "notAvailableYet": "아직 사용할 수 없어요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 1분 후에 다시 해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "authorizedApps": {
+      "signedOut": "앱 접근 권한을 관리하려면 로그인하세요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "notifications": {
+      "signedOut": "알림을 변경하려면 로그인하세요.",
+      "webhookUrlMissing": "웹훅 URL을 붙여넣으세요",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
     }
   },
   "codeBuilder": {

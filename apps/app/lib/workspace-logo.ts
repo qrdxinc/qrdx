@@ -110,22 +110,32 @@ export function logoImageSrc(logo: string | null | undefined): string | null {
 const IPV4 = /^\d{1,3}(?:\.\d{1,3}){3}$/;
 const LOCAL_SUFFIXES = [".local", ".localhost", ".internal", ".home.arpa"];
 
+/** Why a URL can't be a logo, by reason (logoUrlProblem says them). */
+export const LOGO_URL_PROBLEMS = {
+  tooLong: "That URL is too long.",
+  notFull: "Enter a full image URL, starting with https://",
+  notHttps: "Use an https:// image URL.",
+  withPassword: "Use a URL without a password.",
+  notPublic: "Use an image on a public website.",
+} as const;
+export type LogoUrlProblem = keyof typeof LOGO_URL_PROBLEMS;
+
 /**
  * Why `value` can't be a logo URL, or null when it can: https only, a real
  * public host name (no IP addresses or local names, so a logo never makes
  * teammates' browsers call into their own network), no credentials, at most
  * 2048 characters.
  */
-export function logoUrlProblem(value: string): string | null {
-  if (value.length > LOGO_URL_MAX_LENGTH) return "That URL is too long.";
+export function logoUrlProblemReason(value: string): LogoUrlProblem | null {
+  if (value.length > LOGO_URL_MAX_LENGTH) return "tooLong";
   let url: URL;
   try {
     url = new URL(value);
   } catch {
-    return "Enter a full image URL, starting with https://";
+    return "notFull";
   }
-  if (url.protocol !== "https:") return "Use an https:// image URL.";
-  if (url.username || url.password) return "Use a URL without a password.";
+  if (url.protocol !== "https:") return "notHttps";
+  if (url.username || url.password) return "withPassword";
   const host = url.hostname.toLowerCase();
   if (
     !host.includes(".") ||
@@ -133,7 +143,13 @@ export function logoUrlProblem(value: string): string | null {
     IPV4.test(host) ||
     LOCAL_SUFFIXES.some((suffix) => host.endsWith(suffix))
   ) {
-    return "Use an image on a public website.";
+    return "notPublic";
   }
   return null;
+}
+
+/** logoUrlProblemReason in English (LOGO_URL_PROBLEMS). */
+export function logoUrlProblem(value: string): string | null {
+  const reason = logoUrlProblemReason(value);
+  return reason ? LOGO_URL_PROBLEMS[reason] : null;
 }

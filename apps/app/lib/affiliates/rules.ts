@@ -2,6 +2,7 @@
 // The server code (./server.ts) and the tests use these, so the maths is
 // tested once and can't drift between the webhook, the cron and the pages.
 import { QRDX_HANDOFF_TAGS } from "@/lib/analytics/handoff-tags";
+import type { Translator } from "@/lib/i18n/translator";
 import { RESERVED_SLUGS } from "@/lib/short-links";
 import {
   AFFILIATE_COMMISSION_BPS,
@@ -366,6 +367,22 @@ export const CHOSEN_CODE_MESSAGES: Record<
   taken: "That code is taken. Pick another.",
   already_changed: "You've already chosen your code. It can only change once.",
 };
+
+/**
+ * CHOSEN_CODE_MESSAGES in the person's language
+ * (settingsActions.affiliate.chosenCode in messages/en.json).
+ */
+export function chosenCodeMessages(
+  t: Translator<"settingsActions.affiliate.chosenCode">,
+): typeof CHOSEN_CODE_MESSAGES {
+  return {
+    format: t("format"),
+    reserved: t("reserved"),
+    email: t("email"),
+    taken: t("taken"),
+    already_changed: t("alreadyChanged"),
+  };
+}
 
 /**
  * Per-currency amounts in a steady order for display: US dollars first,
