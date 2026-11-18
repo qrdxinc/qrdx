@@ -8954,6 +8954,112 @@
       "open": "Abrir seu painel"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Entre para gerenciar este código.",
+      "failed": "Algo deu errado.",
+      "notFound": "QR code não encontrado",
+      "invalidDate": "Informe uma data e hora válidas",
+      "dateRange": "Escolha uma data entre 2000 e 2100",
+      "passwordTooShort": "Use pelo menos {min, number} caracteres na senha",
+      "passwordTooLong": "As senhas podem ter até {max, number} caracteres",
+      "passwordTooManyBytes": "A senha é longa demais",
+      "scanLimitWhole": "O limite de leituras deve ser um número inteiro",
+      "scanLimitMin": "O limite de leituras deve ser de pelo menos 1",
+      "scanLimitMax": "O limite de leituras é alto demais",
+      "planRequired": "Senhas, agendamentos, limites de leituras e URLs de fallback fazem parte do Pro.",
+      "endBeforeStart": "A data de término deve ser depois da data de início"
+    },
+    "marketing": {
+      "signIn": "Entre para gerenciar este código.",
+      "failed": "Algo deu errado.",
+      "notFound": "QR code não encontrado",
+      "countryCode": "Use um código de país com 2 letras",
+      "regionCode": "Use um código de região, como CA",
+      "invalidUrl": "URL inválida",
+      "rule": "Regra {rule, number}",
+      "variant": "{label}, variante {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {O roteamento inteligente é um recurso do Pro.} business {O roteamento inteligente é um recurso do Business.} other {O roteamento inteligente não está incluído no seu plano.}} Você ainda pode desativar ou remover o que já foi configurado.",
+        "utm": "{plan, select, pro {Os parâmetros UTM são um recurso do Pro.} business {Os parâmetros UTM são um recurso do Business.} other {Os parâmetros UTM não estão incluídos no seu plano.}} Você ainda pode desativar ou remover o que já foi configurado.",
+        "pixels": "{plan, select, pro {Os pixels de rastreamento são um recurso do Pro.} business {Os pixels de rastreamento são um recurso do Business.} other {Os pixels de rastreamento não estão incluídos no seu plano.}} Você ainda pode desativar ou remover o que já foi configurado.",
+        "conversions": "{plan, select, pro {O rastreamento de conversões é um recurso do Pro.} business {O rastreamento de conversões é um recurso do Business.} other {O rastreamento de conversões não está incluído no seu plano.}} Você ainda pode desativar ou remover o que já foi configurado.",
+        "preciseLocation": "{plan, select, pro {A localização precisa da leitura é um recurso do Pro.} business {A localização precisa da leitura é um recurso do Business.} other {A localização precisa da leitura não está incluída no seu plano.}} Você ainda pode desativar ou remover o que já foi configurado."
+      }
+    },
+    "landingPages": {
+      "signIn": "Entre para gerenciar as páginas.",
+      "failed": "Algo deu errado.",
+      "selectAtLeastOne": "Selecione pelo menos uma página",
+      "selectUpTo": "Selecione até {max, number} páginas por vez"
+    },
+    "files": {
+      "signIn": "Entre para gerenciar arquivos.",
+      "failed": "Algo deu errado."
+    },
+    "qrCodes": {
+      "signIn": "Entre para gerenciar QR codes dinâmicos.",
+      "failed": "Algo deu errado.",
+      "nothingToUpdate": "Nada para atualizar"
+    },
+    "customDomains": {
+      "signIn": "Entre para gerenciar domínios personalizados.",
+      "failed": "Algo deu errado.",
+      "enterDomain": "Informe um domínio"
+    },
+    "codeSuggestions": {
+      "signIn": "Entre para receber sugestões.",
+      "rateLimited": "Quantas sugestões! Tente de novo em um minuto.",
+      "unavailable": "As sugestões não estão disponíveis neste servidor.",
+      "failed": "Não foi possível obter sugestões agora. Tente de novo."
+    },
+    "tags": {
+      "nothingToUpdate": "Nada para atualizar",
+      "tooManyTags": "Um código pode ter até {max, number} tags.",
+      "chooseTag": "Escolha uma tag para adicionar ou remover"
+    },
+    "publicStats": {
+      "signIn": "Entre para compartilhar as análises.",
+      "failed": "Algo deu errado.",
+      "notFound": "QR code não encontrado"
+    },
+    "pathAliases": {
+      "signIn": "Entre de novo para alterar este código.",
+      "failed": "Algo deu errado. Tente de novo.",
+      "noDomain": "Aliases de caminho são para códigos em um domínio personalizado."
+    },
+    "formResponses": {
+      "signIn": "Entre para gerenciar as respostas.",
+      "failed": "Algo deu errado. Tente de novo.",
+      "chooseResponses": "Escolha as respostas para excluir."
+    },
+    "codeKind": {
+      "signIn": "Entre para alterar códigos.",
+      "failed": "Algo deu errado."
+    },
+    "barcodes": {
+      "signIn": "Entre para salvar códigos de barras.",
+      "failed": "Algo deu errado."
+    },
+    "utmTemplates": {
+      "signIn": "Entre para usar modelos.",
+      "failed": "Algo deu errado."
+    },
+    "codeOptions": {
+      "signIn": "Entre de novo para ver as opções.",
+      "failed": "Não foi possível carregar as opções. Tente de novo."
+    },
+    "analytics": {
+      "searchTooLong": "A busca é muito longa.",
+      "signIn": "Entre para buscar seus códigos.",
+      "failed": "Algo deu errado. Tente de novo."
+    },
+    "webhooks": {
+      "signIn": "Entre para gerenciar webhooks.",
+      "failed": "Algo deu errado. Tente de novo."
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "Verificando código…",

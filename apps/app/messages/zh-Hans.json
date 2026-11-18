@@ -8954,6 +8954,112 @@
       "open": "打开控制台"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "请登录后管理此二维码。",
+      "failed": "出了点问题。",
+      "notFound": "未找到该二维码",
+      "invalidDate": "请输入有效的日期和时间",
+      "dateRange": "请选择 2000 年到 2100 年之间的日期",
+      "passwordTooShort": "密码至少需要 {min, number} 个字符",
+      "passwordTooLong": "密码最多可包含 {max, number} 个字符",
+      "passwordTooManyBytes": "密码太长",
+      "scanLimitWhole": "扫描次数上限必须是整数",
+      "scanLimitMin": "扫描次数上限至少为 1",
+      "scanLimitMax": "扫描次数上限过高",
+      "planRequired": "密码、定时、扫描次数上限和备用网址属于 Pro 功能。",
+      "endBeforeStart": "结束日期必须晚于开始日期"
+    },
+    "marketing": {
+      "signIn": "请登录后管理此二维码。",
+      "failed": "出了点问题。",
+      "notFound": "未找到该二维码",
+      "countryCode": "请使用 2 位字母的国家代码",
+      "regionCode": "请使用类似 CA 的地区代码",
+      "invalidUrl": "网址无效",
+      "rule": "规则 {rule, number}",
+      "variant": "{label}，变体 {variant}",
+      "problemIn": "{label}：{problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {智能路由是 Pro 功能。} business {智能路由是 Business 功能。} other {您的套餐不包含智能路由。}}您仍可以关闭或移除已设置的内容。",
+        "utm": "{plan, select, pro {UTM 参数是 Pro 功能。} business {UTM 参数是 Business 功能。} other {您的套餐不包含 UTM 参数。}}您仍可以关闭或移除已设置的内容。",
+        "pixels": "{plan, select, pro {跟踪像素是 Pro 功能。} business {跟踪像素是 Business 功能。} other {您的套餐不包含跟踪像素。}}您仍可以关闭或移除已设置的内容。",
+        "conversions": "{plan, select, pro {转化跟踪是 Pro 功能。} business {转化跟踪是 Business 功能。} other {您的套餐不包含转化跟踪。}}您仍可以关闭或移除已设置的内容。",
+        "preciseLocation": "{plan, select, pro {精确扫描位置是 Pro 功能。} business {精确扫描位置是 Business 功能。} other {您的套餐不包含精确扫描位置。}}您仍可以关闭或移除已设置的内容。"
+      }
+    },
+    "landingPages": {
+      "signIn": "请登录后管理页面。",
+      "failed": "出了点问题。",
+      "selectAtLeastOne": "请至少选择一个页面",
+      "selectUpTo": "一次最多可选择 {max, number} 个页面"
+    },
+    "files": {
+      "signIn": "请登录后管理文件。",
+      "failed": "出了点问题。"
+    },
+    "qrCodes": {
+      "signIn": "请登录后管理动态二维码。",
+      "failed": "出了点问题。",
+      "nothingToUpdate": "没有需要更新的内容"
+    },
+    "customDomains": {
+      "signIn": "请登录后管理自定义域名。",
+      "failed": "出了点问题。",
+      "enterDomain": "请输入域名"
+    },
+    "codeSuggestions": {
+      "signIn": "请登录后获取建议。",
+      "rateLimited": "建议获取过于频繁，请一分钟后再试。",
+      "unavailable": "此服务器暂不提供建议功能。",
+      "failed": "暂时无法获取建议，请重试。"
+    },
+    "tags": {
+      "nothingToUpdate": "没有需要更新的内容",
+      "tooManyTags": "一个二维码最多可以有 {max, number} 个标签。",
+      "chooseTag": "请选择要添加或移除的标签"
+    },
+    "publicStats": {
+      "signIn": "请登录后分享分析数据。",
+      "failed": "出了点问题。",
+      "notFound": "未找到该二维码"
+    },
+    "pathAliases": {
+      "signIn": "请重新登录后再修改此二维码。",
+      "failed": "出了点问题，请重试。",
+      "noDomain": "路径别名仅适用于使用自定义域名的二维码。"
+    },
+    "formResponses": {
+      "signIn": "请登录后管理回复。",
+      "failed": "出了点问题，请重试。",
+      "chooseResponses": "请选择要删除的回复。"
+    },
+    "codeKind": {
+      "signIn": "请登录后更改二维码。",
+      "failed": "出了点问题。"
+    },
+    "barcodes": {
+      "signIn": "请登录后保存条形码。",
+      "failed": "出了点问题。"
+    },
+    "utmTemplates": {
+      "signIn": "请登录后使用模板。",
+      "failed": "出了点问题。"
+    },
+    "codeOptions": {
+      "signIn": "请重新登录后查看选项。",
+      "failed": "无法加载选项，请重试。"
+    },
+    "analytics": {
+      "searchTooLong": "搜索内容过长。",
+      "signIn": "请登录后搜索你的二维码。",
+      "failed": "出了点问题，请重试。"
+    },
+    "webhooks": {
+      "signIn": "请登录后管理 webhook。",
+      "failed": "出了点问题，请重试。"
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "正在检查验证码…",

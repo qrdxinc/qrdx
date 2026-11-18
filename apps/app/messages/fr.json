@@ -8954,6 +8954,112 @@
       "open": "Ouvrir votre tableau de bord"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Connectez-vous pour gérer ce code.",
+      "failed": "Une erreur s’est produite.",
+      "notFound": "QR code introuvable",
+      "invalidDate": "Saisissez une date et une heure valides",
+      "dateRange": "Choisissez une date entre 2000 et 2100",
+      "passwordTooShort": "Utilisez au moins {min, number} caractères pour le mot de passe",
+      "passwordTooLong": "Les mots de passe peuvent compter jusqu’à {max, number} caractères",
+      "passwordTooManyBytes": "Le mot de passe est trop long",
+      "scanLimitWhole": "La limite de scans doit être un nombre entier",
+      "scanLimitMin": "La limite de scans doit être d’au moins 1",
+      "scanLimitMax": "La limite de scans est trop élevée",
+      "planRequired": "Les mots de passe, les planifications, les limites de scans et les URL de secours font partie de Pro.",
+      "endBeforeStart": "La date de fin doit être postérieure à la date de début"
+    },
+    "marketing": {
+      "signIn": "Connectez-vous pour gérer ce code.",
+      "failed": "Une erreur s’est produite.",
+      "notFound": "QR code introuvable",
+      "countryCode": "Utilisez un code pays à 2 lettres",
+      "regionCode": "Utilisez un code de région, comme CA",
+      "invalidUrl": "URL non valide",
+      "rule": "Règle {rule, number}",
+      "variant": "{label}, variante {variant}",
+      "problemIn": "{label} : {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {Le routage intelligent est une fonctionnalité Pro.} business {Le routage intelligent est une fonctionnalité Business.} other {Le routage intelligent n’est pas inclus dans votre offre.}} Vous pouvez toujours désactiver ou supprimer ce qui est déjà configuré.",
+        "utm": "{plan, select, pro {Les paramètres UTM sont une fonctionnalité Pro.} business {Les paramètres UTM sont une fonctionnalité Business.} other {Les paramètres UTM ne sont pas inclus dans votre offre.}} Vous pouvez toujours désactiver ou supprimer ce qui est déjà configuré.",
+        "pixels": "{plan, select, pro {Les pixels de suivi sont une fonctionnalité Pro.} business {Les pixels de suivi sont une fonctionnalité Business.} other {Les pixels de suivi ne sont pas inclus dans votre offre.}} Vous pouvez toujours désactiver ou supprimer ce qui est déjà configuré.",
+        "conversions": "{plan, select, pro {Le suivi des conversions est une fonctionnalité Pro.} business {Le suivi des conversions est une fonctionnalité Business.} other {Le suivi des conversions n’est pas inclus dans votre offre.}} Vous pouvez toujours désactiver ou supprimer ce qui est déjà configuré.",
+        "preciseLocation": "{plan, select, pro {La localisation précise des scans est une fonctionnalité Pro.} business {La localisation précise des scans est une fonctionnalité Business.} other {La localisation précise des scans n’est pas incluse dans votre offre.}} Vous pouvez toujours désactiver ou supprimer ce qui est déjà configuré."
+      }
+    },
+    "landingPages": {
+      "signIn": "Connectez-vous pour gérer les pages.",
+      "failed": "Une erreur s’est produite.",
+      "selectAtLeastOne": "Sélectionnez au moins une page",
+      "selectUpTo": "Sélectionnez jusqu’à {max, number} pages à la fois"
+    },
+    "files": {
+      "signIn": "Connectez-vous pour gérer les fichiers.",
+      "failed": "Une erreur s’est produite."
+    },
+    "qrCodes": {
+      "signIn": "Connectez-vous pour gérer les QR codes dynamiques.",
+      "failed": "Une erreur s’est produite.",
+      "nothingToUpdate": "Rien à mettre à jour"
+    },
+    "customDomains": {
+      "signIn": "Connectez-vous pour gérer les domaines personnalisés.",
+      "failed": "Une erreur s’est produite.",
+      "enterDomain": "Saisissez un domaine"
+    },
+    "codeSuggestions": {
+      "signIn": "Connectez-vous pour obtenir des suggestions.",
+      "rateLimited": "Vous demandez beaucoup de suggestions. Réessayez dans une minute.",
+      "unavailable": "Les suggestions ne sont pas disponibles sur ce serveur.",
+      "failed": "Impossible d’obtenir des suggestions pour le moment. Réessayez."
+    },
+    "tags": {
+      "nothingToUpdate": "Rien à mettre à jour",
+      "tooManyTags": "Un code peut avoir jusqu’à {max, number} étiquettes.",
+      "chooseTag": "Choisissez une étiquette à ajouter ou à retirer"
+    },
+    "publicStats": {
+      "signIn": "Connectez-vous pour partager les statistiques.",
+      "failed": "Une erreur s’est produite.",
+      "notFound": "QR code introuvable"
+    },
+    "pathAliases": {
+      "signIn": "Reconnectez-vous pour modifier ce code.",
+      "failed": "Une erreur s’est produite. Réessayez.",
+      "noDomain": "Les alias de chemin sont réservés aux codes sur un domaine personnalisé."
+    },
+    "formResponses": {
+      "signIn": "Connectez-vous pour gérer les réponses.",
+      "failed": "Une erreur s’est produite. Veuillez réessayer.",
+      "chooseResponses": "Choisissez les réponses à supprimer."
+    },
+    "codeKind": {
+      "signIn": "Connectez-vous pour modifier les codes.",
+      "failed": "Une erreur s’est produite."
+    },
+    "barcodes": {
+      "signIn": "Connectez-vous pour enregistrer des codes-barres.",
+      "failed": "Une erreur s’est produite."
+    },
+    "utmTemplates": {
+      "signIn": "Connectez-vous pour utiliser les modèles.",
+      "failed": "Une erreur s’est produite."
+    },
+    "codeOptions": {
+      "signIn": "Reconnectez-vous pour voir les options.",
+      "failed": "Impossible de charger les options. Réessayez."
+    },
+    "analytics": {
+      "searchTooLong": "La recherche est trop longue.",
+      "signIn": "Connectez-vous pour rechercher vos codes.",
+      "failed": "Une erreur s’est produite. Veuillez réessayer."
+    },
+    "webhooks": {
+      "signIn": "Connectez-vous pour gérer les webhooks.",
+      "failed": "Une erreur s’est produite. Veuillez réessayer."
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "Vérification du code…",

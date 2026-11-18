@@ -8954,6 +8954,112 @@
       "open": "Apri la tua dashboard"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Accedi per gestire questo codice.",
+      "failed": "Qualcosa è andato storto.",
+      "notFound": "QR code non trovato",
+      "invalidDate": "Inserisci una data e un’ora valide",
+      "dateRange": "Scegli una data tra il 2000 e il 2100",
+      "passwordTooShort": "Usa almeno {min, number} caratteri per la password",
+      "passwordTooLong": "Le password possono avere al massimo {max, number} caratteri",
+      "passwordTooManyBytes": "La password è troppo lunga",
+      "scanLimitWhole": "Il limite di scansioni deve essere un numero intero",
+      "scanLimitMin": "Il limite di scansioni deve essere almeno 1",
+      "scanLimitMax": "Il limite di scansioni è troppo alto",
+      "planRequired": "Password, programmazioni, limiti di scansioni e URL di riserva fanno parte di Pro.",
+      "endBeforeStart": "La data di fine deve essere successiva a quella di inizio"
+    },
+    "marketing": {
+      "signIn": "Accedi per gestire questo codice.",
+      "failed": "Qualcosa è andato storto.",
+      "notFound": "QR code non trovato",
+      "countryCode": "Usa un codice paese di 2 lettere",
+      "regionCode": "Usa un codice regione come CA",
+      "invalidUrl": "URL non valido",
+      "rule": "Regola {rule, number}",
+      "variant": "{label}, variante {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {Il routing intelligente è una funzione Pro.} business {Il routing intelligente è una funzione Business.} other {Il routing intelligente non è incluso nel tuo piano.}} Puoi comunque disattivare o rimuovere ciò che hai già configurato.",
+        "utm": "{plan, select, pro {I parametri UTM sono una funzione Pro.} business {I parametri UTM sono una funzione Business.} other {I parametri UTM non sono inclusi nel tuo piano.}} Puoi comunque disattivare o rimuovere ciò che hai già configurato.",
+        "pixels": "{plan, select, pro {I pixel di tracciamento sono una funzione Pro.} business {I pixel di tracciamento sono una funzione Business.} other {I pixel di tracciamento non sono inclusi nel tuo piano.}} Puoi comunque disattivare o rimuovere ciò che hai già configurato.",
+        "conversions": "{plan, select, pro {Il tracciamento delle conversioni è una funzione Pro.} business {Il tracciamento delle conversioni è una funzione Business.} other {Il tracciamento delle conversioni non è incluso nel tuo piano.}} Puoi comunque disattivare o rimuovere ciò che hai già configurato.",
+        "preciseLocation": "{plan, select, pro {La posizione precisa della scansione è una funzione Pro.} business {La posizione precisa della scansione è una funzione Business.} other {La posizione precisa della scansione non è inclusa nel tuo piano.}} Puoi comunque disattivare o rimuovere ciò che hai già configurato."
+      }
+    },
+    "landingPages": {
+      "signIn": "Accedi per gestire le pagine.",
+      "failed": "Qualcosa è andato storto.",
+      "selectAtLeastOne": "Seleziona almeno una pagina",
+      "selectUpTo": "Seleziona fino a {max, number} pagine alla volta"
+    },
+    "files": {
+      "signIn": "Accedi per gestire i file.",
+      "failed": "Qualcosa è andato storto."
+    },
+    "qrCodes": {
+      "signIn": "Accedi per gestire i QR code dinamici.",
+      "failed": "Qualcosa è andato storto.",
+      "nothingToUpdate": "Niente da aggiornare"
+    },
+    "customDomains": {
+      "signIn": "Accedi per gestire i domini personalizzati.",
+      "failed": "Qualcosa è andato storto.",
+      "enterDomain": "Inserisci un dominio"
+    },
+    "codeSuggestions": {
+      "signIn": "Accedi per ricevere suggerimenti.",
+      "rateLimited": "Hai chiesto molti suggerimenti. Riprova tra un minuto.",
+      "unavailable": "I suggerimenti non sono disponibili su questo server.",
+      "failed": "Impossibile ottenere suggerimenti al momento. Riprova."
+    },
+    "tags": {
+      "nothingToUpdate": "Niente da aggiornare",
+      "tooManyTags": "Un codice può avere fino a {max, number} tag.",
+      "chooseTag": "Scegli un tag da aggiungere o rimuovere"
+    },
+    "publicStats": {
+      "signIn": "Accedi per condividere le statistiche.",
+      "failed": "Qualcosa è andato storto.",
+      "notFound": "QR code non trovato"
+    },
+    "pathAliases": {
+      "signIn": "Accedi di nuovo per modificare questo codice.",
+      "failed": "Qualcosa è andato storto. Riprova.",
+      "noDomain": "Gli alias di percorso sono per i codici su un dominio personalizzato."
+    },
+    "formResponses": {
+      "signIn": "Accedi per gestire le risposte.",
+      "failed": "Qualcosa è andato storto. Riprova.",
+      "chooseResponses": "Scegli le risposte da eliminare."
+    },
+    "codeKind": {
+      "signIn": "Accedi per modificare i codici.",
+      "failed": "Qualcosa è andato storto."
+    },
+    "barcodes": {
+      "signIn": "Accedi per salvare i codici a barre.",
+      "failed": "Qualcosa è andato storto."
+    },
+    "utmTemplates": {
+      "signIn": "Accedi per usare i modelli.",
+      "failed": "Qualcosa è andato storto."
+    },
+    "codeOptions": {
+      "signIn": "Accedi di nuovo per vedere le opzioni.",
+      "failed": "Impossibile caricare le opzioni. Riprova."
+    },
+    "analytics": {
+      "searchTooLong": "La ricerca è troppo lunga.",
+      "signIn": "Accedi per cercare tra i tuoi codici.",
+      "failed": "Qualcosa è andato storto. Riprova."
+    },
+    "webhooks": {
+      "signIn": "Accedi per gestire i webhook.",
+      "failed": "Qualcosa è andato storto. Riprova."
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "Verifica del codice…",
