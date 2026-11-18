@@ -3,7 +3,12 @@ import "server-only";
 import { RateLimitUnavailableError, redis } from "@repo/rate-limit";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import type { AdminAuditRecord } from "@/app/(app)/admin/_lib/action-runner";
+import {
+  type AdminAuditRecord,
+  isAdminReadable,
+  isConfirmationRequired,
+  recordFailedAction,
+} from "@/app/(app)/admin/_lib/action-runner";
 import { writeAuditLog } from "@/app/(app)/admin/_lib/audit";
 import { env } from "@/env";
 import { HttpError } from "@/lib/http-error";
@@ -13,7 +18,11 @@ import {
   loadConsoleActor,
   requireStrongConsoleActor,
 } from "./actor";
-import { type ConsoleLimitTier, enforceConsoleLimit } from "./limits";
+import {
+  type ConsoleLimitTier,
+  enforceConsoleLimit,
+  refundConsoleLimit,
+} from "./limits";
 import {
   isUsableSecret,
   MAX_BODY_BYTES,
@@ -37,12 +46,17 @@ import {
 //    `rate_limited` with Retry-After; when Upstash can't judge, 503;
 // 8. the endpoint's own fields (400 with the first problem);
 // 9. for strong endpoints, the admin's own second factor and a recent
-//    strong confirmation by that session (CONFIRMATION_REQUIRED);
+//    strong confirmation by that session (CONFIRMATION_REQUIRED). That
+//    refusal, here or in the work's own strong check, gives the call's
+//    count back: nothing ran;
 // 10. the endpoint's work, then its entry in the admin audit log, written
 //    here with the admin checked above and the `reason` in the signed body,
 //    as the admin pages' runner writes it. So an effect that finishes after
 //    the console stopped waiting is still on record. The answer carries the
-//    endpoint's `data` only.
+//    endpoint's `data` only. When the work fails unexpectedly (a 500), or
+//    its entry can't be written, part of it may stand: the log gets an
+//    "<action>.failed" entry instead, with the input's ids, the reason and
+//    the error's kind and code (recordFailedAction).
 //
 // Every request that passes the signature check (3) ends with one log line,
 // `console_internal.outcome`: the path, the admin the signed body names, the
@@ -323,6 +337,10 @@ async function handleSigned<S extends z.ZodType, T>(
   if (!claim.success) return badRequest();
   const actorId = claim.data.actor.userId;
 
+  const limitName = action ?? path;
+  // Set as the steps pass: what the catch below gives back or records.
+  let counted: ConsoleActor | null = null;
+  let started: { actor: ConsoleActor; input: unknown } | null = null;
   try {
     const actor = await loadConsoleActor(claim.data.actor);
     if (!actor) {
@@ -334,7 +352,8 @@ async function handleSigned<S extends z.ZodType, T>(
     }
 
     try {
-      await enforceConsoleLimit(limit, action ?? path, actor.id);
+      await enforceConsoleLimit(limit, limitName, actor.id);
+      counted = actor;
     } catch (error) {
       if (error instanceof HttpError && error.status === 429) {
         const retryAfter = Number(error.headers?.["Retry-After"] ?? 60);
@@ -368,6 +387,7 @@ async function handleSigned<S extends z.ZodType, T>(
       typeof strong === "function" ? strong(input.data) : Boolean(strong);
     if (needsStrong) await requireStrongConsoleActor(actor);
 
+    started = { actor, input: input.data };
     const result = await run(input.data, { actor, request });
     if (result instanceof Response) {
       result.headers.set("Cache-Control", "no-store");
@@ -405,6 +425,18 @@ async function handleSigned<S extends z.ZodType, T>(
       code: "ok",
     };
   } catch (error) {
+    if (counted && isConfirmationRequired(error)) {
+      await refundConsoleLimit(limit, limitName, counted.id);
+    }
+    if (started && action && !isAdminReadable(error)) {
+      await recordFailedAction({
+        actor: started.actor,
+        action,
+        input: started.input,
+        error,
+        extra: { via: "console" },
+      });
+    }
     return failure(error, actorId);
   }
 }
