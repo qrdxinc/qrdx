@@ -780,7 +780,7 @@ export async function sendConfirmationCode(): Promise<ConfirmResult> {
     );
     // The person asked for it: their language, else the site's (the cookie).
     const intl = await emailIntlForAddress(session.email);
-    const details = await currentRequestDetails(new Date(), intl.locale);
+    const details = await currentRequestDetails(new Date(), intl);
     try {
       await deliverSignInCode(
         { email: session.email, otp: code },

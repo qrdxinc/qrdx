@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "他のすべての端末からサインアウト",
           "thisDevice": "この端末",
+          "activeNow": "現在アクティブ",
+          "activeJustNow": "たった今アクティブ",
+          "activeAgo": "最終アクティブ：{relative}",
+          "activeOn": "最終アクティブ：{date}",
+          "signedIn": "{date}にサインイン",
           "signOut": "サインアウト",
           "signOutEverywhereElse2": "他のすべての端末からサインアウトしますか？",
           "thisDeviceStaysSignedIn": "この端末はサインインしたままです。",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "次のアプリに進むには、QRdxにサインインしてください",
           "continueWithGoogle": "Googleで続行",
           "continueWithGithub": "GitHubで続行",
-          "youllReviewThesePermissionsBefore": "情報が共有される前に、これらの権限を確認できます。"
+          "youllReviewThesePermissionsBefore": "情報が共有される前に、これらの権限を確認できます。",
+          "continueToSignIn": "サインインに進む"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "このリンクは使用できません",
@@ -8689,9 +8695,20 @@
       "enter": "QRdxに次のコードを入力すると、このメールアドレスがアカウントのメールアドレスになります。",
       "ignore": "お心当たりがない場合は、このメールを無視してください。コードがなければ何も変更されません。"
     },
+    "emailChanged": {
+      "subject": "QRdxのメールアドレスが変更されました",
+      "preview": "QRdxアカウントのメールアドレスが{newEmail}になりました。",
+      "reason": "このメールは、このアドレスがQRdxアカウントのメールアドレスだったため送信されました。",
+      "body": "QRdxアカウントのメールアドレスが<strong>{newEmail}</strong>になりました。今後、サインインコードやチームへの招待はこのアドレスに届きます。",
+      "notYou": "お心当たりがない場合は、このアドレスからすぐに<support>{email}</support>までサポートへご連絡ください。アカウントを取り戻すためのお手伝いをいたします。"
+    },
     "security": {
       "device": "デバイス",
       "location": "おおよその場所",
+      "browserOnOs": "{os}の{browser}",
+      "osDevice": "{os}デバイス",
+      "unknownDevice": "不明なデバイス",
+      "cityCountry": "{country}、{city}",
       "ip": "IPアドレス",
       "time": "日時",
       "by": "実行者",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "スキャン分析を見る",
-      "milestoneReason": "{workspace}でスキャン数のマイルストーン通知がオンになっているため、このメールをお送りしています。"
+      "milestoneReason": "{workspace}でスキャン数のマイルストーン通知がオンになっているため、このメールをお送りしています。",
+      "yourWorkspace": "ワークスペース"
     },
     "firstScan": {
       "subject": "{code}が初めてスキャンされました",
@@ -8843,6 +8861,12 @@
       "shortLink": "短縮リンク",
       "opens": "開封数",
       "changed": "変更日時",
+      "fields": {
+        "destination": "リンク先",
+        "title": "タイトル",
+        "design": "デザイン",
+        "domain": "短縮リンクのドメイン"
+      },
       "open": "コードを開く",
       "created": {
         "heading": "新しいコード：{code}",
@@ -8915,6 +8939,7 @@
       "subject": "今週のQRdx：スキャン{scans, plural, other {#回}}",
       "preview": "{workspace}で先週{scans, plural, other {#回}}スキャンされました",
       "reason": "{workspace}で週次ダイジェストが有効になっているため、このメールをお送りしています。",
+      "yourWorkspace": "ワークスペース",
       "heading": "今週のQRdx",
       "scans": "スキャン数",
       "uniqueVisitors": "ユニーク訪問者",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "このアカウントは停止されています。誤りだと思われる場合は、サポートまでご連絡ください。",
       "somethingWentWrongTryAgain": "問題が発生しました。もう一度お試しください。",
       "newCodeSent": "新しいコードを送信しました。以前のコードは使えなくなりました。",
-      "connectionFailed": "問題が発生しました。接続を確認して、もう一度お試しください。"
+      "connectionFailed": "問題が発生しました。接続を確認して、もう一度お試しください。",
+      "emailSignInIsntSet": "このサイトではメールでのサインインが設定されていません。",
+      "weCouldntSendACodeTry": "現在コードを送信できません。数分後にもう一度お試しください。",
+      "tooManyCodesRequestedSo": "コードのリクエストが多すぎるため、新たには送信しませんでした。受信トレイにある最新のコードは引き続き使えます。"
     },
     "passkeySignIn": {
       "continueWithPasskey": "パスキーで続行",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "無料で始められ、カードは不要です。",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "現在、{label}でのサインインはご利用いただけません"
+      "labelSignInIsNot": "現在、{label}でのサインインはご利用いただけません",
+      "signInIsntSetUp": "サインインが未設定です",
+      "thisSiteHasNoEmail": "このサイトではメール、Google、GitHubのいずれのサインインも有効になっていないため、ここで新しいアカウントを作成できません。",
+      "runThisSiteThe": "このサイトを運営していますか？有効にする方法は<link>セルフホスティングガイド</link>をご覧ください。",
+      "newToQrdxYourFirst": "QRdxは初めてですか？最初のサインインで無料アカウントが作成されます。",
+      "loading": "読み込み中…",
+      "weCouldntCheckHow": "ここでのサインイン方法を確認できませんでした。<retry>もう一度お試しください</retry>。または<link>サインインページを開いてください</link>。"
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "サインイン方法を読み込んでいます",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider} がこのメールアドレスを確認していないため、QRdx ではこのアドレスでアカウントを作成できません。{provider} のメール設定で確認を済ませてからもう一度お試しいただくか、メールコードでサインインしてください。",
+      "githubUnverifiedNoEmailCodes": "{provider}でこのメールアドレスが確認されていないため、QRdxではこのアドレスでアカウントを作成できません。{provider}のメール設定で確認を済ませてから、もう一度お試しください{otherWay, select, yes {。または、別の方法でサインインしてください} other {}}。",
       "googleUnverified": "{provider} がこのメールアドレスを確認していないため、QRdx ではこのアドレスでアカウントを作成できません。代わりにメールコードでサインインしてください。",
+      "googleUnverifiedNoEmailCodes": "{provider}でこのメールアドレスが確認されていないため、QRdxではこのアドレスでアカウントを作成できません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
       "otherUnverified": "そのアカウントのメールアドレスは確認されていないため、QRdx ではこのアドレスでアカウントを作成できません。代わりにメールコードでサインインしてください。",
+      "otherUnverifiedNoEmailCodes": "そのアカウントのメールアドレスが確認されていないため、QRdxではこのアドレスでアカウントを作成できません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
       "cancelled": "サインインがキャンセルされました。",
       "accountNotLinked": "このアドレスのアカウントはすでに存在しますが、{provider} とは連携されていません。代わりにメールコードでサインインしてください。",
+      "accountNotLinkedNoEmailCodes": "このアドレスのアカウントはすでに存在しており、{provider}とは連携されていません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
       "emailNotShared": "{provider} からメールアドレスが共有されなかったため、QRdx では {provider} でサインインできません。代わりにメールコードでサインインしてください。",
+      "emailNotSharedNoEmailCodes": "{provider}からメールアドレスが共有されなかったため、QRdxでは{provider}でサインインできません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
       "tookTooLong": "サインインに時間がかかりすぎたか、別の場所で開始されました。もう一度お試しください。",
       "providerFailed": "{provider} でのサインインに失敗しました。もう一度お試しいただくか、別の方法でサインインしてください。",
       "sso": {
         "emailRequired": "勤務先のメールアドレスを入力してください。",
         "notFound": "そのアドレスにはSSOが設定されていません。",
+        "notSetUpFor": "{domain}にはSSOが設定されていません。",
+        "notAvailableFor": "{domain}のSSOは現在ご利用いただけません。別の方法でサインインしてください。",
         "required": "お客様の会社では、このアドレスにシングルサインオンが必須となっています。SSOでサインインしてください。",
         "unavailable": "このワークスペースでは、現在シングルサインオンをご利用いただけません。別の方法でサインインしてください。",
         "emailOutsideDomain": "IDプロバイダーから会社のドメイン以外のアドレスが送信されたため、QRdxではそのアドレスでサインインできません。ワークスペースの管理者にお問い合わせください。",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "会社のアプリ一覧からのこのサインインをQRdxで受け付けられませんでした。QRdxのサインインページから、「SSOでサインイン」を選んで勤務先のメールアドレスを入力してください。繰り返し発生する場合は、ワークスペースの管理者にお問い合わせください。",
         "replayDetected": "このサインインはすでに使用されています。もう一度サインインしてください。",
         "accountNotLinked": "このアドレスのアカウントはすでに存在しており、連携できませんでした。代わりにメールコードでサインインしてください。",
+        "accountNotLinkedNoEmailCodes": "このアドレスのアカウントはすでに存在しており、連携できませんでした。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
         "failed": "シングルサインオンを完了できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
         "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。"
       }

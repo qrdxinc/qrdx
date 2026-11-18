@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "다른 모든 기기에서 로그아웃",
           "thisDevice": "이 기기",
+          "activeNow": "지금 활동 중",
+          "activeJustNow": "방금 전 활동",
+          "activeAgo": "{relative} 활동",
+          "activeOn": "{date}에 활동",
+          "signedIn": "{date}에 로그인",
           "signOut": "로그아웃",
           "signOutEverywhereElse2": "다른 모든 기기에서 로그아웃할까요?",
           "thisDeviceStaysSignedIn": "이 기기는 로그인 상태로 유지돼요.",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "계속하려면 QRdx에 로그인하세요:",
           "continueWithGoogle": "Google로 계속하기",
           "continueWithGithub": "GitHub로 계속하기",
-          "youllReviewThesePermissionsBefore": "아무것도 공유되기 전에 이 권한을 먼저 검토하게 돼요."
+          "youllReviewThesePermissionsBefore": "아무것도 공유되기 전에 이 권한을 먼저 검토하게 돼요.",
+          "continueToSignIn": "로그인 계속하기"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "이 링크는 사용할 수 없어요",
@@ -8689,9 +8695,20 @@
       "enter": "QRdx에 이 코드를 입력하면 이 주소가 계정의 이메일로 바뀝니다:",
       "ignore": "요청하지 않으셨다면 이 이메일을 무시하세요. 코드 없이는 아무것도 바뀌지 않습니다."
     },
+    "emailChanged": {
+      "subject": "QRdx 이메일이 변경되었어요",
+      "preview": "QRdx 계정에서 이제 {newEmail}을(를) 사용해요.",
+      "reason": "이 주소가 QRdx 계정의 이메일이었기 때문에 이 메일을 받으셨어요.",
+      "body": "QRdx 계정에서 이제 <strong>{newEmail}</strong>을(를) 사용합니다. 앞으로 로그인 코드와 팀 초대는 이 주소로 전송됩니다.",
+      "notYou": "본인이 아니라면 이 주소에서 바로 <support>{email}</support>로 지원팀에 문의해 주세요. 계정을 되찾을 수 있도록 도와드리겠습니다."
+    },
     "security": {
       "device": "기기",
       "location": "대략적인 위치",
+      "browserOnOs": "{os}의 {browser}",
+      "osDevice": "{os} 기기",
+      "unknownDevice": "알 수 없는 기기",
+      "cityCountry": "{country} {city}",
       "ip": "IP 주소",
       "time": "시간",
       "by": "처리자",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "스캔 분석 보기",
-      "milestoneReason": "{workspace}의 스캔 마일스톤 알림이 켜져 있어서 보내드려요."
+      "milestoneReason": "{workspace}의 스캔 마일스톤 알림이 켜져 있어서 보내드려요.",
+      "yourWorkspace": "내 워크스페이스"
     },
     "firstScan": {
       "subject": "{code}의 첫 스캔이 발생했어요",
@@ -8843,6 +8861,12 @@
       "shortLink": "짧은 링크",
       "opens": "열람 수",
       "changed": "변경됨",
+      "fields": {
+        "destination": "대상 URL",
+        "title": "제목",
+        "design": "디자인",
+        "domain": "짧은 링크 도메인"
+      },
       "open": "코드 열기",
       "created": {
         "heading": "새 코드: {code}",
@@ -8915,6 +8939,7 @@
       "subject": "이번 주 QRdx 현황: {scans, plural, one {스캔 #회} other {스캔 #회}}",
       "preview": "지난주 {workspace} {scans, plural, one {스캔 #회} other {스캔 #회}}",
       "reason": "{workspace}의 주간 요약이 켜져 있어서 이 메일을 받았어요.",
+      "yourWorkspace": "내 워크스페이스",
       "heading": "이번 주 QRdx 현황",
       "scans": "스캔",
       "uniqueVisitors": "고유 방문자",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "이 계정은 정지되었어요. 잘못된 조치라고 생각되면 지원팀에 문의해 주세요.",
       "somethingWentWrongTryAgain": "문제가 발생했어요. 다시 시도해 주세요.",
       "newCodeSent": "새 코드를 보냈어요. 이전 코드는 더 이상 사용할 수 없어요.",
-      "connectionFailed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요."
+      "connectionFailed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요.",
+      "emailSignInIsntSet": "이 사이트에는 이메일 로그인이 설정되어 있지 않아요.",
+      "weCouldntSendACodeTry": "지금은 코드를 보낼 수 없어요. 몇 분 후에 다시 시도해 주세요.",
+      "tooManyCodesRequestedSo": "요청한 코드가 너무 많아 추가로 보내지 않았어요. 받은편지함에 있는 가장 최근 코드는 계속 사용할 수 있어요."
     },
     "passkeySignIn": {
       "continueWithPasskey": "패스키로 계속하기",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "카드 없이 무료로 시작하세요.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "지금은 {label} 로그인을 사용할 수 없어요"
+      "labelSignInIsNot": "지금은 {label} 로그인을 사용할 수 없어요",
+      "signInIsntSetUp": "로그인이 아직 설정되지 않았어요",
+      "thisSiteHasNoEmail": "이 사이트에는 이메일, Google, GitHub 로그인이 켜져 있지 않아 새 계정을 만들 수 없어요.",
+      "runThisSiteThe": "이 사이트를 운영하고 계신가요? <link>셀프 호스팅 가이드</link>에서 로그인을 켜는 방법을 확인하세요.",
+      "newToQrdxYourFirst": "QRdx가 처음이신가요? 처음 로그인하면 무료 계정이 만들어져요.",
+      "loading": "로딩 중…",
+      "weCouldntCheckHow": "여기서 로그인하는 방법을 확인하지 못했어요. <retry>다시 시도</retry>하거나 <link>로그인 페이지를 열어</link> 주세요."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "로그인 방법을 불러오는 중",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider}에서 이 이메일 주소를 확인하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {provider} 이메일 설정에서 주소를 인증한 후 다시 시도하거나 이메일 코드로 로그인해 주세요.",
+      "githubUnverifiedNoEmailCodes": "{provider}에서 이 이메일 주소를 인증하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {provider} 이메일 설정에서 인증한 후 다시 시도해 주세요{otherWay, select, yes {. 다른 방법으로 로그인해도 돼요} other {}}.",
       "googleUnverified": "{provider}에서 이 이메일 주소를 확인하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "googleUnverifiedNoEmailCodes": "{provider}에서 이 이메일 주소를 인증하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "otherUnverified": "해당 계정의 이메일 주소가 확인되지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "otherUnverifiedNoEmailCodes": "해당 계정의 이메일 주소가 인증되지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "cancelled": "로그인이 취소되었어요.",
       "accountNotLinked": "이 주소로 만든 계정이 이미 있으며 {provider}와(과) 연결되어 있지 않아요. 대신 이메일 코드로 로그인해 주세요.",
+      "accountNotLinkedNoEmailCodes": "이 주소로 만든 계정이 이미 있으며 {provider}와(과) 연결되어 있지 않아요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "emailNotShared": "{provider}에서 이메일 주소를 공유하지 않아 QRdx에서 해당 방법으로 로그인할 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "emailNotSharedNoEmailCodes": "{provider}에서 이메일 주소를 제공하지 않아 QRdx에서 이 방법으로 로그인할 수 없어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "tookTooLong": "로그인 시간이 너무 오래 걸렸거나 다른 곳에서 시작되었어요. 다시 시도해 주세요.",
       "providerFailed": "{provider} 로그인이 되지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
       "sso": {
         "emailRequired": "업무용 이메일을 입력해 주세요.",
         "notFound": "해당 주소에는 SSO가 설정되어 있지 않아요.",
+        "notSetUpFor": "{domain}에는 SSO가 설정되어 있지 않아요.",
+        "notAvailableFor": "지금은 {domain}의 SSO를 사용할 수 없어요. 다른 방법으로 로그인해 주세요.",
         "required": "회사에서 이 주소에는 SSO 로그인을 필수로 설정했어요. SSO로 로그인해 주세요.",
         "unavailable": "지금은 이 워크스페이스에서 SSO를 사용할 수 없어요. 다른 방법으로 로그인해 주세요.",
         "emailOutsideDomain": "ID 공급자가 회사 도메인이 아닌 주소를 보냈기 때문에 QRdx에서 이 주소로 로그인할 수 없어요. 워크스페이스 관리자에게 문의해 주세요.",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "회사 앱 목록에서 시작된 이 로그인을 QRdx에서 받아들일 수 없었어요. QRdx 로그인 페이지에서 시작해 주세요. SSO로 로그인을 선택하고 회사 이메일을 입력하면 돼요. 계속 같은 문제가 생기면 워크스페이스 관리자에게 문의해 주세요.",
         "replayDetected": "이미 사용된 로그인이에요. 다시 로그인해 주세요.",
         "accountNotLinked": "이 주소로 만든 계정이 이미 있어서 연결할 수 없었어요. 대신 이메일 코드로 로그인해 주세요.",
+        "accountNotLinkedNoEmailCodes": "이 주소로 만든 계정이 이미 있으며 연결할 수 없었어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
         "failed": "SSO가 제대로 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
         "rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요."
       }

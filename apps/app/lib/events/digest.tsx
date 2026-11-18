@@ -35,7 +35,11 @@ import { type EmailIntl, emailIntl } from "@/lib/i18n/email";
 import { baseUrl } from "@/lib/metadata";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { workspaceLink } from "@/lib/workspace-paths";
-import { eventWorkspaceSlug, workspaceTitle } from "./notify";
+import {
+  eventWorkspaceName,
+  eventWorkspaceSlug,
+  workspaceTitle,
+} from "./notify";
 import { type EventScope, withoutShutOutMembers } from "./subscribers";
 import { unsubscribeUrl } from "./unsubscribe";
 
@@ -296,9 +300,9 @@ export async function runWeeklyDigest({
         summary.skipped++;
         continue;
       }
-      const workspace = await workspaceTitle(scope);
       const unsubscribe = unsubscribeUrl(row.id, "digest.weekly");
       const intl = await intlFor(row.locale);
+      const workspace = workspaceTitle(await eventWorkspaceName(scope), intl);
       const result = await sendEmail({
         to: row.email,
         subject: intl.t("weeklyDigest.subject", { scans: digest.scans }),

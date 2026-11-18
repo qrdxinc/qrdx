@@ -29,7 +29,7 @@ export async function sendPasskeyNotice({
   // The account's language, never the request's: it may not be the owner's.
   const intl = await emailIntlForAddress(email, { fromRequest: false });
   const subject = passkeyNoticeSubject(change, intl);
-  const details = await currentRequestDetails(new Date(), intl.locale);
+  const details = await currentRequestDetails(new Date(), intl);
   const notice = await deliverPasskeyNotice(
     { email, subject },
     {

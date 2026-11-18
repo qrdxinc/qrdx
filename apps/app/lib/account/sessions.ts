@@ -1,3 +1,5 @@
+import type { EmailIntl } from "@/lib/i18n/email";
+import type { Translator } from "@/lib/i18n/translator";
 import { parseUserAgent } from "@/lib/user-agent";
 
 /**
@@ -38,47 +40,178 @@ export interface ApproximateLocation {
   country: string | null;
 }
 
-const DATE_FORMAT = new Intl.DateTimeFormat("en", {
-  dateStyle: "medium",
-  timeZone: "UTC",
-});
-const RELATIVE = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
-const COUNTRY_NAMES = new Intl.DisplayNames("en", { type: "region" });
+/**
+ * The words around browser, system and place names, in one language. Browser
+ * and system names stay as they are ("Chrome", "macOS"); country names come
+ * from Intl in `locale`. English by default: the stolen-session check and
+ * new passkeys' names keep the English label (./session-origin.ts,
+ * ./passkeys.ts). Other languages: deviceWords() below.
+ */
+export interface DeviceWords {
+  locale: string;
+  /** "Chrome on macOS" */
+  browserOnOs: (browser: string, os: string) => string;
+  /** "Windows device" */
+  osDevice: (os: string) => string;
+  unknownDevice: string;
+  /** "Berlin, Germany" */
+  cityCountry: (city: string, country: string) => string;
+}
+
+export const ENGLISH_DEVICE_WORDS: DeviceWords = {
+  locale: "en",
+  browserOnOs: (browser, os) => `${browser} on ${os}`,
+  osDevice: (os) => `${os} device`,
+  unknownDevice: "Unknown device",
+  cityCountry: (city, country) => `${city}, ${country}`,
+};
+
+/**
+ * The device and place words from emails.security in `intl`'s language. The
+ * security emails' details (lib/security/request-details.ts) and Settings →
+ * Sessions both use them, so they name a device and a place alike.
+ */
+export function deviceWords({ locale, t }: EmailIntl): DeviceWords {
+  return {
+    locale,
+    browserOnOs: (browser, os) => t("security.browserOnOs", { browser, os }),
+    osDevice: (os) => t("security.osDevice", { os }),
+    unknownDevice: t("security.unknownDevice"),
+    cityCountry: (city, country) =>
+      t("security.cityCountry", { city, country }),
+  };
+}
+
+/** What a session's row says around the times, in one language. */
+export interface SessionWords {
+  device: DeviceWords;
+  activeNow: string;
+  activeJustNow: string;
+  /** "Active 3 hours ago", with Intl's relative time in `device.locale` */
+  activeAgo: (relative: string) => string;
+  /** "Active on Nov 1, 2026" */
+  activeOn: (date: string) => string;
+  /** "Signed in Nov 1, 2026" */
+  signedIn: (date: string) => string;
+}
+
+export const ENGLISH_SESSION_WORDS: SessionWords = {
+  device: ENGLISH_DEVICE_WORDS,
+  activeNow: "Active now",
+  activeJustNow: "Active just now",
+  activeAgo: (relative) => `Active ${relative}`,
+  activeOn: (date) => `Active on ${date}`,
+  signedIn: (date) => `Signed in ${date}`,
+};
+
+/** Settings → Sessions' words (app.settings.account.sessionsSection). */
+export function sessionWords(
+  t: Translator<"app.settings.account.sessionsSection">,
+  device: DeviceWords,
+): SessionWords {
+  return {
+    device,
+    activeNow: t("activeNow"),
+    activeJustNow: t("activeJustNow"),
+    activeAgo: (relative) => t("activeAgo", { relative }),
+    activeOn: (date) => t("activeOn", { date }),
+    signedIn: (date) => t("signedIn", { date }),
+  };
+}
+
+// One formatter per language; the page renders in one language at a time.
+const formatters = new Map<
+  string,
+  {
+    date: Intl.DateTimeFormat;
+    relative: Intl.RelativeTimeFormat;
+    countries: Intl.DisplayNames;
+  }
+>();
+function formattersFor(locale: string) {
+  let found = formatters.get(locale);
+  if (!found) {
+    found = {
+      date: new Intl.DateTimeFormat(locale, {
+        dateStyle: "medium",
+        timeZone: "UTC",
+      }),
+      relative: new Intl.RelativeTimeFormat(locale, { numeric: "auto" }),
+      countries: new Intl.DisplayNames(locale, { type: "region" }),
+    };
+    formatters.set(locale, found);
+  }
+  return found;
+}
 
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 
+type Elapsed =
+  | { kind: "justNow" }
+  | { kind: "ago"; relative: string }
+  | { kind: "on"; date: string };
+
+function elapsedSince(date: Date, now: Date, locale: string): Elapsed {
+  const { relative, date: dates } = formattersFor(locale);
+  const elapsed = Math.max(0, now.getTime() - date.getTime());
+  if (elapsed < MINUTE) return { kind: "justNow" };
+  if (elapsed < HOUR) {
+    return {
+      kind: "ago",
+      relative: relative.format(-Math.floor(elapsed / MINUTE), "minute"),
+    };
+  }
+  if (elapsed < DAY) {
+    return {
+      kind: "ago",
+      relative: relative.format(-Math.floor(elapsed / HOUR), "hour"),
+    };
+  }
+  if (elapsed < 30 * DAY) {
+    return {
+      kind: "ago",
+      relative: relative.format(-Math.floor(elapsed / DAY), "day"),
+    };
+  }
+  return { kind: "on", date: dates.format(date) };
+}
+
 /** "just now", "5 minutes ago", "yesterday", "12 days ago", else a date. */
 export function formatRelative(date: Date, now: Date): string {
-  const elapsed = Math.max(0, now.getTime() - date.getTime());
-  if (elapsed < MINUTE) return "just now";
-  if (elapsed < HOUR) {
-    return RELATIVE.format(-Math.floor(elapsed / MINUTE), "minute");
-  }
-  if (elapsed < DAY)
-    return RELATIVE.format(-Math.floor(elapsed / HOUR), "hour");
-  if (elapsed < 30 * DAY) {
-    return RELATIVE.format(-Math.floor(elapsed / DAY), "day");
-  }
-  return `on ${DATE_FORMAT.format(date)}`;
+  const elapsed = elapsedSince(date, now, "en");
+  if (elapsed.kind === "justNow") return "just now";
+  return elapsed.kind === "ago" ? elapsed.relative : `on ${elapsed.date}`;
+}
+
+/** "Active 3 hours ago", in the words' language. */
+function lastActive(date: Date, now: Date, words: SessionWords): string {
+  const elapsed = elapsedSince(date, now, words.device.locale);
+  if (elapsed.kind === "justNow") return words.activeJustNow;
+  return elapsed.kind === "ago"
+    ? words.activeAgo(elapsed.relative)
+    : words.activeOn(elapsed.date);
 }
 
 /** "Chrome on macOS", "Safari", "curl", or "Unknown device". */
-export function describeUserAgent(userAgent: string | null): {
+export function describeUserAgent(
+  userAgent: string | null,
+  words: DeviceWords = ENGLISH_DEVICE_WORDS,
+): {
   device: SessionDevice;
   label: string;
 } {
   const ua = userAgent?.trim() ?? "";
-  if (!ua) return { device: "other", label: "Unknown device" };
+  if (!ua) return { device: "other", label: words.unknownDevice };
   const { deviceType, os, browser } = parseUserAgent(ua);
   if (browser && os)
-    return { device: deviceType, label: `${browser} on ${os}` };
+    return { device: deviceType, label: words.browserOnOs(browser, os) };
   if (browser) return { device: deviceType, label: browser };
-  if (os) return { device: deviceType, label: `${os} device` };
+  if (os) return { device: deviceType, label: words.osDevice(os) };
   // Scripts and API clients ("curl/8.7.1", "node"): their product name.
   const product = /^([A-Za-z][\w.-]{0,39})(?:\/|\s|$)/.exec(ua)?.[1];
-  return { device: deviceType, label: product ?? "Unknown device" };
+  return { device: deviceType, label: product ?? words.unknownDevice };
 }
 
 const IPV4 = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
@@ -118,18 +251,22 @@ export function maskIpAddress(address: string | null): string | null {
 /** "Berlin, Germany" / "Germany" from platform geo headers, or null. */
 export function formatLocation(
   location: ApproximateLocation | null,
+  words: DeviceWords = ENGLISH_DEVICE_WORDS,
 ): string | null {
   if (!location) return null;
   let country: string | null = null;
   if (location.country) {
     try {
-      country = COUNTRY_NAMES.of(location.country) ?? location.country;
+      country =
+        formattersFor(words.locale).countries.of(location.country) ??
+        location.country;
     } catch {
       country = location.country;
     }
   }
-  const parts = [location.city, country].filter(Boolean);
-  return parts.length > 0 ? parts.join(", ") : null;
+  const { city } = location;
+  if (city && country) return words.cityCountry(city, country);
+  return city || country || null;
 }
 
 /** Live sessions, this device first, then the most recently active. */
@@ -139,27 +276,33 @@ export function toSessionViews(
     currentSessionId,
     now,
     currentLocation = null,
+    words = ENGLISH_SESSION_WORDS,
   }: {
     currentSessionId: string | null;
     now: Date;
     currentLocation?: ApproximateLocation | null;
+    /** The page's language (English by default) */
+    words?: SessionWords;
   },
 ): SessionView[] {
+  const dates = formattersFor(words.device.locale).date;
   return rows
     .filter((row) => row.expiresAt.getTime() > now.getTime())
     .map((row) => {
       const current = row.id === currentSessionId;
-      const { device, label } = describeUserAgent(row.userAgent);
+      const { device, label } = describeUserAgent(row.userAgent, words.device);
       return {
         id: row.id,
         device,
         label,
         network: maskIpAddress(row.ipAddress),
-        location: current ? formatLocation(currentLocation) : null,
+        location: current
+          ? formatLocation(currentLocation, words.device)
+          : null,
         lastActive: current
-          ? "Active now"
-          : `Active ${formatRelative(row.updatedAt, now)}`,
-        signedIn: `Signed in ${DATE_FORMAT.format(row.createdAt)}`,
+          ? words.activeNow
+          : lastActive(row.updatedAt, now, words),
+        signedIn: words.signedIn(dates.format(row.createdAt)),
         current,
         sortKey: row.updatedAt.getTime(),
       };

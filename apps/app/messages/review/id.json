@@ -16987,6 +16987,26 @@
     "source": "d052579c6a31",
     "status": "machine"
   },
+  "app.settings.account.sessionsSection.activeNow": {
+    "source": "441658c6e186",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.activeJustNow": {
+    "source": "b4a50414adfc",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.activeAgo": {
+    "source": "ec6b0dab9196",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.activeOn": {
+    "source": "094ce2eebce7",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.signedIn": {
+    "source": "1a4654ef870c",
+    "status": "machine"
+  },
   "app.settings.account.sessionsSection.signOut": {
     "source": "48f0d3d397d4",
     "status": "machine"
@@ -27111,6 +27131,10 @@
     "source": "6a4ed122d528",
     "status": "machine"
   },
+  "app.oauth.authorize.oauthSignIn.continueToSignIn": {
+    "source": "d398cd0a268e",
+    "status": "machine"
+  },
   "app.oauth.authorize.oauthConsent.thisLinkCantBeUsed": {
     "source": "9941f422dbe5",
     "status": "machine"
@@ -27283,12 +27307,48 @@
     "source": "79fc83c2b6b8",
     "status": "machine"
   },
+  "emails.emailChanged.subject": {
+    "source": "dbd6f46a3df5",
+    "status": "machine"
+  },
+  "emails.emailChanged.preview": {
+    "source": "0df8f72f86bb",
+    "status": "machine"
+  },
+  "emails.emailChanged.reason": {
+    "source": "1c476b24d8f9",
+    "status": "machine"
+  },
+  "emails.emailChanged.body": {
+    "source": "a267dacf2fe1",
+    "status": "machine"
+  },
+  "emails.emailChanged.notYou": {
+    "source": "265f223190b5",
+    "status": "machine"
+  },
   "emails.security.device": {
     "source": "6ba0bdeccb42",
     "status": "machine"
   },
   "emails.security.location": {
     "source": "a31621515a28",
+    "status": "machine"
+  },
+  "emails.security.browserOnOs": {
+    "source": "84d4aac6be0f",
+    "status": "machine"
+  },
+  "emails.security.osDevice": {
+    "source": "c73458cf3dff",
+    "status": "machine"
+  },
+  "emails.security.unknownDevice": {
+    "source": "06c4a77e4b3e",
+    "status": "machine"
+  },
+  "emails.security.cityCountry": {
+    "source": "c1da53047cea",
     "status": "machine"
   },
   "emails.security.ip": {
@@ -27627,6 +27687,10 @@
     "source": "aa79f1f6f39d",
     "status": "machine"
   },
+  "emails.alerts.yourWorkspace": {
+    "source": "f981bd62fb8b",
+    "status": "machine"
+  },
   "emails.firstScan.subject": {
     "source": "011d74a76241",
     "status": "machine"
@@ -27709,6 +27773,22 @@
   },
   "emails.codeActivity.changed": {
     "source": "2a6141e43be0",
+    "status": "machine"
+  },
+  "emails.codeActivity.fields.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "emails.codeActivity.fields.title": {
+    "source": "7e8cd2056da7",
+    "status": "machine"
+  },
+  "emails.codeActivity.fields.design": {
+    "source": "0072e6b93494",
+    "status": "machine"
+  },
+  "emails.codeActivity.fields.domain": {
+    "source": "8a702756baf5",
     "status": "machine"
   },
   "emails.codeActivity.open": {
@@ -27943,6 +28023,10 @@
     "source": "56c2870766da",
     "status": "machine"
   },
+  "emails.weeklyDigest.yourWorkspace": {
+    "source": "4d0260e6c3e7",
+    "status": "machine"
+  },
   "emails.weeklyDigest.heading": {
     "source": "85c1878803b9",
     "status": "machine"
@@ -28079,6 +28163,18 @@
     "source": "067b61d20082",
     "status": "machine"
   },
+  "auth.emailCodeSignIn.emailSignInIsntSet": {
+    "source": "8c88e0f308cd",
+    "status": "machine"
+  },
+  "auth.emailCodeSignIn.weCouldntSendACodeTry": {
+    "source": "8592f8088a1b",
+    "status": "machine"
+  },
+  "auth.emailCodeSignIn.tooManyCodesRequestedSo": {
+    "source": "08dfc146cbc3",
+    "status": "machine"
+  },
   "auth.passkeySignIn.continueWithPasskey": {
     "source": "217394786b1b",
     "status": "machine"
@@ -28201,6 +28297,30 @@
   },
   "auth.signInPanel.labelSignInIsNot": {
     "source": "c6ec01200cea",
+    "status": "machine"
+  },
+  "auth.signInPanel.signInIsntSetUp": {
+    "source": "876579ac5dae",
+    "status": "machine"
+  },
+  "auth.signInPanel.thisSiteHasNoEmail": {
+    "source": "b4fdb11935be",
+    "status": "machine"
+  },
+  "auth.signInPanel.runThisSiteThe": {
+    "source": "2b8d23e4e72e",
+    "status": "machine"
+  },
+  "auth.signInPanel.newToQrdxYourFirst": {
+    "source": "c1cb6e40557d",
+    "status": "machine"
+  },
+  "auth.signInPanel.loading": {
+    "source": "ba3bbbe10d8b",
+    "status": "machine"
+  },
+  "auth.signInPanel.weCouldntCheckHow": {
+    "source": "a090c1708649",
     "status": "machine"
   },
   "auth.twoFactorChallenge.loadingYourSignInMethods": {
@@ -28959,12 +29079,24 @@
     "source": "95f0dbfb36f9",
     "status": "machine"
   },
+  "auth.signInErrors.githubUnverifiedNoEmailCodes": {
+    "source": "29db572babc6",
+    "status": "machine"
+  },
   "auth.signInErrors.googleUnverified": {
     "source": "84843cc711b2",
     "status": "machine"
   },
+  "auth.signInErrors.googleUnverifiedNoEmailCodes": {
+    "source": "88134a9da6b4",
+    "status": "machine"
+  },
   "auth.signInErrors.otherUnverified": {
     "source": "5796bcbeff17",
+    "status": "machine"
+  },
+  "auth.signInErrors.otherUnverifiedNoEmailCodes": {
+    "source": "4aad9d3f9806",
     "status": "machine"
   },
   "auth.signInErrors.cancelled": {
@@ -28975,8 +29107,16 @@
     "source": "d6e11767c7d9",
     "status": "machine"
   },
+  "auth.signInErrors.accountNotLinkedNoEmailCodes": {
+    "source": "3d4f0148a389",
+    "status": "machine"
+  },
   "auth.signInErrors.emailNotShared": {
     "source": "001a89783b43",
+    "status": "machine"
+  },
+  "auth.signInErrors.emailNotSharedNoEmailCodes": {
+    "source": "45a5d13151c7",
     "status": "machine"
   },
   "auth.signInErrors.tookTooLong": {
@@ -28993,6 +29133,14 @@
   },
   "auth.signInErrors.sso.notFound": {
     "source": "f177879f6b44",
+    "status": "machine"
+  },
+  "auth.signInErrors.sso.notSetUpFor": {
+    "source": "46885efe3a41",
+    "status": "machine"
+  },
+  "auth.signInErrors.sso.notAvailableFor": {
+    "source": "624bb2618671",
     "status": "machine"
   },
   "auth.signInErrors.sso.required": {
@@ -29029,6 +29177,10 @@
   },
   "auth.signInErrors.sso.accountNotLinked": {
     "source": "b55019f6068c",
+    "status": "machine"
+  },
+  "auth.signInErrors.sso.accountNotLinkedNoEmailCodes": {
+    "source": "d0d3a7ad3e10",
     "status": "machine"
   },
   "auth.signInErrors.sso.failed": {
