@@ -89,6 +89,8 @@ export interface FinishInput {
   slugDomainId: string | null;
   /** Put the code on this custom domain of the workspace (pending is fine) */
   bindDomainId: string | null;
+  /** Path alias for the code on bindDomainId (lib/path-aliases.ts) */
+  alias?: string | null;
 }
 
 export interface MigrateRepo {
@@ -114,6 +116,14 @@ export interface MigrateRepo {
     slugs: string[],
     domainId: string | null,
   ): Promise<Set<string>>;
+  /**
+   * Which path aliases are taken on the custom domain; null (or no method)
+   * when path aliases aren't available, so the plan proposes none
+   */
+  findTakenAliases?(
+    paths: string[],
+    domainId: string,
+  ): Promise<Set<string> | null>;
   existingTagNames(scope: Scope): Promise<Set<string>>;
   /** The workspace's QRdx custom domain with this hostname */
   domainFor(
@@ -184,6 +194,7 @@ async function buildPlan(
     byDestination,
     takenSlugs,
     takenOnDomain,
+    takenAliases,
     existingTags,
     hosts,
   ] = await Promise.all([
@@ -197,6 +208,9 @@ async function buildPlan(
     domain?.id && lookups.domain.length > 0
       ? repo.findTakenSlugs(lookups.domain, domain.id)
       : new Set<string>(),
+    domain?.id && lookups.aliases.length > 0 && repo.findTakenAliases
+      ? repo.findTakenAliases(lookups.aliases, domain.id)
+      : null,
     repo.existingTagNames(scope),
     repo.qrdxHosts(scope),
   ]);
@@ -208,6 +222,7 @@ async function buildPlan(
     byDestination,
     takenSlugs,
     takenOnDomain,
+    takenAliases,
     candidates: lookups.candidates,
     remaining: usage.remaining,
     existingTags,
@@ -558,8 +573,17 @@ async function finishItems(
         `${hostname} isn't available in QRdx any more, so the code got a random back-half`,
       );
     }
+    // The old path keeps answering on the domain the code goes on.
+    const alias = usage.customSlugs && onDomain ? (item.alias ?? null) : null;
+    if (item.alias && usage.customSlugs && !onDomain) {
+      warnings.set(
+        item.codeId,
+        `${hostname} isn't available in QRdx any more, so the code doesn't answer at ${item.alias}`,
+      );
+    }
     rows.push({
       codeId: item.codeId,
+      alias,
       notes: buildImportNotes({
         provider: job.provider,
         key: item.key,

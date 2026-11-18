@@ -122,6 +122,37 @@ describe("/sign-in in Spanish", () => {
     );
   });
 
+  it("says which ways in this server offers from the catalog", () => {
+    // Strings not translated yet show in English (mergeMessages), so these
+    // read the merged catalog: what the page sends, whichever it is.
+    const panel = spanish.auth.signInPanel;
+    const none = { google: false, github: false, email: false, sso: false };
+    const notSetUp = inSpanish(
+      <SignInPage next="/dashboard" options={none} signedOut={false} />,
+    );
+    expect(notSetUp).toContain(escaped(panel.signInIsntSetUp));
+    expect(notSetUp).toContain(escaped(panel.thisSiteHasNoEmail));
+    expect(notSetUp).toContain('href="/docs/self-hosting"');
+
+    const githubOnly = inSpanish(
+      <SignInPage
+        next="/dashboard"
+        options={{ ...none, github: true }}
+        signedOut={false}
+      />,
+    );
+    expect(githubOnly).toContain(
+      escaped(
+        translated(
+          en.auth.signInPanel.pickUpWhereYouLeft,
+          es.auth.signInPanel.pickUpWhereYouLeft,
+        ),
+      ),
+    );
+    expect(githubOnly).toContain(escaped(panel.newToQrdxYourFirst));
+    expect(githubOnly).not.toContain(escaped(panel.signInIsntSetUp));
+  });
+
   it("titles the page in the person's language", async () => {
     expect((await generateMetadata()).title).toBe(
       translated(

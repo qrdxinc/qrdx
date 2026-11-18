@@ -7,6 +7,7 @@ import {
 } from "@repo/auth/license";
 import type { FeatureContext } from "@repo/availability";
 import { env } from "@/env";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 
 let cached: { context: FeatureContext; until: number } | null = null;
 
@@ -35,6 +36,9 @@ export function featureContext(): FeatureContext {
       onVercel: Boolean(process.env.VERCEL),
       production: process.env.NODE_ENV === "production",
       eeFeatures: eeLicensedFeatures(licence),
+      // Whether email can go out from here: email sign-in codes need it in
+      // production.
+      outboundDelivery: isOutboundDeliveryAllowed(),
     },
     until: eeLicenseChangesAt(licence),
   };

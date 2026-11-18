@@ -10,6 +10,7 @@ import {
   SIGN_IN_CODE_NOT_SENT,
   sendVerificationOTP,
   signInCodeRateLimited,
+  signInCodesOffered,
 } from "@repo/auth/email-otp";
 import {
   addressKey,
@@ -19,6 +20,8 @@ import {
 } from "./sign-in-code-delivery";
 
 const CODE = { email: "ada@example.com", otp: "402871" };
+/** No per-address limit (signInCodeGate checks it; tests/auth covers that). */
+const anyAddress = async () => true;
 
 function fakeDeps(overrides: Partial<SignInCodeDeliveryDeps>) {
   const calls = { sent: 0, logs: [] as string[] };
@@ -93,9 +96,13 @@ describe("@repo/auth sendVerificationOTP", () => {
   it("delivers sign-in and email-change codes, each through its own sender", async () => {
     const signIn: string[] = [];
     const change: string[] = [];
-    registerSignInCodeSender(async ({ otp }) => {
-      signIn.push(otp);
-    });
+    registerSignInCodeSender(
+      async ({ otp }) => {
+        signIn.push(otp);
+      },
+      () => true,
+      anyAddress,
+    );
     registerEmailChangeCodeSender(async ({ email, otp }) => {
       change.push(`${email}:${otp}`);
     });
@@ -140,9 +147,13 @@ describe("@repo/auth sendVerificationOTP", () => {
   });
 
   it("turns a failed send into an error without the code", async () => {
-    registerSignInCodeSender(async () => {
-      throw new Error("Resend is down");
-    });
+    registerSignInCodeSender(
+      async () => {
+        throw new Error("Resend is down");
+      },
+      () => true,
+      anyAddress,
+    );
     await assert.rejects(
       sendVerificationOTP({ ...CODE, type: "sign-in" }),
       (error: { body?: { code?: string; message?: string } }) => {
@@ -154,9 +165,13 @@ describe("@repo/auth sendVerificationOTP", () => {
   });
 
   it("answers 429 when the address asked for too many codes", async () => {
-    registerSignInCodeSender(async () => {
-      throw signInCodeRateLimited();
-    });
+    registerSignInCodeSender(
+      async () => {
+        throw signInCodeRateLimited();
+      },
+      () => true,
+      anyAddress,
+    );
     await assert.rejects(
       sendVerificationOTP({ ...CODE, type: "sign-in" }),
       (error: { statusCode?: number; body?: { code?: string } }) => {
@@ -165,6 +180,34 @@ describe("@repo/auth sendVerificationOTP", () => {
         return true;
       },
     );
+  });
+});
+
+describe("@repo/auth signInCodesOffered", () => {
+  it("follows what the app registered with the sender", () => {
+    let deliverable = true;
+    registerSignInCodeSender(
+      async () => undefined,
+      () => deliverable,
+      anyAddress,
+    );
+    assert.equal(signInCodesOffered(), true);
+    deliverable = false;
+    assert.equal(signInCodesOffered(), false);
+  });
+
+  it("is off without a sender", () => {
+    registerSignInCodeSender(undefined as never, () => true, anyAddress);
+    assert.equal(signInCodesOffered(), false);
+  });
+
+  it("is off without the per-address limit", () => {
+    registerSignInCodeSender(
+      async () => undefined,
+      () => true,
+      undefined as never,
+    );
+    assert.equal(signInCodesOffered(), false);
   });
 });
 

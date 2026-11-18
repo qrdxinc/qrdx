@@ -21,6 +21,7 @@ import {
 } from "@/app/(app)/(auth)/sign-in/_lib/error-message";
 import { readSignInParams } from "@/app/(app)/(auth)/sign-in/_lib/params";
 import { confirmSignInErrorMessage } from "@/lib/account/confirmation";
+import type { SignInOptions } from "@/lib/auth/sign-in-options";
 import en from "@/messages/en.json";
 
 // In English, from the catalog (auth.signInErrors).
@@ -339,6 +340,159 @@ describe("what the sign-in page says", () => {
   it("signing in again to confirm it's you says it isn't the linked account", () => {
     for (const code of Object.values(UNVERIFIED_SIGN_UP_ERROR)) {
       expect(confirmSignInErrorMessage(code)).toMatch(/isn't linked/);
+    }
+  });
+});
+
+describe("what the sign-in page says where no email code can be sent", () => {
+  const errors = en.auth.signInErrors;
+  const NONE: SignInOptions = {
+    google: false,
+    github: false,
+    email: false,
+    sso: false,
+  };
+  const ALL: SignInOptions = {
+    google: true,
+    github: true,
+    email: true,
+    sso: true,
+  };
+  const message = (
+    code: string,
+    via: SocialSignIn | null,
+    ways?: SignInOptions,
+  ) => signInErrorMessageIn(code, via, tErrors, ways);
+
+  // Every message that suggests an email code: its code, where it came back
+  // from, today's English, the way that failed and another way in.
+  const SUGGESTS_A_CODE: [
+    string,
+    SocialSignIn | null,
+    string,
+    Partial<SignInOptions>,
+    Partial<SignInOptions>,
+  ][] = [
+    [
+      "github_email_unverified",
+      "github",
+      errors.githubUnverified.replaceAll("{provider}", "GitHub"),
+      { github: true },
+      { google: true },
+    ],
+    [
+      "google_email_unverified",
+      "google",
+      errors.googleUnverified.replaceAll("{provider}", "Google"),
+      { google: true },
+      { github: true },
+    ],
+    [
+      "oauth_email_unverified",
+      null,
+      errors.otherUnverified,
+      { sso: true },
+      { google: true },
+    ],
+    [
+      "account_not_linked",
+      "google",
+      errors.accountNotLinked.replaceAll("{provider}", "Google"),
+      { google: true },
+      { sso: true },
+    ],
+    [
+      "email_not_found",
+      "github",
+      errors.emailNotShared.replaceAll("{provider}", "GitHub"),
+      { github: true },
+      { google: true },
+    ],
+    // Single sign-on's own (ee/sso/messages.ts), both spellings.
+    [
+      "account_not_linked",
+      null,
+      errors.sso.accountNotLinked,
+      { sso: true },
+      { github: true },
+    ],
+    [
+      "account not linked",
+      null,
+      errors.sso.accountNotLinked,
+      { sso: true },
+      { google: true },
+    ],
+  ];
+
+  it("says what it always said where email codes work", () => {
+    for (const [code, via, today] of SUGGESTS_A_CODE) {
+      expect(today, code).toMatch(/email code/);
+      expect(message(code, via), code).toBe(today);
+      expect(message(code, via, ALL), code).toBe(today);
+      expect(message(code, via, { ...NONE, email: true }), code).toBe(today);
+    }
+  });
+
+  it("points to another way in where one works", () => {
+    for (const [code, via, , failed, other] of SUGGESTS_A_CODE) {
+      const text = message(code, via, { ...NONE, ...failed, ...other });
+      expect(text, code).not.toMatch(/email code/i);
+      expect(text, code).toMatch(/try another way to sign in\.$/i);
+    }
+    expect(
+      message("google_email_unverified", "google", {
+        ...NONE,
+        google: true,
+        github: true,
+      }),
+    ).toBe(
+      "Google hasn't verified this email address, so QRdx can't create an account with it. Try another way to sign in.",
+    );
+  });
+
+  it("sends people to whoever runs the site where nothing else works", () => {
+    for (const [code, via, , failed] of SUGGESTS_A_CODE) {
+      const text = message(code, via, { ...NONE, ...failed });
+      expect(text, code).not.toMatch(/email code/i);
+      expect(text, code).not.toMatch(/another way/i);
+      if (code === "github_email_unverified") continue;
+      expect(text, code).toMatch(/Ask whoever runs this site for help\.$/);
+    }
+    expect(
+      message("account_not_linked", "google", { ...NONE, google: true }),
+    ).toBe(
+      "An account with this address already exists and isn't linked to Google. Ask whoever runs this site for help.",
+    );
+  });
+
+  it("still tells GitHub users to verify the address there", () => {
+    expect(
+      message("github_email_unverified", "github", { ...NONE, github: true }),
+    ).toBe(
+      "GitHub hasn't verified this email address, so QRdx can't create an account with it. Verify it in your GitHub email settings and try again.",
+    );
+    expect(
+      message("github_email_unverified", "github", {
+        ...NONE,
+        github: true,
+        sso: true,
+      }),
+    ).toBe(
+      "GitHub hasn't verified this email address, so QRdx can't create an account with it. Verify it in your GitHub email settings and try again, or try another way to sign in.",
+    );
+  });
+
+  it("leaves the other messages alone", () => {
+    for (const [code, via] of [
+      ["access_denied", "github"],
+      ["state_mismatch", "google"],
+      ["invalid_code", "github"],
+      ["sso_required", "google"],
+      ["sso_email_unverified", null],
+      ["whatever", null],
+    ] as const) {
+      expect(message(code, via, NONE), code).toBe(message(code, via));
     }
   });
 });
