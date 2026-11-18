@@ -5,30 +5,48 @@
  */
 import type { SecondStep } from "@repo/auth/new-sign-in";
 import { isReservedEmailAddress } from "@/lib/email/reserved-address";
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import type { NoticeDeliveryDeps } from "./email-change";
 
-const METHODS: Record<string, string> = {
-  "email-otp": "Email code",
+// Product names stay as they are in every language.
+const PROVIDERS: Record<string, string> = {
   google: "Google",
   github: "GitHub",
-  passkey: "Passkey",
-  sso: "Single sign-on",
 };
 
-const SECOND_STEPS: Record<SecondStep, string> = {
-  totp: "an authenticator code",
-  "backup-code": "a backup code",
-  passkey: "a passkey",
-};
+// The rest are translated (emails.newSignIn in messages/en.json).
+const METHODS = {
+  "email-otp": "emailOtp",
+  passkey: "passkey",
+  sso: "sso",
+} as const;
+
+const SECOND_STEPS = {
+  totp: "totp",
+  "backup-code": "backupCode",
+  passkey: "passkey",
+} as const satisfies Record<SecondStep, string>;
 
 /** "Google", "Email code, then a passkey"; null when the way in is unknown. */
 export function signInMethodLabel(
   method: string | null,
   secondStep: SecondStep | null,
+  intl: EmailIntl = ENGLISH_EMAIL,
 ): string | null {
-  const first = method ? (METHODS[method] ?? null) : null;
+  if (!method) return null;
+  const { t } = intl;
+  let first: string | null = null;
+  if (Object.hasOwn(PROVIDERS, method)) first = PROVIDERS[method];
+  else if (Object.hasOwn(METHODS, method)) {
+    first = t(`newSignIn.methods.${METHODS[method as keyof typeof METHODS]}`);
+  }
   if (!first) return null;
-  return secondStep ? `${first}, then ${SECOND_STEPS[secondStep]}` : first;
+  return secondStep
+    ? t("newSignIn.withSecondStep", {
+        method: first,
+        secondStep: t(`newSignIn.secondSteps.${SECOND_STEPS[secondStep]}`),
+      })
+    : first;
 }
 
 // Test and e2e accounts use reserved addresses (@qrdx.test) and sign in

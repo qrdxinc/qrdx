@@ -1,10 +1,11 @@
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   ReviewSecurityButton,
   SecurityDetails,
   type SecurityEventDetails,
-  SupportLink,
+  supportLinkArgs,
 } from "./security-parts";
 
 export type PasskeyChange = "added" | "removed";
@@ -14,12 +15,20 @@ export const PASSKEY_NOTICE_SUBJECTS: Record<PasskeyChange, string> = {
   removed: "A passkey was removed from your QRdx account",
 };
 
+/** The subject line in the recipient's language. */
+export const passkeyNoticeSubject = (
+  change: PasskeyChange,
+  intl: EmailIntl = ENGLISH_EMAIL,
+) => intl.t(`passkeyNotice.${change}.subject`);
+
 export interface PasskeyNoticeEmailProps {
   change: PasskeyChange;
   /** The passkey's name, e.g. "Chrome on macOS" */
   passkeyName: string;
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
+  /** The recipient's language */
+  intl?: EmailIntl;
 }
 
 /**
@@ -31,40 +40,27 @@ export function PasskeyNoticeEmail({
   change,
   passkeyName,
   details,
+  intl = ENGLISH_EMAIL,
 }: PasskeyNoticeEmailProps) {
-  const added = change === "added";
+  const { t } = intl;
   return (
     <EmailLayout
-      preview={
-        added
-          ? `The passkey "${passkeyName}" can now sign in to your QRdx account.`
-          : `The passkey "${passkeyName}" can no longer sign in to your QRdx account.`
-      }
-      reason="You got this email because it's the address of a QRdx account, and we tell you about every change to how it signs in."
+      intl={intl}
+      preview={t(`passkeyNotice.${change}.preview`, { name: passkeyName })}
+      reason={t("passkeyNotice.reason")}
     >
-      <EmailHeading>{PASSKEY_NOTICE_SUBJECTS[change]}</EmailHeading>
+      <EmailHeading>{passkeyNoticeSubject(change, intl)}</EmailHeading>
       <EmailText>
-        {added ? (
-          <>
-            The passkey <strong>{passkeyName}</strong> can now sign in to your
-            QRdx account, and works as your second step when two-step
-            verification is on.
-          </>
-        ) : (
-          <>
-            The passkey <strong>{passkeyName}</strong> can no longer sign in to
-            your QRdx account.
-          </>
-        )}
+        {t.rich(`passkeyNotice.${change}.body`, {
+          name: passkeyName,
+          strong: (chunks) => <strong>{chunks}</strong>,
+        })}
       </EmailText>
-      <SecurityDetails details={details} />
-      <EmailText>If this was you, there's nothing else to do.</EmailText>
-      <ReviewSecurityButton />
+      <SecurityDetails details={details} intl={intl} />
+      <EmailText>{t("security.nothingElse")}</EmailText>
+      <ReviewSecurityButton intl={intl} />
       <EmailDivider />
-      <MutedText>
-        If this wasn't you, sign in and remove any passkey you don't recognise,
-        then contact support at <SupportLink /> from this address.
-      </MutedText>
+      <MutedText>{t.rich("passkeyNotice.notYou", supportLinkArgs)}</MutedText>
     </EmailLayout>
   );
 }

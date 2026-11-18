@@ -8665,6 +8665,128 @@
       "enter": "Introduce este código en QRdx para que este sea el correo de tu cuenta:",
       "ignore": "Si no lo solicitaste, ignora este correo. Nada cambia sin el código."
     },
+    "security": {
+      "device": "Dispositivo",
+      "location": "Ubicación aproximada",
+      "ip": "Dirección IP",
+      "time": "Hora",
+      "by": "Por",
+      "support": "Soporte de QRdx",
+      "review": "Revisar seguridad",
+      "nothingElse": "Si fuiste tú, no tienes que hacer nada más."
+    },
+    "confirmationCode": {
+      "subject": "Tu código de confirmación de QRdx",
+      "preview": "Introduce este código para confirmar que eres tú. Caduca en {minutes, plural, one {# minuto} other {# minutos}}.",
+      "reason": "Recibes este correo porque alguien pidió cambiar la seguridad de la cuenta de QRdx asociada a esta dirección.",
+      "heading": "Confirma que eres tú",
+      "enter": "Introduce este código en QRdx para confirmar que eres tú antes de un cambio en la seguridad de tu cuenta:",
+      "notYou": "Si no lo pediste, no introduzcas el código: es posible que alguien haya iniciado sesión en tu cuenta. Revisa tu seguridad y contacta con soporte en <support>{email}</support> desde esta dirección."
+    },
+    "newSignIn": {
+      "subject": "Nuevo inicio de sesión en tu cuenta de QRdx",
+      "preview": "{device} inició sesión en tu cuenta de QRdx{hasLocation, select, yes { cerca de {location}} other {}}.",
+      "newDevice": "Un dispositivo nuevo",
+      "reason": "Recibes este correo porque es la dirección de una cuenta de QRdx y un navegador o dispositivo inició sesión en ella por primera vez.",
+      "body": "Un navegador o dispositivo que no había iniciado sesión antes en tu cuenta de QRdx acaba de hacerlo.",
+      "signedInWith": "Inicio de sesión con",
+      "nothingToDo": "Si fuiste tú, no tienes que hacer nada.",
+      "notYou": "Si no fuiste tú:",
+      "signOut": "Inicia sesión, ve a Ajustes → Perfil y seguridad y, en Sesiones, haz clic en Cerrar sesión en los demás.",
+      "turnOn": "Activa la verificación en dos pasos en la misma página, para que iniciar sesión también requiera tu llave de acceso o tu app de autenticación.",
+      "contact": "Contacta con soporte en <support>{email}</support> desde esta dirección y te ayudaremos a proteger tu cuenta.",
+      "methods": {
+        "emailOtp": "Código por correo",
+        "passkey": "Llave de acceso",
+        "sso": "Inicio único (SSO)"
+      },
+      "secondSteps": {
+        "totp": "un código de autenticación",
+        "backupCode": "un código de respaldo",
+        "passkey": "una llave de acceso"
+      },
+      "withSecondStep": "{method} y después {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Recibes este correo porque es la dirección de una cuenta de QRdx y te avisamos de cada cambio en la forma de iniciar sesión.",
+      "notYou": "Si no fuiste tú, inicia sesión y elimina las llaves de acceso que no reconozcas; después contacta con soporte en <support>{email}</support> desde esta dirección.",
+      "added": {
+        "subject": "Se añadió una llave de acceso a tu cuenta de QRdx",
+        "preview": "La llave de acceso \"{name}\" ya puede iniciar sesión en tu cuenta de QRdx.",
+        "body": "La llave de acceso <strong>{name}</strong> ya puede iniciar sesión en tu cuenta de QRdx y funciona como segundo paso cuando la verificación en dos pasos está activada."
+      },
+      "removed": {
+        "subject": "Se eliminó una llave de acceso de tu cuenta de QRdx",
+        "preview": "La llave de acceso \"{name}\" ya no puede iniciar sesión en tu cuenta de QRdx.",
+        "body": "La llave de acceso <strong>{name}</strong> ya no puede iniciar sesión en tu cuenta de QRdx."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Recibes este correo porque es la dirección de una cuenta de QRdx y cambió la seguridad de su inicio de sesión.",
+      "notYou": "Si no fuiste tú, contacta con soporte en <support>{email}</support> desde esta dirección de inmediato y te ayudaremos a proteger tu cuenta.",
+      "on": {
+        "subject": "La verificación en dos pasos está activada en tu cuenta de QRdx",
+        "heading": "Verificación en dos pasos activada",
+        "body": "Ahora, para iniciar sesión en QRdx se pide un segundo paso: tu llave de acceso o un código de tu aplicación de autenticación. Un código de respaldo sirve cuando no puedes usar ninguna de las dos."
+      },
+      "off": {
+        "subject": "Se desactivó la verificación en dos pasos en tu cuenta de QRdx",
+        "heading": "Verificación en dos pasos desactivada",
+        "body": "Iniciar sesión en QRdx ya no pide un segundo paso. Tus códigos de respaldo dejan de funcionar."
+      },
+      "backupCodes": {
+        "subject": "Nuevos códigos de respaldo para tu cuenta de QRdx",
+        "heading": "Tienes nuevos códigos de respaldo",
+        "body": "Se crearon nuevos códigos de respaldo para tu cuenta de QRdx. Los anteriores dejan de funcionar."
+      },
+      "appAdded": {
+        "subject": "Se añadió una aplicación de autenticación a tu cuenta de QRdx",
+        "heading": "Aplicación de autenticación añadida",
+        "body": "Los códigos de la aplicación de autenticación que acabas de configurar ya sirven como segundo paso al iniciar sesión en QRdx."
+      },
+      "appRemoved": {
+        "subject": "Se eliminó la aplicación de autenticación de tu cuenta de QRdx",
+        "heading": "Aplicación de autenticación eliminada",
+        "body": "Los códigos de tu aplicación de autenticación ya no sirven para iniciar sesión en QRdx. La verificación en dos pasos sigue activada con tus otros métodos."
+      },
+      "supportOff": {
+        "subject": "El soporte de QRdx desactivó la verificación en dos pasos",
+        "heading": "Verificación en dos pasos desactivada",
+        "body": "El soporte de QRdx desactivó la verificación en dos pasos de tu cuenta y cerró tu sesión en todos los dispositivos. Iniciar sesión ya no pide un segundo paso. Puedes volver a activarla en Ajustes → Perfil y seguridad."
+      },
+      "supportResetScheduled": {
+        "subject": "El soporte de QRdx desactivará la verificación en dos pasos",
+        "heading": "El soporte desactivará la verificación en dos pasos",
+        "body": "Alguien pidió al soporte de QRdx que desactive la verificación en dos pasos de tu cuenta, alegando que perdió todas las formas de completar el segundo paso.",
+        "when": "El soporte la desactivará {hasDate, select, yes {el {date} (UTC)} other {en 7 días}} y cerrará la sesión de tu cuenta en todos los dispositivos. Hasta entonces, nada cambia.",
+        "howToStop": "Si lo pediste tú, no tienes que hacer nada. Si no fuiste tú, inicia sesión en QRdx con tu aplicación de autenticación o un código de respaldo: así se cancela. También puedes cancelarlo en Ajustes → Perfil y seguridad, o responder a este correo."
+      },
+      "supportResetCancelled": {
+        "subject": "La verificación en dos pasos sigue activada en tu cuenta de QRdx",
+        "heading": "La verificación en dos pasos sigue activada",
+        "body": "Se canceló la solicitud del soporte para desactivar la verificación en dos pasos de tu cuenta. No ha cambiado nada.",
+        "byPerson": "Cancelaste la solicitud del soporte para desactivar la verificación en dos pasos de tu cuenta de QRdx.",
+        "bySignIn": "Iniciaste sesión con tu aplicación de autenticación o un código de respaldo, así que se canceló la solicitud del soporte para desactivar la verificación en dos pasos de tu cuenta de QRdx.",
+        "bySupport": "El soporte de QRdx canceló la solicitud para desactivar la verificación en dos pasos de tu cuenta.",
+        "staysOn": "La verificación en dos pasos sigue activada, con tus códigos de respaldo y tus métodos como estaban."
+      },
+      "backupCodeUsed": {
+        "subject": "Se usó un código de respaldo en tu cuenta de QRdx",
+        "heading": "Se usó un código de respaldo",
+        "body": "Se acaba de usar uno de tus códigos de respaldo para iniciar sesión en tu cuenta de QRdx. Cada código funciona una sola vez, así que ese ya no sirve.",
+        "toConfirm": "Se acaba de usar uno de tus códigos de respaldo para confirmar que eres tú antes de un cambio de seguridad en tu cuenta de QRdx. Cada código funciona una sola vez, así que ese ya no sirve.",
+        "left": "{count, plural, =0 {Ese era tu último código de respaldo.} one {Te queda # código de respaldo.} other {Te quedan # códigos de respaldo.}}",
+        "makeNew": "Genera otros nuevos en Ajustes → Perfil y seguridad, para seguir teniendo una forma de entrar cuando no puedas usar tu passkey o tu aplicación de autenticación."
+      },
+      "signedOutElsewhere": "Se cerró la sesión de todos los demás dispositivos conectados a tu cuenta, así que cada uno volverá a iniciar sesión con el segundo paso."
+    },
+    "payoutEmailNotice": {
+      "subject": "Tus pagos de afiliado de QRdx ahora van a una nueva dirección de PayPal",
+      "preview": "Los pagos de afiliado de QRdx se enviarán a {paypalEmail}.",
+      "reason": "Recibes este correo porque es la dirección de una cuenta de QRdx en el programa de afiliados, y te avisamos de cada cambio en el destino de sus pagos.",
+      "body": "{replaced, select, yes {Se cambió la dirección de PayPal de tus pagos de afiliado.} other {Se añadió una dirección de PayPal para tus pagos de afiliado.}} A partir de ahora enviaremos tus pagos a <strong>{paypalEmail}</strong>.",
+      "notYou": "Si no fuiste tú, inicia sesión, vuelve a cambiar la dirección en Ajustes → Programa de afiliados y contacta con el soporte en <support>{email}</support> desde esta dirección antes del próximo pago."
+    },
     "alerts": {
       "viewAnalytics": "Ver analíticas de escaneos",
       "milestoneReason": "Recibes esto porque las alertas de hitos de escaneos están activadas para {workspace}."

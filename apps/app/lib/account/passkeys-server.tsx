@@ -3,10 +3,11 @@ import "server-only";
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import { sendEmail } from "@/lib/email/send";
 import {
-  PASSKEY_NOTICE_SUBJECTS,
   type PasskeyChange,
   PasskeyNoticeEmail,
+  passkeyNoticeSubject,
 } from "@/lib/email/templates/passkey-notice";
+import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import { currentRequestDetails } from "@/lib/security/request-details";
 import { deliverPasskeyNotice } from "./passkeys";
 
@@ -25,8 +26,10 @@ export async function sendPasskeyNotice({
   change: PasskeyChange;
   passkeyName: string;
 }): Promise<void> {
-  const subject = PASSKEY_NOTICE_SUBJECTS[change];
-  const details = await currentRequestDetails();
+  // The account's language, never the request's: it may not be the owner's.
+  const intl = await emailIntlForAddress(email, { fromRequest: false });
+  const subject = passkeyNoticeSubject(change, intl);
+  const details = await currentRequestDetails(new Date(), intl.locale);
   const notice = await deliverPasskeyNotice(
     { email, subject },
     {
@@ -41,6 +44,7 @@ export async function sendPasskeyNotice({
             <PasskeyNoticeEmail
               change={change}
               details={details}
+              intl={intl}
               passkeyName={passkeyName}
             />
           ),
