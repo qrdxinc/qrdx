@@ -193,10 +193,10 @@ export function SignInMethodsSection({
                   {lastUsedBadge("email-otp")}
                 </>
               }
-              detail={`A one-time code sent to ${email}.`}
+              detail={t("oneTimeCodeSentTo", { email })}
               key={method.id}
               kind="email"
-              title={method.label}
+              title={t("emailCode")}
             />
           ) : (
             <MethodRow
@@ -214,8 +214,11 @@ export function SignInMethodsSection({
               badges={lastUsedBadge(method.kind)}
               detail={
                 method.unlinkBlocked
-                  ? `Linked ${method.linkedAt}. ${method.unlinkBlocked}`
-                  : `Linked ${method.linkedAt}.`
+                  ? t("linkedOnReason", {
+                      date: method.linkedAt ?? "",
+                      reason: method.unlinkBlocked,
+                    })
+                  : t("linkedOn", { date: method.linkedAt ?? "" })
               }
               key={method.id}
               kind={method.kind}
@@ -236,7 +239,10 @@ export function SignInMethodsSection({
                 {t("link")}
               </Button>
             }
-            detail={`Not linked. Use the ${PROVIDER_LABELS[provider]} account with ${email}.`}
+            detail={t("notLinkedUseThe", {
+              provider: PROVIDER_LABELS[provider],
+              email,
+            })}
             key={provider}
             kind={provider}
             title={PROVIDER_LABELS[provider]}

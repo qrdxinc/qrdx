@@ -6101,7 +6101,12 @@
           "signInMethods": "Sign-in methods",
           "valueIsLinked": "{value} is linked",
           "valueCantBeLinkedRight": "{value} can't be linked right now.",
-          "labelIsNoLongerLinked": "{label} is no longer linked"
+          "labelIsNoLongerLinked": "{label} is no longer linked",
+          "emailCode": "Email code",
+          "oneTimeCodeSentTo": "A one-time code sent to {email}.",
+          "linkedOn": "Linked {date}.",
+          "linkedOnReason": "Linked {date}. {reason}",
+          "notLinkedUseThe": "Not linked. Use the {provider} account with {email}."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Support will turn this off on {dueDate}",
@@ -6148,7 +6153,9 @@
           "afterYouSignInPasskey": "After you sign in, QRdx asks for your passkey. A backup code works too.",
           "afterYouSignInApp": "After you sign in, QRdx asks for a code from your authenticator app. A backup code works too.",
           "afterYouSignInQrdx2": "After you sign in, QRdx asks for a backup code.",
-          "passkeySpotlight": "A passkey can now be your second step, instead of an authenticator code."
+          "passkeySpotlight": "A passkey can now be your second step, instead of an authenticator code.",
+          "addedOn": "Added {date}",
+          "passkeyName": "Passkey"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Step {stepNumber, number} of {length, number}",
@@ -9798,6 +9805,149 @@
         "failed": "Single sign-on didn't work. Try again, or sign in another way.",
         "rateLimited": "Too many tries. Wait a minute, then try again."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "Too many changes. Wait a few minutes and try again.",
+      "failed": "Something went wrong. Please try again.",
+      "nameMissing": "Enter your name.",
+      "nameTooLong": "Use {max} characters or fewer.",
+      "nameSpecialCharacters": "Remove special characters.",
+      "profileSignedOut": "Sign in to change your profile.",
+      "uploadsUnavailable": "Picture uploads aren't set up on this server.",
+      "pictureMissing": "Choose a picture to upload.",
+      "pictureTooLarge": "That picture is too large. Try a smaller one.",
+      "pictureType": "Use a PNG, JPEG or WebP picture.",
+      "methodsSignedOut": "Sign in to manage sign-in methods.",
+      "linkUnavailable": "{provider} can't be linked right now.",
+      "unlinkBlocked": {
+        "notFound": "That sign-in method isn't linked to your account.",
+        "unsupported": "This sign-in method can't be removed here."
+      },
+      "sessionsSignedOut": "Sign in to manage sessions.",
+      "thisDevice": "That's this device. Use Sign out in the menu instead."
+    },
+    "twoFactor": {
+      "signedOut": "Sign in to change two-step verification.",
+      "alreadyOn": "Two-step verification is already on.",
+      "notOn": "Two-step verification is off.",
+      "appAlreadySetUp": "An authenticator app is already set up.",
+      "noApp": "There's no authenticator app to remove.",
+      "noPasskey": "Add a passkey first.",
+      "restart": "This setup expired. Start again.",
+      "rateLimitedLong": "Too many tries. Wait a few minutes and try again."
+    },
+    "emailChange": {
+      "reauth": "For your security, sign out and sign in again, then change your email within a day.",
+      "sameEmail": "That's already your email.",
+      "invalidEmail": "Enter a valid email address.",
+      "invalidCode": "Enter the 6-digit code from the email.",
+      "rateLimited": "Too many tries. Wait a few minutes and try again.",
+      "codeRateLimited": "Too many codes requested for that address. Wait a few minutes and try again.",
+      "notSent": "We couldn't send a code right now. Please try again.",
+      "codeDidntWork": "That code didn't work. Check it, or send a new code.",
+      "taken": "That email already belongs to another QRdx account.",
+      "signedOut": "Sign in to change your email.",
+      "unavailable": "Email isn't set up on this site, so the address can't be changed here.",
+      "failed": "Something went wrong. Please try again.",
+      "ssoOff": "Your company requires single sign-on for {domain}, so your account can't move to an address elsewhere. Ask your workspace admin.",
+      "ssoOnto": "Your company requires single sign-on for {domain}. To use an address there, sign in with SSO instead."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "Type \"{word}\" to confirm.",
+      "signedOut": "Sign in to delete your account.",
+      "rateLimited": "Too many attempts. Wait 15 minutes and try again.",
+      "failed": "We couldn't delete your account. Please try again.",
+      "subscriptionNotCancelled": "We couldn't cancel your subscription, so your account wasn't deleted. Please try again in a few minutes, or email {email}.",
+      "ownerNotMade": "We couldn't make {person} an owner of {team}, so your account wasn't deleted. Make someone else an owner of the team, then try again."
+    },
+    "affiliate": {
+      "notReady": "The affiliate program isn't available yet.",
+      "signedOut": "Sign in to continue.",
+      "failed": "Something went wrong. Please try again.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "paypalEmailInvalid": "Enter the email address of your PayPal account.",
+      "paypalEmailMissing": "Enter an email address.",
+      "paypalNotApproved": "You can add a PayPal email once your application is approved.",
+      "codeUnchanged": "That's already your code.",
+      "codeNotApproved": "You can choose a code once your application is approved.",
+      "chosenCode": {
+        "format": "Use 3 to 32 lower-case letters, digits and single hyphens, starting and ending with a letter or digit.",
+        "reserved": "That code is reserved. Pick another.",
+        "email": "That's the start of your email address. Pick a code that doesn't publish it.",
+        "taken": "That code is taken. Pick another.",
+        "alreadyChanged": "You've already chosen your code. It can only change once."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "That looks too short",
+      "tooLong": "That looks too long",
+      "noSpaces": "Paste it without spaces",
+      "storeDomainMissing": "Enter your store domain",
+      "stripeSecretKey": "That's a full secret key. Create a restricted key with Payment Links: Read instead; QRdx never stores secret keys.",
+      "stripeRestrictedKey": "Paste a restricted key: it starts with rk_live_ or rk_test_.",
+      "calcomKey": "Paste a Cal.com API key: it starts with cal_live_ (or cal_ for test keys).",
+      "shopifyCredentials": "Paste the app's client ID and secret, or an Admin API access token.",
+      "signedOut": "Sign in to connect an account.",
+      "checkDetails": "Check the details and try again.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "notAccepted": "{name} didn't accept that. Check it and try again.",
+      "stripeForbidden": "That key can't read Payment Links. Set Payment Links to Read on the key.",
+      "shopifyForbidden": "That app can't read products. Add the read_products scope and reinstall it.",
+      "forbidden": "{name} refused access for this key.",
+      "unreachable": "Couldn't reach {name}. Try again."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "That key looks too short",
+      "keyTooLong": "That key looks too long",
+      "keyNoSpaces": "Paste the key without spaces",
+      "signedOut": "Sign in to connect an account.",
+      "checkKey": "Check the key and try again.",
+      "notConfigured": "{name} isn't configured here.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "keyRejected": "{name} didn't accept that {label}. Check it and try again.",
+      "unreachable": "Couldn't reach {name}. Try again.",
+      "domainSignedOut": "Sign in first.",
+      "pickDomain": "Pick a domain.",
+      "connectFirst": "Connect the account first.",
+      "domainNotFound": "That domain isn't in your account.",
+      "domainNotSaved": "Couldn't save the domain. Try again."
+    },
+    "slackBot": {
+      "unavailable": "The QRdx bot for Slack isn't available here.",
+      "signedOut": "Sign in to change this.",
+      "notAvailableYet": "This isn't available yet.",
+      "rateLimited": "Too many tries. Wait a minute.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "oauthApps": {
+      "signedOut": "Sign in to manage OAuth apps.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "apiKeys": {
+      "signedOut": "Sign in to manage API keys.",
+      "unavailable": "API keys aren't available on this deployment yet.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "slackLinks": {
+      "signedOut": "Sign in to manage Slack links.",
+      "notAvailableYet": "This isn't available yet.",
+      "rateLimited": "Too many tries. Wait a minute.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "authorizedApps": {
+      "signedOut": "Sign in to manage app access.",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "notifications": {
+      "signedOut": "Sign in to change notifications.",
+      "webhookUrlMissing": "Paste the webhook URL",
+      "rateLimited": "Rate limit exceeded. Please try again later.",
+      "failed": "Something went wrong. Please try again."
     }
   },
   "codeBuilder": {

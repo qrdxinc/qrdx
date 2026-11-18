@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { confirmationNeededFor } from "@/lib/account/confirmation-scope";
 import { HttpError } from "@/lib/error-response";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
 import { canManageOAuthApps } from "@/lib/oauth-apps/access";
 import {
   createOAuthApp,
@@ -19,6 +20,11 @@ import { enforceRateLimits } from "@/lib/request-guards";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError } from "@/types/errors";
+
+// Refusals of its own are in the person's language (settingsActions.oauthApps).
+// The service's (lib/oauth-apps/service.ts: plan limits, owners only) and
+// the form's checks (lib/oauth-apps/validation.ts, which the form runs
+// first and lib/oauth.ts shares) are still English.
 
 export type OAuthAppActionResult<T> =
   | { ok: true; data: T }
@@ -37,17 +43,24 @@ const updateSchema = oauthAppInputSchema.extend({
 });
 const activeSchema = idSchema.extend({ active: z.boolean() });
 
-function failure(error: unknown, action: string): OAuthAppActionResult<never> {
+async function failure(
+  error: unknown,
+  action: string,
+): Promise<OAuthAppActionResult<never>> {
+  const text = settingsActionText("settingsActions.oauthApps");
   if (error instanceof UnauthorizedError) {
-    return { ok: false, error: "Sign in to manage OAuth apps." };
+    return { ok: false, error: (await text())("signedOut") };
   }
   if (error instanceof HttpError) {
+    if (error.code === "RATE_LIMITED") {
+      return { ok: false, error: (await text())("rateLimited") };
+    }
     return error.status === 402
       ? { ok: false, error: error.message, upgrade: true }
       : { ok: false, error: error.message };
   }
   logError(error as Error, { action });
-  return { ok: false, error: "Something went wrong. Please try again." };
+  return { ok: false, error: (await text())("failed") };
 }
 
 function invalid(error: z.ZodError): OAuthAppActionResult<never> {
@@ -85,7 +98,7 @@ async function run<T>(
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { ok: true, data };
   } catch (error) {
-    return failure(error, `oauth-apps.${action}`);
+    return await failure(error, `oauth-apps.${action}`);
   }
 }
 

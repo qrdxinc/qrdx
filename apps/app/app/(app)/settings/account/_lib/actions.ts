@@ -24,10 +24,12 @@ import {
   type LinkedAccount,
   PROVIDER_LABELS,
   SOCIAL_PROVIDERS,
-  UNLINK_BLOCK_MESSAGES,
+  unlinkBlockMessages,
   unlinkBlockReason,
 } from "@/lib/account/sign-in-methods";
 import { SNIFF_BYTES, sniffFileType } from "@/lib/files/magic";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
+import type { Translator } from "@/lib/i18n/translator";
 import { baseUrl } from "@/lib/metadata";
 import { logError } from "@/lib/shared";
 import {
@@ -48,6 +50,9 @@ import {
 // never rate limited: someone whose account is under attack must be able to
 // sign the attacker out at once, and a limiter the attacker's session shares
 // would let it use up their tries first.
+//
+// Refusals are in the person's language (settingsActions.account, through
+// lib/i18n/settings-action-text.ts); the page shows them as they are.
 
 export type AccountActionResult = { ok: true } | { ok: false; error: string };
 
@@ -60,11 +65,12 @@ const signInMethodsLimiter = createRateLimiter({
   limiter: slidingWindow(20, "10 m"),
 });
 
-const RATE_LIMITED = "Too many changes. Wait a few minutes and try again.";
-const SOMETHING_WRONG = "Something went wrong. Please try again.";
 const PATH = "/settings/account";
 
 const fail = (error: string): AccountActionResult => ({ ok: false, error });
+
+/** settingsActions.account in the person's language, read when refusing. */
+const accountText = () => settingsActionText("settingsActions.account");
 
 interface SignedIn {
   userId: string;
@@ -95,28 +101,47 @@ function authErrorCode(error: unknown): string | undefined {
 // biome-ignore lint/suspicious/noControlCharactersInRegex: rejecting them is the point
 const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f]/;
 
+const MAX_NAME_LENGTH = 64;
+
+// Each issue is named by its message's key in settingsActions.account.
 const nameSchema = z
   .string()
   .trim()
-  .min(1, "Enter your name.")
-  .max(64, "Use 64 characters or fewer.")
-  .refine(
-    (value) => !CONTROL_CHARACTERS.test(value),
-    "Remove special characters.",
-  );
+  .min(1, "nameMissing")
+  .max(MAX_NAME_LENGTH, "nameTooLong")
+  .refine((value) => !CONTROL_CHARACTERS.test(value), "nameSpecialCharacters");
+
+function nameIssue(
+  issue: string | undefined,
+  t: Translator<"settingsActions.account">,
+): string {
+  switch (issue) {
+    case "nameTooLong":
+      return t("nameTooLong", { max: String(MAX_NAME_LENGTH) });
+    case "nameSpecialCharacters":
+      return t("nameSpecialCharacters");
+    case "nameMissing":
+    case undefined:
+      return t("nameMissing");
+    default:
+      // Not text at all (a tampered request): zod's own words, as before.
+      return issue;
+  }
+}
 
 export async function updateProfileName(
   input: unknown,
 ): Promise<AccountActionResult> {
+  const text = accountText();
   const parsed = z.object({ name: nameSchema }).safeParse(input);
   if (!parsed.success) {
-    return fail(parsed.error.issues[0]?.message ?? "Enter your name.");
+    return fail(nameIssue(parsed.error.issues[0]?.message, await text()));
   }
   try {
     const user = await signedIn();
-    if (!user) return fail("Sign in to change your profile.");
+    if (!user) return fail((await text())("profileSignedOut"));
     if (!(await profileLimiter.limit(user.userId)).success) {
-      return fail(RATE_LIMITED);
+      return fail((await text())("rateLimited"));
     }
     await auth.api.updateUser({
       headers: user.requestHeaders,
@@ -126,7 +151,7 @@ export async function updateProfileName(
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.updateName" });
-    return fail(SOMETHING_WRONG);
+    return fail((await text())("failed"));
   }
 }
 
@@ -140,28 +165,29 @@ const SNIFFED_AVATAR_MIME: Partial<Record<string, AvatarMime>> = {
 export async function uploadAvatar(
   formData: FormData,
 ): Promise<AccountActionResult & { image?: string }> {
+  const text = accountText();
   try {
     const user = await signedIn();
-    if (!user) return fail("Sign in to change your profile.");
+    if (!user) return fail((await text())("profileSignedOut"));
     if (!isStorageConfigured) {
-      return fail("Picture uploads aren't set up on this server.");
+      return fail((await text())("uploadsUnavailable"));
     }
     const file = formData.get("avatar");
     if (!(file instanceof File) || file.size === 0) {
-      return fail("Choose a picture to upload.");
+      return fail((await text())("pictureMissing"));
     }
     if (file.size > AVATAR_MAX_BYTES) {
-      return fail("That picture is too large. Try a smaller one.");
+      return fail((await text())("pictureTooLarge"));
     }
     if (!(await profileLimiter.limit(user.userId)).success) {
-      return fail(RATE_LIMITED);
+      return fail((await text())("rateLimited"));
     }
 
     // The bytes decide the type, whatever the browser said.
     const bytes = new Uint8Array(await file.arrayBuffer());
     const sniffed = sniffFileType(bytes.subarray(0, SNIFF_BYTES));
     const mime = sniffed ? SNIFFED_AVATAR_MIME[sniffed] : undefined;
-    if (!mime) return fail("Use a PNG, JPEG or WebP picture.");
+    if (!mime) return fail((await text())("pictureType"));
 
     const key = avatarKey(user.userId, cuid(), mime);
     await putObject(key, bytes, {
@@ -186,16 +212,17 @@ export async function uploadAvatar(
     return { ok: true, image };
   } catch (error) {
     logError(error as Error, { action: "account.uploadAvatar" });
-    return fail(SOMETHING_WRONG);
+    return fail((await text())("failed"));
   }
 }
 
 export async function removeAvatar(): Promise<AccountActionResult> {
+  const text = accountText();
   try {
     const user = await signedIn();
-    if (!user) return fail("Sign in to change your profile.");
+    if (!user) return fail((await text())("profileSignedOut"));
     if (!(await profileLimiter.limit(user.userId)).success) {
-      return fail(RATE_LIMITED);
+      return fail((await text())("rateLimited"));
     }
     await auth.api.updateUser({
       headers: user.requestHeaders,
@@ -211,14 +238,13 @@ export async function removeAvatar(): Promise<AccountActionResult> {
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.removeAvatar" });
-    return fail(SOMETHING_WRONG);
+    return fail((await text())("failed"));
   }
 }
 
 // ─── Sign-in methods ────────────────────────────────────────────────────────
 
 const idSchema = z.string().trim().min(1).max(128);
-const SIGNED_OUT_METHODS = "Sign in to manage sign-in methods.";
 
 export type LinkStartResult =
   | { ok: true; url: string }
@@ -239,15 +265,18 @@ export async function linkSignInMethod(
   const parsed = z
     .object({ provider: z.enum(SOCIAL_PROVIDERS) })
     .safeParse(input);
+  // Only a tampered request names another provider: English, as it was.
   if (!parsed.success) return linkFail("That sign-in method can't be linked.");
   const { provider } = parsed.data;
-  const unavailable = `${PROVIDER_LABELS[provider]} can't be linked right now.`;
+  const text = accountText();
   try {
-    const allowed = await confirmedSession(SIGNED_OUT_METHODS);
+    const allowed = await confirmedSession(async () =>
+      (await text())("methodsSignedOut"),
+    );
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     if (!(await signInMethodsLimiter.limit(session.userId)).success) {
-      return linkFail(RATE_LIMITED);
+      return linkFail((await text())("rateLimited"));
     }
     const { headers: responseHeaders, response } =
       await auth.api.linkSocialAccount({
@@ -274,7 +303,11 @@ export async function linkSignInMethod(
     if (authErrorCode(error) !== "PROVIDER_NOT_FOUND") {
       logError(error as Error, { action: "account.link" });
     }
-    return linkFail(unavailable);
+    return linkFail(
+      (await text())("linkUnavailable", {
+        provider: PROVIDER_LABELS[provider],
+      }),
+    );
   }
 }
 
@@ -289,19 +322,27 @@ export async function unlinkSignInMethod(
   input: unknown,
 ): Promise<AccountActionResult> {
   const parsed = z.object({ accountId: idSchema }).safeParse(input);
+  // An id that can't be one (a tampered request): English, as it was.
   if (!parsed.success) return fail("Invalid sign-in method.");
+  const text = accountText();
+  const blockedText = async () =>
+    unlinkBlockMessages(
+      await settingsActionText("settingsActions.account.unlinkBlocked")(),
+    );
   try {
-    const allowed = await confirmedSession(SIGNED_OUT_METHODS);
+    const allowed = await confirmedSession(async () =>
+      (await text())("methodsSignedOut"),
+    );
     if (!allowed.ok) return allowed;
     const { session } = allowed;
     if (!(await signInMethodsLimiter.limit(session.userId)).success) {
-      return fail(RATE_LIMITED);
+      return fail((await text())("rateLimited"));
     }
     const accounts: LinkedAccount[] = await auth.api.listUserAccounts({
       headers: session.requestHeaders,
     });
     const blocked = unlinkBlockReason(accounts, parsed.data.accountId);
-    if (blocked) return fail(UNLINK_BLOCK_MESSAGES[blocked]);
+    if (blocked) return fail((await blockedText())[blocked]);
 
     const removed = await db
       .delete(accountTable)
@@ -312,12 +353,14 @@ export async function unlinkSignInMethod(
         ),
       )
       .returning({ id: accountTable.id });
-    if (removed.length === 0) return fail(UNLINK_BLOCK_MESSAGES["not-found"]);
+    if (removed.length === 0) {
+      return fail((await blockedText())["not-found"]);
+    }
     revalidatePath(PATH);
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.unlink" });
-    return fail(SOMETHING_WRONG);
+    return fail((await text())("failed"));
   }
 }
 
@@ -335,12 +378,14 @@ export async function revokeSession(
   input: unknown,
 ): Promise<AccountActionResult> {
   const parsed = z.object({ sessionId: idSchema }).safeParse(input);
+  // An id that can't be one (a tampered request): English, as it was.
   if (!parsed.success) return fail("Invalid session.");
+  const text = accountText();
   try {
     const user = await signedIn();
-    if (!user) return fail("Sign in to manage sessions.");
+    if (!user) return fail((await text())("sessionsSignedOut"));
     if (parsed.data.sessionId === user.sessionId) {
-      return fail("That's this device. Use Sign out in the menu instead.");
+      return fail((await text())("thisDevice"));
     }
     // Tokens never reach the browser: look this one up by id, for this user only.
     const [row] = await db
@@ -363,19 +408,20 @@ export async function revokeSession(
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.revokeSession" });
-    return fail(SOMETHING_WRONG);
+    return fail((await text())("failed"));
   }
 }
 
 export async function revokeOtherSessions(): Promise<AccountActionResult> {
+  const text = accountText();
   try {
     const user = await signedIn();
-    if (!user) return fail("Sign in to manage sessions.");
+    if (!user) return fail((await text())("sessionsSignedOut"));
     await auth.api.revokeOtherSessions({ headers: user.requestHeaders });
     revalidatePath(PATH);
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.revokeOtherSessions" });
-    return fail(SOMETHING_WRONG);
+    return fail((await text())("failed"));
   }
 }

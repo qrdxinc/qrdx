@@ -5702,7 +5702,12 @@
           "signInMethods": "Anmeldemethoden",
           "valueIsLinked": "{value} ist verknüpft",
           "valueCantBeLinkedRight": "{value} kann gerade nicht verknüpft werden.",
-          "labelIsNoLongerLinked": "{label} ist nicht mehr verknüpft"
+          "labelIsNoLongerLinked": "{label} ist nicht mehr verknüpft",
+          "emailCode": "E-Mail-Code",
+          "oneTimeCodeSentTo": "Ein Einmalcode wurde an {email} gesendet.",
+          "linkedOn": "Verknüpft am {date}.",
+          "linkedOnReason": "Verknüpft am {date}. {reason}",
+          "notLinkedUseThe": "Nicht verknüpft. Nutze das {provider}-Konto mit {email}."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Der Support deaktiviert dies am {dueDate}",
@@ -5749,7 +5754,9 @@
           "afterYouSignInPasskey": "Nach der Anmeldung fragt QRdx nach deinem Passkey. Ein Backup-Code funktioniert ebenfalls.",
           "afterYouSignInApp": "Nach der Anmeldung fragt QRdx nach einem Code aus deiner Authenticator-App. Ein Backup-Code funktioniert ebenfalls.",
           "afterYouSignInQrdx2": "Nach der Anmeldung fragt QRdx nach einem Backup-Code.",
-          "passkeySpotlight": "Ein Passkey kann jetzt dein zweiter Schritt sein, statt eines Authenticator-Codes."
+          "passkeySpotlight": "Ein Passkey kann jetzt dein zweiter Schritt sein, statt eines Authenticator-Codes.",
+          "addedOn": "Hinzugefügt am {date}",
+          "passkeyName": "Passkey"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Schritt {stepNumber, number} von {length, number}",
@@ -9399,6 +9406,149 @@
         "failed": "Single Sign-on hat nicht funktioniert. Versuch es noch einmal oder melde dich auf einem anderen Weg an.",
         "rateLimited": "Zu viele Versuche. Warte eine Minute und versuch es dann erneut."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "Zu viele Änderungen. Warte ein paar Minuten und versuche es erneut.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "nameMissing": "Gib deinen Namen ein.",
+      "nameTooLong": "Maximal {max} Zeichen erlaubt.",
+      "nameSpecialCharacters": "Entferne Sonderzeichen.",
+      "profileSignedOut": "Melde dich an, um dein Profil zu ändern.",
+      "uploadsUnavailable": "Bild-Uploads sind auf diesem Server nicht eingerichtet.",
+      "pictureMissing": "Wähle ein Bild zum Hochladen aus.",
+      "pictureTooLarge": "Das Bild ist zu groß. Versuche es mit einem kleineren.",
+      "pictureType": "Verwende ein Bild als PNG, JPEG oder WebP.",
+      "methodsSignedOut": "Melde dich an, um Anmeldemethoden zu verwalten.",
+      "linkUnavailable": "{provider} kann gerade nicht verknüpft werden.",
+      "unlinkBlocked": {
+        "notFound": "Diese Anmeldemethode ist nicht mit deinem Konto verknüpft.",
+        "unsupported": "Diese Anmeldemethode kann hier nicht entfernt werden."
+      },
+      "sessionsSignedOut": "Melde dich an, um Sitzungen zu verwalten.",
+      "thisDevice": "Das ist dieses Gerät. Nutze stattdessen Abmelden im Menü."
+    },
+    "twoFactor": {
+      "signedOut": "Melde dich an, um die Zwei-Schritt-Verifizierung zu ändern.",
+      "alreadyOn": "Die Zwei-Schritt-Verifizierung ist bereits aktiviert.",
+      "notOn": "Die Zwei-Schritt-Verifizierung ist deaktiviert.",
+      "appAlreadySetUp": "Es ist bereits eine Authenticator-App eingerichtet.",
+      "noApp": "Es gibt keine Authenticator-App zu entfernen.",
+      "noPasskey": "Füge zuerst einen Passkey hinzu.",
+      "restart": "Diese Einrichtung ist abgelaufen. Starte neu.",
+      "rateLimitedLong": "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut."
+    },
+    "emailChange": {
+      "reauth": "Melde dich aus Sicherheitsgründen ab und wieder an. Ändere dann innerhalb eines Tages deine E-Mail-Adresse.",
+      "sameEmail": "Das ist bereits deine E-Mail-Adresse.",
+      "invalidEmail": "Gib eine gültige E-Mail-Adresse ein.",
+      "invalidCode": "Gib den 6-stelligen Code aus der E-Mail ein.",
+      "rateLimited": "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut.",
+      "codeRateLimited": "Für diese Adresse wurden zu viele Codes angefordert. Warte ein paar Minuten und versuche es erneut.",
+      "notSent": "Wir konnten gerade keinen Code senden. Bitte versuche es erneut.",
+      "codeDidntWork": "Dieser Code hat nicht funktioniert. Prüfe ihn oder sende einen neuen Code.",
+      "taken": "Diese E-Mail-Adresse gehört bereits zu einem anderen QRdx-Konto.",
+      "signedOut": "Melde dich an, um deine E-Mail zu ändern.",
+      "unavailable": "E-Mail ist auf dieser Website nicht eingerichtet, daher kann die Adresse hier nicht geändert werden.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "ssoOff": "Dein Unternehmen verlangt Single Sign-on für {domain}, deshalb kann dein Konto nicht zu einer Adresse bei einem anderen Anbieter wechseln. Frag den Admin deines Workspace.",
+      "ssoOnto": "Dein Unternehmen verlangt Single Sign-on für {domain}. Um dort eine Adresse zu verwenden, melde dich stattdessen mit SSO an."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "Gib „{word}“ zur Bestätigung ein.",
+      "signedOut": "Melde dich an, um dein Konto zu löschen.",
+      "rateLimited": "Zu viele Versuche. Warte 15 Minuten und versuche es erneut.",
+      "failed": "Wir konnten dein Konto nicht löschen. Bitte versuche es erneut.",
+      "subscriptionNotCancelled": "Wir konnten dein Abo nicht kündigen, deshalb wurde dein Konto nicht gelöscht. Bitte versuche es in ein paar Minuten erneut oder schreib an {email}.",
+      "ownerNotMade": "Wir konnten {person} nicht zum Owner von {team} machen, deshalb wurde dein Konto nicht gelöscht. Mach jemand anderen zum Owner des Teams und versuche es dann erneut."
+    },
+    "affiliate": {
+      "notReady": "Das Affiliate-Programm ist noch nicht verfügbar.",
+      "signedOut": "Melde dich an, um fortzufahren.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "rateLimited": "Anfragelimit überschritten. Bitte versuche es später erneut.",
+      "paypalEmailInvalid": "Gib die E-Mail-Adresse deines PayPal-Kontos ein.",
+      "paypalEmailMissing": "Gib eine E-Mail-Adresse ein.",
+      "paypalNotApproved": "Du kannst eine PayPal-E-Mail hinzufügen, sobald deine Bewerbung genehmigt ist.",
+      "codeUnchanged": "Das ist bereits dein Code.",
+      "codeNotApproved": "Du kannst einen Code wählen, sobald deine Bewerbung genehmigt ist.",
+      "chosenCode": {
+        "format": "Verwende 3 bis 32 Kleinbuchstaben, Ziffern und einzelne Bindestriche, mit einem Buchstaben oder einer Ziffer am Anfang und am Ende.",
+        "reserved": "Dieser Code ist reserviert. Wähle einen anderen.",
+        "email": "Das ist der Anfang deiner E-Mail-Adresse. Wähle einen Code, der sie nicht preisgibt.",
+        "taken": "Dieser Code ist vergeben. Wähle einen anderen.",
+        "alreadyChanged": "Du hast deinen Code bereits gewählt. Er kann nur einmal geändert werden."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "Das wirkt zu kurz",
+      "tooLong": "Das wirkt zu lang",
+      "noSpaces": "Ohne Leerzeichen einfügen",
+      "storeDomainMissing": "Gib deine Shop-Domain ein",
+      "stripeSecretKey": "Das ist ein vollständiger geheimer Schlüssel. Erstelle stattdessen einen eingeschränkten Schlüssel mit Payment Links: Read. QRdx speichert nie geheime Schlüssel.",
+      "stripeRestrictedKey": "Füge einen eingeschränkten Schlüssel ein: Er beginnt mit rk_live_ oder rk_test_.",
+      "calcomKey": "Füge einen Cal.com API-Schlüssel ein: Er beginnt mit cal_live_ (bei Testschlüsseln mit cal_).",
+      "shopifyCredentials": "Füge die Client-ID und das Secret der App oder ein Admin API-Zugriffstoken ein.",
+      "signedOut": "Melde dich an, um ein Konto zu verbinden.",
+      "checkDetails": "Prüfe die Angaben und versuche es erneut.",
+      "rateLimited": "Limit überschritten. Bitte versuche es später erneut.",
+      "notAccepted": "{name} hat das nicht akzeptiert. Prüfe die Eingabe und versuche es erneut.",
+      "stripeForbidden": "Dieser Schlüssel kann Payment Links nicht lesen. Setze Payment Links beim Schlüssel auf Read.",
+      "shopifyForbidden": "Diese App kann keine Produkte lesen. Füge den Scope read_products hinzu und installiere sie neu.",
+      "forbidden": "{name} hat den Zugriff für diesen Schlüssel verweigert.",
+      "unreachable": "{name} nicht erreichbar. Versuche es erneut."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "Der Schlüssel wirkt zu kurz",
+      "keyTooLong": "Der Schlüssel wirkt zu lang",
+      "keyNoSpaces": "Schlüssel ohne Leerzeichen einfügen",
+      "signedOut": "Melde dich an, um ein Konto zu verbinden.",
+      "checkKey": "Schlüssel prüfen und erneut versuchen.",
+      "notConfigured": "{name} ist hier nicht eingerichtet.",
+      "rateLimited": "Limit überschritten. Bitte versuche es später erneut.",
+      "keyRejected": "{name} hat {label} nicht akzeptiert. Prüfe die Eingabe und versuche es erneut.",
+      "unreachable": "{name} nicht erreichbar. Versuche es erneut.",
+      "domainSignedOut": "Melde dich zuerst an.",
+      "pickDomain": "Wähle eine Domain aus.",
+      "connectFirst": "Verbinde zuerst das Konto.",
+      "domainNotFound": "Diese Domain gehört nicht zu deinem Konto.",
+      "domainNotSaved": "Domain nicht gespeichert. Versuche es erneut."
+    },
+    "slackBot": {
+      "unavailable": "Der QRdx-Bot für Slack ist hier nicht verfügbar.",
+      "signedOut": "Melde dich an, um das zu ändern.",
+      "notAvailableYet": "Das ist noch nicht verfügbar.",
+      "rateLimited": "Zu viele Versuche. Warte kurz.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
+    },
+    "oauthApps": {
+      "signedOut": "Melde dich an, um OAuth-Apps zu verwalten.",
+      "rateLimited": "Limit überschritten. Bitte versuch es später erneut.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
+    },
+    "apiKeys": {
+      "signedOut": "Melde dich an, um API-Schlüssel zu verwalten.",
+      "unavailable": "API-Schlüssel sind in dieser Bereitstellung noch nicht verfügbar.",
+      "rateLimited": "Limit überschritten. Bitte versuch es später erneut.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
+    },
+    "slackLinks": {
+      "signedOut": "Melde dich an, um Slack-Links zu verwalten.",
+      "notAvailableYet": "Das ist noch nicht verfügbar.",
+      "rateLimited": "Zu viele Versuche. Warte kurz.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
+    },
+    "authorizedApps": {
+      "signedOut": "Melde dich an, um App-Zugriffe zu verwalten.",
+      "rateLimited": "Limit überschritten. Bitte versuch es später erneut.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
+    },
+    "notifications": {
+      "signedOut": "Melde dich an, um Benachrichtigungen zu ändern.",
+      "webhookUrlMissing": "Füge die Webhook-URL ein",
+      "rateLimited": "Limit überschritten. Bitte versuch es später erneut.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
     }
   },
   "codeBuilder": {

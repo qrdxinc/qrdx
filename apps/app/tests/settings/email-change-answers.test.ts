@@ -96,6 +96,12 @@ vi.mock("@repo/auth/sso-required", () => ({
 vi.mock("@/lib/i18n/email-locale", () => ({
   emailIntlForAddress: async () => ({}),
 }));
+// Refusals in the person's language (lib/i18n/settings-action-text.ts):
+// English here.
+vi.mock(
+  "@/lib/i18n/app-locale",
+  async () => (await import("../support/intl")).appLocale,
+);
 vi.mock("@/lib/email/send", () => ({ sendEmail: vi.fn() }));
 
 const betterAuthDir = realpathSync(

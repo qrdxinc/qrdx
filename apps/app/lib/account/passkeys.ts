@@ -1,6 +1,10 @@
 import type { Translator } from "@/lib/i18n/translator";
 import type { NoticeDeliveryDeps } from "./email-change";
-import { describeUserAgent } from "./sessions";
+import {
+  type DeviceWords,
+  describeUserAgent,
+  ENGLISH_DEVICE_WORDS,
+} from "./sessions";
 
 /**
  * Settings → Profile & security → Passkeys: what the page shows for each
@@ -34,10 +38,19 @@ export interface PasskeyView {
 export const MAX_PASSKEY_NAME_LENGTH = 64;
 const FALLBACK_NAME = "Passkey";
 
-/** "Chrome on macOS", like the Sessions list; "Passkey" when unknown. */
-export function defaultPasskeyName(userAgent: string | null): string {
-  const { label } = describeUserAgent(userAgent);
-  return label === "Unknown device" ? FALLBACK_NAME : label;
+/**
+ * "Chrome on macOS", like the Sessions list; "Passkey" when unknown. In
+ * English unless given another language's device words and fallback
+ * (newPasskeyName() in ./passkey-name-server.ts). The stolen-session check
+ * reads the English label on its own (./session-origin.ts browserFamily).
+ */
+export function defaultPasskeyName(
+  userAgent: string | null,
+  words: DeviceWords = ENGLISH_DEVICE_WORDS,
+  fallback: string = FALLBACK_NAME,
+): string {
+  const { label } = describeUserAgent(userAgent, words);
+  return label === words.unknownDevice ? fallback : label;
 }
 
 /** Trimmed, single-spaced and at most 64 characters; null when empty. */
@@ -54,9 +67,15 @@ export function toPasskeyViews(
   {
     formatDate,
     providerName = () => undefined,
+    addedOn = (date) => `Added ${date}`,
+    fallbackName = FALLBACK_NAME,
   }: {
     formatDate: (date: Date) => string;
     providerName?: (aaguid: string | null) => string | undefined;
+    /** "Added Nov 5, 2026", in the page's language (English by default) */
+    addedOn?: (date: string) => string;
+    /** The name of a passkey saved without one, and with no known provider */
+    fallbackName?: string;
   },
 ): PasskeyView[] {
   return [...rows]
@@ -67,8 +86,8 @@ export function toPasskeyViews(
       const provider = providerName(row.aaguid) ?? null;
       return {
         id: row.id,
-        name: normalizePasskeyName(row.name) ?? provider ?? FALLBACK_NAME,
-        added: row.createdAt ? `Added ${formatDate(row.createdAt)}` : "",
+        name: normalizePasskeyName(row.name) ?? provider ?? fallbackName,
+        added: row.createdAt ? addedOn(formatDate(row.createdAt)) : "",
         synced: row.backedUp,
         provider,
       };
@@ -126,23 +145,25 @@ interface AuthErrorLike {
 
 /**
  * Adding a passkey on the server failed: a message for a known reason (and
- * whether a fresh sign-in is needed), else null.
+ * whether a fresh sign-in is needed), else null. `messages` are
+ * PASSKEY_MESSAGES in the person's language (English by default).
  */
 export function registrationFailure(
   error: unknown,
+  messages: PasskeyMessages = PASSKEY_MESSAGES,
 ): { message: string; reauth: boolean } | null {
   const { body } =
     error && typeof error === "object" ? (error as AuthErrorLike) : {};
   switch (body?.code) {
     case "SESSION_NOT_FRESH":
-      return { message: PASSKEY_MESSAGES.reauth, reauth: true };
+      return { message: messages.reauth, reauth: true };
     case "UNAUTHORIZED":
     case "SESSION_REQUIRED":
-      return { message: PASSKEY_MESSAGES.signedOut, reauth: false };
+      return { message: messages.signedOut, reauth: false };
     case "CHALLENGE_NOT_FOUND":
-      return { message: PASSKEY_MESSAGES.expired, reauth: false };
+      return { message: messages.expired, reauth: false };
     case "PASSKEY_USER_VERIFICATION_REQUIRED":
-      return { message: PASSKEY_MESSAGES.noUserVerification, reauth: false };
+      return { message: messages.noUserVerification, reauth: false };
   }
   return null;
 }

@@ -4,6 +4,7 @@ import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getSessionUserId } from "@/lib/connected-accounts/server";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { logError } from "@/lib/shared";
 import { isSlackBotEnabled, SETTINGS_PATH } from "@/lib/slack-bot/config";
@@ -13,7 +14,8 @@ import {
 } from "@/lib/slack-bot/store";
 
 // Settings → Integrations → Slack → QRdx bot: unlinking a Slack identity
-// linked to this QRdx account (the same as /qr unlink in Slack).
+// linked to this QRdx account (the same as /qr unlink in Slack). Refusals
+// are in the person's language (settingsActions.slackBot).
 
 const unlinkLimiter = createRateLimiter({
   prefix: "qrdx:slack-bot:unlink",
@@ -25,13 +27,15 @@ const linkIdSchema = z.string().trim().min(1).max(64);
 export async function unlinkSlackIdentityAction(
   linkId: unknown,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const text = settingsActionText("settingsActions.slackBot");
   if (!isSlackBotEnabled()) {
-    return { ok: false, error: "The QRdx bot for Slack isn't available here." };
+    return { ok: false, error: (await text())("unavailable") };
   }
   const parsed = linkIdSchema.safeParse(linkId);
+  // An id the list never shows (a tampered request): English, as it was.
   if (!parsed.success) return { ok: false, error: "Nothing to unlink." };
   const userId = await getSessionUserId();
-  if (!userId) return { ok: false, error: "Sign in to change this." };
+  if (!userId) return { ok: false, error: (await text())("signedOut") };
   try {
     await enforceRateLimits([{ limiter: unlinkLimiter, key: userId }]);
     await deleteUserLinkOf(userId, parsed.data);
@@ -39,12 +43,12 @@ export async function unlinkSlackIdentityAction(
     return { ok: true };
   } catch (error) {
     if (error instanceof SlackBotStoreUnavailableError) {
-      return { ok: false, error: "This isn't available yet." };
+      return { ok: false, error: (await text())("notAvailableYet") };
     }
     if ((error as { status?: number }).status === 429) {
-      return { ok: false, error: "Too many tries. Wait a minute." };
+      return { ok: false, error: (await text())("rateLimited") };
     }
     logError(error as Error, { action: "slack-bot.unlink" });
-    return { ok: false, error: "Something went wrong. Please try again." };
+    return { ok: false, error: (await text())("failed") };
   }
 }

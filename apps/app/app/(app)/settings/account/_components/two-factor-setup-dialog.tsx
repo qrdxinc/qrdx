@@ -46,7 +46,6 @@ import {
 } from "@/lib/account/confirmation";
 import {
   browserFailureMessage,
-  defaultPasskeyName,
   MAX_PASSKEY_NAME_LENGTH,
   PASSKEY_MESSAGES,
 } from "@/lib/account/passkeys";
@@ -143,6 +142,7 @@ export function TwoFactorSetupDialog({
   turningOn,
   passkeysUsable,
   email,
+  defaultPasskeyName,
   onClose,
 }: {
   /** Null while closed */
@@ -152,6 +152,11 @@ export function TwoFactorSetupDialog({
   /** Passkeys work in this browser and on this page */
   passkeysUsable: boolean;
   email: string;
+  /**
+   * The name a new passkey is offered: this device, in the page's language
+   * (newPasskeyName on the server, from this browser's user agent)
+   */
+  defaultPasskeyName: string;
   onClose: () => void;
 }) {
   const t = useTranslations("app.settings.account.twoFactorSetupDialog");
@@ -354,15 +359,25 @@ export function TwoFactorSetupDialog({
   // Each opening starts fresh, then begins the first step: a new secret for
   // the app, or the passkey prompt (on its own once; the button repeats it).
   // The latest values through a ref, so this runs once per opening.
-  const latest = useRef({ beginApp, promptExistingPasskey, passkeysUsable });
-  latest.current = { beginApp, promptExistingPasskey, passkeysUsable };
+  const latest = useRef({
+    beginApp,
+    promptExistingPasskey,
+    passkeysUsable,
+    defaultPasskeyName,
+  });
+  latest.current = {
+    beginApp,
+    promptExistingPasskey,
+    passkeysUsable,
+    defaultPasskeyName,
+  };
   useEffect(() => {
     if (!start) return;
     setStep(start);
     setChoice(latest.current.passkeysUsable ? "passkey" : "app");
     setBusy(false);
     setError(null);
-    setName(defaultPasskeyName(navigator.userAgent));
+    setName(latest.current.defaultPasskeyName);
     setSetup(null);
     setCode("");
     setCodes([]);

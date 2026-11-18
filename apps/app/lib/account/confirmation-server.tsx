@@ -275,15 +275,23 @@ export async function requireRecentConfirmation(
 
 /**
  * For gated actions: the signed-in session when it confirmed recently, else
- * the result to return (signed out, or CONFIRMATION_REQUIRED).
+ * the result to return (signed out, or CONFIRMATION_REQUIRED). The signed-out
+ * message can be a function, read only when it's needed (the caller's own
+ * copy, translated: lib/i18n/settings-action-text.ts).
  */
 export async function confirmedSession(
-  signedOutMessage: string,
+  signedOutMessage: string | (() => Promise<string>),
 ): Promise<
   { ok: true; session: ConfirmableSession } | { ok: false; error: string }
 > {
   const session = await currentSession();
-  if (!session) return fail(signedOutMessage) as { ok: false; error: string };
+  if (!session) {
+    return fail(
+      typeof signedOutMessage === "string"
+        ? signedOutMessage
+        : await signedOutMessage(),
+    ) as { ok: false; error: string };
+  }
   const needed = await requireRecentConfirmation(session);
   if (needed) return needed;
   return { ok: true, session };
