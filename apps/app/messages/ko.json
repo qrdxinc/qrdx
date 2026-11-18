@@ -1174,6 +1174,7 @@
         "format": "형식",
         "formatPng": "PNG(이미지)",
         "formatWebp": "WebP(이미지, 더 작음)",
+        "formatBmp": "BMP(이미지, 비압축)",
         "formatSvg": "SVG(벡터, 인쇄용)",
         "size": "{format} 크기",
         "quietZone": "{modules, number}모듈 여백 추가(인쇄 시 권장)",
@@ -3411,6 +3412,8 @@
         "cmykUsesASimpleConversion": "CMYK는 색상 프로필 없이 간단한 방식으로 변환해요. 브랜드 색상이 정확해야 한다면 인쇄소에 문의하세요.",
         "pdfAndEpsDrawEvery": "PDF와 EPS는 모든 점을 벡터 도형으로 그리며, 선형 및 방사형 그라데이션도 부드러운 벡터 셰이딩으로 유지해요.",
         "jpgCantBeTransparent": "JPG는 투명하게 만들 수 없어요",
+        "bmpCantBeTransparent": "BMP는 투명하게 저장할 수 없어요. 배경은 흰색으로 저장돼요",
+        "moreFormats": "다른 형식 더 보기",
         "vector": " · 벡터",
         "anySize": "원하는 크기",
         "printbleedMm": "{printBleed, number} mm",
@@ -3432,6 +3435,7 @@
           "png": "웹, 문서, 슬라이드에 가장 좋아요.",
           "jpg": "이메일과 작은 파일에 가장 좋아요.",
           "webp": "빠르게 로딩되는 웹사이트에 가장 좋아요 · 무손실이며 보통 PNG보다 작아요.",
+          "bmp": "BMP만 지원하는 오래된 시스템이나 임베디드 도구에 적합합니다 · 비압축 24비트, 투명 배경은 흰색으로 저장됩니다.",
           "svg": "Figma, Illustrator, 웹사이트에 가장 좋아요 · 어떤 크기에서도 선명해요.",
           "pdf": "문서와 간단한 인쇄에 가장 좋아요 · 벡터 PDF가 필요하면 인쇄용을 사용하세요.",
           "eps": "인쇄소와 벡터 앱에 가장 좋아요 · 어떤 크기에서도 선명해요."
@@ -5575,12 +5579,16 @@
           "codeFromTheNewAddress": "새 주소로 받은 코드",
           "youExampleCom": "you@example.com",
           "enterThe6DigitCode": "{sentTo}(으)로 보낸 6자리 코드를 입력해 주세요. 코드는 5분 후에 만료돼요.",
+          "ifNoOtherQrdxAccount": "다른 QRdx 계정에서 {sentTo}을(를) 사용하고 있지 않다면 1분 안에 6자리 코드가 도착해요. 코드는 5분 후에 만료돼요.",
           "signInCodesAndTeam": "로그인 코드와 팀 초대는 새 주소로 전송돼요. 확인하기 전까지는 {currentEmail}을(를) 계속 사용할 수 있어요.",
           "sending": "보내는 중…",
           "resendInSecondsleftS": "{secondsLeft, number}초 후 재전송",
           "resendCode": "코드 재전송",
+          "newCodeRequestedAnyEarlier": "새 코드를 요청했어요. 이전 코드는 더 이상 사용할 수 없어요.",
           "noCodeCheckSpamAn": "코드를 받지 못하셨나요? 스팸함을 확인해 주세요. 이미 QRdx 계정이 있는 주소는 사용할 수 없어요.",
+          "noCodeCheckSpamIf": "코드가 오지 않았나요? 스팸함을 확인해 보세요. 스팸함에도 없다면 주소를 확인하고 다시 시도해 주세요.",
           "weSentANoteAbout": "변경 사항에 대한 안내를 {currentEmail}(으)로 보냈어요.",
+          "wellSendANoteAbout": "변경 내용을 {currentEmail}(으)로 알려 드릴게요.",
           "yourEmailIsNowSentto": "이메일이 {sentTo}(으)로 변경되었어요"
         },
         "communityProfileSection": {
@@ -5633,6 +5641,7 @@
           "verified": "인증됨",
           "notVerified": "인증되지 않음",
           "change": "변경",
+          "emailIsntSetUpOn": "이 사이트에는 이메일이 설정되어 있지 않아 여기서 주소를 변경할 수 없어요.",
           "memberSinceMembersince": "가입일: {memberSince}",
           "yourName": "이름 입력",
           "howYouAppearInQrdx": "QRdx와 팀원에게 표시되는 내 모습이에요.",
@@ -7079,6 +7088,8 @@
           "downloadPng": "PNG 다운로드",
           "downloadWebp": "WebP 다운로드",
           "downloadSvg": "SVG 다운로드",
+          "downloadBmp": "BMP 다운로드",
+          "moreFormats": "다른 형식",
           "editLinkValue": "링크 편집",
           "codeSettings": "코드 설정",
           "editDesignInPlayground": "Playground에서 디자인 편집",
@@ -7132,6 +7143,7 @@
           "shortLinkCopied": "짧은 링크를 복사했어요"
         },
         "codeQr": {
+          "moreFormats": "더보기",
           "downloadFailedPleaseTryAgain": "다운로드하지 못했어요. 다시 시도해 주세요."
         },
         "codesCards": {
@@ -7172,6 +7184,7 @@
           "download": "다운로드",
           "pngImagesZip": "PNG 이미지 (ZIP)",
           "webpImagesZip": "WebP 이미지 (ZIP)",
+          "bmpImagesZip": "BMP 이미지(ZIP)",
           "svgImagesZip": "SVG 이미지 (ZIP)",
           "more": "더 보기",
           "moveToTrash": "휴지통으로 이동",

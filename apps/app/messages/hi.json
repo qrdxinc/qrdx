@@ -1174,6 +1174,7 @@
         "format": "फ़ॉर्मैट",
         "formatPng": "PNG (इमेज)",
         "formatWebp": "WebP (इमेज, छोटी फ़ाइल)",
+        "formatBmp": "BMP (इमेज, बिना कंप्रेस की हुई)",
         "formatSvg": "SVG (वेक्टर, प्रिंट के लिए)",
         "size": "{format} साइज़",
         "quietZone": "{modules, number}-मॉड्यूल का क्वाइट ज़ोन जोड़ें (प्रिंट के लिए सुझाया गया)",
@@ -3411,6 +3412,8 @@
         "cmykUsesASimpleConversion": "CMYK में कलर प्रोफ़ाइल के बिना सीधा कन्वर्ज़न होता है; ब्रांड के सटीक रंग ज़रूरी हों तो अपने प्रिंटर से पूछें।",
         "pdfAndEpsDrawEvery": "PDF और EPS हर डॉट को वेक्टर शेप की तरह बनाते हैं और लीनियर व रेडियल ग्रेडिएंट को स्मूद वेक्टर शेडिंग के रूप में रखते हैं।",
         "jpgCantBeTransparent": "JPG ट्रांसपेरेंट नहीं हो सकता",
+        "bmpCantBeTransparent": "BMP पारदर्शी नहीं हो सकता: बैकग्राउंड सफ़ेद आएगा",
+        "moreFormats": "और फ़ॉर्मैट",
         "vector": " · वेक्टर",
         "anySize": "कोई भी साइज़",
         "printbleedMm": "{printBleed, number} mm",
@@ -3432,6 +3435,7 @@
           "png": "वेब, डॉक्स और स्लाइड के लिए बेहतरीन।",
           "jpg": "ईमेल और छोटी फ़ाइलों के लिए बेहतरीन।",
           "webp": "तेज़ लोड होने वाली वेबसाइटों के लिए बेहतरीन · लॉसलेस, आमतौर पर PNG से छोटा।",
+          "bmp": "पुराने सिस्टम और एम्बेडेड टूल के लिए सबसे अच्छा, जो सिर्फ़ BMP लेते हैं · बिना कंप्रेशन का 24-bit, पारदर्शी बैकग्राउंड सफ़ेद आता है।",
           "svg": "Figma, Illustrator और वेबसाइटों के लिए बेहतरीन · किसी भी साइज़ पर साफ़ रहता है।",
           "pdf": "दस्तावेज़ों और झटपट प्रिंट के लिए बेहतरीन · वेक्टर PDF के लिए Print-ready चुनें।",
           "eps": "प्रिंट शॉप और वेक्टर ऐप्स के लिए बेहतरीन · किसी भी साइज़ पर साफ़ रहता है।"
@@ -5575,12 +5579,16 @@
           "codeFromTheNewAddress": "नए पते पर आया कोड",
           "youExampleCom": "you@example.com",
           "enterThe6DigitCode": "हमने {sentTo} पर 6 अंकों का कोड भेजा है। वह कोड डालें। यह 5 मिनट में एक्सपायर हो जाएगा।",
+          "ifNoOtherQrdxAccount": "अगर {sentTo} का इस्तेमाल किसी और QRdx अकाउंट में नहीं हो रहा है, तो एक मिनट के अंदर वहाँ 6 अंकों का कोड पहुँच जाना चाहिए। यह कोड 5 मिनट बाद एक्सपायर हो जाता है।",
           "signInCodesAndTeam": "साइन-इन कोड और टीम के इनविटेशन नए पते पर जाएंगे। आपके कन्फ़र्म करने तक {currentEmail} काम करता रहेगा।",
           "sending": "भेज रहे हैं…",
           "resendInSecondsleftS": "{secondsLeft, number} सेकंड में दोबारा भेजें",
           "resendCode": "कोड दोबारा भेजें",
+          "newCodeRequestedAnyEarlier": "नया कोड मँगाया गया है। पहले वाला कोई भी कोड अब काम नहीं करेगा।",
           "noCodeCheckSpamAn": "कोड नहीं मिला? स्पैम फ़ोल्डर देखें। जिस पते पर पहले से अपना QRdx अकाउंट है, उसे इस्तेमाल नहीं किया जा सकता।",
+          "noCodeCheckSpamIf": "कोड नहीं मिला? स्पैम चेक करें। वहाँ भी न हो, तो पता जाँचें और दोबारा कोशिश करें।",
           "weSentANoteAbout": "हमने {currentEmail} पर इस बदलाव की सूचना भेजी है।",
+          "wellSendANoteAbout": "हम इस बदलाव की जानकारी {currentEmail} पर भेजेंगे।",
           "yourEmailIsNowSentto": "आपका ईमेल अब {sentTo} है"
         },
         "communityProfileSection": {
@@ -5633,6 +5641,7 @@
           "verified": "वेरिफ़ाइड",
           "notVerified": "वेरिफ़ाइड नहीं",
           "change": "बदलें",
+          "emailIsntSetUpOn": "इस साइट पर ईमेल सेट अप नहीं है, इसलिए पता यहाँ से बदला नहीं जा सकता।",
           "memberSinceMembersince": "{memberSince} से सदस्य।",
           "yourName": "आपका नाम",
           "howYouAppearInQrdx": "QRdx में और आपकी टीमों के लोगों को आप कैसे दिखते हैं।",
@@ -7079,6 +7088,8 @@
           "downloadPng": "PNG डाउनलोड करें",
           "downloadWebp": "WebP डाउनलोड करें",
           "downloadSvg": "SVG डाउनलोड करें",
+          "downloadBmp": "BMP डाउनलोड करें",
+          "moreFormats": "और फ़ॉर्मैट",
           "editLinkValue": "लिंक बदलें",
           "codeSettings": "कोड सेटिंग",
           "editDesignInPlayground": "Playground में डिज़ाइन बदलें",
@@ -7132,6 +7143,7 @@
           "shortLinkCopied": "शॉर्ट लिंक कॉपी हो गया"
         },
         "codeQr": {
+          "moreFormats": "और",
           "downloadFailedPleaseTryAgain": "डाउनलोड नहीं हो सका। कृपया फिर से कोशिश करें।"
         },
         "codesCards": {
@@ -7172,6 +7184,7 @@
           "download": "डाउनलोड",
           "pngImagesZip": "PNG इमेज (ZIP)",
           "webpImagesZip": "WebP इमेज (ZIP)",
+          "bmpImagesZip": "BMP इमेज (ZIP)",
           "svgImagesZip": "SVG इमेज (ZIP)",
           "more": "और",
           "moveToTrash": "ट्रैश में भेजें",

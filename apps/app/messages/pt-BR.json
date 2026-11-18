@@ -1174,6 +1174,7 @@
         "format": "Formato",
         "formatPng": "PNG (imagem)",
         "formatWebp": "WebP (imagem, menor)",
+        "formatBmp": "BMP (imagem, sem compressão)",
         "formatSvg": "SVG (vetor, para impressão)",
         "size": "Tamanho do {format}",
         "quietZone": "Adicionar uma zona de silêncio de {modules, number} módulos (recomendado para impressão)",
@@ -3411,6 +3412,8 @@
         "cmykUsesASimpleConversion": "O CMYK usa uma conversão simples, sem perfil de cor; pergunte à gráfica se as cores exatas da marca importam.",
         "pdfAndEpsDrawEvery": "PDF e EPS desenham cada ponto como uma forma vetorial e mantêm gradientes lineares e radiais como degradês vetoriais suaves.",
         "jpgCantBeTransparent": "JPG não pode ser transparente",
+        "bmpCantBeTransparent": "BMP não suporta transparência: o fundo sai branco",
+        "moreFormats": "Mais formatos",
         "vector": " · vetorial",
         "anySize": "Qualquer tamanho",
         "printbleedMm": "{printBleed, number} mm",
@@ -3432,6 +3435,7 @@
           "png": "Ideal para web, documentos e slides.",
           "jpg": "Ideal para e-mail e arquivos pequenos.",
           "webp": "Ideal para sites de carregamento rápido · sem perdas, geralmente menor que PNG.",
+          "bmp": "Ideal para sistemas mais antigos e ferramentas embarcadas que só aceitam BMP · 24 bits sem compressão, um fundo transparente sai branco.",
           "svg": "Ideal para Figma, Illustrator e sites · continua nítido em qualquer tamanho.",
           "pdf": "Ideal para documentos e impressões rápidas · para um PDF vetorial, use Pronto para impressão.",
           "eps": "Ideal para gráficas e apps vetoriais · continua nítido em qualquer tamanho."
@@ -5575,12 +5579,16 @@
           "codeFromTheNewAddress": "Código do novo endereço",
           "youExampleCom": "voce@exemplo.com",
           "enterThe6DigitCode": "Digite o código de 6 dígitos que enviamos para {sentTo}. Ele expira em 5 minutos.",
+          "ifNoOtherQrdxAccount": "Se nenhuma outra conta do QRdx usar {sentTo}, um código de 6 dígitos deve chegar lá em até um minuto. Ele expira após 5 minutos.",
           "signInCodesAndTeam": "Os códigos de login e os convites de equipe vão para o novo endereço. {currentEmail} continua funcionando até você confirmar.",
           "sending": "Enviando…",
           "resendInSecondsleftS": "Reenviar em {secondsLeft, number}s",
           "resendCode": "Reenviar código",
+          "newCodeRequestedAnyEarlier": "Novo código solicitado. Os códigos anteriores não funcionam mais.",
           "noCodeCheckSpamAn": "Não recebeu o código? Confira o spam. Não é possível usar um endereço que já tenha uma conta própria no QRdx.",
+          "noCodeCheckSpamIf": "Não recebeu o código? Veja no spam. Se não estiver lá, confira o endereço e tente de novo.",
           "weSentANoteAbout": "Enviamos um aviso sobre a alteração para {currentEmail}.",
+          "wellSendANoteAbout": "Vamos enviar um aviso sobre a mudança para {currentEmail}.",
           "yourEmailIsNowSentto": "Seu e-mail agora é {sentTo}"
         },
         "communityProfileSection": {
@@ -5633,6 +5641,7 @@
           "verified": "Verificado",
           "notVerified": "Não verificado",
           "change": "Alterar",
+          "emailIsntSetUpOn": "O e-mail não está configurado neste site, então o endereço não pode ser alterado aqui.",
           "memberSinceMembersince": "Membro desde {memberSince}.",
           "yourName": "Seu nome",
           "howYouAppearInQrdx": "Como você aparece no QRdx e para as pessoas das suas equipes.",
@@ -7079,6 +7088,8 @@
           "downloadPng": "Baixar PNG",
           "downloadWebp": "Baixar WebP",
           "downloadSvg": "Baixar SVG",
+          "downloadBmp": "Baixar BMP",
+          "moreFormats": "Mais formatos",
           "editLinkValue": "Editar link",
           "codeSettings": "Configurações do código",
           "editDesignInPlayground": "Editar design no Playground",
@@ -7132,6 +7143,7 @@
           "shortLinkCopied": "Link curto copiado"
         },
         "codeQr": {
+          "moreFormats": "Mais",
           "downloadFailedPleaseTryAgain": "Falha no download. Tente novamente."
         },
         "codesCards": {
@@ -7172,6 +7184,7 @@
           "download": "Baixar",
           "pngImagesZip": "Imagens PNG (ZIP)",
           "webpImagesZip": "Imagens WebP (ZIP)",
+          "bmpImagesZip": "Imagens BMP (ZIP)",
           "svgImagesZip": "Imagens SVG (ZIP)",
           "more": "Mais",
           "moveToTrash": "Mover para a lixeira",

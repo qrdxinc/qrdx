@@ -3271,6 +3271,10 @@
     "source": "26c45e0d2238",
     "status": "machine"
   },
+  "tools.bulk.generator.formatBmp": {
+    "source": "a1de34968007",
+    "status": "machine"
+  },
   "tools.bulk.generator.formatSvg": {
     "source": "c6299e75cb4a",
     "status": "machine"
@@ -10067,6 +10071,14 @@
     "source": "10c4e899d0fc",
     "status": "machine"
   },
+  "editor.actionBar.downloadDialog.bmpCantBeTransparent": {
+    "source": "40df8db3f859",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.moreFormats": {
+    "source": "b83931930ce6",
+    "status": "machine"
+  },
   "editor.actionBar.downloadDialog.vector": {
     "source": "01d613f5adf8",
     "status": "machine"
@@ -10145,6 +10157,10 @@
   },
   "editor.actionBar.downloadDialog.formatHints.webp": {
     "source": "4e898f2a82cf",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.bmp": {
+    "source": "f4ff37385b9f",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.svg": {
@@ -16679,6 +16695,10 @@
     "source": "af8323ee0ef6",
     "status": "machine"
   },
+  "app.settings.account.changeEmailDialog.ifNoOtherQrdxAccount": {
+    "source": "2a4a313ed812",
+    "status": "machine"
+  },
   "app.settings.account.changeEmailDialog.signInCodesAndTeam": {
     "source": "55056eba3eb3",
     "status": "machine"
@@ -16695,12 +16715,24 @@
     "source": "b97457409ab5",
     "status": "machine"
   },
+  "app.settings.account.changeEmailDialog.newCodeRequestedAnyEarlier": {
+    "source": "2087ed2a9951",
+    "status": "machine"
+  },
   "app.settings.account.changeEmailDialog.noCodeCheckSpamAn": {
     "source": "3280adba0822",
     "status": "machine"
   },
+  "app.settings.account.changeEmailDialog.noCodeCheckSpamIf": {
+    "source": "468015b445cd",
+    "status": "machine"
+  },
   "app.settings.account.changeEmailDialog.weSentANoteAbout": {
     "source": "ddd004fa64ab",
+    "status": "machine"
+  },
+  "app.settings.account.changeEmailDialog.wellSendANoteAbout": {
+    "source": "24a075543740",
     "status": "machine"
   },
   "app.settings.account.changeEmailDialog.yourEmailIsNowSentto": {
@@ -16877,6 +16909,10 @@
   },
   "app.settings.account.profileSection.change": {
     "source": "c0bf75bd78bf",
+    "status": "machine"
+  },
+  "app.settings.account.profileSection.emailIsntSetUpOn": {
+    "source": "d4e839333954",
     "status": "machine"
   },
   "app.settings.account.profileSection.memberSinceMembersince": {
@@ -21927,6 +21963,14 @@
     "source": "91aec62280a3",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.downloadBmp": {
+    "source": "26b25903a21b",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeActionsMenu.moreFormats": {
+    "source": "b83931930ce6",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.editLinkValue": {
     "source": "94026ca2d09f",
     "status": "machine"
@@ -22115,6 +22159,10 @@
     "source": "6b62bcc79bd7",
     "status": "machine"
   },
+  "app.dashboard.codes.codeQr.moreFormats": {
+    "source": "d47d7cb0e4f8",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeQr.downloadFailedPleaseTryAgain": {
     "source": "d2bde7afd757",
     "status": "machine"
@@ -22249,6 +22297,10 @@
   },
   "app.dashboard.codes.codesList.webpImagesZip": {
     "source": "1c37287e8efb",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.bmpImagesZip": {
+    "source": "6c23f3b9ced1",
     "status": "machine"
   },
   "app.dashboard.codes.codesList.svgImagesZip": {

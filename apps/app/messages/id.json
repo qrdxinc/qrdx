@@ -1174,6 +1174,7 @@
         "format": "Format",
         "formatPng": "PNG (gambar)",
         "formatWebp": "WebP (gambar, lebih kecil)",
+        "formatBmp": "BMP (gambar, tidak terkompresi)",
         "formatSvg": "SVG (vektor, untuk cetak)",
         "size": "Ukuran {format}",
         "quietZone": "Tambahkan quiet zone sebesar {modules, number} modul (disarankan untuk cetak)",
@@ -3411,6 +3412,8 @@
         "cmykUsesASimpleConversion": "CMYK menggunakan konversi sederhana tanpa profil warna; tanyakan kepada percetakan jika warna merek yang persis itu penting.",
         "pdfAndEpsDrawEvery": "PDF dan EPS menggambar setiap titik sebagai bentuk vektor dan mempertahankan gradasi linear dan radial sebagai shading vektor yang halus.",
         "jpgCantBeTransparent": "JPG tidak bisa transparan",
+        "bmpCantBeTransparent": "BMP tidak mendukung transparansi: latar belakang akan menjadi putih",
+        "moreFormats": "Format lainnya",
         "vector": " · vektor",
         "anySize": "Ukuran bebas",
         "printbleedMm": "{printBleed, number} mm",
@@ -3432,6 +3435,7 @@
           "png": "Terbaik untuk web, dokumen, dan slide.",
           "jpg": "Terbaik untuk email dan file berukuran kecil.",
           "webp": "Terbaik untuk situs web yang cepat dimuat · lossless, biasanya lebih kecil dari PNG.",
+          "bmp": "Cocok untuk sistem lama dan alat tertanam yang hanya menerima BMP · 24-bit tanpa kompresi, latar belakang transparan akan menjadi putih.",
           "svg": "Terbaik untuk Figma, Illustrator, dan situs web · tetap tajam di ukuran berapa pun.",
           "pdf": "Terbaik untuk dokumen dan cetak cepat · untuk PDF vektor, gunakan Siap cetak.",
           "eps": "Terbaik untuk percetakan dan aplikasi vektor · tetap tajam di ukuran berapa pun."
@@ -5575,12 +5579,16 @@
           "codeFromTheNewAddress": "Kode dari alamat baru",
           "youExampleCom": "anda@example.com",
           "enterThe6DigitCode": "Masukkan kode 6 digit yang kami kirim ke {sentTo}. Kode berlaku selama 5 menit.",
+          "ifNoOtherQrdxAccount": "Jika tidak ada akun QRdx lain yang menggunakan {sentTo}, kode 6 digit seharusnya tiba di sana dalam waktu satu menit. Kode kedaluwarsa setelah 5 menit.",
           "signInCodesAndTeam": "Kode masuk dan undangan tim akan dikirim ke alamat baru. {currentEmail} tetap dapat digunakan sampai Anda mengonfirmasi.",
           "sending": "Mengirim…",
           "resendInSecondsleftS": "Kirim ulang dalam {secondsLeft, number} dtk",
           "resendCode": "Kirim ulang kode",
+          "newCodeRequestedAnyEarlier": "Kode baru telah diminta. Kode sebelumnya tidak berlaku lagi.",
           "noCodeCheckSpamAn": "Tidak ada kode? Periksa folder spam. Alamat yang sudah memiliki akun QRdx sendiri tidak dapat digunakan.",
+          "noCodeCheckSpamIf": "Tidak ada kode? Periksa folder spam. Jika tidak ada di sana, periksa alamat email dan coba lagi.",
           "weSentANoteAbout": "Kami telah mengirim pemberitahuan tentang perubahan ini ke {currentEmail}.",
+          "wellSendANoteAbout": "Kami akan mengirim pemberitahuan tentang perubahan ini ke {currentEmail}.",
           "yourEmailIsNowSentto": "Email Anda sekarang {sentTo}"
         },
         "communityProfileSection": {
@@ -5633,6 +5641,7 @@
           "verified": "Terverifikasi",
           "notVerified": "Belum terverifikasi",
           "change": "Ubah",
+          "emailIsntSetUpOn": "Email belum disiapkan di situs ini, sehingga alamat email tidak dapat diubah di sini.",
           "memberSinceMembersince": "Anggota sejak {memberSince}.",
           "yourName": "Nama Anda",
           "howYouAppearInQrdx": "Cara Anda tampil di QRdx dan bagi orang-orang di tim Anda.",
@@ -7079,6 +7088,8 @@
           "downloadPng": "Unduh PNG",
           "downloadWebp": "Unduh WebP",
           "downloadSvg": "Unduh SVG",
+          "downloadBmp": "Unduh BMP",
+          "moreFormats": "Format lainnya",
           "editLinkValue": "Edit tautan",
           "codeSettings": "Pengaturan kode",
           "editDesignInPlayground": "Edit desain di Playground",
@@ -7132,6 +7143,7 @@
           "shortLinkCopied": "Tautan pendek disalin"
         },
         "codeQr": {
+          "moreFormats": "Lainnya",
           "downloadFailedPleaseTryAgain": "Unduhan gagal. Silakan coba lagi."
         },
         "codesCards": {
@@ -7172,6 +7184,7 @@
           "download": "Unduh",
           "pngImagesZip": "Gambar PNG (ZIP)",
           "webpImagesZip": "Gambar WebP (ZIP)",
+          "bmpImagesZip": "Gambar BMP (ZIP)",
           "svgImagesZip": "Gambar SVG (ZIP)",
           "more": "Lainnya",
           "moveToTrash": "Pindahkan ke sampah",
