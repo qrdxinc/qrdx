@@ -3,7 +3,9 @@
 # Production image for the QRdx web app (apps/app), built as a Next.js
 # standalone server. docker-compose.yml builds it together with Postgres and a
 # one-shot schema sync job; see apps/docs/content/docs/self-hosting.mdx.
-# Untested reference setup.
+# Checked on 18 Nov 2026: `docker compose up -d --build` on a clean machine
+# with 8 GB for Docker (arm64, empty cache) built in under 5 minutes, peaking
+# at about 5 GB.
 #
 #   cp apps/app/.env.example .env    # then fill it in
 #   docker build -t qrdx --build-arg NEXT_PUBLIC_APP_URL=https://qr.example.com .
@@ -53,7 +55,9 @@ ARG NEXT_PUBLIC_QRDX_PRO_YEARLY_PRODUCT_ID
 # Placeholders only satisfy env validation during `next build`. They stay in
 # this stage and are never copied into the runtime image. There's no database
 # here, so QRDX_BUILD_WITHOUT_DATABASE moves pages that read it to request
-# time (lib/build-without-database.ts).
+# time (lib/build-without-database.ts). It also makes next.config.ts build the
+# way Vercel does: no in-build type check (CI already ran it; Node's heap ran
+# out on it here), no Turbopack build cache and no source maps.
 ENV NEXT_OUTPUT=standalone \
     DATABASE_URL=postgresql://build:build@localhost:5432/build \
     BETTER_AUTH_SECRET=build-time-placeholder-not-used-at-runtime \

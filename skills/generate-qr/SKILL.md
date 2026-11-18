@@ -4,7 +4,7 @@ description: Generate a styled, scannable QR code with the QRdx CLI (@qrdx/cli) 
 license: MIT
 compatibility: Requires Node.js 22 or later and network access to the npm registry.
 metadata:
-  version: "2.2.1"
+  version: "2.2.2"
 ---
 
 # Generate QR Code
@@ -22,7 +22,7 @@ npx @qrdx/cli@0.0.13 generate "<data>" -o <output> [flags]
 ```
 
 - `<data>`: the URL or text to encode (required). Wrap it in quotes.
-- `-o, --output <path>`: the output file. The extension sets the format: `.svg`, `.png`, `.webp` (lossless) or `.eps` (vector, for print). The folder must already exist. Without `-o` the CLI writes `qr.svg` in the current folder, so always pass it.
+- `-o, --output <path>`: the output file. The extension sets the format: `.svg`, `.png`, `.webp` (lossless) or `.eps` (vector, for print). The folder must already exist. Without `-o` the CLI writes `qr.svg` in the current folder, so always pass it. PNG and WebP are drawn with `sharp`, which npm installs with the CLI as an optional dependency; SVG and EPS don't need it (see Troubleshooting if it's missing).
 
 Always pass both the data and `-o`. In an interactive terminal the CLI asks for anything missing; agent shells usually aren't interactive, so it runs straight through. If it ever stops at a prompt, run it again with `CI=true` in front.
 
@@ -207,6 +207,8 @@ Invalid input makes the CLI exit with code `1` and print the reason: `✗ …` f
 **`Invalid gradient JSON` / `Invalid gradient`**: single-quote the JSON in the shell, use double quotes inside it, and give at least 2 stops with `offset` 0–100.
 
 **`Unsupported output format`**: use a `.svg`, `.png`, `.webp` or `.eps` file name.
+
+**`PNG export in Node needs an optional rasterizer package`** or **`WebP output needs the sharp package`**: `sharp` didn't install with the CLI. That happens when optional dependencies are turned off (for example `npm config get omit` lists `optional`) or there's no prebuilt `sharp` for this platform. Save as `.svg` or `.eps` instead, which need nothing extra, or install `sharp` (https://sharp.pixelplumbing.com/install) and run the command again.
 
 **`--format … does not match the output file`**: change the extension or drop `--format`.
 

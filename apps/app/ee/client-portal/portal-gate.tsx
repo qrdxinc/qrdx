@@ -10,6 +10,7 @@ import { brandIconUrl } from "@/ee/client-portal/brand-icon";
 import type { PortalViewer, PortalWorkspace } from "@/ee/client-portal/portal";
 import { PortalShell } from "@/ee/client-portal/portal-shell";
 import { PortalSignIn, PortalSignOut } from "@/ee/client-portal/portal-sign-in";
+import { getSignInOptions } from "@/lib/auth/sign-in-options-server";
 
 // What a client portal shows before its reports: signing in, or "no
 // access" for someone signed in with another address (agency tools).
@@ -47,18 +48,23 @@ export function PortalGate({
 }) {
   if (viewer.kind === "client") return null;
   if (viewer.kind === "signed-out") {
+    // Whether a sign-in code can reach anyone here, as the running server
+    // says for this request (portal pages read the session, so they're
+    // never prerendered): the main sign-in's answer. The card and the form
+    // both follow it.
+    const emailCodes = getSignInOptions().email;
     return (
       <PortalShell portal={portal}>
         <Card className="mx-auto w-full max-w-sm">
           <CardHeader>
             <CardTitle>Sign in to see your reports</CardTitle>
             <CardDescription className="text-pretty">
-              Use the email address {portal.brand.name} invited. We'll send you
-              a one-time code.
+              Use the email address {portal.brand.name} invited.
+              {emailCodes && " We'll send you a one-time code."}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <PortalSignIn />
+            <PortalSignIn emailCodes={emailCodes} />
           </CardContent>
         </Card>
       </PortalShell>

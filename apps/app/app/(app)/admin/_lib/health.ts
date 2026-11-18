@@ -1,7 +1,11 @@
 import "server-only";
 
 import { eeLicenseState } from "@repo/auth/license";
-import { FEATURE_IDS, FEATURE_RULES } from "@repo/availability";
+import {
+  FEATURE_IDS,
+  FEATURE_RULES,
+  featureUnusableReason,
+} from "@repo/availability";
 import { database as db, webhookDelivery } from "@repo/database";
 import { getCatalogBySurface } from "@repo/integrations/src/catalog";
 import { redis } from "@repo/rate-limit";
@@ -253,7 +257,8 @@ export function getBuildInfo() {
 /**
  * Optional features: whether each is configured (names only). The feature
  * rows come from packages/availability/rules.ts, the same rules that
- * decide what the site offers.
+ * decide what the site offers. A feature that's off with every variable set
+ * says why instead (email sign-in codes where email may not go out).
  */
 export function getConfiguration(): {
   name: string;
@@ -271,10 +276,11 @@ export function getConfiguration(): {
         name: rule.name,
         on: features[id],
         vars:
-          names.join(", ") ||
-          (id === "customDomains"
-            ? "None off Vercel (DNS TXT verification)"
-            : "None needed here"),
+          featureUnusableReason(id, ctx) ??
+          (names.join(", ") ||
+            (id === "customDomains"
+              ? "None off Vercel (DNS TXT verification)"
+              : "None needed here")),
       };
     }),
     {

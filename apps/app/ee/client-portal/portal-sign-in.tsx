@@ -8,12 +8,27 @@ import { authClient } from "@repo/auth/client";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Logout } from "iconsax-reactjs";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { EmailCodeSignIn } from "@/app/(app)/(auth)/components/email-code-sign-in";
 
-export function PortalSignIn() {
+/**
+ * Codes are the portal's only way in. `emailCodes`: whether one can reach
+ * anyone here, as the running server answered for this request
+ * (getSignInOptions in ./portal-gate.tsx, the main sign-in's answer).
+ * Without them, a line saying so instead of a form that can only fail.
+ */
+export function PortalSignIn({ emailCodes }: { emailCodes: boolean }) {
+  const t = useTranslations("auth.emailCodeSignIn");
   const router = useRouter();
   const [sentTo, setSentTo] = useState<string | null>(null);
+  if (!emailCodes) {
+    return (
+      <p className="text-muted-foreground text-sm text-pretty" role="status">
+        {t("emailSignInIsntSet")}
+      </p>
+    );
+  }
   // The form brings its own side padding (the sign-in panel's); the card
   // around it here already has some.
   return (
