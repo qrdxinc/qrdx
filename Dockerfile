@@ -4,8 +4,8 @@
 # standalone server. docker-compose.yml builds it together with Postgres and a
 # one-shot schema sync job; see apps/docs/content/docs/self-hosting.mdx.
 # Checked on 18 Nov 2026: `docker compose up -d --build` on a clean machine
-# with 8 GB for Docker (arm64, empty cache) built in under 5 minutes, peaking
-# at about 5 GB.
+# with 8 GB for Docker (arm64, empty cache) built in 5 to 6 minutes, with up
+# to about 6.5 GB of memory in use.
 #
 #   cp apps/app/.env.example .env    # then fill it in
 #   docker build -t qrdx --build-arg NEXT_PUBLIC_APP_URL=https://qr.example.com .
