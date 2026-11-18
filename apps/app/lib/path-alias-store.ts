@@ -4,6 +4,7 @@ import { database as db, linkPathAlias, qrCode } from "@repo/database";
 import cuid from "cuid";
 import { and, asc, count, eq, inArray, type SQL } from "drizzle-orm";
 import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
+import { noteMissingAliases } from "./path-alias-missing";
 import {
   hostedPageSlugOf,
   type PathAliasClaimProblem,
@@ -16,36 +17,6 @@ import { findTakenSlugs, isUniqueViolation } from "./slug-claims";
 // The table comes from manual-sql/2026-11-18-path-aliases.sql: until it's
 // applied, every lookup here answers "no alias" (and logs that once), so
 // custom domains keep answering as before.
-
-/**
- * Postgres's "undefined table" (42P01), however deeply the driver wraps it:
- * what every read and write of link_path_alias hits until the SQL is applied.
- */
-export function isMissingTableError(error: unknown): boolean {
-  let current: unknown = error;
-  for (let depth = 0; depth < 5 && current; depth += 1) {
-    if ((current as { code?: unknown }).code === "42P01") return true;
-    current = (current as { cause?: unknown }).cause;
-  }
-  return false;
-}
-
-let warned = false;
-
-/**
- * True when `error` is the missing table; logs it once per process (a
- * warning: it's expected until the SQL is applied).
- */
-export function noteMissingAliases(error: unknown): boolean {
-  if (!isMissingTableError(error)) return false;
-  if (!warned) {
-    warned = true;
-    console.warn(
-      "Path aliases: link_path_alias doesn't exist yet (packages/database/manual-sql/2026-11-18-path-aliases.sql). Custom domains answer without aliases until it does.",
-    );
-  }
-  return true;
-}
 
 /** An alias answers only while its code is on the alias's domain. */
 const liveJoin = and(
@@ -160,7 +131,10 @@ export async function findTakenAliasPaths(
     if (slug) pages.set(slug, path);
   }
   if (pages.size > 0) {
-    for (const slug of await findTakenSlugs([...pages.keys()], domainId)) {
+    const holders = await findTakenSlugs([...pages.keys()], domainId, {
+      aliases: false,
+    });
+    for (const slug of holders) {
       taken.add(pages.get(slug) as string);
     }
   }
@@ -188,7 +162,10 @@ export async function claimAlias(input: {
   if (problem) return { ok: false, problem };
   try {
     const pageSlug = hostedPageSlugOf(path);
-    if (pageSlug && (await findTakenSlugs([pageSlug], domainId)).size > 0) {
+    const pageHolders = pageSlug
+      ? await findTakenSlugs([pageSlug], domainId, { aliases: false })
+      : null;
+    if (pageHolders && pageHolders.size > 0) {
       return { ok: false, problem: "hostedPage" };
     }
     const [existing] = await db

@@ -15,6 +15,7 @@ vi.mock(
 );
 
 const store = await import("@/lib/path-alias-store");
+const { isMissingTableError } = await import("@/lib/path-alias-missing");
 
 function code(id: string, overrides: Record<string, unknown> = {}) {
   return {
@@ -132,6 +133,12 @@ describe("claimAlias", () => {
       problem: "hostedPage",
     });
     expect((await claim("code_a", "/p/eE6l7ofNx")).ok).toBe(true);
+    // Claiming it again stays fine: the alias doesn't block itself.
+    expect((await claim("code_a", "/p/eE6l7ofNx")).ok).toBe(true);
+    expect(await claim("code_b", "/p/eE6l7ofNx")).toEqual({
+      ok: false,
+      problem: "taken",
+    });
   });
 
   it("refuses paths that can't be aliases", async () => {
@@ -218,9 +225,9 @@ describe("before the SQL is applied (no link_path_alias table)", () => {
     const boom = Object.assign(new Error("connection reset"), {
       code: "08006",
     });
-    expect(store.isMissingTableError(boom)).toBe(false);
+    expect(isMissingTableError(boom)).toBe(false);
     expect(
-      store.isMissingTableError(
+      isMissingTableError(
         Object.assign(new Error("Failed query"), {
           cause: {
             code: "42P01",
