@@ -65,12 +65,13 @@ describe("/ai/art FAQ (server HTML)", () => {
     });
   });
 
-  it("states each plan's monthly allowance in the visible answer", () => {
-    const visible = text(html.replace(/<script[\s\S]*?<\/script>/g, ""));
+  it("states each plan's monthly allowance in a visible answer", () => {
+    const answers = details.map(([, , body]) =>
+      text(body?.match(/<p\b[^>]*>([\s\S]*?)<\/p>/)?.[1] ?? ""),
+    );
     const count = (value: number | null) =>
       value === null ? "unlimited" : String(value);
-    expect(visible).toContain(
-      `Free accounts get ${count(ALLOWANCES.free)} credits a month, Pro ${count(ALLOWANCES.pro)} and Business ${count(ALLOWANCES.business)}`,
-    );
+    const allowance = `Free accounts get ${count(ALLOWANCES.free)} credits a month, Pro ${count(ALLOWANCES.pro)} and Business ${count(ALLOWANCES.business)}`;
+    expect(answers.some((answer) => answer.includes(allowance))).toBe(true);
   });
 });
