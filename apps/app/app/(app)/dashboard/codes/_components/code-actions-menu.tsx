@@ -18,6 +18,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@repo/design-system/components/ui/dropdown-menu";
 import {
@@ -356,6 +359,16 @@ export function CodeActionsMenu({
           <DropdownMenuItem onSelect={() => download("svg")}>
             <DocumentDownload /> {t("downloadSvg")}
           </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <GalleryImport /> {t("moreFormats")}
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onSelect={() => download("bmp")}>
+                <GalleryImport /> {t("downloadBmp")}
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
         </DropdownMenuContent>
       </DropdownMenu>
     );
@@ -402,6 +415,16 @@ export function CodeActionsMenu({
           <DropdownMenuItem onSelect={() => download("svg")}>
             <DocumentDownload /> {t("downloadSvg")}
           </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <GalleryImport /> {t("moreFormats")}
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onSelect={() => download("bmp")}>
+                <GalleryImport /> {t("downloadBmp")}
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
           <DropdownMenuSeparator />
           {listItem && (
             <>
