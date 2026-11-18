@@ -5,6 +5,7 @@ import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
+import { useTranslations } from "next-intl";
 import { type FormEvent, useId, useState } from "react";
 import { startSsoSignIn } from "@/ee/sso/start-sso-sign-in";
 
@@ -30,6 +31,8 @@ export function SsoSignIn({
   disabled = false,
   lastUsed = false,
 }: SsoSignInProps) {
+  const t = useTranslations("auth.ssoSignIn");
+  const tErrors = useTranslations("auth.signInErrors");
   const id = useId();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -40,7 +43,7 @@ export function SsoSignIn({
     event.preventDefault();
     setError(null);
     setBusy(true);
-    const failure = await startSsoSignIn(email, callbackURL());
+    const failure = await startSsoSignIn(email, callbackURL(), tErrors);
     // Still busy while the browser goes to the identity provider.
     if (failure) {
       setError(failure);
@@ -57,11 +60,11 @@ export function SsoSignIn({
           onClick={() => setOpen(true)}
           type="button"
         >
-          Sign in with SSO
+          {t("signInWithSso")}
         </button>
         {lastUsed && (
           <Badge className="px-1.5 py-0 text-[10px]" variant="secondary">
-            Last used
+            {t("lastUsed")}
           </Badge>
         )}
       </div>
@@ -70,7 +73,7 @@ export function SsoSignIn({
 
   return (
     <form className="space-y-2 px-6 pt-4" onSubmit={submit}>
-      <Label htmlFor={`${id}-email`}>Work email</Label>
+      <Label htmlFor={`${id}-email`}>{t("workEmail")}</Label>
       {/* Stacked on phones, so a long address stays readable. */}
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input
@@ -85,14 +88,14 @@ export function SsoSignIn({
             setEmail(event.target.value);
             if (error) setError(null);
           }}
-          placeholder="you@company.com"
+          placeholder={t("youCompanyCom")}
           required
           type="email"
           value={email}
         />
         <Button disabled={busy || disabled || !email.trim()} type="submit">
           {busy && <ModuleOrbit aria-hidden className="size-4" />}
-          Continue
+          {t("continue")}
         </Button>
       </div>
       <p
@@ -105,7 +108,7 @@ export function SsoSignIn({
       </p>
       <div className="flex items-center justify-between gap-2">
         <span className="text-muted-foreground text-xs">
-          If your company set it up for QRdx.
+          {t("ifYourCompanySetIt")}
         </span>
         <button
           className={TEXT_ACTION}
@@ -116,7 +119,7 @@ export function SsoSignIn({
           }}
           type="button"
         >
-          Cancel
+          {t("cancel")}
         </button>
       </div>
     </form>

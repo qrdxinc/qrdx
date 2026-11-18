@@ -2,14 +2,18 @@ import { auth } from "@repo/auth/server";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { readSignInParams } from "../_lib/params";
 import { hasPendingChallenge } from "../_lib/two-factor-challenge";
 import { TwoFactorPage } from "./two-factor-page";
 
-export const metadata: Metadata = {
-  title: "Two-step verification",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getAppTranslations("app.signIn.twoFactor.twoFactorPage");
+  return {
+    title: t("twoStepVerification"),
+    robots: { index: false, follow: false },
+  };
+}
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

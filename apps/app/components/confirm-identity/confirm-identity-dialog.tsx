@@ -45,7 +45,6 @@ import {
   CONFIRM_RETURN_FAILED,
   CONFIRM_RETURNED,
   CONFIRMATION_CODE_MINUTES,
-  CONFIRMATION_MESSAGES,
   CONFIRMATION_MINUTES,
   CONFIRMATION_REASONS,
   CONFIRMATION_RESEND_SECONDS,
@@ -56,10 +55,8 @@ import {
   confirmReturnPath,
   isConfirmSignInProvider,
 } from "@/lib/account/confirmation";
-import {
-  normalizeBackupCode,
-  TWO_FACTOR_MESSAGES,
-} from "@/lib/auth/two-factor";
+import { normalizeBackupCode } from "@/lib/auth/two-factor";
+import type { Messages } from "@/lib/i18n/messages";
 import { browserHasPasskeys } from "@/lib/passkeys";
 import { signInPath } from "@/lib/safe-redirect";
 import {
@@ -83,22 +80,17 @@ const DIGITS_ONLY = "^\\d+$";
 // The last method that worked in this browser (no secrets: just its name).
 const REMEMBERED_METHOD = "qrdx:confirm-method";
 
-const SWITCH_LABELS: Record<ConfirmMethod, string> = {
-  passkey: "Use your passkey",
-  totp: "Use an authenticator code",
-  backup: "Use a backup code",
-  email: "Email me a code",
-  google: "Sign in with Google",
-  github: "Sign in with GitHub",
-  sso: "Sign in with SSO",
-  "sign-in-again": "Sign in again",
-};
-
-const SIGN_IN_NAMES: Record<ConfirmSignInProvider, string> = {
+const PROVIDER_NAMES: Record<ConfirmSignInProvider, string> = {
   google: "Google",
   github: "GitHub",
-  sso: "your company's SSO",
+  sso: "SSO",
 };
+
+/** The actions with a "Why am I asked?" of their own (CONFIRMATION_REASONS). */
+type ReasonAction = keyof Messages["auth"]["confirmIdentityDialog"]["reasons"];
+
+const hasOwnReason = (action: ConfirmationAction): action is ReasonAction =>
+  CONFIRMATION_REASONS[action] !== undefined;
 
 const SIGN_IN_ICONS: Record<
   ConfirmSignInProvider,
@@ -231,6 +223,8 @@ export function ConfirmIdentityDialog({
   onDone: (confirmed: boolean) => void;
 }) {
   const t = useTranslations("auth.confirmIdentityDialog");
+  const tMessages = useTranslations("auth.confirmationMessages");
+  const tTwoFactor = useTranslations("auth.twoFactorMessages");
   const id = useId();
   const open = request !== null;
   const [options, setOptions] = useState<ConfirmationOptions | null>(null);
@@ -299,12 +293,12 @@ export function ConfirmIdentityDialog({
         setLoadedFor(current);
       })
       .catch(() => {
-        if (!cancelled) setLoadError(CONFIRMATION_MESSAGES.failed);
+        if (!cancelled) setLoadError(tMessages("failed"));
       });
     return () => {
       cancelled = true;
     };
-  }, [open]);
+  }, [open, tMessages]);
 
   useEffect(() => {
     if (resendAt <= Date.now()) return;
@@ -338,7 +332,7 @@ export function ConfirmIdentityDialog({
           return;
         }
         if (!("options" in started)) {
-          setError(CONFIRMATION_MESSAGES.passkeyFailed);
+          setError(tMessages("passkeyFailed"));
           return;
         }
         let response: Awaited<ReturnType<typeof getPasskeyAssertion>>;
@@ -356,10 +350,10 @@ export function ConfirmIdentityDialog({
           if (automatic && reason === "not-allowed") return;
           setError(
             reason === "not-allowed"
-              ? CONFIRMATION_MESSAGES.passkeyClosed
+              ? tMessages("passkeyClosed")
               : reason === "unsupported"
-                ? CONFIRMATION_MESSAGES.passkeyUnavailable
-                : CONFIRMATION_MESSAGES.passkeyFailed,
+                ? tMessages("passkeyUnavailable")
+                : tMessages("passkeyFailed"),
           );
           return;
         }
@@ -370,13 +364,13 @@ export function ConfirmIdentityDialog({
         }
         succeed("passkey");
       } catch {
-        setError(CONFIRMATION_MESSAGES.failed);
+        setError(tMessages("failed"));
       } finally {
         if (abort.current === controller) abort.current = null;
         setBusy(false);
       }
     },
-    [succeed],
+    [succeed, tMessages],
   );
 
   // The passkey prompt opens on its own when it's the method shown (once the
@@ -414,7 +408,7 @@ export function ConfirmIdentityDialog({
       succeed("totp");
     } catch {
       setCode("");
-      setError(CONFIRMATION_MESSAGES.failed);
+      setError(tMessages("failed"));
     } finally {
       setBusy(false);
     }
@@ -424,7 +418,7 @@ export function ConfirmIdentityDialog({
     event.preventDefault();
     if (busy) return;
     if (!normalizeBackupCode(backupCode)) {
-      setError(TWO_FACTOR_MESSAGES.invalidBackupCode);
+      setError(tTwoFactor("invalidBackupCode"));
       return;
     }
     setBusy(true);
@@ -437,7 +431,7 @@ export function ConfirmIdentityDialog({
       }
       succeed("backup");
     } catch {
-      setError(CONFIRMATION_MESSAGES.failed);
+      setError(tMessages("failed"));
     } finally {
       setBusy(false);
     }
@@ -459,9 +453,9 @@ export function ConfirmIdentityDialog({
       setResendAt(time + CONFIRMATION_RESEND_SECONDS * 1000);
       setCode("");
       setEmailSent(true);
-      if (resend) setNotice("New code sent. The old one no longer works.");
+      if (resend) setNotice(t("newCodeSent"));
     } catch {
-      setError(CONFIRMATION_MESSAGES.failed);
+      setError(tMessages("failed"));
     } finally {
       setBusy(false);
     }
@@ -486,7 +480,7 @@ export function ConfirmIdentityDialog({
       succeed("email");
     } catch {
       setCode("");
-      setError(CONFIRMATION_MESSAGES.failed);
+      setError(tMessages("failed"));
     } finally {
       setBusy(false);
     }
@@ -533,7 +527,7 @@ export function ConfirmIdentityDialog({
       if (failure) throw failure;
       // The browser is on its way to the provider: stay busy.
     } catch {
-      setError(CONFIRMATION_MESSAGES.signInFailed);
+      setError(tMessages("signInFailed"));
       setBusy(false);
     }
   };
@@ -572,7 +566,10 @@ export function ConfirmIdentityDialog({
     </p>
   );
   const others = methods.filter((entry) => entry !== method);
-  const reason = request ? CONFIRMATION_REASONS[request.action] : undefined;
+  const reason =
+    request && hasOwnReason(request.action)
+      ? t(`reasons.${request.action}`)
+      : undefined;
 
   let body: ReactNode;
   if (loadError) {
@@ -601,7 +598,9 @@ export function ConfirmIdentityDialog({
               type="button"
               variant="outline"
             >
-              {SWITCH_LABELS[entry]}
+              {isConfirmSignInProvider(entry)
+                ? t("switchTo.signInWith", { provider: PROVIDER_NAMES[entry] })
+                : t(`switchTo.${entry}`)}
             </Button>
           ))}
         </div>
@@ -794,7 +793,9 @@ export function ConfirmIdentityDialog({
     body = (
       <div className="space-y-3">
         <p className="text-muted-foreground text-sm text-pretty">
-          {t("signInWithValueAgain", { value: SIGN_IN_NAMES[method] })}
+          {method === "sso"
+            ? t("signInWithSsoAgain")
+            : t("signInWithValueAgain", { value: PROVIDER_NAMES[method] })}
         </p>
         {errorLine}
         <Button
@@ -805,9 +806,7 @@ export function ConfirmIdentityDialog({
           variant="outline"
         >
           {busy ? <ModuleOrbit aria-hidden /> : <Icon className="size-4" />}
-          {t("continueWith", {
-            method: method === "sso" ? "SSO" : SIGN_IN_NAMES[method],
-          })}
+          {t("continueWith", { method: PROVIDER_NAMES[method] })}
         </Button>
       </div>
     );
@@ -815,7 +814,7 @@ export function ConfirmIdentityDialog({
     body = (
       <div className="space-y-3">
         <p className="text-muted-foreground text-sm text-pretty">
-          {CONFIRMATION_MESSAGES.signInAgain}
+          {tMessages("signInAgain")}
         </p>
         <Button
           className="h-10 w-full sm:h-9"

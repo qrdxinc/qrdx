@@ -11,6 +11,7 @@ import {
   normalizeBackupCode,
   TRUST_DEVICE_DAYS,
 } from "@repo/auth/sign-in-challenge-rules";
+import type { Translator } from "@/lib/i18n/translator";
 
 export {
   BACKUP_CODE_COUNT,
@@ -31,7 +32,39 @@ export const TWO_FACTOR_MESSAGES = {
   expired: "This sign-in timed out. Sign in again.",
   rateLimited: "Too many tries. Wait a moment, then try again.",
   failed: "Something went wrong. Check your connection and try again.",
+  // A sign-in started with an email code just as the workspace began
+  // requiring SSO for the address (packages/auth/ee/sso-required.ts).
+  ssoRequired:
+    "Your company now requires single sign-on for this address. Start again and sign in with SSO.",
 } as const;
+
+/** TWO_FACTOR_MESSAGES in any language. */
+export type TwoFactorMessages = Record<
+  keyof typeof TWO_FACTOR_MESSAGES,
+  string
+>;
+
+/**
+ * TWO_FACTOR_MESSAGES in the person's language, for the screens that show
+ * them in the browser (auth.twoFactorMessages in messages/en.json). Server
+ * code answers with the English above.
+ */
+export function twoFactorMessages(
+  t: Translator<"auth.twoFactorMessages">,
+): TwoFactorMessages {
+  return {
+    wrongCode: t("wrongCode"),
+    wrongBackupCode: t("wrongBackupCode"),
+    invalidCode: t("invalidCode"),
+    invalidBackupCode: t("invalidBackupCode"),
+    tooManyAttempts: t("tooManyAttempts"),
+    locked: t("locked", { minutes: LOCKOUT_MINUTES }),
+    expired: t("expired"),
+    rateLimited: t("rateLimited"),
+    failed: t("failed"),
+    ssoRequired: t("ssoRequired"),
+  };
+}
 
 export type ChallengeMode = "totp" | "backup";
 
@@ -42,46 +75,39 @@ export interface AuthClientError {
 }
 
 /**
- * A failed challenge answer: the message, and whether this challenge is over
- * (sign in again).
+ * A failed challenge answer: the message (from `messages`, English by
+ * default), and whether this challenge is over (sign in again).
  */
 export function challengeFailure(
   error: AuthClientError,
   mode: ChallengeMode,
+  messages: TwoFactorMessages = TWO_FACTOR_MESSAGES,
 ): { message: string; over: boolean } {
   switch (error.code) {
     case "INVALID_CODE":
-      return { message: TWO_FACTOR_MESSAGES.wrongCode, over: false };
+      return { message: messages.wrongCode, over: false };
     case "INVALID_BACKUP_CODE":
-      return { message: TWO_FACTOR_MESSAGES.wrongBackupCode, over: false };
+      return { message: messages.wrongBackupCode, over: false };
     case "TOO_MANY_ATTEMPTS_REQUEST_NEW_CODE":
-      return { message: TWO_FACTOR_MESSAGES.tooManyAttempts, over: true };
+      return { message: messages.tooManyAttempts, over: true };
     case "ACCOUNT_TEMPORARILY_LOCKED":
-      return { message: TWO_FACTOR_MESSAGES.locked, over: true };
+      return { message: messages.locked, over: true };
     case "INVALID_TWO_FACTOR_COOKIE":
-      return { message: TWO_FACTOR_MESSAGES.expired, over: true };
-    // A sign-in started with an email code just as the workspace began
-    // requiring SSO for the address (packages/auth/ee/sso-required.ts).
+      return { message: messages.expired, over: true };
     case "sso_required":
-      return {
-        message:
-          "Your company now requires single sign-on for this address. Start again and sign in with SSO.",
-        over: true,
-      };
+      return { message: messages.ssoRequired, over: true };
   }
   if (error.status === 429) {
-    return { message: TWO_FACTOR_MESSAGES.rateLimited, over: false };
+    return { message: messages.rateLimited, over: false };
   }
   if (error.status === 401) {
     return {
       message:
-        mode === "backup"
-          ? TWO_FACTOR_MESSAGES.wrongBackupCode
-          : TWO_FACTOR_MESSAGES.wrongCode,
+        mode === "backup" ? messages.wrongBackupCode : messages.wrongCode,
       over: false,
     };
   }
-  return { message: TWO_FACTOR_MESSAGES.failed, over: false };
+  return { message: messages.failed, over: false };
 }
 
 /** A 6-digit authenticator code. */
