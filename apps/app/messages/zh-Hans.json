@@ -8668,6 +8668,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "未找到工作区。",
+      "twoFactorRequired": "此工作区要求开启两步验证。请在“设置”的“个人资料与安全”中开启，然后重试。"
+    },
+    "forbidden": {
+      "viewer": "你在此处是查看者。{only}",
+      "billingRole": "你的账单角色仅涵盖套餐。{only}",
+      "contentWrite": "只有所有者、管理员和成员可以在此工作区中创建或更改内容。",
+      "workspaceUpdate": "只有所有者和管理员可以更改此工作区的设置。",
+      "membersManage": "只有所有者和管理员可以管理此工作区的成员。"
+    },
+    "organizations": {
+      "nameTooShort": "工作区名称太短。",
+      "nameTooLong": "工作区名称太长。",
+      "slugFormat": "请使用 3 到 48 个小写字母、数字或连字符。",
+      "slugReserved": "该网址为保留网址，请换一个。",
+      "invalidEmail": "请输入有效的邮箱地址",
+      "invalidDetails": "工作区信息无效。",
+      "invalidInvitation": "邀请无效。",
+      "invalidRole": "角色无效。",
+      "invalidMember": "成员无效。",
+      "invalidWorkspace": "工作区无效。",
+      "moreWorkspaces": "更多工作区包含在 {pro} 和 {business} 中。",
+      "urlTaken": "该工作区网址已被占用。",
+      "alreadyMember": "该用户已是此工作区的成员。",
+      "needsOwner": "工作区至少需要一位所有者。请先将其他人设为所有者。",
+      "wrongRecipient": "此邀请发送到了另一个邮箱地址。",
+      "verifyEmailFirst": "请先验证你的邮箱地址，再回复此邀请。",
+      "invitationGone": "此邀请已失效。",
+      "workspaceFull": "此工作区已满。{pro} 工作区最多可有 {members} 名成员；{business} 工作区没有人数限制。",
+      "noFreeSeat": "此工作区没有空闲席位可再发送邀请。请撤销一个待处理的邀请，或升级工作区的套餐。",
+      "signIn": "请登录后管理工作区。",
+      "somethingWrong": "出了点问题，请重试。",
+      "rateLimited": "请求过于频繁。请稍等一分钟后重试。",
+      "ownerRoleOwnersOnly": "只有所有者可以将他人设为所有者，或更改所有者的角色。",
+      "billingRoleOwnersOnly": "只有所有者可以授予或撤销 {billing} 角色，因为该角色决定谁来支付工作区的费用。",
+      "seatsNeedPaidOwner": "添加成员需要工作区所有者使用 {pro} 或 {business}。",
+      "seatsUsed": "此工作区的 {seats} 个席位已全部用完（包括成员和待处理的邀请）。请撤销一个邀请，或将一位工作区所有者升级到 {business} 以获得不限数量的成员。",
+      "nothingToSave": "没有需要保存的内容。",
+      "notAMember": "该用户不是此工作区的成员。",
+      "removeOwnerOwnersOnly": "只有所有者可以将所有者移出工作区。",
+      "removeBillingOwnersOnly": "只有所有者可以将账单成员移出工作区。",
+      "cantLeaveOwn": "你不能退出自己的工作区。",
+      "deleteOwnersOnly": "只有所有者可以删除工作区。",
+      "ownCantBeDeleted": "无法删除你自己的工作区，请改为重命名。",
+      "typeUrlToConfirm": "请准确输入工作区网址以确认。"
+    },
+    "joinLinks": {
+      "signIn": "请登录后继续。",
+      "somethingWrong": "出了点问题，请重试。",
+      "rateLimited": "请求过于频繁，请等待几分钟后重试。",
+      "pickRole": "请为链接选择一个角色。",
+      "billingLinkOwnersOnly": "只有所有者可以创建授予 {billing} 角色的链接。",
+      "resetOwnersOnly": "只有所有者可以重置授予 {role} 角色的链接。",
+      "changeOwnersOnly": "只有所有者可以修改授予 {role} 角色的链接。",
+      "linkOff": "加入链接已关闭。",
+      "incomplete": "此加入链接不完整。",
+      "unavailable": "此服务器尚未设置加入链接，目前请通过电子邮件邀请他人。",
+      "linkDead": "此加入链接已失效，请向工作区索取新的链接。",
+      "noSeatYet": "此工作区暂时没有可供新成员使用的席位，请联系所有者将其升级到 {pro} 或 {business}。",
+      "seatsUsed": "此工作区的 {seats} 个席位已全部用完，请联系所有者释放一个席位或升级到 {business}。"
+    },
+    "logo": {
+      "signIn": "请登录后继续。",
+      "somethingWrong": "出了点问题，请重试。",
+      "tooManyChanges": "更改次数过多，请等待几分钟。",
+      "uploadsUnavailable": "此服务器尚未设置 Logo 上传功能，请使用图片网址。",
+      "choosePicture": "请选择要上传的图片。",
+      "tooLarge": "图片太大，请换一张较小的。",
+      "wrongType": "请使用 PNG、JPEG 或 WebP 格式的图片。",
+      "url": {
+        "tooLong": "该网址过长。",
+        "notFull": "请输入以 https:// 开头的完整图片网址。",
+        "notHttps": "请使用 https:// 图片网址。",
+        "withPassword": "请使用不含密码的网址。",
+        "notPublic": "请使用公开网站上的图片。"
+      }
+    },
+    "moveCode": {
+      "signIn": "请登录后再移动二维码。",
+      "somethingWrong": "出了点问题。",
+      "pickWorkspace": "请选择工作区。",
+      "rateLimited": "移动次数过多，请等待一分钟后再试。",
+      "alreadyHere": "该二维码已在此工作区中。",
+      "codeNotFound": "未找到二维码",
+      "cantAddCodes": "你无法向 {name} 添加二维码。{reason}",
+      "othersCodes": "只有所有者和管理员可以移动其他成员创建的二维码。",
+      "pageCode": "打开托管页面的二维码无法移动到其他工作区：页面会保留在此处。",
+      "domainNotInTarget": "此二维码的链接位于 {hostname}，而 {name} 没有该域名。移动后，已印刷的链接将失效，因此无法移动。",
+      "limitReached": "{name} 已用完其套餐包含的 {limit} 个有效动态二维码。请先在该工作区归档一个，或先归档此二维码。"
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "请求无效。",
+      "rateLimited": "请求过于频繁，请等待一分钟后重试。",
+      "planRequired": "要求两步验证需使用 {plan}。",
+      "ownFirst": "请先为你自己的账号开启两步验证，路径：设置中的“个人资料与安全”。",
+      "signIn": "请登录后再更改此工作区的设置。",
+      "somethingWrong": "出了点问题，请重试。"
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "由 <link>{host}</link> 代 {name} 发送",

@@ -8668,6 +8668,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "Workspace nicht gefunden.",
+      "twoFactorRequired": "Dieser Workspace erfordert eine Bestätigung in zwei Schritten. Aktiviere sie in den Einstellungen unter „Profil & Sicherheit“ und versuche es dann erneut."
+    },
+    "forbidden": {
+      "viewer": "Du bist hier Betrachter. {only}",
+      "billingRole": "Deine Abrechnungsrolle gilt nur für den Tarif. {only}",
+      "contentWrite": "Nur Inhaber, Admins und Mitglieder können in diesem Workspace etwas erstellen oder ändern.",
+      "workspaceUpdate": "Nur Inhaber und Admins können die Einstellungen dieses Workspace ändern.",
+      "membersManage": "Nur Inhaber und Admins können die Personen in diesem Workspace verwalten."
+    },
+    "organizations": {
+      "nameTooShort": "Der Workspace-Name ist zu kurz.",
+      "nameTooLong": "Der Workspace-Name ist zu lang.",
+      "slugFormat": "Verwende 3–48 Kleinbuchstaben, Ziffern und Bindestriche.",
+      "slugReserved": "Diese URL ist reserviert. Wähle eine andere.",
+      "invalidEmail": "Gib eine gültige E-Mail ein",
+      "invalidDetails": "Ungültige Workspace-Angaben.",
+      "invalidInvitation": "Ungültige Einladung.",
+      "invalidRole": "Ungültige Rolle.",
+      "invalidMember": "Ungültiges Mitglied.",
+      "invalidWorkspace": "Ungültiger Workspace.",
+      "moreWorkspaces": "Weitere Workspaces sind in {pro} und {business} enthalten.",
+      "urlTaken": "Diese Workspace-URL ist bereits vergeben.",
+      "alreadyMember": "Diese Person ist bereits Mitglied dieses Workspace.",
+      "needsOwner": "Ein Workspace braucht mindestens einen Inhaber. Mach zuerst jemand anderen zum Inhaber.",
+      "wrongRecipient": "Diese Einladung wurde an eine andere E-Mail-Adresse gesendet.",
+      "verifyEmailFirst": "Bestätige deine E-Mail-Adresse, bevor du auf diese Einladung antwortest.",
+      "invitationGone": "Diese Einladung ist nicht mehr gültig.",
+      "workspaceFull": "Dieser Workspace ist voll. {pro}-Workspaces haben bis zu {members} Mitglieder; {business}-Workspaces haben kein Limit.",
+      "noFreeSeat": "Dieser Workspace hat keinen freien Platz für eine weitere Einladung. Widerrufe eine ausstehende Einladung oder upgrade den Tarif des Workspace.",
+      "signIn": "Melde dich an, um Workspaces zu verwalten.",
+      "somethingWrong": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "rateLimited": "Zu viele Anfragen. Bitte warte eine Minute und versuche es erneut.",
+      "ownerRoleOwnersOnly": "Nur Inhaber können jemanden zum Inhaber machen oder die Rolle eines Inhabers ändern.",
+      "billingRoleOwnersOnly": "Nur Inhaber können die Rolle {billing} vergeben oder entziehen, da sie festlegt, wer für den Workspace bezahlt.",
+      "seatsNeedPaidOwner": "Zum Hinzufügen von Mitgliedern braucht es einen Workspace-Inhaber mit {pro} oder {business}.",
+      "seatsUsed": "Dieser Workspace hat alle {seats} Plätze belegt (Mitglieder plus offene Einladungen). Widerrufe eine Einladung oder stelle einen Workspace-Inhaber auf {business} um, damit du unbegrenzt Mitglieder hast.",
+      "nothingToSave": "Nichts zu speichern.",
+      "notAMember": "Diese Person ist kein Mitglied dieses Workspace.",
+      "removeOwnerOwnersOnly": "Nur Inhaber können einen Inhaber aus dem Workspace entfernen.",
+      "removeBillingOwnersOnly": "Nur Inhaber können ein Abrechnungsmitglied aus dem Workspace entfernen.",
+      "cantLeaveOwn": "Du kannst deinen eigenen Workspace nicht verlassen.",
+      "deleteOwnersOnly": "Nur Inhaber können einen Workspace löschen.",
+      "ownCantBeDeleted": "Dein eigener Workspace kann nicht gelöscht werden. Benenne ihn stattdessen um.",
+      "typeUrlToConfirm": "Gib zur Bestätigung die Workspace-URL genau ein."
+    },
+    "joinLinks": {
+      "signIn": "Melde dich an, um fortzufahren.",
+      "somethingWrong": "Etwas ist schiefgelaufen. Bitte versuche es noch einmal.",
+      "rateLimited": "Zu viele Anfragen. Bitte warte ein paar Minuten und versuche es dann erneut.",
+      "pickRole": "Wähle eine Rolle für den Link.",
+      "billingLinkOwnersOnly": "Nur Inhaber können einen Link erstellen, der die Rolle {billing} vergibt.",
+      "resetOwnersOnly": "Nur Inhaber können einen Link zurücksetzen, der die Rolle {role} vergibt.",
+      "changeOwnersOnly": "Nur Inhaber können einen Link ändern, der die Rolle {role} vergibt.",
+      "linkOff": "Der Beitrittslink ist aus.",
+      "incomplete": "Dieser Beitrittslink ist unvollständig.",
+      "unavailable": "Beitrittslinks sind auf diesem Server noch nicht eingerichtet. Lade Leute vorerst per E-Mail ein.",
+      "linkDead": "Dieser Beitrittslink funktioniert nicht mehr. Bitte den Workspace um einen neuen.",
+      "noSeatYet": "Dieser Workspace hat noch keinen freien Platz für ein weiteres Mitglied. Bitte einen Inhaber, auf {pro} oder {business} upzugraden.",
+      "seatsUsed": "Dieser Workspace hat alle {seats} Plätze belegt. Bitte einen Inhaber, einen Platz freizugeben oder auf {business} upzugraden."
+    },
+    "logo": {
+      "signIn": "Melde dich an, um fortzufahren.",
+      "somethingWrong": "Etwas ist schiefgelaufen. Bitte versuche es noch einmal.",
+      "tooManyChanges": "Zu viele Änderungen. Bitte warte ein paar Minuten.",
+      "uploadsUnavailable": "Logo-Uploads sind auf diesem Server nicht eingerichtet. Verwende eine Bild-URL.",
+      "choosePicture": "Wähle ein Bild zum Hochladen aus.",
+      "tooLarge": "Das Bild ist zu groß. Versuche es mit einem kleineren.",
+      "wrongType": "Nutze ein Bild als PNG, JPEG oder WebP.",
+      "url": {
+        "tooLong": "Diese URL ist zu lang.",
+        "notFull": "Gib eine vollständige Bild-URL ein, die mit https:// beginnt.",
+        "notHttps": "Nutze eine https://-Bild-URL.",
+        "withPassword": "Nutze eine URL ohne Passwort.",
+        "notPublic": "Nutze ein Bild von einer öffentlichen Website."
+      }
+    },
+    "moveCode": {
+      "signIn": "Melde dich an, um Codes zu verschieben.",
+      "somethingWrong": "Etwas ist schiefgelaufen.",
+      "pickWorkspace": "Wähle einen Workspace aus.",
+      "rateLimited": "Zu viele Verschiebungen. Bitte warte eine Minute.",
+      "alreadyHere": "Der Code befindet sich bereits in diesem Workspace.",
+      "codeNotFound": "QR-Code nicht gefunden",
+      "cantAddCodes": "Du kannst keine Codes zu {name} hinzufügen. {reason}",
+      "othersCodes": "Nur Inhaber und Admins können Codes verschieben, die andere Mitglieder erstellt haben.",
+      "pageCode": "Codes, die eine gehostete Seite öffnen, lassen sich nicht in einen anderen Workspace verschieben: Die Seite bleibt hier.",
+      "domainNotInTarget": "Der Link dieses Codes liegt auf {hostname}, was {name} nicht hat. Der gedruckte Link würde nicht mehr funktionieren, deshalb kann der Code nicht verschoben werden.",
+      "limitReached": "{name} hat alle {limit} aktiven dynamischen Codes genutzt, die der Tarif enthält. Archiviere dort einen Code oder archiviere zuerst diesen Code."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "Ungültige Anfrage.",
+      "rateLimited": "Zu viele Anfragen. Bitte warte eine Minute und versuche es erneut.",
+      "planRequired": "Die Pflicht zur Zwei-Faktor-Authentifizierung ist in {plan} enthalten.",
+      "ownFirst": "Aktiviere zuerst die Zwei-Faktor-Authentifizierung für dein eigenes Konto, in den Einstellungen unter Profil & Sicherheit.",
+      "signIn": "Melde dich an, um die Einstellungen dieses Workspace zu ändern.",
+      "somethingWrong": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "Gesendet für {name} von <link>{host}</link>",

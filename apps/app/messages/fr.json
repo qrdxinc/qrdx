@@ -8668,6 +8668,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "Espace de travail introuvable.",
+      "twoFactorRequired": "Cet espace de travail exige la vérification en deux étapes. Activez-la dans Paramètres, sous Profil et sécurité, puis réessayez."
+    },
+    "forbidden": {
+      "viewer": "Vous êtes lecteur ici. {only}",
+      "billingRole": "Votre rôle de facturation couvre uniquement l’abonnement. {only}",
+      "contentWrite": "Seuls les propriétaires, les administrateurs et les membres peuvent créer ou modifier des éléments dans cet espace de travail.",
+      "workspaceUpdate": "Seuls les propriétaires et les administrateurs peuvent modifier les paramètres de cet espace de travail.",
+      "membersManage": "Seuls les propriétaires et les administrateurs peuvent gérer les personnes de cet espace de travail."
+    },
+    "organizations": {
+      "nameTooShort": "Le nom de l’espace de travail est trop court.",
+      "nameTooLong": "Le nom de l’espace de travail est trop long.",
+      "slugFormat": "Utilisez de 3 à 48 lettres minuscules, chiffres et tirets.",
+      "slugReserved": "Cette URL est réservée. Choisissez-en une autre.",
+      "invalidEmail": "Saisissez un e-mail valide",
+      "invalidDetails": "Informations de l’espace de travail non valides.",
+      "invalidInvitation": "Invitation non valide.",
+      "invalidRole": "Rôle non valide.",
+      "invalidMember": "Membre non valide.",
+      "invalidWorkspace": "Espace de travail non valide.",
+      "moreWorkspaces": "Les espaces de travail supplémentaires sont inclus dans {pro} et {business}.",
+      "urlTaken": "Cette URL d’espace de travail est déjà prise.",
+      "alreadyMember": "Cette personne est déjà membre de cet espace de travail.",
+      "needsOwner": "Un espace de travail doit avoir au moins un propriétaire. Nommez d’abord un autre propriétaire.",
+      "wrongRecipient": "Cette invitation a été envoyée à une autre adresse e-mail.",
+      "verifyEmailFirst": "Vérifiez votre adresse e-mail avant de répondre à cette invitation.",
+      "invitationGone": "Cette invitation n’est plus valide.",
+      "workspaceFull": "Cet espace de travail est complet. Les espaces de travail {pro} comptent jusqu’à {members} membres ; les espaces de travail {business} n’ont aucune limite.",
+      "noFreeSeat": "Cet espace de travail n’a plus de place libre pour une autre invitation. Révoquez une invitation en attente ou passez à un abonnement supérieur pour cet espace de travail.",
+      "signIn": "Connectez-vous pour gérer les espaces de travail.",
+      "somethingWrong": "Une erreur s’est produite. Veuillez réessayer.",
+      "rateLimited": "Trop de requêtes. Veuillez patienter une minute, puis réessayer.",
+      "ownerRoleOwnersOnly": "Seuls les propriétaires peuvent nommer un propriétaire ou modifier le rôle d’un propriétaire.",
+      "billingRoleOwnersOnly": "Seuls les propriétaires peuvent attribuer ou retirer le rôle {billing}, car il détermine qui paie pour l’espace de travail.",
+      "seatsNeedPaidOwner": "Pour ajouter des membres, un propriétaire de l’espace de travail doit avoir le forfait {pro} ou {business}.",
+      "seatsUsed": "Cet espace de travail a utilisé ses {seats} places (membres et invitations en attente). Révoquez une invitation ou faites passer un propriétaire de l’espace de travail à {business} pour des membres illimités.",
+      "nothingToSave": "Rien à enregistrer.",
+      "notAMember": "Cette personne n’est pas membre de cet espace de travail.",
+      "removeOwnerOwnersOnly": "Seuls les propriétaires peuvent retirer un propriétaire de l’espace de travail.",
+      "removeBillingOwnersOnly": "Seuls les propriétaires peuvent retirer un membre de facturation de l’espace de travail.",
+      "cantLeaveOwn": "Vous ne pouvez pas quitter votre propre espace de travail.",
+      "deleteOwnersOnly": "Seuls les propriétaires peuvent supprimer un espace de travail.",
+      "ownCantBeDeleted": "Votre propre espace de travail ne peut pas être supprimé. Renommez-le plutôt.",
+      "typeUrlToConfirm": "Saisissez exactement l’URL de l’espace de travail pour confirmer."
+    },
+    "joinLinks": {
+      "signIn": "Connectez-vous pour continuer.",
+      "somethingWrong": "Une erreur s’est produite. Veuillez réessayer.",
+      "rateLimited": "Trop de requêtes. Veuillez patienter quelques minutes et réessayer.",
+      "pickRole": "Choisissez un rôle pour le lien.",
+      "billingLinkOwnersOnly": "Seuls les propriétaires peuvent créer un lien qui attribue le rôle {billing}.",
+      "resetOwnersOnly": "Seuls les propriétaires peuvent réinitialiser un lien qui attribue le rôle {role}.",
+      "changeOwnersOnly": "Seuls les propriétaires peuvent modifier un lien qui attribue le rôle {role}.",
+      "linkOff": "Le lien d’invitation est désactivé.",
+      "incomplete": "Ce lien d’invitation est incomplet.",
+      "unavailable": "Les liens d’invitation ne sont pas encore configurés sur ce serveur. Invitez des personnes par e-mail pour le moment.",
+      "linkDead": "Ce lien d’invitation ne fonctionne plus. Demandez-en un nouveau à l’espace de travail.",
+      "noSeatYet": "Cet espace de travail n’a pas encore de place pour un autre membre. Demandez à un propriétaire de passer à {pro} ou {business}.",
+      "seatsUsed": "Cet espace de travail a utilisé ses {seats} places. Demandez à un propriétaire d’en libérer une ou de passer à {business}."
+    },
+    "logo": {
+      "signIn": "Connectez-vous pour continuer.",
+      "somethingWrong": "Une erreur s’est produite. Veuillez réessayer.",
+      "tooManyChanges": "Trop de modifications. Veuillez patienter quelques minutes.",
+      "uploadsUnavailable": "Le téléversement de logos n’est pas configuré sur ce serveur. Utilisez une URL d’image.",
+      "choosePicture": "Choisissez une image à téléverser.",
+      "tooLarge": "Cette image est trop volumineuse. Essayez-en une plus petite.",
+      "wrongType": "Utilisez une image PNG, JPEG ou WebP.",
+      "url": {
+        "tooLong": "Cette URL est trop longue.",
+        "notFull": "Saisissez une URL d’image complète, commençant par https://",
+        "notHttps": "Utilisez une URL d’image en https://.",
+        "withPassword": "Utilisez une URL sans mot de passe.",
+        "notPublic": "Utilisez une image hébergée sur un site public."
+      }
+    },
+    "moveCode": {
+      "signIn": "Connectez-vous pour déplacer des codes.",
+      "somethingWrong": "Une erreur s’est produite.",
+      "pickWorkspace": "Choisissez un espace de travail.",
+      "rateLimited": "Trop de déplacements. Veuillez patienter une minute.",
+      "alreadyHere": "Le code se trouve déjà dans cet espace de travail.",
+      "codeNotFound": "QR code introuvable",
+      "cantAddCodes": "Vous ne pouvez pas ajouter de codes à {name}. {reason}",
+      "othersCodes": "Seuls les propriétaires et les administrateurs peuvent déplacer les codes créés par d’autres membres.",
+      "pageCode": "Les codes qui ouvrent une page hébergée ne peuvent pas être déplacés vers un autre espace de travail : la page reste ici.",
+      "domainNotInTarget": "Le lien de ce code est sur {hostname}, que {name} n’a pas. Son lien imprimé cesserait de fonctionner, il ne peut donc pas être déplacé.",
+      "limitReached": "{name} a utilisé les {limit} codes dynamiques actifs inclus dans son offre. Archivez-en un là-bas, ou archivez d’abord ce code."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "Requête non valide.",
+      "rateLimited": "Trop de requêtes. Veuillez patienter une minute, puis réessayer.",
+      "planRequired": "L’obligation de la validation en deux étapes est incluse avec {plan}.",
+      "ownFirst": "Activez d’abord la validation en deux étapes pour votre propre compte, dans Paramètres, sous Profil et sécurité.",
+      "signIn": "Connectez-vous pour modifier les paramètres de cet espace de travail.",
+      "somethingWrong": "Une erreur s’est produite. Veuillez réessayer."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "Envoyé pour {name} par <link>{host}</link>",

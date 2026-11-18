@@ -9,14 +9,20 @@ import { CONFIRMATION_REQUIRED } from "@/lib/account/confirmation";
 import { confirmationNeededFor } from "@/lib/account/confirmation-scope";
 import { HttpError } from "@/lib/error-response";
 import {
+  forbiddenText,
+  type WorkspaceActionMessage,
+  workspaceActionsText,
+  workspaceActionText,
+  workspaceErrorText,
+} from "@/lib/i18n/workspace-actions";
+import {
   canAssignRole,
-  forbiddenMessage,
   JOINABLE_ROLES,
   WORKSPACE_ROLE_LABELS,
   type WorkspaceRole,
 } from "@/lib/permissions";
 import { getClientIp } from "@/lib/request-guards";
-import { getActiveScope } from "@/lib/scope";
+import { type ActiveScope, getActiveScope } from "@/lib/scope";
 import { getCurrentUser, logError } from "@/lib/shared";
 import {
   deleteJoinLink,
@@ -37,6 +43,9 @@ import { UnauthorizedError } from "@/types/errors";
 // can use, so making one (or giving an existing link that role) needs a
 // recent "Confirm it's you", like inviting an admin by email
 // (actions/organizations.ts). Turning a link off never asks.
+//
+// Errors are in the person's language (workspaceActions.joinLinks in
+// messages/en.json, lib/i18n/workspace-actions.ts); `code` stays as it is.
 
 export type JoinActionResult<T = null> =
   | { ok: true; data: T }
@@ -54,8 +63,8 @@ const joinIpLimiter = createRateLimiter({
   limiter: slidingWindow(30, "10 m"),
 });
 
-const RATE_LIMITED =
-  "Too many requests. Please wait a few minutes and try again.";
+const RATE_LIMITED: WorkspaceActionMessage = (t) => t("joinLinks.rateLimited");
+const PICK_ROLE: WorkspaceActionMessage = (t) => t("joinLinks.pickRole");
 
 const roleSchema = z.enum(
   JOINABLE_ROLES as [WorkspaceRole, ...WorkspaceRole[]],
@@ -66,32 +75,58 @@ function fail(code: string, error: string): JoinActionResult<never> {
   return { ok: false, code, error };
 }
 
-function failure(error: unknown, action: string): JoinActionResult<never> {
-  if (error instanceof UnauthorizedError) {
-    return fail("UNAUTHORIZED", "Sign in to continue.");
-  }
-  if (error instanceof HttpError) return fail(error.code, error.message);
-  logError(error as Error, { action });
-  return fail("UNKNOWN_ERROR", "Something went wrong. Please try again.");
+/** A refusal with `code`, saying `message` in the person's language. */
+async function refuse(
+  code: string,
+  message: WorkspaceActionMessage,
+): Promise<JoinActionResult<never>> {
+  return fail(code, await workspaceActionText(message));
 }
 
-/** The open workspace, when the caller may give `role` through a link. */
-async function managedScope(role: WorkspaceRole | null) {
+async function failure(
+  error: unknown,
+  action: string,
+): Promise<JoinActionResult<never>> {
+  if (error instanceof UnauthorizedError) {
+    return refuse("UNAUTHORIZED", (t) => t("joinLinks.signIn"));
+  }
+  if (error instanceof HttpError) {
+    const text = workspaceErrorText(await workspaceActionsText(), error);
+    return fail(error.code, text ?? error.message);
+  }
+  logError(error as Error, { action });
+  return refuse("UNKNOWN_ERROR", (t) => t("joinLinks.somethingWrong"));
+}
+
+/**
+ * The open workspace, when the caller may give `role` through a link, else
+ * the refusal to answer with.
+ */
+async function managedScope(
+  role: WorkspaceRole | null,
+): Promise<ActiveScope | JoinActionResult<never>> {
   const scope = await getActiveScope();
   const allowed = role
     ? canAssignRole(scope.role, null, role)
     : canAssignRole(scope.role, null, "member");
   if (!allowed) {
-    const message =
+    return refuse("FORBIDDEN", (t) =>
       role === "billing"
-        ? `Only owners can make a link that gives the ${WORKSPACE_ROLE_LABELS.billing} role.`
-        : forbiddenMessage(scope.role, "members.manage");
-    throw new HttpError(403, "FORBIDDEN", message);
+        ? t("joinLinks.billingLinkOwnersOnly", {
+            billing: WORKSPACE_ROLE_LABELS.billing,
+          })
+        : forbiddenText(t, scope.role, "members.manage"),
+    );
   }
   const { success } = await manageLimiter.limit(`join-link:${scope.userId}`);
-  if (!success) throw new HttpError(429, "RATE_LIMITED", RATE_LIMITED);
+  if (!success) return refuse("RATE_LIMITED", RATE_LIMITED);
   return scope;
 }
+
+/** True when managedScope refused. */
+const refused = (
+  scope: ActiveScope | JoinActionResult<never>,
+): scope is JoinActionResult<never> => "ok" in scope;
 
 function revalidateTeam() {
   revalidatePath("/dashboard", "layout");
@@ -120,19 +155,17 @@ export async function issueWorkspaceJoinLink(input: {
 }): Promise<JoinActionResult<{ path: string; role: WorkspaceRole }>> {
   try {
     const requested = roleSchema.safeParse(input?.role ?? "member");
-    if (!requested.success) {
-      return fail("VALIDATION_ERROR", "Pick a role for the link.");
-    }
+    if (!requested.success) return refuse("VALIDATION_ERROR", PICK_ROLE);
     const scope = await managedScope(requested.data);
+    if (refused(scope)) return scope;
     // A reset keeps the role it had unless another is asked for.
     const current = input?.role
       ? null
       : await getJoinLink(scope.organizationId);
     const role = input?.role ?? current?.role ?? "member";
     if (!canAssignRole(scope.role, null, role)) {
-      return fail(
-        "FORBIDDEN",
-        `Only owners can reset a link that gives the ${WORKSPACE_ROLE_LABELS[role]} role.`,
+      return refuse("FORBIDDEN", (t) =>
+        t("joinLinks.resetOwnersOnly", { role: WORKSPACE_ROLE_LABELS[role] }),
       );
     }
     const needed = await confirmationForRole(scope, role);
@@ -155,16 +188,16 @@ export async function setWorkspaceJoinLinkRole(input: {
 }): Promise<JoinActionResult> {
   try {
     const parsed = roleSchema.safeParse(input?.role);
-    if (!parsed.success) {
-      return fail("VALIDATION_ERROR", "Pick a role for the link.");
-    }
+    if (!parsed.success) return refuse("VALIDATION_ERROR", PICK_ROLE);
     const scope = await managedScope(parsed.data);
+    if (refused(scope)) return scope;
     const current = await getJoinLink(scope.organizationId);
-    if (!current) return fail("NOT_FOUND", "The join link is off.");
+    if (!current) return refuse("NOT_FOUND", (t) => t("joinLinks.linkOff"));
     if (!canAssignRole(scope.role, null, current.role)) {
-      return fail(
-        "FORBIDDEN",
-        `Only owners can change a link that gives the ${WORKSPACE_ROLE_LABELS[current.role]} role.`,
+      return refuse("FORBIDDEN", (t) =>
+        t("joinLinks.changeOwnersOnly", {
+          role: WORKSPACE_ROLE_LABELS[current.role],
+        }),
       );
     }
     const needed = await confirmationForRole(scope, parsed.data);
@@ -182,6 +215,7 @@ export async function setWorkspaceJoinLinkRole(input: {
 export async function disableWorkspaceJoinLink(): Promise<JoinActionResult> {
   try {
     const scope = await managedScope(null);
+    if (refused(scope)) return scope;
     await deleteJoinLink(scope.organizationId);
     auditJoinLink(scope, "join_link.disabled");
     revalidateTeam();
@@ -198,7 +232,7 @@ export async function joinWorkspaceWithLink(input: {
   try {
     const parsed = tokenSchema.safeParse(input?.token);
     if (!parsed.success) {
-      return fail("JOIN_LINK_INVALID", "This join link isn't complete.");
+      return refuse("JOIN_LINK_INVALID", (t) => t("joinLinks.incomplete"));
     }
     const user = await getCurrentUser();
     const ip = getClientIp({ headers: await headers() });
@@ -207,7 +241,7 @@ export async function joinWorkspaceWithLink(input: {
       joinIpLimiter.limit(`join:ip:${ip}`),
     ]);
     if (!(byUser.success && byIp.success)) {
-      return fail("RATE_LIMITED", RATE_LIMITED);
+      return refuse("RATE_LIMITED", RATE_LIMITED);
     }
     const outcome = await joinWithLink(
       { id: user.id, email: user.email },
