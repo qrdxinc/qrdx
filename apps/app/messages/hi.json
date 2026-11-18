@@ -7994,6 +7994,9 @@
           "deleting": "हटा रहे हैं...",
           "pageDeleted": "पेज हटा दिया गया",
           "qrCodeCreated": "QR कोड बन गया",
+          "qrCodeCreatedWithSamples": "QR कोड बन गया। पेज पर अभी भी उसके टेम्पलेट के सैंपल मौजूद हैं",
+          "samplesStillOnPage": "{count, plural, one {# सैंपल अभी भी पेज पर है।} other {# सैंपल अभी भी पेज पर हैं।}} विज़िटर को सैंपल लिंक कभी नहीं दिखते, लेकिन सैंपल टेक्स्ट और फ़ोटो दिखते हैं।",
+          "editPage": "पेज एडिट करें",
           "shortLinkCopied": "शॉर्ट लिंक कॉपी हुआ",
           "couldntCopyTheLink": "लिंक कॉपी नहीं हो सका"
         },

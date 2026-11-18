@@ -41,6 +41,8 @@ import { assertCustomCssAllowed } from "@/ee/white-label/access";
 import { HttpError } from "@/lib/error-response";
 import { PRODUCT_BLOCK_TYPE, pageGtin } from "@/lib/gs1/digital-link";
 import { parseLandingPageContent } from "@/lib/landing/blocks";
+import { findSamples } from "@/lib/landing/samples";
+import { templateSampleTexts } from "@/lib/landing/template-samples";
 import {
   buildTemplateContent,
   getTemplate,
@@ -681,7 +683,7 @@ export async function deletePage(
 export async function createCodeForPage(
   scope: ActiveScope,
   id: string,
-): Promise<{ codeId: string }> {
+): Promise<{ codeId: string; samples: number }> {
   const row = await findPageRow(scope, id);
   const [code] = await createCodes(
     scope,
@@ -703,7 +705,15 @@ export async function createCodeForPage(
       destinationUrl: `${SHORT_LINK_BASE}/p/${encodeURIComponent(code.slug)}`,
     })
     .where(eq(qrCode.id, code.id));
-  return { codeId: code.id };
+  return { codeId: code.id, samples: countSamples(row) };
+}
+
+/** The template samples still on a page, so attaching a code can say so. */
+function countSamples(row: { type: string; content: unknown }): number {
+  const parsed = parseLandingPageContent(row.content, { mode: "read" });
+  if (!parsed.success) return 0;
+  return findSamples(parsed.data, new Set(templateSampleTexts(row.type)))
+    .length;
 }
 
 // ─── Pages for an existing code (codes/_lib/code-kind.ts) ───────────────────

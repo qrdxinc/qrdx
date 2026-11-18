@@ -9,6 +9,7 @@ import {
 } from "@/components/landing/page-settings-block";
 import { hostedPageBranding } from "@/ee/white-label/access";
 import { parseLandingPageContent } from "@/lib/landing/blocks";
+import { withoutSampleLinks } from "@/lib/landing/samples";
 import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { type RedirectCode, redirectCodeColumns } from "@/lib/redirect/code";
 import { isValidSlug } from "@/lib/short-links";
@@ -112,6 +113,9 @@ export const loadPublicPage = cache(
       content: _content,
       ...code
     } = row;
+    // A template's sample links (example.com, a profile link with no
+    // profile) never reach visitors, published or not: they'd lead nowhere.
+    const content = withoutSampleLinks(parsed.data);
     const plan = await getPlanForScope({
       userId: pageUserId,
       organizationId: pageOrganizationId,
@@ -127,8 +131,8 @@ export const loadPublicPage = cache(
         userId: pageUserId,
         organizationId: pageOrganizationId,
       },
-      content: parsed.data,
-      settings: getPageSettings(parsed.data),
+      content,
+      settings: getPageSettings(content),
       plan,
       branding: {
         badge: limits.landingPageBadge,

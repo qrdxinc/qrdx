@@ -7994,6 +7994,9 @@
           "deleting": "削除中…",
           "pageDeleted": "ページを削除しました",
           "qrCodeCreated": "QRコードを作成しました",
+          "qrCodeCreatedWithSamples": "QRコードを作成しました。ページにはテンプレートのサンプルが残っています",
+          "samplesStillOnPage": "{count, plural, other {ページにサンプルが#件残っています。}}サンプルのリンクは訪問者には表示されませんが、サンプルのテキストと写真は表示されます。",
+          "editPage": "ページを編集",
           "shortLinkCopied": "短縮リンクをコピーしました",
           "couldntCopyTheLink": "リンクをコピーできませんでした"
         },

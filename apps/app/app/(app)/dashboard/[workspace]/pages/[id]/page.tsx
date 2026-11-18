@@ -10,6 +10,7 @@ import { getSavedThemePalettes } from "@/app/(app)/dashboard/pages/_lib/saved-th
 import { PageEditor } from "@/components/landing/editor/page-editor";
 import { hostedPageBranding } from "@/ee/white-label/access";
 import { HttpError } from "@/lib/error-response";
+import { templateSampleTexts } from "@/lib/landing/template-samples";
 import { getTemplate } from "@/lib/landing/templates";
 import { can } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
@@ -75,6 +76,7 @@ export default async function EditLandingPage({
         version: page.version,
         typeLabel: getTemplate(page.type)?.label ?? "Page",
       }}
+      sampleTexts={templateSampleTexts(page.type)}
       savedThemes={savedThemes}
       storageEnabled={isStorageConfigured}
     />

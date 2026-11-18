@@ -7994,6 +7994,9 @@
           "deleting": "Excluindo...",
           "pageDeleted": "Página excluída",
           "qrCodeCreated": "QR code criado",
+          "qrCodeCreatedWithSamples": "QR code criado. A página ainda tem exemplos do modelo dela",
+          "samplesStillOnPage": "{count, plural, one {# exemplo ainda está na página.} other {# exemplos ainda estão na página.}} Os visitantes nunca veem links de exemplo, mas veem textos e fotos de exemplo.",
+          "editPage": "Editar página",
           "shortLinkCopied": "Link curto copiado",
           "couldntCopyTheLink": "Não foi possível copiar o link"
         },

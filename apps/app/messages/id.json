@@ -7994,6 +7994,9 @@
           "deleting": "Menghapus...",
           "pageDeleted": "Halaman dihapus",
           "qrCodeCreated": "Kode QR dibuat",
+          "qrCodeCreatedWithSamples": "Kode QR dibuat. Halaman ini masih berisi contoh dari templatnya",
+          "samplesStillOnPage": "{count, plural, other {# contoh masih ada di halaman.}} Pengunjung tidak akan melihat tautan contoh, tetapi mereka melihat teks dan foto contoh.",
+          "editPage": "Edit halaman",
           "shortLinkCopied": "Tautan singkat disalin",
           "couldntCopyTheLink": "Tidak dapat menyalin tautan"
         },

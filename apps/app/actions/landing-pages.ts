@@ -242,7 +242,7 @@ export async function deleteLandingPages(input: { ids: string[] }): Promise<
 
 export async function createLandingPageCode(input: {
   id: string;
-}): Promise<LandingPageActionResult<{ codeId: string }>> {
+}): Promise<LandingPageActionResult<{ codeId: string; samples: number }>> {
   return run(
     "createLandingPageCode",
     async (scope) => {
