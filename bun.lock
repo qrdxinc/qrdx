@@ -603,7 +603,7 @@
     },
     "plugins/n8n": {
       "name": "@qrdx/n8n-nodes-qrdx",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "devDependencies": {
         "@eslint/js": "9.29.0",
         "@n8n/eslint-plugin-community-nodes": "0.40.0",
