@@ -202,7 +202,7 @@ export const API_PROVIDERS: Record<ApiProviderId, ApiProvider> = {
       updateDestination: true,
     },
     redirectLimits:
-      "Uniqode's API comes with the Core plan and above, for Owners and Admins. Each code QRdx changes uses two API requests: Core allows 250,000 a month (10 a second), Plus 500,000 and Business 2 million.",
+      "Uniqode's API comes with the Core plan and above, for Owners and Admins. Each code QRdx changes uses about two API requests: Core allows 250,000 a month (10 a second), Plus 500,000 and Business+ 2 million.",
     listScope: "website",
   },
 };
