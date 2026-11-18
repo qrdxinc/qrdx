@@ -818,6 +818,7 @@ describe("GET /api/subscription (the plan /pricing reads in the browser)", () =>
       requestsRemaining: 7,
       requestsUsed: 3,
       plan: "free",
+      currency: "USD",
     });
     expect(state.subscriptionReads).toEqual(["subscriptionAndUsage"]);
 
@@ -829,12 +830,26 @@ describe("GET /api/subscription (the plan /pricing reads in the browser)", () =>
       requestsRemaining: null,
       requestsUsed: 3,
       plan: "pro",
+      currency: "USD",
     });
     expect(state.subscriptionReads).toEqual(["subscriptionAndUsage"]);
 
     // A product it doesn't know (renamed, legacy) counts as Pro, as getPlan says.
     state.subscription = { productId: "prod_from_2025" };
     expect((await json(await get())).plan).toBe("pro");
+  });
+
+  it("answers the currency checkout would charge: the country's, never the display switch", async () => {
+    signIn();
+    const india = await get({ ...BROWSER, "x-vercel-ip-country": "IN" });
+    expect((await json(india)).currency).toBe("INR");
+    const switched = await get({
+      ...BROWSER,
+      "x-vercel-ip-country": "IN",
+      cookie: "qrdx_currency=usd",
+    });
+    expect((await json(switched)).currency).toBe("INR");
+    expect((await json(await get())).currency).toBe("USD");
   });
 
   it("is still a 401 when signed out, and no answer is cached", async () => {

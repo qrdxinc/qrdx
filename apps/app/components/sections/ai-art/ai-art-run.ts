@@ -332,6 +332,33 @@ export function seedIsInvalid(
 }
 
 /** Fewer credits left this month than the run would use. */
+/**
+ * The variations a run starts with: the usual number, or fewer when fewer
+ * images are left this month, so the last ones can still be used. Never 0:
+ * with none left the button waits for an upgrade or the reset.
+ */
+export function variationsWithin(
+  preferred: number,
+  remaining: number | null | undefined,
+): number {
+  if (typeof remaining !== "number" || remaining < 1) return preferred;
+  return Math.min(preferred, remaining);
+}
+
+/**
+ * Whether the art surfaces offer an upgrade when images run short: not on
+ * Business (the top plan), and only to someone whose purchase lifts the
+ * allowance (`canUpgrade`; unknown counts as yes, as before).
+ */
+export function offersArtUpgrade(
+  credits: AIArtCredits | null,
+  canUpgrade: boolean | undefined,
+): boolean {
+  return (
+    credits !== null && credits.plan !== "business" && canUpgrade !== false
+  );
+}
+
 export function lacksCredits(
   credits: AIArtCredits | null,
   variations: number,

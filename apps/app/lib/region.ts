@@ -128,17 +128,27 @@ export function resolveRegion(
 }
 
 /**
- * The currency checkout charges, as Polar names it: the one for the
- * visitor's country (never the display switch, so nobody picks a cheaper
- * region's price). Polar would otherwise pick it from the IP address of the
- * server that creates the session, not the visitor's.
+ * The currency checkout charges: the one for the visitor's country, never
+ * the display switch, so nobody picks a cheaper region's price. In-app
+ * upgrade buttons show their prices in it (GET /api/subscription).
+ */
+export function chargedCurrency(
+  headers: Pick<Headers, "get"> | null | undefined,
+  options: EurOption = {},
+): PricingCurrency {
+  const country = countryFromHeaders(headers);
+  return currencyForRegion(
+    country ? regionForCountry(country, options) : "default",
+  );
+}
+
+/**
+ * chargedCurrency as Polar names it. Polar would otherwise pick it from the
+ * IP address of the server that creates the session, not the visitor's.
  */
 export function checkoutCurrency(
   headers: Pick<Headers, "get"> | null | undefined,
   options: EurOption = {},
 ): CurrencyOverride {
-  const country = countryFromHeaders(headers);
-  return overrideForCurrency(
-    currencyForRegion(country ? regionForCountry(country, options) : "default"),
-  );
+  return overrideForCurrency(chargedCurrency(headers, options));
 }

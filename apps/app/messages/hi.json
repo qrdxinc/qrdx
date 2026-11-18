@@ -198,6 +198,16 @@
       "thisFeatureIsPartOf": "यह फ़ीचर Business प्लान में शामिल है।",
       "thisFeatureIsPartOf2": "यह फ़ीचर Pro और Business में शामिल है।"
     },
+    "checkoutButtons": {
+      "month": "{plan} · {price} प्रति माह",
+      "year": "{plan} · {price} प्रति वर्ष",
+      "monthNoPrice": "{plan} मासिक",
+      "yearNoPrice": "{plan} वार्षिक",
+      "note": "चेकआउट Polar पर होता है; स्थानीय टैक्स जुड़ सकते हैं। कभी भी रद्द करें।",
+      "switchTo": "{plan} पर जाएँ",
+      "openPortal": "पोर्टल खोलें",
+      "failed": "चेकआउट नहीं खुला। थोड़ी देर बाद फिर कोशिश करें।"
+    },
     "themeToggle": {
       "toggleTheme": "थीम बदलें"
     }
@@ -3278,6 +3288,8 @@
       "creditsLeft": "इस महीने <count>{limit, number} में से {remaining, number}</count> AI आर्ट इमेज बची हैं{pooled, select, yes { (आपकी टीम में शेयर्ड)} other {}}, {resets} को रीसेट होंगी। इस बार {variations, number} इमेज बनेंगी; फ़ेल हुई इमेज के क्रेडिट वापस कर दिए जाते हैं।",
       "notEnoughLeft": "{variations, number} के लिए क्रेडिट काफ़ी नहीं हैं: कम वेरिएशन चुनें।",
       "notEnoughLeftOrUpgrade": "{variations, number} के लिए क्रेडिट काफ़ी नहीं हैं: कम वेरिएशन चुनें या अपग्रेड करें।",
+      "noneLeft": "इस महीने कोई क्रेडिट नहीं बचा।",
+      "noneLeftUpgrade": "इस महीने कोई क्रेडिट नहीं बचा। और बनाने के लिए अभी अपग्रेड करें।",
       "moreArtistic": "ज़्यादा आर्टिस्टिक",
       "clearerCode": "ज़्यादा साफ़ कोड",
       "followsYourPrompt": "आपके प्रॉम्प्ट के अनुसार",
@@ -3827,6 +3839,8 @@
         "creditsLeft": "इस महीने के AI आर्ट की <count>{limit, number} में से {remaining, number}</count> इमेज बची हैं{pooled, select, yes { (आपकी टीम में साझा)} other {}}, {resets} को रीसेट होंगी। इस बार {variations, number} इस्तेमाल होंगी।",
         "notEnoughLeft": "पर्याप्त नहीं बचीं: कम वेरिएशन चुनें।",
         "notEnoughLeftOrUpgrade": "पर्याप्त नहीं बचीं: कम वेरिएशन चुनें या अपग्रेड करें।",
+        "noneLeft": "इस महीने कोई नहीं बचा।",
+        "noneLeftUpgrade": "इस महीने कोई नहीं बचा। अभी और बनाने के लिए अपग्रेड करें।",
         "showResults": "{count, plural, one {अपना नतीजा दिखाएँ} other {अपने नतीजे दिखाएँ}}",
         "moreArtistic": "ज़्यादा कलात्मक",
         "clearerCode": "साफ़ कोड",
@@ -6472,6 +6486,7 @@
           "scansAcrossEveryDynamicCode": "इस वर्कस्पेस के सभी डायनेमिक कोड के स्कैन।",
           "dateRange": "तारीख़ की सीमा",
           "yourPlanKeepsAShorter": "आपके प्लान में स्कैन हिस्ट्री कम समय की रखी जाती है",
+          "comparePlans": "प्लान की तुलना करें",
           "dynamicCodes": "डायनेमिक कोड",
           "totalScans": "कुल स्कैन",
           "scansInRange": "इस अवधि के स्कैन",

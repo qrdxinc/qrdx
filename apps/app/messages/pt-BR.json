@@ -198,6 +198,16 @@
       "thisFeatureIsPartOf": "Este recurso faz parte do plano Business.",
       "thisFeatureIsPartOf2": "Este recurso faz parte do Pro e do Business."
     },
+    "checkoutButtons": {
+      "month": "{plan} · {price} por mês",
+      "year": "{plan} · {price} por ano",
+      "monthNoPrice": "{plan} mensal",
+      "yearNoPrice": "{plan} anual",
+      "note": "O pagamento é feito na Polar; podem ser acrescidos impostos locais. Cancele quando quiser.",
+      "switchTo": "Mudar para {plan}",
+      "openPortal": "Abrir portal",
+      "failed": "O pagamento não abriu. Tente de novo daqui a pouco."
+    },
     "themeToggle": {
       "toggleTheme": "Alternar tema"
     }
@@ -3278,6 +3288,8 @@
       "creditsLeft": "<count>{remaining, number} de {limit, number}</count> imagens de arte com IA restantes neste mês{pooled, select, yes { (compartilhadas com sua equipe)} other {}}, renova em {resets}. Esta geração usa {variations, number}; imagens que falharem são reembolsadas.",
       "notEnoughLeft": "Não há créditos suficientes para {variations, number}: escolha menos variações.",
       "notEnoughLeftOrUpgrade": "Não há créditos suficientes para {variations, number}: escolha menos variações ou faça upgrade.",
+      "noneLeft": "Acabaram neste mês.",
+      "noneLeftUpgrade": "Acabaram neste mês. Faça upgrade para criar mais agora.",
       "moreArtistic": "Mais artístico",
       "clearerCode": "Código mais nítido",
       "followsYourPrompt": "Segue seu prompt",
@@ -3827,6 +3839,8 @@
         "creditsLeft": "<count>{remaining, number} de {limit, number}</count> imagens de arte com IA restantes este mês{pooled, select, yes { (compartilhadas com sua equipe)} other {}}, com renovação em {resets}. Esta geração usa {variations, number}.",
         "notEnoughLeft": "Não há o bastante: escolha menos variações.",
         "notEnoughLeftOrUpgrade": "Não há o bastante: escolha menos variações ou faça upgrade.",
+        "noneLeft": "Nenhuma sobrando neste mês.",
+        "noneLeftUpgrade": "Nenhuma sobrando neste mês. Faça upgrade para criar mais agora.",
         "showResults": "{count, plural, one {Mostrar seu resultado} other {Mostrar seus resultados}}",
         "moreArtistic": "Mais artístico",
         "clearerCode": "Código mais nítido",
@@ -6472,6 +6486,7 @@
           "scansAcrossEveryDynamicCode": "Leituras de todos os QR codes dinâmicos deste workspace.",
           "dateRange": "Período",
           "yourPlanKeepsAShorter": "Seu plano mantém um histórico de leituras mais curto",
+          "comparePlans": "Comparar planos",
           "dynamicCodes": "QR codes dinâmicos",
           "totalScans": "Total de leituras",
           "scansInRange": "Leituras no período",

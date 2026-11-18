@@ -18,6 +18,25 @@ export const PAID_PLANS: readonly PaidPlan[] = ["pro", "business"];
 export const BILLING_INTERVALS: readonly BillingInterval[] = ["month", "year"];
 
 /**
+ * `/pricing?interval=month` (or `year`; "monthly" and "yearly" too): the
+ * billing period a link preselects. Null for anything else.
+ */
+export function parseBillingInterval(value: unknown): BillingInterval | null {
+  const raw = Array.isArray(value) ? value[0] : value;
+  if (typeof raw !== "string") return null;
+  switch (raw.trim().toLowerCase()) {
+    case "month":
+    case "monthly":
+      return "month";
+    case "year":
+    case "yearly":
+      return "year";
+    default:
+      return null;
+  }
+}
+
+/**
  * Euro prices, for visitors in the EU and EEA: on only once every Polar
  * product has its EUR price, so the site never shows a price checkout
  * won't charge. A literal read so Next inlines it into client bundles.

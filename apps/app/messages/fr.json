@@ -198,6 +198,16 @@
       "thisFeatureIsPartOf": "Cette fonctionnalité fait partie du plan Business.",
       "thisFeatureIsPartOf2": "Cette fonctionnalité fait partie de Pro et Business."
     },
+    "checkoutButtons": {
+      "month": "{plan} · {price} par mois",
+      "year": "{plan} · {price} par an",
+      "monthNoPrice": "{plan} mensuel",
+      "yearNoPrice": "{plan} annuel",
+      "note": "Le paiement se fait sur Polar ; des taxes locales peuvent s’ajouter. Résiliation à tout moment.",
+      "switchTo": "Passer à {plan}",
+      "openPortal": "Ouvrir le portail",
+      "failed": "Le paiement ne s’est pas ouvert. Réessayez dans un instant."
+    },
     "themeToggle": {
       "toggleTheme": "Changer de thème"
     }
@@ -3278,6 +3288,8 @@
       "creditsLeft": "<count>{remaining, number} sur {limit, number}</count> images d’art IA restantes ce mois-ci{pooled, select, yes { (partagées avec votre équipe)} other {}}, réinitialisation le {resets}. Cette génération utilise {variations, number} ; les images échouées sont remboursées.",
       "notEnoughLeft": "Crédits insuffisants pour {variations, number} : choisissez moins de variations.",
       "notEnoughLeftOrUpgrade": "Crédits insuffisants pour {variations, number} : choisissez moins de variations ou passez à une offre supérieure.",
+      "noneLeft": "Plus aucun crédit ce mois-ci.",
+      "noneLeftUpgrade": "Plus aucun crédit ce mois-ci. Passez à une offre supérieure pour en créer d’autres dès maintenant.",
       "moreArtistic": "Plus artistique",
       "clearerCode": "Code plus lisible",
       "followsYourPrompt": "Suit votre prompt",
@@ -3827,6 +3839,8 @@
         "creditsLeft": "<count>{remaining, number} sur {limit, number}</count> images d’art IA restantes ce mois-ci{pooled, select, yes { (partagées avec votre équipe)} other {}}, renouvellement le {resets}. Cette génération en utilise {variations, number}.",
         "notEnoughLeft": "Pas assez de crédits : choisissez moins de variations.",
         "notEnoughLeftOrUpgrade": "Pas assez de crédits : choisissez moins de variations ou passez à un forfait supérieur.",
+        "noneLeft": "Plus aucune ce mois-ci.",
+        "noneLeftUpgrade": "Plus aucune ce mois-ci. Passez à un forfait supérieur pour en créer d’autres dès maintenant.",
         "showResults": "{count, plural, one {Afficher votre résultat} other {Afficher vos résultats}}",
         "moreArtistic": "Plus artistique",
         "clearerCode": "Code plus net",
@@ -6472,6 +6486,7 @@
           "scansAcrossEveryDynamicCode": "Scans de tous les codes dynamiques de cet espace de travail.",
           "dateRange": "Période",
           "yourPlanKeepsAShorter": "Votre offre conserve un historique de scans plus court",
+          "comparePlans": "Comparer les offres",
           "dynamicCodes": "Codes dynamiques",
           "totalScans": "Total des scans",
           "scansInRange": "Scans sur la période",

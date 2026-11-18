@@ -18,6 +18,10 @@ import { ShieldTick } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrdx";
 import { useAvailability } from "@/components/availability-provider";
+import {
+  CheckoutButtons,
+  useCheckoutChoice,
+} from "@/components/billing/checkout-buttons";
 import { GridLines } from "@/components/fx";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { buildUpgradeHighlights } from "@/components/sections/pricing/upgrade-highlights";
@@ -45,6 +49,7 @@ export function GetProDialog({
     whiteLabel: has("whiteLabel"),
     conversions: has("conversions"),
   });
+  const checkout = useCheckoutChoice(plan).choice.kind !== "none";
   return (
     <ResponsiveDialog open={isOpen} onOpenChange={onClose}>
       <ResponsiveDialogContent
@@ -134,13 +139,26 @@ export function GetProDialog({
               </span>
             </p>
 
-            <ResponsiveDialogFooter className="bg-muted/30 relative flex-col border-t p-6">
-              <Button asChild className="grow">
+            <ResponsiveDialogFooter className="bg-muted/30 relative flex-col border-t p-6 sm:flex-col">
+              {/* Signed in on Free: checkout opens from here. Otherwise
+                  (signed out, no billing here) the pricing page. */}
+              <CheckoutButtons
+                onNavigate={onClose}
+                plan={plan}
+                source="dialog"
+              />
+              <Button
+                asChild
+                className="grow"
+                variant={checkout ? "ghost" : "default"}
+              >
                 <Link
                   href="/pricing"
-                  onClick={() =>
-                    track("upgrade_clicked", { source: "dialog", plan })
-                  }
+                  onClick={() => {
+                    if (!checkout) {
+                      track("upgrade_clicked", { source: "dialog", plan });
+                    }
+                  }}
                   onNavigate={onClose}
                 >
                   {t("comparePlansAndPrices")}

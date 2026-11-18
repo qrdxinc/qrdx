@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import type { AIArtCreditsResponse } from "@/components/sections/ai-art/config";
 import { getArtCredits, isArtConfigured } from "@/lib/ai/art";
 import { handleError } from "@/lib/error-response";
+import { can } from "@/lib/permissions";
 import { getActiveScope } from "@/lib/scope";
 import { UnauthorizedError } from "@/types/errors";
 
@@ -27,7 +28,13 @@ export async function GET(req: NextRequest) {
       throw error;
     }
     return NextResponse.json<AIArtCreditsResponse>(
-      { configured: true, credits: await getArtCredits(scope) },
+      {
+        configured: true,
+        credits: await getArtCredits(scope),
+        // Only someone whose plan counts for the workspace lifts its
+        // allowance by upgrading (the art surfaces' upgrade buttons).
+        canUpgrade: can(scope.role, "billing.manage"),
+      },
       { headers: { "Cache-Control": "private, no-store" } },
     );
   } catch (error) {

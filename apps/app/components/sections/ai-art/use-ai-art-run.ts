@@ -117,10 +117,16 @@ export function useAIArtRun({ store, onSignedOut }: UseAIArtRunOptions) {
 
   const setCredits = (next: AIArtCredits | null) => {
     if (!next || mock) return;
-    queryClient.setQueryData<AIArtCreditsResponse>(AI_ART_CREDITS_QUERY_KEY, {
-      configured: true,
-      credits: next,
-    });
+    queryClient.setQueryData<AIArtCreditsResponse>(
+      AI_ART_CREDITS_QUERY_KEY,
+      (previous) => ({
+        configured: true,
+        credits: next,
+        // A run's answer doesn't say who may upgrade; keep what the
+        // credits read said.
+        canUpgrade: previous?.canUpgrade,
+      }),
+    );
   };
 
   const showError = (error: MyErrorResponseType | null, title: string) => {
@@ -283,6 +289,8 @@ export function useAIArtRun({ store, onSignedOut }: UseAIArtRunOptions) {
     isGenerating: pending > 0,
     pendingVariations: pending,
     lacksCredits: (variations: number) => lacksCredits(credits, variations),
+    /** Whether an upgrade lifts their allowance (offersArtUpgrade) */
+    canUpgrade: creditsResponse?.canUpgrade,
     generate,
     retryClearer,
     cancel: () => cancelAIArt(store),

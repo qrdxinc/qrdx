@@ -32,10 +32,14 @@ import {
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { CheckoutButtons } from "@/components/billing/checkout-buttons";
 import { useDynamicLinkStore } from "@/components/editor/dynamic-link-toggle";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { AIArtPresetGallery } from "@/components/sections/ai-art/ai-art-preset-gallery";
-import { lockedSeedFor } from "@/components/sections/ai-art/ai-art-run";
+import {
+  lockedSeedFor,
+  offersArtUpgrade,
+} from "@/components/sections/ai-art/ai-art-run";
 import { ArtLookChips } from "@/components/sections/ai-art/art-look-chips";
 import {
   ArtLookWriteButton,
@@ -326,6 +330,7 @@ export function AIArtPanel({ style }: AIArtPanelProps) {
           )}
         </div>
         <CreditsLine
+          canUpgrade={art.canUpgrade}
           credits={art.credits}
           signedIn={art.signedIn}
           variations={draft.variations}
@@ -661,10 +666,12 @@ function AdvancedOptions({
 }
 
 function CreditsLine({
+  canUpgrade,
   credits,
   signedIn,
   variations,
 }: {
+  canUpgrade: boolean | undefined;
   credits: AIArtCredits | null;
   signedIn: boolean;
   variations: number;
@@ -700,28 +707,41 @@ function CreditsLine({
     day: "numeric",
     timeZone: "UTC",
   });
+  const short = credits.remaining < variations;
+  const upgrade = short && offersArtUpgrade(credits, canUpgrade);
+  const shortNote =
+    credits.remaining === 0
+      ? t(upgrade ? "noneLeftUpgrade" : "noneLeft")
+      : t(upgrade ? "notEnoughLeftOrUpgrade" : "notEnoughLeft");
   return (
-    <p className={className}>
-      {t.rich("creditsLeft", {
-        remaining: credits.remaining,
-        limit: credits.limit ?? 0,
-        pooled: credits.pooled ? "yes" : "no",
-        resets,
-        variations,
-        count: (chunks) => (
-          <span className="text-foreground font-medium tabular-nums">
-            {chunks}
+    <div className="flex flex-col gap-2">
+      <p className={className}>
+        {t.rich("creditsLeft", {
+          remaining: credits.remaining,
+          limit: credits.limit ?? 0,
+          pooled: credits.pooled ? "yes" : "no",
+          resets,
+          variations,
+          count: (chunks) => (
+            <span className="text-foreground font-medium tabular-nums">
+              {chunks}
+            </span>
+          ),
+        })}
+        {short && (
+          <span className="text-amber-600 dark:text-amber-400">
+            {" "}
+            {shortNote}
           </span>
-        ),
-      })}
-      {credits.remaining < variations && (
-        <span className="text-amber-600 dark:text-amber-400">
-          {" "}
-          {credits.plan === "business"
-            ? t("notEnoughLeft")
-            : t("notEnoughLeftOrUpgrade")}
-        </span>
+        )}
+      </p>
+      {upgrade && (
+        <CheckoutButtons
+          plan={credits.plan === "pro" ? "business" : "pro"}
+          size="sm"
+          source="ai_art_panel"
+        />
       )}
-    </p>
+    </div>
   );
 }

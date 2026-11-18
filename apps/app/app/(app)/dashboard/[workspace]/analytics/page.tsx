@@ -51,6 +51,7 @@ import {
   TimeCard,
 } from "@/app/(app)/dashboard/codes/[id]/_components/analytics-extra";
 import { InfoHint } from "@/components/help/info-hint";
+import { LocaleLink } from "@/components/i18n/locale-link";
 import { conversionsAllowed } from "@/ee/conversions/access";
 import { ConversionsSummary } from "@/ee/conversions/analytics-cards";
 import { getConversionSummary } from "@/ee/conversions/queries";
@@ -300,6 +301,11 @@ export default async function AnalyticsPage({
               </Link>
             </Button>
           ),
+        )}
+        {SCAN_RANGE_KEYS.some((key) => SCAN_RANGES[key] > retentionDays) && (
+          <Button asChild size="sm" variant="link">
+            <LocaleLink href="/pricing">{t("comparePlans")}</LocaleLink>
+          </Button>
         )}
       </nav>
 

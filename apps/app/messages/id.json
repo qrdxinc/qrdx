@@ -198,6 +198,16 @@
       "thisFeatureIsPartOf": "Fitur ini termasuk dalam paket Business.",
       "thisFeatureIsPartOf2": "Fitur ini termasuk dalam paket Pro dan Business."
     },
+    "checkoutButtons": {
+      "month": "{plan} · {price} per bulan",
+      "year": "{plan} · {price} per tahun",
+      "monthNoPrice": "{plan} bulanan",
+      "yearNoPrice": "{plan} tahunan",
+      "note": "Pembayaran dilakukan di Polar; pajak lokal mungkin ditambahkan. Batalkan kapan saja.",
+      "switchTo": "Beralih ke {plan}",
+      "openPortal": "Buka portal",
+      "failed": "Halaman pembayaran gagal dibuka. Coba lagi sesaat lagi."
+    },
     "themeToggle": {
       "toggleTheme": "Ganti tema"
     }
@@ -3278,6 +3288,8 @@
       "creditsLeft": "<count>{remaining, number} dari {limit, number}</count> gambar seni AI tersisa bulan ini{pooled, select, yes { (dibagikan dengan tim Anda)} other {}}, diatur ulang {resets}. Proses ini menggunakan {variations, number}; gambar yang gagal akan dikembalikan.",
       "notEnoughLeft": "Sisa tidak cukup untuk {variations, number}: pilih lebih sedikit variasi.",
       "notEnoughLeftOrUpgrade": "Sisa tidak cukup untuk {variations, number}: pilih lebih sedikit variasi atau upgrade.",
+      "noneLeft": "Bulan ini sudah habis.",
+      "noneLeftUpgrade": "Bulan ini sudah habis. Upgrade untuk membuat lebih banyak sekarang.",
       "moreArtistic": "Lebih artistik",
       "clearerCode": "Kode lebih jelas",
       "followsYourPrompt": "Mengikuti prompt Anda",
@@ -3827,6 +3839,8 @@
         "creditsLeft": "Sisa <count>{remaining, number} dari {limit, number}</count> gambar AI art bulan ini{pooled, select, yes { (dibagi dengan tim Anda)} other {}}, diatur ulang {resets}. Proses ini memakai {variations, number}.",
         "notEnoughLeft": "Sisa tidak cukup: pilih lebih sedikit variasi.",
         "notEnoughLeftOrUpgrade": "Sisa tidak cukup: pilih lebih sedikit variasi atau upgrade.",
+        "noneLeft": "Habis untuk bulan ini.",
+        "noneLeftUpgrade": "Jatah bulan ini habis. Upgrade untuk membuat lebih banyak sekarang.",
         "showResults": "{count, plural, other {Tampilkan hasil Anda}}",
         "moreArtistic": "Lebih artistik",
         "clearerCode": "Kode lebih jelas",
@@ -6472,6 +6486,7 @@
           "scansAcrossEveryDynamicCode": "Pemindaian dari semua kode QR dinamis di ruang kerja ini.",
           "dateRange": "Rentang tanggal",
           "yourPlanKeepsAShorter": "Paket Anda menyimpan riwayat pemindaian yang lebih singkat",
+          "comparePlans": "Bandingkan paket",
           "dynamicCodes": "Kode dinamis",
           "totalScans": "Total pemindaian",
           "scansInRange": "Pemindaian di rentang",

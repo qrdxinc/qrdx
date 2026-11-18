@@ -11,7 +11,7 @@ import { Card } from "@repo/design-system/components/ui/card";
 import { cn } from "@repo/design-system/lib/utils";
 import { Book1, Code1, Driver } from "iconsax-reactjs";
 import { useLocale, useTranslations } from "next-intl";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useAvailability } from "@/components/availability-provider";
 import { AsciiField, RadialHalo } from "@/components/fx";
 import { LocaleLink } from "@/components/i18n/locale-link";
@@ -36,6 +36,7 @@ import {
   type Plan,
   PRICING,
   type PricingCurrency,
+  parseBillingInterval,
 } from "@/lib/pricing";
 import { DEFAULT_NEXT_PATH } from "@/lib/safe-redirect";
 import { startCheckout as requestCheckout } from "@/lib/widget-routes/client";
@@ -56,6 +57,12 @@ interface PricingSectionProps {
   description: string;
   /** Card feature lists, built from lib/plans on the server. */
   highlights: Record<Plan, string[]>;
+  /**
+   * The billing period `?interval=month|year` asked for (null: none, so
+   * yearly). Left out (a page that doesn't read its search params, like the
+   * marketing site's), the cards read it from the address after loading.
+   */
+  initialInterval?: BillingInterval | null;
 }
 
 const PORTAL_HREF = "/settings/portal";
@@ -221,14 +228,26 @@ export function PricingSection({
   currentPlan: serverPlan,
   description,
   highlights,
+  initialInterval,
 }: PricingSectionProps) {
   const t = useTranslations("pricing");
   const locale = useLocale();
   // "Free" is translated; "Pro" and "Business" stay in English.
   const planName = (plan: Plan) =>
     plan === "free" ? t("plans.free") : PLAN_NAMES[plan];
-  const [interval, setInterval] = useState<BillingInterval>("year");
+  const [interval, setInterval] = useState<BillingInterval>(
+    initialInterval ?? "year",
+  );
   const [toggled, setToggled] = useState(false);
+  // In-app upgrade links preselect a period (/pricing?interval=month). A
+  // page that didn't pass it: read it once the cards are in the browser.
+  useEffect(() => {
+    if (initialInterval !== undefined) return;
+    const asked = parseBillingInterval(
+      new URLSearchParams(window.location.search).get("interval"),
+    );
+    if (asked) setInterval(asked);
+  }, [initialInterval]);
   const changeInterval = (next: BillingInterval) => {
     setToggled(true);
     setInterval(next);

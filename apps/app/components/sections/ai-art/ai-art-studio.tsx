@@ -15,8 +15,9 @@ import {
 } from "@repo/design-system/components/ui/toggle-group";
 import { ArrowRight, GalleryAdd, Lock } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SignInLink } from "@/components/auth/sign-in-link";
+import { CheckoutButtons } from "@/components/billing/checkout-buttons";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import { ART_MODEL_LABEL, ART_SUPPORTS_SEED } from "@/lib/ai/art-models";
 import { useTrackEditorOpened } from "@/lib/analytics/react";
@@ -28,7 +29,9 @@ import { AIArtResultPanel } from "./ai-art-result";
 import {
   createAIArtRunStore,
   lockedSeedFor,
+  offersArtUpgrade,
   seedIsInvalid,
+  variationsWithin,
 } from "./ai-art-run";
 import { ArtLookChips } from "./art-look-chips";
 import {
@@ -73,6 +76,9 @@ interface AIArtStudioProps {
   allowances: AIArtAllowances;
 }
 
+/** Variations a run starts with, when that many images are left. */
+const DEFAULT_VARIATIONS = 2;
+
 export function AIArtStudio({ configured, allowances }: AIArtStudioProps) {
   const t = useTranslations("aiArt.aiArtStudio");
   const tLooks = useTranslations("editor.art.artLooks");
@@ -93,7 +99,9 @@ export function AIArtStudio({ configured, allowances }: AIArtStudioProps) {
     ART_QR_VISIBILITY.default,
   );
   const [creativity, setCreativity] = useState<number>(ART_CREATIVITY.default);
-  const [variations, setVariations] = useState(2);
+  const [variations, setVariations] = useState(DEFAULT_VARIATIONS);
+  // Until the person picks a number, it follows the images left.
+  const [variationsChosen, setVariationsChosen] = useState(false);
   const [seed, setSeed] = useState("");
   const [seedLocked, setSeedLocked] = useState(false);
   const [reference, setReference] = useState<string | null>(null);
@@ -104,6 +112,11 @@ export function AIArtStudio({ configured, allowances }: AIArtStudioProps) {
 
   const { credits, isGenerating, pendingVariations, run: result } = art;
   const busy = isGenerating || writer.writing;
+  const remaining = credits?.remaining;
+  useEffect(() => {
+    if (variationsChosen) return;
+    setVariations(variationsWithin(DEFAULT_VARIATIONS, remaining));
+  }, [remaining, variationsChosen]);
 
   if (!art.configured) {
     return <AIArtComingSoon />;
@@ -279,7 +292,11 @@ export function AIArtStudio({ configured, allowances }: AIArtStudioProps) {
           <ToggleGroup
             aria-labelledby="ai-art-variations-label"
             disabled={isGenerating}
-            onValueChange={(value) => value && setVariations(Number(value))}
+            onValueChange={(value) => {
+              if (!value) return;
+              setVariations(Number(value));
+              setVariationsChosen(true);
+            }}
             type="single"
             value={String(variations)}
             variant="outline"
@@ -429,6 +446,7 @@ export function AIArtStudio({ configured, allowances }: AIArtStudioProps) {
           </div>
           <CreditsNote
             allowances={allowances}
+            canUpgrade={art.canUpgrade}
             credits={credits}
             signedIn={art.signedIn}
             variations={variations}
@@ -544,11 +562,13 @@ const formatAllowance = (value: number | null) =>
 function CreditsNote({
   credits,
   allowances,
+  canUpgrade,
   signedIn,
   variations,
 }: {
   credits: AIArtCredits | null;
   allowances: AIArtAllowances;
+  canUpgrade: boolean | undefined;
   signedIn: boolean;
   variations: number;
 }) {
@@ -580,28 +600,50 @@ function CreditsNote({
       </p>
     );
   }
+  const short = credits.remaining < variations;
+  const upgrade = short && offersArtUpgrade(credits, canUpgrade);
   return (
-    <p className="text-muted-foreground text-xs">
-      {t.rich("creditsLeft", {
-        remaining: credits.remaining,
-        limit: credits.limit ?? 0,
-        pooled: credits.pooled ? "yes" : "no",
-        resets,
-        variations,
-        count: (chunks) => (
-          <span className="text-foreground font-medium tabular-nums">
-            {chunks}
+    <div className="flex flex-col gap-2">
+      <p className="text-muted-foreground text-xs">
+        {t.rich("creditsLeft", {
+          remaining: credits.remaining,
+          limit: credits.limit ?? 0,
+          pooled: credits.pooled ? "yes" : "no",
+          resets,
+          variations,
+          count: (chunks) => (
+            <span className="text-foreground font-medium tabular-nums">
+              {chunks}
+            </span>
+          ),
+        })}
+        {short && (
+          <span className="text-amber-600 dark:text-amber-400">
+            {" "}
+            {shortNote(t, credits.remaining, variations, upgrade)}
           </span>
-        ),
-      })}
-      {credits.remaining < variations && (
-        <span className="text-amber-600 dark:text-amber-400">
-          {" "}
-          {credits.plan === "business"
-            ? t("notEnoughLeft", { variations })
-            : t("notEnoughLeftOrUpgrade", { variations })}
-        </span>
+        )}
+      </p>
+      {upgrade && (
+        <CheckoutButtons
+          plan={credits.plan === "pro" ? "business" : "pro"}
+          size="sm"
+          source="ai_art"
+        />
       )}
-    </p>
+    </div>
   );
+}
+
+/** Why Generate waits: none left, or fewer than this run needs. */
+function shortNote(
+  t: ReturnType<typeof useTranslations<"aiArt.aiArtStudio">>,
+  remaining: number,
+  variations: number,
+  upgrade: boolean,
+): string {
+  if (remaining === 0) return upgrade ? t("noneLeftUpgrade") : t("noneLeft");
+  return upgrade
+    ? t("notEnoughLeftOrUpgrade", { variations })
+    : t("notEnoughLeft", { variations });
 }

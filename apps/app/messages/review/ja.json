@@ -447,6 +447,38 @@
     "source": "0fa42daac73b",
     "status": "machine"
   },
+  "nav.checkoutButtons.month": {
+    "source": "3bbee673bc57",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.year": {
+    "source": "35a42faaf250",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.monthNoPrice": {
+    "source": "e9d6632641e8",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.yearNoPrice": {
+    "source": "1ff6c32fca3e",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.note": {
+    "source": "aad8d0267275",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.switchTo": {
+    "source": "4e3823d4f9e6",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.openPortal": {
+    "source": "5a69abb937d2",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.failed": {
+    "source": "dec99252b4d2",
+    "status": "machine"
+  },
   "nav.themeToggle.toggleTheme": {
     "source": "6026719f081a",
     "status": "machine"
@@ -9643,6 +9675,14 @@
     "source": "ee15fcbec3b3",
     "status": "machine"
   },
+  "aiArt.aiArtStudio.noneLeft": {
+    "source": "306e67edc9dc",
+    "status": "machine"
+  },
+  "aiArt.aiArtStudio.noneLeftUpgrade": {
+    "source": "f1a5e6c60519",
+    "status": "machine"
+  },
   "aiArt.aiArtStudio.moreArtistic": {
     "source": "eb94394c75f9",
     "status": "machine"
@@ -11361,6 +11401,14 @@
   },
   "editor.art.aiArtPanel.notEnoughLeftOrUpgrade": {
     "source": "bc75c784391e",
+    "status": "machine"
+  },
+  "editor.art.aiArtPanel.noneLeft": {
+    "source": "306e67edc9dc",
+    "status": "machine"
+  },
+  "editor.art.aiArtPanel.noneLeftUpgrade": {
+    "source": "f1a5e6c60519",
     "status": "machine"
   },
   "editor.art.aiArtPanel.showResults": {
@@ -19761,6 +19809,10 @@
   },
   "app.dashboard.analytics.page.yourPlanKeepsAShorter": {
     "source": "e12b39eee816",
+    "status": "machine"
+  },
+  "app.dashboard.analytics.page.comparePlans": {
+    "source": "30d9abfd7c7a",
     "status": "machine"
   },
   "app.dashboard.analytics.page.dynamicCodes": {
