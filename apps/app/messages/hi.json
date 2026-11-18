@@ -3487,6 +3487,7 @@
         "pasteThisIntoAnyPage": "इसे किसी भी पेज में पेस्ट करें: स्क्रिप्ट CDN से <code>qrdx-code</code> एलिमेंट लोड करती है। बंडलर के साथ इसके बजाय <code>qrdx</code> इंस्टॉल करें और <code>qrdx/element/define</code> इम्पोर्ट करें।",
         "withoutABundlerImportIt": "बंडलर के बिना, इसे यहाँ से इम्पोर्ट करें",
         "addTheQrCodeComponent": "QRdx रजिस्ट्री से QR Code कॉम्पोनेंट जोड़ें, फिर इसे इस डिज़ाइन के साथ इस्तेमाल करें।",
+        "orByUrlWhichWorks": "या URL से, जो shadcn CLI के पुराने वर्शन के साथ भी काम करता है",
         "aPublicImageOfThis": "इस कोड की एक पब्लिक इमेज, जिसे कहीं भी एम्बेड किया जा सकता है। API key की ज़रूरत नहीं।",
         "createsADynamicCodeWith": "इस डिज़ाइन के साथ डायनेमिक कोड बनाता है। इसके लिए <link>API key</link> चाहिए।",
         "addThisServerToYour": "इस सर्वर को अपने AI असिस्टेंट में जोड़ें; किसी key की ज़रूरत नहीं। <link>सेट अप करें</link>",

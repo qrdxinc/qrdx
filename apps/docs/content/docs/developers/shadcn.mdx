@@ -8,6 +8,10 @@ QRdx publishes a shadcn/ui registry of QR code components built on the `qrdx` li
 
 <NpmStatus package="qrdx" />
 
+<PackageManagerTabs command="npx shadcn@latest add @qrdx/qr-code" />
+
+Or by URL, which works with older versions of the CLI too:
+
 <PackageManagerTabs command="npx shadcn@latest add https://qrdx.dev/r/qr-code.json" />
 
 Each component has its own page with a live preview, the source, installation steps, examples and a props table. Styled a code in the [playground](/playground?open=code&lang=shadcn)? Copy it there for the registry's QR Code component.
@@ -47,9 +51,23 @@ Each component is a single file in your `components` folder. The CLI also instal
 
 The full index is at [`https://qrdx.dev/r/registry.json`](https://qrdx.dev/r/registry.json), and each item at `https://qrdx.dev/r/<name>.json`.
 
-## Install by name
+## The @qrdx namespace
 
-To install with a short name, add the registry to your `components.json`:
+QRdx is listed in the [shadcn/ui registry directory](https://ui.shadcn.com/docs/directory), so `@qrdx/<name>` works with no setup: you don't add anything to `components.json` first. It needs version 3.7.0 or later of the shadcn CLI, which `npx shadcn@latest` always fetches.
+
+Add several components at once:
+
+<PackageManagerTabs command="npx shadcn@latest add @qrdx/qr-code @qrdx/qr-code-download @qrdx/qr-code-share-dialog" />
+
+List everything in the registry, or look at an item before you add it:
+
+<PackageManagerTabs command="npx shadcn@latest search @qrdx" />
+
+<PackageManagerTabs command="npx shadcn@latest view @qrdx/qr-code" />
+
+### By URL, or with an older CLI
+
+The full URL, `https://qrdx.dev/r/<name>.json`, doesn't go through the directory, so it also works with versions of the CLI before 3.7.0, which can't read the directory and don't know `@qrdx`. To use the short names on versions 3.0 to 3.6, add the registry to your `components.json` (versions before 3.0 have no namespaces, so use the URL there):
 
 ```json title="components.json"
 {
@@ -58,10 +76,6 @@ To install with a short name, add the registry to your `components.json`:
   }
 }
 ```
-
-Then add one or several components by name:
-
-<PackageManagerTabs command="npx shadcn@latest add @qrdx/qr-code @qrdx/qr-code-download @qrdx/qr-code-share-dialog" />
 
 ## Styling and theming
 

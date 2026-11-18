@@ -4,7 +4,11 @@
 // link is absolute, and pages for features this deployment can't offer are
 // left out. Pure: app/llms.txt/route.ts passes in the content-collection
 // pages and what this deployment offers; tests/lib/agents.test.ts checks it.
-import { CANONICAL_ORIGIN, GITHUB_REPO_URL } from "@repo/config";
+import {
+  CANONICAL_ORIGIN,
+  GITHUB_REPO_URL,
+  SHADCN_REGISTRY_NAMESPACE,
+} from "@repo/config";
 import {
   buildHighlights,
   type PricingOptions,
@@ -412,7 +416,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "shadcn/ui registry",
       url: "/docs/developers/shadcn",
-      description: `\`npx shadcn@latest add ${abs("/r/qr-code.json")}\``,
+      description: `\`npx shadcn@latest add ${SHADCN_REGISTRY_NAMESPACE}/qr-code\` (or \`npx shadcn@latest add ${abs("/r/qr-code.json")}\`, which older CLI versions also take)`,
     },
     {
       title: "Build an integration",

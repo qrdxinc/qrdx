@@ -3487,6 +3487,7 @@
         "pasteThisIntoAnyPage": "Collez ceci dans n’importe quelle page : le script charge l’élément <code>qrdx-code</code> depuis un CDN. Avec un bundler, installez <code>qrdx</code> et importez plutôt <code>qrdx/element/define</code>.",
         "withoutABundlerImportIt": "Sans bundler, importez-le depuis",
         "addTheQrCodeComponent": "Ajoutez le composant QR Code depuis le registre QRdx, puis utilisez-le avec ce design.",
+        "orByUrlWhichWorks": "Ou par URL, qui fonctionne aussi avec les anciennes versions de la CLI shadcn",
         "aPublicImageOfThis": "Une image publique de ce code à intégrer où vous voulez. Aucune clé API requise.",
         "createsADynamicCodeWith": "Crée un QR code dynamique avec ce design. Une <link>clé API</link> est nécessaire.",
         "addThisServerToYour": "Ajoutez ce serveur à votre assistant IA ; aucune clé requise. <link>Le configurer</link>",

@@ -3,6 +3,7 @@ import {
   CANONICAL_ORIGIN,
   NPM_CLI_URL,
   NPM_LIBRARY_URL,
+  SHADCN_REGISTRY_NAMESPACE,
   SHADCN_REGISTRY_URL,
 } from "@repo/config";
 import type { IntegrationCatalogEntry } from "../types";
@@ -308,7 +309,7 @@ export const developers: IntegrationCatalogEntry[] = [
     primaryAction: {
       type: "copy",
       label: "Copy command",
-      text: `npx shadcn@latest add ${SHADCN_REGISTRY_URL}/qr-code.json`,
+      text: `npx shadcn@latest add ${SHADCN_REGISTRY_NAMESPACE}/qr-code`,
       toast: "Command copied — run it in your project",
     },
     secondaryAction: {
@@ -323,7 +324,7 @@ export const developers: IntegrationCatalogEntry[] = [
         snippet: {
           label: "Terminal",
           language: "bash",
-          code: `npx shadcn@latest add ${SHADCN_REGISTRY_URL}/qr-code.json`,
+          code: `npx shadcn@latest add ${SHADCN_REGISTRY_NAMESPACE}/qr-code\n# or by URL, which older CLI versions also take:\nnpx shadcn@latest add ${SHADCN_REGISTRY_URL}/qr-code.json`,
         },
       },
       {
@@ -339,7 +340,7 @@ export const developers: IntegrationCatalogEntry[] = [
         snippet: {
           label: "Terminal",
           language: "bash",
-          code: `npx shadcn@latest add ${SHADCN_REGISTRY_URL}/qr-code-scanner.json`,
+          code: `npx shadcn@latest add ${SHADCN_REGISTRY_NAMESPACE}/qr-code-scanner\n# or by URL, which older CLI versions also take:\nnpx shadcn@latest add ${SHADCN_REGISTRY_URL}/qr-code-scanner.json`,
         },
       },
     ],

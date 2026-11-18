@@ -52,7 +52,7 @@ describe("Markdown for LLMs", () => {
     );
     expect(shown).toContain("**One**\n\n```bash\necho one\n```");
     expect(shown).toContain(
-      "```bash\nnpx shadcn@latest add https://qrdx.dev/r/qr-code.json\n```",
+      "```bash\nnpx shadcn@latest add @qrdx/qr-code\n```\n\nOr by URL, which works with older versions of the CLI too:\n\n```bash\nnpx shadcn@latest add https://qrdx.dev/r/qr-code.json\n```",
     );
     expect(shown).toContain("[a link](https://qrdx.dev/docs/teams)");
   });
