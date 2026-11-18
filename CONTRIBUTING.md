@@ -271,7 +271,7 @@ The docs assistant (Ask AI in the docs) and the MCP server's `search_docs` and `
 
 A language with `review: "machine"` is live on the site but hidden from search engines. Its pages are `noindex`, they're left out of the sitemap, and no page links to them with hreflang. To publish a language, a native speaker reads every string, sets each one's `status` to `"reviewed"` in `review/<code>.json`, and changes the language's `review` to `"reviewed"` in the config. From the next deploy its pages are indexed, listed in the sitemap and linked with hreflang. `i18n:check` then fails on any string in that language that is missing, machine-made or stale. To publish single pages first, set `review` to a list of paths, such as `["/playground", "/ai"]`.
 
-A review can also cover part of a language, such as the header, footer, cookie banner, sign-in and emails. Then mark only the strings you read `"reviewed"` and leave `review` in the config as it is: the work is recorded, and nothing is published until the rest of the language's strings are reviewed too. `i18n:check` counts the reviewed strings on the language's line.
+A review can also cover part of a language, such as the header, footer, cookie banner, sign-in and emails. Then mark only the strings you read `"reviewed"` and leave `review` in the config as it is: the work is recorded, and nothing is published until the rest of the language's strings are reviewed too. `bun run --filter app i18n:review <code> <key prefix>...` marks every string under the prefixes you name, for example `bun run --filter app i18n:review es nav footer`. `i18n:check` counts the reviewed strings on the language's line.
 
 ## Pull requests
 
