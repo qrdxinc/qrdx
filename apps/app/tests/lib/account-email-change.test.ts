@@ -42,6 +42,22 @@ describe("requestFailureMessage", () => {
     ).toBe(EMAIL_CHANGE_MESSAGES.invalidEmail);
   });
 
+  it("words the limit so it's true for an address that never got a code", () => {
+    // The 429 comes before Better Auth looks the address up, so a taken
+    // address (which is never sent a code) gets it too.
+    expect(EMAIL_CHANGE_MESSAGES.codeRateLimited).not.toMatch(/sent/i);
+  });
+
+  it("says email isn't set up where no code can be delivered", () => {
+    expect(
+      requestFailureMessage(
+        apiError(400, { code: "EMAIL_CHANGE_UNAVAILABLE" }),
+      ),
+    ).toBe(
+      "Email isn't set up on this site, so the address can't be changed here.",
+    );
+  });
+
   it("leaves unknown errors to the caller (logged as unexpected)", () => {
     expect(requestFailureMessage(new Error("boom"))).toBeNull();
     expect(requestFailureMessage(null)).toBeNull();
@@ -49,21 +65,21 @@ describe("requestFailureMessage", () => {
 });
 
 describe("confirmFailure", () => {
-  it("keeps the code usable after a wrong guess", () => {
-    expect(confirmFailure(apiError(400, { code: "INVALID_OTP" }))).toEqual({
-      message: EMAIL_CHANGE_MESSAGES.wrongCode,
-      codeDead: false,
-    });
-  });
-
-  it("asks for a new code once the code is used up", () => {
-    expect(confirmFailure(apiError(400, { code: "OTP_EXPIRED" }))).toEqual({
-      message: EMAIL_CHANGE_MESSAGES.expired,
-      codeDead: true,
-    });
-    expect(
-      confirmFailure(apiError(403, { code: "TOO_MANY_ATTEMPTS" }))?.codeDead,
-    ).toBe(true);
+  it("answers a wrong, used-up and expired code alike", () => {
+    // An address with an account never has a code stored, so every code
+    // typed for it is just wrong; only a free address's code runs out of
+    // tries or expires. Telling those apart would tell the addresses apart.
+    const answers = [
+      apiError(400, { code: "INVALID_OTP" }),
+      apiError(403, { code: "TOO_MANY_ATTEMPTS" }),
+      apiError(400, { code: "OTP_EXPIRED" }),
+    ].map(confirmFailure);
+    for (const answer of answers) {
+      expect(answer).toEqual({
+        message: "That code didn't work. Check it, or send a new code.",
+        codeDead: false,
+      });
+    }
   });
 
   it("says when another account took the address meanwhile", () => {

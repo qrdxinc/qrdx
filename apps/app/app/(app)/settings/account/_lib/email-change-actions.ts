@@ -16,6 +16,7 @@ import {
 } from "@/lib/account/confirmation-server";
 import {
   confirmFailure,
+  EMAIL_CHANGE_ANSWER_MS,
   EMAIL_CHANGE_MESSAGES,
   isSameEmail,
   MAX_EMAIL_LENGTH,
@@ -23,8 +24,12 @@ import {
   requestFailureMessage,
 } from "@/lib/account/email-change";
 import { afterEmailChanged } from "@/lib/account/email-change-server";
-import { sendEmailChangeCode } from "@/lib/auth/email-change-code";
+import {
+  emailChangeCodeAllowed,
+  sendEmailChangeCode,
+} from "@/lib/auth/email-change-code";
 import { isFeatureAvailable } from "@/lib/feature-availability";
+import { noSoonerThan } from "@/lib/no-sooner-than";
 import { logError } from "@/lib/shared";
 
 // Settings → Account → Email. Better Auth's email-change endpoints are off
@@ -35,8 +40,23 @@ import { logError } from "@/lib/shared";
 // with a linked Google, GitHub or SSO account) and answer
 // CONFIRMATION_REQUIRED without one. They limit each user, sign out the
 // account's other sessions and tell the old address. The plugin emails the
-// code through the sender registered here.
-registerEmailChangeCodeSender(sendEmailChangeCode);
+// code through the sender registered here. Where codes can't reach anyone
+// (the "emailSignIn" rule, the one sign-in codes follow), asking for one
+// answers EMAIL_CHANGE_UNAVAILABLE for every address, and Settings doesn't
+// offer the change. The new address's limit is checked before Better Auth
+// looks it up, and the code is emailed after the answer (Next's after()).
+// An address with an account (never sent a code) and one without then get
+// the same answers at both steps. Better Auth still does a little more
+// database work for one than the other (it deletes the code it stored for a
+// taken address; it writes a free address's code back after a wrong try), so
+// both actions answer on a whole multiple of EMAIL_CHANGE_ANSWER_MS after they
+// start (at least one), whatever the outcome.
+registerEmailChangeCodeSender(
+  sendEmailChangeCode,
+  () => isFeatureAvailable("emailSignIn"),
+  emailChangeCodeAllowed,
+  (task) => after(task),
+);
 
 export type EmailChangeResult =
   | { ok: true }
@@ -120,6 +140,10 @@ async function mayChange(
 export async function requestEmailChange(
   input: unknown,
 ): Promise<EmailChangeResult> {
+  return await noSoonerThan(EMAIL_CHANGE_ANSWER_MS, () => askForCode(input));
+}
+
+async function askForCode(input: unknown): Promise<EmailChangeResult> {
   const parsed = z.object({ newEmail: newEmailSchema }).safeParse(input);
   if (!parsed.success) return fail(EMAIL_CHANGE_MESSAGES.invalidEmail);
   const { newEmail } = parsed.data;
@@ -131,7 +155,8 @@ export async function requestEmailChange(
       return fail(EMAIL_CHANGE_MESSAGES.rateLimited);
     }
     // Answers the same whether or not the address already has an account
-    // (then no code is sent), so the form can't be used to look addresses up.
+    // (then no code is sent), and whether or not sending worked, so the form
+    // can't be used to look addresses up.
     await auth.api.requestEmailChangeEmailOTP({
       headers: user.requestHeaders,
       body: { newEmail },
@@ -149,6 +174,12 @@ export async function requestEmailChange(
 export async function confirmEmailChange(
   input: unknown,
 ): Promise<EmailChangeResult> {
+  return await noSoonerThan(EMAIL_CHANGE_ANSWER_MS, () =>
+    changeWithCode(input),
+  );
+}
+
+async function changeWithCode(input: unknown): Promise<EmailChangeResult> {
   const parsed = z
     .object({
       newEmail: newEmailSchema,

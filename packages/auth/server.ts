@@ -69,7 +69,10 @@ import {
   TWO_FACTOR_METHODS_PATH,
   UNUSED_TWO_FACTOR_PATHS,
 } from "./sign-in-challenge-rules";
-import { SEND_SIGN_IN_CODE_PATH } from "./sign-in-code-rules";
+import {
+  REQUEST_EMAIL_CHANGE_PATH,
+  SEND_SIGN_IN_CODE_PATH,
+} from "./sign-in-code-rules";
 import { signInMethodForPath } from "./sign-in-method";
 import { saveSignUpLocale } from "./sign-up-locale";
 import { twoFactorResetCancel } from "./two-factor-reset";
@@ -160,7 +163,7 @@ const UNUSED_EMAIL_OTP_PATHS = [
 // you", per-user limits and the notice to the old address, so a direct
 // request can't skip them.
 const SERVER_ONLY_EMAIL_OTP_PATHS = [
-  "/email-otp/request-email-change",
+  REQUEST_EMAIL_CHANGE_PATH,
   "/email-otp/change-email",
 ];
 
@@ -324,7 +327,8 @@ export const auth = betterAuth({
     }),
     // Asking for a sign-in code where none can be delivered fails before one
     // is made, and a code that couldn't be sent fails the request instead of
-    // answering "sent" (./email-otp.ts).
+    // answering "sent". Asking to change the email where no code can be
+    // delivered fails the same way, for every address (./email-otp.ts).
     signInCodeGate(),
     // A first sign-in creates the account, like social sign-in.
     emailOTP({
