@@ -34,6 +34,16 @@ vi.mock("@repo/rate-limit", async () => {
   const { createMemoryLimiter, parseDuration } = await import(
     "@repo/rate-limit/fallback"
   );
+  // The limiters' windows line up with the wall clock (a 30-minute window
+  // starts at :00 and :30), and a burst that crosses a window's start lets
+  // one extra request through, which failed this file now and then on CI.
+  // Each test's limiters get a clock that starts 30 seconds into a window
+  // that every limiter here (60 s, 10 m, 30 m) shares, then runs in real time.
+  const WINDOW_START = Date.UTC(2026, 0, 1);
+  const clockFromNow = () => {
+    const startedAt = Date.now();
+    return () => WINDOW_START + 30_000 + (Date.now() - startedAt);
+  };
   return {
     slidingWindow: (tokens: number, window: string) => ({
       tokens,
@@ -45,12 +55,12 @@ vi.mock("@repo/rate-limit", async () => {
       limiter: { tokens: number; windowMs: number };
     }) => {
       let generation = -1;
-      let memory = createMemoryLimiter(limiter);
+      let memory = createMemoryLimiter(limiter, clockFromNow());
       return {
         limit: async (key: string) => {
           if (generation !== state.generation) {
             generation = state.generation;
-            memory = createMemoryLimiter(limiter);
+            memory = createMemoryLimiter(limiter, clockFromNow());
           }
           state.keys.push(key);
           return memory.limit(key);
