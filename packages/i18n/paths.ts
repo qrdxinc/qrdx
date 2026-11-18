@@ -67,6 +67,24 @@ export function isEnglishOnlyPath(path: string): boolean {
   return ENGLISH_ONLY_MATCHERS.some((matches) => matches(path));
 }
 
+/**
+ * Whether `pathname` (as the browser has it, any language prefix included)
+ * is a page of app/[lang], the root layout the translated and English-only
+ * pages share (a language-prefixed URL always is, even one that redirects
+ * to the English page). Every other page is app/(app)'s, another root layout: Next
+ * loads a page across the two in full even through next/link
+ * (tests/i18n/locale-links.test.tsx checks the lists against the route
+ * folders). A query or hash is ignored.
+ */
+export function isLangRootPath(pathname: string): boolean {
+  const end = pathname.search(/[?#]/);
+  const path = end === -1 ? pathname : pathname.slice(0, end);
+  // A language segment first (/es, /hi/playground, /en/scan): only
+  // app/[lang] takes one; the signed-in app's URLs carry no language.
+  if (localeFromSegment(/^\/([^/]+)/.exec(path)?.[1])) return true;
+  return isLocalizedPath(path) || isEnglishOnlyPath(path);
+}
+
 /** "/playground" in Spanish → "/es/playground". English is unprefixed. */
 export function localizePath(path: string, locale: Locale): string {
   if (locale === DEFAULT_LOCALE || !isLocalizedPath(path)) return path;
