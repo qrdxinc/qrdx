@@ -32,9 +32,10 @@ export const MAX_EMAIL_LENGTH = 254;
  * outcome (lib/no-sooner-than.ts). Better Auth does one more database write
  * for an address with an account when a code is asked for, and one more for
  * an address without one after a wrong code, so the time to answer would
- * otherwise tell them apart. Each step makes about ten database and Upstash
- * round trips one after another, which this is meant to stay above; the
- * wait is short next to finding the code in an inbox.
+ * otherwise tell them apart. Asking for a code makes seven to nine database
+ * and Upstash round trips one after another (more where single sign-on is
+ * on), and a wrong code six to eight. This is meant to be longer than those
+ * usually take, and it's short next to finding the code in an inbox.
  */
 export const EMAIL_CHANGE_ANSWER_MS = 750;
 
