@@ -5901,6 +5901,98 @@
       "placeholder": "Search frames, themes and pages"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Sign in to continue.",
+      "failed": "Something went wrong. Please try again.",
+      "checkDetails": "Check the details.",
+      "themeNotInWorkspace": "This theme isn't in this workspace.",
+      "noCustomFrame": "This theme has no custom frame.",
+      "pageNotFound": "Page not found.",
+      "pageChanged": "This page changed since you reviewed it. Review it again before publishing.",
+      "svgTooLarge": "SVG files can be up to 200 KB.",
+      "tooManyImports": "Too many imports. Try again in an hour.",
+      "tooManyChanges": "Too many changes. Try again later."
+    },
+    "communityThemes": {
+      "alreadyPublished": "This theme is already published to the community.",
+      "workspaceAdminsOnly": "Only owners and admins of this workspace can publish its themes.",
+      "workspaceUnavailable": "Publishing workspace themes isn't available on this deployment yet.",
+      "tooFast": "You're publishing too fast. Please try again later."
+    },
+    "checks": {
+      "licenceRequired": "Confirm the CC0 licence to publish.",
+      "publishedALot": "You've published a lot today. Try again tomorrow.",
+      "unavailable": "The community update isn't available on this deployment yet.",
+      "itemNotFound": "This item isn't in the community.",
+      "workspacePublishRefusal": "Only owners and admins of this workspace can publish what's in it.",
+      "nameRequired": "Give it a name.",
+      "alreadyPublished": "This design is already in the community.",
+      "themeSettings": "This theme has settings the community can't show. Save it again in the editor.",
+      "pageNothingLeft": "Nothing is left to share once your own details are taken out. Add some blocks people can reuse.",
+      "pageInvalid": "This page can't be shared as a template. Publish it again in the page editor first.",
+      "pageTooLarge": "This page is too large to share as a template. Remove some blocks or shorten long text.",
+      "repeatsDetail": "It repeats a detail taken out elsewhere on the page.",
+      "noEmails": "Leave email addresses out of names, labels and descriptions.",
+      "noLinks": "Leave links out of names, labels and descriptions.",
+      "noHandles": "Leave @handles out of names, labels and descriptions.",
+      "noPhones": "Leave phone numbers out of names, labels and descriptions.",
+      "noStreets": "Leave street addresses out of names, labels and descriptions.",
+      "gateFailed": "Only designs that scan Great ({min, number} or more) can be published. {reasons}.",
+      "gateTooLong": "{sample} won't fit in a code at this error correction level",
+      "gateScore": "with {sample} it scores {score, number}",
+      "gateSampleLink": "a link",
+      "gateSampleWifi": "Wi-Fi details",
+      "handleFormat": "Use {min, number} to {max, number} lowercase letters, numbers, \"_\" or \"-\", starting with a letter or number.",
+      "handleReserved": "That handle is reserved.",
+      "handleTaken": "That handle is taken.",
+      "displayNameRequired": "Enter a display name."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, one {# text} other {# texts}} replaced with sample text",
+      "kept": "{count, plural, one {# text} other {# texts}} kept as you wrote it",
+      "links": "{count, plural, one {# link} other {# links}} replaced with example.com",
+      "emails": "{count, plural, one {# email address} other {# email addresses}} replaced with sample ones",
+      "phones": "{count, plural, one {# phone number} other {# phone numbers}} replaced with sample ones",
+      "emailsAndPhones": "{emails, plural, one {# email address} other {# email addresses}} and {phones, plural, one {# phone number} other {# phone numbers}} replaced with sample ones",
+      "addresses": "{count, plural, one {# address} other {# addresses}} replaced with a sample address",
+      "wifi": "Wi-Fi network name and password replaced with sample ones",
+      "codes": "Coupon code replaced with a sample one",
+      "gtins": "Product GTIN removed: people add their own",
+      "images": "{count, plural, one {# photo} other {# photos}} removed: people add their own",
+      "files": "{count, plural, one {# file} other {# files}} removed",
+      "blocks": "Left out because they need your own files: {blocks}",
+      "hidden": "{count, plural, one {# hidden block} other {# hidden blocks}} left out",
+      "settings": "Share image, description and custom CSS left out"
+    },
+    "qrThemes": {
+      "signIn": "Sign in to manage themes.",
+      "failed": "Something went wrong. Please try again.",
+      "tooMany": "Too many changes. Please wait a minute and try again.",
+      "themeLimit": "You have reached the limit of {limit, number} saved themes on the Free plan. Upgrade to Pro for unlimited themes.",
+      "notFound": "Theme not found.",
+      "defaultAdminsOnly": "Only workspace owners and admins can change its default theme.",
+      "openAnotherWorkspace": "Open another workspace to share themes with it.",
+      "shareAdminsOnly": "Only workspace owners and admins can share themes here.",
+      "sharedThemesPlan": "Shared themes are part of the {plan} plan (based on the workspace owner's plan).",
+      "workspaceThemeLimit": "This workspace's plan includes {count, number} themes."
+    },
+    "codeBuilder": {
+      "signInAgain": "Sign in again to create codes.",
+      "loadFailed": "Couldn't load the builder. Try again.",
+      "themesFailed": "Saved themes didn't load.",
+      "foldersFailed": "Folders didn't load.",
+      "tagsFailed": "Tags didn't load.",
+      "domainsFailed": "Custom domains didn't load, so codes use the default short link."
+    },
+    "search": {
+      "untitledPage": "Untitled page",
+      "landingPage": "Landing page",
+      "tooMany": "Too many searches. Wait a moment.",
+      "signInAgain": "Sign in again to search.",
+      "notWorking": "Search isn't working right now."
+    }
+  },
   "app": {
     "settings": {
       "general": {

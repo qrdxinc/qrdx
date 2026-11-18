@@ -5498,6 +5498,98 @@
       "placeholder": "Rechercher des cadres, thèmes et pages"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Connectez-vous pour continuer.",
+      "failed": "Une erreur s’est produite. Veuillez réessayer.",
+      "checkDetails": "Vérifiez les informations.",
+      "themeNotInWorkspace": "Ce thème n’est pas dans cet espace de travail.",
+      "noCustomFrame": "Ce thème n’a pas de cadre personnalisé.",
+      "pageNotFound": "Page introuvable.",
+      "pageChanged": "Cette page a changé depuis votre relecture. Relisez-la avant de la publier.",
+      "svgTooLarge": "Les fichiers SVG peuvent peser jusqu’à 200 Ko.",
+      "tooManyImports": "Trop d’imports. Réessayez dans une heure.",
+      "tooManyChanges": "Trop de modifications. Réessayez plus tard."
+    },
+    "communityThemes": {
+      "alreadyPublished": "Ce thème est déjà publié dans la communauté.",
+      "workspaceAdminsOnly": "Seuls les propriétaires et les administrateurs de cet espace de travail peuvent publier ses thèmes.",
+      "workspaceUnavailable": "La publication des thèmes d’un espace de travail n’est pas encore disponible sur ce déploiement.",
+      "tooFast": "Vous publiez trop vite. Veuillez réessayer plus tard."
+    },
+    "checks": {
+      "licenceRequired": "Confirmez la licence CC0 pour publier.",
+      "publishedALot": "Vous avez beaucoup publié aujourd’hui. Réessayez demain.",
+      "unavailable": "La mise à jour de la communauté n’est pas encore disponible sur ce déploiement.",
+      "itemNotFound": "Cet élément n’est pas dans la communauté.",
+      "workspacePublishRefusal": "Seuls les propriétaires et les administrateurs de cet espace de travail peuvent publier son contenu.",
+      "nameRequired": "Donnez-lui un nom.",
+      "alreadyPublished": "Ce design est déjà dans la communauté.",
+      "themeSettings": "Ce thème contient des réglages que la communauté ne peut pas afficher. Enregistrez-le à nouveau dans l’éditeur.",
+      "pageNothingLeft": "Il ne reste rien à partager une fois vos informations personnelles retirées. Ajoutez des blocs que d’autres pourront réutiliser.",
+      "pageInvalid": "Cette page ne peut pas être partagée comme modèle. Publiez-la d’abord à nouveau dans l’éditeur de pages.",
+      "pageTooLarge": "Cette page est trop volumineuse pour être partagée comme modèle. Supprimez des blocs ou raccourcissez les textes longs.",
+      "repeatsDetail": "Elle répète une information retirée ailleurs sur la page.",
+      "noEmails": "N’indiquez pas d’adresses e-mail dans les noms, libellés et descriptions.",
+      "noLinks": "N’indiquez pas de liens dans les noms, libellés et descriptions.",
+      "noHandles": "N’indiquez pas de @identifiants dans les noms, libellés et descriptions.",
+      "noPhones": "N’indiquez pas de numéros de téléphone dans les noms, libellés et descriptions.",
+      "noStreets": "N’indiquez pas d’adresses postales dans les noms, les libellés et les descriptions.",
+      "gateFailed": "Seuls les designs dont le scan est jugé Excellent ({min, number} ou plus) peuvent être publiés. {reasons}.",
+      "gateTooLong": "{sample} ne tiendra pas dans un code à ce niveau de correction d’erreurs",
+      "gateScore": "avec {sample}, le score est de {score, number}",
+      "gateSampleLink": "un lien",
+      "gateSampleWifi": "infos Wi-Fi",
+      "handleFormat": "Utilisez de {min, number} à {max, number} lettres minuscules, chiffres, « _ » ou « - », en commençant par une lettre ou un chiffre.",
+      "handleReserved": "Cet identifiant est réservé.",
+      "handleTaken": "Cet identifiant est déjà pris.",
+      "displayNameRequired": "Saisissez un nom d’affichage."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, one {# texte remplacé} other {# textes remplacés}} par du texte d’exemple",
+      "kept": "{count, plural, one {# texte conservé} other {# textes conservés}} tel que vous l’avez écrit",
+      "links": "{count, plural, one {# lien remplacé} other {# liens remplacés}} par example.com",
+      "emails": "{count, plural, one {# adresse e-mail remplacée} other {# adresses e-mail remplacées}} par des adresses d’exemple",
+      "phones": "{count, plural, one {# numéro de téléphone remplacé} other {# numéros de téléphone remplacés}} par des numéros d’exemple",
+      "emailsAndPhones": "{emails, plural, one {# adresse e-mail} other {# adresses e-mail}} et {phones, plural, one {# numéro de téléphone} other {# numéros de téléphone}} remplacés par des exemples",
+      "addresses": "{count, plural, one {# adresse remplacée} other {# adresses remplacées}} par une adresse d’exemple",
+      "wifi": "Nom du réseau Wi-Fi et mot de passe remplacés par des exemples",
+      "codes": "Code promo remplacé par un code d’exemple",
+      "gtins": "GTIN du produit supprimé : chacun ajoute le sien",
+      "images": "{count, plural, one {# photo supprimée} other {# photos supprimées}} : chacun ajoute les siennes",
+      "files": "{count, plural, one {# fichier supprimé} other {# fichiers supprimés}}",
+      "blocks": "Exclus, car ils nécessitent vos propres fichiers : {blocks}",
+      "hidden": "{count, plural, one {# bloc masqué exclu} other {# blocs masqués exclus}}",
+      "settings": "Image de partage, description et CSS personnalisé exclus"
+    },
+    "qrThemes": {
+      "signIn": "Connectez-vous pour gérer les thèmes.",
+      "failed": "Une erreur s’est produite. Veuillez réessayer.",
+      "tooMany": "Trop de modifications. Patientez une minute, puis réessayez.",
+      "themeLimit": "Vous avez atteint la limite de {limit, number} thèmes enregistrés avec le plan Gratuit. Passez à Pro pour avoir des thèmes illimités.",
+      "notFound": "Thème introuvable.",
+      "defaultAdminsOnly": "Seuls les propriétaires et les administrateurs de l’espace de travail peuvent modifier son thème par défaut.",
+      "openAnotherWorkspace": "Ouvrez un autre espace de travail pour y partager des thèmes.",
+      "shareAdminsOnly": "Seuls les propriétaires et les administrateurs de l’espace de travail peuvent partager des thèmes ici.",
+      "sharedThemesPlan": "Les thèmes partagés sont inclus dans le forfait {plan} (selon le forfait du propriétaire de l’espace de travail).",
+      "workspaceThemeLimit": "Le forfait de cet espace de travail inclut {count, number} thèmes."
+    },
+    "codeBuilder": {
+      "signInAgain": "Reconnectez-vous pour créer des codes.",
+      "loadFailed": "Impossible de charger l’éditeur. Réessayez.",
+      "themesFailed": "Les thèmes enregistrés n’ont pas chargé.",
+      "foldersFailed": "Les dossiers n’ont pas chargé.",
+      "tagsFailed": "Les tags n’ont pas chargé.",
+      "domainsFailed": "Les domaines personnalisés n’ont pas chargé : les codes utilisent donc le lien court par défaut."
+    },
+    "search": {
+      "untitledPage": "Page sans titre",
+      "landingPage": "Page d’atterrissage",
+      "tooMany": "Trop de recherches. Patientez un instant.",
+      "signInAgain": "Reconnectez-vous pour rechercher.",
+      "notWorking": "La recherche ne fonctionne pas pour le moment."
+    }
+  },
   "app": {
     "settings": {
       "general": {

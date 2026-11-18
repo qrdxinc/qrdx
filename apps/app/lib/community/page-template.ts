@@ -10,6 +10,12 @@ import {
   type LandingPageContent,
   landingThemeSchema,
 } from "@/types/landing";
+import {
+  COMMUNITY_CHECK_MESSAGES,
+  type CommunityCheckMessages,
+  PAGE_CHANGE_MESSAGES,
+  type PageChangeMessages,
+} from "./messages";
 import { textProblem } from "./text";
 
 // A hosted page published as a community page template. A template is a
@@ -449,15 +455,18 @@ class Scrubber {
   }
 
   /** Kept text that repeats a secret or carries contact details. */
-  problems(secrets: ReadonlySet<string>): KeptProblem[] {
+  problems(
+    secrets: ReadonlySet<string>,
+    messages: CommunityCheckMessages,
+  ): KeptProblem[] {
     const problems: KeptProblem[] = [];
     for (const { field } of this.kept) {
       const text = field.original;
       const lower = text.toLowerCase();
       const repeated = [...secrets].some((secret) => lower.includes(secret));
       const message = repeated
-        ? "It repeats a detail taken out elsewhere on the page."
-        : textProblem(text);
+        ? messages.repeatsDetail
+        : textProblem(text, messages);
       if (message) {
         problems.push({
           id: field.id,
@@ -516,10 +525,15 @@ export interface ScrubResult {
 /**
  * `content` with personal data taken out. `keep` lists the text fields
  * (ScrubbedField ids) the publisher chose to publish as they wrote them.
+ * Problems are in English unless `messages` is another language's set
+ * (./messages.ts).
  */
 export function scrubPageContent(
   content: LandingPageContent,
-  options: { keep?: readonly string[] } = {},
+  options: {
+    keep?: readonly string[];
+    messages?: CommunityCheckMessages;
+  } = {},
 ): ScrubResult {
   const keep = new Set(options.keep ?? []);
   const report = emptyReport();
@@ -578,7 +592,9 @@ export function scrubPageContent(
     content: { ...content, theme: scrubTheme(content.theme, report), blocks },
     report,
     fields,
-    problems: scrubbers.flatMap((scrubber) => scrubber.problems(secrets)),
+    problems: scrubbers.flatMap((scrubber) =>
+      scrubber.problems(secrets, options.messages ?? COMMUNITY_CHECK_MESSAGES),
+    ),
   };
 }
 
@@ -613,70 +629,45 @@ function restoreChoices(
   return restored;
 }
 
-/** Plain lines for the publish dialog: what the scrub changed. */
-export function scrubSummary(report: ScrubReport): string[] {
+/**
+ * Plain lines for the publish dialog: what the scrub changed. In English
+ * unless `messages` is another language's set (./messages.ts).
+ */
+export function scrubSummary(
+  report: ScrubReport,
+  messages: PageChangeMessages = PAGE_CHANGE_MESSAGES,
+): string[] {
   const lines: string[] = [];
-  const count = (n: number, one: string, many: string) =>
-    `${n} ${n === 1 ? one : many}`;
-  if (report.texts) {
+  if (report.texts) lines.push(messages.texts({ count: report.texts }));
+  if (report.kept) lines.push(messages.kept({ count: report.kept }));
+  if (report.links) lines.push(messages.links({ count: report.links }));
+  if (report.emails && report.phones) {
     lines.push(
-      `${count(report.texts, "text", "texts")} replaced with sample text`,
+      messages.emailsAndPhones({
+        emails: report.emails,
+        phones: report.phones,
+      }),
     );
-  }
-  if (report.kept) {
-    lines.push(`${count(report.kept, "text", "texts")} kept as you wrote it`);
-  }
-  if (report.links) {
-    lines.push(
-      `${count(report.links, "link", "links")} replaced with example.com`,
-    );
-  }
-  if (report.emails || report.phones) {
-    const parts = [
-      report.emails
-        ? count(report.emails, "email address", "email addresses")
-        : "",
-      report.phones
-        ? count(report.phones, "phone number", "phone numbers")
-        : "",
-    ].filter(Boolean);
-    lines.push(`${parts.join(" and ")} replaced with sample ones`);
+  } else if (report.emails) {
+    lines.push(messages.emails({ count: report.emails }));
+  } else if (report.phones) {
+    lines.push(messages.phones({ count: report.phones }));
   }
   if (report.addresses) {
-    lines.push(
-      `${count(report.addresses, "address", "addresses")} replaced with a sample address`,
-    );
+    lines.push(messages.addresses({ count: report.addresses }));
   }
-  if (report.wifi) {
-    lines.push("Wi-Fi network name and password replaced with sample ones");
-  }
-  if (report.codes) {
-    lines.push("Coupon code replaced with a sample one");
-  }
-  if (report.gtins) {
-    lines.push("Product GTIN removed: people add their own");
-  }
-  if (report.images) {
-    lines.push(
-      `${count(report.images, "photo", "photos")} removed: people add their own`,
-    );
-  }
-  if (report.files) {
-    lines.push(`${count(report.files, "file", "files")} removed`);
-  }
+  if (report.wifi) lines.push(messages.wifi);
+  if (report.codes) lines.push(messages.codes);
+  if (report.gtins) lines.push(messages.gtins);
+  if (report.images) lines.push(messages.images({ count: report.images }));
+  if (report.files) lines.push(messages.files({ count: report.files }));
   if (report.blocks.length) {
     lines.push(
-      `Left out because they need your own files: ${[...new Set(report.blocks)].join(", ")}`,
+      messages.blocks({ blocks: [...new Set(report.blocks)].join(", ") }),
     );
   }
-  if (report.hidden) {
-    lines.push(
-      `${count(report.hidden, "hidden block", "hidden blocks")} left out`,
-    );
-  }
-  if (report.settings) {
-    lines.push("Share image, description and custom CSS left out");
-  }
+  if (report.hidden) lines.push(messages.hidden({ count: report.hidden }));
+  if (report.settings) lines.push(messages.settings);
   return lines;
 }
 

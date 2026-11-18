@@ -3,6 +3,10 @@ import "server-only";
 import type { ScanGrade } from "qrdx";
 import { DesignTooLongError, scoreDesign } from "@/lib/qr-design/score";
 import type { ThemeStyles } from "@/types/theme";
+import {
+  COMMUNITY_CHECK_MESSAGES,
+  type CommunityCheckMessages,
+} from "./messages";
 import { GATE_SAMPLES, type GateSample, MIN_GATE_SCORE } from "./scan-samples";
 
 // The publish gate: a design (a theme, or a frame on a classic code) goes
@@ -61,14 +65,31 @@ export async function checkScanGate(
   };
 }
 
-/** Why a gate failed, e.g. "... With Wi-Fi details it scores 71." */
-export function gateFailureMessage(gate: ScanGate): string {
+/** A gate sample's name in a message, e.g. "Wi-Fi details". */
+const sampleName = (
+  sample: GateSample["id"],
+  messages: CommunityCheckMessages,
+): string =>
+  sample === "wifi" ? messages.gateSampleWifi : messages.gateSampleLink;
+
+/**
+ * Why a gate failed, e.g. "... With Wi-Fi details it scores 71." In English
+ * unless `messages` is another language's set (./messages.ts).
+ */
+export function gateFailureMessage(
+  gate: ScanGate,
+  messages: CommunityCheckMessages = COMMUNITY_CHECK_MESSAGES,
+): string {
   const failed = gate.results.filter((result) => !result.passed);
-  const parts = failed.map((result) =>
-    result.grade === "too-long"
-      ? `${result.label} won't fit in a code at this error correction level`
-      : `with ${result.label} it scores ${result.score}`,
-  );
+  const parts = failed.map((result) => {
+    const sample = sampleName(result.sample, messages);
+    return result.grade === "too-long"
+      ? messages.gateTooLong({ sample })
+      : messages.gateScore({ sample, score: result.score });
+  });
   const reasons = parts.join("; ");
-  return `Only designs that scan Great (${MIN_GATE_SCORE} or more) can be published. ${reasons.charAt(0).toUpperCase()}${reasons.slice(1)}.`;
+  return messages.gateFailed({
+    min: MIN_GATE_SCORE,
+    reasons: `${reasons.charAt(0).toUpperCase()}${reasons.slice(1)}`,
+  });
 }

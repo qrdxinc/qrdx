@@ -5498,6 +5498,98 @@
       "placeholder": "Cerca cornici, temi e pagine"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Accedi per continuare.",
+      "failed": "Qualcosa è andato storto. Riprova.",
+      "checkDetails": "Controlla i dettagli.",
+      "themeNotInWorkspace": "Questo tema non è in questo workspace.",
+      "noCustomFrame": "Questo tema non ha un frame personalizzato.",
+      "pageNotFound": "Pagina non trovata.",
+      "pageChanged": "Questa pagina è cambiata dopo la tua revisione. Rivedila prima di pubblicarla.",
+      "svgTooLarge": "I file SVG possono pesare fino a 200 KB.",
+      "tooManyImports": "Troppe importazioni. Riprova tra un’ora.",
+      "tooManyChanges": "Troppe modifiche. Riprova più tardi."
+    },
+    "communityThemes": {
+      "alreadyPublished": "Questo tema è già pubblicato nella community.",
+      "workspaceAdminsOnly": "Solo i proprietari e gli amministratori di questo workspace possono pubblicarne i temi.",
+      "workspaceUnavailable": "La pubblicazione dei temi del workspace non è ancora disponibile in questa installazione.",
+      "tooFast": "Stai pubblicando troppo in fretta. Riprova più tardi."
+    },
+    "checks": {
+      "licenceRequired": "Conferma la licenza CC0 per pubblicare.",
+      "publishedALot": "Hai pubblicato molto oggi. Riprova domani.",
+      "unavailable": "L’aggiornamento della community non è ancora disponibile in questa installazione.",
+      "itemNotFound": "Questo elemento non è nella community.",
+      "workspacePublishRefusal": "Solo i proprietari e gli amministratori di questo workspace possono pubblicarne i contenuti.",
+      "nameRequired": "Dagli un nome.",
+      "alreadyPublished": "Questo design è già nella community.",
+      "themeSettings": "Questo tema ha impostazioni che la community non può mostrare. Salvalo di nuovo nell’editor.",
+      "pageNothingLeft": "Senza i tuoi dati personali non resta nulla da condividere. Aggiungi dei blocchi che le persone possano riutilizzare.",
+      "pageInvalid": "Questa pagina non può essere condivisa come template. Prima pubblicala di nuovo nell’editor di pagine.",
+      "pageTooLarge": "Questa pagina è troppo grande per essere condivisa come template. Rimuovi dei blocchi o accorcia i testi lunghi.",
+      "repeatsDetail": "Ripete un dettaglio rimosso altrove nella pagina.",
+      "noEmails": "Non inserire indirizzi email in nomi, etichette e descrizioni.",
+      "noLinks": "Non inserire link in nomi, etichette e descrizioni.",
+      "noHandles": "Non inserire @handle in nomi, etichette e descrizioni.",
+      "noPhones": "Non inserire numeri di telefono in nomi, etichette e descrizioni.",
+      "noStreets": "Non inserire indirizzi stradali in nomi, etichette e descrizioni.",
+      "gateFailed": "Si possono pubblicare solo i design con una scansione Ottima ({min, number} o più). {reasons}.",
+      "gateTooLong": "{sample} non sta in un codice con questo livello di correzione degli errori",
+      "gateScore": "con {sample} ottiene {score, number}",
+      "gateSampleLink": "un link",
+      "gateSampleWifi": "dati del Wi-Fi",
+      "handleFormat": "Usa da {min, number} a {max, number} lettere minuscole, numeri, \"_\" o \"-\", iniziando con una lettera o un numero.",
+      "handleReserved": "Questo nome utente è riservato.",
+      "handleTaken": "Questo nome utente è già in uso.",
+      "displayNameRequired": "Inserisci un nome visualizzato."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, one {# testo sostituito} other {# testi sostituiti}} con testo di esempio",
+      "kept": "{count, plural, one {# testo lasciato} other {# testi lasciati}} come l’hai scritto",
+      "links": "{count, plural, one {# link sostituito} other {# link sostituiti}} con example.com",
+      "emails": "{count, plural, one {# indirizzo email sostituito} other {# indirizzi email sostituiti}} con indirizzi di esempio",
+      "phones": "{count, plural, one {# numero di telefono sostituito} other {# numeri di telefono sostituiti}} con numeri di esempio",
+      "emailsAndPhones": "{emails, plural, one {# indirizzo email} other {# indirizzi email}} e {phones, plural, one {# numero di telefono} other {# numeri di telefono}} sostituiti con esempi",
+      "addresses": "{count, plural, one {# indirizzo sostituito} other {# indirizzi sostituiti}} con un indirizzo di esempio",
+      "wifi": "Nome e password della rete Wi-Fi sostituiti con esempi",
+      "codes": "Codice coupon sostituito con uno di esempio",
+      "gtins": "GTIN del prodotto rimosso: ognuno aggiunge il proprio",
+      "images": "{count, plural, one {# foto rimossa} other {# foto rimosse}}: ognuno aggiunge le proprie",
+      "files": "{count, plural, one {# file rimosso} other {# file rimossi}}",
+      "blocks": "Esclusi perché richiedono i tuoi file: {blocks}",
+      "hidden": "{count, plural, one {# blocco nascosto escluso} other {# blocchi nascosti esclusi}}",
+      "settings": "Immagine di condivisione, descrizione e CSS personalizzato esclusi"
+    },
+    "qrThemes": {
+      "signIn": "Accedi per gestire i temi.",
+      "failed": "Qualcosa è andato storto. Riprova.",
+      "tooMany": "Troppe modifiche. Aspetta un minuto e riprova.",
+      "themeLimit": "Hai raggiunto il limite di {limit, number} temi salvati del piano Gratuito. Passa a Pro per avere temi illimitati.",
+      "notFound": "Tema non trovato.",
+      "defaultAdminsOnly": "Solo i proprietari e gli amministratori dello spazio di lavoro possono cambiarne il tema predefinito.",
+      "openAnotherWorkspace": "Apri un altro spazio di lavoro per condividere i temi con esso.",
+      "shareAdminsOnly": "Solo i proprietari e gli amministratori dello spazio di lavoro possono condividere i temi qui.",
+      "sharedThemesPlan": "I temi condivisi sono inclusi nel piano {plan} (in base al piano del proprietario dello spazio di lavoro).",
+      "workspaceThemeLimit": "Il piano di questo spazio di lavoro include {count, number} temi."
+    },
+    "codeBuilder": {
+      "signInAgain": "Accedi di nuovo per creare codici.",
+      "loadFailed": "Impossibile caricare il builder. Riprova.",
+      "themesFailed": "I temi salvati non si sono caricati.",
+      "foldersFailed": "Le cartelle non si sono caricate.",
+      "tagsFailed": "I tag non si sono caricati.",
+      "domainsFailed": "I domini personalizzati non si sono caricati, quindi i codici usano il link breve predefinito."
+    },
+    "search": {
+      "untitledPage": "Pagina senza titolo",
+      "landingPage": "Landing page",
+      "tooMany": "Troppe ricerche. Attendi un attimo.",
+      "signInAgain": "Accedi di nuovo per cercare.",
+      "notWorking": "La ricerca non funziona al momento."
+    }
+  },
   "app": {
     "settings": {
       "general": {

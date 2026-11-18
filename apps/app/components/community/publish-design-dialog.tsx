@@ -14,7 +14,7 @@ import {
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Textarea } from "@repo/design-system/components/ui/textarea";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useState } from "react";
 import { publishCommunityDesign } from "@/actions/community";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
@@ -58,6 +58,8 @@ export function PublishDesignDialog({
   onPublished?: (href: string) => void;
 }) {
   const t = useTranslations("community.publishDesignDialog");
+  // The server answers in this page's language (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const nameId = useId();
   const descriptionId = useId();
   const [name, setName] = useState(draft.name);
@@ -89,14 +91,17 @@ export function PublishDesignDialog({
     setPending(true);
     setRefusal(null);
     try {
-      const result = await publishCommunityDesign({
-        style: style as Record<string, unknown>,
-        name,
-        description,
-        tags,
-        acceptLicense: accepted,
-        ...(chatDraftId ? { chatDraftId } : {}),
-      });
+      const result = await publishCommunityDesign(
+        {
+          style: style as Record<string, unknown>,
+          name,
+          description,
+          tags,
+          acceptLicense: accepted,
+          ...(chatDraftId ? { chatDraftId } : {}),
+        },
+        locale,
+      );
       if (result.ok) {
         setPublished(result.data.href);
         soundEvent("success");

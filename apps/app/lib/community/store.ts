@@ -4,6 +4,7 @@ import { communityItem, communityTheme, database as db } from "@repo/database";
 import { count, eq } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 import { logError } from "@/lib/log-error";
+import { CheckError } from "./messages";
 import { COMMUNITY_TAG, isMissingSchemaError } from "./tables";
 
 export { COMMUNITY_TAG, isMissingSchemaError } from "./tables";
@@ -26,9 +27,9 @@ export interface CommunityState {
 }
 
 /** The community tables can't be used here yet (manual-sql/0012). */
-export class CommunityUnavailableError extends Error {
+export class CommunityUnavailableError extends CheckError {
   constructor() {
-    super("The community update isn't available on this deployment yet.");
+    super((m) => m.unavailable);
     this.name = "CommunityUnavailableError";
   }
 }

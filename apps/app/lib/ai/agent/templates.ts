@@ -51,9 +51,10 @@ export const accountTemplateStore: TemplateStore = {
   },
   async save(_userId, { name, style }) {
     // createTheme reads the session itself, as the editor's dialog does.
+    // Its messages go to the model, in English like the quota's above.
     const { createTheme } = await import("@/actions/qr-themes");
     try {
-      const result = await createTheme({ name, style });
+      const result = await createTheme({ name, style }, "en");
       if (result.success) {
         return { ok: true, id: result.data.id, name: result.data.name };
       }

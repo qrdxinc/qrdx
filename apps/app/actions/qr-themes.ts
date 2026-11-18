@@ -6,8 +6,14 @@ import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import cuid from "cuid";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { getTranslations } from "next-intl/server";
 import { cache } from "react";
 import { z } from "zod";
+import {
+  QR_THEME_MESSAGES,
+  type QrThemeMessages,
+  qrThemeMessages,
+} from "@/app/(app)/dashboard/themes/_lib/action-messages";
 import {
   canEditTheme,
   canManageTeamThemes,
@@ -24,6 +30,7 @@ import type {
   SavedTheme,
   ThemeActionResult,
 } from "@/app/(app)/dashboard/themes/_lib/theme";
+import { actionText } from "@/lib/i18n/action-locale";
 import { noteLimitUsage } from "@/lib/limit-notices";
 import { can } from "@/lib/permissions";
 import { getPlan, getPlanForScope, getPlanLimits } from "@/lib/plans";
@@ -62,7 +69,32 @@ const updateThemeSchema = z.object({
   styles: themeStylePropsSchema.optional(),
 });
 
-const TOO_MANY = "Too many changes. Please wait a minute and try again.";
+// What's thrown (ValidationError and the like) is never shown as it is:
+// Next.js hides a server action's error message in production. What's
+// returned is shown, in the language of the page that asked
+// (lib/i18n/action-locale.ts): the editor sends its own (`pageLocale`), the
+// dashboard's Themes page gets the app's.
+const TOO_MANY = QR_THEME_MESSAGES.tooMany;
+
+/**
+ * QR_THEME_MESSAGES in the page's language; English, logged, if unreadable.
+ * `userId`: who's asking, when the action knows (no second session read).
+ */
+const themeText = (
+  action: string,
+  { pageLocale, userId }: { pageLocale?: unknown; userId?: string } = {},
+) =>
+  actionText<QrThemeMessages>(
+    QR_THEME_MESSAGES,
+    async (locale) =>
+      qrThemeMessages(
+        await getTranslations({
+          locale,
+          namespace: "communityActions.qrThemes",
+        }),
+      ),
+    { pageLocale, userId, action: `qrThemes.${action}` },
+  );
 
 /** Expected errors (signed out, bad input, not found) aren't worth reporting. */
 function report(error: unknown, context: Record<string, unknown>) {
@@ -80,11 +112,14 @@ function fail(error: string, upgrade = false): ThemeActionResult<never> {
   return upgrade ? { ok: false, error, upgrade } : { ok: false, error };
 }
 
-function failure(error: unknown, action: string): ThemeActionResult<never> {
-  if (error instanceof UnauthorizedError)
-    return fail("Sign in to manage themes.");
+async function failure(
+  error: unknown,
+  action: string,
+): Promise<ThemeActionResult<never>> {
+  const m = await themeText(action);
+  if (error instanceof UnauthorizedError) return fail(m.signIn);
   report(error, { action });
-  return fail("Something went wrong. Please try again.");
+  return fail(m.failed);
 }
 
 async function allowMutation(userId: string): Promise<boolean> {
@@ -133,12 +168,16 @@ export const getTheme = cache(async (themeId: string) => {
 /**
  * Saves one of your themes, in your own workspace (Free: up to the plan's
  * saved-theme limit). Owners and admins share it with another workspace
- * with copyThemeToTeam.
+ * with copyThemeToTeam. The editor calls it, with its language
+ * (`pageLocale`) for the limit message.
  */
-export async function createTheme(formData: {
-  name: string;
-  style: ThemeStyles;
-}) {
+export async function createTheme(
+  formData: {
+    name: string;
+    style: ThemeStyles;
+  },
+  pageLocale?: string,
+) {
   try {
     const userId = await getCurrentUserId();
 
@@ -151,10 +190,12 @@ export async function createTheme(formData: {
     const own = await ensureOwnWorkspaceFor(userId);
     const personal = { userId, organizationId: own.id };
     const limit = getPlanLimits(await getPlan(userId)).savedThemes;
-    const limitReached = () =>
+    const limitReached = async () =>
       actionError(
         ErrorCode.THEME_LIMIT_REACHED,
-        `You have reached the limit of ${limit} saved themes on the Free plan. Upgrade to Pro for unlimited themes.`,
+        (await themeText("createTheme", { pageLocale, userId })).themeLimit({
+          limit,
+        }),
       );
     if ((await countThemesInScope(personal)) >= limit) return limitReached();
 
@@ -286,18 +327,22 @@ export async function setDefaultTheme(
 ): Promise<ThemeActionResult<{ id: string }>> {
   try {
     const scope = await getActiveScope();
+    const text = () => themeText("setDefaultTheme", { userId: scope.userId });
     const parsed = idSchema.safeParse(themeId);
     if (!parsed.success || typeof isDefault !== "boolean") {
-      return fail("Theme not found.");
+      return fail((await text()).notFound);
     }
-    if (!(await allowMutation(scope.userId))) return fail(TOO_MANY);
+    if (!(await allowMutation(scope.userId))) {
+      return fail((await text()).tooMany);
+    }
 
     const theme = await findThemeById(parsed.data);
     if (!theme || !canEditTheme(scope, theme)) {
+      const m = await text();
       return fail(
         theme && !isPersonalTheme(theme, scope.userId)
-          ? "Only workspace owners and admins can change its default theme."
-          : "Theme not found.",
+          ? m.defaultAdminsOnly
+          : m.notFound,
       );
     }
 
@@ -323,20 +368,23 @@ export async function copyThemeToTeam(
 ): Promise<ThemeActionResult<{ id: string }>> {
   try {
     const scope = await getActiveScope();
+    const text = () => themeText("copyThemeToTeam", { userId: scope.userId });
     const parsed = idSchema.safeParse(themeId);
-    if (!parsed.success) return fail("Theme not found.");
+    if (!parsed.success) return fail((await text()).notFound);
     if (isOwnWorkspaceOf(scope.organizationId, scope.userId)) {
-      return fail("Open another workspace to share themes with it.");
+      return fail((await text()).openAnotherWorkspace);
     }
     if (!canManageTeamThemes(scope)) {
-      return fail("Only workspace owners and admins can share themes here.");
+      return fail((await text()).shareAdminsOnly);
     }
-    if (!(await allowMutation(scope.userId))) return fail(TOO_MANY);
+    if (!(await allowMutation(scope.userId))) {
+      return fail((await text()).tooMany);
+    }
 
     const limits = getPlanLimits(await getPlanForScope(scope));
     if (!limits.teamThemes) {
       return fail(
-        `Shared themes are part of the ${teamThemesPlanName()} plan (based on the workspace owner's plan).`,
+        (await text()).sharedThemesPlan({ plan: teamThemesPlanName() }),
         can(scope.role, "billing.manage"),
       );
     }
@@ -345,7 +393,7 @@ export async function copyThemeToTeam(
       (await countThemesInScope(scope)) >= limits.savedThemes
     ) {
       return fail(
-        `This workspace's plan includes ${limits.savedThemes} themes.`,
+        (await text()).workspaceThemeLimit({ count: limits.savedThemes }),
       );
     }
 
@@ -355,7 +403,7 @@ export async function copyThemeToTeam(
       theme.userId !== scope.userId ||
       !isPersonalTheme(theme, scope.userId)
     ) {
-      return fail("Theme not found.");
+      return fail((await text()).notFound);
     }
 
     const id = cuid();

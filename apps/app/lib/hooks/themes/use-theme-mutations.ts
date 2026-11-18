@@ -1,7 +1,7 @@
 import { track } from "@repo/analytics";
 import { toast } from "@repo/design-system";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { createTheme, deleteTheme, updateTheme } from "@/actions/qr-themes";
 import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
 import { isUnauthorized } from "@/lib/handle-unauthorized";
@@ -53,15 +53,26 @@ function handleMutationError(
   return error;
 }
 
+/** The plan's saved-theme limit, already shown (its message is translated). */
+class ThemeLimitError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ThemeLimitError";
+  }
+}
+
 export function useCreateTheme() {
   const t = useTranslations("editor.hooks.useThemeMutations");
+  // The limit message comes back in this page's language
+  // (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const queryClient = useQueryClient();
   const { registerPreset } = useThemePresetStore();
   const { openGetProDialog } = useGetProDialogStore();
 
   return useMutation({
     mutationFn: async (data: { name: string; style: ThemeStyles }) => {
-      const result = await createTheme(data);
+      const result = await createTheme(data, locale);
 
       // Handle theme limit error explicitly (returns ActionResult, not thrown)
       if (!result.success) {
@@ -70,6 +81,7 @@ export function useCreateTheme() {
             description: result.error.message,
           });
           openGetProDialog();
+          throw new ThemeLimitError(result.error.message);
         }
         // Throw to trigger onError for other error handling
         throw new Error(result.error.message);
@@ -99,10 +111,9 @@ export function useCreateTheme() {
       });
     },
     onError: (error) => {
-      // Theme limit errors are already handled in mutationFn, skip duplicate toast
-      if ((error as Error).message.includes("limit")) {
-        return;
-      }
+      // Theme limit errors are already handled in mutationFn, skip duplicate
+      // toast (by type: the message is in the page's language)
+      if (error instanceof ThemeLimitError) return;
       handleMutationError(error as Error, "create", t);
     },
     onSettled: () => {

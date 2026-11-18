@@ -16499,6 +16499,310 @@
     "source": "ff85aeb387e6",
     "status": "machine"
   },
+  "communityActions.community.signIn": {
+    "source": "73c27c81d398",
+    "status": "machine"
+  },
+  "communityActions.community.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "communityActions.community.checkDetails": {
+    "source": "375dfe68ec1e",
+    "status": "machine"
+  },
+  "communityActions.community.themeNotInWorkspace": {
+    "source": "c91949de3848",
+    "status": "machine"
+  },
+  "communityActions.community.noCustomFrame": {
+    "source": "b2f198bd8aa1",
+    "status": "machine"
+  },
+  "communityActions.community.pageNotFound": {
+    "source": "d53fc6cd3673",
+    "status": "machine"
+  },
+  "communityActions.community.pageChanged": {
+    "source": "5cb375f87239",
+    "status": "machine"
+  },
+  "communityActions.community.svgTooLarge": {
+    "source": "847dfaffe77d",
+    "status": "machine"
+  },
+  "communityActions.community.tooManyImports": {
+    "source": "f5ff19b3ee81",
+    "status": "machine"
+  },
+  "communityActions.community.tooManyChanges": {
+    "source": "a1984da59d94",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.alreadyPublished": {
+    "source": "1d6e553fff43",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.workspaceAdminsOnly": {
+    "source": "6be147003b2e",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.workspaceUnavailable": {
+    "source": "389f41255d26",
+    "status": "machine"
+  },
+  "communityActions.communityThemes.tooFast": {
+    "source": "93fd22d6c7b7",
+    "status": "machine"
+  },
+  "communityActions.checks.licenceRequired": {
+    "source": "1493427d2375",
+    "status": "machine"
+  },
+  "communityActions.checks.publishedALot": {
+    "source": "f20b7da02e33",
+    "status": "machine"
+  },
+  "communityActions.checks.unavailable": {
+    "source": "b60fe2da5900",
+    "status": "machine"
+  },
+  "communityActions.checks.itemNotFound": {
+    "source": "4fd809b4812f",
+    "status": "machine"
+  },
+  "communityActions.checks.workspacePublishRefusal": {
+    "source": "237a5d6c5b08",
+    "status": "machine"
+  },
+  "communityActions.checks.nameRequired": {
+    "source": "9d63f7c904b4",
+    "status": "machine"
+  },
+  "communityActions.checks.alreadyPublished": {
+    "source": "f6250cd6e149",
+    "status": "machine"
+  },
+  "communityActions.checks.themeSettings": {
+    "source": "a46be77a8b85",
+    "status": "machine"
+  },
+  "communityActions.checks.pageNothingLeft": {
+    "source": "fbae9239939b",
+    "status": "machine"
+  },
+  "communityActions.checks.pageInvalid": {
+    "source": "9ba6121c388a",
+    "status": "machine"
+  },
+  "communityActions.checks.pageTooLarge": {
+    "source": "19edf2989914",
+    "status": "machine"
+  },
+  "communityActions.checks.repeatsDetail": {
+    "source": "182d46548c52",
+    "status": "machine"
+  },
+  "communityActions.checks.noEmails": {
+    "source": "8dd6ac014b14",
+    "status": "machine"
+  },
+  "communityActions.checks.noLinks": {
+    "source": "eb0c08b80549",
+    "status": "machine"
+  },
+  "communityActions.checks.noHandles": {
+    "source": "21ea462bd41c",
+    "status": "machine"
+  },
+  "communityActions.checks.noPhones": {
+    "source": "76f2634e7aed",
+    "status": "machine"
+  },
+  "communityActions.checks.noStreets": {
+    "source": "b6ada55ccf82",
+    "status": "machine"
+  },
+  "communityActions.checks.gateFailed": {
+    "source": "3e71851e4c7f",
+    "status": "machine"
+  },
+  "communityActions.checks.gateTooLong": {
+    "source": "9362bdceb4a5",
+    "status": "machine"
+  },
+  "communityActions.checks.gateScore": {
+    "source": "acafc1501a7d",
+    "status": "machine"
+  },
+  "communityActions.checks.gateSampleLink": {
+    "source": "5a3464444d33",
+    "status": "machine"
+  },
+  "communityActions.checks.gateSampleWifi": {
+    "source": "f65f7e029de8",
+    "status": "machine"
+  },
+  "communityActions.checks.handleFormat": {
+    "source": "3c4eaf10ef56",
+    "status": "machine"
+  },
+  "communityActions.checks.handleReserved": {
+    "source": "d6a2b8a0f42d",
+    "status": "machine"
+  },
+  "communityActions.checks.handleTaken": {
+    "source": "52ea5ad9b30d",
+    "status": "machine"
+  },
+  "communityActions.checks.displayNameRequired": {
+    "source": "c9b317208890",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.texts": {
+    "source": "4cd9aad551fe",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.kept": {
+    "source": "2dc2893cee5b",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.links": {
+    "source": "bb794dc3cf63",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.emails": {
+    "source": "76bfb774ee2a",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.phones": {
+    "source": "6d349ccb0826",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.emailsAndPhones": {
+    "source": "57d3e1565fdd",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.addresses": {
+    "source": "57faf2dc9c7c",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.wifi": {
+    "source": "68cfa80299ea",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.codes": {
+    "source": "f7a9b987ad33",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.gtins": {
+    "source": "04a8c4cf6f4f",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.images": {
+    "source": "61e05dbf3f4f",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.files": {
+    "source": "5163e4a591eb",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.blocks": {
+    "source": "c1abfd1f7e44",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.hidden": {
+    "source": "a204c8515b0c",
+    "status": "machine"
+  },
+  "communityActions.pageChanges.settings": {
+    "source": "72685d716228",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.signIn": {
+    "source": "8a036e32bf49",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.tooMany": {
+    "source": "c4563cbd7409",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.themeLimit": {
+    "source": "9d16feb89038",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.notFound": {
+    "source": "3d8f8d0799e6",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.defaultAdminsOnly": {
+    "source": "127297294361",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.openAnotherWorkspace": {
+    "source": "440bdf4628d6",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.shareAdminsOnly": {
+    "source": "a8a22bf12919",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.sharedThemesPlan": {
+    "source": "c8ed7873ab05",
+    "status": "machine"
+  },
+  "communityActions.qrThemes.workspaceThemeLimit": {
+    "source": "9e9163a3d1c7",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.signInAgain": {
+    "source": "12c1438531d6",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.loadFailed": {
+    "source": "9c26b1620abc",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.themesFailed": {
+    "source": "8521fbbe203f",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.foldersFailed": {
+    "source": "e40dce9e2143",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.tagsFailed": {
+    "source": "7f7babc551d1",
+    "status": "machine"
+  },
+  "communityActions.codeBuilder.domainsFailed": {
+    "source": "71ed9c9bb513",
+    "status": "machine"
+  },
+  "communityActions.search.untitledPage": {
+    "source": "037c426c0597",
+    "status": "machine"
+  },
+  "communityActions.search.landingPage": {
+    "source": "615e54d4d3a0",
+    "status": "machine"
+  },
+  "communityActions.search.tooMany": {
+    "source": "62628e63fa8f",
+    "status": "machine"
+  },
+  "communityActions.search.signInAgain": {
+    "source": "646c48ad30f3",
+    "status": "machine"
+  },
+  "communityActions.search.notWorking": {
+    "source": "448c8bfa0ef1",
+    "status": "machine"
+  },
   "app.settings.general.language.title": {
     "source": "a4fe65264ef7",
     "status": "machine"
