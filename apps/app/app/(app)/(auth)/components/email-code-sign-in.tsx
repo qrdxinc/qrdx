@@ -31,6 +31,7 @@ import { TwoFactorChallenge } from "./two-factor-challenge";
 const CODE_LENGTH = 6;
 // Matches the server: 3 tries per code, a 5-minute expiry.
 const TRIES_PER_CODE = 3;
+const CODE_LIFETIME_MS = 5 * 60_000;
 const RESEND_COOLDOWN_MS = 30_000;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DIGITS_ONLY = "^\\d+$";
@@ -173,6 +174,7 @@ export function EmailCodeSignIn({
   const [verifying, setVerifying] = useState(false);
   const [wrongTries, setWrongTries] = useState(0);
   const [codeDead, setCodeDead] = useState(false);
+  const [codeExpiresAt, setCodeExpiresAt] = useState(0);
   const [resendAt, setResendAt] = useState(0);
   const [now, setNow] = useState(() => Date.now());
   // Two-step verification: where to go once the second step is done.
@@ -230,12 +232,21 @@ export function EmailCodeSignIn({
         type: "sign-in",
       });
       if (error) {
+        // Over the limit, the server refuses before it makes a new code
+        // (signInCodeGate), so the last one works until it expires or runs
+        // out of tries.
+        const lastCodeWorks = !codeDead && Date.now() < codeExpiresAt;
+        if (resend && error.status === 429 && lastCodeWorks) {
+          setNotice(t("tooManyCodesRequestedSo"));
+          return;
+        }
         setError(sendErrorMessage(error, t, socialSignIn));
         return;
       }
       const time = Date.now();
       setNow(time);
       setResendAt(time + RESEND_COOLDOWN_MS);
+      setCodeExpiresAt(time + CODE_LIFETIME_MS);
       setCode("");
       setWrongTries(0);
       setCodeDead(false);

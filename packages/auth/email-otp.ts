@@ -10,7 +10,8 @@ import {
  * Email codes. This package has no email stack, so the app registers how a
  * code reaches the inbox:
  * - sign-in codes: apps/app registers the sender in its /api/auth route,
- *   with whether codes can be delivered on this deployment at all;
+ *   with whether codes can be delivered on this deployment at all and its
+ *   per-address limit;
  * - email-change codes (sent to the NEW address): registered by the server
  *   actions that request them (apps/app/app/settings/account/_lib).
  * Email verification and password reset codes are not used; their endpoints
@@ -26,6 +27,13 @@ export type SignInCodeSender = (data: {
 /** Delivers a code that confirms a new address, to that new address. */
 export type EmailChangeCodeSender = SignInCodeSender;
 
+/**
+ * Whether another sign-in code may be sent to `email` (the app's
+ * per-address limit). Reads the address and its own count only, never
+ * whether an account exists. Each call counts as one request.
+ */
+export type SignInCodeLimit = (email: string) => Promise<boolean>;
+
 type DeliveredType = "sign-in" | "change-email";
 
 // Kept on globalThis so every copy of this module (Next.js can bundle one per
@@ -37,22 +45,29 @@ const SENDERS: Record<DeliveredType, symbol> = {
 const SIGN_IN_CODES_DELIVERABLE = Symbol.for(
   "@repo/auth/sign-in-codes-deliverable"
 );
+const SIGN_IN_CODE_LIMIT = Symbol.for("@repo/auth/sign-in-code-limit");
 type SenderSlots = Record<symbol, SignInCodeSender | undefined>;
 type DeliverableSlot = Record<symbol, (() => boolean) | undefined>;
+type LimitSlot = Record<symbol, SignInCodeLimit | undefined>;
 
 /**
  * `deliverable` says whether a sign-in code can reach anyone here (the app's
  * "emailSignIn" rule in @repo/availability). While it says no, asking for a
  * code fails with SIGN_IN_CODES_UNAVAILABLE before one is made
- * (signInCodeGate below).
+ * (signInCodeGate below). `mayRequest` is the per-address limit, checked
+ * there too: Better Auth stores a new code (and so voids the last one)
+ * before the sender runs, so a limit in the sender would leave someone who
+ * resends too often with no working code.
  */
 export function registerSignInCodeSender(
   sender: SignInCodeSender,
-  deliverable: () => boolean
+  deliverable: () => boolean,
+  mayRequest: SignInCodeLimit
 ): void {
   (globalThis as unknown as SenderSlots)[SENDERS["sign-in"]] = sender;
   (globalThis as unknown as DeliverableSlot)[SIGN_IN_CODES_DELIVERABLE] =
     deliverable;
+  (globalThis as unknown as LimitSlot)[SIGN_IN_CODE_LIMIT] = mayRequest;
 }
 
 export function registerEmailChangeCodeSender(
@@ -61,13 +76,19 @@ export function registerEmailChangeCodeSender(
   (globalThis as unknown as SenderSlots)[SENDERS["change-email"]] = sender;
 }
 
-/** A sign-in sender is registered and says codes can be delivered here. */
+const signInCodeLimit = () =>
+  (globalThis as unknown as LimitSlot)[SIGN_IN_CODE_LIMIT];
+
+/**
+ * A sign-in sender is registered, with its per-address limit, and says
+ * codes can be delivered here.
+ */
 export function signInCodesOffered(): boolean {
   const sender = (globalThis as unknown as SenderSlots)[SENDERS["sign-in"]];
   const deliverable = (globalThis as unknown as DeliverableSlot)[
     SIGN_IN_CODES_DELIVERABLE
   ];
-  return Boolean(sender && deliverable?.());
+  return Boolean(sender && signInCodeLimit() && deliverable?.());
 }
 
 /** Error code the sign-in dialog shows as "couldn't send the code". */
@@ -94,10 +115,11 @@ const ERRORS: Record<
 const RATE_LIMITED = "SignInCodeRateLimited";
 
 /**
- * Throw this from a sender (sign-in or email-change) when the address has
- * asked for too many codes: the request then fails with 429 ("too many
- * requests") instead of "couldn't send". Matched by name, so any copy of
- * this module works.
+ * Throw this from a sender when the address has asked for too many codes:
+ * the request then fails with 429 ("too many requests") instead of
+ * "couldn't send". The email-change sender does; sign-in codes are limited
+ * before one is made (the limit registered with their sender). Matched by
+ * name, so any copy of this module works.
  */
 export function signInCodeRateLimited(): Error {
   const error = new Error("Too many codes requested for this address");
@@ -109,6 +131,13 @@ function notSent(type: DeliveredType): APIError {
   return new APIError("INTERNAL_SERVER_ERROR", {
     code: ERRORS[type].notSent,
     message: ERRORS[type].notSentMessage,
+  });
+}
+
+function rateLimited(type: DeliveredType): APIError {
+  return new APIError("TOO_MANY_REQUESTS", {
+    code: ERRORS[type].rateLimited,
+    message: "Too many codes requested. Try again in a few minutes.",
   });
 }
 
@@ -167,14 +196,7 @@ export const sendVerificationOTP: EmailOTPOptions["sendVerificationOTP"] =
     } catch (error) {
       if (error instanceof Error && error.name === RATE_LIMITED) {
         log("warn", "auth.email_otp.rate_limited", { type });
-        throw unsent(
-          ctx,
-          type,
-          new APIError("TOO_MANY_REQUESTS", {
-            code: ERRORS[type].rateLimited,
-            message: "Too many codes requested. Try again in a few minutes.",
-          })
-        );
+        throw unsent(ctx, type, rateLimited(type));
       }
       log("error", "auth.email_otp.failed", {
         type,
@@ -188,13 +210,42 @@ const onSendCodePath = (ctx: { path?: string }) =>
   ctx.path === SEND_SIGN_IN_CODE_PATH;
 
 /**
+ * The per-address limit for a sign-in code request, before the endpoint
+ * makes the code. Only sign-in codes have a sender here (the endpoint
+ * refuses change-email and sends nothing for the other types). The body
+ * isn't validated yet: an address that isn't a string is left to the
+ * endpoint, which refuses it.
+ */
+async function checkSignInCodeLimit(
+  body: unknown,
+  mayRequest: SignInCodeLimit
+): Promise<void> {
+  const { email, type } = (body ?? {}) as { email?: unknown; type?: unknown };
+  if (type !== "sign-in" || typeof email !== "string") return;
+  let allowed: boolean;
+  try {
+    allowed = await mayRequest(email);
+  } catch (error) {
+    log("error", "auth.email_otp.limit_failed", {
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw notSent("sign-in");
+  }
+  if (allowed) return;
+  log("warn", "auth.email_otp.rate_limited", { type });
+  throw rateLimited("sign-in");
+}
+
+/**
  * Keeps the send-code endpoint honest (registered in ./server.ts):
  * - before: where no code can be delivered (signInCodesOffered), it answers
- *   SIGN_IN_CODES_UNAVAILABLE before a code is made;
+ *   SIGN_IN_CODES_UNAVAILABLE; over the per-address limit, 429. Both before
+ *   a code is made, so the last code someone was sent keeps working;
  * - after: a code the sender couldn't send (noted above) is the answer,
  *   rather than Better Auth's "sent".
  * The plugin emails a sign-in code whether or not the address has an
- * account (sign-up is on), so neither answer says anything about accounts.
+ * account (sign-up is on), and the limit counts by address alone, so none
+ * of these answers says anything about accounts.
  */
 export const signInCodeGate = () =>
   ({
@@ -203,10 +254,13 @@ export const signInCodeGate = () =>
       before: [
         {
           matcher: onSendCodePath,
-          handler: createAuthMiddleware(() => {
-            if (signInCodesOffered()) return Promise.resolve();
-            log("warn", "auth.email_otp.unavailable");
-            return Promise.reject(signInCodesUnavailable());
+          handler: createAuthMiddleware(async (ctx) => {
+            const mayRequest = signInCodeLimit();
+            if (!(mayRequest && signInCodesOffered())) {
+              log("warn", "auth.email_otp.unavailable");
+              throw signInCodesUnavailable();
+            }
+            await checkSignInCodeLimit(ctx.body, mayRequest);
           }),
         },
       ],

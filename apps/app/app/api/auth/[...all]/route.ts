@@ -14,7 +14,7 @@ import { notifyNewSignIn } from "@/lib/account/new-sign-in-notice-server";
 import { registerAppSessionOriginReader } from "@/lib/account/session-origin";
 import { notifyBackupCodeUsed } from "@/lib/account/two-factor-notice-server";
 import { notifyTwoFactorResetCancelled } from "@/lib/account/two-factor-reset-server";
-import { sendSignInCode } from "@/lib/auth/sign-in-code";
+import { sendSignInCode, signInCodeAllowed } from "@/lib/auth/sign-in-code";
 import { isFeatureAvailable } from "@/lib/feature-availability";
 
 // @repo/auth has no email stack: this is the endpoint that issues sign-in
@@ -22,9 +22,12 @@ import { isFeatureAvailable } from "@/lib/feature-availability";
 // before serving requests. Where codes can't reach anyone (the "emailSignIn"
 // rule: no Resend, or a production build on a localhost URL), asking for one
 // answers that email sign-in isn't set up, the same rule the sign-in panel
-// follows.
-registerSignInCodeSender(sendSignInCode, () =>
-  isFeatureAvailable("emailSignIn"),
+// follows. Over the per-address limit it answers 429, before a new code
+// replaces the one already sent.
+registerSignInCodeSender(
+  sendSignInCode,
+  () => isFeatureAvailable("emailSignIn"),
+  signInCodeAllowed,
 );
 registerNewSignInNotifier(notifyNewSignIn);
 registerBackupCodeNotifier(notifyBackupCodeUsed);

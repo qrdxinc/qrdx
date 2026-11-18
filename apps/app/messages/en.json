@@ -9109,7 +9109,8 @@
       "thisAccountIsSuspendedContact": "This account is suspended. Contact support if you think that's a mistake.",
       "somethingWentWrongTryAgain": "Something went wrong. Try again.",
       "emailSignInIsntSet": "Email sign-in isn't set up on this site.",
-      "weCouldntSendACodeTry": "We couldn't send a code right now. Try again in a few minutes."
+      "weCouldntSendACodeTry": "We couldn't send a code right now. Try again in a few minutes.",
+      "tooManyCodesRequestedSo": "Too many codes requested, so we didn't send another. The newest one in your inbox still works."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continue with passkey",
