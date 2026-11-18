@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.2
 
 QR Image → Generate can return BMP (24-bit; a transparent background comes out white).
 

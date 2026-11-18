@@ -7842,6 +7842,8 @@
           "storageUsed": "已用存储空间",
           "storageUsage": "已用 {used}，共 {quota} · {plan} 套餐单个文件最大 {maxFile}",
           "storageUsageUnlimited": "已用 {used}，容量不限 · {plan} 套餐单个文件最大 {maxFile}",
+          "upgradeToPro": "升级到 Pro",
+          "upgradeToBusiness": "升级到 Business",
           "overStorage": "你已超出套餐的存储空间。现有文件仍可正常使用；请删除不再需要的文件或升级套餐，以上传新文件。",
           "overStorageTeam": "你已超出套餐的存储空间。现有文件仍可正常使用；请删除不再需要的文件，以上传新文件。",
           "dropFilesHereOrChoose": "将文件拖放到此处，或选择文件",

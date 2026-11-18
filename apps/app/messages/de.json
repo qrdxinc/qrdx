@@ -7842,6 +7842,8 @@
           "storageUsed": "Genutzter Speicher",
           "storageUsage": "{used} von {quota} belegt · max. {maxFile} pro Datei bei {plan}",
           "storageUsageUnlimited": "{used} von unbegrenzt belegt · max. {maxFile} pro Datei bei {plan}",
+          "upgradeToPro": "Auf Pro upgraden",
+          "upgradeToBusiness": "Auf Business upgraden",
           "overStorage": "Du hast den Speicher deines Tarifs überschritten. Vorhandene Dateien funktionieren weiter; lösche nicht mehr benötigte Dateien oder upgrade, um neue hochzuladen.",
           "overStorageTeam": "Du hast den Speicher deines Tarifs überschritten. Vorhandene Dateien funktionieren weiter; lösche Dateien, die du nicht mehr brauchst, um neue hochzuladen.",
           "dropFilesHereOrChoose": "Dateien hierher ziehen oder auswählen",

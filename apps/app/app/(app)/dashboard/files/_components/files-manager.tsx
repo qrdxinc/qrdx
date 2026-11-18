@@ -80,6 +80,7 @@ import { useCursorList } from "@/lib/hooks/use-cursor-list";
 import type { Translator } from "@/lib/i18n/translator";
 import type { CursorPage } from "@/lib/keyset-cursor";
 import { soundEvent } from "@/lib/sound/emit";
+import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 
 export interface FileRow extends FileView {
   pages: { id: string; title: string | null }[];
@@ -119,9 +120,12 @@ function UsageCard({
   isTeam: boolean;
 }) {
   const t = useTranslations("app.dashboard.files.filesManager");
+  const openUpgradeDialog = useGetProDialogStore((s) => s.openUpgradeDialog);
   const quota = overview.storageBytes;
   const percent = quota === null ? 0 : usagePercent(overview.usedBytes, quota);
   const over = quota !== null && overview.usedBytes > quota;
+  // Pro workspaces are offered Business, the next plan up, not the plan they have.
+  const upgradeTo = overview.plan === "free" ? "pro" : "business";
   return (
     <Card className="gap-3 py-4">
       <CardHeader className="px-4">
@@ -143,7 +147,14 @@ function UsageCard({
                   })}
             </CardDescription>
           </div>
-          {canUpgrade && <UpgradeButton size="sm" />}
+          {canUpgrade && (
+            <UpgradeButton
+              onClick={() => openUpgradeDialog(upgradeTo)}
+              size="sm"
+            >
+              {upgradeTo === "pro" ? t("upgradeToPro") : t("upgradeToBusiness")}
+            </UpgradeButton>
+          )}
         </div>
       </CardHeader>
       <CardContent className="space-y-2 px-4">

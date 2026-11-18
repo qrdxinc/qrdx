@@ -44,12 +44,6 @@ const state = vi.hoisted(() => ({
 const authError = (code: string) =>
   Object.assign(new Error(code), { body: { code } });
 
-// Answers in the signed-in app's language, English here
-// (lib/i18n/workspace-actions.ts).
-vi.mock(
-  "@/lib/i18n/app-locale",
-  async () => (await import("../support/intl")).appLocale,
-);
 vi.mock(
   "drizzle-orm",
   async () => (await import("../support/fake-db")).drizzle,
@@ -58,8 +52,8 @@ vi.mock(
   "@repo/database",
   async () => (await import("../support/fake-db")).repoDatabase,
 );
-// Refusals in the person's language (lib/i18n/settings-action-text.ts):
-// English here.
+// Refusals in the person's language (lib/i18n/settings-action-text.ts,
+// lib/i18n/workspace-actions.ts): English here.
 vi.mock(
   "@/lib/i18n/app-locale",
   async () => (await import("../support/intl")).appLocale,

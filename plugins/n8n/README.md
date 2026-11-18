@@ -80,12 +80,12 @@ cd plugins/n8n
 bun pm pack
 ```
 
-That writes `qrdx-n8n-nodes-qrdx-0.1.1.tgz`. Install it in the `nodes` folder of your n8n user folder and restart n8n:
+That writes `qrdx-n8n-nodes-qrdx-0.1.2.tgz`. Install it in the `nodes` folder of your n8n user folder and restart n8n:
 
 ```bash
 mkdir -p ~/.n8n/nodes
 cd ~/.n8n/nodes
-npm install /path/to/qrdx-n8n-nodes-qrdx-0.1.1.tgz
+npm install /path/to/qrdx-n8n-nodes-qrdx-0.1.2.tgz
 ```
 
 With Docker, copy the file into the container and run the same commands inside it (`docker exec -it n8n sh`). Search for **QRdx** in the nodes panel.
