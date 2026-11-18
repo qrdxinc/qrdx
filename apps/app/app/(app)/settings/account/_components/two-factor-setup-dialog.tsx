@@ -2,7 +2,10 @@
 
 import { addPasskeyWith } from "@repo/auth/passkey-client";
 import { toast } from "@repo/design-system";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
@@ -636,7 +639,7 @@ export function TwoFactorSetupDialog({
                 <div className="flex min-h-5 items-center justify-center">
                   {busy ? (
                     <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
-                      <ModuleOrbit aria-hidden className="size-3.5" />
+                      <FinderTrace aria-hidden className="size-3.5" />
                       {t("checkingCode")}
                     </p>
                   ) : (

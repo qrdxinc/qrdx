@@ -1,7 +1,10 @@
 "use client";
 
 import { toast } from "@repo/design-system";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -114,6 +117,7 @@ function DomainCard({
   domain,
   canManage,
   busy,
+  verifying,
   offer,
   onVerify,
   onRemove,
@@ -121,6 +125,8 @@ function DomainCard({
   domain: CustomDomainView;
   canManage: boolean;
   busy: boolean;
+  /** Checking its DNS (busy is also true while it's being removed) */
+  verifying: boolean;
   /** One-click DNS setup at the domain's DNS provider, when it works */
   offer: DomainConnectOffer | null;
   onVerify: () => void;
@@ -164,7 +170,13 @@ function DomainCard({
                 size="sm"
                 variant={domain.verified || oneClick ? "outline" : "default"}
               >
-                {busy ? <ModuleOrbit aria-hidden /> : <RefreshCw />}
+                {verifying ? (
+                  <FinderTrace aria-hidden />
+                ) : busy ? (
+                  <ModuleOrbit aria-hidden />
+                ) : (
+                  <RefreshCw />
+                )}
                 {domain.verified ? t("checkDns") : t("verify")}
               </Button>
               <Button
@@ -406,6 +418,7 @@ export function DomainsManager({
           offer={offers[domain.id] ?? null}
           onRemove={() => setRemoving(domain)}
           onVerify={() => verify(domain)}
+          verifying={busyId === domain.id}
         />
       ))}
     </div>

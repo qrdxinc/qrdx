@@ -1,6 +1,6 @@
 "use client";
 
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { ModuleWave } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { cn } from "@repo/design-system/lib/utils";
 import type { MouseEvent, RefObject } from "react";
@@ -66,7 +66,7 @@ export function LoadMore({
 
   const content = (
     <>
-      {loading && <ModuleOrbit aria-hidden />}
+      {loading && <ModuleWave aria-hidden />}
       {loading
         ? (labels.loading ?? labels.loadMore)
         : error

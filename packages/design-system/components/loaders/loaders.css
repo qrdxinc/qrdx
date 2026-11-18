@@ -1,7 +1,10 @@
 /*
- * The QRdx loaders (scanframe.tsx, module-orbit.tsx, assembling-code.tsx),
- * drawn from the mark: four rounded corner brackets and an X of modules.
- * Pure SVG and CSS in currentColor, with one module in the brand accent.
+ * The QRdx loaders (scanframe.tsx, module-orbit.tsx, assembling-code.tsx,
+ * module-wave.tsx, finder-trace.tsx, scan-line.tsx, shape-morph.tsx and the
+ * seasonal jack-o-scan.tsx), drawn from the mark: four rounded corner
+ * brackets and modules on its 48-unit grid. Pure SVG and CSS in
+ * currentColor, with one module (or Scan line's line) in the brand accent;
+ * Jack-o'-scan is pumpkin orange instead.
  * A plain stylesheet (styles/globals.css imports it) rather than a CSS module,
  * so the components stay plain TypeScript that Node can import in tests.
  *
@@ -46,6 +49,27 @@
      whole mark follows the label colour. */
   :where(button, [data-slot="button"]) .qrdx-loader-accent {
     fill: currentColor;
+  }
+
+  /* Finder trace's ring: one module thick, like a finder eye's. */
+  .qrdx-loader-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 6;
+    stroke-linecap: round;
+  }
+
+  /* Jack-o'-scan: pumpkin orange (#ff7a1a, the Halloween presets' pumpkin)
+     with a little of the theme's foreground mixed in, so it darkens on light
+     pages (3.5:1 where the pure orange is 2.6:1) and lightens on dark ones,
+     whatever text colour the loader sits in. The face is filled and stroked,
+     which rounds its corners. */
+  .qrdx-loader-pumpkin {
+    color: color-mix(in oklab, #ff7a1a 88%, var(--foreground, currentColor));
+  }
+  .qrdx-loader-face {
+    stroke: currentColor;
+    stroke-linejoin: round;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -102,6 +126,55 @@
     .qrdx-loader-build {
       animation: qrdx-loader-build 2.6s cubic-bezier(0.32, 0.72, 0, 1) infinite
         both;
+    }
+
+    /* Module wave: a 3×3 patch lights up along its diagonals. The accent
+       centre only swells with it: dimmed, it would vanish on dark pages. */
+    .qrdx-loader-wave {
+      animation: qrdx-loader-wave 1.2s ease-in-out infinite both;
+    }
+    .qrdx-loader-wave.qrdx-loader-accent {
+      animation-name: qrdx-loader-wave-accent;
+    }
+
+    /* Finder trace: the ring draws itself around and unwinds while the
+       centre pulses, fullest when the ring closes. The dash pattern is in
+       the ring's pathLength (100), with gaps long enough that no round end
+       shows while it's empty. */
+    .qrdx-loader-trace {
+      stroke-dasharray: 100 110;
+      animation: qrdx-loader-trace 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+    .qrdx-loader-pulse {
+      animation: qrdx-loader-pulse 1.8s ease-in-out infinite;
+    }
+
+    /* Scan line: the line sweeps down, then back up (each way 0.8 s), and
+       a row blinks as it passes: at 34% of a sweep for the top row, which is
+       when the eased line crosses it; the bottom row runs one sweep ahead,
+       which mirrors that. */
+    .qrdx-loader-sweep {
+      animation: qrdx-loader-sweep 0.8s cubic-bezier(0.45, 0, 0.55, 1) infinite
+        alternate;
+    }
+    .qrdx-loader-blink {
+      animation: qrdx-loader-blink 0.8s linear infinite alternate both;
+    }
+
+    /* Shape morph: square, rounded, dot, diamond, then a quarter turn back
+       to the square. */
+    .qrdx-loader-morph {
+      animation: qrdx-loader-morph 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+
+    /* Jack-o'-scan: Scanframe's breathing brackets (above), and a face that
+       flickers like a candle, the grin a beat behind the eyes. */
+    .qrdx-loader-flicker,
+    .qrdx-loader-flicker-late {
+      animation: qrdx-loader-flicker 2.8s linear infinite;
+    }
+    .qrdx-loader-flicker-late {
+      animation-delay: -0.9s;
     }
   }
 
@@ -167,6 +240,134 @@
     80% {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  @keyframes qrdx-loader-wave {
+    0%,
+    50%,
+    100% {
+      opacity: 0.22;
+      transform: scale(0.82);
+    }
+    20% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes qrdx-loader-wave-accent {
+    0%,
+    50%,
+    100% {
+      transform: scale(0.82);
+    }
+    20% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes qrdx-loader-trace {
+    0% {
+      stroke-dashoffset: 105;
+    }
+    45%,
+    55% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -105;
+    }
+  }
+
+  @keyframes qrdx-loader-pulse {
+    0%,
+    100% {
+      opacity: 0.8;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes qrdx-loader-sweep {
+    from {
+      transform: translateY(-13px);
+    }
+    to {
+      transform: translateY(13px);
+    }
+  }
+
+  @keyframes qrdx-loader-blink {
+    0%,
+    18%,
+    50%,
+    100% {
+      opacity: 0.3;
+    }
+    34% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes qrdx-loader-morph {
+    0%,
+    15% {
+      rx: 1px;
+      transform: rotate(0deg) scale(1);
+    }
+    25%,
+    40% {
+      rx: 6px;
+      transform: rotate(0deg) scale(1);
+    }
+    50%,
+    65% {
+      rx: 11px;
+      transform: rotate(0deg) scale(1);
+    }
+    75%,
+    90% {
+      rx: 1.5px;
+      transform: rotate(45deg) scale(0.78);
+    }
+    100% {
+      rx: 1px;
+      transform: rotate(90deg) scale(1);
+    }
+  }
+
+  @keyframes qrdx-loader-flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    9% {
+      opacity: 0.82;
+    }
+    14% {
+      opacity: 0.95;
+    }
+    27% {
+      opacity: 0.7;
+    }
+    35% {
+      opacity: 0.92;
+    }
+    52% {
+      opacity: 0.78;
+    }
+    60% {
+      opacity: 1;
+    }
+    74% {
+      opacity: 0.86;
+    }
+    86% {
+      opacity: 0.72;
     }
   }
 }

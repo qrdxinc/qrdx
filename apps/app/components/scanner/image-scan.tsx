@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "@repo/design-system";
-import { Scanframe } from "@repo/design-system/components/loaders";
+import { ScanLine } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { cn } from "@repo/design-system/lib/utils";
 import {
@@ -143,7 +143,7 @@ export function ImageScan({
       >
         <input {...getInputProps()} aria-label={t("inputLabel")} />
         {busy ? (
-          <Scanframe aria-hidden className="size-8 text-muted-foreground" />
+          <ScanLine aria-hidden className="size-8 text-muted-foreground" />
         ) : (
           <ImageUp aria-hidden className="text-muted-foreground size-8" />
         )}

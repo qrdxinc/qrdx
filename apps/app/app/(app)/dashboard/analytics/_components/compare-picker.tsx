@@ -1,7 +1,7 @@
 "use client";
 
 import { Close as X } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { ModuleWave } from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
@@ -153,7 +153,7 @@ export function ComparePicker({
             <CommandList onWheelCapture={(event) => event.stopPropagation()}>
               {searching && available.length === 0 ? (
                 <div className="flex items-center justify-center gap-2 py-6 text-muted-foreground text-sm">
-                  <ModuleOrbit aria-hidden />
+                  <ModuleWave aria-hidden />
                   {t("searching")}
                 </div>
               ) : (

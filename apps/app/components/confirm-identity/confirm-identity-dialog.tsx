@@ -2,7 +2,10 @@
 
 import { authClient } from "@repo/auth/client";
 import { GithubLogo, GoogleLogo } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Collapsible,
@@ -651,7 +654,7 @@ export function ConfirmIdentityDialog({
         <div className="flex min-h-5 items-center justify-center">
           {busy ? (
             <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
-              <ModuleOrbit aria-hidden className="size-3.5" />
+              <FinderTrace aria-hidden className="size-3.5" />
               {t("checkingCode")}
             </p>
           ) : (

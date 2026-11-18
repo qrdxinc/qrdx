@@ -6,6 +6,7 @@ import { Close } from "@repo/design-system/components/icons";
 import {
   AssemblingCode,
   ModuleOrbit,
+  ShapeMorph,
 } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { useIsMobile } from "@repo/design-system/hooks/use-mobile";
@@ -239,7 +240,7 @@ export function ArtResultActions({
         size="sm"
         variant="outline"
       >
-        {busy === "image-qr" ? <ModuleOrbit /> : <Gallery />}
+        {busy === "image-qr" ? <ShapeMorph /> : <Gallery />}
         {t("useAsImageQr")}
       </Button>
       {result.visibility < ART_QR_VISIBILITY.max && (
