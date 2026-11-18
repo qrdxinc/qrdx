@@ -1,15 +1,17 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@repo/design-system/components/ui/accordion";
+import { ArrowDown2 } from "iconsax-reactjs";
 import { getTranslations } from "next-intl/server";
 import { SectionHeader } from "@/components/sections/section-header";
 import { localized } from "@/lib/i18n/content-server";
 import type { AIArtAllowances } from "./ai-art-studio";
 import { faqItems } from "./faq-items";
 
+/**
+ * Native <details> (one open at a time, by `name`) keeps every answer in the
+ * server-rendered HTML; a closed Radix accordion panel has no content, so
+ * crawlers saw the questions without their answers. The look is the
+ * accordion's cards, including the 0.2s open and close where the browser can
+ * animate ::details-content, and each question stays an h3.
+ */
 export async function AIArtFAQ({
   allowances,
 }: {
@@ -49,26 +51,28 @@ export async function AIArtFAQ({
       </SectionHeader>
 
       <div className="mx-auto w-full max-w-3xl px-10">
-        <Accordion
-          type="single"
-          collapsible
-          className="grid w-full gap-2 border-b-0"
-        >
+        <div className="grid w-full gap-2 [interpolate-size:allow-keywords]">
           {FAQ_ITEMS.map((faq) => (
-            <AccordionItem
+            <details
+              className="group [&::details-content]:h-0 [&::details-content]:overflow-hidden [&::details-content]:transition-[height,content-visibility] [&::details-content]:duration-200 [&::details-content]:ease-out [&::details-content]:[transition-behavior:allow-discrete] open:[&::details-content]:h-auto motion-reduce:[&::details-content]:transition-none"
               key={faq.question}
-              value={faq.question}
-              className="grid gap-2 border-0"
+              name="ai-art-faq"
             >
-              <AccordionTrigger className="bg-secondary-muted border-border data-[state=open]:ring-secondary/20 cursor-pointer rounded-lg border px-4 py-3.5 no-underline hover:no-underline data-[state=open]:ring">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground bg-muted rounded-lg border p-3">
+              <summary className="bg-secondary-muted border-border focus-visible:border-ring focus-visible:ring-ring/50 group-open:ring-secondary/20 flex cursor-pointer list-none items-start justify-between gap-4 rounded-lg border px-4 py-3.5 text-left text-sm font-medium transition-all outline-none group-open:ring focus-visible:ring-[3px] [&::-webkit-details-marker]:hidden">
+                {/* An h3, as the accordion's header was: the same heading
+                    outline and the display font the question had. */}
+                <h3>{faq.question}</h3>
+                <ArrowDown2
+                  aria-hidden
+                  className="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180"
+                />
+              </summary>
+              <div className="text-muted-foreground bg-muted mt-2 rounded-lg border p-3 text-sm">
                 <p className="leading-relaxed font-medium">{faq.answer}</p>
-              </AccordionContent>
-            </AccordionItem>
+              </div>
+            </details>
           ))}
-        </Accordion>
+        </div>
       </div>
     </section>
   );

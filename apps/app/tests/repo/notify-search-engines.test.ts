@@ -14,11 +14,17 @@ import {
   INDEXNOW_KEY,
   inSitemap,
   main,
+  mergeEntries,
   normalizeUrl,
+  onSite,
+  parseRobotsSitemaps,
   parseServiceAccount,
   parseSitemap,
+  parseSitemapIndex,
   pickBingSite,
   rotate,
+  statusSummary,
+  toUrlset,
   utcDay,
 } from "../../../../scripts/notify-search-engines.mjs";
 
@@ -70,6 +76,112 @@ describe("parseSitemap", () => {
         lastmod: "2026-11-01T00:00:00.000Z",
       },
     ]);
+  });
+});
+
+describe("parseRobotsSitemaps", () => {
+  it("reads every Sitemap line on this site, once, in order", () => {
+    const robots = [
+      "User-Agent: *",
+      "Allow: /",
+      "Disallow: /api/",
+      "",
+      "Sitemap: https://qrdx.dev/sitemap.xml",
+      "sitemap:https://qrdx.dev/blog/sitemap.xml\r",
+      "  SITEMAP :  https://qrdx.dev/qr-code-generator/sitemap.xml  ",
+      "Sitemap: https://qrdx.dev/sitemap.xml",
+      "Sitemap: https://example.com/sitemap.xml",
+      "Sitemap: not a url",
+      "# Sitemap: https://qrdx.dev/commented.xml",
+    ].join("\n");
+    expect(parseRobotsSitemaps(robots)).toEqual([
+      "https://qrdx.dev/sitemap.xml",
+      "https://qrdx.dev/blog/sitemap.xml",
+      "https://qrdx.dev/qr-code-generator/sitemap.xml",
+    ]);
+    expect(parseRobotsSitemaps("User-Agent: *\nAllow: /")).toEqual([]);
+  });
+});
+
+describe("parseSitemapIndex", () => {
+  it("lists an index's sitemaps, and nothing for an ordinary sitemap", () => {
+    const index = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap><loc>https://qrdx.dev/a.xml</loc><lastmod>2026-11-19</lastmod></sitemap>
+<sitemap>
+  <loc> https://qrdx.dev/b.xml?x=1&amp;y=2 </loc>
+</sitemap>
+</sitemapindex>`;
+    expect(parseSitemapIndex(index)).toEqual([
+      "https://qrdx.dev/a.xml",
+      "https://qrdx.dev/b.xml?x=1&y=2",
+    ]);
+    expect(parseSitemapIndex(SITEMAP)).toEqual([]);
+  });
+});
+
+describe("mergeEntries", () => {
+  it("joins sitemaps into one list of this site's pages, each once", () => {
+    const main = parseSitemap(SITEMAP);
+    const site = [
+      {
+        url: "https://qrdx.dev/qr-code-generator/pdf",
+        lastmod: "2026-11-17T00:00:00.000Z",
+      },
+      // Also in the main sitemap: the first one listed wins.
+      { url: "https://qrdx.dev/pricing/", lastmod: "2026-11-19T00:00:00.000Z" },
+      { url: "https://elsewhere.example/page", lastmod: undefined },
+    ];
+    const { entries, skipped } = mergeEntries([main, site]);
+    expect(entries.map((entry) => entry.url)).toEqual([
+      "https://qrdx.dev",
+      "https://qrdx.dev/pricing",
+      "https://qrdx.dev/docs/a?x=1&y=2",
+      "https://qrdx.dev/qr-code-generator/pdf",
+    ]);
+    expect(entries[1]?.lastmod).toBe("2026-11-10T10:00:00.000Z");
+    expect(skipped).toBe(1);
+  });
+
+  it("keeps only URLs on qrdx.dev", () => {
+    expect(onSite("https://qrdx.dev/x")).toBe(true);
+    expect(onSite("http://qrdx.dev/x")).toBe(false);
+    expect(onSite("https://api.qrdx.dev/v1")).toBe(false);
+    expect(onSite("::")).toBe(false);
+  });
+});
+
+describe("toUrlset (the --snapshot file)", () => {
+  it("reads back exactly as it was written, entities and missing lastmods included", () => {
+    const entries = [
+      ...parseSitemap(SITEMAP),
+      {
+        url: "https://qrdx.dev/q?a=<b>&c='d'\"",
+        lastmod: "2026-11-19T00:00:00.000Z",
+      },
+    ];
+    const xml = toUrlset(entries);
+    expect(xml).toContain("&amp;y=2");
+    expect(parseSitemap(xml)).toEqual(entries);
+    expect(changedUrls(entries, parseSitemap(xml))).toEqual([]);
+  });
+
+  it("makes a snapshot of the main sitemap alone show the other sitemaps' pages as new", () => {
+    // The first deploy after this change compares against a snapshot taken
+    // before it: the marketing site's pages are then sent once.
+    const main = parseSitemap(SITEMAP);
+    const site = [{ url: "https://qrdx.dev/qr-codes-for/restaurants" }];
+    const { entries } = mergeEntries([main, site]);
+    expect(changedUrls(main, entries)).toEqual([
+      "https://qrdx.dev/qr-codes-for/restaurants",
+    ]);
+  });
+});
+
+describe("statusSummary", () => {
+  it("says one status once, and counts each when they differ", () => {
+    expect(statusSummary([200, 200, 200])).toBe("HTTP 200");
+    expect(statusSummary([200, 500, 200])).toBe("HTTP 200 ×2, HTTP 500 ×1");
   });
 });
 
@@ -249,5 +361,25 @@ describe("workflow", () => {
   it("works through the Bing backlog daily, before the quota resets", () => {
     expect(workflow).toMatch(/schedule:\n\s+- cron: "15 23 \* \* \*"/);
     expect(workflow).toContain("--backlog");
+  });
+
+  it("sweeps the day's sitemap changes from yesterday's cached snapshot, before the backlog", () => {
+    const schedule = workflow.slice(
+      workflow.indexOf('elif [ "$GITHUB_EVENT_NAME" = "schedule" ]'),
+      workflow.indexOf('elif [ "$SCOPE" = "urls" ]'),
+    );
+    const snapshot = schedule.indexOf('--snapshot "$sweep"');
+    const changed = schedule.indexOf('--changed-since "$yesterday"');
+    const backlog = schedule.indexOf("--backlog");
+    expect(snapshot).toBeGreaterThan(-1);
+    expect(changed).toBeGreaterThan(snapshot);
+    expect(backlog).toBeGreaterThan(changed);
+    // The same file is restored and saved, from inside the workspace (where
+    // hashFiles can see it).
+    expect(workflow).toContain("uses: actions/cache/restore@v4");
+    expect(workflow).toContain("uses: actions/cache/save@v4");
+    expect(workflow.match(/path: \.sitemap-sweep\.xml/g)).toHaveLength(2);
+    expect(schedule).toContain('sweep=".sitemap-sweep.xml"');
+    expect(workflow).toContain("restore-keys: sitemap-sweep-");
   });
 });

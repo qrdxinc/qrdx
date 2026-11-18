@@ -13,7 +13,7 @@
 //   node scripts/notify-search-engines.mjs --important     the main pages
 //   node scripts/notify-search-engines.mjs --urls <file>   paths or URLs, one per line
 //   node scripts/notify-search-engines.mjs --snapshot <file>
-//       saves the live sitemap, before a deploy
+//       saves the live sitemaps as one file, before a deploy
 //   node scripts/notify-search-engines.mjs --changed-since <file>
 //       the URLs that are new or have a new lastmod since that saved sitemap
 //   node scripts/notify-search-engines.mjs --backlog
@@ -21,23 +21,35 @@
 //       the Bing API every few days, including pages whose lastmod never
 //       changes. Run late in the UTC day, it uses the quota deploys left.
 //   node scripts/notify-search-engines.mjs --check
-//       reads only: is the IndexNow key file live, does the Bing key work,
-//       is qrdx.dev verified for it and what's today's quota; can the Google
-//       service account see the property and when Google last read the sitemap
+//       reads only: can every sitemap be read and is each important page in
+//       one; is the IndexNow key file live, does the Bing key work, is
+//       qrdx.dev verified for it and what's today's quota; can the Google
+//       service account see the property and when Google last read each
+//       sitemap
+//
+// "The sitemap" is every sitemap robots.txt lists: the main app's
+// /sitemap.xml and the marketing site's own (/qr-code-generator/sitemap.xml
+// and the rest, for the groups it serves; apps/app/app/robots.ts), read as
+// one list. A sitemap that can't be read is a warning, and its pages aren't
+// sent that run.
 //
 // Add --dry-run to print what would be sent without sending anything. Only
-// URLs in the live sitemap are sent. A search engine error is a warning and
+// URLs in the live sitemaps are sent. A search engine error is a warning and
 // never fails a run that sends; bad arguments exit with 2, and --check with
-// 1 when Bing or Google rejects the key or the site.
+// 1 when Bing or Google rejects the key or the site, or when an important
+// page is in no sitemap.
 // .github/workflows/notify-search-engines.yml runs it after every
-// production deploy, daily for the Bing backlog, from the Actions tab, and
-// with --check on pull requests that change it.
+// production deploy, daily for the sitemaps' changes and the Bing backlog,
+// from the Actions tab, and with --check on pull requests that change it.
 import { createSign } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
 export const SITE = "https://qrdx.dev";
+/** Lists the sitemaps; read first. */
+export const ROBOTS_URL = `${SITE}/robots.txt`;
+/** The main app's sitemap: the one read when robots.txt can't be. */
 export const SITEMAP_URL = `${SITE}/sitemap.xml`;
 
 /**
@@ -65,7 +77,10 @@ const GOOGLE_SCOPE = "https://www.googleapis.com/auth/webmasters";
 const GOOGLE_TOKEN_URI = "https://oauth2.googleapis.com/token";
 const GSC_API = "https://searchconsole.googleapis.com/webmasters/v3";
 
-/** Sent to Bing when the changed pages can't be worked out. */
+/**
+ * Sent to Bing when the changed pages can't be worked out. Each must be in
+ * a sitemap: a missing one is a warning on every run and fails --check.
+ */
 export const IMPORTANT_PATHS = [
   "/",
   "/playground",
@@ -105,6 +120,39 @@ const XML_ENTITIES = {
 const decodeXml = (text) =>
   text.replace(/&(?:amp|lt|gt|quot|apos);/g, (entity) => XML_ENTITIES[entity]);
 
+const encodeXml = (text) =>
+  text.replace(
+    /[&<>"']/g,
+    (char) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&apos;",
+      })[char]
+  );
+
+/** Whether `value` is a URL on `site`'s origin. */
+export function onSite(value, site = SITE) {
+  try {
+    return new URL(value).origin === new URL(site).origin;
+  } catch {
+    return false;
+  }
+}
+
+/** The sitemaps robots.txt lists, on this site only and without repeats. */
+export function parseRobotsSitemaps(text, site = SITE) {
+  const found = new Set();
+  for (const [, value] of text.matchAll(
+    /^[ \t]*sitemap[ \t]*:[ \t]*(\S+)/gim
+  )) {
+    if (onSite(value, site)) found.add(new URL(value).toString());
+  }
+  return [...found];
+}
+
 /** The `{ url, lastmod }` of every <url> in a sitemap. */
 export function parseSitemap(xml) {
   const entries = [];
@@ -115,6 +163,50 @@ export function parseSitemap(xml) {
     entries.push({ url: decodeXml(loc), lastmod });
   }
   return entries;
+}
+
+/** The sitemaps a sitemap index lists, or none when `xml` isn't an index. */
+export function parseSitemapIndex(xml) {
+  if (!/<sitemapindex[\s>]/.test(xml)) return [];
+  const urls = [];
+  for (const [, block] of xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/g)) {
+    const loc = /<loc>\s*([^<]+?)\s*<\/loc>/.exec(block)?.[1];
+    if (loc) urls.push(decodeXml(loc));
+  }
+  return urls;
+}
+
+/**
+ * Several sitemaps' entries as one list: this site's URLs only, each once
+ * (the first sitemap that lists it wins). `skipped` counts the other hosts'.
+ */
+export function mergeEntries(lists, site = SITE) {
+  const seen = new Set();
+  const entries = [];
+  let skipped = 0;
+  for (const entry of lists.flat()) {
+    if (!onSite(entry.url, site)) {
+      skipped += 1;
+      continue;
+    }
+    const key = normalizeUrl(entry.url);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    entries.push(entry);
+  }
+  return { entries, skipped };
+}
+
+/**
+ * `entries` as one sitemap (what --snapshot saves), which parseSitemap reads
+ * back as they were.
+ */
+export function toUrlset(entries) {
+  const urls = entries.map(
+    ({ url, lastmod }) =>
+      `<url><loc>${encodeXml(url)}</loc>${lastmod ? `<lastmod>${encodeXml(lastmod)}</lastmod>` : ""}</url>`
+  );
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
 }
 
 /** URLs in `after` that `before` doesn't have, or whose lastmod changed. */
@@ -230,10 +322,72 @@ async function request(url, init = {}) {
   };
 }
 
-async function loadSitemap() {
-  const { ok, status, text } = await request(SITEMAP_URL);
-  if (!ok) throw new Error(`${SITEMAP_URL} answered HTTP ${status}`);
-  return text;
+/** The sitemaps robots.txt lists, or /sitemap.xml alone when it can't say. */
+async function listSitemaps() {
+  let robots;
+  try {
+    robots = await request(ROBOTS_URL);
+  } catch (error) {
+    warn(
+      `Couldn't read ${ROBOTS_URL} (${error.message}); reading ${SITEMAP_URL} only.`
+    );
+    return [SITEMAP_URL];
+  }
+  if (!robots.ok) {
+    warn(
+      `${ROBOTS_URL} answered HTTP ${robots.status}; reading ${SITEMAP_URL} only.`
+    );
+    return [SITEMAP_URL];
+  }
+  const listed = parseRobotsSitemaps(robots.text);
+  if (listed.length === 0) {
+    warn(`${ROBOTS_URL} lists no sitemaps; reading ${SITEMAP_URL} only.`);
+    return [SITEMAP_URL];
+  }
+  return listed;
+}
+
+/**
+ * Every page in the sitemaps robots.txt lists (a sitemap index is followed
+ * one level), and the sitemaps read. A sitemap that can't be read is a
+ * warning naming it; the run goes on with the rest. Throws when none can be.
+ */
+async function loadSitemaps() {
+  const queue = await listSitemaps();
+  const seen = new Set();
+  const sitemaps = [];
+  const lists = [];
+  while (queue.length > 0) {
+    const url = queue.shift();
+    if (seen.has(url)) continue;
+    seen.add(url);
+    let response;
+    try {
+      response = await request(url);
+    } catch (error) {
+      warn(`Couldn't read ${url} (${error.message}); its pages aren't sent.`);
+      continue;
+    }
+    if (!response.ok) {
+      warn(
+        `${url} answered HTTP ${response.status}; its pages aren't sent this run.`
+      );
+      continue;
+    }
+    const children = parseSitemapIndex(response.text);
+    if (children.length > 0) {
+      queue.push(...children.filter((child) => onSite(child)));
+      continue;
+    }
+    sitemaps.push(url);
+    lists.push(parseSitemap(response.text));
+  }
+  if (sitemaps.length === 0) throw new Error("no sitemap could be read");
+  const { entries, skipped } = mergeEntries(lists);
+  if (skipped > 0) {
+    warn(`Left out ${skipped} sitemap URLs that aren't on ${SITE}.`);
+  }
+  return { sitemaps, entries };
 }
 
 /** A short, key-free description of an error response. */
@@ -327,7 +481,22 @@ async function callBing(method, key, { query = {}, body } = {}) {
   return { ...response, data, error: errorText(response.text, key) };
 }
 
-async function sendBing(urls, results) {
+/**
+ * "HTTP 200" when every call answered the same, else each status with its
+ * count: "HTTP 200 ×6, HTTP 500 ×1".
+ */
+export function statusSummary(statuses) {
+  const counts = new Map();
+  for (const status of statuses) {
+    counts.set(status, (counts.get(status) ?? 0) + 1);
+  }
+  if (counts.size === 1) return `HTTP ${statuses[0]}`;
+  return [...counts]
+    .map(([status, count]) => `HTTP ${status} ×${count}`)
+    .join(", ");
+}
+
+async function sendBing(urls, results, sitemaps) {
   const key = process.env.BING_WEBMASTER_API_KEY?.trim();
   if (!key) {
     notice(
@@ -349,13 +518,23 @@ async function sendBing(urls, results) {
     return;
   }
 
-  const feed = await callBing("SubmitFeed", key, {
-    body: { siteUrl, feedUrl: SITEMAP_URL },
-  });
-  if (!feed.ok) {
-    warn(`Bing SubmitFeed answered HTTP ${feed.status}: ${feed.error}`);
+  const feedStatuses = [];
+  for (const feedUrl of sitemaps) {
+    const feed = await callBing("SubmitFeed", key, {
+      body: { siteUrl, feedUrl },
+    });
+    if (!feed.ok) {
+      warn(
+        `Bing SubmitFeed for ${feedUrl} answered HTTP ${feed.status}: ${feed.error}`
+      );
+    }
+    feedStatuses.push(feed.status);
   }
-  results.push(["Bing", "sitemap", `HTTP ${feed.status}`]);
+  results.push([
+    "Bing",
+    `${sitemaps.length} sitemaps`,
+    statusSummary(feedStatuses),
+  ]);
 
   if (urls.length === 0) {
     results.push(["Bing", "0 URLs", "nothing to send"]);
@@ -440,10 +619,10 @@ async function callGoogle(token, path, method = "GET") {
   return { ...response, data, error: errorText(response.text, token) };
 }
 
-const googleSitemapPath = () =>
-  `/sites/${encodeURIComponent(GOOGLE_PROPERTY)}/sitemaps/${encodeURIComponent(SITEMAP_URL)}`;
+const googleSitemapPath = (sitemap) =>
+  `/sites/${encodeURIComponent(GOOGLE_PROPERTY)}/sitemaps/${encodeURIComponent(sitemap)}`;
 
-async function sendGoogle(results) {
+async function sendGoogle(results, sitemaps) {
   const access = await googleAccess();
   if (access.missing) {
     notice(
@@ -457,13 +636,25 @@ async function sendGoogle(results) {
     results.push(["Google", "sitemap", `skipped: ${access.error}`]);
     return;
   }
-  const submit = await callGoogle(access.token, googleSitemapPath(), "PUT");
-  if (!submit.ok) {
-    warn(
-      `Google Search Console sitemaps.submit answered HTTP ${submit.status}: ${submit.error}`
+  const statuses = [];
+  for (const sitemap of sitemaps) {
+    const submit = await callGoogle(
+      access.token,
+      googleSitemapPath(sitemap),
+      "PUT"
     );
+    if (!submit.ok) {
+      warn(
+        `Google Search Console sitemaps.submit for ${sitemap} answered HTTP ${submit.status}: ${submit.error}`
+      );
+    }
+    statuses.push(submit.status);
   }
-  results.push(["Google", "sitemap", `HTTP ${submit.status}`]);
+  results.push([
+    "Google",
+    `${sitemaps.length} sitemaps`,
+    statusSummary(statuses),
+  ]);
 }
 
 /**
@@ -471,7 +662,7 @@ async function sendGoogle(results) {
  * did Google last read the sitemap. False when Google refuses the key or the
  * property; a missing secret is fine.
  */
-async function checkGoogle(results) {
+async function checkGoogle(results, sitemaps) {
   const access = await googleAccess();
   if (access.missing) {
     notice("Google: GSC_SERVICE_ACCOUNT_JSON isn't set; nothing to check.");
@@ -500,30 +691,61 @@ async function checkGoogle(results) {
     "property",
     `${GOOGLE_PROPERTY}: ${site.data?.permissionLevel ?? "unknown permission"}`,
   ]);
-  const sitemap = await callGoogle(access.token, googleSitemapPath());
-  results.push([
-    "Google",
-    "sitemap",
-    sitemap.ok
-      ? `last read ${sitemap.data?.lastDownloaded ?? "never"}${sitemap.data?.isPending ? ", pending" : ""}, ${sitemap.data?.errors ?? 0} errors, ${sitemap.data?.warnings ?? 0} warnings`
-      : `not submitted yet (HTTP ${sitemap.status})`,
-  ]);
+  for (const url of sitemaps) {
+    const sitemap = await callGoogle(access.token, googleSitemapPath(url));
+    results.push([
+      "Google",
+      new URL(url).pathname,
+      sitemap.ok
+        ? `last read ${sitemap.data?.lastDownloaded ?? "never"}${sitemap.data?.isPending ? ", pending" : ""}, ${sitemap.data?.errors ?? 0} errors, ${sitemap.data?.warnings ?? 0} warnings`
+        : `not submitted yet (HTTP ${sitemap.status})`,
+    ]);
+  }
   return true;
 }
 
 /**
- * --check. Reads only, never submits: IndexNow and Bing, then Google. False
- * when either rejects its key or the site.
+ * --check. Reads only, never submits: the sitemaps and the important pages
+ * in them, IndexNow and Bing, then Google. False when no sitemap can be
+ * read, an important page is in none, or an engine rejects its key or the
+ * site.
  */
 async function checkSetup(results) {
+  let sitemaps = [SITEMAP_URL];
+  let pages = false;
+  try {
+    const loaded = await loadSitemaps();
+    sitemaps = loaded.sitemaps;
+    const all = loaded.entries.map((entry) => entry.url);
+    results.push([
+      "Sitemaps",
+      `${sitemaps.length} read`,
+      `${all.length} pages: ${sitemaps.map((url) => new URL(url).pathname).join(", ")}`,
+    ]);
+    const { dropped } = inSitemap(IMPORTANT_PATHS, all);
+    if (dropped.length > 0) {
+      warn(`Important pages in no sitemap: ${dropped.join(", ")}`);
+    }
+    results.push([
+      "Sitemaps",
+      "important pages",
+      dropped.length === 0
+        ? `all ${IMPORTANT_PATHS.length} listed`
+        : `missing: ${dropped.join(", ")}`,
+    ]);
+    pages = dropped.length === 0;
+  } catch (error) {
+    warn(`Couldn't read the sitemaps: ${error.message}`);
+    results.push(["Sitemaps", "-", `failed: ${error.message}`]);
+  }
   const bing = await checkIndexNowAndBing(results);
   let google = false;
   try {
-    google = await checkGoogle(results);
+    google = await checkGoogle(results, sitemaps);
   } catch (error) {
     warn(`Google check failed: ${error.message}`);
   }
-  return bing && google;
+  return pages && bing && google;
 }
 
 /**
@@ -656,25 +878,30 @@ export async function main(argv = process.argv.slice(2)) {
     return ok ? 0 : 1;
   }
 
-  let xml;
+  let loaded;
   try {
-    xml = await loadSitemap();
+    loaded = await loadSitemaps();
   } catch (error) {
-    warn(`Couldn't read the sitemap: ${error.message}. Nothing sent.`);
+    warn(`Couldn't read the sitemaps: ${error.message}. Nothing sent.`);
     return 0;
   }
+  const { sitemaps, entries: sitemap } = loaded;
 
   if (values.snapshot) {
-    writeFileSync(values.snapshot, xml);
+    writeFileSync(values.snapshot, toUrlset(sitemap));
     console.log(
-      `Saved ${parseSitemap(xml).length} sitemap URLs to ${values.snapshot}.`
+      `Saved ${sitemap.length} URLs from ${sitemaps.length} sitemaps to ${values.snapshot}.`
     );
     return 0;
   }
 
-  const sitemap = parseSitemap(xml);
   const all = sitemap.map((entry) => entry.url);
-  const important = inSitemap(IMPORTANT_PATHS, all).kept;
+  const { kept: important, dropped: missing } = inSitemap(IMPORTANT_PATHS, all);
+  if (missing.length > 0) {
+    warn(
+      `Important pages in no sitemap, so not sent: ${missing.join(", ")}. Fix IMPORTANT_PATHS in scripts/notify-search-engines.mjs or the sitemaps.`
+    );
+  }
   // What each engine gets. IndexNow has no quota; Bing's is small. Google
   // gets the sitemap whenever pages are sent, but not for the Bing backlog.
   let plan;
@@ -700,7 +927,7 @@ export async function main(argv = process.argv.slice(2)) {
     }
     const { kept, dropped } = inSitemap(lines, all);
     if (dropped.length > 0) {
-      warn(`Not in the sitemap, so not sent: ${dropped.join(", ")}`);
+      warn(`In no sitemap, so not sent: ${dropped.join(", ")}`);
     }
     plan = { indexNow: kept, bing: kept, source: values.urls };
   } else {
@@ -731,7 +958,7 @@ export async function main(argv = process.argv.slice(2)) {
     ? plan.bing.slice(0, BING_BACKLOG_STEP)
     : plan.indexNow;
   console.log(
-    `${listed.length} URLs (${plan.source}) of ${all.length} in the sitemap.`
+    `${listed.length} URLs (${plan.source}) of ${all.length} in ${sitemaps.length} sitemaps.`
   );
   for (const url of listed.slice(0, 50)) console.log(`  ${url}`);
   if (listed.length > 50) {
@@ -752,14 +979,14 @@ export async function main(argv = process.argv.slice(2)) {
     }
   }
   try {
-    await sendBing(plan.bing, results);
+    await sendBing(plan.bing, results, sitemaps);
   } catch (error) {
     warn(`Bing failed: ${error.message}`);
     results.push(["Bing", `${plan.bing.length} URLs`, "failed"]);
   }
   if (plan.google !== false) {
     try {
-      await sendGoogle(results);
+      await sendGoogle(results, sitemaps);
     } catch (error) {
       warn(`Google failed: ${error.message}`);
       results.push(["Google", "sitemap", "failed"]);
