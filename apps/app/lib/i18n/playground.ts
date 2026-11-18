@@ -114,11 +114,12 @@ export const SETTINGS_NAMESPACES = [
   "app.dashboard.webhooks",
 ] as const;
 
-/** Sign-in, two-step verification and the session check (signed out). */
+/** Sign-in, two-step verification, the session check and signing out. */
 export const SIGN_IN_NAMESPACES = [
   ...CHROME_NAMESPACES,
   "app.signIn",
   "app.sessionCheck",
+  "app.signOut",
 ] as const;
 
 /** Team invitations, join links and OAuth consent: the app's frame too. */

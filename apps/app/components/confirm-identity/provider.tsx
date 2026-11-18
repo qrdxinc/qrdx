@@ -2,6 +2,7 @@
 
 import { toast } from "@repo/design-system";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   createContext,
   type ReactNode,
@@ -12,7 +13,6 @@ import {
   useState,
 } from "react";
 import {
-  CONFIRMATION_MESSAGES,
   type ConfirmationAction,
   needsConfirmation,
   readConfirmReturn,
@@ -37,6 +37,7 @@ const ConfirmationContext = createContext<WithConfirmation | null>(null);
 
 /** Holds the one "Confirm it's you" dialog for the components inside it. */
 export function ConfirmIdentityProvider({ children }: { children: ReactNode }) {
+  const t = useTranslations("auth.confirmationMessages");
   const [request, setRequest] = useState<ConfirmationRequest | null>(null);
   const resolver = useRef<((confirmed: boolean) => void) | null>(null);
   // Two gated actions at once share one dialog.
@@ -59,12 +60,12 @@ export function ConfirmIdentityProvider({ children }: { children: ReactNode }) {
       error: returned.error,
     })
       .then((result) => {
-        if (result.ok) toast.success(CONFIRMATION_MESSAGES.signInConfirmed);
+        if (result.ok) toast.success(t("signInConfirmed"));
         else toast.error(result.error);
       })
-      .catch(() => toast.error(CONFIRMATION_MESSAGES.failed))
+      .catch(() => toast.error(t("failed")))
       .finally(() => router.replace(returned.cleanPath, { scroll: false }));
-  }, [router]);
+  }, [router, t]);
 
   const ask = useCallback((action: ConfirmationAction) => {
     if (pending.current) return pending.current;
@@ -90,12 +91,12 @@ export function ConfirmIdentityProvider({ children }: { children: ReactNode }) {
       if (!(await ask(action))) return null;
       const second = await run();
       if (needsConfirmation(second)) {
-        toast.error(CONFIRMATION_MESSAGES.stillRequired);
+        toast.error(t("stillRequired"));
         return null;
       }
       return second;
     },
-    [ask],
+    [ask, t],
   );
 
   return (

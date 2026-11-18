@@ -1,7 +1,9 @@
 /**
  * The second step of signing in: which method to show, what to call it and
  * what to say when it fails. Pure and client-safe; two-factor-challenge.tsx
- * renders it, tests/auth/sign-in-challenge-ui.test.ts checks it.
+ * renders it, tests/auth/sign-in-challenge-ui.test.ts checks it. The copy is
+ * auth.secondStep in messages/en.json: the headings (`titles`), the links
+ * that switch to each method (`switchTo`) and the lines under them.
  */
 import type { PasskeyStepResult } from "@repo/auth/passkey-client";
 import {
@@ -9,22 +11,11 @@ import {
   LOCKOUT_MINUTES,
   type TwoFactorMethods,
 } from "@repo/auth/sign-in-challenge-rules";
+import type { Translator } from "@/lib/i18n/translator";
 
 export type SecondStep = "passkey" | "totp" | "backup";
 
-/** The heading while each method is shown. */
-export const SECOND_STEP_TITLES: Record<SecondStep, string> = {
-  passkey: "Use your passkey",
-  totp: "Open your authenticator app",
-  backup: "Enter a backup code",
-};
-
-/** The links that switch to each method. */
-export const SWITCH_TO: Record<SecondStep, string> = {
-  passkey: "Use your passkey",
-  totp: "Use an authenticator code",
-  backup: "Use a backup code",
-};
+export type SecondStepTranslator = Translator<"auth.secondStep">;
 
 /**
  * The methods to offer, best first: a passkey (when this browser can use
@@ -86,30 +77,6 @@ export function rememberStep(step: SecondStep): void {
   }
 }
 
-export const PASSKEY_STEP_MESSAGES = {
-  hint: "Use Touch ID, Face ID, Windows Hello or a security key.",
-  waiting: "Waiting for your passkey…",
-  checking: "Checking your passkey…",
-  failed: "Couldn't verify your passkey. Try again.",
-  closed:
-    "The passkey prompt was closed or timed out. Try again or use another method.",
-  // The server no longer had the request the passkey answered (it expired,
-  // or another tab asked for a newer one).
-  expiredRequest: "That passkey request expired. Try again.",
-  userVerification:
-    "That passkey didn't ask for your PIN, fingerprint or face. Use one that does, or use another method.",
-  unavailable: "There's no passkey for this account here. Use another method.",
-  tooManyTries: "Too many failed tries. Sign in again to try again.",
-  locked: `Too many failed tries in a row. Try again in ${LOCKOUT_MINUTES} minutes.`,
-  expired: "This sign-in timed out. Sign in again.",
-  rateLimited: "Too many tries. Wait a moment, then try again.",
-  connection: "Something went wrong. Check your connection and try again.",
-} as const;
-
-/** No method this browser can use (a passkey-only account, no WebAuthn). */
-export const NO_STEP_HERE =
-  "This browser can't use your passkey, and there's no other way to finish signing in here. Use a device with your passkey.";
-
 /**
  * A prompt that failed this quickly never showed: the browser refused to
  * open it without a click (some do when it opens on its own) or the page
@@ -130,6 +97,7 @@ export interface PasskeyStepOutcome {
 export function passkeyStepOutcome(
   result: Extract<PasskeyStepResult, { ok: false }>,
   { automatic }: { automatic: boolean },
+  t: SecondStepTranslator,
 ): PasskeyStepOutcome {
   const quiet = { over: false, counted: false };
   if (result.kind === "aborted") return { message: null, ...quiet };
@@ -137,89 +105,76 @@ export function passkeyStepOutcome(
     if (automatic && result.promptMs < PROMPT_REFUSED_MS) {
       return { message: null, ...quiet };
     }
-    return { message: PASSKEY_STEP_MESSAGES.closed, ...quiet };
+    return { message: t("passkey.closed"), ...quiet };
   }
   if (result.kind === "browser") {
-    return { message: PASSKEY_STEP_MESSAGES.failed, ...quiet };
+    return { message: t("passkey.failed"), ...quiet };
   }
   switch (result.code) {
     case "INVALID_PASSKEY":
-      return {
-        message: PASSKEY_STEP_MESSAGES.failed,
-        over: false,
-        counted: true,
-      };
+      return { message: t("passkey.failed"), over: false, counted: true };
     case "PASSKEY_USER_VERIFICATION_REQUIRED":
       return {
-        message: PASSKEY_STEP_MESSAGES.userVerification,
+        message: t("passkey.userVerification"),
         over: false,
         counted: true,
       };
+    // The server no longer had the request the passkey answered (it expired,
+    // or another tab asked for a newer one).
     case "PASSKEY_CHALLENGE_NOT_FOUND":
-      return { message: PASSKEY_STEP_MESSAGES.expiredRequest, ...quiet };
+      return { message: t("passkey.expiredRequest"), ...quiet };
     case "PASSKEY_STEP_UNAVAILABLE":
-      return { message: PASSKEY_STEP_MESSAGES.unavailable, ...quiet };
+      return { message: t("passkey.unavailable"), ...quiet };
     case "TOO_MANY_ATTEMPTS_REQUEST_NEW_CODE":
-      return {
-        message: PASSKEY_STEP_MESSAGES.tooManyTries,
-        over: true,
-        counted: false,
-      };
+      return { message: t("passkey.tooManyTries"), over: true, counted: false };
     case "ACCOUNT_TEMPORARILY_LOCKED":
       return {
-        message: PASSKEY_STEP_MESSAGES.locked,
+        message: t("passkey.locked", { minutes: LOCKOUT_MINUTES }),
         over: true,
         counted: false,
       };
     case "INVALID_TWO_FACTOR_COOKIE":
-      return {
-        message: PASSKEY_STEP_MESSAGES.expired,
-        over: true,
-        counted: false,
-      };
+      return { message: t("passkey.expired"), over: true, counted: false };
     // The sign-in this finishes started with an email code just as the
     // workspace began requiring SSO for the address.
     case "sso_required":
-      return {
-        message:
-          "Your company now requires single sign-on for this address. Start again and sign in with SSO.",
-        over: true,
-        counted: false,
-      };
+      return { message: t("passkey.ssoRequired"), over: true, counted: false };
   }
   if (result.status === 429) {
-    return { message: PASSKEY_STEP_MESSAGES.rateLimited, ...quiet };
+    return { message: t("passkey.rateLimited"), ...quiet };
   }
-  return { message: PASSKEY_STEP_MESSAGES.connection, ...quiet };
+  return { message: t("passkey.connection"), ...quiet };
 }
 
-/** An authenticator code from an account without an authenticator app. */
-export const NO_AUTHENTICATOR_APP =
-  "Your account doesn't use an authenticator app. Use another method.";
-
-const quoteList = (chars: readonly string[]) =>
-  chars.map((char) => `"${char}"`).join(" or ");
+/** `"0" or "1"`, each "or" from the catalog. */
+const quoteList = (chars: readonly string[], t: SecondStepTranslator) =>
+  chars
+    .map((char) => `"${char}"`)
+    .reduce((first, second) => t("backupCode.or", { first, second }));
 
 /**
  * Why what someone typed can't be a backup code ("ABCDE-FGH23": 10 capital
  * letters and digits 2 to 9, any case, dash and spaces optional), or null
  * when it could be one.
  */
-export function backupCodeProblem(input: string): string | null {
+export function backupCodeProblem(
+  input: string,
+  t: SecondStepTranslator,
+): string | null {
   const chars = input.replace(/[\s-]+/g, "").toUpperCase();
-  if (!chars) return "Enter one of your backup codes.";
+  if (!chars) return t("backupCode.empty");
   const strange = [...new Set(chars)].filter((char) => !/[A-Z0-9]/.test(char));
   if (strange.length) {
-    return `Backup codes only have letters and digits. Remove ${quoteList(strange)}.`;
+    return t("backupCode.strange", { chars: quoteList(strange, t) });
   }
   if (chars.length !== 10) {
-    return `Backup codes have 10 characters, like ABCDE-FGH23. This has ${chars.length}.`;
+    return t("backupCode.length", { count: chars.length });
   }
   const lookalikes = [...new Set(chars)].filter(
     (char) => !BACKUP_CODE_ALPHABET.includes(char),
   );
   if (lookalikes.length) {
-    return `Backup codes never use ${quoteList(lookalikes)}. Check for a look-alike letter or digit.`;
+    return t("backupCode.lookalikes", { chars: quoteList(lookalikes, t) });
   }
   return null;
 }

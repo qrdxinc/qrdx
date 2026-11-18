@@ -8545,7 +8545,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "Volver a QRdx"
+        "backToQrdx": "Volver a QRdx",
+        "signedOut": "Has cerrado sesión.",
+        "pageTitle": "Iniciar sesión"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8612,6 +8614,20 @@
           "authorize": "Autorizar",
           "somethingWentWrongCheckYour": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo."
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "¿Cerrar sesión en QRdx?",
+        "signOut": "Cerrar sesión",
+        "cancel": "Cancelar",
+        "youreStillSignedIn": "Sigues con la sesión iniciada",
+        "signingOutDidntWorkCheck": "No se pudo cerrar la sesión. Revisa tu conexión e inténtalo de nuevo.",
+        "tryAgain": "Reintentar",
+        "backToDashboard": "Volver al panel",
+        "signingYouOut": "Cerrando sesión…",
+        "oneMoment": "Un momento…",
+        "pageTitle": "Cerrar sesión"
       }
     }
   },
@@ -8708,11 +8724,22 @@
       "thatCodeHasExpiredSend": "Ese código ha caducado. Envía uno nuevo.",
       "tooManyWrongTriesSend": "Demasiados intentos incorrectos. Envía un código nuevo.",
       "thisAccountIsSuspendedContact": "Esta cuenta está suspendida. Contacta con soporte si crees que es un error.",
-      "somethingWentWrongTryAgain": "Algo salió mal. Inténtalo de nuevo."
+      "somethingWentWrongTryAgain": "Algo salió mal. Inténtalo de nuevo.",
+      "newCodeSent": "Código nuevo enviado. El anterior ya no funciona.",
+      "connectionFailed": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continuar con passkey",
-      "lastUsed": "Último usado"
+      "lastUsed": "Último usado",
+      "errors": {
+        "rateLimited": "Demasiados intentos. Espera un minuto e inténtalo de nuevo.",
+        "userVerification": "Esa passkey no pidió tu PIN, tu huella ni tu rostro. Usa una que lo haga o inicia sesión de otra forma.",
+        "notFound": "Esa passkey ya no está vinculada a una cuenta de QRdx. Inicia sesión de otra forma.",
+        "banned": "Esta cuenta está suspendida. Contacta con soporte si crees que es un error.",
+        "ssoRequired": "Tu empresa exige el inicio de sesión único para esta cuenta. Inicia sesión con SSO.",
+        "failed": "Esa passkey no funcionó. Inténtalo de nuevo o inicia sesión de otra forma.",
+        "connection": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo."
+      }
     },
     "signInPanel": {
       "codeSentTo": "Código enviado a <strong>{email}</strong>",
@@ -8818,7 +8845,21 @@
       "resendInSecondsleftS": "Reenviar en {secondsLeft, number} s",
       "resendCode": "Reenviar código",
       "whyAmIAsked": "¿Por qué me lo piden?",
-      "whyAmIAskedAgain": "¿Por qué me lo piden otra vez?"
+      "whyAmIAskedAgain": "¿Por qué me lo piden otra vez?",
+      "switchTo": {
+        "passkey": "Usa tu passkey",
+        "totp": "Usa un código de autenticación",
+        "backup": "Usa un código de respaldo",
+        "email": "Envíame un código",
+        "signInWith": "Inicia sesión con {provider}",
+        "sign-in-again": "Inicia sesión otra vez"
+      },
+      "signInWithSsoAgain": "Vuelve a iniciar sesión con el SSO de tu empresa. Volverás a esta página y entonces haz tu cambio de nuevo.",
+      "newCodeSent": "Código nuevo enviado. El anterior ya no funciona.",
+      "reasons": {
+        "continue-session": "Este inicio de sesión se está usando desde un país y un navegador distintos de donde empezó, así que comprobamos que eres tú antes de continuar.",
+        "link-slack-account": "Una vez vinculada, quien use esa cuenta de Slack podrá crear códigos con seguimiento en tu espacio de trabajo con /qr track, así que primero comprobamos que eres tú."
+      }
     },
     "dialogCloseButton": {
       "close": "Cerrar"
@@ -8840,6 +8881,112 @@
     },
     "nudge": {
       "dismiss": "No volver a mostrar"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "Iniciar sesión con SSO",
+      "lastUsed": "Último usado",
+      "workEmail": "Correo de trabajo",
+      "continue": "Continuar",
+      "ifYourCompanySetIt": "Si tu empresa lo configuró para QRdx.",
+      "cancel": "Cancelar",
+      "youCompanyCom": "tu@empresa.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "Continuar con SSO",
+      "lastUsed": "Último usado",
+      "useADifferentEmail": "Usar otro correo",
+      "yourCompanyRequiresItFor": "Tu empresa lo exige para esta dirección. Continuarás en su página de inicio de sesión.",
+      "youllContinueOnYourCompanys": "Continuarás en la página de inicio de sesión de tu empresa.",
+      "sending": "Enviando…",
+      "emailMeACode": "Envíame un código"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "Usa tu llave de acceso",
+        "totp": "Abre tu app de autenticación",
+        "backup": "Introduce un código de respaldo"
+      },
+      "switchTo": {
+        "passkey": "Usa tu llave de acceso",
+        "totp": "Usa un código de autenticación",
+        "backup": "Usa un código de respaldo"
+      },
+      "hints": {
+        "passkey": "Usa Touch ID, Face ID, Windows Hello o una llave de seguridad.",
+        "totp": "Introduce el código de 6 dígitos de tu app de autenticación.",
+        "backup": "Introduce uno de tus códigos de respaldo. Cada uno funciona una sola vez."
+      },
+      "passkey": {
+        "waiting": "Esperando tu llave de acceso…",
+        "checking": "Comprobando tu llave de acceso…",
+        "failed": "No se pudo verificar tu llave de acceso. Inténtalo de nuevo.",
+        "closed": "Se cerró el aviso de la llave de acceso o se agotó el tiempo. Inténtalo de nuevo o usa otro método.",
+        "expiredRequest": "Esa solicitud de llave de acceso caducó. Inténtalo de nuevo.",
+        "userVerification": "Esa llave de acceso no pidió tu PIN, tu huella ni tu rostro. Usa una que sí lo haga, o usa otro método.",
+        "unavailable": "Aquí no hay ninguna llave de acceso para esta cuenta. Usa otro método.",
+        "tooManyTries": "Demasiados intentos fallidos. Inicia sesión de nuevo para volver a intentarlo.",
+        "locked": "Demasiados intentos fallidos seguidos. Inténtalo de nuevo en {minutes, number} minutos.",
+        "expired": "Se agotó el tiempo de este inicio de sesión. Inicia sesión de nuevo.",
+        "rateLimited": "Demasiados intentos. Espera un momento y vuelve a intentarlo.",
+        "connection": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo.",
+        "ssoRequired": "Tu empresa ahora exige el inicio de sesión único para esta dirección. Empieza de nuevo e inicia sesión con SSO."
+      },
+      "noStepHere": "Este navegador no puede usar tu llave de acceso y aquí no hay otra forma de terminar de iniciar sesión. Usa un dispositivo con tu llave de acceso.",
+      "noAuthenticatorApp": "Tu cuenta no usa una app de autenticación. Usa otro método.",
+      "backupCode": {
+        "empty": "Introduce uno de tus códigos de respaldo.",
+        "strange": "Los códigos de respaldo solo tienen letras y dígitos. Quita {chars}.",
+        "length": "Los códigos de respaldo tienen 10 caracteres, como ABCDE-FGH23. Este tiene {count, number}.",
+        "lookalikes": "Los códigos de respaldo nunca usan {chars}. Comprueba si hay una letra o un dígito que se parezca.",
+        "or": "{first} o {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "Ese código no es correcto. Revisa tu aplicación de autenticación e inténtalo de nuevo.",
+      "wrongBackupCode": "Ese código de respaldo no es correcto o ya se usó.",
+      "invalidCode": "Introduce el código de 6 dígitos de tu aplicación de autenticación.",
+      "invalidBackupCode": "Eso no es un código de respaldo. Tienen este aspecto: ABCDE-FGH23, con letras mayúsculas y los dígitos del 2 al 9.",
+      "tooManyAttempts": "Demasiados códigos incorrectos. Inicia sesión de nuevo para volver a intentarlo.",
+      "locked": "Demasiados códigos incorrectos seguidos. Inténtalo de nuevo en {minutes, number} minutos.",
+      "expired": "Este inicio de sesión ha caducado. Inicia sesión de nuevo.",
+      "rateLimited": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+      "failed": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo.",
+      "ssoRequired": "Tu empresa ahora exige el inicio de sesión único para esta dirección. Empieza de nuevo e inicia sesión con SSO."
+    },
+    "confirmationMessages": {
+      "failed": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo.",
+      "passkeyFailed": "No se pudo verificar tu passkey. Inténtalo de nuevo.",
+      "passkeyClosed": "La ventana de la passkey se cerró o caducó. Inténtalo de nuevo o usa otro método.",
+      "passkeyUnavailable": "Las passkeys no funcionan en este navegador. Usa otro método.",
+      "signInAgain": "Por tu seguridad, cierra sesión y vuelve a iniciarla; después inténtalo de nuevo en un plazo de 10 minutos.",
+      "stillRequired": "No pudimos confirmar que eres tú. Inténtalo de nuevo.",
+      "signInFailed": "Ese inicio de sesión no se completó, así que no se cambió nada. Inténtalo de nuevo o usa otro método.",
+      "signInConfirmed": "Gracias, queda confirmado. Puedes hacer tu cambio en los próximos 10 minutos."
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} no ha verificado esta dirección de correo, por lo que QRdx no puede crear una cuenta con ella. Verifícala en la configuración de correo de {provider} e inténtalo de nuevo, o inicia sesión con un código por correo.",
+      "googleUnverified": "{provider} no ha verificado esta dirección de correo, por lo que QRdx no puede crear una cuenta con ella. Inicia sesión con un código por correo.",
+      "otherUnverified": "La dirección de correo de esa cuenta no está verificada, por lo que QRdx no puede crear una cuenta con ella. Inicia sesión con un código por correo.",
+      "cancelled": "Se canceló el inicio de sesión.",
+      "accountNotLinked": "Ya existe una cuenta con esta dirección y no está vinculada a {provider}. Inicia sesión con un código por correo.",
+      "emailNotShared": "{provider} no compartió una dirección de correo, por lo que QRdx no puede iniciar tu sesión con él. Inicia sesión con un código por correo.",
+      "tookTooLong": "Ese inicio de sesión tardó demasiado o se inició en otro lugar. Inténtalo de nuevo.",
+      "providerFailed": "El inicio de sesión con {provider} no funcionó. Inténtalo de nuevo o inicia sesión de otra forma.",
+      "sso": {
+        "emailRequired": "Introduce tu correo de trabajo.",
+        "notFound": "SSO no está configurado para esa dirección.",
+        "required": "Tu empresa exige el inicio de sesión único para esta dirección. Inicia sesión con SSO.",
+        "unavailable": "El inicio de sesión único no está disponible para este espacio de trabajo en este momento. Inicia sesión de otra forma.",
+        "emailOutsideDomain": "Tu proveedor de identidad envió una dirección fuera del dominio de tu empresa, así que QRdx no puede iniciar sesión con ella. Consulta con el administrador de tu espacio de trabajo.",
+        "emailUnverified": "El sistema de inicio de sesión de tu empresa no ha confirmado esta dirección de correo, así que QRdx no puede iniciar sesión con ella. Su administrador debe verificar allí las direcciones de correo.",
+        "emailMissing": "El sistema de inicio de sesión de tu empresa no envió una dirección de correo, así que QRdx no puede iniciar tu sesión. Consulta con el administrador de tu espacio de trabajo.",
+        "weakSignature": "El sistema de inicio de sesión de tu empresa firmó este inicio de sesión con SHA-1 u otro algoritmo obsoleto, que QRdx no acepta. Su administrador debe cambiar el algoritmo de firma de la aplicación de QRdx a SHA-256.",
+        "unsolicitedResponse": "QRdx no pudo aceptar este inicio de sesión desde la lista de aplicaciones de tu empresa. Empieza desde la página de inicio de sesión de QRdx: elige Iniciar sesión con SSO e introduce tu correo de trabajo. Si sigue ocurriendo, consulta con el administrador de tu espacio de trabajo.",
+        "replayDetected": "Ese inicio de sesión ya se ha usado. Vuelve a iniciar sesión.",
+        "accountNotLinked": "Ya existe una cuenta con esta dirección y no se pudo vincular. Inicia sesión con un código por correo.",
+        "failed": "El inicio de sesión único no funcionó. Inténtalo de nuevo o inicia sesión de otra forma.",
+        "rateLimited": "Demasiados intentos. Espera un minuto e inténtalo de nuevo."
+      }
     }
   },
   "codeBuilder": {
