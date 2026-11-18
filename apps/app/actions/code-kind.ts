@@ -75,8 +75,9 @@ const KNOWN_CODES = new Set<string>([
 async function failure(
   error: unknown,
   context: Record<string, unknown>,
+  userId: string | undefined,
 ): Promise<CodeKindActionResult<never>> {
-  const text = (await codeActionText()).codeKind;
+  const text = (await codeActionText({ userId })).codeKind;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
@@ -123,12 +124,15 @@ async function run<T>(
   fn: (scope: ActiveScope) => Promise<T>,
   { revalidate = false } = {},
 ): Promise<CodeKindActionResult<T>> {
+  let userId: string | undefined;
   try {
-    const data = await fn(await getActiveScope());
+    const scope = await getActiveScope();
+    userId = scope.userId;
+    const data = await fn(scope);
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, userId);
   }
 }
 

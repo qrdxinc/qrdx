@@ -37,8 +37,9 @@ const deleteSchema = z.object({
 /** The answer for a thrown `error`, in the person's language (codeActionText). */
 async function failure(
   error: unknown,
+  userId: string | undefined,
 ): Promise<FormResponsesActionResult<never>> {
-  const text = (await codeActionText()).formResponses;
+  const text = (await codeActionText({ userId })).formResponses;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
@@ -76,8 +77,10 @@ export async function deleteFormResponses(input: {
       },
     };
   }
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     const page = await findScopedPage(scope, parsed.data.pageId);
     assertCanManageResponses(scope, page);
     const deleted = await deletePageResponses(page.id, [
@@ -86,6 +89,6 @@ export async function deleteFormResponses(input: {
     revalidatePath("/dashboard", "layout");
     return { success: true, data: { deleted } };
   } catch (error) {
-    return failure(error);
+    return failure(error, userId);
   }
 }

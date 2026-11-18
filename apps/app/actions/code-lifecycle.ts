@@ -128,8 +128,9 @@ type CodeRow = typeof qrCode.$inferSelect;
 async function failure(
   error: unknown,
   context: Record<string, unknown>,
+  who: { pageLocale?: string; userId?: string },
 ): Promise<LifecycleActionResult> {
-  const text = (await codeActionText()).lifecycle;
+  const text = (await codeActionText(who)).lifecycle;
   const say = (message: string) => ownMessage(ENGLISH, text, message);
   if (error instanceof UnauthorizedError) {
     return {
@@ -231,16 +232,24 @@ async function run(
   {
     revalidate = false,
     access = "write",
-  }: { revalidate?: boolean; access?: "read" | "write" } = {},
+    pageLocale,
+  }: {
+    revalidate?: boolean;
+    access?: "read" | "write";
+    /** The calling page's useLocale(): the language its messages are in */
+    pageLocale?: string;
+  } = {},
 ): Promise<LifecycleActionResult> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     if (access === "write") assertCan(scope, "content.write");
     const data = await fn(scope);
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, { pageLocale, userId });
   }
 }
 
@@ -249,17 +258,19 @@ const sameTime = (a: Date | null, b: Date | null) =>
 
 export async function getCodeLifecycle(
   id: string,
+  pageLocale?: string,
 ): Promise<LifecycleActionResult> {
   return run(
     "getCodeLifecycle",
     async (scope) =>
       toView(scope, await findRow(scope, parse(codeIdSchema, id))),
-    { access: "read" },
+    { access: "read", pageLocale },
   );
 }
 
 export async function updateCodeLifecycle(
   input: z.input<typeof updateSchema>,
+  pageLocale?: string,
 ): Promise<LifecycleActionResult> {
   return run(
     "updateCodeLifecycle",
@@ -334,13 +345,14 @@ export async function updateCodeLifecycle(
       );
       return toView(scope, updated);
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }
 
 /** Pausing works on every plan: scans go to the fallback URL or a neutral page. */
 export async function setCodePaused(
   input: z.input<typeof pauseSchema>,
+  pageLocale?: string,
 ): Promise<LifecycleActionResult> {
   return run(
     "setCodePaused",
@@ -365,6 +377,6 @@ export async function setCodePaused(
       );
       return toView(scope, updated);
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }

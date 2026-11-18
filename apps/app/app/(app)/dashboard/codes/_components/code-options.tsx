@@ -16,7 +16,7 @@ import {
   PasswordCheck,
   Routing2,
 } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   createContext,
   type ReactNode,
@@ -337,6 +337,8 @@ export function useCodeOptions(
   codeId: string | null,
 ): CodeOptionsState {
   const known = useContext(PlansContext);
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   // Tagged with the code it was loaded for, so a code created a moment ago
   // never shows the previous (no code) answer.
   const [loaded, setLoaded] = useState<{
@@ -352,7 +354,7 @@ export function useCodeOptions(
     if (!open || (known && !codeId)) return;
     let cancelled = false;
     setError(null);
-    getCodeOptions(codeId)
+    getCodeOptions(codeId, locale)
       .then((result) => {
         if (cancelled) return;
         if (result.success) setLoaded({ codeId, data: result.data });
@@ -365,7 +367,7 @@ export function useCodeOptions(
     return () => {
       cancelled = true;
     };
-  }, [open, codeId, known, version]);
+  }, [open, codeId, known, version, locale]);
 
   const data = loaded && loaded.codeId === codeId ? loaded.data : null;
   const plans = data?.plans ?? known;

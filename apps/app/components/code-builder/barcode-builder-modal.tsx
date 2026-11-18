@@ -21,7 +21,7 @@ import { Button } from "@repo/design-system/components/ui/button";
 import { Label } from "@repo/design-system/components/ui/label";
 import useMediaQuery from "@repo/design-system/hooks/use-media-query";
 import { ArrowLeft, Brush2, ExportSquare } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   type FormEvent,
   type ReactNode,
@@ -73,6 +73,8 @@ export default function BarcodeBuilderModal({
   onClosed: () => void;
 }) {
   const t = useTranslations("app.dashboard.barcodes.barcodeBuilder");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const router = useRouter();
   const wide = useMediaQuery("(min-width: 768px)") ?? true;
   const generator = useBarcodeGenerator({ source: "dashboard" });
@@ -101,7 +103,7 @@ export default function BarcodeBuilderModal({
       setFolders([]);
       setFoldersError(message);
     };
-    listBarcodeFolders()
+    listBarcodeFolders(locale)
       .then((result) => {
         if (cancelled) return;
         if (result.success) setFolders(result.data);
@@ -111,7 +113,7 @@ export default function BarcodeBuilderModal({
     return () => {
       cancelled = true;
     };
-  }, [t]);
+  }, [t, locale]);
 
   const phase = saved ? "success" : "form";
   const designShown = designOpen && !wide && phase === "form";
@@ -175,6 +177,7 @@ export default function BarcodeBuilderModal({
     startTransition(async () => {
       const result = await saveBarcode(
         barcodeSaveFields(current, title, folderId),
+        locale,
       ).catch(() => null);
       if (!result?.success) {
         soundEvent("error");

@@ -43,12 +43,14 @@ async function run<T = PublicStatsShare>(
   | { success: true; data: T }
   | { success: false; error: { code: string; message: string } }
 > {
+  let userId: string | undefined;
   try {
     const parsed = codeId.safeParse(id);
     if (!parsed.success) {
       throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
     }
     const scope = await getActiveScope();
+    userId = scope.userId;
     if (write) {
       await enforceRateLimits([
         {
@@ -59,7 +61,7 @@ async function run<T = PublicStatsShare>(
     }
     return { success: true, data: await fn(scope, parsed.data) };
   } catch (error) {
-    const text = (await codeActionText()).publicStats;
+    const text = (await codeActionText({ userId })).publicStats;
     if (error instanceof UnauthorizedError) {
       return {
         success: false,

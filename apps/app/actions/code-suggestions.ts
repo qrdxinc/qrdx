@@ -33,12 +33,19 @@ const KNOWN = new Set([
   "DOMAIN_NOT_VERIFIED",
 ]);
 
-/** Back-halves and tags for the builder's "Suggest" (lib/code-suggestions). */
+/**
+ * Back-halves and tags for the builder's "Suggest" (lib/code-suggestions).
+ * `pageLocale`: the builder page's useLocale(), the language its messages
+ * are in (lib/code-actions/messages-server.ts).
+ */
 export async function suggestCodeDetailsAction(
   input: SuggestInput,
+  pageLocale?: string,
 ): Promise<SuggestResult> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     const ip = getClientIp({ headers: await headers() });
     await enforceRateLimits([
       { limiter: minuteLimiter, key: `code-suggest:min:${scope.userId}` },
@@ -47,7 +54,7 @@ export async function suggestCodeDetailsAction(
     ]);
     return { success: true, data: await suggestCodeDetails(scope, input) };
   } catch (error) {
-    const text = (await codeActionText()).codeSuggestions;
+    const text = (await codeActionText({ pageLocale, userId })).codeSuggestions;
     if (error instanceof UnauthorizedError) {
       return {
         success: false,

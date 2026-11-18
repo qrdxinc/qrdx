@@ -33,23 +33,28 @@ export type CodeOptionsResult =
  * Everything the builder's option buttons need in one round trip: the plans
  * that unlock each option for the active workspace and, for an existing
  * code, its current settings (from the same actions its panels save with).
+ * `pageLocale`: the builder page's useLocale(), the language its messages
+ * are in.
  */
 export async function getCodeOptions(
   codeId: string | null,
+  pageLocale?: string,
 ): Promise<CodeOptionsResult> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     const [plan, marketing, lifecycle] = await Promise.all([
       getPlanForScope(scope),
-      codeId ? getCodeMarketing(codeId) : null,
-      codeId ? getCodeLifecycle(codeId) : null,
+      codeId ? getCodeMarketing(codeId, pageLocale) : null,
+      codeId ? getCodeLifecycle(codeId, pageLocale) : null,
     ]);
     return {
       success: true,
       data: { plans: codeOptionPlansFor(plan), marketing, lifecycle },
     };
   } catch (error) {
-    const text = (await codeActionText()).codeOptions;
+    const text = (await codeActionText({ pageLocale, userId })).codeOptions;
     if (error instanceof UnauthorizedError) {
       return { success: false, error: { message: text.signIn } };
     }

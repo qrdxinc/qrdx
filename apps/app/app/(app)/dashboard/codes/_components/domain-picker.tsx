@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@repo/design-system/components/ui/select";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { getCustomDomainOptions } from "@/actions/custom-domains";
 import type {
@@ -24,13 +24,14 @@ const DEFAULT_VALUE = "default";
 
 /** The active scope's verified domains, loaded each time the dialog opens. */
 export function useDomainOptions(open: boolean): DomainOptions | null {
+  const locale = useLocale();
   const [options, setOptions] = useState<DomainOptions | null>(null);
 
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
     setOptions(null);
-    getCustomDomainOptions()
+    getCustomDomainOptions(locale)
       .then((result) => {
         if (!cancelled && result.success) setOptions(result.data);
       })
@@ -40,7 +41,7 @@ export function useDomainOptions(open: boolean): DomainOptions | null {
     return () => {
       cancelled = true;
     };
-  }, [open]);
+  }, [open, locale]);
 
   return options;
 }

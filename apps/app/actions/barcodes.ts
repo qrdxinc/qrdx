@@ -57,8 +57,9 @@ const writeLimiter = createRateLimiter({ limiter: slidingWindow(60, "60 s") });
 async function failure(
   error: unknown,
   action: string,
+  who: { pageLocale?: string; userId?: string } = {},
 ): Promise<BarcodeActionResult<never>> {
-  const text = (await codeActionText()).barcodes;
+  const text = (await codeActionText(who)).barcodes;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
@@ -102,9 +103,12 @@ function parse<T extends z.ZodType>(schema: T, input: unknown): z.infer<T> {
 async function run<T>(
   action: string,
   fn: (active: ActiveWorkspace) => Promise<T>,
+  pageLocale?: string,
 ): Promise<BarcodeActionResult<T>> {
+  let userId: string | undefined;
   try {
     const active = await getActiveWorkspace();
+    userId = active.scope.userId;
     assertCan(active.scope, "content.write");
     await enforceRateLimits([
       {
@@ -116,7 +120,7 @@ async function run<T>(
     revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, action);
+    return failure(error, action, { pageLocale, userId });
   }
 }
 
@@ -126,26 +130,36 @@ const ref = (view: BarcodeView, active: ActiveWorkspace): SavedBarcodeRef => ({
   workspace: { slug: active.workspace.slug, name: active.workspace.name },
 });
 
+/**
+ * `pageLocale` (here and in listBarcodeFolders): the calling page's
+ * useLocale(), the language its messages are in.
+ */
 export async function saveBarcode(
   input: z.input<typeof createBarcodeSchema>,
+  pageLocale?: string,
 ): Promise<BarcodeActionResult<SavedBarcodeRef>> {
-  return run("saveBarcode", async (active) =>
-    ref(
-      await createBarcode(active.scope, parse(createBarcodeSchema, input)),
-      active,
-    ),
+  return run(
+    "saveBarcode",
+    async (active) =>
+      ref(
+        await createBarcode(active.scope, parse(createBarcodeSchema, input)),
+        active,
+      ),
+    pageLocale,
   );
 }
 
 /** The workspace's folders, for the new-barcode modal's picker. Read-only. */
-export async function listBarcodeFolders(): Promise<
-  BarcodeActionResult<FolderOption[]>
-> {
+export async function listBarcodeFolders(
+  pageLocale?: string,
+): Promise<BarcodeActionResult<FolderOption[]>> {
+  let userId: string | undefined;
   try {
     const { scope } = await getActiveWorkspace();
+    userId = scope.userId;
     return { success: true, data: folderOptions(await listFolders(scope)) };
   } catch (error) {
-    return failure(error, "listBarcodeFolders");
+    return failure(error, "listBarcodeFolders", { pageLocale, userId });
   }
 }
 

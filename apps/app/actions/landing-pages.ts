@@ -70,8 +70,9 @@ const ENGLISH = CODE_ACTION_MESSAGES.landingPages;
 async function failure(
   error: unknown,
   context: Record<string, unknown>,
+  who: { pageLocale?: string; userId?: string },
 ): Promise<LandingPageActionResult<never>> {
-  const text = (await codeActionText()).landingPages;
+  const text = (await codeActionText(who)).landingPages;
   const say = (message: string) => ownMessage(ENGLISH, text, message);
   if (error instanceof UnauthorizedError) {
     return {
@@ -124,21 +125,30 @@ async function run<T>(
   {
     revalidate = false,
     access = "write",
-  }: { revalidate?: boolean; access?: "read" | "write" } = {},
+    pageLocale,
+  }: {
+    revalidate?: boolean;
+    access?: "read" | "write";
+    /** The calling page's useLocale(): the language its messages are in */
+    pageLocale?: string;
+  } = {},
 ): Promise<LandingPageActionResult<T>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     if (access === "write") assertCan(scope, "content.write");
     const data = await fn(scope);
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, { pageLocale, userId });
   }
 }
 
 export async function createLandingPage(
   input: z.input<typeof createPageSchema>,
+  pageLocale?: string,
 ): Promise<LandingPageActionResult<{ pageId: string; codeId: string }>> {
   return run(
     "createLandingPage",
@@ -147,7 +157,7 @@ export async function createLandingPage(
       await enforceCreateRateLimit(scope.userId);
       return createPage(scope, data);
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }
 
@@ -244,8 +254,11 @@ export async function createLandingPageCode(input: {
   );
 }
 
-export async function getLandingPageUsage(): Promise<
-  LandingPageActionResult<PageUsage>
-> {
-  return run("getLandingPageUsage", getPageUsage, { access: "read" });
+export async function getLandingPageUsage(
+  pageLocale?: string,
+): Promise<LandingPageActionResult<PageUsage>> {
+  return run("getLandingPageUsage", getPageUsage, {
+    access: "read",
+    pageLocale,
+  });
 }

@@ -54,11 +54,11 @@ const mutationLimiter = createRateLimiter({
 async function failure(
   error: unknown,
   action: string,
-  { admin = false } = {},
+  { admin = false, userId }: { admin?: boolean; userId?: string } = {},
 ): Promise<FileActionResult<never>> {
   const text = admin
     ? CODE_ACTION_MESSAGES.files
-    : (await codeActionText()).files;
+    : (await codeActionText({ userId })).files;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
@@ -104,8 +104,10 @@ async function mutate<T>(
   action: string,
   fn: (scope: ActiveScope) => Promise<T>,
 ): Promise<FileActionResult<T>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     assertCan(scope, "content.write");
     await enforceRateLimits([
       { limiter: mutationLimiter, key: `files:mutate:user:${scope.userId}` },
@@ -114,7 +116,7 @@ async function mutate<T>(
     revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, action);
+    return failure(error, action, { userId });
   }
 }
 
@@ -152,8 +154,10 @@ const loadSchema = z.object({
 export async function loadFilesAction(
   input: z.input<typeof loadSchema>,
 ): Promise<FileActionResult<CursorPage<FileRow>>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     await enforceRateLimits([
       { limiter: readLimiter, key: `files:list:user:${scope.userId}` },
     ]);
@@ -167,7 +171,7 @@ export async function loadFilesAction(
       }),
     };
   } catch (error) {
-    return failure(error, "loadFiles");
+    return failure(error, "loadFiles", { userId });
   }
 }
 

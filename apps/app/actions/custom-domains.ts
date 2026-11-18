@@ -74,8 +74,9 @@ const idInputSchema = z.object({ id: z.string().trim().min(1).max(64) });
 async function failure(
   error: unknown,
   action: string,
+  who: { pageLocale?: string; userId?: string } = {},
 ): Promise<CustomDomainActionResult<never>> {
-  const text = (await codeActionText()).customDomains;
+  const text = (await codeActionText(who)).customDomains;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
@@ -124,8 +125,10 @@ async function mutate<T>(
   action: string,
   fn: (scope: ActiveScope) => Promise<T>,
 ): Promise<CustomDomainActionResult<T>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     await enforceRateLimits([
       {
         limiter: mutationLimiter,
@@ -137,7 +140,7 @@ async function mutate<T>(
     revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, action);
+    return failure(error, action, { userId });
   }
 }
 
@@ -165,16 +168,20 @@ export async function removeCustomDomain(
   );
 }
 
-/** Verified domains of the active scope, for the code dialog's domain picker. */
-export async function getCustomDomainOptions(): Promise<
-  CustomDomainActionResult<DomainOptions>
-> {
+/**
+ * Verified domains of the active scope, for the code dialog's domain picker.
+ * `pageLocale`: the calling page's useLocale(), the language its messages
+ * are in.
+ */
+export async function getCustomDomainOptions(
+  pageLocale?: string,
+): Promise<CustomDomainActionResult<DomainOptions>> {
+  let userId: string | undefined;
   try {
-    return {
-      success: true,
-      data: await getDomainOptions(await getActiveScope()),
-    };
+    const scope = await getActiveScope();
+    userId = scope.userId;
+    return { success: true, data: await getDomainOptions(scope) };
   } catch (error) {
-    return failure(error, "getCustomDomainOptions");
+    return failure(error, "getCustomDomainOptions", { pageLocale, userId });
   }
 }

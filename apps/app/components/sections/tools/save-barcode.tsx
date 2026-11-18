@@ -11,7 +11,7 @@ import { toast } from "@repo/design-system";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { ArchiveAdd } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
 import {
@@ -47,6 +47,8 @@ export function PublicBarcodeGenerator({
 
 export function SaveBarcode({ current }: { current: CurrentBarcode | null }) {
   const t = useTranslations("barcodeTool.save");
+  // The server's messages come in this page's language (English here).
+  const locale = useLocale();
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const openSignInTo = useAuthStore((state) => state.openSignInTo);
@@ -76,12 +78,15 @@ export function SaveBarcode({ current }: { current: CurrentBarcode | null }) {
     if (!current) return;
     setSaving(true);
     try {
-      const result = await saveGeneratorBarcode({
-        format: current.format,
-        value: current.value,
-        options: styleChanges(current.format, current.style),
-        title: null,
-      });
+      const result = await saveGeneratorBarcode(
+        {
+          format: current.format,
+          value: current.value,
+          options: styleChanges(current.format, current.style),
+          title: null,
+        },
+        locale,
+      );
       if (!result.success) {
         soundEvent("error");
         toast.error(t("failed"), {

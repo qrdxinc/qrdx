@@ -1,18 +1,22 @@
 // The code, page, domain, tag, suggestion and webhook actions in another
 // language: what they say themselves (signing in, validation, plan limits)
-// comes in the person's language, which the dashboard shows as it is. That
-// language is the app's rule (lib/i18n/app-locale.ts, run for real here):
-// the saved one, else the language menu's cookie, else English. Only
-// next-intl's server entry, which needs Next's plugin, is swapped for what
-// i18n/request.ts does: the locale's catalog over English. Also: English
-// stays English word for word, admin stays English, a catalog that can't be
-// read answers in English, and the catalog's English matches
-// CODE_ACTION_MESSAGES.
+// comes in the language of the page that shows it. The code builder and the
+// editor send their page's language (useLocale(): /es/playground is Spanish,
+// /playground English, whatever the cookie says), and so do the code and
+// barcode routes when the page adds ?locale=. Without one, it's the app's
+// rule (lib/i18n/app-locale.ts, run for real here): the saved language,
+// else the language menu's cookie, else English; the dashboard renders in
+// that same language. Only next-intl's server entry, which needs Next's
+// plugin, is swapped for what i18n/request.ts does: the locale's catalog
+// over English. Also: English stays English word for word, admin stays
+// English, a catalog that can't be read answers in English, and the
+// catalog's English matches CODE_ACTION_MESSAGES.
 import type { Locale } from "@repo/i18n/config";
 import { createTranslator } from "next-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import en from "@/messages/en.json";
 import es from "@/messages/es.json";
+import fr from "@/messages/fr.json";
 import { fakeDb } from "../support/fake-db";
 
 const USER = "u_ana";
@@ -100,12 +104,17 @@ vi.mock("@repo/auth/server", () => ({
 }));
 vi.mock("@/lib/scope", async (importOriginal) => {
   const { UnauthorizedError } = await import("@/types/errors");
+  const scope = () => {
+    if (!state.signedIn) throw new UnauthorizedError();
+    return { userId: USER, organizationId: ORG, role: "owner" as const };
+  };
   return {
     ...(await importOriginal<typeof import("@/lib/scope")>()),
-    getActiveScope: async () => {
-      if (!state.signedIn) throw new UnauthorizedError();
-      return { userId: USER, organizationId: ORG, role: "owner" };
-    },
+    getActiveScope: async () => scope(),
+    getActiveWorkspace: async () => ({
+      scope: scope(),
+      workspace: { id: ORG, slug: "acme", name: "Acme" },
+    }),
   };
 });
 vi.mock("@/lib/plans", async (importOriginal) => ({
@@ -124,6 +133,9 @@ vi.mock("@/lib/code-versions", () => ({ snapshotCodeVersion: async () => {} }));
 vi.mock("@/lib/shared", () => ({
   logError: (error: Error) => state.errors.push(error.message),
 }));
+vi.mock("@/lib/log-error", () => ({
+  logError: (error: Error) => state.errors.push(error.message),
+}));
 
 const lifecycle = await import("@/actions/code-lifecycle");
 const marketing = await import("@/actions/code-marketing");
@@ -134,6 +146,12 @@ const suggestions = await import("@/actions/code-suggestions");
 const qrCodes = await import("@/actions/qr-codes");
 const files = await import("@/actions/files");
 const webhooks = await import("@/app/(app)/dashboard/webhooks/_lib/actions");
+const barcodes = await import("@/actions/barcodes");
+const codeOptions = await import(
+  "@/app/(app)/dashboard/codes/_lib/code-option-actions"
+);
+const codesRoute = await import("@/app/api/playground/codes/route");
+const barcodesRoute = await import("@/app/api/barcodes/route");
 const { CODE_ACTION_MESSAGES, codeActionMessages } = await import(
   "@/lib/code-actions/messages"
 );
@@ -397,6 +415,150 @@ describe("with the language menu on Spanish", () => {
       success: false,
       error: { code: "UNAUTHORIZED", message: "Sign in to manage files." },
     });
+  });
+});
+
+describe("on a page whose URL carries the language (the builder, the editor)", () => {
+  it("is the page's Spanish with no cookie and no saved language", async () => {
+    expect(
+      await lifecycle.updateCodeLifecycle({ id: CODE, password: "abc" }, "es"),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: "Usa al menos 4 caracteres para la contraseña",
+      },
+    });
+    expect(
+      await marketing.saveCodeRouting(
+        { id: CODE, routing: { rules: [rule] } },
+        "es",
+      ),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "PLAN_REQUIRED",
+        message:
+          "El enrutamiento inteligente es una función de Pro. Aún puedes desactivar o eliminar lo que ya está configurado.",
+      },
+    });
+    expect(
+      await tags.setQrCodeTags(
+        { codeId: CODE, tagIds: Array.from({ length: 11 }, (_, i) => `t${i}`) },
+        "es",
+      ),
+    ).toMatchObject({
+      success: false,
+      error: { message: "Un código puede tener hasta 10 etiquetas." },
+    });
+    state.limited = true;
+    expect(
+      await suggestions.suggestCodeDetailsAction(
+        { destinationUrl: "https://shop.example/" } as never,
+        "es",
+      ),
+    ).toMatchObject({
+      error: { message: spanish.codeSuggestions.rateLimited },
+    });
+    state.limited = false;
+    state.signedIn = false;
+    expect(await qrCodes.createQrCode({} as never, undefined, "es")).toEqual({
+      success: false,
+      error: { code: "UNAUTHORIZED", message: spanish.qrCodes.signIn },
+    });
+    expect(await barcodes.saveBarcode({} as never, "es")).toEqual({
+      success: false,
+      error: { code: "UNAUTHORIZED", message: spanish.barcodes.signIn },
+    });
+    expect(await codeOptions.getCodeOptions(CODE, "es")).toEqual({
+      success: false,
+      error: { message: spanish.codeOptions.signIn },
+    });
+    expect(state.errors).toEqual([]);
+  });
+
+  it("is the page's English over a Spanish cookie and a saved Spanish", async () => {
+    fakeDb.resetAll();
+    account("es");
+    code();
+    state.cookieLocale = "es";
+    expect(
+      await lifecycle.updateCodeLifecycle({ id: CODE, password: "abc" }, "en"),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "VALIDATION_ERROR",
+        message: "Use at least 4 characters for the password",
+      },
+    });
+    expect(
+      await marketing.saveCodeRouting(
+        { id: CODE, routing: { rules: [rule] } },
+        "en",
+      ),
+    ).toEqual({
+      success: false,
+      error: {
+        code: "PLAN_REQUIRED",
+        message:
+          "Smart routing is a Pro feature. You can still turn off or remove what's already set up.",
+      },
+    });
+    state.signedIn = false;
+    expect(await qrCodes.getQrCode(CODE, "en")).toEqual({
+      success: false,
+      error: {
+        code: "UNAUTHORIZED",
+        message: "Sign in to manage dynamic QR codes.",
+      },
+    });
+    // The same calls without the page's language: the dashboard's rule.
+    expect(await qrCodes.getQrCode(CODE)).toEqual({
+      success: false,
+      error: { code: "UNAUTHORIZED", message: spanish.qrCodes.signIn },
+    });
+  });
+
+  it("is ignored when it isn't one of QRdx's languages (the app's rule)", async () => {
+    state.cookieLocale = "fr";
+    state.signedIn = false;
+    expect(await qrCodes.getQrCode(CODE, "xx")).toMatchObject({
+      error: { message: fr.codeActions.qrCodes.signIn },
+    });
+  });
+
+  it("comes through the code and barcode routes with ?locale=", async () => {
+    state.signedIn = false;
+    state.cookieLocale = "fr";
+    const post = (path: string) =>
+      new Request(new URL(path, "http://localhost:3000"), {
+        method: "POST",
+        headers: {
+          host: "localhost:3000",
+          origin: "http://localhost:3000",
+          "sec-fetch-site": "same-origin",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ destinationUrl: "https://shop.example/" }),
+      });
+    const spanishCode = await codesRoute.POST(
+      post("/api/playground/codes?locale=es"),
+    );
+    expect(spanishCode.status).toBe(401);
+    expect(await spanishCode.json()).toEqual({
+      success: false,
+      error: { code: "UNAUTHORIZED", message: spanish.qrCodes.signIn },
+    });
+    // Without it, as before: the app's rule (here the cookie's French).
+    expect(
+      await (await codesRoute.POST(post("/api/playground/codes"))).json(),
+    ).toMatchObject({
+      error: { message: fr.codeActions.qrCodes.signIn },
+    });
+    // /barcode-generator is English: its page says so.
+    expect(
+      await (await barcodesRoute.POST(post("/api/barcodes?locale=en"))).json(),
+    ).toMatchObject({ error: { message: "Sign in to save barcodes." } });
   });
 });
 

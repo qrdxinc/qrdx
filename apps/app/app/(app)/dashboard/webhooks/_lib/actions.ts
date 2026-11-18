@@ -51,8 +51,9 @@ const updateSchema = idSchema.extend({
 async function failure(
   error: unknown,
   action: string,
+  userId: string | undefined,
 ): Promise<WebhookActionResult<never>> {
-  const text = (await codeActionText()).webhooks;
+  const text = (await codeActionText({ userId })).webhooks;
   if (error instanceof UnauthorizedError) {
     return { ok: false, error: text.signIn };
   }
@@ -80,8 +81,10 @@ async function run<T>(
     confirm?: boolean | ((scope: ActiveScope) => Promise<boolean>);
   } = {},
 ): Promise<WebhookActionResult<T>> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     // Before the limits, so the round trip that asks doesn't use one up.
     // Someone who can't manage webhooks gets that refusal instead.
     if (
@@ -98,7 +101,7 @@ async function run<T>(
     revalidatePath("/dashboard", "layout");
     return { ok: true, data };
   } catch (error) {
-    return failure(error, action);
+    return failure(error, action, userId);
   }
 }
 

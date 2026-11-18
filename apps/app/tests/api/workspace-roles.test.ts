@@ -124,11 +124,6 @@ vi.mock("@repo/auth/server", () => ({
     ),
   },
 }));
-// The language refusals are said in (it reads the session): English here.
-vi.mock(
-  "@/lib/i18n/app-locale",
-  async () => (await import("../support/intl")).appLocale,
-);
 
 const { ForbiddenError } = await import("@/lib/permissions-server");
 const { can, WORKSPACE_ROLES } = await import("@/lib/permissions");

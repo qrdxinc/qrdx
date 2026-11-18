@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@repo/design-system/components/ui/select";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Suspense, useId, useState, useTransition } from "react";
 import {
   type CodeMarketingSettings,
@@ -109,6 +109,8 @@ function PixelsEditor({
   plans: PixelPlans;
 }) {
   const t = useTranslations("app.dashboard.codes.pixelsPanel");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const id = useId();
   const [settings, setSettings] = useState(initial);
   const [draft, setDraftState] = useState(() => toDraft(initial.pixels));
@@ -137,10 +139,13 @@ function PixelsEditor({
   const save = () => {
     setError(null);
     startTransition(async () => {
-      const result = await saveCodePixels({
-        id: settings.codeId,
-        pixels: fromDraft(draft),
-      });
+      const result = await saveCodePixels(
+        {
+          id: settings.codeId,
+          pixels: fromDraft(draft),
+        },
+        locale,
+      );
       if (result.success) {
         setSettings(result.data);
         setDraftState(toDraft(result.data.pixels));

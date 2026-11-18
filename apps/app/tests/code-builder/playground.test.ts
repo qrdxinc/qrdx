@@ -296,11 +296,15 @@ describe("one-click Dynamic (the toggle)", () => {
       destination: "https://example.com/menu",
       styles: MY_STYLE,
       userId: "u_alice",
+      locale: "es",
     });
-    expect(routes.createDynamicCode).toHaveBeenCalledWith({
-      destinationUrl: "https://example.com/menu",
-      style: MY_STYLE,
-    });
+    expect(routes.createDynamicCode).toHaveBeenCalledWith(
+      {
+        destinationUrl: "https://example.com/menu",
+        style: MY_STYLE,
+      },
+      "es",
+    );
     expect(outcome).toEqual({
       kind: "linked",
       trimmed: false,
@@ -325,6 +329,7 @@ describe("one-click Dynamic (the toggle)", () => {
       destination: "https://example.com/menu",
       styles: MY_STYLE,
       userId: "u_alice",
+      locale: "es",
     });
     expect(outcome).toEqual({
       kind: "limit",
@@ -352,6 +357,7 @@ describe("one-click Dynamic (the toggle)", () => {
         destination: "https://a.com",
         styles: MY_STYLE,
         userId: "u",
+        locale: "es",
       }),
     ).resolves.toEqual({ kind: "signin" });
     routes.createDynamicCode.mockRejectedValueOnce(new Error("offline"));
@@ -360,6 +366,7 @@ describe("one-click Dynamic (the toggle)", () => {
         destination: "https://a.com",
         styles: MY_STYLE,
         userId: "u",
+        locale: "es",
       }),
     ).resolves.toEqual({
       kind: "error",

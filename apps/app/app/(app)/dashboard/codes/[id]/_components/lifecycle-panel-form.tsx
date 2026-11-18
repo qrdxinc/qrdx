@@ -19,7 +19,7 @@ import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Switch } from "@repo/design-system/components/ui/switch";
 import { Lock, ShieldCross as ShieldAlert } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useState, useTransition } from "react";
 import {
   type CodeLifecycleView,
@@ -114,6 +114,8 @@ export function LifecyclePanelForm({
   plan: PaidPlan | null;
 }) {
   const t = useTranslations("app.dashboard.codes.lifecyclePanelForm");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const router = useRouter();
   const openUpgradeDialog = useGetProDialogStore((s) => s.openUpgradeDialog);
   const upgrade = () => openUpgradeDialog(plan ?? "pro");
@@ -193,7 +195,10 @@ export function LifecyclePanelForm({
       return;
     }
     startSaving(async () => {
-      const result = await updateCodeLifecycle({ id: view.id, ...patch });
+      const result = await updateCodeLifecycle(
+        { id: view.id, ...patch },
+        locale,
+      );
       if (!result.success) {
         if (result.error.code === "PLAN_REQUIRED") upgrade();
         toast.error(result.error.message);
@@ -210,7 +215,7 @@ export function LifecyclePanelForm({
 
   const onPausedChange = (paused: boolean) => {
     startPausing(async () => {
-      const result = await setCodePaused({ id: view.id, paused });
+      const result = await setCodePaused({ id: view.id, paused }, locale);
       if (!result.success) {
         toast.error(result.error.message);
         return;

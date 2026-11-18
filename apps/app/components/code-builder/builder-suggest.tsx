@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // "Suggest" next to the builder's back-half and tags fields. One request
 // fills both: up to three free back-halves and up to three tags, shown as
@@ -56,6 +56,8 @@ export function useCodeSuggestions({
   tags: TagRow[] | null;
   currentTagIds: string[];
 }): CodeSuggestionsState {
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const [state, setState] = useState<SuggestState>({ status: "idle" });
   const [field, setField] = useState<"slug" | "tags" | null>(null);
   const latest = useRef("");
@@ -74,13 +76,16 @@ export function useCodeSuggestions({
       latest.current = key;
       setState({ status: "loading", key });
       const byId = new Map((tags ?? []).map((tag) => [tag.id, tag.name]));
-      suggestCodeDetailsAction({
-        destination,
-        domainId,
-        codeId,
-        existingTags: (tags ?? []).map((tag) => tag.name),
-        currentTags: currentTagIds.flatMap((id) => byId.get(id) ?? []),
-      })
+      suggestCodeDetailsAction(
+        {
+          destination,
+          domainId,
+          codeId,
+          existingTags: (tags ?? []).map((tag) => tag.name),
+          currentTags: currentTagIds.flatMap((id) => byId.get(id) ?? []),
+        },
+        locale,
+      )
         .then((result) => {
           if (latest.current !== key) return;
           if (result.success) {
@@ -99,7 +104,7 @@ export function useCodeSuggestions({
           }
         });
     },
-    [destination, domainId, codeId, key, state, tags, currentTagIds],
+    [destination, domainId, codeId, key, state, tags, currentTagIds, locale],
   );
 
   const fresh = "key" in state && state.key === key;

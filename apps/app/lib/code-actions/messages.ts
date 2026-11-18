@@ -2,9 +2,9 @@
 // say themselves (actions/code-*.ts, landing-pages.ts, files.ts and the
 // rest in CODE_ACTION_MESSAGES), in English: the source, with one section
 // per action file. codeActionMessages(t) returns the same messages from
-// codeActions in messages/en.json, in the person's language; the actions
-// read them with codeActionText() (./messages-server.ts) when they answer
-// with a message.
+// codeActions in messages/en.json, in another language; the actions read
+// them with codeActionText() (./messages-server.ts), in the language of the
+// page that called them, when they answer with a message.
 //
 // Messages other modules throw (the code, page and domain services, rate
 // limits, roles) reach the client as those modules wrote them, unless one is

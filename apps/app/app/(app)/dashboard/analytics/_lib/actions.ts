@@ -31,8 +31,10 @@ const searchSchema = z.object({ q: z.string().max(200) });
 export async function searchCompareCodes(input: {
   q: string;
 }): Promise<CompareSearchResult> {
+  let userId: string | undefined;
   try {
     const scope = await getActiveScope();
+    userId = scope.userId;
     await enforceRateLimits([
       { limiter: searchLimiter, key: `analytics:compare:user:${scope.userId}` },
     ]);
@@ -40,7 +42,7 @@ export async function searchCompareCodes(input: {
     if (!parsed.success) {
       return {
         ok: false,
-        error: (await codeActionText()).analytics.searchTooLong,
+        error: (await codeActionText({ userId })).analytics.searchTooLong,
       };
     }
     const { options, more } = await searchCodeOptions(scope, {
@@ -48,7 +50,7 @@ export async function searchCompareCodes(input: {
     });
     return { ok: true, data: { options: options.map(toCompareOption), more } };
   } catch (error) {
-    const text = (await codeActionText()).analytics;
+    const text = (await codeActionText({ userId })).analytics;
     if (error instanceof UnauthorizedError) {
       return { ok: false, error: text.signIn };
     }

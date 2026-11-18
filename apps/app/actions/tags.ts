@@ -26,12 +26,15 @@ const ENGLISH = CODE_ACTION_MESSAGES.tags;
 
 /**
  * runOrganize, saying this file's own messages (its schemas') in the
- * person's language (codeActionText); the rest is runOrganize's.
+ * calling page's language (codeActionText); the rest is runOrganize's.
  */
 async function run<T>(
   action: string,
   fn: (scope: ActiveScope) => Promise<T>,
-  options?: Parameters<typeof runOrganize>[2],
+  {
+    pageLocale,
+    ...options
+  }: Parameters<typeof runOrganize>[2] & { pageLocale?: string } = {},
 ): Promise<OrganizeResult<T>> {
   const result = await runOrganize(action, fn, options);
   if (
@@ -40,7 +43,7 @@ async function run<T>(
   ) {
     return result;
   }
-  const text = (await codeActionText()).tags;
+  const text = (await codeActionText({ pageLocale })).tags;
   return {
     ...result,
     error: {
@@ -115,14 +118,22 @@ export async function deleteCodeTag(
   );
 }
 
-/** Replaces the tags of one code. */
+/**
+ * Replaces the tags of one code. `pageLocale`: the calling page's
+ * useLocale(), the language its own messages are in.
+ */
 export async function setQrCodeTags(
   input: z.input<typeof setSchema>,
+  pageLocale?: string,
 ): Promise<OrganizeResult<void>> {
-  return run("setQrCodeTags", (scope) => {
-    const { codeId, tagIds } = parseInput(setSchema, input);
-    return setCodeTags(scope, codeId, tagIds);
-  });
+  return run(
+    "setQrCodeTags",
+    (scope) => {
+      const { codeId, tagIds } = parseInput(setSchema, input);
+      return setCodeTags(scope, codeId, tagIds);
+    },
+    { pageLocale },
+  );
 }
 
 /** Adds and/or removes tags on several codes. */

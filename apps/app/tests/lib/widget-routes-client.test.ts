@@ -84,6 +84,25 @@ describe("what each call sends", () => {
     });
   });
 
+  it("sends the page's language when it has one, for the server's messages", async () => {
+    answer({ success: true, data: VIEW }, 201);
+    await createDynamicCode(
+      { destinationUrl: VIEW.destinationUrl, style: {} as never },
+      "es",
+    );
+    expect(sent()).toMatchObject({ path: "/api/playground/codes?locale=es" });
+    fetchMock.mockReset();
+    answer({ success: true, data: VIEW });
+    await updateDynamicCode({ id: "code/1", style: {} as never }, "pt-BR");
+    expect(sent()).toMatchObject({
+      path: "/api/playground/codes/code%2F1?locale=pt-BR",
+    });
+    fetchMock.mockReset();
+    answer({ success: true, data: { id: "bc_1" } }, 201);
+    await saveGeneratorBarcode({ format: "code128", value: "X" }, "en");
+    expect(sent()).toMatchObject({ path: "/api/barcodes?locale=en" });
+  });
+
   it("saveGeneratorBarcode posts the barcode", async () => {
     const saved = {
       id: "bc_1",

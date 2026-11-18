@@ -52,8 +52,9 @@ const ENGLISH = CODE_ACTION_MESSAGES.qrCodes;
 async function failure(
   error: unknown,
   context: Record<string, unknown>,
+  who: { pageLocale?: string; userId?: string },
 ): Promise<QrCodeActionResult<never>> {
-  const text = (await codeActionText()).qrCodes;
+  const text = (await codeActionText(who)).qrCodes;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
@@ -101,14 +102,20 @@ function parse<T extends z.ZodType>(schema: T, input: unknown): z.infer<T> {
 async function run<T>(
   action: string,
   fn: (scope: ActiveScope) => Promise<T>,
-  { revalidate = false } = {},
+  {
+    revalidate = false,
+    pageLocale,
+  }: { revalidate?: boolean; pageLocale?: string } = {},
 ): Promise<QrCodeActionResult<T>> {
+  let userId: string | undefined;
   try {
-    const data = await fn(await getActiveScope());
+    const scope = await getActiveScope();
+    userId = scope.userId;
+    const data = await fn(scope);
     if (revalidate) revalidatePath("/dashboard", "layout");
     return { success: true, data };
   } catch (error) {
-    return failure(error, { action });
+    return failure(error, { action }, { pageLocale, userId });
   }
 }
 
@@ -138,11 +145,13 @@ const createdFromSchema = z
 /**
  * Creates a code. `from.via` says which surface asked (the playground's
  * Dynamic toggle and builder say "playground"); anything else counts as the
- * dashboard.
+ * dashboard. `pageLocale` (here and below): the calling page's useLocale(),
+ * the language its messages are in (lib/code-actions/messages-server.ts).
  */
 export async function createQrCode(
   input: z.input<typeof createCodeSchema>,
   from?: { via?: "dashboard" | "playground" },
+  pageLocale?: string,
 ): Promise<QrCodeActionResult<QrCodeView>> {
   return run(
     "createQrCode",
@@ -153,12 +162,13 @@ export async function createQrCode(
       const [code] = await createCodes(scope, [data], { via });
       return code;
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }
 
 export async function updateQrCode(
   input: { id: string } & z.input<typeof updateCodeSchema>,
+  pageLocale?: string,
 ): Promise<QrCodeActionResult<QrCodeView>> {
   return run(
     "updateQrCode",
@@ -166,7 +176,7 @@ export async function updateQrCode(
       const { id, patch } = parse(updateSchema, input);
       return updateCode(scope, id, patch);
     },
-    { revalidate: true },
+    { revalidate: true, pageLocale },
   );
 }
 
@@ -193,19 +203,27 @@ export async function deleteQrCode(
   );
 }
 
-export async function listQrCodes(input?: {
-  status?: CodeListStatus;
-  q?: string;
-}): Promise<QrCodeActionResult<{ codes: QrCodeView[]; total: number }>> {
-  return run("listQrCodes", (scope) =>
-    listCodes(scope, { ...parse(listSchema, input), limit: 100 }),
+export async function listQrCodes(
+  input?: {
+    status?: CodeListStatus;
+    q?: string;
+  },
+  pageLocale?: string,
+): Promise<QrCodeActionResult<{ codes: QrCodeView[]; total: number }>> {
+  return run(
+    "listQrCodes",
+    (scope) => listCodes(scope, { ...parse(listSchema, input), limit: 100 }),
+    { pageLocale },
   );
 }
 
 export async function getQrCode(
   id: string,
+  pageLocale?: string,
 ): Promise<QrCodeActionResult<QrCodeView>> {
-  return run("getQrCode", (scope) => getCode(scope, parse(codeIdSchema, id)));
+  return run("getQrCode", (scope) => getCode(scope, parse(codeIdSchema, id)), {
+    pageLocale,
+  });
 }
 
 export async function getQrCodeUsage(): Promise<QrCodeActionResult<CodeUsage>> {
@@ -223,10 +241,15 @@ const slugCheckSchema = z.object({
 /** Live availability of a back-half for the code dialog (rate-limited per user). */
 export async function checkQrCodeSlug(
   input: z.input<typeof slugCheckSchema>,
+  pageLocale?: string,
 ): Promise<QrCodeActionResult<SlugAvailability>> {
-  return run("checkQrCodeSlug", async (scope) => {
-    const data = parse(slugCheckSchema, input);
-    await enforceSlugCheckRateLimit(scope.userId);
-    return checkSlugAvailability(scope, data);
-  });
+  return run(
+    "checkQrCodeSlug",
+    async (scope) => {
+      const data = parse(slugCheckSchema, input);
+      await enforceSlugCheckRateLimit(scope.userId);
+      return checkSlugAvailability(scope, data);
+    },
+    { pageLocale },
+  );
 }

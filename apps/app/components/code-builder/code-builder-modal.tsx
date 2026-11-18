@@ -281,7 +281,7 @@ export default function CodeBuilderModal({
   useEffect(() => {
     if (!editCodeId) return;
     let cancelled = false;
-    loadCodeForEdit(editCodeId, editHint).then((result) => {
+    loadCodeForEdit(editCodeId, editHint, locale).then((result) => {
       if (cancelled) return;
       if (!result.ok) {
         setLoadError(result.message);
@@ -298,7 +298,7 @@ export default function CodeBuilderModal({
     return () => {
       cancelled = true;
     };
-  }, [editCodeId, editHint]);
+  }, [editCodeId, editHint, locale]);
 
   useEffect(() => {
     let cancelled = false;
@@ -675,7 +675,7 @@ export default function CodeBuilderModal({
           code,
           initial,
           fields,
-          builderServices,
+          builderServices(locale),
           { organizationKnown },
         );
         applyResult(result, { optimisticKey });
@@ -683,7 +683,9 @@ export default function CodeBuilderModal({
       }
       const result = await submitCreate(
         fields,
-        fromPlayground ? playgroundBuilderServices : builderServices,
+        fromPlayground
+          ? playgroundBuilderServices(locale)
+          : builderServices(locale),
       );
       applyResult(result, { optimisticKey, thenOpen });
     });
