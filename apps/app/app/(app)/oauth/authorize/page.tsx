@@ -2,6 +2,7 @@ import { auth } from "@repo/auth/server";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { ConfirmIdentityProvider } from "@/components/confirm-identity/provider";
+import { getSignInOptions } from "@/lib/auth/sign-in-options-server";
 import {
   authorizeParamEntries,
   checkAuthorizeRequest,
@@ -39,10 +40,12 @@ export default async function OAuthAuthorizePage({
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) {
     const callbackURL = `/oauth/authorize?${new URLSearchParams(entries)}`;
+    const { google, github } = getSignInOptions();
     return (
       <OAuthSignIn
         app={{ name: check.app.name, logoUrl: check.app.logoUrl }}
         callbackURL={callbackURL}
+        providers={{ google, github }}
         scopes={check.scopes}
       />
     );

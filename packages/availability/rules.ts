@@ -38,6 +38,10 @@ export const FEATURE_IDS = [
   "scheduledJobs",
   "youtubeChannelPicker",
   "spotifyPlaylistPicker",
+  // Ways to sign in: the sign-in panel shows only these where they work
+  "googleSignIn",
+  "githubSignIn",
+  "emailSignIn",
   "passkeys",
   "sso",
   "auditLog",
@@ -82,6 +86,14 @@ export interface FeatureContext {
    * these rules stay pure. Absent or empty: none.
    */
   eeFeatures?: readonly EeFeature[];
+  /**
+   * Whether this deployment may send email and call other services
+   * (lib/delivery-guard.ts): production on its own domain, not a
+   * preview, a localhost build or local dev, unless QRDX_ALLOW_DEV_DELIVERY
+   * says so. The server works it out and passes the answer in, so these
+   * rules stay pure. Absent: not allowed.
+   */
+  outboundDelivery?: boolean;
 }
 
 interface FeatureRule {
@@ -93,6 +105,12 @@ interface FeatureRule {
    * values can't work (the variables named by `requires` are then reported).
    */
   usable?: (ctx: FeatureContext) => boolean;
+  /**
+   * Why `usable` says no although every variable is set, for admins: the
+   * Health page shows it in place of the variables, which aren't what's
+   * wrong then (featureUnusableReason).
+   */
+  unusableReason?: string;
   /**
    * Pages that only offer this feature. They leave the nav, footer, app
    * sidebar, sitemap and llms.txt while it's unavailable; the pages
@@ -201,6 +219,36 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
     name: "Spotify playlist picker",
     requires: () => ["SPOTIFY_CLIENT_ID", "SPOTIFY_CLIENT_SECRET"],
     extrasOf: "spotify",
+  },
+  // Google and GitHub sign-in: packages/auth/server.ts registers a provider
+  // only when both its client id and secret are set.
+  googleSignIn: {
+    name: "Google sign-in",
+    requires: () => ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
+  },
+  githubSignIn: {
+    name: "GitHub sign-in",
+    requires: () => ["GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET"],
+  },
+  emailSignIn: {
+    // Sign-in codes (lib/auth/sign-in-code-delivery.ts): emailed
+    // through Resend where outbound delivery is allowed, written to the
+    // terminal in local dev. A production build that may not send email (a
+    // localhost app URL, a preview) has no way to get a code to anyone, so
+    // the email form is left out and asking for a code fails
+    // (packages/auth/email-otp.ts). The same rule as canDeliverSignInCodes
+    // in lib/account/deletion.ts; tests/lib/feature-availability.test.ts
+    // checks they agree.
+    name: "Email sign-in codes (Resend; the app URL isn't localhost)",
+    requires: (ctx) =>
+      ctx.production || ctx.outboundDelivery
+        ? ["RESEND_API_KEY", "EMAIL_FROM", "NEXT_PUBLIC_APP_URL"]
+        : [],
+    usable: (ctx) => Boolean(ctx.outboundDelivery) || !ctx.production,
+    // isOutboundDeliveryAllowed's "no" in a production build: on Vercel,
+    // any VERCEL_ENV but production; elsewhere, a localhost app URL.
+    unusableReason:
+      "Outbound email is off on this deployment: NEXT_PUBLIC_APP_URL is localhost or 127.0.0.1, or this is a Vercel preview. Set QRDX_ALLOW_DEV_DELIVERY=1 to allow it.",
   },
   passkeys: {
     // Passkeys belong to the app's host and browsers only offer them over
@@ -435,6 +483,21 @@ export function missingFeatureSetup(
     return [...names];
   }
   return missing;
+}
+
+/**
+ * Why `id` is off although every variable it needs is set, in its rule's
+ * words (`unusableReason`). Null when it's on, a variable is missing, or the
+ * rule has no such words (its variables are the hint then).
+ */
+export function featureUnusableReason(
+  id: FeatureId,
+  ctx: FeatureContext
+): string | null {
+  const rule = FEATURE_RULES[id];
+  if (!(rule.unusableReason && rule.usable)) return null;
+  const allSet = rule.requires(ctx).every((name) => ctx.env[name]?.trim());
+  return allSet && !rule.usable(ctx) ? rule.unusableReason : null;
 }
 
 export type FeatureMap = Record<FeatureId, boolean>;
