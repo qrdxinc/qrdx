@@ -7,6 +7,7 @@ import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SIGNED_OUT_PATH, takeSignOutIntent } from "./_lib/intent";
 
@@ -18,6 +19,7 @@ type Step = "starting" | "confirm" | "signing-out" | "failed";
  * first. Failures say so and offer a retry; nothing pretends to succeed.
  */
 export function SignOutScreen() {
+  const t = useTranslations("app.signOut.signOutScreen");
   const router = useRouter();
   const [step, setStep] = useState<Step>("starting");
   const started = useRef(false);
@@ -68,19 +70,19 @@ export function SignOutScreen() {
           role="status"
         >
           <ModuleOrbit aria-hidden className="size-4" />
-          {step === "signing-out" ? "Signing you out…" : "One moment…"}
+          {step === "signing-out" ? t("signingYouOut") : t("oneMoment")}
         </div>
       )}
 
       {step === "confirm" && (
         <div className="flex max-w-xs flex-col items-center gap-4">
-          <h1 className="text-lg font-semibold">Sign out of QRdx?</h1>
+          <h1 className="text-lg font-semibold">{t("signOutOfQrdx")}</h1>
           <div className="flex gap-2">
             <Button autoFocus onClick={() => void signOut()}>
-              Sign out
+              {t("signOut")}
             </Button>
             <Button asChild variant="outline">
-              <Link href="/dashboard">Cancel</Link>
+              <Link href="/dashboard">{t("cancel")}</Link>
             </Button>
           </div>
         </div>
@@ -89,17 +91,17 @@ export function SignOutScreen() {
       {step === "failed" && (
         <div className="flex max-w-xs flex-col items-center gap-4" role="alert">
           <div className="space-y-1">
-            <h1 className="text-lg font-semibold">You're still signed in</h1>
+            <h1 className="text-lg font-semibold">{t("youreStillSignedIn")}</h1>
             <p className="text-muted-foreground text-sm text-pretty">
-              Signing out didn't work. Check your connection and try again.
+              {t("signingOutDidntWorkCheck")}
             </p>
           </div>
           <div className="flex gap-2">
             <Button autoFocus onClick={() => void signOut()}>
-              Try again
+              {t("tryAgain")}
             </Button>
             <Button asChild variant="outline">
-              <Link href="/dashboard">Back to dashboard</Link>
+              <Link href="/dashboard">{t("backToDashboard")}</Link>
             </Button>
           </div>
         </div>

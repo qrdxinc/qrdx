@@ -7,10 +7,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { signInPath } from "@/lib/safe-redirect";
-import {
-  SECOND_STEP_TITLES,
-  type SecondStep,
-} from "../../components/second-step";
+import type { SecondStep } from "../../components/second-step";
 import { TwoFactorChallenge } from "../../components/two-factor-challenge";
 
 /**
@@ -26,6 +23,7 @@ export function TwoFactorPage({
   pending: boolean;
 }) {
   const t = useTranslations("app.signIn.twoFactor.twoFactorPage");
+  const tStep = useTranslations("auth.secondStep");
   const router = useRouter();
   const [step, setStep] = useState<SecondStep | null>(null);
 
@@ -37,7 +35,7 @@ export function TwoFactorPage({
           <h1 className="text-xl font-semibold tracking-tight">
             {pending
               ? step
-                ? SECOND_STEP_TITLES[step]
+                ? tStep(`titles.${step}`)
                 : t("twoStepVerification")
               : t("signInAgain")}
           </h1>

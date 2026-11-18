@@ -14,6 +14,7 @@ import {
 } from "@repo/auth/passkey";
 import { isPasskeyOrigin, passkeyRelyingParty } from "@repo/auth/passkey-rp";
 import { signInMethodForPath } from "@repo/auth/sign-in-method";
+import { createTranslator } from "next-intl";
 import { createElement } from "react";
 import { describe, expect, it } from "vitest";
 import {
@@ -23,7 +24,7 @@ import {
   normalizePasskeyName,
   PASSKEY_MESSAGES,
   registrationFailure,
-  signInFailureMessage,
+  signInFailureMessage as signInFailureMessageIn,
   toPasskeyViews,
 } from "@/lib/account/passkeys";
 import {
@@ -31,6 +32,18 @@ import {
   PasskeyNoticeEmail,
 } from "@/lib/email/templates/passkey-notice";
 import { passkeysWorkOn } from "@/lib/passkeys";
+import en from "@/messages/en.json";
+
+// Continue with passkey's lines, in English (auth.passkeySignIn.errors).
+const signInFailureMessage = (error: { code?: string; status?: number }) =>
+  signInFailureMessageIn(
+    error,
+    createTranslator({
+      locale: "en",
+      messages: en,
+      namespace: "auth.passkeySignIn.errors",
+    }),
+  );
 
 const CHROME_MAC =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";

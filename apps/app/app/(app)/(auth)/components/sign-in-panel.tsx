@@ -24,7 +24,7 @@ import { signUpLanding } from "@/lib/analytics/landing";
 import { socialSignInErrorPath } from "../sign-in/_lib/error-message";
 import { EmailCodeSignIn } from "./email-code-sign-in";
 import { PasskeySignIn } from "./passkey-sign-in";
-import { SECOND_STEP_TITLES, type SecondStep } from "./second-step";
+import type { SecondStep } from "./second-step";
 
 const FOOTER_LINK =
   "rounded-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
@@ -78,6 +78,7 @@ export function SignInPanel({
   shown = true,
 }: SignInPanelProps) {
   const t = useTranslations("auth.signInPanel");
+  const tStep = useTranslations("auth.secondStep");
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
   const [lastLoginMethod, setLastLoginMethod] = useState<string | null>(null);
@@ -174,7 +175,7 @@ export function SignInPanel({
         <Title className="text-xl font-semibold tracking-tight">
           {twoFactor
             ? secondStep
-              ? SECOND_STEP_TITLES[secondStep]
+              ? tStep(`titles.${secondStep}`)
               : t("twoStepVerification")
             : codeSentTo
               ? t("checkYourEmail")

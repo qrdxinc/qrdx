@@ -18,7 +18,10 @@ import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
 import { useAvailability } from "@/components/availability-provider";
 import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
-import { ssoSignInErrorMessage } from "@/ee/sso/messages";
+import {
+  type SignInErrorTranslator,
+  ssoSignInErrorMessage,
+} from "@/ee/sso/messages";
 import { type SsoSignInOffer, ssoSignInOffer } from "@/ee/sso/sign-in-offer";
 import { SsoOffer } from "@/ee/sso/sso-offer";
 import { pendingReferralCode } from "@/lib/affiliates/referral-client";
@@ -87,6 +90,7 @@ function sendErrorMessage(
 function verifyErrorMessage(
   error: NonNullable<AuthError>,
   t: Translator<"auth.emailCodeSignIn">,
+  tErrors: SignInErrorTranslator,
 ): [string, boolean] {
   if (error.status === 429) {
     return [t("tooManyTriesWaitA"), false];
@@ -101,7 +105,7 @@ function verifyErrorMessage(
     case "BANNED_USER":
       return [t("thisAccountIsSuspendedContact"), true];
     case SSO_REQUIRED:
-      return [ssoSignInErrorMessage(SSO_REQUIRED), true];
+      return [ssoSignInErrorMessage(SSO_REQUIRED, tErrors), true];
     default:
       return [t("somethingWentWrongTryAgain"), false];
   }
@@ -152,6 +156,7 @@ export function EmailCodeSignIn({
   onSsoOfferChange,
 }: EmailCodeSignInProps) {
   const t = useTranslations("auth.emailCodeSignIn");
+  const tErrors = useTranslations("auth.signInErrors");
   const router = useRouter();
   const id = useId();
   const affiliates = useAvailability().has("affiliates");
@@ -231,14 +236,14 @@ export function EmailCodeSignIn({
       setWrongTries(0);
       setCodeDead(false);
       if (resend) {
-        setNotice("New code sent. The old one no longer works.");
+        setNotice(t("newCodeSent"));
       } else {
         showSsoOffer(null);
         onSentToChange(address);
       }
     } catch (err) {
       console.error("Email code request failed:", err);
-      setError("Something went wrong. Check your connection and try again.");
+      setError(t("connectionFailed"));
     } finally {
       setSending(false);
     }
@@ -265,7 +270,7 @@ export function EmailCodeSignIn({
     event.preventDefault();
     const address = email.trim();
     if (!EMAIL_PATTERN.test(address)) {
-      setError("Enter a valid email address.");
+      setError(t("enterAValidEmailAddress"));
       return;
     }
     void submitEmail(address);
@@ -301,17 +306,17 @@ export function EmailCodeSignIn({
           const address = sentTo;
           onSentToChange(null);
           showSsoOffer(address, { required: true, refused: true });
-          setError(ssoSignInErrorMessage(SSO_REQUIRED));
+          setError(ssoSignInErrorMessage(SSO_REQUIRED, tErrors));
           return;
         }
         const tries =
           error.code === "INVALID_OTP" ? wrongTries + 1 : wrongTries;
         setWrongTries(tries);
         if (error.code === "INVALID_OTP" && tries >= TRIES_PER_CODE) {
-          setError("Too many wrong tries. Send a new code.");
+          setError(t("tooManyWrongTriesSend"));
           setCodeDead(true);
         } else {
-          const [message, dead] = verifyErrorMessage(error, t);
+          const [message, dead] = verifyErrorMessage(error, t, tErrors);
           setError(message);
           if (dead) setCodeDead(true);
         }
@@ -327,7 +332,7 @@ export function EmailCodeSignIn({
     } catch (err) {
       console.error("Email code sign-in failed:", err);
       setCode("");
-      setError("Something went wrong. Check your connection and try again.");
+      setError(t("connectionFailed"));
     } finally {
       setVerifying(false);
     }

@@ -2,11 +2,14 @@
 // Google and GitHub come back with `?via=<provider>` as well
 // (socialSignInErrorPath), so their failures name the provider; anything
 // else is a workspace single sign-on and keeps SSO's own messages
-// (ee/sso/messages.ts). Pure and client-safe.
+// (ee/sso/messages.ts). Pure and client-safe; the copy is auth.signInErrors.
 
 import { SSO_REQUIRED_ERROR } from "@repo/auth/sso-required-rules";
 import { UNVERIFIED_SIGN_UP_ERROR } from "@repo/auth/verified-sign-up";
-import { ssoSignInErrorMessage } from "@/ee/sso/messages";
+import {
+  type SignInErrorTranslator,
+  ssoSignInErrorMessage,
+} from "@/ee/sso/messages";
 import { signInPath } from "@/lib/safe-redirect";
 
 export const SOCIAL_SIGN_INS = ["google", "github"] as const;
@@ -30,33 +33,34 @@ export function socialSignInErrorPath(next: string, via: SocialSignIn): string {
 export function signInErrorMessage(
   code: string,
   via: SocialSignIn | null,
+  t: SignInErrorTranslator,
 ): string {
   switch (code) {
     case UNVERIFIED_SIGN_UP_ERROR.github:
-      return "GitHub hasn't verified this email address, so QRdx can't create an account with it. Verify it in your GitHub email settings and try again, or sign in with an email code.";
+      return t("githubUnverified", { provider: LABELS.github });
     case UNVERIFIED_SIGN_UP_ERROR.google:
-      return "Google hasn't verified this email address, so QRdx can't create an account with it. Sign in with an email code instead.";
+      return t("googleUnverified", { provider: LABELS.google });
     case UNVERIFIED_SIGN_UP_ERROR.other:
-      return "That account's email address isn't verified, so QRdx can't create an account with it. Sign in with an email code instead.";
+      return t("otherUnverified");
     // Google or GitHub for an address whose company requires SSO.
     case SSO_REQUIRED_ERROR:
-      return ssoSignInErrorMessage(code);
+      return ssoSignInErrorMessage(code, t);
   }
-  if (!via) return ssoSignInErrorMessage(code);
-  const label = LABELS[via];
+  if (!via) return ssoSignInErrorMessage(code, t);
+  const provider = LABELS[via];
   switch (code) {
     case "access_denied":
-      return "Sign-in was cancelled.";
+      return t("cancelled");
     case "account_not_linked":
-      return `An account with this address already exists and isn't linked to ${label}. Sign in with an email code instead.`;
+      return t("accountNotLinked", { provider });
     case "email_not_found":
-      return `${label} didn't share an email address, so QRdx can't sign you in with it. Sign in with an email code instead.`;
+      return t("emailNotShared", { provider });
     case "state_mismatch":
     case "state_not_found":
     case "state_invalid":
     case "please_restart_the_process":
-      return "That sign-in took too long or was started elsewhere. Try again.";
+      return t("tookTooLong");
     default:
-      return `${label} sign-in didn't work. Try again, or sign in another way.`;
+      return t("providerFailed", { provider });
   }
 }

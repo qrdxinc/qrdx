@@ -8545,7 +8545,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "Kembali ke QRdx"
+        "backToQrdx": "Kembali ke QRdx",
+        "signedOut": "Anda sudah keluar.",
+        "pageTitle": "Masuk"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8612,6 +8614,20 @@
           "authorize": "Otorisasi",
           "somethingWentWrongCheckYour": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi."
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "Keluar dari QRdx?",
+        "signOut": "Keluar",
+        "cancel": "Batal",
+        "youreStillSignedIn": "Anda masih masuk",
+        "signingOutDidntWorkCheck": "Gagal keluar. Periksa koneksi Anda dan coba lagi.",
+        "tryAgain": "Coba lagi",
+        "backToDashboard": "Kembali ke dasbor",
+        "signingYouOut": "Sedang mengeluarkan Anda…",
+        "oneMoment": "Sebentar…",
+        "pageTitle": "Keluar"
       }
     }
   },
@@ -8708,11 +8724,22 @@
       "thatCodeHasExpiredSend": "Kode tersebut sudah kedaluwarsa. Kirim kode baru.",
       "tooManyWrongTriesSend": "Terlalu banyak percobaan yang salah. Kirim kode baru.",
       "thisAccountIsSuspendedContact": "Akun ini ditangguhkan. Hubungi dukungan jika Anda merasa ini sebuah kesalahan.",
-      "somethingWentWrongTryAgain": "Terjadi kesalahan. Coba lagi."
+      "somethingWentWrongTryAgain": "Terjadi kesalahan. Coba lagi.",
+      "newCodeSent": "Kode baru telah dikirim. Kode lama tidak berlaku lagi.",
+      "connectionFailed": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Lanjutkan dengan passkey",
-      "lastUsed": "Terakhir dipakai"
+      "lastUsed": "Terakhir dipakai",
+      "errors": {
+        "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi.",
+        "userVerification": "Passkey tersebut tidak meminta PIN, sidik jari, atau wajah Anda. Gunakan passkey yang memintanya, atau masuk dengan cara lain.",
+        "notFound": "Passkey tersebut tidak lagi tertaut ke akun QRdx. Masuk dengan cara lain.",
+        "banned": "Akun ini ditangguhkan. Hubungi dukungan jika Anda merasa ini sebuah kesalahan.",
+        "ssoRequired": "Perusahaan Anda mewajibkan single sign-on untuk akun ini. Masuk dengan SSO.",
+        "failed": "Passkey tersebut tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
+        "connection": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi."
+      }
     },
     "signInPanel": {
       "codeSentTo": "Kode dikirim ke <strong>{email}</strong>",
@@ -8818,7 +8845,21 @@
       "resendInSecondsleftS": "Kirim ulang dalam {secondsLeft, number} dtk",
       "resendCode": "Kirim ulang kode",
       "whyAmIAsked": "Mengapa saya diminta?",
-      "whyAmIAskedAgain": "Mengapa saya diminta lagi?"
+      "whyAmIAskedAgain": "Mengapa saya diminta lagi?",
+      "switchTo": {
+        "passkey": "Gunakan passkey Anda",
+        "totp": "Gunakan kode autentikator",
+        "backup": "Gunakan kode cadangan",
+        "email": "Kirim kode ke email",
+        "signInWith": "Masuk dengan {provider}",
+        "sign-in-again": "Masuk lagi"
+      },
+      "signInWithSsoAgain": "Masuk lagi dengan SSO perusahaan Anda. Anda akan kembali ke halaman ini, lalu ulangi perubahan Anda.",
+      "newCodeSent": "Kode baru telah dikirim. Kode lama tidak berlaku lagi.",
+      "reasons": {
+        "continue-session": "Proses masuk ini digunakan dari negara dan browser yang berbeda dari tempat awalnya, jadi kami memastikan ini benar-benar Anda sebelum melanjutkan.",
+        "link-slack-account": "Setelah tertaut, siapa pun yang menggunakan akun Slack tersebut dapat membuat kode terlacak di workspace Anda dengan /qr track, jadi kami memastikan ini Anda terlebih dahulu."
+      }
     },
     "dialogCloseButton": {
       "close": "Tutup"
@@ -8840,6 +8881,112 @@
     },
     "nudge": {
       "dismiss": "Jangan tampilkan lagi"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "Masuk dengan SSO",
+      "lastUsed": "Terakhir dipakai",
+      "workEmail": "Email kerja",
+      "continue": "Lanjutkan",
+      "ifYourCompanySetIt": "Jika perusahaan Anda menyiapkannya untuk QRdx.",
+      "cancel": "Batal",
+      "youCompanyCom": "anda@perusahaan.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "Lanjutkan dengan SSO",
+      "lastUsed": "Terakhir dipakai",
+      "useADifferentEmail": "Gunakan email lain",
+      "yourCompanyRequiresItFor": "Perusahaan Anda mewajibkannya untuk alamat ini. Anda akan melanjutkan di halaman masuknya.",
+      "youllContinueOnYourCompanys": "Anda akan melanjutkan di halaman masuk perusahaan Anda.",
+      "sending": "Mengirim…",
+      "emailMeACode": "Kirim kode ke email saya"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "Gunakan passkey Anda",
+        "totp": "Buka aplikasi autentikator Anda",
+        "backup": "Masukkan kode cadangan"
+      },
+      "switchTo": {
+        "passkey": "Gunakan passkey Anda",
+        "totp": "Gunakan kode autentikator",
+        "backup": "Gunakan kode cadangan"
+      },
+      "hints": {
+        "passkey": "Gunakan Touch ID, Face ID, Windows Hello, atau kunci keamanan.",
+        "totp": "Masukkan kode 6 digit dari aplikasi autentikator Anda.",
+        "backup": "Masukkan salah satu kode cadangan Anda. Setiap kode hanya berlaku sekali."
+      },
+      "passkey": {
+        "waiting": "Menunggu passkey Anda…",
+        "checking": "Memeriksa passkey Anda…",
+        "failed": "Passkey Anda tidak dapat diverifikasi. Coba lagi.",
+        "closed": "Jendela passkey ditutup atau waktunya habis. Coba lagi atau gunakan metode lain.",
+        "expiredRequest": "Permintaan passkey itu sudah kedaluwarsa. Coba lagi.",
+        "userVerification": "Passkey tersebut tidak meminta PIN, sidik jari, atau wajah Anda. Gunakan passkey yang memintanya, atau gunakan metode lain.",
+        "unavailable": "Tidak ada passkey untuk akun ini di sini. Gunakan metode lain.",
+        "tooManyTries": "Terlalu banyak percobaan gagal. Masuk lagi untuk mencoba kembali.",
+        "locked": "Terlalu banyak percobaan gagal berturut-turut. Coba lagi dalam {minutes, number} menit.",
+        "expired": "Sesi masuk ini telah habis waktunya. Silakan masuk lagi.",
+        "rateLimited": "Terlalu banyak percobaan. Tunggu sebentar, lalu coba lagi.",
+        "connection": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi.",
+        "ssoRequired": "Perusahaan Anda kini mewajibkan single sign-on untuk alamat ini. Mulai lagi dan masuk dengan SSO."
+      },
+      "noStepHere": "Browser ini tidak dapat menggunakan passkey Anda, dan tidak ada cara lain untuk menyelesaikan proses masuk di sini. Gunakan perangkat yang memiliki passkey Anda.",
+      "noAuthenticatorApp": "Akun Anda tidak menggunakan aplikasi autentikator. Gunakan metode lain.",
+      "backupCode": {
+        "empty": "Masukkan salah satu kode cadangan Anda.",
+        "strange": "Kode cadangan hanya berisi huruf dan angka. Hapus {chars}.",
+        "length": "Kode cadangan terdiri dari 10 karakter, seperti ABCDE-FGH23. Kode ini memiliki {count, number}.",
+        "lookalikes": "Kode cadangan tidak pernah menggunakan {chars}. Periksa apakah ada huruf atau angka yang mirip.",
+        "or": "{first} atau {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "Kode tersebut tidak benar. Periksa aplikasi autentikator Anda dan coba lagi.",
+      "wrongBackupCode": "Kode cadangan tersebut tidak benar, atau sudah pernah digunakan.",
+      "invalidCode": "Masukkan kode 6 digit dari aplikasi autentikator Anda.",
+      "invalidBackupCode": "Itu bukan kode cadangan. Bentuknya seperti ABCDE-FGH23: huruf kapital dan angka 2 sampai 9.",
+      "tooManyAttempts": "Terlalu banyak kode yang salah. Masuk lagi untuk mencoba kembali.",
+      "locked": "Terlalu banyak kode salah berturut-turut. Coba lagi dalam {minutes, number} menit.",
+      "expired": "Waktu proses masuk ini habis. Silakan masuk lagi.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu sebentar, lalu coba lagi.",
+      "failed": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi.",
+      "ssoRequired": "Perusahaan Anda kini mewajibkan single sign-on untuk alamat ini. Mulai lagi dan masuk dengan SSO."
+    },
+    "confirmationMessages": {
+      "failed": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi.",
+      "passkeyFailed": "Passkey Anda tidak dapat diverifikasi. Coba lagi.",
+      "passkeyClosed": "Perintah passkey ditutup atau waktunya habis. Coba lagi atau gunakan metode lain.",
+      "passkeyUnavailable": "Passkey tidak berfungsi di browser ini. Gunakan metode lain.",
+      "signInAgain": "Demi keamanan Anda, keluar lalu masuk lagi, kemudian coba lagi dalam 10 menit.",
+      "stillRequired": "Kami tidak dapat memastikan bahwa ini Anda. Coba lagi.",
+      "signInFailed": "Proses masuk tersebut tidak berhasil, sehingga tidak ada yang berubah. Coba lagi atau gunakan metode lain.",
+      "signInConfirmed": "Terima kasih, sudah dikonfirmasi. Anda dapat melakukan perubahan dalam 10 menit ke depan."
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Verifikasi di pengaturan email {provider} Anda lalu coba lagi, atau masuk dengan kode email.",
+      "googleUnverified": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Masuklah dengan kode email.",
+      "otherUnverified": "Alamat email akun tersebut belum diverifikasi, sehingga QRdx tidak dapat membuat akun dengannya. Masuklah dengan kode email.",
+      "cancelled": "Proses masuk dibatalkan.",
+      "accountNotLinked": "Sudah ada akun dengan alamat ini dan belum ditautkan ke {provider}. Masuklah dengan kode email.",
+      "emailNotShared": "{provider} tidak membagikan alamat email, sehingga QRdx tidak dapat memasukkan Anda dengannya. Masuklah dengan kode email.",
+      "tookTooLong": "Proses masuk tersebut terlalu lama atau dimulai di tempat lain. Coba lagi.",
+      "providerFailed": "Masuk dengan {provider} tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
+      "sso": {
+        "emailRequired": "Masukkan email kerja Anda.",
+        "notFound": "SSO belum disiapkan untuk alamat tersebut.",
+        "required": "Perusahaan Anda mewajibkan single sign-on untuk alamat ini. Masuk dengan SSO.",
+        "unavailable": "Single sign-on saat ini tidak tersedia untuk workspace ini. Masuk dengan cara lain.",
+        "emailOutsideDomain": "Penyedia identitas Anda mengirim alamat di luar domain perusahaan Anda, sehingga QRdx tidak dapat memasukkan Anda dengan alamat tersebut. Hubungi admin workspace Anda.",
+        "emailUnverified": "Sistem masuk perusahaan Anda belum mengonfirmasi alamat email ini, sehingga QRdx tidak dapat memasukkan Anda dengan alamat tersebut. Admin sistem itu perlu memverifikasi alamat email di sana.",
+        "emailMissing": "Sistem masuk perusahaan Anda tidak mengirim alamat email, sehingga QRdx tidak dapat memasukkan Anda. Hubungi admin workspace Anda.",
+        "weakSignature": "Sistem masuk perusahaan Anda menandatangani proses masuk ini dengan SHA-1 atau algoritma usang lainnya, yang tidak diterima QRdx. Admin sistem itu perlu mengganti algoritma tanda tangan aplikasi QRdx ke SHA-256.",
+        "unsolicitedResponse": "QRdx tidak dapat menerima proses masuk ini dari daftar aplikasi perusahaan Anda. Mulailah dari halaman masuk QRdx: pilih Masuk dengan SSO dan masukkan email kerja Anda. Jika masalah ini terus terjadi, hubungi admin workspace Anda.",
+        "replayDetected": "Proses masuk tersebut sudah pernah digunakan. Silakan masuk lagi.",
+        "accountNotLinked": "Sudah ada akun dengan alamat ini dan akun tersebut tidak dapat ditautkan. Masuk dengan kode email.",
+        "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
+        "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
+      }
     }
   },
   "codeBuilder": {
