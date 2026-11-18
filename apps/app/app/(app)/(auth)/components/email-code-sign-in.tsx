@@ -2,6 +2,7 @@
 
 import { authClient } from "@repo/auth/client";
 import { LANDING_HEADER, REFERRAL_HEADER } from "@repo/auth/referral-keys";
+import { SIGN_IN_CODES_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 import { SSO_REQUIRED_ERROR as SSO_REQUIRED } from "@repo/auth/sso-required-rules";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
@@ -75,12 +76,17 @@ type AuthError = { code?: string; status?: number } | null | undefined;
 function sendErrorMessage(
   error: NonNullable<AuthError>,
   t: Translator<"auth.emailCodeSignIn">,
+  socialSignIn: boolean,
 ): string {
+  // No code can be emailed from this site at all (the same for any address).
+  if (error.code === SIGN_IN_CODES_UNAVAILABLE) {
+    return t("emailSignInIsntSet");
+  }
   if (error.status === 429) {
     return t("tooManyCodesRequestedWait");
   }
   if (error.code === "INVALID_EMAIL") return t("enterAValidEmailAddress");
-  return t("weCouldntSendACode");
+  return socialSignIn ? t("weCouldntSendACode") : t("weCouldntSendACodeTry");
 }
 
 /** Message, and whether this code can no longer be used. */
@@ -117,6 +123,8 @@ interface EmailCodeSignInProps {
   /** Another sign-in method is in progress */
   disabled?: boolean;
   lastUsed?: boolean;
+  /** Google and GitHub sign-in both work here, so a failed send suggests them. */
+  socialSignIn?: boolean;
   /** The account asks for a second step (two-step verification) now, or not. */
   onTwoFactorChange?: (active: boolean) => void;
   /** The second step's method on screen, for the heading. */
@@ -146,6 +154,7 @@ export function EmailCodeSignIn({
   onSignedIn,
   disabled = false,
   lastUsed = false,
+  socialSignIn = false,
   onTwoFactorChange,
   onSecondStepChange,
   sso = null,
@@ -221,7 +230,7 @@ export function EmailCodeSignIn({
         type: "sign-in",
       });
       if (error) {
-        setError(sendErrorMessage(error, t));
+        setError(sendErrorMessage(error, t, socialSignIn));
         return;
       }
       const time = Date.now();

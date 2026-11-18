@@ -12,6 +12,7 @@ import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Separator } from "@repo/design-system/components/ui/separator";
+import { cn } from "@repo/design-system/lib/utils";
 import { useTranslations } from "next-intl";
 import { type ComponentType, type ReactNode, useEffect, useState } from "react";
 import { useAvailability } from "@/components/availability-provider";
@@ -21,13 +22,67 @@ import { SsoSignIn } from "@/ee/sso/sso-sign-in";
 import { pendingReferralCode } from "@/lib/affiliates/referral-client";
 import { type AuthDialogMode, showsSignIn } from "@/lib/analytics/auth-prompt";
 import { signUpLanding } from "@/lib/analytics/landing";
+import {
+  offersSignIn,
+  type SignInOptions,
+  signInOptionsFrom,
+} from "@/lib/auth/sign-in-options";
 import { socialSignInErrorPath } from "../sign-in/_lib/error-message";
 import { EmailCodeSignIn } from "./email-code-sign-in";
 import { PasskeySignIn } from "./passkey-sign-in";
 import { SECOND_STEP_TITLES, type SecondStep } from "./second-step";
+import { loadSignInOptions } from "./sign-in-options-action";
 
 const FOOTER_LINK =
   "rounded-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+// What the running server offers, asked once per page load and shared by
+// every panel on it; a failed ask is tried again next time.
+let serverOptions: Promise<SignInOptions> | null = null;
+
+function askServer(): Promise<SignInOptions> {
+  serverOptions ??= loadSignInOptions().catch((error: unknown) => {
+    serverOptions = null;
+    throw error;
+  });
+  return serverOptions;
+}
+
+/**
+ * The ways in to show: `given` when the page worked them out on the server
+ * for this request (/sign-in), else the root layout's answer until the
+ * running server's arrives (sign-in-options-action.ts). `confirmed` is
+ * false until then.
+ */
+function useSignInOptions(
+  given: SignInOptions | undefined,
+  shown: boolean,
+): { options: SignInOptions; confirmed: boolean } {
+  const availability = useAvailability();
+  const [fromServer, setFromServer] = useState<SignInOptions | null>(null);
+  const guess = signInOptionsFrom(availability.has);
+
+  useEffect(() => {
+    if (given || !shown || fromServer) return;
+    let cancelled = false;
+    askServer()
+      .then((options) => {
+        if (!cancelled) setFromServer(options);
+      })
+      .catch((error: unknown) => {
+        console.error("Couldn't ask the server how to sign in:", error);
+        // The layout's answer is the best left.
+        if (!cancelled) setFromServer(signInOptionsFrom(availability.has));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [given, shown, fromServer, availability]);
+
+  if (given) return { options: given, confirmed: true };
+  if (fromServer) return { options: fromServer, confirmed: true };
+  return { options: guess, confirmed: false };
+}
 
 type TextComponent = ComponentType<{
   className?: string;
@@ -58,14 +113,21 @@ export interface SignInPanelProps {
   notice?: ReactNode;
   /** Re-read the last used method when the panel is shown again. */
   shown?: boolean;
+  /**
+   * The ways in, as the server worked them out for this request (the
+   * /sign-in page). Without it the panel asks the server when it's shown.
+   */
+  options?: SignInOptions;
 }
 
 /**
  * The sign-in UI itself: Google, GitHub, an email code, workspace SSO and a
- * passkey, with "Last used" and the legal footer. Where SSO runs, an email
- * whose company signs in with it is offered SSO before a code is sent
- * (email-code-sign-in.tsx). The dialog (auth-dialog.tsx) and the /sign-in
- * page both render it, so the two can't drift apart.
+ * passkey, with "Last used" and the legal footer. Only the ways this
+ * deployment can run are shown; with none of them, it says sign-in isn't
+ * set up and points whoever runs the site to the self-hosting guide. Where
+ * SSO runs, an email whose company signs in with it is offered SSO before a
+ * code is sent (email-code-sign-in.tsx). The dialog (auth-dialog.tsx) and
+ * the /sign-in page both render it, so the two can't drift apart.
  */
 export function SignInPanel({
   mode = "signin",
@@ -76,6 +138,7 @@ export function SignInPanel({
   Description,
   notice,
   shown = true,
+  options: given,
 }: SignInPanelProps) {
   const t = useTranslations("auth.signInPanel");
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
@@ -95,8 +158,12 @@ export function SignInPanel({
   // step; which method is on screen (null while it's worked out).
   const [twoFactor, setTwoFactor] = useState(false);
   const [secondStep, setSecondStep] = useState<SecondStep | null>(null);
+  const { options, confirmed } = useSignInOptions(given, shown);
   // Workspace SSO runs only on servers with a QRdx licence key.
-  const ssoOffered = useAvailability().has("sso");
+  const ssoOffered = options.sso;
+  // No way in at all: say so once the server has confirmed it.
+  const nothingOffered = !offersSignIn(options);
+  const notSetUp = nothingOffered && confirmed;
   const affiliates = useAvailability().has("affiliates");
 
   useEffect(() => {
@@ -153,6 +220,7 @@ export function SignInPanel({
   const providers = [
     {
       id: "google",
+      offered: options.google,
       label: t("google"),
       icon: GoogleLogo,
       loading: isGoogleLoading,
@@ -160,12 +228,13 @@ export function SignInPanel({
     },
     {
       id: "github",
+      offered: options.github,
       label: t("github"),
       icon: GithubLogo,
       loading: isGithubLoading,
       onClick: () => socialSignIn("github", "GitHub", setIsGithubLoading),
     },
-  ];
+  ].filter((provider) => provider.offered);
 
   return (
     <>
@@ -180,9 +249,11 @@ export function SignInPanel({
               ? t("checkYourEmail")
               : ssoOfferFor
                 ? t("signInWithSso")
-                : isSignIn
-                  ? t("signInToQrdx")
-                  : t("createYourQrdxAccount")}
+                : notSetUp
+                  ? t("signInIsntSetUp")
+                  : isSignIn
+                    ? t("signInToQrdx")
+                    : t("createYourQrdxAccount")}
         </Title>
         <Description className="text-muted-foreground text-sm text-pretty">
           {twoFactor
@@ -200,9 +271,11 @@ export function SignInPanel({
                 ? ssoOfferRequired
                   ? t("yourCompanyRequiresSingleSign")
                   : t("yourCompanySignsInWith")
-                : isSignIn
-                  ? t("pickUpWhereYouLeft")
-                  : t("freeToStartNoCard")}
+                : notSetUp
+                  ? t("thisSiteHasNoEmail")
+                  : isSignIn
+                    ? t("pickUpWhereYouLeft")
+                    : t("freeToStartNoCard")}
         </Description>
       </div>
 
@@ -215,8 +288,43 @@ export function SignInPanel({
         </p>
       )}
 
-      {!emailStepPassed && (
-        <div className="grid grid-cols-2 gap-2 px-6">
+      {notSetUp && (
+        <p
+          className="bg-muted/60 mx-6 mb-4 rounded-md px-3 py-2 text-center text-sm text-pretty"
+          role="status"
+        >
+          {t.rich("runThisSiteThe", {
+            link: (chunks) => (
+              <Link
+                className="font-medium underline underline-offset-4"
+                href="/docs/self-hosting"
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
+      )}
+
+      {/* Until the server says how to sign in, when the page's own answer had nothing (a prerendered page in a Docker image built without its secrets, say). */}
+      {nothingOffered && !confirmed && (
+        <div
+          aria-busy="true"
+          className="flex justify-center px-6 pb-4"
+          role="status"
+        >
+          <ModuleOrbit aria-hidden className="size-5" />
+          <span className="sr-only">{t("loading")}</span>
+        </div>
+      )}
+
+      {!emailStepPassed && providers.length > 0 && (
+        <div
+          className={cn(
+            "grid gap-2 px-6",
+            providers.length > 1 && "grid-cols-2",
+          )}
+        >
           {providers.map((provider) => (
             <div className="relative" key={provider.id}>
               <Button
@@ -244,7 +352,7 @@ export function SignInPanel({
         </div>
       )}
 
-      {!emailStepPassed && (
+      {!emailStepPassed && providers.length > 0 && options.email && (
         <div className="flex items-center gap-3 px-6 py-4">
           <Separator className="flex-1" />
           <span className="text-xs text-muted-foreground">{t("or")}</span>
@@ -252,29 +360,32 @@ export function SignInPanel({
         </div>
       )}
 
-      <EmailCodeSignIn
-        disabled={busy}
-        key={emailFormKey}
-        lastUsed={lastLoginMethod === "email-otp"}
-        onSecondStepChange={setSecondStep}
-        onSentToChange={setCodeSentTo}
-        onSignedIn={handleEmailSignedIn}
-        onSsoOfferChange={(email, required) => {
-          setSsoOfferFor(email);
-          setSsoOfferRequired(required);
-        }}
-        onTwoFactorChange={(active) => {
-          setTwoFactor(active);
-          if (!active) setSecondStep(null);
-        }}
-        redirectTo={redirectTo}
-        sentTo={codeSentTo}
-        sso={
-          ssoOffered
-            ? { callbackURL, lastUsed: lastLoginMethod === "sso" }
-            : null
-        }
-      />
+      {options.email && (
+        <EmailCodeSignIn
+          disabled={busy}
+          key={emailFormKey}
+          lastUsed={lastLoginMethod === "email-otp"}
+          onSecondStepChange={setSecondStep}
+          onSentToChange={setCodeSentTo}
+          onSignedIn={handleEmailSignedIn}
+          onSsoOfferChange={(email, required) => {
+            setSsoOfferFor(email);
+            setSsoOfferRequired(required);
+          }}
+          onTwoFactorChange={(active) => {
+            setTwoFactor(active);
+            if (!active) setSecondStep(null);
+          }}
+          redirectTo={redirectTo}
+          sentTo={codeSentTo}
+          socialSignIn={options.google && options.github}
+          sso={
+            ssoOffered
+              ? { callbackURL, lastUsed: lastLoginMethod === "sso" }
+              : null
+          }
+        />
+      )}
 
       {!emailStepPassed && ssoOffered && (
         <SsoSignIn
@@ -294,12 +405,17 @@ export function SignInPanel({
         />
       )}
 
-      {/* Google, GitHub, email codes and workspace SSO create the account on first use, so there's no separate sign-up step (a passkey needs an account first). */}
-      {!emailStepPassed && (
+      {/* Google, GitHub, email codes and workspace SSO create the account on first use, so there's no separate sign-up step (a passkey needs an account first). Named only when all three of the first are offered. */}
+      {!(emailStepPassed || nothingOffered) && (
         <p className="px-6 pt-4 pb-6 text-center text-xs text-pretty text-muted-foreground">
-          {t("newToQrdxGoogleGithub")}
+          {options.google && options.github && options.email
+            ? t("newToQrdxGoogleGithub")
+            : t("newToQrdxYourFirst")}
         </p>
       )}
+
+      {/* Room above the legal footer, which the line above gives otherwise. */}
+      {nothingOffered && <div className="pb-4" />}
 
       <footer className="flex items-center justify-between gap-4 border-t px-6 py-3 text-xs text-muted-foreground">
         <span>

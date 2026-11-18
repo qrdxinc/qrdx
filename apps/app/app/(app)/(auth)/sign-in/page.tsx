@@ -2,6 +2,7 @@ import { auth } from "@repo/auth/server";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { getSignInOptions } from "@/lib/auth/sign-in-options-server";
 import { readSignInParams } from "./_lib/params";
 import { SignInPage } from "./sign-in-page";
 
@@ -17,7 +18,8 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
  * where proxy.ts and page guards send signed-out visitors (/sign-in?next=…),
  * where /sign-out lands (?signedOut=1), and the fallback when the dialog
  * can't open; ?mode=signup opens it as the dialog's sign-up does. Signed-in
- * visitors go straight to `next`.
+ * visitors go straight to `next`. It's rendered per request, so it shows the
+ * ways in this server offers now, not what the build saw.
  */
 export default async function Page({
   searchParams,
@@ -36,6 +38,7 @@ export default async function Page({
       error={error}
       mode={mode}
       next={next}
+      options={getSignInOptions()}
       signedOut={signedOut}
       via={via}
     />
