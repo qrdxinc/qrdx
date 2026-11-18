@@ -49,17 +49,13 @@ export async function generateMetadata({
   const by = item.creator.handle
     ? `@${item.creator.handle}`
     : item.creator.displayName;
-  return {
-    ...createMetadata({
-      title: `${item.name}: free QR code ${TYPE_LABELS[item.type].one.toLowerCase()} by ${by}`,
-      description:
-        item.description ??
-        `A free QR code ${TYPE_LABELS[item.type].one.toLowerCase()} from the QRdx community, under ${COMMUNITY_LICENSE_NAME}.`,
-      path: `/community/${type}/${slug}`,
-    }),
-    // Item pages stay out of search until the first moderation pass.
-    robots: { index: false, follow: true },
-  };
+  return createMetadata({
+    title: `${item.name}: free QR code ${TYPE_LABELS[item.type].one.toLowerCase()} by ${by}`,
+    description:
+      item.description ??
+      `A free QR code ${TYPE_LABELS[item.type].one.toLowerCase()} from the QRdx community, under ${COMMUNITY_LICENSE_NAME}.`,
+    path: `/community/${type}/${slug}`,
+  });
 }
 
 export default async function CommunityItemPage({

@@ -5,6 +5,7 @@ import { BARCODE_FORMAT_PAGES } from "@/app/[lang]/(home)/barcode-generator/[for
 import { CHAT_BOTS } from "@/components/sections/chat-bots/bots";
 import { isArtAvailable } from "@/lib/ai/art-availability";
 import { SLUG_TO_CATEGORY } from "@/lib/blog-constants";
+import { TYPE_SEGMENTS } from "@/lib/community/types";
 import {
   blogAuthorsSource,
   blogSource,
@@ -248,6 +249,15 @@ function entries(docs: Entry[]): Entry[] {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    // The community's galleries; item pages are found through them.
+    ...["all", ...Object.values(TYPE_SEGMENTS)].map(
+      (segment) =>
+        ({
+          url: url(`/community/${segment}`),
+          changeFrequency: "weekly",
+          priority: 0.6,
+        }) satisfies Entry,
+    ),
     {
       url: url("/community/made-with-qrdx"),
       changeFrequency: "monthly",

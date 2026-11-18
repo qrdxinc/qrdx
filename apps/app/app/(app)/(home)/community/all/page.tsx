@@ -25,16 +25,12 @@ import {
   parseAllQuery,
 } from "./browse";
 
-export const metadata: Metadata = {
-  ...createMetadata({
-    title: "Everything | Community",
-    description:
-      "Every QR code frame, theme, collection and page template in the QRdx community, ranked by saves or newest first. Free under CC0.",
-    path: "/community/all",
-  }),
-  // Community pages stay out of search until the first moderation pass.
-  robots: { index: false, follow: true },
-};
+export const metadata: Metadata = createMetadata({
+  title: "Everything | Community",
+  description:
+    "Every QR code frame, theme, collection and page template in the QRdx community, ranked by saves or newest first. Free under CC0.",
+  path: "/community/all",
+});
 
 const SORTS: { value: AllSort; label: string }[] = [
   { value: "saved", label: "Most saved" },
