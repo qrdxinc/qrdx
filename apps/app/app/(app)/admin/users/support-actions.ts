@@ -140,14 +140,20 @@ export async function changeEmailAction(
   );
 }
 
-/** Removes a linked GitHub / Google sign-in; never the user's last one. */
+/**
+ * Removes a linked GitHub / Google sign-in; never the user's last one. For
+ * an admin it takes requireStrongAdmin.
+ */
 export async function unlinkSignInMethodAction(
   input: z.input<typeof unlinkSchema>,
 ): Promise<AdminActionResult> {
   return runAdminAction(
     { action: "user.unlink_sign_in", schema: unlinkSchema },
     input,
-    (admin, data) => unlinkSignInMethod(admin, data),
+    (admin, data) =>
+      unlinkSignInMethod(admin, data, {
+        requireStrong: () => requireStrongAdmin(admin),
+      }),
   );
 }
 

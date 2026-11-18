@@ -7,7 +7,13 @@
 // to the next scripted result. Nothing connects to a database or a service.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-type Call = { root: string; table?: string; steps: [string, unknown[]][] };
+type Call = {
+  root: string;
+  table?: string;
+  /** What the query was started with: select's columns, insert's table. */
+  args?: unknown[];
+  steps: [string, unknown[]][];
+};
 
 const state = vi.hoisted(() => ({
   admin: null as null | {
@@ -77,7 +83,7 @@ vi.mock("@repo/database", () => {
   const start =
     (root: string) =>
     (...args: unknown[]) => {
-      const call: Call = { root, table: tableName(args[0]), steps: [] };
+      const call: Call = { root, table: tableName(args[0]), args, steps: [] };
       state.calls.push(call);
       return chain(call);
     };
@@ -814,6 +820,114 @@ describe("with an admin", () => {
       action: "user.ban",
       metadata: { reason: "Phishing codes", expiresInDays: 7 },
     });
+  });
+
+  it("asks for a strong confirmation before banning, unbanning or signing out an admin", async () => {
+    const { banUserAction, unbanUserAction, revokeUserSessionsAction } =
+      await import("@/app/(app)/admin/actions");
+    const anAdmin = {
+      id: "user_target",
+      email: "other.admin@example.com",
+      emailVerified: true,
+      role: "admin",
+    };
+    const input = { userId: "user_target", reason: "Ticket 1234" };
+    for (const [action, call] of [
+      [banUserAction, "banUser"],
+      [unbanUserAction, "unbanUser"],
+      [revokeUserSessionsAction, "revokeUserSessions"],
+    ] as const) {
+      state.adminStrongConfirmation = false;
+      state.auth = [];
+      state.calls = [];
+      state.results = [[anAdmin]];
+      expect(await action(input), call).toEqual({
+        ok: false,
+        error: "CONFIRMATION_REQUIRED",
+      });
+      expect(state.auth, call).toEqual([]);
+      expect(auditInserts(), call).toEqual([]);
+      // Listed by ADMIN_EMAILS counts the same as the role, so the target's
+      // row is read with whether its address is verified.
+      vi.stubEnv("ADMIN_EMAILS", "other.admin@example.com");
+      state.calls = [];
+      state.results = [[{ ...anAdmin, role: null }]];
+      expect(await action(input), call).toEqual({
+        ok: false,
+        error: "CONFIRMATION_REQUIRED",
+      });
+      expect(Object.keys(state.calls[0]?.args?.[0] ?? {}), call).toEqual([
+        "id",
+        "email",
+        "emailVerified",
+        "role",
+      ]);
+      vi.unstubAllEnvs();
+      // Confirmed, it goes ahead.
+      state.adminStrongConfirmation = true;
+      state.results = [[anAdmin]];
+      expect(await action(input), call).toEqual({ ok: true });
+      expect(state.auth, call).toEqual([call]);
+    }
+  });
+
+  it("asks nothing more to unban or sign out someone who isn't an admin", async () => {
+    const { unbanUserAction, revokeUserSessionsAction } = await import(
+      "@/app/(app)/admin/actions"
+    );
+    state.adminStrongConfirmation = false;
+    state.adminTwoFactor = false;
+    const user = {
+      id: "user_target",
+      email: "target@example.com",
+      emailVerified: true,
+      role: null,
+    };
+    for (const action of [unbanUserAction, revokeUserSessionsAction]) {
+      state.results = [[user]];
+      expect(
+        await action({ userId: "user_target", reason: "Ticket 1234" }),
+      ).toEqual({ ok: true });
+    }
+    expect(state.auth).toEqual(["unbanUser", "revokeUserSessions"]);
+  });
+
+  it("unlinks an admin's sign-in method only with a strong confirmation", async () => {
+    const { unlinkSignInMethodAction } = await import(
+      "@/app/(app)/admin/users/support-actions"
+    );
+    const anAdmin = [
+      {
+        id: "user_target",
+        email: "other.admin@example.com",
+        emailVerified: true,
+        role: "admin",
+      },
+    ];
+    const accounts = [
+      { id: "acct_1", providerId: "github" },
+      { id: "acct_2", providerId: "google" },
+    ];
+    const input = {
+      userId: "user_target",
+      accountId: "acct_1",
+      reason: "Lost access to GitHub",
+    };
+    state.adminStrongConfirmation = false;
+    state.results = [anAdmin, accounts];
+    expect(await unlinkSignInMethodAction(input)).toEqual({
+      ok: false,
+      error: "CONFIRMATION_REQUIRED",
+    });
+    expect(state.calls.some((call) => call.root === "delete")).toBe(false);
+    state.adminStrongConfirmation = true;
+    state.results = [anAdmin, accounts, [], []];
+    expect(await unlinkSignInMethodAction(input)).toEqual({ ok: true });
+    expect(
+      state.calls.some(
+        (call) => call.root === "delete" && call.table === "account",
+      ),
+    ).toBe(true);
   });
 
   it("refuses to ban yourself", async () => {
