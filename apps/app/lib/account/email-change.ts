@@ -12,11 +12,33 @@
  * an old stolen cookie can't move the account. An address that already
  * belongs to another account never gets a code: Better Auth answers as if it
  * sent one, so the form doesn't reveal which addresses have accounts, and
- * the confirming step checks again.
+ * the confirming step checks again. A send that fails answers the same way
+ * (anything else would mark the free addresses), so the dialog only says a
+ * code should arrive if no other account uses the address. Codes typed for
+ * either kind of address get the same answers too (confirmFailure), and both
+ * steps answer on a whole multiple of EMAIL_CHANGE_ANSWER_MS, which hides the little
+ * database work Better Auth does for one kind and not the other. Where this
+ * deployment can't deliver codes at all, every request is refused alike
+ * (EMAIL_CHANGE_UNAVAILABLE) and Settings doesn't offer the change.
  */
+
+import { EMAIL_CHANGE_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 
 /** RFC 5321's limit on an address. */
 export const MAX_EMAIL_LENGTH = 254;
+
+/**
+ * Both steps answer on a whole multiple of this after they start (at least
+ * one), whatever the outcome (lib/no-sooner-than.ts): a slow run lands on
+ * the next step rather than showing its own length. Better Auth does one more database write
+ * for an address with an account when a code is asked for, and one more for
+ * an address without one after a wrong code, so the time to answer would
+ * otherwise tell them apart. Asking for a code makes seven to nine database
+ * and Upstash round trips one after another (more where single sign-on is
+ * on), and a wrong code six to eight. This is meant to be longer than those
+ * usually take, and it's short next to finding the code in an inbox.
+ */
+export const EMAIL_CHANGE_ANSWER_MS = 750;
 
 /** Addresses are compared (and stored by Better Auth) in lower case. */
 export function normalizeEmail(email: string): string {
@@ -34,14 +56,16 @@ export const EMAIL_CHANGE_MESSAGES = {
   invalidEmail: "Enter a valid email address.",
   invalidCode: "Enter the 6-digit code from the email.",
   rateLimited: "Too many tries. Wait a few minutes and try again.",
+  // Also the answer for an address that has an account and so never got a
+  // code: the limit counts requests, before the address is looked up.
   codeRateLimited:
-    "Too many codes sent to that address. Wait a few minutes and try again.",
+    "Too many codes requested for that address. Wait a few minutes and try again.",
   notSent: "We couldn't send a code right now. Please try again.",
-  wrongCode: "That code isn't right. Check the email and try again.",
-  expired: "That code has expired. Send a new one.",
-  tooManyAttempts: "Too many wrong tries. Send a new code.",
+  codeDidntWork: "That code didn't work. Check it, or send a new code.",
   taken: "That email already belongs to another QRdx account.",
   signedOut: "Sign in to change your email.",
+  unavailable:
+    "Email isn't set up on this site, so the address can't be changed here.",
   failed: "Something went wrong. Please try again.",
 } as const;
 
@@ -61,6 +85,8 @@ export function requestFailureMessage(error: unknown): string | null {
   switch (body?.code) {
     case "EMAIL_CHANGE_CODE_NOT_SENT":
       return EMAIL_CHANGE_MESSAGES.notSent;
+    case EMAIL_CHANGE_UNAVAILABLE:
+      return EMAIL_CHANGE_MESSAGES.unavailable;
     case "INVALID_EMAIL":
       return EMAIL_CHANGE_MESSAGES.invalidEmail;
     case "UNAUTHORIZED":
@@ -84,12 +110,14 @@ export function confirmFailure(
     return { message: EMAIL_CHANGE_MESSAGES.rateLimited, codeDead: false };
   }
   switch (body?.code) {
+    // Better Auth keeps no code for an address that already has an account,
+    // so there every code is just wrong (INVALID_OTP), while a free address
+    // runs out of tries or sees its code expire. One answer for all three,
+    // and the code isn't marked used up (that would show too).
     case "INVALID_OTP":
-      return { message: EMAIL_CHANGE_MESSAGES.wrongCode, codeDead: false };
     case "OTP_EXPIRED":
-      return { message: EMAIL_CHANGE_MESSAGES.expired, codeDead: true };
     case "TOO_MANY_ATTEMPTS":
-      return { message: EMAIL_CHANGE_MESSAGES.tooManyAttempts, codeDead: true };
+      return { message: EMAIL_CHANGE_MESSAGES.codeDidntWork, codeDead: false };
     case "INVALID_EMAIL":
       return { message: EMAIL_CHANGE_MESSAGES.invalidEmail, codeDead: true };
     case "UNAUTHORIZED":
