@@ -25,6 +25,7 @@ import {
 import { CardRail } from "./card-rail";
 import { CreatorLine } from "./creator-line";
 import { LazyDesignQr } from "./design-qr";
+import numeral from "./rank-numeral.module.css";
 import { RowSection } from "./row-section";
 
 const COUNT = new Intl.NumberFormat("en", { notation: "compact" });
@@ -72,7 +73,13 @@ export function ItemCard({
   // over the card instead of wrapping it (nested <a> is invalid HTML and
   // breaks hydration), as on the /templates gallery.
   return (
-    <article className={cn(CARD_FRAME, className)}>
+    <article
+      className={cn(
+        CARD_FRAME,
+        rank !== undefined && rankAs === "numeral" && numeral.card,
+        className,
+      )}
+    >
       <Link
         aria-label={`${card.name}, ${type}`}
         className="absolute inset-0 z-10 rounded-xl outline-none"
@@ -80,9 +87,7 @@ export function ItemCard({
       />
       <div className="relative">
         {rank !== undefined && rankAs === "numeral" && (
-          <span aria-hidden className={RANK_NUMERAL}>
-            {rank}
-          </span>
+          <RankNumeral rank={rank} />
         )}
         <div className={CARD_ART}>
           {card.type === "collection" ? (
@@ -201,6 +206,46 @@ export function ItemCard({
         </div>
       </div>
     </article>
+  );
+}
+
+/**
+ * A rank's numeral: a faint, solid figure whose outline draws in when its
+ * card is hovered or focused (./rank-numeral.module.css). The figure in the
+ * HTML is invisible and only gives the numeral its size; both visible
+ * layers are SVG text anchored to its right edge, so they line up.
+ */
+function RankNumeral({ rank }: { rank: number }) {
+  // The baseline of a line-height-1 figure, about the same in every face.
+  const baseline = "0.86em";
+  return (
+    <span aria-hidden className={cn(RANK_NUMERAL, numeral.numeral)}>
+      <span className="invisible">{rank}</span>
+      <svg aria-hidden className={numeral.art} focusable="false">
+        <text
+          className={cn(
+            numeral.fill,
+            "fill-foreground/[0.08] dark:fill-foreground/[0.1]",
+          )}
+          textAnchor="end"
+          x="100%"
+          y={baseline}
+        >
+          {rank}
+        </text>
+        <text
+          className={cn(
+            numeral.trace,
+            "stroke-foreground/45 dark:stroke-foreground/55",
+          )}
+          textAnchor="end"
+          x="100%"
+          y={baseline}
+        >
+          {rank}
+        </text>
+      </svg>
+    </span>
   );
 }
 

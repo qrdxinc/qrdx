@@ -38,12 +38,13 @@ export const CARD_ART =
   "bg-muted relative z-[1] aspect-[4/3] overflow-hidden rounded-xl border border-foreground/[0.07] transition-[border-color] duration-200 group-hover:border-foreground/20 group-has-[a:focus-visible]:ring-ring/50 group-has-[a:focus-visible]:ring-[3px]";
 
 /**
- * A rank's numeral: large, solid and faint, a little above the middle of
- * the design's box, with only its right edge tucked behind the box. Ranked
- * items leave room for it on their left.
+ * Where a rank's numeral sits and how large it is: a little above the
+ * middle of the design's box, with only its right edge tucked behind the
+ * box. Ranked items leave room for it on their left. Its face, colours and
+ * motion: ./rank-numeral.module.css and RankNumeral in ./item-card.tsx.
  */
 export const RANK_NUMERAL =
-  "text-foreground/[0.08] dark:text-foreground/[0.1] pointer-events-none absolute top-[46%] right-[calc(100%-0.12em)] -translate-y-1/2 text-[5.5rem] leading-none font-black tracking-tighter select-none md:text-[7rem] xl:text-[8rem]";
+  "pointer-events-none absolute top-[46%] right-[calc(100%-0.12em)] -translate-y-1/2 text-[5.5rem] leading-none font-black tracking-tighter select-none md:text-[7rem] xl:text-[8rem]";
 
 /** The room a one-digit numeral needs on its item's left. */
 export const RANK_ROOM = "pl-12 md:pl-16 xl:pl-[4.5rem]";
