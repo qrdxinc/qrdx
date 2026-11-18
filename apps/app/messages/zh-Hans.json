@@ -8590,7 +8590,11 @@
       "sessionCheck": {
         "continue": "继续",
         "signOut": "退出登录",
-        "backToQrdx": "返回 QRdx"
+        "backToQrdx": "返回 QRdx",
+        "title": "请确认是你本人操作",
+        "body": "此次登录正在使用与登录时不同的国家和不同的浏览器。请确认是你本人操作，以便继续使用。",
+        "signedOut": "请重新登录以继续。",
+        "failed": "出了点问题。请检查网络连接后重试。"
       }
     },
     "join": {
@@ -9110,7 +9114,37 @@
       "signInAgain": "为了您的账户安全，请先退出登录并重新登录，然后在 10 分钟内再试一次。",
       "stillRequired": "我们无法确认是您本人操作。请重试。",
       "signInFailed": "此次登录未成功，因此没有任何更改。请重试，或使用其他方式。",
-      "signInConfirmed": "谢谢，已确认。您可以在接下来的 10 分钟内进行更改。"
+      "signInConfirmed": "谢谢，已确认。您可以在接下来的 10 分钟内进行更改。",
+      "signedOut": "请重新登录后继续。",
+      "rateLimited": "尝试次数过多。请等待几分钟后再试。",
+      "noAuthenticatorApp": "你的账号未使用身份验证器应用。请使用通行密钥或备用码。",
+      "invalidCode": "请输入邮件中的 6 位验证码。",
+      "wrongCode": "验证码不正确。请查看邮件后重试。",
+      "codeExpired": "该验证码已过期。请重新发送。",
+      "tooManyCodeAttempts": "错误次数过多。请重新发送验证码。",
+      "codeNotSent": "暂时无法发送验证码。请稍后重试。",
+      "twoFactorOn": "已开启两步验证，因此不会发送邮件验证码。请使用通行密钥、身份验证器应用或备用码。",
+      "signInUnavailable": "该登录方式未关联到你的账号。请使用其他方式。",
+      "signInNotLinked": "该账号未关联到你的 QRdx 账号，因此未做任何更改。请使用你已关联的账号登录，或使用其他方式。",
+      "signInExpired": "操作用时超过 10 分钟，因此未做任何更改。请重试。",
+      "signInDifferentAccount": "你登录的是另一个 QRdx 账号，因此此处未做任何更改。请先退出登录，再登录你要更改的账号。",
+      "signInTwoFactorOn": "现已开启两步验证，请改用它来确认：通行密钥、身份验证器应用或备用码。"
+    },
+    "passkeyMessages": {
+      "reauth": "为了你的账号安全，请退出后重新登录，然后在一天内添加通行密钥。",
+      "signedOut": "请登录后管理你的通行密钥。",
+      "invalidName": "请为通行密钥命名。",
+      "notFound": "该通行密钥已不存在。请刷新页面。",
+      "cancelled": "已取消添加通行密钥。",
+      "alreadyAdded": "此设备或密码管理器已为你的账号添加过通行密钥。",
+      "noUserVerification": "该通行密钥未要求输入 PIN、指纹或面容，因此无法用于 QRdx。请尝试其他设备或密码管理器。",
+      "expired": "操作用时过长。请重新尝试添加通行密钥。",
+      "notSupported": "此浏览器无法创建通行密钥。",
+      "rateLimited": "尝试次数过多。请等待几分钟后再试。",
+      "failed": "出了点问题。请重试。"
+    },
+    "mailProvider": {
+      "open": "打开 {provider}"
     },
     "signInErrors": {
       "githubUnverified": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法使用它创建账户。请在 {provider} 的邮箱设置中完成验证后重试，或使用邮箱验证码登录。",

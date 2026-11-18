@@ -8590,7 +8590,11 @@
       "sessionCheck": {
         "continue": "Lanjutkan",
         "signOut": "Keluar",
-        "backToQrdx": "Kembali ke QRdx"
+        "backToQrdx": "Kembali ke QRdx",
+        "title": "Konfirmasi bahwa ini Anda",
+        "body": "Login ini digunakan dari negara dan browser yang berbeda dari tempat sesi dimulai. Konfirmasi bahwa ini Anda untuk melanjutkan.",
+        "signedOut": "Masuk lagi untuk melanjutkan.",
+        "failed": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi."
       }
     },
     "join": {
@@ -9110,7 +9114,37 @@
       "signInAgain": "Demi keamanan Anda, keluar lalu masuk lagi, kemudian coba lagi dalam 10 menit.",
       "stillRequired": "Kami tidak dapat memastikan bahwa ini Anda. Coba lagi.",
       "signInFailed": "Proses masuk tersebut tidak berhasil, sehingga tidak ada yang berubah. Coba lagi atau gunakan metode lain.",
-      "signInConfirmed": "Terima kasih, sudah dikonfirmasi. Anda dapat melakukan perubahan dalam 10 menit ke depan."
+      "signInConfirmed": "Terima kasih, sudah dikonfirmasi. Anda dapat melakukan perubahan dalam 10 menit ke depan.",
+      "signedOut": "Masuk lagi untuk melanjutkan.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+      "noAuthenticatorApp": "Akun Anda tidak menggunakan aplikasi autentikator. Gunakan passkey atau kode cadangan Anda.",
+      "invalidCode": "Masukkan kode 6 digit dari email.",
+      "wrongCode": "Kode itu tidak tepat. Periksa email lalu coba lagi.",
+      "codeExpired": "Kode itu sudah kedaluwarsa. Kirim kode baru.",
+      "tooManyCodeAttempts": "Terlalu banyak percobaan yang salah. Kirim kode baru.",
+      "codeNotSent": "Kami tidak dapat mengirim kode saat ini. Silakan coba lagi.",
+      "twoFactorOn": "Verifikasi dua langkah aktif, jadi tidak ada kode yang dikirim lewat email. Gunakan passkey, aplikasi autentikator, atau kode cadangan Anda.",
+      "signInUnavailable": "Metode masuk itu tidak terhubung ke akun Anda. Gunakan metode lain.",
+      "signInNotLinked": "Akun itu tidak terhubung ke akun QRdx Anda, jadi tidak ada yang berubah. Masuk dengan akun yang Anda hubungkan, atau gunakan metode lain.",
+      "signInExpired": "Prosesnya memakan waktu lebih dari 10 menit, jadi tidak ada yang berubah. Coba lagi.",
+      "signInDifferentAccount": "Anda masuk ke akun QRdx yang berbeda, jadi tidak ada yang berubah di sini. Keluar, lalu masuk ke akun yang ingin Anda ubah.",
+      "signInTwoFactorOn": "Verifikasi dua langkah kini aktif, jadi konfirmasikan dengan cara itu: passkey, aplikasi autentikator, atau kode cadangan Anda."
+    },
+    "passkeyMessages": {
+      "reauth": "Demi keamanan Anda, keluar lalu masuk lagi, kemudian tambahkan passkey Anda dalam waktu satu hari.",
+      "signedOut": "Masuk untuk mengelola passkey Anda.",
+      "invalidName": "Beri nama pada passkey.",
+      "notFound": "Passkey itu sudah tidak ada. Muat ulang halaman.",
+      "cancelled": "Penambahan passkey dibatalkan.",
+      "alreadyAdded": "Perangkat atau pengelola kata sandi ini sudah memiliki passkey untuk akun Anda.",
+      "noUserVerification": "Passkey itu tidak meminta PIN, sidik jari, atau wajah Anda, sehingga tidak dapat digunakan dengan QRdx. Coba perangkat atau pengelola kata sandi lain.",
+      "expired": "Prosesnya terlalu lama. Coba tambahkan passkey lagi.",
+      "notSupported": "Browser ini tidak dapat membuat passkey.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "mailProvider": {
+      "open": "Buka {provider}"
     },
     "signInErrors": {
       "githubUnverified": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Verifikasi di pengaturan email {provider} Anda lalu coba lagi, atau masuk dengan kode email.",
