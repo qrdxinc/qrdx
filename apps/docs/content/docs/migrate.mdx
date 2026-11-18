@@ -90,6 +90,37 @@ If the domain isn't in QRdx yet when you import, its back-halves are kept on `qr
 
 </IfAvailable>
 
+<IfAvailable feature="customDomains" title="Path aliases">
+
+Some providers put more than a back-half in the links on your domain: a prefix such as `/r/`, several parts separated by `/`, or a back-half shorter than 3 characters. Those paths can't be QRdx back-halves, so after the DNS switch they would stop working. A path alias keeps them: the exact old path on your domain opens one of your QRdx codes.
+
+Shapes it covers, among others:
+
+| Provider | Path on your domain |
+| --- | --- |
+| Flowcode | `/r/<code>` (some codes are a single character) and `/s/<id>/code_batch-1/<id>`; `/p/<id>` too, if your older codes use it |
+| Unitag | `/a/<code>` |
+| ME-QR | `/l/<slug>` |
+| BL.INK | two words, such as `/code-of-conduct/clip` |
+| QR Planet | `/object/<id>` |
+
+There are two ways to add one:
+
+- **With an import.** Keep the back-halves on your domain (above). When a link's path can't be a back-half there, the code gets a generated back-half and keeps the old path as an alias. The preview shows both, for example `r/abc → Ab3xK9q` and "Also answers at go.yourbrand.com/r/abc", and the import adds the alias.
+- **By hand.** Open a code on your domain, click **Edit**, and add the old path under **Path aliases**: `/r/abc`, or paste the whole old link. The domain has to be verified first. A code can have up to {facts.pathAliasesPerCode} path aliases.
+
+How a path alias matches:
+
+- The path has to match exactly, and capitals count: `/r/ABC` and `/r/abc` are different. A `/` at the end doesn't matter.
+- The query string doesn't count, as for back-halves: `/r/abc?utm_source=flyer` opens the code at `/r/abc`. Scans and analytics count as for the code's own link, and its password, schedule, scan limit and pause apply.
+- On a domain, each path opens one code.
+- A path that would fit a back-half (one part of 3 to 64 letters, digits, `-` or `_`) can't be an alias. Give the code that back-half instead.
+- QRdx keeps `/api/…`, `/stats/…`, `/q/…`, GS1 Digital Links (`/01/…`) and files such as `/robots.txt` and `/favicon.ico` for itself.
+- `/p/<back-half>` is also where QRdx shows hosted pages. An alias there answers only when no hosted page on the domain has that back-half, and QRdx won't add it while one of your codes there has it.
+- An alias answers only while its code stays on that domain. A domain's first alias can take a minute to start working.
+
+</IfAvailable>
+
 ## From an export file
 
 1. Get the file (steps below). QRdx reads CSV up to 2 MB and 1,000 rows per run; for an Excel file, save or download it as CSV first.
