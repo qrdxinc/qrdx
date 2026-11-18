@@ -5,7 +5,10 @@
 // reloads) and in the address bar, and the sign-in panel sends it along with
 // a sign-up (a request header for email codes, the OAuth state for Google
 // and GitHub). Nothing is ever written to the device: no cookie, no
-// localStorage, no sessionStorage.
+// localStorage, no sessionStorage. A link from the marketing site's pages
+// (another app on qrdx.dev, so a new page) carries the visit, code
+// included, in its address (@repo/analytics/landing visitRef).
+import { visitRef } from "@repo/analytics/landing";
 import { isHandoffTag } from "@/lib/analytics/handoff-tags";
 import { parseReferralCode } from "./rules";
 import { AFFILIATE_REF_PARAM } from "./terms";
@@ -25,16 +28,22 @@ function codeInAddressBar(): string | null {
   }
 }
 
+/** The code the visit started with, carried here from another page of this origin (or read on this one). */
+function codeCarried(): string | null {
+  const code = parseReferralCode(visitRef());
+  return code && !isHandoffTag(code) ? code : null;
+}
+
 /** Keeps the address bar's code (if any) for the rest of this tab's visit. */
 export function captureReferralFromUrl(): string | null {
-  const code = codeInAddressBar();
+  const code = codeInAddressBar() ?? codeCarried();
   if (code && !pending) pending = code;
   return pending;
 }
 
 /** The code this tab's sign-up should carry, if it has one. */
 export function pendingReferralCode(): string | null {
-  return pending ?? codeInAddressBar();
+  return pending ?? codeInAddressBar() ?? codeCarried();
 }
 
 /** Clears the in-memory code (tests). */
