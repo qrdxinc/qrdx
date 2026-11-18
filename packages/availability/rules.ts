@@ -106,6 +106,12 @@ interface FeatureRule {
    */
   usable?: (ctx: FeatureContext) => boolean;
   /**
+   * Why `usable` says no although every variable is set, for admins: the
+   * Health page shows it in place of the variables, which aren't what's
+   * wrong then (featureUnusableReason).
+   */
+  unusableReason?: string;
+  /**
    * Pages that only offer this feature. They leave the nav, footer, app
    * sidebar, sitemap and llms.txt while it's unavailable; the pages
    * themselves keep working (existing users may still need them).
@@ -238,6 +244,10 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
         ? ["RESEND_API_KEY", "EMAIL_FROM", "NEXT_PUBLIC_APP_URL"]
         : [],
     usable: (ctx) => Boolean(ctx.outboundDelivery) || !ctx.production,
+    // isOutboundDeliveryAllowed's "no" in a production build: on Vercel,
+    // any VERCEL_ENV but production; elsewhere, a localhost app URL.
+    unusableReason:
+      "Outbound email is off on this deployment: NEXT_PUBLIC_APP_URL is localhost or 127.0.0.1, or this is a Vercel preview. Set QRDX_ALLOW_DEV_DELIVERY=1 to allow it.",
   },
   passkeys: {
     // Passkeys belong to the app's host and browsers only offer them over
@@ -472,6 +482,21 @@ export function missingFeatureSetup(
     return [...names];
   }
   return missing;
+}
+
+/**
+ * Why `id` is off although every variable it needs is set, in its rule's
+ * words (`unusableReason`). Null when it's on, a variable is missing, or the
+ * rule has no such words (its variables are the hint then).
+ */
+export function featureUnusableReason(
+  id: FeatureId,
+  ctx: FeatureContext
+): string | null {
+  const rule = FEATURE_RULES[id];
+  if (!(rule.unusableReason && rule.usable)) return null;
+  const allSet = rule.requires(ctx).every((name) => ctx.env[name]?.trim());
+  return allSet && !rule.usable(ctx) ? rule.unusableReason : null;
 }
 
 export type FeatureMap = Record<FeatureId, boolean>;

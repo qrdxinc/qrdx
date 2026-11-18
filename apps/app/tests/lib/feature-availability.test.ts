@@ -14,6 +14,7 @@ import {
   type FeatureContext,
   type FeatureId,
   featureForCatalogSlug,
+  featureUnusableReason,
   isPathShown,
   missingFeatureSetup,
   toPublicAvailability,
@@ -402,6 +403,16 @@ describe("ways to sign in", () => {
         ctx({ ...LOCAL_DOCKER, ...resend }, localBuild),
       ),
     ).toEqual(["RESEND_API_KEY", "EMAIL_FROM", "NEXT_PUBLIC_APP_URL"]);
+    // Those are all set, though: what admins are told is that email may not
+    // go out from here (admin Health).
+    expect(
+      featureUnusableReason(
+        "emailSignIn",
+        ctx({ ...LOCAL_DOCKER, ...resend }, localBuild),
+      ),
+    ).toMatch(
+      /^Outbound email is off on this deployment: .*QRDX_ALLOW_DEV_DELIVERY=1/,
+    );
     // Resend on its own domain: codes are emailed.
     expect(
       offered(ctx({ ...ownDomain, ...resend }, { production: true })).email,
@@ -411,6 +422,12 @@ describe("ways to sign in", () => {
     expect(
       missingFeatureSetup("emailSignIn", ctx(ownDomain, { production: true })),
     ).toEqual(["RESEND_API_KEY", "EMAIL_FROM"]);
+    expect(
+      featureUnusableReason(
+        "emailSignIn",
+        ctx(ownDomain, { production: true }),
+      ),
+    ).toBeNull();
   });
 
   it("keeps printing codes in the terminal in local dev, with nothing set", () => {
