@@ -23364,11 +23364,15 @@
     "status": "machine"
   },
   "app.dashboard.codes.importRunStep.oldProviderCodesLiveOnItsDomain": {
-    "source": "7ddce2ff50f4",
+    "source": "47cc093a56bc",
     "status": "machine"
   },
   "app.dashboard.codes.importRunStep.providerCodesLiveOnItsDomain": {
-    "source": "8a87ca7d3613",
+    "source": "61bdf8ed40e2",
+    "status": "machine"
+  },
+  "app.dashboard.codes.importRunStep.ownDomainCodesCanMove": {
+    "source": "de24733b9b3b",
     "status": "machine"
   },
   "app.dashboard.codes.importRunStep.oldLinksPointToQrdx": {
