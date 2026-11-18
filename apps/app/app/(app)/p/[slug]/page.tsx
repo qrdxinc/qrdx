@@ -17,6 +17,7 @@ import { requestAppLocale } from "@/lib/i18n/request-locale";
 import { scanPagesIntl } from "@/lib/i18n/scan-pages";
 import type { BlockRenderContext } from "@/lib/landing/blocks";
 import { baseUrl } from "@/lib/metadata";
+import { NFC_PARAM } from "@/lib/nfc/links";
 import { aliasCode } from "@/lib/path-alias-store";
 import { enforcePageLifecycle } from "@/lib/redirect/lifecycle";
 import { loadPublicPage, pageSummary } from "../_lib/public-page";
@@ -30,7 +31,10 @@ import { loadPublicPage, pageSummary } from "../_lib/public-page";
 
 export const dynamic = "force-dynamic";
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
 /** The scanner's language, from Accept-Language (never stored or cached). */
 async function scannerLocale(): Promise<Locale> {
@@ -45,15 +49,18 @@ async function load(slug: string) {
 /**
  * A path alias at `/p/<slug>` on a custom domain (lib/path-aliases.ts),
  * when no hosted page there has that back-half: the alias's code by its own
- * back-half, which counts the scan like any other. Null otherwise.
+ * back-half, which counts the scan like any other (an NFC tap as a tap:
+ * `?nfc` comes along, as host-routing.ts passes it). Null otherwise.
  */
-async function aliasTarget(slug: string): Promise<string | null> {
+async function aliasTarget(slug: string, nfc: boolean): Promise<string | null> {
   const requestHeaders = await headers();
   const domainId = requestHeaders.get(CUSTOM_DOMAIN_HEADER);
   if (!(domainId && isCustomDomainRequest(requestHeaders))) return null;
   try {
     const code = await aliasCode(`/p/${slug}`, domainId);
-    return code ? `/${encodeURIComponent(code.slug)}` : null;
+    if (!code) return null;
+    const target = `/${encodeURIComponent(code.slug)}`;
+    return nfc ? `${target}?${NFC_PARAM}` : target;
   } catch (error) {
     console.error("Path alias lookup failed:", error);
     return null;
@@ -114,7 +121,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function LandingPage({ params }: Props) {
+export default async function LandingPage({ params, searchParams }: Props) {
   // Before anything renders: the blocks' useTranslations (server
   // components) and not-found.tsx read this request's locale from here.
   const locale = await scannerLocale();
@@ -122,7 +129,10 @@ export default async function LandingPage({ params }: Props) {
   const { slug } = await params;
   const page = await load(slug);
   if (!page) {
-    const target = await aliasTarget(slug);
+    const target = await aliasTarget(
+      slug,
+      (await searchParams)[NFC_PARAM] !== undefined,
+    );
     if (target) redirect(target);
     notFound();
   }

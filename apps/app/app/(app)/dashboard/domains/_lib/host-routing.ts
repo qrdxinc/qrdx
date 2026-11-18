@@ -240,8 +240,10 @@ export async function routeCustomDomain(
     headers.set(CUSTOM_DOMAIN_HEADER, host.id);
     let target = isPagePath ? `/p/${slug}` : `/q/${slug}`;
     // NFC links (`/<slug>?nfc`, lib/nfc/links.ts) carry their marker in the
-    // rewrite itself, so the tap counts as one wherever the app runs.
-    if (!isPagePath && request.nextUrl.searchParams.has(NFC_PARAM)) {
+    // rewrite itself, so the tap counts as one wherever the app runs; so do
+    // `/p/<slug>?nfc` visits, for a /p/ path alias the hosted page route
+    // sends on (app/(app)/p/[slug]/page.tsx).
+    if (request.nextUrl.searchParams.has(NFC_PARAM)) {
       target += `?${NFC_PARAM}`;
     }
     return NextResponse.rewrite(new URL(target, request.url), {

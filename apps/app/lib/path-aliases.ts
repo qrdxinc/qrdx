@@ -68,8 +68,16 @@ export function pathAliasProblem(path: string): PathAliasProblem | null {
   return null;
 }
 
-/** `/a%20b/` → `/a b`; null when the escapes don't decode. */
+/** An escaped `/` or `\`: decoding it would change where the parts split. */
+const ESCAPED_SEPARATOR = /%(?:2f|5c)/i;
+
+/**
+ * `/a%20b/` → `/a b`; null when the escapes don't decode, or hide a
+ * separator (`/r%2Fabc` must not match `/r/abc`, nor `/p%2Fx` skip the
+ * hosted page that `/p/x` reaches first).
+ */
 function decodePath(path: string): string | null {
+  if (ESCAPED_SEPARATOR.test(path)) return null;
   try {
     return decodeURIComponent(path).replace(/\/+$/, "");
   } catch {

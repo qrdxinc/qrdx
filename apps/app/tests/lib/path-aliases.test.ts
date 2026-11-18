@@ -111,6 +111,22 @@ describe("aliasPathOf (request paths)", () => {
     expect(aliasPathOf("/r/%E0%A4%A")).toBeNull();
   });
 
+  it("never decodes an escaped / or \\ (it would move where the parts split)", () => {
+    for (const path of [
+      "/r%2FNBDX",
+      "/r%2fNBDX",
+      "/p%2FQNA8kOWzd",
+      "/r%5CNBDX",
+      "/r%5cNBDX",
+    ]) {
+      expect(aliasPathOf(path), path).toBeNull();
+    }
+    expect(parsePathAlias("r%2Fabc")).toEqual({
+      ok: false,
+      problem: "characters",
+    });
+  });
+
   it("never matches what can't be an alias", () => {
     for (const path of ["/", "/spring-menu", "/api/events", "/.env", "/r//x"]) {
       expect(aliasPathOf(path), path).toBeNull();

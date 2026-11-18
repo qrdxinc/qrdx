@@ -176,6 +176,21 @@ describe("path aliases on a verified custom domain", () => {
     expect(target(await switched("/r/X?nfc"))).toBe("/path-alias/r/X?nfc");
   });
 
+  it("never lets an escaped slash reach an alias or skip the hosted page", async () => {
+    for (const path of ["/r%2FX", "/r%2fX", "/p%2FQNA8kOWzd", "/r%5CX"]) {
+      const response = await switched(path);
+      expect(rewrittenTo(response), path).toBeNull();
+      expect(response?.status, path).toBe(404);
+    }
+  });
+
+  it("passes ?nfc (only) to the hosted page route, for its /p/ alias fallback", async () => {
+    expect(target(await switched("/p/QNA8kOWzd?nfc"))).toBe("/p/QNA8kOWzd?nfc");
+    expect(target(await switched("/p/QNA8kOWzd?utm_source=flyer"))).toBe(
+      "/p/QNA8kOWzd",
+    );
+  });
+
   it("puts back-halves, hosted pages and QRdx's own paths first", async () => {
     expect(rewrittenTo(await switched("/spring-menu"))).toBe("/q/spring-menu");
     // /p/<back-half> is the hosted page; its route answers /p/ aliases
