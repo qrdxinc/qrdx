@@ -18,7 +18,7 @@ QRdx issues the license key with the agreement. To get one, use the [enterprise 
 
 - Docker with Compose v2 and BuildKit (Docker Desktop and current Docker Engine include both), or Node.js 22 (22.22.3 or later) and [Bun](https://bun.com/docs/installation) 1.4 for the manual setup.
 - At least 8 GB of memory for Docker while the image builds.
-- A way to sign in, so accounts can be created: a GitHub or Google OAuth app, or [Resend](https://resend.com) for email sign-in codes. Sign-in codes are emailed only when `NEXT_PUBLIC_APP_URL` isn't `localhost`. `bun run dev` prints them in the terminal instead, but the Docker image doesn't, so a local Docker test needs GitHub or Google sign-in. The sign-in page shows only the ways in that work on your server, and says sign-in isn't set up when none do.
+- A way to sign in, so accounts can be created: a GitHub or Google OAuth app, or [Resend](https://resend.com) for email sign-in codes. Sign-in codes are emailed only when `NEXT_PUBLIC_APP_URL` isn't `localhost`. `bun run dev` prints them in the terminal instead, but the Docker image doesn't, so a local Docker test needs GitHub or Google sign-in. The sign-in page shows only the ways in that work on your server, and says sign-in isn't set up when none do. It still offers **Continue with passkey**, which works only for an account that already has a passkey.
 - Postgres: the container bundled in `docker-compose.yml`, or a [Neon](https://neon.tech) database.
 - For anything beyond a local test, a domain and a reverse proxy that terminates HTTPS.
 
@@ -87,14 +87,14 @@ Leave `DATABASE_URL` as it is: Compose points the app at its own Postgres contai
 docker compose up -d --build
 ```
 
-This builds the image, starts Postgres and the proxy, runs the one-shot `migrate` service (`drizzle-kit push`) and then starts the app on port 3000. The first build takes several minutes. When it's done, the four services look like this:
+This builds the image, starts Postgres and the proxy, runs the one-shot `migrate` service (`drizzle-kit push`) and then starts the app on port 3000. The first build takes several minutes. When it's done, `docker compose ps -a` lists the four services (plain `docker compose ps` leaves out `migrate` once it has exited):
 
-```text title="docker compose ps (columns trimmed)"
+```text title="docker compose ps -a (columns trimmed)"
 NAME              SERVICE    STATUS
-qrdx-db-1         db         running (healthy)
-qrdx-db-proxy-1   db-proxy   running
-qrdx-migrate-1    migrate    exited (0)
-qrdx-app-1        app        running
+qrdx-app-1        app        Up 16 seconds
+qrdx-db-1         db         Up 23 seconds (healthy)
+qrdx-db-proxy-1   db-proxy   Up 17 seconds
+qrdx-migrate-1    migrate    Exited (0) 16 seconds ago
 ```
 
 `migrate` is meant to exit: it syncs the schema and stops. To watch the schema sync and the app start:
@@ -365,9 +365,9 @@ Docker ran out of memory. Give it at least 8 GB (Docker Desktop: **Settings** â†
 
 Node's heap ran out during the type check in `next build`; giving Docker more memory doesn't help. Current versions skip that check in the image build, the way QRdx's own builds do: CI type-checks every change before a release. Pull the latest code and run `docker compose up -d --build` again. If you need to build an older version, add `NODE_OPTIONS=--max-old-space-size=4096` to the `ENV` line in the Dockerfile's build stage.
 
-### "sign-in code email is off for this deployment"
+### "Email sign-in isn't set up on this site"
 
-Email codes aren't sent while `NEXT_PUBLIC_APP_URL` is `localhost`, or when Resend isn't set up. Use GitHub or Google sign-in for a local test.
+Email codes aren't sent while `NEXT_PUBLIC_APP_URL` is `localhost`, or when Resend isn't set up, so the sign-in page leaves out the email form. A request for a code answers `400` with `SIGN_IN_CODES_UNAVAILABLE`, and `docker compose logs app` shows `{"event":"auth.email_otp.unavailable"}`. Older versions logged "sign-in code email is off for this deployment" instead. Use GitHub or Google sign-in for a local test.
 
 Still stuck? [Open an issue](https://github.com/qrdxinc/qrdx/issues) with the output of `docker compose logs app`, with secrets removed.
 
