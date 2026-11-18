@@ -140,7 +140,11 @@ vi.mock("@/app/(app)/admin/_lib/audit", () => ({
     state.audit.push(entry);
   },
 }));
-vi.mock("@/lib/request-guards", () => ({ enforceRateLimits: async () => {} }));
+vi.mock("@/lib/request-guards", () => ({
+  enforceRateLimits: async () => {},
+  // A CONFIRMATION_REQUIRED refusal gives the admin runner's count back.
+  refundRateLimits: async () => {},
+}));
 vi.mock("@/lib/connected-accounts/server", () => ({
   revokeStoredToken: async () => false,
 }));

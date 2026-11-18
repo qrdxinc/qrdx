@@ -1,6 +1,6 @@
 "use server";
 
-import { ADMIN_ROLE } from "@repo/auth/admin";
+import { ADMIN_ROLE, isAdmin } from "@repo/auth/admin";
 import { auth } from "@repo/auth/server";
 import {
   communityItem,
@@ -29,6 +29,7 @@ import {
   roleSchema,
   userReasonSchema as userSchema,
 } from "./_lib/schemas";
+import { requireStrongAdmin } from "./_lib/strong-admin";
 
 export type { AdminActionResult } from "./_lib/action";
 
@@ -50,6 +51,8 @@ export async function banUserAction(
     async (admin, { userId, reason, expiresInDays }) => {
       if (userId === admin.id) throw adminError("You cannot ban yourself");
       const target = await findUser(userId);
+      // Banning another admin locks them out: not on a stolen cookie alone.
+      if (isAdmin(target)) await requireStrongAdmin(admin);
       // Also deletes the user's sessions.
       await auth.api.banUser({
         body: {
@@ -75,8 +78,10 @@ export async function unbanUserAction(
   return runAdminAction(
     { action: "user.unban", schema: userSchema },
     input,
-    async (_admin, { userId }) => {
+    async (admin, { userId }) => {
       const target = await findUser(userId);
+      // Unbanning an admin hands the admin pages back to them.
+      if (isAdmin(target)) await requireStrongAdmin(admin);
       await auth.api.unbanUser({ body: { userId }, headers: await headers() });
       refreshCommunity();
       return userAudit(target);
@@ -111,8 +116,9 @@ export async function revokeUserSessionsAction(
   return runAdminAction(
     { action: "user.revoke_sessions", schema: userSchema },
     input,
-    async (_admin, { userId }) => {
+    async (admin, { userId }) => {
       const target = await findUser(userId);
+      if (isAdmin(target)) await requireStrongAdmin(admin);
       await auth.api.revokeUserSessions({
         body: { userId },
         headers: await headers(),

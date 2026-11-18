@@ -74,7 +74,13 @@ export interface StrongCheck {
 /** The target of a ban, unban, role change or sign-out. */
 export async function findAdminTarget(userId: string) {
   const [found] = await db
-    .select({ id: user.id, email: user.email, role: user.role })
+    .select({
+      id: user.id,
+      email: user.email,
+      // isAdmin counts ADMIN_EMAILS for verified addresses only.
+      emailVerified: user.emailVerified,
+      role: user.role,
+    })
     .from(user)
     .where(eq(user.id, userId))
     .limit(1);
@@ -326,10 +332,15 @@ export async function changeAccountEmail(
   };
 }
 
-/** Removes a linked GitHub / Google sign-in; never the user's last one. */
+/**
+ * Removes a linked GitHub / Google sign-in; never the user's last one. For
+ * an admin it takes the acting admin's strong confirmation: a stolen admin
+ * cookie alone mustn't take away another admin's way in.
+ */
 export async function unlinkSignInMethod(
   _admin: AdminActor,
   { userId, accountId }: { userId: string; accountId: string },
+  { requireStrong }: StrongCheck,
 ): Promise<AdminActionOutcome<undefined>> {
   const target = await findSupportTarget(userId);
   const accounts = await db
@@ -338,6 +349,7 @@ export async function unlinkSignInMethod(
     .where(eq(account.userId, userId));
   const check = canUnlinkSignInMethod(accounts, accountId);
   if (!check.ok) throw adminError(check.error);
+  if (isAdmin(target)) await requireStrong();
   const removed = accounts.find((row) => row.id === accountId);
 
   await db
