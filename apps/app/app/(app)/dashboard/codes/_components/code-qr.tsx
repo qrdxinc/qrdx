@@ -3,6 +3,12 @@
 import { track } from "@repo/analytics";
 import { toast } from "@repo/design-system";
 import { Button } from "@repo/design-system/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@repo/design-system/components/ui/dropdown-menu";
 import { cn } from "@repo/design-system/lib/utils";
 import { Import as Download } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
@@ -16,12 +22,18 @@ import type { ThemeStyles } from "@/types/theme";
 
 const DOWNLOAD_SIZE = 1024;
 
-/** The files a saved code downloads as; WebP is lossless. */
-export type CodeImageFormat = "png" | "webp" | "svg";
+/**
+ * The files a saved code downloads as; WebP is lossless, BMP an uncompressed
+ * 24-bit bitmap (a transparent background comes out white).
+ */
+export type CodeImageFormat = "png" | "webp" | "bmp" | "svg";
 const FORMATS: CodeImageFormat[] = ["png", "webp", "svg"];
+/** Formats beyond the buttons, in a "More" menu. */
+const MORE_FORMATS: CodeImageFormat[] = ["bmp"];
 const FORMAT_LABELS: Record<CodeImageFormat, string> = {
   png: "PNG",
   webp: "WebP",
+  bmp: "BMP",
   svg: "SVG",
 };
 
@@ -143,6 +155,21 @@ export function CodeDownloadButtons({
           {FORMAT_LABELS[format]}
         </Button>
       ))}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button disabled={pending !== null} size="sm" variant="outline">
+            {t("moreFormats")}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          {MORE_FORMATS.map((format) => (
+            <DropdownMenuItem key={format} onSelect={() => download(format)}>
+              <Download />
+              {FORMAT_LABELS[format]}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

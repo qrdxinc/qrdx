@@ -22,14 +22,17 @@ import { z } from "zod";
 import { logError } from "@/lib/shared";
 import {
   CONFIRMATION_MESSAGES,
+  type ConfirmationMessages,
   confirmSignInErrorMessage,
   isConfirmSignInProvider,
 } from "./confirmation";
 import {
   type ConfirmableSession,
+  confirmationText,
   currentSession,
   loadConfirmationOptions,
   recordConfirmation,
+  refuse,
 } from "./confirmation-server";
 import { loadTwoFactorFacts } from "./two-factor-server";
 
@@ -47,6 +50,9 @@ import { loadTwoFactorFacts } from "./two-factor-server";
 //    made after they asked (a new sign-in, not the one they had). Then this
 //    session gets its 10 minutes, and the session it replaced in this
 //    browser is signed out.
+//
+// Refusals are in the person's language (refuse() in
+// ./confirmation-server.tsx): the dialog shows them as they are.
 
 export type SignInStartResult =
   | { ok: true; email: string }
@@ -72,19 +78,19 @@ export async function startSignInConfirmation(
 ): Promise<SignInStartResult> {
   const parsed = startInput.safeParse(input);
   if (!(parsed.success && isConfirmSignInProvider(parsed.data.provider))) {
-    return { ok: false, error: CONFIRMATION_MESSAGES.signInUnavailable };
+    return refuse((text) => text.confirm.signInUnavailable);
   }
   const provider = parsed.data.provider;
   try {
     const session = await currentSession();
-    if (!session) return { ok: false, error: CONFIRMATION_MESSAGES.signedOut };
+    if (!session) return refuse((text) => text.confirm.signedOut);
     // The same list the dialog shows: never with two-step verification on.
     const { methods } = await loadConfirmationOptions(session);
     if (!methods.includes(provider)) {
-      return { ok: false, error: CONFIRMATION_MESSAGES.signInUnavailable };
+      return refuse((text) => text.confirm.signInUnavailable);
     }
     if (!(await startLimiter.limit(session.userId)).success) {
-      return { ok: false, error: CONFIRMATION_MESSAGES.rateLimited };
+      return refuse((text) => text.confirm.rateLimited);
     }
 
     const nonce = randomBytes(32).toString("base64url");
@@ -128,16 +134,20 @@ export async function startSignInConfirmation(
     return { ok: true, email: session.email };
   } catch (error) {
     logError(error as Error, { action: "account.startSignInConfirmation" });
-    return { ok: false, error: CONFIRMATION_MESSAGES.failed };
+    return refuse((text) => text.confirm.failed);
   }
 }
 
-/** The rules for step 3, on the row and the session it came back with. */
+/**
+ * The rules for step 3, on the row and the session it came back with: what
+ * went wrong, from `messages` (English by default), or null.
+ */
 export function signInConfirmationProblem({
   intent,
   rowCreatedAt,
   session,
   now,
+  messages = CONFIRMATION_MESSAGES,
 }: {
   intent: { userId: string; fromSessionId: string };
   rowCreatedAt: Date;
@@ -146,9 +156,10 @@ export function signInConfirmationProblem({
     "userId" | "sessionId" | "sessionCreatedAt"
   >;
   now: Date;
+  messages?: ConfirmationMessages;
 }): string | null {
   if (session.userId !== intent.userId) {
-    return CONFIRMATION_MESSAGES.signInDifferentAccount;
+    return messages.signInDifferentAccount;
   }
   const made = session.sessionCreatedAt.getTime();
   if (
@@ -157,7 +168,7 @@ export function signInConfirmationProblem({
     now.getTime() - made > CONFIRM_SIGN_IN_MINUTES * 60_000
   ) {
     // Came back without a new sign-in (or a very late one).
-    return CONFIRMATION_MESSAGES.signInFailed;
+    return messages.signInFailed;
   }
   return null;
 }
@@ -176,9 +187,7 @@ export async function finishSignInConfirmation(
   input: unknown,
 ): Promise<SignInFinishResult> {
   const parsed = finishInput.safeParse(input);
-  if (!parsed.success) {
-    return { ok: false, error: CONFIRMATION_MESSAGES.signInFailed };
-  }
+  if (!parsed.success) return refuse((text) => text.confirm.signInFailed);
   try {
     const jar = await cookies();
     let nonce: string | null = null;
@@ -210,29 +219,31 @@ export async function finishSignInConfirmation(
           })
       : [];
     if (parsed.data.failed) {
-      return { ok: false, error: confirmSignInErrorMessage(parsed.data.error) };
+      const code = parsed.data.error;
+      return refuse((text) => confirmSignInErrorMessage(code, text.confirm));
     }
     const intent = row ? parseConfirmSignInIntent(row.value) : null;
     if (!(row?.createdAt && intent)) {
-      return { ok: false, error: CONFIRMATION_MESSAGES.signInFailed };
+      return refuse((text) => text.confirm.signInFailed);
     }
     const now = new Date();
     if (new Date(row.expiresAt).getTime() <= now.getTime()) {
-      return { ok: false, error: CONFIRMATION_MESSAGES.signInExpired };
+      return refuse((text) => text.confirm.signInExpired);
     }
     const session = await currentSession();
-    if (!session) return { ok: false, error: CONFIRMATION_MESSAGES.signedOut };
+    if (!session) return refuse((text) => text.confirm.signedOut);
     const problem = signInConfirmationProblem({
       intent,
       rowCreatedAt: new Date(row.createdAt),
       session,
       now,
+      messages: (await confirmationText()).confirm,
     });
     if (problem) return { ok: false, error: problem };
     // Turned on meanwhile (another tab): a sign-in no longer confirms, and
     // one that skipped the second step on a trusted device mustn't.
     if ((await loadTwoFactorFacts(session.userId)).on) {
-      return { ok: false, error: CONFIRMATION_MESSAGES.signInTwoFactorOn };
+      return refuse((text) => text.confirm.signInTwoFactorOn);
     }
 
     await recordConfirmation(session);
@@ -249,6 +260,6 @@ export async function finishSignInConfirmation(
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.finishSignInConfirmation" });
-    return { ok: false, error: CONFIRMATION_MESSAGES.failed };
+    return refuse((text) => text.confirm.failed);
   }
 }

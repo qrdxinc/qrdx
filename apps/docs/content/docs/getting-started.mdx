@@ -107,7 +107,7 @@ export function DownloadSvgButton() {
 }
 ```
 
-Clicking the button saves `menu.svg`: the same code as on screen, drawn at 1024 px and sharp at any size, which is the file a print shop asks for. Set `format` to `png`, `jpg` or `webp` for an image, `eps` for a vector file for design tools, or `pdf` (needs the optional `jspdf` package).
+Clicking the button saves `menu.svg`: the same code as on screen, drawn at 1024 px and sharp at any size, which is the file a print shop asks for. Set `format` to `png`, `jpg`, `webp` or `bmp` for an image, `eps` for a vector file for design tools, or `pdf` (needs the optional `jspdf` package).
 
 `downloadQRCode` uses the browser's DOM, so the button lives in a Client Component. A Server Component can still render it. Keep the code's options in one object, as above, so the file matches the preview.
 
@@ -133,7 +133,7 @@ You can also upload a screenshot or a photo of a printed code to the [scan check
 
 - **`Module not found: Can't resolve 'qrdx'`.** Install the package in the workspace or app that imports it, then restart the dev server.
 - **The code renders but phones don't read it.** Add `margin={4}`, keep dark modules on a light background, and render it at least 128 px wide on screen. [A code won't scan](/docs/help/troubleshooting/wont-scan) lists the other causes.
-- **`PDF export needs the optional "jspdf" package`.** Run `npm install jspdf` in the same package. SVG, PNG, JPG, WebP and EPS need nothing extra.
+- **`PDF export needs the optional "jspdf" package`.** Run `npm install jspdf` in the same package. SVG, PNG, JPG, WebP, BMP and EPS need nothing extra.
 
 ## Related
 

@@ -23963,6 +23963,12 @@
     "status": "machine",
     "context": "barcodeFormats.pages.code-93.usedFor.0"
   },
+  "24c8566504c9": {
+    "source": "Your own barcode on mail: Canada Post lists Code 93 among the barcodes it accepts next to the address on Personalized Mail.",
+    "text": "在邮件上使用自己的条形码：加拿大邮政（Canada Post）在个性化邮件（Personalized Mail）的地址旁，接受的条形码中包括 Code 93。",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
   "8d204ecd0aaf": {
     "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
     "text": "如果没有硬性要求使用 Code 93，请选用 Code 128：它也支持小写字母，而且更多扫描器已开启对它的识读。",

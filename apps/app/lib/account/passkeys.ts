@@ -92,6 +92,32 @@ export const PASSKEY_MESSAGES = {
   failed: "Something went wrong. Please try again.",
 } as const;
 
+/** PASSKEY_MESSAGES in any language. */
+export type PasskeyMessages = Record<keyof typeof PASSKEY_MESSAGES, string>;
+
+/**
+ * PASSKEY_MESSAGES in the person's language (auth.passkeyMessages in
+ * messages/en.json), for answers the server sends to "Confirm it's you"
+ * and Settings (lib/account/confirmation-server.tsx).
+ */
+export function passkeyMessages(
+  t: Translator<"auth.passkeyMessages">,
+): PasskeyMessages {
+  return {
+    reauth: t("reauth"),
+    signedOut: t("signedOut"),
+    invalidName: t("invalidName"),
+    notFound: t("notFound"),
+    cancelled: t("cancelled"),
+    alreadyAdded: t("alreadyAdded"),
+    noUserVerification: t("noUserVerification"),
+    expired: t("expired"),
+    notSupported: t("notSupported"),
+    rateLimited: t("rateLimited"),
+    failed: t("failed"),
+  };
+}
+
 /** What a Better Auth APIError carries (auth.api throws these). */
 interface AuthErrorLike {
   statusCode?: number;

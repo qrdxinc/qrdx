@@ -26,6 +26,11 @@ const DESCRIPTIONS: Record<TwoFactorNoticeKind, string> = {
   "backup-code-used": "a backup code was used",
 };
 
+const DUE_DAY = new Intl.DateTimeFormat("en", {
+  dateStyle: "long",
+  timeZone: "UTC",
+});
+
 /** What the notice says, in a few words (for the local dev log). */
 export function describeTwoFactorNotice(
   kind: TwoFactorNoticeKind,
@@ -35,8 +40,8 @@ export function describeTwoFactorNotice(
   if (kind === "on" && extra.signedOutElsewhere) {
     parts.push("other sessions signed out");
   }
-  if (kind === "support-reset-scheduled" && extra.dueDate) {
-    parts.push(`on ${extra.dueDate}`);
+  if (kind === "support-reset-scheduled" && extra.dueAt) {
+    parts.push(`on ${DUE_DAY.format(extra.dueAt)}`);
   }
   if (kind === "support-reset-cancelled" && extra.cancelledBy) {
     parts.push(`by ${extra.cancelledBy}`);

@@ -218,6 +218,52 @@ describe("sendLimitNotice", () => {
     expect(state.sent).toHaveLength(1);
   });
 
+  it("sends each owner's saved language, else English: one email per language", async () => {
+    const alice = fakeDb.find("user", { id: "u_alice" });
+    if (alice) alice.locale = "es";
+    await sendLimitNotice(scope, "dynamicCodes", { used: 9, limit: 10 }, NOW);
+    expect(state.sent).toHaveLength(2);
+    const sentTo = (address: string) =>
+      state.sent.find((email) => email.to.includes(address));
+    const english = sentTo("carol@example.com");
+    const spanish = sentTo("alice@example.com");
+    expect(english?.to).toEqual(["carol@example.com"]);
+    expect(english?.subject).toBe("Dynamic QR codes: 9 of 10 used in Acme");
+    expect(english?.idempotencyKey).toBe(
+      "limit-notice:org_acme:dynamicCodes:workspace:2026-11:90",
+    );
+    expect(spanish?.to).toEqual(["alice@example.com"]);
+    expect(spanish?.subject).toBe(
+      "Códigos QR dinámicos: 9 de 10 usado en Acme",
+    );
+    expect(spanish?.idempotencyKey).toBe(
+      "limit-notice:org_acme:dynamicCodes:workspace:2026-11:90:es",
+    );
+    const text = await render(spanish?.react as ReactElement, {
+      plainText: true,
+    });
+    expect(text).toContain("1 código dinámico activo restante en Gratis.");
+    expect(text).toContain("Recibes esto porque eres propietario de Acme");
+    expect(text).not.toContain("You get this");
+  });
+
+  it("frees the claim when one language's email didn't go out", async () => {
+    const alice = fakeDb.find("user", { id: "u_alice" });
+    if (alice) alice.locale = "es";
+    const { sendEmail } = await import("@/lib/email/send");
+    vi.mocked(sendEmail).mockImplementationOnce(async (options) => {
+      state.sent.push({
+        ...(options as (typeof state.sent)[number]),
+        to: [options.to].flat(),
+      });
+      return { sent: false, reason: "failed" };
+    });
+    expect(
+      await sendLimitNotice(scope, "storage", { used: 49, limit: 50 }, NOW),
+    ).toEqual({ sent: null, reason: "failed" });
+    expect(fakeDb.rows("limitNotice")).toHaveLength(0);
+  });
+
   it("sends once when two writes race", async () => {
     await Promise.all([
       sendLimitNotice(scope, "savedThemes", { used: 9, limit: 10 }, NOW),

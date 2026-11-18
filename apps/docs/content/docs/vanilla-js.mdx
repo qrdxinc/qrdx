@@ -60,7 +60,7 @@ qr.destroy(); // removes the <svg>
 ```
 
 - `update` merges new options into the current ones and redraws. Pass `undefined` to drop an option. When the markup does not change, the page is not touched.
-- `toDataURL` and `download` default to PNG at the code's own `size`. The formats are `png`, `jpg`, `webp`, `svg`, `pdf` and `eps`. A frame makes the image bigger than the code. PDF needs the optional `jspdf` package.
+- `toDataURL` and `download` default to PNG at the code's own `size`. The formats are `png`, `jpg`, `webp`, `bmp`, `svg`, `pdf` and `eps`. A frame makes the image bigger than the code. PDF needs the optional `jspdf` package.
 - `qr.svg` is the `<svg>` element and `qr.options` the current options.
 - `destroy` removes the `<svg>`. `update` throws after it.
 

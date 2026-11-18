@@ -1,9 +1,8 @@
 "use server";
 
-import {
-  CONFIRMATION_MESSAGES,
-  type ConfirmationOptions,
-  type ConfirmationRequired,
+import type {
+  ConfirmationOptions,
+  ConfirmationRequired,
 } from "@/lib/account/confirmation";
 import {
   type ConfirmResult,
@@ -13,6 +12,7 @@ import {
   currentSession,
   type EmailCodeResult,
   loadConfirmationOptions,
+  refuse,
   requireRecentConfirmation,
   sendConfirmationCode as sendCode,
   startPasskeyConfirmation as startPasskey,
@@ -27,7 +27,8 @@ import { logError } from "@/lib/shared";
 
 // "Confirm it's you" (lib/account/confirmation.ts): the dialog's server
 // actions. Each answer is checked and counted on the server; a right one
-// starts this session's 10 minutes.
+// starts this session's 10 minutes. Refusals come in the person's language
+// (refuse() in lib/account/confirmation-server.tsx).
 
 /** The ways this account can confirm, and the masked address for codes. */
 export async function getConfirmationOptions(): Promise<
@@ -35,11 +36,11 @@ export async function getConfirmationOptions(): Promise<
 > {
   try {
     const session = await currentSession();
-    if (!session) return { ok: false, error: CONFIRMATION_MESSAGES.signedOut };
+    if (!session) return refuse((text) => text.confirm.signedOut);
     return { ok: true, options: await loadConfirmationOptions(session) };
   } catch (error) {
     logError(error as Error, { action: "account.getConfirmationOptions" });
-    return { ok: false, error: CONFIRMATION_MESSAGES.failed };
+    return refuse((text) => text.confirm.failed);
   }
 }
 
@@ -52,11 +53,11 @@ export async function ensureConfirmed(): Promise<
 > {
   try {
     const session = await currentSession();
-    if (!session) return { ok: false, error: CONFIRMATION_MESSAGES.signedOut };
+    if (!session) return refuse((text) => text.confirm.signedOut);
     return (await requireRecentConfirmation(session)) ?? { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.ensureConfirmed" });
-    return { ok: false, error: CONFIRMATION_MESSAGES.failed };
+    return refuse((text) => text.confirm.failed);
   }
 }
 

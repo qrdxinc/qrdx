@@ -11,6 +11,7 @@ import {
   qrScan,
   user,
 } from "@repo/database";
+import { DEFAULT_LOCALE, isLocale, type Locale } from "@repo/i18n/config";
 import {
   and,
   count,
@@ -30,6 +31,7 @@ import {
   WeeklyDigestEmail,
   type WeeklyDigestEmailProps,
 } from "@/lib/email/templates/weekly-digest";
+import { type EmailIntl, emailIntl } from "@/lib/i18n/email";
 import { baseUrl } from "@/lib/metadata";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { workspaceLink } from "@/lib/workspace-paths";
@@ -85,7 +87,7 @@ function pageScope(scope: EventScope): SQL {
 
 type DigestNumbers = Omit<
   WeeklyDigestEmailProps,
-  "workspaceName" | "dashboardUrl" | "unsubscribeUrl"
+  "workspaceName" | "dashboardUrl" | "unsubscribeUrl" | "intl"
 >;
 
 export async function buildDigest(
@@ -220,6 +222,9 @@ export async function runWeeklyDigest({
       organizationId: notificationSetting.organizationId,
       events: notificationSetting.events,
       email: user.email,
+      // The recipient's saved language, read here rather than once per
+      // recipient; none (or none known) = English.
+      locale: user.locale,
       twoFactorOn: user.twoFactorEnabled,
       memberId: member.id,
     })
@@ -263,6 +268,18 @@ export async function runWeeklyDigest({
     return { ...summary, skipped: candidates.length };
   }
 
+  // One translator per language in this run.
+  const translators = new Map<Locale, Promise<EmailIntl>>();
+  const intlFor = (locale: unknown) => {
+    const key = isLocale(locale) ? locale : DEFAULT_LOCALE;
+    let intl = translators.get(key);
+    if (!intl) {
+      intl = emailIntl(key);
+      translators.set(key, intl);
+    }
+    return intl;
+  };
+
   for (const row of candidates) {
     if (Date.now() - started > budgetMs) {
       summary.timedOut = true;
@@ -281,9 +298,10 @@ export async function runWeeklyDigest({
       }
       const workspace = await workspaceTitle(scope);
       const unsubscribe = unsubscribeUrl(row.id, "digest.weekly");
+      const intl = await intlFor(row.locale);
       const result = await sendEmail({
         to: row.email,
-        subject: `Your QRdx week: ${digest.scans.toLocaleString("en-US")} scans`,
+        subject: intl.t("weeklyDigest.subject", { scans: digest.scans }),
         react: (
           <WeeklyDigestEmail
             {...digest}
@@ -291,6 +309,7 @@ export async function runWeeklyDigest({
               workspaceLink(await eventWorkspaceSlug(scope), "/analytics"),
               baseUrl.origin,
             ).toString()}
+            intl={intl}
             unsubscribeUrl={unsubscribe}
             workspaceName={workspace}
           />

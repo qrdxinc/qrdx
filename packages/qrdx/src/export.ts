@@ -4,6 +4,7 @@
 // score and qrdx/node's PNG all start here; none of it needs React.
 
 import type { QRProps } from "../types";
+import { canvasToBMP } from "./bmp";
 import { DEFAULT_SIZE } from "./constants";
 import { getFrameDimensions } from "./frame";
 import { toSVGString } from "./svg";
@@ -186,6 +187,11 @@ export async function getQRAsCanvas(
           // WebP (Safari); canvasToWebP encodes it itself there.
           canvasToWebP(canvas)
             .then(blobToDataUrl)
+            .then(resolve, reject)
+            .finally(() => canvas.remove());
+        } else if (type === "image/bmp") {
+          // toDataURL would hand back a PNG: no browser encodes BMP.
+          blobToDataUrl(canvasToBMP(canvas))
             .then(resolve, reject)
             .finally(() => canvas.remove());
         } else {

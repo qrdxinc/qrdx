@@ -64,9 +64,16 @@ function clientTimeZone(headers: HeaderSource): string {
   }
 }
 
-/** "Nov 7, 2026, 3:04 PM GMT+5:30" / "Nov 7, 2026, 9:34 AM UTC". */
-export function formatSecurityTime(date: Date, timeZone: string): string {
-  return new Intl.DateTimeFormat("en-US", {
+/**
+ * "Nov 7, 2026, 3:04 PM GMT+5:30" / "Nov 7, 2026, 9:34 AM UTC", or the same
+ * in the email's language ("7 nov 2026, 15:04 GMT+5:30").
+ */
+export function formatSecurityTime(
+  date: Date,
+  timeZone: string,
+  locale = "en-US",
+): string {
+  return new Intl.DateTimeFormat(locale, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -86,16 +93,18 @@ function approximateLocation(headers: HeaderSource): string | null {
   return formatLocation({ city, country });
 }
 
+/** `locale`: the email's language, for the time. */
 export function requestDetails(
   headers: HeaderSource | null | undefined,
   now: Date = new Date(),
+  locale?: string,
 ): RequestDetails {
   const timeZone = headers ? clientTimeZone(headers) : "UTC";
   return {
     device: describeUserAgent(headers?.get("user-agent") ?? null).label,
     location: headers ? approximateLocation(headers) : null,
     ip: headers ? clientIp(headers) : null,
-    time: formatSecurityTime(now, timeZone),
+    time: formatSecurityTime(now, timeZone, locale),
     timeZone,
   };
 }
@@ -107,10 +116,11 @@ export function requestDetails(
  */
 export async function currentRequestDetails(
   now: Date = new Date(),
+  locale?: string,
 ): Promise<RequestDetails> {
   try {
-    return requestDetails(await requestHeaders(), now);
+    return requestDetails(await requestHeaders(), now, locale);
   } catch {
-    return requestDetails(null, now);
+    return requestDetails(null, now, locale);
   }
 }

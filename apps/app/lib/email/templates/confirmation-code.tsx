@@ -1,3 +1,4 @@
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
@@ -5,11 +6,15 @@ import {
   ReviewSecurityButton,
   SecurityDetails,
   type SecurityEventDetails,
-  SupportLink,
+  supportLinkArgs,
 } from "./security-parts";
 import { EmailCodeBox } from "./sign-in-code";
 
 export const CONFIRMATION_CODE_SUBJECT = "Your QRdx confirmation code";
+
+/** The subject line in the recipient's language. */
+export const confirmationCodeSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+  intl.t("confirmationCode.subject");
 
 export interface ConfirmationCodeEmailProps {
   /** The 6-digit code */
@@ -17,6 +22,8 @@ export interface ConfirmationCodeEmailProps {
   expiresInMinutes: number;
   /** Where the code was asked for */
   details: SecurityEventDetails;
+  /** The recipient's language */
+  intl?: EmailIntl;
 }
 
 /**
@@ -28,30 +35,25 @@ export function ConfirmationCodeEmail({
   code,
   expiresInMinutes,
   details,
+  intl = ENGLISH_EMAIL,
 }: ConfirmationCodeEmailProps) {
-  const expiry = `${expiresInMinutes} minute${expiresInMinutes === 1 ? "" : "s"}`;
+  const { t } = intl;
   return (
     <EmailLayout
-      preview={`Enter this code to confirm it's you. It expires in ${expiry}.`}
-      reason="You got this email because someone asked to change the security of the QRdx account with this address."
+      intl={intl}
+      preview={t("confirmationCode.preview", { minutes: expiresInMinutes })}
+      reason={t("confirmationCode.reason")}
     >
-      <EmailHeading>Confirm it's you</EmailHeading>
-      <EmailText>
-        Enter this code in QRdx to confirm it's you before a change to your
-        account's security:
-      </EmailText>
+      <EmailHeading>{t("confirmationCode.heading")}</EmailHeading>
+      <EmailText>{t("confirmationCode.enter")}</EmailText>
       <EmailCodeBox code={code} />
-      <EmailText>
-        The code expires in {expiry} and works once. Don't share it with anyone.
-      </EmailText>
-      <NeverAskForCode />
-      <SecurityDetails details={details} />
-      <ReviewSecurityButton />
+      <EmailText>{t("codes.expires", { minutes: expiresInMinutes })}</EmailText>
+      <NeverAskForCode intl={intl} />
+      <SecurityDetails details={details} intl={intl} />
+      <ReviewSecurityButton intl={intl} />
       <EmailDivider />
       <MutedText>
-        If you didn't ask for this, don't enter the code: someone may be signed
-        in to your account. Review your security and contact support at{" "}
-        <SupportLink /> from this address.
+        {t.rich("confirmationCode.notYou", supportLinkArgs)}
       </MutedText>
     </EmailLayout>
   );

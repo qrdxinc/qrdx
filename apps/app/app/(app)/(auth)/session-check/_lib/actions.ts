@@ -5,8 +5,16 @@ import {
   confirmationRequired,
 } from "@/lib/account/confirmation";
 import { currentSession } from "@/lib/account/confirmation-server";
-import { SESSION_CHECK_MESSAGES } from "@/lib/account/session-origin";
+import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { logError } from "@/lib/shared";
+
+/** A refusal in the person's language; the page shows it as it is. */
+async function refuse(
+  key: "signedOut" | "failed",
+): Promise<{ ok: false; error: string }> {
+  const t = await getAppTranslations("app.sessionCheck.sessionCheck");
+  return { ok: false, error: t(key) };
+}
 
 /**
  * The check page's question (lib/account/session-origin.ts): CONFIRMATION_
@@ -18,10 +26,10 @@ export async function checkSession(): Promise<
 > {
   try {
     const session = await currentSession();
-    if (!session) return { ok: false, error: SESSION_CHECK_MESSAGES.signedOut };
+    if (!session) return await refuse("signedOut");
     return session.held ? confirmationRequired() : { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.checkSession" });
-    return { ok: false, error: SESSION_CHECK_MESSAGES.failed };
+    return refuse("failed");
   }
 }

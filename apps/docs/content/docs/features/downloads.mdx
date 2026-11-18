@@ -1,6 +1,6 @@
 ---
 title: Export and download
-description: Save a QR code as PNG, JPG, WebP, SVG, PDF or EPS with downloadQRCode, get it as a data URL, a Blob or SVG markup, copy it to the clipboard, and make a PNG in Node.
+description: Save a QR code as PNG, JPG, WebP, BMP, SVG, PDF or EPS with downloadQRCode, get it as a data URL, a Blob or SVG markup, copy it to the clipboard, and make a PNG in Node.
 icon: Download
 ---
 
@@ -41,6 +41,7 @@ Props are the same as on `QRCode`, except that a logo goes in `imageSettings`. T
 | `png` | Image | Keeps a transparent background. The default for most uses |
 | `jpg` | Image | Solid background only, smaller file |
 | `webp` | Image | PNG's pixels in a smaller file; lossless unless `quality` is set |
+| `bmp` | Image | Uncompressed 24-bit bitmap for legacy systems; a transparent background comes out white |
 | `svg` | Vector | Sharp at any size; the file for print shops and design tools |
 | `pdf` | Document | One page holding the code as a PNG. Needs the optional `jspdf` package |
 | `eps` | Vector | PostScript for Illustrator, CorelDRAW and InDesign. `size.width` is read as points (72 per inch) |
@@ -59,6 +60,20 @@ const lossy = await getQRAsWebP({ value: "https://example.com", size: 1024 }, { 
 ```
 
 `canvasToWebP(canvas, options)` does the same for any canvas, and `encodeWebPLossless(rgba, width, height)` encodes RGBA pixels with no DOM.
+
+### BMP
+
+BMP is for the legacy systems and embedded tools that only take it. The file is an uncompressed 24-bit bitmap, so it is much larger than the same code as PNG. 24-bit BMP has no alpha channel, so a transparent background comes out white.
+
+No browser can write BMP from a canvas (`toBlob("image/bmp")` returns a PNG), so the library writes the file itself, in every browser, and checks its header before saving: a `.bmp` file is always a BMP. `getQRAsBMP` returns it as a `Blob`:
+
+```ts title="lib/bmp.ts"
+import { getQRAsBMP } from "qrdx";
+
+const bmp = await getQRAsBMP({ value: "https://example.com", size: 1024 });
+```
+
+`canvasToBMP(canvas)` does the same for any canvas, and `encodeBMP(rgba, width, height)` writes RGBA pixels with no DOM.
 
 ### PDF
 
