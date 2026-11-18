@@ -2,7 +2,8 @@
 // (lib/console-internal/route.ts and actor.ts): off without a long enough
 // secret, a fresh and matching signature, each request id once, the admin
 // checked again against this app's database (role, verified email, no ban,
-// the named qrdx.dev session alive and theirs), and for strong endpoints the
+// the named qrdx.dev session alive and theirs, and the console sign-in's
+// grant when the call carries one), and for strong endpoints the
 // admin's own second factor and a recent strong confirmation by that session.
 // Then the rate limit per admin and endpoint, failing closed, and one log
 // line per signed request that never carries the secret, the signature,
@@ -138,6 +139,7 @@ vi.mock("@repo/database", () => {
     database: { select: start("select") },
     user: table("user"),
     session: table("session"),
+    adminConsoleGrant: table("admin_console_grant"),
     oauthApp: table("oauth_app"),
     oauthToken: table("oauth_token"),
   };
@@ -147,6 +149,7 @@ vi.mock("drizzle-orm", () => ({
   and: (...args: unknown[]) => ({ op: "and", args }),
   eq: (left: unknown, right: unknown) => ({ op: "eq", left, right }),
   gt: (left: unknown, right: unknown) => ({ op: "gt", left, right }),
+  lte: (left: unknown, right: unknown) => ({ op: "lte", left, right }),
   isNull: (value: unknown) => ({ op: "isNull", value }),
 }));
 
@@ -163,6 +166,7 @@ const {
   TIMESTAMP_HEADER,
 } = await import("@/lib/console-internal/signature");
 const { HttpError } = await import("@/lib/http-error");
+const { grantHash } = await import("@/lib/admin-console/grants");
 // Drizzle's real query error (only "drizzle-orm" itself is faked above).
 const { DrizzleQueryError } = await import("drizzle-orm/errors");
 
@@ -479,6 +483,107 @@ describe("the actor", () => {
         },
       }),
     );
+  });
+});
+
+describe("the console sign-in's grant", () => {
+  const GRANT = "g".repeat(43);
+  const WITH_GRANT = { ...ACTOR, grant: GRANT };
+  /**
+   * Scripts the actor check with a grant: the grant's row (its lookup starts
+   * first, as the check begins), then the user row and the session.
+   */
+  const checks = (
+    row: unknown,
+    grant: Record<string, unknown> | Error | null,
+  ) => {
+    state.results.push(grant instanceof Error ? grant : grant ? [grant] : []);
+    actorRows(row);
+  };
+  const minted = (overrides: Record<string, unknown> = {}) => ({
+    userId: "u_admin",
+    sessionId: "sess_admin",
+    expiresAt: new Date(Date.now() + 60_000),
+    ...overrides,
+  });
+
+  it("lets a call through with the grant minted for this admin and session, looked up by its hash", async () => {
+    checks(adminRow(), minted());
+    expect(
+      (await POST(signedRequest({ actor: WITH_GRANT, n: 1 }))).status,
+    ).toBe(200);
+    expect(run).toHaveBeenCalledTimes(1);
+    const lookup = state.calls.find(
+      (call) => call.table === "admin_console_grant",
+    );
+    expect(lookup?.steps.find(([step]) => step === "where")?.[1][0]).toEqual({
+      op: "eq",
+      left: "admin_console_grant.tokenHash",
+      right: grantHash(GRANT),
+    });
+    expect(JSON.stringify(state.calls)).not.toContain(GRANT);
+  });
+
+  it.each([
+    ["another admin's", minted({ userId: "u_other" })],
+    ["another session's", minted({ sessionId: "sess_other" })],
+    ["an expired", minted({ expiresAt: new Date(Date.now() - 1000) })],
+    ["an unknown", null],
+  ])(
+    "refuses %s grant with 403 grant_invalid, before the limit or the work",
+    async (_label, row) => {
+      checks(adminRow(), row);
+      const { status, body } = await answer(
+        await POST(signedRequest({ actor: WITH_GRANT, n: 1 })),
+      );
+      expect(status).toBe(403);
+      expect(body).toEqual({ ok: false, error: "grant_invalid" });
+      expect(state.counts.size).toBe(0);
+      expect(run).not.toHaveBeenCalled();
+    },
+  );
+
+  it("refuses any grant before its table exists: none was minted", async () => {
+    checks(
+      adminRow(),
+      Object.assign(
+        new Error('relation "admin_console_grant" does not exist'),
+        {
+          code: "42P01",
+        },
+      ),
+    );
+    expect(
+      (await answer(await POST(signedRequest({ actor: WITH_GRANT, n: 1 }))))
+        .body,
+    ).toEqual({ ok: false, error: "grant_invalid" });
+    expect(run).not.toHaveBeenCalled();
+  });
+
+  it("answers not_admin, not grant_invalid, for someone who isn't an admin", async () => {
+    checks(adminRow({ role: "user" }), null);
+    expect(
+      (await answer(await POST(signedRequest({ actor: WITH_GRANT, n: 1 }))))
+        .body,
+    ).toEqual({ ok: false, error: "not_admin" });
+  });
+
+  it("still lets a call without a grant through, and doesn't look one up", async () => {
+    actorRows(adminRow());
+    expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
+      200,
+    );
+    expect(
+      state.calls.some((call) => call.table === "admin_console_grant"),
+    ).toBe(false);
+  });
+
+  it("refuses a grant that can't be one as a bad request", async () => {
+    expect(
+      (await POST(signedRequest({ actor: { ...ACTOR, grant: "short" }, n: 1 })))
+        .status,
+    ).toBe(400);
+    expect(state.calls).toEqual([]);
   });
 });
 
@@ -847,6 +952,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 403,
       code: "confirmation_required",
     });
@@ -869,6 +975,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 400,
       code: "admin_action",
     });
@@ -915,6 +1022,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status,
       code,
     });
@@ -942,10 +1050,36 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 503,
       code: "unavailable",
       reason: "rate_limit_store",
     });
+  });
+
+  it("says whether the call carried a grant, never the grant itself", async () => {
+    const grant = "g".repeat(43);
+    // The grant's lookup starts first, then the user row and the session.
+    state.results.push([
+      {
+        userId: "u_admin",
+        sessionId: "sess_admin",
+        expiresAt: new Date(Date.now() + 60_000),
+      },
+    ]);
+    actorRows(adminRow());
+    const request = signedRequest({ actor: { ...ACTOR, grant }, n: 1 });
+    expect((await POST(request)).status).toBe(200);
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      grant: true,
+      status: 200,
+      code: "ok",
+    });
+    expect(allLines().join("\n")).not.toContain(grant);
+    expectNoSecrets(request);
   });
 
   it("is one info line for a success", async () => {
@@ -956,6 +1090,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 200,
       code: "ok",
     });
@@ -986,6 +1121,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 500,
       code: "failed",
       error: { name: "DrizzleQueryError", code: "57P01" },
