@@ -15,11 +15,17 @@ import { registerAppSessionOriginReader } from "@/lib/account/session-origin";
 import { notifyBackupCodeUsed } from "@/lib/account/two-factor-notice-server";
 import { notifyTwoFactorResetCancelled } from "@/lib/account/two-factor-reset-server";
 import { sendSignInCode } from "@/lib/auth/sign-in-code";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 
 // @repo/auth has no email stack: this is the endpoint that issues sign-in
 // codes and finishes sign-ins, so it hands the plugins the app's senders
-// before serving requests.
-registerSignInCodeSender(sendSignInCode);
+// before serving requests. Where codes can't reach anyone (the "emailSignIn"
+// rule: no Resend, or a production build on a localhost URL), asking for one
+// answers that email sign-in isn't set up, the same rule the sign-in panel
+// follows.
+registerSignInCodeSender(sendSignInCode, () =>
+  isFeatureAvailable("emailSignIn"),
+);
 registerNewSignInNotifier(notifyNewSignIn);
 registerBackupCodeNotifier(notifyBackupCodeUsed);
 // Where each new session starts, and the check on the ones it holds

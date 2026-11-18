@@ -40,7 +40,7 @@ import {
   validateSsoUserInfo,
 } from "./ee/sso";
 import { ssoRequirementGate } from "./ee/sso-required";
-import { sendVerificationOTP } from "./email-otp";
+import { sendVerificationOTP, signInCodeGate } from "./email-otp";
 import { keys } from "./keys";
 import { newSignIn } from "./new-sign-in";
 import {
@@ -69,6 +69,7 @@ import {
   TWO_FACTOR_METHODS_PATH,
   UNUSED_TWO_FACTOR_PATHS,
 } from "./sign-in-challenge-rules";
+import { SEND_SIGN_IN_CODE_PATH } from "./sign-in-code-rules";
 import { signInMethodForPath } from "./sign-in-method";
 import { saveSignUpLocale } from "./sign-up-locale";
 import { twoFactorResetCancel } from "./two-factor-reset";
@@ -144,7 +145,7 @@ const socialProviders: BetterAuthOptions["socialProviders"] = {
 
 // Email sign-in codes: request one, then sign in with it. Verification and
 // password reset, which the emailOTP plugin also offers, are off.
-const SEND_CODE_PATH = "/email-otp/send-verification-otp";
+const SEND_CODE_PATH = SEND_SIGN_IN_CODE_PATH;
 const SIGN_IN_CODE_PATH = "/sign-in/email-otp";
 const UNUSED_EMAIL_OTP_PATHS = [
   "/email-otp/check-verification-otp",
@@ -321,6 +322,10 @@ export const auth = betterAuth({
       // falls back to the plugin's own detection (Google, GitHub).
       customResolveMethod: (ctx) => signInMethodForPath(ctx.path),
     }),
+    // Asking for a sign-in code where none can be delivered fails before one
+    // is made, and a code that couldn't be sent fails the request instead of
+    // answering "sent" (./email-otp.ts).
+    signInCodeGate(),
     // A first sign-in creates the account, like social sign-in.
     emailOTP({
       otpLength: 6,
