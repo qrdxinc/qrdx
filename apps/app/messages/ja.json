@@ -5693,7 +5693,12 @@
           "signInMethods": "サインイン方法",
           "valueIsLinked": "{value}を連携しました",
           "valueCantBeLinkedRight": "現在、{value}を連携できません。",
-          "labelIsNoLongerLinked": "{label}の連携を解除しました"
+          "labelIsNoLongerLinked": "{label}の連携を解除しました",
+          "emailCode": "メールコード",
+          "oneTimeCodeSentTo": "{email} に送信されたワンタイムコードです。",
+          "linkedOn": "{date} に連携しました。",
+          "linkedOnReason": "{date} に連携しました。{reason}",
+          "notLinkedUseThe": "未連携です。{email} の {provider} アカウントをご利用ください。"
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "サポートが{dueDate}にこれをオフにします",
@@ -5740,7 +5745,9 @@
           "afterYouSignInPasskey": "サインイン後、QRdxからパスキーの入力を求められます。バックアップコードも使用できます。",
           "afterYouSignInApp": "サインイン後、QRdxから認証アプリのコードの入力を求められます。バックアップコードも使用できます。",
           "afterYouSignInQrdx2": "サインイン後、QRdxからバックアップコードの入力を求められます。",
-          "passkeySpotlight": "認証アプリのコードの代わりに、パスキーを2段階目の認証として使えるようになりました。"
+          "passkeySpotlight": "認証アプリのコードの代わりに、パスキーを2段階目の認証として使えるようになりました。",
+          "addedOn": "{date} に追加",
+          "passkeyName": "パスキー"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "ステップ {stepNumber, number}/{length, number}",
@@ -9285,6 +9292,149 @@
         "failed": "シングルサインオンを完了できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
         "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。"
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "変更の回数が多すぎます。数分待ってから、もう一度お試しください。",
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "nameMissing": "お名前を入力してください。",
+      "nameTooLong": "{max}文字以内で入力してください。",
+      "nameSpecialCharacters": "特殊文字は使用できません。",
+      "profileSignedOut": "プロフィールを変更するにはサインインしてください。",
+      "uploadsUnavailable": "このサーバーでは画像のアップロードが設定されていません。",
+      "pictureMissing": "アップロードする画像を選択してください。",
+      "pictureTooLarge": "画像が大きすぎます。より小さい画像をお試しください。",
+      "pictureType": "PNG、JPEG、WebPのいずれかの画像を使用してください。",
+      "methodsSignedOut": "サインイン方法を管理するにはサインインしてください。",
+      "linkUnavailable": "現在、{provider}は連携できません。",
+      "unlinkBlocked": {
+        "notFound": "そのサインイン方法はアカウントに連携されていません。",
+        "unsupported": "このサインイン方法はここでは削除できません。"
+      },
+      "sessionsSignedOut": "セッションを管理するにはサインインしてください。",
+      "thisDevice": "これは現在お使いのデバイスです。代わりにメニューのサインアウトを使用してください。"
+    },
+    "twoFactor": {
+      "signedOut": "2段階認証を変更するにはサインインしてください。",
+      "alreadyOn": "2段階認証はすでにオンです。",
+      "notOn": "2段階認証はオフです。",
+      "appAlreadySetUp": "認証アプリはすでに設定されています。",
+      "noApp": "削除できる認証アプリがありません。",
+      "noPasskey": "先にパスキーを追加してください。",
+      "restart": "この設定は期限切れです。最初からやり直してください。",
+      "rateLimitedLong": "試行回数が多すぎます。数分待ってから、もう一度お試しください。"
+    },
+    "emailChange": {
+      "reauth": "セキュリティ保護のため、一度サインアウトして再度サインインし、1日以内にメールアドレスを変更してください。",
+      "sameEmail": "現在お使いのメールアドレスと同じです。",
+      "invalidEmail": "有効なメールアドレスを入力してください。",
+      "invalidCode": "メールに記載された6桁のコードを入力してください。",
+      "rateLimited": "試行回数が多すぎます。数分待ってから、もう一度お試しください。",
+      "codeRateLimited": "そのアドレスに対するコードのリクエストが多すぎます。数分待ってから、もう一度お試しください。",
+      "notSent": "現在コードを送信できません。もう一度お試しください。",
+      "codeDidntWork": "そのコードは使えませんでした。コードを確認するか、新しいコードを送信してください。",
+      "taken": "そのメールアドレスは、すでに別のQRdxアカウントで使われています。",
+      "signedOut": "メールアドレスを変更するにはサインインしてください。",
+      "unavailable": "このサイトではメールが設定されていないため、ここではアドレスを変更できません。",
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "ssoOff": "お勤め先では {domain} にシングルサインオンが必須となっているため、アカウントを他のドメインのアドレスに変更できません。ワークスペースの管理者にお問い合わせください。",
+      "ssoOnto": "お勤め先では {domain} にシングルサインオンが必須となっています。このドメインのアドレスを使うには、代わりにSSOでサインインしてください。"
+    },
+    "deleteAccount": {
+      "typeToConfirm": "確認のため「{word}」と入力してください。",
+      "signedOut": "アカウントを削除するにはサインインしてください。",
+      "rateLimited": "試行回数が多すぎます。15分待ってから、もう一度お試しください。",
+      "failed": "アカウントを削除できませんでした。もう一度お試しください。",
+      "subscriptionNotCancelled": "サブスクリプションを解約できなかったため、アカウントは削除されていません。数分後にもう一度お試しいただくか、{email} までメールでご連絡ください。",
+      "ownerNotMade": "{person} さんを {team} のオーナーにできなかったため、アカウントは削除されていません。チームの別のメンバーをオーナーにしてから、もう一度お試しください。"
+    },
+    "affiliate": {
+      "notReady": "アフィリエイトプログラムはまだ利用できません。",
+      "signedOut": "続行するにはサインインしてください。",
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "rateLimited": "リクエストの上限を超えました。しばらくしてからもう一度お試しください。",
+      "paypalEmailInvalid": "PayPalアカウントのメールアドレスを入力してください。",
+      "paypalEmailMissing": "メールアドレスを入力してください。",
+      "paypalNotApproved": "PayPalのメールアドレスは、お申し込みが承認されると追加できます。",
+      "codeUnchanged": "すでにそのコードをお使いです。",
+      "codeNotApproved": "コードは、お申し込みが承認されると選択できます。",
+      "chosenCode": {
+        "format": "3～32文字の小文字の英字、数字、単独のハイフンを使用し、先頭と末尾は英字または数字にしてください。",
+        "reserved": "そのコードは予約されています。別のコードを選んでください。",
+        "email": "メールアドレスの先頭部分と同じです。公開されないコードを選んでください。",
+        "taken": "そのコードは使用済みです。別のコードを選んでください。",
+        "alreadyChanged": "コードはすでに選択済みです。変更できるのは1回のみです。"
+      }
+    },
+    "dataConnections": {
+      "tooShort": "短すぎるようです",
+      "tooLong": "長すぎるようです",
+      "noSpaces": "スペースを入れずに貼り付けてください",
+      "storeDomainMissing": "ストアのドメインを入力してください",
+      "stripeSecretKey": "これはシークレットキー全体です。代わりに Payment Links: Read の制限付きキーを作成してください。QRdx がシークレットキーを保存することはありません。",
+      "stripeRestrictedKey": "制限付きキーを貼り付けてください。rk_live_ または rk_test_ で始まります。",
+      "calcomKey": "Cal.com の API キーを貼り付けてください。cal_live_（テストキーの場合は cal_）で始まります。",
+      "shopifyCredentials": "アプリのクライアント ID とシークレット、または Admin API のアクセストークンを貼り付けてください。",
+      "signedOut": "アカウントを連携するにはサインインしてください。",
+      "checkDetails": "内容を確認して、もう一度お試しください。",
+      "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
+      "notAccepted": "{name} に受け付けられませんでした。内容を確認して、もう一度お試しください。",
+      "stripeForbidden": "このキーでは Payment Links を読み取れません。キーの Payment Links を Read に設定してください。",
+      "shopifyForbidden": "このアプリでは商品を読み取れません。read_products スコープを追加して、再インストールしてください。",
+      "forbidden": "{name} がこのキーへのアクセスを拒否しました。",
+      "unreachable": "{name} に接続できませんでした。もう一度お試しください。"
+    },
+    "connectedAccounts": {
+      "keyTooShort": "キーが短すぎるようです",
+      "keyTooLong": "キーが長すぎるようです",
+      "keyNoSpaces": "スペースを入れずにキーを貼り付けてください",
+      "signedOut": "アカウントを連携するにはサインインしてください。",
+      "checkKey": "キーを確認して、もう一度お試しください。",
+      "notConfigured": "{name} はここでは設定されていません。",
+      "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
+      "keyRejected": "{name} に{label}が受け付けられませんでした。内容を確認して、もう一度お試しください。",
+      "unreachable": "{name} に接続できませんでした。もう一度お試しください。",
+      "domainSignedOut": "先にサインインしてください。",
+      "pickDomain": "ドメインを選択してください。",
+      "connectFirst": "先にアカウントを連携してください。",
+      "domainNotFound": "このドメインはアカウントにありません。",
+      "domainNotSaved": "ドメインを保存できませんでした。もう一度お試しください。"
+    },
+    "slackBot": {
+      "unavailable": "Slack 用の QRdx ボットはここでは利用できません。",
+      "signedOut": "変更するにはサインインしてください。",
+      "notAvailableYet": "この機能はまだ利用できません。",
+      "rateLimited": "試行回数が多すぎます。1分ほど待ってください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    },
+    "oauthApps": {
+      "signedOut": "OAuthアプリを管理するにはサインインしてください。",
+      "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    },
+    "apiKeys": {
+      "signedOut": "APIキーを管理するにはサインインしてください。",
+      "unavailable": "このデプロイメントでは、APIキーはまだ利用できません。",
+      "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    },
+    "slackLinks": {
+      "signedOut": "Slackリンクを管理するにはサインインしてください。",
+      "notAvailableYet": "この機能はまだ利用できません。",
+      "rateLimited": "試行回数が多すぎます。1分ほど待ってください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    },
+    "authorizedApps": {
+      "signedOut": "アプリのアクセスを管理するにはサインインしてください。",
+      "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    },
+    "notifications": {
+      "signedOut": "通知を変更するにはサインインしてください。",
+      "webhookUrlMissing": "Webhook URLを貼り付けてください",
+      "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
     }
   },
   "codeBuilder": {

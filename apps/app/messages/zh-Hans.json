@@ -5693,7 +5693,12 @@
           "signInMethods": "登录方式",
           "valueIsLinked": "{value} 已关联",
           "valueCantBeLinkedRight": "目前无法关联 {value}。",
-          "labelIsNoLongerLinked": "{label} 已解除关联"
+          "labelIsNoLongerLinked": "{label} 已解除关联",
+          "emailCode": "邮箱验证码",
+          "oneTimeCodeSentTo": "一次性验证码已发送至 {email}。",
+          "linkedOn": "绑定于 {date}。",
+          "linkedOnReason": "绑定于 {date}。{reason}",
+          "notLinkedUseThe": "尚未绑定。请使用邮箱为 {email} 的 {provider} 账号。"
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "支持团队将于 {dueDate} 关闭此功能",
@@ -5740,7 +5745,9 @@
           "afterYouSignInPasskey": "登录后，QRdx 会要求你提供通行密钥。使用备用码也可以。",
           "afterYouSignInApp": "登录后，QRdx 会要求你输入身份验证器应用中的验证码。使用备用码也可以。",
           "afterYouSignInQrdx2": "登录后，QRdx 会要求输入备用码。",
-          "passkeySpotlight": "现在可以用通行密钥作为第二步验证，不必再输入验证器代码。"
+          "passkeySpotlight": "现在可以用通行密钥作为第二步验证，不必再输入验证器代码。",
+          "addedOn": "添加于 {date}",
+          "passkeyName": "通行密钥"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "第 {stepNumber, number} 步，共 {length, number} 步",
@@ -9285,6 +9292,149 @@
         "failed": "单点登录未能成功。请重试，或改用其他方式登录。",
         "rateLimited": "尝试次数过多。请等待一分钟后再试。"
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "更改次数过多，请等待几分钟后再试。",
+      "failed": "出了点问题，请重试。",
+      "nameMissing": "请输入你的姓名。",
+      "nameTooLong": "最多使用 {max} 个字符。",
+      "nameSpecialCharacters": "请删除特殊字符。",
+      "profileSignedOut": "请登录后修改个人资料。",
+      "uploadsUnavailable": "此服务器未设置图片上传功能。",
+      "pictureMissing": "请选择要上传的图片。",
+      "pictureTooLarge": "图片太大，请换一张较小的。",
+      "pictureType": "请使用 PNG、JPEG 或 WebP 格式的图片。",
+      "methodsSignedOut": "请登录后管理登录方式。",
+      "linkUnavailable": "暂时无法关联 {provider}。",
+      "unlinkBlocked": {
+        "notFound": "该登录方式未关联到你的账号。",
+        "unsupported": "无法在此处移除该登录方式。"
+      },
+      "sessionsSignedOut": "请登录后管理会话。",
+      "thisDevice": "这是当前设备，请改用菜单中的“退出登录”。"
+    },
+    "twoFactor": {
+      "signedOut": "请登录后更改两步验证设置。",
+      "alreadyOn": "两步验证已开启。",
+      "notOn": "两步验证已关闭。",
+      "appAlreadySetUp": "已设置验证器应用。",
+      "noApp": "没有可移除的验证器应用。",
+      "noPasskey": "请先添加通行密钥。",
+      "restart": "此次设置已过期，请重新开始。",
+      "rateLimitedLong": "尝试次数过多，请等待几分钟后再试。"
+    },
+    "emailChange": {
+      "reauth": "为了你的账号安全，请退出登录后重新登录，然后在一天内更改邮箱。",
+      "sameEmail": "这已经是你当前的邮箱。",
+      "invalidEmail": "请输入有效的邮箱地址。",
+      "invalidCode": "请输入邮件中的 6 位验证码。",
+      "rateLimited": "尝试次数过多，请等待几分钟后再试。",
+      "codeRateLimited": "该地址请求验证码的次数过多，请等待几分钟后再试。",
+      "notSent": "目前无法发送验证码，请稍后重试。",
+      "codeDidntWork": "验证码无效。请检查后重试，或重新发送验证码。",
+      "taken": "该邮箱已属于另一个 QRdx 账户。",
+      "signedOut": "请登录后更改邮箱。",
+      "unavailable": "本站尚未设置电子邮件功能，因此无法在此更改邮箱地址。",
+      "failed": "出了点问题，请重试。",
+      "ssoOff": "贵公司要求 {domain} 使用单点登录，因此您的账户无法迁移到其他域名的邮箱地址。请联系您的工作区管理员。",
+      "ssoOnto": "贵公司要求 {domain} 使用单点登录。若要使用该域名下的邮箱地址，请改用 SSO 登录。"
+    },
+    "deleteAccount": {
+      "typeToConfirm": "请输入“{word}”以确认。",
+      "signedOut": "请登录后删除您的账户。",
+      "rateLimited": "尝试次数过多。请等待 15 分钟后重试。",
+      "failed": "无法删除您的账户，请重试。",
+      "subscriptionNotCancelled": "无法取消您的订阅，因此您的账户未被删除。请几分钟后重试，或发送邮件至 {email}。",
+      "ownerNotMade": "无法将 {person} 设为 {team} 的所有者，因此您的账户未被删除。请先将团队的所有者身份授予其他人，然后重试。"
+    },
+    "affiliate": {
+      "notReady": "推广计划尚未开放。",
+      "signedOut": "请登录后继续。",
+      "failed": "出了点问题，请重试。",
+      "rateLimited": "已超出请求频率限制，请稍后重试。",
+      "paypalEmailInvalid": "请输入您的 PayPal 账户邮箱地址。",
+      "paypalEmailMissing": "请输入邮箱地址。",
+      "paypalNotApproved": "申请通过后，您即可添加 PayPal 邮箱。",
+      "codeUnchanged": "这已经是您的推广码。",
+      "codeNotApproved": "申请通过后，您即可自选推广码。",
+      "chosenCode": {
+        "format": "请使用 3 到 32 个小写字母、数字和单个连字符，且以字母或数字开头和结尾。",
+        "reserved": "该推广码为保留字，请换一个。",
+        "email": "这是您邮箱地址的开头部分。请选择不会泄露邮箱的推广码。",
+        "taken": "该推广码已被占用，请换一个。",
+        "alreadyChanged": "您已选择过推广码，且只能更改一次。"
+      }
+    },
+    "dataConnections": {
+      "tooShort": "内容似乎太短",
+      "tooLong": "内容似乎太长",
+      "noSpaces": "请粘贴时不要带空格",
+      "storeDomainMissing": "请输入你的店铺域名",
+      "stripeSecretKey": "这是完整的密钥（secret key）。请改为创建一个 Payment Links 权限为“读取”的受限密钥；QRdx 绝不会存储完整密钥。",
+      "stripeRestrictedKey": "请粘贴受限密钥：它以 rk_live_ 或 rk_test_ 开头。",
+      "calcomKey": "请粘贴 Cal.com API 密钥：它以 cal_live_ 开头（测试密钥以 cal_ 开头）。",
+      "shopifyCredentials": "请粘贴应用的客户端 ID 和密钥，或 Admin API 访问令牌。",
+      "signedOut": "请登录后再连接账户。",
+      "checkDetails": "请检查详细信息后重试。",
+      "rateLimited": "已超出请求频率限制，请稍后再试。",
+      "notAccepted": "{name} 未接受该内容。请检查后重试。",
+      "stripeForbidden": "该密钥无法读取 Payment Links。请在密钥中将 Payment Links 设为“读取”。",
+      "shopifyForbidden": "该应用无法读取商品。请添加 read_products 权限范围并重新安装。",
+      "forbidden": "{name} 拒绝了该密钥的访问。",
+      "unreachable": "无法连接 {name}，请重试。"
+    },
+    "connectedAccounts": {
+      "keyTooShort": "该密钥似乎太短",
+      "keyTooLong": "该密钥似乎太长",
+      "keyNoSpaces": "请粘贴不带空格的密钥",
+      "signedOut": "请登录后再连接账户。",
+      "checkKey": "请检查密钥后重试。",
+      "notConfigured": "此处未配置 {name}。",
+      "rateLimited": "已超出请求频率限制，请稍后再试。",
+      "keyRejected": "{name} 未接受该{label}。请检查后重试。",
+      "unreachable": "无法连接 {name}，请重试。",
+      "domainSignedOut": "请先登录。",
+      "pickDomain": "请选择一个域名。",
+      "connectFirst": "请先连接账户。",
+      "domainNotFound": "该域名不在你的账户中。",
+      "domainNotSaved": "无法保存域名，请重试。"
+    },
+    "slackBot": {
+      "unavailable": "此处不提供 Slack 的 QRdx 机器人。",
+      "signedOut": "请登录后再更改。",
+      "notAvailableYet": "此功能暂不可用。",
+      "rateLimited": "尝试次数过多，请稍等一分钟。",
+      "failed": "出了点问题，请重试。"
+    },
+    "oauthApps": {
+      "signedOut": "请登录后管理 OAuth 应用。",
+      "rateLimited": "已超出请求频率限制，请稍后再试。",
+      "failed": "出了点问题，请重试。"
+    },
+    "apiKeys": {
+      "signedOut": "请登录后管理 API 密钥。",
+      "unavailable": "当前部署暂不支持 API 密钥。",
+      "rateLimited": "已超出请求频率限制，请稍后再试。",
+      "failed": "出了点问题，请重试。"
+    },
+    "slackLinks": {
+      "signedOut": "请登录后管理 Slack 链接。",
+      "notAvailableYet": "此功能暂不可用。",
+      "rateLimited": "尝试次数过多，请稍等一分钟。",
+      "failed": "出了点问题，请重试。"
+    },
+    "authorizedApps": {
+      "signedOut": "请登录后管理应用访问权限。",
+      "rateLimited": "已超出请求频率限制，请稍后再试。",
+      "failed": "出了点问题，请重试。"
+    },
+    "notifications": {
+      "signedOut": "请登录后更改通知设置。",
+      "webhookUrlMissing": "请粘贴 webhook 网址",
+      "rateLimited": "已超出请求频率限制，请稍后再试。",
+      "failed": "出了点问题，请重试。"
     }
   },
   "codeBuilder": {

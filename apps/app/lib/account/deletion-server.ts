@@ -73,11 +73,27 @@ const TEAM_CONTENT = [
   barcode,
 ] as const;
 
-/** Thrown when deletion must stop; the message is shown to the user. */
+/** Why deletion stopped, for saying so in the person's language. */
+export type AccountDeletionProblem =
+  /** The plan's blocker (planAccountDeletion) */
+  | { kind: "blocked" }
+  /** The subscription couldn't be cancelled */
+  | { kind: "subscription" }
+  /** `person` couldn't be made an owner of `team` */
+  | { kind: "owner"; person: string; team: string };
+
+/**
+ * Thrown when deletion must stop. The message (English: admin shows it as
+ * it is) is shown to the user in their language from `problem`
+ * (actions/account.ts).
+ */
 export class AccountDeletionError extends Error {
-  constructor(message: string) {
+  readonly problem: AccountDeletionProblem;
+
+  constructor(message: string, problem: AccountDeletionProblem) {
     super(message);
     this.name = "AccountDeletionError";
+    this.problem = problem;
   }
 }
 
@@ -275,6 +291,7 @@ async function deletePolarCustomer(userId: string, subscribed: boolean) {
       logError(error as Error, { action: "deleteAccount.cancelSubscription" });
       throw new AccountDeletionError(
         `We couldn't cancel your subscription, so your account wasn't deleted. Please try again in a few minutes, or email ${SUPPORT_EMAIL}.`,
+        { kind: "subscription" },
       );
     }
     logError(error as Error, { action: "deleteAccount.deletePolarCustomer" });
@@ -296,7 +313,7 @@ export async function executeAccountDeletion({
   requestHeaders: Headers;
 }): Promise<void> {
   if (plan.blockers.length > 0) {
-    throw new AccountDeletionError(plan.blockers[0]);
+    throw new AccountDeletionError(plan.blockers[0], { kind: "blocked" });
   }
 
   // 1. A team never loses its last owner: promote first, stop on failure.
@@ -317,8 +334,10 @@ export async function executeAccountDeletion({
         action: "deleteAccount.promoteOwner",
         organizationId: team.organizationId,
       });
+      const person = team.successor.name || team.successor.email;
       throw new AccountDeletionError(
-        `We couldn't make ${team.successor.name || team.successor.email} an owner of ${team.name}, so your account wasn't deleted. Make someone else an owner of the team, then try again.`,
+        `We couldn't make ${person} an owner of ${team.name}, so your account wasn't deleted. Make someone else an owner of the team, then try again.`,
+        { kind: "owner", person, team: team.name },
       );
     }
   }

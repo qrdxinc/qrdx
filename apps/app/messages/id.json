@@ -5693,7 +5693,12 @@
           "signInMethods": "Metode masuk",
           "valueIsLinked": "{value} tertaut",
           "valueCantBeLinkedRight": "{value} tidak dapat ditautkan saat ini.",
-          "labelIsNoLongerLinked": "{label} tidak lagi tertaut"
+          "labelIsNoLongerLinked": "{label} tidak lagi tertaut",
+          "emailCode": "Kode email",
+          "oneTimeCodeSentTo": "Kode sekali pakai dikirim ke {email}.",
+          "linkedOn": "Ditautkan {date}.",
+          "linkedOnReason": "Ditautkan {date}. {reason}",
+          "notLinkedUseThe": "Belum ditautkan. Gunakan akun {provider} dengan {email}."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Dukungan akan menonaktifkannya pada {dueDate}",
@@ -5740,7 +5745,9 @@
           "afterYouSignInPasskey": "Setelah Anda masuk, QRdx akan meminta passkey Anda. Kode cadangan juga dapat digunakan.",
           "afterYouSignInApp": "Setelah Anda masuk, QRdx akan meminta kode dari aplikasi autentikator Anda. Kode cadangan juga dapat digunakan.",
           "afterYouSignInQrdx2": "Setelah Anda masuk, QRdx meminta kode cadangan.",
-          "passkeySpotlight": "Sekarang passkey dapat menjadi langkah kedua Anda, sebagai pengganti kode autentikator."
+          "passkeySpotlight": "Sekarang passkey dapat menjadi langkah kedua Anda, sebagai pengganti kode autentikator.",
+          "addedOn": "Ditambahkan {date}",
+          "passkeyName": "Passkey"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Langkah {stepNumber, number} dari {length, number}",
@@ -9285,6 +9292,149 @@
         "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
         "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "Terlalu banyak perubahan. Tunggu beberapa menit lalu coba lagi.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "nameMissing": "Masukkan nama Anda.",
+      "nameTooLong": "Gunakan maksimal {max} karakter.",
+      "nameSpecialCharacters": "Hapus karakter khusus.",
+      "profileSignedOut": "Masuk untuk mengubah profil Anda.",
+      "uploadsUnavailable": "Unggah gambar belum disiapkan di server ini.",
+      "pictureMissing": "Pilih gambar untuk diunggah.",
+      "pictureTooLarge": "Gambar itu terlalu besar. Coba yang lebih kecil.",
+      "pictureType": "Gunakan gambar PNG, JPEG, atau WebP.",
+      "methodsSignedOut": "Masuk untuk mengelola metode masuk.",
+      "linkUnavailable": "{provider} tidak dapat ditautkan saat ini.",
+      "unlinkBlocked": {
+        "notFound": "Metode masuk itu tidak tertaut ke akun Anda.",
+        "unsupported": "Metode masuk ini tidak dapat dihapus di sini."
+      },
+      "sessionsSignedOut": "Masuk untuk mengelola sesi.",
+      "thisDevice": "Itu adalah perangkat ini. Gunakan Keluar di menu."
+    },
+    "twoFactor": {
+      "signedOut": "Masuk untuk mengubah verifikasi dua langkah.",
+      "alreadyOn": "Verifikasi dua langkah sudah aktif.",
+      "notOn": "Verifikasi dua langkah nonaktif.",
+      "appAlreadySetUp": "Aplikasi autentikator sudah disiapkan.",
+      "noApp": "Tidak ada aplikasi autentikator untuk dihapus.",
+      "noPasskey": "Tambahkan passkey terlebih dahulu.",
+      "restart": "Penyiapan ini kedaluwarsa. Mulai lagi.",
+      "rateLimitedLong": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi."
+    },
+    "emailChange": {
+      "reauth": "Demi keamanan Anda, keluar lalu masuk lagi, kemudian ubah email Anda dalam waktu satu hari.",
+      "sameEmail": "Itu sudah menjadi email Anda.",
+      "invalidEmail": "Masukkan alamat email yang valid.",
+      "invalidCode": "Masukkan kode 6 digit dari email.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+      "codeRateLimited": "Terlalu banyak kode diminta untuk alamat itu. Tunggu beberapa menit lalu coba lagi.",
+      "notSent": "Kami tidak dapat mengirim kode saat ini. Silakan coba lagi.",
+      "codeDidntWork": "Kode tersebut tidak berhasil. Periksa kembali, atau kirim kode baru.",
+      "taken": "Email tersebut sudah dimiliki akun QRdx lain.",
+      "signedOut": "Masuk untuk mengubah email Anda.",
+      "unavailable": "Email belum diatur di situs ini, sehingga alamat tidak dapat diubah di sini.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "ssoOff": "Perusahaan Anda mewajibkan single sign-on untuk {domain}, sehingga akun Anda tidak dapat dipindahkan ke alamat di domain lain. Hubungi admin workspace Anda.",
+      "ssoOnto": "Perusahaan Anda mewajibkan single sign-on untuk {domain}. Untuk menggunakan alamat di domain tersebut, masuklah dengan SSO."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "Ketik \"{word}\" untuk mengonfirmasi.",
+      "signedOut": "Masuk untuk menghapus akun Anda.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu 15 menit lalu coba lagi.",
+      "failed": "Kami tidak dapat menghapus akun Anda. Silakan coba lagi.",
+      "subscriptionNotCancelled": "Kami tidak dapat membatalkan langganan Anda, sehingga akun Anda tidak dihapus. Silakan coba lagi dalam beberapa menit, atau kirim email ke {email}.",
+      "ownerNotMade": "Kami tidak dapat menjadikan {person} pemilik {team}, sehingga akun Anda tidak dihapus. Jadikan orang lain pemilik tim, lalu coba lagi."
+    },
+    "affiliate": {
+      "notReady": "Program afiliasi belum tersedia.",
+      "signedOut": "Masuk untuk melanjutkan.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "paypalEmailInvalid": "Masukkan alamat email akun PayPal Anda.",
+      "paypalEmailMissing": "Masukkan alamat email.",
+      "paypalNotApproved": "Anda dapat menambahkan email PayPal setelah pendaftaran Anda disetujui.",
+      "codeUnchanged": "Itu sudah menjadi kode Anda.",
+      "codeNotApproved": "Anda dapat memilih kode setelah pendaftaran Anda disetujui.",
+      "chosenCode": {
+        "format": "Gunakan 3 hingga 32 huruf kecil, angka, dan tanda hubung tunggal, diawali dan diakhiri dengan huruf atau angka.",
+        "reserved": "Kode itu sudah dicadangkan. Pilih yang lain.",
+        "email": "Itu adalah awal alamat email Anda. Pilih kode yang tidak menampilkannya.",
+        "taken": "Kode itu sudah dipakai. Pilih yang lain.",
+        "alreadyChanged": "Anda sudah memilih kode Anda. Kode hanya dapat diubah satu kali."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "Sepertinya terlalu pendek",
+      "tooLong": "Sepertinya terlalu panjang",
+      "noSpaces": "Tempel tanpa spasi",
+      "storeDomainMissing": "Masukkan domain toko Anda",
+      "stripeSecretKey": "Itu adalah secret key lengkap. Buat restricted key dengan Payment Links: Read; QRdx tidak pernah menyimpan secret key.",
+      "stripeRestrictedKey": "Tempel restricted key: diawali dengan rk_live_ atau rk_test_.",
+      "calcomKey": "Tempel API key Cal.com: diawali dengan cal_live_ (atau cal_ untuk key uji coba).",
+      "shopifyCredentials": "Tempel client ID dan secret aplikasi, atau token akses Admin API.",
+      "signedOut": "Masuk untuk menghubungkan akun.",
+      "checkDetails": "Periksa detailnya lalu coba lagi.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "notAccepted": "{name} tidak menerimanya. Periksa lalu coba lagi.",
+      "stripeForbidden": "Key tersebut tidak dapat membaca Payment Links. Atur Payment Links ke Read pada key.",
+      "shopifyForbidden": "Aplikasi tersebut tidak dapat membaca produk. Tambahkan scope read_products lalu instal ulang.",
+      "forbidden": "{name} menolak akses untuk key ini.",
+      "unreachable": "Tidak dapat menjangkau {name}. Coba lagi."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "Key tersebut terlalu pendek",
+      "keyTooLong": "Key tersebut terlalu panjang",
+      "keyNoSpaces": "Tempel key tanpa spasi",
+      "signedOut": "Masuk untuk menghubungkan akun.",
+      "checkKey": "Periksa key lalu coba lagi.",
+      "notConfigured": "{name} belum dikonfigurasi di sini.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "keyRejected": "{name} tidak menerima {label} tersebut. Periksa lalu coba lagi.",
+      "unreachable": "Tidak dapat menjangkau {name}. Coba lagi.",
+      "domainSignedOut": "Masuk terlebih dahulu.",
+      "pickDomain": "Pilih domain.",
+      "connectFirst": "Hubungkan akun terlebih dahulu.",
+      "domainNotFound": "Domain tersebut tidak ada di akun Anda.",
+      "domainNotSaved": "Tidak dapat menyimpan domain. Coba lagi."
+    },
+    "slackBot": {
+      "unavailable": "Bot QRdx untuk Slack tidak tersedia di sini.",
+      "signedOut": "Masuk untuk mengubah ini.",
+      "notAvailableYet": "Ini belum tersedia.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu semenit.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "oauthApps": {
+      "signedOut": "Masuk untuk mengelola aplikasi OAuth.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "apiKeys": {
+      "signedOut": "Masuk untuk mengelola kunci API.",
+      "unavailable": "Kunci API belum tersedia di deployment ini.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "slackLinks": {
+      "signedOut": "Masuk untuk mengelola tautan Slack.",
+      "notAvailableYet": "Ini belum tersedia.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu semenit.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "authorizedApps": {
+      "signedOut": "Masuk untuk mengelola akses aplikasi.",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "notifications": {
+      "signedOut": "Masuk untuk mengubah notifikasi.",
+      "webhookUrlMissing": "Tempel URL webhook",
+      "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
     }
   },
   "codeBuilder": {

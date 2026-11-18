@@ -43,9 +43,10 @@ export interface ApproximateLocation {
 /**
  * The words around browser, system and place names, in one language. Browser
  * and system names stay as they are ("Chrome", "macOS"); country names come
- * from Intl in `locale`. English by default: the stolen-session check and
- * new passkeys' names keep the English label (./session-origin.ts,
- * ./passkeys.ts). Other languages: deviceWords() below.
+ * from Intl in `locale`. English by default: the stolen-session check keeps
+ * the English label (./session-origin.ts). New passkeys are named in the
+ * account's language (./passkey-name-server.ts). Other languages: deviceWords()
+ * below.
  */
 export interface DeviceWords {
   locale: string;

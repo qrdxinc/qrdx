@@ -21,15 +21,19 @@ import {
 } from "@/lib/affiliates/program";
 import {
   type AffiliateStatus,
-  CHOSEN_CODE_MESSAGES,
+  chosenCodeMessages,
 } from "@/lib/affiliates/rules";
 import { HttpError } from "@/lib/error-response";
 import { isFeatureAvailable } from "@/lib/feature-availability";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
+import type { Translator } from "@/lib/i18n/translator";
 import { logError } from "@/lib/log-error";
 import { enforceRateLimits } from "@/lib/request-guards";
 
 // The signed-in side of the affiliate program: applying (/affiliates) and the
-// PayPal address (Settings → Affiliate program).
+// PayPal address (Settings → Affiliate program). /affiliates is English only,
+// so applying answers in English; Settings answers in the person's language
+// (settingsActions.affiliate), read only when refusing.
 
 export type AffiliateActionResult<T = null> =
   | { ok: true; data: T }
@@ -37,16 +41,33 @@ export type AffiliateActionResult<T = null> =
 
 const NOT_READY = "The affiliate program isn't available yet.";
 const SIGNED_OUT = "Sign in to continue.";
+const SOMETHING_WRONG = "Something went wrong. Please try again.";
+
+type AffiliateText = () => Promise<Translator<"settingsActions.affiliate">>;
+const affiliateText = (): AffiliateText =>
+  settingsActionText("settingsActions.affiliate");
 
 const applyLimiter = createRateLimiter({ limiter: slidingWindow(5, "1 h") });
 const paypalLimiter = createRateLimiter({ limiter: slidingWindow(10, "1 h") });
 const codeLimiter = createRateLimiter({ limiter: slidingWindow(10, "1 h") });
 
-function failure(error: unknown, action: string): AffiliateActionResult<never> {
-  if (isMissingTableError(error)) return { ok: false, error: NOT_READY };
-  if (error instanceof HttpError) return { ok: false, error: error.message };
+/** In English, or with `text` in the person's language. */
+async function failure(
+  error: unknown,
+  action: string,
+  text?: AffiliateText,
+): Promise<AffiliateActionResult<never>> {
+  const t = text ? await text() : null;
+  if (isMissingTableError(error)) {
+    return { ok: false, error: t ? t("notReady") : NOT_READY };
+  }
+  if (error instanceof HttpError) {
+    // The only one here: enforceRateLimits' refusal.
+    const limited = t && error.code === "RATE_LIMITED";
+    return { ok: false, error: limited ? t("rateLimited") : error.message };
+  }
   logError(error as Error, { action });
-  return { ok: false, error: "Something went wrong. Please try again." };
+  return { ok: false, error: t ? t("failed") : SOMETHING_WRONG };
 }
 
 export interface ApplyState {
@@ -123,7 +144,7 @@ export async function applyForAffiliateAction(
     revalidatePath("/settings/affiliate");
     return { ok: true, data: { status: row.status as AffiliateStatus } };
   } catch (error) {
-    return failure(error, "affiliates.apply");
+    return await failure(error, "affiliates.apply");
   }
 }
 
@@ -133,7 +154,8 @@ const paypalSchema = z.object({
     .trim()
     .toLowerCase()
     .max(MAX_EMAIL_LENGTH)
-    .email("Enter the email address of your PayPal account."),
+    // Its key in settingsActions.affiliate.
+    .email("paypalEmailInvalid"),
 });
 
 /**
@@ -145,17 +167,26 @@ const paypalSchema = z.object({
 export async function savePaypalEmailAction(
   input: z.input<typeof paypalSchema>,
 ): Promise<AffiliateActionResult> {
-  if (!isFeatureAvailable("affiliates")) return { ok: false, error: NOT_READY };
+  const text = affiliateText();
+  if (!isFeatureAvailable("affiliates")) {
+    return { ok: false, error: (await text())("notReady") };
+  }
   const parsed = paypalSchema.safeParse(input);
   if (!parsed.success) {
+    const issue = parsed.error.issues[0]?.message;
+    const t = await text();
     return {
       ok: false,
-      error: parsed.error.issues[0]?.message ?? "Enter an email address.",
+      // Zod's own words for an address too long to be one, as before.
+      error:
+        issue === "paypalEmailInvalid"
+          ? t("paypalEmailInvalid")
+          : (issue ?? t("paypalEmailMissing")),
     };
   }
   try {
     const session = await currentSession();
-    if (!session) return { ok: false, error: SIGNED_OUT };
+    if (!session) return { ok: false, error: (await text())("signedOut") };
     // Before the limit, so the round trip that asks doesn't use one up.
     const needed = await requireRecentConfirmation(session);
     if (needed) return needed;
@@ -167,10 +198,7 @@ export async function savePaypalEmailAction(
       email: parsed.data.email,
     });
     if (saved.status === "not_approved") {
-      return {
-        ok: false,
-        error: "You can add a PayPal email once your application is approved.",
-      };
+      return { ok: false, error: (await text())("paypalNotApproved") };
     }
     if (saved.status === "saved") {
       const notice = () =>
@@ -189,7 +217,7 @@ export async function savePaypalEmailAction(
     revalidatePath("/settings/affiliate");
     return { ok: true, data: null };
   } catch (error) {
-    return failure(error, "affiliates.paypal");
+    return await failure(error, "affiliates.paypal", text);
   }
 }
 
@@ -202,14 +230,21 @@ const codeSchema = z.object({ code: z.string().trim().toLowerCase().max(64) });
 export async function chooseReferralCodeAction(
   input: z.input<typeof codeSchema>,
 ): Promise<AffiliateActionResult<{ code: string }>> {
-  if (!isFeatureAvailable("affiliates")) return { ok: false, error: NOT_READY };
+  const text = affiliateText();
+  const codeText = async () =>
+    chosenCodeMessages(
+      await settingsActionText("settingsActions.affiliate.chosenCode")(),
+    );
+  if (!isFeatureAvailable("affiliates")) {
+    return { ok: false, error: (await text())("notReady") };
+  }
   const parsed = codeSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false, error: CHOSEN_CODE_MESSAGES.format };
+    return { ok: false, error: (await codeText()).format };
   }
   try {
     const session = await currentSession();
-    if (!session) return { ok: false, error: SIGNED_OUT };
+    if (!session) return { ok: false, error: (await text())("signedOut") };
     await enforceRateLimits([
       { limiter: codeLimiter, key: `affiliates:code:${session.userId}` },
     ]);
@@ -223,16 +258,13 @@ export async function chooseReferralCodeAction(
         revalidatePath("/settings/affiliate");
         return { ok: true, data: { code: result.code } };
       case "unchanged":
-        return { ok: false, error: "That's already your code." };
+        return { ok: false, error: (await text())("codeUnchanged") };
       case "not_approved":
-        return {
-          ok: false,
-          error: "You can choose a code once your application is approved.",
-        };
+        return { ok: false, error: (await text())("codeNotApproved") };
       default:
-        return { ok: false, error: CHOSEN_CODE_MESSAGES[result.status] };
+        return { ok: false, error: (await codeText())[result.status] };
     }
   } catch (error) {
-    return failure(error, "affiliates.code");
+    return await failure(error, "affiliates.code", text);
   }
 }

@@ -1,8 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { CONFIRMATION_MESSAGES } from "@/lib/account/confirmation";
-import { confirmedSession } from "@/lib/account/confirmation-server";
+import {
+  confirmationText,
+  confirmedSession,
+  refuse,
+} from "@/lib/account/confirmation-server";
 import { cancelTwoFactorReset } from "@/lib/account/two-factor-reset-server";
 import { logError } from "@/lib/shared";
 
@@ -12,13 +15,16 @@ import { logError } from "@/lib/shared";
  * with two-step verification on takes a passkey, an authenticator code or a
  * backup code: what someone who really lost them can't give. Confirming with
  * a code cancels it on its own (this then finds nothing left and says it's
- * done); confirming with a passkey doesn't, so this cancels it.
+ * done); confirming with a passkey doesn't, so this cancels it. Refusals
+ * are in the person's language (auth.confirmationMessages).
  */
 export async function cancelSupportTwoFactorReset(): Promise<
   { ok: true } | { ok: false; error: string }
 > {
   try {
-    const confirmed = await confirmedSession(CONFIRMATION_MESSAGES.signedOut);
+    const confirmed = await confirmedSession(
+      async () => (await confirmationText()).confirm.signedOut,
+    );
     if (!confirmed.ok) return confirmed;
     const { session } = confirmed;
     await cancelTwoFactorReset(
@@ -30,6 +36,6 @@ export async function cancelSupportTwoFactorReset(): Promise<
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.cancelTwoFactorReset" });
-    return { ok: false, error: CONFIRMATION_MESSAGES.failed };
+    return await refuse((text) => text.confirm.failed);
   }
 }

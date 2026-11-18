@@ -1,3 +1,5 @@
+import type { Translator } from "@/lib/i18n/translator";
+
 /**
  * Settings → Account → Sign-in methods. Client-safe and pure.
  *
@@ -49,6 +51,19 @@ export const UNLINK_BLOCK_MESSAGES: Record<UnlinkBlockReason, string> = {
   unsupported: "This sign-in method can't be removed here.",
 };
 
+/** UNLINK_BLOCK_MESSAGES in any language. */
+export type UnlinkBlockMessages = Record<UnlinkBlockReason, string>;
+
+/**
+ * UNLINK_BLOCK_MESSAGES in the person's language
+ * (settingsActions.account.unlinkBlocked in messages/en.json).
+ */
+export function unlinkBlockMessages(
+  t: Translator<"settingsActions.account.unlinkBlocked">,
+): UnlinkBlockMessages {
+  return { "not-found": t("notFound"), unsupported: t("unsupported") };
+}
+
 /** Said wherever unlinking is offered: email codes always remain. */
 export const EMAIL_CODES_REMAIN =
   "You can still sign in with a code sent to your email.";
@@ -67,6 +82,7 @@ export interface SignInMethodView {
 export function toSignInMethods(
   accounts: readonly LinkedAccount[],
   formatDate: (date: Date) => string,
+  messages: UnlinkBlockMessages = UNLINK_BLOCK_MESSAGES,
 ): SignInMethodView[] {
   const social = accounts
     .filter((account) => isSocialProvider(account.providerId))
@@ -82,7 +98,7 @@ export function toSignInMethods(
         kind: account.providerId as SocialProvider,
         label: PROVIDER_LABELS[account.providerId as SocialProvider],
         linkedAt: formatDate(new Date(account.createdAt)),
-        unlinkBlocked: reason ? UNLINK_BLOCK_MESSAGES[reason] : null,
+        unlinkBlocked: reason ? messages[reason] : null,
       };
     });
   return [

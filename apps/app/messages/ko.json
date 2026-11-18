@@ -5693,7 +5693,12 @@
           "signInMethods": "로그인 방법",
           "valueIsLinked": "{value} 연결됨",
           "valueCantBeLinkedRight": "지금은 {value}을(를) 연결할 수 없어요.",
-          "labelIsNoLongerLinked": "{label} 연결이 해제되었어요"
+          "labelIsNoLongerLinked": "{label} 연결이 해제되었어요",
+          "emailCode": "이메일 코드",
+          "oneTimeCodeSentTo": "{email}(으)로 보낸 일회용 코드예요.",
+          "linkedOn": "{date}에 연결됨",
+          "linkedOnReason": "{date}에 연결됨. {reason}",
+          "notLinkedUseThe": "연결되지 않았어요. {email} 이메일의 {provider} 계정을 사용하세요."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "지원팀이 {dueDate}에 이 기능을 끌 예정이에요",
@@ -5740,7 +5745,9 @@
           "afterYouSignInPasskey": "로그인하면 QRdx가 패스키를 요청해요. 백업 코드도 사용할 수 있어요.",
           "afterYouSignInApp": "로그인하면 QRdx가 인증 앱의 코드를 요청해요. 백업 코드도 사용할 수 있어요.",
           "afterYouSignInQrdx2": "로그인하면 QRdx에서 백업 코드를 요청해요.",
-          "passkeySpotlight": "이제 인증 앱 코드 대신 패스키를 두 번째 인증 단계로 사용할 수 있어요."
+          "passkeySpotlight": "이제 인증 앱 코드 대신 패스키를 두 번째 인증 단계로 사용할 수 있어요.",
+          "addedOn": "{date}에 추가됨",
+          "passkeyName": "패스키"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "{length, number}단계 중 {stepNumber, number}단계",
@@ -9285,6 +9292,149 @@
         "failed": "SSO가 제대로 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
         "rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "변경 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "nameMissing": "이름을 입력해 주세요.",
+      "nameTooLong": "{max}자 이하로 입력해 주세요.",
+      "nameSpecialCharacters": "특수문자를 삭제해 주세요.",
+      "profileSignedOut": "프로필을 변경하려면 로그인해 주세요.",
+      "uploadsUnavailable": "이 서버에는 사진 업로드가 설정되어 있지 않아요.",
+      "pictureMissing": "업로드할 사진을 선택해 주세요.",
+      "pictureTooLarge": "사진이 너무 커요. 더 작은 사진을 사용해 주세요.",
+      "pictureType": "PNG, JPEG 또는 WebP 사진을 사용해 주세요.",
+      "methodsSignedOut": "로그인 방법을 관리하려면 로그인해 주세요.",
+      "linkUnavailable": "지금은 {provider}을(를) 연결할 수 없어요.",
+      "unlinkBlocked": {
+        "notFound": "해당 로그인 방법은 내 계정에 연결되어 있지 않아요.",
+        "unsupported": "이 로그인 방법은 여기에서 삭제할 수 없어요."
+      },
+      "sessionsSignedOut": "세션을 관리하려면 로그인해 주세요.",
+      "thisDevice": "현재 사용 중인 기기예요. 메뉴의 로그아웃을 이용해 주세요."
+    },
+    "twoFactor": {
+      "signedOut": "2단계 인증을 변경하려면 로그인해 주세요.",
+      "alreadyOn": "2단계 인증이 이미 켜져 있어요.",
+      "notOn": "2단계 인증이 꺼져 있어요.",
+      "appAlreadySetUp": "인증 앱이 이미 설정되어 있어요.",
+      "noApp": "삭제할 인증 앱이 없어요.",
+      "noPasskey": "먼저 패스키를 추가해 주세요.",
+      "restart": "설정 시간이 만료되었어요. 다시 시작해 주세요.",
+      "rateLimitedLong": "시도 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요."
+    },
+    "emailChange": {
+      "reauth": "보안을 위해 로그아웃했다가 다시 로그인한 후, 하루 안에 이메일을 변경해 주세요.",
+      "sameEmail": "지금 쓰고 있는 이메일과 같아요.",
+      "invalidEmail": "올바른 이메일 주소를 입력해 주세요.",
+      "invalidCode": "이메일로 받은 6자리 코드를 입력해 주세요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "codeRateLimited": "해당 주소로 요청한 코드가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "notSent": "지금은 코드를 보낼 수 없어요. 다시 시도해 주세요.",
+      "codeDidntWork": "그 코드는 사용할 수 없었어요. 코드를 확인하거나 새 코드를 보내 주세요.",
+      "taken": "이 이메일은 이미 다른 QRdx 계정에서 사용 중이에요.",
+      "signedOut": "이메일을 변경하려면 로그인하세요.",
+      "unavailable": "이 사이트에는 이메일이 설정되어 있지 않아서 여기서는 주소를 변경할 수 없어요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "ssoOff": "회사에서 {domain}에 단일 로그인(SSO)을 요구하고 있어서 계정을 다른 도메인의 주소로 옮길 수 없어요. 워크스페이스 관리자에게 문의하세요.",
+      "ssoOnto": "회사에서 {domain}에 단일 로그인(SSO)을 요구하고 있어요. 해당 도메인의 주소를 사용하려면 SSO로 로그인하세요."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "확인하려면 \"{word}\"를 입력하세요.",
+      "signedOut": "계정을 삭제하려면 로그인하세요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 15분 후에 다시 시도해 주세요.",
+      "failed": "계정을 삭제하지 못했어요. 다시 시도해 주세요.",
+      "subscriptionNotCancelled": "구독을 취소하지 못해서 계정이 삭제되지 않았어요. 몇 분 후에 다시 시도하거나 {email}로 이메일을 보내 주세요.",
+      "ownerNotMade": "{person} 님을 {team}의 소유자로 지정하지 못해서 계정이 삭제되지 않았어요. 팀의 다른 사람을 소유자로 지정한 후 다시 시도해 주세요."
+    },
+    "affiliate": {
+      "notReady": "제휴 프로그램은 아직 이용할 수 없어요.",
+      "signedOut": "계속하려면 로그인하세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "paypalEmailInvalid": "PayPal 계정의 이메일 주소를 입력하세요.",
+      "paypalEmailMissing": "이메일 주소를 입력하세요.",
+      "paypalNotApproved": "신청이 승인되면 PayPal 이메일을 추가할 수 있어요.",
+      "codeUnchanged": "이미 사용 중인 코드예요.",
+      "codeNotApproved": "신청이 승인되면 코드를 선택할 수 있어요.",
+      "chosenCode": {
+        "format": "소문자, 숫자, 하이픈(연속 불가)을 사용해 3~32자로 입력하세요. 첫 글자와 마지막 글자는 문자나 숫자여야 해요.",
+        "reserved": "예약된 코드예요. 다른 코드를 선택하세요.",
+        "email": "이메일 주소의 앞부분이에요. 이메일이 공개되지 않는 코드를 선택하세요.",
+        "taken": "이미 사용 중인 코드예요. 다른 코드를 선택하세요.",
+        "alreadyChanged": "이미 코드를 선택하셨어요. 코드는 한 번만 변경할 수 있어요."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "너무 짧아 보여요",
+      "tooLong": "너무 길어 보여요",
+      "noSpaces": "공백 없이 붙여넣어 주세요",
+      "storeDomainMissing": "스토어 도메인을 입력해 주세요",
+      "stripeSecretKey": "전체 시크릿 키예요. 대신 Payment Links: Read 권한이 있는 제한된 키를 만들어 주세요. QRdx는 시크릿 키를 저장하지 않습니다.",
+      "stripeRestrictedKey": "rk_live_ 또는 rk_test_로 시작하는 제한된 키를 붙여넣어 주세요.",
+      "calcomKey": "cal_live_로 시작하는 Cal.com API 키를 붙여넣어 주세요(테스트 키는 cal_로 시작해요).",
+      "shopifyCredentials": "앱의 클라이언트 ID와 시크릿 또는 Admin API 액세스 토큰을 붙여넣어 주세요.",
+      "signedOut": "계정을 연결하려면 로그인해 주세요.",
+      "checkDetails": "내용을 확인하고 다시 시도해 주세요.",
+      "rateLimited": "요청 한도를 초과했습니다. 나중에 다시 시도해 주세요.",
+      "notAccepted": "{name}에서 해당 값을 받아들이지 않았어요. 확인한 후 다시 시도해 주세요.",
+      "stripeForbidden": "이 키로는 Payment Links를 읽을 수 없어요. 키에서 Payment Links를 Read로 설정해 주세요.",
+      "shopifyForbidden": "이 앱은 제품을 읽을 수 없어요. read_products 범위를 추가하고 앱을 다시 설치해 주세요.",
+      "forbidden": "{name}에서 이 키의 접근을 거부했어요.",
+      "unreachable": "{name}에 연결할 수 없어요. 다시 시도해 주세요."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "키가 너무 짧은 것 같아요",
+      "keyTooLong": "키가 너무 긴 것 같아요",
+      "keyNoSpaces": "키를 공백 없이 붙여넣어 주세요",
+      "signedOut": "계정을 연결하려면 로그인해 주세요.",
+      "checkKey": "키를 확인하고 다시 시도해 주세요.",
+      "notConfigured": "여기서는 {name}이(가) 설정되어 있지 않아요.",
+      "rateLimited": "요청 한도를 초과했습니다. 나중에 다시 시도해 주세요.",
+      "keyRejected": "{name}에서 해당 {label}을(를) 받아들이지 않았어요. 확인한 후 다시 시도해 주세요.",
+      "unreachable": "{name}에 연결할 수 없어요. 다시 시도해 주세요.",
+      "domainSignedOut": "먼저 로그인해 주세요.",
+      "pickDomain": "도메인을 선택해 주세요.",
+      "connectFirst": "먼저 계정을 연결해 주세요.",
+      "domainNotFound": "이 도메인은 계정에 없어요.",
+      "domainNotSaved": "도메인을 저장하지 못했어요. 다시 시도해 주세요."
+    },
+    "slackBot": {
+      "unavailable": "Slack용 QRdx 봇은 여기서 사용할 수 없습니다.",
+      "signedOut": "변경하려면 로그인해 주세요.",
+      "notAvailableYet": "아직 사용할 수 없어요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 1분 후에 다시 해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "oauthApps": {
+      "signedOut": "OAuth 앱을 관리하려면 로그인하세요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "apiKeys": {
+      "signedOut": "API 키를 관리하려면 로그인하세요.",
+      "unavailable": "이 배포 환경에서는 아직 API 키를 사용할 수 없어요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "slackLinks": {
+      "signedOut": "Slack 링크를 관리하려면 로그인하세요.",
+      "notAvailableYet": "아직 사용할 수 없어요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 1분 후에 다시 해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "authorizedApps": {
+      "signedOut": "앱 접근 권한을 관리하려면 로그인하세요.",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "notifications": {
+      "signedOut": "알림을 변경하려면 로그인하세요.",
+      "webhookUrlMissing": "웹훅 URL을 붙여넣으세요",
+      "rateLimited": "요청 한도를 초과했어요. 나중에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
     }
   },
   "codeBuilder": {

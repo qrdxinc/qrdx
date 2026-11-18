@@ -21,6 +21,7 @@ import {
   type LinkedAccount,
   linkableProviders,
   toSignInMethods,
+  unlinkBlockMessages,
 } from "@/lib/account/sign-in-methods";
 import { getSignInOptions } from "@/lib/auth/sign-in-options-server";
 import { getMyCommunityProfile } from "@/lib/community/profiles";
@@ -48,11 +49,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const DATE_FORMAT = new Intl.DateTimeFormat("en", {
-  dateStyle: "medium",
-  timeZone: "UTC",
-});
-const formatDate = (date: Date) => DATE_FORMAT.format(date);
+/** "Nov 5, 2026" in the page's language, like Sessions' dates. */
+const dateFormatter = (locale: string) => {
+  const format = new Intl.DateTimeFormat(locale, {
+    dateStyle: "medium",
+    timeZone: "UTC",
+  });
+  return (date: Date) => format.format(date);
+};
 
 // Sessions listed at most (newest first); older ones still end on expiry.
 const SESSION_LIMIT = 50;
@@ -85,6 +89,8 @@ export default async function AccountPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const t = await getAppTranslations("app.settings.account.page");
+  const locale = await getAppLocale();
+  const formatDate = dateFormatter(locale);
   const requestHeaders = await headers();
   const session = await auth.api.getSession({ headers: requestHeaders });
   if (!session) redirect(signInPath("/settings/account"));
@@ -138,7 +144,7 @@ export default async function AccountPage({
     // emails' (emails.security), so both name a device alike.
     words: sessionWords(
       await getAppTranslations("app.settings.account.sessionsSection"),
-      deviceWords(await emailIntl(await getAppLocale())),
+      deviceWords(await emailIntl(locale)),
     ),
   });
   // Changes to the account's security ask "Confirm it's you" first
@@ -168,7 +174,13 @@ export default async function AccountPage({
         <SignInMethodsSection
           email={session.user.email}
           linkable={linkableProviders(accounts, configuredSocialProviders())}
-          methods={toSignInMethods(accounts, formatDate)}
+          methods={toSignInMethods(
+            accounts,
+            formatDate,
+            unlinkBlockMessages(
+              await getAppTranslations("settingsActions.account.unlinkBlocked"),
+            ),
+          )}
           outcome={linkOutcome(params)}
         />
 
@@ -191,7 +203,7 @@ export default async function AccountPage({
           summary={describeDeletionPlan(
             planAccountDeletion(facts),
             await getAppTranslations("app.settings.account.deletion"),
-            await getAppLocale(),
+            locale,
           )}
         />
       </div>

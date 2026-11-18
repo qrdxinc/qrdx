@@ -21,21 +21,33 @@ import {
   getSessionUserId,
 } from "@/lib/connected-accounts/server";
 import { HttpError } from "@/lib/error-response";
+import { settingsActionText } from "@/lib/i18n/settings-action-text";
+import type { Translator } from "@/lib/i18n/translator";
 import { isIntegrationConfigured } from "@/lib/integration-oauth";
 import { enforceRateLimits } from "@/lib/request-guards";
+
+// Refusals are in the person's language (settingsActions.connectedAccounts),
+// read only when refusing; the providers' own error messages pass through.
 
 export type ConnectedAccountActionResult =
   | { ok: true }
   | { ok: false; error: string };
+
+type AccountText = () => Promise<
+  Translator<"settingsActions.connectedAccounts">
+>;
+
+// Each message here is its key in settingsActions.connectedAccounts.
+const KEY_ISSUES = ["keyTooShort", "keyTooLong", "keyNoSpaces"] as const;
 
 const apiKeySchema = z.object({
   provider: z.string().min(1).max(64),
   apiKey: z
     .string()
     .trim()
-    .min(8, "That key looks too short")
-    .max(512, "That key looks too long")
-    .regex(/^[\x21-\x7E]+$/, "Paste the key without spaces"),
+    .min(8, "keyTooShort")
+    .max(512, "keyTooLong")
+    .regex(/^[\x21-\x7E]+$/, "keyNoSpaces"),
 });
 
 const domainSchema = z.object({
@@ -46,6 +58,7 @@ const domainSchema = z.object({
 async function guard(
   userId: string,
   action: string,
+  text: AccountText,
 ): Promise<ConnectedAccountActionResult | null> {
   try {
     await enforceRateLimits([
@@ -53,7 +66,15 @@ async function guard(
     ]);
     return null;
   } catch (error) {
-    if (error instanceof HttpError) return { ok: false, error: error.message };
+    if (error instanceof HttpError) {
+      return {
+        ok: false,
+        error:
+          error.code === "RATE_LIMITED"
+            ? (await text())("rateLimited")
+            : error.message,
+      };
+    }
     throw error;
   }
 }
@@ -81,29 +102,35 @@ export async function connectWithApiKeyAction(
   provider: string,
   apiKey: string,
 ): Promise<ConnectedAccountActionResult> {
+  const text = settingsActionText("settingsActions.connectedAccounts");
   const userId = await getSessionUserId();
-  if (!userId) return { ok: false, error: "Sign in to connect an account." };
+  if (!userId) return { ok: false, error: (await text())("signedOut") };
 
   const input = apiKeySchema.safeParse({ provider, apiKey });
   if (!input.success) {
-    return {
-      ok: false,
-      error: input.error.issues[0]?.message ?? "Check the key and try again.",
-    };
+    const issue = input.error.issues[0]?.message;
+    const key = KEY_ISSUES.find((known) => known === issue);
+    const t = await text();
+    // Zod's own words for a provider the form never sends, as before.
+    return { ok: false, error: key ? t(key) : (issue ?? t("checkKey")) };
   }
 
   const definition = getIntegrationRegistry().get(input.data.provider);
   const takesKeys =
     isShortLinkProvider(input.data.provider) ||
     isMigrationSourceProvider(input.data.provider);
+  // Only offered for the ones that do: English, as it was.
   if (!(definition?.apiKey && takesKeys)) {
     return { ok: false, error: "This integration doesn't use API keys." };
   }
   if (!isIntegrationConfigured(input.data.provider)) {
-    return { ok: false, error: `${definition.name} isn't configured here.` };
+    return {
+      ok: false,
+      error: (await text())("notConfigured", { name: definition.name }),
+    };
   }
 
-  const limited = await guard(userId, "api-key");
+  const limited = await guard(userId, "api-key", text);
   if (limited) return limited;
 
   let metadata: Record<string, unknown>;
@@ -114,16 +141,20 @@ export async function connectWithApiKeyAction(
       isIntegrationApiError(error) &&
       (error.code === "unauthorized" || error.code === "forbidden")
     ) {
+      // The key's label as the form shows it (the catalogue's English).
       return {
         ok: false,
-        error: `${definition.name} didn't accept that ${definition.apiKey.label.toLowerCase()}. Check it and try again.`,
+        error: (await text())("keyRejected", {
+          name: definition.name,
+          label: definition.apiKey.label.toLowerCase(),
+        }),
       };
     }
     return {
       ok: false,
       error: isIntegrationApiError(error)
         ? error.message
-        : `Couldn't reach ${definition.name}. Try again.`,
+        : (await text())("unreachable", { name: definition.name }),
     };
   }
 
@@ -171,20 +202,21 @@ export async function setDefaultShortLinkDomainAction(
   provider: string,
   domainId: string,
 ): Promise<ConnectedAccountActionResult> {
+  const text = settingsActionText("settingsActions.connectedAccounts");
   const userId = await getSessionUserId();
-  if (!userId) return { ok: false, error: "Sign in first." };
+  if (!userId) return { ok: false, error: (await text())("domainSignedOut") };
 
   const input = domainSchema.safeParse({ provider, domainId });
   if (!(input.success && isShortLinkProvider(input.data.provider))) {
-    return { ok: false, error: "Pick a domain." };
+    return { ok: false, error: (await text())("pickDomain") };
   }
 
-  const limited = await guard(userId, "domain");
+  const limited = await guard(userId, "domain", text);
   if (limited) return limited;
 
   const connection = await getConnection(userId, input.data.provider);
   if (connection?.status !== "active") {
-    return { ok: false, error: "Connect the account first." };
+    return { ok: false, error: (await text())("connectFirst") };
   }
 
   try {
@@ -193,8 +225,9 @@ export async function setDefaultShortLinkDomainAction(
       metadata: connection.metadata,
     }).listDomains();
     const match = domains.find((domain) => domain.id === input.data.domainId);
-    if (!match)
-      return { ok: false, error: "That domain isn't in your account." };
+    if (!match) {
+      return { ok: false, error: (await text())("domainNotFound") };
+    }
 
     await db
       .update(integration)
@@ -211,7 +244,7 @@ export async function setDefaultShortLinkDomainAction(
       ok: false,
       error: isIntegrationApiError(error)
         ? error.message
-        : "Couldn't save the domain. Try again.",
+        : (await text())("domainNotSaved"),
     };
   }
 

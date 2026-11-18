@@ -5693,7 +5693,12 @@
           "signInMethods": "Métodos de inicio de sesión",
           "valueIsLinked": "{value} está vinculado",
           "valueCantBeLinkedRight": "No se puede vincular {value} ahora mismo.",
-          "labelIsNoLongerLinked": "{label} ya no está vinculado"
+          "labelIsNoLongerLinked": "{label} ya no está vinculado",
+          "emailCode": "Código por correo",
+          "oneTimeCodeSentTo": "Un código de un solo uso enviado a {email}.",
+          "linkedOn": "Vinculado el {date}.",
+          "linkedOnReason": "Vinculado el {date}. {reason}",
+          "notLinkedUseThe": "Sin vincular. Usa la cuenta de {provider} con {email}."
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Soporte lo desactivará el {dueDate}",
@@ -5740,7 +5745,9 @@
           "afterYouSignInPasskey": "Después de iniciar sesión, QRdx te pedirá tu llave de acceso. Un código de respaldo también funciona.",
           "afterYouSignInApp": "Después de iniciar sesión, QRdx te pedirá un código de tu app de autenticación. Un código de respaldo también funciona.",
           "afterYouSignInQrdx2": "Después de iniciar sesión, QRdx te pedirá un código de respaldo.",
-          "passkeySpotlight": "Ahora una llave de acceso puede ser tu segundo paso, en lugar de un código de autenticación."
+          "passkeySpotlight": "Ahora una llave de acceso puede ser tu segundo paso, en lugar de un código de autenticación.",
+          "addedOn": "Añadida el {date}",
+          "passkeyName": "Passkey"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Paso {stepNumber, number} de {length, number}",
@@ -9285,6 +9292,149 @@
         "failed": "El inicio de sesión único no funcionó. Inténtalo de nuevo o inicia sesión de otra forma.",
         "rateLimited": "Demasiados intentos. Espera un minuto e inténtalo de nuevo."
       }
+    }
+  },
+  "settingsActions": {
+    "account": {
+      "rateLimited": "Demasiados cambios. Espera unos minutos e inténtalo de nuevo.",
+      "failed": "Algo salió mal. Inténtalo de nuevo.",
+      "nameMissing": "Escribe tu nombre.",
+      "nameTooLong": "Usa {max} caracteres o menos.",
+      "nameSpecialCharacters": "Quita los caracteres especiales.",
+      "profileSignedOut": "Inicia sesión para cambiar tu perfil.",
+      "uploadsUnavailable": "La subida de imágenes no está configurada en este servidor.",
+      "pictureMissing": "Elige una imagen para subir.",
+      "pictureTooLarge": "Esa imagen es demasiado grande. Prueba con una más pequeña.",
+      "pictureType": "Usa una imagen PNG, JPEG o WebP.",
+      "methodsSignedOut": "Inicia sesión para gestionar los métodos de acceso.",
+      "linkUnavailable": "{provider} no se puede vincular ahora mismo.",
+      "unlinkBlocked": {
+        "notFound": "Ese método de inicio de sesión no está vinculado a tu cuenta.",
+        "unsupported": "Este método de inicio de sesión no se puede eliminar aquí."
+      },
+      "sessionsSignedOut": "Inicia sesión para gestionar las sesiones.",
+      "thisDevice": "Este es tu dispositivo actual. Usa Cerrar sesión en el menú."
+    },
+    "twoFactor": {
+      "signedOut": "Inicia sesión para cambiar la verificación en dos pasos.",
+      "alreadyOn": "La verificación en dos pasos ya está activada.",
+      "notOn": "La verificación en dos pasos está desactivada.",
+      "appAlreadySetUp": "Ya hay una aplicación de autenticación configurada.",
+      "noApp": "No hay ninguna aplicación de autenticación que eliminar.",
+      "noPasskey": "Primero añade una passkey.",
+      "restart": "Esta configuración caducó. Empieza de nuevo.",
+      "rateLimitedLong": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo."
+    },
+    "emailChange": {
+      "reauth": "Por tu seguridad, cierra sesión y vuelve a iniciarla; después cambia tu correo en el plazo de un día.",
+      "sameEmail": "Ese ya es tu correo.",
+      "invalidEmail": "Escribe un correo electrónico válido.",
+      "invalidCode": "Escribe el código de 6 dígitos del correo.",
+      "rateLimited": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo.",
+      "codeRateLimited": "Se han solicitado demasiados códigos para esa dirección. Espera unos minutos e inténtalo de nuevo.",
+      "notSent": "No hemos podido enviar un código en este momento. Inténtalo de nuevo.",
+      "codeDidntWork": "Ese código no ha funcionado. Revísalo o envía un código nuevo.",
+      "taken": "Ese correo electrónico ya pertenece a otra cuenta de QRdx.",
+      "signedOut": "Inicia sesión para cambiar tu correo.",
+      "unavailable": "El correo electrónico no está configurado en este sitio, así que la dirección no se puede cambiar aquí.",
+      "failed": "Algo salió mal. Inténtalo de nuevo.",
+      "ssoOff": "Tu empresa exige el inicio de sesión único para {domain}, por lo que tu cuenta no puede pasar a una dirección de otro dominio. Consulta con el administrador de tu espacio de trabajo.",
+      "ssoOnto": "Tu empresa exige el inicio de sesión único para {domain}. Para usar una dirección de ese dominio, inicia sesión con SSO."
+    },
+    "deleteAccount": {
+      "typeToConfirm": "Escribe \"{word}\" para confirmar.",
+      "signedOut": "Inicia sesión para eliminar tu cuenta.",
+      "rateLimited": "Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.",
+      "failed": "No hemos podido eliminar tu cuenta. Inténtalo de nuevo.",
+      "subscriptionNotCancelled": "No hemos podido cancelar tu suscripción, así que tu cuenta no se ha eliminado. Inténtalo de nuevo en unos minutos o escribe a {email}.",
+      "ownerNotMade": "No hemos podido nombrar a {person} propietario de {team}, así que tu cuenta no se ha eliminado. Nombra a otra persona propietaria del equipo e inténtalo de nuevo."
+    },
+    "affiliate": {
+      "notReady": "El programa de afiliados aún no está disponible.",
+      "signedOut": "Inicia sesión para continuar.",
+      "failed": "Algo salió mal. Inténtalo de nuevo.",
+      "rateLimited": "Has superado el límite de solicitudes. Inténtalo de nuevo más tarde.",
+      "paypalEmailInvalid": "Introduce la dirección de correo de tu cuenta de PayPal.",
+      "paypalEmailMissing": "Introduce una dirección de correo.",
+      "paypalNotApproved": "Podrás añadir un correo de PayPal cuando se apruebe tu solicitud.",
+      "codeUnchanged": "Ese ya es tu código.",
+      "codeNotApproved": "Podrás elegir un código cuando se apruebe tu solicitud.",
+      "chosenCode": {
+        "format": "Usa de 3 a 32 letras minúsculas, dígitos y guiones simples, empezando y terminando con una letra o un dígito.",
+        "reserved": "Ese código está reservado. Elige otro.",
+        "email": "Eso es el comienzo de tu dirección de correo. Elige un código que no la haga pública.",
+        "taken": "Ese código ya está en uso. Elige otro.",
+        "alreadyChanged": "Ya has elegido tu código. Solo se puede cambiar una vez."
+      }
+    },
+    "dataConnections": {
+      "tooShort": "Parece demasiado corto",
+      "tooLong": "Parece demasiado largo",
+      "noSpaces": "Pégalo sin espacios",
+      "storeDomainMissing": "Introduce el dominio de tu tienda",
+      "stripeSecretKey": "Esa es una clave secreta completa. Crea en su lugar una clave restringida con Payment Links: Read; QRdx nunca almacena claves secretas.",
+      "stripeRestrictedKey": "Pega una clave restringida: empieza por rk_live_ o rk_test_.",
+      "calcomKey": "Pega una clave de API de Cal.com: empieza por cal_live_ (o cal_ para claves de prueba).",
+      "shopifyCredentials": "Pega el ID de cliente y el secreto de la app, o un token de acceso de Admin API.",
+      "signedOut": "Inicia sesión para conectar una cuenta.",
+      "checkDetails": "Revisa los datos e inténtalo de nuevo.",
+      "rateLimited": "Se superó el límite de solicitudes. Inténtalo de nuevo más tarde.",
+      "notAccepted": "{name} no aceptó eso. Revísalo e inténtalo de nuevo.",
+      "stripeForbidden": "Esa clave no puede leer Payment Links. Configura Payment Links como Read en la clave.",
+      "shopifyForbidden": "Esa app no puede leer productos. Añade el permiso read_products y vuelve a instalarla.",
+      "forbidden": "{name} denegó el acceso a esta clave.",
+      "unreachable": "No se pudo conectar con {name}. Inténtalo de nuevo."
+    },
+    "connectedAccounts": {
+      "keyTooShort": "Esa clave parece demasiado corta",
+      "keyTooLong": "Esa clave parece demasiado larga",
+      "keyNoSpaces": "Pega la clave sin espacios",
+      "signedOut": "Inicia sesión para conectar una cuenta.",
+      "checkKey": "Revisa la clave e inténtalo de nuevo.",
+      "notConfigured": "{name} no está configurado aquí.",
+      "rateLimited": "Se superó el límite de solicitudes. Inténtalo de nuevo más tarde.",
+      "keyRejected": "{name} no aceptó ese dato ({label}). Revísalo e inténtalo de nuevo.",
+      "unreachable": "No se pudo conectar con {name}. Inténtalo de nuevo.",
+      "domainSignedOut": "Inicia sesión primero.",
+      "pickDomain": "Elige un dominio.",
+      "connectFirst": "Conecta primero la cuenta.",
+      "domainNotFound": "Ese dominio no está en tu cuenta.",
+      "domainNotSaved": "No se pudo guardar el dominio. Inténtalo de nuevo."
+    },
+    "slackBot": {
+      "unavailable": "El bot de QRdx para Slack no está disponible aquí.",
+      "signedOut": "Inicia sesión para cambiar esto.",
+      "notAvailableYet": "Esto aún no está disponible.",
+      "rateLimited": "Demasiados intentos. Espera un minuto.",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "oauthApps": {
+      "signedOut": "Inicia sesión para gestionar las apps OAuth.",
+      "rateLimited": "Has superado el límite de solicitudes. Inténtalo de nuevo más tarde.",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "apiKeys": {
+      "signedOut": "Inicia sesión para gestionar las claves API.",
+      "unavailable": "Las claves API aún no están disponibles en este despliegue.",
+      "rateLimited": "Has superado el límite de solicitudes. Inténtalo de nuevo más tarde.",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "slackLinks": {
+      "signedOut": "Inicia sesión para gestionar los enlaces de Slack.",
+      "notAvailableYet": "Esto aún no está disponible.",
+      "rateLimited": "Demasiados intentos. Espera un minuto.",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "authorizedApps": {
+      "signedOut": "Inicia sesión para gestionar el acceso de apps.",
+      "rateLimited": "Has superado el límite de solicitudes. Inténtalo de nuevo más tarde.",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "notifications": {
+      "signedOut": "Inicia sesión para cambiar las notificaciones.",
+      "webhookUrlMissing": "Pega la URL del webhook",
+      "rateLimited": "Has superado el límite de solicitudes. Inténtalo de nuevo más tarde.",
+      "failed": "Algo salió mal. Inténtalo de nuevo."
     }
   },
   "codeBuilder": {

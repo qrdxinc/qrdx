@@ -17099,6 +17099,26 @@
     "source": "8488ea041cb4",
     "status": "machine"
   },
+  "app.settings.account.signInMethodsSection.emailCode": {
+    "source": "0adcdb5d55ec",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.oneTimeCodeSentTo": {
+    "source": "595ef1926619",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkedOn": {
+    "source": "5411bb3af810",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkedOnReason": {
+    "source": "dd26bf6a9f53",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.notLinkedUseThe": {
+    "source": "b72aea42c98e",
+    "status": "machine"
+  },
   "app.settings.account.twoFactorResetNotice.supportWillTurnThisOff": {
     "source": "14a60950efe4",
     "status": "machine"
@@ -17269,6 +17289,14 @@
   },
   "app.settings.account.twoFactorSettings.passkeySpotlight": {
     "source": "7ba7ffc49846",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSettings.addedOn": {
+    "source": "e7bbba62018a",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSettings.passkeyName": {
+    "source": "904c9aa9baae",
     "status": "machine"
   },
   "app.settings.account.twoFactorSetupDialog.stepStepnumberOfLength": {
@@ -29189,6 +29217,450 @@
   },
   "auth.signInErrors.sso.rateLimited": {
     "source": "2c69a672e807",
+    "status": "machine"
+  },
+  "settingsActions.account.rateLimited": {
+    "source": "826942fe5eb0",
+    "status": "machine"
+  },
+  "settingsActions.account.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.account.nameMissing": {
+    "source": "a480220a0f59",
+    "status": "machine"
+  },
+  "settingsActions.account.nameTooLong": {
+    "source": "663b0cf48c2a",
+    "status": "machine"
+  },
+  "settingsActions.account.nameSpecialCharacters": {
+    "source": "131235effa50",
+    "status": "machine"
+  },
+  "settingsActions.account.profileSignedOut": {
+    "source": "cb9e9fd1ed34",
+    "status": "machine"
+  },
+  "settingsActions.account.uploadsUnavailable": {
+    "source": "5407c76b33a1",
+    "status": "machine"
+  },
+  "settingsActions.account.pictureMissing": {
+    "source": "e8c63d0348a3",
+    "status": "machine"
+  },
+  "settingsActions.account.pictureTooLarge": {
+    "source": "77ba27cca03f",
+    "status": "machine"
+  },
+  "settingsActions.account.pictureType": {
+    "source": "a0e80a7db53c",
+    "status": "machine"
+  },
+  "settingsActions.account.methodsSignedOut": {
+    "source": "54cdfe3a08df",
+    "status": "machine"
+  },
+  "settingsActions.account.linkUnavailable": {
+    "source": "6969c39b3ffc",
+    "status": "machine"
+  },
+  "settingsActions.account.unlinkBlocked.notFound": {
+    "source": "8dc3eeb4d853",
+    "status": "machine"
+  },
+  "settingsActions.account.unlinkBlocked.unsupported": {
+    "source": "c7d302318a4d",
+    "status": "machine"
+  },
+  "settingsActions.account.sessionsSignedOut": {
+    "source": "7786baa84406",
+    "status": "machine"
+  },
+  "settingsActions.account.thisDevice": {
+    "source": "9436d22156ca",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.signedOut": {
+    "source": "c570c169d0f3",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.alreadyOn": {
+    "source": "8e567424d19e",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.notOn": {
+    "source": "46ef4bbf21ba",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.appAlreadySetUp": {
+    "source": "8cdee0310412",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.noApp": {
+    "source": "b261f2ba0809",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.noPasskey": {
+    "source": "e9e6388cf1b0",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.restart": {
+    "source": "3200b1611bcf",
+    "status": "machine"
+  },
+  "settingsActions.twoFactor.rateLimitedLong": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.reauth": {
+    "source": "d0a3d1d3b4a2",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.sameEmail": {
+    "source": "8e3914536155",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.invalidEmail": {
+    "source": "8a966af884a0",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.invalidCode": {
+    "source": "6fcbaa8c8395",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.rateLimited": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.codeRateLimited": {
+    "source": "8f0b7a35cf62",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.notSent": {
+    "source": "b19037a8d4ff",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.codeDidntWork": {
+    "source": "c485cddda2ad",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.taken": {
+    "source": "6df15e03f233",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.signedOut": {
+    "source": "ec58095c7f11",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.unavailable": {
+    "source": "d4e839333954",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.ssoOff": {
+    "source": "7c0dd7e0dac7",
+    "status": "machine"
+  },
+  "settingsActions.emailChange.ssoOnto": {
+    "source": "8294be1df7ad",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.typeToConfirm": {
+    "source": "b8426e7e9629",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.signedOut": {
+    "source": "fb6936316037",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.rateLimited": {
+    "source": "6a2d7e54b897",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.failed": {
+    "source": "a90c8da677ba",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.subscriptionNotCancelled": {
+    "source": "a66bd5c7379c",
+    "status": "machine"
+  },
+  "settingsActions.deleteAccount.ownerNotMade": {
+    "source": "c3e5a3e6761a",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.notReady": {
+    "source": "a2ff5d36bc17",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.signedOut": {
+    "source": "73c27c81d398",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.paypalEmailInvalid": {
+    "source": "f8f497dc8e2f",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.paypalEmailMissing": {
+    "source": "3d8fe4c46ff6",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.paypalNotApproved": {
+    "source": "e6975845e975",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.codeUnchanged": {
+    "source": "12afefb98761",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.codeNotApproved": {
+    "source": "3844f75e6506",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.format": {
+    "source": "cff370674eeb",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.reserved": {
+    "source": "1608dbd63459",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.email": {
+    "source": "7ab29a35cab9",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.taken": {
+    "source": "e6c16f40e8d9",
+    "status": "machine"
+  },
+  "settingsActions.affiliate.chosenCode.alreadyChanged": {
+    "source": "b05e2c558111",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.tooShort": {
+    "source": "04adffdbe53e",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.tooLong": {
+    "source": "d43bcf93f425",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.noSpaces": {
+    "source": "dec54101479f",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.storeDomainMissing": {
+    "source": "56efd120388a",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.stripeSecretKey": {
+    "source": "ee55ff100e7f",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.stripeRestrictedKey": {
+    "source": "407d2218463c",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.calcomKey": {
+    "source": "cb2f0c1af072",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.shopifyCredentials": {
+    "source": "349d08370a42",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.signedOut": {
+    "source": "acac47dc5ae2",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.checkDetails": {
+    "source": "f8d3eacd088e",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.notAccepted": {
+    "source": "2ca0b46b0be2",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.stripeForbidden": {
+    "source": "8972db143eb9",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.shopifyForbidden": {
+    "source": "911ff369bd10",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.forbidden": {
+    "source": "c9c73c052ca6",
+    "status": "machine"
+  },
+  "settingsActions.dataConnections.unreachable": {
+    "source": "9870f957f4d7",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyTooShort": {
+    "source": "950ac5280e9a",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyTooLong": {
+    "source": "733cf9809653",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyNoSpaces": {
+    "source": "a84f88dce096",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.signedOut": {
+    "source": "acac47dc5ae2",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.checkKey": {
+    "source": "7e751a81bfdc",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.notConfigured": {
+    "source": "f4c8e8dad64b",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.keyRejected": {
+    "source": "046c1fa89bba",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.unreachable": {
+    "source": "9870f957f4d7",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.domainSignedOut": {
+    "source": "1ba0ae88fee7",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.pickDomain": {
+    "source": "6e353649cba2",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.connectFirst": {
+    "source": "6e59f9431577",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.domainNotFound": {
+    "source": "59a4e69f234d",
+    "status": "machine"
+  },
+  "settingsActions.connectedAccounts.domainNotSaved": {
+    "source": "c7f08aa3513a",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.unavailable": {
+    "source": "a3a7e3dd36ad",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.signedOut": {
+    "source": "034b4c5a9594",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.notAvailableYet": {
+    "source": "26dd7852da78",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.rateLimited": {
+    "source": "2d81c14ad5fa",
+    "status": "machine"
+  },
+  "settingsActions.slackBot.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.oauthApps.signedOut": {
+    "source": "02c9462797ad",
+    "status": "machine"
+  },
+  "settingsActions.oauthApps.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.oauthApps.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.signedOut": {
+    "source": "db9390b03a67",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.unavailable": {
+    "source": "0b95bdef8470",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.apiKeys.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.signedOut": {
+    "source": "c806355c3f90",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.notAvailableYet": {
+    "source": "26dd7852da78",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.rateLimited": {
+    "source": "2d81c14ad5fa",
+    "status": "machine"
+  },
+  "settingsActions.slackLinks.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.authorizedApps.signedOut": {
+    "source": "5abc61c8498d",
+    "status": "machine"
+  },
+  "settingsActions.authorizedApps.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.authorizedApps.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.notifications.signedOut": {
+    "source": "8159bac1df6e",
+    "status": "machine"
+  },
+  "settingsActions.notifications.webhookUrlMissing": {
+    "source": "3676f78d65b7",
+    "status": "machine"
+  },
+  "settingsActions.notifications.rateLimited": {
+    "source": "9f646f4ab678",
+    "status": "machine"
+  },
+  "settingsActions.notifications.failed": {
+    "source": "3ccd9d6586ef",
     "status": "machine"
   },
   "codeBuilder.builderOptions.on": {
