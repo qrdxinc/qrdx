@@ -376,6 +376,10 @@ describe("links to the site's pages", () => {
       "/pricing",
       "/templates",
       "/integrations/zapier",
+      // The home page, at either address (the home group).
+      "/",
+      "/?ref=x",
+      "/home",
     ]) {
       expect(await render(href, { prefetch: false })).toBe(
         `<a href="${href}">x</a>`,
@@ -386,6 +390,9 @@ describe("links to the site's pages", () => {
   it("leave neighbouring pages to next/link", async () => {
     expect(await render("/customers")).toContain("data-next-link");
     expect(await render("/blogx")).toContain("data-next-link");
+    // The home group is / and /home exactly.
+    expect(await render("/homepage")).toContain("data-next-link");
+    expect(await render("/home/x")).toContain("data-next-link");
     // The templates' own pages and Slack's linking page stay in this app.
     expect(await render("/templates/wifi")).toContain("data-next-link");
     expect(await render("/integrations/slack/link")).toContain(
@@ -405,6 +412,25 @@ describe("links to the site's pages", () => {
       const anchors = siteAnchors(renderHindi(node));
       expect(anchors.length, name).toBeGreaterThan(0);
       for (const tag of anchors) {
+        expect(tag, `${name}: ${tag}`).not.toContain("data-next-link");
+      }
+    }
+  });
+
+  it("hold for the logo, which links to the home page's /home", async () => {
+    const { Navbar } = await import("@/components/sections/navbar");
+    const { FooterSection } = await import(
+      "@/components/sections/footer-section"
+    );
+    for (const [name, node] of [
+      ["navbar", <Navbar key="navbar" />],
+      ["footer", <FooterSection key="footer" />],
+    ] as const) {
+      const logos = [...renderHindi(node).matchAll(/<a\b[^>]*>/g)]
+        .map((match) => match[0])
+        .filter((tag) => /\bhref="\/home"/.test(tag));
+      expect(logos.length, name).toBeGreaterThan(0);
+      for (const tag of logos) {
         expect(tag, `${name}: ${tag}`).not.toContain("data-next-link");
       }
     }

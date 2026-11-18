@@ -94,7 +94,7 @@ export function PublicStatsShell({
             <span className="truncate">{brand.name}</span>
           </span>
         ) : (
-          <Link
+          <a
             aria-label="QRdx home"
             className="flex items-center gap-2 text-sm font-semibold"
             href="/"
@@ -103,7 +103,7 @@ export function PublicStatsShell({
               <QrdxLogo />
             </span>
             QRdx
-          </Link>
+          </a>
         )}
         <span className="text-muted-foreground shrink-0 text-xs">
           {brand ? "Scan report" : "Public scan analytics"}
@@ -297,12 +297,12 @@ export function PublicStatsView({
         {!hideQrdx && (
           <span>
             Made with{" "}
-            <Link
+            <a
               className="text-foreground underline-offset-4 hover:underline"
               href="/"
             >
               QRdx
-            </Link>
+            </a>
           </span>
         )}
       </footer>

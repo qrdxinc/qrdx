@@ -7,6 +7,7 @@
 // zone key on exactly the proxied requests.
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { LOCALE_INFO, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import { docsZoneRewrites } from "@repo/i18n/docs";
 import {
   CONSOLE_ASSET_PREFIX,
@@ -73,17 +74,22 @@ const BLOG_DIR = path.resolve(
 
 interface ProxySession {
   lookups: number;
+  /** Whether a lookup finds a session (the home page's redirect reads it). */
+  signedIn?: boolean;
 }
 
 /**
  * What proxy.ts reads besides the request: the session and custom domains.
- * The site's paths are public, so neither should ever be looked up.
+ * The site's paths are public, so neither should ever be looked up (the
+ * home page alone looks up a session cookie's session, for its redirect).
  */
 function mockProxyDependencies(session: ProxySession) {
   vi.doMock("@/lib/account/session-origin-server", () => ({
     getSessionAllowingHold: async () => {
       session.lookups++;
-      return null;
+      return session.signedIn
+        ? { session: { id: "s" }, user: { id: "u" } }
+        : null;
     },
     isSessionHeld: async () => false,
   }));
@@ -192,6 +198,8 @@ describe("siteZoneRewrites", () => {
       "/templates",
       "/templates/:p1(opengraph-image[^/.]*)",
       "/templates/:p1(twitter-image[^/.]*)",
+      "/",
+      "/home",
       "/site-static/:path*",
     ]);
     // A path's parameters go on as they came, without their patterns.
@@ -202,6 +210,57 @@ describe("siteZoneRewrites", () => {
     expect(
       rules.find((rule) => rule.source === "/templates")?.destination,
     ).toBe(`${ORIGIN}/templates`);
+  });
+
+  it("proxies the home page at / and /home, those two paths alone", () => {
+    expect(
+      siteZoneRewrites(ORIGIN, { hosts: HOSTS, groups: ["home"] }),
+    ).toEqual([
+      { source: "/", destination: `${ORIGIN}/`, has },
+      { source: "/home", destination: `${ORIGIN}/home`, has },
+      {
+        source: "/site-static/:path*",
+        destination: `${ORIGIN}/site-static/:path*`,
+        has,
+      },
+    ]);
+  });
+
+  it("gives / exactly one rule, and no rule reaches every path", () => {
+    const rules = siteZoneRewrites(ORIGIN, { hosts: HOSTS });
+    expect(rules.filter((rule) => rule.source === "/")).toEqual([
+      { source: "/", destination: `${ORIGIN}/`, has },
+    ]);
+    // Next's own matching (strict, without regard to case): none of these
+    // belongs to a group, so no source may match one.
+    const unclaimed = [
+      "/x",
+      "/a/b",
+      "/a/b/c",
+      "/home/x",
+      "/homepage",
+      "/home.md",
+      "/index.md",
+      "/opengraph-image",
+      "/opengraph-image-1a2b3c",
+      "/twitter-image-1a2b3c",
+      "/favicon.ico",
+      "/robots.txt",
+      "/sitemap.xml",
+      "/dashboard",
+      "/playground",
+      "/q/x",
+    ];
+    for (const rule of rules) {
+      const match = getPathMatch(rule.source, {
+        strict: true,
+        removeUnnamedParams: true,
+        regexModifier: (regex: string) => modifyRouteRegex(regex),
+      });
+      for (const pathname of unclaimed) {
+        expect(match(pathname), `${rule.source} vs ${pathname}`).toBe(false);
+      }
+    }
   });
 
   it("uses the origin alone, whatever else the value has", () => {
@@ -347,13 +406,46 @@ describe("site paths", () => {
     ["/templates", "templates"],
     ["/templates/opengraph-image-1r9j8v", "templates"],
     ["/TEMPLATES", "templates"],
+    ["/", "home"],
+    ["/home", "home"],
+    ["/HOME", "home"],
+    ["/Home", "home"],
   ])("%s is the site's %s group", (pathname, group) => {
     expect(siteGroup(pathname)).toBe(group);
     expect(isSitePath(pathname)).toBe(true);
   });
 
   it.each([
-    "/",
+    // The home group is / and /home exactly. Everything else at the root
+    // stays here: the default social images every page without its own
+    // uses, the icons, the manifest, robots.txt, the sitemap, the home
+    // page's Markdown. (/home/ never gets this far: Next sends it to /home.)
+    "/home/",
+    "/home/x",
+    "/homepage",
+    "/home.md",
+    "/HOME/x",
+    "/index.md",
+    "/opengraph-image",
+    "/opengraph-image-1a2b3c",
+    "/twitter-image",
+    "/twitter-image-1a2b3c",
+    "/favicon.ico",
+    "/favicon.svg",
+    "/favicon-96x96.png",
+    "/icon",
+    "/icon.svg",
+    "/apple-icon",
+    "/apple-touch-icon.png",
+    "/site.webmanifest",
+    "/manifest.webmanifest",
+    "/web-app-manifest-192x192.png",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/llms.txt",
+    "/en",
+    "/es",
+    "/es/home",
     "/blogx",
     "/blog.md",
     "/blo",
@@ -389,11 +481,26 @@ describe("site paths", () => {
       "/pricing?plan=pro",
       "/templates#gallery",
       "/integrations/zapier",
+      "/",
+      "/?ref=x",
+      "/#features",
+      "/home",
+      "/home?ref=logo",
     ]) {
       expect(isSitePagePath(href), href).toBe(true);
     }
     for (const href of [
-      "/",
+      "",
+      "?ref=x",
+      "#top",
+      "/home/x",
+      "/homepage",
+      "/home.md",
+      "/index.md",
+      "/opengraph-image",
+      "/favicon.ico",
+      "https://qrdx.dev/",
+      "//qrdx.dev/",
       "/blogx",
       "/blog.md",
       "/customers",
@@ -418,6 +525,12 @@ describe("site paths", () => {
     expect(isSitePath("/blog", ["blog"])).toBe(true);
     expect(siteGroup("/blog", [])).toBeNull();
     expect(isSitePath("/blog", [])).toBe(false);
+    // The home page moves with its own group only.
+    for (const pathname of ["/", "/home"]) {
+      expect(isSitePath(pathname, ["home"]), pathname).toBe(true);
+      expect(isSitePath(pathname, ["blog", "pricing"]), pathname).toBe(false);
+      expect(siteGroup(pathname, ["blog"]), pathname).toBeNull();
+    }
     // No group on, no rewrites: the assets aren't proxied either.
     expect(isSitePath("/site-static/x.js", [])).toBe(false);
   });
@@ -436,11 +549,19 @@ describe("lowerCasedSitePrefix (proxy.ts)", () => {
       "/INTEGRATIONS/Slack/OpenGraph-Image-AbC",
       "/integrations/Slack/opengraph-image-AbC",
     ],
+    ["/HOME", "/home"],
+    ["/Home", "/home"],
   ])("sends %s to %s", (pathname, expected) => {
     expect(lowerCasedSitePrefix(pathname)).toBe(expected);
   });
 
   it.each([
+    "/home",
+    "/HOME/x",
+    "/Homepage",
+    "/HOME.md",
+    "/Index.md",
+    "/OpenGraph-Image",
     "/blog",
     "/blog/X",
     "/site-static/x.js",
@@ -466,10 +587,11 @@ describe("the groups and this app's own paths", () => {
       if (typeof entry === "string") {
         expect(entry, entry).toMatch(/^\/(?:[a-z0-9-]+(?:\/[a-z0-9-]+)*)?$/);
       } else {
-        // A literal first segment (proxy.ts's matcher lists it), then
-        // literals, `*`, or literals ending in `*`.
+        // The root alone, or a literal first segment (proxy.ts's matcher
+        // lists it), then literals, `*`, or literals ending in `*`: never
+        // a wildcard first, which would reach this app's every page.
         expect(entry.path, entry.path).toMatch(
-          /^\/[a-z0-9-]+(?:\/(?:[a-z0-9-]+\*?|\*))*$/,
+          /^\/(?:[a-z0-9-]+(?:\/(?:[a-z0-9-]+\*?|\*))*)?$/,
         );
       }
     }
@@ -589,6 +711,7 @@ describe("next.config.ts", () => {
   let off: NextConfig;
   let on: NextConfig;
   let all: NextConfig;
+  let home: NextConfig;
   let warned: string[];
 
   beforeAll(async () => {
@@ -596,6 +719,11 @@ describe("next.config.ts", () => {
     off = await loadConfig({});
     on = await loadConfig({ SITE_ORIGIN: `${ORIGIN}/`, SITE_ZONE_KEY: KEY });
     expect(warn).not.toHaveBeenCalled();
+    home = await loadConfig({
+      SITE_ORIGIN: ORIGIN,
+      SITE_ZONE_KEY: KEY,
+      SITE_ZONE_GROUPS: "home",
+    });
     all = await loadConfig({
       SITE_ORIGIN: ORIGIN,
       SITE_ZONE_KEY: KEY,
@@ -638,9 +766,33 @@ describe("next.config.ts", () => {
   }
 
   const CORE = [
-    "/",
     "/pricing.md",
     "/index.md",
+    // The home group is / and /home exactly: the root's images, icons and
+    // files stay here (the default social image of every page without its
+    // own is this app's).
+    "/home/x",
+    "/home.md",
+    "/homepage",
+    "/HOMEPAGE",
+    "/opengraph-image",
+    "/opengraph-image-1a2b3c",
+    "/opengraph-image-1a2b3c?abc",
+    "/twitter-image",
+    "/twitter-image-1a2b3c",
+    "/favicon.ico",
+    "/favicon.svg",
+    "/favicon-96x96.png",
+    "/icon",
+    "/apple-icon",
+    "/apple-touch-icon.png",
+    "/site.webmanifest",
+    "/manifest.webmanifest",
+    "/web-app-manifest-192x192.png",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/llms.txt",
+    "/logo.png",
     "/blogx",
     "/blog.md",
     "/customers",
@@ -778,8 +930,8 @@ describe("next.config.ts", () => {
       }
     }
     // With every group on, /pricing's page is the site's, but an agent
-    // asking for Markdown still gets this app's; so does / (the home page
-    // isn't a group yet).
+    // asking for Markdown still gets this app's; so does / with the home
+    // group on (alone or with every other group).
     expect(
       getRewrittenUrl(
         await resolve(on, "https://qrdx.dev/pricing", {
@@ -790,11 +942,117 @@ describe("next.config.ts", () => {
     expect(
       await siteTarget(on, "https://qrdx.dev/pricing", { accept: "text/html" }),
     ).toBe(`${ORIGIN}/pricing`);
-    expect(
-      getRewrittenUrl(
-        await resolve(on, "https://qrdx.dev/", { accept: "text/markdown" }),
-      ),
-    ).toBe("https://qrdx.dev/index.md");
+    for (const nextConfig of [on, home]) {
+      expect(
+        getRewrittenUrl(
+          await resolve(nextConfig, "https://qrdx.dev/", {
+            accept: "text/markdown",
+          }),
+        ),
+      ).toBe("https://qrdx.dev/index.md");
+      expect(
+        getRewrittenUrl(
+          await resolve(nextConfig, "https://qrdx.dev/", {
+            accept: "text/html, text/markdown;q=0.9",
+          }),
+        ),
+      ).toBe("https://qrdx.dev/index.md");
+      expect(
+        await siteTarget(nextConfig, "https://qrdx.dev/", {
+          accept: "text/html",
+        }),
+      ).toBe(`${ORIGIN}/`);
+      // The Markdown file itself is this app's, whoever asks.
+      expect(await siteTarget(nextConfig, "https://qrdx.dev/index.md")).toBe(
+        null,
+      );
+    }
+  });
+
+  describe("the home group", () => {
+    it.each([
+      ["/", "/"],
+      ["/?ref=x", "/?ref=x"],
+      ["/?a=1&b=two", "/?a=1&b=two"],
+      ["/home", "/home"],
+      ["/home?ref=logo", "/home?ref=logo"],
+    ])("sends %s to the site's %s, query kept", async (url, target) => {
+      for (const nextConfig of [on, home]) {
+        expect(await siteTarget(nextConfig, `https://qrdx.dev${url}`)).toBe(
+          `${ORIGIN}${target}`,
+        );
+      }
+    });
+
+    it("keeps the home page here while the group is off: /home is this app's /en", async () => {
+      // `all` names the blog alone; `off` has no site.
+      for (const nextConfig of [off, all]) {
+        expect(await siteTarget(nextConfig, "https://qrdx.dev/")).toBeNull();
+        const atHome = await resolve(nextConfig, "https://qrdx.dev/home");
+        expect(getRedirectUrl(atHome)).toBeNull();
+        expect(getRewrittenUrl(atHome)).toBe("https://qrdx.dev/en");
+      }
+    });
+
+    it("never redirects /home, and lists the site's rule ahead of this app's", async () => {
+      const rules = await beforeFiles(home);
+      const site = rules.findIndex(
+        (rule) => rule.source === "/home" && onSite(rule.destination),
+      );
+      const core = rules.findIndex(
+        (rule) => rule.source === "/home" && rule.destination === "/en",
+      );
+      expect(site).toBeGreaterThan(-1);
+      expect(core).toBeGreaterThan(site);
+      const response = await resolve(home, "https://qrdx.dev/home");
+      expect(response.status).not.toBe(307);
+      expect(response.status).not.toBe(308);
+      expect(getRedirectUrl(response)).toBeNull();
+    });
+
+    it("sends /home/ to /home first, as every page", async () => {
+      const response = await resolve(home, "https://qrdx.dev/home/");
+      expect(response.status).toBe(308);
+      expect(getRedirectUrl(response)).toBe("https://qrdx.dev/home");
+    });
+
+    it.each(TRANSLATED_LOCALES.map((locale) => LOCALE_INFO[locale].segment))(
+      "still redirects /%s to /, and its /home to /home",
+      async (segment) => {
+        for (const nextConfig of [on, home]) {
+          const root = await resolve(nextConfig, `https://qrdx.dev/${segment}`);
+          expect(root.status).toBe(307);
+          expect(getRedirectUrl(root)).toBe("https://qrdx.dev/");
+          const atHome = await resolve(
+            nextConfig,
+            `https://qrdx.dev/${segment}/home`,
+          );
+          expect(atHome.status).toBe(307);
+          expect(getRedirectUrl(atHome)).toBe("https://qrdx.dev/home");
+        }
+      },
+    );
+
+    it("keeps the query through the language redirect", async () => {
+      const response = await resolve(home, "https://qrdx.dev/es?ref=x");
+      expect(response.status).toBe(307);
+      expect(getRedirectUrl(response)).toBe("https://qrdx.dev/?ref=x");
+    });
+
+    it("keeps /en and /en/home's permanent redirects", async () => {
+      for (const [path, location] of [
+        ["/en", "https://qrdx.dev/"],
+        ["/en/home", "https://qrdx.dev/home"],
+      ] as const) {
+        const response = await resolve(home, `https://qrdx.dev${path}`);
+        expect(response.status, path).toBe(308);
+        expect(getRedirectUrl(response), path).toBe(location);
+      }
+    });
+
+    it.each(CORE)("never sends %s to the site", async (pathname) => {
+      expect(await siteTarget(home, `https://qrdx.dev${pathname}`)).toBeNull();
+    });
   });
 
   it("sends /blog as /blog, never /blog/ (a zone's slash redirect would loop)", async () => {
@@ -902,6 +1160,10 @@ describe("next.config.ts", () => {
       "/templates/OpenGraph-Image-1r9j8v",
       "/Integrations/Slack",
       "/integrations/slack/OpenGraph-Image-1ulwde",
+      "/",
+      "/home",
+      "/HOME",
+      "/Home",
     ];
 
     it.each(CASINGS)(
@@ -912,14 +1174,34 @@ describe("next.config.ts", () => {
       },
     );
 
+    /** A path each SitePath covers: its wildcards filled in. */
+    const sampleOf = (path: string) =>
+      path
+        .split("/")
+        .map((segment) =>
+          segment === "*"
+            ? "x"
+            : segment.endsWith("*")
+              ? `${segment.slice(0, -1)}-1a`
+              : segment,
+        )
+        .join("/") || "/";
+
     it("covers every prefix and path of every group, on or off", () => {
       const prefixes = siteMatcherPrefixes();
       expect(prefixes).toContain(SITE_ASSET_PREFIX);
+      // The root has no prefix to list: proxy.ts matches "/" itself.
+      expect(prefixes).not.toContain("/");
       for (const entry of SITE_ENTRIES) {
         const first = `/${entryPath(entry).split("/")[1]}`;
+        if (first === "/") continue;
         expect(prefixes, entryPath(entry)).toContain(first);
       }
-      for (const prefix of prefixes) {
+      // A prefix's page and everything under it.
+      for (const prefix of [
+        ...SITE_ENTRIES.filter((entry) => typeof entry === "string"),
+        SITE_ASSET_PREFIX,
+      ]) {
         for (const casing of [prefix, prefix.toUpperCase()]) {
           expect(proxyMatches(casing), casing).toBe(true);
           expect(proxyMatches(`${casing}/x`), casing).toBe(true);
@@ -928,11 +1210,28 @@ describe("next.config.ts", () => {
           );
         }
       }
+      // A path itself, in any case.
+      for (const entry of SITE_ENTRIES) {
+        if (typeof entry === "string") continue;
+        const sample = sampleOf(entry.path);
+        expect(siteGroup(sample), sample).not.toBeNull();
+        for (const casing of [sample, sample.toUpperCase()]) {
+          expect(proxyMatches(casing), casing).toBe(true);
+        }
+      }
     });
 
     it("never rewrites other paths, in any case", async () => {
       for (const pathname of [
-        "/",
+        // (/home/ would match, as /blog/ does: the trailing-slash redirect
+        // sends it to /home first, before any rewrite or the proxy.)
+        "/HOME/x",
+        "/Homepage",
+        "/HOME.md",
+        "/Index.md",
+        "/OpenGraph-Image-1a2b3c",
+        "/Twitter-Image",
+        "/Favicon.ico",
         "/BLOGX",
         "/Blog.md",
         "/x/blog",
@@ -1016,10 +1315,16 @@ describe("proxy.ts", () => {
   let onWithoutKey: (request: NextRequest) => Promise<Response>;
   let off: (request: NextRequest) => Promise<Response>;
   let both: (request: NextRequest) => Promise<Response>;
+  let home: (request: NextRequest) => Promise<Response>;
 
   beforeAll(async () => {
     off = await loadProxy({});
     onWithoutKey = await loadProxy({ SITE_ORIGIN: ORIGIN });
+    home = await loadProxy({
+      SITE_ORIGIN: ORIGIN,
+      SITE_ZONE_KEY: KEY,
+      SITE_ZONE_GROUPS: "home",
+    });
     both = await loadProxy({
       SITE_ORIGIN: ORIGIN,
       SITE_ZONE_KEY: KEY,
@@ -1269,5 +1574,110 @@ describe("proxy.ts", () => {
       }
     }
     expect(session.lookups).toBe(0);
+  });
+
+  describe("the home group", () => {
+    const SESSION = "__Secure-better-auth.session_token=abc.def";
+
+    afterAll(() => {
+      session.signedIn = false;
+    });
+
+    it("sends a signed-in visitor on / to the dashboard before the site sees the request", async () => {
+      session.signedIn = true;
+      for (const proxy of [home, on, both, off]) {
+        const response = await proxy(
+          request("https://qrdx.dev/", { cookie: SESSION }),
+        );
+        expect(response.status).toBe(307);
+        expect(response.headers.get("location")).toBe(
+          "https://qrdx.dev/dashboard",
+        );
+        expect(forwarded(response)(SITE_KEY_HEADER)).toBeUndefined();
+      }
+      session.signedIn = false;
+    });
+
+    it("gives everyone else on / the site's key, with no session lookup", async () => {
+      session.signedIn = false;
+      session.lookups = 0;
+      for (const url of ["https://qrdx.dev/", "https://qrdx.dev/?ref=x"]) {
+        const response = await home(
+          request(url, { [SITE_KEY_HEADER]: "forged", cookie: "theme=dark" }),
+        );
+        expect(response.status, url).toBe(200);
+        expect(response.headers.get("location"), url).toBeNull();
+        expect(forwarded(response)(SITE_KEY_HEADER), url).toBe(KEY);
+      }
+      expect(session.lookups).toBe(0);
+    });
+
+    it("gives a stale session cookie on / the site's page", async () => {
+      session.signedIn = false;
+      session.lookups = 0;
+      const response = await home(
+        request("https://qrdx.dev/", { cookie: SESSION }),
+      );
+      expect(session.lookups).toBe(1);
+      expect(response.headers.get("location")).toBeNull();
+      expect(forwarded(response)(SITE_KEY_HEADER)).toBe(KEY);
+    });
+
+    it("never redirects /home, signed in or not: it goes to the site", async () => {
+      session.signedIn = true;
+      session.lookups = 0;
+      for (const cookie of [SESSION, "theme=dark"]) {
+        const response = await home(
+          request("https://qrdx.dev/home", { cookie }),
+        );
+        expect(response.status, cookie).toBe(200);
+        expect(response.headers.get("location"), cookie).toBeNull();
+        expect(forwarded(response)(SITE_KEY_HEADER), cookie).toBe(KEY);
+      }
+      expect(session.lookups).toBe(0);
+      session.signedIn = false;
+    });
+
+    it("leaves / and /home to this app while the group is off", async () => {
+      for (const proxy of [both, off]) {
+        for (const pathname of ["/", "/home"]) {
+          const response = await proxy(request(`https://qrdx.dev${pathname}`));
+          expect(response.status, pathname).toBe(200);
+          expect(forwarded(response)(SITE_KEY_HEADER), pathname).toBe(
+            undefined,
+          );
+        }
+      }
+    });
+
+    it("never gives the site's key to the root's other paths", async () => {
+      for (const pathname of [
+        "/home/x",
+        "/homepage",
+        "/home.md",
+        "/index.md",
+        "/opengraph-image-1a2b3c",
+        "/twitter-image",
+        "/favicon.ico",
+        "/robots.txt",
+        "/sitemap.xml",
+      ]) {
+        const response = await home(request(`https://qrdx.dev${pathname}`));
+        expect(forwarded(response)(SITE_KEY_HEADER), pathname).toBe(undefined);
+      }
+    });
+
+    it.each([
+      ["/HOME", "/home"],
+      ["/Home?ref=x", "/home?ref=x"],
+    ])("sends %s to %s with a 308, in every mode", async (path, target) => {
+      for (const proxy of [home, on, both, off]) {
+        const response = await proxy(request(`https://qrdx.dev${path}`));
+        expect(response.status).toBe(308);
+        expect(response.headers.get("location")).toBe(
+          `https://qrdx.dev${target}`,
+        );
+      }
+    });
   });
 });

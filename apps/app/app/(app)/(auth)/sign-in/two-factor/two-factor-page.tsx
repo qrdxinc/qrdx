@@ -58,12 +58,12 @@ export function TwoFactorPage({
           )}
         </div>
       </div>
-      <Link
+      <a
         className="text-muted-foreground hover:text-foreground inline-flex min-h-10 items-center rounded-sm px-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         href="/"
       >
         {t("backToQrdx")}
-      </Link>
+      </a>
     </main>
   );
 }
