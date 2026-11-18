@@ -220,17 +220,29 @@ export function isSameLink(oldLink: string, newLink: string): boolean {
 }
 
 /** Old link → its QRdx link, for every item that has one (mapping CSV). */
-export function mappedItems(job: ImportJob): JobItem[] {
+export function mappedItems(job: Pick<ImportJob, "items">): JobItem[] {
   return job.items.filter(
     (item) => item.newLink && item.codeId && item.shortLink,
   );
 }
 
 /** Items whose old link can be re-pointed: mapped to a different QRdx link. */
-export function redirectTargets(job: ImportJob): JobItem[] {
+export function redirectTargets(job: Pick<ImportJob, "items">): JobItem[] {
   return mappedItems(job).filter(
     (item) => !isSameLink(item.shortLink as string, item.newLink as string),
   );
+}
+
+/**
+ * QRdx codes whose old printed link the provider didn't give, counted only
+ * when nothing else can be re-pointed: the redirect step would be empty, so
+ * the run step says why instead.
+ */
+export function missingOldLinks(job: Pick<ImportJob, "items">): number {
+  if (redirectTargets(job).length > 0) return 0;
+  return job.items.filter(
+    (item) => item.newLink && item.codeId && !item.shortLink,
+  ).length;
 }
 
 /** Items the next redirect request handles, and how many remain after it. */

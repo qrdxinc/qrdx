@@ -2,7 +2,8 @@
 // switch "in minutes", and for imported codes it covers the three cases that
 // decide whether printed codes need a reprint (own domain, still on the old
 // provider's domain, already stopped). The own-domain case shows only where
-// custom domains can be added.
+// custom domains can be added. Imports also get the switch offers (a switch
+// check from one old link, help with a big move), with no countdown.
 
 import { renderToStaticMarkup } from "react-dom/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -44,15 +45,33 @@ describe("compare pages: How to switch", () => {
     expect(html).not.toMatch(/in minutes/i);
     expect(html).toContain("On a domain you own");
     expect(html).toContain("No reprint");
-    expect(html).toContain(
-      'href="/docs/migrate#your-own-domain-go-yourbrand-com"',
-    );
+    expect(html).toContain('href="/docs/move-your-qr-domain"');
     expect(html).toContain("On Flowcode's domain");
     expect(html).toContain("If your codes have already stopped");
     expect(html).toContain("Reprint once");
     expect(html).toContain('href="/guarantee"');
     // Flowcode's folder download is documented, so the first step uses it.
     expect(html).toContain("Download URLs");
+  });
+
+  it("offers a switch check and help with a big move for imports", () => {
+    const html = render("bitly-qr", "Bitly");
+    expect(html).toContain("Send one of your old QR links");
+    expect(html).toContain('href="mailto:support@qrdx.dev"');
+    expect(html).toContain("Moving many codes or your own domain?");
+    expect(html).toContain("We do the move with you.");
+    expect(html).toContain('href="/docs/migrate#free-help-with-your-move"');
+    // No cap, countdown or urgency in the offer.
+    const offer = html.match(/Not sure which way fits\?.*?<\/p>/)?.[0] ?? "";
+    expect(offer).toContain("support@qrdx.dev");
+    expect(offer).not.toMatch(
+      /\b(only|left|spots?|hurry|limited|first \d+)\b/i,
+    );
+
+    state.customDomains = false;
+    expect(render("uniqode", "Uniqode")).toContain(
+      "Moving many codes? We do the move with you.",
+    );
   });
 
   it("leaves out the own-domain case where custom domains can't be added", () => {
@@ -72,6 +91,33 @@ describe("compare pages: How to switch", () => {
       expect(html).toContain("Printed codes");
       expect(html).not.toContain("If your codes have already stopped");
       expect(html).not.toContain("On a domain you own");
+      expect(html).not.toContain("free-help-with-your-move");
     }
+  });
+
+  it("adds the link shapes seen on customers' own domains, only where seen", () => {
+    expect(render("uniqode", "Uniqode")).toContain(
+      "we've seen Uniqode codes like /aB3xYz",
+    );
+    expect(render("bitly-qr", "Bitly")).toContain("ignores the ?r=qr");
+    expect(render("hovercode", "Hovercode")).toContain(
+      "we've seen Hovercode codes",
+    );
+    const flowcode = render("flowcode", "Flowcode");
+    expect(flowcode).toContain("/r/aB3x");
+    expect(flowcode).toContain('href="/docs/migrate#path-aliases"');
+    // Unconfirmed on customers' domains: the general case only.
+    for (const [slug, name] of [
+      ["scanova", "Scanova"],
+      ["qr-tiger", "QR TIGER"],
+      ["me-qr", "ME-QR"],
+    ] as const) {
+      const html = render(slug, name);
+      expect(html).toContain("On a domain you own");
+      expect(html).not.toContain("we've seen");
+    }
+
+    state.customDomains = false;
+    expect(render("uniqode", "Uniqode")).not.toContain("we've seen");
   });
 });

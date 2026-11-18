@@ -3,6 +3,7 @@
 import type { PickerItem, SharedLinkResult } from "@repo/integrations";
 import { CloudFilePicker } from "@repo/integrations/src/ui/cloud-file-picker";
 import { useCallback } from "react";
+import { BrandLoader } from "@/components/brand-loader";
 import {
   createShareLink,
   loadPickerPage,
@@ -70,6 +71,9 @@ export function CloudPickerDialog({
       description={DESCRIPTIONS[provider.slug]}
       emptyHint={EMPTY_HINTS[provider.slug]}
       load={load}
+      loadingIndicator={
+        <BrandLoader aria-hidden className="text-muted-foreground" size={24} />
+      }
       logoSrc={provider.logo}
       onOpenChange={onOpenChange}
       onPick={pick}

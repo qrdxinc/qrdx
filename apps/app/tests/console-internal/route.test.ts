@@ -2,11 +2,14 @@
 // (lib/console-internal/route.ts and actor.ts): off without a long enough
 // secret, a fresh and matching signature, each request id once, the admin
 // checked again against this app's database (role, verified email, no ban,
-// the named qrdx.dev session alive and theirs), and for strong endpoints the
+// the named qrdx.dev session alive and theirs, and the console sign-in's
+// grant when the call carries one), and for strong endpoints the
 // admin's own second factor and a recent strong confirmation by that session.
-// Then the rate limit per admin and endpoint, failing closed, and one log
-// line per signed request that never carries the secret, the signature,
-// headers, the body, an address or a database error's message.
+// Then the rate limit per admin and endpoint, failing closed (a
+// CONFIRMATION_REQUIRED refusal gives its count back), an "<action>.failed"
+// audit entry when the work fails unexpectedly, and one log line per signed
+// request that never carries the secret, the signature, headers, the body,
+// an address or a database error's message.
 //
 // The database is a scripted fake (a scripted Error makes that query fail);
 // the limiter counts in memory. Nothing connects anywhere.
@@ -29,6 +32,8 @@ const state = vi.hoisted(() => ({
   strongConfirmed: true,
   /** The rate limit store can't answer (the replay store still can). */
   limiterDown: false,
+  /** The store takes counts but can't give one back. */
+  refundDown: false,
   /** Calls counted so far, by limiter prefix and key. */
   counts: new Map<string, number>(),
   /** Every limiter created: its prefix, window and failClosed. */
@@ -67,12 +72,13 @@ const limits = vi.hoisted(() => {
     }) => {
       state.limiters.push({ ...limiter, prefix, failClosed });
       return {
-        limit: async (key: string) => {
-          if (state.limiterDown) {
+        // A negative rate gives counts back, as Upstash's refund does.
+        limit: async (key: string, rate = 1) => {
+          if (state.limiterDown || (rate < 0 && state.refundDown)) {
             throw new RateLimitUnavailableError("Upstash failed");
           }
           const id = `${prefix}|${key}`;
-          const used = (state.counts.get(id) ?? 0) + 1;
+          const used = (state.counts.get(id) ?? 0) + rate;
           state.counts.set(id, used);
           return {
             success: used <= limiter.tokens,
@@ -138,6 +144,7 @@ vi.mock("@repo/database", () => {
     database: { select: start("select") },
     user: table("user"),
     session: table("session"),
+    adminConsoleGrant: table("admin_console_grant"),
     oauthApp: table("oauth_app"),
     oauthToken: table("oauth_token"),
   };
@@ -147,6 +154,7 @@ vi.mock("drizzle-orm", () => ({
   and: (...args: unknown[]) => ({ op: "and", args }),
   eq: (left: unknown, right: unknown) => ({ op: "eq", left, right }),
   gt: (left: unknown, right: unknown) => ({ op: "gt", left, right }),
+  lte: (left: unknown, right: unknown) => ({ op: "lte", left, right }),
   isNull: (value: unknown) => ({ op: "isNull", value }),
 }));
 
@@ -163,6 +171,7 @@ const {
   TIMESTAMP_HEADER,
 } = await import("@/lib/console-internal/signature");
 const { HttpError } = await import("@/lib/http-error");
+const { grantHash } = await import("@/lib/admin-console/grants");
 // Drizzle's real query error (only "drizzle-orm" itself is faked above).
 const { DrizzleQueryError } = await import("drizzle-orm/errors");
 
@@ -267,8 +276,10 @@ beforeEach(() => {
   state.redisDown = false;
   state.redisMissing = false;
   state.limiterDown = false;
+  state.refundDown = false;
   state.counts.clear();
-  audit.writeAuditLog.mockClear();
+  audit.writeAuditLog.mockReset();
+  audit.writeAuditLog.mockResolvedValue(undefined);
   run.mockReset();
   run.mockResolvedValue({
     audit: { targetType: "user", targetId: "u_1", metadata: { a: 1 } },
@@ -482,6 +493,107 @@ describe("the actor", () => {
   });
 });
 
+describe("the console sign-in's grant", () => {
+  const GRANT = "g".repeat(43);
+  const WITH_GRANT = { ...ACTOR, grant: GRANT };
+  /**
+   * Scripts the actor check with a grant: the grant's row (its lookup starts
+   * first, as the check begins), then the user row and the session.
+   */
+  const checks = (
+    row: unknown,
+    grant: Record<string, unknown> | Error | null,
+  ) => {
+    state.results.push(grant instanceof Error ? grant : grant ? [grant] : []);
+    actorRows(row);
+  };
+  const minted = (overrides: Record<string, unknown> = {}) => ({
+    userId: "u_admin",
+    sessionId: "sess_admin",
+    expiresAt: new Date(Date.now() + 60_000),
+    ...overrides,
+  });
+
+  it("lets a call through with the grant minted for this admin and session, looked up by its hash", async () => {
+    checks(adminRow(), minted());
+    expect(
+      (await POST(signedRequest({ actor: WITH_GRANT, n: 1 }))).status,
+    ).toBe(200);
+    expect(run).toHaveBeenCalledTimes(1);
+    const lookup = state.calls.find(
+      (call) => call.table === "admin_console_grant",
+    );
+    expect(lookup?.steps.find(([step]) => step === "where")?.[1][0]).toEqual({
+      op: "eq",
+      left: "admin_console_grant.tokenHash",
+      right: grantHash(GRANT),
+    });
+    expect(JSON.stringify(state.calls)).not.toContain(GRANT);
+  });
+
+  it.each([
+    ["another admin's", minted({ userId: "u_other" })],
+    ["another session's", minted({ sessionId: "sess_other" })],
+    ["an expired", minted({ expiresAt: new Date(Date.now() - 1000) })],
+    ["an unknown", null],
+  ])(
+    "refuses %s grant with 403 grant_invalid, before the limit or the work",
+    async (_label, row) => {
+      checks(adminRow(), row);
+      const { status, body } = await answer(
+        await POST(signedRequest({ actor: WITH_GRANT, n: 1 })),
+      );
+      expect(status).toBe(403);
+      expect(body).toEqual({ ok: false, error: "grant_invalid" });
+      expect(state.counts.size).toBe(0);
+      expect(run).not.toHaveBeenCalled();
+    },
+  );
+
+  it("refuses any grant before its table exists: none was minted", async () => {
+    checks(
+      adminRow(),
+      Object.assign(
+        new Error('relation "admin_console_grant" does not exist'),
+        {
+          code: "42P01",
+        },
+      ),
+    );
+    expect(
+      (await answer(await POST(signedRequest({ actor: WITH_GRANT, n: 1 }))))
+        .body,
+    ).toEqual({ ok: false, error: "grant_invalid" });
+    expect(run).not.toHaveBeenCalled();
+  });
+
+  it("answers not_admin, not grant_invalid, for someone who isn't an admin", async () => {
+    checks(adminRow({ role: "user" }), null);
+    expect(
+      (await answer(await POST(signedRequest({ actor: WITH_GRANT, n: 1 }))))
+        .body,
+    ).toEqual({ ok: false, error: "not_admin" });
+  });
+
+  it("still lets a call without a grant through, and doesn't look one up", async () => {
+    actorRows(adminRow());
+    expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
+      200,
+    );
+    expect(
+      state.calls.some((call) => call.table === "admin_console_grant"),
+    ).toBe(false);
+  });
+
+  it("refuses a grant that can't be one as a bad request", async () => {
+    expect(
+      (await POST(signedRequest({ actor: { ...ACTOR, grant: "short" }, n: 1 })))
+        .status,
+    ).toBe(400);
+    expect(state.calls).toEqual([]);
+  });
+});
+
 describe("strong endpoints", () => {
   it("need the admin's own two-step verification", async () => {
     actorRows(adminRow({ twoFactorEnabled: false }));
@@ -599,7 +711,7 @@ describe("answers and the audit log", () => {
     );
   });
 
-  it("write nothing when nothing changed, or the work failed", async () => {
+  it("write nothing when nothing changed, or the work refused", async () => {
     run.mockResolvedValue(null);
     actorRows(adminRow());
     expect(
@@ -623,6 +735,128 @@ describe("answers and the audit log", () => {
       await unnamed(signedRequest({ actor: ACTOR })),
     );
     expect(status).toBe(500);
+    expect(audit.writeAuditLog).not.toHaveBeenCalled();
+  });
+
+  it("record a failed attempt when the work fails unexpectedly", async () => {
+    // Part of it may stand (a ban saved, then the sign-out failed).
+    run.mockRejectedValue(new Error("connection refused at 10.0.0.1"));
+    actorRows(adminRow());
+    expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
+      500,
+    );
+    expect(audit.writeAuditLog.mock.calls).toEqual([
+      [
+        {
+          actor: CHECKED,
+          action: "test.run.failed",
+          targetType: "test",
+          targetId: null,
+          metadata: {
+            ids: {},
+            reason: null,
+            error: { name: "Error" },
+            via: "console",
+          },
+        },
+      ],
+    ]);
+    expect(JSON.stringify(audit.writeAuditLog.mock.calls)).not.toContain(
+      "10.0.0.1",
+    );
+  });
+
+  it("put a failed attempt on the user the input names, with its ids and reason only", async () => {
+    const onUser = consoleInternalRoute({
+      action: "user.move",
+      schema: z.object({
+        userId: z.string(),
+        accountId: z.string(),
+        newEmail: z.string(),
+        reason: z.string(),
+      }),
+      run: async () => {
+        throw new DrizzleQueryError(
+          'update "user" set "email" = $1',
+          ["new.owner@example.com"],
+          Object.assign(new Error("Key (email)=(new.owner@example.com)"), {
+            code: "23505",
+          }),
+        );
+      },
+    });
+    actorRows(adminRow());
+    await onUser(
+      signedRequest({
+        actor: ACTOR,
+        userId: "u_target",
+        accountId: "acct_1",
+        newEmail: "new.owner@example.com",
+        reason: "Ticket 9",
+      }),
+    );
+    expect(audit.writeAuditLog).toHaveBeenCalledTimes(1);
+    expect(audit.writeAuditLog).toHaveBeenCalledWith({
+      actor: CHECKED,
+      action: "user.move.failed",
+      targetType: "user",
+      targetId: "u_target",
+      metadata: {
+        ids: { userId: "u_target", accountId: "acct_1" },
+        reason: "Ticket 9",
+        error: { name: "DrizzleQueryError", code: "23505" },
+        subjectUserId: "u_target",
+        via: "console",
+      },
+    });
+    expect(JSON.stringify(audit.writeAuditLog.mock.calls)).not.toContain(
+      "new.owner",
+    );
+  });
+
+  it("record a failed attempt when the entry itself can't be written", async () => {
+    audit.writeAuditLog.mockRejectedValueOnce(new Error("insert failed"));
+    actorRows(adminRow());
+    expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
+      500,
+    );
+    expect(
+      audit.writeAuditLog.mock.calls.map(([entry]) => entry.action),
+    ).toEqual(["test.run", "test.run.failed"]);
+  });
+
+  it("log one line when even the failed attempt can't be recorded", async () => {
+    audit.writeAuditLog.mockRejectedValue(
+      Object.assign(new Error("database is down"), { code: "57P01" }),
+    );
+    run.mockRejectedValue(new Error("boom"));
+    actorRows(adminRow());
+    expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
+      500,
+    );
+    const lines = logged.error.mock.calls.map(([line]) =>
+      JSON.parse(String(line)),
+    );
+    expect(lines).toContainEqual({
+      event: "admin.audit_failed",
+      action: "test.run.failed",
+      error: { name: "Error", code: "57P01" },
+    });
+    expect(allLines().join("\n")).not.toContain("database is down");
+  });
+
+  it("record no failed attempt for a refusal, a strong check or work that never started", async () => {
+    // A refusal the admin reads (thrown before any effect).
+    run.mockRejectedValue(new HttpError(400, "ADMIN_ACTION", "No"));
+    actorRows(adminRow());
+    await POST(signedRequest({ actor: ACTOR, n: 1 }));
+    // The strong check refused: the work never ran.
+    state.strongConfirmed = false;
+    actorRows(adminRow());
+    await POST(signedRequest({ actor: ACTOR, n: 2 }));
+    // The admin check failed before the work.
+    state.results.push(new Error("db down"), []);
+    await POST(signedRequest({ actor: ACTOR, n: 1 }));
     expect(audit.writeAuditLog).not.toHaveBeenCalled();
   });
 
@@ -799,6 +1033,68 @@ describe("rate limits", () => {
     expect(strongCheck).not.toHaveBeenCalled();
   });
 
+  it("give a CONFIRMATION_REQUIRED refusal's count back: nothing ran", async () => {
+    state.strongConfirmed = false;
+    // n: 2 needs the strong check here, before the work.
+    expect((await by(POST, ACTOR, { n: 2 })).status).toBe(403);
+    expect(state.counts.get("qrdx:console-internal|test.run:u_admin")).toBe(0);
+    // A strong check inside the work (an operation's requireStrong) too.
+    const inner = vi.fn(async () => {
+      throw new HttpError(
+        403,
+        "CONFIRMATION_REQUIRED",
+        "CONFIRMATION_REQUIRED",
+      );
+    });
+    const SENSITIVE_INNER = consoleInternalRoute({
+      action: "test.sensitive_inner",
+      schema: z.object({}),
+      limit: "sensitive",
+      run: inner,
+    });
+    for (let i = 0; i < 10; i++) {
+      expect((await by(SENSITIVE_INNER, ACTOR, {})).status).toBe(403);
+    }
+    expect(
+      state.counts.get(
+        "qrdx:console-internal-sensitive|test.sensitive_inner:u_admin",
+      ),
+    ).toBe(0);
+    // The five an hour are all still there once confirmed.
+    inner.mockResolvedValue(undefined as never);
+    for (let i = 0; i < 5; i++) {
+      expect((await by(SENSITIVE_INNER, ACTOR, {})).status).toBe(200);
+    }
+    expect((await by(SENSITIVE_INNER, ACTOR, {})).status).toBe(429);
+  });
+
+  it("keep counting every other refusal", async () => {
+    run.mockRejectedValue(new HttpError(400, "ADMIN_ACTION", "No"));
+    expect((await by(POST)).status).toBe(400);
+    run.mockRejectedValue(new Error("boom"));
+    expect((await by(POST)).status).toBe(500);
+    // No two-step verification on the admin's own account: not a round trip.
+    actorRows(adminRow({ twoFactorEnabled: false }));
+    expect((await POST(signedRequest({ actor: ACTOR, n: 2 }))).status).toBe(
+      400,
+    );
+    expect(state.counts.get("qrdx:console-internal|test.run:u_admin")).toBe(3);
+  });
+
+  it("still answer CONFIRMATION_REQUIRED when the count can't be given back", async () => {
+    state.strongConfirmed = false;
+    state.refundDown = true;
+    const response = await by(POST, ACTOR, { n: 2 });
+    expect(await response.json()).toEqual({
+      ok: false,
+      error: "CONFIRMATION_REQUIRED",
+    });
+    expect(state.counts.get("qrdx:console-internal|test.run:u_admin")).toBe(1);
+    expect(
+      logged.warn.mock.calls.map(([line]) => JSON.parse(String(line)).event),
+    ).toContain("rate_limit.refund_failed");
+  });
+
   it("answer 503 when the limit store can't answer, and do nothing", async () => {
     state.limiterDown = true;
     const response = await by(POST);
@@ -847,6 +1143,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 403,
       code: "confirmation_required",
     });
@@ -869,6 +1166,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 400,
       code: "admin_action",
     });
@@ -915,6 +1213,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status,
       code,
     });
@@ -942,10 +1241,36 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 503,
       code: "unavailable",
       reason: "rate_limit_store",
     });
+  });
+
+  it("says whether the call carried a grant, never the grant itself", async () => {
+    const grant = "g".repeat(43);
+    // The grant's lookup starts first, then the user row and the session.
+    state.results.push([
+      {
+        userId: "u_admin",
+        sessionId: "sess_admin",
+        expiresAt: new Date(Date.now() + 60_000),
+      },
+    ]);
+    actorRows(adminRow());
+    const request = signedRequest({ actor: { ...ACTOR, grant }, n: 1 });
+    expect((await POST(request)).status).toBe(200);
+    expect(onlyLine()).toEqual({
+      event: "console_internal.outcome",
+      path: PATH,
+      actorId: "u_admin",
+      grant: true,
+      status: 200,
+      code: "ok",
+    });
+    expect(allLines().join("\n")).not.toContain(grant);
+    expectNoSecrets(request);
   });
 
   it("is one info line for a success", async () => {
@@ -956,6 +1281,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 200,
       code: "ok",
     });
@@ -986,6 +1312,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
+      grant: false,
       status: 500,
       code: "failed",
       error: { name: "DrizzleQueryError", code: "57P01" },

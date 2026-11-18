@@ -137,6 +137,31 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)]
 );
 
+// The back-office console's grants (apps/app/lib/admin-console/grants.ts):
+// one per console sign-in, which the console keeps in that admin's own
+// session cookie and sends with every signed call to the app's internal
+// API, so a call proves which admin is at the console. Only the grant's
+// SHA-256 is stored. It goes with the qrdx.dev session it was made from,
+// and with its user. SQL: manual-sql/2026-11-18-console-grants.sql
+export const adminConsoleGrant = pgTable(
+  "admin_console_grant",
+  {
+    tokenHash: text("token_hash").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    sessionId: text("session_id")
+      .notNull()
+      .references(() => session.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").notNull(),
+    expiresAt: timestamp("expires_at").notNull(),
+  },
+  (table) => [
+    index("admin_console_grant_user_id_idx").on(table.userId),
+    index("admin_console_grant_session_id_idx").on(table.sessionId),
+  ]
+);
+
 // Sign-in security: two-step verification, passkeys and workspace SSO. Field
 // names match better-auth 1.7.14's twoFactor, @better-auth/passkey and
 // @better-auth/sso schemas; written only through those plugins.

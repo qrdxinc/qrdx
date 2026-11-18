@@ -2,7 +2,7 @@
 "use client";
 
 import { HairlineFigure } from "@repo/design-system/components/hairline/hairline";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { ModuleWave } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Card } from "@repo/design-system/components/ui/card";
 import { Skeleton } from "@repo/design-system/components/ui/skeleton";
@@ -254,7 +254,7 @@ export function CommunityThemesContent() {
 
           <div ref={sentinelRef} className="flex justify-center pt-4">
             {isFetchingNextPage && (
-              <ModuleOrbit
+              <ModuleWave
                 aria-hidden
                 className="size-6 text-muted-foreground"
               />

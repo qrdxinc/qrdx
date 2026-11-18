@@ -3,7 +3,10 @@
 import { CANONICAL_ORIGIN, MAX_LOGO_FILE_SIZE } from "@repo/config";
 import { toast } from "@repo/design-system";
 import { Tick, Close as X } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Collapsible,
@@ -645,7 +648,7 @@ function ArtScanScore({ art, style }: { art: QRArt; style: QRStyle }) {
                 {gradeLabels[result.grade]}
               </span>
               {checking && (
-                <ModuleOrbit
+                <FinderTrace
                   aria-hidden
                   className="text-muted-foreground size-3.5"
                 />
@@ -653,7 +656,7 @@ function ArtScanScore({ art, style }: { art: QRArt; style: QRStyle }) {
             </p>
           ) : (
             <p className="text-muted-foreground flex items-center gap-2 text-xs">
-              <ModuleOrbit aria-hidden className="size-3.5" />
+              <FinderTrace aria-hidden className="size-3.5" />
               {t("checking")}
             </p>
           )}

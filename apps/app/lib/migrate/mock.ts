@@ -69,6 +69,7 @@ const SHARED: Record<ApiProviderId, string> = {
   bitly: "bit.ly",
   rebrandly: "rebrand.ly",
   "short-io": "short.gy",
+  "uniqode-api": "qrcodes.pro",
 };
 const BRANDED = "go.example.com";
 
@@ -98,7 +99,9 @@ function mockLinks(provider: ApiProviderId): SourceLink[] {
         ? `${domain}/${backHalf}`
         : provider === "dub"
           ? `link_${fakeKey(index + 5)}`
-          : `lnk_${fakeKey(index + 9)}`;
+          : provider === "uniqode-api"
+            ? String(4_100_000 + index)
+            : `lnk_${fakeKey(index + 9)}`;
     const created = new Date(
       Date.UTC(2023, (index * 5) % 12, 1 + (index % 27)),
     );

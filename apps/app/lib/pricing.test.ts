@@ -112,6 +112,7 @@ describe("display helpers", () => {
 
   it("keeps the guarantee and the non-profit discount in one place", () => {
     assert.equal(pricing.MONEY_BACK_DAYS, 30);
+    assert.equal(pricing.SWITCHER_MONEY_BACK_DAYS, 60);
     assert.equal(pricing.NONPROFIT_DISCOUNT_PERCENT, 50);
   });
 

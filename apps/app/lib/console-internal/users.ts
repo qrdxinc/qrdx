@@ -30,9 +30,10 @@ const adapter = async () => (await auth.$context).internalAdapter;
 
 /**
  * Whether the target is an admin now: the role, or ADMIN_EMAILS (verified
- * addresses) / ADMIN_USER_IDS. Banning or demoting one takes the acting
- * admin's strong confirmation here, which the admin pages don't ask for: a
- * stolen console cookie alone must not lock the other admins out.
+ * addresses) / ADMIN_USER_IDS. Banning, unbanning, signing out or demoting
+ * one takes the acting admin's strong confirmation, as on the admin pages: a
+ * stolen console cookie alone must not lock the other admins out, or let a
+ * banned admin back in.
  */
 async function targetIsAdmin(userId: string): Promise<boolean> {
   const [found] = await db
@@ -77,12 +78,17 @@ export async function banUserForConsole(
   return userAudit(target, { expiresInDays: expiresInDays ?? null });
 }
 
-/** As unbanUserAction. */
+/**
+ * As unbanUserAction. Unbanning an admin hands the console back to them, so
+ * it takes the same strong confirmation as banning one.
+ */
 export async function unbanUserForConsole(
   _admin: AdminActor,
   { userId }: { userId: string },
+  { requireStrong }: StrongCheck,
 ): Promise<AdminActionOutcome<undefined>> {
   const target = await findAdminTarget(userId);
+  if (await targetIsAdmin(userId)) await requireStrong();
   await (await adapter()).updateUser(userId, {
     banned: false,
     banExpires: null,
@@ -111,12 +117,17 @@ export async function setUserRoleForConsole(
   return userAudit(target, { from: target.role, to: role });
 }
 
-/** As revokeUserSessionsAction: every session on every device. */
+/**
+ * As revokeUserSessionsAction: every session on every device. For an admin
+ * it takes the strong confirmation (it signs them out of the console too).
+ */
 export async function revokeUserSessionsForConsole(
   _admin: AdminActor,
   { userId }: { userId: string },
+  { requireStrong }: StrongCheck,
 ): Promise<AdminActionOutcome<undefined>> {
   const target = await findAdminTarget(userId);
+  if (await targetIsAdmin(userId)) await requireStrong();
   await (await adapter()).deleteUserSessions(userId);
   return userAudit(target);
 }

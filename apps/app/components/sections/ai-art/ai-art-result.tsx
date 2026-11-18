@@ -4,6 +4,7 @@ import { track } from "@repo/analytics";
 import { toast } from "@repo/design-system";
 import {
   AssemblingCode,
+  FinderTrace,
   ModuleOrbit,
 } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -281,7 +282,7 @@ export function StatusDot({ status }: { status: ScanStatus }) {
 // Titles and descriptions: aiArt.aiArtResult.status.<status>.
 export const SCAN_STATUS: Record<ScanStatus, { icon: ReactNode }> = {
   checking: {
-    icon: <ModuleOrbit className="size-4" />,
+    icon: <FinderTrace className="size-4" />,
   },
   scannable: {
     icon: (

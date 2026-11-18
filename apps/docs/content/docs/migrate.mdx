@@ -11,13 +11,21 @@ QRdx imports links and dynamic codes from other providers in one go, so you can 
 
 In a hurry? The short task page: [Bring codes from another service](/docs/help/dynamic-codes/import).
 
+## Free help with your move
+
+If you're moving from another QR code provider, we can help:
+
+- **A switch check.** Send one of your old QR links (the short link a printed code opens) to [support@qrdx.dev](mailto:support@qrdx.dev). We reply with the way of switching that fits and its steps: <IfAvailable feature="customDomains">moving your own domain to QRdx with no reprint, </IfAvailable>pointing your old links at QRdx, or a reprint.
+- **Help with a big move.** If you're moving many codes<IfAvailable feature="customDomains"> or your own QR domain</IfAvailable>, we do the move with you: we map your export file and run the import together<IfAvailable feature="customDomains">, and walk you through the DNS change</IfAvailable>.
+- **More time to change your mind.** If you import your codes before your first payment for a paid plan or within {facts.moneyBackDays} days after it, you have {facts.switcherMoneyBackDays} days instead of {facts.moneyBackDays} to ask for that payment back. Say which provider you moved from when you ask. It's an offer that may end; the [refund policy](/legal/refunds#money-back-guarantee) has the details.
+
 ## How it works
 
 <Diagram id="import-flow" />
 
 Open [Codes](/dashboard?to=codes), then the **⋯** menu → **Import codes** → **From Bitly and other apps**. Two kinds of source:
 
-- **Connected accounts:** Bitly, Rebrandly and Short.io. QRdx lists your links through the provider's API.
+- **Connected accounts:** Bitly, Rebrandly, Short.io and Uniqode. QRdx lists your links or codes through the provider's API.
 - **Export files:** QR Code Generator PRO, Uniqode (Beaconstac), Flowcode, QR TIGER, ME-QR, TinyURL, Hovercode, Scanova, or any CSV with destination URLs.
 
 Nothing changes in your old account during the import itself.
@@ -50,8 +58,11 @@ Imports run in batches of 50 with a progress bar. Closing the dialog is safe: op
 | Bitly | Sign in, or a generic access token | Yes | Paid Bitly plans only: 5 link redirects a month on Core, 20 on Growth, 110 on Premium |
 | Rebrandly | API key | Yes | Within Rebrandly's monthly destination edits: 10 on Essentials, 50 on Professional, 150 on Growth (none on Free) |
 | Short.io | API key | Yes, one domain at a time | Yes, on every plan |
+| Uniqode | API key (Uniqode's Core plan and above, as an Owner or Admin) | Dynamic website codes only | Yes, while your plan includes the API. Each code uses about two API requests, out of 250,000 a month on Core, 500,000 on Plus and 2 million on Business+ |
 
 Plan limits are the providers' own and change over time. Check their pricing pages.
+
+Uniqode lists only dynamic website codes: its other code types (PDF, vCard Plus, forms and the like) open pages Uniqode hosts, so make those again in QRdx. Your Uniqode API key is in the **API** section of Uniqode's sidebar. If Uniqode doesn't send the links your printed codes open, the import summary says so: download the mapping CSV and replace each code's destination with its new QRdx link in Uniqode.
 
 ## Keep printed codes working
 
@@ -61,7 +72,7 @@ QR codes you printed with another provider encode that provider's short link. Af
 2. Confirm, and QRdx changes each old link's destination to its new QRdx code. Visitors still end up on the same page, and every scan now shows in QRdx analytics. The old provider still sees a click first.
 3. **Undo** puts back the original destinations, which QRdx saved with the import.
 
-If the provider refuses (for example a Bitly plan without link redirects left), QRdx stops, says why, and leaves the remaining links unchanged. Links skipped because their destination already had a QRdx code point at that existing code.<IfAvailable feature="customDomains"> Links whose back-half moves with your own domain (below) aren't changed: after the DNS switch they're the QRdx link.</IfAvailable>
+If the provider refuses (for example a Bitly plan without link redirects left, or a Uniqode plan or role without API access), QRdx stops, says why, and leaves the remaining links unchanged. A single code the provider won't change (a Uniqode code that's no longer a website code, say) is listed with the reason and left as it was. Links skipped because their destination already had a QRdx code point at that existing code.<IfAvailable feature="customDomains"> Links whose back-half moves with your own domain (below) aren't changed: after the DNS switch they're the QRdx link.</IfAvailable>
 
 <Callout type="warn" title="Keep the old account for now">
   Keep the provider connected until you're sure: undo needs the connection. The old account also has to stay active for its links to keep redirecting.
@@ -79,7 +90,7 @@ Back-halves that can't be kept get a generated one; those links need a reprint o
 
 <IfAvailable feature="customDomains" title="Your own domain (go.yourbrand.com)">
 
-If your links use your own domain, you can move that domain to QRdx and keep the back-halves, so `go.yourbrand.com/spring-menu` keeps working after the DNS switch.
+If your links use your own domain, you can move that domain to QRdx and keep the back-halves, so `go.yourbrand.com/spring-menu` keeps working after the DNS switch. [Move your QR domain to QRdx](/docs/move-your-qr-domain) has the checks to make first and each provider's link shapes.
 
 1. Add the domain in **Settings** → **Domains** first. It can stay unverified for now: back-halves are then kept on the domain itself, where they only have to be unique among your own codes, and only a few technical words are reserved.
 2. In the import preview, tick **Keep the original back-halves** and pick the domain under **Links on**. The preview shows which back-halves are kept.
@@ -135,7 +146,7 @@ There's no documented export of the code list. Make a spreadsheet with **Name**,
 
 ### Uniqode (Beaconstac)
 
-**QR Codes → Dynamic**, select all, **⋯ → Export**, per organization or folder. The export's columns (QR Code Name, QR Code URL, Destination URL, Labels and others) are recognized. To re-point: open the code → **Edit** → new URL → **Next** → **Save**.
+**QR Codes → Dynamic**, select all, **⋯ → Export**, per organization or folder. The export's columns (QR Code Name, QR Code URL, Destination URL, Labels and others) are recognized. To re-point: open the code → **Edit** → new URL → **Next** → **Save**. On Uniqode's Core plan or above, connect the account instead (see [From a connected account](#from-a-connected-account)) and QRdx re-points the codes for you.
 
 ### Flowcode
 

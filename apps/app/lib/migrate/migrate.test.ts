@@ -3,14 +3,22 @@
 // provider clients instead of HTTP. Nothing connects anywhere.
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import type { DubClient, ShortLinkClient } from "@repo/integrations";
+import type {
+  DubClient,
+  ShortLinkClient,
+  UniqodeClient,
+  UniqodeQrCode,
+} from "@repo/integrations";
 import { IntegrationApiError } from "@repo/integrations/src/core/http-client";
+import { createUniqodeClient } from "@repo/integrations/src/integrations/uniqode/client";
 import {
   dubUndoSource,
   explainProviderError,
   filterPage,
   fromShortLink,
+  fromUniqodeCode,
   shortLinkSource,
+  uniqodeSource,
 } from "./adapters";
 import { backHalfShapeProblem, fallbackCandidates } from "./back-halves";
 import { detectFileProvider, guessFileMapping, linksFromRows } from "./files";
@@ -23,6 +31,7 @@ import {
   listJobs,
   type MigrateRepo,
   previewImport,
+  resetRedirectErrors,
   runJobChunk,
   runRedirects,
   type Scope,
@@ -920,6 +929,602 @@ describe("keep printed codes working", () => {
   });
 });
 
+// ─── Uniqode (connected account) ─────────────────────────────────────────────
+// Shaped like Uniqode's API reference (QRCode and Campaign objects, the
+// paginated list). Not checked against the live API: QRdx has no account.
+
+const UNIQODE_CODE: UniqodeQrCode = {
+  id: 4_100_001,
+  name: "Spring menu",
+  qr_type: 2,
+  organization: 15_406,
+  url: "https://qrcodes.pro/AbC123",
+  state: "A",
+  tag_data: [
+    { id: 859, name: "print" },
+    { id: 860, name: " menu " },
+  ],
+  campaign: {
+    id: 77,
+    content_type: 1,
+    custom_url: "https://example.com/menu",
+  },
+  created: "2025-03-02T10:00:00Z",
+};
+
+const uniqodeCode = (n: number, patch: Partial<UniqodeQrCode> = {}) => ({
+  ...UNIQODE_CODE,
+  id: 4_100_000 + n,
+  name: `Code ${n}`,
+  url: `https://qr.brand.com/Code${n}x`,
+  campaign: {
+    id: 70 + n,
+    content_type: 1,
+    custom_url: `https://example.com/page-${n}`,
+  },
+  ...patch,
+});
+
+/**
+ * An in-memory api.uniqode.com behind global fetch. A refusal can be
+ * `applied` (the change goes through, the reply is an error: a lost reply)
+ * and `once` (the next attempt answers normally).
+ */
+function fakeUniqode(
+  codes: UniqodeQrCode[],
+  refuse: Record<
+    string,
+    { status: number; body: unknown; applied?: boolean; once?: boolean }
+  > = {},
+) {
+  const byId = new Map(
+    codes.map((code) => [String(code.id), structuredClone(code)]),
+  );
+  const calls: { method: string; path: string; body?: unknown }[] = [];
+  const reply = (status: number, body: unknown) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { "content-type": "application/json" },
+    });
+  const fetchImpl = async (
+    input: RequestInfo | URL,
+    init: RequestInit = {},
+  ) => {
+    const url = new URL(String(input));
+    assert.equal(url.host, "api.uniqode.com");
+    const method = init.method ?? "GET";
+    const body =
+      typeof init.body === "string" ? JSON.parse(init.body) : undefined;
+    calls.push({ method, path: url.pathname, body });
+    const id = /^\/api\/2\.0\/qrcodes\/(\d+)\/$/.exec(url.pathname)?.[1];
+    if (!id) {
+      const results = [...byId.values()];
+      return reply(200, {
+        count: results.length,
+        next: null,
+        previous: null,
+        results,
+      });
+    }
+    const code = byId.get(id);
+    if (!code) return reply(404, { detail: "Not found." });
+    if (method === "PUT") {
+      const refusal = refuse[id];
+      if (refusal?.once) delete refuse[id];
+      if (refusal?.applied) {
+        code.campaign = { ...code.campaign, ...body.campaign };
+      }
+      if (refusal) return reply(refusal.status, refusal.body);
+      code.campaign = { ...code.campaign, ...body.campaign };
+    }
+    return reply(200, code);
+  };
+  return { byId, calls, fetchImpl };
+}
+
+async function withFetch<T>(
+  fetchImpl: (
+    input: RequestInfo | URL,
+    init?: RequestInit,
+  ) => Promise<Response>,
+  fn: () => Promise<T>,
+): Promise<T> {
+  const original = globalThis.fetch;
+  globalThis.fetch = fetchImpl as typeof fetch;
+  try {
+    return await fn();
+  } finally {
+    globalThis.fetch = original;
+  }
+}
+
+describe("Uniqode (connected account)", () => {
+  const client = () => createUniqodeClient("uq-key", { minIntervalMs: 0 });
+
+  it("maps a dynamic website code and leaves other kinds out", () => {
+    const mapped = fromUniqodeCode(UNIQODE_CODE);
+    assert.deepEqual(mapped, {
+      id: "4100001",
+      shortLink: "https://qrcodes.pro/AbC123",
+      domain: "qrcodes.pro",
+      backHalf: "AbC123",
+      destinationUrl: "https://example.com/menu",
+      title: "Spring menu",
+      tags: ["print", "menu"],
+      clicks: null,
+      createdAt: "2025-03-02T10:00:00.000Z",
+      archived: false,
+    });
+    assert.equal(
+      fromUniqodeCode({ ...UNIQODE_CODE, campaign: { content_type: 13 } }),
+      null,
+    );
+    assert.equal(fromUniqodeCode({ ...UNIQODE_CODE, qr_type: 1 }), null);
+    // Sleeping codes, epoch dates, and a `url` that is the destination.
+    const odd = fromUniqodeCode({
+      ...UNIQODE_CODE,
+      state: "S",
+      created: 1_740_909_600_000,
+      url: "https://example.com/menu",
+    });
+    assert.equal(odd?.archived, true);
+    assert.equal(odd?.createdAt, "2025-03-02T10:00:00.000Z");
+    assert.equal(odd?.shortLink, null);
+    assert.equal(odd?.backHalf, null);
+    assert.equal(
+      fromUniqodeCode({ ...UNIQODE_CODE, created: "not a date" })?.createdAt,
+      null,
+    );
+  });
+
+  it("reads the printed link from `url`, then other fields", () => {
+    const printed = (patch: Record<string, unknown>) =>
+      fromUniqodeCode({ ...UNIQODE_CODE, url: undefined, ...patch })
+        ?.shortLink ?? null;
+    assert.equal(
+      printed({ url: "qrcodes.pro/AbC123" }),
+      "https://qrcodes.pro/AbC123",
+    );
+    assert.equal(
+      printed({ url: "", short_url: "https://qr.tapnscan.me/Xy9" }),
+      "https://qr.tapnscan.me/Xy9",
+    );
+    assert.equal(
+      printed({ qr_code_url: "https://qr.brand.com/Menu" }),
+      "https://qr.brand.com/Menu",
+    );
+    // A bare slug, a bare domain, the destination itself, nothing.
+    assert.equal(printed({ url: "AbC123" }), null);
+    assert.equal(printed({ url: "https://qrcodes.pro/" }), null);
+    assert.equal(printed({ url: "https://Example.com/menu/" }), null);
+    assert.equal(printed({}), null);
+  });
+
+  it("skips pages without website codes, up to a few", async () => {
+    const cursors: (string | undefined)[] = [];
+    const pages = [
+      {
+        codes: [uniqodeCode(1, { campaign: { content_type: 13 } })],
+        nextCursor: "page=2",
+      },
+      { codes: [], nextCursor: "page=3" },
+      { codes: [uniqodeCode(3)], nextCursor: "page=4" },
+    ];
+    const fake = {
+      listQrCodes: async (options: { cursor?: string }) => {
+        cursors.push(options.cursor);
+        return pages.shift() ?? { codes: [] };
+      },
+    } as unknown as UniqodeClient;
+    const page = await uniqodeSource(fake).listLinks(null, {});
+    assert.deepEqual(cursors, [undefined, "page=2", "page=3"]);
+    assert.deepEqual(
+      page.links.map((link) => link.id),
+      ["4100003"],
+    );
+    assert.equal(page.nextCursor, "page=4");
+
+    let calls = 0;
+    const empty = {
+      listQrCodes: async () => {
+        calls += 1;
+        return { codes: [], nextCursor: `page=${calls + 1}` };
+      },
+    } as unknown as UniqodeClient;
+    const none = await uniqodeSource(empty).listLinks(null, {});
+    assert.equal(calls, 4);
+    assert.equal(none.links.length, 0);
+    assert.equal(none.nextCursor, "page=5");
+  });
+
+  async function importedUniqode() {
+    const fake = fakeRepo();
+    const deps = depsFor(fake.repo);
+    const source = uniqodeSource(client());
+    const { links } = await source.listLinks(null, {});
+    const { job } = await startJob(deps, SCOPE, {
+      provider: "uniqode-api",
+      links,
+      options: { ...OPTIONS, folderName: "Imported from Uniqode" },
+    });
+    await runToEnd(deps, job.id);
+    return { fake, deps, id: job.id, source };
+  }
+
+  it("imports, re-points with two requests a code, and undoes", async () => {
+    const server = fakeUniqode([
+      uniqodeCode(1),
+      uniqodeCode(2),
+      uniqodeCode(3, { campaign: { id: 9, content_type: 13 } }),
+    ]);
+    await withFetch(server.fetchImpl, async () => {
+      const { fake, deps, id, source } = await importedUniqode();
+      const jobs = await fake.repo.loadJobs("user_1");
+      const items = jobs.find((job) => job.id === id)?.items ?? [];
+      // The PDF code isn't listed, so it isn't imported.
+      assert.deepEqual(
+        items.map((item) => item.key),
+        ["4100001", "4100002"],
+      );
+      assert.equal(
+        fake.codes[0]?.notes?.includes("[import:uniqode-api:4100001]"),
+        true,
+      );
+
+      server.calls.length = 0;
+      const applied = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.equal(applied.stopped, null);
+      assert.equal(applied.job.redirected, 2);
+      assert.deepEqual(
+        server.calls.map((call) => call.method),
+        ["GET", "PUT", "GET", "PUT"],
+      );
+      const put = server.calls[1]?.body as Record<string, unknown>;
+      assert.deepEqual(Object.keys(put).sort(), [
+        "campaign",
+        "name",
+        "organization",
+        "qr_type",
+      ]);
+      const pointed = server.byId.get("4100001")?.campaign?.custom_url ?? "";
+      assert.match(pointed, /^https:\/\/qrdx\.dev\/q\//);
+
+      let undo = await runRedirects(deps, SCOPE, id, "undo", source);
+      while (undo.remaining > 0) {
+        undo = await runRedirects(deps, SCOPE, id, "undo", source);
+      }
+      assert.equal(undo.job.undone, 2);
+      assert.equal(
+        server.byId.get("4100001")?.campaign?.custom_url,
+        "https://example.com/page-1",
+      );
+      assert.equal(
+        server.byId.get("4100002")?.campaign?.custom_url,
+        "https://example.com/page-2",
+      );
+    });
+  });
+
+  it("leaves a code that can't change as it was, and the rest undo", async () => {
+    const server = fakeUniqode(
+      [uniqodeCode(1), uniqodeCode(2), uniqodeCode(3)],
+      {
+        "4100003": {
+          status: 400,
+          body: { campaign: { custom_url: ["Enter a valid URL."] } },
+        },
+      },
+    );
+    await withFetch(server.fetchImpl, async () => {
+      const { deps, id, source } = await importedUniqode();
+      // Changed into a PDF code in Uniqode after the import.
+      const two = server.byId.get("4100002");
+      if (two) two.campaign = { id: 72, content_type: 13 };
+
+      const applied = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.equal(applied.stopped, null);
+      assert.equal(applied.job.redirected, 1);
+      const byKey = new Map(applied.items.map((item) => [item.key, item]));
+      assert.equal(byKey.get("4100001")?.ok, true);
+      assert.match(
+        byKey.get("4100002")?.error ?? "",
+        /isn't a dynamic website code, so QRdx left it unchanged/,
+      );
+      assert.match(
+        byKey.get("4100003")?.error ?? "",
+        /Uniqode didn't accept the change/,
+      );
+      assert.equal(two?.campaign?.custom_url, undefined);
+      assert.equal(
+        server.byId.get("4100003")?.campaign?.custom_url,
+        "https://example.com/page-3",
+      );
+
+      const undo = await runRedirects(deps, SCOPE, id, "undo", source);
+      assert.equal(undo.job.undone, 1);
+      assert.equal(
+        server.byId.get("4100001")?.campaign?.custom_url,
+        "https://example.com/page-1",
+      );
+    });
+  });
+
+  it("logs counts, not links, when no code came with its printed link", async () => {
+    const server = fakeUniqode([
+      uniqodeCode(1, { url: null }),
+      uniqodeCode(2, { url: "" }),
+    ]);
+    await withFetch(server.fetchImpl, async () => {
+      const warnings: { message: string; context: unknown }[] = [];
+      const fake = fakeRepo();
+      const deps: ImporterDeps = {
+        ...depsFor(fake.repo),
+        warn: (message, context) => warnings.push({ message, context }),
+      };
+      const source = uniqodeSource(client());
+      const { links } = await source.listLinks(null, {});
+      const { job } = await startJob(deps, SCOPE, {
+        provider: "uniqode-api",
+        links,
+        options: OPTIONS,
+      });
+      await runToEnd(deps, job.id);
+      assert.equal(warnings.length, 1);
+      assert.deepEqual(warnings[0]?.context, {
+        provider: "uniqode-api",
+        jobId: job.id,
+        codes: 2,
+      });
+      assert.doesNotMatch(
+        JSON.stringify(warnings),
+        /https?:|example\.com|uq-key/,
+      );
+      const dry = await runRedirects(deps, SCOPE, job.id, "dry-run", source);
+      assert.equal(dry.items.length, 0);
+      // Opening the finished import again doesn't log again.
+      await runJobChunk(deps, SCOPE, job.id);
+      assert.equal(warnings.length, 1);
+    });
+
+    const withLinks = fakeUniqode([uniqodeCode(3)]);
+    await withFetch(withLinks.fetchImpl, async () => {
+      const warnings: string[] = [];
+      const fake = fakeRepo();
+      const deps: ImporterDeps = {
+        ...depsFor(fake.repo),
+        warn: (message) => warnings.push(message),
+      };
+      const { links } = await uniqodeSource(client()).listLinks(null, {});
+      const { job } = await startJob(deps, SCOPE, {
+        provider: "uniqode-api",
+        links,
+        options: OPTIONS,
+      });
+      await runToEnd(deps, job.id);
+      assert.deepEqual(warnings, []);
+    });
+  });
+
+  it("try again after a lost PUT reply restores the original on undo", async () => {
+    // Uniqode made the change, but its reply never arrived (a 502).
+    const server = fakeUniqode([uniqodeCode(1), uniqodeCode(2)], {
+      "4100001": {
+        status: 502,
+        body: "Bad Gateway",
+        applied: true,
+        once: true,
+      },
+    });
+    await withFetch(server.fetchImpl, async () => {
+      const { deps, id, source } = await importedUniqode();
+      const first = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.equal(first.job.redirected, 1);
+      assert.equal(
+        first.items.find((item) => item.key === "4100001")?.ok,
+        false,
+      );
+      assert.match(
+        server.byId.get("4100001")?.campaign?.custom_url ?? "",
+        /^https:\/\/qrdx\.dev\/q\//,
+      );
+
+      // "Try again": the code already opens its QRdx link.
+      await resetRedirectErrors(deps, SCOPE, id);
+      const again = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.equal(again.job.redirected, 2);
+
+      let undo = await runRedirects(deps, SCOPE, id, "undo", source);
+      while (undo.remaining > 0) {
+        undo = await runRedirects(deps, SCOPE, id, "undo", source);
+      }
+      assert.equal(undo.job.undone, 2);
+      assert.equal(
+        server.byId.get("4100001")?.campaign?.custom_url,
+        "https://example.com/page-1",
+      );
+      assert.equal(
+        server.byId.get("4100002")?.campaign?.custom_url,
+        "https://example.com/page-2",
+      );
+    });
+  });
+
+  it("a batch whose save failed still undoes to the original", async () => {
+    const server = fakeUniqode([uniqodeCode(1)]);
+    await withFetch(server.fetchImpl, async () => {
+      const { fake, deps, id, source } = await importedUniqode();
+      const save = fake.repo.saveJobs;
+      fake.repo.saveJobs = async () => {
+        fake.repo.saveJobs = save;
+        throw new Error("Connection lost");
+      };
+      await assert.rejects(
+        runRedirects(deps, SCOPE, id, "apply", source),
+        /Connection lost/,
+      );
+      // The PUT went through; QRdx has no record of it.
+      assert.match(
+        server.byId.get("4100001")?.campaign?.custom_url ?? "",
+        /^https:\/\/qrdx\.dev\/q\//,
+      );
+      const again = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.equal(again.job.redirected, 1);
+      const undo = await runRedirects(deps, SCOPE, id, "undo", source);
+      assert.equal(undo.job.undone, 1);
+      assert.equal(
+        server.byId.get("4100001")?.campaign?.custom_url,
+        "https://example.com/page-1",
+      );
+    });
+  });
+
+  it("leaves one refused code unchanged once others went through", async () => {
+    const refusal = {
+      status: 403,
+      body: { detail: "You do not have permission to perform this action." },
+    };
+    const server = fakeUniqode(
+      [uniqodeCode(1), uniqodeCode(2), uniqodeCode(3)],
+      { "4100002": refusal },
+    );
+    await withFetch(server.fetchImpl, async () => {
+      const { deps, id, source } = await importedUniqode();
+      const applied = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.equal(applied.stopped, null);
+      assert.equal(applied.job.redirected, 2);
+      const byKey = new Map(applied.items.map((item) => [item.key, item]));
+      assert.match(
+        byKey.get("4100002")?.error ?? "",
+        /Uniqode didn't allow changing this link, so QRdx left it unchanged/,
+      );
+      assert.equal(
+        server.byId.get("4100002")?.campaign?.custom_url,
+        "https://example.com/page-2",
+      );
+      assert.match(
+        server.byId.get("4100003")?.campaign?.custom_url ?? "",
+        /^https:\/\/qrdx\.dev\/q\//,
+      );
+
+      // "Try again" alone: earlier codes of this run went through, so the
+      // refusal is still about this one code.
+      await resetRedirectErrors(deps, SCOPE, id);
+      const again = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.equal(again.stopped, null);
+      assert.equal(again.items[0]?.ok, false);
+    });
+  });
+
+  it("stops when refusals keep coming after a change went through", async () => {
+    const refusal = { status: 403, body: { detail: "Forbidden." } };
+    const server = fakeUniqode(
+      [1, 2, 3, 4, 5, 6].map((n) => uniqodeCode(n)),
+      Object.fromEntries([2, 3, 4, 5, 6].map((n) => [`410000${n}`, refusal])),
+    );
+    await withFetch(server.fetchImpl, async () => {
+      const { deps, id, source } = await importedUniqode();
+      const applied = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.match(applied.stopped ?? "", /Core plan and above/);
+      assert.equal(applied.job.redirected, 1);
+      // Three refused codes are reported; the run stops at the fourth.
+      assert.equal(applied.items.filter((item) => !item.ok).length, 3);
+      assert.equal(applied.remaining, 2);
+    });
+  });
+
+  it("stops on a plan or role refusal with nothing half-done", async () => {
+    const refusal = {
+      status: 403,
+      body: { detail: "You do not have permission to perform this action." },
+    };
+    const server = fakeUniqode([uniqodeCode(1), uniqodeCode(2)], {
+      "4100001": refusal,
+      "4100002": refusal,
+    });
+    await withFetch(server.fetchImpl, async () => {
+      const { deps, id, source } = await importedUniqode();
+      const result = await runRedirects(deps, SCOPE, id, "apply", source);
+      assert.match(
+        result.stopped ?? "",
+        /Core plan and above, for Owners and Admins/,
+      );
+      assert.equal(result.job.redirected, 0);
+      assert.equal(result.remaining, 2);
+      assert.equal(
+        server.byId.get("4100001")?.campaign?.custom_url,
+        "https://example.com/page-1",
+      );
+    });
+  });
+
+  it("explains Uniqode's errors in plain words", () => {
+    const error = (status: number, body?: unknown) =>
+      new IntegrationApiError({
+        provider: "uniqode",
+        status,
+        code: status === 429 ? "rate_limited" : "bad_request",
+        message: "Uniqode: x",
+        body,
+      });
+    const rate = explainProviderError(
+      "uniqode-api",
+      error(429, { detail: "Request was throttled." }),
+    );
+    assert.equal(rate.kind, "rate");
+    assert.equal(rate.stop, true);
+    assert.match(rate.message, /Uniqode is limiting requests/);
+    assert.equal(
+      explainProviderError(
+        "uniqode-api",
+        error(401, { detail: "Invalid token" }),
+      ).kind,
+      "auth",
+    );
+    const own = explainProviderError("uniqode-api", error(400));
+    assert.equal(own.kind, "unsupported");
+    assert.equal(own.message, "Uniqode: x");
+    assert.equal(own.stop, false);
+  });
+
+  it("reads a long 429 wait as the monthly allowance, not a rate limit", () => {
+    const throttled = (detail: string, retryAfterSeconds?: number) =>
+      explainProviderError(
+        "uniqode-api",
+        new IntegrationApiError({
+          provider: "uniqode",
+          status: 429,
+          code: "rate_limited",
+          message: "x",
+          retryAfterSeconds,
+          body: { detail },
+        }),
+      );
+    // DRF's throttle answer, with and without a Retry-After header.
+    const month = throttled(
+      "Request was throttled. Expected available in 1209600 seconds.",
+    );
+    assert.equal(month.kind, "quota");
+    assert.equal(month.stop, true);
+    assert.match(month.message, /requests for this month are used up/);
+    assert.match(month.message, /2 million on Business\+/);
+    assert.doesNotMatch(month.message, /Wait a minute/);
+    assert.equal(throttled("Request was throttled.", 86_400).kind, "quota");
+    // Short waits are the per-second limit.
+    assert.equal(
+      throttled("Request was throttled. Expected available in 3 seconds.").kind,
+      "rate",
+    );
+    assert.equal(throttled("Request was throttled.", 60).kind, "rate");
+    assert.equal(throttled("Request was throttled.", 300).kind, "rate");
+  });
+
+  it("keeps file imports and connected imports apart", () => {
+    assert.equal(parseProviderParam("uniqode"), "uniqode");
+    assert.equal(parseProviderParam("beaconstac"), "uniqode");
+    assert.equal(parseProviderParam("uniqode-api"), "uniqode-api");
+  });
+});
+
 // ─── Dub is a partner: no new imports, old jobs keep history and undo ───────
 
 /** A Dub job as stored before Dub imports ended (read back like the DB's). */
@@ -998,7 +1603,7 @@ describe("Dub imports have ended (Dub is a partner)", () => {
     assert.ok(!(IMPORT_API_PROVIDER_IDS as readonly string[]).includes("dub"));
     assert.deepEqual(
       [...IMPORT_API_PROVIDER_IDS],
-      ["bitly", "rebrandly", "short-io"],
+      ["bitly", "rebrandly", "short-io", "uniqode-api"],
     );
     // Stored jobs still name it, so it stays a known id.
     assert.ok((API_PROVIDER_IDS as readonly string[]).includes("dub"));

@@ -107,9 +107,9 @@ export function ProviderStep({
                 {t("pickLinksFromTheAccount")}
               </p>
             </div>
-            {/* Three providers: one row from md (where each tile still fits
-                its text), one column below. */}
-            <div className="grid gap-2 md:grid-cols-3" data-provider-grid="api">
+            {/* Four providers: two columns from sm, like the file tiles
+                (three to a row cut the last one off on its own). */}
+            <div className="grid gap-2 sm:grid-cols-2" data-provider-grid="api">
               {apiIds.map((id) => (
                 <Tile
                   key={id}

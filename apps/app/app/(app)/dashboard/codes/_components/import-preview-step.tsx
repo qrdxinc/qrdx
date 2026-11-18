@@ -1,6 +1,5 @@
 "use client";
 
-import { track } from "@repo/analytics";
 import { Info } from "@repo/design-system/components/icons";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -165,7 +164,6 @@ export function PreviewStep({
           folderName: useFolder ? folderName.trim() || null : null,
         },
       });
-      track("import_started", { provider, count: links.length });
       onStarted(job);
     } catch (failure) {
       setError(
