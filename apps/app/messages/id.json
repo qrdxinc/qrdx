@@ -7378,6 +7378,7 @@
           "reconnect": "Hubungkan ulang",
           "noLinksMatchTheseFilters": "Tidak ada tautan yang cocok dengan filter ini.",
           "noLinksInThisName": "Tidak ada tautan di akun {name} ini.",
+          "onlyWebsiteCodesListed": "Hanya kode situs web dinamis yang ditampilkan. Jenis kode {name} lainnya (PDF, vCard Plus, formulir, dan sejenisnya) membuka halaman yang di-hosting oleh {name}, jadi buat ulang kode tersebut di QRdx.",
           "theNameSignInWas": "Proses masuk {name} dibatalkan.",
           "couldntConnectNameTryAgain": "Tidak dapat terhubung ke {name}. Coba lagi."
         },
@@ -7477,6 +7478,7 @@
           "reviewUndo": "Tinjau pembatalan",
           "keepMyPrintedCodesWorking": "Jaga kode cetak saya tetap berfungsi",
           "optionalPointEachOldName": "Opsional. Arahkan setiap tautan {name} lama ke kode QRdx barunya, agar kode yang sudah dicetak tetap berfungsi dan pemindaiannya muncul di QRdx. Anda akan melihat setiap perubahan terlebih dahulu dan dapat membatalkannya.",
+          "oldLinksNotFound": "{name} tidak mengirimkan tautan yang dibuka oleh kode cetak Anda, sehingga QRdx tidak dapat mengarahkannya ke kode baru dari sini. Kode tersebut tetap membuka tujuan saat ini. Agar pemindaian kode tersebut masuk ke QRdx, unduh CSV pemetaan, lalu di {name} buka setiap kode dan ganti tujuannya dengan tautan QRdx barunya.",
           "pointYourOldCodesAt": "Arahkan kode lama Anda ke QRdx",
           "oldProviderCodesLiveOnItsDomain": "Kode dari penyedia lama Anda berada di domainnya sendiri, sehingga QRdx tidak dapat mengubahnya. Untuk setiap kode lama:",
           "providerCodesLiveOnItsDomain": "Kode dari {name} berada di domainnya sendiri, sehingga QRdx tidak dapat mengubahnya. Untuk setiap kode lama:",

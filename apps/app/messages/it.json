@@ -7378,6 +7378,7 @@
           "reconnect": "Riconnetti",
           "noLinksMatchTheseFilters": "Nessun link corrisponde a questi filtri.",
           "noLinksInThisName": "Nessun link in questo account {name}.",
+          "onlyWebsiteCodesListed": "Sono elencati solo i QR code dinamici per siti web. Gli altri tipi di codice di {name} (PDF, vCard Plus, moduli e simili) aprono pagine ospitate da {name}, quindi creali di nuovo in QRdx.",
           "theNameSignInWas": "L’accesso a {name} è stato annullato.",
           "couldntConnectNameTryAgain": "Impossibile connettere {name}. Riprova."
         },
@@ -7477,6 +7478,7 @@
           "reviewUndo": "Rivedi annullamento",
           "keepMyPrintedCodesWorking": "Mantieni funzionanti i miei codici stampati",
           "optionalPointEachOldName": "Facoltativo. Fai puntare ogni vecchio link di {name} al nuovo QR code su QRdx, così i codici già stampati continuano a funzionare e le relative scansioni compaiono in QRdx. Vedrai prima ogni modifica e potrai annullarla.",
+          "oldLinksNotFound": "{name} non ha inviato i link che aprono i tuoi codici stampati, quindi da qui QRdx non può indirizzarli ai nuovi codici. Continuano ad aprire le loro destinazioni attuali. Per inviare le loro scansioni a QRdx, scarica il CSV di mappatura, poi in {name} apri ogni codice e sostituisci la sua destinazione con il nuovo link QRdx.",
           "pointYourOldCodesAt": "Fai puntare i vecchi codici a QRdx",
           "oldProviderCodesLiveOnItsDomain": "I QR code del tuo vecchio provider risiedono sul suo dominio, quindi QRdx non può modificarli. Per ogni vecchio QR code:",
           "providerCodesLiveOnItsDomain": "I QR code di {name} risiedono sul suo dominio, quindi QRdx non può modificarli. Per ogni vecchio QR code:",

@@ -7378,6 +7378,7 @@
           "reconnect": "Reconectar",
           "noLinksMatchTheseFilters": "Ningún enlace coincide con estos filtros.",
           "noLinksInThisName": "No hay enlaces en esta cuenta de {name}.",
+          "onlyWebsiteCodesListed": "Solo se muestran los códigos QR dinámicos de sitios web. Los otros tipos de código de {name} (PDF, vCard Plus, formularios y similares) abren páginas que aloja {name}, así que vuelve a crearlos en QRdx.",
           "theNameSignInWas": "Se canceló el inicio de sesión en {name}.",
           "couldntConnectNameTryAgain": "No se pudo conectar {name}. Inténtalo de nuevo."
         },
@@ -7477,6 +7478,7 @@
           "reviewUndo": "Revisar deshacer",
           "keepMyPrintedCodesWorking": "Mantener mis códigos impresos activos",
           "optionalPointEachOldName": "Opcional. Dirige cada enlace antiguo de {name} a su nuevo código de QRdx, para que los códigos ya impresos sigan funcionando y sus escaneos aparezcan en QRdx. Verás cada cambio antes y podrás deshacerlo.",
+          "oldLinksNotFound": "{name} no envió los enlaces que abren tus códigos impresos, por lo que QRdx no puede redirigirlos a los códigos nuevos desde aquí. Siguen abriendo sus destinos actuales. Para enviar sus escaneos a QRdx, descarga el CSV de correspondencias y, luego, en {name}, abre cada código y reemplaza su destino por su nuevo enlace de QRdx.",
           "pointYourOldCodesAt": "Dirige tus códigos antiguos a QRdx",
           "oldProviderCodesLiveOnItsDomain": "Los códigos de tu proveedor anterior viven en su propio dominio, así que QRdx no puede cambiarlos. Para cada código antiguo:",
           "providerCodesLiveOnItsDomain": "Los códigos de {name} viven en su propio dominio, así que QRdx no puede cambiarlos. Para cada código antiguo:",
