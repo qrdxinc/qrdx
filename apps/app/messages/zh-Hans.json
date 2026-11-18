@@ -1174,6 +1174,7 @@
         "format": "格式",
         "formatPng": "PNG（图片）",
         "formatWebp": "WebP（图片，体积更小）",
+        "formatBmp": "BMP（未压缩图像）",
         "formatSvg": "SVG（矢量，适合印刷）",
         "size": "{format} 尺寸",
         "quietZone": "添加 {modules, number} 个模块宽度的静区（印刷时推荐）",
@@ -3411,6 +3412,8 @@
         "cmykUsesASimpleConversion": "CMYK 采用不含色彩配置文件的简单转换；如果品牌色要求精确，请咨询印刷商。",
         "pdfAndEpsDrawEvery": "PDF 和 EPS 将每个圆点绘制为矢量形状，并将线性和径向渐变保留为平滑的矢量渐变。",
         "jpgCantBeTransparent": "JPG 不支持透明",
+        "bmpCantBeTransparent": "BMP 不支持透明：背景会变为白色",
+        "moreFormats": "更多格式",
         "vector": " · 矢量",
         "anySize": "任意尺寸",
         "printbleedMm": "{printBleed, number} mm",
@@ -3432,6 +3435,7 @@
           "png": "适合网页、文档和幻灯片。",
           "jpg": "适合电子邮件和小文件。",
           "webp": "适合需要快速加载的网站 · 无损，通常比 PNG 更小。",
+          "bmp": "适合只支持 BMP 的旧系统和嵌入式工具 · 未压缩 24 位，透明背景会变为白色。",
           "svg": "适合 Figma、Illustrator 和网站 · 任意尺寸都保持清晰。",
           "pdf": "适合文档和快速打印 · 如需矢量 PDF，请使用“印刷就绪”。",
           "eps": "适合印刷厂和矢量应用 · 任意尺寸都保持清晰。"
@@ -5575,12 +5579,16 @@
           "codeFromTheNewAddress": "新地址收到的验证码",
           "youExampleCom": "you@example.com",
           "enterThe6DigitCode": "请输入我们发送到 {sentTo} 的 6 位验证码。验证码 5 分钟后失效。",
+          "ifNoOtherQrdxAccount": "如果没有其他 QRdx 账号使用 {sentTo}，一分钟内该邮箱应会收到一个 6 位验证码。验证码 5 分钟后失效。",
           "signInCodesAndTeam": "登录验证码和团队邀请将发送到新地址。在你确认之前，{currentEmail} 仍可继续使用。",
           "sending": "发送中…",
           "resendInSecondsleftS": "{secondsLeft, number} 秒后重新发送",
           "resendCode": "重新发送验证码",
+          "newCodeRequestedAnyEarlier": "已请求新的验证码，之前的验证码已失效。",
           "noCodeCheckSpamAn": "没收到验证码？请检查垃圾邮件。已拥有 QRdx 账户的邮箱地址无法使用。",
+          "noCodeCheckSpamIf": "没有收到验证码？请检查垃圾邮件。如果里面也没有，请核对邮箱地址后重试。",
           "weSentANoteAbout": "我们已向 {currentEmail} 发送了一封关于此次更改的通知。",
+          "wellSendANoteAbout": "我们会向 {currentEmail} 发送一封关于此次更改的通知。",
           "yourEmailIsNowSentto": "你的邮箱现为 {sentTo}"
         },
         "communityProfileSection": {
@@ -5633,6 +5641,7 @@
           "verified": "已验证",
           "notVerified": "未验证",
           "change": "更改",
+          "emailIsntSetUpOn": "本站尚未设置电子邮件功能，因此无法在此更改邮箱地址。",
           "memberSinceMembersince": "注册于 {memberSince}。",
           "yourName": "你的姓名",
           "howYouAppearInQrdx": "你在 QRdx 中以及在团队成员眼中的显示方式。",
@@ -7079,6 +7088,8 @@
           "downloadPng": "下载 PNG",
           "downloadWebp": "下载 WebP",
           "downloadSvg": "下载 SVG",
+          "downloadBmp": "下载 BMP",
+          "moreFormats": "更多格式",
           "editLinkValue": "编辑链接",
           "codeSettings": "二维码设置",
           "editDesignInPlayground": "在 Playground 中编辑设计",
@@ -7132,6 +7143,7 @@
           "shortLinkCopied": "短链接已复制"
         },
         "codeQr": {
+          "moreFormats": "更多",
           "downloadFailedPleaseTryAgain": "下载失败，请重试。"
         },
         "codesCards": {
@@ -7172,6 +7184,7 @@
           "download": "下载",
           "pngImagesZip": "PNG 图片（ZIP）",
           "webpImagesZip": "WebP 图片（ZIP）",
+          "bmpImagesZip": "BMP 图片（ZIP）",
           "svgImagesZip": "SVG 图片（ZIP）",
           "more": "更多",
           "moveToTrash": "移至回收站",

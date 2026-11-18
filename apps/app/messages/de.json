@@ -1174,6 +1174,7 @@
         "format": "Format",
         "formatPng": "PNG (Bild)",
         "formatWebp": "WebP (Bild, kleiner)",
+        "formatBmp": "BMP (Bild, unkomprimiert)",
         "formatSvg": "SVG (Vektor, für den Druck)",
         "size": "{format}-Größe",
         "quietZone": "Ruhezone von {modules, number} Modulen hinzufügen (für den Druck empfohlen)",
@@ -3411,6 +3412,8 @@
         "cmykUsesASimpleConversion": "CMYK nutzt eine einfache Umrechnung ohne Farbprofil; frag deine Druckerei, wenn exakte Markenfarben wichtig sind.",
         "pdfAndEpsDrawEvery": "PDF und EPS zeichnen jeden Punkt als Vektorform und behalten lineare und radiale Verläufe als weiche Vektorverläufe bei.",
         "jpgCantBeTransparent": "JPG kann nicht transparent sein",
+        "bmpCantBeTransparent": "BMP kann nicht transparent sein: Der Hintergrund wird weiß",
+        "moreFormats": "Weitere Formate",
         "vector": " · Vektor",
         "anySize": "Beliebige Größe",
         "printbleedMm": "{printBleed, number} mm",
@@ -3432,6 +3435,7 @@
           "png": "Ideal für Web, Dokumente und Folien.",
           "jpg": "Ideal für E-Mail und kleine Dateien.",
           "webp": "Ideal für schnell ladende Websites · verlustfrei, meist kleiner als PNG.",
+          "bmp": "Am besten für ältere Systeme und eingebettete Tools, die nur BMP akzeptieren · unkomprimiert, 24 Bit, ein transparenter Hintergrund wird weiß.",
           "svg": "Ideal für Figma, Illustrator, Websites · bleibt in jeder Größe scharf.",
           "pdf": "Ideal für Dokumente und schnelle Drucke · für ein Vektor-PDF nutze Druckfertig.",
           "eps": "Ideal für Druckereien und Vektor-Apps · bleibt in jeder Größe scharf."
@@ -5575,12 +5579,16 @@
           "codeFromTheNewAddress": "Code von der neuen Adresse",
           "youExampleCom": "du@beispiel.de",
           "enterThe6DigitCode": "Gib den 6-stelligen Code ein, den wir an {sentTo} gesendet haben. Er läuft in 5 Minuten ab.",
+          "ifNoOtherQrdxAccount": "Falls kein anderes QRdx-Konto {sentTo} verwendet, sollte dort innerhalb einer Minute ein 6-stelliger Code ankommen. Er läuft nach 5 Minuten ab.",
           "signInCodesAndTeam": "Anmeldecodes und Team-Einladungen gehen an die neue Adresse. {currentEmail} funktioniert weiter, bis du die Änderung bestätigst.",
           "sending": "Wird gesendet…",
           "resendInSecondsleftS": "Erneut senden in {secondsLeft, number} s",
           "resendCode": "Code erneut senden",
+          "newCodeRequestedAnyEarlier": "Neuer Code angefordert. Frühere Codes funktionieren nicht mehr.",
           "noCodeCheckSpamAn": "Kein Code? Prüfe deinen Spam-Ordner. Eine Adresse, die bereits ein eigenes QRdx-Konto hat, kann nicht verwendet werden.",
+          "noCodeCheckSpamIf": "Kein Code? Sieh im Spam-Ordner nach. Wenn er dort nicht ist, prüfe die Adresse und versuche es erneut.",
           "weSentANoteAbout": "Wir haben eine Benachrichtigung über die Änderung an {currentEmail} gesendet.",
+          "wellSendANoteAbout": "Wir schicken eine Nachricht über die Änderung an {currentEmail}.",
           "yourEmailIsNowSentto": "Deine E-Mail-Adresse ist jetzt {sentTo}"
         },
         "communityProfileSection": {
@@ -5633,6 +5641,7 @@
           "verified": "Verifiziert",
           "notVerified": "Nicht verifiziert",
           "change": "Ändern",
+          "emailIsntSetUpOn": "E-Mail ist auf dieser Website nicht eingerichtet, deshalb kann die Adresse hier nicht geändert werden.",
           "memberSinceMembersince": "Mitglied seit {memberSince}.",
           "yourName": "Dein Name",
           "howYouAppearInQrdx": "So erscheinst du in QRdx und für die Personen in deinen Teams.",
@@ -7079,6 +7088,8 @@
           "downloadPng": "PNG herunterladen",
           "downloadWebp": "WebP herunterladen",
           "downloadSvg": "SVG herunterladen",
+          "downloadBmp": "BMP herunterladen",
+          "moreFormats": "Weitere Formate",
           "editLinkValue": "Link bearbeiten",
           "codeSettings": "Code-Einstellungen",
           "editDesignInPlayground": "Design im Playground bearbeiten",
@@ -7132,6 +7143,7 @@
           "shortLinkCopied": "Kurzlink kopiert"
         },
         "codeQr": {
+          "moreFormats": "Mehr",
           "downloadFailedPleaseTryAgain": "Download fehlgeschlagen. Bitte versuche es erneut."
         },
         "codesCards": {
@@ -7172,6 +7184,7 @@
           "download": "Herunterladen",
           "pngImagesZip": "PNG-Bilder (ZIP)",
           "webpImagesZip": "WebP-Bilder (ZIP)",
+          "bmpImagesZip": "BMP-Bilder (ZIP)",
           "svgImagesZip": "SVG-Bilder (ZIP)",
           "more": "Mehr",
           "moveToTrash": "In den Papierkorb",

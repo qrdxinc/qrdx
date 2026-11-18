@@ -1174,6 +1174,7 @@
         "format": "形式",
         "formatPng": "PNG（画像）",
         "formatWebp": "WebP（画像、軽量）",
+        "formatBmp": "BMP(非圧縮の画像)",
         "formatSvg": "SVG（ベクター、印刷用）",
         "size": "{format}のサイズ",
         "quietZone": "{modules, number}モジュール分のクワイエットゾーンを追加（印刷時に推奨）",
@@ -3411,6 +3412,8 @@
         "cmykUsesASimpleConversion": "CMYKはカラープロファイルを使わない簡易変換です。ブランドカラーを正確に再現したい場合は、印刷会社にご相談ください。",
         "pdfAndEpsDrawEvery": "PDFとEPSではすべてのドットをベクター図形として描画し、線形グラデーションと放射状グラデーションもなめらかなベクターシェーディングとして保持します。",
         "jpgCantBeTransparent": "JPGは透過に対応していません",
+        "bmpCantBeTransparent": "BMPは透過に対応していません。背景は白になります",
+        "moreFormats": "その他の形式",
         "vector": " ・ベクター",
         "anySize": "自由なサイズ",
         "printbleedMm": "{printBleed, number} mm",
@@ -3432,6 +3435,7 @@
           "png": "Web、ドキュメント、スライド向けです。",
           "jpg": "メールや小さなファイル向けです。",
           "webp": "高速に表示したいWebサイト向け・可逆圧縮で、通常はPNGより小さくなります。",
+          "bmp": "BMPのみ対応している古いシステムや組み込みツールに最適です · 非圧縮の24ビットで、透明な背景は白になります。",
           "svg": "Figma、Illustrator、Webサイト向け・どんなサイズでも鮮明なままです。",
           "pdf": "ドキュメントや手軽な印刷向け・ベクターPDFが必要な場合は印刷用を選んでください。",
           "eps": "印刷会社やベクターアプリ向け・どんなサイズでも鮮明なままです。"
@@ -5575,12 +5579,16 @@
           "codeFromTheNewAddress": "新しいアドレスに届いたコード",
           "youExampleCom": "you@example.com",
           "enterThe6DigitCode": "{sentTo}に送信した6桁のコードを入力してください。有効期限は5分です。",
+          "ifNoOtherQrdxAccount": "{sentTo} を使用している他のQRdxアカウントがなければ、1分以内に6桁のコードがそのアドレスに届きます。コードの有効期限は5分です。",
           "signInCodesAndTeam": "ログインコードとチームへの招待は新しいアドレスに届きます。確認が完了するまでは{currentEmail}も引き続き使えます。",
           "sending": "送信中…",
           "resendInSecondsleftS": "{secondsLeft, number}秒後に再送信できます",
           "resendCode": "コードを再送信",
+          "newCodeRequestedAnyEarlier": "新しいコードをリクエストしました。以前のコードは使えなくなります。",
           "noCodeCheckSpamAn": "コードが届かない場合は、迷惑メールフォルダをご確認ください。すでにQRdxのアカウントがあるアドレスは使用できません。",
+          "noCodeCheckSpamIf": "コードが届きませんか？迷惑メールフォルダをご確認ください。そこにもない場合は、アドレスを確認してもう一度お試しください。",
           "weSentANoteAbout": "変更についてのお知らせを{currentEmail}に送信しました。",
+          "wellSendANoteAbout": "この変更についての通知を {currentEmail} に送信します。",
           "yourEmailIsNowSentto": "メールアドレスが{sentTo}になりました"
         },
         "communityProfileSection": {
@@ -5633,6 +5641,7 @@
           "verified": "確認済み",
           "notVerified": "未確認",
           "change": "変更",
+          "emailIsntSetUpOn": "このサイトではメールが設定されていないため、ここではアドレスを変更できません。",
           "memberSinceMembersince": "{memberSince}からのメンバーです。",
           "yourName": "お名前",
           "howYouAppearInQrdx": "QRdxや所属チームの人に表示される名前です。",
@@ -7079,6 +7088,8 @@
           "downloadPng": "PNGをダウンロード",
           "downloadWebp": "WebPをダウンロード",
           "downloadSvg": "SVGをダウンロード",
+          "downloadBmp": "BMPをダウンロード",
+          "moreFormats": "その他の形式",
           "editLinkValue": "リンクを編集",
           "codeSettings": "コード設定",
           "editDesignInPlayground": "Playgroundでデザインを編集",
@@ -7132,6 +7143,7 @@
           "shortLinkCopied": "短縮リンクをコピーしました"
         },
         "codeQr": {
+          "moreFormats": "その他",
           "downloadFailedPleaseTryAgain": "ダウンロードに失敗しました。もう一度お試しください。"
         },
         "codesCards": {
@@ -7172,6 +7184,7 @@
           "download": "ダウンロード",
           "pngImagesZip": "PNG画像（ZIP）",
           "webpImagesZip": "WebP画像（ZIP）",
+          "bmpImagesZip": "BMP画像（ZIP）",
           "svgImagesZip": "SVG画像（ZIP）",
           "more": "その他",
           "moveToTrash": "ゴミ箱に移動",
