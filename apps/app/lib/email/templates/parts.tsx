@@ -32,8 +32,15 @@ export const formatEmailDateTime = (value: Date | string, locale?: string) =>
       : dateTimeFormat
   ).format(new Date(value))} UTC`;
 
-export const formatEmailDate = (value: Date | string) =>
-  dateFormat.format(new Date(value));
+export const formatEmailDate = (value: Date | string, locale?: string) =>
+  (locale
+    ? new Intl.DateTimeFormat(locale, {
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+      })
+    : dateFormat
+  ).format(new Date(value));
 
 /** “Title” or the slug when a code has no title. */
 export const codeLabel = (code: { title: string | null; slug: string }) =>
@@ -120,7 +127,13 @@ export function DetailsTable({
 export function StatGrid({
   stats,
 }: {
-  stats: { label: string; value: string; delta?: string | null }[];
+  /** `down`: the delta is a drop (else read from a leading "-") */
+  stats: {
+    label: string;
+    value: string;
+    delta?: string | null;
+    down?: boolean;
+  }[];
 }) {
   return (
     <Section style={{ margin: "0 0 8px" }}>
@@ -137,9 +150,10 @@ export function StatGrid({
                 <Text
                   style={{
                     ...styles.delta,
-                    color: stat.delta.startsWith("-")
-                      ? "#b45309"
-                      : EMAIL_ACCENT,
+                    color:
+                      (stat.down ?? stat.delta.startsWith("-"))
+                        ? "#b45309"
+                        : EMAIL_ACCENT,
                   }}
                 >
                   {stat.delta}

@@ -21,6 +21,8 @@ import { portalPath } from "@/ee/client-portal/paths";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { isEmailConfigured, sendEmail } from "@/lib/email/send";
 import { HttpError } from "@/lib/error-response";
+import { getAppLocale } from "@/lib/i18n/app-locale";
+import { emailIntlForInvitee } from "@/lib/i18n/email-locale";
 import { baseUrl } from "@/lib/metadata";
 import { assertCan } from "@/lib/permissions-server";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
@@ -193,8 +195,8 @@ async function replaceFolders(clientId: string, folderIds: string[]) {
   }
 }
 
-/** The portal's name as clients see it, for the invitation. */
-async function portalName(scope: ActiveScope): Promise<string> {
+/** The portal's name as clients see it, for the invitation; null without one. */
+async function portalName(scope: ActiveScope): Promise<string | null> {
   const [brand, [org]] = await Promise.all([
     findPortalBrand(scope.organizationId).catch(() => null),
     db
@@ -203,7 +205,7 @@ async function portalName(scope: ActiveScope): Promise<string> {
       .where(eq(organization.id, scope.organizationId))
       .limit(1),
   ]);
-  return brand?.name?.trim() || org?.name || "Your agency";
+  return brand?.name?.trim() || org?.name || null;
 }
 
 async function workspaceSlug(scope: ActiveScope): Promise<string> {
@@ -226,7 +228,9 @@ export async function portalUrlFor(scope: ActiveScope): Promise<string> {
 
 /**
  * Emails the client their portal link. False when email isn't set up or
- * sending failed: the settings page shows the link to send by hand.
+ * sending failed: the settings page shows the link to send by hand. In the
+ * client's saved language when the address has an account, else the
+ * inviter's (this is their request), else English.
  */
 async function sendInvite(
   scope: ActiveScope,
@@ -235,7 +239,7 @@ async function sendInvite(
 ): Promise<boolean> {
   if (!isEmailConfigured) return false;
   try {
-    const [[inviter], name, url] = await Promise.all([
+    const [[inviter], brandName, url, intl] = await Promise.all([
       db
         .select({ name: user.name, email: user.email })
         .from(user)
@@ -243,14 +247,20 @@ async function sendInvite(
         .limit(1),
       portalName(scope),
       portalUrlFor(scope),
+      getAppLocale()
+        .catch(() => null)
+        .then((inviterLocale) => emailIntlForInvitee(email, inviterLocale)),
     ]);
+    const yourAgency = intl.t("portalInvite.yourAgency");
+    const name = brandName ?? yourAgency;
     const result = await sendEmail({
       to: email,
-      subject: portalInviteSubject(name),
+      subject: portalInviteSubject(name, intl),
       react: (
         <PortalInviteEmail
           folders={folderNames}
-          inviterName={inviter?.name || inviter?.email || "Your agency"}
+          intl={intl}
+          inviterName={inviter?.name || inviter?.email || yourAgency}
           portalName={name}
           portalUrl={url}
         />
