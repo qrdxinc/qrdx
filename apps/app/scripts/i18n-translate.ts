@@ -193,7 +193,11 @@ const SURFACES: Record<string, string> = {
   codeBuilder:
     "the dynamic QR code builder over the editor: making a code dynamic, its short link, folder, tags, drafts and hosted pages",
   app: "the signed-in QRdx app (dashboard and settings): dynamic QR codes, hosted pages and forms, analytics, files, themes, team, domains, webhooks, API keys, integrations, billing and account security; mostly buttons, labels, table headings, empty states, dialogs, toasts and errors",
+  workspaceActions:
+    "messages the server sends back to the signed-in app's workspace and team screens, shown as they are in error toasts and form errors: workspace name and URL, invitations, roles and seats, join links, the workspace logo, moving codes between workspaces, requiring two-step verification; short and plain",
   auth: "signing in to QRdx (email code, Google, GitHub, passkeys, two-step verification) and the 'Confirm it's you' dialog before sensitive changes",
+  settingsActions:
+    "messages the server sends back to the signed-in app's Settings screens, shown as they are in error toasts and form errors: the account (name, sign-in methods, email change, account deletion), two-step verification and passkeys, the affiliate dashboard, integrations and their API keys, OAuth apps, API keys, Slack links, authorized apps, notifications; short and plain",
   emails:
     "emails QRdx sends: sign-in and confirmation codes (keep them short and clear, never ask for the code), scan and form alerts with their subject lines, footers",
   codeActions:
