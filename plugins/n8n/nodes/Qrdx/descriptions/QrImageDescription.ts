@@ -52,6 +52,12 @@ export const qrImageFields: INodeProperties[] = [
     type: "options",
     options: [
       {
+        name: "BMP",
+        value: "bmp",
+        description:
+          "An uncompressed 24-bit bitmap for legacy systems; a transparent background comes out white",
+      },
+      {
         name: "EPS",
         value: "eps",
         description: "Vector PostScript for print",

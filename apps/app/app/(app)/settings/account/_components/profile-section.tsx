@@ -3,7 +3,10 @@
 import { authClient } from "@repo/auth/client";
 import { toast } from "@repo/design-system";
 import { Tick } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -31,6 +34,8 @@ export interface ProfileView {
   memberSince: string;
   /** R2 is configured, so pictures can be uploaded */
   canUpload: boolean;
+  /** A code can reach a new address here, so the email can be changed */
+  canChangeEmail: boolean;
 }
 
 function Avatar({
@@ -150,7 +155,7 @@ function AvatarField({ profile }: { profile: ProfileView }) {
                 variant="outline"
               >
                 {busy === "upload" ? (
-                  <ModuleOrbit aria-hidden />
+                  <FinderTrace aria-hidden />
                 ) : (
                   <GalleryEdit aria-hidden />
                 )}
@@ -280,18 +285,26 @@ function EmailField({ profile }: { profile: ProfileView }) {
             <Badge variant="outline">{t("notVerified")}</Badge>
           )}
         </div>
-        <Button onClick={() => setOpen(true)} size="sm" variant="outline">
-          {t("change")}
-        </Button>
+        {profile.canChangeEmail ? (
+          <Button onClick={() => setOpen(true)} size="sm" variant="outline">
+            {t("change")}
+          </Button>
+        ) : (
+          <p className="text-muted-foreground basis-full text-xs text-pretty">
+            {t("emailIsntSetUpOn")}
+          </p>
+        )}
       </div>
       <p className="text-muted-foreground mt-2 text-xs text-pretty">
         {t("memberSinceMembersince", { memberSince: profile.memberSince })}
       </p>
-      <ChangeEmailDialog
-        currentEmail={profile.email}
-        onOpenChange={setOpen}
-        open={open}
-      />
+      {profile.canChangeEmail && (
+        <ChangeEmailDialog
+          currentEmail={profile.email}
+          onOpenChange={setOpen}
+          open={open}
+        />
+      )}
     </>
   );
 }

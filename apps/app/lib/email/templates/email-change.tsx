@@ -6,7 +6,7 @@ import {
   ReviewSecurityButton,
   SecurityDetails,
   type SecurityEventDetails,
-  SupportLink,
+  supportLinkArgs,
 } from "./security-parts";
 import { EmailCodeBox } from "./sign-in-code";
 
@@ -16,6 +16,10 @@ export const EMAIL_CHANGE_CODE_SUBJECT = "Confirm your new email for QRdx";
 export const emailChangeCodeSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
   intl.t("emailChangeCode.subject");
 export const EMAIL_CHANGED_SUBJECT = "Your QRdx email was changed";
+
+/** The "your address was changed" notice's subject in the recipient's language. */
+export const emailChangedSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+  intl.t("emailChanged.subject");
 
 const _plural = (minutes: number) =>
   `${minutes} minute${minutes === 1 ? "" : "s"}`;
@@ -60,6 +64,8 @@ export interface EmailChangedEmailProps {
   newEmail: string;
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
+  /** The recipient's language */
+  intl?: EmailIntl;
 }
 
 /**
@@ -70,25 +76,27 @@ export interface EmailChangedEmailProps {
 export function EmailChangedEmail({
   newEmail,
   details,
+  intl = ENGLISH_EMAIL,
 }: EmailChangedEmailProps) {
+  const { t } = intl;
   return (
     <EmailLayout
-      preview={`Your QRdx account now uses ${newEmail}.`}
-      reason="You got this email because this address was the email for a QRdx account."
+      intl={intl}
+      preview={t("emailChanged.preview", { newEmail })}
+      reason={t("emailChanged.reason")}
     >
-      <EmailHeading>Your QRdx email was changed</EmailHeading>
+      <EmailHeading>{emailChangedSubject(intl)}</EmailHeading>
       <EmailText>
-        Your QRdx account now uses <strong>{newEmail}</strong>. Sign-in codes
-        and team invitations go there from now on.
+        {t.rich("emailChanged.body", {
+          newEmail,
+          strong: (chunks) => <strong>{chunks}</strong>,
+        })}
       </EmailText>
-      <SecurityDetails details={details} />
-      <EmailText>If this was you, there's nothing else to do.</EmailText>
-      <ReviewSecurityButton />
+      <SecurityDetails details={details} intl={intl} />
+      <EmailText>{t("security.nothingElse")}</EmailText>
+      <ReviewSecurityButton intl={intl} />
       <EmailDivider />
-      <MutedText>
-        If this wasn't you, contact support at <SupportLink /> from this address
-        straight away, and we'll help you get your account back.
-      </MutedText>
+      <MutedText>{t.rich("emailChanged.notYou", supportLinkArgs)}</MutedText>
     </EmailLayout>
   );
 }

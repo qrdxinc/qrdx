@@ -2,8 +2,12 @@
 
 import { authClient } from "@repo/auth/client";
 import { LANDING_HEADER, REFERRAL_HEADER } from "@repo/auth/referral-keys";
+import { SIGN_IN_CODES_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 import { SSO_REQUIRED_ERROR as SSO_REQUIRED } from "@repo/auth/sso-required-rules";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -18,7 +22,10 @@ import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
 import { useAvailability } from "@/components/availability-provider";
 import { useLocaleRouter as useRouter } from "@/components/i18n/locale-link";
-import { ssoSignInErrorMessage } from "@/ee/sso/messages";
+import {
+  type SignInErrorTranslator,
+  ssoSignInErrorMessage,
+} from "@/ee/sso/messages";
 import { type SsoSignInOffer, ssoSignInOffer } from "@/ee/sso/sign-in-offer";
 import { SsoOffer } from "@/ee/sso/sso-offer";
 import { pendingReferralCode } from "@/lib/affiliates/referral-client";
@@ -30,6 +37,7 @@ import { TwoFactorChallenge } from "./two-factor-challenge";
 const CODE_LENGTH = 6;
 // Matches the server: 3 tries per code, a 5-minute expiry.
 const TRIES_PER_CODE = 3;
+const CODE_LIFETIME_MS = 5 * 60_000;
 const RESEND_COOLDOWN_MS = 30_000;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DIGITS_ONLY = "^\\d+$";
@@ -75,18 +83,24 @@ type AuthError = { code?: string; status?: number } | null | undefined;
 function sendErrorMessage(
   error: NonNullable<AuthError>,
   t: Translator<"auth.emailCodeSignIn">,
+  socialSignIn: boolean,
 ): string {
+  // No code can be emailed from this site at all (the same for any address).
+  if (error.code === SIGN_IN_CODES_UNAVAILABLE) {
+    return t("emailSignInIsntSet");
+  }
   if (error.status === 429) {
     return t("tooManyCodesRequestedWait");
   }
   if (error.code === "INVALID_EMAIL") return t("enterAValidEmailAddress");
-  return t("weCouldntSendACode");
+  return socialSignIn ? t("weCouldntSendACode") : t("weCouldntSendACodeTry");
 }
 
 /** Message, and whether this code can no longer be used. */
 function verifyErrorMessage(
   error: NonNullable<AuthError>,
   t: Translator<"auth.emailCodeSignIn">,
+  tErrors: SignInErrorTranslator,
 ): [string, boolean] {
   if (error.status === 429) {
     return [t("tooManyTriesWaitA"), false];
@@ -101,7 +115,7 @@ function verifyErrorMessage(
     case "BANNED_USER":
       return [t("thisAccountIsSuspendedContact"), true];
     case SSO_REQUIRED:
-      return [ssoSignInErrorMessage(SSO_REQUIRED), true];
+      return [ssoSignInErrorMessage(SSO_REQUIRED, tErrors), true];
     default:
       return [t("somethingWentWrongTryAgain"), false];
   }
@@ -117,6 +131,8 @@ interface EmailCodeSignInProps {
   /** Another sign-in method is in progress */
   disabled?: boolean;
   lastUsed?: boolean;
+  /** Google and GitHub sign-in both work here, so a failed send suggests them. */
+  socialSignIn?: boolean;
   /** The account asks for a second step (two-step verification) now, or not. */
   onTwoFactorChange?: (active: boolean) => void;
   /** The second step's method on screen, for the heading. */
@@ -146,12 +162,14 @@ export function EmailCodeSignIn({
   onSignedIn,
   disabled = false,
   lastUsed = false,
+  socialSignIn = false,
   onTwoFactorChange,
   onSecondStepChange,
   sso = null,
   onSsoOfferChange,
 }: EmailCodeSignInProps) {
   const t = useTranslations("auth.emailCodeSignIn");
+  const tErrors = useTranslations("auth.signInErrors");
   const router = useRouter();
   const id = useId();
   const affiliates = useAvailability().has("affiliates");
@@ -164,6 +182,7 @@ export function EmailCodeSignIn({
   const [verifying, setVerifying] = useState(false);
   const [wrongTries, setWrongTries] = useState(0);
   const [codeDead, setCodeDead] = useState(false);
+  const [codeExpiresAt, setCodeExpiresAt] = useState(0);
   const [resendAt, setResendAt] = useState(0);
   const [now, setNow] = useState(() => Date.now());
   // Two-step verification: where to go once the second step is done.
@@ -221,24 +240,33 @@ export function EmailCodeSignIn({
         type: "sign-in",
       });
       if (error) {
-        setError(sendErrorMessage(error, t));
+        // Over the limit, the server refuses before it makes a new code
+        // (signInCodeGate), so the last one works until it expires or runs
+        // out of tries.
+        const lastCodeWorks = !codeDead && Date.now() < codeExpiresAt;
+        if (resend && error.status === 429 && lastCodeWorks) {
+          setNotice(t("tooManyCodesRequestedSo"));
+          return;
+        }
+        setError(sendErrorMessage(error, t, socialSignIn));
         return;
       }
       const time = Date.now();
       setNow(time);
       setResendAt(time + RESEND_COOLDOWN_MS);
+      setCodeExpiresAt(time + CODE_LIFETIME_MS);
       setCode("");
       setWrongTries(0);
       setCodeDead(false);
       if (resend) {
-        setNotice("New code sent. The old one no longer works.");
+        setNotice(t("newCodeSent"));
       } else {
         showSsoOffer(null);
         onSentToChange(address);
       }
     } catch (err) {
       console.error("Email code request failed:", err);
-      setError("Something went wrong. Check your connection and try again.");
+      setError(t("connectionFailed"));
     } finally {
       setSending(false);
     }
@@ -265,7 +293,7 @@ export function EmailCodeSignIn({
     event.preventDefault();
     const address = email.trim();
     if (!EMAIL_PATTERN.test(address)) {
-      setError("Enter a valid email address.");
+      setError(t("enterAValidEmailAddress"));
       return;
     }
     void submitEmail(address);
@@ -301,17 +329,17 @@ export function EmailCodeSignIn({
           const address = sentTo;
           onSentToChange(null);
           showSsoOffer(address, { required: true, refused: true });
-          setError(ssoSignInErrorMessage(SSO_REQUIRED));
+          setError(ssoSignInErrorMessage(SSO_REQUIRED, tErrors));
           return;
         }
         const tries =
           error.code === "INVALID_OTP" ? wrongTries + 1 : wrongTries;
         setWrongTries(tries);
         if (error.code === "INVALID_OTP" && tries >= TRIES_PER_CODE) {
-          setError("Too many wrong tries. Send a new code.");
+          setError(t("tooManyWrongTriesSend"));
           setCodeDead(true);
         } else {
-          const [message, dead] = verifyErrorMessage(error, t);
+          const [message, dead] = verifyErrorMessage(error, t, tErrors);
           setError(message);
           if (dead) setCodeDead(true);
         }
@@ -327,7 +355,7 @@ export function EmailCodeSignIn({
     } catch (err) {
       console.error("Email code sign-in failed:", err);
       setCode("");
-      setError("Something went wrong. Check your connection and try again.");
+      setError(t("connectionFailed"));
     } finally {
       setVerifying(false);
     }
@@ -407,7 +435,7 @@ export function EmailCodeSignIn({
         >
           {verifying ? (
             <>
-              <ModuleOrbit aria-hidden className="size-3.5" />
+              <FinderTrace aria-hidden className="size-3.5" />
               {t("checkingCode")}
             </>
           ) : (

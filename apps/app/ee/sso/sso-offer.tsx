@@ -4,6 +4,7 @@ import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Building } from "iconsax-reactjs";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { startSsoSignIn } from "@/ee/sso/start-sso-sign-in";
 
@@ -50,6 +51,8 @@ export function SsoOffer({
   onBack,
   required = false,
 }: SsoOfferProps) {
+  const t = useTranslations("auth.ssoOffer");
+  const tErrors = useTranslations("auth.signInErrors");
   const id = useId();
   const [starting, setStarting] = useState(false);
   const busy = starting || sendingCode;
@@ -57,7 +60,7 @@ export function SsoOffer({
   const start = async () => {
     onError(null);
     setStarting(true);
-    const failure = await startSsoSignIn(email, callbackURL());
+    const failure = await startSsoSignIn(email, callbackURL(), tErrors);
     // Still busy while the browser goes to the identity provider.
     if (failure) {
       onError(failure);
@@ -79,7 +82,7 @@ export function SsoOffer({
           variant="outline"
         >
           <Building aria-hidden className="size-5" />
-          <span className="font-medium">Continue with SSO</span>
+          <span className="font-medium">{t("continueWithSso")}</span>
           {starting && <ModuleOrbit aria-hidden className="size-4" />}
         </Button>
         {lastUsed && (
@@ -87,7 +90,7 @@ export function SsoOffer({
             className="pointer-events-none absolute -top-2 right-3 px-1.5 py-0 text-[10px]"
             variant="secondary"
           >
-            Last used
+            {t("lastUsed")}
           </Badge>
         )}
       </div>
@@ -101,8 +104,8 @@ export function SsoOffer({
       >
         {error ??
           (required
-            ? "Your company requires it for this address. You'll continue on its sign-in page."
-            : "You'll continue on your company's sign-in page.")}
+            ? t("yourCompanyRequiresItFor")
+            : t("youllContinueOnYourCompanys"))}
       </p>
 
       {/* The 40 px tap targets keep the code step's spacing and edges. */}
@@ -113,7 +116,7 @@ export function SsoOffer({
           onClick={onBack}
           type="button"
         >
-          Use a different email
+          {t("useADifferentEmail")}
         </button>
         {onEmailCode && (
           <button
@@ -122,7 +125,7 @@ export function SsoOffer({
             onClick={onEmailCode}
             type="button"
           >
-            {sendingCode ? "Sending…" : "Email me a code"}
+            {sendingCode ? t("sending") : t("emailMeACode")}
           </button>
         )}
       </div>

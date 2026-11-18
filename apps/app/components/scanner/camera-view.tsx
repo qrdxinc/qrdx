@@ -1,6 +1,6 @@
 "use client";
 
-import { Scanframe } from "@repo/design-system/components/loaders";
+import { ScanLine } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { cn } from "@repo/design-system/lib/utils";
@@ -338,7 +338,7 @@ export function CameraView({
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center text-white">
             {status === "starting" ? (
               <>
-                <Scanframe aria-hidden />
+                <ScanLine aria-hidden />
                 <p className="text-sm">{t("starting")}</p>
               </>
             ) : (

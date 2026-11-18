@@ -110,6 +110,18 @@ describe("createMemoryLimiter", () => {
     expect(memory.limit("k").success).toBe(false);
   });
 
+  it("gives a count back for a negative rate, as Upstash's refund does", () => {
+    const time = clock(0);
+    const memory = createMemoryLimiter({ tokens: 2, windowMs: 1000 }, time.now);
+    memory.limit("k");
+    memory.limit("k");
+    expect(memory.limit("k").success).toBe(false);
+    // Even when full: a refund is never refused.
+    expect(memory.limit("k", -1).success).toBe(true);
+    expect(memory.limit("k")).toMatchObject({ success: true, remaining: 0 });
+    expect(memory.limit("k").success).toBe(false);
+  });
+
   it("keeps a bounded number of keys", () => {
     const memory = createMemoryLimiter(
       { tokens: 1, windowMs: 60_000 },

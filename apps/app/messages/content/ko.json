@@ -23963,6 +23963,12 @@
     "status": "machine",
     "context": "barcodeFormats.pages.code-93.usedFor.0"
   },
+  "24c8566504c9": {
+    "source": "Your own barcode on mail: Canada Post lists Code 93 among the barcodes it accepts next to the address on Personalized Mail.",
+    "text": "우편물에 넣는 나만의 바코드: Canada Post는 Personalized Mail의 주소 옆에 사용할 수 있는 바코드 중 하나로 Code 93을 안내하고 있어요.",
+    "status": "machine",
+    "context": "barcodeFormats.pages.code-93.usedFor.1"
+  },
   "8d204ecd0aaf": {
     "source": "If nothing requires Code 93, use Code 128: it holds lowercase letters too, and more scanners have it switched on.",
     "text": "Code 93이 꼭 필요한 게 아니라면 Code 128을 사용하세요. 소문자도 담을 수 있고, 이 방식을 켜 둔 스캐너가 더 많아요.",

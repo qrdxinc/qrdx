@@ -1,7 +1,10 @@
 "use client";
 
 import { Info } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ModuleWave,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -252,7 +255,7 @@ export function LinksStep({
   onContinue: (links: SourceLink[]) => void;
 }) {
   const t = useTranslations("app.dashboard.codes.importLinksStep");
-  const { name, capabilities } = API_PROVIDERS[provider];
+  const { name, capabilities, listScope } = API_PROVIDERS[provider];
   const connected = status?.connection === "active";
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
@@ -485,6 +488,12 @@ export function LinksStep({
           )}
         </div>
 
+        {listScope === "website" && (
+          <Note icon={<Info />}>
+            <p>{t("onlyWebsiteCodesListed", { name })}</p>
+          </Note>
+        )}
+
         {error && (
           <Note icon={<Warning2 />} tone="warning">
             <p>{error}</p>
@@ -599,7 +608,7 @@ export function LinksStep({
           <div className="text-muted-foreground flex items-center gap-2">
             {loadingAll !== null ? (
               <>
-                <ModuleOrbit aria-hidden className="size-4" />
+                <ModuleWave aria-hidden className="size-4" />
                 {t("loadingLinksLoadingall", {
                   loadingAll: formatCount(loadingAll),
                 })}
@@ -628,7 +637,7 @@ export function LinksStep({
           </div>
           <div className="flex items-center gap-2">
             {loading && page && (
-              <ModuleOrbit
+              <ModuleWave
                 aria-hidden
                 className="text-muted-foreground size-4"
               />

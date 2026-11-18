@@ -1,8 +1,8 @@
 import "server-only";
 
-import {
-  type EmailChangeCodeSender,
-  signInCodeRateLimited,
+import type {
+  EmailChangeCodeSender,
+  SignInCodeLimit,
 } from "@repo/auth/email-otp";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
@@ -21,7 +21,8 @@ import {
 // The same per-address limits as sign-in codes (./sign-in-code.tsx), on their
 // own counters: 5 per 15 minutes and 30 a day for each new address, shared
 // across instances through Upstash. Fail open when Upstash isn't configured.
-// The server actions also limit each user (_lib/email-change-actions.ts).
+// Checked by emailChangeCodeAllowed below, before a code is made. The server
+// actions also limit each user (_lib/email-change-actions.ts).
 const perAddressLimiter = createRateLimiter({
   prefix: "qrdx:email-change-code",
   limiter: slidingWindow(5, "15 m"),
@@ -32,19 +33,30 @@ const perAddressDailyLimiter = createRateLimiter({
 });
 
 /**
+ * Whether `email` may be sent another code that confirms it as a new
+ * address: 5 in 15 minutes, 30 a day, by its hashed address. Registered with
+ * @repo/auth next to the sender, which checks it before Better Auth looks the
+ * address up (signInCodeGate), so an address with an account and one without
+ * count alike, and a refused resend leaves the last code working. One call
+ * counts one request.
+ */
+export const emailChangeCodeAllowed: SignInCodeLimit = (email) =>
+  addressMayRequestCode(addressKey(email), [
+    perAddressLimiter,
+    perAddressDailyLimiter,
+  ]);
+
+/**
  * Emails the code that confirms a new address, to that address. In local dev
  * it is printed to the server log instead (like sign-in codes). Registered
- * with @repo/auth by app/(app)/settings/account/_lib/email-change-actions.ts.
+ * with @repo/auth by app/(app)/settings/account/_lib/email-change-actions.ts,
+ * which runs it after the answer. The per-address limit has run by now
+ * (emailChangeCodeAllowed).
  */
 export const sendEmailChangeCode: EmailChangeCodeSender = async ({
   email,
   otp,
 }) => {
-  const allowed = await addressMayRequestCode(addressKey(email), [
-    perAddressLimiter,
-    perAddressDailyLimiter,
-  ]);
-  if (!allowed) throw signInCodeRateLimited();
   // The new address has no account yet: the language the request was in.
   const intl = await emailIntlForAddress(email);
   await deliverSignInCode(

@@ -5,6 +5,7 @@ import cuid from "cuid";
 import { and, asc, count, eq, inArray, isNull, type SQL } from "drizzle-orm";
 import { z } from "zod";
 import { recordAuditEvent } from "@/ee/audit-log/record";
+import { trackDomainVerified } from "@/lib/analytics/domain-verified";
 import {
   type CustomDomainMode,
   checkManualDomain,
@@ -490,10 +491,10 @@ export async function addDomain(
   if (mode === "manual") return toView(row, 0);
 
   try {
-    return toView(
-      await saveCheck(row, state, await checkVercelDomain(hostname), mode),
-      0,
-    );
+    const check = await checkVercelDomain(hostname);
+    const saved = await saveCheck(row, state, check, mode);
+    if (saved.verified) trackDomainVerified(scope, saved);
+    return toView(saved, 0);
   } catch (error) {
     const failure = providerError(error, hostname, "addDomain");
     if (failure.status === 502) {
@@ -551,6 +552,7 @@ export async function verifyDomain(
       action: "domain.verified",
       target: { type: "domain", id: row.id, label: row.hostname },
     });
+    trackDomainVerified(scope, saved);
   }
   const counts = await codeCounts([saved.id]);
   return toView(saved, counts.get(saved.id) ?? 0);

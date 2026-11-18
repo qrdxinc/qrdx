@@ -33,6 +33,7 @@ import {
   CONFIRM_SIGN_IN_WRONG_ACCOUNT,
 } from "@repo/auth/confirm-sign-in-rules";
 import { UNVERIFIED_SIGN_UP_ERROR } from "@repo/auth/verified-sign-up";
+import type { Translator } from "@/lib/i18n/translator";
 
 /** How long a confirmation lasts for its session (a finished sign-in too). */
 export { CONFIRMATION_MINUTES } from "@repo/auth/confirm-sign-in-rules";
@@ -194,28 +195,33 @@ export function maskEmail(email: string): string {
   return `${email.slice(0, 1)}…${email.slice(at)}`;
 }
 
-const MAIL_PROVIDERS: { domains: string[]; label: string; href: string }[] = [
+const MAIL_PROVIDERS: { domains: string[]; name: string; href: string }[] = [
   {
     domains: ["gmail.com", "googlemail.com"],
-    label: "Open Gmail",
+    name: "Gmail",
     href: "https://mail.google.com/mail/",
   },
   {
     domains: ["outlook.com", "hotmail.com", "live.com", "msn.com"],
-    label: "Open Outlook",
+    name: "Outlook",
     href: "https://outlook.live.com/mail/",
   },
 ];
 
-/** A link to the address's webmail, when its domain is one we know. */
+/**
+ * A link to the address's webmail, when its domain is one we know. `open`
+ * makes the button's label from the provider's name (auth.mailProvider in
+ * messages/en.json); English by default.
+ */
 export function mailProviderFor(
   email: string,
+  open: (provider: string) => string = (provider) => `Open ${provider}`,
 ): { label: string; href: string } | null {
   const domain = email.slice(email.lastIndexOf("@") + 1).toLowerCase();
   const provider = MAIL_PROVIDERS.find((entry) =>
     entry.domains.includes(domain),
   );
-  return provider ? { label: provider.label, href: provider.href } : null;
+  return provider ? { label: open(provider.name), href: provider.href } : null;
 }
 
 export const CONFIRMATION_MESSAGES = {
@@ -254,6 +260,46 @@ export const CONFIRMATION_MESSAGES = {
   signInConfirmed:
     "Thanks, that's confirmed. You can make your change in the next 10 minutes.",
 } as const;
+
+/** CONFIRMATION_MESSAGES in any language. */
+export type ConfirmationMessages = Record<
+  keyof typeof CONFIRMATION_MESSAGES,
+  string
+>;
+
+/**
+ * CONFIRMATION_MESSAGES in the person's language (auth.confirmationMessages
+ * in messages/en.json): the dialog's own lines, and the answers the server
+ * sends it (./confirmation-server.tsx).
+ */
+export function confirmationMessages(
+  t: Translator<"auth.confirmationMessages">,
+): ConfirmationMessages {
+  return {
+    signedOut: t("signedOut"),
+    failed: t("failed"),
+    rateLimited: t("rateLimited"),
+    passkeyFailed: t("passkeyFailed"),
+    passkeyClosed: t("passkeyClosed"),
+    passkeyUnavailable: t("passkeyUnavailable"),
+    noAuthenticatorApp: t("noAuthenticatorApp"),
+    invalidCode: t("invalidCode"),
+    wrongCode: t("wrongCode"),
+    codeExpired: t("codeExpired"),
+    tooManyCodeAttempts: t("tooManyCodeAttempts"),
+    codeNotSent: t("codeNotSent"),
+    twoFactorOn: t("twoFactorOn"),
+    signInAgain: t("signInAgain"),
+    stillRequired: t("stillRequired"),
+    signInUnavailable: t("signInUnavailable"),
+    signInFailed: t("signInFailed"),
+    signInNotLinked: t("signInNotLinked"),
+    signInExpired: t("signInExpired"),
+    signInDifferentAccount: t("signInDifferentAccount"),
+    signInTwoFactorOn: t("signInTwoFactorOn"),
+    signInConfirmed: t("signInConfirmed"),
+  };
+}
 
 /** Where the dialog came back to after signing in again: `?confirm=…`. */
 export {
@@ -304,8 +350,14 @@ export function readConfirmReturn(href: string): {
   };
 }
 
-/** Better Auth's callback errors (`?error=`) after signing in again. */
-export function confirmSignInErrorMessage(code: string | null): string {
+/**
+ * Better Auth's callback errors (`?error=`) after signing in again, from
+ * `messages` (English by default).
+ */
+export function confirmSignInErrorMessage(
+  code: string | null,
+  messages: ConfirmationMessages = CONFIRMATION_MESSAGES,
+): string {
   switch (code) {
     case CONFIRM_SIGN_IN_WRONG_ACCOUNT:
     case "unable_to_create_user":
@@ -317,9 +369,9 @@ export function confirmSignInErrorMessage(code: string | null): string {
     case UNVERIFIED_SIGN_UP_ERROR.github:
     case UNVERIFIED_SIGN_UP_ERROR.google:
     case UNVERIFIED_SIGN_UP_ERROR.other:
-      return CONFIRMATION_MESSAGES.signInNotLinked;
+      return messages.signInNotLinked;
     default:
-      return CONFIRMATION_MESSAGES.signInFailed;
+      return messages.signInFailed;
   }
 }
 

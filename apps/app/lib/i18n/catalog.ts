@@ -1,6 +1,6 @@
-// Catalog bookkeeping for scripts/i18n-check.ts, scripts/i18n-translate.ts
-// and their tests. Node only (node:crypto): pages reach sourceHash() only on
-// the server, through lib/i18n/content-server.ts.
+// Catalog bookkeeping for scripts/i18n-check.ts, scripts/i18n-translate.ts,
+// scripts/i18n-review.ts and their tests. Node only (node:crypto): pages
+// reach sourceHash() only on the server, through lib/i18n/content-server.ts.
 //
 // messages/review/<locale>.json records, per key, the hash of the English it
 // was translated from and its review status. A translation is "stale" when
@@ -56,6 +56,79 @@ export function unflatten(
 
 export function sourceHash(english: string): string {
   return createHash("sha256").update(english).digest("hex").slice(0, 12);
+}
+
+/** How the scripts write files in messages/: two-space JSON, a newline at the end. */
+export function formatJson(value: unknown): string {
+  return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+export interface MarkReport {
+  /** The review file with the marked strings set to "reviewed", keys in their order. */
+  review: ReviewFile;
+  marked: string[];
+  /** Already reviewed, left as they are. */
+  reviewed: string[];
+  skipped: { key: string; reason: string }[];
+  /** Prefixes no English key falls under. */
+  unmatched: string[];
+}
+
+/**
+ * Marks the strings under `prefixes` reviewed (scripts/i18n-review.ts). A
+ * prefix is a key or a dotted part of one: "app.signIn" covers
+ * "app.signIn.title" but not "app.signInHelp". Only a translated string
+ * whose review entry matches the current English is marked; missing,
+ * unrecorded and stale strings are skipped with the reason.
+ */
+export function markReviewed({
+  english,
+  catalog,
+  review,
+  prefixes,
+}: {
+  english: Catalog;
+  catalog: Catalog;
+  review: ReviewFile;
+  prefixes: string[];
+}): MarkReport {
+  const source = flatten(english);
+  const translated = flatten(catalog);
+  const under = (key: string, prefix: string) =>
+    key === prefix || key.startsWith(`${prefix}.`);
+  const report: MarkReport = {
+    review: { ...review },
+    marked: [],
+    reviewed: [],
+    skipped: [],
+    unmatched: prefixes.filter(
+      (prefix) => ![...source.keys()].some((key) => under(key, prefix)),
+    ),
+  };
+  for (const [key, message] of source) {
+    if (!prefixes.some((prefix) => under(key, prefix))) continue;
+    const translation = translated.get(key);
+    const entry = review[key];
+    if (translation === undefined || translation.trim() === "") {
+      report.skipped.push({ key, reason: "missing (shows in English)" });
+    } else if (!entry) {
+      report.skipped.push({
+        key,
+        reason: "no review entry (run i18n:translate --record)",
+      });
+    } else if (entry.source !== sourceHash(message)) {
+      report.skipped.push({
+        key,
+        reason: "stale (the English changed since it was translated)",
+      });
+    } else if (entry.status === "reviewed") {
+      report.reviewed.push(key);
+    } else {
+      report.review[key] = { ...entry, status: "reviewed" };
+      report.marked.push(key);
+    }
+  }
+  return report;
 }
 
 export interface LocaleReport {

@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Keluar di semua perangkat lain",
           "thisDevice": "Perangkat ini",
+          "activeNow": "Aktif sekarang",
+          "activeJustNow": "Baru saja aktif",
+          "activeAgo": "Aktif {relative}",
+          "activeOn": "Aktif pada {date}",
+          "signedIn": "Masuk pada {date}",
           "signOut": "Keluar",
           "signOutEverywhereElse2": "Keluar di semua perangkat lain?",
           "thisDeviceStaysSignedIn": "Perangkat ini tetap masuk.",
@@ -7274,6 +7279,29 @@
           "show": "Tampilkan",
           "clearSearch": "Hapus pencarian"
         },
+        "pathAliases": {
+          "title": "Alias path",
+          "description": "Tautan lama di {domain} dari penyedia lain, seperti {domain}/r/abc, yang harus membuka kode ini. Setiap path harus cocok persis; query string tidak berpengaruh. Alias pertama sebuah domain mungkin butuh waktu satu menit untuk mulai berfungsi.",
+          "placeholder": "/r/abc",
+          "add": "Tambah",
+          "remove": "Hapus {path}",
+          "loadFailed": "Alias path tidak dapat dimuat. Tutup dialog ini lalu buka kembali.",
+          "failed": "Perubahan tidak dapat disimpan. Coba lagi.",
+          "verifyFirst": "Verifikasi {domain} di halaman Domain untuk menambahkan alias path.",
+          "problems": {
+            "empty": "Masukkan path setelah domain, misalnya /r/abc.",
+            "length": "Gunakan maksimal {maxLength, number} karakter.",
+            "segments": "Gunakan maksimal {maxSegments, number} bagian yang dipisahkan oleh /.",
+            "characters": "Gunakan huruf, angka, - _ . dan ~ di antara garis miring, tanpa bagian kosong.",
+            "backHalf": "Path ini cocok sebagai back-half. Berikan back-half tersebut ke kode ini sebagai gantinya.",
+            "reserved": "QRdx menggunakan path ini pada domain kustom.",
+            "otherDomain": "Tautan itu berada di domain lain.",
+            "taken": "Kode lain di domain ini sudah merespons pada path ini.",
+            "hostedPage": "Sebuah kode di domain ini memiliki back-half ini, dan halaman yang di-hosting miliknya merespons pada path ini.",
+            "limit": "Satu kode dapat memiliki hingga {max, number} alias path.",
+            "unavailable": "Alias path belum tersedia di server ini."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Domain tautan pendek",
           "defaulthostQDefault": "{defaultHost}/q/ (default)",
@@ -7379,6 +7407,7 @@
           "reconnect": "Hubungkan ulang",
           "noLinksMatchTheseFilters": "Tidak ada tautan yang cocok dengan filter ini.",
           "noLinksInThisName": "Tidak ada tautan di akun {name} ini.",
+          "onlyWebsiteCodesListed": "Hanya kode situs web dinamis yang ditampilkan. Jenis kode {name} lainnya (PDF, vCard Plus, formulir, dan sejenisnya) membuka halaman yang di-hosting oleh {name}, jadi buat ulang kode tersebut di QRdx.",
           "theNameSignInWas": "Proses masuk {name} dibatalkan.",
           "couldntConnectNameTryAgain": "Tidak dapat terhubung ke {name}. Coba lagi."
         },
@@ -7422,7 +7451,8 @@
           "keepingBackHalvesIsPart": "Mempertahankan back-half termasuk dalam {slugPlans}.",
           "yourPlanDoesntKeepBack": "Paket Anda tidak mempertahankan back-half.",
           "random": "acak",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "Juga merespons di {link}, sehingga kode yang dicetak dengan tautan lama tetap berfungsi."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Dari akun yang terhubung",
@@ -7478,9 +7508,11 @@
           "reviewUndo": "Tinjau pembatalan",
           "keepMyPrintedCodesWorking": "Jaga kode cetak saya tetap berfungsi",
           "optionalPointEachOldName": "Opsional. Arahkan setiap tautan {name} lama ke kode QRdx barunya, agar kode yang sudah dicetak tetap berfungsi dan pemindaiannya muncul di QRdx. Anda akan melihat setiap perubahan terlebih dahulu dan dapat membatalkannya.",
+          "oldLinksNotFound": "{name} tidak mengirimkan tautan yang dibuka oleh kode cetak Anda, sehingga QRdx tidak dapat mengarahkannya ke kode baru dari sini. Kode tersebut tetap membuka tujuan saat ini. Agar pemindaian kode tersebut masuk ke QRdx, unduh CSV pemetaan, lalu di {name} buka setiap kode dan ganti tujuannya dengan tautan QRdx barunya.",
           "pointYourOldCodesAt": "Arahkan kode lama Anda ke QRdx",
-          "oldProviderCodesLiveOnItsDomain": "Kode dari penyedia lama Anda berada di domainnya sendiri, sehingga QRdx tidak dapat mengubahnya. Untuk setiap kode lama:",
-          "providerCodesLiveOnItsDomain": "Kode dari {name} berada di domainnya sendiri, sehingga QRdx tidak dapat mengubahnya. Untuk setiap kode lama:",
+          "oldProviderCodesLiveOnItsDomain": "QRdx tidak dapat mengubah kode pada domain milik penyedia lama Anda. Untuk setiap kode lama tersebut:",
+          "providerCodesLiveOnItsDomain": "QRdx tidak dapat mengubah kode pada domain milik {name}. Untuk setiap kode lama tersebut:",
+          "ownDomainCodesCanMove": "Kode pada domain milik Anda sendiri tidak memerlukan langkah ini: pindahkan domain ke QRdx dan kode tetap bisa dipakai di materi cetak. <link>Cara memindahkan domain QR Anda</link>",
           "oldLinksPointToQrdx": "{count, plural, one {# tautan {name} lama mengarah} other {# tautan {name} lama mengarah}} ke QRdx",
           "backHalvesOnBackhalfdomain": "Back-half di {backHalfDomain}",
           "attachCodes": "Lampirkan kode",
@@ -8545,7 +8577,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "Kembali ke QRdx"
+        "backToQrdx": "Kembali ke QRdx",
+        "signedOut": "Anda sudah keluar.",
+        "pageTitle": "Masuk"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8561,7 +8595,11 @@
       "sessionCheck": {
         "continue": "Lanjutkan",
         "signOut": "Keluar",
-        "backToQrdx": "Kembali ke QRdx"
+        "backToQrdx": "Kembali ke QRdx",
+        "title": "Konfirmasi bahwa ini Anda",
+        "body": "Login ini digunakan dari negara dan browser yang berbeda dari tempat sesi dimulai. Konfirmasi bahwa ini Anda untuk melanjutkan.",
+        "signedOut": "Masuk lagi untuk melanjutkan.",
+        "failed": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi."
       }
     },
     "join": {
@@ -8593,7 +8631,8 @@
           "signInToQrdxTo": "Masuk ke QRdx untuk melanjutkan ke",
           "continueWithGoogle": "Lanjutkan dengan Google",
           "continueWithGithub": "Lanjutkan dengan GitHub",
-          "youllReviewThesePermissionsBefore": "Anda akan meninjau izin ini sebelum apa pun dibagikan."
+          "youllReviewThesePermissionsBefore": "Anda akan meninjau izin ini sebelum apa pun dibagikan.",
+          "continueToSignIn": "Lanjutkan untuk masuk"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Tautan ini tidak dapat digunakan",
@@ -8612,6 +8651,20 @@
           "authorize": "Otorisasi",
           "somethingWentWrongCheckYour": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi."
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "Keluar dari QRdx?",
+        "signOut": "Keluar",
+        "cancel": "Batal",
+        "youreStillSignedIn": "Anda masih masuk",
+        "signingOutDidntWorkCheck": "Gagal keluar. Periksa koneksi Anda dan coba lagi.",
+        "tryAgain": "Coba lagi",
+        "backToDashboard": "Kembali ke dasbor",
+        "signingYouOut": "Sedang mengeluarkan Anda…",
+        "oneMoment": "Sebentar…",
+        "pageTitle": "Keluar"
       }
     }
   },
@@ -8642,9 +8695,143 @@
       "enter": "Masukkan kode ini di QRdx untuk menjadikannya email akun Anda:",
       "ignore": "Jika Anda tidak memintanya, abaikan email ini. Tidak ada yang berubah tanpa kode."
     },
+    "emailChanged": {
+      "subject": "Email QRdx Anda telah diubah",
+      "preview": "Akun QRdx Anda kini menggunakan {newEmail}.",
+      "reason": "Anda menerima email ini karena alamat ini adalah email untuk sebuah akun QRdx.",
+      "body": "Akun QRdx Anda kini menggunakan <strong>{newEmail}</strong>. Kode masuk dan undangan tim akan dikirim ke alamat tersebut mulai sekarang.",
+      "notYou": "Jika ini bukan Anda, segera hubungi dukungan di <support>{email}</support> dari alamat ini, dan kami akan membantu Anda memulihkan akun."
+    },
+    "security": {
+      "device": "Perangkat",
+      "location": "Perkiraan lokasi",
+      "browserOnOs": "{browser} di {os}",
+      "osDevice": "Perangkat {os}",
+      "unknownDevice": "Perangkat tidak dikenal",
+      "cityCountry": "{city}, {country}",
+      "ip": "Alamat IP",
+      "time": "Waktu",
+      "by": "Oleh",
+      "support": "Dukungan QRdx",
+      "review": "Tinjau keamanan",
+      "nothingElse": "Jika ini memang Anda, tidak ada yang perlu dilakukan lagi."
+    },
+    "confirmationCode": {
+      "subject": "Kode konfirmasi QRdx Anda",
+      "preview": "Masukkan kode ini untuk memastikan ini Anda. Kode berlaku selama {minutes, plural, other {# menit}}.",
+      "reason": "Anda menerima email ini karena seseorang meminta perubahan keamanan pada akun QRdx dengan alamat ini.",
+      "heading": "Konfirmasi bahwa ini Anda",
+      "enter": "Masukkan kode ini di QRdx untuk memastikan ini Anda sebelum keamanan akun Anda diubah:",
+      "notYou": "Jika Anda tidak memintanya, jangan masukkan kode ini: mungkin ada orang lain yang masuk ke akun Anda. Tinjau keamanan Anda dan hubungi dukungan di <support>{email}</support> dari alamat ini."
+    },
+    "newSignIn": {
+      "subject": "Login baru ke akun QRdx Anda",
+      "preview": "{device} masuk ke akun QRdx Anda{hasLocation, select, yes { di dekat {location}} other {}}.",
+      "newDevice": "Perangkat baru",
+      "reason": "Anda menerima email ini karena ini adalah alamat sebuah akun QRdx, dan ada browser atau perangkat yang masuk ke akun tersebut untuk pertama kalinya.",
+      "body": "Baru saja ada browser atau perangkat yang belum pernah masuk ke akun QRdx Anda sebelumnya.",
+      "signedInWith": "Masuk dengan",
+      "nothingToDo": "Jika ini memang Anda, tidak ada yang perlu dilakukan.",
+      "notYou": "Jika ini bukan Anda:",
+      "signOut": "Masuk, buka Pengaturan → Profil & keamanan, lalu di bagian Sesi klik Keluar di semua perangkat lain.",
+      "turnOn": "Aktifkan verifikasi dua langkah di halaman yang sama, sehingga untuk masuk juga diperlukan passkey atau aplikasi autentikator Anda.",
+      "contact": "Hubungi dukungan di <support>{email}</support> dari alamat ini, dan kami akan membantu mengamankan akun Anda.",
+      "methods": {
+        "emailOtp": "Kode email",
+        "passkey": "Passkey",
+        "sso": "Single sign-on"
+      },
+      "secondSteps": {
+        "totp": "kode autentikator",
+        "backupCode": "kode cadangan",
+        "passkey": "sebuah passkey"
+      },
+      "withSecondStep": "{method}, lalu {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Anda menerima email ini karena ini adalah alamat akun QRdx, dan kami memberi tahu Anda tentang setiap perubahan pada cara akun ini masuk.",
+      "notYou": "Jika ini bukan Anda, masuklah dan hapus passkey yang tidak Anda kenali, lalu hubungi dukungan di <support>{email}</support> dari alamat ini.",
+      "added": {
+        "subject": "Sebuah passkey ditambahkan ke akun QRdx Anda",
+        "preview": "Passkey \"{name}\" kini dapat digunakan untuk masuk ke akun QRdx Anda.",
+        "body": "Passkey <strong>{name}</strong> kini dapat digunakan untuk masuk ke akun QRdx Anda, dan berfungsi sebagai langkah kedua saat verifikasi dua langkah aktif."
+      },
+      "removed": {
+        "subject": "Sebuah passkey dihapus dari akun QRdx Anda",
+        "preview": "Passkey \"{name}\" tidak lagi dapat digunakan untuk masuk ke akun QRdx Anda.",
+        "body": "Passkey <strong>{name}</strong> tidak lagi dapat digunakan untuk masuk ke akun QRdx Anda."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Anda menerima email ini karena ini adalah alamat akun QRdx, dan keamanan proses masuknya berubah.",
+      "notYou": "Jika ini bukan Anda, segera hubungi dukungan di <support>{email}</support> dari alamat ini, dan kami akan membantu mengamankan akun Anda.",
+      "on": {
+        "subject": "Verifikasi dua langkah aktif di akun QRdx Anda",
+        "heading": "Verifikasi dua langkah aktif",
+        "body": "Masuk ke QRdx kini meminta langkah kedua: passkey Anda atau kode dari aplikasi autentikator Anda. Kode cadangan dapat digunakan jika Anda tidak bisa memakai keduanya."
+      },
+      "off": {
+        "subject": "Verifikasi dua langkah dinonaktifkan di akun QRdx Anda",
+        "heading": "Verifikasi dua langkah nonaktif",
+        "body": "Masuk ke QRdx tidak lagi meminta langkah kedua. Kode cadangan Anda tidak lagi berfungsi."
+      },
+      "backupCodes": {
+        "subject": "Kode cadangan baru untuk akun QRdx Anda",
+        "heading": "Anda punya kode cadangan baru",
+        "body": "Kode cadangan baru telah dibuat untuk akun QRdx Anda. Kode yang lama tidak lagi berfungsi."
+      },
+      "appAdded": {
+        "subject": "Aplikasi autentikator ditambahkan ke akun QRdx Anda",
+        "heading": "Aplikasi autentikator ditambahkan",
+        "body": "Kode dari aplikasi autentikator yang baru saja Anda siapkan kini berfungsi sebagai langkah kedua saat Anda masuk ke QRdx."
+      },
+      "appRemoved": {
+        "subject": "Aplikasi autentikator dihapus dari akun QRdx Anda",
+        "heading": "Aplikasi autentikator dihapus",
+        "body": "Kode dari aplikasi autentikator Anda tidak lagi berfungsi untuk masuk ke QRdx. Verifikasi dua langkah tetap aktif dengan metode Anda yang lain."
+      },
+      "supportOff": {
+        "subject": "Dukungan QRdx menonaktifkan verifikasi dua langkah",
+        "heading": "Verifikasi dua langkah nonaktif",
+        "body": "Dukungan QRdx menonaktifkan verifikasi dua langkah untuk akun Anda dan mengeluarkan akun dari semua perangkat. Proses masuk tidak lagi meminta langkah kedua. Anda dapat mengaktifkannya kembali di Pengaturan → Profil & keamanan."
+      },
+      "supportResetScheduled": {
+        "subject": "Dukungan QRdx akan menonaktifkan verifikasi dua langkah",
+        "heading": "Dukungan akan menonaktifkan verifikasi dua langkah",
+        "body": "Seseorang meminta dukungan QRdx untuk menonaktifkan verifikasi dua langkah pada akun Anda, dengan alasan kehilangan semua cara untuk melakukan langkah kedua.",
+        "when": "Dukungan akan menonaktifkannya {hasDate, select, yes {pada {date} (UTC)} other {dalam 7 hari}} dan mengeluarkan akun Anda dari semua perangkat. Sampai saat itu, tidak ada yang berubah.",
+        "howToStop": "Jika Anda yang meminta ini, tidak ada yang perlu dilakukan. Jika bukan, masuk ke QRdx dengan aplikasi autentikator atau kode cadangan Anda: itu akan membatalkannya. Atau batalkan di Pengaturan → Profil & keamanan, atau balas email ini."
+      },
+      "supportResetCancelled": {
+        "subject": "Verifikasi dua langkah tetap aktif untuk akun QRdx Anda",
+        "heading": "Verifikasi dua langkah tetap aktif",
+        "body": "Permintaan dukungan untuk menonaktifkan verifikasi dua langkah pada akun Anda telah dibatalkan. Tidak ada yang berubah.",
+        "byPerson": "Anda membatalkan permintaan dukungan untuk menonaktifkan verifikasi dua langkah pada akun QRdx Anda.",
+        "bySignIn": "Anda masuk dengan aplikasi autentikator atau kode cadangan, sehingga permintaan dukungan untuk menonaktifkan verifikasi dua langkah pada akun QRdx Anda dibatalkan.",
+        "bySupport": "Dukungan QRdx membatalkan permintaan untuk menonaktifkan verifikasi dua langkah pada akun Anda.",
+        "staysOn": "Verifikasi dua langkah tetap aktif, dengan kode cadangan dan metode Anda seperti sebelumnya."
+      },
+      "backupCodeUsed": {
+        "subject": "Kode cadangan digunakan pada akun QRdx Anda",
+        "heading": "Kode cadangan digunakan",
+        "body": "Salah satu kode cadangan Anda baru saja digunakan untuk masuk ke akun QRdx Anda. Setiap kode hanya berlaku sekali, jadi kode itu tidak berlaku lagi.",
+        "toConfirm": "Salah satu kode cadangan Anda baru saja digunakan untuk memastikan bahwa itu Anda sebelum perubahan keamanan pada akun QRdx Anda. Setiap kode hanya berlaku sekali, jadi kode itu tidak berlaku lagi.",
+        "left": "{count, plural, =0 {Itu adalah kode cadangan terakhir Anda.} other {Anda memiliki # kode cadangan tersisa.}}",
+        "makeNew": "Buat kode baru di Pengaturan → Profil & keamanan, agar Anda tetap punya cara masuk saat tidak dapat menggunakan passkey atau aplikasi autentikator."
+      },
+      "signedOutElsewhere": "Semua perangkat lain yang masuk ke akun Anda telah dikeluarkan, sehingga masing-masing akan masuk lagi dengan langkah kedua."
+    },
+    "payoutEmailNotice": {
+      "subject": "Pembayaran afiliasi QRdx Anda kini dikirim ke alamat PayPal baru",
+      "preview": "Pembayaran afiliasi dari QRdx akan dikirim ke {paypalEmail}.",
+      "reason": "Anda menerima email ini karena ini adalah alamat akun QRdx dalam program afiliasi, dan kami memberi tahu Anda tentang setiap perubahan tujuan pembayarannya.",
+      "body": "{replaced, select, yes {Alamat PayPal untuk pembayaran afiliasi Anda telah diubah.} other {Alamat PayPal untuk pembayaran afiliasi Anda telah ditambahkan.}} Mulai sekarang, kami mengirim pembayaran Anda ke <strong>{paypalEmail}</strong>.",
+      "notYou": "Jika ini bukan Anda, masuk, ubah kembali alamatnya di Pengaturan → Program afiliasi, lalu hubungi dukungan di <support>{email}</support> dari alamat ini sebelum pembayaran berikutnya."
+    },
     "alerts": {
       "viewAnalytics": "Lihat analitik pemindaian",
-      "milestoneReason": "Anda menerima ini karena peringatan tonggak pemindaian aktif untuk {workspace}."
+      "milestoneReason": "Anda menerima ini karena peringatan tonggak pemindaian aktif untuk {workspace}.",
+      "yourWorkspace": "workspace Anda"
     },
     "firstScan": {
       "subject": "{code} mendapat pemindaian pertama",
@@ -8674,6 +8861,12 @@
       "shortLink": "Tautan pendek",
       "opens": "Dibuka",
       "changed": "Diubah",
+      "fields": {
+        "destination": "Tujuan",
+        "title": "Judul",
+        "design": "Desain",
+        "domain": "Domain tautan pendek"
+      },
       "open": "Buka kode",
       "created": {
         "heading": "Kode baru: {code}",
@@ -8685,6 +8878,80 @@
         "reason": "Anda menerima email ini karena notifikasi perubahan kode aktif untuk {workspace}.",
         "body": "{who} mengubah kode QR dinamis ini di {workspace}. Kode QR yang sudah dicetak tetap berfungsi dan kini mengikuti pengaturan baru."
       }
+    },
+    "teamInvite": {
+      "subject": "{inviter} mengundang Anda ke {team} di QRdx sebagai {role, select, owner {pemilik} admin {admin} member {anggota} billing {pengelola penagihan} other {pengamat}}",
+      "reason": "Anda menerima email ini karena seseorang mengundang alamat ini ke ruang kerja QRdx.",
+      "heading": "Gabung ke {team} di QRdx",
+      "body": "{inviter} mengundang Anda ke ruang kerja {team} sebagai {role, select, owner {pemilik} admin {admin} member {anggota} billing {pengelola penagihan} other {pengamat}}.",
+      "roles": {
+        "owner": "Pemilik dapat melakukan semuanya, termasuk mengelola penagihan dan menghapus ruang kerja.",
+        "admin": "Admin mengelola anggota, pengaturan, domain, dan kode semua orang.",
+        "member": "Anggota membuat kode dan halaman serta mengedit kode di ruang kerja.",
+        "billing": "Pengelola penagihan mengurus paket dan penagihan, serta dapat melihat semua hal lainnya tanpa mengubahnya.",
+        "viewer": "Pengamat melihat kode, halaman, dan analitik ruang kerja tanpa mengubah apa pun."
+      },
+      "accept": "Terima undangan",
+      "expires": "Masuk dengan alamat email ini untuk menerima. Undangan berakhir pada {date}. Jika Anda tidak mengharapkannya, abaikan saja email ini.",
+      "pasteLink": "Atau tempel tautan ini di browser Anda: {url}",
+      "someone": "Rekan tim"
+    },
+    "portalInvite": {
+      "subject": "{portal} membagikan laporan kode QR kepada Anda",
+      "reason": "Anda menerima email ini karena {inviter} di {portal} mengundang alamat ini untuk melihat laporan kode QR mereka.",
+      "heading": "Laporan kode QR Anda",
+      "body": "{hasFolders, select, yes {{inviter} mengundang Anda untuk melihat kode QR milik {portal} di {folders}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.} other {{inviter} mengundang Anda untuk melihat kode QR milik {portal}: seberapa sering tiap kode dipindai, di mana dan pada perangkat apa, serta halaman yang dibuka. Hanya bisa dilihat.}}",
+      "open": "Buka laporan",
+      "signIn": "Masuk dengan alamat email ini: kami akan mengirimkan kode sekali pakai. Jika Anda tidak mengharapkannya, abaikan saja.",
+      "pasteLink": "Atau tempel tautan ini di browser Anda: {url}",
+      "yourAgency": "Agensi Anda"
+    },
+    "limitNotice": {
+      "subject": "{level, select, full {{label}: batas tercapai di {workspace}} other {{label}: {value} terpakai di {workspace}}}",
+      "preview": "{level, select, full {{workspace} telah mencapai batas {noun}} other {{workspace} telah memakai {value} {noun}}}",
+      "heading": "{level, select, full {{workspace} telah mencapai batas paket} other {{workspace} hampir mencapai batas paket}}",
+      "body": "{level, select, full {{workspace} telah menggunakan semua {noun}.} other {{workspace} telah menggunakan {value} {noun}.}}",
+      "plan": "Paket",
+      "button": "Lihat paket dan penggunaan",
+      "howOften": "Anda menerima paling banyak dua email seperti ini per batas setiap bulan: satu pada 90% dan satu pada 100%.",
+      "ownerReason": "Anda menerima ini karena Anda adalah pemilik {workspace} di QRdx.",
+      "artReason": "Anda menerima ini karena Anda membuat seni AI di {workspace} di QRdx. Kuotanya dihitung untuk Anda.",
+      "label": "{limit, select, dynamicCodes {Kode QR dinamis} landingPages {Halaman yang di-hosting} formResponses {Respons formulir} storage {Penyimpanan file} savedThemes {Tema tersimpan} other {Gambar seni AI}}",
+      "noun": "{limit, select, dynamicCodes {kode QR dinamis} landingPages {halaman yang di-hosting} formResponses {respons formulir} storage {penyimpanan file} savedThemes {tema tersimpan} other {gambar seni AI}}",
+      "planName": "{plan, select, free {Gratis} pro {Pro} other {Business}}",
+      "value": "{used} dari {cap}",
+      "amount": "{limit, select, dynamicCodes {{count, plural, other {# kode QR dinamis aktif}}} landingPages {{count, plural, other {# halaman yang di-hosting}}} formResponses {{count, plural, other {# respons formulir}}} savedThemes {{count, plural, other {# tema tersimpan}}} other {{count, plural, other {# gambar seni AI}}}}",
+      "storageAmount": "{size} penyimpanan file",
+      "amountLeft": "{limit, select, dynamicCodes {{count, plural, other {Tersisa # kode dinamis aktif}}} landingPages {{count, plural, other {Tersisa # halaman yang di-hosting}}} formResponses {{count, plural, other {Tersisa # respons formulir}}} savedThemes {{count, plural, other {Tersisa # tema tersimpan}}} other {{count, plural, other {Tersisa # gambar seni AI}}}}",
+      "storageLeft": "Tersisa {size}",
+      "left": "{monthly, select, yes {{left} bulan ini di {plan}.} other {{left} di {plan}.}}",
+      "includes": "{monthly, select, yes {{plan} mencakup {amount} per bulan.} other {{plan} mencakup {amount}.}}",
+      "liftUnlimited": "{limit, select, dynamicCodes {kode tanpa batas} landingPages {halaman tanpa batas} formResponses {respons tanpa batas} storage {penyimpanan tanpa batas} savedThemes {tema tanpa batas} other {gambar tanpa batas}}",
+      "liftCount": "{limit, select, dynamicCodes {{count, number} kode} landingPages {{count, number} halaman} formResponses {{count, number} respons per bulan} savedThemes {{count, number} tema} other {{count, number} gambar per bulan}}",
+      "liftShared": "{lift}, dipakai bersama oleh ruang kerja",
+      "upgrade": "{limit, select, dynamicCodes {Arsipkan satu atau tingkatkan ke {plan} untuk mendapatkan {lift}.} landingPages {Hapus satu atau tingkatkan ke {plan} untuk mendapatkan {lift}.} storage {Hapus file yang tidak lagi Anda perlukan atau tingkatkan ke {plan} untuk mendapatkan {lift}.} savedThemes {Hapus satu atau tingkatkan ke {plan} untuk mendapatkan {lift}.} other {Tingkatkan ke {plan} untuk mendapatkan {lift}.}}",
+      "askOwner": "{limit, select, dynamicCodes {Arsipkan satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} landingPages {Hapus satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} storage {Hapus file yang tidak lagi Anda perlukan, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} savedThemes {Hapus satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} other {Minta pemilik ruang kerja untuk meningkatkan ke {plan}.}}",
+      "makeRoom": "{limit, select, dynamicCodes {Arsipkan satu untuk memberi ruang.} landingPages {Hapus satu untuk memberi ruang.} storage {Hapus file yang tidak lagi Anda perlukan untuk memberi ruang.} savedThemes {Hapus satu untuk memberi ruang.} other {}}",
+      "resets": "Diatur ulang {date}.",
+      "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}"
+    },
+    "weeklyDigest": {
+      "subject": "Minggu Anda di QRdx: {scans, plural, other {# pemindaian}}",
+      "preview": "{scans, plural, other {# pemindaian}} di {workspace} minggu lalu",
+      "reason": "Anda menerima ini karena ringkasan mingguan aktif untuk {workspace}.",
+      "yourWorkspace": "Workspace Anda",
+      "heading": "Minggu Anda di QRdx",
+      "scans": "Pemindaian",
+      "uniqueVisitors": "Pengunjung unik",
+      "formResponses": "Respons formulir",
+      "newCodes": "Kode baru",
+      "newThisWeek": "Baru minggu ini",
+      "sameAsLastWeek": "Sama seperti minggu lalu",
+      "change": "{change} dibanding minggu lalu",
+      "topCodes": "Kode teratas",
+      "countries": "Dari mana orang memindai",
+      "newCodesLine": "{count, plural, other {# kode baru}} minggu ini.",
+      "open": "Buka dasbor Anda"
     }
   },
   "auth": {
@@ -8708,11 +8975,25 @@
       "thatCodeHasExpiredSend": "Kode tersebut sudah kedaluwarsa. Kirim kode baru.",
       "tooManyWrongTriesSend": "Terlalu banyak percobaan yang salah. Kirim kode baru.",
       "thisAccountIsSuspendedContact": "Akun ini ditangguhkan. Hubungi dukungan jika Anda merasa ini sebuah kesalahan.",
-      "somethingWentWrongTryAgain": "Terjadi kesalahan. Coba lagi."
+      "somethingWentWrongTryAgain": "Terjadi kesalahan. Coba lagi.",
+      "newCodeSent": "Kode baru telah dikirim. Kode lama tidak berlaku lagi.",
+      "connectionFailed": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi.",
+      "emailSignInIsntSet": "Masuk dengan email belum disiapkan di situs ini.",
+      "weCouldntSendACodeTry": "Kami tidak dapat mengirim kode saat ini. Coba lagi dalam beberapa menit.",
+      "tooManyCodesRequestedSo": "Terlalu banyak permintaan kode, jadi kami tidak mengirim kode lagi. Kode terbaru di kotak masuk Anda masih berlaku."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Lanjutkan dengan passkey",
-      "lastUsed": "Terakhir dipakai"
+      "lastUsed": "Terakhir dipakai",
+      "errors": {
+        "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi.",
+        "userVerification": "Passkey tersebut tidak meminta PIN, sidik jari, atau wajah Anda. Gunakan passkey yang memintanya, atau masuk dengan cara lain.",
+        "notFound": "Passkey tersebut tidak lagi tertaut ke akun QRdx. Masuk dengan cara lain.",
+        "banned": "Akun ini ditangguhkan. Hubungi dukungan jika Anda merasa ini sebuah kesalahan.",
+        "ssoRequired": "Perusahaan Anda mewajibkan single sign-on untuk akun ini. Masuk dengan SSO.",
+        "failed": "Passkey tersebut tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
+        "connection": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi."
+      }
     },
     "signInPanel": {
       "codeSentTo": "Kode dikirim ke <strong>{email}</strong>",
@@ -8736,7 +9017,13 @@
       "freeToStartNoCard": "Gratis untuk memulai, tanpa kartu.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "Masuk dengan {label} saat ini tidak tersedia"
+      "labelSignInIsNot": "Masuk dengan {label} saat ini tidak tersedia",
+      "signInIsntSetUp": "Fitur masuk belum disiapkan",
+      "thisSiteHasNoEmail": "Situs ini belum mengaktifkan cara masuk dengan email, Google, atau GitHub, sehingga akun baru tidak dapat dibuat di sini.",
+      "runThisSiteThe": "Mengelola situs ini? <link>Panduan self-hosting</link> menjelaskan cara mengaktifkannya.",
+      "newToQrdxYourFirst": "Baru di QRdx? Akun gratis Anda dibuat saat Anda pertama kali masuk.",
+      "loading": "Memuat…",
+      "weCouldntCheckHow": "Kami tidak dapat memeriksa cara masuk di sini. <retry>Coba lagi</retry>, atau <link>buka halaman masuk</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Memuat metode masuk Anda",
@@ -8818,7 +9105,21 @@
       "resendInSecondsleftS": "Kirim ulang dalam {secondsLeft, number} dtk",
       "resendCode": "Kirim ulang kode",
       "whyAmIAsked": "Mengapa saya diminta?",
-      "whyAmIAskedAgain": "Mengapa saya diminta lagi?"
+      "whyAmIAskedAgain": "Mengapa saya diminta lagi?",
+      "switchTo": {
+        "passkey": "Gunakan passkey Anda",
+        "totp": "Gunakan kode autentikator",
+        "backup": "Gunakan kode cadangan",
+        "email": "Kirim kode ke email",
+        "signInWith": "Masuk dengan {provider}",
+        "sign-in-again": "Masuk lagi"
+      },
+      "signInWithSsoAgain": "Masuk lagi dengan SSO perusahaan Anda. Anda akan kembali ke halaman ini, lalu ulangi perubahan Anda.",
+      "newCodeSent": "Kode baru telah dikirim. Kode lama tidak berlaku lagi.",
+      "reasons": {
+        "continue-session": "Proses masuk ini digunakan dari negara dan browser yang berbeda dari tempat awalnya, jadi kami memastikan ini benar-benar Anda sebelum melanjutkan.",
+        "link-slack-account": "Setelah tertaut, siapa pun yang menggunakan akun Slack tersebut dapat membuat kode terlacak di workspace Anda dengan /qr track, jadi kami memastikan ini Anda terlebih dahulu."
+      }
     },
     "dialogCloseButton": {
       "close": "Tutup"
@@ -8840,6 +9141,150 @@
     },
     "nudge": {
       "dismiss": "Jangan tampilkan lagi"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "Masuk dengan SSO",
+      "lastUsed": "Terakhir dipakai",
+      "workEmail": "Email kerja",
+      "continue": "Lanjutkan",
+      "ifYourCompanySetIt": "Jika perusahaan Anda menyiapkannya untuk QRdx.",
+      "cancel": "Batal",
+      "youCompanyCom": "anda@perusahaan.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "Lanjutkan dengan SSO",
+      "lastUsed": "Terakhir dipakai",
+      "useADifferentEmail": "Gunakan email lain",
+      "yourCompanyRequiresItFor": "Perusahaan Anda mewajibkannya untuk alamat ini. Anda akan melanjutkan di halaman masuknya.",
+      "youllContinueOnYourCompanys": "Anda akan melanjutkan di halaman masuk perusahaan Anda.",
+      "sending": "Mengirim…",
+      "emailMeACode": "Kirim kode ke email saya"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "Gunakan passkey Anda",
+        "totp": "Buka aplikasi autentikator Anda",
+        "backup": "Masukkan kode cadangan"
+      },
+      "switchTo": {
+        "passkey": "Gunakan passkey Anda",
+        "totp": "Gunakan kode autentikator",
+        "backup": "Gunakan kode cadangan"
+      },
+      "hints": {
+        "passkey": "Gunakan Touch ID, Face ID, Windows Hello, atau kunci keamanan.",
+        "totp": "Masukkan kode 6 digit dari aplikasi autentikator Anda.",
+        "backup": "Masukkan salah satu kode cadangan Anda. Setiap kode hanya berlaku sekali."
+      },
+      "passkey": {
+        "waiting": "Menunggu passkey Anda…",
+        "checking": "Memeriksa passkey Anda…",
+        "failed": "Passkey Anda tidak dapat diverifikasi. Coba lagi.",
+        "closed": "Jendela passkey ditutup atau waktunya habis. Coba lagi atau gunakan metode lain.",
+        "expiredRequest": "Permintaan passkey itu sudah kedaluwarsa. Coba lagi.",
+        "userVerification": "Passkey tersebut tidak meminta PIN, sidik jari, atau wajah Anda. Gunakan passkey yang memintanya, atau gunakan metode lain.",
+        "unavailable": "Tidak ada passkey untuk akun ini di sini. Gunakan metode lain.",
+        "tooManyTries": "Terlalu banyak percobaan gagal. Masuk lagi untuk mencoba kembali.",
+        "locked": "Terlalu banyak percobaan gagal berturut-turut. Coba lagi dalam {minutes, number} menit.",
+        "expired": "Sesi masuk ini telah habis waktunya. Silakan masuk lagi.",
+        "rateLimited": "Terlalu banyak percobaan. Tunggu sebentar, lalu coba lagi.",
+        "connection": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi.",
+        "ssoRequired": "Perusahaan Anda kini mewajibkan single sign-on untuk alamat ini. Mulai lagi dan masuk dengan SSO."
+      },
+      "noStepHere": "Browser ini tidak dapat menggunakan passkey Anda, dan tidak ada cara lain untuk menyelesaikan proses masuk di sini. Gunakan perangkat yang memiliki passkey Anda.",
+      "noAuthenticatorApp": "Akun Anda tidak menggunakan aplikasi autentikator. Gunakan metode lain.",
+      "backupCode": {
+        "empty": "Masukkan salah satu kode cadangan Anda.",
+        "strange": "Kode cadangan hanya berisi huruf dan angka. Hapus {chars}.",
+        "length": "Kode cadangan terdiri dari 10 karakter, seperti ABCDE-FGH23. Kode ini memiliki {count, number}.",
+        "lookalikes": "Kode cadangan tidak pernah menggunakan {chars}. Periksa apakah ada huruf atau angka yang mirip.",
+        "or": "{first} atau {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "Kode tersebut tidak benar. Periksa aplikasi autentikator Anda dan coba lagi.",
+      "wrongBackupCode": "Kode cadangan tersebut tidak benar, atau sudah pernah digunakan.",
+      "invalidCode": "Masukkan kode 6 digit dari aplikasi autentikator Anda.",
+      "invalidBackupCode": "Itu bukan kode cadangan. Bentuknya seperti ABCDE-FGH23: huruf kapital dan angka 2 sampai 9.",
+      "tooManyAttempts": "Terlalu banyak kode yang salah. Masuk lagi untuk mencoba kembali.",
+      "locked": "Terlalu banyak kode salah berturut-turut. Coba lagi dalam {minutes, number} menit.",
+      "expired": "Waktu proses masuk ini habis. Silakan masuk lagi.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu sebentar, lalu coba lagi.",
+      "failed": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi.",
+      "ssoRequired": "Perusahaan Anda kini mewajibkan single sign-on untuk alamat ini. Mulai lagi dan masuk dengan SSO."
+    },
+    "confirmationMessages": {
+      "failed": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi.",
+      "passkeyFailed": "Passkey Anda tidak dapat diverifikasi. Coba lagi.",
+      "passkeyClosed": "Perintah passkey ditutup atau waktunya habis. Coba lagi atau gunakan metode lain.",
+      "passkeyUnavailable": "Passkey tidak berfungsi di browser ini. Gunakan metode lain.",
+      "signInAgain": "Demi keamanan Anda, keluar lalu masuk lagi, kemudian coba lagi dalam 10 menit.",
+      "stillRequired": "Kami tidak dapat memastikan bahwa ini Anda. Coba lagi.",
+      "signInFailed": "Proses masuk tersebut tidak berhasil, sehingga tidak ada yang berubah. Coba lagi atau gunakan metode lain.",
+      "signInConfirmed": "Terima kasih, sudah dikonfirmasi. Anda dapat melakukan perubahan dalam 10 menit ke depan.",
+      "signedOut": "Masuk lagi untuk melanjutkan.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+      "noAuthenticatorApp": "Akun Anda tidak menggunakan aplikasi autentikator. Gunakan passkey atau kode cadangan Anda.",
+      "invalidCode": "Masukkan kode 6 digit dari email.",
+      "wrongCode": "Kode itu tidak tepat. Periksa email lalu coba lagi.",
+      "codeExpired": "Kode itu sudah kedaluwarsa. Kirim kode baru.",
+      "tooManyCodeAttempts": "Terlalu banyak percobaan yang salah. Kirim kode baru.",
+      "codeNotSent": "Kami tidak dapat mengirim kode saat ini. Silakan coba lagi.",
+      "twoFactorOn": "Verifikasi dua langkah aktif, jadi tidak ada kode yang dikirim lewat email. Gunakan passkey, aplikasi autentikator, atau kode cadangan Anda.",
+      "signInUnavailable": "Metode masuk itu tidak terhubung ke akun Anda. Gunakan metode lain.",
+      "signInNotLinked": "Akun itu tidak terhubung ke akun QRdx Anda, jadi tidak ada yang berubah. Masuk dengan akun yang Anda hubungkan, atau gunakan metode lain.",
+      "signInExpired": "Prosesnya memakan waktu lebih dari 10 menit, jadi tidak ada yang berubah. Coba lagi.",
+      "signInDifferentAccount": "Anda masuk ke akun QRdx yang berbeda, jadi tidak ada yang berubah di sini. Keluar, lalu masuk ke akun yang ingin Anda ubah.",
+      "signInTwoFactorOn": "Verifikasi dua langkah kini aktif, jadi konfirmasikan dengan cara itu: passkey, aplikasi autentikator, atau kode cadangan Anda."
+    },
+    "passkeyMessages": {
+      "reauth": "Demi keamanan Anda, keluar lalu masuk lagi, kemudian tambahkan passkey Anda dalam waktu satu hari.",
+      "signedOut": "Masuk untuk mengelola passkey Anda.",
+      "invalidName": "Beri nama pada passkey.",
+      "notFound": "Passkey itu sudah tidak ada. Muat ulang halaman.",
+      "cancelled": "Penambahan passkey dibatalkan.",
+      "alreadyAdded": "Perangkat atau pengelola kata sandi ini sudah memiliki passkey untuk akun Anda.",
+      "noUserVerification": "Passkey itu tidak meminta PIN, sidik jari, atau wajah Anda, sehingga tidak dapat digunakan dengan QRdx. Coba perangkat atau pengelola kata sandi lain.",
+      "expired": "Prosesnya terlalu lama. Coba tambahkan passkey lagi.",
+      "notSupported": "Browser ini tidak dapat membuat passkey.",
+      "rateLimited": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "mailProvider": {
+      "open": "Buka {provider}"
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Verifikasi di pengaturan email {provider} Anda lalu coba lagi, atau masuk dengan kode email.",
+      "githubUnverifiedNoEmailCodes": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Verifikasi alamat tersebut di pengaturan email {provider} Anda lalu coba lagi{otherWay, select, yes {, atau coba cara masuk lainnya} other {}}.",
+      "googleUnverified": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Masuklah dengan kode email.",
+      "googleUnverifiedNoEmailCodes": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
+      "otherUnverified": "Alamat email akun tersebut belum diverifikasi, sehingga QRdx tidak dapat membuat akun dengannya. Masuklah dengan kode email.",
+      "otherUnverifiedNoEmailCodes": "Alamat email akun tersebut belum diverifikasi, sehingga QRdx tidak dapat membuat akun dengannya. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
+      "cancelled": "Proses masuk dibatalkan.",
+      "accountNotLinked": "Sudah ada akun dengan alamat ini dan belum ditautkan ke {provider}. Masuklah dengan kode email.",
+      "accountNotLinkedNoEmailCodes": "Akun dengan alamat ini sudah ada dan belum terhubung ke {provider}. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
+      "emailNotShared": "{provider} tidak membagikan alamat email, sehingga QRdx tidak dapat memasukkan Anda dengannya. Masuklah dengan kode email.",
+      "emailNotSharedNoEmailCodes": "{provider} tidak membagikan alamat email, sehingga QRdx tidak dapat memasukkan Anda dengannya. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
+      "tookTooLong": "Proses masuk tersebut terlalu lama atau dimulai di tempat lain. Coba lagi.",
+      "providerFailed": "Masuk dengan {provider} tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
+      "sso": {
+        "emailRequired": "Masukkan email kerja Anda.",
+        "notFound": "SSO belum disiapkan untuk alamat tersebut.",
+        "notSetUpFor": "SSO belum disiapkan untuk {domain}.",
+        "notAvailableFor": "SSO untuk {domain} sedang tidak tersedia. Masuk dengan cara lain.",
+        "required": "Perusahaan Anda mewajibkan single sign-on untuk alamat ini. Masuk dengan SSO.",
+        "unavailable": "Single sign-on saat ini tidak tersedia untuk workspace ini. Masuk dengan cara lain.",
+        "emailOutsideDomain": "Penyedia identitas Anda mengirim alamat di luar domain perusahaan Anda, sehingga QRdx tidak dapat memasukkan Anda dengan alamat tersebut. Hubungi admin workspace Anda.",
+        "emailUnverified": "Sistem masuk perusahaan Anda belum mengonfirmasi alamat email ini, sehingga QRdx tidak dapat memasukkan Anda dengan alamat tersebut. Admin sistem itu perlu memverifikasi alamat email di sana.",
+        "emailMissing": "Sistem masuk perusahaan Anda tidak mengirim alamat email, sehingga QRdx tidak dapat memasukkan Anda. Hubungi admin workspace Anda.",
+        "weakSignature": "Sistem masuk perusahaan Anda menandatangani proses masuk ini dengan SHA-1 atau algoritma usang lainnya, yang tidak diterima QRdx. Admin sistem itu perlu mengganti algoritma tanda tangan aplikasi QRdx ke SHA-256.",
+        "unsolicitedResponse": "QRdx tidak dapat menerima proses masuk ini dari daftar aplikasi perusahaan Anda. Mulailah dari halaman masuk QRdx: pilih Masuk dengan SSO dan masukkan email kerja Anda. Jika masalah ini terus terjadi, hubungi admin workspace Anda.",
+        "replayDetected": "Proses masuk tersebut sudah pernah digunakan. Silakan masuk lagi.",
+        "accountNotLinked": "Sudah ada akun dengan alamat ini dan akun tersebut tidak dapat ditautkan. Masuk dengan kode email.",
+        "accountNotLinkedNoEmailCodes": "Akun dengan alamat ini sudah ada dan tidak dapat dihubungkan. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
+        "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
+        "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
+      }
     }
   },
   "codeBuilder": {

@@ -6,6 +6,7 @@ import {
   EmailText,
 } from "@/lib/email/templates/layout";
 import { MutedText } from "@/lib/email/templates/parts";
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 
 // Agency tools: a workspace on Business shared some of its folders with a
 // client. Sent in the workspace's name (EmailLayout `sender`).
@@ -17,42 +18,59 @@ export interface PortalInviteEmailProps {
   portalUrl: string;
   /** The folders shared, by name */
   folders: string[];
+  /** The client's language (./manage.tsx picks it) */
+  intl?: EmailIntl;
 }
 
-export const portalInviteSubject = (portalName: string) =>
-  `${portalName} shared QR code reports with you`;
+export const portalInviteSubject = (
+  portalName: string,
+  intl: EmailIntl = ENGLISH_EMAIL,
+) => intl.t("portalInvite.subject", { portal: portalName });
+
+/** "Menus", "Menus and Flyers", "Menus, Flyers and Posters" */
+function folderList(folders: string[], intl: EmailIntl): string {
+  // English keeps the list it always had (no comma before "and").
+  if (intl.locale !== "en") {
+    return new Intl.ListFormat(intl.locale, { type: "conjunction" }).format(
+      folders,
+    );
+  }
+  return folders.length === 1
+    ? (folders[0] as string)
+    : `${folders.slice(0, -1).join(", ")} and ${folders.at(-1)}`;
+}
 
 export function PortalInviteEmail({
   portalName,
   inviterName,
   portalUrl,
   folders,
+  intl = ENGLISH_EMAIL,
 }: PortalInviteEmailProps) {
-  const list =
-    folders.length === 0
-      ? null
-      : folders.length === 1
-        ? folders[0]
-        : `${folders.slice(0, -1).join(", ")} and ${folders.at(-1)}`;
+  const { t } = intl;
   return (
     <EmailLayout
-      preview={portalInviteSubject(portalName)}
-      reason={`You got this email because ${inviterName} at ${portalName} invited this address to see their QR code reports.`}
+      intl={intl}
+      preview={portalInviteSubject(portalName, intl)}
+      reason={t("portalInvite.reason", {
+        inviter: inviterName,
+        portal: portalName,
+      })}
       sender={{ name: portalName }}
     >
-      <EmailHeading>Your QR code reports</EmailHeading>
+      <EmailHeading>{t("portalInvite.heading")}</EmailHeading>
       <EmailText>
-        {inviterName} invited you to see {portalName}'s QR codes
-        {list ? ` in ${list}` : ""}: how often each one is scanned, where and on
-        which devices, and the pages they open. It's read-only.
+        {t("portalInvite.body", {
+          hasFolders: folders.length > 0 ? "yes" : "no",
+          inviter: inviterName,
+          portal: portalName,
+          folders: folders.length > 0 ? folderList(folders, intl) : "",
+        })}
       </EmailText>
-      <EmailButton href={portalUrl}>Open the reports</EmailButton>
+      <EmailButton href={portalUrl}>{t("portalInvite.open")}</EmailButton>
       <EmailDivider />
-      <MutedText>
-        Sign in with this email address: we'll send you a one-time code. If you
-        weren't expecting this, you can ignore it.
-      </MutedText>
-      <MutedText>Or paste this link into your browser: {portalUrl}</MutedText>
+      <MutedText>{t("portalInvite.signIn")}</MutedText>
+      <MutedText>{t("portalInvite.pasteLink", { url: portalUrl })}</MutedText>
     </EmailLayout>
   );
 }

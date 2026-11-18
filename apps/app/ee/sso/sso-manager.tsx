@@ -6,7 +6,10 @@ import {
   type SsoServiceProviderUrls,
 } from "@repo/auth/sso-rules";
 import { toast } from "@repo/design-system";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -750,7 +753,7 @@ function VerifyCard({
             onClick={verify}
             size="sm"
           >
-            {busy ? <ModuleOrbit aria-hidden /> : <RefreshCw />}
+            {busy ? <FinderTrace aria-hidden /> : <RefreshCw />}
             Verify
           </Button>
         </div>

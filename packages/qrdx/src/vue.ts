@@ -168,7 +168,7 @@ export interface UseQRCodeReturn {
   readonly options: ComputedRef<QRSVGOptions>;
   /** The code's SVG markup, as `toSVGString` writes it; follows the props */
   readonly svg: ComputedRef<string>;
-  /** The code as a data URL: "png" (default), "jpg", "webp", "svg", "pdf" or "eps" */
+  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "svg", "pdf" or "eps" */
   toDataURL(
     format?: DownloadFormat,
     options?: QRCodeExportOptions
@@ -186,7 +186,7 @@ const exportSize = (options: QRSVGOptions, size?: number) => {
  * A QR code as a composable: takes `<QRCode>`'s props (a plain object, a
  * ref, a reactive object or a getter) and returns its SVG markup, which
  * follows the props, plus `toDataURL` and `download`. The markup works in
- * SSR; PNG, JPG and WebP need a browser.
+ * SSR; PNG, JPG, WebP and BMP need a browser.
  *
  * @example
  * const url = ref("https://qrdx.dev");

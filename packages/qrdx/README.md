@@ -144,7 +144,7 @@ const qr = createQRCode("#qr", {
 
 qr.update({ fgColor: "#1d4ed8" }); // merges, redraws only when the markup changes
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 qr.destroy(); // removes the <svg>
 ```
@@ -252,7 +252,7 @@ qr.frame = { style: "banner-bottom", text: "Scan me" };
 qr.props = { margin: 2 }; // every option at once; attributes and named properties win over it
 
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 ```
 
@@ -546,6 +546,7 @@ Art only renders dark dots on a light background: the background must be at leas
 import {
   copyQRCodeToClipboard,
   downloadQRCode,
+  getQRAsBMP,
   getQRAsWebP,
   getQRCodeDataUrl,
   getSVGString,
@@ -554,9 +555,11 @@ import {
 
 const props = { value: "https://example.com", bodyPattern: "rounded" as const };
 
-await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | svg | pdf | eps
+await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | bmp | svg | pdf | eps
 await downloadQRCode(props, { format: "webp", size: PRESET_SIZES.large }); // lossless WebP
+await downloadQRCode(props, { format: "bmp", size: PRESET_SIZES.large }); // 24-bit BMP, transparent areas white
 const webp = await getQRAsWebP({ ...props, size: 1024 }); // a Blob; { quality: 0.9 } makes it lossy
+const bmp = await getQRAsBMP({ ...props, size: 1024 }); // a Blob of type image/bmp
 const png = await getQRAsPNG({ ...props, size: 1024 }); // PNG bytes, plain Node — import from "qrdx/node"
 await downloadQRCode(props, { format: "pdf", size: { width: 1200, height: 1200 }, filename: "qr.pdf" });
 const dataUrl = await getQRCodeDataUrl(props, "svg", { width: 512, height: 512 });
@@ -577,6 +580,8 @@ It rasterizes the SVG the library renders with an optional peer dependency loade
 Logos are conservative by default, since a library function that runs on servers shouldn't fetch or read on a caller's behalf: a `src` that is a **data URL** is always used, while **http(s) URLs and local paths are only loaded with `loadExternalLogos: true`** (fetches are capped at 1 MB and refuse redirects). A logo that isn't loaded or can't be is left out, like in the browser. Frame label text needs a font on the machine. The CLI passes `loadExternalLogos: true` for its PNG and WebP output, since the person running it picked the source.
 
 WebP is lossless by default, so module edges stay exact, and a transparent background stays transparent. `quality` (0 to 1, in `downloadQRCode` options or `getQRAsWebP`) asks for a smaller lossy file instead. The browser's canvas encodes it where it can; where it can't (Safari hands back a PNG for `image/webp`), QRdx encodes the pixels itself with a small built-in lossless encoder, so a `.webp` file is always WebP. `canvasToWebP(canvas)` does the same for any canvas, and `encodeWebPLossless(rgba, width, height)` encodes raw RGBA pixels without a DOM. Lower-level helpers: `getQRAsSVGDataUri(props)` and `getQRAsCanvas(props, mimeType, returnCanvas?)`.
+
+BMP is an uncompressed 24-bit bitmap, for the legacy systems and embedded tools that only take it. No browser can encode BMP from a canvas, so QRdx writes the file itself (`canvasToBMP`, `encodeBMP`), and `isBMPFile` checks a file's header. 24-bit BMP has no alpha channel, so a transparent background comes out white.
 
 Vector output writes coordinates with at most 3 decimals (0.001 px in SVG, 0.001 pt in PDF and EPS; scale factors keep 6), so edges move by at most 0.0005 px and SVG markup is roughly 30% smaller than with full-precision numbers.
 

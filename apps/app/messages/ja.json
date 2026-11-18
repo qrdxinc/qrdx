@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "他のすべての端末からサインアウト",
           "thisDevice": "この端末",
+          "activeNow": "現在アクティブ",
+          "activeJustNow": "たった今アクティブ",
+          "activeAgo": "最終アクティブ：{relative}",
+          "activeOn": "最終アクティブ：{date}",
+          "signedIn": "{date}にサインイン",
           "signOut": "サインアウト",
           "signOutEverywhereElse2": "他のすべての端末からサインアウトしますか？",
           "thisDeviceStaysSignedIn": "この端末はサインインしたままです。",
@@ -7274,6 +7279,29 @@
           "show": "表示対象",
           "clearSearch": "検索をクリア"
         },
+        "pathAliases": {
+          "title": "パスエイリアス",
+          "description": "別のプロバイダーで使っていた {domain} 上の古いリンク（{domain}/r/abc など）を、このコードで開けるようにします。パスは完全に一致する必要があり、クエリ文字列は関係ありません。ドメインで最初のエイリアスが有効になるまで、1分ほどかかる場合があります。",
+          "placeholder": "/r/abc",
+          "add": "追加",
+          "remove": "{path}を削除",
+          "loadFailed": "パスエイリアスを読み込めませんでした。このダイアログを閉じて、もう一度開いてください。",
+          "failed": "変更を保存できませんでした。もう一度お試しください。",
+          "verifyFirst": "パスエイリアスを追加するには、ドメインのページで {domain} を確認してください。",
+          "problems": {
+            "empty": "ドメインの後ろのパスを入力してください（例：/r/abc）。",
+            "length": "{maxLength, number}文字以内で入力してください。",
+            "segments": "/ で区切るパートは{maxSegments, number}個までです。",
+            "characters": "スラッシュの間には英字、数字、- _ . ~ を使ってください。空のパートは使えません。",
+            "backHalf": "このパスはバックハーフとして使えます。代わりにコードのバックハーフとして設定してください。",
+            "reserved": "このパスは、カスタムドメイン上でQRdxが使用しています。",
+            "otherDomain": "そのリンクは別のドメインのものです。",
+            "taken": "このドメインの別のコードが、すでにこのパスで応答しています。",
+            "hostedPage": "このドメインのコードにこのバックハーフが設定されており、そのホスト型ページがこのパスで応答しています。",
+            "limit": "1つのコードに設定できるパスエイリアスは最大{max, number}個です。",
+            "unavailable": "このサーバーでは、パスエイリアスはまだ利用できません。"
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "短縮リンクのドメイン",
           "defaulthostQDefault": "{defaultHost}/q/（デフォルト）",
@@ -7379,6 +7407,7 @@
           "reconnect": "再接続",
           "noLinksMatchTheseFilters": "これらの条件に一致するリンクはありません。",
           "noLinksInThisName": "この{name}アカウントにリンクはありません。",
+          "onlyWebsiteCodesListed": "一覧に表示されるのは、動的なウェブサイト用コードだけです。{name}のその他のコードタイプ(PDF、vCard Plus、フォームなど)は{name}がホストするページを開くため、QRdxで作り直してください。",
           "theNameSignInWas": "{name}のサインインがキャンセルされました。",
           "couldntConnectNameTryAgain": "{name}に接続できませんでした。もう一度お試しください。"
         },
@@ -7422,7 +7451,8 @@
           "keepingBackHalvesIsPart": "バックハーフの保持は{slugPlans}の機能です。",
           "yourPlanDoesntKeepBack": "ご利用のプランではバックハーフを保持できません。",
           "random": "ランダム",
-          "backHalf": "バックハーフ"
+          "backHalf": "バックハーフ",
+          "alsoAnswersAt": "{link} でも応答するため、古いリンクで印刷済みのコードも引き続き使えます。"
         },
         "importProviderStep": {
           "fromAConnectedAccount": "連携済みアカウントから",
@@ -7478,9 +7508,11 @@
           "reviewUndo": "元に戻す内容を確認",
           "keepMyPrintedCodesWorking": "印刷済みのコードを使い続ける",
           "optionalPointEachOldName": "任意です。以前の{name}の各リンクを新しいQRdxのコードに向けることで、印刷済みのコードをそのまま使い続けられ、そのスキャンもQRdxに表示されます。変更内容は事前にすべて確認でき、元に戻すこともできます。",
+          "oldLinksNotFound": "{name}から印刷済みコードが開くリンクが送られてこなかったため、QRdxからは新しいコードへ転送できません。これらのコードは、現在の転送先を開いたままになります。スキャンをQRdxに送るには、マッピングCSVをダウンロードし、{name}で各コードを開いて、転送先を新しいQRdxのリンクに置き換えてください。",
           "pointYourOldCodesAt": "以前のコードをQRdxに向ける",
-          "oldProviderCodesLiveOnItsDomain": "以前のプロバイダーのコードは同社のドメイン上にあるため、QRdxでは変更できません。古いコードごとに次の操作を行ってください：",
-          "providerCodesLiveOnItsDomain": "{name}のコードは同社のドメイン上にあるため、QRdxでは変更できません。古いコードごとに次の操作を行ってください：",
+          "oldProviderCodesLiveOnItsDomain": "QRdxでは、以前のプロバイダー独自のドメイン上にあるコードを変更できません。該当する以前のコードごとに、次の手順を行ってください。",
+          "providerCodesLiveOnItsDomain": "QRdxでは、{name}独自のドメイン上にあるコードを変更できません。該当する以前のコードごとに、次の手順を行ってください。",
+          "ownDomainCodesCanMove": "ご自身が所有するドメイン上のコードには、これらの手順は不要です。ドメインをQRdxに移せば、印刷済みのコードはそのまま使えます。<link>QRドメインの移行方法</link>",
           "oldLinksPointToQrdx": "{count, plural, other {古い{name}のリンク#件がQRdxを指しています}}",
           "backHalvesOnBackhalfdomain": "{backHalfDomain}のバックハーフ",
           "attachCodes": "コードを添付",
@@ -8545,7 +8577,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "QRdxに戻る"
+        "backToQrdx": "QRdxに戻る",
+        "signedOut": "サインアウトしました。",
+        "pageTitle": "サインイン"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8561,7 +8595,11 @@
       "sessionCheck": {
         "continue": "続ける",
         "signOut": "サインアウト",
-        "backToQrdx": "QRdxに戻る"
+        "backToQrdx": "QRdxに戻る",
+        "title": "ご本人確認をお願いします",
+        "body": "このサインインは、開始時とは異なる国と異なるブラウザーから使用されています。続行するには、ご本人であることを確認してください。",
+        "signedOut": "続行するには、もう一度サインインしてください。",
+        "failed": "問題が発生しました。接続を確認して、もう一度お試しください。"
       }
     },
     "join": {
@@ -8593,7 +8631,8 @@
           "signInToQrdxTo": "次のアプリに進むには、QRdxにサインインしてください",
           "continueWithGoogle": "Googleで続行",
           "continueWithGithub": "GitHubで続行",
-          "youllReviewThesePermissionsBefore": "情報が共有される前に、これらの権限を確認できます。"
+          "youllReviewThesePermissionsBefore": "情報が共有される前に、これらの権限を確認できます。",
+          "continueToSignIn": "サインインに進む"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "このリンクは使用できません",
@@ -8612,6 +8651,20 @@
           "authorize": "承認する",
           "somethingWentWrongCheckYour": "問題が発生しました。接続を確認して、もう一度お試しください。"
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "QRdxからサインアウトしますか？",
+        "signOut": "サインアウト",
+        "cancel": "キャンセル",
+        "youreStillSignedIn": "まだサインインしています",
+        "signingOutDidntWorkCheck": "サインアウトできませんでした。接続を確認して、もう一度お試しください。",
+        "tryAgain": "再試行",
+        "backToDashboard": "ダッシュボードに戻る",
+        "signingYouOut": "サインアウトしています…",
+        "oneMoment": "しばらくお待ちください…",
+        "pageTitle": "サインアウト"
       }
     }
   },
@@ -8642,9 +8695,143 @@
       "enter": "QRdxに次のコードを入力すると、このメールアドレスがアカウントのメールアドレスになります。",
       "ignore": "お心当たりがない場合は、このメールを無視してください。コードがなければ何も変更されません。"
     },
+    "emailChanged": {
+      "subject": "QRdxのメールアドレスが変更されました",
+      "preview": "QRdxアカウントのメールアドレスが{newEmail}になりました。",
+      "reason": "このメールは、このアドレスがQRdxアカウントのメールアドレスだったため送信されました。",
+      "body": "QRdxアカウントのメールアドレスが<strong>{newEmail}</strong>になりました。今後、サインインコードやチームへの招待はこのアドレスに届きます。",
+      "notYou": "お心当たりがない場合は、このアドレスからすぐに<support>{email}</support>までサポートへご連絡ください。アカウントを取り戻すためのお手伝いをいたします。"
+    },
+    "security": {
+      "device": "デバイス",
+      "location": "おおよその場所",
+      "browserOnOs": "{os}の{browser}",
+      "osDevice": "{os}デバイス",
+      "unknownDevice": "不明なデバイス",
+      "cityCountry": "{country}、{city}",
+      "ip": "IPアドレス",
+      "time": "日時",
+      "by": "実行者",
+      "support": "QRdxサポート",
+      "review": "セキュリティを確認",
+      "nothingElse": "ご本人の場合は、これ以上の操作は不要です。"
+    },
+    "confirmationCode": {
+      "subject": "QRdxの確認コード",
+      "preview": "このコードを入力して本人確認を行ってください。有効期限は{minutes, plural, other {#分}}です。",
+      "reason": "このメールは、このアドレスに紐づくQRdxアカウントのセキュリティ変更がリクエストされたためお送りしています。",
+      "heading": "本人確認",
+      "enter": "アカウントのセキュリティを変更する前に、QRdxでこのコードを入力して本人確認を行ってください：",
+      "notYou": "お心当たりがない場合は、コードを入力しないでください。アカウントに誰かがサインインしている可能性があります。セキュリティを確認し、このアドレスから <support>{email}</support> のサポートまでご連絡ください。"
+    },
+    "newSignIn": {
+      "subject": "QRdxアカウントへの新しいサインイン",
+      "preview": "{device}がQRdxアカウントにサインインしました{hasLocation, select, yes {（{location}付近）} other {}}。",
+      "newDevice": "新しいデバイス",
+      "reason": "このメールは、QRdxアカウントのアドレス宛てに、ブラウザまたはデバイスが初めてサインインしたためお送りしています。",
+      "body": "これまでQRdxアカウントにサインインしたことのないブラウザまたはデバイスから、たった今サインインがありました。",
+      "signedInWith": "サインイン方法",
+      "nothingToDo": "ご本人の場合は、操作は不要です。",
+      "notYou": "お心当たりがない場合：",
+      "signOut": "サインインして、設定 → プロフィールとセキュリティを開き、セッションの「他のすべての端末からサインアウト」をクリックしてください。",
+      "turnOn": "同じページで2段階認証をオンにすると、サインインにパスキーまたは認証アプリも必要になります。",
+      "contact": "このアドレスから <support>{email}</support> のサポートまでご連絡ください。アカウントの保護をお手伝いします。",
+      "methods": {
+        "emailOtp": "メールコード",
+        "passkey": "パスキー",
+        "sso": "シングルサインオン"
+      },
+      "secondSteps": {
+        "totp": "認証アプリのコード",
+        "backupCode": "バックアップコード",
+        "passkey": "パスキー"
+      },
+      "withSecondStep": "{method}の後に{secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "このメールは、お客様のメールアドレスがQRdxアカウントに登録されており、サインイン方法に関する変更をすべてお知らせしているため、お送りしています。",
+      "notYou": "お心当たりがない場合は、サインインして身に覚えのないパスキーを削除し、このメールアドレスから <support>{email}</support> のサポートまでご連絡ください。",
+      "added": {
+        "subject": "QRdxアカウントにパスキーが追加されました",
+        "preview": "パスキー「{name}」でQRdxアカウントにサインインできるようになりました。",
+        "body": "パスキー<strong>{name}</strong>でQRdxアカウントにサインインできるようになりました。2段階認証がオンの場合は、2番目のステップとしても使用できます。"
+      },
+      "removed": {
+        "subject": "QRdxアカウントからパスキーが削除されました",
+        "preview": "パスキー「{name}」では、QRdxアカウントにサインインできなくなりました。",
+        "body": "パスキー<strong>{name}</strong>では、QRdxアカウントにサインインできなくなりました。"
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "このメールは、お客様のメールアドレスがQRdxアカウントに登録されており、サインインのセキュリティ設定が変更されたため、お送りしています。",
+      "notYou": "お心当たりがない場合は、このメールアドレスからすぐに <support>{email}</support> のサポートまでご連絡ください。アカウントの保護をお手伝いします。",
+      "on": {
+        "subject": "QRdxアカウントの2段階認証がオンになりました",
+        "heading": "2段階認証がオンです",
+        "body": "QRdxへのサインイン時に、2番目のステップとしてパスキーまたは認証アプリのコードが必要になりました。どちらも使えない場合は、バックアップコードをご利用いただけます。"
+      },
+      "off": {
+        "subject": "QRdxアカウントの2段階認証がオフになりました",
+        "heading": "2段階認証がオフです",
+        "body": "QRdxへのサインイン時に、2番目のステップは求められなくなりました。バックアップコードも使用できなくなりました。"
+      },
+      "backupCodes": {
+        "subject": "QRdxアカウントの新しいバックアップコード",
+        "heading": "新しいバックアップコードがあります",
+        "body": "QRdxアカウントの新しいバックアップコードが作成されました。以前のコードは使用できなくなりました。"
+      },
+      "appAdded": {
+        "subject": "QRdxアカウントに認証アプリが追加されました",
+        "heading": "認証アプリを追加しました",
+        "body": "設定したばかりの認証アプリのコードを、QRdxへのサインイン時の2番目のステップとして使用できるようになりました。"
+      },
+      "appRemoved": {
+        "subject": "QRdxアカウントから認証アプリが削除されました",
+        "heading": "認証アプリを削除しました",
+        "body": "認証アプリのコードでは、QRdxにサインインできなくなりました。2段階認証は、他の方法でオンのままです。"
+      },
+      "supportOff": {
+        "subject": "QRdxサポートが2段階認証をオフにしました",
+        "heading": "2段階認証がオフです",
+        "body": "QRdxサポートがお客様のアカウントの2段階認証をオフにし、すべてのデバイスからサインアウトしました。サインイン時に2番目のステップは求められなくなりました。設定 → プロフィールとセキュリティから、再度オンにできます。"
+      },
+      "supportResetScheduled": {
+        "subject": "QRdxサポートが2段階認証をオフにします",
+        "heading": "サポートが2段階認証をオフにします",
+        "body": "2番目の認証手段をすべて失ったとして、お客様のアカウントの2段階認証をオフにするようQRdxサポートに依頼がありました。",
+        "when": "サポートは{hasDate, select, yes {{date}（UTC）に} other {7日後に}}2段階認証をオフにし、すべてのデバイスでアカウントからサインアウトします。それまでは何も変わりません。",
+        "howToStop": "ご自身で依頼された場合は、何もする必要はありません。依頼していない場合は、認証アプリまたはバックアップコードでQRdxにサインインしてください。これで依頼は取り消されます。「設定 → プロフィールとセキュリティ」から取り消すか、このメールに返信していただくこともできます。"
+      },
+      "supportResetCancelled": {
+        "subject": "QRdxアカウントの2段階認証はオンのままです",
+        "heading": "2段階認証はオンのままです",
+        "body": "お客様のアカウントの2段階認証をオフにするサポートへの依頼は取り消されました。変更はありません。",
+        "byPerson": "QRdxアカウントの2段階認証をオフにするサポートへの依頼を、ご自身で取り消しました。",
+        "bySignIn": "認証アプリまたはバックアップコードでサインインしたため、QRdxアカウントの2段階認証をオフにするサポートへの依頼は取り消されました。",
+        "bySupport": "QRdxサポートが、お客様のアカウントの2段階認証をオフにする依頼を取り消しました。",
+        "staysOn": "2段階認証はオンのままで、バックアップコードと認証方法もそのままです。"
+      },
+      "backupCodeUsed": {
+        "subject": "QRdxアカウントでバックアップコードが使用されました",
+        "heading": "バックアップコードが使用されました",
+        "body": "たった今、バックアップコードの1つがQRdxアカウントへのサインインに使用されました。各コードは1回しか使えないため、このコードはもう使えません。",
+        "toConfirm": "たった今、QRdxアカウントのセキュリティ変更の前に本人確認をするため、バックアップコードの1つが使用されました。各コードは1回しか使えないため、このコードはもう使えません。",
+        "left": "{count, plural, =0 {最後のバックアップコードを使用しました。} other {バックアップコードは残り#個です。}}",
+        "makeNew": "パスキーや認証アプリを使えないときでもサインインできるよう、「設定 → プロフィールとセキュリティ」で新しいコードを作成してください。"
+      },
+      "signedOutElsewhere": "アカウントにサインインしていた他のすべてのデバイスはサインアウトされました。各デバイスでは、次回から2番目の認証を行ってサインインすることになります。"
+    },
+    "payoutEmailNotice": {
+      "subject": "QRdxのアフィリエイト報酬の支払先が新しいPayPalアドレスになりました",
+      "preview": "QRdxのアフィリエイト報酬は{paypalEmail}に送金されます。",
+      "reason": "このメールは、アフィリエイトプログラムに参加しているQRdxアカウントのアドレス宛てにお送りしています。報酬の支払先が変更されるたびにお知らせしています。",
+      "body": "{replaced, select, yes {アフィリエイト報酬のPayPalアドレスが変更されました。} other {アフィリエイト報酬のPayPalアドレスが追加されました。}}今後、報酬は<strong>{paypalEmail}</strong>に送金されます。",
+      "notYou": "心当たりがない場合は、サインインして「設定 → アフィリエイトプログラム」でアドレスを元に戻し、次回の支払い前に、このアドレスから<support>{email}</support>のサポートまでご連絡ください。"
+    },
     "alerts": {
       "viewAnalytics": "スキャン分析を見る",
-      "milestoneReason": "{workspace}でスキャン数のマイルストーン通知がオンになっているため、このメールをお送りしています。"
+      "milestoneReason": "{workspace}でスキャン数のマイルストーン通知がオンになっているため、このメールをお送りしています。",
+      "yourWorkspace": "ワークスペース"
     },
     "firstScan": {
       "subject": "{code}が初めてスキャンされました",
@@ -8674,6 +8861,12 @@
       "shortLink": "短縮リンク",
       "opens": "開封数",
       "changed": "変更日時",
+      "fields": {
+        "destination": "リンク先",
+        "title": "タイトル",
+        "design": "デザイン",
+        "domain": "短縮リンクのドメイン"
+      },
       "open": "コードを開く",
       "created": {
         "heading": "新しいコード：{code}",
@@ -8685,6 +8878,80 @@
         "reason": "{workspace}でコード変更の通知がオンになっているため、このメールをお送りしています。",
         "body": "{who}さんが{workspace}でこの動的QRコードを変更しました。印刷済みのQRコードはそのまま使え、新しい設定が反映されます。"
       }
+    },
+    "teamInvite": {
+      "subject": "{inviter}さんが、QRdxの{team}に{role, select, owner {オーナー} admin {管理者} member {メンバー} billing {請求管理者} other {閲覧者}}として招待しました",
+      "reason": "このメールアドレスがQRdxのワークスペースに招待されたため、このメールをお送りしています。",
+      "heading": "QRdxで{team}に参加",
+      "body": "{inviter}さんが、{team}ワークスペースに{role, select, owner {オーナー} admin {管理者} member {メンバー} billing {請求管理者} other {閲覧者}}として招待しました。",
+      "roles": {
+        "owner": "オーナーは、請求やワークスペースの削除を含め、すべての操作ができます。",
+        "admin": "管理者は、メンバー、設定、ドメイン、全員のコードを管理できます。",
+        "member": "メンバーは、コードとページを作成し、ワークスペースのコードを編集できます。",
+        "billing": "請求管理者は、プランと請求を管理できます。それ以外はすべて閲覧のみで、変更はできません。",
+        "viewer": "閲覧者は、ワークスペースのコード、ページ、分析を閲覧できますが、変更はできません。"
+      },
+      "accept": "招待を承諾する",
+      "expires": "承諾するには、このメールアドレスでサインインしてください。招待の有効期限は{date}です。心当たりがない場合は、このメールを無視してください。",
+      "pasteLink": "または、次のリンクをブラウザに貼り付けてください：{url}",
+      "someone": "チームメンバー"
+    },
+    "portalInvite": {
+      "subject": "{portal}がQRコードのレポートを共有しました",
+      "reason": "{portal}の{inviter}さんが、このメールアドレスをQRコードのレポートの閲覧に招待したため、このメールをお送りしています。",
+      "heading": "QRコードのレポート",
+      "body": "{hasFolders, select, yes {{inviter}さんが、{folders}にある{portal}のQRコードの閲覧に招待しました。各QRコードのスキャン回数、スキャンされた場所とデバイス、開かれるページを確認できます。閲覧専用です。} other {{inviter}さんが、{portal}のQRコードの閲覧に招待しました。各QRコードのスキャン回数、スキャンされた場所とデバイス、開かれるページを確認できます。閲覧専用です。}}",
+      "open": "レポートを開く",
+      "signIn": "このメールアドレスでサインインしてください。ワンタイムコードをお送りします。心当たりがない場合は、無視してください。",
+      "pasteLink": "または、次のリンクをブラウザに貼り付けてください：{url}",
+      "yourAgency": "担当の代理店"
+    },
+    "limitNotice": {
+      "subject": "{level, select, full {{label}：{workspace}で上限に達しました} other {{label}：{workspace}で{value}を使用しました}}",
+      "preview": "{level, select, full {{workspace}は{noun}の上限に達しました} other {{workspace}は{noun}の{value}を使用しました}}",
+      "heading": "{level, select, full {{workspace}がプランの上限に達しました} other {{workspace}がプランの上限に近づいています}}",
+      "body": "{level, select, full {{workspace}は{noun}をすべて使用しました。} other {{workspace}は{noun}の{value}を使用しました。}}",
+      "plan": "プラン",
+      "button": "プランと使用状況を見る",
+      "howOften": "このメールは、上限ごとに毎月最大2通お送りします。90%に達したときと100%に達したときの1通ずつです。",
+      "ownerReason": "QRdxの{workspace}のオーナーであるため、このメールをお送りしています。",
+      "artReason": "QRdxの{workspace}でAIアートを作成したため、このメールをお送りしています。利用枠はあなた個人で集計されます。",
+      "label": "{limit, select, dynamicCodes {動的QRコード} landingPages {ホスト型ページ} formResponses {フォームの回答} storage {ファイルストレージ} savedThemes {保存済みテーマ} other {AIアート画像}}",
+      "noun": "{limit, select, dynamicCodes {動的QRコード} landingPages {ホスト型ページ} formResponses {フォームの回答} storage {ファイルストレージ} savedThemes {保存済みテーマ} other {AIアート画像}}",
+      "planName": "{plan, select, free {フリー} pro {Pro} other {Business}}",
+      "value": "{used} / {cap}",
+      "amount": "{limit, select, dynamicCodes {{count, plural, other {有効な動的QRコード#件}}} landingPages {{count, plural, other {ホスト型ページ#件}}} formResponses {{count, plural, other {フォームの回答#件}}} savedThemes {{count, plural, other {保存済みテーマ#件}}} other {{count, plural, other {AIアート画像#件}}}}",
+      "storageAmount": "{size}のファイルストレージ",
+      "amountLeft": "{limit, select, dynamicCodes {{count, plural, one {有効な動的QRコードの残り: #個} other {有効な動的QRコードの残り: #個}}} landingPages {{count, plural, one {ホスト型ページの残り: #件} other {ホスト型ページの残り: #件}}} formResponses {{count, plural, one {フォーム回答の残り: #件} other {フォーム回答の残り: #件}}} savedThemes {{count, plural, one {保存できるテーマの残り: #件} other {保存できるテーマの残り: #件}}} other {{count, plural, one {AIアート画像の残り: #枚} other {AIアート画像の残り: #枚}}}}",
+      "storageLeft": "残り {size}",
+      "left": "{monthly, select, yes {{plan}プランの今月の{left}です。} other {{plan}プランの{left}です。}}",
+      "includes": "{monthly, select, yes {{plan}プランには月に{amount}が含まれます。} other {{plan}プランには{amount}が含まれます。}}",
+      "liftUnlimited": "{limit, select, dynamicCodes {無制限のコード} landingPages {無制限のページ} formResponses {無制限の回答} storage {無制限のストレージ} savedThemes {無制限のテーマ} other {無制限の画像}}",
+      "liftCount": "{limit, select, dynamicCodes {{count, number}件のコード} landingPages {{count, number}件のページ} formResponses {月{count, number}件の回答} savedThemes {{count, number}件のテーマ} other {月{count, number}枚の画像}}",
+      "liftShared": "{lift}（ワークスペースで共有）",
+      "upgrade": "{limit, select, dynamicCodes {コードを1つアーカイブするか、{plan}にアップグレードすると{lift}を利用できます。} landingPages {ページを1つ削除するか、{plan}にアップグレードすると{lift}を利用できます。} storage {不要なファイルを削除するか、{plan}にアップグレードすると{lift}を利用できます。} savedThemes {テーマを1つ削除するか、{plan}にアップグレードすると{lift}を利用できます。} other {{plan}にアップグレードすると{lift}を利用できます。}}",
+      "askOwner": "{limit, select, dynamicCodes {コードを1つアーカイブするか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} landingPages {ページを1つ削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} storage {不要なファイルを削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} savedThemes {テーマを1つ削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} other {ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。}}",
+      "makeRoom": "{limit, select, dynamicCodes {コードを1つアーカイブして空きを作ってください。} landingPages {ページを1つ削除して空きを作ってください。} storage {不要なファイルを削除して空きを作ってください。} savedThemes {テーマを1つ削除して空きを作ってください。} other {}}",
+      "resets": "{date}にリセットされます。",
+      "keeps": "{limit, select, dynamicCodes {既存のコードは引き続き動作します。} landingPages {既存のページは公開されたままです。} formResponses {ページは公開されたままです。リセット後、フォームは再び回答を受け付けます。} storage {アップロード済みのファイルは引き続き利用できます。} other {}}"
+    },
+    "weeklyDigest": {
+      "subject": "今週のQRdx：スキャン{scans, plural, other {#回}}",
+      "preview": "{workspace}で先週{scans, plural, other {#回}}スキャンされました",
+      "reason": "{workspace}で週次ダイジェストが有効になっているため、このメールをお送りしています。",
+      "yourWorkspace": "ワークスペース",
+      "heading": "今週のQRdx",
+      "scans": "スキャン数",
+      "uniqueVisitors": "ユニーク訪問者",
+      "formResponses": "フォームの回答",
+      "newCodes": "新規コード",
+      "newThisWeek": "今週の新規",
+      "sameAsLastWeek": "先週と同じ",
+      "change": "先週比 {change}",
+      "topCodes": "上位のコード",
+      "countries": "スキャンされた場所",
+      "newCodesLine": "今週は新しいコードが{count, plural, other {#件}}ありました。",
+      "open": "ダッシュボードを開く"
     }
   },
   "auth": {
@@ -8708,11 +8975,25 @@
       "thatCodeHasExpiredSend": "コードの有効期限が切れました。新しいコードを送信してください。",
       "tooManyWrongTriesSend": "誤った入力が多すぎます。新しいコードを送信してください。",
       "thisAccountIsSuspendedContact": "このアカウントは停止されています。誤りだと思われる場合は、サポートまでご連絡ください。",
-      "somethingWentWrongTryAgain": "問題が発生しました。もう一度お試しください。"
+      "somethingWentWrongTryAgain": "問題が発生しました。もう一度お試しください。",
+      "newCodeSent": "新しいコードを送信しました。以前のコードは使えなくなりました。",
+      "connectionFailed": "問題が発生しました。接続を確認して、もう一度お試しください。",
+      "emailSignInIsntSet": "このサイトではメールでのサインインが設定されていません。",
+      "weCouldntSendACodeTry": "現在コードを送信できません。数分後にもう一度お試しください。",
+      "tooManyCodesRequestedSo": "コードのリクエストが多すぎるため、新たには送信しませんでした。受信トレイにある最新のコードは引き続き使えます。"
     },
     "passkeySignIn": {
       "continueWithPasskey": "パスキーで続行",
-      "lastUsed": "前回の利用"
+      "lastUsed": "前回の利用",
+      "errors": {
+        "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。",
+        "userVerification": "そのパスキーでは、PIN・指紋・顔の確認が求められませんでした。確認が求められるパスキーを使うか、別の方法でサインインしてください。",
+        "notFound": "そのパスキーは、QRdxのアカウントにリンクされていません。別の方法でサインインしてください。",
+        "banned": "このアカウントは停止されています。誤りだと思われる場合は、サポートまでご連絡ください。",
+        "ssoRequired": "このアカウントでは、会社によりシングルサインオンが必須となっています。SSOでサインインしてください。",
+        "failed": "そのパスキーは使用できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
+        "connection": "問題が発生しました。接続を確認して、もう一度お試しください。"
+      }
     },
     "signInPanel": {
       "codeSentTo": "<strong>{email}</strong> にコードを送信しました",
@@ -8736,7 +9017,13 @@
       "freeToStartNoCard": "無料で始められ、カードは不要です。",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "現在、{label}でのサインインはご利用いただけません"
+      "labelSignInIsNot": "現在、{label}でのサインインはご利用いただけません",
+      "signInIsntSetUp": "サインインが未設定です",
+      "thisSiteHasNoEmail": "このサイトではメール、Google、GitHubのいずれのサインインも有効になっていないため、ここで新しいアカウントを作成できません。",
+      "runThisSiteThe": "このサイトを運営していますか？有効にする方法は<link>セルフホスティングガイド</link>をご覧ください。",
+      "newToQrdxYourFirst": "QRdxは初めてですか？最初のサインインで無料アカウントが作成されます。",
+      "loading": "読み込み中…",
+      "weCouldntCheckHow": "ここでのサインイン方法を確認できませんでした。<retry>もう一度お試しください</retry>。または<link>サインインページを開いてください</link>。"
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "サインイン方法を読み込んでいます",
@@ -8818,7 +9105,21 @@
       "resendInSecondsleftS": "{secondsLeft, number}秒後に再送信できます",
       "resendCode": "コードを再送信",
       "whyAmIAsked": "なぜ確認が必要ですか？",
-      "whyAmIAskedAgain": "なぜ再度確認が必要ですか？"
+      "whyAmIAskedAgain": "なぜ再度確認が必要ですか？",
+      "switchTo": {
+        "passkey": "パスキーを使う",
+        "totp": "認証アプリのコードを使う",
+        "backup": "バックアップコードを使う",
+        "email": "コードをメールで送る",
+        "signInWith": "{provider}でサインイン",
+        "sign-in-again": "もう一度サインイン"
+      },
+      "signInWithSsoAgain": "会社のSSOでもう一度サインインしてください。このページに戻りますので、あらためて変更を行ってください。",
+      "newCodeSent": "新しいコードを送信しました。以前のコードは使えなくなりました。",
+      "reasons": {
+        "continue-session": "このサインインは、開始時とは異なる国・異なるブラウザーから使用されています。そのため、他の操作より先に本人確認を行います。",
+        "link-slack-account": "リンクすると、そのSlackアカウントを使う人は誰でも、/qr track でワークスペース内に追跡コードを作成できるようになります。そのため、先に本人確認を行います。"
+      }
     },
     "dialogCloseButton": {
       "close": "閉じる"
@@ -8840,6 +9141,150 @@
     },
     "nudge": {
       "dismiss": "今後は表示しない"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "SSOでサインイン",
+      "lastUsed": "前回使用",
+      "workEmail": "勤務先のメール",
+      "continue": "続ける",
+      "ifYourCompanySetIt": "会社でQRdx向けに設定されている場合に使えます。",
+      "cancel": "キャンセル",
+      "youCompanyCom": "you@company.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "SSOで続ける",
+      "lastUsed": "前回使用",
+      "useADifferentEmail": "別のメールアドレスを使う",
+      "yourCompanyRequiresItFor": "このアドレスでは、会社によりSSOが必須となっています。SSOのサインインページで続行します。",
+      "youllContinueOnYourCompanys": "お勤め先のサインインページに移動します。",
+      "sending": "送信中…",
+      "emailMeACode": "コードをメールで送る"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "パスキーを使用",
+        "totp": "認証アプリを開いてください",
+        "backup": "バックアップコードを入力"
+      },
+      "switchTo": {
+        "passkey": "パスキーを使用",
+        "totp": "認証アプリのコードを使用",
+        "backup": "バックアップコードを使用"
+      },
+      "hints": {
+        "passkey": "Touch ID、Face ID、Windows Hello、またはセキュリティキーをご利用ください。",
+        "totp": "認証アプリに表示される6桁のコードを入力してください。",
+        "backup": "バックアップコードを1つ入力してください。各コードは1回のみ使用できます。"
+      },
+      "passkey": {
+        "waiting": "パスキーを待っています…",
+        "checking": "パスキーを確認しています…",
+        "failed": "パスキーを確認できませんでした。もう一度お試しください。",
+        "closed": "パスキーの確認画面が閉じられたか、時間切れになりました。もう一度お試しいただくか、別の方法をご利用ください。",
+        "expiredRequest": "パスキーのリクエストの有効期限が切れました。もう一度お試しください。",
+        "userVerification": "このパスキーでは、PIN・指紋・顔認証の確認が行われませんでした。確認が行われるパスキーを使うか、別の方法をご利用ください。",
+        "unavailable": "ここにはこのアカウントのパスキーがありません。別の方法をご利用ください。",
+        "tooManyTries": "失敗した回数が多すぎます。もう一度サインインしてからお試しください。",
+        "locked": "連続して失敗した回数が多すぎます。{minutes, number}分後にもう一度お試しください。",
+        "expired": "このサインインは時間切れになりました。もう一度サインインしてください。",
+        "rateLimited": "試行回数が多すぎます。しばらく待ってから、もう一度お試しください。",
+        "connection": "問題が発生しました。接続を確認して、もう一度お試しください。",
+        "ssoRequired": "このアドレスについて、会社でシングルサインオンが必須になりました。最初からやり直し、SSOでサインインしてください。"
+      },
+      "noStepHere": "このブラウザではパスキーを使用できず、ここでサインインを完了する他の方法もありません。パスキーのあるデバイスをご利用ください。",
+      "noAuthenticatorApp": "このアカウントでは認証アプリを使用していません。別の方法をご利用ください。",
+      "backupCode": {
+        "empty": "バックアップコードを1つ入力してください。",
+        "strange": "バックアップコードには英字と数字のみ使用できます。{chars}を削除してください。",
+        "length": "バックアップコードは ABCDE-FGH23 のように10文字です。入力されたコードは{count, number}文字です。",
+        "lookalikes": "バックアップコードには {chars} は使われません。似た文字や数字を使っていないか確認してください。",
+        "or": "{first} または {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "コードが正しくありません。認証アプリを確認して、もう一度お試しください。",
+      "wrongBackupCode": "そのバックアップコードは正しくないか、すでに使用されています。",
+      "invalidCode": "認証アプリに表示される6桁のコードを入力してください。",
+      "invalidBackupCode": "バックアップコードではありません。バックアップコードは ABCDE-FGH23 のような形式で、大文字の英字と2から9の数字で構成されています。",
+      "tooManyAttempts": "誤ったコードの入力が多すぎます。もう一度サインインしてやり直してください。",
+      "locked": "誤ったコードが続けて入力されました。{minutes, number}分後にもう一度お試しください。",
+      "expired": "このサインインはタイムアウトしました。もう一度サインインしてください。",
+      "rateLimited": "試行回数が多すぎます。しばらく待ってから、もう一度お試しください。",
+      "failed": "問題が発生しました。接続を確認して、もう一度お試しください。",
+      "ssoRequired": "お使いの会社では、このメールアドレスにシングルサインオンが必須になりました。最初からやり直して、SSOでサインインしてください。"
+    },
+    "confirmationMessages": {
+      "failed": "問題が発生しました。接続を確認して、もう一度お試しください。",
+      "passkeyFailed": "パスキーを確認できませんでした。もう一度お試しください。",
+      "passkeyClosed": "パスキーの画面が閉じられたか、タイムアウトしました。もう一度お試しいただくか、別の方法をご利用ください。",
+      "passkeyUnavailable": "このブラウザーではパスキーを利用できません。別の方法をご利用ください。",
+      "signInAgain": "安全のため、いったんサインアウトして再度サインインし、10分以内にもう一度お試しください。",
+      "stillRequired": "ご本人であることを確認できませんでした。もう一度お試しください。",
+      "signInFailed": "サインインが完了しなかったため、変更は行われていません。もう一度お試しいただくか、別の方法をご利用ください。",
+      "signInConfirmed": "ありがとうございます。確認が完了しました。今後10分以内に変更を行えます。",
+      "signedOut": "続行するには、もう一度サインインしてください。",
+      "rateLimited": "試行回数が多すぎます。数分待ってから、もう一度お試しください。",
+      "noAuthenticatorApp": "このアカウントでは認証アプリを使用していません。パスキーまたはバックアップコードをご利用ください。",
+      "invalidCode": "メールに記載された6桁のコードを入力してください。",
+      "wrongCode": "コードが正しくありません。メールを確認して、もう一度お試しください。",
+      "codeExpired": "コードの有効期限が切れました。新しいコードを送信してください。",
+      "tooManyCodeAttempts": "間違いが続いたため、確認できません。新しいコードを送信してください。",
+      "codeNotSent": "現在コードを送信できません。もう一度お試しください。",
+      "twoFactorOn": "2段階認証が有効なため、メールでコードは送信されません。パスキー、認証アプリ、またはバックアップコードをご利用ください。",
+      "signInUnavailable": "そのサインイン方法はアカウントに連携されていません。別の方法をご利用ください。",
+      "signInNotLinked": "そのアカウントはQRdxアカウントに連携されていないため、変更はありません。連携済みのアカウントでサインインするか、別の方法をご利用ください。",
+      "signInExpired": "10分以上かかったため、変更はありません。もう一度お試しください。",
+      "signInDifferentAccount": "別のQRdxアカウントでサインインしたため、ここでは何も変更されていません。サインアウトしてから、変更したいアカウントでサインインしてください。",
+      "signInTwoFactorOn": "2段階認証が有効になったため、代わりにそちらで確認してください。パスキー、認証アプリ、またはバックアップコードを使用できます。"
+    },
+    "passkeyMessages": {
+      "reauth": "安全のため、いったんサインアウトして再度サインインし、1日以内にパスキーを追加してください。",
+      "signedOut": "パスキーを管理するにはサインインしてください。",
+      "invalidName": "パスキーの名前を入力してください。",
+      "notFound": "このパスキーはすでに削除されています。ページを更新してください。",
+      "cancelled": "パスキーの追加がキャンセルされました。",
+      "alreadyAdded": "このデバイスまたはパスワードマネージャーには、すでにアカウントのパスキーがあります。",
+      "noUserVerification": "このパスキーではPIN、指紋、顔認証が求められなかったため、QRdxでは使用できません。別のデバイスまたはパスワードマネージャーをお試しください。",
+      "expired": "時間がかかりすぎました。もう一度パスキーの追加をお試しください。",
+      "notSupported": "このブラウザではパスキーを作成できません。",
+      "rateLimited": "試行回数が多すぎます。数分待ってから、もう一度お試しください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    },
+    "mailProvider": {
+      "open": "{provider}を開く"
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} がこのメールアドレスを確認していないため、QRdx ではこのアドレスでアカウントを作成できません。{provider} のメール設定で確認を済ませてからもう一度お試しいただくか、メールコードでサインインしてください。",
+      "githubUnverifiedNoEmailCodes": "{provider}でこのメールアドレスが確認されていないため、QRdxではこのアドレスでアカウントを作成できません。{provider}のメール設定で確認を済ませてから、もう一度お試しください{otherWay, select, yes {。または、別の方法でサインインしてください} other {}}。",
+      "googleUnverified": "{provider} がこのメールアドレスを確認していないため、QRdx ではこのアドレスでアカウントを作成できません。代わりにメールコードでサインインしてください。",
+      "googleUnverifiedNoEmailCodes": "{provider}でこのメールアドレスが確認されていないため、QRdxではこのアドレスでアカウントを作成できません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
+      "otherUnverified": "そのアカウントのメールアドレスは確認されていないため、QRdx ではこのアドレスでアカウントを作成できません。代わりにメールコードでサインインしてください。",
+      "otherUnverifiedNoEmailCodes": "そのアカウントのメールアドレスが確認されていないため、QRdxではこのアドレスでアカウントを作成できません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
+      "cancelled": "サインインがキャンセルされました。",
+      "accountNotLinked": "このアドレスのアカウントはすでに存在しますが、{provider} とは連携されていません。代わりにメールコードでサインインしてください。",
+      "accountNotLinkedNoEmailCodes": "このアドレスのアカウントはすでに存在しており、{provider}とは連携されていません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
+      "emailNotShared": "{provider} からメールアドレスが共有されなかったため、QRdx では {provider} でサインインできません。代わりにメールコードでサインインしてください。",
+      "emailNotSharedNoEmailCodes": "{provider}からメールアドレスが共有されなかったため、QRdxでは{provider}でサインインできません。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
+      "tookTooLong": "サインインに時間がかかりすぎたか、別の場所で開始されました。もう一度お試しください。",
+      "providerFailed": "{provider} でのサインインに失敗しました。もう一度お試しいただくか、別の方法でサインインしてください。",
+      "sso": {
+        "emailRequired": "勤務先のメールアドレスを入力してください。",
+        "notFound": "そのアドレスにはSSOが設定されていません。",
+        "notSetUpFor": "{domain}にはSSOが設定されていません。",
+        "notAvailableFor": "{domain}のSSOは現在ご利用いただけません。別の方法でサインインしてください。",
+        "required": "お客様の会社では、このアドレスにシングルサインオンが必須となっています。SSOでサインインしてください。",
+        "unavailable": "このワークスペースでは、現在シングルサインオンをご利用いただけません。別の方法でサインインしてください。",
+        "emailOutsideDomain": "IDプロバイダーから会社のドメイン以外のアドレスが送信されたため、QRdxではそのアドレスでサインインできません。ワークスペースの管理者にお問い合わせください。",
+        "emailUnverified": "会社のサインインシステムでこのメールアドレスが確認されていないため、QRdxではサインインできません。管理者がそちらでメールアドレスを確認済みにする必要があります。",
+        "emailMissing": "会社のサインインシステムからメールアドレスが送信されなかったため、QRdxではサインインできません。ワークスペースの管理者にお問い合わせください。",
+        "weakSignature": "会社のサインインシステムが、QRdxで受け付けていないSHA-1などの古いアルゴリズムでこのサインインに署名しました。管理者がQRdxアプリの署名アルゴリズムをSHA-256に変更する必要があります。",
+        "unsolicitedResponse": "会社のアプリ一覧からのこのサインインをQRdxで受け付けられませんでした。QRdxのサインインページから、「SSOでサインイン」を選んで勤務先のメールアドレスを入力してください。繰り返し発生する場合は、ワークスペースの管理者にお問い合わせください。",
+        "replayDetected": "このサインインはすでに使用されています。もう一度サインインしてください。",
+        "accountNotLinked": "このアドレスのアカウントはすでに存在しており、連携できませんでした。代わりにメールコードでサインインしてください。",
+        "accountNotLinkedNoEmailCodes": "このアドレスのアカウントはすでに存在しており、連携できませんでした。{otherWay, select, yes {別の方法でサインインしてください。} other {このサイトの運営者にお問い合わせください。}}",
+        "failed": "シングルサインオンを完了できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
+        "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。"
+      }
     }
   },
   "codeBuilder": {

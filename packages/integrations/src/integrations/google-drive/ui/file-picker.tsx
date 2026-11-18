@@ -2,7 +2,10 @@
 "use client";
 
 import { Close as X } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ModuleWave,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Dialog,
@@ -182,7 +185,7 @@ export function GoogleDriveFilePicker({
           <ScrollArea className="h-[400px] rounded-md border">
             {loading && files.length === 0 ? (
               <div className="flex items-center justify-center p-8">
-                <ModuleOrbit
+                <ModuleWave
                   aria-hidden
                   className="h-8 w-8 text-muted-foreground"
                 />
@@ -226,7 +229,7 @@ export function GoogleDriveFilePicker({
             )}
 
             {/* Load more button */}
-            {nextPageToken && !loading && (
+            {nextPageToken && (files.length > 0 || !loading) && (
               <div className="flex justify-center p-4">
                 <Button
                   disabled={loading}
@@ -234,7 +237,7 @@ export function GoogleDriveFilePicker({
                   variant="outline"
                 >
                   {loading && (
-                    <ModuleOrbit aria-hidden className="mr-2 h-4 w-4" />
+                    <ModuleWave aria-hidden className="mr-2 h-4 w-4" />
                   )}
                   Load More
                 </Button>

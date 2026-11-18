@@ -1,4 +1,5 @@
 import { SUPPORT_EMAIL } from "@repo/config";
+import type { ReactNode } from "react";
 import { Link, Section } from "react-email";
 import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { baseUrl } from "@/lib/metadata";
@@ -40,36 +41,47 @@ export interface SecurityEventDetails {
 export function SecurityDetails({
   details,
   extra = [],
+  intl = ENGLISH_EMAIL,
 }: {
   details: SecurityEventDetails | undefined;
   /** Rows after the device's, e.g. how someone signed in */
   extra?: { label: string; value: string }[];
+  intl?: EmailIntl;
 }) {
   if (!details) return null;
+  const { t } = intl;
   const rows = details.actor
-    ? [{ label: "By", value: details.actor }]
+    ? [{ label: t("security.by"), value: details.actor }]
     : [
-        details.device ? { label: "Device", value: details.device } : null,
-        details.location
-          ? { label: "Approximate location", value: details.location }
+        details.device
+          ? { label: t("security.device"), value: details.device }
           : null,
-        details.ip ? { label: "IP address", value: details.ip } : null,
+        details.location
+          ? { label: t("security.location"), value: details.location }
+          : null,
+        details.ip ? { label: t("security.ip"), value: details.ip } : null,
       ];
   return (
     <DetailsTable
       rows={[
         ...rows.filter((row) => row !== null),
         ...extra,
-        { label: "Time", value: details.time },
+        { label: t("security.time"), value: details.time },
       ]}
     />
   );
 }
 
-export function ReviewSecurityButton() {
+export function ReviewSecurityButton({
+  intl = ENGLISH_EMAIL,
+}: {
+  intl?: EmailIntl;
+}) {
   return (
     <Section style={{ margin: "4px 0 8px" }}>
-      <EmailButton href={reviewSecurityUrl()}>Review security</EmailButton>
+      <EmailButton href={reviewSecurityUrl()}>
+        {intl.t("security.review")}
+      </EmailButton>
     </Section>
   );
 }
@@ -83,6 +95,10 @@ export function NeverAskForCode({
   return <EmailText>{intl.t("codes.neverAsk")}</EmailText>;
 }
 
-export function SupportLink() {
-  return <Link href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</Link>;
-}
+/** The arguments of "…contact support at <support>{email}</support>…". */
+export const supportLinkArgs = {
+  email: SUPPORT_EMAIL,
+  support: (chunks: ReactNode) => (
+    <Link href={`mailto:${SUPPORT_EMAIL}`}>{chunks}</Link>
+  ),
+};

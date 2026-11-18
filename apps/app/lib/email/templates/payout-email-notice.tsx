@@ -1,13 +1,18 @@
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
   SecurityDetails,
   type SecurityEventDetails,
-  SupportLink,
+  supportLinkArgs,
 } from "./security-parts";
 
 export const PAYOUT_EMAIL_NOTICE_SUBJECT =
   "Your QRdx affiliate payouts now go to a new PayPal address";
+
+/** The subject line in the recipient's language. */
+export const payoutEmailNoticeSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+  intl.t("payoutEmailNotice.subject");
 
 export interface PayoutEmailNoticeProps {
   /** The PayPal address payouts go to from now on */
@@ -16,6 +21,8 @@ export interface PayoutEmailNoticeProps {
   replaced: boolean;
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
+  /** The recipient's language */
+  intl?: EmailIntl;
 }
 
 /**
@@ -29,26 +36,28 @@ export function PayoutEmailNoticeEmail({
   paypalEmail,
   replaced,
   details,
+  intl = ENGLISH_EMAIL,
 }: PayoutEmailNoticeProps) {
+  const { t } = intl;
   return (
     <EmailLayout
-      preview={`Affiliate payouts from QRdx will be sent to ${paypalEmail}.`}
-      reason="You got this email because it's the address of a QRdx account in the affiliate program, and we tell you about every change to where its payouts go."
+      intl={intl}
+      preview={t("payoutEmailNotice.preview", { paypalEmail })}
+      reason={t("payoutEmailNotice.reason")}
     >
-      <EmailHeading>{PAYOUT_EMAIL_NOTICE_SUBJECT}</EmailHeading>
+      <EmailHeading>{payoutEmailNoticeSubject(intl)}</EmailHeading>
       <EmailText>
-        {replaced
-          ? "The PayPal address for your affiliate payouts was changed. "
-          : "A PayPal address for your affiliate payouts was added. "}
-        From now on we send your payouts to <strong>{paypalEmail}</strong>.
+        {t.rich("payoutEmailNotice.body", {
+          replaced: replaced ? "yes" : "no",
+          paypalEmail,
+          strong: (chunks) => <strong>{chunks}</strong>,
+        })}
       </EmailText>
-      <SecurityDetails details={details} />
-      <EmailText>If this was you, there's nothing else to do.</EmailText>
+      <SecurityDetails details={details} intl={intl} />
+      <EmailText>{t("security.nothingElse")}</EmailText>
       <EmailDivider />
       <MutedText>
-        If this wasn't you, sign in, change the address back in Settings →
-        Affiliate program, and contact support at <SupportLink /> from this
-        address before the next payout.
+        {t.rich("payoutEmailNotice.notYou", supportLinkArgs)}
       </MutedText>
     </EmailLayout>
   );

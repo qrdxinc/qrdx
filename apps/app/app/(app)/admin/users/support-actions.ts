@@ -93,13 +93,18 @@ export async function resetTwoFactorAction(
  * Stops a pending reset (say the owner replied that it wasn't them). Two-step
  * verification stays as it is, and the address is told. Cancelling one the
  * owner really asked for leaves them locked out, so it takes the same
- * requireStrongAdmin as starting one: not a stolen admin cookie alone.
+ * requireStrongAdmin as starting one: not a stolen admin cookie alone. The
+ * same limit too, 5 an hour.
  */
 export async function cancelTwoFactorResetAction(
   input: z.input<typeof userReason>,
 ): Promise<AdminActionResult> {
   return runAdminAction(
-    { action: "user.reset_two_factor_cancel", schema: userReason },
+    {
+      action: "user.reset_two_factor_cancel",
+      schema: userReason,
+      limit: "sensitive",
+    },
     input,
     (admin, data) =>
       cancelPendingTwoFactorReset(admin, data, {
@@ -140,14 +145,20 @@ export async function changeEmailAction(
   );
 }
 
-/** Removes a linked GitHub / Google sign-in; never the user's last one. */
+/**
+ * Removes a linked GitHub / Google sign-in; never the user's last one. For
+ * an admin it takes requireStrongAdmin.
+ */
 export async function unlinkSignInMethodAction(
   input: z.input<typeof unlinkSchema>,
 ): Promise<AdminActionResult> {
   return runAdminAction(
     { action: "user.unlink_sign_in", schema: unlinkSchema },
     input,
-    (admin, data) => unlinkSignInMethod(admin, data),
+    (admin, data) =>
+      unlinkSignInMethod(admin, data, {
+        requireStrong: () => requireStrongAdmin(admin),
+      }),
   );
 }
 

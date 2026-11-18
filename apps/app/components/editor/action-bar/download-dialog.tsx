@@ -37,6 +37,7 @@ import {
   DocumentText,
   Gallery,
   Global,
+  Grid2,
   type Icon,
   Image,
   Import,
@@ -167,6 +168,18 @@ const FORMATS: {
   },
 ];
 
+// The grid above is full at six, so formats beyond them go in a "More formats"
+// row under it (hints too: editor.actionBar.downloadDialog.formatHints).
+const MORE_FORMATS: {
+  id: ImageFormat;
+  label: string;
+  Icon: Icon;
+  vector?: boolean;
+}[] = [{ id: "bmp", label: "BMP", Icon: Grid2 }];
+
+/** Formats that can't keep a transparent background (JPG and 24-bit BMP). */
+const OPAQUE_FORMATS: readonly ImageFormat[] = ["jpg", "bmp"];
+
 // Names in messages/en.json: editor.actionBar.downloadDialog.sizePresets.
 const SIZE_PRESETS = [
   { id: "small" },
@@ -251,8 +264,10 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
   };
 
   const format = downloadOptions.format;
-  const formatInfo = FORMATS.find((item) => item.id === format) ?? FORMATS[0];
-  const canBeTransparent = format !== "jpg";
+  const formatInfo =
+    [...FORMATS, ...MORE_FORMATS].find((item) => item.id === format) ??
+    FORMATS[0];
+  const canBeTransparent = !OPAQUE_FORMATS.includes(format);
   const transparent = downloadOptions.transparent && canBeTransparent;
 
   const qrProps = React.useMemo(
@@ -590,7 +605,9 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                         updateDownloadOption("format", next as ImageFormat);
                     }}
                     type="single"
-                    value={format}
+                    value={
+                      FORMATS.some((item) => item.id === format) ? format : ""
+                    }
                     variant="outline"
                   >
                     {FORMATS.map((item) => (
@@ -603,6 +620,35 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                             ? EPS_IMAGE_FILL_REASON
                             : undefined
                         }
+                        value={item.id}
+                      >
+                        <item.Icon className="size-4" />
+                        {item.label}
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
+                  <span className="text-muted-foreground mt-3 mb-1.5 block text-xs">
+                    <span id="dl-more-formats">{t("moreFormats")}</span>
+                  </span>
+                  <ToggleGroup
+                    aria-labelledby="dl-more-formats"
+                    className="grid w-full grid-cols-6"
+                    onValueChange={(next) => {
+                      if (next)
+                        updateDownloadOption("format", next as ImageFormat);
+                    }}
+                    type="single"
+                    value={
+                      MORE_FORMATS.some((item) => item.id === format)
+                        ? format
+                        : ""
+                    }
+                    variant="outline"
+                  >
+                    {MORE_FORMATS.map((item) => (
+                      <ToggleGroupItem
+                        className="h-14 flex-col gap-1 px-1 text-xs font-medium"
+                        key={item.id}
                         value={item.id}
                       >
                         <item.Icon className="size-4" />
@@ -730,7 +776,13 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                       className="cursor-pointer text-xs"
                       htmlFor="transparent-bg"
                       title={
-                        canBeTransparent ? undefined : t("jpgCantBeTransparent")
+                        canBeTransparent
+                          ? undefined
+                          : t(
+                              format === "bmp"
+                                ? "bmpCantBeTransparent"
+                                : "jpgCantBeTransparent",
+                            )
                       }
                     >
                       {t("transparentBackground")}

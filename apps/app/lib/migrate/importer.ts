@@ -9,7 +9,9 @@ import {
   applyRedirects,
   clearRedirectErrors,
   createJob,
+  isSameLink,
   mappedItems,
+  missingOldLinks,
   nextChunk,
   redirectBatch,
   redirectPlanItem,
@@ -25,6 +27,7 @@ import {
   slugLookups,
 } from "./plan";
 import {
+  API_PROVIDERS,
   isApiProviderId,
   isRetiredProvider,
   providerName,
@@ -86,6 +89,8 @@ export interface FinishInput {
   slugDomainId: string | null;
   /** Put the code on this custom domain of the workspace (pending is fine) */
   bindDomainId: string | null;
+  /** Path alias for the code on bindDomainId (lib/path-aliases.ts) */
+  alias?: string | null;
 }
 
 export interface MigrateRepo {
@@ -111,6 +116,14 @@ export interface MigrateRepo {
     slugs: string[],
     domainId: string | null,
   ): Promise<Set<string>>;
+  /**
+   * Which path aliases are taken on the custom domain; null (or no method)
+   * when path aliases aren't available, so the plan proposes none
+   */
+  findTakenAliases?(
+    paths: string[],
+    domainId: string,
+  ): Promise<Set<string> | null>;
   existingTagNames(scope: Scope): Promise<Set<string>>;
   /** The workspace's QRdx custom domain with this hostname */
   domainFor(
@@ -145,6 +158,8 @@ export interface ImporterDeps {
   newId: () => string;
   /** A random generated slug (the last fallback for a back-half) */
   newSlug: () => string;
+  /** Server-side warnings (console.warn by default); never URLs or keys */
+  warn?: (message: string, context: Record<string, unknown>) => void;
 }
 
 // ─── Preview ─────────────────────────────────────────────────────────────────
@@ -179,6 +194,7 @@ async function buildPlan(
     byDestination,
     takenSlugs,
     takenOnDomain,
+    takenAliases,
     existingTags,
     hosts,
   ] = await Promise.all([
@@ -192,6 +208,9 @@ async function buildPlan(
     domain?.id && lookups.domain.length > 0
       ? repo.findTakenSlugs(lookups.domain, domain.id)
       : new Set<string>(),
+    domain?.id && lookups.aliases.length > 0 && repo.findTakenAliases
+      ? repo.findTakenAliases(lookups.aliases, domain.id)
+      : null,
     repo.existingTagNames(scope),
     repo.qrdxHosts(scope),
   ]);
@@ -203,6 +222,7 @@ async function buildPlan(
     byDestination,
     takenSlugs,
     takenOnDomain,
+    takenAliases,
     candidates: lookups.candidates,
     remaining: usage.remaining,
     existingTags,
@@ -485,11 +505,35 @@ export async function runJobChunk(
       job.items.filter((item) => created.has(item.key)),
     );
   }
+  if (job.status === "done" && loaded.job.status !== "done") {
+    warnIfNothingToRepoint(deps, job);
+  }
   return {
     job: summarizeJob(job),
     items: indexes.map((index) => job.items[index] as JobItem),
     done: job.status === "done",
   };
+}
+
+/**
+ * A connected import that could re-point old codes but got no printed link
+ * for any of them. The run step tells the user; this tells us, in counts.
+ */
+function warnIfNothingToRepoint(deps: ImporterDeps, job: ImportJob) {
+  const { provider } = job;
+  if (
+    !isApiProviderId(provider) ||
+    isRetiredProvider(provider) ||
+    !API_PROVIDERS[provider].capabilities.updateDestination
+  ) {
+    return;
+  }
+  const codes = missingOldLinks(job);
+  if (codes === 0) return;
+  (deps.warn ?? console.warn)(
+    "[migrate] Import finished without old links to re-point",
+    { provider, jobId: job.id, codes },
+  );
 }
 
 /**
@@ -529,8 +573,17 @@ async function finishItems(
         `${hostname} isn't available in QRdx any more, so the code got a random back-half`,
       );
     }
+    // The old path keeps answering on the domain the code goes on.
+    const alias = usage.customSlugs && onDomain ? (item.alias ?? null) : null;
+    if (item.alias && usage.customSlugs && !onDomain) {
+      warnings.set(
+        item.codeId,
+        `${hostname} isn't available in QRdx any more, so the code doesn't answer at ${item.alias}`,
+      );
+    }
     rows.push({
       codeId: item.codeId,
+      alias,
       notes: buildImportNotes({
         provider: job.provider,
         key: item.key,
@@ -570,6 +623,9 @@ async function finishItems(
 }
 
 // ─── Redirects (keep printed codes working) ──────────────────────────────────
+
+/** Single-link refusals in a row before a run stops as a plan or role refusal. */
+const MAX_REFUSED_IN_A_ROW = 3;
 
 /**
  * Dry run lists every change. Apply points old links at their QRdx links and
@@ -646,6 +702,14 @@ export async function runRedirects(
     { ok: boolean; previousUrl?: string; error?: string }
   >();
   let stopped: string | null = null;
+  // Once changes in this run went through, a refusal is about that one link;
+  // several in a row mean the plan or role changed, so the run stops.
+  let changed = job.items.some((item) =>
+    mode === "undo"
+      ? Boolean(item.redirect?.undoneAt)
+      : Boolean(item.redirect && !item.redirect.undoneAt),
+  );
+  let refusedInARow = 0;
   for (const item of items) {
     if (mode === "apply" && !(item.codeId && inScope.has(item.codeId))) {
       outcomes.set(item.key, {
@@ -659,17 +723,30 @@ export async function runRedirects(
       let previousUrl = item.url;
       if (mode === "apply" && source.getLink) {
         // Record what the link points to right now, not at import time.
+        // When that is already the QRdx link (an update whose reply was
+        // lost, or a batch whose save failed), the imported destination is
+        // the original.
         const current = await source.getLink(item.key).catch(() => null);
-        if (current?.destinationUrl) previousUrl = current.destinationUrl;
+        if (
+          current?.destinationUrl &&
+          !isSameLink(current.destinationUrl, plan.to)
+        ) {
+          previousUrl = current.destinationUrl;
+        }
       }
       await source.updateDestination(item.key, plan.to);
       outcomes.set(item.key, { ok: true, previousUrl });
+      changed = true;
+      refusedInARow = 0;
     } catch (error) {
-      const explained = explainProviderError(job.provider, error);
+      const explained = explainProviderError(job.provider, error, {
+        changedBefore: changed && refusedInARow < MAX_REFUSED_IN_A_ROW,
+      });
       if (explained.stop) {
         stopped = explained.message;
         break;
       }
+      if (explained.kind === "refused") refusedInARow += 1;
       outcomes.set(item.key, { ok: false, error: explained.message });
     }
   }

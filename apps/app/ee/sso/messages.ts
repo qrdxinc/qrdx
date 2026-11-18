@@ -1,45 +1,53 @@
 // Workspace SSO copy shared by the sign-in panel, the /sign-in page and the
-// settings page. Pure and client-safe.
+// settings page. Pure and client-safe. The sign-in errors are
+// auth.signInErrors in messages/en.json; callers pass its translator.
 
 import type { EmailChangeSsoProblem } from "@repo/auth/sso-required-rules";
+import type { Translator } from "@/lib/i18n/translator";
 
-/** Codes the plugin and packages/auth/ee/sso.ts send back (?error= or JSON). */
+export type SignInErrorTranslator = Translator<"auth.signInErrors">;
+
+/**
+ * Codes the plugin and packages/auth/ee/sso.ts send back (?error= or JSON).
+ * `domain`: the typed work email's (startSsoSignIn), never one from the URL.
+ */
 export function ssoSignInErrorMessage(
   code: string | null | undefined,
-  description?: string | null,
+  t: SignInErrorTranslator,
+  domain?: string | null,
 ): string {
   switch (code) {
     case "SSO_EMAIL_REQUIRED":
-      return "Enter your work email.";
+      return t("sso.emailRequired");
     case "SSO_NOT_FOUND":
+      return domain ? t("sso.notSetUpFor", { domain }) : t("sso.notFound");
     case "SSO_NOT_AVAILABLE":
-      // The server's message names the domain.
-      return description || "SSO isn't set up for that address.";
+      return domain ? t("sso.notAvailableFor", { domain }) : t("sso.notFound");
     case "sso_required":
-      return "Your company requires single sign-on for this address. Sign in with SSO.";
+      return t("sso.required");
     case "sso_unavailable":
-      return "Single sign-on isn't available for this workspace right now. Sign in another way.";
+      return t("sso.unavailable");
     case "sso_email_outside_domain":
-      return "Your identity provider sent an address outside your company's domain, so QRdx can't sign you in with it. Ask your workspace admin.";
+      return t("sso.emailOutsideDomain");
     case "sso_email_unverified":
-      return "Your company's sign-in system hasn't confirmed this email address, so QRdx can't sign you in with it. Its admin needs to verify email addresses there.";
+      return t("sso.emailUnverified");
     case "sso_email_missing":
-      return "Your company's sign-in system didn't send an email address, so QRdx can't sign you in. Ask your workspace admin.";
+      return t("sso.emailMissing");
     case "sso_weak_signature":
-      return "Your company's sign-in system signed this sign-in with SHA-1 or another outdated algorithm, which QRdx doesn't accept. Its admin needs to switch the QRdx app's signature algorithm to SHA-256.";
+      return t("sso.weakSignature");
     case "unsolicited_response":
-      return "QRdx couldn't accept this sign-in from your company's app list. Start from QRdx's sign-in page: choose Sign in with SSO and enter your work email. If it keeps happening, ask your workspace admin.";
+      return t("sso.unsolicitedResponse");
     case "replay_detected":
-      return "That sign-in has already been used. Sign in again.";
+      return t("sso.replayDetected");
     case "account_not_linked":
     case "account not linked":
-      return "An account with this address already exists and couldn't be linked. Sign in with an email code instead.";
+      return t("sso.accountNotLinked");
     case "access_denied":
-      return "Sign-in was cancelled.";
+      return t("cancelled");
     case "invalid_state":
-      return "That sign-in took too long or was started elsewhere. Try again.";
+      return t("tookTooLong");
     default:
-      return "Single sign-on didn't work. Try again, or sign in another way.";
+      return t("sso.failed");
   }
 }
 

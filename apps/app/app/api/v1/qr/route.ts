@@ -99,7 +99,7 @@ function parseQuery(searchParams: URLSearchParams) {
 
 type Query = ReturnType<typeof parseQuery>;
 
-/** A converted image (WebP) with its content type and the request's headers. */
+/** A converted image (WebP, BMP) with its content type and the request's headers. */
 function imageResponse(
   bytes: Uint8Array,
   format: ConvertedFormat,

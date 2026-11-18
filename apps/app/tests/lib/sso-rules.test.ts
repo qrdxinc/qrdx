@@ -24,15 +24,26 @@ import {
   ssoServiceProviderUrls,
   ssoVerificationRecord,
 } from "@repo/auth/sso-rules";
+import { createTranslator } from "next-intl";
 import { describe, expect, it } from "vitest";
 import {
   describeCertificate,
   readIdpMetadata,
   withUnsignedSignInRequests,
 } from "@/ee/sso/connections";
-import { ssoSignInErrorMessage } from "@/ee/sso/messages";
+import { ssoSignInErrorMessage as ssoSignInErrorMessageIn } from "@/ee/sso/messages";
 import { can, WORKSPACE_ROLES } from "@/lib/permissions";
 import { cheapestPlanWith, PLAN_LIMITS, PLANS } from "@/lib/plans";
+import en from "@/messages/en.json";
+
+// In English, from the catalog (auth.signInErrors).
+const tErrors = createTranslator({
+  locale: "en",
+  messages: en,
+  namespace: "auth.signInErrors",
+});
+const ssoSignInErrorMessage = (code: string, domain?: string) =>
+  ssoSignInErrorMessageIn(code, tErrors, domain);
 
 describe("plan gate", () => {
   it("only Business includes SSO", () => {
@@ -227,10 +238,13 @@ describe("IdP metadata", () => {
 });
 
 describe("sign-in messages", () => {
-  it("name the domain from the server, never from the URL", () => {
-    expect(
-      ssoSignInErrorMessage("SSO_NOT_FOUND", "No SSO is set up for acme.com."),
-    ).toBe("No SSO is set up for acme.com.");
+  it("name the typed address's domain, never one from the URL", () => {
+    expect(ssoSignInErrorMessage("SSO_NOT_FOUND", "acme.com")).toBe(
+      "No SSO is set up for acme.com.",
+    );
+    expect(ssoSignInErrorMessage("SSO_NOT_AVAILABLE", "acme.com")).toBe(
+      "SSO for acme.com isn't available right now. Sign in another way.",
+    );
     // The /sign-in page passes only the code.
     expect(ssoSignInErrorMessage("SSO_NOT_FOUND")).toBe(
       "SSO isn't set up for that address.",

@@ -1,7 +1,12 @@
 "use client";
 
 import { CANONICAL_ORIGIN } from "@repo/config";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  type LoaderProps,
+  ModuleOrbit,
+  ShapeMorph,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
 import { cn } from "@repo/design-system/lib/utils";
@@ -14,7 +19,13 @@ import {
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG, type ScanGrade } from "qrdx";
-import { Fragment, type ReactNode, useMemo, useState } from "react";
+import {
+  type ComponentType,
+  Fragment,
+  type ReactNode,
+  useMemo,
+  useState,
+} from "react";
 import { GRADE_COLORS, useGradeLabels } from "@/components/editor/scan-score";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import type {
@@ -87,16 +98,19 @@ export function ScoreLabel({
 
 export function StepLine({
   status,
+  loader: Loader = ModuleOrbit,
   children,
 }: {
   status: "running" | "done" | "failed";
+  /** The loader while it runs (Finder trace for a scan check). */
+  loader?: ComponentType<LoaderProps>;
   children: ReactNode;
 }) {
   return (
     <li className="flex items-start gap-2 text-xs leading-5">
       <span className="grid size-5 shrink-0 place-items-center">
         {status === "running" ? (
-          <ModuleOrbit aria-hidden className="text-muted-foreground size-3.5" />
+          <Loader aria-hidden className="text-muted-foreground size-3.5" />
         ) : status === "done" ? (
           <TickCircle className="text-muted-foreground size-3.5" />
         ) : (
@@ -259,7 +273,10 @@ export function ScoreCheckStep({
   if (part.state !== "output-available") {
     return (
       <ul>
-        <StepLine status={part.state === "output-error" ? "failed" : "running"}>
+        <StepLine
+          loader={FinderTrace}
+          status={part.state === "output-error" ? "failed" : "running"}
+        >
           {part.state === "output-error"
             ? t("couldntCheckTheScanScore")
             : t("checkingTheScanScore")}
@@ -557,7 +574,7 @@ export function ApplyDesignCard({
           </span>
         ) : state === "approval-responded" ? (
           <span className="text-muted-foreground inline-flex items-center gap-1.5 text-xs">
-            <ModuleOrbit aria-hidden className="size-3.5" />
+            <ShapeMorph aria-hidden className="size-3.5" />
             {t("applying")}
           </span>
         ) : state === "output-error" ? (

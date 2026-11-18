@@ -137,7 +137,7 @@ export function notifyTwoFactorResetScheduled(
   pending: Pick<PendingTwoFactorReset, "dueAt">,
 ): Promise<TwoFactorNoticeOutcome> {
   return sendTwoFactorNotice("support-reset-scheduled", email, {
-    extra: { dueDate: formatTwoFactorResetDate(pending.dueAt) },
+    extra: { dueAt: pending.dueAt },
   });
 }
 

@@ -98,7 +98,11 @@ export const COMPARE_MIGRATIONS: Record<string, CompareMigration> = {
     "bitly",
     "Printed codes can keep working: QRdx points each old Bitly link at its new code where your Bitly plan allows link redirects (5 a month on Core, more on higher plans; none on Free). Otherwise keep the Bitly links live until you reprint.",
   ),
-  uniqode: file("uniqode", "Uniqode", UNIQODE),
+  uniqode: {
+    ...file("uniqode", "Uniqode", UNIQODE),
+    printed:
+      "On Uniqode's Core plan and above, connect your Uniqode account in the import instead, and QRdx points each old dynamic website code at its new QRdx code, with undo. Otherwise point each one at its new QRdx link in Uniqode (the mapping CSV lists them), and keep that account active until you reprint.",
+  },
   "qr-tiger": file("qr-tiger", "QR TIGER", QR_TIGER),
   "qr-code-generator-pro": file(
     "qr-code-generator-pro",

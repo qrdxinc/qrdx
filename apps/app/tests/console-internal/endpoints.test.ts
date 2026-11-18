@@ -525,6 +525,36 @@ describe("endpoints on the shared operations", () => {
     expect(written()).toEqual([]);
   });
 
+  it("unlink hands the operation a strong check, for an admin's sign-in", async () => {
+    ops.unlinkSignInMethod.mockImplementation(
+      async (_admin, _input, check: { requireStrong: () => Promise<void> }) => {
+        await check.requireStrong();
+        return outcome("unlinkSignInMethod");
+      },
+    );
+    state.strong = false;
+    expect(
+      await json(
+        await call("users/unlink-sign-in", {
+          userId: "u_target",
+          accountId: "acct_1",
+          reason,
+        }),
+      ),
+    ).toEqual([403, { ok: false, error: "CONFIRMATION_REQUIRED" }]);
+    expect(written()).toEqual([]);
+    state.strong = true;
+    expect(
+      (
+        await call("users/unlink-sign-in", {
+          userId: "u_target",
+          accountId: "acct_1",
+          reason,
+        })
+      ).status,
+    ).toBe(200);
+  });
+
   it("mark-email-verified hands the operation a strong check, for an account it would make an admin", async () => {
     ops.markEmailVerified.mockImplementation(
       async (_admin, _input, check: { requireStrong: () => Promise<void> }) => {
@@ -657,6 +687,59 @@ describe("ban, unban, role and sign-out (Better Auth's admin routes)", () => {
       metadata: { targetEmail: "target@example.com", reason },
     });
   });
+
+  // Unbanning a banned admin hands the console back to them; signing one out
+  // everywhere locks them out of it. Both take the strong confirmation that
+  // banning one does.
+  it.each([
+    ["users/unban", "updateUser"],
+    ["users/revoke-sessions", "deleteUserSessions"],
+  ] as const)(
+    "%s for another admin only with a strong confirmation",
+    async (path, effect) => {
+      const adminRow = {
+        id: "u_target",
+        email: "t@example.com",
+        emailVerified: true,
+        role: "admin",
+      };
+      state.results = [[adminRow]];
+      state.strong = false;
+      expect(
+        await json(await call(path, { userId: "u_target", reason })),
+      ).toEqual([403, { ok: false, error: "CONFIRMATION_REQUIRED" }]);
+      expect(adapter[effect]).not.toHaveBeenCalled();
+      expect(written()).toEqual([]);
+      state.strong = true;
+      state.results = [[adminRow]];
+      expect((await call(path, { userId: "u_target", reason })).status).toBe(
+        200,
+      );
+      expect(adapter[effect]).toHaveBeenCalledTimes(1);
+      expect(state.strongCalls).toBe(2);
+    },
+  );
+
+  it.each(["users/unban", "users/revoke-sessions"] as const)(
+    "%s asks nothing more for a user who isn't an admin",
+    async (path) => {
+      state.results = [
+        [
+          {
+            id: "u_target",
+            email: "t@example.com",
+            emailVerified: true,
+            role: "user",
+          },
+        ],
+      ];
+      state.strong = false;
+      expect((await call(path, { userId: "u_target", reason })).status).toBe(
+        200,
+      );
+      expect(state.strongCalls).toBe(0);
+    },
+  );
 
   it("removes another admin's role only with a strong confirmation", async () => {
     state.target = {

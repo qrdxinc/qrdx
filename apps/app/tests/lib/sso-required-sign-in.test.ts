@@ -5,8 +5,25 @@
 // it's you" offers. The refusals themselves are tested in
 // tests/auth/sso-required.test.ts. Nothing connects anywhere.
 import { SSO_REQUIRED_ERROR } from "@repo/auth/sso-required-rules";
+import { createTranslator } from "next-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { signInErrorMessage } from "@/app/(app)/(auth)/sign-in/_lib/error-message";
+import {
+  type SocialSignIn,
+  signInErrorMessage as signInErrorMessageIn,
+} from "@/app/(app)/(auth)/sign-in/_lib/error-message";
+import en from "@/messages/en.json";
+
+// The screens' copy in English, from the catalog.
+const english = <
+  NS extends
+    | "auth.signInErrors"
+    | "auth.passkeySignIn.errors"
+    | "auth.secondStep",
+>(
+  namespace: NS,
+) => createTranslator({ locale: "en", messages: en, namespace });
+const signInErrorMessage = (code: string, via: SocialSignIn | null) =>
+  signInErrorMessageIn(code, via, english("auth.signInErrors"));
 
 const state = vi.hoisted(() => ({
   problem: null as null | { kind: "off" | "onto"; domain: string },
@@ -94,6 +111,7 @@ vi.mock("@repo/rate-limit", () => ({
 }));
 vi.mock("@/lib/auth/email-change-code", () => ({
   sendEmailChangeCode: async () => {},
+  emailChangeCodeAllowed: async () => true,
 }));
 vi.mock("@/lib/account/email-change-server", () => ({
   afterEmailChanged: async () => {},
@@ -136,11 +154,18 @@ describe("the sign-in screens say why, and point to SSO", () => {
     expect(signInErrorMessage("sso_required", "google")).toBe(REQUIRED);
     expect(signInErrorMessage("sso_required", "github")).toBe(REQUIRED);
     expect(signInErrorMessage("sso_required", null)).toBe(REQUIRED);
-    expect(ssoSignInErrorMessage("sso_required")).toBe(REQUIRED);
+    expect(
+      ssoSignInErrorMessage("sso_required", english("auth.signInErrors")),
+    ).toBe(REQUIRED);
   });
 
   it("under Continue with passkey", () => {
-    expect(signInFailureMessage({ code: "sso_required", status: 403 })).toBe(
+    expect(
+      signInFailureMessage(
+        { code: "sso_required", status: 403 },
+        english("auth.passkeySignIn.errors"),
+      ),
+    ).toBe(
       "Your company requires single sign-on for this account. Sign in with SSO.",
     );
   });
@@ -157,6 +182,7 @@ describe("the sign-in screens say why, and point to SSO", () => {
     const passkey = passkeyStepOutcome(
       { ok: false, kind: "server", code: "sso_required", status: 403 } as never,
       { automatic: false },
+      english("auth.secondStep"),
     );
     expect(passkey).toMatchObject({ over: true, counted: false });
     expect(passkey.message).toMatch(/requires single sign-on/);

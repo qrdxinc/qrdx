@@ -1,3 +1,4 @@
+import type { Translator } from "@/lib/i18n/translator";
 import type { NoticeDeliveryDeps } from "./email-change";
 import { describeUserAgent } from "./sessions";
 
@@ -91,6 +92,32 @@ export const PASSKEY_MESSAGES = {
   failed: "Something went wrong. Please try again.",
 } as const;
 
+/** PASSKEY_MESSAGES in any language. */
+export type PasskeyMessages = Record<keyof typeof PASSKEY_MESSAGES, string>;
+
+/**
+ * PASSKEY_MESSAGES in the person's language (auth.passkeyMessages in
+ * messages/en.json), for answers the server sends to "Confirm it's you"
+ * and Settings (lib/account/confirmation-server.tsx).
+ */
+export function passkeyMessages(
+  t: Translator<"auth.passkeyMessages">,
+): PasskeyMessages {
+  return {
+    reauth: t("reauth"),
+    signedOut: t("signedOut"),
+    invalidName: t("invalidName"),
+    notFound: t("notFound"),
+    cancelled: t("cancelled"),
+    alreadyAdded: t("alreadyAdded"),
+    noUserVerification: t("noUserVerification"),
+    expired: t("expired"),
+    notSupported: t("notSupported"),
+    rateLimited: t("rateLimited"),
+    failed: t("failed"),
+  };
+}
+
 /** What a Better Auth APIError carries (auth.api throws these). */
 interface AuthErrorLike {
   statusCode?: number;
@@ -139,14 +166,15 @@ export function browserFailureMessage(code: string | undefined): string {
   }
 }
 
-/** Signing in with a passkey failed: the line under the button. */
-export function signInFailureMessage(error: {
-  code?: string;
-  status?: number;
-}): string | null {
-  if (error.status === 429) {
-    return "Too many tries. Wait a minute, then try again.";
-  }
+/**
+ * Signing in with a passkey failed: the line under the button
+ * (auth.passkeySignIn.errors on the sign-in screens).
+ */
+export function signInFailureMessage(
+  error: { code?: string; status?: number },
+  t: Translator<"auth.passkeySignIn.errors">,
+): string | null {
+  if (error.status === 429) return t("rateLimited");
   switch (error.code) {
     // Closed the browser's prompt, or picked nothing: say nothing.
     case "AUTH_CANCELLED":
@@ -154,16 +182,16 @@ export function signInFailureMessage(error: {
     case "ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY":
       return null;
     case "PASSKEY_USER_VERIFICATION_REQUIRED":
-      return "That passkey didn't ask for your PIN, fingerprint or face. Use one that does, or sign in another way.";
+      return t("userVerification");
     case "PASSKEY_NOT_FOUND":
-      return "That passkey isn't linked to a QRdx account anymore. Sign in another way.";
+      return t("notFound");
     case "BANNED_USER":
-      return "This account is suspended. Contact support if you think that's a mistake.";
+      return t("banned");
     // The account's address is at a domain whose company requires SSO.
     case "sso_required":
-      return "Your company requires single sign-on for this account. Sign in with SSO.";
+      return t("ssoRequired");
     default:
-      return "That passkey didn't work. Try again, or sign in another way.";
+      return t("failed");
   }
 }
 

@@ -2,7 +2,10 @@
 
 import { toast } from "@repo/design-system";
 import { Close } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
@@ -199,7 +202,7 @@ function ArtPhotoField({
           type="button"
         >
           {preparing ? (
-            <ModuleOrbit className="size-5" />
+            <FinderTrace className="size-5" />
           ) : (
             <GalleryAdd aria-hidden className="size-5" />
           )}

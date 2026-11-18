@@ -1,3 +1,4 @@
+import { SUPPORT_EMAIL } from "@repo/config";
 import { Info } from "@repo/design-system/components/icons";
 import { ArrowSwapHorizontal, Global, Printer } from "iconsax-reactjs";
 import type { ReactNode } from "react";
@@ -14,6 +15,48 @@ interface CompareMigrateProps {
 const LINK_CLASS =
   "font-medium text-foreground underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground";
 
+/**
+ * Link shapes seen on real codes on customers' own domains (checked 17 Nov
+ * 2026), for the own-domain case. Only providers where we saw them; the
+ * others get the general case, and the docs' "Move your QR domain to QRdx"
+ * lists every provider.
+ */
+const OWN_DOMAIN_SHAPES: Record<string, ReactNode> = {
+  "bitly-qr": (
+    <>
+      On customers&apos; own domains we&apos;ve seen Bitly links like
+      /aB3xYz9?r=qr, and words (checked November 17, 2026). QRdx answers them as
+      they are and ignores the ?r=qr.
+    </>
+  ),
+  flowcode: (
+    <>
+      On customers&apos; own domains we&apos;ve seen Flowcode codes like
+      /r/aB3x, and longer paths (checked November 17, 2026). QRdx answers those
+      with{" "}
+      <LocaleLink className={LINK_CLASS} href="/docs/migrate#path-aliases">
+        path aliases
+      </LocaleLink>
+      .
+    </>
+  ),
+  hovercode: (
+    <>
+      On customers&apos; own domains we&apos;ve seen Hovercode codes of 8
+      letters and digits, and words (checked November 17, 2026). QRdx answers
+      them as they are.
+    </>
+  ),
+  uniqode: (
+    <>
+      On customers&apos; own domains we&apos;ve seen Uniqode codes like /aB3xYz,
+      and words (checked November 17, 2026). QRdx answers them as they are.
+      Codes printed on Uniqode&apos;s own qrcodes.pro don&apos;t move with your
+      domain.
+    </>
+  ),
+};
+
 interface PrintedCase {
   icon: typeof Global;
   title: string;
@@ -26,13 +69,16 @@ interface PrintedCase {
  * Codes from an import (api, file) depend on where they point: a domain the
  * customer owns can move with no reprint, codes on the provider's domain need
  * its plan until the reprint, and codes that already stopped need a reprint.
+ * Imports also get the switch offers (docs/migrate "Free help with your
+ * move"): a switch check from one old link, and help with a big move.
  */
 export function CompareMigrate({ slug, competitor }: CompareMigrateProps) {
   const migration = compareMigration(slug, competitor);
   const imported = migration.kind === "api" || migration.kind === "file";
+  const customDomains = isFeatureAvailable("customDomains");
 
   const cases: PrintedCase[] = [
-    ...(isFeatureAvailable("customDomains")
+    ...(customDomains
       ? [
           {
             icon: Global,
@@ -48,14 +94,17 @@ export function CompareMigrate({ slug, competitor }: CompareMigrateProps) {
                 on that domain, then point the domain&apos;s DNS at QRdx. The
                 same printed codes then open through QRdx. Links don&apos;t work
                 between the DNS change and QRdx verifying the domain (usually
-                minutes), so do it at a quiet time. The import preview shows any
-                back-half QRdx can&apos;t keep. Custom domains are on Pro and
-                Business.{" "}
+                minutes), so do it at a quiet time.{" "}
+                {OWN_DOMAIN_SHAPES[slug] ? (
+                  <>{OWN_DOMAIN_SHAPES[slug]} </>
+                ) : null}
+                The import preview shows any back-half QRdx can&apos;t keep.
+                Custom domains are on Pro and Business.{" "}
                 <LocaleLink
                   className={LINK_CLASS}
-                  href="/docs/migrate#your-own-domain-go-yourbrand-com"
+                  href="/docs/move-your-qr-domain"
                 >
-                  How to move a domain
+                  How to move your QR domain
                 </LocaleLink>
               </>
             ),
@@ -158,6 +207,24 @@ export function CompareMigrate({ slug, competitor }: CompareMigrateProps) {
             </div>
           </div>
         )}
+
+        {imported ? (
+          <p className="text-center text-sm text-muted-foreground text-pretty">
+            Not sure which way fits? Send one of your old QR links to{" "}
+            <a className={LINK_CLASS} href={`mailto:${SUPPORT_EMAIL}`}>
+              {SUPPORT_EMAIL}
+            </a>{" "}
+            and we&apos;ll tell you. Moving many codes
+            {customDomains ? " or your own domain" : ""}? We do the move with
+            you.{" "}
+            <LocaleLink
+              className={LINK_CLASS}
+              href="/docs/migrate#free-help-with-your-move"
+            >
+              Free help with your move
+            </LocaleLink>
+          </p>
+        ) : null}
 
         <div className="flex justify-center">
           <CompareMigrateButton

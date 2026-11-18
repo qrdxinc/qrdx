@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "退出其他所有设备",
           "thisDevice": "此设备",
+          "activeNow": "当前在线",
+          "activeJustNow": "刚刚活跃",
+          "activeAgo": "{relative}活跃",
+          "activeOn": "{date}活跃",
+          "signedIn": "{date}登录",
           "signOut": "退出登录",
           "signOutEverywhereElse2": "退出其他所有设备？",
           "thisDeviceStaysSignedIn": "此设备将保持登录状态。",
@@ -7274,6 +7279,29 @@
           "show": "显示",
           "clearSearch": "清除搜索"
         },
+        "pathAliases": {
+          "title": "路径别名",
+          "description": "来自其他服务商、位于 {domain} 上的旧链接（例如 {domain}/r/abc），需要打开此二维码。每个路径必须完全匹配，查询字符串不影响匹配。某个域名的第一个别名可能需要一分钟才能生效。",
+          "placeholder": "/r/abc",
+          "add": "添加",
+          "remove": "移除 {path}",
+          "loadFailed": "无法加载路径别名。请关闭此对话框后重新打开。",
+          "failed": "无法保存更改。请重试。",
+          "verifyFirst": "请先在“域名”页面验证 {domain}，再添加路径别名。",
+          "problems": {
+            "empty": "请输入域名之后的路径，例如 /r/abc。",
+            "length": "最多使用 {maxLength, number} 个字符。",
+            "segments": "最多使用 {maxSegments, number} 个以 / 分隔的部分。",
+            "characters": "斜杠之间请使用字母、数字、- _ . 和 ~，且不能有空的部分。",
+            "backHalf": "此路径适合作为后缀。请改为给该二维码设置这个后缀。",
+            "reserved": "QRdx 在自定义域名上使用此路径。",
+            "otherDomain": "该链接位于另一个域名。",
+            "taken": "此域名上的另一个二维码已使用此路径。",
+            "hostedPage": "此域名上有二维码使用了这个后缀，其托管页面已使用此路径。",
+            "limit": "每个二维码最多可以有 {max, number} 个路径别名。",
+            "unavailable": "此服务器暂不支持路径别名。"
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "短链接域名",
           "defaulthostQDefault": "{defaultHost}/q/（默认）",
@@ -7379,6 +7407,7 @@
           "reconnect": "重新连接",
           "noLinksMatchTheseFilters": "没有符合这些筛选条件的链接。",
           "noLinksInThisName": "此 {name} 账号中没有链接。",
+          "onlyWebsiteCodesListed": "仅列出动态网站二维码。{name} 的其他二维码类型（PDF、vCard Plus、表单等）打开的是由 {name} 托管的页面，因此请在 QRdx 中重新创建这些二维码。",
           "theNameSignInWas": "{name} 登录已取消。",
           "couldntConnectNameTryAgain": "无法连接 {name}。请重试。"
         },
@@ -7422,7 +7451,8 @@
           "keepingBackHalvesIsPart": "保留短链后缀包含在 {slugPlans} 中。",
           "yourPlanDoesntKeepBack": "你的套餐不保留短链后缀。",
           "random": "随机",
-          "backHalf": "短链后缀"
+          "backHalf": "短链后缀",
+          "alsoAnswersAt": "同时也可通过 {link} 访问，因此印有旧链接的二维码仍可正常使用。"
         },
         "importProviderStep": {
           "fromAConnectedAccount": "来自已连接的账号",
@@ -7478,9 +7508,11 @@
           "reviewUndo": "查看撤销",
           "keepMyPrintedCodesWorking": "让我已印刷的二维码继续可用",
           "optionalPointEachOldName": "可选。将每个旧的 {name} 链接指向对应的新 QRdx 二维码，这样已印刷的二维码仍可使用，其扫描也会显示在 QRdx 中。你会先看到每一项更改，也可以撤销。",
+          "oldLinksNotFound": "{name} 没有提供已印刷二维码所打开的链接，因此 QRdx 无法在此将它们指向新的二维码。它们会继续打开当前的目标地址。若要让这些二维码的扫描转到 QRdx，请下载映射 CSV，然后在 {name} 中打开每个二维码，并将其目标地址替换为对应的新 QRdx 链接。",
           "pointYourOldCodesAt": "将旧二维码指向 QRdx",
-          "oldProviderCodesLiveOnItsDomain": "你的旧服务商的二维码位于其自有域名下，因此 QRdx 无法更改。对每个旧二维码：",
-          "providerCodesLiveOnItsDomain": "{name} 的二维码位于其自有域名下，因此 QRdx 无法更改。对每个旧二维码：",
+          "oldProviderCodesLiveOnItsDomain": "QRdx 无法修改位于原服务商自有域名上的二维码。对于每一个这样的旧二维码：",
+          "providerCodesLiveOnItsDomain": "QRdx 无法修改位于 {name} 自有域名上的二维码。对于每一个这样的旧二维码：",
+          "ownDomainCodesCanMove": "位于您自己域名上的二维码无需执行这些步骤：将域名迁移到 QRdx，已印刷的二维码即可继续使用。<link>如何迁移您的二维码域名</link>",
           "oldLinksPointToQrdx": "{count, plural, one {# 个旧的 {name} 链接} other {# 个旧的 {name} 链接}}指向 QRdx",
           "backHalvesOnBackhalfdomain": "{backHalfDomain} 上的后缀",
           "attachCodes": "关联二维码",
@@ -8545,7 +8577,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "返回 QRdx"
+        "backToQrdx": "返回 QRdx",
+        "signedOut": "你已退出登录。",
+        "pageTitle": "登录"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8561,7 +8595,11 @@
       "sessionCheck": {
         "continue": "继续",
         "signOut": "退出登录",
-        "backToQrdx": "返回 QRdx"
+        "backToQrdx": "返回 QRdx",
+        "title": "请确认是你本人操作",
+        "body": "此次登录正在使用与登录时不同的国家和不同的浏览器。请确认是你本人操作，以便继续使用。",
+        "signedOut": "请重新登录以继续。",
+        "failed": "出了点问题。请检查网络连接后重试。"
       }
     },
     "join": {
@@ -8593,7 +8631,8 @@
           "signInToQrdxTo": "登录 QRdx 以继续前往",
           "continueWithGoogle": "使用 Google 继续",
           "continueWithGithub": "使用 GitHub 继续",
-          "youllReviewThesePermissionsBefore": "在共享任何内容之前，你将先查看这些权限。"
+          "youllReviewThesePermissionsBefore": "在共享任何内容之前，你将先查看这些权限。",
+          "continueToSignIn": "继续登录"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "此链接无法使用",
@@ -8612,6 +8651,20 @@
           "authorize": "授权",
           "somethingWentWrongCheckYour": "出了点问题。请检查网络连接后重试。"
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "退出 QRdx 登录？",
+        "signOut": "退出登录",
+        "cancel": "取消",
+        "youreStillSignedIn": "你仍处于登录状态",
+        "signingOutDidntWorkCheck": "退出登录失败。请检查网络连接后重试。",
+        "tryAgain": "重试",
+        "backToDashboard": "返回控制台",
+        "signingYouOut": "正在退出登录…",
+        "oneMoment": "请稍候…",
+        "pageTitle": "退出登录"
       }
     }
   },
@@ -8642,9 +8695,143 @@
       "enter": "请在 QRdx 中输入此验证码，将此邮箱设为你的账号邮箱：",
       "ignore": "如果这不是你本人的操作，请忽略这封邮件。没有验证码，一切都不会改变。"
     },
+    "emailChanged": {
+      "subject": "你的 QRdx 邮箱已更改",
+      "preview": "你的 QRdx 账号现已使用 {newEmail}。",
+      "reason": "你收到这封邮件，是因为该邮箱地址曾是某个 QRdx 账号所用的邮箱。",
+      "body": "你的 QRdx 账号现已使用 <strong>{newEmail}</strong>。今后登录验证码和团队邀请都将发送到该邮箱。",
+      "notYou": "如果不是你本人操作，请立即使用此邮箱地址联系支持团队 <support>{email}</support>，我们会帮你找回账号。"
+    },
+    "security": {
+      "device": "设备",
+      "location": "大致位置",
+      "browserOnOs": "{os} 上的 {browser}",
+      "osDevice": "{os} 设备",
+      "unknownDevice": "未知设备",
+      "cityCountry": "{country} {city}",
+      "ip": "IP 地址",
+      "time": "时间",
+      "by": "操作方",
+      "support": "QRdx 支持团队",
+      "review": "检查安全设置",
+      "nothingElse": "如果是您本人操作，则无需进行其他操作。"
+    },
+    "confirmationCode": {
+      "subject": "您的 QRdx 确认码",
+      "preview": "输入此确认码，确认是您本人操作。确认码将在 {minutes, plural, one {# 分钟} other {# 分钟}}后失效。",
+      "reason": "您收到这封邮件，是因为有人请求更改使用此邮箱地址的 QRdx 账户的安全设置。",
+      "heading": "确认是您本人操作",
+      "enter": "请在 QRdx 中输入此确认码，以便在更改账户安全设置前确认是您本人操作：",
+      "notYou": "如果这不是您本人的请求，请不要输入此确认码：可能有人已登录您的账户。请检查安全设置，并使用此邮箱地址通过 <support>{email}</support> 联系支持团队。"
+    },
+    "newSignIn": {
+      "subject": "您的 QRdx 账户有新的登录",
+      "preview": "{device} 已登录您的 QRdx 账户{hasLocation, select, yes {，位置在 {location} 附近} other {}}。",
+      "newDevice": "一台新设备",
+      "reason": "您收到这封邮件，是因为这是某个 QRdx 账户的邮箱地址，并且有浏览器或设备首次登录了该账户。",
+      "body": "刚刚有一个此前未登录过您 QRdx 账户的浏览器或设备登录了该账户。",
+      "signedInWith": "登录方式",
+      "nothingToDo": "如果是您本人登录，则无需任何操作。",
+      "notYou": "如果这不是您本人操作：",
+      "signOut": "登录后，前往“设置 → 个人资料与安全”，在“会话”下点击“退出其他所有设备”。",
+      "turnOn": "在同一页面开启两步验证，这样登录时还需要使用您的通行密钥或验证器应用。",
+      "contact": "请使用此邮箱地址通过 <support>{email}</support> 联系支持团队，我们将帮助您保护账户安全。",
+      "methods": {
+        "emailOtp": "邮箱验证码",
+        "passkey": "通行密钥",
+        "sso": "单点登录"
+      },
+      "secondSteps": {
+        "totp": "验证器应用的验证码",
+        "backupCode": "备份码",
+        "passkey": "通行密钥"
+      },
+      "withSecondStep": "{method}，然后{secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "您收到这封邮件，是因为该邮箱是一个 QRdx 账户的地址，而该账户的登录方式有任何变更，我们都会通知您。",
+      "notYou": "如果这不是您本人所为，请登录并移除任何您不认识的通行密钥，然后用此邮箱地址联系支持团队：<support>{email}</support>。",
+      "added": {
+        "subject": "您的 QRdx 账户已添加通行密钥",
+        "preview": "通行密钥“{name}”现在可以登录您的 QRdx 账户。",
+        "body": "通行密钥 <strong>{name}</strong> 现在可以登录您的 QRdx 账户，并在开启两步验证时用作第二步验证。"
+      },
+      "removed": {
+        "subject": "您的 QRdx 账户已移除通行密钥",
+        "preview": "通行密钥“{name}”已无法再登录您的 QRdx 账户。",
+        "body": "通行密钥 <strong>{name}</strong> 已无法再登录您的 QRdx 账户。"
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "您收到这封邮件，是因为该邮箱是一个 QRdx 账户的地址，而该账户的登录安全设置已发生变更。",
+      "notYou": "如果这不是您本人所为，请立即用此邮箱地址联系支持团队：<support>{email}</support>，我们会帮助您保护账户安全。",
+      "on": {
+        "subject": "您的 QRdx 账户已开启两步验证",
+        "heading": "两步验证已开启",
+        "body": "现在登录 QRdx 需要进行第二步验证：使用您的通行密钥或验证器应用中的验证码。如果两者都无法使用，可以使用备用码。"
+      },
+      "off": {
+        "subject": "您的 QRdx 账户已关闭两步验证",
+        "heading": "两步验证已关闭",
+        "body": "现在登录 QRdx 不再需要第二步验证。您的备用码也已失效。"
+      },
+      "backupCodes": {
+        "subject": "您的 QRdx 账户有了新的备用码",
+        "heading": "您有了新的备用码",
+        "body": "已为您的 QRdx 账户生成新的备用码，旧的备用码已失效。"
+      },
+      "appAdded": {
+        "subject": "您的 QRdx 账户已添加验证器应用",
+        "heading": "已添加验证器应用",
+        "body": "现在登录 QRdx 时，您刚设置的验证器应用中的验证码可用作第二步验证。"
+      },
+      "appRemoved": {
+        "subject": "您的 QRdx 账户已移除验证器应用",
+        "heading": "已移除验证器应用",
+        "body": "您的验证器应用中的验证码已无法用于登录 QRdx。两步验证仍会通过您的其他方式保持开启。"
+      },
+      "supportOff": {
+        "subject": "QRdx 支持团队已关闭两步验证",
+        "heading": "两步验证已关闭",
+        "body": "QRdx 支持团队已为您的账户关闭两步验证，并让它在所有设备上退出登录。现在登录不再需要第二步验证。您可以在“设置 → 个人资料与安全”中重新开启。"
+      },
+      "supportResetScheduled": {
+        "subject": "QRdx 支持团队将关闭两步验证",
+        "heading": "支持团队将关闭两步验证",
+        "body": "有人请求 QRdx 支持团队关闭你账户的两步验证，称已无法完成第二步验证的任何方式。",
+        "when": "支持团队将{hasDate, select, yes {于 {date}（UTC）} other {在 7 天后}}将其关闭，并让你的账户在所有设备上退出登录。在此之前，一切保持不变。",
+        "howToStop": "如果是你本人提出的请求，无需任何操作。如果不是，请使用验证器应用或备用码登录 QRdx，即可取消该请求。你也可以在“设置 → 个人资料与安全”中取消，或直接回复此邮件。"
+      },
+      "supportResetCancelled": {
+        "subject": "你的 QRdx 账户将继续启用两步验证",
+        "heading": "两步验证将继续启用",
+        "body": "支持团队关闭你账户两步验证的请求已被取消，一切保持不变。",
+        "byPerson": "你已取消支持团队关闭你 QRdx 账户两步验证的请求。",
+        "bySignIn": "你已使用验证器应用或备用码登录，因此支持团队关闭你 QRdx 账户两步验证的请求已被取消。",
+        "bySupport": "QRdx 支持团队已取消关闭你账户两步验证的请求。",
+        "staysOn": "两步验证将继续启用，你的备用码和验证方式保持原样。"
+      },
+      "backupCodeUsed": {
+        "subject": "你的 QRdx 账户使用了一个备用码",
+        "heading": "一个备用码已被使用",
+        "body": "你的一个备用码刚刚被用于登录 QRdx 账户。每个备用码只能使用一次，因此该备用码已失效。",
+        "toConfirm": "你的一个备用码刚刚被用于在 QRdx 账户进行安全变更前确认是你本人操作。每个备用码只能使用一次，因此该备用码已失效。",
+        "left": "{count, plural, =0 {这是你的最后一个备用码。} one {你还剩 # 个备用码。} other {你还剩 # 个备用码。}}",
+        "makeNew": "请在“设置 → 个人资料与安全”中生成新的备用码，这样在无法使用通行密钥或验证器应用时，你仍有办法登录。"
+      },
+      "signedOutElsewhere": "你账户在其他所有设备上的登录均已退出，这些设备现在需要通过第二步验证重新登录。"
+    },
+    "payoutEmailNotice": {
+      "subject": "你的 QRdx 联盟计划付款现将发送至新的 PayPal 地址",
+      "preview": "QRdx 联盟计划的付款将发送至 {paypalEmail}。",
+      "reason": "你收到这封邮件，是因为此邮箱地址对应一个已加入联盟计划的 QRdx 账户，而该账户的付款去向发生任何变更，我们都会通知你。",
+      "body": "{replaced, select, yes {你的联盟计划付款所用的 PayPal 地址已被更改。} other {你的联盟计划付款已添加一个 PayPal 地址。}}今后我们会将付款发送至 <strong>{paypalEmail}</strong>。",
+      "notYou": "如果这不是你本人的操作，请登录，在“设置 → 推广计划”中把地址改回来，并在下一次付款前使用此邮箱地址联系支持团队：<support>{email}</support>。"
+    },
     "alerts": {
       "viewAnalytics": "查看扫描分析",
-      "milestoneReason": "你收到此邮件，是因为 {workspace} 已开启扫描里程碑提醒。"
+      "milestoneReason": "你收到此邮件，是因为 {workspace} 已开启扫描里程碑提醒。",
+      "yourWorkspace": "你的工作区"
     },
     "firstScan": {
       "subject": "{code} 迎来了第一次扫描",
@@ -8674,6 +8861,12 @@
       "shortLink": "短链接",
       "opens": "打开次数",
       "changed": "已更改",
+      "fields": {
+        "destination": "目标地址",
+        "title": "标题",
+        "design": "设计",
+        "domain": "短链接域名"
+      },
       "open": "打开二维码",
       "created": {
         "heading": "新二维码：{code}",
@@ -8685,6 +8878,80 @@
         "reason": "您收到此邮件，是因为 {workspace} 已开启二维码变更提醒。",
         "body": "{who} 在 {workspace} 中更改了这个动态二维码。已印刷的二维码仍可正常使用，并会采用新的设置。"
       }
+    },
+    "teamInvite": {
+      "subject": "{inviter} 邀请你以{role, select, owner {所有者} admin {管理员} member {成员} billing {账单管理员} other {查看者}}身份加入 QRdx 上的 {team}",
+      "reason": "你收到这封邮件，是因为有人邀请此邮箱地址加入 QRdx 工作区。",
+      "heading": "加入 QRdx 上的 {team}",
+      "body": "{inviter} 邀请你以{role, select, owner {所有者} admin {管理员} member {成员} billing {账单管理员} other {查看者}}身份加入 {team} 工作区。",
+      "roles": {
+        "owner": "所有者可以执行所有操作，包括管理账单和删除工作区。",
+        "admin": "管理员负责管理成员、设置、域名和所有人的二维码。",
+        "member": "成员可以创建二维码和页面，并编辑工作区中的二维码。",
+        "billing": "账单管理员负责套餐和账单，可以查看其他所有内容，但不能更改。",
+        "viewer": "查看者可以查看工作区中的二维码、页面和分析数据，但不能更改任何内容。"
+      },
+      "accept": "接受邀请",
+      "expires": "请使用此邮箱地址登录以接受邀请。邀请将于 {date} 过期。如果你并未预期收到此邮件，请忽略。",
+      "pasteLink": "或将此链接粘贴到浏览器中：{url}",
+      "someone": "一位团队成员"
+    },
+    "portalInvite": {
+      "subject": "{portal} 与你共享了二维码报告",
+      "reason": "你收到这封邮件，是因为 {portal} 的 {inviter} 邀请此邮箱地址查看其二维码报告。",
+      "heading": "你的二维码报告",
+      "body": "{hasFolders, select, yes {{inviter} 邀请你查看 {portal} 在 {folders} 中的二维码：每个二维码的扫描频率、扫描地点和设备，以及打开的页面。仅供查看。} other {{inviter} 邀请你查看 {portal} 的二维码：每个二维码的扫描频率、扫描地点和设备，以及打开的页面。仅供查看。}}",
+      "open": "打开报告",
+      "signIn": "请使用此邮箱地址登录：我们会向你发送一次性验证码。如果你并未预期收到此邮件，请忽略。",
+      "pasteLink": "或将此链接粘贴到浏览器中：{url}",
+      "yourAgency": "你的代理商"
+    },
+    "limitNotice": {
+      "subject": "{level, select, full {{label}：{workspace} 已达上限} other {{label}：{workspace} 已使用 {value}}}",
+      "preview": "{level, select, full {{workspace} 的{noun}已达上限} other {{workspace} 已使用 {value} 的{noun}}}",
+      "heading": "{level, select, full {{workspace} 已达到套餐上限} other {{workspace} 即将达到套餐上限}}",
+      "body": "{level, select, full {{workspace} 已用完全部{noun}。} other {{workspace} 已使用 {value} 的{noun}。}}",
+      "plan": "套餐",
+      "button": "查看套餐和用量",
+      "howOften": "每项上限每月最多会收到两封此类邮件：一封在达到 90% 时，一封在达到 100% 时。",
+      "ownerReason": "你收到这封邮件，是因为你是 QRdx 上 {workspace} 的所有者。",
+      "artReason": "你收到这封邮件，是因为你在 QRdx 的 {workspace} 中生成过 AI 艺术图。额度按你个人计算。",
+      "label": "{limit, select, dynamicCodes {动态二维码} landingPages {托管页面} formResponses {表单回复} storage {文件存储空间} savedThemes {已保存的主题} other {AI 艺术图片}}",
+      "noun": "{limit, select, dynamicCodes {动态二维码} landingPages {托管页面} formResponses {表单回复} storage {文件存储空间} savedThemes {已保存的主题} other {AI 艺术图片}}",
+      "planName": "{plan, select, free {免费版} pro {Pro} other {Business}}",
+      "value": "{used} / {cap}",
+      "amount": "{limit, select, dynamicCodes {{count, plural, other {# 个有效的动态二维码}}} landingPages {{count, plural, other {# 个托管页面}}} formResponses {{count, plural, other {# 条表单回复}}} savedThemes {{count, plural, other {# 个已保存的主题}}} other {{count, plural, other {# 张 AI 艺术图片}}}}",
+      "storageAmount": "{size} 文件存储空间",
+      "amountLeft": "{limit, select, dynamicCodes {{count, plural, one {剩余 # 个有效的动态二维码} other {剩余 # 个有效的动态二维码}}} landingPages {{count, plural, one {剩余 # 个托管页面} other {剩余 # 个托管页面}}} formResponses {{count, plural, one {剩余 # 条表单回复} other {剩余 # 条表单回复}}} savedThemes {{count, plural, one {剩余 # 个已保存的主题} other {剩余 # 个已保存的主题}}} other {{count, plural, one {剩余 # 张 AI 艺术图片} other {剩余 # 张 AI 艺术图片}}}}",
+      "storageLeft": "剩余 {size}",
+      "left": "{monthly, select, yes {{plan}：本月{left}。} other {{plan}：{left}。}}",
+      "includes": "{monthly, select, yes {{plan} 每月包含 {amount}。} other {{plan} 包含 {amount}。}}",
+      "liftUnlimited": "{limit, select, dynamicCodes {不限数量的二维码} landingPages {不限数量的页面} formResponses {不限数量的回复} storage {不限存储空间} savedThemes {不限数量的主题} other {不限数量的图片}}",
+      "liftCount": "{limit, select, dynamicCodes {{count, number} 个二维码} landingPages {{count, number} 个页面} formResponses {每月 {count, number} 条回复} savedThemes {{count, number} 个主题} other {每月 {count, number} 张图片}}",
+      "liftShared": "{lift}，由工作区共享",
+      "upgrade": "{limit, select, dynamicCodes {归档一个，或升级到 {plan} 以获得{lift}。} landingPages {删除一个，或升级到 {plan} 以获得{lift}。} storage {删除不再需要的文件，或升级到 {plan} 以获得{lift}。} savedThemes {删除一个，或升级到 {plan} 以获得{lift}。} other {升级到 {plan} 以获得{lift}。}}",
+      "askOwner": "{limit, select, dynamicCodes {归档一个，或请工作区所有者升级到 {plan}。} landingPages {删除一个，或请工作区所有者升级到 {plan}。} storage {删除不再需要的文件，或请工作区所有者升级到 {plan}。} savedThemes {删除一个，或请工作区所有者升级到 {plan}。} other {请工作区所有者升级到 {plan}。}}",
+      "makeRoom": "{limit, select, dynamicCodes {归档一个以腾出空间。} landingPages {删除一个以腾出空间。} storage {删除不再需要的文件以腾出空间。} savedThemes {删除一个以腾出空间。} other {}}",
+      "resets": "{date} 重置。",
+      "keeps": "{limit, select, dynamicCodes {现有二维码仍可正常使用。} landingPages {现有页面保持在线。} formResponses {页面保持在线。重置后，表单将再次接收回复。} storage {你已上传的文件仍可使用。} other {}}"
+    },
+    "weeklyDigest": {
+      "subject": "你的 QRdx 一周概览：{scans, plural, other {# 次扫描}}",
+      "preview": "上周 {workspace} 共有 {scans, plural, other {# 次扫描}}",
+      "reason": "你收到这封邮件，是因为 {workspace} 已开启每周摘要。",
+      "yourWorkspace": "你的工作区",
+      "heading": "你在 QRdx 的一周",
+      "scans": "扫描",
+      "uniqueVisitors": "独立访客",
+      "formResponses": "表单回复",
+      "newCodes": "新建二维码",
+      "newThisWeek": "本周新增",
+      "sameAsLastWeek": "与上周持平",
+      "change": "较上周 {change}",
+      "topCodes": "热门二维码",
+      "countries": "扫描地区",
+      "newCodesLine": "本周新增 {count, plural, other {# 个二维码}}。",
+      "open": "打开控制台"
     }
   },
   "auth": {
@@ -8708,11 +8975,25 @@
       "thatCodeHasExpiredSend": "验证码已过期。请重新发送一个。",
       "tooManyWrongTriesSend": "错误次数过多。请重新发送验证码。",
       "thisAccountIsSuspendedContact": "此账号已被暂停。如果你认为这是误判，请联系支持团队。",
-      "somethingWentWrongTryAgain": "出了点问题。请重试。"
+      "somethingWentWrongTryAgain": "出了点问题。请重试。",
+      "newCodeSent": "新验证码已发送，旧验证码已失效。",
+      "connectionFailed": "出了点问题。请检查网络连接后重试。",
+      "emailSignInIsntSet": "此站点未启用邮箱登录。",
+      "weCouldntSendACodeTry": "暂时无法发送验证码，请几分钟后再试。",
+      "tooManyCodesRequestedSo": "验证码请求次数过多，因此我们没有再发送新的验证码。收件箱中最新的一封仍然有效。"
     },
     "passkeySignIn": {
       "continueWithPasskey": "使用通行密钥继续",
-      "lastUsed": "上次使用"
+      "lastUsed": "上次使用",
+      "errors": {
+        "rateLimited": "尝试次数过多。请等待一分钟后再试。",
+        "userVerification": "该通行密钥没有要求输入 PIN、指纹或面部验证。请使用会要求验证的通行密钥，或换一种方式登录。",
+        "notFound": "该通行密钥已不再关联任何 QRdx 账户。请换一种方式登录。",
+        "banned": "此账户已被停用。如果你认为这是误判，请联系支持团队。",
+        "ssoRequired": "你的公司要求此账户使用单点登录。请通过 SSO 登录。",
+        "failed": "该通行密钥无法使用。请重试，或换一种方式登录。",
+        "connection": "出了点问题。请检查网络连接后重试。"
+      }
     },
     "signInPanel": {
       "codeSentTo": "验证码已发送至 <strong>{email}</strong>",
@@ -8736,7 +9017,13 @@
       "freeToStartNoCard": "免费开始，无需绑定银行卡。",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "{label} 登录暂时不可用"
+      "labelSignInIsNot": "{label} 登录暂时不可用",
+      "signInIsntSetUp": "尚未设置登录方式",
+      "thisSiteHasNoEmail": "此站点未开启邮箱、Google 或 GitHub 登录，因此无法在这里创建新账号。",
+      "runThisSiteThe": "您是站点管理员吗？<link>自托管指南</link>介绍了如何开启登录。",
+      "newToQrdxYourFirst": "初次使用 QRdx？首次登录时将为您创建免费账号。",
+      "loading": "加载中…",
+      "weCouldntCheckHow": "我们无法确认此处的登录方式。请<retry>重试</retry>，或<link>打开登录页面</link>。"
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "正在加载您的登录方式",
@@ -8818,7 +9105,21 @@
       "resendInSecondsleftS": "{secondsLeft, number} 秒后可重新发送",
       "resendCode": "重新发送验证码",
       "whyAmIAsked": "为什么需要确认？",
-      "whyAmIAskedAgain": "为什么又要确认？"
+      "whyAmIAskedAgain": "为什么又要确认？",
+      "switchTo": {
+        "passkey": "使用通行密钥",
+        "totp": "使用验证器验证码",
+        "backup": "使用备用验证码",
+        "email": "通过邮件发送验证码",
+        "signInWith": "使用 {provider} 登录",
+        "sign-in-again": "重新登录"
+      },
+      "signInWithSsoAgain": "请重新通过公司的 SSO 登录。你将回到此页面，然后再次进行更改。",
+      "newCodeSent": "新验证码已发送，旧验证码已失效。",
+      "reasons": {
+        "continue-session": "此登录正在与最初登录时不同的国家和浏览器中使用，因此我们会先确认是你本人操作。",
+        "link-slack-account": "关联后，任何使用该 Slack 账号的人都可以通过 /qr track 在你的工作区创建带追踪的二维码，因此我们会先确认是你本人操作。"
+      }
     },
     "dialogCloseButton": {
       "close": "关闭"
@@ -8840,6 +9141,150 @@
     },
     "nudge": {
       "dismiss": "不再显示此提示"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "使用 SSO 登录",
+      "lastUsed": "上次使用",
+      "workEmail": "工作邮箱",
+      "continue": "继续",
+      "ifYourCompanySetIt": "前提是你的公司已为 QRdx 配置了 SSO。",
+      "cancel": "取消",
+      "youCompanyCom": "you@company.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "继续使用 SSO",
+      "lastUsed": "上次使用",
+      "useADifferentEmail": "使用其他邮箱",
+      "yourCompanyRequiresItFor": "你的公司要求此邮箱地址使用 SSO。你将前往其登录页面继续。",
+      "youllContinueOnYourCompanys": "你将跳转到贵公司的登录页面继续。",
+      "sending": "发送中…",
+      "emailMeACode": "通过邮件发送验证码"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "使用通行密钥",
+        "totp": "打开你的身份验证器应用",
+        "backup": "输入备用码"
+      },
+      "switchTo": {
+        "passkey": "使用通行密钥",
+        "totp": "使用身份验证器验证码",
+        "backup": "使用备用码"
+      },
+      "hints": {
+        "passkey": "使用 Touch ID、Face ID、Windows Hello 或安全密钥。",
+        "totp": "输入身份验证器应用中的 6 位验证码。",
+        "backup": "输入任意一个备用码。每个备用码只能使用一次。"
+      },
+      "passkey": {
+        "waiting": "正在等待你的通行密钥…",
+        "checking": "正在检查你的通行密钥…",
+        "failed": "无法验证你的通行密钥，请重试。",
+        "closed": "通行密钥提示已关闭或已超时。请重试，或使用其他方式。",
+        "expiredRequest": "该通行密钥请求已过期，请重试。",
+        "userVerification": "该通行密钥没有要求输入 PIN、指纹或面容。请使用会要求验证的通行密钥，或使用其他方式。",
+        "unavailable": "此处没有该账户的通行密钥。请使用其他方式。",
+        "tooManyTries": "失败次数过多。请重新登录后再试。",
+        "locked": "连续失败次数过多。请在 {minutes, number} 分钟后重试。",
+        "expired": "此次登录已超时，请重新登录。",
+        "rateLimited": "尝试次数过多。请稍等片刻后重试。",
+        "connection": "出了点问题。请检查网络连接后重试。",
+        "ssoRequired": "贵公司现已要求此地址使用单点登录。请重新开始，并通过 SSO 登录。"
+      },
+      "noStepHere": "此浏览器无法使用你的通行密钥，这里也没有其他方式可以完成登录。请使用存有该通行密钥的设备。",
+      "noAuthenticatorApp": "你的账户未使用身份验证器应用。请使用其他方式。",
+      "backupCode": {
+        "empty": "请输入任意一个备用码。",
+        "strange": "备用码只包含字母和数字。请删除 {chars}。",
+        "length": "备用码为 10 个字符，例如 ABCDE-FGH23。当前输入为 {count, number} 个。",
+        "lookalikes": "备份码中不会出现 {chars}。请检查是否输错了外形相近的字母或数字。",
+        "or": "{first} 或 {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "验证码不正确。请检查您的验证器应用后重试。",
+      "wrongBackupCode": "备份码不正确，或已被使用过。",
+      "invalidCode": "请输入验证器应用中的 6 位验证码。",
+      "invalidBackupCode": "这不是备份码。备份码的格式类似 ABCDE-FGH23：由大写字母和数字 2 至 9 组成。",
+      "tooManyAttempts": "验证码错误次数过多。请重新登录后再试。",
+      "locked": "连续输错验证码次数过多。请在 {minutes, number} 分钟后重试。",
+      "expired": "本次登录已超时。请重新登录。",
+      "rateLimited": "尝试次数过多。请稍候片刻后再试。",
+      "failed": "出了点问题。请检查网络连接后重试。",
+      "ssoRequired": "贵公司现已要求此地址使用单点登录。请重新开始，并通过 SSO 登录。"
+    },
+    "confirmationMessages": {
+      "failed": "出了点问题。请检查网络连接后重试。",
+      "passkeyFailed": "无法验证您的通行密钥。请重试。",
+      "passkeyClosed": "通行密钥提示已关闭或已超时。请重试，或使用其他方式。",
+      "passkeyUnavailable": "此浏览器不支持通行密钥。请使用其他方式。",
+      "signInAgain": "为了您的账户安全，请先退出登录并重新登录，然后在 10 分钟内再试一次。",
+      "stillRequired": "我们无法确认是您本人操作。请重试。",
+      "signInFailed": "此次登录未成功，因此没有任何更改。请重试，或使用其他方式。",
+      "signInConfirmed": "谢谢，已确认。您可以在接下来的 10 分钟内进行更改。",
+      "signedOut": "请重新登录后继续。",
+      "rateLimited": "尝试次数过多。请等待几分钟后再试。",
+      "noAuthenticatorApp": "你的账号未使用身份验证器应用。请使用通行密钥或备用码。",
+      "invalidCode": "请输入邮件中的 6 位验证码。",
+      "wrongCode": "验证码不正确。请查看邮件后重试。",
+      "codeExpired": "该验证码已过期。请重新发送。",
+      "tooManyCodeAttempts": "错误次数过多。请重新发送验证码。",
+      "codeNotSent": "暂时无法发送验证码。请稍后重试。",
+      "twoFactorOn": "已开启两步验证，因此不会发送邮件验证码。请使用通行密钥、身份验证器应用或备用码。",
+      "signInUnavailable": "该登录方式未关联到你的账号。请使用其他方式。",
+      "signInNotLinked": "该账号未关联到你的 QRdx 账号，因此未做任何更改。请使用你已关联的账号登录，或使用其他方式。",
+      "signInExpired": "操作用时超过 10 分钟，因此未做任何更改。请重试。",
+      "signInDifferentAccount": "你登录的是另一个 QRdx 账号，因此此处未做任何更改。请先退出登录，再登录你要更改的账号。",
+      "signInTwoFactorOn": "现已开启两步验证，请改用它来确认：通行密钥、身份验证器应用或备用码。"
+    },
+    "passkeyMessages": {
+      "reauth": "为了你的账号安全，请退出后重新登录，然后在一天内添加通行密钥。",
+      "signedOut": "请登录后管理你的通行密钥。",
+      "invalidName": "请为通行密钥命名。",
+      "notFound": "该通行密钥已不存在。请刷新页面。",
+      "cancelled": "已取消添加通行密钥。",
+      "alreadyAdded": "此设备或密码管理器已为你的账号添加过通行密钥。",
+      "noUserVerification": "该通行密钥未要求输入 PIN、指纹或面容，因此无法用于 QRdx。请尝试其他设备或密码管理器。",
+      "expired": "操作用时过长。请重新尝试添加通行密钥。",
+      "notSupported": "此浏览器无法创建通行密钥。",
+      "rateLimited": "尝试次数过多。请等待几分钟后再试。",
+      "failed": "出了点问题。请重试。"
+    },
+    "mailProvider": {
+      "open": "打开 {provider}"
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法使用它创建账户。请在 {provider} 的邮箱设置中完成验证后重试，或使用邮箱验证码登录。",
+      "githubUnverifiedNoEmailCodes": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法用它创建账号。请在 {provider} 的邮箱设置中完成验证后重试{otherWay, select, yes {，或尝试其他登录方式} other {}}。",
+      "googleUnverified": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法使用它创建账户。请改用邮箱验证码登录。",
+      "googleUnverifiedNoEmailCodes": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法用它创建账号。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
+      "otherUnverified": "该账户的邮箱地址尚未验证，因此 QRdx 无法使用它创建账户。请改用邮箱验证码登录。",
+      "otherUnverifiedNoEmailCodes": "该账号的邮箱地址尚未验证，因此 QRdx 无法用它创建账号。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
+      "cancelled": "登录已取消。",
+      "accountNotLinked": "使用此地址的账户已存在，且未关联 {provider}。请改用邮箱验证码登录。",
+      "accountNotLinkedNoEmailCodes": "使用此地址的账号已存在，且未与 {provider} 关联。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
+      "emailNotShared": "{provider} 未提供邮箱地址，因此 QRdx 无法通过它让您登录。请改用邮箱验证码登录。",
+      "emailNotSharedNoEmailCodes": "{provider} 未提供邮箱地址，因此 QRdx 无法通过它让您登录。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
+      "tookTooLong": "此次登录耗时过长，或是在其他地方发起的。请重试。",
+      "providerFailed": "{provider} 登录未成功。请重试，或使用其他方式登录。",
+      "sso": {
+        "emailRequired": "请输入您的工作邮箱。",
+        "notFound": "该地址尚未设置 SSO。",
+        "notSetUpFor": "{domain} 尚未设置 SSO。",
+        "notAvailableFor": "{domain} 的 SSO 暂时不可用，请使用其他方式登录。",
+        "required": "贵公司要求此地址使用单点登录。请通过 SSO 登录。",
+        "unavailable": "此工作区目前无法使用单点登录。请改用其他方式登录。",
+        "emailOutsideDomain": "您的身份提供商发送的邮箱地址不属于贵公司的域名，因此 QRdx 无法使用该地址让您登录。请联系工作区管理员。",
+        "emailUnverified": "贵公司的登录系统尚未确认此邮箱地址，因此 QRdx 无法使用该地址让您登录。需要由其管理员在该系统中验证邮箱地址。",
+        "emailMissing": "贵公司的登录系统没有发送邮箱地址，因此 QRdx 无法让您登录。请联系工作区管理员。",
+        "weakSignature": "贵公司的登录系统使用 SHA-1 或其他已过时的算法对本次登录进行了签名，QRdx 不接受这种签名。其管理员需要将 QRdx 应用的签名算法改为 SHA-256。",
+        "unsolicitedResponse": "QRdx 无法接受来自贵公司应用列表的这次登录。请从 QRdx 的登录页面开始：选择“通过 SSO 登录”，然后输入您的工作邮箱。如果问题仍然出现，请联系工作区管理员。",
+        "replayDetected": "该登录请求已被使用过。请重新登录。",
+        "accountNotLinked": "使用此地址的账户已经存在，无法完成关联。请改用邮箱验证码登录。",
+        "accountNotLinkedNoEmailCodes": "使用此地址的账号已存在，但无法完成关联。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
+        "failed": "单点登录未能成功。请重试，或改用其他方式登录。",
+        "rateLimited": "尝试次数过多。请等待一分钟后再试。"
+      }
     }
   },
   "codeBuilder": {

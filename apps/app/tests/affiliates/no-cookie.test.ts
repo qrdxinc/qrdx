@@ -66,6 +66,9 @@ function programFiles(): string[] {
     "components/referral-capture.tsx",
     "../../packages/auth/referral.ts",
     "../../packages/auth/referral-keys.ts",
+    // Carries the code between qrdx.dev's apps (and holds it on a page the
+    // site's link opened).
+    "../../packages/analytics/landing.ts",
   ];
   const files: string[] = [];
   const walk = (path: string) => {

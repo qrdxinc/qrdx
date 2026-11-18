@@ -10,6 +10,9 @@ export const API_PROVIDER_IDS = [
   "bitly",
   "rebrandly",
   "short-io",
+  // Not "uniqode": that id is the export-file import, and stored file jobs
+  // must stay file jobs.
+  "uniqode-api",
 ] as const;
 export type ApiProviderId = (typeof API_PROVIDER_IDS)[number];
 
@@ -78,6 +81,11 @@ export interface ApiProvider {
   capabilities: ApiProviderCapabilities;
   /** Plan limits on editing destinations, in plain words */
   redirectLimits: string;
+  /**
+   * The account's list holds only some of its codes ("website": dynamic
+   * codes that open one URL); the links step says so.
+   */
+  listScope?: "website";
 }
 
 export interface FileProvider {
@@ -175,6 +183,27 @@ export const API_PROVIDERS: Record<ApiProviderId, ApiProvider> = {
     },
     redirectLimits:
       "Short.io lets you edit destinations on every plan, so all selected links can be updated.",
+  },
+  "uniqode-api": {
+    id: "uniqode-api",
+    kind: "api",
+    name: "Uniqode",
+    integration: "uniqode",
+    connect: "api_key",
+    website: "https://www.uniqode.com",
+    logo: "/compare/uniqode.svg",
+    // Uniqode's own short domains (its API's `domain` field).
+    sharedDomains: ["qrcodes.pro", "qr.tapnscan.me"],
+    capabilities: {
+      search: false,
+      domainFilter: false,
+      tagFilter: false,
+      clicks: false,
+      updateDestination: true,
+    },
+    redirectLimits:
+      "Uniqode's API comes with the Core plan and above, for Owners and Admins. Each code QRdx changes uses about two API requests: Core allows 250,000 a month (10 a second), Plus 500,000 and Business+ 2 million.",
+    listScope: "website",
   },
 };
 

@@ -1,0 +1,126 @@
+---
+title: Move your QR domain to QRdx
+description: Keep printed QR codes on your own domain working with no reprint. Import the codes onto the domain in QRdx, then point the domain's DNS at QRdx. The limits, and the link shapes each provider uses.
+---
+
+If your printed QR codes open links on a domain you own, such as `qr.yourbrand.com/menu`, you can move that domain from your current provider to QRdx. The printed codes stay as they are: they open the same links, and QRdx answers them instead. Use this page before you count on "no reprint". It covers the steps, the limits, and the link shapes each provider uses.
+
+This only works for a domain you own. Codes that open your provider's own domain, such as its short-link domain, can't move this way: point them at QRdx from the old provider until you reprint (see [Keep printed codes working](/docs/migrate#keep-printed-codes-working)). If the codes have already stopped, see [Why a QR code stops working](/docs/help/troubleshooting/stopped-working#if-your-codes-have-already-stopped).
+
+<Callout type="info" title="Pro and Business">
+  Custom domains and kept back-halves are part of Pro (up to 5 domains per workspace) and Business (up to 25). See [Plans and limits](/docs/plans-and-limits).
+</Callout>
+
+## 1. Check one real link
+
+Scan one printed code, or open one of its links, and look at the path after the domain. QRdx answers a link on your domain when the path is a single back-half: 3 to 64 letters, digits, `-` or `_`, not starting or ending with `-`.
+
+| Path after your domain | On QRdx |
+| --- | --- |
+| `/menu` or `/aB3xYz` | Works as it is |
+| `/aB3xYz?r=qr` | Works: QRdx ignores the query string when it looks up the back-half |
+| `/menu/` | Works, after one redirect to the link without the slash |
+| A prefix, such as `/r/aB3x` | Needs a path alias |
+| More than one segment, such as `/spring/menu` | Needs a path alias |
+| Under 3 characters, such as `/ab` | Needs a path alias |
+| `/p/…` | `/p/` is where QRdx serves [hosted pages](/docs/landing-pages) on your domain. See [Path aliases](/docs/migrate#path-aliases) |
+
+A path alias answers one exact old path on your domain with a QRdx code: see [Path aliases](/docs/migrate#path-aliases).
+
+Two more things to check:
+
+- **Case:** back-halves are case-sensitive. `/Menu` and `/menu` are different links, so import them exactly as they're printed.
+- **Reserved words:** `api`, `_next`, `p`, `q`, `null` and `undefined` can't be back-halves on your domain.
+
+Not sure what you have? [Contact support](/docs/help/contact) with one of your links.
+
+## 2. Get the list of codes
+
+You need each code's link, with its back-half, and its destination.
+
+- **Export file:** export the codes from your current provider. [From an export file](/docs/migrate#from-an-export-file) has the steps for each provider. Where a provider has no export, list the links and destinations in a spreadsheet by hand.
+- **Connected account:** Bitly, Rebrandly and Short.io list your links through their API, so there's no file. See [From a connected account](/docs/migrate#from-a-connected-account).
+
+Export the scan history too. It stays with your current provider, and QRdx counts scans from the day of the switch.
+
+If a code opens a page your current provider hosts (a menu, a business card, a landing page), its destination is that page on the provider's servers, which stops when you cancel. Rebuild it as a [hosted page](/docs/landing-pages) in QRdx and use that as the destination instead.
+
+## 3. Add the domain to QRdx
+
+Open **Settings** → **Domains** in the workspace and add the domain. Don't change its DNS yet: it stays unverified until the switch, and the printed codes keep working at your current provider meanwhile.
+
+Plan the switch within 3 days of adding the domain. After 3 days, an unverified domain can be added by another account. The codes you imported onto it would then move to `qrdx.dev`, with a new back-half wherever theirs is taken there.
+
+## 4. Import onto the domain
+
+Open [Codes](/dashboard?to=codes), then the **⋯** menu → **Import codes** → **From Bitly and other apps**, and pick your provider.
+
+1. In the preview, tick **Keep the original back-halves** and pick your domain under **Links on**.
+2. Read the list of back-halves QRdx can't keep, and why. A printed link whose back-half isn't kept won't open after the switch.
+3. Import. Each run takes up to 1,000 links; run it again for the rest. A second run skips the codes already imported.
+
+Nothing changes at your current provider during the import.
+
+## 5. Switch the DNS at a quiet time
+
+1. A day ahead, lower the TTL of the domain's current record at your DNS provider, to 5 minutes (300 seconds) if it allows. The switch then reaches visitors faster.
+2. At a quiet time, such as night in your time zone, replace the record that points at your current provider with the records the **Domains** page shows. A subdomain gets a `CNAME` record and a root domain an `A` record. [Which provider serves your domain](#which-provider-serves-your-domain) shows what the old record usually looks like.
+3. Click **Verify** on the **Domains** page. If the record isn't found yet, try again in a few minutes. See [Custom domains](/docs/custom-domains) for the details.
+
+Links on the domain stop working at your current provider as soon as DNS moves, and start working on QRdx once the domain is verified. The gap is usually minutes, but DNS caches can make it longer for some visitors.
+
+## 6. Test, then cancel the old plan
+
+Scan five printed codes from different print runs, on a phone using mobile data rather than your office Wi-Fi. A link QRdx can't match shows a "QR code not found" page: check its case and whether the preview kept its back-half.
+
+If something is wrong, point the DNS back at your current provider. The codes work there again for as long as the old plan is active. Cancel the old plan only when the codes open through QRdx and you have its scan history.
+
+## Link shapes by provider
+
+What we found, checked on November 17, 2026. "Seen" means we found real codes with that shape on customers' own domains. "Unconfirmed" means we only saw the provider's own short links, so the shape on your domain may differ. Providers change these, so check one of your own links (step 1).
+
+| Provider | Links | On QRdx |
+| --- | --- | --- |
+| Bitly | `/<7 characters>?r=qr`, and words | Yes (seen) |
+| BL.INK | `/<6 characters>`; on some accounts `/<word>/<word>` | Yes (seen). Two segments need a path alias |
+| Flowcode, on `whitelabel.flowsto.com` | `/r/<code>`, where the code can be 1 character, and `/s/<id>/code_batch-1/<id>` | Needs path aliases (seen) |
+| Flowcode, on `custom.flowcode.com` | Not seen on a customer's domain. Flowcode's own links are `flowcode.com/p/<id>` | Unconfirmed. For `/p/<id>`, see [Path aliases](/docs/migrate#path-aliases) |
+| Hovercode | `/<8 hex characters>`, and words | Yes (seen) |
+| ME-QR | `/l/<slug>` and `/<8 characters>` on its own domains | Unconfirmed. `/l/` needs a path alias; the short ones likely fit |
+| QR Code Generator PRO | `/<4 to 6 characters>` on its own `qrco.de` | Unconfirmed, likely yes |
+| QR Planet | `/<word>`; one demo used `/object/<id>` | Yes (seen). `/object/<id>` needs a path alias |
+| QR TIGER | `/<4 to 6 characters>` on its own `qr1.be` | Unconfirmed, likely yes |
+| QRCodeChimp | `/<11 to 21 characters>` on its own `linko.page` | Unconfirmed, likely yes |
+| Rebrandly | Mixed-case words joined by `_` or `-` | Yes (seen), up to 64 characters |
+| Scanova | `/<4 characters>?qr=…` on its own `scnv.io` | Unconfirmed, likely yes: the query string is ignored |
+| Unitag | `/a/<6 characters>` | Needs path aliases (seen) |
+| Uniqode (Beaconstac) | `/<6 characters>` in mixed case, and words | Yes (seen) |
+
+Some companies print codes on the provider's own domain as well as their own. Uniqode codes on `qrcodes.pro`, for example, don't move with your domain: they need [Keep printed codes working](/docs/migrate#keep-printed-codes-working) or a reprint.
+
+## Which provider serves your domain
+
+Look up where your domain's record points, for example with `dig +short qr.yourbrand.com`, and match it here. This is also the record you replace in step 5.
+
+| The record points to | Provider |
+| --- | --- |
+| `cname.bitly.com`, or `A` records `67.199.248.12` and `67.199.248.13` on a root domain | Bitly |
+| `bl2.blink.domains`, or a host made for your account | BL.INK |
+| `whitelabel.flowsto.com` | Flowcode |
+| `scan.custom.flowcode.com` or `page.custom.flowcode.com` | Flowcode |
+| `custom_domain.hovercode.com` | Hovercode |
+| A host under `me-qr.com` | ME-QR |
+| `whitelabel-02.egoditor.de` | QR Code Generator PRO |
+| `<id>.webapp-portal.com` | QR Planet |
+| `qr1.be` | QR TIGER |
+| `cname.qrcodechimp.com` | QRCodeChimp |
+| `A` records `13.248.148.104` and `76.223.20.46` on a root domain | Rebrandly |
+| `scnv.io` or `scnv.app` | Scanova |
+| `<id>.qrcode.link` | Unitag |
+| A host under `tapnscan.me`; on older setups, a `cloudfront.net` host | Uniqode |
+
+## Related
+
+- [Move from Bitly, Rebrandly and others](/docs/migrate): the importer, export files and keeping back-halves
+- [Custom domains](/docs/custom-domains): DNS records, verifying, and what the domain serves
+- [Why a QR code stops working](/docs/help/troubleshooting/stopped-working)

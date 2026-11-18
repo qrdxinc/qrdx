@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { enforceCreateRateLimit } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import { runJobChunk } from "@/lib/migrate/importer";
+import { trackImportChunk } from "@/lib/migrate/server/analytics";
 import { deps, migrateScope, respond } from "@/lib/migrate/server/http";
 import { parseWithSchema } from "@/lib/request-guards";
 
@@ -20,6 +21,8 @@ export function POST(req: Request, context: Context) {
     const scope = await migrateScope(req, { write: true });
     // The same per-user cap as every other way of creating codes.
     await enforceCreateRateLimit(scope.userId);
-    return runJobChunk(deps, scope, id);
+    const result = await runJobChunk(deps, scope, id);
+    trackImportChunk(scope, result);
+    return result;
   });
 }

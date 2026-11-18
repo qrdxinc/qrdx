@@ -1,5 +1,9 @@
 import { authClient } from "@repo/auth/client";
-import { ssoSignInErrorMessage } from "@/ee/sso/messages";
+import { emailDomain } from "@repo/auth/sso-rules";
+import {
+  type SignInErrorTranslator,
+  ssoSignInErrorMessage,
+} from "@/ee/sso/messages";
 import { signInPath } from "@/lib/safe-redirect";
 
 /**
@@ -12,6 +16,7 @@ import { signInPath } from "@/lib/safe-redirect";
 export async function startSsoSignIn(
   email: string,
   callbackURL: string,
+  t: SignInErrorTranslator,
 ): Promise<string | null> {
   try {
     const { data, error } = await authClient.signIn.sso({
@@ -20,14 +25,16 @@ export async function startSsoSignIn(
       errorCallbackURL: signInPath(callbackURL),
     });
     if (error) {
+      // The server's message is English; the code and the address's domain
+      // (the one the server looked up) give the reader's language.
       return error.status === 429
-        ? "Too many tries. Wait a minute, then try again."
-        : ssoSignInErrorMessage(error.code, error.message);
+        ? t("sso.rateLimited")
+        : ssoSignInErrorMessage(error.code, t, emailDomain(email));
     }
-    if (!data?.url) return ssoSignInErrorMessage(null);
+    if (!data?.url) return ssoSignInErrorMessage(null, t);
     window.location.href = data.url;
     return null;
   } catch {
-    return ssoSignInErrorMessage(null);
+    return ssoSignInErrorMessage(null, t);
   }
 }

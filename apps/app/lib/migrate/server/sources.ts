@@ -3,6 +3,7 @@ import "server-only";
 import {
   createDubClient,
   createShortLinkClient,
+  createUniqodeClient,
   getIntegrationRegistry,
   initializeIntegrations,
 } from "@repo/integrations";
@@ -10,7 +11,7 @@ import { getConnection } from "@/lib/connected-accounts/server";
 import { getIntegrationAvailability } from "@/lib/integration-availability";
 import { isVisible, setupNeeded } from "@/lib/integration-availability-rules";
 import { isIntegrationConfigured } from "@/lib/integration-oauth";
-import { dubUndoSource, shortLinkSource } from "../adapters";
+import { dubUndoSource, shortLinkSource, uniqodeSource } from "../adapters";
 import { ImportError } from "../importer";
 import {
   API_PROVIDERS,
@@ -68,7 +69,8 @@ export async function providerStatuses(
 /**
  * The user's connected account as a MigrationSource (token stays
  * server-side). Dub shares the Dub integration's connection and, retired for
- * new imports, can only undo earlier re-points.
+ * new imports, can only undo earlier re-points. Uniqode is an import-only
+ * integration with its own client.
  */
 export async function getSource(
   userId: string,
@@ -88,6 +90,8 @@ export async function getSource(
   }
   if (provider === "dub")
     return dubUndoSource(createDubClient(connection.accessToken));
+  if (provider === "uniqode-api")
+    return uniqodeSource(createUniqodeClient(connection.accessToken));
   return shortLinkSource(
     provider,
     createShortLinkClient(provider, {

@@ -1,7 +1,11 @@
 "use client";
 
 import { Close as X } from "@repo/design-system/components/icons";
-import { ModuleOrbit, Scanframe } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ModuleWave,
+  Scanframe,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Dialog,
@@ -25,6 +29,7 @@ import {
 } from "iconsax-reactjs";
 import {
   type KeyboardEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useRef,
@@ -53,6 +58,11 @@ export interface CloudFilePickerProps {
   onPick: (item: PickerItem) => Promise<void>;
   /** Folders get a "Use folder" button next to opening them. */
   allowFolderPick?: boolean;
+  /**
+   * Shown while the first page loads (Scanframe unless given), so the app
+   * can pass its seasonal loader.
+   */
+  loadingIndicator?: ReactNode;
 }
 
 const IMAGE = /\.(png|jpe?g|gif|webp|svg|heic|avif)$/i;
@@ -134,6 +144,7 @@ export function CloudFilePicker({
   load,
   onPick,
   allowFolderPick = false,
+  loadingIndicator,
 }: CloudFilePickerProps) {
   const [items, setItems] = useState<PickerItem[]>([]);
   const [cursor, setCursor] = useState<string | undefined>();
@@ -364,11 +375,13 @@ export function CloudFilePicker({
         <ScrollArea className="h-[360px] rounded-md border">
           {loading && items.length === 0 ? (
             <div className="flex items-center justify-center p-8">
-              <Scanframe
-                aria-hidden
-                className="text-muted-foreground"
-                size={24}
-              />
+              {loadingIndicator ?? (
+                <Scanframe
+                  aria-hidden
+                  className="text-muted-foreground"
+                  size={24}
+                />
+              )}
             </div>
           ) : items.length === 0 ? (
             <div className="flex flex-col items-center justify-center gap-1 p-8 text-center">
@@ -490,7 +503,7 @@ export function CloudFilePicker({
                 type="button"
                 variant="outline"
               >
-                {loading && <ModuleOrbit aria-hidden className="size-3.5" />}
+                {loading && <ModuleWave aria-hidden className="size-3.5" />}
                 Load more
               </Button>
             </div>

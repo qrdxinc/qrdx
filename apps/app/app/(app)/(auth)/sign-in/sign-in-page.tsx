@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+import type { SignInOptions } from "@/lib/auth/sign-in-options";
 import { SignInPanel } from "../components/sign-in-panel";
 import { type SocialSignIn, signInErrorMessage } from "./_lib/error-message";
 import type { SignInPageMode } from "./_lib/params";
@@ -31,7 +32,8 @@ function Lead({
  * The sign-in panel on a page: centered, with a way back to the site.
  * Google, GitHub and the email code all land on `next` (already checked by
  * lib/safe-redirect on the server). `mode` "signup" shows it as the dialog's
- * sign-up (?mode=signup).
+ * sign-up (?mode=signup). `options` are the ways in the server offers for
+ * this request; without them the panel asks.
  */
 export function SignInPage({
   next,
@@ -39,6 +41,7 @@ export function SignInPage({
   error = null,
   via = null,
   mode = "signin",
+  options,
 }: {
   next: string;
   signedOut: boolean;
@@ -48,8 +51,10 @@ export function SignInPage({
   error?: string | null;
   /** Google or GitHub; otherwise single sign-on. */
   via?: SocialSignIn | null;
+  options?: SignInOptions;
 }) {
   const t = useTranslations("app.signIn.signInPage");
+  const tErrors = useTranslations("auth.signInErrors");
   return (
     <main className="bg-background flex min-h-svh flex-col items-center justify-center gap-4 px-4 py-10">
       <div className="bg-card w-full max-w-sm overflow-hidden rounded-xl border shadow-sm">
@@ -59,11 +64,12 @@ export function SignInPage({
           mode={mode}
           notice={
             error
-              ? signInErrorMessage(error, via)
+              ? signInErrorMessage(error, via, tErrors, options)
               : signedOut
-                ? "You're signed out."
+                ? t("signedOut")
                 : undefined
           }
+          options={options}
           redirectTo={next}
           Title={Heading}
         />

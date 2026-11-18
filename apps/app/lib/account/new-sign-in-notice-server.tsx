@@ -5,9 +5,10 @@ import { after } from "next/server";
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import { sendEmail } from "@/lib/email/send";
 import {
-  NEW_SIGN_IN_SUBJECT,
   NewSignInEmail,
+  newSignInSubject,
 } from "@/lib/email/templates/new-sign-in";
+import { emailIntlForUser } from "@/lib/i18n/email-locale";
 import { requestDetails } from "@/lib/security/request-details";
 import {
   deliverNewSignInNotice,
@@ -20,8 +21,11 @@ async function sendNewSignInAlert({
   secondStep,
   headers,
 }: NewSignIn): Promise<void> {
-  const details = requestDetails(headers);
-  const methodLabel = signInMethodLabel(method, secondStep);
+  // The account's language: the request is the one being reported, and may
+  // not be the owner's.
+  const intl = await emailIntlForUser(user.id);
+  const details = requestDetails(headers, new Date(), intl);
+  const methodLabel = signInMethodLabel(method, secondStep, intl);
   const summary = [
     details.device,
     details.location,
@@ -40,8 +44,14 @@ async function sendNewSignInAlert({
       send: () =>
         sendEmail({
           to: user.email,
-          subject: NEW_SIGN_IN_SUBJECT,
-          react: <NewSignInEmail details={details} method={methodLabel} />,
+          subject: newSignInSubject(intl),
+          react: (
+            <NewSignInEmail
+              details={details}
+              intl={intl}
+              method={methodLabel}
+            />
+          ),
           tags: [{ name: "category", value: "new_sign_in" }],
         }),
     },

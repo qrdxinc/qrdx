@@ -1,6 +1,6 @@
 "use client";
 
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { FinderTrace } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Popover,
@@ -264,7 +264,7 @@ export function ScanScoreBadge({
         >
           <span className="relative grid size-3.5 shrink-0 place-items-center">
             {checking ? (
-              <ModuleOrbit
+              <FinderTrace
                 aria-hidden
                 className="text-muted-foreground size-3.5"
               />
@@ -319,7 +319,7 @@ export function ScanScoreBadge({
             <ScanCheckList checks={result.checks} />
           ) : (
             <p className="text-muted-foreground flex items-center gap-2 text-sm">
-              <ModuleOrbit aria-hidden className="size-4" />
+              <FinderTrace aria-hidden className="size-4" />
               {t("decodingYourDesignAtA")}
             </p>
           )}

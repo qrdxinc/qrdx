@@ -53,6 +53,7 @@ import { z } from "zod";
 import {
   type Catalog,
   flatten,
+  formatJson,
   type ReviewFile,
   sourceHash,
   unflatten,
@@ -123,10 +124,7 @@ const readJson = <T>(file: string): T =>
     : ({} as T);
 const writeJson = (file: string, value: unknown) => {
   mkdirSync(path.dirname(path.join(MESSAGES, file)), { recursive: true });
-  writeFileSync(
-    path.join(MESSAGES, file),
-    `${JSON.stringify(value, null, 2)}\n`,
-  );
+  writeFileSync(path.join(MESSAGES, file), formatJson(value));
 };
 
 interface Glossary {

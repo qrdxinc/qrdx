@@ -61,7 +61,12 @@ import { ART_MODEL_LABEL } from "./ai/art-models";
 import { BARCODE_FORMATS } from "./barcode/formats";
 import { BRAND_LOGO_COUNT } from "./brand-logos/catalog.generated";
 import { PAGE_TYPE_IDS } from "./landing/page-type-ids";
-import { MONEY_BACK_DAYS, NONPROFIT_DISCOUNT_PERCENT } from "./pricing";
+import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
+import {
+  MONEY_BACK_DAYS,
+  NONPROFIT_DISCOUNT_PERCENT,
+  SWITCHER_MONEY_BACK_DAYS,
+} from "./pricing";
 import { FREE_SCAN_HISTORY_YEARS } from "./scan-history";
 
 export const PRODUCT_FACTS = {
@@ -143,6 +148,8 @@ export const PRODUCT_FACTS = {
   // Pricing offers (lib/pricing.ts), for the refund policy, help and compare pages.
   /** Days to ask for a full refund of the first payment for a paid plan: "30". */
   moneyBackDays: MONEY_BACK_DAYS,
+  /** The same window for customers moving from another QR code provider: "60". */
+  switcherMoneyBackDays: SWITCHER_MONEY_BACK_DAYS,
   /** The non-profit discount, as copy writes it: "50" (followed by "%"). */
   nonprofitDiscountPercent: NONPROFIT_DISCOUNT_PERCENT,
   /**
@@ -150,6 +157,8 @@ export const PRODUCT_FACTS = {
    * "year". Pro and Business keep all of it, which copy writes as words.
    */
   freeScanHistoryYears: FREE_SCAN_HISTORY_YEARS,
+  /** Path aliases one code can have on its custom domain (lib/path-alias-limits.ts). */
+  pathAliasesPerCode: PATH_ALIASES_PER_CODE,
 } as const;
 
 export type ProductFact = keyof typeof PRODUCT_FACTS;

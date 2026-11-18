@@ -1,18 +1,38 @@
 // The second step's page logic (app/(app)/(auth)/components/second-step.ts):
 // which method shows first, what a failed passkey says, and why a typed
 // backup code can't be one.
-import { normalizeBackupCode } from "@repo/auth/sign-in-challenge-rules";
+import {
+  LOCKOUT_MINUTES,
+  normalizeBackupCode,
+} from "@repo/auth/sign-in-challenge-rules";
+import { createTranslator } from "next-intl";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
-  backupCodeProblem,
+  backupCodeProblem as backupCodeProblemIn,
   firstStep,
   offeredSteps,
-  PASSKEY_STEP_MESSAGES,
   PROMPT_REFUSED_MS,
-  passkeyStepOutcome,
+  passkeyStepOutcome as passkeyStepOutcomeIn,
   readRememberedStep,
   rememberStep,
 } from "@/app/(app)/(auth)/components/second-step";
+import en from "@/messages/en.json";
+
+// In English, from the catalog (auth.secondStep).
+const t = createTranslator({
+  locale: "en",
+  messages: en,
+  namespace: "auth.secondStep",
+});
+const PASSKEY_STEP_MESSAGES = {
+  ...en.auth.secondStep.passkey,
+  locked: t("passkey.locked", { minutes: LOCKOUT_MINUTES }),
+};
+const passkeyStepOutcome = (
+  result: Parameters<typeof passkeyStepOutcomeIn>[0],
+  options: Parameters<typeof passkeyStepOutcomeIn>[1],
+) => passkeyStepOutcomeIn(result, options, t);
+const backupCodeProblem = (input: string) => backupCodeProblemIn(input, t);
 
 const ALL = { passkey: true, totp: true, backupCodes: true };
 
