@@ -17,6 +17,7 @@ export const CODE_BUILDER_NAMESPACES = [
   "app.dashboard.codes.codeQr",
   "app.dashboard.codes.domainPicker",
   "app.dashboard.codes.lifecyclePanelForm",
+  "app.dashboard.codes.pathAliases",
   "app.dashboard.codes.pixelsPanel",
   "app.dashboard.codes.routingPanel",
   "app.dashboard.codes.slugField",

@@ -7673,6 +7673,29 @@
           "show": "Show",
           "clearSearch": "Clear search"
         },
+        "pathAliases": {
+          "title": "Path aliases",
+          "description": "Old links on {domain} from another provider, such as {domain}/r/abc, that should open this code. Each path must match exactly; the query string doesn't matter. A domain's first alias can take a minute to start working.",
+          "placeholder": "/r/abc",
+          "add": "Add",
+          "remove": "Remove {path}",
+          "loadFailed": "Couldn't load the path aliases. Close this dialog and open it again.",
+          "failed": "Couldn't save the change. Try again.",
+          "verifyFirst": "Verify {domain} on the Domains page to add path aliases.",
+          "problems": {
+            "empty": "Enter the path after the domain, for example /r/abc.",
+            "length": "Use at most {maxLength, number} characters.",
+            "segments": "Use at most {maxSegments, number} parts separated by /.",
+            "characters": "Use letters, digits, - _ . and ~ between the slashes, with no empty parts.",
+            "backHalf": "This path fits a back-half. Give the code that back-half instead.",
+            "reserved": "QRdx uses this path on custom domains.",
+            "otherDomain": "That link is on another domain.",
+            "taken": "Another code on this domain already answers at this path.",
+            "hostedPage": "A code on this domain has this back-half, and its hosted page answers at this path.",
+            "limit": "A code can have up to {max, number} path aliases.",
+            "unavailable": "Path aliases aren't available on this server yet."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Short link domain",
           "defaulthostQDefault": "{defaultHost}/q/ (default)",

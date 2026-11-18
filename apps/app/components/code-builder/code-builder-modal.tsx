@@ -56,6 +56,7 @@ import {
 import { CodeDownloadButtons } from "@/app/(app)/dashboard/codes/_components/code-qr";
 import { DomainPicker } from "@/app/(app)/dashboard/codes/_components/domain-picker";
 import { displayUrl } from "@/app/(app)/dashboard/codes/_components/format";
+import { PathAliasesField } from "@/app/(app)/dashboard/codes/_components/path-aliases-field";
 import {
   SlugField,
   useSlugCheck,
@@ -1069,6 +1070,9 @@ export default function CodeBuilderModal({
               : t("qrCodesAlreadyPrintedWith2", { shortLink: code.shortLink })
             : t("theQrCodeChangesTo")}
         </p>
+      )}
+      {editing && code?.domain && !domainChanged && (
+        <PathAliasesField codeId={code.id} disabled={isPending} />
       )}
 
       <div className="space-y-1.5">
