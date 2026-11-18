@@ -1,8 +1,10 @@
 import "server-only";
 
+import type { AcquisitionProps } from "@repo/analytics/events";
 import type { NewUserSignUp } from "@repo/auth/referral";
 import { LANDING_HEADER } from "@repo/auth/referral-keys";
 import { database as db, userAcquisition } from "@repo/database";
+import { eq } from "drizzle-orm";
 import { isMissingTableError } from "@/lib/affiliates/missing-table";
 import { logError } from "@/lib/log-error";
 import { baseUrl } from "@/lib/metadata";
@@ -95,5 +97,56 @@ export async function recordAcquisition(input: {
     }
     logError(error as Error, { action: "analytics.record_acquisition" });
     return "error";
+  }
+}
+
+// ── On events ────────────────────────────────────────────────────────────────
+
+/**
+ * Campaign names (utm_campaign) on links QRdx shares itself, passed on to
+ * events as they are: `utm_campaign=switch` marks every link the switch
+ * campaign puts out (emails, community answers, partners, directories),
+ * with where it was shared in utm_source and utm_medium. Any other tag could
+ * name a company or a person, so it stays in user_acquisition.
+ */
+export const OWN_CAMPAIGNS = ["switch"] as const;
+export type OwnCampaign = (typeof OWN_CAMPAIGNS)[number];
+
+/** A stored campaign tag when it's one of QRdx's own, else null. */
+export function ownCampaign(
+  tag: string | null | undefined,
+): OwnCampaign | null {
+  const value = tag?.trim().toLowerCase() ?? "";
+  return (OWN_CAMPAIGNS as readonly string[]).includes(value)
+    ? (value as OwnCampaign)
+    : null;
+}
+
+/**
+ * How an account found QRdx, for a server event's properties: its channel
+ * ("unknown" when nothing was recorded) and QRdx's own campaign, if any.
+ * Empty when it can't be read (the table missing, a database error). Never
+ * throws.
+ */
+export async function acquisitionProps(
+  userId: string,
+): Promise<AcquisitionProps> {
+  try {
+    const [row] = await db
+      .select({
+        channel: userAcquisition.channel,
+        utmCampaign: userAcquisition.utmCampaign,
+      })
+      .from(userAcquisition)
+      .where(eq(userAcquisition.userId, userId))
+      .limit(1);
+    if (!row) return { channel: "unknown" };
+    const campaign = ownCampaign(row.utmCampaign);
+    return { channel: row.channel, ...(campaign && { campaign }) };
+  } catch (error) {
+    if (!isMissingTableError(error)) {
+      logError(error as Error, { action: "analytics.acquisition_props" });
+    }
+    return {};
   }
 }

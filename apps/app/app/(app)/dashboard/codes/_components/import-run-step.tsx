@@ -1,6 +1,5 @@
 "use client";
 
-import { track } from "@repo/analytics";
 import { Info } from "@repo/design-system/components/icons";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -149,17 +148,10 @@ export function RunStep({
   }, [refresh, run]);
 
   const done = job?.status === "done" && !running;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: once, when the run finishes.
   useEffect(() => {
     if (done && !finishedOnce.current) {
       finishedOnce.current = true;
       soundEvent("success");
-      if (job)
-        track("import_completed", {
-          provider: job.provider,
-          count: job.created,
-          failed: job.failed,
-        });
     }
   }, [done]);
 
