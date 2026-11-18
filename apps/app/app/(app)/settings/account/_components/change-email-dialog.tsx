@@ -166,8 +166,10 @@ export function ChangeEmailDialog({
         if (!result.ok && result.reason !== "code-dead") setCode("");
         return;
       }
+      // The note to the old address goes out after the answer
+      // (afterEmailChanged), so it's on its way, not sent yet.
       toast.success(t("yourEmailIsNowSentto", { sentTo }), {
-        description: t("weSentANoteAbout", { currentEmail }),
+        description: t("wellSendANoteAbout", { currentEmail }),
       });
       track("email_changed");
       onOpenChange(false);

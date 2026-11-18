@@ -5983,6 +5983,7 @@
           "noCodeCheckSpamAn": "No code? Check spam. An address that already has its own QRdx account can't be used.",
           "noCodeCheckSpamIf": "No code? Check spam. If it isn't there, check the address and try again.",
           "weSentANoteAbout": "We sent a note about the change to {currentEmail}.",
+          "wellSendANoteAbout": "We'll send a note about the change to {currentEmail}.",
           "yourEmailIsNowSentto": "Your email is now {sentTo}"
         },
         "communityProfileSection": {

@@ -40,8 +40,10 @@ export const EMAIL_CHANGE_MESSAGES = {
   invalidEmail: "Enter a valid email address.",
   invalidCode: "Enter the 6-digit code from the email.",
   rateLimited: "Too many tries. Wait a few minutes and try again.",
+  // Also the answer for an address that has an account and so never got a
+  // code: the limit counts requests, before the address is looked up.
   codeRateLimited:
-    "Too many codes sent to that address. Wait a few minutes and try again.",
+    "Too many codes requested for that address. Wait a few minutes and try again.",
   notSent: "We couldn't send a code right now. Please try again.",
   wrongCode: "That code isn't right. Check the email and try again.",
   expired: "That code has expired. Send a new one.",

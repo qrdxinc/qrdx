@@ -5,7 +5,9 @@
 // addresses up), and a send that fails can't be told apart from that without
 // giving it away. So the dialog only says a code should arrive if no other
 // account uses the address. Where this deployment can't deliver codes at all,
-// Settings says so instead of offering the change.
+// Settings says so instead of offering the change. Once the change is made,
+// the note to the old address goes out after the answer, so the toast says
+// one will be sent, not that it was.
 import { NextIntlClientProvider } from "next-intl";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
@@ -16,6 +18,7 @@ const actions = vi.hoisted(() => ({
   requestEmailChange: vi.fn(),
   confirmEmailChange: vi.fn(),
 }));
+const toasts = vi.hoisted(() => ({ success: vi.fn(), error: vi.fn() }));
 
 vi.mock(
   "@/app/(app)/settings/account/_lib/email-change-actions",
@@ -26,6 +29,11 @@ vi.mock("@/app/(app)/settings/account/_lib/actions", () => ({
   updateProfileName: vi.fn(),
   uploadAvatar: vi.fn(),
 }));
+vi.mock("@repo/design-system", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@repo/design-system")>()),
+  toast: toasts,
+}));
+vi.mock("@repo/analytics", () => ({ track: () => undefined }));
 vi.mock("@repo/auth/client", () => ({
   authClient: { useSession: () => ({ refetch: async () => undefined }) },
 }));
@@ -78,6 +86,8 @@ beforeEach(() => {
   // input-otp looks for password managers' badges; jsdom has no layout.
   document.elementFromPoint = () => null;
   actions.requestEmailChange.mockReset();
+  actions.confirmEmailChange.mockReset();
+  toasts.success.mockReset();
   container = document.createElement("div");
   document.body.append(container);
   root = createRoot(container);
@@ -165,6 +175,35 @@ describe("after asking for a code", () => {
     expect(actions.requestEmailChange).toHaveBeenCalledTimes(2);
     expect(text()).toContain(dialog.newCodeRequestedAnyEarlier);
     expect(text()).not.toMatch(/code sent/i);
+  });
+});
+
+describe("after the change is made", () => {
+  it("says a note will go to the old address, not that it went", async () => {
+    await askForCode(NEW);
+    const box = document.body.querySelector<HTMLInputElement>(
+      'input[autocomplete="one-time-code"]',
+    );
+    if (!box) throw new Error("no code box");
+    await act(async () => {
+      Object.getOwnPropertyDescriptor(
+        HTMLInputElement.prototype,
+        "value",
+      )?.set?.call(box, "402871");
+      box.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+    actions.confirmEmailChange.mockResolvedValueOnce({ ok: true });
+    await act(async () => {
+      box.form?.requestSubmit();
+    });
+    await wait(0);
+    expect(actions.confirmEmailChange).toHaveBeenCalledWith({
+      newEmail: NEW,
+      code: "402871",
+    });
+    expect(toasts.success).toHaveBeenCalledWith(`Your email is now ${NEW}`, {
+      description: dialog.wellSendANoteAbout.replace("{currentEmail}", CURRENT),
+    });
   });
 });
 

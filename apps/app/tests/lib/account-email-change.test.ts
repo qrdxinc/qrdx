@@ -42,6 +42,12 @@ describe("requestFailureMessage", () => {
     ).toBe(EMAIL_CHANGE_MESSAGES.invalidEmail);
   });
 
+  it("words the limit so it's true for an address that never got a code", () => {
+    // The 429 comes before Better Auth looks the address up, so a taken
+    // address (which is never sent a code) gets it too.
+    expect(EMAIL_CHANGE_MESSAGES.codeRateLimited).not.toMatch(/sent/i);
+  });
+
   it("says email isn't set up where no code can be delivered", () => {
     expect(
       requestFailureMessage(

@@ -23,7 +23,10 @@ import {
   requestFailureMessage,
 } from "@/lib/account/email-change";
 import { afterEmailChanged } from "@/lib/account/email-change-server";
-import { sendEmailChangeCode } from "@/lib/auth/email-change-code";
+import {
+  emailChangeCodeAllowed,
+  sendEmailChangeCode,
+} from "@/lib/auth/email-change-code";
 import { isFeatureAvailable } from "@/lib/feature-availability";
 import { logError } from "@/lib/shared";
 
@@ -38,9 +41,15 @@ import { logError } from "@/lib/shared";
 // code through the sender registered here. Where codes can't reach anyone
 // (the "emailSignIn" rule, the one sign-in codes follow), asking for one
 // answers EMAIL_CHANGE_UNAVAILABLE for every address, and Settings doesn't
-// offer the change.
-registerEmailChangeCodeSender(sendEmailChangeCode, () =>
-  isFeatureAvailable("emailSignIn"),
+// offer the change. The new address's limit is checked before Better Auth
+// looks it up, and the code is emailed after the answer (Next's after()), so
+// an address with an account (never sent a code) and one without do the same
+// work before answering.
+registerEmailChangeCodeSender(
+  sendEmailChangeCode,
+  () => isFeatureAvailable("emailSignIn"),
+  emailChangeCodeAllowed,
+  (task) => after(task),
 );
 
 export type EmailChangeResult =

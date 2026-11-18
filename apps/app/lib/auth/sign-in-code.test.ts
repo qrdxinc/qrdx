@@ -2,7 +2,7 @@
 // (nothing is sent).
 //   cd apps/app && npx tsx --test lib/auth/sign-in-code.test.ts
 import assert from "node:assert/strict";
-import { describe, it } from "node:test";
+import { describe, it, mock } from "node:test";
 import {
   EMAIL_CHANGE_CODE_NOT_SENT,
   registerEmailChangeCodeSender,
@@ -22,6 +22,16 @@ import {
 const CODE = { email: "ada@example.com", otp: "402871" };
 /** No per-address limit (signInCodeGate checks it; tests/auth covers that). */
 const anyAddress = async () => true;
+/** Email-change codes go out after the answer (Next's after() in the app). */
+function afterAnswer() {
+  const tasks: (() => Promise<void>)[] = [];
+  return {
+    tasks,
+    later: (task: () => Promise<void>) => {
+      tasks.push(task);
+    },
+  };
+}
 
 function fakeDeps(overrides: Partial<SignInCodeDeliveryDeps>) {
   const calls = { sent: 0, logs: [] as string[] };
@@ -96,6 +106,7 @@ describe("@repo/auth sendVerificationOTP", () => {
   it("delivers sign-in and email-change codes, each through its own sender", async () => {
     const signIn: string[] = [];
     const change: string[] = [];
+    const after = afterAnswer();
     registerSignInCodeSender(
       async ({ otp }) => {
         signIn.push(otp);
@@ -108,6 +119,8 @@ describe("@repo/auth sendVerificationOTP", () => {
         change.push(`${email}:${otp}`);
       },
       () => true,
+      anyAddress,
+      after.later,
     );
     for (const type of ["email-verification", "forget-password"] as const) {
       await sendVerificationOTP({ ...CODE, type });
@@ -121,11 +134,19 @@ describe("@repo/auth sendVerificationOTP", () => {
       type: "change-email",
     });
     assert.deepEqual(signIn, ["402871"]);
+    // The email-change code waits for the answer to go first.
+    assert.deepEqual(change, []);
+    for (const task of after.tasks) await task();
     assert.deepEqual(change, ["new@example.com:915273"]);
   });
 
   it("refuses an email-change code when no sender is registered", async () => {
-    registerEmailChangeCodeSender(undefined as never, () => true);
+    registerEmailChangeCodeSender(
+      undefined as never,
+      () => true,
+      anyAddress,
+      afterAnswer().later,
+    );
     await assert.rejects(
       sendVerificationOTP({ ...CODE, type: "change-email" }),
       (error: { body?: { code?: string } }) => {
@@ -135,21 +156,31 @@ describe("@repo/auth sendVerificationOTP", () => {
     );
   });
 
-  it("answers 429 when a new address got too many email-change codes", async () => {
+  it("sends an email-change code after the answer, and logs a failure without the address or code", async () => {
+    const after = afterAnswer();
     registerEmailChangeCodeSender(
       async () => {
-        throw signInCodeRateLimited();
+        throw new Error("Resend is down");
       },
       () => true,
+      anyAddress,
+      after.later,
     );
-    await assert.rejects(
-      sendVerificationOTP({ ...CODE, type: "change-email" }),
-      (error: { statusCode?: number; body?: { code?: string } }) => {
-        assert.equal(error.statusCode, 429);
-        assert.equal(error.body?.code, "EMAIL_CHANGE_CODE_RATE_LIMITED");
-        return true;
-      },
-    );
+    const logged = mock.method(console, "error", () => undefined);
+    try {
+      // Nothing is tried before the answer, so nothing can fail there.
+      await sendVerificationOTP({ ...CODE, type: "change-email" });
+      assert.equal(after.tasks.length, 1);
+      assert.equal(logged.mock.callCount(), 0);
+      // Never throws: there's no one left to tell.
+      await after.tasks[0]?.();
+      assert.equal(logged.mock.callCount(), 1);
+      const line = String(logged.mock.calls[0]?.arguments[0]);
+      assert.match(line, /"event":"auth\.email_otp\.failed"/);
+      assert.doesNotMatch(line, /ada@example\.com|402871/);
+    } finally {
+      logged.mock.restore();
+    }
   });
 
   it("turns a failed send into an error without the code", async () => {

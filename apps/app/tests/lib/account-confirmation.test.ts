@@ -135,6 +135,7 @@ vi.mock("@/lib/account/passkeys-server", () => ({
 }));
 vi.mock("@/lib/auth/email-change-code", () => ({
   sendEmailChangeCode: async () => {},
+  emailChangeCodeAllowed: async () => true,
 }));
 vi.mock("@/lib/account/email-change-server", () => ({
   afterEmailChanged: async () => {
