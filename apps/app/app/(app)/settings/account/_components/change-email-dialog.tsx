@@ -48,7 +48,10 @@ const TEXT_ACTION =
 /**
  * Moves the account to a new address: a code goes to the new address, and
  * entering it makes the change (lib/account/email-change.ts). Both steps ask
- * "Confirm it's you" first when this session hasn't recently.
+ * "Confirm it's you" first when this session hasn't recently. The server
+ * answers "sent" whether or not a code went out (none goes to an address
+ * that has an account, and a failed send looks the same), so the dialog
+ * only says one should arrive if no other account uses the address.
  */
 export function ChangeEmailDialog({
   open,
@@ -124,7 +127,7 @@ export function ChangeEmailDialog({
       setCode("");
       setCodeDead(false);
       setSentTo(address);
-      if (resend) setNotice("New code sent. The old one no longer works.");
+      if (resend) setNotice(t("newCodeRequestedAnyEarlier"));
     } catch (failure) {
       console.error("Requesting the email change failed:", failure);
       setError(CONNECTION_FAILED);
@@ -224,7 +227,7 @@ export function ChangeEmailDialog({
           <DialogTitle>{t("changeYourEmail")}</DialogTitle>
           <DialogDescription className="text-pretty">
             {sentTo
-              ? t("enterThe6DigitCode", { sentTo })
+              ? t("ifNoOtherQrdxAccount", { sentTo })
               : t("signInCodesAndTeam", { currentEmail })}
           </DialogDescription>
         </DialogHeader>
@@ -286,7 +289,7 @@ export function ChangeEmailDialog({
               className="text-muted-foreground text-xs text-pretty"
               id={`${id}-status`}
             >
-              {notice ?? t("noCodeCheckSpamAn")}
+              {notice ?? t("noCodeCheckSpamIf")}
             </p>
             <DialogFooter>
               <Button
