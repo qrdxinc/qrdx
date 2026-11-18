@@ -8566,7 +8566,11 @@
       "sessionCheck": {
         "continue": "Continuer",
         "signOut": "Déconnexion",
-        "backToQrdx": "Retour à QRdx"
+        "backToQrdx": "Retour à QRdx",
+        "title": "Confirmez que c’est vous",
+        "body": "Cette connexion est utilisée depuis un autre pays et un autre navigateur que ceux où elle a commencé. Confirmez que c’est bien vous pour continuer.",
+        "signedOut": "Reconnectez-vous pour continuer.",
+        "failed": "Une erreur s’est produite. Vérifiez votre connexion et réessayez."
       }
     },
     "join": {
@@ -8964,7 +8968,37 @@
       "signInAgain": "Pour votre sécurité, déconnectez-vous puis reconnectez-vous, et réessayez dans les 10 minutes.",
       "stillRequired": "Nous n’avons pas pu confirmer votre identité. Réessayez.",
       "signInFailed": "Cette connexion n’a pas abouti, donc rien n’a changé. Réessayez ou utilisez une autre méthode.",
-      "signInConfirmed": "Merci, c’est confirmé. Vous pouvez effectuer votre modification dans les 10 minutes qui suivent."
+      "signInConfirmed": "Merci, c’est confirmé. Vous pouvez effectuer votre modification dans les 10 minutes qui suivent.",
+      "signedOut": "Reconnectez-vous pour continuer.",
+      "rateLimited": "Trop de tentatives. Patientez quelques minutes, puis réessayez.",
+      "noAuthenticatorApp": "Votre compte n’utilise pas d’application d’authentification. Utilisez votre passkey ou un code de secours.",
+      "invalidCode": "Saisissez le code à 6 chiffres reçu par e-mail.",
+      "wrongCode": "Ce code n’est pas correct. Vérifiez l’e-mail et réessayez.",
+      "codeExpired": "Ce code a expiré. Envoyez-en un nouveau.",
+      "tooManyCodeAttempts": "Trop de tentatives incorrectes. Envoyez un nouveau code.",
+      "codeNotSent": "Nous n’avons pas pu envoyer de code pour le moment. Veuillez réessayer.",
+      "twoFactorOn": "La validation en deux étapes est activée : aucun code n’est donc envoyé par e-mail. Utilisez votre passkey, votre application d’authentification ou un code de secours.",
+      "signInUnavailable": "Cette connexion n’est pas associée à votre compte. Utilisez une autre méthode.",
+      "signInNotLinked": "Ce compte n’est pas associé à votre compte QRdx, donc rien n’a changé. Connectez-vous avec celui que vous avez associé, ou utilisez une autre méthode.",
+      "signInExpired": "Cela a pris plus de 10 minutes, donc rien n’a changé. Réessayez.",
+      "signInDifferentAccount": "Vous vous êtes connecté à un autre compte QRdx, donc rien n’a changé ici. Déconnectez-vous, puis connectez-vous au compte que vous souhaitez modifier.",
+      "signInTwoFactorOn": "La validation en deux étapes est désormais activée : confirmez plutôt avec elle, via votre passkey, votre application d’authentification ou un code de secours."
+    },
+    "passkeyMessages": {
+      "reauth": "Pour votre sécurité, déconnectez-vous puis reconnectez-vous, et ajoutez votre passkey dans un délai d’un jour.",
+      "signedOut": "Connectez-vous pour gérer vos passkeys.",
+      "invalidName": "Donnez un nom à la passkey.",
+      "notFound": "Cette passkey n’existe déjà plus. Actualisez la page.",
+      "cancelled": "L’ajout de la passkey a été annulé.",
+      "alreadyAdded": "Cet appareil ou ce gestionnaire de mots de passe possède déjà une passkey pour votre compte.",
+      "noUserVerification": "Cette passkey n’a pas demandé votre code PIN, votre empreinte ou votre visage, elle ne peut donc pas être utilisée avec QRdx. Essayez un autre appareil ou gestionnaire de mots de passe.",
+      "expired": "Cela a pris trop de temps. Essayez d’ajouter à nouveau la passkey.",
+      "notSupported": "Ce navigateur ne peut pas créer de passkeys.",
+      "rateLimited": "Trop de tentatives. Patientez quelques minutes, puis réessayez.",
+      "failed": "Une erreur s’est produite. Veuillez réessayer."
+    },
+    "mailProvider": {
+      "open": "Ouvrir {provider}"
     },
     "signInErrors": {
       "githubUnverified": "{provider} n’a pas vérifié cette adresse e-mail, donc QRdx ne peut pas créer de compte avec celle-ci. Vérifiez-la dans les paramètres e-mail de {provider} et réessayez, ou connectez-vous avec un code reçu par e-mail.",

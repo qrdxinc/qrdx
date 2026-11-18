@@ -8566,7 +8566,11 @@
       "sessionCheck": {
         "continue": "Continuar",
         "signOut": "Sair",
-        "backToQrdx": "Voltar ao QRdx"
+        "backToQrdx": "Voltar ao QRdx",
+        "title": "Confirme que é você",
+        "body": "Este login está sendo usado em um país e em um navegador diferentes de onde foi iniciado. Confirme que é você para continuar.",
+        "signedOut": "Faça login de novo para continuar.",
+        "failed": "Algo deu errado. Verifique sua conexão e tente de novo."
       }
     },
     "join": {
@@ -8964,7 +8968,37 @@
       "signInAgain": "Para sua segurança, saia da conta e entre de novo. Depois, tente outra vez em até 10 minutos.",
       "stillRequired": "Não conseguimos confirmar que é você. Tente de novo.",
       "signInFailed": "Esse login não foi concluído, então nada mudou. Tente de novo ou use outro método.",
-      "signInConfirmed": "Obrigado, está confirmado. Você pode fazer sua alteração nos próximos 10 minutos."
+      "signInConfirmed": "Obrigado, está confirmado. Você pode fazer sua alteração nos próximos 10 minutos.",
+      "signedOut": "Entre de novo para continuar.",
+      "rateLimited": "Muitas tentativas. Espere alguns minutos e tente de novo.",
+      "noAuthenticatorApp": "Sua conta não usa app autenticador. Use sua passkey ou um código de backup.",
+      "invalidCode": "Digite o código de 6 dígitos do e-mail.",
+      "wrongCode": "Esse código não está certo. Confira o e-mail e tente de novo.",
+      "codeExpired": "Esse código expirou. Envie um novo.",
+      "tooManyCodeAttempts": "Muitas tentativas erradas. Envie um novo código.",
+      "codeNotSent": "Não conseguimos enviar um código agora. Tente de novo.",
+      "twoFactorOn": "A verificação em duas etapas está ativada, então não há código por e-mail. Use sua passkey, seu app autenticador ou um código de backup.",
+      "signInUnavailable": "Esse login não está vinculado à sua conta. Use outro método.",
+      "signInNotLinked": "Essa conta não está vinculada à sua conta do QRdx, então nada mudou. Entre com a que você vinculou ou use outro método.",
+      "signInExpired": "Passaram mais de 10 minutos, então nada mudou. Tente de novo.",
+      "signInDifferentAccount": "Você entrou em outra conta do QRdx, então nada mudou aqui. Saia e entre na conta que você quer alterar.",
+      "signInTwoFactorOn": "A verificação em duas etapas agora está ativada, então confirme com ela: sua passkey, seu app autenticador ou um código de backup."
+    },
+    "passkeyMessages": {
+      "reauth": "Por segurança, saia e entre de novo, depois adicione sua passkey em até um dia.",
+      "signedOut": "Entre para gerenciar suas passkeys.",
+      "invalidName": "Dê um nome à passkey.",
+      "notFound": "Essa passkey já não existe. Atualize a página.",
+      "cancelled": "A criação da passkey foi cancelada.",
+      "alreadyAdded": "Este dispositivo ou gerenciador de senhas já tem uma passkey da sua conta.",
+      "noUserVerification": "Essa passkey não pediu seu PIN, sua digital ou seu rosto, então não pode ser usada com o QRdx. Tente outro dispositivo ou gerenciador de senhas.",
+      "expired": "Demorou demais. Tente adicionar a passkey de novo.",
+      "notSupported": "Este navegador não cria passkeys.",
+      "rateLimited": "Muitas tentativas. Espere alguns minutos e tente de novo.",
+      "failed": "Algo deu errado. Tente de novo."
+    },
+    "mailProvider": {
+      "open": "Abrir {provider}"
     },
     "signInErrors": {
       "githubUnverified": "O {provider} não verificou este endereço de e-mail, então o QRdx não pode criar uma conta com ele. Verifique-o nas configurações de e-mail do {provider} e tente de novo, ou entre com um código por e-mail.",

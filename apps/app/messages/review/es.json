@@ -26931,6 +26931,22 @@
     "source": "3d9f2a52a0db",
     "status": "machine"
   },
+  "app.sessionCheck.sessionCheck.title": {
+    "source": "6176eec272e8",
+    "status": "machine"
+  },
+  "app.sessionCheck.sessionCheck.body": {
+    "source": "9098ec90d7b1",
+    "status": "machine"
+  },
+  "app.sessionCheck.sessionCheck.signedOut": {
+    "source": "40f531d6cd85",
+    "status": "machine"
+  },
+  "app.sessionCheck.sessionCheck.failed": {
+    "source": "067b61d20082",
+    "status": "machine"
+  },
   "app.join.joinButton.joinWorkspace": {
     "source": "5bc5bd172d1c",
     "status": "machine"
@@ -28165,6 +28181,110 @@
   },
   "auth.confirmationMessages.signInConfirmed": {
     "source": "bb43912f169b",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signedOut": {
+    "source": "40f531d6cd85",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.rateLimited": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.noAuthenticatorApp": {
+    "source": "9cdf50a042a9",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.invalidCode": {
+    "source": "6fcbaa8c8395",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.wrongCode": {
+    "source": "38ed4a6cfb34",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.codeExpired": {
+    "source": "54aeefd53e04",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.tooManyCodeAttempts": {
+    "source": "a33df752e779",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.codeNotSent": {
+    "source": "b19037a8d4ff",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.twoFactorOn": {
+    "source": "3f110798dfe0",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInUnavailable": {
+    "source": "fa428b3d7ad7",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInNotLinked": {
+    "source": "0069bd34aea3",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInExpired": {
+    "source": "17eaa0b71502",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInDifferentAccount": {
+    "source": "960ea113f42e",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInTwoFactorOn": {
+    "source": "2bf0aff31d2f",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.reauth": {
+    "source": "5eb423a23fa4",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.signedOut": {
+    "source": "0c5ea2a7de13",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.invalidName": {
+    "source": "47096625bfd7",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.notFound": {
+    "source": "f012532d6532",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.cancelled": {
+    "source": "2cf8ae25a0ba",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.alreadyAdded": {
+    "source": "bd48607669ac",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.noUserVerification": {
+    "source": "da959b796692",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.expired": {
+    "source": "91cc68c6cfe4",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.notSupported": {
+    "source": "219a654aa2f3",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.rateLimited": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "auth.mailProvider.open": {
+    "source": "34fde0614319",
     "status": "machine"
   },
   "auth.signInErrors.githubUnverified": {

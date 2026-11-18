@@ -65,6 +65,12 @@ const requestHeaders = () => {
   if (state.country) headers.set("cf-ipcountry", state.country);
   return headers;
 };
+// Refusals in the person's language (lib/account/confirmation-server.tsx):
+// English here.
+vi.mock(
+  "@/lib/i18n/app-locale",
+  async () => (await import("../support/intl")).appLocale,
+);
 vi.mock("next/headers", () => ({
   headers: async () => requestHeaders(),
   cookies: async () => ({ set: () => {}, get: () => undefined }),

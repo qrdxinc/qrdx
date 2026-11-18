@@ -2,17 +2,15 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { CONFIRM_RETURN_PARAM } from "@/lib/account/confirmation";
 import { currentSession } from "@/lib/account/confirmation-server";
-import {
-  SESSION_CHECK_MESSAGES,
-  sessionCheckNext,
-} from "@/lib/account/session-origin";
+import { sessionCheckNext } from "@/lib/account/session-origin";
+import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { signInPath } from "@/lib/safe-redirect";
 import { SessionCheck } from "./session-check";
 
-export const metadata: Metadata = {
-  title: SESSION_CHECK_MESSAGES.title,
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getAppTranslations("app.sessionCheck.sessionCheck");
+  return { title: t("title"), robots: { index: false, follow: false } };
+}
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

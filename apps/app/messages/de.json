@@ -8566,7 +8566,11 @@
       "sessionCheck": {
         "continue": "Weiter",
         "signOut": "Abmelden",
-        "backToQrdx": "Zurück zu QRdx"
+        "backToQrdx": "Zurück zu QRdx",
+        "title": "Bestätige, dass du es bist",
+        "body": "Diese Anmeldung wird aus einem anderen Land und mit einem anderen Browser verwendet als dort, wo sie begonnen hat. Bestätige, dass du es bist, um fortzufahren.",
+        "signedOut": "Melde dich erneut an, um fortzufahren.",
+        "failed": "Etwas ist schiefgelaufen. Prüfe deine Verbindung und versuche es erneut."
       }
     },
     "join": {
@@ -8964,7 +8968,37 @@
       "signInAgain": "Zu deiner Sicherheit: Melde dich ab und wieder an und versuche es dann innerhalb von 10 Minuten erneut.",
       "stillRequired": "Wir konnten nicht bestätigen, dass du es bist. Versuche es erneut.",
       "signInFailed": "Diese Anmeldung hat nicht geklappt, daher wurde nichts geändert. Versuche es erneut oder nutze eine andere Methode.",
-      "signInConfirmed": "Danke, das ist bestätigt. Du kannst deine Änderung in den nächsten 10 Minuten vornehmen."
+      "signInConfirmed": "Danke, das ist bestätigt. Du kannst deine Änderung in den nächsten 10 Minuten vornehmen.",
+      "signedOut": "Melde dich erneut an, um fortzufahren.",
+      "rateLimited": "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut.",
+      "noAuthenticatorApp": "Dein Konto nutzt keine Authenticator-App. Verwende deinen Passkey oder einen Backup-Code.",
+      "invalidCode": "Gib den 6-stelligen Code aus der E-Mail ein.",
+      "wrongCode": "Dieser Code ist nicht korrekt. Prüfe die E-Mail und versuche es erneut.",
+      "codeExpired": "Dieser Code ist abgelaufen. Fordere einen neuen an.",
+      "tooManyCodeAttempts": "Zu viele falsche Versuche. Fordere einen neuen Code an.",
+      "codeNotSent": "Wir konnten gerade keinen Code senden. Bitte versuche es erneut.",
+      "twoFactorOn": "Die Bestätigung in zwei Schritten ist aktiviert, deshalb gibt es keinen Code per E-Mail. Verwende deinen Passkey, deine Authenticator-App oder einen Backup-Code.",
+      "signInUnavailable": "Diese Anmeldung ist nicht mit deinem Konto verknüpft. Verwende eine andere Methode.",
+      "signInNotLinked": "Dieses Konto ist nicht mit deinem QRdx-Konto verknüpft, daher wurde nichts geändert. Melde dich mit dem verknüpften Konto an oder verwende eine andere Methode.",
+      "signInExpired": "Das hat länger als 10 Minuten gedauert, daher wurde nichts geändert. Versuche es erneut.",
+      "signInDifferentAccount": "Du hast dich bei einem anderen QRdx-Konto angemeldet, daher wurde hier nichts geändert. Melde dich ab und dann bei dem Konto an, das du ändern möchtest.",
+      "signInTwoFactorOn": "Die Bestätigung in zwei Schritten ist jetzt aktiviert, bestätige also stattdessen damit: mit deinem Passkey, deiner Authenticator-App oder einem Backup-Code."
+    },
+    "passkeyMessages": {
+      "reauth": "Melde dich zu deiner Sicherheit ab und erneut an. Füge deinen Passkey dann innerhalb eines Tages hinzu.",
+      "signedOut": "Melde dich an, um deine Passkeys zu verwalten.",
+      "invalidName": "Gib dem Passkey einen Namen.",
+      "notFound": "Dieser Passkey existiert nicht mehr. Lade die Seite neu.",
+      "cancelled": "Das Hinzufügen des Passkeys wurde abgebrochen.",
+      "alreadyAdded": "Dieses Gerät oder dieser Passwortmanager hat bereits einen Passkey für dein Konto.",
+      "noUserVerification": "Dieser Passkey hat nicht nach deiner PIN, deinem Fingerabdruck oder deinem Gesicht gefragt und kann daher nicht mit QRdx verwendet werden. Probiere ein anderes Gerät oder einen anderen Passwortmanager.",
+      "expired": "Das hat zu lange gedauert. Versuche erneut, den Passkey hinzuzufügen.",
+      "notSupported": "Dieser Browser kann keine Passkeys erstellen.",
+      "rateLimited": "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    },
+    "mailProvider": {
+      "open": "{provider} öffnen"
     },
     "signInErrors": {
       "githubUnverified": "{provider} hat diese E-Mail-Adresse nicht verifiziert, deshalb kann QRdx kein Konto damit erstellen. Verifiziere sie in deinen E-Mail-Einstellungen bei {provider} und versuche es erneut, oder melde dich mit einem E-Mail-Code an.",

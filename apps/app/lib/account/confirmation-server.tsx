@@ -34,6 +34,8 @@ import {
   isTotpCode,
   normalizeBackupCode,
   TWO_FACTOR_MESSAGES,
+  type TwoFactorMessages,
+  twoFactorMessages,
 } from "@/lib/auth/two-factor";
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import { sendEmail } from "@/lib/email/send";
@@ -41,6 +43,7 @@ import {
   CONFIRMATION_CODE_SUBJECT,
   ConfirmationCodeEmail,
 } from "@/lib/email/templates/confirmation-code";
+import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { currentRequestDetails } from "@/lib/security/request-details";
 import { logError } from "@/lib/shared";
 import {
@@ -48,8 +51,10 @@ import {
   CONFIRMATION_CODE_MINUTES,
   CONFIRMATION_MESSAGES,
   CONFIRMATION_MINUTES,
+  type ConfirmationMessages,
   type ConfirmationOptions,
   type ConfirmationRequired,
+  confirmationMessages,
   confirmationMethodsFor,
   confirmationRequired,
   mailProviderFor,
@@ -57,7 +62,11 @@ import {
 } from "./confirmation";
 import { isRecentSignIn } from "./deletion";
 import { linkedSignInsFor } from "./linked-sign-ins-server";
-import { PASSKEY_MESSAGES } from "./passkeys";
+import {
+  PASSKEY_MESSAGES,
+  type PasskeyMessages,
+  passkeyMessages,
+} from "./passkeys";
 import { signInCodesAvailable } from "./reauth";
 import {
   getSessionAllowingHold,
@@ -89,6 +98,9 @@ import {
 // every gated action answers CONFIRMATION_REQUIRED, even with a confirmation
 // recorded before it was held. Every confirmation moves the session's
 // origin to where it is now.
+//
+// Refusals answer in the person's language (refuse(), below): the dialog
+// and Settings show a result's `error` as it is.
 
 export type ConfirmResult = { ok: true } | { ok: false; error: string };
 
@@ -135,6 +147,50 @@ const perAddressDailyLimiter = createRateLimiter({
 });
 
 const fail = (error: string): ConfirmResult => ({ ok: false, error });
+
+/** What a refusal can say, in one language. */
+export interface ConfirmationText {
+  confirm: ConfirmationMessages;
+  twoFactor: TwoFactorMessages;
+  passkey: PasskeyMessages;
+}
+
+const ENGLISH: ConfirmationText = {
+  confirm: CONFIRMATION_MESSAGES,
+  twoFactor: TWO_FACTOR_MESSAGES,
+  passkey: PASSKEY_MESSAGES,
+};
+
+/**
+ * CONFIRMATION_MESSAGES, TWO_FACTOR_MESSAGES and PASSKEY_MESSAGES in the
+ * person's language (lib/i18n/app-locale.ts: their saved one, else the
+ * language menu's cookie, else English). English, logged, when that can't
+ * be read: the answer still goes out.
+ */
+export async function confirmationText(): Promise<ConfirmationText> {
+  try {
+    const [confirm, twoFactor, passkey] = await Promise.all([
+      getAppTranslations("auth.confirmationMessages"),
+      getAppTranslations("auth.twoFactorMessages"),
+      getAppTranslations("auth.passkeyMessages"),
+    ]);
+    return {
+      confirm: confirmationMessages(confirm),
+      twoFactor: twoFactorMessages(twoFactor),
+      passkey: passkeyMessages(passkey),
+    };
+  } catch (error) {
+    logError(error as Error, { action: "account.confirmationText" });
+    return ENGLISH;
+  }
+}
+
+/** A refusal saying `message` of confirmationText(), read only to refuse. */
+export async function refuse(
+  message: (text: ConfirmationText) => string,
+): Promise<{ ok: false; error: string }> {
+  return { ok: false, error: message(await confirmationText()) };
+}
 
 /** What a Better Auth APIError carries (auth.api throws these). */
 const authErrorCode = (error: unknown): string | undefined =>
@@ -346,7 +402,10 @@ export function sessionTokenFromSetCookie(
 export async function loadConfirmationOptions(
   session: ConfirmableSession,
 ): Promise<ConfirmationOptions> {
-  const facts = await loadTwoFactorFacts(session.userId);
+  const [facts, t] = await Promise.all([
+    loadTwoFactorFacts(session.userId),
+    getAppTranslations("auth.mailProvider"),
+  ]);
   return {
     methods: confirmationMethodsFor({
       twoFactorOn: facts.on,
@@ -356,7 +415,9 @@ export async function loadConfirmationOptions(
       signIns: facts.on ? [] : await linkedSignInsFor(session),
     }),
     maskedEmail: maskEmail(session.email),
-    mailProvider: mailProviderFor(session.email),
+    mailProvider: mailProviderFor(session.email, (provider) =>
+      t("open", { provider }),
+    ),
   };
 }
 
@@ -377,27 +438,25 @@ export async function checkSecondFactorCode(
   const totpCode = isTotpCode(rawCode.trim()) ? rawCode.trim() : null;
   const backupCode = totpCode ? null : normalizeBackupCode(rawCode);
   if (!(totpCode || backupCode)) {
-    return fail(
+    return refuse((text) =>
       /^[\d\s]+$/.test(rawCode.trim())
-        ? TWO_FACTOR_MESSAGES.invalidCode
-        : TWO_FACTOR_MESSAGES.invalidBackupCode,
+        ? text.twoFactor.invalidCode
+        : text.twoFactor.invalidBackupCode,
     );
   }
 
   const facts = await loadTwoFactorFacts(session.userId);
-  if (!(facts.on && facts.row)) return fail(CONFIRMATION_MESSAGES.failed);
+  if (!(facts.on && facts.row)) return refuse((text) => text.confirm.failed);
   if (totpCode && !hasAuthenticatorApp(facts.row)) {
-    return fail(CONFIRMATION_MESSAGES.noAuthenticatorApp);
+    return refuse((text) => text.confirm.noAuthenticatorApp);
   }
   if (!(await answerLimiter.limit(session.userId)).success) {
-    return fail(CONFIRMATION_MESSAGES.rateLimited);
+    return refuse((text) => text.confirm.rateLimited);
   }
   const attempt = await reserveCodeAttempt(session.userId);
   if (!attempt.ok) {
-    return fail(
-      attempt.reason === "locked"
-        ? TWO_FACTOR_MESSAGES.locked
-        : CONFIRMATION_MESSAGES.failed,
+    return refuse((text) =>
+      attempt.reason === "locked" ? text.twoFactor.locked : text.confirm.failed,
     );
   }
 
@@ -418,12 +477,10 @@ export async function checkSecondFactorCode(
     if (code !== "INVALID_CODE" && code !== "INVALID_BACKUP_CODE") throw error;
     // Already counted; the attempt that reached the limit set the lock.
     if (attempt.attempts >= LOCKOUT_FAILURES) {
-      return fail(TWO_FACTOR_MESSAGES.locked);
+      return refuse((text) => text.twoFactor.locked);
     }
-    return fail(
-      totpCode
-        ? TWO_FACTOR_MESSAGES.wrongCode
-        : TWO_FACTOR_MESSAGES.wrongBackupCode,
+    return refuse((text) =>
+      totpCode ? text.twoFactor.wrongCode : text.twoFactor.wrongBackupCode,
     );
   }
   await clearCodeFailures(attempt.id);
@@ -447,17 +504,17 @@ export async function checkSecondFactorCode(
 
 export async function confirmWithCode(input: unknown): Promise<ConfirmResult> {
   const parsed = z.object({ code: z.string().max(64) }).safeParse(input);
-  if (!parsed.success) return fail(TWO_FACTOR_MESSAGES.invalidCode);
+  if (!parsed.success) return refuse((text) => text.twoFactor.invalidCode);
   try {
     const session = await currentSession();
-    if (!session) return fail(CONFIRMATION_MESSAGES.signedOut);
+    if (!session) return refuse((text) => text.confirm.signedOut);
     const check = await checkSecondFactorCode(session, parsed.data.code);
     if (!check.ok) return check;
     await recordConfirmation(session, { strong: "code" });
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.confirmWithCode" });
-    return fail(CONFIRMATION_MESSAGES.failed);
+    return refuse((text) => text.confirm.failed);
   }
 }
 
@@ -472,10 +529,10 @@ export async function passkeyAssertionOptions(
   session: ConfirmableSession,
 ): Promise<{ ok: true; options: Record<string, unknown> } | ConfirmResult> {
   if (!passkeysWorkHere(session.requestHeaders)) {
-    return fail(CONFIRMATION_MESSAGES.passkeyUnavailable);
+    return refuse((text) => text.confirm.passkeyUnavailable);
   }
   if (!(await passkeyOptionsLimiter.limit(session.userId)).success) {
-    return fail(CONFIRMATION_MESSAGES.rateLimited);
+    return refuse((text) => text.confirm.rateLimited);
   }
   const { headers: responseHeaders, response } =
     await auth.api.generatePasskeyAuthenticationOptions({
@@ -490,7 +547,7 @@ export async function passkeyAssertionOptions(
   const allowed = options.allowCredentials;
   // Without passkeys of its own the plugin would allow any, as for sign-in.
   if (!(Array.isArray(allowed) && allowed.length > 0)) {
-    return fail(CONFIRMATION_MESSAGES.passkeyFailed);
+    return refuse((text) => text.confirm.passkeyFailed);
   }
   return { ok: true, options: { ...options, userVerification: "required" } };
 }
@@ -530,10 +587,10 @@ export async function verifyOwnPasskey(
   } catch (error) {
     const code = authErrorCode(error);
     if (code === "PASSKEY_USER_VERIFICATION_REQUIRED") {
-      return fail(PASSKEY_MESSAGES.noUserVerification);
+      return refuse((text) => text.passkey.noUserVerification);
     }
     if (code && PASSKEY_REFUSALS.has(code)) {
-      return fail(CONFIRMATION_MESSAGES.passkeyFailed);
+      return refuse((text) => text.confirm.passkeyFailed);
     }
     throw error;
   } finally {
@@ -548,7 +605,7 @@ export async function verifyOwnPasskey(
   }
   return created?.user?.id === session.userId
     ? { ok: true }
-    : fail(CONFIRMATION_MESSAGES.passkeyFailed);
+    : refuse((text) => text.confirm.passkeyFailed);
 }
 
 export async function startPasskeyConfirmation(): Promise<
@@ -556,18 +613,18 @@ export async function startPasskeyConfirmation(): Promise<
 > {
   try {
     const session = await currentSession();
-    if (!session) return fail(CONFIRMATION_MESSAGES.signedOut);
+    if (!session) return refuse((text) => text.confirm.signedOut);
     const facts = await loadTwoFactorFacts(session.userId);
     // Any passkey of the person's own confirms, two-step verification on or
     // off: it checks the person on their device, which a stolen session
     // cookie can't.
     if (facts.passkeys === 0) {
-      return fail(CONFIRMATION_MESSAGES.passkeyUnavailable);
+      return refuse((text) => text.confirm.passkeyUnavailable);
     }
     return await passkeyAssertionOptions(session);
   } catch (error) {
     logError(error as Error, { action: "account.startPasskeyConfirmation" });
-    return fail(CONFIRMATION_MESSAGES.failed);
+    return refuse((text) => text.confirm.failed);
   }
 }
 
@@ -579,16 +636,16 @@ export async function confirmWithPasskey(
   input: unknown,
 ): Promise<ConfirmResult> {
   const parsed = assertionInput.safeParse(input);
-  if (!parsed.success) return fail(CONFIRMATION_MESSAGES.passkeyFailed);
+  if (!parsed.success) return refuse((text) => text.confirm.passkeyFailed);
   try {
     const session = await currentSession();
-    if (!session) return fail(CONFIRMATION_MESSAGES.signedOut);
+    if (!session) return refuse((text) => text.confirm.signedOut);
     const facts = await loadTwoFactorFacts(session.userId);
     if (facts.passkeys === 0) {
-      return fail(CONFIRMATION_MESSAGES.passkeyUnavailable);
+      return refuse((text) => text.confirm.passkeyUnavailable);
     }
     if (!(await answerLimiter.limit(session.userId)).success) {
-      return fail(CONFIRMATION_MESSAGES.rateLimited);
+      return refuse((text) => text.confirm.rateLimited);
     }
     // With two-step verification on, a passkey shares the account's lockout
     // with codes. Without it there's no `two_factor` row to count on, and
@@ -596,10 +653,10 @@ export async function confirmWithPasskey(
     // device over a single-use challenge, so it can't be guessed.
     const attempt = facts.on ? await reserveCodeAttempt(session.userId) : null;
     if (attempt && !attempt.ok) {
-      return fail(
+      return refuse((text) =>
         attempt.reason === "locked"
-          ? TWO_FACTOR_MESSAGES.locked
-          : CONFIRMATION_MESSAGES.failed,
+          ? text.twoFactor.locked
+          : text.confirm.failed,
       );
     }
     let check: ConfirmResult;
@@ -614,7 +671,7 @@ export async function confirmWithPasskey(
     }
     if (!check.ok) {
       return attempt?.ok && attempt.attempts >= LOCKOUT_FAILURES
-        ? fail(TWO_FACTOR_MESSAGES.locked)
+        ? refuse((text) => text.twoFactor.locked)
         : check;
     }
     if (attempt?.ok) await clearCodeFailures(attempt.id);
@@ -622,7 +679,7 @@ export async function confirmWithPasskey(
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.confirmWithPasskey" });
-    return fail(CONFIRMATION_MESSAGES.passkeyFailed);
+    return refuse((text) => text.confirm.passkeyFailed);
   }
 }
 
@@ -695,18 +752,20 @@ async function storeCode(
 export async function sendConfirmationCode(): Promise<ConfirmResult> {
   try {
     const session = await currentSession();
-    if (!session) return fail(CONFIRMATION_MESSAGES.signedOut);
+    if (!session) return refuse((text) => text.confirm.signedOut);
     const { on } = await loadTwoFactorFacts(session.userId);
-    if (on) return fail(CONFIRMATION_MESSAGES.twoFactorOn);
-    if (!signInCodesAvailable()) return fail(CONFIRMATION_MESSAGES.signInAgain);
+    if (on) return refuse((text) => text.confirm.twoFactorOn);
+    if (!signInCodesAvailable()) {
+      return refuse((text) => text.confirm.signInAgain);
+    }
     if (!(await sendLimiter.limit(session.userId)).success) {
-      return fail(CONFIRMATION_MESSAGES.rateLimited);
+      return refuse((text) => text.confirm.rateLimited);
     }
     const allowed = await addressMayRequestCode(addressKey(session.email), [
       perAddressLimiter,
       perAddressDailyLimiter,
     ]);
-    if (!allowed) return fail(CONFIRMATION_MESSAGES.rateLimited);
+    if (!allowed) return refuse((text) => text.confirm.rateLimited);
 
     const code = randomInt(0, 1_000_000).toString().padStart(6, "0");
     await storeCode(
@@ -748,12 +807,12 @@ export async function sendConfirmationCode(): Promise<ConfirmResult> {
         .delete(verification)
         .where(eq(verification.identifier, codeIdentifier(session.sessionId)));
       logError(error as Error, { action: "account.sendConfirmationCode" });
-      return fail(CONFIRMATION_MESSAGES.codeNotSent);
+      return refuse((text) => text.confirm.codeNotSent);
     }
     return { ok: true };
   } catch (error) {
     logError(error as Error, { action: "account.sendConfirmationCode" });
-    return fail(CONFIRMATION_MESSAGES.codeNotSent);
+    return refuse((text) => text.confirm.codeNotSent);
   }
 }
 
@@ -777,14 +836,14 @@ export async function confirmWithEmailCode(
         .regex(/^\d{6}$/),
     })
     .safeParse(input);
-  if (!parsed.success) return fail(CONFIRMATION_MESSAGES.invalidCode);
+  if (!parsed.success) return refuse((text) => text.confirm.invalidCode);
   try {
     const session = await currentSession();
-    if (!session) return fail(CONFIRMATION_MESSAGES.signedOut);
+    if (!session) return refuse((text) => text.confirm.signedOut);
     const { on } = await loadTwoFactorFacts(session.userId);
-    if (on) return fail(CONFIRMATION_MESSAGES.twoFactorOn);
+    if (on) return refuse((text) => text.confirm.twoFactorOn);
     if (!(await answerLimiter.limit(session.userId)).success) {
-      return fail(CONFIRMATION_MESSAGES.rateLimited);
+      return refuse((text) => text.confirm.rateLimited);
     }
     const [row] = await db
       .delete(verification)
@@ -800,8 +859,7 @@ export async function confirmWithEmailCode(
       new Date(row.expiresAt).getTime() <= Date.now()
     ) {
       return {
-        ok: false,
-        error: CONFIRMATION_MESSAGES.codeExpired,
+        ...(await refuse((text) => text.confirm.codeExpired)),
         codeDead: true,
       };
     }
@@ -817,15 +875,14 @@ export async function confirmWithEmailCode(
     const attempts = stored.attempts + 1;
     if (attempts >= CONFIRMATION_CODE_ATTEMPTS) {
       return {
-        ok: false,
-        error: CONFIRMATION_MESSAGES.tooManyCodeAttempts,
+        ...(await refuse((text) => text.confirm.tooManyCodeAttempts)),
         codeDead: true,
       };
     }
     await storeCode(session.sessionId, { ...stored, attempts }, row.expiresAt);
-    return fail(CONFIRMATION_MESSAGES.wrongCode);
+    return refuse((text) => text.confirm.wrongCode);
   } catch (error) {
     logError(error as Error, { action: "account.confirmWithEmailCode" });
-    return fail(CONFIRMATION_MESSAGES.failed);
+    return refuse((text) => text.confirm.failed);
   }
 }
