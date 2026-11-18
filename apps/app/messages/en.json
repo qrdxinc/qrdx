@@ -7821,7 +7821,8 @@
           "keepingBackHalvesIsPart": "Keeping back-halves is part of {slugPlans}.",
           "yourPlanDoesntKeepBack": "Your plan doesn't keep back-halves.",
           "random": "random",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "Also answers at {link}, so codes printed with the old link keep working."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "From a connected account",

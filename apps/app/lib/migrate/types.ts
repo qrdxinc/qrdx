@@ -199,6 +199,11 @@ export interface BackHalfPlan {
   slug: string | null;
   /** The generated slug used when the original can't be kept */
   suggestion: string | null;
+  /**
+   * The old path, kept as a path alias on the custom domain when it can't
+   * be a back-half there ("/r/abc", lib/path-aliases.ts); absent = none
+   */
+  alias?: string;
 }
 
 export interface CodeRef {
@@ -279,6 +284,8 @@ export interface JobItem {
   slug: string | null;
   /** Namespace of `slug`; absent (older jobs) = shared */
   slugTarget?: BackHalfTarget;
+  /** Path alias to claim on the job's custom domain (BackHalfPlan.alias) */
+  alias?: string;
   status: JobItemStatus;
   reason?: string;
   /** `reason` as a code the import screens translate (./reasons.ts) */

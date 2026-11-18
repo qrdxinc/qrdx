@@ -42,6 +42,7 @@ import type {
   PlannedItem,
   SourceLink,
 } from "@/lib/migrate/types";
+import { aliasUrl } from "@/lib/path-aliases";
 import { PLAN_NAMES } from "@/lib/pricing";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 import { formatPlanList } from "../_lib/code-options";
@@ -502,6 +503,18 @@ export function PreviewStep({
                         </div>
                         {item.reason && (
                           <p className="truncate">{reasonText(item)}</p>
+                        )}
+                        {item.backHalf.alias && preview?.backHalves?.domain && (
+                          <p className="truncate">
+                            {t("alsoAnswersAt", {
+                              link: displayLink(
+                                aliasUrl(
+                                  preview.backHalves.domain,
+                                  item.backHalf.alias,
+                                ),
+                              ),
+                            })}
+                          </p>
                         )}
                       </div>
                     ) : (

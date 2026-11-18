@@ -27,6 +27,8 @@ import {
 } from "@/app/(app)/dashboard/domains/_lib/domains";
 import { HttpError } from "@/lib/error-response";
 import { baseUrl } from "@/lib/metadata";
+import { claimAlias, findTakenAliasPaths } from "@/lib/path-alias-store";
+import { PATH_ALIAS_MESSAGES } from "@/lib/path-aliases";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import type { ActiveScope } from "@/lib/scope";
 import {
@@ -256,6 +258,7 @@ export const dbRepo: MigrateRepo = {
   findImported,
   findByDestinations,
   findTakenSlugs: (slugs, domainId) => findTakenSlugs(slugs, domainId),
+  findTakenAliases: (paths, domainId) => findTakenAliasPaths(paths, domainId),
   existingTagNames: (scope) => existingTagNames(asScope(scope)),
   domainFor,
   async qrdxHosts(scope) {
@@ -407,6 +410,30 @@ export const dbRepo: MigrateRepo = {
       .select(refColumns)
       .from(qrCode)
       .where(where(rows.map((row) => row.codeId)));
+
+    // Path aliases (the old paths that can't be back-halves), for codes that
+    // made it onto their domain.
+    for (const row of rows) {
+      if (!(row.alias && row.bindDomainId)) continue;
+      const code = final.find((entry) => entry.id === row.codeId);
+      const claim =
+        code?.domainId === row.bindDomainId
+          ? await claimAlias({
+              codeId: row.codeId,
+              domainId: row.bindDomainId,
+              path: row.alias,
+            })
+          : null;
+      if (!claim?.ok) {
+        const why = claim
+          ? PATH_ALIAS_MESSAGES[claim.problem]
+          : "It isn't on the domain.";
+        warnings.set(
+          row.codeId,
+          `Created, but it doesn't answer at ${row.alias}. ${why}`,
+        );
+      }
+    }
     const refs = await toRefs(final);
     for (const row of rows) {
       const ref = refs.get(row.codeId);
