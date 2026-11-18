@@ -2,7 +2,11 @@
 
 import { track } from "@repo/analytics";
 import { toast } from "@repo/design-system";
-import { ModuleOrbit, Scanframe } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  Scanframe,
+  ScanLine,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   DropdownMenu,
@@ -257,7 +261,7 @@ function ScanStatus({
   if (checking || !result) {
     return (
       <p className="flex items-center gap-2 text-xs text-muted-foreground">
-        <ModuleOrbit aria-hidden className="size-4" />
+        <ScanLine aria-hidden className="size-4" />
         {t("checking")}
       </p>
     );

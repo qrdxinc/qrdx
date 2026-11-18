@@ -1,7 +1,10 @@
 "use client";
 
 import { toast } from "@repo/design-system";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ModuleWave,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Dialog,
@@ -123,7 +126,7 @@ export function MoveToWorkspaceDialog({
           </p>
         ) : targets === null ? (
           <div className="text-muted-foreground flex items-center gap-2 py-6 text-sm">
-            <ModuleOrbit aria-hidden /> {t("loadingWorkspaces")}
+            <ModuleWave aria-hidden /> {t("loadingWorkspaces")}
           </div>
         ) : targets.length === 0 ? (
           <p className="text-muted-foreground py-2 text-sm text-pretty">

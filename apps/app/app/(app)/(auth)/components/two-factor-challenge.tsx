@@ -8,7 +8,10 @@ import {
   TWO_FACTOR_METHODS_PATH,
   type TwoFactorMethods,
 } from "@repo/auth/sign-in-challenge-rules";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -355,7 +358,7 @@ export function TwoFactorChallenge({
     >
       {working ? (
         <>
-          <ModuleOrbit aria-hidden className="size-3.5" />
+          <FinderTrace aria-hidden className="size-3.5" />
           {prompting
             ? PASSKEY_STEP_MESSAGES.waiting
             : mode === "passkey"

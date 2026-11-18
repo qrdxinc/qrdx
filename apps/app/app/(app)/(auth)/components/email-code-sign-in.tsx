@@ -3,7 +3,10 @@
 import { authClient } from "@repo/auth/client";
 import { LANDING_HEADER, REFERRAL_HEADER } from "@repo/auth/referral-keys";
 import { SSO_REQUIRED_ERROR as SSO_REQUIRED } from "@repo/auth/sso-required-rules";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  FinderTrace,
+  ModuleOrbit,
+} from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -407,7 +410,7 @@ export function EmailCodeSignIn({
         >
           {verifying ? (
             <>
-              <ModuleOrbit aria-hidden className="size-3.5" />
+              <FinderTrace aria-hidden className="size-3.5" />
               {t("checkingCode")}
             </>
           ) : (

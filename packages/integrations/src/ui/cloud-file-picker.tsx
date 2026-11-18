@@ -1,7 +1,11 @@
 "use client";
 
 import { Close as X } from "@repo/design-system/components/icons";
-import { ModuleOrbit, Scanframe } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ModuleWave,
+  Scanframe,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Dialog,
@@ -490,7 +494,7 @@ export function CloudFilePicker({
                 type="button"
                 variant="outline"
               >
-                {loading && <ModuleOrbit aria-hidden className="size-3.5" />}
+                {loading && <ModuleWave aria-hidden className="size-3.5" />}
                 Load more
               </Button>
             </div>

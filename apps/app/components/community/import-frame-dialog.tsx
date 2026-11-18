@@ -2,7 +2,7 @@
 
 import { CANONICAL_HOST } from "@repo/config";
 import { Info } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { FinderTrace } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Dialog,
@@ -98,7 +98,7 @@ export function ImportFrameDialog({
             <span className="min-w-0 flex-1 truncate">
               {fileName ?? t("chooseAnSvgFileUp")}
             </span>
-            {pending && <ModuleOrbit aria-hidden className="size-4" />}
+            {pending && <FinderTrace aria-hidden className="size-4" />}
           </label>
           <input
             accept=".svg,image/svg+xml"

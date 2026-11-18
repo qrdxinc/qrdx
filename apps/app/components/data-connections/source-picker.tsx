@@ -1,7 +1,7 @@
 "use client";
 
 import { Close as X } from "@repo/design-system/components/icons";
-import { ModuleOrbit, Scanframe } from "@repo/design-system/components/loaders";
+import { ModuleWave, Scanframe } from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
@@ -316,7 +316,7 @@ export function SourcePickerDialog({
                 type="button"
                 variant="outline"
               >
-                {loading && <ModuleOrbit aria-hidden className="size-3.5" />}
+                {loading && <ModuleWave aria-hidden className="size-3.5" />}
                 {t("loadMore")}
               </Button>
             </div>

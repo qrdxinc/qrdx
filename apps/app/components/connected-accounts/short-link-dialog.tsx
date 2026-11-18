@@ -1,6 +1,9 @@
 "use client";
 
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ModuleWave,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Dialog,
@@ -372,9 +375,7 @@ export function ShortLinkDialog({
                     type="button"
                     variant="outline"
                   >
-                    {listing && (
-                      <ModuleOrbit aria-hidden className="size-3.5" />
-                    )}
+                    {listing && <ModuleWave aria-hidden className="size-3.5" />}
                     {t("loadMore")}
                   </Button>
                 </div>

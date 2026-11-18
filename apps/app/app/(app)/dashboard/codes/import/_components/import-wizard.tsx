@@ -2,7 +2,7 @@
 
 import { track } from "@repo/analytics";
 import { Close as X } from "@repo/design-system/components/icons";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import { ModuleOrbit, ScanLine } from "@repo/design-system/components/loaders";
 import {
   Alert,
   AlertDescription,
@@ -589,7 +589,7 @@ export function ImportWizard({
             <h2 className="flex items-center gap-2 text-base font-semibold">
               {t("n4Review")}
               {checking && (
-                <ModuleOrbit
+                <ScanLine
                   aria-hidden
                   className="text-muted-foreground size-4"
                 />
