@@ -1,26 +1,28 @@
-// @vitest-environment jsdom
-// The client portal's sign-in (ee/client-portal/portal-sign-in.tsx) offers
-// only the email code. It follows the same answer as the main sign-in panel
-// (use-sign-in-options.ts: the running server's, not the build's): where no
-// code can be delivered it says email sign-in isn't set up instead of
-// showing a form that can only fail. When the server can't be asked, it
-// shows the form, whose send answers what the server really can do; it never
-// claims "isn't set up" from the build's guess.
-import { NextIntlClientProvider } from "next-intl";
-import { act } from "react";
-import { createRoot, type Root } from "react-dom/client";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+// The client portal's sign-in card, signed out (ee/client-portal/portal-gate.tsx
+// and portal-sign-in.tsx). Email codes are the portal's only way in, and the
+// card follows the running server's answer for this request
+// (getSignInOptions, the one the main sign-in follows): where no code can
+// be delivered it says email sign-in isn't set up, shows no form that can
+// only fail, and doesn't promise "We'll send you a one-time code" above
+// that line.
+import { describe, expect, it, vi } from "vitest";
+import type { PortalWorkspace } from "@/ee/client-portal/portal";
 import type { SignInOptions } from "@/lib/auth/sign-in-options";
 import en from "@/messages/en.json";
+import { renderIntl } from "../support/intl";
 
-const action = vi.hoisted(() => ({
-  loadSignInOptions: vi.fn<() => Promise<SignInOptions>>(),
+const server = vi.hoisted(() => ({
+  options: {
+    google: false,
+    github: false,
+    email: true,
+    sso: false,
+  } as SignInOptions,
 }));
 
-vi.mock("@/app/(app)/(auth)/components/sign-in-options-action", () => action);
-// Server actions the email form's other parts import; none runs here.
-vi.mock("@/ee/sso/sign-in-offer", () => ({ ssoSignInOffer: vi.fn() }));
-vi.mock("@/app/(app)/(auth)/sign-in/_lib/two-factor-actions", () => ({}));
+vi.mock("@/lib/auth/sign-in-options-server", () => ({
+  getSignInOptions: () => server.options,
+}));
 vi.mock("next/navigation", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/navigation")>()),
   useRouter: () => ({
@@ -34,92 +36,54 @@ vi.mock("next/navigation", async (importOriginal) => ({
   usePathname: () => "/portal/acme",
   useSearchParams: () => new URLSearchParams(),
 }));
+// Server actions the email form's other parts import; none runs here.
+vi.mock("@/ee/sso/sign-in-offer", () => ({ ssoSignInOffer: vi.fn() }));
+vi.mock("@/app/(app)/(auth)/sign-in/_lib/two-factor-actions", () => ({}));
 
-(
-  globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
-).IS_REACT_ACT_ENVIRONMENT = true;
+const { PortalGate } = await import("@/ee/client-portal/portal-gate");
 
-const form = en.auth.emailCodeSignIn;
-
-const NOTHING: SignInOptions = {
-  google: false,
-  github: false,
-  email: false,
-  sso: false,
+const PORTAL: PortalWorkspace = {
+  id: "ws_acme",
+  slug: "acme",
+  brand: { name: "Acme", logo: null, accent: null },
+  retentionDays: 365,
 };
 
-// A Docker image built without secrets: the root layout says nothing works.
-const BUILD_VIEW = {
-  unavailable: ["googleSignIn", "githubSignIn", "emailSignIn", "sso"],
-  hiddenPaths: [],
-  hiddenIntegrations: [],
-} as never;
+const form = en.auth.emailCodeSignIn;
+const escaped = (text: string) => text.replaceAll("'", "&#x27;");
 
-let container: HTMLDivElement;
-let root: Root;
-
-beforeEach(() => {
-  vi.resetModules();
-  action.loadSignInOptions.mockReset();
-  vi.spyOn(console, "error").mockImplementation(() => undefined);
-  container = document.createElement("div");
-  document.body.append(container);
-  root = createRoot(container);
-});
-
-afterEach(async () => {
-  await act(async () => root.unmount());
-  container.remove();
-  vi.restoreAllMocks();
-});
-
-async function renderPortalSignIn() {
-  // Fresh modules: the server's answer is kept for the page load.
-  const { PortalSignIn } = await import("@/ee/client-portal/portal-sign-in");
-  const { AvailabilityProvider } = await import(
-    "@/components/availability-provider"
+const renderSignedOut = (options: Partial<SignInOptions>) => {
+  server.options = {
+    google: false,
+    github: false,
+    email: false,
+    sso: false,
+    ...options,
+  };
+  return renderIntl(
+    <PortalGate portal={PORTAL} viewer={{ kind: "signed-out" }} />,
   );
-  await act(async () => {
-    root.render(
-      <NextIntlClientProvider locale="en" messages={en} timeZone="UTC">
-        <AvailabilityProvider value={BUILD_VIEW}>
-          <PortalSignIn />
-        </AvailabilityProvider>
-      </NextIntlClientProvider>,
-    );
-  });
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 20));
-  });
-}
+};
 
-const text = () => container.textContent ?? "";
-const emailInput = () => container.querySelector('input[type="email"]');
+describe("the client portal's sign-in card", () => {
+  it("where no code can be delivered, says so and promises no code", () => {
+    // GitHub works here, but the portal only signs in with codes.
+    const html = renderSignedOut({ github: true });
 
-describe("the client portal's sign-in", () => {
-  it("says email sign-in isn't set up where no code can be delivered", async () => {
-    action.loadSignInOptions.mockResolvedValue({ ...NOTHING, github: true });
-    await renderPortalSignIn();
-
-    expect(text()).toContain(form.emailSignInIsntSet);
-    expect(emailInput()).toBeNull();
-    expect(text()).not.toContain(form.emailMeACode);
+    expect(html).not.toContain("one-time code");
+    expect(html).toContain(escaped(form.emailSignInIsntSet));
+    expect(html).not.toContain('type="email"');
+    expect(html).not.toContain(form.emailMeACode);
+    // Still says whose reports these are.
+    expect(html).toContain("Use the email address Acme invited.");
   });
 
-  it("shows the email form where codes can be delivered", async () => {
-    action.loadSignInOptions.mockResolvedValue({ ...NOTHING, email: true });
-    await renderPortalSignIn();
+  it("where codes can be delivered, promises one and shows the form", () => {
+    const html = renderSignedOut({ email: true });
 
-    expect(emailInput()).not.toBeNull();
-    expect(text()).toContain(form.emailMeACode);
-    expect(text()).not.toContain(form.emailSignInIsntSet);
-  });
-
-  it("keeps the form when the server can't be asked, rather than guessing", async () => {
-    action.loadSignInOptions.mockRejectedValue(new Error("offline"));
-    await renderPortalSignIn();
-
-    expect(emailInput()).not.toBeNull();
-    expect(text()).not.toContain(form.emailSignInIsntSet);
+    expect(html).toContain(escaped("We'll send you a one-time code."));
+    expect(html).toContain('type="email"');
+    expect(html).toContain(form.emailMeACode);
+    expect(html).not.toContain(escaped(form.emailSignInIsntSet));
   });
 });

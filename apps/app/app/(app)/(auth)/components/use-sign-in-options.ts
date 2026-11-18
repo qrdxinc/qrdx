@@ -39,7 +39,6 @@ export interface SignInOptionsAnswer {
  * The ways in to show: `given` when the page worked them out on the server
  * for this request (/sign-in), else the root layout's answer until the
  * running server's arrives (sign-in-options-action.ts), asked once `shown`.
- * Used by the sign-in panel and the client portal's sign-in.
  */
 export function useSignInOptions(
   given: SignInOptions | undefined,
