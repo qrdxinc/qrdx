@@ -17,8 +17,18 @@ export const MCP_HOST = `mcp.${CANONICAL_HOST}`;
 /** The hosted MCP server's public endpoint. */
 export const MCP_ENDPOINT = `https://${MCP_HOST}/mcp`;
 
-/** The shadcn registry: `npx shadcn@latest add <url>/qr-code.json`. */
+/** The shadcn registry's files: `<url>/qr-code.json`, `<url>/registry.json`. */
 export const SHADCN_REGISTRY_URL = `${CANONICAL_ORIGIN}/r`;
+
+/**
+ * The registry's namespace in the shadcn/ui registry directory:
+ * `npx shadcn@latest add @qrdx/qr-code`. The CLI (3.7.0 and later) resolves
+ * it from the directory's index, so projects don't add it to components.json.
+ */
+export const SHADCN_REGISTRY_NAMESPACE = "@qrdx";
+
+/** The shadcn/ui registry directory, which lists the namespace. */
+export const SHADCN_DIRECTORY_URL = "https://ui.shadcn.com/docs/directory";
 
 /** qrdx.dev or one of its subdomains (www, api, mcp). */
 export function isQrdxHost(host: string): boolean {

@@ -170,6 +170,13 @@ describe("llms.txt", () => {
     );
   });
 
+  it("gives the shadcn install by @qrdx name and by URL", () => {
+    expect(text).toContain("`npx shadcn@latest add @qrdx/qr-code`");
+    expect(text).toContain(
+      `\`npx shadcn@latest add ${LOCAL.origin}/r/qr-code.json\``,
+    );
+  });
+
   it("takes product counts from the catalogues, never from the source", () => {
     expect(text).toContain(
       `${PRODUCT_FACTS.bodyPatterns} body patterns, ${PRODUCT_FACTS.eyeShapes} corner-eye shapes and ${PRODUCT_FACTS.eyeCentres} eye centers, ${PRODUCT_FACTS.frames} frames`,
