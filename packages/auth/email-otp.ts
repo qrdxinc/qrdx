@@ -100,7 +100,7 @@ export function registerSignInCodeSender(
  * the answer waited for would make a free address answer much later than a
  * taken one. That isn't all of the difference: Better Auth also deletes the
  * code it stored for a taken address before answering, which the app's
- * actions hide by answering no sooner than a fixed minimum
+ * actions hide by answering on whole multiples of a fixed step
  * (EMAIL_CHANGE_ANSWER_MS in apps/app/lib/account/email-change.ts).
  * Registered on its own: the server actions that ask for these codes may run
  * where the /api/auth route, which registers the sign-in sender, never

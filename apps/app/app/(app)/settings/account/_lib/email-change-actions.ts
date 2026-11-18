@@ -49,8 +49,8 @@ import { logError } from "@/lib/shared";
 // the same answers at both steps. Better Auth still does a little more
 // database work for one than the other (it deletes the code it stored for a
 // taken address; it writes a free address's code back after a wrong try), so
-// both actions answer no sooner than EMAIL_CHANGE_ANSWER_MS after they start,
-// whatever the outcome.
+// both actions answer on a whole multiple of EMAIL_CHANGE_ANSWER_MS after they
+// start (at least one), whatever the outcome.
 registerEmailChangeCodeSender(
   sendEmailChangeCode,
   () => isFeatureAvailable("emailSignIn"),

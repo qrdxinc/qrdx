@@ -49,12 +49,36 @@ describe("noSoonerThan", () => {
     await expect(pending).rejects.toBe(boom);
   });
 
-  it("adds nothing when the work takes longer than the minimum", async () => {
+  it("rounds slow work up to the next multiple of the minimum", async () => {
     const pending = noSoonerThan(750, async () => {
       await takes(900);
       return "slow";
     });
-    expect(await settledAfter(pending, 900)).toBe(900);
+    expect(await settledAfter(pending, 1499)).toBeUndefined();
+    await vi.advanceTimersByTimeAsync(1);
     expect(await pending).toBe("slow");
+  });
+
+  it("lands two slow runs of different lengths on the same step", async () => {
+    const times: (number | undefined)[] = [];
+    for (const length of [760, 1400]) {
+      const pending = noSoonerThan(750, async () => {
+        await takes(length);
+      });
+      // settledAfter records when the promise settled, not how far the
+      // clock was moved, so an early answer shows up as a smaller number.
+      times.push(await settledAfter(pending, 1600));
+      await pending;
+    }
+    expect(times).toEqual([1500, 1500]);
+  });
+
+  it("adds nothing when the work ends exactly on a step", async () => {
+    const pending = noSoonerThan(750, async () => {
+      await takes(1500);
+      return "exact";
+    });
+    expect(await settledAfter(pending, 1500)).toBe(1500);
+    expect(await pending).toBe("exact");
   });
 });

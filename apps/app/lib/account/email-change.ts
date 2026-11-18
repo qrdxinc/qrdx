@@ -16,7 +16,7 @@
  * (anything else would mark the free addresses), so the dialog only says a
  * code should arrive if no other account uses the address. Codes typed for
  * either kind of address get the same answers too (confirmFailure), and both
- * steps answer no sooner than EMAIL_CHANGE_ANSWER_MS, which hides the little
+ * steps answer on a whole multiple of EMAIL_CHANGE_ANSWER_MS, which hides the little
  * database work Better Auth does for one kind and not the other. Where this
  * deployment can't deliver codes at all, every request is refused alike
  * (EMAIL_CHANGE_UNAVAILABLE) and Settings doesn't offer the change.
@@ -28,8 +28,9 @@ import { EMAIL_CHANGE_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 export const MAX_EMAIL_LENGTH = 254;
 
 /**
- * Both steps answer no sooner than this after they start, whatever the
- * outcome (lib/no-sooner-than.ts). Better Auth does one more database write
+ * Both steps answer on a whole multiple of this after they start (at least
+ * one), whatever the outcome (lib/no-sooner-than.ts): a slow run lands on
+ * the next step rather than showing its own length. Better Auth does one more database write
  * for an address with an account when a code is asked for, and one more for
  * an address without one after a wrong code, so the time to answer would
  * otherwise tell them apart. Asking for a code makes seven to nine database
