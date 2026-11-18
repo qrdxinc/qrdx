@@ -5498,6 +5498,98 @@
       "placeholder": "Pesquise molduras, temas e páginas"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Entre para continuar.",
+      "failed": "Algo deu errado. Tente novamente.",
+      "checkDetails": "Confira os detalhes.",
+      "themeNotInWorkspace": "Este tema não está neste workspace.",
+      "noCustomFrame": "Este tema não tem moldura personalizada.",
+      "pageNotFound": "Página não encontrada.",
+      "pageChanged": "Esta página mudou desde a sua revisão. Revise de novo antes de publicar.",
+      "svgTooLarge": "Arquivos SVG podem ter até 200 KB.",
+      "tooManyImports": "Importações demais. Tente de novo em uma hora.",
+      "tooManyChanges": "Alterações demais. Tente de novo mais tarde."
+    },
+    "communityThemes": {
+      "alreadyPublished": "Este tema já está publicado na comunidade.",
+      "workspaceAdminsOnly": "Só proprietários e administradores deste workspace podem publicar os temas dele.",
+      "workspaceUnavailable": "A publicação de temas do workspace ainda não está disponível nesta instalação.",
+      "tooFast": "Você está publicando rápido demais. Tente de novo mais tarde."
+    },
+    "checks": {
+      "licenceRequired": "Confirme a licença CC0 para publicar.",
+      "publishedALot": "Você publicou bastante hoje. Tente de novo amanhã.",
+      "unavailable": "A atualização da comunidade ainda não está disponível nesta instalação.",
+      "itemNotFound": "Este item não está na comunidade.",
+      "workspacePublishRefusal": "Só proprietários e administradores deste workspace podem publicar o que há nele.",
+      "nameRequired": "Dê um nome a ele.",
+      "alreadyPublished": "Este design já está na comunidade.",
+      "themeSettings": "Este tema tem configurações que a comunidade não consegue exibir. Salve-o de novo no editor.",
+      "pageNothingLeft": "Não sobra nada para compartilhar depois que seus dados pessoais são removidos. Adicione alguns blocos que outras pessoas possam reutilizar.",
+      "pageInvalid": "Esta página não pode ser compartilhada como modelo. Publique-a de novo no editor de páginas primeiro.",
+      "pageTooLarge": "Esta página é grande demais para ser compartilhada como modelo. Remova alguns blocos ou encurte textos longos.",
+      "repeatsDetail": "Ele repete um dado removido em outro ponto da página.",
+      "noEmails": "Não coloque endereços de e-mail em nomes, rótulos e descrições.",
+      "noLinks": "Não coloque links em nomes, rótulos e descrições.",
+      "noHandles": "Não coloque @usuários em nomes, rótulos e descrições.",
+      "noPhones": "Não coloque números de telefone em nomes, rótulos e descrições.",
+      "noStreets": "Não coloque endereços de ruas em nomes, rótulos e descrições.",
+      "gateFailed": "Só é possível publicar designs com leitura Ótima ({min, number} ou mais). {reasons}.",
+      "gateTooLong": "{sample} não cabe em um código com esse nível de correção de erros",
+      "gateScore": "com {sample}, a nota é {score, number}",
+      "gateSampleLink": "um link",
+      "gateSampleWifi": "dados de Wi-Fi",
+      "handleFormat": "Use de {min, number} a {max, number} letras minúsculas, números, \"_\" ou \"-\", começando com uma letra ou um número.",
+      "handleReserved": "Esse identificador é reservado.",
+      "handleTaken": "Esse identificador já está em uso.",
+      "displayNameRequired": "Digite um nome de exibição."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, one {# texto substituído} other {# textos substituídos}} por texto de exemplo",
+      "kept": "{count, plural, one {# texto mantido} other {# textos mantidos}} como você escreveu",
+      "links": "{count, plural, one {# link substituído} other {# links substituídos}} por example.com",
+      "emails": "{count, plural, one {# endereço de e-mail substituído} other {# endereços de e-mail substituídos}} por exemplos",
+      "phones": "{count, plural, one {# número de telefone substituído} other {# números de telefone substituídos}} por exemplos",
+      "emailsAndPhones": "{emails, plural, one {# endereço de e-mail} other {# endereços de e-mail}} e {phones, plural, one {# número de telefone} other {# números de telefone}} substituídos por exemplos",
+      "addresses": "{count, plural, one {# endereço substituído} other {# endereços substituídos}} por um endereço de exemplo",
+      "wifi": "Nome e senha da rede Wi-Fi substituídos por exemplos",
+      "codes": "Código de cupom substituído por um de exemplo",
+      "gtins": "GTIN do produto removido: cada pessoa adiciona o seu",
+      "images": "{count, plural, one {# foto removida} other {# fotos removidas}}: cada pessoa adiciona as suas",
+      "files": "{count, plural, one {# arquivo removido} other {# arquivos removidos}}",
+      "blocks": "Deixados de fora porque precisam dos seus próprios arquivos: {blocks}",
+      "hidden": "{count, plural, one {# bloco oculto deixado de fora} other {# blocos ocultos deixados de fora}}",
+      "settings": "Imagem de compartilhamento, descrição e CSS personalizado deixados de fora"
+    },
+    "qrThemes": {
+      "signIn": "Entre para gerenciar os temas.",
+      "failed": "Algo deu errado. Tente novamente.",
+      "tooMany": "Muitas alterações. Aguarde um minuto e tente novamente.",
+      "themeLimit": "Você atingiu o limite de {limit, number} temas salvos do plano Grátis. Faça upgrade para o Pro e tenha temas ilimitados.",
+      "notFound": "Tema não encontrado.",
+      "defaultAdminsOnly": "Só proprietários e administradores do workspace podem alterar o tema padrão dele.",
+      "openAnotherWorkspace": "Abra outro workspace para compartilhar temas com ele.",
+      "shareAdminsOnly": "Só proprietários e administradores do workspace podem compartilhar temas aqui.",
+      "sharedThemesPlan": "Os temas compartilhados fazem parte do plano {plan} (de acordo com o plano do proprietário do workspace).",
+      "workspaceThemeLimit": "O plano deste workspace inclui {count, number} temas."
+    },
+    "codeBuilder": {
+      "signInAgain": "Entre de novo para criar códigos.",
+      "loadFailed": "Não foi possível carregar o criador. Tente de novo.",
+      "themesFailed": "Os temas salvos não carregaram.",
+      "foldersFailed": "As pastas não carregaram.",
+      "tagsFailed": "As tags não carregaram.",
+      "domainsFailed": "Os domínios personalizados não carregaram, então os códigos usam o link curto padrão."
+    },
+    "search": {
+      "untitledPage": "Página sem título",
+      "landingPage": "Landing page",
+      "tooMany": "Muitas buscas. Aguarde um instante.",
+      "signInAgain": "Entre de novo para buscar.",
+      "notWorking": "A busca não está funcionando agora."
+    }
+  },
   "app": {
     "settings": {
       "general": {

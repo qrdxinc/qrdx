@@ -15,7 +15,7 @@ import {
   DialogTitle,
 } from "@repo/design-system/components/ui/dialog";
 import { DocumentUpload } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { type FrameSpec, QRCodeSVG } from "qrdx";
 import { useEffect, useId, useRef, useState } from "react";
 import {
@@ -40,6 +40,8 @@ export function ImportFrameDialog({
   onImported: (spec: FrameSpec) => void;
 }) {
   const t = useTranslations("community.importFrameDialog");
+  // The server answers in this page's language (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const inputId = useId();
   const input = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -66,7 +68,7 @@ export function ImportFrameDialog({
     }
     setPending(true);
     try {
-      const response = await importCommunityFrameSvg(await file.text());
+      const response = await importCommunityFrameSvg(await file.text(), locale);
       if (response.ok) setResult(response.data);
       else setError(response.message);
     } catch {

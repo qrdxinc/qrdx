@@ -36,7 +36,7 @@ import {
   SearchNormal1,
   Verify,
 } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   type ReactNode,
   type RefObject,
@@ -303,6 +303,8 @@ const sheetKey = [...communityKeys.all, "sheet"] as const;
 
 export function CommunitySheet() {
   const t = useTranslations("editor.communitySheet");
+  // The server answers in this page's language (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const open = useCommunitySheetStore((state) => state.open);
   const setOpen = useCommunitySheetStore((state) => state.setOpen);
   const publishRequested = useCommunitySheetStore(
@@ -336,7 +338,7 @@ export function CommunitySheet() {
     if (!data?.communityThemeId) return;
     setOpen(true);
     const result = await ensureLiked(data.communityThemeId, (id) =>
-      toggleCommunityLike(id),
+      toggleCommunityLike(id, locale),
     );
     if (result.ok) {
       toast.success(
@@ -511,6 +513,7 @@ function CommunitySheetBody({
   searchRef: RefObject<HTMLInputElement | null>;
 }) {
   const t = useTranslations("editor.communitySheet");
+  const locale = useLocale();
   const queryClient = useQueryClient();
   const { data: session } = authClient.useSession();
   const userId = session?.user?.id ?? null;
@@ -596,7 +599,7 @@ function CommunitySheetBody({
     }
     setBusyId(theme.id);
     await runLike(theme, {
-      toggle: (id) => toggleCommunityLike(id),
+      toggle: (id) => toggleCommunityLike(id, locale),
       show: (id, liked, likeCount) =>
         queryClient.setQueriesData<InfiniteData<CommunityThemesResponse>>(
           { queryKey: sheetKey },

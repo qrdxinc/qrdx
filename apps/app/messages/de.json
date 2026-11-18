@@ -5498,6 +5498,98 @@
       "placeholder": "Rahmen, Themes und Seiten suchen"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Melde dich an, um fortzufahren.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "checkDetails": "Prüfe die Angaben.",
+      "themeNotInWorkspace": "Dieses Theme gehört nicht zu diesem Workspace.",
+      "noCustomFrame": "Dieses Theme hat keinen eigenen Rahmen.",
+      "pageNotFound": "Seite nicht gefunden.",
+      "pageChanged": "Diese Seite wurde seit deiner Prüfung geändert. Prüfe sie erneut, bevor du sie veröffentlichst.",
+      "svgTooLarge": "SVG-Dateien dürfen bis zu 200 KB groß sein.",
+      "tooManyImports": "Zu viele Importe. Versuche es in einer Stunde erneut.",
+      "tooManyChanges": "Zu viele Änderungen. Versuche es später erneut."
+    },
+    "communityThemes": {
+      "alreadyPublished": "Dieses Theme ist bereits in der Community veröffentlicht.",
+      "workspaceAdminsOnly": "Nur Inhaber und Admins dieses Workspace können dessen Themes veröffentlichen.",
+      "workspaceUnavailable": "Das Veröffentlichen von Workspace-Themes ist in dieser Installation noch nicht verfügbar.",
+      "tooFast": "Du veröffentlichst zu schnell. Bitte versuche es später erneut."
+    },
+    "checks": {
+      "licenceRequired": "Bestätige die CC0-Lizenz zum Veröffentlichen.",
+      "publishedALot": "Du hast heute schon viel veröffentlicht. Versuche es morgen erneut.",
+      "unavailable": "Das Community-Update ist in dieser Installation noch nicht verfügbar.",
+      "itemNotFound": "Dieser Eintrag ist nicht in der Community.",
+      "workspacePublishRefusal": "Nur Inhaber und Admins dieses Workspace können dessen Inhalte veröffentlichen.",
+      "nameRequired": "Gib einen Namen ein.",
+      "alreadyPublished": "Dieses Design ist bereits in der Community.",
+      "themeSettings": "Dieses Theme hat Einstellungen, die die Community nicht anzeigen kann. Speichere es im Editor erneut.",
+      "pageNothingLeft": "Ohne deine eigenen Angaben bleibt nichts zum Teilen übrig. Füge Blöcke hinzu, die andere wiederverwenden können.",
+      "pageInvalid": "Diese Seite kann nicht als Vorlage geteilt werden. Veröffentliche sie zuerst im Seiteneditor erneut.",
+      "pageTooLarge": "Diese Seite ist zu groß, um sie als Vorlage zu teilen. Entferne einige Blöcke oder kürze lange Texte.",
+      "repeatsDetail": "Sie wiederholt eine Angabe, die an anderer Stelle der Seite entfernt wurde.",
+      "noEmails": "Lass E-Mail-Adressen in Namen, Beschriftungen und Beschreibungen weg.",
+      "noLinks": "Lass Links in Namen, Beschriftungen und Beschreibungen weg.",
+      "noHandles": "Lass @Handles in Namen, Beschriftungen und Beschreibungen weg.",
+      "noPhones": "Lass Telefonnummern in Namen, Beschriftungen und Beschreibungen weg.",
+      "noStreets": "Lass Straßenadressen in Namen, Labels und Beschreibungen weg.",
+      "gateFailed": "Nur Designs, die mit „Sehr gut“ scannen ({min, number} oder mehr), können veröffentlicht werden. {reasons}.",
+      "gateTooLong": "{sample} passt bei dieser Fehlerkorrekturstufe nicht in einen Code",
+      "gateScore": "mit {sample} erreicht es {score, number}",
+      "gateSampleLink": "einem Link",
+      "gateSampleWifi": "Wi-Fi-Zugangsdaten",
+      "handleFormat": "Verwende {min, number} bis {max, number} Kleinbuchstaben, Ziffern, „_“ oder „-“, beginnend mit einem Buchstaben oder einer Ziffer.",
+      "handleReserved": "Dieser Handle ist reserviert.",
+      "handleTaken": "Dieser Handle ist vergeben.",
+      "displayNameRequired": "Gib einen Anzeigenamen ein."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, one {# Text} other {# Texte}} durch Beispieltext ersetzt",
+      "kept": "{count, plural, one {# Text} other {# Texte}} so übernommen, wie du ihn geschrieben hast",
+      "links": "{count, plural, one {# Link} other {# Links}} durch example.com ersetzt",
+      "emails": "{count, plural, one {# E-Mail-Adresse} other {# E-Mail-Adressen}} durch Beispieladressen ersetzt",
+      "phones": "{count, plural, one {# Telefonnummer} other {# Telefonnummern}} durch Beispielnummern ersetzt",
+      "emailsAndPhones": "{emails, plural, one {# E-Mail-Adresse} other {# E-Mail-Adressen}} und {phones, plural, one {# Telefonnummer} other {# Telefonnummern}} durch Beispieldaten ersetzt",
+      "addresses": "{count, plural, one {# Adresse} other {# Adressen}} durch eine Beispieladresse ersetzt",
+      "wifi": "Wi-Fi-Netzwerkname und Passwort durch Beispielwerte ersetzt",
+      "codes": "Gutscheincode durch einen Beispielcode ersetzt",
+      "gtins": "GTIN des Produkts entfernt: Andere tragen ihre eigene ein",
+      "images": "{count, plural, one {# Foto} other {# Fotos}} entfernt: Andere fügen ihre eigenen hinzu",
+      "files": "{count, plural, one {# Datei} other {# Dateien}} entfernt",
+      "blocks": "Weggelassen, weil sie deine eigenen Dateien brauchen: {blocks}",
+      "hidden": "{count, plural, one {# ausgeblendeter Block} other {# ausgeblendete Blöcke}} weggelassen",
+      "settings": "Share-Bild, Beschreibung und eigenes CSS weggelassen"
+    },
+    "qrThemes": {
+      "signIn": "Melde dich an, um Themes zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+      "tooMany": "Zu viele Änderungen. Warte bitte eine Minute und versuche es erneut.",
+      "themeLimit": "Du hast das Limit von {limit, number} gespeicherten Themes im Tarif Kostenlos erreicht. Upgrade auf Pro für unbegrenzt viele Themes.",
+      "notFound": "Theme nicht gefunden.",
+      "defaultAdminsOnly": "Nur Workspace-Inhaber und Admins können das Standard-Theme ändern.",
+      "openAnotherWorkspace": "Öffne einen anderen Workspace, um Themes mit ihm zu teilen.",
+      "shareAdminsOnly": "Nur Workspace-Inhaber und Admins können hier Themes teilen.",
+      "sharedThemesPlan": "Geteilte Themes sind Teil des {plan}-Tarifs (basierend auf dem Tarif des Workspace-Inhabers).",
+      "workspaceThemeLimit": "Der Tarif dieses Workspace enthält {count, number} Themes."
+    },
+    "codeBuilder": {
+      "signInAgain": "Melde dich erneut an, um Codes zu erstellen.",
+      "loadFailed": "Der Builder konnte nicht geladen werden. Versuch es erneut.",
+      "themesFailed": "Gespeicherte Themes wurden nicht geladen.",
+      "foldersFailed": "Ordner wurden nicht geladen.",
+      "tagsFailed": "Tags wurden nicht geladen.",
+      "domainsFailed": "Eigene Domains wurden nicht geladen, deshalb verwenden Codes den Standard-Kurzlink."
+    },
+    "search": {
+      "untitledPage": "Seite ohne Titel",
+      "landingPage": "Landingpage",
+      "tooMany": "Zu viele Suchanfragen. Warte kurz.",
+      "signInAgain": "Melde dich erneut an, um zu suchen.",
+      "notWorking": "Die Suche funktioniert gerade nicht."
+    }
+  },
   "app": {
     "settings": {
       "general": {

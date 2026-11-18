@@ -67,10 +67,6 @@ export function canPublishFromWorkspace(
   return can(scope.role, "content.manageAll");
 }
 
-/** The refusal shown to members and viewers of a shared workspace. */
-export const WORKSPACE_PUBLISH_REFUSAL =
-  "Only owners and admins of this workspace can publish what's in it.";
-
 /**
  * Whether `userId` may unpublish an item someone else published from a
  * shared workspace: as an owner or admin of the workspace the page or theme

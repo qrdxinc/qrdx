@@ -4,8 +4,11 @@
 // actions from a page run one after another, so the five separate reads it
 // started with (settings, themes, folders, tags, domains) held the form
 // back by several round trips. Read-only; each part fails on its own and the
-// failure is reported, never hidden.
+// failure is reported, never hidden, in the language of the page the builder
+// opens on: the dashboard or the playground (/es/playground), which sends
+// its own (`pageLocale`, lib/i18n/action-locale.ts).
 
+import { getTranslations } from "next-intl/server";
 import { getUserSettings } from "@/actions/user-settings";
 import {
   listFolders,
@@ -19,9 +22,15 @@ import {
 } from "@/app/(app)/dashboard/domains/_lib/domains";
 import { listVisibleThemes } from "@/app/(app)/dashboard/themes/_lib/queries";
 import type { SavedTheme } from "@/app/(app)/dashboard/themes/_lib/theme";
+import { actionText } from "@/lib/i18n/action-locale";
 import { getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError } from "@/types/errors";
+import {
+  CODE_BUILDER_DATA_MESSAGES,
+  type CodeBuilderDataMessages,
+  codeBuilderDataMessages,
+} from "./action-messages";
 
 export interface CodeBuilderData {
   /** Saved themes the workspace can use; null when they couldn't load */
@@ -52,22 +61,33 @@ function settled<T>(
   return null;
 }
 
-export async function getCodeBuilderData(): Promise<CodeBuilderDataResult> {
+/** The messages in the page's language; English, logged, if unreadable. */
+const builderText = (pageLocale: unknown) =>
+  actionText<CodeBuilderDataMessages>(
+    CODE_BUILDER_DATA_MESSAGES,
+    async (locale) =>
+      codeBuilderDataMessages(
+        await getTranslations({
+          locale,
+          namespace: "communityActions.codeBuilder",
+        }),
+      ),
+    { pageLocale, action: "getCodeBuilderData" },
+  );
+
+export async function getCodeBuilderData(
+  pageLocale?: string,
+): Promise<CodeBuilderDataResult> {
   let scope: Awaited<ReturnType<typeof getActiveScope>>;
   try {
     scope = await getActiveScope();
   } catch (error) {
+    const m = await builderText(pageLocale);
     if (error instanceof UnauthorizedError) {
-      return {
-        success: false,
-        error: { message: "Sign in again to create codes." },
-      };
+      return { success: false, error: { message: m.signInAgain } };
     }
     logError(error as Error, { action: "getCodeBuilderData" });
-    return {
-      success: false,
-      error: { message: "Couldn't load the builder. Try again." },
-    };
+    return { success: false, error: { message: m.loadFailed } };
   }
 
   const [themes, folders, tags, domains, settings] = await Promise.allSettled([
@@ -78,18 +98,18 @@ export async function getCodeBuilderData(): Promise<CodeBuilderDataResult> {
     getUserSettings(),
   ] as const);
   const problems: string[] = [];
+  const failed = [themes, folders, tags, domains].some(
+    (part) => part.status === "rejected",
+  );
+  // Read only when a part failed: most opens say nothing.
+  const m = failed ? await builderText(pageLocale) : CODE_BUILDER_DATA_MESSAGES;
   return {
     success: true,
     data: {
-      themes: settled(themes, "themes", problems, "Saved themes didn't load."),
-      folders: settled(folders, "folders", problems, "Folders didn't load."),
-      tags: settled(tags, "tags", problems, "Tags didn't load."),
-      domains: settled(
-        domains,
-        "domains",
-        problems,
-        "Custom domains didn't load, so codes use the default short link.",
-      ),
+      themes: settled(themes, "themes", problems, m.themesFailed),
+      folders: settled(folders, "folders", problems, m.foldersFailed),
+      tags: settled(tags, "tags", problems, m.tagsFailed),
+      domains: settled(domains, "domains", problems, m.domainsFailed),
       keyboardShortcuts:
         settings.status === "fulfilled"
           ? (settings.value?.keyboardShortcuts ?? true)

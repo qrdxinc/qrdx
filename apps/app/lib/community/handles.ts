@@ -4,6 +4,10 @@
 // lookalike. packages/database/scripts/backfill-community.mjs and
 // seed-community.mjs keep their own copy of RESERVED_HANDLES; a test keeps
 // them equal.
+import {
+  COMMUNITY_CHECK_MESSAGES,
+  type CommunityCheckMessages,
+} from "./messages";
 
 export const HANDLE_MIN_LENGTH = 3;
 export const HANDLE_MAX_LENGTH = 30;
@@ -91,17 +95,26 @@ export function looksLikeQrdx(handle: string): boolean {
   return plain.includes("qrdx");
 }
 
-/** Why `handle` can't be claimed by a person, or null when it can. */
-export function handleProblem(handle: string): string | null {
+/**
+ * Why `handle` can't be claimed by a person, or null when it can. In English
+ * unless `messages` is another language's set (./messages.ts).
+ */
+export function handleProblem(
+  handle: string,
+  messages: CommunityCheckMessages = COMMUNITY_CHECK_MESSAGES,
+): string | null {
   if (
     handle.length < HANDLE_MIN_LENGTH ||
     handle.length > HANDLE_MAX_LENGTH ||
     !HANDLE_PATTERN.test(handle)
   ) {
-    return `Use ${HANDLE_MIN_LENGTH} to ${HANDLE_MAX_LENGTH} lowercase letters, numbers, "_" or "-", starting with a letter or number.`;
+    return messages.handleFormat({
+      min: HANDLE_MIN_LENGTH,
+      max: HANDLE_MAX_LENGTH,
+    });
   }
   if (RESERVED.has(handle) || looksLikeQrdx(handle)) {
-    return "That handle is reserved.";
+    return messages.handleReserved;
   }
   return null;
 }

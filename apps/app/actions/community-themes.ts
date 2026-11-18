@@ -21,6 +21,10 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { findThemeById } from "@/app/(app)/dashboard/themes/_lib/queries";
+import {
+  type CommunityActionText,
+  lazyCommunityText,
+} from "@/lib/community/action-text";
 import { publicStyleFromSaved } from "@/lib/community/public-style-server";
 import { PublishError, publishSavedTheme } from "@/lib/community/publish";
 import { themePublishAccess } from "@/lib/community/publish-access";
@@ -313,11 +317,12 @@ async function publishThemeAsItem(
   userId: string,
   theme: { id: string; name: string; style: unknown },
   tags: string[],
+  text: () => Promise<CommunityActionText>,
 ): Promise<ActionResult<{ id: string }>> {
   if ((await myPublishedThemeSources(userId)).includes(theme.id)) {
     return actionError(
       ErrorCode.ALREADY_PUBLISHED,
-      "This theme is already published to the community.",
+      (await text()).themes.alreadyPublished,
     );
   }
   if (process.env.NODE_ENV !== "development") {
@@ -327,7 +332,7 @@ async function publishThemeAsItem(
     if (!success) {
       return actionError(
         ErrorCode.RATE_LIMITED,
-        "You've published a lot today. Try again tomorrow.",
+        (await text()).checks.publishedALot,
       );
     }
   }
@@ -344,17 +349,27 @@ async function publishThemeAsItem(
     return actionSuccess({ id: item.id });
   } catch (error) {
     if (error instanceof PublishError) {
-      return actionError(ErrorCode[error.code], error.message);
+      return actionError(
+        ErrorCode[error.code],
+        error.messageIn((await text()).checks),
+      );
     }
     throw error;
   }
 }
 
+/**
+ * Publishes a saved theme, from the dashboard's Themes page and the editor:
+ * refusals in the page's language (`options.locale`, the client's
+ * useLocale(); lib/i18n/action-locale.ts). What's thrown is never shown as
+ * it is (Next.js hides it in production) and stays English.
+ */
 export async function publishTheme(
   themeId: string,
   tags: string[] = [],
-  options: { acceptLicense?: boolean } = {},
+  options: { acceptLicense?: boolean; locale?: string } = {},
 ): Promise<ActionResult<{ id: string }>> {
+  const text = lazyCommunityText(options.locale, "publishTheme");
   try {
     const userId = await getCurrentUserId();
 
@@ -362,7 +377,7 @@ export async function publishTheme(
     if (options.acceptLicense !== true) {
       return actionError(
         ErrorCode.LICENSE_REQUIRED,
-        "Confirm the CC0 licence to publish.",
+        (await text()).checks.licenceRequired,
       );
     }
 
@@ -399,12 +414,12 @@ export async function publishTheme(
     if (access === "view") {
       return actionError(
         ErrorCode.THEME_NOT_FOUND,
-        "Only owners and admins of this workspace can publish its themes.",
+        (await text()).themes.workspaceAdminsOnly,
       );
     }
 
     if ((await communityState()).themes === "items") {
-      return await publishThemeAsItem(userId, existingTheme, validTags);
+      return await publishThemeAsItem(userId, existingTheme, validTags, text);
     }
 
     // The legacy gallery shows the live theme row, not a snapshot, so a
@@ -412,7 +427,7 @@ export async function publishTheme(
     if (access === "workspace") {
       return actionError(
         ErrorCode.COMMUNITY_UNAVAILABLE,
-        "Publishing workspace themes isn't available on this deployment yet.",
+        (await text()).themes.workspaceUnavailable,
       );
     }
 
@@ -426,7 +441,7 @@ export async function publishTheme(
     if (existing) {
       return actionError(
         ErrorCode.ALREADY_PUBLISHED,
-        "This theme is already published to the community.",
+        (await text()).themes.alreadyPublished,
       );
     }
 
@@ -436,7 +451,7 @@ export async function publishTheme(
       if (!success) {
         return actionError(
           ErrorCode.RATE_LIMITED,
-          "You're publishing too fast. Please try again later.",
+          (await text()).themes.tooFast,
         );
       }
     }
@@ -447,7 +462,10 @@ export async function publishTheme(
       publicStyleFromSaved(existingTheme.style as ThemeStyles),
     );
     if (!gate.passed) {
-      return actionError(ErrorCode.SCAN_GATE, gateFailureMessage(gate));
+      return actionError(
+        ErrorCode.SCAN_GATE,
+        gateFailureMessage(gate, (await text()).checks),
+      );
     }
 
     const id = cuid();
