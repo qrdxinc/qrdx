@@ -99,15 +99,16 @@ describe("qrImageFile", () => {
       mimeType: "image/webp",
       fileExtension: "webp",
     });
+    expect(qrImageFile("bmp", "menu")).toEqual({
+      fileName: "menu.bmp",
+      mimeType: "image/bmp",
+      fileExtension: "bmp",
+    });
   });
 
   it("knows the formats", () => {
-    expect(["png", "webp", "svg", "eps", "jpg"].map(isQrImageFormat)).toEqual([
-      true,
-      true,
-      true,
-      true,
-      false,
-    ]);
+    expect(
+      ["png", "webp", "bmp", "svg", "eps", "jpg"].map(isQrImageFormat)
+    ).toEqual([true, true, true, true, true, false]);
   });
 });

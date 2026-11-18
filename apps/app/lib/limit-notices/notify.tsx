@@ -8,26 +8,22 @@ import {
   organization,
   user,
 } from "@repo/database";
+import { DEFAULT_LOCALE, isLocale, type Locale } from "@repo/i18n/config";
 import cuid from "cuid";
 import { and, eq, inArray, like } from "drizzle-orm";
-import { limitCopy } from "@/app/(app)/settings/usage/_lib/limit-copy";
-import {
-  type Meter,
-  meterLabel,
-  resolveMeterCaps,
-} from "@/app/(app)/settings/usage/_lib/meters";
+import { resolveMeterCaps } from "@/app/(app)/settings/usage/_lib/meters";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { sendEmail } from "@/lib/email/send";
 import { LimitNoticeEmail } from "@/lib/email/templates/limit-notice";
+import { emailIntl } from "@/lib/i18n/email";
 import { baseUrl } from "@/lib/metadata";
 import { PLAN_LIMITS } from "@/lib/plans";
-import { PLAN_NAMES } from "@/lib/pricing";
 import { workspaceHref } from "@/lib/workspace-paths";
 import { strongestRole } from "@/lib/workspaces";
+import { noticeCopy } from "./copy";
 import type { KnownUsage, LimitScope } from "./index";
 import {
-  NOTICE_WORDS,
   type NoticeLimitId,
   type NoticeThreshold,
   noticeKey,
@@ -35,7 +31,7 @@ import {
   noticeSubject,
   reachedThresholds,
 } from "./levels";
-import { type LimitUsage, readLimitUsage } from "./usage";
+import { readLimitUsage } from "./usage";
 
 function log(event: string, fields: Record<string, unknown>) {
   console.info(JSON.stringify({ event, ...fields }));
@@ -99,6 +95,8 @@ async function releaseThreshold(claim: Claim, threshold: NoticeThreshold) {
 
 interface Recipient {
   email: string;
+  /** Their saved language; null = English */
+  locale: Locale | null;
 }
 
 /** The workspace's owners (a personal workspace's owner is its person). */
@@ -121,12 +119,15 @@ async function ownerEmails(organizationId: string): Promise<Recipient[]> {
 async function emailsOf(userIds: string[]): Promise<Recipient[]> {
   if (userIds.length === 0) return [];
   const rows = await db
-    .select({ email: user.email, banned: user.banned })
+    .select({ email: user.email, banned: user.banned, locale: user.locale })
     .from(user)
     .where(inArray(user.id, userIds));
   return rows
     .filter((row) => !row.banned && row.email)
-    .map((row) => ({ email: row.email }));
+    .map((row) => ({
+      email: row.email,
+      locale: isLocale(row.locale) ? row.locale : null,
+    }));
 }
 
 async function workspaceInfo(organizationId: string) {
@@ -140,16 +141,14 @@ async function workspaceInfo(organizationId: string) {
 
 const absolute = (path: string) => new URL(path, baseUrl.origin).toString();
 
-/** The meter Plan & usage would show, as limit-copy.ts takes it. */
-function toMeter(id: NoticeLimitId, usage: LimitUsage): Meter {
-  return {
-    id,
-    label: meterLabel(id),
-    used: usage.used,
-    limit: usage.limit,
-    unit: id === "storage" ? "bytes" : "count",
-    ...(usage.resetsAt ? { resetsAt: usage.resetsAt } : {}),
-  };
+/** The recipients' addresses by their language, English for no choice. */
+function byLanguage(recipients: Recipient[]): Map<Locale, string[]> {
+  const groups = new Map<Locale, string[]>();
+  for (const { email, locale } of recipients) {
+    const key = locale ?? DEFAULT_LOCALE;
+    groups.set(key, [...(groups.get(key) ?? []), email]);
+  }
+  return groups;
 }
 
 export interface NoticeOutcome {
@@ -176,7 +175,9 @@ export async function sendLimitNotice(
 ): Promise<NoticeOutcome> {
   const usage = await readLimitUsage(scope, limitId, known);
   const thresholds = usage ? reachedThresholds(usage.used, usage.limit) : [];
-  if (!usage || thresholds.length === 0) return { sent: null, reason: "under" };
+  if (!usage || usage.limit === null || thresholds.length === 0) {
+    return { sent: null, reason: "under" };
+  }
   const top = thresholds.at(-1) as NoticeThreshold;
 
   // AI art counted per person is that person's notice; everything else is
@@ -200,50 +201,67 @@ export async function sendLimitNotice(
   if (recipients.length === 0) return { sent: null, reason: "no-recipients" };
 
   const own = isOwnWorkspaceOf(scope.organizationId, scope.userId);
-  const meter = toMeter(limitId, usage);
-  const copy = limitCopy(meter, {
+  const notice = {
+    limitId,
+    used: usage.used,
+    limit: usage.limit,
+    resetsAt: usage.resetsAt,
     plan: usage.plan,
     canUpgrade: !perPerson,
     checkoutOpen: getCheckoutOpen(),
     cap: resolveMeterCaps(PLAN_LIMITS, usage.plan, { isTeam: !own })[limitId],
-  });
-  if (!copy) return { sent: null, reason: "under" };
-
-  const words = NOTICE_WORDS[limitId];
+  };
   const level = top === 100 ? "full" : "near";
-  const email = (
-    <LimitNoticeEmail
-      level={level}
-      limitLabel={words.label}
-      noun={words.noun}
-      planName={PLAN_NAMES[usage.plan]}
-      reason={copy.reason}
-      recipientReason={
-        perPerson
-          ? `You get this because you made AI art in ${workspace.name} on QRdx. The allowance is counted for you.`
-          : `You get this because you're an owner of ${workspace.name} on QRdx.`
-      }
-      usageUrl={absolute(workspaceHref(workspace.slug, "/settings/usage"))}
-      value={copy.value}
-      workspaceName={workspace.name}
-    />
-  );
+  const key = noticeKey({ ...claim, threshold: top });
 
-  const result = await sendEmail({
-    to: recipients.map((recipient) => recipient.email),
-    subject: noticeSubject(limitId, top, {
-      value: copy.value,
-      workspace: workspace.name,
+  // One email per language among the recipients, each in their saved
+  // language, else English. No request's cookie: this runs after someone
+  // else's write (a teammate's, a visitor's form response).
+  const results = await Promise.all(
+    [...byLanguage(recipients)].map(async ([locale, to]) => {
+      const intl = await emailIntl(locale);
+      const copy = noticeCopy(notice, intl);
+      return sendEmail({
+        to,
+        subject: noticeSubject(
+          limitId,
+          top,
+          { value: copy.value, workspace: workspace.name },
+          intl,
+        ),
+        react: (
+          <LimitNoticeEmail
+            intl={intl}
+            level={level}
+            limitLabel={copy.label}
+            noun={copy.noun}
+            planName={copy.planName}
+            reason={copy.reason}
+            recipientReason={intl.t(
+              perPerson ? "limitNotice.artReason" : "limitNotice.ownerReason",
+              { workspace: workspace.name },
+            )}
+            usageUrl={absolute(
+              workspaceHref(workspace.slug, "/settings/usage"),
+            )}
+            value={copy.value}
+            workspaceName={workspace.name}
+          />
+        ),
+        // English keeps the key it always had; another language's email
+        // is its own send.
+        idempotencyKey: locale === DEFAULT_LOCALE ? key : `${key}:${locale}`,
+        tags: [
+          { name: "type", value: "limit_notice" },
+          { name: "limit", value: limitId },
+        ],
+      });
     }),
-    react: email,
-    idempotencyKey: noticeKey({ ...claim, threshold: top }),
-    tags: [
-      { name: "type", value: "limit_notice" },
-      { name: "limit", value: limitId },
-    ],
-  });
-  if (!result.sent) {
-    // Not sent: free the claim so the next write tries again.
+  );
+  if (!results.every((result) => result.sent)) {
+    // Not sent (to everyone): free the claim so the next write tries again.
+    // An email that did go out has its idempotency key, so Resend doesn't
+    // send it twice within a day.
     await releaseThreshold(claim, top).catch(() => {});
     log("limit_notice.not_sent", { limit: limitId, threshold: top });
     return { sent: null, reason: "failed" };

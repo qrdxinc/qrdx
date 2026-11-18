@@ -1,7 +1,8 @@
 import "server-only";
 
-import { database as db, qrCode } from "@repo/database";
+import { database as db, linkPathAlias, qrCode } from "@repo/database";
 import { and, eq, inArray, or, type SQL } from "drizzle-orm";
+import { noteMissingAliases } from "@/lib/path-alias-missing";
 import {
   generateSlug,
   SHARED_SLUG_SCOPE,
@@ -44,11 +45,19 @@ function claimedWhere(slugs: string[], domainId: string | null): SQL {
       ) as SQL);
 }
 
-/** Which of `slugs` are taken for a code on `domainId` (null = the shared namespace). */
+/**
+ * Which of `slugs` are taken for a code on `domainId` (null = the shared
+ * namespace). On a custom domain that includes back-halves whose hosted-page
+ * path is another code's path alias (aliasBlockedSlugs), unless `aliases`
+ * is false.
+ */
 export async function findTakenSlugs(
   slugs: string[],
   domainId: string | null,
-  { exceptCodeId }: { exceptCodeId?: string } = {},
+  {
+    exceptCodeId,
+    aliases = true,
+  }: { exceptCodeId?: string; aliases?: boolean } = {},
 ): Promise<Set<string>> {
   const taken = new Set<string>();
   const unique = [...new Set(slugs)];
@@ -61,7 +70,60 @@ export async function findTakenSlugs(
       if (row.id !== exceptCodeId) taken.add(row.slug);
     }
   }
+  if (domainId && aliases) {
+    for (const slug of await aliasBlockedSlugs(unique, domainId, {
+      exceptCodeId,
+    })) {
+      taken.add(slug);
+    }
+  }
   return taken;
+}
+
+/**
+ * Back-halves a code on `domainId` can't take because `/p/<slug>`, where its
+ * hosted page would answer, is another code's path alias there
+ * (lib/path-aliases.ts): the hosted page would hide the alias. Empty while
+ * link_path_alias doesn't exist yet.
+ */
+export async function aliasBlockedSlugs(
+  slugs: string[],
+  domainId: string,
+  { exceptCodeId }: { exceptCodeId?: string } = {},
+): Promise<Set<string>> {
+  const blocked = new Set<string>();
+  const unique = [...new Set(slugs)];
+  try {
+    for (let i = 0; i < unique.length; i += 500) {
+      const rows = await db
+        .select({ path: linkPathAlias.path, codeId: linkPathAlias.qrCodeId })
+        .from(linkPathAlias)
+        // Only aliases that answer: their code is still on the domain.
+        .innerJoin(
+          qrCode,
+          and(
+            eq(qrCode.id, linkPathAlias.qrCodeId),
+            eq(qrCode.domainId, linkPathAlias.domainId),
+          ),
+        )
+        .where(
+          and(
+            eq(linkPathAlias.domainId, domainId),
+            inArray(
+              linkPathAlias.path,
+              unique.slice(i, i + 500).map((slug) => `/p/${slug}`),
+            ),
+          ),
+        );
+      for (const row of rows) {
+        if (row.codeId !== exceptCodeId) blocked.add(row.path.slice(3));
+      }
+    }
+  } catch (error) {
+    if (noteMissingAliases(error)) return blocked;
+    throw error;
+  }
+  return blocked;
 }
 
 /** A Postgres unique violation (23505), also when drizzle wraps it. */

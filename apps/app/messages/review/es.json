@@ -16987,6 +16987,26 @@
     "source": "d052579c6a31",
     "status": "machine"
   },
+  "app.settings.account.sessionsSection.activeNow": {
+    "source": "441658c6e186",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.activeJustNow": {
+    "source": "b4a50414adfc",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.activeAgo": {
+    "source": "ec6b0dab9196",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.activeOn": {
+    "source": "094ce2eebce7",
+    "status": "machine"
+  },
+  "app.settings.account.sessionsSection.signedIn": {
+    "source": "1a4654ef870c",
+    "status": "machine"
+  },
   "app.settings.account.sessionsSection.signOut": {
     "source": "48f0d3d397d4",
     "status": "machine"
@@ -22623,6 +22643,82 @@
     "source": "3b7ea51793e9",
     "status": "machine"
   },
+  "app.dashboard.codes.pathAliases.title": {
+    "source": "4a36ef200a9d",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.description": {
+    "source": "b5e055d27466",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.placeholder": {
+    "source": "da7f4fc3b252",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.add": {
+    "source": "9fd728c66c9a",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.remove": {
+    "source": "6f0a17de28a4",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.loadFailed": {
+    "source": "b8436aff3ee6",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.failed": {
+    "source": "6d90f7b93fda",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.verifyFirst": {
+    "source": "d14d534b77b0",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.empty": {
+    "source": "87f6aecc62d1",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.length": {
+    "source": "184de9cf3ac5",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.segments": {
+    "source": "2ad61d5ec592",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.characters": {
+    "source": "c0ce873fbb7c",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.backHalf": {
+    "source": "905ec80b887f",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.reserved": {
+    "source": "c1f637d088a7",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.otherDomain": {
+    "source": "99e1ab2351e0",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.taken": {
+    "source": "d79b86605439",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.hostedPage": {
+    "source": "a31fcf1124f5",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.limit": {
+    "source": "c7c7c4301052",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.unavailable": {
+    "source": "f9f63238322d",
+    "status": "machine"
+  },
   "app.dashboard.codes.domainPicker.shortLinkDomain": {
     "source": "8a702756baf5",
     "status": "machine"
@@ -23169,6 +23265,10 @@
   },
   "app.dashboard.codes.importPreviewStep.backHalf": {
     "source": "c00fa3c0017b",
+    "status": "machine"
+  },
+  "app.dashboard.codes.importPreviewStep.alsoAnswersAt": {
+    "source": "121b4753ef07",
     "status": "machine"
   },
   "app.dashboard.codes.importProviderStep.fromAConnectedAccount": {
@@ -26931,6 +27031,22 @@
     "source": "3d9f2a52a0db",
     "status": "machine"
   },
+  "app.sessionCheck.sessionCheck.title": {
+    "source": "6176eec272e8",
+    "status": "machine"
+  },
+  "app.sessionCheck.sessionCheck.body": {
+    "source": "9098ec90d7b1",
+    "status": "machine"
+  },
+  "app.sessionCheck.sessionCheck.signedOut": {
+    "source": "40f531d6cd85",
+    "status": "machine"
+  },
+  "app.sessionCheck.sessionCheck.failed": {
+    "source": "067b61d20082",
+    "status": "machine"
+  },
   "app.join.joinButton.joinWorkspace": {
     "source": "5bc5bd172d1c",
     "status": "machine"
@@ -27013,6 +27129,10 @@
   },
   "app.oauth.authorize.oauthSignIn.youllReviewThesePermissionsBefore": {
     "source": "6a4ed122d528",
+    "status": "machine"
+  },
+  "app.oauth.authorize.oauthSignIn.continueToSignIn": {
+    "source": "d398cd0a268e",
     "status": "machine"
   },
   "app.oauth.authorize.oauthConsent.thisLinkCantBeUsed": {
@@ -27187,12 +27307,388 @@
     "source": "79fc83c2b6b8",
     "status": "machine"
   },
+  "emails.emailChanged.subject": {
+    "source": "dbd6f46a3df5",
+    "status": "machine"
+  },
+  "emails.emailChanged.preview": {
+    "source": "0df8f72f86bb",
+    "status": "machine"
+  },
+  "emails.emailChanged.reason": {
+    "source": "1c476b24d8f9",
+    "status": "machine"
+  },
+  "emails.emailChanged.body": {
+    "source": "a267dacf2fe1",
+    "status": "machine"
+  },
+  "emails.emailChanged.notYou": {
+    "source": "265f223190b5",
+    "status": "machine"
+  },
+  "emails.security.device": {
+    "source": "6ba0bdeccb42",
+    "status": "machine"
+  },
+  "emails.security.location": {
+    "source": "a31621515a28",
+    "status": "machine"
+  },
+  "emails.security.browserOnOs": {
+    "source": "84d4aac6be0f",
+    "status": "machine"
+  },
+  "emails.security.osDevice": {
+    "source": "c73458cf3dff",
+    "status": "machine"
+  },
+  "emails.security.unknownDevice": {
+    "source": "06c4a77e4b3e",
+    "status": "machine"
+  },
+  "emails.security.cityCountry": {
+    "source": "c1da53047cea",
+    "status": "machine"
+  },
+  "emails.security.ip": {
+    "source": "0302a467885a",
+    "status": "machine"
+  },
+  "emails.security.time": {
+    "source": "33b93476cf59",
+    "status": "machine"
+  },
+  "emails.security.by": {
+    "source": "125466b821c6",
+    "status": "machine"
+  },
+  "emails.security.support": {
+    "source": "d2e9c758120b",
+    "status": "machine"
+  },
+  "emails.security.review": {
+    "source": "264a816b5ea1",
+    "status": "machine"
+  },
+  "emails.security.nothingElse": {
+    "source": "e3079f34f99b",
+    "status": "machine"
+  },
+  "emails.confirmationCode.subject": {
+    "source": "c5427bfc7b23",
+    "status": "machine"
+  },
+  "emails.confirmationCode.preview": {
+    "source": "37d3fc7746b9",
+    "status": "machine"
+  },
+  "emails.confirmationCode.reason": {
+    "source": "c78313445280",
+    "status": "machine"
+  },
+  "emails.confirmationCode.heading": {
+    "source": "6176eec272e8",
+    "status": "machine"
+  },
+  "emails.confirmationCode.enter": {
+    "source": "6e51a6ef6822",
+    "status": "machine"
+  },
+  "emails.confirmationCode.notYou": {
+    "source": "f1f2d72432cb",
+    "status": "machine"
+  },
+  "emails.newSignIn.subject": {
+    "source": "1194dd0a620c",
+    "status": "machine"
+  },
+  "emails.newSignIn.preview": {
+    "source": "fa4bf20a0e4f",
+    "status": "machine"
+  },
+  "emails.newSignIn.newDevice": {
+    "source": "e5f51556fbc3",
+    "status": "machine"
+  },
+  "emails.newSignIn.reason": {
+    "source": "0088b13a4f22",
+    "status": "machine"
+  },
+  "emails.newSignIn.body": {
+    "source": "2c1637beaef2",
+    "status": "machine"
+  },
+  "emails.newSignIn.signedInWith": {
+    "source": "118f3f0286af",
+    "status": "machine"
+  },
+  "emails.newSignIn.nothingToDo": {
+    "source": "e49561471d00",
+    "status": "machine"
+  },
+  "emails.newSignIn.notYou": {
+    "source": "e8b870789781",
+    "status": "machine"
+  },
+  "emails.newSignIn.signOut": {
+    "source": "b64ba163193d",
+    "status": "machine"
+  },
+  "emails.newSignIn.turnOn": {
+    "source": "b083fb6e859b",
+    "status": "machine"
+  },
+  "emails.newSignIn.contact": {
+    "source": "50d531366c7b",
+    "status": "machine"
+  },
+  "emails.newSignIn.methods.emailOtp": {
+    "source": "0adcdb5d55ec",
+    "status": "machine"
+  },
+  "emails.newSignIn.methods.passkey": {
+    "source": "904c9aa9baae",
+    "status": "machine"
+  },
+  "emails.newSignIn.methods.sso": {
+    "source": "3bc44ac28dcd",
+    "status": "machine"
+  },
+  "emails.newSignIn.secondSteps.totp": {
+    "source": "b494fc668a64",
+    "status": "machine"
+  },
+  "emails.newSignIn.secondSteps.backupCode": {
+    "source": "acd5e98f2c1b",
+    "status": "machine"
+  },
+  "emails.newSignIn.secondSteps.passkey": {
+    "source": "a69520b2093a",
+    "status": "machine"
+  },
+  "emails.newSignIn.withSecondStep": {
+    "source": "ac4ba1ba0342",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.reason": {
+    "source": "08a6017288d0",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.notYou": {
+    "source": "b5e63c7c522a",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.added.subject": {
+    "source": "408a0f8cba26",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.added.preview": {
+    "source": "3b9ea39559f4",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.added.body": {
+    "source": "97dddd956113",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.removed.subject": {
+    "source": "7e464665ec7f",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.removed.preview": {
+    "source": "25b7b94c1882",
+    "status": "machine"
+  },
+  "emails.passkeyNotice.removed.body": {
+    "source": "64b8f5daef93",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.reason": {
+    "source": "d1a0ff227cb1",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.notYou": {
+    "source": "386dc15e7f70",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.on.subject": {
+    "source": "0bccf00b660a",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.on.heading": {
+    "source": "ee929ec4bf31",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.on.body": {
+    "source": "85d37f9f768d",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.off.subject": {
+    "source": "4de785b2d85a",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.off.heading": {
+    "source": "afa5fa5e977a",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.off.body": {
+    "source": "2f327ba0f9c8",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodes.subject": {
+    "source": "d8f86a5305b2",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodes.heading": {
+    "source": "8fa503c85246",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodes.body": {
+    "source": "2f88c683fe1b",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.appAdded.subject": {
+    "source": "a13650295b15",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.appAdded.heading": {
+    "source": "6199bc799798",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.appAdded.body": {
+    "source": "29045d1e7ec0",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.appRemoved.subject": {
+    "source": "4408cd87714e",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.appRemoved.heading": {
+    "source": "d74f7054faf4",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.appRemoved.body": {
+    "source": "ad7249d25d54",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportOff.subject": {
+    "source": "bb4f283f1c96",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportOff.heading": {
+    "source": "afa5fa5e977a",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportOff.body": {
+    "source": "f0920acf7949",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetScheduled.subject": {
+    "source": "b680f1ba989e",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetScheduled.heading": {
+    "source": "1597de2f9232",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetScheduled.body": {
+    "source": "66bfe16e2918",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetScheduled.when": {
+    "source": "145a44b02fb5",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetScheduled.howToStop": {
+    "source": "e3aa441cb3ef",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetCancelled.subject": {
+    "source": "f9e4792d2f8d",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetCancelled.heading": {
+    "source": "07b32265e88c",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetCancelled.body": {
+    "source": "c462c71b73fd",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetCancelled.byPerson": {
+    "source": "d448dfddb361",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetCancelled.bySignIn": {
+    "source": "d90362414c9d",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetCancelled.bySupport": {
+    "source": "7adb59126b81",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.supportResetCancelled.staysOn": {
+    "source": "07c5e7e62610",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodeUsed.subject": {
+    "source": "936d654aaa12",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodeUsed.heading": {
+    "source": "d13c7af8a207",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodeUsed.body": {
+    "source": "6d872a9a8afc",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodeUsed.toConfirm": {
+    "source": "87bc26d6e94d",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodeUsed.left": {
+    "source": "b8d3dc0258eb",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.backupCodeUsed.makeNew": {
+    "source": "1200efe214f3",
+    "status": "machine"
+  },
+  "emails.twoFactorNotice.signedOutElsewhere": {
+    "source": "207fa76326a9",
+    "status": "machine"
+  },
+  "emails.payoutEmailNotice.subject": {
+    "source": "20f815eb30af",
+    "status": "machine"
+  },
+  "emails.payoutEmailNotice.preview": {
+    "source": "1e0aa37fbb4f",
+    "status": "machine"
+  },
+  "emails.payoutEmailNotice.reason": {
+    "source": "bc1ffd13459d",
+    "status": "machine"
+  },
+  "emails.payoutEmailNotice.body": {
+    "source": "742224108168",
+    "status": "machine"
+  },
+  "emails.payoutEmailNotice.notYou": {
+    "source": "7058c63f6358",
+    "status": "machine"
+  },
   "emails.alerts.viewAnalytics": {
     "source": "68baa5949fe8",
     "status": "machine"
   },
   "emails.alerts.milestoneReason": {
     "source": "aa79f1f6f39d",
+    "status": "machine"
+  },
+  "emails.alerts.yourWorkspace": {
+    "source": "f981bd62fb8b",
     "status": "machine"
   },
   "emails.firstScan.subject": {
@@ -27279,6 +27775,22 @@
     "source": "2a6141e43be0",
     "status": "machine"
   },
+  "emails.codeActivity.fields.destination": {
+    "source": "293d404a500f",
+    "status": "machine"
+  },
+  "emails.codeActivity.fields.title": {
+    "source": "7e8cd2056da7",
+    "status": "machine"
+  },
+  "emails.codeActivity.fields.design": {
+    "source": "0072e6b93494",
+    "status": "machine"
+  },
+  "emails.codeActivity.fields.domain": {
+    "source": "8a702756baf5",
+    "status": "machine"
+  },
   "emails.codeActivity.open": {
     "source": "b2e24d1d2658",
     "status": "machine"
@@ -27305,6 +27817,262 @@
   },
   "emails.codeActivity.updated.body": {
     "source": "8c67fc93a679",
+    "status": "machine"
+  },
+  "emails.teamInvite.subject": {
+    "source": "08216ca43aa9",
+    "status": "machine"
+  },
+  "emails.teamInvite.reason": {
+    "source": "1d1bc90674c3",
+    "status": "machine"
+  },
+  "emails.teamInvite.heading": {
+    "source": "b21893c466cc",
+    "status": "machine"
+  },
+  "emails.teamInvite.body": {
+    "source": "a52408c746d9",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.owner": {
+    "source": "40d87740723d",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.admin": {
+    "source": "92fe12fb367a",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.member": {
+    "source": "649951da0563",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.billing": {
+    "source": "e4284292cb96",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.viewer": {
+    "source": "05db230a8ec7",
+    "status": "machine"
+  },
+  "emails.teamInvite.accept": {
+    "source": "7e17aadc3039",
+    "status": "machine"
+  },
+  "emails.teamInvite.expires": {
+    "source": "08b223faabcc",
+    "status": "machine"
+  },
+  "emails.teamInvite.pasteLink": {
+    "source": "d2bd54ffc3fd",
+    "status": "machine"
+  },
+  "emails.teamInvite.someone": {
+    "source": "89271b7400a2",
+    "status": "machine"
+  },
+  "emails.portalInvite.subject": {
+    "source": "ae8fd1d3d04e",
+    "status": "machine"
+  },
+  "emails.portalInvite.reason": {
+    "source": "74275e5cf996",
+    "status": "machine"
+  },
+  "emails.portalInvite.heading": {
+    "source": "a11932fcf45c",
+    "status": "machine"
+  },
+  "emails.portalInvite.body": {
+    "source": "110251ce65cc",
+    "status": "machine"
+  },
+  "emails.portalInvite.open": {
+    "source": "d5da8ea71c44",
+    "status": "machine"
+  },
+  "emails.portalInvite.signIn": {
+    "source": "d80bc37f7f74",
+    "status": "machine"
+  },
+  "emails.portalInvite.pasteLink": {
+    "source": "d2bd54ffc3fd",
+    "status": "machine"
+  },
+  "emails.portalInvite.yourAgency": {
+    "source": "3ea3801e9eb2",
+    "status": "machine"
+  },
+  "emails.limitNotice.subject": {
+    "source": "f3f0777eb04b",
+    "status": "machine"
+  },
+  "emails.limitNotice.preview": {
+    "source": "61093fc6074e",
+    "status": "machine"
+  },
+  "emails.limitNotice.heading": {
+    "source": "a5c07f598449",
+    "status": "machine"
+  },
+  "emails.limitNotice.body": {
+    "source": "84ecb413b9bd",
+    "status": "machine"
+  },
+  "emails.limitNotice.plan": {
+    "source": "fa8ed0bdabdd",
+    "status": "machine"
+  },
+  "emails.limitNotice.button": {
+    "source": "098a4195f950",
+    "status": "machine"
+  },
+  "emails.limitNotice.howOften": {
+    "source": "87669e5ce226",
+    "status": "machine"
+  },
+  "emails.limitNotice.ownerReason": {
+    "source": "99f142e44756",
+    "status": "machine"
+  },
+  "emails.limitNotice.artReason": {
+    "source": "05c886715f08",
+    "status": "machine"
+  },
+  "emails.limitNotice.label": {
+    "source": "619ddaf74c17",
+    "status": "machine"
+  },
+  "emails.limitNotice.noun": {
+    "source": "ca6d2ced62d1",
+    "status": "machine"
+  },
+  "emails.limitNotice.planName": {
+    "source": "a425ad73d1b4",
+    "status": "machine"
+  },
+  "emails.limitNotice.value": {
+    "source": "fb02a32b587a",
+    "status": "machine"
+  },
+  "emails.limitNotice.amount": {
+    "source": "13bbdb85cfa9",
+    "status": "machine"
+  },
+  "emails.limitNotice.storageAmount": {
+    "source": "074d13784327",
+    "status": "machine"
+  },
+  "emails.limitNotice.amountLeft": {
+    "source": "f2e95d36ec37",
+    "status": "machine"
+  },
+  "emails.limitNotice.storageLeft": {
+    "source": "89cc1a0e6ab9",
+    "status": "machine"
+  },
+  "emails.limitNotice.left": {
+    "source": "de17701be560",
+    "status": "machine"
+  },
+  "emails.limitNotice.includes": {
+    "source": "3430a872eb70",
+    "status": "machine"
+  },
+  "emails.limitNotice.liftUnlimited": {
+    "source": "deaf657e3539",
+    "status": "machine"
+  },
+  "emails.limitNotice.liftCount": {
+    "source": "4b9185d254c3",
+    "status": "machine"
+  },
+  "emails.limitNotice.liftShared": {
+    "source": "d524e0135a87",
+    "status": "machine"
+  },
+  "emails.limitNotice.upgrade": {
+    "source": "710537b7f2b8",
+    "status": "machine"
+  },
+  "emails.limitNotice.askOwner": {
+    "source": "d473ae7e1854",
+    "status": "machine"
+  },
+  "emails.limitNotice.makeRoom": {
+    "source": "80d214ebfafc",
+    "status": "machine"
+  },
+  "emails.limitNotice.resets": {
+    "source": "36696bbe0a18",
+    "status": "machine"
+  },
+  "emails.limitNotice.keeps": {
+    "source": "8f58b8caf034",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.subject": {
+    "source": "16f59aaf314b",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.preview": {
+    "source": "cee0ec044d51",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.reason": {
+    "source": "56c2870766da",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.yourWorkspace": {
+    "source": "4d0260e6c3e7",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.heading": {
+    "source": "85c1878803b9",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.scans": {
+    "source": "d128917a9540",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.uniqueVisitors": {
+    "source": "a8edb2959cd6",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.formResponses": {
+    "source": "5db3b4a7d498",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.newCodes": {
+    "source": "4ae207d785d6",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.newThisWeek": {
+    "source": "5fe62cd83491",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.sameAsLastWeek": {
+    "source": "156e9380042c",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.change": {
+    "source": "f4a0da82aa94",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.topCodes": {
+    "source": "49e39783efc8",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.countries": {
+    "source": "0a5a6bfb0054",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.newCodesLine": {
+    "source": "889b7337391b",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.open": {
+    "source": "a71e9a1f885f",
     "status": "machine"
   },
   "auth.emailCodeSignIn.checkingCode": {
@@ -27393,6 +28161,18 @@
   },
   "auth.emailCodeSignIn.connectionFailed": {
     "source": "067b61d20082",
+    "status": "machine"
+  },
+  "auth.emailCodeSignIn.emailSignInIsntSet": {
+    "source": "8c88e0f308cd",
+    "status": "machine"
+  },
+  "auth.emailCodeSignIn.weCouldntSendACodeTry": {
+    "source": "8592f8088a1b",
+    "status": "machine"
+  },
+  "auth.emailCodeSignIn.tooManyCodesRequestedSo": {
+    "source": "08dfc146cbc3",
     "status": "machine"
   },
   "auth.passkeySignIn.continueWithPasskey": {
@@ -27517,6 +28297,30 @@
   },
   "auth.signInPanel.labelSignInIsNot": {
     "source": "c6ec01200cea",
+    "status": "machine"
+  },
+  "auth.signInPanel.signInIsntSetUp": {
+    "source": "876579ac5dae",
+    "status": "machine"
+  },
+  "auth.signInPanel.thisSiteHasNoEmail": {
+    "source": "b4fdb11935be",
+    "status": "machine"
+  },
+  "auth.signInPanel.runThisSiteThe": {
+    "source": "2b8d23e4e72e",
+    "status": "machine"
+  },
+  "auth.signInPanel.newToQrdxYourFirst": {
+    "source": "c1cb6e40557d",
+    "status": "machine"
+  },
+  "auth.signInPanel.loading": {
+    "source": "ba3bbbe10d8b",
+    "status": "machine"
+  },
+  "auth.signInPanel.weCouldntCheckHow": {
+    "source": "a090c1708649",
     "status": "machine"
   },
   "auth.twoFactorChallenge.loadingYourSignInMethods": {
@@ -28167,16 +28971,132 @@
     "source": "bb43912f169b",
     "status": "machine"
   },
+  "auth.confirmationMessages.signedOut": {
+    "source": "40f531d6cd85",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.rateLimited": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.noAuthenticatorApp": {
+    "source": "9cdf50a042a9",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.invalidCode": {
+    "source": "6fcbaa8c8395",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.wrongCode": {
+    "source": "38ed4a6cfb34",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.codeExpired": {
+    "source": "54aeefd53e04",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.tooManyCodeAttempts": {
+    "source": "a33df752e779",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.codeNotSent": {
+    "source": "b19037a8d4ff",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.twoFactorOn": {
+    "source": "3f110798dfe0",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInUnavailable": {
+    "source": "fa428b3d7ad7",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInNotLinked": {
+    "source": "0069bd34aea3",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInExpired": {
+    "source": "17eaa0b71502",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInDifferentAccount": {
+    "source": "960ea113f42e",
+    "status": "machine"
+  },
+  "auth.confirmationMessages.signInTwoFactorOn": {
+    "source": "2bf0aff31d2f",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.reauth": {
+    "source": "5eb423a23fa4",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.signedOut": {
+    "source": "0c5ea2a7de13",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.invalidName": {
+    "source": "47096625bfd7",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.notFound": {
+    "source": "f012532d6532",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.cancelled": {
+    "source": "2cf8ae25a0ba",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.alreadyAdded": {
+    "source": "bd48607669ac",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.noUserVerification": {
+    "source": "da959b796692",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.expired": {
+    "source": "91cc68c6cfe4",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.notSupported": {
+    "source": "219a654aa2f3",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.rateLimited": {
+    "source": "ee3e94d4fe54",
+    "status": "machine"
+  },
+  "auth.passkeyMessages.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "auth.mailProvider.open": {
+    "source": "34fde0614319",
+    "status": "machine"
+  },
   "auth.signInErrors.githubUnverified": {
     "source": "95f0dbfb36f9",
+    "status": "machine"
+  },
+  "auth.signInErrors.githubUnverifiedNoEmailCodes": {
+    "source": "29db572babc6",
     "status": "machine"
   },
   "auth.signInErrors.googleUnverified": {
     "source": "84843cc711b2",
     "status": "machine"
   },
+  "auth.signInErrors.googleUnverifiedNoEmailCodes": {
+    "source": "88134a9da6b4",
+    "status": "machine"
+  },
   "auth.signInErrors.otherUnverified": {
     "source": "5796bcbeff17",
+    "status": "machine"
+  },
+  "auth.signInErrors.otherUnverifiedNoEmailCodes": {
+    "source": "4aad9d3f9806",
     "status": "machine"
   },
   "auth.signInErrors.cancelled": {
@@ -28187,8 +29107,16 @@
     "source": "d6e11767c7d9",
     "status": "machine"
   },
+  "auth.signInErrors.accountNotLinkedNoEmailCodes": {
+    "source": "3d4f0148a389",
+    "status": "machine"
+  },
   "auth.signInErrors.emailNotShared": {
     "source": "001a89783b43",
+    "status": "machine"
+  },
+  "auth.signInErrors.emailNotSharedNoEmailCodes": {
+    "source": "45a5d13151c7",
     "status": "machine"
   },
   "auth.signInErrors.tookTooLong": {
@@ -28205,6 +29133,14 @@
   },
   "auth.signInErrors.sso.notFound": {
     "source": "f177879f6b44",
+    "status": "machine"
+  },
+  "auth.signInErrors.sso.notSetUpFor": {
+    "source": "46885efe3a41",
+    "status": "machine"
+  },
+  "auth.signInErrors.sso.notAvailableFor": {
+    "source": "624bb2618671",
     "status": "machine"
   },
   "auth.signInErrors.sso.required": {
@@ -28241,6 +29177,10 @@
   },
   "auth.signInErrors.sso.accountNotLinked": {
     "source": "b55019f6068c",
+    "status": "machine"
+  },
+  "auth.signInErrors.sso.accountNotLinkedNoEmailCodes": {
+    "source": "d0d3a7ad3e10",
     "status": "machine"
   },
   "auth.signInErrors.sso.failed": {

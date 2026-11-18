@@ -1,5 +1,11 @@
 import { headers as requestHeaders } from "next/headers";
-import { describeUserAgent, formatLocation } from "@/lib/account/sessions";
+import {
+  type DeviceWords,
+  describeUserAgent,
+  deviceWords,
+  formatLocation,
+} from "@/lib/account/sessions";
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { geoPlatform } from "@/lib/request-geo";
 import { scanGeo } from "@/lib/scans";
 
@@ -64,9 +70,16 @@ function clientTimeZone(headers: HeaderSource): string {
   }
 }
 
-/** "Nov 7, 2026, 3:04 PM GMT+5:30" / "Nov 7, 2026, 9:34 AM UTC". */
-export function formatSecurityTime(date: Date, timeZone: string): string {
-  return new Intl.DateTimeFormat("en-US", {
+/**
+ * "Nov 7, 2026, 3:04 PM GMT+5:30" / "Nov 7, 2026, 9:34 AM UTC", or the same
+ * in the email's language ("7 nov 2026, 15:04 GMT+5:30").
+ */
+export function formatSecurityTime(
+  date: Date,
+  timeZone: string,
+  locale = "en-US",
+): string {
+  return new Intl.DateTimeFormat(locale, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -81,21 +94,30 @@ export function formatSecurityTime(date: Date, timeZone: string): string {
  * "Berlin, Germany", or just the country. The platform's region is a code
  * ("MH", "CA") that reads badly on its own, so it isn't shown.
  */
-function approximateLocation(headers: HeaderSource): string | null {
+function approximateLocation(
+  headers: HeaderSource,
+  words: DeviceWords,
+): string | null {
   const { city, country } = scanGeo(headers as Headers);
-  return formatLocation({ city, country });
+  return formatLocation({ city, country }, words);
 }
 
+/**
+ * `intl`: the email's language, for the device's and place's words, the
+ * country's name and the time. English by default (the audit log).
+ */
 export function requestDetails(
   headers: HeaderSource | null | undefined,
   now: Date = new Date(),
+  intl: EmailIntl = ENGLISH_EMAIL,
 ): RequestDetails {
   const timeZone = headers ? clientTimeZone(headers) : "UTC";
+  const words = deviceWords(intl);
   return {
-    device: describeUserAgent(headers?.get("user-agent") ?? null).label,
-    location: headers ? approximateLocation(headers) : null,
+    device: describeUserAgent(headers?.get("user-agent") ?? null, words).label,
+    location: headers ? approximateLocation(headers, words) : null,
     ip: headers ? clientIp(headers) : null,
-    time: formatSecurityTime(now, timeZone),
+    time: formatSecurityTime(now, timeZone, intl.locale),
     timeZone,
   };
 }
@@ -107,10 +129,11 @@ export function requestDetails(
  */
 export async function currentRequestDetails(
   now: Date = new Date(),
+  intl: EmailIntl = ENGLISH_EMAIL,
 ): Promise<RequestDetails> {
   try {
-    return requestDetails(await requestHeaders(), now);
+    return requestDetails(await requestHeaders(), now, intl);
   } catch {
-    return requestDetails(null, now);
+    return requestDetails(null, now, intl);
   }
 }

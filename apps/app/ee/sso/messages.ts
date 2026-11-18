@@ -7,19 +7,22 @@ import type { Translator } from "@/lib/i18n/translator";
 
 export type SignInErrorTranslator = Translator<"auth.signInErrors">;
 
-/** Codes the plugin and packages/auth/ee/sso.ts send back (?error= or JSON). */
+/**
+ * Codes the plugin and packages/auth/ee/sso.ts send back (?error= or JSON).
+ * `domain`: the typed work email's (startSsoSignIn), never one from the URL.
+ */
 export function ssoSignInErrorMessage(
   code: string | null | undefined,
   t: SignInErrorTranslator,
-  description?: string | null,
+  domain?: string | null,
 ): string {
   switch (code) {
     case "SSO_EMAIL_REQUIRED":
       return t("sso.emailRequired");
     case "SSO_NOT_FOUND":
+      return domain ? t("sso.notSetUpFor", { domain }) : t("sso.notFound");
     case "SSO_NOT_AVAILABLE":
-      // The server's message names the domain.
-      return description || t("sso.notFound");
+      return domain ? t("sso.notAvailableFor", { domain }) : t("sso.notFound");
     case "sso_required":
       return t("sso.required");
     case "sso_unavailable":

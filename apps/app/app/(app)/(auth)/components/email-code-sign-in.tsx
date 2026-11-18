@@ -2,6 +2,7 @@
 
 import { authClient } from "@repo/auth/client";
 import { LANDING_HEADER, REFERRAL_HEADER } from "@repo/auth/referral-keys";
+import { SIGN_IN_CODES_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 import { SSO_REQUIRED_ERROR as SSO_REQUIRED } from "@repo/auth/sso-required-rules";
 import {
   FinderTrace,
@@ -36,6 +37,7 @@ import { TwoFactorChallenge } from "./two-factor-challenge";
 const CODE_LENGTH = 6;
 // Matches the server: 3 tries per code, a 5-minute expiry.
 const TRIES_PER_CODE = 3;
+const CODE_LIFETIME_MS = 5 * 60_000;
 const RESEND_COOLDOWN_MS = 30_000;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DIGITS_ONLY = "^\\d+$";
@@ -81,12 +83,17 @@ type AuthError = { code?: string; status?: number } | null | undefined;
 function sendErrorMessage(
   error: NonNullable<AuthError>,
   t: Translator<"auth.emailCodeSignIn">,
+  socialSignIn: boolean,
 ): string {
+  // No code can be emailed from this site at all (the same for any address).
+  if (error.code === SIGN_IN_CODES_UNAVAILABLE) {
+    return t("emailSignInIsntSet");
+  }
   if (error.status === 429) {
     return t("tooManyCodesRequestedWait");
   }
   if (error.code === "INVALID_EMAIL") return t("enterAValidEmailAddress");
-  return t("weCouldntSendACode");
+  return socialSignIn ? t("weCouldntSendACode") : t("weCouldntSendACodeTry");
 }
 
 /** Message, and whether this code can no longer be used. */
@@ -124,6 +131,8 @@ interface EmailCodeSignInProps {
   /** Another sign-in method is in progress */
   disabled?: boolean;
   lastUsed?: boolean;
+  /** Google and GitHub sign-in both work here, so a failed send suggests them. */
+  socialSignIn?: boolean;
   /** The account asks for a second step (two-step verification) now, or not. */
   onTwoFactorChange?: (active: boolean) => void;
   /** The second step's method on screen, for the heading. */
@@ -153,6 +162,7 @@ export function EmailCodeSignIn({
   onSignedIn,
   disabled = false,
   lastUsed = false,
+  socialSignIn = false,
   onTwoFactorChange,
   onSecondStepChange,
   sso = null,
@@ -172,6 +182,7 @@ export function EmailCodeSignIn({
   const [verifying, setVerifying] = useState(false);
   const [wrongTries, setWrongTries] = useState(0);
   const [codeDead, setCodeDead] = useState(false);
+  const [codeExpiresAt, setCodeExpiresAt] = useState(0);
   const [resendAt, setResendAt] = useState(0);
   const [now, setNow] = useState(() => Date.now());
   // Two-step verification: where to go once the second step is done.
@@ -229,12 +240,21 @@ export function EmailCodeSignIn({
         type: "sign-in",
       });
       if (error) {
-        setError(sendErrorMessage(error, t));
+        // Over the limit, the server refuses before it makes a new code
+        // (signInCodeGate), so the last one works until it expires or runs
+        // out of tries.
+        const lastCodeWorks = !codeDead && Date.now() < codeExpiresAt;
+        if (resend && error.status === 429 && lastCodeWorks) {
+          setNotice(t("tooManyCodesRequestedSo"));
+          return;
+        }
+        setError(sendErrorMessage(error, t, socialSignIn));
         return;
       }
       const time = Date.now();
       setNow(time);
       setResendAt(time + RESEND_COOLDOWN_MS);
+      setCodeExpiresAt(time + CODE_LIFETIME_MS);
       setCode("");
       setWrongTries(0);
       setCodeDead(false);

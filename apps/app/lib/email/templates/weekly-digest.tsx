@@ -1,4 +1,5 @@
 import { Column, Link, Row, Section } from "react-email";
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import {
   EMAIL_ACCENT,
   EmailButton,
@@ -28,24 +29,38 @@ export interface WeeklyDigestEmailProps {
   topCountries: { country: string; scans: number }[];
   dashboardUrl: string;
   unsubscribeUrl: string;
+  /** The recipient's language */
+  intl?: EmailIntl;
 }
 
-const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-
-function countryName(code: string): string {
+function countryName(code: string, locale: string): string {
   try {
-    return regionNames.of(code) ?? code;
+    return new Intl.DisplayNames([locale], { type: "region" }).of(code) ?? code;
   } catch {
     return code;
   }
 }
 
+/** The change from the week before in whole percent; null without a baseline. */
+const percentChange = (current: number, previous: number) =>
+  previous === 0 ? null : Math.round(((current - previous) / previous) * 100);
+
 /** "+12%" / "-5%" vs the week before; null without a baseline. */
-export function weekOverWeek(current: number, previous: number): string | null {
-  if (previous === 0) return current > 0 ? "New this week" : null;
-  const change = Math.round(((current - previous) / previous) * 100);
-  if (change === 0) return "Same as last week";
-  return `${change > 0 ? "+" : ""}${change}% vs last week`;
+export function weekOverWeek(
+  current: number,
+  previous: number,
+  { t, locale }: EmailIntl = ENGLISH_EMAIL,
+): string | null {
+  const change = percentChange(current, previous);
+  if (change === null) {
+    return current > 0 ? t("weeklyDigest.newThisWeek") : null;
+  }
+  if (change === 0) return t("weeklyDigest.sameAsLastWeek");
+  const percent = new Intl.NumberFormat(locale, {
+    style: "percent",
+    signDisplay: "exceptZero",
+  });
+  return t("weeklyDigest.change", { change: percent.format(change / 100) });
 }
 
 const rowStyle = {
@@ -69,37 +84,48 @@ export function WeeklyDigestEmail({
   topCountries,
   dashboardUrl,
   unsubscribeUrl,
+  intl = ENGLISH_EMAIL,
 }: WeeklyDigestEmailProps) {
+  const { t, locale } = intl;
+  const count = (value: number) => formatCount(value, locale);
   const lastDay = new Date(new Date(periodEnd).getTime() - 1);
-  const period = `${formatEmailDate(periodStart)} – ${formatEmailDate(lastDay)}`;
+  const period = `${formatEmailDate(periodStart, locale)} – ${formatEmailDate(lastDay, locale)}`;
   return (
     <EmailLayout
-      preview={`${formatCount(scans)} scans in ${workspaceName} last week`}
-      reason={`You get this because the weekly digest is on for ${workspaceName}.`}
+      intl={intl}
+      preview={t("weeklyDigest.preview", { scans, workspace: workspaceName })}
+      reason={t("weeklyDigest.reason", { workspace: workspaceName })}
       unsubscribeUrl={unsubscribeUrl}
     >
-      <EmailHeading>Your week on QRdx</EmailHeading>
+      <EmailHeading>{t("weeklyDigest.heading")}</EmailHeading>
       <EmailText>
         {workspaceName} · {period}
       </EmailText>
       <StatGrid
         stats={[
           {
-            label: "Scans",
-            value: formatCount(scans),
-            delta: weekOverWeek(scans, previousScans),
+            label: t("weeklyDigest.scans"),
+            value: count(scans),
+            delta: weekOverWeek(scans, previousScans, intl),
+            down: (percentChange(scans, previousScans) ?? 0) < 0,
           },
-          { label: "Unique visitors", value: formatCount(uniqueVisitors) },
           {
-            label: formResponses > 0 ? "Form responses" : "New codes",
-            value: formatCount(formResponses > 0 ? formResponses : newCodes),
+            label: t("weeklyDigest.uniqueVisitors"),
+            value: count(uniqueVisitors),
+          },
+          {
+            label:
+              formResponses > 0
+                ? t("weeklyDigest.formResponses")
+                : t("weeklyDigest.newCodes"),
+            value: count(formResponses > 0 ? formResponses : newCodes),
           },
         ]}
       />
 
       {topCodes.length > 0 ? (
         <>
-          <SectionTitle>Top codes</SectionTitle>
+          <SectionTitle>{t("weeklyDigest.topCodes")}</SectionTitle>
           <Section>
             {topCodes.map((code) => (
               <Row key={code.url}>
@@ -109,7 +135,7 @@ export function WeeklyDigestEmail({
                   </Link>
                 </Column>
                 <Column style={{ ...rowStyle, textAlign: "right" }}>
-                  {formatCount(code.scans)}
+                  {count(code.scans)}
                 </Column>
               </Row>
             ))}
@@ -119,12 +145,12 @@ export function WeeklyDigestEmail({
 
       {topCountries.length > 0 ? (
         <>
-          <SectionTitle>Where people scanned</SectionTitle>
+          <SectionTitle>{t("weeklyDigest.countries")}</SectionTitle>
           <MutedText>
             {topCountries
               .map(
                 (row) =>
-                  `${countryName(row.country)} ${formatCount(row.scans)}`,
+                  `${countryName(row.country, locale)} ${count(row.scans)}`,
               )
               .join(" · ")}
           </MutedText>
@@ -133,13 +159,12 @@ export function WeeklyDigestEmail({
 
       {formResponses > 0 && newCodes > 0 ? (
         <MutedText>
-          {formatCount(newCodes)} new {newCodes === 1 ? "code" : "codes"} this
-          week.
+          {t("weeklyDigest.newCodesLine", { count: newCodes })}
         </MutedText>
       ) : null}
 
       <Section style={{ marginTop: "20px" }}>
-        <EmailButton href={dashboardUrl}>Open your dashboard</EmailButton>
+        <EmailButton href={dashboardUrl}>{t("weeklyDigest.open")}</EmailButton>
       </Section>
     </EmailLayout>
   );

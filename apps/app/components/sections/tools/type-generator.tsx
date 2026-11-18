@@ -235,12 +235,16 @@ function GeneratorSkeleton() {
 // forms call account APIs, and a 401 there signs out and reloads the page.
 const LINK_ONLY = new Set<ContentType>(["dubsh", "google-drive"]);
 
-/** WebP is lossless: the PNG's pixels in a smaller file. */
-type ImageFormat = "png" | "webp" | "svg";
-const IMAGE_FORMATS: ImageFormat[] = ["png", "webp", "svg"];
+/**
+ * WebP is lossless: the PNG's pixels in a smaller file. BMP is an
+ * uncompressed 24-bit bitmap (a transparent background comes out white).
+ */
+type ImageFormat = "png" | "webp" | "bmp" | "svg";
+const IMAGE_FORMATS: ImageFormat[] = ["png", "webp", "bmp", "svg"];
 const IMAGE_FORMAT_LABELS: Record<ImageFormat, string> = {
   png: "PNG",
   webp: "WebP",
+  bmp: "BMP",
   svg: "SVG",
 };
 
@@ -351,7 +355,7 @@ function GeneratorPanel({
           />
         </div>
 
-        <div className="grid w-full grid-cols-3 gap-2">
+        <div className="grid w-full grid-cols-4 gap-2">
           {IMAGE_FORMATS.map((format) => (
             <Button
               key={format}

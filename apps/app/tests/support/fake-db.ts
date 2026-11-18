@@ -17,7 +17,7 @@
 // onConflictDoNothing/onConflictDoUpdate; raw upserts through db.execute
 // (insert … on conflict (…) do update set …); update set/where/returning (unique
 // keys checked like inserts, `sql` increments like sql`${col} + 1`, and
-// json ->> 'key' reads); delete;
+// json ->> 'key' reads); jsonb @> '[…]' array tests; delete;
 // transaction and batch (rolled back when one throws); db.query.<table>
 // findMany/findFirst without relations. Anything else throws, so a test can never pass
 // on a query the fake silently misread.
@@ -216,6 +216,14 @@ function evaluateSql(expr: SqlExpr, ctx: Ctx): unknown {
           ? JSON.stringify(field)
           : String(field);
     return match[2] ? value !== null && value === String(v(1)) : value;
+  }
+  // ${column}::jsonb @> '["a"]'::jsonb: a JSON array holding every item.
+  match = text.match(/^\$0::jsonb @> '(\[.*\])'::jsonb$/);
+  if (match) {
+    const value = v(0);
+    const list: unknown = typeof value === "string" ? JSON.parse(value) : value;
+    const wanted = JSON.parse(match[1] as string) as unknown[];
+    return Array.isArray(list) && wanted.every((item) => list.includes(item));
   }
   // ${column} is [not] null
   match = text.match(/^\$0 is (not )?null$/i);

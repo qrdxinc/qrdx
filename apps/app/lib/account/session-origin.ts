@@ -45,7 +45,11 @@ export function registerAppSessionOriginReader(): void {
   registerSessionOriginReader(appSessionOriginReader);
 }
 
-/** The page a held session's browser is sent to from the signed-in app. */
+/**
+ * The page a held session's browser is sent to from the signed-in app. Its
+ * copy, and what its action answers, are app.sessionCheck.sessionCheck in
+ * messages/en.json.
+ */
 export const SESSION_CHECK_PATH = "/session-check";
 
 /**
@@ -62,10 +66,3 @@ export function sessionCheckNext(value: unknown): string {
 export function sessionCheckPath(next: string): string {
   return `${SESSION_CHECK_PATH}?next=${encodeURIComponent(sessionCheckNext(next))}`;
 }
-
-export const SESSION_CHECK_MESSAGES = {
-  title: "Confirm it's you",
-  body: "This sign-in is being used from a different country and a different browser than where it started. Confirm it's you to keep going.",
-  signedOut: "Sign in again to continue.",
-  failed: "Something went wrong. Check your connection and try again.",
-} as const;

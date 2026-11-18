@@ -77,6 +77,7 @@ import {
   slugProblem,
 } from "@/lib/short-links";
 import {
+  aliasBlockedSlugs,
   findTakenSlugs,
   isUniqueViolation,
   scopeForDomain,
@@ -450,6 +451,14 @@ const slugTaken = (slug: string) =>
     `${slug} is already taken. Try another back-half.`,
   );
 
+/** Its hosted page (/p/<slug>) would hide another code's path alias. */
+const slugBlockedByAlias = (slug: string) =>
+  new HttpError(
+    409,
+    "SLUG_TAKEN",
+    `${slug} is taken on this domain: /p/${slug} is another code's path alias. Try another back-half.`,
+  );
+
 /** Rules that depend on where the code lives (reserved words); throws INVALID_SLUG. */
 function assertSlugAllowed(slug: string, domainId: string | null) {
   const problem = slugProblem(slug, { onCustomDomain: Boolean(domainId) });
@@ -494,9 +503,23 @@ export async function checkSlugAvailability(
   if (problem) {
     return { status: "invalid", message: SLUG_PROBLEM_MESSAGES[problem] };
   }
-  const taken = await findTakenSlugs([slug], input.domainId, {
-    exceptCodeId: input.codeId,
-  });
+  const [taken, blocked] = await Promise.all([
+    findTakenSlugs([slug], input.domainId, {
+      exceptCodeId: input.codeId,
+      aliases: false,
+    }),
+    input.domainId
+      ? aliasBlockedSlugs([slug], input.domainId, {
+          exceptCodeId: input.codeId,
+        })
+      : new Set<string>(),
+  ]);
+  if (blocked.has(slug)) {
+    return {
+      status: "taken",
+      message: `/p/${slug} on this domain is another code's path alias. Try another one.`,
+    };
+  }
   return taken.has(slug)
     ? {
         status: "taken",
@@ -1041,16 +1064,22 @@ export async function createCodesBatch(
       throw rowsError(400, "INVALID_SLUG", problems, total);
     }
     for (const [domainId, wanted] of chosenByDomain) {
-      const taken = await findTakenSlugs(
-        wanted.map((item) => item.slug),
-        domainId,
-      );
+      const slugs = wanted.map((item) => item.slug);
+      const [taken, blocked] = await Promise.all([
+        findTakenSlugs(slugs, domainId, { aliases: false }),
+        domainId ? aliasBlockedSlugs(slugs, domainId) : new Set<string>(),
+      ]);
       for (const item of wanted) {
-        if (taken.has(item.slug)) {
+        const error = blocked.has(item.slug)
+          ? slugBlockedByAlias(item.slug)
+          : taken.has(item.slug)
+            ? slugTaken(item.slug)
+            : null;
+        if (error) {
           problems.push({
             index: item.index,
             path: `${item.index}.slug`,
-            message: slugTaken(item.slug).message,
+            message: error.message,
           });
         }
       }
@@ -1249,10 +1278,21 @@ export async function updateCode(
   if (Object.keys(values).length === 0 && !slug) return toOneCodeView(current);
 
   const first = slug?.candidates[0];
+  // On a custom domain, a back-half chosen now or brought along onto it
+  // can't be one whose hosted page (/p/<slug>) would hide another code's
+  // path alias there.
+  const nextSlug = (first?.slug as string | undefined) ?? current.slug;
+  if (domainId && (slug?.chosen || domainId !== current.domainId)) {
+    const blocked = await aliasBlockedSlugs([nextSlug], domainId, {
+      exceptCodeId: id,
+    });
+    if (blocked.has(nextSlug)) throw slugBlockedByAlias(nextSlug);
+  }
   if (slug?.chosen && first) {
     // Checked up front so a taken back-half doesn't leave a version behind.
     const taken = await findTakenSlugs([first.slug as string], domainId, {
       exceptCodeId: id,
+      aliases: false,
     });
     if (taken.has(first.slug as string)) throw slugTaken(first.slug as string);
   }

@@ -217,6 +217,13 @@ const cspHeaders = cspEnabled
     ]
   : [];
 
+// Builds that run once on a fixed memory budget and never reuse a cache:
+// Vercel (2 cores, 8 GB) and the Docker image build, whose build stage sets
+// QRDX_BUILD_WITHOUT_DATABASE (Dockerfile; lib/build-without-database.ts).
+// Both skip the work below that only pays off on a developer's machine.
+const leanBuild =
+  env.VERCEL === "1" || process.env.QRDX_BUILD_WITHOUT_DATABASE === "1";
+
 let nextConfig: NextConfig = {
   ...config,
   // Opt-in for Docker / self-hosting: NEXT_OUTPUT=standalone bun run build
@@ -226,16 +233,20 @@ let nextConfig: NextConfig = {
   // files from outside the app (plugins/*, .github/scripts) that a Docker
   // build doesn't copy in. `tsc --noEmit` and CI still check every test.
   //
-  // On Vercel the check is skipped: the Hobby build machine has 8 GB, and
-  // after the switch to Bun the in-build type check ran out of memory right
-  // after compiling (2026-11-11). The required "Typecheck, test, lint" CI job
-  // type-checks every pull request and release before anything reaches main,
-  // so Vercel would only repeat it. Docker and local builds still check.
+  // On Vercel and in the Docker image build the check is skipped. On Vercel's
+  // 8 GB machine it ran out of memory right after compiling once the app
+  // moved to Bun (2026-11-11). In Docker it ran out of Node's JavaScript heap
+  // even with 12 GB for the container (2026-11-18): the limit there is the
+  // heap, so more memory doesn't help. The required "Typecheck, test, lint"
+  // CI job type-checks every pull request and release before anything
+  // reaches main, so both builds would only repeat it. Local builds still
+  // check; if you change the code before building an image, run
+  // `bun x tsc --noEmit` in apps/app first.
   // CI's "Build the main app" job sets VERCEL=1 to build the way Vercel does
   // (this and the experimental settings below).
   typescript: {
     tsconfigPath: "tsconfig.build.json",
-    ignoreBuildErrors: env.VERCEL === "1",
+    ignoreBuildErrors: leanBuild,
   },
   // `next dev` prints every server action call with its arguments. Those
   // include secrets typed into settings (an SSO client secret, 2FA and email
@@ -261,12 +272,13 @@ let nextConfig: NextConfig = {
     // these two cut the compiler's peak by about a third:
     // - the build cache: writing it makes Turbopack track every task's
     //   dependencies, and Vercel never restores it ("build cache was too
-    //   large"), so it costs memory and buys nothing there;
+    //   large"), so it costs memory and buys nothing there; a Docker image
+    //   build starts from an empty cache every time, too;
     // - source maps: nothing reads them in production (they aren't uploaded
     //   anywhere, and the server only applies them when Node runs with
     //   source maps on, which this app doesn't). `next dev` and local builds
     //   keep both.
-    ...(env.VERCEL === "1" && {
+    ...(leanBuild && {
       turbopackFileSystemCacheForBuild: false,
       turbopackSourceMaps: false,
     }),

@@ -10,7 +10,6 @@ import {
   ConfirmIdentityProvider,
   useConfirmation,
 } from "@/components/confirm-identity/provider";
-import { SESSION_CHECK_MESSAGES } from "@/lib/account/session-origin";
 import { signInPath } from "@/lib/safe-redirect";
 import { checkSession } from "./_lib/actions";
 
@@ -66,10 +65,10 @@ function SessionCheckScreen({
       setError(result.error);
       setStep("waiting");
     } catch {
-      setError(SESSION_CHECK_MESSAGES.failed);
+      setError(t("failed"));
       setStep("waiting");
     }
-  }, [withConfirmation, next]);
+  }, [withConfirmation, next, t]);
 
   // The dialog opens on its own, once. Back from signing in again, the
   // provider finishes that first and the page loads again without it.
@@ -92,11 +91,9 @@ function SessionCheckScreen({
       <div className="bg-card w-full max-w-sm overflow-hidden rounded-xl border shadow-sm">
         <div className="flex flex-col items-center gap-2 px-6 pt-8 pb-6 text-center">
           <QrdxLogoAnimation className="mb-3" size={52} />
-          <h1 className="text-xl font-semibold tracking-tight">
-            {SESSION_CHECK_MESSAGES.title}
-          </h1>
+          <h1 className="text-xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="text-muted-foreground text-sm text-pretty">
-            {SESSION_CHECK_MESSAGES.body}
+            {t("body")}
           </p>
         </div>
         <div className="flex flex-col gap-2 px-6 pb-6">

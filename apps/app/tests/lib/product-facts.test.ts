@@ -98,6 +98,8 @@ describe("PRODUCT_FACTS", () => {
       nonprofitDiscountPercent: 50,
       // lib/scan-history.ts: 365 days, written "1 year"
       freeScanHistoryYears: 1,
+      // lib/path-alias-limits.ts
+      pathAliasesPerCode: 5,
     });
     expect(FRAME_STYLES).toContain("none");
     // Every built-in frame is a spec named by one style; none is official

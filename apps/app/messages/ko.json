@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "다른 모든 기기에서 로그아웃",
           "thisDevice": "이 기기",
+          "activeNow": "지금 활동 중",
+          "activeJustNow": "방금 전 활동",
+          "activeAgo": "{relative} 활동",
+          "activeOn": "{date}에 활동",
+          "signedIn": "{date}에 로그인",
           "signOut": "로그아웃",
           "signOutEverywhereElse2": "다른 모든 기기에서 로그아웃할까요?",
           "thisDeviceStaysSignedIn": "이 기기는 로그인 상태로 유지돼요.",
@@ -7274,6 +7279,29 @@
           "show": "표시 항목",
           "clearSearch": "검색어 지우기"
         },
+        "pathAliases": {
+          "title": "경로 별칭",
+          "description": "다른 제공업체에서 사용하던 {domain}의 이전 링크(예: {domain}/r/abc)를 이 코드로 연결해요. 각 경로는 정확히 일치해야 하며 쿼리 문자열은 상관없어요. 도메인의 첫 번째 별칭은 작동하기까지 1분 정도 걸릴 수 있어요.",
+          "placeholder": "/r/abc",
+          "add": "추가",
+          "remove": "{path} 삭제",
+          "loadFailed": "경로 별칭을 불러오지 못했어요. 이 대화상자를 닫고 다시 열어 주세요.",
+          "failed": "변경 사항을 저장하지 못했어요. 다시 시도해 주세요.",
+          "verifyFirst": "경로 별칭을 추가하려면 도메인 페이지에서 {domain}을(를) 인증해 주세요.",
+          "problems": {
+            "empty": "도메인 뒤의 경로를 입력해 주세요. 예: /r/abc",
+            "length": "최대 {maxLength, number}자까지 사용할 수 있어요.",
+            "segments": "/로 구분된 부분은 최대 {maxSegments, number}개까지 사용할 수 있어요.",
+            "characters": "슬래시 사이에는 영문자, 숫자, - _ . ~ 만 사용할 수 있고 빈 부분은 둘 수 없어요.",
+            "backHalf": "이 경로는 back-half로 쓸 수 있어요. 별칭 대신 코드의 back-half로 지정해 주세요.",
+            "reserved": "QRdx가 커스텀 도메인에서 이 경로를 사용해요.",
+            "otherDomain": "이 링크는 다른 도메인에 있어요.",
+            "taken": "이 도메인의 다른 코드가 이미 이 경로로 연결되고 있어요.",
+            "hostedPage": "이 도메인의 한 코드가 이 back-half를 사용 중이며, 해당 호스팅 페이지가 이 경로로 연결돼요.",
+            "limit": "코드 하나에 경로 별칭을 최대 {max, number}개까지 추가할 수 있어요.",
+            "unavailable": "이 서버에서는 아직 경로 별칭을 사용할 수 없어요."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "짧은 링크 도메인",
           "defaulthostQDefault": "{defaultHost}/q/ (기본값)",
@@ -7423,7 +7451,8 @@
           "keepingBackHalvesIsPart": "백하프 유지는 {slugPlans}에 포함돼요.",
           "yourPlanDoesntKeepBack": "현재 플랜은 백하프를 유지하지 않아요.",
           "random": "무작위",
-          "backHalf": "백하프"
+          "backHalf": "백하프",
+          "alsoAnswersAt": "{link}로도 연결되므로 이전 링크로 인쇄한 코드도 계속 작동해요."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "연결된 계정에서",
@@ -8566,7 +8595,11 @@
       "sessionCheck": {
         "continue": "계속",
         "signOut": "로그아웃",
-        "backToQrdx": "QRdx로 돌아가기"
+        "backToQrdx": "QRdx로 돌아가기",
+        "title": "본인 확인이 필요해요",
+        "body": "처음 로그인한 곳과 다른 국가, 다른 브라우저에서 이 로그인이 사용되고 있어요. 계속하려면 본인이 맞는지 확인해 주세요.",
+        "signedOut": "계속하려면 다시 로그인해 주세요.",
+        "failed": "문제가 발생했어요. 연결 상태를 확인한 뒤 다시 시도해 주세요."
       }
     },
     "join": {
@@ -8598,7 +8631,8 @@
           "signInToQrdxTo": "계속하려면 QRdx에 로그인하세요:",
           "continueWithGoogle": "Google로 계속하기",
           "continueWithGithub": "GitHub로 계속하기",
-          "youllReviewThesePermissionsBefore": "아무것도 공유되기 전에 이 권한을 먼저 검토하게 돼요."
+          "youllReviewThesePermissionsBefore": "아무것도 공유되기 전에 이 권한을 먼저 검토하게 돼요.",
+          "continueToSignIn": "로그인 계속하기"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "이 링크는 사용할 수 없어요",
@@ -8661,9 +8695,143 @@
       "enter": "QRdx에 이 코드를 입력하면 이 주소가 계정의 이메일로 바뀝니다:",
       "ignore": "요청하지 않으셨다면 이 이메일을 무시하세요. 코드 없이는 아무것도 바뀌지 않습니다."
     },
+    "emailChanged": {
+      "subject": "QRdx 이메일이 변경되었어요",
+      "preview": "QRdx 계정에서 이제 {newEmail}을(를) 사용해요.",
+      "reason": "이 주소가 QRdx 계정의 이메일이었기 때문에 이 메일을 받으셨어요.",
+      "body": "QRdx 계정에서 이제 <strong>{newEmail}</strong>을(를) 사용합니다. 앞으로 로그인 코드와 팀 초대는 이 주소로 전송됩니다.",
+      "notYou": "본인이 아니라면 이 주소에서 바로 <support>{email}</support>로 지원팀에 문의해 주세요. 계정을 되찾을 수 있도록 도와드리겠습니다."
+    },
+    "security": {
+      "device": "기기",
+      "location": "대략적인 위치",
+      "browserOnOs": "{os}의 {browser}",
+      "osDevice": "{os} 기기",
+      "unknownDevice": "알 수 없는 기기",
+      "cityCountry": "{country} {city}",
+      "ip": "IP 주소",
+      "time": "시간",
+      "by": "처리자",
+      "support": "QRdx 지원팀",
+      "review": "보안 검토하기",
+      "nothingElse": "본인이 하신 일이라면 따로 하실 일은 없습니다."
+    },
+    "confirmationCode": {
+      "subject": "QRdx 확인 코드",
+      "preview": "본인 확인을 위해 이 코드를 입력하세요. {minutes, plural, one {#분} other {#분}} 후에 만료됩니다.",
+      "reason": "이 주소를 사용하는 QRdx 계정의 보안 변경이 요청되어 이 이메일을 받으셨습니다.",
+      "heading": "본인 확인",
+      "enter": "계정 보안을 변경하기 전에 QRdx에서 이 코드를 입력해 본인임을 확인해 주세요.",
+      "notYou": "요청하신 적이 없다면 코드를 입력하지 마세요. 다른 사람이 계정에 로그인했을 수 있습니다. 보안을 검토하시고, 이 주소에서 <support>{email}</support>으로 지원팀에 문의해 주세요."
+    },
+    "newSignIn": {
+      "subject": "QRdx 계정에 새로 로그인했어요",
+      "preview": "{device}에서 QRdx 계정에 로그인했습니다{hasLocation, select, yes { ({location} 근처)} other {}}.",
+      "newDevice": "새 기기",
+      "reason": "QRdx 계정에 등록된 주소이고, 처음 사용하는 브라우저 또는 기기에서 로그인되어 이 이메일을 받으셨습니다.",
+      "body": "이전에 QRdx 계정에 로그인한 적 없는 브라우저 또는 기기에서 방금 로그인했습니다.",
+      "signedInWith": "로그인 방법",
+      "nothingToDo": "본인이 하신 일이라면 따로 하실 일은 없습니다.",
+      "notYou": "본인이 아니라면:",
+      "signOut": "로그인한 뒤 설정 → 프로필 및 보안으로 이동하고, 세션에서 다른 모든 기기에서 로그아웃을 클릭하세요.",
+      "turnOn": "같은 페이지에서 2단계 인증을 켜세요. 그러면 로그인할 때 패스키 또는 인증 앱도 필요합니다.",
+      "contact": "이 주소에서 <support>{email}</support>으로 지원팀에 문의해 주세요. 계정을 안전하게 지킬 수 있도록 도와드리겠습니다.",
+      "methods": {
+        "emailOtp": "이메일 코드",
+        "passkey": "패스키",
+        "sso": "싱글 사인온"
+      },
+      "secondSteps": {
+        "totp": "인증 앱 코드",
+        "backupCode": "백업 코드",
+        "passkey": "패스키"
+      },
+      "withSecondStep": "{method} 후 {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "이 이메일은 QRdx 계정에 등록된 주소로 발송되었으며, QRdx는 로그인 방식이 바뀔 때마다 알려 드립니다.",
+      "notYou": "본인이 아니라면 로그인해서 알아볼 수 없는 패스키를 삭제한 다음, 이 주소로 <support>{email}</support>에 문의해 주세요.",
+      "added": {
+        "subject": "QRdx 계정에 패스키가 추가되었습니다",
+        "preview": "패스키 \"{name}\"(으)로 이제 QRdx 계정에 로그인할 수 있습니다.",
+        "body": "패스키 <strong>{name}</strong>(으)로 이제 QRdx 계정에 로그인할 수 있으며, 2단계 인증이 켜져 있으면 두 번째 단계로도 사용할 수 있습니다."
+      },
+      "removed": {
+        "subject": "QRdx 계정에서 패스키가 삭제되었습니다",
+        "preview": "패스키 \"{name}\"(으)로는 더 이상 QRdx 계정에 로그인할 수 없습니다.",
+        "body": "패스키 <strong>{name}</strong>(으)로는 더 이상 QRdx 계정에 로그인할 수 없습니다."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "이 이메일은 QRdx 계정에 등록된 주소로 발송되었으며, 해당 계정의 로그인 보안 설정이 변경되었습니다.",
+      "notYou": "본인이 아니라면 이 주소로 바로 <support>{email}</support>에 문의해 주세요. 계정을 안전하게 보호하도록 도와 드리겠습니다.",
+      "on": {
+        "subject": "QRdx 계정에 2단계 인증이 켜졌습니다",
+        "heading": "2단계 인증이 켜졌어요",
+        "body": "이제 QRdx에 로그인할 때 두 번째 단계로 패스키 또는 인증 앱의 코드를 요청합니다. 둘 다 사용할 수 없을 때는 백업 코드를 쓸 수 있습니다."
+      },
+      "off": {
+        "subject": "QRdx 계정의 2단계 인증이 꺼졌습니다",
+        "heading": "2단계 인증이 꺼졌어요",
+        "body": "이제 QRdx에 로그인할 때 두 번째 단계를 요청하지 않습니다. 기존 백업 코드도 더 이상 사용할 수 없습니다."
+      },
+      "backupCodes": {
+        "subject": "QRdx 계정의 새 백업 코드",
+        "heading": "새 백업 코드가 생겼어요",
+        "body": "QRdx 계정에 새 백업 코드가 만들어졌습니다. 이전 코드는 더 이상 사용할 수 없습니다."
+      },
+      "appAdded": {
+        "subject": "QRdx 계정에 인증 앱이 추가되었습니다",
+        "heading": "인증 앱이 추가됐어요",
+        "body": "방금 설정한 인증 앱의 코드를 이제 QRdx 로그인 시 두 번째 단계로 사용할 수 있습니다."
+      },
+      "appRemoved": {
+        "subject": "QRdx 계정에서 인증 앱이 삭제되었습니다",
+        "heading": "인증 앱이 삭제됐어요",
+        "body": "인증 앱의 코드로는 더 이상 QRdx에 로그인할 수 없습니다. 2단계 인증은 다른 방법으로 계속 켜져 있습니다."
+      },
+      "supportOff": {
+        "subject": "QRdx 지원팀이 2단계 인증을 껐습니다",
+        "heading": "2단계 인증이 꺼졌어요",
+        "body": "QRdx 지원팀이 회원님 계정의 2단계 인증을 끄고 모든 기기에서 로그아웃했습니다. 이제 로그인할 때 두 번째 단계를 요청하지 않습니다. 설정 → 프로필 및 보안에서 다시 켤 수 있습니다."
+      },
+      "supportResetScheduled": {
+        "subject": "QRdx 지원팀에서 2단계 인증을 해제할 예정입니다",
+        "heading": "지원팀에서 2단계 인증을 해제할 예정입니다",
+        "body": "누군가 두 번째 단계를 거칠 수 있는 방법을 모두 잃어버렸다며 회원님 계정의 2단계 인증을 해제해 달라고 QRdx 지원팀에 요청했습니다.",
+        "when": "지원팀은 {hasDate, select, yes {{date}(UTC)에} other {7일 후에}} 2단계 인증을 해제하고 모든 기기에서 계정을 로그아웃합니다. 그때까지는 아무것도 바뀌지 않습니다.",
+        "howToStop": "직접 요청하셨다면 따로 하실 일은 없습니다. 요청하지 않으셨다면 인증 앱이나 백업 코드로 QRdx에 로그인해 주세요. 그러면 요청이 취소됩니다. 설정 → 프로필 및 보안에서 취소하거나 이 이메일에 회신하셔도 됩니다."
+      },
+      "supportResetCancelled": {
+        "subject": "QRdx 계정의 2단계 인증이 그대로 유지됩니다",
+        "heading": "2단계 인증이 유지됩니다",
+        "body": "회원님 계정의 2단계 인증을 해제해 달라는 지원팀 요청이 취소되었습니다. 바뀐 것은 없습니다.",
+        "byPerson": "회원님이 QRdx 계정의 2단계 인증을 해제해 달라는 지원팀 요청을 취소했습니다.",
+        "bySignIn": "인증 앱이나 백업 코드로 로그인하셨기 때문에 QRdx 계정의 2단계 인증을 해제해 달라는 지원팀 요청이 취소되었습니다.",
+        "bySupport": "QRdx 지원팀이 회원님 계정의 2단계 인증을 해제해 달라는 요청을 취소했습니다.",
+        "staysOn": "2단계 인증은 그대로 유지되며, 백업 코드와 인증 방법도 이전과 같습니다."
+      },
+      "backupCodeUsed": {
+        "subject": "QRdx 계정에서 백업 코드가 사용되었습니다",
+        "heading": "백업 코드가 사용되었습니다",
+        "body": "방금 백업 코드 하나로 QRdx 계정에 로그인했습니다. 각 코드는 한 번만 사용할 수 있어서 해당 코드는 더 이상 쓸 수 없습니다.",
+        "toConfirm": "방금 QRdx 계정의 보안 변경에 앞서 본인 확인을 위해 백업 코드 하나가 사용되었습니다. 각 코드는 한 번만 사용할 수 있어서 해당 코드는 더 이상 쓸 수 없습니다.",
+        "left": "{count, plural, =0 {마지막 백업 코드를 사용했습니다.} one {백업 코드가 #개 남았습니다.} other {백업 코드가 #개 남았습니다.}}",
+        "makeNew": "설정 → 프로필 및 보안에서 새 코드를 만들어 두세요. 패스키나 인증 앱을 사용할 수 없을 때도 로그인할 수 있습니다."
+      },
+      "signedOutElsewhere": "계정에 로그인되어 있던 다른 모든 기기는 로그아웃되었으며, 각 기기에서 다시 로그인할 때 두 번째 단계를 거치게 됩니다."
+    },
+    "payoutEmailNotice": {
+      "subject": "QRdx 제휴 프로그램 수익금이 새 PayPal 주소로 지급됩니다",
+      "preview": "QRdx 제휴 수익금이 {paypalEmail}(으)로 지급됩니다.",
+      "reason": "이 이메일은 제휴 프로그램에 참여 중인 QRdx 계정의 주소로 발송되었습니다. 수익금 지급처가 바뀔 때마다 알려 드리고 있습니다.",
+      "body": "{replaced, select, yes {제휴 수익금을 받을 PayPal 주소가 변경되었습니다.} other {제휴 수익금을 받을 PayPal 주소가 추가되었습니다.}} 앞으로 수익금은 <strong>{paypalEmail}</strong>(으)로 지급됩니다.",
+      "notYou": "본인이 하신 일이 아니라면 로그인해서 설정 → 제휴 프로그램에서 주소를 원래대로 되돌리고, 다음 지급 전에 이 주소에서 <support>{email}</support>로 지원팀에 문의해 주세요."
+    },
     "alerts": {
       "viewAnalytics": "스캔 분석 보기",
-      "milestoneReason": "{workspace}의 스캔 마일스톤 알림이 켜져 있어서 보내드려요."
+      "milestoneReason": "{workspace}의 스캔 마일스톤 알림이 켜져 있어서 보내드려요.",
+      "yourWorkspace": "내 워크스페이스"
     },
     "firstScan": {
       "subject": "{code}의 첫 스캔이 발생했어요",
@@ -8693,6 +8861,12 @@
       "shortLink": "짧은 링크",
       "opens": "열람 수",
       "changed": "변경됨",
+      "fields": {
+        "destination": "대상 URL",
+        "title": "제목",
+        "design": "디자인",
+        "domain": "짧은 링크 도메인"
+      },
       "open": "코드 열기",
       "created": {
         "heading": "새 코드: {code}",
@@ -8704,6 +8878,80 @@
         "reason": "{workspace}의 코드 변경 알림이 켜져 있어서 이 메일을 받으셨어요.",
         "body": "{who}님이 {workspace}에서 이 동적 QR 코드를 변경했어요. 인쇄된 QR 코드는 계속 작동하며 새 설정이 적용돼요."
       }
+    },
+    "teamInvite": {
+      "subject": "{inviter}님이 QRdx의 {team}에 {role, select, owner {소유자로} admin {관리자로} member {멤버로} billing {결제 관리자로} other {뷰어로}} 초대했어요",
+      "reason": "누군가 이 주소를 QRdx 워크스페이스에 초대해서 받은 이메일이에요.",
+      "heading": "QRdx에서 {team} 참여하기",
+      "body": "{inviter}님이 {team} 워크스페이스에 {role, select, owner {소유자로} admin {관리자로} member {멤버로} billing {결제 관리자로} other {뷰어로}} 초대했어요.",
+      "roles": {
+        "owner": "소유자는 결제와 워크스페이스 삭제를 포함해 모든 작업을 할 수 있어요.",
+        "admin": "관리자는 사용자, 설정, 도메인, 모든 사람의 코드를 관리해요.",
+        "member": "멤버는 코드와 페이지를 만들고 워크스페이스의 코드를 편집해요.",
+        "billing": "결제 관리자는 요금제와 결제를 관리하고, 그 외 모든 항목은 변경 없이 볼 수 있어요.",
+        "viewer": "뷰어는 워크스페이스의 코드, 페이지, 분석을 변경 없이 볼 수 있어요."
+      },
+      "accept": "초대 수락하기",
+      "expires": "수락하려면 이 이메일 주소로 로그인해 주세요. 초대는 {date}에 만료돼요. 예상하지 못한 초대라면 이 이메일은 무시해도 돼요.",
+      "pasteLink": "또는 이 링크를 브라우저에 붙여넣어 주세요: {url}",
+      "someone": "팀원"
+    },
+    "portalInvite": {
+      "subject": "{portal}에서 QR 코드 리포트를 공유했어요",
+      "reason": "{portal}의 {inviter}님이 이 주소를 QR 코드 리포트에 초대해서 받은 이메일이에요.",
+      "heading": "QR 코드 리포트",
+      "body": "{hasFolders, select, yes {{inviter}님이 {folders}에 있는 {portal}의 QR 코드를 볼 수 있도록 초대했어요. 코드별 스캔 횟수, 스캔한 위치와 기기, 열리는 페이지를 확인할 수 있어요. 읽기 전용이에요.} other {{inviter}님이 {portal}의 QR 코드를 볼 수 있도록 초대했어요. 코드별 스캔 횟수, 스캔한 위치와 기기, 열리는 페이지를 확인할 수 있어요. 읽기 전용이에요.}}",
+      "open": "리포트 열기",
+      "signIn": "이 이메일 주소로 로그인해 주세요. 일회용 코드를 보내 드려요. 예상하지 못한 메일이라면 무시해도 돼요.",
+      "pasteLink": "또는 이 링크를 브라우저에 붙여넣어 주세요: {url}",
+      "yourAgency": "에이전시"
+    },
+    "limitNotice": {
+      "subject": "{level, select, full {{label}: {workspace} 한도에 도달했어요} other {{label}: {workspace}에서 {value} 사용}}",
+      "preview": "{level, select, full {{workspace}의 {noun} 한도에 도달했어요} other {{workspace}의 {noun} 사용량: {value}}}",
+      "heading": "{level, select, full {{workspace}의 요금제 한도에 도달했어요} other {{workspace}의 요금제 한도가 가까워졌어요}}",
+      "body": "{level, select, full {{workspace}의 {noun} 사용량이 한도에 도달했어요.} other {{workspace}의 {noun} 사용량: {value}.}}",
+      "plan": "요금제",
+      "button": "요금제와 사용량 보기",
+      "howOften": "한도별로 매달 최대 2번 받아요. 90%에서 한 번, 100%에서 한 번이에요.",
+      "ownerReason": "QRdx의 {workspace} 소유자여서 받은 이메일이에요.",
+      "artReason": "QRdx의 {workspace}에서 AI 아트를 만들어서 받은 이메일이에요. 사용 허용량은 회원님 기준으로 계산돼요.",
+      "label": "{limit, select, dynamicCodes {동적 QR 코드} landingPages {호스팅 페이지} formResponses {폼 응답} storage {파일 저장공간} savedThemes {저장된 테마} other {AI 아트 이미지}}",
+      "noun": "{limit, select, dynamicCodes {동적 QR 코드} landingPages {호스팅 페이지} formResponses {폼 응답} storage {파일 저장공간} savedThemes {저장된 테마} other {AI 아트 이미지}}",
+      "planName": "{plan, select, free {무료} pro {Pro} other {Business}}",
+      "value": "{cap} 중 {used}",
+      "amount": "{limit, select, dynamicCodes {{count, plural, one {활성 동적 QR 코드 #개} other {활성 동적 QR 코드 #개}}} landingPages {{count, plural, one {호스팅 페이지 #개} other {호스팅 페이지 #개}}} formResponses {{count, plural, one {폼 응답 #개} other {폼 응답 #개}}} savedThemes {{count, plural, one {저장된 테마 #개} other {저장된 테마 #개}}} other {{count, plural, one {AI 아트 이미지 #개} other {AI 아트 이미지 #개}}}}",
+      "storageAmount": "파일 저장공간 {size}",
+      "amountLeft": "{limit, select, dynamicCodes {{count, plural, one {활성 동적 QR 코드 #개 남음} other {활성 동적 QR 코드 #개 남음}}} landingPages {{count, plural, one {호스팅 페이지 #개 남음} other {호스팅 페이지 #개 남음}}} formResponses {{count, plural, one {양식 응답 #개 남음} other {양식 응답 #개 남음}}} savedThemes {{count, plural, one {저장된 테마 #개 남음} other {저장된 테마 #개 남음}}} other {{count, plural, one {AI 아트 이미지 #개 남음} other {AI 아트 이미지 #개 남음}}}}",
+      "storageLeft": "{size} 남음",
+      "left": "{monthly, select, yes {{plan} 플랜에서 이번 달 {left}.} other {{plan} 플랜에서 {left}.}}",
+      "includes": "{monthly, select, yes {{plan} 플랜 포함량: 매달 {amount}.} other {{plan} 플랜 포함량: {amount}.}}",
+      "liftUnlimited": "{limit, select, dynamicCodes {무제한 코드} landingPages {무제한 페이지} formResponses {무제한 응답} storage {무제한 저장공간} savedThemes {무제한 테마} other {무제한 이미지}}",
+      "liftCount": "{limit, select, dynamicCodes {코드 {count, number}개} landingPages {페이지 {count, number}개} formResponses {매달 응답 {count, number}개} savedThemes {테마 {count, number}개} other {매달 이미지 {count, number}개}}",
+      "liftShared": "{lift}, 워크스페이스 내 공유",
+      "upgrade": "{limit, select, dynamicCodes {코드 하나를 보관하거나 {plan} 플랜으로 업그레이드해 보세요 ({lift}).} landingPages {페이지 하나를 삭제하거나 {plan} 플랜으로 업그레이드해 보세요 ({lift}).} storage {필요 없는 파일을 삭제하거나 {plan} 플랜으로 업그레이드해 보세요 ({lift}).} savedThemes {테마 하나를 삭제하거나 {plan} 플랜으로 업그레이드해 보세요 ({lift}).} other {{plan} 플랜으로 업그레이드해 보세요 ({lift}).}}",
+      "askOwner": "{limit, select, dynamicCodes {코드 하나를 보관하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} landingPages {페이지 하나를 삭제하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} storage {필요 없는 파일을 삭제하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} savedThemes {테마 하나를 삭제하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} other {워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.}}",
+      "makeRoom": "{limit, select, dynamicCodes {공간을 확보하려면 코드 하나를 보관하세요.} landingPages {공간을 확보하려면 페이지 하나를 삭제하세요.} storage {공간을 확보하려면 필요 없는 파일을 삭제하세요.} savedThemes {공간을 확보하려면 테마 하나를 삭제하세요.} other {}}",
+      "resets": "{date}에 초기화돼요.",
+      "keeps": "{limit, select, dynamicCodes {기존 코드는 계속 작동해요.} landingPages {기존 페이지는 계속 게시돼요.} formResponses {페이지는 계속 게시돼요. 초기화 후에는 폼이 다시 응답을 받아요.} storage {업로드한 파일은 계속 사용할 수 있어요.} other {}}"
+    },
+    "weeklyDigest": {
+      "subject": "이번 주 QRdx 현황: {scans, plural, one {스캔 #회} other {스캔 #회}}",
+      "preview": "지난주 {workspace} {scans, plural, one {스캔 #회} other {스캔 #회}}",
+      "reason": "{workspace}의 주간 요약이 켜져 있어서 이 메일을 받았어요.",
+      "yourWorkspace": "내 워크스페이스",
+      "heading": "이번 주 QRdx 현황",
+      "scans": "스캔",
+      "uniqueVisitors": "고유 방문자",
+      "formResponses": "폼 응답",
+      "newCodes": "새 코드",
+      "newThisWeek": "이번 주 신규",
+      "sameAsLastWeek": "지난주와 동일",
+      "change": "지난주 대비 {change}",
+      "topCodes": "상위 코드",
+      "countries": "스캔한 지역",
+      "newCodesLine": "이번 주 {count, plural, one {새 코드 #개} other {새 코드 #개}}예요.",
+      "open": "대시보드 열기"
     }
   },
   "auth": {
@@ -8729,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "이 계정은 정지되었어요. 잘못된 조치라고 생각되면 지원팀에 문의해 주세요.",
       "somethingWentWrongTryAgain": "문제가 발생했어요. 다시 시도해 주세요.",
       "newCodeSent": "새 코드를 보냈어요. 이전 코드는 더 이상 사용할 수 없어요.",
-      "connectionFailed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요."
+      "connectionFailed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요.",
+      "emailSignInIsntSet": "이 사이트에는 이메일 로그인이 설정되어 있지 않아요.",
+      "weCouldntSendACodeTry": "지금은 코드를 보낼 수 없어요. 몇 분 후에 다시 시도해 주세요.",
+      "tooManyCodesRequestedSo": "요청한 코드가 너무 많아 추가로 보내지 않았어요. 받은편지함에 있는 가장 최근 코드는 계속 사용할 수 있어요."
     },
     "passkeySignIn": {
       "continueWithPasskey": "패스키로 계속하기",
@@ -8766,7 +9017,13 @@
       "freeToStartNoCard": "카드 없이 무료로 시작하세요.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "지금은 {label} 로그인을 사용할 수 없어요"
+      "labelSignInIsNot": "지금은 {label} 로그인을 사용할 수 없어요",
+      "signInIsntSetUp": "로그인이 아직 설정되지 않았어요",
+      "thisSiteHasNoEmail": "이 사이트에는 이메일, Google, GitHub 로그인이 켜져 있지 않아 새 계정을 만들 수 없어요.",
+      "runThisSiteThe": "이 사이트를 운영하고 계신가요? <link>셀프 호스팅 가이드</link>에서 로그인을 켜는 방법을 확인하세요.",
+      "newToQrdxYourFirst": "QRdx가 처음이신가요? 처음 로그인하면 무료 계정이 만들어져요.",
+      "loading": "로딩 중…",
+      "weCouldntCheckHow": "여기서 로그인하는 방법을 확인하지 못했어요. <retry>다시 시도</retry>하거나 <link>로그인 페이지를 열어</link> 주세요."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "로그인 방법을 불러오는 중",
@@ -8964,20 +9221,57 @@
       "signInAgain": "보안을 위해 로그아웃한 후 다시 로그인하고, 10분 이내에 다시 시도해 주세요.",
       "stillRequired": "본인 확인을 하지 못했어요. 다시 시도해 주세요.",
       "signInFailed": "로그인이 완료되지 않아 변경된 내용은 없어요. 다시 시도하거나 다른 방법을 사용해 주세요.",
-      "signInConfirmed": "확인되었어요. 지금부터 10분 이내에 변경할 수 있어요."
+      "signInConfirmed": "확인되었어요. 지금부터 10분 이내에 변경할 수 있어요.",
+      "signedOut": "계속하려면 다시 로그인해 주세요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "noAuthenticatorApp": "계정에서 인증 앱을 사용하지 않아요. 패스키나 백업 코드를 사용해 주세요.",
+      "invalidCode": "이메일로 받은 6자리 코드를 입력해 주세요.",
+      "wrongCode": "코드가 올바르지 않아요. 이메일을 확인하고 다시 시도해 주세요.",
+      "codeExpired": "코드가 만료되었어요. 새 코드를 보내 주세요.",
+      "tooManyCodeAttempts": "잘못 입력한 횟수가 너무 많아요. 새 코드를 보내 주세요.",
+      "codeNotSent": "지금은 코드를 보낼 수 없어요. 다시 시도해 주세요.",
+      "twoFactorOn": "2단계 인증이 켜져 있어서 이메일 코드는 보내지 않아요. 패스키, 인증 앱 또는 백업 코드를 사용해 주세요.",
+      "signInUnavailable": "해당 로그인 방법은 계정에 연결되어 있지 않아요. 다른 방법을 사용해 주세요.",
+      "signInNotLinked": "해당 계정은 QRdx 계정에 연결되어 있지 않아서 변경된 내용은 없어요. 연결해 둔 계정으로 로그인하거나 다른 방법을 사용해 주세요.",
+      "signInExpired": "10분이 넘게 걸려서 변경된 내용은 없어요. 다시 시도해 주세요.",
+      "signInDifferentAccount": "다른 QRdx 계정으로 로그인해서 여기서는 변경된 내용이 없어요. 로그아웃한 후 변경하려는 계정으로 로그인해 주세요.",
+      "signInTwoFactorOn": "이제 2단계 인증이 켜져 있으니 대신 그 방법으로 확인해 주세요. 패스키, 인증 앱 또는 백업 코드를 사용할 수 있어요."
+    },
+    "passkeyMessages": {
+      "reauth": "보안을 위해 로그아웃했다가 다시 로그인한 후 하루 안에 패스키를 추가해 주세요.",
+      "signedOut": "패스키를 관리하려면 로그인해 주세요.",
+      "invalidName": "패스키 이름을 입력해 주세요.",
+      "notFound": "해당 패스키는 이미 삭제되었어요. 페이지를 새로고침해 주세요.",
+      "cancelled": "패스키 추가를 취소했어요.",
+      "alreadyAdded": "이 기기 또는 비밀번호 관리자에 이미 계정의 패스키가 있어요.",
+      "noUserVerification": "해당 패스키는 PIN, 지문 또는 얼굴 확인을 요청하지 않아서 QRdx에서 사용할 수 없어요. 다른 기기나 비밀번호 관리자를 사용해 보세요.",
+      "expired": "시간이 너무 오래 걸렸어요. 패스키를 다시 추가해 주세요.",
+      "notSupported": "이 브라우저에서는 패스키를 만들 수 없어요.",
+      "rateLimited": "시도 횟수가 너무 많아요. 몇 분 후에 다시 시도해 주세요.",
+      "failed": "문제가 발생했어요. 다시 시도해 주세요."
+    },
+    "mailProvider": {
+      "open": "{provider} 열기"
     },
     "signInErrors": {
       "githubUnverified": "{provider}에서 이 이메일 주소를 확인하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {provider} 이메일 설정에서 주소를 인증한 후 다시 시도하거나 이메일 코드로 로그인해 주세요.",
+      "githubUnverifiedNoEmailCodes": "{provider}에서 이 이메일 주소를 인증하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {provider} 이메일 설정에서 인증한 후 다시 시도해 주세요{otherWay, select, yes {. 다른 방법으로 로그인해도 돼요} other {}}.",
       "googleUnverified": "{provider}에서 이 이메일 주소를 확인하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "googleUnverifiedNoEmailCodes": "{provider}에서 이 이메일 주소를 인증하지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "otherUnverified": "해당 계정의 이메일 주소가 확인되지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "otherUnverifiedNoEmailCodes": "해당 계정의 이메일 주소가 인증되지 않아 QRdx에서 이 주소로 계정을 만들 수 없어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "cancelled": "로그인이 취소되었어요.",
       "accountNotLinked": "이 주소로 만든 계정이 이미 있으며 {provider}와(과) 연결되어 있지 않아요. 대신 이메일 코드로 로그인해 주세요.",
+      "accountNotLinkedNoEmailCodes": "이 주소로 만든 계정이 이미 있으며 {provider}와(과) 연결되어 있지 않아요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "emailNotShared": "{provider}에서 이메일 주소를 공유하지 않아 QRdx에서 해당 방법으로 로그인할 수 없어요. 대신 이메일 코드로 로그인해 주세요.",
+      "emailNotSharedNoEmailCodes": "{provider}에서 이메일 주소를 제공하지 않아 QRdx에서 이 방법으로 로그인할 수 없어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
       "tookTooLong": "로그인 시간이 너무 오래 걸렸거나 다른 곳에서 시작되었어요. 다시 시도해 주세요.",
       "providerFailed": "{provider} 로그인이 되지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
       "sso": {
         "emailRequired": "업무용 이메일을 입력해 주세요.",
         "notFound": "해당 주소에는 SSO가 설정되어 있지 않아요.",
+        "notSetUpFor": "{domain}에는 SSO가 설정되어 있지 않아요.",
+        "notAvailableFor": "지금은 {domain}의 SSO를 사용할 수 없어요. 다른 방법으로 로그인해 주세요.",
         "required": "회사에서 이 주소에는 SSO 로그인을 필수로 설정했어요. SSO로 로그인해 주세요.",
         "unavailable": "지금은 이 워크스페이스에서 SSO를 사용할 수 없어요. 다른 방법으로 로그인해 주세요.",
         "emailOutsideDomain": "ID 공급자가 회사 도메인이 아닌 주소를 보냈기 때문에 QRdx에서 이 주소로 로그인할 수 없어요. 워크스페이스 관리자에게 문의해 주세요.",
@@ -8987,6 +9281,7 @@
         "unsolicitedResponse": "회사 앱 목록에서 시작된 이 로그인을 QRdx에서 받아들일 수 없었어요. QRdx 로그인 페이지에서 시작해 주세요. SSO로 로그인을 선택하고 회사 이메일을 입력하면 돼요. 계속 같은 문제가 생기면 워크스페이스 관리자에게 문의해 주세요.",
         "replayDetected": "이미 사용된 로그인이에요. 다시 로그인해 주세요.",
         "accountNotLinked": "이 주소로 만든 계정이 이미 있어서 연결할 수 없었어요. 대신 이메일 코드로 로그인해 주세요.",
+        "accountNotLinkedNoEmailCodes": "이 주소로 만든 계정이 이미 있으며 연결할 수 없었어요. {otherWay, select, yes {다른 방법으로 로그인해 보세요.} other {이 사이트 운영자에게 도움을 요청해 주세요.}}",
         "failed": "SSO가 제대로 작동하지 않았어요. 다시 시도하거나 다른 방법으로 로그인해 주세요.",
         "rateLimited": "시도 횟수가 너무 많아요. 1분 정도 기다린 후 다시 시도해 주세요."
       }

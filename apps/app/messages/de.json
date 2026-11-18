@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Überall sonst abmelden",
           "thisDevice": "Dieses Gerät",
+          "activeNow": "Gerade aktiv",
+          "activeJustNow": "Gerade eben aktiv",
+          "activeAgo": "Aktiv {relative}",
+          "activeOn": "Aktiv am {date}",
+          "signedIn": "Angemeldet am {date}",
           "signOut": "Abmelden",
           "signOutEverywhereElse2": "Überall sonst abmelden?",
           "thisDeviceStaysSignedIn": "Dieses Gerät bleibt angemeldet.",
@@ -7274,6 +7279,29 @@
           "show": "Anzeigen",
           "clearSearch": "Suche löschen"
         },
+        "pathAliases": {
+          "title": "Pfad-Aliasse",
+          "description": "Alte Links auf {domain} von einem anderen Anbieter, zum Beispiel {domain}/r/abc, die diesen Code öffnen sollen. Jeder Pfad muss genau übereinstimmen; der Query-String spielt keine Rolle. Der erste Alias einer Domain braucht unter Umständen eine Minute, bis er funktioniert.",
+          "placeholder": "/r/abc",
+          "add": "Hinzufügen",
+          "remove": "{path} entfernen",
+          "loadFailed": "Die Pfad-Aliasse konnten nicht geladen werden. Schließe diesen Dialog und öffne ihn erneut.",
+          "failed": "Die Änderung konnte nicht gespeichert werden. Versuche es erneut.",
+          "verifyFirst": "Verifiziere {domain} auf der Seite „Domains“, um Pfad-Aliasse hinzuzufügen.",
+          "problems": {
+            "empty": "Gib den Pfad nach der Domain ein, zum Beispiel /r/abc.",
+            "length": "Verwende höchstens {maxLength, number} Zeichen.",
+            "segments": "Verwende höchstens {maxSegments, number} durch / getrennte Teile.",
+            "characters": "Verwende zwischen den Schrägstrichen Buchstaben, Ziffern, - _ . und ~, ohne leere Teile.",
+            "backHalf": "Dieser Pfad passt als Back-Half. Gib dem Code stattdessen diesen Back-Half.",
+            "reserved": "QRdx verwendet diesen Pfad auf eigenen Domains.",
+            "otherDomain": "Dieser Link liegt auf einer anderen Domain.",
+            "taken": "Ein anderer Code auf dieser Domain antwortet bereits unter diesem Pfad.",
+            "hostedPage": "Ein Code auf dieser Domain hat diesen Back-Half, und seine gehostete Seite antwortet unter diesem Pfad.",
+            "limit": "Ein Code kann bis zu {max, number} Pfad-Aliasse haben.",
+            "unavailable": "Pfad-Aliasse sind auf diesem Server noch nicht verfügbar."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Kurzlink-Domain",
           "defaulthostQDefault": "{defaultHost}/q/ (Standard)",
@@ -7423,7 +7451,8 @@
           "keepingBackHalvesIsPart": "Back-Halves beizubehalten ist Teil von {slugPlans}.",
           "yourPlanDoesntKeepBack": "Dein Tarif behält keine Back-Halves bei.",
           "random": "zufällig",
-          "backHalf": "Back-Half"
+          "backHalf": "Back-Half",
+          "alsoAnswersAt": "Antwortet auch unter {link}, damit mit dem alten Link gedruckte Codes weiter funktionieren."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Aus einem verbundenen Konto",
@@ -8566,7 +8595,11 @@
       "sessionCheck": {
         "continue": "Weiter",
         "signOut": "Abmelden",
-        "backToQrdx": "Zurück zu QRdx"
+        "backToQrdx": "Zurück zu QRdx",
+        "title": "Bestätige, dass du es bist",
+        "body": "Diese Anmeldung wird aus einem anderen Land und mit einem anderen Browser verwendet als dort, wo sie begonnen hat. Bestätige, dass du es bist, um fortzufahren.",
+        "signedOut": "Melde dich erneut an, um fortzufahren.",
+        "failed": "Etwas ist schiefgelaufen. Prüfe deine Verbindung und versuche es erneut."
       }
     },
     "join": {
@@ -8598,7 +8631,8 @@
           "signInToQrdxTo": "Melde dich bei QRdx an, um fortzufahren zu",
           "continueWithGoogle": "Weiter mit Google",
           "continueWithGithub": "Weiter mit GitHub",
-          "youllReviewThesePermissionsBefore": "Du prüfst diese Berechtigungen, bevor etwas geteilt wird."
+          "youllReviewThesePermissionsBefore": "Du prüfst diese Berechtigungen, bevor etwas geteilt wird.",
+          "continueToSignIn": "Weiter zur Anmeldung"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Dieser Link ist nicht nutzbar",
@@ -8661,9 +8695,143 @@
       "enter": "Gib diesen Code in QRdx ein, um diese Adresse als E-Mail für dein Konto zu übernehmen:",
       "ignore": "Wenn du das nicht angefordert hast, ignoriere diese E-Mail. Ohne den Code ändert sich nichts."
     },
+    "emailChanged": {
+      "subject": "Deine QRdx-E-Mail wurde geändert",
+      "preview": "Dein QRdx-Konto nutzt jetzt {newEmail}.",
+      "reason": "Du erhältst diese E-Mail, weil diese Adresse die E-Mail-Adresse eines QRdx-Kontos war.",
+      "body": "Dein QRdx-Konto nutzt jetzt <strong>{newEmail}</strong>. Anmeldecodes und Team-Einladungen gehen ab sofort dorthin.",
+      "notYou": "Wenn du das nicht warst, schreib uns sofort von dieser Adresse an den Support unter <support>{email}</support>, dann helfen wir dir, dein Konto zurückzubekommen."
+    },
+    "security": {
+      "device": "Gerät",
+      "location": "Ungefährer Standort",
+      "browserOnOs": "{browser} auf {os}",
+      "osDevice": "{os}-Gerät",
+      "unknownDevice": "Unbekanntes Gerät",
+      "cityCountry": "{city}, {country}",
+      "ip": "IP-Adresse",
+      "time": "Zeit",
+      "by": "Von",
+      "support": "QRdx-Support",
+      "review": "Sicherheit prüfen",
+      "nothingElse": "Wenn du das warst, musst du nichts weiter tun."
+    },
+    "confirmationCode": {
+      "subject": "Dein QRdx-Bestätigungscode",
+      "preview": "Gib diesen Code ein, um zu bestätigen, dass du es bist. Er läuft in {minutes, plural, one {# Minute} other {# Minuten}} ab.",
+      "reason": "Du erhältst diese E-Mail, weil jemand die Sicherheitseinstellungen des QRdx-Kontos mit dieser Adresse ändern wollte.",
+      "heading": "Bestätige, dass du es bist",
+      "enter": "Gib diesen Code in QRdx ein, um zu bestätigen, dass du es bist, bevor die Sicherheit deines Kontos geändert wird:",
+      "notYou": "Wenn du das nicht angefordert hast, gib den Code nicht ein: Möglicherweise ist jemand in deinem Konto angemeldet. Prüfe deine Sicherheit und schreib dem Support unter <support>{email}</support> von dieser Adresse aus."
+    },
+    "newSignIn": {
+      "subject": "Neue Anmeldung in deinem QRdx-Konto",
+      "preview": "{device} hat sich in deinem QRdx-Konto angemeldet{hasLocation, select, yes { in der Nähe von {location}} other {}}.",
+      "newDevice": "Ein neues Gerät",
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist und sich ein Browser oder Gerät zum ersten Mal darin angemeldet hat.",
+      "body": "Ein Browser oder Gerät, das sich noch nie in deinem QRdx-Konto angemeldet hatte, hat sich gerade angemeldet.",
+      "signedInWith": "Angemeldet mit",
+      "nothingToDo": "Wenn du das warst, musst du nichts tun.",
+      "notYou": "Falls du das nicht warst:",
+      "signOut": "Melde dich an, gehe zu Einstellungen → Profil & Sicherheit und klicke unter Sitzungen auf Überall sonst abmelden.",
+      "turnOn": "Aktiviere auf derselben Seite die Zwei-Faktor-Authentifizierung, damit du dich zusätzlich mit deinem Passkey oder deiner Authenticator-App anmelden musst.",
+      "contact": "Schreib dem Support unter <support>{email}</support> von dieser Adresse aus, dann helfen wir dir, dein Konto zu schützen.",
+      "methods": {
+        "emailOtp": "E-Mail-Code",
+        "passkey": "Passkey",
+        "sso": "Single Sign-on"
+      },
+      "secondSteps": {
+        "totp": "ein Authenticator-Code",
+        "backupCode": "ein Backup-Code",
+        "passkey": "einen Passkey"
+      },
+      "withSecondStep": "{method}, dann {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist und wir dich über jede Änderung der Anmeldung informieren.",
+      "notYou": "Falls du das nicht warst, melde dich an und entferne alle Passkeys, die du nicht kennst. Schreib dann von dieser Adresse aus an den Support unter <support>{email}</support>.",
+      "added": {
+        "subject": "Ein Passkey wurde zu deinem QRdx-Konto hinzugefügt",
+        "preview": "Mit dem Passkey „{name}“ kann man sich jetzt bei deinem QRdx-Konto anmelden.",
+        "body": "Mit dem Passkey <strong>{name}</strong> kann man sich jetzt bei deinem QRdx-Konto anmelden. Er dient auch als zweiter Schritt, wenn die Bestätigung in zwei Schritten aktiv ist."
+      },
+      "removed": {
+        "subject": "Ein Passkey wurde von deinem QRdx-Konto entfernt",
+        "preview": "Mit dem Passkey „{name}“ kann man sich nicht mehr bei deinem QRdx-Konto anmelden.",
+        "body": "Mit dem Passkey <strong>{name}</strong> kann man sich nicht mehr bei deinem QRdx-Konto anmelden."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist und sich die Anmeldesicherheit geändert hat.",
+      "notYou": "Falls du das nicht warst, schreib sofort von dieser Adresse aus an den Support unter <support>{email}</support>. Wir helfen dir, dein Konto zu sichern.",
+      "on": {
+        "subject": "Die Bestätigung in zwei Schritten ist für dein QRdx-Konto aktiv",
+        "heading": "Bestätigung in zwei Schritten ist aktiv",
+        "body": "Bei der Anmeldung bei QRdx wird jetzt ein zweiter Schritt abgefragt: dein Passkey oder ein Code aus deiner Authenticator-App. Ein Backup-Code funktioniert, wenn du keins von beidem nutzen kannst."
+      },
+      "off": {
+        "subject": "Die Bestätigung in zwei Schritten wurde für dein QRdx-Konto deaktiviert",
+        "heading": "Bestätigung in zwei Schritten ist aus",
+        "body": "Bei der Anmeldung bei QRdx wird kein zweiter Schritt mehr abgefragt. Deine Backup-Codes funktionieren nicht mehr."
+      },
+      "backupCodes": {
+        "subject": "Neue Backup-Codes für dein QRdx-Konto",
+        "heading": "Du hast neue Backup-Codes",
+        "body": "Für dein QRdx-Konto wurden neue Backup-Codes erstellt. Die alten funktionieren nicht mehr."
+      },
+      "appAdded": {
+        "subject": "Eine Authenticator-App wurde zu deinem QRdx-Konto hinzugefügt",
+        "heading": "Authenticator-App hinzugefügt",
+        "body": "Codes aus der Authenticator-App, die du gerade eingerichtet hast, gelten jetzt als zweiter Schritt bei der Anmeldung bei QRdx."
+      },
+      "appRemoved": {
+        "subject": "Die Authenticator-App wurde von deinem QRdx-Konto entfernt",
+        "heading": "Authenticator-App entfernt",
+        "body": "Codes aus deiner Authenticator-App funktionieren bei der Anmeldung bei QRdx nicht mehr. Die Bestätigung in zwei Schritten bleibt mit deinen anderen Methoden aktiv."
+      },
+      "supportOff": {
+        "subject": "Der QRdx-Support hat die Bestätigung in zwei Schritten deaktiviert",
+        "heading": "Bestätigung in zwei Schritten ist aus",
+        "body": "Der QRdx-Support hat die Bestätigung in zwei Schritten für dein Konto deaktiviert und es auf allen Geräten abgemeldet. Bei der Anmeldung wird kein zweiter Schritt mehr abgefragt. Du kannst sie unter Einstellungen → Profil & Sicherheit wieder aktivieren."
+      },
+      "supportResetScheduled": {
+        "subject": "Der QRdx-Support schaltet die Zwei-Faktor-Authentifizierung ab",
+        "heading": "Support schaltet die Zwei-Faktor-Authentifizierung ab",
+        "body": "Jemand hat den QRdx-Support gebeten, die Zwei-Faktor-Authentifizierung für dein Konto abzuschalten, und angegeben, alle Möglichkeiten für den zweiten Schritt verloren zu haben.",
+        "when": "Der Support schaltet sie {hasDate, select, yes {am {date} (UTC)} other {in 7 Tagen}} ab und meldet dein Konto auf allen Geräten ab. Bis dahin ändert sich nichts.",
+        "howToStop": "Wenn du das veranlasst hast, musst du nichts tun. Wenn nicht, melde dich mit deiner Authenticator-App oder einem Backup-Code bei QRdx an: Damit wird die Anfrage abgebrochen. Du kannst sie auch unter Einstellungen → Profil & Sicherheit abbrechen oder auf diese E-Mail antworten."
+      },
+      "supportResetCancelled": {
+        "subject": "Die Zwei-Faktor-Authentifizierung bleibt für dein QRdx-Konto aktiv",
+        "heading": "Zwei-Faktor-Authentifizierung bleibt aktiv",
+        "body": "Die Anfrage des Supports, die Zwei-Faktor-Authentifizierung für dein Konto abzuschalten, wurde abgebrochen. Es hat sich nichts geändert.",
+        "byPerson": "Du hast die Anfrage des Supports, die Zwei-Faktor-Authentifizierung für dein QRdx-Konto abzuschalten, abgebrochen.",
+        "bySignIn": "Du hast dich mit deiner Authenticator-App oder einem Backup-Code angemeldet, deshalb wurde die Anfrage des Supports, die Zwei-Faktor-Authentifizierung für dein QRdx-Konto abzuschalten, abgebrochen.",
+        "bySupport": "Der QRdx-Support hat die Anfrage, die Zwei-Faktor-Authentifizierung für dein Konto abzuschalten, abgebrochen.",
+        "staysOn": "Die Zwei-Faktor-Authentifizierung bleibt aktiv, deine Backup-Codes und Methoden sind unverändert."
+      },
+      "backupCodeUsed": {
+        "subject": "Ein Backup-Code wurde für dein QRdx-Konto verwendet",
+        "heading": "Ein Backup-Code wurde verwendet",
+        "body": "Einer deiner Backup-Codes wurde gerade zur Anmeldung bei deinem QRdx-Konto verwendet. Jeder Code funktioniert nur einmal, dieser ist also nicht mehr gültig.",
+        "toConfirm": "Einer deiner Backup-Codes wurde gerade verwendet, um vor einer Sicherheitsänderung an deinem QRdx-Konto zu bestätigen, dass du es bist. Jeder Code funktioniert nur einmal, dieser ist also nicht mehr gültig.",
+        "left": "{count, plural, =0 {Das war dein letzter Backup-Code.} one {Du hast noch # Backup-Code.} other {Du hast noch # Backup-Codes.}}",
+        "makeNew": "Erstelle neue unter Einstellungen → Profil & Sicherheit, damit du weiterhin Zugang hast, wenn du deinen Passkey oder deine Authenticator-App nicht nutzen kannst."
+      },
+      "signedOutElsewhere": "Alle anderen Geräte, die bei deinem Konto angemeldet waren, wurden abgemeldet und melden sich jetzt wieder mit dem zweiten Schritt an."
+    },
+    "payoutEmailNotice": {
+      "subject": "Deine QRdx-Affiliate-Auszahlungen gehen jetzt an eine neue PayPal-Adresse",
+      "preview": "Affiliate-Auszahlungen von QRdx werden an {paypalEmail} gesendet.",
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos im Affiliate-Programm ist und wir dich über jede Änderung des Ziels seiner Auszahlungen informieren.",
+      "body": "{replaced, select, yes {Die PayPal-Adresse für deine Affiliate-Auszahlungen wurde geändert.} other {Eine PayPal-Adresse für deine Affiliate-Auszahlungen wurde hinzugefügt.}} Ab sofort senden wir deine Auszahlungen an <strong>{paypalEmail}</strong>.",
+      "notYou": "Wenn du das nicht warst, melde dich an, ändere die Adresse unter Einstellungen → Partnerprogramm zurück und wende dich vor der nächsten Auszahlung von dieser Adresse aus an den Support unter <support>{email}</support>."
+    },
     "alerts": {
       "viewAnalytics": "Scan-Analysen ansehen",
-      "milestoneReason": "Du erhältst das, weil Benachrichtigungen zu Scan-Meilensteinen für {workspace} aktiviert sind."
+      "milestoneReason": "Du erhältst das, weil Benachrichtigungen zu Scan-Meilensteinen für {workspace} aktiviert sind.",
+      "yourWorkspace": "dein Workspace"
     },
     "firstScan": {
       "subject": "{code} wurde zum ersten Mal gescannt",
@@ -8693,6 +8861,12 @@
       "shortLink": "Kurzlink",
       "opens": "Aufrufe",
       "changed": "Geändert",
+      "fields": {
+        "destination": "Ziel",
+        "title": "Titel",
+        "design": "Design",
+        "domain": "Kurzlink-Domain"
+      },
       "open": "Code öffnen",
       "created": {
         "heading": "Neuer Code: {code}",
@@ -8704,6 +8878,80 @@
         "reason": "Du erhältst diese E-Mail, weil Benachrichtigungen zu Code-Änderungen für {workspace} aktiviert sind.",
         "body": "{who} hat diesen dynamischen QR-Code in {workspace} geändert. Gedruckte QR-Codes funktionieren weiterhin und folgen jetzt den neuen Einstellungen."
       }
+    },
+    "teamInvite": {
+      "subject": "{inviter} hat dich zu {team} auf QRdx eingeladen, als {role, select, owner {Owner} admin {Admin} member {Mitglied} billing {Abrechnungsmanager} other {Betrachter}}",
+      "reason": "Du erhältst diese E-Mail, weil jemand diese Adresse zu einem QRdx-Workspace eingeladen hat.",
+      "heading": "Tritt {team} auf QRdx bei",
+      "body": "{inviter} hat dich in den Workspace {team} eingeladen, als {role, select, owner {Owner} admin {Admin} member {Mitglied} billing {Abrechnungsmanager} other {Betrachter}}.",
+      "roles": {
+        "owner": "Owner können alles, auch die Abrechnung und das Löschen des Workspace.",
+        "admin": "Admins verwalten Personen, Einstellungen, Domains und die Codes aller.",
+        "member": "Mitglieder erstellen Codes und Seiten und bearbeiten die Codes des Workspace.",
+        "billing": "Abrechnungsmanager kümmern sich um Tarif und Abrechnung und sehen alles andere, ohne es zu ändern.",
+        "viewer": "Betrachter sehen Codes, Seiten und Analysen des Workspace, ohne etwas zu ändern."
+      },
+      "accept": "Einladung annehmen",
+      "expires": "Melde dich mit dieser E-Mail-Adresse an, um die Einladung anzunehmen. Sie läuft am {date} ab. Wenn du sie nicht erwartet hast, kannst du diese E-Mail ignorieren.",
+      "pasteLink": "Oder füge diesen Link in deinen Browser ein: {url}",
+      "someone": "Jemand im Team"
+    },
+    "portalInvite": {
+      "subject": "{portal} hat QR-Code-Berichte mit dir geteilt",
+      "reason": "Du erhältst diese E-Mail, weil {inviter} von {portal} diese Adresse eingeladen hat, die QR-Code-Berichte einzusehen.",
+      "heading": "Deine QR-Code-Berichte",
+      "body": "{hasFolders, select, yes {{inviter} hat dich eingeladen, die QR-Codes von {portal} in {folders} einzusehen: wie oft jeder gescannt wird, wo und auf welchen Geräten und welche Seiten sie öffnen. Nur Lesezugriff.} other {{inviter} hat dich eingeladen, die QR-Codes von {portal} einzusehen: wie oft jeder gescannt wird, wo und auf welchen Geräten und welche Seiten sie öffnen. Nur Lesezugriff.}}",
+      "open": "Berichte öffnen",
+      "signIn": "Melde dich mit dieser E-Mail-Adresse an: Wir senden dir einen Einmalcode. Wenn du das nicht erwartet hast, kannst du es ignorieren.",
+      "pasteLink": "Oder füge diesen Link in deinen Browser ein: {url}",
+      "yourAgency": "Deine Agentur"
+    },
+    "limitNotice": {
+      "subject": "{level, select, full {{label}: Limit in {workspace} erreicht} other {{label}: {value} in {workspace} verbraucht}}",
+      "preview": "{level, select, full {{workspace} hat das Limit für {noun} erreicht} other {{noun}: {workspace} hat {value} verbraucht}}",
+      "heading": "{level, select, full {{workspace} hat ein Tarif-Limit erreicht} other {{workspace} ist kurz vor einem Tarif-Limit}}",
+      "body": "{level, select, full {{workspace} hat alle {noun} verbraucht.} other {{noun}: {workspace} hat {value} verbraucht.}}",
+      "plan": "Tarif",
+      "button": "Tarif und Nutzung ansehen",
+      "howOften": "Du bekommst pro Limit höchstens zwei dieser E-Mails im Monat: eine bei 90% und eine bei 100%.",
+      "ownerReason": "Du erhältst das, weil du Owner von {workspace} auf QRdx bist.",
+      "artReason": "Du erhältst das, weil du in {workspace} auf QRdx KI-Kunst erstellt hast. Das Kontingent wird für dich gezählt.",
+      "label": "{limit, select, dynamicCodes {Dynamische QR-Codes} landingPages {Gehostete Seiten} formResponses {Formularantworten} storage {Dateispeicher} savedThemes {Gespeicherte Designs} other {KI-Kunstbilder}}",
+      "noun": "{limit, select, dynamicCodes {dynamische QR-Codes} landingPages {gehostete Seiten} formResponses {Formularantworten} storage {Dateispeicher} savedThemes {gespeicherte Designs} other {KI-Kunstbilder}}",
+      "planName": "{plan, select, free {Kostenlos} pro {Pro} other {Business}}",
+      "value": "{used} von {cap}",
+      "amount": "{limit, select, dynamicCodes {{count, plural, one {# aktiver dynamischer QR-Code} other {# aktive dynamische QR-Codes}}} landingPages {{count, plural, one {# gehostete Seite} other {# gehostete Seiten}}} formResponses {{count, plural, one {# Formularantwort} other {# Formularantworten}}} savedThemes {{count, plural, one {# gespeichertes Design} other {# gespeicherte Designs}}} other {{count, plural, one {# KI-Kunstbild} other {# KI-Kunstbilder}}}}",
+      "storageAmount": "{size} Dateispeicher",
+      "amountLeft": "{limit, select, dynamicCodes {{count, plural, one {# aktiver dynamischer QR-Code übrig} other {# aktive dynamische QR-Codes übrig}}} landingPages {{count, plural, one {# gehostete Seite übrig} other {# gehostete Seiten übrig}}} formResponses {{count, plural, one {# Formularantwort übrig} other {# Formularantworten übrig}}} savedThemes {{count, plural, one {# gespeichertes Theme übrig} other {# gespeicherte Themes übrig}}} other {{count, plural, one {# KI-Kunstbild übrig} other {# KI-Kunstbilder übrig}}}}",
+      "storageLeft": "{size} übrig",
+      "left": "{monthly, select, yes {{left} diesen Monat im Plan {plan}.} other {{left} im Plan {plan}.}}",
+      "includes": "{monthly, select, yes {Im Tarif {plan} enthalten: {amount} pro Monat.} other {Im Tarif {plan} enthalten: {amount}.}}",
+      "liftUnlimited": "{limit, select, dynamicCodes {unbegrenzt viele Codes} landingPages {unbegrenzt viele Seiten} formResponses {unbegrenzt viele Antworten} storage {unbegrenzten Speicher} savedThemes {unbegrenzt viele Designs} other {unbegrenzt viele Bilder}}",
+      "liftCount": "{limit, select, dynamicCodes {{count, number} Codes} landingPages {{count, number} Seiten} formResponses {{count, number} Antworten pro Monat} savedThemes {{count, number} Designs} other {{count, number} Bilder pro Monat}}",
+      "liftShared": "{lift}, geteilt im Workspace",
+      "upgrade": "{limit, select, dynamicCodes {Archiviere einen oder wechsle zu {plan} für {lift}.} landingPages {Lösche eine oder wechsle zu {plan} für {lift}.} storage {Lösche nicht mehr benötigte Dateien oder wechsle zu {plan} für {lift}.} savedThemes {Lösche eines oder wechsle zu {plan} für {lift}.} other {Wechsle zu {plan} für {lift}.}}",
+      "askOwner": "{limit, select, dynamicCodes {Archiviere einen oder bitte einen Workspace-Inhaber, auf {plan} zu wechseln.} landingPages {Lösche eine oder bitte einen Workspace-Inhaber, auf {plan} zu wechseln.} storage {Lösche nicht mehr benötigte Dateien oder bitte einen Workspace-Inhaber, auf {plan} zu wechseln.} savedThemes {Lösche eines oder bitte einen Workspace-Inhaber, auf {plan} zu wechseln.} other {Bitte einen Workspace-Inhaber, auf {plan} zu wechseln.}}",
+      "makeRoom": "{limit, select, dynamicCodes {Archiviere einen, um Platz zu schaffen.} landingPages {Lösche eine, um Platz zu schaffen.} storage {Lösche nicht mehr benötigte Dateien, um Platz zu schaffen.} savedThemes {Lösche eines, um Platz zu schaffen.} other {}}",
+      "resets": "Reset am {date}.",
+      "keeps": "{limit, select, dynamicCodes {Bestehende Codes funktionieren weiter.} landingPages {Bestehende Seiten bleiben online.} formResponses {Seiten bleiben online. Formulare nehmen nach dem Reset wieder Antworten an.} storage {Hochgeladene Dateien bleiben verfügbar.} other {}}"
+    },
+    "weeklyDigest": {
+      "subject": "Deine QRdx-Woche: {scans, plural, one {# Scan} other {# Scans}}",
+      "preview": "{scans, plural, one {# Scan} other {# Scans}} in {workspace} in der letzten Woche",
+      "reason": "Du erhältst diese E-Mail, weil die wöchentliche Zusammenfassung für {workspace} aktiviert ist.",
+      "yourWorkspace": "Dein Workspace",
+      "heading": "Deine Woche auf QRdx",
+      "scans": "Scans",
+      "uniqueVisitors": "Eindeutige Besucher",
+      "formResponses": "Formularantworten",
+      "newCodes": "Neue Codes",
+      "newThisWeek": "Neu diese Woche",
+      "sameAsLastWeek": "Wie letzte Woche",
+      "change": "{change} ggü. Vorwoche",
+      "topCodes": "Top-Codes",
+      "countries": "Wo gescannt wurde",
+      "newCodesLine": "{count, plural, one {# neuer Code} other {# neue Codes}} diese Woche.",
+      "open": "Dashboard öffnen"
     }
   },
   "auth": {
@@ -8729,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "Dieses Konto ist gesperrt. Wende dich an den Support, wenn du glaubst, dass das ein Fehler ist.",
       "somethingWentWrongTryAgain": "Etwas ist schiefgelaufen. Versuche es erneut.",
       "newCodeSent": "Neuer Code gesendet. Der alte funktioniert nicht mehr.",
-      "connectionFailed": "Etwas ist schiefgelaufen. Prüfe deine Verbindung und versuche es erneut."
+      "connectionFailed": "Etwas ist schiefgelaufen. Prüfe deine Verbindung und versuche es erneut.",
+      "emailSignInIsntSet": "Die Anmeldung per E-Mail ist auf dieser Website nicht eingerichtet.",
+      "weCouldntSendACodeTry": "Wir konnten gerade keinen Code senden. Versuche es in ein paar Minuten noch einmal.",
+      "tooManyCodesRequestedSo": "Es wurden zu viele Codes angefordert, deshalb haben wir keinen weiteren gesendet. Der neueste Code in deinem Posteingang funktioniert weiterhin."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Weiter mit Passkey",
@@ -8766,7 +9017,13 @@
       "freeToStartNoCard": "Kostenlos starten, keine Karte nötig.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "Die Anmeldung mit {label} ist gerade nicht verfügbar"
+      "labelSignInIsNot": "Die Anmeldung mit {label} ist gerade nicht verfügbar",
+      "signInIsntSetUp": "Anmeldung noch nicht eingerichtet",
+      "thisSiteHasNoEmail": "Auf dieser Website ist weder die Anmeldung per E-Mail noch per Google oder GitHub aktiviert, deshalb können hier keine neuen Konten erstellt werden.",
+      "runThisSiteThe": "Betreibst du diese Website? In der <link>Self-Hosting-Anleitung</link> steht, wie du eine Anmeldung aktivierst.",
+      "newToQrdxYourFirst": "Neu bei QRdx? Mit deiner ersten Anmeldung erstellst du dein kostenloses Konto.",
+      "loading": "Lädt …",
+      "weCouldntCheckHow": "Wir konnten nicht prüfen, wie du dich hier anmelden kannst. <retry>Versuche es erneut</retry> oder <link>öffne die Anmeldeseite</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Deine Anmeldemethoden werden geladen",
@@ -8964,20 +9221,57 @@
       "signInAgain": "Zu deiner Sicherheit: Melde dich ab und wieder an und versuche es dann innerhalb von 10 Minuten erneut.",
       "stillRequired": "Wir konnten nicht bestätigen, dass du es bist. Versuche es erneut.",
       "signInFailed": "Diese Anmeldung hat nicht geklappt, daher wurde nichts geändert. Versuche es erneut oder nutze eine andere Methode.",
-      "signInConfirmed": "Danke, das ist bestätigt. Du kannst deine Änderung in den nächsten 10 Minuten vornehmen."
+      "signInConfirmed": "Danke, das ist bestätigt. Du kannst deine Änderung in den nächsten 10 Minuten vornehmen.",
+      "signedOut": "Melde dich erneut an, um fortzufahren.",
+      "rateLimited": "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut.",
+      "noAuthenticatorApp": "Dein Konto nutzt keine Authenticator-App. Verwende deinen Passkey oder einen Backup-Code.",
+      "invalidCode": "Gib den 6-stelligen Code aus der E-Mail ein.",
+      "wrongCode": "Dieser Code ist nicht korrekt. Prüfe die E-Mail und versuche es erneut.",
+      "codeExpired": "Dieser Code ist abgelaufen. Fordere einen neuen an.",
+      "tooManyCodeAttempts": "Zu viele falsche Versuche. Fordere einen neuen Code an.",
+      "codeNotSent": "Wir konnten gerade keinen Code senden. Bitte versuche es erneut.",
+      "twoFactorOn": "Die Bestätigung in zwei Schritten ist aktiviert, deshalb gibt es keinen Code per E-Mail. Verwende deinen Passkey, deine Authenticator-App oder einen Backup-Code.",
+      "signInUnavailable": "Diese Anmeldung ist nicht mit deinem Konto verknüpft. Verwende eine andere Methode.",
+      "signInNotLinked": "Dieses Konto ist nicht mit deinem QRdx-Konto verknüpft, daher wurde nichts geändert. Melde dich mit dem verknüpften Konto an oder verwende eine andere Methode.",
+      "signInExpired": "Das hat länger als 10 Minuten gedauert, daher wurde nichts geändert. Versuche es erneut.",
+      "signInDifferentAccount": "Du hast dich bei einem anderen QRdx-Konto angemeldet, daher wurde hier nichts geändert. Melde dich ab und dann bei dem Konto an, das du ändern möchtest.",
+      "signInTwoFactorOn": "Die Bestätigung in zwei Schritten ist jetzt aktiviert, bestätige also stattdessen damit: mit deinem Passkey, deiner Authenticator-App oder einem Backup-Code."
+    },
+    "passkeyMessages": {
+      "reauth": "Melde dich zu deiner Sicherheit ab und erneut an. Füge deinen Passkey dann innerhalb eines Tages hinzu.",
+      "signedOut": "Melde dich an, um deine Passkeys zu verwalten.",
+      "invalidName": "Gib dem Passkey einen Namen.",
+      "notFound": "Dieser Passkey existiert nicht mehr. Lade die Seite neu.",
+      "cancelled": "Das Hinzufügen des Passkeys wurde abgebrochen.",
+      "alreadyAdded": "Dieses Gerät oder dieser Passwortmanager hat bereits einen Passkey für dein Konto.",
+      "noUserVerification": "Dieser Passkey hat nicht nach deiner PIN, deinem Fingerabdruck oder deinem Gesicht gefragt und kann daher nicht mit QRdx verwendet werden. Probiere ein anderes Gerät oder einen anderen Passwortmanager.",
+      "expired": "Das hat zu lange gedauert. Versuche erneut, den Passkey hinzuzufügen.",
+      "notSupported": "Dieser Browser kann keine Passkeys erstellen.",
+      "rateLimited": "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    },
+    "mailProvider": {
+      "open": "{provider} öffnen"
     },
     "signInErrors": {
       "githubUnverified": "{provider} hat diese E-Mail-Adresse nicht verifiziert, deshalb kann QRdx kein Konto damit erstellen. Verifiziere sie in deinen E-Mail-Einstellungen bei {provider} und versuche es erneut, oder melde dich mit einem E-Mail-Code an.",
+      "githubUnverifiedNoEmailCodes": "{provider} hat diese E-Mail-Adresse nicht bestätigt, daher kann QRdx damit kein Konto erstellen. Bestätige sie in deinen E-Mail-Einstellungen bei {provider} und versuche es erneut{otherWay, select, yes {, oder melde dich auf anderem Weg an} other {}}.",
       "googleUnverified": "{provider} hat diese E-Mail-Adresse nicht verifiziert, deshalb kann QRdx kein Konto damit erstellen. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "googleUnverifiedNoEmailCodes": "{provider} hat diese E-Mail-Adresse nicht bestätigt, daher kann QRdx damit kein Konto erstellen. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "otherUnverified": "Die E-Mail-Adresse dieses Kontos ist nicht verifiziert, deshalb kann QRdx kein Konto damit erstellen. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "otherUnverifiedNoEmailCodes": "Die E-Mail-Adresse dieses Kontos ist nicht bestätigt, daher kann QRdx damit kein Konto erstellen. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "cancelled": "Anmeldung abgebrochen.",
       "accountNotLinked": "Mit dieser Adresse gibt es bereits ein Konto, das nicht mit {provider} verknüpft ist. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "accountNotLinkedNoEmailCodes": "Es gibt bereits ein Konto mit dieser Adresse, das nicht mit {provider} verknüpft ist. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "emailNotShared": "{provider} hat keine E-Mail-Adresse weitergegeben, deshalb kann QRdx dich damit nicht anmelden. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "emailNotSharedNoEmailCodes": "{provider} hat keine E-Mail-Adresse weitergegeben, daher kann QRdx dich damit nicht anmelden. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "tookTooLong": "Diese Anmeldung hat zu lange gedauert oder wurde woanders gestartet. Versuche es erneut.",
       "providerFailed": "Die Anmeldung mit {provider} hat nicht funktioniert. Versuche es erneut oder melde dich anders an.",
       "sso": {
         "emailRequired": "Gib deine Arbeits-E-Mail ein.",
         "notFound": "Für diese Adresse ist kein SSO eingerichtet.",
+        "notSetUpFor": "Für {domain} ist kein SSO eingerichtet.",
+        "notAvailableFor": "SSO für {domain} ist gerade nicht verfügbar. Melde dich auf anderem Weg an.",
         "required": "Deine Firma verlangt für diese Adresse Single Sign-on. Melde dich mit SSO an.",
         "unavailable": "Single Sign-on ist für diesen Workspace gerade nicht verfügbar. Melde dich auf einem anderen Weg an.",
         "emailOutsideDomain": "Dein Identitätsanbieter hat eine Adresse außerhalb der Domain deiner Firma gesendet, deshalb kann QRdx dich damit nicht anmelden. Wende dich an den Admin deines Workspaces.",
@@ -8987,6 +9281,7 @@
         "unsolicitedResponse": "QRdx konnte diese Anmeldung aus der App-Liste deiner Firma nicht akzeptieren. Starte auf der Anmeldeseite von QRdx: Wähle „Mit SSO anmelden“ und gib deine Arbeits-E-Mail-Adresse ein. Wenn das weiterhin passiert, wende dich an den Admin deines Workspaces.",
         "replayDetected": "Diese Anmeldung wurde bereits verwendet. Melde dich erneut an.",
         "accountNotLinked": "Ein Konto mit dieser Adresse existiert bereits und konnte nicht verknüpft werden. Melde dich stattdessen mit einem E-Mail-Code an.",
+        "accountNotLinkedNoEmailCodes": "Es gibt bereits ein Konto mit dieser Adresse, das sich nicht verknüpfen ließ. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
         "failed": "Single Sign-on hat nicht funktioniert. Versuch es noch einmal oder melde dich auf einem anderen Weg an.",
         "rateLimited": "Zu viele Versuche. Warte eine Minute und versuch es dann erneut."
       }

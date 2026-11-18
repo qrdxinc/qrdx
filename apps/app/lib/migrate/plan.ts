@@ -4,6 +4,7 @@
 // looked up, the dev mock passes in fixtures.
 
 import {
+  aliasForBackHalf,
   backHalfReason,
   backHalfShapeProblem,
   fallbackCandidates,
@@ -50,6 +51,11 @@ export interface PlanContext {
   takenSlugs: ReadonlySet<string>;
   /** Slugs taken on the backHalfDomain (among slugLookups().domain) */
   takenOnDomain?: ReadonlySet<string>;
+  /**
+   * Path aliases taken on the backHalfDomain (among slugLookups().aliases);
+   * absent or null = path aliases aren't available, so none are proposed
+   */
+  takenAliases?: ReadonlySet<string> | null;
   /** Link id → generated slugs for when its back-half can't be kept */
   candidates: ReadonlyMap<string, string[]>;
   /** Free active-code slots; null = unlimited */
@@ -73,6 +79,8 @@ export interface PreparedLink {
   tags: string[];
   slug: string | null;
   slugTarget: BackHalfTarget | null;
+  /** Path alias to claim on the custom domain (BackHalfPlan.alias) */
+  alias: string | null;
 }
 
 export interface ImportPlan {
@@ -109,7 +117,8 @@ const fallbackSeed = (link: SourceLink) => `${link.id}|${link.shortLink ?? ""}`;
 
 /**
  * Slugs the server must look up before planning: the back-halves to keep (by
- * namespace) and each link's generated fallbacks (shared namespace).
+ * namespace), each link's generated fallbacks (shared namespace) and the
+ * path aliases for old paths on the domain that can't be back-halves.
  */
 export function slugLookups(
   links: SourceLink[],
@@ -119,24 +128,37 @@ export function slugLookups(
 ): {
   shared: string[];
   domain: string[];
+  aliases: string[];
   candidates: Map<string, string[]>;
 } {
   const shared = new Set<string>();
   const onDomain = new Set<string>();
+  const aliases = new Set<string>();
   const candidates = new Map<string, string[]>();
   for (const link of links) {
     const target = backHalfTarget(link, options, domain);
     if (!(target && link.backHalf)) continue;
-    if (!backHalfShapeProblem(link.backHalf, target)) {
+    const shape = backHalfShapeProblem(link.backHalf, target);
+    if (!shape) {
       (target === "domain" ? onDomain : shared).add(link.backHalf);
     }
+    const alias =
+      target === "domain" && shape === "shape"
+        ? aliasForBackHalf(link.backHalf)
+        : null;
+    if (alias) aliases.add(alias);
     if (!candidates.has(link.id)) {
       const list = fallbackCandidates(fallbackSeed(link), random);
       candidates.set(link.id, list);
       for (const slug of list) shared.add(slug);
     }
   }
-  return { shared: [...shared], domain: [...onDomain], candidates };
+  return {
+    shared: [...shared],
+    domain: [...onDomain],
+    aliases: [...aliases],
+    candidates,
+  };
 }
 
 function pointsToQrdx(url: string, hosts: ReadonlySet<string>): boolean {
@@ -160,6 +182,8 @@ export function planImport(links: SourceLink[], ctx: PlanContext): ImportPlan {
     shared: new Set(),
     domain: new Set(),
   };
+  // Path aliases given out in this selection (on the custom domain).
+  const usedAliases = new Set<string>();
 
   const cap = Math.min(
     ctx.remaining ?? Number.POSITIVE_INFINITY,
@@ -254,6 +278,16 @@ export function planImport(links: SourceLink[], ctx: PlanContext): ImportPlan {
         kept: keptBackHalves,
         candidates: ctx.candidates,
       });
+      // An old path on the domain that can't be a back-half there keeps
+      // answering as a path alias, when it's free.
+      const alias =
+        target === "domain" && backHalf.status === "shape" && ctx.takenAliases
+          ? aliasForBackHalf(link.backHalf as string)
+          : null;
+      if (alias && !(ctx.takenAliases?.has(alias) || usedAliases.has(alias))) {
+        backHalf.alias = alias;
+        usedAliases.add(alias);
+      }
       if (backHalf.status === "kept") {
         kept += 1;
         used[target].add(backHalf.slug as string);
@@ -304,6 +338,7 @@ export function planImport(links: SourceLink[], ctx: PlanContext): ImportPlan {
         tags,
         slug,
         slugTarget,
+        alias: backHalf?.alias ?? null,
       },
     };
   });
@@ -395,6 +430,7 @@ export function jobItemsFromPlan(plan: ImportPlan): JobItem[] {
       createdAt: link.createdAt,
       slug: prepared?.slug ?? null,
       ...(prepared?.slugTarget && { slugTarget: prepared.slugTarget }),
+      ...(prepared?.alias && { alias: prepared.alias }),
       status: item.status === "create" ? "pending" : "skipped",
     };
     if (item.status !== "create") {

@@ -437,3 +437,99 @@ describe("saveOutput – EPS", () => {
     expect(height).toBe(288);
   });
 });
+
+describe("saveOutput – BMP", () => {
+  // jsqr ships with qrdx, so resolve it from there.
+  const require = createRequire(import.meta.url);
+  const jsQR = createRequire(require.resolve("qrdx/package.json"))(
+    "jsqr"
+  ) as typeof import("jsqr").default;
+
+  /** The pixels of a 24-bit bottom-up BMP, top row first, as RGBA. */
+  const readBMP = (file: string) => {
+    const bytes = readFileSync(file);
+    expect(bytes.toString("latin1", 0, 2)).toBe("BM");
+    expect(bytes.readUInt32LE(2)).toBe(bytes.length);
+    expect(bytes.readUInt16LE(28)).toBe(24);
+    expect(bytes.readUInt32LE(30)).toBe(0);
+    const width = bytes.readInt32LE(18);
+    const height = bytes.readInt32LE(22);
+    const offset = bytes.readUInt32LE(10);
+    const stride = Math.ceil((width * 3) / 4) * 4;
+    const data = new Uint8ClampedArray(width * height * 4);
+    for (let row = 0; row < height; row++) {
+      const y = height - 1 - row;
+      for (let x = 0; x < width; x++) {
+        const from = offset + row * stride + x * 3;
+        const to = (y * width + x) * 4;
+        data[to] = bytes[from + 2] as number;
+        data[to + 1] = bytes[from + 1] as number;
+        data[to + 2] = bytes[from] as number;
+        data[to + 3] = 255;
+      }
+    }
+    return { width, height, data };
+  };
+
+  const pixels = async (file: string) => {
+    const { data, info } = await sharp(file)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { data: new Uint8ClampedArray(data), info };
+  };
+
+  it("writes the PNG's pixels as a 24-bit BMP, and it scans", async () => {
+    const bmp = tmp("save.bmp");
+    const png = tmp("same-bmp.png");
+    cleanups.push(bmp, png);
+    const props = { value: "https://qrdx.dev/cli-bmp", size: 300 };
+    await saveOutput({ ...props, outputPath: bmp, format: "bmp" });
+    await saveOutput({ ...props, outputPath: png, format: "png" });
+    const fromBmp = readBMP(bmp);
+    const fromPng = await pixels(png);
+    expect([fromBmp.width, fromBmp.height]).toEqual([300, 300]);
+    expect(
+      Buffer.compare(Buffer.from(fromBmp.data), Buffer.from(fromPng.data))
+    ).toBe(0);
+    expect(jsQR(fromBmp.data, 300, 300)?.data).toBe("https://qrdx.dev/cli-bmp");
+  });
+
+  it("lays a transparent background over white, keeps opaque pixels exact and sizes a frame", async () => {
+    const bmp = tmp("frame.bmp");
+    const png = tmp("frame-bmp.png");
+    cleanups.push(bmp, png);
+    const props = {
+      value: "https://qrdx.dev",
+      size: 200,
+      bgColor: "transparent",
+      frame: { style: "banner-bottom", text: "Scan me" },
+    } as const;
+    await saveOutput({ ...props, outputPath: bmp, format: "bmp" });
+    await saveOutput({ ...props, outputPath: png, format: "png" });
+    const fromBmp = readBMP(bmp);
+    const fromPng = await pixels(png);
+    expect([fromBmp.width, fromBmp.height]).toEqual([
+      fromPng.info.width,
+      fromPng.info.height,
+    ]);
+    // The frame makes it taller than wide.
+    expect(fromBmp.height).toBeGreaterThan(fromBmp.width);
+    let transparent = 0;
+    let opaque = 0;
+    for (let index = 0; index < fromPng.data.length; index += 4) {
+      const alpha = fromPng.data[index + 3] as number;
+      const out = fromBmp.data.subarray(index, index + 4);
+      if (alpha === 0) {
+        transparent++;
+        expect([...out]).toEqual([255, 255, 255, 255]);
+      } else if (alpha === 255) {
+        opaque++;
+        expect([...out]).toEqual([...fromPng.data.subarray(index, index + 4)]);
+      }
+    }
+    // Both kinds are really there, so neither branch passed on nothing.
+    expect(transparent).toBeGreaterThan(0);
+    expect(opaque).toBeGreaterThan(0);
+  });
+});

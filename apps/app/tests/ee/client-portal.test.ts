@@ -666,6 +666,40 @@ describe("a client through the REST API", () => {
 // ─── Managing clients ───────────────────────────────────────────────────────
 
 describe("managing portal clients", () => {
+  it("emails the invitation in the client's saved language, else the inviter's", async () => {
+    fakeDb.seed("user", [
+      {
+        id: "u_eva",
+        name: "Eva",
+        email: "eva@client.example",
+        emailVerified: true,
+        locale: "es",
+      },
+    ]);
+    const ana = fakeDb.find("user", { id: "u_ana" });
+    if (ana) ana.locale = "de";
+    signIn("u_ana", "agency");
+    for (const email of ["eva@client.example", "new@client.example"]) {
+      expect(
+        await portal.invitePortalClientAction({
+          email,
+          name: "",
+          folderIds: ["f_bloom"],
+        }),
+      ).toMatchObject({ ok: true, data: { emailed: true } });
+    }
+    expect(state.emails).toEqual([
+      {
+        to: "eva@client.example",
+        subject: "North Agency compartió contigo informes de códigos QR",
+      },
+      {
+        to: "new@client.example",
+        subject: "North Agency hat QR-Code-Berichte mit dir geteilt",
+      },
+    ]);
+  });
+
   it("needs an owner or admin, on Business, and this workspace's folders", async () => {
     signIn("u_max", "agency");
     expect(

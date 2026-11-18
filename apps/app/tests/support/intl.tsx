@@ -42,6 +42,16 @@ export const i18nServer = {
   requireLocale: async () => "en" as const,
 };
 
+/**
+ * The signed-in app's language (lib/i18n/app-locale.ts) as English, for
+ * server code that answers in the person's language:
+ *   vi.mock("@/lib/i18n/app-locale", async () => (await import("../support/intl")).appLocale);
+ */
+export const appLocale = {
+  getAppLocale: async () => "en" as const,
+  getAppTranslations: intlServer.getTranslations,
+};
+
 /** Static markup of `node` inside the English catalog's provider. */
 export const renderIntl = (node: ReactNode) =>
   renderToStaticMarkup(

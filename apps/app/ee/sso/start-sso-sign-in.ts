@@ -1,4 +1,5 @@
 import { authClient } from "@repo/auth/client";
+import { emailDomain } from "@repo/auth/sso-rules";
 import {
   type SignInErrorTranslator,
   ssoSignInErrorMessage,
@@ -24,9 +25,11 @@ export async function startSsoSignIn(
       errorCallbackURL: signInPath(callbackURL),
     });
     if (error) {
+      // The server's message is English; the code and the address's domain
+      // (the one the server looked up) give the reader's language.
       return error.status === 429
         ? t("sso.rateLimited")
-        : ssoSignInErrorMessage(error.code, t, error.message);
+        : ssoSignInErrorMessage(error.code, t, emailDomain(email));
     }
     if (!data?.url) return ssoSignInErrorMessage(null, t);
     window.location.href = data.url;

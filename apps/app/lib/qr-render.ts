@@ -215,7 +215,7 @@ export async function renderQrPng(options: QrOptions): Promise<ArrayBuffer> {
 
 /**
  * Renders the QR code in a format converted from the same PNG, such as
- * lossless WebP (lib/qr-image-formats.ts).
+ * lossless WebP or BMP (lib/qr-image-formats.ts).
  */
 export async function renderQrImage(
   options: QrOptions,

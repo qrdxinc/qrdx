@@ -42,8 +42,8 @@ const tErrors = createTranslator({
   messages: en,
   namespace: "auth.signInErrors",
 });
-const ssoSignInErrorMessage = (code: string, description?: string) =>
-  ssoSignInErrorMessageIn(code, tErrors, description);
+const ssoSignInErrorMessage = (code: string, domain?: string) =>
+  ssoSignInErrorMessageIn(code, tErrors, domain);
 
 describe("plan gate", () => {
   it("only Business includes SSO", () => {
@@ -238,10 +238,13 @@ describe("IdP metadata", () => {
 });
 
 describe("sign-in messages", () => {
-  it("name the domain from the server, never from the URL", () => {
-    expect(
-      ssoSignInErrorMessage("SSO_NOT_FOUND", "No SSO is set up for acme.com."),
-    ).toBe("No SSO is set up for acme.com.");
+  it("name the typed address's domain, never one from the URL", () => {
+    expect(ssoSignInErrorMessage("SSO_NOT_FOUND", "acme.com")).toBe(
+      "No SSO is set up for acme.com.",
+    );
+    expect(ssoSignInErrorMessage("SSO_NOT_AVAILABLE", "acme.com")).toBe(
+      "SSO for acme.com isn't available right now. Sign in another way.",
+    );
     // The /sign-in page passes only the code.
     expect(ssoSignInErrorMessage("SSO_NOT_FOUND")).toBe(
       "SSO isn't set up for that address.",

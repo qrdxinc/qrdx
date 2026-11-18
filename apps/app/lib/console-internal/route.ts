@@ -40,9 +40,10 @@ import {
 // 4. a request id seen before is refused (Upstash). Without Upstash the
 //    endpoints answer 503: a replay store is required, never skipped;
 // 5. the body: JSON with `actor` and the endpoint's own fields;
-// 6. the actor checked again here (./actor.ts), 403 for anyone else, and
-//    403 `grant_invalid` for a console sign-in grant this app doesn't hold
-//    for that admin and session (calls without one still pass);
+// 6. the actor checked again here (./actor.ts), 403 for anyone else; 403
+//    `grant_required` for a call without its console sign-in's grant, and
+//    `grant_invalid` for one this app doesn't hold for that admin and
+//    session;
 // 7. the rate limit per admin and endpoint (./limits.ts): the admin pages'
 //    30 a minute, or 5 an hour for sensitive endpoints. Past it, 429
 //    `rate_limited` with Retry-After; when Upstash can't judge, 503;
@@ -63,9 +64,7 @@ import {
 // Every request that passes the signature check (3) ends with one log line,
 // `console_internal.outcome`: the path, the admin the signed body names,
 // whether it carried a grant, the HTTP status and a short code, and for a
-// 500 the error's kind and code. (`grant: false` lines show which console
-// sessions are from before grants: none may be left before grants are
-// required.)
+// 500 the error's kind and code.
 // Never the secret, the signature, headers, the body, an address, or an
 // error's message (a database error's lists the query's values). Requests
 // refused before it log `console_internal.refused`.
@@ -91,6 +90,8 @@ const refuse = (
 const actorSchema = z.object({
   userId: z.string().trim().min(1).max(128),
   sessionId: z.string().trim().min(1).max(256),
+  // Required from ./route.ts's own check (grant_required), not here, so a
+  // call without one gets that answer rather than bad_request.
   grant: z.string().min(32).max(256).optional(),
 });
 
@@ -357,7 +358,17 @@ async function handleSigned<S extends z.ZodType, T>(
   }
   const claim = z.object({ actor: actorSchema }).safeParse(parsedBody);
   if (!claim.success) return badRequest();
-  named.grant = claim.data.actor.grant !== undefined;
+  const { grant } = claim.data.actor;
+  named.grant = grant !== undefined;
+  // Session ids aren't secret: a call proves its admin with the grant only
+  // their console sign-in got (./actor.ts).
+  if (grant === undefined) {
+    return {
+      response: json(403, { ok: false, error: "grant_required" }),
+      actorId: claim.data.actor.userId,
+      code: "grant_required",
+    };
+  }
   const actorId = claim.data.actor.userId;
 
   const limitName = action ?? path;
@@ -365,7 +376,7 @@ async function handleSigned<S extends z.ZodType, T>(
   let counted: ConsoleActor | null = null;
   let started: { actor: ConsoleActor; input: unknown } | null = null;
   try {
-    const actor = await loadConsoleActor(claim.data.actor);
+    const actor = await loadConsoleActor({ ...claim.data.actor, grant });
     if (!actor) {
       return {
         response: json(403, { ok: false, error: "not_admin" }),

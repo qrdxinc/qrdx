@@ -10,7 +10,7 @@ import { FirstScanEmail } from "@/lib/email/templates/first-scan";
 import { FormSubmissionEmail } from "@/lib/email/templates/form-submission";
 import { codeLabel, formatCount } from "@/lib/email/templates/parts";
 import { ScanMilestoneEmail } from "@/lib/email/templates/scan-milestone";
-import type { EmailIntl } from "@/lib/i18n/email";
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { emailIntlForUser } from "@/lib/i18n/email-locale";
 import { baseUrl } from "@/lib/metadata";
 import { workspaceLink } from "@/lib/workspace-paths";
@@ -48,12 +48,22 @@ async function withinAlertLimit(targetId: string, event: string) {
   }
 }
 
-const CHANGE_LABELS: Record<string, string> = {
-  destination_url: "Destination",
-  title: "Title",
-  style: "Design",
-  domain_id: "Short link domain",
-};
+// What changed, by field: the chat message's English, and each email's
+// language (emails.codeActivity.fields). Unknown fields show as they are.
+const CHANGE_FIELDS = {
+  destination_url: "destination",
+  title: "title",
+  style: "design",
+  domain_id: "domain",
+} as const;
+
+function changeLabel(field: string, { t }: EmailIntl = ENGLISH_EMAIL) {
+  return Object.hasOwn(CHANGE_FIELDS, field)
+    ? t(
+        `codeActivity.fields.${CHANGE_FIELDS[field as keyof typeof CHANGE_FIELDS]}`,
+      )
+    : field;
+}
 
 const absolute = (path: string) => new URL(path, baseUrl.origin).toString();
 // Links name the workspace (/dashboard/<slug>/...), so they open the right
@@ -74,16 +84,27 @@ async function teamName(organizationId: string): Promise<string | null> {
   return team?.name ?? null;
 }
 
-/** For sentences: "Acme" (every member reads the same alert). */
-export async function workspaceLabel(scope: EventScope): Promise<string> {
-  if (!scope.organizationId) return "your workspace";
-  return (await teamName(scope.organizationId)) ?? "your workspace";
+/** The event's workspace's name ("Acme"); null without one. */
+export async function eventWorkspaceName(
+  scope: EventScope,
+): Promise<string | null> {
+  return scope.organizationId ? teamName(scope.organizationId) : null;
 }
 
-/** For headings: "Acme". */
-export async function workspaceTitle(scope: EventScope): Promise<string> {
-  if (!scope.organizationId) return "Your workspace";
-  return (await teamName(scope.organizationId)) ?? "Your workspace";
+/** For sentences: "Acme", else "your workspace" in the email's language. */
+export function workspaceLabel(
+  name: string | null,
+  { t }: EmailIntl = ENGLISH_EMAIL,
+): string {
+  return name ?? t("alerts.yourWorkspace");
+}
+
+/** For headings: "Acme", else "Your workspace" in the email's language. */
+export function workspaceTitle(
+  name: string | null,
+  { t }: EmailIntl = ENGLISH_EMAIL,
+): string {
+  return name ?? t("weeklyDigest.yourWorkspace");
 }
 
 /** The slug for links into the event's workspace (null before workspaces). */
@@ -121,7 +142,7 @@ function joinParts(parts: (string | null | undefined)[], separator: string) {
 
 function milestoneAlert(
   data: ScanMilestoneData,
-  workspace: string,
+  workspace: string | null,
   slug: string | null,
 ): Alert {
   const url = codeUrl(slug, data.code.id);
@@ -144,7 +165,7 @@ function milestoneAlert(
             location={location}
             scannedAt={data.scan.scanned_at}
             unsubscribeUrl={unsubscribe}
-            workspaceName={workspace}
+            workspaceName={workspaceLabel(workspace, intl)}
           />
         ),
       }),
@@ -167,7 +188,7 @@ function milestoneAlert(
           intl={intl}
           milestone={data.milestone}
           unsubscribeUrl={unsubscribe}
-          workspaceName={workspace}
+          workspaceName={workspaceLabel(workspace, intl)}
         />
       ),
     }),
@@ -176,7 +197,7 @@ function milestoneAlert(
 
 function formAlert(
   data: FormSubmittedData,
-  workspace: string,
+  workspace: string | null,
   slug: string | null,
 ): Alert {
   const url = responsesUrl(slug, data.page.id);
@@ -206,7 +227,7 @@ function formAlert(
           responsesUrl={url}
           submittedAt={data.submitted_at}
           unsubscribeUrl={unsubscribe}
-          workspaceName={workspace}
+          workspaceName={workspaceLabel(workspace, intl)}
         />
       ),
     }),
@@ -216,15 +237,13 @@ function formAlert(
 function codeAlert(
   type: "code.created" | "code.updated",
   data: CodeEventData,
-  workspace: string,
+  workspace: string | null,
   slug: string | null,
   actorName: string | null,
 ): Alert {
   const url = codeUrl(slug, data.code.id);
   const label = codeLabel(data.code);
-  const changes = (data.changes ?? []).map(
-    (field) => CHANGE_LABELS[field] ?? field,
-  );
+  const changes = (data.changes ?? []).map((field) => changeLabel(field));
   const who = actorName?.trim() || "Someone";
   const created = type === "code.created";
   return {
@@ -243,7 +262,9 @@ function codeAlert(
       react: (
         <CodeActivityEmail
           actorName={actorName}
-          changes={changes}
+          changes={(data.changes ?? []).map((field) =>
+            changeLabel(field, intl),
+          )}
           code={{
             title: data.code.title,
             slug: data.code.slug,
@@ -254,7 +275,7 @@ function codeAlert(
           intl={intl}
           kind={created ? "created" : "updated"}
           unsubscribeUrl={unsubscribe}
-          workspaceName={workspace}
+          workspaceName={workspaceLabel(workspace, intl)}
         />
       ),
     }),
@@ -303,7 +324,7 @@ export async function notifyTargets<T extends AlertEvent>(
   if (targets.length === 0) return;
   try {
     const [workspace, slug] = await Promise.all([
-      workspaceLabel(scope),
+      eventWorkspaceName(scope),
       eventWorkspaceSlug(scope),
     ]);
     let alert: Alert;

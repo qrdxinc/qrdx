@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Déconnecter tous les autres",
           "thisDevice": "Cet appareil",
+          "activeNow": "Actif en ce moment",
+          "activeJustNow": "Actif à l’instant",
+          "activeAgo": "Actif {relative}",
+          "activeOn": "Actif le {date}",
+          "signedIn": "Connecté le {date}",
           "signOut": "Se déconnecter",
           "signOutEverywhereElse2": "Déconnecter tous les autres ?",
           "thisDeviceStaysSignedIn": "Cet appareil reste connecté.",
@@ -7274,6 +7279,29 @@
           "show": "Afficher",
           "clearSearch": "Effacer la recherche"
         },
+        "pathAliases": {
+          "title": "Alias de chemin",
+          "description": "Anciens liens sur {domain} provenant d’un autre fournisseur, comme {domain}/r/abc, qui doivent ouvrir ce code. Chaque chemin doit correspondre exactement ; la chaîne de requête n’a pas d’importance. Le premier alias d’un domaine peut mettre une minute à fonctionner.",
+          "placeholder": "/r/abc",
+          "add": "Ajouter",
+          "remove": "Retirer {path}",
+          "loadFailed": "Impossible de charger les alias de chemin. Fermez cette boîte de dialogue et rouvrez-la.",
+          "failed": "Impossible d’enregistrer la modification. Réessayez.",
+          "verifyFirst": "Vérifiez {domain} sur la page Domaines pour ajouter des alias de chemin.",
+          "problems": {
+            "empty": "Saisissez le chemin après le domaine, par exemple /r/abc.",
+            "length": "Utilisez au maximum {maxLength, number} caractères.",
+            "segments": "Utilisez au maximum {maxSegments, number} parties séparées par /.",
+            "characters": "Utilisez des lettres, des chiffres, - _ . et ~ entre les barres obliques, sans partie vide.",
+            "backHalf": "Ce chemin convient à une fin de lien personnalisée. Attribuez-la plutôt au code.",
+            "reserved": "QRdx utilise ce chemin sur les domaines personnalisés.",
+            "otherDomain": "Ce lien est sur un autre domaine.",
+            "taken": "Un autre code de ce domaine répond déjà à ce chemin.",
+            "hostedPage": "Un code de ce domaine utilise cette fin de lien personnalisée, et sa page hébergée répond à ce chemin.",
+            "limit": "Un code peut avoir jusqu’à {max, number} alias de chemin.",
+            "unavailable": "Les alias de chemin ne sont pas encore disponibles sur ce serveur."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Domaine du lien court",
           "defaulthostQDefault": "{defaultHost}/q/ (par défaut)",
@@ -7423,7 +7451,8 @@
           "keepingBackHalvesIsPart": "La conservation des back-halves fait partie de {slugPlans}.",
           "yourPlanDoesntKeepBack": "Votre offre ne conserve pas les back-halves.",
           "random": "aléatoire",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "Répond aussi à l’adresse {link}, afin que les codes imprimés avec l’ancien lien continuent de fonctionner."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Depuis un compte connecté",
@@ -8566,7 +8595,11 @@
       "sessionCheck": {
         "continue": "Continuer",
         "signOut": "Déconnexion",
-        "backToQrdx": "Retour à QRdx"
+        "backToQrdx": "Retour à QRdx",
+        "title": "Confirmez que c’est vous",
+        "body": "Cette connexion est utilisée depuis un autre pays et un autre navigateur que ceux où elle a commencé. Confirmez que c’est bien vous pour continuer.",
+        "signedOut": "Reconnectez-vous pour continuer.",
+        "failed": "Une erreur s’est produite. Vérifiez votre connexion et réessayez."
       }
     },
     "join": {
@@ -8598,7 +8631,8 @@
           "signInToQrdxTo": "Connectez-vous à QRdx pour accéder à",
           "continueWithGoogle": "Continuer avec Google",
           "continueWithGithub": "Continuer avec GitHub",
-          "youllReviewThesePermissionsBefore": "Vous passerez en revue ces autorisations avant tout partage."
+          "youllReviewThesePermissionsBefore": "Vous passerez en revue ces autorisations avant tout partage.",
+          "continueToSignIn": "Continuer vers la connexion"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Ce lien est inutilisable",
@@ -8661,9 +8695,143 @@
       "enter": "Saisissez ce code dans QRdx pour faire de cette adresse l’e-mail de votre compte :",
       "ignore": "Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail. Rien ne change sans le code."
     },
+    "emailChanged": {
+      "subject": "Votre e-mail QRdx a été modifié",
+      "preview": "Votre compte QRdx utilise désormais {newEmail}.",
+      "reason": "Vous recevez cet e-mail car cette adresse était celle d’un compte QRdx.",
+      "body": "Votre compte QRdx utilise désormais <strong>{newEmail}</strong>. Les codes de connexion et les invitations d’équipe seront envoyés à cette adresse.",
+      "notYou": "Si ce n’était pas vous, contactez dès maintenant le support à <support>{email}</support> depuis cette adresse, et nous vous aiderons à récupérer votre compte."
+    },
+    "security": {
+      "device": "Appareil",
+      "location": "Localisation approximative",
+      "browserOnOs": "{browser} sur {os}",
+      "osDevice": "Appareil {os}",
+      "unknownDevice": "Appareil inconnu",
+      "cityCountry": "{city}, {country}",
+      "ip": "Adresse IP",
+      "time": "Heure",
+      "by": "Par",
+      "support": "Support QRdx",
+      "review": "Vérifier la sécurité",
+      "nothingElse": "Si c’était vous, vous n’avez rien d’autre à faire."
+    },
+    "confirmationCode": {
+      "subject": "Votre code de confirmation QRdx",
+      "preview": "Saisissez ce code pour confirmer votre identité. Il expire dans {minutes, plural, one {# minute} other {# minutes}}.",
+      "reason": "Vous recevez cet e-mail parce que quelqu’un a demandé à modifier la sécurité du compte QRdx associé à cette adresse.",
+      "heading": "Confirmez votre identité",
+      "enter": "Saisissez ce code dans QRdx pour confirmer votre identité avant une modification de la sécurité de votre compte :",
+      "notYou": "Si vous n’êtes pas à l’origine de cette demande, ne saisissez pas le code : quelqu’un est peut-être connecté à votre compte. Vérifiez votre sécurité et contactez le support à <support>{email}</support> depuis cette adresse."
+    },
+    "newSignIn": {
+      "subject": "Nouvelle connexion à votre compte QRdx",
+      "preview": "{device} s’est connecté à votre compte QRdx{hasLocation, select, yes { près de {location}} other {}}.",
+      "newDevice": "Un nouvel appareil",
+      "reason": "Vous recevez cet e-mail parce qu’il s’agit de l’adresse d’un compte QRdx et qu’un navigateur ou un appareil s’y est connecté pour la première fois.",
+      "body": "Un navigateur ou un appareil qui ne s’était jamais connecté à votre compte QRdx vient de le faire.",
+      "signedInWith": "Connexion via",
+      "nothingToDo": "Si c’était vous, vous n’avez rien à faire.",
+      "notYou": "Si ce n’était pas vous :",
+      "signOut": "Connectez-vous, allez dans Paramètres → Profil et sécurité, puis, sous Sessions, cliquez sur Déconnecter tous les autres.",
+      "turnOn": "Activez la vérification en deux étapes sur la même page, afin que la connexion nécessite aussi votre clé d’accès ou votre application d’authentification.",
+      "contact": "Contactez le support à <support>{email}</support> depuis cette adresse, et nous vous aiderons à sécuriser votre compte.",
+      "methods": {
+        "emailOtp": "Code par e-mail",
+        "passkey": "Clé d’accès",
+        "sso": "Authentification unique"
+      },
+      "secondSteps": {
+        "totp": "un code d’authentification",
+        "backupCode": "un code de secours",
+        "passkey": "une clé d’accès"
+      },
+      "withSecondStep": "{method}, puis {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Vous recevez cet e-mail car il s’agit de l’adresse d’un compte QRdx, et nous vous informons de chaque modification de sa méthode de connexion.",
+      "notYou": "Si ce n’était pas vous, connectez-vous et supprimez toute clé d’accès que vous ne reconnaissez pas, puis contactez le support à l’adresse <support>{email}</support> depuis cette adresse e-mail.",
+      "added": {
+        "subject": "Une clé d’accès a été ajoutée à votre compte QRdx",
+        "preview": "La clé d’accès « {name} » peut désormais se connecter à votre compte QRdx.",
+        "body": "La clé d’accès <strong>{name}</strong> peut désormais se connecter à votre compte QRdx et sert de seconde étape lorsque la validation en deux étapes est activée."
+      },
+      "removed": {
+        "subject": "Une clé d’accès a été supprimée de votre compte QRdx",
+        "preview": "La clé d’accès « {name} » ne peut plus se connecter à votre compte QRdx.",
+        "body": "La clé d’accès <strong>{name}</strong> ne peut plus se connecter à votre compte QRdx."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Vous recevez cet e-mail car il s’agit de l’adresse d’un compte QRdx, dont la sécurité de connexion a changé.",
+      "notYou": "Si ce n’était pas vous, contactez immédiatement le support à l’adresse <support>{email}</support> depuis cette adresse e-mail, et nous vous aiderons à sécuriser votre compte.",
+      "on": {
+        "subject": "La validation en deux étapes est activée sur votre compte QRdx",
+        "heading": "Validation en deux étapes activée",
+        "body": "Se connecter à QRdx demande désormais une seconde étape : votre clé d’accès ou un code de votre application d’authentification. Un code de secours fonctionne si vous ne pouvez utiliser ni l’une ni l’autre."
+      },
+      "off": {
+        "subject": "La validation en deux étapes a été désactivée sur votre compte QRdx",
+        "heading": "Validation en deux étapes désactivée",
+        "body": "Se connecter à QRdx ne demande plus de seconde étape. Vos codes de secours ne fonctionnent plus."
+      },
+      "backupCodes": {
+        "subject": "Nouveaux codes de secours pour votre compte QRdx",
+        "heading": "Vous avez de nouveaux codes de secours",
+        "body": "De nouveaux codes de secours ont été créés pour votre compte QRdx. Les anciens ne fonctionnent plus."
+      },
+      "appAdded": {
+        "subject": "Une application d’authentification a été ajoutée à votre compte QRdx",
+        "heading": "Application d’authentification ajoutée",
+        "body": "Les codes de l’application d’authentification que vous venez de configurer servent désormais de seconde étape lorsque vous vous connectez à QRdx."
+      },
+      "appRemoved": {
+        "subject": "L’application d’authentification a été supprimée de votre compte QRdx",
+        "heading": "Application d’authentification supprimée",
+        "body": "Les codes de votre application d’authentification ne permettent plus de vous connecter à QRdx. La validation en deux étapes reste activée avec vos autres méthodes."
+      },
+      "supportOff": {
+        "subject": "Le support QRdx a désactivé la validation en deux étapes",
+        "heading": "Validation en deux étapes désactivée",
+        "body": "Le support QRdx a désactivé la validation en deux étapes de votre compte et l’a déconnecté de tous les appareils. Se connecter ne demande plus de seconde étape. Vous pouvez la réactiver dans Paramètres → Profil et sécurité."
+      },
+      "supportResetScheduled": {
+        "subject": "Le support QRdx va désactiver la vérification en deux étapes",
+        "heading": "Le support va désactiver la vérification en deux étapes",
+        "body": "Quelqu’un a demandé au support QRdx de désactiver la vérification en deux étapes de votre compte, en indiquant avoir perdu tous les moyens d’effectuer la seconde étape.",
+        "when": "Le support la désactivera {hasDate, select, yes {le {date} (UTC)} other {dans 7 jours}} et déconnectera votre compte de tous les appareils. D’ici là, rien ne change.",
+        "howToStop": "Si vous êtes à l’origine de cette demande, il n’y a rien à faire. Sinon, connectez-vous à QRdx avec votre application d’authentification ou un code de secours : cela l’annule. Vous pouvez aussi l’annuler dans Paramètres → Profil et sécurité, ou répondre à cet e-mail."
+      },
+      "supportResetCancelled": {
+        "subject": "La vérification en deux étapes reste activée sur votre compte QRdx",
+        "heading": "La vérification en deux étapes reste activée",
+        "body": "La demande du support de désactiver la vérification en deux étapes de votre compte a été annulée. Rien n’a changé.",
+        "byPerson": "Vous avez annulé la demande du support de désactiver la vérification en deux étapes de votre compte QRdx.",
+        "bySignIn": "Vous vous êtes connecté avec votre application d’authentification ou un code de secours : la demande du support de désactiver la vérification en deux étapes de votre compte QRdx a donc été annulée.",
+        "bySupport": "Le support QRdx a annulé la demande de désactivation de la vérification en deux étapes de votre compte.",
+        "staysOn": "La vérification en deux étapes reste activée, avec vos codes de secours et vos méthodes inchangés."
+      },
+      "backupCodeUsed": {
+        "subject": "Un code de secours a été utilisé sur votre compte QRdx",
+        "heading": "Un code de secours a été utilisé",
+        "body": "L’un de vos codes de secours vient d’être utilisé pour vous connecter à votre compte QRdx. Chaque code ne fonctionne qu’une fois : celui-ci ne fonctionne donc plus.",
+        "toConfirm": "L’un de vos codes de secours vient d’être utilisé pour confirmer votre identité avant une modification de sécurité sur votre compte QRdx. Chaque code ne fonctionne qu’une fois : celui-ci ne fonctionne donc plus.",
+        "left": "{count, plural, =0 {Il s’agissait de votre dernier code de secours.} one {Il vous reste # code de secours.} other {Il vous reste # codes de secours.}}",
+        "makeNew": "Créez-en de nouveaux dans Paramètres → Profil et sécurité, pour garder un moyen d’accès lorsque vous ne pouvez pas utiliser votre clé d’accès ou votre application d’authentification."
+      },
+      "signedOutElsewhere": "Tous les autres appareils connectés à votre compte ont été déconnectés ; chacun devra donc se reconnecter avec la seconde étape."
+    },
+    "payoutEmailNotice": {
+      "subject": "Vos paiements d’affiliation QRdx sont désormais versés à une nouvelle adresse PayPal",
+      "preview": "Les paiements d’affiliation de QRdx seront envoyés à {paypalEmail}.",
+      "reason": "Vous recevez cet e-mail car il s’agit de l’adresse d’un compte QRdx inscrit au programme d’affiliation, et nous vous informons de chaque modification de la destination de ses paiements.",
+      "body": "{replaced, select, yes {L’adresse PayPal de vos paiements d’affiliation a été modifiée.} other {Une adresse PayPal a été ajoutée pour vos paiements d’affiliation.}} Désormais, nous enverrons vos paiements à <strong>{paypalEmail}</strong>.",
+      "notYou": "Si ce n’était pas vous, connectez-vous, rétablissez l’ancienne adresse dans Paramètres → Programme d’affiliation, et contactez le support à <support>{email}</support> depuis cette adresse avant le prochain paiement."
+    },
     "alerts": {
       "viewAnalytics": "Voir les statistiques de scan",
-      "milestoneReason": "Vous recevez ce message parce que les alertes de seuils de scans sont activées pour {workspace}."
+      "milestoneReason": "Vous recevez ce message parce que les alertes de seuils de scans sont activées pour {workspace}.",
+      "yourWorkspace": "votre espace de travail"
     },
     "firstScan": {
       "subject": "{code} a reçu son premier scan",
@@ -8693,6 +8861,12 @@
       "shortLink": "Lien court",
       "opens": "Ouvertures",
       "changed": "Modifié",
+      "fields": {
+        "destination": "Destination",
+        "title": "Titre",
+        "design": "Design",
+        "domain": "Domaine du lien court"
+      },
       "open": "Ouvrir le code",
       "created": {
         "heading": "Nouveau code : {code}",
@@ -8704,6 +8878,80 @@
         "reason": "Vous recevez ce message parce que les alertes de modification de code sont activées pour {workspace}.",
         "body": "{who} a modifié ce QR code dynamique dans {workspace}. Les QR codes imprimés continuent de fonctionner et suivent désormais les nouveaux réglages."
       }
+    },
+    "teamInvite": {
+      "subject": "{inviter} vous a envoyé une invitation pour rejoindre {team} sur QRdx en tant que {role, select, owner {propriétaire} admin {administrateur} member {membre} billing {gestionnaire de facturation} other {lecteur}}",
+      "reason": "Vous recevez cet e-mail parce que quelqu’un a invité cette adresse à rejoindre un espace de travail QRdx.",
+      "heading": "Rejoignez {team} sur QRdx",
+      "body": "{inviter} vous a envoyé une invitation pour l’espace de travail {team} en tant que {role, select, owner {propriétaire} admin {administrateur} member {membre} billing {gestionnaire de facturation} other {lecteur}}.",
+      "roles": {
+        "owner": "Les propriétaires peuvent tout faire, y compris gérer la facturation et supprimer l’espace de travail.",
+        "admin": "Les administrateurs gèrent les personnes, les paramètres, les domaines et les codes de tous.",
+        "member": "Les membres créent des codes et des pages, et modifient les codes de l’espace de travail.",
+        "billing": "Les gestionnaires de facturation gèrent le forfait et la facturation, et peuvent tout consulter sans rien modifier.",
+        "viewer": "Les lecteurs consultent les codes, les pages et les statistiques de l’espace de travail sans rien modifier."
+      },
+      "accept": "Accepter l’invitation",
+      "expires": "Connectez-vous avec cette adresse e-mail pour accepter. L’invitation expire le {date}. Si vous ne l’attendiez pas, vous pouvez ignorer cet e-mail.",
+      "pasteLink": "Ou collez ce lien dans votre navigateur : {url}",
+      "someone": "Un collègue"
+    },
+    "portalInvite": {
+      "subject": "{portal} a partagé des rapports de QR code avec vous",
+      "reason": "Vous recevez cet e-mail parce que {inviter} de {portal} a invité cette adresse à consulter ses rapports de QR code.",
+      "heading": "Vos rapports de QR code",
+      "body": "{hasFolders, select, yes {{inviter} vous a envoyé une invitation pour consulter les QR codes de {portal} dans {folders} : la fréquence de scan de chacun, où et sur quels appareils, et les pages qu’ils ouvrent. C’est en lecture seule.} other {{inviter} vous a envoyé une invitation pour consulter les QR codes de {portal} : la fréquence de scan de chacun, où et sur quels appareils, et les pages qu’ils ouvrent. C’est en lecture seule.}}",
+      "open": "Ouvrir les rapports",
+      "signIn": "Connectez-vous avec cette adresse e-mail : nous vous enverrons un code à usage unique. Si vous ne vous y attendiez pas, vous pouvez ignorer cet e-mail.",
+      "pasteLink": "Ou collez ce lien dans votre navigateur : {url}",
+      "yourAgency": "Votre agence"
+    },
+    "limitNotice": {
+      "subject": "{level, select, full {{label} : limite atteinte dans {workspace}} other {{label} : {workspace} a utilisé {value}}}",
+      "preview": "{level, select, full {{workspace} a atteint sa limite de {noun}} other {{workspace} a utilisé {value} {noun}}}",
+      "heading": "{level, select, full {{workspace} a atteint une limite du forfait} other {{workspace} approche d’une limite du forfait}}",
+      "body": "{level, select, full {{workspace} a atteint la limite de ses {noun}.} other {{workspace} a utilisé {value} {noun}.}}",
+      "plan": "Forfait",
+      "button": "Forfait et utilisation",
+      "howOften": "Vous recevez au maximum deux e-mails de ce type par limite et par mois : un à 90 % et un à 100 %.",
+      "ownerReason": "Vous recevez cet e-mail parce que vous êtes propriétaire de {workspace} sur QRdx.",
+      "artReason": "Vous recevez cet e-mail parce que vous avez créé des illustrations IA dans {workspace} sur QRdx. Le quota est comptabilisé à votre niveau.",
+      "label": "{limit, select, dynamicCodes {QR codes dynamiques} landingPages {Pages hébergées} formResponses {Réponses de formulaire} storage {Stockage de fichiers} savedThemes {Thèmes enregistrés} other {Images d’art IA}}",
+      "noun": "{limit, select, dynamicCodes {QR codes dynamiques} landingPages {pages hébergées} formResponses {réponses de formulaire} storage {stockage de fichiers} savedThemes {thèmes enregistrés} other {images d’art IA}}",
+      "planName": "{plan, select, free {Gratuit} pro {Pro} other {Business}}",
+      "value": "{used} sur {cap}",
+      "amount": "{limit, select, dynamicCodes {{count, plural, one {# QR code dynamique actif} other {# QR codes dynamiques actifs}}} landingPages {{count, plural, one {# page hébergée} other {# pages hébergées}}} formResponses {{count, plural, one {# réponse de formulaire} other {# réponses de formulaire}}} savedThemes {{count, plural, one {# thème enregistré} other {# thèmes enregistrés}}} other {{count, plural, one {# image d’art IA} other {# images d’art IA}}}}",
+      "storageAmount": "{size} de stockage de fichiers",
+      "amountLeft": "{limit, select, dynamicCodes {{count, plural, one {# code dynamique actif restant} other {# codes dynamiques actifs restants}}} landingPages {{count, plural, one {# page hébergée restante} other {# pages hébergées restantes}}} formResponses {{count, plural, one {# réponse de formulaire restante} other {# réponses de formulaire restantes}}} savedThemes {{count, plural, one {# thème enregistré restant} other {# thèmes enregistrés restants}}} other {{count, plural, one {# image d’art IA restante} other {# images d’art IA restantes}}}}",
+      "storageLeft": "{size} restant",
+      "left": "{monthly, select, yes {{left} ce mois-ci sur le plan {plan}.} other {{left} sur le plan {plan}.}}",
+      "includes": "{monthly, select, yes {Le plan {plan} inclut {amount} par mois.} other {Le plan {plan} inclut {amount}.}}",
+      "liftUnlimited": "{limit, select, dynamicCodes {des codes illimités} landingPages {des pages illimitées} formResponses {des réponses illimitées} storage {un stockage illimité} savedThemes {des thèmes illimités} other {des images illimitées}}",
+      "liftCount": "{limit, select, dynamicCodes {{count, number} codes} landingPages {{count, number} pages} formResponses {{count, number} réponses par mois} savedThemes {{count, number} thèmes} other {{count, number} images par mois}}",
+      "liftShared": "{lift} pour l’ensemble de l’espace de travail",
+      "upgrade": "{limit, select, dynamicCodes {Archivez-en un ou passez au plan {plan} pour obtenir {lift}.} landingPages {Supprimez-en une ou passez au plan {plan} pour obtenir {lift}.} storage {Supprimez les fichiers dont vous n’avez plus besoin ou passez au plan {plan} pour obtenir {lift}.} savedThemes {Supprimez-en un ou passez au plan {plan} pour obtenir {lift}.} other {Passez au plan {plan} pour obtenir {lift}.}}",
+      "askOwner": "{limit, select, dynamicCodes {Archivez-en un ou demandez à un propriétaire de l’espace de travail de passer au plan {plan}.} landingPages {Supprimez-en une ou demandez à un propriétaire de l’espace de travail de passer au plan {plan}.} storage {Supprimez les fichiers dont vous n’avez plus besoin ou demandez à un propriétaire de l’espace de travail de passer au plan {plan}.} savedThemes {Supprimez-en un ou demandez à un propriétaire de l’espace de travail de passer au plan {plan}.} other {Demandez à un propriétaire de l’espace de travail de passer au plan {plan}.}}",
+      "makeRoom": "{limit, select, dynamicCodes {Archivez-en un pour faire de la place.} landingPages {Supprimez-en une pour faire de la place.} storage {Supprimez les fichiers dont vous n’avez plus besoin pour faire de la place.} savedThemes {Supprimez-en un pour faire de la place.} other {}}",
+      "resets": "Remise à zéro le {date}.",
+      "keeps": "{limit, select, dynamicCodes {Vos codes existants continuent de fonctionner.} landingPages {Vos pages existantes restent en ligne.} formResponses {Les pages restent en ligne. Les formulaires acceptent de nouveau les réponses après la réinitialisation.} storage {Les fichiers que vous avez importés restent disponibles.} other {}}"
+    },
+    "weeklyDigest": {
+      "subject": "Votre semaine QRdx : {scans, plural, one {# scan} other {# scans}}",
+      "preview": "{scans, plural, one {# scan} other {# scans}} dans {workspace} la semaine dernière",
+      "reason": "Vous recevez ce message car le récapitulatif hebdomadaire est activé pour {workspace}.",
+      "yourWorkspace": "Votre espace de travail",
+      "heading": "Votre semaine sur QRdx",
+      "scans": "Scans",
+      "uniqueVisitors": "Visiteurs uniques",
+      "formResponses": "Réponses de formulaire",
+      "newCodes": "Nouveaux codes",
+      "newThisWeek": "Nouveau cette semaine",
+      "sameAsLastWeek": "Comme la semaine dernière",
+      "change": "{change} vs semaine dernière",
+      "topCodes": "Top des codes",
+      "countries": "Où les gens ont scanné",
+      "newCodesLine": "{count, plural, one {# nouveau code} other {# nouveaux codes}} cette semaine.",
+      "open": "Ouvrir votre tableau de bord"
     }
   },
   "auth": {
@@ -8729,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "Ce compte est suspendu. Contactez le support si vous pensez qu’il s’agit d’une erreur.",
       "somethingWentWrongTryAgain": "Une erreur s’est produite. Réessayez.",
       "newCodeSent": "Nouveau code envoyé. L’ancien ne fonctionne plus.",
-      "connectionFailed": "Un problème est survenu. Vérifiez votre connexion et réessayez."
+      "connectionFailed": "Un problème est survenu. Vérifiez votre connexion et réessayez.",
+      "emailSignInIsntSet": "La connexion par e-mail n’est pas configurée sur ce site.",
+      "weCouldntSendACodeTry": "Nous n’avons pas pu envoyer de code pour le moment. Réessayez dans quelques minutes.",
+      "tooManyCodesRequestedSo": "Trop de codes ont été demandés, nous n’en avons donc pas envoyé de nouveau. Le plus récent dans votre boîte de réception reste valable."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continuer avec une clé d’accès",
@@ -8766,7 +9017,13 @@
       "freeToStartNoCard": "Gratuit pour commencer, sans carte bancaire.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "La connexion avec {label} n’est pas disponible pour le moment"
+      "labelSignInIsNot": "La connexion avec {label} n’est pas disponible pour le moment",
+      "signInIsntSetUp": "Connexion non configurée",
+      "thisSiteHasNoEmail": "Aucune connexion par e-mail, Google ou GitHub n’est activée sur ce site : il est donc impossible d’y créer de nouveaux comptes.",
+      "runThisSiteThe": "Vous gérez ce site ? Le <link>guide d’auto-hébergement</link> explique comment en activer une.",
+      "newToQrdxYourFirst": "Nouveau sur QRdx ? Votre première connexion crée votre compte gratuit.",
+      "loading": "Chargement…",
+      "weCouldntCheckHow": "Nous n’avons pas pu vérifier comment se connecter ici. <retry>Réessayez</retry> ou <link>ouvrez la page de connexion</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Chargement de vos méthodes de connexion",
@@ -8964,20 +9221,57 @@
       "signInAgain": "Pour votre sécurité, déconnectez-vous puis reconnectez-vous, et réessayez dans les 10 minutes.",
       "stillRequired": "Nous n’avons pas pu confirmer votre identité. Réessayez.",
       "signInFailed": "Cette connexion n’a pas abouti, donc rien n’a changé. Réessayez ou utilisez une autre méthode.",
-      "signInConfirmed": "Merci, c’est confirmé. Vous pouvez effectuer votre modification dans les 10 minutes qui suivent."
+      "signInConfirmed": "Merci, c’est confirmé. Vous pouvez effectuer votre modification dans les 10 minutes qui suivent.",
+      "signedOut": "Reconnectez-vous pour continuer.",
+      "rateLimited": "Trop de tentatives. Patientez quelques minutes, puis réessayez.",
+      "noAuthenticatorApp": "Votre compte n’utilise pas d’application d’authentification. Utilisez votre passkey ou un code de secours.",
+      "invalidCode": "Saisissez le code à 6 chiffres reçu par e-mail.",
+      "wrongCode": "Ce code n’est pas correct. Vérifiez l’e-mail et réessayez.",
+      "codeExpired": "Ce code a expiré. Envoyez-en un nouveau.",
+      "tooManyCodeAttempts": "Trop de tentatives incorrectes. Envoyez un nouveau code.",
+      "codeNotSent": "Nous n’avons pas pu envoyer de code pour le moment. Veuillez réessayer.",
+      "twoFactorOn": "La validation en deux étapes est activée : aucun code n’est donc envoyé par e-mail. Utilisez votre passkey, votre application d’authentification ou un code de secours.",
+      "signInUnavailable": "Cette connexion n’est pas associée à votre compte. Utilisez une autre méthode.",
+      "signInNotLinked": "Ce compte n’est pas associé à votre compte QRdx, donc rien n’a changé. Connectez-vous avec celui que vous avez associé, ou utilisez une autre méthode.",
+      "signInExpired": "Cela a pris plus de 10 minutes, donc rien n’a changé. Réessayez.",
+      "signInDifferentAccount": "Vous vous êtes connecté à un autre compte QRdx, donc rien n’a changé ici. Déconnectez-vous, puis connectez-vous au compte que vous souhaitez modifier.",
+      "signInTwoFactorOn": "La validation en deux étapes est désormais activée : confirmez plutôt avec elle, via votre passkey, votre application d’authentification ou un code de secours."
+    },
+    "passkeyMessages": {
+      "reauth": "Pour votre sécurité, déconnectez-vous puis reconnectez-vous, et ajoutez votre passkey dans un délai d’un jour.",
+      "signedOut": "Connectez-vous pour gérer vos passkeys.",
+      "invalidName": "Donnez un nom à la passkey.",
+      "notFound": "Cette passkey n’existe déjà plus. Actualisez la page.",
+      "cancelled": "L’ajout de la passkey a été annulé.",
+      "alreadyAdded": "Cet appareil ou ce gestionnaire de mots de passe possède déjà une passkey pour votre compte.",
+      "noUserVerification": "Cette passkey n’a pas demandé votre code PIN, votre empreinte ou votre visage, elle ne peut donc pas être utilisée avec QRdx. Essayez un autre appareil ou gestionnaire de mots de passe.",
+      "expired": "Cela a pris trop de temps. Essayez d’ajouter à nouveau la passkey.",
+      "notSupported": "Ce navigateur ne peut pas créer de passkeys.",
+      "rateLimited": "Trop de tentatives. Patientez quelques minutes, puis réessayez.",
+      "failed": "Une erreur s’est produite. Veuillez réessayer."
+    },
+    "mailProvider": {
+      "open": "Ouvrir {provider}"
     },
     "signInErrors": {
       "githubUnverified": "{provider} n’a pas vérifié cette adresse e-mail, donc QRdx ne peut pas créer de compte avec celle-ci. Vérifiez-la dans les paramètres e-mail de {provider} et réessayez, ou connectez-vous avec un code reçu par e-mail.",
+      "githubUnverifiedNoEmailCodes": "{provider} n’a pas vérifié cette adresse e-mail, donc QRdx ne peut pas créer de compte avec elle. Vérifiez-la dans les paramètres e-mail de {provider} et réessayez{otherWay, select, yes {, ou essayez une autre méthode de connexion} other {}}.",
       "googleUnverified": "{provider} n’a pas vérifié cette adresse e-mail, donc QRdx ne peut pas créer de compte avec celle-ci. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "googleUnverifiedNoEmailCodes": "{provider} n’a pas vérifié cette adresse e-mail, donc QRdx ne peut pas créer de compte avec elle. {otherWay, select, yes {Essayez une autre méthode de connexion.} other {Demandez de l’aide à la personne qui gère ce site.}}",
       "otherUnverified": "L’adresse e-mail de ce compte n’est pas vérifiée, donc QRdx ne peut pas créer de compte avec celle-ci. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "otherUnverifiedNoEmailCodes": "L’adresse e-mail de ce compte n’est pas vérifiée, donc QRdx ne peut pas créer de compte avec elle. {otherWay, select, yes {Essayez une autre méthode de connexion.} other {Demandez de l’aide à la personne qui gère ce site.}}",
       "cancelled": "Connexion annulée.",
       "accountNotLinked": "Un compte existe déjà avec cette adresse et n’est pas lié à {provider}. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "accountNotLinkedNoEmailCodes": "Un compte avec cette adresse existe déjà et n’est pas lié à {provider}. {otherWay, select, yes {Essayez une autre méthode de connexion.} other {Demandez de l’aide à la personne qui gère ce site.}}",
       "emailNotShared": "{provider} n’a pas partagé d’adresse e-mail, donc QRdx ne peut pas vous connecter avec ce service. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "emailNotSharedNoEmailCodes": "{provider} n’a pas partagé d’adresse e-mail, donc QRdx ne peut pas vous connecter avec ce service. {otherWay, select, yes {Essayez une autre méthode de connexion.} other {Demandez de l’aide à la personne qui gère ce site.}}",
       "tookTooLong": "Cette connexion a pris trop de temps ou a été lancée ailleurs. Réessayez.",
       "providerFailed": "La connexion avec {provider} n’a pas fonctionné. Réessayez ou connectez-vous autrement.",
       "sso": {
         "emailRequired": "Saisissez votre e-mail professionnel.",
         "notFound": "SSO n’est pas configuré pour cette adresse.",
+        "notSetUpFor": "Aucun SSO n’est configuré pour {domain}.",
+        "notAvailableFor": "Le SSO pour {domain} n’est pas disponible pour le moment. Connectez-vous autrement.",
         "required": "Votre entreprise impose l’authentification unique (SSO) pour cette adresse. Connectez-vous avec SSO.",
         "unavailable": "L’authentification unique n’est pas disponible pour cet espace de travail pour le moment. Connectez-vous autrement.",
         "emailOutsideDomain": "Votre fournisseur d’identité a envoyé une adresse extérieure au domaine de votre entreprise. QRdx ne peut donc pas vous connecter avec celle-ci. Contactez l’administrateur de votre espace de travail.",
@@ -8987,6 +9281,7 @@
         "unsolicitedResponse": "QRdx n’a pas pu accepter cette connexion depuis la liste d’applications de votre entreprise. Partez de la page de connexion de QRdx : choisissez Se connecter avec SSO et saisissez votre adresse e-mail professionnelle. Si le problème persiste, contactez l’administrateur de votre espace de travail.",
         "replayDetected": "Cette connexion a déjà été utilisée. Connectez-vous à nouveau.",
         "accountNotLinked": "Un compte avec cette adresse existe déjà et n’a pas pu être associé. Connectez-vous plutôt avec un code envoyé par e-mail.",
+        "accountNotLinkedNoEmailCodes": "Un compte avec cette adresse existe déjà et n’a pas pu être lié. {otherWay, select, yes {Essayez une autre méthode de connexion.} other {Demandez de l’aide à la personne qui gère ce site.}}",
         "failed": "L’authentification unique n’a pas fonctionné. Réessayez ou connectez-vous autrement.",
         "rateLimited": "Trop de tentatives. Patientez une minute, puis réessayez."
       }

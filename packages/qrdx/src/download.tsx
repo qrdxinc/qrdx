@@ -1,4 +1,5 @@
 import type { QRProps } from "../types";
+import { canvasToBMP } from "./bmp";
 import { DEFAULT_SIZE } from "./constants";
 import { epsToDataUrl, getQRAsEPS } from "./eps";
 import { getQRAsCanvas, getQRAsSVGDataUri } from "./export";
@@ -6,10 +7,18 @@ import { getFrameDimensions } from "./frame";
 import { blobToDataUrl, canvasToWebP, type WebPOptions } from "./webp";
 
 /**
- * "webp" is lossless unless `quality` is set. "eps" is vector PostScript:
- * `size.width` becomes points (72 per inch).
+ * "webp" is lossless unless `quality` is set. "bmp" is an uncompressed
+ * 24-bit bitmap: a transparent background comes out white. "eps" is vector
+ * PostScript: `size.width` becomes points (72 per inch).
  */
-export type DownloadFormat = "png" | "jpg" | "webp" | "svg" | "pdf" | "eps";
+export type DownloadFormat =
+  | "png"
+  | "jpg"
+  | "webp"
+  | "bmp"
+  | "svg"
+  | "pdf"
+  | "eps";
 
 export interface DownloadFormatInfo {
   mimeType: string;
@@ -22,13 +31,15 @@ export interface DownloadFormatInfo {
  * Every download format with its MIME type and file extension. Each is made
  * by one branch of downloadQRCode and getQRCodeDataUrl: PNG and JPG by the
  * canvas, WebP by canvasToWebP (the canvas, or the built-in lossless
- * encoder), SVG from the markup, PDF with jspdf, EPS by getQRAsEPS. A new
+ * encoder), BMP by canvasToBMP (the built-in encoder: no browser writes it),
+ * SVG from the markup, PDF with jspdf, EPS by getQRAsEPS. A new
  * format needs an entry here and a branch there.
  */
 export const DOWNLOAD_FORMATS: Record<DownloadFormat, DownloadFormatInfo> = {
   png: { mimeType: "image/png", extension: "png", vector: false },
   jpg: { mimeType: "image/jpeg", extension: "jpg", vector: false },
   webp: { mimeType: "image/webp", extension: "webp", vector: false },
+  bmp: { mimeType: "image/bmp", extension: "bmp", vector: false },
   svg: { mimeType: "image/svg+xml", extension: "svg", vector: true },
   // A PDF download holds the PNG, so it's named after its pixel size.
   pdf: { mimeType: "application/pdf", extension: "pdf", vector: false },
@@ -136,7 +147,7 @@ const getMimeType = (format: DownloadFormat): string =>
   (DOWNLOAD_FORMATS[format] ?? DOWNLOAD_FORMATS.png).mimeType;
 
 /**
- * The default file name of a download: for PNG, JPG and WebP (and the image
+ * The default file name of a download: for PNG, JPG, WebP and BMP (and the image
  * a PDF holds) the exact pixel size of what is saved, which a frame makes
  * bigger than the code (a 400 px code in a bottom banner is 496 × 568);
  * SVG and EPS have no pixel size and name none.
@@ -172,6 +183,23 @@ export async function getQRAsWebP(
   )) as HTMLCanvasElement;
   try {
     return await canvasToWebP(canvas, options);
+  } finally {
+    canvas.remove();
+  }
+}
+
+/**
+ * The code as a 24-bit BMP image (plus its frame, if any). A transparent
+ * background comes out white. Every browser gets it from QRdx's own encoder.
+ */
+export async function getQRAsBMP(qrProps: QRProps): Promise<Blob> {
+  const canvas = (await getQRAsCanvas(
+    qrProps,
+    "image/png",
+    true
+  )) as HTMLCanvasElement;
+  try {
+    return canvasToBMP(canvas);
   } finally {
     canvas.remove();
   }
@@ -326,6 +354,9 @@ export async function downloadQRCode(
     } else if (format === "webp") {
       const webp = await getQRAsWebP(propsWithSize, { quality });
       downloadFile(await blobToDataUrl(webp), finalFilename);
+    } else if (format === "bmp") {
+      const bmp = await getQRAsBMP(propsWithSize);
+      downloadFile(await blobToDataUrl(bmp), finalFilename);
     } else {
       // Download as PNG or JPG
       const mimeType = getMimeType(format);
@@ -374,6 +405,10 @@ export async function getQRCodeDataUrl(
 
   if (format === "webp") {
     return await blobToDataUrl(await getQRAsWebP(propsWithSize, options));
+  }
+
+  if (format === "bmp") {
+    return await blobToDataUrl(await getQRAsBMP(propsWithSize));
   }
 
   const mimeType = getMimeType(format);

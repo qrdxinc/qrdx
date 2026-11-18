@@ -27,6 +27,8 @@ import {
 } from "@/app/(app)/dashboard/domains/_lib/domains";
 import { HttpError } from "@/lib/error-response";
 import { baseUrl } from "@/lib/metadata";
+import { claimAlias, findTakenAliasPaths } from "@/lib/path-alias-store";
+import { PATH_ALIAS_MESSAGES } from "@/lib/path-aliases";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import type { ActiveScope } from "@/lib/scope";
 import {
@@ -34,7 +36,11 @@ import {
   SHARED_SLUG_SCOPE,
   SHORT_LINK_BASE,
 } from "@/lib/short-links";
-import { findTakenSlugs, isUniqueViolation } from "@/lib/slug-claims";
+import {
+  aliasBlockedSlugs,
+  findTakenSlugs,
+  isUniqueViolation,
+} from "@/lib/slug-claims";
 import type { MigrateRepo, Scope } from "../importer";
 import { readJobs } from "../jobs";
 import {
@@ -256,6 +262,7 @@ export const dbRepo: MigrateRepo = {
   findImported,
   findByDestinations,
   findTakenSlugs: (slugs, domainId) => findTakenSlugs(slugs, domainId),
+  findTakenAliases: (paths, domainId) => findTakenAliasPaths(paths, domainId),
   existingTagNames: (scope) => existingTagNames(asScope(scope)),
   domainFor,
   async qrdxHosts(scope) {
@@ -407,6 +414,30 @@ export const dbRepo: MigrateRepo = {
       .select(refColumns)
       .from(qrCode)
       .where(where(rows.map((row) => row.codeId)));
+
+    // Path aliases (the old paths that can't be back-halves), for codes that
+    // made it onto their domain.
+    for (const row of rows) {
+      if (!(row.alias && row.bindDomainId)) continue;
+      const code = final.find((entry) => entry.id === row.codeId);
+      const claim =
+        code?.domainId === row.bindDomainId
+          ? await claimAlias({
+              codeId: row.codeId,
+              domainId: row.bindDomainId,
+              path: row.alias,
+            })
+          : null;
+      if (!claim?.ok) {
+        const why = claim
+          ? PATH_ALIAS_MESSAGES[claim.problem]
+          : "It isn't on the domain.";
+        warnings.set(
+          row.codeId,
+          `Created, but it doesn't answer at ${row.alias}. ${why}`,
+        );
+      }
+    }
     const refs = await toRefs(final);
     for (const row of rows) {
       const ref = refs.get(row.codeId);
@@ -435,6 +466,22 @@ export const dbRepo: MigrateRepo = {
   },
   async attachDomain(scope, ids, domainId) {
     await assertBindableDomains(asScope(scope), [domainId]);
+    // A code whose hosted page (/p/<slug>) would hide another code's path
+    // alias there stays on qrdx.dev/q/, like one whose slug is taken.
+    const codes =
+      ids.length > 0
+        ? await db
+            .select({ id: qrCode.id, slug: qrCode.slug })
+            .from(qrCode)
+            .where(and(inArray(qrCode.id, ids), scopeWhere(asScope(scope))))
+        : [];
+    const blocked = await aliasBlockedSlugs(
+      codes.map((code) => code.slug),
+      domainId,
+    );
+    const movable = codes.flatMap((code) =>
+      blocked.has(code.slug) ? [] : [code.id],
+    );
     const attach = (batch: string[]) =>
       db
         .update(qrCode)
@@ -442,8 +489,8 @@ export const dbRepo: MigrateRepo = {
         .where(and(inArray(qrCode.id, batch), scopeWhere(asScope(scope))))
         .returning({ id: qrCode.id });
     let total = 0;
-    for (let i = 0; i < ids.length; i += 200) {
-      const batch = ids.slice(i, i + 200);
+    for (let i = 0; i < movable.length; i += 200) {
+      const batch = movable.slice(i, i + 200);
       try {
         total += (await attach(batch)).length;
       } catch (error) {

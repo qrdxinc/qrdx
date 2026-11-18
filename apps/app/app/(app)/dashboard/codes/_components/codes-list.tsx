@@ -300,6 +300,9 @@ export function CodesList({
                 <DropdownMenuItem onSelect={() => zip("webp")}>
                   {t("webpImagesZip")}
                 </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => zip("bmp")}>
+                  {t("bmpImagesZip")}
+                </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => zip("svg")}>
                   {t("svgImagesZip")}
                 </DropdownMenuItem>

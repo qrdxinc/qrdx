@@ -1,3 +1,4 @@
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import {
   EmailButton,
   EmailDivider,
@@ -13,36 +14,15 @@ export interface TeamInviteEmailProps {
   memberRole: string;
   inviteUrl: string;
   expiresAt: Date | string;
+  /** The invitee's language (lib/events/emails.tsx picks it) */
+  intl?: EmailIntl;
 }
 
-// The workspace roles (apps/app/lib/permissions.ts), as the invitation
-// says them. Kept here so the template renders on its own.
-const ROLE_COPY = {
-  owner: {
-    phrase: "an owner",
-    line: "Owners can do everything, including billing and deleting the workspace.",
-  },
-  admin: {
-    phrase: "an admin",
-    line: "Admins manage people, settings, domains and everyone's codes.",
-  },
-  member: {
-    phrase: "a member",
-    line: "Members create codes and pages and edit the workspace's codes.",
-  },
-  billing: {
-    phrase: "a billing manager",
-    line: "Billing managers handle the plan and billing, and can see everything else without changing it.",
-  },
-  viewer: {
-    phrase: "a viewer",
-    line: "Viewers see the workspace's codes, pages and analytics without changing anything.",
-  },
-} as const;
+// The workspace roles (apps/app/lib/permissions.ts), strongest first. What
+// the invitation says about each is emails.teamInvite in messages/en.json.
+const RANK = ["owner", "admin", "member", "billing", "viewer"] as const;
 
-export type InviteRole = keyof typeof ROLE_COPY;
-
-const RANK: InviteRole[] = ["owner", "admin", "member", "billing", "viewer"];
+export type InviteRole = (typeof RANK)[number];
 
 /**
  * The strongest role in Better Auth's comma-separated field, each part
@@ -54,18 +34,20 @@ export function inviteRole(role: string | null | undefined): InviteRole {
   return RANK.find((known) => roles.includes(known)) ?? "viewer";
 }
 
-/** "an admin", "a billing manager", "a viewer", ... */
-export function inviteRolePhrase(role: string | null | undefined): string {
-  return ROLE_COPY[inviteRole(role)].phrase;
-}
-
 /** The subject line, also the inbox preview: who, where and as what. */
-export function teamInviteSubject({
-  inviterName,
-  teamName,
-  memberRole,
-}: Pick<TeamInviteEmailProps, "inviterName" | "teamName" | "memberRole">) {
-  return `${inviterName} invited you to ${teamName} on QRdx as ${inviteRolePhrase(memberRole)}`;
+export function teamInviteSubject(
+  {
+    inviterName,
+    teamName,
+    memberRole,
+  }: Pick<TeamInviteEmailProps, "inviterName" | "teamName" | "memberRole">,
+  intl: EmailIntl = ENGLISH_EMAIL,
+) {
+  return intl.t("teamInvite.subject", {
+    inviter: inviterName,
+    team: teamName,
+    role: inviteRole(memberRole),
+  });
 }
 
 /** Transactional: sent when an owner or admin invites someone to a workspace. */
@@ -75,25 +57,29 @@ export function TeamInviteEmail({
   memberRole,
   inviteUrl,
   expiresAt,
+  intl = ENGLISH_EMAIL,
 }: TeamInviteEmailProps) {
+  const { t } = intl;
+  const role = inviteRole(memberRole);
   return (
     <EmailLayout
-      preview={teamInviteSubject({ inviterName, teamName, memberRole })}
-      reason="You got this email because someone invited this address to a QRdx workspace."
+      intl={intl}
+      preview={teamInviteSubject({ inviterName, teamName, memberRole }, intl)}
+      reason={t("teamInvite.reason")}
     >
-      <EmailHeading>Join {teamName} on QRdx</EmailHeading>
+      <EmailHeading>{t("teamInvite.heading", { team: teamName })}</EmailHeading>
       <EmailText>
-        {inviterName} invited you to the {teamName} workspace as{" "}
-        {inviteRolePhrase(memberRole)}. {ROLE_COPY[inviteRole(memberRole)].line}
+        {t("teamInvite.body", { inviter: inviterName, team: teamName, role })}{" "}
+        {t(`teamInvite.roles.${role}`)}
       </EmailText>
-      <EmailButton href={inviteUrl}>Accept invitation</EmailButton>
+      <EmailButton href={inviteUrl}>{t("teamInvite.accept")}</EmailButton>
       <EmailDivider />
       <MutedText>
-        Sign in with this email address to accept. The invitation expires on{" "}
-        {formatEmailDateTime(expiresAt)}. If you weren't expecting it, you can
-        ignore this email.
+        {t("teamInvite.expires", {
+          date: formatEmailDateTime(expiresAt, intl.locale),
+        })}
       </MutedText>
-      <MutedText>Or paste this link into your browser: {inviteUrl}</MutedText>
+      <MutedText>{t("teamInvite.pasteLink", { url: inviteUrl })}</MutedText>
     </EmailLayout>
   );
 }

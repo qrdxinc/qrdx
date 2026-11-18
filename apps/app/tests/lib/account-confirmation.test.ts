@@ -69,6 +69,12 @@ vi.mock(
   "@repo/database",
   async () => (await import("../support/fake-db")).repoDatabase,
 );
+// Refusals in the person's language (lib/account/confirmation-server.tsx):
+// English here.
+vi.mock(
+  "@/lib/i18n/app-locale",
+  async () => (await import("../support/intl")).appLocale,
+);
 vi.mock("next/headers", () => ({
   headers: async () =>
     new Headers({ host: "localhost:3000", "user-agent": "test" }),
@@ -135,6 +141,7 @@ vi.mock("@/lib/account/passkeys-server", () => ({
 }));
 vi.mock("@/lib/auth/email-change-code", () => ({
   sendEmailChangeCode: async () => {},
+  emailChangeCodeAllowed: async () => true,
 }));
 vi.mock("@/lib/account/email-change-server", () => ({
   afterEmailChanged: async () => {

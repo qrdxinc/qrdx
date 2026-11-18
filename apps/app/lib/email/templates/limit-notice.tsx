@@ -1,3 +1,4 @@
+import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import {
   EmailButton,
   EmailDivider,
@@ -20,14 +21,16 @@ export interface LimitNoticeEmailProps {
   /** "Free" */
   planName: string;
   /**
-   * The app's own limit sentences (app/(app)/settings/usage/_lib/limit-copy.ts),
-   * with the reset date for monthly allowances
+   * What Plan & usage says about the limit (lib/limit-notices/copy.ts), with
+   * the reset date for monthly allowances
    */
   reason: string;
   /** Plan & usage for the workspace */
   usageUrl: string;
   /** Why this person gets it */
   recipientReason: string;
+  /** The recipients' language; the strings above come in it too */
+  intl?: EmailIntl;
 }
 
 /**
@@ -44,39 +47,28 @@ export function LimitNoticeEmail({
   reason,
   usageUrl,
   recipientReason,
+  intl = ENGLISH_EMAIL,
 }: LimitNoticeEmailProps) {
-  const full = level === "full";
+  const { t } = intl;
+  const words = { level, workspace: workspaceName, noun, value };
   const rows = [
     { label: limitLabel, value },
-    { label: "Plan", value: planName },
+    { label: t("limitNotice.plan"), value: planName },
   ];
   return (
     <EmailLayout
-      preview={
-        full
-          ? `${workspaceName} has reached its limit of ${noun}`
-          : `${workspaceName} has used ${value} ${noun}`
-      }
+      intl={intl}
+      preview={t("limitNotice.preview", words)}
       reason={recipientReason}
     >
-      <EmailHeading>
-        {full
-          ? `${workspaceName} has reached a plan limit`
-          : `${workspaceName} is close to a plan limit`}
-      </EmailHeading>
+      <EmailHeading>{t("limitNotice.heading", words)}</EmailHeading>
       <EmailText>
-        {full
-          ? `${workspaceName} has used all its ${noun}.`
-          : `${workspaceName} has used ${value} ${noun}.`}{" "}
-        {reason}
+        {t("limitNotice.body", words)} {reason}
       </EmailText>
       <DetailsTable rows={rows} />
-      <EmailButton href={usageUrl}>See plan and usage</EmailButton>
+      <EmailButton href={usageUrl}>{t("limitNotice.button")}</EmailButton>
       <EmailDivider />
-      <MutedText>
-        You get at most two of these per limit each month: one at 90% and one at
-        100%.
-      </MutedText>
+      <MutedText>{t("limitNotice.howOften")}</MutedText>
     </EmailLayout>
   );
 }
