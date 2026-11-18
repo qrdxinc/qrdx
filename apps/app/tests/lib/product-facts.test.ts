@@ -94,6 +94,7 @@ describe("PRODUCT_FACTS", () => {
       designQrPerMinute: 20,
       // lib/pricing.ts
       moneyBackDays: 30,
+      switcherMoneyBackDays: 60,
       nonprofitDiscountPercent: 50,
       // lib/scan-history.ts: 365 days, written "1 year"
       freeScanHistoryYears: 1,
