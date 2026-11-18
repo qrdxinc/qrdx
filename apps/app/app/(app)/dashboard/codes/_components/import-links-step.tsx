@@ -252,7 +252,7 @@ export function LinksStep({
   onContinue: (links: SourceLink[]) => void;
 }) {
   const t = useTranslations("app.dashboard.codes.importLinksStep");
-  const { name, capabilities } = API_PROVIDERS[provider];
+  const { name, capabilities, listScope } = API_PROVIDERS[provider];
   const connected = status?.connection === "active";
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
@@ -484,6 +484,12 @@ export function LinksStep({
             </Select>
           )}
         </div>
+
+        {listScope === "website" && (
+          <Note icon={<Info />}>
+            <p>{t("onlyWebsiteCodesListed", { name })}</p>
+          </Note>
+        )}
 
         {error && (
           <Note icon={<Warning2 />} tone="warning">

@@ -7,7 +7,9 @@ import {
   encryptApiKey,
   getIntegrationRegistry,
   isIntegrationApiError,
+  isMigrationSourceProvider,
   isShortLinkProvider,
+  verifyMigrationSourceCredentials,
   verifyShortLinkCredentials,
 } from "@repo/integrations";
 import { and, eq } from "drizzle-orm";
@@ -56,9 +58,24 @@ async function guard(
   }
 }
 
+/** Checks a pasted key with the provider; null when it takes none. */
+function verifyKey(
+  provider: string,
+  apiKey: string,
+): Promise<Record<string, unknown>> | null {
+  if (isShortLinkProvider(provider)) {
+    return verifyShortLinkCredentials(provider, apiKey);
+  }
+  if (isMigrationSourceProvider(provider)) {
+    return verifyMigrationSourceCredentials(provider, apiKey);
+  }
+  return null;
+}
+
 /**
- * Connects Bitly (generic access token), Rebrandly or Short.io with a pasted
- * key: checked against the provider first, then stored encrypted.
+ * Connects Bitly (generic access token), Rebrandly, Short.io or Uniqode (an
+ * import source) with a pasted key: checked against the provider first, then
+ * stored encrypted.
  */
 export async function connectWithApiKeyAction(
   provider: string,
@@ -76,7 +93,10 @@ export async function connectWithApiKeyAction(
   }
 
   const definition = getIntegrationRegistry().get(input.data.provider);
-  if (!(definition?.apiKey && isShortLinkProvider(input.data.provider))) {
+  const takesKeys =
+    isShortLinkProvider(input.data.provider) ||
+    isMigrationSourceProvider(input.data.provider);
+  if (!(definition?.apiKey && takesKeys)) {
     return { ok: false, error: "This integration doesn't use API keys." };
   }
   if (!isIntegrationConfigured(input.data.provider)) {
@@ -88,10 +108,7 @@ export async function connectWithApiKeyAction(
 
   let metadata: Record<string, unknown>;
   try {
-    metadata = await verifyShortLinkCredentials(
-      input.data.provider,
-      input.data.apiKey,
-    );
+    metadata = (await verifyKey(input.data.provider, input.data.apiKey)) ?? {};
   } catch (error) {
     if (
       isIntegrationApiError(error) &&

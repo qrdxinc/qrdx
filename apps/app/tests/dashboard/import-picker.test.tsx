@@ -47,16 +47,20 @@ function render(statuses: ProviderStatus[] | null, jobs: JobSummary[] = []) {
 }
 
 describe("Import provider picker", () => {
-  it("lists Bitly, Rebrandly and Short.io but not Dub", () => {
+  it("lists Bitly, Rebrandly, Short.io and Uniqode but not Dub", () => {
     // Even a stale status entry for Dub doesn't bring the tile back.
     const { picker } = render([
       status("dub"),
       status("bitly"),
       status("rebrandly"),
       status("short-io"),
+      status("uniqode-api"),
     ]);
-    for (const name of ["Bitly", "Rebrandly", "Short.io"]) {
-      expect(picker).toContain(`>${name}</span>`);
+    // Uniqode also has an export-file tile; this is the connected-account row.
+    const [, connected = ""] = picker.split('data-provider-grid="api"');
+    const [apiTiles = ""] = connected.split("From an export file");
+    for (const name of ["Bitly", "Rebrandly", "Short.io", "Uniqode"]) {
+      expect(apiTiles).toContain(`>${name}</span>`);
     }
     expect(picker).not.toMatch(/\bDub\b/);
   });

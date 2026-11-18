@@ -7777,6 +7777,7 @@
           "reconnect": "Reconnect",
           "noLinksMatchTheseFilters": "No links match these filters.",
           "noLinksInThisName": "No links in this {name} account.",
+          "onlyWebsiteCodesListed": "Only dynamic website codes are listed. {name}'s other code types (PDF, vCard Plus, forms and the like) open pages {name} hosts, so make those again in QRdx.",
           "theNameSignInWas": "The {name} sign-in was cancelled.",
           "couldntConnectNameTryAgain": "Couldn't connect {name}. Try again."
         },
