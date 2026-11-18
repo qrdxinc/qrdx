@@ -144,9 +144,22 @@ describe("links in code that translated pages import", () => {
 
 // ─── 2. Rendered in Hindi ────────────────────────────────────────────────────
 
+/** The page the links render on: the Hindi home page unless a test moves it. */
+const navigation = vi.hoisted(() => ({ pathname: "/hi" }));
+
+/** Renders `run` as if on `pathname`, then back on the Hindi home page. */
+async function onPage<T>(pathname: string, run: () => Promise<T>): Promise<T> {
+  navigation.pathname = pathname;
+  try {
+    return await run();
+  } finally {
+    navigation.pathname = "/hi";
+  }
+}
+
 vi.mock("next/navigation", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/navigation")>()),
-  usePathname: () => "/hi",
+  usePathname: () => navigation.pathname,
   useSearchParams: () => new URLSearchParams(),
   useRouter: () => ({
     push: () => undefined,
@@ -338,12 +351,16 @@ describe("links to the docs", () => {
   });
 
   it("leave every other page to next/link", async () => {
-    expect(await render("/customers")).toContain("data-next-link");
     expect(await render("/playground")).toContain("data-next-link");
-    // A docs page's Markdown is a file, not a page of either app.
-    expect(await render("/docs/dynamic-qr-codes.md")).toContain(
-      "data-next-link",
-    );
+    // The (app) layout's pages, linked from one of its own (a link from
+    // app/[lang] into them is a plain <a>: below).
+    await onPage("/customers", async () => {
+      expect(await render("/customers/acme")).toContain("data-next-link");
+      // A docs page's Markdown is a file, not a page of either app.
+      expect(await render("/docs/dynamic-qr-codes.md")).toContain(
+        "data-next-link",
+      );
+    });
   });
 });
 
@@ -388,16 +405,19 @@ describe("links to the site's pages", () => {
   });
 
   it("leave neighbouring pages to next/link", async () => {
-    expect(await render("/customers")).toContain("data-next-link");
-    expect(await render("/blogx")).toContain("data-next-link");
-    // The home group is / and /home exactly.
-    expect(await render("/homepage")).toContain("data-next-link");
-    expect(await render("/home/x")).toContain("data-next-link");
-    // The templates' own pages and Slack's linking page stay in this app.
-    expect(await render("/templates/wifi")).toContain("data-next-link");
-    expect(await render("/integrations/slack/link")).toContain(
-      "data-next-link",
-    );
+    // Pages of the (app) layout, linked from one of its own.
+    await onPage("/customers", async () => {
+      expect(await render("/customers")).toContain("data-next-link");
+      expect(await render("/blogx")).toContain("data-next-link");
+      // The home group is / and /home exactly.
+      expect(await render("/homepage")).toContain("data-next-link");
+      expect(await render("/home/x")).toContain("data-next-link");
+      // The templates' own pages and Slack's linking page stay in this app.
+      expect(await render("/templates/wifi")).toContain("data-next-link");
+      expect(await render("/integrations/slack/link")).toContain(
+        "data-next-link",
+      );
+    });
   });
 
   it("hold for the header and footer entries that point at the blog", async () => {
@@ -433,6 +453,100 @@ describe("links to the site's pages", () => {
       for (const tag of logos) {
         expect(tag, `${name}: ${tag}`).not.toContain("data-next-link");
       }
+    }
+  });
+});
+
+// ─── 5. Across this app's two root layouts ───────────────────────────────────
+
+describe("links across this app's two root layouts", () => {
+  // app/[lang] (translated and English-only pages) and app/(app) (sign-in,
+  // the dashboard, shared themes …) are separate root layouts: Next loads a
+  // page across them in full even through next/link, so the link is a plain
+  // <a>, and the visit's start rides along (@repo/analytics/landing).
+  const render = async (href: string, props: object = {}) => {
+    const { LocaleLink } = await import("@/components/i18n/locale-link");
+    return renderHindi(
+      <LocaleLink href={href} {...props}>
+        x
+      </LocaleLink>,
+    );
+  };
+
+  it("are plain <a> elements from app/[lang] into app/(app)", async () => {
+    for (const pathname of ["/hi", "/hi/playground", "/en/scan", "/mcp"]) {
+      await onPage(pathname, async () => {
+        for (const href of [
+          "/dashboard",
+          "/sign-in?mode=signup&next=%2Fdashboard",
+          "/settings/general",
+          // A shared theme: /playground/<id> is app/(app)'s.
+          "/playground/abc123",
+          "/community",
+        ]) {
+          expect(
+            await render(href, { prefetch: false }),
+            `${pathname} → ${href}`,
+          ).toBe(`<a href="${href.replaceAll("&", "&amp;")}">x</a>`);
+        }
+      });
+    }
+  });
+
+  it("are plain <a> elements from app/(app) into app/[lang], in the page's language", async () => {
+    for (const pathname of ["/dashboard/acme", "/sign-in", "/community"]) {
+      await onPage(pathname, async () => {
+        expect(await render("/playground", { prefetch: false })).toBe(
+          '<a href="/hi/playground">x</a>',
+        );
+        expect(await render("/ai/art", { prefetch: false })).toBe(
+          '<a href="/hi/ai/art">x</a>',
+        );
+      });
+    }
+  });
+
+  it("leave links within one root layout to next/link", async () => {
+    expect(await render("/ai")).toContain("data-next-link");
+    expect(await render("/playground#editor")).toContain("data-next-link");
+    await onPage("/dashboard/acme", async () => {
+      expect(await render("/settings/general")).toContain("data-next-link");
+      expect(await render("/dashboard/acme/codes")).toContain("data-next-link");
+    });
+    // In-page links and other sites aren't page loads into either layout.
+    expect(await render("#top")).toContain("data-next-link");
+  });
+
+  it("tell the two layouts apart exactly as their route folders do", async () => {
+    const { isLangRootPath } = await import("@repo/i18n/paths");
+    /** Every page route under `dir`, route groups dropped, dynamic segments filled in. */
+    const routes = (dir: string, at = ""): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+        if (!entry.isDirectory()) {
+          return entry.name === "page.tsx" ? [at || "/"] : [];
+        }
+        const name = entry.name;
+        // Parallel routes and private folders aren't URL segments of their own.
+        if (name.startsWith("@") || name.startsWith("_")) return [];
+        const segment = name.startsWith("(")
+          ? ""
+          : name.startsWith("[")
+            ? "/x"
+            : `/${name}`;
+        return routes(join(dir, name), `${at}${segment}`);
+      });
+    const lang = routes(join(ROOT, "app/[lang]"));
+    const app = routes(join(ROOT, "app/(app)"));
+    expect(lang.length).toBeGreaterThan(20);
+    expect(app.length).toBeGreaterThan(50);
+    for (const route of lang) {
+      expect(isLangRootPath(route), `app/[lang] ${route}`).toBe(true);
+      expect(isLangRootPath(`/es${route === "/" ? "" : route}`), route).toBe(
+        true,
+      );
+    }
+    for (const route of app) {
+      expect(isLangRootPath(route), `app/(app) ${route}`).toBe(false);
     }
   });
 });
