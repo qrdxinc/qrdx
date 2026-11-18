@@ -2,6 +2,8 @@ import type { BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import type { EmailOTPOptions } from "better-auth/plugins";
 import {
+  EMAIL_CHANGE_UNAVAILABLE,
+  REQUEST_EMAIL_CHANGE_PATH,
   SEND_SIGN_IN_CODE_PATH,
   SIGN_IN_CODES_UNAVAILABLE,
 } from "./sign-in-code-rules";
@@ -13,7 +15,8 @@ import {
  *   with whether codes can be delivered on this deployment at all and its
  *   per-address limit;
  * - email-change codes (sent to the NEW address): registered by the server
- *   actions that request them (apps/app/app/settings/account/_lib).
+ *   actions that request them (apps/app/app/settings/account/_lib), with
+ *   whether codes can be delivered on this deployment at all.
  * Email verification and password reset codes are not used; their endpoints
  * are disabled in ./server.ts.
  */
@@ -46,6 +49,9 @@ const SIGN_IN_CODES_DELIVERABLE = Symbol.for(
   "@repo/auth/sign-in-codes-deliverable"
 );
 const SIGN_IN_CODE_LIMIT = Symbol.for("@repo/auth/sign-in-code-limit");
+const EMAIL_CHANGE_CODES_DELIVERABLE = Symbol.for(
+  "@repo/auth/email-change-codes-deliverable"
+);
 type SenderSlots = Record<symbol, SignInCodeSender | undefined>;
 type DeliverableSlot = Record<symbol, (() => boolean) | undefined>;
 type LimitSlot = Record<symbol, SignInCodeLimit | undefined>;
@@ -70,10 +76,20 @@ export function registerSignInCodeSender(
   (globalThis as unknown as LimitSlot)[SIGN_IN_CODE_LIMIT] = mayRequest;
 }
 
+/**
+ * `deliverable` says whether a code can reach a new address here (the same
+ * rule as sign-in codes). While it says no, asking to change the email fails
+ * with EMAIL_CHANGE_UNAVAILABLE before a code is made (signInCodeGate below).
+ * Registered on its own: the server actions that ask for these codes may run
+ * where the /api/auth route, which registers the sign-in sender, never loaded.
+ */
 export function registerEmailChangeCodeSender(
-  sender: EmailChangeCodeSender
+  sender: EmailChangeCodeSender,
+  deliverable: () => boolean
 ): void {
   (globalThis as unknown as SenderSlots)[SENDERS["change-email"]] = sender;
+  (globalThis as unknown as DeliverableSlot)[EMAIL_CHANGE_CODES_DELIVERABLE] =
+    deliverable;
 }
 
 const signInCodeLimit = () =>
@@ -89,6 +105,17 @@ export function signInCodesOffered(): boolean {
     SIGN_IN_CODES_DELIVERABLE
   ];
   return Boolean(sender && signInCodeLimit() && deliverable?.());
+}
+
+/** An email-change sender is registered and says codes can be delivered here. */
+export function emailChangeCodesOffered(): boolean {
+  const sender = (globalThis as unknown as SenderSlots)[
+    SENDERS["change-email"]
+  ];
+  const deliverable = (globalThis as unknown as DeliverableSlot)[
+    EMAIL_CHANGE_CODES_DELIVERABLE
+  ];
+  return Boolean(sender && deliverable?.());
 }
 
 /** Error code the sign-in dialog shows as "couldn't send the code". */
@@ -116,10 +143,11 @@ const RATE_LIMITED = "SignInCodeRateLimited";
 
 /**
  * Throw this from a sender when the address has asked for too many codes:
- * the request then fails with 429 ("too many requests") instead of
- * "couldn't send". The email-change sender does; sign-in codes are limited
- * before one is made (the limit registered with their sender). Matched by
- * name, so any copy of this module works.
+ * the error is 429 ("too many requests") instead of "couldn't send". The
+ * email-change sender does, and its request still answers "sent" (see
+ * `unsent` below); sign-in codes are limited before one is made (the limit
+ * registered with their sender). Matched by name, so any copy of this
+ * module works.
  */
 export function signInCodeRateLimited(): Error {
   const error = new Error("Too many codes requested for this address");
@@ -146,6 +174,15 @@ export function signInCodesUnavailable(): APIError {
   return new APIError("BAD_REQUEST", {
     code: SIGN_IN_CODES_UNAVAILABLE,
     message: "Email sign-in isn't set up on this site.",
+  });
+}
+
+/** The answer to a change of email where no code can be delivered. */
+export function emailChangeUnavailable(): APIError {
+  return new APIError("BAD_REQUEST", {
+    code: EMAIL_CHANGE_UNAVAILABLE,
+    message:
+      "Email isn't set up on this site, so the address can't be changed here.",
   });
 }
 
@@ -208,6 +245,8 @@ export const sendVerificationOTP: EmailOTPOptions["sendVerificationOTP"] =
 
 const onSendCodePath = (ctx: { path?: string }) =>
   ctx.path === SEND_SIGN_IN_CODE_PATH;
+const onRequestEmailChangePath = (ctx: { path?: string }) =>
+  ctx.path === REQUEST_EMAIL_CHANGE_PATH;
 
 /**
  * The per-address limit for a sign-in code request, before the endpoint
@@ -246,6 +285,14 @@ async function checkSignInCodeLimit(
  * The plugin emails a sign-in code whether or not the address has an
  * account (sign-up is on), and the limit counts by address alone, so none
  * of these answers says anything about accounts.
+ *
+ * And the request-email-change endpoint (called by the app through auth.api,
+ * which runs these hooks too): where no code can be delivered
+ * (emailChangeCodesOffered), it answers EMAIL_CHANGE_UNAVAILABLE before the
+ * address is looked at or the session checked, so every address gets the
+ * same answer. Otherwise Better Auth's own "sent" stands, failed sends included:
+ * it sends nothing to an address that already has an account, so passing a
+ * failure on would mark the addresses that have none.
  */
 export const signInCodeGate = () =>
   ({
@@ -261,6 +308,14 @@ export const signInCodeGate = () =>
               throw signInCodesUnavailable();
             }
             await checkSignInCodeLimit(ctx.body, mayRequest);
+          }),
+        },
+        {
+          matcher: onRequestEmailChangePath,
+          handler: createAuthMiddleware(() => {
+            if (emailChangeCodesOffered()) return Promise.resolve();
+            log("warn", "auth.email_otp.unavailable", { type: "change-email" });
+            return Promise.reject(emailChangeUnavailable());
           }),
         },
       ],

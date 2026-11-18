@@ -103,9 +103,12 @@ describe("@repo/auth sendVerificationOTP", () => {
       () => true,
       anyAddress,
     );
-    registerEmailChangeCodeSender(async ({ email, otp }) => {
-      change.push(`${email}:${otp}`);
-    });
+    registerEmailChangeCodeSender(
+      async ({ email, otp }) => {
+        change.push(`${email}:${otp}`);
+      },
+      () => true,
+    );
     for (const type of ["email-verification", "forget-password"] as const) {
       await sendVerificationOTP({ ...CODE, type });
     }
@@ -122,7 +125,7 @@ describe("@repo/auth sendVerificationOTP", () => {
   });
 
   it("refuses an email-change code when no sender is registered", async () => {
-    registerEmailChangeCodeSender(undefined as never);
+    registerEmailChangeCodeSender(undefined as never, () => true);
     await assert.rejects(
       sendVerificationOTP({ ...CODE, type: "change-email" }),
       (error: { body?: { code?: string } }) => {
@@ -133,9 +136,12 @@ describe("@repo/auth sendVerificationOTP", () => {
   });
 
   it("answers 429 when a new address got too many email-change codes", async () => {
-    registerEmailChangeCodeSender(async () => {
-      throw signInCodeRateLimited();
-    });
+    registerEmailChangeCodeSender(
+      async () => {
+        throw signInCodeRateLimited();
+      },
+      () => true,
+    );
     await assert.rejects(
       sendVerificationOTP({ ...CODE, type: "change-email" }),
       (error: { statusCode?: number; body?: { code?: string } }) => {

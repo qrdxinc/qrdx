@@ -42,6 +42,16 @@ describe("requestFailureMessage", () => {
     ).toBe(EMAIL_CHANGE_MESSAGES.invalidEmail);
   });
 
+  it("says email isn't set up where no code can be delivered", () => {
+    expect(
+      requestFailureMessage(
+        apiError(400, { code: "EMAIL_CHANGE_UNAVAILABLE" }),
+      ),
+    ).toBe(
+      "Email isn't set up on this site, so the address can't be changed here.",
+    );
+  });
+
   it("leaves unknown errors to the caller (logged as unexpected)", () => {
     expect(requestFailureMessage(new Error("boom"))).toBeNull();
     expect(requestFailureMessage(null)).toBeNull();

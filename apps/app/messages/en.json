@@ -6032,6 +6032,7 @@
           "verified": "Verified",
           "notVerified": "Not verified",
           "change": "Change",
+          "emailIsntSetUpOn": "Email isn't set up on this site, so the address can't be changed here.",
           "memberSinceMembersince": "Member since {memberSince}.",
           "yourName": "Your name",
           "howYouAppearInQrdx": "How you appear in QRdx and to people in your teams.",

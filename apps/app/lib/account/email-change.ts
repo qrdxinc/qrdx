@@ -12,8 +12,14 @@
  * an old stolen cookie can't move the account. An address that already
  * belongs to another account never gets a code: Better Auth answers as if it
  * sent one, so the form doesn't reveal which addresses have accounts, and
- * the confirming step checks again.
+ * the confirming step checks again. A send that fails answers the same way
+ * (anything else would mark the free addresses), so the dialog only says a
+ * code should arrive if no other account uses the address. Where this
+ * deployment can't deliver codes at all, every request is refused alike
+ * (EMAIL_CHANGE_UNAVAILABLE) and Settings doesn't offer the change.
  */
+
+import { EMAIL_CHANGE_UNAVAILABLE } from "@repo/auth/sign-in-code-rules";
 
 /** RFC 5321's limit on an address. */
 export const MAX_EMAIL_LENGTH = 254;
@@ -42,6 +48,8 @@ export const EMAIL_CHANGE_MESSAGES = {
   tooManyAttempts: "Too many wrong tries. Send a new code.",
   taken: "That email already belongs to another QRdx account.",
   signedOut: "Sign in to change your email.",
+  unavailable:
+    "Email isn't set up on this site, so the address can't be changed here.",
   failed: "Something went wrong. Please try again.",
 } as const;
 
@@ -61,6 +69,8 @@ export function requestFailureMessage(error: unknown): string | null {
   switch (body?.code) {
     case "EMAIL_CHANGE_CODE_NOT_SENT":
       return EMAIL_CHANGE_MESSAGES.notSent;
+    case EMAIL_CHANGE_UNAVAILABLE:
+      return EMAIL_CHANGE_MESSAGES.unavailable;
     case "INVALID_EMAIL":
       return EMAIL_CHANGE_MESSAGES.invalidEmail;
     case "UNAUTHORIZED":

@@ -18,6 +18,7 @@ import {
   linkableProviders,
   toSignInMethods,
 } from "@/lib/account/sign-in-methods";
+import { getSignInOptions } from "@/lib/auth/sign-in-options-server";
 import { getMyCommunityProfile } from "@/lib/community/profiles";
 import { CommunityUnavailableError } from "@/lib/community/store";
 import { getAppLocale, getAppTranslations } from "@/lib/i18n/app-locale";
@@ -147,6 +148,9 @@ export default async function AccountPage({
             image: session.user.image ?? null,
             memberSince: formatDate(new Date(session.user.createdAt)),
             canUpload: isStorageConfigured,
+            // The running server's answer (this page renders per request):
+            // where codes can't reach a new address, the change isn't offered.
+            canChangeEmail: getSignInOptions().email,
           }}
         />
 

@@ -31,6 +31,8 @@ export interface ProfileView {
   memberSince: string;
   /** R2 is configured, so pictures can be uploaded */
   canUpload: boolean;
+  /** A code can reach a new address here, so the email can be changed */
+  canChangeEmail: boolean;
 }
 
 function Avatar({
@@ -280,18 +282,26 @@ function EmailField({ profile }: { profile: ProfileView }) {
             <Badge variant="outline">{t("notVerified")}</Badge>
           )}
         </div>
-        <Button onClick={() => setOpen(true)} size="sm" variant="outline">
-          {t("change")}
-        </Button>
+        {profile.canChangeEmail ? (
+          <Button onClick={() => setOpen(true)} size="sm" variant="outline">
+            {t("change")}
+          </Button>
+        ) : (
+          <p className="text-muted-foreground basis-full text-xs text-pretty">
+            {t("emailIsntSetUpOn")}
+          </p>
+        )}
       </div>
       <p className="text-muted-foreground mt-2 text-xs text-pretty">
         {t("memberSinceMembersince", { memberSince: profile.memberSince })}
       </p>
-      <ChangeEmailDialog
-        currentEmail={profile.email}
-        onOpenChange={setOpen}
-        open={open}
-      />
+      {profile.canChangeEmail && (
+        <ChangeEmailDialog
+          currentEmail={profile.email}
+          onOpenChange={setOpen}
+          open={open}
+        />
+      )}
     </>
   );
 }

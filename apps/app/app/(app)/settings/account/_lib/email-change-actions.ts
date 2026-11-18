@@ -35,8 +35,13 @@ import { logError } from "@/lib/shared";
 // with a linked Google, GitHub or SSO account) and answer
 // CONFIRMATION_REQUIRED without one. They limit each user, sign out the
 // account's other sessions and tell the old address. The plugin emails the
-// code through the sender registered here.
-registerEmailChangeCodeSender(sendEmailChangeCode);
+// code through the sender registered here. Where codes can't reach anyone
+// (the "emailSignIn" rule, the one sign-in codes follow), asking for one
+// answers EMAIL_CHANGE_UNAVAILABLE for every address, and Settings doesn't
+// offer the change.
+registerEmailChangeCodeSender(sendEmailChangeCode, () =>
+  isFeatureAvailable("emailSignIn"),
+);
 
 export type EmailChangeResult =
   | { ok: true }
@@ -131,7 +136,8 @@ export async function requestEmailChange(
       return fail(EMAIL_CHANGE_MESSAGES.rateLimited);
     }
     // Answers the same whether or not the address already has an account
-    // (then no code is sent), so the form can't be used to look addresses up.
+    // (then no code is sent), and whether or not sending worked, so the form
+    // can't be used to look addresses up.
     await auth.api.requestEmailChangeEmailOTP({
       headers: user.requestHeaders,
       body: { newEmail },

@@ -5,17 +5,24 @@
 // so before one is made; when sending fails, the failure is the answer. The
 // same answer for every address, with an account or without. The
 // per-address limit runs before a code is made, so a refused resend leaves
-// the last code working. Run inside a real Better Auth (memory adapter) with
-// the real emailOTP plugin; nothing is emailed.
+// the last code working. Asking to change the email (the code goes to the
+// new address) is refused the same way where no code can be delivered; where
+// codes can, a taken address and a free one get the same answer, even when
+// sending fails, so the request never says which addresses have accounts.
+// Run inside a real Better Auth (memory adapter) with the real emailOTP
+// plugin; nothing is emailed.
 import { realpathSync } from "node:fs";
 import path from "node:path";
 import {
+  registerEmailChangeCodeSender,
   registerSignInCodeSender,
   SIGN_IN_CODE_NOT_SENT,
   sendVerificationOTP,
   signInCodeGate,
+  signInCodeRateLimited,
 } from "@repo/auth/email-otp";
 import {
+  EMAIL_CHANGE_UNAVAILABLE,
   SEND_SIGN_IN_CODE_PATH,
   SIGN_IN_CODES_UNAVAILABLE,
 } from "@repo/auth/sign-in-code-rules";
@@ -109,6 +116,7 @@ beforeAll(async () => {
         allowedAttempts: 3,
         storeOTP: "hashed",
         disableSignUp: false,
+        changeEmail: { enabled: true },
         sendVerificationOTP,
       }),
     ],
@@ -358,5 +366,161 @@ describe("without the limit in the gate, a refused resend still replaces the cod
     expect(
       await signInWith(gated, NO_ACCOUNT, delivered.get(NO_ACCOUNT) as string),
     ).toBe(400);
+  });
+});
+
+// Settings → Account → Email. The app calls this endpoint through auth.api
+// from its server actions only (it's off over HTTP in packages/auth/
+// server.ts); the plugin's before hooks run for both, so it's asked over
+// HTTP here like the rest of this file.
+const REQUEST_EMAIL_CHANGE = "/email-otp/request-email-change";
+const SIGNED_IN = "lin@qrdx.test";
+
+/** Signs `email` in with an emailed code; the session cookie. */
+async function sessionCookie(auth: any, email: string): Promise<string> {
+  registerSignInCodeSender(working, () => true, anyAddress);
+  expect((await askForCode(auth, email)).status).toBe(200);
+  const response = await auth.handler(
+    new Request(`${ORIGIN}/api/auth/sign-in/email-otp`, {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: ORIGIN },
+      body: JSON.stringify({ email, otp: delivered.get(email) }),
+    }),
+  );
+  expect(response.status).toBe(200);
+  return (response.headers as Headers)
+    .getSetCookie()
+    .map((cookie) => cookie.split(";")[0])
+    .join("; ");
+}
+
+async function askToChangeEmail(auth: any, cookie: string, newEmail: string) {
+  const response = await auth.handler(
+    new Request(`${ORIGIN}/api/auth${REQUEST_EMAIL_CHANGE}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        origin: ORIGIN,
+        cookie,
+      },
+      body: JSON.stringify({ newEmail }),
+    }),
+  );
+  const text = await response.text();
+  return {
+    status: response.status as number,
+    body: text ? (JSON.parse(text) as Record<string, unknown>) : null,
+  };
+}
+
+const changeEmailRows = () =>
+  db.verification.filter((row) =>
+    String(row.identifier).startsWith("change-email-otp-"),
+  );
+
+describe("asking to change the email", () => {
+  /** What the email-change sender was handed, by new address. */
+  let toNewAddress: Map<string, string>;
+  const sendToNewAddress = async ({
+    email,
+    otp,
+  }: {
+    email: string;
+    otp: string;
+  }) => {
+    toNewAddress.set(email, otp);
+  };
+  let cookie: string;
+
+  beforeEach(async () => {
+    const now = new Date();
+    db.user.push({
+      id: "user_lin",
+      email: SIGNED_IN,
+      name: "Lin",
+      emailVerified: true,
+      createdAt: now,
+      updatedAt: now,
+    });
+    toNewAddress = new Map();
+    cookie = await sessionCookie(gated, SIGNED_IN);
+  });
+
+  describe("where no code can be delivered", () => {
+    it("says email isn't set up, the same for every address, and makes no code", async () => {
+      registerEmailChangeCodeSender(sendToNewAddress, () => false);
+      const taken = await askToChangeEmail(gated, cookie, HAS_ACCOUNT);
+      const free = await askToChangeEmail(gated, cookie, NO_ACCOUNT);
+      expect(taken.status).toBe(400);
+      expect(taken.body).toMatchObject({
+        code: EMAIL_CHANGE_UNAVAILABLE,
+        message:
+          "Email isn't set up on this site, so the address can't be changed here.",
+      });
+      expect(free).toEqual(taken);
+      // Even an address that isn't one: it's answered before the address is
+      // looked at.
+      expect(await askToChangeEmail(gated, cookie, "not an address")).toEqual(
+        taken,
+      );
+      expect(toNewAddress.size).toBe(0);
+      expect(changeEmailRows()).toEqual([]);
+    });
+
+    it("says the same when the app never registered a sender", async () => {
+      registerEmailChangeCodeSender(undefined as never, () => true);
+      const reply = await askToChangeEmail(gated, cookie, NO_ACCOUNT);
+      expect(reply.status).toBe(400);
+      expect(reply.body?.code).toBe(EMAIL_CHANGE_UNAVAILABLE);
+      expect(changeEmailRows()).toEqual([]);
+    });
+
+    it("leaves sign-in codes to their own rule", async () => {
+      registerEmailChangeCodeSender(sendToNewAddress, () => false);
+      registerSignInCodeSender(working, () => true, anyAddress);
+      expect(await askForCode(gated, NO_ACCOUNT)).toEqual({
+        status: 200,
+        body: { success: true },
+      });
+    });
+  });
+
+  describe("where codes can be delivered", () => {
+    // Better Auth sends nothing when the new address already has an account
+    // and answers "sent" all the same, so the dialog can't say a code went
+    // out: only that one should arrive if no other account uses the address.
+    it("answers a taken address and a free one alike; only the free one gets a code", async () => {
+      registerEmailChangeCodeSender(sendToNewAddress, () => true);
+      const taken = await askToChangeEmail(gated, cookie, HAS_ACCOUNT);
+      const free = await askToChangeEmail(gated, cookie, NO_ACCOUNT);
+      expect(taken).toEqual({ status: 200, body: { success: true } });
+      expect(free).toEqual(taken);
+      expect([...toNewAddress.keys()]).toEqual([NO_ACCOUNT]);
+    });
+
+    it("answers alike when sending fails, so a failure doesn't single out a free address", async () => {
+      registerEmailChangeCodeSender(
+        async () => {
+          throw new Error("Resend is down");
+        },
+        () => true,
+      );
+      const taken = await askToChangeEmail(gated, cookie, HAS_ACCOUNT);
+      const free = await askToChangeEmail(gated, cookie, NO_ACCOUNT);
+      expect(free).toEqual(taken);
+      expect(JSON.stringify(free.body)).not.toMatch(/Resend|\d{6}/);
+    });
+
+    it("answers alike when the new address asked for too many codes", async () => {
+      registerEmailChangeCodeSender(
+        async () => {
+          throw signInCodeRateLimited();
+        },
+        () => true,
+      );
+      const taken = await askToChangeEmail(gated, cookie, HAS_ACCOUNT);
+      const free = await askToChangeEmail(gated, cookie, NO_ACCOUNT);
+      expect(free).toEqual(taken);
+    });
   });
 });
