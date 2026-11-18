@@ -35,14 +35,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const profile = await loadProfile((await params).handle);
   if (!profile?.creator.handle) return {};
-  return {
-    ...createMetadata({
-      title: `${profile.creator.displayName} (@${profile.creator.handle}) | Community`,
-      description: `QR code frames and themes by ${profile.creator.displayName} on QRdx.`,
-      path: profilePath(profile.creator.handle),
-    }),
-    robots: { index: false, follow: true },
-  };
+  return createMetadata({
+    title: `${profile.creator.displayName} (@${profile.creator.handle}) | Community`,
+    description: `QR code frames and themes by ${profile.creator.displayName} on QRdx.`,
+    path: profilePath(profile.creator.handle),
+  });
 }
 
 const NUMBER = new Intl.NumberFormat("en");

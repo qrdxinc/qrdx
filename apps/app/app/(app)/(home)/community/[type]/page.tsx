@@ -54,16 +54,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const type = typeFromSegment((await params).type);
   if (!type) return {};
-  return {
-    ...createMetadata({
-      title: `${COPY[type].title} | Community`,
-      description: COPY[type].description,
-      path: `/community/${(await params).type}`,
-      ownOgImage: true,
-    }),
-    // Community pages stay out of search until the first moderation pass.
-    robots: { index: false, follow: true },
-  };
+  return createMetadata({
+    title: `${COPY[type].title} | Community`,
+    description: COPY[type].description,
+    path: `/community/${(await params).type}`,
+    ownOgImage: true,
+  });
 }
 
 export default async function CommunityTypePage({
