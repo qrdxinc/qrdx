@@ -40,6 +40,12 @@ export {
 export const ADMIN_CONSOLE_CODE_SECONDS = 120;
 /** How long its access token opens userinfo (seconds); used once. */
 export const ADMIN_CONSOLE_ACCESS_TOKEN_SECONDS = 60;
+/**
+ * How long a console sign-in's grant (./grants.ts) is good for (seconds):
+ * the console's session lasts 8 hours from sign-in and isn't refreshed, plus
+ * 5 minutes for the time between this exchange and the console's cookie.
+ */
+export const ADMIN_CONSOLE_GRANT_SECONDS = 8 * 60 * 60 + 5 * 60;
 
 const MAX_STATE_LENGTH = 1024;
 

@@ -4,7 +4,8 @@
 // id is unknown. Set, only this deployment's admin, signed in and not held,
 // gets a one-time code bound to the console's exact redirect URI and PKCE
 // challenge; the console exchanges it with the shared secret for a one-time
-// access token, and userinfo answers OpenID claims plus the session id.
+// access token and this sign-in's grant (stored hashed), and userinfo
+// answers OpenID claims plus the session id.
 import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
@@ -73,6 +74,9 @@ const token = await import("@/app/api/oauth/token/route");
 const userinfo = await import("@/app/api/oauth/userinfo/route");
 const { ticketIdentifier, CODE_IDENTIFIER_PREFIX } = await import(
   "@/lib/admin-console/tickets"
+);
+const { grantHash, isAdminConsoleGrant } = await import(
+  "@/lib/admin-console/grants"
 );
 
 function seed() {
@@ -320,6 +324,7 @@ describe("POST /api/oauth/token for the console", () => {
       token_type: "Bearer",
       expires_in: 60,
       scope: "openid email profile",
+      console_grant: expect.stringMatching(/^[A-Za-z0-9_-]{43}$/),
     });
     // The code is gone; the token's row is there, hashed.
     const rows = fakeDb.rows("verification");
@@ -330,6 +335,80 @@ describe("POST /api/oauth/token for the console", () => {
     const again = await exchange(code);
     expect(again.status).toBe(400);
     expect(await errorOf(again)).toBe("invalid_grant");
+  });
+
+  it("mints the sign-in's grant for this admin and session, and stores only its hash", async () => {
+    const before = new Date("2026-11-15T09:00:00Z");
+    fakeDb.seed("adminConsoleGrant", [
+      // This admin's expired grant goes; another admin's stays.
+      {
+        tokenHash: "old",
+        userId: "u_admin",
+        sessionId: "session_u_admin",
+        createdAt: before,
+        expiresAt: new Date("2026-11-15T09:59:59Z"),
+      },
+      {
+        tokenHash: "theirs",
+        userId: "u_ana",
+        sessionId: "session_u_ana",
+        createdAt: before,
+        expiresAt: new Date("2026-11-15T09:59:59Z"),
+      },
+    ]);
+    const body = await (await exchange(await codeFor())).json();
+    const grant = body.console_grant as string;
+    expect(fakeDb.rows("adminConsoleGrant")).toEqual([
+      expect.objectContaining({ tokenHash: "theirs" }),
+      {
+        tokenHash: grantHash(grant),
+        userId: "u_admin",
+        sessionId: "session_u_admin",
+        createdAt: new Date("2026-11-15T10:00:00Z"),
+        // The console's 8-hour session, plus 5 minutes.
+        expiresAt: new Date("2026-11-15T18:05:00Z"),
+      },
+    ]);
+    expect(JSON.stringify(fakeDb.rows("adminConsoleGrant"))).not.toContain(
+      grant,
+    );
+    // Good for this admin and session only, until it expires.
+    const who = { userId: "u_admin", sessionId: "session_u_admin" };
+    expect(await isAdminConsoleGrant(grant, who)).toBe(true);
+    expect(
+      await isAdminConsoleGrant(grant, { ...who, sessionId: "session_other" }),
+    ).toBe(false);
+    expect(await isAdminConsoleGrant(grant, { ...who, userId: "u_ana" })).toBe(
+      false,
+    );
+    expect(await isAdminConsoleGrant(`${grant}x`, who)).toBe(false);
+    vi.setSystemTime(new Date("2026-11-15T18:05:00Z"));
+    expect(await isAdminConsoleGrant(grant, who)).toBe(false);
+  });
+
+  it("still signs the console in before the grants table exists, with no grant", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const code = await codeFor();
+    fakeDb.missing("adminConsoleGrant");
+    const response = await exchange(code);
+    expect(response.status).toBe(200);
+    const body = await response.json();
+    expect(body.access_token).toMatch(/^qrdxc_/);
+    expect(body).not.toHaveProperty("console_grant");
+    expect(
+      await isAdminConsoleGrant("g".repeat(43), {
+        userId: "u_admin",
+        sessionId: "session_u_admin",
+      }),
+    ).toBe(false);
+    // Said once per process, not per sign-in.
+    await exchange(await codeFor());
+    expect(
+      warn.mock.calls.filter(([line]) =>
+        String(line).includes("admin_console.grants_missing"),
+      ),
+    ).toHaveLength(1);
+    warn.mockRestore();
   });
 
   it("checks the secret before touching the code", async () => {

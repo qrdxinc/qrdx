@@ -6,6 +6,7 @@ import { and, eq, gt } from "drizzle-orm";
 import type { AdminUser } from "@/app/(app)/admin/_lib/guard";
 import { CONFIRMATION_REQUIRED } from "@/lib/account/confirmation";
 import { hasRecentStrongConfirmation } from "@/lib/account/confirmation-server";
+import { isAdminConsoleGrant } from "@/lib/admin-console/grants";
 import { HttpError } from "@/lib/http-error";
 import { isBanActive } from "@/lib/oauth";
 
@@ -14,10 +15,19 @@ import { isBanActive } from "@/lib/oauth";
 // call, against its own database and admin lists, instead of trusting the
 // console's word: the admin rule (role, ADMIN_EMAILS, ADMIN_USER_IDS), a
 // verified email, no ban in force, and that session alive and theirs.
+//
+// Session ids aren't secret, so the console also sends the grant its sign-in
+// got (lib/admin-console/grants.ts), which only that admin's console cookie
+// holds: when a call carries one, it must be a grant this app minted for
+// this admin and this session, still good, or the call is refused
+// (grant_invalid). Calls without one are still accepted, until every console
+// session carries a grant.
 
 export interface ConsoleActorClaim {
   userId: string;
   sessionId: string;
+  /** The console sign-in's grant, when the console sends one. */
+  grant?: string;
 }
 
 export interface ConsoleActor extends AdminUser {
@@ -25,12 +35,16 @@ export interface ConsoleActor extends AdminUser {
   twoFactorEnabled: boolean;
 }
 
-/** The admin the console acts for, or null when the claim doesn't hold. */
+/**
+ * The admin the console acts for, or null when the claim doesn't hold.
+ * Throws an HttpError 403 (GRANT_INVALID) for an admin whose call carries a
+ * grant this app doesn't hold for them and this session.
+ */
 export async function loadConsoleActor(
   claim: ConsoleActorClaim,
   now: Date = new Date(),
 ): Promise<ConsoleActor | null> {
-  const [[found], [alive]] = await Promise.all([
+  const [[found], [alive], granted] = await Promise.all([
     db
       .select({
         id: user.id,
@@ -56,10 +70,16 @@ export async function loadConsoleActor(
         ),
       )
       .limit(1),
+    claim.grant === undefined
+      ? null
+      : isAdminConsoleGrant(claim.grant, claim, now),
   ]);
   if (!(found && alive)) return null;
   if (found.emailVerified !== true || isBanActive(found, now)) return null;
   if (!isAdmin(found)) return null;
+  if (claim.grant !== undefined && !granted) {
+    throw new HttpError(403, "GRANT_INVALID", "grant_invalid");
+  }
   return {
     id: found.id,
     email: found.email,
