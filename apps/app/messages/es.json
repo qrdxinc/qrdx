@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Cerrar sesión en los demás",
           "thisDevice": "Este dispositivo",
+          "activeNow": "Activa ahora",
+          "activeJustNow": "Activa hace un momento",
+          "activeAgo": "Activa {relative}",
+          "activeOn": "Activa el {date}",
+          "signedIn": "Inicio de sesión: {date}",
           "signOut": "Cerrar sesión",
           "signOutEverywhereElse2": "¿Cerrar sesión en los demás?",
           "thisDeviceStaysSignedIn": "Este dispositivo mantiene la sesión iniciada.",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "Inicia sesión en QRdx para continuar a",
           "continueWithGoogle": "Continuar con Google",
           "continueWithGithub": "Continuar con GitHub",
-          "youllReviewThesePermissionsBefore": "Revisarás estos permisos antes de compartir nada."
+          "youllReviewThesePermissionsBefore": "Revisarás estos permisos antes de compartir nada.",
+          "continueToSignIn": "Continuar para iniciar sesión"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Este enlace no se puede usar",
@@ -8689,9 +8695,20 @@
       "enter": "Introduce este código en QRdx para que este sea el correo de tu cuenta:",
       "ignore": "Si no lo solicitaste, ignora este correo. Nada cambia sin el código."
     },
+    "emailChanged": {
+      "subject": "Se cambió tu correo de QRdx",
+      "preview": "Tu cuenta de QRdx ahora usa {newEmail}.",
+      "reason": "Recibes este correo porque esta dirección era el correo de una cuenta de QRdx.",
+      "body": "Tu cuenta de QRdx ahora usa <strong>{newEmail}</strong>. A partir de ahora, los códigos de inicio de sesión y las invitaciones de equipo se enviarán a esa dirección.",
+      "notYou": "Si no fuiste tú, escribe cuanto antes a soporte en <support>{email}</support> desde esta dirección y te ayudaremos a recuperar tu cuenta."
+    },
     "security": {
       "device": "Dispositivo",
       "location": "Ubicación aproximada",
+      "browserOnOs": "{browser} en {os}",
+      "osDevice": "Dispositivo {os}",
+      "unknownDevice": "Dispositivo desconocido",
+      "cityCountry": "{city}, {country}",
       "ip": "Dirección IP",
       "time": "Hora",
       "by": "Por",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "Ver analíticas de escaneos",
-      "milestoneReason": "Recibes esto porque las alertas de hitos de escaneos están activadas para {workspace}."
+      "milestoneReason": "Recibes esto porque las alertas de hitos de escaneos están activadas para {workspace}.",
+      "yourWorkspace": "tu espacio de trabajo"
     },
     "firstScan": {
       "subject": "{code} recibió su primer escaneo",
@@ -8843,6 +8861,12 @@
       "shortLink": "Enlace corto",
       "opens": "Aperturas",
       "changed": "Cambiado",
+      "fields": {
+        "destination": "Destino",
+        "title": "Título",
+        "design": "Diseño",
+        "domain": "Dominio del enlace corto"
+      },
       "open": "Abrir el código",
       "created": {
         "heading": "Nuevo código: {code}",
@@ -8883,7 +8907,7 @@
       "yourAgency": "Tu agencia"
     },
     "limitNotice": {
-      "subject": "{level, select, full {{label}: límite alcanzado en {workspace}} other {{label}: {value} usado en {workspace}}}",
+      "subject": "{level, select, full {{label}: límite alcanzado en {workspace}} other {{label}: {workspace} ha usado {value}}}",
       "preview": "{level, select, full {{workspace} ha alcanzado su límite de {noun}} other {{workspace} ha usado {value} de {noun}}}",
       "heading": "{level, select, full {{workspace} ha alcanzado un límite del plan} other {{workspace} está cerca de un límite del plan}}",
       "body": "{level, select, full {{workspace} ha usado el total de {noun}.} other {{workspace} ha usado {value} de {noun}.}}",
@@ -8915,6 +8939,7 @@
       "subject": "Tu semana en QRdx: {scans, plural, one {# escaneo} other {# escaneos}}",
       "preview": "{scans, plural, one {# escaneo} other {# escaneos}} en {workspace} la semana pasada",
       "reason": "Recibes este correo porque el resumen semanal está activado para {workspace}.",
+      "yourWorkspace": "Tu espacio de trabajo",
       "heading": "Tu semana en QRdx",
       "scans": "Escaneos",
       "uniqueVisitors": "Visitantes únicos",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "Esta cuenta está suspendida. Contacta con soporte si crees que es un error.",
       "somethingWentWrongTryAgain": "Algo salió mal. Inténtalo de nuevo.",
       "newCodeSent": "Código nuevo enviado. El anterior ya no funciona.",
-      "connectionFailed": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo."
+      "connectionFailed": "Algo salió mal. Revisa tu conexión e inténtalo de nuevo.",
+      "emailSignInIsntSet": "El inicio de sesión por correo no está configurado en este sitio.",
+      "weCouldntSendACodeTry": "No pudimos enviar un código en este momento. Inténtalo de nuevo en unos minutos.",
+      "tooManyCodesRequestedSo": "Se solicitaron demasiados códigos, así que no enviamos otro. El más reciente de tu bandeja de entrada sigue siendo válido."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continuar con passkey",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "Empieza gratis, sin tarjeta.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "El inicio de sesión con {label} no está disponible en este momento"
+      "labelSignInIsNot": "El inicio de sesión con {label} no está disponible en este momento",
+      "signInIsntSetUp": "El inicio de sesión no está configurado",
+      "thisSiteHasNoEmail": "Este sitio no tiene activado el inicio de sesión por correo, Google ni GitHub, por lo que aquí no se pueden crear cuentas nuevas.",
+      "runThisSiteThe": "¿Administras este sitio? La <link>guía de autoalojamiento</link> explica cómo activar uno.",
+      "newToQrdxYourFirst": "¿Eres nuevo en QRdx? Tu primer inicio de sesión crea tu cuenta gratuita.",
+      "loading": "Cargando…",
+      "weCouldntCheckHow": "No pudimos comprobar cómo iniciar sesión aquí. <retry>Inténtalo de nuevo</retry> o <link>abre la página de inicio de sesión</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Cargando tus métodos de acceso",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider} no ha verificado esta dirección de correo, por lo que QRdx no puede crear una cuenta con ella. Verifícala en la configuración de correo de {provider} e inténtalo de nuevo, o inicia sesión con un código por correo.",
+      "githubUnverifiedNoEmailCodes": "{provider} no ha verificado esta dirección de correo, así que QRdx no puede crear una cuenta con ella. Verifícala en la configuración de correo de {provider} e inténtalo de nuevo{otherWay, select, yes {, o prueba otra forma de iniciar sesión} other {}}.",
       "googleUnverified": "{provider} no ha verificado esta dirección de correo, por lo que QRdx no puede crear una cuenta con ella. Inicia sesión con un código por correo.",
+      "googleUnverifiedNoEmailCodes": "{provider} no ha verificado esta dirección de correo, así que QRdx no puede crear una cuenta con ella. {otherWay, select, yes {Prueba otra forma de iniciar sesión.} other {Pide ayuda a quien administra este sitio.}}",
       "otherUnverified": "La dirección de correo de esa cuenta no está verificada, por lo que QRdx no puede crear una cuenta con ella. Inicia sesión con un código por correo.",
+      "otherUnverifiedNoEmailCodes": "La dirección de correo de esa cuenta no está verificada, así que QRdx no puede crear una cuenta con ella. {otherWay, select, yes {Prueba otra forma de iniciar sesión.} other {Pide ayuda a quien administra este sitio.}}",
       "cancelled": "Se canceló el inicio de sesión.",
       "accountNotLinked": "Ya existe una cuenta con esta dirección y no está vinculada a {provider}. Inicia sesión con un código por correo.",
+      "accountNotLinkedNoEmailCodes": "Ya existe una cuenta con esta dirección y no está vinculada a {provider}. {otherWay, select, yes {Prueba otra forma de iniciar sesión.} other {Pide ayuda a quien administra este sitio.}}",
       "emailNotShared": "{provider} no compartió una dirección de correo, por lo que QRdx no puede iniciar tu sesión con él. Inicia sesión con un código por correo.",
+      "emailNotSharedNoEmailCodes": "{provider} no compartió una dirección de correo, así que QRdx no puede iniciar tu sesión con él. {otherWay, select, yes {Prueba otra forma de iniciar sesión.} other {Pide ayuda a quien administra este sitio.}}",
       "tookTooLong": "Ese inicio de sesión tardó demasiado o se inició en otro lugar. Inténtalo de nuevo.",
       "providerFailed": "El inicio de sesión con {provider} no funcionó. Inténtalo de nuevo o inicia sesión de otra forma.",
       "sso": {
         "emailRequired": "Introduce tu correo de trabajo.",
         "notFound": "SSO no está configurado para esa dirección.",
+        "notSetUpFor": "No hay SSO configurado para {domain}.",
+        "notAvailableFor": "El SSO de {domain} no está disponible en este momento. Inicia sesión de otra forma.",
         "required": "Tu empresa exige el inicio de sesión único para esta dirección. Inicia sesión con SSO.",
         "unavailable": "El inicio de sesión único no está disponible para este espacio de trabajo en este momento. Inicia sesión de otra forma.",
         "emailOutsideDomain": "Tu proveedor de identidad envió una dirección fuera del dominio de tu empresa, así que QRdx no puede iniciar sesión con ella. Consulta con el administrador de tu espacio de trabajo.",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "QRdx no pudo aceptar este inicio de sesión desde la lista de aplicaciones de tu empresa. Empieza desde la página de inicio de sesión de QRdx: elige Iniciar sesión con SSO e introduce tu correo de trabajo. Si sigue ocurriendo, consulta con el administrador de tu espacio de trabajo.",
         "replayDetected": "Ese inicio de sesión ya se ha usado. Vuelve a iniciar sesión.",
         "accountNotLinked": "Ya existe una cuenta con esta dirección y no se pudo vincular. Inicia sesión con un código por correo.",
+        "accountNotLinkedNoEmailCodes": "Ya existe una cuenta con esta dirección y no se pudo vincular. {otherWay, select, yes {Prueba otra forma de iniciar sesión.} other {Pide ayuda a quien administra este sitio.}}",
         "failed": "El inicio de sesión único no funcionó. Inténtalo de nuevo o inicia sesión de otra forma.",
         "rateLimited": "Demasiados intentos. Espera un minuto e inténtalo de nuevo."
       }

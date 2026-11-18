@@ -6063,6 +6063,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Sign out everywhere else",
           "thisDevice": "This device",
+          "activeNow": "Active now",
+          "activeJustNow": "Active just now",
+          "activeAgo": "Active {relative}",
+          "activeOn": "Active on {date}",
+          "signedIn": "Signed in {date}",
           "signOut": "Sign out",
           "signOutEverywhereElse2": "Sign out everywhere else?",
           "thisDeviceStaysSignedIn": "This device stays signed in.",
@@ -9089,9 +9094,20 @@
       "enter": "Enter this code in QRdx to make this the email for your account:",
       "ignore": "If you didn't ask for this, ignore this email. Nothing changes without the code."
     },
+    "emailChanged": {
+      "subject": "Your QRdx email was changed",
+      "preview": "Your QRdx account now uses {newEmail}.",
+      "reason": "You got this email because this address was the email for a QRdx account.",
+      "body": "Your QRdx account now uses <strong>{newEmail}</strong>. Sign-in codes and team invitations go there from now on.",
+      "notYou": "If this wasn't you, contact support at <support>{email}</support> from this address straight away, and we'll help you get your account back."
+    },
     "security": {
       "device": "Device",
       "location": "Approximate location",
+      "browserOnOs": "{browser} on {os}",
+      "osDevice": "{os} device",
+      "unknownDevice": "Unknown device",
+      "cityCountry": "{city}, {country}",
       "ip": "IP address",
       "time": "Time",
       "by": "By",
@@ -9213,7 +9229,8 @@
     },
     "alerts": {
       "viewAnalytics": "View scan analytics",
-      "milestoneReason": "You get this because scan milestone alerts are on for {workspace}."
+      "milestoneReason": "You get this because scan milestone alerts are on for {workspace}.",
+      "yourWorkspace": "your workspace"
     },
     "firstScan": {
       "subject": "{code} got its first scan",
@@ -9243,6 +9260,12 @@
       "shortLink": "Short link",
       "opens": "Opens",
       "changed": "Changed",
+      "fields": {
+        "destination": "Destination",
+        "title": "Title",
+        "design": "Design",
+        "domain": "Short link domain"
+      },
       "open": "Open the code",
       "created": {
         "heading": "New code: {code}",
@@ -9315,6 +9338,7 @@
       "subject": "Your QRdx week: {scans, plural, one {# scan} other {# scans}}",
       "preview": "{scans, plural, one {# scan} other {# scans}} in {workspace} last week",
       "reason": "You get this because the weekly digest is on for {workspace}.",
+      "yourWorkspace": "Your workspace",
       "heading": "Your week on QRdx",
       "scans": "Scans",
       "uniqueVisitors": "Unique visitors",
@@ -9645,6 +9669,8 @@
       "sso": {
         "emailRequired": "Enter your work email.",
         "notFound": "SSO isn't set up for that address.",
+        "notSetUpFor": "No SSO is set up for {domain}.",
+        "notAvailableFor": "SSO for {domain} isn't available right now. Sign in another way.",
         "required": "Your company requires single sign-on for this address. Sign in with SSO.",
         "unavailable": "Single sign-on isn't available for this workspace right now. Sign in another way.",
         "emailOutsideDomain": "Your identity provider sent an address outside your company's domain, so QRdx can't sign you in with it. Ask your workspace admin.",

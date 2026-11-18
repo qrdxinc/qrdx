@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "बाकी सब जगह साइन आउट करें",
           "thisDevice": "यह डिवाइस",
+          "activeNow": "अभी सक्रिय",
+          "activeJustNow": "अभी-अभी सक्रिय था",
+          "activeAgo": "{relative} सक्रिय था",
+          "activeOn": "{date} को सक्रिय था",
+          "signedIn": "{date} को साइन इन किया",
           "signOut": "साइन आउट करें",
           "signOutEverywhereElse2": "बाकी सब जगह साइन आउट करें?",
           "thisDeviceStaysSignedIn": "यह डिवाइस साइन इन रहेगा।",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "आगे बढ़ने के लिए QRdx में साइन इन करें:",
           "continueWithGoogle": "Google से जारी रखें",
           "continueWithGithub": "GitHub से जारी रखें",
-          "youllReviewThesePermissionsBefore": "कुछ भी शेयर होने से पहले आप इन अनुमतियों को देख पाएँगे।"
+          "youllReviewThesePermissionsBefore": "कुछ भी शेयर होने से पहले आप इन अनुमतियों को देख पाएँगे।",
+          "continueToSignIn": "साइन इन जारी रखें"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "यह लिंक इस्तेमाल नहीं हो सकता",
@@ -8689,9 +8695,20 @@
       "enter": "इसे अपने अकाउंट का ईमेल बनाने के लिए यह कोड QRdx में डालें:",
       "ignore": "अगर आपने यह अनुरोध नहीं किया, तो इस ईमेल को अनदेखा करें। कोड के बिना कुछ नहीं बदलेगा।"
     },
+    "emailChanged": {
+      "subject": "आपका QRdx ईमेल बदल दिया गया है",
+      "preview": "आपका QRdx अकाउंट अब {newEmail} इस्तेमाल करता है।",
+      "reason": "आपको यह ईमेल इसलिए मिला है क्योंकि यह पता एक QRdx अकाउंट का ईमेल था।",
+      "body": "आपका QRdx अकाउंट अब <strong>{newEmail}</strong> इस्तेमाल करता है। साइन-इन कोड और टीम के इनविटेशन अब से वहीं जाएंगे।",
+      "notYou": "अगर यह आपने नहीं किया, तो इसी पते से तुरंत <support>{email}</support> पर सपोर्ट से संपर्क करें, हम आपका अकाउंट वापस पाने में मदद करेंगे।"
+    },
     "security": {
       "device": "डिवाइस",
       "location": "अनुमानित लोकेशन",
+      "browserOnOs": "{os} पर {browser}",
+      "osDevice": "{os} डिवाइस",
+      "unknownDevice": "अनजान डिवाइस",
+      "cityCountry": "{city}, {country}",
       "ip": "IP एड्रेस",
       "time": "समय",
       "by": "द्वारा",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "स्कैन एनालिटिक्स देखें",
-      "milestoneReason": "आपको यह इसलिए मिला है क्योंकि {workspace} के लिए स्कैन माइलस्टोन अलर्ट चालू हैं।"
+      "milestoneReason": "आपको यह इसलिए मिला है क्योंकि {workspace} के लिए स्कैन माइलस्टोन अलर्ट चालू हैं।",
+      "yourWorkspace": "आपका वर्कस्पेस"
     },
     "firstScan": {
       "subject": "{code} का पहला स्कैन हुआ",
@@ -8843,6 +8861,12 @@
       "shortLink": "शॉर्ट लिंक",
       "opens": "ओपन",
       "changed": "बदला गया",
+      "fields": {
+        "destination": "डेस्टिनेशन",
+        "title": "टाइटल",
+        "design": "डिज़ाइन",
+        "domain": "शॉर्ट लिंक डोमेन"
+      },
       "open": "कोड खोलें",
       "created": {
         "heading": "नया कोड: {code}",
@@ -8883,7 +8907,7 @@
       "yourAgency": "आपकी एजेंसी"
     },
     "limitNotice": {
-      "subject": "{level, select, full {{label}: {workspace} में लिमिट पूरी हो गई} other {{label}: {workspace} में {value} इस्तेमाल हुआ}}",
+      "subject": "{level, select, full {{label}: {workspace} में लिमिट पूरी हो गई} other {{label}: {workspace} ने {value} इस्तेमाल किए}}",
       "preview": "{level, select, full {{workspace} अपनी {noun} की लिमिट तक पहुँच गया है} other {{workspace} ने {value} {noun} इस्तेमाल किए हैं}}",
       "heading": "{level, select, full {{workspace} प्लान की लिमिट तक पहुँच गया है} other {{workspace} प्लान की लिमिट के करीब है}}",
       "body": "{level, select, full {{workspace} अपने सभी {noun} इस्तेमाल कर चुका है।} other {{workspace} ने {value} {noun} इस्तेमाल किए हैं।}}",
@@ -8915,6 +8939,7 @@
       "subject": "QRdx पर आपका हफ़्ता: {scans, plural, one {# स्कैन} other {# स्कैन}}",
       "preview": "पिछले हफ़्ते {workspace} में {scans, plural, one {# स्कैन} other {# स्कैन}}",
       "reason": "आपको यह ईमेल इसलिए मिला है क्योंकि {workspace} के लिए साप्ताहिक डाइजेस्ट चालू है।",
+      "yourWorkspace": "आपका वर्कस्पेस",
       "heading": "QRdx पर आपका हफ़्ता",
       "scans": "स्कैन",
       "uniqueVisitors": "यूनिक विज़िटर",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "यह अकाउंट सस्पेंड है। अगर आपको लगता है कि यह गलती है, तो सपोर्ट से संपर्क करें।",
       "somethingWentWrongTryAgain": "कुछ गड़बड़ हो गई। दोबारा कोशिश करें।",
       "newCodeSent": "नया कोड भेज दिया गया है। पुराना कोड अब काम नहीं करेगा।",
-      "connectionFailed": "कुछ गड़बड़ हो गई। अपना कनेक्शन जाँचें और फिर कोशिश करें।"
+      "connectionFailed": "कुछ गड़बड़ हो गई। अपना कनेक्शन जाँचें और फिर कोशिश करें।",
+      "emailSignInIsntSet": "इस साइट पर ईमेल से साइन इन सेट अप नहीं है।",
+      "weCouldntSendACodeTry": "अभी हम कोड नहीं भेज पाए। कुछ मिनट बाद फिर कोशिश करें।",
+      "tooManyCodesRequestedSo": "बहुत ज़्यादा कोड मांगे गए, इसलिए हमने नया कोड नहीं भेजा। आपके इनबॉक्स में सबसे नया कोड अब भी काम करता है।"
     },
     "passkeySignIn": {
       "continueWithPasskey": "पासकी से जारी रखें",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "शुरू करना फ़्री है, कार्ड की ज़रूरत नहीं।",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "{label} से साइन इन अभी उपलब्ध नहीं है"
+      "labelSignInIsNot": "{label} से साइन इन अभी उपलब्ध नहीं है",
+      "signInIsntSetUp": "साइन इन अभी सेट अप नहीं है",
+      "thisSiteHasNoEmail": "इस साइट पर ईमेल, Google या GitHub से साइन इन चालू नहीं है, इसलिए यहाँ नए खाते नहीं बन सकते।",
+      "runThisSiteThe": "यह साइट चलाते हैं? इसे चालू करने का तरीका <link>सेल्फ-होस्टिंग गाइड</link> में है।",
+      "newToQrdxYourFirst": "QRdx पर नए हैं? पहली बार साइन इन करते ही आपका फ़्री खाता बन जाएगा।",
+      "loading": "लोड हो रहा है…",
+      "weCouldntCheckHow": "हम यह जाँच नहीं पाए कि यहाँ साइन इन कैसे करें। <retry>फिर कोशिश करें</retry>, या <link>साइन इन पेज खोलें</link>।"
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "आपके साइन-इन तरीके लोड हो रहे हैं",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider} ने इस ईमेल एड्रेस को वेरीफ़ाई नहीं किया है, इसलिए QRdx इससे अकाउंट नहीं बना सकता। अपनी {provider} ईमेल सेटिंग में इसे वेरीफ़ाई करें और फिर से कोशिश करें, या ईमेल कोड से साइन इन करें।",
+      "githubUnverifiedNoEmailCodes": "{provider} ने इस ईमेल पता को वेरिफ़ाई नहीं किया है, इसलिए QRdx इससे खाता नहीं बना सकता। अपनी {provider} ईमेल सेटिंग में इसे वेरिफ़ाई करें और फिर कोशिश करें{otherWay, select, yes {, या साइन इन करने का कोई दूसरा तरीका आज़माएँ} other {}}।",
       "googleUnverified": "{provider} ने इस ईमेल एड्रेस को वेरीफ़ाई नहीं किया है, इसलिए QRdx इससे अकाउंट नहीं बना सकता। इसके बजाय ईमेल कोड से साइन इन करें।",
+      "googleUnverifiedNoEmailCodes": "{provider} ने इस ईमेल पते को वेरिफ़ाई नहीं किया है, इसलिए QRdx इससे खाता नहीं बना सकता। {otherWay, select, yes {साइन इन करने का कोई दूसरा तरीका आज़माएँ।} other {मदद के लिए इस साइट को चलाने वाले से पूछें।}}",
       "otherUnverified": "उस अकाउंट का ईमेल एड्रेस वेरीफ़ाई नहीं है, इसलिए QRdx इससे अकाउंट नहीं बना सकता। इसके बजाय ईमेल कोड से साइन इन करें।",
+      "otherUnverifiedNoEmailCodes": "उस खाते का ईमेल पता वेरिफ़ाई नहीं है, इसलिए QRdx इससे खाता नहीं बना सकता। {otherWay, select, yes {साइन इन करने का कोई दूसरा तरीका आज़माएँ।} other {मदद के लिए इस साइट को चलाने वाले से पूछें।}}",
       "cancelled": "साइन-इन रद्द कर दिया गया।",
       "accountNotLinked": "इस एड्रेस से पहले से एक अकाउंट मौजूद है और वह {provider} से लिंक नहीं है। इसके बजाय ईमेल कोड से साइन इन करें।",
+      "accountNotLinkedNoEmailCodes": "इस पते से एक खाता पहले से मौजूद है और वह {provider} से लिंक नहीं है। {otherWay, select, yes {साइन इन करने का कोई दूसरा तरीका आज़माएँ।} other {मदद के लिए इस साइट को चलाने वाले से पूछें।}}",
       "emailNotShared": "{provider} ने ईमेल एड्रेस शेयर नहीं किया, इसलिए QRdx आपको इससे साइन इन नहीं करा सकता। इसके बजाय ईमेल कोड से साइन इन करें।",
+      "emailNotSharedNoEmailCodes": "{provider} ने ईमेल पता साझा नहीं किया, इसलिए QRdx आपको इससे साइन इन नहीं कर सकता। {otherWay, select, yes {साइन इन करने का कोई दूसरा तरीका आज़माएँ।} other {मदद के लिए इस साइट को चलाने वाले से पूछें।}}",
       "tookTooLong": "वह साइन-इन बहुत देर तक चला या कहीं और से शुरू किया गया था। फिर से कोशिश करें।",
       "providerFailed": "{provider} से साइन-इन नहीं हो पाया। फिर से कोशिश करें, या किसी दूसरे तरीके से साइन इन करें।",
       "sso": {
         "emailRequired": "अपना वर्क ईमेल डालें।",
         "notFound": "उस एड्रेस के लिए SSO सेट अप नहीं है।",
+        "notSetUpFor": "{domain} के लिए कोई SSO सेट अप नहीं है।",
+        "notAvailableFor": "{domain} के लिए SSO अभी उपलब्ध नहीं है। किसी दूसरे तरीके से साइन इन करें।",
         "required": "आपकी कंपनी इस पते के लिए सिंगल साइन-ऑन ज़रूरी करती है। SSO से साइन इन करें।",
         "unavailable": "इस वर्कस्पेस के लिए सिंगल साइन-ऑन अभी उपलब्ध नहीं है। किसी और तरीके से साइन इन करें।",
         "emailOutsideDomain": "आपके आइडेंटिटी प्रोवाइडर ने आपकी कंपनी के डोमेन से बाहर का पता भेजा है, इसलिए QRdx इससे आपको साइन इन नहीं कर सकता। अपने वर्कस्पेस एडमिन से पूछें।",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "QRdx आपकी कंपनी की ऐप सूची से आए इस साइन-इन को स्वीकार नहीं कर सका। QRdx के साइन-इन पेज से शुरू करें: SSO से साइन इन चुनें और अपना काम का ईमेल डालें। अगर यह बार-बार हो, तो अपने वर्कस्पेस एडमिन से पूछें।",
         "replayDetected": "यह साइन-इन पहले ही इस्तेमाल हो चुका है। फिर से साइन इन करें।",
         "accountNotLinked": "इस पते से एक अकाउंट पहले से मौजूद है और उसे लिंक नहीं किया जा सका। इसके बजाय ईमेल कोड से साइन इन करें।",
+        "accountNotLinkedNoEmailCodes": "इस पते से एक खाता पहले से मौजूद है और उसे लिंक नहीं किया जा सका। {otherWay, select, yes {साइन इन करने का कोई दूसरा तरीका आज़माएँ।} other {मदद के लिए इस साइट को चलाने वाले से पूछें।}}",
         "failed": "सिंगल साइन-ऑन काम नहीं किया। फिर कोशिश करें, या किसी और तरीके से साइन इन करें।",
         "rateLimited": "बहुत ज़्यादा कोशिशें हो गईं। एक मिनट रुकें, फिर दोबारा कोशिश करें।"
       }

@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Keluar di semua perangkat lain",
           "thisDevice": "Perangkat ini",
+          "activeNow": "Aktif sekarang",
+          "activeJustNow": "Baru saja aktif",
+          "activeAgo": "Aktif {relative}",
+          "activeOn": "Aktif pada {date}",
+          "signedIn": "Masuk pada {date}",
           "signOut": "Keluar",
           "signOutEverywhereElse2": "Keluar di semua perangkat lain?",
           "thisDeviceStaysSignedIn": "Perangkat ini tetap masuk.",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "Masuk ke QRdx untuk melanjutkan ke",
           "continueWithGoogle": "Lanjutkan dengan Google",
           "continueWithGithub": "Lanjutkan dengan GitHub",
-          "youllReviewThesePermissionsBefore": "Anda akan meninjau izin ini sebelum apa pun dibagikan."
+          "youllReviewThesePermissionsBefore": "Anda akan meninjau izin ini sebelum apa pun dibagikan.",
+          "continueToSignIn": "Lanjutkan untuk masuk"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Tautan ini tidak dapat digunakan",
@@ -8689,9 +8695,20 @@
       "enter": "Masukkan kode ini di QRdx untuk menjadikannya email akun Anda:",
       "ignore": "Jika Anda tidak memintanya, abaikan email ini. Tidak ada yang berubah tanpa kode."
     },
+    "emailChanged": {
+      "subject": "Email QRdx Anda telah diubah",
+      "preview": "Akun QRdx Anda kini menggunakan {newEmail}.",
+      "reason": "Anda menerima email ini karena alamat ini adalah email untuk sebuah akun QRdx.",
+      "body": "Akun QRdx Anda kini menggunakan <strong>{newEmail}</strong>. Kode masuk dan undangan tim akan dikirim ke alamat tersebut mulai sekarang.",
+      "notYou": "Jika ini bukan Anda, segera hubungi dukungan di <support>{email}</support> dari alamat ini, dan kami akan membantu Anda memulihkan akun."
+    },
     "security": {
       "device": "Perangkat",
       "location": "Perkiraan lokasi",
+      "browserOnOs": "{browser} di {os}",
+      "osDevice": "Perangkat {os}",
+      "unknownDevice": "Perangkat tidak dikenal",
+      "cityCountry": "{city}, {country}",
       "ip": "Alamat IP",
       "time": "Waktu",
       "by": "Oleh",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "Lihat analitik pemindaian",
-      "milestoneReason": "Anda menerima ini karena peringatan tonggak pemindaian aktif untuk {workspace}."
+      "milestoneReason": "Anda menerima ini karena peringatan tonggak pemindaian aktif untuk {workspace}.",
+      "yourWorkspace": "workspace Anda"
     },
     "firstScan": {
       "subject": "{code} mendapat pemindaian pertama",
@@ -8843,6 +8861,12 @@
       "shortLink": "Tautan pendek",
       "opens": "Dibuka",
       "changed": "Diubah",
+      "fields": {
+        "destination": "Tujuan",
+        "title": "Judul",
+        "design": "Desain",
+        "domain": "Domain tautan pendek"
+      },
       "open": "Buka kode",
       "created": {
         "heading": "Kode baru: {code}",
@@ -8915,6 +8939,7 @@
       "subject": "Minggu Anda di QRdx: {scans, plural, other {# pemindaian}}",
       "preview": "{scans, plural, other {# pemindaian}} di {workspace} minggu lalu",
       "reason": "Anda menerima ini karena ringkasan mingguan aktif untuk {workspace}.",
+      "yourWorkspace": "Workspace Anda",
       "heading": "Minggu Anda di QRdx",
       "scans": "Pemindaian",
       "uniqueVisitors": "Pengunjung unik",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "Akun ini ditangguhkan. Hubungi dukungan jika Anda merasa ini sebuah kesalahan.",
       "somethingWentWrongTryAgain": "Terjadi kesalahan. Coba lagi.",
       "newCodeSent": "Kode baru telah dikirim. Kode lama tidak berlaku lagi.",
-      "connectionFailed": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi."
+      "connectionFailed": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi.",
+      "emailSignInIsntSet": "Masuk dengan email belum disiapkan di situs ini.",
+      "weCouldntSendACodeTry": "Kami tidak dapat mengirim kode saat ini. Coba lagi dalam beberapa menit.",
+      "tooManyCodesRequestedSo": "Terlalu banyak permintaan kode, jadi kami tidak mengirim kode lagi. Kode terbaru di kotak masuk Anda masih berlaku."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Lanjutkan dengan passkey",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "Gratis untuk memulai, tanpa kartu.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "Masuk dengan {label} saat ini tidak tersedia"
+      "labelSignInIsNot": "Masuk dengan {label} saat ini tidak tersedia",
+      "signInIsntSetUp": "Fitur masuk belum disiapkan",
+      "thisSiteHasNoEmail": "Situs ini belum mengaktifkan cara masuk dengan email, Google, atau GitHub, sehingga akun baru tidak dapat dibuat di sini.",
+      "runThisSiteThe": "Mengelola situs ini? <link>Panduan self-hosting</link> menjelaskan cara mengaktifkannya.",
+      "newToQrdxYourFirst": "Baru di QRdx? Akun gratis Anda dibuat saat Anda pertama kali masuk.",
+      "loading": "Memuat…",
+      "weCouldntCheckHow": "Kami tidak dapat memeriksa cara masuk di sini. <retry>Coba lagi</retry>, atau <link>buka halaman masuk</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Memuat metode masuk Anda",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Verifikasi di pengaturan email {provider} Anda lalu coba lagi, atau masuk dengan kode email.",
+      "githubUnverifiedNoEmailCodes": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Verifikasi alamat tersebut di pengaturan email {provider} Anda lalu coba lagi{otherWay, select, yes {, atau coba cara masuk lainnya} other {}}.",
       "googleUnverified": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. Masuklah dengan kode email.",
+      "googleUnverifiedNoEmailCodes": "{provider} belum memverifikasi alamat email ini, sehingga QRdx tidak dapat membuat akun dengannya. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
       "otherUnverified": "Alamat email akun tersebut belum diverifikasi, sehingga QRdx tidak dapat membuat akun dengannya. Masuklah dengan kode email.",
+      "otherUnverifiedNoEmailCodes": "Alamat email akun tersebut belum diverifikasi, sehingga QRdx tidak dapat membuat akun dengannya. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
       "cancelled": "Proses masuk dibatalkan.",
       "accountNotLinked": "Sudah ada akun dengan alamat ini dan belum ditautkan ke {provider}. Masuklah dengan kode email.",
+      "accountNotLinkedNoEmailCodes": "Akun dengan alamat ini sudah ada dan belum terhubung ke {provider}. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
       "emailNotShared": "{provider} tidak membagikan alamat email, sehingga QRdx tidak dapat memasukkan Anda dengannya. Masuklah dengan kode email.",
+      "emailNotSharedNoEmailCodes": "{provider} tidak membagikan alamat email, sehingga QRdx tidak dapat memasukkan Anda dengannya. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
       "tookTooLong": "Proses masuk tersebut terlalu lama atau dimulai di tempat lain. Coba lagi.",
       "providerFailed": "Masuk dengan {provider} tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
       "sso": {
         "emailRequired": "Masukkan email kerja Anda.",
         "notFound": "SSO belum disiapkan untuk alamat tersebut.",
+        "notSetUpFor": "SSO belum disiapkan untuk {domain}.",
+        "notAvailableFor": "SSO untuk {domain} sedang tidak tersedia. Masuk dengan cara lain.",
         "required": "Perusahaan Anda mewajibkan single sign-on untuk alamat ini. Masuk dengan SSO.",
         "unavailable": "Single sign-on saat ini tidak tersedia untuk workspace ini. Masuk dengan cara lain.",
         "emailOutsideDomain": "Penyedia identitas Anda mengirim alamat di luar domain perusahaan Anda, sehingga QRdx tidak dapat memasukkan Anda dengan alamat tersebut. Hubungi admin workspace Anda.",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "QRdx tidak dapat menerima proses masuk ini dari daftar aplikasi perusahaan Anda. Mulailah dari halaman masuk QRdx: pilih Masuk dengan SSO dan masukkan email kerja Anda. Jika masalah ini terus terjadi, hubungi admin workspace Anda.",
         "replayDetected": "Proses masuk tersebut sudah pernah digunakan. Silakan masuk lagi.",
         "accountNotLinked": "Sudah ada akun dengan alamat ini dan akun tersebut tidak dapat ditautkan. Masuk dengan kode email.",
+        "accountNotLinkedNoEmailCodes": "Akun dengan alamat ini sudah ada dan tidak dapat dihubungkan. {otherWay, select, yes {Coba cara masuk lainnya.} other {Minta bantuan kepada pengelola situs ini.}}",
         "failed": "Single sign-on tidak berhasil. Coba lagi, atau masuk dengan cara lain.",
         "rateLimited": "Terlalu banyak percobaan. Tunggu satu menit, lalu coba lagi."
       }

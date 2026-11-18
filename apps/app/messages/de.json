@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Überall sonst abmelden",
           "thisDevice": "Dieses Gerät",
+          "activeNow": "Gerade aktiv",
+          "activeJustNow": "Gerade eben aktiv",
+          "activeAgo": "Aktiv {relative}",
+          "activeOn": "Aktiv am {date}",
+          "signedIn": "Angemeldet am {date}",
           "signOut": "Abmelden",
           "signOutEverywhereElse2": "Überall sonst abmelden?",
           "thisDeviceStaysSignedIn": "Dieses Gerät bleibt angemeldet.",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "Melde dich bei QRdx an, um fortzufahren zu",
           "continueWithGoogle": "Weiter mit Google",
           "continueWithGithub": "Weiter mit GitHub",
-          "youllReviewThesePermissionsBefore": "Du prüfst diese Berechtigungen, bevor etwas geteilt wird."
+          "youllReviewThesePermissionsBefore": "Du prüfst diese Berechtigungen, bevor etwas geteilt wird.",
+          "continueToSignIn": "Weiter zur Anmeldung"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Dieser Link ist nicht nutzbar",
@@ -8689,9 +8695,20 @@
       "enter": "Gib diesen Code in QRdx ein, um diese Adresse als E-Mail für dein Konto zu übernehmen:",
       "ignore": "Wenn du das nicht angefordert hast, ignoriere diese E-Mail. Ohne den Code ändert sich nichts."
     },
+    "emailChanged": {
+      "subject": "Deine QRdx-E-Mail wurde geändert",
+      "preview": "Dein QRdx-Konto nutzt jetzt {newEmail}.",
+      "reason": "Du erhältst diese E-Mail, weil diese Adresse die E-Mail-Adresse eines QRdx-Kontos war.",
+      "body": "Dein QRdx-Konto nutzt jetzt <strong>{newEmail}</strong>. Anmeldecodes und Team-Einladungen gehen ab sofort dorthin.",
+      "notYou": "Wenn du das nicht warst, schreib uns sofort von dieser Adresse an den Support unter <support>{email}</support>, dann helfen wir dir, dein Konto zurückzubekommen."
+    },
     "security": {
       "device": "Gerät",
       "location": "Ungefährer Standort",
+      "browserOnOs": "{browser} auf {os}",
+      "osDevice": "{os}-Gerät",
+      "unknownDevice": "Unbekanntes Gerät",
+      "cityCountry": "{city}, {country}",
       "ip": "IP-Adresse",
       "time": "Zeit",
       "by": "Von",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "Scan-Analysen ansehen",
-      "milestoneReason": "Du erhältst das, weil Benachrichtigungen zu Scan-Meilensteinen für {workspace} aktiviert sind."
+      "milestoneReason": "Du erhältst das, weil Benachrichtigungen zu Scan-Meilensteinen für {workspace} aktiviert sind.",
+      "yourWorkspace": "dein Workspace"
     },
     "firstScan": {
       "subject": "{code} wurde zum ersten Mal gescannt",
@@ -8843,6 +8861,12 @@
       "shortLink": "Kurzlink",
       "opens": "Aufrufe",
       "changed": "Geändert",
+      "fields": {
+        "destination": "Ziel",
+        "title": "Titel",
+        "design": "Design",
+        "domain": "Kurzlink-Domain"
+      },
       "open": "Code öffnen",
       "created": {
         "heading": "Neuer Code: {code}",
@@ -8915,6 +8939,7 @@
       "subject": "Deine QRdx-Woche: {scans, plural, one {# Scan} other {# Scans}}",
       "preview": "{scans, plural, one {# Scan} other {# Scans}} in {workspace} in der letzten Woche",
       "reason": "Du erhältst diese E-Mail, weil die wöchentliche Zusammenfassung für {workspace} aktiviert ist.",
+      "yourWorkspace": "Dein Workspace",
       "heading": "Deine Woche auf QRdx",
       "scans": "Scans",
       "uniqueVisitors": "Eindeutige Besucher",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "Dieses Konto ist gesperrt. Wende dich an den Support, wenn du glaubst, dass das ein Fehler ist.",
       "somethingWentWrongTryAgain": "Etwas ist schiefgelaufen. Versuche es erneut.",
       "newCodeSent": "Neuer Code gesendet. Der alte funktioniert nicht mehr.",
-      "connectionFailed": "Etwas ist schiefgelaufen. Prüfe deine Verbindung und versuche es erneut."
+      "connectionFailed": "Etwas ist schiefgelaufen. Prüfe deine Verbindung und versuche es erneut.",
+      "emailSignInIsntSet": "Die Anmeldung per E-Mail ist auf dieser Website nicht eingerichtet.",
+      "weCouldntSendACodeTry": "Wir konnten gerade keinen Code senden. Versuche es in ein paar Minuten noch einmal.",
+      "tooManyCodesRequestedSo": "Es wurden zu viele Codes angefordert, deshalb haben wir keinen weiteren gesendet. Der neueste Code in deinem Posteingang funktioniert weiterhin."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Weiter mit Passkey",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "Kostenlos starten, keine Karte nötig.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "Die Anmeldung mit {label} ist gerade nicht verfügbar"
+      "labelSignInIsNot": "Die Anmeldung mit {label} ist gerade nicht verfügbar",
+      "signInIsntSetUp": "Anmeldung noch nicht eingerichtet",
+      "thisSiteHasNoEmail": "Auf dieser Website ist weder die Anmeldung per E-Mail noch per Google oder GitHub aktiviert, deshalb können hier keine neuen Konten erstellt werden.",
+      "runThisSiteThe": "Betreibst du diese Website? In der <link>Self-Hosting-Anleitung</link> steht, wie du eine Anmeldung aktivierst.",
+      "newToQrdxYourFirst": "Neu bei QRdx? Mit deiner ersten Anmeldung erstellst du dein kostenloses Konto.",
+      "loading": "Lädt …",
+      "weCouldntCheckHow": "Wir konnten nicht prüfen, wie du dich hier anmelden kannst. <retry>Versuche es erneut</retry> oder <link>öffne die Anmeldeseite</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Deine Anmeldemethoden werden geladen",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider} hat diese E-Mail-Adresse nicht verifiziert, deshalb kann QRdx kein Konto damit erstellen. Verifiziere sie in deinen E-Mail-Einstellungen bei {provider} und versuche es erneut, oder melde dich mit einem E-Mail-Code an.",
+      "githubUnverifiedNoEmailCodes": "{provider} hat diese E-Mail-Adresse nicht bestätigt, daher kann QRdx damit kein Konto erstellen. Bestätige sie in deinen E-Mail-Einstellungen bei {provider} und versuche es erneut{otherWay, select, yes {, oder melde dich auf anderem Weg an} other {}}.",
       "googleUnverified": "{provider} hat diese E-Mail-Adresse nicht verifiziert, deshalb kann QRdx kein Konto damit erstellen. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "googleUnverifiedNoEmailCodes": "{provider} hat diese E-Mail-Adresse nicht bestätigt, daher kann QRdx damit kein Konto erstellen. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "otherUnverified": "Die E-Mail-Adresse dieses Kontos ist nicht verifiziert, deshalb kann QRdx kein Konto damit erstellen. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "otherUnverifiedNoEmailCodes": "Die E-Mail-Adresse dieses Kontos ist nicht bestätigt, daher kann QRdx damit kein Konto erstellen. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "cancelled": "Anmeldung abgebrochen.",
       "accountNotLinked": "Mit dieser Adresse gibt es bereits ein Konto, das nicht mit {provider} verknüpft ist. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "accountNotLinkedNoEmailCodes": "Es gibt bereits ein Konto mit dieser Adresse, das nicht mit {provider} verknüpft ist. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "emailNotShared": "{provider} hat keine E-Mail-Adresse weitergegeben, deshalb kann QRdx dich damit nicht anmelden. Melde dich stattdessen mit einem E-Mail-Code an.",
+      "emailNotSharedNoEmailCodes": "{provider} hat keine E-Mail-Adresse weitergegeben, daher kann QRdx dich damit nicht anmelden. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
       "tookTooLong": "Diese Anmeldung hat zu lange gedauert oder wurde woanders gestartet. Versuche es erneut.",
       "providerFailed": "Die Anmeldung mit {provider} hat nicht funktioniert. Versuche es erneut oder melde dich anders an.",
       "sso": {
         "emailRequired": "Gib deine Arbeits-E-Mail ein.",
         "notFound": "Für diese Adresse ist kein SSO eingerichtet.",
+        "notSetUpFor": "Für {domain} ist kein SSO eingerichtet.",
+        "notAvailableFor": "SSO für {domain} ist gerade nicht verfügbar. Melde dich auf anderem Weg an.",
         "required": "Deine Firma verlangt für diese Adresse Single Sign-on. Melde dich mit SSO an.",
         "unavailable": "Single Sign-on ist für diesen Workspace gerade nicht verfügbar. Melde dich auf einem anderen Weg an.",
         "emailOutsideDomain": "Dein Identitätsanbieter hat eine Adresse außerhalb der Domain deiner Firma gesendet, deshalb kann QRdx dich damit nicht anmelden. Wende dich an den Admin deines Workspaces.",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "QRdx konnte diese Anmeldung aus der App-Liste deiner Firma nicht akzeptieren. Starte auf der Anmeldeseite von QRdx: Wähle „Mit SSO anmelden“ und gib deine Arbeits-E-Mail-Adresse ein. Wenn das weiterhin passiert, wende dich an den Admin deines Workspaces.",
         "replayDetected": "Diese Anmeldung wurde bereits verwendet. Melde dich erneut an.",
         "accountNotLinked": "Ein Konto mit dieser Adresse existiert bereits und konnte nicht verknüpft werden. Melde dich stattdessen mit einem E-Mail-Code an.",
+        "accountNotLinkedNoEmailCodes": "Es gibt bereits ein Konto mit dieser Adresse, das sich nicht verknüpfen ließ. {otherWay, select, yes {Melde dich auf anderem Weg an.} other {Wende dich an die Person, die diese Website betreibt.}}",
         "failed": "Single Sign-on hat nicht funktioniert. Versuch es noch einmal oder melde dich auf einem anderen Weg an.",
         "rateLimited": "Zu viele Versuche. Warte eine Minute und versuch es dann erneut."
       }

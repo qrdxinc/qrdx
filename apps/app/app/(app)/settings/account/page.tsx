@@ -11,7 +11,11 @@ import { planAccountDeletion } from "@/lib/account/deletion";
 import { loadDeletionFacts } from "@/lib/account/deletion-server";
 import { describeDeletionPlan } from "@/lib/account/deletion-summary";
 import { configuredSocialProviders } from "@/lib/account/linked-sign-ins-server";
-import { toSessionViews } from "@/lib/account/sessions";
+import {
+  deviceWords,
+  sessionWords,
+  toSessionViews,
+} from "@/lib/account/sessions";
 import {
   isSocialProvider,
   type LinkedAccount,
@@ -21,6 +25,7 @@ import {
 import { getMyCommunityProfile } from "@/lib/community/profiles";
 import { CommunityUnavailableError } from "@/lib/community/store";
 import { getAppLocale, getAppTranslations } from "@/lib/i18n/app-locale";
+import { emailIntl } from "@/lib/i18n/email";
 import { signInPath } from "@/lib/safe-redirect";
 import { scanGeo } from "@/lib/scans";
 import { isStorageConfigured } from "@/lib/storage/r2";
@@ -128,6 +133,12 @@ export default async function AccountPage({
     currentSessionId: session.session.id,
     now,
     currentLocation: scanGeo(requestHeaders as unknown as Headers),
+    // In the page's language; the device and place words are the security
+    // emails' (emails.security), so both name a device alike.
+    words: sessionWords(
+      await getAppTranslations("app.settings.account.sessionsSection"),
+      deviceWords(await emailIntl(await getAppLocale())),
+    ),
   });
   // Changes to the account's security ask "Confirm it's you" first
   // (lib/account/confirmation.ts); one dialog serves the whole page.

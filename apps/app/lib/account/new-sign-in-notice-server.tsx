@@ -24,7 +24,7 @@ async function sendNewSignInAlert({
   // The account's language: the request is the one being reported, and may
   // not be the owner's.
   const intl = await emailIntlForUser(user.id);
-  const details = requestDetails(headers, new Date(), intl.locale);
+  const details = requestDetails(headers, new Date(), intl);
   const methodLabel = signInMethodLabel(method, secondStep, intl);
   const summary = [
     details.device,

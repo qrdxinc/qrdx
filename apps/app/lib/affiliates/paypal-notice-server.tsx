@@ -31,7 +31,7 @@ export async function sendPayoutEmailNotice({
     // The account's language, never the request's: it may not be the owner's.
     const intl = await emailIntlForAddress(email, { fromRequest: false });
     const subject = payoutEmailNoticeSubject(intl);
-    const details = await currentRequestDetails(new Date(), intl.locale);
+    const details = await currentRequestDetails(new Date(), intl);
     const notice = await deliverSecurityNotice(
       { email, subject },
       {
