@@ -44,9 +44,7 @@ describe("compare pages: How to switch", () => {
     expect(html).not.toMatch(/in minutes/i);
     expect(html).toContain("On a domain you own");
     expect(html).toContain("No reprint");
-    expect(html).toContain(
-      'href="/docs/migrate#your-own-domain-go-yourbrand-com"',
-    );
+    expect(html).toContain('href="/docs/move-your-qr-domain"');
     expect(html).toContain("On Flowcode's domain");
     expect(html).toContain("If your codes have already stopped");
     expect(html).toContain("Reprint once");
@@ -73,5 +71,31 @@ describe("compare pages: How to switch", () => {
       expect(html).not.toContain("If your codes have already stopped");
       expect(html).not.toContain("On a domain you own");
     }
+  });
+
+  it("adds the link shapes seen on customers' own domains, only where seen", () => {
+    expect(render("uniqode", "Uniqode")).toContain(
+      "we've seen Uniqode codes like /aB3xYz",
+    );
+    expect(render("bitly-qr", "Bitly")).toContain("ignores the ?r=qr");
+    expect(render("hovercode", "Hovercode")).toContain(
+      "we've seen Hovercode codes",
+    );
+    const flowcode = render("flowcode", "Flowcode");
+    expect(flowcode).toContain("/r/aB3x");
+    expect(flowcode).toContain('href="/docs/migrate#path-aliases"');
+    // Unconfirmed on customers' domains: the general case only.
+    for (const [slug, name] of [
+      ["scanova", "Scanova"],
+      ["qr-tiger", "QR TIGER"],
+      ["me-qr", "ME-QR"],
+    ] as const) {
+      const html = render(slug, name);
+      expect(html).toContain("On a domain you own");
+      expect(html).not.toContain("we've seen");
+    }
+
+    state.customDomains = false;
+    expect(render("uniqode", "Uniqode")).not.toContain("we've seen");
   });
 });
