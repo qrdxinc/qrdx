@@ -7274,6 +7274,29 @@
           "show": "표시 항목",
           "clearSearch": "검색어 지우기"
         },
+        "pathAliases": {
+          "title": "경로 별칭",
+          "description": "다른 제공업체에서 사용하던 {domain}의 이전 링크(예: {domain}/r/abc)를 이 코드로 연결해요. 각 경로는 정확히 일치해야 하며 쿼리 문자열은 상관없어요. 도메인의 첫 번째 별칭은 작동하기까지 1분 정도 걸릴 수 있어요.",
+          "placeholder": "/r/abc",
+          "add": "추가",
+          "remove": "{path} 삭제",
+          "loadFailed": "경로 별칭을 불러오지 못했어요. 이 대화상자를 닫고 다시 열어 주세요.",
+          "failed": "변경 사항을 저장하지 못했어요. 다시 시도해 주세요.",
+          "verifyFirst": "경로 별칭을 추가하려면 도메인 페이지에서 {domain}을(를) 인증해 주세요.",
+          "problems": {
+            "empty": "도메인 뒤의 경로를 입력해 주세요. 예: /r/abc",
+            "length": "최대 {maxLength, number}자까지 사용할 수 있어요.",
+            "segments": "/로 구분된 부분은 최대 {maxSegments, number}개까지 사용할 수 있어요.",
+            "characters": "슬래시 사이에는 영문자, 숫자, - _ . ~ 만 사용할 수 있고 빈 부분은 둘 수 없어요.",
+            "backHalf": "이 경로는 back-half로 쓸 수 있어요. 별칭 대신 코드의 back-half로 지정해 주세요.",
+            "reserved": "QRdx가 커스텀 도메인에서 이 경로를 사용해요.",
+            "otherDomain": "이 링크는 다른 도메인에 있어요.",
+            "taken": "이 도메인의 다른 코드가 이미 이 경로로 연결되고 있어요.",
+            "hostedPage": "이 도메인의 한 코드가 이 back-half를 사용 중이며, 해당 호스팅 페이지가 이 경로로 연결돼요.",
+            "limit": "코드 하나에 경로 별칭을 최대 {max, number}개까지 추가할 수 있어요.",
+            "unavailable": "이 서버에서는 아직 경로 별칭을 사용할 수 없어요."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "짧은 링크 도메인",
           "defaulthostQDefault": "{defaultHost}/q/ (기본값)",
@@ -7422,7 +7445,8 @@
           "keepingBackHalvesIsPart": "백하프 유지는 {slugPlans}에 포함돼요.",
           "yourPlanDoesntKeepBack": "현재 플랜은 백하프를 유지하지 않아요.",
           "random": "무작위",
-          "backHalf": "백하프"
+          "backHalf": "백하프",
+          "alsoAnswersAt": "{link}로도 연결되므로 이전 링크로 인쇄한 코드도 계속 작동해요."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "연결된 계정에서",

@@ -7274,6 +7274,29 @@
           "show": "Anzeigen",
           "clearSearch": "Suche löschen"
         },
+        "pathAliases": {
+          "title": "Pfad-Aliasse",
+          "description": "Alte Links auf {domain} von einem anderen Anbieter, zum Beispiel {domain}/r/abc, die diesen Code öffnen sollen. Jeder Pfad muss genau übereinstimmen; der Query-String spielt keine Rolle. Der erste Alias einer Domain braucht unter Umständen eine Minute, bis er funktioniert.",
+          "placeholder": "/r/abc",
+          "add": "Hinzufügen",
+          "remove": "{path} entfernen",
+          "loadFailed": "Die Pfad-Aliasse konnten nicht geladen werden. Schließe diesen Dialog und öffne ihn erneut.",
+          "failed": "Die Änderung konnte nicht gespeichert werden. Versuche es erneut.",
+          "verifyFirst": "Verifiziere {domain} auf der Seite „Domains“, um Pfad-Aliasse hinzuzufügen.",
+          "problems": {
+            "empty": "Gib den Pfad nach der Domain ein, zum Beispiel /r/abc.",
+            "length": "Verwende höchstens {maxLength, number} Zeichen.",
+            "segments": "Verwende höchstens {maxSegments, number} durch / getrennte Teile.",
+            "characters": "Verwende zwischen den Schrägstrichen Buchstaben, Ziffern, - _ . und ~, ohne leere Teile.",
+            "backHalf": "Dieser Pfad passt als Back-Half. Gib dem Code stattdessen diesen Back-Half.",
+            "reserved": "QRdx verwendet diesen Pfad auf eigenen Domains.",
+            "otherDomain": "Dieser Link liegt auf einer anderen Domain.",
+            "taken": "Ein anderer Code auf dieser Domain antwortet bereits unter diesem Pfad.",
+            "hostedPage": "Ein Code auf dieser Domain hat diesen Back-Half, und seine gehostete Seite antwortet unter diesem Pfad.",
+            "limit": "Ein Code kann bis zu {max, number} Pfad-Aliasse haben.",
+            "unavailable": "Pfad-Aliasse sind auf diesem Server noch nicht verfügbar."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Kurzlink-Domain",
           "defaulthostQDefault": "{defaultHost}/q/ (Standard)",
@@ -7422,7 +7445,8 @@
           "keepingBackHalvesIsPart": "Back-Halves beizubehalten ist Teil von {slugPlans}.",
           "yourPlanDoesntKeepBack": "Dein Tarif behält keine Back-Halves bei.",
           "random": "zufällig",
-          "backHalf": "Back-Half"
+          "backHalf": "Back-Half",
+          "alsoAnswersAt": "Antwortet auch unter {link}, damit mit dem alten Link gedruckte Codes weiter funktionieren."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Aus einem verbundenen Konto",

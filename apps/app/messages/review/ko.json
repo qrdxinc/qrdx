@@ -22623,6 +22623,82 @@
     "source": "3b7ea51793e9",
     "status": "machine"
   },
+  "app.dashboard.codes.pathAliases.title": {
+    "source": "4a36ef200a9d",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.description": {
+    "source": "b5e055d27466",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.placeholder": {
+    "source": "da7f4fc3b252",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.add": {
+    "source": "9fd728c66c9a",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.remove": {
+    "source": "6f0a17de28a4",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.loadFailed": {
+    "source": "b8436aff3ee6",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.failed": {
+    "source": "6d90f7b93fda",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.verifyFirst": {
+    "source": "d14d534b77b0",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.empty": {
+    "source": "87f6aecc62d1",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.length": {
+    "source": "184de9cf3ac5",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.segments": {
+    "source": "2ad61d5ec592",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.characters": {
+    "source": "c0ce873fbb7c",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.backHalf": {
+    "source": "905ec80b887f",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.reserved": {
+    "source": "c1f637d088a7",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.otherDomain": {
+    "source": "99e1ab2351e0",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.taken": {
+    "source": "d79b86605439",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.hostedPage": {
+    "source": "a31fcf1124f5",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.limit": {
+    "source": "c7c7c4301052",
+    "status": "machine"
+  },
+  "app.dashboard.codes.pathAliases.problems.unavailable": {
+    "source": "f9f63238322d",
+    "status": "machine"
+  },
   "app.dashboard.codes.domainPicker.shortLinkDomain": {
     "source": "8a702756baf5",
     "status": "machine"
@@ -23165,6 +23241,10 @@
   },
   "app.dashboard.codes.importPreviewStep.backHalf": {
     "source": "c00fa3c0017b",
+    "status": "machine"
+  },
+  "app.dashboard.codes.importPreviewStep.alsoAnswersAt": {
+    "source": "121b4753ef07",
     "status": "machine"
   },
   "app.dashboard.codes.importProviderStep.fromAConnectedAccount": {
