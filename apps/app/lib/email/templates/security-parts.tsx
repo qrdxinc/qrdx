@@ -95,10 +95,6 @@ export function NeverAskForCode({
   return <EmailText>{intl.t("codes.neverAsk")}</EmailText>;
 }
 
-export function SupportLink() {
-  return <Link href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</Link>;
-}
-
 /** The arguments of "…contact support at <support>{email}</support>…". */
 export const supportLinkArgs = {
   email: SUPPORT_EMAIL,

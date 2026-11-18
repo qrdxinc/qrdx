@@ -3,9 +3,10 @@ import "server-only";
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import { sendEmail } from "@/lib/email/send";
 import {
-  EMAIL_CHANGED_SUBJECT,
   EmailChangedEmail,
+  emailChangedSubject,
 } from "@/lib/email/templates/email-change";
+import { emailIntlForUser } from "@/lib/i18n/email-locale";
 import { isBillingConfigured, polar } from "@/lib/polar";
 import { currentRequestDetails } from "@/lib/security/request-details";
 import { deliverEmailChangedNotice } from "./email-change";
@@ -53,7 +54,9 @@ async function updatePolarCustomerEmail(
  * and each step is reported rather than undone. The notice shows the device,
  * place and time of the request that changed it (read here), or "By QRdx
  * support" when support moved the account (their device and place aren't
- * the account's business).
+ * the account's business). It goes out in the account's saved language,
+ * else English: never the request's, which may not be the owner's (the
+ * reason the notice is sent).
  */
 export async function afterEmailChanged({
   userId,
@@ -66,8 +69,11 @@ export async function afterEmailChanged({
   newEmail: string;
   bySupport?: boolean;
 }): Promise<void> {
-  const request = await currentRequestDetails();
-  const details = bySupport ? { ...request, actor: "QRdx support" } : request;
+  const intl = await emailIntlForUser(userId);
+  const request = await currentRequestDetails(new Date(), intl);
+  const details = bySupport
+    ? { ...request, actor: intl.t("security.support") }
+    : request;
   const [notice, polarCustomer] = await Promise.all([
     deliverEmailChangedNotice(
       { previousEmail, newEmail },
@@ -78,8 +84,14 @@ export async function afterEmailChanged({
         send: () =>
           sendEmail({
             to: previousEmail,
-            subject: EMAIL_CHANGED_SUBJECT,
-            react: <EmailChangedEmail details={details} newEmail={newEmail} />,
+            subject: emailChangedSubject(intl),
+            react: (
+              <EmailChangedEmail
+                details={details}
+                intl={intl}
+                newEmail={newEmail}
+              />
+            ),
             tags: [{ name: "category", value: "email_changed" }],
           }),
       },

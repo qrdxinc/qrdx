@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Esci da tutti gli altri",
           "thisDevice": "Questo dispositivo",
+          "activeNow": "Attiva ora",
+          "activeJustNow": "Attiva poco fa",
+          "activeAgo": "Attiva {relative}",
+          "activeOn": "Attiva il {date}",
+          "signedIn": "Accesso il {date}",
           "signOut": "Esci",
           "signOutEverywhereElse2": "Uscire da tutti gli altri?",
           "thisDeviceStaysSignedIn": "Questo dispositivo resta connesso.",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "Accedi a QRdx per continuare su",
           "continueWithGoogle": "Continua con Google",
           "continueWithGithub": "Continua con GitHub",
-          "youllReviewThesePermissionsBefore": "Rivedrai questi permessi prima che venga condiviso qualcosa."
+          "youllReviewThesePermissionsBefore": "Rivedrai questi permessi prima che venga condiviso qualcosa.",
+          "continueToSignIn": "Continua per accedere"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Questo link non può essere usato",
@@ -8689,9 +8695,20 @@
       "enter": "Inserisci questo codice in QRdx per usare questa email per il tuo account:",
       "ignore": "Se non l’hai chiesto tu, ignora questa email. Senza il codice non cambia nulla."
     },
+    "emailChanged": {
+      "subject": "La tua email QRdx è stata cambiata",
+      "preview": "Il tuo account QRdx ora usa {newEmail}.",
+      "reason": "Hai ricevuto questa email perché questo indirizzo era l’email di un account QRdx.",
+      "body": "Il tuo account QRdx ora usa <strong>{newEmail}</strong>. D’ora in poi i codici di accesso e gli inviti al team arriveranno lì.",
+      "notYou": "Se non sei stato tu, contatta subito l’assistenza all’indirizzo <support>{email}</support> da questo indirizzo e ti aiuteremo a recuperare il tuo account."
+    },
     "security": {
       "device": "Dispositivo",
       "location": "Posizione approssimativa",
+      "browserOnOs": "{browser} su {os}",
+      "osDevice": "Dispositivo {os}",
+      "unknownDevice": "Dispositivo sconosciuto",
+      "cityCountry": "{city}, {country}",
       "ip": "Indirizzo IP",
       "time": "Ora",
       "by": "Da",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "Vedi le analisi delle scansioni",
-      "milestoneReason": "Ricevi questa email perché gli avvisi sui traguardi di scansioni sono attivi per {workspace}."
+      "milestoneReason": "Ricevi questa email perché gli avvisi sui traguardi di scansioni sono attivi per {workspace}.",
+      "yourWorkspace": "il tuo workspace"
     },
     "firstScan": {
       "subject": "{code} ha ricevuto la prima scansione",
@@ -8843,6 +8861,12 @@
       "shortLink": "Link breve",
       "opens": "Aperture",
       "changed": "Modificato",
+      "fields": {
+        "destination": "Destinazione",
+        "title": "Titolo",
+        "design": "Design",
+        "domain": "Dominio del link breve"
+      },
       "open": "Apri il codice",
       "created": {
         "heading": "Nuovo codice: {code}",
@@ -8883,7 +8907,7 @@
       "yourAgency": "La tua agenzia"
     },
     "limitNotice": {
-      "subject": "{level, select, full {{label}: limite raggiunto in {workspace}} other {{label}: {value} usato in {workspace}}}",
+      "subject": "{level, select, full {{label}: limite raggiunto in {workspace}} other {{label}: {workspace} ha usato {value}}}",
       "preview": "{level, select, full {{workspace} ha raggiunto il limite di {noun}} other {{workspace} ha usato {value} di {noun}}}",
       "heading": "{level, select, full {{workspace} ha raggiunto il limite del piano} other {{workspace} si avvicina al limite del piano}}",
       "body": "{level, select, full {{workspace} ha usato tutta la quota di {noun}.} other {{workspace} ha usato {value} di {noun}.}}",
@@ -8915,6 +8939,7 @@
       "subject": "La tua settimana su QRdx: {scans, plural, one {# scansione} other {# scansioni}}",
       "preview": "{scans, plural, one {# scansione} other {# scansioni}} in {workspace} la settimana scorsa",
       "reason": "Ricevi questa email perché il riepilogo settimanale è attivo per {workspace}.",
+      "yourWorkspace": "Il tuo workspace",
       "heading": "La tua settimana su QRdx",
       "scans": "Scansioni",
       "uniqueVisitors": "Visitatori unici",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "Questo account è sospeso. Contatta il supporto se pensi che sia un errore.",
       "somethingWentWrongTryAgain": "Qualcosa è andato storto. Riprova.",
       "newCodeSent": "Nuovo codice inviato. Quello vecchio non funziona più.",
-      "connectionFailed": "Qualcosa è andato storto. Controlla la connessione e riprova."
+      "connectionFailed": "Qualcosa è andato storto. Controlla la connessione e riprova.",
+      "emailSignInIsntSet": "L’accesso con email non è configurato su questo sito.",
+      "weCouldntSendACodeTry": "Al momento non siamo riusciti a inviare un codice. Riprova tra qualche minuto.",
+      "tooManyCodesRequestedSo": "Hai richiesto troppi codici, quindi non ne abbiamo inviato un altro. L’ultimo nella tua casella di posta funziona ancora."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continua con passkey",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "Inizi gratis, senza carta.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "L’accesso con {label} non è disponibile al momento"
+      "labelSignInIsNot": "L’accesso con {label} non è disponibile al momento",
+      "signInIsntSetUp": "L’accesso non è ancora configurato",
+      "thisSiteHasNoEmail": "Su questo sito non è attivo nessun accesso con email, Google o GitHub, quindi qui non è possibile creare nuovi account.",
+      "runThisSiteThe": "Gestisci tu questo sito? La <link>guida al self-hosting</link> spiega come attivarne uno.",
+      "newToQrdxYourFirst": "Sei nuovo su QRdx? Il tuo primo accesso crea il tuo account gratuito.",
+      "loading": "Caricamento…",
+      "weCouldntCheckHow": "Non siamo riusciti a verificare come accedere qui. <retry>Riprova</retry>, oppure <link>apri la pagina di accesso</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Caricamento dei metodi di accesso",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider} non ha verificato questo indirizzo email, quindi QRdx non può creare un account con esso. Verificalo nelle impostazioni email di {provider} e riprova, oppure accedi con un codice via email.",
+      "githubUnverifiedNoEmailCodes": "{provider} non ha verificato questo indirizzo email, quindi QRdx non può creare un account con esso. Verificalo nelle impostazioni email di {provider} e riprova{otherWay, select, yes {, oppure prova un altro modo per accedere} other {}}.",
       "googleUnverified": "{provider} non ha verificato questo indirizzo email, quindi QRdx non può creare un account con esso. Accedi invece con un codice via email.",
+      "googleUnverifiedNoEmailCodes": "{provider} non ha verificato questo indirizzo email, quindi QRdx non può creare un account con esso. {otherWay, select, yes {Prova un altro modo per accedere.} other {Chiedi aiuto a chi gestisce questo sito.}}",
       "otherUnverified": "L’indirizzo email di quell’account non è verificato, quindi QRdx non può creare un account con esso. Accedi invece con un codice via email.",
+      "otherUnverifiedNoEmailCodes": "L’indirizzo email di quell’account non è verificato, quindi QRdx non può creare un account con esso. {otherWay, select, yes {Prova un altro modo per accedere.} other {Chiedi aiuto a chi gestisce questo sito.}}",
       "cancelled": "Accesso annullato.",
       "accountNotLinked": "Esiste già un account con questo indirizzo e non è collegato a {provider}. Accedi invece con un codice via email.",
+      "accountNotLinkedNoEmailCodes": "Esiste già un account con questo indirizzo e non è collegato a {provider}. {otherWay, select, yes {Prova un altro modo per accedere.} other {Chiedi aiuto a chi gestisce questo sito.}}",
       "emailNotShared": "{provider} non ha condiviso un indirizzo email, quindi QRdx non può farti accedere con esso. Accedi invece con un codice via email.",
+      "emailNotSharedNoEmailCodes": "{provider} non ha condiviso un indirizzo email, quindi QRdx non può farti accedere con esso. {otherWay, select, yes {Prova un altro modo per accedere.} other {Chiedi aiuto a chi gestisce questo sito.}}",
       "tookTooLong": "Quell’accesso ha richiesto troppo tempo o è stato avviato altrove. Riprova.",
       "providerFailed": "L’accesso con {provider} non ha funzionato. Riprova, oppure accedi in un altro modo.",
       "sso": {
         "emailRequired": "Inserisci la tua email di lavoro.",
         "notFound": "SSO non è configurato per quell’indirizzo.",
+        "notSetUpFor": "Nessun SSO è configurato per {domain}.",
+        "notAvailableFor": "L’SSO per {domain} non è disponibile al momento. Accedi in un altro modo.",
         "required": "La tua azienda richiede il single sign-on per questo indirizzo. Accedi con SSO.",
         "unavailable": "Al momento il single sign-on non è disponibile per questo workspace. Accedi in un altro modo.",
         "emailOutsideDomain": "Il tuo identity provider ha inviato un indirizzo che non appartiene al dominio della tua azienda, quindi QRdx non può farti accedere con questo indirizzo. Rivolgiti all’amministratore del tuo workspace.",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "QRdx non ha potuto accettare questo accesso dall’elenco di app della tua azienda. Parti dalla pagina di accesso di QRdx: scegli Accedi con SSO e inserisci la tua email di lavoro. Se il problema persiste, rivolgiti all’amministratore del tuo workspace.",
         "replayDetected": "Questo accesso è già stato usato. Accedi di nuovo.",
         "accountNotLinked": "Esiste già un account con questo indirizzo e non è stato possibile collegarlo. Accedi invece con un codice via email.",
+        "accountNotLinkedNoEmailCodes": "Esiste già un account con questo indirizzo e non è stato possibile collegarlo. {otherWay, select, yes {Prova un altro modo per accedere.} other {Chiedi aiuto a chi gestisce questo sito.}}",
         "failed": "Il single sign-on non ha funzionato. Riprova oppure accedi in un altro modo.",
         "rateLimited": "Troppi tentativi. Aspetta un minuto, poi riprova."
       }

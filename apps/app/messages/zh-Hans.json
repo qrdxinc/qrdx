@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "退出其他所有设备",
           "thisDevice": "此设备",
+          "activeNow": "当前在线",
+          "activeJustNow": "刚刚活跃",
+          "activeAgo": "{relative}活跃",
+          "activeOn": "{date}活跃",
+          "signedIn": "{date}登录",
           "signOut": "退出登录",
           "signOutEverywhereElse2": "退出其他所有设备？",
           "thisDeviceStaysSignedIn": "此设备将保持登录状态。",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "登录 QRdx 以继续前往",
           "continueWithGoogle": "使用 Google 继续",
           "continueWithGithub": "使用 GitHub 继续",
-          "youllReviewThesePermissionsBefore": "在共享任何内容之前，你将先查看这些权限。"
+          "youllReviewThesePermissionsBefore": "在共享任何内容之前，你将先查看这些权限。",
+          "continueToSignIn": "继续登录"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "此链接无法使用",
@@ -8689,9 +8695,20 @@
       "enter": "请在 QRdx 中输入此验证码，将此邮箱设为你的账号邮箱：",
       "ignore": "如果这不是你本人的操作，请忽略这封邮件。没有验证码，一切都不会改变。"
     },
+    "emailChanged": {
+      "subject": "你的 QRdx 邮箱已更改",
+      "preview": "你的 QRdx 账号现已使用 {newEmail}。",
+      "reason": "你收到这封邮件，是因为该邮箱地址曾是某个 QRdx 账号所用的邮箱。",
+      "body": "你的 QRdx 账号现已使用 <strong>{newEmail}</strong>。今后登录验证码和团队邀请都将发送到该邮箱。",
+      "notYou": "如果不是你本人操作，请立即使用此邮箱地址联系支持团队 <support>{email}</support>，我们会帮你找回账号。"
+    },
     "security": {
       "device": "设备",
       "location": "大致位置",
+      "browserOnOs": "{os} 上的 {browser}",
+      "osDevice": "{os} 设备",
+      "unknownDevice": "未知设备",
+      "cityCountry": "{country} {city}",
       "ip": "IP 地址",
       "time": "时间",
       "by": "操作方",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "查看扫描分析",
-      "milestoneReason": "你收到此邮件，是因为 {workspace} 已开启扫描里程碑提醒。"
+      "milestoneReason": "你收到此邮件，是因为 {workspace} 已开启扫描里程碑提醒。",
+      "yourWorkspace": "你的工作区"
     },
     "firstScan": {
       "subject": "{code} 迎来了第一次扫描",
@@ -8843,6 +8861,12 @@
       "shortLink": "短链接",
       "opens": "打开次数",
       "changed": "已更改",
+      "fields": {
+        "destination": "目标地址",
+        "title": "标题",
+        "design": "设计",
+        "domain": "短链接域名"
+      },
       "open": "打开二维码",
       "created": {
         "heading": "新二维码：{code}",
@@ -8915,6 +8939,7 @@
       "subject": "你的 QRdx 一周概览：{scans, plural, other {# 次扫描}}",
       "preview": "上周 {workspace} 共有 {scans, plural, other {# 次扫描}}",
       "reason": "你收到这封邮件，是因为 {workspace} 已开启每周摘要。",
+      "yourWorkspace": "你的工作区",
       "heading": "你在 QRdx 的一周",
       "scans": "扫描",
       "uniqueVisitors": "独立访客",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "此账号已被暂停。如果你认为这是误判，请联系支持团队。",
       "somethingWentWrongTryAgain": "出了点问题。请重试。",
       "newCodeSent": "新验证码已发送，旧验证码已失效。",
-      "connectionFailed": "出了点问题。请检查网络连接后重试。"
+      "connectionFailed": "出了点问题。请检查网络连接后重试。",
+      "emailSignInIsntSet": "此站点未启用邮箱登录。",
+      "weCouldntSendACodeTry": "暂时无法发送验证码，请几分钟后再试。",
+      "tooManyCodesRequestedSo": "验证码请求次数过多，因此我们没有再发送新的验证码。收件箱中最新的一封仍然有效。"
     },
     "passkeySignIn": {
       "continueWithPasskey": "使用通行密钥继续",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "免费开始，无需绑定银行卡。",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "{label} 登录暂时不可用"
+      "labelSignInIsNot": "{label} 登录暂时不可用",
+      "signInIsntSetUp": "尚未设置登录方式",
+      "thisSiteHasNoEmail": "此站点未开启邮箱、Google 或 GitHub 登录，因此无法在这里创建新账号。",
+      "runThisSiteThe": "您是站点管理员吗？<link>自托管指南</link>介绍了如何开启登录。",
+      "newToQrdxYourFirst": "初次使用 QRdx？首次登录时将为您创建免费账号。",
+      "loading": "加载中…",
+      "weCouldntCheckHow": "我们无法确认此处的登录方式。请<retry>重试</retry>，或<link>打开登录页面</link>。"
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "正在加载您的登录方式",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法使用它创建账户。请在 {provider} 的邮箱设置中完成验证后重试，或使用邮箱验证码登录。",
+      "githubUnverifiedNoEmailCodes": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法用它创建账号。请在 {provider} 的邮箱设置中完成验证后重试{otherWay, select, yes {，或尝试其他登录方式} other {}}。",
       "googleUnverified": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法使用它创建账户。请改用邮箱验证码登录。",
+      "googleUnverifiedNoEmailCodes": "{provider} 尚未验证此邮箱地址，因此 QRdx 无法用它创建账号。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
       "otherUnverified": "该账户的邮箱地址尚未验证，因此 QRdx 无法使用它创建账户。请改用邮箱验证码登录。",
+      "otherUnverifiedNoEmailCodes": "该账号的邮箱地址尚未验证，因此 QRdx 无法用它创建账号。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
       "cancelled": "登录已取消。",
       "accountNotLinked": "使用此地址的账户已存在，且未关联 {provider}。请改用邮箱验证码登录。",
+      "accountNotLinkedNoEmailCodes": "使用此地址的账号已存在，且未与 {provider} 关联。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
       "emailNotShared": "{provider} 未提供邮箱地址，因此 QRdx 无法通过它让您登录。请改用邮箱验证码登录。",
+      "emailNotSharedNoEmailCodes": "{provider} 未提供邮箱地址，因此 QRdx 无法通过它让您登录。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
       "tookTooLong": "此次登录耗时过长，或是在其他地方发起的。请重试。",
       "providerFailed": "{provider} 登录未成功。请重试，或使用其他方式登录。",
       "sso": {
         "emailRequired": "请输入您的工作邮箱。",
         "notFound": "该地址尚未设置 SSO。",
+        "notSetUpFor": "{domain} 尚未设置 SSO。",
+        "notAvailableFor": "{domain} 的 SSO 暂时不可用，请使用其他方式登录。",
         "required": "贵公司要求此地址使用单点登录。请通过 SSO 登录。",
         "unavailable": "此工作区目前无法使用单点登录。请改用其他方式登录。",
         "emailOutsideDomain": "您的身份提供商发送的邮箱地址不属于贵公司的域名，因此 QRdx 无法使用该地址让您登录。请联系工作区管理员。",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "QRdx 无法接受来自贵公司应用列表的这次登录。请从 QRdx 的登录页面开始：选择“通过 SSO 登录”，然后输入您的工作邮箱。如果问题仍然出现，请联系工作区管理员。",
         "replayDetected": "该登录请求已被使用过。请重新登录。",
         "accountNotLinked": "使用此地址的账户已经存在，无法完成关联。请改用邮箱验证码登录。",
+        "accountNotLinkedNoEmailCodes": "使用此地址的账号已存在，但无法完成关联。{otherWay, select, yes {请尝试其他登录方式。} other {请联系此站点的管理员寻求帮助。}}",
         "failed": "单点登录未能成功。请重试，或改用其他方式登录。",
         "rateLimited": "尝试次数过多。请等待一分钟后再试。"
       }

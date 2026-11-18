@@ -49,8 +49,8 @@ export async function sendTwoFactorNotice(
     const intl = await emailIntlForAddress(email, { fromRequest: false });
     const now = new Date();
     const request = headers
-      ? requestDetails(headers, now, intl.locale)
-      : await currentRequestDetails(now, intl.locale);
+      ? requestDetails(headers, now, intl)
+      : await currentRequestDetails(now, intl);
     // Support's change: their device and address aren't the account's business.
     const bySupport =
       kind === "support-off" ||

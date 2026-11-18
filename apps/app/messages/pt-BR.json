@@ -5664,6 +5664,11 @@
         "sessionsSection": {
           "signOutEverywhereElse": "Sair em todos os outros",
           "thisDevice": "Este dispositivo",
+          "activeNow": "Ativa agora",
+          "activeJustNow": "Ativa há pouco",
+          "activeAgo": "Ativa {relative}",
+          "activeOn": "Ativa em {date}",
+          "signedIn": "Login em {date}",
           "signOut": "Sair",
           "signOutEverywhereElse2": "Sair em todos os outros?",
           "thisDeviceStaysSignedIn": "Este dispositivo continua conectado.",
@@ -8626,7 +8631,8 @@
           "signInToQrdxTo": "Entre no QRdx para continuar para",
           "continueWithGoogle": "Continuar com Google",
           "continueWithGithub": "Continuar com GitHub",
-          "youllReviewThesePermissionsBefore": "Você vai revisar estas permissões antes de qualquer compartilhamento."
+          "youllReviewThesePermissionsBefore": "Você vai revisar estas permissões antes de qualquer compartilhamento.",
+          "continueToSignIn": "Continuar para o login"
         },
         "oauthConsent": {
           "thisLinkCantBeUsed": "Não é possível usar este link",
@@ -8689,9 +8695,20 @@
       "enter": "Digite este código no QRdx para tornar este o e-mail da sua conta:",
       "ignore": "Se não foi você, ignore este e-mail. Nada muda sem o código."
     },
+    "emailChanged": {
+      "subject": "Seu e-mail do QRdx foi alterado",
+      "preview": "Sua conta do QRdx agora usa {newEmail}.",
+      "reason": "Você recebeu este e-mail porque este endereço era o e-mail de uma conta do QRdx.",
+      "body": "Sua conta do QRdx agora usa <strong>{newEmail}</strong>. Os códigos de acesso e os convites de equipe vão para esse endereço a partir de agora.",
+      "notYou": "Se não foi você, entre em contato com o suporte em <support>{email}</support> a partir deste endereço imediatamente, e vamos ajudar você a recuperar sua conta."
+    },
     "security": {
       "device": "Dispositivo",
       "location": "Localização aproximada",
+      "browserOnOs": "{browser} no {os}",
+      "osDevice": "Dispositivo {os}",
+      "unknownDevice": "Dispositivo desconhecido",
+      "cityCountry": "{city}, {country}",
       "ip": "Endereço IP",
       "time": "Hora",
       "by": "Por",
@@ -8813,7 +8830,8 @@
     },
     "alerts": {
       "viewAnalytics": "Ver análise de leituras",
-      "milestoneReason": "Você recebe isto porque os alertas de marcos de leituras estão ativados para {workspace}."
+      "milestoneReason": "Você recebe isto porque os alertas de marcos de leituras estão ativados para {workspace}.",
+      "yourWorkspace": "seu workspace"
     },
     "firstScan": {
       "subject": "{code} teve a primeira leitura",
@@ -8843,6 +8861,12 @@
       "shortLink": "Link curto",
       "opens": "Aberturas",
       "changed": "Alterado",
+      "fields": {
+        "destination": "Destino",
+        "title": "Título",
+        "design": "Design",
+        "domain": "Domínio do link curto"
+      },
       "open": "Abrir o código",
       "created": {
         "heading": "Novo código: {code}",
@@ -8883,7 +8907,7 @@
       "yourAgency": "Sua agência"
     },
     "limitNotice": {
-      "subject": "{level, select, full {{label}: limite atingido em {workspace}} other {{label}: {value} usado em {workspace}}}",
+      "subject": "{level, select, full {{label}: limite atingido em {workspace}} other {{label}: {workspace} usou {value}}}",
       "preview": "{level, select, full {{workspace} atingiu o limite de {noun}} other {{workspace} usou {value} de {noun}}}",
       "heading": "{level, select, full {{workspace} atingiu o limite do plano} other {{workspace} está perto do limite do plano}}",
       "body": "{level, select, full {{workspace} usou todo o limite de {noun}.} other {{workspace} usou {value} de {noun}.}}",
@@ -8915,6 +8939,7 @@
       "subject": "Sua semana no QRdx: {scans, plural, one {# leitura} other {# leituras}}",
       "preview": "{scans, plural, one {# leitura} other {# leituras}} em {workspace} na semana passada",
       "reason": "Você recebe este e-mail porque o resumo semanal está ativado para {workspace}.",
+      "yourWorkspace": "Seu workspace",
       "heading": "Sua semana no QRdx",
       "scans": "Leituras",
       "uniqueVisitors": "Visitantes únicos",
@@ -8952,7 +8977,10 @@
       "thisAccountIsSuspendedContact": "Esta conta está suspensa. Fale com o suporte se achar que é um engano.",
       "somethingWentWrongTryAgain": "Algo deu errado. Tente de novo.",
       "newCodeSent": "Novo código enviado. O anterior não funciona mais.",
-      "connectionFailed": "Algo deu errado. Verifique sua conexão e tente de novo."
+      "connectionFailed": "Algo deu errado. Verifique sua conexão e tente de novo.",
+      "emailSignInIsntSet": "O login por e-mail não está configurado neste site.",
+      "weCouldntSendACodeTry": "Não conseguimos enviar um código agora. Tente de novo em alguns minutos.",
+      "tooManyCodesRequestedSo": "Você pediu códigos demais, então não enviamos outro. O mais recente na sua caixa de entrada ainda funciona."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continuar com passkey",
@@ -8989,7 +9017,13 @@
       "freeToStartNoCard": "Comece grátis, sem precisar de cartão.",
       "google": "Google",
       "github": "GitHub",
-      "labelSignInIsNot": "O login com {label} não está disponível no momento"
+      "labelSignInIsNot": "O login com {label} não está disponível no momento",
+      "signInIsntSetUp": "O login ainda não está configurado",
+      "thisSiteHasNoEmail": "Este site não tem login por e-mail, Google ou GitHub ativado, então não é possível criar novas contas aqui.",
+      "runThisSiteThe": "Você administra este site? O <link>guia de hospedagem própria</link> mostra como ativar um.",
+      "newToQrdxYourFirst": "Primeira vez no QRdx? Seu primeiro login cria sua conta grátis.",
+      "loading": "Carregando…",
+      "weCouldntCheckHow": "Não conseguimos verificar como fazer login aqui. <retry>Tente de novo</retry> ou <link>abra a página de login</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Carregando seus métodos de login",
@@ -9221,16 +9255,23 @@
     },
     "signInErrors": {
       "githubUnverified": "O {provider} não verificou este endereço de e-mail, então o QRdx não pode criar uma conta com ele. Verifique-o nas configurações de e-mail do {provider} e tente de novo, ou entre com um código por e-mail.",
+      "githubUnverifiedNoEmailCodes": "O {provider} não verificou este endereço de e-mail, então o QRdx não pode criar uma conta com ele. Verifique-o nas configurações de e-mail do {provider} e tente de novo{otherWay, select, yes {, ou use outra forma de fazer login} other {}}.",
       "googleUnverified": "O {provider} não verificou este endereço de e-mail, então o QRdx não pode criar uma conta com ele. Entre com um código por e-mail.",
+      "googleUnverifiedNoEmailCodes": "O {provider} não verificou este endereço de e-mail, então o QRdx não pode criar uma conta com ele. {otherWay, select, yes {Tente outra forma de fazer login.} other {Peça ajuda a quem administra este site.}}",
       "otherUnverified": "O endereço de e-mail dessa conta não está verificado, então o QRdx não pode criar uma conta com ele. Entre com um código por e-mail.",
+      "otherUnverifiedNoEmailCodes": "O endereço de e-mail dessa conta não está verificado, então o QRdx não pode criar uma conta com ele. {otherWay, select, yes {Tente outra forma de fazer login.} other {Peça ajuda a quem administra este site.}}",
       "cancelled": "O login foi cancelado.",
       "accountNotLinked": "Já existe uma conta com este endereço, e ela não está vinculada ao {provider}. Entre com um código por e-mail.",
+      "accountNotLinkedNoEmailCodes": "Já existe uma conta com este endereço, e ela não está vinculada ao {provider}. {otherWay, select, yes {Tente outra forma de fazer login.} other {Peça ajuda a quem administra este site.}}",
       "emailNotShared": "O {provider} não compartilhou um endereço de e-mail, então o QRdx não pode fazer seu login com ele. Entre com um código por e-mail.",
+      "emailNotSharedNoEmailCodes": "O {provider} não compartilhou um endereço de e-mail, então o QRdx não pode fazer seu login com ele. {otherWay, select, yes {Tente outra forma de fazer login.} other {Peça ajuda a quem administra este site.}}",
       "tookTooLong": "Esse login demorou demais ou foi iniciado em outro lugar. Tente de novo.",
       "providerFailed": "O login com {provider} não funcionou. Tente de novo ou entre de outro jeito.",
       "sso": {
         "emailRequired": "Digite seu e-mail de trabalho.",
         "notFound": "O SSO não está configurado para esse endereço.",
+        "notSetUpFor": "Nenhum SSO está configurado para {domain}.",
+        "notAvailableFor": "O SSO de {domain} não está disponível agora. Faça login de outra forma.",
         "required": "Sua empresa exige login único (SSO) para este endereço. Entre com SSO.",
         "unavailable": "O login único (SSO) não está disponível para este workspace no momento. Entre de outra forma.",
         "emailOutsideDomain": "Seu provedor de identidade enviou um endereço fora do domínio da sua empresa, então o QRdx não pode fazer seu login com ele. Fale com o administrador do seu workspace.",
@@ -9240,6 +9281,7 @@
         "unsolicitedResponse": "O QRdx não conseguiu aceitar este login vindo da lista de apps da sua empresa. Comece pela página de login do QRdx: escolha Entrar com SSO e informe seu e-mail de trabalho. Se continuar acontecendo, fale com o administrador do seu workspace.",
         "replayDetected": "Esse login já foi usado. Entre novamente.",
         "accountNotLinked": "Já existe uma conta com este endereço e não foi possível vinculá-la. Entre com um código por e-mail.",
+        "accountNotLinkedNoEmailCodes": "Já existe uma conta com este endereço, e não foi possível vinculá-la. {otherWay, select, yes {Tente outra forma de fazer login.} other {Peça ajuda a quem administra este site.}}",
         "failed": "O login único (SSO) não funcionou. Tente novamente ou entre de outra forma.",
         "rateLimited": "Tentativas demais. Aguarde um minuto e tente novamente."
       }

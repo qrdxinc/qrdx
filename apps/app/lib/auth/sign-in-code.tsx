@@ -48,9 +48,9 @@ export const signInCodeAllowed: SignInCodeLimit = (email) =>
  * The per-address limit has run by now (signInCodeAllowed).
  */
 export const sendSignInCode: SignInCodeSender = async ({ email, otp }) => {
-  const { location } = await currentRequestDetails();
   // The account's language, or the site's when there's no account yet.
   const intl = await emailIntlForAddress(email);
+  const { location } = await currentRequestDetails(new Date(), intl);
   await deliverSignInCode(
     { email, otp },
     {

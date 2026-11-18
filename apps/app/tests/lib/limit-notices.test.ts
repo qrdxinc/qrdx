@@ -234,7 +234,7 @@ describe("sendLimitNotice", () => {
     );
     expect(spanish?.to).toEqual(["alice@example.com"]);
     expect(spanish?.subject).toBe(
-      "Códigos QR dinámicos: 9 de 10 usado en Acme",
+      "Códigos QR dinámicos: Acme ha usado 9 de 10",
     );
     expect(spanish?.idempotencyKey).toBe(
       "limit-notice:org_acme:dynamicCodes:workspace:2026-11:90:es",
