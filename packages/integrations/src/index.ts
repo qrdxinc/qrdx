@@ -40,6 +40,7 @@ export {
   getDefaultShortLinkDomain,
   REVOCABLE_PROVIDERS,
   revokeProviderToken,
+  verifyMigrationSourceCredentials,
   verifyShortLinkCredentials,
 } from "./capabilities/factory";
 export type {
@@ -54,7 +55,10 @@ export {
   FILE_PICKER_PROVIDERS,
   type FilePickerProviderSlug,
   isFilePickerProvider,
+  isMigrationSourceProvider,
   isShortLinkProvider,
+  MIGRATION_SOURCE_PROVIDERS,
+  type MigrationSourceProviderSlug,
   SHORT_LINK_PROVIDERS,
   type ShortLinkProviderSlug,
   SLUG_SUPPORT,
@@ -137,6 +141,12 @@ export {
 } from "./integrations/rebrandly";
 export { createShortIoClient, ShortIoClient } from "./integrations/short-io";
 export { readSlackInstall, type SlackInstall } from "./integrations/slack";
+export {
+  createUniqodeClient,
+  UniqodeClient,
+  type UniqodeQrCode,
+  uniqodeWebsiteDestination,
+} from "./integrations/uniqode";
 // Registry
 export {
   getIntegrationRegistry,

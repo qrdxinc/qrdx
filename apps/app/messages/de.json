@@ -7379,6 +7379,7 @@
           "reconnect": "Neu verbinden",
           "noLinksMatchTheseFilters": "Keine Links entsprechen diesen Filtern.",
           "noLinksInThisName": "Keine Links in diesem {name}-Konto.",
+          "onlyWebsiteCodesListed": "Es werden nur dynamische Website-Codes aufgelistet. Die anderen Codetypen von {name} (PDF, vCard Plus, Formulare und Ähnliches) öffnen Seiten, die {name} hostet. Erstelle diese deshalb in QRdx neu.",
           "theNameSignInWas": "Die Anmeldung bei {name} wurde abgebrochen.",
           "couldntConnectNameTryAgain": "{name} konnte nicht verbunden werden. Versuch es noch einmal."
         },
@@ -7478,6 +7479,7 @@
           "reviewUndo": "Rückgängig prüfen",
           "keepMyPrintedCodesWorking": "Meine gedruckten Codes weiter nutzen",
           "optionalPointEachOldName": "Optional. Lass jeden alten {name}-Link auf den neuen QRdx-Code zeigen, damit bereits gedruckte Codes weiter funktionieren und ihre Scans in QRdx erscheinen. Du siehst vorher jede Änderung und kannst sie rückgängig machen.",
+          "oldLinksNotFound": "{name} hat die Links, die deine gedruckten Codes öffnen, nicht übermittelt. Deshalb kann QRdx sie von hier aus nicht auf die neuen Codes umleiten. Sie öffnen weiterhin ihre aktuellen Ziele. Damit ihre Scans bei QRdx ankommen, lade die Zuordnungs-CSV herunter. Öffne dann in {name} jeden Code und ersetze sein Ziel durch den neuen QRdx-Link.",
           "pointYourOldCodesAt": "Alte Codes auf QRdx umleiten",
           "oldProviderCodesLiveOnItsDomain": "Die Codes deines alten Anbieters liegen auf dessen eigener Domain, daher kann QRdx sie nicht ändern. Für jeden alten Code:",
           "providerCodesLiveOnItsDomain": "Die Codes von {name} liegen auf einer eigenen Domain, daher kann QRdx sie nicht ändern. Für jeden alten Code:",

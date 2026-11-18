@@ -23,6 +23,7 @@ import {
   type MigrateClient,
   withRetry,
 } from "@/lib/migrate/client";
+import { missingOldLinks } from "@/lib/migrate/jobs";
 import { mappingCsv, mappingText } from "@/lib/migrate/mapping";
 import {
   API_PROVIDERS,
@@ -160,6 +161,7 @@ export function RunStep({
     () => items.filter((item) => item.newLink),
     [items],
   );
+  const missingLinks = useMemo(() => missingOldLinks({ items }), [items]);
 
   if (!(job && provider)) {
     return (
@@ -351,7 +353,8 @@ export function RunStep({
 
         {!retired &&
           api?.capabilities.updateDestination &&
-          withLinks.length > 0 && (
+          withLinks.length > 0 &&
+          missingLinks === 0 && (
             <div className="flex flex-col gap-3 rounded-xl border p-4 sm:flex-row sm:items-center">
               <span className="grid size-9 shrink-0 place-items-center rounded-lg border bg-muted/40">
                 <Link21 aria-hidden className="size-4 text-foreground/80" />
@@ -368,6 +371,25 @@ export function RunStep({
                 {job.redirected > 0 ? t("manage") : t("reviewChanges")}
                 <ArrowRight />
               </Button>
+            </div>
+          )}
+
+        {!retired &&
+          api?.capabilities.updateDestination &&
+          job.created > 0 &&
+          missingLinks > 0 && (
+            <div className="flex gap-3 rounded-xl border p-4">
+              <span className="grid size-9 shrink-0 place-items-center rounded-lg border bg-muted/40">
+                <Link21 aria-hidden className="size-4 text-foreground/80" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-sm font-semibold">
+                  {t("keepMyPrintedCodesWorking")}
+                </h3>
+                <p className="text-muted-foreground text-xs">
+                  {t("oldLinksNotFound", { name })}
+                </p>
+              </div>
             </div>
           )}
 

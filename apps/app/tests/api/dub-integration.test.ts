@@ -336,7 +336,7 @@ describe("Import: no Dub, even with Dub connected", () => {
     const ids = (await response.json()).data.providers.map(
       (provider: { id: string }) => provider.id,
     );
-    expect(ids).toEqual(["bitly", "rebrandly", "short-io"]);
+    expect(ids).toEqual(["bitly", "rebrandly", "short-io", "uniqode-api"]);
   });
 
   it("refuses to list, preview or start a Dub import", async () => {

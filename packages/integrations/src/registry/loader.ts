@@ -17,6 +17,7 @@ import { shortIoIntegration } from "../integrations/short-io/config";
 import { slackIntegration } from "../integrations/slack/config";
 import { spotifyIntegration } from "../integrations/spotify/config";
 import { stripeIntegration } from "../integrations/stripe/config";
+import { uniqodeIntegration } from "../integrations/uniqode/config";
 import { youtubeIntegration } from "../integrations/youtube/config";
 import { getIntegrationRegistry } from "./index";
 import type { IntegrationConfig } from "./types";
@@ -64,6 +65,9 @@ export function registerAllIntegrations(): void {
   registry.register(bitlyIntegration);
   registry.register(rebrandlyIntegration);
   registry.register(shortIoIntegration);
+
+  // Import sources (Codes → Import only)
+  registry.register(uniqodeIntegration);
 
   // File and page pickers
   registry.register(dropboxIntegration);

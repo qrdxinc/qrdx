@@ -7778,6 +7778,7 @@
           "reconnect": "Reconnect",
           "noLinksMatchTheseFilters": "No links match these filters.",
           "noLinksInThisName": "No links in this {name} account.",
+          "onlyWebsiteCodesListed": "Only dynamic website codes are listed. {name}'s other code types (PDF, vCard Plus, forms and the like) open pages {name} hosts, so make those again in QRdx.",
           "theNameSignInWas": "The {name} sign-in was cancelled.",
           "couldntConnectNameTryAgain": "Couldn't connect {name}. Try again."
         },
@@ -7877,6 +7878,7 @@
           "reviewUndo": "Review undo",
           "keepMyPrintedCodesWorking": "Keep my printed codes working",
           "optionalPointEachOldName": "Optional. Point each old {name} link at its new QRdx code, so codes already printed keep working and their scans show up in QRdx. You'll see every change first, and can undo it.",
+          "oldLinksNotFound": "{name} didn't send the links your printed codes open, so QRdx can't point them at the new codes from here. They keep opening their current destinations. To send their scans to QRdx, download the mapping CSV, then in {name} open each code and replace its destination with its new QRdx link.",
           "pointYourOldCodesAt": "Point your old codes at QRdx",
           "oldProviderCodesLiveOnItsDomain": "Your old provider's codes live on its own domain, so QRdx can't change them. For each old code:",
           "providerCodesLiveOnItsDomain": "{name}'s codes live on its own domain, so QRdx can't change them. For each old code:",
