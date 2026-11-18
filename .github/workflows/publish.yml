@@ -21,7 +21,9 @@
 # "qrdx": "workspace:*" into the exact qrdx version; npm then uploads the
 # tarball. Publishing a tarball skips the packages' prepublishOnly scripts,
 # so this job runs the same checks itself: build, tests and the README
-# option lists.
+# option lists. The CLI's tarball also gets an npm-shrinkwrap.json
+# (scripts/shrinkwrap-cli.sh), so each CLI version installs one fixed
+# dependency tree.
 #
 # A package is published only when the version in its package.json is not
 # on npm yet, so a push that doesn't bump a version publishes nothing. qrdx
@@ -156,9 +158,36 @@ jobs:
         if: steps.versions.outputs.qrdx == 'true'
         run: npm publish "${{ steps.pack.outputs.qrdx }}" --access public --provenance
 
+      # `npx @qrdx/cli@<version>` pins the CLI but not the ^ ranges under it.
+      # An npm-shrinkwrap.json in the tarball pins the whole tree: npm installs
+      # exactly what it lists. It's made after qrdx is published because it
+      # has to resolve the qrdx version the CLI depends on.
+      - name: Add npm-shrinkwrap.json to @qrdx/cli
+        if: steps.versions.outputs.cli == 'true'
+        id: shrinkwrap
+        run: |
+          tarball="$(bash scripts/shrinkwrap-cli.sh "${{ steps.pack.outputs.cli }}" "$RUNNER_TEMP/npm-packs-shrinkwrapped")"
+          echo "cli=$tarball" >> "$GITHUB_OUTPUT"
+          pinned="$(tar -xOzf "$tarball" package/npm-shrinkwrap.json | node -p "Object.keys(JSON.parse(require('fs').readFileSync(0, 'utf8')).packages).filter(Boolean).length")"
+          echo "@qrdx/cli ships an npm-shrinkwrap.json that pins $pinned packages." | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # npm repacked the tarball, so install it and draw a few codes before
+      # it goes out.
+      - name: Smoke-test the @qrdx/cli tarball
+        if: steps.versions.outputs.cli == 'true'
+        run: |
+          dir="$RUNNER_TEMP/cli-smoke"
+          mkdir -p "$dir"
+          cd "$dir"
+          npm init -y > /dev/null
+          npm install "${{ steps.shrinkwrap.outputs.cli }}" --no-audit --no-fund
+          for file in qr.svg qr.png qr.webp; do
+            ./node_modules/.bin/qrdx generate "https://qrdx.dev" -o "$file"
+          done
+
       - name: Publish @qrdx/cli
         if: steps.versions.outputs.cli == 'true'
-        run: npm publish "${{ steps.pack.outputs.cli }}" --access public --provenance
+        run: npm publish "${{ steps.shrinkwrap.outputs.cli }}" --access public --provenance
 
   publish-n8n:
     name: Publish @qrdx/n8n-nodes-qrdx to npm
