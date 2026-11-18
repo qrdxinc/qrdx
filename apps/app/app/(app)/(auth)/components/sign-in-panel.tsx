@@ -22,67 +22,16 @@ import { SsoSignIn } from "@/ee/sso/sso-sign-in";
 import { pendingReferralCode } from "@/lib/affiliates/referral-client";
 import { type AuthDialogMode, showsSignIn } from "@/lib/analytics/auth-prompt";
 import { signUpLanding } from "@/lib/analytics/landing";
-import {
-  offersSignIn,
-  type SignInOptions,
-  signInOptionsFrom,
-} from "@/lib/auth/sign-in-options";
+import { offersSignIn, type SignInOptions } from "@/lib/auth/sign-in-options";
+import { signInPath } from "@/lib/safe-redirect";
 import { socialSignInErrorPath } from "../sign-in/_lib/error-message";
 import { EmailCodeSignIn } from "./email-code-sign-in";
 import { PasskeySignIn } from "./passkey-sign-in";
 import { SECOND_STEP_TITLES, type SecondStep } from "./second-step";
-import { loadSignInOptions } from "./sign-in-options-action";
+import { useSignInOptions } from "./use-sign-in-options";
 
 const FOOTER_LINK =
   "rounded-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
-
-// What the running server offers, asked once per page load and shared by
-// every panel on it; a failed ask is tried again next time.
-let serverOptions: Promise<SignInOptions> | null = null;
-
-function askServer(): Promise<SignInOptions> {
-  serverOptions ??= loadSignInOptions().catch((error: unknown) => {
-    serverOptions = null;
-    throw error;
-  });
-  return serverOptions;
-}
-
-/**
- * The ways in to show: `given` when the page worked them out on the server
- * for this request (/sign-in), else the root layout's answer until the
- * running server's arrives (sign-in-options-action.ts). `confirmed` is
- * false until then.
- */
-function useSignInOptions(
-  given: SignInOptions | undefined,
-  shown: boolean,
-): { options: SignInOptions; confirmed: boolean } {
-  const availability = useAvailability();
-  const [fromServer, setFromServer] = useState<SignInOptions | null>(null);
-  const guess = signInOptionsFrom(availability.has);
-
-  useEffect(() => {
-    if (given || !shown || fromServer) return;
-    let cancelled = false;
-    askServer()
-      .then((options) => {
-        if (!cancelled) setFromServer(options);
-      })
-      .catch((error: unknown) => {
-        console.error("Couldn't ask the server how to sign in:", error);
-        // The layout's answer is the best left.
-        if (!cancelled) setFromServer(signInOptionsFrom(availability.has));
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [given, shown, fromServer, availability]);
-
-  if (given) return { options: given, confirmed: true };
-  if (fromServer) return { options: fromServer, confirmed: true };
-  return { options: guess, confirmed: false };
-}
 
 type TextComponent = ComponentType<{
   className?: string;
@@ -158,12 +107,14 @@ export function SignInPanel({
   // step; which method is on screen (null while it's worked out).
   const [twoFactor, setTwoFactor] = useState(false);
   const [secondStep, setSecondStep] = useState<SecondStep | null>(null);
-  const { options, confirmed } = useSignInOptions(given, shown);
+  const { options, confirmed, failed, retry } = useSignInOptions(given, shown);
   // Workspace SSO runs only on servers with a QRdx licence key.
   const ssoOffered = options.sso;
-  // No way in at all: say so once the server has confirmed it.
+  // No way in at all: say so only once the server itself has answered. A
+  // failed ask leaves the layout's guess, which proves nothing.
   const nothingOffered = !offersSignIn(options);
   const notSetUp = nothingOffered && confirmed;
+  const askFailed = nothingOffered && failed;
   const affiliates = useAvailability().has("affiliates");
 
   useEffect(() => {
@@ -306,8 +257,36 @@ export function SignInPanel({
         </p>
       )}
 
+      {/* Couldn't ask the server: try again, or the sign-in page, which works the ways in out per request without a server action. */}
+      {askFailed && (
+        <p
+          className="bg-muted/60 mx-6 mb-4 rounded-md px-3 py-2 text-center text-sm text-pretty"
+          role="status"
+        >
+          {t.rich("weCouldntCheckHow", {
+            retry: (chunks) => (
+              <button
+                className="font-medium underline underline-offset-4"
+                onClick={retry}
+                type="button"
+              >
+                {chunks}
+              </button>
+            ),
+            link: (chunks) => (
+              <a
+                className="font-medium underline underline-offset-4"
+                href={signInPath(callbackURL())}
+              >
+                {chunks}
+              </a>
+            ),
+          })}
+        </p>
+      )}
+
       {/* Until the server says how to sign in, when the page's own answer had nothing (a prerendered page in a Docker image built without its secrets, say). */}
-      {nothingOffered && !confirmed && (
+      {nothingOffered && !confirmed && !failed && (
         <div
           aria-busy="true"
           className="flex justify-center px-6 pb-4"

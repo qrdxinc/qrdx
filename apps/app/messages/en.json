@@ -9142,7 +9142,8 @@
       "thisSiteHasNoEmail": "This site has no email, Google or GitHub sign-in turned on, so new accounts can't be made here.",
       "runThisSiteThe": "Run this site? The <link>self-hosting guide</link> shows how to turn one on.",
       "newToQrdxYourFirst": "New to QRdx? Your first sign-in creates your free account.",
-      "loading": "Loading…"
+      "loading": "Loading…",
+      "weCouldntCheckHow": "We couldn't check how to sign in here. <retry>Try again</retry>, or <link>open the sign-in page</link>."
     },
     "twoFactorChallenge": {
       "loadingYourSignInMethods": "Loading your sign-in methods",
