@@ -2,7 +2,10 @@
 
 import { track } from "@repo/analytics";
 import { toast } from "@repo/design-system";
-import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  ModuleOrbit,
+  ShapeMorph,
+} from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   ResponsiveDialog,
@@ -168,11 +171,7 @@ export function AIArtDownloadDialog({
                 onClick={turnIntoImageQR}
                 variant="outline"
               >
-                {busy === "image-qr" ? (
-                  <ModuleOrbit aria-hidden />
-                ) : (
-                  <Gallery />
-                )}
+                {busy === "image-qr" ? <ShapeMorph aria-hidden /> : <Gallery />}
                 {t("useAsImageQr")}
               </Button>
             </div>
