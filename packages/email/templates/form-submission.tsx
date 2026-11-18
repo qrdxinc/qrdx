@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, formatEmailDateTime, MutedText } from "./parts";
 
@@ -10,7 +10,7 @@ export interface FormSubmissionEmailProps {
   workspaceName: string;
   unsubscribeUrl: string;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 const MAX_FIELDS = 30;
@@ -23,7 +23,7 @@ export function FormSubmissionEmail({
   responsesUrl,
   workspaceName,
   unsubscribeUrl,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: FormSubmissionEmailProps) {
   const { t } = intl;
   // The page's title (quoted the language's way), or "your page".
@@ -64,4 +64,16 @@ export function FormSubmissionEmail({
   );
 }
 
-export default FormSubmissionEmail;
+/** What the preview app (apps/email) renders. */
+FormSubmissionEmail.PreviewProps = {
+  pageTitle: "Workshop sign-up",
+  fields: [
+    { label: "Name", value: "Sam Lee" },
+    { label: "Email", value: "sam@example.com" },
+    { label: "Which day?", value: "Saturday" },
+  ],
+  submittedAt: new Date("2026-11-19T09:30:00Z"),
+  responsesUrl: "https://qrdx.dev/dashboard/acme/pages/workshop/responses",
+  workspaceName: "Acme",
+  unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+} satisfies Omit<FormSubmissionEmailProps, "intl">;

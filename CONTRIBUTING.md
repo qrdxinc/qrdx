@@ -47,7 +47,7 @@ You don't need a database or any environment variables to work on the React libr
 
    In `apps/app/.env.local`, set the three required values (`NEXT_PUBLIC_APP_URL`, `DATABASE_URL`, `BETTER_AUTH_SECRET`). To sign in locally, also add a [GitHub OAuth app](https://github.com/settings/developers) with the callback URL `http://localhost:3000/api/auth/callback/github`. Every other variable is optional, and `apps/app/.env.example` explains each one. It's the only env file you need: the database scripts (`bun run db:push` and the other `db:*` scripts) read `DATABASE_URL` from it too.
 
-   The app checks its environment when it starts (`next dev`, `next build` and a production server): if a required value is missing, or a value is set but invalid, it stops and names the variable. The schema is `apps/app/env.ts`, which extends the `keys.ts` of `packages/analytics`, `packages/auth`, `packages/config`, `packages/database`, `packages/next-config` and `packages/rate-limit`. A new variable goes in the `keys.ts` of the package that reads it, or in `apps/app/env.ts` if only the app does, and in `apps/app/.env.example`; server code reads it from `env` (`import { env } from "@/env"`) or the package's `keys()` rather than from `process.env`.
+   The app checks its environment when it starts (`next dev`, `next build` and a production server): if a required value is missing, or a value is set but invalid, it stops and names the variable. The schema is `apps/app/env.ts`, which extends the `keys.ts` of `packages/analytics`, `packages/auth`, `packages/config`, `packages/database`, `packages/email`, `packages/next-config` and `packages/rate-limit`. A new variable goes in the `keys.ts` of the package that reads it, or in `apps/app/env.ts` if only the app does, and in `apps/app/.env.example`; server code reads it from `env` (`import { env } from "@/env"`) or the package's `keys()` rather than from `process.env`.
 
 4. **Set up the database**
 
@@ -92,6 +92,14 @@ You don't need a database or any environment variables to work on the React libr
 
    Open http://localhost:3001/docs. To see them through the main app, as readers do, add `DOCS_ZONE_URL=http://localhost:3001` to `apps/app/.env.local` and restart `bun run --filter app dev`.
 
+   To see the emails while you work on them, start the preview server, which needs no environment, database or Resend key:
+
+   ```bash
+   bun run --filter email dev
+   ```
+
+   Open http://localhost:3003. It shows every template in `packages/email/templates` that has `PreviewProps`, in English; a new template needs `PreviewProps` to appear. Restart it after a new template or a change to the copy in `apps/app/messages/en.json`: it writes its preview files and its copy of the English catalog when it starts. It isn't part of the pre-push hook, CI or Vercel's build.
+
 ## Project structure
 
 | Path | What it is |
@@ -100,7 +108,9 @@ You don't need a database or any environment variables to work on the React libr
 | `apps/docs` | The docs: their pages (`content/docs`, MDX, every language) and the docs site, a Next.js app deployed to a separate Vercel project from `.github/workflows/docs-deploy.yml`. With `DOCS_ZONE_URL` set, the main app proxies `/docs` and the other docs URLs to it; without it (self-hosting, local development), it redirects them to qrdx.dev. Its README says what it reads from `apps/app` |
 | `packages/qrdx` | The QR engine and React library, published to npm as `qrdx` |
 | `packages/cli` | The command-line tool, published to npm as `@qrdx/cli` |
+| `apps/email` | The preview server for the emails (React Email, port 3003); it writes a preview file for each template before it starts (`scripts/prepare.mjs`) |
 | `packages/auth` | Better Auth server and client configuration |
+| `packages/email` | `@repo/email`: the email templates and their layout (`templates/`, React Email), rendering, and sending through Resend; the app binds the sender to its environment in `apps/app/lib/email/send.ts` |
 | `packages/database` | Drizzle schema (`schema.ts`), the database client, and hand-applied SQL (`manual-sql/`) |
 | `packages/design-system` | Shared UI components (shadcn/ui), icons, styles and fonts; the logo, the figure set, JSON-LD helpers and the Open Graph image frame (`og/`, with the Geist files server images use) |
 | `packages/integrations`, `packages/integration-kit` | The integrations catalogue (`src/catalog`), the connected-account integrations (`src/integrations`) and the shared integration types |
@@ -206,7 +216,7 @@ Translated so far:
   - The security notices (a new sign-in, a passkey added or removed, a two-step verification change, a new PayPal payout address, and the notice to the old address after an email change): the account's saved language, else English, never the language of the request that set them off. That request may not be the owner's, which is why the notice is sent (`emailIntlForAddress(email, { fromRequest: false })`, or `emailIntlForUser(userId)` when the sender has the account's id). The device and place they show are in the email's language too.
   - The first scan, scan milestone, form response and code activity alerts, plan-limit notices and the weekly digest: each recipient's saved language, else English. They're sent after someone else's request (a scan, a form response, a teammate's edit) or on a schedule, so no request's language menu cookie counts. When a workspace's owners chose different languages, a limit notice goes out once per language.
 
-  Templates take an `intl` (`apps/app/lib/i18n/email.ts`) and default to English.
+  Templates (`packages/email/templates`) take an `intl` (`apps/app/lib/i18n/email.ts`): `ENGLISH_EMAIL`, or the recipient's language from the helpers above.
 
 The docs, the blog, the legal pages, the comparison pages themselves and admin are English only (see [Docs](#docs) below), and so are the emails to QRdx's own team (enterprise, non-profit and invoice requests).
 

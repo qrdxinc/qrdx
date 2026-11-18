@@ -4,8 +4,8 @@ import {
   EmailHeading,
   EmailLayout,
   EmailText,
-} from "@/lib/email/templates/layout";
-import { MutedText } from "@/lib/email/templates/parts";
+} from "@repo/email/templates/layout";
+import { MutedText } from "@repo/email/templates/parts";
 import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 
 // Agency tools: a workspace on Business shared some of its folders with a

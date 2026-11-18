@@ -1,0 +1,23 @@
+{
+  "name": "email",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/prepare.mjs && email dev --dir emails --port 3003",
+    "export": "node scripts/prepare.mjs && email export --dir emails",
+    "clean": "git clean -xdf .turbo emails out node_modules"
+  },
+  "devDependencies": {
+    "@react-email/ui": "6.11.9",
+    "@repo/email": "workspace:*",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-email": "6.11.9",
+    "use-intl": "4.14.9"
+  },
+  "engines": {
+    "node": ">=22.22.3"
+  }
+}

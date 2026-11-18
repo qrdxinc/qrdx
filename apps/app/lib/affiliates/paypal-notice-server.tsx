@@ -1,12 +1,12 @@
 import "server-only";
 
-import { deliverPasskeyNotice as deliverSecurityNotice } from "@/lib/account/passkeys";
-import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
-import { sendEmail } from "@/lib/email/send";
 import {
   PayoutEmailNoticeEmail,
   payoutEmailNoticeSubject,
-} from "@/lib/email/templates/payout-email-notice";
+} from "@repo/email/templates/payout-email-notice";
+import { deliverPasskeyNotice as deliverSecurityNotice } from "@/lib/account/passkeys";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
+import { sendEmail } from "@/lib/email/send";
 import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import { currentRequestDetails } from "@/lib/security/request-details";
 

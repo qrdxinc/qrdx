@@ -72,6 +72,7 @@
     "@eslint/config-array>minimatch": "^11.0.1",
     "eslint>minimatch": "^11.0.1",
     "@esbuild-kit/core-utils>esbuild": "^0.25.0",
+    "@react-email/ui>next": "16.4.5",
     "use-intl": "4.14.9",
     "icu-minify": "4.14.9"
   },

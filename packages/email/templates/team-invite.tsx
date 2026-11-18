@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import {
   EmailButton,
   EmailDivider,
@@ -14,12 +14,12 @@ export interface TeamInviteEmailProps {
   memberRole: string;
   inviteUrl: string;
   expiresAt: Date | string;
-  /** The invitee's language (lib/events/emails.tsx picks it) */
-  intl?: EmailIntl;
+  /** The invitee's language (apps/app/lib/events/emails.tsx picks it) */
+  intl: EmailIntl;
 }
 
 // The workspace roles (apps/app/lib/permissions.ts), strongest first. What
-// the invitation says about each is emails.teamInvite in messages/en.json.
+// the invitation says about each is emails.teamInvite in apps/app/messages/en.json.
 const RANK = ["owner", "admin", "member", "billing", "viewer"] as const;
 
 export type InviteRole = (typeof RANK)[number];
@@ -41,7 +41,7 @@ export function teamInviteSubject(
     teamName,
     memberRole,
   }: Pick<TeamInviteEmailProps, "inviterName" | "teamName" | "memberRole">,
-  intl: EmailIntl = ENGLISH_EMAIL,
+  intl: EmailIntl
 ) {
   return intl.t("teamInvite.subject", {
     inviter: inviterName,
@@ -57,7 +57,7 @@ export function TeamInviteEmail({
   memberRole,
   inviteUrl,
   expiresAt,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: TeamInviteEmailProps) {
   const { t } = intl;
   const role = inviteRole(memberRole);
@@ -84,4 +84,11 @@ export function TeamInviteEmail({
   );
 }
 
-export default TeamInviteEmail;
+/** What the preview app (apps/email) renders. */
+TeamInviteEmail.PreviewProps = {
+  teamName: "Acme",
+  inviterName: "Sam Lee",
+  memberRole: "member",
+  inviteUrl: "https://qrdx.dev/invite/preview",
+  expiresAt: new Date("2026-11-26T09:30:00Z"),
+} satisfies Omit<TeamInviteEmailProps, "intl">;

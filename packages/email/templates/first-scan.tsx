@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { codeLabel, DetailsTable, formatEmailDateTime } from "./parts";
 
@@ -13,7 +13,7 @@ export interface FirstScanEmailProps {
   workspaceName: string;
   unsubscribeUrl: string;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 export function FirstScanEmail({
@@ -24,7 +24,7 @@ export function FirstScanEmail({
   analyticsUrl,
   workspaceName,
   unsubscribeUrl,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: FirstScanEmailProps) {
   const { t } = intl;
   const rows = [
@@ -50,4 +50,13 @@ export function FirstScanEmail({
   );
 }
 
-export default FirstScanEmail;
+/** What the preview app (apps/email) renders. */
+FirstScanEmail.PreviewProps = {
+  code: { title: "Spring menu", slug: "aB3dE5f" },
+  scannedAt: new Date("2026-11-19T09:30:00Z"),
+  location: "Berlin, DE",
+  device: "iOS · Safari",
+  analyticsUrl: "https://qrdx.dev/dashboard/acme/codes/aB3dE5f",
+  workspaceName: "Acme",
+  unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+} satisfies Omit<FirstScanEmailProps, "intl">;

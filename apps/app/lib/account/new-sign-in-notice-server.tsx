@@ -1,13 +1,13 @@
 import "server-only";
 
 import type { NewSignIn, NewSignInNotifier } from "@repo/auth/new-sign-in";
-import { after } from "next/server";
-import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
-import { sendEmail } from "@/lib/email/send";
 import {
   NewSignInEmail,
   newSignInSubject,
-} from "@/lib/email/templates/new-sign-in";
+} from "@repo/email/templates/new-sign-in";
+import { after } from "next/server";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
+import { sendEmail } from "@/lib/email/send";
 import { emailIntlForUser } from "@/lib/i18n/email-locale";
 import { requestDetails } from "@/lib/security/request-details";
 import {

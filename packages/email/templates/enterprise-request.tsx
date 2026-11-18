@@ -1,3 +1,4 @@
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, MutedText } from "./parts";
 
@@ -13,6 +14,8 @@ export interface EnterpriseRequestEmailProps {
   need: string;
   /** The language of the page they wrote from, e.g. "ja" */
   locale: string;
+  /** The email's language (English: it goes to the QRdx team) */
+  intl: EmailIntl;
 }
 
 export const enterpriseRequestSubject = (company: string, teamSize: string) =>
@@ -29,6 +32,7 @@ export function EnterpriseRequestEmail(props: EnterpriseRequestEmailProps) {
   ];
   return (
     <EmailLayout
+      intl={props.intl}
       preview={enterpriseRequestSubject(props.company, props.teamSize)}
       reason="Sent by the contact form on the Enterprise page."
     >
@@ -47,4 +51,12 @@ export function EnterpriseRequestEmail(props: EnterpriseRequestEmailProps) {
   );
 }
 
-export default EnterpriseRequestEmail;
+/** What the preview app (apps/email) renders. */
+EnterpriseRequestEmail.PreviewProps = {
+  name: "Sam Lee",
+  email: "sam@example.com",
+  company: "Acme",
+  teamSize: "51 to 200 people",
+  need: "Codes on every product label, with our own domain and SSO.",
+  locale: "en",
+} satisfies Omit<EnterpriseRequestEmailProps, "intl">;

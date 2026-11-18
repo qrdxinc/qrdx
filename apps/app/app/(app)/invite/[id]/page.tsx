@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/design-system/components/ui/card";
+import { inviteRole } from "@repo/email/templates/team-invite";
 import { Profile2User as Users } from "iconsax-reactjs";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -17,7 +18,6 @@ import {
   isTeamMember,
 } from "@/app/(app)/dashboard/team/_lib/queries";
 import { formatUtcDateTime } from "@/app/(app)/dashboard/team/_lib/team";
-import { inviteRole } from "@/lib/email/templates/team-invite";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import type { Translator } from "@/lib/i18n/translator";
 import { InviteActions, SignOutButton } from "./invite-actions";

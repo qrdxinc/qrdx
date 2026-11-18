@@ -1,0 +1,4 @@
+# Written by scripts/prepare.mjs before every run
+/emails
+# email export
+/out

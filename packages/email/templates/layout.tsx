@@ -12,8 +12,8 @@ import {
   Section,
   Text,
 } from "react-email";
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
-import { baseUrl } from "@/lib/metadata";
+import type { EmailIntl } from "../intl";
+import { baseUrl } from "../origin";
 
 // Base layout for every QRdx email. Templates render
 // <EmailLayout preview="…">…</EmailLayout> and use the helpers below so all
@@ -99,8 +99,8 @@ export interface EmailLayoutProps {
    * the footer only names the host that sends it.
    */
   sender?: { name: string };
-  /** The recipient's language (lib/i18n/email.ts); English by default. */
-  intl?: EmailIntl;
+  /** The recipient's language (../intl.ts) */
+  intl: EmailIntl;
 }
 
 export function EmailLayout({
@@ -109,7 +109,7 @@ export function EmailLayout({
   reason,
   unsubscribeUrl,
   sender,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: EmailLayoutProps) {
   const origin = baseUrl.origin;
   const { t } = intl;

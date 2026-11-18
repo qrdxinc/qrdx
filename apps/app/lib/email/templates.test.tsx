@@ -1,31 +1,45 @@
 // Renders every template to HTML and plain text (no network, nothing sent).
-//   cd apps/app && npx tsx --test lib/email/templates/templates.test.tsx
+//   cd apps/app && npx tsx --test lib/email/templates.test.tsx
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { render } from "@react-email/render";
-import * as React from "react";
-import { AbuseReportAckEmail } from "./abuse-report-ack";
-import { CodeActivityEmail } from "./code-activity";
+import { AbuseReportAckEmail } from "@repo/email/templates/abuse-report-ack";
+import { CodeActivityEmail } from "@repo/email/templates/code-activity";
 import {
   CONFIRMATION_CODE_SUBJECT,
   ConfirmationCodeEmail,
-} from "./confirmation-code";
-import { EmailChangeCodeEmail, EmailChangedEmail } from "./email-change";
-import { FirstScanEmail } from "./first-scan";
-import { FormSubmissionEmail } from "./form-submission";
-import { LimitNoticeEmail } from "./limit-notice";
-import { NEW_SIGN_IN_SUBJECT, NewSignInEmail } from "./new-sign-in";
-import { PasskeyNoticeEmail } from "./passkey-notice";
-import { ScanMilestoneEmail } from "./scan-milestone";
-import type { SecurityEventDetails } from "./security-parts";
-import { SignInCodeEmail } from "./sign-in-code";
-import { inviteRole, TeamInviteEmail, teamInviteSubject } from "./team-invite";
+} from "@repo/email/templates/confirmation-code";
+import {
+  EmailChangeCodeEmail,
+  EmailChangedEmail,
+} from "@repo/email/templates/email-change";
+import { FirstScanEmail } from "@repo/email/templates/first-scan";
+import { FormSubmissionEmail } from "@repo/email/templates/form-submission";
+import { LimitNoticeEmail } from "@repo/email/templates/limit-notice";
+import {
+  NEW_SIGN_IN_SUBJECT,
+  NewSignInEmail,
+} from "@repo/email/templates/new-sign-in";
+import { PasskeyNoticeEmail } from "@repo/email/templates/passkey-notice";
+import { ScanMilestoneEmail } from "@repo/email/templates/scan-milestone";
+import type { SecurityEventDetails } from "@repo/email/templates/security-parts";
+import { SignInCodeEmail } from "@repo/email/templates/sign-in-code";
+import {
+  inviteRole,
+  TeamInviteEmail,
+  teamInviteSubject,
+} from "@repo/email/templates/team-invite";
 import {
   TwoFactorNoticeEmail,
   type TwoFactorNoticeKind,
   twoFactorNoticeSubject,
-} from "./two-factor-notice";
-import { WeeklyDigestEmail, weekOverWeek } from "./weekly-digest";
+} from "@repo/email/templates/two-factor-notice";
+import {
+  WeeklyDigestEmail,
+  weekOverWeek,
+} from "@repo/email/templates/weekly-digest";
+import * as React from "react";
+import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 
 // tsconfig has jsx: "preserve", so tsx compiles JSX to React.createElement.
 Object.assign(globalThis, { React });
@@ -85,6 +99,7 @@ describe("email templates", () => {
   it("alert emails carry an unsubscribe link", async () => {
     const emails = [
       <FirstScanEmail
+        intl={ENGLISH_EMAIL}
         analyticsUrl="https://qrdx.dev/dashboard/codes/c1"
         code={code}
         device="iOS · Safari"
@@ -95,6 +110,7 @@ describe("email templates", () => {
         workspaceName="your personal workspace"
       />,
       <ScanMilestoneEmail
+        intl={ENGLISH_EMAIL}
         analyticsUrl="https://qrdx.dev/dashboard/codes/c1"
         code={code}
         key="milestone"
@@ -103,6 +119,7 @@ describe("email templates", () => {
         workspaceName="the Acme team"
       />,
       <FormSubmissionEmail
+        intl={ENGLISH_EMAIL}
         fields={[
           { label: "Email", value: "ada@example.com" },
           { label: "Message", value: "<script>alert(1)</script>" },
@@ -115,6 +132,7 @@ describe("email templates", () => {
         workspaceName="your personal workspace"
       />,
       <CodeActivityEmail
+        intl={ENGLISH_EMAIL}
         actorName="Ada"
         changes={["Destination"]}
         code={{
@@ -129,6 +147,7 @@ describe("email templates", () => {
         workspaceName="the Acme team"
       />,
       <WeeklyDigestEmail
+        intl={ENGLISH_EMAIL}
         dashboardUrl="https://qrdx.dev/dashboard/analytics"
         formResponses={3}
         key="digest"
@@ -160,6 +179,7 @@ describe("email templates", () => {
   it("escapes visitor-typed form values", async () => {
     const { html } = await both(
       <FormSubmissionEmail
+        intl={ENGLISH_EMAIL}
         fields={[{ label: "Message", value: "<script>alert(1)</script>" }]}
         pageTitle={null}
         responsesUrl="https://qrdx.dev/r"
@@ -175,6 +195,7 @@ describe("email templates", () => {
   it("digest shows totals, week-over-week and countries", async () => {
     const { text } = await both(
       <WeeklyDigestEmail
+        intl={ENGLISH_EMAIL}
         dashboardUrl="https://qrdx.dev/dashboard/analytics"
         formResponses={0}
         newCodes={1}
@@ -192,15 +213,16 @@ describe("email templates", () => {
     assert.match(text, /1,250/);
     assert.match(text, /Oct 26 – Nov 1/);
     assert.match(text, /India 900/);
-    assert.equal(weekOverWeek(120, 100), "+20% vs last week");
-    assert.equal(weekOverWeek(50, 100), "-50% vs last week");
-    assert.equal(weekOverWeek(5, 0), "New this week");
-    assert.equal(weekOverWeek(0, 0), null);
+    assert.equal(weekOverWeek(120, 100, ENGLISH_EMAIL), "+20% vs last week");
+    assert.equal(weekOverWeek(50, 100, ENGLISH_EMAIL), "-50% vs last week");
+    assert.equal(weekOverWeek(5, 0, ENGLISH_EMAIL), "New this week");
+    assert.equal(weekOverWeek(0, 0, ENGLISH_EMAIL), null);
   });
 
   it("transactional emails have no unsubscribe link", async () => {
     const invite = await both(
       <TeamInviteEmail
+        intl={ENGLISH_EMAIL}
         expiresAt="2026-11-07T10:00:00Z"
         inviteUrl="https://qrdx.dev/invite/inv_1"
         inviterName="Ada"
@@ -232,6 +254,7 @@ describe("email templates", () => {
 
     const ack = await both(
       <AbuseReportAckEmail
+        intl={ENGLISH_EMAIL}
         reason="Phishing"
         reportId="rep_1"
         reported="https://qrdx.dev/q/aB3dE5f"
@@ -255,14 +278,18 @@ describe("email templates", () => {
       ["member", "a member", /create codes and pages/],
     ] as const;
     for (const [role, phrase, line] of cases) {
-      const subject = teamInviteSubject({
-        inviterName: "Ada",
-        teamName: "Acme",
-        memberRole: role,
-      });
+      const subject = teamInviteSubject(
+        {
+          inviterName: "Ada",
+          teamName: "Acme",
+          memberRole: role,
+        },
+        ENGLISH_EMAIL,
+      );
       assert.equal(subject, `Ada invited you to Acme on QRdx as ${phrase}`);
       const email = await both(
         <TeamInviteEmail
+          intl={ENGLISH_EMAIL}
           expiresAt="2026-11-07T10:00:00Z"
           inviteUrl="https://qrdx.dev/invite/inv_1"
           inviterName="Ada"
@@ -288,7 +315,9 @@ describe("email templates", () => {
   });
 
   it("sign-in code email shows the code and has no tracking links", async () => {
-    const { html, text } = await both(<SignInCodeEmail code="402871" />);
+    const { html, text } = await both(
+      <SignInCodeEmail intl={ENGLISH_EMAIL} code="402871" />,
+    );
     assert.match(text, /Your QRdx sign-in code/i);
     assert.match(text, /402871/);
     assert.match(text, /expires in 5 minutes/);
@@ -312,7 +341,11 @@ describe("email templates", () => {
 
   it("sign-in code email says roughly where the code was asked for", async () => {
     const { text } = await both(
-      <SignInCodeEmail code="402871" location="Mumbai, India" />,
+      <SignInCodeEmail
+        intl={ENGLISH_EMAIL}
+        code="402871"
+        location="Mumbai, India"
+      />,
     );
     assert.match(text, /Someone asked to sign in from Mumbai, India\./);
     // The place, never the address or the device: anyone can ask for a code
@@ -321,7 +354,9 @@ describe("email templates", () => {
   });
 
   it("email-change code email shows the code and nothing to click", async () => {
-    const { html, text } = await both(<EmailChangeCodeEmail code="915273" />);
+    const { html, text } = await both(
+      <EmailChangeCodeEmail intl={ENGLISH_EMAIL} code="915273" />,
+    );
     assert.match(text, /Confirm your new email/i);
     assert.match(text, /915273/);
     assert.match(text, /expires in 5 minutes/);
@@ -337,7 +372,11 @@ describe("email templates", () => {
 
   it("email-changed notice names the new address and has no undo link", async () => {
     const { html, text } = await both(
-      <EmailChangedEmail details={DETAILS} newEmail="ada+new@example.com" />,
+      <EmailChangedEmail
+        intl={ENGLISH_EMAIL}
+        details={DETAILS}
+        newEmail="ada+new@example.com"
+      />,
     );
     assert.match(text, /Your QRdx email was changed/i);
     assert.match(text, /ada\+new@example\.com/);
@@ -361,11 +400,15 @@ describe("email templates", () => {
     ];
     for (const [kind, line] of kinds) {
       const { html, text } = await both(
-        <TwoFactorNoticeEmail details={DETAILS} kind={kind} />,
+        <TwoFactorNoticeEmail
+          intl={ENGLISH_EMAIL}
+          details={DETAILS}
+          kind={kind}
+        />,
       );
       assert.match(text, line);
       assert.match(text, /If this wasn't you, contact support/);
-      assert.ok(twoFactorNoticeSubject(kind).length > 0);
+      assert.ok(twoFactorNoticeSubject(kind, ENGLISH_EMAIL).length > 0);
       assertSecurityLinks(html, kind);
       if (kind !== "support-off") assertDetails(text, kind);
     }
@@ -374,6 +417,7 @@ describe("email templates", () => {
   it("a used backup code says what for, how many are left, and when to make new ones", async () => {
     const plenty = await both(
       <TwoFactorNoticeEmail
+        intl={ENGLISH_EMAIL}
         details={DETAILS}
         extra={{ usedFor: "sign-in", codesLeft: 7 }}
         kind="backup-code-used"
@@ -389,6 +433,7 @@ describe("email templates", () => {
 
     const low = await both(
       <TwoFactorNoticeEmail
+        intl={ENGLISH_EMAIL}
         details={DETAILS}
         extra={{ usedFor: "confirm", codesLeft: 1 }}
         kind="backup-code-used"
@@ -401,6 +446,7 @@ describe("email templates", () => {
 
     const last = await both(
       <TwoFactorNoticeEmail
+        intl={ENGLISH_EMAIL}
         details={DETAILS}
         extra={{ usedFor: "sign-in", codesLeft: 0 }}
         kind="backup-code-used"
@@ -412,6 +458,7 @@ describe("email templates", () => {
   it("turning it on says the other devices were signed out, when they were", async () => {
     const { text } = await both(
       <TwoFactorNoticeEmail
+        intl={ENGLISH_EMAIL}
         details={DETAILS}
         extra={{ signedOutElsewhere: true }}
         kind="on"
@@ -422,7 +469,7 @@ describe("email templates", () => {
       /Every other device signed in to your account was signed out/,
     );
     const quiet = await both(
-      <TwoFactorNoticeEmail details={DETAILS} kind="on" />,
+      <TwoFactorNoticeEmail intl={ENGLISH_EMAIL} details={DETAILS} kind="on" />,
     );
     assert.doesNotMatch(quiet.text, /was signed out/);
   });
@@ -430,6 +477,7 @@ describe("email templates", () => {
   it("a change by support names support, not the device it was made from", async () => {
     const { text } = await both(
       <TwoFactorNoticeEmail
+        intl={ENGLISH_EMAIL}
         details={{ ...DETAILS, actor: "QRdx support" }}
         kind="support-off"
       />,
@@ -444,6 +492,7 @@ describe("email templates", () => {
   it("leaves out what isn't known about the request", async () => {
     const { text } = await both(
       <TwoFactorNoticeEmail
+        intl={ENGLISH_EMAIL}
         details={{
           device: "Unknown device",
           location: null,
@@ -462,6 +511,7 @@ describe("email templates", () => {
     for (const change of ["added", "removed"] as const) {
       const { html, text } = await both(
         <PasskeyNoticeEmail
+          intl={ENGLISH_EMAIL}
           change={change}
           details={DETAILS}
           passkeyName="Chrome on macOS"
@@ -480,7 +530,11 @@ describe("email templates", () => {
 
   it("the new sign-in alert says how and where, and what to do if it wasn't you", async () => {
     const { html, text } = await both(
-      <NewSignInEmail details={DETAILS} method="Email code, then a passkey" />,
+      <NewSignInEmail
+        intl={ENGLISH_EMAIL}
+        details={DETAILS}
+        method="Email code, then a passkey"
+      />,
     );
     // Headings come out in capitals in plain text.
     assert.match(text, new RegExp(NEW_SIGN_IN_SUBJECT, "i"));
@@ -501,6 +555,7 @@ describe("email templates", () => {
 
     const unknown = await both(
       <NewSignInEmail
+        intl={ENGLISH_EMAIL}
         details={{ ...DETAILS, location: null, ip: null }}
         method={null}
       />,
@@ -511,6 +566,7 @@ describe("email templates", () => {
   it("the confirmation code email carries the code, where it was asked for and a warning", async () => {
     const { html, text } = await both(
       <ConfirmationCodeEmail
+        intl={ENGLISH_EMAIL}
         code="503118"
         details={DETAILS}
         expiresInMinutes={10}
@@ -531,6 +587,7 @@ describe("email templates", () => {
     const usageUrl = "https://qrdx.dev/dashboard/acme/settings/usage";
     const near = await both(
       <LimitNoticeEmail
+        intl={ENGLISH_EMAIL}
         level="near"
         limitLabel="Form responses"
         noun="form responses"
@@ -556,6 +613,7 @@ describe("email templates", () => {
 
     const full = await both(
       <LimitNoticeEmail
+        intl={ENGLISH_EMAIL}
         level="full"
         limitLabel="Dynamic QR codes"
         noun="dynamic QR codes"

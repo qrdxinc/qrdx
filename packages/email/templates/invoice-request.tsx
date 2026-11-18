@@ -1,3 +1,4 @@
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, MutedText } from "./parts";
 
@@ -16,6 +17,8 @@ export interface InvoiceRequestEmailProps {
   address: string | null;
   notes: string | null;
   plan: string;
+  /** The email's language (English: it goes to the QRdx team) */
+  intl: EmailIntl;
 }
 
 export const invoiceRequestSubject = (company: string, plan: string) =>
@@ -42,6 +45,7 @@ export function InvoiceRequestEmail(props: InvoiceRequestEmailProps) {
   ];
   return (
     <EmailLayout
+      intl={props.intl}
       preview={invoiceRequestSubject(props.company, props.plan)}
       reason="Sent by the pay-by-invoice form on the pricing page."
     >
@@ -60,4 +64,16 @@ export function InvoiceRequestEmail(props: InvoiceRequestEmailProps) {
   );
 }
 
-export default InvoiceRequestEmail;
+/** What the preview app (apps/email) renders. */
+InvoiceRequestEmail.PreviewProps = {
+  company: "Acme",
+  billingEmail: "billing@example.com",
+  accountEmail: "sam@example.com",
+  accountId: "usr_preview",
+  workspace: { name: "Acme", slug: "acme" },
+  country: "Germany",
+  taxId: "DE123456789",
+  address: "1 Example Street, Berlin",
+  notes: null,
+  plan: "Business (yearly)",
+} satisfies Omit<InvoiceRequestEmailProps, "intl">;

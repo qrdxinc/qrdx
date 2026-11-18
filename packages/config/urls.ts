@@ -34,3 +34,33 @@ export const SHADCN_DIRECTORY_URL = "https://ui.shadcn.com/docs/directory";
 export function isQrdxHost(host: string): boolean {
   return host === CANONICAL_HOST || host.endsWith(`.${CANONICAL_HOST}`);
 }
+
+/** Where a dev server runs when NEXT_PUBLIC_APP_URL doesn't say. */
+export const DEV_BASE_URL = "http://localhost:3000";
+
+/**
+ * The origin absolute URLs are built on (canonical and Open Graph URLs,
+ * template and sample images, links in emails). In development, the dev
+ * server's own NEXT_PUBLIC_APP_URL, so a server on another port links to
+ * itself; otherwise the production domain Vercel names, then
+ * NEXT_PUBLIC_APP_URL, then qrdx.dev.
+ */
+export function resolveBaseUrl({
+  nodeEnv,
+  devAppUrl,
+  appUrl,
+  productionUrl,
+}: {
+  nodeEnv: string | undefined;
+  /** NEXT_PUBLIC_APP_URL, read only in development */
+  devAppUrl: string | undefined;
+  /** NEXT_PUBLIC_APP_URL as the process has it */
+  appUrl: string | undefined;
+  /** VERCEL_PROJECT_PRODUCTION_URL: a host name, no scheme */
+  productionUrl: string | undefined;
+}): URL {
+  if (nodeEnv === "development") return new URL(devAppUrl || DEV_BASE_URL);
+  return new URL(
+    productionUrl ? `https://${productionUrl}` : (appUrl ?? CANONICAL_ORIGIN)
+  );
+}

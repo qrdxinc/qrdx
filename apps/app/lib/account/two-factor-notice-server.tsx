@@ -2,15 +2,15 @@ import "server-only";
 
 import type { BackupCodeNotifier } from "@repo/auth/sign-in-challenge";
 import { SUPPORT_EMAIL } from "@repo/config";
-import { after } from "next/server";
-import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
-import { sendEmail } from "@/lib/email/send";
 import {
   type BackupCodeUsedFor,
   SUPPORT_KINDS,
   TwoFactorNoticeEmail,
   twoFactorNoticeSubject,
-} from "@/lib/email/templates/two-factor-notice";
+} from "@repo/email/templates/two-factor-notice";
+import { after } from "next/server";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
+import { sendEmail } from "@/lib/email/send";
 import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import {
   currentRequestDetails,

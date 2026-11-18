@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
@@ -16,10 +16,8 @@ export const PASSKEY_NOTICE_SUBJECTS: Record<PasskeyChange, string> = {
 };
 
 /** The subject line in the recipient's language. */
-export const passkeyNoticeSubject = (
-  change: PasskeyChange,
-  intl: EmailIntl = ENGLISH_EMAIL,
-) => intl.t(`passkeyNotice.${change}.subject`);
+export const passkeyNoticeSubject = (change: PasskeyChange, intl: EmailIntl) =>
+  intl.t(`passkeyNotice.${change}.subject`);
 
 export interface PasskeyNoticeEmailProps {
   change: PasskeyChange;
@@ -28,7 +26,7 @@ export interface PasskeyNoticeEmailProps {
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /**
@@ -40,7 +38,7 @@ export function PasskeyNoticeEmail({
   change,
   passkeyName,
   details,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: PasskeyNoticeEmailProps) {
   const { t } = intl;
   return (
@@ -64,3 +62,15 @@ export function PasskeyNoticeEmail({
     </EmailLayout>
   );
 }
+
+/** What the preview app (apps/email) renders. */
+PasskeyNoticeEmail.PreviewProps = {
+  change: "added",
+  passkeyName: "Chrome on macOS",
+  details: {
+    device: "Chrome on macOS",
+    location: "Mumbai, India",
+    ip: "203.0.113.24",
+    time: "Nov 19, 2026, 3:04 PM GMT+5:30",
+  },
+} satisfies Omit<PasskeyNoticeEmailProps, "intl">;

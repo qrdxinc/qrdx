@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
@@ -11,7 +11,7 @@ export const PAYOUT_EMAIL_NOTICE_SUBJECT =
   "Your QRdx affiliate payouts now go to a new PayPal address";
 
 /** The subject line in the recipient's language. */
-export const payoutEmailNoticeSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+export const payoutEmailNoticeSubject = (intl: EmailIntl) =>
   intl.t("payoutEmailNotice.subject");
 
 export interface PayoutEmailNoticeProps {
@@ -22,7 +22,7 @@ export interface PayoutEmailNoticeProps {
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /**
@@ -36,7 +36,7 @@ export function PayoutEmailNoticeEmail({
   paypalEmail,
   replaced,
   details,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: PayoutEmailNoticeProps) {
   const { t } = intl;
   return (
@@ -62,3 +62,15 @@ export function PayoutEmailNoticeEmail({
     </EmailLayout>
   );
 }
+
+/** What the preview app (apps/email) renders. */
+PayoutEmailNoticeEmail.PreviewProps = {
+  paypalEmail: "payouts@example.com",
+  replaced: true,
+  details: {
+    device: "Chrome on macOS",
+    location: "Mumbai, India",
+    ip: "203.0.113.24",
+    time: "Nov 19, 2026, 3:04 PM GMT+5:30",
+  },
+} satisfies Omit<PayoutEmailNoticeProps, "intl">;

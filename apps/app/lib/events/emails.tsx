@@ -1,14 +1,14 @@
 import "server-only";
 
 import { database as db, organization, user } from "@repo/database";
+import {
+  TeamInviteEmail,
+  teamInviteSubject,
+} from "@repo/email/templates/team-invite";
 import type { Locale } from "@repo/i18n/config";
 import { eq } from "drizzle-orm";
 import { invitePath } from "@/app/(app)/dashboard/team/_lib/team";
 import { isEmailConfigured, sendEmail } from "@/lib/email/send";
-import {
-  TeamInviteEmail,
-  teamInviteSubject,
-} from "@/lib/email/templates/team-invite";
 import { emailIntlForInvitee } from "@/lib/i18n/email-locale";
 import { baseUrl } from "@/lib/metadata";
 

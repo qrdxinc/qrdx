@@ -4,13 +4,13 @@ import type {
   EmailChangeCodeSender,
   SignInCodeLimit,
 } from "@repo/auth/email-otp";
-import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
-import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
-import { sendEmail } from "@/lib/email/send";
 import {
   EmailChangeCodeEmail,
   emailChangeCodeSubject,
-} from "@/lib/email/templates/email-change";
+} from "@repo/email/templates/email-change";
+import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
+import { sendEmail } from "@/lib/email/send";
 import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import {
   addressKey,

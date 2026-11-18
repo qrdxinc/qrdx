@@ -1,14 +1,15 @@
 import "server-only";
 
-import { z } from "zod";
-import { sendEmail } from "@/lib/email/send";
 import {
   InvoiceRequestEmail,
   invoiceRequestSubject,
-} from "@/lib/email/templates/invoice-request";
+} from "@repo/email/templates/invoice-request";
+import { z } from "zod";
+import { sendEmail } from "@/lib/email/send";
 import { ENTERPRISE_EMAIL } from "@/lib/enterprise";
 import { HttpError } from "@/lib/error-response";
 import { isFeatureAvailable } from "@/lib/feature-availability";
+import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { cheapestPlanWith } from "@/lib/plans";
 import { formatPrice, PLAN_NAMES, PRICING } from "@/lib/pricing";
 
@@ -105,6 +106,7 @@ export async function sendInvoiceRequest(
     subject: invoiceRequestSubject(data.company, offer.label),
     react: (
       <InvoiceRequestEmail
+        intl={ENGLISH_EMAIL}
         accountEmail={account.email}
         accountId={account.id}
         address={data.address}

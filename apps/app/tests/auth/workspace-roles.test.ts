@@ -25,10 +25,10 @@ import {
   workspaceRoleGate,
   workspaceRoleHooks,
 } from "@repo/auth/workspace-roles";
+import { inviteRole } from "@repo/email/templates/team-invite";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { z } from "zod";
 import { roleRank } from "@/lib/account/deletion";
-import { inviteRole } from "@/lib/email/templates/team-invite";
 import {
   holdsPlanRole,
   strongestRole,

@@ -14,6 +14,10 @@ import {
 } from "@repo/auth/passkey";
 import { isPasskeyOrigin, passkeyRelyingParty } from "@repo/auth/passkey-rp";
 import { signInMethodForPath } from "@repo/auth/sign-in-method";
+import {
+  PASSKEY_NOTICE_SUBJECTS,
+  PasskeyNoticeEmail,
+} from "@repo/email/templates/passkey-notice";
 import { createTranslator } from "next-intl";
 import { createElement } from "react";
 import { describe, expect, it } from "vitest";
@@ -27,10 +31,7 @@ import {
   signInFailureMessage as signInFailureMessageIn,
   toPasskeyViews,
 } from "@/lib/account/passkeys";
-import {
-  PASSKEY_NOTICE_SUBJECTS,
-  PasskeyNoticeEmail,
-} from "@/lib/email/templates/passkey-notice";
+import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { passkeysWorkOn } from "@/lib/passkeys";
 import en from "@/messages/en.json";
 
@@ -338,6 +339,7 @@ describe("notice email", () => {
       const element = createElement(PasskeyNoticeEmail, {
         change,
         passkeyName: "Chrome on macOS",
+        intl: ENGLISH_EMAIL,
       });
       const [html, text] = await Promise.all([
         render(element),

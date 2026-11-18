@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { Section, Text } from "react-email";
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import { NeverAskForCode } from "./security-parts";
@@ -8,7 +8,7 @@ import { NeverAskForCode } from "./security-parts";
 export const SIGN_IN_CODE_SUBJECT = "Your QRdx sign-in code";
 
 /** The subject line in the recipient's language. */
-export const signInCodeSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+export const signInCodeSubject = (intl: EmailIntl) =>
   intl.t("signInCode.subject");
 
 const MONO =
@@ -55,7 +55,7 @@ export interface SignInCodeEmailProps {
   /** Where the code was asked for, approximately ("Mumbai, India") */
   location?: string | null;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /** Transactional: the one-time code for signing in with email. No links. */
@@ -63,7 +63,7 @@ export function SignInCodeEmail({
   code,
   expiresInMinutes = 5,
   location = null,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: SignInCodeEmailProps) {
   const { t } = intl;
   return (
@@ -86,4 +86,9 @@ export function SignInCodeEmail({
   );
 }
 
-export default SignInCodeEmail;
+/** What the preview app (apps/email) renders. */
+SignInCodeEmail.PreviewProps = {
+  code: "482913",
+  expiresInMinutes: 5,
+  location: "Mumbai, India",
+} satisfies Omit<SignInCodeEmailProps, "intl">;

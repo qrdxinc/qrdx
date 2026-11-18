@@ -1,0 +1,40 @@
+{
+  "name": "@repo/email",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "exports": {
+    ".": "./index.ts",
+    "./intl": "./intl.ts",
+    "./keys": "./keys.ts",
+    "./origin": "./origin.ts",
+    "./render": "./render.ts",
+    "./reserved-address": "./reserved-address.ts",
+    "./templates/*": "./templates/*.tsx"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@react-email/render": "^2.2.0",
+    "@repo/config": "workspace:*",
+    "@repo/i18n": "workspace:*",
+    "@repo/next-config": "workspace:*",
+    "@t3-oss/env-nextjs": "^0.13.11",
+    "react": "19.3.1",
+    "react-email": "^6.11.9",
+    "resend": "^6.37.0",
+    "use-intl": "4.14.9",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.22.3"
+  }
+}
