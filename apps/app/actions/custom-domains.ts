@@ -12,6 +12,8 @@ import {
   removeDomain,
   verifyDomain,
 } from "@/app/(app)/dashboard/domains/_lib/domains";
+import { CODE_ACTION_MESSAGES, ownMessage } from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
@@ -57,28 +59,36 @@ const mutationLimiter = createRateLimiter({
   limiter: slidingWindow(20, "60 s"),
 });
 
+const ENGLISH = CODE_ACTION_MESSAGES.customDomains;
+
 const hostnameInputSchema = z.object({
-  hostname: z.string().trim().min(1, "Enter a domain").max(MAX_HOSTNAME_INPUT),
+  hostname: z
+    .string()
+    .trim()
+    .min(1, ENGLISH.enterDomain)
+    .max(MAX_HOSTNAME_INPUT),
 });
 const idInputSchema = z.object({ id: z.string().trim().min(1).max(64) });
 
-function failure(
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
   error: unknown,
   action: string,
-): CustomDomainActionResult<never> {
+): Promise<CustomDomainActionResult<never>> {
+  const text = (await codeActionText()).customDomains;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: {
-        code: "UNAUTHORIZED",
-        message: "Sign in to manage custom domains.",
-      },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
     return {
       success: false,
-      error: { code: "VALIDATION_ERROR", message: error.message },
+      error: {
+        code: "VALIDATION_ERROR",
+        message: ownMessage(ENGLISH, text, error.message),
+      },
     };
   }
   if (error instanceof HttpError) {
@@ -95,7 +105,7 @@ function failure(
   logError(error as Error, { action });
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 

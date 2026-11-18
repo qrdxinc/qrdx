@@ -23,6 +23,8 @@ import {
   updateCodeFields,
   type updateCodeSchema,
 } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
+import { CODE_ACTION_MESSAGES, ownMessage } from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
@@ -44,23 +46,27 @@ const KNOWN_CODES = new Set<string>([
   "SLUG_TAKEN",
 ]);
 
-function failure(
+const ENGLISH = CODE_ACTION_MESSAGES.qrCodes;
+
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
   error: unknown,
   context: Record<string, unknown>,
-): QrCodeActionResult<never> {
+): Promise<QrCodeActionResult<never>> {
+  const text = (await codeActionText()).qrCodes;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: {
-        code: "UNAUTHORIZED",
-        message: "Sign in to manage dynamic QR codes.",
-      },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
     return {
       success: false,
-      error: { code: "VALIDATION_ERROR", message: error.message },
+      error: {
+        code: "VALIDATION_ERROR",
+        message: ownMessage(ENGLISH, text, error.message),
+      },
     };
   }
   if (error instanceof HttpError) {
@@ -77,7 +83,7 @@ function failure(
   logError(error as Error, context);
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -116,7 +122,9 @@ const listSchema = z
 const updateSchema = updateCodeFields
   .extend({ id: codeIdSchema })
   .transform(({ id, ...patch }) => ({ id, patch }))
-  .refine(({ patch }) => hasAnyField(patch), { message: "Nothing to update" });
+  .refine(({ patch }) => hasAnyField(patch), {
+    message: ENGLISH.nothingToUpdate,
+  });
 
 const archiveSchema = z.object({ id: codeIdSchema, archived: z.boolean() });
 const idOnlySchema = z.object({ id: codeIdSchema });

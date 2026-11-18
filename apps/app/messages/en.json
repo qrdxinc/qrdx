@@ -9366,6 +9366,112 @@
       "open": "Open your dashboard"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Sign in to manage this code.",
+      "failed": "Something went wrong.",
+      "notFound": "QR code not found",
+      "invalidDate": "Enter a valid date and time",
+      "dateRange": "Pick a date between 2000 and 2100",
+      "passwordTooShort": "Use at least {min, number} characters for the password",
+      "passwordTooLong": "Passwords can be up to {max, number} characters",
+      "passwordTooManyBytes": "The password is too long",
+      "scanLimitWhole": "The scan limit must be a whole number",
+      "scanLimitMin": "The scan limit must be at least 1",
+      "scanLimitMax": "The scan limit is too high",
+      "planRequired": "Passwords, schedules, scan limits and fallback URLs are part of Pro.",
+      "endBeforeStart": "The end date must be after the start date"
+    },
+    "marketing": {
+      "signIn": "Sign in to manage this code.",
+      "failed": "Something went wrong.",
+      "notFound": "QR code not found",
+      "countryCode": "Use a 2-letter country code",
+      "regionCode": "Use a region code like CA",
+      "invalidUrl": "invalid URL",
+      "rule": "Rule {rule, number}",
+      "variant": "{label}, variant {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {Smart routing is a Pro feature.} business {Smart routing is a Business feature.} other {Smart routing isn't on your plan.}} You can still turn off or remove what's already set up.",
+        "utm": "{plan, select, pro {UTM parameters are a Pro feature.} business {UTM parameters are a Business feature.} other {UTM parameters aren't on your plan.}} You can still turn off or remove what's already set up.",
+        "pixels": "{plan, select, pro {Tracking pixels are a Pro feature.} business {Tracking pixels are a Business feature.} other {Tracking pixels aren't on your plan.}} You can still turn off or remove what's already set up.",
+        "conversions": "{plan, select, pro {Conversion tracking is a Pro feature.} business {Conversion tracking is a Business feature.} other {Conversion tracking isn't on your plan.}} You can still turn off or remove what's already set up.",
+        "preciseLocation": "{plan, select, pro {Precise scan location is a Pro feature.} business {Precise scan location is a Business feature.} other {Precise scan location isn't on your plan.}} You can still turn off or remove what's already set up."
+      }
+    },
+    "landingPages": {
+      "signIn": "Sign in to manage pages.",
+      "failed": "Something went wrong.",
+      "selectAtLeastOne": "Select at least one page",
+      "selectUpTo": "Select up to {max, number} pages at a time"
+    },
+    "files": {
+      "signIn": "Sign in to manage files.",
+      "failed": "Something went wrong."
+    },
+    "qrCodes": {
+      "signIn": "Sign in to manage dynamic QR codes.",
+      "failed": "Something went wrong.",
+      "nothingToUpdate": "Nothing to update"
+    },
+    "customDomains": {
+      "signIn": "Sign in to manage custom domains.",
+      "failed": "Something went wrong.",
+      "enterDomain": "Enter a domain"
+    },
+    "codeSuggestions": {
+      "signIn": "Sign in to get suggestions.",
+      "rateLimited": "That's a lot of suggestions. Try again in a minute.",
+      "unavailable": "Suggestions aren't available on this server.",
+      "failed": "Couldn't get suggestions right now. Try again."
+    },
+    "tags": {
+      "nothingToUpdate": "Nothing to update",
+      "tooManyTags": "A code can have up to {max, number} tags.",
+      "chooseTag": "Choose a tag to add or remove"
+    },
+    "publicStats": {
+      "signIn": "Sign in to share analytics.",
+      "failed": "Something went wrong.",
+      "notFound": "QR code not found"
+    },
+    "pathAliases": {
+      "signIn": "Sign in again to change this code.",
+      "failed": "Something went wrong. Try again.",
+      "noDomain": "Path aliases are for codes on a custom domain."
+    },
+    "formResponses": {
+      "signIn": "Sign in to manage responses.",
+      "failed": "Something went wrong. Please try again.",
+      "chooseResponses": "Choose responses to delete."
+    },
+    "codeKind": {
+      "signIn": "Sign in to change codes.",
+      "failed": "Something went wrong."
+    },
+    "barcodes": {
+      "signIn": "Sign in to save barcodes.",
+      "failed": "Something went wrong."
+    },
+    "utmTemplates": {
+      "signIn": "Sign in to use templates.",
+      "failed": "Something went wrong."
+    },
+    "codeOptions": {
+      "signIn": "Sign in again to see the options.",
+      "failed": "Couldn't load the options. Try again."
+    },
+    "analytics": {
+      "searchTooLong": "Search is too long.",
+      "signIn": "Sign in to search your codes.",
+      "failed": "Something went wrong. Please try again."
+    },
+    "webhooks": {
+      "signIn": "Sign in to manage webhooks.",
+      "failed": "Something went wrong. Please try again."
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "Checking code…",

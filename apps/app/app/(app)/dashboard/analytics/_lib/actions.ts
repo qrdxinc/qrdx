@@ -7,6 +7,7 @@ import {
   toCompareOption,
 } from "@/app/(app)/dashboard/analytics/_lib/code-label";
 import { searchCodeOptions } from "@/app/(app)/dashboard/analytics/_lib/queries";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { getActiveScope } from "@/lib/scope";
@@ -36,17 +37,23 @@ export async function searchCompareCodes(input: {
       { limiter: searchLimiter, key: `analytics:compare:user:${scope.userId}` },
     ]);
     const parsed = searchSchema.safeParse(input);
-    if (!parsed.success) return { ok: false, error: "Search is too long." };
+    if (!parsed.success) {
+      return {
+        ok: false,
+        error: (await codeActionText()).analytics.searchTooLong,
+      };
+    }
     const { options, more } = await searchCodeOptions(scope, {
       q: parsed.data.q,
     });
     return { ok: true, data: { options: options.map(toCompareOption), more } };
   } catch (error) {
+    const text = (await codeActionText()).analytics;
     if (error instanceof UnauthorizedError) {
-      return { ok: false, error: "Sign in to search your codes." };
+      return { ok: false, error: text.signIn };
     }
     if (error instanceof HttpError) return { ok: false, error: error.message };
     logError(error as Error, { action: "analytics.compare-search" });
-    return { ok: false, error: "Something went wrong. Please try again." };
+    return { ok: false, error: text.failed };
   }
 }

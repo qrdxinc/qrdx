@@ -25,6 +25,7 @@ import {
   trashBarcodes,
   updateBarcode,
 } from "@/lib/barcodes/service";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { assertCan } from "@/lib/permissions-server";
 import { enforceRateLimits } from "@/lib/request-guards";
@@ -52,11 +53,16 @@ const KNOWN = new Set<string>([
 
 const writeLimiter = createRateLimiter({ limiter: slidingWindow(60, "60 s") });
 
-function failure(error: unknown, action: string): BarcodeActionResult<never> {
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
+  error: unknown,
+  action: string,
+): Promise<BarcodeActionResult<never>> {
+  const text = (await codeActionText()).barcodes;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to save barcodes." },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
@@ -79,7 +85,7 @@ function failure(error: unknown, action: string): BarcodeActionResult<never> {
   logError(error as Error, { action });
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 

@@ -18,6 +18,37 @@ import {
   updateTag,
 } from "@/app/(app)/dashboard/codes/_lib/organize";
 import { MAX_TAGS_PER_CODE } from "@/app/(app)/dashboard/codes/_lib/organize-shared";
+import { CODE_ACTION_MESSAGES, ownMessage } from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
+import type { ActiveScope } from "@/lib/scope";
+
+const ENGLISH = CODE_ACTION_MESSAGES.tags;
+
+/**
+ * runOrganize, saying this file's own messages (its schemas') in the
+ * person's language (codeActionText); the rest is runOrganize's.
+ */
+async function run<T>(
+  action: string,
+  fn: (scope: ActiveScope) => Promise<T>,
+  options?: Parameters<typeof runOrganize>[2],
+): Promise<OrganizeResult<T>> {
+  const result = await runOrganize(action, fn, options);
+  if (
+    result.success ||
+    !Object.values(ENGLISH).includes(result.error.message)
+  ) {
+    return result;
+  }
+  const text = (await codeActionText()).tags;
+  return {
+    ...result,
+    error: {
+      ...result.error,
+      message: ownMessage(ENGLISH, text, result.error.message),
+    },
+  };
+}
 
 const createSchema = z.object({
   name: tagNameSchema,
@@ -31,7 +62,7 @@ const updateSchema = z
     color: tagColorSchema.optional(),
   })
   .refine((input) => input.name !== undefined || input.color !== undefined, {
-    message: "Nothing to update",
+    message: ENGLISH.nothingToUpdate,
   });
 
 const idOnlySchema = z.object({ id: idSchema });
@@ -40,9 +71,7 @@ const tagIdsSchema = z.array(idSchema).max(MAX_TAGS_PER_CODE * 2);
 
 const setSchema = z.object({
   codeId: idSchema,
-  tagIds: z
-    .array(idSchema)
-    .max(MAX_TAGS_PER_CODE, `A code can have up to ${MAX_TAGS_PER_CODE} tags.`),
+  tagIds: z.array(idSchema).max(MAX_TAGS_PER_CODE, ENGLISH.tooManyTags),
 });
 
 const bulkSchema = z
@@ -52,11 +81,11 @@ const bulkSchema = z
     remove: tagIdsSchema.default([]),
   })
   .refine((input) => input.add.length + input.remove.length > 0, {
-    message: "Choose a tag to add or remove",
+    message: ENGLISH.chooseTag,
   });
 
 export async function listCodeTags(): Promise<OrganizeResult<TagRow[]>> {
-  return runOrganize("listCodeTags", listTags, {
+  return run("listCodeTags", listTags, {
     revalidate: false,
     access: "read",
   });
@@ -65,7 +94,7 @@ export async function listCodeTags(): Promise<OrganizeResult<TagRow[]>> {
 export async function createCodeTag(
   input: z.input<typeof createSchema>,
 ): Promise<OrganizeResult<TagRow>> {
-  return runOrganize("createCodeTag", (scope) =>
+  return run("createCodeTag", (scope) =>
     createTag(scope, parseInput(createSchema, input)),
   );
 }
@@ -73,7 +102,7 @@ export async function createCodeTag(
 export async function updateCodeTag(
   input: z.input<typeof updateSchema>,
 ): Promise<OrganizeResult<void>> {
-  return runOrganize("updateCodeTag", (scope) =>
+  return run("updateCodeTag", (scope) =>
     updateTag(scope, parseInput(updateSchema, input)),
   );
 }
@@ -81,7 +110,7 @@ export async function updateCodeTag(
 export async function deleteCodeTag(
   input: z.input<typeof idOnlySchema>,
 ): Promise<OrganizeResult<void>> {
-  return runOrganize("deleteCodeTag", (scope) =>
+  return run("deleteCodeTag", (scope) =>
     deleteTag(scope, parseInput(idOnlySchema, input).id),
   );
 }
@@ -90,7 +119,7 @@ export async function deleteCodeTag(
 export async function setQrCodeTags(
   input: z.input<typeof setSchema>,
 ): Promise<OrganizeResult<void>> {
-  return runOrganize("setQrCodeTags", (scope) => {
+  return run("setQrCodeTags", (scope) => {
     const { codeId, tagIds } = parseInput(setSchema, input);
     return setCodeTags(scope, codeId, tagIds);
   });
@@ -100,7 +129,7 @@ export async function setQrCodeTags(
 export async function tagQrCodes(
   input: z.input<typeof bulkSchema>,
 ): Promise<OrganizeResult<{ updated: number }>> {
-  return runOrganize("tagQrCodes", (scope) => {
+  return run("tagQrCodes", (scope) => {
     const { ids, add, remove } = parseInput(bulkSchema, input);
     return tagCodes(scope, ids, { add, remove });
   });

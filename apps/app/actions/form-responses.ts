@@ -7,6 +7,7 @@ import {
   deletePageResponses,
   findScopedPage,
 } from "@/app/api/forms/_lib/responses";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
@@ -33,11 +34,15 @@ const deleteSchema = z.object({
   ids: z.array(idSchema).min(1).max(100),
 });
 
-function failure(error: unknown): FormResponsesActionResult<never> {
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
+  error: unknown,
+): Promise<FormResponsesActionResult<never>> {
+  const text = (await codeActionText()).formResponses;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to manage responses." },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (
@@ -52,10 +57,7 @@ function failure(error: unknown): FormResponsesActionResult<never> {
   logError(error as Error, { action: "form-responses" });
   return {
     success: false,
-    error: {
-      code: "UNKNOWN_ERROR",
-      message: "Something went wrong. Please try again.",
-    },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -70,7 +72,7 @@ export async function deleteFormResponses(input: {
       success: false,
       error: {
         code: "VALIDATION_ERROR",
-        message: "Choose responses to delete.",
+        message: (await codeActionText()).formResponses.chooseResponses,
       },
     };
   }

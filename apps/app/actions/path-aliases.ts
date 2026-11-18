@@ -10,6 +10,7 @@ import {
   assertBindableDomains,
   type DomainRef,
 } from "@/app/(app)/dashboard/domains/_lib/domains";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { PATH_ALIASES_PER_CODE } from "@/lib/path-alias-limits";
 import { claimAlias, listAliases, removeAlias } from "@/lib/path-alias-store";
@@ -73,13 +74,15 @@ const fail = (
   error: { code, message },
 });
 
-function failure(error: unknown, action: string) {
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(error: unknown, action: string) {
+  const text = (await codeActionText()).pathAliases;
   if (error instanceof UnauthorizedError) {
-    return fail("unauthorized", "Sign in again to change this code.");
+    return fail("unauthorized", text.signIn);
   }
   if (error instanceof HttpError) return fail("failed", error.message);
   logError(error as Error, { action });
-  return fail("failed", "Something went wrong. Try again.");
+  return fail("failed", text.failed);
 }
 
 /** The code (in the caller's workspace) and its custom domain. */
@@ -90,8 +93,8 @@ async function codeOnDomain(
   return (await getCode(scope, codeId)).domain;
 }
 
-const noDomain = () =>
-  fail("noDomain", "Path aliases are for codes on a custom domain.");
+const noDomain = async () =>
+  fail("noDomain", (await codeActionText()).pathAliases.noDomain);
 const problem = (code: PathAliasClaimProblem) =>
   fail(code, PATH_ALIAS_MESSAGES[code]);
 

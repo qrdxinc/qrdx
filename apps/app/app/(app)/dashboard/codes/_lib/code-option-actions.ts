@@ -9,6 +9,7 @@ import {
   getCodeMarketing,
   type MarketingActionResult,
 } from "@/actions/code-marketing";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { getPlanForScope } from "@/lib/plans";
 import { getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
@@ -48,16 +49,11 @@ export async function getCodeOptions(
       data: { plans: codeOptionPlansFor(plan), marketing, lifecycle },
     };
   } catch (error) {
+    const text = (await codeActionText()).codeOptions;
     if (error instanceof UnauthorizedError) {
-      return {
-        success: false,
-        error: { message: "Sign in again to see the options." },
-      };
+      return { success: false, error: { message: text.signIn } };
     }
     logError(error as Error, { action: "getCodeOptions" });
-    return {
-      success: false,
-      error: { message: "Couldn't load the options. Try again." },
-    };
+    return { success: false, error: { message: text.failed } };
   }
 }

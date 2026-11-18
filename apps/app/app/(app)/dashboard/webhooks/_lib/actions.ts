@@ -4,6 +4,7 @@ import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { confirmationNeededFor } from "@/lib/account/confirmation-scope";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import {
   canManageWebhooks,
@@ -46,9 +47,14 @@ const updateSchema = idSchema.extend({
   active: z.boolean().optional(),
 });
 
-function failure(error: unknown, action: string): WebhookActionResult<never> {
+/** The answer for a thrown `error`, in the person's language (codeActionText). */
+async function failure(
+  error: unknown,
+  action: string,
+): Promise<WebhookActionResult<never>> {
+  const text = (await codeActionText()).webhooks;
   if (error instanceof UnauthorizedError) {
-    return { ok: false, error: "Sign in to manage webhooks." };
+    return { ok: false, error: text.signIn };
   }
   if (error instanceof HttpError) {
     return error.status === 402
@@ -56,7 +62,7 @@ function failure(error: unknown, action: string): WebhookActionResult<never> {
       : { ok: false, error: error.message };
   }
   logError(error as Error, { action });
-  return { ok: false, error: "Something went wrong. Please try again." };
+  return { ok: false, error: text.failed };
 }
 
 function invalid(error: z.ZodError): WebhookActionResult<never> {

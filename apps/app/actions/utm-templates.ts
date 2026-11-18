@@ -1,6 +1,7 @@
 "use server";
 
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
@@ -49,10 +50,11 @@ async function run<T>(
     }
     return { success: true, data: await fn(scope) };
   } catch (error) {
+    const text = (await codeActionText()).utmTemplates;
     if (error instanceof UnauthorizedError) {
       return {
         success: false,
-        error: { code: "UNAUTHORIZED", message: "Sign in to use templates." },
+        error: { code: "UNAUTHORIZED", message: text.signIn },
       };
     }
     if (error instanceof HttpError && KNOWN.has(error.code)) {
@@ -64,7 +66,7 @@ async function run<T>(
     logError(error as Error, { action });
     return {
       success: false,
-      error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+      error: { code: "UNKNOWN_ERROR", message: text.failed },
     };
   }
 }

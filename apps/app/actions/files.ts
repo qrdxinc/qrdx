@@ -6,6 +6,8 @@ import { z } from "zod";
 import { assertAdmin } from "@/app/(app)/admin/_lib/guard";
 import type { FileRow } from "@/app/(app)/dashboard/files/_components/files-manager";
 import { loadFileRows } from "@/app/(app)/dashboard/files/_lib/rows";
+import { CODE_ACTION_MESSAGES } from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { type AdminFileView, setFileBlocked } from "@/lib/files/admin";
 import { deleteFile, fileIdSchema } from "@/lib/files/service";
@@ -45,11 +47,22 @@ const mutationLimiter = createRateLimiter({
   limiter: slidingWindow(60, "60 s"),
 });
 
-function failure(error: unknown, action: string): FileActionResult<never> {
+/**
+ * The answer for a thrown `error`, in the person's language (codeActionText);
+ * admin's stays English.
+ */
+async function failure(
+  error: unknown,
+  action: string,
+  { admin = false } = {},
+): Promise<FileActionResult<never>> {
+  const text = admin
+    ? CODE_ACTION_MESSAGES.files
+    : (await codeActionText()).files;
   if (error instanceof UnauthorizedError) {
     return {
       success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to manage files." },
+      error: { code: "UNAUTHORIZED", message: text.signIn },
     };
   }
   if (error instanceof ValidationError) {
@@ -72,7 +85,7 @@ function failure(error: unknown, action: string): FileActionResult<never> {
   logError(error as Error, { action });
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code: "UNKNOWN_ERROR", message: text.failed },
   };
 }
 
@@ -186,6 +199,6 @@ export async function adminSetFileBlocked(
         error: { code: "NOT_FOUND", message: "Not found." },
       };
     }
-    return failure(error, "adminSetFileBlocked");
+    return failure(error, "adminSetFileBlocked", { admin: true });
   }
 }

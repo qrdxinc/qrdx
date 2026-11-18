@@ -2,6 +2,7 @@
 
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { headers } from "next/headers";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import {
   type CodeSuggestions,
   type SuggestInput,
@@ -46,10 +47,11 @@ export async function suggestCodeDetailsAction(
     ]);
     return { success: true, data: await suggestCodeDetails(scope, input) };
   } catch (error) {
+    const text = (await codeActionText()).codeSuggestions;
     if (error instanceof UnauthorizedError) {
       return {
         success: false,
-        error: { code: "UNAUTHORIZED", message: "Sign in to get suggestions." },
+        error: { code: "UNAUTHORIZED", message: text.signIn },
       };
     }
     if (error instanceof HttpError && KNOWN.has(error.code)) {
@@ -59,9 +61,9 @@ export async function suggestCodeDetailsAction(
           code: error.code,
           message:
             error.code === "RATE_LIMITED"
-              ? "That's a lot of suggestions. Try again in a minute."
+              ? text.rateLimited
               : error.code === "AI_NOT_CONFIGURED"
-                ? "Suggestions aren't available on this server."
+                ? text.unavailable
                 : error.message,
         },
       };
@@ -69,10 +71,7 @@ export async function suggestCodeDetailsAction(
     logError(error as Error, { action: "suggestCodeDetails" });
     return {
       success: false,
-      error: {
-        code: "UNKNOWN_ERROR",
-        message: "Couldn't get suggestions right now. Try again.",
-      },
+      error: { code: "UNKNOWN_ERROR", message: text.failed },
     };
   }
 }
