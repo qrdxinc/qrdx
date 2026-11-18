@@ -57,6 +57,8 @@ openssl rand -base64 32
 Open `.env` and set these values. Every other line can stay commented out.
 
 ```bash title=".env"
+# Your instance's URL. For a local test use http://localhost:3000 and sign in
+# with GitHub or Google: email codes aren't sent to a localhost instance.
 NEXT_PUBLIC_APP_URL=https://qr.example.com
 BETTER_AUTH_URL=https://qr.example.com
 BETTER_AUTH_SECRET=<the string openssl printed>
@@ -103,7 +105,7 @@ docker compose logs -f migrate app
 
 ### 4. Sign in
 
-Open `NEXT_PUBLIC_APP_URL` in a browser and sign in with GitHub, Google or an email code. Your account is created on first sign-in.
+Open `NEXT_PUBLIC_APP_URL` in a browser and sign in with a method you set up in step 2: GitHub or Google, or an email code if you set up [Resend](/docs/notifications#self-hosting) and `NEXT_PUBLIC_APP_URL` isn't `localhost`. Your account is created on first sign-in. Without one of these, nobody can create an account.
 
 ### 5. Make yourself an admin
 
@@ -314,7 +316,7 @@ With Neon, use its own backups and branching instead.
 ## What is different from qrdx.dev
 
 - **Docs** open on qrdx.dev. Your instance redirects every docs URL there.
-- **Payments and plans** need Polar. Without it, every account has the Free limits, and nobody can upgrade. The limits themselves are in `apps/app/lib/plans.ts`, which you can change for your instance; see [Plans and limits](#plans-and-limits).
+- **Payments and plans** need Polar. Without it, every account has the Free limits, and nobody can upgrade. As shipped, that means no webhooks, no custom domains and no custom back-halves, and the dashboard still shows upgrade buttons. The limits themselves are in `apps/app/lib/plans.ts`, which you can change for your instance; see [Plans and limits](#plans-and-limits).
 - **The affiliate program, pay-by-invoice requests, non-profit discounts and the enterprise contact form** are QRdx's own sales and run only where QRdx itself runs. A self-hosted copy has none of them.
 - **Scan locations:** country, region and city come from Vercel's geo headers. Behind Cloudflare only the country is read (`CF-IPCountry`); elsewhere locations show as unknown, and [area rules](/docs/precise-location#route-scans-by-area) only match scans with a shared location.
 - **Custom domains** are verified with a DNS `TXT` record and routed by your reverse proxy, unless you run on Vercel with the Domains API variables set. The **Set up with …** button needs your own Domain Connect template: QRdx's works only for qrdx.dev.
@@ -355,9 +357,13 @@ Your Docker has no BuildKit. Install the `buildx` plugin, or update Docker.
 
 Docker ran out of memory. Give it at least 8 GB (Docker Desktop: **Settings** → **Resources**) and run `docker compose up -d --build` again.
 
+### The build stops with "JavaScript heap out of memory" and "Failed to type check"
+
+Node's heap ran out during the type check in `next build`; giving Docker more memory doesn't help. Current versions skip that check in the image build, the way QRdx's own builds do: CI type-checks every change before a release. Pull the latest code and run `docker compose up -d --build` again. If you need to build an older version, add `NODE_OPTIONS=--max-old-space-size=4096` to the `ENV` line in the Dockerfile's build stage.
+
 ### "sign-in code email is off for this deployment"
 
-Email codes aren't sent while `NEXT_PUBLIC_APP_URL` is `localhost`. Use GitHub or Google sign-in for a local test.
+Email codes aren't sent while `NEXT_PUBLIC_APP_URL` is `localhost`, or when Resend isn't set up. Use GitHub or Google sign-in for a local test.
 
 Still stuck? [Open an issue](https://github.com/qrdxinc/qrdx/issues) with the output of `docker compose logs app`, with secrets removed.
 
