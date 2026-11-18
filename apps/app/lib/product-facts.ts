@@ -61,6 +61,7 @@ import { ART_MODEL_LABEL } from "./ai/art-models";
 import { BARCODE_FORMATS } from "./barcode/formats";
 import { BRAND_LOGO_COUNT } from "./brand-logos/catalog.generated";
 import { PAGE_TYPE_IDS } from "./landing/page-type-ids";
+import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
 import {
   MONEY_BACK_DAYS,
   NONPROFIT_DISCOUNT_PERCENT,
@@ -156,6 +157,8 @@ export const PRODUCT_FACTS = {
    * "year". Pro and Business keep all of it, which copy writes as words.
    */
   freeScanHistoryYears: FREE_SCAN_HISTORY_YEARS,
+  /** Path aliases one code can have on its custom domain (lib/path-alias-limits.ts). */
+  pathAliasesPerCode: PATH_ALIASES_PER_CODE,
 } as const;
 
 export type ProductFact = keyof typeof PRODUCT_FACTS;

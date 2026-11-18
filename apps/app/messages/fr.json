@@ -7274,6 +7274,29 @@
           "show": "Afficher",
           "clearSearch": "Effacer la recherche"
         },
+        "pathAliases": {
+          "title": "Alias de chemin",
+          "description": "Anciens liens sur {domain} provenant d’un autre fournisseur, comme {domain}/r/abc, qui doivent ouvrir ce code. Chaque chemin doit correspondre exactement ; la chaîne de requête n’a pas d’importance. Le premier alias d’un domaine peut mettre une minute à fonctionner.",
+          "placeholder": "/r/abc",
+          "add": "Ajouter",
+          "remove": "Retirer {path}",
+          "loadFailed": "Impossible de charger les alias de chemin. Fermez cette boîte de dialogue et rouvrez-la.",
+          "failed": "Impossible d’enregistrer la modification. Réessayez.",
+          "verifyFirst": "Vérifiez {domain} sur la page Domaines pour ajouter des alias de chemin.",
+          "problems": {
+            "empty": "Saisissez le chemin après le domaine, par exemple /r/abc.",
+            "length": "Utilisez au maximum {maxLength, number} caractères.",
+            "segments": "Utilisez au maximum {maxSegments, number} parties séparées par /.",
+            "characters": "Utilisez des lettres, des chiffres, - _ . et ~ entre les barres obliques, sans partie vide.",
+            "backHalf": "Ce chemin convient à une fin de lien personnalisée. Attribuez-la plutôt au code.",
+            "reserved": "QRdx utilise ce chemin sur les domaines personnalisés.",
+            "otherDomain": "Ce lien est sur un autre domaine.",
+            "taken": "Un autre code de ce domaine répond déjà à ce chemin.",
+            "hostedPage": "Un code de ce domaine utilise cette fin de lien personnalisée, et sa page hébergée répond à ce chemin.",
+            "limit": "Un code peut avoir jusqu’à {max, number} alias de chemin.",
+            "unavailable": "Les alias de chemin ne sont pas encore disponibles sur ce serveur."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Domaine du lien court",
           "defaulthostQDefault": "{defaultHost}/q/ (par défaut)",
@@ -7423,7 +7446,8 @@
           "keepingBackHalvesIsPart": "La conservation des back-halves fait partie de {slugPlans}.",
           "yourPlanDoesntKeepBack": "Votre offre ne conserve pas les back-halves.",
           "random": "aléatoire",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "Répond aussi à l’adresse {link}, afin que les codes imprimés avec l’ancien lien continuent de fonctionner."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Depuis un compte connecté",

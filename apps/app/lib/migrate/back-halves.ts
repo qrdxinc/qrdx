@@ -3,6 +3,7 @@
 // for links on that domain (unique per domain), or on the shared qrdx.dev/q/
 // (unique across QRdx). Pure and client-safe.
 
+import { parsePathAlias } from "@/lib/path-aliases";
 import {
   isGeneratedSlug,
   type SlugProblem,
@@ -58,6 +59,16 @@ export function backHalfShapeProblem(
   });
   if (!problem) return null;
   return problem === "reserved" ? "reserved" : "shape";
+}
+
+/**
+ * The path alias an old link on the custom domain becomes when its path
+ * can't be a back-half there (`r/abc` → "/r/abc"); null when it can't be an
+ * alias either.
+ */
+export function aliasForBackHalf(backHalf: string): string | null {
+  const parsed = parsePathAlias(backHalf);
+  return parsed.ok ? parsed.path : null;
 }
 
 const BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

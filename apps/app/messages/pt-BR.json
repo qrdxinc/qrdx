@@ -7274,6 +7274,29 @@
           "show": "Mostrar",
           "clearSearch": "Limpar busca"
         },
+        "pathAliases": {
+          "title": "Aliases de caminho",
+          "description": "Links antigos em {domain} de outro provedor, como {domain}/r/abc, que devem abrir este código. Cada caminho precisa ser idêntico; a query string não importa. O primeiro alias de um domínio pode levar um minuto para começar a funcionar.",
+          "placeholder": "/r/abc",
+          "add": "Adicionar",
+          "remove": "Remover {path}",
+          "loadFailed": "Não foi possível carregar os aliases de caminho. Feche esta janela e abra de novo.",
+          "failed": "Não foi possível salvar a alteração. Tente de novo.",
+          "verifyFirst": "Verifique {domain} na página Domínios para adicionar aliases de caminho.",
+          "problems": {
+            "empty": "Digite o caminho depois do domínio, por exemplo /r/abc.",
+            "length": "Use no máximo {maxLength, number} caracteres.",
+            "segments": "Use no máximo {maxSegments, number} partes separadas por /.",
+            "characters": "Use letras, dígitos, - _ . e ~ entre as barras, sem partes vazias.",
+            "backHalf": "Este caminho serve como back-half. Use-o como back-half do código.",
+            "reserved": "O QRdx usa este caminho em domínios personalizados.",
+            "otherDomain": "Esse link está em outro domínio.",
+            "taken": "Outro código neste domínio já responde neste caminho.",
+            "hostedPage": "Um código neste domínio tem este back-half, e a página hospedada dele responde neste caminho.",
+            "limit": "Um código pode ter até {max, number} aliases de caminho.",
+            "unavailable": "Os aliases de caminho ainda não estão disponíveis neste servidor."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Domínio do link curto",
           "defaulthostQDefault": "{defaultHost}/q/ (padrão)",
@@ -7423,7 +7446,8 @@
           "keepingBackHalvesIsPart": "Manter back-halves faz parte de {slugPlans}.",
           "yourPlanDoesntKeepBack": "Seu plano não mantém back-halves.",
           "random": "aleatório",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "Também responde em {link}, então os códigos impressos com o link antigo continuam funcionando."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "De uma conta conectada",

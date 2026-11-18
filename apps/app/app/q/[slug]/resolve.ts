@@ -6,6 +6,7 @@ import { CUSTOM_DOMAIN_HEADER } from "@/app/(app)/dashboard/domains/_lib/hostnam
 import { scanPagesIntlFor } from "@/lib/i18n/scan-pages";
 // NFC taps: `?nfc` on the short link marks the scan as a tap (lib/nfc/links.ts).
 import { scanSourceOf } from "@/lib/nfc/links";
+import { aliasCode } from "@/lib/path-alias-store";
 import { type RedirectCode, redirectCodeColumns } from "@/lib/redirect/code";
 import {
   evaluateLifecycle,
@@ -32,13 +33,18 @@ import { slugWhere } from "@/lib/slug-claims";
 import { type StatusPageKind, statusPage } from "./status-page";
 
 // The redirect pipeline behind /q/<slug> (route.ts) and, on custom domains,
-// GS1 Digital Links (app/gs1/[...path]/route.ts): lookup → on/off checks →
-// lifecycle → page or routing. Both record scans the same way.
+// GS1 Digital Links (app/gs1/[...path]/route.ts) and path aliases
+// (app/path-alias/[...path]/route.ts): lookup → on/off checks → lifecycle →
+// page or routing. All record scans the same way.
 
-/** Which code to open: a short link's slug, or a product page's GTIN on a custom domain. */
+/**
+ * Which code to open: a short link's slug, or on a custom domain a product
+ * page's GTIN or a path alias (lib/path-aliases.ts).
+ */
 export type ShortLinkLookup =
   | { slug: string }
-  | { gtin: string; domainId: string };
+  | { gtin: string; domainId: string }
+  | { alias: string; domainId: string };
 
 /**
  * The code a GS1 Digital Link opens on a custom domain: a page code of a
@@ -132,6 +138,8 @@ export async function resolveShortLink(
         .from(qrCode)
         .where(slugWhere(lookup.slug, customDomainId))
         .limit(1);
+    } else if ("alias" in lookup) {
+      code = await aliasCode(lookup.alias, lookup.domainId);
     } else {
       code = await findGtinCode(lookup.gtin, lookup.domainId);
     }
