@@ -4,6 +4,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { GS1_PATH } from "@/lib/gs1/digital-link";
 import { baseUrl } from "@/lib/metadata";
 import { NFC_PARAM } from "@/lib/nfc/links";
+import { domainHasAliases } from "@/lib/path-alias-store";
+import { aliasPathOf } from "@/lib/path-aliases";
 import { isValidSlug } from "@/lib/short-links";
 import {
   CUSTOM_DOMAIN_HEADER,
@@ -32,46 +34,80 @@ const PAGE_API_PATH =
 
 const CACHE_TTL_MS = 60_000;
 const CACHE_MAX_ENTRIES = 1000;
-const cache = new Map<string, { host: CustomHost | null; expiresAt: number }>();
-const inflight = new Map<string, Promise<CustomHost | null>>();
 
-function remember(hostname: string, host: CustomHost | null) {
+interface CacheEntry<T> {
+  value: T;
+  expiresAt: number;
+}
+
+function remember<T>(cache: Map<string, CacheEntry<T>>, key: string, value: T) {
   const now = Date.now();
   if (cache.size >= CACHE_MAX_ENTRIES) {
-    for (const [key, entry] of cache) {
-      if (entry.expiresAt <= now) cache.delete(key);
+    for (const [entryKey, entry] of cache) {
+      if (entry.expiresAt <= now) cache.delete(entryKey);
     }
     // Still full: drop the oldest entry (Map keeps insertion order).
     const oldest = cache.keys().next().value;
     if (cache.size >= CACHE_MAX_ENTRIES && oldest) cache.delete(oldest);
   }
-  cache.set(hostname, { host, expiresAt: now + CACHE_TTL_MS });
+  cache.set(key, { value, expiresAt: now + CACHE_TTL_MS });
+}
+
+/** `load`, cached per instance for about a minute, one query at a time per key. */
+function cachedLookup<T>(
+  load: (key: string) => Promise<T>,
+): (key: string) => Promise<T> {
+  const cache = new Map<string, CacheEntry<T>>();
+  const inflight = new Map<string, Promise<T>>();
+  return (key) => {
+    const cached = cache.get(key);
+    if (cached && cached.expiresAt > Date.now()) {
+      return Promise.resolve(cached.value);
+    }
+    let pending = inflight.get(key);
+    if (!pending) {
+      pending = load(key)
+        .then((value) => {
+          remember(cache, key, value);
+          return value;
+        })
+        .finally(() => inflight.delete(key));
+      inflight.set(key, pending);
+    }
+    return pending;
+  };
 }
 
 /**
- * The custom_domain row for a host, cached per instance for about a minute
- * (so a newly verified or removed domain takes effect within ~60s).
+ * The custom_domain row for a host (so a newly verified or removed domain
+ * takes effect within ~60s).
  */
-async function lookupCustomHost(hostname: string): Promise<CustomHost | null> {
-  const cached = cache.get(hostname);
-  if (cached && cached.expiresAt > Date.now()) return cached.host;
+const lookupCustomHost = cachedLookup(async (hostname) => {
+  const [row] = await db
+    .select({ id: customDomain.id, verified: customDomain.verified })
+    .from(customDomain)
+    .where(eq(customDomain.hostname, hostname))
+    .limit(1);
+  return (row ?? null) as CustomHost | null;
+});
 
-  let pending = inflight.get(hostname);
-  if (!pending) {
-    pending = db
-      .select({ id: customDomain.id, verified: customDomain.verified })
-      .from(customDomain)
-      .where(eq(customDomain.hostname, hostname))
-      .limit(1)
-      .then(([row]) => {
-        const host = row ?? null;
-        remember(hostname, host);
-        return host;
-      })
-      .finally(() => inflight.delete(hostname));
-    inflight.set(hostname, pending);
+/**
+ * Whether a domain has path aliases, by domain id (a domain's first alias
+ * answers within ~60s). Domains without any never look one up.
+ */
+const lookupHasAliases = cachedLookup(domainHasAliases);
+
+/** Internal route that opens a path alias's code (app/path-alias/[...path]). */
+const ALIAS_ROUTE = "/path-alias";
+
+/** Whether to look up path aliases on a domain; a failed check means no. */
+async function hasAliases(domainId: string): Promise<boolean> {
+  try {
+    return await lookupHasAliases(domainId);
+  } catch (error) {
+    console.error("Path alias check failed:", error);
+    return false;
   }
-  return pending;
 }
 
 const escapeHtml = (value: string) =>
@@ -135,8 +171,11 @@ a{display:inline-block;margin-top:28px;color:var(--fg);font-size:14px;font-weigh
  * through (tagged too), GS1 Digital Links `/01/<GTIN>/...` →
  * `/gs1/01/<GTIN>/...` (tagged; the product page with that GTIN on this
  * domain), `/stats/<token>` and its `/og` image pass through (tagged; only
- * shares assigned to this domain answer), `/` → a small page, everything
- * else 404.
+ * shares assigned to this domain answer), `/` → a small page, path aliases
+ * (lib/path-aliases.ts: another provider's links kept on the domain, such as
+ * `/r/abc`) → `/path-alias/<path>` (tagged) on domains that have any,
+ * everything else 404. `/p/<slug>` aliases are answered by the hosted page
+ * route when no hosted page has that back-half.
  * Pending domains serve nothing.
  */
 export async function routeCustomDomain(
@@ -203,6 +242,24 @@ export async function routeCustomDomain(
     // NFC links (`/<slug>?nfc`, lib/nfc/links.ts) carry their marker in the
     // rewrite itself, so the tap counts as one wherever the app runs.
     if (!isPagePath && request.nextUrl.searchParams.has(NFC_PARAM)) {
+      target += `?${NFC_PARAM}`;
+    }
+    return NextResponse.rewrite(new URL(target, request.url), {
+      request: { headers },
+    });
+  }
+
+  // Another provider's link kept on this domain (an exact path; the query
+  // string never counts, as with back-halves).
+  const aliasPath = aliasPathOf(pathname);
+  if (aliasPath && (await hasAliases(host.id))) {
+    const headers = new Headers(request.headers);
+    headers.set(CUSTOM_DOMAIN_HEADER, host.id);
+    let target = `${ALIAS_ROUTE}${aliasPath
+      .split("/")
+      .map((segment) => encodeURIComponent(segment))
+      .join("/")}`;
+    if (request.nextUrl.searchParams.has(NFC_PARAM)) {
       target += `?${NFC_PARAM}`;
     }
     return NextResponse.rewrite(new URL(target, request.url), {

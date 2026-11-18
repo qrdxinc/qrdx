@@ -2,7 +2,7 @@ import type { Locale } from "@repo/i18n/config";
 import { localizePath } from "@repo/i18n/paths";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import {
   CUSTOM_DOMAIN_HEADER,
   isCustomDomainRequest,
@@ -17,6 +17,7 @@ import { requestAppLocale } from "@/lib/i18n/request-locale";
 import { scanPagesIntl } from "@/lib/i18n/scan-pages";
 import type { BlockRenderContext } from "@/lib/landing/blocks";
 import { baseUrl } from "@/lib/metadata";
+import { aliasCode } from "@/lib/path-alias-store";
 import { enforcePageLifecycle } from "@/lib/redirect/lifecycle";
 import { loadPublicPage, pageSummary } from "../_lib/public-page";
 
@@ -39,6 +40,24 @@ async function scannerLocale(): Promise<Locale> {
 async function load(slug: string) {
   const customDomainId = (await headers()).get(CUSTOM_DOMAIN_HEADER);
   return loadPublicPage({ slug }, customDomainId);
+}
+
+/**
+ * A path alias at `/p/<slug>` on a custom domain (lib/path-aliases.ts),
+ * when no hosted page there has that back-half: the alias's code by its own
+ * back-half, which counts the scan like any other. Null otherwise.
+ */
+async function aliasTarget(slug: string): Promise<string | null> {
+  const requestHeaders = await headers();
+  const domainId = requestHeaders.get(CUSTOM_DOMAIN_HEADER);
+  if (!(domainId && isCustomDomainRequest(requestHeaders))) return null;
+  try {
+    const code = await aliasCode(`/p/${slug}`, domainId);
+    return code ? `/${encodeURIComponent(code.slug)}` : null;
+  } catch (error) {
+    console.error("Path alias lookup failed:", error);
+    return null;
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -102,7 +121,11 @@ export default async function LandingPage({ params }: Props) {
   requestAppLocale().current = locale;
   const { slug } = await params;
   const page = await load(slug);
-  if (!page) notFound();
+  if (!page) {
+    const target = await aliasTarget(slug);
+    if (target) redirect(target);
+    notFound();
+  }
   // Password gate, schedule, scan limit and pause apply to direct visits too.
   await enforcePageLifecycle(page.code);
 
