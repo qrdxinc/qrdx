@@ -3,6 +3,10 @@
 // carries contact details or links, so an item can't be used to spread
 // them. Safe to import anywhere.
 import { sanitizeFrameText } from "qrdx/types";
+import {
+  COMMUNITY_CHECK_MESSAGES,
+  type CommunityCheckMessages,
+} from "./messages";
 
 // Contact details and links, wherever they sit in the text: any domain
 // (not only common endings), @handles, phone numbers of 7 or more digits
@@ -26,23 +30,19 @@ export function cleanText(text: string, max: number): string {
   return sanitizeFrameText(text ?? "", max);
 }
 
-/** Why published text is refused, or null when it's fine. */
-export function textProblem(text: string): string | null {
-  if (EMAIL.test(text)) {
-    return "Leave email addresses out of names, labels and descriptions.";
-  }
-  if (LINK.test(text)) {
-    return "Leave links out of names, labels and descriptions.";
-  }
-  if (HANDLE.test(text)) {
-    return "Leave @handles out of names, labels and descriptions.";
-  }
-  if (hasPhone(text)) {
-    return "Leave phone numbers out of names, labels and descriptions.";
-  }
-  if (STREET.test(text)) {
-    return "Leave street addresses out of names, labels and descriptions.";
-  }
+/**
+ * Why published text is refused, or null when it's fine. In English unless
+ * `messages` is another language's set (./messages.ts).
+ */
+export function textProblem(
+  text: string,
+  messages: CommunityCheckMessages = COMMUNITY_CHECK_MESSAGES,
+): string | null {
+  if (EMAIL.test(text)) return messages.noEmails;
+  if (LINK.test(text)) return messages.noLinks;
+  if (HANDLE.test(text)) return messages.noHandles;
+  if (hasPhone(text)) return messages.noPhones;
+  if (STREET.test(text)) return messages.noStreets;
   return null;
 }
 

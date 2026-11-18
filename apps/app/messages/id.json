@@ -5502,6 +5502,98 @@
       "placeholder": "Cari bingkai, tema, dan halaman"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "Masuk untuk melanjutkan.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "checkDetails": "Periksa detailnya.",
+      "themeNotInWorkspace": "Tema ini tidak ada di workspace ini.",
+      "noCustomFrame": "Tema ini tidak memiliki bingkai kustom.",
+      "pageNotFound": "Halaman tidak ditemukan.",
+      "pageChanged": "Halaman ini berubah sejak terakhir Anda tinjau. Tinjau lagi sebelum memublikasikan.",
+      "svgTooLarge": "File SVG maksimal 200 KB.",
+      "tooManyImports": "Terlalu banyak impor. Coba lagi dalam satu jam.",
+      "tooManyChanges": "Terlalu banyak perubahan. Coba lagi nanti."
+    },
+    "communityThemes": {
+      "alreadyPublished": "Tema ini sudah dipublikasikan ke komunitas.",
+      "workspaceAdminsOnly": "Hanya pemilik dan admin workspace ini yang dapat memublikasikan temanya.",
+      "workspaceUnavailable": "Publikasi tema workspace belum tersedia di deployment ini.",
+      "tooFast": "Anda memublikasikan terlalu cepat. Silakan coba lagi nanti."
+    },
+    "checks": {
+      "licenceRequired": "Konfirmasikan lisensi CC0 untuk memublikasikan.",
+      "publishedALot": "Anda sudah banyak memublikasikan hari ini. Coba lagi besok.",
+      "unavailable": "Pembaruan komunitas belum tersedia di deployment ini.",
+      "itemNotFound": "Item ini tidak ada di komunitas.",
+      "workspacePublishRefusal": "Hanya pemilik dan admin workspace ini yang dapat memublikasikan isinya.",
+      "nameRequired": "Berikan nama.",
+      "alreadyPublished": "Desain ini sudah ada di komunitas.",
+      "themeSettings": "Tema ini memiliki pengaturan yang tidak dapat ditampilkan komunitas. Simpan ulang di editor.",
+      "pageNothingLeft": "Tidak ada yang tersisa untuk dibagikan setelah detail pribadi Anda dihapus. Tambahkan beberapa blok yang dapat digunakan ulang orang lain.",
+      "pageInvalid": "Halaman ini tidak dapat dibagikan sebagai templat. Publikasikan ulang dulu di editor halaman.",
+      "pageTooLarge": "Halaman ini terlalu besar untuk dibagikan sebagai templat. Hapus beberapa blok atau persingkat teks yang panjang.",
+      "repeatsDetail": "Ini mengulang detail yang dihapus di bagian lain halaman.",
+      "noEmails": "Jangan cantumkan alamat email pada nama, label, dan deskripsi.",
+      "noLinks": "Jangan cantumkan tautan pada nama, label, dan deskripsi.",
+      "noHandles": "Jangan cantumkan @handle pada nama, label, dan deskripsi.",
+      "noPhones": "Jangan cantumkan nomor telepon pada nama, label, dan deskripsi.",
+      "noStreets": "Jangan cantumkan alamat jalan pada nama, label, dan deskripsi.",
+      "gateFailed": "Hanya desain dengan hasil pemindaian “Bagus” ({min, number} atau lebih) yang dapat dipublikasikan. {reasons}.",
+      "gateTooLong": "{sample} tidak muat dalam kode pada tingkat koreksi kesalahan ini",
+      "gateScore": "dengan {sample} skornya {score, number}",
+      "gateSampleLink": "tautan",
+      "gateSampleWifi": "detail Wi-Fi",
+      "handleFormat": "Gunakan {min, number} hingga {max, number} huruf kecil, angka, \"_\" atau \"-\", diawali huruf atau angka.",
+      "handleReserved": "Handle itu sudah dicadangkan.",
+      "handleTaken": "Handle itu sudah dipakai.",
+      "displayNameRequired": "Masukkan nama tampilan."
+    },
+    "pageChanges": {
+      "texts": "{count, plural, other {# teks}} diganti dengan teks contoh",
+      "kept": "{count, plural, other {# teks}} dipertahankan sesuai tulisan Anda",
+      "links": "{count, plural, other {# tautan}} diganti dengan example.com",
+      "emails": "{count, plural, other {# alamat email}} diganti dengan alamat contoh",
+      "phones": "{count, plural, other {# nomor telepon}} diganti dengan nomor contoh",
+      "emailsAndPhones": "{emails, plural, other {# alamat email}} dan {phones, plural, other {# nomor telepon}} diganti dengan data contoh",
+      "addresses": "{count, plural, other {# alamat}} diganti dengan alamat contoh",
+      "wifi": "Nama jaringan dan kata sandi Wi-Fi diganti dengan contoh",
+      "codes": "Kode kupon diganti dengan kode contoh",
+      "gtins": "GTIN produk dihapus: pengguna menambahkan sendiri",
+      "images": "{count, plural, other {# foto}} dihapus: pengguna menambahkan sendiri",
+      "files": "{count, plural, other {# file}} dihapus",
+      "blocks": "Tidak disertakan karena memerlukan file Anda sendiri: {blocks}",
+      "hidden": "{count, plural, other {# blok tersembunyi}} tidak disertakan",
+      "settings": "Gambar untuk berbagi, deskripsi, dan CSS khusus tidak disertakan"
+    },
+    "qrThemes": {
+      "signIn": "Masuk untuk mengelola tema.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "tooMany": "Terlalu banyak perubahan. Tunggu semenit lalu coba lagi.",
+      "themeLimit": "Anda telah mencapai batas {limit, number} tema tersimpan pada paket Gratis. Upgrade ke Pro untuk tema tanpa batas.",
+      "notFound": "Tema tidak ditemukan.",
+      "defaultAdminsOnly": "Hanya pemilik dan admin workspace yang dapat mengubah tema default-nya.",
+      "openAnotherWorkspace": "Buka workspace lain untuk membagikan tema ke sana.",
+      "shareAdminsOnly": "Hanya pemilik dan admin workspace yang dapat membagikan tema di sini.",
+      "sharedThemesPlan": "Tema bersama termasuk dalam paket {plan} (berdasarkan paket pemilik workspace).",
+      "workspaceThemeLimit": "Paket workspace ini mencakup {count, number} tema."
+    },
+    "codeBuilder": {
+      "signInAgain": "Masuk lagi untuk membuat kode.",
+      "loadFailed": "Pembuat kode tidak dapat dimuat. Coba lagi.",
+      "themesFailed": "Tema tersimpan tidak dapat dimuat.",
+      "foldersFailed": "Folder tidak dapat dimuat.",
+      "tagsFailed": "Tag tidak dapat dimuat.",
+      "domainsFailed": "Domain kustom tidak dapat dimuat, sehingga kode memakai tautan pendek default."
+    },
+    "search": {
+      "untitledPage": "Halaman tanpa judul",
+      "landingPage": "Landing page",
+      "tooMany": "Terlalu banyak pencarian. Tunggu sebentar.",
+      "signInAgain": "Masuk lagi untuk mencari.",
+      "notWorking": "Pencarian sedang tidak berfungsi."
+    }
+  },
   "app": {
     "settings": {
       "general": {

@@ -8,14 +8,15 @@ import {
 } from "@repo/database";
 import { and, eq, gt, sql } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
+import { CheckError } from "./messages";
 import { COMMUNITY_TAG, guarded } from "./store";
 
 // Likes (public appreciation) and saves (private bookmarks) on items. Each
 // toggle checks the item is published, flips the row and moves the count.
 
-export class ItemNotFoundError extends Error {
+export class ItemNotFoundError extends CheckError {
   constructor() {
-    super("This item isn't in the community.");
+    super((m) => m.itemNotFound);
     this.name = "ItemNotFoundError";
   }
 }

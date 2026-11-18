@@ -16,7 +16,7 @@ import {
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Textarea } from "@repo/design-system/components/ui/textarea";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { QRCustomFrame } from "qrdx";
 import { useEffect, useId, useState } from "react";
 import {
@@ -55,6 +55,8 @@ export function PublishFrameDialog({
   defaultName?: string;
 }) {
   const t = useTranslations("community.publishFrameDialog");
+  // The server answers in this page's language (lib/i18n/action-locale.ts).
+  const locale = useLocale();
   const nameId = useId();
   const descriptionId = useId();
   const [name, setName] = useState(defaultName);
@@ -86,8 +88,8 @@ export function PublishFrameDialog({
     try {
       const details = { name, description, tags, acceptLicense: accepted };
       const result = themeId
-        ? await publishCommunityThemeFrame({ themeId, ...details })
-        : await publishCommunityFrame({ frame, ...details });
+        ? await publishCommunityThemeFrame({ themeId, ...details }, locale)
+        : await publishCommunityFrame({ frame, ...details }, locale);
       if (result.ok) {
         setPublished(result.data.href);
         soundEvent("success");

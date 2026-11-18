@@ -5502,6 +5502,98 @@
       "placeholder": "搜索边框、主题和页面"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "请登录后继续。",
+      "failed": "出了点问题，请重试。",
+      "checkDetails": "请检查填写的内容。",
+      "themeNotInWorkspace": "此主题不在当前工作区中。",
+      "noCustomFrame": "此主题没有自定义边框。",
+      "pageNotFound": "未找到该页面。",
+      "pageChanged": "此页面在你审核之后有改动。发布前请重新审核。",
+      "svgTooLarge": "SVG 文件最大为 200 KB。",
+      "tooManyImports": "导入次数过多，请 1 小时后再试。",
+      "tooManyChanges": "改动过于频繁，请稍后再试。"
+    },
+    "communityThemes": {
+      "alreadyPublished": "此主题已发布到社区。",
+      "workspaceAdminsOnly": "只有此工作区的所有者和管理员才能发布其中的主题。",
+      "workspaceUnavailable": "当前部署暂不支持发布工作区主题。",
+      "tooFast": "你发布得太快了，请稍后再试。"
+    },
+    "checks": {
+      "licenceRequired": "请确认 CC0 许可后再发布。",
+      "publishedALot": "你今天发布的内容已经很多，请明天再试。",
+      "unavailable": "当前部署暂不支持更新社区内容。",
+      "itemNotFound": "社区中没有此项内容。",
+      "workspacePublishRefusal": "只有此工作区的所有者和管理员才能发布其中的内容。",
+      "nameRequired": "请为它命名。",
+      "alreadyPublished": "此设计已在社区中。",
+      "themeSettings": "此主题包含社区无法显示的设置。请在编辑器中重新保存。",
+      "pageNothingLeft": "去掉你的个人信息后，已没有可分享的内容。请添加一些他人可复用的区块。",
+      "pageInvalid": "此页面无法作为模板分享。请先在页面编辑器中重新发布。",
+      "pageTooLarge": "此页面过大，无法作为模板分享。请删除部分区块或缩短长文本。",
+      "repeatsDetail": "其中重复了页面其他位置已移除的信息。",
+      "noEmails": "名称、标签和描述中请不要包含电子邮箱地址。",
+      "noLinks": "名称、标签和描述中请不要包含链接。",
+      "noHandles": "名称、标签和描述中请不要包含 @用户名。",
+      "noPhones": "名称、标签和描述中请不要包含电话号码。",
+      "noStreets": "请勿在名称、标签和描述中填写街道地址。",
+      "gateFailed": "只有扫描评级为“优秀”（{min, number} 分及以上）的设计才能发布。{reasons}。",
+      "gateTooLong": "在当前纠错级别下，{sample}无法放入二维码",
+      "gateScore": "使用{sample}时得分为 {score, number}",
+      "gateSampleLink": "链接",
+      "gateSampleWifi": "Wi-Fi 信息",
+      "handleFormat": "请使用 {min, number} 到 {max, number} 个小写字母、数字、“_”或“-”，且以字母或数字开头。",
+      "handleReserved": "该用户名为保留名称。",
+      "handleTaken": "该用户名已被占用。",
+      "displayNameRequired": "请输入显示名称。"
+    },
+    "pageChanges": {
+      "texts": "{count, plural, other {# 段文字}}已替换为示例文字",
+      "kept": "{count, plural, other {# 段文字}}保持你填写的原样",
+      "links": "{count, plural, other {# 个链接}}已替换为 example.com",
+      "emails": "{count, plural, other {# 个电子邮箱地址}}已替换为示例地址",
+      "phones": "{count, plural, other {# 个电话号码}}已替换为示例号码",
+      "emailsAndPhones": "{emails, plural, other {# 个电子邮箱地址}}和{phones, plural, other {# 个电话号码}}已替换为示例内容",
+      "addresses": "{count, plural, other {# 个地址}}已替换为示例地址",
+      "wifi": "Wi-Fi 网络名称和密码已替换为示例内容",
+      "codes": "优惠码已替换为示例优惠码",
+      "gtins": "已移除商品 GTIN：由使用者自行添加",
+      "images": "{count, plural, other {# 张照片}}已移除：由使用者自行添加",
+      "files": "{count, plural, other {# 个文件}}已移除",
+      "blocks": "因需要你自己的文件而未包含：{blocks}",
+      "hidden": "{count, plural, other {# 个隐藏区块}}未包含",
+      "settings": "分享图片、描述和自定义 CSS 未包含"
+    },
+    "qrThemes": {
+      "signIn": "请登录后管理主题。",
+      "failed": "出了点问题，请重试。",
+      "tooMany": "修改过于频繁，请等待一分钟后重试。",
+      "themeLimit": "你已达到免费版 {limit, number} 个已保存主题的上限。升级到 Pro 即可保存不限数量的主题。",
+      "notFound": "未找到该主题。",
+      "defaultAdminsOnly": "只有工作区所有者和管理员可以更改其默认主题。",
+      "openAnotherWorkspace": "请打开另一个工作区，再向其共享主题。",
+      "shareAdminsOnly": "只有工作区所有者和管理员可以在此共享主题。",
+      "sharedThemesPlan": "共享主题包含在 {plan} 套餐中（以工作区所有者的套餐为准）。",
+      "workspaceThemeLimit": "此工作区的套餐包含 {count, number} 个主题。"
+    },
+    "codeBuilder": {
+      "signInAgain": "请重新登录后再创建二维码。",
+      "loadFailed": "无法加载生成器，请重试。",
+      "themesFailed": "已保存的主题未能加载。",
+      "foldersFailed": "文件夹未能加载。",
+      "tagsFailed": "标签未能加载。",
+      "domainsFailed": "自定义域名未能加载，因此二维码将使用默认短链接。"
+    },
+    "search": {
+      "untitledPage": "未命名页面",
+      "landingPage": "落地页",
+      "tooMany": "搜索次数过多，请稍候。",
+      "signInAgain": "请重新登录后再搜索。",
+      "notWorking": "搜索暂时无法使用。"
+    }
+  },
   "app": {
     "settings": {
       "general": {

@@ -5502,6 +5502,98 @@
       "placeholder": "フレーム、テーマ、ページを検索"
     }
   },
+  "communityActions": {
+    "community": {
+      "signIn": "続行するにはサインインしてください。",
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "checkDetails": "内容をご確認ください。",
+      "themeNotInWorkspace": "このテーマはこのワークスペースにありません。",
+      "noCustomFrame": "このテーマにはカスタムフレームがありません。",
+      "pageNotFound": "ページが見つかりません。",
+      "pageChanged": "確認後にこのページが変更されました。公開する前にもう一度確認してください。",
+      "svgTooLarge": "SVGファイルは200 KBまでです。",
+      "tooManyImports": "インポートの回数が多すぎます。1時間後にもう一度お試しください。",
+      "tooManyChanges": "変更の回数が多すぎます。しばらくしてからもう一度お試しください。"
+    },
+    "communityThemes": {
+      "alreadyPublished": "このテーマはすでにコミュニティに公開されています。",
+      "workspaceAdminsOnly": "このワークスペースのテーマを公開できるのは、オーナーと管理者のみです。",
+      "workspaceUnavailable": "ワークスペースのテーマの公開は、このデプロイではまだ利用できません。",
+      "tooFast": "公開のペースが速すぎます。しばらくしてからもう一度お試しください。"
+    },
+    "checks": {
+      "licenceRequired": "公開するにはCC0ライセンスへの同意が必要です。",
+      "publishedALot": "本日の公開数が上限に達しました。明日もう一度お試しください。",
+      "unavailable": "コミュニティの更新は、このデプロイではまだ利用できません。",
+      "itemNotFound": "このアイテムはコミュニティにありません。",
+      "workspacePublishRefusal": "このワークスペースの内容を公開できるのは、オーナーと管理者のみです。",
+      "nameRequired": "名前を付けてください。",
+      "alreadyPublished": "このデザインはすでにコミュニティにあります。",
+      "themeSettings": "このテーマには、コミュニティで表示できない設定が含まれています。エディターでもう一度保存してください。",
+      "pageNothingLeft": "ご自身の情報を取り除くと、共有できる内容が残りません。他の人が再利用できるブロックを追加してください。",
+      "pageInvalid": "このページはテンプレートとして共有できません。先にページエディターでもう一度公開してください。",
+      "pageTooLarge": "このページは大きすぎるため、テンプレートとして共有できません。ブロックを減らすか、長いテキストを短くしてください。",
+      "repeatsDetail": "ページ内の別の場所で取り除かれた情報と同じ内容が含まれています。",
+      "noEmails": "名前、ラベル、説明にメールアドレスを入れないでください。",
+      "noLinks": "名前、ラベル、説明にリンクを入れないでください。",
+      "noHandles": "名前、ラベル、説明に@ハンドルを入れないでください。",
+      "noPhones": "名前、ラベル、説明に電話番号を入れないでください。",
+      "noStreets": "名前、ラベル、説明に番地などの住所を含めないでください。",
+      "gateFailed": "公開できるのは、スキャン評価が「良好」（{min, number} 以上）のデザインのみです。{reasons}。",
+      "gateTooLong": "このエラー訂正レベルでは、{sample}がコードに収まりません",
+      "gateScore": "{sample}の場合のスコアは {score, number} です",
+      "gateSampleLink": "リンク",
+      "gateSampleWifi": "Wi-Fi情報",
+      "handleFormat": "半角の小文字英字、数字、「_」、「-」を {min, number}～{max, number} 文字で入力してください。先頭は英字または数字にしてください。",
+      "handleReserved": "このハンドルは予約されています。",
+      "handleTaken": "このハンドルは使用されています。",
+      "displayNameRequired": "表示名を入力してください。"
+    },
+    "pageChanges": {
+      "texts": "{count, plural, other {テキスト # 件をサンプルテキストに置き換えました}}",
+      "kept": "{count, plural, other {テキスト # 件は入力したままにしました}}",
+      "links": "{count, plural, other {リンク # 件を example.com に置き換えました}}",
+      "emails": "{count, plural, other {メールアドレス # 件をサンプルに置き換えました}}",
+      "phones": "{count, plural, other {電話番号 # 件をサンプルに置き換えました}}",
+      "emailsAndPhones": "{emails, plural, other {メールアドレス # 件}}と{phones, plural, other {電話番号 # 件}}をサンプルに置き換えました",
+      "addresses": "{count, plural, other {住所 # 件をサンプルの住所に置き換えました}}",
+      "wifi": "Wi-Fiのネットワーク名とパスワードをサンプルに置き換えました",
+      "codes": "クーポンコードをサンプルに置き換えました",
+      "gtins": "商品のGTINを削除しました（使う人が自分のGTINを追加します）",
+      "images": "{count, plural, other {写真 # 枚を削除しました（使う人が自分の写真を追加します）}}",
+      "files": "{count, plural, other {ファイル # 件を削除しました}}",
+      "blocks": "ご自身のファイルが必要なため除外しました：{blocks}",
+      "hidden": "{count, plural, other {非表示のブロック # 件を除外しました}}",
+      "settings": "共有画像、説明、カスタムCSSは除外しました"
+    },
+    "qrThemes": {
+      "signIn": "テーマを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "tooMany": "変更が多すぎます。1分ほど待ってから、もう一度お試しください。",
+      "themeLimit": "フリープランで保存できるテーマの上限（{limit, number} 件）に達しました。Proにアップグレードすると、テーマを無制限に保存できます。",
+      "notFound": "テーマが見つかりません。",
+      "defaultAdminsOnly": "デフォルトテーマを変更できるのは、ワークスペースのオーナーと管理者のみです。",
+      "openAnotherWorkspace": "テーマを共有するには、別のワークスペースを開いてください。",
+      "shareAdminsOnly": "ここでテーマを共有できるのは、ワークスペースのオーナーと管理者のみです。",
+      "sharedThemesPlan": "共有テーマは{plan}プランに含まれています（ワークスペースオーナーのプランに基づきます）。",
+      "workspaceThemeLimit": "このワークスペースのプランには{count, number}件のテーマが含まれています。"
+    },
+    "codeBuilder": {
+      "signInAgain": "コードを作成するには、もう一度サインインしてください。",
+      "loadFailed": "ビルダーを読み込めませんでした。もう一度お試しください。",
+      "themesFailed": "保存したテーマを読み込めませんでした。",
+      "foldersFailed": "フォルダを読み込めませんでした。",
+      "tagsFailed": "タグを読み込めませんでした。",
+      "domainsFailed": "カスタムドメインを読み込めなかったため、コードにはデフォルトの短縮リンクを使用します。"
+    },
+    "search": {
+      "untitledPage": "無題のページ",
+      "landingPage": "ランディングページ",
+      "tooMany": "検索回数が多すぎます。しばらくお待ちください。",
+      "signInAgain": "検索するには、もう一度サインインしてください。",
+      "notWorking": "現在、検索を利用できません。"
+    }
+  },
   "app": {
     "settings": {
       "general": {
