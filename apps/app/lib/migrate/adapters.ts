@@ -15,6 +15,7 @@ import type {
 // The module, not the package index, so tests don't load the database client.
 import { isIntegrationApiError } from "@repo/integrations/src/core/http-client";
 import { uniqodeWebsiteDestination } from "@repo/integrations/src/integrations/uniqode/client";
+import { isSameLink } from "./jobs";
 import { absoluteShortLink, splitShortLink } from "./normalize";
 import { API_PROVIDERS, type ApiProviderId, retiredMessage } from "./providers";
 import type {
@@ -125,17 +126,43 @@ function isoDate(value: UniqodeQrCode["created"]): string | null {
   return Number.isNaN(date.getTime()) ? null : date.toISOString();
 }
 
+/**
+ * Fields that may hold the address a printed code opens. Uniqode's reference
+ * documents `url` ("URL of the QR Code"; its CSV export calls the column "QR
+ * Code URL"); the others are read only when a live answer lacks it.
+ */
+const UNIQODE_LINK_FIELDS = ["url", "short_url", "qr_url", "qr_code_url"];
+
+/** The printed code's address (scheme optional); never the destination. */
+function uniqodePrintedLink(
+  code: UniqodeQrCode,
+  destinationUrl: string,
+): string | null {
+  const record = code as unknown as Record<string, unknown>;
+  for (const field of UNIQODE_LINK_FIELDS) {
+    const value = record[field];
+    const link = typeof value === "string" ? absoluteShortLink(value) : null;
+    const { domain, backHalf } = splitShortLink(link);
+    // A host with a dot and a path: "qrcodes.pro/AbC123", not "AbC123".
+    if (
+      link &&
+      domain?.includes(".") &&
+      backHalf &&
+      !isSameLink(link, destinationUrl)
+    ) {
+      return link;
+    }
+  }
+  return null;
+}
+
 /** A dynamic website code as a link; null for every other kind of code. */
 export function fromUniqodeCode(code: UniqodeQrCode): SourceLink | null {
   const destinationUrl = uniqodeWebsiteDestination(code);
   if (!destinationUrl) return null;
-  const encoded = typeof code.url === "string" ? code.url.trim() : "";
-  // `url` is the address the printed code opens. If it ever reads as the
-  // destination itself, there is no old short link to keep.
-  const shortLink =
-    /^https?:\/\//i.test(encoded) && encoded !== destinationUrl
-      ? encoded
-      : null;
+  // Without a printed link (none given, or it reads as the destination) the
+  // code still imports, but there is no old link to re-point.
+  const shortLink = uniqodePrintedLink(code, destinationUrl);
   const parts = splitShortLink(shortLink);
   return {
     id: String(code.id),
@@ -224,6 +251,8 @@ export type ProviderErrorKind =
   | "auth"
   | "rate"
   | "not-found"
+  /** The provider wouldn't change this one link (others went through) */
+  | "refused"
   /** QRdx can't use this code or answer (its message says why) */
   | "unsupported"
   | "other";
@@ -253,10 +282,35 @@ const PLAN_MESSAGES: Record<ApiProviderId, string> = {
     "Uniqode refused the change for your plan or role: its API comes with the Core plan and above, for Owners and Admins. The remaining codes were left unchanged.",
 };
 
+/** A used-up monthly allowance, where it differs from PLAN_MESSAGES. */
+const QUOTA_MESSAGES: Partial<Record<ApiProviderId, string>> = {
+  "uniqode-api":
+    "Your Uniqode plan's API requests for this month are used up (250,000 a month on Core, 500,000 on Plus, 2 million on Business+). QRdx stopped there and changed nothing more: continue when the allowance renews, or after upgrading in Uniqode.",
+};
+
+/** A 429 asking for a longer wait than this is a monthly allowance, not a rate limit. */
+const QUOTA_WAIT_SECONDS = 300;
+
+/** Seconds a 429 asks to wait: Retry-After, or DRF's "Expected available in N seconds". */
+function waitSeconds(error: unknown, body: string): number {
+  const header = isIntegrationApiError(error)
+    ? (error.retryAfterSeconds ?? 0)
+    : 0;
+  const match = /available in (\d+(?:\.\d+)?) seconds?/i.exec(body);
+  return Math.max(header, match ? Number(match[1]) : 0);
+}
+
 /** A provider failure in plain words, without tokens or URLs. */
 export function explainProviderError(
   provider: ApiProviderId,
   error: unknown,
+  options: {
+    /**
+     * Earlier changes in this run went through, so a 403 is about this one
+     * link (one the account can't change), not the plan or role.
+     */
+    changedBefore?: boolean;
+  } = {},
 ): ExplainedError {
   const name = API_PROVIDERS[provider].name;
   const status = statusOf(error);
@@ -279,14 +333,29 @@ export function explainProviderError(
   ) {
     return { kind: "plan", message: PLAN_MESSAGES[provider], stop: true };
   }
-  if (status === 429 && /MONTHLY_LIMIT|LIMIT_EXCEEDED|quota/i.test(body)) {
-    return { kind: "quota", message: PLAN_MESSAGES[provider], stop: true };
+  if (
+    status === 429 &&
+    (/MONTHLY_LIMIT|LIMIT_EXCEEDED|quota/i.test(body) ||
+      waitSeconds(error, body) > QUOTA_WAIT_SECONDS)
+  ) {
+    return {
+      kind: "quota",
+      message: QUOTA_MESSAGES[provider] ?? PLAN_MESSAGES[provider],
+      stop: true,
+    };
   }
   if (status === 429 || code === "rate_limited") {
     return {
       kind: "rate",
       message: `${name} is limiting requests. Wait a minute, then continue.`,
       stop: true,
+    };
+  }
+  if ((status === 403 || code === "forbidden") && options.changedBefore) {
+    return {
+      kind: "refused",
+      message: `${name} didn't allow changing this link, so QRdx left it unchanged.`,
+      stop: false,
     };
   }
   if (status === 403 || code === "forbidden") {
