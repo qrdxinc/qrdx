@@ -8661,6 +8661,128 @@
       "enter": "Saisissez ce code dans QRdx pour faire de cette adresse l’e-mail de votre compte :",
       "ignore": "Si vous n’êtes pas à l’origine de cette demande, ignorez cet e-mail. Rien ne change sans le code."
     },
+    "security": {
+      "device": "Appareil",
+      "location": "Localisation approximative",
+      "ip": "Adresse IP",
+      "time": "Heure",
+      "by": "Par",
+      "support": "Support QRdx",
+      "review": "Vérifier la sécurité",
+      "nothingElse": "Si c’était vous, vous n’avez rien d’autre à faire."
+    },
+    "confirmationCode": {
+      "subject": "Votre code de confirmation QRdx",
+      "preview": "Saisissez ce code pour confirmer votre identité. Il expire dans {minutes, plural, one {# minute} other {# minutes}}.",
+      "reason": "Vous recevez cet e-mail parce que quelqu’un a demandé à modifier la sécurité du compte QRdx associé à cette adresse.",
+      "heading": "Confirmez votre identité",
+      "enter": "Saisissez ce code dans QRdx pour confirmer votre identité avant une modification de la sécurité de votre compte :",
+      "notYou": "Si vous n’êtes pas à l’origine de cette demande, ne saisissez pas le code : quelqu’un est peut-être connecté à votre compte. Vérifiez votre sécurité et contactez le support à <support>{email}</support> depuis cette adresse."
+    },
+    "newSignIn": {
+      "subject": "Nouvelle connexion à votre compte QRdx",
+      "preview": "{device} s’est connecté à votre compte QRdx{hasLocation, select, yes { près de {location}} other {}}.",
+      "newDevice": "Un nouvel appareil",
+      "reason": "Vous recevez cet e-mail parce qu’il s’agit de l’adresse d’un compte QRdx et qu’un navigateur ou un appareil s’y est connecté pour la première fois.",
+      "body": "Un navigateur ou un appareil qui ne s’était jamais connecté à votre compte QRdx vient de le faire.",
+      "signedInWith": "Connexion via",
+      "nothingToDo": "Si c’était vous, vous n’avez rien à faire.",
+      "notYou": "Si ce n’était pas vous :",
+      "signOut": "Connectez-vous, allez dans Paramètres → Profil et sécurité, puis, sous Sessions, cliquez sur Déconnecter tous les autres.",
+      "turnOn": "Activez la vérification en deux étapes sur la même page, afin que la connexion nécessite aussi votre clé d’accès ou votre application d’authentification.",
+      "contact": "Contactez le support à <support>{email}</support> depuis cette adresse, et nous vous aiderons à sécuriser votre compte.",
+      "methods": {
+        "emailOtp": "Code par e-mail",
+        "passkey": "Clé d’accès",
+        "sso": "Authentification unique"
+      },
+      "secondSteps": {
+        "totp": "un code d’authentification",
+        "backupCode": "un code de secours",
+        "passkey": "une clé d’accès"
+      },
+      "withSecondStep": "{method}, puis {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Vous recevez cet e-mail car il s’agit de l’adresse d’un compte QRdx, et nous vous informons de chaque modification de sa méthode de connexion.",
+      "notYou": "Si ce n’était pas vous, connectez-vous et supprimez toute clé d’accès que vous ne reconnaissez pas, puis contactez le support à l’adresse <support>{email}</support> depuis cette adresse e-mail.",
+      "added": {
+        "subject": "Une clé d’accès a été ajoutée à votre compte QRdx",
+        "preview": "La clé d’accès « {name} » peut désormais se connecter à votre compte QRdx.",
+        "body": "La clé d’accès <strong>{name}</strong> peut désormais se connecter à votre compte QRdx et sert de seconde étape lorsque la validation en deux étapes est activée."
+      },
+      "removed": {
+        "subject": "Une clé d’accès a été supprimée de votre compte QRdx",
+        "preview": "La clé d’accès « {name} » ne peut plus se connecter à votre compte QRdx.",
+        "body": "La clé d’accès <strong>{name}</strong> ne peut plus se connecter à votre compte QRdx."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Vous recevez cet e-mail car il s’agit de l’adresse d’un compte QRdx, dont la sécurité de connexion a changé.",
+      "notYou": "Si ce n’était pas vous, contactez immédiatement le support à l’adresse <support>{email}</support> depuis cette adresse e-mail, et nous vous aiderons à sécuriser votre compte.",
+      "on": {
+        "subject": "La validation en deux étapes est activée sur votre compte QRdx",
+        "heading": "Validation en deux étapes activée",
+        "body": "Se connecter à QRdx demande désormais une seconde étape : votre clé d’accès ou un code de votre application d’authentification. Un code de secours fonctionne si vous ne pouvez utiliser ni l’une ni l’autre."
+      },
+      "off": {
+        "subject": "La validation en deux étapes a été désactivée sur votre compte QRdx",
+        "heading": "Validation en deux étapes désactivée",
+        "body": "Se connecter à QRdx ne demande plus de seconde étape. Vos codes de secours ne fonctionnent plus."
+      },
+      "backupCodes": {
+        "subject": "Nouveaux codes de secours pour votre compte QRdx",
+        "heading": "Vous avez de nouveaux codes de secours",
+        "body": "De nouveaux codes de secours ont été créés pour votre compte QRdx. Les anciens ne fonctionnent plus."
+      },
+      "appAdded": {
+        "subject": "Une application d’authentification a été ajoutée à votre compte QRdx",
+        "heading": "Application d’authentification ajoutée",
+        "body": "Les codes de l’application d’authentification que vous venez de configurer servent désormais de seconde étape lorsque vous vous connectez à QRdx."
+      },
+      "appRemoved": {
+        "subject": "L’application d’authentification a été supprimée de votre compte QRdx",
+        "heading": "Application d’authentification supprimée",
+        "body": "Les codes de votre application d’authentification ne permettent plus de vous connecter à QRdx. La validation en deux étapes reste activée avec vos autres méthodes."
+      },
+      "supportOff": {
+        "subject": "Le support QRdx a désactivé la validation en deux étapes",
+        "heading": "Validation en deux étapes désactivée",
+        "body": "Le support QRdx a désactivé la validation en deux étapes de votre compte et l’a déconnecté de tous les appareils. Se connecter ne demande plus de seconde étape. Vous pouvez la réactiver dans Paramètres → Profil et sécurité."
+      },
+      "supportResetScheduled": {
+        "subject": "Le support QRdx va désactiver la vérification en deux étapes",
+        "heading": "Le support va désactiver la vérification en deux étapes",
+        "body": "Quelqu’un a demandé au support QRdx de désactiver la vérification en deux étapes de votre compte, en indiquant avoir perdu tous les moyens d’effectuer la seconde étape.",
+        "when": "Le support la désactivera {hasDate, select, yes {le {date} (UTC)} other {dans 7 jours}} et déconnectera votre compte de tous les appareils. D’ici là, rien ne change.",
+        "howToStop": "Si vous êtes à l’origine de cette demande, il n’y a rien à faire. Sinon, connectez-vous à QRdx avec votre application d’authentification ou un code de secours : cela l’annule. Vous pouvez aussi l’annuler dans Paramètres → Profil et sécurité, ou répondre à cet e-mail."
+      },
+      "supportResetCancelled": {
+        "subject": "La vérification en deux étapes reste activée sur votre compte QRdx",
+        "heading": "La vérification en deux étapes reste activée",
+        "body": "La demande du support de désactiver la vérification en deux étapes de votre compte a été annulée. Rien n’a changé.",
+        "byPerson": "Vous avez annulé la demande du support de désactiver la vérification en deux étapes de votre compte QRdx.",
+        "bySignIn": "Vous vous êtes connecté avec votre application d’authentification ou un code de secours : la demande du support de désactiver la vérification en deux étapes de votre compte QRdx a donc été annulée.",
+        "bySupport": "Le support QRdx a annulé la demande de désactivation de la vérification en deux étapes de votre compte.",
+        "staysOn": "La vérification en deux étapes reste activée, avec vos codes de secours et vos méthodes inchangés."
+      },
+      "backupCodeUsed": {
+        "subject": "Un code de secours a été utilisé sur votre compte QRdx",
+        "heading": "Un code de secours a été utilisé",
+        "body": "L’un de vos codes de secours vient d’être utilisé pour vous connecter à votre compte QRdx. Chaque code ne fonctionne qu’une fois : celui-ci ne fonctionne donc plus.",
+        "toConfirm": "L’un de vos codes de secours vient d’être utilisé pour confirmer votre identité avant une modification de sécurité sur votre compte QRdx. Chaque code ne fonctionne qu’une fois : celui-ci ne fonctionne donc plus.",
+        "left": "{count, plural, =0 {Il s’agissait de votre dernier code de secours.} one {Il vous reste # code de secours.} other {Il vous reste # codes de secours.}}",
+        "makeNew": "Créez-en de nouveaux dans Paramètres → Profil et sécurité, pour garder un moyen d’accès lorsque vous ne pouvez pas utiliser votre clé d’accès ou votre application d’authentification."
+      },
+      "signedOutElsewhere": "Tous les autres appareils connectés à votre compte ont été déconnectés ; chacun devra donc se reconnecter avec la seconde étape."
+    },
+    "payoutEmailNotice": {
+      "subject": "Vos paiements d’affiliation QRdx sont désormais versés à une nouvelle adresse PayPal",
+      "preview": "Les paiements d’affiliation de QRdx seront envoyés à {paypalEmail}.",
+      "reason": "Vous recevez cet e-mail car il s’agit de l’adresse d’un compte QRdx inscrit au programme d’affiliation, et nous vous informons de chaque modification de la destination de ses paiements.",
+      "body": "{replaced, select, yes {L’adresse PayPal de vos paiements d’affiliation a été modifiée.} other {Une adresse PayPal a été ajoutée pour vos paiements d’affiliation.}} Désormais, nous enverrons vos paiements à <strong>{paypalEmail}</strong>.",
+      "notYou": "Si ce n’était pas vous, connectez-vous, rétablissez l’ancienne adresse dans Paramètres → Programme d’affiliation, et contactez le support à <support>{email}</support> depuis cette adresse avant le prochain paiement."
+    },
     "alerts": {
       "viewAnalytics": "Voir les statistiques de scan",
       "milestoneReason": "Vous recevez ce message parce que les alertes de seuils de scans sont activées pour {workspace}."

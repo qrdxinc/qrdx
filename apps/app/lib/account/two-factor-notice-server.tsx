@@ -11,6 +11,7 @@ import {
   TwoFactorNoticeEmail,
   twoFactorNoticeSubject,
 } from "@/lib/email/templates/two-factor-notice";
+import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import {
   currentRequestDetails,
   requestDetails,
@@ -44,15 +45,20 @@ export async function sendTwoFactorNotice(
   { extra, headers }: { extra?: TwoFactorNoticeExtra; headers?: Headers } = {},
 ): Promise<TwoFactorNoticeOutcome> {
   try {
+    // The account's language, never the request's: it may not be the owner's.
+    const intl = await emailIntlForAddress(email, { fromRequest: false });
+    const now = new Date();
     const request = headers
-      ? requestDetails(headers)
-      : await currentRequestDetails();
+      ? requestDetails(headers, now, intl.locale)
+      : await currentRequestDetails(now, intl.locale);
     // Support's change: their device and address aren't the account's business.
     const bySupport =
       kind === "support-off" ||
       kind === "support-reset-scheduled" ||
       (kind === "support-reset-cancelled" && extra?.cancelledBy === "support");
-    const details = bySupport ? { ...request, actor: "QRdx support" } : request;
+    const details = bySupport
+      ? { ...request, actor: intl.t("security.support") }
+      : request;
     const outcome = await deliverTwoFactorNotice(
       { kind, email, extra },
       {
@@ -64,11 +70,12 @@ export async function sendTwoFactorNotice(
             to: email,
             // Support's notices ask for a reply if it wasn't them.
             ...(SUPPORT_KINDS.has(kind) ? { replyTo: SUPPORT_EMAIL } : {}),
-            subject: twoFactorNoticeSubject(kind),
+            subject: twoFactorNoticeSubject(kind, intl),
             react: (
               <TwoFactorNoticeEmail
                 details={details}
                 extra={extra}
+                intl={intl}
                 kind={kind}
               />
             ),

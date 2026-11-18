@@ -8661,6 +8661,128 @@
       "enter": "Gib diesen Code in QRdx ein, um diese Adresse als E-Mail für dein Konto zu übernehmen:",
       "ignore": "Wenn du das nicht angefordert hast, ignoriere diese E-Mail. Ohne den Code ändert sich nichts."
     },
+    "security": {
+      "device": "Gerät",
+      "location": "Ungefährer Standort",
+      "ip": "IP-Adresse",
+      "time": "Zeit",
+      "by": "Von",
+      "support": "QRdx-Support",
+      "review": "Sicherheit prüfen",
+      "nothingElse": "Wenn du das warst, musst du nichts weiter tun."
+    },
+    "confirmationCode": {
+      "subject": "Dein QRdx-Bestätigungscode",
+      "preview": "Gib diesen Code ein, um zu bestätigen, dass du es bist. Er läuft in {minutes, plural, one {# Minute} other {# Minuten}} ab.",
+      "reason": "Du erhältst diese E-Mail, weil jemand die Sicherheitseinstellungen des QRdx-Kontos mit dieser Adresse ändern wollte.",
+      "heading": "Bestätige, dass du es bist",
+      "enter": "Gib diesen Code in QRdx ein, um zu bestätigen, dass du es bist, bevor die Sicherheit deines Kontos geändert wird:",
+      "notYou": "Wenn du das nicht angefordert hast, gib den Code nicht ein: Möglicherweise ist jemand in deinem Konto angemeldet. Prüfe deine Sicherheit und schreib dem Support unter <support>{email}</support> von dieser Adresse aus."
+    },
+    "newSignIn": {
+      "subject": "Neue Anmeldung in deinem QRdx-Konto",
+      "preview": "{device} hat sich in deinem QRdx-Konto angemeldet{hasLocation, select, yes { in der Nähe von {location}} other {}}.",
+      "newDevice": "Ein neues Gerät",
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist und sich ein Browser oder Gerät zum ersten Mal darin angemeldet hat.",
+      "body": "Ein Browser oder Gerät, das sich noch nie in deinem QRdx-Konto angemeldet hatte, hat sich gerade angemeldet.",
+      "signedInWith": "Angemeldet mit",
+      "nothingToDo": "Wenn du das warst, musst du nichts tun.",
+      "notYou": "Falls du das nicht warst:",
+      "signOut": "Melde dich an, gehe zu Einstellungen → Profil & Sicherheit und klicke unter Sitzungen auf Überall sonst abmelden.",
+      "turnOn": "Aktiviere auf derselben Seite die Zwei-Faktor-Authentifizierung, damit du dich zusätzlich mit deinem Passkey oder deiner Authenticator-App anmelden musst.",
+      "contact": "Schreib dem Support unter <support>{email}</support> von dieser Adresse aus, dann helfen wir dir, dein Konto zu schützen.",
+      "methods": {
+        "emailOtp": "E-Mail-Code",
+        "passkey": "Passkey",
+        "sso": "Single Sign-on"
+      },
+      "secondSteps": {
+        "totp": "ein Authenticator-Code",
+        "backupCode": "ein Backup-Code",
+        "passkey": "einen Passkey"
+      },
+      "withSecondStep": "{method}, dann {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist und wir dich über jede Änderung der Anmeldung informieren.",
+      "notYou": "Falls du das nicht warst, melde dich an und entferne alle Passkeys, die du nicht kennst. Schreib dann von dieser Adresse aus an den Support unter <support>{email}</support>.",
+      "added": {
+        "subject": "Ein Passkey wurde zu deinem QRdx-Konto hinzugefügt",
+        "preview": "Mit dem Passkey „{name}“ kann man sich jetzt bei deinem QRdx-Konto anmelden.",
+        "body": "Mit dem Passkey <strong>{name}</strong> kann man sich jetzt bei deinem QRdx-Konto anmelden. Er dient auch als zweiter Schritt, wenn die Bestätigung in zwei Schritten aktiv ist."
+      },
+      "removed": {
+        "subject": "Ein Passkey wurde von deinem QRdx-Konto entfernt",
+        "preview": "Mit dem Passkey „{name}“ kann man sich nicht mehr bei deinem QRdx-Konto anmelden.",
+        "body": "Mit dem Passkey <strong>{name}</strong> kann man sich nicht mehr bei deinem QRdx-Konto anmelden."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos ist und sich die Anmeldesicherheit geändert hat.",
+      "notYou": "Falls du das nicht warst, schreib sofort von dieser Adresse aus an den Support unter <support>{email}</support>. Wir helfen dir, dein Konto zu sichern.",
+      "on": {
+        "subject": "Die Bestätigung in zwei Schritten ist für dein QRdx-Konto aktiv",
+        "heading": "Bestätigung in zwei Schritten ist aktiv",
+        "body": "Bei der Anmeldung bei QRdx wird jetzt ein zweiter Schritt abgefragt: dein Passkey oder ein Code aus deiner Authenticator-App. Ein Backup-Code funktioniert, wenn du keins von beidem nutzen kannst."
+      },
+      "off": {
+        "subject": "Die Bestätigung in zwei Schritten wurde für dein QRdx-Konto deaktiviert",
+        "heading": "Bestätigung in zwei Schritten ist aus",
+        "body": "Bei der Anmeldung bei QRdx wird kein zweiter Schritt mehr abgefragt. Deine Backup-Codes funktionieren nicht mehr."
+      },
+      "backupCodes": {
+        "subject": "Neue Backup-Codes für dein QRdx-Konto",
+        "heading": "Du hast neue Backup-Codes",
+        "body": "Für dein QRdx-Konto wurden neue Backup-Codes erstellt. Die alten funktionieren nicht mehr."
+      },
+      "appAdded": {
+        "subject": "Eine Authenticator-App wurde zu deinem QRdx-Konto hinzugefügt",
+        "heading": "Authenticator-App hinzugefügt",
+        "body": "Codes aus der Authenticator-App, die du gerade eingerichtet hast, gelten jetzt als zweiter Schritt bei der Anmeldung bei QRdx."
+      },
+      "appRemoved": {
+        "subject": "Die Authenticator-App wurde von deinem QRdx-Konto entfernt",
+        "heading": "Authenticator-App entfernt",
+        "body": "Codes aus deiner Authenticator-App funktionieren bei der Anmeldung bei QRdx nicht mehr. Die Bestätigung in zwei Schritten bleibt mit deinen anderen Methoden aktiv."
+      },
+      "supportOff": {
+        "subject": "Der QRdx-Support hat die Bestätigung in zwei Schritten deaktiviert",
+        "heading": "Bestätigung in zwei Schritten ist aus",
+        "body": "Der QRdx-Support hat die Bestätigung in zwei Schritten für dein Konto deaktiviert und es auf allen Geräten abgemeldet. Bei der Anmeldung wird kein zweiter Schritt mehr abgefragt. Du kannst sie unter Einstellungen → Profil & Sicherheit wieder aktivieren."
+      },
+      "supportResetScheduled": {
+        "subject": "Der QRdx-Support schaltet die Zwei-Faktor-Authentifizierung ab",
+        "heading": "Support schaltet die Zwei-Faktor-Authentifizierung ab",
+        "body": "Jemand hat den QRdx-Support gebeten, die Zwei-Faktor-Authentifizierung für dein Konto abzuschalten, und angegeben, alle Möglichkeiten für den zweiten Schritt verloren zu haben.",
+        "when": "Der Support schaltet sie {hasDate, select, yes {am {date} (UTC)} other {in 7 Tagen}} ab und meldet dein Konto auf allen Geräten ab. Bis dahin ändert sich nichts.",
+        "howToStop": "Wenn du das veranlasst hast, musst du nichts tun. Wenn nicht, melde dich mit deiner Authenticator-App oder einem Backup-Code bei QRdx an: Damit wird die Anfrage abgebrochen. Du kannst sie auch unter Einstellungen → Profil & Sicherheit abbrechen oder auf diese E-Mail antworten."
+      },
+      "supportResetCancelled": {
+        "subject": "Die Zwei-Faktor-Authentifizierung bleibt für dein QRdx-Konto aktiv",
+        "heading": "Zwei-Faktor-Authentifizierung bleibt aktiv",
+        "body": "Die Anfrage des Supports, die Zwei-Faktor-Authentifizierung für dein Konto abzuschalten, wurde abgebrochen. Es hat sich nichts geändert.",
+        "byPerson": "Du hast die Anfrage des Supports, die Zwei-Faktor-Authentifizierung für dein QRdx-Konto abzuschalten, abgebrochen.",
+        "bySignIn": "Du hast dich mit deiner Authenticator-App oder einem Backup-Code angemeldet, deshalb wurde die Anfrage des Supports, die Zwei-Faktor-Authentifizierung für dein QRdx-Konto abzuschalten, abgebrochen.",
+        "bySupport": "Der QRdx-Support hat die Anfrage, die Zwei-Faktor-Authentifizierung für dein Konto abzuschalten, abgebrochen.",
+        "staysOn": "Die Zwei-Faktor-Authentifizierung bleibt aktiv, deine Backup-Codes und Methoden sind unverändert."
+      },
+      "backupCodeUsed": {
+        "subject": "Ein Backup-Code wurde für dein QRdx-Konto verwendet",
+        "heading": "Ein Backup-Code wurde verwendet",
+        "body": "Einer deiner Backup-Codes wurde gerade zur Anmeldung bei deinem QRdx-Konto verwendet. Jeder Code funktioniert nur einmal, dieser ist also nicht mehr gültig.",
+        "toConfirm": "Einer deiner Backup-Codes wurde gerade verwendet, um vor einer Sicherheitsänderung an deinem QRdx-Konto zu bestätigen, dass du es bist. Jeder Code funktioniert nur einmal, dieser ist also nicht mehr gültig.",
+        "left": "{count, plural, =0 {Das war dein letzter Backup-Code.} one {Du hast noch # Backup-Code.} other {Du hast noch # Backup-Codes.}}",
+        "makeNew": "Erstelle neue unter Einstellungen → Profil & Sicherheit, damit du weiterhin Zugang hast, wenn du deinen Passkey oder deine Authenticator-App nicht nutzen kannst."
+      },
+      "signedOutElsewhere": "Alle anderen Geräte, die bei deinem Konto angemeldet waren, wurden abgemeldet und melden sich jetzt wieder mit dem zweiten Schritt an."
+    },
+    "payoutEmailNotice": {
+      "subject": "Deine QRdx-Affiliate-Auszahlungen gehen jetzt an eine neue PayPal-Adresse",
+      "preview": "Affiliate-Auszahlungen von QRdx werden an {paypalEmail} gesendet.",
+      "reason": "Du erhältst diese E-Mail, weil dies die Adresse eines QRdx-Kontos im Affiliate-Programm ist und wir dich über jede Änderung des Ziels seiner Auszahlungen informieren.",
+      "body": "{replaced, select, yes {Die PayPal-Adresse für deine Affiliate-Auszahlungen wurde geändert.} other {Eine PayPal-Adresse für deine Affiliate-Auszahlungen wurde hinzugefügt.}} Ab sofort senden wir deine Auszahlungen an <strong>{paypalEmail}</strong>.",
+      "notYou": "Wenn du das nicht warst, melde dich an, ändere die Adresse unter Einstellungen → Partnerprogramm zurück und wende dich vor der nächsten Auszahlung von dieser Adresse aus an den Support unter <support>{email}</support>."
+    },
     "alerts": {
       "viewAnalytics": "Scan-Analysen ansehen",
       "milestoneReason": "Du erhältst das, weil Benachrichtigungen zu Scan-Meilensteinen für {workspace} aktiviert sind."

@@ -8661,6 +8661,128 @@
       "enter": "Masukkan kode ini di QRdx untuk menjadikannya email akun Anda:",
       "ignore": "Jika Anda tidak memintanya, abaikan email ini. Tidak ada yang berubah tanpa kode."
     },
+    "security": {
+      "device": "Perangkat",
+      "location": "Perkiraan lokasi",
+      "ip": "Alamat IP",
+      "time": "Waktu",
+      "by": "Oleh",
+      "support": "Dukungan QRdx",
+      "review": "Tinjau keamanan",
+      "nothingElse": "Jika ini memang Anda, tidak ada yang perlu dilakukan lagi."
+    },
+    "confirmationCode": {
+      "subject": "Kode konfirmasi QRdx Anda",
+      "preview": "Masukkan kode ini untuk memastikan ini Anda. Kode berlaku selama {minutes, plural, other {# menit}}.",
+      "reason": "Anda menerima email ini karena seseorang meminta perubahan keamanan pada akun QRdx dengan alamat ini.",
+      "heading": "Konfirmasi bahwa ini Anda",
+      "enter": "Masukkan kode ini di QRdx untuk memastikan ini Anda sebelum keamanan akun Anda diubah:",
+      "notYou": "Jika Anda tidak memintanya, jangan masukkan kode ini: mungkin ada orang lain yang masuk ke akun Anda. Tinjau keamanan Anda dan hubungi dukungan di <support>{email}</support> dari alamat ini."
+    },
+    "newSignIn": {
+      "subject": "Login baru ke akun QRdx Anda",
+      "preview": "{device} masuk ke akun QRdx Anda{hasLocation, select, yes { di dekat {location}} other {}}.",
+      "newDevice": "Perangkat baru",
+      "reason": "Anda menerima email ini karena ini adalah alamat sebuah akun QRdx, dan ada browser atau perangkat yang masuk ke akun tersebut untuk pertama kalinya.",
+      "body": "Baru saja ada browser atau perangkat yang belum pernah masuk ke akun QRdx Anda sebelumnya.",
+      "signedInWith": "Masuk dengan",
+      "nothingToDo": "Jika ini memang Anda, tidak ada yang perlu dilakukan.",
+      "notYou": "Jika ini bukan Anda:",
+      "signOut": "Masuk, buka Pengaturan → Profil & keamanan, lalu di bagian Sesi klik Keluar di semua perangkat lain.",
+      "turnOn": "Aktifkan verifikasi dua langkah di halaman yang sama, sehingga untuk masuk juga diperlukan passkey atau aplikasi autentikator Anda.",
+      "contact": "Hubungi dukungan di <support>{email}</support> dari alamat ini, dan kami akan membantu mengamankan akun Anda.",
+      "methods": {
+        "emailOtp": "Kode email",
+        "passkey": "Passkey",
+        "sso": "Single sign-on"
+      },
+      "secondSteps": {
+        "totp": "kode autentikator",
+        "backupCode": "kode cadangan",
+        "passkey": "sebuah passkey"
+      },
+      "withSecondStep": "{method}, lalu {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Anda menerima email ini karena ini adalah alamat akun QRdx, dan kami memberi tahu Anda tentang setiap perubahan pada cara akun ini masuk.",
+      "notYou": "Jika ini bukan Anda, masuklah dan hapus passkey yang tidak Anda kenali, lalu hubungi dukungan di <support>{email}</support> dari alamat ini.",
+      "added": {
+        "subject": "Sebuah passkey ditambahkan ke akun QRdx Anda",
+        "preview": "Passkey \"{name}\" kini dapat digunakan untuk masuk ke akun QRdx Anda.",
+        "body": "Passkey <strong>{name}</strong> kini dapat digunakan untuk masuk ke akun QRdx Anda, dan berfungsi sebagai langkah kedua saat verifikasi dua langkah aktif."
+      },
+      "removed": {
+        "subject": "Sebuah passkey dihapus dari akun QRdx Anda",
+        "preview": "Passkey \"{name}\" tidak lagi dapat digunakan untuk masuk ke akun QRdx Anda.",
+        "body": "Passkey <strong>{name}</strong> tidak lagi dapat digunakan untuk masuk ke akun QRdx Anda."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Anda menerima email ini karena ini adalah alamat akun QRdx, dan keamanan proses masuknya berubah.",
+      "notYou": "Jika ini bukan Anda, segera hubungi dukungan di <support>{email}</support> dari alamat ini, dan kami akan membantu mengamankan akun Anda.",
+      "on": {
+        "subject": "Verifikasi dua langkah aktif di akun QRdx Anda",
+        "heading": "Verifikasi dua langkah aktif",
+        "body": "Masuk ke QRdx kini meminta langkah kedua: passkey Anda atau kode dari aplikasi autentikator Anda. Kode cadangan dapat digunakan jika Anda tidak bisa memakai keduanya."
+      },
+      "off": {
+        "subject": "Verifikasi dua langkah dinonaktifkan di akun QRdx Anda",
+        "heading": "Verifikasi dua langkah nonaktif",
+        "body": "Masuk ke QRdx tidak lagi meminta langkah kedua. Kode cadangan Anda tidak lagi berfungsi."
+      },
+      "backupCodes": {
+        "subject": "Kode cadangan baru untuk akun QRdx Anda",
+        "heading": "Anda punya kode cadangan baru",
+        "body": "Kode cadangan baru telah dibuat untuk akun QRdx Anda. Kode yang lama tidak lagi berfungsi."
+      },
+      "appAdded": {
+        "subject": "Aplikasi autentikator ditambahkan ke akun QRdx Anda",
+        "heading": "Aplikasi autentikator ditambahkan",
+        "body": "Kode dari aplikasi autentikator yang baru saja Anda siapkan kini berfungsi sebagai langkah kedua saat Anda masuk ke QRdx."
+      },
+      "appRemoved": {
+        "subject": "Aplikasi autentikator dihapus dari akun QRdx Anda",
+        "heading": "Aplikasi autentikator dihapus",
+        "body": "Kode dari aplikasi autentikator Anda tidak lagi berfungsi untuk masuk ke QRdx. Verifikasi dua langkah tetap aktif dengan metode Anda yang lain."
+      },
+      "supportOff": {
+        "subject": "Dukungan QRdx menonaktifkan verifikasi dua langkah",
+        "heading": "Verifikasi dua langkah nonaktif",
+        "body": "Dukungan QRdx menonaktifkan verifikasi dua langkah untuk akun Anda dan mengeluarkan akun dari semua perangkat. Proses masuk tidak lagi meminta langkah kedua. Anda dapat mengaktifkannya kembali di Pengaturan → Profil & keamanan."
+      },
+      "supportResetScheduled": {
+        "subject": "Dukungan QRdx akan menonaktifkan verifikasi dua langkah",
+        "heading": "Dukungan akan menonaktifkan verifikasi dua langkah",
+        "body": "Seseorang meminta dukungan QRdx untuk menonaktifkan verifikasi dua langkah pada akun Anda, dengan alasan kehilangan semua cara untuk melakukan langkah kedua.",
+        "when": "Dukungan akan menonaktifkannya {hasDate, select, yes {pada {date} (UTC)} other {dalam 7 hari}} dan mengeluarkan akun Anda dari semua perangkat. Sampai saat itu, tidak ada yang berubah.",
+        "howToStop": "Jika Anda yang meminta ini, tidak ada yang perlu dilakukan. Jika bukan, masuk ke QRdx dengan aplikasi autentikator atau kode cadangan Anda: itu akan membatalkannya. Atau batalkan di Pengaturan → Profil & keamanan, atau balas email ini."
+      },
+      "supportResetCancelled": {
+        "subject": "Verifikasi dua langkah tetap aktif untuk akun QRdx Anda",
+        "heading": "Verifikasi dua langkah tetap aktif",
+        "body": "Permintaan dukungan untuk menonaktifkan verifikasi dua langkah pada akun Anda telah dibatalkan. Tidak ada yang berubah.",
+        "byPerson": "Anda membatalkan permintaan dukungan untuk menonaktifkan verifikasi dua langkah pada akun QRdx Anda.",
+        "bySignIn": "Anda masuk dengan aplikasi autentikator atau kode cadangan, sehingga permintaan dukungan untuk menonaktifkan verifikasi dua langkah pada akun QRdx Anda dibatalkan.",
+        "bySupport": "Dukungan QRdx membatalkan permintaan untuk menonaktifkan verifikasi dua langkah pada akun Anda.",
+        "staysOn": "Verifikasi dua langkah tetap aktif, dengan kode cadangan dan metode Anda seperti sebelumnya."
+      },
+      "backupCodeUsed": {
+        "subject": "Kode cadangan digunakan pada akun QRdx Anda",
+        "heading": "Kode cadangan digunakan",
+        "body": "Salah satu kode cadangan Anda baru saja digunakan untuk masuk ke akun QRdx Anda. Setiap kode hanya berlaku sekali, jadi kode itu tidak berlaku lagi.",
+        "toConfirm": "Salah satu kode cadangan Anda baru saja digunakan untuk memastikan bahwa itu Anda sebelum perubahan keamanan pada akun QRdx Anda. Setiap kode hanya berlaku sekali, jadi kode itu tidak berlaku lagi.",
+        "left": "{count, plural, =0 {Itu adalah kode cadangan terakhir Anda.} other {Anda memiliki # kode cadangan tersisa.}}",
+        "makeNew": "Buat kode baru di Pengaturan → Profil & keamanan, agar Anda tetap punya cara masuk saat tidak dapat menggunakan passkey atau aplikasi autentikator."
+      },
+      "signedOutElsewhere": "Semua perangkat lain yang masuk ke akun Anda telah dikeluarkan, sehingga masing-masing akan masuk lagi dengan langkah kedua."
+    },
+    "payoutEmailNotice": {
+      "subject": "Pembayaran afiliasi QRdx Anda kini dikirim ke alamat PayPal baru",
+      "preview": "Pembayaran afiliasi dari QRdx akan dikirim ke {paypalEmail}.",
+      "reason": "Anda menerima email ini karena ini adalah alamat akun QRdx dalam program afiliasi, dan kami memberi tahu Anda tentang setiap perubahan tujuan pembayarannya.",
+      "body": "{replaced, select, yes {Alamat PayPal untuk pembayaran afiliasi Anda telah diubah.} other {Alamat PayPal untuk pembayaran afiliasi Anda telah ditambahkan.}} Mulai sekarang, kami mengirim pembayaran Anda ke <strong>{paypalEmail}</strong>.",
+      "notYou": "Jika ini bukan Anda, masuk, ubah kembali alamatnya di Pengaturan → Program afiliasi, lalu hubungi dukungan di <support>{email}</support> dari alamat ini sebelum pembayaran berikutnya."
+    },
     "alerts": {
       "viewAnalytics": "Lihat analitik pemindaian",
       "milestoneReason": "Anda menerima ini karena peringatan tonggak pemindaian aktif untuk {workspace}."

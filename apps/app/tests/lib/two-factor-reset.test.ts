@@ -312,7 +312,7 @@ describe("the notices", () => {
   it("say the day, that nothing changes until then, and how to stop it", async () => {
     const template = await import("@/lib/email/templates/two-factor-notice");
     const lines = template.twoFactorNoticeLines("support-reset-scheduled", {
-      dueDate: "November 16, 2026",
+      dueAt: new Date("2026-11-16T00:00:00.000Z"),
     });
     expect(lines.join("\n")).toContain("on November 16, 2026 (UTC)");
     expect(lines.join("\n")).toContain("Until then, nothing changes.");
@@ -425,7 +425,7 @@ describe("support starting a reset", () => {
       {
         kind: "support-reset-scheduled",
         email: EMAIL,
-        extra: { dueDate: "November 16, 2026" },
+        extra: { dueAt: new Date("2026-11-16T00:00:00.000Z") },
       },
     ]);
     expect(state.audit).toMatchObject([
