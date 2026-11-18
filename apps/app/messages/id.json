@@ -8681,6 +8681,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "Workspace tidak ditemukan.",
+      "twoFactorRequired": "Workspace ini mewajibkan verifikasi dua langkah. Aktifkan di Pengaturan, pada Profil & keamanan, lalu coba lagi."
+    },
+    "forbidden": {
+      "viewer": "Anda hanya penampil di sini. {only}",
+      "billingRole": "Peran penagihan Anda hanya mencakup paket. {only}",
+      "contentWrite": "Hanya pemilik, admin, dan anggota yang dapat membuat atau mengubah item di workspace ini.",
+      "workspaceUpdate": "Hanya pemilik dan admin yang dapat mengubah pengaturan workspace ini.",
+      "membersManage": "Hanya pemilik dan admin yang dapat mengelola anggota workspace ini."
+    },
+    "organizations": {
+      "nameTooShort": "Nama workspace terlalu pendek.",
+      "nameTooLong": "Nama workspace terlalu panjang.",
+      "slugFormat": "Gunakan 3-48 huruf kecil, angka, dan tanda hubung.",
+      "slugReserved": "URL tersebut sudah dicadangkan. Pilih URL lain.",
+      "invalidEmail": "Masukkan email yang valid",
+      "invalidDetails": "Detail workspace tidak valid.",
+      "invalidInvitation": "Undangan tidak valid.",
+      "invalidRole": "Peran tidak valid.",
+      "invalidMember": "Anggota tidak valid.",
+      "invalidWorkspace": "Workspace tidak valid.",
+      "moreWorkspaces": "Workspace tambahan tersedia di {pro} dan {business}.",
+      "urlTaken": "URL workspace tersebut sudah digunakan.",
+      "alreadyMember": "Orang tersebut sudah menjadi anggota workspace ini.",
+      "needsOwner": "Workspace memerlukan setidaknya satu pemilik. Jadikan orang lain sebagai pemilik terlebih dahulu.",
+      "wrongRecipient": "Undangan ini dikirim ke alamat email yang berbeda.",
+      "verifyEmailFirst": "Verifikasi alamat email Anda sebelum menanggapi undangan ini.",
+      "invitationGone": "Undangan ini sudah tidak berlaku.",
+      "workspaceFull": "Workspace ini sudah penuh. Workspace {pro} memiliki hingga {members} anggota; workspace {business} tidak memiliki batas.",
+      "noFreeSeat": "Workspace ini tidak memiliki kursi kosong untuk undangan lain. Batalkan undangan yang tertunda atau tingkatkan paket workspace.",
+      "signIn": "Masuk untuk mengelola workspace.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi.",
+      "rateLimited": "Terlalu banyak permintaan. Harap tunggu semenit lalu coba lagi.",
+      "ownerRoleOwnersOnly": "Hanya pemilik yang dapat menjadikan seseorang pemilik, atau mengubah peran pemilik.",
+      "billingRoleOwnersOnly": "Hanya pemilik yang dapat memberikan atau mencabut peran {billing}, karena peran ini menentukan siapa yang membayar workspace.",
+      "seatsNeedPaidOwner": "Menambahkan anggota memerlukan pemilik workspace dengan paket {pro} atau {business}.",
+      "seatsUsed": "Workspace ini telah menggunakan semua {seats} kursi (anggota ditambah undangan yang tertunda). Batalkan undangan, atau upgrade pemilik workspace ke {business} untuk anggota tanpa batas.",
+      "nothingToSave": "Tidak ada yang disimpan.",
+      "notAMember": "Orang tersebut bukan anggota workspace ini.",
+      "removeOwnerOwnersOnly": "Hanya pemilik yang dapat mengeluarkan pemilik dari workspace.",
+      "removeBillingOwnersOnly": "Hanya pemilik yang dapat mengeluarkan anggota penagihan dari workspace.",
+      "cantLeaveOwn": "Anda tidak dapat keluar dari workspace Anda sendiri.",
+      "deleteOwnersOnly": "Hanya pemilik yang dapat menghapus workspace.",
+      "ownCantBeDeleted": "Workspace pribadi Anda tidak dapat dihapus. Ganti namanya saja.",
+      "typeUrlToConfirm": "Ketik URL workspace persis seperti aslinya untuk mengonfirmasi."
+    },
+    "joinLinks": {
+      "signIn": "Masuk untuk melanjutkan.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi.",
+      "rateLimited": "Terlalu banyak permintaan. Harap tunggu beberapa menit lalu coba lagi.",
+      "pickRole": "Pilih peran untuk tautan ini.",
+      "billingLinkOwnersOnly": "Hanya pemilik yang dapat membuat tautan yang memberikan peran {billing}.",
+      "resetOwnersOnly": "Hanya pemilik yang dapat mereset tautan yang memberikan peran {role}.",
+      "changeOwnersOnly": "Hanya pemilik yang dapat mengubah tautan yang memberikan peran {role}.",
+      "linkOff": "Tautan bergabung sedang nonaktif.",
+      "incomplete": "Tautan bergabung ini tidak lengkap.",
+      "unavailable": "Tautan bergabung belum disiapkan di server ini. Untuk saat ini, undang orang melalui email.",
+      "linkDead": "Tautan bergabung ini sudah tidak berfungsi. Minta tautan baru kepada workspace tersebut.",
+      "noSeatYet": "Workspace ini belum memiliki kursi untuk anggota lain. Minta pemilik untuk meng-upgrade-nya ke {pro} atau {business}.",
+      "seatsUsed": "Workspace ini telah menggunakan semua {seats} kursi. Minta pemilik untuk mengosongkan satu kursi atau meng-upgrade-nya ke {business}."
+    },
+    "logo": {
+      "signIn": "Masuk untuk melanjutkan.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi.",
+      "tooManyChanges": "Terlalu banyak perubahan. Harap tunggu beberapa menit.",
+      "uploadsUnavailable": "Unggah logo belum disiapkan di server ini. Gunakan URL gambar.",
+      "choosePicture": "Pilih gambar untuk diunggah.",
+      "tooLarge": "Gambar itu terlalu besar. Coba yang lebih kecil.",
+      "wrongType": "Gunakan gambar PNG, JPEG, atau WebP.",
+      "url": {
+        "tooLong": "URL tersebut terlalu panjang.",
+        "notFull": "Masukkan URL gambar lengkap, diawali dengan https://",
+        "notHttps": "Gunakan URL gambar https://.",
+        "withPassword": "Gunakan URL tanpa kata sandi.",
+        "notPublic": "Gunakan gambar dari situs web publik."
+      }
+    },
+    "moveCode": {
+      "signIn": "Masuk untuk memindahkan kode.",
+      "somethingWrong": "Terjadi kesalahan.",
+      "pickWorkspace": "Pilih ruang kerja.",
+      "rateLimited": "Terlalu banyak pemindahan. Harap tunggu satu menit.",
+      "alreadyHere": "Kode sudah ada di ruang kerja ini.",
+      "codeNotFound": "Kode QR tidak ditemukan",
+      "cantAddCodes": "Anda tidak dapat menambahkan kode ke {name}. {reason}",
+      "othersCodes": "Hanya pemilik dan admin yang dapat memindahkan kode yang dibuat anggota lain.",
+      "pageCode": "Kode yang membuka halaman yang di-hosting tidak dapat dipindahkan ke ruang kerja lain: halaman tetap berada di sini.",
+      "domainNotInTarget": "Tautan kode ini berada di {hostname}, yang tidak dimiliki {name}. Tautan yang sudah dicetak akan berhenti berfungsi, sehingga kode ini tidak dapat dipindahkan.",
+      "limitReached": "{name} telah menggunakan seluruh {limit} kode dinamis aktif yang disertakan dalam paketnya. Arsipkan satu kode di sana, atau arsipkan kode ini terlebih dahulu."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "Permintaan tidak valid.",
+      "rateLimited": "Terlalu banyak permintaan. Harap tunggu satu menit lalu coba lagi.",
+      "planRequired": "Mewajibkan verifikasi dua langkah tersedia di paket {plan}.",
+      "ownFirst": "Aktifkan verifikasi dua langkah untuk akun Anda sendiri terlebih dahulu, di Pengaturan pada bagian Profil & keamanan.",
+      "signIn": "Masuk untuk mengubah pengaturan ruang kerja ini.",
+      "somethingWrong": "Terjadi kesalahan. Silakan coba lagi."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "Dikirim untuk {name} oleh <link>{host}</link>",

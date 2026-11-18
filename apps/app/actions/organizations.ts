@@ -3,7 +3,6 @@
 import { isOwnWorkspaceOf } from "@repo/auth/own-workspace-id";
 import { auth } from "@repo/auth/server";
 import {
-  SLUG_FORMAT_MESSAGE,
   WORKSPACE_SLUG_PATTERN,
   workspaceSlugProblem,
 } from "@repo/auth/workspace-rules";
@@ -22,9 +21,15 @@ import { confirmationNeededFor } from "@/lib/account/confirmation-scope";
 // Team changes are recorded by packages/auth/workspace-audit.ts.
 import "@/ee/audit-log/auth-changes";
 import {
+  forbiddenText,
+  slugProblemText,
+  type WorkspaceActionMessage,
+  type WorkspaceActionsText,
+  workspaceActionText,
+} from "@/lib/i18n/workspace-actions";
+import {
   can,
   canAssignRole,
-  forbiddenMessage,
   JOINABLE_ROLES,
   strongestRole,
   WORKSPACE_ROLE_LABELS,
@@ -58,6 +63,10 @@ import { UnauthorizedError } from "@/types/errors";
 // (lib/account/confirmation.ts), asked once every other check has passed;
 // without one they answer CONFIRMATION_REQUIRED and change nothing. The same
 // plugin endpoints over HTTP are gated in packages/auth/confirm-gate.ts.
+//
+// What they say back is in the person's language (workspaceActions in
+// messages/en.json, lib/i18n/workspace-actions.ts), read only to refuse.
+// Better Auth's own messages for codes not listed below stay English.
 
 export type TeamActionResult<T = null> =
   | { ok: true; data: T }
@@ -79,19 +88,32 @@ const idSchema = z
   // Plugin endpoints treat values containing "@" as emails.
   .regex(/^[^@\s]+$/);
 
+// Each check's message is its key in workspaceActions (issueText reads it).
+const ISSUES = [
+  "organizations.slugFormat",
+  "organizations.slugReserved",
+  "organizations.nameTooShort",
+  "organizations.nameTooLong",
+  "organizations.invalidEmail",
+] as const;
+type Issue = (typeof ISSUES)[number];
+
 const slugSchema = z
   .string()
   .trim()
   .toLowerCase()
-  .regex(new RegExp(WORKSPACE_SLUG_PATTERN), SLUG_FORMAT_MESSAGE)
+  .regex(
+    new RegExp(WORKSPACE_SLUG_PATTERN),
+    "organizations.slugFormat" satisfies Issue,
+  )
   .refine((slug) => workspaceSlugProblem(slug) === null, {
-    message: "That URL is reserved. Pick another one.",
+    message: "organizations.slugReserved" satisfies Issue,
   });
 const nameSchema = z
   .string()
   .trim()
-  .min(2, "Workspace name is too short.")
-  .max(50, "Workspace name is too long.");
+  .min(2, "organizations.nameTooShort" satisfies Issue)
+  .max(50, "organizations.nameTooLong" satisfies Issue);
 
 const createWorkspaceSchema = z.object({ name: nameSchema, slug: slugSchema });
 const updateWorkspaceSchema = z.object({
@@ -105,7 +127,7 @@ const inviteSchema = z.object({
     .trim()
     .toLowerCase()
     .max(254)
-    .pipe(z.email("Enter a valid email")),
+    .pipe(z.email("organizations.invalidEmail" satisfies Issue)),
   role: z.enum(JOINABLE_ROLES as [WorkspaceRole, ...WorkspaceRole[]]),
 });
 
@@ -121,26 +143,32 @@ const deleteTeamSchema = organizationSchema.extend({
   confirmSlug: z.string().trim().max(64),
 });
 
-const MORE_WORKSPACES = `More workspaces are part of ${PLAN_NAMES.pro} and ${PLAN_NAMES.business}.`;
+const PAID_PLANS = { pro: PLAN_NAMES.pro, business: PLAN_NAMES.business };
 
-const ERROR_MESSAGES: Record<string, string> = {
-  ORGANIZATION_ALREADY_EXISTS: "That workspace URL is already taken.",
-  ORGANIZATION_SLUG_ALREADY_TAKEN: "That workspace URL is already taken.",
-  YOU_ARE_NOT_ALLOWED_TO_CREATE_A_NEW_ORGANIZATION: MORE_WORKSPACES,
-  USER_IS_ALREADY_A_MEMBER_OF_THIS_ORGANIZATION:
-    "That person is already a member of this workspace.",
-  YOU_CANNOT_LEAVE_THE_ORGANIZATION_AS_THE_ONLY_OWNER:
-    "A workspace needs at least one owner. Make someone else an owner first.",
-  YOU_CANNOT_LEAVE_THE_ORGANIZATION_WITHOUT_AN_OWNER:
-    "A workspace needs at least one owner. Make someone else an owner first.",
-  YOU_ARE_NOT_THE_RECIPIENT_OF_THE_INVITATION:
-    "This invitation was sent to a different email address.",
-  EMAIL_VERIFICATION_REQUIRED_BEFORE_ACCEPTING_OR_REJECTING_INVITATION:
-    "Verify your email address before responding to this invitation.",
-  INVITATION_NOT_FOUND: "This invitation is no longer valid.",
-  ORGANIZATION_MEMBERSHIP_LIMIT_REACHED: `This workspace is full. ${PLAN_NAMES.pro} workspaces have up to ${getPlanLimits("pro").teamMembers} members; ${PLAN_NAMES.business} workspaces have no limit.`,
-  INVITATION_LIMIT_REACHED:
-    "This workspace has no free seats for another invitation. Revoke a pending invitation or upgrade the workspace's plan.",
+const moreWorkspaces: WorkspaceActionMessage = (t) =>
+  t("organizations.moreWorkspaces", PAID_PLANS);
+
+const ERROR_MESSAGES: Record<string, WorkspaceActionMessage> = {
+  ORGANIZATION_ALREADY_EXISTS: (t) => t("organizations.urlTaken"),
+  ORGANIZATION_SLUG_ALREADY_TAKEN: (t) => t("organizations.urlTaken"),
+  YOU_ARE_NOT_ALLOWED_TO_CREATE_A_NEW_ORGANIZATION: moreWorkspaces,
+  USER_IS_ALREADY_A_MEMBER_OF_THIS_ORGANIZATION: (t) =>
+    t("organizations.alreadyMember"),
+  YOU_CANNOT_LEAVE_THE_ORGANIZATION_AS_THE_ONLY_OWNER: (t) =>
+    t("organizations.needsOwner"),
+  YOU_CANNOT_LEAVE_THE_ORGANIZATION_WITHOUT_AN_OWNER: (t) =>
+    t("organizations.needsOwner"),
+  YOU_ARE_NOT_THE_RECIPIENT_OF_THE_INVITATION: (t) =>
+    t("organizations.wrongRecipient"),
+  EMAIL_VERIFICATION_REQUIRED_BEFORE_ACCEPTING_OR_REJECTING_INVITATION: (t) =>
+    t("organizations.verifyEmailFirst"),
+  INVITATION_NOT_FOUND: (t) => t("organizations.invitationGone"),
+  ORGANIZATION_MEMBERSHIP_LIMIT_REACHED: (t) =>
+    t("organizations.workspaceFull", {
+      ...PAID_PLANS,
+      members: String(getPlanLimits("pro").teamMembers),
+    }),
+  INVITATION_LIMIT_REACHED: (t) => t("organizations.noFreeSeat"),
 };
 
 // Errors the inviter or creator can fix by upgrading (TeamActionResult.upgrade).
@@ -158,20 +186,59 @@ function fail(error: string, upgrade?: boolean): TeamActionResult<never> {
   return upgrade ? { ok: false, error, upgrade } : { ok: false, error };
 }
 
+/** A refusal saying `message` in the person's language. */
+async function refuse(
+  message: WorkspaceActionMessage,
+  upgrade?: boolean,
+): Promise<TeamActionResult<never>> {
+  return fail(await workspaceActionText(message), upgrade);
+}
+
+/** The first failed check's message (ISSUES), else `fallback`. */
+function issueText(
+  t: WorkspaceActionsText,
+  error: z.ZodError,
+  fallback: WorkspaceActionMessage,
+): string {
+  const message = error.issues[0]?.message;
+  if ((ISSUES as readonly unknown[]).includes(message)) {
+    return t(message as Issue);
+  }
+  // zod's own wording: only a request the forms never send gets one.
+  return message ?? fallback(t);
+}
+
+/** A refusal for input that failed `error`'s checks. */
+function invalid(
+  error: z.ZodError,
+  fallback: WorkspaceActionMessage,
+): Promise<TeamActionResult<never>> {
+  return refuse((t) => issueText(t, error, fallback));
+}
+
+const RATE_LIMITED: WorkspaceActionMessage = (t) =>
+  t("organizations.rateLimited");
+const INVALID_INVITATION: WorkspaceActionMessage = (t) =>
+  t("organizations.invalidInvitation");
+const INVALID_WORKSPACE: WorkspaceActionMessage = (t) =>
+  t("organizations.invalidWorkspace");
+
 /** Surfaces Better Auth API errors (worded for workspaces); hides anything else. */
-function failure(error: unknown, action: string): TeamActionResult<never> {
+function failure(
+  error: unknown,
+  action: string,
+): Promise<TeamActionResult<never>> | TeamActionResult<never> {
   if (error instanceof UnauthorizedError) {
-    return fail("Sign in to manage workspaces.");
+    return refuse((t) => t("organizations.signIn"));
   }
   const apiError = error as ErrorWithBody;
   if (error instanceof Error && typeof apiError.statusCode === "number") {
     const code = apiError.body?.code;
-    if (code && UPGRADE_ERROR_CODES.has(code)) {
-      return fail(ERROR_MESSAGES[code], true);
+    if (code && Object.hasOwn(ERROR_MESSAGES, code)) {
+      return refuse(ERROR_MESSAGES[code], UPGRADE_ERROR_CODES.has(code));
     }
-    const message =
-      (code && ERROR_MESSAGES[code]) ||
-      (apiError.body?.message ?? apiError.message);
+    // Better Auth's own English, for codes this file doesn't word.
+    const message = apiError.body?.message ?? apiError.message;
     if (message) {
       return fail(
         message.replace(/organization/gi, (word) =>
@@ -181,7 +248,7 @@ function failure(error: unknown, action: string): TeamActionResult<never> {
     }
   }
   logError(error as Error, { action });
-  return fail("Something went wrong. Please try again.");
+  return refuse((t) => t("organizations.somethingWrong"));
 }
 
 async function allow(
@@ -192,8 +259,6 @@ async function allow(
   const { success } = await limiter.limit(`teams:${bucket}:${scope.userId}`);
   return success;
 }
-
-const RATE_LIMITED = "Too many requests. Please wait a minute and try again.";
 
 /** The open workspace, when the caller may manage its people (lib/permissions). */
 function managedTeamId(scope: ActiveScope): string | null {
@@ -227,14 +292,25 @@ function roleChangeError(
   actor: WorkspaceRole,
   from: WorkspaceRole | null,
   to: WorkspaceRole,
-): string {
+): WorkspaceActionMessage {
   if (to === "owner" || from === "owner") {
-    return "Only owners can make someone an owner, or change an owner's role.";
+    return (t) => t("organizations.ownerRoleOwnersOnly");
   }
   if (to === "billing" || from === "billing") {
-    return `Only owners can give or take away the ${WORKSPACE_ROLE_LABELS.billing} role, since it decides who pays for the workspace.`;
+    return (t) =>
+      t("organizations.billingRoleOwnersOnly", {
+        billing: WORKSPACE_ROLE_LABELS.billing,
+      });
   }
-  return forbiddenMessage(actor, "members.manage");
+  return forbidden(actor, "members.manage");
+}
+
+/** forbiddenMessage(role, action), in the person's language. */
+function forbidden(
+  role: WorkspaceRole,
+  action: "workspace.update" | "members.manage",
+): WorkspaceActionMessage {
+  return (t) => forbiddenText(t, role, action);
 }
 
 /** Inviting someone as one of these needs "Confirm it's you". */
@@ -254,7 +330,7 @@ function revalidateTeam() {
 async function seatLimitError(
   organizationId: string,
   email: string,
-): Promise<string | null> {
+): Promise<WorkspaceActionMessage | null> {
   const seats = getPlanLimits(
     await getOwnerPlanForOrganization(organizationId),
   ).teamMembers;
@@ -281,8 +357,12 @@ async function seatLimitError(
   if ((members?.value ?? 0) + (pending?.value ?? 0) < seats) return null;
 
   return seats <= 1
-    ? `Adding members needs a workspace owner on ${PLAN_NAMES.pro} or ${PLAN_NAMES.business}.`
-    : `This workspace has used all ${seats} seats (members plus pending invitations). Revoke an invitation, or upgrade a workspace owner to ${PLAN_NAMES.business} for unlimited members.`;
+    ? (t) => t("organizations.seatsNeedPaidOwner", PAID_PLANS)
+    : (t) =>
+        t("organizations.seatsUsed", {
+          seats: String(seats),
+          business: PLAN_NAMES.business,
+        });
 }
 
 export async function createWorkspace(input: {
@@ -293,16 +373,16 @@ export async function createWorkspace(input: {
     const scope = await getActiveScope();
     const parsed = createWorkspaceSchema.safeParse(input);
     if (!parsed.success) {
-      return fail(
-        parsed.error.issues[0]?.message ?? "Invalid workspace details.",
-      );
+      return invalid(parsed.error, (t) => t("organizations.invalidDetails"));
     }
-    if (!(await allow(teamLimiter, scope, "create"))) return fail(RATE_LIMITED);
+    if (!(await allow(teamLimiter, scope, "create"))) {
+      return refuse(RATE_LIMITED);
+    }
 
     // Everyone has their own workspace; more need a paid plan. The plugin's
     // allowUserToCreateOrganization callback enforces this too.
     if (!getPlanLimits(await getPlan(scope.userId)).teams) {
-      return fail(MORE_WORKSPACES, true);
+      return refuse(moreWorkspaces, true);
     }
 
     const created = (await auth.api.createOrganization({
@@ -330,9 +410,19 @@ export async function checkWorkspaceSlug(input: {
     const slug = typeof input?.slug === "string" ? input.slug.trim() : "";
     const problem = workspaceSlugProblem(slug);
     if (problem) {
-      return { ok: true, data: { status: "unavailable", message: problem } };
+      return {
+        ok: true,
+        data: {
+          status: "unavailable",
+          message: await workspaceActionText((t) =>
+            slugProblemText(t, problem),
+          ),
+        },
+      };
     }
-    if (!(await allow(checkLimiter, scope, "check"))) return fail(RATE_LIMITED);
+    if (!(await allow(checkLimiter, scope, "check"))) {
+      return refuse(RATE_LIMITED);
+    }
     const [existing] = await db
       .select({ id: organization.id })
       .from(organization)
@@ -344,7 +434,9 @@ export async function checkWorkspaceSlug(input: {
         ok: true,
         data: {
           status: "unavailable",
-          message: "That workspace URL is already taken.",
+          message: await workspaceActionText((t) =>
+            t("organizations.urlTaken"),
+          ),
         },
       };
     }
@@ -365,19 +457,21 @@ export async function updateWorkspace(input: {
   try {
     const scope = await getActiveScope();
     if (!can(scope.role, "workspace.update")) {
-      return fail(forbiddenMessage(scope.role, "workspace.update"));
+      return refuse(forbidden(scope.role, "workspace.update"));
     }
     const parsed = updateWorkspaceSchema.safeParse(input);
     if (!parsed.success) {
-      return fail(
-        parsed.error.issues[0]?.message ?? "Invalid workspace details.",
-      );
+      return invalid(parsed.error, (t) => t("organizations.invalidDetails"));
     }
     const data = Object.fromEntries(
       Object.entries(parsed.data).filter(([, value]) => value !== undefined),
     );
-    if (Object.keys(data).length === 0) return fail("Nothing to save.");
-    if (!(await allow(teamLimiter, scope, "manage"))) return fail(RATE_LIMITED);
+    if (Object.keys(data).length === 0) {
+      return refuse((t) => t("organizations.nothingToSave"));
+    }
+    if (!(await allow(teamLimiter, scope, "manage"))) {
+      return refuse(RATE_LIMITED);
+    }
 
     await auth.api.updateOrganization({
       headers: await headers(),
@@ -429,19 +523,20 @@ export async function inviteMember(input: {
     const scope = await getActiveScope();
     const organizationId = managedTeamId(scope);
     if (!organizationId) {
-      return fail(forbiddenMessage(scope.role, "members.manage"));
+      return refuse(forbidden(scope.role, "members.manage"));
     }
     const parsed = inviteSchema.safeParse(input);
     if (!parsed.success) {
-      return fail(parsed.error.issues[0]?.message ?? "Invalid invitation.");
+      return invalid(parsed.error, INVALID_INVITATION);
     }
     if (!canAssignRole(scope.role, null, parsed.data.role)) {
-      return fail(roleChangeError(scope.role, null, parsed.data.role));
+      return refuse(roleChangeError(scope.role, null, parsed.data.role));
     }
-    if (!(await allow(inviteLimiter, scope, "invite")))
-      return fail(RATE_LIMITED);
+    if (!(await allow(inviteLimiter, scope, "invite"))) {
+      return refuse(RATE_LIMITED);
+    }
     const seatError = await seatLimitError(organizationId, parsed.data.email);
-    if (seatError) return fail(seatError, true);
+    if (seatError) return refuse(seatError, true);
     if (isPrivilegedRole(parsed.data.role)) {
       const needed = await confirmationNeededFor(scope);
       if (needed) return needed;
@@ -496,15 +591,21 @@ export async function cancelInvitation(input: {
 }): Promise<TeamActionResult> {
   try {
     const scope = await getActiveScope();
-    if (!managedTeamId(scope))
-      return fail(forbiddenMessage(scope.role, "members.manage"));
+    if (!managedTeamId(scope)) {
+      return refuse(forbidden(scope.role, "members.manage"));
+    }
     const parsed = invitationSchema.safeParse(input);
-    if (!parsed.success) return fail("Invalid invitation.");
-    if (!(await allow(teamLimiter, scope, "manage"))) return fail(RATE_LIMITED);
+    if (!parsed.success) return refuse(INVALID_INVITATION);
+    if (!(await allow(teamLimiter, scope, "manage"))) {
+      return refuse(RATE_LIMITED);
+    }
     // Only the open workspace's invitations (the plugin checks the role in
     // the invitation's own workspace, which may be another one).
-    if (!(await isInvitationOf(parsed.data.invitationId, scope.organizationId)))
-      return fail("Invalid invitation.");
+    if (
+      !(await isInvitationOf(parsed.data.invitationId, scope.organizationId))
+    ) {
+      return refuse(INVALID_INVITATION);
+    }
 
     await auth.api.cancelInvitation({
       headers: await headers(),
@@ -525,15 +626,18 @@ export async function updateMemberRole(input: {
   try {
     const scope = await getActiveScope();
     const organizationId = managedTeamId(scope);
-    if (!organizationId)
-      return fail(forbiddenMessage(scope.role, "members.manage"));
+    if (!organizationId) {
+      return refuse(forbidden(scope.role, "members.manage"));
+    }
     const parsed = roleSchema.safeParse(input);
-    if (!parsed.success) return fail("Invalid role.");
-    if (!(await allow(teamLimiter, scope, "manage"))) return fail(RATE_LIMITED);
+    if (!parsed.success) return refuse((t) => t("organizations.invalidRole"));
+    if (!(await allow(teamLimiter, scope, "manage"))) {
+      return refuse(RATE_LIMITED);
+    }
     const target = await findTeamMember(organizationId, parsed.data.memberId);
-    if (!target) return fail("That person isn't a member of this workspace.");
+    if (!target) return refuse((t) => t("organizations.notAMember"));
     if (!canAssignRole(scope.role, target.role, parsed.data.role)) {
-      return fail(roleChangeError(scope.role, target.role, parsed.data.role));
+      return refuse(roleChangeError(scope.role, target.role, parsed.data.role));
     }
     const needed = await confirmationNeededFor(scope);
     if (needed) return needed;
@@ -560,11 +664,14 @@ export async function removeMember(input: {
   try {
     const scope = await getActiveScope();
     const organizationId = managedTeamId(scope);
-    if (!organizationId)
-      return fail(forbiddenMessage(scope.role, "members.manage"));
+    if (!organizationId) {
+      return refuse(forbidden(scope.role, "members.manage"));
+    }
     const parsed = memberSchema.safeParse(input);
-    if (!parsed.success) return fail("Invalid member.");
-    if (!(await allow(teamLimiter, scope, "manage"))) return fail(RATE_LIMITED);
+    if (!parsed.success) return refuse((t) => t("organizations.invalidMember"));
+    if (!(await allow(teamLimiter, scope, "manage"))) {
+      return refuse(RATE_LIMITED);
+    }
     // Owners and billing members decide who pays: only owners remove them.
     const target = await findTeamMember(organizationId, parsed.data.memberId);
     if (
@@ -572,10 +679,10 @@ export async function removeMember(input: {
       (target.role === "owner" || target.role === "billing") &&
       !can(scope.role, "owners.manage")
     ) {
-      return fail(
+      return refuse((t) =>
         target.role === "owner"
-          ? "Only owners can remove an owner from the workspace."
-          : "Only owners can remove a billing member from the workspace.",
+          ? t("organizations.removeOwnerOwnersOnly")
+          : t("organizations.removeBillingOwnersOnly"),
       );
     }
 
@@ -601,11 +708,13 @@ export async function leaveTeam(input: {
   try {
     const scope = await getActiveScope();
     const parsed = organizationSchema.safeParse(input);
-    if (!parsed.success) return fail("Invalid workspace.");
+    if (!parsed.success) return refuse(INVALID_WORKSPACE);
     if (isOwnWorkspaceOf(parsed.data.organizationId, scope.userId)) {
-      return fail("You can't leave your own workspace.");
+      return refuse((t) => t("organizations.cantLeaveOwn"));
     }
-    if (!(await allow(teamLimiter, scope, "manage"))) return fail(RATE_LIMITED);
+    if (!(await allow(teamLimiter, scope, "manage"))) {
+      return refuse(RATE_LIMITED);
+    }
 
     await auth.api.leaveOrganization({
       headers: await headers(),
@@ -626,27 +735,29 @@ export async function deleteTeam(input: {
   try {
     const scope = await getActiveScope();
     const parsed = deleteTeamSchema.safeParse(input);
-    if (!parsed.success) return fail("Invalid workspace.");
+    if (!parsed.success) return refuse(INVALID_WORKSPACE);
     // Only the workspace that is open in the dashboard, and only by an owner.
     if (
       scope.organizationId !== parsed.data.organizationId ||
       !can(scope.role, "workspace.delete")
     ) {
-      return fail("Only owners can delete a workspace.");
+      return refuse((t) => t("organizations.deleteOwnersOnly"));
     }
     if (isOwnWorkspaceOf(parsed.data.organizationId, scope.userId)) {
-      return fail("Your own workspace can't be deleted. Rename it instead.");
+      return refuse((t) => t("organizations.ownCantBeDeleted"));
     }
     const [team] = await db
       .select({ slug: organization.slug })
       .from(organization)
       .where(eq(organization.id, parsed.data.organizationId))
       .limit(1);
-    if (!team) return fail("Workspace not found.");
+    if (!team) return refuse((t) => t("shared.workspaceNotFound"));
     if (team.slug !== parsed.data.confirmSlug) {
-      return fail("Type the workspace URL exactly to confirm.");
+      return refuse((t) => t("organizations.typeUrlToConfirm"));
     }
-    if (!(await allow(teamLimiter, scope, "manage"))) return fail(RATE_LIMITED);
+    if (!(await allow(teamLimiter, scope, "manage"))) {
+      return refuse(RATE_LIMITED);
+    }
     const needed = await confirmationNeededFor(scope);
     if (needed) return needed;
 
@@ -670,9 +781,10 @@ export async function acceptInvitation(input: {
   try {
     const scope = await getActiveScope();
     const parsed = invitationSchema.safeParse(input);
-    if (!parsed.success) return fail("Invalid invitation.");
-    if (!(await allow(teamLimiter, scope, "respond")))
-      return fail(RATE_LIMITED);
+    if (!parsed.success) return refuse(INVALID_INVITATION);
+    if (!(await allow(teamLimiter, scope, "respond"))) {
+      return refuse(RATE_LIMITED);
+    }
 
     // Checks the invitee email, expiry and status; makes the workspace active.
     const result = (await auth.api.acceptInvitation({
@@ -699,9 +811,10 @@ export async function rejectInvitation(input: {
   try {
     const scope = await getActiveScope();
     const parsed = invitationSchema.safeParse(input);
-    if (!parsed.success) return fail("Invalid invitation.");
-    if (!(await allow(teamLimiter, scope, "respond")))
-      return fail(RATE_LIMITED);
+    if (!parsed.success) return refuse(INVALID_INVITATION);
+    if (!(await allow(teamLimiter, scope, "respond"))) {
+      return refuse(RATE_LIMITED);
+    }
 
     await auth.api.rejectInvitation({
       headers: await headers(),

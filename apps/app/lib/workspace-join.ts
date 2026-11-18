@@ -15,7 +15,7 @@ import { isTeamMember } from "@/app/(app)/dashboard/team/_lib/queries";
 // Joining through addMember is recorded by packages/auth/workspace-audit.ts.
 import "@/ee/audit-log/auth-changes";
 import { isMissingSchemaError } from "@/lib/community/tables";
-import { HttpError } from "@/lib/error-response";
+import { WorkspaceActionError } from "@/lib/i18n/workspace-actions";
 import { logError } from "@/lib/log-error";
 import { JOINABLE_ROLES, type WorkspaceRole } from "@/lib/permissions";
 import { getOwnerPlanForOrganization, getPlanLimits } from "@/lib/plans";
@@ -28,7 +28,8 @@ import { isUniqueViolation } from "@/lib/slug-claims";
 // link is shown once, when it's made or reset. The table comes from
 // packages/database/manual-sql/0014_workspace_join_link.sql: until it's
 // applied every call here throws JoinLinksUnavailableError (a clear 503),
-// never a 500.
+// never a 500. Errors are WorkspaceActionErrors: English messages that
+// actions/workspace-join.ts says in the person's language.
 
 /** 32 random bytes, base64url: 43 characters. */
 export const JOIN_TOKEN_PATTERN = /^[A-Za-z0-9_-]{43}$/;
@@ -46,16 +47,17 @@ export function joinLinkPath(token: string): string {
   return `/join/${token}`;
 }
 
-export class JoinLinksUnavailableError extends HttpError {
+export class JoinLinksUnavailableError extends WorkspaceActionError {
   constructor() {
-    super(
-      503,
-      "JOIN_LINKS_UNAVAILABLE",
-      "Join links aren't set up on this server yet. Invite people by email for now.",
-    );
+    super(503, "JOIN_LINKS_UNAVAILABLE", (t) => t("joinLinks.unavailable"));
     this.name = "JoinLinksUnavailableError";
   }
 }
+
+const pickRole = () =>
+  new WorkspaceActionError(400, "VALIDATION_ERROR", (t) =>
+    t("joinLinks.pickRole"),
+  );
 
 let reported = false;
 
@@ -128,7 +130,7 @@ export async function issueJoinLink(input: {
   createdBy: string;
 }): Promise<{ token: string }> {
   if (!JOINABLE_ROLES.includes(input.role)) {
-    throw new HttpError(400, "VALIDATION_ERROR", "Pick a role for the link.");
+    throw pickRole();
   }
   const { token, hash } = generateJoinToken();
   const now = new Date();
@@ -163,7 +165,7 @@ export async function setJoinLinkRole(
   role: WorkspaceRole,
 ): Promise<boolean> {
   if (!JOINABLE_ROLES.includes(role)) {
-    throw new HttpError(400, "VALIDATION_ERROR", "Pick a role for the link.");
+    throw pickRole();
   }
   const rows = await guarded(() =>
     db
@@ -228,13 +230,17 @@ export async function findJoinTarget(
 }
 
 /** 402 LIMIT_REACHED: the plan's teamMembers seats are all taken. */
-export function seatsFullError(seats: number): HttpError {
-  return new HttpError(
-    402,
-    "LIMIT_REACHED",
+export function seatsFullError(seats: number): WorkspaceActionError {
+  return new WorkspaceActionError(402, "LIMIT_REACHED", (t) =>
     seats <= 1
-      ? `This workspace has no seat for another member yet. Ask an owner to upgrade it to ${PLAN_NAMES.pro} or ${PLAN_NAMES.business}.`
-      : `This workspace has used all ${seats} seats. Ask an owner to free one or upgrade it to ${PLAN_NAMES.business}.`,
+      ? t("joinLinks.noSeatYet", {
+          pro: PLAN_NAMES.pro,
+          business: PLAN_NAMES.business,
+        })
+      : t("joinLinks.seatsUsed", {
+          seats: String(seats),
+          business: PLAN_NAMES.business,
+        }),
   );
 }
 
@@ -292,10 +298,8 @@ export async function joinWithLink(
 ): Promise<JoinOutcome> {
   const target = await findJoinTarget(token);
   if (!target) {
-    throw new HttpError(
-      404,
-      "JOIN_LINK_INVALID",
-      "This join link doesn't work anymore. Ask the workspace for a new one.",
+    throw new WorkspaceActionError(404, "JOIN_LINK_INVALID", (t) =>
+      t("joinLinks.linkDead"),
     );
   }
   if (await isTeamMember(target.organizationId, person.id)) {

@@ -8681,6 +8681,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "Workspace non trovato.",
+      "twoFactorRequired": "Questo workspace richiede la verifica in due passaggi. Attivala in Impostazioni, sotto Profilo e sicurezza, poi riprova."
+    },
+    "forbidden": {
+      "viewer": "Qui sei un visualizzatore. {only}",
+      "billingRole": "Il tuo ruolo di fatturazione riguarda solo il piano. {only}",
+      "contentWrite": "Solo proprietari, amministratori e membri possono creare o modificare elementi in questo workspace.",
+      "workspaceUpdate": "Solo proprietari e amministratori possono modificare le impostazioni di questo workspace.",
+      "membersManage": "Solo proprietari e amministratori possono gestire le persone di questo workspace."
+    },
+    "organizations": {
+      "nameTooShort": "Il nome del workspace è troppo corto.",
+      "nameTooLong": "Il nome del workspace è troppo lungo.",
+      "slugFormat": "Usa da 3 a 48 lettere minuscole, numeri e trattini.",
+      "slugReserved": "Questo URL è riservato. Scegline un altro.",
+      "invalidEmail": "Inserisci un’email valida",
+      "invalidDetails": "Dati del workspace non validi.",
+      "invalidInvitation": "Invito non valido.",
+      "invalidRole": "Ruolo non valido.",
+      "invalidMember": "Membro non valido.",
+      "invalidWorkspace": "Workspace non valido.",
+      "moreWorkspaces": "Altri workspace sono inclusi in {pro} e {business}.",
+      "urlTaken": "Questo URL del workspace è già in uso.",
+      "alreadyMember": "Questa persona è già membro di questo workspace.",
+      "needsOwner": "Un workspace ha bisogno di almeno un proprietario. Prima nomina proprietario qualcun altro.",
+      "wrongRecipient": "Questo invito è stato inviato a un altro indirizzo email.",
+      "verifyEmailFirst": "Verifica il tuo indirizzo email prima di rispondere a questo invito.",
+      "invitationGone": "Questo invito non è più valido.",
+      "workspaceFull": "Questo workspace è al completo. I workspace {pro} hanno fino a {members} membri; i workspace {business} non hanno limiti.",
+      "noFreeSeat": "Questo workspace non ha posti liberi per un altro invito. Revoca un invito in sospeso o passa a un piano superiore per il workspace.",
+      "signIn": "Accedi per gestire i workspace.",
+      "somethingWrong": "Qualcosa è andato storto. Riprova.",
+      "rateLimited": "Troppe richieste. Attendi un minuto e riprova.",
+      "ownerRoleOwnersOnly": "Solo i proprietari possono nominare un proprietario o cambiare il ruolo di un proprietario.",
+      "billingRoleOwnersOnly": "Solo i proprietari possono assegnare o togliere il ruolo {billing}, perché decide chi paga per il workspace.",
+      "seatsNeedPaidOwner": "Per aggiungere membri serve un proprietario del workspace con {pro} o {business}.",
+      "seatsUsed": "Questo workspace ha usato tutti i {seats} posti (membri più inviti in sospeso). Revoca un invito oppure passa un proprietario del workspace a {business} per avere membri illimitati.",
+      "nothingToSave": "Niente da salvare.",
+      "notAMember": "Questa persona non è un membro di questo workspace.",
+      "removeOwnerOwnersOnly": "Solo i proprietari possono rimuovere un proprietario dal workspace.",
+      "removeBillingOwnersOnly": "Solo i proprietari possono rimuovere dal workspace un membro con ruolo di fatturazione.",
+      "cantLeaveOwn": "Non puoi lasciare il tuo workspace.",
+      "deleteOwnersOnly": "Solo i proprietari possono eliminare un workspace.",
+      "ownCantBeDeleted": "Il tuo workspace personale non può essere eliminato. Rinominalo invece.",
+      "typeUrlToConfirm": "Digita esattamente l’URL del workspace per confermare."
+    },
+    "joinLinks": {
+      "signIn": "Accedi per continuare.",
+      "somethingWrong": "Qualcosa è andato storto. Riprova.",
+      "rateLimited": "Troppe richieste. Attendi qualche minuto e riprova.",
+      "pickRole": "Scegli un ruolo per il link.",
+      "billingLinkOwnersOnly": "Solo i proprietari possono creare un link che assegna il ruolo {billing}.",
+      "resetOwnersOnly": "Solo i proprietari possono reimpostare un link che assegna il ruolo {role}.",
+      "changeOwnersOnly": "Solo i proprietari possono modificare un link che assegna il ruolo {role}.",
+      "linkOff": "Il link di invito è disattivato.",
+      "incomplete": "Questo link di invito non è completo.",
+      "unavailable": "I link di invito non sono ancora configurati su questo server. Per ora invita le persone via email.",
+      "linkDead": "Questo link di invito non funziona più. Chiedine uno nuovo al workspace.",
+      "noSeatYet": "Questo workspace non ha ancora un posto libero per un altro membro. Chiedi a un proprietario di passare a {pro} o {business}.",
+      "seatsUsed": "Questo workspace ha usato tutti i {seats} posti. Chiedi a un proprietario di liberarne uno o di passare a {business}."
+    },
+    "logo": {
+      "signIn": "Accedi per continuare.",
+      "somethingWrong": "Qualcosa è andato storto. Riprova.",
+      "tooManyChanges": "Troppe modifiche. Attendi qualche minuto.",
+      "uploadsUnavailable": "Il caricamento dei logo non è configurato su questo server. Usa l’URL di un’immagine.",
+      "choosePicture": "Scegli un’immagine da caricare.",
+      "tooLarge": "Questa immagine è troppo grande. Provane una più piccola.",
+      "wrongType": "Usa un’immagine PNG, JPEG o WebP.",
+      "url": {
+        "tooLong": "Questo URL è troppo lungo.",
+        "notFull": "Inserisci l’URL completo dell’immagine, che inizia con https://",
+        "notHttps": "Usa un URL immagine https://.",
+        "withPassword": "Usa un URL senza password.",
+        "notPublic": "Usa un’immagine di un sito web pubblico."
+      }
+    },
+    "moveCode": {
+      "signIn": "Accedi per spostare i codici.",
+      "somethingWrong": "Qualcosa è andato storto.",
+      "pickWorkspace": "Scegli uno spazio di lavoro.",
+      "rateLimited": "Troppi spostamenti. Attendi un minuto.",
+      "alreadyHere": "Il codice è già in questo spazio di lavoro.",
+      "codeNotFound": "QR code non trovato",
+      "cantAddCodes": "Non puoi aggiungere codici a {name}. {reason}",
+      "othersCodes": "Solo proprietari e amministratori possono spostare i codici creati da altri membri.",
+      "pageCode": "I codici che aprono una pagina ospitata non possono essere spostati in un altro spazio di lavoro: la pagina resta qui.",
+      "domainNotInTarget": "Il link di questo codice è su {hostname}, che {name} non ha. Il link stampato smetterebbe di funzionare, quindi non può essere spostato.",
+      "limitReached": "{name} ha usato tutti i {limit} QR code dinamici attivi inclusi nel suo piano. Archiviane uno lì, oppure archivia prima questo codice."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "Richiesta non valida.",
+      "rateLimited": "Troppe richieste. Attendi un minuto e riprova.",
+      "planRequired": "Richiedere la verifica in due passaggi è incluso in {plan}.",
+      "ownFirst": "Attiva prima la verifica in due passaggi per il tuo account, in Impostazioni sotto Profilo e sicurezza.",
+      "signIn": "Accedi per modificare le impostazioni di questo spazio di lavoro.",
+      "somethingWrong": "Qualcosa è andato storto. Riprova."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "Inviato per {name} da <link>{host}</link>",

@@ -24,6 +24,12 @@ const state = vi.hoisted(() => {
   };
 });
 
+// Answers in the signed-in app's language, English here
+// (lib/i18n/workspace-actions.ts).
+vi.mock(
+  "@/lib/i18n/app-locale",
+  async () => (await import("../support/intl")).appLocale,
+);
 vi.mock(
   "drizzle-orm",
   async () => (await import("../support/fake-db")).drizzle,

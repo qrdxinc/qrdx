@@ -8,8 +8,11 @@ import {
   qrCodeTag,
 } from "@repo/database";
 import { and, eq, isNull } from "drizzle-orm";
-import { HttpError } from "@/lib/error-response";
-import { can, forbiddenMessage } from "@/lib/permissions";
+import {
+  forbiddenText,
+  WorkspaceActionError,
+} from "@/lib/i18n/workspace-actions";
+import { can } from "@/lib/permissions";
 import { assertCan } from "@/lib/permissions-server";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import type { ActiveScope } from "@/lib/scope";
@@ -27,7 +30,8 @@ import { countUnarchived, getCode, type QrCodeView } from "./qr-codes";
 // a code on a custom domain can't move (the domain belongs to this
 // workspace). Scans, versions and conversions hang off the code's id, so
 // they move with it. Folders and tags belong to a workspace, so the code
-// leaves them behind.
+// leaves them behind. Refusals are WorkspaceActionErrors: English messages
+// actions/move-code.ts says in the person's language.
 
 export interface MoveTarget {
   id: string;
@@ -65,7 +69,8 @@ export interface MoveResult {
   leftBehind: { folder: boolean; tags: number };
 }
 
-const notFound = () => new HttpError(404, "NOT_FOUND", "QR code not found");
+const notFound = () =>
+  new WorkspaceActionError(404, "NOT_FOUND", (t) => t("moveCode.codeNotFound"));
 
 /**
  * Moves the code `id` from the scope's workspace to `targetId`. Needs the
@@ -79,15 +84,15 @@ export async function moveCodeToWorkspace(
 ): Promise<MoveResult> {
   assertCan(scope, "content.write");
   if (targetId === scope.organizationId) {
-    throw new HttpError(
-      400,
-      "VALIDATION_ERROR",
-      "The code is already in this workspace.",
+    throw new WorkspaceActionError(400, "VALIDATION_ERROR", (t) =>
+      t("moveCode.alreadyHere"),
     );
   }
   const target = await findWorkspaceById(scope.userId, targetId);
   if (!target) {
-    throw new HttpError(404, "NOT_FOUND", "Workspace not found.");
+    throw new WorkspaceActionError(404, "NOT_FOUND", (t) =>
+      t("shared.workspaceNotFound"),
+    );
   }
   const targetScope: ActiveScope = {
     userId: scope.userId,
@@ -95,10 +100,11 @@ export async function moveCodeToWorkspace(
     role: target.role,
   };
   if (!can(target.role, "content.write")) {
-    throw new HttpError(
-      403,
-      "FORBIDDEN",
-      `You can't add codes to ${target.name}. ${forbiddenMessage(target.role, "content.write")}`,
+    throw new WorkspaceActionError(403, "FORBIDDEN", (t) =>
+      t("moveCode.cantAddCodes", {
+        name: target.name,
+        reason: forbiddenText(t, target.role, "content.write"),
+      }),
     );
   }
   if (await shutsOut(scope.userId, target)) throw new TwoFactorRequiredError();
@@ -116,17 +122,13 @@ export async function moveCodeToWorkspace(
     .limit(1);
   if (!row) throw notFound();
   if (!can(scope.role, "content.manageAll") && row.userId !== scope.userId) {
-    throw new HttpError(
-      403,
-      "FORBIDDEN",
-      "Only owners and admins can move codes that other members created.",
+    throw new WorkspaceActionError(403, "FORBIDDEN", (t) =>
+      t("moveCode.othersCodes"),
     );
   }
   if (row.kind === "page" || row.pageId) {
-    throw new HttpError(
-      400,
-      "PAGE_CODE",
-      "Codes that open a hosted page can't move to another workspace: the page stays here.",
+    throw new WorkspaceActionError(400, "PAGE_CODE", (t) =>
+      t("moveCode.pageCode"),
     );
   }
   if (row.domainId) {
@@ -139,10 +141,11 @@ export async function moveCodeToWorkspace(
       .where(eq(customDomain.id, row.domainId))
       .limit(1);
     if (domain && domain.organizationId !== target.id) {
-      throw new HttpError(
-        400,
-        "DOMAIN_NOT_IN_TARGET",
-        `This code's link is on ${domain.hostname}, which ${target.name} doesn't have. Its printed link would stop working, so it can't move.`,
+      throw new WorkspaceActionError(400, "DOMAIN_NOT_IN_TARGET", (t) =>
+        t("moveCode.domainNotInTarget", {
+          hostname: domain.hostname,
+          name: target.name,
+        }),
       );
     }
   }
@@ -152,10 +155,11 @@ export async function moveCodeToWorkspace(
   const full = async () =>
     capped && (await countUnarchived(targetScope)) >= limits.dynamicCodes;
   const limitError = () =>
-    new HttpError(
-      402,
-      "LIMIT_REACHED",
-      `${target.name} has used all ${limits.dynamicCodes} active dynamic codes its plan includes. Archive one there, or archive this code first.`,
+    new WorkspaceActionError(402, "LIMIT_REACHED", (t) =>
+      t("moveCode.limitReached", {
+        name: target.name,
+        limit: String(limits.dynamicCodes),
+      }),
     );
   if (await full()) throw limitError();
 

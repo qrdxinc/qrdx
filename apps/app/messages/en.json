@@ -9080,6 +9080,107 @@
       }
     }
   },
+  "workspaceActions": {
+    "shared": {
+      "workspaceNotFound": "Workspace not found.",
+      "twoFactorRequired": "This workspace requires two-step verification. Turn it on in Settings, under Profile & security, then try again."
+    },
+    "forbidden": {
+      "viewer": "You're a viewer here. {only}",
+      "billingRole": "Your billing role covers the plan only. {only}",
+      "contentWrite": "Only owners, admins and members can create or change things in this workspace.",
+      "workspaceUpdate": "Only owners and admins can change this workspace's settings.",
+      "membersManage": "Only owners and admins can manage this workspace's people."
+    },
+    "organizations": {
+      "nameTooShort": "Workspace name is too short.",
+      "nameTooLong": "Workspace name is too long.",
+      "slugFormat": "Use 3-48 lowercase letters, numbers and dashes.",
+      "slugReserved": "That URL is reserved. Pick another one.",
+      "invalidEmail": "Enter a valid email",
+      "invalidDetails": "Invalid workspace details.",
+      "invalidInvitation": "Invalid invitation.",
+      "invalidRole": "Invalid role.",
+      "invalidMember": "Invalid member.",
+      "invalidWorkspace": "Invalid workspace.",
+      "moreWorkspaces": "More workspaces are part of {pro} and {business}.",
+      "urlTaken": "That workspace URL is already taken.",
+      "alreadyMember": "That person is already a member of this workspace.",
+      "needsOwner": "A workspace needs at least one owner. Make someone else an owner first.",
+      "wrongRecipient": "This invitation was sent to a different email address.",
+      "verifyEmailFirst": "Verify your email address before responding to this invitation.",
+      "invitationGone": "This invitation is no longer valid.",
+      "workspaceFull": "This workspace is full. {pro} workspaces have up to {members} members; {business} workspaces have no limit.",
+      "noFreeSeat": "This workspace has no free seats for another invitation. Revoke a pending invitation or upgrade the workspace's plan.",
+      "signIn": "Sign in to manage workspaces.",
+      "somethingWrong": "Something went wrong. Please try again.",
+      "rateLimited": "Too many requests. Please wait a minute and try again.",
+      "ownerRoleOwnersOnly": "Only owners can make someone an owner, or change an owner's role.",
+      "billingRoleOwnersOnly": "Only owners can give or take away the {billing} role, since it decides who pays for the workspace.",
+      "seatsNeedPaidOwner": "Adding members needs a workspace owner on {pro} or {business}.",
+      "seatsUsed": "This workspace has used all {seats} seats (members plus pending invitations). Revoke an invitation, or upgrade a workspace owner to {business} for unlimited members.",
+      "nothingToSave": "Nothing to save.",
+      "notAMember": "That person isn't a member of this workspace.",
+      "removeOwnerOwnersOnly": "Only owners can remove an owner from the workspace.",
+      "removeBillingOwnersOnly": "Only owners can remove a billing member from the workspace.",
+      "cantLeaveOwn": "You can't leave your own workspace.",
+      "deleteOwnersOnly": "Only owners can delete a workspace.",
+      "ownCantBeDeleted": "Your own workspace can't be deleted. Rename it instead.",
+      "typeUrlToConfirm": "Type the workspace URL exactly to confirm."
+    },
+    "joinLinks": {
+      "signIn": "Sign in to continue.",
+      "somethingWrong": "Something went wrong. Please try again.",
+      "rateLimited": "Too many requests. Please wait a few minutes and try again.",
+      "pickRole": "Pick a role for the link.",
+      "billingLinkOwnersOnly": "Only owners can make a link that gives the {billing} role.",
+      "resetOwnersOnly": "Only owners can reset a link that gives the {role} role.",
+      "changeOwnersOnly": "Only owners can change a link that gives the {role} role.",
+      "linkOff": "The join link is off.",
+      "incomplete": "This join link isn't complete.",
+      "unavailable": "Join links aren't set up on this server yet. Invite people by email for now.",
+      "linkDead": "This join link doesn't work anymore. Ask the workspace for a new one.",
+      "noSeatYet": "This workspace has no seat for another member yet. Ask an owner to upgrade it to {pro} or {business}.",
+      "seatsUsed": "This workspace has used all {seats} seats. Ask an owner to free one or upgrade it to {business}."
+    },
+    "logo": {
+      "signIn": "Sign in to continue.",
+      "somethingWrong": "Something went wrong. Please try again.",
+      "tooManyChanges": "Too many changes. Please wait a few minutes.",
+      "uploadsUnavailable": "Logo uploads aren't set up on this server. Use an image URL.",
+      "choosePicture": "Choose a picture to upload.",
+      "tooLarge": "That picture is too large. Try a smaller one.",
+      "wrongType": "Use a PNG, JPEG or WebP picture.",
+      "url": {
+        "tooLong": "That URL is too long.",
+        "notFull": "Enter a full image URL, starting with https://",
+        "notHttps": "Use an https:// image URL.",
+        "withPassword": "Use a URL without a password.",
+        "notPublic": "Use an image on a public website."
+      }
+    },
+    "moveCode": {
+      "signIn": "Sign in to move codes.",
+      "somethingWrong": "Something went wrong.",
+      "pickWorkspace": "Pick a workspace.",
+      "rateLimited": "Too many moves. Please wait a minute.",
+      "alreadyHere": "The code is already in this workspace.",
+      "codeNotFound": "QR code not found",
+      "cantAddCodes": "You can't add codes to {name}. {reason}",
+      "othersCodes": "Only owners and admins can move codes that other members created.",
+      "pageCode": "Codes that open a hosted page can't move to another workspace: the page stays here.",
+      "domainNotInTarget": "This code's link is on {hostname}, which {name} doesn't have. Its printed link would stop working, so it can't move.",
+      "limitReached": "{name} has used all {limit} active dynamic codes its plan includes. Archive one there, or archive this code first."
+    },
+    "twoFactorRequirement": {
+      "invalidRequest": "Invalid request.",
+      "rateLimited": "Too many requests. Please wait a minute and try again.",
+      "planRequired": "Requiring two-step verification comes with {plan}.",
+      "ownFirst": "Turn on two-step verification for your own account first, in Settings under Profile & security.",
+      "signIn": "Sign in to change this workspace's settings.",
+      "somethingWrong": "Something went wrong. Please try again."
+    }
+  },
   "emails": {
     "layout": {
       "sentFor": "Sent for {name} by <link>{host}</link>",

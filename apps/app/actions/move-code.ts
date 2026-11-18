@@ -11,12 +11,23 @@ import {
 } from "@/app/(app)/dashboard/codes/_lib/move-workspace";
 import { recordCodeMove } from "@/ee/audit-log/code-events";
 import { HttpError } from "@/lib/error-response";
+import {
+  forbiddenText,
+  type WorkspaceActionMessage,
+  workspaceActionsText,
+  workspaceActionText,
+  workspaceErrorText,
+} from "@/lib/i18n/workspace-actions";
+import type { WorkspaceRole } from "@/lib/permissions";
+import { ForbiddenError } from "@/lib/permissions-server";
 import { getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError } from "@/types/errors";
 
 // "Move to workspace…" in the code row menu. The rules live in
-// app/(app)/dashboard/codes/_lib/move-workspace.ts.
+// app/(app)/dashboard/codes/_lib/move-workspace.ts. Messages are in the
+// person's language (workspaceActions.moveCode in messages/en.json,
+// lib/i18n/workspace-actions.ts); `code` stays as it is.
 
 export type MoveCodeResult<T> =
   | { success: true; data: T }
@@ -29,24 +40,38 @@ const moveSchema = z.object({
   organizationId: z.string().trim().min(1).max(128),
 });
 
-function failure(error: unknown, action: string): MoveCodeResult<never> {
-  if (error instanceof UnauthorizedError) {
-    return {
-      success: false,
-      error: { code: "UNAUTHORIZED", message: "Sign in to move codes." },
-    };
-  }
-  if (error instanceof HttpError) {
-    return {
-      success: false,
-      error: { code: error.code, message: error.message },
-    };
-  }
-  logError(error as Error, { action });
+/** A refusal with `code`, saying `message` in the person's language. */
+async function refuse(
+  code: string,
+  message: WorkspaceActionMessage,
+): Promise<MoveCodeResult<never>> {
   return {
     success: false,
-    error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+    error: { code, message: await workspaceActionText(message) },
   };
+}
+
+/** `role`: the open workspace's, which assertCan refused with. */
+async function failure(
+  error: unknown,
+  action: string,
+  role?: WorkspaceRole,
+): Promise<MoveCodeResult<never>> {
+  if (error instanceof UnauthorizedError) {
+    return refuse("UNAUTHORIZED", (t) => t("moveCode.signIn"));
+  }
+  if (error instanceof HttpError) {
+    const t = await workspaceActionsText();
+    const message =
+      error instanceof ForbiddenError &&
+      role &&
+      error.action === "content.write"
+        ? forbiddenText(t, role, error.action)
+        : (workspaceErrorText(t, error) ?? error.message);
+    return { success: false, error: { code: error.code, message } };
+  }
+  logError(error as Error, { action });
+  return refuse("UNKNOWN_ERROR", (t) => t("moveCode.somethingWrong"));
 }
 
 /** Where the open workspace's codes can go: workspaces you may add codes to. */
@@ -67,24 +92,17 @@ export async function moveQrCodeToWorkspace(input: {
   id: string;
   organizationId: string;
 }): Promise<MoveCodeResult<MoveResult>> {
+  let role: WorkspaceRole | undefined;
   try {
     const scope = await getActiveScope();
+    role = scope.role;
     const parsed = moveSchema.safeParse(input);
     if (!parsed.success) {
-      return {
-        success: false,
-        error: { code: "VALIDATION_ERROR", message: "Pick a workspace." },
-      };
+      return refuse("VALIDATION_ERROR", (t) => t("moveCode.pickWorkspace"));
     }
     const { success } = await moveLimiter.limit(`move-code:${scope.userId}`);
     if (!success) {
-      return {
-        success: false,
-        error: {
-          code: "RATE_LIMITED",
-          message: "Too many moves. Please wait a minute.",
-        },
-      };
+      return refuse("RATE_LIMITED", (t) => t("moveCode.rateLimited"));
     }
     const result = await moveCodeToWorkspace(
       scope,
@@ -95,6 +113,6 @@ export async function moveQrCodeToWorkspace(input: {
     revalidatePath("/dashboard", "layout");
     return { success: true, data: result };
   } catch (error) {
-    return failure(error, "moveQrCodeToWorkspace");
+    return failure(error, "moveQrCodeToWorkspace", role);
   }
 }

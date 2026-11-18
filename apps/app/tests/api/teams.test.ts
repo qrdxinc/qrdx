@@ -11,6 +11,7 @@
 // The plugin's own callbacks in packages/auth/server.ts (who may create a
 // workspace, membershipLimit, invitationLimit) run for real in
 // tests/lib/self-hosted-plans.test.ts.
+import type { Locale } from "@repo/i18n/config";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 
@@ -29,6 +30,27 @@ const state = vi.hoisted(() => {
   };
 });
 
+// What i18n/request.ts gives getTranslations (the locale's catalog over
+// English), so actions answer in the app's language for real
+// (lib/i18n/workspace-actions.ts): English here, where nobody chose one.
+vi.mock("next-intl/server", async () => {
+  const { createTranslator } = await import("next-intl");
+  const { loadMessages } = await import("@/lib/i18n/messages");
+  return {
+    getTranslations: async ({
+      locale,
+      namespace,
+    }: {
+      locale: Locale;
+      namespace?: string;
+    }) =>
+      createTranslator({
+        locale,
+        messages: await loadMessages(locale),
+        namespace: namespace as never,
+      }),
+  };
+});
 vi.mock(
   "drizzle-orm",
   async () => (await import("../support/fake-db")).drizzle,
