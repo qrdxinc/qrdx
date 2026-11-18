@@ -2,9 +2,11 @@
 // The QRdx loaders (packages/design-system/components/loaders): each one is
 // a decorative SVG beside a visually hidden role="status" label, drawn at the
 // board's sizes, shown only after a delay, and still at full opacity with
-// reduced motion. Plus the toaster that uses Module orbit for loading toasts.
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+// reduced motion. Plus the toaster that uses Module orbit for loading toasts,
+// and the app's BrandLoader, which shows Jack-o'-scan instead of Scanframe
+// during Halloween.
+import { readdirSync, readFileSync } from "node:fs";
+import { join, relative } from "node:path";
 import {
   AssemblingCode,
   DEFAULT_LOADER_LABEL,
@@ -21,9 +23,22 @@ import {
 } from "@repo/design-system/components/loaders";
 import { Toaster } from "@repo/design-system/components/toaster";
 import type { ComponentType, ReactElement } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, it as test } from "vitest";
+import { act } from "react";
+import { createRoot, hydrateRoot } from "react-dom/client";
+import { renderToStaticMarkup, renderToString } from "react-dom/server";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  it as test,
+  vi,
+} from "vitest";
+import { BrandLoader } from "@/components/brand-loader";
 import { HALLOWEEN_PUMPKIN } from "@/components/seasonal/halloween-presets";
+import { HALLOWEEN_HIDDEN_KEY } from "@/components/seasonal/use-halloween";
+import { SEASON_OVERRIDE_STORAGE_KEY } from "@/lib/seasonal";
 
 const APP = join(import.meta.dirname, "../..");
 const DESIGN_SYSTEM = join(APP, "../../packages/design-system");
@@ -451,5 +466,112 @@ describe("the toaster", () => {
     expect(Object.keys(icons).sort()).toEqual(
       ["error", "info", "loading", "success", "warning"].sort(),
     );
+  });
+});
+
+describe("the seasonal swap", () => {
+  // BrandLoader follows lib/seasonal.ts (Halloween is 20 Oct – 2 Nov UTC,
+  // `?season=` previews it or turns it off) and the visitor's "Hide
+  // Halloween" choice, as the season's characters do.
+  (
+    globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
+  ).IS_REACT_ACT_ENVIRONMENT = true;
+
+  const HALLOWEEN = new Date("2026-10-28T12:00:00Z");
+  const NOVEMBER = new Date("2026-11-18T12:00:00Z");
+
+  let host: HTMLDivElement;
+
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    host = document.createElement("div");
+    document.body.append(host);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    host.remove();
+    window.history.replaceState(null, "", "/");
+    window.sessionStorage.removeItem(SEASON_OVERRIDE_STORAGE_KEY);
+    window.localStorage.removeItem(HALLOWEEN_HIDDEN_KEY);
+  });
+
+  /** Which loader BrandLoader shows on the client, on `date` at `url`. */
+  async function shown(date: Date, url = "/") {
+    vi.setSystemTime(date);
+    window.history.replaceState(null, "", url);
+    const root = createRoot(host);
+    await act(async () => root.render(<BrandLoader label="Loading…" />));
+    const pumpkin = host.querySelector('[class*="pumpkin"]') !== null;
+    const status = host.querySelector('[role="status"]')?.textContent;
+    act(() => root.unmount());
+    expect(status).toBe("Loading…");
+    return pumpkin ? "JackOScan" : "Scanframe";
+  }
+
+  it("shows Jack-o'-scan inside the Halloween window", async () => {
+    expect(await shown(new Date("2026-10-20T00:00:00Z"))).toBe("JackOScan");
+    expect(await shown(HALLOWEEN)).toBe("JackOScan");
+    expect(await shown(new Date("2026-11-02T23:59:00Z"))).toBe("JackOScan");
+  });
+
+  it("shows Scanframe outside it", async () => {
+    expect(await shown(new Date("2026-10-19T23:59:00Z"))).toBe("Scanframe");
+    expect(await shown(new Date("2026-11-03T00:00:00Z"))).toBe("Scanframe");
+    expect(await shown(NOVEMBER)).toBe("Scanframe");
+    expect(await shown(new Date("2026-12-24T12:00:00Z"))).toBe("Scanframe");
+  });
+
+  it("follows ?season= previews", async () => {
+    expect(await shown(HALLOWEEN, "/?season=off")).toBe("Scanframe");
+    window.sessionStorage.removeItem(SEASON_OVERRIDE_STORAGE_KEY);
+    expect(await shown(NOVEMBER, "/?season=halloween")).toBe("JackOScan");
+    // The preview lasts for the tab, as the rest of the season layer's does.
+    expect(await shown(NOVEMBER, "/")).toBe("JackOScan");
+    window.sessionStorage.removeItem(SEASON_OVERRIDE_STORAGE_KEY);
+    expect(await shown(HALLOWEEN, "/?season=christmas")).toBe("Scanframe");
+  });
+
+  it("stays Scanframe for a visitor who hid Halloween", async () => {
+    window.localStorage.setItem(HALLOWEEN_HIDDEN_KEY, "1");
+    expect(await shown(HALLOWEEN)).toBe("Scanframe");
+  });
+
+  it("renders Scanframe on the server and hydrates without a mismatch", async () => {
+    vi.setSystemTime(HALLOWEEN);
+    const html = renderToString(<BrandLoader />);
+    expect(html).not.toContain("pumpkin");
+    expect(html).toContain("qrdx-loader-pop");
+    host.innerHTML = html;
+    const errors: unknown[] = [];
+    const root = await act(async () =>
+      hydrateRoot(host, <BrandLoader />, {
+        onRecoverableError: (error) => errors.push(error),
+      }),
+    );
+    expect(errors).toEqual([]);
+    // Then the client swaps it for the season's loader.
+    expect(host.querySelector('[class*="pumpkin"]')).not.toBeNull();
+    act(() => root.unmount());
+  });
+
+  it("is how the app shows Scanframe everywhere", () => {
+    const skip = new Set(["node_modules", "tests", "e2e", ".next"]);
+    const offenders: string[] = [];
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        if (skip.has(entry.name) || entry.name.startsWith(".")) continue;
+        const full = join(dir, entry.name);
+        if (entry.isDirectory()) walk(full);
+        else if (
+          /\.tsx?$/.test(entry.name) &&
+          /\bScanframe\b/.test(readFileSync(full, "utf8"))
+        ) {
+          offenders.push(relative(APP, full));
+        }
+      }
+    };
+    walk(APP);
+    expect(offenders).toEqual(["components/brand-loader.tsx"]);
   });
 });

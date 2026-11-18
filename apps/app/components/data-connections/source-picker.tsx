@@ -1,7 +1,7 @@
 "use client";
 
 import { Close as X } from "@repo/design-system/components/icons";
-import { ModuleWave, Scanframe } from "@repo/design-system/components/loaders";
+import { ModuleWave } from "@repo/design-system/components/loaders";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
@@ -28,6 +28,7 @@ import {
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useCallback, useEffect, useId, useState } from "react";
+import { BrandLoader } from "@/components/brand-loader";
 import { emitSound } from "@/components/editor/sound";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { NeedsSetupBadge } from "@/components/needs-setup";
@@ -239,7 +240,7 @@ export function SourcePickerDialog({
         <div className="h-[340px] overflow-y-auto overscroll-contain rounded-md border">
           {loading && items.length === 0 ? (
             <div className="flex items-center justify-center p-8">
-              <Scanframe
+              <BrandLoader
                 aria-hidden
                 className="text-muted-foreground"
                 size={24}
