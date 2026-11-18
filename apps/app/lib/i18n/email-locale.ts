@@ -1,9 +1,11 @@
 import "server-only";
 
 // Which language an email goes out in: the recipient's saved language
-// (user.locale), else, for codes asked for before there's an account, the
+// (user.locale), else, for codes the person asked for themselves, the
 // language the site was in (the language menu's cookie on that request),
-// else English.
+// else English. Security notices (a new sign-in, a passkey or two-step
+// change, a new payout address) never use the request's language: whoever
+// made the change may not be the account's owner, which is why they're sent.
 import { database as db, user } from "@repo/database";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@repo/i18n/config";
 import { eq } from "drizzle-orm";
@@ -33,11 +35,18 @@ async function requestCookieLocale(): Promise<Locale | null> {
   }
 }
 
-/** For a code sent to an address (sign-in, a new address): account, else cookie. */
-export async function emailIntlForAddress(email: string): Promise<EmailIntl> {
+/**
+ * For a code sent to an address (sign-in, a new address, "Confirm it's you"):
+ * the account's language, else the cookie's. `fromRequest: false` for a
+ * security notice: the account's language, else English.
+ */
+export async function emailIntlForAddress(
+  email: string,
+  { fromRequest = true }: { fromRequest?: boolean } = {},
+): Promise<EmailIntl> {
   const locale =
     (await localeForAddress(email)) ??
-    (await requestCookieLocale()) ??
+    (fromRequest ? await requestCookieLocale() : null) ??
     DEFAULT_LOCALE;
   return emailIntl(locale);
 }

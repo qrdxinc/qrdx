@@ -8685,6 +8685,128 @@
       "enter": "Digite este código no QRdx para tornar este o e-mail da sua conta:",
       "ignore": "Se não foi você, ignore este e-mail. Nada muda sem o código."
     },
+    "security": {
+      "device": "Dispositivo",
+      "location": "Localização aproximada",
+      "ip": "Endereço IP",
+      "time": "Hora",
+      "by": "Por",
+      "support": "Suporte QRdx",
+      "review": "Revisar segurança",
+      "nothingElse": "Se foi você, não há mais nada a fazer."
+    },
+    "confirmationCode": {
+      "subject": "Seu código de confirmação do QRdx",
+      "preview": "Digite este código para confirmar que é você. Ele expira em {minutes, plural, one {# minuto} other {# minutos}}.",
+      "reason": "Você recebeu este e-mail porque alguém pediu para alterar a segurança da conta do QRdx com este endereço.",
+      "heading": "Confirme que é você",
+      "enter": "Digite este código no QRdx para confirmar que é você antes de uma alteração na segurança da sua conta:",
+      "notYou": "Se você não pediu isso, não digite o código: alguém pode estar conectado à sua conta. Revise sua segurança e fale com o suporte em <support>{email}</support> a partir deste endereço."
+    },
+    "newSignIn": {
+      "subject": "Novo login na sua conta do QRdx",
+      "preview": "{device} entrou na sua conta do QRdx{hasLocation, select, yes { perto de {location}} other {}}.",
+      "newDevice": "Um novo dispositivo",
+      "reason": "Você recebeu este e-mail porque este é o endereço de uma conta do QRdx e um navegador ou dispositivo entrou nela pela primeira vez.",
+      "body": "Um navegador ou dispositivo que nunca tinha entrado na sua conta do QRdx acabou de entrar.",
+      "signedInWith": "Login feito com",
+      "nothingToDo": "Se foi você, não precisa fazer nada.",
+      "notYou": "Se não foi você:",
+      "signOut": "Entre, vá em Configurações → Perfil e segurança e, em Sessões, clique em Sair em todos os outros.",
+      "turnOn": "Ative a verificação em duas etapas na mesma página, para que o login também exija sua passkey ou o app autenticador.",
+      "contact": "Fale com o suporte em <support>{email}</support> a partir deste endereço e vamos ajudar você a proteger sua conta.",
+      "methods": {
+        "emailOtp": "Código por e-mail",
+        "passkey": "Passkey",
+        "sso": "Login único"
+      },
+      "secondSteps": {
+        "totp": "um código do autenticador",
+        "backupCode": "um código de backup",
+        "passkey": "uma passkey"
+      },
+      "withSecondStep": "{method} e depois {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "Você recebeu este e-mail porque ele é o endereço de uma conta do QRdx, e avisamos sobre cada mudança na forma de entrar nela.",
+      "notYou": "Se não foi você, entre na sua conta e remova qualquer passkey que não reconheça. Depois, fale com o suporte em <support>{email}</support> a partir deste endereço.",
+      "added": {
+        "subject": "Uma passkey foi adicionada à sua conta do QRdx",
+        "preview": "A passkey \"{name}\" agora pode entrar na sua conta do QRdx.",
+        "body": "A passkey <strong>{name}</strong> agora pode entrar na sua conta do QRdx e funciona como segunda etapa quando a verificação em duas etapas está ativada."
+      },
+      "removed": {
+        "subject": "Uma passkey foi removida da sua conta do QRdx",
+        "preview": "A passkey \"{name}\" não pode mais entrar na sua conta do QRdx.",
+        "body": "A passkey <strong>{name}</strong> não pode mais entrar na sua conta do QRdx."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "Você recebeu este e-mail porque ele é o endereço de uma conta do QRdx, e a segurança de login dela mudou.",
+      "notYou": "Se não foi você, fale agora mesmo com o suporte em <support>{email}</support> a partir deste endereço, e vamos ajudar você a proteger sua conta.",
+      "on": {
+        "subject": "A verificação em duas etapas está ativada na sua conta do QRdx",
+        "heading": "Verificação em duas etapas ativada",
+        "body": "Agora, entrar no QRdx pede uma segunda etapa: sua passkey ou um código do seu app autenticador. Um código de backup funciona quando você não pode usar nenhum dos dois."
+      },
+      "off": {
+        "subject": "A verificação em duas etapas foi desativada na sua conta do QRdx",
+        "heading": "Verificação em duas etapas desativada",
+        "body": "Entrar no QRdx não pede mais uma segunda etapa. Seus códigos de backup não funcionam mais."
+      },
+      "backupCodes": {
+        "subject": "Novos códigos de backup da sua conta do QRdx",
+        "heading": "Você tem novos códigos de backup",
+        "body": "Novos códigos de backup foram gerados para sua conta do QRdx. Os antigos não funcionam mais."
+      },
+      "appAdded": {
+        "subject": "Um app autenticador foi adicionado à sua conta do QRdx",
+        "heading": "App autenticador adicionado",
+        "body": "Os códigos do app autenticador que você acabou de configurar agora funcionam como segunda etapa ao entrar no QRdx."
+      },
+      "appRemoved": {
+        "subject": "O app autenticador foi removido da sua conta do QRdx",
+        "heading": "App autenticador removido",
+        "body": "Os códigos do seu app autenticador não funcionam mais para entrar no QRdx. A verificação em duas etapas continua ativada com seus outros métodos."
+      },
+      "supportOff": {
+        "subject": "O suporte do QRdx desativou a verificação em duas etapas",
+        "heading": "Verificação em duas etapas desativada",
+        "body": "O suporte do QRdx desativou a verificação em duas etapas da sua conta e encerrou sua sessão em todos os dispositivos. Entrar não pede mais uma segunda etapa. Você pode ativá-la de novo em Configurações → Perfil e segurança."
+      },
+      "supportResetScheduled": {
+        "subject": "O suporte da QRdx vai desativar a verificação em duas etapas",
+        "heading": "O suporte vai desativar a verificação em duas etapas",
+        "body": "Alguém pediu ao suporte da QRdx para desativar a verificação em duas etapas da sua conta, dizendo que perdeu todos os meios de fazer a segunda etapa.",
+        "when": "O suporte vai desativá-la {hasDate, select, yes {em {date} (UTC)} other {em 7 dias}} e desconectar sua conta em todos os dispositivos. Até lá, nada muda.",
+        "howToStop": "Se foi você quem pediu, não precisa fazer nada. Se não foi, entre na QRdx com seu app autenticador ou um código de backup: isso cancela o pedido. Você também pode cancelar em Configurações → Perfil e segurança, ou responder a este e-mail."
+      },
+      "supportResetCancelled": {
+        "subject": "A verificação em duas etapas continua ativada na sua conta QRdx",
+        "heading": "A verificação em duas etapas continua ativada",
+        "body": "O pedido do suporte para desativar a verificação em duas etapas da sua conta foi cancelado. Nada mudou.",
+        "byPerson": "Você cancelou o pedido do suporte para desativar a verificação em duas etapas da sua conta QRdx.",
+        "bySignIn": "Você entrou com seu app autenticador ou um código de backup, então o pedido do suporte para desativar a verificação em duas etapas da sua conta QRdx foi cancelado.",
+        "bySupport": "O suporte da QRdx cancelou o pedido para desativar a verificação em duas etapas da sua conta.",
+        "staysOn": "A verificação em duas etapas continua ativada, com seus códigos de backup e métodos como estavam."
+      },
+      "backupCodeUsed": {
+        "subject": "Um código de backup foi usado na sua conta QRdx",
+        "heading": "Um código de backup foi usado",
+        "body": "Um dos seus códigos de backup acabou de ser usado para entrar na sua conta QRdx. Cada código funciona uma vez, então esse não funciona mais.",
+        "toConfirm": "Um dos seus códigos de backup acabou de ser usado para confirmar que é você antes de uma alteração de segurança na sua conta QRdx. Cada código funciona uma vez, então esse não funciona mais.",
+        "left": "{count, plural, =0 {Esse era o seu último código de backup.} one {Você tem # código de backup restante.} other {Você tem # códigos de backup restantes.}}",
+        "makeNew": "Gere novos em Configurações → Perfil e segurança, para continuar tendo uma forma de entrar quando não puder usar sua passkey ou seu app autenticador."
+      },
+      "signedOutElsewhere": "Todos os outros dispositivos conectados à sua conta foram desconectados, então cada um vai entrar de novo usando a segunda etapa."
+    },
+    "payoutEmailNotice": {
+      "subject": "Seus pagamentos de afiliado da QRdx agora vão para um novo endereço do PayPal",
+      "preview": "Os pagamentos de afiliado da QRdx serão enviados para {paypalEmail}.",
+      "reason": "Você recebeu este e-mail porque este é o endereço de uma conta QRdx no programa de afiliados, e avisamos sobre toda mudança no destino dos pagamentos dela.",
+      "body": "{replaced, select, yes {O endereço do PayPal dos seus pagamentos de afiliado foi alterado.} other {Um endereço do PayPal foi adicionado para seus pagamentos de afiliado.}} A partir de agora, enviaremos seus pagamentos para <strong>{paypalEmail}</strong>.",
+      "notYou": "Se não foi você, entre na conta, volte o endereço ao anterior em Configurações → Programa de afiliados e fale com o suporte em <support>{email}</support> a partir deste endereço antes do próximo pagamento."
+    },
     "alerts": {
       "viewAnalytics": "Ver análise de leituras",
       "milestoneReason": "Você recebe isto porque os alertas de marcos de leituras estão ativados para {workspace}."

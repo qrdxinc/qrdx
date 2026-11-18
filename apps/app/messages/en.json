@@ -9085,6 +9085,128 @@
       "enter": "Enter this code in QRdx to make this the email for your account:",
       "ignore": "If you didn't ask for this, ignore this email. Nothing changes without the code."
     },
+    "security": {
+      "device": "Device",
+      "location": "Approximate location",
+      "ip": "IP address",
+      "time": "Time",
+      "by": "By",
+      "support": "QRdx support",
+      "review": "Review security",
+      "nothingElse": "If this was you, there's nothing else to do."
+    },
+    "confirmationCode": {
+      "subject": "Your QRdx confirmation code",
+      "preview": "Enter this code to confirm it's you. It expires in {minutes, plural, one {# minute} other {# minutes}}.",
+      "reason": "You got this email because someone asked to change the security of the QRdx account with this address.",
+      "heading": "Confirm it's you",
+      "enter": "Enter this code in QRdx to confirm it's you before a change to your account's security:",
+      "notYou": "If you didn't ask for this, don't enter the code: someone may be signed in to your account. Review your security and contact support at <support>{email}</support> from this address."
+    },
+    "newSignIn": {
+      "subject": "New sign-in to your QRdx account",
+      "preview": "{device} signed in to your QRdx account{hasLocation, select, yes { near {location}} other {}}.",
+      "newDevice": "A new device",
+      "reason": "You got this email because it's the address of a QRdx account, and a browser or device signed in to it for the first time.",
+      "body": "A browser or device that hasn't signed in to your QRdx account before just did.",
+      "signedInWith": "Signed in with",
+      "nothingToDo": "If this was you, there's nothing to do.",
+      "notYou": "If this wasn't you:",
+      "signOut": "Sign in, go to Settings → Profile & security, and under Sessions click Sign out everywhere else.",
+      "turnOn": "Turn on two-step verification on the same page, so signing in also takes your passkey or authenticator app.",
+      "contact": "Contact support at <support>{email}</support> from this address, and we'll help you secure your account.",
+      "methods": {
+        "emailOtp": "Email code",
+        "passkey": "Passkey",
+        "sso": "Single sign-on"
+      },
+      "secondSteps": {
+        "totp": "an authenticator code",
+        "backupCode": "a backup code",
+        "passkey": "a passkey"
+      },
+      "withSecondStep": "{method}, then {secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "You got this email because it's the address of a QRdx account, and we tell you about every change to how it signs in.",
+      "notYou": "If this wasn't you, sign in and remove any passkey you don't recognise, then contact support at <support>{email}</support> from this address.",
+      "added": {
+        "subject": "A passkey was added to your QRdx account",
+        "preview": "The passkey \"{name}\" can now sign in to your QRdx account.",
+        "body": "The passkey <strong>{name}</strong> can now sign in to your QRdx account, and works as your second step when two-step verification is on."
+      },
+      "removed": {
+        "subject": "A passkey was removed from your QRdx account",
+        "preview": "The passkey \"{name}\" can no longer sign in to your QRdx account.",
+        "body": "The passkey <strong>{name}</strong> can no longer sign in to your QRdx account."
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "You got this email because it's the address of a QRdx account, and its sign-in security changed.",
+      "notYou": "If this wasn't you, contact support at <support>{email}</support> from this address straight away, and we'll help you secure your account.",
+      "on": {
+        "subject": "Two-step verification is on for your QRdx account",
+        "heading": "Two-step verification is on",
+        "body": "Signing in to QRdx now asks for a second step: your passkey or a code from your authenticator app. A backup code works when you can't use either."
+      },
+      "off": {
+        "subject": "Two-step verification was turned off on your QRdx account",
+        "heading": "Two-step verification is off",
+        "body": "Signing in to QRdx no longer asks for a second step. Your backup codes no longer work."
+      },
+      "backupCodes": {
+        "subject": "New backup codes for your QRdx account",
+        "heading": "You have new backup codes",
+        "body": "New backup codes were made for your QRdx account. The old ones no longer work."
+      },
+      "appAdded": {
+        "subject": "An authenticator app was added to your QRdx account",
+        "heading": "Authenticator app added",
+        "body": "Codes from the authenticator app you just set up now work as the second step when you sign in to QRdx."
+      },
+      "appRemoved": {
+        "subject": "The authenticator app was removed from your QRdx account",
+        "heading": "Authenticator app removed",
+        "body": "Codes from your authenticator app no longer work for signing in to QRdx. Two-step verification stays on with your other methods."
+      },
+      "supportOff": {
+        "subject": "QRdx support turned off two-step verification",
+        "heading": "Two-step verification is off",
+        "body": "QRdx support turned off two-step verification for your account and signed it out on every device. Signing in no longer asks for a second step. You can turn it on again in Settings → Profile & security."
+      },
+      "supportResetScheduled": {
+        "subject": "QRdx support will turn off two-step verification",
+        "heading": "Support will turn off two-step verification",
+        "body": "Someone asked QRdx support to turn off two-step verification for your account, saying they lost every way to do the second step.",
+        "when": "Support will turn it off {hasDate, select, yes {on {date} (UTC)} other {in 7 days}} and sign your account out on every device. Until then, nothing changes.",
+        "howToStop": "If you asked for this, there's nothing to do. If you didn't, sign in to QRdx with your authenticator app or a backup code: that cancels it. Or cancel it in Settings → Profile & security, or reply to this email."
+      },
+      "supportResetCancelled": {
+        "subject": "Two-step verification stays on for your QRdx account",
+        "heading": "Two-step verification stays on",
+        "body": "Support's request to turn off two-step verification for your account was cancelled. Nothing changed.",
+        "byPerson": "You cancelled support's request to turn off two-step verification for your QRdx account.",
+        "bySignIn": "You signed in with your authenticator app or a backup code, so support's request to turn off two-step verification for your QRdx account was cancelled.",
+        "bySupport": "QRdx support cancelled the request to turn off two-step verification for your account.",
+        "staysOn": "Two-step verification stays on, with your backup codes and methods as they were."
+      },
+      "backupCodeUsed": {
+        "subject": "A backup code was used on your QRdx account",
+        "heading": "A backup code was used",
+        "body": "One of your backup codes was just used to sign in to your QRdx account. Each code works once, so that one no longer works.",
+        "toConfirm": "One of your backup codes was just used to confirm it's you before a security change on your QRdx account. Each code works once, so that one no longer works.",
+        "left": "{count, plural, =0 {That was your last backup code.} one {You have # backup code left.} other {You have # backup codes left.}}",
+        "makeNew": "Make new ones in Settings → Profile & security, so you still have a way in when you can't use your passkey or authenticator app."
+      },
+      "signedOutElsewhere": "Every other device signed in to your account was signed out, so each one now signs in again with the second step."
+    },
+    "payoutEmailNotice": {
+      "subject": "Your QRdx affiliate payouts now go to a new PayPal address",
+      "preview": "Affiliate payouts from QRdx will be sent to {paypalEmail}.",
+      "reason": "You got this email because it's the address of a QRdx account in the affiliate program, and we tell you about every change to where its payouts go.",
+      "body": "{replaced, select, yes {The PayPal address for your affiliate payouts was changed.} other {A PayPal address for your affiliate payouts was added.}} From now on we send your payouts to <strong>{paypalEmail}</strong>.",
+      "notYou": "If this wasn't you, sign in, change the address back in Settings → Affiliate program, and contact support at <support>{email}</support> from this address before the next payout."
+    },
     "alerts": {
       "viewAnalytics": "View scan analytics",
       "milestoneReason": "You get this because scan milestone alerts are on for {workspace}."

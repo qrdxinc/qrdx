@@ -8685,6 +8685,128 @@
       "enter": "请在 QRdx 中输入此验证码，将此邮箱设为你的账号邮箱：",
       "ignore": "如果这不是你本人的操作，请忽略这封邮件。没有验证码，一切都不会改变。"
     },
+    "security": {
+      "device": "设备",
+      "location": "大致位置",
+      "ip": "IP 地址",
+      "time": "时间",
+      "by": "操作方",
+      "support": "QRdx 支持团队",
+      "review": "检查安全设置",
+      "nothingElse": "如果是您本人操作，则无需进行其他操作。"
+    },
+    "confirmationCode": {
+      "subject": "您的 QRdx 确认码",
+      "preview": "输入此确认码，确认是您本人操作。确认码将在 {minutes, plural, one {# 分钟} other {# 分钟}}后失效。",
+      "reason": "您收到这封邮件，是因为有人请求更改使用此邮箱地址的 QRdx 账户的安全设置。",
+      "heading": "确认是您本人操作",
+      "enter": "请在 QRdx 中输入此确认码，以便在更改账户安全设置前确认是您本人操作：",
+      "notYou": "如果这不是您本人的请求，请不要输入此确认码：可能有人已登录您的账户。请检查安全设置，并使用此邮箱地址通过 <support>{email}</support> 联系支持团队。"
+    },
+    "newSignIn": {
+      "subject": "您的 QRdx 账户有新的登录",
+      "preview": "{device} 已登录您的 QRdx 账户{hasLocation, select, yes {，位置在 {location} 附近} other {}}。",
+      "newDevice": "一台新设备",
+      "reason": "您收到这封邮件，是因为这是某个 QRdx 账户的邮箱地址，并且有浏览器或设备首次登录了该账户。",
+      "body": "刚刚有一个此前未登录过您 QRdx 账户的浏览器或设备登录了该账户。",
+      "signedInWith": "登录方式",
+      "nothingToDo": "如果是您本人登录，则无需任何操作。",
+      "notYou": "如果这不是您本人操作：",
+      "signOut": "登录后，前往“设置 → 个人资料与安全”，在“会话”下点击“退出其他所有设备”。",
+      "turnOn": "在同一页面开启两步验证，这样登录时还需要使用您的通行密钥或验证器应用。",
+      "contact": "请使用此邮箱地址通过 <support>{email}</support> 联系支持团队，我们将帮助您保护账户安全。",
+      "methods": {
+        "emailOtp": "邮箱验证码",
+        "passkey": "通行密钥",
+        "sso": "单点登录"
+      },
+      "secondSteps": {
+        "totp": "验证器应用的验证码",
+        "backupCode": "备份码",
+        "passkey": "通行密钥"
+      },
+      "withSecondStep": "{method}，然后{secondStep}"
+    },
+    "passkeyNotice": {
+      "reason": "您收到这封邮件，是因为该邮箱是一个 QRdx 账户的地址，而该账户的登录方式有任何变更，我们都会通知您。",
+      "notYou": "如果这不是您本人所为，请登录并移除任何您不认识的通行密钥，然后用此邮箱地址联系支持团队：<support>{email}</support>。",
+      "added": {
+        "subject": "您的 QRdx 账户已添加通行密钥",
+        "preview": "通行密钥“{name}”现在可以登录您的 QRdx 账户。",
+        "body": "通行密钥 <strong>{name}</strong> 现在可以登录您的 QRdx 账户，并在开启两步验证时用作第二步验证。"
+      },
+      "removed": {
+        "subject": "您的 QRdx 账户已移除通行密钥",
+        "preview": "通行密钥“{name}”已无法再登录您的 QRdx 账户。",
+        "body": "通行密钥 <strong>{name}</strong> 已无法再登录您的 QRdx 账户。"
+      }
+    },
+    "twoFactorNotice": {
+      "reason": "您收到这封邮件，是因为该邮箱是一个 QRdx 账户的地址，而该账户的登录安全设置已发生变更。",
+      "notYou": "如果这不是您本人所为，请立即用此邮箱地址联系支持团队：<support>{email}</support>，我们会帮助您保护账户安全。",
+      "on": {
+        "subject": "您的 QRdx 账户已开启两步验证",
+        "heading": "两步验证已开启",
+        "body": "现在登录 QRdx 需要进行第二步验证：使用您的通行密钥或验证器应用中的验证码。如果两者都无法使用，可以使用备用码。"
+      },
+      "off": {
+        "subject": "您的 QRdx 账户已关闭两步验证",
+        "heading": "两步验证已关闭",
+        "body": "现在登录 QRdx 不再需要第二步验证。您的备用码也已失效。"
+      },
+      "backupCodes": {
+        "subject": "您的 QRdx 账户有了新的备用码",
+        "heading": "您有了新的备用码",
+        "body": "已为您的 QRdx 账户生成新的备用码，旧的备用码已失效。"
+      },
+      "appAdded": {
+        "subject": "您的 QRdx 账户已添加验证器应用",
+        "heading": "已添加验证器应用",
+        "body": "现在登录 QRdx 时，您刚设置的验证器应用中的验证码可用作第二步验证。"
+      },
+      "appRemoved": {
+        "subject": "您的 QRdx 账户已移除验证器应用",
+        "heading": "已移除验证器应用",
+        "body": "您的验证器应用中的验证码已无法用于登录 QRdx。两步验证仍会通过您的其他方式保持开启。"
+      },
+      "supportOff": {
+        "subject": "QRdx 支持团队已关闭两步验证",
+        "heading": "两步验证已关闭",
+        "body": "QRdx 支持团队已为您的账户关闭两步验证，并让它在所有设备上退出登录。现在登录不再需要第二步验证。您可以在“设置 → 个人资料与安全”中重新开启。"
+      },
+      "supportResetScheduled": {
+        "subject": "QRdx 支持团队将关闭两步验证",
+        "heading": "支持团队将关闭两步验证",
+        "body": "有人请求 QRdx 支持团队关闭你账户的两步验证，称已无法完成第二步验证的任何方式。",
+        "when": "支持团队将{hasDate, select, yes {于 {date}（UTC）} other {在 7 天后}}将其关闭，并让你的账户在所有设备上退出登录。在此之前，一切保持不变。",
+        "howToStop": "如果是你本人提出的请求，无需任何操作。如果不是，请使用验证器应用或备用码登录 QRdx，即可取消该请求。你也可以在“设置 → 个人资料与安全”中取消，或直接回复此邮件。"
+      },
+      "supportResetCancelled": {
+        "subject": "你的 QRdx 账户将继续启用两步验证",
+        "heading": "两步验证将继续启用",
+        "body": "支持团队关闭你账户两步验证的请求已被取消，一切保持不变。",
+        "byPerson": "你已取消支持团队关闭你 QRdx 账户两步验证的请求。",
+        "bySignIn": "你已使用验证器应用或备用码登录，因此支持团队关闭你 QRdx 账户两步验证的请求已被取消。",
+        "bySupport": "QRdx 支持团队已取消关闭你账户两步验证的请求。",
+        "staysOn": "两步验证将继续启用，你的备用码和验证方式保持原样。"
+      },
+      "backupCodeUsed": {
+        "subject": "你的 QRdx 账户使用了一个备用码",
+        "heading": "一个备用码已被使用",
+        "body": "你的一个备用码刚刚被用于登录 QRdx 账户。每个备用码只能使用一次，因此该备用码已失效。",
+        "toConfirm": "你的一个备用码刚刚被用于在 QRdx 账户进行安全变更前确认是你本人操作。每个备用码只能使用一次，因此该备用码已失效。",
+        "left": "{count, plural, =0 {这是你的最后一个备用码。} one {你还剩 # 个备用码。} other {你还剩 # 个备用码。}}",
+        "makeNew": "请在“设置 → 个人资料与安全”中生成新的备用码，这样在无法使用通行密钥或验证器应用时，你仍有办法登录。"
+      },
+      "signedOutElsewhere": "你账户在其他所有设备上的登录均已退出，这些设备现在需要通过第二步验证重新登录。"
+    },
+    "payoutEmailNotice": {
+      "subject": "你的 QRdx 联盟计划付款现将发送至新的 PayPal 地址",
+      "preview": "QRdx 联盟计划的付款将发送至 {paypalEmail}。",
+      "reason": "你收到这封邮件，是因为此邮箱地址对应一个已加入联盟计划的 QRdx 账户，而该账户的付款去向发生任何变更，我们都会通知你。",
+      "body": "{replaced, select, yes {你的联盟计划付款所用的 PayPal 地址已被更改。} other {你的联盟计划付款已添加一个 PayPal 地址。}}今后我们会将付款发送至 <strong>{paypalEmail}</strong>。",
+      "notYou": "如果这不是你本人的操作，请登录，在“设置 → 推广计划”中把地址改回来，并在下一次付款前使用此邮箱地址联系支持团队：<support>{email}</support>。"
+    },
     "alerts": {
       "viewAnalytics": "查看扫描分析",
       "milestoneReason": "你收到此邮件，是因为 {workspace} 已开启扫描里程碑提醒。"

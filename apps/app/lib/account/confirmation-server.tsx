@@ -38,9 +38,10 @@ import {
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import { sendEmail } from "@/lib/email/send";
 import {
-  CONFIRMATION_CODE_SUBJECT,
   ConfirmationCodeEmail,
+  confirmationCodeSubject,
 } from "@/lib/email/templates/confirmation-code";
+import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import { currentRequestDetails } from "@/lib/security/request-details";
 import { logError } from "@/lib/shared";
 import {
@@ -718,7 +719,9 @@ export async function sendConfirmationCode(): Promise<ConfirmResult> {
       },
       new Date(Date.now() + CONFIRMATION_CODE_MINUTES * 60_000),
     );
-    const details = await currentRequestDetails();
+    // The person asked for it: their language, else the site's (the cookie).
+    const intl = await emailIntlForAddress(session.email);
+    const details = await currentRequestDetails(new Date(), intl.locale);
     try {
       await deliverSignInCode(
         { email: session.email, otp: code },
@@ -729,12 +732,13 @@ export async function sendConfirmationCode(): Promise<ConfirmResult> {
           send: () =>
             sendEmail({
               to: session.email,
-              subject: CONFIRMATION_CODE_SUBJECT,
+              subject: confirmationCodeSubject(intl),
               react: (
                 <ConfirmationCodeEmail
                   code={code}
                   details={details}
                   expiresInMinutes={CONFIRMATION_CODE_MINUTES}
+                  intl={intl}
                 />
               ),
               tags: [{ name: "category", value: "confirmation_code" }],
