@@ -254,9 +254,12 @@ export function useImportRunner(
         commit({ ...current, status: finished ? "done" : "paused" });
         soundEvent(finished && progress.created > 0 ? "success" : "error");
         if (finished) {
-          track("import_completed", {
-            provider: "csv",
-            count: progress.created,
+          track("import_finished", {
+            provider: "bulk",
+            source: "file",
+            rows: progress.total + current.skipped.length,
+            created: progress.created,
+            skipped: current.skipped.length,
             failed: progress.rowErrors,
           });
         }

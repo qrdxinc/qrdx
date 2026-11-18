@@ -37,6 +37,17 @@ export async function hasAnalyticsConsent(): Promise<boolean> {
   }
 }
 
+/** Options naming `userId` if this request allowed analytics, else none. */
+export async function userEventOptions(
+  userId: string,
+  dedupeKey?: string,
+): Promise<ServerEventOptions> {
+  return {
+    distinctId: (await hasAnalyticsConsent()) ? userId : null,
+    ...(dedupeKey && { dedupeKey }),
+  };
+}
+
 /** A stable UUID (v4 layout) from a key. */
 function uuidFromKey(key: string): string {
   const hex = createHash("sha256").update(key).digest("hex").slice(0, 32);
@@ -77,6 +88,11 @@ function isServerAnalyticsEnabled(): boolean {
   return !env.VERCEL_ENV || env.VERCEL_ENV === "production";
 }
 
+/** Whether server events go out here: a PostHog key, in production. */
+export function serverEventsEnabled(): boolean {
+  return Boolean(env.NEXT_PUBLIC_POSTHOG_KEY) && isServerAnalyticsEnabled();
+}
+
 async function send(body: ReturnType<typeof buildServerEvent>) {
   const host = (env.NEXT_PUBLIC_POSTHOG_HOST ?? DEFAULT_POSTHOG_HOST).replace(
     /\/$/,
@@ -114,5 +130,38 @@ export function trackServer<E extends ServerAnalyticsEventName>(
   } catch {
     // Outside a request scope.
     void send(body);
+  }
+}
+
+/**
+ * trackServer for an event that needs work first (a database read, the
+ * consent cookie): `build` runs after the response, in Route Handlers and
+ * Server Functions, and null sends nothing. Nothing runs where server events
+ * are off. Never throws and never delays the request.
+ */
+export function trackServerAfter<E extends ServerAnalyticsEventName>(
+  event: E,
+  build: () => Promise<{
+    props: AnalyticsEvents[E];
+    options?: ServerEventOptions;
+  } | null>,
+): void {
+  const apiKey = env.NEXT_PUBLIC_POSTHOG_KEY;
+  if (!(apiKey && isServerAnalyticsEnabled())) return;
+  const task = async () => {
+    try {
+      const built = await build();
+      if (!built) return;
+      const props = sanitizeProps(built.props);
+      await send(buildServerEvent(event, props, apiKey, built.options));
+    } catch (error) {
+      console.error("PostHog capture failed:", event, error);
+    }
+  };
+  try {
+    after(task);
+  } catch {
+    // Outside a request scope.
+    void task();
   }
 }

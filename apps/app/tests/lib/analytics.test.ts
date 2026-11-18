@@ -208,6 +208,29 @@ describe("PostHog consent gating", () => {
     }
   });
 
+  it("holds the dashboard CSV import's events for consent, with counts only", async () => {
+    installBrowser({ path: "/dashboard/acme/codes/import" });
+    const a = await load();
+    const finished = {
+      provider: "bulk",
+      source: "file",
+      rows: 3,
+      created: 2,
+      skipped: 1,
+      failed: 0,
+    } as const;
+    a.setPostHogConsent(false);
+    a.track("import_finished", finished);
+    await settle();
+    expect(posthog.capture).not.toHaveBeenCalled();
+
+    a.setPostHogConsent(true);
+    await settle();
+    a.track("import_finished", finished);
+    expect(posthog.capture).toHaveBeenCalledTimes(1);
+    expect(posthog.capture).toHaveBeenCalledWith("import_finished", finished);
+  });
+
   it("sends nothing in development without the debug opt-in", async () => {
     const { umami } = installBrowser({ debug: false });
     const a = await load({ NEXT_PUBLIC_UMAMI_WEBSITE_ID: "site-1" });

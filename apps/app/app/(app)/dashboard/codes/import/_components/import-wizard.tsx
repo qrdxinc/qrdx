@@ -340,7 +340,13 @@ export function ImportWizard({
 
   const runImport = () => {
     if (!file || validRows.length === 0) return;
-    track("import_started", { provider: "csv", count: validRows.length });
+    track("import_started", {
+      provider: "bulk",
+      source: "file",
+      rows: rows.length,
+      to_create: validRows.length,
+      skipped: rows.length - validRows.length,
+    });
     void runner.start(
       createImportJob({
         id: crypto.randomUUID(),

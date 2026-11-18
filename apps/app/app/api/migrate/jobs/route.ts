@@ -1,4 +1,5 @@
 import { listJobs, startJob } from "@/lib/migrate/importer";
+import { trackImportStarted } from "@/lib/migrate/server/analytics";
 import {
   deps,
   migrateScope,
@@ -22,6 +23,8 @@ export function POST(req: Request) {
   return respond("POST /api/migrate/jobs", async () => {
     const scope = await migrateScope(req, { write: true });
     const request = await readBody(req, startJobSchema);
-    return startJob(deps, scope, request);
+    const started = await startJob(deps, scope, request);
+    trackImportStarted(scope, started);
+    return started;
   });
 }
