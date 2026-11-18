@@ -14,6 +14,7 @@
     "./featurebase-launcher": "./featurebase-launcher.ts",
     "./identity": "./identity.ts",
     "./keys": "./keys.ts",
+    "./landing": "./landing.ts",
     "./posthog": "./posthog.ts",
     "./privacy": "./privacy.ts",
     "./track": "./track.ts",
