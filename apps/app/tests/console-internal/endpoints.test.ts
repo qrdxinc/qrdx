@@ -247,7 +247,11 @@ async function call(path: RoutePath, fields: Record<string, unknown> = {}) {
   };
   const pathname = `/api/internal/console/${path}`;
   const body = JSON.stringify({
-    actor: { userId: ACTOR.id, sessionId: ACTOR.sessionId },
+    actor: {
+      userId: ACTOR.id,
+      sessionId: ACTOR.sessionId,
+      grant: "g".repeat(43),
+    },
     ...fields,
   });
   const parts = {

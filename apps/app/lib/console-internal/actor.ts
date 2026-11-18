@@ -18,16 +18,15 @@ import { isBanActive } from "@/lib/oauth";
 //
 // Session ids aren't secret, so the console also sends the grant its sign-in
 // got (lib/admin-console/grants.ts), which only that admin's console cookie
-// holds: when a call carries one, it must be a grant this app minted for
-// this admin and this session, still good, or the call is refused
-// (grant_invalid). Calls without one are still accepted, until every console
-// session carries a grant.
+// holds: it must be a grant this app minted for this admin and this
+// session, still good, or the call is refused (grant_invalid; a call
+// without one never gets here: ./route.ts answers grant_required).
 
 export interface ConsoleActorClaim {
   userId: string;
   sessionId: string;
-  /** The console sign-in's grant, when the console sends one. */
-  grant?: string;
+  /** The console sign-in's grant. */
+  grant: string;
 }
 
 export interface ConsoleActor extends AdminUser {
@@ -37,8 +36,8 @@ export interface ConsoleActor extends AdminUser {
 
 /**
  * The admin the console acts for, or null when the claim doesn't hold.
- * Throws an HttpError 403 (GRANT_INVALID) for an admin whose call carries a
- * grant this app doesn't hold for them and this session.
+ * Throws an HttpError 403 (GRANT_INVALID) for an admin whose grant this app
+ * doesn't hold for them and this session.
  */
 export async function loadConsoleActor(
   claim: ConsoleActorClaim,
@@ -70,14 +69,12 @@ export async function loadConsoleActor(
         ),
       )
       .limit(1),
-    claim.grant === undefined
-      ? null
-      : isAdminConsoleGrant(claim.grant, claim, now),
+    isAdminConsoleGrant(claim.grant, claim, now),
   ]);
   if (!(found && alive)) return null;
   if (found.emailVerified !== true || isBanActive(found, now)) return null;
   if (!isAdmin(found)) return null;
-  if (claim.grant !== undefined && !granted) {
+  if (!granted) {
     throw new HttpError(403, "GRANT_INVALID", "grant_invalid");
   }
   return {

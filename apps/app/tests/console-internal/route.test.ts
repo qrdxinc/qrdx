@@ -172,7 +172,8 @@ const { DrizzleQueryError } = await import("drizzle-orm/errors");
 
 const SECRET = "k".repeat(48);
 const PATH = "/api/internal/console/test";
-const ACTOR = { userId: "u_admin", sessionId: "sess_admin" };
+const GRANT = "g".repeat(43);
+const ACTOR = { userId: "u_admin", sessionId: "sess_admin", grant: GRANT };
 
 const adminRow = (overrides: Record<string, unknown> = {}) => ({
   id: "u_admin",
@@ -233,9 +234,29 @@ const POST = consoleInternalRoute({
   run,
 });
 
-/** Scripts the actor check: the user row, then whether the session is alive. */
-const actorRows = (row: unknown, sessionAlive = true) => {
+/** The grant row this app holds for an actor's grant. */
+const mintedFor = (
+  { userId, sessionId }: { userId: string; sessionId: string },
+  overrides: Record<string, unknown> = {},
+) => ({
+  userId,
+  sessionId,
+  expiresAt: new Date(Date.now() + 60_000),
+  ...overrides,
+});
+
+/**
+ * Scripts the actor check: the grant's row (its lookup starts first, as the
+ * check begins; by default the one minted for ACTOR), then the user row and
+ * whether the session is alive.
+ */
+const actorRows = (
+  row: unknown,
+  sessionAlive = true,
+  grant: Record<string, unknown> | Error | null = mintedFor(ACTOR),
+) => {
   state.results.push(
+    grant instanceof Error ? grant : grant ? [grant] : [],
     row ? [row] : [],
     sessionAlive ? [{ id: "sess_admin" }] : [],
   );
@@ -487,25 +508,13 @@ describe("the actor", () => {
 });
 
 describe("the console sign-in's grant", () => {
-  const GRANT = "g".repeat(43);
-  const WITH_GRANT = { ...ACTOR, grant: GRANT };
-  /**
-   * Scripts the actor check with a grant: the grant's row (its lookup starts
-   * first, as the check begins), then the user row and the session.
-   */
+  const WITH_GRANT = ACTOR;
   const checks = (
     row: unknown,
     grant: Record<string, unknown> | Error | null,
-  ) => {
-    state.results.push(grant instanceof Error ? grant : grant ? [grant] : []);
-    actorRows(row);
-  };
-  const minted = (overrides: Record<string, unknown> = {}) => ({
-    userId: "u_admin",
-    sessionId: "sess_admin",
-    expiresAt: new Date(Date.now() + 60_000),
-    ...overrides,
-  });
+  ) => actorRows(row, true, grant);
+  const minted = (overrides: Record<string, unknown> = {}) =>
+    mintedFor(ACTOR, overrides);
 
   it("lets a call through with the grant minted for this admin and session, looked up by its hash", async () => {
     checks(adminRow(), minted());
@@ -568,14 +577,16 @@ describe("the console sign-in's grant", () => {
     ).toEqual({ ok: false, error: "not_admin" });
   });
 
-  it("still lets a call without a grant through, and doesn't look one up", async () => {
-    actorRows(adminRow());
-    expect((await POST(signedRequest({ actor: ACTOR, n: 1 }))).status).toBe(
-      200,
+  it("refuses a call without a grant: 403 grant_required, before any query", async () => {
+    const { userId, sessionId } = ACTOR;
+    const { status, body } = await answer(
+      await POST(signedRequest({ actor: { userId, sessionId }, n: 1 })),
     );
-    expect(
-      state.calls.some((call) => call.table === "admin_console_grant"),
-    ).toBe(false);
+    expect(status).toBe(403);
+    expect(body).toEqual({ ok: false, error: "grant_required" });
+    expect(state.calls).toEqual([]);
+    expect(state.counts.size).toBe(0);
+    expect(run).not.toHaveBeenCalled();
   });
 
   it("refuses a grant that can't be one as a bad request", async () => {
@@ -785,15 +796,19 @@ describe("rate limits", () => {
     limit: "sensitive",
     run: sensitive,
   });
-  const ADMIN_2 = { userId: "u_admin_2", sessionId: "sess_admin_2" };
+  const ADMIN_2 = {
+    userId: "u_admin_2",
+    sessionId: "sess_admin_2",
+    grant: "h".repeat(43),
+  };
 
   /** One signed call by `actor`, with the actor check scripted to pass. */
   const by = async (
     route: (request: NextRequest) => Promise<Response>,
-    actor: { userId: string; sessionId: string } = ACTOR,
+    actor: { userId: string; sessionId: string; grant: string } = ACTOR,
     fields: Record<string, unknown> = { n: 1 },
   ) => {
-    actorRows(adminRow({ id: actor.userId }));
+    actorRows(adminRow({ id: actor.userId }), true, mintedFor(actor));
     return route(signedRequest({ actor, ...fields }));
   };
 
@@ -935,6 +950,7 @@ describe("the log line", () => {
       request.headers.get(SIGNATURE_HEADER)?.slice(3) ?? "",
       request.headers.get(REQUEST_ID_HEADER) ?? "",
       "sess_admin",
+      GRANT,
       "admin@qrdx.test",
       "@",
       "Ticket",
@@ -952,7 +968,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
-      grant: false,
+      grant: true,
       status: 403,
       code: "confirmation_required",
     });
@@ -975,7 +991,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
-      grant: false,
+      grant: true,
       status: 400,
       code: "admin_action",
     });
@@ -1022,7 +1038,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
-      grant: false,
+      grant: true,
       status,
       code,
     });
@@ -1050,35 +1066,25 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
-      grant: false,
+      grant: true,
       status: 503,
       code: "unavailable",
       reason: "rate_limit_store",
     });
   });
 
-  it("says whether the call carried a grant, never the grant itself", async () => {
-    const grant = "g".repeat(43);
-    // The grant's lookup starts first, then the user row and the session.
-    state.results.push([
-      {
-        userId: "u_admin",
-        sessionId: "sess_admin",
-        expiresAt: new Date(Date.now() + 60_000),
-      },
-    ]);
-    actorRows(adminRow());
-    const request = signedRequest({ actor: { ...ACTOR, grant }, n: 1 });
-    expect((await POST(request)).status).toBe(200);
+  it("is one line for a call without a grant, saying so", async () => {
+    const { userId, sessionId } = ACTOR;
+    const request = signedRequest({ actor: { userId, sessionId }, n: 1 });
+    expect((await POST(request)).status).toBe(403);
     expect(onlyLine()).toEqual({
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
-      grant: true,
-      status: 200,
-      code: "ok",
+      grant: false,
+      status: 403,
+      code: "grant_required",
     });
-    expect(allLines().join("\n")).not.toContain(grant);
     expectNoSecrets(request);
   });
 
@@ -1090,7 +1096,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
-      grant: false,
+      grant: true,
       status: 200,
       code: "ok",
     });
@@ -1121,7 +1127,7 @@ describe("the log line", () => {
       event: "console_internal.outcome",
       path: PATH,
       actorId: "u_admin",
-      grant: false,
+      grant: true,
       status: 500,
       code: "failed",
       error: { name: "DrizzleQueryError", code: "57P01" },

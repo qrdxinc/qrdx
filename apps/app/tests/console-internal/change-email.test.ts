@@ -153,7 +153,11 @@ const PATH = "/api/internal/console/users/change-email";
 let counter = 0;
 function changeEmail(newEmail: string) {
   const body = JSON.stringify({
-    actor: { userId: ACTOR.id, sessionId: ACTOR.sessionId },
+    actor: {
+      userId: ACTOR.id,
+      sessionId: ACTOR.sessionId,
+      grant: "g".repeat(43),
+    },
     userId: "u_target",
     newEmail,
     reason: "Lost-email policy, ticket 99",
@@ -242,7 +246,7 @@ describe("the console's change-email", () => {
         event: "console_internal.outcome",
         path: PATH,
         actorId: "u_admin",
-        grant: false,
+        grant: true,
         status: 400,
         code: "admin_action",
       }),
@@ -272,7 +276,7 @@ describe("the console's change-email", () => {
         event: "console_internal.outcome",
         path: PATH,
         actorId: "u_admin",
-        grant: false,
+        grant: true,
         status: 500,
         code: "failed",
         error: { name: "DrizzleQueryError", code: "08006" },

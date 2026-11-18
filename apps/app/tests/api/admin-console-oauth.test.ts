@@ -4,8 +4,8 @@
 // id is unknown. Set, only this deployment's admin, signed in and not held,
 // gets a one-time code bound to the console's exact redirect URI and PKCE
 // challenge; the console exchanges it with the shared secret for a one-time
-// access token and this sign-in's grant (stored hashed), and userinfo
-// answers OpenID claims plus the session id.
+// access token and this sign-in's grant (stored hashed; no sign-in without
+// one), and userinfo answers OpenID claims plus the session id.
 import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
@@ -386,28 +386,17 @@ describe("POST /api/oauth/token for the console", () => {
     expect(await isAdminConsoleGrant(grant, who)).toBe(false);
   });
 
-  it("still signs the console in before the grants table exists, with no grant", async () => {
+  it("refuses a console sign-in when no grant can be minted", async () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const code = await codeFor();
     fakeDb.missing("adminConsoleGrant");
     const response = await exchange(code);
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(503);
     const body = await response.json();
-    expect(body.access_token).toMatch(/^qrdxc_/);
+    expect(body.error).toBe("server_error");
+    // Nothing for the console to use.
+    expect(body).not.toHaveProperty("access_token");
     expect(body).not.toHaveProperty("console_grant");
-    expect(
-      await isAdminConsoleGrant("g".repeat(43), {
-        userId: "u_admin",
-        sessionId: "session_u_admin",
-      }),
-    ).toBe(false);
-    // Said once per process, not per sign-in.
-    await exchange(await codeFor());
-    expect(
-      warn.mock.calls.filter(([line]) =>
-        String(line).includes("admin_console.grants_missing"),
-      ),
-    ).toHaveLength(1);
     warn.mockRestore();
   });
 

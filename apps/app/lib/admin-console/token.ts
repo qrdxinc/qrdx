@@ -34,7 +34,8 @@ const field = (body: FormData, key: string): string | null => {
  * code is consumed as it's read, so it's good once. The answer is an
  * access token for userinfo, good for a minute and once, and this sign-in's
  * grant (`console_grant`, ./grants.ts), which the console sends with every
- * signed call. Without the grants table yet, the answer has no grant.
+ * signed call. Without the grants table, the console couldn't make one, so
+ * the sign-in is refused.
  */
 export async function exchangeAdminConsoleCode(
   body: FormData,
@@ -89,13 +90,20 @@ export async function exchangeAdminConsoleCode(
     userId: ticket.userId,
     sessionId: ticket.sessionId,
   });
+  if (!grant) {
+    return oauthError(
+      "server_error",
+      "This deployment can't mint console grants yet (manual-sql/2026-11-18-console-grants.sql)",
+      503,
+    );
+  }
   return Response.json(
     {
       access_token: accessToken,
       token_type: "Bearer",
       expires_in: ADMIN_CONSOLE_ACCESS_TOKEN_SECONDS,
       scope: ticket.scopes.join(" "),
-      ...(grant ? { console_grant: grant } : {}),
+      console_grant: grant,
     },
     { headers: NO_STORE_HEADERS },
   );
