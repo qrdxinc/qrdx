@@ -232,6 +232,18 @@ describe("on a custom domain", () => {
     expect(target(await rewrite("/spring-menu?utm_source=x"))).toBe(
       "/q/spring-menu",
     );
-    expect(target(await rewrite("/p/spring-menu?nfc"))).toBe("/p/spring-menu");
+    expect(target(await rewrite("/p/spring-menu?utm_source=x"))).toBe(
+      "/p/spring-menu",
+    );
+  });
+
+  it("passes the marker on to hosted pages, for their /p/ path alias fallback", async () => {
+    // A /p/<x> path alias is answered by the hosted page route when no page
+    // has the back-half x (app/(app)/p/[slug]/page.tsx); it sends the tap on
+    // to the alias's code with `?nfc`, so it counts as a tap. A hosted page
+    // itself never records a visit, so nothing else changes.
+    expect(target(await rewrite("/p/spring-menu?nfc"))).toBe(
+      "/p/spring-menu?nfc",
+    );
   });
 });
