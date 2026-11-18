@@ -64,7 +64,7 @@ export function SignInPage({
           mode={mode}
           notice={
             error
-              ? signInErrorMessage(error, via, tErrors)
+              ? signInErrorMessage(error, via, tErrors, options)
               : signedOut
                 ? t("signedOut")
                 : undefined

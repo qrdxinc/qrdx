@@ -187,6 +187,24 @@ describe("the sign-in page", () => {
     }
     expect(html).not.toContain(panel.signInIsntSetUp);
   });
+
+  it("doesn't suggest an email code for a refused sign-in where there are none", () => {
+    const refused = (options: SignInOptions) =>
+      renderIntl(
+        <SignInPage
+          error="google_email_unverified"
+          next="/dashboard"
+          options={options}
+          signedOut={false}
+          via="google"
+        />,
+      );
+    const withCodes = refused({ ...NOTHING, google: true, email: true });
+    expect(withCodes).toContain("Sign in with an email code instead.");
+    const googleOnly = refused({ ...NOTHING, google: true });
+    expect(googleOnly).not.toContain("email code");
+    expect(googleOnly).toContain("Ask whoever runs this site for help.");
+  });
 });
 
 describe("the OAuth authorize page, signed out", () => {
