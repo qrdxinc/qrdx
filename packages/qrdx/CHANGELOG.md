@@ -2,6 +2,13 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## 0.0.57
+
+- **BMP export.** `"bmp"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write an uncompressed 24-bit BMP, for legacy systems and embedded tools that only take BMP. No browser encodes BMP from a canvas (`toBlob("image/bmp")` returns a PNG), so the engine writes the file itself, the same way in every browser.
+- **A transparent background comes out white.** 24-bit BMP has no alpha channel, so see-through pixels are laid over white.
+- **New exports** from `qrdx`, `qrdx/core` and `qrdx/vanilla`: `getQRAsBMP(props)` returns the code, with its frame, as a BMP `Blob`, and `canvasToBMP(canvas)` turns a canvas into one. `encodeBMP(rgba, width, height)` writes RGBA pixels as a BMP file without a DOM, so it also runs in Node. `isBMPFile(bytes)` checks a file's header, and `BMP_MAX_DIMENSION` (16,384) is the largest side `encodeBMP` writes. `getQRAsCanvas(props, "image/bmp")` returns a BMP data URL.
+- `@qrdx/cli` 0.0.14 writes BMP too: `-o qr.bmp`, or `--format bmp`.
+
 ## 0.0.56
 
 - **`QRCode` forwards other props to the `<svg>`.** React's `QRCode`, and the Preact and Solid `QRCode`, used to drop every prop that isn't one of the code's own. `aria-label`, `className` (`class`), `role`, `id`, `title` and `data-*` now land on the `<svg>`, or on the frame's outer `<svg>` when there is a frame, as they always have with `QRCodeSVG`, the Vue `QRCode` and `createQRCode`. Nothing is renamed or removed, and codes that pass no such props draw the same markup as before.
