@@ -42,6 +42,21 @@ export async function emailIntlForAddress(email: string): Promise<EmailIntl> {
   return emailIntl(locale);
 }
 
+/**
+ * For an invitation (a workspace, a client portal): the invitee's saved
+ * language when the address has an account, else `inviterLocale` (the
+ * inviter's, when they sent it from their own request: it joins their
+ * workspace), else English.
+ */
+export async function emailIntlForInvitee(
+  email: string,
+  inviterLocale: Locale | null = null,
+): Promise<EmailIntl> {
+  return emailIntl(
+    (await localeForAddress(email)) ?? inviterLocale ?? DEFAULT_LOCALE,
+  );
+}
+
 /** For an email to a known account (notifications): its saved language. */
 export async function emailIntlForUser(userId: string): Promise<EmailIntl> {
   return emailIntl((await savedUserLocale(userId)) ?? DEFAULT_LOCALE);

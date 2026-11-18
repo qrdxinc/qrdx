@@ -460,14 +460,20 @@ export async function inviteMember(input: {
 
     // The copyable invite link keeps working whether or not this is sent.
     const { sendTeamInviteEmail } = await import("@/lib/events/emails");
-    const emailed = await sendTeamInviteEmail({
-      id: invitation.id,
-      email: invitation.email,
-      role: invitation.role,
-      expiresAt: new Date(invitation.expiresAt),
-      organizationId,
-      inviterId: scope.userId,
-    });
+    const { getAppLocale } = await import("@/lib/i18n/app-locale");
+    const emailed = await sendTeamInviteEmail(
+      {
+        id: invitation.id,
+        email: invitation.email,
+        role: invitation.role,
+        expiresAt: new Date(invitation.expiresAt),
+        organizationId,
+        inviterId: scope.userId,
+      },
+      // Without a saved language for the invitee, the inviter's: the
+      // invitation joins their workspace.
+      { inviterLocale: await getAppLocale().catch(() => null) },
+    );
 
     revalidateTeam();
     return {

@@ -24,6 +24,8 @@ const state = vi.hoisted(() => {
     rateLimited: false,
     calls: [] as { method: string; body: Record<string, unknown> }[],
     apiError: null as null | { method: string; code: string; message?: string },
+    /** sendTeamInviteEmail's options, per call */
+    inviteEmails: [] as unknown[],
   };
 });
 
@@ -39,7 +41,10 @@ vi.mock(
   "@repo/database/schema",
   async () => (await import("../support/fake-db")).repoDatabase,
 );
-vi.mock("next/headers", () => ({ headers: vi.fn(async () => new Headers()) }));
+vi.mock("next/headers", () => ({
+  headers: vi.fn(async () => new Headers()),
+  cookies: async () => ({ get: () => undefined }),
+}));
 vi.mock("next/cache", () => ({ revalidatePath: () => {} }));
 vi.mock("@repo/rate-limit", () => ({
   slidingWindow: () => ({}),
@@ -54,7 +59,10 @@ vi.mock("@repo/rate-limit", () => ({
   }),
 }));
 vi.mock("@/lib/events/emails", () => ({
-  sendTeamInviteEmail: async () => false,
+  sendTeamInviteEmail: async (_invitation: unknown, options: unknown) => {
+    state.inviteEmails.push(options);
+    return false;
+  },
 }));
 vi.mock("@/lib/shared", () => ({ logError: () => {} }));
 // "Confirm it's you" before role changes, removals, admin invitations and
@@ -257,6 +265,7 @@ beforeEach(() => {
   state.rateLimited = false;
   state.calls = [];
   state.apiError = null;
+  state.inviteEmails = [];
   memberSeq = 0;
 });
 
@@ -592,6 +601,18 @@ describe("who manages a team", () => {
       error: "Adding members needs a workspace owner on Pro or Business.",
       upgrade: true,
     });
+  });
+
+  it("passes the inviter's language for an invitee without one", async () => {
+    fakeDb.seed("user", [{ id: "u_owner", name: "Owner", locale: "de" }]);
+    expect((await teams.inviteMember(invitation)).ok).toBe(true);
+    // No saved language and no language cookie: English.
+    signIn("u_admin", "org_acme");
+    expect((await teams.inviteMember(invitation)).ok).toBe(true);
+    expect(state.inviteEmails).toEqual([
+      { inviterLocale: "de" },
+      { inviterLocale: "en" },
+    ]);
   });
 
   it("invites by valid email as member or admin only", async () => {

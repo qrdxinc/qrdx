@@ -27307,6 +27307,258 @@
     "source": "8c67fc93a679",
     "status": "machine"
   },
+  "emails.teamInvite.subject": {
+    "source": "08216ca43aa9",
+    "status": "machine"
+  },
+  "emails.teamInvite.reason": {
+    "source": "1d1bc90674c3",
+    "status": "machine"
+  },
+  "emails.teamInvite.heading": {
+    "source": "b21893c466cc",
+    "status": "machine"
+  },
+  "emails.teamInvite.body": {
+    "source": "a52408c746d9",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.owner": {
+    "source": "40d87740723d",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.admin": {
+    "source": "92fe12fb367a",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.member": {
+    "source": "649951da0563",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.billing": {
+    "source": "e4284292cb96",
+    "status": "machine"
+  },
+  "emails.teamInvite.roles.viewer": {
+    "source": "05db230a8ec7",
+    "status": "machine"
+  },
+  "emails.teamInvite.accept": {
+    "source": "7e17aadc3039",
+    "status": "machine"
+  },
+  "emails.teamInvite.expires": {
+    "source": "08b223faabcc",
+    "status": "machine"
+  },
+  "emails.teamInvite.pasteLink": {
+    "source": "d2bd54ffc3fd",
+    "status": "machine"
+  },
+  "emails.teamInvite.someone": {
+    "source": "89271b7400a2",
+    "status": "machine"
+  },
+  "emails.portalInvite.subject": {
+    "source": "ae8fd1d3d04e",
+    "status": "machine"
+  },
+  "emails.portalInvite.reason": {
+    "source": "74275e5cf996",
+    "status": "machine"
+  },
+  "emails.portalInvite.heading": {
+    "source": "a11932fcf45c",
+    "status": "machine"
+  },
+  "emails.portalInvite.body": {
+    "source": "110251ce65cc",
+    "status": "machine"
+  },
+  "emails.portalInvite.open": {
+    "source": "d5da8ea71c44",
+    "status": "machine"
+  },
+  "emails.portalInvite.signIn": {
+    "source": "d80bc37f7f74",
+    "status": "machine"
+  },
+  "emails.portalInvite.pasteLink": {
+    "source": "d2bd54ffc3fd",
+    "status": "machine"
+  },
+  "emails.portalInvite.yourAgency": {
+    "source": "3ea3801e9eb2",
+    "status": "machine"
+  },
+  "emails.limitNotice.subject": {
+    "source": "f3f0777eb04b",
+    "status": "machine"
+  },
+  "emails.limitNotice.preview": {
+    "source": "61093fc6074e",
+    "status": "machine"
+  },
+  "emails.limitNotice.heading": {
+    "source": "a5c07f598449",
+    "status": "machine"
+  },
+  "emails.limitNotice.body": {
+    "source": "84ecb413b9bd",
+    "status": "machine"
+  },
+  "emails.limitNotice.plan": {
+    "source": "fa8ed0bdabdd",
+    "status": "machine"
+  },
+  "emails.limitNotice.button": {
+    "source": "098a4195f950",
+    "status": "machine"
+  },
+  "emails.limitNotice.howOften": {
+    "source": "87669e5ce226",
+    "status": "machine"
+  },
+  "emails.limitNotice.ownerReason": {
+    "source": "99f142e44756",
+    "status": "machine"
+  },
+  "emails.limitNotice.artReason": {
+    "source": "05c886715f08",
+    "status": "machine"
+  },
+  "emails.limitNotice.label": {
+    "source": "619ddaf74c17",
+    "status": "machine"
+  },
+  "emails.limitNotice.noun": {
+    "source": "ca6d2ced62d1",
+    "status": "machine"
+  },
+  "emails.limitNotice.planName": {
+    "source": "a425ad73d1b4",
+    "status": "machine"
+  },
+  "emails.limitNotice.value": {
+    "source": "fb02a32b587a",
+    "status": "machine"
+  },
+  "emails.limitNotice.amount": {
+    "source": "13bbdb85cfa9",
+    "status": "machine"
+  },
+  "emails.limitNotice.storageAmount": {
+    "source": "074d13784327",
+    "status": "machine"
+  },
+  "emails.limitNotice.amountLeft": {
+    "source": "f2e95d36ec37",
+    "status": "machine"
+  },
+  "emails.limitNotice.storageLeft": {
+    "source": "89cc1a0e6ab9",
+    "status": "machine"
+  },
+  "emails.limitNotice.left": {
+    "source": "de17701be560",
+    "status": "machine"
+  },
+  "emails.limitNotice.includes": {
+    "source": "3430a872eb70",
+    "status": "machine"
+  },
+  "emails.limitNotice.liftUnlimited": {
+    "source": "deaf657e3539",
+    "status": "machine"
+  },
+  "emails.limitNotice.liftCount": {
+    "source": "4b9185d254c3",
+    "status": "machine"
+  },
+  "emails.limitNotice.liftShared": {
+    "source": "d524e0135a87",
+    "status": "machine"
+  },
+  "emails.limitNotice.upgrade": {
+    "source": "710537b7f2b8",
+    "status": "machine"
+  },
+  "emails.limitNotice.askOwner": {
+    "source": "d473ae7e1854",
+    "status": "machine"
+  },
+  "emails.limitNotice.makeRoom": {
+    "source": "80d214ebfafc",
+    "status": "machine"
+  },
+  "emails.limitNotice.resets": {
+    "source": "36696bbe0a18",
+    "status": "machine"
+  },
+  "emails.limitNotice.keeps": {
+    "source": "8f58b8caf034",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.subject": {
+    "source": "16f59aaf314b",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.preview": {
+    "source": "cee0ec044d51",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.reason": {
+    "source": "56c2870766da",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.heading": {
+    "source": "85c1878803b9",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.scans": {
+    "source": "d128917a9540",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.uniqueVisitors": {
+    "source": "a8edb2959cd6",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.formResponses": {
+    "source": "5db3b4a7d498",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.newCodes": {
+    "source": "4ae207d785d6",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.newThisWeek": {
+    "source": "5fe62cd83491",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.sameAsLastWeek": {
+    "source": "156e9380042c",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.change": {
+    "source": "f4a0da82aa94",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.topCodes": {
+    "source": "49e39783efc8",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.countries": {
+    "source": "0a5a6bfb0054",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.newCodesLine": {
+    "source": "889b7337391b",
+    "status": "machine"
+  },
+  "emails.weeklyDigest.open": {
+    "source": "a71e9a1f885f",
+    "status": "machine"
+  },
   "auth.emailCodeSignIn.checkingCode": {
     "source": "aea53f1018f5",
     "status": "machine"
