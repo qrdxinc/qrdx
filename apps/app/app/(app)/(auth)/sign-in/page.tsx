@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getSignInOptions } from "@/lib/auth/sign-in-options-server";
+import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { readSignInParams } from "./_lib/params";
 import { SignInPage } from "./sign-in-page";
 
-export const metadata: Metadata = {
-  title: "Sign in",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getAppTranslations("app.signIn.signInPage");
+  return { title: t("pageTitle"), robots: { index: false, follow: false } };
+}
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

@@ -200,13 +200,21 @@ For clients that only run local servers, bridge it with `npx -y mcp-remote https
 
 ## 6. shadcn/ui: components you own
 
-For a React app built on shadcn/ui, QRdx publishes a registry of eight components: QR Code, QR Code Card, Download, Share Dialog, Generator, Scanner, Wi-Fi QR Code and vCard QR Code. The shadcn CLI copies the source into your project:
+For a React app built on shadcn/ui, QRdx publishes a registry of eight components: QR Code, QR Code Card, Download, Share Dialog, Generator, Scanner, Wi-Fi QR Code and vCard QR Code. It's listed in the [shadcn/ui registry directory](https://ui.shadcn.com/docs/directory), so the shadcn CLI knows the `@qrdx` namespace with no setup and copies the source into your project:
+
+```bash
+npx shadcn@latest add @qrdx/qr-code
+```
+
+Install several at once with `npx shadcn@latest add @qrdx/qr-code @qrdx/qr-code-download`. The components use your theme tokens and your own Button, Card and Dialog.
+
+Versions of the CLI before 3.7.0 can't read the directory. With one of those, use the full URL:
 
 ```bash
 npx shadcn@latest add https://qrdx.dev/r/qr-code.json
 ```
 
-Or add the namespace to `components.json` once:
+or, to keep the short names on versions 3.0 to 3.6, add the namespace to `components.json` once:
 
 ```json
 {
@@ -215,8 +223,6 @@ Or add the namespace to `components.json` once:
   }
 }
 ```
-
-and install several by name with `npx shadcn@latest add @qrdx/qr-code @qrdx/qr-code-download`. The components use your theme tokens and your own Button, Card and Dialog.
 
 One caveat today: the registry installs `qrdx` from npm, which means 0.0.46, and seven of the eight components draw with `<QRCode>`. On 0.0.46 they render the code at 128 px with the QRdx logo in the middle, as described in section 2. The Scanner is unaffected. Once 0.0.47 is on npm, they render at the size you pass with no default logo; until then, you own the copied code and can swap `QRCode` for `QRCodeSVG`.
 

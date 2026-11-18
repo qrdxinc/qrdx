@@ -28,6 +28,7 @@ import {
   restSnippet,
   SAMPLE_VALUE,
   SHADCN_INSTALL,
+  SHADCN_INSTALL_URL,
   type SnippetInput,
   shadcnSnippet,
 } from "@/components/editor/action-bar/code-snippets";
@@ -394,7 +395,8 @@ describe("shadcnSnippet", () => {
   it("adds the registry item and uses only its props", () => {
     const snippet = shadcnSnippet(urlInput(plain));
     expect(snippet.install).toBe(SHADCN_INSTALL);
-    expect(SHADCN_INSTALL).toBe(
+    expect(SHADCN_INSTALL).toBe("npx shadcn@latest add @qrdx/qr-code");
+    expect(SHADCN_INSTALL_URL).toBe(
       "npx shadcn@latest add https://qrdx.dev/r/qr-code.json",
     );
     expect(snippet.code).toContain(

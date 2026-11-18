@@ -3487,6 +3487,7 @@
         "pasteThisIntoAnyPage": "Collez ceci dans n’importe quelle page : le script charge l’élément <code>qrdx-code</code> depuis un CDN. Avec un bundler, installez <code>qrdx</code> et importez plutôt <code>qrdx/element/define</code>.",
         "withoutABundlerImportIt": "Sans bundler, importez-le depuis",
         "addTheQrCodeComponent": "Ajoutez le composant QR Code depuis le registre QRdx, puis utilisez-le avec ce design.",
+        "orByUrlWhichWorks": "Ou par URL, qui fonctionne aussi avec les anciennes versions de la CLI shadcn",
         "aPublicImageOfThis": "Une image publique de ce code à intégrer où vous voulez. Aucune clé API requise.",
         "createsADynamicCodeWith": "Crée un QR code dynamique avec ce design. Une <link>clé API</link> est nécessaire.",
         "addThisServerToYour": "Ajoutez ce serveur à votre assistant IA ; aucune clé requise. <link>Le configurer</link>",
@@ -8544,7 +8545,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "Retour à QRdx"
+        "backToQrdx": "Retour à QRdx",
+        "signedOut": "Vous êtes déconnecté.",
+        "pageTitle": "Connexion"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8611,6 +8614,20 @@
           "authorize": "Autoriser",
           "somethingWentWrongCheckYour": "Une erreur s’est produite. Vérifiez votre connexion et réessayez."
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "Se déconnecter de QRdx ?",
+        "signOut": "Se déconnecter",
+        "cancel": "Annuler",
+        "youreStillSignedIn": "Vous êtes toujours connecté",
+        "signingOutDidntWorkCheck": "La déconnexion a échoué. Vérifiez votre connexion et réessayez.",
+        "tryAgain": "Réessayer",
+        "backToDashboard": "Retour au tableau de bord",
+        "signingYouOut": "Déconnexion en cours…",
+        "oneMoment": "Un instant…",
+        "pageTitle": "Déconnexion"
       }
     }
   },
@@ -8707,11 +8724,22 @@
       "thatCodeHasExpiredSend": "Ce code a expiré. Envoyez-en un nouveau.",
       "tooManyWrongTriesSend": "Trop de tentatives incorrectes. Envoyez un nouveau code.",
       "thisAccountIsSuspendedContact": "Ce compte est suspendu. Contactez le support si vous pensez qu’il s’agit d’une erreur.",
-      "somethingWentWrongTryAgain": "Une erreur s’est produite. Réessayez."
+      "somethingWentWrongTryAgain": "Une erreur s’est produite. Réessayez.",
+      "newCodeSent": "Nouveau code envoyé. L’ancien ne fonctionne plus.",
+      "connectionFailed": "Un problème est survenu. Vérifiez votre connexion et réessayez."
     },
     "passkeySignIn": {
       "continueWithPasskey": "Continuer avec une clé d’accès",
-      "lastUsed": "Dernière utilisation"
+      "lastUsed": "Dernière utilisation",
+      "errors": {
+        "rateLimited": "Trop de tentatives. Patientez une minute, puis réessayez.",
+        "userVerification": "Cette clé d’accès n’a pas demandé votre code PIN, votre empreinte digitale ou votre visage. Utilisez-en une qui le fait, ou connectez-vous autrement.",
+        "notFound": "Cette clé d’accès n’est plus associée à un compte QRdx. Connectez-vous autrement.",
+        "banned": "Ce compte est suspendu. Contactez le support si vous pensez qu’il s’agit d’une erreur.",
+        "ssoRequired": "Votre entreprise exige l’authentification unique pour ce compte. Connectez-vous avec SSO.",
+        "failed": "Cette clé d’accès n’a pas fonctionné. Réessayez, ou connectez-vous autrement.",
+        "connection": "Un problème est survenu. Vérifiez votre connexion et réessayez."
+      }
     },
     "signInPanel": {
       "codeSentTo": "Code envoyé à <strong>{email}</strong>",
@@ -8817,7 +8845,21 @@
       "resendInSecondsleftS": "Renvoyer dans {secondsLeft, number} s",
       "resendCode": "Renvoyer le code",
       "whyAmIAsked": "Pourquoi cette demande ?",
-      "whyAmIAskedAgain": "Pourquoi à nouveau cette demande ?"
+      "whyAmIAskedAgain": "Pourquoi à nouveau cette demande ?",
+      "switchTo": {
+        "passkey": "Utiliser votre clé d’accès",
+        "totp": "Utiliser un code d’authentification",
+        "backup": "Utiliser un code de secours",
+        "email": "M’envoyer un code par e-mail",
+        "signInWith": "Se connecter avec {provider}",
+        "sign-in-again": "Se reconnecter"
+      },
+      "signInWithSsoAgain": "Connectez-vous de nouveau avec le SSO de votre entreprise. Vous reviendrez sur cette page, puis vous referez votre modification.",
+      "newCodeSent": "Nouveau code envoyé. L’ancien ne fonctionne plus.",
+      "reasons": {
+        "continue-session": "Cette connexion est utilisée depuis un autre pays et un autre navigateur que ceux de départ. Nous vérifions donc que c’est bien vous avant toute chose.",
+        "link-slack-account": "Une fois le compte associé, toute personne qui utilise ce compte Slack peut créer des codes suivis dans votre espace de travail avec /qr track. Nous vérifions donc d’abord que c’est bien vous."
+      }
     },
     "dialogCloseButton": {
       "close": "Fermer"
@@ -8839,6 +8881,112 @@
     },
     "nudge": {
       "dismiss": "Ne plus afficher ce message"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "Se connecter avec SSO",
+      "lastUsed": "Dernier utilisé",
+      "workEmail": "E-mail professionnel",
+      "continue": "Continuer",
+      "ifYourCompanySetIt": "Si votre entreprise l’a configuré pour QRdx.",
+      "cancel": "Annuler",
+      "youCompanyCom": "vous@entreprise.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "Continuer avec SSO",
+      "lastUsed": "Dernier utilisé",
+      "useADifferentEmail": "Utiliser un autre e-mail",
+      "yourCompanyRequiresItFor": "Votre entreprise l’exige pour cette adresse. Vous continuerez sur sa page de connexion.",
+      "youllContinueOnYourCompanys": "Vous poursuivrez sur la page de connexion de votre entreprise.",
+      "sending": "Envoi…",
+      "emailMeACode": "Recevoir un code par e-mail"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "Utilisez votre passkey",
+        "totp": "Ouvrez votre application d’authentification",
+        "backup": "Saisissez un code de secours"
+      },
+      "switchTo": {
+        "passkey": "Utiliser votre passkey",
+        "totp": "Utiliser un code d’authentification",
+        "backup": "Utiliser un code de secours"
+      },
+      "hints": {
+        "passkey": "Utilisez Touch ID, Face ID, Windows Hello ou une clé de sécurité.",
+        "totp": "Saisissez le code à 6 chiffres de votre application d’authentification.",
+        "backup": "Saisissez l’un de vos codes de secours. Chacun ne fonctionne qu’une seule fois."
+      },
+      "passkey": {
+        "waiting": "En attente de votre passkey…",
+        "checking": "Vérification de votre passkey…",
+        "failed": "Impossible de vérifier votre passkey. Réessayez.",
+        "closed": "La fenêtre de la passkey a été fermée ou a expiré. Réessayez ou utilisez une autre méthode.",
+        "expiredRequest": "Cette demande de passkey a expiré. Réessayez.",
+        "userVerification": "Cette passkey n’a pas demandé votre code PIN, votre empreinte ou votre visage. Utilisez-en une qui le demande, ou choisissez une autre méthode.",
+        "unavailable": "Aucune passkey n’est associée à ce compte ici. Utilisez une autre méthode.",
+        "tooManyTries": "Trop d’échecs. Reconnectez-vous pour réessayer.",
+        "locked": "Trop d’échecs consécutifs. Réessayez dans {minutes, number} minutes.",
+        "expired": "Cette connexion a expiré. Reconnectez-vous.",
+        "rateLimited": "Trop de tentatives. Patientez un instant, puis réessayez.",
+        "connection": "Une erreur s’est produite. Vérifiez votre connexion et réessayez.",
+        "ssoRequired": "Votre entreprise exige désormais l’authentification unique pour cette adresse. Recommencez et connectez-vous avec SSO."
+      },
+      "noStepHere": "Ce navigateur ne peut pas utiliser votre passkey, et il n’existe aucun autre moyen de terminer la connexion ici. Utilisez un appareil doté de votre passkey.",
+      "noAuthenticatorApp": "Votre compte n’utilise pas d’application d’authentification. Utilisez une autre méthode.",
+      "backupCode": {
+        "empty": "Saisissez l’un de vos codes de secours.",
+        "strange": "Les codes de secours ne contiennent que des lettres et des chiffres. Supprimez {chars}.",
+        "length": "Les codes de secours comptent 10 caractères, comme ABCDE-FGH23. Celui-ci en compte {count, number}.",
+        "lookalikes": "Les codes de secours n’utilisent jamais {chars}. Vérifiez qu’il ne s’agit pas d’une lettre ou d’un chiffre qui y ressemble.",
+        "or": "{first} ou {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "Ce code n’est pas correct. Vérifiez votre application d’authentification et réessayez.",
+      "wrongBackupCode": "Ce code de secours n’est pas correct, ou il a déjà été utilisé.",
+      "invalidCode": "Saisissez le code à 6 chiffres de votre application d’authentification.",
+      "invalidBackupCode": "Ce n’est pas un code de secours. Il ressemble à ABCDE-FGH23 : des lettres majuscules et les chiffres de 2 à 9.",
+      "tooManyAttempts": "Trop de codes incorrects. Reconnectez-vous pour réessayer.",
+      "locked": "Trop de codes incorrects d’affilée. Réessayez dans {minutes, number} minutes.",
+      "expired": "Cette connexion a expiré. Reconnectez-vous.",
+      "rateLimited": "Trop de tentatives. Patientez un instant, puis réessayez.",
+      "failed": "Une erreur s’est produite. Vérifiez votre connexion et réessayez.",
+      "ssoRequired": "Votre entreprise exige désormais l’authentification unique pour cette adresse. Recommencez et connectez-vous avec SSO."
+    },
+    "confirmationMessages": {
+      "failed": "Une erreur s’est produite. Vérifiez votre connexion et réessayez.",
+      "passkeyFailed": "Impossible de vérifier votre passkey. Réessayez.",
+      "passkeyClosed": "La fenêtre de la passkey a été fermée ou a expiré. Réessayez ou utilisez une autre méthode.",
+      "passkeyUnavailable": "Les passkeys ne fonctionnent pas dans ce navigateur. Utilisez une autre méthode.",
+      "signInAgain": "Pour votre sécurité, déconnectez-vous puis reconnectez-vous, et réessayez dans les 10 minutes.",
+      "stillRequired": "Nous n’avons pas pu confirmer votre identité. Réessayez.",
+      "signInFailed": "Cette connexion n’a pas abouti, donc rien n’a changé. Réessayez ou utilisez une autre méthode.",
+      "signInConfirmed": "Merci, c’est confirmé. Vous pouvez effectuer votre modification dans les 10 minutes qui suivent."
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} n’a pas vérifié cette adresse e-mail, donc QRdx ne peut pas créer de compte avec celle-ci. Vérifiez-la dans les paramètres e-mail de {provider} et réessayez, ou connectez-vous avec un code reçu par e-mail.",
+      "googleUnverified": "{provider} n’a pas vérifié cette adresse e-mail, donc QRdx ne peut pas créer de compte avec celle-ci. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "otherUnverified": "L’adresse e-mail de ce compte n’est pas vérifiée, donc QRdx ne peut pas créer de compte avec celle-ci. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "cancelled": "Connexion annulée.",
+      "accountNotLinked": "Un compte existe déjà avec cette adresse et n’est pas lié à {provider}. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "emailNotShared": "{provider} n’a pas partagé d’adresse e-mail, donc QRdx ne peut pas vous connecter avec ce service. Connectez-vous plutôt avec un code reçu par e-mail.",
+      "tookTooLong": "Cette connexion a pris trop de temps ou a été lancée ailleurs. Réessayez.",
+      "providerFailed": "La connexion avec {provider} n’a pas fonctionné. Réessayez ou connectez-vous autrement.",
+      "sso": {
+        "emailRequired": "Saisissez votre e-mail professionnel.",
+        "notFound": "SSO n’est pas configuré pour cette adresse.",
+        "required": "Votre entreprise impose l’authentification unique (SSO) pour cette adresse. Connectez-vous avec SSO.",
+        "unavailable": "L’authentification unique n’est pas disponible pour cet espace de travail pour le moment. Connectez-vous autrement.",
+        "emailOutsideDomain": "Votre fournisseur d’identité a envoyé une adresse extérieure au domaine de votre entreprise. QRdx ne peut donc pas vous connecter avec celle-ci. Contactez l’administrateur de votre espace de travail.",
+        "emailUnverified": "Le système de connexion de votre entreprise n’a pas confirmé cette adresse e-mail. QRdx ne peut donc pas vous connecter avec celle-ci. Son administrateur doit y vérifier les adresses e-mail.",
+        "emailMissing": "Le système de connexion de votre entreprise n’a pas envoyé d’adresse e-mail. QRdx ne peut donc pas vous connecter. Contactez l’administrateur de votre espace de travail.",
+        "weakSignature": "Le système de connexion de votre entreprise a signé cette connexion avec SHA-1 ou un autre algorithme obsolète, que QRdx n’accepte pas. Son administrateur doit passer l’algorithme de signature de l’application QRdx à SHA-256.",
+        "unsolicitedResponse": "QRdx n’a pas pu accepter cette connexion depuis la liste d’applications de votre entreprise. Partez de la page de connexion de QRdx : choisissez Se connecter avec SSO et saisissez votre adresse e-mail professionnelle. Si le problème persiste, contactez l’administrateur de votre espace de travail.",
+        "replayDetected": "Cette connexion a déjà été utilisée. Connectez-vous à nouveau.",
+        "accountNotLinked": "Un compte avec cette adresse existe déjà et n’a pas pu être associé. Connectez-vous plutôt avec un code envoyé par e-mail.",
+        "failed": "L’authentification unique n’a pas fonctionné. Réessayez ou connectez-vous autrement.",
+        "rateLimited": "Trop de tentatives. Patientez une minute, puis réessayez."
+      }
     }
   },
   "codeBuilder": {

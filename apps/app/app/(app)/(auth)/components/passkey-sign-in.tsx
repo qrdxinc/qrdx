@@ -35,6 +35,7 @@ export function PasskeySignIn({
   lastUsed = false,
 }: PasskeySignInProps) {
   const t = useTranslations("auth.passkeySignIn");
+  const tErrors = useTranslations("auth.passkeySignIn.errors");
   const router = useRouter();
   const offered = useAvailability().has("passkeys");
   const [usable, setUsable] = useState(false);
@@ -58,7 +59,7 @@ export function PasskeySignIn({
       const result = await authClient.signIn.passkey();
       if (result.error) {
         // Nothing when the prompt was just closed.
-        setError(signInFailureMessage(result.error));
+        setError(signInFailureMessage(result.error, tErrors));
         return;
       }
       // The session updates in place; server-rendered parts need a refresh.
@@ -67,7 +68,7 @@ export function PasskeySignIn({
       onSignedIn();
     } catch (err) {
       console.error("Passkey sign-in failed:", err);
-      setError("Something went wrong. Check your connection and try again.");
+      setError(tErrors("connection"));
     } finally {
       setLoading(false);
     }

@@ -54,6 +54,7 @@ export function SignInPage({
   options?: SignInOptions;
 }) {
   const t = useTranslations("app.signIn.signInPage");
+  const tErrors = useTranslations("auth.signInErrors");
   return (
     <main className="bg-background flex min-h-svh flex-col items-center justify-center gap-4 px-4 py-10">
       <div className="bg-card w-full max-w-sm overflow-hidden rounded-xl border shadow-sm">
@@ -63,9 +64,9 @@ export function SignInPage({
           mode={mode}
           notice={
             error
-              ? signInErrorMessage(error, via)
+              ? signInErrorMessage(error, via, tErrors)
               : signedOut
-                ? "You're signed out."
+                ? t("signedOut")
                 : undefined
           }
           options={options}

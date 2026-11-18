@@ -28,22 +28,18 @@ import {
   challengeFailure,
   normalizeBackupCode,
   TRUST_DEVICE_DAYS,
-  TWO_FACTOR_MESSAGES,
+  twoFactorMessages,
 } from "@/lib/auth/two-factor";
 import { browserHasPasskeys, passkeysWorkOn } from "@/lib/passkeys";
 import { cancelTwoFactorChallenge } from "../sign-in/_lib/two-factor-actions";
 import {
   backupCodeProblem,
   firstStep,
-  NO_AUTHENTICATOR_APP,
-  NO_STEP_HERE,
   offeredSteps,
-  PASSKEY_STEP_MESSAGES,
   passkeyStepOutcome,
   readRememberedStep,
   rememberStep,
   type SecondStep,
-  SWITCH_TO,
 } from "./second-step";
 
 const CODE_LENGTH = 6;
@@ -53,12 +49,6 @@ const DIGITS_ONLY = "^\\d+$";
 // stacked.
 const TEXT_ACTION =
   "inline-flex min-h-10 items-center rounded-sm text-left text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
-
-const HINTS: Record<SecondStep, string> = {
-  passkey: PASSKEY_STEP_MESSAGES.hint,
-  totp: "Enter the 6-digit code from your authenticator app.",
-  backup: "Enter one of your backup codes. Each works once.",
-};
 
 type FetchResult<T> =
   | { data: T; error: null }
@@ -99,6 +89,8 @@ export function TwoFactorChallenge({
   onStepChange,
 }: TwoFactorChallengeProps) {
   const t = useTranslations("auth.twoFactorChallenge");
+  const tStep = useTranslations("auth.secondStep");
+  const messages = twoFactorMessages(useTranslations("auth.twoFactorMessages"));
   const id = useId();
   const passkeysOffered = useAvailability().has("passkeys");
   // The methods this person can use here; null while they're looked up.
@@ -154,8 +146,8 @@ export function TwoFactorChallenge({
     if (tries >= CHALLENGE_ATTEMPTS) {
       setError(
         step === "passkey"
-          ? PASSKEY_STEP_MESSAGES.tooManyTries
-          : TWO_FACTOR_MESSAGES.tooManyAttempts,
+          ? tStep("passkey.tooManyTries")
+          : messages.tooManyAttempts,
       );
       setOver(true);
       return true;
@@ -194,7 +186,11 @@ export function TwoFactorChallenge({
         latest.current.onVerified();
         return;
       }
-      const outcome = passkeyStepOutcome(result, { automatic: !fromButton });
+      const outcome = passkeyStepOutcome(
+        result,
+        { automatic: !fromButton },
+        tStep,
+      );
       if (outcome.counted && countWrong("passkey")) return;
       setError(outcome.message);
       if (outcome.over) setOver(true);
@@ -209,7 +205,7 @@ export function TwoFactorChallenge({
       }
     } catch (failure) {
       console.error("Passkey second step failed:", failure);
-      setError(PASSKEY_STEP_MESSAGES.connection);
+      setError(tStep("passkey.connection"));
     } finally {
       busy.current = false;
       setPrompting(false);
@@ -239,7 +235,7 @@ export function TwoFactorChallenge({
         if (failure?.status === 401) {
           if (!active) return;
           setSteps([]);
-          setError(TWO_FACTOR_MESSAGES.expired);
+          setError(messages.expired);
           setOver(true);
           return;
         }
@@ -263,17 +259,17 @@ export function TwoFactorChallenge({
       active = false;
       passkey.cancel();
     };
-  }, [passkeysOffered, passkey]);
+  }, [passkeysOffered, passkey, messages.expired]);
 
   const fail = (failure: AuthClientError, step: "totp" | "backup") => {
     const wrong =
       failure.code === "INVALID_CODE" || failure.code === "INVALID_BACKUP_CODE";
     if (wrong && countWrong(step)) return;
     if (failure.code === "TOTP_NOT_ENABLED") {
-      setError(NO_AUTHENTICATOR_APP);
+      setError(tStep("noAuthenticatorApp"));
       return;
     }
-    const result = challengeFailure(failure, step);
+    const result = challengeFailure(failure, step, messages);
     setError(result.message);
     if (result.over) setOver(true);
   };
@@ -305,7 +301,7 @@ export function TwoFactorChallenge({
     } catch (failure) {
       console.error("Two-step verification failed:", failure);
       setCode("");
-      setError(TWO_FACTOR_MESSAGES.failed);
+      setError(messages.failed);
     } finally {
       setChecking(false);
     }
@@ -313,10 +309,10 @@ export function TwoFactorChallenge({
 
   const submitBackupCode = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const problem = backupCodeProblem(backupCode);
+    const problem = backupCodeProblem(backupCode, tStep);
     const normalized = normalizeBackupCode(backupCode);
     if (problem || !normalized) {
-      setError(problem ?? TWO_FACTOR_MESSAGES.invalidBackupCode);
+      setError(problem ?? messages.invalidBackupCode);
       return;
     }
     void submit(normalized);
@@ -357,14 +353,18 @@ export function TwoFactorChallenge({
         <>
           <ModuleOrbit aria-hidden className="size-3.5" />
           {prompting
-            ? PASSKEY_STEP_MESSAGES.waiting
+            ? tStep("passkey.waiting")
             : mode === "passkey"
-              ? PASSKEY_STEP_MESSAGES.checking
+              ? tStep("passkey.checking")
               : t("checkingCode")}
         </>
       ) : (
         (error ??
-        (mode ? HINTS[mode] : steps?.length === 0 ? NO_STEP_HERE : ""))
+        (mode
+          ? tStep(`hints.${mode}`)
+          : steps?.length === 0
+            ? tStep("noStepHere")
+            : ""))
       )}
     </p>
   );
@@ -505,7 +505,7 @@ export function TwoFactorChallenge({
                   onClick={() => switchTo(step)}
                   type="button"
                 >
-                  {SWITCH_TO[step]}
+                  {tStep(`switchTo.${step}`)}
                 </button>
               ))}
             </div>

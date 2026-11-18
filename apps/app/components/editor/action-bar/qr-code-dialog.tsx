@@ -45,6 +45,7 @@ import {
   QRDX_INSTALL,
   QRDX_NPM_VERSION,
   restSnippet,
+  SHADCN_INSTALL_URL,
   type SnippetInput,
   shadcnSnippet,
   VANILLA_CDN_URL,
@@ -270,6 +271,16 @@ function GetCode({ onLeave }: { onLeave: () => void }) {
                   text={shadcn.install}
                   {...copyProps("shadcn-install", shadcn.install)}
                 />
+                <div className="space-y-1.5">
+                  <span className="text-muted-foreground block text-xs font-medium">
+                    {t("orByUrlWhichWorks")}
+                  </span>
+                  <CommandLine
+                    prefix="$"
+                    text={SHADCN_INSTALL_URL}
+                    {...copyProps("shadcn-install-url", SHADCN_INSTALL_URL)}
+                  />
+                </div>
                 <CodeCard
                   code={shadcn.code}
                   lang="tsx"

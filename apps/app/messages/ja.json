@@ -3487,6 +3487,7 @@
         "pasteThisIntoAnyPage": "これを任意のページに貼り付けてください。スクリプトが CDN から<code>qrdx-code</code>要素を読み込みます。バンドラーを使う場合は、代わりに<code>qrdx</code>をインストールして<code>qrdx/element/define</code>をインポートしてください。",
         "withoutABundlerImportIt": "バンドラーを使わない場合は、次からインポートします",
         "addTheQrCodeComponent": "QRdxレジストリからQRコードコンポーネントを追加し、このデザインで使用します。",
+        "orByUrlWhichWorks": "または、以前のバージョンのshadcn CLIでも使えるURLを指定する方法もあります",
         "aPublicImageOfThis": "このコードの公開画像です。どこにでも埋め込めます。APIキーは不要です。",
         "createsADynamicCodeWith": "このデザインで動的QRコードを作成します。<link>APIキー</link>が必要です。",
         "addThisServerToYour": "このサーバーをAIアシスタントに追加します。キーは不要です。<link>設定方法</link>",
@@ -8544,7 +8545,9 @@
     },
     "signIn": {
       "signInPage": {
-        "backToQrdx": "QRdxに戻る"
+        "backToQrdx": "QRdxに戻る",
+        "signedOut": "サインアウトしました。",
+        "pageTitle": "サインイン"
       },
       "twoFactor": {
         "twoFactorPage": {
@@ -8611,6 +8614,20 @@
           "authorize": "承認する",
           "somethingWentWrongCheckYour": "問題が発生しました。接続を確認して、もう一度お試しください。"
         }
+      }
+    },
+    "signOut": {
+      "signOutScreen": {
+        "signOutOfQrdx": "QRdxからサインアウトしますか？",
+        "signOut": "サインアウト",
+        "cancel": "キャンセル",
+        "youreStillSignedIn": "まだサインインしています",
+        "signingOutDidntWorkCheck": "サインアウトできませんでした。接続を確認して、もう一度お試しください。",
+        "tryAgain": "再試行",
+        "backToDashboard": "ダッシュボードに戻る",
+        "signingYouOut": "サインアウトしています…",
+        "oneMoment": "しばらくお待ちください…",
+        "pageTitle": "サインアウト"
       }
     }
   },
@@ -8707,11 +8724,22 @@
       "thatCodeHasExpiredSend": "コードの有効期限が切れました。新しいコードを送信してください。",
       "tooManyWrongTriesSend": "誤った入力が多すぎます。新しいコードを送信してください。",
       "thisAccountIsSuspendedContact": "このアカウントは停止されています。誤りだと思われる場合は、サポートまでご連絡ください。",
-      "somethingWentWrongTryAgain": "問題が発生しました。もう一度お試しください。"
+      "somethingWentWrongTryAgain": "問題が発生しました。もう一度お試しください。",
+      "newCodeSent": "新しいコードを送信しました。以前のコードは使えなくなりました。",
+      "connectionFailed": "問題が発生しました。接続を確認して、もう一度お試しください。"
     },
     "passkeySignIn": {
       "continueWithPasskey": "パスキーで続行",
-      "lastUsed": "前回の利用"
+      "lastUsed": "前回の利用",
+      "errors": {
+        "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。",
+        "userVerification": "そのパスキーでは、PIN・指紋・顔の確認が求められませんでした。確認が求められるパスキーを使うか、別の方法でサインインしてください。",
+        "notFound": "そのパスキーは、QRdxのアカウントにリンクされていません。別の方法でサインインしてください。",
+        "banned": "このアカウントは停止されています。誤りだと思われる場合は、サポートまでご連絡ください。",
+        "ssoRequired": "このアカウントでは、会社によりシングルサインオンが必須となっています。SSOでサインインしてください。",
+        "failed": "そのパスキーは使用できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
+        "connection": "問題が発生しました。接続を確認して、もう一度お試しください。"
+      }
     },
     "signInPanel": {
       "codeSentTo": "<strong>{email}</strong> にコードを送信しました",
@@ -8817,7 +8845,21 @@
       "resendInSecondsleftS": "{secondsLeft, number}秒後に再送信できます",
       "resendCode": "コードを再送信",
       "whyAmIAsked": "なぜ確認が必要ですか？",
-      "whyAmIAskedAgain": "なぜ再度確認が必要ですか？"
+      "whyAmIAskedAgain": "なぜ再度確認が必要ですか？",
+      "switchTo": {
+        "passkey": "パスキーを使う",
+        "totp": "認証アプリのコードを使う",
+        "backup": "バックアップコードを使う",
+        "email": "コードをメールで送る",
+        "signInWith": "{provider}でサインイン",
+        "sign-in-again": "もう一度サインイン"
+      },
+      "signInWithSsoAgain": "会社のSSOでもう一度サインインしてください。このページに戻りますので、あらためて変更を行ってください。",
+      "newCodeSent": "新しいコードを送信しました。以前のコードは使えなくなりました。",
+      "reasons": {
+        "continue-session": "このサインインは、開始時とは異なる国・異なるブラウザーから使用されています。そのため、他の操作より先に本人確認を行います。",
+        "link-slack-account": "リンクすると、そのSlackアカウントを使う人は誰でも、/qr track でワークスペース内に追跡コードを作成できるようになります。そのため、先に本人確認を行います。"
+      }
     },
     "dialogCloseButton": {
       "close": "閉じる"
@@ -8839,6 +8881,112 @@
     },
     "nudge": {
       "dismiss": "今後は表示しない"
+    },
+    "ssoSignIn": {
+      "signInWithSso": "SSOでサインイン",
+      "lastUsed": "前回使用",
+      "workEmail": "勤務先のメール",
+      "continue": "続ける",
+      "ifYourCompanySetIt": "会社でQRdx向けに設定されている場合に使えます。",
+      "cancel": "キャンセル",
+      "youCompanyCom": "you@company.com"
+    },
+    "ssoOffer": {
+      "continueWithSso": "SSOで続ける",
+      "lastUsed": "前回使用",
+      "useADifferentEmail": "別のメールアドレスを使う",
+      "yourCompanyRequiresItFor": "このアドレスでは、会社によりSSOが必須となっています。SSOのサインインページで続行します。",
+      "youllContinueOnYourCompanys": "お勤め先のサインインページに移動します。",
+      "sending": "送信中…",
+      "emailMeACode": "コードをメールで送る"
+    },
+    "secondStep": {
+      "titles": {
+        "passkey": "パスキーを使用",
+        "totp": "認証アプリを開いてください",
+        "backup": "バックアップコードを入力"
+      },
+      "switchTo": {
+        "passkey": "パスキーを使用",
+        "totp": "認証アプリのコードを使用",
+        "backup": "バックアップコードを使用"
+      },
+      "hints": {
+        "passkey": "Touch ID、Face ID、Windows Hello、またはセキュリティキーをご利用ください。",
+        "totp": "認証アプリに表示される6桁のコードを入力してください。",
+        "backup": "バックアップコードを1つ入力してください。各コードは1回のみ使用できます。"
+      },
+      "passkey": {
+        "waiting": "パスキーを待っています…",
+        "checking": "パスキーを確認しています…",
+        "failed": "パスキーを確認できませんでした。もう一度お試しください。",
+        "closed": "パスキーの確認画面が閉じられたか、時間切れになりました。もう一度お試しいただくか、別の方法をご利用ください。",
+        "expiredRequest": "パスキーのリクエストの有効期限が切れました。もう一度お試しください。",
+        "userVerification": "このパスキーでは、PIN・指紋・顔認証の確認が行われませんでした。確認が行われるパスキーを使うか、別の方法をご利用ください。",
+        "unavailable": "ここにはこのアカウントのパスキーがありません。別の方法をご利用ください。",
+        "tooManyTries": "失敗した回数が多すぎます。もう一度サインインしてからお試しください。",
+        "locked": "連続して失敗した回数が多すぎます。{minutes, number}分後にもう一度お試しください。",
+        "expired": "このサインインは時間切れになりました。もう一度サインインしてください。",
+        "rateLimited": "試行回数が多すぎます。しばらく待ってから、もう一度お試しください。",
+        "connection": "問題が発生しました。接続を確認して、もう一度お試しください。",
+        "ssoRequired": "このアドレスについて、会社でシングルサインオンが必須になりました。最初からやり直し、SSOでサインインしてください。"
+      },
+      "noStepHere": "このブラウザではパスキーを使用できず、ここでサインインを完了する他の方法もありません。パスキーのあるデバイスをご利用ください。",
+      "noAuthenticatorApp": "このアカウントでは認証アプリを使用していません。別の方法をご利用ください。",
+      "backupCode": {
+        "empty": "バックアップコードを1つ入力してください。",
+        "strange": "バックアップコードには英字と数字のみ使用できます。{chars}を削除してください。",
+        "length": "バックアップコードは ABCDE-FGH23 のように10文字です。入力されたコードは{count, number}文字です。",
+        "lookalikes": "バックアップコードには {chars} は使われません。似た文字や数字を使っていないか確認してください。",
+        "or": "{first} または {second}"
+      }
+    },
+    "twoFactorMessages": {
+      "wrongCode": "コードが正しくありません。認証アプリを確認して、もう一度お試しください。",
+      "wrongBackupCode": "そのバックアップコードは正しくないか、すでに使用されています。",
+      "invalidCode": "認証アプリに表示される6桁のコードを入力してください。",
+      "invalidBackupCode": "バックアップコードではありません。バックアップコードは ABCDE-FGH23 のような形式で、大文字の英字と2から9の数字で構成されています。",
+      "tooManyAttempts": "誤ったコードの入力が多すぎます。もう一度サインインしてやり直してください。",
+      "locked": "誤ったコードが続けて入力されました。{minutes, number}分後にもう一度お試しください。",
+      "expired": "このサインインはタイムアウトしました。もう一度サインインしてください。",
+      "rateLimited": "試行回数が多すぎます。しばらく待ってから、もう一度お試しください。",
+      "failed": "問題が発生しました。接続を確認して、もう一度お試しください。",
+      "ssoRequired": "お使いの会社では、このメールアドレスにシングルサインオンが必須になりました。最初からやり直して、SSOでサインインしてください。"
+    },
+    "confirmationMessages": {
+      "failed": "問題が発生しました。接続を確認して、もう一度お試しください。",
+      "passkeyFailed": "パスキーを確認できませんでした。もう一度お試しください。",
+      "passkeyClosed": "パスキーの画面が閉じられたか、タイムアウトしました。もう一度お試しいただくか、別の方法をご利用ください。",
+      "passkeyUnavailable": "このブラウザーではパスキーを利用できません。別の方法をご利用ください。",
+      "signInAgain": "安全のため、いったんサインアウトして再度サインインし、10分以内にもう一度お試しください。",
+      "stillRequired": "ご本人であることを確認できませんでした。もう一度お試しください。",
+      "signInFailed": "サインインが完了しなかったため、変更は行われていません。もう一度お試しいただくか、別の方法をご利用ください。",
+      "signInConfirmed": "ありがとうございます。確認が完了しました。今後10分以内に変更を行えます。"
+    },
+    "signInErrors": {
+      "githubUnverified": "{provider} がこのメールアドレスを確認していないため、QRdx ではこのアドレスでアカウントを作成できません。{provider} のメール設定で確認を済ませてからもう一度お試しいただくか、メールコードでサインインしてください。",
+      "googleUnverified": "{provider} がこのメールアドレスを確認していないため、QRdx ではこのアドレスでアカウントを作成できません。代わりにメールコードでサインインしてください。",
+      "otherUnverified": "そのアカウントのメールアドレスは確認されていないため、QRdx ではこのアドレスでアカウントを作成できません。代わりにメールコードでサインインしてください。",
+      "cancelled": "サインインがキャンセルされました。",
+      "accountNotLinked": "このアドレスのアカウントはすでに存在しますが、{provider} とは連携されていません。代わりにメールコードでサインインしてください。",
+      "emailNotShared": "{provider} からメールアドレスが共有されなかったため、QRdx では {provider} でサインインできません。代わりにメールコードでサインインしてください。",
+      "tookTooLong": "サインインに時間がかかりすぎたか、別の場所で開始されました。もう一度お試しください。",
+      "providerFailed": "{provider} でのサインインに失敗しました。もう一度お試しいただくか、別の方法でサインインしてください。",
+      "sso": {
+        "emailRequired": "勤務先のメールアドレスを入力してください。",
+        "notFound": "そのアドレスにはSSOが設定されていません。",
+        "required": "お客様の会社では、このアドレスにシングルサインオンが必須となっています。SSOでサインインしてください。",
+        "unavailable": "このワークスペースでは、現在シングルサインオンをご利用いただけません。別の方法でサインインしてください。",
+        "emailOutsideDomain": "IDプロバイダーから会社のドメイン以外のアドレスが送信されたため、QRdxではそのアドレスでサインインできません。ワークスペースの管理者にお問い合わせください。",
+        "emailUnverified": "会社のサインインシステムでこのメールアドレスが確認されていないため、QRdxではサインインできません。管理者がそちらでメールアドレスを確認済みにする必要があります。",
+        "emailMissing": "会社のサインインシステムからメールアドレスが送信されなかったため、QRdxではサインインできません。ワークスペースの管理者にお問い合わせください。",
+        "weakSignature": "会社のサインインシステムが、QRdxで受け付けていないSHA-1などの古いアルゴリズムでこのサインインに署名しました。管理者がQRdxアプリの署名アルゴリズムをSHA-256に変更する必要があります。",
+        "unsolicitedResponse": "会社のアプリ一覧からのこのサインインをQRdxで受け付けられませんでした。QRdxのサインインページから、「SSOでサインイン」を選んで勤務先のメールアドレスを入力してください。繰り返し発生する場合は、ワークスペースの管理者にお問い合わせください。",
+        "replayDetected": "このサインインはすでに使用されています。もう一度サインインしてください。",
+        "accountNotLinked": "このアドレスのアカウントはすでに存在しており、連携できませんでした。代わりにメールコードでサインインしてください。",
+        "failed": "シングルサインオンを完了できませんでした。もう一度お試しいただくか、別の方法でサインインしてください。",
+        "rateLimited": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。"
+      }
     }
   },
   "codeBuilder": {
