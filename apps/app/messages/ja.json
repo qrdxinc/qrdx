@@ -8030,6 +8030,11 @@
           "everyType": "すべてのタイプ",
           "removeFilter": "絞り込みを解除",
           "searchPages": "ページを検索"
+        },
+        "planLine": {
+          "upload": "ファイルサイズの上限は、フリーが {free}、Pro が {pro} です。",
+          "published": "フリーでは {pages, plural, other {# ページ}}まで作成でき、ファイルは {free} までで、「Made with QRdx」のフッターが表示されます。Pro ではフッターとページ数の上限がなくなり、ファイルは {pro} まで使えます。",
+          "seePro": "Proを見る"
         }
       },
       "settings": {
@@ -8236,6 +8241,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "新しい動的コード"
+        },
+        "codeLiveCard": {
+          "title": "コードを公開しました",
+          "body": "フリーでも終了日なしで使い続けられます。ビジネス向けに印刷する場合は、Pro で次の機能を追加できます。",
+          "customDomain": "短縮リンクに独自ドメインを使用",
+          "customSlug": "ランダムな文字列ではなく、好きな末尾を指定",
+          "scanEmails": "コードがスキャンされたときにメールで通知",
+          "linkControls": "パスワード、開始日と終了日、スキャン数の上限",
+          "fullHistory": "直近{years, plural, other {# 年}}だけでなく、すべてのスキャンを履歴に保存",
+          "price": "Pro は月額 {month}、または年額 {year} です。",
+          "seePro": "Proを見る",
+          "hide": "非表示"
+        },
+        "scanAlertsOffer": {
+          "title": "コードがスキャンされたらメールで受け取る",
+          "body": "コードが初めてスキャンされたときと、スキャン数が {first, number} 回、{second, number} 回、{third, number} 回を超えたときに、QRdx がメールでお知らせします。毎週の簡単なまとめも届きます。",
+          "turnOn": "スキャンメールをオンにする",
+          "turningOn": "オンにしています…",
+          "on": "スキャンメールをオンにしました。アカウントのメールアドレスに届きます。",
+          "change": "通知設定で変更できます",
+          "notNow": "今はしない"
         }
       },
       "listSelection": {
@@ -8516,7 +8542,9 @@
         "whatsNew": "新着情報",
         "backToLabel": "{label}に戻る",
         "expandSidebar": "サイドバーを展開",
-        "collapseSidebar": "サイドバーを折りたたむ"
+        "collapseSidebar": "サイドバーを折りたたむ",
+        "upgrade": "アップグレード",
+        "upgradeToPro": "Proにアップグレード"
       },
       "appTopbar": {
         "breadcrumb": "パンくずリスト",
@@ -8791,6 +8819,36 @@
         "signingYouOut": "サインアウトしています…",
         "oneMoment": "しばらくお待ちください…",
         "pageTitle": "サインアウト"
+      }
+    },
+    "success": {
+      "metaTitle": "アップグレード",
+      "activeTitle": "アップグレードありがとうございます",
+      "activeBody": "{plan} プランが有効です。",
+      "pendingTitle": "お支払いを受け付けました",
+      "pendingBody": "Polar でお支払いが確認され次第、プランが有効になります。通常は1分以内です。このページは自動的に再確認します。",
+      "checkNow": "今すぐ確認",
+      "incompleteTitle": "決済が完了していません",
+      "incompleteBody": "この決済は完了しなかったため、プランは変更されていません。",
+      "failedTitle": "お支払いが完了しませんでした",
+      "failedBody": "プランは変更されていません。料金ページからもう一度お試しください。",
+      "backToPricing": "料金ページに戻る",
+      "unverifiedTitle": "お支払いを確認できませんでした",
+      "unverifiedBody": "Polarから応答がありませんでした。お支払い済みの場合、数分以内にプランが有効になります。しばらくしてからもう一度ご確認ください。",
+      "unknownTitle": "チェックアウトが見つかりません",
+      "unknownBody": "このチェックアウトはお客様のアカウントで見つかりませんでした。お支払いが完了した直後の場合は、アップグレードしたアカウントでサインインしているかをご確認いただくか、<mail>{email}</mail>までご連絡ください。",
+      "signedOutTitle": "サインインしてプランを確認",
+      "signedOutBody": "アップグレードしたアカウントでサインインすると、プランが有効かどうかを確認できます。",
+      "signIn": "サインイン",
+      "goToDashboard": "ダッシュボードへ移動",
+      "manageSubscription": "サブスクリプションを管理",
+      "steps": {
+        "codesTitle": "動的QRコードを作成",
+        "codesBody": "印刷後も編集でき、スキャン分析も使えるコードです。",
+        "domainTitle": "カスタムドメインを追加",
+        "domainBody": "短縮リンクを独自ドメインで配信できます。",
+        "teamTitle": "チームを招待",
+        "teamBody": "コード、ページ、保存したテーマをチームメンバーと共有できます。"
       }
     }
   },

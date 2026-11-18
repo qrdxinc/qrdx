@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { type FormEvent, useId, useState } from "react";
 import { CloudFileButton } from "@/components/connected-accounts/cloud-file-button";
 import { FieldRow, normalizeLink } from "@/components/landing/editor/fields";
+import { PagePlanNote } from "@/components/landing/editor/page-plan-line";
 import { landingUrlSchema } from "@/types/landing";
 import type { FileSource } from "../source";
 import { FILE_KIND_LABELS, type FileKind, type FileView } from "../types";
@@ -171,6 +172,7 @@ export function FileSourceField({
             kind={kind}
             onSelect={([file]) => file && onChange(fileToSource(file))}
           />
+          <PagePlanNote variant="upload" />
         </div>
       ) : (
         <p className="text-muted-foreground text-xs">

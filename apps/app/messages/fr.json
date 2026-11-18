@@ -8030,6 +8030,11 @@
           "everyType": "Tous les types",
           "removeFilter": "Retirer le filtre",
           "searchPages": "Rechercher des pages"
+        },
+        "planLine": {
+          "upload": "Fichiers jusqu’à {free} avec Gratuit, {pro} avec Pro.",
+          "published": "Avec Gratuit, vous disposez de {pages, plural, one {# page} other {# pages}}, de fichiers jusqu’à {free} et d’un pied de page « Made with QRdx ». Pro supprime le pied de page et la limite de pages, et accepte les fichiers jusqu’à {pro}.",
+          "seePro": "Voir Pro"
         }
       },
       "settings": {
@@ -8236,6 +8241,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Nouveau code dynamique"
+        },
+        "codeLiveCard": {
+          "title": "Votre code est actif",
+          "body": "Il continue de fonctionner avec Gratuit, sans date de fin. S’il est imprimé pour une entreprise, Pro ajoute :",
+          "customDomain": "Votre propre domaine sur le lien court",
+          "customSlug": "Une fin de lien que vous choisissez au lieu d’une fin aléatoire",
+          "scanEmails": "Un e-mail quand un code est scanné",
+          "linkControls": "Mots de passe, dates de début et de fin, et limites de scans",
+          "fullHistory": "Tous les scans dans votre historique, et pas seulement ceux {years, plural, one {de la dernière année} other {des # dernières années}}",
+          "price": "Pro coûte {month} par mois ou {year} par an.",
+          "seePro": "Voir Pro",
+          "hide": "Masquer"
+        },
+        "scanAlertsOffer": {
+          "title": "Recevez un e-mail quand vos codes sont scannés",
+          "body": "QRdx vous envoie un e-mail quand un code est scanné pour la première fois et quand il dépasse {first, number}, {second, number} et {third, number} scans, ainsi qu’un court récapitulatif chaque semaine.",
+          "turnOn": "Activer les e-mails de scan",
+          "turningOn": "Activation…",
+          "on": "Les e-mails de scan sont activés. Ils sont envoyés à l’adresse e-mail de votre compte.",
+          "change": "Modifier dans Notifications",
+          "notNow": "Plus tard"
         }
       },
       "listSelection": {
@@ -8516,7 +8542,9 @@
         "whatsNew": "Nouveautés",
         "backToLabel": "Retour à {label}",
         "expandSidebar": "Développer la barre latérale",
-        "collapseSidebar": "Réduire la barre latérale"
+        "collapseSidebar": "Réduire la barre latérale",
+        "upgrade": "Passer à Pro",
+        "upgradeToPro": "Passer à Pro"
       },
       "appTopbar": {
         "breadcrumb": "Fil d’Ariane",
@@ -8791,6 +8819,36 @@
         "signingYouOut": "Déconnexion en cours…",
         "oneMoment": "Un instant…",
         "pageTitle": "Déconnexion"
+      }
+    },
+    "success": {
+      "metaTitle": "Votre mise à niveau",
+      "activeTitle": "Merci pour votre mise à niveau",
+      "activeBody": "Votre offre {plan} est active.",
+      "pendingTitle": "Paiement reçu",
+      "pendingBody": "Votre offre sera activée dès que Polar confirmera le paiement, en général en moins d’une minute. Cette page vérifie à nouveau automatiquement.",
+      "checkNow": "Vérifier",
+      "incompleteTitle": "Paiement non terminé",
+      "incompleteBody": "Ce paiement n’a pas été finalisé, votre offre n’a donc pas changé.",
+      "failedTitle": "Le paiement n’a pas abouti",
+      "failedBody": "Votre offre n’a pas changé. Vous pouvez réessayer depuis la page des tarifs.",
+      "backToPricing": "Retour aux tarifs",
+      "unverifiedTitle": "Impossible de vérifier votre paiement",
+      "unverifiedBody": "Polar n’a pas répondu à l’instant. Si vous avez payé, votre offre sera activée d’ici quelques minutes. Vérifiez à nouveau dans un instant.",
+      "unknownTitle": "Aucun paiement trouvé",
+      "unknownBody": "Nous n’avons pas trouvé ce paiement sur votre compte. Si vous venez de payer, assurez-vous d’être connecté avec le compte que vous avez mis à niveau, ou écrivez à <mail>{email}</mail>.",
+      "signedOutTitle": "Connectez-vous pour voir votre offre",
+      "signedOutBody": "Connectez-vous avec le compte que vous avez mis à niveau pour voir si votre offre est active.",
+      "signIn": "Se connecter",
+      "goToDashboard": "Aller au tableau de bord",
+      "manageSubscription": "Gérer l’abonnement",
+      "steps": {
+        "codesTitle": "Créez des QR codes dynamiques",
+        "codesBody": "Des codes modifiables après impression, avec des statistiques de scan.",
+        "domainTitle": "Ajoutez un domaine personnalisé",
+        "domainBody": "Diffusez vos liens courts depuis votre propre domaine.",
+        "teamTitle": "Invitez votre équipe",
+        "teamBody": "Partagez codes, pages et thèmes enregistrés avec vos collègues."
       }
     }
   },

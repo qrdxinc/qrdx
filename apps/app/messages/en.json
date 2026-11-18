@@ -8429,6 +8429,11 @@
           "everyType": "Every type",
           "removeFilter": "Remove filter",
           "searchPages": "Search pages"
+        },
+        "planLine": {
+          "upload": "Files up to {free} on Free, {pro} on Pro.",
+          "published": "On Free you get {pages, plural, one {# page} other {# pages}}, files up to {free} and a “Made with QRdx” footer. Pro removes the footer and the page limit, and takes files up to {pro}.",
+          "seePro": "See Pro"
         }
       },
       "settings": {
@@ -8635,6 +8640,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "New dynamic code"
+        },
+        "codeLiveCard": {
+          "title": "Your code is live",
+          "body": "It keeps working on Free, with no end date. If it goes on print for a business, Pro adds:",
+          "customDomain": "Your own domain on the short link",
+          "customSlug": "A back-half you choose instead of a random one",
+          "scanEmails": "An email when a code gets scanned",
+          "linkControls": "Passwords, start and end dates, and scan limits",
+          "fullHistory": "Every scan in your history, not only the last {years, plural, one {year} other {# years}}",
+          "price": "Pro is {month} a month or {year} a year.",
+          "seePro": "See Pro",
+          "hide": "Hide"
+        },
+        "scanAlertsOffer": {
+          "title": "Get an email when your codes are scanned",
+          "body": "QRdx emails you when a code is scanned for the first time and when it passes {first, number}, {second, number} and {third, number} scans, plus a short summary each week.",
+          "turnOn": "Turn on scan emails",
+          "turningOn": "Turning on…",
+          "on": "Scan emails are on. They go to your account’s email address.",
+          "change": "Change them in Notifications",
+          "notNow": "Not now"
         }
       },
       "listSelection": {
@@ -8915,7 +8941,9 @@
         "whatsNew": "What's new",
         "backToLabel": "Back to {label}",
         "expandSidebar": "Expand sidebar",
-        "collapseSidebar": "Collapse sidebar"
+        "collapseSidebar": "Collapse sidebar",
+        "upgrade": "Upgrade",
+        "upgradeToPro": "Upgrade to Pro"
       },
       "appTopbar": {
         "breadcrumb": "Breadcrumb",
@@ -9190,6 +9218,36 @@
         "signingYouOut": "Signing you out…",
         "oneMoment": "One moment…",
         "pageTitle": "Sign out"
+      }
+    },
+    "success": {
+      "metaTitle": "Your upgrade",
+      "activeTitle": "Thanks for upgrading",
+      "activeBody": "Your {plan} plan is active.",
+      "pendingTitle": "Payment received",
+      "pendingBody": "Your plan switches on as soon as Polar confirms the payment, usually within a minute. This page checks again on its own.",
+      "checkNow": "Check now",
+      "incompleteTitle": "Checkout not finished",
+      "incompleteBody": "This checkout wasn’t completed, so your plan hasn’t changed.",
+      "failedTitle": "The payment didn’t go through",
+      "failedBody": "Your plan hasn’t changed. You can try again from the pricing page.",
+      "backToPricing": "Back to pricing",
+      "unverifiedTitle": "We couldn’t check your payment",
+      "unverifiedBody": "Polar didn’t answer just now. If you paid, your plan switches on within a few minutes. Check again in a moment.",
+      "unknownTitle": "No checkout found",
+      "unknownBody": "We couldn’t find this checkout on your account. If you just paid, make sure you’re signed in with the account you upgraded, or write to <mail>{email}</mail>.",
+      "signedOutTitle": "Sign in to see your plan",
+      "signedOutBody": "Sign in with the account you upgraded to see whether your plan is active.",
+      "signIn": "Sign in",
+      "goToDashboard": "Go to the dashboard",
+      "manageSubscription": "Manage subscription",
+      "steps": {
+        "codesTitle": "Create dynamic codes",
+        "codesBody": "Codes you can edit after printing, with scan analytics.",
+        "domainTitle": "Add a custom domain",
+        "domainBody": "Serve your short links from your own domain.",
+        "teamTitle": "Invite your team",
+        "teamBody": "Share codes, pages and saved themes with teammates."
       }
     }
   },

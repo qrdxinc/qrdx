@@ -8030,6 +8030,11 @@
           "everyType": "Todos os tipos",
           "removeFilter": "Remover filtro",
           "searchPages": "Buscar páginas"
+        },
+        "planLine": {
+          "upload": "Arquivos de até {free} no Grátis, {pro} no Pro.",
+          "published": "No plano Grátis você tem {pages, plural, one {# página} other {# páginas}}, arquivos de até {free} e um rodapé “Made with QRdx”. O Pro remove o rodapé e o limite de páginas, e aceita arquivos de até {pro}.",
+          "seePro": "Ver o Pro"
         }
       },
       "settings": {
@@ -8236,6 +8241,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Novo código dinâmico"
+        },
+        "codeLiveCard": {
+          "title": "Seu código está no ar",
+          "body": "Ele continua funcionando no plano Grátis, sem data para acabar. Se for para impressão em um negócio, o Pro acrescenta:",
+          "customDomain": "Seu próprio domínio no link curto",
+          "customSlug": "Um final de link que você escolhe, em vez de um aleatório",
+          "scanEmails": "Um e-mail quando um código for lido",
+          "linkControls": "Senhas, datas de início e de fim e limites de leituras",
+          "fullHistory": "Todas as leituras no seu histórico, não só as {years, plural, one {do último ano} other {dos últimos # anos}}",
+          "price": "O Pro custa {month} por mês ou {year} por ano.",
+          "seePro": "Ver o Pro",
+          "hide": "Ocultar"
+        },
+        "scanAlertsOffer": {
+          "title": "Receba um e-mail quando seus códigos forem lidos",
+          "body": "O QRdx envia um e-mail quando um código é lido pela primeira vez e quando passa de {first, number}, {second, number} e {third, number} leituras, além de um breve resumo semanal.",
+          "turnOn": "Ativar e-mails de leitura",
+          "turningOn": "Ativando…",
+          "on": "Os e-mails de leitura estão ativados. Eles vão para o e-mail da sua conta.",
+          "change": "Altere em Notificações",
+          "notNow": "Agora não"
         }
       },
       "listSelection": {
@@ -8516,7 +8542,9 @@
         "whatsNew": "Novidades",
         "backToLabel": "Voltar para {label}",
         "expandSidebar": "Expandir barra lateral",
-        "collapseSidebar": "Recolher barra lateral"
+        "collapseSidebar": "Recolher barra lateral",
+        "upgrade": "Fazer upgrade",
+        "upgradeToPro": "Fazer upgrade para o Pro"
       },
       "appTopbar": {
         "breadcrumb": "Trilha de navegação",
@@ -8791,6 +8819,36 @@
         "signingYouOut": "Saindo da conta…",
         "oneMoment": "Só um instante…",
         "pageTitle": "Sair"
+      }
+    },
+    "success": {
+      "metaTitle": "Seu upgrade",
+      "activeTitle": "Obrigado pelo upgrade",
+      "activeBody": "Seu plano {plan} está ativo.",
+      "pendingTitle": "Pagamento recebido",
+      "pendingBody": "Seu plano é ativado assim que a Polar confirmar o pagamento, normalmente em até um minuto. Esta página verifica de novo sozinha.",
+      "checkNow": "Verificar agora",
+      "incompleteTitle": "Compra não concluída",
+      "incompleteBody": "Esta compra não foi concluída, então seu plano não mudou.",
+      "failedTitle": "O pagamento não foi concluído",
+      "failedBody": "Seu plano não mudou. Você pode tentar de novo na página de preços.",
+      "backToPricing": "Voltar para os preços",
+      "unverifiedTitle": "Não conseguimos verificar seu pagamento",
+      "unverifiedBody": "A Polar não respondeu agora há pouco. Se você pagou, seu plano é ativado em alguns minutos. Verifique de novo daqui a pouco.",
+      "unknownTitle": "Checkout não encontrado",
+      "unknownBody": "Não encontramos este checkout na sua conta. Se você acabou de pagar, confira se entrou com a conta que fez o upgrade ou escreva para <mail>{email}</mail>.",
+      "signedOutTitle": "Entre para ver seu plano",
+      "signedOutBody": "Entre com a conta que fez o upgrade para ver se seu plano está ativo.",
+      "signIn": "Entrar",
+      "goToDashboard": "Ir para o painel",
+      "manageSubscription": "Gerenciar assinatura",
+      "steps": {
+        "codesTitle": "Crie QR codes dinâmicos",
+        "codesBody": "QR codes que você pode editar depois de impressos, com análise de leituras.",
+        "domainTitle": "Adicione um domínio próprio",
+        "domainBody": "Use seu próprio domínio nos seus links curtos.",
+        "teamTitle": "Convide sua equipe",
+        "teamBody": "Compartilhe QR codes, páginas e temas salvos com seus colegas."
       }
     }
   },

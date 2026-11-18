@@ -8030,6 +8030,11 @@
           "everyType": "Semua jenis",
           "removeFilter": "Hapus filter",
           "searchPages": "Cari halaman"
+        },
+        "planLine": {
+          "upload": "File hingga {free} di paket Gratis, {pro} di paket Pro.",
+          "published": "Di paket Gratis Anda mendapatkan {pages, plural, other {# halaman}}, file hingga {free}, dan footer “Made with QRdx”. Pro menghapus footer dan batas halaman, serta mendukung file hingga {pro}.",
+          "seePro": "Lihat Pro"
         }
       },
       "settings": {
@@ -8236,6 +8241,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Kode dinamis baru"
+        },
+        "codeLiveCard": {
+          "title": "Kode Anda sudah aktif",
+          "body": "Kode ini tetap berfungsi di paket Gratis, tanpa tanggal berakhir. Jika dicetak untuk bisnis, Pro menambahkan:",
+          "customDomain": "Domain Anda sendiri pada tautan pendek",
+          "customSlug": "Bagian akhir tautan yang Anda pilih sendiri, bukan yang acak",
+          "scanEmails": "Email saat sebuah kode dipindai",
+          "linkControls": "Kata sandi, tanggal mulai dan berakhir, serta batas pemindaian",
+          "fullHistory": "Setiap pemindaian dalam riwayat Anda, bukan hanya {years, plural, other {# tahun}} terakhir",
+          "price": "Pro seharga {month} per bulan atau {year} per tahun.",
+          "seePro": "Lihat Pro",
+          "hide": "Sembunyikan"
+        },
+        "scanAlertsOffer": {
+          "title": "Dapatkan email saat kode Anda dipindai",
+          "body": "QRdx mengirim email kepada Anda saat sebuah kode dipindai untuk pertama kalinya dan saat mencapai {first, number}, {second, number}, dan {third, number} pemindaian, ditambah ringkasan singkat setiap minggu.",
+          "turnOn": "Aktifkan email pemindaian",
+          "turningOn": "Mengaktifkan…",
+          "on": "Email pemindaian aktif. Email dikirim ke alamat email akun Anda.",
+          "change": "Ubah di Notifikasi",
+          "notNow": "Nanti saja"
         }
       },
       "listSelection": {
@@ -8516,7 +8542,9 @@
         "whatsNew": "Yang baru",
         "backToLabel": "Kembali ke {label}",
         "expandSidebar": "Perluas sidebar",
-        "collapseSidebar": "Ciutkan sidebar"
+        "collapseSidebar": "Ciutkan sidebar",
+        "upgrade": "Upgrade",
+        "upgradeToPro": "Upgrade ke Pro"
       },
       "appTopbar": {
         "breadcrumb": "Breadcrumb",
@@ -8791,6 +8819,36 @@
         "signingYouOut": "Sedang mengeluarkan Anda…",
         "oneMoment": "Sebentar…",
         "pageTitle": "Keluar"
+      }
+    },
+    "success": {
+      "metaTitle": "Upgrade Anda",
+      "activeTitle": "Terima kasih telah upgrade",
+      "activeBody": "Paket {plan} Anda sudah aktif.",
+      "pendingTitle": "Pembayaran diterima",
+      "pendingBody": "Paket Anda aktif segera setelah Polar mengonfirmasi pembayaran, biasanya dalam waktu satu menit. Halaman ini memeriksa ulang secara otomatis.",
+      "checkNow": "Periksa sekarang",
+      "incompleteTitle": "Checkout belum selesai",
+      "incompleteBody": "Checkout ini tidak diselesaikan, jadi paket Anda tidak berubah.",
+      "failedTitle": "Pembayaran tidak berhasil",
+      "failedBody": "Paket Anda tidak berubah. Anda dapat mencoba lagi dari halaman harga.",
+      "backToPricing": "Kembali ke harga",
+      "unverifiedTitle": "Kami tidak dapat memeriksa pembayaran Anda",
+      "unverifiedBody": "Polar tidak merespons saat ini. Jika Anda sudah membayar, paket Anda akan aktif dalam beberapa menit. Periksa lagi sebentar lagi.",
+      "unknownTitle": "Checkout tidak ditemukan",
+      "unknownBody": "Kami tidak dapat menemukan checkout ini di akun Anda. Jika Anda baru saja membayar, pastikan Anda masuk dengan akun yang Anda upgrade, atau kirim email ke <mail>{email}</mail>.",
+      "signedOutTitle": "Masuk untuk melihat paket Anda",
+      "signedOutBody": "Masuk dengan akun yang Anda upgrade untuk melihat apakah paket Anda sudah aktif.",
+      "signIn": "Masuk",
+      "goToDashboard": "Buka dasbor",
+      "manageSubscription": "Kelola langganan",
+      "steps": {
+        "codesTitle": "Buat kode dinamis",
+        "codesBody": "Kode yang dapat Anda edit setelah dicetak, dengan analitik pemindaian.",
+        "domainTitle": "Tambahkan domain khusus",
+        "domainBody": "Sajikan tautan pendek Anda dari domain Anda sendiri.",
+        "teamTitle": "Undang tim Anda",
+        "teamBody": "Bagikan kode, halaman, dan tema tersimpan dengan rekan tim."
       }
     }
   },

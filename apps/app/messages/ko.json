@@ -8030,6 +8030,11 @@
           "everyType": "모든 유형",
           "removeFilter": "필터 제거",
           "searchPages": "페이지 검색"
+        },
+        "planLine": {
+          "upload": "파일은 무료 플랜에서 최대 {free}, Pro에서 최대 {pro}까지 올릴 수 있어요.",
+          "published": "무료 플랜에서는 {pages, plural, one {# 페이지} other {# 페이지}}, 최대 {free} 파일, 그리고 “Made with QRdx” 푸터가 제공됩니다. Pro는 푸터와 페이지 제한을 없애고, 최대 {pro}까지의 파일을 지원합니다.",
+          "seePro": "Pro 보기"
         }
       },
       "settings": {
@@ -8236,6 +8241,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "새 동적 코드"
+        },
+        "codeLiveCard": {
+          "title": "코드가 활성화되었어요",
+          "body": "무료 플랜에서도 종료일 없이 계속 작동해요. 비즈니스용으로 인쇄하게 된다면 Pro에서 다음을 추가로 제공합니다.",
+          "customDomain": "짧은 링크에 내 도메인 사용",
+          "customSlug": "무작위 값 대신 직접 정하는 백하프",
+          "scanEmails": "코드가 스캔되면 이메일 알림",
+          "linkControls": "비밀번호, 시작일과 종료일, 스캔 횟수 제한",
+          "fullHistory": "최근 {years, plural, one {1년} other {#년}}만이 아니라 모든 스캔을 기록에서 확인",
+          "price": "Pro는 월 {month} 또는 연 {year}입니다.",
+          "seePro": "Pro 보기",
+          "hide": "숨기기"
+        },
+        "scanAlertsOffer": {
+          "title": "코드가 스캔되면 이메일을 받아보세요",
+          "body": "QRdx는 코드가 처음 스캔될 때와 스캔 횟수가 {first, number}회, {second, number}회, {third, number}회를 넘을 때 이메일을 보내드리며, 매주 간단한 요약도 함께 보내드립니다.",
+          "turnOn": "스캔 이메일 켜기",
+          "turningOn": "켜는 중…",
+          "on": "스캔 이메일이 켜졌어요. 계정의 이메일 주소로 전송됩니다.",
+          "change": "알림 설정에서 변경하기",
+          "notNow": "나중에"
         }
       },
       "listSelection": {
@@ -8516,7 +8542,9 @@
         "whatsNew": "새로운 소식",
         "backToLabel": "{label}(으)로 돌아가기",
         "expandSidebar": "사이드바 펼치기",
-        "collapseSidebar": "사이드바 접기"
+        "collapseSidebar": "사이드바 접기",
+        "upgrade": "업그레이드",
+        "upgradeToPro": "Pro로 업그레이드"
       },
       "appTopbar": {
         "breadcrumb": "탐색 경로",
@@ -8791,6 +8819,36 @@
         "signingYouOut": "로그아웃하는 중…",
         "oneMoment": "잠시만 기다려 주세요…",
         "pageTitle": "로그아웃"
+      }
+    },
+    "success": {
+      "metaTitle": "업그레이드",
+      "activeTitle": "업그레이드해 주셔서 감사합니다",
+      "activeBody": "{plan} 플랜이 활성화되었어요.",
+      "pendingTitle": "결제가 접수되었어요",
+      "pendingBody": "Polar에서 결제를 확인하는 대로 플랜이 켜지며, 보통 1분 안에 완료됩니다. 이 페이지는 자동으로 다시 확인해요.",
+      "checkNow": "지금 확인",
+      "incompleteTitle": "결제가 완료되지 않았어요",
+      "incompleteBody": "결제가 완료되지 않아서 플랜은 변경되지 않았어요.",
+      "failedTitle": "결제가 완료되지 않았어요",
+      "failedBody": "플랜은 그대로예요. 요금제 페이지에서 다시 시도할 수 있어요.",
+      "backToPricing": "요금제로 돌아가기",
+      "unverifiedTitle": "결제를 확인하지 못했어요",
+      "unverifiedBody": "방금 Polar에서 응답이 없었어요. 결제하셨다면 몇 분 안에 플랜이 활성화돼요. 잠시 후 다시 확인해 주세요.",
+      "unknownTitle": "체크아웃을 찾을 수 없어요",
+      "unknownBody": "이 체크아웃을 계정에서 찾지 못했어요. 방금 결제하셨다면 업그레이드한 계정으로 로그인했는지 확인하시거나 <mail>{email}</mail>로 문의해 주세요.",
+      "signedOutTitle": "로그인하고 플랜 확인하기",
+      "signedOutBody": "업그레이드한 계정으로 로그인하면 플랜이 활성화되었는지 확인할 수 있어요.",
+      "signIn": "로그인",
+      "goToDashboard": "대시보드로 이동",
+      "manageSubscription": "구독 관리",
+      "steps": {
+        "codesTitle": "동적 QR 코드 만들기",
+        "codesBody": "인쇄한 후에도 수정할 수 있고 스캔 분석도 볼 수 있는 코드예요.",
+        "domainTitle": "커스텀 도메인 추가",
+        "domainBody": "내 도메인으로 짧은 링크를 제공해 보세요.",
+        "teamTitle": "팀원 초대하기",
+        "teamBody": "코드, 페이지, 저장한 테마를 팀원과 공유해 보세요."
       }
     }
   },
