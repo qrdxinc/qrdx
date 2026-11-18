@@ -9167,6 +9167,112 @@
       "open": "Dashboard öffnen"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Melde dich an, um diesen Code zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen.",
+      "notFound": "QR-Code nicht gefunden",
+      "invalidDate": "Gib ein gültiges Datum mit Uhrzeit ein",
+      "dateRange": "Wähle ein Datum zwischen 2000 und 2100",
+      "passwordTooShort": "Verwende mindestens {min, number} Zeichen für das Passwort",
+      "passwordTooLong": "Passwörter dürfen bis zu {max, number} Zeichen lang sein",
+      "passwordTooManyBytes": "Das Passwort ist zu lang",
+      "scanLimitWhole": "Das Scan-Limit muss eine ganze Zahl sein",
+      "scanLimitMin": "Das Scan-Limit muss mindestens 1 betragen",
+      "scanLimitMax": "Das Scan-Limit ist zu hoch",
+      "planRequired": "Passwörter, Zeitpläne, Scan-Limits und Fallback-URLs gehören zu Pro.",
+      "endBeforeStart": "Das Enddatum muss nach dem Startdatum liegen"
+    },
+    "marketing": {
+      "signIn": "Melde dich an, um diesen Code zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen.",
+      "notFound": "QR-Code nicht gefunden",
+      "countryCode": "Verwende einen 2-stelligen Ländercode",
+      "regionCode": "Verwende einen Regionscode wie CA",
+      "invalidUrl": "Ungültige URL",
+      "rule": "Regel {rule, number}",
+      "variant": "{label}, Variante {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {Smart Routing ist eine Pro-Funktion.} business {Smart Routing ist eine Business-Funktion.} other {Smart Routing ist in deinem Tarif nicht enthalten.}} Bereits eingerichtete Einstellungen kannst du weiterhin ausschalten oder entfernen.",
+        "utm": "{plan, select, pro {UTM-Parameter sind eine Pro-Funktion.} business {UTM-Parameter sind eine Business-Funktion.} other {UTM-Parameter sind in deinem Tarif nicht enthalten.}} Bereits eingerichtete Einstellungen kannst du weiterhin ausschalten oder entfernen.",
+        "pixels": "{plan, select, pro {Tracking-Pixel sind eine Pro-Funktion.} business {Tracking-Pixel sind eine Business-Funktion.} other {Tracking-Pixel sind in deinem Tarif nicht enthalten.}} Bereits eingerichtete Einstellungen kannst du weiterhin ausschalten oder entfernen.",
+        "conversions": "{plan, select, pro {Conversion-Tracking ist eine Pro-Funktion.} business {Conversion-Tracking ist eine Business-Funktion.} other {Conversion-Tracking ist in deinem Tarif nicht enthalten.}} Bereits eingerichtete Einstellungen kannst du weiterhin ausschalten oder entfernen.",
+        "preciseLocation": "{plan, select, pro {Der genaue Scan-Standort ist eine Pro-Funktion.} business {Der genaue Scan-Standort ist eine Business-Funktion.} other {Der genaue Scan-Standort ist in deinem Tarif nicht enthalten.}} Bereits eingerichtete Einstellungen kannst du weiterhin ausschalten oder entfernen."
+      }
+    },
+    "landingPages": {
+      "signIn": "Melde dich an, um Seiten zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen.",
+      "selectAtLeastOne": "Wähle mindestens eine Seite aus",
+      "selectUpTo": "Wähle bis zu {max, number} Seiten gleichzeitig aus"
+    },
+    "files": {
+      "signIn": "Melde dich an, um Dateien zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen."
+    },
+    "qrCodes": {
+      "signIn": "Melde dich an, um dynamische QR-Codes zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen.",
+      "nothingToUpdate": "Nichts zu aktualisieren"
+    },
+    "customDomains": {
+      "signIn": "Melde dich an, um eigene Domains zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen.",
+      "enterDomain": "Domain eingeben"
+    },
+    "codeSuggestions": {
+      "signIn": "Melde dich an, um Vorschläge zu erhalten.",
+      "rateLimited": "Das sind ziemlich viele Vorschläge. Versuch es in einer Minute noch einmal.",
+      "unavailable": "Vorschläge sind auf diesem Server nicht verfügbar.",
+      "failed": "Vorschläge konnten gerade nicht geladen werden. Versuch es noch einmal."
+    },
+    "tags": {
+      "nothingToUpdate": "Nichts zu aktualisieren",
+      "tooManyTags": "Ein Code kann bis zu {max, number} Tags haben.",
+      "chooseTag": "Wähle einen Tag zum Hinzufügen oder Entfernen"
+    },
+    "publicStats": {
+      "signIn": "Melde dich an, um Analysen zu teilen.",
+      "failed": "Etwas ist schiefgelaufen.",
+      "notFound": "QR-Code nicht gefunden"
+    },
+    "pathAliases": {
+      "signIn": "Melde dich erneut an, um diesen Code zu ändern.",
+      "failed": "Etwas ist schiefgelaufen. Versuch es noch einmal.",
+      "noDomain": "Pfad-Aliase gibt es nur für Codes auf einer eigenen Domain."
+    },
+    "formResponses": {
+      "signIn": "Melde dich an, um Antworten zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es noch einmal.",
+      "chooseResponses": "Wähle Antworten zum Löschen aus."
+    },
+    "codeKind": {
+      "signIn": "Melde dich an, um Codes zu ändern.",
+      "failed": "Etwas ist schiefgelaufen."
+    },
+    "barcodes": {
+      "signIn": "Melde dich an, um Barcodes zu speichern.",
+      "failed": "Etwas ist schiefgelaufen."
+    },
+    "utmTemplates": {
+      "signIn": "Melde dich an, um Vorlagen zu nutzen.",
+      "failed": "Etwas ist schiefgelaufen."
+    },
+    "codeOptions": {
+      "signIn": "Melde dich erneut an, um die Optionen zu sehen.",
+      "failed": "Optionen konnten nicht geladen werden. Versuch es noch einmal."
+    },
+    "analytics": {
+      "searchTooLong": "Die Suche ist zu lang.",
+      "signIn": "Melde dich an, um deine Codes zu durchsuchen.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es noch einmal."
+    },
+    "webhooks": {
+      "signIn": "Melde dich an, um Webhooks zu verwalten.",
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es noch einmal."
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "Code wird geprüft…",

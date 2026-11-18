@@ -9167,6 +9167,112 @@
       "open": "Buka dasbor Anda"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "Masuk untuk mengelola kode ini.",
+      "failed": "Terjadi kesalahan.",
+      "notFound": "Kode QR tidak ditemukan",
+      "invalidDate": "Masukkan tanggal dan waktu yang valid",
+      "dateRange": "Pilih tanggal antara tahun 2000 dan 2100",
+      "passwordTooShort": "Gunakan minimal {min, number} karakter untuk kata sandi",
+      "passwordTooLong": "Kata sandi maksimal {max, number} karakter",
+      "passwordTooManyBytes": "Kata sandi terlalu panjang",
+      "scanLimitWhole": "Batas pemindaian harus berupa bilangan bulat",
+      "scanLimitMin": "Batas pemindaian minimal 1",
+      "scanLimitMax": "Batas pemindaian terlalu tinggi",
+      "planRequired": "Kata sandi, jadwal, batas pemindaian, dan URL cadangan termasuk dalam Pro.",
+      "endBeforeStart": "Tanggal berakhir harus setelah tanggal mulai"
+    },
+    "marketing": {
+      "signIn": "Masuk untuk mengelola kode ini.",
+      "failed": "Terjadi kesalahan.",
+      "notFound": "Kode QR tidak ditemukan",
+      "countryCode": "Gunakan kode negara 2 huruf",
+      "regionCode": "Gunakan kode wilayah seperti CA",
+      "invalidUrl": "URL tidak valid",
+      "rule": "Aturan {rule, number}",
+      "variant": "{label}, varian {variant}",
+      "problemIn": "{label}: {problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {Perutean cerdas adalah fitur Pro.} business {Perutean cerdas adalah fitur Business.} other {Perutean cerdas tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "utm": "{plan, select, pro {Parameter UTM adalah fitur Pro.} business {Parameter UTM adalah fitur Business.} other {Parameter UTM tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "pixels": "{plan, select, pro {Piksel pelacakan adalah fitur Pro.} business {Piksel pelacakan adalah fitur Business.} other {Piksel pelacakan tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "conversions": "{plan, select, pro {Pelacakan konversi adalah fitur Pro.} business {Pelacakan konversi adalah fitur Business.} other {Pelacakan konversi tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur.",
+        "preciseLocation": "{plan, select, pro {Lokasi pemindaian yang presisi adalah fitur Pro.} business {Lokasi pemindaian yang presisi adalah fitur Business.} other {Lokasi pemindaian yang presisi tidak tersedia di paket Anda.}} Anda tetap dapat menonaktifkan atau menghapus yang sudah diatur."
+      }
+    },
+    "landingPages": {
+      "signIn": "Masuk untuk mengelola halaman.",
+      "failed": "Terjadi kesalahan.",
+      "selectAtLeastOne": "Pilih setidaknya satu halaman",
+      "selectUpTo": "Pilih hingga {max, number} halaman sekaligus"
+    },
+    "files": {
+      "signIn": "Masuk untuk mengelola file.",
+      "failed": "Terjadi kesalahan."
+    },
+    "qrCodes": {
+      "signIn": "Masuk untuk mengelola kode QR dinamis.",
+      "failed": "Terjadi kesalahan.",
+      "nothingToUpdate": "Tidak ada yang diperbarui"
+    },
+    "customDomains": {
+      "signIn": "Masuk untuk mengelola domain khusus.",
+      "failed": "Terjadi kesalahan.",
+      "enterDomain": "Masukkan domain"
+    },
+    "codeSuggestions": {
+      "signIn": "Masuk untuk mendapatkan saran.",
+      "rateLimited": "Terlalu banyak permintaan saran. Coba lagi dalam satu menit.",
+      "unavailable": "Saran tidak tersedia di server ini.",
+      "failed": "Saat ini tidak dapat mengambil saran. Coba lagi."
+    },
+    "tags": {
+      "nothingToUpdate": "Tidak ada yang diperbarui",
+      "tooManyTags": "Satu kode dapat memiliki hingga {max, number} tag.",
+      "chooseTag": "Pilih tag untuk ditambahkan atau dihapus"
+    },
+    "publicStats": {
+      "signIn": "Masuk untuk membagikan analitik.",
+      "failed": "Terjadi kesalahan.",
+      "notFound": "Kode QR tidak ditemukan"
+    },
+    "pathAliases": {
+      "signIn": "Masuk lagi untuk mengubah kode ini.",
+      "failed": "Terjadi kesalahan. Coba lagi.",
+      "noDomain": "Alias jalur hanya untuk kode di domain khusus."
+    },
+    "formResponses": {
+      "signIn": "Masuk untuk mengelola respons.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "chooseResponses": "Pilih respons yang akan dihapus."
+    },
+    "codeKind": {
+      "signIn": "Masuk untuk mengubah kode.",
+      "failed": "Terjadi kesalahan."
+    },
+    "barcodes": {
+      "signIn": "Masuk untuk menyimpan barcode.",
+      "failed": "Terjadi kesalahan."
+    },
+    "utmTemplates": {
+      "signIn": "Masuk untuk menggunakan templat.",
+      "failed": "Terjadi kesalahan."
+    },
+    "codeOptions": {
+      "signIn": "Masuk lagi untuk melihat opsi.",
+      "failed": "Tidak dapat memuat opsi. Coba lagi."
+    },
+    "analytics": {
+      "searchTooLong": "Pencarian terlalu panjang.",
+      "signIn": "Masuk untuk mencari kode Anda.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    },
+    "webhooks": {
+      "signIn": "Masuk untuk mengelola webhook.",
+      "failed": "Terjadi kesalahan. Silakan coba lagi."
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "Memeriksa kode…",

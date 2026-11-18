@@ -27,17 +27,28 @@ const input = {
 
 describe("the builder's new codes", () => {
   it("say they were made in the playground when the builder is over it", async () => {
-    await playgroundBuilderServices.createCode(input);
-    expect(actions.createQrCode).toHaveBeenLastCalledWith(input, {
-      via: "playground",
-    });
+    await playgroundBuilderServices("es").createCode(input);
+    expect(actions.createQrCode).toHaveBeenLastCalledWith(
+      input,
+      { via: "playground" },
+      "es",
+    );
   });
 
   it("say nothing from the dashboard (recorded as the dashboard)", async () => {
-    await builderServices.createCode(input);
-    expect(actions.createQrCode).toHaveBeenLastCalledWith(input);
-    expect(playgroundBuilderServices.updateCode).toBe(
-      builderServices.updateCode,
+    await builderServices("es").createCode(input);
+    expect(actions.createQrCode).toHaveBeenLastCalledWith(
+      input,
+      undefined,
+      "es",
     );
+  });
+
+  it("are updated the same way from both", async () => {
+    const patch = { id: "code_1", title: "Menu" };
+    await playgroundBuilderServices("fr").updateCode(patch);
+    expect(actions.updateQrCode).toHaveBeenLastCalledWith(patch, "fr");
+    await builderServices("de").updateCode(patch);
+    expect(actions.updateQrCode).toHaveBeenLastCalledWith(patch, "de");
   });
 });

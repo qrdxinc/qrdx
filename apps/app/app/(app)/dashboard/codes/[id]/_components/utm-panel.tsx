@@ -6,7 +6,7 @@ import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Add as Plus } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Suspense, useId, useState, useTransition } from "react";
 import {
   type CodeMarketingSettings,
@@ -99,6 +99,8 @@ function UtmEditor({
   plan: PaidPlan | null;
 }) {
   const t = useTranslations("app.dashboard.codes.utmPanel");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const id = useId();
   const [settings, setSettings] = useState(initial);
   const [draft, setDraft] = useState(() => toDraft(initial.utm));
@@ -112,10 +114,13 @@ function UtmEditor({
   const save = (next: Draft) => {
     setError(null);
     startTransition(async () => {
-      const result = await saveCodeUtm({
-        id: settings.codeId,
-        utm: fromDraft(next),
-      });
+      const result = await saveCodeUtm(
+        {
+          id: settings.codeId,
+          utm: fromDraft(next),
+        },
+        locale,
+      );
       if (result.success) {
         setSettings(result.data);
         setDraft(toDraft(result.data.utm));

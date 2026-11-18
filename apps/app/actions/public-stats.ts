@@ -2,6 +2,8 @@
 
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { z } from "zod";
+import { CODE_ACTION_MESSAGES, ownMessage } from "@/lib/code-actions/messages";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import {
   disablePublicStats,
@@ -27,6 +29,8 @@ const KNOWN = new Set([
   "VALIDATION_ERROR",
 ]);
 
+const ENGLISH = CODE_ACTION_MESSAGES.publicStats;
+
 const codeId = z.string().trim().min(1).max(64);
 const writeLimiter = createRateLimiter({ limiter: slidingWindow(20, "60 s") });
 
@@ -39,12 +43,14 @@ async function run<T = PublicStatsShare>(
   | { success: true; data: T }
   | { success: false; error: { code: string; message: string } }
 > {
+  let userId: string | undefined;
   try {
     const parsed = codeId.safeParse(id);
     if (!parsed.success) {
-      throw new HttpError(404, "NOT_FOUND", "QR code not found");
+      throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
     }
     const scope = await getActiveScope();
+    userId = scope.userId;
     if (write) {
       await enforceRateLimits([
         {
@@ -55,22 +61,26 @@ async function run<T = PublicStatsShare>(
     }
     return { success: true, data: await fn(scope, parsed.data) };
   } catch (error) {
+    const text = (await codeActionText({ userId })).publicStats;
     if (error instanceof UnauthorizedError) {
       return {
         success: false,
-        error: { code: "UNAUTHORIZED", message: "Sign in to share analytics." },
+        error: { code: "UNAUTHORIZED", message: text.signIn },
       };
     }
     if (error instanceof HttpError && KNOWN.has(error.code)) {
       return {
         success: false,
-        error: { code: error.code, message: error.message },
+        error: {
+          code: error.code,
+          message: ownMessage(ENGLISH, text, error.message),
+        },
       };
     }
     logError(error as Error, { action });
     return {
       success: false,
-      error: { code: "UNKNOWN_ERROR", message: "Something went wrong." },
+      error: { code: "UNKNOWN_ERROR", message: text.failed },
     };
   }
 }

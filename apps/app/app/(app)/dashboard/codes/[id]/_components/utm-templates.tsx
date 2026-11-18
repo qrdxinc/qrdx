@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // Saved UTM templates in the UTM panel: fill the panel from a template, save
 // its values as one,
@@ -59,11 +59,12 @@ import {
 
 /** Loads the workspace's templates once; null until known (and when off). */
 function useUtmTemplates() {
+  const locale = useLocale();
   const [templates, setTemplates] = useState<UtmTemplateView[] | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    getUtmTemplates()
+    getUtmTemplates(locale)
       .then((result) => {
         if (cancelled) return;
         // Off (no table yet, or not on the plan) and failures look the same:
@@ -76,7 +77,7 @@ function useUtmTemplates() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [locale]);
 
   const upsert = useCallback((template: UtmTemplateView) => {
     setTemplates((list) =>
@@ -230,6 +231,8 @@ function SaveTemplateDialog({
   onSaved: (template: UtmTemplateView) => void;
 }) {
   const t = useTranslations("app.dashboard.codes.utmTemplates");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const id = useId();
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -247,7 +250,7 @@ function SaveTemplateDialog({
     setError(null);
     startTransition(async () => {
       try {
-        const result = await saveUtmTemplate({ name, utm: current });
+        const result = await saveUtmTemplate({ name, utm: current }, locale);
         if (!result.success) {
           setError(result.error.message);
           return;
@@ -323,6 +326,8 @@ function ManageTemplatesDialog({
   onRemoved: (id: string) => void;
 }) {
   const t = useTranslations("app.dashboard.codes.utmTemplates");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const [editing, setEditing] = useState<{ id: string; name: string } | null>(
     null,
   );
@@ -342,7 +347,7 @@ function ManageTemplatesDialog({
     setError(null);
     startTransition(async () => {
       try {
-        const result = await renameUtmTemplateAction(editing);
+        const result = await renameUtmTemplateAction(editing, locale);
         if (!result.success) {
           setError(result.error.message);
           return;
@@ -359,7 +364,10 @@ function ManageTemplatesDialog({
     setError(null);
     startTransition(async () => {
       try {
-        const result = await deleteUtmTemplateAction({ id: template.id });
+        const result = await deleteUtmTemplateAction(
+          { id: template.id },
+          locale,
+        );
         if (!result.success) {
           setError(result.error.message);
           return;

@@ -10,6 +10,7 @@ import {
   assertBindableDomains,
   type DomainRef,
 } from "@/app/(app)/dashboard/domains/_lib/domains";
+import { codeActionText } from "@/lib/code-actions/messages-server";
 import { HttpError } from "@/lib/error-response";
 import { PATH_ALIASES_PER_CODE } from "@/lib/path-alias-limits";
 import { claimAlias, listAliases, removeAlias } from "@/lib/path-alias-store";
@@ -73,13 +74,21 @@ const fail = (
   error: { code, message },
 });
 
-function failure(error: unknown, action: string) {
+/** Who's asking: the calling page's useLocale(), and the user once known. */
+interface Asker {
+  pageLocale?: string;
+  userId?: string;
+}
+
+/** The answer for a thrown `error`, in the page's language (codeActionText). */
+async function failure(error: unknown, action: string, who: Asker) {
+  const text = (await codeActionText(who)).pathAliases;
   if (error instanceof UnauthorizedError) {
-    return fail("unauthorized", "Sign in again to change this code.");
+    return fail("unauthorized", text.signIn);
   }
   if (error instanceof HttpError) return fail("failed", error.message);
   logError(error as Error, { action });
-  return fail("failed", "Something went wrong. Try again.");
+  return fail("failed", text.failed);
 }
 
 /** The code (in the caller's workspace) and its custom domain. */
@@ -90,18 +99,21 @@ async function codeOnDomain(
   return (await getCode(scope, codeId)).domain;
 }
 
-const noDomain = () =>
-  fail("noDomain", "Path aliases are for codes on a custom domain.");
+const noDomain = async (who: Asker) =>
+  fail("noDomain", (await codeActionText(who)).pathAliases.noDomain);
 const problem = (code: PathAliasClaimProblem) =>
   fail(code, PATH_ALIAS_MESSAGES[code]);
 
 export async function getPathAliases(
   codeId: string,
+  pageLocale?: string,
 ): Promise<PathAliasActionResult<PathAliasesData>> {
+  const who: Asker = { pageLocale };
   try {
     const scope = await getActiveScope();
+    who.userId = scope.userId;
     const domain = await codeOnDomain(scope, codeIdSchema.parse(codeId));
-    if (!domain) return noDomain();
+    if (!domain) return noDomain(who);
     const aliases = await listAliases(codeId, domain.id);
     if (!aliases) return problem("unavailable");
     return {
@@ -113,22 +125,25 @@ export async function getPathAliases(
       },
     };
   } catch (error) {
-    return failure(error, "getPathAliases");
+    return failure(error, "getPathAliases", who);
   }
 }
 
 export async function addPathAlias(
   input: z.input<typeof addSchema>,
+  pageLocale?: string,
 ): Promise<PathAliasActionResult<PathAliasView>> {
+  const who: Asker = { pageLocale };
   try {
     const { codeId, path } = addSchema.parse(input);
     const scope = await getActiveScope();
+    who.userId = scope.userId;
     assertCan(scope, "content.write");
     await enforceRateLimits([
       { limiter: mutationLimiter, key: `path-aliases:user:${scope.userId}` },
     ]);
     const domain = await codeOnDomain(scope, codeId);
-    if (!domain) return noDomain();
+    if (!domain) return noDomain(who);
     try {
       // In the workspace, verified, and custom domains on the plan.
       await assertBindableDomains(scope, [domain.id]);
@@ -149,16 +164,19 @@ export async function addPathAlias(
       data: { id: claim.alias.id, path: claim.alias.path },
     };
   } catch (error) {
-    return failure(error, "addPathAlias");
+    return failure(error, "addPathAlias", who);
   }
 }
 
 export async function removePathAlias(
   input: z.input<typeof removeSchema>,
+  pageLocale?: string,
 ): Promise<PathAliasActionResult<{ id: string }>> {
+  const who: Asker = { pageLocale };
   try {
     const { codeId, aliasId } = removeSchema.parse(input);
     const scope = await getActiveScope();
+    who.userId = scope.userId;
     assertCan(scope, "content.write");
     await enforceRateLimits([
       { limiter: mutationLimiter, key: `path-aliases:user:${scope.userId}` },
@@ -170,6 +188,6 @@ export async function removePathAlias(
     }
     return { success: true, data: { id: aliasId } };
   } catch (error) {
-    return failure(error, "removePathAlias");
+    return failure(error, "removePathAlias", who);
   }
 }

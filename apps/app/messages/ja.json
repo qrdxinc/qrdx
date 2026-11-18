@@ -9167,6 +9167,112 @@
       "open": "ダッシュボードを開く"
     }
   },
+  "codeActions": {
+    "lifecycle": {
+      "signIn": "このコードを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。",
+      "notFound": "QRコードが見つかりません",
+      "invalidDate": "有効な日時を入力してください",
+      "dateRange": "2000年から2100年の間の日付を選択してください",
+      "passwordTooShort": "パスワードは{min, number}文字以上にしてください",
+      "passwordTooLong": "パスワードは{max, number}文字以内にしてください",
+      "passwordTooManyBytes": "パスワードが長すぎます",
+      "scanLimitWhole": "スキャン上限は整数で指定してください",
+      "scanLimitMin": "スキャン上限は1以上にしてください",
+      "scanLimitMax": "スキャン上限が大きすぎます",
+      "planRequired": "パスワード、スケジュール、スキャン上限、フォールバックURLはProの機能です。",
+      "endBeforeStart": "終了日は開始日より後にしてください"
+    },
+    "marketing": {
+      "signIn": "このコードを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。",
+      "notFound": "QRコードが見つかりません",
+      "countryCode": "2文字の国コードを入力してください",
+      "regionCode": "CAのような地域コードを入力してください",
+      "invalidUrl": "URLが無効です",
+      "rule": "ルール{rule, number}",
+      "variant": "{label}、バリアント{variant}",
+      "problemIn": "{label}：{problem}",
+      "planRequired": {
+        "routing": "{plan, select, pro {スマートルーティングはProの機能です。} business {スマートルーティングはBusinessの機能です。} other {スマートルーティングは現在のプランでは利用できません。}}すでに設定済みのものをオフにしたり削除したりすることは引き続き可能です。",
+        "utm": "{plan, select, pro {UTMパラメータはProの機能です。} business {UTMパラメータはBusinessの機能です。} other {UTMパラメータは現在のプランでは利用できません。}}すでに設定済みのものをオフにしたり削除したりすることは引き続き可能です。",
+        "pixels": "{plan, select, pro {トラッキングピクセルはProの機能です。} business {トラッキングピクセルはBusinessの機能です。} other {トラッキングピクセルは現在のプランでは利用できません。}}すでに設定済みのものをオフにしたり削除したりすることは引き続き可能です。",
+        "conversions": "{plan, select, pro {コンバージョントラッキングはProの機能です。} business {コンバージョントラッキングはBusinessの機能です。} other {コンバージョントラッキングは現在のプランでは利用できません。}}すでに設定済みのものをオフにしたり削除したりすることは引き続き可能です。",
+        "preciseLocation": "{plan, select, pro {正確なスキャン位置はProの機能です。} business {正確なスキャン位置はBusinessの機能です。} other {正確なスキャン位置は現在のプランでは利用できません。}}すでに設定済みのものをオフにしたり削除したりすることは引き続き可能です。"
+      }
+    },
+    "landingPages": {
+      "signIn": "ページを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。",
+      "selectAtLeastOne": "ページを1つ以上選択してください",
+      "selectUpTo": "一度に選択できるページは最大{max, number}件です"
+    },
+    "files": {
+      "signIn": "ファイルを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。"
+    },
+    "qrCodes": {
+      "signIn": "動的QRコードを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。",
+      "nothingToUpdate": "更新する項目がありません"
+    },
+    "customDomains": {
+      "signIn": "カスタムドメインを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。",
+      "enterDomain": "ドメインを入力してください"
+    },
+    "codeSuggestions": {
+      "signIn": "候補を取得するにはサインインしてください。",
+      "rateLimited": "候補のリクエストが多すぎます。1分ほど待ってからもう一度お試しください。",
+      "unavailable": "このサーバーでは候補を利用できません。",
+      "failed": "現在、候補を取得できませんでした。もう一度お試しください。"
+    },
+    "tags": {
+      "nothingToUpdate": "更新する項目がありません",
+      "tooManyTags": "1つのコードに設定できるタグは最大{max, number}個です。",
+      "chooseTag": "追加または削除するタグを選択してください"
+    },
+    "publicStats": {
+      "signIn": "分析を共有するにはサインインしてください。",
+      "failed": "問題が発生しました。",
+      "notFound": "QRコードが見つかりません"
+    },
+    "pathAliases": {
+      "signIn": "このコードを変更するには、もう一度サインインしてください。",
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "noDomain": "パスエイリアスはカスタムドメインのコード用です。"
+    },
+    "formResponses": {
+      "signIn": "回答を管理するにはサインインしてください。",
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "chooseResponses": "削除する回答を選択してください。"
+    },
+    "codeKind": {
+      "signIn": "コードを変更するにはサインインしてください。",
+      "failed": "問題が発生しました。"
+    },
+    "barcodes": {
+      "signIn": "バーコードを保存するにはサインインしてください。",
+      "failed": "問題が発生しました。"
+    },
+    "utmTemplates": {
+      "signIn": "テンプレートを使うにはサインインしてください。",
+      "failed": "問題が発生しました。"
+    },
+    "codeOptions": {
+      "signIn": "オプションを表示するには、もう一度サインインしてください。",
+      "failed": "オプションを読み込めませんでした。もう一度お試しください。"
+    },
+    "analytics": {
+      "searchTooLong": "検索語が長すぎます。",
+      "signIn": "コードを検索するにはサインインしてください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    },
+    "webhooks": {
+      "signIn": "Webhookを管理するにはサインインしてください。",
+      "failed": "問題が発生しました。もう一度お試しください。"
+    }
+  },
   "auth": {
     "emailCodeSignIn": {
       "checkingCode": "コードを確認中…",

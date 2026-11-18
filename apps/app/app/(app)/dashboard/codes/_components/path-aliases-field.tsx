@@ -4,7 +4,7 @@ import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Trash } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { type KeyboardEvent, useEffect, useState } from "react";
 import {
   addPathAlias,
@@ -56,6 +56,8 @@ export function PathAliasesField({
   disabled?: boolean;
 }) {
   const t = useTranslations("app.dashboard.codes.pathAliases");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const [loaded, setLoaded] = useState<Loaded>({ state: "loading" });
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +66,7 @@ export function PathAliasesField({
   useEffect(() => {
     let cancelled = false;
     setLoaded({ state: "loading" });
-    getPathAliases(codeId)
+    getPathAliases(codeId, locale)
       .then((result) => {
         if (cancelled) return;
         setLoaded(
@@ -81,7 +83,7 @@ export function PathAliasesField({
     return () => {
       cancelled = true;
     };
-  }, [codeId]);
+  }, [codeId, locale]);
 
   // Codes on the default short link have no aliases: nothing to show.
   if (loaded.state === "off" && loaded.code === "noDomain") return null;
@@ -124,7 +126,9 @@ export function PathAliasesField({
     if (!path || busy) return;
     setBusy(true);
     setError(null);
-    const result = await addPathAlias({ codeId, path }).catch(() => null);
+    const result = await addPathAlias({ codeId, path }, locale).catch(
+      () => null,
+    );
     setBusy(false);
     if (!result) {
       setError(t("failed"));
@@ -149,7 +153,9 @@ export function PathAliasesField({
   const remove = async (aliasId: string) => {
     setBusy(true);
     setError(null);
-    const result = await removePathAlias({ codeId, aliasId }).catch(() => null);
+    const result = await removePathAlias({ codeId, aliasId }, locale).catch(
+      () => null,
+    );
     setBusy(false);
     if (!result?.success) {
       setError(

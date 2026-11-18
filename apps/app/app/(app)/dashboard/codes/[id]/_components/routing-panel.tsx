@@ -45,7 +45,7 @@ import {
   Add as Plus,
   Trash as Trash2,
 } from "iconsax-reactjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   type ReactNode,
   Suspense,
@@ -1310,6 +1310,8 @@ function RuleCard({
 
 function RuleTester({ codeId, rules }: { codeId: string; rules: DraftRule[] }) {
   const t = useTranslations("app.dashboard.codes.routingPanel");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const id = useId();
   const [sample, setSample] = useState({
     device: "mobile",
@@ -1348,21 +1350,24 @@ function RuleTester({ codeId, rules }: { codeId: string; rules: DraftRule[] }) {
       return;
     }
     startTransition(async () => {
-      const response = await testCodeRouting({
-        id: codeId,
-        routing: rules.length > 0 ? fromDraft(rules) : null,
-        sample: {
-          device: sample.device as "mobile",
-          os: sample.os === "unknown" ? null : (sample.os as "iOS"),
-          country: sample.country,
-          region: sample.region,
-          language: sample.language,
-          at: fromLocalInput(sample.at) ?? new Date().toISOString(),
-          scanNumber: Number(sample.scanNumber) || 1,
-          visitor: sample.visitor,
-          location: point,
+      const response = await testCodeRouting(
+        {
+          id: codeId,
+          routing: rules.length > 0 ? fromDraft(rules) : null,
+          sample: {
+            device: sample.device as "mobile",
+            os: sample.os === "unknown" ? null : (sample.os as "iOS"),
+            country: sample.country,
+            region: sample.region,
+            language: sample.language,
+            at: fromLocalInput(sample.at) ?? new Date().toISOString(),
+            scanNumber: Number(sample.scanNumber) || 1,
+            visitor: sample.visitor,
+            location: point,
+          },
         },
-      });
+        locale,
+      );
       if (response.success) {
         setResult(response.data);
       } else {
@@ -1581,6 +1586,8 @@ function RoutingEditor({
   startWith?: "split";
 }) {
   const t = useTranslations("app.dashboard.codes.routingPanel");
+  // The server's messages come in this page's language.
+  const locale = useLocale();
   const [settings, setSettings] = useState(initial);
   const [rules, setRules] = useState(() => initialRules(initial, startWith, t));
   const [error, setError] = useState<string | null>(null);
@@ -1614,10 +1621,13 @@ function RoutingEditor({
       return;
     }
     startTransition(async () => {
-      const result = await saveCodeRouting({
-        id: settings.codeId,
-        routing: rules.length > 0 ? fromDraft(rules) : null,
-      });
+      const result = await saveCodeRouting(
+        {
+          id: settings.codeId,
+          routing: rules.length > 0 ? fromDraft(rules) : null,
+        },
+        locale,
+      );
       if (result.success) {
         setSettings(result.data);
         setRules(toDraft(result.data.routing));

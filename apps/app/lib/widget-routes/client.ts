@@ -112,28 +112,42 @@ async function call<R>(
   return result as R;
 }
 
-export function createDynamicCode(input: {
-  destinationUrl: string;
-  style: ThemeStyles;
-}): Promise<QrCodeActionResult<DynamicCodeRef>> {
-  return call(WIDGET_ROUTES.dynamicCodes, "POST", input);
+/**
+ * `path` with the calling page's language (its useLocale()), which the code
+ * and barcode routes pass to their action so its messages come in it.
+ */
+const inLocale = (path: string, locale: string | undefined) =>
+  locale ? `${path}?locale=${encodeURIComponent(locale)}` : path;
+
+export function createDynamicCode(
+  input: {
+    destinationUrl: string;
+    style: ThemeStyles;
+  },
+  locale?: string,
+): Promise<QrCodeActionResult<DynamicCodeRef>> {
+  return call(inLocale(WIDGET_ROUTES.dynamicCodes, locale), "POST", input);
 }
 
-export function updateDynamicCode({
-  id,
-  ...patch
-}: {
-  id: string;
-  destinationUrl?: string;
-  style?: ThemeStyles;
-}): Promise<QrCodeActionResult<DynamicCodeRef>> {
-  return call(WIDGET_ROUTES.dynamicCode(id), "PATCH", patch);
+export function updateDynamicCode(
+  {
+    id,
+    ...patch
+  }: {
+    id: string;
+    destinationUrl?: string;
+    style?: ThemeStyles;
+  },
+  locale?: string,
+): Promise<QrCodeActionResult<DynamicCodeRef>> {
+  return call(inLocale(WIDGET_ROUTES.dynamicCode(id), locale), "PATCH", patch);
 }
 
 export function saveGeneratorBarcode(
   input: z.input<typeof createBarcodeSchema>,
+  locale?: string,
 ): Promise<BarcodeActionResult<SavedBarcodeRef>> {
-  return call(WIDGET_ROUTES.barcodes, "POST", input);
+  return call(inLocale(WIDGET_ROUTES.barcodes, locale), "POST", input);
 }
 
 /** A Polar checkout for `plan`, or why not (sign_in, subscribed, …). */

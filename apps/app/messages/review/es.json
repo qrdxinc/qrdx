@@ -28791,6 +28791,278 @@
     "source": "a71e9a1f885f",
     "status": "machine"
   },
+  "codeActions.lifecycle.signIn": {
+    "source": "4b0dd0c20c78",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.notFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.invalidDate": {
+    "source": "a5e862b5076d",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.dateRange": {
+    "source": "93581c48f80e",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.passwordTooShort": {
+    "source": "90f89f76a2a0",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.passwordTooLong": {
+    "source": "6ce7beec0f2c",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.passwordTooManyBytes": {
+    "source": "1c9fae3f720e",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.scanLimitWhole": {
+    "source": "8d43ad3ca1f4",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.scanLimitMin": {
+    "source": "97126300d68f",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.scanLimitMax": {
+    "source": "9f6b97d3a4d8",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.planRequired": {
+    "source": "803df7a08aa6",
+    "status": "machine"
+  },
+  "codeActions.lifecycle.endBeforeStart": {
+    "source": "b9dce1ea4651",
+    "status": "machine"
+  },
+  "codeActions.marketing.signIn": {
+    "source": "4b0dd0c20c78",
+    "status": "machine"
+  },
+  "codeActions.marketing.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.marketing.notFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "codeActions.marketing.countryCode": {
+    "source": "cc51d4a366aa",
+    "status": "machine"
+  },
+  "codeActions.marketing.regionCode": {
+    "source": "5bd4003c6b02",
+    "status": "machine"
+  },
+  "codeActions.marketing.invalidUrl": {
+    "source": "551eacad7ff5",
+    "status": "machine"
+  },
+  "codeActions.marketing.rule": {
+    "source": "8764032038a9",
+    "status": "machine"
+  },
+  "codeActions.marketing.variant": {
+    "source": "37f16182f2cf",
+    "status": "machine"
+  },
+  "codeActions.marketing.problemIn": {
+    "source": "154e872af7dc",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.routing": {
+    "source": "65e0ca0746b0",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.utm": {
+    "source": "9b7e7bb3ee3c",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.pixels": {
+    "source": "9e6d9d52ed0d",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.conversions": {
+    "source": "21e936e93887",
+    "status": "machine"
+  },
+  "codeActions.marketing.planRequired.preciseLocation": {
+    "source": "518f17912e69",
+    "status": "machine"
+  },
+  "codeActions.landingPages.signIn": {
+    "source": "97d1e1ea3cd5",
+    "status": "machine"
+  },
+  "codeActions.landingPages.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.landingPages.selectAtLeastOne": {
+    "source": "9ce94aa0f925",
+    "status": "machine"
+  },
+  "codeActions.landingPages.selectUpTo": {
+    "source": "ced26be12b02",
+    "status": "machine"
+  },
+  "codeActions.files.signIn": {
+    "source": "60282aa8fea0",
+    "status": "machine"
+  },
+  "codeActions.files.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.qrCodes.signIn": {
+    "source": "c3c2a5d99e92",
+    "status": "machine"
+  },
+  "codeActions.qrCodes.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.qrCodes.nothingToUpdate": {
+    "source": "aeb531150e91",
+    "status": "machine"
+  },
+  "codeActions.customDomains.signIn": {
+    "source": "b6ac37c3557e",
+    "status": "machine"
+  },
+  "codeActions.customDomains.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.customDomains.enterDomain": {
+    "source": "fc95d6f2369c",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.signIn": {
+    "source": "51ca2f404b53",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.rateLimited": {
+    "source": "f14cbf01d29e",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.unavailable": {
+    "source": "8e92eed0ada8",
+    "status": "machine"
+  },
+  "codeActions.codeSuggestions.failed": {
+    "source": "cc1e58f5ce87",
+    "status": "machine"
+  },
+  "codeActions.tags.nothingToUpdate": {
+    "source": "aeb531150e91",
+    "status": "machine"
+  },
+  "codeActions.tags.tooManyTags": {
+    "source": "6c3d336e18ca",
+    "status": "machine"
+  },
+  "codeActions.tags.chooseTag": {
+    "source": "9dfdf64488d3",
+    "status": "machine"
+  },
+  "codeActions.publicStats.signIn": {
+    "source": "b7685c7282a9",
+    "status": "machine"
+  },
+  "codeActions.publicStats.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.publicStats.notFound": {
+    "source": "61ca4e5ce6f1",
+    "status": "machine"
+  },
+  "codeActions.pathAliases.signIn": {
+    "source": "5b98222c548f",
+    "status": "machine"
+  },
+  "codeActions.pathAliases.failed": {
+    "source": "4def98c89240",
+    "status": "machine"
+  },
+  "codeActions.pathAliases.noDomain": {
+    "source": "51951b4a9164",
+    "status": "machine"
+  },
+  "codeActions.formResponses.signIn": {
+    "source": "d0e967616b72",
+    "status": "machine"
+  },
+  "codeActions.formResponses.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "codeActions.formResponses.chooseResponses": {
+    "source": "b128f79805ae",
+    "status": "machine"
+  },
+  "codeActions.codeKind.signIn": {
+    "source": "2afc2fdcf52a",
+    "status": "machine"
+  },
+  "codeActions.codeKind.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.barcodes.signIn": {
+    "source": "1c710f9da91e",
+    "status": "machine"
+  },
+  "codeActions.barcodes.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.utmTemplates.signIn": {
+    "source": "f3717805c300",
+    "status": "machine"
+  },
+  "codeActions.utmTemplates.failed": {
+    "source": "0c953ab32c60",
+    "status": "machine"
+  },
+  "codeActions.codeOptions.signIn": {
+    "source": "476b9b14319d",
+    "status": "machine"
+  },
+  "codeActions.codeOptions.failed": {
+    "source": "c7f72ae219e5",
+    "status": "machine"
+  },
+  "codeActions.analytics.searchTooLong": {
+    "source": "df7064341e1e",
+    "status": "machine"
+  },
+  "codeActions.analytics.signIn": {
+    "source": "dc32cbf386a5",
+    "status": "machine"
+  },
+  "codeActions.analytics.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "codeActions.webhooks.signIn": {
+    "source": "737423fda7bc",
+    "status": "machine"
+  },
+  "codeActions.webhooks.failed": {
+    "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
   "auth.emailCodeSignIn.checkingCode": {
     "source": "aea53f1018f5",
     "status": "machine"
