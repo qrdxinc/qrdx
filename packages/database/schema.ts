@@ -1488,6 +1488,37 @@ export const qrCode = pgTable(
   ]
 );
 
+/**
+ * Path aliases (manual-sql/2026-11-18-path-aliases.sql): an exact legacy
+ * path on a custom domain (`/r/abc`, `/s/<uuid>/code_batch-1/<uuid>`) that
+ * opens a code on that domain, for codes printed by another provider before
+ * the domain moved to QRdx. Rules in apps/app/lib/path-aliases.ts; an alias
+ * answers only while its code is on the same domain.
+ */
+export const linkPathAlias = pgTable(
+  "link_path_alias",
+  {
+    id: text("id").primaryKey(),
+    domainId: text("domain_id")
+      .notNull()
+      .references(() => customDomain.id, { onDelete: "cascade" }),
+    qrCodeId: text("qr_code_id")
+      .notNull()
+      .references(() => qrCode.id, { onDelete: "cascade" }),
+    // Leading "/", no trailing "/", case kept (matching is case-sensitive)
+    path: text("path").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    // A domain answers at each path once.
+    uniqueIndex("link_path_alias_domain_id_path_unique").on(
+      table.domainId,
+      table.path
+    ),
+    index("link_path_alias_qr_code_id_idx").on(table.qrCodeId),
+  ]
+);
+
 export const qrScan = pgTable(
   "qr_scan",
   {

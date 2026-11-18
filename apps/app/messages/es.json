@@ -7274,6 +7274,29 @@
           "show": "Mostrar",
           "clearSearch": "Borrar búsqueda"
         },
+        "pathAliases": {
+          "title": "Alias de ruta",
+          "description": "Enlaces antiguos en {domain} de otro proveedor, como {domain}/r/abc, que deben abrir este código. Cada ruta debe coincidir exactamente; la cadena de consulta no importa. El primer alias de un dominio puede tardar un minuto en funcionar.",
+          "placeholder": "/r/abc",
+          "add": "Añadir",
+          "remove": "Quitar {path}",
+          "loadFailed": "No se pudieron cargar los alias de ruta. Cierra este cuadro de diálogo y ábrelo de nuevo.",
+          "failed": "No se pudo guardar el cambio. Inténtalo de nuevo.",
+          "verifyFirst": "Verifica {domain} en la página Dominios para añadir alias de ruta.",
+          "problems": {
+            "empty": "Introduce la ruta después del dominio, por ejemplo /r/abc.",
+            "length": "Usa un máximo de {maxLength, number} caracteres.",
+            "segments": "Usa un máximo de {maxSegments, number} partes separadas por /.",
+            "characters": "Usa letras, dígitos, - _ . y ~ entre las barras, sin partes vacías.",
+            "backHalf": "Esta ruta encaja como back-half. Asigna ese back-half al código en su lugar.",
+            "reserved": "QRdx usa esta ruta en los dominios personalizados.",
+            "otherDomain": "Ese enlace está en otro dominio.",
+            "taken": "Otro código de este dominio ya responde en esta ruta.",
+            "hostedPage": "Un código de este dominio tiene este back-half, y su página alojada responde en esta ruta.",
+            "limit": "Un código puede tener hasta {max, number} alias de ruta.",
+            "unavailable": "Los alias de ruta aún no están disponibles en este servidor."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Dominio del enlace corto",
           "defaulthostQDefault": "{defaultHost}/q/ (predeterminado)",
@@ -7423,7 +7446,8 @@
           "keepingBackHalvesIsPart": "Conservar los back-halves forma parte de {slugPlans}.",
           "yourPlanDoesntKeepBack": "Tu plan no conserva los back-halves.",
           "random": "aleatorio",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "También responde en {link}, así que los códigos impresos con el enlace antiguo siguen funcionando."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Desde una cuenta conectada",

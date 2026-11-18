@@ -3,6 +3,7 @@
 // lib/migrate/server/records.ts stores them.
 
 import { z } from "zod";
+import { PATH_ALIAS_MAX_LENGTH } from "@/lib/path-alias-limits";
 import { MIGRATE_REASON_CODES } from "./reasons";
 import type {
   ImportJob,
@@ -39,6 +40,7 @@ const jobItemSchema = z.object({
   createdAt: z.string().max(64).nullable(),
   slug: z.string().max(64).nullable(),
   slugTarget: z.enum(["domain", "shared"]).optional(),
+  alias: z.string().max(PATH_ALIAS_MAX_LENGTH).optional(),
   status: z.enum(["pending", "created", "skipped", "failed"]),
   reason: z.string().max(500).optional(),
   reasonCode: z

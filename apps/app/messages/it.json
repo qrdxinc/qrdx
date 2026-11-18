@@ -7274,6 +7274,29 @@
           "show": "Mostra",
           "clearSearch": "Cancella ricerca"
         },
+        "pathAliases": {
+          "title": "Alias di percorso",
+          "description": "Vecchi link su {domain} di un altro provider, come {domain}/r/abc, che devono aprire questo codice. Ogni percorso deve corrispondere esattamente; la query string non conta. Il primo alias di un dominio può impiegare un minuto per iniziare a funzionare.",
+          "placeholder": "/r/abc",
+          "add": "Aggiungi",
+          "remove": "Rimuovi {path}",
+          "loadFailed": "Impossibile caricare gli alias di percorso. Chiudi questa finestra e riaprila.",
+          "failed": "Impossibile salvare la modifica. Riprova.",
+          "verifyFirst": "Verifica {domain} nella pagina Domini per aggiungere alias di percorso.",
+          "problems": {
+            "empty": "Inserisci il percorso dopo il dominio, ad esempio /r/abc.",
+            "length": "Usa al massimo {maxLength, number} caratteri.",
+            "segments": "Usa al massimo {maxSegments, number} parti separate da /.",
+            "characters": "Usa lettere, cifre, - _ . e ~ tra gli slash, senza parti vuote.",
+            "backHalf": "Questo percorso è adatto a un back-half. Assegna invece quel back-half al codice.",
+            "reserved": "QRdx usa questo percorso sui domini personalizzati.",
+            "otherDomain": "Quel link è su un altro dominio.",
+            "taken": "Un altro codice su questo dominio risponde già a questo percorso.",
+            "hostedPage": "Un codice su questo dominio ha questo back-half e la sua pagina ospitata risponde a questo percorso.",
+            "limit": "Un codice può avere fino a {max, number} alias di percorso.",
+            "unavailable": "Gli alias di percorso non sono ancora disponibili su questo server."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Dominio del link breve",
           "defaulthostQDefault": "{defaultHost}/q/ (predefinito)",
@@ -7423,7 +7446,8 @@
           "keepingBackHalvesIsPart": "Mantenere i back-half è incluso in {slugPlans}.",
           "yourPlanDoesntKeepBack": "Il tuo piano non mantiene i back-half.",
           "random": "casuale",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "Risponde anche a {link}, quindi i codici stampati con il vecchio link continuano a funzionare."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Da un account collegato",

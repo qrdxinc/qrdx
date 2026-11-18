@@ -7274,6 +7274,29 @@
           "show": "表示対象",
           "clearSearch": "検索をクリア"
         },
+        "pathAliases": {
+          "title": "パスエイリアス",
+          "description": "別のプロバイダーで使っていた {domain} 上の古いリンク（{domain}/r/abc など）を、このコードで開けるようにします。パスは完全に一致する必要があり、クエリ文字列は関係ありません。ドメインで最初のエイリアスが有効になるまで、1分ほどかかる場合があります。",
+          "placeholder": "/r/abc",
+          "add": "追加",
+          "remove": "{path}を削除",
+          "loadFailed": "パスエイリアスを読み込めませんでした。このダイアログを閉じて、もう一度開いてください。",
+          "failed": "変更を保存できませんでした。もう一度お試しください。",
+          "verifyFirst": "パスエイリアスを追加するには、ドメインのページで {domain} を確認してください。",
+          "problems": {
+            "empty": "ドメインの後ろのパスを入力してください（例：/r/abc）。",
+            "length": "{maxLength, number}文字以内で入力してください。",
+            "segments": "/ で区切るパートは{maxSegments, number}個までです。",
+            "characters": "スラッシュの間には英字、数字、- _ . ~ を使ってください。空のパートは使えません。",
+            "backHalf": "このパスはバックハーフとして使えます。代わりにコードのバックハーフとして設定してください。",
+            "reserved": "このパスは、カスタムドメイン上でQRdxが使用しています。",
+            "otherDomain": "そのリンクは別のドメインのものです。",
+            "taken": "このドメインの別のコードが、すでにこのパスで応答しています。",
+            "hostedPage": "このドメインのコードにこのバックハーフが設定されており、そのホスト型ページがこのパスで応答しています。",
+            "limit": "1つのコードに設定できるパスエイリアスは最大{max, number}個です。",
+            "unavailable": "このサーバーでは、パスエイリアスはまだ利用できません。"
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "短縮リンクのドメイン",
           "defaulthostQDefault": "{defaultHost}/q/（デフォルト）",
@@ -7423,7 +7446,8 @@
           "keepingBackHalvesIsPart": "バックハーフの保持は{slugPlans}の機能です。",
           "yourPlanDoesntKeepBack": "ご利用のプランではバックハーフを保持できません。",
           "random": "ランダム",
-          "backHalf": "バックハーフ"
+          "backHalf": "バックハーフ",
+          "alsoAnswersAt": "{link} でも応答するため、古いリンクで印刷済みのコードも引き続き使えます。"
         },
         "importProviderStep": {
           "fromAConnectedAccount": "連携済みアカウントから",

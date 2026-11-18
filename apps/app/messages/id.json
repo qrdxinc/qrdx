@@ -7274,6 +7274,29 @@
           "show": "Tampilkan",
           "clearSearch": "Hapus pencarian"
         },
+        "pathAliases": {
+          "title": "Alias path",
+          "description": "Tautan lama di {domain} dari penyedia lain, seperti {domain}/r/abc, yang harus membuka kode ini. Setiap path harus cocok persis; query string tidak berpengaruh. Alias pertama sebuah domain mungkin butuh waktu satu menit untuk mulai berfungsi.",
+          "placeholder": "/r/abc",
+          "add": "Tambah",
+          "remove": "Hapus {path}",
+          "loadFailed": "Alias path tidak dapat dimuat. Tutup dialog ini lalu buka kembali.",
+          "failed": "Perubahan tidak dapat disimpan. Coba lagi.",
+          "verifyFirst": "Verifikasi {domain} di halaman Domain untuk menambahkan alias path.",
+          "problems": {
+            "empty": "Masukkan path setelah domain, misalnya /r/abc.",
+            "length": "Gunakan maksimal {maxLength, number} karakter.",
+            "segments": "Gunakan maksimal {maxSegments, number} bagian yang dipisahkan oleh /.",
+            "characters": "Gunakan huruf, angka, - _ . dan ~ di antara garis miring, tanpa bagian kosong.",
+            "backHalf": "Path ini cocok sebagai back-half. Berikan back-half tersebut ke kode ini sebagai gantinya.",
+            "reserved": "QRdx menggunakan path ini pada domain kustom.",
+            "otherDomain": "Tautan itu berada di domain lain.",
+            "taken": "Kode lain di domain ini sudah merespons pada path ini.",
+            "hostedPage": "Sebuah kode di domain ini memiliki back-half ini, dan halaman yang di-hosting miliknya merespons pada path ini.",
+            "limit": "Satu kode dapat memiliki hingga {max, number} alias path.",
+            "unavailable": "Alias path belum tersedia di server ini."
+          }
+        },
         "domainPicker": {
           "shortLinkDomain": "Domain tautan pendek",
           "defaulthostQDefault": "{defaultHost}/q/ (default)",
@@ -7423,7 +7446,8 @@
           "keepingBackHalvesIsPart": "Mempertahankan back-half termasuk dalam {slugPlans}.",
           "yourPlanDoesntKeepBack": "Paket Anda tidak mempertahankan back-half.",
           "random": "acak",
-          "backHalf": "Back-half"
+          "backHalf": "Back-half",
+          "alsoAnswersAt": "Juga merespons di {link}, sehingga kode yang dicetak dengan tautan lama tetap berfungsi."
         },
         "importProviderStep": {
           "fromAConnectedAccount": "Dari akun yang terhubung",
