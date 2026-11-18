@@ -4,7 +4,6 @@ import { authClient } from "@repo/auth/client";
 import { QrdxLogoAnimation } from "@repo/design-system/components/brand/qrdx-logo-animation";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -126,12 +125,12 @@ function SessionCheckScreen({
           </Button>
         </div>
       </div>
-      <Link
+      <a
         className="text-muted-foreground hover:text-foreground inline-flex min-h-10 items-center rounded-sm px-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         href="/"
       >
         {t("backToQrdx")}
-      </Link>
+      </a>
     </main>
   );
 }

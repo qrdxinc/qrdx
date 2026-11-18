@@ -7,7 +7,6 @@ import {
   TooltipTrigger,
 } from "@repo/design-system/components/ui/tooltip";
 import { Home2, RefreshCircle } from "iconsax-reactjs";
-import Link from "next/link";
 import { useEffect } from "react";
 import { AsciiField } from "@/components/fx/ascii-field";
 import { AsciiQr } from "@/components/fx/ascii-qr";
@@ -71,10 +70,10 @@ export function RouteErrorScreen({
             Try again
           </Button>
           <Button asChild variant="outline">
-            <Link href="/">
+            <a href="/">
               <Home2 className="size-4" />
               Go home
-            </Link>
+            </a>
           </Button>
         </div>
       </div>

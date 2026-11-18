@@ -3,6 +3,7 @@
 // leaves the blog out, robots.txt names the site's own sitemap
 // (/blog/sitemap.xml), and llms.txt keeps only the Blog link. Without the
 // site, all three list this app's blog as before.
+import { SITE_SITEMAPS, type SiteGroup } from "@repo/next-config/site-zone";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const zone = vi.hoisted(() => ({ blog: false, groups: new Set<string>() }));
@@ -187,9 +188,9 @@ describe("before the site serves the generators and barcodes", () => {
   });
 });
 
-// Stage two's groups keep their URLs whichever app serves them, so this
-// app's sitemap goes on listing them and robots.txt names no sitemap of
-// theirs (SITE_SITEMAPS has none).
+// Stage two's groups and the home page (/) keep their URLs whichever app
+// serves them, so this app's sitemap goes on listing them and robots.txt
+// names no sitemap of theirs (SITE_SITEMAPS has none).
 describe("while the marketing site serves pages without a sitemap of their own", () => {
   const groups = [
     "trust",
@@ -200,7 +201,14 @@ describe("while the marketing site serves pages without a sitemap of their own",
     "pricing",
     "integrations",
     "templates",
+    "home",
   ];
+
+  it("has no sitemap of the site's for them", () => {
+    for (const group of groups) {
+      expect(SITE_SITEMAPS[group as SiteGroup], group).toBeUndefined();
+    }
+  });
 
   it("the sitemap still lists their pages", async () => {
     zone.blog = false;
@@ -209,7 +217,7 @@ describe("while the marketing site serves pages without a sitemap of their own",
     zone.groups = new Set(groups);
     const after = (await sitemap()).map((entry) => entry.url);
     expect(after).toEqual(before);
-    for (const path of ["/pricing", "/integrations", "/security"]) {
+    for (const path of ["/pricing", "/integrations", "/security", "/"]) {
       expect(after, path).toContain(new URL(path, after[0]).toString());
     }
   });
