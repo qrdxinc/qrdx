@@ -6463,7 +6463,9 @@
           "notificationsSaved": "Notificaciones guardadas",
           "testMessageSentToValue": "Mensaje de prueba enviado a {value}",
           "webhookRemoved": "Webhook eliminado",
-          "emailAlertsAreProFirstScan": "En Gratis recibes un correo cuando cada código nuevo tiene su primer escaneo. Las demás alertas por correo y el resumen semanal forman parte de Pro y Business."
+          "onByDefaultOwnCodes": "Activadas por defecto para los códigos que creas.",
+          "everyCodeAlerts": "Recibe alertas de todos los códigos de este espacio de trabajo",
+          "emailAlertsAreProFirstScan": "En Gratis recibes un correo cuando cada código QR dinámico que creas tiene su primer escaneo. Las demás alertas por correo y el resumen semanal forman parte de Pro y Business."
         },
         "teamNotes": {
           "title": "Notas del equipo de QRdx",
@@ -8287,15 +8289,6 @@
           "price": "Pro cuesta {month} al mes o {year} al año.",
           "seePro": "Ver Pro",
           "hide": "Ocultar"
-        },
-        "scanAlertsOffer": {
-          "title": "Recibe un correo cuando se escaneen tus códigos",
-          "body": "QRdx te envía un correo cuando un código se escanea por primera vez y cuando supera {first, number}, {second, number} y {third, number} escaneos, además de un breve resumen cada semana.",
-          "turnOn": "Activar correos de escaneo",
-          "turningOn": "Activando…",
-          "on": "Los correos de escaneo están activados. Se envían a la dirección de correo de tu cuenta.",
-          "change": "Cámbialos en Notificaciones",
-          "notNow": "Ahora no"
         }
       },
       "listSelection": {
@@ -8880,6 +8873,7 @@
       "signIn": "Iniciar sesión",
       "goToDashboard": "Ir al panel",
       "manageSubscription": "Gestionar suscripción",
+      "scanEmailsOn": "Los correos de escaneo están activados: te avisaremos de los primeros escaneos y de los hitos. <link>Cámbialo en Ajustes → Notificaciones</link>.",
       "steps": {
         "codesTitle": "Crea códigos dinámicos",
         "codesBody": "Códigos que puedes editar después de imprimirlos, con analíticas de escaneo.",
@@ -9164,7 +9158,7 @@
       "preview": "{code} se escaneó por primera vez",
       "heading": "Tu código recibió su primer escaneo",
       "body": "Alguien acaba de escanear {code}. Tu código QR está activo y funciona.",
-      "pro": "<link>Pro</link> también te escribe por correo en {first}, {second} y {third} escaneos y más, cuando alguien envía uno de tus formularios y cada lunes con las cifras de la semana pasada.",
+      "pro": "<link>Pro</link> también te envía un correo en los escaneos {first}, {second} y {third} y en los siguientes, y puede enviarte un resumen semanal.",
       "freeReason": "Recibes este correo porque un código que creaste tuvo su primer escaneo. QRdx lo envía una sola vez por código."
     },
     "scanMilestone": {
@@ -9295,7 +9289,7 @@
       "seeScans": "<link>Mira sus escaneos:</link> cuándo, dónde y en qué dispositivos lo escanea la gente.",
       "changeLink": "Cambia el destino cuando quieras, incluso después de imprimirlo. Sin volver a imprimir.",
       "free": "Los códigos estáticos son gratis, y los códigos que crees seguirán funcionando si cambias de plan o dejas de pagar. Gratis también incluye {count} códigos dinámicos.",
-      "pro": "Si necesitas más, Pro cuesta {monthly} al mes o {yearly} al año y añade códigos dinámicos ilimitados, {domains} dominios personalizados y alertas por correo en cada hito de escaneos, con un resumen semanal.",
+      "pro": "Si necesitas más, Pro cuesta {monthly} al mes o {yearly} al año e incluye códigos dinámicos ilimitados, {domains} dominios personalizados, alertas por correo en cada hito de escaneos y un resumen semanal si lo quieres.",
       "taxes": "Es posible que se añadan impuestos locales al pagar.",
       "reply": "Si algo te lo pone difícil o no sabes cómo hacer algo, responde a este correo. Una persona lee cada respuesta.",
       "reason": "Recibes este correo porque acabas de crear una cuenta de QRdx."

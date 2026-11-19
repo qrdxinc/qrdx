@@ -30,6 +30,7 @@ vi.mock("next/headers", () => ({
 vi.mock("@repo/rate-limit", () => ({
   createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
   slidingWindow: () => ({}),
+  fixedWindow: () => ({}),
 }));
 vi.mock("@/lib/email/send", () => ({
   sendEmail: async (message: { to: string; subject: string }) => {

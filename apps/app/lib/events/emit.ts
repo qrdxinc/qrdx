@@ -4,13 +4,19 @@ import { database as db, webhookDelivery } from "@repo/database";
 import cuid from "cuid";
 import { and, asc, eq, gt, inArray, sql } from "drizzle-orm";
 import { after } from "next/server";
-import { sendFreeFirstScanEmail } from "@/lib/email/first-scan";
+import {
+  type FirstScanStatus,
+  firstScanStatus,
+  isBroughtIn,
+  sendFreeFirstScanEmail,
+} from "@/lib/email/first-scan";
 import { normalizeScanSource } from "@/lib/nfc/links";
 import { getPlanLimits } from "@/lib/plans";
 import { shortLinkUrl } from "@/lib/short-links";
 import { claimDueDeliveries, deliverNow, processClaimed } from "./deliveries";
 import { isAlertEvent, notifyTargets } from "./notify";
 import {
+  defaultEmailTargets,
   type EventScope,
   loadSubscribers,
   type Subscribers,
@@ -168,7 +174,20 @@ export async function emitEvent<T extends EventType>(
   {
     now = new Date(),
     subscribers,
-  }: { now?: Date; subscribers?: Subscribers | null } = {},
+    webhooks = true,
+    chat = true,
+    email = true,
+    defaults = true,
+  }: {
+    now?: Date;
+    subscribers?: Subscribers | null;
+    /** Deliver to webhook endpoints, chat targets, email (default: all) */
+    webhooks?: boolean;
+    chat?: boolean;
+    email?: boolean;
+    /** Email people with no email row the plan's defaults (default: yes) */
+    defaults?: boolean;
+  } = {},
 ): Promise<void> {
   try {
     const subs =
@@ -179,11 +198,12 @@ export async function emitEvent<T extends EventType>(
     const limits = getPlanLimits(subs.plan);
     const tasks: Promise<unknown>[] = [];
 
-    const endpointIds = limits.webhooks
-      ? subs.endpoints
-          .filter((endpoint) => endpoint.events.includes(type))
-          .map((endpoint) => endpoint.id)
-      : [];
+    const endpointIds =
+      limits.webhooks && webhooks
+        ? subs.endpoints
+            .filter((endpoint) => endpoint.events.includes(type))
+            .map((endpoint) => endpoint.id)
+        : [];
 
     if (type === "scan.created") {
       for (const endpointId of endpointIds) {
@@ -195,11 +215,20 @@ export async function emitEvent<T extends EventType>(
         tasks.push(enqueue(endpointIds, envelope));
       }
       if (isAlertEvent(type)) {
-        const targets = subs.targets.filter(
-          (target) =>
-            target.events.includes(type) &&
-            (target.channel === "email" ? limits.emailAlerts : limits.webhooks),
-        );
+        const targets = [
+          ...subs.targets.filter(
+            (target) =>
+              target.events.includes(type) &&
+              (target.channel === "email"
+                ? email && limits.emailAlerts
+                : chat && limits.webhooks),
+          ),
+          // People with no email row get the plan's defaults (scan events:
+          // the scope's person is the code's maker).
+          ...(email && defaults && limits.emailAlerts
+            ? defaultEmailTargets(subs, type, scope, scope.userId)
+            : []),
+        ];
         if (targets.length > 0) {
           tasks.push(notifyTargets(envelope as never, targets, scope));
         }
@@ -342,7 +371,6 @@ export function emitCodesCreated(
   runInBackground(async () => {
     // Bulk creation (API batches, CSV import): look subscribers up once.
     const subscribers = await loadSubscribers(scope).catch(() => undefined);
-    if (subscribers === null) return;
     if (subscribers && codes.length > BATCH_DELIVER_NOW) {
       try {
         await emitBatchCreated(scope, codes, subscribers);
@@ -480,41 +508,99 @@ export function scanSummary(
  * Also Free's one first-scan email per code (lib/email/first-scan.tsx),
  * which needs no subscriber.
  */
+/** Whether anyone would get scan milestone emails for this scope's codes. */
+function hasMilestoneEmail(
+  subs: Subscribers,
+  scope: EventScope,
+  defaults: boolean,
+) {
+  return (
+    subs.targets.some(
+      (target) =>
+        target.channel === "email" && target.events.includes("scan.milestone"),
+    ) ||
+    (defaults &&
+      defaultEmailTargets(subs, "scan.milestone", scope, scope.userId).length >
+        0)
+  );
+}
+
 export async function emitScanRecorded(
   scan: RecordedScan,
   code: ScannedCode,
 ): Promise<void> {
-  const freeFirstScan = sendFreeFirstScanEmail(scan, code);
+  const scope = { userId: code.userId, organizationId: code.organizationId };
+  let subscribers: Subscribers | null = null;
   try {
-    const scope = { userId: code.userId, organizationId: code.organizationId };
     // Google Sheets "keep in sync": batched, at most every 5 min per sheet
     triggerIntegrationSyncs(scope, "scans");
-    const subscribers = await loadSubscribers(scope, { cached: true });
-    if (!subscribers) return;
+    subscribers = await loadSubscribers(scope, { cached: true });
+  } catch (error) {
+    log("event.scan_emit_failed", { error: errorMessage(error) });
+  }
+  // Both first-scan emails (paid plans' alert below, Free's email per code)
+  // go on the code's first real scan, past the maker's test window, read
+  // once; one read of the plan says which, so a code never gets both, even
+  // while its workspace changes plans. Without it, Free's email reads the
+  // plan itself.
+  const emailAlerts = subscribers
+    ? getPlanLimits(subscribers.plan).emailAlerts
+    : undefined;
+  let status: Promise<FirstScanStatus> | null = null;
+  const firstScan = () => {
+    status ??= firstScanStatus(scan, code);
+    return status;
+  };
+  const freeFirstScan = sendFreeFirstScanEmail(scan, code, {
+    emailAlerts,
+    firstScan,
+  });
+  if (!subscribers) {
+    await freeFirstScan;
+    return;
+  }
+  try {
     const summary = scanSummary(scan, code);
-    const tasks = [
-      emitEvent("scan.created", summary, scope, {
-        now: scan.scannedAt,
-        subscribers,
-      }),
-    ];
+    const milestone = (count: number) =>
+      ({
+        milestone: count,
+        code: {
+          id: code.id,
+          slug: code.slug,
+          title: code.title,
+          scan_count: code.scanCount,
+        },
+        scan: summary,
+      }) as const;
+    // Imported codes (CSV, another provider) are likely printed and scanned
+    // already: their first scan and milestones here aren't news, so they
+    // only go to people who turned the alerts on (a row), not by default.
+    const defaults = !isBroughtIn(code.createdVia);
+    const at = { now: scan.scannedAt, subscribers, defaults };
+    // The first-scan email (milestone 1) waits for the first real scan,
+    // whether it goes to a row or by default; webhooks and chat still get
+    // milestone 1 on the very first scan.
+    const firstScanEmail =
+      emailAlerts === true &&
+      hasMilestoneEmail(subscribers, scope, defaults) &&
+      (await firstScan()) === "first";
+    const tasks = [emitEvent("scan.created", summary, scope, at)];
     if (isScanMilestone(code.scanCount)) {
       tasks.push(
-        emitEvent(
-          "scan.milestone",
-          {
-            milestone: code.scanCount,
-            code: {
-              id: code.id,
-              slug: code.slug,
-              title: code.title,
-              scan_count: code.scanCount,
-            },
-            scan: summary,
-          },
-          scope,
-          { now: scan.scannedAt, subscribers },
-        ),
+        emitEvent("scan.milestone", milestone(code.scanCount), scope, {
+          ...at,
+          email: code.scanCount !== 1 || firstScanEmail,
+        }),
+      );
+    }
+    if (firstScanEmail && code.scanCount !== 1) {
+      // Test scans came first: this scan's first-scan email, alone.
+      tasks.push(
+        emitEvent("scan.milestone", milestone(1), scope, {
+          ...at,
+          webhooks: false,
+          chat: false,
+        }),
       );
     }
     await Promise.all(tasks);

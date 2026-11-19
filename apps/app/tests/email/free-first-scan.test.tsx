@@ -147,7 +147,7 @@ describe("sendFreeFirstScanEmail", () => {
     expect(text).toContain("Someone just scanned “Spring menu”");
     expect(text).toContain("Berlin, DE");
     expect(text).toContain(
-      "also emails you at 10, 100, 500 scans and beyond, when someone submits one of your forms, and every Monday with last week's numbers.",
+      "also emails you at 10, 100 and 500 scans and beyond, and can send you a weekly summary.",
     );
     expect(text).toContain(
       "You're getting this because a code you made got its first scan. QRdx sends this once per code.",

@@ -11,6 +11,9 @@
   },
   "files": {
     "ignoreUnknown": true,
+    // 2 MiB, not Biome's 1 MiB: the translated message catalogues
+    // (messages/*.json) pass 1 MiB and would be skipped unchecked.
+    "maxSize": 2097152,
     "includes": [
       "**",
       "!node_modules",

@@ -6,7 +6,7 @@ description: Email alerts, a weekly digest, and Slack or Discord messages when y
 Notifications tell you what happens to your codes without opening the dashboard: a first scan, a milestone, a form response, a teammate's change, and a weekly summary. Choose what QRdx tells you about in [Settings → Notifications](/settings/notifications). Settings are per person and per workspace: your own workspace and every other workspace you belong to have their own switches, and in a shared workspace every member picks their own.
 
 <Callout type="info" title="Email on Pro, chat on Business">
-  Email alerts and the weekly digest are part of Pro and Business; Slack and Discord messages are part of Business. Each workspace follows the plan of its owners and billing members. Everything is off until you turn it on. See [Plans and limits](/docs/plans-and-limits).
+  Email alerts and the weekly digest are part of Pro and Business; Slack and Discord messages are part of Business. Each workspace follows the plan of its owners and billing members. On Pro and Business, scan milestone emails (a code's first scan included) are on by default for the person who made the code; owners who want every code's alerts, the weekly digest or the other alerts turn them on. See [Plans and limits](/docs/plans-and-limits).
 </Callout>
 
 In a hurry? [Sign-in codes or emails don't arrive](/docs/help/troubleshooting/emails) covers missing alerts.
@@ -25,7 +25,7 @@ Every scan, form response and code change is an event. Notifications subscribe y
 
 ## Alerts
 
-- **Scan milestones:** a code's first scan, then 10, 100, 500, 1,000, 5,000, 10,000, 50,000, 100,000, 500,000, 1,000,000 scans and every million after that. The first-scan email says when, where and on which device; the Slack and Discord message names the city and country.
+- **Scan milestones:** a code's first scan, then 10, 100, 500, 1,000, 5,000, 10,000, 50,000, 100,000, 500,000, 1,000,000 scans and every million after that. The first-scan email says when, where and on which device; the Slack and Discord message names the city and country. Scans in the first 3 minutes after a code is made count as the maker's own test, so the first-scan email waits for the first scan after that; Slack, Discord and [webhooks](/docs/webhooks) get the very first scan.
 - **Form submissions:** the answers from a form on one of your [hosted pages](/docs/forms-and-pages#forms), with a link to all responses.
 - **New codes** and **code changes:** who created a code, or changed its destination, title, design or domain. Most useful in workspaces you share with other people.
 
@@ -37,7 +37,7 @@ Every Monday morning (UTC) you get last week's numbers for the workspace: scans 
 
 ## Email
 
-Alert emails go to your account's email address, under the **Email to** heading in notification settings. Each one has an **Unsubscribe** link that turns off that kind of email without signing in (mail apps that support one-click unsubscribe show it too). Turn emails back on, or off, in notification settings at any time. Team invitations and other account emails are not affected by these settings.
+Alert emails go to your account's email address, under the **Email to** heading in notification settings. Until you change your email switches for a workspace, its plan's defaults apply: scan milestone emails for the codes you make, at most 25 a day per workspace (the rest of that day's are skipped). Codes you import from a file or another provider are left out of the defaults, since they're usually printed and scanned already. Changing any switch, or **Get them for every code in this workspace** under **Scan milestones**, saves your own choice, which covers every code in the workspace with no daily cap beyond the hourly one below; switching everything off keeps it off. Each one has an **Unsubscribe** link that turns off that kind of email without signing in (mail apps that support one-click unsubscribe show it too). Turn emails back on, or off, in notification settings at any time. Team invitations and other account emails are not affected by these settings.
 
 <IfAvailable feature="teamNotes">
 

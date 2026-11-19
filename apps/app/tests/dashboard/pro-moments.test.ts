@@ -3,48 +3,14 @@
 // shows, and that their numbers come from the plan limits. Pure; no
 // database, no Polar.
 import { describe, expect, it } from "vitest";
-import {
-  codeLiveCard,
-  SCAN_ALERT_EVENTS,
-  showScanAlertsOffer,
-} from "@/app/(app)/dashboard/_components/home/pro-moments-rules";
+import { codeLiveCard } from "@/app/(app)/dashboard/_components/home/pro-moments-rules";
 import { showsSidebarUpgrade } from "@/components/app-shell/upgrade-row";
-import { NOTIFICATION_EVENTS } from "@/lib/events/types";
 import { pagePlanLine } from "@/lib/landing/plan-line";
 import { PLAN_LIMITS, type PlanLimits } from "@/lib/plans";
 import en from "@/messages/en.json";
 
 const free = PLAN_LIMITS.free;
 const pro = PLAN_LIMITS.pro;
-
-describe("scan-email offer", () => {
-  const base = {
-    emailAlerts: true,
-    emailAvailable: true,
-    canManage: true,
-    hasEmailSetting: false,
-  };
-
-  it("shows on a plan with email alerts, to someone without an email row", () => {
-    expect(showScanAlertsOffer(base)).toBe(true);
-  });
-
-  it.each([
-    ["the plan has no email alerts (Free)", { emailAlerts: free.emailAlerts }],
-    ["this server can't send email", { emailAvailable: false }],
-    ["the viewer can't manage billing", { canManage: false }],
-    ["an email row exists, whatever its events", { hasEmailSetting: true }],
-  ])("stays hidden when %s", (_, change) => {
-    expect(showScanAlertsOffer({ ...base, ...change })).toBe(false);
-  });
-
-  it("turns on events Settings → Notifications knows", () => {
-    for (const event of SCAN_ALERT_EVENTS) {
-      expect(NOTIFICATION_EVENTS).toContain(event);
-    }
-    expect([...SCAN_ALERT_EVENTS]).toEqual(["scan.milestone", "digest.weekly"]);
-  });
-});
 
 describe("Your code is live", () => {
   const base = {
@@ -92,18 +58,14 @@ describe("Your code is live", () => {
     ]);
   });
 
-  it("describes Pro's scan emails as the offer on Pro Home does", () => {
-    // Milestones (the first scan, then 10, 100, 500 …) and the weekly
-    // summary, with the same three milestone numbers.
+  it("describes Pro's scan emails: the first scan, three milestones, a weekly summary", () => {
     const card = en.app.dashboard.home.codeLiveCard.scanEmails;
-    const offer = en.app.dashboard.home.scanAlertsOffer.body;
     for (const argument of [
       "{first, number}",
       "{second, number}",
       "{third, number}",
     ]) {
       expect(card).toContain(argument);
-      expect(offer).toContain(argument);
     }
     expect(card).toMatch(/first scan/);
     expect(card).toMatch(/weekly summary/);

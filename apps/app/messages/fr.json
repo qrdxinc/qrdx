@@ -6463,7 +6463,9 @@
           "notificationsSaved": "Notifications enregistrées",
           "testMessageSentToValue": "Message de test envoyé à {value}",
           "webhookRemoved": "Webhook supprimé",
-          "emailAlertsAreProFirstScan": "Avec le plan Gratuit, vous recevez un e-mail lorsque chaque nouveau code reçoit son premier scan. Les autres alertes par e-mail et le résumé hebdomadaire font partie de Pro et Business."
+          "onByDefaultOwnCodes": "Activé par défaut pour les codes que vous créez.",
+          "everyCodeAlerts": "Les recevoir pour chaque code de cet espace de travail",
+          "emailAlertsAreProFirstScan": "Avec le plan Gratuit, vous recevez un e-mail lorsque chacun de vos QR codes dynamiques reçoit son premier scan. Les autres alertes par e-mail et le récapitulatif hebdomadaire font partie de Pro et Business."
         },
         "teamNotes": {
           "title": "Messages de l’équipe QRdx",
@@ -8287,15 +8289,6 @@
           "price": "Pro coûte {month} par mois ou {year} par an.",
           "seePro": "Voir Pro",
           "hide": "Masquer"
-        },
-        "scanAlertsOffer": {
-          "title": "Recevez un e-mail quand vos codes sont scannés",
-          "body": "QRdx vous envoie un e-mail quand un code est scanné pour la première fois et quand il dépasse {first, number}, {second, number} et {third, number} scans, ainsi qu’un court récapitulatif chaque semaine.",
-          "turnOn": "Activer les e-mails de scan",
-          "turningOn": "Activation…",
-          "on": "Les e-mails de scan sont activés. Ils sont envoyés à l’adresse e-mail de votre compte.",
-          "change": "Modifier dans Notifications",
-          "notNow": "Plus tard"
         }
       },
       "listSelection": {
@@ -8880,6 +8873,7 @@
       "signIn": "Se connecter",
       "goToDashboard": "Aller au tableau de bord",
       "manageSubscription": "Gérer l’abonnement",
+      "scanEmailsOn": "Les e-mails de scan sont activés : vous serez informé des premiers scans et des étapes importantes. <link>Modifiez-les dans Paramètres → Notifications</link>.",
       "steps": {
         "codesTitle": "Créez des QR codes dynamiques",
         "codesBody": "Des codes modifiables après impression, avec des statistiques de scan.",
@@ -9164,7 +9158,7 @@
       "preview": "{code} a été scanné pour la première fois",
       "heading": "Votre code a reçu son premier scan",
       "body": "Quelqu’un vient de scanner {code}. Votre QR code est actif et fonctionne.",
-      "pro": "<link>Pro</link> vous envoie aussi un e-mail à {first}, {second}, {third} scans et au-delà, quand quelqu’un soumet l’un de vos formulaires, et chaque lundi avec les chiffres de la semaine dernière.",
+      "pro": "<link>Pro</link> vous envoie aussi un e-mail aux {first}, {second} et {third} scans et au-delà, et peut vous adresser un résumé hebdomadaire.",
       "freeReason": "Vous recevez cet e-mail parce qu’un code que vous avez créé a reçu son premier scan. QRdx n’envoie ce message qu’une seule fois par code."
     },
     "scanMilestone": {
@@ -9295,7 +9289,7 @@
       "seeScans": "<link>Suivez ses scans :</link> quand, où et sur quels appareils les gens le scannent.",
       "changeLink": "Changez sa destination quand vous voulez, même après l’impression. Sans réimpression.",
       "free": "Les QR codes statiques restent gratuits, et les codes que vous créez continuent de fonctionner si vous changez d’offre ou arrêtez de payer. L’offre Gratuit inclut aussi {count} QR codes dynamiques.",
-      "pro": "Si vous avez besoin de plus, Pro coûte {monthly} par mois ou {yearly} par an et ajoute des codes dynamiques illimités, {domains} domaines personnalisés, et des alertes par e-mail à chaque palier de scans avec un récapitulatif hebdomadaire.",
+      "pro": "Si vous avez besoin de plus, Pro coûte {monthly} par mois ou {yearly} par an et offre des codes dynamiques illimités, {domains} domaines personnalisés, des alertes par e-mail à chaque palier de scans, et un récapitulatif hebdomadaire si vous le souhaitez.",
       "taxes": "Des taxes locales peuvent s’ajouter lors du paiement.",
       "reply": "Si quelque chose vous bloque, ou si vous ne savez pas comment faire, répondez à cet e-mail. Une personne lit chaque réponse.",
       "reason": "Vous recevez ce message parce que vous venez de créer un compte QRdx."

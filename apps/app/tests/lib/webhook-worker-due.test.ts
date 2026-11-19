@@ -40,6 +40,7 @@ vi.mock("@repo/rate-limit", async () => {
   return {
     redis: state.redis,
     slidingWindow: () => ({}),
+    fixedWindow: () => ({}),
     createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
   };
 });
@@ -167,6 +168,7 @@ describe("scheduling lowers the worker marker", () => {
           plan: "business",
           endpoints: [{ id: "ep_1", events: ["scan.created"] }],
           targets: [],
+          defaultEmail: [],
         },
       },
     );

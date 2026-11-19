@@ -19767,8 +19767,16 @@
     "source": "bc7bafdda4a7",
     "status": "machine"
   },
+  "app.settings.notifications.workspaceNotifications.onByDefaultOwnCodes": {
+    "source": "77d7e7fe81e8",
+    "status": "machine"
+  },
+  "app.settings.notifications.workspaceNotifications.everyCodeAlerts": {
+    "source": "019e630439f6",
+    "status": "machine"
+  },
   "app.settings.notifications.workspaceNotifications.emailAlertsAreProFirstScan": {
-    "source": "57d61cc70254",
+    "source": "048ebcf553c9",
     "status": "machine"
   },
   "app.settings.notifications.teamNotes.title": {
@@ -26095,34 +26103,6 @@
     "source": "ac20a57bfde0",
     "status": "machine"
   },
-  "app.dashboard.home.scanAlertsOffer.title": {
-    "source": "ecc7905cea28",
-    "status": "machine"
-  },
-  "app.dashboard.home.scanAlertsOffer.body": {
-    "source": "75e4d3b76363",
-    "status": "machine"
-  },
-  "app.dashboard.home.scanAlertsOffer.turnOn": {
-    "source": "14a1f83a7e42",
-    "status": "machine"
-  },
-  "app.dashboard.home.scanAlertsOffer.turningOn": {
-    "source": "63fd4df43f4f",
-    "status": "machine"
-  },
-  "app.dashboard.home.scanAlertsOffer.on": {
-    "source": "971629afcd11",
-    "status": "machine"
-  },
-  "app.dashboard.home.scanAlertsOffer.change": {
-    "source": "2edc322c3b87",
-    "status": "machine"
-  },
-  "app.dashboard.home.scanAlertsOffer.notNow": {
-    "source": "a0e63d7c7125",
-    "status": "machine"
-  },
   "app.dashboard.listSelection.keyboardShortcuts": {
     "source": "e9bef0b0f3c2",
     "status": "machine"
@@ -27979,6 +27959,10 @@
     "source": "9041c6aa2c3d",
     "status": "machine"
   },
+  "app.success.scanEmailsOn": {
+    "source": "cdfaa88030df",
+    "status": "machine"
+  },
   "app.success.steps.codesTitle": {
     "source": "0e25aa95bccb",
     "status": "machine"
@@ -28820,7 +28804,7 @@
     "status": "machine"
   },
   "emails.firstScan.pro": {
-    "source": "d452cfe47a07",
+    "source": "7382b933ecf7",
     "status": "machine"
   },
   "emails.firstScan.freeReason": {
@@ -29232,7 +29216,7 @@
     "status": "machine"
   },
   "emails.welcome.pro": {
-    "source": "2ff1d85e942e",
+    "source": "97f5ef3795bd",
     "status": "machine"
   },
   "emails.welcome.taxes": {

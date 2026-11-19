@@ -5,7 +5,6 @@ import { database as db, subscription } from "@repo/database";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Card } from "@repo/design-system/components/ui/card";
 import { cn } from "@repo/design-system/lib/utils";
-import { pickMessages } from "@repo/i18n/messages";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { desc, eq } from "drizzle-orm";
 import {
@@ -21,16 +20,13 @@ import {
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { NextIntlClientProvider } from "next-intl";
 import type { ReactNode } from "react";
-import { scanAlertsOfferFor } from "@/app/(app)/dashboard/_components/home/pro-moments";
-import { ScanAlertsOffer } from "@/app/(app)/dashboard/_components/home/scan-alerts-offer";
+import { ownerScanEmailsOn } from "@/app/(app)/dashboard/_components/home/pro-moments";
 import { AsciiField, Aurora, Backdrop } from "@/components/fx";
 import { PRESSABLE } from "@/components/mockups/motion";
 import { SoundCue } from "@/components/sound/sound-cue";
 import { isPathAvailable } from "@/lib/feature-availability";
-import { getAppLocale, getAppTranslations } from "@/lib/i18n/app-locale";
-import { loadMessages } from "@/lib/i18n/messages";
+import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { isBillingConfigured, polar } from "@/lib/polar";
 import { PLAN_NAMES, planForProductId } from "@/lib/pricing";
 import { signInPath } from "@/lib/safe-redirect";
@@ -143,22 +139,17 @@ export default async function SuccessPage({
     ? `/success?checkout_id=${encodeURIComponent(checkoutId)}`
     : "/success";
   const own = userId ? ownWorkspaceId(userId) : null;
-  const offerAlerts =
+  // Scan emails are on by default on paid plans (lib/events/types.ts
+  // DEFAULT_EMAIL_EVENTS): say so, unless they turned them off. Their own
+  // workspace, which they own.
+  const scanEmailsOn =
     outcome.kind === "active" && userId && own
-      ? await scanAlertsOfferFor({
+      ? await ownerScanEmailsOn({
           userId,
           organizationId: own,
           plan: outcome.plan,
-          // Their own workspace: they own it.
-          canManage: true,
         }).catch(() => false)
       : false;
-  const locale = offerAlerts ? await getAppLocale() : null;
-  const offerMessages = locale
-    ? pickMessages(await loadMessages(locale), [
-        "app.dashboard.home.scanAlertsOffer",
-      ])
-    : null;
   // No step for a feature this deployment can't offer (custom domains).
   const steps =
     outcome.kind === "active"
@@ -228,12 +219,19 @@ export default async function SuccessPage({
           </div>
         </div>
 
-        {own && locale && offerMessages && (
-          <div className="w-full max-w-xl">
-            <NextIntlClientProvider locale={locale} messages={offerMessages}>
-              <ScanAlertsOffer organizationId={own} />
-            </NextIntlClientProvider>
-          </div>
+        {scanEmailsOn && (
+          <p className="max-w-md text-pretty text-sm text-muted-foreground">
+            {t.rich("scanEmailsOn", {
+              link: (chunks) => (
+                <Link
+                  className="font-medium text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground"
+                  href="/settings/notifications"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
         )}
 
         {steps.length > 0 && (

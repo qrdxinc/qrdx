@@ -6862,7 +6862,9 @@
           "notificationsSaved": "Notifications saved",
           "testMessageSentToValue": "Test message sent to {value}",
           "webhookRemoved": "Webhook removed",
-          "emailAlertsAreProFirstScan": "On Free you get one email when each new code gets its first scan. The other email alerts and the weekly digest are part of Pro and Business."
+          "onByDefaultOwnCodes": "On by default for the codes you make.",
+          "everyCodeAlerts": "Get them for every code in this workspace",
+          "emailAlertsAreProFirstScan": "On Free you get one email when each dynamic code you make gets its first scan. The other email alerts and the weekly digest are part of Pro and Business."
         },
         "teamNotes": {
           "title": "Notes from the QRdx team",
@@ -8686,15 +8688,6 @@
           "price": "Pro is {month} a month or {year} a year.",
           "seePro": "See Pro",
           "hide": "Hide"
-        },
-        "scanAlertsOffer": {
-          "title": "Get an email when your codes are scanned",
-          "body": "QRdx emails you when a code is scanned for the first time and when it passes {first, number}, {second, number} and {third, number} scans, plus a short summary each week.",
-          "turnOn": "Turn on scan emails",
-          "turningOn": "Turning on…",
-          "on": "Scan emails are on. They go to your account’s email address.",
-          "change": "Change them in Notifications",
-          "notNow": "Not now"
         }
       },
       "listSelection": {
@@ -9279,6 +9272,7 @@
       "signIn": "Sign in",
       "goToDashboard": "Go to the dashboard",
       "manageSubscription": "Manage subscription",
+      "scanEmailsOn": "Scan emails are on: you'll hear about first scans and milestones. <link>Change them in Settings → Notifications</link>.",
       "steps": {
         "codesTitle": "Create dynamic codes",
         "codesBody": "Codes you can edit after printing, with scan analytics.",
@@ -9563,7 +9557,7 @@
       "preview": "{code} was scanned for the first time",
       "heading": "Your code got its first scan",
       "body": "Someone just scanned {code}. Your QR code is live and working.",
-      "pro": "<link>Pro</link> also emails you at {first}, {second}, {third} scans and beyond, when someone submits one of your forms, and every Monday with last week's numbers.",
+      "pro": "<link>Pro</link> also emails you at {first}, {second} and {third} scans and beyond, and can send you a weekly summary.",
       "freeReason": "You're getting this because a code you made got its first scan. QRdx sends this once per code."
     },
     "scanMilestone": {
@@ -9694,7 +9688,7 @@
       "seeScans": "<link>Watch its scans:</link> when, where and on which devices people scan it.",
       "changeLink": "Change where it points whenever you like, even after it's printed. No reprinting.",
       "free": "Static codes stay free, and the codes you make keep working if you change plans or stop paying. Free also includes {count} dynamic codes.",
-      "pro": "If you need more, Pro is {monthly} a month or {yearly} a year and adds unlimited dynamic codes, {domains} custom domains, and email alerts at every scan milestone with a weekly digest.",
+      "pro": "If you need more, Pro is {monthly} a month or {yearly} a year and adds unlimited dynamic codes, {domains} custom domains, email alerts at every scan milestone, and a weekly summary if you want one.",
       "taxes": "Local taxes may be added at checkout.",
       "reply": "If anything gets in your way, or you're not sure how to do something, reply to this email. A person reads every reply.",
       "reason": "You're getting this because you just made a QRdx account."

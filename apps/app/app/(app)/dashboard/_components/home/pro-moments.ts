@@ -3,24 +3,34 @@ import "server-only";
 import { database as db, notificationSetting } from "@repo/database";
 import { and, eq } from "drizzle-orm";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
+import { DEFAULT_EMAIL_EVENTS } from "@/lib/events/types";
 import { isFeatureAvailable } from "@/lib/feature-availability";
 import { can } from "@/lib/permissions";
 import { getPlanLimits, type Plan } from "@/lib/plans";
 import { formatPrice, PRICING, type PricingCurrency } from "@/lib/pricing";
 import type { ActiveScope } from "@/lib/scope";
-import {
-  type CodeLiveCard,
-  codeLiveCard,
-  showScanAlertsOffer,
-} from "./pro-moments-rules";
+import { type CodeLiveCard, codeLiveCard } from "./pro-moments-rules";
 
-/** Whether the person has an email notification row for the workspace. */
-export async function hasEmailSetting(
-  userId: string,
-  organizationId: string,
-): Promise<boolean> {
+/**
+ * Whether the person gets scan emails (first scans and milestones) from the
+ * workspace: its plan has email alerts, this server sends email, and they
+ * kept the default (no email row: the codes they make) or chose scan
+ * milestones (every code). For /success, which says so after an upgrade.
+ */
+export async function ownerScanEmailsOn({
+  userId,
+  organizationId,
+  plan,
+}: {
+  userId: string;
+  organizationId: string;
+  plan: Plan;
+}): Promise<boolean> {
+  if (!(getPlanLimits(plan).emailAlerts && isFeatureAvailable("email"))) {
+    return false;
+  }
   const [row] = await db
-    .select({ id: notificationSetting.id })
+    .select({ events: notificationSetting.events })
     .from(notificationSetting)
     .where(
       and(
@@ -30,38 +40,17 @@ export async function hasEmailSetting(
       ),
     )
     .limit(1);
-  return Boolean(row);
-}
-
-/** The scan-email offer for this person in a workspace on `plan`. */
-export async function scanAlertsOfferFor({
-  userId,
-  organizationId,
-  plan,
-  canManage,
-}: {
-  userId: string;
-  organizationId: string;
-  plan: Plan;
-  canManage: boolean;
-}): Promise<boolean> {
-  const emailAlerts = getPlanLimits(plan).emailAlerts;
-  const emailAvailable = isFeatureAvailable("email");
-  // Only ask the database when the answer can change the outcome.
-  if (!(emailAlerts && emailAvailable && canManage)) return false;
-  return showScanAlertsOffer({
-    emailAlerts,
-    emailAvailable,
-    canManage,
-    hasEmailSetting: await hasEmailSetting(userId, organizationId),
-  });
+  const events: unknown[] = row
+    ? Array.isArray(row.events)
+      ? row.events
+      : []
+    : [...DEFAULT_EMAIL_EVENTS];
+  return events.includes("scan.milestone");
 }
 
 export interface HomeProMoments {
   /** "Your code is live", with Pro's price in the visitor's currency */
   codeLive: (CodeLiveCard & { month: string; year: string }) | null;
-  /** The one-click scan-email offer */
-  scanAlerts: boolean;
 }
 
 /**
@@ -95,18 +84,11 @@ export async function getHomeProMoments(
       email: isFeatureAvailable("email"),
     },
   });
-  const scanAlerts = await scanAlertsOfferFor({
-    userId: scope.userId,
-    organizationId: scope.organizationId,
-    plan,
-    canManage,
-  }).catch(() => false);
   return {
     codeLive: card && {
       ...card,
       month: formatPrice(PRICING.pro.month.amounts[currency], currency, locale),
       year: formatPrice(PRICING.pro.year.amounts[currency], currency, locale),
     },
-    scanAlerts,
   };
 }
