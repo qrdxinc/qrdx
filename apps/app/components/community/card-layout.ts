@@ -33,10 +33,12 @@ export const CARD_FRAME = "group relative flex min-w-0 flex-col gap-3";
 
 /**
  * The design's box: a calm surface with a hairline edge, the same shape for
- * every type. Opaque, so a rank's numeral can sit partly behind it.
+ * every type. Opaque, so a rank's numeral can sit partly behind it. On
+ * hover it lifts a little, with a soft shadow under it (it stays put with
+ * reduced motion).
  */
 export const CARD_ART =
-  "bg-muted relative z-[1] aspect-[4/3] overflow-hidden rounded-xl border border-foreground/[0.07] transition-[border-color] duration-200 group-hover:border-foreground/20 group-has-[a:focus-visible]:ring-ring/50 group-has-[a:focus-visible]:ring-[3px]";
+  "bg-muted relative z-[1] aspect-[4/3] overflow-hidden rounded-xl border border-foreground/[0.07] transition-[border-color,translate,box-shadow] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:border-foreground/20 group-hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/0.3)] group-has-[a:focus-visible]:ring-ring/50 group-has-[a:focus-visible]:ring-[3px] motion-reduce:group-hover:translate-y-0";
 
 /**
  * Where a rank's numeral sits and how large it is: a little above the

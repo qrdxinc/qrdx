@@ -1,14 +1,14 @@
 /*
  * A rank's numeral on the community's ranked rows (item-card.tsx): a large,
  * faint figure with soft, rounded strokes, tucked behind the design's box.
- * When its card is hovered or holds keyboard focus, the fill steps back and
- * the figure's outline draws itself in, from where each stroke starts; when
- * the card is left, the outline fades and the fill comes back. With reduced
- * motion the outline appears without being drawn.
+ * When its card is hovered or holds keyboard focus, the figure fills with
+ * the accent colour, raised and glossy (an SVG lighting filter, RankNumeral
+ * in item-card.tsx), and a band of light sweeps across it once; when the
+ * card is left, the colour drains back to the faint figure. With reduced
+ * motion the colour just fades in and out.
  *
- * Both layers are SVG text over the same figure, so they line up exactly
- * whatever font the system picks. Their colours come from utilities on the
- * elements (fill-*, stroke-*), so light and dark follow the theme.
+ * Every layer is SVG text over the same figure, so they line up exactly
+ * whatever font the system picks.
  */
 
 .numeral {
@@ -29,44 +29,68 @@
 }
 
 .fill {
-  transition: opacity 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: opacity 380ms ease;
 }
 
-.trace {
-  fill: none;
-  stroke-width: 0.014em;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  /* One dash longer than any figure's outline: offset by its length, the
-     outline is hidden; at 0 it's whole. */
-  stroke-dasharray: 4em;
-  stroke-dashoffset: 4em;
+/* The coloured figure: hidden (and not painted) until its card is hovered. */
+.gloss {
   opacity: 0;
-  /* Leaving: fade out, then rewind while it can't be seen. */
+  visibility: hidden;
+  transform: scale(0.97);
+  transform-box: fill-box;
+  transform-origin: 50% 60%;
+  /* Leaving: drain slowly, then stop painting. */
   transition:
-    opacity 200ms ease,
-    stroke-dashoffset 0s linear 200ms;
+    opacity 380ms ease,
+    transform 380ms ease,
+    visibility 0s linear 380ms;
+}
+
+.rim {
+  fill: none;
+  stroke-width: 0.012em;
+  stroke-linejoin: round;
+}
+
+/* The band of light: parked left of the figure, swept across on hover. */
+.sheen {
+  transform: translateX(-120%);
+  transform-box: fill-box;
+  transition: transform 0s linear 380ms;
 }
 
 .card:hover .fill,
 .card:has(a:focus-visible) .fill {
   opacity: 0;
+  transition-duration: 160ms;
 }
 
-.card:hover .trace,
-.card:has(a:focus-visible) .trace {
+.card:hover .gloss,
+.card:has(a:focus-visible) .gloss {
   opacity: 1;
-  stroke-dashoffset: 0;
+  visibility: visible;
+  transform: scale(1);
   transition:
-    opacity 120ms ease,
-    stroke-dashoffset 1100ms cubic-bezier(0.33, 0, 0.2, 1);
+    opacity 160ms ease-out,
+    transform 260ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    visibility 0s;
+}
+
+.card:hover .sheen,
+.card:has(a:focus-visible) .sheen {
+  transform: translateX(120%);
+  transition: transform 900ms cubic-bezier(0.4, 0, 0.2, 1) 120ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .trace,
-  .card:hover .trace,
-  .card:has(a:focus-visible) .trace {
-    stroke-dashoffset: 0;
-    transition: opacity 200ms ease;
+  .gloss,
+  .card:hover .gloss,
+  .card:has(a:focus-visible) .gloss {
+    transform: none;
+  }
+  .sheen,
+  .card:hover .sheen,
+  .card:has(a:focus-visible) .sheen {
+    display: none;
   }
 }
