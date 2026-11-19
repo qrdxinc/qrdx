@@ -323,7 +323,14 @@ const GROUPS: {
       {
         id: "emailAlerts",
         feature: "emailAlerts",
-        value: flag("emailAlerts"),
+        // Free gets one email at each new code's first scan, where QRdx
+        // sends it (apps/app/lib/email/first-scan.tsx); the alerts and the
+        // digest are the plans' emailAlerts.
+        value: (l, _plan, copy, options) =>
+          l.emailAlerts ||
+          (options.freeFirstScan === false
+            ? false
+            : copy.t("comparison.cells.firstScanOnly")),
       },
       { id: "webhooks", value: flag("webhooks") },
       {
@@ -376,6 +383,8 @@ export interface PricingOptions {
   fileStorage?: boolean;
   /** Email alerts and digests (Resend). */
   emailAlerts?: boolean;
+  /** Free's first-scan email per code (teamNotes: qrdx.dev with email). */
+  freeFirstScan?: boolean;
   /** Workspace single sign-on (QRDX_EE_LICENSE). */
   sso?: boolean;
   /** The workspace audit log (QRDX_EE_LICENSE). */

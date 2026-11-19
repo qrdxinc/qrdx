@@ -743,7 +743,8 @@
         "storage": "{size} ({perFile} por arquivo)",
         "apiBulk": "{count} + criação em massa",
         "clientReportsBadge": "Com um pequeno crédito no rodapé",
-        "clientReportsWhiteLabel": "White-label"
+        "clientReportsWhiteLabel": "White-label",
+        "firstScanOnly": "Primeira leitura de cada código"
       }
     },
     "guarantee": {
@@ -6461,11 +6462,12 @@
           "webhookAdded": "Webhook adicionado",
           "notificationsSaved": "Notificações salvas",
           "testMessageSentToValue": "Mensagem de teste enviada para {value}",
-          "webhookRemoved": "Webhook removido"
+          "webhookRemoved": "Webhook removido",
+          "emailAlertsAreProFirstScan": "No plano Grátis, você recebe um e-mail quando cada novo código tem sua primeira leitura. Os outros alertas por e-mail e o resumo semanal fazem parte dos planos Pro e Business."
         },
         "teamNotes": {
           "title": "Recados da equipe QRdx",
-          "description": "De vez em quando, alguém da QRdx escreve para você pessoalmente, por exemplo para perguntar como o QRdx está funcionando para você. Se você responder, a mensagem chega até essa pessoa.",
+          "description": "Uma mensagem de boas-vindas quando você se cadastra, um e-mail quando cada novo código tem sua primeira leitura (no plano Grátis) e, de vez em quando, um recado pessoal de alguém da QRdx. Se você responder, quem lê é uma pessoa.",
           "label": "Receber recados da equipe",
           "hint": "Seus alertas, resumos e e-mails de segurança não mudam.",
           "turnedOn": "Recados da equipe ativados",
@@ -9161,7 +9163,9 @@
       "device": "Dispositivo",
       "preview": "{code} foi lido pela primeira vez",
       "heading": "Seu código teve a primeira leitura",
-      "body": "Alguém acabou de ler {code}. Seu QR code está ativo e funcionando."
+      "body": "Alguém acabou de ler {code}. Seu QR code está ativo e funcionando.",
+      "pro": "O <link>Pro</link> também envia e-mail nas leituras de número {first}, {second}, {third} e seguintes, quando alguém envia um dos seus formulários e toda segunda-feira com os números da semana passada.",
+      "freeReason": "Você está recebendo este e-mail porque um código que você criou teve a primeira leitura. O QRdx envia este aviso uma vez por código."
     },
     "scanMilestone": {
       "reached": "{code} chegou a {count, number} leituras",
@@ -9254,7 +9258,8 @@
       "askOwner": "{limit, select, dynamicCodes {Arquive um ou peça a um proprietário do workspace para fazer upgrade para o plano {plan}.} landingPages {Exclua uma ou peça a um proprietário do workspace para fazer upgrade para o plano {plan}.} storage {Exclua os arquivos de que você não precisa mais ou peça a um proprietário do workspace para fazer upgrade para o plano {plan}.} savedThemes {Exclua um ou peça a um proprietário do workspace para fazer upgrade para o plano {plan}.} other {Peça a um proprietário do workspace para fazer upgrade para o plano {plan}.}}",
       "makeRoom": "{limit, select, dynamicCodes {Arquive um para liberar espaço.} landingPages {Exclua uma para liberar espaço.} storage {Exclua os arquivos de que você não precisa mais para liberar espaço.} savedThemes {Exclua um para liberar espaço.} other {}}",
       "resets": "Reinicia em {date}.",
-      "keeps": "{limit, select, dynamicCodes {Os QR codes existentes continuam funcionando.} landingPages {As páginas existentes continuam no ar.} formResponses {As páginas continuam no ar. Os formulários voltam a aceitar respostas após o reinício.} storage {Os arquivos que você enviou continuam disponíveis.} other {}}"
+      "keeps": "{limit, select, dynamicCodes {Os QR codes existentes continuam funcionando.} landingPages {As páginas existentes continuam no ar.} formResponses {As páginas continuam no ar. Os formulários voltam a aceitar respostas após o reinício.} storage {Os arquivos que você enviou continuam disponíveis.} other {}}",
+      "upgradeButton": "Fazer upgrade para {plan}"
     },
     "weeklyDigest": {
       "subject": "Sua semana no QRdx: {scans, plural, one {# leitura} other {# leituras}}",
@@ -9290,7 +9295,7 @@
       "seeScans": "<link>Acompanhe as leituras:</link> quando, onde e em quais dispositivos as pessoas fazem a leitura.",
       "changeLink": "Mude o destino sempre que quiser, mesmo depois de impresso. Sem precisar reimprimir.",
       "free": "Os QR codes estáticos continuam grátis, e os códigos que você criar seguem funcionando se você mudar de plano ou parar de pagar. O plano Grátis também inclui {count} QR codes dinâmicos.",
-      "pro": "Se precisar de mais, o Pro custa {monthly} por mês ou {yearly} por ano e inclui QR codes dinâmicos ilimitados, {domains} domínios próprios e alertas de leitura por e-mail.",
+      "pro": "Se precisar de mais, o Pro custa {monthly} por mês ou {yearly} por ano e traz QR codes dinâmicos ilimitados, {domains} domínios personalizados e alertas por e-mail a cada marco de leituras, com um resumo semanal.",
       "taxes": "Impostos locais podem ser adicionados no checkout.",
       "reply": "Se algo atrapalhar ou você não souber como fazer alguma coisa, responda a este e-mail. Uma pessoa lê todas as respostas.",
       "reason": "Você está recebendo este e-mail porque acabou de criar uma conta no QRdx."

@@ -19768,7 +19768,7 @@
     "status": "machine"
   },
   "app.settings.notifications.teamNotes.description": {
-    "source": "c0e0ba92f1f9",
+    "source": "752f62fa4062",
     "status": "machine"
   },
   "app.settings.notifications.teamNotes.label": {
@@ -29212,7 +29212,7 @@
     "status": "machine"
   },
   "emails.welcome.pro": {
-    "source": "5f3406c92f78",
+    "source": "2ff1d85e942e",
     "status": "machine"
   },
   "emails.welcome.taxes": {
@@ -31497,6 +31497,26 @@
   },
   "codeBuilder.formBanner.upgrade": {
     "source": "7ec0261b8e8a",
+    "status": "machine"
+  },
+  "pricing.comparison.cells.firstScanOnly": {
+    "source": "395a2af9e36a",
+    "status": "machine"
+  },
+  "app.settings.notifications.workspaceNotifications.emailAlertsAreProFirstScan": {
+    "source": "57d61cc70254",
+    "status": "machine"
+  },
+  "emails.firstScan.pro": {
+    "source": "d452cfe47a07",
+    "status": "machine"
+  },
+  "emails.firstScan.freeReason": {
+    "source": "5b67dd68123e",
+    "status": "machine"
+  },
+  "emails.limitNotice.upgradeButton": {
+    "source": "fcc19175c100",
     "status": "machine"
   }
 }

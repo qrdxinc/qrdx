@@ -743,7 +743,8 @@
         "storage": "{size} ({perFile} per file)",
         "apiBulk": "{count} + pembuatan massal",
         "clientReportsBadge": "Dengan kredit kecil di footer",
-        "clientReportsWhiteLabel": "White-label"
+        "clientReportsWhiteLabel": "White-label",
+        "firstScanOnly": "Pemindaian pertama tiap kode"
       }
     },
     "guarantee": {
@@ -6461,11 +6462,12 @@
           "webhookAdded": "Webhook ditambahkan",
           "notificationsSaved": "Notifikasi disimpan",
           "testMessageSentToValue": "Pesan uji dikirim ke {value}",
-          "webhookRemoved": "Webhook dihapus"
+          "webhookRemoved": "Webhook dihapus",
+          "emailAlertsAreProFirstScan": "Di paket Gratis, Anda mendapatkan satu email saat setiap kode baru menerima pemindaian pertamanya. Peringatan email lainnya dan ringkasan mingguan tersedia di Pro dan Business."
         },
         "teamNotes": {
           "title": "Catatan dari tim QRdx",
-          "description": "Sesekali seseorang di QRdx menulis kepada Anda secara pribadi, misalnya untuk menanyakan bagaimana QRdx bekerja untuk Anda. Balasan Anda akan sampai kepada mereka.",
+          "description": "Ucapan selamat datang saat Anda mendaftar, satu email saat setiap kode baru menerima pemindaian pertamanya (di paket Gratis), dan sesekali pesan pribadi dari seseorang di QRdx. Balasan Anda akan sampai ke seorang manusia.",
           "label": "Terima catatan dari tim",
           "hint": "Peringatan, rangkuman, dan email keamanan Anda tidak berubah.",
           "turnedOn": "Catatan dari tim diaktifkan",
@@ -9161,7 +9163,9 @@
       "device": "Perangkat",
       "preview": "{code} dipindai untuk pertama kalinya",
       "heading": "Kode Anda mendapat pemindaian pertama",
-      "body": "Seseorang baru saja memindai {code}. Kode QR Anda aktif dan berfungsi."
+      "body": "Seseorang baru saja memindai {code}. Kode QR Anda aktif dan berfungsi.",
+      "pro": "<link>Pro</link> juga mengirim email kepada Anda pada pemindaian {first}, {second}, {third} dan seterusnya, saat seseorang mengirim salah satu formulir Anda, serta setiap hari Senin dengan angka minggu lalu.",
+      "freeReason": "Anda menerima email ini karena kode yang Anda buat mendapat pemindaian pertamanya. QRdx hanya mengirim email ini sekali untuk setiap kode."
     },
     "scanMilestone": {
       "reached": "{code} mencapai {count, number} pemindaian",
@@ -9254,7 +9258,8 @@
       "askOwner": "{limit, select, dynamicCodes {Arsipkan satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} landingPages {Hapus satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} storage {Hapus file yang tidak lagi Anda perlukan, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} savedThemes {Hapus satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} other {Minta pemilik ruang kerja untuk meningkatkan ke {plan}.}}",
       "makeRoom": "{limit, select, dynamicCodes {Arsipkan satu untuk memberi ruang.} landingPages {Hapus satu untuk memberi ruang.} storage {Hapus file yang tidak lagi Anda perlukan untuk memberi ruang.} savedThemes {Hapus satu untuk memberi ruang.} other {}}",
       "resets": "Diatur ulang {date}.",
-      "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}"
+      "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}",
+      "upgradeButton": "Upgrade ke {plan}"
     },
     "weeklyDigest": {
       "subject": "Minggu Anda di QRdx: {scans, plural, other {# pemindaian}}",
@@ -9290,7 +9295,7 @@
       "seeScans": "<link>Lihat pemindaiannya:</link> kapan, di mana, dan dari perangkat apa orang memindainya.",
       "changeLink": "Ubah tujuan tautannya kapan pun Anda mau, bahkan setelah dicetak. Tanpa cetak ulang.",
       "free": "Kode QR statis tetap gratis, dan kode yang Anda buat tetap berfungsi meskipun Anda berganti paket atau berhenti membayar. Paket Gratis juga mencakup {count} kode QR dinamis.",
-      "pro": "Jika Anda butuh lebih banyak, Pro seharga {monthly} per bulan atau {yearly} per tahun, dengan tambahan kode dinamis tanpa batas, {domains} domain kustom, dan notifikasi pemindaian lewat email.",
+      "pro": "Jika Anda membutuhkan lebih, Pro seharga {monthly} per bulan atau {yearly} per tahun dan menambahkan kode dinamis tanpa batas, {domains} domain kustom, serta pemberitahuan email di setiap tonggak pemindaian beserta ringkasan mingguan.",
       "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
       "reply": "Jika ada kendala, atau Anda tidak yakin cara melakukan sesuatu, balas email ini. Setiap balasan dibaca oleh seorang manusia.",
       "reason": "Anda menerima email ini karena baru saja membuat akun QRdx."

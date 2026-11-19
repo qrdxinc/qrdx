@@ -27,6 +27,12 @@ export interface LimitNoticeEmailProps {
   reason: string;
   /** Plan & usage for the workspace */
   usageUrl: string;
+  /**
+   * The plan the notice offers, when the reader can buy it (owners; never a
+   * member who can't change the plan): the button opens pricing instead of
+   * Plan & usage.
+   */
+  upgrade?: { planName: string; url: string };
   /** Why this person gets it */
   recipientReason: string;
   /** The recipients' language; the strings above come in it too */
@@ -48,6 +54,7 @@ export function LimitNoticeEmail({
   usageUrl,
   recipientReason,
   intl,
+  upgrade,
 }: LimitNoticeEmailProps) {
   const { t } = intl;
   const words = { level, workspace: workspaceName, noun, value };
@@ -66,7 +73,13 @@ export function LimitNoticeEmail({
         {t("limitNotice.body", words)} {reason}
       </EmailText>
       <DetailsTable rows={rows} />
-      <EmailButton href={usageUrl}>{t("limitNotice.button")}</EmailButton>
+      {upgrade ? (
+        <EmailButton href={upgrade.url}>
+          {t("limitNotice.upgradeButton", { plan: upgrade.planName })}
+        </EmailButton>
+      ) : (
+        <EmailButton href={usageUrl}>{t("limitNotice.button")}</EmailButton>
+      )}
       <EmailDivider />
       <MutedText>{t("limitNotice.howOften")}</MutedText>
     </EmailLayout>

@@ -4,6 +4,7 @@ import { database as db, webhookDelivery } from "@repo/database";
 import cuid from "cuid";
 import { and, asc, eq, gt, inArray, sql } from "drizzle-orm";
 import { after } from "next/server";
+import { sendFreeFirstScanEmail } from "@/lib/email/first-scan";
 import { normalizeScanSource } from "@/lib/nfc/links";
 import { getPlanLimits } from "@/lib/plans";
 import { shortLinkUrl } from "@/lib/short-links";
@@ -448,6 +449,8 @@ export interface ScannedCode {
   title: string | null;
   /** After this scan */
   scanCount: number;
+  /** When the code was made (Free's first-scan email skips test scans) */
+  createdAt?: Date;
 }
 
 export function scanSummary(
@@ -472,11 +475,14 @@ export function scanSummary(
 /**
  * scan.created (batched) and, on milestone counts, scan.milestone. Each scan
  * sees a unique post-increment count, so a milestone fires exactly once.
+ * Also Free's one first-scan email per code (lib/email/first-scan.tsx),
+ * which needs no subscriber.
  */
 export async function emitScanRecorded(
   scan: RecordedScan,
   code: ScannedCode,
 ): Promise<void> {
+  const freeFirstScan = sendFreeFirstScanEmail(scan, code);
   try {
     const scope = { userId: code.userId, organizationId: code.organizationId };
     // Google Sheets "keep in sync": batched, at most every 5 min per sheet
@@ -512,5 +518,7 @@ export async function emitScanRecorded(
     await Promise.all(tasks);
   } catch (error) {
     log("event.scan_emit_failed", { error: errorMessage(error) });
+  } finally {
+    await freeFirstScan;
   }
 }

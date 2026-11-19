@@ -41,6 +41,12 @@ export interface NoticeCopy {
   planName: string;
   /** "1 active dynamic code left on Free.", or what's included and what to do */
   reason: string;
+  /**
+   * The plan the readers can upgrade to for more ("Pro"), by the same rule
+   * as the upgrade sentence (upgradeTo: owners only, on sale here); null
+   * for a member who can't change the plan, or when nothing lifts the cap.
+   */
+  upgradePlan: string | null;
 }
 
 /** Allowances that start over every month. */
@@ -87,6 +93,11 @@ export function noticeCopy(
 
   const sentences: string[] = [];
   const reset = resetDay(usage.resetsAt, locale);
+  const offered = upgradeTo(
+    usage.cap?.lift?.plan ?? null,
+    usage.canUpgrade,
+    usage.checkoutOpen,
+  );
   if (usage.used < usage.limit) {
     const remaining = Math.max(0, usage.limit - usage.used);
     const left = storage
@@ -105,13 +116,8 @@ export function noticeCopy(
       }),
     );
     const lift = usage.cap?.lift ?? null;
-    const upgrade = upgradeTo(
-      lift?.plan ?? null,
-      usage.canUpgrade,
-      usage.checkoutOpen,
-    );
     let remedy: string;
-    if (lift && upgrade) {
+    if (lift && offered) {
       let liftText: string;
       if (lift.limit === null) {
         liftText = t("limitNotice.liftUnlimited", { limit: id });
@@ -153,5 +159,6 @@ export function noticeCopy(
     }),
     planName: plan,
     reason: sentences.join(" "),
+    upgradePlan: offered ? planName(offered.plan) : null,
   };
 }

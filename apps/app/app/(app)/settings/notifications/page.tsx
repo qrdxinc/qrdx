@@ -56,6 +56,7 @@ export default async function NotificationsPage() {
         {workspaces.map((workspace) => (
           <WorkspaceNotifications
             email={session.user.email}
+            freeFirstScan={isFeatureAvailable("teamNotes")}
             key={workspace.organizationId ?? "personal"}
             workspace={workspace}
           />

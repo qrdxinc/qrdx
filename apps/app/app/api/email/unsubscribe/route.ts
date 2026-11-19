@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
     return page(
       "Stop notes",
       `<h1>Stop notes from the QRdx team?</h1>
-<p>These are the personal emails someone at QRdx writes to you. Alerts, digests and security emails don't change. You can turn notes back on in notification settings.</p>
+<p>These are the welcome email, the email when each new code gets its first scan on Free, and notes someone at QRdx writes to you. Pro alerts, digests and security emails don't change. You can turn notes back on in notification settings.</p>
 <form method="post" action="?token=${encodeURIComponent(token)}">
   <button type="submit">Stop notes</button>
 </form>`,
@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
     return page(
       "Notes stopped",
       `<h1>Notes stopped</h1>
-<p>You won't get notes from the QRdx team anymore. Alerts, digests and security emails don't change.</p>
+<p>You won't get notes from the QRdx team anymore, or Free's first-scan emails. Pro alerts, digests and security emails don't change.</p>
 <a class="button" href="/settings/notifications">Notification settings</a>`,
     );
   }

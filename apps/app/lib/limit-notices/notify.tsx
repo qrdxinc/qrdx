@@ -266,6 +266,14 @@ export async function sendLimitNotice(
               perPerson ? "limitNotice.artReason" : "limitNotice.ownerReason",
               { workspace: workspace.name },
             )}
+            upgrade={
+              copy.upgradePlan
+                ? {
+                    planName: copy.upgradePlan,
+                    url: absolute("/pricing?interval=month"),
+                  }
+                : undefined
+            }
             usageUrl={absolute(
               workspaceHref(workspace.slug, "/settings/usage"),
             )}
