@@ -89,17 +89,19 @@ describe("ranked row numerals", () => {
       Array.from({ length: 10 }, (_, i) => String(i + 1)),
     );
     for (const { rank, markup } of found) {
-      // The clip, the faint fill, the coloured figure and its rim: the same
-      // figure, anchored the same, so the layers line up.
+      // The clip, the faint fill, the inner edge, the highlight and the rim:
+      // the same figure, anchored the same, so the layers line up.
       const texts = [...markup.matchAll(/<text[^>]*>(\d+)<\/text>/g)];
-      expect(texts.map((t) => t[1])).toEqual([rank, rank, rank, rank]);
-      expect(markup.match(/text-anchor="end" x="100%"/g)).toHaveLength(4);
-      // The coloured figure is the accent, raised by the numeral's own filter.
-      expect(markup).toMatch(/<text class="fill-primary" filter="url\(#/);
+      expect(texts.map((t) => t[1])).toEqual([rank, rank, rank, rank, rank]);
+      expect(markup.match(/text-anchor="end" x="100%"/g)).toHaveLength(5);
+      // The liquid inside is clipped to the figure.
+      expect(markup).toMatch(
+        /<g class="[^"]*" clip-path="url\(#[^)]+-shape\)">/,
+      );
     }
   });
 
-  it("give each numeral its own filter, clip and light band", () => {
+  it("give each numeral its own clip, gradients and filters", () => {
     const html = renderIntl(
       RankedRowCards({
         cards: Array.from({ length: 3 }, (_, i) => card(i + 1)),
@@ -109,7 +111,7 @@ describe("ranked row numerals", () => {
     const all: string[] = [];
     for (const { markup } of numerals(html)) {
       const { defined, used } = ids(markup);
-      expect(defined).toHaveLength(3);
+      expect(defined).toHaveLength(5);
       // Every reference points at something this numeral defines.
       expect(used.every((id) => defined.includes(id))).toBe(true);
       all.push(...defined);
@@ -125,7 +127,7 @@ describe("ranked row numerals", () => {
     expect(html).not.toContain("<text");
   });
 
-  it("only fade the colour in and out when motion isn't welcome", () => {
+  it("drift the currents only while hovered, and never with reduced motion", () => {
     const css = readFileSync(
       join(
         import.meta.dirname,
@@ -133,11 +135,13 @@ describe("ranked row numerals", () => {
       ),
       "utf8",
     );
+    expect(css).toMatch(/\.current \{[^}]*animation: [^;]*paused;/);
+    expect(css).toMatch(
+      /\.card:hover \.current,[^{]*\{\s*animation-play-state: running;/,
+    );
     const reduced = css.slice(
       css.indexOf("@media (prefers-reduced-motion: reduce)"),
     );
-    // No pop in scale, and no band of light sweeping across.
-    expect(reduced).toMatch(/\.gloss[^{]*\{\s*transform: none;/);
-    expect(reduced).toMatch(/\.sheen[^{]*\{\s*display: none;/);
+    expect(reduced).toMatch(/\.current \{\s*animation: none;/);
   });
 });
