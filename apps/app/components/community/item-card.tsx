@@ -38,6 +38,8 @@ import { CreatorLine } from "./creator-line";
 import { LazyDesignQr } from "./design-qr";
 import numeral from "./rank-numeral.module.css";
 import { RowSection } from "./row-section";
+import { ThemeSwatch } from "./theme-swatch";
+import { LazyFrameSlot } from "./type-previews";
 
 const COUNT = new Intl.NumberFormat("en", { notation: "compact" });
 
@@ -56,11 +58,13 @@ export const cardHref = (card: CommunityItemCard) =>
     ? itemPath(card.type, card.slug)
     : `/community/${TYPE_SEGMENTS[card.type]}`;
 
-/** The plate a theme is drawn on: its own background. */
-const plateColor = (card: CommunityItemCard) =>
-  typeof card.preview.bgColor === "string" && card.preview.bgColor
-    ? card.preview.bgColor
-    : "#ffffff";
+/**
+ * Whether a kit's look is a frame alone: it has a frame and no theme, so
+ * its picture is the frame's (a swatch would show the plain code frames
+ * are drawn on).
+ */
+const frameOnlyKit = (card: CommunityItemCard) =>
+  Boolean(card.kit?.frame && !card.kit.theme && card.preview.frame);
 
 /**
  * One item in a grid or row: the design on a calm surface, then its name,
@@ -139,15 +143,24 @@ export function ItemCard({
               )}
             </div>
           ) : card.type === "kit" ? (
-            // The look and the page, side by side.
+            // The look (a swatch, or the frame it brings) and the page, side
+            // by side: "look + page".
             <div className="absolute inset-0 flex items-start justify-center gap-3 px-5 pt-5">
-              <div className="mt-6 aspect-square w-[36%] rounded-lg bg-white p-2 shadow-sm ring-1 ring-black/5">
-                <LazyDesignQr
-                  className="size-full"
+              {frameOnlyKit(card) ? (
+                <LazyFrameSlot
+                  className="mt-6 aspect-square w-[36%] drop-shadow-sm"
+                  eager={eager}
+                  label={t("yourQrCode")}
+                  style={card.preview}
+                />
+              ) : (
+                <ThemeSwatch
+                  className="mt-6 aspect-square w-[36%]"
+                  compact
                   eager={eager}
                   style={card.preview}
                 />
-              </div>
+              )}
               <div className="aspect-[9/16] w-[34%] overflow-hidden rounded-t-xl bg-white shadow-sm ring-1 ring-black/5">
                 {card.page ? (
                   <TemplatePreview
@@ -168,25 +181,24 @@ export function ItemCard({
               ) : null}
             </div>
           ) : card.type === "frame" ? (
-            // A frame is a card of its own: drawn as it is, no plate.
+            // A frame is a card of its own, drawn as it is with a holder
+            // where your code goes: a frame, not a code.
             <div className="absolute inset-y-[8%] inset-x-0 transition-transform duration-300 motion-safe:group-hover:scale-[1.03]">
-              <LazyDesignQr
+              <LazyFrameSlot
                 className="size-full drop-shadow-sm"
                 eager={eager}
+                label={t("yourQrCode")}
                 style={card.preview}
               />
             </div>
           ) : (
-            <div
-              className="absolute top-1/2 left-1/2 aspect-square h-[72%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg p-1.5 shadow-sm ring-1 ring-black/5 transition-transform duration-300 motion-safe:group-hover:scale-[1.03]"
-              style={{ backgroundColor: plateColor(card) }}
-            >
-              <LazyDesignQr
-                className="size-full"
-                eager={eager}
-                style={card.preview}
-              />
-            </div>
+            // A theme is a look: a close-up of its code with its colors.
+            // One that carries a frame shows it on its page.
+            <ThemeSwatch
+              className="absolute inset-[8%] transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
+              eager={eager}
+              style={card.preview}
+            />
           )}
           {rank !== undefined && rankAs === "badge" && (
             <span

@@ -1,36 +1,11 @@
 "use client";
 
-import type { BodyPattern } from "qrdx/types";
 import type React from "react";
+import { BODY_PATTERNS } from "@/lib/qr-design/pattern-names";
 import { useQREditorStore } from "@/store/editor-store";
 import { BodyPatterns } from "../icons/body-patterns";
 
-// Every body pattern, simplest first (23: no lone tile in 3 or 4 columns)
-export const patterns: Array<{ id: BodyPattern; name: string }> = [
-  { id: "square", name: "Square" },
-  { id: "rounded", name: "Rounded" },
-  { id: "circle", name: "Circle" },
-  { id: "circle-large", name: "Circle Large" },
-  { id: "small-square", name: "Small Square" },
-  { id: "random-dots", name: "Random Dots" },
-  { id: "liquid", name: "Liquid" },
-  { id: "liquid-horizontal", name: "Liquid Rows" },
-  { id: "liquid-vertical", name: "Liquid Columns" },
-  { id: "classy", name: "Classy" },
-  { id: "classy-rounded", name: "Classy Rounded" },
-  { id: "leaf", name: "Leaf" },
-  { id: "horizontal-line", name: "Horizontal Line" },
-  { id: "vertical-line", name: "Vertical Line" },
-  { id: "diamond", name: "Diamond" },
-  { id: "octagon", name: "Octagon" },
-  { id: "hexagon", name: "Hexagon" },
-  { id: "mosaic", name: "Mosaic" },
-  { id: "plus", name: "Plus" },
-  { id: "star", name: "Star" },
-  { id: "heart", name: "Heart" },
-  { id: "pacman", name: "Pacman" },
-  { id: "circle-mixed", name: "Mixed" },
-] as const;
+export const patterns = BODY_PATTERNS;
 
 export const PatternSelector: React.FC = () => {
   const { themeState, setThemeState } = useQREditorStore();

@@ -1,5 +1,7 @@
-// A community card's caption: the name with its saves on the first line, the
-// creator with the item's type (an icon and its name) on the second.
+// A community card: its picture says what the item is (a frame around an
+// empty slot, a theme as a swatch, a kit as look + page), and its caption
+// gives the name with its saves on the first line, the creator with the
+// item's type (an icon and its name) on the second.
 
 import { describe, expect, it, vi } from "vitest";
 import { renderIntl } from "../support/intl";
@@ -25,7 +27,11 @@ vi.mock("next/cache", () => ({
   revalidateTag: vi.fn(),
 }));
 
+import { getOfficialFrame } from "qrdx";
 import { ItemGrid, TYPE_ICONS } from "@/components/community/item-card";
+import { MAX_CHIPS } from "@/components/community/theme-swatch";
+import { SWATCH_VIEW_BOX } from "@/components/community/type-previews";
+import { officialFramePreview } from "@/lib/community/catalog";
 import {
   type CommunityItemCard,
   type CommunityItemType,
@@ -96,5 +102,116 @@ describe("community card captions", () => {
     );
     expect(typeEnd(html)).toMatch(/<svg[\s\S]*?<\/svg>4 items</);
     expect(typeEnd(html)).not.toContain(">Collection<");
+  });
+});
+
+const TABLE_TENT = getOfficialFrame("table-tent");
+if (!TABLE_TENT) throw new Error("table-tent is missing");
+const FRAME_PREVIEW = officialFramePreview(TABLE_TENT);
+
+/** A card drawn as on the first screen (its picture in the HTML). */
+const eagerCard = (overrides: Partial<CommunityItemCard>) =>
+  renderIntl(ItemGrid({ cards: [card(overrides)], eager: 1 }));
+
+/** The colors of a swatch's chips, in order. */
+const chips = (html: string) =>
+  [
+    ...(
+      html.match(/data-swatch-colors="">([\s\S]*?)<\/ul>/)?.[1] ?? ""
+    ).matchAll(/background-color:(#[0-9a-f]+)/g),
+  ].map((match) => match[1]);
+
+describe("community card pictures", () => {
+  it("draw a frame around an empty slot, not a code", () => {
+    const html = eagerCard({ type: "frame", preview: FRAME_PREVIEW });
+    expect(html).toContain('data-qrdx-frame="custom"');
+    expect(html).toContain(">Your QR code</text>");
+    expect(html).toContain("Scan for our menu");
+    // No code: its 128 × 128 <svg> isn't drawn
+    expect(html).not.toContain('viewBox="0 0 128 128"');
+    expect(html).not.toContain(SWATCH_VIEW_BOX);
+  });
+
+  it("show a theme as a swatch: a close-up and its colors, once each", () => {
+    const html = eagerCard({
+      type: "theme",
+      preview: {
+        fgColor: "#1D4ED8",
+        eyeColor: "#1d4ed8",
+        dotColor: "#0f172a",
+        bgColor: "#ffffff",
+      },
+    });
+    expect(html).toContain(`viewBox="${SWATCH_VIEW_BOX}"`);
+    expect(chips(html)).toEqual(["#1d4ed8", "#0f172a", "#ffffff"]);
+    expect(html).not.toContain("Your QR code");
+  });
+
+  it("show a theme that carries a frame as a swatch too", () => {
+    const html = eagerCard({
+      type: "theme",
+      preview: {
+        fgColor: "#3b2a20",
+        bgColor: "#fbf6ee",
+        frame: FRAME_PREVIEW.frame,
+      },
+    });
+    expect(html).toContain(`viewBox="${SWATCH_VIEW_BOX}"`);
+    expect(html).not.toContain("data-qrdx-frame");
+  });
+
+  it("cap a swatch's chips", () => {
+    const stops = [
+      "#111111",
+      "#222222",
+      "#333333",
+      "#444444",
+      "#555555",
+      "#666666",
+    ];
+    const html = eagerCard({
+      type: "theme",
+      preview: {
+        fgColor: {
+          type: "linear",
+          angle: 0,
+          stops: stops.map((color, index) => ({ color, offset: index * 20 })),
+        },
+      },
+    });
+    expect(chips(html)).toHaveLength(MAX_CHIPS);
+  });
+
+  it("draw a kit's look as a swatch, or as its frame when it has no theme", () => {
+    const withTheme = eagerCard({
+      type: "kit",
+      kit: { page: "p", theme: "t", frame: "f" },
+      preview: { fgColor: "#0f766e", frame: FRAME_PREVIEW.frame },
+    });
+    expect(withTheme).toContain(`viewBox="${SWATCH_VIEW_BOX}"`);
+    expect(withTheme).not.toContain("Your QR code");
+
+    const frameOnly = eagerCard({
+      type: "kit",
+      kit: { page: "p", frame: "f" },
+      preview: FRAME_PREVIEW,
+    });
+    expect(frameOnly).toContain("Your QR code");
+    expect(frameOnly).not.toContain(SWATCH_VIEW_BOX);
+  });
+
+  it("leave the pictures of cards past the first screen to the browser", () => {
+    const html = renderIntl(
+      ItemGrid({
+        cards: [
+          card({ type: "frame", preview: FRAME_PREVIEW }),
+          card({ type: "theme", preview: { fgColor: "#1d4ed8" } }),
+        ],
+      }),
+    );
+    expect(html).not.toContain("Your QR code");
+    expect(html).not.toContain(SWATCH_VIEW_BOX);
+    // The chips are plain HTML, there from the start
+    expect(chips(html)).toEqual(["#1d4ed8", "#ffffff"]);
   });
 });
