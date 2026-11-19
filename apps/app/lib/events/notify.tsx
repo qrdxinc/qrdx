@@ -353,6 +353,20 @@ export async function postChatMessage(
   return postJson(url, body, {}, 5000);
 }
 
+/**
+ * An alert email's idempotency key: per event and target, except the
+ * first-scan email (milestone 1), which is per code and target, as Free's
+ * is per code. Two scans that each count as the code's first real one
+ * (stored in the other order a moment apart) then send it once.
+ */
+function idempotencyKey(envelope: WebhookEnvelope<unknown>, targetId: string) {
+  if (envelope.type === "scan.milestone") {
+    const data = envelope.data as ScanMilestoneData;
+    if (data.milestone === 1) return `first-scan:${data.code.id}:${targetId}`;
+  }
+  return `${envelope.id}:${targetId}`;
+}
+
 /** Sends one event's alerts to the targets that asked for it. Never throws. */
 export async function notifyTargets<T extends AlertEvent>(
   envelope: WebhookEnvelope<EventDataMap[T]> & { type: T },
@@ -403,7 +417,7 @@ export async function notifyTargets<T extends AlertEvent>(
             subject,
             react,
             unsubscribeUrl: unsubscribe,
-            idempotencyKey: `${envelope.id}:${target.id}`,
+            idempotencyKey: idempotencyKey(envelope, target.id),
             tags: [
               { name: "category", value: envelope.type.replace(".", "_") },
             ],

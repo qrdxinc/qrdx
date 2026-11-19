@@ -66,6 +66,14 @@ export const FIRST_SCAN_EMAIL_SINCE = new Date("2026-11-19T00:00:00Z");
 /** Where a code came from elsewhere, already printed and scanned. */
 const BROUGHT_IN = new Set(["import", "migrate"]);
 
+/**
+ * A code from a CSV import or another provider (created_via import or
+ * migrate): likely printed and scanned already, so its "first scan" here
+ * isn't news. Free's email and paid plans' default alerts skip it.
+ */
+export const isBroughtIn = (createdVia: string | null | undefined) =>
+  Boolean(createdVia && BROUGHT_IN.has(createdVia));
+
 export type FreeFirstScanOutcome =
   | "sent"
   | "not_first"
@@ -168,7 +176,7 @@ export async function sendFreeFirstScanEmail(
       return "not_first";
     }
     if (code.createdAt < FIRST_SCAN_EMAIL_SINCE) return "old_code";
-    if (code.createdVia && BROUGHT_IN.has(code.createdVia)) return "imported";
+    if (isBroughtIn(code.createdVia)) return "imported";
     const after = testWindowEnd(code.createdAt);
     if (scan.scannedAt < after) return "test_scan";
     if (!isFeatureAvailable("teamNotes")) return "off";

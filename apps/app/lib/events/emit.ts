@@ -7,6 +7,7 @@ import { after } from "next/server";
 import {
   type FirstScanStatus,
   firstScanStatus,
+  isBroughtIn,
   sendFreeFirstScanEmail,
 } from "@/lib/email/first-scan";
 import { normalizeScanSource } from "@/lib/nfc/links";
@@ -176,6 +177,7 @@ export async function emitEvent<T extends EventType>(
     webhooks = true,
     chat = true,
     email = true,
+    defaults = true,
   }: {
     now?: Date;
     subscribers?: Subscribers | null;
@@ -183,6 +185,8 @@ export async function emitEvent<T extends EventType>(
     webhooks?: boolean;
     chat?: boolean;
     email?: boolean;
+    /** Email people with no email row the plan's defaults (default: yes) */
+    defaults?: boolean;
   } = {},
 ): Promise<void> {
   try {
@@ -221,7 +225,7 @@ export async function emitEvent<T extends EventType>(
           ),
           // People with no email row get the plan's defaults (scan events:
           // the scope's person is the code's maker).
-          ...(email && limits.emailAlerts
+          ...(email && defaults && limits.emailAlerts
             ? defaultEmailTargets(subs, type, scope, scope.userId)
             : []),
         ];
@@ -505,13 +509,19 @@ export function scanSummary(
  * which needs no subscriber.
  */
 /** Whether anyone would get scan milestone emails for this scope's codes. */
-function hasMilestoneEmail(subs: Subscribers, scope: EventScope) {
+function hasMilestoneEmail(
+  subs: Subscribers,
+  scope: EventScope,
+  defaults: boolean,
+) {
   return (
     subs.targets.some(
       (target) =>
         target.channel === "email" && target.events.includes("scan.milestone"),
     ) ||
-    defaultEmailTargets(subs, "scan.milestone", scope, scope.userId).length > 0
+    (defaults &&
+      defaultEmailTargets(subs, "scan.milestone", scope, scope.userId).length >
+        0)
   );
 }
 
@@ -562,13 +572,17 @@ export async function emitScanRecorded(
         },
         scan: summary,
       }) as const;
-    const at = { now: scan.scannedAt, subscribers };
+    // Imported codes (CSV, another provider) are likely printed and scanned
+    // already: their first scan and milestones here aren't news, so they
+    // only go to people who turned the alerts on (a row), not by default.
+    const defaults = !isBroughtIn(code.createdVia);
+    const at = { now: scan.scannedAt, subscribers, defaults };
     // The first-scan email (milestone 1) waits for the first real scan,
     // whether it goes to a row or by default; webhooks and chat still get
     // milestone 1 on the very first scan.
     const firstScanEmail =
       emailAlerts === true &&
-      hasMilestoneEmail(subscribers, scope) &&
+      hasMilestoneEmail(subscribers, scope, defaults) &&
       (await firstScan()) === "first";
     const tasks = [emitEvent("scan.created", summary, scope, at)];
     if (isScanMilestone(code.scanCount)) {

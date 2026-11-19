@@ -128,7 +128,12 @@ const person = (id: string) => ({
 });
 
 /** Stores the scan, then runs what recordScan runs after it. */
-async function scan(id: string, at: Date, count: number) {
+async function scan(
+  id: string,
+  at: Date,
+  count: number,
+  createdVia = "dashboard",
+) {
   fakeDb.seed("qrScan", [{ id, qrCodeId: "c_menu", scannedAt: at }]);
   await emitScanRecorded(
     {
@@ -150,7 +155,7 @@ async function scan(id: string, at: Date, count: number) {
       title: "Spring menu",
       scanCount: count,
       createdAt: MADE,
-      createdVia: "dashboard",
+      createdVia,
     },
   );
 }
@@ -351,6 +356,47 @@ describe("Pro and Business with no email row", () => {
     state.sent.length = 0;
     await scan("s10", minutes(90), 10);
     expect(state.sent).toHaveLength(0);
+  });
+});
+
+describe("imported codes", () => {
+  it("get no default alerts: no first-scan or milestone emails", async () => {
+    for (const via of ["import", "migrate"]) {
+      state.sent.length = 0;
+      fakeDb.rows("qrScan").length = 0;
+      await scan(`s1_${via}`, minutes(60), 1, via);
+      await scan(`s10_${via}`, minutes(90), 10, via);
+      expect(state.sent, via).toEqual([]);
+    }
+  });
+
+  it("still alert someone who turned the alerts on", async () => {
+    await settings.setEmailEvents("u_owner", ORG, ["scan.milestone"]);
+    await scan("s1", minutes(60), 1, "import");
+    await scan("s10", minutes(90), 10, "import");
+    expect(state.sent.map((email) => [email.to, email.subject])).toEqual([
+      [address("u_owner"), "“Spring menu” got its first scan"],
+      [address("u_owner"), expect.stringContaining("10")],
+    ]);
+  });
+});
+
+describe("the first-scan email's idempotency key", () => {
+  it("is per code and recipient, so two scans that each count as first send it once", async () => {
+    // Stored in the other order a moment apart: the later scan is checked
+    // before the earlier one exists, so each sees no earlier real scan.
+    await scan("s_later", minutes(61), 2);
+    await scan("s_earlier", minutes(60), 1);
+    const target = `default:u_maker:${ORG}`;
+    expect(state.sent.map((email) => email.idempotencyKey)).toEqual([
+      `first-scan:c_menu:${target}`,
+      `first-scan:c_menu:${target}`,
+    ]);
+    // Other milestones stay per event.
+    await scan("s10", minutes(90), 10);
+    expect(state.sent[2]?.idempotencyKey).toMatch(
+      new RegExp(`^(?!first-scan:).+:${target}$`),
+    );
   });
 });
 
