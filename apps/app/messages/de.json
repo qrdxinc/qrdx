@@ -8288,15 +8288,6 @@
           "price": "Pro kostet {month} im Monat oder {year} im Jahr.",
           "seePro": "Pro ansehen",
           "hide": "Ausblenden"
-        },
-        "scanAlertsOffer": {
-          "title": "Per E-Mail erfahren, wenn deine Codes gescannt werden",
-          "body": "QRdx schickt dir eine E-Mail, wenn ein Code zum ersten Mal gescannt wird und wenn er {first, number}, {second, number} und {third, number} Scans überschreitet, dazu jede Woche eine kurze Zusammenfassung.",
-          "turnOn": "Scan-E-Mails aktivieren",
-          "turningOn": "Wird aktiviert…",
-          "on": "Scan-E-Mails sind aktiviert. Sie gehen an die E-Mail-Adresse deines Kontos.",
-          "change": "In den Benachrichtigungen ändern",
-          "notNow": "Nicht jetzt"
         }
       },
       "listSelection": {
@@ -8881,6 +8872,7 @@
       "signIn": "Anmelden",
       "goToDashboard": "Zum Dashboard",
       "manageSubscription": "Abo verwalten",
+      "scanEmailsOn": "Scan-E-Mails sind aktiviert: Du erfährst vom ersten Scan jedes Codes und von seinen Meilensteinen. <link>Ändere sie unter Einstellungen → Benachrichtigungen</link>.",
       "steps": {
         "codesTitle": "Dynamische Codes erstellen",
         "codesBody": "Codes, die du nach dem Druck noch bearbeiten kannst, mit Scan-Statistiken.",

@@ -47,7 +47,7 @@ export function CodeLiveCard({
   useEffect(() => setHidden(readHidden(organizationId)), [organizationId]);
   if (hidden) return null;
   // Pro's scan emails are milestones (the first scan, then 10, 100, 500 …)
-  // and the weekly summary, as the offer on Pro Home says.
+  // and the weekly summary.
   const [, first, second, third] = SCAN_MILESTONES;
   const featureText = (feature: CodeLiveCardData["features"][number]) => {
     switch (feature) {

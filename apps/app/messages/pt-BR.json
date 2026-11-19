@@ -8288,15 +8288,6 @@
           "price": "O Pro custa {month} por mês ou {year} por ano.",
           "seePro": "Ver o Pro",
           "hide": "Ocultar"
-        },
-        "scanAlertsOffer": {
-          "title": "Receba um e-mail quando seus códigos forem lidos",
-          "body": "O QRdx envia um e-mail quando um código é lido pela primeira vez e quando passa de {first, number}, {second, number} e {third, number} leituras, além de um breve resumo semanal.",
-          "turnOn": "Ativar e-mails de leitura",
-          "turningOn": "Ativando…",
-          "on": "Os e-mails de leitura estão ativados. Eles vão para o e-mail da sua conta.",
-          "change": "Altere em Notificações",
-          "notNow": "Agora não"
         }
       },
       "listSelection": {
@@ -8881,6 +8872,7 @@
       "signIn": "Entrar",
       "goToDashboard": "Ir para o painel",
       "manageSubscription": "Gerenciar assinatura",
+      "scanEmailsOn": "Os e-mails de leitura estão ativados: você vai receber avisos sobre a primeira leitura de cada código e sobre os respectivos marcos. <link>Altere em Configurações → Notificações</link>.",
       "steps": {
         "codesTitle": "Crie QR codes dinâmicos",
         "codesBody": "QR codes que você pode editar depois de impressos, com análise de leituras.",

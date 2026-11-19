@@ -8288,15 +8288,6 @@
           "price": "Pro seharga {month} per bulan atau {year} per tahun.",
           "seePro": "Lihat Pro",
           "hide": "Sembunyikan"
-        },
-        "scanAlertsOffer": {
-          "title": "Dapatkan email saat kode Anda dipindai",
-          "body": "QRdx mengirim email kepada Anda saat sebuah kode dipindai untuk pertama kalinya dan saat mencapai {first, number}, {second, number}, dan {third, number} pemindaian, ditambah ringkasan singkat setiap minggu.",
-          "turnOn": "Aktifkan email pemindaian",
-          "turningOn": "Mengaktifkan…",
-          "on": "Email pemindaian aktif. Email dikirim ke alamat email akun Anda.",
-          "change": "Ubah di Notifikasi",
-          "notNow": "Nanti saja"
         }
       },
       "listSelection": {
@@ -8881,6 +8872,7 @@
       "signIn": "Masuk",
       "goToDashboard": "Buka dasbor",
       "manageSubscription": "Kelola langganan",
+      "scanEmailsOn": "Email pemindaian aktif: Anda akan mendapat kabar tentang pemindaian pertama setiap kode dan tonggak pencapaiannya. <link>Ubah di Pengaturan → Notifikasi</link>.",
       "steps": {
         "codesTitle": "Buat kode dinamis",
         "codesBody": "Kode yang dapat Anda edit setelah dicetak, dengan analitik pemindaian.",

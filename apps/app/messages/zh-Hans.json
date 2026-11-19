@@ -8288,15 +8288,6 @@
           "price": "Pro 每月 {month}，或每年 {year}。",
           "seePro": "查看 Pro",
           "hide": "隐藏"
-        },
-        "scanAlertsOffer": {
-          "title": "二维码被扫描时收到邮件通知",
-          "body": "二维码首次被扫描时，以及扫描次数达到 {first, number}、{second, number} 和 {third, number} 次时，QRdx 都会给你发送邮件，另外每周还会发送一份简短的汇总。",
-          "turnOn": "开启扫描邮件通知",
-          "turningOn": "正在开启…",
-          "on": "扫描邮件通知已开启，将发送到你账户的邮箱地址。",
-          "change": "在“通知”中更改",
-          "notNow": "暂不开启"
         }
       },
       "listSelection": {
@@ -8881,6 +8872,7 @@
       "signIn": "登录",
       "goToDashboard": "前往控制台",
       "manageSubscription": "管理订阅",
+      "scanEmailsOn": "扫描邮件通知已开启：每个二维码的首次扫描及各个里程碑，你都会收到通知。<link>在“设置 → 通知”中更改</link>。",
       "steps": {
         "codesTitle": "创建动态二维码",
         "codesBody": "打印后仍可编辑的二维码，并附带扫描分析。",

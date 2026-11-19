@@ -8288,15 +8288,6 @@
           "price": "Pro は月額 {month}、または年額 {year} です。",
           "seePro": "Proを見る",
           "hide": "非表示"
-        },
-        "scanAlertsOffer": {
-          "title": "コードがスキャンされたらメールで受け取る",
-          "body": "コードが初めてスキャンされたときと、スキャン数が {first, number} 回、{second, number} 回、{third, number} 回を超えたときに、QRdx がメールでお知らせします。毎週の簡単なまとめも届きます。",
-          "turnOn": "スキャンメールをオンにする",
-          "turningOn": "オンにしています…",
-          "on": "スキャンメールをオンにしました。アカウントのメールアドレスに届きます。",
-          "change": "通知設定で変更できます",
-          "notNow": "今はしない"
         }
       },
       "listSelection": {
@@ -8881,6 +8872,7 @@
       "signIn": "サインイン",
       "goToDashboard": "ダッシュボードへ移動",
       "manageSubscription": "サブスクリプションを管理",
+      "scanEmailsOn": "スキャン通知メールがオンになりました。各コードの初回スキャンと節目のスキャン数をお知らせします。<link>設定 → 通知で変更できます</link>。",
       "steps": {
         "codesTitle": "動的QRコードを作成",
         "codesBody": "印刷後も編集でき、スキャン分析も使えるコードです。",

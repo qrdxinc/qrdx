@@ -8687,15 +8687,6 @@
           "price": "Pro is {month} a month or {year} a year.",
           "seePro": "See Pro",
           "hide": "Hide"
-        },
-        "scanAlertsOffer": {
-          "title": "Get an email when your codes are scanned",
-          "body": "QRdx emails you when a code is scanned for the first time and when it passes {first, number}, {second, number} and {third, number} scans, plus a short summary each week.",
-          "turnOn": "Turn on scan emails",
-          "turningOn": "Turning on…",
-          "on": "Scan emails are on. They go to your account’s email address.",
-          "change": "Change them in Notifications",
-          "notNow": "Not now"
         }
       },
       "listSelection": {
@@ -9280,6 +9271,7 @@
       "signIn": "Sign in",
       "goToDashboard": "Go to the dashboard",
       "manageSubscription": "Manage subscription",
+      "scanEmailsOn": "Scan emails are on: you'll hear about each code's first scan and its milestones. <link>Change them in Settings → Notifications</link>.",
       "steps": {
         "codesTitle": "Create dynamic codes",
         "codesBody": "Codes you can edit after printing, with scan analytics.",

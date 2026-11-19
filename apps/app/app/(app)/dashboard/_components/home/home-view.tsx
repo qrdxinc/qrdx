@@ -15,7 +15,6 @@ import { CodeLiveCard } from "./code-live-card";
 import type { HomeData } from "./home-data";
 import { NewCodeButton } from "./new-code-button";
 import type { HomeProMoments } from "./pro-moments";
-import { ScanAlertsOffer } from "./scan-alerts-offer";
 
 const number = (value: number) => value.toLocaleString("en-US");
 
@@ -106,9 +105,6 @@ export function HomeView({
         />
       </div>
 
-      {moments.scanAlerts && (
-        <ScanAlertsOffer dismissible organizationId={organizationId} />
-      )}
       {moments.codeLive && (
         <CodeLiveCard card={moments.codeLive} organizationId={organizationId} />
       )}

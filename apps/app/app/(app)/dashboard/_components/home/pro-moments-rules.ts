@@ -1,44 +1,11 @@
-// When Home and /success show what a plan includes at the moment it matters:
-// a one-click offer of scan emails on plans that have them, and on Free,
-// once a code exists, what Pro adds for a printed code. Pure, so the tests
-// cover every case; the limits come in from lib/plans.ts (server-only).
+// When Home shows what a plan includes at the moment it matters: on Free,
+// once a code exists, what Pro adds for a printed code. (Scan emails need no
+// offer: plans with email alerts send them by default, lib/events/types.ts
+// DEFAULT_EMAIL_EVENTS.) Pure, so the tests cover every case; the limits
+// come in from lib/plans.ts (server-only).
 
-import type { NotificationEvent } from "@/lib/events/types";
 import type { PlanLimits } from "@/lib/plans";
 import type { Plan } from "@/lib/pricing";
-
-/**
- * What "Turn on scan emails" sets: each code's first scan and its
- * milestones, and the weekly summary (Settings → Notifications lists both).
- */
-export const SCAN_ALERT_EVENTS = [
-  "scan.milestone",
-  "digest.weekly",
-] as const satisfies readonly NotificationEvent[];
-
-export interface ScanAlertsOfferInput {
-  /** The workspace's plan includes email alerts (lib/plans.ts emailAlerts) */
-  emailAlerts: boolean;
-  /** This deployment can send email (the "email" feature) */
-  emailAvailable: boolean;
-  /** Owners and billing members (lib/permissions.ts billing.manage) */
-  canManage: boolean;
-  /** The person already has an email row for the workspace, any events */
-  hasEmailSetting: boolean;
-}
-
-/**
- * The offer only adds a row: someone who already chose their email events,
- * or turned them all off and kept the row, is never asked again.
- */
-export function showScanAlertsOffer({
-  emailAlerts,
-  emailAvailable,
-  canManage,
-  hasEmailSetting,
-}: ScanAlertsOfferInput): boolean {
-  return emailAlerts && emailAvailable && canManage && !hasEmailSetting;
-}
 
 export type CodeLiveFeature =
   | "customDomain"

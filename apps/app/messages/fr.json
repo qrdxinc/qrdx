@@ -8288,15 +8288,6 @@
           "price": "Pro coûte {month} par mois ou {year} par an.",
           "seePro": "Voir Pro",
           "hide": "Masquer"
-        },
-        "scanAlertsOffer": {
-          "title": "Recevez un e-mail quand vos codes sont scannés",
-          "body": "QRdx vous envoie un e-mail quand un code est scanné pour la première fois et quand il dépasse {first, number}, {second, number} et {third, number} scans, ainsi qu’un court récapitulatif chaque semaine.",
-          "turnOn": "Activer les e-mails de scan",
-          "turningOn": "Activation…",
-          "on": "Les e-mails de scan sont activés. Ils sont envoyés à l’adresse e-mail de votre compte.",
-          "change": "Modifier dans Notifications",
-          "notNow": "Plus tard"
         }
       },
       "listSelection": {
@@ -8881,6 +8872,7 @@
       "signIn": "Se connecter",
       "goToDashboard": "Aller au tableau de bord",
       "manageSubscription": "Gérer l’abonnement",
+      "scanEmailsOn": "Les e-mails de scan sont activés : vous serez informé du premier scan de chaque code et de ses paliers. <link>Modifiez-les dans Paramètres → Notifications</link>.",
       "steps": {
         "codesTitle": "Créez des QR codes dynamiques",
         "codesBody": "Des codes modifiables après impression, avec des statistiques de scan.",

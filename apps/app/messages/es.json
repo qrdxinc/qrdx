@@ -8288,15 +8288,6 @@
           "price": "Pro cuesta {month} al mes o {year} al año.",
           "seePro": "Ver Pro",
           "hide": "Ocultar"
-        },
-        "scanAlertsOffer": {
-          "title": "Recibe un correo cuando se escaneen tus códigos",
-          "body": "QRdx te envía un correo cuando un código se escanea por primera vez y cuando supera {first, number}, {second, number} y {third, number} escaneos, además de un breve resumen cada semana.",
-          "turnOn": "Activar correos de escaneo",
-          "turningOn": "Activando…",
-          "on": "Los correos de escaneo están activados. Se envían a la dirección de correo de tu cuenta.",
-          "change": "Cámbialos en Notificaciones",
-          "notNow": "Ahora no"
         }
       },
       "listSelection": {
@@ -8881,6 +8872,7 @@
       "signIn": "Iniciar sesión",
       "goToDashboard": "Ir al panel",
       "manageSubscription": "Gestionar suscripción",
+      "scanEmailsOn": "Los correos de escaneo están activados: te avisaremos del primer escaneo de cada código y de sus hitos. <link>Cámbialos en Ajustes → Notificaciones</link>.",
       "steps": {
         "codesTitle": "Crea códigos dinámicos",
         "codesBody": "Códigos que puedes editar después de imprimirlos, con analíticas de escaneo.",

@@ -94,6 +94,9 @@ const { invalidateSubscribers, loadSubscribers } = await import(
 );
 const settings = await import("@/lib/events/notification-settings");
 const { runWeeklyDigest } = await import("@/lib/events/digest");
+const { ownerScanEmailsOn } = await import(
+  "@/app/(app)/dashboard/_components/home/pro-moments"
+);
 const { verifyUnsubscribeToken } = await import("@/lib/events/unsubscribe");
 const { ConfirmIdentityProvider } = await import(
   "@/components/confirm-identity/provider"
@@ -313,6 +316,29 @@ describe("one first-scan email per code across plan changes", () => {
     invalidateSubscribers(scope);
     await scan("s2", minutes(61), 2);
     expect(state.sent).toHaveLength(1);
+  });
+});
+
+describe("/success's line about scan emails", () => {
+  const on = (plan: "free" | "pro" | "business" = "pro") =>
+    ownerScanEmailsOn({ userId: "u_owner", organizationId: ORG, plan });
+
+  it("says they're on with the default, or with milestones chosen", async () => {
+    expect(await on("pro")).toBe(true);
+    expect(await on("business")).toBe(true);
+    await settings.setEmailEvents("u_owner", ORG, [
+      "scan.milestone",
+      "digest.weekly",
+    ]);
+    expect(await on()).toBe(true);
+  });
+
+  it("stays quiet when they turned them off, or on Free", async () => {
+    expect(await on("free")).toBe(false);
+    await settings.setEmailEvents("u_owner", ORG, ["form.submitted"]);
+    expect(await on()).toBe(false);
+    await settings.setEmailEvents("u_owner", ORG, []);
+    expect(await on()).toBe(false);
   });
 });
 
