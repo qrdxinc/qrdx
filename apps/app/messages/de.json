@@ -196,7 +196,8 @@
       "comparePlansAndPrices": "Tarife und Preise vergleichen",
       "maybeLater": "Vielleicht später",
       "thisFeatureIsPartOf": "Diese Funktion ist Teil des Business-Tarifs.",
-      "thisFeatureIsPartOf2": "Diese Funktion ist Teil von Pro und Business."
+      "thisFeatureIsPartOf2": "Diese Funktion ist Teil von Pro und Business.",
+      "ownerUpgrades": "Nur die Owner dieses Workspace und Mitglieder mit Zugriff auf die Abrechnung können den Tarif ändern. Bitte eine dieser Personen, auf {plan} umzustellen."
     },
     "checkoutButtons": {
       "month": "{plan} · {price} im Monat",
@@ -206,7 +207,10 @@
       "note": "Der Checkout läuft über Polar; lokale Steuern können hinzukommen. Jederzeit kündbar.",
       "switchTo": "Zu {plan} wechseln",
       "openPortal": "Portal öffnen",
-      "failed": "Der Checkout hat sich nicht geöffnet. Versuch es gleich noch einmal."
+      "failed": "Der Checkout hat sich nicht geöffnet. Versuch es gleich noch einmal.",
+      "subscribed": "Du hast bereits ein Abo. Ändere deinen Tarif im Abrechnungsportal.",
+      "unavailable": "Der Checkout ist hier gerade nicht verfügbar.",
+      "rateLimited": "Zu viele Checkout-Versuche. Versuche es in ein paar Minuten erneut."
     },
     "themeToggle": {
       "toggleTheme": "Design wechseln"

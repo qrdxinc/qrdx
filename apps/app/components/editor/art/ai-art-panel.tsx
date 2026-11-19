@@ -32,11 +32,15 @@ import {
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
-import { CheckoutButtons } from "@/components/billing/checkout-buttons";
+import {
+  CheckoutButtons,
+  useCheckoutChoice,
+} from "@/components/billing/checkout-buttons";
 import { useDynamicLinkStore } from "@/components/editor/dynamic-link-toggle";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { AIArtPresetGallery } from "@/components/sections/ai-art/ai-art-preset-gallery";
 import {
+  artUpgradePlan,
   lockedSeedFor,
   offersArtUpgrade,
 } from "@/components/sections/ai-art/ai-art-run";
@@ -677,6 +681,8 @@ function CreditsLine({
   variations: number;
 }) {
   const t = useTranslations("editor.art.aiArtPanel");
+  const target = artUpgradePlan(credits);
+  const sells = useCheckoutChoice(target).choice.kind !== "none";
   const className = "text-muted-foreground text-xs text-pretty";
   if (!signedIn) {
     return (
@@ -708,7 +714,7 @@ function CreditsLine({
     timeZone: "UTC",
   });
   const short = credits.remaining < variations;
-  const upgrade = short && offersArtUpgrade(credits, canUpgrade);
+  const upgrade = short && offersArtUpgrade(credits, canUpgrade, sells);
   const shortNote =
     credits.remaining === 0
       ? t(upgrade ? "noneLeftUpgrade" : "noneLeft")
@@ -736,11 +742,7 @@ function CreditsLine({
         )}
       </p>
       {upgrade && (
-        <CheckoutButtons
-          plan={credits.plan === "pro" ? "business" : "pro"}
-          size="sm"
-          source="ai_art_panel"
-        />
+        <CheckoutButtons plan={target} size="sm" source="ai_art_panel" />
       )}
     </div>
   );

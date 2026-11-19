@@ -196,7 +196,8 @@
       "comparePlansAndPrices": "Comparer les offres et les prix",
       "maybeLater": "Plus tard",
       "thisFeatureIsPartOf": "Cette fonctionnalité fait partie du plan Business.",
-      "thisFeatureIsPartOf2": "Cette fonctionnalité fait partie de Pro et Business."
+      "thisFeatureIsPartOf2": "Cette fonctionnalité fait partie de Pro et Business.",
+      "ownerUpgrades": "Seuls les propriétaires de cet espace de travail et les membres chargés de la facturation peuvent modifier son offre. Demandez à l’un d’eux de passer à {plan}."
     },
     "checkoutButtons": {
       "month": "{plan} · {price} par mois",
@@ -206,7 +207,10 @@
       "note": "Le paiement se fait sur Polar ; des taxes locales peuvent s’ajouter. Résiliation à tout moment.",
       "switchTo": "Passer à {plan}",
       "openPortal": "Ouvrir le portail",
-      "failed": "Le paiement ne s’est pas ouvert. Réessayez dans un instant."
+      "failed": "Le paiement ne s’est pas ouvert. Réessayez dans un instant.",
+      "subscribed": "Vous avez déjà un abonnement. Modifiez votre offre dans le portail de facturation.",
+      "unavailable": "Le paiement n’est pas disponible pour le moment.",
+      "rateLimited": "Trop de tentatives de paiement. Réessayez dans quelques minutes."
     },
     "themeToggle": {
       "toggleTheme": "Changer de thème"

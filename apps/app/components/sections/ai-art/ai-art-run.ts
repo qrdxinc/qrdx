@@ -331,7 +331,6 @@ export function seedIsInvalid(
   );
 }
 
-/** Fewer credits left this month than the run would use. */
 /**
  * The variations a run starts with: the usual number, or fewer when fewer
  * images are left this month, so the last ones can still be used. Never 0:
@@ -347,18 +346,29 @@ export function variationsWithin(
 
 /**
  * Whether the art surfaces offer an upgrade when images run short: not on
- * Business (the top plan), and only to someone whose purchase lifts the
- * allowance (`canUpgrade`; unknown counts as yes, as before).
+ * Business (the top plan), only to someone whose purchase lifts the
+ * allowance (`canUpgrade`; unknown counts as yes, as before), and only
+ * where checkout can sell the next plan (`sells`: the upgrade buttons have
+ * something to show).
  */
 export function offersArtUpgrade(
   credits: AIArtCredits | null,
   canUpgrade: boolean | undefined,
+  sells: boolean,
 ): boolean {
   return (
-    credits !== null && credits.plan !== "business" && canUpgrade !== false
+    sells &&
+    credits !== null &&
+    credits.plan !== "business" &&
+    canUpgrade !== false
   );
 }
 
+/** The plan that lifts an art allowance: Business above Pro, else Pro. */
+export const artUpgradePlan = (credits: AIArtCredits | null) =>
+  credits?.plan === "pro" ? "business" : "pro";
+
+/** Fewer credits left this month than the run would use. */
 export function lacksCredits(
   credits: AIArtCredits | null,
   variations: number,

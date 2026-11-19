@@ -1,6 +1,8 @@
 // In-app upgrade buttons (components/billing/checkout-buttons.tsx): what they
-// offer to whom, priced in the currency checkout charges, and the
-// `/pricing?interval=` links they and others use. Pure: no network, no Polar.
+// offer to whom, priced in the currency checkout charges, who may buy from a
+// gate (the upgrade dialog's store and payerCanUpgrade), the words for a
+// refused checkout, and the `/pricing?interval=` links. Pure: no network, no
+// Polar.
 import { describe, expect, it, vi } from "vitest";
 
 vi.hoisted(() => {
@@ -10,7 +12,10 @@ vi.hoisted(() => {
   // Business yearly has no product here: its button is left out.
 });
 
-const { checkoutChoice } = await import("@/components/billing/checkout-choice");
+const { checkoutChoice, checkoutErrorKey, payerCanUpgrade } = await import(
+  "@/components/billing/checkout-choice"
+);
+const { useGetProDialogStore } = await import("@/store/get-pro-dialog-store");
 const { parseBillingInterval } = await import("@/lib/pricing");
 
 const base = {
@@ -98,5 +103,89 @@ describe("parseBillingInterval (/pricing?interval=)", () => {
     expect(parseBillingInterval(null)).toBeNull();
     expect(parseBillingInterval("weekly")).toBeNull();
     expect(parseBillingInterval("")).toBeNull();
+  });
+});
+
+describe("payerCanUpgrade (who may buy from a gate)", () => {
+  const none = { gate: null, shell: null, server: null };
+
+  it("a gate on the person's own plan (more workspaces, AI chat) is always theirs", () => {
+    expect(payerCanUpgrade({ ...none, payer: "self" })).toBe("yes");
+    expect(
+      payerCanUpgrade({
+        payer: "self",
+        gate: false,
+        shell: false,
+        server: false,
+      }),
+    ).toBe("yes");
+  });
+
+  it("a workspace's gate: the gate's answer, then the app shell's, then the server's", () => {
+    const workspace = { ...none, payer: "workspace" as const };
+    expect(payerCanUpgrade({ ...workspace, gate: true, shell: false })).toBe(
+      "yes",
+    );
+    expect(payerCanUpgrade({ ...workspace, gate: false, shell: true })).toBe(
+      "no",
+    );
+    expect(payerCanUpgrade({ ...workspace, shell: true, server: false })).toBe(
+      "yes",
+    );
+    // A member of a Free team: their own Pro wouldn't lift the team's plan.
+    expect(payerCanUpgrade({ ...workspace, shell: false, server: true })).toBe(
+      "no",
+    );
+    expect(payerCanUpgrade({ ...workspace, server: true })).toBe("yes");
+    expect(payerCanUpgrade({ ...workspace, server: false })).toBe("no");
+    // Nobody has answered: no checkout, the pricing page instead.
+    expect(payerCanUpgrade(workspace)).toBe("unknown");
+    expect(payerCanUpgrade({ ...workspace, server: undefined })).toBe(
+      "unknown",
+    );
+  });
+});
+
+describe("the upgrade dialog's store", () => {
+  it("openGetProDialog, passed straight to onClick, is a workspace gate with no answer of its own", () => {
+    const store = useGetProDialogStore.getState();
+    store.openUpgradeDialog("business", { payer: "self", canUpgrade: true });
+    (store.openGetProDialog as (event: unknown) => void)({ type: "click" });
+    expect(useGetProDialogStore.getState()).toMatchObject({
+      isOpen: true,
+      plan: "pro",
+      payer: "workspace",
+      canUpgrade: null,
+    });
+  });
+
+  it("keeps a gate's payer and answer, and the shell's answer apart", () => {
+    const store = useGetProDialogStore.getState();
+    store.setShellCanUpgrade(false);
+    store.openUpgradeDialog("pro", { payer: "self" });
+    expect(useGetProDialogStore.getState()).toMatchObject({
+      payer: "self",
+      canUpgrade: null,
+      shellCanUpgrade: false,
+    });
+    store.openUpgradeDialog("pro", { canUpgrade: true });
+    expect(useGetProDialogStore.getState()).toMatchObject({
+      payer: "workspace",
+      canUpgrade: true,
+    });
+    store.setShellCanUpgrade(null);
+    store.closeGetProDialog();
+    expect(useGetProDialogStore.getState().isOpen).toBe(false);
+  });
+});
+
+describe("checkoutErrorKey (the page's words for a refused checkout)", () => {
+  it("maps the server's reasons, anything else to the generic one", () => {
+    expect(checkoutErrorKey("subscribed")).toBe("subscribed");
+    expect(checkoutErrorKey("unavailable")).toBe("unavailable");
+    expect(checkoutErrorKey("rate_limited")).toBe("rateLimited");
+    expect(checkoutErrorKey("failed")).toBe("failed");
+    expect(checkoutErrorKey("invalid")).toBe("failed");
+    expect(checkoutErrorKey(undefined)).toBe("failed");
   });
 });

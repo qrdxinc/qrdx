@@ -17,7 +17,10 @@ import { ArrowRight, GalleryAdd, Lock } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { SignInLink } from "@/components/auth/sign-in-link";
-import { CheckoutButtons } from "@/components/billing/checkout-buttons";
+import {
+  CheckoutButtons,
+  useCheckoutChoice,
+} from "@/components/billing/checkout-buttons";
 import { LocaleLink } from "@/components/i18n/locale-link";
 import { ART_MODEL_LABEL, ART_SUPPORTS_SEED } from "@/lib/ai/art-models";
 import { useTrackEditorOpened } from "@/lib/analytics/react";
@@ -27,6 +30,7 @@ import { AIArtComingSoon } from "./ai-art-coming-soon";
 import { AIArtPresetGallery } from "./ai-art-preset-gallery";
 import { AIArtResultPanel } from "./ai-art-result";
 import {
+  artUpgradePlan,
   createAIArtRunStore,
   lockedSeedFor,
   offersArtUpgrade,
@@ -573,6 +577,8 @@ function CreditsNote({
   variations: number;
 }) {
   const t = useTranslations("aiArt.aiArtStudio");
+  const target = artUpgradePlan(credits);
+  const sells = useCheckoutChoice(target).choice.kind !== "none";
   const plans = `Free ${formatAllowance(allowances.free)}, Pro ${formatAllowance(allowances.pro)}, Business ${formatAllowance(allowances.business)} (shared by the team) images a month.`;
   if (!signedIn) {
     return (
@@ -601,7 +607,7 @@ function CreditsNote({
     );
   }
   const short = credits.remaining < variations;
-  const upgrade = short && offersArtUpgrade(credits, canUpgrade);
+  const upgrade = short && offersArtUpgrade(credits, canUpgrade, sells);
   return (
     <div className="flex flex-col gap-2">
       <p className="text-muted-foreground text-xs">
@@ -624,13 +630,7 @@ function CreditsNote({
           </span>
         )}
       </p>
-      {upgrade && (
-        <CheckoutButtons
-          plan={credits.plan === "pro" ? "business" : "pro"}
-          size="sm"
-          source="ai_art"
-        />
-      )}
+      {upgrade && <CheckoutButtons plan={target} size="sm" source="ai_art" />}
     </div>
   );
 }

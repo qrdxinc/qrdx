@@ -196,7 +196,8 @@
       "comparePlansAndPrices": "プランと料金を比較",
       "maybeLater": "あとで",
       "thisFeatureIsPartOf": "この機能はBusinessプランに含まれています。",
-      "thisFeatureIsPartOf2": "この機能はProとBusinessに含まれています。"
+      "thisFeatureIsPartOf2": "この機能はProとBusinessに含まれています。",
+      "ownerUpgrades": "このワークスペースのプランを変更できるのは、オーナーと請求担当メンバーのみです。{plan}へのアップグレードは、いずれかの方にご依頼ください。"
     },
     "checkoutButtons": {
       "month": "{plan} · 月額{price}",
@@ -206,7 +207,10 @@
       "note": "お支払いはPolarで行います。現地の税金が加算される場合があります。いつでも解約できます。",
       "switchTo": "{plan}に切り替える",
       "openPortal": "ポータルを開く",
-      "failed": "チェックアウトを開けませんでした。しばらくしてからもう一度お試しください。"
+      "failed": "チェックアウトを開けませんでした。しばらくしてからもう一度お試しください。",
+      "subscribed": "すでにサブスクリプションをご利用中です。プランの変更は請求ポータルで行えます。",
+      "unavailable": "現在、こちらではチェックアウトをご利用いただけません。",
+      "rateLimited": "チェックアウトの試行回数が多すぎます。数分後にもう一度お試しください。"
     },
     "themeToggle": {
       "toggleTheme": "テーマを切り替え"

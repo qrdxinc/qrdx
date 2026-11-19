@@ -196,7 +196,8 @@
       "comparePlansAndPrices": "Compare plans and prices",
       "maybeLater": "Maybe later",
       "thisFeatureIsPartOf": "This feature is part of the Business plan.",
-      "thisFeatureIsPartOf2": "This feature is part of Pro and Business."
+      "thisFeatureIsPartOf2": "This feature is part of Pro and Business.",
+      "ownerUpgrades": "Only this workspace's owners and billing members can change its plan. Ask one of them to upgrade to {plan}."
     },
     "checkoutButtons": {
       "month": "{plan} · {price} a month",
@@ -206,7 +207,10 @@
       "note": "Checkout is on Polar; local taxes may be added. Cancel anytime.",
       "switchTo": "Switch to {plan}",
       "openPortal": "Open portal",
-      "failed": "Checkout didn't open. Try again in a moment."
+      "failed": "Checkout didn't open. Try again in a moment.",
+      "subscribed": "You already have a subscription. Change your plan in the billing portal.",
+      "unavailable": "Checkout isn't available here right now.",
+      "rateLimited": "Too many checkout attempts. Try again in a few minutes."
     },
     "themeToggle": {
       "toggleTheme": "Toggle theme"

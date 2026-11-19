@@ -22,23 +22,35 @@ import {
   CheckoutButtons,
   useCheckoutChoice,
 } from "@/components/billing/checkout-buttons";
+import { payerCanUpgrade } from "@/components/billing/checkout-choice";
 import { GridLines } from "@/components/fx";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { buildUpgradeHighlights } from "@/components/sections/pricing/upgrade-highlights";
 import { easterEggUrl } from "@/lib/easter-eggs";
+import { useSubscription } from "@/lib/hooks/use-subscription";
 import { PAID_PLANS, type PaidPlan, PLAN_NAMES } from "@/lib/pricing";
+import type { UpgradePayer } from "@/store/get-pro-dialog-store";
 
 interface GetProDialogProps {
   isOpen: boolean;
   onClose: () => void;
   /** The plan the locked feature needs; it's highlighted. */
   plan?: PaidPlan;
+  /** Whose plan the feature follows (store/get-pro-dialog-store.ts) */
+  payer?: UpgradePayer;
+  /** The gate's own answer: this person's purchase lifts the workspace's plan */
+  canUpgrade?: boolean | null;
+  /** The app shell's answer for the open workspace; null outside the shell */
+  shellCanUpgrade?: boolean | null;
 }
 
 export function GetProDialog({
   isOpen,
   onClose,
   plan = "pro",
+  payer = "workspace",
+  canUpgrade = null,
+  shellCanUpgrade = null,
 }: GetProDialogProps) {
   const t = useTranslations("nav.getProDialog");
   // Headline features; nothing this deployment can't offer (custom domains,
@@ -49,7 +61,19 @@ export function GetProDialog({
     whiteLabel: has("whiteLabel"),
     conversions: has("conversions"),
   });
-  const checkout = useCheckoutChoice(plan).choice.kind !== "none";
+  // Checkout only for someone whose purchase lifts the plan behind the
+  // gate. A member of someone else's workspace paying for Pro would leave
+  // the workspace on its owners' plan, the feature still locked.
+  const { subscriptionStatus } = useSubscription();
+  const payerAnswer = payerCanUpgrade({
+    payer,
+    gate: canUpgrade,
+    shell: shellCanUpgrade,
+    server: subscriptionStatus?.canUpgradeWorkspace,
+  });
+  const sells = useCheckoutChoice(plan).choice.kind !== "none";
+  const checkout = payerAnswer === "yes" && sells;
+  const askOwner = payerAnswer === "no";
   return (
     <ResponsiveDialog open={isOpen} onOpenChange={onClose}>
       <ResponsiveDialogContent
@@ -140,13 +164,20 @@ export function GetProDialog({
             </p>
 
             <ResponsiveDialogFooter className="bg-muted/30 relative flex-col border-t p-6 sm:flex-col">
-              {/* Signed in on Free: checkout opens from here. Otherwise
-                  (signed out, no billing here) the pricing page. */}
-              <CheckoutButtons
-                onNavigate={onClose}
-                plan={plan}
-                source="dialog"
-              />
+              {/* Signed in on Free, and their purchase lifts the plan:
+                  checkout opens from here. Otherwise the pricing page. */}
+              {checkout && (
+                <CheckoutButtons
+                  onNavigate={onClose}
+                  plan={plan}
+                  source="dialog"
+                />
+              )}
+              {askOwner && (
+                <p className="text-muted-foreground text-sm text-pretty">
+                  {t("ownerUpgrades", { plan: PLAN_NAMES[plan] })}
+                </p>
+              )}
               <Button
                 asChild
                 className="grow"

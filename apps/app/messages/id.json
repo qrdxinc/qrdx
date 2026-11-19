@@ -196,7 +196,8 @@
       "comparePlansAndPrices": "Bandingkan paket dan harga",
       "maybeLater": "Nanti saja",
       "thisFeatureIsPartOf": "Fitur ini termasuk dalam paket Business.",
-      "thisFeatureIsPartOf2": "Fitur ini termasuk dalam paket Pro dan Business."
+      "thisFeatureIsPartOf2": "Fitur ini termasuk dalam paket Pro dan Business.",
+      "ownerUpgrades": "Hanya pemilik dan anggota penagihan di workspace ini yang dapat mengubah paketnya. Mintalah salah satu dari mereka untuk meningkatkan ke {plan}."
     },
     "checkoutButtons": {
       "month": "{plan} · {price} per bulan",
@@ -206,7 +207,10 @@
       "note": "Pembayaran dilakukan di Polar; pajak lokal mungkin ditambahkan. Batalkan kapan saja.",
       "switchTo": "Beralih ke {plan}",
       "openPortal": "Buka portal",
-      "failed": "Halaman pembayaran gagal dibuka. Coba lagi sesaat lagi."
+      "failed": "Halaman pembayaran gagal dibuka. Coba lagi sesaat lagi.",
+      "subscribed": "Anda sudah berlangganan. Ubah paket Anda di portal penagihan.",
+      "unavailable": "Pembayaran belum tersedia di sini saat ini.",
+      "rateLimited": "Terlalu banyak percobaan pembayaran. Coba lagi dalam beberapa menit."
     },
     "themeToggle": {
       "toggleTheme": "Ganti tema"

@@ -447,6 +447,10 @@
     "source": "0fa42daac73b",
     "status": "machine"
   },
+  "nav.getProDialog.ownerUpgrades": {
+    "source": "c86d2c9a1ca1",
+    "status": "machine"
+  },
   "nav.checkoutButtons.month": {
     "source": "3bbee673bc57",
     "status": "machine"
@@ -477,6 +481,18 @@
   },
   "nav.checkoutButtons.failed": {
     "source": "dec99252b4d2",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.subscribed": {
+    "source": "e31d6372310f",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.unavailable": {
+    "source": "6f56f35179ce",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.rateLimited": {
+    "source": "3f1000f6990d",
     "status": "machine"
   },
   "nav.themeToggle.toggleTheme": {

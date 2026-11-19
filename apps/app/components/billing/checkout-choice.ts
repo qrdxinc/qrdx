@@ -25,6 +25,46 @@ export type CheckoutChoice =
   /** Nothing to offer here: the caller's own link (or nothing) stays. */
   | { kind: "none" };
 
+/**
+ * Whether this person's purchase lifts the plan behind a gate: "yes",
+ * "no" (a member of someone else's workspace: its plan is its owners' and
+ * billing members'), or "unknown" while nobody has answered. A gate on the
+ * person's own plan is always theirs. For a workspace's, the gate's own
+ * answer comes first, then the app shell's, then the server's.
+ */
+export function payerCanUpgrade({
+  payer,
+  gate,
+  shell,
+  server,
+}: {
+  payer: "workspace" | "self";
+  gate: boolean | null | undefined;
+  shell: boolean | null | undefined;
+  server: boolean | null | undefined;
+}): "yes" | "no" | "unknown" {
+  if (payer === "self") return "yes";
+  const answer = gate ?? shell ?? server;
+  if (answer === true) return "yes";
+  return answer === false ? "no" : "unknown";
+}
+
+/** The words for a checkout the server refused (nav.checkoutButtons). */
+export function checkoutErrorKey(
+  reason: string | undefined,
+): "subscribed" | "unavailable" | "rateLimited" | "failed" {
+  switch (reason) {
+    case "subscribed":
+      return "subscribed";
+    case "unavailable":
+      return "unavailable";
+    case "rate_limited":
+      return "rateLimited";
+    default:
+      return "failed";
+  }
+}
+
 export function checkoutChoice({
   plan,
   billing,

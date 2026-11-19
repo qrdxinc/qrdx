@@ -1,7 +1,9 @@
 import type { NextRequest } from "next/server";
 import { handleError } from "@/lib/error-response";
+import { can } from "@/lib/permissions";
 import { planForSubscription } from "@/lib/plans";
 import { chargedCurrency } from "@/lib/region";
+import { getActiveScope } from "@/lib/scope";
 import { getCurrentUserId } from "@/lib/shared";
 import { subscriptionAndUsage } from "@/lib/subscription";
 import {
@@ -34,6 +36,7 @@ export async function GET(request: NextRequest) {
       requestsUsed,
       plan: planForSubscription(subscription),
       currency: chargedCurrency(request.headers),
+      canUpgradeWorkspace: await upgradesWorkspace(request.headers),
     };
 
     return jsonResponse(response);
@@ -41,5 +44,19 @@ export async function GET(request: NextRequest) {
     const response = handleError(error, { route: "/api/subscription" });
     response.headers.set("Cache-Control", "no-store");
     return response;
+  }
+}
+
+/**
+ * Whether the person's purchase lifts the plan of the workspace the request
+ * names (the open tab's, else their default): the upgrade buttons of
+ * workspace gates outside the app shell ask (components/billing). Null when
+ * it can't be read (a workspace they've left, one that shuts them out).
+ */
+async function upgradesWorkspace(headers: Headers): Promise<boolean | null> {
+  try {
+    return can((await getActiveScope(headers)).role, "billing.manage");
+  } catch {
+    return null;
   }
 }

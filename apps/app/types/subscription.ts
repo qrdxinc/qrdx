@@ -20,4 +20,10 @@ export interface SubscriptionSummary extends SubscriptionStatus {
    * for the prices on in-app upgrade buttons.
    */
   currency: PricingCurrency;
+  /**
+   * Whether their purchase lifts the plan of the workspace the request
+   * names (the open tab's, else their default): an owner or billing member.
+   * Null when it couldn't be read.
+   */
+  canUpgradeWorkspace: boolean | null;
 }

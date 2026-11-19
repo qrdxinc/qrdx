@@ -196,7 +196,8 @@
       "comparePlansAndPrices": "요금제와 가격 비교하기",
       "maybeLater": "나중에 할게요",
       "thisFeatureIsPartOf": "이 기능은 Business 요금제에 포함되어 있어요.",
-      "thisFeatureIsPartOf2": "이 기능은 Pro와 Business에 포함되어 있어요."
+      "thisFeatureIsPartOf2": "이 기능은 Pro와 Business에 포함되어 있어요.",
+      "ownerUpgrades": "이 워크스페이스의 요금제는 소유자와 결제 담당 멤버만 변경할 수 있어요. 이들 중 한 분에게 {plan}(으)로 업그레이드해 달라고 요청해 주세요."
     },
     "checkoutButtons": {
       "month": "{plan} · 월 {price}",
@@ -206,7 +207,10 @@
       "note": "결제는 Polar에서 진행되며 현지 세금이 추가될 수 있어요. 언제든지 취소할 수 있어요.",
       "switchTo": "{plan}(으)로 전환",
       "openPortal": "포털 열기",
-      "failed": "결제 창이 열리지 않았어요. 잠시 후 다시 시도해 주세요."
+      "failed": "결제 창이 열리지 않았어요. 잠시 후 다시 시도해 주세요.",
+      "subscribed": "이미 구독 중이에요. 결제 포털에서 요금제를 변경해 주세요.",
+      "unavailable": "지금은 여기서 결제할 수 없어요.",
+      "rateLimited": "결제 시도가 너무 많아요. 몇 분 후에 다시 시도해 주세요."
     },
     "themeToggle": {
       "toggleTheme": "테마 전환"

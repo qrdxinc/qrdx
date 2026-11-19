@@ -7,12 +7,17 @@ import { ModuleOrbit } from "@repo/design-system/components/loaders";
 import { Button } from "@repo/design-system/components/ui/button";
 import { cn } from "@repo/design-system/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
-import { type ComponentProps, type ReactNode, useState } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { useAvailability } from "@/components/availability-provider";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 import { type BillingInterval, type PaidPlan, PLAN_NAMES } from "@/lib/pricing";
 import { startCheckout } from "@/lib/widget-routes/client";
-import { checkoutChoice } from "./checkout-choice";
+import { checkoutChoice, checkoutErrorKey } from "./checkout-choice";
 
 const PORTAL_HREF = "/settings/portal";
 
@@ -70,6 +75,15 @@ export function CheckoutButtons({
   const t = useTranslations("nav.checkoutButtons");
   const { choice, waiting } = useCheckoutChoice(plan);
   const [pending, setPending] = useState<BillingInterval | null>(null);
+  // Back from Polar, the browser may show this page from its back/forward
+  // cache, still waiting on the button that left: let it be clicked again.
+  useEffect(() => {
+    const restored = (event: PageTransitionEvent) => {
+      if (event.persisted) setPending(null);
+    };
+    window.addEventListener("pageshow", restored);
+    return () => window.removeEventListener("pageshow", restored);
+  }, []);
 
   if (choice.kind === "none") return fallback;
   if (choice.kind === "portal") {
@@ -100,8 +114,10 @@ export function CheckoutButtons({
         window.location.assign(`/pricing?interval=${interval}`);
         return;
       }
+      // The server's message is English; the page may not be.
+      const message = t(checkoutErrorKey(result.reason));
       if (result.reason === "subscribed") {
-        toast.error(result.error, {
+        toast.error(message, {
           action: {
             label: t("openPortal"),
             onClick: () => window.location.assign(PORTAL_HREF),
@@ -109,7 +125,7 @@ export function CheckoutButtons({
         });
         return;
       }
-      toast.error(result.error);
+      toast.error(message);
     } catch {
       setPending(null);
       toast.error(t("failed"));
