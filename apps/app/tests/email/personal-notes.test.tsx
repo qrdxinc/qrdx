@@ -9,9 +9,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 
 const state = vi.hoisted(() => ({
+  auditFails: false,
+  budget: 60,
+  used: new Map<string, number>(),
+  store: new Map<string, string>(),
   sendResult: { sent: true, id: "em_1" } as
     | { sent: true; id: string }
-    | { sent: false; reason: "failed"; error: string },
+    | { sent: false; reason: "failed"; error: string; code?: string },
   sent: [] as {
     to: string;
     from?: string;
@@ -32,6 +36,45 @@ vi.mock(
   "@repo/database",
   async () => (await import("../support/fake-db")).repoDatabase,
 );
+// Redis: the batch lock, and the hourly budget counted per admin.
+vi.mock("@repo/rate-limit", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@repo/rate-limit")>()),
+  redis: {
+    set: async (key: string, value: string, options?: { nx?: boolean }) => {
+      if (options?.nx && state.store.has(key)) return null;
+      state.store.set(key, value);
+      return "OK";
+    },
+    get: async (key: string) => state.store.get(key) ?? null,
+    del: async (key: string) => Number(state.store.delete(key)),
+  },
+  createRateLimiter: () => ({
+    limit: async (key: string, rate = 1) => {
+      const used = state.used.get(key) ?? 0;
+      const success = used + rate <= state.budget;
+      if (success) state.used.set(key, used + rate);
+      return {
+        success,
+        limit: state.budget,
+        remaining: Math.max(0, state.budget - used),
+        reset: Date.now() + 60_000,
+        pending: Promise.resolve(),
+      };
+    },
+  }),
+}));
+vi.mock("@/app/(app)/admin/_lib/audit", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("@/app/(app)/admin/_lib/audit")>();
+  return {
+    writeAuditLog: async (
+      entry: Parameters<typeof actual.writeAuditLog>[0],
+    ) => {
+      if (state.auditFails) throw new Error("db down");
+      return actual.writeAuditLog(entry);
+    },
+  };
+});
 vi.mock("@/lib/email/send", () => ({
   isEmailConfigured: true,
   sendEmail: vi.fn(async (options: (typeof state.sent)[number]) => {
@@ -42,9 +85,10 @@ vi.mock("@/lib/email/send", () => ({
 
 const { noteParagraphs } = await import("@repo/email/templates/personal-note");
 const { parseSender } = await import("@/lib/email/personal-sender");
-const { firstName, previewPersonalNote, sendPersonalNotes } = await import(
+const { fillNote, previewPersonalNote, sendPersonalNotes } = await import(
   "@/lib/email/personal-notes"
 );
+const { greetingName } = await import("@/lib/email/greeting");
 const {
   createTeamNotesToken,
   createUnsubscribeToken,
@@ -91,6 +135,11 @@ const send = (
 beforeEach(() => {
   fakeDb.resetAll();
   state.sent.length = 0;
+  state.auditFails = false;
+  state.budget = 60;
+  state.used.clear();
+  state.store.clear();
+  vi.spyOn(console, "error").mockImplementation(() => undefined);
   state.sendResult = { sent: true, id: "em_1" };
   fakeDb.seed("user", [
     person("u_on"),
@@ -101,6 +150,8 @@ beforeEach(() => {
     person("u_test", { email: "e2e@qrdx.test" }),
     person("u_es", { locale: "es", name: "Ana" }),
     person("u_noname", { name: "  " }),
+    person("u_info", { name: "info", email: "info@shop.example.org.uk" }),
+    person("u_long", { name: `${"B".repeat(30)} Lee` }),
   ]);
   fakeDb.seed("adminAuditLog", []);
 });
@@ -268,7 +319,9 @@ describe("the note", () => {
   it("puts the footer in the person's language, the text as written", async () => {
     const preview = await html("u_es", "Hola {first_name}");
     expect(preview.text).toContain("Hola Ana");
-    expect(preview.html).toContain('lang="es"');
+    // The footer is in the reader's language; the text is the writer's.
+    expect(preview.html).toContain('<div lang="es"');
+    expect(preview.html).not.toMatch(/<html[^>]*lang="es"/);
     expect(preview.text).not.toContain("you have a QRdx account");
   });
 
@@ -285,12 +338,62 @@ describe("the note", () => {
     expect(preview.html).toContain("&lt;b&gt;hi&lt;/b&gt;");
   });
 
-  it("fills {first_name} with the first word of the name, else 'there'", async () => {
-    expect(firstName("Sam Lee")).toBe("Sam");
-    expect(firstName("  ")).toBe("there");
-    expect((await html("u_noname", "Hi {first_name}")).text).toContain(
-      "Hi there",
+  it("fills {first_name} with the first word of a real name, else 'there', and says which", async () => {
+    expect(greetingName("Sam Lee", "sam@x.org")).toEqual({
+      name: "Sam",
+      fallback: false,
+    });
+    for (const [name, email] of [
+      ["  ", "a@x.org"],
+      ["info", "info@x.org"],
+      ["JDoe", "jdoe@x.org"],
+      ["jdoe1987", "other@x.org"],
+      ["sam.lee", "s@x.org"],
+      ["sam_lee", "s@x.org"],
+    ]) {
+      expect(greetingName(name as string, email as string), name).toEqual({
+        name: "there",
+        fallback: true,
+      });
+    }
+    const info = await html("u_info", "Hi {first_name}");
+    expect(info.text).toContain("Hi there");
+    expect(info.greeting).toEqual({ name: "there", fallback: true });
+    expect((await html("u_on", "Hi")).greeting).toEqual({
+      name: "Sam",
+      fallback: false,
+    });
+  });
+
+  it("never reads $ in a name as a replacement pattern", () => {
+    expect(
+      fillNote("Hi {first_name}!", { name: "$`$`$`$`", fallback: false }),
+    ).toBe("Hi $`$`$`$`!");
+    expect(fillNote("{first_name} $&", { name: "$&", fallback: false })).toBe(
+      "$& $&",
     );
+  });
+
+  it("checks the subject's length after {first_name} is filled in", async () => {
+    const subject = `${"x".repeat(190)} {first_name}`;
+    await expect(
+      previewPersonalNote(
+        { template: "personal-note", userId: "u_long", subject, body: "Hi" },
+        SENDER,
+      ),
+    ).rejects.toMatchObject({ status: 400 });
+    await expect(
+      sendPersonalNotes(
+        {
+          template: "personal-note",
+          campaign: "warm-check-in",
+          reason: "Warm check-ins",
+          messages: [{ userId: "u_long", subject, body: "Hi" }],
+        },
+        { actor: ACTOR, sender: SENDER, spacingMs: 0 },
+      ),
+    ).rejects.toMatchObject({ status: 400 });
+    expect(state.sent).toHaveLength(0);
   });
 
   it("splits paragraphs at blank lines and keeps line breaks", () => {
@@ -340,5 +443,85 @@ describe("the stop link's token", () => {
         `${Buffer.from("u_other:team-notes").toString("base64url")}.${signature}`,
       ),
     ).toBeNull();
+  });
+});
+
+describe("limits on sending", () => {
+  it("keeps to the admin's hourly budget, counting only who it would send to", async () => {
+    state.budget = 2;
+    expect(await send(["u_on", "u_off", "u_es"].map(note))).toHaveLength(3);
+    await expect(
+      send([note("u_ban_over")], "another-one"),
+    ).rejects.toMatchObject({ status: 429, message: "note_budget_exceeded" });
+    expect(state.sent).toHaveLength(2);
+  });
+
+  it("runs one batch at a time: busy while another holds the lock, free after", async () => {
+    state.store.set("qrdx:personal-notes:lock", "other-batch");
+    await expect(send([note("u_on")])).rejects.toMatchObject({
+      status: 409,
+      message: "busy",
+    });
+    state.store.clear();
+    await send([note("u_on")]);
+    expect(state.store.size).toBe(0);
+  });
+
+  it("stops at its time budget and marks the rest not attempted", async () => {
+    let clock = 0;
+    const results = await sendPersonalNotes(
+      {
+        template: "personal-note",
+        campaign: "warm-check-in",
+        reason: "Warm check-ins",
+        messages: ["u_on", "u_es", "u_ban_over"].map(note),
+      },
+      {
+        actor: ACTOR,
+        sender: SENDER,
+        spacingMs: 0,
+        timeBudgetMs: 45_000,
+        now: () => {
+          const at = clock;
+          clock += 30_000;
+          return at;
+        },
+      },
+    );
+    expect(results).toEqual([
+      { userId: "u_on", status: "sent", id: "em_1" },
+      { userId: "u_es", status: "skipped", reason: "not_attempted" },
+      { userId: "u_ban_over", status: "skipped", reason: "not_attempted" },
+    ]);
+  });
+
+  it("reports a sent note whose audit entry failed, and sends no more", async () => {
+    state.auditFails = true;
+    expect(await send(["u_on", "u_es"].map(note))).toEqual([
+      { userId: "u_on", status: "sent", id: "em_1", auditFailed: true },
+      { userId: "u_es", status: "skipped", reason: "not_attempted" },
+    ]);
+    expect(state.sent).toHaveLength(1);
+    const logged = vi
+      .mocked(console.error)
+      .mock.calls.map(([line]) => String(line))
+      .find((line) => line.includes("personal_note.audit_failed"));
+    expect(JSON.parse(logged ?? "{}")).toMatchObject({
+      userId: "u_on",
+      emailId: "em_1",
+    });
+    expect(logged).not.toContain("@");
+  });
+
+  it("calls a note Resend is still sending 'in progress', not failed", async () => {
+    state.sendResult = {
+      sent: false,
+      reason: "failed",
+      error: "concurrent",
+      code: "concurrent_idempotent_requests",
+    };
+    expect(await send([note("u_on")])).toEqual([
+      { userId: "u_on", status: "skipped", reason: "in_progress" },
+    ]);
   });
 });

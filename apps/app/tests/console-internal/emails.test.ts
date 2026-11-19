@@ -208,6 +208,8 @@ describe("emails/preview", () => {
       { template: "personal-note", ...message("u_1"), subject: " " },
       { template: "personal-note", ...message("u_1"), body: "" },
       { template: "personal-note", ...message("u_1"), body: "x".repeat(2001) },
+      { template: "personal-note", ...message("u_1"), subject: "Hi\nBcc: x" },
+      { template: "personal-note", ...message("u_1"), subject: "Hi\u0007" },
     ]) {
       const [status] = await call("emails/preview", fields);
       expect(status, JSON.stringify(fields).slice(0, 60)).toBe(400);

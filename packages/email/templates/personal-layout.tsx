@@ -53,8 +53,14 @@ export interface PersonalLayoutProps {
   replyTo: string;
   /** Turns these emails off in one click (pass it to sendEmail too) */
   unsubscribeUrl: string;
-  /** The recipient's language (../intl.ts) */
+  /** The recipient's language (../intl.ts): the footer's */
   intl: EmailIntl;
+  /**
+   * The whole email's language, when it's all in the recipient's (the
+   * welcome). A note is in its writer's language, which isn't known, so
+   * only its footer says it's in the recipient's.
+   */
+  lang?: string;
 }
 
 export function PersonalLayout({
@@ -64,25 +70,28 @@ export function PersonalLayout({
   replyTo,
   unsubscribeUrl,
   intl,
+  lang,
 }: PersonalLayoutProps) {
   const { t } = intl;
   return (
-    <Html lang={intl.locale}>
+    <Html lang={lang}>
       <Head />
       <Preview>{preview}</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           {children}
           <Hr style={styles.hr} />
-          <Text style={styles.footerText}>{reason}</Text>
-          <Text style={styles.footerText}>
-            {t("personal.reply", { name: replyTo })}
-          </Text>
-          <Text style={styles.footerText}>
-            <Link href={unsubscribeUrl} style={styles.footerLink}>
-              {t("personal.stop")}
-            </Link>
-          </Text>
+          <div lang={intl.locale}>
+            <Text style={styles.footerText}>{reason}</Text>
+            <Text style={styles.footerText}>
+              {t("personal.reply", { name: replyTo })}
+            </Text>
+            <Text style={styles.footerText}>
+              <Link href={unsubscribeUrl} style={styles.footerLink}>
+                {t("personal.stop")}
+              </Link>
+            </Text>
+          </div>
         </Container>
       </Body>
     </Html>
