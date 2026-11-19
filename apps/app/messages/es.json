@@ -743,7 +743,8 @@
         "storage": "{size} ({perFile} por archivo)",
         "apiBulk": "{count} + creación masiva",
         "clientReportsBadge": "Con un pequeño crédito al pie",
-        "clientReportsWhiteLabel": "Marca blanca"
+        "clientReportsWhiteLabel": "Marca blanca",
+        "firstScanOnly": "Primer escaneo de cada código dinámico"
       }
     },
     "guarantee": {
@@ -6461,11 +6462,12 @@
           "webhookAdded": "Webhook añadido",
           "notificationsSaved": "Notificaciones guardadas",
           "testMessageSentToValue": "Mensaje de prueba enviado a {value}",
-          "webhookRemoved": "Webhook eliminado"
+          "webhookRemoved": "Webhook eliminado",
+          "emailAlertsAreProFirstScan": "En Gratis recibes un correo cuando cada código nuevo tiene su primer escaneo. Las demás alertas por correo y el resumen semanal forman parte de Pro y Business."
         },
         "teamNotes": {
           "title": "Notas del equipo de QRdx",
-          "description": "De vez en cuando alguien de QRdx te escribe personalmente, por ejemplo para preguntarte cómo te funciona QRdx. Si respondes, te leerán.",
+          "description": "Un mensaje de bienvenida al registrarte, un correo cuando cada código nuevo tiene su primer escaneo (en Gratis) y, de vez en cuando, una nota personal de alguien de QRdx. Si respondes, te lee una persona.",
           "label": "Recibir notas del equipo",
           "hint": "Tus alertas, resúmenes y correos de seguridad no cambian.",
           "turnedOn": "Las notas del equipo están activadas",
@@ -9161,7 +9163,9 @@
       "device": "Dispositivo",
       "preview": "{code} se escaneó por primera vez",
       "heading": "Tu código recibió su primer escaneo",
-      "body": "Alguien acaba de escanear {code}. Tu código QR está activo y funciona."
+      "body": "Alguien acaba de escanear {code}. Tu código QR está activo y funciona.",
+      "pro": "<link>Pro</link> también te escribe por correo en {first}, {second} y {third} escaneos y más, cuando alguien envía uno de tus formularios y cada lunes con las cifras de la semana pasada.",
+      "freeReason": "Recibes este correo porque un código que creaste tuvo su primer escaneo. QRdx lo envía una sola vez por código."
     },
     "scanMilestone": {
       "reached": "{code} alcanzó {count, number} escaneos",
@@ -9254,7 +9258,8 @@
       "askOwner": "{limit, select, dynamicCodes {Archiva uno o pide a un propietario del espacio de trabajo que pase al plan {plan}.} landingPages {Elimina una o pide a un propietario del espacio de trabajo que pase al plan {plan}.} storage {Elimina los archivos que ya no necesites o pide a un propietario del espacio de trabajo que pase al plan {plan}.} savedThemes {Elimina uno o pide a un propietario del espacio de trabajo que pase al plan {plan}.} other {Pide a un propietario del espacio de trabajo que pase al plan {plan}.}}",
       "makeRoom": "{limit, select, dynamicCodes {Archiva uno para liberar espacio.} landingPages {Elimina una para liberar espacio.} storage {Elimina los archivos que ya no necesites para liberar espacio.} savedThemes {Elimina uno para liberar espacio.} other {}}",
       "resets": "Se restablece el {date}.",
-      "keeps": "{limit, select, dynamicCodes {Los códigos existentes siguen funcionando.} landingPages {Las páginas existentes siguen activas.} formResponses {Las páginas siguen activas. Los formularios volverán a aceptar respuestas después del restablecimiento.} storage {Los archivos que has subido siguen disponibles.} other {}}"
+      "keeps": "{limit, select, dynamicCodes {Los códigos existentes siguen funcionando.} landingPages {Las páginas existentes siguen activas.} formResponses {Las páginas siguen activas. Los formularios volverán a aceptar respuestas después del restablecimiento.} storage {Los archivos que has subido siguen disponibles.} other {}}",
+      "upgradeButton": "Cambiar a {plan}"
     },
     "weeklyDigest": {
       "subject": "Tu semana en QRdx: {scans, plural, one {# escaneo} other {# escaneos}}",
@@ -9290,7 +9295,7 @@
       "seeScans": "<link>Mira sus escaneos:</link> cuándo, dónde y en qué dispositivos lo escanea la gente.",
       "changeLink": "Cambia el destino cuando quieras, incluso después de imprimirlo. Sin volver a imprimir.",
       "free": "Los códigos estáticos son gratis, y los códigos que crees seguirán funcionando si cambias de plan o dejas de pagar. Gratis también incluye {count} códigos dinámicos.",
-      "pro": "Si necesitas más, Pro cuesta {monthly} al mes o {yearly} al año y añade códigos dinámicos ilimitados, {domains} dominios personalizados y alertas de escaneo por correo electrónico.",
+      "pro": "Si necesitas más, Pro cuesta {monthly} al mes o {yearly} al año y añade códigos dinámicos ilimitados, {domains} dominios personalizados y alertas por correo en cada hito de escaneos, con un resumen semanal.",
       "taxes": "Es posible que se añadan impuestos locales al pagar.",
       "reply": "Si algo te lo pone difícil o no sabes cómo hacer algo, responde a este correo. Una persona lee cada respuesta.",
       "reason": "Recibes este correo porque acabas de crear una cuenta de QRdx."

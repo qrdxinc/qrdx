@@ -216,6 +216,8 @@ export async function recordScan(
         slug: qrCode.slug,
         title: qrCode.title,
         scanCount: qrCode.scanCount,
+        createdAt: qrCode.createdAt,
+        createdVia: qrCode.createdVia,
       }),
   ]);
   if (counted) {

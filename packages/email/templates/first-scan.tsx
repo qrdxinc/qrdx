@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+import { Link } from "react-email";
 import type { EmailIntl } from "../intl";
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { codeLabel, DetailsTable, formatEmailDateTime } from "./parts";
@@ -14,6 +16,15 @@ export interface FirstScanEmailProps {
   unsubscribeUrl: string;
   /** The recipient's language */
   intl: EmailIntl;
+  /**
+   * The Free plan's one first-scan email per code (apps/app/lib/email/
+   * first-scan.tsx): says why it came and adds one line on what Pro sends.
+   */
+  free?: {
+    pricingUrl: string;
+    /** The next scan milestones Pro emails at: "10", "100", "500" */
+    milestones: [string, string, string];
+  };
 }
 
 export function FirstScanEmail({
@@ -25,6 +36,7 @@ export function FirstScanEmail({
   workspaceName,
   unsubscribeUrl,
   intl,
+  free,
 }: FirstScanEmailProps) {
   const { t } = intl;
   const rows = [
@@ -39,12 +51,28 @@ export function FirstScanEmail({
     <EmailLayout
       intl={intl}
       preview={t("firstScan.preview", { code: codeLabel(code) })}
-      reason={t("alerts.milestoneReason", { workspace: workspaceName })}
+      reason={
+        free
+          ? t("firstScan.freeReason")
+          : t("alerts.milestoneReason", { workspace: workspaceName })
+      }
       unsubscribeUrl={unsubscribeUrl}
     >
       <EmailHeading>{t("firstScan.heading")}</EmailHeading>
       <EmailText>{t("firstScan.body", { code: codeLabel(code) })}</EmailText>
       <DetailsTable rows={rows} />
+      {free ? (
+        <EmailText>
+          {t.rich("firstScan.pro", {
+            first: free.milestones[0],
+            second: free.milestones[1],
+            third: free.milestones[2],
+            link: (chunks: ReactNode) => (
+              <Link href={free.pricingUrl}>{chunks}</Link>
+            ),
+          })}
+        </EmailText>
+      ) : null}
       <EmailButton href={analyticsUrl}>{t("alerts.viewAnalytics")}</EmailButton>
     </EmailLayout>
   );

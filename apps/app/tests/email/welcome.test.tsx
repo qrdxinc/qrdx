@@ -126,7 +126,7 @@ describe("sendWelcomeEmail", () => {
       "Watch its scans:",
       "Change where it points whenever you like, even after it's printed.",
       "Static codes stay free, and the codes you make keep working if you change plans or stop paying. Free also includes 10 dynamic codes.",
-      "Pro is $5 a month or $48 a year and adds unlimited dynamic codes, 5 custom domains and scan alerts by email. Local taxes may be added at checkout.",
+      "Pro is $5 a month or $48 a year and adds unlimited dynamic codes, 5 custom domains, and email alerts at every scan milestone with a weekly digest. Local taxes may be added at checkout.",
       "reply to this email. A person reads every reply.",
       "Ritesh from QRdx",
       "You're getting this because you just made a QRdx account.",

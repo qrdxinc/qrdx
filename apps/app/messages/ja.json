@@ -743,7 +743,8 @@
         "storage": "{size}（1ファイル{perFile}）",
         "apiBulk": "{count}＋一括作成",
         "clientReportsBadge": "フッターに小さくクレジット表記あり",
-        "clientReportsWhiteLabel": "ホワイトラベル"
+        "clientReportsWhiteLabel": "ホワイトラベル",
+        "firstScanOnly": "動的QRコードごとの最初のスキャン"
       }
     },
     "guarantee": {
@@ -6461,11 +6462,12 @@
           "webhookAdded": "Webhookを追加しました",
           "notificationsSaved": "通知を保存しました",
           "testMessageSentToValue": "{value}にテストメッセージを送信しました",
-          "webhookRemoved": "Webhookを削除しました"
+          "webhookRemoved": "Webhookを削除しました",
+          "emailAlertsAreProFirstScan": "フリープランでは、新しいQRコードが初めてスキャンされたときに1通のメールが届きます。その他のメール通知と週次ダイジェストは、ProとBusinessに含まれています。"
         },
         "teamNotes": {
           "title": "QRdxチームからのお知らせ",
-          "description": "QRdxの担当者から、QRdxの使い心地をおたずねするなど、個別にご連絡することがあります。返信いただくと担当者に届きます。",
+          "description": "ご登録時のウェルカムメール、新しいQRコードが初めてスキャンされたときのメール（フリープランの場合）、そしてQRdxのメンバーからときどき届く個人宛てのメッセージです。返信すると、担当者に届きます。",
           "label": "チームからのお知らせを受け取る",
           "hint": "アラート、ダイジェスト、セキュリティに関するメールの設定は変わりません。",
           "turnedOn": "チームからのお知らせをオンにしました",
@@ -9161,7 +9163,9 @@
       "device": "デバイス",
       "preview": "{code}が初めてスキャンされました",
       "heading": "コードが初めてスキャンされました",
-      "body": "たった今、誰かが{code}をスキャンしました。QRコードは公開され、正常に動作しています。"
+      "body": "たった今、誰かが{code}をスキャンしました。QRコードは公開され、正常に動作しています。",
+      "pro": "<link>Pro</link>では、さらにスキャンが{first}回、{second}回、{third}回以降に達したとき、フォームが送信されたとき、そして毎週月曜日に先週の数値をメールでお知らせします。",
+      "freeReason": "このメールは、作成されたコードが初めてスキャンされたためお送りしています。QRdxからこのメールをお送りするのは、コードごとに一度だけです。"
     },
     "scanMilestone": {
       "reached": "{code}が{count, number}回スキャンされました",
@@ -9254,7 +9258,8 @@
       "askOwner": "{limit, select, dynamicCodes {コードを1つアーカイブするか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} landingPages {ページを1つ削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} storage {不要なファイルを削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} savedThemes {テーマを1つ削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} other {ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。}}",
       "makeRoom": "{limit, select, dynamicCodes {コードを1つアーカイブして空きを作ってください。} landingPages {ページを1つ削除して空きを作ってください。} storage {不要なファイルを削除して空きを作ってください。} savedThemes {テーマを1つ削除して空きを作ってください。} other {}}",
       "resets": "{date}にリセットされます。",
-      "keeps": "{limit, select, dynamicCodes {既存のコードは引き続き動作します。} landingPages {既存のページは公開されたままです。} formResponses {ページは公開されたままです。リセット後、フォームは再び回答を受け付けます。} storage {アップロード済みのファイルは引き続き利用できます。} other {}}"
+      "keeps": "{limit, select, dynamicCodes {既存のコードは引き続き動作します。} landingPages {既存のページは公開されたままです。} formResponses {ページは公開されたままです。リセット後、フォームは再び回答を受け付けます。} storage {アップロード済みのファイルは引き続き利用できます。} other {}}",
+      "upgradeButton": "{plan}にアップグレード"
     },
     "weeklyDigest": {
       "subject": "今週のQRdx：スキャン{scans, plural, other {#回}}",
@@ -9290,7 +9295,7 @@
       "seeScans": "<link>スキャンの状況を確認します。</link>いつ、どこで、どのデバイスからスキャンされたかがわかります。",
       "changeLink": "印刷後でも、リンク先はいつでも変更できます。再印刷は不要です。",
       "free": "静的QRコードは無料のままです。プランを変更したりお支払いをやめたりしても、作成したコードはそのまま使えます。フリープランには動的QRコードも{count}個含まれます。",
-      "pro": "さらに必要な場合は、Proプラン（月額{monthly}、年額{yearly}）で、動的QRコードの無制限作成、{domains}件のカスタムドメイン、メールでのスキャン通知をご利用いただけます。",
+      "pro": "さらに必要な場合は、Proが月額{monthly}、年額{yearly}で、動的QRコードの無制限作成、{domains}個のカスタムドメイン、スキャン件数の節目ごとのメール通知と週次ダイジェストが加わります。",
       "taxes": "お支払い時に、現地の税金が加算される場合があります。",
       "reply": "困ったことや操作がわからないことがあれば、このメールにご返信ください。返信は一通ずつ担当者が読んでいます。",
       "reason": "QRdxのアカウントを作成されたため、このメールをお送りしています。"

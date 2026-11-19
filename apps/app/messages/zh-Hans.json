@@ -743,7 +743,8 @@
         "storage": "{size}（每个文件 {perFile}）",
         "apiBulk": "{count} + 批量创建",
         "clientReportsBadge": "页脚带有小字署名",
-        "clientReportsWhiteLabel": "白标"
+        "clientReportsWhiteLabel": "白标",
+        "firstScanOnly": "每个动态二维码的首次扫描"
       }
     },
     "guarantee": {
@@ -6461,11 +6462,12 @@
           "webhookAdded": "已添加 Webhook",
           "notificationsSaved": "通知已保存",
           "testMessageSentToValue": "测试消息已发送至 {value}",
-          "webhookRemoved": "已移除 Webhook"
+          "webhookRemoved": "已移除 Webhook",
+          "emailAlertsAreProFirstScan": "在免费版中，每个新二维码首次被扫描时，你会收到一封邮件。其他邮件提醒和每周摘要属于 Pro 和 Business。"
         },
         "teamNotes": {
           "title": "QRdx 团队的来信",
-          "description": "QRdx 团队成员偶尔会亲自给你写信，例如询问你使用 QRdx 的感受。直接回复即可联系到他们。",
+          "description": "包括注册时的欢迎邮件、（免费版中）每个新二维码首次被扫描时的一封邮件，以及 QRdx 团队成员偶尔发来的私人留言。回复邮件会有真人收到。",
           "label": "接收团队来信",
           "hint": "你的提醒、摘要和安全邮件不受影响。",
           "turnedOn": "已开启团队来信",
@@ -9161,7 +9163,9 @@
       "device": "设备",
       "preview": "{code} 被首次扫描",
       "heading": "你的二维码迎来了第一次扫描",
-      "body": "刚刚有人扫描了 {code}。你的二维码已上线并正常运行。"
+      "body": "刚刚有人扫描了 {code}。你的二维码已上线并正常运行。",
+      "pro": "<link>Pro</link> 还会在扫描次数达到 {first}、{second}、{third} 次及更多时，以及有人提交你的表单时发送邮件，并在每周一发送上周的数据。",
+      "freeReason": "你收到这封邮件，是因为你创建的二维码迎来了第一次扫描。QRdx 对每个二维码只发送一次。"
     },
     "scanMilestone": {
       "reached": "{code} 已达到 {count, number} 次扫描",
@@ -9254,7 +9258,8 @@
       "askOwner": "{limit, select, dynamicCodes {归档一个，或请工作区所有者升级到 {plan}。} landingPages {删除一个，或请工作区所有者升级到 {plan}。} storage {删除不再需要的文件，或请工作区所有者升级到 {plan}。} savedThemes {删除一个，或请工作区所有者升级到 {plan}。} other {请工作区所有者升级到 {plan}。}}",
       "makeRoom": "{limit, select, dynamicCodes {归档一个以腾出空间。} landingPages {删除一个以腾出空间。} storage {删除不再需要的文件以腾出空间。} savedThemes {删除一个以腾出空间。} other {}}",
       "resets": "{date} 重置。",
-      "keeps": "{limit, select, dynamicCodes {现有二维码仍可正常使用。} landingPages {现有页面保持在线。} formResponses {页面保持在线。重置后，表单将再次接收回复。} storage {你已上传的文件仍可使用。} other {}}"
+      "keeps": "{limit, select, dynamicCodes {现有二维码仍可正常使用。} landingPages {现有页面保持在线。} formResponses {页面保持在线。重置后，表单将再次接收回复。} storage {你已上传的文件仍可使用。} other {}}",
+      "upgradeButton": "升级到 {plan}"
     },
     "weeklyDigest": {
       "subject": "你的 QRdx 一周概览：{scans, plural, other {# 次扫描}}",
@@ -9290,7 +9295,7 @@
       "seeScans": "<link>查看扫描情况：</link>用户在何时、何地、使用哪些设备扫描。",
       "changeLink": "随时更改二维码指向的地址，即使已经印刷也可以，无需重新印刷。",
       "free": "静态二维码永久免费，即使你更换套餐或停止付费，已创建的二维码也会继续有效。免费版还包含 {count} 个动态二维码。",
-      "pro": "如果您需要更多，Pro 每月 {monthly} 或每年 {yearly}，并增加不限数量的动态二维码、{domains} 个自定义域名以及邮件扫描提醒。",
+      "pro": "如果您需要更多功能，Pro 版每月 {monthly} 或每年 {yearly}，可享无限动态二维码、{domains} 个自定义域名，以及每个扫描里程碑的邮件提醒和每周摘要。",
       "taxes": "结账时可能会加收当地税费。",
       "reply": "如果您遇到任何问题，或不确定如何操作，请直接回复这封邮件。每一封回复都会有专人阅读。",
       "reason": "您收到这封邮件，是因为您刚刚创建了 QRdx 账户。"

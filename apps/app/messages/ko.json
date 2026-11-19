@@ -743,7 +743,8 @@
         "storage": "{size} (파일당 {perFile})",
         "apiBulk": "{count} + 일괄 생성",
         "clientReportsBadge": "하단에 작은 크레딧 표시",
-        "clientReportsWhiteLabel": "화이트 라벨"
+        "clientReportsWhiteLabel": "화이트 라벨",
+        "firstScanOnly": "각 동적 QR 코드의 첫 스캔"
       }
     },
     "guarantee": {
@@ -6461,11 +6462,12 @@
           "webhookAdded": "웹훅을 추가했어요",
           "notificationsSaved": "알림을 저장했어요",
           "testMessageSentToValue": "{value}(으)로 테스트 메시지를 보냈어요",
-          "webhookRemoved": "웹훅을 삭제했어요"
+          "webhookRemoved": "웹훅을 삭제했어요",
+          "emailAlertsAreProFirstScan": "무료 플랜에서는 새 코드가 처음 스캔될 때마다 이메일을 한 통 보내드려요. 그 밖의 이메일 알림과 주간 요약은 Pro와 Business에 포함돼 있어요."
         },
         "teamNotes": {
           "title": "QRdx 팀의 메모",
-          "description": "가끔 QRdx 팀원이 직접 메일을 보내 QRdx를 쓰면서 어떠셨는지 여쭤볼 때가 있어요. 답장하시면 팀원에게 전달돼요.",
+          "description": "가입하면 환영 메일을 보내드리고, (무료 플랜에서는) 새 코드가 처음 스캔될 때마다 이메일을 한 통 보내드려요. 가끔 QRdx 팀원이 직접 쓴 메모도 보내드려요. 답장하면 사람에게 전달돼요.",
           "label": "팀의 메모 받기",
           "hint": "알림, 요약, 보안 이메일은 그대로 유지돼요.",
           "turnedOn": "팀의 메모를 받아요",
@@ -9161,7 +9163,9 @@
       "device": "기기",
       "preview": "{code}이(가) 처음 스캔되었어요",
       "heading": "코드의 첫 스캔이 발생했어요",
-      "body": "방금 누군가 {code}을(를) 스캔했어요. QR 코드가 정상적으로 작동하고 있어요."
+      "body": "방금 누군가 {code}을(를) 스캔했어요. QR 코드가 정상적으로 작동하고 있어요.",
+      "pro": "<link>Pro</link>는 추가로 {first}회, {second}회, {third}회 스캔과 그 이후, 누군가 폼을 제출했을 때, 그리고 매주 월요일에 지난주 수치까지 이메일로 보내드려요.",
+      "freeReason": "만드신 코드가 처음으로 스캔되어 이 이메일을 보내드려요. QRdx는 코드당 한 번만 보내요."
     },
     "scanMilestone": {
       "reached": "{code}이(가) {count, number}회 스캔을 달성했어요",
@@ -9254,7 +9258,8 @@
       "askOwner": "{limit, select, dynamicCodes {코드 하나를 보관하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} landingPages {페이지 하나를 삭제하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} storage {필요 없는 파일을 삭제하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} savedThemes {테마 하나를 삭제하거나 워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.} other {워크스페이스 소유자에게 {plan} 플랜 업그레이드를 요청해 주세요.}}",
       "makeRoom": "{limit, select, dynamicCodes {공간을 확보하려면 코드 하나를 보관하세요.} landingPages {공간을 확보하려면 페이지 하나를 삭제하세요.} storage {공간을 확보하려면 필요 없는 파일을 삭제하세요.} savedThemes {공간을 확보하려면 테마 하나를 삭제하세요.} other {}}",
       "resets": "{date}에 초기화돼요.",
-      "keeps": "{limit, select, dynamicCodes {기존 코드는 계속 작동해요.} landingPages {기존 페이지는 계속 게시돼요.} formResponses {페이지는 계속 게시돼요. 초기화 후에는 폼이 다시 응답을 받아요.} storage {업로드한 파일은 계속 사용할 수 있어요.} other {}}"
+      "keeps": "{limit, select, dynamicCodes {기존 코드는 계속 작동해요.} landingPages {기존 페이지는 계속 게시돼요.} formResponses {페이지는 계속 게시돼요. 초기화 후에는 폼이 다시 응답을 받아요.} storage {업로드한 파일은 계속 사용할 수 있어요.} other {}}",
+      "upgradeButton": "{plan}(으)로 업그레이드"
     },
     "weeklyDigest": {
       "subject": "이번 주 QRdx 현황: {scans, plural, one {스캔 #회} other {스캔 #회}}",
@@ -9290,7 +9295,7 @@
       "seeScans": "<link>스캔 현황을 확인해 보세요.</link> 언제, 어디서, 어떤 기기로 스캔하는지 볼 수 있습니다.",
       "changeLink": "연결되는 주소는 인쇄한 뒤에도 언제든 바꿀 수 있습니다. 다시 인쇄할 필요가 없습니다.",
       "free": "정적 QR 코드는 계속 무료이고, 플랜을 바꾸거나 결제를 중단하더라도 만든 코드는 계속 작동해요. 무료 플랜에는 동적 QR 코드 {count}개도 포함돼요.",
-      "pro": "더 필요하시면 Pro는 월 {monthly} 또는 연 {yearly}이며, 동적 QR 코드 무제한, 사용자 지정 도메인 {domains}개, 이메일 스캔 알림이 추가됩니다.",
+      "pro": "더 필요하시다면 Pro는 월 {monthly} 또는 연 {yearly}이며, 무제한 동적 QR 코드, 사용자 지정 도메인 {domains}개, 스캔 마일스톤마다 보내는 이메일 알림과 주간 요약을 제공합니다.",
       "taxes": "결제 시 현지 세금이 추가될 수 있어요.",
       "reply": "사용하다가 막히거나 방법이 헷갈리면 이 이메일에 답장해 주세요. 답장은 사람이 한 건씩 직접 읽습니다.",
       "reason": "방금 QRdx 계정을 만드셔서 이 이메일을 받으셨습니다."

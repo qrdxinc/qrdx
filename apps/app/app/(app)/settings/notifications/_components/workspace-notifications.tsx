@@ -97,10 +97,13 @@ function ChatIcon({ channel }: { channel: "slack" | "discord" }) {
 export function WorkspaceNotifications({
   workspace,
   email,
+  freeFirstScan = false,
 }: {
   workspace: NotificationWorkspace;
   /** The signed-in account's address (email alerts always go there) */
   email: string;
+  /** Free's first-scan email per code goes out here (lib/email/first-scan.tsx) */
+  freeFirstScan?: boolean;
 }) {
   const t = useTranslations(
     "app.settings.notifications.workspaceNotifications",
@@ -268,7 +271,13 @@ export function WorkspaceNotifications({
               {t("emailToEmail", { email })}
             </h3>
           </div>
-          {!workspace.emailAlerts && lockedNote("pro", t("emailAlertsArePro"))}
+          {!workspace.emailAlerts &&
+            lockedNote(
+              "pro",
+              freeFirstScan
+                ? t("emailAlertsAreProFirstScan")
+                : t("emailAlertsArePro"),
+            )}
           <ul className="divide-y">
             {NOTIFICATION_EVENTS.map((event) => {
               const on = emailEvents.includes(event);

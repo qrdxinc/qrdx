@@ -42,6 +42,7 @@ const OPTIONS: PricingOptions = {
   customDomains: isFeatureAvailable("customDomains"),
   fileStorage: isFeatureAvailable("fileStorage"),
   emailAlerts: isFeatureAvailable("email"),
+  freeFirstScan: isFeatureAvailable("teamNotes"),
   sso: isFeatureAvailable("sso"),
   auditLog: isFeatureAvailable("auditLog"),
   clientPortal: isFeatureAvailable("clientPortal"),
