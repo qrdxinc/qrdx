@@ -1,9 +1,9 @@
 "use server";
 
-import { abuseReport, database as db, qrCode } from "@repo/database";
+import { database as db, qrCode } from "@repo/database";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { hash } from "bcryptjs";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import {
@@ -25,6 +25,8 @@ import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { type EndedReason, lifecycleState } from "@/lib/redirect/lifecycle";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { screenUrlChange } from "@/lib/safety/destinations";
+import { heldForReviewIds } from "@/lib/safety/holds";
+import { writeHoldReports } from "@/lib/safety/velocity";
 import { type ActiveScope, getActiveScope, isInScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError, ValidationError } from "@/types/errors";
@@ -186,18 +188,7 @@ async function findRow(scope: ActiveScope, id: string): Promise<CodeRow> {
 }
 
 async function isHeldForReview(codeId: string): Promise<boolean> {
-  const [report] = await db
-    .select({ id: abuseReport.id })
-    .from(abuseReport)
-    .where(
-      and(
-        eq(abuseReport.qrCodeId, codeId),
-        eq(abuseReport.reason, "auto-hold"),
-        eq(abuseReport.status, "open"),
-      ),
-    )
-    .limit(1);
-  return Boolean(report);
+  return (await heldForReviewIds([codeId])).has(codeId);
 }
 
 async function toView(
@@ -319,16 +310,14 @@ export async function updateCodeLifecycle(
         throw new ValidationError(ENGLISH.endBeforeStart);
       }
 
-      if (
-        values.fallbackUrl &&
-        (await screenUrlChange(scope, row, {
-          previous: row.fallbackUrl,
-          next: values.fallbackUrl,
-          field: "fallback URL",
-        }))
-      ) {
-        values.isActive = false;
-      }
+      const hold = values.fallbackUrl
+        ? await screenUrlChange(scope, row, {
+            previous: row.fallbackUrl,
+            next: values.fallbackUrl,
+            field: "fallback URL",
+          })
+        : null;
+      if (hold) values.isActive = false;
 
       await snapshotCodeVersion(id, scope.userId);
       const [updated] = await db
@@ -337,6 +326,7 @@ export async function updateCodeLifecycle(
         .where(eq(qrCode.id, id))
         .returning();
       if (!updated) throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
+      if (hold) await writeHoldReports([hold]);
       recordAuditEvent(
         scope,
         codeEvents("code.link_controls_changed", [updated], {

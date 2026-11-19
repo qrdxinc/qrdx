@@ -1,5 +1,6 @@
 "use client";
 
+import { SUPPORT_EMAIL } from "@repo/config";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Card, CardContent } from "@repo/design-system/components/ui/card";
 import {
@@ -45,7 +46,7 @@ export function CodeHeader({ code }: { code: QrCodeView }) {
             <h1 className="truncate text-xl font-bold md:text-2xl">
               {code.title || displayUrl(code.destinationUrl)}
             </h1>
-            <StatusBadge status={code.status} />
+            <StatusBadge held={code.heldForReview} status={code.status} />
           </div>
           <p className="text-muted-foreground truncate text-sm">
             {displayUrl(code.shortLink)}
@@ -80,7 +81,9 @@ export function CodeHeader({ code }: { code: QrCodeView }) {
       </div>
       {code.status !== "active" && (
         <p className="bg-muted rounded-md p-3 text-sm">
-          {STATUS_NOTES[code.status]}
+          {code.status === "disabled" && code.heldForReview
+            ? t("heldNote", { email: SUPPORT_EMAIL })
+            : STATUS_NOTES[code.status]}
         </p>
       )}
       {canWrite && (

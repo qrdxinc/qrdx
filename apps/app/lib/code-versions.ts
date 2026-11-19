@@ -30,6 +30,8 @@ import { contentTypeForDestination } from "@/lib/dynamic-content";
 import { HttpError } from "@/lib/error-response";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { screenUrlChange } from "@/lib/safety/destinations";
+import { assertNotModerated } from "@/lib/safety/holds";
+import { type HoldRequest, writeHoldReports } from "@/lib/safety/velocity";
 import { type ActiveScope, isInScope } from "@/lib/scope";
 import { SHARED_SLUG_SCOPE, SHORT_LINK_BASE } from "@/lib/short-links";
 
@@ -248,6 +250,8 @@ export async function restoreCodeVersion(
   versionId: string,
 ): Promise<RestoreResult> {
   const current = await findLiveCode(scope, codeId);
+  // An older version is what the code opened before QRdx switched it off.
+  await assertNotModerated(current);
   const [version] = await db
     .select()
     .from(qrCodeVersion)
@@ -275,6 +279,7 @@ export async function restoreCodeVersion(
     normalizeVersion(version.snapshot),
   );
   const values: Partial<typeof qrCode.$inferInsert> = {};
+  const holds: HoldRequest[] = [];
   const restored: VersionChange[] = [];
   const skipped: string[] = [];
   // A type that can't be put back keeps the destination that goes with it.
@@ -331,23 +336,23 @@ export async function restoreCodeVersion(
         continue;
       }
       // Old destinations are screened again like any edit (unsafe → error).
-      if (
-        await screenUrlChange(scope, current, {
-          previous: current.destinationUrl,
-          next: target.destinationUrl,
-        })
-      ) {
+      const hold = await screenUrlChange(scope, current, {
+        previous: current.destinationUrl,
+        next: target.destinationUrl,
+      });
+      if (hold) {
+        holds.push(hold);
         values.isActive = false;
       }
       values.destinationUrl = target.destinationUrl;
     } else if (field === "fallbackUrl" && target.fallbackUrl) {
-      if (
-        await screenUrlChange(scope, current, {
-          previous: current.fallbackUrl,
-          next: target.fallbackUrl,
-          field: "fallback URL",
-        })
-      ) {
+      const hold = await screenUrlChange(scope, current, {
+        previous: current.fallbackUrl,
+        next: target.fallbackUrl,
+        field: "fallback URL",
+      });
+      if (hold) {
+        holds.push(hold);
         values.isActive = false;
       }
       values.fallbackUrl = target.fallbackUrl;
@@ -383,6 +388,7 @@ export async function restoreCodeVersion(
     .where(and(eq(qrCode.id, codeId), isNull(qrCode.deletedAt)))
     .returning({ id: qrCode.id });
   if (!row) throw notFound();
+  await writeHoldReports(holds);
   recordAuditEvent(
     scope,
     codeEvents("code.version_restored", [current], {

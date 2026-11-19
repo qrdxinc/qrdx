@@ -1,5 +1,6 @@
 "use client";
 
+import { SUPPORT_EMAIL } from "@repo/config";
 import { toast } from "@repo/design-system";
 import {
   Alert,
@@ -245,14 +246,15 @@ export function LifecyclePanelForm({
 
       <CardContent className="space-y-6 px-4">
         {view.disabled && (
-          <Alert variant="destructive">
+          // A safety hold isn't a moderation decision: no warning red.
+          <Alert variant={view.heldForReview ? "default" : "destructive"}>
             <ShieldAlert />
             <AlertTitle>
               {view.heldForReview ? t("heldForReview") : t("turnedOffByQrdx")}
             </AlertTitle>
             <AlertDescription>
               {view.heldForReview
-                ? t("ourAutomatedChecksFlaggedA")
+                ? `${t("ourAutomatedChecksFlaggedA")} ${t("heldQuestions", { email: SUPPORT_EMAIL })}`
                 : t("thisCodeWasSwitchedOff")}
             </AlertDescription>
           </Alert>

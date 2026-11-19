@@ -4932,7 +4932,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, or a browser-session write from another site. An API key can do only what its creator's role in its workspace allows.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
         "content": {
           "application/json": {
             "schema": {
@@ -4952,7 +4952,7 @@
                 "summary": "FORBIDDEN",
                 "value": {
                   "code": "FORBIDDEN",
-                  "message": "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, or a browser-session write from another site. An API key can do only what its creator's role in its workspace allows.",
+                  "message": "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
                   "status": 403
                 }
               }
@@ -4961,7 +4961,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_LimitReached_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, or a browser-session write from another site. An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.",
         "content": {
           "application/json": {
             "schema": {
@@ -4981,7 +4981,7 @@
                 "summary": "FORBIDDEN",
                 "value": {
                   "code": "FORBIDDEN",
-                  "message": "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, or a browser-session write from another site. An API key can do only what its creator's role in its workspace allows.",
+                  "message": "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
                   "status": 403
                 }
               },
@@ -4998,7 +4998,7 @@
         }
       },
       "Error403_InsufficientScope_Forbidden_LimitReached_ConfirmationRequired_CodesWrite": {
-        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, or a browser-session write from another site. An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.\n\n`CONFIRMATION_REQUIRED`: Creating a hook with a signed-in browser session needs a recent \"Confirm it's you\". API keys and OAuth tokens aren't asked.",
+        "description": "`INSUFFICIENT_SCOPE`: The API key or token is valid but lacks the scope this endpoint needs.\n\n`FORBIDDEN`: The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.\n\n`LIMIT_REACHED`: The workspace already has 20 webhook endpoints and hooks.\n\n`CONFIRMATION_REQUIRED`: Creating a hook with a signed-in browser session needs a recent \"Confirm it's you\". API keys and OAuth tokens aren't asked.",
         "content": {
           "application/json": {
             "schema": {
@@ -5018,7 +5018,7 @@
                 "summary": "FORBIDDEN",
                 "value": {
                   "code": "FORBIDDEN",
-                  "message": "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, or a browser-session write from another site. An API key can do only what its creator's role in its workspace allows.",
+                  "message": "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or pointing a code QRdx switched off after a review anywhere new (a new destination, or another type). An API key can do only what its creator's role in its workspace allows.",
                   "status": 403
                 }
               },

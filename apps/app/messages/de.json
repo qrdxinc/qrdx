@@ -6979,9 +6979,10 @@
           "thePasswordWillBeRemoved": "Das Passwort wird beim Speichern entfernt",
           "noPassword": "Kein Passwort",
           "noLimit": "Kein Limit",
-          "heldForReview": "In Prüfung",
+          "heldForReview": "Wartet auf Sicherheitsprüfung",
+          "heldQuestions": "Fragen? Schreib an {email}.",
           "turnedOffByQrdx": "Von QRdx deaktiviert",
-          "ourAutomatedChecksFlaggedA": "Unsere automatischen Prüfungen haben einen Link in diesem Code markiert (zum Beispiel einen URL-Shortener, eine IP-Adresse oder eine ähnlich aussehende Domain). Er bleibt deshalb deaktiviert, bis ein Prüfer ihn freigibt, meist innerhalb eines Tages. Du musst nichts weiter tun.",
+          "ourAutomatedChecksFlaggedA": "Unsere automatischen Prüfungen haben einen Link in diesem Code markiert (zum Beispiel einen URL-Kürzer, eine IP-Adresse oder eine täuschend ähnliche Domain). Deshalb bleibt er deaktiviert, bis eine Person bei QRdx ihn geprüft hat. Von dir ist nichts weiter nötig.",
           "thisCodeWasSwitchedOff": "Dieser Code wurde nach einer Missbrauchsprüfung deaktiviert und leitet nicht weiter. Wenn du glaubst, dass das ein Irrtum ist, wende dich an support@qrdx.dev.",
           "yourCurrentSettingsKeepWorking": "Deine aktuellen Einstellungen funktionieren weiter, und du kannst sie jederzeit entfernen.",
           "timesAreInYourTime": " Die Zeiten gelten in deiner Zeitzone ({timeZone}).",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "Zugriff & Zeitplan"
         },
         "codeOverview": {
+          "heldNote": "Wartet auf Sicherheitsprüfung. Links von neuen Konten zu bestimmten Arten von Adressen, etwa URL-Kürzern, IP-Adressen oder täuschend ähnlichen Domains, werden von einer Person geprüft, bevor sie live gehen. Bis dahin ist dieser Code deaktiviert. Drucke ihn noch nicht. Fragen: {email}",
           "editLink": "Link bearbeiten",
           "changeType": "Typ ändern",
           "shortLinkEncodedInThe": "Kurzlink (im QR-Code codiert)",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "Pausiert",
           "pausedScansGoToThe": "Pausiert: Scans führen zur Fallback-URL oder zu einer neutralen Seite „Pausiert“",
-          "turnedOffByQrdxModeration": "Von der QRdx-Moderation deaktiviert. Wende dich an den Support, falls das ein Fehler ist."
+          "turnedOffByQrdxModeration": "Von der QRdx-Moderation deaktiviert. Wende dich an den Support, falls das ein Fehler ist.",
+          "held": "Sicherheitsprüfung",
+          "heldTitle": "Wartet auf Sicherheitsprüfung, bevor er live geht. Fragen: {email}"
         },
         "tagDialogs": {
           "color": "Farbe",

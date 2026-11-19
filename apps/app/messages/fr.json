@@ -6979,9 +6979,10 @@
           "thePasswordWillBeRemoved": "Le mot de passe sera supprimé à l’enregistrement",
           "noPassword": "Sans mot de passe",
           "noLimit": "Sans limite",
-          "heldForReview": "En attente de révision",
+          "heldForReview": "En attente de vérification de sécurité",
+          "heldQuestions": "Des questions ? Écrivez à {email}.",
           "turnedOffByQrdx": "Désactivé par QRdx",
-          "ourAutomatedChecksFlaggedA": "Nos contrôles automatiques ont signalé un lien sur ce code (par exemple un raccourcisseur d’URL, une adresse IP ou un domaine trompeur) : il reste donc désactivé jusqu’à son approbation par un réviseur, généralement sous un jour. Vous n’avez rien d’autre à faire.",
+          "ourAutomatedChecksFlaggedA": "Nos contrôles automatiques ont signalé un lien sur ce code (par exemple un raccourcisseur d’URL, une adresse IP ou un domaine trompeur). Il reste donc désactivé jusqu’à ce qu’une personne de QRdx l’ait vérifié. Vous n’avez rien d’autre à faire.",
           "thisCodeWasSwitchedOff": "Ce code a été désactivé après un examen pour abus et ne redirige plus. Contactez support@qrdx.dev si vous pensez qu’il s’agit d’une erreur.",
           "yourCurrentSettingsKeepWorking": "Vos réglages actuels continuent de fonctionner, et vous pouvez les supprimer à tout moment.",
           "timesAreInYourTime": " Les heures sont indiquées dans votre fuseau horaire ({timeZone}).",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "Accès et planification"
         },
         "codeOverview": {
+          "heldNote": "En attente de vérification de sécurité. Les liens des nouveaux comptes vers certains types d’adresses, comme les raccourcisseurs d’URL, les adresses IP ou les domaines trompeurs, sont vérifiés par une personne avant leur mise en ligne. Ce code est donc désactivé d’ici là. Ne l’imprimez pas encore. Des questions ? {email}",
           "editLink": "Modifier le lien",
           "changeType": "Changer de type",
           "shortLinkEncodedInThe": "Lien court (encodé dans le QR code)",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "En pause",
           "pausedScansGoToThe": "En pause : les scans mènent à l’URL de secours ou à une page « en pause » neutre",
-          "turnedOffByQrdxModeration": "Désactivé par la modération de QRdx. Contactez le support s’il s’agit d’une erreur."
+          "turnedOffByQrdxModeration": "Désactivé par la modération de QRdx. Contactez le support s’il s’agit d’une erreur.",
+          "held": "Contrôle sécurité",
+          "heldTitle": "En attente de vérification de sécurité avant sa mise en ligne. Des questions ? {email}"
         },
         "tagDialogs": {
           "color": "Couleur",

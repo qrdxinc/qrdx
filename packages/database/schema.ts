@@ -1932,6 +1932,8 @@ export const abuseReport = pgTable(
       table.status,
       table.createdAt
     ),
+    // A code's reports (manual-sql/2026-11-19-abuse-report-qr-code-idx.sql)
+    index("abuse_report_qr_code_id_idx").on(table.qrCodeId),
   ]
 );
 

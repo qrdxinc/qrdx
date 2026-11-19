@@ -6979,9 +6979,10 @@
           "thePasswordWillBeRemoved": "A senha será removida quando você salvar",
           "noPassword": "Sem senha",
           "noLimit": "Sem limite",
-          "heldForReview": "Em revisão",
+          "heldForReview": "Aguardando verificação de segurança",
+          "heldQuestions": "Dúvidas? Escreva para {email}.",
           "turnedOffByQrdx": "Desativado pelo QRdx",
-          "ourAutomatedChecksFlaggedA": "Nossas verificações automáticas sinalizaram um link neste código (por exemplo, um encurtador de URL, um endereço IP ou um domínio parecido com outro), então ele fica desativado até um revisor aprová-lo, normalmente em até um dia. Você não precisa fazer mais nada.",
+          "ourAutomatedChecksFlaggedA": "Nossas verificações automáticas sinalizaram um link neste código (por exemplo, um encurtador de URL, um endereço IP ou um domínio parecido com outro), então ele fica desativado até que uma pessoa da QRdx o verifique. Você não precisa fazer mais nada.",
           "thisCodeWasSwitchedOff": "Este código foi desativado após uma revisão de abuso e não redireciona. Entre em contato com support@qrdx.dev se você acha que isso é um engano.",
           "yourCurrentSettingsKeepWorking": "Suas configurações atuais continuam funcionando, e você pode removê-las quando quiser.",
           "timesAreInYourTime": " Os horários seguem o seu fuso horário ({timeZone}).",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "Acesso e agenda"
         },
         "codeOverview": {
+          "heldNote": "Aguardando verificação de segurança. Links de contas novas para alguns tipos de endereço, como encurtadores de URL, endereços IP ou domínios parecidos com outros, são verificados por uma pessoa antes de entrar no ar, então este código fica desativado até lá. Não o imprima ainda. Dúvidas: {email}",
           "editLink": "Editar link",
           "changeType": "Alterar tipo",
           "shortLinkEncodedInThe": "Link curto (codificado no QR code)",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "Pausado",
           "pausedScansGoToThe": "Pausado: as leituras vão para a URL alternativa ou para uma página neutra de “pausado”",
-          "turnedOffByQrdxModeration": "Desativado pela moderação do QRdx. Fale com o suporte se for um engano."
+          "turnedOffByQrdxModeration": "Desativado pela moderação do QRdx. Fale com o suporte se for um engano.",
+          "held": "Verificação",
+          "heldTitle": "Aguardando verificação de segurança antes de entrar no ar. Dúvidas: {email}"
         },
         "tagDialogs": {
           "color": "Cor",
