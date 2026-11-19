@@ -14,6 +14,7 @@ import { DynamicLinkToggle } from "@/components/editor/dynamic-link-toggle";
 import { LinkSourceMenu } from "@/components/editor/link-source-menu";
 import { useSmartPaste } from "@/lib/hooks/use-smart-paste";
 import { useQREditorStore } from "@/store/editor-store";
+import { usePlaygroundFocusStore } from "@/store/playground-focus-store";
 import type { UrlContent } from "@/types/qr-content";
 
 export function UrlForm() {
@@ -25,6 +26,8 @@ export function UrlForm() {
   const setContentConfig = useQREditorStore((state) => state.setContentConfig);
   const { handlePaste } = useSmartPaste();
   const helperId = React.useId();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const addressFocus = usePlaygroundFocusStore((state) => state.addressFocus);
 
   const [url, setUrl] = React.useState(storedUrl);
   // Errors wait until the field is left once, so typing isn't nagged.
@@ -36,6 +39,17 @@ export function UrlForm() {
   }, [storedUrl]);
 
   const check = React.useMemo(() => checkUrl(url), [url]);
+
+  // Came for a dynamic code (open=dynamic, signed out): the address is the
+  // first thing to fill in, once (not on every remount). Not on touch
+  // screens, where focus opens the keyboard over the preview.
+  React.useEffect(() => {
+    if (!addressFocus) return;
+    if (!usePlaygroundFocusStore.getState().takeAddressFocus()) return;
+    if (useQREditorStore.getState().value) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    inputRef.current?.focus();
+  }, [addressFocus]);
 
   React.useEffect(() => {
     const config: UrlContent = { type: "url", url };
@@ -85,6 +99,7 @@ export function UrlForm() {
           }}
           onPaste={handlePaste}
           placeholder="example.com"
+          ref={inputRef}
           spellCheck={false}
           type="text"
           value={url}

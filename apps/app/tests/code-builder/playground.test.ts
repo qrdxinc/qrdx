@@ -347,6 +347,28 @@ describe("one-click Dynamic (the toggle)", () => {
     expect(html).toContain(`href="${dashboardEntry("codes")}"`);
   });
 
+  it("a code saved switched off (held for a check) isn't linked", async () => {
+    routes.createDynamicCode.mockResolvedValue({
+      success: true,
+      data: view({ status: "disabled" }),
+    });
+    const outcome = await makeDynamic({
+      destination: "https://example.com/menu",
+      styles: MY_STYLE,
+      userId: "u_alice",
+      locale: "es",
+    });
+    expect(outcome).toEqual({
+      kind: "held",
+      code: {
+        id: "code_1",
+        shortLink: "https://qrdx.dev/q/abc1234",
+        destinationUrl: "https://example.com/menu",
+        userId: "u_alice",
+      },
+    });
+  });
+
   it("a lost session asks for sign-in; a network failure says so", async () => {
     routes.createDynamicCode.mockResolvedValueOnce({
       success: false,
