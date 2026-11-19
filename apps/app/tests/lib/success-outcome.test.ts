@@ -227,20 +227,41 @@ describe("resolveCheckoutOutcome", () => {
     });
     // Its name and status code only, never the request.
     expect(onFailure).toHaveBeenCalledWith({
+      lookup: "checkout",
       error: error.name,
       status: (error as { statusCode?: number }).statusCode,
     });
   });
 
-  it("says processing when the customer lookup fails", async () => {
+  it("says processing when the customer lookup fails, and logs it", async () => {
+    const onFailure = vi.fn();
     const lookupDown = client({
       getExternal: vi.fn(async () => {
         throw polarError("HTTPClientError", 502);
       }),
     });
-    expect(await resolve({ client: lookupDown })).toEqual({
+    expect(await resolve({ client: lookupDown, onFailure })).toEqual({
       kind: "processing",
     });
+    expect(onFailure).toHaveBeenCalledTimes(1);
+    expect(onFailure).toHaveBeenCalledWith({
+      lookup: "customer",
+      error: "HTTPClientError",
+      status: 502,
+    });
+  });
+
+  it("doesn't log a person with no Polar customer: the checkout isn't theirs", async () => {
+    const onFailure = vi.fn();
+    const noCustomer = client({
+      getExternal: vi.fn(async () => {
+        throw polarError("ResourceNotFound", 404);
+      }),
+    });
+    expect(await resolve({ client: noCustomer, onFailure })).toEqual({
+      kind: "unknown",
+    });
+    expect(onFailure).not.toHaveBeenCalled();
   });
 
   it("doesn't ask Polar past the rate limit, and waits for the row", async () => {

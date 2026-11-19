@@ -90,8 +90,18 @@ export interface ResolveOutcomeOptions {
    * leaves it to the webhook's row. Default: always.
    */
   allowLookup?: () => Promise<boolean>;
-  /** Polar errors carry the request: only their name and status are passed. */
-  onFailure?: (failure: { error: string; status?: number }) => void;
+  /**
+   * A Polar lookup failed: which one (the checkout, or the person's Polar
+   * customer), and the error's name and status. Polar errors carry the
+   * request, so nothing else is passed.
+   */
+  onFailure?: (failure: PolarLookupFailure) => void;
+}
+
+export interface PolarLookupFailure {
+  lookup: "checkout" | "customer";
+  error: string;
+  status?: number;
 }
 
 /** Never throws, except when `allowLookup` does. */
@@ -135,11 +145,21 @@ export async function resolveCheckoutOutcome({
     if (isNotFound(error)) return otherwise({ kind: "unknown" });
     // Any other answer (a token without checkouts:read, Polar down): the
     // webhook's row still switches the plan on, so say only that.
-    onFailure?.({ error: nameOf(error), status: statusOf(error) });
+    onFailure?.({
+      lookup: "checkout",
+      error: nameOf(error),
+      status: statusOf(error),
+    });
     return otherwise({ kind: "processing" });
   }
 
-  const owner = await ownedBy(checkout, userId, subscriptions, client);
+  const owner = await ownedBy(
+    checkout,
+    userId,
+    subscriptions,
+    client,
+    onFailure,
+  );
   if (owner === "unknown") return otherwise({ kind: "processing" });
   if (!owner) return otherwise({ kind: "unknown" });
   switch (checkout.status) {
@@ -169,6 +189,7 @@ async function ownedBy(
   userId: string,
   subscriptions: SubscriptionView[],
   client: CheckoutClient,
+  onFailure?: (failure: PolarLookupFailure) => void,
 ): Promise<boolean | "unknown"> {
   if (checkout.external_customer_id === userId) return true;
   const customerId = checkout.customer_id;
@@ -178,7 +199,13 @@ async function ownedBy(
     return (await client.customers.getExternal(userId)).id === customerId;
   } catch (error) {
     // No Polar customer for this person: the checkout can't be theirs.
-    return isNotFound(error) ? false : "unknown";
+    if (isNotFound(error)) return false;
+    onFailure?.({
+      lookup: "customer",
+      error: nameOf(error),
+      status: statusOf(error),
+    });
+    return "unknown";
   }
 }
 

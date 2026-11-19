@@ -126,10 +126,13 @@ export default async function SuccessPage({
       (await lookupLimiter.limit(`success-check:${userId}`)).success,
     // Name and status code only (a missing checkouts:read scope is 403).
     onFailure: (failure) =>
-      logError(new Error(`Checkout lookup failed: ${failure.error}`), {
-        action: "success.checkout",
-        ...failure,
-      }),
+      logError(
+        new Error(`Polar ${failure.lookup} lookup failed: ${failure.error}`),
+        {
+          action: "success.checkout",
+          ...failure,
+        },
+      ),
     // This app's own read (the subscription rows), not Polar.
     onLoadError: (error) =>
       logError(error as Error, { action: "success.subscriptions" }),
