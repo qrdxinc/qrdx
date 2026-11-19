@@ -158,6 +158,7 @@ describe("MCP over Streamable HTTP", () => {
     expect(summary).toMatch(/PNG URL: \S+format=png/);
     expect(summary).toMatch(/WebP URL .*format=webp/);
     expect(summary).toMatch(/BMP URL .*format=bmp/);
+    expect(summary).toMatch(/ICO URL .*format=ico/);
     expect(summary).toMatch(/EPS URL .*format=eps/);
     expect(summary).toContain("Markdown: ![QR code](");
 

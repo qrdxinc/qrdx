@@ -104,11 +104,16 @@ describe("qrImageFile", () => {
       mimeType: "image/bmp",
       fileExtension: "bmp",
     });
+    expect(qrImageFile("ico", "favicon")).toEqual({
+      fileName: "favicon.ico",
+      mimeType: "image/vnd.microsoft.icon",
+      fileExtension: "ico",
+    });
   });
 
   it("knows the formats", () => {
     expect(
-      ["png", "webp", "bmp", "svg", "eps", "jpg"].map(isQrImageFormat)
-    ).toEqual([true, true, true, true, true, false]);
+      ["png", "webp", "bmp", "ico", "svg", "eps", "jpg"].map(isQrImageFormat)
+    ).toEqual([true, true, true, true, true, true, false]);
   });
 });

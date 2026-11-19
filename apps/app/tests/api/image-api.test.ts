@@ -7,6 +7,7 @@ import { NextRequest } from "next/server";
 import { OFFICIAL_FRAMES } from "qrdx";
 import { describe, expect, it, vi } from "vitest";
 import { readBMP } from "../../../../packages/qrdx/tests/support/bmp";
+import { readICO } from "../../../../packages/qrdx/tests/support/ico";
 import {
   decodeQR,
   rasterizeSvg,
@@ -327,5 +328,147 @@ describe("BMP", () => {
     expect(decodeQR({ data: rgba, width, height })).toBe(
       "https://qrdx.dev/transparent",
     );
+  });
+});
+
+describe("ICO", () => {
+  const icoOf = async (response: Response) =>
+    new Uint8Array(await response.arrayBuffer());
+  const rawOf = async (png: Uint8Array | Buffer) => {
+    const { default: sharp } = await import("sharp");
+    const { data, info } = await sharp(Buffer.from(png))
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { data: new Uint8ClampedArray(data), info };
+  };
+
+  it("is a favicon with the code at 16, 32, 48 and 256 px, and the same caching", async () => {
+    const response = await get(
+      q({ data: "https://qrdx.dev/ico", format: "ico", fg: "155dfc" }),
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe(
+      "image/vnd.microsoft.icon",
+    );
+    expect(response.headers.get("cache-control")).toBe(IMMUTABLE);
+    expect(response.headers.get("cdn-cache-control")).toBe(IMMUTABLE);
+    expect(response.headers.get("access-control-allow-origin")).toBe("*");
+    const entries = readICO(await icoOf(response));
+    expect(entries.map((entry) => [entry.width, entry.height])).toEqual([
+      [16, 16],
+      [32, 32],
+      [48, 48],
+      [256, 256],
+    ]);
+    for (const entry of entries) {
+      expect(entry.bitCount).toBe(32);
+      const { info } = await rawOf(entry.png);
+      expect([info.width, info.height]).toEqual([entry.width, entry.height]);
+    }
+  });
+
+  it("scans at 256 px and is the PNG render scaled down to each size", async () => {
+    const query = { data: "https://qrdx.dev/ico", fg: "155dfc" };
+    const entries = readICO(
+      await icoOf(await get(q({ ...query, format: "ico" }))),
+    );
+    const { default: sharp } = await import("sharp");
+    const master = new Uint8Array(
+      await (
+        await get(q({ ...query, format: "png", size: "1024" }))
+      ).arrayBuffer(),
+    );
+    for (const entry of entries) {
+      const expected = await sharp(Buffer.from(master))
+        .resize(entry.width, entry.height, {
+          fit: "contain",
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+          kernel: "lanczos3",
+        })
+        .ensureAlpha()
+        .raw()
+        .toBuffer();
+      const decoded = await rawOf(entry.png);
+      expect(
+        Buffer.compare(Buffer.from(decoded.data), expected),
+        `${entry.width} px`,
+      ).toBe(0);
+    }
+    const large = entries.at(-1);
+    const { data, info } = await rawOf(large?.png as Uint8Array);
+    expect(decodeQR({ data, width: info.width, height: info.height })).toBe(
+      "https://qrdx.dev/ico",
+    );
+  });
+
+  it("takes ICO in any case, and ignores size and a frame", async () => {
+    const plainResponse = await get(q({ data: "x", format: "ico" }));
+    expect(plainResponse.status).toBe(200);
+    expect(plainResponse.headers.get("content-type")).toBe(
+      "image/vnd.microsoft.icon",
+    );
+    const plain = await icoOf(plainResponse);
+    expect(readICO(plain)).toHaveLength(4);
+    const sized = await icoOf(
+      await get(q({ data: "x", format: "ICO", size: "64" })),
+    );
+    const huge = await icoOf(
+      await get(q({ data: "x", format: "ico", size: "2000" })),
+    );
+    const framed = await icoOf(
+      await get(q({ data: "x", format: "ico", frame: "border" })),
+    );
+    for (const other of [sized, huge, framed]) {
+      expect(Buffer.compare(Buffer.from(other), Buffer.from(plain))).toBe(0);
+    }
+  });
+
+  it("keeps a transparent background transparent at every size", async () => {
+    const response = await get(
+      q({
+        data: "https://qrdx.dev/transparent",
+        format: "ico",
+        style: JSON.stringify({ bgColor: "transparent" }),
+      }),
+    );
+    expect(response.status).toBe(200);
+    for (const entry of readICO(await icoOf(response))) {
+      const { data } = await rawOf(entry.png);
+      expect(data[3], `${entry.width} px corner`).toBe(0);
+      expect(Math.max(...data.filter((_, i) => i % 4 === 3))).toBeGreaterThan(
+        0,
+      );
+    }
+  });
+});
+
+describe("ICO from a PNG that isn't square", () => {
+  it("fits it whole in each size, with a transparent margin", async () => {
+    const { default: sharp } = await import("sharp");
+    const { convertPng } = await import("@/lib/qr-image-formats");
+    const wide = await sharp({
+      create: {
+        width: 300,
+        height: 100,
+        channels: 4,
+        background: { r: 255, g: 0, b: 0, alpha: 1 },
+      },
+    })
+      .png()
+      .toBuffer();
+    const entries = readICO(await convertPng(new Uint8Array(wide), "ico"));
+    expect(entries.map((entry) => entry.width)).toEqual([16, 32, 48, 256]);
+    const { data, info } = await sharp(
+      Buffer.from(entries[3]?.png as Uint8Array),
+    )
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    expect([info.width, info.height]).toEqual([256, 256]);
+    // Top-left is margin (transparent); the middle is the red bar (opaque)
+    expect(data[3]).toBe(0);
+    const middle = (128 * 256 + 128) * 4;
+    expect([data[middle], data[middle + 3]]).toEqual([255, 255]);
   });
 });
