@@ -70,8 +70,14 @@ const numerals = (html: string) =>
     ),
   ].map((match) => ({ rank: match[1], markup: match[0] }));
 
+/** The ids a numeral defines, and the ids its url(#…) references point at. */
+const ids = (markup: string) => ({
+  defined: [...markup.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]),
+  used: [...markup.matchAll(/url\(#([^)]+)\)/g)].map((m) => m[1]),
+});
+
 describe("ranked row numerals", () => {
-  it("number the cards from 1, each figure drawn twice in SVG", () => {
+  it("number the cards from 1, every layer the same figure in SVG", () => {
     const html = renderIntl(
       RankedRowCards({
         cards: Array.from({ length: 10 }, (_, i) => card(i + 1)),
@@ -83,11 +89,32 @@ describe("ranked row numerals", () => {
       Array.from({ length: 10 }, (_, i) => String(i + 1)),
     );
     for (const { rank, markup } of found) {
-      // The faint fill and the outline: the same figure, anchored the same.
+      // The clip, the faint fill, the coloured figure and its rim: the same
+      // figure, anchored the same, so the layers line up.
       const texts = [...markup.matchAll(/<text[^>]*>(\d+)<\/text>/g)];
-      expect(texts.map((t) => t[1])).toEqual([rank, rank]);
-      expect(markup.match(/text-anchor="end" x="100%"/g)).toHaveLength(2);
+      expect(texts.map((t) => t[1])).toEqual([rank, rank, rank, rank]);
+      expect(markup.match(/text-anchor="end" x="100%"/g)).toHaveLength(4);
+      // The coloured figure is the accent, raised by the numeral's own filter.
+      expect(markup).toMatch(/<text class="fill-primary" filter="url\(#/);
     }
+  });
+
+  it("give each numeral its own filter, clip and light band", () => {
+    const html = renderIntl(
+      RankedRowCards({
+        cards: Array.from({ length: 3 }, (_, i) => card(i + 1)),
+        label: "Top today",
+      }),
+    );
+    const all: string[] = [];
+    for (const { markup } of numerals(html)) {
+      const { defined, used } = ids(markup);
+      expect(defined).toHaveLength(3);
+      // Every reference points at something this numeral defines.
+      expect(used.every((id) => defined.includes(id))).toBe(true);
+      all.push(...defined);
+    }
+    expect(new Set(all).size).toBe(all.length);
   });
 
   it("are left out of grids, which show a badge instead", () => {
@@ -98,7 +125,7 @@ describe("ranked row numerals", () => {
     expect(html).not.toContain("<text");
   });
 
-  it("only draw the outline in when motion is welcome", () => {
+  it("only fade the colour in and out when motion isn't welcome", () => {
     const css = readFileSync(
       join(
         import.meta.dirname,
@@ -109,7 +136,8 @@ describe("ranked row numerals", () => {
     const reduced = css.slice(
       css.indexOf("@media (prefers-reduced-motion: reduce)"),
     );
-    expect(reduced).toContain("stroke-dashoffset: 0;");
-    expect(reduced).not.toMatch(/transition:[^;]*stroke-dashoffset/);
+    // No pop in scale, and no band of light sweeping across.
+    expect(reduced).toMatch(/\.gloss[^{]*\{\s*transform: none;/);
+    expect(reduced).toMatch(/\.sheen[^{]*\{\s*display: none;/);
   });
 });
