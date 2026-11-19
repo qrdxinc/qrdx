@@ -48,6 +48,8 @@ export interface DynamicCodeRef {
    * so the code is saved but switched off.
    */
   status?: "active" | "archived" | "disabled";
+  /** Paused by its owner: status stays "active", scans don't reach the address. */
+  paused?: boolean;
 }
 
 const isObject = (value: unknown): value is Record<string, unknown> =>

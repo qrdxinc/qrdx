@@ -14075,12 +14075,16 @@
     "source": "56bcdfa7bb8a",
     "status": "machine"
   },
-  "editor.dynamicLinkToggle.updateHeldTitle": {
-    "source": "3355e24c4330",
+  "editor.dynamicLinkToggle.updateSwitchedOffTitle": {
+    "source": "b942557a2338",
     "status": "machine"
   },
-  "editor.dynamicLinkToggle.updateHeldBody": {
-    "source": "d2e2ba1e4479",
+  "editor.dynamicLinkToggle.updateSwitchedOffBody": {
+    "source": "84640ae66d84",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.updatePausedBody": {
+    "source": "69aa5dc737f7",
     "status": "machine"
   },
   "editor.dynamicLinkToggle.resumeDroppedTitle": {
