@@ -3,11 +3,11 @@
 //
 // IndexNow always: Bing, Yandex, Seznam, Naver and the other IndexNow engines
 // share what one of them receives. The Bing Webmaster API too, when
-// BING_WEBMASTER_API_KEY is set: it resubmits the sitemap, then submits the
-// URLs, up to the site's daily quota. And Google, when
+// BING_WEBMASTER_API_KEY is set: it submits the URLs, up to the site's daily
+// quota, then resubmits the sitemaps. And Google, when
 // GSC_SERVICE_ACCOUNT_JSON is set (a service account with access to the
-// Search Console property): it resubmits the sitemap. Google has no API to
-// request indexing of ordinary pages, so the sitemap is all it gets.
+// Search Console property): it resubmits the sitemaps. Google has no API to
+// request indexing of ordinary pages, so the sitemaps are all it gets.
 //
 //   node scripts/notify-search-engines.mjs --all           every sitemap URL
 //   node scripts/notify-search-engines.mjs --important     the main pages
@@ -165,9 +165,18 @@ export function parseSitemap(xml) {
   return entries;
 }
 
+/**
+ * "index" for a sitemap index, "urlset" for a sitemap of pages, undefined
+ * for anything else (an HTML error page answering 200, say).
+ */
+export function sitemapKind(xml) {
+  if (/<sitemapindex[\s>]/.test(xml)) return "index";
+  if (/<urlset[\s>]/.test(xml)) return "urlset";
+}
+
 /** The sitemaps a sitemap index lists, or none when `xml` isn't an index. */
 export function parseSitemapIndex(xml) {
-  if (!/<sitemapindex[\s>]/.test(xml)) return [];
+  if (sitemapKind(xml) !== "index") return [];
   const urls = [];
   for (const [, block] of xml.matchAll(/<sitemap>([\s\S]*?)<\/sitemap>/g)) {
     const loc = /<loc>\s*([^<]+?)\s*<\/loc>/.exec(block)?.[1];
@@ -323,7 +332,7 @@ async function request(url, init = {}) {
 }
 
 /** The sitemaps robots.txt lists, or /sitemap.xml alone when it can't say. */
-async function listSitemaps() {
+export async function listSitemaps() {
   let robots;
   try {
     robots = await request(ROBOTS_URL);
@@ -352,7 +361,7 @@ async function listSitemaps() {
  * one level), and the sitemaps read. A sitemap that can't be read is a
  * warning naming it; the run goes on with the rest. Throws when none can be.
  */
-async function loadSitemaps() {
+export async function loadSitemaps() {
   const queue = await listSitemaps();
   const seen = new Set();
   const sitemaps = [];
@@ -374,9 +383,15 @@ async function loadSitemaps() {
       );
       continue;
     }
-    const children = parseSitemapIndex(response.text);
-    if (children.length > 0) {
-      queue.push(...children.filter((child) => onSite(child)));
+    const kind = sitemapKind(response.text);
+    if (!kind) {
+      warn(
+        `${url} answered HTTP ${response.status} without a sitemap (no <urlset> or <sitemapindex>); skipped this run.`
+      );
+      continue;
+    }
+    if (kind === "index") {
+      queue.push(...parseSitemapIndex(response.text).filter((u) => onSite(u)));
       continue;
     }
     sitemaps.push(url);
@@ -482,21 +497,50 @@ async function callBing(method, key, { query = {}, body } = {}) {
 }
 
 /**
- * "HTTP 200" when every call answered the same, else each status with its
- * count: "HTTP 200 ×6, HTTP 500 ×1".
+ * One outcome when every call ended the same ("HTTP 200"), else each with
+ * its count: "HTTP 200 ×6, timed out ×1".
  */
-export function statusSummary(statuses) {
+export function statusSummary(outcomes) {
   const counts = new Map();
-  for (const status of statuses) {
-    counts.set(status, (counts.get(status) ?? 0) + 1);
+  for (const outcome of outcomes) {
+    counts.set(outcome, (counts.get(outcome) ?? 0) + 1);
   }
-  if (counts.size === 1) return `HTTP ${statuses[0]}`;
+  if (counts.size === 1) return outcomes[0];
   return [...counts]
-    .map(([status, count]) => `HTTP ${status} ×${count}`)
+    .map(([outcome, count]) => `${outcome} ×${count}`)
     .join(", ");
 }
 
-async function sendBing(urls, results, sitemaps) {
+/**
+ * `submit` for each sitemap in turn, as one results row. A sitemap whose
+ * call throws (a timeout, a dropped connection) is a warning and its own
+ * outcome; the others still go.
+ */
+export async function submitSitemaps(engine, sitemaps, submit) {
+  const outcomes = [];
+  for (const sitemap of sitemaps) {
+    try {
+      const response = await submit(sitemap);
+      if (!response.ok) {
+        warn(
+          `${engine}: submitting ${sitemap} answered HTTP ${response.status}: ${response.error}`
+        );
+      }
+      outcomes.push(`HTTP ${response.status}`);
+    } catch (error) {
+      warn(`${engine}: submitting ${sitemap} failed: ${error.message}`);
+      outcomes.push(error.name === "TimeoutError" ? "timed out" : "failed");
+    }
+  }
+  return [engine, `${sitemaps.length} sitemaps`, statusSummary(outcomes)];
+}
+
+/**
+ * The URLs, up to today's quota, then every sitemap. The URLs go first and
+ * on their own: a failure there still leaves the sitemaps to send, and a
+ * sitemap that fails leaves the rest.
+ */
+export async function sendBing(urls, results, sitemaps) {
   const key = process.env.BING_WEBMASTER_API_KEY?.trim();
   if (!key) {
     notice(
@@ -518,24 +562,21 @@ async function sendBing(urls, results, sitemaps) {
     return;
   }
 
-  const feedStatuses = [];
-  for (const feedUrl of sitemaps) {
-    const feed = await callBing("SubmitFeed", key, {
-      body: { siteUrl, feedUrl },
-    });
-    if (!feed.ok) {
-      warn(
-        `Bing SubmitFeed for ${feedUrl} answered HTTP ${feed.status}: ${feed.error}`
-      );
-    }
-    feedStatuses.push(feed.status);
+  try {
+    await sendBingUrls(key, siteUrl, urls, results);
+  } catch (error) {
+    warn(`Bing: submitting the URLs failed: ${error.message}`);
+    results.push(["Bing", `${urls.length} URLs`, "failed"]);
   }
-  results.push([
-    "Bing",
-    `${sitemaps.length} sitemaps`,
-    statusSummary(feedStatuses),
-  ]);
+  results.push(
+    await submitSitemaps("Bing", sitemaps, (feedUrl) =>
+      callBing("SubmitFeed", key, { body: { siteUrl, feedUrl } })
+    )
+  );
+}
 
+/** Today's quota, then up to that many of `urls`. */
+async function sendBingUrls(key, siteUrl, urls, results) {
   if (urls.length === 0) {
     results.push(["Bing", "0 URLs", "nothing to send"]);
     return;
@@ -554,7 +595,7 @@ async function sendBing(urls, results, sitemaps) {
   const urlList = urls.slice(0, Math.min(daily, BING_BATCH_MAX));
   if (urlList.length === 0) {
     warn(
-      "Bing: today's URL submission quota is used up; sent the sitemap only."
+      "Bing: today's URL submission quota is used up; sending the sitemaps only."
     );
     results.push(["Bing", `${urls.length} URLs`, "skipped: quota 0"]);
     return;
@@ -636,25 +677,11 @@ async function sendGoogle(results, sitemaps) {
     results.push(["Google", "sitemap", `skipped: ${access.error}`]);
     return;
   }
-  const statuses = [];
-  for (const sitemap of sitemaps) {
-    const submit = await callGoogle(
-      access.token,
-      googleSitemapPath(sitemap),
-      "PUT"
-    );
-    if (!submit.ok) {
-      warn(
-        `Google Search Console sitemaps.submit for ${sitemap} answered HTTP ${submit.status}: ${submit.error}`
-      );
-    }
-    statuses.push(submit.status);
-  }
-  results.push([
-    "Google",
-    `${sitemaps.length} sitemaps`,
-    statusSummary(statuses),
-  ]);
+  results.push(
+    await submitSitemaps("Google", sitemaps, (sitemap) =>
+      callGoogle(access.token, googleSitemapPath(sitemap), "PUT")
+    )
+  );
 }
 
 /**

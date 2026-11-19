@@ -10,7 +10,9 @@ import { faqItems } from "./faq-items";
  * server-rendered HTML; a closed Radix accordion panel has no content, so
  * crawlers saw the questions without their answers. The look is the
  * accordion's cards, including the 0.2s open and close where the browser can
- * animate ::details-content, and each question stays an h3.
+ * animate ::details-content, and the question's width and wrapping (the
+ * accordion's header was an h3: globals.css gives h3 font-stretch 106% and
+ * balanced wrapping).
  */
 export async function AIArtFAQ({
   allowances,
@@ -59,9 +61,11 @@ export async function AIArtFAQ({
               name="ai-art-faq"
             >
               <summary className="bg-secondary-muted border-border focus-visible:border-ring focus-visible:ring-ring/50 group-open:ring-secondary/20 flex cursor-pointer list-none items-start justify-between gap-4 rounded-lg border px-4 py-3.5 text-left text-sm font-medium transition-all outline-none group-open:ring focus-visible:ring-[3px] [&::-webkit-details-marker]:hidden">
-                {/* An h3, as the accordion's header was: the same heading
-                    outline and the display font the question had. */}
-                <h3>{faq.question}</h3>
+                {/* A span, not a heading: screen readers expose <summary> as
+                    a button. Its classes keep the accordion header's h3 look. */}
+                <span className="[font-stretch:106%] text-balance">
+                  {faq.question}
+                </span>
                 <ArrowDown2
                   aria-hidden
                   className="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200 group-open:rotate-180"

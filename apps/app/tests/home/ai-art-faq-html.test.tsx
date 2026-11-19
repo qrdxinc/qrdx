@@ -60,8 +60,10 @@ describe("/ai/art FAQ (server HTML)", () => {
       expect(question).toBe(entity?.name);
       expect(answer).toBe(entity?.acceptedAnswer.text);
       expect(answer.length).toBeGreaterThan(20);
-      // Each question is a heading, as the accordion's header was.
-      expect(body).toMatch(/<summary\b[^>]*><h3>[^<]+<\/h3>/);
+      // No heading inside <summary>: screen readers expose it as a button.
+      const summary = body?.match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/)?.[1];
+      expect(summary).toBeDefined();
+      expect(summary).not.toMatch(/<h[1-6]\b/);
     });
   });
 
