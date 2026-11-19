@@ -27,6 +27,7 @@ import {
   CARD_GRID,
   CARD_LINE,
   CARD_TEXT,
+  CARD_TEXT_REVEAL,
   RAIL_CARD,
   RAIL_RANKED,
   RANK_NUMERAL,
@@ -210,7 +211,7 @@ export function ItemCard({
           )}
         </div>
       </div>
-      <div className={CARD_TEXT}>
+      <div className={cn(CARD_TEXT, CARD_TEXT_REVEAL)}>
         <div className={CARD_LINE}>
           <span className="truncate text-sm font-medium">{card.name}</span>
           {card.saveCount > 0 && (
