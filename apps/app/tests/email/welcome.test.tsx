@@ -125,8 +125,8 @@ describe("sendWelcomeEmail", () => {
       "Make a dynamic code.",
       "Watch its scans:",
       "Change where it points whenever you like, even after it's printed.",
-      "Static codes stay free, and the codes you make are never switched off. Free also includes 10 dynamic codes.",
-      "Pro is $5 a month or $48 a year and adds unlimited dynamic codes, 5 custom domains and scan alerts by email.",
+      "Static codes stay free, and the codes you make keep working if you change plans or stop paying. Free also includes 10 dynamic codes.",
+      "Pro is $5 a month or $48 a year and adds unlimited dynamic codes, 5 custom domains and scan alerts by email. Local taxes may be added at checkout.",
       "reply to this email. A person reads every reply.",
       "Ritesh from QRdx",
       "You're getting this because you just made a QRdx account.",
@@ -145,22 +145,45 @@ describe("sendWelcomeEmail", () => {
     expect(html).not.toContain(">QR<");
   });
 
-  it("comes from EMAIL_FROM when there's no personal sender", async () => {
+  it("isn't sent without a personal sender: it promises a person reads replies", async () => {
     state.env.EMAIL_FROM_PERSONAL = undefined;
-    await sendWelcomeEmail({ userId: "u_new", country: null });
-    const { email, text } = await rendered();
-    expect(email).toMatchObject({
-      from: "QRdx <hello@qrdx.dev>",
-      replyTo: "hello@qrdx.dev",
-    });
-    expect(text).toContain("Reply to this email and it reaches QRdx.");
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    expect(await sendWelcomeEmail({ userId: "u_new", country: null })).toBe(
+      "no_personal_sender",
+    );
+    expect(state.sent).toHaveLength(0);
+  });
+
+  it("isn't sent to an agency's portal client", async () => {
+    fakeDb.seed("portalClient", [
+      {
+        id: "pc_1",
+        organizationId: "org_agency",
+        email: "u_new@mail.example.org.uk",
+      },
+    ]);
+    expect(await sendWelcomeEmail({ userId: "u_new", country: null })).toBe(
+      "portal_client",
+    );
+    expect(state.sent).toHaveLength(0);
+  });
+
+  it("greets 'there' when the name is the address's local part", async () => {
+    fakeDb.seed("user", [
+      person("u_info", { name: "info", email: "info@shop.example.org.uk" }),
+    ]);
+    await sendWelcomeEmail({ userId: "u_info", country: null });
+    const { text } = await rendered();
+    expect(text).toContain("Hi there,");
   });
 
   it("is in the person's language, with Pro's price in their currency", async () => {
     await sendWelcomeEmail({ userId: "u_es", country: "IN" });
     const { email, html, text } = await rendered();
     expect(email.subject).toBe("Te damos la bienvenida a QRdx");
-    expect(html).toContain('lang="es"');
+    expect(html).toMatch(/<html[^>]*lang="es"/);
+    // The editor link opens in their language.
+    expect(html).toContain(new URL("/es/playground", baseUrl).toString());
     expect(text).toContain("Ana");
     // The language picks the format, the country the currency (lib/pricing.ts).
     expect(text).toMatch(/199\s₹ al mes o 1499\s₹ al año/);

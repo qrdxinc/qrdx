@@ -9289,8 +9289,9 @@
       "makeCode": "<link>Buat kode dinamis.</link> Kode ini membuka tautan pendek yang tidak berubah, sehingga bisa langsung Anda cetak.",
       "seeScans": "<link>Lihat pemindaiannya:</link> kapan, di mana, dan dari perangkat apa orang memindainya.",
       "changeLink": "Ubah tujuan tautannya kapan pun Anda mau, bahkan setelah dicetak. Tanpa cetak ulang.",
-      "free": "Kode statis tetap gratis, dan kode yang Anda buat tidak akan pernah dinonaktifkan. Paket Gratis juga mencakup {count} kode dinamis.",
+      "free": "Kode QR statis tetap gratis, dan kode yang Anda buat tetap berfungsi meskipun Anda berganti paket atau berhenti membayar. Paket Gratis juga mencakup {count} kode QR dinamis.",
       "pro": "Jika Anda butuh lebih banyak, Pro seharga {monthly} per bulan atau {yearly} per tahun, dengan tambahan kode dinamis tanpa batas, {domains} domain kustom, dan notifikasi pemindaian lewat email.",
+      "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
       "reply": "Jika ada kendala, atau Anda tidak yakin cara melakukan sesuatu, balas email ini. Setiap balasan dibaca oleh seorang manusia.",
       "reason": "Anda menerima email ini karena baru saja membuat akun QRdx."
     }

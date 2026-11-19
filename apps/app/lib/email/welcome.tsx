@@ -1,10 +1,11 @@
 import "server-only";
 
-import { database as db, user } from "@repo/database";
+import { database as db, portalClient, user } from "@repo/database";
 import { baseUrl } from "@repo/email/origin";
 import { isReservedEmailAddress } from "@repo/email/reserved-address";
 import { WelcomeEmail, welcomeSubject } from "@repo/email/templates/welcome";
 import { DEFAULT_LOCALE, isLocale } from "@repo/i18n/config";
+import { localizePath } from "@repo/i18n/paths";
 import { eq } from "drizzle-orm";
 import { env } from "@/env";
 import { teamNotesUnsubscribeUrl } from "@/lib/events/unsubscribe";
@@ -13,15 +14,16 @@ import { emailIntl } from "@/lib/i18n/email";
 import { PLAN_LIMITS } from "@/lib/plans";
 import { currencyForCountry, formatPrice, PRICING } from "@/lib/pricing";
 import { workspaceLink } from "@/lib/workspace-paths";
-import { firstName } from "./personal-notes";
-import { parseSender, personalSender } from "./personal-sender";
+import { greetingName } from "./greeting";
+import { personalSender } from "./personal-sender";
 import { sendEmail } from "./send";
 import { wantsTeamNotes } from "./team-notes";
 
 // The welcome email: one short note, sent once right after someone makes an
 // account (lib/analytics/sign-up-hook.ts runs it after the response), from
-// EMAIL_FROM_PERSONAL when it's set, else EMAIL_FROM, with replies to that
-// address. It's one of the notes from the QRdx team (./team-notes.ts), so
+// EMAIL_FROM_PERSONAL with replies to it; without that sender it isn't sent
+// (it promises a person reads every reply). Agency portal clients don't get
+// it. It's one of the notes from the QRdx team (./team-notes.ts), so
 // it only goes out where those exist (the teamNotes feature: qrdx.dev with
 // email set up) and its footer turns them off. Accounts are only made
 // through sign-up (/api/auth), never by the console or an import; test
@@ -33,11 +35,29 @@ import { wantsTeamNotes } from "./team-notes";
 export type WelcomeOutcome =
   | "sent"
   | "off"
+  | "no_personal_sender"
+  | "portal_client"
   | "not_found"
   | "opted_out"
   | "banned"
   | "reserved_address"
   | "failed";
+
+let warnedNoSender = false;
+
+/**
+ * An agency's client (ee/client-portal): their first portal sign-in makes a
+ * free QRdx account, but the portal never shows it, so no QRdx welcome. The
+ * portal_client row is made when they're invited, before that sign-in.
+ */
+export async function isPortalClient(email: string): Promise<boolean> {
+  const [row] = await db
+    .select({ id: portalClient.id })
+    .from(portalClient)
+    .where(eq(portalClient.email, email.trim().toLowerCase()))
+    .limit(1);
+  return Boolean(row);
+}
 
 export async function sendWelcomeEmail({
   userId,
@@ -48,6 +68,20 @@ export async function sendWelcomeEmail({
   country: string | null;
 }): Promise<WelcomeOutcome> {
   if (!(isFeatureAvailable("teamNotes") && env.EMAIL_FROM)) return "off";
+  // It promises that a person reads every reply: only from one.
+  const sender = personalSender();
+  if (!sender) {
+    if (!warnedNoSender) {
+      warnedNoSender = true;
+      console.warn(
+        JSON.stringify({
+          event: "email.welcome",
+          outcome: "no_personal_sender",
+        }),
+      );
+    }
+    return "no_personal_sender";
+  }
   const [row] = await db
     .select({
       id: user.id,
@@ -64,8 +98,8 @@ export async function sendWelcomeEmail({
   if (row.banned) return "banned";
   if (isReservedEmailAddress(row.email)) return "reserved_address";
   if (!wantsTeamNotes(row)) return "opted_out";
+  if (await isPortalClient(row.email)) return "portal_client";
 
-  const sender = personalSender() ?? parseSender(env.EMAIL_FROM);
   const intl = await emailIntl(
     isLocale(row.locale) ? row.locale : DEFAULT_LOCALE,
   );
@@ -82,10 +116,10 @@ export async function sendWelcomeEmail({
     subject: welcomeSubject(intl),
     react: (
       <WelcomeEmail
-        firstName={firstName(row.name)}
+        firstName={greetingName(row.name, row.email).name}
         freeDynamicCodes={PLAN_LIMITS.free.dynamicCodes}
         intl={intl}
-        newCodeUrl={absolute("/playground")}
+        newCodeUrl={absolute(localizePath("/playground", intl.locale))}
         proCustomDomains={PLAN_LIMITS.pro.customDomains}
         proMonthly={price("month")}
         proYearly={price("year")}

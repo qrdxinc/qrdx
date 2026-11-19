@@ -67,6 +67,7 @@ export function WelcomeEmail({
   return (
     <PersonalLayout
       intl={intl}
+      lang={intl.locale}
       preview={t("welcome.intro")}
       reason={t("welcome.reason")}
       replyTo={senderName}
@@ -94,7 +95,8 @@ export function WelcomeEmail({
           monthly: proMonthly,
           yearly: proYearly,
           domains: formatCount(proCustomDomains, intl.locale),
-        })}
+        })}{" "}
+        {t("welcome.taxes")}
       </PersonalText>
       <PersonalText>{t("welcome.reply")}</PersonalText>
       <PersonalText>{senderName}</PersonalText>

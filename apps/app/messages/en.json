@@ -9688,8 +9688,9 @@
       "makeCode": "<link>Make a dynamic code.</link> It opens a short link that stays the same, so you can print it right away.",
       "seeScans": "<link>Watch its scans:</link> when, where and on which devices people scan it.",
       "changeLink": "Change where it points whenever you like, even after it's printed. No reprinting.",
-      "free": "Static codes stay free, and the codes you make are never switched off. Free also includes {count} dynamic codes.",
+      "free": "Static codes stay free, and the codes you make keep working if you change plans or stop paying. Free also includes {count} dynamic codes.",
       "pro": "If you need more, Pro is {monthly} a month or {yearly} a year and adds unlimited dynamic codes, {domains} custom domains and scan alerts by email.",
+      "taxes": "Local taxes may be added at checkout.",
       "reply": "If anything gets in your way, or you're not sure how to do something, reply to this email. A person reads every reply.",
       "reason": "You're getting this because you just made a QRdx account."
     }

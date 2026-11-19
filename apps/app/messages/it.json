@@ -9289,8 +9289,9 @@
       "makeCode": "<link>Crea un QR code dinamico.</link> Apre un link breve che non cambia, quindi puoi stamparlo subito.",
       "seeScans": "<link>Guarda le sue scansioni:</link> quando, dove e con quali dispositivi le persone lo inquadrano.",
       "changeLink": "Cambia la destinazione quando vuoi, anche dopo la stampa. Nessuna ristampa.",
-      "free": "I QR code statici restano gratuiti e i codici che crei non vengono mai disattivati. Il piano Gratuito include anche {count} QR code dinamici.",
+      "free": "I QR code statici restano gratuiti e i codici che crei continuano a funzionare anche se cambi piano o smetti di pagare. Il piano Gratuito include anche {count} QR code dinamici.",
       "pro": "Se te ne serve di più, Pro costa {monthly} al mese o {yearly} all’anno e aggiunge QR code dinamici illimitati, {domains} domini personalizzati e avvisi di scansione via email.",
+      "taxes": "Le imposte locali possono essere aggiunte al momento del pagamento.",
       "reply": "Se qualcosa ti blocca, o non sei sicuro di come fare, rispondi a questa email. Ogni risposta viene letta da una persona.",
       "reason": "Ricevi questa email perché hai appena creato un account QRdx."
     }

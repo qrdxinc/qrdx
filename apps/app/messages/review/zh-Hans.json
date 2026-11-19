@@ -29208,11 +29208,15 @@
     "status": "machine"
   },
   "emails.welcome.free": {
-    "source": "5040aae821b1",
+    "source": "717da00cdb2e",
     "status": "machine"
   },
   "emails.welcome.pro": {
     "source": "5f3406c92f78",
+    "status": "machine"
+  },
+  "emails.welcome.taxes": {
+    "source": "3f5c5dcd5198",
     "status": "machine"
   },
   "emails.welcome.reply": {
