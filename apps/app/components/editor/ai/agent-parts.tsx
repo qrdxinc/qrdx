@@ -34,6 +34,7 @@ import type {
   DesignQrOutput,
   DesignRecord,
 } from "@/lib/ai/agent/tools";
+import { pricingHref } from "@/lib/checkout-surface";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { useChatContext } from "@/lib/hooks/use-chat-context";
 import { designQRProps } from "@/lib/qr-design/props";
@@ -682,7 +683,7 @@ export function SaveTemplateCard({
               size="sm"
               variant="outline"
             >
-              <Link href="/pricing">{t("upgrade")}</Link>
+              <Link href={pricingHref("ai_chat")}>{t("upgrade")}</Link>
             </Button>
           </>
         ) : output && !output.ok ? (

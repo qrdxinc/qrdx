@@ -6,6 +6,7 @@ import type { ComponentProps } from "react";
 import type { UpgradeAction } from "@/app/(app)/settings/usage/_lib/meters";
 import { CheckoutButtons } from "@/components/billing/checkout-buttons";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { type KnownCheckoutSurface, withSurface } from "@/lib/checkout-surface";
 
 /**
  * An upgrade link from a limit (limitCopy's `upgrade`), tracked on click.
@@ -16,6 +17,7 @@ import { LocaleLink as Link } from "@/components/i18n/locale-link";
 export function UpgradeButton({
   upgrade,
   source,
+  surface,
   onNavigate,
   checkout = false,
   className,
@@ -24,15 +26,17 @@ export function UpgradeButton({
   upgrade: UpgradeAction;
   /** For analytics, e.g. "limit_dialog" */
   source: string;
+  /** Recorded on the payment, through the pricing page for the link */
+  surface: KnownCheckoutSurface;
   onNavigate?: () => void;
   checkout?: boolean;
 } & Omit<ComponentProps<typeof Button>, "asChild" | "children">) {
   const link = (
     <Button asChild className={className} size="sm" {...props}>
       <Link
-        href={upgrade.href}
+        href={withSurface(upgrade.href, surface)}
         onClick={() => {
-          track("upgrade_clicked", { source, plan: upgrade.plan });
+          track("upgrade_clicked", { source, plan: upgrade.plan, surface });
           onNavigate?.();
         }}
       >
@@ -49,6 +53,7 @@ export function UpgradeButton({
       plan={upgrade.plan}
       size="sm"
       source={source}
+      surface={surface}
     />
   );
 }

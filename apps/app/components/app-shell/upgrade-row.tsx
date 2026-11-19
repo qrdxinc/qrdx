@@ -14,6 +14,7 @@ import {
   upgradeTo,
 } from "@/app/(app)/settings/usage/_lib/meters";
 import { LocaleLink } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import type { Plan } from "@/lib/pricing";
 
 /**
@@ -48,9 +49,13 @@ export function UpgradeRow({
         "hover:bg-foreground/[0.05] hover:text-foreground focus-visible:ring-ring/50 text-muted-foreground flex shrink-0 items-center rounded-md text-sm font-medium outline-none transition-colors focus-visible:ring-[3px] focus-visible:ring-inset",
         collapsed ? "size-9 justify-center" : "h-8 w-full gap-2.5 px-2.5",
       )}
-      href="/pricing"
+      href={pricingHref("sidebar_upgrade")}
       onClick={() => {
-        track("upgrade_clicked", { source: "sidebar", plan: "pro" });
+        track("upgrade_clicked", {
+          source: "sidebar",
+          plan: "pro",
+          surface: "sidebar_upgrade",
+        });
         onNavigate?.();
       }}
     >

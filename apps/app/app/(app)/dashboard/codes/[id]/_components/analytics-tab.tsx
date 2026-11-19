@@ -25,6 +25,7 @@ import { AnalyticsExtra } from "@/app/(app)/dashboard/codes/[id]/_components/ana
 import { PreciseLocationsCard } from "@/app/(app)/dashboard/codes/[id]/_components/precise-locations-card";
 import { SheetsExport } from "@/components/data-connections/sheets-export";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import type { Translator } from "@/lib/i18n/translator";
 import { PLAN_LIMITS, PLANS } from "@/lib/plans";
@@ -238,7 +239,10 @@ export async function AnalyticsTab({
             value: retentionText(retentionDays, t),
             value2: upgradeRetentionText(retentionDays, t),
             link: (chunks) => (
-              <Link className="underline" href="/pricing">
+              <Link
+                className="underline"
+                href={pricingHref("analytics_locked")}
+              >
                 {chunks}
               </Link>
             ),

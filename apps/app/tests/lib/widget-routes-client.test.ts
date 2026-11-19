@@ -178,21 +178,31 @@ describe("what comes back", () => {
 });
 
 describe("the pricing page, the enterprise form and the bulk tool", () => {
-  it("startCheckout posts the plan and period, and hands back the URL or the reason", async () => {
+  it("startCheckout posts the plan, period and surface, and hands back the URL or the reason", async () => {
     answer({ url: "https://checkout.example/session" });
-    expect(await startCheckout({ plan: "pro", interval: "year" })).toEqual({
+    expect(
+      await startCheckout({
+        plan: "pro",
+        interval: "year",
+        surface: "pricing_page",
+      }),
+    ).toEqual({
       url: "https://checkout.example/session",
     });
     expect(sent()).toMatchObject({
       path: "/api/subscription/checkout",
       method: "POST",
       credentials: "same-origin",
-      body: { plan: "pro", interval: "year" },
+      body: { plan: "pro", interval: "year", surface: "pricing_page" },
     });
     const signIn = { error: "Sign in to upgrade.", reason: "sign_in" };
     answer(signIn, 401);
     expect(
-      await startCheckout({ plan: "business", interval: "month" }),
+      await startCheckout({
+        plan: "business",
+        interval: "month",
+        surface: "limit_dialog",
+      }),
     ).toEqual(signIn);
   });
 
@@ -280,7 +290,12 @@ describe("the pricing page, the enterprise form and the bulk tool", () => {
 
   it("each rejects on a network failure or an answer that isn't its result", async () => {
     const calls = [
-      () => startCheckout({ plan: "pro", interval: "year" }),
+      () =>
+        startCheckout({
+          plan: "pro",
+          interval: "year",
+          surface: "pricing_page",
+        }),
       () =>
         requestInvoice({
           company: "",

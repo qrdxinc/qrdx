@@ -62,6 +62,7 @@ import {
 } from "@/components/sections/ai-art/use-ai-art-run";
 import { useArtUpgrade } from "@/components/sections/ai-art/use-art-upgrade";
 import { ART_MODEL_LABEL, ART_SUPPORTS_SEED } from "@/lib/ai/art-models";
+import { pricingHref } from "@/lib/checkout-surface";
 import { useControlsTabFromUrl } from "@/lib/hooks/use-controls-tab-from-url";
 import { useArtSessionStore } from "@/store/art-session-store";
 import { useAuthStore } from "@/store/auth-store";
@@ -683,7 +684,7 @@ function CreditsLine({
           link: (chunks) => (
             <Link
               className="text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground"
-              href="/pricing"
+              href={pricingHref("art_tab")}
             >
               {chunks}
             </Link>
@@ -736,6 +737,7 @@ function CreditsLine({
           plan={target}
           size="sm"
           source="ai_art_panel"
+          surface="art_tab"
           waiting={waiting}
         />
       )}

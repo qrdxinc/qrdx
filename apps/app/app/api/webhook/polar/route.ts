@@ -9,6 +9,7 @@ import {
 import { env } from "@/env";
 import { handleAffiliateWebhook } from "@/lib/affiliates/commissions";
 import { trackServer } from "@/lib/analytics/server";
+import { parseCheckoutSurface } from "@/lib/checkout-surface";
 import { planForProductId } from "@/lib/pricing";
 
 function safeParseDate(value: string | Date | null | undefined): Date | null {
@@ -54,6 +55,8 @@ const onPayload: WebhooksConfig["onPayload"] = async ({ data, type }) => {
         checkoutId: data.checkout_id || "",
         customerCancellationReason: data.customer_cancellation_reason || null,
         customerCancellationComment: data.customer_cancellation_comment || null,
+        // What checkout put there (plan, interval, surface: the button or
+        // page that led to it), which Polar copies onto the subscription.
         metadata: data.metadata ? JSON.stringify(data.metadata) : null,
         customFieldData: data.custom_field_data
           ? JSON.stringify(data.custom_field_data)
@@ -104,6 +107,8 @@ const onPayload: WebhooksConfig["onPayload"] = async ({ data, type }) => {
           {
             plan: planForProductId(data.product_id) ?? "pro",
             interval: data.recurring_interval ?? undefined,
+            // The button or page checkout recorded (actions/checkout.ts)
+            surface: parseCheckoutSurface(data.metadata?.surface),
           },
           {
             // Named only if the buyer allowed analytics (set at checkout).

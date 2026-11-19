@@ -104,6 +104,7 @@ export default async function AdminSubscriptionsPage({
               <TableHead>Amount</TableHead>
               <TableHead>Period end</TableHead>
               <TableHead>Created</TableHead>
+              <TableHead>From</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -139,6 +140,13 @@ export default async function AdminSubscriptionsPage({
                 </TableCell>
                 <TableCell>{formatDate(row.currentPeriodEnd)}</TableCell>
                 <TableCell>{formatDate(row.createdAt)}</TableCell>
+                <TableCell>
+                  {row.surface ? (
+                    <code className="text-xs">{row.surface}</code>
+                  ) : (
+                    <span className="text-muted-foreground">Not recorded</span>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

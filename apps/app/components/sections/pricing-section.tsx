@@ -23,6 +23,11 @@ import { InvoiceRequestDialog } from "@/components/sections/pricing/invoice-requ
 import { PricingOffers } from "@/components/sections/pricing/pricing-offers";
 import { maxYearlySavingsPercent } from "@/components/sections/pricing/savings";
 import { siteConfig } from "@/config/site";
+import {
+  type KnownCheckoutSurface,
+  knownCheckoutSurface,
+  SURFACE_PARAM,
+} from "@/lib/checkout-surface";
 import { usePostLoginAction } from "@/lib/hooks/use-post-login-action";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 import {
@@ -63,6 +68,13 @@ interface PricingSectionProps {
    * marketing site's), the cards read it from the address after loading.
    */
   initialInterval?: BillingInterval | null;
+  /**
+   * What these cards' checkouts record as the button that led to them
+   * (lib/checkout-surface.ts): "pricing_page" unless the page says
+   * otherwise (the marketing site's: "site_pricing"). A link that came
+   * here with `?from=<surface>` (an email, the sidebar) records that one.
+   */
+  surface?: KnownCheckoutSurface;
 }
 
 const PORTAL_HREF = "/settings/portal";
@@ -229,6 +241,7 @@ export function PricingSection({
   description,
   highlights,
   initialInterval,
+  surface: pageSurface = "pricing_page",
 }: PricingSectionProps) {
   const t = useTranslations("pricing");
   const locale = useLocale();
@@ -248,6 +261,17 @@ export function PricingSection({
     );
     if (asked) setInterval(asked);
   }, [initialInterval]);
+  // The link that brought them here (/pricing?from=limit_email), checked
+  // against the list; read once the cards are in the browser.
+  const [from, setFrom] = useState<KnownCheckoutSurface | null>(null);
+  useEffect(() => {
+    setFrom(
+      knownCheckoutSurface(
+        new URLSearchParams(window.location.search).get(SURFACE_PARAM),
+      ),
+    );
+  }, []);
+  const surface = from ?? pageSurface;
   const changeInterval = (next: BillingInterval) => {
     setToggled(true);
     setInterval(next);
@@ -277,12 +301,20 @@ export function PricingSection({
   const invoices = useAvailability().has("invoiceRequests");
   const [invoiceOpen, setInvoiceOpen] = useState(false);
 
-  const startCheckout = (plan: PaidPlan, billing: BillingInterval) => {
+  const startCheckout = (
+    plan: PaidPlan,
+    billing: BillingInterval,
+    via: KnownCheckoutSurface,
+  ) => {
     setPendingPlan(plan);
     startTransition(async () => {
-      const result = await requestCheckout({ plan, interval: billing });
+      const result = await requestCheckout({
+        plan,
+        interval: billing,
+        surface: via,
+      });
       if ("url" in result) {
-        track("checkout_started", { plan, interval: billing });
+        track("checkout_started", { plan, interval: billing, surface: via });
         window.location.assign(result.url);
         return;
       }
@@ -290,7 +322,7 @@ export function PricingSection({
       if (result.reason === "sign_in") {
         openAuthDialog("upgrade", {
           action: "CHECKOUT",
-          data: { plan, interval: billing },
+          data: { plan, interval: billing, surface: via },
         });
         return;
       }
@@ -307,26 +339,28 @@ export function PricingSection({
     });
   };
 
-  usePostLoginAction<{ plan?: unknown; interval?: unknown }>(
-    "CHECKOUT",
-    (data) => {
-      startCheckout(
-        isPaidPlan(data?.plan) ? data.plan : "pro",
-        isInterval(data?.interval) ? data.interval : "year",
-      );
-    },
-  );
+  usePostLoginAction<{
+    plan?: unknown;
+    interval?: unknown;
+    surface?: unknown;
+  }>("CHECKOUT", (data) => {
+    startCheckout(
+      isPaidPlan(data?.plan) ? data.plan : "pro",
+      isInterval(data?.interval) ? data.interval : "year",
+      knownCheckoutSurface(data?.surface) ?? pageSurface,
+    );
+  });
 
   const onUpgrade = (plan: PaidPlan) => {
-    track("upgrade_clicked", { source: "pricing", plan });
+    track("upgrade_clicked", { source: "pricing", plan, surface });
     if (!isSignedIn) {
       openAuthDialog("upgrade", {
         action: "CHECKOUT",
-        data: { plan, interval },
+        data: { plan, interval, surface },
       });
       return;
     }
-    startCheckout(plan, interval);
+    startCheckout(plan, interval, surface);
   };
 
   const paidAction = (plan: PaidPlan) => {
@@ -496,7 +530,7 @@ export function PricingSection({
               onChange={changeInterval}
               savings={maxYearlySavingsPercent(currency)}
             />
-            <CurrencyNote currency={currency} />
+            <CurrencyNote currency={currency} from={from} />
           </div>
         </div>
       </div>

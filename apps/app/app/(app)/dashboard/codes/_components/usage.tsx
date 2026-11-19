@@ -32,6 +32,7 @@ export function UsageMeter({ usage }: { usage: CodeUsage }) {
       note={t("archivedNote")}
       plan={usage.plan}
       source="codes_meter"
+      surface="codes_meter"
       used={usage.used}
       limit={usage.limit}
     />

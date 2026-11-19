@@ -20,7 +20,10 @@ const STATUS: Record<
  * for pages that can't call this app's server actions. Runs createCheckout:
  * the session, its rate limit, the one-subscription rule, the visitor's IP
  * and the currency of their country (this request's own geo headers) are
- * the action's. Answers { url } (Polar's checkout) or { error, reason }.
+ * the action's. The body is { plan, interval, surface }: `surface` (the
+ * button or page, lib/checkout-surface.ts) is checked against the list and
+ * stored as "unknown" when it isn't on it. Answers { url } (Polar's
+ * checkout) or { error, reason }.
  */
 export function POST(req: Request) {
   return resultRoute<CheckoutResult>(
