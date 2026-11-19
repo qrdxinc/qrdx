@@ -1,31 +1,11 @@
 "use client";
 
-import type { PickableCornerEyePattern } from "qrdx/types";
 import type React from "react";
+import { EYE_PATTERNS } from "@/lib/qr-design/pattern-names";
 import { useQREditorStore } from "@/store/editor-store";
 import { EyePatterns } from "../icons/eye-patterns";
 
-// Every offered eye frame (curly was retired: it doesn't scan reliably;
-// saved designs that use it still render)
-export const patterns: Array<{ id: PickableCornerEyePattern; name: string }> = [
-  { id: "square", name: "Square" },
-  { id: "rounded", name: "Rounded" },
-  { id: "extra-rounded", name: "Extra Rounded" },
-  { id: "squircle", name: "Squircle" },
-  { id: "cushion", name: "Cushion" },
-  { id: "bevel", name: "Bevel" },
-  { id: "octagon", name: "Octagon" },
-  { id: "leaf", name: "Leaf" },
-  { id: "leaf-reverse", name: "Leaf Reverse" },
-  { id: "drop", name: "Drop" },
-  { id: "petal", name: "Petal" },
-  { id: "shield", name: "Shield" },
-  { id: "diya", name: "Diya" },
-  { id: "message", name: "Message" },
-  { id: "pointy", name: "Pointy" },
-  { id: "gear", name: "Gear" },
-  { id: "circle", name: "Circle" },
-] as const;
+export const patterns = EYE_PATTERNS;
 
 export const CornerEyePatternSelector: React.FC = () => {
   const { themeState, setThemeState } = useQREditorStore();

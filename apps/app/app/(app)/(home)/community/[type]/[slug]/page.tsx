@@ -8,14 +8,25 @@ import { getAdminUser } from "@/app/(app)/admin/_lib/guard";
 import { CreatorLine } from "@/components/community/creator-line";
 import { ItemActions } from "@/components/community/item-actions";
 import { ItemGrid, ItemRow } from "@/components/community/item-card";
+import {
+  designSentence,
+  FrameContents,
+  sampleFrames,
+  ThemeContents,
+  withoutFrame,
+} from "@/components/community/item-details";
+import { FrameInUse, ThemeInUse } from "@/components/community/item-previews";
 import { PagePreview } from "@/components/community/page-preview";
 import { RemoveItemButton } from "@/components/community/remove-item-button";
+import { RowSection } from "@/components/community/row-section";
 import { TryIt } from "@/components/community/try-it";
+import { frameParts } from "@/lib/community/design-parts";
 import { itemScanGate } from "@/lib/community/home";
 import {
   COMMUNITY_LICENSE_NAME,
   COMMUNITY_LICENSE_URL,
 } from "@/lib/community/licence";
+import { FRAME_BASE_STYLE } from "@/lib/community/payloads";
 import { workspaceCanUnpublish } from "@/lib/community/publish-access";
 import { getItem, moreFromCreator, remixesOf } from "@/lib/community/queries";
 import { MIN_GATE_SCORE } from "@/lib/community/scan-samples";
@@ -79,6 +90,10 @@ export default async function CommunityItemPage({
   ]);
   const typeLabel = TYPE_LABELS[item.type];
   const isDesign = item.type === "frame" || item.type === "theme";
+  const frame =
+    item.type === "frame" && item.preview.frame
+      ? frameParts(item.preview.frame)
+      : null;
   // The page stays on the server: the actions only need the item's id.
   const { page, ...actionItem } = item;
 
@@ -135,6 +150,11 @@ export default async function CommunityItemPage({
                 </h1>
                 {item.isOfficial && <Badge variant="outline">Official</Badge>}
               </div>
+              {isDesign && (
+                <p className="text-sm leading-relaxed text-pretty">
+                  {designSentence(item)}
+                </p>
+              )}
               <p className="text-muted-foreground text-sm">
                 {typeLabel.one}
                 {item.type === "collection" && item.entries
@@ -186,7 +206,10 @@ export default async function CommunityItemPage({
               <RemoveItemButton itemId={item.id} name={item.name} />
             )}
 
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+            {item.type === "theme" && <ThemeContents style={item.preview} />}
+            {frame && <FrameContents parts={frame} />}
+
+            <dl className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-x-4 gap-y-2 text-sm">
               {page && item.type === "page-template" && (
                 <>
                   <dt className="text-muted-foreground">Page type</dt>
@@ -234,6 +257,26 @@ export default async function CommunityItemPage({
         </div>
 
         <div className="mt-14 space-y-10">
+          {item.type === "frame" && (
+            <RowSection
+              sub="With a sample code, the way it prints."
+              title="How it looks"
+            >
+              <FrameInUse style={item.preview} />
+            </RowSection>
+          )}
+          {item.type === "theme" && (
+            <RowSection
+              sub="With a sample code, beside a plain one and in use."
+              title="How it looks"
+            >
+              <ThemeInUse
+                frames={sampleFrames(item.preview)}
+                look={withoutFrame(item.preview)}
+                plain={FRAME_BASE_STYLE}
+              />
+            </RowSection>
+          )}
           <ItemRow cards={remixes} title="Remixes" />
           <ItemRow
             cards={more}

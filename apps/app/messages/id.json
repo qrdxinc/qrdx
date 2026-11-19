@@ -5427,7 +5427,18 @@
       "empty": "Kosong",
       "viewAll": "Lihat semua",
       "saves": "Disimpan",
-      "itemCount": "{count, plural, other {# item}}"
+      "itemCount": "{count, plural, other {# item}}",
+      "yourQrCode": "Kode QR Anda"
+    },
+    "itemPreviews": {
+      "onATableTent": "Di tent card meja",
+      "onAPoster": "Pada poster",
+      "asASticker": "Sebagai stiker",
+      "plainCode": "Kode polos",
+      "withThisTheme": "Kode yang sama dengan tema ini",
+      "inTheFrame": "Dalam bingkai {name}",
+      "withItsOwnFrame": "Dengan bingkai sendiri",
+      "onABusinessCard": "Pada kartu nama"
     },
     "itemPages": {
       "previous": "Sebelumnya",

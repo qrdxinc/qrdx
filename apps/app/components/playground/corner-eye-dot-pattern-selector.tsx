@@ -1,38 +1,11 @@
 "use client";
 
-import type { PickableCornerEyeDotPattern } from "qrdx/types";
 import type React from "react";
+import { EYE_DOT_PATTERNS } from "@/lib/qr-design/pattern-names";
 import { useQREditorStore } from "@/store/editor-store";
 import { EyeDotPatterns } from "../icons/internal-eye-patterns";
 
-// Every offered eye dot (diamond, star and banner were retired: they don't
-// scan reliably; saved designs that use them still render)
-export const patterns: Array<{
-  id: PickableCornerEyeDotPattern;
-  name: string;
-}> = [
-  { id: "square", name: "Square" },
-  { id: "rounded", name: "Rounded" },
-  { id: "extra-rounded", name: "Extra Rounded" },
-  { id: "circle", name: "Circle" },
-  { id: "squircle", name: "Squircle" },
-  { id: "octagon", name: "Octagon" },
-  { id: "hexagon", name: "Hexagon" },
-  { id: "dots", name: "Dots" },
-  { id: "leaf", name: "Leaf" },
-  { id: "leaf-reverse", name: "Leaf Reverse" },
-  { id: "drop", name: "Drop" },
-  { id: "drop-reverse", name: "Drop Reverse" },
-  { id: "plus", name: "Plus" },
-  { id: "cross-rounded", name: "Rounded Cross" },
-  { id: "flower", name: "Flower" },
-  { id: "heart", name: "Heart" },
-  { id: "message", name: "Message" },
-  { id: "message-reverse", name: "Message Reverse" },
-  { id: "diya", name: "Diya" },
-  { id: "diya-reverse", name: "Diya Reverse" },
-  { id: "rounded-triangle", name: "Rounded Triangle" },
-] as const;
+export const patterns = EYE_DOT_PATTERNS;
 
 export const CornerEyeDotPatternSelector: React.FC = () => {
   const { themeState, setThemeState } = useQREditorStore();

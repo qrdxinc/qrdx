@@ -5427,7 +5427,18 @@
       "empty": "Vuoto",
       "viewAll": "Vedi tutti",
       "saves": "Salvataggi",
-      "itemCount": "{count, plural, one {# elemento} other {# elementi}}"
+      "itemCount": "{count, plural, one {# elemento} other {# elementi}}",
+      "yourQrCode": "Il tuo QR code"
+    },
+    "itemPreviews": {
+      "onATableTent": "Su un segnatavolo",
+      "onAPoster": "Su un poster",
+      "asASticker": "Come adesivo",
+      "plainCode": "Un codice semplice",
+      "withThisTheme": "Lo stesso codice con questo tema",
+      "inTheFrame": "Nella cornice {name}",
+      "withItsOwnFrame": "Con la sua cornice",
+      "onABusinessCard": "Su un biglietto da visita"
     },
     "itemPages": {
       "previous": "Precedente",
