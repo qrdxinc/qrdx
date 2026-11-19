@@ -25183,6 +25183,18 @@
     "source": "b1c1de607e25",
     "status": "machine"
   },
+  "app.dashboard.pages.pageListControls.qrCodeCreatedWithSamples": {
+    "source": "02a41ea0e219",
+    "status": "machine"
+  },
+  "app.dashboard.pages.pageListControls.samplesStillOnPage": {
+    "source": "e3850fc5ce78",
+    "status": "machine"
+  },
+  "app.dashboard.pages.pageListControls.editPage": {
+    "source": "5d2c6743b87c",
+    "status": "machine"
+  },
   "app.dashboard.pages.pageListControls.shortLinkCopied": {
     "source": "6b62bcc79bd7",
     "status": "machine"

@@ -8003,6 +8003,9 @@
           "deleting": "正在删除…",
           "pageDeleted": "页面已删除",
           "qrCodeCreated": "二维码已创建",
+          "qrCodeCreatedWithSamples": "二维码已创建。页面上仍保留着模板中的示例内容",
+          "samplesStillOnPage": "{count, plural, one {页面上仍有 # 个示例。} other {页面上仍有 # 个示例。}}访客看不到示例链接，但会看到示例文字和照片。",
+          "editPage": "编辑页面",
           "shortLinkCopied": "短链接已复制",
           "couldntCopyTheLink": "无法复制链接"
         },

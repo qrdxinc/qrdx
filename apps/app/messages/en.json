@@ -8402,6 +8402,9 @@
           "deleting": "Deleting...",
           "pageDeleted": "Page deleted",
           "qrCodeCreated": "QR code created",
+          "qrCodeCreatedWithSamples": "QR code created. The page still has samples from its template",
+          "samplesStillOnPage": "{count, plural, one {# sample is still on the page.} other {# samples are still on the page.}} Visitors never see sample links, but they do see sample text and photos.",
+          "editPage": "Edit page",
           "shortLinkCopied": "Short link copied",
           "couldntCopyTheLink": "Couldn't copy the link"
         },

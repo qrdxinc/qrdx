@@ -8003,6 +8003,9 @@
           "deleting": "Eliminazione...",
           "pageDeleted": "Pagina eliminata",
           "qrCodeCreated": "QR code creato",
+          "qrCodeCreatedWithSamples": "QR code creato. La pagina contiene ancora gli esempi del suo template",
+          "samplesStillOnPage": "{count, plural, one {# esempio è ancora presente nella pagina.} other {# esempi sono ancora presenti nella pagina.}} I visitatori non vedono mai i link di esempio, ma vedono i testi e le foto di esempio.",
+          "editPage": "Modifica pagina",
           "shortLinkCopied": "Link breve copiato",
           "couldntCopyTheLink": "Impossibile copiare il link"
         },

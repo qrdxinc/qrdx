@@ -8003,6 +8003,9 @@
           "deleting": "삭제하는 중...",
           "pageDeleted": "페이지를 삭제했어요",
           "qrCodeCreated": "QR 코드를 만들었어요",
+          "qrCodeCreatedWithSamples": "QR 코드를 만들었어요. 페이지에 템플릿의 샘플이 아직 남아 있어요",
+          "samplesStillOnPage": "{count, plural, one {샘플 #개가 아직 페이지에 남아 있어요.} other {샘플 #개가 아직 페이지에 남아 있어요.}} 방문자에게 샘플 링크는 보이지 않지만, 샘플 텍스트와 사진은 보여요.",
+          "editPage": "페이지 편집",
           "shortLinkCopied": "짧은 링크를 복사했어요",
           "couldntCopyTheLink": "링크를 복사하지 못했어요"
         },
