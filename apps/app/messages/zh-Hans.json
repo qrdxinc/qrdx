@@ -9938,6 +9938,8 @@
       "qrCodesAlreadyPrintedWith2": "已使用 {shortLink} 打印的二维码将失效。若其后缀在新位置未被占用，会随二维码一并迁移，否则二维码会获得新的后缀。",
       "theQrCodeChangesTo": "二维码会改为新链接，因此保存后请重新下载。已打印的二维码仍可正常使用。",
       "downloadItAndPrintIt": "下载后可随处打印。你可以随时更改它指向的位置。",
+      "heldDescription": "已保存，但在 QRdx 检查其地址之前处于关闭状态。请先不要打印。",
+      "heldBody": "新账户的二维码上线前，QRdx 会先检查部分地址，因此这个二维码目前处于关闭状态。请先不要打印：它开启后，你可以在控制台的对应页面中看到。",
       "itEncodesAShortLink": "它编码的是一个短链接，因此打印后仍可更改其指向。",
       "saving": "保存中...",
       "creating": "创建中...",

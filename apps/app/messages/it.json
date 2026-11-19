@@ -9938,6 +9938,8 @@
       "qrCodesAlreadyPrintedWith2": "I QR code già stampati con {shortLink} smetteranno di funzionare. La sua parte finale si sposta con il codice se lì è libera, altrimenti il codice ne riceve una nuova.",
       "theQrCodeChangesTo": "Il QR code cambia con il nuovo link, quindi scaricalo di nuovo dopo il salvataggio. I codici già stampati continuano a funzionare.",
       "downloadItAndPrintIt": "Scaricalo e stampalo dove vuoi. Puoi cambiare la destinazione in qualsiasi momento.",
+      "heldDescription": "È salvato, ma resta disattivato finché QRdx non controlla il suo indirizzo. Non stamparlo ancora.",
+      "heldBody": "QRdx controlla alcuni indirizzi prima che il codice di un nuovo account diventi attivo, quindi per ora questo codice è disattivato. Non stamparlo ancora: la sua pagina nella tua dashboard mostra quando è attivo.",
       "itEncodesAShortLink": "Codifica un link breve, così puoi cambiare la destinazione dopo la stampa.",
       "saving": "Salvataggio...",
       "creating": "Creazione...",

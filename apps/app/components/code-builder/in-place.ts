@@ -7,8 +7,11 @@
 
 import type { QrCodeView } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import {
+  heldFor,
+  type LinkedDynamicCode,
   loadCodeIntoEditor,
   useDynamicLinkStore,
+  useHeldDynamicStore,
 } from "@/components/editor/dynamic-link-toggle";
 import { markProgrammaticQrContent } from "@/lib/analytics/react";
 import { useQREditorStore } from "@/store/editor-store";
@@ -54,13 +57,55 @@ export function currentPageGalleryRequest(
 
 /**
  * A code created from the playground: the playground's URL code becomes it
- * (encodes its short link, in the design it was saved with).
+ * (encodes its short link, in the design it was saved with). A code saved
+ * switched off (a new account's address waiting for a safety check) never
+ * does: the QR keeps the address itself, so nothing gets printed with a
+ * short link that opens nothing, and it's held (useHeldDynamicStore), so
+ * Dynamic and the builder don't make another one for that address. Returns
+ * whether the playground now encodes the code.
  */
 export function bindCreatedCode(
-  code: Pick<QrCodeView, "id" | "shortLink" | "destinationUrl" | "style">,
+  code: Pick<
+    QrCodeView,
+    "id" | "shortLink" | "destinationUrl" | "style" | "status"
+  >,
   userId: string,
-): void {
+): boolean {
+  if (code.status === "disabled") {
+    useHeldDynamicStore.getState().hold({
+      id: code.id,
+      shortLink: code.shortLink,
+      destinationUrl: code.destinationUrl,
+      userId,
+    });
+    return false;
+  }
   loadCodeIntoEditor(code, userId);
+  return true;
+}
+
+/**
+ * The code this account made from the playground for `destination` that's
+ * still held, if any: creating another for that address is blocked until it
+ * goes live (the same rule as the Dynamic toggle's).
+ */
+export function heldPlaygroundCode(
+  userId: string | null,
+  destination: string | null,
+): LinkedDynamicCode | null {
+  return heldFor(useHeldDynamicStore.getState().code, userId, destination);
+}
+
+/**
+ * What saving an existing code means for its printed copies: "switched-off"
+ * (held for a check or by moderation; the response doesn't say which), or
+ * "paused" by its owner, else "live".
+ */
+export function savedCodeState(
+  code: Pick<QrCodeView, "status" | "paused">,
+): "switched-off" | "paused" | "live" {
+  if (code.status === "disabled") return "switched-off";
+  return code.paused ? "paused" : "live";
 }
 
 /**

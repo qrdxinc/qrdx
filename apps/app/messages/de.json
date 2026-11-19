@@ -9938,6 +9938,8 @@
       "qrCodesAlreadyPrintedWith2": "Bereits gedruckte QR-Codes mit {shortLink} funktionieren nicht mehr. Sein Back-Half wird mit dem Code übernommen, wenn er dort frei ist, sonst erhält der Code einen neuen.",
       "theQrCodeChangesTo": "Der QR-Code wechselt zum neuen Link, lade ihn also nach dem Speichern erneut herunter. Bereits gedruckte Codes funktionieren weiterhin.",
       "downloadItAndPrintIt": "Lade ihn herunter und drucke ihn überall aus. Du kannst jederzeit ändern, wohin er verweist.",
+      "heldDescription": "Er ist gespeichert, aber ausgeschaltet, bis QRdx die Adresse geprüft hat. Drucke ihn noch nicht.",
+      "heldBody": "QRdx prüft einige Adressen, bevor der Code eines neuen Kontos live geht, deshalb ist dieser Code vorerst ausgeschaltet. Drucke ihn noch nicht: Auf seiner Seite in deinem Dashboard siehst du, wann er aktiv ist.",
       "itEncodesAShortLink": "Er kodiert einen Kurzlink, daher kannst du nach dem Druck ändern, wohin er verweist.",
       "saving": "Speichern...",
       "creating": "Erstellen...",

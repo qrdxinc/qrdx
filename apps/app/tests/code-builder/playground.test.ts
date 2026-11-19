@@ -52,7 +52,9 @@ const {
   bindCreatedCode,
   currentBuilderRequest,
   currentPageGalleryRequest,
+  heldPlaygroundCode,
   openPlaygroundBuilder,
+  savedCodeState,
   syncSavedCode,
 } = inPlace;
 const request = await import("@/components/code-builder/playground-request");
@@ -160,6 +162,7 @@ beforeEach(() => {
   });
   useQREditorStore.getState().replaceThemeState(defaultThemeState);
   useDynamicLinkStore.getState().unlink();
+  toggle.useHeldDynamicStore.getState().hold(null);
   useCodeBuilderStore.setState({ request: null, hosts: [] });
   actions.createQrCode.mockReset();
   actions.updateQrCode.mockReset();
@@ -429,6 +432,70 @@ describe("the builder over the playground", () => {
     expect(editor().value).toBe("https://qrdx.dev/q/abc1234");
     expect(editor().contentType).toBe("url");
     expect(editor().themeState.styles).toEqual(MY_STYLE);
+  });
+
+  it("create: a code saved switched off (held for a check) isn't bound, and blocks another for that address", async () => {
+    // "Link options…" and open=dynamic signed in both create through here.
+    playgroundWithUrl("https://example.com/menu");
+    const fake = services({
+      createCode: async () => ({
+        success: true as const,
+        data: view({ status: "disabled" }),
+      }),
+    });
+    const result = await submitCreate(fieldsFor(), fake);
+    if (!result.ok) throw new Error("expected a code");
+    expect(bindCreatedCode(result.code, "u_alice")).toBe(false);
+
+    // The QR keeps the address itself: nothing printed opens a dead link.
+    expect(linked()).toBeNull();
+    expect(editor().value).toBe("https://example.com/menu");
+    expect(editor().value).not.toContain("/q/");
+    // Held, as the Dynamic toggle holds its own: the builder and Dynamic
+    // don't make another for this address, this account.
+    const held = {
+      id: "code_1",
+      shortLink: "https://qrdx.dev/q/abc1234",
+      destinationUrl: "https://example.com/menu",
+      userId: "u_alice",
+    };
+    expect(toggle.useHeldDynamicStore.getState().code).toEqual(held);
+    expect(heldPlaygroundCode("u_alice", "https://example.com/menu")).toEqual(
+      held,
+    );
+    expect(
+      toggle.heldFor(
+        toggle.useHeldDynamicStore.getState().code,
+        "u_alice",
+        "https://example.com/menu",
+      ),
+    ).toEqual(held);
+    // Another address, or another account on this browser, isn't blocked.
+    expect(heldPlaygroundCode("u_alice", "https://example.com/other")).toBe(
+      null,
+    );
+    expect(heldPlaygroundCode("u_bob", "https://example.com/menu")).toBeNull();
+  });
+
+  it("create: a live code is bound and holds nothing", async () => {
+    playgroundWithUrl("https://example.com/menu");
+    const result = await submitCreate(fieldsFor(), services());
+    if (!result.ok) throw new Error("expected a code");
+    expect(bindCreatedCode(result.code, "u_alice")).toBe(true);
+    expect(linked()?.id).toBe("code_1");
+    expect(toggle.useHeldDynamicStore.getState().code).toBeNull();
+    expect(heldPlaygroundCode("u_alice", "https://example.com/menu")).toBe(
+      null,
+    );
+  });
+
+  it("edit: says what a save means for printed copies (switched off, paused or live)", () => {
+    expect(savedCodeState(view({ status: "disabled" }))).toBe("switched-off");
+    expect(savedCodeState(view({ status: "disabled", paused: true }))).toBe(
+      "switched-off",
+    );
+    expect(savedCodeState(view({ paused: true }))).toBe("paused");
+    expect(savedCodeState(view())).toBe("live");
   });
 
   it("create: LIMIT_REACHED shows the limit banner with the upgrade, and nothing is bound", async () => {

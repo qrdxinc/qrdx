@@ -9938,6 +9938,8 @@
       "qrCodesAlreadyPrintedWith2": "Kode QR yang sudah dicetak dengan {shortLink} akan berhenti berfungsi. Akhiran tautannya ikut berpindah bersama kode jika tersedia di sana, jika tidak, kode mendapat akhiran baru.",
       "theQrCodeChangesTo": "Kode QR berubah ke tautan baru, jadi unduh lagi setelah menyimpan. Kode yang sudah Anda cetak tetap berfungsi.",
       "downloadItAndPrintIt": "Unduh dan cetak di mana saja. Anda dapat mengubah tujuannya kapan saja.",
+      "heldDescription": "Kode ini sudah disimpan, tetapi dinonaktifkan sampai QRdx memeriksa alamatnya. Jangan dicetak dulu.",
+      "heldBody": "QRdx memeriksa beberapa alamat sebelum kode dari akun baru diaktifkan, jadi kode ini dinonaktifkan untuk sementara. Jangan dicetak dulu: halamannya di dasbor Anda akan menunjukkan kapan kode ini aktif.",
       "itEncodesAShortLink": "Kode ini menyandikan tautan pendek, sehingga Anda dapat mengubah tujuannya setelah dicetak.",
       "saving": "Menyimpan...",
       "creating": "Membuat...",

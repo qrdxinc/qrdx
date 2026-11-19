@@ -31283,6 +31283,14 @@
     "source": "c27c6bd4e7f6",
     "status": "machine"
   },
+  "codeBuilder.codeBuilderModal.heldDescription": {
+    "source": "24c26d4c4098",
+    "status": "machine"
+  },
+  "codeBuilder.codeBuilderModal.heldBody": {
+    "source": "1def776e1eca",
+    "status": "machine"
+  },
   "codeBuilder.codeBuilderModal.itEncodesAShortLink": {
     "source": "f1ca65ee3e45",
     "status": "machine"
