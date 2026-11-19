@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "无限数量的动态二维码",
       "longerAnalytics": "你的完整扫描历史",
-      "analyticsHistory": "完整的分析历史记录",
       "customDomains": "自定义域名",
       "teams": "团队"
     },

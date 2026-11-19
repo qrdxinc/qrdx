@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "unlimited dynamic codes",
       "longerAnalytics": "your full scan history",
-      "analyticsHistory": "full analytics history",
       "customDomains": "custom domains",
       "teams": "teams"
     },
@@ -1498,8 +1497,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "Free Bulk QR Code Generator from CSV: Styled, SVG, No Upload",
-      "metaDescription": "Turn a CSV into up to {rows, number} styled QR codes and download them as PNG, WebP or SVG in a ZIP. Runs in your browser: no upload, no watermark, no sign-up up to {limit, number} rows.",
+      "metaTitle": "Free Bulk QR Code Generator from CSV, No Upload",
+      "metaDescription": "Turn a CSV into up to {rows, number} styled QR codes as PNG, WebP or SVG in a ZIP. It runs in your browser: no upload, no watermark, no sign-up up to {limit, number} rows.",
       "crumb": "Bulk generator",
       "title": "Bulk QR code generator",
       "intro1": "Turn a CSV file into thousands of QR codes in one go, styled the way you want and downloaded as PNG, WebP or SVG in a ZIP. One row per code, with file names from a column: product labels, event tickets, asset tags, table numbers or mailers.",
@@ -2335,7 +2334,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Free Barcode Generator: EAN-13, UPC, Code 128",
-    "metaDescription": "Make EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix and more: {count, number} barcode types with check digits worked out for you. PNG, JPG, SVG, PDF and EPS. Free, no signup.",
+    "metaDescription": "Make EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix and more: {count, number} barcode types with check digits done for you. PNG, JPG, SVG, PDF, EPS. Free, no signup.",
     "crumb": "Barcode generator",
     "title": "Free barcode generator",
     "intro1": "Make retail, shipping and inventory barcodes in {count, number} formats, from EAN-13 and UPC-A to Code 128, GS1-128, ITF-14 and Data Matrix. Type the number and the check digit is worked out for you; a wrong one is caught before you print.",
@@ -2516,8 +2515,8 @@
     "questions": "Questions about the guarantee? Email <mail>{email}</mail>. Last updated <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise: SSO, Audit Log, Contracts and Reply Times",
-    "metaDescription": "QRdx for larger teams: single sign-on, an audit log with CSV export, roles, custom domains and a client portal, with a yearly contract, written reply times and payment by invoice.",
+    "metaTitle": "QRdx Enterprise: SSO, Audit Log and Contracts",
+    "metaDescription": "QRdx for larger teams: SSO, an audit log with CSV export, roles, custom domains and a client portal, on a yearly contract with reply times and invoices.",
     "crumb": "Enterprise",
     "title": "QRdx for enterprise teams",
     "intro1": "For companies that put QR codes on packaging, signs and campaigns across many teams, brands or clients, and need single sign-on, an audit trail and a contract before they roll them out.",
@@ -2667,8 +2666,8 @@
     }
   },
   "security": {
-    "metaTitle": "Security at QRdx: Sign-in, Data Storage and Reporting Issues",
-    "metaDescription": "How QRdx protects accounts and data: HTTPS with HSTS, a content security policy, passkeys and two-step verification, single sign-on, an audit log, link checks, where data is stored and how to report a vulnerability.",
+    "metaTitle": "Security at QRdx: Sign-in, Data and Reporting Issues",
+    "metaDescription": "How QRdx protects accounts and data: HSTS and CSP, passkeys, two-step verification, SSO, an audit log, link checks, where data lives and how to report a flaw.",
     "crumb": "Security",
     "title": "Security at QRdx",
     "intro1": "What QRdx does to protect your account, your codes and your visitors' data. Each item describes something that runs on qrdx.dev today, and the code is open source, so you can check it.",
@@ -3137,7 +3136,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "Free QR Code API: No Key, SVG, PNG and Logos",
-    "metaDescription": "A free QR code API with no key or signup. One URL returns a QR code as SVG, PNG, WebP or EPS, with your colors, shapes and a logo. {perMinute, number} requests a minute, cached for a year.",
+    "metaDescription": "A free QR code API with no key. One URL returns an SVG, PNG, WebP or EPS QR code with your colors, shapes and logo. {perMinute, number} requests a minute, cached a year.",
     "crumb": "QR code API",
     "title": "Free QR code API",
     "intro1": "Put a QR code anywhere a URL can go. One GET request to api.qrdx.dev returns the image itself: no account, no API key, no SDK. Colors, shapes, error correction and a logo go in the query string.",
@@ -3535,7 +3534,7 @@
   },
   "ai": {
     "metaTitle": "AI QR Code Generator — Design QR Codes From a Prompt",
-    "metaDescription": "Tell QRdx's AI what the code should open (a link, Wi-Fi, a contact card and more) and how it should look. It checks the scan score, repairs the design until it's Great and asks before changing your editor. Free accounts include {count, number} AI requests; Pro unlocks unlimited.",
+    "metaDescription": "Describe a QR code and QRdx's AI designs it, repairs it until the scan score is Great and asks before changing your editor. Free accounts get {count, number} AI requests.",
     "artLink": "Or turn a link into scannable AI QR art",
     "chat": {
       "upgrade": "Upgrade to Pro for unlimited requests",

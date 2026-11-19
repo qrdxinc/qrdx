@@ -465,16 +465,20 @@ function storageAndForms(
     : copy.t("highlights.forms", { count });
 }
 
-/** What paid plans add, in a list: "unlimited dynamic codes, …, and teams". */
+/**
+ * What paid plans add, in a list: "unlimited dynamic codes, …, and teams".
+ * Without `history` it leaves out the scan history, for the meta
+ * description, which has to stay within about 160 characters.
+ */
 function paidExtras(
   options: PricingOptions,
-  analytics: "longerAnalytics" | "analyticsHistory",
   copy: PricingCopy,
+  history = true,
 ): string {
   return joinList(
     [
       copy.t("extras.unlimitedDynamic"),
-      copy.t(`extras.${analytics}`),
+      ...(history ? [copy.t("extras.longerAnalytics")] : []),
       ...(offered(options, "customDomains")
         ? [copy.t("extras.customDomains")]
         : []),
@@ -490,7 +494,7 @@ export function buildPricingIntro(
   copy = englishCopy(),
 ): string {
   return copy.t("header.intro", {
-    extras: paidExtras(options, "longerAnalytics", copy),
+    extras: paidExtras(options, copy),
   });
 }
 
@@ -504,7 +508,7 @@ export function buildPricingDescription(
   return copy.t("meta.description", {
     pro: usd("pro"),
     business: usd("business"),
-    extras: paidExtras(options, "analyticsHistory", copy),
+    extras: paidExtras(options, copy, false),
   });
 }
 

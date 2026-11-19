@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "무제한 동적 QR 코드",
       "longerAnalytics": "전체 스캔 기록",
-      "analyticsHistory": "전체 분석 기록",
       "customDomains": "맞춤 도메인",
       "teams": "팀"
     },

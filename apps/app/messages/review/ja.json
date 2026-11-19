@@ -1447,10 +1447,6 @@
     "source": "ae257e3ae35d",
     "status": "machine"
   },
-  "pricing.extras.analyticsHistory": {
-    "source": "505e90a770cf",
-    "status": "machine"
-  },
   "pricing.extras.customDomains": {
     "source": "c56f5d9bc51e",
     "status": "machine"

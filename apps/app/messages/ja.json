@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "無制限の動的QRコード",
       "longerAnalytics": "スキャン履歴のすべて",
-      "analyticsHistory": "分析履歴のすべて",
       "customDomains": "カスタムドメイン",
       "teams": "チーム"
     },
