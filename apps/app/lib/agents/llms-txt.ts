@@ -31,6 +31,7 @@ import {
 } from "@/lib/pricing";
 import { PRODUCT_FACTS, STYLE_SUMMARY } from "@/lib/product-facts";
 import { getQrTypeTitle, QR_TYPES } from "@/lib/qr-types-content";
+import { HOSTED_QR_TYPES, hostedTypePath } from "@/lib/qr-types-content-hosted";
 import { industries, placements } from "@/lib/seo-content";
 import { apiBaseUrl, imageApiUrl } from "./hosts";
 import { OPENAPI_PATH } from "./well-known";
@@ -321,6 +322,13 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     ...QR_TYPES.map((type) => ({
       title: getQrTypeTitle(type),
       url: `/qr-code-generator/${type.type}`,
+      description: type.summary,
+    })),
+    // The generators whose code opens a hosted page (the PDF one needs file
+    // storage, which `showsPath` checks).
+    ...HOSTED_QR_TYPES.map((type) => ({
+      title: type.title,
+      url: hostedTypePath(type.slug),
       description: type.summary,
     })),
   ]);
