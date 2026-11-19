@@ -284,21 +284,15 @@ describe("run helpers", () => {
     expect(variationsWithin(2, undefined)).toBe(2);
   });
 
-  it("offers an upgrade below Business, to someone whose purchase lifts the allowance, where checkout sells it", () => {
-    expect(offersArtUpgrade(credits(0), true, true)).toBe(true);
-    expect(offersArtUpgrade({ ...credits(0), plan: "pro" }, true, true)).toBe(
-      true,
+  it("may offer an upgrade below Business, where checkout sells it", () => {
+    expect(offersArtUpgrade(credits(0), true)).toBe(true);
+    expect(offersArtUpgrade({ ...credits(0), plan: "pro" }, true)).toBe(true);
+    expect(offersArtUpgrade({ ...credits(0), plan: "business" }, true)).toBe(
+      false,
     );
-    expect(
-      offersArtUpgrade({ ...credits(0), plan: "business" }, true, true),
-    ).toBe(false);
-    // A team member: the team's plan is its owners' and billing members'.
-    expect(offersArtUpgrade(credits(0), false, true)).toBe(false);
-    // Not known (an older answer): offered, as before.
-    expect(offersArtUpgrade(credits(0), undefined, true)).toBe(true);
     // Checkout can't sell it here (no billing, no product): no promise.
-    expect(offersArtUpgrade(credits(0), true, false)).toBe(false);
-    expect(offersArtUpgrade(null, true, true)).toBe(false);
+    expect(offersArtUpgrade(credits(0), false)).toBe(false);
+    expect(offersArtUpgrade(null, true)).toBe(false);
     expect(artUpgradePlan(credits(0))).toBe("pro");
     expect(artUpgradePlan({ ...credits(0), plan: "pro" })).toBe("business");
     expect(artUpgradePlan(null)).toBe("pro");

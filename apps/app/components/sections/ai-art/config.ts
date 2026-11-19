@@ -335,12 +335,6 @@ export interface AIArtCreditsResponse {
   configured: boolean;
   /** null when signed out */
   credits: AIArtCredits | null;
-  /**
-   * Their own purchase would lift the allowance: the workspace's plan is its
-   * owners' and billing members' (lib/plans.ts getPlanForScope). Absent when
-   * not known (signed out, the dev mock).
-   */
-  canUpgrade?: boolean;
 }
 
 /** One generated image (POST /api/ai/art). */

@@ -17,7 +17,13 @@ import { useAvailability } from "@/components/availability-provider";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 import { type BillingInterval, type PaidPlan, PLAN_NAMES } from "@/lib/pricing";
 import { startCheckout } from "@/lib/widget-routes/client";
-import { checkoutChoice, checkoutErrorKey } from "./checkout-choice";
+import type { UpgradePayer } from "@/store/get-pro-dialog-store";
+import {
+  checkoutChoice,
+  checkoutErrorKey,
+  payerCanUpgrade,
+} from "./checkout-choice";
+import { useFreshWorkspaceUpgrade } from "./fresh-upgrade";
 
 const PORTAL_HREF = "/settings/portal";
 
@@ -49,6 +55,36 @@ export function useCheckoutChoice(plan: PaidPlan) {
 }
 
 /**
+ * What an upgrade dialog shows for a gate: the checkout buttons (waiting
+ * until the person's right to buy is confirmed), or a line that an owner
+ * or billing member has to upgrade. Outside the app shell the answer is
+ * read again each time the dialog opens (useFreshWorkspaceUpgrade).
+ */
+export function useGateCheckout({
+  open,
+  plan,
+  payer,
+  shellCanUpgrade,
+}: {
+  open: boolean;
+  plan: PaidPlan;
+  payer: UpgradePayer;
+  /** The app shell's answer for the open workspace; null outside it */
+  shellCanUpgrade: boolean | null;
+}) {
+  const server = useFreshWorkspaceUpgrade(
+    open && payer === "workspace" && shellCanUpgrade === null,
+  );
+  const answer = payerCanUpgrade({ payer, shell: shellCanUpgrade, server });
+  const sells = useCheckoutChoice(plan).choice.kind !== "none";
+  return {
+    buttons: sells && (answer === "yes" || answer === "waiting"),
+    waiting: answer === "waiting",
+    askOwner: answer === "no",
+  };
+}
+
+/**
  * Monthly and yearly buttons that open Polar's checkout for `plan` straight
  * away, priced in the currency checkout will charge. Where that can't
  * happen here (signed out, no billing, already on the plan) it shows
@@ -62,6 +98,7 @@ export function CheckoutButtons({
   onNavigate,
   size,
   className,
+  waiting: held = false,
 }: {
   plan?: PaidPlan;
   /** For analytics, e.g. "dialog", "limit_dialog", "ai_art" */
@@ -71,6 +108,8 @@ export function CheckoutButtons({
   onNavigate?: () => void;
   size?: ComponentProps<typeof Button>["size"];
   className?: string;
+  /** Shown but not clickable yet: the caller is still confirming they may buy. */
+  waiting?: boolean;
 }) {
   const t = useTranslations("nav.checkoutButtons");
   const { choice, waiting } = useCheckoutChoice(plan);
@@ -87,6 +126,13 @@ export function CheckoutButtons({
 
   if (choice.kind === "none") return fallback;
   if (choice.kind === "portal") {
+    if (held) {
+      return (
+        <Button className={className} disabled size={size} variant="outline">
+          {t("switchTo", { plan: PLAN_NAMES[plan] })}
+        </Button>
+      );
+    }
     return (
       <Button asChild className={className} size={size} variant="outline">
         {/* A route handler that redirects to Polar, so no <Link>. */}
@@ -138,7 +184,7 @@ export function CheckoutButtons({
         {choice.options.map(({ interval, price }, index) => (
           <Button
             className="grow"
-            disabled={waiting || pending !== null}
+            disabled={held || waiting || pending !== null}
             key={interval}
             onClick={() => start(interval)}
             size={size}

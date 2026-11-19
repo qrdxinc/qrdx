@@ -26,27 +26,61 @@ export type CheckoutChoice =
   | { kind: "none" };
 
 /**
- * Whether this person's purchase lifts the plan behind a gate: "yes",
- * "no" (a member of someone else's workspace: its plan is its owners' and
- * billing members'), or "unknown" while nobody has answered. A gate on the
- * person's own plan is always theirs. For a workspace's, the gate's own
- * answer comes first, then the app shell's, then the server's.
+ * Whether this person's purchase lifts the plan behind a gate: "yes", "no"
+ * (a member of someone else's workspace: its plan is its owners' and
+ * billing members'), "waiting" for a fresh answer, or "unknown" (nobody
+ * can say: signed out, or the read failed).
+ */
+export type UpgradeAnswer = "yes" | "no" | "waiting" | "unknown";
+
+/**
+ * A gate on the person's own plan is always theirs. For a workspace's: the
+ * app shell's answer (the workspace this tab's page names, where its
+ * requests go), else the server's, read since the gate opened
+ * (freshUpgradeAnswer).
  */
 export function payerCanUpgrade({
   payer,
-  gate,
   shell,
   server,
 }: {
   payer: "workspace" | "self";
-  gate: boolean | null | undefined;
   shell: boolean | null | undefined;
-  server: boolean | null | undefined;
-}): "yes" | "no" | "unknown" {
+  server: UpgradeAnswer;
+}): UpgradeAnswer {
   if (payer === "self") return "yes";
-  const answer = gate ?? shell ?? server;
-  if (answer === true) return "yes";
-  return answer === false ? "no" : "unknown";
+  if (shell === true) return "yes";
+  if (shell === false) return "no";
+  return server;
+}
+
+/**
+ * The server's canUpgradeWorkspace, counted only once it was read after
+ * `since` (when the gate opened). Another tab may have switched the
+ * session's workspace in the meantime, so an answer cached from before
+ * proves nothing: until a new one arrives, "waiting". `since` null: not
+ * asked ("unknown").
+ */
+export function freshUpgradeAnswer({
+  since,
+  dataUpdatedAt,
+  errorUpdatedAt,
+  fetching,
+  answer,
+}: {
+  since: number | null;
+  dataUpdatedAt: number;
+  errorUpdatedAt: number;
+  fetching: boolean;
+  answer: boolean | null | undefined;
+}): UpgradeAnswer {
+  if (since === null) return "unknown";
+  if (fetching) return "waiting";
+  if (dataUpdatedAt >= since) {
+    if (answer === true) return "yes";
+    return answer === false ? "no" : "unknown";
+  }
+  return errorUpdatedAt >= since ? "unknown" : "waiting";
 }
 
 /** The words for a checkout the server refused (nav.checkoutButtons). */

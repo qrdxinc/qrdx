@@ -4,6 +4,7 @@
 // Art panel. use-ai-art-run.ts wires these to the session, credits and toasts.
 
 import { createStore, type StoreApi } from "zustand/vanilla";
+import type { PaidPlan } from "@/lib/pricing";
 import { type MyErrorResponseType, UnauthorizedError } from "@/types/errors";
 import {
   type AIArtCredits,
@@ -345,27 +346,20 @@ export function variationsWithin(
 }
 
 /**
- * Whether the art surfaces offer an upgrade when images run short: not on
- * Business (the top plan), only to someone whose purchase lifts the
- * allowance (`canUpgrade`; unknown counts as yes, as before), and only
- * where checkout can sell the next plan (`sells`: the upgrade buttons have
- * something to show).
+ * Whether the art surfaces may offer an upgrade when images run short: not
+ * on Business (the top plan), and only where checkout can sell the next
+ * plan (`sells`: the upgrade buttons have something to show). Who may buy
+ * it is asked fresh when they would show (use-art-upgrade.ts).
  */
 export function offersArtUpgrade(
   credits: AIArtCredits | null,
-  canUpgrade: boolean | undefined,
   sells: boolean,
 ): boolean {
-  return (
-    sells &&
-    credits !== null &&
-    credits.plan !== "business" &&
-    canUpgrade !== false
-  );
+  return sells && credits !== null && credits.plan !== "business";
 }
 
 /** The plan that lifts an art allowance: Business above Pro, else Pro. */
-export const artUpgradePlan = (credits: AIArtCredits | null) =>
+export const artUpgradePlan = (credits: AIArtCredits | null): PaidPlan =>
   credits?.plan === "pro" ? "business" : "pro";
 
 /** Fewer credits left this month than the run would use. */

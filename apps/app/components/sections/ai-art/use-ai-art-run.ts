@@ -114,31 +114,21 @@ export function useAIArtRun({ store, onSignedOut }: UseAIArtRunOptions) {
   const credits = creditsResponse?.credits ?? null;
   const creditsRef = useRef(credits);
   creditsRef.current = credits;
-  const canUpgradeRef = useRef(creditsResponse?.canUpgrade);
-  canUpgradeRef.current = creditsResponse?.canUpgrade;
 
   const setCredits = (next: AIArtCredits | null) => {
     if (!next || mock) return;
-    queryClient.setQueryData<AIArtCreditsResponse>(
-      AI_ART_CREDITS_QUERY_KEY,
-      (previous) => ({
-        configured: true,
-        credits: next,
-        // A run's answer doesn't say who may upgrade; keep what the
-        // credits read said.
-        canUpgrade: previous?.canUpgrade,
-      }),
-    );
+    queryClient.setQueryData<AIArtCreditsResponse>(AI_ART_CREDITS_QUERY_KEY, {
+      configured: true,
+      credits: next,
+    });
   };
 
   const showError = (error: MyErrorResponseType | null, title: string) => {
     if (error?.code === "AI_NOT_CONFIGURED") return;
     if (error?.code === "SUBSCRIPTION_REQUIRED") {
-      // The workspace's plan: checkout only for someone whose purchase
-      // lifts it (the credits read says).
+      // The workspace's plan: the dialog checks who may lift it.
       openUpgradeDialog(
         creditsRef.current?.plan === "pro" ? "business" : "pro",
-        { canUpgrade: canUpgradeRef.current },
       );
     }
     if (!error) {
@@ -295,8 +285,6 @@ export function useAIArtRun({ store, onSignedOut }: UseAIArtRunOptions) {
     isGenerating: pending > 0,
     pendingVariations: pending,
     lacksCredits: (variations: number) => lacksCredits(credits, variations),
-    /** Whether an upgrade lifts their allowance (offersArtUpgrade) */
-    canUpgrade: creditsResponse?.canUpgrade,
     generate,
     retryClearer,
     cancel: () => cancelAIArt(store),

@@ -12,9 +12,12 @@ vi.hoisted(() => {
   // Business yearly has no product here: its button is left out.
 });
 
-const { checkoutChoice, checkoutErrorKey, payerCanUpgrade } = await import(
-  "@/components/billing/checkout-choice"
-);
+const {
+  checkoutChoice,
+  checkoutErrorKey,
+  freshUpgradeAnswer,
+  payerCanUpgrade,
+} = await import("@/components/billing/checkout-choice");
 const { useGetProDialogStore } = await import("@/store/get-pro-dialog-store");
 const { parseBillingInterval } = await import("@/lib/pricing");
 
@@ -107,72 +110,97 @@ describe("parseBillingInterval (/pricing?interval=)", () => {
 });
 
 describe("payerCanUpgrade (who may buy from a gate)", () => {
-  const none = { gate: null, shell: null, server: null };
-
   it("a gate on the person's own plan (more workspaces, AI chat) is always theirs", () => {
-    expect(payerCanUpgrade({ ...none, payer: "self" })).toBe("yes");
     expect(
-      payerCanUpgrade({
-        payer: "self",
-        gate: false,
-        shell: false,
-        server: false,
-      }),
+      payerCanUpgrade({ payer: "self", shell: null, server: "unknown" }),
     ).toBe("yes");
-  });
-
-  it("a workspace's gate: the gate's answer, then the app shell's, then the server's", () => {
-    const workspace = { ...none, payer: "workspace" as const };
-    expect(payerCanUpgrade({ ...workspace, gate: true, shell: false })).toBe(
+    expect(payerCanUpgrade({ payer: "self", shell: false, server: "no" })).toBe(
       "yes",
     );
-    expect(payerCanUpgrade({ ...workspace, gate: false, shell: true })).toBe(
-      "no",
-    );
-    expect(payerCanUpgrade({ ...workspace, shell: true, server: false })).toBe(
+  });
+
+  it("a workspace's gate: the app shell's answer, else the server's fresh one", () => {
+    const workspace = { payer: "workspace" as const };
+    expect(payerCanUpgrade({ ...workspace, shell: true, server: "no" })).toBe(
       "yes",
     );
     // A member of a Free team: their own Pro wouldn't lift the team's plan.
-    expect(payerCanUpgrade({ ...workspace, shell: false, server: true })).toBe(
+    expect(payerCanUpgrade({ ...workspace, shell: false, server: "yes" })).toBe(
       "no",
     );
-    expect(payerCanUpgrade({ ...workspace, server: true })).toBe("yes");
-    expect(payerCanUpgrade({ ...workspace, server: false })).toBe("no");
-    // Nobody has answered: no checkout, the pricing page instead.
-    expect(payerCanUpgrade(workspace)).toBe("unknown");
-    expect(payerCanUpgrade({ ...workspace, server: undefined })).toBe(
+    for (const server of ["yes", "no", "waiting", "unknown"] as const) {
+      expect(payerCanUpgrade({ ...workspace, shell: null, server })).toBe(
+        server,
+      );
+    }
+  });
+});
+
+describe("freshUpgradeAnswer (only an answer read since the gate opened counts)", () => {
+  const OPENED = 1_000;
+  const read = {
+    since: OPENED,
+    dataUpdatedAt: 0,
+    errorUpdatedAt: 0,
+    fetching: false,
+    answer: true,
+  };
+
+  it("a cached yes from before the gate opened waits for the new read", () => {
+    expect(freshUpgradeAnswer({ ...read, dataUpdatedAt: OPENED - 1 })).toBe(
+      "waiting",
+    );
+    expect(
+      freshUpgradeAnswer({
+        ...read,
+        dataUpdatedAt: OPENED + 5,
+        fetching: true,
+      }),
+    ).toBe("waiting");
+  });
+
+  it("then says what the new read said", () => {
+    expect(freshUpgradeAnswer({ ...read, dataUpdatedAt: OPENED + 5 })).toBe(
+      "yes",
+    );
+    expect(
+      freshUpgradeAnswer({ ...read, dataUpdatedAt: OPENED + 5, answer: false }),
+    ).toBe("no");
+    expect(
+      freshUpgradeAnswer({ ...read, dataUpdatedAt: OPENED + 5, answer: null }),
+    ).toBe("unknown");
+  });
+
+  it("is unknown when the new read failed, or nothing was asked", () => {
+    expect(freshUpgradeAnswer({ ...read, errorUpdatedAt: OPENED + 5 })).toBe(
       "unknown",
     );
+    expect(freshUpgradeAnswer({ ...read, since: null })).toBe("unknown");
   });
 });
 
 describe("the upgrade dialog's store", () => {
-  it("openGetProDialog, passed straight to onClick, is a workspace gate with no answer of its own", () => {
+  it("openGetProDialog, passed straight to onClick, is a workspace gate", () => {
     const store = useGetProDialogStore.getState();
-    store.openUpgradeDialog("business", { payer: "self", canUpgrade: true });
+    store.openUpgradeDialog("business", { payer: "self" });
     (store.openGetProDialog as (event: unknown) => void)({ type: "click" });
     expect(useGetProDialogStore.getState()).toMatchObject({
       isOpen: true,
       plan: "pro",
       payer: "workspace",
-      canUpgrade: null,
     });
   });
 
-  it("keeps a gate's payer and answer, and the shell's answer apart", () => {
+  it("keeps the gate's payer and the shell's answer apart", () => {
     const store = useGetProDialogStore.getState();
     store.setShellCanUpgrade(false);
     store.openUpgradeDialog("pro", { payer: "self" });
     expect(useGetProDialogStore.getState()).toMatchObject({
       payer: "self",
-      canUpgrade: null,
       shellCanUpgrade: false,
     });
-    store.openUpgradeDialog("pro", { canUpgrade: true });
-    expect(useGetProDialogStore.getState()).toMatchObject({
-      payer: "workspace",
-      canUpgrade: true,
-    });
+    store.openUpgradeDialog("pro");
+    expect(useGetProDialogStore.getState().payer).toBe("workspace");
     store.setShellCanUpgrade(null);
     store.closeGetProDialog();
     expect(useGetProDialogStore.getState().isOpen).toBe(false);

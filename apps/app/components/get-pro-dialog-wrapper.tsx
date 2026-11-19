@@ -12,14 +12,8 @@ const GetProDialog = dynamic(
 );
 
 export function GetProDialogWrapper() {
-  const {
-    isOpen,
-    plan,
-    payer,
-    canUpgrade,
-    shellCanUpgrade,
-    closeGetProDialog,
-  } = useGetProDialogStore();
+  const { isOpen, plan, payer, shellCanUpgrade, closeGetProDialog } =
+    useGetProDialogStore();
   // Once opened, keep it mounted so closing still animates.
   const [hasOpened, setHasOpened] = useState(isOpen);
   if (isOpen && !hasOpened) setHasOpened(true);
@@ -27,7 +21,6 @@ export function GetProDialogWrapper() {
 
   return (
     <GetProDialog
-      canUpgrade={canUpgrade}
       isOpen={isOpen}
       onClose={closeGetProDialog}
       payer={payer}

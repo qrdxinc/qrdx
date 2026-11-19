@@ -32,18 +32,11 @@ import {
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
-import {
-  CheckoutButtons,
-  useCheckoutChoice,
-} from "@/components/billing/checkout-buttons";
+import { CheckoutButtons } from "@/components/billing/checkout-buttons";
 import { useDynamicLinkStore } from "@/components/editor/dynamic-link-toggle";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { AIArtPresetGallery } from "@/components/sections/ai-art/ai-art-preset-gallery";
-import {
-  artUpgradePlan,
-  lockedSeedFor,
-  offersArtUpgrade,
-} from "@/components/sections/ai-art/ai-art-run";
+import { lockedSeedFor } from "@/components/sections/ai-art/ai-art-run";
 import { ArtLookChips } from "@/components/sections/ai-art/art-look-chips";
 import {
   ArtLookWriteButton,
@@ -67,6 +60,7 @@ import {
   readReferenceFile,
   useAIArtRun,
 } from "@/components/sections/ai-art/use-ai-art-run";
+import { useArtUpgrade } from "@/components/sections/ai-art/use-art-upgrade";
 import { ART_MODEL_LABEL, ART_SUPPORTS_SEED } from "@/lib/ai/art-models";
 import { useControlsTabFromUrl } from "@/lib/hooks/use-controls-tab-from-url";
 import { useArtSessionStore } from "@/store/art-session-store";
@@ -334,7 +328,6 @@ export function AIArtPanel({ style }: AIArtPanelProps) {
           )}
         </div>
         <CreditsLine
-          canUpgrade={art.canUpgrade}
           credits={art.credits}
           signedIn={art.signedIn}
           variations={draft.variations}
@@ -670,19 +663,18 @@ function AdvancedOptions({
 }
 
 function CreditsLine({
-  canUpgrade,
   credits,
   signedIn,
   variations,
 }: {
-  canUpgrade: boolean | undefined;
   credits: AIArtCredits | null;
   signedIn: boolean;
   variations: number;
 }) {
   const t = useTranslations("editor.art.aiArtPanel");
-  const target = artUpgradePlan(credits);
-  const sells = useCheckoutChoice(target).choice.kind !== "none";
+  const short =
+    typeof credits?.remaining === "number" && credits.remaining < variations;
+  const { target, offer: upgrade, waiting } = useArtUpgrade(credits, short);
   const className = "text-muted-foreground text-xs text-pretty";
   if (!signedIn) {
     return (
@@ -713,8 +705,6 @@ function CreditsLine({
     day: "numeric",
     timeZone: "UTC",
   });
-  const short = credits.remaining < variations;
-  const upgrade = short && offersArtUpgrade(credits, canUpgrade, sells);
   const shortNote =
     credits.remaining === 0
       ? t(upgrade ? "noneLeftUpgrade" : "noneLeft")
@@ -742,7 +732,12 @@ function CreditsLine({
         )}
       </p>
       {upgrade && (
-        <CheckoutButtons plan={target} size="sm" source="ai_art_panel" />
+        <CheckoutButtons
+          plan={target}
+          size="sm"
+          source="ai_art_panel"
+          waiting={waiting}
+        />
       )}
     </div>
   );
