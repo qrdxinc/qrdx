@@ -76,6 +76,40 @@ export const useDynamicLinkStore = create<DynamicLinkStore>()(
   ),
 );
 
+interface HeldDynamicStore {
+  /** The last code made here that came back switched off (held for a check) */
+  code: LinkedDynamicCode | null;
+  hold: (code: LinkedDynamicCode | null) => void;
+}
+
+/**
+ * Kept for the page's life, not saved: switching tabs remounts the toggle,
+ * and a fresh Dynamic there would make another switched-off code. A reload
+ * starts over (the code is in the dashboard by then).
+ */
+export const useHeldDynamicStore = create<HeldDynamicStore>()((set) => ({
+  code: null,
+  hold: (code) => set({ code }),
+}));
+
+/**
+ * The held code for this account and address, if any: Dynamic stays off
+ * while it shows, so pressing again doesn't make another one. A different
+ * address turns Dynamic back on.
+ */
+export function heldFor(
+  held: LinkedDynamicCode | null,
+  userId: string | null,
+  destination: string | null,
+): LinkedDynamicCode | null {
+  return held &&
+    userId !== null &&
+    held.userId === userId &&
+    held.destinationUrl === destination
+    ? held
+    : null;
+}
+
 /** Loads a dashboard code (design, destination, short link) into the playground editor. */
 export function loadCodeIntoEditor(
   code: {
@@ -305,8 +339,8 @@ export function DynamicLinkToggle() {
   const [designSaved, setDesignSaved] = useState(false);
   const [copied, setCopied] = useState(false);
   const [resume, setResume] = useState<unknown>(null);
-  // The last code made here that came back switched off (held for a check).
-  const [held, setHeld] = useState<LinkedDynamicCode | null>(null);
+  const heldCode = useHeldDynamicStore((state) => state.code);
+  const setHeld = useHeldDynamicStore((state) => state.hold);
 
   // While the session loads, keep showing a saved link so the card doesn't
   // collapse and grow back; a different account unlinks it below.
@@ -316,6 +350,8 @@ export function DynamicLinkToggle() {
       ? code
       : null;
   const destination = dynamicDestination(url);
+  // Saved switched off for this address: Dynamic waits for another address.
+  const held = linked ? null : heldFor(heldCode, userId, destination);
   const destinationChanged =
     linked !== null &&
     destination !== null &&
@@ -345,7 +381,7 @@ export function DynamicLinkToggle() {
   };
 
   const enable = () => {
-    if (!destination) return;
+    if (!destination || held) return;
     if (!userId) {
       signInToMakeDynamic(openAuthDialog, destination);
       return;
@@ -449,17 +485,20 @@ export function DynamicLinkToggle() {
         return;
       }
       link({ ...linked, destinationUrl: result.data.destinationUrl });
-      // A new account's new address can wait for a safety check, with the
-      // code switched off meanwhile: never say printed copies work then.
+      // Switched off (a safety check, moderation): the response doesn't say
+      // which, so never claim printed copies open the new address.
       if (result.data.status === "disabled") {
-        toast.warning(t("updateHeldTitle"), {
-          description: t("updateHeldBody"),
+        toast.warning(t("updateSwitchedOffTitle"), {
+          description: t("updateSwitchedOffBody"),
         });
         return;
       }
       emitSound("apply");
+      // Paused by its owner: saved, but scans don't reach it until resumed.
       toast.success(t("destinationUpdated"), {
-        description: t("printedCopiesOfThisCode"),
+        description: result.data.paused
+          ? t("updatePausedBody")
+          : t("printedCopiesOfThisCode"),
       });
     });
   };
@@ -539,7 +578,8 @@ export function DynamicLinkToggle() {
             disabled={
               isPending ||
               (isSessionPending && !linked) ||
-              !(linked || destination)
+              !(linked || destination) ||
+              held !== null
             }
             value="dynamic"
           >
@@ -566,7 +606,7 @@ export function DynamicLinkToggle() {
         <div className="space-y-1.5">
           <Button
             className="w-full"
-            disabled={isPending || !destination}
+            disabled={isPending || !destination || held !== null}
             onClick={enable}
           >
             <Flash variant="Bold" />
@@ -590,9 +630,7 @@ export function DynamicLinkToggle() {
         <DynamicLimitCard message={limitMessage} onUpgrade={openGetProDialog} />
       )}
 
-      {held && !linked && held.destinationUrl === destination && (
-        <DynamicHeldCard codeId={held.id} />
-      )}
+      {held && <DynamicHeldCard codeId={held.id} />}
 
       {userId && !linked && (
         <Button

@@ -48,6 +48,7 @@ import { UrlForm } from "@/components/editor/content-forms/url-form";
 import {
   DynamicLinkToggle,
   useDynamicLinkStore,
+  useHeldDynamicStore,
 } from "@/components/editor/dynamic-link-toggle";
 import { makeDynamicIntent } from "@/components/editor/dynamic-resume";
 import { executePostLoginAction } from "@/lib/hooks/use-post-login-action";
@@ -136,6 +137,7 @@ beforeEach(() => {
   usePlaygroundFocusStore.setState({ dynamicPick: false, addressFocus: false });
   useAuthStore.setState({ isOpen: false, postLoginAction: null });
   useDynamicLinkStore.setState({ code: null });
+  useHeldDynamicStore.setState({ code: null });
   setUrl("");
   routes.createDynamicCode.mockReset();
   routes.updateDynamicCode.mockReset();
@@ -271,7 +273,53 @@ describe("a code saved switched off (held for a safety check)", () => {
     expect(container.querySelector('a[href*="codes/code_1"]')).not.toBeNull();
   });
 
-  it("a new address that waits for a check doesn't claim printed copies work", async () => {
+  it("keeps Dynamic off for that address, even after a remount, until the address changes", async () => {
+    routes.createDynamicCode.mockResolvedValue({
+      success: true,
+      data: { ...CREATED, status: "disabled" },
+    });
+    render(<DynamicLinkToggle />);
+    act(() => dynamicChoice()?.click());
+    await settle();
+    expect(dynamicChoice()?.disabled).toBe(true);
+    act(() => dynamicChoice()?.click());
+    await settle();
+    expect(routes.createDynamicCode).toHaveBeenCalledTimes(1);
+
+    // Switching tabs remounts the toggle: still off, card still there.
+    remount(<DynamicLinkToggle />);
+    expect(dynamicChoice()?.disabled).toBe(true);
+    expect(container.textContent).toContain("Saved, but not live yet");
+
+    // Another address: Dynamic works again, the card goes.
+    act(() => setUrl("https://example.com/other"));
+    expect(dynamicChoice()?.disabled).toBe(false);
+    expect(container.textContent).not.toContain("Saved, but not live yet");
+
+    // Back to the held address: off again.
+    act(() => setUrl("https://example.com/menu"));
+    expect(dynamicChoice()?.disabled).toBe(true);
+  });
+
+  it("doesn't block another account signed in on this browser", () => {
+    useHeldDynamicStore.setState({
+      code: {
+        id: "code_9",
+        shortLink: "https://qrdx.dev/q/zzz9999",
+        destinationUrl: "https://example.com/menu",
+        userId: "u_bob",
+      },
+    });
+    render(<DynamicLinkToggle />);
+    expect(dynamicChoice()?.disabled).toBe(false);
+    expect(container.textContent).not.toContain("Saved, but not live yet");
+  });
+});
+
+describe("pointing a linked code to a new address", () => {
+  beforeEach(() => {
+    state.session = { user: { id: "u_alice" } };
+    setUrl("https://example.com/menu");
     useDynamicLinkStore.setState({
       code: {
         id: "code_1",
@@ -280,19 +328,62 @@ describe("a code saved switched off (held for a safety check)", () => {
         userId: "u_alice",
       },
     });
-    routes.updateDynamicCode.mockResolvedValue({
-      success: true,
-      data: { ...CREATED, status: "disabled" },
-    });
+  });
+
+  const update = async () => {
     render(<DynamicLinkToggle />);
     act(() => buttonWith("Point it to the new address")?.click());
     await settle();
     expect(routes.updateDynamicCode).toHaveBeenCalledTimes(1);
+  };
+
+  it("a live code: printed copies open the new address", async () => {
+    routes.updateDynamicCode.mockResolvedValue({
+      success: true,
+      data: { ...CREATED, paused: false },
+    });
+    await update();
+    expect(toasts.toast.success).toHaveBeenCalledWith(
+      "Destination updated",
+      expect.objectContaining({
+        description: "Printed copies of this code now open the new URL.",
+      }),
+    );
+  });
+
+  it("a switched-off code (held or moderated) doesn't claim printed copies work", async () => {
+    routes.updateDynamicCode.mockResolvedValue({
+      success: true,
+      data: { ...CREATED, status: "disabled" },
+    });
+    await update();
     expect(toasts.toast.success).not.toHaveBeenCalled();
     expect(toasts.toast.warning).toHaveBeenCalledWith(
-      "The new address is being checked",
+      "Saved, but this code is switched off",
+      {
+        description:
+          "Printed copies won't open anything until it's back on. Your dashboard shows why.",
+      },
+    );
+  });
+
+  it("a code its owner paused says it's paused, not that printed copies open the new address", async () => {
+    routes.updateDynamicCode.mockResolvedValue({
+      success: true,
+      data: { ...CREATED, status: "active", paused: true },
+    });
+    await update();
+    expect(toasts.toast.warning).not.toHaveBeenCalled();
+    expect(toasts.toast.success).toHaveBeenCalledWith(
+      "Destination updated",
       expect.objectContaining({
-        description: expect.stringContaining("Printed copies won't open"),
+        description: expect.stringContaining("This code is paused"),
+      }),
+    );
+    expect(toasts.toast.success).not.toHaveBeenCalledWith(
+      "Destination updated",
+      expect.objectContaining({
+        description: "Printed copies of this code now open the new URL.",
       }),
     );
   });

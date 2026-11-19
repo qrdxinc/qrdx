@@ -264,6 +264,11 @@ export interface QrCodeView {
   createdBy: string;
   /** Asks scanners for precise location (pixels.preciseLocation, lib/scan-location) */
   preciseLocation?: boolean;
+  /**
+   * Paused by its owner (lib/redirect/lifecycle.ts): status stays "active",
+   * but scans go to the fallback URL or a "paused" page until it's resumed.
+   */
+  paused?: boolean;
 }
 
 type QrCodeRow = typeof qrCode.$inferSelect;
@@ -302,6 +307,7 @@ export function toCodeView(
     organizationId: row.organizationId,
     createdBy: row.userId,
     preciseLocation: asksPreciseLocation(row.pixels),
+    paused: row.pausedAt !== null,
   };
 }
 
