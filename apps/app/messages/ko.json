@@ -5427,7 +5427,18 @@
       "empty": "비어 있음",
       "viewAll": "모두 보기",
       "saves": "저장",
-      "itemCount": "{count, plural, one {#개 항목} other {#개 항목}}"
+      "itemCount": "{count, plural, one {#개 항목} other {#개 항목}}",
+      "yourQrCode": "내 QR 코드"
+    },
+    "itemPreviews": {
+      "onATableTent": "테이블 텐트에 적용",
+      "onAPoster": "포스터에 적용",
+      "asASticker": "스티커로 적용",
+      "plainCode": "기본 QR 코드",
+      "withThisTheme": "이 테마를 적용한 같은 코드",
+      "inTheFrame": "{name} 프레임에 적용",
+      "withItsOwnFrame": "전용 프레임과 함께",
+      "onABusinessCard": "명함에 적용"
     },
     "itemPages": {
       "previous": "이전",

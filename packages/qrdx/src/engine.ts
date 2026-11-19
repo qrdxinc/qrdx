@@ -96,6 +96,7 @@ export {
 } from "./eps";
 export { getQRAsCanvas, getQRAsSVGDataUri } from "./export";
 export {
+  createFrameTree,
   FRAME_FONT_FAMILY,
   FRAME_GAP_RATIO,
   FRAME_LABEL_ATTRIBUTE,
@@ -106,6 +107,7 @@ export {
   type FramePolygon,
   type FrameRect,
   type FrameShape,
+  type FrameTreeOptions,
   frameLabels,
   getFrameDimensions,
   getFrameGapRatio,

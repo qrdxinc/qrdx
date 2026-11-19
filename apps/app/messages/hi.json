@@ -5427,7 +5427,18 @@
       "empty": "खाली",
       "viewAll": "सभी देखें",
       "saves": "सेव",
-      "itemCount": "{count, plural, one {# आइटम} other {# आइटम}}"
+      "itemCount": "{count, plural, one {# आइटम} other {# आइटम}}",
+      "yourQrCode": "आपका QR कोड"
+    },
+    "itemPreviews": {
+      "onATableTent": "टेबल टेंट पर",
+      "onAPoster": "पोस्टर पर",
+      "asASticker": "स्टिकर के रूप में",
+      "plainCode": "एक सादा कोड",
+      "withThisTheme": "इस थीम के साथ वही कोड",
+      "inTheFrame": "{name} फ़्रेम में",
+      "withItsOwnFrame": "अपने फ़्रेम के साथ",
+      "onABusinessCard": "बिज़नेस कार्ड पर"
     },
     "itemPages": {
       "previous": "पिछला",

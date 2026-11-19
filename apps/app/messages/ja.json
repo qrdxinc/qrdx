@@ -5427,7 +5427,18 @@
       "empty": "空",
       "viewAll": "すべて見る",
       "saves": "保存数",
-      "itemCount": "{count, plural, one {#件} other {#件}}"
+      "itemCount": "{count, plural, one {#件} other {#件}}",
+      "yourQrCode": "あなたのQRコード"
+    },
+    "itemPreviews": {
+      "onATableTent": "テーブルテントに配置した例",
+      "onAPoster": "ポスターに配置した例",
+      "asASticker": "ステッカーにした例",
+      "plainCode": "シンプルなコード",
+      "withThisTheme": "このテーマを適用した同じコード",
+      "inTheFrame": "{name}フレームに入れた例",
+      "withItsOwnFrame": "専用フレーム付き",
+      "onABusinessCard": "名刺に配置した例"
     },
     "itemPages": {
       "previous": "前へ",

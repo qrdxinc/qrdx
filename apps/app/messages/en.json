@@ -5826,7 +5826,18 @@
       "empty": "Empty",
       "viewAll": "View all",
       "saves": "Saves",
-      "itemCount": "{count, plural, one {# item} other {# items}}"
+      "itemCount": "{count, plural, one {# item} other {# items}}",
+      "yourQrCode": "Your QR code"
+    },
+    "itemPreviews": {
+      "onATableTent": "On a table tent",
+      "onAPoster": "On a poster",
+      "asASticker": "As a sticker",
+      "plainCode": "A plain code",
+      "withThisTheme": "The same code with this theme",
+      "inTheFrame": "In the {name} frame",
+      "withItsOwnFrame": "With its own frame",
+      "onABusinessCard": "On a business card"
     },
     "itemPages": {
       "previous": "Previous",

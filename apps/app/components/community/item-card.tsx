@@ -38,6 +38,8 @@ import { CreatorLine } from "./creator-line";
 import { LazyDesignQr } from "./design-qr";
 import numeral from "./rank-numeral.module.css";
 import { RowSection } from "./row-section";
+import { ThemeSwatch } from "./theme-swatch";
+import { LazyFrameSlot } from "./type-previews";
 
 const COUNT = new Intl.NumberFormat("en", { notation: "compact" });
 
@@ -56,11 +58,13 @@ export const cardHref = (card: CommunityItemCard) =>
     ? itemPath(card.type, card.slug)
     : `/community/${TYPE_SEGMENTS[card.type]}`;
 
-/** The plate a theme is drawn on: its own background. */
-const plateColor = (card: CommunityItemCard) =>
-  typeof card.preview.bgColor === "string" && card.preview.bgColor
-    ? card.preview.bgColor
-    : "#ffffff";
+/**
+ * Whether a kit's look is a frame alone: it has a frame and no theme, so
+ * its picture is the frame's (a swatch would show the plain code frames
+ * are drawn on).
+ */
+const frameOnlyKit = (card: CommunityItemCard) =>
+  Boolean(card.kit?.frame && !card.kit.theme && card.preview.frame);
 
 /**
  * One item in a grid or row: the design on a calm surface, then its name,
@@ -108,7 +112,7 @@ export function ItemCard({
       />
       <div className="relative">
         {rank !== undefined && rankAs === "numeral" && (
-          <RankNumeral rank={rank} />
+          <RankNumeral id={rankId(card, rank)} rank={rank} />
         )}
         <div className={CARD_ART}>
           {card.type === "collection" ? (
@@ -139,15 +143,24 @@ export function ItemCard({
               )}
             </div>
           ) : card.type === "kit" ? (
-            // The look and the page, side by side.
+            // The look (a swatch, or the frame it brings) and the page, side
+            // by side: "look + page".
             <div className="absolute inset-0 flex items-start justify-center gap-3 px-5 pt-5">
-              <div className="mt-6 aspect-square w-[36%] rounded-lg bg-white p-2 shadow-sm ring-1 ring-black/5">
-                <LazyDesignQr
-                  className="size-full"
+              {frameOnlyKit(card) ? (
+                <LazyFrameSlot
+                  className="mt-6 aspect-square w-[36%] drop-shadow-sm"
+                  eager={eager}
+                  label={t("yourQrCode")}
+                  style={card.preview}
+                />
+              ) : (
+                <ThemeSwatch
+                  className="mt-6 aspect-square w-[36%]"
+                  compact
                   eager={eager}
                   style={card.preview}
                 />
-              </div>
+              )}
               <div className="aspect-[9/16] w-[34%] overflow-hidden rounded-t-xl bg-white shadow-sm ring-1 ring-black/5">
                 {card.page ? (
                   <TemplatePreview
@@ -168,25 +181,24 @@ export function ItemCard({
               ) : null}
             </div>
           ) : card.type === "frame" ? (
-            // A frame is a card of its own: drawn as it is, no plate.
+            // A frame is a card of its own, drawn as it is with a holder
+            // where your code goes: a frame, not a code.
             <div className="absolute inset-y-[8%] inset-x-0 transition-transform duration-300 motion-safe:group-hover:scale-[1.03]">
-              <LazyDesignQr
+              <LazyFrameSlot
                 className="size-full drop-shadow-sm"
                 eager={eager}
+                label={t("yourQrCode")}
                 style={card.preview}
               />
             </div>
           ) : (
-            <div
-              className="absolute top-1/2 left-1/2 aspect-square h-[72%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg p-1.5 shadow-sm ring-1 ring-black/5 transition-transform duration-300 motion-safe:group-hover:scale-[1.03]"
-              style={{ backgroundColor: plateColor(card) }}
-            >
-              <LazyDesignQr
-                className="size-full"
-                eager={eager}
-                style={card.preview}
-              />
-            </div>
+            // A theme is a look: a close-up of its code with its colors.
+            // One that carries a frame shows it on its page.
+            <ThemeSwatch
+              className="absolute inset-[8%] transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
+              eager={eager}
+              style={card.preview}
+            />
           )}
           {rank !== undefined && rankAs === "badge" && (
             <span
@@ -228,41 +240,124 @@ export function ItemCard({
   );
 }
 
+/** The id a ranked card's numeral gives its SVG filter and clip. */
+const rankId = (card: CommunityItemCard, rank: number) =>
+  `rank-${rank}-${cardKey(card).replace(/[^\w-]/g, "")}`;
+
 /**
- * A rank's numeral: a faint, solid figure whose outline draws in when its
- * card is hovered or focused (./rank-numeral.module.css). The figure in the
- * HTML is invisible and only gives the numeral its size; both visible
- * layers are SVG text anchored to its right edge, so they line up.
+ * A rank's numeral: a faint, solid figure that, when its card is hovered or
+ * focused, fills with the accent colour, raised and glossy, and catches a
+ * band of light (./rank-numeral.module.css). The figure in the HTML is
+ * invisible and only gives the numeral its size; every visible layer is
+ * SVG text anchored to its right edge, so they line up.
+ *
+ * The raised look is an SVG lighting filter: the figure's blurred edge is
+ * read as a height map and lit from the top left, so its middle stays flat
+ * and its edges round over, lighter on the lit side, darker on the other.
  */
-function RankNumeral({ rank }: { rank: number }) {
+function RankNumeral({ rank, id }: { rank: number; id: string }) {
   // The baseline of a line-height-1 figure, about the same in every face.
-  const baseline = "0.86em";
+  const figure = {
+    textAnchor: "end",
+    x: "100%",
+    y: "0.86em",
+  } as const;
   return (
     <span aria-hidden className={cn(RANK_NUMERAL, numeral.numeral)}>
       <span className="invisible">{rank}</span>
       <svg aria-hidden className={numeral.art} focusable="false">
+        <defs>
+          <filter
+            colorInterpolationFilters="sRGB"
+            height="140%"
+            id={`${id}-raise`}
+            width="140%"
+            x="-20%"
+            y="-20%"
+          >
+            <feGaussianBlur in="SourceAlpha" result="height" stdDeviation="4" />
+            <feDiffuseLighting
+              diffuseConstant="1.15"
+              in="height"
+              lightingColor="#fff"
+              result="diffuse"
+              surfaceScale="4"
+            >
+              <feDistantLight azimuth="225" elevation="55" />
+            </feDiffuseLighting>
+            <feSpecularLighting
+              in="height"
+              lightingColor="#fff"
+              result="specular"
+              specularConstant="0.85"
+              specularExponent="24"
+              surfaceScale="4"
+            >
+              <feDistantLight azimuth="225" elevation="40" />
+            </feSpecularLighting>
+            <feComposite
+              in="SourceGraphic"
+              in2="diffuse"
+              k1="1"
+              operator="arithmetic"
+              result="shaded"
+            />
+            <feComposite
+              in="specular"
+              in2="SourceAlpha"
+              operator="in"
+              result="shine"
+            />
+            <feComposite
+              in="shine"
+              in2="shaded"
+              k2="0.75"
+              k3="1"
+              operator="arithmetic"
+              result="lit"
+            />
+            <feComposite in="lit" in2="SourceAlpha" operator="in" />
+          </filter>
+          <clipPath id={`${id}-shape`}>
+            <text {...figure}>{rank}</text>
+          </clipPath>
+          <linearGradient id={`${id}-band`} x1="0" x2="1" y1="0" y2="0.35">
+            <stop offset="0.3" stopColor="#fff" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#fff" stopOpacity="0.55" />
+            <stop offset="0.7" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+        </defs>
         <text
           className={cn(
             numeral.fill,
             "fill-foreground/[0.08] dark:fill-foreground/[0.1]",
           )}
-          textAnchor="end"
-          x="100%"
-          y={baseline}
+          {...figure}
         >
           {rank}
         </text>
-        <text
-          className={cn(
-            numeral.trace,
-            "stroke-foreground/45 dark:stroke-foreground/55",
-          )}
-          textAnchor="end"
-          x="100%"
-          y={baseline}
-        >
-          {rank}
-        </text>
+        <g className={numeral.gloss}>
+          <text
+            className="fill-primary"
+            filter={`url(#${id}-raise)`}
+            {...figure}
+          >
+            {rank}
+          </text>
+          <text className={cn(numeral.rim, "stroke-white/35")} {...figure}>
+            {rank}
+          </text>
+          <g clipPath={`url(#${id}-shape)`}>
+            <rect
+              className={numeral.sheen}
+              fill={`url(#${id}-band)`}
+              height="100%"
+              width="100%"
+              x="0"
+              y="0"
+            />
+          </g>
+        </g>
       </svg>
     </span>
   );

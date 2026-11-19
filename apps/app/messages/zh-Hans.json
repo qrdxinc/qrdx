@@ -5427,7 +5427,18 @@
       "empty": "空",
       "viewAll": "查看全部",
       "saves": "收藏",
-      "itemCount": "{count, plural, one {# 个项目} other {# 个项目}}"
+      "itemCount": "{count, plural, one {# 个项目} other {# 个项目}}",
+      "yourQrCode": "你的二维码"
+    },
+    "itemPreviews": {
+      "onATableTent": "台卡上的效果",
+      "onAPoster": "海报上的效果",
+      "asASticker": "贴纸上的效果",
+      "plainCode": "普通二维码",
+      "withThisTheme": "应用此主题的同一个二维码",
+      "inTheFrame": "在 {name} 边框中",
+      "withItsOwnFrame": "带专属边框",
+      "onABusinessCard": "名片上的效果"
     },
     "itemPages": {
       "previous": "上一页",
