@@ -49,7 +49,9 @@ import { unsubscribeUrl } from "./unsubscribe";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 export const DIGEST_SHARDS = 24;
-// Stay under Resend's default rate limit (2 requests / second).
+// Resend allows 10 requests a second per team (ratelimit-policy: 10;w=1),
+// shared with sign-in codes and every other email: the digest keeps to
+// under 2 a second.
 const SEND_SPACING_MS = 550;
 
 /** Monday 00:00 UTC of the week before the one containing `now`, and the Monday after. */

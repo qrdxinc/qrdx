@@ -6463,6 +6463,14 @@
           "testMessageSentToValue": "测试消息已发送至 {value}",
           "webhookRemoved": "已移除 Webhook"
         },
+        "teamNotes": {
+          "title": "QRdx 团队的来信",
+          "description": "QRdx 团队成员偶尔会亲自给你写信，例如询问你使用 QRdx 的感受。直接回复即可联系到他们。",
+          "label": "接收团队来信",
+          "hint": "你的提醒、摘要和安全邮件不受影响。",
+          "turnedOn": "已开启团队来信",
+          "turnedOff": "已关闭团队来信"
+        },
         "page": {
           "emailIsntSetUpOn": "此服务器尚未设置电子邮件（RESEND_API_KEY 和 EMAIL_FROM），因此邮件提醒和摘要只会保存，不会发送。Slack 和 Discord 提醒仍可使用。<link>设置指南</link>",
           "chooseWhatQrdxTellsYou": "选择 QRdx 通知你的内容：通过电子邮件，或在 Slack 和 Discord 中接收。",
@@ -9265,6 +9273,13 @@
       "countries": "扫描地区",
       "newCodesLine": "本周新增 {count, plural, other {# 个二维码}}。",
       "open": "打开控制台"
+    },
+    "personal": {
+      "reply": "直接回复这封邮件，{name} 就能收到。",
+      "stop": "不再接收 QRdx 团队的来信"
+    },
+    "personalNote": {
+      "reason": "您收到这封邮件，是因为您拥有 QRdx 账户。"
     }
   },
   "codeActions": {

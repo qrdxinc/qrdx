@@ -6463,6 +6463,14 @@
           "testMessageSentToValue": "{value}にテストメッセージを送信しました",
           "webhookRemoved": "Webhookを削除しました"
         },
+        "teamNotes": {
+          "title": "QRdxチームからのお知らせ",
+          "description": "QRdxの担当者から、QRdxの使い心地をおたずねするなど、個別にご連絡することがあります。返信いただくと担当者に届きます。",
+          "label": "チームからのお知らせを受け取る",
+          "hint": "アラート、ダイジェスト、セキュリティに関するメールの設定は変わりません。",
+          "turnedOn": "チームからのお知らせをオンにしました",
+          "turnedOff": "チームからのお知らせをオフにしました"
+        },
         "page": {
           "emailIsntSetUpOn": "このサーバーではメールが設定されていない（RESEND_API_KEY と EMAIL_FROM）ため、メールのアラートとダイジェストは保存されますが送信されません。SlackとDiscordのアラートは引き続き利用できます。<link>セットアップガイド</link>",
           "chooseWhatQrdxTellsYou": "QRdxからの通知内容を、メール、SlackまたはDiscordで選択できます。",
@@ -9265,6 +9273,13 @@
       "countries": "スキャンされた場所",
       "newCodesLine": "今週は新しいコードが{count, plural, other {#件}}ありました。",
       "open": "ダッシュボードを開く"
+    },
+    "personal": {
+      "reply": "このメールに返信すると、{name}に届きます。",
+      "stop": "QRdxチームからのお知らせを停止する"
+    },
+    "personalNote": {
+      "reason": "QRdxアカウントをお持ちのため、このメールをお送りしています。"
     }
   },
   "codeActions": {

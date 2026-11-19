@@ -6463,6 +6463,14 @@
           "testMessageSentToValue": "Mensagem de teste enviada para {value}",
           "webhookRemoved": "Webhook removido"
         },
+        "teamNotes": {
+          "title": "Recados da equipe QRdx",
+          "description": "De vez em quando, alguém da QRdx escreve para você pessoalmente, por exemplo para perguntar como o QRdx está funcionando para você. Se você responder, a mensagem chega até essa pessoa.",
+          "label": "Receber recados da equipe",
+          "hint": "Seus alertas, resumos e e-mails de segurança não mudam.",
+          "turnedOn": "Recados da equipe ativados",
+          "turnedOff": "Recados da equipe desativados"
+        },
         "page": {
           "emailIsntSetUpOn": "O e-mail não está configurado neste servidor (RESEND_API_KEY e EMAIL_FROM), então os alertas e resumos por e-mail são salvos, mas não enviados. Os alertas do Slack e do Discord continuam funcionando. <link>Guia de configuração</link>",
           "chooseWhatQrdxTellsYou": "Escolha o que o QRdx avisa para você: por e-mail, no Slack e no Discord.",
@@ -9265,6 +9273,13 @@
       "countries": "De onde vieram as leituras",
       "newCodesLine": "{count, plural, one {# novo código} other {# novos códigos}} esta semana.",
       "open": "Abrir seu painel"
+    },
+    "personal": {
+      "reply": "Responda a este e-mail e a mensagem chega até {name}.",
+      "stop": "Parar de receber notas da equipe QRdx"
+    },
+    "personalNote": {
+      "reason": "Você está recebendo este e-mail porque tem uma conta no QRdx."
     }
   },
   "codeActions": {

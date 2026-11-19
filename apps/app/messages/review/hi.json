@@ -19763,6 +19763,30 @@
     "source": "bc7bafdda4a7",
     "status": "machine"
   },
+  "app.settings.notifications.teamNotes.title": {
+    "source": "8a52391b8446",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.description": {
+    "source": "c0e0ba92f1f9",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.label": {
+    "source": "04c0b9690baf",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.hint": {
+    "source": "43ee843b7b30",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.turnedOn": {
+    "source": "ddb292bb23b3",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.turnedOff": {
+    "source": "12cbb3403572",
+    "status": "machine"
+  },
   "app.settings.notifications.page.emailIsntSetUpOn": {
     "source": "d5d328db1109",
     "status": "machine"
@@ -29141,6 +29165,18 @@
   },
   "emails.weeklyDigest.open": {
     "source": "a71e9a1f885f",
+    "status": "machine"
+  },
+  "emails.personal.reply": {
+    "source": "ba550a397311",
+    "status": "machine"
+  },
+  "emails.personal.stop": {
+    "source": "eebaef77d055",
+    "status": "machine"
+  },
+  "emails.personalNote.reason": {
+    "source": "29f16d6d2389",
     "status": "machine"
   },
   "codeActions.lifecycle.signIn": {

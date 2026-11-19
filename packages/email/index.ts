@@ -29,6 +29,8 @@ export interface SendEmailOptions {
   subject: string;
   /** A template from ./templates (wrapped in EmailLayout) */
   react: ReactElement;
+  /** Another sender on a verified domain (EMAIL_FROM_PERSONAL); else `from` */
+  from?: string;
   replyTo?: string;
   /** Adds one-click List-Unsubscribe headers (digests, alerts) */
   unsubscribeUrl?: string;
@@ -46,6 +48,8 @@ export type SendEmailResult =
       sent: false;
       reason: "not-configured" | "failed" | "reserved-address";
       error?: string;
+      /** Resend's error name, e.g. "concurrent_idempotent_requests" */
+      code?: string;
     };
 
 export interface EmailSender {
@@ -74,6 +78,7 @@ export function createEmailSender({
     to,
     subject,
     react,
+    from: sender,
     replyTo,
     unsubscribeUrl,
     idempotencyKey,
@@ -110,7 +115,7 @@ export function createEmailSender({
       client ??= new Resend(apiKey);
       const { data, error } = await client.emails.send(
         {
-          from,
+          from: sender ?? from,
           to: recipients,
           subject,
           html,
@@ -127,15 +132,24 @@ export function createEmailSender({
         idempotencyKey ? { idempotencyKey } : undefined
       );
       if (error || !data) {
-        throw new Error(error?.message ?? "Resend returned no email id");
+        throw Object.assign(
+          new Error(error?.message ?? "Resend returned no email id"),
+          { code: error?.name }
+        );
       }
       log("info", "email.sent", { ...fields, id: data.id });
       return { sent: true, id: data.id };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
+      const code = (error as { code?: unknown } | null)?.code;
       log("error", "email.failed", { ...fields, error: message });
       if (throwOnError) throw error;
-      return { sent: false, reason: "failed", error: message };
+      return {
+        sent: false,
+        reason: "failed",
+        error: message,
+        ...(typeof code === "string" ? { code } : {}),
+      };
     }
   }
 

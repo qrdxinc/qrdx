@@ -55,16 +55,16 @@ export async function enforceRateLimits(
 /**
  * Gives back the request enforceRateLimits counted, for one that was refused
  * before it did anything and shouldn't use up the budget (an admin action
- * that first asks for a strong confirmation). A negative rate is Upstash's
- * refund; the in-memory fallback takes it the same way. Best effort: when
- * the store can't take it back, the request stays counted.
+ * that first asks for a strong confirmation), or `rate` of them. A negative
+ * rate is Upstash's refund; the in-memory fallback takes it the same way.
+ * Best effort: when the store can't take it back, the request stays counted.
  */
 export async function refundRateLimits(
-  checks: Array<{ limiter: RateLimiter; key: string }>,
+  checks: Array<{ limiter: RateLimiter; key: string; rate?: number }>,
 ): Promise<void> {
   await Promise.all(
-    checks.map(({ limiter, key }) =>
-      limiter.limit(key, -1).catch((error: unknown) => {
+    checks.map(({ limiter, key, rate = 1 }) =>
+      limiter.limit(key, -rate).catch((error: unknown) => {
         console.warn(
           JSON.stringify({
             event: "rate_limit.refund_failed",

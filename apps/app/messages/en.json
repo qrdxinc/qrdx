@@ -6862,6 +6862,14 @@
           "testMessageSentToValue": "Test message sent to {value}",
           "webhookRemoved": "Webhook removed"
         },
+        "teamNotes": {
+          "title": "Notes from the QRdx team",
+          "description": "Now and then someone at QRdx writes to you personally, for example to ask how QRdx is working for you. Replying reaches them.",
+          "label": "Get notes from the team",
+          "hint": "Your alerts, digests and security emails don't change.",
+          "turnedOn": "Notes from the team are on",
+          "turnedOff": "Notes from the team are off"
+        },
         "page": {
           "emailIsntSetUpOn": "Email isn't set up on this server (RESEND_API_KEY and EMAIL_FROM), so email alerts and digests are saved but not sent. Slack and Discord alerts still work. <link>Setup guide</link>",
           "chooseWhatQrdxTellsYou": "Choose what QRdx tells you about: by email, or in Slack and Discord.",
@@ -9664,6 +9672,13 @@
       "countries": "Where people scanned",
       "newCodesLine": "{count, plural, one {# new code} other {# new codes}} this week.",
       "open": "Open your dashboard"
+    },
+    "personal": {
+      "reply": "Reply to this email and it reaches {name}.",
+      "stop": "Stop notes from the QRdx team"
+    },
+    "personalNote": {
+      "reason": "You're getting this because you have a QRdx account."
     }
   },
   "codeActions": {

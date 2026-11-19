@@ -6463,6 +6463,14 @@
           "testMessageSentToValue": "Testnachricht an {value} gesendet",
           "webhookRemoved": "Webhook entfernt"
         },
+        "teamNotes": {
+          "title": "Nachrichten vom QRdx-Team",
+          "description": "Hin und wieder schreibt dir jemand von QRdx persönlich, zum Beispiel um zu fragen, wie QRdx für dich funktioniert. Wenn du antwortest, erreichst du diese Person direkt.",
+          "label": "Nachrichten vom Team erhalten",
+          "hint": "Deine Benachrichtigungen, Zusammenfassungen und Sicherheits-E-Mails bleiben unverändert.",
+          "turnedOn": "Nachrichten vom Team sind aktiviert",
+          "turnedOff": "Nachrichten vom Team sind deaktiviert"
+        },
         "page": {
           "emailIsntSetUpOn": "E-Mail ist auf diesem Server nicht eingerichtet (RESEND_API_KEY und EMAIL_FROM). E-Mail-Benachrichtigungen und Zusammenfassungen werden daher gespeichert, aber nicht gesendet. Slack- und Discord-Benachrichtigungen funktionieren weiterhin. <link>Einrichtungsanleitung</link>",
           "chooseWhatQrdxTellsYou": "Lege fest, worüber QRdx dich informiert: per E-Mail oder in Slack und Discord.",
@@ -9265,6 +9273,13 @@
       "countries": "Wo gescannt wurde",
       "newCodesLine": "{count, plural, one {# neuer Code} other {# neue Codes}} diese Woche.",
       "open": "Dashboard öffnen"
+    },
+    "personal": {
+      "reply": "Antworte auf diese E-Mail, und sie geht direkt an {name}.",
+      "stop": "Nachrichten vom QRdx-Team abbestellen"
+    },
+    "personalNote": {
+      "reason": "Du erhältst diese E-Mail, weil du ein QRdx-Konto hast."
     }
   },
   "codeActions": {
