@@ -98,7 +98,7 @@ You don't need a database or any environment variables to work on the React libr
    bun run --filter email dev
    ```
 
-   Open http://localhost:3003. It shows every template in `packages/email/templates` that has `PreviewProps`, in English; a new template needs `PreviewProps` to appear. Restart it after a new template or a change to the copy in `apps/app/messages/en.json`: it writes its preview files and its copy of the English catalog when it starts. It isn't part of the pre-push hook, CI or Vercel's build.
+   Open http://localhost:3003. It shows every template in `packages/email/templates` that has `PreviewProps`, in English; a new template needs `PreviewProps` to appear. Restart it after a new template or a change to the copy in `apps/app/messages/en.json`: it writes its preview files and its copy of the English catalog when it starts. It isn't part of the pre-push hook, CI, Vercel's build or the root `bun run dev`.
 
 ## Project structure
 
@@ -106,9 +106,9 @@ You don't need a database or any environment variables to work on the React libr
 | --- | --- |
 | `apps/app` | The Next.js app behind qrdx.dev: marketing pages, the editor (`app/(app)/playground`), the blog, the signed-in app (`app/(app)/dashboard`, `app/(app)/settings`), admin, and the API routes (`app/api`, served as `api.qrdx.dev/v1` and `mcp.qrdx.dev/mcp`). It serves the docs' URLs through `apps/docs` |
 | `apps/docs` | The docs: their pages (`content/docs`, MDX, every language) and the docs site, a Next.js app deployed to a separate Vercel project from `.github/workflows/docs-deploy.yml`. With `DOCS_ZONE_URL` set, the main app proxies `/docs` and the other docs URLs to it; without it (self-hosting, local development), it redirects them to qrdx.dev. Its README says what it reads from `apps/app` |
+| `apps/email` | The preview server for the emails (React Email, port 3003); it writes a preview file for each template before it starts (`scripts/prepare.mjs`) |
 | `packages/qrdx` | The QR engine and React library, published to npm as `qrdx` |
 | `packages/cli` | The command-line tool, published to npm as `@qrdx/cli` |
-| `apps/email` | The preview server for the emails (React Email, port 3003); it writes a preview file for each template before it starts (`scripts/prepare.mjs`) |
 | `packages/auth` | Better Auth server and client configuration |
 | `packages/email` | `@repo/email`: the email templates and their layout (`templates/`, React Email), rendering, and sending through Resend; the app binds the sender to its environment in `apps/app/lib/email/send.ts` |
 | `packages/database` | Drizzle schema (`schema.ts`), the database client, and hand-applied SQL (`manual-sql/`) |

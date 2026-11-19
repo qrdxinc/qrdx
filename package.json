@@ -4,7 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "build:qrdx": "turbo build --filter=qrdx",
-    "dev": "turbo dev --filter=!./plugins/*",
+    "dev": "turbo dev --filter=!./plugins/* --filter=!email",
     "check": "ultracite check",
     "fix": "ultracite fix",
     "test": "turbo test",

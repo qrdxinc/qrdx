@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { ReactElement } from "react";
 import { Resend } from "resend";
 import { renderEmail } from "./render";
