@@ -100,7 +100,7 @@ const scope = {
 } as never;
 const SHORTENER = "https://bit.ly/menu";
 const MODERATED =
-  "This code was switched off by QRdx after a review. Contact support@qrdx.dev.";
+  "This code was switched off by QRdx after a review, so it can't be pointed anywhere new. Contact support@qrdx.dev.";
 
 const reports = () =>
   fakeDb.rows("abuseReport") as {
@@ -145,6 +145,8 @@ function report(patch: Record<string, unknown>) {
   };
 }
 
+const ago = (minutes: number) => new Date(NOW.getTime() - minutes * 60_000);
+
 const audit = (action: string, minutesAgo: number) => ({
   id: `audit_${action}_${minutesAgo}`,
   actorUserId: "admin_1",
@@ -152,7 +154,7 @@ const audit = (action: string, minutesAgo: number) => ({
   targetType: "qr_code",
   targetId: "code_1",
   metadata: {},
-  createdAt: new Date(NOW.getTime() - minutesAgo * 60_000),
+  createdAt: ago(minutesAgo),
 });
 
 beforeEach(() => {
@@ -265,6 +267,34 @@ describe("what records moderation", () => {
     expect(await moderatedIds([])).toEqual(new Set());
   });
 
+  it("the newest record wins: an Enable cancels older actioned reports", async () => {
+    const actioned = (qrCodeId: string, minutesAgo: number) =>
+      report({
+        qrCodeId,
+        status: "actioned",
+        reason: "phishing",
+        createdAt: ago(minutesAgo),
+      });
+    fakeDb.seed("abuseReport", [
+      actioned("code_back_on", 60),
+      actioned("code_reported_since", 10),
+      actioned("code_off_again", 60),
+    ]);
+    fakeDb.seed("adminAuditLog", [
+      { ...audit("qr_code.enable", 30), targetId: "code_back_on" },
+      { ...audit("qr_code.enable", 30), targetId: "code_reported_since" },
+      { ...audit("qr_code.enable", 30), targetId: "code_off_again" },
+      { ...audit("qr_code.disable", 10), targetId: "code_off_again" },
+    ]);
+    expect(
+      await moderatedIds([
+        "code_back_on",
+        "code_reported_since",
+        "code_off_again",
+      ]),
+    ).toEqual(new Set(["code_reported_since", "code_off_again"]));
+  });
+
   it("a newer auto-hold doesn't make a moderated code read as held", async () => {
     seedCode({ isActive: false });
     fakeDb.seed("abuseReport", [
@@ -373,6 +403,45 @@ describe("an owner can't change what a moderated code opens", () => {
       code: "FORBIDDEN",
       message: MODERATED,
     });
+  });
+});
+
+describe("a moderated code an admin turned back on", () => {
+  beforeEach(() => {
+    // Moderated an hour ago, turned back on half an hour ago.
+    seedCode();
+    fakeDb.seed("abuseReport", [
+      report({
+        status: "actioned",
+        reason: "phishing",
+        url: null,
+        createdAt: ago(60),
+      }),
+    ]);
+    fakeDb.seed("adminAuditLog", [audit("qr_code.enable", 30)]);
+  });
+
+  it("is an ordinary hold when a new address is held", async () => {
+    const view = await updateCode(scope, "code_1", {
+      destinationUrl: SHORTENER,
+    });
+    expect(view.status).toBe("disabled");
+    expect(view.heldForReview).toBe(true);
+
+    // The owner can still fix the address while it waits.
+    const fixed = await updateCode(scope, "code_1", {
+      destinationUrl: "https://example.com/spring-menu",
+    });
+    expect(fixed.destinationUrl).toBe("https://example.com/spring-menu");
+  });
+
+  it("is approved without an override", async () => {
+    await updateCode(scope, "code_1", { destinationUrl: SHORTENER });
+    const hold = reports().find((row) => row.status === "open");
+    expect(
+      await restoreReportedCodeAction({ reportId: hold?.id as string }),
+    ).toEqual({ ok: true });
+    expect(codeRow()?.isActive).toBe(true);
   });
 });
 

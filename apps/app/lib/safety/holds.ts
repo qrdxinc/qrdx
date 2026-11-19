@@ -2,27 +2,31 @@ import "server-only";
 
 import { SUPPORT_EMAIL } from "@repo/config";
 import { abuseReport, adminAuditLog, database as db } from "@repo/database";
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { HttpError } from "@/lib/error-response";
 
 /**
- * Codes among `ids` that QRdx switched off after a review, by either record
- * a person leaves:
- * - an "actioned" abuse report about the code: /admin/abuse "Disable" marks
- *   every open report actioned, and "Mark resolved" on a held code keeps it
- *   off;
- * - the latest admin "Enable" or "Disable" of the code was a disable
- *   ("qr_code.disable" in the admin audit log): the codes and user pages
- *   (and the console's copies) switch a code off without a report.
- * An actioned report counts even after an admin turned the code back on, so
- * a code that's off again is never mistaken for a safety hold. Only
- * meaningful for codes that are off.
+ * Codes among `ids` that QRdx switched off after a review: the newest of
+ * these records a person leaves about the code is a moderation one.
+ * - An "actioned" abuse report moderates: /admin/abuse "Disable" marks every
+ *   open report actioned, and "Mark resolved" on a held code keeps it off.
+ *   It dates from its createdAt (a status change has no time of its own).
+ * - An admin's "qr_code.disable" audit entry moderates too: the codes and
+ *   user pages (and the console's copies) switch a code off without a
+ *   report.
+ * - An admin's "qr_code.enable" entry (a restore, or Enable on those pages)
+ *   cancels the older ones, so a code turned back on and later held by a new
+ *   address is an ordinary hold again.
+ * Only meaningful for codes that are off.
  */
 export async function moderatedIds(ids: string[]): Promise<Set<string>> {
   if (ids.length === 0) return new Set();
   const [actioned, decisions] = await Promise.all([
     db
-      .select({ qrCodeId: abuseReport.qrCodeId })
+      .select({
+        codeId: abuseReport.qrCodeId,
+        createdAt: abuseReport.createdAt,
+      })
       .from(abuseReport)
       .where(
         and(
@@ -31,7 +35,11 @@ export async function moderatedIds(ids: string[]): Promise<Set<string>> {
         ),
       ),
     db
-      .select({ codeId: adminAuditLog.targetId, action: adminAuditLog.action })
+      .select({
+        codeId: adminAuditLog.targetId,
+        action: adminAuditLog.action,
+        createdAt: adminAuditLog.createdAt,
+      })
       .from(adminAuditLog)
       .where(
         and(
@@ -39,19 +47,28 @@ export async function moderatedIds(ids: string[]): Promise<Set<string>> {
           inArray(adminAuditLog.targetId, ids),
           inArray(adminAuditLog.action, ["qr_code.disable", "qr_code.enable"]),
         ),
-      )
-      .orderBy(desc(adminAuditLog.createdAt)),
+      ),
   ]);
-  const moderated = new Set(
-    actioned.flatMap((row) => (row.qrCodeId ? [row.qrCodeId] : [])),
-  );
-  const decided = new Set<string>();
-  for (const { codeId, action } of decisions) {
-    if (!codeId || decided.has(codeId)) continue;
-    decided.add(codeId);
-    if (action === "qr_code.disable") moderated.add(codeId);
+  // Each code's newest record: moderated, or turned back on.
+  const newest = new Map<string, { at: number; moderated: boolean }>();
+  const note = (codeId: string | null, at: Date, moderated: boolean) => {
+    if (!codeId) return;
+    const time = new Date(at).getTime();
+    const seen = newest.get(codeId);
+    // On a tie the moderation wins.
+    if (!seen || time > seen.at || (time === seen.at && moderated)) {
+      newest.set(codeId, { at: time, moderated });
+    }
+  };
+  for (const report of actioned) note(report.codeId, report.createdAt, true);
+  for (const entry of decisions) {
+    note(entry.codeId, entry.createdAt, entry.action === "qr_code.disable");
   }
-  return moderated;
+  return new Set(
+    [...newest].flatMap(([codeId, { moderated }]) =>
+      moderated ? [codeId] : [],
+    ),
+  );
 }
 
 /**
@@ -84,10 +101,11 @@ export async function heldForReviewIds(ids: string[]): Promise<Set<string>> {
 }
 
 /**
- * Owners can't change what a code QRdx switched off after a review opens
- * (its address, fallback, routing, type or an older version): a new address
- * would file a fresh safety hold, and approving that hold would turn the
- * moderated code back on.
+ * Owners can't point a code QRdx switched off after a review anywhere new: a
+ * new destination, fallback or routing address (screenUrlChange), another
+ * type, or an older version. A new address would file a fresh safety hold,
+ * and approving that hold would turn the moderated code back on. Removing
+ * rules or a fallback, UTM and design edits still save.
  */
 export async function assertNotModerated(code: {
   id: string;
@@ -98,6 +116,6 @@ export async function assertNotModerated(code: {
   throw new HttpError(
     403,
     "FORBIDDEN",
-    `This code was switched off by QRdx after a review. Contact ${SUPPORT_EMAIL}.`,
+    `This code was switched off by QRdx after a review, so it can't be pointed anywhere new. Contact ${SUPPORT_EMAIL}.`,
   );
 }
