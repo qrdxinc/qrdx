@@ -1,14 +1,16 @@
 /*
  * A rank's numeral on the community's ranked rows (item-card.tsx): a large,
  * faint figure with soft, rounded strokes, tucked behind the design's box.
- * When its card is hovered or holds keyboard focus, the figure fills with
- * the accent colour, raised and glossy (an SVG lighting filter, RankNumeral
- * in item-card.tsx), and a band of light sweeps across it once; when the
- * card is left, the colour drains back to the faint figure. With reduced
- * motion the colour just fades in and out.
  *
- * Every layer is SVG text over the same figure, so they line up exactly
- * whatever font the system picks.
+ * When its card is hovered or holds keyboard focus, the figure turns into
+ * liquid accent: a bright rim shows first, then the inside fills with a
+ * deep accent in which lighter and darker currents slowly drift for as
+ * long as the card is hovered, under a fixed highlight. When the card is
+ * left, the colour drains back to the faint figure. With reduced motion
+ * the colour fades in and out and the currents stay still.
+ *
+ * Every layer is SVG over the same figure (RankNumeral in item-card.tsx),
+ * so they line up whatever font the system picks.
  */
 
 .numeral {
@@ -17,6 +19,11 @@
   font-family:
     ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", "Helvetica Rounded",
     system-ui, sans-serif;
+
+  --rank-ink: var(--primary);
+  --rank-deep: color-mix(in oklab, var(--primary) 62%, black);
+  --rank-light: color-mix(in oklab, var(--primary) 70%, white);
+  --rank-rim: color-mix(in oklab, var(--primary) 75%, white);
 }
 
 /* An SVG keeps its default 300 by 150 box unless it's sized outright. */
@@ -29,68 +36,115 @@
 }
 
 .fill {
-  transition: opacity 380ms ease;
+  transition: opacity 420ms ease;
 }
 
-/* The coloured figure: hidden (and not painted) until its card is hovered. */
+/* The liquid figure: hidden (and not painted) until its card is hovered. */
 .gloss {
-  opacity: 0;
   visibility: hidden;
-  transform: scale(0.97);
-  transform-box: fill-box;
-  transform-origin: 50% 60%;
-  /* Leaving: drain slowly, then stop painting. */
-  transition:
-    opacity 380ms ease,
-    transform 380ms ease,
-    visibility 0s linear 380ms;
+  transition: visibility 0s linear 460ms;
+}
+
+.base {
+  fill: var(--rank-ink);
+}
+
+.lightStop {
+  stop-color: var(--rank-light);
+}
+
+.deepStop {
+  stop-color: var(--rank-deep);
+}
+
+/* The inside: fills just after the rim, drains first on the way out. */
+.body {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+
+/* A soft, darker band just inside the rim, for depth. */
+.edge {
+  fill: none;
+  stroke: var(--rank-deep);
+  stroke-width: 0.07em;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+/* The currents: drifting only while hovered. */
+.current {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: drift 3.2s ease-in-out infinite alternate paused;
+}
+
+.current:nth-child(2) {
+  animation-duration: 2.6s;
+  animation-direction: alternate-reverse;
+}
+
+.current:nth-child(3) {
+  animation-duration: 3.8s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(-6%, 4%) rotate(-14deg) scale(1);
+  }
+  to {
+    transform: translate(7%, -5%) rotate(12deg) scale(1.12);
+  }
+}
+
+.shine {
+  opacity: 0;
+  transition: opacity 420ms ease;
 }
 
 .rim {
   fill: none;
-  stroke-width: 0.012em;
+  stroke: var(--rank-rim);
+  stroke-width: 0.016em;
   stroke-linejoin: round;
-}
-
-/* The band of light: parked left of the figure, swept across on hover. */
-.sheen {
-  transform: translateX(-120%);
-  transform-box: fill-box;
-  transition: transform 0s linear 380ms;
+  opacity: 0;
+  transition: opacity 460ms ease;
 }
 
 .card:hover .fill,
 .card:has(a:focus-visible) .fill {
   opacity: 0;
-  transition-duration: 160ms;
+  transition-duration: 120ms;
 }
 
 .card:hover .gloss,
 .card:has(a:focus-visible) .gloss {
-  opacity: 1;
   visibility: visible;
-  transform: scale(1);
-  transition:
-    opacity 160ms ease-out,
-    transform 260ms cubic-bezier(0.34, 1.4, 0.64, 1),
-    visibility 0s;
+  transition: visibility 0s;
 }
 
-.card:hover .sheen,
-.card:has(a:focus-visible) .sheen {
-  transform: translateX(120%);
-  transition: transform 900ms cubic-bezier(0.4, 0, 0.2, 1) 120ms;
+/* Arriving: the rim at once, then the inside and its highlight. */
+.card:hover .rim,
+.card:has(a:focus-visible) .rim {
+  opacity: 1;
+  transition: opacity 80ms ease-out;
+}
+
+.card:hover .body,
+.card:has(a:focus-visible) .body,
+.card:hover .shine,
+.card:has(a:focus-visible) .shine {
+  opacity: 1;
+  transition: opacity 140ms ease-out 50ms;
+}
+
+.card:hover .current,
+.card:has(a:focus-visible) .current {
+  animation-play-state: running;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gloss,
-  .card:hover .gloss,
-  .card:has(a:focus-visible) .gloss {
-    transform: none;
-  }
-  .sheen,
-  .card:hover .sheen,
-  .card:has(a:focus-visible) .sheen {
-    display: none;
+  .current {
+    animation: none;
   }
 }

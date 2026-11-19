@@ -215,3 +215,32 @@ describe("community card pictures", () => {
     expect(chips(html)).toEqual(["#1d4ed8", "#ffffff"]);
   });
 });
+
+describe("community card captions on hover", () => {
+  /** The class list of the caption: the element holding the card's name. */
+  const captionClass = (html: string) => {
+    const at = html.indexOf(">Harbour Blue<");
+    const open = html.lastIndexOf(
+      '<div class="',
+      html.lastIndexOf('<div class="', at) - 1,
+    );
+    return html.slice(open + 12, html.indexOf('"', open + 12)).split(" ");
+  };
+
+  it("wait out of sight where a pointer can hover, and keep their room", () => {
+    const classes = captionClass(renderIntl(ItemGrid({ cards: [card({})] })));
+    // Hidden only on mouse and trackpad devices: touch screens always show it
+    expect(classes).toContain(
+      "[@media(hover:hover)_and_(pointer:fine)]:opacity-0",
+    );
+    expect(
+      classes.some((c) => /^(hidden|invisible)$|:(hidden|invisible)$/.test(c)),
+    ).toBe(false);
+  });
+
+  it("come back when the card is hovered or holds keyboard focus", () => {
+    const classes = captionClass(renderIntl(ItemGrid({ cards: [card({})] })));
+    expect(classes).toContain("group-hover:opacity-100");
+    expect(classes).toContain("group-has-[a:focus-visible]:opacity-100");
+  });
+});

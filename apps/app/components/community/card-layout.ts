@@ -61,6 +61,15 @@ export const RANK_ROOM_WIDE = "pl-24 md:pl-[7.75rem] xl:pl-[8.75rem]";
  */
 export const CARD_TEXT = "flex min-w-0 flex-col gap-1.5 px-0.5";
 
+/**
+ * Where a pointer can hover (a mouse or trackpad), the caption waits out of
+ * sight until its card is hovered or holds keyboard focus, then rises into
+ * place; it keeps its room, so nothing below moves. Touch screens, which
+ * can't hover, always show it. Screen readers read it either way.
+ */
+export const CARD_TEXT_REVEAL =
+  "transition-[opacity,translate] duration-200 ease-out [@media(hover:hover)_and_(pointer:fine)]:opacity-0 [@media(hover:hover)_and_(pointer:fine)]:motion-safe:translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 group-has-[a:focus-visible]:translate-y-0 group-has-[a:focus-visible]:opacity-100";
+
 /** One line of the caption: one end on the left, the other on the right. */
 export const CARD_LINE = "flex min-w-0 items-center justify-between gap-3";
 

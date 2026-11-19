@@ -27,6 +27,7 @@ import {
   CARD_GRID,
   CARD_LINE,
   CARD_TEXT,
+  CARD_TEXT_REVEAL,
   RAIL_CARD,
   RAIL_RANKED,
   RANK_NUMERAL,
@@ -210,7 +211,7 @@ export function ItemCard({
           )}
         </div>
       </div>
-      <div className={CARD_TEXT}>
+      <div className={cn(CARD_TEXT, CARD_TEXT_REVEAL)}>
         <div className={CARD_LINE}>
           <span className="truncate text-sm font-medium">{card.name}</span>
           {card.saveCount > 0 && (
@@ -246,14 +247,15 @@ const rankId = (card: CommunityItemCard, rank: number) =>
 
 /**
  * A rank's numeral: a faint, solid figure that, when its card is hovered or
- * focused, fills with the accent colour, raised and glossy, and catches a
- * band of light (./rank-numeral.module.css). The figure in the HTML is
- * invisible and only gives the numeral its size; every visible layer is
- * SVG text anchored to its right edge, so they line up.
+ * focused, turns into liquid accent (./rank-numeral.module.css): a bright
+ * rim, then a deep accent inside where lighter and darker currents drift,
+ * under a fixed highlight. The figure in the HTML is invisible and only
+ * gives the numeral its size; every visible layer is SVG over the same
+ * figure, anchored to its right edge, so they line up.
  *
- * The raised look is an SVG lighting filter: the figure's blurred edge is
- * read as a height map and lit from the top left, so its middle stays flat
- * and its edges round over, lighter on the lit side, darker on the other.
+ * The currents are soft-edged ellipses clipped to the figure; the highlight
+ * is an SVG lighting filter (the figure's blurred edge read as a height map
+ * and lit from the top left), keeping only the light it catches.
  */
 function RankNumeral({ rank, id }: { rank: number; id: string }) {
   // The baseline of a line-height-1 figure, about the same in every face.
@@ -267,65 +269,41 @@ function RankNumeral({ rank, id }: { rank: number; id: string }) {
       <span className="invisible">{rank}</span>
       <svg aria-hidden className={numeral.art} focusable="false">
         <defs>
+          <clipPath id={`${id}-shape`}>
+            <text {...figure}>{rank}</text>
+          </clipPath>
+          <radialGradient id={`${id}-light`}>
+            <stop className={numeral.lightStop} offset="0" stopOpacity="0.95" />
+            <stop className={numeral.lightStop} offset="1" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id={`${id}-deep`}>
+            <stop className={numeral.deepStop} offset="0" stopOpacity="0.7" />
+            <stop className={numeral.deepStop} offset="1" stopOpacity="0" />
+          </radialGradient>
           <filter
             colorInterpolationFilters="sRGB"
             height="140%"
-            id={`${id}-raise`}
+            id={`${id}-shine`}
             width="140%"
             x="-20%"
             y="-20%"
           >
-            <feGaussianBlur in="SourceAlpha" result="height" stdDeviation="4" />
-            <feDiffuseLighting
-              diffuseConstant="1.15"
-              in="height"
-              lightingColor="#fff"
-              result="diffuse"
-              surfaceScale="4"
-            >
-              <feDistantLight azimuth="225" elevation="55" />
-            </feDiffuseLighting>
+            <feGaussianBlur in="SourceAlpha" result="height" stdDeviation="3" />
             <feSpecularLighting
               in="height"
               lightingColor="#fff"
               result="specular"
-              specularConstant="0.85"
-              specularExponent="24"
-              surfaceScale="4"
+              specularConstant="0.35"
+              specularExponent="28"
+              surfaceScale="3"
             >
-              <feDistantLight azimuth="225" elevation="40" />
+              <feDistantLight azimuth="225" elevation="42" />
             </feSpecularLighting>
-            <feComposite
-              in="SourceGraphic"
-              in2="diffuse"
-              k1="1"
-              operator="arithmetic"
-              result="shaded"
-            />
-            <feComposite
-              in="specular"
-              in2="SourceAlpha"
-              operator="in"
-              result="shine"
-            />
-            <feComposite
-              in="shine"
-              in2="shaded"
-              k2="0.75"
-              k3="1"
-              operator="arithmetic"
-              result="lit"
-            />
-            <feComposite in="lit" in2="SourceAlpha" operator="in" />
+            <feComposite in="specular" in2="SourceAlpha" operator="in" />
           </filter>
-          <clipPath id={`${id}-shape`}>
-            <text {...figure}>{rank}</text>
-          </clipPath>
-          <linearGradient id={`${id}-band`} x1="0" x2="1" y1="0" y2="0.35">
-            <stop offset="0.3" stopColor="#fff" stopOpacity="0" />
-            <stop offset="0.5" stopColor="#fff" stopOpacity="0.55" />
-            <stop offset="0.7" stopColor="#fff" stopOpacity="0" />
-          </linearGradient>
+          <filter id={`${id}-soft`}>
+            <feGaussianBlur stdDeviation="1.5" />
+          </filter>
         </defs>
         <text
           className={cn(
@@ -337,26 +315,52 @@ function RankNumeral({ rank, id }: { rank: number; id: string }) {
           {rank}
         </text>
         <g className={numeral.gloss}>
+          <g className={numeral.body} clipPath={`url(#${id}-shape)`}>
+            <rect className={numeral.base} height="100%" width="100%" />
+            <g>
+              <ellipse
+                className={numeral.current}
+                cx="34%"
+                cy="30%"
+                fill={`url(#${id}-light)`}
+                rx="58%"
+                ry="13%"
+              />
+              <ellipse
+                className={numeral.current}
+                cx="68%"
+                cy="56%"
+                fill={`url(#${id}-deep)`}
+                rx="42%"
+                ry="18%"
+              />
+              <ellipse
+                className={numeral.current}
+                cx="52%"
+                cy="76%"
+                fill={`url(#${id}-light)`}
+                rx="38%"
+                ry="8%"
+              />
+            </g>
+            <text
+              className={numeral.edge}
+              filter={`url(#${id}-soft)`}
+              {...figure}
+            >
+              {rank}
+            </text>
+          </g>
           <text
-            className="fill-primary"
-            filter={`url(#${id}-raise)`}
+            className={numeral.shine}
+            filter={`url(#${id}-shine)`}
             {...figure}
           >
             {rank}
           </text>
-          <text className={cn(numeral.rim, "stroke-white/35")} {...figure}>
+          <text className={numeral.rim} {...figure}>
             {rank}
           </text>
-          <g clipPath={`url(#${id}-shape)`}>
-            <rect
-              className={numeral.sheen}
-              fill={`url(#${id}-band)`}
-              height="100%"
-              width="100%"
-              x="0"
-              y="0"
-            />
-          </g>
         </g>
       </svg>
     </span>
