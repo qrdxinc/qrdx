@@ -9679,6 +9679,19 @@
     },
     "personalNote": {
       "reason": "You're getting this because you have a QRdx account."
+    },
+    "welcome": {
+      "subject": "Welcome to QRdx",
+      "greeting": "Hi {name},",
+      "intro": "Thanks for signing up. QRdx makes QR codes you can change after they're printed, and shows you when and where they're scanned.",
+      "try": "Three things to try first:",
+      "makeCode": "<link>Make a dynamic code.</link> It opens a short link that stays the same, so you can print it right away.",
+      "seeScans": "<link>Watch its scans:</link> when, where and on which devices people scan it.",
+      "changeLink": "Change where it points whenever you like, even after it's printed. No reprinting.",
+      "free": "Static codes stay free, and the codes you make are never switched off. Free also includes {count} dynamic codes.",
+      "pro": "If you need more, Pro is {monthly} a month or {yearly} a year and adds unlimited dynamic codes, {domains} custom domains and scan alerts by email.",
+      "reply": "If anything gets in your way, or you're not sure how to do something, reply to this email. A person reads every reply.",
+      "reason": "You're getting this because you just made a QRdx account."
     }
   },
   "codeActions": {

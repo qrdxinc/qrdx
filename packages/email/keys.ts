@@ -10,8 +10,9 @@ export const keys = () =>
       // Sender, e.g. "QRdx <hello@qrdx.dev>"
       EMAIL_FROM: z.string().regex(/\S@\S/).optional(),
       // Sender of the emails a person on the team writes (personal notes
-      // from the console), e.g. "Ritesh from QRdx <support@qrdx.dev>";
-      // replies go to the same address. Personal notes are off without it.
+      // from the console, the welcome email), e.g. "Ritesh from QRdx
+      // <support@qrdx.dev>"; replies go to the same address. Personal notes
+      // are off without it, and the welcome email comes from EMAIL_FROM.
       EMAIL_FROM_PERSONAL: z.string().regex(/\S@\S/).optional(),
     },
     runtimeEnv: {

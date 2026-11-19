@@ -162,7 +162,7 @@ const NEEDS: Record<FeatureId, string[]> = {
   billing: ["POLAR_ACCESS_TOKEN"],
   invoiceRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
   enterpriseRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
-  teamNotes: ["RESEND_API_KEY", "EMAIL_FROM", "EMAIL_FROM_PERSONAL"],
+  teamNotes: ["RESEND_API_KEY", "EMAIL_FROM"],
   eurPrices: ["NEXT_PUBLIC_QRDX_EUR_PRICES"],
   nonprofitDiscounts: ["RESEND_API_KEY", "EMAIL_FROM"],
 };
@@ -918,7 +918,7 @@ describe("a production-like deployment", () => {
     }
   });
 
-  it("leaves out adding custom domains, the spam check, the media pickers, GitHub sign-in, the chat bots, notes from the team and euro prices", () => {
+  it("leaves out adding custom domains, the spam check, the media pickers, GitHub sign-in, the chat bots and euro prices", () => {
     expect(FEATURE_IDS.filter((id) => !features[id])).toEqual([
       "customDomains",
       "domainConnect",
@@ -930,8 +930,6 @@ describe("a production-like deployment", () => {
       "slackBot",
       "discordBot",
       "telegramBot",
-      // Off until EMAIL_FROM_PERSONAL is set (notes from the console).
-      "teamNotes",
       // Off until the EUR prices exist in Polar and the flag is set.
       "eurPrices",
     ]);

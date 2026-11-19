@@ -1,7 +1,8 @@
 -- "Notes from the QRdx team" (feat/paid-email-notes).
 --
 -- user.team_notes says whether the person gets the personal notes the team
--- writes and sends from the console (apps/app/lib/email/personal-notes.tsx).
+-- writes and sends from the console (apps/app/lib/email/personal-notes.tsx)
+-- and the welcome email (apps/app/lib/email/welcome.tsx).
 -- On for everyone (true) until they turn it off in Settings > Notifications
 -- or with the one-click link at the bottom of every note. Alerts, digests
 -- and security emails don't read it.

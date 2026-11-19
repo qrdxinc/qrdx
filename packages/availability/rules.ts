@@ -417,13 +417,15 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
       }),
   },
   teamNotes: {
-    // Notes from the QRdx team (apps/app/lib/email/personal-notes.tsx): the
-    // personal emails the team writes and sends from QRdx's back-office
-    // console, which isn't part of this code, so only where QRdx itself
-    // runs, with email and the personal sender set up. Without it nobody
-    // gets notes, so Settings > Notifications leaves out their switch.
+    // Notes from the QRdx team: the welcome email (apps/app/lib/email/
+    // welcome.tsx) and the personal notes the team sends from QRdx's
+    // back-office console (./personal-notes.tsx there), which isn't part of
+    // this code. QRdx's own emails, so only where QRdx itself runs, with
+    // email set up; notes from the console also need EMAIL_FROM_PERSONAL.
+    // Without it nobody gets either, so Settings > Notifications leaves out
+    // their switch.
     name: "Notes from the QRdx team (qrdx.dev, with email)",
-    requires: () => ["RESEND_API_KEY", "EMAIL_FROM", "EMAIL_FROM_PERSONAL"],
+    requires: () => ["RESEND_API_KEY", "EMAIL_FROM"],
     usable: (ctx) =>
       isQrdxDeployment({
         appUrl: ctx.env.NEXT_PUBLIC_APP_URL,

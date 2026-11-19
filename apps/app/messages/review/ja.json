@@ -29179,6 +29179,50 @@
     "source": "29f16d6d2389",
     "status": "machine"
   },
+  "emails.welcome.subject": {
+    "source": "21219273217b",
+    "status": "machine"
+  },
+  "emails.welcome.greeting": {
+    "source": "9f7b52b0f23b",
+    "status": "machine"
+  },
+  "emails.welcome.intro": {
+    "source": "d9472c25c95f",
+    "status": "machine"
+  },
+  "emails.welcome.try": {
+    "source": "08163a027f54",
+    "status": "machine"
+  },
+  "emails.welcome.makeCode": {
+    "source": "c2b882466f29",
+    "status": "machine"
+  },
+  "emails.welcome.seeScans": {
+    "source": "fcf116f25232",
+    "status": "machine"
+  },
+  "emails.welcome.changeLink": {
+    "source": "af4beb5cd4b3",
+    "status": "machine"
+  },
+  "emails.welcome.free": {
+    "source": "5040aae821b1",
+    "status": "machine"
+  },
+  "emails.welcome.pro": {
+    "source": "5f3406c92f78",
+    "status": "machine"
+  },
+  "emails.welcome.reply": {
+    "source": "8a41bef8b0d3",
+    "status": "machine"
+  },
+  "emails.welcome.reason": {
+    "source": "0f58ba16364b",
+    "status": "machine"
+  },
   "codeActions.lifecycle.signIn": {
     "source": "4b0dd0c20c78",
     "status": "machine"
