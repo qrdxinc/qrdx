@@ -25,6 +25,7 @@ import { useTranslations } from "next-intl";
 import { type ReactNode, useState, useTransition } from "react";
 import { useConfirmation } from "@/components/confirm-identity/provider";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import {
   membersWithoutTwoFactor,
   TWO_FACTOR_SECTION_ID,
@@ -121,7 +122,7 @@ export function TwoFactorRequirementCard({
         {stored
           ? t("itsOffWhileThisWorkspace", { planName })
           : t("requiringTwoStepVerificationComes", { planName })}{" "}
-        <Link className={`py-3 ${LINK}`} href="/pricing">
+        <Link className={`py-3 ${LINK}`} href={pricingHref("team_two_factor")}>
           {t("seePlans")}
         </Link>
       </>

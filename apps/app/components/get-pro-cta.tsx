@@ -6,6 +6,7 @@ import { cn } from "@repo/design-system/lib/utils";
 import { Diamonds } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 
 interface GetProCTAProps extends React.ComponentProps<typeof Button> {}
@@ -30,8 +31,13 @@ export function GetProCTA({ className, ...props }: GetProCTAProps) {
       {...props}
     >
       <Link
-        href="/pricing"
-        onClick={() => track("upgrade_clicked", { source: "header" })}
+        href={pricingHref("header_get_pro")}
+        onClick={() =>
+          track("upgrade_clicked", {
+            source: "header",
+            surface: "header_get_pro",
+          })
+        }
       >
         <Diamonds className="h-4 w-4" />
         {t("getPro")}

@@ -25,6 +25,7 @@ import { ownerScanEmailsOn } from "@/app/(app)/dashboard/_components/home/pro-mo
 import { AsciiField, Aurora, Backdrop } from "@/components/fx";
 import { PRESSABLE } from "@/components/mockups/motion";
 import { SoundCue } from "@/components/sound/sound-cue";
+import { pricingHref } from "@/lib/checkout-surface";
 import { isPathAvailable } from "@/lib/feature-availability";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { isBillingConfigured, polar } from "@/lib/polar";
@@ -393,7 +394,7 @@ function OutcomeActions({
             <a href="/settings/portal">{labels.manageSubscription}</a>
           </Button>
           <Button asChild variant="outline">
-            <a href="/pricing">{labels.backToPricing}</a>
+            <a href={pricingHref("success_page")}>{labels.backToPricing}</a>
           </Button>
         </>
       );
@@ -402,7 +403,7 @@ function OutcomeActions({
         <>
           <Button asChild>
             {/* The pricing page is the marketing site's: a full page load. */}
-            <a href="/pricing">{labels.backToPricing}</a>
+            <a href={pricingHref("success_page")}>{labels.backToPricing}</a>
           </Button>
           {dashboard}
         </>

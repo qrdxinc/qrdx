@@ -2,13 +2,14 @@
 // opens, otherwise a page on this site that says what to do next. No
 // server-only imports, so every outcome is unit tested directly.
 
+import { pricingHref } from "@/lib/checkout-surface";
 import { signInPath } from "@/lib/safe-redirect";
 import { dashboardEntry } from "@/lib/workspace-paths";
 
 /** Signed-out visitors sign in, then come back to open the portal. */
 export const SIGNED_OUT_PATH = signInPath("/settings/portal");
 /** Users who never checked out have no Polar customer, so no portal. */
-export const NO_CUSTOMER_PATH = "/pricing";
+export const NO_CUSTOMER_PATH = pricingHref("billing_portal");
 /**
  * The usage page (in the person's default workspace: billing is per person)
  * shows "Billing portal is unavailable right now" for this.

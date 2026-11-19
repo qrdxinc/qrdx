@@ -8,6 +8,7 @@ import { cn } from "@repo/design-system/lib/utils";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 
 export function AlertBanner() {
@@ -75,7 +76,7 @@ export function AlertBanner() {
           {getBannerContent()}
         </p>
         <div className="ml-auto flex items-center gap-1">
-          <Link href="/pricing">
+          <Link href={pricingHref("ai_chat")}>
             <Button
               variant="link"
               size="sm"

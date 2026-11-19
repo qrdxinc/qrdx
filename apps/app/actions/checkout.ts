@@ -5,6 +5,10 @@ import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { hasAnalyticsConsent } from "@/lib/analytics/server";
+import {
+  type CheckoutSurface,
+  parseCheckoutSurface,
+} from "@/lib/checkout-surface";
 import { baseUrl } from "@/lib/metadata";
 import {
   BILLING_NOT_CONFIGURED_MESSAGE,
@@ -45,12 +49,17 @@ function visitorIp(requestHeaders: Pick<Headers, "get">): string | undefined {
 export async function createCheckout(input: {
   plan: PaidPlan;
   interval: BillingInterval;
+  /** The button or page that started it (lib/checkout-surface.ts) */
+  surface?: CheckoutSurface;
 }): Promise<CheckoutResult> {
   const parsed = checkoutSchema.safeParse(input);
   if (!parsed.success) {
     return { error: "Choose a plan and billing period.", reason: "invalid" };
   }
   const { plan, interval } = parsed.data;
+  // Never the client's free text: a name off the list is "unknown", and
+  // checkout goes ahead either way.
+  const surface = parseCheckoutSurface(input.surface);
 
   // The same product for every region: each one has a USD and an INR price
   // (and a EUR one once euro prices are on).
@@ -92,6 +101,9 @@ export async function createCheckout(input: {
       metadata: {
         plan,
         interval,
+        // Which button or page led here; Polar copies the metadata onto the
+        // subscription and the webhook stores it (subscription.metadata).
+        surface,
         // Lets the webhook attribute subscription_activated to this user in
         // PostHog; without analytics consent it is an anonymous count.
         ...((await hasAnalyticsConsent()) ? { analytics_consent: "1" } : {}),

@@ -14,6 +14,7 @@ import {
   useState,
 } from "react";
 import { useAvailability } from "@/components/availability-provider";
+import { type KnownCheckoutSurface, pricingHref } from "@/lib/checkout-surface";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 import { type BillingInterval, type PaidPlan, PLAN_NAMES } from "@/lib/pricing";
 import { startCheckout } from "@/lib/widget-routes/client";
@@ -94,6 +95,7 @@ export function useGateCheckout({
 export function CheckoutButtons({
   plan = "pro",
   source,
+  surface,
   fallback = null,
   onNavigate,
   size,
@@ -103,6 +105,8 @@ export function CheckoutButtons({
   plan?: PaidPlan;
   /** For analytics, e.g. "dialog", "limit_dialog", "ai_art" */
   source: string;
+  /** Recorded on the payment: which button this is (lib/checkout-surface.ts) */
+  surface: KnownCheckoutSurface;
   fallback?: ReactNode;
   /** Called before leaving for checkout or the portal (close a dialog). */
   onNavigate?: () => void;
@@ -144,20 +148,21 @@ export function CheckoutButtons({
   }
 
   const start = async (interval: BillingInterval) => {
-    track("upgrade_clicked", { source, plan });
+    track("upgrade_clicked", { source, plan, surface });
     setPending(interval);
     try {
-      const result = await startCheckout({ plan, interval });
+      const result = await startCheckout({ plan, interval, surface });
       if ("url" in result) {
-        track("checkout_started", { plan, interval });
+        track("checkout_started", { plan, interval, surface });
         onNavigate?.();
         window.location.assign(result.url);
         return;
       }
       setPending(null);
       if (result.reason === "sign_in") {
-        // The pricing page signs them in and carries on to checkout.
-        window.location.assign(`/pricing?interval=${interval}`);
+        // The pricing page signs them in and carries on to checkout, still
+        // from this button.
+        window.location.assign(pricingHref(surface, interval));
         return;
       }
       // The server's message is English; the page may not be.

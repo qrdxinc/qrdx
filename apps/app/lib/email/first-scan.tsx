@@ -7,6 +7,7 @@ import { FirstScanEmail } from "@repo/email/templates/first-scan";
 import { codeLabel } from "@repo/email/templates/parts";
 import { DEFAULT_LOCALE, isLocale } from "@repo/i18n/config";
 import { and, eq, gte, lt, or } from "drizzle-orm";
+import { pricingHref } from "@/lib/checkout-surface";
 import type { RecordedScan, ScannedCode } from "@/lib/events/emit";
 import { SCAN_MILESTONES } from "@/lib/events/types";
 import { teamNotesUnsubscribeUrl } from "@/lib/events/unsubscribe";
@@ -248,7 +249,7 @@ export async function sendFreeFirstScanEmail(
           code={code}
           device={device || null}
           free={{
-            pricingUrl: absolute("/pricing?interval=month"),
+            pricingUrl: absolute(pricingHref("first_scan_email", "month")),
             milestones: nextMilestones(intl.locale),
           }}
           intl={intl}

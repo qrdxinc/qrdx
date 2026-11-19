@@ -235,10 +235,26 @@ export interface AnalyticsEvents {
    * ("ai_requests", "pro_feature", "dynamic_codes") and the plan it hit.
    */
   limit_gate_shown: { limit: string; plan: string };
-  upgrade_clicked: { source: string; plan?: "pro" | "business" };
-  checkout_started: { plan: "pro" | "business"; interval: "month" | "year" };
+  /**
+   * `surface`: the button or page, as checkout records it on the
+   * subscription (apps/app/lib/checkout-surface.ts); `source` is older.
+   */
+  upgrade_clicked: {
+    source: string;
+    plan?: "pro" | "business";
+    surface?: string;
+  };
+  checkout_started: {
+    plan: "pro" | "business";
+    interval: "month" | "year";
+    surface: string;
+  };
   /** Server side, from the Polar webhook. */
-  subscription_activated: { plan: "pro" | "business"; interval?: string };
+  subscription_activated: {
+    plan: "pro" | "business";
+    interval?: string;
+    surface?: string;
+  };
 
   // Docs and errors
   docs_search: { query_length: number; result_count?: number };

@@ -10,6 +10,7 @@ import {
   meterPercent,
 } from "@/app/(app)/settings/usage/_lib/meters";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import type { KnownCheckoutSurface } from "@/lib/checkout-surface";
 import { UpgradeButton } from "./upgrade-button";
 
 /**
@@ -22,6 +23,7 @@ export function LimitCard({
   copy,
   usageHref,
   source,
+  surface,
   onNavigate,
   onDismiss,
   showStatus = true,
@@ -34,6 +36,8 @@ export function LimitCard({
   showStatus?: boolean;
   /** For the upgrade click's analytics, e.g. "limit_dialog" */
   source: string;
+  /** Recorded on the payment (lib/checkout-surface.ts) */
+  surface: KnownCheckoutSurface;
   onNavigate?: () => void;
   /** Adds "Not now" at the end (in a dialog) */
   onDismiss?: () => void;
@@ -69,6 +73,7 @@ export function LimitCard({
             checkout
             onNavigate={onNavigate}
             source={source}
+            surface={surface}
             upgrade={upgrade}
           />
         </div>

@@ -480,6 +480,36 @@ describe("POST /api/subscription/checkout (the paid plan buttons)", () => {
     expect(state.limitKeys).toEqual(["checkout:u_ana"]);
   });
 
+  it("records the button or page in Polar's metadata: a known surface as sent, anything else as unknown", async () => {
+    signIn();
+    const cases: [unknown, string][] = [
+      ["limit_dialog", "limit_dialog"],
+      ["site_pricing", "site_pricing"],
+      // Free text, a near miss, another type, nothing: never stored as sent.
+      ["<script>alert(1)</script>", "unknown"],
+      ["Limit_Dialog", "unknown"],
+      [42, "unknown"],
+      [{ surface: "limit_dialog" }, "unknown"],
+      [undefined, "unknown"],
+    ];
+    for (const [surface, recorded] of cases) {
+      state.checkouts = [];
+      const response = await checkout({
+        plan: "pro",
+        interval: "month",
+        surface,
+      });
+      // An unknown surface never stops the sale.
+      expect(response.status, String(surface)).toBe(200);
+      expect(state.checkouts, String(surface)).toHaveLength(1);
+      expect(state.checkouts[0]?.metadata, String(surface)).toEqual({
+        plan: "pro",
+        interval: "month",
+        surface: recorded,
+      });
+    }
+  });
+
   it("ignores everything in the body but the plan and period: product, currency and URLs are the server's", async () => {
     signIn();
     const response = await checkout(
@@ -509,7 +539,12 @@ describe("POST /api/subscription/checkout (the paid plan buttons)", () => {
       customer_id: "cus_1",
       customer_ip_address: "203.0.113.7",
       currency: "usd",
-      metadata: { plan: "pro", interval: "year" },
+    });
+    // Not the body's metadata: the server's, with no surface sent.
+    expect(sent.metadata).toEqual({
+      plan: "pro",
+      interval: "year",
+      surface: "unknown",
     });
     expect(String(sent.success_url)).toMatch(
       /^http:\/\/localhost:3000\/success/,

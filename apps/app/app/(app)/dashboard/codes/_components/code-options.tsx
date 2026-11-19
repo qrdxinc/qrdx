@@ -51,6 +51,7 @@ import {
 import { UtmPanel } from "@/app/(app)/dashboard/codes/[id]/_components/utm-panel";
 import { useAvailability } from "@/components/availability-provider";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import { PLAN_NAMES } from "@/lib/pricing";
 
 /** One icon per option; none repeats in the grid. */
@@ -206,7 +207,10 @@ export function CodeOptionPlanNote({
         plans: formatPlanList(access.plans),
         value: PLAN_NAMES[plans.plan],
         link: (chunks) => (
-          <Link className="underline underline-offset-4" href="/pricing">
+          <Link
+            className="underline underline-offset-4"
+            href={pricingHref("code_options")}
+          >
             {chunks}
           </Link>
         ),

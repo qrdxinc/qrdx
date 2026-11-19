@@ -135,6 +135,7 @@ export function PageUsageMeter({ usage }: { usage: PageUsage }) {
       note={`Free pages show a small "Made with QRdx" footer. Existing pages keep working on every plan.`}
       plan={usage.plan}
       source="pages_meter"
+      surface="pages_meter"
       used={usage.used}
     />
   );
