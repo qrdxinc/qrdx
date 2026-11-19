@@ -4,9 +4,10 @@ import { database as db, user } from "@repo/database";
 import { eq } from "drizzle-orm";
 
 // "Notes from the QRdx team": the personal notes the team sends from the
-// console (./personal-notes.tsx). One setting per person, not per workspace
-// (user.team_notes, on unless turned off): Settings > Notifications and the
-// one-click link in every note change it.
+// console (./personal-notes.tsx) and the welcome email (./welcome.tsx). One
+// setting per person, not per workspace (user.team_notes, on unless turned
+// off): Settings > Notifications and the one-click link in every note
+// change it.
 
 /** Whether the person gets notes from the team (a missing value counts as on). */
 export const wantsTeamNotes = (row: {

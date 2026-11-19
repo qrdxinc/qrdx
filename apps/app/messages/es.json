@@ -9280,6 +9280,20 @@
     },
     "personalNote": {
       "reason": "Recibes este mensaje porque tienes una cuenta de QRdx."
+    },
+    "welcome": {
+      "subject": "Te damos la bienvenida a QRdx",
+      "greeting": "Hola, {name}:",
+      "intro": "Gracias por registrarte. QRdx crea códigos QR que puedes cambiar después de imprimirlos y te muestra cuándo y dónde se escanean.",
+      "try": "Tres cosas para probar primero:",
+      "makeCode": "<link>Crea un código dinámico.</link> Abre un enlace corto que no cambia, así que puedes imprimirlo de inmediato.",
+      "seeScans": "<link>Mira sus escaneos:</link> cuándo, dónde y en qué dispositivos lo escanea la gente.",
+      "changeLink": "Cambia el destino cuando quieras, incluso después de imprimirlo. Sin volver a imprimir.",
+      "free": "Los códigos estáticos son gratis, y los códigos que crees seguirán funcionando si cambias de plan o dejas de pagar. Gratis también incluye {count} códigos dinámicos.",
+      "pro": "Si necesitas más, Pro cuesta {monthly} al mes o {yearly} al año y añade códigos dinámicos ilimitados, {domains} dominios personalizados y alertas de escaneo por correo electrónico.",
+      "taxes": "Es posible que se añadan impuestos locales al pagar.",
+      "reply": "Si algo te lo pone difícil o no sabes cómo hacer algo, responde a este correo. Una persona lee cada respuesta.",
+      "reason": "Recibes este correo porque acabas de crear una cuenta de QRdx."
     }
   },
   "codeActions": {
