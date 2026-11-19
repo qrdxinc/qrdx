@@ -53,18 +53,21 @@ vi.mock("@repo/rate-limit", async (importOriginal) => ({
       return Number(state.store.delete(key));
     },
   },
+  // Upstash's sliding window: a full window refuses without counting; one
+  // with room counts first, and refuses when that went past the limit.
   createRateLimiter: () => ({
     limit: async (key: string, rate = 1) => {
       const used = state.used.get(key) ?? 0;
-      const success = used + rate <= state.budget;
-      if (success) state.used.set(key, used + rate);
-      return {
+      const answer = (success: boolean, total: number) => ({
         success,
         limit: state.budget,
-        remaining: Math.max(0, state.budget - used),
+        remaining: Math.max(0, state.budget - total),
         reset: Date.now() + 60_000,
         pending: Promise.resolve(),
-      };
+      });
+      if (rate > 0 && used >= state.budget) return answer(false, used);
+      state.used.set(key, used + rate);
+      return answer(used + rate <= state.budget, used + rate);
     },
   }),
 }));
@@ -481,6 +484,26 @@ describe("limits on sending", () => {
       send([note("u_ban_over")], "another-one"),
     ).rejects.toMatchObject({ status: 429, message: "note_budget_exceeded" });
     expect(state.sent).toHaveLength(2);
+  });
+
+  it("counts nothing for a batch it refuses, so the admin isn't held off longer", async () => {
+    state.budget = 3;
+    await send(["u_on", "u_es"].map(note));
+    expect(state.used.get("u_admin")).toBe(2);
+    // Two more don't fit in the one left: refused, and not counted.
+    await expect(
+      send(["u_on", "u_es"].map(note), "second-round"),
+    ).rejects.toMatchObject({
+      status: 429,
+      message: "note_budget_exceeded",
+      headers: { "Retry-After": expect.stringMatching(/^\d+$/) },
+    });
+    expect(state.used.get("u_admin")).toBe(2);
+    // The one that's left still goes.
+    expect(await send([note("u_on")], "second-round")).toEqual([
+      { userId: "u_on", status: "sent", id: "em_1" },
+    ]);
+    expect(state.used.get("u_admin")).toBe(3);
   });
 
   it("gives the budget back for notes that didn't go out", async () => {

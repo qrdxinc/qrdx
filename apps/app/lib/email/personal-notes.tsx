@@ -20,7 +20,7 @@ import { adminId, requiredReason } from "@/app/(app)/admin/_lib/rules";
 import { teamNotesUnsubscribeUrl } from "@/lib/events/unsubscribe";
 import { HttpError } from "@/lib/http-error";
 import { emailIntl } from "@/lib/i18n/email";
-import { enforceRateLimits, refundRateLimits } from "@/lib/request-guards";
+import { refundRateLimits } from "@/lib/request-guards";
 import { type Greeting, greetingName } from "./greeting";
 import { type PersonalSender, personalSender } from "./personal-sender";
 import { isEmailConfigured, sendEmail } from "./send";
@@ -301,6 +301,32 @@ const noteBudget = createRateLimiter({
   failClosed: true,
 });
 
+/**
+ * Counts `count` notes against the admin's hourly budget, or refuses the
+ * whole batch (429 `note_budget_exceeded`, with Retry-After) counting
+ * nothing. Upstash's sliding window adds a request's count whenever the
+ * window had any room, even when that count takes it past the limit and
+ * the request is refused, so a refused batch would hold the admin off
+ * longer. The room is read first instead (a zero rate counts nothing);
+ * only one batch runs at a time (NOTE_LOCK), so it can't change before
+ * the count.
+ */
+async function takeNoteBudget(adminId: string, count: number) {
+  const room = await noteBudget.limit(adminId, 0);
+  if (room.remaining >= count) {
+    const taken = await noteBudget.limit(adminId, count);
+    if (taken.success) return;
+    // Counted, then refused: give it back before saying no.
+    await refundRateLimits([
+      { limiter: noteBudget, key: adminId, rate: count },
+    ]);
+  }
+  const seconds = Math.max(1, Math.ceil((room.reset - Date.now()) / 1000));
+  throw new HttpError(429, "NOTE_BUDGET", "note_budget_exceeded", {
+    "Retry-After": String(seconds),
+  });
+}
+
 /** One send batch at a time across the deployment. */
 const NOTE_LOCK = "qrdx:personal-notes:lock";
 const NOTE_LOCK_SECONDS = 90;
@@ -387,21 +413,7 @@ export async function sendPersonalNotes(
     });
     const sendable = plan.filter((entry) => entry.skip === null).length;
     const budget = { limiter: noteBudget, key: actor.id };
-    if (sendable > 0) {
-      try {
-        await enforceRateLimits([{ ...budget, rate: sendable }]);
-      } catch (error) {
-        if (error instanceof HttpError && error.status === 429) {
-          throw new HttpError(
-            429,
-            "NOTE_BUDGET",
-            "note_budget_exceeded",
-            error.headers,
-          );
-        }
-        throw error;
-      }
-    }
+    if (sendable > 0) await takeNoteBudget(actor.id, sendable);
 
     const results: NoteResult[] = [];
     let sent = 0;
