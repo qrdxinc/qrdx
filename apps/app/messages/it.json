@@ -8049,6 +8049,11 @@
           "everyType": "Tutti i tipi",
           "removeFilter": "Rimuovi filtro",
           "searchPages": "Cerca pagine"
+        },
+        "planLine": {
+          "upload": "File fino a {free} con il piano Gratuito, fino a {pro} con Pro.",
+          "published": "Con il piano Gratuito hai {pages, plural, one {# pagina} other {# pagine}}, file fino a {free} e un footer “Made with QRdx”. Pro elimina il footer e il limite di pagine e accetta file fino a {pro}.",
+          "seePro": "Scopri Pro"
         }
       },
       "settings": {
@@ -8255,6 +8260,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Nuovo codice dinamico"
+        },
+        "codeLiveCard": {
+          "title": "Il tuo codice è attivo",
+          "body": "Continua a funzionare con il piano Gratuito, senza data di scadenza. Se va in stampa per un’attività, Pro aggiunge:",
+          "customDomain": "Il tuo dominio sul link breve",
+          "customSlug": "Una parte finale del link scelta da te, al posto di una casuale",
+          "scanEmails": "Email alla prima scansione di un codice e alla scansione numero {first, number}, {second, number} e {third, number}, più un riepilogo settimanale",
+          "linkControls": "Password, date di inizio e fine e limiti di scansioni",
+          "fullHistory": "Rivedi ogni scansione, non solo quelle {years, plural, one {dell’ultimo anno} other {degli ultimi # anni}}",
+          "price": "Pro costa {month} al mese o {year} all’anno.",
+          "seePro": "Scopri Pro",
+          "hide": "Nascondi"
+        },
+        "scanAlertsOffer": {
+          "title": "Ricevi un’email quando i tuoi codici vengono scansionati",
+          "body": "QRdx ti scrive quando un codice viene scansionato per la prima volta e quando supera {first, number}, {second, number} e {third, number} scansioni, più un breve riepilogo ogni settimana.",
+          "turnOn": "Attiva le email di scansione",
+          "turningOn": "Attivazione…",
+          "on": "Le email di scansione sono attive. Arrivano all’indirizzo email del tuo account.",
+          "change": "Modificale in Notifiche",
+          "notNow": "Non ora"
         }
       },
       "listSelection": {
@@ -8535,7 +8561,9 @@
         "whatsNew": "Novità",
         "backToLabel": "Torna a {label}",
         "expandSidebar": "Espandi barra laterale",
-        "collapseSidebar": "Comprimi barra laterale"
+        "collapseSidebar": "Comprimi barra laterale",
+        "upgrade": "Passa a Pro",
+        "upgradeToPro": "Passa a Pro"
       },
       "appTopbar": {
         "breadcrumb": "Breadcrumb",
@@ -8810,6 +8838,40 @@
         "signingYouOut": "Uscita in corso…",
         "oneMoment": "Un attimo…",
         "pageTitle": "Esci"
+      }
+    },
+    "success": {
+      "metaTitle": "Il tuo upgrade",
+      "activeTitle": "Grazie per l’upgrade",
+      "activeBody": "Il tuo piano {plan} è attivo.",
+      "processingTitle": "Pagamento in elaborazione",
+      "processingBody": "Il tuo piano si attiva non appena Polar conferma il pagamento, di solito entro un minuto. Questa pagina ricontrolla da sola per circa un minuto.",
+      "checksStopped": "Ci sta volendo più del solito e questa pagina ha smesso di ricontrollare da sola. Ricaricala tra qualche minuto. Se dopo il tuo piano non è ancora cambiato, scrivi a <mail>{email}</mail>.",
+      "reload": "Ricarica",
+      "checkNow": "Controlla ora",
+      "incompleteTitle": "Checkout non completato",
+      "incompleteBody": "Questo checkout non è stato completato, quindi il tuo piano non è cambiato.",
+      "failedTitle": "Il pagamento non è andato a buon fine",
+      "failedBody": "Il tuo piano non è cambiato. Puoi riprovare dalla pagina dei prezzi.",
+      "backToPricing": "Torna ai prezzi",
+      "endedTitle": "Questo piano è terminato",
+      "endedBody": "L’abbonamento di questo checkout non è più attivo, quindi questo account è sul piano Gratuito. Il portale di fatturazione mostra cosa è successo.",
+      "errorTitle": "Non siamo riusciti a caricare il tuo piano",
+      "errorBody": "Qualcosa è andato storto da parte nostra durante il caricamento del tuo piano. Riprova tra un attimo.",
+      "unknownTitle": "Nessun checkout trovato",
+      "unknownBody": "Non abbiamo trovato questo checkout nel tuo account. Se hai appena pagato, assicurati di aver effettuato l’accesso con l’account di cui hai fatto l’upgrade, oppure scrivi a <mail>{email}</mail>.",
+      "signedOutTitle": "Accedi per vedere il tuo piano",
+      "signedOutBody": "Accedi con l’account di cui hai fatto l’upgrade per vedere se il tuo piano è attivo.",
+      "signIn": "Accedi",
+      "goToDashboard": "Vai alla dashboard",
+      "manageSubscription": "Gestisci abbonamento",
+      "steps": {
+        "codesTitle": "Crea QR code dinamici",
+        "codesBody": "QR code che puoi modificare dopo la stampa, con analisi delle scansioni.",
+        "domainTitle": "Aggiungi un dominio personalizzato",
+        "domainBody": "Usa il tuo dominio per i link brevi.",
+        "teamTitle": "Invita il tuo team",
+        "teamBody": "Condividi QR code, pagine e temi salvati con i tuoi colleghi."
       }
     }
   },

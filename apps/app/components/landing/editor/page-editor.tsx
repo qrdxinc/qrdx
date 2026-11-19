@@ -79,6 +79,7 @@ import {
 import { LandingRender } from "../render";
 import { AddBlockMenu } from "./add-block-menu";
 import { BrandingSection } from "./branding-section";
+import { PagePlanNote } from "./page-plan-line";
 import { PageSettingsEditor } from "./page-settings-editor";
 import { type SavedThemePalette, ThemeControls } from "./theme-controls";
 
@@ -777,6 +778,9 @@ export function PageEditor({
         </div>
       </div>
 
+      {!(readOnly || switchCode || dirty) && (
+        <PagePlanNote variant="published" />
+      )}
       {switchCode && (
         <p className="bg-muted rounded-md p-3 text-sm">
           When you publish, scans of{" "}

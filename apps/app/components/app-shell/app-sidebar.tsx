@@ -47,6 +47,7 @@ import {
 } from "./nav-areas";
 import { isNavItemActive } from "./nav-config";
 import type { ShellData } from "./shell-data";
+import { showsSidebarUpgrade, UpgradeRow } from "./upgrade-row";
 import { useWhatsNew } from "./whats-new";
 import { WhatsNewCards } from "./whats-new-cards";
 
@@ -557,6 +558,9 @@ export function AppSidebar({
       >
         {!collapsed && <WhatsNewCards onNavigate={onNavigate} />}
         <WhatsNewRow collapsed={collapsed} onNavigate={onNavigate} />
+        {shell && showsSidebarUpgrade(shell.limits) && (
+          <UpgradeRow collapsed={collapsed} onNavigate={onNavigate} />
+        )}
         {shell && limitWarnings && (
           <Suspense fallback={null}>
             <LimitNotice

@@ -8049,6 +8049,11 @@
           "everyType": "Todos los tipos",
           "removeFilter": "Quitar filtro",
           "searchPages": "Buscar páginas"
+        },
+        "planLine": {
+          "upload": "Archivos de hasta {free} en Gratis y {pro} en Pro.",
+          "published": "En Gratis tienes {pages, plural, one {# página} other {# páginas}}, archivos de hasta {free} y un pie de página «Made with QRdx». Pro elimina el pie de página y el límite de páginas, y admite archivos de hasta {pro}.",
+          "seePro": "Ver Pro"
         }
       },
       "settings": {
@@ -8255,6 +8260,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Nuevo código dinámico"
+        },
+        "codeLiveCard": {
+          "title": "Tu código está activo",
+          "body": "Sigue funcionando en Gratis, sin fecha de fin. Si se va a imprimir para un negocio, Pro añade:",
+          "customDomain": "Tu propio dominio en el enlace corto",
+          "customSlug": "Un final de enlace que eliges tú en vez de uno aleatorio",
+          "scanEmails": "Correos en el primer escaneo de un código y en los escaneos {first, number}, {second, number} y {third, number}, además de un resumen semanal",
+          "linkControls": "Contraseñas, fechas de inicio y fin, y límites de escaneo",
+          "fullHistory": "Consulta todo el historial de escaneos, no solo {years, plural, one {el último año} other {los últimos # años}}",
+          "price": "Pro cuesta {month} al mes o {year} al año.",
+          "seePro": "Ver Pro",
+          "hide": "Ocultar"
+        },
+        "scanAlertsOffer": {
+          "title": "Recibe un correo cuando se escaneen tus códigos",
+          "body": "QRdx te envía un correo cuando un código se escanea por primera vez y cuando supera {first, number}, {second, number} y {third, number} escaneos, además de un breve resumen cada semana.",
+          "turnOn": "Activar correos de escaneo",
+          "turningOn": "Activando…",
+          "on": "Los correos de escaneo están activados. Se envían a la dirección de correo de tu cuenta.",
+          "change": "Cámbialos en Notificaciones",
+          "notNow": "Ahora no"
         }
       },
       "listSelection": {
@@ -8535,7 +8561,9 @@
         "whatsNew": "Novedades",
         "backToLabel": "Volver a {label}",
         "expandSidebar": "Expandir barra lateral",
-        "collapseSidebar": "Contraer barra lateral"
+        "collapseSidebar": "Contraer barra lateral",
+        "upgrade": "Mejorar",
+        "upgradeToPro": "Mejorar a Pro"
       },
       "appTopbar": {
         "breadcrumb": "Ruta de navegación",
@@ -8810,6 +8838,40 @@
         "signingYouOut": "Cerrando sesión…",
         "oneMoment": "Un momento…",
         "pageTitle": "Cerrar sesión"
+      }
+    },
+    "success": {
+      "metaTitle": "Tu mejora de plan",
+      "activeTitle": "Gracias por mejorar tu plan",
+      "activeBody": "Tu plan {plan} está activo.",
+      "processingTitle": "Procesando el pago",
+      "processingBody": "Tu plan se activará en cuanto Polar confirme el pago, normalmente en menos de un minuto. Esta página vuelve a comprobarlo sola durante aproximadamente un minuto.",
+      "checksStopped": "Está tardando más de lo habitual y esta página ha dejado de comprobarlo sola. Recárgala en unos minutos. Si después tu plan sigue sin cambiar, escribe a <mail>{email}</mail>.",
+      "reload": "Recargar",
+      "checkNow": "Comprobar ahora",
+      "incompleteTitle": "Pago sin terminar",
+      "incompleteBody": "Este pago no se completó, así que tu plan no ha cambiado.",
+      "failedTitle": "El pago no se ha completado",
+      "failedBody": "Tu plan no ha cambiado. Puedes volver a intentarlo desde la página de precios.",
+      "backToPricing": "Volver a precios",
+      "endedTitle": "Este plan ha terminado",
+      "endedBody": "La suscripción de este pago ya no está activa, por lo que esta cuenta tiene el plan Gratis. El portal de facturación muestra lo que ocurrió.",
+      "errorTitle": "No pudimos cargar tu plan",
+      "errorBody": "Algo salió mal por nuestra parte al cargar tu plan. Vuelve a comprobarlo en un momento.",
+      "unknownTitle": "No se encontró el pago",
+      "unknownBody": "No pudimos encontrar este pago en tu cuenta. Si acabas de pagar, comprueba que hayas iniciado sesión con la cuenta que mejoraste, o escribe a <mail>{email}</mail>.",
+      "signedOutTitle": "Inicia sesión para ver tu plan",
+      "signedOutBody": "Inicia sesión con la cuenta que mejoraste para ver si tu plan está activo.",
+      "signIn": "Iniciar sesión",
+      "goToDashboard": "Ir al panel",
+      "manageSubscription": "Gestionar suscripción",
+      "steps": {
+        "codesTitle": "Crea códigos dinámicos",
+        "codesBody": "Códigos que puedes editar después de imprimirlos, con analíticas de escaneo.",
+        "domainTitle": "Añade un dominio personalizado",
+        "domainBody": "Sirve tus enlaces cortos desde tu propio dominio.",
+        "teamTitle": "Invita a tu equipo",
+        "teamBody": "Comparte códigos, páginas y temas guardados con tus compañeros."
       }
     }
   },

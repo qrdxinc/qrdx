@@ -8049,6 +8049,11 @@
           "everyType": "Alle Typen",
           "removeFilter": "Filter entfernen",
           "searchPages": "Seiten durchsuchen"
+        },
+        "planLine": {
+          "upload": "Dateien bis {free} im Kostenlos-Plan, bis {pro} mit Pro.",
+          "published": "Im Kostenlos-Plan hast du {pages, plural, one {# Seite} other {# Seiten}}, Dateien bis {free} und einen Footer „Made with QRdx“. Pro entfernt den Footer und das Seitenlimit und erlaubt Dateien bis {pro}.",
+          "seePro": "Pro ansehen"
         }
       },
       "settings": {
@@ -8255,6 +8260,27 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Neuer dynamischer Code"
+        },
+        "codeLiveCard": {
+          "title": "Dein Code ist live",
+          "body": "Er funktioniert im Kostenlos-Plan weiter, ohne Enddatum. Wenn er für ein Unternehmen in den Druck geht, bietet Pro zusätzlich:",
+          "customDomain": "Deine eigene Domain für den Kurzlink",
+          "customSlug": "Ein selbst gewählter Link-Teil statt eines zufälligen",
+          "scanEmails": "E-Mails beim ersten Scan eines Codes und bei {first, number}, {second, number} und {third, number} Scans, dazu eine wöchentliche Zusammenfassung",
+          "linkControls": "Passwörter, Start- und Enddaten und Scan-Limits",
+          "fullHistory": "Blick zurück auf jeden Scan, nicht nur auf {years, plural, one {das letzte Jahr} other {die letzten # Jahre}}",
+          "price": "Pro kostet {month} im Monat oder {year} im Jahr.",
+          "seePro": "Pro ansehen",
+          "hide": "Ausblenden"
+        },
+        "scanAlertsOffer": {
+          "title": "Per E-Mail erfahren, wenn deine Codes gescannt werden",
+          "body": "QRdx schickt dir eine E-Mail, wenn ein Code zum ersten Mal gescannt wird und wenn er {first, number}, {second, number} und {third, number} Scans überschreitet, dazu jede Woche eine kurze Zusammenfassung.",
+          "turnOn": "Scan-E-Mails aktivieren",
+          "turningOn": "Wird aktiviert…",
+          "on": "Scan-E-Mails sind aktiviert. Sie gehen an die E-Mail-Adresse deines Kontos.",
+          "change": "In den Benachrichtigungen ändern",
+          "notNow": "Nicht jetzt"
         }
       },
       "listSelection": {
@@ -8535,7 +8561,9 @@
         "whatsNew": "Neuigkeiten",
         "backToLabel": "Zurück zu {label}",
         "expandSidebar": "Seitenleiste ausklappen",
-        "collapseSidebar": "Seitenleiste einklappen"
+        "collapseSidebar": "Seitenleiste einklappen",
+        "upgrade": "Upgraden",
+        "upgradeToPro": "Auf Pro upgraden"
       },
       "appTopbar": {
         "breadcrumb": "Brotkrumennavigation",
@@ -8810,6 +8838,40 @@
         "signingYouOut": "Du wirst abgemeldet…",
         "oneMoment": "Einen Moment…",
         "pageTitle": "Abmelden"
+      }
+    },
+    "success": {
+      "metaTitle": "Dein Upgrade",
+      "activeTitle": "Danke für dein Upgrade",
+      "activeBody": "Dein {plan}-Plan ist aktiv.",
+      "processingTitle": "Zahlung wird verarbeitet",
+      "processingBody": "Dein Tarif wird aktiviert, sobald Polar die Zahlung bestätigt, meist innerhalb einer Minute. Diese Seite prüft etwa eine Minute lang selbstständig erneut.",
+      "checksStopped": "Es dauert länger als sonst, und diese Seite prüft nicht mehr selbstständig. Lade sie in ein paar Minuten neu. Wenn sich dein Tarif danach immer noch nicht geändert hat, schreib an <mail>{email}</mail>.",
+      "reload": "Neu laden",
+      "checkNow": "Jetzt prüfen",
+      "incompleteTitle": "Checkout nicht abgeschlossen",
+      "incompleteBody": "Dieser Checkout wurde nicht abgeschlossen, daher hat sich dein Plan nicht geändert.",
+      "failedTitle": "Die Zahlung ist nicht durchgegangen",
+      "failedBody": "Dein Tarif hat sich nicht geändert. Du kannst es auf der Preisseite noch einmal versuchen.",
+      "backToPricing": "Zurück zu den Preisen",
+      "endedTitle": "Dieser Tarif ist beendet",
+      "endedBody": "Das Abo aus diesem Checkout ist nicht mehr aktiv, deshalb ist dieses Konto im Tarif Kostenlos. Im Abrechnungsportal siehst du, was passiert ist.",
+      "errorTitle": "Dein Tarif konnte nicht geladen werden",
+      "errorBody": "Beim Laden deines Tarifs ist auf unserer Seite etwas schiefgelaufen. Versuche es gleich noch einmal.",
+      "unknownTitle": "Kein Checkout gefunden",
+      "unknownBody": "Wir konnten diesen Checkout in deinem Konto nicht finden. Wenn du gerade bezahlt hast, achte darauf, dass du mit dem Konto angemeldet bist, das du upgegradet hast, oder schreib an <mail>{email}</mail>.",
+      "signedOutTitle": "Melde dich an, um deinen Tarif zu sehen",
+      "signedOutBody": "Melde dich mit dem Konto an, das du upgegradet hast, um zu sehen, ob dein Tarif aktiv ist.",
+      "signIn": "Anmelden",
+      "goToDashboard": "Zum Dashboard",
+      "manageSubscription": "Abo verwalten",
+      "steps": {
+        "codesTitle": "Dynamische Codes erstellen",
+        "codesBody": "Codes, die du nach dem Druck noch bearbeiten kannst, mit Scan-Statistiken.",
+        "domainTitle": "Eigene Domain hinzufügen",
+        "domainBody": "Liefere deine Kurzlinks über deine eigene Domain aus.",
+        "teamTitle": "Team einladen",
+        "teamBody": "Teile Codes, Seiten und gespeicherte Themes mit deinem Team."
       }
     }
   },
