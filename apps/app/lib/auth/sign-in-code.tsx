@@ -1,13 +1,13 @@
 import "server-only";
 
 import type { SignInCodeLimit, SignInCodeSender } from "@repo/auth/email-otp";
-import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
-import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
-import { sendEmail } from "@/lib/email/send";
 import {
   SignInCodeEmail,
   signInCodeSubject,
-} from "@/lib/email/templates/sign-in-code";
+} from "@repo/email/templates/sign-in-code";
+import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
+import { sendEmail } from "@/lib/email/send";
 import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import { currentRequestDetails } from "@/lib/security/request-details";
 import {

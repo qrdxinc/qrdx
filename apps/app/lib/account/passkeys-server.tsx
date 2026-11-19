@@ -1,12 +1,12 @@
 import "server-only";
 
-import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
-import { sendEmail } from "@/lib/email/send";
 import {
   type PasskeyChange,
   PasskeyNoticeEmail,
   passkeyNoticeSubject,
-} from "@/lib/email/templates/passkey-notice";
+} from "@repo/email/templates/passkey-notice";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
+import { sendEmail } from "@/lib/email/send";
 import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import { currentRequestDetails } from "@/lib/security/request-details";
 import { deliverPasskeyNotice } from "./passkeys";

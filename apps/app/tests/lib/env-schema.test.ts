@@ -15,6 +15,7 @@ const SCHEMAS = [
   "../../packages/auth/keys.ts",
   "../../packages/config/keys.ts",
   "../../packages/database/keys.ts",
+  "../../packages/email/keys.ts",
   "../../packages/next-config/keys.ts",
   "../../packages/rate-limit/keys.ts",
 ];

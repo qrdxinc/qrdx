@@ -1,11 +1,11 @@
 import "server-only";
 
-import { z } from "zod";
-import { sendEmail } from "@/lib/email/send";
 import {
   EnterpriseRequestEmail,
   enterpriseRequestSubject,
-} from "@/lib/email/templates/enterprise-request";
+} from "@repo/email/templates/enterprise-request";
+import { z } from "zod";
+import { sendEmail } from "@/lib/email/send";
 import {
   ENTERPRISE_EMAIL,
   ENTERPRISE_FIELD_LIMITS,
@@ -15,6 +15,7 @@ import {
 } from "@/lib/enterprise";
 import { HttpError } from "@/lib/error-response";
 import { isFeatureAvailable } from "@/lib/feature-availability";
+import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 
 // The contact form on /enterprise. It goes the way pay-by-invoice requests
 // go (lib/invoice-requests.tsx): an email to QRdx's sales address with the
@@ -78,6 +79,7 @@ export async function sendEnterpriseRequest(
     subject: enterpriseRequestSubject(data.company, teamSize),
     react: (
       <EnterpriseRequestEmail
+        intl={ENGLISH_EMAIL}
         company={data.company}
         email={data.email}
         locale={locale}

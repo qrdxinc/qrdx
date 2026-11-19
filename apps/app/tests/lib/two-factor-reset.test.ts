@@ -10,6 +10,7 @@
 // notices and the audit log recorded; nothing connects to a database.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CONFIRMATION_REQUIRED } from "@/lib/account/confirmation";
+import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { fakeDb } from "../support/fake-db";
 
 const USER = "user_1";
@@ -310,10 +311,14 @@ describe("the wait", () => {
 
 describe("the notices", () => {
   it("say the day, that nothing changes until then, and how to stop it", async () => {
-    const template = await import("@/lib/email/templates/two-factor-notice");
-    const lines = template.twoFactorNoticeLines("support-reset-scheduled", {
-      dueAt: new Date("2026-11-16T00:00:00.000Z"),
-    });
+    const template = await import("@repo/email/templates/two-factor-notice");
+    const lines = template.twoFactorNoticeLines(
+      "support-reset-scheduled",
+      {
+        dueAt: new Date("2026-11-16T00:00:00.000Z"),
+      },
+      ENGLISH_EMAIL,
+    );
     expect(lines.join("\n")).toContain("on November 16, 2026 (UTC)");
     expect(lines.join("\n")).toContain("Until then, nothing changes.");
     expect(lines.join("\n")).toMatch(
@@ -322,20 +327,25 @@ describe("the notices", () => {
     // A passkey doesn't cancel it (it may be on the lost device).
     expect(lines.join("\n")).not.toMatch(/passkey/);
     expect(lines.join("\n")).toContain("reply to this email");
-    expect(template.twoFactorNoticeSubject("support-reset-scheduled")).toBe(
-      "QRdx support will turn off two-step verification",
-    );
+    expect(
+      template.twoFactorNoticeSubject("support-reset-scheduled", ENGLISH_EMAIL),
+    ).toBe("QRdx support will turn off two-step verification");
     for (const by of ["person", "sign-in", "support"] as const) {
       const cancelled = template.twoFactorNoticeLines(
         "support-reset-cancelled",
         { cancelledBy: by },
+        ENGLISH_EMAIL,
       );
       expect(cancelled[1], by).toMatch(/stays on/);
     }
     expect(
-      template.twoFactorNoticeLines("support-reset-cancelled", {
-        cancelledBy: "sign-in",
-      })[0],
+      template.twoFactorNoticeLines(
+        "support-reset-cancelled",
+        {
+          cancelledBy: "sign-in",
+        },
+        ENGLISH_EMAIL,
+      )[0],
     ).toMatch(/You signed in with your authenticator app or a backup code/);
     // Support's notices don't say "if this was you, there's nothing to do".
     expect(template.SUPPORT_KINDS.has("support-reset-scheduled")).toBe(true);

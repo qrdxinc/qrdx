@@ -1,8 +1,8 @@
 import { SUPPORT_EMAIL } from "@repo/config";
 import type { ReactNode } from "react";
 import { Link, Section } from "react-email";
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
-import { baseUrl } from "@/lib/metadata";
+import type { EmailIntl } from "../intl";
+import { baseUrl } from "../origin";
 import { EmailButton, EmailText } from "./layout";
 import { DetailsTable } from "./parts";
 
@@ -16,7 +16,7 @@ export const reviewSecurityUrl = () =>
 
 /**
  * Where and when a security event happened. The senders fill it from the
- * request (lib/security/request-details.ts).
+ * request (apps/app/lib/security/request-details.ts).
  */
 export interface SecurityEventDetails {
   /** "Chrome on macOS" */
@@ -41,12 +41,12 @@ export interface SecurityEventDetails {
 export function SecurityDetails({
   details,
   extra = [],
-  intl = ENGLISH_EMAIL,
+  intl,
 }: {
   details: SecurityEventDetails | undefined;
   /** Rows after the device's, e.g. how someone signed in */
   extra?: { label: string; value: string }[];
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }) {
   if (!details) return null;
   const { t } = intl;
@@ -72,11 +72,7 @@ export function SecurityDetails({
   );
 }
 
-export function ReviewSecurityButton({
-  intl = ENGLISH_EMAIL,
-}: {
-  intl?: EmailIntl;
-}) {
+export function ReviewSecurityButton({ intl }: { intl: EmailIntl }) {
   return (
     <Section style={{ margin: "4px 0 8px" }}>
       <EmailButton href={reviewSecurityUrl()}>
@@ -87,11 +83,7 @@ export function ReviewSecurityButton({
 }
 
 /** On every email that carries a code. */
-export function NeverAskForCode({
-  intl = ENGLISH_EMAIL,
-}: {
-  intl?: EmailIntl;
-}) {
+export function NeverAskForCode({ intl }: { intl: EmailIntl }) {
   return <EmailText>{intl.t("codes.neverAsk")}</EmailText>;
 }
 

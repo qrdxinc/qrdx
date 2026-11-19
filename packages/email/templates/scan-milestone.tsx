@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { codeLabel } from "./parts";
 
@@ -9,7 +9,7 @@ export interface ScanMilestoneEmailProps {
   workspaceName: string;
   unsubscribeUrl: string;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 export function ScanMilestoneEmail({
@@ -18,7 +18,7 @@ export function ScanMilestoneEmail({
   analyticsUrl,
   workspaceName,
   unsubscribeUrl,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: ScanMilestoneEmailProps) {
   const { t } = intl;
   const reached = t("scanMilestone.reached", {
@@ -39,4 +39,11 @@ export function ScanMilestoneEmail({
   );
 }
 
-export default ScanMilestoneEmail;
+/** What the preview app (apps/email) renders. */
+ScanMilestoneEmail.PreviewProps = {
+  code: { title: "Spring menu", slug: "aB3dE5f" },
+  milestone: 100,
+  analyticsUrl: "https://qrdx.dev/dashboard/acme/codes/aB3dE5f",
+  workspaceName: "Acme",
+  unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+} satisfies Omit<ScanMilestoneEmailProps, "intl">;

@@ -6,6 +6,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 
 const state = vi.hoisted(() => ({
   codes: ["ABCDE-FGH23", "JKLMN-PQR45", "STUVW-XYZ67"] as string[],
@@ -60,7 +61,7 @@ vi.mock("@/lib/account/two-factor-server", () => ({
 
 const notices = await import("@/lib/account/two-factor-notice");
 const sender = await import("@/lib/account/two-factor-notice-server");
-const template = await import("@/lib/email/templates/two-factor-notice");
+const template = await import("@repo/email/templates/two-factor-notice");
 
 beforeEach(() => {
   state.codes = ["ABCDE-FGH23", "JKLMN-PQR45", "STUVW-XYZ67"];
@@ -84,10 +85,14 @@ afterEach(() => {
 describe("what the notices say", () => {
   it("a backup code used to sign in, with plenty left", () => {
     expect(
-      template.twoFactorNoticeLines("backup-code-used", {
-        usedFor: "sign-in",
-        codesLeft: 7,
-      }),
+      template.twoFactorNoticeLines(
+        "backup-code-used",
+        {
+          usedFor: "sign-in",
+          codesLeft: 7,
+        },
+        ENGLISH_EMAIL,
+      ),
     ).toEqual([
       "One of your backup codes was just used to sign in to your QRdx account. Each code works once, so that one no longer works.",
       "You have 7 backup codes left.",
@@ -95,52 +100,70 @@ describe("what the notices say", () => {
   });
 
   it("a backup code used to confirm it's you", () => {
-    const [used] = template.twoFactorNoticeLines("backup-code-used", {
-      usedFor: "confirm",
-      codesLeft: 5,
-    });
+    const [used] = template.twoFactorNoticeLines(
+      "backup-code-used",
+      {
+        usedFor: "confirm",
+        codesLeft: 5,
+      },
+      ENGLISH_EMAIL,
+    );
     expect(used).toMatch(/to confirm it's you before a security change/);
   });
 
   it(`suggests new codes at ${template.BACKUP_CODES_LOW} or fewer, and not before`, () => {
     const low = template.BACKUP_CODES_LOW;
-    expect(template.backupCodesLeftText(low + 1)).toBe(
+    expect(template.backupCodesLeftText(low + 1, ENGLISH_EMAIL)).toBe(
       `You have ${low + 1} backup codes left.`,
     );
-    expect(template.backupCodesLeftText(low)).toMatch(
+    expect(template.backupCodesLeftText(low, ENGLISH_EMAIL)).toMatch(
       new RegExp(`^You have ${low} backup codes left\\. Make new ones`),
     );
-    expect(template.backupCodesLeftText(1)).toMatch(
+    expect(template.backupCodesLeftText(1, ENGLISH_EMAIL)).toMatch(
       /^You have 1 backup code left\. Make new ones in Settings → Profile & security/,
     );
-    expect(template.backupCodesLeftText(0)).toMatch(
+    expect(template.backupCodesLeftText(0, ENGLISH_EMAIL)).toMatch(
       /^That was your last backup code\. Make new ones/,
     );
   });
 
   it("leaves the count out when it isn't known", () => {
     expect(
-      template.twoFactorNoticeLines("backup-code-used", {
-        usedFor: "sign-in",
-        codesLeft: null,
-      }),
+      template.twoFactorNoticeLines(
+        "backup-code-used",
+        {
+          usedFor: "sign-in",
+          codesLeft: null,
+        },
+        ENGLISH_EMAIL,
+      ),
     ).toHaveLength(1);
   });
 
   it("the 'on' notice says the other devices were signed out, only when they were", () => {
     expect(
-      template.twoFactorNoticeLines("on", { signedOutElsewhere: true })[1],
+      template.twoFactorNoticeLines(
+        "on",
+        { signedOutElsewhere: true },
+        ENGLISH_EMAIL,
+      )[1],
     ).toMatch(/Every other device signed in to your account was signed out/);
     expect(
-      template.twoFactorNoticeLines("on", { signedOutElsewhere: false }),
+      template.twoFactorNoticeLines(
+        "on",
+        { signedOutElsewhere: false },
+        ENGLISH_EMAIL,
+      ),
     ).toHaveLength(1);
-    expect(template.twoFactorNoticeLines("on")).toHaveLength(1);
+    expect(template.twoFactorNoticeLines("on", {}, ENGLISH_EMAIL)).toHaveLength(
+      1,
+    );
   });
 
   it("support's notice says every device was signed out", () => {
-    expect(template.twoFactorNoticeLines("support-off")[0]).toMatch(
-      /signed it out on every device/,
-    );
+    expect(
+      template.twoFactorNoticeLines("support-off", {}, ENGLISH_EMAIL)[0],
+    ).toMatch(/signed it out on every device/);
   });
 
   it("describes each in the dev log", () => {

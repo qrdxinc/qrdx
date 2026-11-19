@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { codeLabel, DetailsTable } from "./parts";
 
@@ -17,7 +17,7 @@ export interface CodeActivityEmailProps {
   workspaceName: string;
   unsubscribeUrl: string;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 export function CodeActivityEmail({
@@ -28,7 +28,7 @@ export function CodeActivityEmail({
   codeUrl,
   workspaceName,
   unsubscribeUrl,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: CodeActivityEmailProps) {
   const { t } = intl;
   const label = codeLabel(code);
@@ -58,4 +58,18 @@ export function CodeActivityEmail({
   );
 }
 
-export default CodeActivityEmail;
+/** What the preview app (apps/email) renders. */
+CodeActivityEmail.PreviewProps = {
+  kind: "updated",
+  code: {
+    title: "Spring menu",
+    slug: "aB3dE5f",
+    shortLink: "https://qrdx.dev/q/aB3dE5f",
+    destination: "https://example.com/menu/spring",
+  },
+  changes: ["Destination", "Title"],
+  actorName: "Sam Lee",
+  codeUrl: "https://qrdx.dev/dashboard/acme/codes/aB3dE5f",
+  workspaceName: "Acme",
+  unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+} satisfies Omit<CodeActivityEmailProps, "intl">;

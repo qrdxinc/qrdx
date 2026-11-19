@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
@@ -13,12 +13,12 @@ import { EmailCodeBox } from "./sign-in-code";
 export const EMAIL_CHANGE_CODE_SUBJECT = "Confirm your new email for QRdx";
 
 /** The code email's subject in the recipient's language. */
-export const emailChangeCodeSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+export const emailChangeCodeSubject = (intl: EmailIntl) =>
   intl.t("emailChangeCode.subject");
 export const EMAIL_CHANGED_SUBJECT = "Your QRdx email was changed";
 
 /** The "your address was changed" notice's subject in the recipient's language. */
-export const emailChangedSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+export const emailChangedSubject = (intl: EmailIntl) =>
   intl.t("emailChanged.subject");
 
 const _plural = (minutes: number) =>
@@ -29,7 +29,7 @@ export interface EmailChangeCodeEmailProps {
   code: string;
   expiresInMinutes?: number;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /**
@@ -39,7 +39,7 @@ export interface EmailChangeCodeEmailProps {
 export function EmailChangeCodeEmail({
   code,
   expiresInMinutes = 5,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: EmailChangeCodeEmailProps) {
   const { t } = intl;
   return (
@@ -65,7 +65,7 @@ export interface EmailChangedEmailProps {
   /** Where and when; the sender always passes it */
   details?: SecurityEventDetails;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /**
@@ -76,7 +76,7 @@ export interface EmailChangedEmailProps {
 export function EmailChangedEmail({
   newEmail,
   details,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: EmailChangedEmailProps) {
   const { t } = intl;
   return (
@@ -100,3 +100,20 @@ export function EmailChangedEmail({
     </EmailLayout>
   );
 }
+
+/** What the preview app (apps/email) renders. */
+EmailChangeCodeEmail.PreviewProps = {
+  code: "482913",
+  expiresInMinutes: 5,
+} satisfies Omit<EmailChangeCodeEmailProps, "intl">;
+
+/** What the preview app (apps/email) renders. */
+EmailChangedEmail.PreviewProps = {
+  newEmail: "sam@example.com",
+  details: {
+    device: "Chrome on macOS",
+    location: "Mumbai, India",
+    ip: "203.0.113.24",
+    time: "Nov 19, 2026, 3:04 PM GMT+5:30",
+  },
+} satisfies Omit<EmailChangedEmailProps, "intl">;

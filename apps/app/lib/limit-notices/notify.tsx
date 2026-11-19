@@ -8,6 +8,7 @@ import {
   organization,
   user,
 } from "@repo/database";
+import { LimitNoticeEmail } from "@repo/email/templates/limit-notice";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@repo/i18n/config";
 import cuid from "cuid";
 import { and, eq, inArray, like } from "drizzle-orm";
@@ -15,7 +16,6 @@ import { resolveMeterCaps } from "@/app/(app)/settings/usage/_lib/meters";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { sendEmail } from "@/lib/email/send";
-import { LimitNoticeEmail } from "@/lib/email/templates/limit-notice";
 import { emailIntl } from "@/lib/i18n/email";
 import { baseUrl } from "@/lib/metadata";
 import { holdsPlanRole } from "@/lib/permissions";

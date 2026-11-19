@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import {
   EmailButton,
   EmailDivider,
@@ -21,7 +21,7 @@ export interface LimitNoticeEmailProps {
   /** "Free" */
   planName: string;
   /**
-   * What Plan & usage says about the limit (lib/limit-notices/copy.ts), with
+   * What Plan & usage says about the limit (apps/app/lib/limit-notices/copy.ts), with
    * the reset date for monthly allowances
    */
   reason: string;
@@ -30,12 +30,12 @@ export interface LimitNoticeEmailProps {
   /** Why this person gets it */
   recipientReason: string;
   /** The recipients' language; the strings above come in it too */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /**
  * Account notice: sent once when a workspace reaches 90% of a plan limit
- * and once at 100%, per limit and calendar month (lib/limit-notices).
+ * and once at 100%, per limit and calendar month (apps/app/lib/limit-notices).
  */
 export function LimitNoticeEmail({
   workspaceName,
@@ -47,7 +47,7 @@ export function LimitNoticeEmail({
   reason,
   usageUrl,
   recipientReason,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: LimitNoticeEmailProps) {
   const { t } = intl;
   const words = { level, workspace: workspaceName, noun, value };
@@ -73,4 +73,15 @@ export function LimitNoticeEmail({
   );
 }
 
-export default LimitNoticeEmail;
+/** What the preview app (apps/email) renders. */
+LimitNoticeEmail.PreviewProps = {
+  workspaceName: "Acme",
+  limitLabel: "Dynamic QR codes",
+  noun: "dynamic QR codes",
+  level: "near",
+  value: "9 of 10",
+  planName: "Free",
+  reason: "Free includes 10 dynamic QR codes.",
+  usageUrl: "https://qrdx.dev/settings/usage",
+  recipientReason: "You're an owner of Acme on QRdx.",
+} satisfies Omit<LimitNoticeEmailProps, "intl">;

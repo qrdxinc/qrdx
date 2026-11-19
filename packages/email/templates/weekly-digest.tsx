@@ -1,5 +1,5 @@
 import { Column, Link, Row, Section } from "react-email";
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import {
   EMAIL_ACCENT,
   EmailButton,
@@ -30,7 +30,7 @@ export interface WeeklyDigestEmailProps {
   dashboardUrl: string;
   unsubscribeUrl: string;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 function countryName(code: string, locale: string): string {
@@ -49,7 +49,7 @@ const percentChange = (current: number, previous: number) =>
 export function weekOverWeek(
   current: number,
   previous: number,
-  { t, locale }: EmailIntl = ENGLISH_EMAIL,
+  { t, locale }: EmailIntl
 ): string | null {
   const change = percentChange(current, previous);
   if (change === null) {
@@ -84,7 +84,7 @@ export function WeeklyDigestEmail({
   topCountries,
   dashboardUrl,
   unsubscribeUrl,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: WeeklyDigestEmailProps) {
   const { t, locale } = intl;
   const count = (value: number) => formatCount(value, locale);
@@ -150,7 +150,7 @@ export function WeeklyDigestEmail({
             {topCountries
               .map(
                 (row) =>
-                  `${countryName(row.country, locale)} ${count(row.scans)}`,
+                  `${countryName(row.country, locale)} ${count(row.scans)}`
               )
               .join(" · ")}
           </MutedText>
@@ -170,4 +170,32 @@ export function WeeklyDigestEmail({
   );
 }
 
-export default WeeklyDigestEmail;
+/** What the preview app (apps/email) renders. */
+WeeklyDigestEmail.PreviewProps = {
+  workspaceName: "Acme",
+  periodStart: new Date("2026-11-09T00:00:00Z"),
+  periodEnd: new Date("2026-11-16T00:00:00Z"),
+  scans: 1284,
+  previousScans: 1102,
+  uniqueVisitors: 917,
+  newCodes: 3,
+  formResponses: 12,
+  topCodes: [
+    {
+      label: "Spring menu",
+      scans: 640,
+      url: "https://qrdx.dev/dashboard/acme/codes/aB3dE5f",
+    },
+    {
+      label: "Table tents",
+      scans: 388,
+      url: "https://qrdx.dev/dashboard/acme/codes/k9Lm2Pq",
+    },
+  ],
+  topCountries: [
+    { country: "DE", scans: 702 },
+    { country: "US", scans: 311 },
+  ],
+  dashboardUrl: "https://qrdx.dev/dashboard/acme",
+  unsubscribeUrl: "https://qrdx.dev/api/email/unsubscribe?token=preview.token",
+} satisfies Omit<WeeklyDigestEmailProps, "intl">;

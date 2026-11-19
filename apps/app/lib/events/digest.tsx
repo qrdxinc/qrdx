@@ -11,6 +11,11 @@ import {
   qrScan,
   user,
 } from "@repo/database";
+import { codeLabel } from "@repo/email/templates/parts";
+import {
+  WeeklyDigestEmail,
+  type WeeklyDigestEmailProps,
+} from "@repo/email/templates/weekly-digest";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "@repo/i18n/config";
 import {
   and,
@@ -26,11 +31,6 @@ import {
   sql,
 } from "drizzle-orm";
 import { isEmailConfigured, sendEmail } from "@/lib/email/send";
-import { codeLabel } from "@/lib/email/templates/parts";
-import {
-  WeeklyDigestEmail,
-  type WeeklyDigestEmailProps,
-} from "@/lib/email/templates/weekly-digest";
 import { type EmailIntl, emailIntl } from "@/lib/i18n/email";
 import { baseUrl } from "@/lib/metadata";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";

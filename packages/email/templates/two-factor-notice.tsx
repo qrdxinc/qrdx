@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
@@ -46,7 +46,7 @@ export interface TwoFactorNoticeExtra {
   cancelledBy?: TwoFactorResetCancelledBy;
 }
 
-// Each kind's strings under emails.twoFactorNotice in messages/en.json.
+// Each kind's strings under emails.twoFactorNotice in apps/app/messages/en.json.
 const KEYS = {
   on: "on",
   off: "off",
@@ -67,7 +67,7 @@ const CANCELLED_BY = {
 
 export const twoFactorNoticeSubject = (
   kind: TwoFactorNoticeKind,
-  intl: EmailIntl = ENGLISH_EMAIL,
+  intl: EmailIntl
 ) => intl.t(`twoFactorNotice.${KEYS[kind]}.subject`);
 
 /** "November 16, 2026": the UTC day, in the email's language. */
@@ -80,7 +80,7 @@ const formatDueDate = (date: Date, locale: string) =>
 /** "You have 3 backup codes left." and, when few are left, what to do. */
 export function backupCodesLeftText(
   codesLeft: number,
-  intl: EmailIntl = ENGLISH_EMAIL,
+  intl: EmailIntl
 ): string {
   const { t } = intl;
   const left = t("twoFactorNotice.backupCodeUsed.left", { count: codesLeft });
@@ -92,8 +92,8 @@ export function backupCodesLeftText(
 /** The notice's paragraphs, before the details table. */
 export function twoFactorNoticeLines(
   kind: TwoFactorNoticeKind,
-  extra: TwoFactorNoticeExtra = {},
-  intl: EmailIntl = ENGLISH_EMAIL,
+  extra: TwoFactorNoticeExtra,
+  intl: EmailIntl
 ): string[] {
   const { t } = intl;
   const body = t(`twoFactorNotice.${KEYS[kind]}.body`);
@@ -111,7 +111,7 @@ export function twoFactorNoticeLines(
     return [
       extra.cancelledBy
         ? t(
-            `twoFactorNotice.supportResetCancelled.${CANCELLED_BY[extra.cancelledBy]}`,
+            `twoFactorNotice.supportResetCancelled.${CANCELLED_BY[extra.cancelledBy]}`
           )
         : body,
       t("twoFactorNotice.supportResetCancelled.staysOn"),
@@ -142,11 +142,20 @@ export const SUPPORT_KINDS: ReadonlySet<TwoFactorNoticeKind> = new Set([
 /** Whether a "backup code used" notice asks the person to act. */
 const asksForNewCodes = (
   kind: TwoFactorNoticeKind,
-  extra: TwoFactorNoticeExtra,
+  extra: TwoFactorNoticeExtra
 ) =>
   kind === "backup-code-used" &&
   typeof extra.codesLeft === "number" &&
   extra.codesLeft <= BACKUP_CODES_LOW;
+
+export interface TwoFactorNoticeEmailProps {
+  kind: TwoFactorNoticeKind;
+  /** Where and when; the sender always passes it */
+  details?: SecurityEventDetails;
+  extra?: TwoFactorNoticeExtra;
+  /** The recipient's language */
+  intl: EmailIntl;
+}
 
 /**
  * Transactional, to the account's address after a two-step verification
@@ -157,15 +166,8 @@ export function TwoFactorNoticeEmail({
   kind,
   details,
   extra = {},
-  intl = ENGLISH_EMAIL,
-}: {
-  kind: TwoFactorNoticeKind;
-  /** Where and when; the sender always passes it */
-  details?: SecurityEventDetails;
-  extra?: TwoFactorNoticeExtra;
-  /** The recipient's language */
-  intl?: EmailIntl;
-}) {
+  intl,
+}: TwoFactorNoticeEmailProps) {
   const { t } = intl;
   const lines = twoFactorNoticeLines(kind, extra, intl);
   return (
@@ -179,7 +181,7 @@ export function TwoFactorNoticeEmail({
         <EmailText key={line}>{line}</EmailText>
       ))}
       <SecurityDetails details={details} intl={intl} />
-      {!SUPPORT_KINDS.has(kind) && !asksForNewCodes(kind, extra) && (
+      {!(SUPPORT_KINDS.has(kind) || asksForNewCodes(kind, extra)) && (
         <EmailText>{t("security.nothingElse")}</EmailText>
       )}
       <ReviewSecurityButton intl={intl} />
@@ -188,3 +190,15 @@ export function TwoFactorNoticeEmail({
     </EmailLayout>
   );
 }
+
+/** What the preview app (apps/email) renders. */
+TwoFactorNoticeEmail.PreviewProps = {
+  kind: "on",
+  details: {
+    device: "Chrome on macOS",
+    location: "Mumbai, India",
+    ip: "203.0.113.24",
+    time: "Nov 19, 2026, 3:04 PM GMT+5:30",
+  },
+  extra: { signedOutElsewhere: true },
+} satisfies Omit<TwoFactorNoticeEmailProps, "intl">;

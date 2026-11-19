@@ -1,7 +1,7 @@
 // Names reserved for tests and examples (RFC 2606, RFC 6761): no inbox
 // behind them, so mail there only bounces (and bounces hurt the sending
 // domain's reputation). Test and e2e accounts use them (@qrdx.test), so no
-// email of any kind goes to them (lib/email/send.ts).
+// email of any kind goes to them (./index.ts).
 const RESERVED_DOMAINS = new Set(["example.com", "example.net", "example.org"]);
 const RESERVED_TLDS = new Set(["test", "invalid", "example", "localhost"]);
 

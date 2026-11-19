@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
@@ -12,7 +12,7 @@ import {
 export const NEW_SIGN_IN_SUBJECT = "New sign-in to your QRdx account";
 
 /** The subject line in the recipient's language. */
-export const newSignInSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+export const newSignInSubject = (intl: EmailIntl) =>
   intl.t("newSignIn.subject");
 
 const styles = {
@@ -31,7 +31,7 @@ export interface NewSignInEmailProps {
   /** How they signed in: "Google", "Email code, then a passkey" */
   method: string | null;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /**
@@ -39,11 +39,7 @@ export interface NewSignInEmailProps {
  * for the first time. The only links go to the security settings and
  * support; nothing in it changes the account.
  */
-export function NewSignInEmail({
-  details,
-  method,
-  intl = ENGLISH_EMAIL,
-}: NewSignInEmailProps) {
+export function NewSignInEmail({ details, method, intl }: NewSignInEmailProps) {
   const { t } = intl;
   return (
     <EmailLayout
@@ -78,3 +74,14 @@ export function NewSignInEmail({
     </EmailLayout>
   );
 }
+
+/** What the preview app (apps/email) renders. */
+NewSignInEmail.PreviewProps = {
+  details: {
+    device: "Chrome on macOS",
+    location: "Mumbai, India",
+    ip: "203.0.113.24",
+    time: "Nov 19, 2026, 3:04 PM GMT+5:30",
+  },
+  method: "Google",
+} satisfies Omit<NewSignInEmailProps, "intl">;

@@ -1,4 +1,5 @@
-import { baseUrl } from "@/lib/metadata";
+import type { EmailIntl } from "../intl";
+import { baseUrl } from "../origin";
 import { EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, formatEmailDateTime, MutedText } from "./parts";
 
@@ -8,6 +9,8 @@ export interface AbuseReportAckEmailProps {
   reason: string;
   reportedAt: Date | string;
   reportId: string;
+  /** The layout's language (the body is English) */
+  intl: EmailIntl;
 }
 
 /**
@@ -19,9 +22,11 @@ export function AbuseReportAckEmail({
   reason,
   reportedAt,
   reportId,
+  intl,
 }: AbuseReportAckEmailProps) {
   return (
     <EmailLayout
+      intl={intl}
       preview="We received your report"
       reason="You got this email because this address was entered on the QRdx abuse report form."
     >
@@ -47,4 +52,10 @@ export function AbuseReportAckEmail({
   );
 }
 
-export default AbuseReportAckEmail;
+/** What the preview app (apps/email) renders. */
+AbuseReportAckEmail.PreviewProps = {
+  reported: "https://qrdx.dev/q/aB3dE5f",
+  reason: "Phishing",
+  reportedAt: new Date("2026-11-19T09:30:00Z"),
+  reportId: "rep_7f3k2m9x",
+} satisfies Omit<AbuseReportAckEmailProps, "intl">;

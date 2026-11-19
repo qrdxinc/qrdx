@@ -1,3 +1,4 @@
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { DetailsTable, MutedText } from "./parts";
 
@@ -17,6 +18,8 @@ export interface NonprofitRequestEmailProps {
   accountEmail: string;
   accountId: string;
   workspace: { name: string; slug: string } | null;
+  /** The email's language (English: it goes to the QRdx team) */
+  intl: EmailIntl;
 }
 
 export const nonprofitRequestSubject = (organization: string, plan: string) =>
@@ -39,6 +42,7 @@ export function NonprofitRequestEmail(props: NonprofitRequestEmailProps) {
   ];
   return (
     <EmailLayout
+      intl={props.intl}
       preview={nonprofitRequestSubject(props.organization, props.plan)}
       reason="Sent by the non-profit discount form on the pricing page."
     >
@@ -58,4 +62,15 @@ export function NonprofitRequestEmail(props: NonprofitRequestEmailProps) {
   );
 }
 
-export default NonprofitRequestEmail;
+/** What the preview app (apps/email) renders. */
+NonprofitRequestEmail.PreviewProps = {
+  organization: "Example Food Bank",
+  country: "Canada",
+  registration: "123456789RR0001",
+  contactEmail: "team@example.org",
+  plan: "Pro",
+  offer: "50% off Pro or Business",
+  accountEmail: "sam@example.org",
+  accountId: "usr_preview",
+  workspace: { name: "Example Food Bank", slug: "food-bank" },
+} satisfies Omit<NonprofitRequestEmailProps, "intl">;

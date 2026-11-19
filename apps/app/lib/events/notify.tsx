@@ -1,15 +1,15 @@
 import "server-only";
 
 import { database as db, organization, user } from "@repo/database";
+import { CodeActivityEmail } from "@repo/email/templates/code-activity";
+import { FirstScanEmail } from "@repo/email/templates/first-scan";
+import { FormSubmissionEmail } from "@repo/email/templates/form-submission";
+import { codeLabel, formatCount } from "@repo/email/templates/parts";
+import { ScanMilestoneEmail } from "@repo/email/templates/scan-milestone";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { eq } from "drizzle-orm";
 import type { ReactElement } from "react";
 import { sendEmail } from "@/lib/email/send";
-import { CodeActivityEmail } from "@/lib/email/templates/code-activity";
-import { FirstScanEmail } from "@/lib/email/templates/first-scan";
-import { FormSubmissionEmail } from "@/lib/email/templates/form-submission";
-import { codeLabel, formatCount } from "@/lib/email/templates/parts";
-import { ScanMilestoneEmail } from "@/lib/email/templates/scan-milestone";
 import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { emailIntlForUser } from "@/lib/i18n/email-locale";
 import { baseUrl } from "@/lib/metadata";

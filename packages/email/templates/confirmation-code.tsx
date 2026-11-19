@@ -1,4 +1,4 @@
-import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
+import type { EmailIntl } from "../intl";
 import { EmailDivider, EmailHeading, EmailLayout, EmailText } from "./layout";
 import { MutedText } from "./parts";
 import {
@@ -13,7 +13,7 @@ import { EmailCodeBox } from "./sign-in-code";
 export const CONFIRMATION_CODE_SUBJECT = "Your QRdx confirmation code";
 
 /** The subject line in the recipient's language. */
-export const confirmationCodeSubject = (intl: EmailIntl = ENGLISH_EMAIL) =>
+export const confirmationCodeSubject = (intl: EmailIntl) =>
   intl.t("confirmationCode.subject");
 
 export interface ConfirmationCodeEmailProps {
@@ -23,7 +23,7 @@ export interface ConfirmationCodeEmailProps {
   /** Where the code was asked for */
   details: SecurityEventDetails;
   /** The recipient's language */
-  intl?: EmailIntl;
+  intl: EmailIntl;
 }
 
 /**
@@ -35,7 +35,7 @@ export function ConfirmationCodeEmail({
   code,
   expiresInMinutes,
   details,
-  intl = ENGLISH_EMAIL,
+  intl,
 }: ConfirmationCodeEmailProps) {
   const { t } = intl;
   return (
@@ -58,3 +58,15 @@ export function ConfirmationCodeEmail({
     </EmailLayout>
   );
 }
+
+/** What the preview app (apps/email) renders. */
+ConfirmationCodeEmail.PreviewProps = {
+  code: "482913",
+  expiresInMinutes: 10,
+  details: {
+    device: "Chrome on macOS",
+    location: "Mumbai, India",
+    ip: "203.0.113.24",
+    time: "Nov 19, 2026, 3:04 PM GMT+5:30",
+  },
+} satisfies Omit<ConfirmationCodeEmailProps, "intl">;
