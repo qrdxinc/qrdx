@@ -1190,6 +1190,7 @@
         "formatPng": "PNG(이미지)",
         "formatWebp": "WebP(이미지, 더 작음)",
         "formatBmp": "BMP(이미지, 비압축)",
+        "formatIco": "ICO (파비콘, 16~256px)",
         "formatSvg": "SVG(벡터, 인쇄용)",
         "size": "{format} 크기",
         "quietZone": "{modules, number}모듈 여백 추가(인쇄 시 권장)",
@@ -3453,6 +3454,7 @@
           "jpg": "이메일과 작은 파일에 가장 좋아요.",
           "webp": "빠르게 로딩되는 웹사이트에 가장 좋아요 · 무손실이며 보통 PNG보다 작아요.",
           "bmp": "BMP만 지원하는 오래된 시스템이나 임베디드 도구에 적합합니다 · 비압축 24비트, 투명 배경은 흰색으로 저장됩니다.",
+          "ico": "파비콘에 가장 적합해요 · 16, 32, 48, 256px 이미지가 들어 있는 파일 하나예요. 작은 크기는 아이콘용이며 스캔용이 아니에요.",
           "svg": "Figma, Illustrator, 웹사이트에 가장 좋아요 · 어떤 크기에서도 선명해요.",
           "pdf": "문서와 간단한 인쇄에 가장 좋아요 · 벡터 PDF가 필요하면 인쇄용을 사용하세요.",
           "eps": "인쇄소와 벡터 앱에 가장 좋아요 · 어떤 크기에서도 선명해요."
@@ -5710,7 +5712,10 @@
           "noCodeCheckSpamIf": "코드가 오지 않았나요? 스팸함을 확인해 보세요. 스팸함에도 없다면 주소를 확인하고 다시 시도해 주세요.",
           "weSentANoteAbout": "변경 사항에 대한 안내를 {currentEmail}(으)로 보냈어요.",
           "wellSendANoteAbout": "변경 내용을 {currentEmail}(으)로 알려 드릴게요.",
-          "yourEmailIsNowSentto": "이메일이 {sentTo}(으)로 변경되었어요"
+          "yourEmailIsNowSentto": "이메일이 {sentTo}(으)로 변경되었어요",
+          "invalidEmail": "올바른 이메일 주소를 입력해 주세요.",
+          "sameEmail": "지금 쓰고 있는 이메일과 같아요.",
+          "connectionFailed": "문제가 발생했어요. 연결 상태를 확인하고 다시 시도해 주세요."
         },
         "communityProfileSection": {
           "liveAtCommunityHandleClear": "<link>/community/@{handle}</link>에 공개 중이에요. 핸들을 해제하려면 입력란을 비워 주세요.",
@@ -5828,7 +5833,15 @@
           "oneTimeCodeSentTo": "{email}(으)로 보낸 일회용 코드예요.",
           "linkedOn": "{date}에 연결됨",
           "linkedOnReason": "{date}에 연결됨. {reason}",
-          "notLinkedUseThe": "연결되지 않았어요. {email} 이메일의 {provider} 계정을 사용하세요."
+          "notLinkedUseThe": "연결되지 않았어요. {email} 이메일의 {provider} 계정을 사용하세요.",
+          "emailCodesRemain": "이메일로 받은 코드로 계속 로그인할 수 있어요.",
+          "linkError": {
+            "emailDoesNotMatch": "해당 계정은 다른 이메일 주소를 사용해요. QRdx 계정과 이메일이 같은 계정만 연결할 수 있어요.",
+            "alreadyLinked": "해당 계정은 이미 다른 QRdx 계정으로 로그인하고 있어요.",
+            "notVerified": "해당 계정의 이메일 주소가 제공업체에서 인증되지 않아 연결할 수 없어요.",
+            "cancelled": "연결이 취소되었어요.",
+            "failed": "해당 계정을 연결하지 못했어요. 다시 시도해 주세요."
+          }
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "지원팀이 {dueDate}에 이 기능을 끌 예정이에요",
@@ -5877,7 +5890,10 @@
           "afterYouSignInQrdx2": "로그인하면 QRdx에서 백업 코드를 요청해요.",
           "passkeySpotlight": "이제 인증 앱 코드 대신 패스키를 두 번째 인증 단계로 사용할 수 있어요.",
           "addedOn": "{date}에 추가됨",
-          "passkeyName": "패스키"
+          "passkeyName": "패스키",
+          "backupCodesDetails": "패스키나 앱을 사용할 수 없을 때를 위한 코드예요. 각 코드는 한 번만 사용할 수 있어요.",
+          "backupCodesLeft": "{total, number}개 중 {left, number}개 남았어요. 각 코드는 한 번만 사용할 수 있어요.",
+          "backupCodesLeftSoon": "{total, number}개 중 {left, number}개 남았어요. 각 코드는 한 번만 사용할 수 있어요. 곧 새 코드를 만들어 주세요."
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "{length, number}단계 중 {stepNumber, number}단계",
@@ -5915,7 +5931,11 @@
           "authenticatorApp": "인증 앱",
           "passkeyAddedButTwoStep": "패스키는 추가했지만 2단계 인증이 켜지지 않았어요. 켜기를 다시 시도해 보세요.",
           "confirmationCancelled": "확인이 취소되었어요",
-          "sessionNotFresh": "세션이 최신 상태가 아니에요"
+          "sessionNotFresh": "세션이 최신 상태가 아니에요",
+          "authenticatorAppAdded": "인증 앱을 추가했어요",
+          "passkeyAdded": "패스키를 추가했어요",
+          "otherDevicesSignedOut": "다른 기기에서 로그아웃되었어요.",
+          "otherDevicesNotSignedOut": "다른 기기에서 로그아웃하지 못했어요. 세션에서 다른 모든 기기에서 로그아웃을 사용해 주세요."
         },
         "workspaceTwoFactorNotice": {
           "twoStepVerificationIsOn": "2단계 인증이 켜져 있어서 이제 <span>{name}</span>을(를) 열 수 있어요.",
@@ -7230,6 +7250,7 @@
           "downloadWebp": "WebP 다운로드",
           "downloadSvg": "SVG 다운로드",
           "downloadBmp": "BMP 다운로드",
+          "downloadIco": "ICO 다운로드",
           "moreFormats": "다른 형식",
           "editLinkValue": "링크 편집",
           "codeSettings": "코드 설정",
@@ -7327,6 +7348,7 @@
           "pngImagesZip": "PNG 이미지 (ZIP)",
           "webpImagesZip": "WebP 이미지 (ZIP)",
           "bmpImagesZip": "BMP 이미지(ZIP)",
+          "icoImagesZip": "ICO 파비콘 (ZIP)",
           "svgImagesZip": "SVG 이미지 (ZIP)",
           "more": "더 보기",
           "moveToTrash": "휴지통으로 이동",

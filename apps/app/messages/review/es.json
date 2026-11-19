@@ -3327,6 +3327,10 @@
     "source": "a1de34968007",
     "status": "machine"
   },
+  "tools.bulk.generator.formatIco": {
+    "source": "cff1556f0a13",
+    "status": "machine"
+  },
   "tools.bulk.generator.formatSvg": {
     "source": "c6299e75cb4a",
     "status": "machine"
@@ -10221,6 +10225,10 @@
   },
   "editor.actionBar.downloadDialog.formatHints.bmp": {
     "source": "f4ff37385b9f",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.ico": {
+    "source": "809036c56b1c",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.svg": {
@@ -22515,6 +22523,10 @@
     "source": "26b25903a21b",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.downloadIco": {
+    "source": "56cfcbae213b",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.moreFormats": {
     "source": "b83931930ce6",
     "status": "machine"
@@ -22853,6 +22865,10 @@
   },
   "app.dashboard.codes.codesList.bmpImagesZip": {
     "source": "6c23f3b9ced1",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.icoImagesZip": {
+    "source": "e7859e50b34f",
     "status": "machine"
   },
   "app.dashboard.codes.codesList.svgImagesZip": {
