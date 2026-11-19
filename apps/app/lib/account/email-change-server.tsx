@@ -1,11 +1,11 @@
 import "server-only";
 
-import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
-import { sendEmail } from "@/lib/email/send";
 import {
   EmailChangedEmail,
   emailChangedSubject,
-} from "@/lib/email/templates/email-change";
+} from "@repo/email/templates/email-change";
+import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
+import { sendEmail } from "@/lib/email/send";
 import { emailIntlForUser } from "@/lib/i18n/email-locale";
 import { isBillingConfigured, polar } from "@/lib/polar";
 import { currentRequestDetails } from "@/lib/security/request-details";

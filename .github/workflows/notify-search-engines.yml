@@ -3,21 +3,32 @@ name: Notify search engines
 # After each production deploy, tells IndexNow (Bing, Yandex, Seznam and the
 # other IndexNow engines) and, when the BING_WEBMASTER_API_KEY secret is set,
 # the Bing Webmaster API which sitemap URLs changed, and resubmits the
-# sitemap to Google Search Console when the GSC_SERVICE_ACCOUNT_JSON secret
-# is set (scripts/notify-search-engines.mjs). Google has no API to request
-# indexing of ordinary pages; that stays a manual step in Search Console.
+# sitemaps to Google Search Console when the GSC_SERVICE_ACCOUNT_JSON secret
+# is set (scripts/notify-search-engines.mjs). "The sitemaps" are every one
+# robots.txt lists, the marketing site's included. Google has no API to
+# request indexing of ordinary pages; that stays a manual step in Search
+# Console.
 #
-# Every day at 23:15 UTC, before Bing's quota resets at midnight, the rest of
-# the day's Bing quota goes to the next slice of the sitemap (--backlog), so
-# every page reaches the Bing API every few days, including pages whose
-# lastmod never changes, like the home page.
+# Every day at 23:15 UTC, before Bing's quota resets at midnight:
+# - the sweep sends what changed in the sitemaps since yesterday's run, from
+#   a snapshot kept in the Actions cache. That catches the marketing site's
+#   deploys, which don't run this workflow. Without yesterday's snapshot
+#   (the first run, or after the cache dropped it), every URL goes to
+#   IndexNow and the main pages to Bing, as for a deploy with no snapshot;
+# - then the rest of the day's Bing quota goes to the next slice of the
+#   sitemaps (--backlog), so every page reaches the Bing API every few days,
+#   including pages whose lastmod never changes, like the home page.
+# The repository is public, so these runs use no billed Actions minutes;
+# the sweep adds a few seconds to the daily run.
 #
 # A search engine error never fails the run, and nothing here gates a merge
 # or a deploy. Pull requests that change the script or this workflow run its
-# read-only --check: the IndexNow key file, the Bing key, the site's
-# verification and today's quota, the Google service account's access to the
-# property and when Google last read the sitemap. It fails when Bing or
-# Google rejects the key or the site, so a broken setup shows before merging.
+# read-only --check: the sitemaps and the important pages in them, the
+# IndexNow key file, the Bing key, the site's verification and today's quota,
+# the Google service account's access to the property and when Google last
+# read each sitemap. It fails when an important page is in no sitemap, or
+# when Bing or Google rejects the key or the site, so a broken setup shows
+# before merging.
 on:
   push:
     branches:
@@ -134,6 +145,15 @@ jobs:
           done
           echo "::warning::No finished production deploy of $GITHUB_SHA after 30 minutes; sending what the live sitemap shows."
 
+      # The daily sweep's baseline: the sitemaps as yesterday's run saved them.
+      - name: Restore yesterday's sitemap snapshot
+        if: github.event_name == 'schedule'
+        uses: actions/cache/restore@v4
+        with:
+          path: .sitemap-sweep.xml
+          key: sitemap-sweep-${{ github.run_id }}
+          restore-keys: sitemap-sweep-
+
       - name: Notify search engines
         if: steps.deploy.outputs.skip != 'true'
         env:
@@ -146,6 +166,13 @@ jobs:
           if [ "$GITHUB_EVENT_NAME" = "push" ]; then
             node scripts/notify-search-engines.mjs --changed-since "$RUNNER_TEMP/sitemap-before.xml"
           elif [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
+            # Today's snapshot first, so a change that lands while this runs
+            # is sent today and again tomorrow, never missed.
+            sweep=".sitemap-sweep.xml"
+            yesterday="$RUNNER_TEMP/sitemap-yesterday.xml"
+            if [ -f "$sweep" ]; then mv "$sweep" "$yesterday"; fi
+            node scripts/notify-search-engines.mjs --snapshot "$sweep"
+            node scripts/notify-search-engines.mjs --changed-since "$yesterday"
             node scripts/notify-search-engines.mjs --backlog
           elif [ "$SCOPE" = "urls" ]; then
             printf '%s\n' $URLS > "$RUNNER_TEMP/urls.txt"
@@ -153,3 +180,12 @@ jobs:
           else
             node scripts/notify-search-engines.mjs "--$SCOPE"
           fi
+
+      # Tomorrow's baseline. A new key each run; the cache keeps the newest,
+      # and drops entries nobody reads for 7 days.
+      - name: Save today's sitemap snapshot
+        if: github.event_name == 'schedule' && hashFiles('.sitemap-sweep.xml') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: .sitemap-sweep.xml
+          key: sitemap-sweep-${{ github.run_id }}

@@ -1,5 +1,5 @@
+import { isReservedEmailAddress } from "@repo/email/reserved-address";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { isReservedEmailAddress } from "@/lib/email/reserved-address";
 
 const sent: { to: string[] }[] = [];
 

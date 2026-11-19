@@ -1,0 +1,24 @@
+-- "Notes from the QRdx team" (feat/paid-email-notes).
+--
+-- user.team_notes says whether the person gets the personal notes the team
+-- writes and sends from the console (apps/app/lib/email/personal-notes.tsx)
+-- and the welcome email (apps/app/lib/email/welcome.tsx).
+-- On for everyone (true) until they turn it off in Settings > Notifications
+-- or with the one-click link at the bottom of every note. Alerts, digests
+-- and security emails don't read it.
+--
+-- Additive and idempotent: one boolean column with a constant default, no
+-- index, safe to run more than once. Since Postgres 11, adding a column
+-- with a constant default is a metadata-only change (no table rewrite, no
+-- long lock).
+--
+-- Order: apply it BEFORE deploying the code that uses it.
+-- packages/database/schema.ts lists the column, so every query that selects
+-- whole user rows (Better Auth's session lookups among them) needs it to
+-- exist. The code before this feature never reads it, so applying it early
+-- is safe.
+--
+-- Rollback: ALTER TABLE "user" DROP COLUMN IF EXISTS team_notes;
+-- (only after the code that reads it is gone).
+
+ALTER TABLE "user" ADD COLUMN IF NOT EXISTS "team_notes" boolean NOT NULL DEFAULT true;

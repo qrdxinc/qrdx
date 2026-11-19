@@ -15,9 +15,9 @@ import {
   user as userTable,
   verification,
 } from "@repo/database";
+import type { TwoFactorResetCancelledBy } from "@repo/email/templates/two-factor-notice";
 import { eq, like } from "drizzle-orm";
 import { writeAuditLog } from "@/app/(app)/admin/_lib/audit";
-import type { TwoFactorResetCancelledBy } from "@/lib/email/templates/two-factor-notice";
 import type { TwoFactorNoticeOutcome } from "./two-factor-notice";
 import { sendTwoFactorNotice } from "./two-factor-notice-server";
 import { resetTwoFactor } from "./two-factor-server";

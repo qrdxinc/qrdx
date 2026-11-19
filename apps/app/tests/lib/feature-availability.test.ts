@@ -82,6 +82,7 @@ const EVERYTHING: Record<string, string> = {
   R2_BUCKET: FAKE,
   RESEND_API_KEY: FAKE,
   EMAIL_FROM: FAKE,
+  EMAIL_FROM_PERSONAL: FAKE,
   TURNSTILE_SECRET_KEY: FAKE,
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: FAKE,
   WEB_RISK_API_KEY: FAKE,
@@ -161,6 +162,7 @@ const NEEDS: Record<FeatureId, string[]> = {
   billing: ["POLAR_ACCESS_TOKEN"],
   invoiceRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
   enterpriseRequests: ["RESEND_API_KEY", "EMAIL_FROM"],
+  teamNotes: ["RESEND_API_KEY", "EMAIL_FROM"],
   eurPrices: ["NEXT_PUBLIC_QRDX_EUR_PRICES"],
   nonprofitDiscounts: ["RESEND_API_KEY", "EMAIL_FROM"],
 };

@@ -19,6 +19,10 @@ import {
   session as sessionTable,
   verification,
 } from "@repo/database";
+import {
+  ConfirmationCodeEmail,
+  confirmationCodeSubject,
+} from "@repo/email/templates/confirmation-code";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { and, eq, gt } from "drizzle-orm";
 import { cookies, headers } from "next/headers";
@@ -39,10 +43,6 @@ import {
 } from "@/lib/auth/two-factor";
 import { isOutboundDeliveryAllowed } from "@/lib/delivery-guard";
 import { sendEmail } from "@/lib/email/send";
-import {
-  ConfirmationCodeEmail,
-  confirmationCodeSubject,
-} from "@/lib/email/templates/confirmation-code";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { emailIntlForAddress } from "@/lib/i18n/email-locale";
 import { currentRequestDetails } from "@/lib/security/request-details";

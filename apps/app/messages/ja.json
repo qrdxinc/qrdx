@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "プランと料金を比較",
       "maybeLater": "あとで",
       "thisFeatureIsPartOf": "この機能はBusinessプランに含まれています。",
-      "thisFeatureIsPartOf2": "この機能はProとBusinessに含まれています。"
+      "thisFeatureIsPartOf2": "この機能はProとBusinessに含まれています。",
+      "ownerUpgrades": "このワークスペースのプランを変更できるのは、オーナーと請求担当メンバーのみです。{plan}へのアップグレードは、いずれかの方にご依頼ください。"
+    },
+    "checkoutButtons": {
+      "month": "{plan} · 月額{price}",
+      "year": "{plan} · 年額{price}",
+      "monthNoPrice": "{plan}（月払い）",
+      "yearNoPrice": "{plan}（年払い）",
+      "note": "お支払いはPolarで行います。現地の税金が加算される場合があります。いつでも解約できます。",
+      "switchTo": "{plan}に切り替える",
+      "openPortal": "ポータルを開く",
+      "failed": "チェックアウトを開けませんでした。しばらくしてからもう一度お試しください。",
+      "subscribed": "すでにサブスクリプションをご利用中です。プランの変更は請求ポータルで行えます。",
+      "unavailable": "現在、こちらではチェックアウトをご利用いただけません。",
+      "rateLimited": "チェックアウトの試行回数が多すぎます。数分後にもう一度お試しください。"
     },
     "themeToggle": {
       "toggleTheme": "テーマを切り替え"
@@ -729,7 +743,8 @@
         "storage": "{size}（1ファイル{perFile}）",
         "apiBulk": "{count}＋一括作成",
         "clientReportsBadge": "フッターに小さくクレジット表記あり",
-        "clientReportsWhiteLabel": "ホワイトラベル"
+        "clientReportsWhiteLabel": "ホワイトラベル",
+        "firstScanOnly": "動的QRコードごとの最初のスキャン"
       }
     },
     "guarantee": {
@@ -3278,6 +3293,8 @@
       "creditsLeft": "今月のAIアート画像の残りは<count>{limit, number}枚中{remaining, number}枚</count>です{pooled, select, yes {（チームで共有）} other {}}。リセット日は{resets}です。今回の生成では{variations, number}を使用します。失敗した画像は返却されます。",
       "notEnoughLeft": "{variations, number}には残りが足りません。バリエーション数を減らしてください。",
       "notEnoughLeftOrUpgrade": "{variations, number}には残りが足りません。バリエーション数を減らすか、アップグレードしてください。",
+      "noneLeft": "今月の残りはありません。",
+      "noneLeftUpgrade": "今月の残りはありません。今すぐアップグレードすると、さらに作成できます。",
       "moreArtistic": "より芸術的に",
       "clearerCode": "より読み取りやすく",
       "followsYourPrompt": "プロンプトに忠実",
@@ -3827,6 +3844,8 @@
         "creditsLeft": "今月のAIアート画像の残りは<count>{limit, number}枚中{remaining, number}枚</count>です{pooled, select, yes {（チームで共有）} other {}}。{resets}にリセットされます。今回の生成では{variations, number}枚使用します。",
         "notEnoughLeft": "残りが足りません。バリエーション数を減らしてください。",
         "notEnoughLeftOrUpgrade": "残りが足りません。バリエーション数を減らすか、アップグレードしてください。",
+        "noneLeft": "今月の残りはありません。",
+        "noneLeftUpgrade": "今月の残りはありません。今すぐアップグレードして、さらに作成できます。",
         "showResults": "{count, plural, other {結果を表示}}",
         "moreArtistic": "より芸術的に",
         "clearerCode": "より読み取りやすく",
@@ -4657,6 +4676,16 @@
       "dynamic": "動的",
       "editLaterCountScans": "後から編集、スキャン数を計測",
       "signedOutNote": "動的QRコードには無料アカウントが必要です。プランがどうなっても、コードはそのまま使い続けられます。",
+      "createDynamicCode": "動的QRコードを作成",
+      "addYourAddressFirst": "先に上のウェブサイトのアドレスを入力してください。",
+      "heldTitle": "保存済み(まだ公開前)",
+      "heldBody": "QRdxでは、新規アカウントのコードを公開する前に一部のアドレスを確認しているため、このコードは現在オフになっています。まだ印刷しないでください。QRコードには、アドレスそのものが表示されたままです。",
+      "openInDashboard": "ダッシュボードで開く",
+      "updateSwitchedOffTitle": "保存しましたが、このコードはオフになっています",
+      "updateSwitchedOffBody": "オンに戻すまで、印刷したコードをスキャンしても何も開きません。理由はダッシュボードに表示されます。",
+      "updatePausedBody": "このコードは一時停止中のため、ダッシュボードで再開するまで、印刷したコードをスキャンするとフォールバック先または一時停止ページに移動します。",
+      "resumeDroppedTitle": "QRコードはまだ静的です",
+      "resumeDroppedBody": "アドレスが変更されたか、サインインに時間がかかりすぎたため、動的になりませんでした。もう一度「動的」を選ぶと、動的になります。",
       "linkOptions": "リンクオプション…",
       "printedCodesStillOpenDestinationurl": "印刷済みのコードは引き続き<span>{destinationUrl}</span>を開きます。",
       "pointItToTheNew": "新しいアドレスに切り替える",
@@ -6433,7 +6462,18 @@
           "webhookAdded": "Webhookを追加しました",
           "notificationsSaved": "通知を保存しました",
           "testMessageSentToValue": "{value}にテストメッセージを送信しました",
-          "webhookRemoved": "Webhookを削除しました"
+          "webhookRemoved": "Webhookを削除しました",
+          "onByDefaultOwnCodes": "ご自身が作成したコードについては、デフォルトでオンになっています。",
+          "everyCodeAlerts": "このワークスペースのすべてのコードについて通知を受け取る",
+          "emailAlertsAreProFirstScan": "フリープランでは、作成した動的QRコードが最初のスキャンを受けるたびに、メールが1通届きます。そのほかのメール通知と週次ダイジェストは、ProとBusinessに含まれています。"
+        },
+        "teamNotes": {
+          "title": "QRdxチームからのお知らせ",
+          "description": "ご登録時のウェルカムメール、新しいQRコードが初めてスキャンされたときのメール（フリープランの場合）、そしてQRdxのメンバーからときどき届く個人宛てのメッセージです。返信すると、担当者に届きます。",
+          "label": "チームからのお知らせを受け取る",
+          "hint": "アラート、ダイジェスト、セキュリティに関するメールの設定は変わりません。",
+          "turnedOn": "チームからのお知らせをオンにしました",
+          "turnedOff": "チームからのお知らせをオフにしました"
         },
         "page": {
           "emailIsntSetUpOn": "このサーバーではメールが設定されていない（RESEND_API_KEY と EMAIL_FROM）ため、メールのアラートとダイジェストは保存されますが送信されません。SlackとDiscordのアラートは引き続き利用できます。<link>セットアップガイド</link>",
@@ -6472,6 +6512,7 @@
           "scansAcrossEveryDynamicCode": "このワークスペースにあるすべての動的QRコードのスキャン数です。",
           "dateRange": "期間",
           "yourPlanKeepsAShorter": "ご利用のプランではスキャン履歴の保持期間が短くなります",
+          "comparePlans": "プランを比較",
           "dynamicCodes": "動的コード",
           "totalScans": "スキャン総数",
           "scansInRange": "期間内のスキャン",
@@ -6950,9 +6991,10 @@
           "thePasswordWillBeRemoved": "保存するとパスワードが削除されます",
           "noPassword": "パスワードなし",
           "noLimit": "上限なし",
-          "heldForReview": "審査待ち",
+          "heldForReview": "安全確認の待機中です",
+          "heldQuestions": "ご質問は {email} までご連絡ください。",
           "turnedOffByQrdx": "QRdxによりオフ",
-          "ourAutomatedChecksFlaggedA": "自動チェックにより、このコード内のリンク（URL短縮サービス、IPアドレス、紛らわしいドメインなど）が検出されたため、審査担当者が承認するまでオフのままになります。通常は1日以内に完了します。お客様側での対応は不要です。",
+          "ourAutomatedChecksFlaggedA": "自動チェックでこのコードのリンク(URL短縮サービス、IPアドレス、紛らわしいドメインなど)が検出されたため、QRdxの担当者が確認するまで無効のままとなります。お客様側での対応は必要ありません。",
           "thisCodeWasSwitchedOff": "このコードは不正利用の審査後にオフになり、リダイレクトされません。誤りだと思われる場合は、support@qrdx.dev までご連絡ください。",
           "yourCurrentSettingsKeepWorking": "現在の設定はそのまま機能し、いつでも削除できます。",
           "timesAreInYourTime": "時刻はお使いのタイムゾーン（{timeZone}）で表示されます。",
@@ -7234,6 +7276,7 @@
           "accessSchedule": "アクセスとスケジュール"
         },
         "codeOverview": {
+          "heldNote": "安全確認の待機中です。新規アカウントによる、URL短縮サービス、IPアドレス、紛らわしいドメインなど一部の種類のアドレスへのリンクは、公開前に担当者が確認します。そのため、確認が完了するまでこのコードは無効です。まだ印刷しないでください。お問い合わせ: {email}",
           "editLink": "リンクを編集",
           "changeType": "タイプを変更",
           "shortLinkEncodedInThe": "短縮リンク(QRコードにエンコード)",
@@ -7796,7 +7839,9 @@
         "statusBadge": {
           "paused": "一時停止中",
           "pausedScansGoToThe": "一時停止中：スキャンするとフォールバックURLか、中立的な「一時停止中」ページに移動します",
-          "turnedOffByQrdxModeration": "QRdxのモデレーションによりオフになっています。誤りの場合はサポートまでご連絡ください。"
+          "turnedOffByQrdxModeration": "QRdxのモデレーションによりオフになっています。誤りの場合はサポートまでご連絡ください。",
+          "held": "安全確認中",
+          "heldTitle": "公開前の安全確認の待機中です。お問い合わせ: {email}"
         },
         "tagDialogs": {
           "color": "色",
@@ -7994,6 +8039,9 @@
           "deleting": "削除中…",
           "pageDeleted": "ページを削除しました",
           "qrCodeCreated": "QRコードを作成しました",
+          "qrCodeCreatedWithSamples": "QRコードを作成しました。ページにはテンプレートのサンプルが残っています",
+          "samplesStillOnPage": "{count, plural, other {ページにサンプルが#件残っています。}}サンプルのリンクは訪問者には表示されませんが、サンプルのテキストと写真は表示されます。",
+          "editPage": "ページを編集",
           "shortLinkCopied": "短縮リンクをコピーしました",
           "couldntCopyTheLink": "リンクをコピーできませんでした"
         },
@@ -8018,6 +8066,11 @@
           "everyType": "すべてのタイプ",
           "removeFilter": "絞り込みを解除",
           "searchPages": "ページを検索"
+        },
+        "planLine": {
+          "upload": "ファイルサイズの上限は、フリーが {free}、Pro が {pro} です。",
+          "published": "フリーでは {pages, plural, other {# ページ}}まで作成でき、ファイルは {free} までで、「Made with QRdx」のフッターが表示されます。Pro ではフッターとページ数の上限がなくなり、ファイルは {pro} まで使えます。",
+          "seePro": "Proを見る"
         }
       },
       "settings": {
@@ -8224,6 +8277,18 @@
         },
         "newCodeButton": {
           "newDynamicCode": "新しい動的コード"
+        },
+        "codeLiveCard": {
+          "title": "コードを公開しました",
+          "body": "フリーでも終了日なしで使い続けられます。ビジネス向けに印刷する場合は、Pro で次の機能を追加できます。",
+          "customDomain": "短縮リンクに独自ドメインを使用",
+          "customSlug": "ランダムな文字列ではなく、好きな末尾を指定",
+          "scanEmails": "コードの初回スキャン時と、{first, number}回目、{second, number}回目、{third, number}回目のスキャン時にメールでお知らせします。週次のサマリーも届きます",
+          "linkControls": "パスワード、開始日と終了日、スキャン数の上限",
+          "fullHistory": "直近{years, plural, other {#年}}分だけでなく、すべてのスキャンを振り返れます",
+          "price": "Pro は月額 {month}、または年額 {year} です。",
+          "seePro": "Proを見る",
+          "hide": "非表示"
         }
       },
       "listSelection": {
@@ -8504,7 +8569,9 @@
         "whatsNew": "新着情報",
         "backToLabel": "{label}に戻る",
         "expandSidebar": "サイドバーを展開",
-        "collapseSidebar": "サイドバーを折りたたむ"
+        "collapseSidebar": "サイドバーを折りたたむ",
+        "upgrade": "アップグレード",
+        "upgradeToPro": "Proにアップグレード"
       },
       "appTopbar": {
         "breadcrumb": "パンくずリスト",
@@ -8779,6 +8846,41 @@
         "signingYouOut": "サインアウトしています…",
         "oneMoment": "しばらくお待ちください…",
         "pageTitle": "サインアウト"
+      }
+    },
+    "success": {
+      "metaTitle": "アップグレード",
+      "activeTitle": "アップグレードありがとうございます",
+      "activeBody": "{plan} プランが有効です。",
+      "processingTitle": "お支払いを処理中です",
+      "processingBody": "Polarで支払いが確認され次第、プランが有効になります。通常は1分以内です。このページは約1分間、自動で再確認します。",
+      "checksStopped": "通常より時間がかかっており、このページの自動確認は停止しました。数分後に再読み込みしてください。それでもプランが変わらない場合は、<mail>{email}</mail>までご連絡ください。",
+      "reload": "再読み込み",
+      "checkNow": "今すぐ確認",
+      "incompleteTitle": "決済が完了していません",
+      "incompleteBody": "この決済は完了しなかったため、プランは変更されていません。",
+      "failedTitle": "お支払いが完了しませんでした",
+      "failedBody": "プランは変更されていません。料金ページからもう一度お試しください。",
+      "backToPricing": "料金ページに戻る",
+      "endedTitle": "このプランは終了しました",
+      "endedBody": "このチェックアウトのサブスクリプションは有効ではなくなったため、このアカウントはフリープランです。詳しい状況は課金ポータルでご確認ください。",
+      "errorTitle": "プランを読み込めませんでした",
+      "errorBody": "プランの読み込み中に、こちら側で問題が発生しました。しばらくしてからもう一度お試しください。",
+      "unknownTitle": "チェックアウトが見つかりません",
+      "unknownBody": "このチェックアウトはお客様のアカウントで見つかりませんでした。お支払いが完了した直後の場合は、アップグレードしたアカウントでサインインしているかをご確認いただくか、<mail>{email}</mail>までご連絡ください。",
+      "signedOutTitle": "サインインしてプランを確認",
+      "signedOutBody": "アップグレードしたアカウントでサインインすると、プランが有効かどうかを確認できます。",
+      "signIn": "サインイン",
+      "goToDashboard": "ダッシュボードへ移動",
+      "manageSubscription": "サブスクリプションを管理",
+      "scanEmailsOn": "スキャン通知メールをオンにしました。初回のスキャンやマイルストーンをお知らせします。<link>設定 → 通知で変更できます</link>。",
+      "steps": {
+        "codesTitle": "動的QRコードを作成",
+        "codesBody": "印刷後も編集でき、スキャン分析も使えるコードです。",
+        "domainTitle": "カスタムドメインを追加",
+        "domainBody": "短縮リンクを独自ドメインで配信できます。",
+        "teamTitle": "チームを招待",
+        "teamBody": "コード、ページ、保存したテーマをチームメンバーと共有できます。"
       }
     }
   },
@@ -9055,7 +9157,9 @@
       "device": "デバイス",
       "preview": "{code}が初めてスキャンされました",
       "heading": "コードが初めてスキャンされました",
-      "body": "たった今、誰かが{code}をスキャンしました。QRコードは公開され、正常に動作しています。"
+      "body": "たった今、誰かが{code}をスキャンしました。QRコードは公開され、正常に動作しています。",
+      "pro": "<link>Pro</link>では、{first}回目、{second}回目、{third}回目のスキャン以降もメールでお知らせし、週次サマリーをお送りすることもできます。",
+      "freeReason": "このメールは、作成されたコードが初めてスキャンされたためお送りしています。QRdxからこのメールをお送りするのは、コードごとに一度だけです。"
     },
     "scanMilestone": {
       "reached": "{code}が{count, number}回スキャンされました",
@@ -9148,7 +9252,8 @@
       "askOwner": "{limit, select, dynamicCodes {コードを1つアーカイブするか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} landingPages {ページを1つ削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} storage {不要なファイルを削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} savedThemes {テーマを1つ削除するか、ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。} other {ワークスペースのオーナーに{plan}へのアップグレードを依頼してください。}}",
       "makeRoom": "{limit, select, dynamicCodes {コードを1つアーカイブして空きを作ってください。} landingPages {ページを1つ削除して空きを作ってください。} storage {不要なファイルを削除して空きを作ってください。} savedThemes {テーマを1つ削除して空きを作ってください。} other {}}",
       "resets": "{date}にリセットされます。",
-      "keeps": "{limit, select, dynamicCodes {既存のコードは引き続き動作します。} landingPages {既存のページは公開されたままです。} formResponses {ページは公開されたままです。リセット後、フォームは再び回答を受け付けます。} storage {アップロード済みのファイルは引き続き利用できます。} other {}}"
+      "keeps": "{limit, select, dynamicCodes {既存のコードは引き続き動作します。} landingPages {既存のページは公開されたままです。} formResponses {ページは公開されたままです。リセット後、フォームは再び回答を受け付けます。} storage {アップロード済みのファイルは引き続き利用できます。} other {}}",
+      "upgradeButton": "{plan}にアップグレード"
     },
     "weeklyDigest": {
       "subject": "今週のQRdx：スキャン{scans, plural, other {#回}}",
@@ -9167,6 +9272,27 @@
       "countries": "スキャンされた場所",
       "newCodesLine": "今週は新しいコードが{count, plural, other {#件}}ありました。",
       "open": "ダッシュボードを開く"
+    },
+    "personal": {
+      "reply": "このメールに返信すると、{name}に届きます。",
+      "stop": "QRdxチームからのお知らせを停止する"
+    },
+    "personalNote": {
+      "reason": "QRdxアカウントをお持ちのため、このメールをお送りしています。"
+    },
+    "welcome": {
+      "subject": "QRdxへようこそ",
+      "greeting": "{name}さん、こんにちは。",
+      "intro": "ご登録ありがとうございます。QRdxでは、印刷後でも内容を変更できるQRコードを作成でき、いつ・どこでスキャンされたかも確認できます。",
+      "try": "最初にお試しいただきたい3つのこと:",
+      "makeCode": "<link>動的QRコードを作成します。</link>短縮リンクが開き、リンクは変わらないので、すぐに印刷できます。",
+      "seeScans": "<link>スキャンの状況を確認します。</link>いつ、どこで、どのデバイスからスキャンされたかがわかります。",
+      "changeLink": "印刷後でも、リンク先はいつでも変更できます。再印刷は不要です。",
+      "free": "静的QRコードは無料のままです。プランを変更したりお支払いをやめたりしても、作成したコードはそのまま使えます。フリープランには動的QRコードも{count}個含まれます。",
+      "pro": "さらに必要な場合は、Proをご利用いただけます。月額 {monthly}、または年額 {yearly} で、動的QRコードが無制限になり、カスタムドメインを {domains} 件まで追加できます。スキャン数が節目に達するたびのメールアラートに加え、ご希望であれば週次サマリーもお届けします。",
+      "taxes": "お支払い時に、現地の税金が加算される場合があります。",
+      "reply": "困ったことや操作がわからないことがあれば、このメールにご返信ください。返信は一通ずつ担当者が読んでいます。",
+      "reason": "QRdxのアカウントを作成されたため、このメールをお送りしています。"
     }
   },
   "codeActions": {
@@ -9844,6 +9970,8 @@
       "qrCodesAlreadyPrintedWith2": "{shortLink}で印刷済みのQRコードは動作しなくなります。バックハーフは、移動先で使用できる場合はコードと一緒に移り、使用できない場合は新しいものが割り当てられます。",
       "theQrCodeChangesTo": "QRコードは新しいリンクに変わるため、保存後にもう一度ダウンロードしてください。すでに印刷したコードは引き続き動作します。",
       "downloadItAndPrintIt": "ダウンロードして、どこにでも印刷できます。リンク先はいつでも変更できます。",
+      "heldDescription": "保存済みですが、QRdxがアドレスを確認するまでオフになっています。まだ印刷しないでください。",
+      "heldBody": "QRdxでは、新しいアカウントのコードを公開する前に、一部のアドレスを確認しています。そのため、このコードは現在オフになっています。まだ印刷しないでください。オンになったかどうかは、ダッシュボードにあるこのコードのページで確認できます。",
       "itEncodesAShortLink": "短縮リンクをエンコードしているので、印刷後でもリンク先を変更できます。",
       "saving": "保存中...",
       "creating": "作成中...",

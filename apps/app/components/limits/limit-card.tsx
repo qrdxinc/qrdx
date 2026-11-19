@@ -63,15 +63,18 @@ export function LimitCard({
       {meter.note && (
         <p className="text-muted-foreground text-xs">{meter.note}</p>
       )}
-      {(upgrade || usageHref || onDismiss) && (
+      {upgrade && (
+        <div className="pt-1">
+          <UpgradeButton
+            checkout
+            onNavigate={onNavigate}
+            source={source}
+            upgrade={upgrade}
+          />
+        </div>
+      )}
+      {(usageHref || onDismiss) && (
         <div className="flex flex-wrap items-center gap-2 pt-1">
-          {upgrade && (
-            <UpgradeButton
-              onNavigate={onNavigate}
-              source={source}
-              upgrade={upgrade}
-            />
-          )}
           {usageHref && (
             <Button asChild size="sm" variant={upgrade ? "ghost" : "outline"}>
               <Link href={usageHref} onClick={onNavigate}>

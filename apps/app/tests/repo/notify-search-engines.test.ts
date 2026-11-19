@@ -5,7 +5,7 @@
 import { createVerify, generateKeyPairSync } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   BING_BACKLOG_STEP,
   changedUrls,
@@ -13,12 +13,24 @@ import {
   IMPORTANT_PATHS,
   INDEXNOW_KEY,
   inSitemap,
+  listSitemaps,
+  loadSitemaps,
   main,
+  mergeEntries,
   normalizeUrl,
+  onSite,
+  parseRobotsSitemaps,
   parseServiceAccount,
   parseSitemap,
+  parseSitemapIndex,
   pickBingSite,
   rotate,
+  SITEMAP_URL,
+  sendBing,
+  sitemapKind,
+  statusSummary,
+  submitSitemaps,
+  toUrlset,
   utcDay,
 } from "../../../../scripts/notify-search-engines.mjs";
 
@@ -70,6 +82,134 @@ describe("parseSitemap", () => {
         lastmod: "2026-11-01T00:00:00.000Z",
       },
     ]);
+  });
+});
+
+describe("parseRobotsSitemaps", () => {
+  it("reads every Sitemap line on this site, once, in order", () => {
+    const robots = [
+      "User-Agent: *",
+      "Allow: /",
+      "Disallow: /api/",
+      "",
+      "Sitemap: https://qrdx.dev/sitemap.xml",
+      "sitemap:https://qrdx.dev/blog/sitemap.xml\r",
+      "  SITEMAP :  https://qrdx.dev/qr-code-generator/sitemap.xml  ",
+      "Sitemap: https://qrdx.dev/sitemap.xml",
+      "Sitemap: https://example.com/sitemap.xml",
+      "Sitemap: not a url",
+      "# Sitemap: https://qrdx.dev/commented.xml",
+    ].join("\n");
+    expect(parseRobotsSitemaps(robots)).toEqual([
+      "https://qrdx.dev/sitemap.xml",
+      "https://qrdx.dev/blog/sitemap.xml",
+      "https://qrdx.dev/qr-code-generator/sitemap.xml",
+    ]);
+    expect(parseRobotsSitemaps("User-Agent: *\nAllow: /")).toEqual([]);
+  });
+});
+
+describe("parseSitemapIndex", () => {
+  it("lists an index's sitemaps, and nothing for an ordinary sitemap", () => {
+    const index = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap><loc>https://qrdx.dev/a.xml</loc><lastmod>2026-11-19</lastmod></sitemap>
+<sitemap>
+  <loc> https://qrdx.dev/b.xml?x=1&amp;y=2 </loc>
+</sitemap>
+</sitemapindex>`;
+    expect(parseSitemapIndex(index)).toEqual([
+      "https://qrdx.dev/a.xml",
+      "https://qrdx.dev/b.xml?x=1&y=2",
+    ]);
+    expect(parseSitemapIndex(SITEMAP)).toEqual([]);
+  });
+});
+
+describe("mergeEntries", () => {
+  it("joins sitemaps into one list of this site's pages, each once", () => {
+    const main = parseSitemap(SITEMAP);
+    const site = [
+      {
+        url: "https://qrdx.dev/qr-code-generator/pdf",
+        lastmod: "2026-11-17T00:00:00.000Z",
+      },
+      // Also in the main sitemap: the first one listed wins.
+      { url: "https://qrdx.dev/pricing/", lastmod: "2026-11-19T00:00:00.000Z" },
+      { url: "https://elsewhere.example/page", lastmod: undefined },
+    ];
+    const { entries, skipped } = mergeEntries([main, site]);
+    expect(entries.map((entry) => entry.url)).toEqual([
+      "https://qrdx.dev",
+      "https://qrdx.dev/pricing",
+      "https://qrdx.dev/docs/a?x=1&y=2",
+      "https://qrdx.dev/qr-code-generator/pdf",
+    ]);
+    expect(entries[1]?.lastmod).toBe("2026-11-10T10:00:00.000Z");
+    expect(skipped).toBe(1);
+  });
+
+  it("keeps only URLs on qrdx.dev", () => {
+    expect(onSite("https://qrdx.dev/x")).toBe(true);
+    expect(onSite("http://qrdx.dev/x")).toBe(false);
+    expect(onSite("https://api.qrdx.dev/v1")).toBe(false);
+    expect(onSite("::")).toBe(false);
+  });
+});
+
+describe("toUrlset (the --snapshot file)", () => {
+  it("reads back exactly as it was written, entities and missing lastmods included", () => {
+    const entries = [
+      ...parseSitemap(SITEMAP),
+      {
+        url: "https://qrdx.dev/q?a=<b>&c='d'\"",
+        lastmod: "2026-11-19T00:00:00.000Z",
+      },
+    ];
+    const xml = toUrlset(entries);
+    expect(xml).toContain("&amp;y=2");
+    expect(parseSitemap(xml)).toEqual(entries);
+    expect(changedUrls(entries, parseSitemap(xml))).toEqual([]);
+  });
+
+  it("still reads a snapshot in the old one-sitemap form, other sitemaps' pages showing as new", () => {
+    // Only a file saved by hand before this change looks like this: the
+    // deploy job's own snapshot runs the new script, so it already has every
+    // sitemap. The marketing site's pages go out first through the daily
+    // sweep, whose first run has no snapshot and sends everything
+    // ("falls back to every URL" below).
+    const main = parseSitemap(SITEMAP);
+    const site = [{ url: "https://qrdx.dev/qr-codes-for/restaurants" }];
+    const { entries } = mergeEntries([main, site]);
+    expect(changedUrls(main, entries)).toEqual([
+      "https://qrdx.dev/qr-codes-for/restaurants",
+    ]);
+  });
+});
+
+describe("statusSummary", () => {
+  it("says one outcome once, and counts each when they differ", () => {
+    expect(statusSummary(["HTTP 200", "HTTP 200", "HTTP 200"])).toBe(
+      "HTTP 200",
+    );
+    expect(statusSummary(["HTTP 200", "timed out", "HTTP 200"])).toBe(
+      "HTTP 200 ×2, timed out ×1",
+    );
+  });
+});
+
+describe("sitemapKind", () => {
+  it("tells a sitemap of pages from an index, and from anything else", () => {
+    expect(sitemapKind(SITEMAP)).toBe("urlset");
+    expect(
+      sitemapKind(
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></sitemapindex>',
+      ),
+    ).toBe("index");
+    expect(sitemapKind("<!doctype html><html><body>Error</body></html>")).toBe(
+      undefined,
+    );
+    expect(sitemapKind("")).toBe(undefined);
   });
 });
 
@@ -215,6 +355,283 @@ describe("Google service account", () => {
   });
 });
 
+// The network parts, against a stubbed fetch: nothing leaves the machine.
+type Answer = Response | Error;
+type Route = (url: URL, body: Record<string, unknown> | undefined) => Answer;
+
+const timeout = () =>
+  new DOMException("The operation was aborted due to timeout", "TimeoutError");
+const json = (data: unknown) => new Response(JSON.stringify(data));
+const urlset = (...paths: string[]) =>
+  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths
+    .map((p) => `<url><loc>https://qrdx.dev${p}</loc></url>`)
+    .join("")}</urlset>`;
+
+/** Every URL fetched; `route` answers each (an Error is thrown). */
+function stubFetch(route: Route) {
+  const fetched: string[] = [];
+  vi.stubGlobal(
+    "fetch",
+    async (input: string | URL, init?: { body?: unknown }) => {
+      const url = new URL(String(input));
+      fetched.push(url.toString());
+      const body =
+        typeof init?.body === "string" ? JSON.parse(init.body) : undefined;
+      const answer = route(url, body);
+      if (answer instanceof Error) throw answer;
+      return answer;
+    },
+  );
+  return fetched;
+}
+
+/** The script's console output, one string per line. */
+function captureOutput() {
+  const spy = vi.spyOn(console, "log").mockImplementation(() => undefined);
+  return () => spy.mock.calls.map((call) => String(call[0]));
+}
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+  vi.restoreAllMocks();
+});
+
+describe("sendBing (stubbed fetch)", () => {
+  const sitemaps = Array.from(
+    { length: 7 },
+    (_, i) => `https://qrdx.dev/s${i + 1}/sitemap.xml`,
+  );
+  const urls = ["https://qrdx.dev/a", "https://qrdx.dev/b"];
+
+  /**
+   * Bing's API: a verified site and a quota of 100. `answer` replies first,
+   * by API method name; undefined leaves the call to these defaults.
+   */
+  const bing =
+    (
+      answer: (
+        method: string,
+        body: Record<string, unknown> | undefined,
+      ) => Answer | undefined = () => undefined,
+    ): Route =>
+    (url, body) => {
+      const method = url.pathname.split("/").pop() ?? "";
+      const answered = answer(method, body);
+      if (answered) return answered;
+      if (method === "GetUserSites") {
+        return json({ d: [{ Url: "https://qrdx.dev/", IsVerified: true }] });
+      }
+      if (method === "GetUrlSubmissionQuota") {
+        return json({ d: { DailyQuota: 100, MonthlyQuota: 2800 } });
+      }
+      if (method === "SubmitUrlBatch" || method === "SubmitFeed") {
+        return json({ d: null });
+      }
+      return new Error(`unexpected call to ${url.pathname}`);
+    };
+
+  it("sends the URL batch and the other six sitemaps when sitemap 3 times out", async () => {
+    vi.stubEnv("BING_WEBMASTER_API_KEY", "fake-bing-key");
+    const output = captureOutput();
+    const batches: unknown[] = [];
+    const fed: unknown[] = [];
+    stubFetch(
+      bing((method, body) => {
+        if (method === "SubmitUrlBatch") batches.push(body?.urlList);
+        if (method !== "SubmitFeed") return;
+        if (body?.feedUrl === sitemaps[2]) return timeout();
+        fed.push(body?.feedUrl);
+        return;
+      }),
+    );
+    const results: string[][] = [];
+    await sendBing(urls, results, sitemaps);
+
+    expect(batches).toEqual([urls]);
+    expect(fed).toEqual(sitemaps.filter((_, i) => i !== 2));
+    expect(results).toEqual([
+      ["Bing", "2 of 2 URLs (quota 100)", "HTTP 200"],
+      ["Bing", "7 sitemaps", "HTTP 200 ×6, timed out ×1"],
+    ]);
+    expect(
+      output().some(
+        (line) => line.includes(sitemaps[2] ?? "") && line.includes("timeout"),
+      ),
+    ).toBe(true);
+    // The key never reaches the output.
+    expect(output().join("\n")).not.toContain("fake-bing-key");
+  });
+
+  it("still sends every sitemap when the URL batch fails", async () => {
+    vi.stubEnv("BING_WEBMASTER_API_KEY", "fake-bing-key");
+    captureOutput();
+    const fed: unknown[] = [];
+    stubFetch(
+      bing((method, body) => {
+        if (method === "SubmitUrlBatch") return new TypeError("fetch failed");
+        if (method === "SubmitFeed") fed.push(body?.feedUrl);
+        return;
+      }),
+    );
+    const results: string[][] = [];
+    await sendBing(urls, results, sitemaps);
+
+    expect(fed).toEqual(sitemaps);
+    expect(results).toEqual([
+      ["Bing", "2 URLs", "failed"],
+      ["Bing", "7 sitemaps", "HTTP 200"],
+    ]);
+  });
+});
+
+describe("submitSitemaps", () => {
+  it("records each sitemap's outcome, an error answer or a throw included", async () => {
+    const output = captureOutput();
+    const row = await submitSitemaps(
+      "Google",
+      [
+        "https://qrdx.dev/a.xml",
+        "https://qrdx.dev/b.xml",
+        "https://qrdx.dev/c.xml",
+      ],
+      async (sitemap: string) => {
+        if (sitemap.endsWith("b.xml")) throw new TypeError("fetch failed");
+        if (sitemap.endsWith("c.xml")) {
+          return { ok: false, status: 403, error: "no access" };
+        }
+        return { ok: true, status: 204 };
+      },
+    );
+    expect(row).toEqual([
+      "Google",
+      "3 sitemaps",
+      "HTTP 204 ×1, failed ×1, HTTP 403 ×1",
+    ]);
+    expect(output().filter((line) => line.startsWith("Warning:"))).toHaveLength(
+      2,
+    );
+  });
+});
+
+describe("loadSitemaps (stubbed fetch)", () => {
+  it("reads every sitemap robots.txt lists, skipping one that times out and one that isn't a sitemap", async () => {
+    const output = captureOutput();
+    const fetched = stubFetch((url) => {
+      switch (url.pathname) {
+        case "/robots.txt":
+          return new Response(
+            [
+              "User-Agent: *",
+              "Allow: /",
+              "Sitemap: https://qrdx.dev/sitemap.xml",
+              "Sitemap: https://qrdx.dev/blog/sitemap.xml",
+              "Sitemap: https://qrdx.dev/slow/sitemap.xml",
+              "Sitemap: https://qrdx.dev/html/sitemap.xml",
+              "Sitemap: https://qrdx.dev/index.xml",
+            ].join("\n"),
+          );
+        case "/sitemap.xml":
+          return new Response(urlset("/", "/pricing"));
+        case "/blog/sitemap.xml":
+          return new Response(urlset("/blog", "/pricing/"));
+        case "/slow/sitemap.xml":
+          return timeout();
+        case "/html/sitemap.xml":
+          return new Response("<!doctype html><html><body>Hi</body></html>");
+        case "/index.xml":
+          return new Response(
+            `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>https://qrdx.dev/child.xml</loc></sitemap><sitemap><loc>https://elsewhere.example/x.xml</loc></sitemap></sitemapindex>`,
+          );
+        case "/child.xml":
+          return new Response(urlset("/child"));
+        default:
+          return new Response("Not found", { status: 404 });
+      }
+    });
+
+    const { sitemaps, entries } = await loadSitemaps();
+    expect(sitemaps).toEqual([
+      "https://qrdx.dev/sitemap.xml",
+      "https://qrdx.dev/blog/sitemap.xml",
+      "https://qrdx.dev/child.xml",
+    ]);
+    expect(entries.map((entry: { url: string }) => entry.url)).toEqual([
+      "https://qrdx.dev/",
+      "https://qrdx.dev/pricing",
+      "https://qrdx.dev/blog",
+      "https://qrdx.dev/child",
+    ]);
+    const warnings = output().filter((line) => line.startsWith("Warning:"));
+    expect(warnings.some((w) => w.includes("/slow/sitemap.xml"))).toBe(true);
+    expect(
+      warnings.some(
+        (w) =>
+          w.includes("/html/sitemap.xml") && w.includes("without a sitemap"),
+      ),
+    ).toBe(true);
+    // An index's sitemap on another host is never fetched.
+    expect(fetched.some((url) => url.includes("elsewhere.example"))).toBe(
+      false,
+    );
+  });
+
+  it("falls back to /sitemap.xml when robots.txt fails, can't be read or lists none", async () => {
+    captureOutput();
+    const answers: Answer[] = [
+      new Response("Server error", { status: 500 }),
+      new TypeError("fetch failed"),
+      new Response("User-Agent: *\nAllow: /"),
+    ];
+    for (const answer of answers) {
+      stubFetch(() => answer);
+      expect(await listSitemaps()).toEqual([SITEMAP_URL]);
+    }
+  });
+
+  it("throws when no sitemap can be read", async () => {
+    captureOutput();
+    stubFetch((url) =>
+      url.pathname === "/robots.txt"
+        ? new Response("Sitemap: https://qrdx.dev/sitemap.xml")
+        : new Response("Unavailable", { status: 503 }),
+    );
+    await expect(loadSitemaps()).rejects.toThrow("no sitemap could be read");
+  });
+});
+
+describe("the first daily sweep (stubbed fetch, dry run)", () => {
+  it("falls back to every URL when there's no snapshot from yesterday", async () => {
+    const output = captureOutput();
+    stubFetch((url) => {
+      if (url.pathname === "/robots.txt") {
+        return new Response(
+          "Sitemap: https://qrdx.dev/sitemap.xml\nSitemap: https://qrdx.dev/qr-code-generator/sitemap.xml",
+        );
+      }
+      if (url.pathname === "/sitemap.xml") {
+        return new Response(urlset("/", "/pricing"));
+      }
+      if (url.pathname === "/qr-code-generator/sitemap.xml") {
+        return new Response(
+          urlset("/qr-code-generator", "/qr-code-generator/pdf"),
+        );
+      }
+      return new Error(`unexpected fetch of ${url}`);
+    });
+    const code = await main([
+      "--changed-since",
+      join(REPO, "no-such-snapshot.xml"),
+      "--dry-run",
+    ]);
+    expect(code).toBe(0);
+    const lines = output();
+    expect(lines).toContain("4 URLs (fallback) of 4 in 2 sitemaps.");
+    expect(lines).toContain("  https://qrdx.dev/qr-code-generator/pdf");
+    expect(lines).toContain("Dry run: nothing sent.");
+  });
+});
+
 describe("arguments", () => {
   it("wants exactly one mode", async () => {
     expect(await main([])).toBe(2);
@@ -249,5 +666,25 @@ describe("workflow", () => {
   it("works through the Bing backlog daily, before the quota resets", () => {
     expect(workflow).toMatch(/schedule:\n\s+- cron: "15 23 \* \* \*"/);
     expect(workflow).toContain("--backlog");
+  });
+
+  it("sweeps the day's sitemap changes from yesterday's cached snapshot, before the backlog", () => {
+    const schedule = workflow.slice(
+      workflow.indexOf('elif [ "$GITHUB_EVENT_NAME" = "schedule" ]'),
+      workflow.indexOf('elif [ "$SCOPE" = "urls" ]'),
+    );
+    const snapshot = schedule.indexOf('--snapshot "$sweep"');
+    const changed = schedule.indexOf('--changed-since "$yesterday"');
+    const backlog = schedule.indexOf("--backlog");
+    expect(snapshot).toBeGreaterThan(-1);
+    expect(changed).toBeGreaterThan(snapshot);
+    expect(backlog).toBeGreaterThan(changed);
+    // The same file is restored and saved, from inside the workspace (where
+    // hashFiles can see it).
+    expect(workflow).toContain("uses: actions/cache/restore@v4");
+    expect(workflow).toContain("uses: actions/cache/save@v4");
+    expect(workflow.match(/path: \.sitemap-sweep\.xml/g)).toHaveLength(2);
+    expect(schedule).toContain('sweep=".sitemap-sweep.xml"');
+    expect(workflow).toContain("restore-keys: sitemap-sweep-");
   });
 });

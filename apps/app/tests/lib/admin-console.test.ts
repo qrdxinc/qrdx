@@ -11,6 +11,7 @@ import {
   adminConsoleHref,
   adminConsoleRedirects,
   adminConsoleReturnUrl,
+  CONSOLE_ONLY_SECTIONS,
 } from "@repo/next-config/console-zone";
 import { describe, expect, it } from "vitest";
 import { adminNavLinks } from "@/app/(app)/admin/_lib/nav";
@@ -32,13 +33,18 @@ const CHALLENGE = "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM";
 const ADMIN_DIR = path.resolve(import.meta.dirname, "../../app/(app)/admin");
 
 describe("ADMIN_CONSOLE_SECTIONS", () => {
-  it("is every section of this app's admin, once, except the old confirm page", () => {
+  it("is every section of this app's admin, once, except the old confirm page, and the console's own", () => {
     const folders = readdirSync(ADMIN_DIR, { withFileTypes: true })
       .filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"))
       .map((entry) => entry.name)
       .filter((name) => name !== "confirm")
       .sort();
-    expect([...ADMIN_CONSOLE_SECTIONS].sort()).toEqual(folders);
+    expect([...ADMIN_CONSOLE_SECTIONS].sort()).toEqual(
+      [...folders, ...CONSOLE_ONLY_SECTIONS].sort(),
+    );
+    for (const section of CONSOLE_ONLY_SECTIONS) {
+      expect(folders, section).not.toContain(section);
+    }
     expect(new Set(ADMIN_CONSOLE_SECTIONS).size).toBe(
       ADMIN_CONSOLE_SECTIONS.length,
     );
@@ -48,6 +54,18 @@ describe("ADMIN_CONSOLE_SECTIONS", () => {
     for (const { href } of adminNavLinks(false)) {
       expect(adminConsoleHref(href, URL_), href).not.toBeNull();
     }
+  });
+
+  it("lists the console's own sections in the menu only at the console's address", () => {
+    const email = (links: { href: string; crossZone: boolean }[]) =>
+      links.find((link) => link.href.endsWith("/email"));
+    expect(email(adminNavLinks(false))).toBeUndefined();
+    // The proxied console (CONSOLE_ORIGIN) serves its five sections only.
+    expect(email(adminNavLinks(true))).toBeUndefined();
+    expect(email(adminNavLinks(false, URL_))).toMatchObject({
+      href: `${URL_}/email`,
+      crossZone: true,
+    });
   });
 });
 
@@ -83,6 +101,7 @@ describe("adminConsoleRedirects", () => {
         "audit-log",
         "health",
         "search",
+        "email",
       ].flatMap((section) => [
         rule(`/admin/${section}`, `${URL_}/${section}`),
         rule(`/admin/${section}/:path+`, `${URL_}/${section}/:path+`),
@@ -311,6 +330,7 @@ describe("the admin menu with the console at its own address", () => {
       `${URL_}/integrations`,
       `${URL_}/audit-log`,
       `${URL_}/health`,
+      `${URL_}/email`,
     ]);
   });
 

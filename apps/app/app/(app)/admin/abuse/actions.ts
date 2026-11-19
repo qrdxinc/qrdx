@@ -4,6 +4,7 @@ import { abuseReport, database as db, qrCode } from "@repo/database";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { ABUSE_REPORT_STATUSES } from "@/lib/safety/abuse-reasons";
+import { moderatedIds } from "@/lib/safety/holds";
 import {
   type AdminActionResult,
   adminError,
@@ -22,6 +23,13 @@ const statusSchema = z.object({
   reason: optionalReason,
 });
 const codeSchema = z.object({ reportId: adminId, reason: optionalReason });
+const restoreSchema = codeSchema
+  .extend({ override: z.boolean().optional() })
+  .refine((input) => !input.override || (input.reason?.length ?? 0) >= 3, {
+    message:
+      "Add a reason (at least 3 characters) to turn a moderated code back on.",
+    path: ["reason"],
+  });
 
 /** Marks a report actioned, dismissed or open again. */
 export async function setAbuseReportStatusAction(
@@ -106,18 +114,30 @@ export async function disableReportedCodeAction(
 
 /**
  * Turns a reported or held code back on (e.g. a held destination that is
- * fine) and dismisses the report.
+ * fine) and dismisses the report. A code QRdx switched off after a review
+ * (lib/safety/holds.ts moderatedIds) stays off unless the admin overrides,
+ * with a reason: approving a hold its owner filed since, by changing its
+ * address, mustn't undo the review.
  */
 export async function restoreReportedCodeAction(
-  input: z.input<typeof codeSchema>,
+  input: z.input<typeof restoreSchema>,
 ): Promise<AdminActionResult> {
   return runAdminAction(
-    { action: "qr_code.enable", schema: codeSchema },
+    { action: "qr_code.enable", schema: restoreSchema },
     input,
-    async (_admin, { reportId }) => {
+    async (_admin, { reportId, override }) => {
       const report = await findReport(reportId);
       if (!report.qrCodeId) {
         throw adminError("This report isn't linked to a code");
+      }
+      const moderated = (await moderatedIds([report.qrCodeId])).has(
+        report.qrCodeId,
+      );
+      if (moderated && !override) {
+        throw adminError(
+          "QRdx switched this code off after a review (an actioned report or an admin's Disable). Reload the page to turn it back on with an override and a reason.",
+          409,
+        );
       }
       const [code] = await db
         .update(qrCode)
@@ -144,6 +164,7 @@ export async function restoreReportedCodeAction(
             destinationUrl: code.destinationUrl,
             ownerId: code.userId,
             abuseReportId: reportId,
+            ...(moderated && { override: true }),
           },
         },
       };

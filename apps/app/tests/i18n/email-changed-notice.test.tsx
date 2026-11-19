@@ -1,4 +1,4 @@
-// The "your address was changed" notice (lib/email/templates/email-change.tsx),
+// The "your address was changed" notice (packages/email/templates/email-change.tsx),
 // sent to the OLD address by lib/account/email-change-server.tsx. A security
 // notice: the account's saved language, else English, never the language of
 // the request that changed the address (it may not be the owner's, which is
@@ -6,14 +6,14 @@
 // language too. Nothing is emailed: sendEmail renders and keeps each email,
 // against in-memory tables.
 import { render } from "@react-email/render";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   EMAIL_CHANGED_SUBJECT,
   EmailChangedEmail,
   emailChangedSubject,
-} from "@/lib/email/templates/email-change";
-import type { SecurityEventDetails } from "@/lib/email/templates/security-parts";
-import { emailIntl } from "@/lib/i18n/email";
+} from "@repo/email/templates/email-change";
+import type { SecurityEventDetails } from "@repo/email/templates/security-parts";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { ENGLISH_EMAIL, emailIntl } from "@/lib/i18n/email";
 import es from "@/messages/es.json";
 import { fakeDb } from "../support/fake-db";
 
@@ -141,9 +141,13 @@ describe("the email-changed notice", () => {
   });
 
   it("is unchanged in English", async () => {
-    expect(emailChangedSubject()).toBe(EMAIL_CHANGED_SUBJECT);
+    expect(emailChangedSubject(ENGLISH_EMAIL)).toBe(EMAIL_CHANGED_SUBJECT);
     const page = await html(
-      <EmailChangedEmail details={details} newEmail="new@example.com" />,
+      <EmailChangedEmail
+        intl={ENGLISH_EMAIL}
+        details={details}
+        newEmail="new@example.com"
+      />,
     );
     expect(page).toContain('lang="en"');
     expect(page).toContain("Your QRdx email was changed");
@@ -157,7 +161,11 @@ describe("the email-changed notice", () => {
       'contact support at <a href="mailto:support@qrdx.dev"',
     );
     const text = await render(
-      <EmailChangedEmail details={details} newEmail="new@example.com" />,
+      <EmailChangedEmail
+        intl={ENGLISH_EMAIL}
+        details={details}
+        newEmail="new@example.com"
+      />,
       { plainText: true },
     );
     expect(text).toContain("Your QRdx account now uses new@example.com.");

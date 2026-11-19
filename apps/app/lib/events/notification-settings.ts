@@ -16,9 +16,13 @@ import { baseUrl } from "@/lib/metadata";
 import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { assertNotShutOut } from "@/lib/workspaces";
 import { postChatMessage } from "./notify";
-import { invalidateSubscribers } from "./subscribers";
+import {
+  invalidateSubscribers,
+  parseDefaultEmailTargetId,
+} from "./subscribers";
 import {
   CHAT_NOTIFICATION_EVENTS,
+  DEFAULT_EMAIL_EVENTS,
   MAX_CHAT_TARGETS,
   NOTIFICATION_EVENTS,
   type NotificationEvent,
@@ -33,7 +37,9 @@ import {
 // notification_setting rows belong to one person and one workspace
 // (organization_id null = personal). Each person has at most one email row
 // per workspace (always their own account address) plus Slack / Discord
-// incoming-webhook targets.
+// incoming-webhook targets. No email row means the plan's defaults
+// (DEFAULT_EMAIL_EVENTS for the codes the person made, on plans with email
+// alerts), so turning email off keeps a row with no events.
 
 export type ChatChannel = "slack" | "discord";
 
@@ -62,6 +68,12 @@ export interface NotificationWorkspace {
   emailAlerts: boolean;
   chat: boolean;
   email: { id: string; events: NotificationEvent[] } | null;
+  /**
+   * No email row on a plan with email alerts: DEFAULT_EMAIL_EVENTS go out
+   * for the codes the person made. False once they have a row, or without
+   * email alerts.
+   */
+  emailByDefault: boolean;
   chats: {
     id: string;
     channel: ChatChannel;
@@ -99,14 +111,7 @@ const scopeOf = (userId: string, organizationId: string | null) => ({
  */
 async function assertMember(userId: string, organizationId: string | null) {
   if (!organizationId) return;
-  const [row] = await db
-    .select({ id: member.id })
-    .from(member)
-    .where(
-      and(eq(member.organizationId, organizationId), eq(member.userId, userId)),
-    )
-    .limit(1);
-  if (!row) {
+  if (!(await isMember(userId, organizationId))) {
     throw new HttpError(
       403,
       "FORBIDDEN",
@@ -166,6 +171,7 @@ export async function listNotificationWorkspaces(
         email: emailRow
           ? { id: emailRow.id, events: asEvents(emailRow.events) }
           : null,
+        emailByDefault: !emailRow && limits.emailAlerts,
         chats: rows
           .filter((row) => row.channel !== "email")
           .map((row) => ({
@@ -182,20 +188,18 @@ export async function listNotificationWorkspaces(
 
 /**
  * Replaces the person's email events for a workspace ([] turns email off,
- * which always works: it only removes the person's own row).
+ * which always works, even after a downgrade: it keeps a row with no
+ * events, since no row means the plan's defaults).
  */
 export async function setEmailEvents(
   userId: string,
   organizationId: string | null,
   events: NotificationEvent[],
 ): Promise<void> {
-  const where = and(
-    workspaceWhere(userId, organizationId),
-    eq(notificationSetting.channel, "email"),
-  );
   if (events.length === 0) {
-    await db.delete(notificationSetting).where(where);
-    invalidateSubscribers(scopeOf(userId, organizationId));
+    // Only for a workspace the person is in: no row elsewhere.
+    if (organizationId && !(await isMember(userId, organizationId))) return;
+    await saveEmailEvents(userId, organizationId, []);
     return;
   }
   await assertMember(userId, organizationId);
@@ -206,6 +210,30 @@ export async function setEmailEvents(
       "Email alerts and the weekly digest are part of Pro.",
     );
   }
+  await saveEmailEvents(userId, organizationId, events);
+}
+
+async function isMember(userId: string, organizationId: string) {
+  const [row] = await db
+    .select({ id: member.id })
+    .from(member)
+    .where(
+      and(eq(member.organizationId, organizationId), eq(member.userId, userId)),
+    )
+    .limit(1);
+  return Boolean(row);
+}
+
+/** Writes the person's one email row for the workspace (no checks). */
+async function saveEmailEvents(
+  userId: string,
+  organizationId: string | null,
+  events: NotificationEvent[],
+): Promise<void> {
+  const where = and(
+    workspaceWhere(userId, organizationId),
+    eq(notificationSetting.channel, "email"),
+  );
   const [account] = await db
     .select({ email: user.email })
     .from(user)
@@ -372,12 +400,39 @@ export async function sendTestChatMessage(userId: string, id: string) {
 
 /**
  * Unsubscribe link handler: removes the event (or every event) from an email
- * setting; deletes the row when nothing is left. Idempotent.
+ * setting, keeping the row when nothing is left (no row would mean the
+ * plan's defaults). A default recipient's link (no row yet) saves one: the
+ * defaults without the event. Idempotent.
  */
 export async function applyUnsubscribe(
   settingId: string,
   event: UnsubscribeScope,
 ): Promise<{ found: boolean }> {
+  const byDefault = parseDefaultEmailTargetId(settingId);
+  if (byDefault) {
+    const { userId, organizationId } = byDefault;
+    // Someone who left the workspace gets nothing from it anyway.
+    if (organizationId && !(await isMember(userId, organizationId))) {
+      return { found: false };
+    }
+    const [current] = await db
+      .select({ events: notificationSetting.events })
+      .from(notificationSetting)
+      .where(
+        and(
+          workspaceWhere(userId, organizationId),
+          eq(notificationSetting.channel, "email"),
+        ),
+      )
+      .limit(1);
+    const from = current ? asEvents(current.events) : [...DEFAULT_EMAIL_EVENTS];
+    await saveEmailEvents(
+      userId,
+      organizationId,
+      event === "all" ? [] : from.filter((item) => item !== event),
+    );
+    return { found: true };
+  }
   const [row] = await db
     .select()
     .from(notificationSetting)
@@ -388,16 +443,10 @@ export async function applyUnsubscribe(
     event === "all"
       ? []
       : asEvents(row.events).filter((item) => item !== event);
-  if (remaining.length === 0) {
-    await db
-      .delete(notificationSetting)
-      .where(eq(notificationSetting.id, row.id));
-  } else {
-    await db
-      .update(notificationSetting)
-      .set({ events: remaining })
-      .where(eq(notificationSetting.id, row.id));
-  }
+  await db
+    .update(notificationSetting)
+    .set({ events: remaining })
+    .where(eq(notificationSetting.id, row.id));
   invalidateSubscribers(scopeOf(row.userId, row.organizationId));
   return { found: true };
 }

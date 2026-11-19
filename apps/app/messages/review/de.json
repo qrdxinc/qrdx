@@ -447,6 +447,54 @@
     "source": "0fa42daac73b",
     "status": "machine"
   },
+  "nav.getProDialog.ownerUpgrades": {
+    "source": "c86d2c9a1ca1",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.month": {
+    "source": "3bbee673bc57",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.year": {
+    "source": "35a42faaf250",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.monthNoPrice": {
+    "source": "e9d6632641e8",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.yearNoPrice": {
+    "source": "1ff6c32fca3e",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.note": {
+    "source": "aad8d0267275",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.switchTo": {
+    "source": "4e3823d4f9e6",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.openPortal": {
+    "source": "5a69abb937d2",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.failed": {
+    "source": "dec99252b4d2",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.subscribed": {
+    "source": "e31d6372310f",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.unavailable": {
+    "source": "6f56f35179ce",
+    "status": "machine"
+  },
+  "nav.checkoutButtons.rateLimited": {
+    "source": "3f1000f6990d",
+    "status": "machine"
+  },
   "nav.themeToggle.toggleTheme": {
     "source": "6026719f081a",
     "status": "machine"
@@ -1965,6 +2013,10 @@
   },
   "pricing.comparison.cells.clientReportsWhiteLabel": {
     "source": "c711077aba84",
+    "status": "machine"
+  },
+  "pricing.comparison.cells.firstScanOnly": {
+    "source": "8984dc8a6e20",
     "status": "machine"
   },
   "pricing.guarantee.eyebrow": {
@@ -9643,6 +9695,14 @@
     "source": "ee15fcbec3b3",
     "status": "machine"
   },
+  "aiArt.aiArtStudio.noneLeft": {
+    "source": "306e67edc9dc",
+    "status": "machine"
+  },
+  "aiArt.aiArtStudio.noneLeftUpgrade": {
+    "source": "f1a5e6c60519",
+    "status": "machine"
+  },
   "aiArt.aiArtStudio.moreArtistic": {
     "source": "eb94394c75f9",
     "status": "machine"
@@ -11361,6 +11421,14 @@
   },
   "editor.art.aiArtPanel.notEnoughLeftOrUpgrade": {
     "source": "bc75c784391e",
+    "status": "machine"
+  },
+  "editor.art.aiArtPanel.noneLeft": {
+    "source": "306e67edc9dc",
+    "status": "machine"
+  },
+  "editor.art.aiArtPanel.noneLeftUpgrade": {
+    "source": "f1a5e6c60519",
     "status": "machine"
   },
   "editor.art.aiArtPanel.showResults": {
@@ -13989,6 +14057,46 @@
   },
   "editor.dynamicLinkToggle.signedOutNote": {
     "source": "ad0a2acf65a0",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.createDynamicCode": {
+    "source": "b2d4a7bc7f35",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.addYourAddressFirst": {
+    "source": "bfebb17ef429",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.heldTitle": {
+    "source": "171cafeeccff",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.heldBody": {
+    "source": "f9ed6bd309df",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.openInDashboard": {
+    "source": "56bcdfa7bb8a",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.updateSwitchedOffTitle": {
+    "source": "b942557a2338",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.updateSwitchedOffBody": {
+    "source": "84640ae66d84",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.updatePausedBody": {
+    "source": "69aa5dc737f7",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.resumeDroppedTitle": {
+    "source": "b5b43db01c42",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.resumeDroppedBody": {
+    "source": "1e70ba2147fc",
     "status": "machine"
   },
   "editor.dynamicLinkToggle.linkOptions": {
@@ -19659,6 +19767,42 @@
     "source": "bc7bafdda4a7",
     "status": "machine"
   },
+  "app.settings.notifications.workspaceNotifications.onByDefaultOwnCodes": {
+    "source": "77d7e7fe81e8",
+    "status": "machine"
+  },
+  "app.settings.notifications.workspaceNotifications.everyCodeAlerts": {
+    "source": "019e630439f6",
+    "status": "machine"
+  },
+  "app.settings.notifications.workspaceNotifications.emailAlertsAreProFirstScan": {
+    "source": "048ebcf553c9",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.title": {
+    "source": "8a52391b8446",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.description": {
+    "source": "752f62fa4062",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.label": {
+    "source": "04c0b9690baf",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.hint": {
+    "source": "43ee843b7b30",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.turnedOn": {
+    "source": "ddb292bb23b3",
+    "status": "machine"
+  },
+  "app.settings.notifications.teamNotes.turnedOff": {
+    "source": "12cbb3403572",
+    "status": "machine"
+  },
   "app.settings.notifications.page.emailIsntSetUpOn": {
     "source": "d5d328db1109",
     "status": "machine"
@@ -19761,6 +19905,10 @@
   },
   "app.dashboard.analytics.page.yourPlanKeepsAShorter": {
     "source": "e12b39eee816",
+    "status": "machine"
+  },
+  "app.dashboard.analytics.page.comparePlans": {
+    "source": "30d9abfd7c7a",
     "status": "machine"
   },
   "app.dashboard.analytics.page.dynamicCodes": {
@@ -21428,7 +21576,11 @@
     "status": "machine"
   },
   "app.dashboard.codes.lifecyclePanelForm.heldForReview": {
-    "source": "57b7af20f83c",
+    "source": "32a2d86bb6ba",
+    "status": "machine"
+  },
+  "app.dashboard.codes.lifecyclePanelForm.heldQuestions": {
+    "source": "a4d8a79cac9e",
     "status": "machine"
   },
   "app.dashboard.codes.lifecyclePanelForm.turnedOffByQrdx": {
@@ -21436,7 +21588,7 @@
     "status": "machine"
   },
   "app.dashboard.codes.lifecyclePanelForm.ourAutomatedChecksFlaggedA": {
-    "source": "9f49aaa7ec5a",
+    "source": "fa962d33022d",
     "status": "machine"
   },
   "app.dashboard.codes.lifecyclePanelForm.thisCodeWasSwitchedOff": {
@@ -22465,6 +22617,10 @@
   },
   "app.dashboard.codes.codeOptions.accessSchedule": {
     "source": "9ee6f86b7f2f",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeOverview.heldNote": {
+    "source": "8ed6f7b36c45",
     "status": "machine"
   },
   "app.dashboard.codes.codeOverview.editLink": {
@@ -24471,6 +24627,14 @@
     "source": "9ee07d6a9f84",
     "status": "machine"
   },
+  "app.dashboard.codes.statusBadge.held": {
+    "source": "e92cb2cbf3e2",
+    "status": "machine"
+  },
+  "app.dashboard.codes.statusBadge.heldTitle": {
+    "source": "81a1c2b2e7eb",
+    "status": "machine"
+  },
   "app.dashboard.codes.tagDialogs.color": {
     "source": "6b73191a0a4b",
     "status": "machine"
@@ -25147,6 +25311,18 @@
     "source": "b1c1de607e25",
     "status": "machine"
   },
+  "app.dashboard.pages.pageListControls.qrCodeCreatedWithSamples": {
+    "source": "02a41ea0e219",
+    "status": "machine"
+  },
+  "app.dashboard.pages.pageListControls.samplesStillOnPage": {
+    "source": "e3850fc5ce78",
+    "status": "machine"
+  },
+  "app.dashboard.pages.pageListControls.editPage": {
+    "source": "5d2c6743b87c",
+    "status": "machine"
+  },
   "app.dashboard.pages.pageListControls.shortLinkCopied": {
     "source": "6b62bcc79bd7",
     "status": "machine"
@@ -25225,6 +25401,18 @@
   },
   "app.dashboard.pages.pagesToolbar.searchPages": {
     "source": "fe57215eb996",
+    "status": "machine"
+  },
+  "app.dashboard.pages.planLine.upload": {
+    "source": "013403ba7fff",
+    "status": "machine"
+  },
+  "app.dashboard.pages.planLine.published": {
+    "source": "6089dff0b057",
+    "status": "machine"
+  },
+  "app.dashboard.pages.planLine.seePro": {
+    "source": "5fb2bb5f2347",
     "status": "machine"
   },
   "app.dashboard.settings.clients.page.theClientPortalIsntAvailable": {
@@ -25873,6 +26061,46 @@
   },
   "app.dashboard.home.newCodeButton.newDynamicCode": {
     "source": "fbd99af4f3c0",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.title": {
+    "source": "f806d7498061",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.body": {
+    "source": "a6c33b6e9758",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.customDomain": {
+    "source": "dfffa36e9419",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.customSlug": {
+    "source": "6ad558746b03",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.scanEmails": {
+    "source": "220d43bc2dbe",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.linkControls": {
+    "source": "e212f80b6194",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.fullHistory": {
+    "source": "89d856daf615",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.price": {
+    "source": "26725fb33933",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.seePro": {
+    "source": "5fb2bb5f2347",
+    "status": "machine"
+  },
+  "app.dashboard.home.codeLiveCard.hide": {
+    "source": "ac20a57bfde0",
     "status": "machine"
   },
   "app.dashboard.listSelection.keyboardShortcuts": {
@@ -26811,6 +27039,14 @@
     "source": "aab31cde23ba",
     "status": "machine"
   },
+  "app.shell.appSidebar.upgrade": {
+    "source": "7ec0261b8e8a",
+    "status": "machine"
+  },
+  "app.shell.appSidebar.upgradeToPro": {
+    "source": "acb320d7f3e3",
+    "status": "machine"
+  },
   "app.shell.appTopbar.breadcrumb": {
     "source": "2bd873d6c734",
     "status": "machine"
@@ -27625,6 +27861,130 @@
   },
   "app.signOut.signOutScreen.pageTitle": {
     "source": "48f0d3d397d4",
+    "status": "machine"
+  },
+  "app.success.metaTitle": {
+    "source": "b100e7b42a37",
+    "status": "machine"
+  },
+  "app.success.activeTitle": {
+    "source": "31bee244f42e",
+    "status": "machine"
+  },
+  "app.success.activeBody": {
+    "source": "703c0671a2a1",
+    "status": "machine"
+  },
+  "app.success.processingTitle": {
+    "source": "f6bce9cb2282",
+    "status": "machine"
+  },
+  "app.success.processingBody": {
+    "source": "3d5325f8f61e",
+    "status": "machine"
+  },
+  "app.success.checksStopped": {
+    "source": "c10bbd94e667",
+    "status": "machine"
+  },
+  "app.success.reload": {
+    "source": "bdc090ec61e3",
+    "status": "machine"
+  },
+  "app.success.checkNow": {
+    "source": "2937cffb37ab",
+    "status": "machine"
+  },
+  "app.success.incompleteTitle": {
+    "source": "ea922d8f1a9b",
+    "status": "machine"
+  },
+  "app.success.incompleteBody": {
+    "source": "d631efe884d8",
+    "status": "machine"
+  },
+  "app.success.failedTitle": {
+    "source": "625654afef82",
+    "status": "machine"
+  },
+  "app.success.failedBody": {
+    "source": "55b3766d20d1",
+    "status": "machine"
+  },
+  "app.success.backToPricing": {
+    "source": "0330cba5cdfe",
+    "status": "machine"
+  },
+  "app.success.endedTitle": {
+    "source": "77bc5e4690c2",
+    "status": "machine"
+  },
+  "app.success.endedBody": {
+    "source": "a5951a2e44b3",
+    "status": "machine"
+  },
+  "app.success.errorTitle": {
+    "source": "81ecbc0a22e3",
+    "status": "machine"
+  },
+  "app.success.errorBody": {
+    "source": "28678085beb1",
+    "status": "machine"
+  },
+  "app.success.unknownTitle": {
+    "source": "b27311c9282f",
+    "status": "machine"
+  },
+  "app.success.unknownBody": {
+    "source": "60e7b454be1e",
+    "status": "machine"
+  },
+  "app.success.signedOutTitle": {
+    "source": "64fea862dd86",
+    "status": "machine"
+  },
+  "app.success.signedOutBody": {
+    "source": "802cc1fd19f1",
+    "status": "machine"
+  },
+  "app.success.signIn": {
+    "source": "bfd402b2f6f3",
+    "status": "machine"
+  },
+  "app.success.goToDashboard": {
+    "source": "7a9470bc1c1b",
+    "status": "machine"
+  },
+  "app.success.manageSubscription": {
+    "source": "9041c6aa2c3d",
+    "status": "machine"
+  },
+  "app.success.scanEmailsOn": {
+    "source": "cdfaa88030df",
+    "status": "machine"
+  },
+  "app.success.steps.codesTitle": {
+    "source": "0e25aa95bccb",
+    "status": "machine"
+  },
+  "app.success.steps.codesBody": {
+    "source": "59704699731e",
+    "status": "machine"
+  },
+  "app.success.steps.domainTitle": {
+    "source": "592d331457d0",
+    "status": "machine"
+  },
+  "app.success.steps.domainBody": {
+    "source": "b5c37a90b9b0",
+    "status": "machine"
+  },
+  "app.success.steps.teamTitle": {
+    "source": "8caa939a8117",
+    "status": "machine"
+  },
+  "app.success.steps.teamBody": {
+    "source": "9a8ca920bb07",
     "status": "machine"
   },
   "workspaceActions.shared.workspaceNotFound": {
@@ -28443,6 +28803,14 @@
     "source": "228b15a83187",
     "status": "machine"
   },
+  "emails.firstScan.pro": {
+    "source": "7382b933ecf7",
+    "status": "machine"
+  },
+  "emails.firstScan.freeReason": {
+    "source": "5b67dd68123e",
+    "status": "machine"
+  },
   "emails.scanMilestone.reached": {
     "source": "f61ae14de41b",
     "status": "machine"
@@ -28735,6 +29103,10 @@
     "source": "8f58b8caf034",
     "status": "machine"
   },
+  "emails.limitNotice.upgradeButton": {
+    "source": "fcc19175c100",
+    "status": "machine"
+  },
   "emails.weeklyDigest.subject": {
     "source": "16f59aaf314b",
     "status": "machine"
@@ -28797,6 +29169,66 @@
   },
   "emails.weeklyDigest.open": {
     "source": "a71e9a1f885f",
+    "status": "machine"
+  },
+  "emails.personal.reply": {
+    "source": "ba550a397311",
+    "status": "machine"
+  },
+  "emails.personal.stop": {
+    "source": "eebaef77d055",
+    "status": "machine"
+  },
+  "emails.personalNote.reason": {
+    "source": "29f16d6d2389",
+    "status": "machine"
+  },
+  "emails.welcome.subject": {
+    "source": "21219273217b",
+    "status": "machine"
+  },
+  "emails.welcome.greeting": {
+    "source": "9f7b52b0f23b",
+    "status": "machine"
+  },
+  "emails.welcome.intro": {
+    "source": "d9472c25c95f",
+    "status": "machine"
+  },
+  "emails.welcome.try": {
+    "source": "08163a027f54",
+    "status": "machine"
+  },
+  "emails.welcome.makeCode": {
+    "source": "c2b882466f29",
+    "status": "machine"
+  },
+  "emails.welcome.seeScans": {
+    "source": "fcf116f25232",
+    "status": "machine"
+  },
+  "emails.welcome.changeLink": {
+    "source": "af4beb5cd4b3",
+    "status": "machine"
+  },
+  "emails.welcome.free": {
+    "source": "717da00cdb2e",
+    "status": "machine"
+  },
+  "emails.welcome.pro": {
+    "source": "97f5ef3795bd",
+    "status": "machine"
+  },
+  "emails.welcome.taxes": {
+    "source": "3f5c5dcd5198",
+    "status": "machine"
+  },
+  "emails.welcome.reply": {
+    "source": "8a41bef8b0d3",
+    "status": "machine"
+  },
+  "emails.welcome.reason": {
+    "source": "0f58ba16364b",
     "status": "machine"
   },
   "codeActions.lifecycle.signIn": {
@@ -30953,6 +31385,14 @@
   },
   "codeBuilder.codeBuilderModal.downloadItAndPrintIt": {
     "source": "c27c6bd4e7f6",
+    "status": "machine"
+  },
+  "codeBuilder.codeBuilderModal.heldDescription": {
+    "source": "24c26d4c4098",
+    "status": "machine"
+  },
+  "codeBuilder.codeBuilderModal.heldBody": {
+    "source": "1def776e1eca",
     "status": "machine"
   },
   "codeBuilder.codeBuilderModal.itEncodesAShortLink": {

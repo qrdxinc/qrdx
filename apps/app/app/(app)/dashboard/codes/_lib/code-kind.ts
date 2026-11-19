@@ -18,6 +18,8 @@ import { HttpError } from "@/lib/error-response";
 import { getTemplate } from "@/lib/landing/templates";
 import { assertCan } from "@/lib/permissions-server";
 import { screenUrlChange } from "@/lib/safety/destinations";
+import { assertNotModerated } from "@/lib/safety/holds";
+import { type HoldRequest, writeHoldReports } from "@/lib/safety/velocity";
 import { type ActiveScope, isInScope } from "@/lib/scope";
 import { SHORT_LINK_BASE } from "@/lib/short-links";
 import { KIND_LABELS } from "./code-kind-shared";
@@ -74,6 +76,8 @@ export async function switchCodeKind(
 ): Promise<QrCodeView> {
   assertCan(scope, "content.write");
   const current = await findLiveCode(scope, id);
+  // Not even to a page, which files no hold: QRdx keeps what it opens.
+  await assertNotModerated(current);
 
   if (change.kind === "redirect") {
     // Already a website link: this is an ordinary destination edit.
@@ -86,21 +90,24 @@ export async function switchCodeKind(
       destinationUrl: change.destinationUrl,
       contentType: contentTypeForDestination(change.destinationUrl),
     };
-    if (
-      await screenUrlChange(scope, current, {
-        previous: current.destinationUrl,
-        next: change.destinationUrl,
-      })
-    ) {
-      values.isActive = false;
-    }
-    return applySwitch(scope, current, values, {
-      before: await pageSummary(scope, current),
-      after: {
-        type: KIND_LABELS.redirect,
-        destinationUrl: change.destinationUrl,
-      },
+    const hold = await screenUrlChange(scope, current, {
+      previous: current.destinationUrl,
+      next: change.destinationUrl,
     });
+    if (hold) values.isActive = false;
+    return applySwitch(
+      scope,
+      current,
+      values,
+      {
+        before: await pageSummary(scope, current),
+        after: {
+          type: KIND_LABELS.redirect,
+          destinationUrl: change.destinationUrl,
+        },
+      },
+      { hold },
+    );
   }
 
   let page: { id: string; label: string };
@@ -135,14 +142,16 @@ export async function switchCodeKind(
         before: await pageSummary(scope, current),
         after: { type: KIND_LABELS.page, page: page.label },
       },
-      created
-        ? [
-            {
-              action: "page.created",
-              target: { type: "page", id: page.id, label: page.label },
-            },
-          ]
-        : [],
+      {
+        events: created
+          ? [
+              {
+                action: "page.created",
+                target: { type: "page", id: page.id, label: page.label },
+              },
+            ]
+          : [],
+      },
     );
     return view;
   } catch (error) {
@@ -174,7 +183,14 @@ async function applySwitch(
     before: Record<string, string | null>;
     after: Record<string, string | null>;
   },
-  extraEvents: AuditEventInput[] = [],
+  {
+    events: extraEvents = [],
+    hold = null,
+  }: {
+    events?: AuditEventInput[];
+    /** screenUrlChange's hold, written once the switch is saved */
+    hold?: HoldRequest | null;
+  } = {},
 ): Promise<QrCodeView> {
   await snapshotCodeVersion(current.id, scope.userId);
   const [row] = await db
@@ -189,6 +205,7 @@ async function applySwitch(
     )
     .returning({ id: qrCode.id });
   if (!row) throw notFound();
+  if (hold) await writeHoldReports([hold]);
   const view = await getCode(scope, current.id);
 
   const fields = (["kind", "pageId", "destinationUrl"] as const).filter(

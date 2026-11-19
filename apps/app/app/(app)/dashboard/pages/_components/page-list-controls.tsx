@@ -187,7 +187,21 @@ export function PageActions({
         return;
       }
       track("dynamic_code_created", { source: "page" });
-      toast.success(t("qrCodeCreated"));
+      if (result.data.samples > 0) {
+        // The page is live from now: say what's still a template sample.
+        toast.warning(t("qrCodeCreatedWithSamples"), {
+          description: t("samplesStillOnPage", {
+            count: result.data.samples,
+          }),
+          action: {
+            label: t("editPage"),
+            onClick: () =>
+              router.push(inWorkspace(`/pages/${encodeURIComponent(page.id)}`)),
+          },
+        });
+      } else {
+        toast.success(t("qrCodeCreated"));
+      }
       router.push(
         inWorkspace(`/codes/${encodeURIComponent(result.data.codeId)}`),
       );

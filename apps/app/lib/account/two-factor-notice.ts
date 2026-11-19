@@ -7,7 +7,7 @@
 import type {
   TwoFactorNoticeExtra,
   TwoFactorNoticeKind,
-} from "@/lib/email/templates/two-factor-notice";
+} from "@repo/email/templates/two-factor-notice";
 import type { NoticeDeliveryDeps } from "./email-change";
 
 export type { TwoFactorNoticeExtra, TwoFactorNoticeKind };

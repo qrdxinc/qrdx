@@ -3,6 +3,7 @@
 // creates a dynamic code later.
 import { beforeEach, describe, expect, it } from "vitest";
 import {
+  claimDynamicResume,
   MAKE_DYNAMIC_MAX_AGE_MS,
   makeDynamicIntent,
   shouldResumeDynamic,
@@ -73,5 +74,48 @@ describe("the stored post-login action", () => {
     });
     useAuthStore.getState().clearPostLoginAction();
     expect(useAuthStore.getState().postLoginAction).toBeNull();
+  });
+});
+
+describe("claimDynamicResume", () => {
+  const memory = () => {
+    const items = new Map<string, string>();
+    return {
+      getItem: (key: string) => items.get(key) ?? null,
+      setItem: (key: string, value: string) => void items.set(key, value),
+    };
+  };
+
+  it("runs a pick once per tab: a page restored from the back-forward cache doesn't run it again", () => {
+    const storage = memory();
+    const pick = makeDynamicIntent(DESTINATION, NOW);
+    expect(claimDynamicResume(pick, storage)).toBe(true);
+    expect(claimDynamicResume(pick, storage)).toBe(false);
+    // Another pick (another time) still runs.
+    expect(
+      claimDynamicResume(makeDynamicIntent(DESTINATION, NOW + 1), storage),
+    ).toBe(true);
+  });
+
+  it("keeps only the last few marks", () => {
+    const storage = memory();
+    for (let index = 0; index < 15; index++) {
+      claimDynamicResume(makeDynamicIntent(DESTINATION, NOW + index), storage);
+    }
+    expect(
+      storage.getItem("qrdx:make-dynamic-resumed")?.split(","),
+    ).toHaveLength(10);
+  });
+
+  it("runs the pick when sessionStorage is missing or throws", () => {
+    const pick = makeDynamicIntent(DESTINATION, NOW);
+    expect(claimDynamicResume(pick, null)).toBe(true);
+    const broken = {
+      getItem: () => {
+        throw new Error("SecurityError");
+      },
+      setItem: () => undefined,
+    };
+    expect(claimDynamicResume(pick, broken)).toBe(true);
   });
 });

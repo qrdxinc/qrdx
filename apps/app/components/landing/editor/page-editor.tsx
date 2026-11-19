@@ -3,6 +3,15 @@
 import { track } from "@repo/analytics";
 import { toast } from "@repo/design-system";
 import { ModuleOrbit } from "@repo/design-system/components/loaders";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@repo/design-system/components/ui/alert-dialog";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -52,6 +61,12 @@ import {
   getBlock,
   parseLandingPageContent,
 } from "@/lib/landing/blocks";
+import {
+  findSamples,
+  removeSamples,
+  type SampleItem,
+  samplesByBlock,
+} from "@/lib/landing/samples";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 import type { LandingBlock, LandingPageContent } from "@/types/landing";
 import { LandingPageFooter } from "../page-footer";
@@ -64,6 +79,7 @@ import {
 import { LandingRender } from "../render";
 import { AddBlockMenu } from "./add-block-menu";
 import { BrandingSection } from "./branding-section";
+import { PagePlanNote } from "./page-plan-line";
 import { PageSettingsEditor } from "./page-settings-editor";
 import { type SavedThemePalette, ThemeControls } from "./theme-controls";
 
@@ -102,6 +118,11 @@ export interface PageEditorProps {
    * scans keep their current destination until then.
    */
   switchCode?: PageEditorSwitch;
+  /**
+   * The wording this page type's templates start with
+   * (lib/landing/template-samples.ts): unchanged, it's marked as a sample.
+   */
+  sampleTexts?: string[];
 }
 
 export interface PageEditorSwitch {
@@ -160,6 +181,37 @@ function withCssIssue(
   return issues;
 }
 
+const SAMPLE_KIND_LABELS: Record<SampleItem["kind"], string> = {
+  link: "Sample link",
+  photo: "Sample photo",
+  text: "Sample text",
+};
+
+/** "Sample link: Register your warranty (example.com/warranty)" */
+const sampleLine = (item: SampleItem) =>
+  `${SAMPLE_KIND_LABELS[item.kind]}: ${item.text}${
+    item.link && item.link !== item.text ? ` (${item.link})` : ""
+  }`;
+
+/** How many sample lines a list shows before "and N more". */
+const SAMPLES_SHOWN = 6;
+
+function SampleList({ items }: { items: SampleItem[] }) {
+  const shown = items.slice(0, SAMPLES_SHOWN);
+  const more = items.length - shown.length;
+  return (
+    <ul className="list-inside list-disc space-y-0.5">
+      {shown.map((item, index) => (
+        // Two samples can read the same ("Photo"); the position keeps them apart.
+        <li className="truncate" key={`${item.blockId}-${index}`}>
+          {sampleLine(item)}
+        </li>
+      ))}
+      {more > 0 && <li>and {more} more</li>}
+    </ul>
+  );
+}
+
 /** Validation issues keyed by block id ("theme" for theme issues). */
 function collectIssues(content: LandingPageContent): Issues {
   const issues: Issues = new Map();
@@ -207,6 +259,7 @@ export function PageEditor({
   storageEnabled,
   readOnly = false,
   switchCode,
+  sampleTexts,
 }: PageEditorProps) {
   const inWorkspace = useWorkspaceHref();
   const router = useRouter();
@@ -244,6 +297,15 @@ export function PageEditor({
     (n, list) => n + list.length,
     0,
   );
+  // The template's samples still on the page: marked on their blocks, listed
+  // above them and before publishing (visitors never see sample links).
+  const sampleWords = useMemo(() => new Set(sampleTexts ?? []), [sampleTexts]);
+  const samples = useMemo(
+    () => findSamples(content, sampleWords),
+    [content, sampleWords],
+  );
+  const samplesInBlock = useMemo(() => samplesByBlock(samples), [samples]);
+  const [samplesCheck, setSamplesCheck] = useState(false);
 
   // Offer to restore unpublished edits from this browser.
   useEffect(() => {
@@ -369,97 +431,143 @@ export function PageEditor({
     );
   };
 
-  const publish = useCallback(() => {
-    if (issueCount > 0) {
+  /** The page without its samples; null (and a toast) when that leaves issues. */
+  const withoutSamples = (): LandingPageContent | null => {
+    const next = removeSamples(content, sampleWords);
+    const left = collectIssues(next).size;
+    if (left > 0) {
+      setContent(next);
       toast.error(
-        `Fix ${issueCount} ${issueCount === 1 ? "issue" : "issues"} before publishing`,
+        "Samples removed. Fix the remaining issues before publishing",
       );
-      return;
+      return null;
     }
-    startPublishing(async () => {
-      if (switchCode) {
-        const switched = await publishCodeSwitchPage({
-          codeId: switchCode.codeId,
-          type: switchCode.type,
-          variantId: switchCode.variantId,
-          title: title.trim() || null,
-          content,
-        });
-        if (!switched.success) {
-          // The hosted-pages cap: the plan limit card, as when creating one.
-          if (switched.error.code === "LIMIT_REACHED") {
-            showLimit("landingPages", { message: switched.error.message });
+    return next;
+  };
+
+  const removeAllSamples = () => {
+    const before = content;
+    const next = removeSamples(content, sampleWords);
+    setContent(next);
+    if (selected && !next.blocks.some((block) => block.id === selected)) {
+      setSelected(null);
+    }
+    toast("Samples removed", {
+      description:
+        findSamples(next, sampleWords).length > 0
+          ? "Some are in blocks you've changed: edit those yourself."
+          : undefined,
+      action: { label: "Undo", onClick: () => setContent(before) },
+    });
+  };
+
+  const publish = useCallback(
+    (pageContent: LandingPageContent = content) => {
+      // Issues are the editor's content's; content without its samples is
+      // checked before it gets here (withoutSamples).
+      if (issueCount > 0 && pageContent === content) {
+        toast.error(
+          `Fix ${issueCount} ${issueCount === 1 ? "issue" : "issues"} before publishing`,
+        );
+        return;
+      }
+      startPublishing(async () => {
+        if (switchCode) {
+          const switched = await publishCodeSwitchPage({
+            codeId: switchCode.codeId,
+            type: switchCode.type,
+            variantId: switchCode.variantId,
+            title: title.trim() || null,
+            content: pageContent,
+          });
+          if (!switched.success) {
+            // The hosted-pages cap: the plan limit card, as when creating one.
+            if (switched.error.code === "LIMIT_REACHED") {
+              showLimit("landingPages", { message: switched.error.message });
+              return;
+            }
+            if (switched.error.code === "PLAN_REQUIRED") {
+              openUpgradeDialog("business");
+            }
+            toast.error(switched.error.message);
             return;
           }
-          if (switched.error.code === "PLAN_REQUIRED") {
-            openUpgradeDialog("business");
-          }
-          toast.error(switched.error.message);
+          setPublished(snapshot(title, pageContent));
+          writeDraft(page.id, null);
+          setDraft(null);
+          track("page_published", { page_type: page.typeLabel });
+          toast.success("Published", {
+            description: "Scans of this code now open the page.",
+          });
+          router.push(
+            inWorkspace(`/codes/${encodeURIComponent(switchCode.codeId)}`),
+          );
           return;
         }
-        setPublished(snapshot(title, content));
+        const result = await publishLandingPage({
+          id: page.id,
+          title,
+          content: pageContent,
+          baseVersion: version,
+        });
+        if (!result.success) {
+          if (result.error.code === "CONFLICT") setConflict(true);
+          if (result.error.code === "PLAN_REQUIRED") {
+            openUpgradeDialog("business");
+          }
+          toast.error(result.error.message);
+          return;
+        }
+        setVersion(result.data.version);
+        setPublished(snapshot(title, pageContent));
         writeDraft(page.id, null);
         setDraft(null);
         track("page_published", { page_type: page.typeLabel });
         toast.success("Published", {
-          description: "Scans of this code now open the page.",
+          description: code
+            ? "Scans now open the updated page."
+            : "Create a QR code for this page to share it.",
         });
-        router.push(
-          inWorkspace(`/codes/${encodeURIComponent(switchCode.codeId)}`),
-        );
-        return;
-      }
-      const result = await publishLandingPage({
-        id: page.id,
-        title,
-        content,
-        baseVersion: version,
+        router.refresh();
       });
-      if (!result.success) {
-        if (result.error.code === "CONFLICT") setConflict(true);
-        if (result.error.code === "PLAN_REQUIRED") {
-          openUpgradeDialog("business");
-        }
-        toast.error(result.error.message);
-        return;
-      }
-      setVersion(result.data.version);
-      setPublished(snapshot(title, content));
-      writeDraft(page.id, null);
-      setDraft(null);
-      track("page_published", { page_type: page.typeLabel });
-      toast.success("Published", {
-        description: code
-          ? "Scans now open the updated page."
-          : "Create a QR code for this page to share it.",
-      });
-      router.refresh();
-    });
-  }, [
-    issueCount,
-    page.id,
-    page.typeLabel,
-    title,
-    content,
-    version,
-    code,
-    router,
-    openUpgradeDialog,
-    switchCode,
-    inWorkspace,
-    showLimit,
-  ]);
+    },
+    [
+      issueCount,
+      page.id,
+      page.typeLabel,
+      title,
+      content,
+      version,
+      code,
+      router,
+      openUpgradeDialog,
+      switchCode,
+      inWorkspace,
+      showLimit,
+    ],
+  );
+
+  /** Publish, asking first while the template's samples are on the page. */
+  const requestPublish = useCallback(() => {
+    if (issueCount === 0 && samples.length > 0) {
+      setSamplesCheck(true);
+      return;
+    }
+    publish();
+  }, [issueCount, samples.length, publish]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
-        if (!readOnly && (dirty || switchCode) && !isPublishing) publish();
+        if (!readOnly && (dirty || switchCode) && !isPublishing) {
+          requestPublish();
+        }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [dirty, isPublishing, publish, readOnly, switchCode]);
+  }, [dirty, isPublishing, requestPublish, readOnly, switchCode]);
 
   const editorContext: BlockEditorContext = {
     theme: content.theme,
@@ -660,7 +768,7 @@ export function PageEditor({
           {codeLinks}
           <Button
             disabled={(!dirty && !switchCode) || isPublishing}
-            onClick={publish}
+            onClick={requestPublish}
             size="sm"
             title="Publish (⌘S)"
           >
@@ -670,6 +778,9 @@ export function PageEditor({
         </div>
       </div>
 
+      {!(readOnly || switchCode || dirty) && (
+        <PagePlanNote variant="published" />
+      )}
       {switchCode && (
         <p className="bg-muted rounded-md p-3 text-sm">
           When you publish, scans of{" "}
@@ -765,17 +876,54 @@ export function PageEditor({
             </TabsList>
 
             <TabsContent className="mt-4 space-y-3" value="blocks">
-              {version === 1 && (
-                // Never published: the template's names, prices, numbers
-                // and photos are samples, not anyone's real details.
-                <p className="bg-muted text-muted-foreground flex items-start gap-2 rounded-md p-3 text-xs">
-                  <AlertCircle className="mt-px size-3.5 shrink-0" />
-                  <span>
-                    This page starts with sample text, numbers and photos from
-                    its template. Replace them with your own before you share
-                    the code.
-                  </span>
-                </p>
+              {samples.length > 0 ? (
+                // The template's samples still on the page, published or not.
+                <div
+                  className="bg-muted text-muted-foreground space-y-2 rounded-md p-3 text-xs"
+                  role="status"
+                >
+                  <p className="flex items-start gap-2">
+                    <AlertCircle className="mt-px size-3.5 shrink-0" />
+                    <span>
+                      <span className="text-foreground font-medium">
+                        {samples.length === 1
+                          ? "1 sample from the template is still on this page."
+                          : `${samples.length} samples from the template are still on this page.`}
+                      </span>{" "}
+                      Visitors never see sample links, but they do see sample
+                      text and photos. Replace them with your own, or remove
+                      them.
+                    </span>
+                  </p>
+                  <div className="pl-5.5">
+                    <SampleList items={samples} />
+                  </div>
+                  {!readOnly && (
+                    <div className="pl-5.5">
+                      <Button
+                        onClick={removeAllSamples}
+                        size="sm"
+                        variant="outline"
+                      >
+                        <Trash2 />
+                        Remove all samples
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                version === 1 && (
+                  // Never published: the template's names, prices and
+                  // numbers may still be samples, even when none is marked.
+                  <p className="bg-muted text-muted-foreground flex items-start gap-2 rounded-md p-3 text-xs">
+                    <AlertCircle className="mt-px size-3.5 shrink-0" />
+                    <span>
+                      This page starts with sample text, numbers and photos from
+                      its template. Replace them with your own before you share
+                      the code.
+                    </span>
+                  </p>
+                )
               )}
               <div className="space-y-2" ref={listRef}>
                 {editableBlocks.length === 0 && (
@@ -787,6 +935,7 @@ export function PageEditor({
                   const definition = getBlock(block.type);
                   const open = selected === block.id;
                   const blockIssues = issues.get(block.id);
+                  const blockSamples = samplesInBlock.get(block.id) ?? 0;
                   const Icon = definition?.icon;
                   const Editor = definition?.Editor;
                   const summary = blockSummary(block);
@@ -837,6 +986,15 @@ export function PageEditor({
                               </span>
                             )}
                           </span>
+                          {blockSamples > 0 && (
+                            <Badge
+                              className="text-muted-foreground shrink-0"
+                              title="Sample: replace or remove"
+                              variant="outline"
+                            >
+                              Sample
+                            </Badge>
+                          )}
                           {blockIssues && (
                             <AlertCircle className="text-destructive size-4 shrink-0" />
                           )}
@@ -913,6 +1071,18 @@ export function PageEditor({
                                 <li key={message}>{message}</li>
                               ))}
                             </ul>
+                          )}
+                          {blockSamples > 0 && (
+                            <div className="bg-muted text-muted-foreground space-y-1 rounded-md p-2 text-xs">
+                              <p className="text-foreground font-medium">
+                                Sample: replace or remove
+                              </p>
+                              <SampleList
+                                items={samples.filter(
+                                  (item) => item.blockId === block.id,
+                                )}
+                              />
+                            </div>
                           )}
                           {Editor ? (
                             <Editor
@@ -998,6 +1168,52 @@ export function PageEditor({
           </div>
         </div>
       </div>
+
+      {/* Publishing with samples: say what's left, never block. */}
+      <AlertDialog onOpenChange={setSamplesCheck} open={samplesCheck}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Publish with samples from the template?
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-2 text-sm">
+                <p>
+                  {samples.length === 1
+                    ? "This sample is still on the page."
+                    : `These ${samples.length} samples are still on the page.`}{" "}
+                  Visitors won't see sample links, but they will see sample text
+                  and photos.
+                </p>
+                <SampleList items={samples} />
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep editing</AlertDialogCancel>
+            <Button
+              onClick={() => {
+                setSamplesCheck(false);
+                publish();
+              }}
+              variant="outline"
+            >
+              Publish anyway
+            </Button>
+            <Button
+              onClick={() => {
+                setSamplesCheck(false);
+                const next = withoutSamples();
+                if (!next) return;
+                setContent(next);
+                publish(next);
+              }}
+            >
+              Remove samples and publish
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

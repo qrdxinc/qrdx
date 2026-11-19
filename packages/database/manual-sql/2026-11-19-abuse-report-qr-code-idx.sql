@@ -1,0 +1,24 @@
+-- An index on abuse_report.qr_code_id. The dashboard looks a code's reports
+-- up by code: whether a switched-off code is only held for a safety check
+-- or was switched off after a review (apps/app/lib/safety/holds.ts
+-- heldForReviewIds and moderatedIds), on every page of codes with one that's
+-- off and on every edit of a switched-off code's address, and /admin/abuse
+-- counts each listed code's open reports. Without it, the actioned-report
+-- lookup can only use abuse_report_status_created_at_idx, so it reads every
+-- actioned report ever filed.
+--
+-- Additive and idempotent: one new index, IF NOT EXISTS, no table, column or
+-- data changes, safe to run more than once. packages/database/schema.ts
+-- declares the same index.
+--
+-- CREATE INDEX CONCURRENTLY can't run inside a transaction block: run this
+-- statement on its own (psql without -1/--single-transaction), not inside
+-- BEGIN/COMMIT. It builds without locking writes to abuse_report.
+--
+-- Order: any time. The code doesn't depend on it (the lookups only get
+-- cheaper), so apply before or after the deploy.
+--
+-- Rollback: nothing to do; code from before this change works with or
+-- without it.
+CREATE INDEX CONCURRENTLY IF NOT EXISTS abuse_report_qr_code_id_idx
+  ON abuse_report (qr_code_id);

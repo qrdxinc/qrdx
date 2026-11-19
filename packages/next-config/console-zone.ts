@@ -235,10 +235,18 @@ export function adminConsoleAddress({
 }
 
 /**
- * Every section of the main app's admin (app/(app)/admin/<section>), which
- * the console at its own address serves at /<section>: the five it started
- * with, then the rest. /admin itself is the console's front page (/), and
- * /admin/confirm isn't a section: the console confirms on /oauth/confirm.
+ * Sections only the console has (no app/(app)/admin/<section> here): its
+ * Email page sends personal notes through this app's signed endpoints
+ * (/api/internal/console/emails/*).
+ */
+export const CONSOLE_ONLY_SECTIONS = ["email"] as const;
+
+/**
+ * Every section the console at its own address serves at /<section>: each
+ * of the main app's admin sections (app/(app)/admin/<section>), the five it
+ * started with first, then CONSOLE_ONLY_SECTIONS. /admin itself is the
+ * console's front page (/), and /admin/confirm isn't a section: the console
+ * confirms on /oauth/confirm.
  */
 export const ADMIN_CONSOLE_SECTIONS = [
   ...CONSOLE_SECTIONS,
@@ -251,6 +259,7 @@ export const ADMIN_CONSOLE_SECTIONS = [
   "audit-log",
   "health",
   "search",
+  ...CONSOLE_ONLY_SECTIONS,
 ] as const;
 
 export type AdminConsoleSection = (typeof ADMIN_CONSOLE_SECTIONS)[number];

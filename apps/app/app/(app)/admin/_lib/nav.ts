@@ -10,6 +10,7 @@ import {
   Health as HeartPulse,
   type Icon,
   Element3 as LayoutDashboard,
+  Sms as Mail,
   ColorSwatch as Palette,
   MoneySend as Payouts,
   Electricity as Plug,
@@ -26,7 +27,9 @@ import {
 /**
  * Which app has the page: "core" pages are in this app, on every
  * deployment; "console" pages only exist in the console, so they're listed
- * only where it's on (CONSOLE_ORIGIN set).
+ * only where a console serves them: the proxied one (CONSOLE_ORIGIN) its
+ * five sections, the one at its own address (ADMIN_CONSOLE_URL) every
+ * section, CONSOLE_ONLY_SECTIONS included.
  */
 export type AdminZone = "core" | "console";
 
@@ -84,6 +87,8 @@ export const ADMIN_NAV_ITEMS: readonly AdminNavItem[] = [
     zone: "core",
   },
   { href: "/admin/health", label: "Health", icon: HeartPulse, zone: "core" },
+  // Personal notes to users, sent through this app's signed endpoints.
+  { href: "/admin/email", label: "Email", icon: Mail, zone: "console" },
 ];
 
 export interface AdminNavLink extends AdminNavItem {
@@ -106,16 +111,16 @@ export function adminNavLinks(
   consoleEnabled: boolean,
   adminConsoleUrl?: string,
 ): AdminNavLink[] {
-  const on = consoleEnabled || Boolean(adminConsoleUrl);
-  return ADMIN_NAV_ITEMS.filter((item) => item.zone === "core" || on).map(
-    (item) => {
-      const ownAddress = adminConsoleHref(item.href, adminConsoleUrl);
-      return {
+  return ADMIN_NAV_ITEMS.flatMap((item) => {
+    const ownAddress = adminConsoleHref(item.href, adminConsoleUrl);
+    const proxied = consoleEnabled && isConsolePath(item.href);
+    if (item.zone === "console" && ownAddress === null && !proxied) return [];
+    return [
+      {
         ...item,
         href: ownAddress ?? item.href,
-        crossZone:
-          ownAddress !== null || (consoleEnabled && isConsolePath(item.href)),
-      };
-    },
-  );
+        crossZone: ownAddress !== null || proxied,
+      },
+    ];
+  });
 }

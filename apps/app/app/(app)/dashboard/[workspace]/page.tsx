@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
+import { cookies, headers } from "next/headers";
 import { getHomeData } from "@/app/(app)/dashboard/_components/home/home-data";
 import { HomeView } from "@/app/(app)/dashboard/_components/home/home-view";
+import { getHomeProMoments } from "@/app/(app)/dashboard/_components/home/pro-moments";
 import { requireDashboardScope } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
+import { getAppLocale } from "@/lib/i18n/app-locale";
+import {
+  CURRENCY_COOKIE,
+  currencyForRegion,
+  resolveRegion,
+} from "@/lib/region";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -14,9 +22,34 @@ export default async function DashboardPage({
 }: {
   params: Promise<{ workspace: string }>;
 }) {
-  const [scope, { workspace }] = await Promise.all([
-    requireDashboardScope(),
-    params,
-  ]);
-  return <HomeView data={await getHomeData(scope)} slug={workspace} />;
+  const [scope, { workspace }, requestHeaders, cookieStore, locale] =
+    await Promise.all([
+      requireDashboardScope(),
+      params,
+      headers(),
+      cookies(),
+      getAppLocale(),
+    ]);
+  const data = await getHomeData(scope);
+  // Pro's price as /pricing shows it here: the region picks the currency.
+  const currency = currencyForRegion(
+    resolveRegion({
+      cookie: cookieStore.get(CURRENCY_COOKIE)?.value,
+      headers: requestHeaders,
+    }),
+  );
+  const moments = await getHomeProMoments(scope, {
+    plan: data.plan,
+    codesUsed: data.codes.used,
+    currency,
+    locale,
+  });
+  return (
+    <HomeView
+      data={data}
+      moments={moments}
+      organizationId={scope.organizationId}
+      slug={workspace}
+    />
+  );
 }

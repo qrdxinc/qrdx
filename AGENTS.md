@@ -10,10 +10,12 @@ QRdx is an open-source QR code platform (https://qrdx.dev): a free static QR gen
 | --- | --- |
 | `apps/app` | The Next.js app behind qrdx.dev: marketing pages, the blog, the editor (`app/(app)/playground`), the signed-in app (`app/(app)/dashboard`, `app/(app)/settings`), API routes (`app/api`, served as `api.qrdx.dev/v1` and `mcp.qrdx.dev/mcp`). It serves the docs' URLs through `apps/docs` |
 | `apps/docs` | The docs (qrdx.dev/docs), in English only: their content (`content/docs`) and the docs site, a Next.js app (package `docs`) the main app proxies at the same URLs when `DOCS_ZONE_URL` is set; without it, the main app redirects the docs' URLs to qrdx.dev. Its README lists what it reads from `apps/app` |
+| `apps/email` | The emails' preview server (React Email, http://localhost:3003); not deployed, not in the pre-push hook |
 | `packages/qrdx` | The QR engine and React library, published to npm as `qrdx` |
 | `packages/cli` | `@qrdx/cli`, the command-line generator |
 | `packages/database` | Drizzle schema (`schema.ts`), migrations and `manual-sql/` |
 | `packages/auth` | Better Auth setup |
+| `packages/email` | `@repo/email`: the email templates (`templates/`, React Email), rendering and the Resend sender; the app binds it to its environment in `apps/app/lib/email/send.ts`. Templates take an `intl` (the copy is `emails` in `apps/app/messages/en.json`) |
 | `packages/design-system` | Shared UI (shadcn/ui), icons, styles, the logo, figures, JSON-LD helpers and the Open Graph image frame with its fonts |
 | `packages/integrations`, `packages/integration-kit` | The integrations catalogue and shared types |
 | `packages/config` | `@repo/config`: platform constants (brand, URLs, contact emails, social links, shared limits); import these instead of typing `qrdx.dev` or an email address |
@@ -32,6 +34,7 @@ bun run --filter qrdx build:inplace     # the app imports the engine's dist/, so
 bun run --filter app dev                # http://localhost:3000 (needs apps/app/.env.local, see CONTRIBUTING)
 bun run --filter docs dev               # the docs on http://localhost:3001 (needs apps/docs/.env.local, see its README);
                                         # DOCS_ZONE_URL=http://localhost:3001 in apps/app/.env.local shows them through :3000
+bun run --filter email dev              # every email template on http://localhost:3003 (no env needed)
 bun x ultracite fix <files you changed> # format and lint (Ultracite runs Biome)
 
 cd apps/app

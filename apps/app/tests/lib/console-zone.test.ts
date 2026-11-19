@@ -12,6 +12,7 @@ import { docsZoneRewrites } from "@repo/i18n/docs";
 import {
   CONSOLE_ASSET_PREFIX,
   CONSOLE_KEY_HEADER,
+  CONSOLE_ONLY_SECTIONS,
   CONSOLE_SECTIONS,
   consoleReturnPath,
   consoleSection,
@@ -339,7 +340,11 @@ describe("the sections and the admin menu", () => {
       (item) => item.zone === "console",
     ).map((item) => item.href);
     for (const href of consoleItems) {
-      expect(consoleSection(href), href).not.toBeNull();
+      expect(
+        consoleSection(href) !== null ||
+          CONSOLE_ONLY_SECTIONS.some((section) => href === `/admin/${section}`),
+        href,
+      ).toBe(true);
     }
     for (const section of CONSOLE_SECTIONS) {
       const href = `/admin/${section}`;

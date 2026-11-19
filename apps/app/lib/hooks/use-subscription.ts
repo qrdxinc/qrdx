@@ -1,10 +1,15 @@
 import { authClient } from "@repo/auth/client";
 import { useQuery } from "@tanstack/react-query";
+import { workspaceRequestHeaders } from "@/components/workspace-provider";
 import { apiFetch } from "@/lib/api-fetch";
 import type { SubscriptionSummary } from "@/types/subscription";
 
 async function fetchSubscriptionStatus(): Promise<SubscriptionSummary> {
-  const res = await apiFetch("/api/subscription", { method: "GET" });
+  // The open workspace, for canUpgradeWorkspace (none outside the app).
+  const res = await apiFetch("/api/subscription", {
+    method: "GET",
+    headers: workspaceRequestHeaders(),
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch subscription status");

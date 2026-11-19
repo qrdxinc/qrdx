@@ -209,3 +209,31 @@ describe("the plan cards", () => {
     }
   });
 });
+
+describe("the billing period", () => {
+  const cards = (initialInterval?: "month" | "year" | null) =>
+    renderIntl(
+      <QueryClientProvider client={new QueryClient()}>
+        <PricingSection
+          currency="USD"
+          currentPlan={null}
+          description="Plans"
+          highlights={HIGHLIGHTS}
+          initialInterval={initialInterval}
+        />
+      </QueryClientProvider>,
+    );
+
+  it("is yearly unless a link asked for monthly (/pricing?interval=month)", () => {
+    for (const html of [cards(), cards(null), cards("year")]) {
+      expect(html).toContain("$48");
+      expect(html).toContain("/year");
+      expect(html).not.toContain("Billed monthly, cancel anytime");
+    }
+    const monthly = cards("month");
+    expect(monthly).toContain("$5");
+    expect(monthly).toContain("/month");
+    expect(monthly).toContain("Billed monthly, cancel anytime");
+    expect(monthly).not.toContain("$48");
+  });
+});

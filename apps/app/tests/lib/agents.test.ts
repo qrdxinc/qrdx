@@ -27,6 +27,7 @@ import { MCP_PUBLIC_URL } from "@/lib/mcp-clients";
 import { PLAN_LIMITS } from "@/lib/plans";
 import { PRODUCT_FACTS } from "@/lib/product-facts";
 import { QR_TYPES } from "@/lib/qr-types-content";
+import { HOSTED_QR_TYPES, hostedTypePath } from "@/lib/qr-types-content-hosted";
 
 const LOCAL = new URL("http://localhost:3000");
 const SELF_HOSTED = new URL("https://qr.example.com");
@@ -200,6 +201,35 @@ describe("llms.txt", () => {
     );
     expect(text).toContain("Can Claude or ChatGPT make a QR code that scans?");
     expect(text).toContain("- When to choose something else:");
+  });
+
+  it("lists every generator page, the hosted ones too, from the catalogues", () => {
+    const tools = text.slice(
+      text.indexOf("## Playground and tools"),
+      text.indexOf("## Developers"),
+    );
+    const generators = [
+      ...QR_TYPES.map((type) => `/qr-code-generator/${type.type}`),
+      ...HOSTED_QR_TYPES.map((type) => hostedTypePath(type.slug)),
+    ];
+    expect(HOSTED_QR_TYPES.length).toBeGreaterThan(0);
+    for (const generator of generators) {
+      expect(tools).toContain(`](${LOCAL.origin}${generator})`);
+    }
+    for (const type of HOSTED_QR_TYPES) {
+      expect(tools).toContain(
+        `- [${type.title}](${LOCAL.origin}${hostedTypePath(type.slug)}): ${type.summary}`,
+      );
+    }
+  });
+
+  it("leaves out hosted generators this deployment hides", () => {
+    const pdf = hostedTypePath("pdf");
+    const withoutFiles = buildLlmsTxt(fixture({ showsPath: (p) => p !== pdf }));
+    expect(withoutFiles).not.toContain(`${LOCAL.origin}${pdf})`);
+    expect(withoutFiles).toContain(
+      `${LOCAL.origin}${hostedTypePath("business-card")})`,
+    );
   });
 
   it("leaves out what this deployment can't offer", () => {

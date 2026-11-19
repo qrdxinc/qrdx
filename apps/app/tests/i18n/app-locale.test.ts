@@ -2,12 +2,12 @@
 // language cookie, and email templates rendered in the recipient's language.
 import { render } from "@react-email/render";
 import { signUpLocale } from "@repo/auth/sign-up-locale";
-import { createElement } from "react";
-import { describe, expect, it } from "vitest";
 import {
   SignInCodeEmail,
   signInCodeSubject,
-} from "@/lib/email/templates/sign-in-code";
+} from "@repo/email/templates/sign-in-code";
+import { createElement } from "react";
+import { describe, expect, it } from "vitest";
 import { ENGLISH_EMAIL, emailIntl } from "@/lib/i18n/email";
 import en from "@/messages/en.json";
 import es from "@/messages/es.json";
@@ -39,13 +39,13 @@ describe("a new account's language", () => {
 });
 
 describe("emails in the recipient's language", () => {
-  it("render in English by default, as before", async () => {
+  it("render in English with the English translator, as before", async () => {
     const html = await render(
-      createElement(SignInCodeEmail, { code: "402871" }),
+      createElement(SignInCodeEmail, { code: "402871", intl: ENGLISH_EMAIL }),
     );
     expect(html).toContain('lang="en"');
     expect(html).toContain(en.emails.signInCode.heading);
-    expect(signInCodeSubject()).toBe("Your QRdx sign-in code");
+    expect(signInCodeSubject(ENGLISH_EMAIL)).toBe("Your QRdx sign-in code");
     expect(ENGLISH_EMAIL.t("codes.expires", { minutes: 5 })).toContain(
       "5 minutes",
     );
@@ -60,6 +60,6 @@ describe("emails in the recipient's language", () => {
     expect(html).toContain("402871");
     expect(html).toContain(es.emails.signInCode.heading);
     expect(signInCodeSubject(intl)).toBe(es.emails.signInCode.subject);
-    expect(signInCodeSubject(intl)).not.toBe(signInCodeSubject());
+    expect(signInCodeSubject(intl)).not.toBe(signInCodeSubject(ENGLISH_EMAIL));
   });
 });

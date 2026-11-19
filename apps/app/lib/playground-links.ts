@@ -84,8 +84,9 @@ export type OpenTarget = (typeof OPEN_TARGETS)[number];
 // ─── open=dynamic (hub phase 4) ─────────────────────────────────────────────
 /**
  * open=dynamic: "Make it dynamic…" for the URL code, the code builder over
- * the editor. Applying it checks sign-in (asking first) and the content
- * type (lib/playground-apply.ts, applyDynamicOpen).
+ * the editor. Signed out, the editor opens first with a "Create dynamic
+ * code" button that asks for sign-up when pressed. Applying it checks the
+ * content type (lib/playground-apply.ts, applyDynamicOpen).
  */
 export const DYNAMIC_OPEN_TARGET = "dynamic";
 export type DynamicOpenTarget = typeof DYNAMIC_OPEN_TARGET;

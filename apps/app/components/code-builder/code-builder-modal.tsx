@@ -74,6 +74,11 @@ import type { ShellData } from "@/components/app-shell/shell-data";
 import { useAvailability } from "@/components/availability-provider";
 import { CopyButton } from "@/components/copy-button";
 import { AccountSourcePicker } from "@/components/data-connections/source-picker";
+import {
+  DynamicHeldCard,
+  heldFor,
+  useHeldDynamicStore,
+} from "@/components/editor/dynamic-link-toggle";
 import { InfoHint } from "@/components/help/info-hint";
 import {
   LocaleLink as Link,
@@ -126,7 +131,12 @@ import {
 } from "./drafts";
 import { BuilderFormBanner } from "./form-banner";
 import { fullEditorDestination, openInFullEditor } from "./full-editor";
-import { bindCreatedCode, syncSavedCode } from "./in-place";
+import {
+  bindCreatedCode,
+  heldPlaygroundCode,
+  savedCodeState,
+  syncSavedCode,
+} from "./in-place";
 import { previewLink } from "./links";
 import { listItemFromView } from "./optimistic";
 import {
@@ -211,6 +221,8 @@ export default function CodeBuilderModal({
   onChoosePageType: (type: string, style: QRStyle | null) => void;
 }) {
   const t = useTranslations("codeBuilder.codeBuilderModal");
+  // The held-code and switched-off wording the Dynamic toggle uses.
+  const heldT = useTranslations("editor.dynamicLinkToggle");
   // The builder's data comes with messages in this page's language
   // (lib/i18n/action-locale.ts).
   const locale = useLocale();
@@ -354,6 +366,15 @@ export default function CodeBuilderModal({
     defaultThemeState.styles;
 
   const destination = checkDestination(fields.destination);
+  // Over the playground: a code this account made for this address that's
+  // still held for a safety check. Another one isn't made until it's live.
+  const heldCode = useHeldDynamicStore((state) => state.code);
+  const heldHere =
+    !editing && fromPlayground && contentType === "link" && destination.ok
+      ? heldFor(heldCode, userId, destination.url)
+      : null;
+  // Created, but switched off until its address is checked: nothing to print.
+  const createdHeld = created?.code.status === "disabled";
   const typedContent =
     !editing && contentType === "other" && otherType !== null;
   const otherResult = useMemo(
@@ -568,17 +589,30 @@ export default function CodeBuilderModal({
           style: changedFields(initial, fields).style ? fields.style : null,
         });
       }
-      soundEvent("apply");
-      toast.success(
-        t("changesSaved"),
-        result.code.shortLink !== code.shortLink
-          ? {
-              description: t("downloadTheQrCodeAgain", {
-                shortLink: result.code.shortLink,
-              }),
-            }
-          : { description: t("scansNowOpenTheUpdated") },
-      );
+      // Never "scans now open it" for a code that's switched off or paused.
+      const state = savedCodeState(result.code);
+      if (state === "switched-off") {
+        toast.warning(heldT("updateSwitchedOffTitle"), {
+          description: heldT("updateSwitchedOffBody"),
+        });
+      } else {
+        soundEvent("apply");
+        toast.success(
+          t("changesSaved"),
+          result.code.shortLink !== code.shortLink
+            ? {
+                description: t("downloadTheQrCodeAgain", {
+                  shortLink: result.code.shortLink,
+                }),
+              }
+            : {
+                description:
+                  state === "paused"
+                    ? heldT("updatePausedBody")
+                    : t("scansNowOpenTheUpdated"),
+              },
+        );
+      }
       finishClose({ keepDraft: false });
       return;
     }
@@ -611,6 +645,8 @@ export default function CodeBuilderModal({
     track("dynamic_code_created", {
       source: fromPlayground ? "playground" : "dashboard",
     });
+    // A held code's short link opens nothing yet: not copied, not shown.
+    if (result.code.status === "disabled") return;
     // Copied right away; the success screen keeps a Copy button.
     navigator.clipboard
       ?.writeText(result.code.shortLink)
@@ -648,6 +684,14 @@ export default function CodeBuilderModal({
       return;
     }
     if (editing && !dirty) return;
+    if (
+      !editing &&
+      fromPlayground &&
+      destination.ok &&
+      heldPlaygroundCode(userId, destination.url)
+    ) {
+      return;
+    }
     // A heuristic, so it asks instead of blocking.
     if (score?.grade === "fails" && !confirmed) {
       setConfirm({ lowScore: thenOpen ?? null });
@@ -848,7 +892,9 @@ export default function CodeBuilderModal({
 
   const title =
     phase === "success"
-      ? "Your dynamic QR code is ready"
+      ? createdHeld
+        ? heldT("heldTitle")
+        : "Your dynamic QR code is ready"
       : editing
         ? "Edit dynamic QR code"
         : "New dynamic QR code";
@@ -1200,6 +1246,29 @@ export default function CodeBuilderModal({
     </div>
   );
 
+  const heldSuccessBody = created && (
+    <div className="space-y-5">
+      <DynamicHeldCard
+        body={fromPlayground ? undefined : t("heldBody")}
+        codeId={created.code.id}
+        onOpen={() => finishClose({ keepDraft: false })}
+      />
+      <div className="space-y-1.5">
+        <Label>{t("opens")}</Label>
+        <p className="text-muted-foreground text-sm break-all">
+          {created.code.destinationUrl}
+        </p>
+      </div>
+      {created.warnings.length > 0 && (
+        <ul className="bg-muted space-y-1 rounded-md p-3 text-sm">
+          {created.warnings.map((warning) => (
+            <li key={warning}>{warning}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+
   const successBody = created && (
     <div className="space-y-5">
       <div className="space-y-1.5">
@@ -1354,7 +1423,7 @@ export default function CodeBuilderModal({
       </div>
     );
   } else if (phase === "success") {
-    main = successBody;
+    main = createdHeld ? heldSuccessBody : successBody;
   } else {
     main = (
       <form
@@ -1404,6 +1473,12 @@ export default function CodeBuilderModal({
         ) : (
           linkForm
         )}
+        {heldHere && (
+          <DynamicHeldCard
+            codeId={heldHere.id}
+            onOpen={() => finishClose({ keepDraft: false })}
+          />
+        )}
       </form>
     );
   }
@@ -1417,7 +1492,8 @@ export default function CodeBuilderModal({
     <>
       <BuilderShell
         aside={
-          showPreviewColumn && (
+          showPreviewColumn &&
+          !(phase === "success" && createdHeld) && (
             <>
               <div className="shrink-0 p-4">{ready && preview}</div>
               {phase === "success" && created ? (
@@ -1444,7 +1520,9 @@ export default function CodeBuilderModal({
         contentRef={contentRef}
         description={
           phase === "success"
-            ? t("downloadItAndPrintIt")
+            ? createdHeld
+              ? t("heldDescription")
+              : t("downloadItAndPrintIt")
             : code
               ? displayUrl(code.shortLink)
               : t("itEncodesAShortLink")
@@ -1482,7 +1560,8 @@ export default function CodeBuilderModal({
                   !ready ||
                   panel !== null ||
                   (editing && !dirty) ||
-                  (!editing && contentType === "other" && !otherType)
+                  (!editing && contentType === "other" && !otherType) ||
+                  heldHere !== null
                 }
                 form="code-builder-form"
                 type="submit"
@@ -1531,7 +1610,13 @@ export default function CodeBuilderModal({
             ? `${title} · ${CODE_OPTION_COPY[optionPanel].label}`
             : title
         }
-        top={!wide && ready && !(contentType === "page" && !editing) && preview}
+        top={
+          !wide &&
+          ready &&
+          !(phase === "success" && createdHeld) &&
+          !(contentType === "page" && !editing) &&
+          preview
+        }
       >
         {main}
       </BuilderShell>

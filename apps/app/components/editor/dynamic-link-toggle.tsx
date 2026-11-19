@@ -26,6 +26,7 @@ import {
   currentBuilderRequest,
   openPlaygroundBuilder,
 } from "@/components/code-builder/in-place";
+import { checkUrl } from "@/components/editor/content-forms/url-check";
 import { emitSound } from "@/components/editor/sound";
 import { InfoHint } from "@/components/help/info-hint";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
@@ -39,10 +40,15 @@ import { dashboardEntry } from "@/lib/workspace-paths";
 import { useAuthStore } from "@/store/auth-store";
 import { useQREditorStore } from "@/store/editor-store";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
+import { usePlaygroundFocusStore } from "@/store/playground-focus-store";
 import type { QrCodeActionResult } from "@/types/action-results";
 import type { UrlContent } from "@/types/qr-content";
 import type { ThemeStyles } from "@/types/theme";
-import { makeDynamicIntent, shouldResumeDynamic } from "./dynamic-resume";
+import {
+  claimDynamicResume,
+  shouldResumeDynamic,
+  signInToMakeDynamic,
+} from "./dynamic-resume";
 
 export interface LinkedDynamicCode {
   id: string;
@@ -69,6 +75,40 @@ export const useDynamicLinkStore = create<DynamicLinkStore>()(
     { name: "dynamic-link-storage" },
   ),
 );
+
+interface HeldDynamicStore {
+  /** The last code made here that came back switched off (held for a check) */
+  code: LinkedDynamicCode | null;
+  hold: (code: LinkedDynamicCode | null) => void;
+}
+
+/**
+ * Kept for the page's life, not saved: switching tabs remounts the toggle,
+ * and a fresh Dynamic there would make another switched-off code. A reload
+ * starts over (the code is in the dashboard by then).
+ */
+export const useHeldDynamicStore = create<HeldDynamicStore>()((set) => ({
+  code: null,
+  hold: (code) => set({ code }),
+}));
+
+/**
+ * The held code for this account and address, if any: Dynamic stays off
+ * while it shows, so pressing again doesn't make another one. A different
+ * address turns Dynamic back on.
+ */
+export function heldFor(
+  held: LinkedDynamicCode | null,
+  userId: string | null,
+  destination: string | null,
+): LinkedDynamicCode | null {
+  return held &&
+    userId !== null &&
+    held.userId === userId &&
+    held.destinationUrl === destination
+    ? held
+    : null;
+}
 
 /** Loads a dashboard code (design, destination, short link) into the playground editor. */
 export function loadCodeIntoEditor(
@@ -113,6 +153,19 @@ export function normalizeDestination(raw: string): string | null {
   }
 }
 
+/**
+ * The address a dynamic code is made for: only one the URL form accepts
+ * too (checkUrl: a domain with an ending, no spaces), normalized as
+ * normalizeDestination does. "mycompany" is null: the form says "Add a
+ * domain ending", and a code for https://mycompany/ would be held for a
+ * safety check and never work.
+ */
+export function dynamicDestination(raw: string): string | null {
+  const check = checkUrl(raw);
+  if (check.status !== "ok" && check.status !== "warning") return null;
+  return normalizeDestination(raw);
+}
+
 // The routes (and the server actions behind them) take up to 2MB; a very
 // large inline logo is left out of the saved design.
 const MAX_SAVED_STYLE_LENGTH = 900_000;
@@ -147,6 +200,12 @@ async function safely<T>(
 
 export type MakeDynamicOutcome =
   | { kind: "linked"; code: LinkedDynamicCode; trimmed: boolean }
+  /**
+   * Saved but switched off: a new account's address waits for a safety
+   * check (lib/safety/destinations.ts). Not linked, so nothing gets printed
+   * with a short link that doesn't open anything yet.
+   */
+  | { kind: "held"; code: LinkedDynamicCode }
   | { kind: "limit"; message: string }
   | { kind: "signin" }
   | { kind: "error"; message: string };
@@ -177,16 +236,47 @@ export async function makeDynamic(
     if (result.error.code === "UNAUTHORIZED") return { kind: "signin" };
     return { kind: "error", message: result.error.message };
   }
-  return {
-    kind: "linked",
-    trimmed,
-    code: {
-      id: result.data.id,
-      shortLink: result.data.shortLink,
-      destinationUrl: result.data.destinationUrl,
-      userId: input.userId,
-    },
+  const code = {
+    id: result.data.id,
+    shortLink: result.data.shortLink,
+    destinationUrl: result.data.destinationUrl,
+    userId: input.userId,
   };
+  if (result.data.status === "disabled") return { kind: "held", code };
+  return { kind: "linked", trimmed, code };
+}
+
+/**
+ * A code saved switched off until QRdx checks its address: say so, and that
+ * it shouldn't be printed yet. It's in the dashboard.
+ */
+export function DynamicHeldCard({
+  codeId,
+  body,
+  onOpen,
+}: {
+  codeId: string;
+  /** In place of the playground's wording (the builder over the dashboard) */
+  body?: string;
+  /** Before the dashboard link navigates (closing a dialog) */
+  onOpen?: () => void;
+}) {
+  const t = useTranslations("editor.dynamicLinkToggle");
+  return (
+    <div
+      className="space-y-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs"
+      role="status"
+    >
+      <p className="font-medium">{t("heldTitle")}</p>
+      <p className="text-pretty">{body ?? t("heldBody")}</p>
+      <Button asChild size="sm" variant="outline">
+        <Link href={dashboardEntry(`codes/${codeId}`)} onClick={onOpen}>
+          {t("openInDashboard")}
+          <ArrowRight />
+        </Link>
+      </Button>
+    </div>
+  );
 }
 
 /** Shown when the plan's dynamic codes are used up. */
@@ -251,12 +341,16 @@ export function DynamicLinkToggle() {
   const openGetProDialog = useGetProDialogStore(
     (state) => state.openGetProDialog,
   );
+  // Came from a "Create a dynamic QR code" link (open=dynamic) signed out.
+  const dynamicPick = usePlaygroundFocusStore((state) => state.dynamicPick);
 
   const [isPending, startTransition] = useTransition();
   const [limitMessage, setLimitMessage] = useState<string | null>(null);
   const [designSaved, setDesignSaved] = useState(false);
   const [copied, setCopied] = useState(false);
   const [resume, setResume] = useState<unknown>(null);
+  const heldCode = useHeldDynamicStore((state) => state.code);
+  const setHeld = useHeldDynamicStore((state) => state.hold);
 
   // While the session loads, keep showing a saved link so the card doesn't
   // collapse and grow back; a different account unlinks it below.
@@ -265,7 +359,9 @@ export function DynamicLinkToggle() {
     (isSessionPending ? true : userId !== null && code.userId === userId)
       ? code
       : null;
-  const destination = normalizeDestination(url);
+  const destination = dynamicDestination(url);
+  // Saved switched off for this address: Dynamic waits for another address.
+  const held = linked ? null : heldFor(heldCode, userId, destination);
   const destinationChanged =
     linked !== null &&
     destination !== null &&
@@ -295,16 +391,14 @@ export function DynamicLinkToggle() {
   };
 
   const enable = () => {
-    if (!destination) return;
+    if (!destination || held) return;
     if (!userId) {
-      openAuthDialog("make_dynamic", {
-        action: "MAKE_DYNAMIC",
-        data: makeDynamicIntent(destination),
-      });
+      signInToMakeDynamic(openAuthDialog, destination);
       return;
     }
 
     setLimitMessage(null);
+    setHeld(null);
     startTransition(async () => {
       const outcome = await makeDynamic({
         destination,
@@ -317,17 +411,19 @@ export function DynamicLinkToggle() {
         return;
       }
       if (outcome.kind === "signin") {
-        openAuthDialog("make_dynamic", {
-          action: "MAKE_DYNAMIC",
-          data: makeDynamicIntent(destination),
-        });
+        signInToMakeDynamic(openAuthDialog, destination);
         return;
       }
       if (outcome.kind === "error") {
         toast.error(outcome.message);
         return;
       }
+      if (outcome.kind === "held") {
+        setHeld(outcome.code);
+        return;
+      }
 
+      usePlaygroundFocusStore.getState().setDynamicPick(false);
       link(outcome.code);
       // The short link isn't a code the visitor typed: no qr_generated.
       markProgrammaticQrContent(outcome.code.shortLink);
@@ -358,7 +454,18 @@ export function DynamicLinkToggle() {
   const runResume = useEffectEvent(() => {
     const intent = resume;
     setResume(null);
-    if (linked || !shouldResumeDynamic(intent, destination)) return;
+    if (linked) return;
+    if (!shouldResumeDynamic(intent, destination)) {
+      // The address changed meanwhile or the pick is too old: say so, rather
+      // than leave a static code where a dynamic one was asked for.
+      toast(t("resumeDroppedTitle"), {
+        description: t("resumeDroppedBody"),
+      });
+      return;
+    }
+    // Once per pick in this tab (a page restored from the back-forward
+    // cache would run it again).
+    if (!claimDynamicResume(intent)) return;
     enable();
   });
   useEffect(() => {
@@ -388,9 +495,20 @@ export function DynamicLinkToggle() {
         return;
       }
       link({ ...linked, destinationUrl: result.data.destinationUrl });
+      // Switched off (a safety check, moderation): the response doesn't say
+      // which, so never claim printed copies open the new address.
+      if (result.data.status === "disabled") {
+        toast.warning(t("updateSwitchedOffTitle"), {
+          description: t("updateSwitchedOffBody"),
+        });
+        return;
+      }
       emitSound("apply");
+      // Paused by its owner: saved, but scans don't reach it until resumed.
       toast.success(t("destinationUpdated"), {
-        description: t("printedCopiesOfThisCode"),
+        description: result.data.paused
+          ? t("updatePausedBody")
+          : t("printedCopiesOfThisCode"),
       });
     });
   };
@@ -470,7 +588,8 @@ export function DynamicLinkToggle() {
             disabled={
               isPending ||
               (isSessionPending && !linked) ||
-              !(linked || destination)
+              !(linked || destination) ||
+              held !== null
             }
             value="dynamic"
           >
@@ -493,6 +612,24 @@ export function DynamicLinkToggle() {
         <InfoHint align="end" className="mt-2.5" id="dynamic-qr" />
       </div>
 
+      {signedOut && dynamicPick && !linked && (
+        <div className="space-y-1.5">
+          <Button
+            className="w-full"
+            disabled={isPending || !destination || held !== null}
+            onClick={enable}
+          >
+            <Flash variant="Bold" />
+            {t("createDynamicCode")}
+          </Button>
+          {!destination && (
+            <p className="text-muted-foreground text-xs text-pretty">
+              {t("addYourAddressFirst")}
+            </p>
+          )}
+        </div>
+      )}
+
       {signedOut && !linked && (
         <p className="text-muted-foreground text-xs text-pretty">
           {t("signedOutNote")}
@@ -502,6 +639,8 @@ export function DynamicLinkToggle() {
       {limitMessage && !linked && (
         <DynamicLimitCard message={limitMessage} onUpgrade={openGetProDialog} />
       )}
+
+      {held && <DynamicHeldCard codeId={held.id} />}
 
       {userId && !linked && (
         <Button

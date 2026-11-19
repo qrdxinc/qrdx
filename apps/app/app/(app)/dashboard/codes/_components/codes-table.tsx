@@ -250,6 +250,7 @@ export function CodesTable({
               )}
               <TableCell>
                 <StatusBadge
+                  held={code.heldForReview}
                   paused={Boolean(code.pausedAt)}
                   status={code.status}
                 />

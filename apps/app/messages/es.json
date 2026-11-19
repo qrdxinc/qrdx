@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "Comparar planes y precios",
       "maybeLater": "Quizá más tarde",
       "thisFeatureIsPartOf": "Esta función forma parte del plan Business.",
-      "thisFeatureIsPartOf2": "Esta función forma parte de Pro y Business."
+      "thisFeatureIsPartOf2": "Esta función forma parte de Pro y Business.",
+      "ownerUpgrades": "Solo los propietarios y los miembros de facturación de este espacio de trabajo pueden cambiar su plan. Pídele a uno de ellos que lo actualice a {plan}."
+    },
+    "checkoutButtons": {
+      "month": "{plan} · {price} al mes",
+      "year": "{plan} · {price} al año",
+      "monthNoPrice": "{plan} mensual",
+      "yearNoPrice": "{plan} anual",
+      "note": "El pago se realiza en Polar; pueden añadirse impuestos locales. Cancela cuando quieras.",
+      "switchTo": "Cambiar a {plan}",
+      "openPortal": "Abrir portal",
+      "failed": "No se abrió el pago. Inténtalo de nuevo en un momento.",
+      "subscribed": "Ya tienes una suscripción. Cambia tu plan en el portal de facturación.",
+      "unavailable": "El pago no está disponible aquí ahora mismo.",
+      "rateLimited": "Demasiados intentos de pago. Inténtalo de nuevo en unos minutos."
     },
     "themeToggle": {
       "toggleTheme": "Cambiar tema"
@@ -729,7 +743,8 @@
         "storage": "{size} ({perFile} por archivo)",
         "apiBulk": "{count} + creación masiva",
         "clientReportsBadge": "Con un pequeño crédito al pie",
-        "clientReportsWhiteLabel": "Marca blanca"
+        "clientReportsWhiteLabel": "Marca blanca",
+        "firstScanOnly": "Primer escaneo de cada código dinámico"
       }
     },
     "guarantee": {
@@ -3278,6 +3293,8 @@
       "creditsLeft": "<count>{remaining, number} de {limit, number}</count> imágenes de arte con IA restantes este mes{pooled, select, yes { (compartidas con tu equipo)} other {}}, se restablecen {resets}. Esta generación usa {variations, number}; las imágenes fallidas se reembolsan.",
       "notEnoughLeft": "No quedan suficientes para {variations, number}: elige menos variaciones.",
       "notEnoughLeftOrUpgrade": "No quedan suficientes para {variations, number}: elige menos variaciones o mejora tu plan.",
+      "noneLeft": "No te quedan este mes.",
+      "noneLeftUpgrade": "No te quedan este mes. Mejora tu plan para crear más ahora.",
       "moreArtistic": "Más artístico",
       "clearerCode": "Código más claro",
       "followsYourPrompt": "Sigue tu prompt",
@@ -3827,6 +3844,8 @@
         "creditsLeft": "Te quedan <count>{remaining, number} de {limit, number}</count> imágenes de arte con IA este mes{pooled, select, yes { (compartidas con tu equipo)} other {}}, se restablece el {resets}. Esta generación usa {variations, number}.",
         "notEnoughLeft": "No te quedan suficientes: elige menos variaciones.",
         "notEnoughLeftOrUpgrade": "No te quedan suficientes: elige menos variaciones o mejora tu plan.",
+        "noneLeft": "No quedan este mes.",
+        "noneLeftUpgrade": "No quedan este mes. Mejora tu plan para crear más ahora.",
         "showResults": "{count, plural, one {Ver tu resultado} other {Ver tus resultados}}",
         "moreArtistic": "Más artístico",
         "clearerCode": "Código más claro",
@@ -4657,6 +4676,16 @@
       "dynamic": "Dinámico",
       "editLaterCountScans": "Edita después, cuenta escaneos",
       "signedOutNote": "Lo dinámico requiere una cuenta gratuita. Tu código seguirá funcionando pase lo que pase con tu plan.",
+      "createDynamicCode": "Crear código dinámico",
+      "addYourAddressFirst": "Primero añade la dirección de tu sitio web arriba.",
+      "heldTitle": "Guardado, pero aún no activo",
+      "heldBody": "QRdx revisa algunas direcciones antes de que el código de una cuenta nueva se active, así que este código está desactivado por ahora. No lo imprimas todavía: tu código QR sigue mostrando la propia dirección.",
+      "openInDashboard": "Abrir en el panel",
+      "updateSwitchedOffTitle": "Guardado, pero este código está desactivado",
+      "updateSwitchedOffBody": "Las copias impresas no abrirán nada hasta que se vuelva a activar. Tu panel te muestra el motivo.",
+      "updatePausedBody": "Este código está en pausa, así que las copias impresas van a su destino alternativo o a una página de pausa hasta que lo reanudes en el panel.",
+      "resumeDroppedTitle": "Tu código QR sigue siendo estático",
+      "resumeDroppedBody": "No se convirtió en dinámico porque la dirección cambió o el inicio de sesión tardó demasiado. Elige Dinámico de nuevo para hacerlo dinámico.",
       "linkOptions": "Opciones del enlace…",
       "printedCodesStillOpenDestinationurl": "Los códigos impresos siguen abriendo <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Apúntalo a la nueva dirección",
@@ -6433,7 +6462,18 @@
           "webhookAdded": "Webhook añadido",
           "notificationsSaved": "Notificaciones guardadas",
           "testMessageSentToValue": "Mensaje de prueba enviado a {value}",
-          "webhookRemoved": "Webhook eliminado"
+          "webhookRemoved": "Webhook eliminado",
+          "onByDefaultOwnCodes": "Activadas por defecto para los códigos que creas.",
+          "everyCodeAlerts": "Recibe alertas de todos los códigos de este espacio de trabajo",
+          "emailAlertsAreProFirstScan": "En Gratis recibes un correo cuando cada código QR dinámico que creas tiene su primer escaneo. Las demás alertas por correo y el resumen semanal forman parte de Pro y Business."
+        },
+        "teamNotes": {
+          "title": "Notas del equipo de QRdx",
+          "description": "Un mensaje de bienvenida al registrarte, un correo cuando cada código nuevo tiene su primer escaneo (en Gratis) y, de vez en cuando, una nota personal de alguien de QRdx. Si respondes, te lee una persona.",
+          "label": "Recibir notas del equipo",
+          "hint": "Tus alertas, resúmenes y correos de seguridad no cambian.",
+          "turnedOn": "Las notas del equipo están activadas",
+          "turnedOff": "Las notas del equipo están desactivadas"
         },
         "page": {
           "emailIsntSetUpOn": "El correo electrónico no está configurado en este servidor (RESEND_API_KEY y EMAIL_FROM), por lo que las alertas y los resúmenes por correo se guardan pero no se envían. Las alertas de Slack y Discord siguen funcionando. <link>Guía de configuración</link>",
@@ -6472,6 +6512,7 @@
           "scansAcrossEveryDynamicCode": "Escaneos de todos los códigos dinámicos de este espacio de trabajo.",
           "dateRange": "Rango de fechas",
           "yourPlanKeepsAShorter": "Tu plan conserva un historial de escaneos más corto",
+          "comparePlans": "Comparar planes",
           "dynamicCodes": "Códigos dinámicos",
           "totalScans": "Escaneos totales",
           "scansInRange": "Escaneos en el rango",
@@ -6950,9 +6991,10 @@
           "thePasswordWillBeRemoved": "La contraseña se eliminará al guardar",
           "noPassword": "Sin contraseña",
           "noLimit": "Sin límite",
-          "heldForReview": "En revisión",
+          "heldForReview": "Pendiente de revisión de seguridad",
+          "heldQuestions": "¿Dudas? Escribe a {email}.",
           "turnedOffByQrdx": "Desactivado por QRdx",
-          "ourAutomatedChecksFlaggedA": "Nuestras comprobaciones automáticas marcaron un enlace de este código (por ejemplo, un acortador de URL, una dirección IP o un dominio parecido a otro), así que permanece desactivado hasta que un revisor lo apruebe, normalmente en un día. No tienes que hacer nada más.",
+          "ourAutomatedChecksFlaggedA": "Nuestras comprobaciones automáticas han marcado un enlace de este código (por ejemplo, un acortador de URL, una dirección IP o un dominio que imita a otro), así que permanece desactivado hasta que una persona de QRdx lo revise. No tienes que hacer nada más.",
           "thisCodeWasSwitchedOff": "Este código se desactivó tras una revisión por abuso y no redirige. Escribe a support@qrdx.dev si crees que es un error.",
           "yourCurrentSettingsKeepWorking": "Tu configuración actual sigue funcionando y puedes quitarla cuando quieras.",
           "timesAreInYourTime": " Las horas se muestran en tu zona horaria ({timeZone}).",
@@ -7234,6 +7276,7 @@
           "accessSchedule": "Acceso y programación"
         },
         "codeOverview": {
+          "heldNote": "Pendiente de revisión de seguridad. Los enlaces de cuentas nuevas a ciertos tipos de direcciones, como acortadores de URL, direcciones IP o dominios que imitan a otros, los revisa una persona antes de publicarse, por lo que este código está desactivado hasta entonces. No lo imprimas todavía. Preguntas: {email}",
           "editLink": "Editar enlace",
           "changeType": "Cambiar tipo",
           "shortLinkEncodedInThe": "Enlace corto (codificado en el código QR)",
@@ -7796,7 +7839,9 @@
         "statusBadge": {
           "paused": "En pausa",
           "pausedScansGoToThe": "En pausa: los escaneos van a la URL alternativa o a una página neutra de «pausa»",
-          "turnedOffByQrdxModeration": "Desactivado por la moderación de QRdx. Contacta con soporte si es un error."
+          "turnedOffByQrdxModeration": "Desactivado por la moderación de QRdx. Contacta con soporte si es un error.",
+          "held": "Revisión",
+          "heldTitle": "Pendiente de revisión de seguridad antes de publicarse. Preguntas: {email}"
         },
         "tagDialogs": {
           "color": "Color",
@@ -7994,6 +8039,9 @@
           "deleting": "Eliminando...",
           "pageDeleted": "Página eliminada",
           "qrCodeCreated": "Código QR creado",
+          "qrCodeCreatedWithSamples": "Código QR creado. La página aún tiene ejemplos de su plantilla",
+          "samplesStillOnPage": "{count, plural, one {Todavía queda # ejemplo en la página.} other {Todavía quedan # ejemplos en la página.}} Los visitantes nunca ven los enlaces de ejemplo, pero sí ven el texto y las fotos de ejemplo.",
+          "editPage": "Editar página",
           "shortLinkCopied": "Enlace corto copiado",
           "couldntCopyTheLink": "No se pudo copiar el enlace"
         },
@@ -8018,6 +8066,11 @@
           "everyType": "Todos los tipos",
           "removeFilter": "Quitar filtro",
           "searchPages": "Buscar páginas"
+        },
+        "planLine": {
+          "upload": "Archivos de hasta {free} en Gratis y {pro} en Pro.",
+          "published": "En Gratis tienes {pages, plural, one {# página} other {# páginas}}, archivos de hasta {free} y un pie de página «Made with QRdx». Pro elimina el pie de página y el límite de páginas, y admite archivos de hasta {pro}.",
+          "seePro": "Ver Pro"
         }
       },
       "settings": {
@@ -8224,6 +8277,18 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Nuevo código dinámico"
+        },
+        "codeLiveCard": {
+          "title": "Tu código está activo",
+          "body": "Sigue funcionando en Gratis, sin fecha de fin. Si se va a imprimir para un negocio, Pro añade:",
+          "customDomain": "Tu propio dominio en el enlace corto",
+          "customSlug": "Un final de enlace que eliges tú en vez de uno aleatorio",
+          "scanEmails": "Correos en el primer escaneo de un código y en los escaneos {first, number}, {second, number} y {third, number}, además de un resumen semanal",
+          "linkControls": "Contraseñas, fechas de inicio y fin, y límites de escaneo",
+          "fullHistory": "Consulta todo el historial de escaneos, no solo {years, plural, one {el último año} other {los últimos # años}}",
+          "price": "Pro cuesta {month} al mes o {year} al año.",
+          "seePro": "Ver Pro",
+          "hide": "Ocultar"
         }
       },
       "listSelection": {
@@ -8504,7 +8569,9 @@
         "whatsNew": "Novedades",
         "backToLabel": "Volver a {label}",
         "expandSidebar": "Expandir barra lateral",
-        "collapseSidebar": "Contraer barra lateral"
+        "collapseSidebar": "Contraer barra lateral",
+        "upgrade": "Mejorar",
+        "upgradeToPro": "Mejorar a Pro"
       },
       "appTopbar": {
         "breadcrumb": "Ruta de navegación",
@@ -8779,6 +8846,41 @@
         "signingYouOut": "Cerrando sesión…",
         "oneMoment": "Un momento…",
         "pageTitle": "Cerrar sesión"
+      }
+    },
+    "success": {
+      "metaTitle": "Tu mejora de plan",
+      "activeTitle": "Gracias por mejorar tu plan",
+      "activeBody": "Tu plan {plan} está activo.",
+      "processingTitle": "Procesando el pago",
+      "processingBody": "Tu plan se activará en cuanto Polar confirme el pago, normalmente en menos de un minuto. Esta página vuelve a comprobarlo sola durante aproximadamente un minuto.",
+      "checksStopped": "Está tardando más de lo habitual y esta página ha dejado de comprobarlo sola. Recárgala en unos minutos. Si después tu plan sigue sin cambiar, escribe a <mail>{email}</mail>.",
+      "reload": "Recargar",
+      "checkNow": "Comprobar ahora",
+      "incompleteTitle": "Pago sin terminar",
+      "incompleteBody": "Este pago no se completó, así que tu plan no ha cambiado.",
+      "failedTitle": "El pago no se ha completado",
+      "failedBody": "Tu plan no ha cambiado. Puedes volver a intentarlo desde la página de precios.",
+      "backToPricing": "Volver a precios",
+      "endedTitle": "Este plan ha terminado",
+      "endedBody": "La suscripción de este pago ya no está activa, por lo que esta cuenta tiene el plan Gratis. El portal de facturación muestra lo que ocurrió.",
+      "errorTitle": "No pudimos cargar tu plan",
+      "errorBody": "Algo salió mal por nuestra parte al cargar tu plan. Vuelve a comprobarlo en un momento.",
+      "unknownTitle": "No se encontró el pago",
+      "unknownBody": "No pudimos encontrar este pago en tu cuenta. Si acabas de pagar, comprueba que hayas iniciado sesión con la cuenta que mejoraste, o escribe a <mail>{email}</mail>.",
+      "signedOutTitle": "Inicia sesión para ver tu plan",
+      "signedOutBody": "Inicia sesión con la cuenta que mejoraste para ver si tu plan está activo.",
+      "signIn": "Iniciar sesión",
+      "goToDashboard": "Ir al panel",
+      "manageSubscription": "Gestionar suscripción",
+      "scanEmailsOn": "Los correos de escaneo están activados: te avisaremos de los primeros escaneos y de los hitos. <link>Cámbialo en Ajustes → Notificaciones</link>.",
+      "steps": {
+        "codesTitle": "Crea códigos dinámicos",
+        "codesBody": "Códigos que puedes editar después de imprimirlos, con analíticas de escaneo.",
+        "domainTitle": "Añade un dominio personalizado",
+        "domainBody": "Sirve tus enlaces cortos desde tu propio dominio.",
+        "teamTitle": "Invita a tu equipo",
+        "teamBody": "Comparte códigos, páginas y temas guardados con tus compañeros."
       }
     }
   },
@@ -9055,7 +9157,9 @@
       "device": "Dispositivo",
       "preview": "{code} se escaneó por primera vez",
       "heading": "Tu código recibió su primer escaneo",
-      "body": "Alguien acaba de escanear {code}. Tu código QR está activo y funciona."
+      "body": "Alguien acaba de escanear {code}. Tu código QR está activo y funciona.",
+      "pro": "<link>Pro</link> también te envía un correo en los escaneos {first}, {second} y {third} y en los siguientes, y puede enviarte un resumen semanal.",
+      "freeReason": "Recibes este correo porque un código que creaste tuvo su primer escaneo. QRdx lo envía una sola vez por código."
     },
     "scanMilestone": {
       "reached": "{code} alcanzó {count, number} escaneos",
@@ -9148,7 +9252,8 @@
       "askOwner": "{limit, select, dynamicCodes {Archiva uno o pide a un propietario del espacio de trabajo que pase al plan {plan}.} landingPages {Elimina una o pide a un propietario del espacio de trabajo que pase al plan {plan}.} storage {Elimina los archivos que ya no necesites o pide a un propietario del espacio de trabajo que pase al plan {plan}.} savedThemes {Elimina uno o pide a un propietario del espacio de trabajo que pase al plan {plan}.} other {Pide a un propietario del espacio de trabajo que pase al plan {plan}.}}",
       "makeRoom": "{limit, select, dynamicCodes {Archiva uno para liberar espacio.} landingPages {Elimina una para liberar espacio.} storage {Elimina los archivos que ya no necesites para liberar espacio.} savedThemes {Elimina uno para liberar espacio.} other {}}",
       "resets": "Se restablece el {date}.",
-      "keeps": "{limit, select, dynamicCodes {Los códigos existentes siguen funcionando.} landingPages {Las páginas existentes siguen activas.} formResponses {Las páginas siguen activas. Los formularios volverán a aceptar respuestas después del restablecimiento.} storage {Los archivos que has subido siguen disponibles.} other {}}"
+      "keeps": "{limit, select, dynamicCodes {Los códigos existentes siguen funcionando.} landingPages {Las páginas existentes siguen activas.} formResponses {Las páginas siguen activas. Los formularios volverán a aceptar respuestas después del restablecimiento.} storage {Los archivos que has subido siguen disponibles.} other {}}",
+      "upgradeButton": "Cambiar a {plan}"
     },
     "weeklyDigest": {
       "subject": "Tu semana en QRdx: {scans, plural, one {# escaneo} other {# escaneos}}",
@@ -9167,6 +9272,27 @@
       "countries": "Dónde escaneó la gente",
       "newCodesLine": "{count, plural, one {# código nuevo} other {# códigos nuevos}} esta semana.",
       "open": "Abre tu panel"
+    },
+    "personal": {
+      "reply": "Responde a este correo y le llegará a {name}.",
+      "stop": "Dejar de recibir notas del equipo de QRdx"
+    },
+    "personalNote": {
+      "reason": "Recibes este mensaje porque tienes una cuenta de QRdx."
+    },
+    "welcome": {
+      "subject": "Te damos la bienvenida a QRdx",
+      "greeting": "Hola, {name}:",
+      "intro": "Gracias por registrarte. QRdx crea códigos QR que puedes cambiar después de imprimirlos y te muestra cuándo y dónde se escanean.",
+      "try": "Tres cosas para probar primero:",
+      "makeCode": "<link>Crea un código dinámico.</link> Abre un enlace corto que no cambia, así que puedes imprimirlo de inmediato.",
+      "seeScans": "<link>Mira sus escaneos:</link> cuándo, dónde y en qué dispositivos lo escanea la gente.",
+      "changeLink": "Cambia el destino cuando quieras, incluso después de imprimirlo. Sin volver a imprimir.",
+      "free": "Los códigos estáticos son gratis, y los códigos que crees seguirán funcionando si cambias de plan o dejas de pagar. Gratis también incluye {count} códigos dinámicos.",
+      "pro": "Si necesitas más, Pro cuesta {monthly} al mes o {yearly} al año e incluye códigos dinámicos ilimitados, {domains} dominios personalizados, alertas por correo en cada hito de escaneos y un resumen semanal si lo quieres.",
+      "taxes": "Es posible que se añadan impuestos locales al pagar.",
+      "reply": "Si algo te lo pone difícil o no sabes cómo hacer algo, responde a este correo. Una persona lee cada respuesta.",
+      "reason": "Recibes este correo porque acabas de crear una cuenta de QRdx."
     }
   },
   "codeActions": {
@@ -9844,6 +9970,8 @@
       "qrCodesAlreadyPrintedWith2": "Los códigos QR ya impresos con {shortLink} dejarán de funcionar. Su terminación se traslada con el código si está libre allí; si no, el código recibe una nueva.",
       "theQrCodeChangesTo": "El código QR cambia al nuevo enlace, así que descárgalo de nuevo después de guardar. Los códigos que ya imprimiste seguirán funcionando.",
       "downloadItAndPrintIt": "Descárgalo e imprímelo donde quieras. Puedes cambiar a dónde apunta en cualquier momento.",
+      "heldDescription": "Está guardado, pero desactivado hasta que QRdx compruebe su dirección. No lo imprimas todavía.",
+      "heldBody": "QRdx comprueba algunas direcciones antes de activar el código de una cuenta nueva, así que este código está desactivado por ahora. No lo imprimas todavía: su página en tu panel indica cuándo está activo.",
       "itEncodesAShortLink": "Codifica un enlace corto, así que puedes cambiar a dónde apunta después de imprimir.",
       "saving": "Guardando...",
       "creating": "Creando...",

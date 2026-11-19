@@ -85,6 +85,7 @@ vi.mock("next/server", () => ({
 vi.mock("@repo/rate-limit", () => ({
   createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
   slidingWindow: () => ({}),
+  fixedWindow: () => ({}),
 }));
 vi.mock("@repo/auth/passkey", () => ({ cookiesToSet: () => [] }));
 vi.mock("@repo/auth/passkey-rp", () => ({

@@ -1,14 +1,15 @@
 import "server-only";
 
 import { SUPPORT_EMAIL } from "@repo/config";
-import { z } from "zod";
-import { sendEmail } from "@/lib/email/send";
 import {
   NonprofitRequestEmail,
   nonprofitRequestSubject,
-} from "@/lib/email/templates/nonprofit-request";
+} from "@repo/email/templates/nonprofit-request";
+import { z } from "zod";
+import { sendEmail } from "@/lib/email/send";
 import { HttpError } from "@/lib/error-response";
 import { isFeatureAvailable } from "@/lib/feature-availability";
+import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 import {
   NONPROFIT_DISCOUNT_PERCENT,
   PAID_PLANS,
@@ -89,6 +90,7 @@ export async function sendNonprofitRequest(
     subject: nonprofitRequestSubject(data.organization, plan),
     react: (
       <NonprofitRequestEmail
+        intl={ENGLISH_EMAIL}
         accountEmail={account.email}
         accountId={account.id}
         contactEmail={data.contactEmail}

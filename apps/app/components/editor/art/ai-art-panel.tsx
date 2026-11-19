@@ -32,6 +32,7 @@ import {
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { CheckoutButtons } from "@/components/billing/checkout-buttons";
 import { useDynamicLinkStore } from "@/components/editor/dynamic-link-toggle";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { AIArtPresetGallery } from "@/components/sections/ai-art/ai-art-preset-gallery";
@@ -59,6 +60,7 @@ import {
   readReferenceFile,
   useAIArtRun,
 } from "@/components/sections/ai-art/use-ai-art-run";
+import { useArtUpgrade } from "@/components/sections/ai-art/use-art-upgrade";
 import { ART_MODEL_LABEL, ART_SUPPORTS_SEED } from "@/lib/ai/art-models";
 import { useControlsTabFromUrl } from "@/lib/hooks/use-controls-tab-from-url";
 import { useArtSessionStore } from "@/store/art-session-store";
@@ -670,6 +672,9 @@ function CreditsLine({
   variations: number;
 }) {
   const t = useTranslations("editor.art.aiArtPanel");
+  const short =
+    typeof credits?.remaining === "number" && credits.remaining < variations;
+  const { target, offer: upgrade, waiting } = useArtUpgrade(credits, short);
   const className = "text-muted-foreground text-xs text-pretty";
   if (!signedIn) {
     return (
@@ -700,28 +705,40 @@ function CreditsLine({
     day: "numeric",
     timeZone: "UTC",
   });
+  const shortNote =
+    credits.remaining === 0
+      ? t(upgrade ? "noneLeftUpgrade" : "noneLeft")
+      : t(upgrade ? "notEnoughLeftOrUpgrade" : "notEnoughLeft");
   return (
-    <p className={className}>
-      {t.rich("creditsLeft", {
-        remaining: credits.remaining,
-        limit: credits.limit ?? 0,
-        pooled: credits.pooled ? "yes" : "no",
-        resets,
-        variations,
-        count: (chunks) => (
-          <span className="text-foreground font-medium tabular-nums">
-            {chunks}
+    <div className="flex flex-col gap-2">
+      <p className={className}>
+        {t.rich("creditsLeft", {
+          remaining: credits.remaining,
+          limit: credits.limit ?? 0,
+          pooled: credits.pooled ? "yes" : "no",
+          resets,
+          variations,
+          count: (chunks) => (
+            <span className="text-foreground font-medium tabular-nums">
+              {chunks}
+            </span>
+          ),
+        })}
+        {short && (
+          <span className="text-amber-600 dark:text-amber-400">
+            {" "}
+            {shortNote}
           </span>
-        ),
-      })}
-      {credits.remaining < variations && (
-        <span className="text-amber-600 dark:text-amber-400">
-          {" "}
-          {credits.plan === "business"
-            ? t("notEnoughLeft")
-            : t("notEnoughLeftOrUpgrade")}
-        </span>
+        )}
+      </p>
+      {upgrade && (
+        <CheckoutButtons
+          plan={target}
+          size="sm"
+          source="ai_art_panel"
+          waiting={waiting}
+        />
       )}
-    </p>
+    </div>
   );
 }

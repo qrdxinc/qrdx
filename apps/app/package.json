@@ -51,6 +51,7 @@
     "@repo/database": "workspace:*",
     "@repo/design-system": "workspace:*",
     "@repo/docs-assets": "workspace:*",
+    "@repo/email": "workspace:*",
     "@repo/i18n": "workspace:*",
     "@repo/integration-kit": "workspace:*",
     "@repo/integrations": "workspace:*",

@@ -42,6 +42,14 @@ export interface DynamicCodeRef {
   id: string;
   shortLink: string;
   destinationUrl: string;
+  /**
+   * The route answers with the whole code view: "disabled" when a new
+   * account's address waits for a safety check (lib/safety/destinations.ts),
+   * so the code is saved but switched off.
+   */
+  status?: "active" | "archived" | "disabled";
+  /** Paused by its owner: status stays "active", scans don't reach the address. */
+  paused?: boolean;
 }
 
 const isObject = (value: unknown): value is Record<string, unknown> =>

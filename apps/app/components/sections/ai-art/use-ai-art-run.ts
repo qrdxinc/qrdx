@@ -83,7 +83,7 @@ export function useAIArtRun({ store, onSignedOut }: UseAIArtRunOptions) {
   const queryClient = useQueryClient();
   const { data: session, isPending: sessionPending } = authClient.useSession();
   const openAuthDialog = useAuthStore((state) => state.openAuthDialog);
-  const { openGetProDialog, openUpgradeDialog } = useGetProDialogStore();
+  const { openUpgradeDialog } = useGetProDialogStore();
   const configured = useStore(store, (state) => state.configured);
   const run = useStore(store, (state) => state.run);
   const pending = useStore(store, (state) => state.pending);
@@ -126,8 +126,10 @@ export function useAIArtRun({ store, onSignedOut }: UseAIArtRunOptions) {
   const showError = (error: MyErrorResponseType | null, title: string) => {
     if (error?.code === "AI_NOT_CONFIGURED") return;
     if (error?.code === "SUBSCRIPTION_REQUIRED") {
-      if (creditsRef.current?.plan === "pro") openUpgradeDialog("business");
-      else openGetProDialog();
+      // The workspace's plan: the dialog checks who may lift it.
+      openUpgradeDialog(
+        creditsRef.current?.plan === "pro" ? "business" : "pro",
+      );
     }
     if (!error) {
       toast.error(title, {

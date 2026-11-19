@@ -11,8 +11,10 @@ import { PageHeader } from "@/components/app-shell/page-header";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { PLAN_NAMES } from "@/lib/pricing";
 import { workspaceHref } from "@/lib/workspace-paths";
+import { CodeLiveCard } from "./code-live-card";
 import type { HomeData } from "./home-data";
 import { NewCodeButton } from "./new-code-button";
+import type { HomeProMoments } from "./pro-moments";
 
 const number = (value: number) => value.toLocaleString("en-US");
 
@@ -48,8 +50,20 @@ const STATUS_LABELS = {
 /**
  * The app's front page: the numbers that matter and the newest codes. "Get
  * set up" is the app shell's launcher (components/app-shell/setup-guide.tsx).
+ * `moments`: the scan-email offer and, on Free, "Your code is live"
+ * (pro-moments.ts).
  */
-export function HomeView({ data, slug }: { data: HomeData; slug: string }) {
+export function HomeView({
+  data,
+  slug,
+  organizationId,
+  moments,
+}: {
+  data: HomeData;
+  slug: string;
+  organizationId: string;
+  moments: HomeProMoments;
+}) {
   const t = use(getAppTranslations("app.dashboard.home.homeView"));
   const workspace = data.teamName ?? "Workspace";
   const href = (path: string) => workspaceHref(slug, path);
@@ -90,6 +104,10 @@ export function HomeView({ data, slug }: { data: HomeData; slug: string }) {
           value={number(data.pages)}
         />
       </div>
+
+      {moments.codeLive && (
+        <CodeLiveCard card={moments.codeLive} organizationId={organizationId} />
+      )}
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-4">

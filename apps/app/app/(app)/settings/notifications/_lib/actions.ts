@@ -7,6 +7,7 @@ import {
   currentSession,
   requireRecentConfirmation,
 } from "@/lib/account/confirmation-server";
+import { setTeamNotes } from "@/lib/email/team-notes";
 import { HttpError } from "@/lib/error-response";
 import {
   addChatTarget,
@@ -52,6 +53,7 @@ const addSchema = z.object({
 });
 const updateSchema = z.object({ id: idSchema, events: chatEventsSchema });
 const targetSchema = z.object({ id: idSchema });
+const teamNotesSchema = z.object({ on: z.boolean() });
 
 async function failure(
   error: unknown,
@@ -182,6 +184,18 @@ export async function testNotificationWebhook(input: {
   if (!parsed.success) return await invalid(parsed.error);
   return run("test", testLimiter, async (userId) => {
     await sendTestChatMessage(userId, parsed.data.id);
+    return null;
+  });
+}
+
+/** Notes from the QRdx team (lib/email/team-notes.ts): on or off. */
+export async function setTeamNotesPreference(input: {
+  on: boolean;
+}): Promise<NotificationActionResult> {
+  const parsed = teamNotesSchema.safeParse(input);
+  if (!parsed.success) return await invalid(parsed.error);
+  return run("team-notes", mutationLimiter, async (userId) => {
+    await setTeamNotes(userId, parsed.data.on);
     return null;
   });
 }

@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "Bandingkan paket dan harga",
       "maybeLater": "Nanti saja",
       "thisFeatureIsPartOf": "Fitur ini termasuk dalam paket Business.",
-      "thisFeatureIsPartOf2": "Fitur ini termasuk dalam paket Pro dan Business."
+      "thisFeatureIsPartOf2": "Fitur ini termasuk dalam paket Pro dan Business.",
+      "ownerUpgrades": "Hanya pemilik dan anggota penagihan di workspace ini yang dapat mengubah paketnya. Mintalah salah satu dari mereka untuk meningkatkan ke {plan}."
+    },
+    "checkoutButtons": {
+      "month": "{plan} · {price} per bulan",
+      "year": "{plan} · {price} per tahun",
+      "monthNoPrice": "{plan} bulanan",
+      "yearNoPrice": "{plan} tahunan",
+      "note": "Pembayaran dilakukan di Polar; pajak lokal mungkin ditambahkan. Batalkan kapan saja.",
+      "switchTo": "Beralih ke {plan}",
+      "openPortal": "Buka portal",
+      "failed": "Halaman pembayaran gagal dibuka. Coba lagi sesaat lagi.",
+      "subscribed": "Anda sudah berlangganan. Ubah paket Anda di portal penagihan.",
+      "unavailable": "Pembayaran belum tersedia di sini saat ini.",
+      "rateLimited": "Terlalu banyak percobaan pembayaran. Coba lagi dalam beberapa menit."
     },
     "themeToggle": {
       "toggleTheme": "Ganti tema"
@@ -729,7 +743,8 @@
         "storage": "{size} ({perFile} per file)",
         "apiBulk": "{count} + pembuatan massal",
         "clientReportsBadge": "Dengan kredit kecil di footer",
-        "clientReportsWhiteLabel": "White-label"
+        "clientReportsWhiteLabel": "White-label",
+        "firstScanOnly": "Pemindaian pertama tiap kode QR dinamis"
       }
     },
     "guarantee": {
@@ -3278,6 +3293,8 @@
       "creditsLeft": "<count>{remaining, number} dari {limit, number}</count> gambar seni AI tersisa bulan ini{pooled, select, yes { (dibagikan dengan tim Anda)} other {}}, diatur ulang {resets}. Proses ini menggunakan {variations, number}; gambar yang gagal akan dikembalikan.",
       "notEnoughLeft": "Sisa tidak cukup untuk {variations, number}: pilih lebih sedikit variasi.",
       "notEnoughLeftOrUpgrade": "Sisa tidak cukup untuk {variations, number}: pilih lebih sedikit variasi atau upgrade.",
+      "noneLeft": "Bulan ini sudah habis.",
+      "noneLeftUpgrade": "Bulan ini sudah habis. Upgrade untuk membuat lebih banyak sekarang.",
       "moreArtistic": "Lebih artistik",
       "clearerCode": "Kode lebih jelas",
       "followsYourPrompt": "Mengikuti prompt Anda",
@@ -3827,6 +3844,8 @@
         "creditsLeft": "Sisa <count>{remaining, number} dari {limit, number}</count> gambar AI art bulan ini{pooled, select, yes { (dibagi dengan tim Anda)} other {}}, diatur ulang {resets}. Proses ini memakai {variations, number}.",
         "notEnoughLeft": "Sisa tidak cukup: pilih lebih sedikit variasi.",
         "notEnoughLeftOrUpgrade": "Sisa tidak cukup: pilih lebih sedikit variasi atau upgrade.",
+        "noneLeft": "Habis untuk bulan ini.",
+        "noneLeftUpgrade": "Jatah bulan ini habis. Upgrade untuk membuat lebih banyak sekarang.",
         "showResults": "{count, plural, other {Tampilkan hasil Anda}}",
         "moreArtistic": "Lebih artistik",
         "clearerCode": "Kode lebih jelas",
@@ -4657,6 +4676,16 @@
       "dynamic": "Dinamis",
       "editLaterCountScans": "Edit nanti, hitung pemindaian",
       "signedOutNote": "Kode dinamis memerlukan akun gratis. Kode Anda tetap berfungsi apa pun yang terjadi pada paket Anda.",
+      "createDynamicCode": "Buat kode dinamis",
+      "addYourAddressFirst": "Tambahkan alamat situs web Anda di atas terlebih dahulu.",
+      "heldTitle": "Tersimpan, tetapi belum aktif",
+      "heldBody": "QRdx memeriksa beberapa alamat sebelum kode milik akun baru diaktifkan, jadi kode ini dinonaktifkan untuk sementara. Jangan dicetak dulu: kode QR Anda masih menampilkan alamat itu sendiri.",
+      "openInDashboard": "Buka di dasbor",
+      "updateSwitchedOffTitle": "Tersimpan, tetapi kode ini sedang dimatikan",
+      "updateSwitchedOffBody": "Salinan cetak tidak akan membuka apa pun sampai kode ini dinyalakan kembali. Dasbor Anda menunjukkan alasannya.",
+      "updatePausedBody": "Kode ini dijeda, sehingga salinan cetak diarahkan ke tujuan cadangannya atau ke halaman jeda sampai Anda melanjutkannya di dasbor.",
+      "resumeDroppedTitle": "Kode QR Anda masih statis",
+      "resumeDroppedBody": "Kode ini tidak dijadikan dinamis karena alamatnya berubah atau proses masuk terlalu lama. Pilih Dinamis lagi untuk menjadikannya dinamis.",
       "linkOptions": "Opsi tautan…",
       "printedCodesStillOpenDestinationurl": "Kode yang sudah dicetak tetap membuka <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Arahkan ke alamat baru",
@@ -6433,7 +6462,18 @@
           "webhookAdded": "Webhook ditambahkan",
           "notificationsSaved": "Notifikasi disimpan",
           "testMessageSentToValue": "Pesan uji dikirim ke {value}",
-          "webhookRemoved": "Webhook dihapus"
+          "webhookRemoved": "Webhook dihapus",
+          "onByDefaultOwnCodes": "Aktif secara default untuk kode yang Anda buat.",
+          "everyCodeAlerts": "Terima untuk setiap kode di workspace ini",
+          "emailAlertsAreProFirstScan": "Di paket Gratis, Anda mendapatkan satu email saat setiap kode QR dinamis yang Anda buat mendapat pemindaian pertamanya. Notifikasi email lainnya dan ringkasan mingguan tersedia di Pro dan Business."
+        },
+        "teamNotes": {
+          "title": "Catatan dari tim QRdx",
+          "description": "Ucapan selamat datang saat Anda mendaftar, satu email saat setiap kode baru menerima pemindaian pertamanya (di paket Gratis), dan sesekali pesan pribadi dari seseorang di QRdx. Balasan Anda akan sampai ke seorang manusia.",
+          "label": "Terima catatan dari tim",
+          "hint": "Peringatan, rangkuman, dan email keamanan Anda tidak berubah.",
+          "turnedOn": "Catatan dari tim diaktifkan",
+          "turnedOff": "Catatan dari tim dinonaktifkan"
         },
         "page": {
           "emailIsntSetUpOn": "Email belum disiapkan di server ini (RESEND_API_KEY dan EMAIL_FROM), sehingga peringatan dan ringkasan email disimpan tetapi tidak dikirim. Peringatan Slack dan Discord tetap berfungsi. <link>Panduan penyiapan</link>",
@@ -6472,6 +6512,7 @@
           "scansAcrossEveryDynamicCode": "Pemindaian dari semua kode QR dinamis di ruang kerja ini.",
           "dateRange": "Rentang tanggal",
           "yourPlanKeepsAShorter": "Paket Anda menyimpan riwayat pemindaian yang lebih singkat",
+          "comparePlans": "Bandingkan paket",
           "dynamicCodes": "Kode dinamis",
           "totalScans": "Total pemindaian",
           "scansInRange": "Pemindaian di rentang",
@@ -6950,9 +6991,10 @@
           "thePasswordWillBeRemoved": "Kata sandi akan dihapus saat Anda menyimpan",
           "noPassword": "Tanpa kata sandi",
           "noLimit": "Tanpa batas",
-          "heldForReview": "Menunggu peninjauan",
+          "heldForReview": "Menunggu pemeriksaan keamanan",
+          "heldQuestions": "Ada pertanyaan? Tulis ke {email}.",
           "turnedOffByQrdx": "Dinonaktifkan oleh QRdx",
-          "ourAutomatedChecksFlaggedA": "Pemeriksaan otomatis kami menandai sebuah tautan pada kode ini (misalnya pemendek URL, alamat IP, atau domain tiruan), sehingga kode tetap nonaktif hingga disetujui oleh peninjau, biasanya dalam sehari. Anda tidak perlu melakukan apa pun.",
+          "ourAutomatedChecksFlaggedA": "Pemeriksaan otomatis kami menandai sebuah tautan pada kode ini (misalnya pemendek URL, alamat IP, atau domain yang menyerupai domain lain), sehingga kode ini tetap nonaktif sampai seseorang dari QRdx memeriksanya. Anda tidak perlu melakukan apa pun.",
           "thisCodeWasSwitchedOff": "Kode ini dinonaktifkan setelah peninjauan penyalahgunaan dan tidak mengalihkan. Hubungi support@qrdx.dev jika Anda merasa ini keliru.",
           "yourCurrentSettingsKeepWorking": "Pengaturan Anda saat ini tetap berfungsi, dan Anda dapat menghapusnya kapan saja.",
           "timesAreInYourTime": " Waktu mengikuti zona waktu Anda ({timeZone}).",
@@ -7234,6 +7276,7 @@
           "accessSchedule": "Akses & jadwal"
         },
         "codeOverview": {
+          "heldNote": "Menunggu pemeriksaan keamanan. Tautan dari akun baru ke beberapa jenis alamat, seperti pemendek URL, alamat IP, atau domain yang menyerupai domain lain, diperiksa oleh seseorang sebelum aktif, sehingga kode ini nonaktif sampai saat itu. Jangan dicetak dulu. Pertanyaan: {email}",
           "editLink": "Edit tautan",
           "changeType": "Ubah tipe",
           "shortLinkEncodedInThe": "Tautan pendek (dikodekan dalam kode QR)",
@@ -7796,7 +7839,9 @@
         "statusBadge": {
           "paused": "Dijeda",
           "pausedScansGoToThe": "Dijeda: pemindaian diarahkan ke URL cadangan atau halaman “dijeda” netral",
-          "turnedOffByQrdxModeration": "Dinonaktifkan oleh moderasi QRdx. Hubungi dukungan jika ini suatu kesalahan."
+          "turnedOffByQrdxModeration": "Dinonaktifkan oleh moderasi QRdx. Hubungi dukungan jika ini suatu kesalahan.",
+          "held": "Cek keamanan",
+          "heldTitle": "Menunggu pemeriksaan keamanan sebelum aktif. Pertanyaan: {email}"
         },
         "tagDialogs": {
           "color": "Warna",
@@ -7994,6 +8039,9 @@
           "deleting": "Menghapus...",
           "pageDeleted": "Halaman dihapus",
           "qrCodeCreated": "Kode QR dibuat",
+          "qrCodeCreatedWithSamples": "Kode QR dibuat. Halaman ini masih berisi contoh dari templatnya",
+          "samplesStillOnPage": "{count, plural, other {# contoh masih ada di halaman.}} Pengunjung tidak akan melihat tautan contoh, tetapi mereka melihat teks dan foto contoh.",
+          "editPage": "Edit halaman",
           "shortLinkCopied": "Tautan singkat disalin",
           "couldntCopyTheLink": "Tidak dapat menyalin tautan"
         },
@@ -8018,6 +8066,11 @@
           "everyType": "Semua jenis",
           "removeFilter": "Hapus filter",
           "searchPages": "Cari halaman"
+        },
+        "planLine": {
+          "upload": "File hingga {free} di paket Gratis, {pro} di paket Pro.",
+          "published": "Di paket Gratis Anda mendapatkan {pages, plural, other {# halaman}}, file hingga {free}, dan footer “Made with QRdx”. Pro menghapus footer dan batas halaman, serta mendukung file hingga {pro}.",
+          "seePro": "Lihat Pro"
         }
       },
       "settings": {
@@ -8224,6 +8277,18 @@
         },
         "newCodeButton": {
           "newDynamicCode": "Kode dinamis baru"
+        },
+        "codeLiveCard": {
+          "title": "Kode Anda sudah aktif",
+          "body": "Kode ini tetap berfungsi di paket Gratis, tanpa tanggal berakhir. Jika dicetak untuk bisnis, Pro menambahkan:",
+          "customDomain": "Domain Anda sendiri pada tautan pendek",
+          "customSlug": "Bagian akhir tautan yang Anda pilih sendiri, bukan yang acak",
+          "scanEmails": "Email saat pemindaian pertama kode dan pada pemindaian ke-{first, number}, ke-{second, number} dan ke-{third, number}, plus ringkasan mingguan",
+          "linkControls": "Kata sandi, tanggal mulai dan berakhir, serta batas pemindaian",
+          "fullHistory": "Lihat kembali setiap pemindaian, bukan hanya {years, plural, one {# tahun} other {# tahun}} terakhir",
+          "price": "Pro seharga {month} per bulan atau {year} per tahun.",
+          "seePro": "Lihat Pro",
+          "hide": "Sembunyikan"
         }
       },
       "listSelection": {
@@ -8504,7 +8569,9 @@
         "whatsNew": "Yang baru",
         "backToLabel": "Kembali ke {label}",
         "expandSidebar": "Perluas sidebar",
-        "collapseSidebar": "Ciutkan sidebar"
+        "collapseSidebar": "Ciutkan sidebar",
+        "upgrade": "Upgrade",
+        "upgradeToPro": "Upgrade ke Pro"
       },
       "appTopbar": {
         "breadcrumb": "Breadcrumb",
@@ -8779,6 +8846,41 @@
         "signingYouOut": "Sedang mengeluarkan Anda…",
         "oneMoment": "Sebentar…",
         "pageTitle": "Keluar"
+      }
+    },
+    "success": {
+      "metaTitle": "Upgrade Anda",
+      "activeTitle": "Terima kasih telah upgrade",
+      "activeBody": "Paket {plan} Anda sudah aktif.",
+      "processingTitle": "Pembayaran diproses",
+      "processingBody": "Paket Anda aktif begitu Polar mengonfirmasi pembayaran, biasanya dalam waktu satu menit. Halaman ini memeriksa ulang secara otomatis selama sekitar satu menit.",
+      "checksStopped": "Proses ini memakan waktu lebih lama dari biasanya, dan halaman ini sudah berhenti memeriksa secara otomatis. Muat ulang halaman ini dalam beberapa menit. Jika paket Anda masih belum berubah setelah itu, hubungi <mail>{email}</mail>.",
+      "reload": "Muat ulang",
+      "checkNow": "Periksa sekarang",
+      "incompleteTitle": "Checkout belum selesai",
+      "incompleteBody": "Checkout ini tidak diselesaikan, jadi paket Anda tidak berubah.",
+      "failedTitle": "Pembayaran tidak berhasil",
+      "failedBody": "Paket Anda tidak berubah. Anda dapat mencoba lagi dari halaman harga.",
+      "backToPricing": "Kembali ke harga",
+      "endedTitle": "Paket ini telah berakhir",
+      "endedBody": "Langganan dari pembayaran ini sudah tidak aktif, sehingga akun ini menggunakan paket Gratis. Portal penagihan menunjukkan apa yang terjadi.",
+      "errorTitle": "Paket Anda tidak dapat dimuat",
+      "errorBody": "Terjadi kesalahan di pihak kami saat memuat paket Anda. Coba periksa lagi sebentar lagi.",
+      "unknownTitle": "Checkout tidak ditemukan",
+      "unknownBody": "Kami tidak dapat menemukan checkout ini di akun Anda. Jika Anda baru saja membayar, pastikan Anda masuk dengan akun yang Anda upgrade, atau kirim email ke <mail>{email}</mail>.",
+      "signedOutTitle": "Masuk untuk melihat paket Anda",
+      "signedOutBody": "Masuk dengan akun yang Anda upgrade untuk melihat apakah paket Anda sudah aktif.",
+      "signIn": "Masuk",
+      "goToDashboard": "Buka dasbor",
+      "manageSubscription": "Kelola langganan",
+      "scanEmailsOn": "Email pemindaian aktif: Anda akan menerima kabar tentang pemindaian pertama dan tonggak pencapaian. <link>Ubah di Pengaturan → Notifikasi</link>.",
+      "steps": {
+        "codesTitle": "Buat kode dinamis",
+        "codesBody": "Kode yang dapat Anda edit setelah dicetak, dengan analitik pemindaian.",
+        "domainTitle": "Tambahkan domain khusus",
+        "domainBody": "Sajikan tautan pendek Anda dari domain Anda sendiri.",
+        "teamTitle": "Undang tim Anda",
+        "teamBody": "Bagikan kode, halaman, dan tema tersimpan dengan rekan tim."
       }
     }
   },
@@ -9055,7 +9157,9 @@
       "device": "Perangkat",
       "preview": "{code} dipindai untuk pertama kalinya",
       "heading": "Kode Anda mendapat pemindaian pertama",
-      "body": "Seseorang baru saja memindai {code}. Kode QR Anda aktif dan berfungsi."
+      "body": "Seseorang baru saja memindai {code}. Kode QR Anda aktif dan berfungsi.",
+      "pro": "<link>Pro</link> juga mengirim email kepada Anda pada {first}, {second}, dan {third} pemindaian dan seterusnya, serta dapat mengirimkan ringkasan mingguan.",
+      "freeReason": "Anda menerima email ini karena kode yang Anda buat mendapat pemindaian pertamanya. QRdx hanya mengirim email ini sekali untuk setiap kode."
     },
     "scanMilestone": {
       "reached": "{code} mencapai {count, number} pemindaian",
@@ -9148,7 +9252,8 @@
       "askOwner": "{limit, select, dynamicCodes {Arsipkan satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} landingPages {Hapus satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} storage {Hapus file yang tidak lagi Anda perlukan, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} savedThemes {Hapus satu, atau minta pemilik ruang kerja untuk meningkatkan ke {plan}.} other {Minta pemilik ruang kerja untuk meningkatkan ke {plan}.}}",
       "makeRoom": "{limit, select, dynamicCodes {Arsipkan satu untuk memberi ruang.} landingPages {Hapus satu untuk memberi ruang.} storage {Hapus file yang tidak lagi Anda perlukan untuk memberi ruang.} savedThemes {Hapus satu untuk memberi ruang.} other {}}",
       "resets": "Diatur ulang {date}.",
-      "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}"
+      "keeps": "{limit, select, dynamicCodes {Kode yang ada tetap berfungsi.} landingPages {Halaman yang ada tetap aktif.} formResponses {Halaman tetap aktif. Formulir kembali menerima respons setelah pengaturan ulang.} storage {File yang sudah Anda unggah tetap tersedia.} other {}}",
+      "upgradeButton": "Upgrade ke {plan}"
     },
     "weeklyDigest": {
       "subject": "Minggu Anda di QRdx: {scans, plural, other {# pemindaian}}",
@@ -9167,6 +9272,27 @@
       "countries": "Dari mana orang memindai",
       "newCodesLine": "{count, plural, other {# kode baru}} minggu ini.",
       "open": "Buka dasbor Anda"
+    },
+    "personal": {
+      "reply": "Balas email ini dan balasan Anda akan sampai ke {name}.",
+      "stop": "Berhenti menerima catatan dari tim QRdx"
+    },
+    "personalNote": {
+      "reason": "Anda menerima email ini karena Anda memiliki akun QRdx."
+    },
+    "welcome": {
+      "subject": "Selamat datang di QRdx",
+      "greeting": "Halo {name},",
+      "intro": "Terima kasih telah mendaftar. QRdx membuat kode QR yang bisa Anda ubah setelah dicetak, dan menunjukkan kapan serta di mana kode tersebut dipindai.",
+      "try": "Tiga hal untuk dicoba lebih dulu:",
+      "makeCode": "<link>Buat kode dinamis.</link> Kode ini membuka tautan pendek yang tidak berubah, sehingga bisa langsung Anda cetak.",
+      "seeScans": "<link>Lihat pemindaiannya:</link> kapan, di mana, dan dari perangkat apa orang memindainya.",
+      "changeLink": "Ubah tujuan tautannya kapan pun Anda mau, bahkan setelah dicetak. Tanpa cetak ulang.",
+      "free": "Kode QR statis tetap gratis, dan kode yang Anda buat tetap berfungsi meskipun Anda berganti paket atau berhenti membayar. Paket Gratis juga mencakup {count} kode QR dinamis.",
+      "pro": "Jika Anda membutuhkan lebih, Pro seharga {monthly} per bulan atau {yearly} per tahun, dengan tambahan kode dinamis tanpa batas, {domains} domain kustom, peringatan email di setiap tonggak pemindaian, serta ringkasan mingguan jika Anda menginginkannya.",
+      "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
+      "reply": "Jika ada kendala, atau Anda tidak yakin cara melakukan sesuatu, balas email ini. Setiap balasan dibaca oleh seorang manusia.",
+      "reason": "Anda menerima email ini karena baru saja membuat akun QRdx."
     }
   },
   "codeActions": {
@@ -9844,6 +9970,8 @@
       "qrCodesAlreadyPrintedWith2": "Kode QR yang sudah dicetak dengan {shortLink} akan berhenti berfungsi. Akhiran tautannya ikut berpindah bersama kode jika tersedia di sana, jika tidak, kode mendapat akhiran baru.",
       "theQrCodeChangesTo": "Kode QR berubah ke tautan baru, jadi unduh lagi setelah menyimpan. Kode yang sudah Anda cetak tetap berfungsi.",
       "downloadItAndPrintIt": "Unduh dan cetak di mana saja. Anda dapat mengubah tujuannya kapan saja.",
+      "heldDescription": "Kode ini sudah disimpan, tetapi dinonaktifkan sampai QRdx memeriksa alamatnya. Jangan dicetak dulu.",
+      "heldBody": "QRdx memeriksa beberapa alamat sebelum kode dari akun baru diaktifkan, jadi kode ini dinonaktifkan untuk sementara. Jangan dicetak dulu: halamannya di dasbor Anda akan menunjukkan kapan kode ini aktif.",
       "itEncodesAShortLink": "Kode ini menyandikan tautan pendek, sehingga Anda dapat mengubah tujuannya setelah dicetak.",
       "saving": "Menyimpan...",
       "creating": "Membuat...",

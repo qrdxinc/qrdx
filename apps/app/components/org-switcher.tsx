@@ -86,7 +86,7 @@ export function OrgSwitcher({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [creating, setCreating] = useState(false);
-  const openGetProDialog = useGetProDialogStore((s) => s.openGetProDialog);
+  const openUpgradeDialog = useGetProDialogStore((s) => s.openUpgradeDialog);
 
   if (!shell) return null;
   const active: ShellWorkspace = shell.workspace;
@@ -106,7 +106,8 @@ export function OrgSwitcher({
           business: PLAN_NAMES.business,
         }),
       );
-      openGetProDialog();
+      // More workspaces follow the person's own plan.
+      openUpgradeDialog("pro", { payer: "self" });
       return;
     }
     setCreating(true);

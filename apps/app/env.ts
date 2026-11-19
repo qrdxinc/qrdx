@@ -2,6 +2,7 @@ import { keys as analytics } from "@repo/analytics/keys";
 import { keys as auth } from "@repo/auth/keys";
 import { keys as config } from "@repo/config/keys";
 import { keys as database } from "@repo/database/keys";
+import { keys as email } from "@repo/email/keys";
 import { isConsoleOrigin } from "@repo/next-config/console-zone";
 import {
   onValidationError,
@@ -26,7 +27,15 @@ import { z } from "zod";
 // Template with every variable explained: apps/app/.env.example.
 export const env = validateTogether(() =>
   createEnv({
-    extends: [analytics(), auth(), config(), core(), database(), rateLimit()],
+    extends: [
+      analytics(),
+      auth(),
+      config(),
+      core(),
+      database(),
+      email(),
+      rateLimit(),
+    ],
     server: {
       // AI - Vercel AI Gateway (AI themes, prompt enhancement, AI QR art and
       // the docs assistant; models per task in lib/ai/models.ts)
@@ -119,11 +128,6 @@ export const env = validateTogether(() =>
       R2_BUCKET: z.string().min(1).optional(),
       // Public bucket URL or custom domain for served files (else presigned GETs)
       R2_PUBLIC_BASE_URL: z.url().optional(),
-
-      // Email: Resend (emails are skipped and logged when unset)
-      RESEND_API_KEY: z.string().min(1).optional(),
-      // Sender, e.g. "QRdx <hello@qrdx.dev>"
-      EMAIL_FROM: z.string().regex(/\S@\S/).optional(),
 
       // Google Web Risk lookups of destination URLs
       WEB_RISK_API_KEY: z.string().min(1).optional(),
@@ -318,8 +322,6 @@ export const env = validateTogether(() =>
       R2_SECRET_ACCESS_KEY: process.env.R2_SECRET_ACCESS_KEY,
       R2_BUCKET: process.env.R2_BUCKET,
       R2_PUBLIC_BASE_URL: process.env.R2_PUBLIC_BASE_URL,
-      RESEND_API_KEY: process.env.RESEND_API_KEY,
-      EMAIL_FROM: process.env.EMAIL_FROM,
       WEB_RISK_API_KEY: process.env.WEB_RISK_API_KEY,
       SAFETY_YOUNG_ACCOUNT_DAYS: process.env.SAFETY_YOUNG_ACCOUNT_DAYS,
       SAFETY_YOUNG_ACCOUNT_DYNAMIC_PER_HOUR:

@@ -24,6 +24,7 @@ import { localizedMetadata } from "@/lib/i18n/metadata";
 import { requireLocale } from "@/lib/i18n/server";
 import { baseUrl } from "@/lib/metadata";
 import { getPlan, PLAN_LIMITS, type Plan } from "@/lib/plans";
+import { parseBillingInterval } from "@/lib/pricing";
 import {
   CURRENCY_COOKIE,
   CURRENCY_PARAM,
@@ -41,6 +42,7 @@ const OPTIONS: PricingOptions = {
   customDomains: isFeatureAvailable("customDomains"),
   fileStorage: isFeatureAvailable("fileStorage"),
   emailAlerts: isFeatureAvailable("email"),
+  freeFirstScan: isFeatureAvailable("teamNotes"),
   sso: isFeatureAvailable("sso"),
   auditLog: isFeatureAvailable("auditLog"),
   clientPortal: isFeatureAvailable("clientPortal"),
@@ -140,6 +142,7 @@ export default async function PricingPage({
         <PricingSection
           currency={currency}
           currentPlan={plan}
+          initialInterval={parseBillingInterval(query.interval)}
           description={buildPricingIntro(OPTIONS, pricing)}
           highlights={buildHighlights(PLAN_LIMITS, OPTIONS, pricing)}
         />

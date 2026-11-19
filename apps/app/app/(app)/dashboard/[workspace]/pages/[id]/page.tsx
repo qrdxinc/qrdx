@@ -8,8 +8,17 @@ import { requireDashboardScope } from "@/app/(app)/dashboard/codes/_lib/qr-codes
 import { getPageForEdit } from "@/app/(app)/dashboard/pages/_lib/landing-pages";
 import { getSavedThemePalettes } from "@/app/(app)/dashboard/pages/_lib/saved-themes";
 import { PageEditor } from "@/components/landing/editor/page-editor";
+import {
+  type PagePlanCopy,
+  PagePlanLineProvider,
+} from "@/components/landing/editor/page-plan-line";
 import { hostedPageBranding } from "@/ee/white-label/access";
+import { getCheckoutOpen } from "@/lib/checkout-availability";
 import { HttpError } from "@/lib/error-response";
+import { formatBytes } from "@/lib/files/types";
+import { getAppTranslations } from "@/lib/i18n/app-locale";
+import { type PagePlanLine, pagePlanLine } from "@/lib/landing/plan-line";
+import { templateSampleTexts } from "@/lib/landing/template-samples";
 import { getTemplate } from "@/lib/landing/templates";
 import { can } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
@@ -44,7 +53,18 @@ export default async function EditLandingPage({
     page.codes.find((item) => !item.inTrash) ??
     null;
 
-  return (
+  // Free's page limits next to uploads and after publishing, for people
+  // who can buy Pro here.
+  const planLine = pagePlanLine(
+    plan,
+    { free: getPlanLimits("free"), pro: getPlanLimits("pro") },
+    {
+      canBuyPro: getCheckoutOpen().pro && can(scope.role, "billing.manage"),
+    },
+  );
+  const planCopy = planLine && (await pagePlanCopy(planLine));
+
+  const editor = (
     <PageEditor
       branding={{
         badge: limits.landingPageBadge,
@@ -75,8 +95,25 @@ export default async function EditLandingPage({
         version: page.version,
         typeLabel: getTemplate(page.type)?.label ?? "Page",
       }}
+      sampleTexts={templateSampleTexts(page.type)}
       savedThemes={savedThemes}
       storageEnabled={isStorageConfigured}
     />
   );
+
+  return <PagePlanLineProvider value={planCopy}>{editor}</PagePlanLineProvider>;
+}
+
+/** The Free/Pro line's words, in the person's language. */
+async function pagePlanCopy(line: PagePlanLine): Promise<PagePlanCopy> {
+  const t = await getAppTranslations("app.dashboard.pages.planLine");
+  const sizes = {
+    free: formatBytes(line.freeFileBytes),
+    pro: formatBytes(line.proFileBytes),
+  };
+  return {
+    upload: t("upload", sizes),
+    published: t("published", { ...sizes, pages: line.freePages }),
+    seePro: t("seePro"),
+  };
 }

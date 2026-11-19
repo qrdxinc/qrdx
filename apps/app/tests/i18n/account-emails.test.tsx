@@ -7,36 +7,36 @@
 // notice: the account's language, else English, never the request's).
 // Nothing is emailed: sendEmail is captured, against in-memory tables.
 import { render } from "@react-email/render";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { signInMethodLabel } from "@/lib/account/new-sign-in-notice";
 import {
   CONFIRMATION_CODE_SUBJECT,
   ConfirmationCodeEmail,
   confirmationCodeSubject,
-} from "@/lib/email/templates/confirmation-code";
+} from "@repo/email/templates/confirmation-code";
 import {
   NEW_SIGN_IN_SUBJECT,
   NewSignInEmail,
   newSignInSubject,
-} from "@/lib/email/templates/new-sign-in";
+} from "@repo/email/templates/new-sign-in";
 import {
   PASSKEY_NOTICE_SUBJECTS,
   PasskeyNoticeEmail,
   passkeyNoticeSubject,
-} from "@/lib/email/templates/passkey-notice";
+} from "@repo/email/templates/passkey-notice";
 import {
   PAYOUT_EMAIL_NOTICE_SUBJECT,
   PayoutEmailNoticeEmail,
   payoutEmailNoticeSubject,
-} from "@/lib/email/templates/payout-email-notice";
-import type { SecurityEventDetails } from "@/lib/email/templates/security-parts";
+} from "@repo/email/templates/payout-email-notice";
+import type { SecurityEventDetails } from "@repo/email/templates/security-parts";
 import {
   backupCodesLeftText,
   TwoFactorNoticeEmail,
   twoFactorNoticeLines,
   twoFactorNoticeSubject,
-} from "@/lib/email/templates/two-factor-notice";
-import { emailIntl } from "@/lib/i18n/email";
+} from "@repo/email/templates/two-factor-notice";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { signInMethodLabel } from "@/lib/account/new-sign-in-notice";
+import { ENGLISH_EMAIL, emailIntl } from "@/lib/i18n/email";
 import { formatSecurityTime } from "@/lib/security/request-details";
 import de from "@/messages/de.json";
 import en from "@/messages/en.json";
@@ -332,15 +332,19 @@ describe("the account and security emails in Spanish", async () => {
   });
 });
 
-describe("in English by default, as before", () => {
+describe("in English, as before", () => {
   it("keeps the subjects", () => {
-    expect(confirmationCodeSubject()).toBe(CONFIRMATION_CODE_SUBJECT);
-    expect(newSignInSubject()).toBe(NEW_SIGN_IN_SUBJECT);
-    expect(passkeyNoticeSubject("removed")).toBe(
+    expect(confirmationCodeSubject(ENGLISH_EMAIL)).toBe(
+      CONFIRMATION_CODE_SUBJECT,
+    );
+    expect(newSignInSubject(ENGLISH_EMAIL)).toBe(NEW_SIGN_IN_SUBJECT);
+    expect(passkeyNoticeSubject("removed", ENGLISH_EMAIL)).toBe(
       PASSKEY_NOTICE_SUBJECTS.removed,
     );
-    expect(payoutEmailNoticeSubject()).toBe(PAYOUT_EMAIL_NOTICE_SUBJECT);
-    expect(twoFactorNoticeSubject("on")).toBe(
+    expect(payoutEmailNoticeSubject(ENGLISH_EMAIL)).toBe(
+      PAYOUT_EMAIL_NOTICE_SUBJECT,
+    );
+    expect(twoFactorNoticeSubject("on", ENGLISH_EMAIL)).toBe(
       en.emails.twoFactorNotice.on.subject,
     );
     expect(signInMethodLabel("email-otp", "totp")).toBe(

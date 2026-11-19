@@ -52,6 +52,7 @@ import {
 import { enforceRateLimits } from "@/lib/request-guards";
 import { mapWithConcurrency } from "@/lib/safety/check";
 import { screenUrlChange } from "@/lib/safety/destinations";
+import { type HoldRequest, writeHoldReports } from "@/lib/safety/velocity";
 import { withPreciseLocation } from "@/lib/scan-location/settings";
 import { type ActiveScope, getActiveScope, isInScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
@@ -209,6 +210,7 @@ const codeColumns = {
   organizationId: qrCode.organizationId,
   kind: qrCode.kind,
   destinationUrl: qrCode.destinationUrl,
+  isActive: qrCode.isActive,
   scanCount: qrCode.scanCount,
   routing: qrCode.routing,
   utm: qrCode.utm,
@@ -320,7 +322,7 @@ const routingUrls = (config: RoutingConfig | null): string[] =>
 
 /**
  * lib/safety screen for URLs the rules add (unchanged ones aren't re-checked).
- * Throws for unsafe URLs; true = switch the code off pending review, as for
+ * Throws for unsafe URLs; holds = switch the code off pending review, as for
  * a new main destination.
  */
 async function screenRoutingUrls(
@@ -328,7 +330,7 @@ async function screenRoutingUrls(
   row: CodeRow,
   next: RoutingConfig,
   previous: RoutingConfig | null,
-): Promise<boolean> {
+): Promise<HoldRequest[]> {
   const known = new Set(routingUrls(previous));
   const added = [...new Set(routingUrls(next))].filter(
     (url) => !known.has(url),
@@ -340,7 +342,7 @@ async function screenRoutingUrls(
       field: "routing rule",
     }),
   );
-  return holds.some(Boolean);
+  return holds.filter((hold) => hold !== null);
 }
 
 const withoutEnabled = (rule: RoutingConfig["rules"][number]) =>
@@ -441,13 +443,14 @@ export async function saveCodeRouting(
         throw planRequired("routing", "routing");
       }
       if (next) assertRoutingUrls(next);
-      const hold = next
+      const holds = next
         ? await screenRoutingUrls(scope, row, next, previous)
-        : false;
+        : [];
       const saved = await saveColumn(scope, row, {
         routing: next ? stampSplits(next, previous, new Date()) : null,
-        ...(hold ? { isActive: false } : {}),
+        ...(holds.length > 0 ? { isActive: false } : {}),
       });
+      await writeHoldReports(holds);
       recordAuditEvent(scope, () =>
         codeEventsByIds("code.routing_changed", [row.id], {
           before: { rules: previous?.rules.length ?? 0 },

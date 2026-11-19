@@ -11,6 +11,7 @@ import { getSavedThemePalettes } from "@/app/(app)/dashboard/pages/_lib/saved-th
 import { PageEditor } from "@/components/landing/editor/page-editor";
 import { hostedPageBranding } from "@/ee/white-label/access";
 import { HttpError } from "@/lib/error-response";
+import { templateSampleTexts } from "@/lib/landing/template-samples";
 import { buildTemplateContent, getTemplate } from "@/lib/landing/templates";
 import { can } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
@@ -86,6 +87,7 @@ export default async function ChangeCodeTypePage({
         version: 0,
         typeLabel: template.label,
       }}
+      sampleTexts={templateSampleTexts(template.type)}
       savedThemes={savedThemes}
       storageEnabled={isStorageConfigured}
       switchCode={{

@@ -4,7 +4,7 @@
  * is ./new-sign-in-notice-server.tsx.
  */
 import type { SecondStep } from "@repo/auth/new-sign-in";
-import { isReservedEmailAddress } from "@/lib/email/reserved-address";
+import { isReservedEmailAddress } from "@repo/email/reserved-address";
 import { type EmailIntl, ENGLISH_EMAIL } from "@/lib/i18n/email";
 import type { NoticeDeliveryDeps } from "./email-change";
 
@@ -51,7 +51,7 @@ export function signInMethodLabel(
 
 // Test and e2e accounts use reserved addresses (@qrdx.test) and sign in
 // from fresh browsers all the time; they're never emailed.
-export { isReservedEmailAddress } from "@/lib/email/reserved-address";
+export { isReservedEmailAddress } from "@repo/email/reserved-address";
 
 /**
  * Emails the alert where outbound delivery is on, writes it to the console in

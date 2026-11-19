@@ -36,7 +36,7 @@ export function CreateWorkspaceDialog({
   const t = useTranslations("app.workspaces.createWorkspaceDialog");
   const router = useRouter();
   const refresh = useRefreshTeams();
-  const openGetProDialog = useGetProDialogStore((s) => s.openGetProDialog);
+  const openUpgradeDialog = useGetProDialogStore((s) => s.openUpgradeDialog);
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [slugEdited, setSlugEdited] = useState(false);
@@ -58,7 +58,8 @@ export function CreateWorkspaceDialog({
         toast.error(result.error);
         if (result.upgrade) {
           close();
-          openGetProDialog();
+          // More workspaces follow the person's own plan.
+          openUpgradeDialog("pro", { payer: "self" });
         }
         return;
       }

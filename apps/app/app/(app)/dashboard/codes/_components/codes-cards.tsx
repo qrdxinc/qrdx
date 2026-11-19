@@ -228,6 +228,7 @@ export function CodesCards({
                 {!inTrash && <FavoriteButton code={code} />}
                 {quiet && (
                   <StatusBadge
+                    held={code.heldForReview}
                     paused={Boolean(code.pausedAt)}
                     status={code.status}
                   />

@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "Compare plans and prices",
       "maybeLater": "Maybe later",
       "thisFeatureIsPartOf": "This feature is part of the Business plan.",
-      "thisFeatureIsPartOf2": "This feature is part of Pro and Business."
+      "thisFeatureIsPartOf2": "This feature is part of Pro and Business.",
+      "ownerUpgrades": "Only this workspace's owners and billing members can change its plan. Ask one of them to upgrade to {plan}."
+    },
+    "checkoutButtons": {
+      "month": "{plan} · {price} a month",
+      "year": "{plan} · {price} a year",
+      "monthNoPrice": "{plan} monthly",
+      "yearNoPrice": "{plan} yearly",
+      "note": "Checkout is on Polar; local taxes may be added. Cancel anytime.",
+      "switchTo": "Switch to {plan}",
+      "openPortal": "Open portal",
+      "failed": "Checkout didn't open. Try again in a moment.",
+      "subscribed": "You already have a subscription. Change your plan in the billing portal.",
+      "unavailable": "Checkout isn't available here right now.",
+      "rateLimited": "Too many checkout attempts. Try again in a few minutes."
     },
     "themeToggle": {
       "toggleTheme": "Toggle theme"
@@ -729,7 +743,8 @@
         "storage": "{size} ({perFile} per file)",
         "apiBulk": "{count} + bulk creation",
         "clientReportsBadge": "With a small footer credit",
-        "clientReportsWhiteLabel": "White-label"
+        "clientReportsWhiteLabel": "White-label",
+        "firstScanOnly": "First scan of each dynamic code"
       }
     },
     "guarantee": {
@@ -3677,6 +3692,8 @@
       "creditsLeft": "<count>{remaining, number} of {limit, number}</count> AI art images left this month{pooled, select, yes { (shared by your team)} other {}}, resets {resets}. This run uses {variations, number}; failed images are refunded.",
       "notEnoughLeft": "Not enough left for {variations, number}: pick fewer variations.",
       "notEnoughLeftOrUpgrade": "Not enough left for {variations, number}: pick fewer variations or upgrade.",
+      "noneLeft": "None left this month.",
+      "noneLeftUpgrade": "None left this month. Upgrade to make more now.",
       "moreArtistic": "More artistic",
       "clearerCode": "Clearer code",
       "followsYourPrompt": "Follows your prompt",
@@ -4226,6 +4243,8 @@
         "creditsLeft": "<count>{remaining, number} of {limit, number}</count> AI art images left this month{pooled, select, yes { (shared by your team)} other {}}, resets {resets}. This run uses {variations, number}.",
         "notEnoughLeft": "Not enough left: pick fewer variations.",
         "notEnoughLeftOrUpgrade": "Not enough left: pick fewer variations or upgrade.",
+        "noneLeft": "None left this month.",
+        "noneLeftUpgrade": "None left this month. Upgrade to make more now.",
         "showResults": "{count, plural, one {Show your result} other {Show your results}}",
         "moreArtistic": "More artistic",
         "clearerCode": "Clearer code",
@@ -5056,6 +5075,16 @@
       "dynamic": "Dynamic",
       "editLaterCountScans": "Edit later, count scans",
       "signedOutNote": "Dynamic needs a free account. Your code keeps working whatever happens to your plan.",
+      "createDynamicCode": "Create dynamic code",
+      "addYourAddressFirst": "Add your website address above first.",
+      "heldTitle": "Saved, but not live yet",
+      "heldBody": "QRdx checks some addresses before a new account's code goes live, so this code is switched off for now. Don't print it yet: your QR code still shows the address itself.",
+      "openInDashboard": "Open in dashboard",
+      "updateSwitchedOffTitle": "Saved, but this code is switched off",
+      "updateSwitchedOffBody": "Printed copies won't open anything until it's back on. Your dashboard shows why.",
+      "updatePausedBody": "This code is paused, so printed copies go to its fallback or a paused page until you resume it in the dashboard.",
+      "resumeDroppedTitle": "Your QR code is still static",
+      "resumeDroppedBody": "It wasn't made dynamic because the address changed or the sign-in took too long. Pick Dynamic again to make it dynamic.",
       "linkOptions": "Link options…",
       "printedCodesStillOpenDestinationurl": "Printed codes still open <span>{destinationUrl}</span>.",
       "pointItToTheNew": "Point it to the new address",
@@ -6832,7 +6861,18 @@
           "webhookAdded": "Webhook added",
           "notificationsSaved": "Notifications saved",
           "testMessageSentToValue": "Test message sent to {value}",
-          "webhookRemoved": "Webhook removed"
+          "webhookRemoved": "Webhook removed",
+          "onByDefaultOwnCodes": "On by default for the codes you make.",
+          "everyCodeAlerts": "Get them for every code in this workspace",
+          "emailAlertsAreProFirstScan": "On Free you get one email when each dynamic code you make gets its first scan. The other email alerts and the weekly digest are part of Pro and Business."
+        },
+        "teamNotes": {
+          "title": "Notes from the QRdx team",
+          "description": "A welcome when you sign up, one email when each new code gets its first scan (on Free), and now and then a personal note from someone at QRdx. Replying reaches a person.",
+          "label": "Get notes from the team",
+          "hint": "Your alerts, digests and security emails don't change.",
+          "turnedOn": "Notes from the team are on",
+          "turnedOff": "Notes from the team are off"
         },
         "page": {
           "emailIsntSetUpOn": "Email isn't set up on this server (RESEND_API_KEY and EMAIL_FROM), so email alerts and digests are saved but not sent. Slack and Discord alerts still work. <link>Setup guide</link>",
@@ -6871,6 +6911,7 @@
           "scansAcrossEveryDynamicCode": "Scans across every dynamic code in this workspace.",
           "dateRange": "Date range",
           "yourPlanKeepsAShorter": "Your plan keeps a shorter scan history",
+          "comparePlans": "Compare plans",
           "dynamicCodes": "Dynamic codes",
           "totalScans": "Total scans",
           "scansInRange": "Scans in range",
@@ -7349,9 +7390,10 @@
           "thePasswordWillBeRemoved": "The password will be removed when you save",
           "noPassword": "No password",
           "noLimit": "No limit",
-          "heldForReview": "Held for review",
+          "heldForReview": "Waiting for a safety check",
+          "heldQuestions": "Questions? Write to {email}.",
           "turnedOffByQrdx": "Turned off by QRdx",
-          "ourAutomatedChecksFlaggedA": "Our automated checks flagged a link on this code (for example a URL shortener, an IP address or a lookalike domain), so it stays off until a reviewer approves it, usually within a day. Nothing else is needed from you.",
+          "ourAutomatedChecksFlaggedA": "Our automated checks flagged a link on this code (for example a URL shortener, an IP address or a lookalike domain), so it stays off until a person at QRdx has checked it. Nothing else is needed from you.",
           "thisCodeWasSwitchedOff": "This code was switched off after an abuse review and doesn't redirect. Contact support@qrdx.dev if you think this is a mistake.",
           "yourCurrentSettingsKeepWorking": "Your current settings keep working, and you can remove them any time.",
           "timesAreInYourTime": " Times are in your time zone ({timeZone}).",
@@ -7633,6 +7675,7 @@
           "accessSchedule": "Access & schedule"
         },
         "codeOverview": {
+          "heldNote": "Waiting for a safety check. Links from new accounts to some kinds of addresses, such as URL shorteners, IP addresses or lookalike domains, are checked by a person before they go live, so this code is off until then. Don't print it yet. Questions: {email}",
           "editLink": "Edit link",
           "changeType": "Change type",
           "shortLinkEncodedInThe": "Short link (encoded in the QR code)",
@@ -8195,7 +8238,9 @@
         "statusBadge": {
           "paused": "Paused",
           "pausedScansGoToThe": "Paused: scans go to the fallback URL or a neutral 'paused' page",
-          "turnedOffByQrdxModeration": "Turned off by QRdx moderation. Contact support if this is a mistake."
+          "turnedOffByQrdxModeration": "Turned off by QRdx moderation. Contact support if this is a mistake.",
+          "held": "Safety check",
+          "heldTitle": "Waiting for a safety check before it goes live. Questions: {email}"
         },
         "tagDialogs": {
           "color": "Color",
@@ -8393,6 +8438,9 @@
           "deleting": "Deleting...",
           "pageDeleted": "Page deleted",
           "qrCodeCreated": "QR code created",
+          "qrCodeCreatedWithSamples": "QR code created. The page still has samples from its template",
+          "samplesStillOnPage": "{count, plural, one {# sample is still on the page.} other {# samples are still on the page.}} Visitors never see sample links, but they do see sample text and photos.",
+          "editPage": "Edit page",
           "shortLinkCopied": "Short link copied",
           "couldntCopyTheLink": "Couldn't copy the link"
         },
@@ -8417,6 +8465,11 @@
           "everyType": "Every type",
           "removeFilter": "Remove filter",
           "searchPages": "Search pages"
+        },
+        "planLine": {
+          "upload": "Files up to {free} on Free, {pro} on Pro.",
+          "published": "On Free you get {pages, plural, one {# page} other {# pages}}, files up to {free} and a “Made with QRdx” footer. Pro removes the footer and the page limit, and takes files up to {pro}.",
+          "seePro": "See Pro"
         }
       },
       "settings": {
@@ -8623,6 +8676,18 @@
         },
         "newCodeButton": {
           "newDynamicCode": "New dynamic code"
+        },
+        "codeLiveCard": {
+          "title": "Your code is live",
+          "body": "It keeps working on Free, with no end date. If it goes on print for a business, Pro adds:",
+          "customDomain": "Your own domain on the short link",
+          "customSlug": "A back-half you choose instead of a random one",
+          "scanEmails": "Emails on a code’s first scan and at {first, number}, {second, number} and {third, number} scans, plus a weekly summary",
+          "linkControls": "Passwords, start and end dates, and scan limits",
+          "fullHistory": "Look back over every scan, not only the last {years, plural, one {year} other {# years}}",
+          "price": "Pro is {month} a month or {year} a year.",
+          "seePro": "See Pro",
+          "hide": "Hide"
         }
       },
       "listSelection": {
@@ -8903,7 +8968,9 @@
         "whatsNew": "What's new",
         "backToLabel": "Back to {label}",
         "expandSidebar": "Expand sidebar",
-        "collapseSidebar": "Collapse sidebar"
+        "collapseSidebar": "Collapse sidebar",
+        "upgrade": "Upgrade",
+        "upgradeToPro": "Upgrade to Pro"
       },
       "appTopbar": {
         "breadcrumb": "Breadcrumb",
@@ -9178,6 +9245,41 @@
         "signingYouOut": "Signing you out…",
         "oneMoment": "One moment…",
         "pageTitle": "Sign out"
+      }
+    },
+    "success": {
+      "metaTitle": "Your upgrade",
+      "activeTitle": "Thanks for upgrading",
+      "activeBody": "Your {plan} plan is active.",
+      "processingTitle": "Payment processing",
+      "processingBody": "Your plan switches on as soon as Polar confirms the payment, usually within a minute. This page checks again on its own for about a minute.",
+      "checksStopped": "It’s taking longer than usual, and this page has stopped checking on its own. Reload it in a few minutes. If your plan still hasn’t changed after that, write to <mail>{email}</mail>.",
+      "reload": "Reload",
+      "checkNow": "Check now",
+      "incompleteTitle": "Checkout not finished",
+      "incompleteBody": "This checkout wasn’t completed, so your plan hasn’t changed.",
+      "failedTitle": "The payment didn’t go through",
+      "failedBody": "Your plan hasn’t changed. You can try again from the pricing page.",
+      "backToPricing": "Back to pricing",
+      "endedTitle": "This plan has ended",
+      "endedBody": "The subscription from this checkout isn’t active any more, so this account is on Free. The billing portal shows what happened.",
+      "errorTitle": "We couldn’t load your plan",
+      "errorBody": "Something went wrong on our side while loading your plan. Check again in a moment.",
+      "unknownTitle": "No checkout found",
+      "unknownBody": "We couldn’t find this checkout on your account. If you just paid, make sure you’re signed in with the account you upgraded, or write to <mail>{email}</mail>.",
+      "signedOutTitle": "Sign in to see your plan",
+      "signedOutBody": "Sign in with the account you upgraded to see whether your plan is active.",
+      "signIn": "Sign in",
+      "goToDashboard": "Go to the dashboard",
+      "manageSubscription": "Manage subscription",
+      "scanEmailsOn": "Scan emails are on: you'll hear about first scans and milestones. <link>Change them in Settings → Notifications</link>.",
+      "steps": {
+        "codesTitle": "Create dynamic codes",
+        "codesBody": "Codes you can edit after printing, with scan analytics.",
+        "domainTitle": "Add a custom domain",
+        "domainBody": "Serve your short links from your own domain.",
+        "teamTitle": "Invite your team",
+        "teamBody": "Share codes, pages and saved themes with teammates."
       }
     }
   },
@@ -9454,7 +9556,9 @@
       "device": "Device",
       "preview": "{code} was scanned for the first time",
       "heading": "Your code got its first scan",
-      "body": "Someone just scanned {code}. Your QR code is live and working."
+      "body": "Someone just scanned {code}. Your QR code is live and working.",
+      "pro": "<link>Pro</link> also emails you at {first}, {second} and {third} scans and beyond, and can send you a weekly summary.",
+      "freeReason": "You're getting this because a code you made got its first scan. QRdx sends this once per code."
     },
     "scanMilestone": {
       "reached": "{code} reached {count, number} scans",
@@ -9547,7 +9651,8 @@
       "askOwner": "{limit, select, dynamicCodes {Archive one, or ask a workspace owner to upgrade to {plan}.} landingPages {Delete one, or ask a workspace owner to upgrade to {plan}.} storage {Delete files you no longer need, or ask a workspace owner to upgrade to {plan}.} savedThemes {Delete one, or ask a workspace owner to upgrade to {plan}.} other {Ask a workspace owner to upgrade to {plan}.}}",
       "makeRoom": "{limit, select, dynamicCodes {Archive one to make room.} landingPages {Delete one to make room.} storage {Delete files you no longer need to make room.} savedThemes {Delete one to make room.} other {}}",
       "resets": "Resets {date}.",
-      "keeps": "{limit, select, dynamicCodes {Existing codes keep working.} landingPages {Existing pages stay live.} formResponses {Pages stay live. Forms accept responses again after the reset.} storage {Files you've uploaded stay available.} other {}}"
+      "keeps": "{limit, select, dynamicCodes {Existing codes keep working.} landingPages {Existing pages stay live.} formResponses {Pages stay live. Forms accept responses again after the reset.} storage {Files you've uploaded stay available.} other {}}",
+      "upgradeButton": "Upgrade to {plan}"
     },
     "weeklyDigest": {
       "subject": "Your QRdx week: {scans, plural, one {# scan} other {# scans}}",
@@ -9566,6 +9671,27 @@
       "countries": "Where people scanned",
       "newCodesLine": "{count, plural, one {# new code} other {# new codes}} this week.",
       "open": "Open your dashboard"
+    },
+    "personal": {
+      "reply": "Reply to this email and it reaches {name}.",
+      "stop": "Stop notes from the QRdx team"
+    },
+    "personalNote": {
+      "reason": "You're getting this because you have a QRdx account."
+    },
+    "welcome": {
+      "subject": "Welcome to QRdx",
+      "greeting": "Hi {name},",
+      "intro": "Thanks for signing up. QRdx makes QR codes you can change after they're printed, and shows you when and where they're scanned.",
+      "try": "Three things to try first:",
+      "makeCode": "<link>Make a dynamic code.</link> It opens a short link that stays the same, so you can print it right away.",
+      "seeScans": "<link>Watch its scans:</link> when, where and on which devices people scan it.",
+      "changeLink": "Change where it points whenever you like, even after it's printed. No reprinting.",
+      "free": "Static codes stay free, and the codes you make keep working if you change plans or stop paying. Free also includes {count} dynamic codes.",
+      "pro": "If you need more, Pro is {monthly} a month or {yearly} a year and adds unlimited dynamic codes, {domains} custom domains, email alerts at every scan milestone, and a weekly summary if you want one.",
+      "taxes": "Local taxes may be added at checkout.",
+      "reply": "If anything gets in your way, or you're not sure how to do something, reply to this email. A person reads every reply.",
+      "reason": "You're getting this because you just made a QRdx account."
     }
   },
   "codeActions": {
@@ -10243,6 +10369,8 @@
       "qrCodesAlreadyPrintedWith2": "QR codes already printed with {shortLink} will stop working. Its back-half moves with the code when it's free there, otherwise the code gets a new one.",
       "theQrCodeChangesTo": "The QR code changes to the new link, so download it again after saving. Codes you already printed keep working.",
       "downloadItAndPrintIt": "Download it and print it anywhere. You can change where it points at any time.",
+      "heldDescription": "It's saved, but switched off until QRdx checks its address. Don't print it yet.",
+      "heldBody": "QRdx checks some addresses before a new account's code goes live, so this code is switched off for now. Don't print it yet: its page in your dashboard shows when it's on.",
       "itEncodesAShortLink": "It encodes a short link, so you can change where it points after printing.",
       "saving": "Saving...",
       "creating": "Creating...",

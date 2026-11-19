@@ -57,7 +57,9 @@ import { PLAN_NAMES } from "@/lib/pricing";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { signInPath } from "@/lib/safe-redirect";
 import { screenNewCodes, screenUrlChange } from "@/lib/safety/destinations";
+import { heldForReviewIds } from "@/lib/safety/holds";
 import { recheckAfterResponse } from "@/lib/safety/recheck";
+import { type HoldRequest, writeHoldReports } from "@/lib/safety/velocity";
 import { asksPreciseLocation } from "@/lib/scan-location/server";
 import {
   type ActiveScope,
@@ -264,6 +266,17 @@ export interface QrCodeView {
   createdBy: string;
   /** Asks scanners for precise location (pixels.preciseLocation, lib/scan-location) */
   preciseLocation?: boolean;
+  /**
+   * Paused by its owner (lib/redirect/lifecycle.ts): status stays "active",
+   * but scans go to the fallback URL or a "paused" page until it's resumed.
+   */
+  paused?: boolean;
+  /**
+   * Switched off ("disabled") only while a safety check runs: a new
+   * account's address waits for a person (lib/safety/holds.ts), not a
+   * moderation decision. Dashboard wording only; never in the REST API.
+   */
+  heldForReview?: boolean;
 }
 
 type QrCodeRow = typeof qrCode.$inferSelect;
@@ -302,15 +315,27 @@ export function toCodeView(
     organizationId: row.organizationId,
     createdBy: row.userId,
     preciseLocation: asksPreciseLocation(row.pixels),
+    paused: row.pausedAt !== null,
   };
 }
 
-/** Views for rows, with their custom domains loaded in one query. */
+/**
+ * Views for rows, with their custom domains loaded in one query, and the
+ * switched-off ones that are only held for a safety check marked.
+ */
 async function toCodeViews(rows: QrCodeRow[]): Promise<QrCodeView[]> {
-  const domains = await getDomainRefs(rows.map((row) => row.domainId));
-  return rows.map((row) =>
-    toCodeView(row, row.domainId ? (domains.get(row.domainId) ?? null) : null),
-  );
+  const off = rows.filter((row) => !row.isActive).map((row) => row.id);
+  const [domains, held] = await Promise.all([
+    getDomainRefs(rows.map((row) => row.domainId)),
+    heldForReviewIds(off),
+  ]);
+  return rows.map((row) => {
+    const view = toCodeView(
+      row,
+      row.domainId ? (domains.get(row.domainId) ?? null) : null,
+    );
+    return held.has(row.id) ? { ...view, heldForReview: true } : view;
+  });
 }
 
 const toOneCodeView = async (row: QrCodeRow) =>
@@ -1133,10 +1158,12 @@ export async function createCodesBatch(
         updatedAt: now,
       };
     });
+    const holds: HoldRequest[] = [];
     const screened = await screenNewCodes(scope, rows, {
       budgetMs: screenBudgetMs,
       indexOf: (position) => todo[position]?.index ?? position,
       paid: plan !== "free",
+      holds,
     });
     ({ inserted, raced } = await insertBatch(screened as InsertRow[], {
       chosen,
@@ -1157,6 +1184,9 @@ export async function createCodesBatch(
         limit: limits.dynamicCodes,
       });
     }
+    // Before the views: a held code's answer already says "Safety check".
+    const saved = new Set(inserted.map((row) => row.id));
+    await writeHoldReports(holds.filter((hold) => saved.has(hold.qrCodeId)));
   }
 
   // Keep the caller's order (returning() order is not guaranteed).
@@ -1249,13 +1279,14 @@ export async function updateCode(
   const current = await findCodeRow(scope, id);
 
   const values: Partial<typeof qrCode.$inferInsert> = {};
+  let hold: HoldRequest | null = null;
   if (patch.destinationUrl !== undefined) {
     values.destinationUrl = patch.destinationUrl;
-    const change = {
+    hold = await screenUrlChange(scope, current, {
       previous: current.destinationUrl,
       next: patch.destinationUrl,
-    };
-    if (await screenUrlChange(scope, current, change)) values.isActive = false;
+    });
+    if (hold) values.isActive = false;
     // A website code pointed at a WhatsApp chat becomes a WhatsApp code, and
     // back; other content types keep theirs.
     const contentType = contentTypeForDestination(patch.destinationUrl);
@@ -1329,6 +1360,7 @@ export async function updateCode(
     throw new HttpError(503, "SLUG_UNAVAILABLE", "Please try again.");
   }
   if (!row) throw notFound();
+  if (hold) await writeHoldReports([hold]);
   const view = await toOneCodeView(row);
   // code.updated webhooks + alerts, after the response (never throws).
   (await import("@/lib/events/emit")).emitCodeUpdated(
