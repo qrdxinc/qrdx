@@ -1,6 +1,6 @@
 ---
 title: CLI
-description: Generate styled QR codes as SVG, PNG, WebP, BMP or vector EPS from your terminal or CI with @qrdx/cli, one at a time with qrdx generate or a whole CSV with qrdx batch.
+description: Generate styled QR codes as SVG, PNG, WebP, BMP, ICO or vector EPS from your terminal or CI with @qrdx/cli, one at a time with qrdx generate or a whole CSV with qrdx batch.
 icon: Terminal
 ---
 
@@ -40,6 +40,7 @@ The file extension picks the format, or use `--format` when the file name has no
 | `.png` | Documents, slides, anywhere that needs an image | Width in pixels |
 | `.webp` | Websites: the PNG's pixels, lossless, in a smaller file | Width in pixels |
 | `.bmp` | Legacy systems that only take BMP: 24-bit and uncompressed, a transparent background comes out white | Width in pixels |
+| `.ico` | Favicons: the code at 16, 32, 48 and 256 px in one file, transparency kept | Not used |
 | `.eps` | Print shops, Illustrator, InDesign | Width in points (72 per inch, so `144` is 2 inches) |
 
 EPS files are vector PostScript. PNG and JPEG logos are embedded as they are; other logo formats are converted with sharp when it's installed, and otherwise left out with a warning.
@@ -76,7 +77,7 @@ With a frame, `--size` is the code's width and the frame adds to the image. To p
 | Flag | Default | Description |
 | --- | --- | --- |
 | `-o`, `--output` | `qr.svg` | Output file |
-| `--format` | from the extension | `svg`, `png`, `webp`, `bmp` or `eps` |
+| `--format` | from the extension | `svg`, `png`, `webp`, `bmp`, `ico` or `eps` |
 | `--size` | `512` | Output size (see above) |
 | `-l`, `--level` | `Q` | Error correction: `L`, `M`, `Q` or `H` |
 | `--body` | `square` | Data module [pattern](/docs/features/patterns) |

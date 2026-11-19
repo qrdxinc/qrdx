@@ -24,16 +24,18 @@ const DOWNLOAD_SIZE = 1024;
 
 /**
  * The files a saved code downloads as; WebP is lossless, BMP an uncompressed
- * 24-bit bitmap (a transparent background comes out white).
+ * 24-bit bitmap (a transparent background comes out white), ICO a favicon
+ * with the code at 16, 32, 48 and 256 px.
  */
-export type CodeImageFormat = "png" | "webp" | "bmp" | "svg";
+export type CodeImageFormat = "png" | "webp" | "bmp" | "ico" | "svg";
 const FORMATS: CodeImageFormat[] = ["png", "webp", "svg"];
 /** Formats beyond the buttons, in a "More" menu. */
-const MORE_FORMATS: CodeImageFormat[] = ["bmp"];
+const MORE_FORMATS: CodeImageFormat[] = ["bmp", "ico"];
 const FORMAT_LABELS: Record<CodeImageFormat, string> = {
   png: "PNG",
   webp: "WebP",
   bmp: "BMP",
+  ico: "ICO",
   svg: "SVG",
 };
 

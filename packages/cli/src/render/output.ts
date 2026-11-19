@@ -6,6 +6,7 @@ import {
   encodeBMP,
   encodeICO,
   ICO_SIZES,
+  type IcoImage,
   QRCodeSVG,
   svgToEPS,
 } from "qrdx";
@@ -128,7 +129,7 @@ export async function saveOutput(options: OutputOptions): Promise<void> {
   // doesn't apply, and a frame is left out: every image is square. The small
   // sizes are for icons, not for scanning.
   if (format === "ico") {
-    const images = [];
+    const images: IcoImage[] = [];
     for (const size of ICO_SIZES) {
       const png = await getQRAsPNG(
         { ...qrProps, frame: undefined, size },

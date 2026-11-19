@@ -367,6 +367,9 @@ export function CodeActionsMenu({
               <DropdownMenuItem onSelect={() => download("bmp")}>
                 <GalleryImport /> {t("downloadBmp")}
               </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => download("ico")}>
+                <GalleryImport /> {t("downloadIco")}
+              </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         </DropdownMenuContent>
@@ -422,6 +425,9 @@ export function CodeActionsMenu({
             <DropdownMenuSubContent>
               <DropdownMenuItem onSelect={() => download("bmp")}>
                 <GalleryImport /> {t("downloadBmp")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => download("ico")}>
+                <GalleryImport /> {t("downloadIco")}
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
