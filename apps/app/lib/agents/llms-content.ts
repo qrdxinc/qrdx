@@ -128,8 +128,11 @@ export async function llmsTxt(): Promise<string> {
     docsOrigin: docsZone ? baseUrl : new URL(CANONICAL_ORIGIN),
     offered: pricingOptions(),
     showsPath: isPathAvailable,
-    // Only the marketing site has this page (SITE_GROUPS.products).
+    // Only the marketing site has these pages (SITE_GROUPS.products and
+    // .generators).
     customDomainPage: siteServes("products"),
+    trackingPage: siteServes("products"),
+    appDownloadGenerator: siteServes("generators"),
     limits: PLAN_LIMITS,
     docs: docsZone?.sections ?? DOCS_ON_QRDX,
     blog,

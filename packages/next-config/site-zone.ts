@@ -61,15 +61,17 @@ export const SITE_GROUPS = {
   /** The free tools: /tools and its tools (bulk, print size, scan checker). */
   tools: ["/tools"],
   /**
-   * The product pages. /custom-domain-qr-codes is the site's alone: this
-   * app has no page there (a 404 without the site), so its sitemap and
-   * llms.txt list it only while the site serves this group.
+   * The product pages. /custom-domain-qr-codes and /qr-code-tracking are
+   * the site's alone: this app has no page there (a 404 without the site),
+   * so its sitemap and llms.txt list them only while the site serves this
+   * group.
    */
   products: [
     "/dynamic-qr-code",
     "/qr-code-api",
     "/open-source-qr-code-generator",
     "/custom-domain-qr-codes",
+    "/qr-code-tracking",
   ],
   /** /enterprise and its contact form (which posts to this app's API). */
   enterprise: ["/enterprise"],

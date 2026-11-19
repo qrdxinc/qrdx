@@ -24,6 +24,7 @@ import type { PlanLimits } from "@/lib/plans";
 import {
   formatPrice,
   localPricesNote,
+  PAID_PLANS,
   type PaidPlan,
   PLAN_NAMES,
   type Plan,
@@ -32,6 +33,7 @@ import {
 import { PRODUCT_FACTS, STYLE_SUMMARY } from "@/lib/product-facts";
 import { getQrTypeTitle, QR_TYPES } from "@/lib/qr-types-content";
 import { HOSTED_QR_TYPES, hostedTypePath } from "@/lib/qr-types-content-hosted";
+import { scanHistoryLabel } from "@/lib/scan-history";
 import { industries, placements } from "@/lib/seo-content";
 import { apiBaseUrl, imageApiUrl } from "./hosts";
 import { OPENAPI_PATH } from "./well-known";
@@ -75,6 +77,17 @@ export interface LlmsTxtInput {
    * there, so it's listed only then. Defaults to false.
    */
   customDomainPage?: boolean;
+  /**
+   * Whether the marketing site serves its scan tracking page here
+   * (SITE_GROUPS.products). Listed only then, as `customDomainPage`.
+   */
+  trackingPage?: boolean;
+  /**
+   * Whether the marketing site serves its app download generator here
+   * (/qr-code-generator/app-download, SITE_GROUPS.generators), a hosted
+   * type this app's HOSTED_QR_TYPES doesn't have. Listed only then.
+   */
+  appDownloadGenerator?: boolean;
   limits: Record<Plan, PlanLimits>;
   docs: LlmsDocsSection[];
   blog: LlmsLink[];
@@ -150,6 +163,36 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       (plan) =>
         `${input.limits[plan].customDomains} on ${PLAN_NAMES[plan]} (${formatPrice(PRICING[plan].month.amounts.USD, "USD")} a month)`,
     );
+  const and = (items: string[]) =>
+    items.length < 2
+      ? (items[0] ?? "")
+      : `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
+  const usdMonth = (plan: PaidPlan) =>
+    `${formatPrice(PRICING[plan].month.amounts.USD, "USD")} a month`;
+  // The scan tracking page: the cheapest plan with more history than Free
+  // and what it adds, and the plan with conversions.
+  const free = input.limits.free;
+  const historyPlan = PAID_PLANS.find(
+    (plan) =>
+      input.limits[plan].analyticsRetentionDays > free.analyticsRetentionDays,
+  );
+  const conversionsPlan = PAID_PLANS.find(
+    (plan) => input.limits[plan].conversions,
+  );
+  const trackingAdds = historyPlan
+    ? and(
+        [
+          on("emailAlerts") &&
+            input.limits[historyPlan].emailAlerts &&
+            "email alerts",
+          input.limits[historyPlan].preciseLocation && "precise location",
+          input.limits[historyPlan].pixels && "tracking pixels",
+          input.limits[historyPlan].routing && "UTM tags",
+        ].filter((item): item is string => Boolean(item)),
+      )
+    : "";
+  // The app download generator: the cheapest plan whose routing skips the page.
+  const routingPlan = PAID_PLANS.find((plan) => input.limits[plan].routing);
   const product = links([
     {
       title: "Dynamic QR code generator",
@@ -162,6 +205,12 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
         title: "QR codes on your own domain",
         url: "/custom-domain-qr-codes",
         description: `Dynamic QR codes whose short links use a domain you own, like go.yourbrand.com/menu, connected with one DNS record and served over HTTPS. Custom domains per plan: ${domainPlans.join(", ")}`,
+      },
+    Boolean(input.trackingPage) &&
+      historyPlan !== undefined && {
+        title: "QR code scan tracking",
+        url: "/qr-code-tracking",
+        description: `How a dynamic code counts its scans: the time, place, device, browser and referrer of each, without cookies or stored IP addresses, with bots left out and a CSV export on every plan. Scan history is ${scanHistoryLabel(free.analyticsRetentionDays)} on Free and ${scanHistoryLabel(input.limits[historyPlan].analyticsRetentionDays)} on ${PLAN_NAMES[historyPlan]} (${usdMonth(historyPlan)}), which adds ${trackingAdds}${on("conversions") && conversionsPlan ? `; conversion tracking on ${PLAN_NAMES[conversionsPlan]} (${usdMonth(conversionsPlan)})` : ""}`,
       },
     {
       title: "Dynamic QR codes",
@@ -350,6 +399,13 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       url: hostedTypePath(type.slug),
       description: type.summary,
     })),
+    // The marketing site's own hosted generator, which this app doesn't have.
+    Boolean(input.appDownloadGenerator) &&
+      routingPlan !== undefined && {
+        title: "App Store and Google Play QR Code Generator",
+        url: "/qr-code-generator/app-download",
+        description: `One code for an app: a free hosted App download page shows iPhones the App Store button first and Android phones Google Play; on ${PLAN_NAMES[routingPlan]} (${usdMonth(routingPlan)}) a smart app link skips the page and opens the right store directly`,
+      },
   ]);
 
   const developers = links([
