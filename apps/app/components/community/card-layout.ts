@@ -7,9 +7,10 @@
 /**
  * A row that scrolls sideways: it runs to the frame's rails on both sides,
  * so the last card is cut at the edge, and snaps card by card on touch.
+ * The gap leaves each card's caption clear of its neighbour's.
  */
 export const RAIL =
-  "no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-pl-4 gap-4 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:-mx-6 sm:scroll-pl-6 sm:px-6";
+  "no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-pl-4 gap-5 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:-mx-6 sm:scroll-pl-6 sm:px-6 md:gap-6 xl:gap-8";
 
 /** A card's box in a row: about four and a half across a wide screen. */
 export const RAIL_CARD =
@@ -28,7 +29,7 @@ export const MAKER_CARD =
   "bg-card flex h-48 flex-col items-center justify-center gap-3 rounded-xl border px-4 text-center";
 
 /** A card: the design's box, then its name and creator under it. */
-export const CARD_FRAME = "group relative flex min-w-0 flex-col gap-2.5";
+export const CARD_FRAME = "group relative flex min-w-0 flex-col gap-3";
 
 /**
  * The design's box: a calm surface with a hairline edge, the same shape for
@@ -51,5 +52,15 @@ export const RANK_ROOM = "pl-12 md:pl-16 xl:pl-[4.5rem]";
 /** The room "10" needs. */
 export const RANK_ROOM_WIDE = "pl-24 md:pl-[7.75rem] xl:pl-[8.75rem]";
 
-/** The name, saves and creator under it. */
-export const CARD_TEXT = "flex min-w-0 flex-col gap-1 px-0.5";
+/**
+ * The caption under it, two lines of two ends: the name and its saves, then
+ * the creator and what kind of item it is.
+ */
+export const CARD_TEXT = "flex min-w-0 flex-col gap-1.5 px-0.5";
+
+/** One line of the caption: one end on the left, the other on the right. */
+export const CARD_LINE = "flex min-w-0 items-center justify-between gap-3";
+
+/** A card grid with room for four columns (a profile, a collection). */
+export const CARD_GRID =
+  "grid gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4";

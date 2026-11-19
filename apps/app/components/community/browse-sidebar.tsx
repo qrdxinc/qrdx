@@ -25,7 +25,7 @@ import { Fragment, type ReactNode } from "react";
 
 /** The galleries' card grid: the sidebar leaves room for three columns. */
 export const GALLERY_GRID =
-  "grid gap-x-5 gap-y-8 sm:grid-cols-2 xl:grid-cols-3";
+  "grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3";
 
 const ROW =
   "flex w-full items-center justify-between gap-3 rounded-md px-3 py-1.5 text-left text-sm transition-colors";
