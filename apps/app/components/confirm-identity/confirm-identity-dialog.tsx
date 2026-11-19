@@ -78,6 +78,9 @@ import {
   PasskeyPromptError,
 } from "./webauthn";
 
+/** The dialog's options couldn't be fetched at all (no answer from the server). */
+const LOAD_FAILED = Symbol("load-failed");
+
 const CODE_LENGTH = 6;
 const DIGITS_ONLY = "^\\d+$";
 // The last method that worked in this browser (no secrets: just its name).
@@ -234,7 +237,12 @@ export function ConfirmIdentityDialog({
   const [methods, setMethods] = useState<ConfirmMethod[]>([]);
   const [method, setMethod] = useState<ConfirmMethod | null>(null);
   const [choosing, setChoosing] = useState(false);
-  const [loadError, setLoadError] = useState<string | null>(null);
+  // The server's refusal (already translated), or LOAD_FAILED when the request
+  // itself failed: translated when rendered, so the opening effect below needs
+  // no translation function.
+  const [loadError, setLoadError] = useState<
+    string | typeof LOAD_FAILED | null
+  >(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [code, setCode] = useState("");
@@ -262,6 +270,14 @@ export function ConfirmIdentityDialog({
   // A fresh start each time it opens. Each opening is numbered, and the
   // passkey prompt only starts once this opening's options are in: the
   // first render of an opening still holds the last one's method.
+  //
+  // Opening is the only thing that runs this. Asking for the passkey prompt
+  // sets the challenge cookie in a Server Action, and Next.js then re-renders
+  // the page, which gives this component new translation functions. When
+  // those were dependencies here, each re-render counted as opening again:
+  // it reset the dialog and started a new prompt, aborting the one on
+  // screen, and that prompt's cookie re-rendered the page again, until "Too
+  // many tries" (tests/auth/confirm-passkey-rerender.test.tsx).
   useEffect(() => {
     if (!open) return;
     opening.current += 1;
@@ -296,12 +312,12 @@ export function ConfirmIdentityDialog({
         setLoadedFor(current);
       })
       .catch(() => {
-        if (!cancelled) setLoadError(tMessages("failed"));
+        if (!cancelled) setLoadError(LOAD_FAILED);
       });
     return () => {
       cancelled = true;
     };
-  }, [open, tMessages]);
+  }, [open]);
 
   useEffect(() => {
     if (resendAt <= Date.now()) return;
@@ -578,7 +594,7 @@ export function ConfirmIdentityDialog({
   if (loadError) {
     body = (
       <p className="text-destructive text-sm text-pretty" role="alert">
-        {loadError}
+        {loadError === LOAD_FAILED ? tMessages("failed") : loadError}
       </p>
     );
   } else if (!(options && method)) {
