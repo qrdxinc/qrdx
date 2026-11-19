@@ -14,7 +14,8 @@ import {
 interface ReportActionsProps {
   reportId: string;
   status: string;
-  code: { slug: string; isActive: boolean } | null;
+  /** `moderated`: off after a review, so turning it on is an override */
+  code: { slug: string; isActive: boolean; moderated: boolean } | null;
   files: { id: string; filename: string; blocked: boolean }[];
 }
 
@@ -56,6 +57,17 @@ export function ReportActions({
 
   const onRestore = () => {
     if (!code) return;
+    if (code.moderated) {
+      const reason = window.prompt(
+        `QRdx switched /q/${code.slug} off after a review (an actioned report or an admin's Disable). Turn it back on anyway and dismiss this report? Reason (required):`,
+      );
+      if (reason === null) return;
+      perform(
+        () => restoreReportedCodeAction({ reportId, reason, override: true }),
+        `Enabled /q/${code.slug}`,
+      );
+      return;
+    }
     const reason = askReason(
       `Turn /q/${code.slug} back on and dismiss this report?`,
     );
@@ -96,7 +108,11 @@ export function ReportActions({
             size="sm"
             variant="outline"
           >
-            {status === "open" ? "Approve & enable" : "Enable code"}
+            {code.moderated
+              ? "Enable anyway"
+              : status === "open"
+                ? "Approve & enable"
+                : "Enable code"}
           </Button>
         ))}
       {files

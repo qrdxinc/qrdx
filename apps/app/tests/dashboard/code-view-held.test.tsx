@@ -141,7 +141,7 @@ describe("the dashboard's wording", () => {
   it("held: a safety check with the support address, never moderation", () => {
     const html = badge({ status: "disabled", held: true });
     expect(html).toContain("Safety check");
-    expect(html).toContain("quick safety check");
+    expect(html).toContain("Waiting for a safety check");
     expect(html).toContain("support@qrdx.dev");
     expect(html).not.toMatch(/moderation|abuse/i);
   });

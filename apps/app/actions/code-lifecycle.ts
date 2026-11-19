@@ -26,6 +26,7 @@ import { type EndedReason, lifecycleState } from "@/lib/redirect/lifecycle";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { screenUrlChange } from "@/lib/safety/destinations";
 import { heldForReviewIds } from "@/lib/safety/holds";
+import { writeHoldReports } from "@/lib/safety/velocity";
 import { type ActiveScope, getActiveScope, isInScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError, ValidationError } from "@/types/errors";
@@ -309,16 +310,14 @@ export async function updateCodeLifecycle(
         throw new ValidationError(ENGLISH.endBeforeStart);
       }
 
-      if (
-        values.fallbackUrl &&
-        (await screenUrlChange(scope, row, {
-          previous: row.fallbackUrl,
-          next: values.fallbackUrl,
-          field: "fallback URL",
-        }))
-      ) {
-        values.isActive = false;
-      }
+      const hold = values.fallbackUrl
+        ? await screenUrlChange(scope, row, {
+            previous: row.fallbackUrl,
+            next: values.fallbackUrl,
+            field: "fallback URL",
+          })
+        : null;
+      if (hold) values.isActive = false;
 
       await snapshotCodeVersion(id, scope.userId);
       const [updated] = await db
@@ -327,6 +326,7 @@ export async function updateCodeLifecycle(
         .where(eq(qrCode.id, id))
         .returning();
       if (!updated) throw new HttpError(404, "NOT_FOUND", ENGLISH.notFound);
+      if (hold) await writeHoldReports([hold]);
       recordAuditEvent(
         scope,
         codeEvents("code.link_controls_changed", [updated], {

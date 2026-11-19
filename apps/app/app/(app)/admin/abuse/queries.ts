@@ -10,6 +10,7 @@ import {
 import { and, count, desc, eq, inArray, type SQL } from "drizzle-orm";
 import { type AdminFileView, listFilesForPage } from "@/lib/files/admin";
 import type { AbuseReportStatus } from "@/lib/safety/abuse-reasons";
+import { moderatedIds } from "@/lib/safety/holds";
 import { PAGE_SIZE } from "../_lib/queries";
 
 export type AbuseStatusFilter = AbuseReportStatus | "all";
@@ -33,6 +34,8 @@ export interface AbuseReportRow {
     ownerEmail: string;
     ownerCreatedAt: Date;
     organizationId: string | null;
+    /** Off after a review (moderatedIds): turning it on needs an override */
+    moderated: boolean;
   } | null;
   page: { id: string; title: string | null } | null;
   /** Open reports about the same code, this one included */
@@ -101,7 +104,15 @@ export async function listAbuseReports({
     ),
   ];
 
-  const [openCounts, pages, filesByPage] = await Promise.all([
+  const offCodeIds = [
+    ...new Set(
+      rows.flatMap((row) =>
+        row.codeId && row.isActive === false ? [row.codeId] : [],
+      ),
+    ),
+  ];
+
+  const [openCounts, pages, filesByPage, moderated] = await Promise.all([
     codeIds.length
       ? db
           .select({ codeId: abuseReport.qrCodeId, total: count() })
@@ -132,6 +143,7 @@ export async function listAbuseReports({
           ] as const,
       ),
     ),
+    moderatedIds(offCodeIds),
   ]);
 
   const openByCode = new Map(openCounts.map((row) => [row.codeId, row.total]));
@@ -161,6 +173,7 @@ export async function listAbuseReports({
               ownerEmail: row.ownerEmail,
               ownerCreatedAt: row.ownerCreatedAt ?? new Date(0),
               organizationId: row.organizationId,
+              moderated: moderated.has(row.codeId),
             }
           : null,
       page: pageId ? (pageById.get(pageId) ?? null) : null,

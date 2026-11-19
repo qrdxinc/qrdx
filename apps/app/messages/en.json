@@ -7378,10 +7378,10 @@
           "thePasswordWillBeRemoved": "The password will be removed when you save",
           "noPassword": "No password",
           "noLimit": "No limit",
-          "heldForReview": "Held for review",
+          "heldForReview": "Waiting for a safety check",
           "heldQuestions": "Questions? Write to {email}.",
           "turnedOffByQrdx": "Turned off by QRdx",
-          "ourAutomatedChecksFlaggedA": "Our automated checks flagged a link on this code (for example a URL shortener, an IP address or a lookalike domain), so it stays off until a reviewer approves it, usually within a day. Nothing else is needed from you.",
+          "ourAutomatedChecksFlaggedA": "Our automated checks flagged a link on this code (for example a URL shortener, an IP address or a lookalike domain), so it stays off until a person at QRdx has checked it. Nothing else is needed from you.",
           "thisCodeWasSwitchedOff": "This code was switched off after an abuse review and doesn't redirect. Contact support@qrdx.dev if you think this is a mistake.",
           "yourCurrentSettingsKeepWorking": "Your current settings keep working, and you can remove them any time.",
           "timesAreInYourTime": " Times are in your time zone ({timeZone}).",
@@ -7663,7 +7663,7 @@
           "accessSchedule": "Access & schedule"
         },
         "codeOverview": {
-          "heldNote": "Waiting for a quick safety check. Links from new accounts to some kinds of addresses, such as URL shorteners, IP addresses or lookalike domains, are checked by a person before they go live, so this code is off until then. Don't print it yet. Questions: {email}",
+          "heldNote": "Waiting for a safety check. Links from new accounts to some kinds of addresses, such as URL shorteners, IP addresses or lookalike domains, are checked by a person before they go live, so this code is off until then. Don't print it yet. Questions: {email}",
           "editLink": "Edit link",
           "changeType": "Change type",
           "shortLinkEncodedInThe": "Short link (encoded in the QR code)",
@@ -8228,7 +8228,7 @@
           "pausedScansGoToThe": "Paused: scans go to the fallback URL or a neutral 'paused' page",
           "turnedOffByQrdxModeration": "Turned off by QRdx moderation. Contact support if this is a mistake.",
           "held": "Safety check",
-          "heldTitle": "Waiting for a quick safety check before it goes live. Questions: {email}"
+          "heldTitle": "Waiting for a safety check before it goes live. Questions: {email}"
         },
         "tagDialogs": {
           "color": "Color",

@@ -9,6 +9,7 @@ import {
   THREAT_LABELS,
   type UrlSafety,
 } from "./check";
+import { assertNotModerated } from "./holds";
 import {
   enforceNewAccountVelocity,
   fileHoldReports,
@@ -47,7 +48,9 @@ export function lookupConcurrency(rows: number): number {
 
 /**
  * For createCodes: checks every row's destination and returns the rows, with
- * held ones (new account + suspicious URL) set to `isActive: false`.
+ * held ones (new account + suspicious URL) set to `isActive: false`. Their
+ * reports go into `holds`, for the caller to write once the codes exist
+ * (writeHoldReports); without it, they're filed after the response.
  *
  * A batch stops waiting for Web Risk after `budgetMs`: rows not looked up by
  * then get the offline checks only, as during a Web Risk outage, so a large
@@ -64,11 +67,14 @@ export async function screenNewCodes<
     budgetMs = Number.POSITIVE_INFINITY,
     indexOf = (position: number) => position,
     paid = false,
+    holds: collect,
   }: {
     budgetMs?: number;
     indexOf?: (position: number) => number;
     /** The codes go to a paid workspace (a higher new-account cap) */
     paid?: boolean;
+    /** Collects the held rows' reports for the caller to write */
+    holds?: HoldRequest[];
   } = {},
 ): Promise<(T & { isActive?: boolean; webRiskRecheckAt?: Date })[]> {
   if (rows.length === 0) return rows;
@@ -145,34 +151,35 @@ export async function screenNewCodes<
     });
     return { ...row, isActive: false };
   });
-  fileHoldReports(holds);
+  if (collect) collect.push(...holds);
+  else fileHoldReports(holds);
   return screened;
 }
 
 /**
- * For edits of a code's destination or fallback URL. Throws for unsafe URLs;
- * returns true when the code must be switched off pending review. Unchanged
- * URLs are not checked again.
+ * For edits of a code's destination, fallback or routing URLs. Throws for
+ * unsafe URLs and for codes QRdx switched off after a review
+ * (assertNotModerated). Returns the hold when the code must be switched off
+ * pending review: the caller writes its report (writeHoldReports) once the
+ * change is saved. Unchanged URLs are not checked again.
  */
 export async function screenUrlChange(
   scope: { userId: string },
-  code: { id: string },
+  code: { id: string; isActive: boolean },
   change: { previous: string | null; next: string; field?: string },
-): Promise<boolean> {
-  if (change.next === change.previous) return false;
+): Promise<HoldRequest | null> {
+  if (change.next === change.previous) return null;
+  await assertNotModerated(code);
 
   const safety = await checkUrlSafety(change.next);
   if (safety.verdict === "block") throw unsafeUrl(change.next, safety);
-  if (safety.verdict !== "review") return false;
-  if (!(await getAccountStanding(scope.userId)).isNew) return false;
+  if (safety.verdict !== "review") return null;
+  if (!(await getAccountStanding(scope.userId)).isNew) return null;
 
-  fileHoldReports([
-    {
-      qrCodeId: code.id,
-      url: change.next,
-      field: change.field ?? "destination",
-      reasons: describeSafety(safety),
-    },
-  ]);
-  return true;
+  return {
+    qrCodeId: code.id,
+    url: change.next,
+    field: change.field ?? "destination",
+    reasons: describeSafety(safety),
+  };
 }

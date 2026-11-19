@@ -105,30 +105,38 @@ export interface HoldRequest {
 }
 
 /**
- * Files an open "auto-hold" report per held code once the response has been
- * sent (new codes exist by then). Failures are logged, never thrown.
+ * Writes an open "auto-hold" report per held code, once the codes are saved
+ * and before their views are built, so the answer, the refreshed page and
+ * the lifecycle panel already say "Safety check" (lib/safety/holds.ts).
+ * Failures are logged, never thrown.
+ */
+export async function writeHoldReports(holds: HoldRequest[]): Promise<void> {
+  if (holds.length === 0) return;
+  const createdAt = new Date();
+  try {
+    await db.insert(abuseReport).values(
+      holds.map((hold) => ({
+        id: cuid(),
+        qrCodeId: hold.qrCodeId,
+        url: hold.url.slice(0, 2048),
+        reason: "auto-hold",
+        details: `New account; ${hold.field} flagged: ${hold.reasons.join("; ")}`,
+        status: "open",
+        createdAt,
+      })),
+    );
+  } catch (error) {
+    console.error("[safety] Failed to file hold report:", error);
+  }
+}
+
+/**
+ * writeHoldReports once the response has been sent, for callers that don't
+ * write them themselves (new codes exist by then).
  */
 export function fileHoldReports(holds: HoldRequest[]): void {
   if (holds.length === 0) return;
-  const createdAt = new Date();
-  const task = () =>
-    db
-      .insert(abuseReport)
-      .values(
-        holds.map((hold) => ({
-          id: cuid(),
-          qrCodeId: hold.qrCodeId,
-          url: hold.url.slice(0, 2048),
-          reason: "auto-hold",
-          details: `New account; ${hold.field} flagged: ${hold.reasons.join("; ")}`,
-          status: "open",
-          createdAt,
-        })),
-      )
-      .then(() => undefined)
-      .catch((error: unknown) => {
-        console.error("[safety] Failed to file hold report:", error);
-      });
+  const task = () => writeHoldReports(holds);
   try {
     after(task);
   } catch {

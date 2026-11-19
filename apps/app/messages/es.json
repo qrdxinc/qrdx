@@ -6979,10 +6979,10 @@
           "thePasswordWillBeRemoved": "La contraseña se eliminará al guardar",
           "noPassword": "Sin contraseña",
           "noLimit": "Sin límite",
-          "heldForReview": "En revisión",
+          "heldForReview": "Pendiente de revisión de seguridad",
           "heldQuestions": "¿Dudas? Escribe a {email}.",
           "turnedOffByQrdx": "Desactivado por QRdx",
-          "ourAutomatedChecksFlaggedA": "Nuestras comprobaciones automáticas marcaron un enlace de este código (por ejemplo, un acortador de URL, una dirección IP o un dominio parecido a otro), así que permanece desactivado hasta que un revisor lo apruebe, normalmente en un día. No tienes que hacer nada más.",
+          "ourAutomatedChecksFlaggedA": "Nuestras comprobaciones automáticas han marcado un enlace de este código (por ejemplo, un acortador de URL, una dirección IP o un dominio que imita a otro), así que permanece desactivado hasta que una persona de QRdx lo revise. No tienes que hacer nada más.",
           "thisCodeWasSwitchedOff": "Este código se desactivó tras una revisión por abuso y no redirige. Escribe a support@qrdx.dev si crees que es un error.",
           "yourCurrentSettingsKeepWorking": "Tu configuración actual sigue funcionando y puedes quitarla cuando quieras.",
           "timesAreInYourTime": " Las horas se muestran en tu zona horaria ({timeZone}).",
@@ -7264,7 +7264,7 @@
           "accessSchedule": "Acceso y programación"
         },
         "codeOverview": {
-          "heldNote": "Esperando una revisión de seguridad rápida. Los enlaces de cuentas nuevas a ciertos tipos de direcciones, como acortadores de URL, direcciones IP o dominios que imitan a otros, los revisa una persona antes de publicarse, así que este código está desactivado hasta entonces. No lo imprimas todavía. Consultas: {email}",
+          "heldNote": "Pendiente de revisión de seguridad. Los enlaces de cuentas nuevas a ciertos tipos de direcciones, como acortadores de URL, direcciones IP o dominios que imitan a otros, los revisa una persona antes de publicarse, por lo que este código está desactivado hasta entonces. No lo imprimas todavía. Preguntas: {email}",
           "editLink": "Editar enlace",
           "changeType": "Cambiar tipo",
           "shortLinkEncodedInThe": "Enlace corto (codificado en el código QR)",
@@ -7829,7 +7829,7 @@
           "pausedScansGoToThe": "En pausa: los escaneos van a la URL alternativa o a una página neutra de «pausa»",
           "turnedOffByQrdxModeration": "Desactivado por la moderación de QRdx. Contacta con soporte si es un error.",
           "held": "Revisión",
-          "heldTitle": "Esperando una revisión de seguridad rápida antes de publicarse. Consultas: {email}"
+          "heldTitle": "Pendiente de revisión de seguridad antes de publicarse. Preguntas: {email}"
         },
         "tagDialogs": {
           "color": "Color",

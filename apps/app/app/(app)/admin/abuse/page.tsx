@@ -113,6 +113,9 @@ function ReportCard({ report }: { report: AbuseReportRow }) {
                 {report.openReportsForCode} open reports on this code
               </Badge>
             )}
+            {report.code?.moderated && (
+              <Badge variant="outline">Switched off after a review</Badge>
+            )}
           </div>
           <p className="text-muted-foreground text-xs">
             {formatDateTime(report.createdAt)}
@@ -122,7 +125,11 @@ function ReportCard({ report }: { report: AbuseReportRow }) {
         <ReportActions
           code={
             report.code
-              ? { slug: report.code.slug, isActive: report.code.isActive }
+              ? {
+                  slug: report.code.slug,
+                  isActive: report.code.isActive,
+                  moderated: report.code.moderated,
+                }
               : null
           }
           files={files}

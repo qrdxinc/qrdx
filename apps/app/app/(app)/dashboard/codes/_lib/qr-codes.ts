@@ -59,6 +59,7 @@ import { signInPath } from "@/lib/safe-redirect";
 import { screenNewCodes, screenUrlChange } from "@/lib/safety/destinations";
 import { heldForReviewIds } from "@/lib/safety/holds";
 import { recheckAfterResponse } from "@/lib/safety/recheck";
+import { type HoldRequest, writeHoldReports } from "@/lib/safety/velocity";
 import { asksPreciseLocation } from "@/lib/scan-location/server";
 import {
   type ActiveScope,
@@ -1157,10 +1158,12 @@ export async function createCodesBatch(
         updatedAt: now,
       };
     });
+    const holds: HoldRequest[] = [];
     const screened = await screenNewCodes(scope, rows, {
       budgetMs: screenBudgetMs,
       indexOf: (position) => todo[position]?.index ?? position,
       paid: plan !== "free",
+      holds,
     });
     ({ inserted, raced } = await insertBatch(screened as InsertRow[], {
       chosen,
@@ -1181,6 +1184,9 @@ export async function createCodesBatch(
         limit: limits.dynamicCodes,
       });
     }
+    // Before the views: a held code's answer already says "Safety check".
+    const saved = new Set(inserted.map((row) => row.id));
+    await writeHoldReports(holds.filter((hold) => saved.has(hold.qrCodeId)));
   }
 
   // Keep the caller's order (returning() order is not guaranteed).
@@ -1273,13 +1279,14 @@ export async function updateCode(
   const current = await findCodeRow(scope, id);
 
   const values: Partial<typeof qrCode.$inferInsert> = {};
+  let hold: HoldRequest | null = null;
   if (patch.destinationUrl !== undefined) {
     values.destinationUrl = patch.destinationUrl;
-    const change = {
+    hold = await screenUrlChange(scope, current, {
       previous: current.destinationUrl,
       next: patch.destinationUrl,
-    };
-    if (await screenUrlChange(scope, current, change)) values.isActive = false;
+    });
+    if (hold) values.isActive = false;
     // A website code pointed at a WhatsApp chat becomes a WhatsApp code, and
     // back; other content types keep theirs.
     const contentType = contentTypeForDestination(patch.destinationUrl);
@@ -1353,6 +1360,7 @@ export async function updateCode(
     throw new HttpError(503, "SLUG_UNAVAILABLE", "Please try again.");
   }
   if (!row) throw notFound();
+  if (hold) await writeHoldReports([hold]);
   const view = await toOneCodeView(row);
   // code.updated webhooks + alerts, after the response (never throws).
   (await import("@/lib/events/emit")).emitCodeUpdated(

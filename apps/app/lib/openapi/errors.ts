@@ -105,8 +105,8 @@ export const API_ERRORS = [
     code: "FORBIDDEN",
     status: 403,
     meaning:
-      "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, or a browser-session write from another site. An API key can do only what its creator's role in its workspace allows.",
-    fix: "Ask a workspace owner or admin, or call the API with an API key from your server.",
+      "The caller may not do this: a workspace member deleting a code someone else created, a member managing hooks, a browser-session write from another site, or changing the destination or type of a code QRdx switched off after a review. An API key can do only what its creator's role in its workspace allows.",
+    fix: "Ask a workspace owner or admin, or call the API with an API key from your server. For a code QRdx switched off, contact support.",
   },
   {
     code: "CONFIRMATION_REQUIRED",
