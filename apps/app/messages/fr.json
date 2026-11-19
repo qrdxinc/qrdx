@@ -1190,6 +1190,7 @@
         "formatPng": "PNG (image)",
         "formatWebp": "WebP (image, plus léger)",
         "formatBmp": "BMP (image, non compressée)",
+        "formatIco": "ICO (favicon, de 16 à 256 px)",
         "formatSvg": "SVG (vectoriel, pour l’impression)",
         "size": "Taille du {format}",
         "quietZone": "Ajouter une zone de silence de {modules, number} modules (recommandé pour l’impression)",
@@ -3453,6 +3454,7 @@
           "jpg": "Idéal pour les e-mails et les fichiers légers.",
           "webp": "Idéal pour les sites web à chargement rapide · sans perte, généralement plus léger que le PNG.",
           "bmp": "Idéal pour les systèmes anciens et les outils embarqués qui n’acceptent que le BMP · 24 bits non compressé, un arrière-plan transparent devient blanc.",
+          "ico": "Idéal pour les favicons · un seul fichier avec des images de 16, 32, 48 et 256 px. Les petites tailles sont prévues pour les icônes, pas pour le scan.",
           "svg": "Idéal pour Figma, Illustrator, les sites web · reste net à toute taille.",
           "pdf": "Idéal pour les documents et les impressions rapides · pour un PDF vectoriel, utilisez Prêt à imprimer.",
           "eps": "Idéal pour les imprimeurs et les applications vectorielles · reste net à toute taille."
@@ -5710,7 +5712,10 @@
           "noCodeCheckSpamIf": "Pas de code ? Vérifiez vos spams. S’il n’y est pas, vérifiez l’adresse et réessayez.",
           "weSentANoteAbout": "Nous avons envoyé un message à {currentEmail} pour signaler ce changement.",
           "wellSendANoteAbout": "Nous enverrons une notification de ce changement à {currentEmail}.",
-          "yourEmailIsNowSentto": "Votre e-mail est désormais {sentTo}"
+          "yourEmailIsNowSentto": "Votre e-mail est désormais {sentTo}",
+          "invalidEmail": "Saisissez une adresse e-mail valide.",
+          "sameEmail": "C’est déjà votre adresse e-mail.",
+          "connectionFailed": "Une erreur s’est produite. Vérifiez votre connexion et réessayez."
         },
         "communityProfileSection": {
           "liveAtCommunityHandleClear": "En ligne sur <link>/community/@{handle}</link>. Effacez-le pour libérer l’identifiant.",
@@ -5828,7 +5833,15 @@
           "oneTimeCodeSentTo": "Un code à usage unique envoyé à {email}.",
           "linkedOn": "Associé le {date}.",
           "linkedOnReason": "Associé le {date}. {reason}",
-          "notLinkedUseThe": "Non associé. Utilisez le compte {provider} avec {email}."
+          "notLinkedUseThe": "Non associé. Utilisez le compte {provider} avec {email}.",
+          "emailCodesRemain": "Vous pouvez toujours vous connecter avec un code envoyé à votre adresse e-mail.",
+          "linkError": {
+            "emailDoesNotMatch": "Ce compte utilise une autre adresse e-mail. Vous ne pouvez associer que les comptes ayant la même adresse e-mail que votre compte QRdx.",
+            "alreadyLinked": "Ce compte permet déjà de se connecter à un autre compte QRdx.",
+            "notVerified": "L’adresse e-mail de ce compte n’est pas vérifiée auprès du fournisseur, il ne peut donc pas être associé.",
+            "cancelled": "L’association a été annulée.",
+            "failed": "Nous n’avons pas pu associer ce compte. Veuillez réessayer."
+          }
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Le support le désactivera le {dueDate}",
@@ -5877,7 +5890,10 @@
           "afterYouSignInQrdx2": "Après votre connexion, QRdx demande un code de secours.",
           "passkeySpotlight": "Une clé d’accès peut désormais servir de seconde étape, à la place d’un code d’authentification.",
           "addedOn": "Ajoutée le {date}",
-          "passkeyName": "Clé d’accès"
+          "passkeyName": "Clé d’accès",
+          "backupCodesDetails": "Pour les cas où vous ne pouvez pas utiliser votre clé d’accès ou votre application. Chaque code ne fonctionne qu’une fois.",
+          "backupCodesLeft": "{left, number} sur {total, number} restants. Chaque code ne fonctionne qu’une fois.",
+          "backupCodesLeftSoon": "{left, number} sur {total, number} restants. Chaque code ne fonctionne qu’une fois. Générez-en bientôt de nouveaux."
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Étape {stepNumber, number} sur {length, number}",
@@ -5915,7 +5931,11 @@
           "authenticatorApp": "Application d’authentification",
           "passkeyAddedButTwoStep": "Passkey ajoutée, mais la vérification en deux étapes ne s’est pas activée. Essayez de nouveau Activer.",
           "confirmationCancelled": "CONFIRMATION_CANCELLED",
-          "sessionNotFresh": "SESSION_NOT_FRESH"
+          "sessionNotFresh": "SESSION_NOT_FRESH",
+          "authenticatorAppAdded": "Application d’authentification ajoutée",
+          "passkeyAdded": "Clé d’accès ajoutée",
+          "otherDevicesSignedOut": "Vos autres appareils ont été déconnectés.",
+          "otherDevicesNotSignedOut": "Nous n’avons pas pu déconnecter vos autres appareils. Utilisez Se déconnecter partout ailleurs dans Sessions."
         },
         "workspaceTwoFactorNotice": {
           "twoStepVerificationIsOn": "La vérification en deux étapes est activée, vous pouvez donc ouvrir <span>{name}</span> maintenant.",
@@ -7230,6 +7250,7 @@
           "downloadWebp": "Télécharger en WebP",
           "downloadSvg": "Télécharger en SVG",
           "downloadBmp": "Télécharger en BMP",
+          "downloadIco": "Télécharger l’ICO",
           "moreFormats": "Autres formats",
           "editLinkValue": "Modifier le lien",
           "codeSettings": "Paramètres du code",
@@ -7327,6 +7348,7 @@
           "pngImagesZip": "Images PNG (ZIP)",
           "webpImagesZip": "Images WebP (ZIP)",
           "bmpImagesZip": "Images BMP (ZIP)",
+          "icoImagesZip": "Favicons ICO (ZIP)",
           "svgImagesZip": "Images SVG (ZIP)",
           "more": "Plus",
           "moveToTrash": "Mettre à la corbeille",

@@ -1190,6 +1190,7 @@
         "formatPng": "PNG (इमेज)",
         "formatWebp": "WebP (इमेज, छोटी फ़ाइल)",
         "formatBmp": "BMP (इमेज, बिना कंप्रेस की हुई)",
+        "formatIco": "ICO (फ़ेविकॉन, 16 से 256 px)",
         "formatSvg": "SVG (वेक्टर, प्रिंट के लिए)",
         "size": "{format} साइज़",
         "quietZone": "{modules, number}-मॉड्यूल का क्वाइट ज़ोन जोड़ें (प्रिंट के लिए सुझाया गया)",
@@ -3453,6 +3454,7 @@
           "jpg": "ईमेल और छोटी फ़ाइलों के लिए बेहतरीन।",
           "webp": "तेज़ लोड होने वाली वेबसाइटों के लिए बेहतरीन · लॉसलेस, आमतौर पर PNG से छोटा।",
           "bmp": "पुराने सिस्टम और एम्बेडेड टूल के लिए सबसे अच्छा, जो सिर्फ़ BMP लेते हैं · बिना कंप्रेशन का 24-bit, पारदर्शी बैकग्राउंड सफ़ेद आता है।",
+          "ico": "फ़ेविकॉन के लिए सबसे अच्छा · एक फ़ाइल में 16, 32, 48 और 256 px की इमेज। छोटे साइज़ आइकन के लिए हैं, स्कैन करने के लिए नहीं।",
           "svg": "Figma, Illustrator और वेबसाइटों के लिए बेहतरीन · किसी भी साइज़ पर साफ़ रहता है।",
           "pdf": "दस्तावेज़ों और झटपट प्रिंट के लिए बेहतरीन · वेक्टर PDF के लिए Print-ready चुनें।",
           "eps": "प्रिंट शॉप और वेक्टर ऐप्स के लिए बेहतरीन · किसी भी साइज़ पर साफ़ रहता है।"
@@ -5710,7 +5712,10 @@
           "noCodeCheckSpamIf": "कोड नहीं मिला? स्पैम चेक करें। वहाँ भी न हो, तो पता जाँचें और दोबारा कोशिश करें।",
           "weSentANoteAbout": "हमने {currentEmail} पर इस बदलाव की सूचना भेजी है।",
           "wellSendANoteAbout": "हम इस बदलाव की जानकारी {currentEmail} पर भेजेंगे।",
-          "yourEmailIsNowSentto": "आपका ईमेल अब {sentTo} है"
+          "yourEmailIsNowSentto": "आपका ईमेल अब {sentTo} है",
+          "invalidEmail": "सही ईमेल पता लिखें।",
+          "sameEmail": "यह पहले से आपका ईमेल है।",
+          "connectionFailed": "कुछ गड़बड़ हो गई। अपना कनेक्शन जाँचें और फिर कोशिश करें।"
         },
         "communityProfileSection": {
           "liveAtCommunityHandleClear": "<link>/community/@{handle}</link> पर लाइव है। हैंडल छोड़ने के लिए इसे खाली कर दें।",
@@ -5828,7 +5833,15 @@
           "oneTimeCodeSentTo": "{email} पर भेजा गया वन-टाइम कोड।",
           "linkedOn": "{date} को लिंक किया गया।",
           "linkedOnReason": "{date} को लिंक किया। {reason}",
-          "notLinkedUseThe": "लिंक नहीं है। {email} वाला {provider} अकाउंट इस्तेमाल करें।"
+          "notLinkedUseThe": "लिंक नहीं है। {email} वाला {provider} अकाउंट इस्तेमाल करें।",
+          "emailCodesRemain": "आप अपने ईमेल पर भेजे गए कोड से अब भी साइन इन कर सकते हैं।",
+          "linkError": {
+            "emailDoesNotMatch": "उस अकाउंट का ईमेल पता अलग है। आप सिर्फ़ वही अकाउंट लिंक कर सकते हैं जिसका ईमेल आपके QRdx अकाउंट के ईमेल जैसा हो।",
+            "alreadyLinked": "वह अकाउंट पहले से किसी दूसरे QRdx अकाउंट में साइन इन करता है।",
+            "notVerified": "उस अकाउंट का ईमेल पता प्रोवाइडर के पास वेरिफ़ाई नहीं है, इसलिए उसे लिंक नहीं किया जा सकता।",
+            "cancelled": "लिंक करना रद्द कर दिया गया।",
+            "failed": "हम वह अकाउंट लिंक नहीं कर सके। कृपया फिर कोशिश करें।"
+          }
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "सपोर्ट इसे {dueDate} को बंद कर देगा",
@@ -5877,7 +5890,10 @@
           "afterYouSignInQrdx2": "साइन इन करने के बाद QRdx बैकअप कोड मांगता है।",
           "passkeySpotlight": "अब आप authenticator कोड की जगह passkey को अपना दूसरा स्टेप बना सकते हैं।",
           "addedOn": "{date} को जोड़ा गया",
-          "passkeyName": "पासकी"
+          "passkeyName": "पासकी",
+          "backupCodesDetails": "जब आप अपनी पासकी या ऐप इस्तेमाल न कर सकें। हर कोड एक बार ही काम करता है।",
+          "backupCodesLeft": "{total, number} में से {left, number} बचे हैं। हर कोड एक बार ही काम करता है।",
+          "backupCodesLeftSoon": "{total, number} में से {left, number} बचे हैं। हर कोड एक बार ही काम करता है। जल्द ही नए बना लें।"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "स्टेप {stepNumber, number} / {length, number}",
@@ -5915,7 +5931,11 @@
           "authenticatorApp": "Authenticator app",
           "passkeyAddedButTwoStep": "Passkey जुड़ गई, लेकिन टू-स्टेप वेरिफ़िकेशन चालू नहीं हुआ। चालू करें को फिर से आज़माएँ।",
           "confirmationCancelled": "CONFIRMATION_CANCELLED",
-          "sessionNotFresh": "SESSION_NOT_FRESH"
+          "sessionNotFresh": "SESSION_NOT_FRESH",
+          "authenticatorAppAdded": "ऑथेंटिकेटर ऐप जुड़ गया",
+          "passkeyAdded": "पासकी जुड़ गई",
+          "otherDevicesSignedOut": "आपके बाकी डिवाइस साइन आउट हो गए।",
+          "otherDevicesNotSignedOut": "हम आपके बाकी डिवाइस साइन आउट नहीं कर सके। सेशन में जाकर “बाकी सब जगह साइन आउट करें” चुनें।"
         },
         "workspaceTwoFactorNotice": {
           "twoStepVerificationIsOn": "टू-स्टेप वेरिफ़िकेशन चालू है, इसलिए अब आप <span>{name}</span> खोल सकते हैं।",
@@ -7230,6 +7250,7 @@
           "downloadWebp": "WebP डाउनलोड करें",
           "downloadSvg": "SVG डाउनलोड करें",
           "downloadBmp": "BMP डाउनलोड करें",
+          "downloadIco": "ICO डाउनलोड करें",
           "moreFormats": "और फ़ॉर्मैट",
           "editLinkValue": "लिंक बदलें",
           "codeSettings": "कोड सेटिंग",
@@ -7327,6 +7348,7 @@
           "pngImagesZip": "PNG इमेज (ZIP)",
           "webpImagesZip": "WebP इमेज (ZIP)",
           "bmpImagesZip": "BMP इमेज (ZIP)",
+          "icoImagesZip": "ICO फ़ेविकॉन (ZIP)",
           "svgImagesZip": "SVG इमेज (ZIP)",
           "more": "और",
           "moveToTrash": "ट्रैश में भेजें",
