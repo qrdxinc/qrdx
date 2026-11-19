@@ -29,6 +29,8 @@ export interface SendEmailOptions {
   subject: string;
   /** A template from ./templates (wrapped in EmailLayout) */
   react: ReactElement;
+  /** Another sender on a verified domain (EMAIL_FROM_PERSONAL); else `from` */
+  from?: string;
   replyTo?: string;
   /** Adds one-click List-Unsubscribe headers (digests, alerts) */
   unsubscribeUrl?: string;
@@ -74,6 +76,7 @@ export function createEmailSender({
     to,
     subject,
     react,
+    from: sender,
     replyTo,
     unsubscribeUrl,
     idempotencyKey,
@@ -110,7 +113,7 @@ export function createEmailSender({
       client ??= new Resend(apiKey);
       const { data, error } = await client.emails.send(
         {
-          from,
+          from: sender ?? from,
           to: recipients,
           subject,
           html,

@@ -5,10 +5,13 @@ import { redirect } from "next/navigation";
 import { ConfirmIdentityProvider } from "@/components/confirm-identity/provider";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { isEmailConfigured } from "@/lib/email/send";
+import { teamNotesSetting } from "@/lib/email/team-notes";
 import { listNotificationWorkspaces } from "@/lib/events/notification-settings";
+import { isFeatureAvailable } from "@/lib/feature-availability";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { signInPath } from "@/lib/safe-redirect";
 import { SettingsHeader } from "../components/settings-header";
+import { TeamNotesCard } from "./_components/team-notes";
 import {
   NotificationsFooter,
   WorkspaceNotifications,
@@ -24,7 +27,10 @@ export default async function NotificationsPage() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) redirect(signInPath("/settings/notifications"));
 
-  const workspaces = await listNotificationWorkspaces(session.user.id);
+  const [workspaces, teamNotes] = await Promise.all([
+    listNotificationWorkspaces(session.user.id),
+    teamNotesSetting(session.user.id),
+  ]);
 
   // Adding a Slack or Discord webhook asks "Confirm it's you" first.
   return (
@@ -54,6 +60,10 @@ export default async function NotificationsPage() {
             workspace={workspace}
           />
         ))}
+
+        {isFeatureAvailable("teamNotes") && (
+          <TeamNotesCard initialOn={teamNotes} />
+        )}
 
         <NotificationsFooter />
       </div>

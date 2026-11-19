@@ -1,16 +1,19 @@
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import type { NextRequest } from "next/server";
+import { setTeamNotes } from "@/lib/email/team-notes";
 import { applyUnsubscribe } from "@/lib/events/notification-settings";
 import { EVENT_INFO } from "@/lib/events/types";
 import {
   type UnsubscribeScope,
+  verifyTeamNotesToken,
   verifyUnsubscribeToken,
 } from "@/lib/events/unsubscribe";
 import { getClientIp } from "@/lib/request-guards";
 
-// Unsubscribe links in alert and digest emails. GET shows a confirmation
-// button (link scanners must not unsubscribe anyone); POST applies it, which
-// also serves RFC 8058 one-click requests from mail clients. No sign-in.
+// Unsubscribe links in alert and digest emails, and the link in notes from
+// the QRdx team (lib/email/team-notes.ts). GET shows a confirmation button
+// (link scanners must not unsubscribe anyone); POST applies it, which also
+// serves RFC 8058 one-click requests from mail clients. No sign-in.
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -81,6 +84,16 @@ async function limited(request: NextRequest): Promise<boolean> {
 
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get("token") ?? "";
+  if (verifyTeamNotesToken(token)) {
+    return page(
+      "Stop notes",
+      `<h1>Stop notes from the QRdx team?</h1>
+<p>These are the personal emails someone at QRdx writes to you. Alerts, digests and security emails don't change. You can turn notes back on in notification settings.</p>
+<form method="post" action="?token=${encodeURIComponent(token)}">
+  <button type="submit">Stop notes</button>
+</form>`,
+    );
+  }
   const parsed = verifyUnsubscribeToken(token);
   if (!parsed) return invalid();
   return page(
@@ -102,17 +115,27 @@ export async function POST(request: NextRequest) {
     );
   }
   const token = request.nextUrl.searchParams.get("token") ?? "";
-  const parsed = verifyUnsubscribeToken(token);
-  if (!parsed) return invalid();
+  const teamNotesUser = verifyTeamNotesToken(token);
+  const parsed = teamNotesUser ? null : verifyUnsubscribeToken(token);
+  if (!(teamNotesUser || parsed)) return invalid();
 
   try {
-    await applyUnsubscribe(parsed.settingId, parsed.event);
+    if (teamNotesUser) await setTeamNotes(teamNotesUser, false);
+    else if (parsed) await applyUnsubscribe(parsed.settingId, parsed.event);
   } catch (error) {
     console.error("Unsubscribe failed:", error);
     return page(
       "Something went wrong",
       `<h1>Something went wrong</h1><p>Please try again, or turn emails off in <a href="/settings/notifications">notification settings</a>.</p>`,
       500,
+    );
+  }
+  if (!parsed) {
+    return page(
+      "Notes stopped",
+      `<h1>Notes stopped</h1>
+<p>You won't get notes from the QRdx team anymore. Alerts, digests and security emails don't change.</p>
+<a class="button" href="/settings/notifications">Notification settings</a>`,
     );
   }
   // Already removed counts as done: the link may be used twice.

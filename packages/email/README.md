@@ -4,13 +4,13 @@ QRdx's emails: the templates and their layout (React Email), rendering, and send
 
 | Module | What it holds |
 | --- | --- |
-| `index.ts` (`@repo/email`) | `createEmailSender({ apiKey, from, isDeliveryAllowed })`: `sendEmail()` and `isEmailConfigured`. Never throws unless asked; skips and logs without a key or sender, where delivery isn't allowed, and for reserved test addresses; sends the HTML and plain-text bodies, tags, idempotency keys and one-click List-Unsubscribe headers |
+| `index.ts` (`@repo/email`) | `createEmailSender({ apiKey, from, isDeliveryAllowed })`: `sendEmail()` (which takes another `from` per email) and `isEmailConfigured`. Never throws unless asked; skips and logs without a key or sender, where delivery isn't allowed, and for reserved test addresses; sends the HTML and plain-text bodies, tags, idempotency keys and one-click List-Unsubscribe headers |
 | `render.ts` | `renderEmail()`: a template's HTML and plain text |
 | `reserved-address.ts` | `isReservedEmailAddress()`: RFC 2606 and 6761 names (`@qrdx.test`, `example.com`), which never get email |
 | `intl.ts` | `EmailIntl`, the language every template takes |
 | `origin.ts` | `baseUrl`, the origin the templates link to (the app's, resolved as the app resolves it) |
-| `keys.ts` | `RESEND_API_KEY` and `EMAIL_FROM`, validated like every other `keys.ts`; `apps/app/env.ts` extends it |
-| `templates/` | One file per email, plus `layout.tsx` (the frame every email shares), `parts.tsx` and `security-parts.tsx` |
+| `keys.ts` | `RESEND_API_KEY`, `EMAIL_FROM` and `EMAIL_FROM_PERSONAL` (the sender of personal notes), validated like every other `keys.ts`; `apps/app/env.ts` extends it |
+| `templates/` | One file per email, plus `layout.tsx` (the frame QRdx's own emails share), `personal-layout.tsx` (the plain frame of an email a person on the team writes, such as `personal-note.tsx`), `parts.tsx` and `security-parts.tsx` |
 
 ## Templates and their language
 

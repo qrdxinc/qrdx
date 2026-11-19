@@ -6463,6 +6463,14 @@
           "testMessageSentToValue": "Pesan uji dikirim ke {value}",
           "webhookRemoved": "Webhook dihapus"
         },
+        "teamNotes": {
+          "title": "Catatan dari tim QRdx",
+          "description": "Sesekali seseorang di QRdx menulis kepada Anda secara pribadi, misalnya untuk menanyakan bagaimana QRdx bekerja untuk Anda. Balasan Anda akan sampai kepada mereka.",
+          "label": "Terima catatan dari tim",
+          "hint": "Peringatan, rangkuman, dan email keamanan Anda tidak berubah.",
+          "turnedOn": "Catatan dari tim diaktifkan",
+          "turnedOff": "Catatan dari tim dinonaktifkan"
+        },
         "page": {
           "emailIsntSetUpOn": "Email belum disiapkan di server ini (RESEND_API_KEY dan EMAIL_FROM), sehingga peringatan dan ringkasan email disimpan tetapi tidak dikirim. Peringatan Slack dan Discord tetap berfungsi. <link>Panduan penyiapan</link>",
           "chooseWhatQrdxTellsYou": "Pilih hal apa saja yang QRdx informasikan kepada Anda: lewat email, atau di Slack dan Discord.",
@@ -9265,6 +9273,13 @@
       "countries": "Dari mana orang memindai",
       "newCodesLine": "{count, plural, other {# kode baru}} minggu ini.",
       "open": "Buka dasbor Anda"
+    },
+    "personal": {
+      "reply": "Balas email ini dan balasan Anda akan sampai ke {name}.",
+      "stop": "Berhenti menerima catatan dari tim QRdx"
+    },
+    "personalNote": {
+      "reason": "Anda menerima email ini karena Anda memiliki akun QRdx."
     }
   },
   "codeActions": {

@@ -58,6 +58,8 @@ export const FEATURE_IDS = [
   "invoiceRequests",
   // Enterprise pages: the contact form on /enterprise
   "enterpriseRequests",
+  // Personal notes from the team (sent from QRdx's console) and their switch
+  "teamNotes",
   // Pricing: euro prices for the EU and EEA, and non-profit discount requests
   "eurPrices",
   "nonprofitDiscounts",
@@ -408,6 +410,20 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
     // stays everywhere and shows the plain address without it.
     name: "Enterprise contact form (qrdx.dev, with email)",
     requires: () => ["RESEND_API_KEY", "EMAIL_FROM"],
+    usable: (ctx) =>
+      isQrdxDeployment({
+        appUrl: ctx.env.NEXT_PUBLIC_APP_URL,
+        productionUrl: ctx.env.VERCEL_PROJECT_PRODUCTION_URL,
+      }),
+  },
+  teamNotes: {
+    // Notes from the QRdx team (apps/app/lib/email/personal-notes.tsx): the
+    // personal emails the team writes and sends from QRdx's back-office
+    // console, which isn't part of this code, so only where QRdx itself
+    // runs, with email and the personal sender set up. Without it nobody
+    // gets notes, so Settings > Notifications leaves out their switch.
+    name: "Notes from the QRdx team (qrdx.dev, with email)",
+    requires: () => ["RESEND_API_KEY", "EMAIL_FROM", "EMAIL_FROM_PERSONAL"],
     usable: (ctx) =>
       isQrdxDeployment({
         appUrl: ctx.env.NEXT_PUBLIC_APP_URL,

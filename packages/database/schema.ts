@@ -77,6 +77,11 @@ export const user = pgTable(
     // null follows the language cookie. SQL:
     // packages/database/manual-sql/2026-11-11-user-locale.sql
     locale: text("locale"),
+    // "Notes from the QRdx team": the personal notes the team sends from the
+    // console. On unless the person turns it off (Settings > Notifications,
+    // or the link in every note). SQL:
+    // packages/database/manual-sql/2026-11-19-team-notes.sql
+    teamNotes: boolean("team_notes").notNull().default(true),
     createdAt: timestamp("created_at").notNull(),
     updatedAt: timestamp("updated_at").notNull(),
   },
