@@ -1,6 +1,6 @@
 # @qrdx/cli
 
-QR code generator CLI for developers. Generate styled, scannable QR codes as SVG, PNG, WebP, BMP or vector EPS. It runs non-interactively in scripts and CI, and guides you with prompts when run in a terminal. It renders with the same [`qrdx`](https://www.npmjs.com/package/qrdx) library as the [QRdx](https://qrdx.dev) web app.
+QR code generator CLI for developers. Generate styled, scannable QR codes as SVG, PNG, WebP, BMP, ICO or vector EPS. It runs non-interactively in scripts and CI, and guides you with prompts when run in a terminal. It renders with the same [`qrdx`](https://www.npmjs.com/package/qrdx) library as the [QRdx](https://qrdx.dev) web app.
 
 ## Install
 
@@ -33,8 +33,8 @@ qrdx generate <data> [options]
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
-| `--output` | `-o` | `qr.svg` | Output path; the extension sets the format (`.svg`, `.png`, `.webp`, `.bmp` or `.eps`) |
-| `--format` | | from the extension | `svg`, `png`, `webp`, `bmp` or `eps`, for a file name without an extension |
+| `--output` | `-o` | `qr.svg` | Output path; the extension sets the format (`.svg`, `.png`, `.webp`, `.bmp`, `.ico` or `.eps`) |
+| `--format` | | from the extension | `svg`, `png`, `webp`, `bmp`, `ico` or `eps`, for a file name without an extension |
 | `--size` | | `512` | Output size: pixels for SVG, PNG, WebP and BMP, points (72 per inch) for EPS |
 | `--level` | `-l` | `Q` | Error correction: `L` `M` `Q` `H` |
 | `--body` | | `square` | Body dot pattern |
@@ -71,6 +71,9 @@ qrdx generate "https://qrdx.dev" -o qr.webp --size 1024
 
 # 24-bit BMP for a legacy system that only takes BMP (a transparent background comes out white)
 qrdx generate "https://qrdx.dev" -o qr.bmp --size 600
+
+# A favicon: the code at 16, 32, 48 and 256 px in one file (--size doesn't apply)
+qrdx generate "https://qrdx.dev" -o favicon.ico
 
 # Vector EPS for a print shop or Illustrator, 2 inches wide
 qrdx generate "https://qrdx.dev" -o qr.eps --size 144

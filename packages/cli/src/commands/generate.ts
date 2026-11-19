@@ -195,9 +195,9 @@ function validateFlags(flags: GenerateFlags): void {
   assertOneOf("--format", flags.format, OUTPUT_FORMATS);
   if (flags.output !== undefined) {
     const ext = extname(flags.output).toLowerCase();
-    if (!["", ".svg", ".png", ".webp", ".bmp", ".eps"].includes(ext)) {
+    if (!["", ".svg", ".png", ".webp", ".bmp", ".ico", ".eps"].includes(ext)) {
       throw new Error(
-        `Unsupported output format "${ext}". Use a .svg, .png, .webp, .bmp or .eps file name.`
+        `Unsupported output format "${ext}". Use a .svg, .png, .webp, .bmp, .ico or .eps file name.`
       );
     }
     if (ext && flags.format && ext !== `.${flags.format}`) {
@@ -475,6 +475,9 @@ function inferFormat(
   if (ext === ".bmp") {
     return "bmp";
   }
+  if (ext === ".ico") {
+    return "ico";
+  }
   if (ext === ".eps") {
     return "eps";
   }
@@ -572,7 +575,7 @@ export async function runGenerate(
   if (!outputPath) {
     if (canUseClack) {
       const pathRes = await p.text({
-        message: "Output file (.svg, .png, .webp, .bmp or .eps)",
+        message: "Output file (.svg, .png, .webp, .bmp, .ico or .eps)",
         placeholder: defaultOutput,
         defaultValue: defaultOutput,
         validate(v) {
@@ -587,7 +590,7 @@ export async function runGenerate(
       outputPath = (pathRes as string) || defaultOutput;
     } else if (process.stdout.isTTY && !isCI) {
       const pathAns = await readLineFromTTY(
-        `Output file ${DIM}(.svg, .png, .webp, .bmp or .eps, Enter = ${defaultOutput})${RESET}: `
+        `Output file ${DIM}(.svg, .png, .webp, .bmp, .ico or .eps, Enter = ${defaultOutput})${RESET}: `
       );
       outputPath = pathAns?.trim() || defaultOutput;
     } else {

@@ -533,3 +533,89 @@ describe("saveOutput – BMP", () => {
     expect(opaque).toBeGreaterThan(0);
   });
 });
+
+describe("saveOutput – ICO", () => {
+  // jsqr ships with qrdx, so resolve it from there.
+  const require = createRequire(import.meta.url);
+  const jsQR = createRequire(require.resolve("qrdx/package.json"))(
+    "jsqr"
+  ) as typeof import("jsqr").default;
+
+  /** The images of an ICO whose directory entries hold whole PNG files. */
+  const readICO = (file: string) => {
+    const bytes = readFileSync(file);
+    expect(bytes.readUInt16LE(0)).toBe(0);
+    expect(bytes.readUInt16LE(2)).toBe(1);
+    const count = bytes.readUInt16LE(4);
+    return Array.from({ length: count }, (_, index) => {
+      const at = 6 + 16 * index;
+      const length = bytes.readUInt32LE(at + 8);
+      const offset = bytes.readUInt32LE(at + 12);
+      return {
+        width: bytes[at] || 256,
+        height: bytes[at + 1] || 256,
+        bitCount: bytes.readUInt16LE(at + 6),
+        png: bytes.subarray(offset, offset + length),
+      };
+    });
+  };
+
+  const pixels = async (png: Uint8Array | Buffer) => {
+    const { data, info } = await sharp(Buffer.from(png))
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { data: new Uint8ClampedArray(data), info };
+  };
+
+  it("writes the code at each icon size as a PNG, and the biggest scans", async () => {
+    const ico = tmp("save.ico");
+    cleanups.push(ico);
+    await saveOutput({
+      value: "https://qrdx.dev/cli-ico",
+      size: 999,
+      outputPath: ico,
+      format: "ico",
+    });
+    const images = readICO(ico);
+    expect(images.map((image) => [image.width, image.height])).toEqual([
+      [16, 16],
+      [32, 32],
+      [48, 48],
+      [256, 256],
+    ]);
+    for (const image of images) {
+      expect(image.bitCount).toBe(32);
+      const { info } = await pixels(image.png);
+      expect([info.width, info.height]).toEqual([image.width, image.height]);
+    }
+    const large = await pixels(images[3]?.png as Uint8Array);
+    expect(jsQR(large.data, 256, 256)?.data).toBe("https://qrdx.dev/cli-ico");
+  });
+
+  it("keeps a transparent background and leaves a frame out", async () => {
+    const ico = tmp("frame.ico");
+    cleanups.push(ico);
+    await saveOutput({
+      value: "https://qrdx.dev",
+      outputPath: ico,
+      format: "ico",
+      bgColor: "transparent",
+      // A margin, so the corner is background (the CLI's own default is none)
+      margin: 4,
+      frame: { style: "banner-bottom", text: "Scan me" },
+    });
+    const images = readICO(ico);
+    // Square at every size: the banner would have made the 256 px one taller.
+    expect(images.map((image) => [image.width, image.height])).toEqual([
+      [16, 16],
+      [32, 32],
+      [48, 48],
+      [256, 256],
+    ]);
+    for (const image of images) {
+      const { data } = await pixels(image.png);
+      expect(data[3], `${image.width} px corner`).toBe(0);
+    }
+  });
+});

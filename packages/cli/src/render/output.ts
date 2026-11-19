@@ -1,7 +1,14 @@
 import { writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import type { QRProps } from "qrdx";
-import { decodePNGPixels, encodeBMP, QRCodeSVG, svgToEPS } from "qrdx";
+import {
+  decodePNGPixels,
+  encodeBMP,
+  encodeICO,
+  ICO_SIZES,
+  QRCodeSVG,
+  svgToEPS,
+} from "qrdx";
 import { getQRAsPNG } from "qrdx/node";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -9,14 +16,16 @@ import { renderToStaticMarkup } from "react-dom/server";
 /**
  * "webp" is lossless: the PNG's pixels in a smaller file. "bmp" is an
  * uncompressed 24-bit bitmap; a transparent background comes out white.
+ * "ico" is a favicon holding the code at 16, 32, 48 and 256 px.
  */
-export type OutputFormat = "svg" | "png" | "webp" | "bmp" | "eps";
+export type OutputFormat = "svg" | "png" | "webp" | "bmp" | "ico" | "eps";
 
 export const OUTPUT_FORMATS: readonly OutputFormat[] = [
   "svg",
   "png",
   "webp",
   "bmp",
+  "ico",
   "eps",
 ];
 
@@ -114,7 +123,24 @@ export async function saveOutput(options: OutputOptions): Promise<void> {
     return;
   }
 
-  // One raster path with the library for both raster formats: the engine
+  // ICO: the code drawn at each of the icon's sizes (16, 32, 48 and 256 px),
+  // each a PNG inside the engine's ICO writer, so it needs no sharp. --size
+  // doesn't apply, and a frame is left out: every image is square. The small
+  // sizes are for icons, not for scanning.
+  if (format === "ico") {
+    const images = [];
+    for (const size of ICO_SIZES) {
+      const png = await getQRAsPNG(
+        { ...qrProps, frame: undefined, size },
+        { size, loadExternalLogos: true }
+      );
+      images.push({ width: size, height: size, png });
+    }
+    writeFileSync(outputPath, encodeICO(images));
+    return;
+  }
+
+  // One raster path with the library for the other raster formats: the engine
   // rasterizes its own SVG (an optional @resvg/resvg-js or sharp peer,
   // loaded on demand). The CLI loads external logos — the person running it
   // picked the path or URL.
