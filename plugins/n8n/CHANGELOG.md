@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+QR Image → Generate can return ICO (a favicon with 16, 32, 48 and 256 px images in one file).
+
 ## 0.1.2
 
 QR Image → Generate can return BMP (24-bit; a transparent background comes out white).

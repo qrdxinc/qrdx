@@ -17,7 +17,11 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { type ConvertedFormat, convertPng } from "@/lib/qr-image-formats";
+import {
+  type ConvertedFormat,
+  convertPng,
+  ICO_MASTER_SIZE,
+} from "@/lib/qr-image-formats";
 import {
   QR_DATA_MAX_LENGTH,
   QR_DEFAULTS,
@@ -215,13 +219,16 @@ export async function renderQrPng(options: QrOptions): Promise<ArrayBuffer> {
 
 /**
  * Renders the QR code in a format converted from the same PNG, such as
- * lossless WebP or BMP (lib/qr-image-formats.ts).
+ * lossless WebP, BMP or an ICO favicon (lib/qr-image-formats.ts).
  */
 export async function renderQrImage(
   options: QrOptions,
   format: ConvertedFormat,
 ): Promise<Uint8Array> {
-  return await convertPng(await renderQrPng(options), format);
+  // An ICO is scaled down from one big render: the request's size doesn't apply.
+  const drawn =
+    format === "ico" ? { ...options, size: ICO_MASTER_SIZE } : options;
+  return await convertPng(await renderQrPng(drawn), format);
 }
 
 /**

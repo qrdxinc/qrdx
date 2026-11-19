@@ -19,14 +19,16 @@ const BATCH = 6;
 
 /**
  * Image files a ZIP of codes can hold (WebP is lossless; BMP is an
- * uncompressed 24-bit bitmap, so the archive compresses it).
+ * uncompressed 24-bit bitmap, so the archive compresses it; an ICO is a
+ * favicon of PNGs at 16, 32, 48 and 256 px).
  */
-export type ZipFormat = "png" | "webp" | "bmp" | "svg";
+export type ZipFormat = "png" | "webp" | "bmp" | "ico" | "svg";
 
 export const ZIP_FORMAT_LABELS: Record<ZipFormat, string> = {
   png: "PNG",
   webp: "WebP",
   bmp: "BMP",
+  ico: "ICO",
   svg: "SVG",
 };
 

@@ -567,7 +567,7 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
         summary: "Render a QR code image",
         tags: ["QR images"],
         security: [],
-        description: `A QR code image as SVG (default), PNG, WebP, BMP or EPS, with no key.
+        description: `A QR code image as SVG (default), PNG, WebP, BMP, ICO or EPS, with no key.
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Colors are hex without \`#\` (or with \`#\` encoded as \`%23\`). Limit: 300 requests a minute per IP address. More in the [Image API guide](${docs("developers/image-api")}).
 
@@ -579,7 +579,9 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
 
 **WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.
 
-**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.`,
+**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.
+
+**ICO** is a favicon: the code at 16, 32, 48 and 256 px in one file, each a PNG inside the ICO, transparency kept. \`size\` doesn't apply, and a frame is left out. The small sizes are for icons, not for scanning.`,
         parameters: c.parameters(
           qrImage,
           "query",
@@ -610,6 +612,12 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
               },
               "image/bmp": {
                 schema: { type: "string", contentMediaType: "image/bmp" },
+              },
+              "image/vnd.microsoft.icon": {
+                schema: {
+                  type: "string",
+                  contentMediaType: "image/vnd.microsoft.icon",
+                },
               },
               "application/postscript": {
                 schema: {

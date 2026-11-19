@@ -158,6 +158,7 @@ export type {
 } from "./frames/official-types";
 export { frameSpecHash } from "./frames/spec-hash";
 export { getLogoSizeLimit, getQRData } from "./helpers";
+export * from "./ico";
 export {
   Fragment,
   h,

@@ -4,18 +4,22 @@ import { DEFAULT_SIZE } from "./constants";
 import { epsToDataUrl, getQRAsEPS } from "./eps";
 import { getQRAsCanvas, getQRAsSVGDataUri } from "./export";
 import { getFrameDimensions } from "./frame";
+import { canvasesToICO, ICO_MIME, ICO_SIZES } from "./ico";
 import { blobToDataUrl, canvasToWebP, type WebPOptions } from "./webp";
 
 /**
  * "webp" is lossless unless `quality` is set. "bmp" is an uncompressed
- * 24-bit bitmap: a transparent background comes out white. "eps" is vector
- * PostScript: `size.width` becomes points (72 per inch).
+ * 24-bit bitmap: a transparent background comes out white. "ico" is one
+ * favicon file holding the code at 16, 32, 48 and 256 px, each an embedded
+ * PNG with its transparency; `size` doesn't apply, and a frame is left out.
+ * "eps" is vector PostScript: `size.width` becomes points (72 per inch).
  */
 export type DownloadFormat =
   | "png"
   | "jpg"
   | "webp"
   | "bmp"
+  | "ico"
   | "svg"
   | "pdf"
   | "eps";
@@ -25,6 +29,8 @@ export interface DownloadFormatInfo {
   extension: string;
   /** No pixel size: the file name states none. */
   vector: boolean;
+  /** The pixel sizes one file holds at once (ICO); its file name states none. */
+  sizes?: readonly number[];
 }
 
 /**
@@ -32,6 +38,7 @@ export interface DownloadFormatInfo {
  * by one branch of downloadQRCode and getQRCodeDataUrl: PNG and JPG by the
  * canvas, WebP by canvasToWebP (the canvas, or the built-in lossless
  * encoder), BMP by canvasToBMP (the built-in encoder: no browser writes it),
+ * ICO by canvasesToICO (a PNG of each size inside the built-in ICO writer),
  * SVG from the markup, PDF with jspdf, EPS by getQRAsEPS. A new
  * format needs an entry here and a branch there.
  */
@@ -40,6 +47,12 @@ export const DOWNLOAD_FORMATS: Record<DownloadFormat, DownloadFormatInfo> = {
   jpg: { mimeType: "image/jpeg", extension: "jpg", vector: false },
   webp: { mimeType: "image/webp", extension: "webp", vector: false },
   bmp: { mimeType: "image/bmp", extension: "bmp", vector: false },
+  ico: {
+    mimeType: ICO_MIME,
+    extension: "ico",
+    vector: false,
+    sizes: ICO_SIZES,
+  },
   svg: { mimeType: "image/svg+xml", extension: "svg", vector: true },
   // A PDF download holds the PNG, so it's named after its pixel size.
   pdf: { mimeType: "application/pdf", extension: "pdf", vector: false },
@@ -150,15 +163,16 @@ const getMimeType = (format: DownloadFormat): string =>
  * The default file name of a download: for PNG, JPG, WebP and BMP (and the image
  * a PDF holds) the exact pixel size of what is saved, which a frame makes
  * bigger than the code (a 400 px code in a bottom banner is 496 × 568);
- * SVG and EPS have no pixel size and name none.
+ * SVG and EPS have no pixel size and name none, and nor does an ICO, which
+ * holds several.
  */
 export function getDownloadFilename(
   format: DownloadFormat,
   size: DownloadSize,
   frame?: QRProps["frame"]
 ): string {
-  const { extension, vector } = DOWNLOAD_FORMATS[format];
-  if (vector) {
+  const { extension, vector, sizes } = DOWNLOAD_FORMATS[format];
+  if (vector || sizes) {
     return `qr-code.${extension}`;
   }
   // The canvas size getQRAsCanvas and getQRAsPDF draw on
@@ -202,6 +216,36 @@ export async function getQRAsBMP(qrProps: QRProps): Promise<Blob> {
     return canvasToBMP(canvas);
   } finally {
     canvas.remove();
+  }
+}
+
+/**
+ * The code as an ICO favicon holding it at each of `sizes` (16, 32, 48 and 256
+ * px by default), each an embedded PNG that keeps a transparent background.
+ * The size of `qrProps` doesn't apply, and a frame is left out: the
+ * images are square and no taller than 256 px. Every browser gets it from
+ * QRdx's own writer. Small sizes are for icons, not for scanning.
+ */
+export async function getQRAsICO(
+  qrProps: QRProps,
+  sizes: readonly number[] = ICO_SIZES
+): Promise<Blob> {
+  const canvases: HTMLCanvasElement[] = [];
+  try {
+    for (const size of sizes) {
+      canvases.push(
+        (await getQRAsCanvas(
+          withQRSize({ ...qrProps, frame: undefined }, size),
+          "image/png",
+          true
+        )) as HTMLCanvasElement
+      );
+    }
+    return canvasesToICO(canvases);
+  } finally {
+    for (const canvas of canvases) {
+      canvas.remove();
+    }
   }
 }
 
@@ -357,6 +401,9 @@ export async function downloadQRCode(
     } else if (format === "bmp") {
       const bmp = await getQRAsBMP(propsWithSize);
       downloadFile(await blobToDataUrl(bmp), finalFilename);
+    } else if (format === "ico") {
+      const ico = await getQRAsICO(propsWithSize);
+      downloadFile(await blobToDataUrl(ico), finalFilename);
     } else {
       // Download as PNG or JPG
       const mimeType = getMimeType(format);
@@ -409,6 +456,10 @@ export async function getQRCodeDataUrl(
 
   if (format === "bmp") {
     return await blobToDataUrl(await getQRAsBMP(propsWithSize));
+  }
+
+  if (format === "ico") {
+    return await blobToDataUrl(await getQRAsICO(propsWithSize));
   }
 
   const mimeType = getMimeType(format);

@@ -42,11 +42,13 @@ import {
   Image,
   Import,
   InfoCircle,
+  Layer,
   Printer,
   TableDocument,
 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import {
+  DOWNLOAD_FORMATS,
   type DownloadSize,
   downloadPrintEPS,
   downloadPrintPDF,
@@ -175,7 +177,10 @@ const MORE_FORMATS: {
   label: string;
   Icon: Icon;
   vector?: boolean;
-}[] = [{ id: "bmp", label: "BMP", Icon: Grid2 }];
+}[] = [
+  { id: "bmp", label: "BMP", Icon: Grid2 },
+  { id: "ico", label: "ICO", Icon: Layer },
+];
 
 /** Formats that can't keep a transparent background (JPG and 24-bit BMP). */
 const OPAQUE_FORMATS: readonly ImageFormat[] = ["jpg", "bmp"];
@@ -268,6 +273,9 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
     [...FORMATS, ...MORE_FORMATS].find((item) => item.id === format) ??
     FORMATS[0];
   const canBeTransparent = !OPAQUE_FORMATS.includes(format);
+  // An ICO holds the code at fixed sizes (16, 32, 48 and 256 px), so the size
+  // controls don't apply to it.
+  const iconSizes = DOWNLOAD_FORMATS[format]?.sizes;
   const transparent = downloadOptions.transparent && canBeTransparent;
 
   const qrProps = React.useMemo(
@@ -389,7 +397,8 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
     Number.isNaN(exportSize.width) || Number.isNaN(exportSize.height)
       ? { isValid: false, error: "Enter a width and height in pixels." }
       : validateSize(exportSize.width, exportSize.height);
-  const sizeError = validation.isValid ? "" : (validation.error ?? "");
+  const sizeError =
+    validation.isValid || iconSizes ? "" : (validation.error ?? "");
   // The pixel size of the file saved (a frame adds to the code), or none
   // for SVG and EPS; the same name downloadQRCode saves under.
   const filename =
@@ -402,7 +411,8 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
     try {
       await downloadQRCode(qrProps, {
         format,
-        size: exportSize,
+        // An ICO has its own sizes; the engine still wants one in range.
+        size: iconSizes ? PRESET_SIZES.medium : exportSize,
         filename,
       });
       emitSound("download");
@@ -512,12 +522,20 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
             </dd>
             <dt>{t("pixels")}</dt>
             <dd className="text-foreground text-right tabular-nums">
-              {outputWidth} × {outputHeight}
+              {iconSizes
+                ? iconSizes.join(" · ")
+                : `${outputWidth} × ${outputHeight}`}
             </dd>
-            <dt>{t("at300Dpi")}</dt>
-            <dd className="text-foreground text-right tabular-nums">
-              {formatInfo?.vector ? t("anySize") : physicalSize(outputWidth)}
-            </dd>
+            {!iconSizes && (
+              <>
+                <dt>{t("at300Dpi")}</dt>
+                <dd className="text-foreground text-right tabular-nums">
+                  {formatInfo?.vector
+                    ? t("anySize")
+                    : physicalSize(outputWidth)}
+                </dd>
+              </>
+            )}
           </>
         ) : (
           <>
@@ -666,103 +684,112 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                   )}
                 </section>
 
-                <section>
-                  <span className={sectionLabel} id="dl-size">
-                    {t("size")}
-                  </span>
-                  <ToggleGroup
-                    aria-labelledby="dl-size"
-                    className="grid w-full grid-cols-3 sm:grid-cols-6"
-                    onValueChange={(next) => {
-                      if (next)
-                        updateDownloadOption("sizePreset", next as SizePreset);
-                    }}
-                    type="single"
-                    value={downloadOptions.sizePreset}
-                    variant="outline"
-                  >
-                    {SIZE_PRESETS.map((preset) => (
-                      <ToggleGroupItem
-                        className="h-14 flex-col gap-0.5 px-1"
-                        key={preset.id}
-                        value={preset.id}
-                      >
-                        <span className="text-xs font-medium">
-                          {t(`sizePresets.${preset.id}`)}
-                        </span>
-                        <span className="text-muted-foreground text-[11px] tabular-nums">
-                          {PRESET_SIZES[preset.id]?.width}
-                        </span>
-                      </ToggleGroupItem>
-                    ))}
-                    <ToggleGroupItem
-                      className="h-14 flex-col gap-0.5 px-1"
-                      value="custom"
-                    >
-                      <span className="text-xs font-medium">{t("custom")}</span>
-                      <span className="text-muted-foreground text-[11px]">
-                        {t("px")}
-                      </span>
-                    </ToggleGroupItem>
-                  </ToggleGroup>
-                  {downloadOptions.sizePreset === "custom" && (
-                    <div className="mt-2.5 flex items-center gap-2">
-                      <Label className="text-xs" htmlFor="custom-size">
-                        {t("widthAndHeight")}
-                      </Label>
-                      <InputGroup className="w-36">
-                        <InputGroupInput
-                          id="custom-size"
-                          inputMode="numeric"
-                          max={5000}
-                          min={50}
-                          onChange={(event) => {
-                            const next = Number(event.target.value);
-                            updateDownloadOption("width", next);
-                            updateDownloadOption("height", next);
-                          }}
-                          type="number"
-                          value={downloadOptions.width}
-                        />
-                        <InputGroupAddon align="inline-end">
-                          <InputGroupText>{t("px")}</InputGroupText>
-                        </InputGroupAddon>
-                      </InputGroup>
-                    </div>
-                  )}
-                </section>
-
-                <section className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-                  <div className="flex items-center gap-2.5">
-                    <span
-                      className="text-muted-foreground text-xs font-medium"
-                      id="dl-scale"
-                    >
-                      {t("scale")}
+                {!iconSizes && (
+                  <section>
+                    <span className={sectionLabel} id="dl-size">
+                      {t("size")}
                     </span>
                     <ToggleGroup
-                      aria-labelledby="dl-scale"
+                      aria-labelledby="dl-size"
+                      className="grid w-full grid-cols-3 sm:grid-cols-6"
                       onValueChange={(next) => {
                         if (next)
-                          updateDownloadOption("multiplier", Number(next));
+                          updateDownloadOption(
+                            "sizePreset",
+                            next as SizePreset,
+                          );
                       }}
-                      size="sm"
                       type="single"
-                      value={String(multiplier)}
+                      value={downloadOptions.sizePreset}
                       variant="outline"
                     >
-                      {SCALES.map((scale) => (
+                      {SIZE_PRESETS.map((preset) => (
                         <ToggleGroupItem
-                          aria-label={`${scale}×`}
-                          className="px-2.5 text-xs tabular-nums"
-                          key={scale}
-                          value={String(scale)}
+                          className="h-14 flex-col gap-0.5 px-1"
+                          key={preset.id}
+                          value={preset.id}
                         >
-                          {scale}×
+                          <span className="text-xs font-medium">
+                            {t(`sizePresets.${preset.id}`)}
+                          </span>
+                          <span className="text-muted-foreground text-[11px] tabular-nums">
+                            {PRESET_SIZES[preset.id]?.width}
+                          </span>
                         </ToggleGroupItem>
                       ))}
+                      <ToggleGroupItem
+                        className="h-14 flex-col gap-0.5 px-1"
+                        value="custom"
+                      >
+                        <span className="text-xs font-medium">
+                          {t("custom")}
+                        </span>
+                        <span className="text-muted-foreground text-[11px]">
+                          {t("px")}
+                        </span>
+                      </ToggleGroupItem>
                     </ToggleGroup>
-                  </div>
+                    {downloadOptions.sizePreset === "custom" && (
+                      <div className="mt-2.5 flex items-center gap-2">
+                        <Label className="text-xs" htmlFor="custom-size">
+                          {t("widthAndHeight")}
+                        </Label>
+                        <InputGroup className="w-36">
+                          <InputGroupInput
+                            id="custom-size"
+                            inputMode="numeric"
+                            max={5000}
+                            min={50}
+                            onChange={(event) => {
+                              const next = Number(event.target.value);
+                              updateDownloadOption("width", next);
+                              updateDownloadOption("height", next);
+                            }}
+                            type="number"
+                            value={downloadOptions.width}
+                          />
+                          <InputGroupAddon align="inline-end">
+                            <InputGroupText>{t("px")}</InputGroupText>
+                          </InputGroupAddon>
+                        </InputGroup>
+                      </div>
+                    )}
+                  </section>
+                )}
+
+                <section className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+                  {!iconSizes && (
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className="text-muted-foreground text-xs font-medium"
+                        id="dl-scale"
+                      >
+                        {t("scale")}
+                      </span>
+                      <ToggleGroup
+                        aria-labelledby="dl-scale"
+                        onValueChange={(next) => {
+                          if (next)
+                            updateDownloadOption("multiplier", Number(next));
+                        }}
+                        size="sm"
+                        type="single"
+                        value={String(multiplier)}
+                        variant="outline"
+                      >
+                        {SCALES.map((scale) => (
+                          <ToggleGroupItem
+                            aria-label={`${scale}×`}
+                            className="px-2.5 text-xs tabular-nums"
+                            key={scale}
+                            value={String(scale)}
+                          >
+                            {scale}×
+                          </ToggleGroupItem>
+                        ))}
+                      </ToggleGroup>
+                    </div>
+                  )}
                   <div className="flex items-center gap-2.5">
                     <Switch
                       checked={transparent}

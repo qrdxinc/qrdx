@@ -63,6 +63,12 @@ export const qrImageFields: INodeProperties[] = [
         description: "Vector PostScript for print",
       },
       {
+        name: "ICO",
+        value: "ico",
+        description:
+          "A favicon with 16, 32, 48 and 256 px images in one file; the small sizes are for icons, not for scanning",
+      },
+      {
         name: "PNG",
         value: "png",
         description: "An image for email, chat and documents",

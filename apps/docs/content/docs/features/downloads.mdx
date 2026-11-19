@@ -1,6 +1,6 @@
 ---
 title: Export and download
-description: Save a QR code as PNG, JPG, WebP, BMP, SVG, PDF or EPS with downloadQRCode, get it as a data URL, a Blob or SVG markup, copy it to the clipboard, and make a PNG in Node.
+description: Save a QR code as PNG, JPG, WebP, BMP, ICO, SVG, PDF or EPS with downloadQRCode, get it as a data URL, a Blob or SVG markup, copy it to the clipboard, and make a PNG in Node.
 icon: Download
 ---
 
@@ -42,6 +42,7 @@ Props are the same as on `QRCode`, except that a logo goes in `imageSettings`. T
 | `jpg` | Image | Solid background only, smaller file |
 | `webp` | Image | PNG's pixels in a smaller file; lossless unless `quality` is set |
 | `bmp` | Image | Uncompressed 24-bit bitmap for legacy systems; a transparent background comes out white |
+| `ico` | Image | A favicon: the code at 16, 32, 48 and 256 px in one file, with transparency kept. `size` doesn't apply |
 | `svg` | Vector | Sharp at any size; the file for print shops and design tools |
 | `pdf` | Document | One page holding the code as a PNG. Needs the optional `jspdf` package |
 | `eps` | Vector | PostScript for Illustrator, CorelDRAW and InDesign. `size.width` is read as points (72 per inch) |
@@ -74,6 +75,20 @@ const bmp = await getQRAsBMP({ value: "https://example.com", size: 1024 });
 ```
 
 `canvasToBMP(canvas)` does the same for any canvas, and `encodeBMP(rgba, width, height)` writes RGBA pixels with no DOM.
+
+### ICO
+
+ICO is the favicon format: one file holding the code at 16, 32, 48 and 256 px, each stored as a PNG inside the ICO, which every browser and Windows since Vista read. A transparent background stays transparent. Because the sizes are fixed, `size` doesn't apply and the file name states none (`qr-code.ico`), and a frame is left out, since every image is square and at most 256 px. The small sizes are for icons, not for scanning.
+
+No browser can write ICO from a canvas (`toBlob("image/x-icon")` returns a PNG), so the library draws the code at each size, takes a PNG of each, writes the ICO itself, and checks its header before saving: a `.ico` file is always an ICO. `getQRAsICO` returns it as a `Blob`:
+
+```ts title="lib/favicon.ts"
+import { getQRAsICO } from "qrdx";
+
+const favicon = await getQRAsICO({ value: "https://example.com" });
+```
+
+`canvasesToICO(canvases)` writes any canvases of 1 to 256 px, and `encodeICO(images)` wraps PNG files you already have, with no DOM.
 
 ### PDF
 

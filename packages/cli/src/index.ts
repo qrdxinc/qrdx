@@ -89,10 +89,11 @@ ${BOLD}Commands:${RESET}
 
 ${BOLD}Generate Options:${RESET}
   <data>              URL or text to encode (positional)
-  -o, --output        Output file path (.svg, .png, .webp, .bmp or .eps)
+  -o, --output        Output file path (.svg, .png, .webp, .bmp, .ico or .eps)
   --format            Output format when the file name has no extension:
-                        ${DIM}svg, png, webp, bmp, eps${RESET}  ${DIM}(WebP is lossless; BMP is 24-bit,${RESET}
-                        ${DIM}transparent = white; EPS is vector,${RESET}
+                        ${DIM}svg, png, webp, bmp, ico, eps${RESET}  ${DIM}(WebP is lossless; BMP is 24-bit,${RESET}
+                        ${DIM}transparent = white; ICO is a favicon with 16, 32, 48${RESET}
+                        ${DIM}and 256 px, --size doesn't apply; EPS is vector,${RESET}
                         ${DIM}--size = width in points)${RESET}
   -l, --level         Error correction: L, M, Q, H  ${DIM}(default: Q)${RESET}
   --body              Body dot pattern, e.g.:
