@@ -18,6 +18,7 @@ import {
   CARD_ART,
   CARD_FRAME,
   CARD_TEXT,
+  CARD_TEXT_REVEAL,
   RAIL,
   RAIL_CARD,
   RAIL_RANKED,
@@ -62,7 +63,7 @@ describe("a gallery's placeholder", () => {
     const markup = html(<GallerySkeleton view="frames" />);
     expect(count(markup, CARD_FRAME)).toBe(6);
     expect(count(markup, CARD_ART)).toBe(6);
-    expect(count(markup, CARD_TEXT)).toBe(6);
+    expect(count(markup, `${CARD_TEXT} ${CARD_TEXT_REVEAL}`)).toBe(6);
   });
 
   it("holds the themes gallery's own loading cards on Themes", () => {

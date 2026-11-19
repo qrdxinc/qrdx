@@ -22,6 +22,7 @@ import {
   CARD_ART,
   CARD_FRAME,
   CARD_TEXT,
+  CARD_TEXT_REVEAL,
   MAKER_CARD,
   RAIL,
   RAIL_CARD,
@@ -45,14 +46,17 @@ const BAR = "bg-foreground/[0.06] rounded-sm";
 /** Cards in a gallery's placeholder grid: two full rows on a wide screen. */
 const GALLERY_CARDS = 6;
 
-/** A card's shape: the design's box, then its two lines. */
+/**
+ * A card's shape: the design's box, then its two lines, hidden until hover
+ * where the card's own caption is (CARD_TEXT_REVEAL).
+ */
 export function CardShape() {
   return (
     <div className={CARD_FRAME}>
       <div className="relative">
         <div className={CARD_ART} />
       </div>
-      <div className={CARD_TEXT}>
+      <div className={cn(CARD_TEXT, CARD_TEXT_REVEAL)}>
         <div className="flex h-5 items-center">
           <div className={cn(BAR, "h-3 w-2/5")} />
         </div>

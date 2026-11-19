@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { COMMUNITY_LICENSE_NAME } from "@/lib/community/licence";
 import { typeFromSegment } from "@/lib/community/types";
 import { onDemandParams } from "@/lib/static-params";
-import { COPY } from "./copy";
+import { COPY } from "../copy";
 
 export const alt =
   "QR code frames, themes and collections from the QRdx community";
