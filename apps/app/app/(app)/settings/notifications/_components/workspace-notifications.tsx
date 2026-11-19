@@ -50,6 +50,7 @@ import { useWorkspaceHref } from "@/components/workspace-provider";
 import type { NotificationWorkspace } from "@/lib/events/notification-settings";
 import {
   CHAT_NOTIFICATION_EVENTS,
+  DEFAULT_EMAIL_EVENTS,
   EVENT_INFO,
   NOTIFICATION_CHANNEL_LABELS,
   NOTIFICATION_EVENTS,
@@ -111,8 +112,11 @@ export function WorkspaceNotifications({
   const router = useRouter();
   const openUpgradeDialog = useGetProDialogStore((s) => s.openUpgradeDialog);
   const isTeam = !workspace.own;
+  // No email row on a plan with email alerts: the defaults go out, so the
+  // switches show them on (lib/events/types.ts DEFAULT_EMAIL_EVENTS).
   const [emailEvents, setEmailEventsState] = useState<NotificationEvent[]>(
-    workspace.email?.events ?? [],
+    workspace.email?.events ??
+      (workspace.emailByDefault ? [...DEFAULT_EMAIL_EVENTS] : []),
   );
   const [chatDialog, setChatDialog] = useState<ChatDialog | null>(null);
   const [chatUrl, setChatUrl] = useState("");
@@ -294,6 +298,15 @@ export function WorkspaceNotifications({
                     <span className="text-muted-foreground block text-xs">
                       {EVENT_INFO[event].description}
                     </span>
+                    {workspace.emailByDefault === "ownCodes" &&
+                      on &&
+                      (DEFAULT_EMAIL_EVENTS as readonly string[]).includes(
+                        event,
+                      ) && (
+                        <span className="text-muted-foreground block text-xs">
+                          {t("onByDefaultOwnCodes")}
+                        </span>
+                      )}
                   </label>
                   <Switch
                     checked={on}

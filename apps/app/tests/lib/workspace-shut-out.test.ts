@@ -204,9 +204,13 @@ describe("notification targets", () => {
   it("can always turn email off and remove a webhook", async () => {
     await settings.setEmailEvents(CY, TEAM, []);
     await settings.removeChatTarget(CY, "n_cy_slack");
+    // Off is an email row with no events: no row would mean the defaults.
     expect(
-      fakeDb.rows("notificationSetting").filter((row) => row.userId === CY),
-    ).toEqual([]);
+      fakeDb
+        .rows("notificationSetting")
+        .filter((row) => row.userId === CY)
+        .map((row) => [row.channel, row.events]),
+    ).toEqual([["email", []]]);
   });
 
   it("works with two-step verification on, in a team without the requirement, and once it's off", async () => {

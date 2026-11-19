@@ -46,7 +46,9 @@ vi.mock("@/lib/events/subscribers", () => ({
       { id: "ep_2", events: ["scan.created"] },
     ],
     targets: [{ id: "t_1", channel: "slack", events: ["code.created"] }],
+    defaultEmail: [],
   }),
+  defaultEmailTargets: () => [],
 }));
 
 const { emitCodesCreated } = await import("@/lib/events/emit");

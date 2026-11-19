@@ -10,7 +10,9 @@ import {
   webhookEndpoint,
 } from "@repo/database";
 import { and, eq, isNull, type SQL } from "drizzle-orm";
-import { getPlanForScope, type Plan } from "@/lib/plans";
+import { strongestRole } from "@/lib/permissions";
+import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
+import { DEFAULT_EMAIL_EVENTS } from "./types";
 
 /** A workspace (organizationId null only for rows from before workspaces). */
 export interface EventScope {
@@ -34,10 +36,71 @@ export interface NotificationTarget {
   events: string[];
 }
 
+/**
+ * A member who gets DEFAULT_EMAIL_EVENTS without an email row (a plan with
+ * email alerts only): owners for every code, anyone else for the codes they
+ * made. A personal workspace's person is its owner.
+ */
+export interface DefaultEmailRecipient {
+  userId: string;
+  userName: string;
+  email: string;
+  owner: boolean;
+}
+
 export interface Subscribers {
   plan: Plan;
   endpoints: SubscribedEndpoint[];
   targets: NotificationTarget[];
+  /** Empty unless the plan has email alerts */
+  defaultEmail: DefaultEmailRecipient[];
+}
+
+// A default recipient has no row, so their target id names them instead:
+// "default:<userId>:<organizationId>" (empty for a personal workspace). It
+// keys their alert limit, their emails' idempotency and their unsubscribe
+// link, which saves a row (lib/events/notification-settings.ts).
+const DEFAULT_TARGET = "default:";
+
+export const defaultEmailTargetId = (
+  userId: string,
+  organizationId: string | null,
+) => `${DEFAULT_TARGET}${userId}:${organizationId ?? ""}`;
+
+export function parseDefaultEmailTargetId(
+  id: string,
+): { userId: string; organizationId: string | null } | null {
+  if (!id.startsWith(DEFAULT_TARGET)) return null;
+  const [userId, organizationId, extra] = id
+    .slice(DEFAULT_TARGET.length)
+    .split(":");
+  if (!userId || organizationId === undefined || extra !== undefined) {
+    return null;
+  }
+  return { userId, organizationId: organizationId || null };
+}
+
+/**
+ * The default email targets for one event on one code: none unless the
+ * event is a default one; owners, and the code's maker.
+ */
+export function defaultEmailTargets(
+  subs: Pick<Subscribers, "defaultEmail">,
+  event: string,
+  scope: EventScope,
+  makerId: string,
+): NotificationTarget[] {
+  if (!(DEFAULT_EMAIL_EVENTS as readonly string[]).includes(event)) return [];
+  return subs.defaultEmail
+    .filter((person) => person.owner || person.userId === makerId)
+    .map((person) => ({
+      id: defaultEmailTargetId(person.userId, scope.organizationId),
+      userId: person.userId,
+      userName: person.userName,
+      channel: "email" as const,
+      target: person.email,
+      events: [...DEFAULT_EMAIL_EVENTS],
+    }));
 }
 
 export const scopeKey = (scope: EventScope) =>
@@ -92,9 +155,47 @@ export async function withoutShutOutMembers<
   return kept;
 }
 
-async function querySubscribers(
+/**
+ * The workspace's members with no email row for it (anyone with one chose,
+ * even if they chose nothing), minus those it shuts out.
+ */
+async function defaultEmailRecipients(
   scope: EventScope,
-): Promise<Subscribers | null> {
+  chose: Set<string>,
+): Promise<DefaultEmailRecipient[]> {
+  if (!scope.organizationId) {
+    if (chose.has(scope.userId)) return [];
+    const [person] = await db
+      .select({ userId: user.id, userName: user.name, email: user.email })
+      .from(user)
+      .where(eq(user.id, scope.userId))
+      .limit(1);
+    return person ? [{ ...person, owner: true }] : [];
+  }
+  const members = await db
+    .select({
+      userId: member.userId,
+      role: member.role,
+      organizationId: member.organizationId,
+      userName: user.name,
+      email: user.email,
+      twoFactorOn: user.twoFactorEnabled,
+    })
+    .from(member)
+    .innerJoin(user, eq(user.id, member.userId))
+    .where(eq(member.organizationId, scope.organizationId));
+  const kept = await withoutShutOutMembers(
+    members.filter((row) => !chose.has(row.userId)),
+  );
+  return kept.map((row) => ({
+    userId: row.userId,
+    userName: row.userName,
+    email: row.email,
+    owner: strongestRole(row.role) === "owner",
+  }));
+}
+
+async function querySubscribers(scope: EventScope): Promise<Subscribers> {
   const [endpoints, settings] = await db.batch([
     db
       .select({ id: webhookEndpoint.id, events: webhookEndpoint.events })
@@ -146,11 +247,19 @@ async function querySubscribers(
     .map((row) => ({ id: row.id, events: asEvents(row.events) }))
     .filter((row) => row.events.length > 0);
 
-  if (subscribed.length === 0 && targets.length === 0) return null;
+  // Every workspace needs its plan now: with email alerts, people who never
+  // set their email events get the defaults.
+  const plan = await getPlanForScope(scope);
+  const chose = new Set(
+    settings.filter((row) => row.channel === "email").map((row) => row.userId),
+  );
   return {
-    plan: await getPlanForScope(scope),
+    plan,
     endpoints: subscribed,
     targets,
+    defaultEmail: getPlanLimits(plan).emailAlerts
+      ? await defaultEmailRecipients(scope, chose)
+      : [],
   };
 }
 
@@ -159,12 +268,13 @@ async function querySubscribers(
 // server instance apply within this window.
 const CACHE_TTL_MS = 30_000;
 const CACHE_MAX_ENTRIES = 2000;
-const cache = new Map<string, { at: number; value: Subscribers | null }>();
+const cache = new Map<string, { at: number; value: Subscribers }>();
 
+/** The workspace's plan, webhooks and notification targets (cached for scans). */
 export async function loadSubscribers(
   scope: EventScope,
   { cached = false }: { cached?: boolean } = {},
-): Promise<Subscribers | null> {
+): Promise<Subscribers> {
   const key = scopeKey(scope);
   const now = Date.now();
   if (cached) {

@@ -4,13 +4,17 @@ import { database as db, webhookDelivery } from "@repo/database";
 import cuid from "cuid";
 import { and, asc, eq, gt, inArray, sql } from "drizzle-orm";
 import { after } from "next/server";
-import { sendFreeFirstScanEmail } from "@/lib/email/first-scan";
+import {
+  markPaidFirstScan,
+  sendFreeFirstScanEmail,
+} from "@/lib/email/first-scan";
 import { normalizeScanSource } from "@/lib/nfc/links";
 import { getPlanLimits } from "@/lib/plans";
 import { shortLinkUrl } from "@/lib/short-links";
 import { claimDueDeliveries, deliverNow, processClaimed } from "./deliveries";
 import { isAlertEvent, notifyTargets } from "./notify";
 import {
+  defaultEmailTargets,
   type EventScope,
   loadSubscribers,
   type Subscribers,
@@ -195,11 +199,20 @@ export async function emitEvent<T extends EventType>(
         tasks.push(enqueue(endpointIds, envelope));
       }
       if (isAlertEvent(type)) {
-        const targets = subs.targets.filter(
-          (target) =>
-            target.events.includes(type) &&
-            (target.channel === "email" ? limits.emailAlerts : limits.webhooks),
-        );
+        const targets = [
+          ...subs.targets.filter(
+            (target) =>
+              target.events.includes(type) &&
+              (target.channel === "email"
+                ? limits.emailAlerts
+                : limits.webhooks),
+          ),
+          // People with no email row get the plan's defaults (scan events:
+          // the scope's person is the code's maker).
+          ...(limits.emailAlerts
+            ? defaultEmailTargets(subs, type, scope, scope.userId)
+            : []),
+        ];
         if (targets.length > 0) {
           tasks.push(notifyTargets(envelope as never, targets, scope));
         }
@@ -342,7 +355,6 @@ export function emitCodesCreated(
   runInBackground(async () => {
     // Bulk creation (API batches, CSV import): look subscribers up once.
     const subscribers = await loadSubscribers(scope).catch(() => undefined);
-    if (subscribers === null) return;
     if (subscribers && codes.length > BATCH_DELIVER_NOW) {
       try {
         await emitBatchCreated(scope, codes, subscribers);
@@ -484,13 +496,28 @@ export async function emitScanRecorded(
   scan: RecordedScan,
   code: ScannedCode,
 ): Promise<void> {
-  const freeFirstScan = sendFreeFirstScanEmail(scan, code);
+  const scope = { userId: code.userId, organizationId: code.organizationId };
+  let subscribers: Subscribers | null = null;
   try {
-    const scope = { userId: code.userId, organizationId: code.organizationId };
     // Google Sheets "keep in sync": batched, at most every 5 min per sheet
     triggerIntegrationSyncs(scope, "scans");
-    const subscribers = await loadSubscribers(scope, { cached: true });
-    if (!subscribers) return;
+    subscribers = await loadSubscribers(scope, { cached: true });
+  } catch (error) {
+    log("event.scan_emit_failed", { error: errorMessage(error) });
+  }
+  // One read of the plan decides both first-scan emails (Pro's alert below,
+  // Free's email per code), so a code never gets both, even while its
+  // workspace changes plans. Without it, Free's email reads the plan itself.
+  const emailAlerts = subscribers
+    ? getPlanLimits(subscribers.plan).emailAlerts
+    : undefined;
+  const freeFirstScan = sendFreeFirstScanEmail(scan, code, { emailAlerts });
+  if (!subscribers) {
+    await freeFirstScan;
+    return;
+  }
+  try {
+    if (emailAlerts && code.scanCount === 1) await markPaidFirstScan(code.id);
     const summary = scanSummary(scan, code);
     const tasks = [
       emitEvent("scan.created", summary, scope, {

@@ -6,6 +6,7 @@ import { isReservedEmailAddress } from "@repo/email/reserved-address";
 import { FirstScanEmail } from "@repo/email/templates/first-scan";
 import { codeLabel } from "@repo/email/templates/parts";
 import { DEFAULT_LOCALE, isLocale } from "@repo/i18n/config";
+import { redis } from "@repo/rate-limit";
 import { and, eq, gte, lt, or } from "drizzle-orm";
 import type { RecordedScan, ScannedCode } from "@/lib/events/emit";
 import { SCAN_MILESTONES } from "@/lib/events/types";
@@ -22,10 +23,12 @@ import { isPortalClient } from "./welcome";
 
 // Free's one first-scan email per code (owner decision, 19 Nov): "your code
 // got its first scan", to the person who made the code, with one line on
-// what Pro adds. Pro and Business keep their own alerts (scan milestones,
-// form responses, code changes, the weekly digest; lib/events/notify.tsx),
-// which need a notification_setting row, so this never goes to a workspace
-// whose plan has email alerts: nobody gets both for one code.
+// what Pro adds. Pro and Business have their own first-scan alert (scan
+// milestone 1, on by default; lib/events/types.ts DEFAULT_EMAIL_EVENTS), so
+// this never goes to a workspace whose plan has email alerts, and nobody
+// gets both for one code: lib/events/emit.ts decides both from one read of
+// the plan, and a code whose first scan came on such a plan is marked
+// (markPaidFirstScan), so after a downgrade it doesn't get this one too.
 //
 // It's one of the notes from the QRdx team (./team-notes.ts): no row
 // needed, on by default, and the one-click link in it (or Settings >
@@ -73,6 +76,7 @@ export type FreeFirstScanOutcome =
   | "off"
   | "no_personal_sender"
   | "paid_plan"
+  | "paid_first_scan"
   | "not_found"
   | "opted_out"
   | "banned"
@@ -114,6 +118,38 @@ async function hadRealScan(
 
 let warnedNoSender = false;
 
+// Codes whose first scan came while their workspace's plan had email
+// alerts (Pro's first-scan alert went, or was on offer): about 13 months.
+const PAID_FIRST_SCAN = "qrdx:first-scan:paid:";
+const PAID_FIRST_SCAN_SECONDS = 400 * 24 * 60 * 60;
+
+/** Called on a code's first scan while its plan has email alerts. */
+export async function markPaidFirstScan(codeId: string): Promise<void> {
+  try {
+    await redis?.set(`${PAID_FIRST_SCAN}${codeId}`, 1, {
+      ex: PAID_FIRST_SCAN_SECONDS,
+    });
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        event: "email.first_scan_mark_failed",
+        codeId,
+        error: error instanceof Error ? error.name : "unknown",
+      }),
+    );
+  }
+}
+
+/**
+ * Whether the code's first scan came on a plan with email alerts. Throws
+ * when Redis can't say, so the email isn't sent rather than risk a second
+ * first-scan email for one code.
+ */
+async function hadPaidFirstScan(codeId: string): Promise<boolean> {
+  if (!redis) return false;
+  return (await redis.get(`${PAID_FIRST_SCAN}${codeId}`)) !== null;
+}
+
 const logFailure = (codeId: string, error: string) =>
   console.error(
     JSON.stringify({ event: "email.free_first_scan_failed", codeId, error }),
@@ -126,6 +162,12 @@ const logFailure = (codeId: string, error: string) =>
 export async function sendFreeFirstScanEmail(
   scan: RecordedScan,
   code: ScannedCode,
+  {
+    emailAlerts,
+  }: {
+    /** Whether the plan has email alerts, as the alerts saw it (emit.ts) */
+    emailAlerts?: boolean;
+  } = {},
 ): Promise<FreeFirstScanOutcome> {
   try {
     if (!code.createdAt || code.scanCount > FIRST_SCAN_CHECK_LIMIT) {
@@ -152,10 +194,14 @@ export async function sendFreeFirstScanEmail(
       return "no_personal_sender";
     }
     const scope = { userId: code.userId, organizationId: code.organizationId };
-    if (getPlanLimits(await getPlanForScope(scope)).emailAlerts) {
+    if (
+      emailAlerts ??
+      getPlanLimits(await getPlanForScope(scope)).emailAlerts
+    ) {
       return "paid_plan";
     }
     if (await hadRealScan(code, scan, after)) return "not_first";
+    if (await hadPaidFirstScan(code.id)) return "paid_first_scan";
 
     const [maker] = await db
       .select({

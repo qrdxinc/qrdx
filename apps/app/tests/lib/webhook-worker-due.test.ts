@@ -167,6 +167,7 @@ describe("scheduling lowers the worker marker", () => {
           plan: "business",
           endpoints: [{ id: "ep_1", events: ["scan.created"] }],
           targets: [],
+          defaultEmail: [],
         },
       },
     );

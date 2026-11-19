@@ -19767,8 +19767,12 @@
     "source": "bc7bafdda4a7",
     "status": "machine"
   },
+  "app.settings.notifications.workspaceNotifications.onByDefaultOwnCodes": {
+    "source": "11db281425cd",
+    "status": "machine"
+  },
   "app.settings.notifications.workspaceNotifications.emailAlertsAreProFirstScan": {
-    "source": "57d61cc70254",
+    "source": "048ebcf553c9",
     "status": "machine"
   },
   "app.settings.notifications.teamNotes.title": {
@@ -28820,7 +28824,7 @@
     "status": "machine"
   },
   "emails.firstScan.pro": {
-    "source": "d452cfe47a07",
+    "source": "7382b933ecf7",
     "status": "machine"
   },
   "emails.firstScan.freeReason": {
@@ -29232,7 +29236,7 @@
     "status": "machine"
   },
   "emails.welcome.pro": {
-    "source": "2ff1d85e942e",
+    "source": "97f5ef3795bd",
     "status": "machine"
   },
   "emails.welcome.taxes": {

@@ -6463,7 +6463,8 @@
           "notificationsSaved": "Notifikasi disimpan",
           "testMessageSentToValue": "Pesan uji dikirim ke {value}",
           "webhookRemoved": "Webhook dihapus",
-          "emailAlertsAreProFirstScan": "Di paket Gratis, Anda mendapatkan satu email saat setiap kode baru menerima pemindaian pertamanya. Peringatan email lainnya dan ringkasan mingguan tersedia di Pro dan Business."
+          "onByDefaultOwnCodes": "Aktif secara default untuk kode yang Anda buat. Mengubah sakelar di sini akan menyimpan pilihan Anda untuk setiap kode di workspace ini.",
+          "emailAlertsAreProFirstScan": "Di paket Gratis, Anda mendapatkan satu email saat setiap kode QR dinamis yang Anda buat mendapat pemindaian pertamanya. Notifikasi email lainnya dan ringkasan mingguan tersedia di Pro dan Business."
         },
         "teamNotes": {
           "title": "Catatan dari tim QRdx",
@@ -9164,7 +9165,7 @@
       "preview": "{code} dipindai untuk pertama kalinya",
       "heading": "Kode Anda mendapat pemindaian pertama",
       "body": "Seseorang baru saja memindai {code}. Kode QR Anda aktif dan berfungsi.",
-      "pro": "<link>Pro</link> juga mengirim email kepada Anda pada pemindaian {first}, {second}, {third} dan seterusnya, saat seseorang mengirim salah satu formulir Anda, serta setiap hari Senin dengan angka minggu lalu.",
+      "pro": "<link>Pro</link> juga mengirim email kepada Anda pada {first}, {second}, dan {third} pemindaian dan seterusnya, serta dapat mengirimkan ringkasan mingguan.",
       "freeReason": "Anda menerima email ini karena kode yang Anda buat mendapat pemindaian pertamanya. QRdx hanya mengirim email ini sekali untuk setiap kode."
     },
     "scanMilestone": {
@@ -9295,7 +9296,7 @@
       "seeScans": "<link>Lihat pemindaiannya:</link> kapan, di mana, dan dari perangkat apa orang memindainya.",
       "changeLink": "Ubah tujuan tautannya kapan pun Anda mau, bahkan setelah dicetak. Tanpa cetak ulang.",
       "free": "Kode QR statis tetap gratis, dan kode yang Anda buat tetap berfungsi meskipun Anda berganti paket atau berhenti membayar. Paket Gratis juga mencakup {count} kode QR dinamis.",
-      "pro": "Jika Anda membutuhkan lebih, Pro seharga {monthly} per bulan atau {yearly} per tahun dan menambahkan kode dinamis tanpa batas, {domains} domain kustom, serta pemberitahuan email di setiap tonggak pemindaian beserta ringkasan mingguan.",
+      "pro": "Jika Anda membutuhkan lebih, Pro seharga {monthly} per bulan atau {yearly} per tahun, dengan tambahan kode dinamis tanpa batas, {domains} domain kustom, peringatan email di setiap tonggak pemindaian, serta ringkasan mingguan jika Anda menginginkannya.",
       "taxes": "Pajak setempat mungkin ditambahkan saat pembayaran.",
       "reply": "Jika ada kendala, atau Anda tidak yakin cara melakukan sesuatu, balas email ini. Setiap balasan dibaca oleh seorang manusia.",
       "reason": "Anda menerima email ini karena baru saja membuat akun QRdx."

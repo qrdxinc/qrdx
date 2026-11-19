@@ -31,6 +31,18 @@ export type NotificationEvent = (typeof NOTIFICATION_EVENTS)[number];
 export const CHAT_NOTIFICATION_EVENTS: readonly NotificationEvent[] =
   NOTIFICATION_EVENTS.filter((event) => event !== "digest.weekly");
 
+/**
+ * Email a plan with email alerts sends by default (owner decision, 19 Nov
+ * 2026): each code's first scan and its milestones, to the code's maker and
+ * the workspace's owners while they have no email row for the workspace
+ * (lib/events/subscribers.ts). The weekly digest, form responses and code
+ * changes stay off until someone turns them on. An email row, even one with
+ * no events (turned off), always wins.
+ */
+export const DEFAULT_EMAIL_EVENTS = [
+  "scan.milestone",
+] as const satisfies readonly NotificationEvent[];
+
 export const NOTIFICATION_CHANNEL_LABELS = {
   email: "Email",
   slack: "Slack",

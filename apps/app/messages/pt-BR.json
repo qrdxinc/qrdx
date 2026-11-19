@@ -6463,7 +6463,8 @@
           "notificationsSaved": "Notificações salvas",
           "testMessageSentToValue": "Mensagem de teste enviada para {value}",
           "webhookRemoved": "Webhook removido",
-          "emailAlertsAreProFirstScan": "No plano Grátis, você recebe um e-mail quando cada novo código tem sua primeira leitura. Os outros alertas por e-mail e o resumo semanal fazem parte dos planos Pro e Business."
+          "onByDefaultOwnCodes": "Ativado por padrão para os códigos que você cria. Ao mudar uma chave aqui, sua escolha é salva para todos os códigos deste workspace.",
+          "emailAlertsAreProFirstScan": "No plano Grátis, você recebe um e-mail quando cada QR code dinâmico que você cria tem a primeira leitura. Os demais alertas por e-mail e o resumo semanal fazem parte do Pro e do Business."
         },
         "teamNotes": {
           "title": "Recados da equipe QRdx",
@@ -9164,7 +9165,7 @@
       "preview": "{code} foi lido pela primeira vez",
       "heading": "Seu código teve a primeira leitura",
       "body": "Alguém acabou de ler {code}. Seu QR code está ativo e funcionando.",
-      "pro": "O <link>Pro</link> também envia e-mail nas leituras de número {first}, {second}, {third} e seguintes, quando alguém envia um dos seus formulários e toda segunda-feira com os números da semana passada.",
+      "pro": "O <link>Pro</link> também avisa você por e-mail nas leituras {first}, {second} e {third} e nas seguintes, e pode enviar um resumo semanal.",
       "freeReason": "Você está recebendo este e-mail porque um código que você criou teve a primeira leitura. O QRdx envia este aviso uma vez por código."
     },
     "scanMilestone": {
@@ -9295,7 +9296,7 @@
       "seeScans": "<link>Acompanhe as leituras:</link> quando, onde e em quais dispositivos as pessoas fazem a leitura.",
       "changeLink": "Mude o destino sempre que quiser, mesmo depois de impresso. Sem precisar reimprimir.",
       "free": "Os QR codes estáticos continuam grátis, e os códigos que você criar seguem funcionando se você mudar de plano ou parar de pagar. O plano Grátis também inclui {count} QR codes dinâmicos.",
-      "pro": "Se precisar de mais, o Pro custa {monthly} por mês ou {yearly} por ano e traz QR codes dinâmicos ilimitados, {domains} domínios personalizados e alertas por e-mail a cada marco de leituras, com um resumo semanal.",
+      "pro": "Se precisar de mais, o Pro custa {monthly} por mês ou {yearly} por ano e inclui QR codes dinâmicos ilimitados, {domains} domínios personalizados, alertas por e-mail a cada marco de leituras e um resumo semanal, se você quiser.",
       "taxes": "Impostos locais podem ser adicionados no checkout.",
       "reply": "Se algo atrapalhar ou você não souber como fazer alguma coisa, responda a este e-mail. Uma pessoa lê todas as respostas.",
       "reason": "Você está recebendo este e-mail porque acabou de criar uma conta no QRdx."
