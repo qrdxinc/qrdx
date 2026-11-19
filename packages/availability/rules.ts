@@ -163,6 +163,8 @@ export const FEATURE_RULES: Record<FeatureId, FeatureRule> = {
       "/docs/custom-domains",
       "/docs/help/domains/custom-domains",
       "/docs/move-your-qr-domain",
+      // The site zone's page about them (SITE_GROUPS.products).
+      "/custom-domain-qr-codes",
     ],
     // Tag Manager containers run any script, so they only ever load on a
     // customer's own domain (components/landing/pixels.tsx).
