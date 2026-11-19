@@ -250,7 +250,17 @@ export async function makeDynamic(
  * A code saved switched off until QRdx checks its address: say so, and that
  * it shouldn't be printed yet. It's in the dashboard.
  */
-export function DynamicHeldCard({ codeId }: { codeId: string }) {
+export function DynamicHeldCard({
+  codeId,
+  body,
+  onOpen,
+}: {
+  codeId: string;
+  /** In place of the playground's wording (the builder over the dashboard) */
+  body?: string;
+  /** Before the dashboard link navigates (closing a dialog) */
+  onOpen?: () => void;
+}) {
   const t = useTranslations("editor.dynamicLinkToggle");
   return (
     <div
@@ -258,9 +268,9 @@ export function DynamicHeldCard({ codeId }: { codeId: string }) {
       role="status"
     >
       <p className="font-medium">{t("heldTitle")}</p>
-      <p className="text-pretty">{t("heldBody")}</p>
+      <p className="text-pretty">{body ?? t("heldBody")}</p>
       <Button asChild size="sm" variant="outline">
-        <Link href={dashboardEntry(`codes/${codeId}`)}>
+        <Link href={dashboardEntry(`codes/${codeId}`)} onClick={onOpen}>
           {t("openInDashboard")}
           <ArrowRight />
         </Link>

@@ -10337,6 +10337,8 @@
       "qrCodesAlreadyPrintedWith2": "QR codes already printed with {shortLink} will stop working. Its back-half moves with the code when it's free there, otherwise the code gets a new one.",
       "theQrCodeChangesTo": "The QR code changes to the new link, so download it again after saving. Codes you already printed keep working.",
       "downloadItAndPrintIt": "Download it and print it anywhere. You can change where it points at any time.",
+      "heldDescription": "It's saved, but switched off until QRdx checks its address. Don't print it yet.",
+      "heldBody": "QRdx checks some addresses before a new account's code goes live, so this code is switched off for now. Don't print it yet: its page in your dashboard shows when it's on.",
       "itEncodesAShortLink": "It encodes a short link, so you can change where it points after printing.",
       "saving": "Saving...",
       "creating": "Creating...",
