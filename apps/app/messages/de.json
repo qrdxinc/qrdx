@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "Tarife und Preise vergleichen",
       "maybeLater": "Vielleicht später",
       "thisFeatureIsPartOf": "Diese Funktion ist Teil des Business-Tarifs.",
-      "thisFeatureIsPartOf2": "Diese Funktion ist Teil von Pro und Business."
+      "thisFeatureIsPartOf2": "Diese Funktion ist Teil von Pro und Business.",
+      "ownerUpgrades": "Nur die Owner dieses Workspace und Mitglieder mit Zugriff auf die Abrechnung können den Tarif ändern. Bitte eine dieser Personen, auf {plan} umzustellen."
+    },
+    "checkoutButtons": {
+      "month": "{plan} · {price} im Monat",
+      "year": "{plan} · {price} im Jahr",
+      "monthNoPrice": "{plan} monatlich",
+      "yearNoPrice": "{plan} jährlich",
+      "note": "Der Checkout läuft über Polar; lokale Steuern können hinzukommen. Jederzeit kündbar.",
+      "switchTo": "Zu {plan} wechseln",
+      "openPortal": "Portal öffnen",
+      "failed": "Der Checkout hat sich nicht geöffnet. Versuch es gleich noch einmal.",
+      "subscribed": "Du hast bereits ein Abo. Ändere deinen Tarif im Abrechnungsportal.",
+      "unavailable": "Der Checkout ist hier gerade nicht verfügbar.",
+      "rateLimited": "Zu viele Checkout-Versuche. Versuche es in ein paar Minuten erneut."
     },
     "themeToggle": {
       "toggleTheme": "Design wechseln"
@@ -3278,6 +3292,8 @@
       "creditsLeft": "<count>{remaining, number} von {limit, number}</count> KI-Art-Bildern in diesem Monat übrig{pooled, select, yes { (geteilt mit deinem Team)} other {}}, wird {resets} zurückgesetzt. Dieser Durchlauf nutzt {variations, number}; fehlgeschlagene Bilder werden erstattet.",
       "notEnoughLeft": "Nicht genug übrig für {variations, number}: Wähle weniger Variationen.",
       "notEnoughLeftOrUpgrade": "Nicht genug übrig für {variations, number}: Wähle weniger Variationen oder upgrade.",
+      "noneLeft": "Diesen Monat keine mehr übrig.",
+      "noneLeftUpgrade": "Diesen Monat keine mehr übrig. Upgrade jetzt, um weitere zu erstellen.",
       "moreArtistic": "Künstlerischer",
       "clearerCode": "Klarerer Code",
       "followsYourPrompt": "Folgt deinem Prompt",
@@ -3827,6 +3843,8 @@
         "creditsLeft": "<count>{remaining, number} von {limit, number}</count> KI-Art-Bildern in diesem Monat übrig{pooled, select, yes { (von deinem Team geteilt)} other {}}, wird {resets} zurückgesetzt. Dieser Durchlauf nutzt {variations, number}.",
         "notEnoughLeft": "Nicht genug übrig: Wähle weniger Varianten.",
         "notEnoughLeftOrUpgrade": "Nicht genug übrig: Wähle weniger Varianten oder upgrade.",
+        "noneLeft": "Diesen Monat nichts mehr übrig.",
+        "noneLeftUpgrade": "Diesen Monat nichts mehr übrig. Upgrade jetzt, um sofort mehr zu erstellen.",
         "showResults": "{count, plural, one {Dein Ergebnis anzeigen} other {Deine Ergebnisse anzeigen}}",
         "moreArtistic": "Künstlerischer",
         "clearerCode": "Klarerer Code",
@@ -6481,6 +6499,7 @@
           "scansAcrossEveryDynamicCode": "Scans aller dynamischen QR-Codes in diesem Workspace.",
           "dateRange": "Zeitraum",
           "yourPlanKeepsAShorter": "Dein Tarif speichert den Scan-Verlauf kürzer",
+          "comparePlans": "Pläne vergleichen",
           "dynamicCodes": "Dynamische QR-Codes",
           "totalScans": "Scans gesamt",
           "scansInRange": "Scans im Zeitraum",

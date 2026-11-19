@@ -50,11 +50,15 @@ import {
   LanguagesCard,
   TimeCard,
 } from "@/app/(app)/dashboard/codes/[id]/_components/analytics-extra";
+import { upgradeAction } from "@/app/(app)/settings/usage/_lib/meters";
 import { InfoHint } from "@/components/help/info-hint";
+import { LocaleLink } from "@/components/i18n/locale-link";
 import { conversionsAllowed } from "@/ee/conversions/access";
 import { ConversionsSummary } from "@/ee/conversions/analytics-cards";
 import { getConversionSummary } from "@/ee/conversions/queries";
+import { getCheckoutOpen } from "@/lib/checkout-availability";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
+import { can } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { seriesDates } from "@/lib/scan-ranges";
 import {
@@ -173,8 +177,16 @@ export default async function AnalyticsPage({
   const [query, { workspace }] = await Promise.all([searchParams, routeParams]);
   const href = (path: string) => workspaceHref(workspace, path);
   const PATH = href("/analytics");
-  const limits = getPlanLimits(await getPlanForScope(scope));
+  const plan = await getPlanForScope(scope);
+  const limits = getPlanLimits(plan);
   const retentionDays = limits.analyticsRetentionDays;
+  // "Compare plans" by the locked ranges: only for someone who can change
+  // the plan, where checkout sells the next one (as the limit cards do).
+  const upgrade = upgradeAction(
+    plan,
+    can(scope.role, "billing.manage"),
+    getCheckoutOpen(),
+  );
   const range = resolveScanRange(first(query.range), retentionDays);
   const allTime = range === ALL_TIME_RANGE;
   // "All time" starts at the workspace's first scan (else its first code).
@@ -301,6 +313,12 @@ export default async function AnalyticsPage({
             </Button>
           ),
         )}
+        {upgrade &&
+          SCAN_RANGE_KEYS.some((key) => SCAN_RANGES[key] > retentionDays) && (
+            <Button asChild size="sm" variant="link">
+              <LocaleLink href="/pricing">{t("comparePlans")}</LocaleLink>
+            </Button>
+          )}
       </nav>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">

@@ -40,6 +40,8 @@ const state = vi.hoisted(() => {
     requestsUsed: 3,
     /** Which subscription reads ran, in order */
     subscriptionReads: [] as string[],
+    /** The person's role in the workspace the request names; null: none */
+    workspaceRole: "owner" as string | null,
   };
 });
 
@@ -149,6 +151,14 @@ vi.mock("@/lib/scope", () => ({
   getActiveWorkspace: async () => ({
     workspace: { name: "North Agency", slug: "north" },
   }),
+  getActiveScope: async () => {
+    if (!state.workspaceRole) throw new Error("Workspace not found");
+    return {
+      userId: state.user?.id,
+      organizationId: "org_north",
+      role: state.workspaceRole,
+    };
+  },
 }));
 vi.mock("@/lib/safety/turnstile", () => ({
   TURNSTILE_FIELD: "cf-turnstile-response",
@@ -186,6 +196,7 @@ beforeEach(() => {
   state.requestHeaders = new Headers();
   state.user = null;
   state.subscription = null;
+  state.workspaceRole = "owner";
   state.limited = false;
   state.limitKeys = [];
   state.features = {
@@ -818,6 +829,8 @@ describe("GET /api/subscription (the plan /pricing reads in the browser)", () =>
       requestsRemaining: 7,
       requestsUsed: 3,
       plan: "free",
+      currency: "USD",
+      canUpgradeWorkspace: true,
     });
     expect(state.subscriptionReads).toEqual(["subscriptionAndUsage"]);
 
@@ -829,12 +842,43 @@ describe("GET /api/subscription (the plan /pricing reads in the browser)", () =>
       requestsRemaining: null,
       requestsUsed: 3,
       plan: "pro",
+      currency: "USD",
+      canUpgradeWorkspace: true,
     });
     expect(state.subscriptionReads).toEqual(["subscriptionAndUsage"]);
 
     // A product it doesn't know (renamed, legacy) counts as Pro, as getPlan says.
     state.subscription = { productId: "prod_from_2025" };
     expect((await json(await get())).plan).toBe("pro");
+  });
+
+  it("answers the currency checkout would charge: the country's, never the display switch", async () => {
+    signIn();
+    const india = await get({ ...BROWSER, "x-vercel-ip-country": "IN" });
+    expect((await json(india)).currency).toBe("INR");
+    const switched = await get({
+      ...BROWSER,
+      "x-vercel-ip-country": "IN",
+      cookie: "qrdx_currency=usd",
+    });
+    expect((await json(switched)).currency).toBe("INR");
+    expect((await json(await get())).currency).toBe("USD");
+  });
+
+  it("says whether their purchase lifts the workspace's plan: owners and billing members, not members", async () => {
+    signIn();
+    for (const [role, answer] of [
+      ["owner", true],
+      ["billing", true],
+      ["admin", false],
+      ["member", false],
+      ["viewer", false],
+      // A workspace they can't open (left, or it shuts them out).
+      [null, null],
+    ] as const) {
+      state.workspaceRole = role;
+      expect((await json(await get())).canUpgradeWorkspace).toBe(answer);
+    }
   });
 
   it("is still a 401 when signed out, and no answer is cached", async () => {

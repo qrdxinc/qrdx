@@ -26,10 +26,13 @@ const {
   clearAIArt,
   clearerRequest,
   createAIArtRunStore,
+  artUpgradePlan,
   lacksCredits,
   lockedSeedFor,
+  offersArtUpgrade,
   runAIArt,
   seedIsInvalid,
+  variationsWithin,
 } = await import("@/components/sections/ai-art/ai-art-run");
 const { ART_QR_VISIBILITY, ART_TEXT_MAX_LENGTH } = await import(
   "@/components/sections/ai-art/config"
@@ -269,6 +272,30 @@ describe("run helpers", () => {
     expect(lacksCredits(credits(2), 1)).toBe(false);
     expect(lacksCredits({ ...credits(0), remaining: null }, 4)).toBe(false);
     expect(lacksCredits(null, 4)).toBe(false);
+  });
+
+  it("starts a run at the images left when fewer than the usual number are left", () => {
+    expect(variationsWithin(2, 3)).toBe(2);
+    expect(variationsWithin(2, 1)).toBe(1);
+    // None left: the usual number, and the button waits for an upgrade.
+    expect(variationsWithin(2, 0)).toBe(2);
+    // Unlimited or not known yet.
+    expect(variationsWithin(2, null)).toBe(2);
+    expect(variationsWithin(2, undefined)).toBe(2);
+  });
+
+  it("may offer an upgrade below Business, where checkout sells it", () => {
+    expect(offersArtUpgrade(credits(0), true)).toBe(true);
+    expect(offersArtUpgrade({ ...credits(0), plan: "pro" }, true)).toBe(true);
+    expect(offersArtUpgrade({ ...credits(0), plan: "business" }, true)).toBe(
+      false,
+    );
+    // Checkout can't sell it here (no billing, no product): no promise.
+    expect(offersArtUpgrade(credits(0), false)).toBe(false);
+    expect(offersArtUpgrade(null, true)).toBe(false);
+    expect(artUpgradePlan(credits(0))).toBe("pro");
+    expect(artUpgradePlan({ ...credits(0), plan: "pro" })).toBe("business");
+    expect(artUpgradePlan(null)).toBe("pro");
   });
 });
 

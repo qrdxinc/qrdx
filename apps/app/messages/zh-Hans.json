@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "对比方案与价格",
       "maybeLater": "以后再说",
       "thisFeatureIsPartOf": "此功能属于 Business 方案。",
-      "thisFeatureIsPartOf2": "此功能属于 Pro 和 Business 方案。"
+      "thisFeatureIsPartOf2": "此功能属于 Pro 和 Business 方案。",
+      "ownerUpgrades": "只有此工作区的所有者和账单成员才能更改其套餐。请联系其中一位升级到 {plan}。"
+    },
+    "checkoutButtons": {
+      "month": "{plan} · {price}/月",
+      "year": "{plan} · {price}/年",
+      "monthNoPrice": "{plan} 月付",
+      "yearNoPrice": "{plan} 年付",
+      "note": "结账在 Polar 上进行，可能会加收当地税费。可随时取消。",
+      "switchTo": "切换到 {plan}",
+      "openPortal": "打开管理门户",
+      "failed": "结账页面未能打开，请稍后再试。",
+      "subscribed": "你已订阅套餐。如需更改，请前往账单门户。",
+      "unavailable": "此处暂时无法结账。",
+      "rateLimited": "结账尝试次数过多，请几分钟后再试。"
     },
     "themeToggle": {
       "toggleTheme": "切换主题"
@@ -3278,6 +3292,8 @@
       "creditsLeft": "本月 AI 艺术图像剩余 <count>{remaining, number}/{limit, number}</count> 张{pooled, select, yes {（团队共享）} other {}}，将于 {resets} 重置。本次将生成 {variations, number} 张；生成失败的图像会退还额度。",
       "notEnoughLeft": "剩余额度不足以生成 {variations, number} 张：请减少变体数量。",
       "notEnoughLeftOrUpgrade": "剩余额度不足以生成 {variations, number} 张：请减少变体数量或升级套餐。",
+      "noneLeft": "本月额度已用完。",
+      "noneLeftUpgrade": "本月额度已用完。升级套餐即可立即生成更多。",
       "moreArtistic": "更具艺术感",
       "clearerCode": "二维码更清晰",
       "followsYourPrompt": "紧贴您的提示词",
@@ -3827,6 +3843,8 @@
         "creditsLeft": "本月 AI 艺术图还剩 <count>{remaining, number}/{limit, number}</count> 张{pooled, select, yes {（团队共享）} other {}}，将于 {resets} 重置。本次生成将使用 {variations, number} 张。",
         "notEnoughLeft": "额度不足：请减少变体数量。",
         "notEnoughLeftOrUpgrade": "额度不足：请减少变体数量或升级。",
+        "noneLeft": "本月次数已用完。",
+        "noneLeftUpgrade": "本月次数已用完。升级后即可立即生成更多。",
         "showResults": "{count, plural, other {查看结果}}",
         "moreArtistic": "更具艺术感",
         "clearerCode": "更清晰的二维码",
@@ -6481,6 +6499,7 @@
           "scansAcrossEveryDynamicCode": "此工作区内所有动态二维码的扫描次数。",
           "dateRange": "日期范围",
           "yourPlanKeepsAShorter": "你的套餐保留的扫描历史较短",
+          "comparePlans": "比较套餐",
           "dynamicCodes": "动态二维码",
           "totalScans": "总扫描次数",
           "scansInRange": "范围内扫描次数",

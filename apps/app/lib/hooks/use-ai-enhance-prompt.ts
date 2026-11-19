@@ -15,7 +15,7 @@ import { convertPromptDataToJSONContent } from "@/utils/ai/ai-prompt";
 
 export function useAIEnhancePrompt() {
   const t = useTranslations("editor.hooks.useAiEnhancePrompt");
-  const { openGetProDialog } = useGetProDialogStore();
+  const { openUpgradeDialog } = useGetProDialogStore();
   const { complete, completion, isLoading, stop, setCompletion } =
     useCompletion({
       api: "/api/enhance-prompt",
@@ -29,7 +29,8 @@ export function useAIEnhancePrompt() {
         });
 
         if (normalized.code === "SUBSCRIPTION_REQUIRED") {
-          openGetProDialog();
+          // AI requests follow the person's own subscription.
+          openUpgradeDialog("pro", { payer: "self" });
         }
 
         toast.error(t("anErrorOccurred"), {

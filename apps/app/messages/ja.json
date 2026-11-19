@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "プランと料金を比較",
       "maybeLater": "あとで",
       "thisFeatureIsPartOf": "この機能はBusinessプランに含まれています。",
-      "thisFeatureIsPartOf2": "この機能はProとBusinessに含まれています。"
+      "thisFeatureIsPartOf2": "この機能はProとBusinessに含まれています。",
+      "ownerUpgrades": "このワークスペースのプランを変更できるのは、オーナーと請求担当メンバーのみです。{plan}へのアップグレードは、いずれかの方にご依頼ください。"
+    },
+    "checkoutButtons": {
+      "month": "{plan} · 月額{price}",
+      "year": "{plan} · 年額{price}",
+      "monthNoPrice": "{plan}（月払い）",
+      "yearNoPrice": "{plan}（年払い）",
+      "note": "お支払いはPolarで行います。現地の税金が加算される場合があります。いつでも解約できます。",
+      "switchTo": "{plan}に切り替える",
+      "openPortal": "ポータルを開く",
+      "failed": "チェックアウトを開けませんでした。しばらくしてからもう一度お試しください。",
+      "subscribed": "すでにサブスクリプションをご利用中です。プランの変更は請求ポータルで行えます。",
+      "unavailable": "現在、こちらではチェックアウトをご利用いただけません。",
+      "rateLimited": "チェックアウトの試行回数が多すぎます。数分後にもう一度お試しください。"
     },
     "themeToggle": {
       "toggleTheme": "テーマを切り替え"
@@ -3278,6 +3292,8 @@
       "creditsLeft": "今月のAIアート画像の残りは<count>{limit, number}枚中{remaining, number}枚</count>です{pooled, select, yes {（チームで共有）} other {}}。リセット日は{resets}です。今回の生成では{variations, number}を使用します。失敗した画像は返却されます。",
       "notEnoughLeft": "{variations, number}には残りが足りません。バリエーション数を減らしてください。",
       "notEnoughLeftOrUpgrade": "{variations, number}には残りが足りません。バリエーション数を減らすか、アップグレードしてください。",
+      "noneLeft": "今月の残りはありません。",
+      "noneLeftUpgrade": "今月の残りはありません。今すぐアップグレードすると、さらに作成できます。",
       "moreArtistic": "より芸術的に",
       "clearerCode": "より読み取りやすく",
       "followsYourPrompt": "プロンプトに忠実",
@@ -3827,6 +3843,8 @@
         "creditsLeft": "今月のAIアート画像の残りは<count>{limit, number}枚中{remaining, number}枚</count>です{pooled, select, yes {（チームで共有）} other {}}。{resets}にリセットされます。今回の生成では{variations, number}枚使用します。",
         "notEnoughLeft": "残りが足りません。バリエーション数を減らしてください。",
         "notEnoughLeftOrUpgrade": "残りが足りません。バリエーション数を減らすか、アップグレードしてください。",
+        "noneLeft": "今月の残りはありません。",
+        "noneLeftUpgrade": "今月の残りはありません。今すぐアップグレードして、さらに作成できます。",
         "showResults": "{count, plural, other {結果を表示}}",
         "moreArtistic": "より芸術的に",
         "clearerCode": "より読み取りやすく",
@@ -6481,6 +6499,7 @@
           "scansAcrossEveryDynamicCode": "このワークスペースにあるすべての動的QRコードのスキャン数です。",
           "dateRange": "期間",
           "yourPlanKeepsAShorter": "ご利用のプランではスキャン履歴の保持期間が短くなります",
+          "comparePlans": "プランを比較",
           "dynamicCodes": "動的コード",
           "totalScans": "スキャン総数",
           "scansInRange": "期間内のスキャン",

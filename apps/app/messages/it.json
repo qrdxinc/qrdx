@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "Confronta piani e prezzi",
       "maybeLater": "Forse più tardi",
       "thisFeatureIsPartOf": "Questa funzione fa parte del piano Business.",
-      "thisFeatureIsPartOf2": "Questa funzione fa parte di Pro e Business."
+      "thisFeatureIsPartOf2": "Questa funzione fa parte di Pro e Business.",
+      "ownerUpgrades": "Solo i proprietari e i membri con accesso alla fatturazione di questo workspace possono cambiarne il piano. Chiedi a uno di loro di passare a {plan}."
+    },
+    "checkoutButtons": {
+      "month": "{plan} · {price} al mese",
+      "year": "{plan} · {price} all’anno",
+      "monthNoPrice": "{plan} mensile",
+      "yearNoPrice": "{plan} annuale",
+      "note": "Il pagamento avviene su Polar; potrebbero essere aggiunte tasse locali. Disdici quando vuoi.",
+      "switchTo": "Passa a {plan}",
+      "openPortal": "Apri il portale",
+      "failed": "Il pagamento non si è aperto. Riprova tra un attimo.",
+      "subscribed": "Hai già un abbonamento. Cambia piano nel portale di fatturazione.",
+      "unavailable": "Il pagamento non è disponibile al momento.",
+      "rateLimited": "Troppi tentativi di pagamento. Riprova tra qualche minuto."
     },
     "themeToggle": {
       "toggleTheme": "Cambia tema"
@@ -3278,6 +3292,8 @@
       "creditsLeft": "<count>{remaining, number} di {limit, number}</count> immagini AI art rimaste questo mese{pooled, select, yes { (condivise con il tuo team)} other {}}, si azzera il {resets}. Questa generazione ne usa {variations, number}; le immagini non riuscite vengono rimborsate.",
       "notEnoughLeft": "Non te ne restano abbastanza per {variations, number}: scegli meno varianti.",
       "notEnoughLeftOrUpgrade": "Non te ne restano abbastanza per {variations, number}: scegli meno varianti o passa a un piano superiore.",
+      "noneLeft": "Nessuno rimasto questo mese.",
+      "noneLeftUpgrade": "Non te ne restano per questo mese. Passa a un piano superiore per crearne altri subito.",
       "moreArtistic": "Più artistico",
       "clearerCode": "Codice più chiaro",
       "followsYourPrompt": "Segue il tuo prompt",
@@ -3827,6 +3843,8 @@
         "creditsLeft": "<count>{remaining, number} di {limit, number}</count> immagini AI art rimaste questo mese{pooled, select, yes { (condivise dal tuo team)} other {}}, si azzera il {resets}. Questa generazione ne usa {variations, number}.",
         "notEnoughLeft": "Non ne restano abbastanza: scegli meno varianti.",
         "notEnoughLeftOrUpgrade": "Non ne restano abbastanza: scegli meno varianti o passa a un piano superiore.",
+        "noneLeft": "Nessuna rimasta questo mese.",
+        "noneLeftUpgrade": "Nessuna rimasta questo mese. Passa a un piano superiore per crearne altre subito.",
         "showResults": "{count, plural, one {Mostra il tuo risultato} other {Mostra i tuoi risultati}}",
         "moreArtistic": "Più artistico",
         "clearerCode": "Codice più nitido",
@@ -6481,6 +6499,7 @@
           "scansAcrossEveryDynamicCode": "Scansioni di tutti i QR code dinamici in questo workspace.",
           "dateRange": "Intervallo date",
           "yourPlanKeepsAShorter": "Il tuo piano conserva uno storico delle scansioni più breve",
+          "comparePlans": "Confronta i piani",
           "dynamicCodes": "QR code dinamici",
           "totalScans": "Scansioni totali",
           "scansInRange": "Scansioni nel periodo",

@@ -1,11 +1,12 @@
 "use client";
 
-import { createContext, type ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext, useEffect } from "react";
 import type {
   CheckoutOpen,
   MeterCaps,
 } from "@/app/(app)/settings/usage/_lib/meters";
 import type { Plan } from "@/lib/pricing";
+import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 
 /** What limit cards need to know about the open workspace's plan. */
 export interface ShellLimits {
@@ -32,6 +33,14 @@ export function PlanLimitsProvider({
   value: ShellLimits | null;
   children: ReactNode;
 }) {
+  // The upgrade dialog sits above the shell (app/providers.tsx): it learns
+  // here whether this person's purchase lifts the open workspace's plan.
+  const canUpgrade = value?.canUpgrade ?? null;
+  useEffect(() => {
+    const { setShellCanUpgrade } = useGetProDialogStore.getState();
+    setShellCanUpgrade(canUpgrade);
+    return () => setShellCanUpgrade(null);
+  }, [canUpgrade]);
   return (
     <PlanLimitsContext.Provider value={value}>
       {children}

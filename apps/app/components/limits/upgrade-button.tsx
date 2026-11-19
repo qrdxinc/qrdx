@@ -4,22 +4,31 @@ import { track } from "@repo/analytics";
 import { Button } from "@repo/design-system/components/ui/button";
 import type { ComponentProps } from "react";
 import type { UpgradeAction } from "@/app/(app)/settings/usage/_lib/meters";
+import { CheckoutButtons } from "@/components/billing/checkout-buttons";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 
-/** An upgrade link from a limit (limitCopy's `upgrade`), tracked on click. */
+/**
+ * An upgrade link from a limit (limitCopy's `upgrade`), tracked on click.
+ * With `checkout`, monthly and yearly buttons that open checkout straight
+ * away instead, where they can (signed in, not paying yet); the link
+ * otherwise.
+ */
 export function UpgradeButton({
   upgrade,
   source,
   onNavigate,
+  checkout = false,
+  className,
   ...props
 }: {
   upgrade: UpgradeAction;
   /** For analytics, e.g. "limit_dialog" */
   source: string;
   onNavigate?: () => void;
+  checkout?: boolean;
 } & Omit<ComponentProps<typeof Button>, "asChild" | "children">) {
-  return (
-    <Button asChild size="sm" {...props}>
+  const link = (
+    <Button asChild className={className} size="sm" {...props}>
       <Link
         href={upgrade.href}
         onClick={() => {
@@ -30,5 +39,16 @@ export function UpgradeButton({
         {upgrade.label}
       </Link>
     </Button>
+  );
+  if (!checkout) return link;
+  return (
+    <CheckoutButtons
+      className={className}
+      fallback={link}
+      onNavigate={onNavigate}
+      plan={upgrade.plan}
+      size="sm"
+      source={source}
+    />
   );
 }

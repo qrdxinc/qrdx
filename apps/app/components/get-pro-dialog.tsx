@@ -18,23 +18,34 @@ import { ShieldTick } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrdx";
 import { useAvailability } from "@/components/availability-provider";
+import {
+  CheckoutButtons,
+  useGateCheckout,
+} from "@/components/billing/checkout-buttons";
 import { GridLines } from "@/components/fx";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { buildUpgradeHighlights } from "@/components/sections/pricing/upgrade-highlights";
 import { easterEggUrl } from "@/lib/easter-eggs";
 import { PAID_PLANS, type PaidPlan, PLAN_NAMES } from "@/lib/pricing";
+import type { UpgradePayer } from "@/store/get-pro-dialog-store";
 
 interface GetProDialogProps {
   isOpen: boolean;
   onClose: () => void;
   /** The plan the locked feature needs; it's highlighted. */
   plan?: PaidPlan;
+  /** Whose plan the feature follows (store/get-pro-dialog-store.ts) */
+  payer?: UpgradePayer;
+  /** The app shell's answer for the open workspace; null outside the shell */
+  shellCanUpgrade?: boolean | null;
 }
 
 export function GetProDialog({
   isOpen,
   onClose,
   plan = "pro",
+  payer = "workspace",
+  shellCanUpgrade = null,
 }: GetProDialogProps) {
   const t = useTranslations("nav.getProDialog");
   // Headline features; nothing this deployment can't offer (custom domains,
@@ -45,6 +56,14 @@ export function GetProDialog({
     whiteLabel: has("whiteLabel"),
     conversions: has("conversions"),
   });
+  // Checkout only for someone whose purchase lifts the plan behind the
+  // gate. A member of someone else's workspace paying for Pro would leave
+  // the workspace on its owners' plan, the feature still locked.
+  const {
+    buttons: checkout,
+    waiting,
+    askOwner,
+  } = useGateCheckout({ open: isOpen, plan, payer, shellCanUpgrade });
   return (
     <ResponsiveDialog open={isOpen} onOpenChange={onClose}>
       <ResponsiveDialogContent
@@ -134,13 +153,34 @@ export function GetProDialog({
               </span>
             </p>
 
-            <ResponsiveDialogFooter className="bg-muted/30 relative flex-col border-t p-6">
-              <Button asChild className="grow">
+            <ResponsiveDialogFooter className="bg-muted/30 relative flex-col border-t p-6 sm:flex-col">
+              {/* Signed in on Free, and their purchase lifts the plan:
+                  checkout opens from here. Otherwise the pricing page. */}
+              {checkout && (
+                <CheckoutButtons
+                  onNavigate={onClose}
+                  plan={plan}
+                  source="dialog"
+                  waiting={waiting}
+                />
+              )}
+              {askOwner && (
+                <p className="text-muted-foreground text-sm text-pretty">
+                  {t("ownerUpgrades", { plan: PLAN_NAMES[plan] })}
+                </p>
+              )}
+              <Button
+                asChild
+                className="grow"
+                variant={checkout ? "ghost" : "default"}
+              >
                 <Link
                   href="/pricing"
-                  onClick={() =>
-                    track("upgrade_clicked", { source: "dialog", plan })
-                  }
+                  onClick={() => {
+                    if (!checkout) {
+                      track("upgrade_clicked", { source: "dialog", plan });
+                    }
+                  }}
                   onNavigate={onClose}
                 >
                   {t("comparePlansAndPrices")}

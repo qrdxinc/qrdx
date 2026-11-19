@@ -13,6 +13,8 @@ const state = vi.hoisted(() => ({
   plan: "free" as "free" | "pro" | "business",
   deliveryAllowed: true,
   emailOn: true,
+  // What checkout sells here (the real one: nothing, tests have no Polar).
+  checkoutOpen: { pro: false, business: false },
   sendResult: { sent: true, id: "em_1" } as
     | { sent: true; id: string }
     | { sent: false; reason: "failed" },
@@ -37,6 +39,9 @@ vi.mock("@/lib/plans", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/plans")>()),
   getPlanForScope: async () => state.plan,
   getPlan: async () => state.plan,
+}));
+vi.mock("@/lib/checkout-availability", () => ({
+  getCheckoutOpen: () => state.checkoutOpen,
 }));
 vi.mock("@/lib/delivery-guard", () => ({
   isOutboundDeliveryAllowed: () => state.deliveryAllowed,
@@ -97,6 +102,7 @@ beforeEach(() => {
     "threshold",
   );
   state.plan = "free";
+  state.checkoutOpen = { pro: false, business: false };
   state.deliveryAllowed = true;
   state.emailOn = true;
   state.sendResult = { sent: true, id: "em_1" };
@@ -315,6 +321,48 @@ describe("sendLimitNotice", () => {
       "alice@example.com",
       "carol@example.com",
     ]);
+  });
+
+  it("offers the upgrade on an AI art cap to whoever's plan counts: a solo owner, a team owner; a member asks", async () => {
+    state.checkoutOpen = { pro: true, business: true };
+    const { ownWorkspaceId } = await import("@repo/auth/own-workspace-id");
+    const own = ownWorkspaceId("u_dana");
+    fakeDb.seed("organization", [{ id: own, name: "Dana", slug: "dana" }]);
+    fakeDb.seed("member", [
+      { id: "m_dana", organizationId: own, userId: "u_dana", role: "owner" },
+    ]);
+    fakeDb.seed("user", [
+      { id: "u_dana", email: "dana@example.com", banned: false },
+    ]);
+    const art = { used: 3, limit: 3, pooled: false };
+    const text = async (index: number) =>
+      render(state.sent[index]?.react as ReactElement, { plainText: true });
+
+    // Their own workspace: they are its owner, so the email says upgrade.
+    await sendLimitNotice(
+      { userId: "u_dana", organizationId: own },
+      "aiArt",
+      art,
+      NOW,
+    );
+    expect(state.sent[0]?.to).toEqual(["dana@example.com"]);
+    expect(await text(0)).toContain("Upgrade to Pro for 30 images a month.");
+    expect(await text(0)).not.toContain("Ask a workspace owner");
+
+    // A team's owner: the same.
+    await sendLimitNotice(
+      { userId: "u_alice", organizationId: "org_acme" },
+      "aiArt",
+      art,
+      NOW,
+    );
+    expect(state.sent[1]?.to).toEqual(["alice@example.com"]);
+    expect(await text(1)).toContain("Upgrade to Pro for 30 images a month.");
+
+    // A member's purchase wouldn't lift the team's plan: they ask an owner.
+    await sendLimitNotice(scope, "aiArt", art, NOW);
+    expect(state.sent[2]?.to).toEqual(["bob@example.com"]);
+    expect(await text(2)).toContain("Ask a workspace owner to upgrade to Pro.");
   });
 
   it("sends nothing and doesn't fail before the limit_notice table exists", async () => {

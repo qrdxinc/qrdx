@@ -46,7 +46,9 @@ export function useSessionGuard() {
 
 export function useSubscriptionGuard() {
   const { subscriptionStatus, isPending } = useSubscription();
-  const { openGetProDialog } = useGetProDialogStore();
+  const { openUpgradeDialog } = useGetProDialogStore();
+  // AI chat requests follow the person's own subscription.
+  const openGetProDialog = () => openUpgradeDialog("pro", { payer: "self" });
 
   const checkValidSubscription = () => {
     if (isPending) return false;

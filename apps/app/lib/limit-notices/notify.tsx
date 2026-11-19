@@ -18,6 +18,7 @@ import { sendEmail } from "@/lib/email/send";
 import { LimitNoticeEmail } from "@/lib/email/templates/limit-notice";
 import { emailIntl } from "@/lib/i18n/email";
 import { baseUrl } from "@/lib/metadata";
+import { holdsPlanRole } from "@/lib/permissions";
 import { PLAN_LIMITS } from "@/lib/plans";
 import { workspaceHref } from "@/lib/workspace-paths";
 import { strongestRole } from "@/lib/workspaces";
@@ -116,6 +117,25 @@ async function ownerEmails(organizationId: string): Promise<Recipient[]> {
   return emailsOf(ids);
 }
 
+/**
+ * Whether the person's own purchase lifts the workspace's limits: the plan
+ * is the best among its owners' and billing members' (lib/plans.ts).
+ */
+async function paysForWorkspace(
+  organizationId: string,
+  userId: string,
+): Promise<boolean> {
+  if (isOwnWorkspaceOf(organizationId, userId)) return true;
+  const [row] = await db
+    .select({ role: member.role })
+    .from(member)
+    .where(
+      and(eq(member.organizationId, organizationId), eq(member.userId, userId)),
+    )
+    .limit(1);
+  return holdsPlanRole(row?.role);
+}
+
 async function emailsOf(userIds: string[]): Promise<Recipient[]> {
   if (userIds.length === 0) return [];
   const rows = await db
@@ -207,7 +227,12 @@ export async function sendLimitNotice(
     limit: usage.limit,
     resetsAt: usage.resetsAt,
     plan: usage.plan,
-    canUpgrade: !perPerson,
+    // Owners get the workspace's notices. A per-person allowance goes to
+    // that person, who can upgrade when their plan counts for the
+    // workspace: always in their own, else as an owner or billing member.
+    canUpgrade:
+      !perPerson ||
+      (await paysForWorkspace(scope.organizationId, scope.userId)),
     checkoutOpen: getCheckoutOpen(),
     cap: resolveMeterCaps(PLAN_LIMITS, usage.plan, { isTeam: !own })[limitId],
   };

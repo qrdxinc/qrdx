@@ -89,6 +89,7 @@ function MeterRow({
           </p>
           {copy.upgrade && (
             <UpgradeButton
+              checkout
               className="shrink-0 self-start"
               source="usage_page"
               upgrade={copy.upgrade}

@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "Comparar planes y precios",
       "maybeLater": "Quizá más tarde",
       "thisFeatureIsPartOf": "Esta función forma parte del plan Business.",
-      "thisFeatureIsPartOf2": "Esta función forma parte de Pro y Business."
+      "thisFeatureIsPartOf2": "Esta función forma parte de Pro y Business.",
+      "ownerUpgrades": "Solo los propietarios y los miembros de facturación de este espacio de trabajo pueden cambiar su plan. Pídele a uno de ellos que lo actualice a {plan}."
+    },
+    "checkoutButtons": {
+      "month": "{plan} · {price} al mes",
+      "year": "{plan} · {price} al año",
+      "monthNoPrice": "{plan} mensual",
+      "yearNoPrice": "{plan} anual",
+      "note": "El pago se realiza en Polar; pueden añadirse impuestos locales. Cancela cuando quieras.",
+      "switchTo": "Cambiar a {plan}",
+      "openPortal": "Abrir portal",
+      "failed": "No se abrió el pago. Inténtalo de nuevo en un momento.",
+      "subscribed": "Ya tienes una suscripción. Cambia tu plan en el portal de facturación.",
+      "unavailable": "El pago no está disponible aquí ahora mismo.",
+      "rateLimited": "Demasiados intentos de pago. Inténtalo de nuevo en unos minutos."
     },
     "themeToggle": {
       "toggleTheme": "Cambiar tema"
@@ -3278,6 +3292,8 @@
       "creditsLeft": "<count>{remaining, number} de {limit, number}</count> imágenes de arte con IA restantes este mes{pooled, select, yes { (compartidas con tu equipo)} other {}}, se restablecen {resets}. Esta generación usa {variations, number}; las imágenes fallidas se reembolsan.",
       "notEnoughLeft": "No quedan suficientes para {variations, number}: elige menos variaciones.",
       "notEnoughLeftOrUpgrade": "No quedan suficientes para {variations, number}: elige menos variaciones o mejora tu plan.",
+      "noneLeft": "No te quedan este mes.",
+      "noneLeftUpgrade": "No te quedan este mes. Mejora tu plan para crear más ahora.",
       "moreArtistic": "Más artístico",
       "clearerCode": "Código más claro",
       "followsYourPrompt": "Sigue tu prompt",
@@ -3827,6 +3843,8 @@
         "creditsLeft": "Te quedan <count>{remaining, number} de {limit, number}</count> imágenes de arte con IA este mes{pooled, select, yes { (compartidas con tu equipo)} other {}}, se restablece el {resets}. Esta generación usa {variations, number}.",
         "notEnoughLeft": "No te quedan suficientes: elige menos variaciones.",
         "notEnoughLeftOrUpgrade": "No te quedan suficientes: elige menos variaciones o mejora tu plan.",
+        "noneLeft": "No quedan este mes.",
+        "noneLeftUpgrade": "No quedan este mes. Mejora tu plan para crear más ahora.",
         "showResults": "{count, plural, one {Ver tu resultado} other {Ver tus resultados}}",
         "moreArtistic": "Más artístico",
         "clearerCode": "Código más claro",
@@ -6481,6 +6499,7 @@
           "scansAcrossEveryDynamicCode": "Escaneos de todos los códigos dinámicos de este espacio de trabajo.",
           "dateRange": "Rango de fechas",
           "yourPlanKeepsAShorter": "Tu plan conserva un historial de escaneos más corto",
+          "comparePlans": "Comparar planes",
           "dynamicCodes": "Códigos dinámicos",
           "totalScans": "Escaneos totales",
           "scansInRange": "Escaneos en el rango",

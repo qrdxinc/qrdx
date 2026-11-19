@@ -80,6 +80,8 @@ export const AI_ART_STUDIO_NAMESPACES = [
   "aiArt.aiArtPresetGallery",
   "editor.art.artLooks",
   "aiArt.artModes",
+  // The upgrade buttons when images run short (components/billing).
+  "nav.checkoutButtons",
 ] as const;
 
 /**

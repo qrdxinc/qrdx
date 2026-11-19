@@ -196,7 +196,21 @@
       "comparePlansAndPrices": "요금제와 가격 비교하기",
       "maybeLater": "나중에 할게요",
       "thisFeatureIsPartOf": "이 기능은 Business 요금제에 포함되어 있어요.",
-      "thisFeatureIsPartOf2": "이 기능은 Pro와 Business에 포함되어 있어요."
+      "thisFeatureIsPartOf2": "이 기능은 Pro와 Business에 포함되어 있어요.",
+      "ownerUpgrades": "이 워크스페이스의 요금제는 소유자와 결제 담당 멤버만 변경할 수 있어요. 이들 중 한 분에게 {plan}(으)로 업그레이드해 달라고 요청해 주세요."
+    },
+    "checkoutButtons": {
+      "month": "{plan} · 월 {price}",
+      "year": "{plan} · 연 {price}",
+      "monthNoPrice": "{plan} 월간",
+      "yearNoPrice": "{plan} 연간",
+      "note": "결제는 Polar에서 진행되며 현지 세금이 추가될 수 있어요. 언제든지 취소할 수 있어요.",
+      "switchTo": "{plan}(으)로 전환",
+      "openPortal": "포털 열기",
+      "failed": "결제 창이 열리지 않았어요. 잠시 후 다시 시도해 주세요.",
+      "subscribed": "이미 구독 중이에요. 결제 포털에서 요금제를 변경해 주세요.",
+      "unavailable": "지금은 여기서 결제할 수 없어요.",
+      "rateLimited": "결제 시도가 너무 많아요. 몇 분 후에 다시 시도해 주세요."
     },
     "themeToggle": {
       "toggleTheme": "테마 전환"
@@ -3278,6 +3292,8 @@
       "creditsLeft": "이번 달 AI 아트 이미지가 <count>{limit, number}개 중 {remaining, number}개</count> 남았어요{pooled, select, yes { (팀 공동 사용)} other {}}. {resets}에 초기화돼요. 이번 실행에서는 {variations, number}개를 사용하고, 실패한 이미지는 환불돼요.",
       "notEnoughLeft": "{variations, number}개를 만들기에는 남은 크레딧이 부족해요. 변형 수를 줄여 주세요.",
       "notEnoughLeftOrUpgrade": "{variations, number}개를 만들기에는 남은 크레딧이 부족해요. 변형 수를 줄이거나 업그레이드해 주세요.",
+      "noneLeft": "이번 달 남은 횟수가 없어요.",
+      "noneLeftUpgrade": "이번 달 남은 횟수가 없어요. 지금 업그레이드해서 더 만들어 보세요.",
       "moreArtistic": "더 예술적으로",
       "clearerCode": "더 선명한 코드",
       "followsYourPrompt": "프롬프트에 충실",
@@ -3827,6 +3843,8 @@
         "creditsLeft": "이번 달 AI 아트 이미지가 <count>{limit, number}개 중 {remaining, number}개</count> 남았어요{pooled, select, yes { (팀 공유)} other {}}. {resets}에 초기화돼요. 이번 실행에는 {variations, number}개를 사용해요.",
         "notEnoughLeft": "남은 횟수가 부족해요. 변형 수를 줄여 주세요.",
         "notEnoughLeftOrUpgrade": "남은 횟수가 부족해요. 변형 수를 줄이거나 업그레이드해 주세요.",
+        "noneLeft": "이번 달 남은 횟수가 없어요.",
+        "noneLeftUpgrade": "이번 달 남은 횟수가 없어요. 지금 업그레이드하면 더 만들 수 있어요.",
         "showResults": "{count, plural, one {결과 보기} other {결과 보기}}",
         "moreArtistic": "더 예술적으로",
         "clearerCode": "더 선명한 코드",
@@ -6481,6 +6499,7 @@
           "scansAcrossEveryDynamicCode": "이 워크스페이스의 모든 동적 QR 코드에 대한 스캔 수예요.",
           "dateRange": "기간",
           "yourPlanKeepsAShorter": "현재 플랜은 스캔 기록 보관 기간이 더 짧아요",
+          "comparePlans": "요금제 비교",
           "dynamicCodes": "동적 QR 코드",
           "totalScans": "총 스캔 수",
           "scansInRange": "기간 내 스캔 수",
