@@ -42,9 +42,10 @@ export interface NoticeCopy {
   /** "1 active dynamic code left on Free.", or what's included and what to do */
   reason: string;
   /**
-   * The plan the readers can upgrade to for more ("Pro"), by the same rule
-   * as the upgrade sentence (upgradeTo: owners only, on sale here); null
-   * for a member who can't change the plan, or when nothing lifts the cap.
+   * The plan the readers can upgrade to for more ("Pro"), when `reason`
+   * says to upgrade (the cap is reached; upgradeTo: owners only, on sale
+   * here), so the button and the words agree; null otherwise: before the
+   * cap, for a member who can't change the plan, or when nothing lifts it.
    */
   upgradePlan: string | null;
 }
@@ -93,6 +94,7 @@ export function noticeCopy(
 
   const sentences: string[] = [];
   const reset = resetDay(usage.resetsAt, locale);
+  let upgradePlan: string | null = null;
   const offered = upgradeTo(
     usage.cap?.lift?.plan ?? null,
     usage.canUpgrade,
@@ -134,6 +136,7 @@ export function noticeCopy(
         plan: planName(lift.plan),
         lift: liftText,
       });
+      upgradePlan = planName(offered.plan);
     } else if (lift && !usage.canUpgrade) {
       remedy = t("limitNotice.askOwner", {
         limit: id,
@@ -159,6 +162,6 @@ export function noticeCopy(
     }),
     planName: plan,
     reason: sentences.join(" "),
-    upgradePlan: offered ? planName(offered.plan) : null,
+    upgradePlan,
   };
 }

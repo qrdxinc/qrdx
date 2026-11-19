@@ -744,7 +744,7 @@
         "apiBulk": "{count} + Massenerstellung",
         "clientReportsBadge": "Mit kleinem Hinweis im Footer",
         "clientReportsWhiteLabel": "White-Label",
-        "firstScanOnly": "Erster Scan jedes Codes"
+        "firstScanOnly": "Erster Scan jedes dynamischen Codes"
       }
     },
     "guarantee": {

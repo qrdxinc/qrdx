@@ -451,6 +451,8 @@ export interface ScannedCode {
   scanCount: number;
   /** When the code was made (Free's first-scan email skips test scans) */
   createdAt?: Date;
+  /** Where it was made (Free's first-scan email skips imported codes) */
+  createdVia?: string | null;
 }
 
 export function scanSummary(

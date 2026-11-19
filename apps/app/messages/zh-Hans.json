@@ -744,7 +744,7 @@
         "apiBulk": "{count} + 批量创建",
         "clientReportsBadge": "页脚带有小字署名",
         "clientReportsWhiteLabel": "白标",
-        "firstScanOnly": "每个二维码的首次扫描"
+        "firstScanOnly": "每个动态二维码的首次扫描"
       }
     },
     "guarantee": {

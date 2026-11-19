@@ -744,7 +744,7 @@
         "apiBulk": "{count} + creación masiva",
         "clientReportsBadge": "Con un pequeño crédito al pie",
         "clientReportsWhiteLabel": "Marca blanca",
-        "firstScanOnly": "Primer escaneo de cada código"
+        "firstScanOnly": "Primer escaneo de cada código dinámico"
       }
     },
     "guarantee": {

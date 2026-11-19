@@ -744,7 +744,7 @@
         "apiBulk": "{count} + bulk creation",
         "clientReportsBadge": "With a small footer credit",
         "clientReportsWhiteLabel": "White-label",
-        "firstScanOnly": "First scan of each code"
+        "firstScanOnly": "First scan of each dynamic code"
       }
     },
     "guarantee": {

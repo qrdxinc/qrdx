@@ -744,7 +744,7 @@
         "apiBulk": "{count} + criação em massa",
         "clientReportsBadge": "Com um pequeno crédito no rodapé",
         "clientReportsWhiteLabel": "White-label",
-        "firstScanOnly": "Primeira leitura de cada código"
+        "firstScanOnly": "Primeira leitura de cada QR code dinâmico"
       }
     },
     "guarantee": {

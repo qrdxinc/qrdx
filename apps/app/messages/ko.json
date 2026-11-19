@@ -744,7 +744,7 @@
         "apiBulk": "{count} + 일괄 생성",
         "clientReportsBadge": "하단에 작은 크레딧 표시",
         "clientReportsWhiteLabel": "화이트 라벨",
-        "firstScanOnly": "코드별 첫 번째 스캔"
+        "firstScanOnly": "각 동적 QR 코드의 첫 스캔"
       }
     },
     "guarantee": {

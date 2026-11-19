@@ -6,7 +6,7 @@ import { isReservedEmailAddress } from "@repo/email/reserved-address";
 import { FirstScanEmail } from "@repo/email/templates/first-scan";
 import { codeLabel } from "@repo/email/templates/parts";
 import { DEFAULT_LOCALE, isLocale } from "@repo/i18n/config";
-import { and, eq, gte, ne } from "drizzle-orm";
+import { and, eq, gte, lt, or } from "drizzle-orm";
 import type { RecordedScan, ScannedCode } from "@/lib/events/emit";
 import { SCAN_MILESTONES } from "@/lib/events/types";
 import { teamNotesUnsubscribeUrl } from "@/lib/events/unsubscribe";
@@ -15,6 +15,7 @@ import { emailIntl } from "@/lib/i18n/email";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { workspaceLink } from "@/lib/workspace-paths";
 import { workspaceSlug } from "@/lib/workspaces";
+import { personalSender } from "./personal-sender";
 import { sendEmail } from "./send";
 import { wantsTeamNotes } from "./team-notes";
 import { isPortalClient } from "./welcome";
@@ -30,16 +31,26 @@ import { isPortalClient } from "./welcome";
 // needed, on by default, and the one-click link in it (or Settings >
 // Notifications) turns those off. So it only goes out where they exist
 // (the teamNotes feature: qrdx.dev with email), never from a self-hosted
-// server.
+// server. Like the welcome, it comes from EMAIL_FROM_PERSONAL with replies
+// to it (the setting says replying reaches a person), and isn't sent
+// without that sender.
+//
+// Only codes made here from FIRST_SCAN_EMAIL_SINCE on: an older code that
+// was never scanned isn't news, and a code brought in by a CSV import or
+// from another provider (created_via import or migrate) was likely being
+// scanned already.
 //
 // The maker's own test scan: nothing tells who scanned (the phone that
 // scans is rarely signed in, and making a code stores no visitor hash), so
 // any scan in the first FIRST_SCAN_TEST_MINUTES after the code was made
 // counts as the maker trying it. The email goes with the first scan after
 // that. Each scan checks this only while the code has at most
-// FIRST_SCAN_CHECK_LIMIT scans, so busy codes cost nothing. The
-// idempotency key first-scan:<codeId> keeps two scans at once from sending
-// it twice.
+// FIRST_SCAN_CHECK_LIMIT scans, so busy codes cost nothing. Only scans
+// stored strictly before this one count as earlier (the time, then the id),
+// so of two scans at once exactly one sends, and the idempotency key
+// first-scan:<codeId> covers a retry. A send that fails isn't tried again
+// on a later scan (that one sees an earlier real scan); it's logged with
+// the code's id.
 
 /** Scans this soon after the code was made are the maker's test. */
 export const FIRST_SCAN_TEST_MINUTES = 3;
@@ -47,11 +58,20 @@ export const FIRST_SCAN_TEST_MINUTES = 3;
 /** Past this many scans, a code's first real scan is long gone. */
 export const FIRST_SCAN_CHECK_LIMIT = 25;
 
+/** Codes made before this (the day the email shipped) never get it. */
+export const FIRST_SCAN_EMAIL_SINCE = new Date("2026-11-19T00:00:00Z");
+
+/** Where a code came from elsewhere, already printed and scanned. */
+const BROUGHT_IN = new Set(["import", "migrate"]);
+
 export type FreeFirstScanOutcome =
   | "sent"
   | "not_first"
   | "test_scan"
+  | "old_code"
+  | "imported"
   | "off"
+  | "no_personal_sender"
   | "paid_plan"
   | "not_found"
   | "opted_out"
@@ -66,9 +86,12 @@ const nextMilestones = (locale: string) =>
     new Intl.NumberFormat(locale).format(count),
   ) as [string, string, string];
 
-/** Whether an earlier scan of the code came after its test window. */
+/**
+ * Whether a scan stored before this one (earlier, or at the same moment
+ * with a smaller id) came after the code's test window.
+ */
 async function hadRealScan(
-  code: ScannedCode & { createdAt: Date },
+  code: ScannedCode,
   scan: RecordedScan,
   after: Date,
 ): Promise<boolean> {
@@ -79,12 +102,22 @@ async function hadRealScan(
       and(
         eq(qrScan.qrCodeId, code.id),
         gte(qrScan.scannedAt, after),
-        ne(qrScan.id, scan.id),
+        or(
+          lt(qrScan.scannedAt, scan.scannedAt),
+          and(eq(qrScan.scannedAt, scan.scannedAt), lt(qrScan.id, scan.id)),
+        ),
       ),
     )
     .limit(1);
   return Boolean(earlier);
 }
+
+let warnedNoSender = false;
+
+const logFailure = (codeId: string, error: string) =>
+  console.error(
+    JSON.stringify({ event: "email.free_first_scan_failed", codeId, error }),
+  );
 
 /**
  * Sends the Free first-scan email when this is the code's first real scan.
@@ -98,20 +131,31 @@ export async function sendFreeFirstScanEmail(
     if (!code.createdAt || code.scanCount > FIRST_SCAN_CHECK_LIMIT) {
       return "not_first";
     }
+    if (code.createdAt < FIRST_SCAN_EMAIL_SINCE) return "old_code";
+    if (code.createdVia && BROUGHT_IN.has(code.createdVia)) return "imported";
     const after = new Date(
       code.createdAt.getTime() + FIRST_SCAN_TEST_MINUTES * 60_000,
     );
     if (scan.scannedAt < after) return "test_scan";
     if (!isFeatureAvailable("teamNotes")) return "off";
+    const sender = personalSender();
+    if (!sender) {
+      if (!warnedNoSender) {
+        warnedNoSender = true;
+        console.warn(
+          JSON.stringify({
+            event: "email.free_first_scan",
+            outcome: "no_personal_sender",
+          }),
+        );
+      }
+      return "no_personal_sender";
+    }
     const scope = { userId: code.userId, organizationId: code.organizationId };
     if (getPlanLimits(await getPlanForScope(scope)).emailAlerts) {
       return "paid_plan";
     }
-    if (
-      await hadRealScan({ ...code, createdAt: code.createdAt }, scan, after)
-    ) {
-      return "not_first";
-    }
+    if (await hadRealScan(code, scan, after)) return "not_first";
 
     const [maker] = await db
       .select({
@@ -144,6 +188,8 @@ export async function sendFreeFirstScanEmail(
     const device = [scan.os, scan.browser].filter(Boolean).join(" · ");
     const result = await sendEmail({
       to: maker.email,
+      from: sender.from,
+      replyTo: sender.address,
       subject: intl.t("firstScan.subject", { code: label }),
       react: (
         <FirstScanEmail
@@ -167,14 +213,12 @@ export async function sendFreeFirstScanEmail(
       idempotencyKey: `first-scan:${code.id}`,
       tags: [{ name: "kind", value: "first-scan" }],
     });
-    return result.sent ? "sent" : "failed";
+    if (result.sent) return "sent";
+    // Never tried again: the next scan sees this one as the first.
+    logFailure(code.id, result.code ?? result.reason);
+    return "failed";
   } catch (error) {
-    console.error(
-      JSON.stringify({
-        event: "email.free_first_scan_failed",
-        error: error instanceof Error ? error.name : "unknown",
-      }),
-    );
+    logFailure(code.id, error instanceof Error ? error.name : "unknown");
     return "failed";
   }
 }

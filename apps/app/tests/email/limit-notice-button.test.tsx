@@ -8,9 +8,9 @@ import { describe, expect, it } from "vitest";
 import { ENGLISH_EMAIL } from "@/lib/i18n/email";
 import { noticeCopy } from "@/lib/limit-notices/copy";
 
-const usage = (canUpgrade: boolean, lift: "pro" | null = "pro") => ({
+const usage = (canUpgrade: boolean, lift: "pro" | null = "pro", used = 10) => ({
   limitId: "dynamicCodes" as const,
-  used: 10,
+  used,
   limit: 10,
   plan: "free" as const,
   canUpgrade,
@@ -21,8 +21,15 @@ const usage = (canUpgrade: boolean, lift: "pro" | null = "pro") => ({
   },
 });
 
-async function button(canUpgrade: boolean, lift: "pro" | null = "pro") {
-  const copy = noticeCopy(usage(canUpgrade, lift) as never, ENGLISH_EMAIL);
+async function button(
+  canUpgrade: boolean,
+  lift: "pro" | null = "pro",
+  used = 10,
+) {
+  const copy = noticeCopy(
+    usage(canUpgrade, lift, used) as never,
+    ENGLISH_EMAIL,
+  );
   const html = await render(
     <LimitNoticeEmail
       intl={ENGLISH_EMAIL}
@@ -57,12 +64,14 @@ describe("the limit notice's button", () => {
     expect(html).not.toContain("See plan and usage");
   });
 
-  it("stays See plan and usage for a member who can't, or when nothing lifts the cap", async () => {
-    for (const [canUpgrade, lift] of [
-      [false, "pro"],
-      [true, null],
+  it("stays See plan and usage for a member who can't, when nothing lifts the cap, or before the cap", async () => {
+    for (const [canUpgrade, lift, used] of [
+      [false, "pro", 10],
+      [true, null, 10],
+      // Near the cap the words don't offer an upgrade, so neither does the button.
+      [true, "pro", 8],
     ] as const) {
-      const { copy, html } = await button(canUpgrade, lift);
+      const { copy, html } = await button(canUpgrade, lift, used);
       expect(copy.upgradePlan).toBeNull();
       expect(html).toContain("See plan and usage");
       expect(html).toContain("/settings/usage");

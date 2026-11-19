@@ -744,7 +744,7 @@
         "apiBulk": "{count} + बल्क क्रिएशन",
         "clientReportsBadge": "नीचे छोटे क्रेडिट के साथ",
         "clientReportsWhiteLabel": "व्हाइट-लेबल",
-        "firstScanOnly": "हर कोड का पहला स्कैन"
+        "firstScanOnly": "हर डायनेमिक QR कोड का पहला स्कैन"
       }
     },
     "guarantee": {

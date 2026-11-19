@@ -2015,6 +2015,10 @@
     "source": "c711077aba84",
     "status": "machine"
   },
+  "pricing.comparison.cells.firstScanOnly": {
+    "source": "8984dc8a6e20",
+    "status": "machine"
+  },
   "pricing.guarantee.eyebrow": {
     "source": "2837765c81f5",
     "status": "machine"
@@ -19763,6 +19767,10 @@
     "source": "bc7bafdda4a7",
     "status": "machine"
   },
+  "app.settings.notifications.workspaceNotifications.emailAlertsAreProFirstScan": {
+    "source": "57d61cc70254",
+    "status": "machine"
+  },
   "app.settings.notifications.teamNotes.title": {
     "source": "8a52391b8446",
     "status": "machine"
@@ -28811,6 +28819,14 @@
     "source": "228b15a83187",
     "status": "machine"
   },
+  "emails.firstScan.pro": {
+    "source": "d452cfe47a07",
+    "status": "machine"
+  },
+  "emails.firstScan.freeReason": {
+    "source": "5b67dd68123e",
+    "status": "machine"
+  },
   "emails.scanMilestone.reached": {
     "source": "f61ae14de41b",
     "status": "machine"
@@ -29101,6 +29117,10 @@
   },
   "emails.limitNotice.keeps": {
     "source": "8f58b8caf034",
+    "status": "machine"
+  },
+  "emails.limitNotice.upgradeButton": {
+    "source": "fcc19175c100",
     "status": "machine"
   },
   "emails.weeklyDigest.subject": {
@@ -31497,26 +31517,6 @@
   },
   "codeBuilder.formBanner.upgrade": {
     "source": "7ec0261b8e8a",
-    "status": "machine"
-  },
-  "pricing.comparison.cells.firstScanOnly": {
-    "source": "395a2af9e36a",
-    "status": "machine"
-  },
-  "app.settings.notifications.workspaceNotifications.emailAlertsAreProFirstScan": {
-    "source": "57d61cc70254",
-    "status": "machine"
-  },
-  "emails.firstScan.pro": {
-    "source": "d452cfe47a07",
-    "status": "machine"
-  },
-  "emails.firstScan.freeReason": {
-    "source": "5b67dd68123e",
-    "status": "machine"
-  },
-  "emails.limitNotice.upgradeButton": {
-    "source": "fcc19175c100",
     "status": "machine"
   }
 }

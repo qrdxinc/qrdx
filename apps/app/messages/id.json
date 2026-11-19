@@ -744,7 +744,7 @@
         "apiBulk": "{count} + pembuatan massal",
         "clientReportsBadge": "Dengan kredit kecil di footer",
         "clientReportsWhiteLabel": "White-label",
-        "firstScanOnly": "Pemindaian pertama tiap kode"
+        "firstScanOnly": "Pemindaian pertama tiap kode QR dinamis"
       }
     },
     "guarantee": {

@@ -744,7 +744,7 @@
         "apiBulk": "{count}＋一括作成",
         "clientReportsBadge": "フッターに小さくクレジット表記あり",
         "clientReportsWhiteLabel": "ホワイトラベル",
-        "firstScanOnly": "各コードの最初のスキャン"
+        "firstScanOnly": "動的QRコードごとの最初のスキャン"
       }
     },
     "guarantee": {
