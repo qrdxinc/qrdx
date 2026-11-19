@@ -127,7 +127,7 @@ registerTemplate({
               {
                 type: "bank",
                 details:
-                  "Account name: Riverside Community Garden\nRouting number: 011000015\nAccount number: 000123456789\nReference: TREES",
+                  "Account name: Riverside Community Garden\nRouting number: your routing number\nAccount number: your account number\nReference: TREES",
               },
             ],
             note: "Would you like a receipt? Email us after you give and we'll send one.",

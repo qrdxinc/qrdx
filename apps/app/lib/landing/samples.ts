@@ -1,3 +1,4 @@
+import { CANONICAL_HOST } from "@repo/config";
 import type { LandingBlock, LandingPageContent } from "@/types/landing";
 import { getBlock } from "./blocks";
 
@@ -21,13 +22,22 @@ export const TEMPLATE_PHOTO_PATH = "/images/templates/";
 /** RFC 2606's example domains, and their subdomains. */
 const EXAMPLE_DOMAIN = /(^|\.)example\.(com|net|org)$/i;
 
-/** 555-0100 to 555-0199: North American numbers set aside for fiction. */
-const SAMPLE_PHONE_DIGITS = /^1?(\d{3})?55501\d{2}$/;
+/**
+ * Numbers set aside for fiction, as digits after the country code: in North
+ * America (+1) 555-0100 to 555-0199, with or without an area code; in the
+ * UK (+44) Ofcom's drama ranges (020 7946 0xxx, 07700 900xxx and the rest).
+ */
+const SAMPLE_PHONE_NANP = /^(\d{3})?55501\d{2}$/;
+const SAMPLE_PHONE_UK =
+  /^(11[3-8]4960|1[2-6]14960|1914980|2079460|2896496|2920180|1632960|7700900|8081570|9098790|3069990)\d{3}$/;
+
+/** Props that hold a phone number (contact cards, event organizers). */
+const PHONE_KEYS: ReadonlySet<string> = new Set(["number", "phone"]);
 
 /**
- * Links the templates use that open a service's front page or a stock
- * video, not anyone's own profile, as host + path (no "www.", no trailing
- * slash).
+ * Links the templates use that open a service's front page, a stock video or
+ * a "yourname" payment link, not anyone's own profile, as host + path (no
+ * "www.", no trailing slash).
  */
 const SAMPLE_PLACEHOLDER_LINKS: ReadonlySet<string> = new Set([
   "apps.apple.com",
@@ -56,6 +66,12 @@ const SAMPLE_PLACEHOLDER_LINKS: ReadonlySet<string> = new Set([
   "youtube.com",
   // The templates' sample video
   "youtube.com/watch?v=aqz-KE-bpKQ",
+  // Payment methods' sample links (lib/landing/blocks/payment-schema.ts)
+  "cash.app/$yourname",
+  "paypal.me/yourname",
+  "revolut.me/yourname",
+  "venmo.com/u/yourname",
+  "wise.com/pay/me/yourname",
 ]);
 
 /**
@@ -111,8 +127,14 @@ function isSampleEmail(address: string): boolean {
   return EXAMPLE_DOMAIN.test(domain);
 }
 
+/** A fiction-range number, written with its country code (+1 or +44). */
 function isSamplePhone(number: string): boolean {
-  return SAMPLE_PHONE_DIGITS.test(number.replace(/\D/g, ""));
+  const text = number.trim();
+  if (!text.startsWith("+")) return false;
+  const digits = text.replace(/\D/g, "");
+  if (digits.startsWith("1")) return SAMPLE_PHONE_NANP.test(digits.slice(1));
+  if (digits.startsWith("44")) return SAMPLE_PHONE_UK.test(digits.slice(2));
+  return false;
 }
 
 function isSampleWebLink(value: string): boolean {
@@ -124,15 +146,15 @@ function isSampleWebLink(value: string): boolean {
   }
   const host = url.hostname.toLowerCase().replace(/^www\./, "");
   if (EXAMPLE_DOMAIN.test(host)) return true;
-  if (/yourname/i.test(url.pathname + url.search)) return true;
   const path = url.pathname.replace(/\/+$/, "");
   return SAMPLE_PLACEHOLDER_LINKS.has(`${host}${path}${url.search}`);
 }
 
 /**
- * Whether a link, address or phone number is a template's stand-in:
+ * Whether a link or an address is a template's stand-in:
  * https://example.com/…, hello@example.com, tel:+1 555 0142, a profile link
  * with no profile ("https://instagram.com/", "https://paypal.me/yourname").
+ * A bare phone number counts only in a phone field (isSampleField).
  */
 export function isSampleLink(value: string): boolean {
   const text = value.trim();
@@ -141,13 +163,50 @@ export function isSampleLink(value: string): boolean {
   if (/^tel:/i.test(text)) return isSamplePhone(text.slice(4));
   if (/^https?:\/\//i.test(text)) return isSampleWebLink(text);
   if (/^[^\s@]+@[^\s@]+$/.test(text)) return isSampleEmail(text);
-  if (/^\+?[\d\s().-]{7,}$/.test(text)) return isSamplePhone(text);
   return false;
 }
 
-/** Whether an image URL is one of the template photos. */
+/** A prop's value is a sample link, address or (in a phone field) number. */
+export function isSampleField(key: string, value: string): boolean {
+  return isSampleLink(value) || (PHONE_KEYS.has(key) && isSamplePhone(value));
+}
+
+function hostOf(value: string | undefined): string {
+  try {
+    return value ? new URL(value).hostname : "";
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Hosts template photos are served from: QRdx's own, the deployment's own
+ * (a literal read Next inlines in the editor) and a local dev server's.
+ */
+const PHOTO_HOSTS: ReadonlySet<string> = new Set(
+  [
+    CANONICAL_HOST,
+    `www.${CANONICAL_HOST}`,
+    "localhost",
+    "127.0.0.1",
+    hostOf(process.env.NEXT_PUBLIC_APP_URL),
+  ].filter(Boolean),
+);
+
+/** Whether an image URL is one of the template photos, on QRdx's own host. */
 export function isSamplePhoto(value: string): boolean {
-  return value.includes(TEMPLATE_PHOTO_PATH);
+  const text = value.trim();
+  if (text.startsWith(TEMPLATE_PHOTO_PATH)) return true;
+  let url: URL;
+  try {
+    url = new URL(text);
+  } catch {
+    return false;
+  }
+  return (
+    url.pathname.startsWith(TEMPLATE_PHOTO_PATH) &&
+    PHOTO_HOSTS.has(url.hostname.toLowerCase())
+  );
 }
 
 type Json = Record<string, unknown>;
@@ -158,18 +217,33 @@ const isObject = (value: unknown): value is Json =>
 /** A link, address or number that isn't a sample, or an uploaded file. */
 function isOwnerData(key: string, value: string): boolean {
   if (key === "fileId") return value.length > 0;
-  return (
-    (/^(https?:|mailto:|tel:)/i.test(value) ||
-      /^[^\s@]+@[^\s@]+$/.test(value)) &&
-    !isSampleLink(value) &&
-    !isSamplePhoto(value)
-  );
+  const linkLike =
+    /^(https?:|mailto:|tel:)/i.test(value) ||
+    /^[^\s@]+@[^\s@]+$/.test(value) ||
+    PHONE_KEYS.has(key);
+  return linkLike && !isSampleField(key, value) && !isSamplePhoto(value);
 }
 
 /** The object's own sample link, if it has one (not its children's). */
 function ownSampleLink(item: Json): string | null {
-  for (const value of Object.values(item)) {
-    if (typeof value === "string" && isSampleLink(value)) return value;
+  for (const [key, value] of Object.entries(item)) {
+    if (typeof value === "string" && isSampleField(key, value)) return value;
+  }
+  return null;
+}
+
+/**
+ * A list item that points at a sample: by its own link (a links item, a
+ * phone row) or its image or file source's (a gallery photo, a download).
+ */
+function itemSampleLink(item: Json): string | null {
+  const own = ownSampleLink(item);
+  if (own) return own;
+  for (const child of Object.values(item)) {
+    if (isObject(child)) {
+      const nested = ownSampleLink(child);
+      if (nested) return nested;
+    }
   }
   return null;
 }
@@ -239,7 +313,7 @@ function collect(
   }
   if (!isObject(value)) return;
   const base = { blockId: block.id, blockType: block.type };
-  const link = ownSampleLink(value);
+  const link = inList ? itemSampleLink(value) : ownSampleLink(value);
   // A list item (a link, a social profile, a gallery photo) is one sample.
   if (inList && link) {
     const shown = displayLink(link);
@@ -260,7 +334,7 @@ function collect(
   // Anything else (a block's props, a nested object): each of its fields.
   for (const [key, item] of Object.entries(value)) {
     if (typeof item === "string") {
-      if (isSampleLink(item)) {
+      if (isSampleField(key, item)) {
         const shown = displayLink(item);
         found.push({
           ...base,
@@ -329,7 +403,7 @@ function clean(value: unknown, photos: boolean): Cleaned {
     for (const item of value) {
       if (
         isObject(item) &&
-        (ownSampleLink(item) || (photos && photoIn(item)))
+        (itemSampleLink(item) || (photos && photoIn(item)))
       ) {
         continue;
       }
@@ -346,7 +420,7 @@ function clean(value: unknown, photos: boolean): Cleaned {
   let emptied = false;
   const next: Json = {};
   for (const [key, item] of Object.entries(value)) {
-    if (typeof item === "string" && isSampleLink(item)) {
+    if (typeof item === "string" && isSampleField(key, item)) {
       next[key] = "";
     } else if (
       isObject(item) &&
@@ -407,6 +481,11 @@ export function removeSamples(
 ): LandingPageContent {
   const blocks: LandingBlock[] = [];
   for (const block of content.blocks) {
+    // Hidden blocks aren't listed (findSamples) or shown: left as they are.
+    if (block.hidden) {
+      blocks.push(block);
+      continue;
+    }
     if (
       WORDS_ONLY_BLOCKS.has(block.type) &&
       onlySampleWords(block.props, texts)
@@ -435,6 +514,10 @@ export function withoutSampleLinks(
   let changed = false;
   const blocks: LandingBlock[] = [];
   for (const block of content.blocks) {
+    if (block.hidden) {
+      blocks.push(block);
+      continue;
+    }
     const cleaned = clean(block.props, false);
     if (JSON.stringify(cleaned.value) === JSON.stringify(block.props)) {
       blocks.push(block);

@@ -9,6 +9,7 @@ import {
   type EventProps,
   toCalendarEvent,
 } from "@/lib/landing/blocks/event-schema";
+import { withoutSampleLinks } from "@/lib/landing/samples";
 import { baseUrl } from "@/lib/metadata";
 import { checkPageLifecycle } from "@/lib/redirect/lifecycle";
 import { getClientIp } from "@/lib/request-guards";
@@ -97,8 +98,10 @@ export async function GET(request: NextRequest, { params }: Context) {
     }
 
     const parsed = parseLandingPageContent(row.content, { mode: "read" });
+    // As on the page: a template's sample links (example.com tickets,
+    // hello@example.com) never reach the calendar file.
     const block = parsed.success
-      ? parsed.data.blocks.find(
+      ? withoutSampleLinks(parsed.data).blocks.find(
           (candidate) =>
             candidate.id === blockId &&
             candidate.type === "event" &&

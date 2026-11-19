@@ -3,6 +3,7 @@ import { LandingRender } from "@/components/landing/render";
 import { listBlocks, parseLandingPageContent } from "@/lib/landing/blocks";
 import {
   findSamples,
+  isSampleField,
   isSampleLink,
   isSamplePhoto,
   removeSamples,
@@ -37,18 +38,46 @@ vi.mock("next/font/google", () => {
 });
 
 const LINK = /^(https?:\/\/|mailto:|tel:)/i;
+const EMAIL = /^[^\s@]+@[^\s@]+\.[a-z]+$/i;
 
-/** Every link, address and number a value holds. */
-function links(value: unknown, found: string[] = []): string[] {
+/**
+ * Every link, address and number a value holds, with the prop it sits in:
+ * links anywhere, bare addresses anywhere, numbers in phone props.
+ */
+function links(
+  value: unknown,
+  found: { key: string; value: string }[] = [],
+  key = "",
+): { key: string; value: string }[] {
   if (typeof value === "string") {
-    if (LINK.test(value)) found.push(value);
+    const text = value.trim();
+    if (
+      LINK.test(text) ||
+      EMAIL.test(text) ||
+      ((key === "number" || key === "phone") && text)
+    ) {
+      found.push({ key, value });
+    }
   } else if (Array.isArray(value)) {
-    for (const item of value) links(item, found);
+    for (const item of value) links(item, found, key);
   } else if (value && typeof value === "object") {
-    for (const item of Object.values(value)) links(item, found);
+    for (const [childKey, item] of Object.entries(value)) {
+      links(item, found, childKey);
+    }
   }
   return found;
 }
+
+/** What a link, address or number becomes in an href. */
+const hrefForms = ({ key, value }: { key: string; value: string }) => {
+  const text = value.trim();
+  if (LINK.test(text)) return [text];
+  if (EMAIL.test(text)) return [`mailto:${text}`];
+  if (key === "number" || key === "phone") {
+    return [`tel:${text.replace(/[^0-9+]/g, "")}`];
+  }
+  return [];
+};
 
 const templates = listTemplates().flatMap((template) =>
   template.variants.map((variant) => ({
@@ -83,18 +112,28 @@ function render(content: LandingPageContent): string {
 }
 
 describe("sample links", () => {
-  it("covers every link in every template and block default", () => {
-    const missed = [
+  it("covers every link, address and number in every template and block default", () => {
+    const all = [
       ...templates.flatMap(({ key, content }) =>
-        links(content.blocks).map((link) => `${key}: ${link}`),
+        links(content.blocks).map((link) => ({ ...link, where: key })),
       ),
       ...listBlocks().flatMap((block) =>
-        links(block.defaults).map((link) => `${block.type} default: ${link}`),
+        links(block.defaults).map((link) => ({
+          ...link,
+          where: `${block.type} default`,
+        })),
       ),
-    ].filter((entry) => {
-      const link = entry.slice(entry.indexOf(": ") + 2);
-      return !(isSampleLink(link) || isSamplePhoto(link));
-    });
+    ];
+    // The collector itself finds the bare kinds (a vCard's number, an
+    // organizer's address), so a new kind of sample can't slip past.
+    expect(all.some((link) => link.key === "number")).toBe(true);
+    expect(all.some((link) => EMAIL.test(link.value))).toBe(true);
+    const missed = all
+      .filter(
+        (link) =>
+          !(isSampleField(link.key, link.value) || isSamplePhoto(link.value)),
+      )
+      .map((link) => `${link.where}: ${link.key} ${link.value}`);
     expect(missed).toEqual([]);
   });
 
@@ -112,15 +151,43 @@ describe("sample links", () => {
     "sam@example.com",
     "tel:+15550142",
     "tel:+15035550142",
-    "+1 503 555 0142",
     "https://instagram.com/",
     "https://www.instagram.com",
     "https://play.google.com/store/apps",
     "https://paypal.me/yourname",
     "https://cash.app/$yourname",
     "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+    "https://venmo.com/u/yourname",
+    "https://wise.com/pay/me/yourname",
   ])("%s is a sample", (link) => {
     expect(isSampleLink(link)).toBe(true);
+  });
+
+  it.each([
+    "+1 503 555 0142",
+    "+1 555 0119",
+    "+15550142",
+    "+44 20 7946 0321",
+    "+44 7700 900123",
+    "+44 113 496 0000",
+  ])("the number %s is a sample in a phone field only", (number) => {
+    expect(isSampleField("number", number)).toBe(true);
+    expect(isSampleField("phone", number)).toBe(true);
+    expect(isSampleField("code", number)).toBe(false);
+    expect(isSampleField("body", number)).toBe(false);
+  });
+
+  it.each([
+    "555 0123",
+    "555-0142",
+    "+372 5550 123",
+    "98755 50123",
+    "138 4555 0123",
+    "+91 98765 55501",
+    "+44 20 7946 1321",
+    "+1 503 555 1234",
+  ])("the number %s is not a sample", (number) => {
+    expect(isSampleField("number", number)).toBe(false);
   });
 
   it.each([
@@ -135,9 +202,27 @@ describe("sample links", () => {
     "tel:+442071838750",
     "https://paypal.me/lenasbakery",
     "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "https://instagram.com/yournamejewelry",
+    "https://www.etsy.com/listing/1/custom-yourname-necklace",
+    "https://shop.com/p?ref=yourname",
+    "https://paypal.me/yournameshop",
     "Book a table",
   ])("%s is not a sample", (link) => {
     expect(isSampleLink(link)).toBe(false);
+  });
+
+  it("knows template photos only on QRdx's own hosts", () => {
+    expect(isSamplePhoto("/images/templates/hero-cafe.webp")).toBe(true);
+    expect(
+      isSamplePhoto("https://qrdx.dev/images/templates/hero-cafe.webp"),
+    ).toBe(true);
+    expect(
+      isSamplePhoto("http://localhost:3000/images/templates/hero-cafe.webp"),
+    ).toBe(true);
+    expect(
+      isSamplePhoto("https://lenasbakery.com/images/templates/hero-cafe.webp"),
+    ).toBe(false);
+    expect(isSamplePhoto("https://qrdx.dev/images/hero-cafe.webp")).toBe(false);
   });
 });
 
@@ -282,14 +367,25 @@ describe("the public page (withoutSampleLinks)", () => {
     expect(html).toContain("Our shop");
   });
 
-  it("renders every template without a sample link, keeping its photos and text", () => {
+  it("renders every template without any of its links, keeping its photos and text", () => {
     for (const { key, content } of templates) {
+      // Every link, address and number the template ships with is a sample
+      // (the coverage test above); none may reach an href.
+      const sampleHrefs = new Set(
+        links(content.blocks)
+          .filter((link) => !isSamplePhoto(link.value))
+          .flatMap(hrefForms),
+      );
       const html = render(withoutSampleLinks(content));
-      const left = (html.match(/(?:href|src)="[^"]*"/g) ?? [])
-        .map((attr) =>
-          attr.slice(attr.indexOf('"') + 1, -1).replaceAll("&amp;", "&"),
-        )
-        .filter((link) => isSampleLink(link));
+      const hrefs = (html.match(/href="[^"]*"/g) ?? []).map((attr) =>
+        attr.slice(6, -1).replaceAll("&amp;", "&"),
+      );
+      const left = hrefs.filter(
+        (href) =>
+          sampleHrefs.has(href) ||
+          sampleHrefs.has(href.replace(/\/$/, "")) ||
+          /example\.(com|net|org)/i.test(href),
+      );
       expect(left, key).toEqual([]);
     }
   });
@@ -356,5 +452,82 @@ describe("removeSamples (the editor's Remove all samples)", () => {
     expect(
       findSamples(cleaned, texts).every((item) => item.kind === "text"),
     ).toBe(true);
+  });
+});
+
+describe("only samples go, never the owner's content around them", () => {
+  const photo = (id: string, url: string) => ({
+    id,
+    source: { type: "url", url },
+    alt: id,
+  });
+
+  it("drops the sample photo from a gallery, not the gallery", () => {
+    const content = page([
+      {
+        id: "gallery",
+        type: "gallery",
+        props: {
+          images: [
+            photo("own", "https://lenasbakery.com/a.jpg"),
+            photo("sample", "https://example.com/b.jpg"),
+          ],
+        },
+      },
+    ]);
+    for (const cleaned of [
+      withoutSampleLinks(content),
+      removeSamples(content, new Set()),
+    ]) {
+      const gallery = cleaned.blocks.find((block) => block.id === "gallery");
+      expect(gallery).toBeDefined();
+      const images = (gallery?.props.images ?? []) as { id: string }[];
+      expect(images.map((image) => image.id)).toEqual(["own"]);
+    }
+  });
+
+  it("keeps real links that happen to say yourname", () => {
+    const content = page([
+      {
+        id: "links",
+        type: "links",
+        props: {
+          items: [
+            {
+              id: "a",
+              label: "Shop",
+              url: "https://instagram.com/yournamejewelry",
+            },
+          ],
+        },
+      },
+    ]);
+    expect(withoutSampleLinks(content)).toBe(content);
+  });
+
+  it("leaves numbers outside phone fields alone (a coupon code, a text)", () => {
+    const content = page([
+      {
+        id: "coupon",
+        type: "coupon",
+        props: { headline: "10% off", code: "5550142" },
+      },
+      { id: "text", type: "text", props: { body: "Call 555-0142" } },
+    ]);
+    expect(withoutSampleLinks(content)).toBe(content);
+    expect(removeSamples(content, new Set()).blocks).toEqual(content.blocks);
+  });
+
+  it("leaves hidden blocks as they are, as the list does", () => {
+    const content = page([
+      {
+        id: "hidden",
+        type: "button",
+        hidden: true,
+        props: { label: "Visit our website", url: "https://example.com" },
+      },
+    ]);
+    expect(findSamples(content)).toEqual([]);
+    expect(removeSamples(content, new Set()).blocks).toEqual(content.blocks);
   });
 });

@@ -708,12 +708,20 @@ export async function createCodeForPage(
   return { codeId: code.id, samples: countSamples(row) };
 }
 
-/** The template samples still on a page, so attaching a code can say so. */
+/**
+ * The template samples still on a page, so attaching a code can say so. The
+ * code is saved by then: a failure here counts as none, never as an error.
+ */
 function countSamples(row: { type: string; content: unknown }): number {
-  const parsed = parseLandingPageContent(row.content, { mode: "read" });
-  if (!parsed.success) return 0;
-  return findSamples(parsed.data, new Set(templateSampleTexts(row.type)))
-    .length;
+  try {
+    const parsed = parseLandingPageContent(row.content, { mode: "read" });
+    if (!parsed.success) return 0;
+    return findSamples(parsed.data, new Set(templateSampleTexts(row.type)))
+      .length;
+  } catch (error) {
+    console.error("Counting a page's samples failed:", error);
+    return 0;
+  }
 }
 
 // ─── Pages for an existing code (codes/_lib/code-kind.ts) ───────────────────
