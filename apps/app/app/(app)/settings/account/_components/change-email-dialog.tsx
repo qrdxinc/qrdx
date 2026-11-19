@@ -24,11 +24,7 @@ import { useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useId, useState } from "react";
 import { DialogCloseButton } from "@/components/confirm-identity/dialog-close-button";
 import { useConfirmation } from "@/components/confirm-identity/provider";
-import {
-  EMAIL_CHANGE_MESSAGES,
-  isSameEmail,
-  MAX_EMAIL_LENGTH,
-} from "@/lib/account/email-change";
+import { isSameEmail, MAX_EMAIL_LENGTH } from "@/lib/account/email-change";
 import {
   confirmEmailChange,
   type EmailChangeResult,
@@ -39,9 +35,6 @@ const CODE_LENGTH = 6;
 const RESEND_COOLDOWN_MS = 30_000;
 const DIGITS_ONLY = "^\\d+$";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const CONNECTION_FAILED =
-  "Something went wrong. Check your connection and try again.";
-
 const TEXT_ACTION =
   "-my-3 inline-flex min-h-10 items-center sm:my-0 sm:min-h-0 rounded-sm text-xs text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:no-underline";
 
@@ -130,7 +123,7 @@ export function ChangeEmailDialog({
       if (resend) setNotice(t("newCodeRequestedAnyEarlier"));
     } catch (failure) {
       console.error("Requesting the email change failed:", failure);
-      setError(CONNECTION_FAILED);
+      setError(t("connectionFailed"));
     } finally {
       setSending(false);
     }
@@ -140,11 +133,11 @@ export function ChangeEmailDialog({
     event.preventDefault();
     const address = newEmail.trim();
     if (!EMAIL_PATTERN.test(address)) {
-      setError(EMAIL_CHANGE_MESSAGES.invalidEmail);
+      setError(t("invalidEmail"));
       return;
     }
     if (isSameEmail(address, currentEmail)) {
-      setError(EMAIL_CHANGE_MESSAGES.sameEmail);
+      setError(t("sameEmail"));
       return;
     }
     void sendCode(address, false);
@@ -180,7 +173,7 @@ export function ChangeEmailDialog({
     } catch (failure) {
       console.error("Confirming the email change failed:", failure);
       setCode("");
-      setError(CONNECTION_FAILED);
+      setError(t("connectionFailed"));
     } finally {
       setConfirming(false);
     }

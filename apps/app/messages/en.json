@@ -6108,7 +6108,10 @@
           "noCodeCheckSpamIf": "No code? Check spam. If it isn't there, check the address and try again.",
           "weSentANoteAbout": "We sent a note about the change to {currentEmail}.",
           "wellSendANoteAbout": "We'll send a note about the change to {currentEmail}.",
-          "yourEmailIsNowSentto": "Your email is now {sentTo}"
+          "yourEmailIsNowSentto": "Your email is now {sentTo}",
+          "invalidEmail": "Enter a valid email address.",
+          "sameEmail": "That's already your email.",
+          "connectionFailed": "Something went wrong. Check your connection and try again."
         },
         "communityProfileSection": {
           "liveAtCommunityHandleClear": "Live at <link>/community/@{handle}</link>. Clear it to release the handle.",
@@ -6226,7 +6229,15 @@
           "oneTimeCodeSentTo": "A one-time code sent to {email}.",
           "linkedOn": "Linked {date}.",
           "linkedOnReason": "Linked {date}. {reason}",
-          "notLinkedUseThe": "Not linked. Use the {provider} account with {email}."
+          "notLinkedUseThe": "Not linked. Use the {provider} account with {email}.",
+          "emailCodesRemain": "You can still sign in with a code sent to your email.",
+          "linkError": {
+            "emailDoesNotMatch": "That account uses a different email address. You can only link accounts with the same email as your QRdx account.",
+            "alreadyLinked": "That account already signs in to a different QRdx account.",
+            "notVerified": "That account's email address isn't verified with the provider, so it can't be linked.",
+            "cancelled": "Linking was cancelled.",
+            "failed": "We couldn't link that account. Please try again."
+          }
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Support will turn this off on {dueDate}",
@@ -6275,7 +6286,10 @@
           "afterYouSignInQrdx2": "After you sign in, QRdx asks for a backup code.",
           "passkeySpotlight": "A passkey can now be your second step, instead of an authenticator code.",
           "addedOn": "Added {date}",
-          "passkeyName": "Passkey"
+          "passkeyName": "Passkey",
+          "backupCodesDetails": "For when you can't use your passkey or app. Each works once.",
+          "backupCodesLeft": "{left, number} of {total, number} left. Each works once.",
+          "backupCodesLeftSoon": "{left, number} of {total, number} left. Each works once. Make new ones soon."
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Step {stepNumber, number} of {length, number}",
@@ -6313,7 +6327,11 @@
           "authenticatorApp": "Authenticator app",
           "passkeyAddedButTwoStep": "Passkey added, but two-step verification didn't turn on. Try Turn on again.",
           "confirmationCancelled": "CONFIRMATION_CANCELLED",
-          "sessionNotFresh": "SESSION_NOT_FRESH"
+          "sessionNotFresh": "SESSION_NOT_FRESH",
+          "authenticatorAppAdded": "Authenticator app added",
+          "passkeyAdded": "Passkey added",
+          "otherDevicesSignedOut": "Your other devices were signed out.",
+          "otherDevicesNotSignedOut": "We couldn't sign out your other devices. Use Sign out everywhere else under Sessions."
         },
         "workspaceTwoFactorNotice": {
           "twoStepVerificationIsOn": "Two-step verification is on, so you can open <span>{name}</span> now.",

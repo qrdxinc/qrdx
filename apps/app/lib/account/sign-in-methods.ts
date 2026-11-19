@@ -68,6 +68,17 @@ export function unlinkBlockMessages(
 export const EMAIL_CODES_REMAIN =
   "You can still sign in with a code sent to your email.";
 
+/**
+ * EMAIL_CODES_REMAIN in the person's language
+ * (app.settings.account.signInMethodsSection.emailCodesRemain in
+ * messages/en.json).
+ */
+export function emailCodesRemain(
+  t: Translator<"app.settings.account.signInMethodsSection">,
+): string {
+  return t("emailCodesRemain");
+}
+
 export interface SignInMethodView {
   /** Account row id, or "email" for email codes */
   id: string;
@@ -124,19 +135,58 @@ export function linkableProviders(
   );
 }
 
-/** Better Auth's OAuth callback error codes (?error=) after linking. */
-export function linkErrorMessage(code: string | null | undefined): string {
+/** What linking a sign-in method says when it doesn't work, in English. */
+export const LINK_ERROR_MESSAGES = {
+  emailDoesNotMatch:
+    "That account uses a different email address. You can only link accounts with the same email as your QRdx account.",
+  alreadyLinked: "That account already signs in to a different QRdx account.",
+  notVerified:
+    "That account's email address isn't verified with the provider, so it can't be linked.",
+  cancelled: "Linking was cancelled.",
+  failed: "We couldn't link that account. Please try again.",
+} as const;
+
+/** LINK_ERROR_MESSAGES in any language. */
+export type LinkErrorMessages = Record<
+  keyof typeof LINK_ERROR_MESSAGES,
+  string
+>;
+
+/**
+ * LINK_ERROR_MESSAGES in the person's language
+ * (app.settings.account.signInMethodsSection.linkError in messages/en.json).
+ */
+export function linkErrorMessages(
+  t: Translator<"app.settings.account.signInMethodsSection.linkError">,
+): LinkErrorMessages {
+  return {
+    emailDoesNotMatch: t("emailDoesNotMatch"),
+    alreadyLinked: t("alreadyLinked"),
+    notVerified: t("notVerified"),
+    cancelled: t("cancelled"),
+    failed: t("failed"),
+  };
+}
+
+/**
+ * Better Auth's OAuth callback error codes (?error=) after linking, as a
+ * message: English unless `messages` (linkErrorMessages(t)) is given.
+ */
+export function linkErrorMessage(
+  code: string | null | undefined,
+  messages: LinkErrorMessages = LINK_ERROR_MESSAGES,
+): string {
   switch (code) {
     case "email_does_not_match":
-      return "That account uses a different email address. You can only link accounts with the same email as your QRdx account.";
+      return messages.emailDoesNotMatch;
     case "account_already_linked_to_different_user":
-      return "That account already signs in to a different QRdx account.";
+      return messages.alreadyLinked;
     case "unable_to_link_account":
     case "email_not_verified":
-      return "That account's email address isn't verified with the provider, so it can't be linked.";
+      return messages.notVerified;
     case "access_denied":
-      return "Linking was cancelled.";
+      return messages.cancelled;
     default:
-      return "We couldn't link that account. Please try again.";
+      return messages.failed;
   }
 }
