@@ -102,6 +102,7 @@ const routes = {
 } as const;
 
 let counter = 0;
+let lastHeaders = new Headers();
 async function call(
   path: keyof typeof routes,
   fields: Record<string, unknown>,
@@ -135,6 +136,7 @@ async function call(
       },
     }),
   );
+  lastHeaders = response.headers;
   return [response.status, await response.json()] as const;
 }
 
@@ -239,6 +241,21 @@ describe("emails/send", () => {
     expect(limitChecks).toEqual([
       { prefix: "qrdx:console-internal", key: "email.personal_note:u_admin" },
     ]);
+  });
+
+  it("keeps the note budget's Retry-After, in the header and the body", async () => {
+    const { HttpError } = await import("@/lib/http-error");
+    notes.sendPersonalNotes.mockRejectedValue(
+      new HttpError(429, "NOTE_BUDGET", "note_budget_exceeded", {
+        "Retry-After": "120",
+      }),
+    );
+    expect(await call("emails/send", sendFields([message("u_1")]))).toEqual([
+      429,
+      { ok: false, error: "note_budget_exceeded", retryAfter: 120 },
+    ]);
+    expect(lastHeaders.get("Retry-After")).toBe("120");
+    expect(lastHeaders.get("Cache-Control")).toBe("no-store");
   });
 
   it("asks for strong confirmation only when it goes to more than one person", async () => {

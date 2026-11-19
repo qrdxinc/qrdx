@@ -20,7 +20,7 @@ import { adminId, requiredReason } from "@/app/(app)/admin/_lib/rules";
 import { teamNotesUnsubscribeUrl } from "@/lib/events/unsubscribe";
 import { HttpError } from "@/lib/http-error";
 import { emailIntl } from "@/lib/i18n/email";
-import { enforceRateLimits } from "@/lib/request-guards";
+import { enforceRateLimits, refundRateLimits } from "@/lib/request-guards";
 import { type Greeting, greetingName } from "./greeting";
 import { type PersonalSender, personalSender } from "./personal-sender";
 import { isEmailConfigured, sendEmail } from "./send";
@@ -131,6 +131,8 @@ export type NoteSkipReason =
   | "reserved_address"
   | "not_found"
   | "already_sent"
+  // With {first_name} filled in, this person's subject is over 200 characters
+  | "too_long"
   // Resend is still handling the same note (an overlapping request)
   | "in_progress"
   // The batch stopped first (its time budget, or an audit write failed)
@@ -302,6 +304,12 @@ const noteBudget = createRateLimiter({
 /** One send batch at a time across the deployment. */
 const NOTE_LOCK = "qrdx:personal-notes:lock";
 const NOTE_LOCK_SECONDS = 90;
+// Deletes the lock only while it still holds this batch's token, in one
+// step: a batch that outlived its lock doesn't free the next one's.
+const RELEASE_LOCK = `if redis.call("get", KEYS[1]) == ARGV[1] then
+  return redis.call("del", KEYS[1])
+end
+return 0`;
 
 /**
  * Runs `work` holding the batch lock; 409 `busy` while another batch holds
@@ -318,8 +326,13 @@ async function withNoteLock<T>(work: () => Promise<T>): Promise<T> {
   try {
     return await work();
   } finally {
-    // Only our own lock: a batch that outlived it doesn't free the next one's.
-    if ((await redis.get(NOTE_LOCK)) === token) await redis.del(NOTE_LOCK);
+    // The notes went out either way: a lock that can't be freed only holds
+    // the next batch off until it expires, so the results still go back.
+    await redis.eval(RELEASE_LOCK, [NOTE_LOCK], [token]).catch(() => {
+      console.error(
+        JSON.stringify({ event: "personal_note.lock_release_failed" }),
+      );
+    });
   }
 }
 
@@ -327,7 +340,9 @@ async function withNoteLock<T>(work: () => Promise<T>): Promise<T> {
  * Sends each message to its person, one at a time, NOTE_SPACING_MS apart,
  * one batch at a time (409 `busy`), within the admin's hourly budget (429
  * `note_budget_exceeded`, counted for the people it would actually send
- * to), and answers what happened to each, in order. A failed send is
+ * to, and given back for the ones that didn't go out), and answers what
+ * happened to each, in order. A subject that {first_name} pushes past 200
+ * characters skips just that person (`too_long`). A failed send is
  * reported and the rest still go. Past NOTE_TIME_BUDGET_MS, or after an
  * audit entry can't be written (no more email without a record), the rest
  * are `not_attempted`.
@@ -365,15 +380,16 @@ export async function sendPersonalNotes(
       const skip = skipReason(recipient, today);
       if (skip) return { message, skip };
       const text = noteText(recipient, message);
-      if (text.subject.length > SUBJECT_MAX) throw subjectTooLong();
+      if (text.subject.length > SUBJECT_MAX) {
+        return { message, skip: "too_long" as const };
+      }
       return { message, recipient, text, skip: null };
     });
     const sendable = plan.filter((entry) => entry.skip === null).length;
+    const budget = { limiter: noteBudget, key: actor.id };
     if (sendable > 0) {
       try {
-        await enforceRateLimits([
-          { limiter: noteBudget, key: actor.id, rate: sendable },
-        ]);
+        await enforceRateLimits([{ ...budget, rate: sendable }]);
       } catch (error) {
         if (error instanceof HttpError && error.status === 429) {
           throw new HttpError(
@@ -476,6 +492,10 @@ export async function sendPersonalNotes(
         stopped = true;
       }
     }
+    // The budget counts notes sent: give back the ones counted above that
+    // didn't go out (failed, in progress, already sent or not attempted).
+    const unsent = sendable - results.filter((r) => r.status === "sent").length;
+    if (unsent > 0) await refundRateLimits([{ ...budget, rate: unsent }]);
     return results;
   });
 }

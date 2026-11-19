@@ -10,6 +10,7 @@ import { fakeDb } from "../support/fake-db";
 
 const state = vi.hoisted(() => ({
   auditFails: false,
+  lockReleaseFails: false,
   budget: 60,
   used: new Map<string, number>(),
   store: new Map<string, string>(),
@@ -45,8 +46,12 @@ vi.mock("@repo/rate-limit", async (importOriginal) => ({
       state.store.set(key, value);
       return "OK";
     },
-    get: async (key: string) => state.store.get(key) ?? null,
-    del: async (key: string) => Number(state.store.delete(key)),
+    // The lock's compare-and-delete script.
+    eval: async (_script: string, [key]: string[], [token]: string[]) => {
+      if (state.lockReleaseFails) throw new Error("redis down");
+      if (state.store.get(key) !== token) return 0;
+      return Number(state.store.delete(key));
+    },
   },
   createRateLimiter: () => ({
     limit: async (key: string, rate = 1) => {
@@ -136,6 +141,7 @@ beforeEach(() => {
   fakeDb.resetAll();
   state.sent.length = 0;
   state.auditFails = false;
+  state.lockReleaseFails = false;
   state.budget = 60;
   state.used.clear();
   state.store.clear();
@@ -152,6 +158,7 @@ beforeEach(() => {
     person("u_noname", { name: "  " }),
     person("u_info", { name: "info", email: "info@shop.example.org.uk" }),
     person("u_long", { name: `${"B".repeat(30)} Lee` }),
+    person("u_ctrl", { name: "Sam\u0000" }),
   ]);
   fakeDb.seed("adminAuditLog", []);
 });
@@ -350,12 +357,21 @@ describe("the note", () => {
       ["jdoe1987", "other@x.org"],
       ["sam.lee", "s@x.org"],
       ["sam_lee", "s@x.org"],
+      ["\u0007", "s@x.org"],
     ]) {
       expect(greetingName(name as string, email as string), name).toEqual({
         name: "there",
         fallback: true,
       });
     }
+    // Control characters count as spaces, so none reach a subject.
+    for (const name of ["Sam\u0000", "Sam\u0000Lee", "\u001bSam"]) {
+      expect(greetingName(name, "s@x.org"), name).toEqual({
+        name: "Sam",
+        fallback: false,
+      });
+    }
+    expect((await html("u_ctrl", "Hi {first_name}")).subject).toBe("Hi Sam");
     const info = await html("u_info", "Hi {first_name}");
     expect(info.text).toContain("Hi there");
     expect(info.greeting).toEqual({ name: "there", fallback: true });
@@ -374,26 +390,37 @@ describe("the note", () => {
     );
   });
 
-  it("checks the subject's length after {first_name} is filled in", async () => {
-    const subject = `${"x".repeat(190)} {first_name}`;
+  it("checks the subject's length after {first_name} is filled in, per person", async () => {
+    const subject = `${"x".repeat(175)} {first_name}`;
     await expect(
       previewPersonalNote(
         { template: "personal-note", userId: "u_long", subject, body: "Hi" },
         SENDER,
       ),
     ).rejects.toMatchObject({ status: 400 });
-    await expect(
-      sendPersonalNotes(
+    expect(
+      await sendPersonalNotes(
         {
           template: "personal-note",
           campaign: "warm-check-in",
           reason: "Warm check-ins",
-          messages: [{ userId: "u_long", subject, body: "Hi" }],
+          messages: ["u_long", "u_on"].map((userId) => ({
+            userId,
+            subject,
+            body: "Hi",
+          })),
         },
         { actor: ACTOR, sender: SENDER, spacingMs: 0 },
       ),
-    ).rejects.toMatchObject({ status: 400 });
-    expect(state.sent).toHaveLength(0);
+    ).toEqual([
+      { userId: "u_long", status: "skipped", reason: "too_long" },
+      { userId: "u_on", status: "sent", id: "em_1" },
+    ]);
+    expect(state.sent.map((email) => email.to)).toEqual([
+      "u_on@mail.example.org.uk",
+    ]);
+    // Only the note that could go out counted against the budget.
+    expect(state.used.get("u_admin")).toBe(1);
   });
 
   it("splits paragraphs at blank lines and keeps line breaks", () => {
@@ -454,6 +481,34 @@ describe("limits on sending", () => {
       send([note("u_ban_over")], "another-one"),
     ).rejects.toMatchObject({ status: 429, message: "note_budget_exceeded" });
     expect(state.sent).toHaveLength(2);
+  });
+
+  it("gives the budget back for notes that didn't go out", async () => {
+    state.sendResult = { sent: false, reason: "failed", error: "down" };
+    expect(await send(["u_on", "u_es"].map(note))).toEqual([
+      { userId: "u_on", status: "skipped", reason: "failed" },
+      { userId: "u_es", status: "skipped", reason: "failed" },
+    ]);
+    expect(state.used.get("u_admin")).toBe(0);
+
+    state.sendResult = { sent: true, id: "em_1" };
+    state.auditFails = true;
+    await send(["u_on", "u_es", "u_ban_over"].map(note), "another-one");
+    // One sent (its entry failed), two not attempted.
+    expect(state.used.get("u_admin")).toBe(1);
+  });
+
+  it("returns the results when the lock can't be freed, and logs it", async () => {
+    state.lockReleaseFails = true;
+    expect(await send([note("u_on")])).toEqual([
+      { userId: "u_on", status: "sent", id: "em_1" },
+    ]);
+    const logged = vi
+      .mocked(console.error)
+      .mock.calls.map(([line]) => String(line));
+    expect(logged).toContain(
+      JSON.stringify({ event: "personal_note.lock_release_failed" }),
+    );
   });
 
   it("runs one batch at a time: busy while another holds the lock, free after", async () => {

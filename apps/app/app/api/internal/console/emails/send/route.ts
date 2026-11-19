@@ -12,7 +12,8 @@ import {
 // { userId, status: "skipped", reason }] }. Strong confirmation when it
 // goes to more than one person; the admin pages' standard limit (30 calls a
 // minute per admin), and at most 60 notes an hour per admin (429
-// note_budget_exceeded) with one batch at a time (409 busy). Each note sent gets its own audit entry
+// note_budget_exceeded, with Retry-After and `retryAfter` seconds) with one
+// batch at a time (409 busy). Each note sent gets its own audit entry
 // (email.personal_note), so the call writes none of its own. 503 while
 // notes are off (personal_email_not_configured without EMAIL_FROM_PERSONAL,
 // email_not_configured without Resend). Signed, with the admin checked

@@ -72,8 +72,11 @@ import {
 const NO_STORE = { "Cache-Control": "no-store" } as const;
 const REPLAY_TTL_SECONDS = 600;
 
-const json = (status: number, body: Record<string, unknown>) =>
-  NextResponse.json(body, { status, headers: NO_STORE });
+const json = (
+  status: number,
+  body: Record<string, unknown>,
+  headers?: Record<string, string>,
+) => NextResponse.json(body, { status, headers: { ...headers, ...NO_STORE } });
 
 /** A request refused before its signature matched (no actor to name). */
 const refuse = (
@@ -195,8 +198,19 @@ function failure(error: unknown, actorId: string | null): SignedOutcome {
     };
   }
   if (error instanceof HttpError) {
+    // A refusal with Retry-After (an endpoint's own budget) keeps it, and
+    // says it in the body too, as `rate_limited` does.
+    const retryAfter = error.headers?.["Retry-After"];
     return {
-      response: json(error.status, { ok: false, error: error.message }),
+      response: json(
+        error.status,
+        {
+          ok: false,
+          error: error.message,
+          ...(retryAfter ? { retryAfter: Number(retryAfter) } : {}),
+        },
+        error.headers,
+      ),
       actorId,
       // ADMIN_ACTION, CONFIRMATION_REQUIRED…: the message itself may name
       // things (a plan, a status), so only the code is logged.
