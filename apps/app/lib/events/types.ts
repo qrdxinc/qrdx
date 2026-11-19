@@ -33,15 +33,23 @@ export const CHAT_NOTIFICATION_EVENTS: readonly NotificationEvent[] =
 
 /**
  * Email a plan with email alerts sends by default (owner decision, 19 Nov
- * 2026): each code's first scan and its milestones, to the code's maker and
- * the workspace's owners while they have no email row for the workspace
- * (lib/events/subscribers.ts). The weekly digest, form responses and code
- * changes stay off until someone turns them on. An email row, even one with
- * no events (turned off), always wins.
+ * 2026): each code's first scan and its milestones, to the code's maker
+ * while they have no email row for the workspace, at most
+ * DEFAULT_EMAIL_DAILY_CAP a day (lib/events/subscribers.ts, notify.tsx).
+ * Owners who want every code's alerts turn them on in Settings, which saves
+ * a row. The weekly digest, form responses and code changes stay off until
+ * someone turns them on. An email row, even one with no events (turned
+ * off), always wins.
  */
 export const DEFAULT_EMAIL_EVENTS = [
   "scan.milestone",
 ] as const satisfies readonly NotificationEvent[];
+
+/**
+ * Default (no-row) alert emails one person gets a day (UTC) per workspace;
+ * past it, the rest of the day's are skipped and logged.
+ */
+export const DEFAULT_EMAIL_DAILY_CAP = 25;
 
 export const NOTIFICATION_CHANNEL_LABELS = {
   email: "Email",

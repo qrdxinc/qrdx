@@ -1,18 +1,22 @@
 // Scan alerts on by default (lib/events/types.ts DEFAULT_EMAIL_EVENTS): on a
-// plan with email alerts, someone with no email row for the workspace gets
-// each code's first scan and its milestones, if they're an owner or made
-// the code, and never the digest; an email row, even one with no events,
-// wins; Free gets only its own first-scan email, and a code never gets both,
+// plan with email alerts, the code's maker, with no email row for the
+// workspace, gets its first scan and its milestones, at most 25 a day, and
+// never the digest; banned accounts get nothing; an email row, even one with
+// no events, wins; the first-scan email waits for the first scan past the
+// maker's test window, row or not, while chat still gets the very first
+// scan; Free gets only its own first-scan email, and a code never gets both,
 // even while its workspace changes plans; the unsubscribe link of a default
 // email saves a row; the settings switches show the defaults on. Tables in
-// memory, sendEmail captured: nothing is sent or stored.
+// memory, sendEmail and chat posts captured: nothing is sent or stored.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 import { renderIntl } from "../support/intl";
 
 const state = vi.hoisted(() => ({
   plan: "pro" as "free" | "pro" | "business",
-  redis: new Map<string, unknown>(),
+  /** Per key, for the daily cap's limiter only */
+  daily: new Map<string, number>(),
+  chat: [] as string[],
   sent: [] as {
     to: string;
     from?: string;
@@ -39,16 +43,17 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
   usePathname: () => "/settings/notifications",
 }));
+// Every limiter allows, except the default emails' daily cap, which counts.
 vi.mock("@repo/rate-limit", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@repo/rate-limit")>()),
-  createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
-  redis: {
-    get: async (key: string) => state.redis.get(key) ?? null,
-    set: async (key: string, value: unknown) => {
-      state.redis.set(key, value);
-      return "OK";
+  createRateLimiter: ({ prefix }: { prefix?: string }) => ({
+    limit: async (key: string) => {
+      if (prefix !== "qrdx:notify-default") return { success: true };
+      const used = (state.daily.get(key) ?? 0) + 1;
+      state.daily.set(key, used);
+      return { success: used <= 25 };
     },
-  },
+  }),
 }));
 vi.mock("@/lib/plans", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/plans")>()),
@@ -89,6 +94,7 @@ vi.mock("@/components/confirm-identity/actions", () => ({
 }));
 
 const { emitScanRecorded } = await import("@/lib/events/emit");
+const { setTransportForTests } = await import("@/lib/events/http");
 const { invalidateSubscribers, loadSubscribers } = await import(
   "@/lib/events/subscribers"
 );
@@ -115,6 +121,7 @@ const person = (id: string) => ({
   name: id,
   email: `${id}@mail.example.org.uk`,
   banned: false,
+  banExpires: null,
   locale: null,
   teamNotes: true,
   twoFactorEnabled: true,
@@ -155,10 +162,16 @@ beforeEach(() => {
   fakeDb.resetAll();
   invalidateSubscribers(scope);
   state.plan = "pro";
-  state.redis.clear();
+  state.daily.clear();
+  state.chat.length = 0;
   state.sent.length = 0;
+  setTransportForTests(async (url) => {
+    state.chat.push(url.toString());
+    return { status: 200, body: "ok" };
+  });
   vi.spyOn(console, "error").mockImplementation(() => undefined);
   vi.spyOn(console, "warn").mockImplementation(() => undefined);
+  vi.spyOn(console, "info").mockImplementation(() => undefined);
   fakeDb.seed("user", ["u_owner", "u_maker", "u_other"].map(person));
   fakeDb.seed("organization", [
     { id: ORG, name: "Acme", slug: "acme", createdAt: MADE },
@@ -175,43 +188,94 @@ beforeEach(() => {
 });
 
 describe("Pro and Business with no email row", () => {
-  it("email each code's first scan and milestones to its maker and the owners, nobody else", async () => {
+  it("email the code's maker its first real scan and milestones, nobody else", async () => {
     for (const plan of ["pro", "business"] as const) {
       state.plan = plan;
       state.sent.length = 0;
+      fakeDb.rows("qrScan").length = 0;
       invalidateSubscribers(scope);
-      await scan(`s1_${plan}`, minutes(1), 1);
-      expect(recipients(), plan).toEqual([
-        address("u_maker"),
-        address("u_owner"),
-      ]);
+      await scan(`s1_${plan}`, minutes(60), 1);
+      expect(recipients(), plan).toEqual([address("u_maker")]);
       expect(state.sent[0]?.subject).toBe("“Spring menu” got its first scan");
     }
     state.sent.length = 0;
     await scan("s10", minutes(90), 10);
-    expect(recipients()).toEqual([address("u_maker"), address("u_owner")]);
+    expect(recipients()).toEqual([address("u_maker")]);
     await scan("s11", minutes(91), 11);
-    expect(state.sent).toHaveLength(2);
+    expect(state.sent).toHaveLength(1);
+  });
+
+  it("wait past the maker's test window for the first-scan email", async () => {
+    await scan("s1", minutes(1), 1);
+    await scan("s2", minutes(2), 2);
+    expect(state.sent).toHaveLength(0);
+    await scan("s3", minutes(30), 3);
+    expect(state.sent).toEqual([
+      expect.objectContaining({
+        to: address("u_maker"),
+        subject: "“Spring menu” got its first scan",
+      }),
+    ]);
+    await scan("s4", minutes(31), 4);
+    expect(state.sent).toHaveLength(1);
   });
 
   it("never sends the digest, form responses or code changes by default", async () => {
     const subscribers = await loadSubscribers(scope);
     expect(subscribers.targets).toEqual([]);
-    expect(subscribers.defaultEmail.map((p) => [p.userId, p.owner])).toEqual([
-      ["u_owner", true],
-      ["u_maker", false],
-      ["u_other", false],
+    expect(subscribers.defaultEmail.map((p) => p.userId)).toEqual([
+      "u_owner",
+      "u_maker",
+      "u_other",
     ]);
-    const [workspace] = await settings.listNotificationWorkspaces("u_owner");
-    expect(workspace?.email).toBeNull();
-    expect(workspace?.emailByDefault).toBe("everyCode");
-    expect(
-      (await settings.listNotificationWorkspaces("u_maker"))[0]?.emailByDefault,
-    ).toBe("ownCodes");
+    for (const userId of ["u_owner", "u_maker"]) {
+      const [workspace] = await settings.listNotificationWorkspaces(userId);
+      expect(workspace?.email, userId).toBeNull();
+      expect(workspace?.emailByDefault, userId).toBe(true);
+    }
     // The digest goes only to rows that ask for it.
     expect((await runWeeklyDigest({ shard: "all" })).candidates).toBe(0);
     await settings.setEmailEvents("u_owner", ORG, ["digest.weekly"]);
     expect((await runWeeklyDigest({ shard: "all" })).candidates).toBe(1);
+  });
+
+  it("stop at 25 a day per person and workspace, and log each one skipped", async () => {
+    // The first scan, then 30 milestone alerts in a day (each a 10th scan,
+    // for the test's sake): 31 alert emails, 25 sent, 6 skipped.
+    await scan("s1", minutes(30), 1);
+    for (let index = 0; index < 30; index += 1) {
+      await scan(`s10_${index}`, minutes(60 + index), 10);
+    }
+    expect(state.sent).toHaveLength(25);
+    const logged = vi
+      .mocked(console.info)
+      .mock.calls.map(([line]) => String(line))
+      .filter((line) => line.includes("notification.default_daily_cap"));
+    expect(logged).toHaveLength(6);
+    expect(JSON.parse(logged[0] ?? "{}")).toEqual({
+      event: "notification.default_daily_cap",
+      targetId: `default:u_maker:${ORG}`,
+      cap: 25,
+    });
+  });
+
+  it("never go to a banned maker; a ban that ended doesn't count", async () => {
+    const maker = fakeDb.find("user", { id: "u_maker" }) as Record<
+      string,
+      unknown
+    >;
+    maker.banned = true;
+    await scan("s1", minutes(60), 1);
+    expect(state.sent).toHaveLength(0);
+    maker.banExpires = new Date("2026-01-01T00:00:00Z");
+    invalidateSubscribers(scope);
+    await scan("s10", minutes(90), 10);
+    expect(recipients()).toEqual([address("u_maker")]);
+    maker.banExpires = new Date("2099-01-01T00:00:00Z");
+    invalidateSubscribers(scope);
+    state.sent.length = 0;
+    await scan("s100", minutes(120), 100);
+    expect(state.sent).toHaveLength(0);
   });
 
   it("send nothing to someone whose row turns alerts off, and only what a row asks for", async () => {
@@ -223,35 +287,58 @@ describe("Pro and Business with no email row", () => {
       ["u_owner", []],
       ["u_maker", ["form.submitted"]],
     ]);
-    await scan("s1", minutes(1), 1);
+    await scan("s1", minutes(60), 1);
     expect(state.sent).toHaveLength(0);
     const [workspace] = await settings.listNotificationWorkspaces("u_owner");
     expect(workspace?.email?.events).toEqual([]);
-    expect(workspace?.emailByDefault).toBeNull();
+    expect(workspace?.emailByDefault).toBe(false);
   });
 
-  it("send every code's milestones to a member who turned them on", async () => {
-    await settings.setEmailEvents("u_other", ORG, ["scan.milestone"]);
+  it("send every code's milestones to an owner who turned them on, after the same test window", async () => {
+    await settings.setEmailEvents("u_owner", ORG, ["scan.milestone"]);
     await scan("s1", minutes(1), 1);
-    expect(recipients()).toEqual([
-      address("u_maker"),
-      address("u_other"),
-      address("u_owner"),
+    expect(state.sent).toHaveLength(0);
+    await scan("s2", minutes(60), 2);
+    expect(recipients()).toEqual([address("u_maker"), address("u_owner")]);
+  });
+
+  it("still post the very first scan to chat, test window or not", async () => {
+    state.plan = "business";
+    fakeDb.seed("notificationSetting", [
+      {
+        id: "n_slack",
+        userId: "u_owner",
+        organizationId: ORG,
+        channel: "slack",
+        target: "https://hooks.slack.com/services/T000/B000/XXXX",
+        events: ["scan.milestone"],
+        createdAt: MADE,
+      },
     ]);
+    invalidateSubscribers(scope);
+    await scan("s1", minutes(1), 1);
+    expect(state.chat).toEqual([
+      "https://hooks.slack.com/services/T000/B000/XXXX",
+    ]);
+    expect(state.sent).toHaveLength(0);
+    await scan("s2", minutes(60), 2);
+    // The late first-scan email goes alone: no second chat message.
+    expect(state.chat).toHaveLength(1);
+    expect(recipients()).toEqual([address("u_maker")]);
   });
 
   it("have an unsubscribe link that saves the person's choice", async () => {
-    await scan("s1", minutes(1), 1);
-    const owner = state.sent.find((email) => email.to === address("u_owner"));
-    const token = new URL(owner?.unsubscribeUrl ?? "").searchParams.get(
+    await scan("s1", minutes(60), 1);
+    const [email] = state.sent;
+    const token = new URL(email?.unsubscribeUrl ?? "").searchParams.get(
       "token",
     );
     const parsed = verifyUnsubscribeToken(token ?? "");
     expect(parsed).toEqual({
-      settingId: `default:u_owner:${ORG}`,
+      settingId: `default:u_maker:${ORG}`,
       event: "scan.milestone",
     });
-    expect(owner?.idempotencyKey).toMatch(/:default:u_owner:org_acme$/);
+    expect(email?.idempotencyKey).toMatch(/:default:u_maker:org_acme$/);
     await settings.applyUnsubscribe(
       parsed?.settingId ?? "",
       parsed?.event ?? "all",
@@ -260,10 +347,10 @@ describe("Pro and Business with no email row", () => {
       fakeDb
         .rows("notificationSetting")
         .map((row) => [row.userId, row.organizationId, row.events]),
-    ).toEqual([["u_owner", ORG, []]]);
+    ).toEqual([["u_maker", ORG, []]]);
     state.sent.length = 0;
     await scan("s10", minutes(90), 10);
-    expect(recipients()).toEqual([address("u_maker")]);
+    expect(state.sent).toHaveLength(0);
   });
 });
 
@@ -292,20 +379,33 @@ describe("one first-scan email per code across plan changes", () => {
     await loadSubscribers(scope, { cached: true });
     state.plan = "free";
     await scan("s1", minutes(60), 1);
-    expect(state.sent.map((email) => email.subject)).toEqual([
-      "“Spring menu” got its first scan",
-      "“Spring menu” got its first scan",
+    expect(state.sent).toEqual([
+      expect.objectContaining({
+        to: address("u_maker"),
+        subject: "“Spring menu” got its first scan",
+      }),
     ]);
-    expect(state.sent.some((email) => email.from)).toBe(false);
+    expect(state.sent[0]?.from).toBeUndefined();
   });
 
-  it("sends no Free email after a downgrade when the first scan came on Pro", async () => {
+  it("sends no Free email after a downgrade once Pro's went", async () => {
+    await scan("s1", minutes(60), 1);
+    expect(state.sent).toHaveLength(1);
+    state.plan = "free";
+    invalidateSubscribers(scope);
+    await scan("s2", minutes(61), 2);
+    expect(state.sent).toHaveLength(1);
+  });
+
+  it("sends Free's email after a downgrade when Pro only saw test scans", async () => {
     await scan("s1", minutes(1), 1);
-    expect(state.sent).toHaveLength(2);
+    expect(state.sent).toHaveLength(0);
     state.plan = "free";
     invalidateSubscribers(scope);
     await scan("s2", minutes(60), 2);
-    expect(state.sent).toHaveLength(2);
+    expect(state.sent).toEqual([
+      expect.objectContaining({ from: "Ritesh from QRdx <support@qrdx.dev>" }),
+    ]);
   });
 
   it("sends no Pro first-scan alert after an upgrade when Free's went", async () => {
@@ -366,10 +466,11 @@ describe("the settings switches", () => {
     for (const event of ["digest.weekly", "form.submitted", "code.created"]) {
       expect(checked(html, event), event).toBe(false);
     }
-    expect(html).not.toContain("On by default for the codes you make");
-    expect(await render("u_maker")).toContain(
-      "On by default for the codes you make",
-    );
+    // Everyone's default is the codes they make, owners too.
+    for (const page of [html, await render("u_maker")]) {
+      expect(page).toContain("On by default for the codes you make.");
+      expect(page).toContain("Get them for every code in this workspace");
+    }
   });
 
   it("show a row's choice, off included", async () => {

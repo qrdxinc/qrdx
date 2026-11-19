@@ -6463,7 +6463,8 @@
           "notificationsSaved": "Notifikasi disimpan",
           "testMessageSentToValue": "Pesan uji dikirim ke {value}",
           "webhookRemoved": "Webhook dihapus",
-          "onByDefaultOwnCodes": "Aktif secara default untuk kode yang Anda buat. Mengubah sakelar di sini akan menyimpan pilihan Anda untuk setiap kode di workspace ini.",
+          "onByDefaultOwnCodes": "Aktif secara default untuk kode yang Anda buat.",
+          "everyCodeAlerts": "Terima untuk setiap kode di workspace ini",
           "emailAlertsAreProFirstScan": "Di paket Gratis, Anda mendapatkan satu email saat setiap kode QR dinamis yang Anda buat mendapat pemindaian pertamanya. Notifikasi email lainnya dan ringkasan mingguan tersedia di Pro dan Business."
         },
         "teamNotes": {
@@ -8872,7 +8873,7 @@
       "signIn": "Masuk",
       "goToDashboard": "Buka dasbor",
       "manageSubscription": "Kelola langganan",
-      "scanEmailsOn": "Email pemindaian aktif: Anda akan mendapat kabar tentang pemindaian pertama setiap kode dan tonggak pencapaiannya. <link>Ubah di Pengaturan → Notifikasi</link>.",
+      "scanEmailsOn": "Email pemindaian aktif: Anda akan menerima kabar tentang pemindaian pertama dan tonggak pencapaian. <link>Ubah di Pengaturan → Notifikasi</link>.",
       "steps": {
         "codesTitle": "Buat kode dinamis",
         "codesBody": "Kode yang dapat Anda edit setelah dicetak, dengan analitik pemindaian.",

@@ -40,6 +40,7 @@ vi.mock("@repo/rate-limit", async () => {
   return {
     redis: state.redis,
     slidingWindow: () => ({}),
+    fixedWindow: () => ({}),
     createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
   };
 });

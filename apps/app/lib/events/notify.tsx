@@ -6,7 +6,11 @@ import { FirstScanEmail } from "@repo/email/templates/first-scan";
 import { FormSubmissionEmail } from "@repo/email/templates/form-submission";
 import { codeLabel, formatCount } from "@repo/email/templates/parts";
 import { ScanMilestoneEmail } from "@repo/email/templates/scan-milestone";
-import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
+import {
+  createRateLimiter,
+  fixedWindow,
+  slidingWindow,
+} from "@repo/rate-limit";
 import { eq } from "drizzle-orm";
 import type { ReactElement } from "react";
 import { sendEmail } from "@/lib/email/send";
@@ -16,14 +20,19 @@ import { baseUrl } from "@/lib/metadata";
 import { workspaceLink } from "@/lib/workspace-paths";
 import { workspaceSlug } from "@/lib/workspaces";
 import { postJson } from "./http";
-import type { EventScope, NotificationTarget } from "./subscribers";
-import type {
-  CodeEventData,
-  EventDataMap,
-  FormSubmittedData,
-  NotificationEvent,
-  ScanMilestoneData,
-  WebhookEnvelope,
+import {
+  type EventScope,
+  type NotificationTarget,
+  parseDefaultEmailTargetId,
+} from "./subscribers";
+import {
+  type CodeEventData,
+  DEFAULT_EMAIL_DAILY_CAP,
+  type EventDataMap,
+  type FormSubmittedData,
+  type NotificationEvent,
+  type ScanMilestoneData,
+  type WebhookEnvelope,
 } from "./types";
 import { unsubscribeUrl } from "./unsubscribe";
 
@@ -46,6 +55,35 @@ async function withinAlertLimit(targetId: string, event: string) {
   } catch {
     return true;
   }
+}
+
+// Default (no-row) alert emails: at most DEFAULT_EMAIL_DAILY_CAP a UTC day
+// per person and workspace, whatever the event. Past it the rest of the day
+// is skipped, one log line each (the day's skips are their count). Like the
+// hourly limit, it lets email through when the limiter can't answer.
+const defaultDailyLimiter = createRateLimiter({
+  limiter: fixedWindow(DEFAULT_EMAIL_DAILY_CAP, "1 d"),
+  prefix: "qrdx:notify-default",
+});
+
+async function withinDefaultDailyCap(targetId: string) {
+  if (!parseDefaultEmailTargetId(targetId)) return true;
+  let within = true;
+  try {
+    within = (await defaultDailyLimiter.limit(targetId)).success;
+  } catch {
+    return true;
+  }
+  if (!within) {
+    console.info(
+      JSON.stringify({
+        event: "notification.default_daily_cap",
+        targetId,
+        cap: DEFAULT_EMAIL_DAILY_CAP,
+      }),
+    );
+  }
+  return within;
 }
 
 // What changed, by field: the chat message's English, and each email's
@@ -350,6 +388,7 @@ export async function notifyTargets<T extends AlertEvent>(
     await Promise.allSettled(
       targets.map(async (target) => {
         if (!(await withinAlertLimit(target.id, envelope.type))) return;
+        if (!(await withinDefaultDailyCap(target.id))) return;
         if (target.channel === "email") {
           const unsubscribe = unsubscribeUrl(target.id, envelope.type);
           // The recipient's saved language, else English. Not the request's

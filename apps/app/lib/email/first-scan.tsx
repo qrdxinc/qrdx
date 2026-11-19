@@ -6,7 +6,6 @@ import { isReservedEmailAddress } from "@repo/email/reserved-address";
 import { FirstScanEmail } from "@repo/email/templates/first-scan";
 import { codeLabel } from "@repo/email/templates/parts";
 import { DEFAULT_LOCALE, isLocale } from "@repo/i18n/config";
-import { redis } from "@repo/rate-limit";
 import { and, eq, gte, lt, or } from "drizzle-orm";
 import type { RecordedScan, ScannedCode } from "@/lib/events/emit";
 import { SCAN_MILESTONES } from "@/lib/events/types";
@@ -26,9 +25,9 @@ import { isPortalClient } from "./welcome";
 // what Pro adds. Pro and Business have their own first-scan alert (scan
 // milestone 1, on by default; lib/events/types.ts DEFAULT_EMAIL_EVENTS), so
 // this never goes to a workspace whose plan has email alerts, and nobody
-// gets both for one code: lib/events/emit.ts decides both from one read of
-// the plan, and a code whose first scan came on such a plan is marked
-// (markPaidFirstScan), so after a downgrade it doesn't get this one too.
+// gets both for one code: both go on the same scan, the code's first real
+// one (firstScanStatus), and lib/events/emit.ts decides which from one read
+// of the plan, so an upgrade or downgrade can't send both.
 //
 // It's one of the notes from the QRdx team (./team-notes.ts): no row
 // needed, on by default, and the one-click link in it (or Settings >
@@ -76,7 +75,6 @@ export type FreeFirstScanOutcome =
   | "off"
   | "no_personal_sender"
   | "paid_plan"
-  | "paid_first_scan"
   | "not_found"
   | "opted_out"
   | "banned"
@@ -116,39 +114,32 @@ async function hadRealScan(
   return Boolean(earlier);
 }
 
-let warnedNoSender = false;
+export type FirstScanStatus = "first" | "test_scan" | "not_first";
 
-// Codes whose first scan came while their workspace's plan had email
-// alerts (Pro's first-scan alert went, or was on offer): about 13 months.
-const PAID_FIRST_SCAN = "qrdx:first-scan:paid:";
-const PAID_FIRST_SCAN_SECONDS = 400 * 24 * 60 * 60;
-
-/** Called on a code's first scan while its plan has email alerts. */
-export async function markPaidFirstScan(codeId: string): Promise<void> {
-  try {
-    await redis?.set(`${PAID_FIRST_SCAN}${codeId}`, 1, {
-      ex: PAID_FIRST_SCAN_SECONDS,
-    });
-  } catch (error) {
-    console.error(
-      JSON.stringify({
-        event: "email.first_scan_mark_failed",
-        codeId,
-        error: error instanceof Error ? error.name : "unknown",
-      }),
-    );
-  }
-}
+/** When the maker's test window for a code ends. */
+const testWindowEnd = (createdAt: Date) =>
+  new Date(createdAt.getTime() + FIRST_SCAN_TEST_MINUTES * 60_000);
 
 /**
- * Whether the code's first scan came on a plan with email alerts. Throws
- * when Redis can't say, so the email isn't sent rather than risk a second
- * first-scan email for one code.
+ * Whether this scan is the code's first real one: past its test window
+ * (FIRST_SCAN_TEST_MINUTES after it was made), with no scan stored before
+ * it past the window. Free's first-scan email and paid plans' first-scan
+ * alert email both go on it. Past FIRST_SCAN_CHECK_LIMIT scans it's
+ * "not_first" without a query; a code with no creation time counts its
+ * very first scan.
  */
-async function hadPaidFirstScan(codeId: string): Promise<boolean> {
-  if (!redis) return false;
-  return (await redis.get(`${PAID_FIRST_SCAN}${codeId}`)) !== null;
+export async function firstScanStatus(
+  scan: RecordedScan,
+  code: ScannedCode,
+): Promise<FirstScanStatus> {
+  if (!code.createdAt) return code.scanCount === 1 ? "first" : "not_first";
+  if (code.scanCount > FIRST_SCAN_CHECK_LIMIT) return "not_first";
+  const after = testWindowEnd(code.createdAt);
+  if (scan.scannedAt < after) return "test_scan";
+  return (await hadRealScan(code, scan, after)) ? "not_first" : "first";
 }
+
+let warnedNoSender = false;
 
 const logFailure = (codeId: string, error: string) =>
   console.error(
@@ -164,9 +155,12 @@ export async function sendFreeFirstScanEmail(
   code: ScannedCode,
   {
     emailAlerts,
+    firstScan = () => firstScanStatus(scan, code),
   }: {
     /** Whether the plan has email alerts, as the alerts saw it (emit.ts) */
     emailAlerts?: boolean;
+    /** firstScanStatus, shared with the alerts (emit.ts) */
+    firstScan?: () => Promise<FirstScanStatus>;
   } = {},
 ): Promise<FreeFirstScanOutcome> {
   try {
@@ -175,9 +169,7 @@ export async function sendFreeFirstScanEmail(
     }
     if (code.createdAt < FIRST_SCAN_EMAIL_SINCE) return "old_code";
     if (code.createdVia && BROUGHT_IN.has(code.createdVia)) return "imported";
-    const after = new Date(
-      code.createdAt.getTime() + FIRST_SCAN_TEST_MINUTES * 60_000,
-    );
+    const after = testWindowEnd(code.createdAt);
     if (scan.scannedAt < after) return "test_scan";
     if (!isFeatureAvailable("teamNotes")) return "off";
     const sender = personalSender();
@@ -200,14 +192,14 @@ export async function sendFreeFirstScanEmail(
     ) {
       return "paid_plan";
     }
-    if (await hadRealScan(code, scan, after)) return "not_first";
-    if (await hadPaidFirstScan(code.id)) return "paid_first_scan";
+    if ((await firstScan()) !== "first") return "not_first";
 
     const [maker] = await db
       .select({
         id: user.id,
         email: user.email,
         banned: user.banned,
+        banExpires: user.banExpires,
         locale: user.locale,
         teamNotes: user.teamNotes,
       })
@@ -215,7 +207,10 @@ export async function sendFreeFirstScanEmail(
       .where(eq(user.id, code.userId))
       .limit(1);
     if (!maker) return "not_found";
-    if (maker.banned) return "banned";
+    // A ban in force (lib/oauth.ts isBanActive): one that ended doesn't count.
+    if (maker.banned && (!maker.banExpires || maker.banExpires > new Date())) {
+      return "banned";
+    }
     if (isReservedEmailAddress(maker.email)) return "reserved_address";
     if (!wantsTeamNotes(maker)) return "opted_out";
     // An agency's client: their QRdx account is the portal's, not theirs.

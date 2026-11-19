@@ -6463,7 +6463,8 @@
           "notificationsSaved": "Notificaciones guardadas",
           "testMessageSentToValue": "Mensaje de prueba enviado a {value}",
           "webhookRemoved": "Webhook eliminado",
-          "onByDefaultOwnCodes": "Activado por defecto para los códigos que creas. Al cambiar un interruptor aquí, se guarda tu elección para todos los códigos de este espacio de trabajo.",
+          "onByDefaultOwnCodes": "Activadas por defecto para los códigos que creas.",
+          "everyCodeAlerts": "Recibe alertas de todos los códigos de este espacio de trabajo",
           "emailAlertsAreProFirstScan": "En Gratis recibes un correo cuando cada código QR dinámico que creas tiene su primer escaneo. Las demás alertas por correo y el resumen semanal forman parte de Pro y Business."
         },
         "teamNotes": {
@@ -8872,7 +8873,7 @@
       "signIn": "Iniciar sesión",
       "goToDashboard": "Ir al panel",
       "manageSubscription": "Gestionar suscripción",
-      "scanEmailsOn": "Los correos de escaneo están activados: te avisaremos del primer escaneo de cada código y de sus hitos. <link>Cámbialos en Ajustes → Notificaciones</link>.",
+      "scanEmailsOn": "Los correos de escaneo están activados: te avisaremos de los primeros escaneos y de los hitos. <link>Cámbialo en Ajustes → Notificaciones</link>.",
       "steps": {
         "codesTitle": "Crea códigos dinámicos",
         "codesBody": "Códigos que puedes editar después de imprimirlos, con analíticas de escaneo.",

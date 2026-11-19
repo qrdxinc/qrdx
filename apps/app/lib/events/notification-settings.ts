@@ -13,7 +13,6 @@ import { and, asc, eq, isNull, type SQL } from "drizzle-orm";
 import { z } from "zod";
 import { HttpError } from "@/lib/error-response";
 import { baseUrl } from "@/lib/metadata";
-import { strongestRole } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { assertNotShutOut } from "@/lib/workspaces";
 import { postChatMessage } from "./notify";
@@ -39,9 +38,8 @@ import {
 // (organization_id null = personal). Each person has at most one email row
 // per workspace (always their own account address) plus Slack / Discord
 // incoming-webhook targets. No email row means the plan's defaults
-// (DEFAULT_EMAIL_EVENTS, on plans with email alerts: owners for every code,
-// anyone else for the codes they made), so turning email off keeps a row
-// with no events.
+// (DEFAULT_EMAIL_EVENTS for the codes the person made, on plans with email
+// alerts), so turning email off keeps a row with no events.
 
 export type ChatChannel = "slack" | "discord";
 
@@ -71,11 +69,11 @@ export interface NotificationWorkspace {
   chat: boolean;
   email: { id: string; events: NotificationEvent[] } | null;
   /**
-   * No email row on a plan with email alerts: DEFAULT_EMAIL_EVENTS go out,
-   * for every code ("everyCode", owners) or the codes the person made
-   * ("ownCodes"). Null once they have a row, or without email alerts.
+   * No email row on a plan with email alerts: DEFAULT_EMAIL_EVENTS go out
+   * for the codes the person made. False once they have a row, or without
+   * email alerts.
    */
-  emailByDefault: "everyCode" | "ownCodes" | null;
+  emailByDefault: boolean;
   chats: {
     id: string;
     channel: ChatChannel;
@@ -136,11 +134,7 @@ export async function listNotificationWorkspaces(
 ): Promise<NotificationWorkspace[]> {
   const [teams, settings] = await db.batch([
     db
-      .select({
-        id: organization.id,
-        name: organization.name,
-        role: member.role,
-      })
+      .select({ id: organization.id, name: organization.name })
       .from(member)
       .innerJoin(organization, eq(organization.id, member.organizationId))
       .where(eq(member.userId, userId))
@@ -154,21 +148,13 @@ export async function listNotificationWorkspaces(
 
   // Your own workspace first, then the others by name.
   const own = ownWorkspaceId(userId);
-  const scopes: {
-    organizationId: string | null;
-    name: string;
-    owner: boolean;
-  }[] = [
+  const scopes: { organizationId: string | null; name: string }[] = [
     ...teams.filter((team) => team.id === own),
     ...teams.filter((team) => team.id !== own),
-  ].map((team) => ({
-    organizationId: team.id,
-    name: team.name,
-    owner: strongestRole(team.role) === "owner",
-  }));
+  ].map((team) => ({ organizationId: team.id, name: team.name }));
 
   return Promise.all(
-    scopes.map(async ({ organizationId, name, owner }) => {
+    scopes.map(async ({ organizationId, name }) => {
       const plan = await getPlanForScope(scopeOf(userId, organizationId));
       const limits = getPlanLimits(plan);
       const rows = settings.filter(
@@ -185,12 +171,7 @@ export async function listNotificationWorkspaces(
         email: emailRow
           ? { id: emailRow.id, events: asEvents(emailRow.events) }
           : null,
-        emailByDefault:
-          emailRow || !limits.emailAlerts
-            ? null
-            : owner
-              ? ("everyCode" as const)
-              : ("ownCodes" as const),
+        emailByDefault: !emailRow && limits.emailAlerts,
         chats: rows
           .filter((row) => row.channel !== "email")
           .map((row) => ({

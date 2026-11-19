@@ -291,23 +291,37 @@ export function WorkspaceNotifications({
                   className="flex items-start justify-between gap-4 py-3"
                   key={event}
                 >
-                  <label className="min-w-0 space-y-0.5" htmlFor={id}>
-                    <span className="block text-sm font-medium">
-                      {EVENT_INFO[event].label}
-                    </span>
-                    <span className="text-muted-foreground block text-xs">
-                      {EVENT_INFO[event].description}
-                    </span>
-                    {workspace.emailByDefault === "ownCodes" &&
+                  <div className="min-w-0 space-y-0.5">
+                    <label className="block space-y-0.5" htmlFor={id}>
+                      <span className="block text-sm font-medium">
+                        {EVENT_INFO[event].label}
+                      </span>
+                      <span className="text-muted-foreground block text-xs">
+                        {EVENT_INFO[event].description}
+                      </span>
+                    </label>
+                    {/* The default covers the codes you make; saving it as
+                        your choice covers every code in the workspace. */}
+                    {workspace.emailByDefault &&
                       on &&
                       (DEFAULT_EMAIL_EVENTS as readonly string[]).includes(
                         event,
                       ) && (
-                        <span className="text-muted-foreground block text-xs">
-                          {t("onByDefaultOwnCodes")}
-                        </span>
+                        <p className="text-muted-foreground text-xs">
+                          {t("onByDefaultOwnCodes")}{" "}
+                          <Button
+                            className="h-auto p-0 text-xs"
+                            disabled={busy === `email:${event}`}
+                            onClick={() => toggleEmail(event, true)}
+                            size="sm"
+                            type="button"
+                            variant="link"
+                          >
+                            {t("everyCodeAlerts")}
+                          </Button>
+                        </p>
                       )}
-                  </label>
+                  </div>
                   <Switch
                     checked={on}
                     // Turning off always works, even after a downgrade.

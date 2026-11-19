@@ -10,7 +10,6 @@ import {
   webhookEndpoint,
 } from "@repo/database";
 import { and, eq, isNull, type SQL } from "drizzle-orm";
-import { strongestRole } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { DEFAULT_EMAIL_EVENTS } from "./types";
 
@@ -37,15 +36,14 @@ export interface NotificationTarget {
 }
 
 /**
- * A member who gets DEFAULT_EMAIL_EVENTS without an email row (a plan with
- * email alerts only): owners for every code, anyone else for the codes they
- * made. A personal workspace's person is its owner.
+ * A member with no email row, who gets DEFAULT_EMAIL_EVENTS for the codes
+ * they made (a plan with email alerts only). Owners who want every code's
+ * alerts turn them on in Settings, which saves a row.
  */
 export interface DefaultEmailRecipient {
   userId: string;
   userName: string;
   email: string;
-  owner: boolean;
 }
 
 export interface Subscribers {
@@ -81,8 +79,8 @@ export function parseDefaultEmailTargetId(
 }
 
 /**
- * The default email targets for one event on one code: none unless the
- * event is a default one; owners, and the code's maker.
+ * The default email target for one event on one code: the code's maker,
+ * while they have no email row; none unless the event is a default one.
  */
 export function defaultEmailTargets(
   subs: Pick<Subscribers, "defaultEmail">,
@@ -92,7 +90,7 @@ export function defaultEmailTargets(
 ): NotificationTarget[] {
   if (!(DEFAULT_EMAIL_EVENTS as readonly string[]).includes(event)) return [];
   return subs.defaultEmail
-    .filter((person) => person.owner || person.userId === makerId)
+    .filter((person) => person.userId === makerId)
     .map((person) => ({
       id: defaultEmailTargetId(person.userId, scope.organizationId),
       userId: person.userId,
@@ -155,43 +153,56 @@ export async function withoutShutOutMembers<
   return kept;
 }
 
+/** A ban in force: `banned` until `banExpires` (lib/oauth.ts isBanActive). */
+const banActive = (
+  row: { banned: boolean | null; banExpires: Date | null },
+  now: Date,
+) => Boolean(row.banned) && (!row.banExpires || row.banExpires > now);
+
 /**
  * The workspace's members with no email row for it (anyone with one chose,
- * even if they chose nothing), minus those it shuts out.
+ * even if they chose nothing), minus banned accounts and members it shuts
+ * out. A personal workspace's member is its person.
  */
 async function defaultEmailRecipients(
   scope: EventScope,
   chose: Set<string>,
 ): Promise<DefaultEmailRecipient[]> {
+  const now = new Date();
+  const person = {
+    userId: user.id,
+    userName: user.name,
+    email: user.email,
+    banned: user.banned,
+    banExpires: user.banExpires,
+  };
   if (!scope.organizationId) {
     if (chose.has(scope.userId)) return [];
-    const [person] = await db
-      .select({ userId: user.id, userName: user.name, email: user.email })
+    const [row] = await db
+      .select(person)
       .from(user)
       .where(eq(user.id, scope.userId))
       .limit(1);
-    return person ? [{ ...person, owner: true }] : [];
+    return row && !banActive(row, now)
+      ? [{ userId: row.userId, userName: row.userName, email: row.email }]
+      : [];
   }
   const members = await db
     .select({
-      userId: member.userId,
-      role: member.role,
+      ...person,
       organizationId: member.organizationId,
-      userName: user.name,
-      email: user.email,
       twoFactorOn: user.twoFactorEnabled,
     })
     .from(member)
     .innerJoin(user, eq(user.id, member.userId))
     .where(eq(member.organizationId, scope.organizationId));
   const kept = await withoutShutOutMembers(
-    members.filter((row) => !chose.has(row.userId)),
+    members.filter((row) => !(chose.has(row.userId) || banActive(row, now))),
   );
   return kept.map((row) => ({
     userId: row.userId,
     userName: row.userName,
     email: row.email,
-    owner: strongestRole(row.role) === "owner",
   }));
 }
 

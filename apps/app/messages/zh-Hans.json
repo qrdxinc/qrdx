@@ -6463,7 +6463,8 @@
           "notificationsSaved": "通知已保存",
           "testMessageSentToValue": "测试消息已发送至 {value}",
           "webhookRemoved": "已移除 Webhook",
-          "onByDefaultOwnCodes": "默认对你创建的二维码开启。在此更改开关会保存你的选择，并应用于此工作区中的所有二维码。",
+          "onByDefaultOwnCodes": "默认对你创建的二维码开启。",
+          "everyCodeAlerts": "接收此工作区中所有二维码的提醒",
           "emailAlertsAreProFirstScan": "在免费版中，您创建的每个动态二维码在首次被扫描时，您会收到一封邮件。其他邮件提醒和每周摘要属于 Pro 和 Business 套餐。"
         },
         "teamNotes": {
@@ -8872,7 +8873,7 @@
       "signIn": "登录",
       "goToDashboard": "前往控制台",
       "manageSubscription": "管理订阅",
-      "scanEmailsOn": "扫描邮件通知已开启：每个二维码的首次扫描及各个里程碑，你都会收到通知。<link>在“设置 → 通知”中更改</link>。",
+      "scanEmailsOn": "扫描邮件通知已开启：首次扫描和里程碑达成时，你都会收到通知。<link>在“设置 → 通知”中更改</link>。",
       "steps": {
         "codesTitle": "创建动态二维码",
         "codesBody": "打印后仍可编辑的二维码，并附带扫描分析。",

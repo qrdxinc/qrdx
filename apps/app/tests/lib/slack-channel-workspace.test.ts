@@ -47,6 +47,7 @@ vi.mock("next/cache", () => ({ revalidatePath: () => {} }));
 vi.mock("@repo/rate-limit", () => ({
   createRateLimiter: () => ({ limit: async () => ({ success: true }) }),
   slidingWindow: () => ({}),
+  fixedWindow: () => ({}),
 }));
 vi.mock("@repo/auth/server", () => ({
   auth: {

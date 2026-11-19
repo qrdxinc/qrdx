@@ -19768,7 +19768,11 @@
     "status": "machine"
   },
   "app.settings.notifications.workspaceNotifications.onByDefaultOwnCodes": {
-    "source": "11db281425cd",
+    "source": "77d7e7fe81e8",
+    "status": "machine"
+  },
+  "app.settings.notifications.workspaceNotifications.everyCodeAlerts": {
+    "source": "019e630439f6",
     "status": "machine"
   },
   "app.settings.notifications.workspaceNotifications.emailAlertsAreProFirstScan": {
@@ -27956,7 +27960,7 @@
     "status": "machine"
   },
   "app.success.scanEmailsOn": {
-    "source": "6df6c18121d2",
+    "source": "cdfaa88030df",
     "status": "machine"
   },
   "app.success.steps.codesTitle": {

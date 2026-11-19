@@ -6463,7 +6463,8 @@
           "notificationsSaved": "Notifications enregistrées",
           "testMessageSentToValue": "Message de test envoyé à {value}",
           "webhookRemoved": "Webhook supprimé",
-          "onByDefaultOwnCodes": "Activé par défaut pour les codes que vous créez. Modifier un interrupteur ici enregistre votre choix pour tous les codes de cet espace de travail.",
+          "onByDefaultOwnCodes": "Activé par défaut pour les codes que vous créez.",
+          "everyCodeAlerts": "Les recevoir pour chaque code de cet espace de travail",
           "emailAlertsAreProFirstScan": "Avec le plan Gratuit, vous recevez un e-mail lorsque chacun de vos QR codes dynamiques reçoit son premier scan. Les autres alertes par e-mail et le récapitulatif hebdomadaire font partie de Pro et Business."
         },
         "teamNotes": {
@@ -8872,7 +8873,7 @@
       "signIn": "Se connecter",
       "goToDashboard": "Aller au tableau de bord",
       "manageSubscription": "Gérer l’abonnement",
-      "scanEmailsOn": "Les e-mails de scan sont activés : vous serez informé du premier scan de chaque code et de ses paliers. <link>Modifiez-les dans Paramètres → Notifications</link>.",
+      "scanEmailsOn": "Les e-mails de scan sont activés : vous serez informé des premiers scans et des étapes importantes. <link>Modifiez-les dans Paramètres → Notifications</link>.",
       "steps": {
         "codesTitle": "Créez des QR codes dynamiques",
         "codesBody": "Des codes modifiables après impression, avec des statistiques de scan.",

@@ -6463,7 +6463,8 @@
           "notificationsSaved": "Benachrichtigungen gespeichert",
           "testMessageSentToValue": "Testnachricht an {value} gesendet",
           "webhookRemoved": "Webhook entfernt",
-          "onByDefaultOwnCodes": "Standardmäßig für deine eigenen Codes aktiviert. Wenn du hier einen Schalter änderst, wird deine Auswahl für alle Codes in diesem Workspace gespeichert.",
+          "onByDefaultOwnCodes": "Standardmäßig für deine eigenen Codes aktiviert.",
+          "everyCodeAlerts": "Für jeden Code in diesem Workspace erhalten",
           "emailAlertsAreProFirstScan": "Im Free-Plan bekommst du eine E-Mail, wenn jeder dynamische QR-Code, den du erstellst, seinen ersten Scan erhält. Die anderen E-Mail-Benachrichtigungen und die wöchentliche Zusammenfassung gehören zu Pro und Business."
         },
         "teamNotes": {
@@ -8872,7 +8873,7 @@
       "signIn": "Anmelden",
       "goToDashboard": "Zum Dashboard",
       "manageSubscription": "Abo verwalten",
-      "scanEmailsOn": "Scan-E-Mails sind aktiviert: Du erfährst vom ersten Scan jedes Codes und von seinen Meilensteinen. <link>Ändere sie unter Einstellungen → Benachrichtigungen</link>.",
+      "scanEmailsOn": "Scan-E-Mails sind aktiviert: Du erfährst von ersten Scans und Meilensteinen. <link>Ändere das unter Einstellungen → Benachrichtigungen</link>.",
       "steps": {
         "codesTitle": "Dynamische Codes erstellen",
         "codesBody": "Codes, die du nach dem Druck noch bearbeiten kannst, mit Scan-Statistiken.",

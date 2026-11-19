@@ -6862,7 +6862,8 @@
           "notificationsSaved": "Notifications saved",
           "testMessageSentToValue": "Test message sent to {value}",
           "webhookRemoved": "Webhook removed",
-          "onByDefaultOwnCodes": "On by default for the codes you make. Changing a switch here saves your choice for every code in this workspace.",
+          "onByDefaultOwnCodes": "On by default for the codes you make.",
+          "everyCodeAlerts": "Get them for every code in this workspace",
           "emailAlertsAreProFirstScan": "On Free you get one email when each dynamic code you make gets its first scan. The other email alerts and the weekly digest are part of Pro and Business."
         },
         "teamNotes": {
@@ -9271,7 +9272,7 @@
       "signIn": "Sign in",
       "goToDashboard": "Go to the dashboard",
       "manageSubscription": "Manage subscription",
-      "scanEmailsOn": "Scan emails are on: you'll hear about each code's first scan and its milestones. <link>Change them in Settings → Notifications</link>.",
+      "scanEmailsOn": "Scan emails are on: you'll hear about first scans and milestones. <link>Change them in Settings → Notifications</link>.",
       "steps": {
         "codesTitle": "Create dynamic codes",
         "codesBody": "Codes you can edit after printing, with scan analytics.",

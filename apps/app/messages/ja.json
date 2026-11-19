@@ -6463,7 +6463,8 @@
           "notificationsSaved": "通知を保存しました",
           "testMessageSentToValue": "{value}にテストメッセージを送信しました",
           "webhookRemoved": "Webhookを削除しました",
-          "onByDefaultOwnCodes": "ご自身が作成したコードでは、デフォルトでオンになっています。ここでスイッチを切り替えると、このワークスペースのすべてのコードに対する設定として保存されます。",
+          "onByDefaultOwnCodes": "ご自身が作成したコードについては、デフォルトでオンになっています。",
+          "everyCodeAlerts": "このワークスペースのすべてのコードについて通知を受け取る",
           "emailAlertsAreProFirstScan": "フリープランでは、作成した動的QRコードが最初のスキャンを受けるたびに、メールが1通届きます。そのほかのメール通知と週次ダイジェストは、ProとBusinessに含まれています。"
         },
         "teamNotes": {
@@ -8872,7 +8873,7 @@
       "signIn": "サインイン",
       "goToDashboard": "ダッシュボードへ移動",
       "manageSubscription": "サブスクリプションを管理",
-      "scanEmailsOn": "スキャン通知メールがオンになりました。各コードの初回スキャンと節目のスキャン数をお知らせします。<link>設定 → 通知で変更できます</link>。",
+      "scanEmailsOn": "スキャン通知メールをオンにしました。初回のスキャンやマイルストーンをお知らせします。<link>設定 → 通知で変更できます</link>。",
       "steps": {
         "codesTitle": "動的QRコードを作成",
         "codesBody": "印刷後も編集でき、スキャン分析も使えるコードです。",

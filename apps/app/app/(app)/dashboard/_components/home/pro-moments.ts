@@ -12,10 +12,10 @@ import type { ActiveScope } from "@/lib/scope";
 import { type CodeLiveCard, codeLiveCard } from "./pro-moments-rules";
 
 /**
- * Whether an owner of the workspace gets its scan emails (first scans and
- * milestones): its plan has email alerts, this server sends email, and
- * they kept the default (no email row) or chose scan milestones. For
- * /success, which says so after an upgrade.
+ * Whether the person gets scan emails (first scans and milestones) from the
+ * workspace: its plan has email alerts, this server sends email, and they
+ * kept the default (no email row: the codes they make) or chose scan
+ * milestones (every code). For /success, which says so after an upgrade.
  */
 export async function ownerScanEmailsOn({
   userId,

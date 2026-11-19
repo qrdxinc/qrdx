@@ -6463,7 +6463,8 @@
           "notificationsSaved": "알림을 저장했어요",
           "testMessageSentToValue": "{value}(으)로 테스트 메시지를 보냈어요",
           "webhookRemoved": "웹훅을 삭제했어요",
-          "onByDefaultOwnCodes": "직접 만든 코드에는 기본적으로 켜져 있어요. 여기서 스위치를 바꾸면 선택한 내용이 이 워크스페이스의 모든 코드에 저장돼요.",
+          "onByDefaultOwnCodes": "직접 만드는 코드에는 기본적으로 켜져 있어요.",
+          "everyCodeAlerts": "이 워크스페이스의 모든 코드에 대해 알림을 받아요",
           "emailAlertsAreProFirstScan": "무료 플랜에서는 만든 동적 QR 코드가 처음 스캔될 때마다 이메일을 한 통씩 받아요. 그 밖의 이메일 알림과 주간 요약은 Pro와 Business에 포함돼 있어요."
         },
         "teamNotes": {
@@ -8872,7 +8873,7 @@
       "signIn": "로그인",
       "goToDashboard": "대시보드로 이동",
       "manageSubscription": "구독 관리",
-      "scanEmailsOn": "스캔 이메일이 켜져 있어요. 각 코드의 첫 스캔과 마일스톤을 알려드려요. <link>설정 → 알림에서 변경할 수 있어요</link>.",
+      "scanEmailsOn": "스캔 알림 이메일이 켜져 있어요. 첫 스캔과 주요 달성 기록을 이메일로 알려드려요. <link>설정 → 알림에서 변경하기</link>",
       "steps": {
         "codesTitle": "동적 QR 코드 만들기",
         "codesBody": "인쇄한 후에도 수정할 수 있고 스캔 분석도 볼 수 있는 코드예요.",
