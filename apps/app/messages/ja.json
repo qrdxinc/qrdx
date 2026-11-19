@@ -5710,7 +5710,10 @@
           "noCodeCheckSpamIf": "コードが届きませんか？迷惑メールフォルダをご確認ください。そこにもない場合は、アドレスを確認してもう一度お試しください。",
           "weSentANoteAbout": "変更についてのお知らせを{currentEmail}に送信しました。",
           "wellSendANoteAbout": "この変更についての通知を {currentEmail} に送信します。",
-          "yourEmailIsNowSentto": "メールアドレスが{sentTo}になりました"
+          "yourEmailIsNowSentto": "メールアドレスが{sentTo}になりました",
+          "invalidEmail": "有効なメールアドレスを入力してください。",
+          "sameEmail": "現在お使いのメールアドレスと同じです。",
+          "connectionFailed": "問題が発生しました。接続を確認して、もう一度お試しください。"
         },
         "communityProfileSection": {
           "liveAtCommunityHandleClear": "<link>/community/@{handle}</link>で公開中です。ハンドルを解除するには入力欄を空にしてください。",
@@ -5828,7 +5831,15 @@
           "oneTimeCodeSentTo": "{email} に送信されたワンタイムコードです。",
           "linkedOn": "{date} に連携しました。",
           "linkedOnReason": "{date} に連携しました。{reason}",
-          "notLinkedUseThe": "未連携です。{email} の {provider} アカウントをご利用ください。"
+          "notLinkedUseThe": "未連携です。{email} の {provider} アカウントをご利用ください。",
+          "emailCodesRemain": "メールに送信されるコードでは引き続きサインインできます。",
+          "linkError": {
+            "emailDoesNotMatch": "そのアカウントは別のメールアドレスを使用しています。QRdxアカウントと同じメールアドレスのアカウントのみ連携できます。",
+            "alreadyLinked": "そのアカウントはすでに別のQRdxアカウントにサインインしています。",
+            "notVerified": "そのアカウントのメールアドレスはプロバイダーで確認されていないため、連携できません。",
+            "cancelled": "連携がキャンセルされました。",
+            "failed": "そのアカウントを連携できませんでした。もう一度お試しください。"
+          }
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "サポートが{dueDate}にこれをオフにします",
@@ -5877,7 +5888,10 @@
           "afterYouSignInQrdx2": "サインイン後、QRdxからバックアップコードの入力を求められます。",
           "passkeySpotlight": "認証アプリのコードの代わりに、パスキーを2段階目の認証として使えるようになりました。",
           "addedOn": "{date} に追加",
-          "passkeyName": "パスキー"
+          "passkeyName": "パスキー",
+          "backupCodesDetails": "パスキーや認証アプリを使えないときのためのコードです。各コードは1回だけ使えます。",
+          "backupCodesLeft": "残り{left, number}/{total, number}個。各コードは1回だけ使えます。",
+          "backupCodesLeftSoon": "残り{left, number}/{total, number}個。各コードは1回だけ使えます。早めに新しいコードを作成してください。"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "ステップ {stepNumber, number}/{length, number}",
@@ -5915,7 +5929,11 @@
           "authenticatorApp": "認証アプリ",
           "passkeyAddedButTwoStep": "パスキーは追加されましたが、2段階認証は有効になりませんでした。もう一度「有効にする」をお試しください。",
           "confirmationCancelled": "確認がキャンセルされました",
-          "sessionNotFresh": "セッションが最新ではありません"
+          "sessionNotFresh": "セッションが最新ではありません",
+          "authenticatorAppAdded": "認証アプリを追加しました",
+          "passkeyAdded": "パスキーを追加しました",
+          "otherDevicesSignedOut": "他の端末はサインアウトされました。",
+          "otherDevicesNotSignedOut": "他の端末をサインアウトできませんでした。セッションの「他のすべての端末からサインアウト」をご利用ください。"
         },
         "workspaceTwoFactorNotice": {
           "twoStepVerificationIsOn": "2段階認証が有効になったため、<span>{name}</span>を開けるようになりました。",

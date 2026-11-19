@@ -21,8 +21,9 @@ import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useState } from "react";
 import { useConfirmation } from "@/components/confirm-identity/provider";
 import {
-  EMAIL_CODES_REMAIN,
+  emailCodesRemain,
   linkErrorMessage,
+  linkErrorMessages,
   PROVIDER_LABELS,
   type SignInMethodView,
   type SocialProvider,
@@ -98,6 +99,9 @@ export function SignInMethodsSection({
   outcome: LinkOutcome | null;
 }) {
   const t = useTranslations("app.settings.account.signInMethodsSection");
+  const linkErrorText = useTranslations(
+    "app.settings.account.signInMethodsSection.linkError",
+  );
   const router = useRouter();
   const pathname = usePathname();
   const { withConfirmation } = useConfirmation();
@@ -118,10 +122,12 @@ export function SignInMethodsSection({
         t("valueIsLinked", { value: PROVIDER_LABELS[outcome.provider] }),
       );
     } else {
-      toast.error(linkErrorMessage(outcome.code));
+      toast.error(
+        linkErrorMessage(outcome.code, linkErrorMessages(linkErrorText)),
+      );
     }
     router.replace(pathname, { scroll: false });
-  }, [outcome, pathname, router, t]);
+  }, [outcome, pathname, router, t, linkErrorText]);
 
   // Asks "Confirm it's you" first when this session hasn't recently; the
   // server then answers the provider's address to go to.
@@ -264,7 +270,7 @@ export function SignInMethodsSection({
             <AlertDialogDescription>
               {t("youWontBeAbleTo", {
                 label: unlinking?.label ?? "",
-                EMAIL_CODES_REMAIN,
+                EMAIL_CODES_REMAIN: emailCodesRemain(t),
               })}
             </AlertDialogDescription>
           </AlertDialogHeader>

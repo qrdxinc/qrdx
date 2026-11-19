@@ -8,12 +8,19 @@
 // they hand the client components are read; the sign-in methods list is
 // rendered. The stolen-session check keeps reading the English device
 // label (lib/account/session-origin.ts browserFamily).
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import type { Locale } from "@repo/i18n/config";
 import { mergeMessages } from "@repo/i18n/messages";
 import { createTranslator, NextIntlClientProvider } from "next-intl";
-import { isValidElement, type ReactElement, type ReactNode } from "react";
+import {
+  type ComponentProps,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, it as test, vi } from "vitest";
 import en from "@/messages/en.json";
 import es from "@/messages/es.json";
 import ja from "@/messages/ja.json";
@@ -174,10 +181,19 @@ const { TwoFactorSection } = await import(
 const { TwoFactorSettings } = await import(
   "@/app/(app)/settings/account/_components/two-factor-settings"
 );
+const {
+  EMAIL_CODES_REMAIN,
+  emailCodesRemain,
+  LINK_ERROR_MESSAGES,
+  linkErrorMessage,
+  linkErrorMessages,
+} = await import("@/lib/account/sign-in-methods");
+const { BACKUP_CODE_COUNT } = await import("@/lib/auth/two-factor");
 const { newPasskeyName } = await import("@/lib/account/passkey-name-server");
 const { browserFamily } = await import("@/lib/account/session-origin");
 
 const spanish = mergeMessages(en, es);
+const japanese = mergeMessages(en, ja);
 const t = createTranslator({ locale: "es", messages: spanish });
 const spanishDate = (date: Date) =>
   new Intl.DateTimeFormat("es", {
@@ -431,5 +447,184 @@ describe("whose language it is", () => {
       "Not linked. Use the Google account with ada@qrdx.test.",
     );
     expect(state.errors).toEqual([]);
+  });
+});
+
+// The last English on Settings → Account: the backup codes row, the
+// toasts and notes of the two-step setup dialog, the sign-in method link
+// errors and the unlink dialog's last sentence, and the change-email dialog's
+// own checks.
+const LANGUAGES = [
+  ["es", spanish, es],
+  ["ja", japanese, ja],
+] as const;
+
+const SETTINGS = "app.settings.account";
+
+describe.each(LANGUAGES)(
+  "Settings → Account in %s",
+  (locale, messages, catalog) => {
+    const account = catalog.app.settings.account;
+    const translator = <NS extends string>(namespace: NS) =>
+      createTranslator({ locale, messages, namespace: namespace as never });
+
+    async function backupCodesRow(backupCodesLeft: number | null) {
+      const section = await TwoFactorSection({
+        userId: USER,
+        email: "ada@qrdx.test",
+      });
+      const props = propsOf<ComponentProps<typeof TwoFactorSettings>>(
+        section,
+        TwoFactorSettings,
+      );
+      if (!props) throw new Error("TwoFactorSection rendered no settings");
+      return renderToStaticMarkup(
+        <NextIntlClientProvider
+          locale={locale}
+          messages={messages}
+          timeZone="UTC"
+        >
+          <TwoFactorSettings
+            {...props}
+            methods={{ ...props.methods, backupCodesLeft }}
+          />
+        </NextIntlClientProvider>,
+      );
+    }
+
+    test("says how many backup codes are left, and when to make new ones", async () => {
+      const tr = translator(`${SETTINGS}.twoFactorSettings`) as unknown as (
+        key: string,
+        values?: Record<string, number>,
+      ) => string;
+      const total = BACKUP_CODE_COUNT;
+
+      const plenty = await backupCodesRow(total);
+      expect(plenty).toContain(tr("backupCodesLeft", { left: total, total }));
+      const few = await backupCodesRow(2);
+      expect(few).toContain(tr("backupCodesLeftSoon", { left: 2, total }));
+      const unknown = await backupCodesRow(null);
+      expect(unknown).toContain(
+        tr("backupCodesDetails").replaceAll("'", "&#x27;"),
+      );
+
+      for (const html of [plenty, few, unknown]) {
+        expect(html).not.toContain("Each works once");
+        expect(html).not.toContain("Make new ones soon");
+        expect(html).not.toContain("For when you can");
+      }
+      // The three lines are three different sentences.
+      expect(
+        new Set([
+          tr("backupCodesLeft", { left: 2, total }),
+          tr("backupCodesLeftSoon", { left: 2, total }),
+          tr("backupCodesDetails"),
+        ]).size,
+      ).toBe(3);
+    });
+
+    test("gives every sign-in link error in the language, not English", () => {
+      const messagesInLanguage = linkErrorMessages(
+        translator(`${SETTINGS}.signInMethodsSection.linkError`) as never,
+      );
+      expect(Object.keys(messagesInLanguage)).toEqual(
+        Object.keys(LINK_ERROR_MESSAGES),
+      );
+      for (const code of [
+        "email_does_not_match",
+        "account_already_linked_to_different_user",
+        "unable_to_link_account",
+        "email_not_verified",
+        "access_denied",
+        "something_else",
+        null,
+      ]) {
+        const message = linkErrorMessage(code, messagesInLanguage);
+        expect(message).toBeTruthy();
+        expect(message).not.toBe(linkErrorMessage(code));
+      }
+    });
+
+    test("says in the language that email codes remain, inside the unlink dialog's sentence", () => {
+      const section = translator(`${SETTINGS}.signInMethodsSection`) as never;
+      const remain = emailCodesRemain(section);
+      expect(remain).toBe(account.signInMethodsSection.emailCodesRemain);
+      expect(remain).not.toBe(EMAIL_CODES_REMAIN);
+      const sentence = (
+        section as unknown as (key: string, values: object) => string
+      )("youWontBeAbleTo", { label: "GitHub", EMAIL_CODES_REMAIN: remain });
+      expect(sentence).toContain(remain);
+      expect(sentence).not.toContain(EMAIL_CODES_REMAIN);
+    });
+
+    test("translates the two-step setup dialog's toasts and notes", () => {
+      const dialog = account.twoFactorSetupDialog;
+      const english = en.app.settings.account.twoFactorSetupDialog;
+      for (const key of [
+        "authenticatorAppAdded",
+        "passkeyAdded",
+        "otherDevicesSignedOut",
+        "otherDevicesNotSignedOut",
+      ] as const) {
+        expect(dialog[key], key).toBeTruthy();
+        expect(dialog[key], key).not.toBe(english[key]);
+      }
+    });
+
+    test("translates the change-email dialog's own checks like the actions' answers", () => {
+      const dialog = account.changeEmailDialog;
+      expect(dialog.invalidEmail).toBe(
+        catalog.settingsActions.emailChange.invalidEmail,
+      );
+      expect(dialog.sameEmail).toBe(
+        catalog.settingsActions.emailChange.sameEmail,
+      );
+      expect(dialog.connectionFailed).toBeTruthy();
+      expect(dialog.connectionFailed).not.toBe(
+        en.app.settings.account.changeEmailDialog.connectionFailed,
+      );
+    });
+  },
+);
+
+describe("the components no longer write these lines in English", () => {
+  const source = (path: string) =>
+    readFileSync(fileURLToPath(new URL(path, import.meta.url)), "utf8");
+  const components = "../../app/(app)/settings/account/_components/";
+
+  it.each([
+    [
+      `${components}two-factor-setup-dialog.tsx`,
+      [
+        "Authenticator app added",
+        "Passkey added",
+        "Your other devices were signed out",
+        "We couldn't sign out your other devices",
+        "Two-step verification is on",
+      ],
+    ],
+    [
+      `${components}two-factor-settings.tsx`,
+      [
+        "Each works once",
+        "Make new ones soon",
+        "For when you can't use your passkey",
+      ],
+    ],
+    [
+      `${components}sign-in-methods-section.tsx`,
+      ["EMAIL_CODES_REMAIN,", "linkErrorMessage(outcome.code)"],
+    ],
+    [
+      `${components}change-email-dialog.tsx`,
+      [
+        "EMAIL_CHANGE_MESSAGES",
+        "CONNECTION_FAILED",
+        "Check your connection and try again",
+      ],
+    ],
+  ])("%s", (path, english) => {
+    const text = source(path);
+    for (const line of english) expect(text, line).not.toContain(line);
   });
 });

@@ -509,8 +509,11 @@ export function TwoFactorSettings({
           }
           details={
             left === null
-              ? "For when you can't use your passkey or app. Each works once."
-              : `${left} of ${BACKUP_CODE_COUNT} left. Each works once.${left <= 3 ? " Make new ones soon." : ""}`
+              ? t("backupCodesDetails")
+              : t(left <= 3 ? "backupCodesLeftSoon" : "backupCodesLeft", {
+                  left,
+                  total: BACKUP_CODE_COUNT,
+                })
           }
           icon={<DocumentText aria-hidden className="size-4" />}
           title={t("backupCodes")}

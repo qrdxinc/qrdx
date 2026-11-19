@@ -199,9 +199,14 @@ const { recordConfirmation } = await import(
   "@/lib/account/confirmation-server"
 );
 const { AccountDeletionError } = await import("@/lib/account/deletion-server");
-const { UNLINK_BLOCK_MESSAGES, unlinkBlockMessages } = await import(
-  "@/lib/account/sign-in-methods"
-);
+const {
+  EMAIL_CODES_REMAIN,
+  emailCodesRemain,
+  LINK_ERROR_MESSAGES,
+  linkErrorMessages,
+  UNLINK_BLOCK_MESSAGES,
+  unlinkBlockMessages,
+} = await import("@/lib/account/sign-in-methods");
 const { EMAIL_CHANGE_MESSAGES, emailChangeMessages } = await import(
   "@/lib/account/email-change"
 );
@@ -569,6 +574,26 @@ describe("the catalog's copies of the actions' English", () => {
     expect(
       unlinkBlockMessages(english("settingsActions.account.unlinkBlocked")),
     ).toEqual(UNLINK_BLOCK_MESSAGES);
+  });
+
+  it("match LINK_ERROR_MESSAGES", () => {
+    expect(
+      linkErrorMessages(
+        english("app.settings.account.signInMethodsSection.linkError"),
+      ),
+    ).toEqual(LINK_ERROR_MESSAGES);
+  });
+
+  it("match EMAIL_CODES_REMAIN", () => {
+    expect(
+      emailCodesRemain(english("app.settings.account.signInMethodsSection")),
+    ).toBe(EMAIL_CODES_REMAIN);
+  });
+
+  it("match the change-email dialog's own checks to EMAIL_CHANGE_MESSAGES", () => {
+    const t = english("app.settings.account.changeEmailDialog");
+    expect(t("invalidEmail" as never)).toBe(EMAIL_CHANGE_MESSAGES.invalidEmail);
+    expect(t("sameEmail" as never)).toBe(EMAIL_CHANGE_MESSAGES.sameEmail);
   });
 
   it("match EMAIL_CHANGE_MESSAGES", () => {
