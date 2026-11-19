@@ -402,7 +402,7 @@ function applyDynamicOpen(context: ApplyContext): {
   const blocked = dynamicBlockedReason(editor.contentType);
   if (blocked) return { applied: false, picked: false, notice: blocked };
   if (!(context.signedIn && access.userId)) {
-    usePlaygroundFocusStore.getState().setDynamicPick(true);
+    usePlaygroundFocusStore.getState().pickDynamic();
     return { applied: true, picked: true, notice: null };
   }
   const next = builderRequestFor({

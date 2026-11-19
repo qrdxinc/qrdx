@@ -118,7 +118,11 @@ beforeEach(() => {
   useCodeDialogStore.setState({ open: false, lang: null });
   usePhotoScanDialogStore.setState({ open: false });
   useCommunitySheetStore.setState({ open: false, publishRequested: false });
-  usePlaygroundFocusStore.setState({ section: null, dynamicPick: false });
+  usePlaygroundFocusStore.setState({
+    section: null,
+    dynamicPick: false,
+    addressFocus: false,
+  });
 });
 
 describe("the look", () => {
@@ -586,7 +590,10 @@ describe("open=dynamic", () => {
     );
     expect(useAuthStore.getState().isOpen).toBe(false);
     expect(codeBuilder.open).not.toHaveBeenCalled();
-    expect(usePlaygroundFocusStore.getState().dynamicPick).toBe(true);
+    expect(usePlaygroundFocusStore.getState()).toMatchObject({
+      dynamicPick: true,
+      addressFocus: true,
+    });
     expect(outcome.applied).toEqual(["url", "open"]);
     expect(outcome.tab).toBe("content");
     // The address is in the editor for the "Create dynamic code" button.

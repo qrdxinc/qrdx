@@ -27,7 +27,7 @@ export function UrlForm() {
   const { handlePaste } = useSmartPaste();
   const helperId = React.useId();
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const dynamicPick = usePlaygroundFocusStore((state) => state.dynamicPick);
+  const addressFocus = usePlaygroundFocusStore((state) => state.addressFocus);
 
   const [url, setUrl] = React.useState(storedUrl);
   // Errors wait until the field is left once, so typing isn't nagged.
@@ -41,13 +41,15 @@ export function UrlForm() {
   const check = React.useMemo(() => checkUrl(url), [url]);
 
   // Came for a dynamic code (open=dynamic, signed out): the address is the
-  // first thing to fill in. Not on touch screens, where focus opens the
-  // keyboard over the preview.
+  // first thing to fill in, once (not on every remount). Not on touch
+  // screens, where focus opens the keyboard over the preview.
   React.useEffect(() => {
-    if (!dynamicPick || useQREditorStore.getState().value) return;
+    if (!addressFocus) return;
+    if (!usePlaygroundFocusStore.getState().takeAddressFocus()) return;
+    if (useQREditorStore.getState().value) return;
     if (!window.matchMedia("(pointer: fine)").matches) return;
     inputRef.current?.focus();
-  }, [dynamicPick]);
+  }, [addressFocus]);
 
   React.useEffect(() => {
     const config: UrlContent = { type: "url", url };

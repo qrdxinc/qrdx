@@ -23,6 +23,7 @@ import {
 } from "@/lib/playground-links";
 import { officialFrameIdOfStyleParam } from "@/lib/playground-style";
 import { useQREditorStore } from "@/store/editor-store";
+import { useEndDynamicPickWhenSignedIn } from "@/store/playground-focus-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 import { getPresetLabel } from "@/utils/qr-presets-helper";
 
@@ -89,6 +90,9 @@ export function usePlaygroundParams({
     window.addEventListener("hashchange", update);
     return () => window.removeEventListener("hashchange", update);
   }, []);
+
+  // The signed-out "Create dynamic code" (open=dynamic) ends with a session.
+  useEndDynamicPickWhenSignedIn(Boolean(session?.user));
 
   useEffect(() => {
     if (hydrated) return;

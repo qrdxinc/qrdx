@@ -13999,6 +13999,34 @@
     "source": "bfebb17ef429",
     "status": "machine"
   },
+  "editor.dynamicLinkToggle.heldTitle": {
+    "source": "171cafeeccff",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.heldBody": {
+    "source": "f9ed6bd309df",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.openInDashboard": {
+    "source": "56bcdfa7bb8a",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.updateHeldTitle": {
+    "source": "3355e24c4330",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.updateHeldBody": {
+    "source": "d2e2ba1e4479",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.resumeDroppedTitle": {
+    "source": "b5b43db01c42",
+    "status": "machine"
+  },
+  "editor.dynamicLinkToggle.resumeDroppedBody": {
+    "source": "1e70ba2147fc",
+    "status": "machine"
+  },
   "editor.dynamicLinkToggle.linkOptions": {
     "source": "854665437a38",
     "status": "machine"
