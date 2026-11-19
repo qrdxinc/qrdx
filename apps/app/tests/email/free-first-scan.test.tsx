@@ -171,6 +171,18 @@ describe("sendFreeFirstScanEmail", () => {
     expect(state.sent).toHaveLength(0);
   });
 
+  it("isn't sent to an agency's portal client", async () => {
+    fakeDb.seed("portalClient", [
+      {
+        id: "pc_1",
+        organizationId: "org_agency",
+        email: "maker@mail.example.org.uk",
+      },
+    ]);
+    expect(await scanned("s1", minutes(60), 1)).toBe("portal_client");
+    expect(state.sent).toHaveLength(0);
+  });
+
   it("skips busy codes without a query, and codes without a creation time", async () => {
     expect(
       await sendFreeFirstScanEmail(

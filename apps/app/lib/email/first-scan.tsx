@@ -17,6 +17,7 @@ import { workspaceLink } from "@/lib/workspace-paths";
 import { workspaceSlug } from "@/lib/workspaces";
 import { sendEmail } from "./send";
 import { wantsTeamNotes } from "./team-notes";
+import { isPortalClient } from "./welcome";
 
 // Free's one first-scan email per code (owner decision, 19 Nov): "your code
 // got its first scan", to the person who made the code, with one line on
@@ -56,6 +57,7 @@ export type FreeFirstScanOutcome =
   | "opted_out"
   | "banned"
   | "reserved_address"
+  | "portal_client"
   | "failed";
 
 /** The milestones after the first, as Pro emails them: "10", "100", "500". */
@@ -126,6 +128,8 @@ export async function sendFreeFirstScanEmail(
     if (maker.banned) return "banned";
     if (isReservedEmailAddress(maker.email)) return "reserved_address";
     if (!wantsTeamNotes(maker)) return "opted_out";
+    // An agency's client: their QRdx account is the portal's, not theirs.
+    if (await isPortalClient(maker.email)) return "portal_client";
 
     const intl = await emailIntl(
       isLocale(maker.locale) ? maker.locale : DEFAULT_LOCALE,
