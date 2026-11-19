@@ -13,10 +13,14 @@ import {
   ThemeContents,
   withoutFrame,
 } from "@/components/community/item-details";
-import { FrameInUse, ThemeInUse } from "@/components/community/item-previews";
+import {
+  aspectOf,
+  FrameInUse,
+  ThemeInUse,
+  toneOf,
+} from "@/components/community/item-previews";
 import { officialFramePreview } from "@/lib/community/catalog";
 import { frameParts } from "@/lib/community/design-parts";
-import { FRAME_BASE_STYLE } from "@/lib/community/payloads";
 import type { ThemeStyles } from "@/types/theme";
 import { renderIntl } from "../support/intl";
 
@@ -35,6 +39,12 @@ const THEME: ThemeStyles = {
   cornerEyePattern: "rounded",
   cornerEyeDotPattern: "rounded",
 };
+
+/** The SVGs in server HTML other than 24-unit icons: designs, if any. */
+const designSvgs = (html: string) =>
+  (html.match(/<svg[^>]*>/g) ?? []).filter(
+    (tag) => !tag.includes('viewBox="0 0 24 24"'),
+  );
 
 /** Text without tags, spaces collapsed. */
 const text = (html: string) =>
@@ -116,23 +126,65 @@ describe("How it looks", () => {
     expect(withoutFrame({ ...THEME, frame: FRAME })).toEqual(THEME);
   });
 
-  it("draws a frame in use in the browser only", () => {
+  it("draws a frame in use in the browser only, its tiles named for screen readers", () => {
     const html = renderIntl(<FrameInUse style={FRAME_STYLE} />);
-    expect(text(html)).toBe("On a table tent On a poster As a sticker");
-    expect(html).not.toContain("<svg");
+    // The names are the tiles' only text, and only screen readers get them
+    expect(text(html)).toBe(
+      "As a sticker On a phone, on its hosted page On a business card On a table tent qrdx.dev/community On a poster On a badge As ASCII art",
+    );
+    expect(html.match(/<figcaption class="sr-only">/g)).toHaveLength(7);
+    expect(designSvgs(html)).toEqual([]);
   });
 
-  it("draws a theme in use in the browser only", () => {
+  it("draws a theme in use in the browser only: no plain code, a tile for its frames", () => {
     const html = renderIntl(
       <ThemeInUse
         frames={sampleFrames({ ...THEME, frame: FRAME })}
         look={THEME}
-        plain={FRAME_BASE_STYLE}
       />,
     );
     expect(text(html)).toBe(
-      "A plain code The same code with this theme On a business card With its own frame In the Scan me tile frame In the Learn more card frame",
+      "As a sticker On a phone, on its hosted page On a business card On a table tent qrdx.dev/community On a poster In frames On a badge As ASCII art",
     );
-    expect(html).not.toContain("<svg");
+    expect(html.match(/<figcaption class="sr-only">/g)).toHaveLength(8);
+    expect(designSvgs(html)).toEqual([]);
+  });
+
+  it("sizes each tile to the design's own shape", () => {
+    // A code is square; the table tent frame is taller than it's wide
+    expect(aspectOf(THEME)).toBe(1);
+    const tent = aspectOf(FRAME_STYLE);
+    expect(tent).toBeGreaterThan(0.4);
+    expect(tent).toBeLessThan(1);
+    // Every tile that shows the framed design carries its shape
+    const html = renderIntl(<FrameInUse style={FRAME_STYLE} />);
+    const shapes = html.match(/--fa:([\d.]+)/g) ?? [];
+    expect(shapes.length).toBeGreaterThanOrEqual(5);
+    expect(new Set(shapes)).toEqual(new Set([`--fa:${tent.toFixed(4)}`]));
+  });
+
+  it("lights the tiles with the design's most colorful color", () => {
+    // The blue dots, not the white background
+    expect(toneOf(THEME).toLowerCase()).toBe("#0b3d91");
+    // A theme on a colored background: the background
+    expect(
+      toneOf({
+        ...THEME,
+        bgColor: "#D0FA4E",
+        dotColor: "#0B0B0B",
+        fgColor: "#0B0B0B",
+        eyeColor: "#0B0B0B",
+      }),
+    ).toBe("#D0FA4E");
+    // Black on white: a quiet silver
+    expect(
+      toneOf({
+        ...THEME,
+        bgColor: "#ffffff",
+        dotColor: "#000000",
+        fgColor: "#000000",
+        eyeColor: "#000000",
+      }),
+    ).toBe("#b8b8c0");
   });
 });

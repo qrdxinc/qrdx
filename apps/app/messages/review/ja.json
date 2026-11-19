@@ -16331,22 +16331,6 @@
     "source": "e9130271e04b",
     "status": "machine"
   },
-  "community.itemPreviews.plainCode": {
-    "source": "9b38f897f46f",
-    "status": "machine"
-  },
-  "community.itemPreviews.withThisTheme": {
-    "source": "f0e4540a07cb",
-    "status": "machine"
-  },
-  "community.itemPreviews.inTheFrame": {
-    "source": "0ea923f002b3",
-    "status": "machine"
-  },
-  "community.itemPreviews.withItsOwnFrame": {
-    "source": "a6a694e38c20",
-    "status": "machine"
-  },
   "community.itemPreviews.onABusinessCard": {
     "source": "94e9261a0e4c",
     "status": "machine"

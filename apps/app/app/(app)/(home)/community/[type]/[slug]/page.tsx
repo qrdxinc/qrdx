@@ -26,7 +26,6 @@ import {
   COMMUNITY_LICENSE_NAME,
   COMMUNITY_LICENSE_URL,
 } from "@/lib/community/licence";
-import { FRAME_BASE_STYLE } from "@/lib/community/payloads";
 import { workspaceCanUnpublish } from "@/lib/community/publish-access";
 import { getItem, moreFromCreator, remixesOf } from "@/lib/community/queries";
 import { MIN_GATE_SCORE } from "@/lib/community/scan-samples";
@@ -259,7 +258,7 @@ export default async function CommunityItemPage({
         <div className="mt-14 space-y-10">
           {item.type === "frame" && (
             <RowSection
-              sub="With a sample code, the way it prints."
+              sub="With a sample code, on the things people print it on."
               title="How it looks"
             >
               <FrameInUse style={item.preview} />
@@ -267,13 +266,12 @@ export default async function CommunityItemPage({
           )}
           {item.type === "theme" && (
             <RowSection
-              sub="With a sample code, beside a plain one and in use."
+              sub="With a sample code, on the things people print it on."
               title="How it looks"
             >
               <ThemeInUse
                 frames={sampleFrames(item.preview)}
                 look={withoutFrame(item.preview)}
-                plain={FRAME_BASE_STYLE}
               />
             </RowSection>
           )}

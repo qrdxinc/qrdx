@@ -5434,10 +5434,6 @@
       "onATableTent": "En un display de mesa",
       "onAPoster": "En un póster",
       "asASticker": "Como pegatina",
-      "plainCode": "Un código sin más",
-      "withThisTheme": "El mismo código con este tema",
-      "inTheFrame": "En el marco {name}",
-      "withItsOwnFrame": "Con su propio marco",
       "onABusinessCard": "En una tarjeta de visita"
     },
     "itemPages": {
