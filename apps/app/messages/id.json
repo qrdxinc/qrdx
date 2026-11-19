@@ -1190,6 +1190,7 @@
         "formatPng": "PNG (gambar)",
         "formatWebp": "WebP (gambar, lebih kecil)",
         "formatBmp": "BMP (gambar, tidak terkompresi)",
+        "formatIco": "ICO (favicon, 16 hingga 256 px)",
         "formatSvg": "SVG (vektor, untuk cetak)",
         "size": "Ukuran {format}",
         "quietZone": "Tambahkan quiet zone sebesar {modules, number} modul (disarankan untuk cetak)",
@@ -3453,6 +3454,7 @@
           "jpg": "Terbaik untuk email dan file berukuran kecil.",
           "webp": "Terbaik untuk situs web yang cepat dimuat · lossless, biasanya lebih kecil dari PNG.",
           "bmp": "Cocok untuk sistem lama dan alat tertanam yang hanya menerima BMP · 24-bit tanpa kompresi, latar belakang transparan akan menjadi putih.",
+          "ico": "Terbaik untuk favicon · satu file berisi gambar 16, 32, 48, dan 256 px. Ukuran kecil untuk ikon, bukan untuk pemindaian.",
           "svg": "Terbaik untuk Figma, Illustrator, dan situs web · tetap tajam di ukuran berapa pun.",
           "pdf": "Terbaik untuk dokumen dan cetak cepat · untuk PDF vektor, gunakan Siap cetak.",
           "eps": "Terbaik untuk percetakan dan aplikasi vektor · tetap tajam di ukuran berapa pun."
@@ -5710,7 +5712,10 @@
           "noCodeCheckSpamIf": "Tidak ada kode? Periksa folder spam. Jika tidak ada di sana, periksa alamat email dan coba lagi.",
           "weSentANoteAbout": "Kami telah mengirim pemberitahuan tentang perubahan ini ke {currentEmail}.",
           "wellSendANoteAbout": "Kami akan mengirim pemberitahuan tentang perubahan ini ke {currentEmail}.",
-          "yourEmailIsNowSentto": "Email Anda sekarang {sentTo}"
+          "yourEmailIsNowSentto": "Email Anda sekarang {sentTo}",
+          "invalidEmail": "Masukkan alamat email yang valid.",
+          "sameEmail": "Itu sudah menjadi email Anda.",
+          "connectionFailed": "Terjadi kesalahan. Periksa koneksi Anda lalu coba lagi."
         },
         "communityProfileSection": {
           "liveAtCommunityHandleClear": "Aktif di <link>/community/@{handle}</link>. Kosongkan untuk melepaskan handle.",
@@ -5828,7 +5833,15 @@
           "oneTimeCodeSentTo": "Kode sekali pakai dikirim ke {email}.",
           "linkedOn": "Ditautkan {date}.",
           "linkedOnReason": "Ditautkan {date}. {reason}",
-          "notLinkedUseThe": "Belum ditautkan. Gunakan akun {provider} dengan {email}."
+          "notLinkedUseThe": "Belum ditautkan. Gunakan akun {provider} dengan {email}.",
+          "emailCodesRemain": "Anda masih bisa masuk dengan kode yang dikirim ke email Anda.",
+          "linkError": {
+            "emailDoesNotMatch": "Akun tersebut menggunakan alamat email yang berbeda. Anda hanya dapat menautkan akun dengan email yang sama dengan akun QRdx Anda.",
+            "alreadyLinked": "Akun tersebut sudah digunakan untuk masuk ke akun QRdx yang berbeda.",
+            "notVerified": "Alamat email akun tersebut belum diverifikasi oleh penyedia, sehingga tidak dapat ditautkan.",
+            "cancelled": "Penautan dibatalkan.",
+            "failed": "Kami tidak dapat menautkan akun tersebut. Silakan coba lagi."
+          }
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "Dukungan akan menonaktifkannya pada {dueDate}",
@@ -5877,7 +5890,10 @@
           "afterYouSignInQrdx2": "Setelah Anda masuk, QRdx meminta kode cadangan.",
           "passkeySpotlight": "Sekarang passkey dapat menjadi langkah kedua Anda, sebagai pengganti kode autentikator.",
           "addedOn": "Ditambahkan {date}",
-          "passkeyName": "Passkey"
+          "passkeyName": "Passkey",
+          "backupCodesDetails": "Untuk saat Anda tidak bisa memakai passkey atau aplikasi Anda. Masing-masing hanya berlaku sekali.",
+          "backupCodesLeft": "Sisa {left, number} dari {total, number}. Masing-masing hanya berlaku sekali.",
+          "backupCodesLeftSoon": "Sisa {left, number} dari {total, number}. Masing-masing hanya berlaku sekali. Segera buat kode baru."
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "Langkah {stepNumber, number} dari {length, number}",
@@ -5915,7 +5931,11 @@
           "authenticatorApp": "Aplikasi autentikator",
           "passkeyAddedButTwoStep": "Passkey sudah ditambahkan, tetapi verifikasi dua langkah belum aktif. Coba klik Aktifkan lagi.",
           "confirmationCancelled": "CONFIRMATION_CANCELLED",
-          "sessionNotFresh": "SESSION_NOT_FRESH"
+          "sessionNotFresh": "SESSION_NOT_FRESH",
+          "authenticatorAppAdded": "Aplikasi autentikator ditambahkan",
+          "passkeyAdded": "Passkey ditambahkan",
+          "otherDevicesSignedOut": "Perangkat Anda yang lain telah dikeluarkan.",
+          "otherDevicesNotSignedOut": "Kami tidak dapat mengeluarkan perangkat Anda yang lain. Gunakan Keluar dari semua tempat lain di bagian Sesi."
         },
         "workspaceTwoFactorNotice": {
           "twoStepVerificationIsOn": "Verifikasi dua langkah sudah aktif, jadi Anda bisa membuka <span>{name}</span> sekarang.",
@@ -7230,6 +7250,7 @@
           "downloadWebp": "Unduh WebP",
           "downloadSvg": "Unduh SVG",
           "downloadBmp": "Unduh BMP",
+          "downloadIco": "Unduh ICO",
           "moreFormats": "Format lainnya",
           "editLinkValue": "Edit tautan",
           "codeSettings": "Pengaturan kode",
@@ -7327,6 +7348,7 @@
           "pngImagesZip": "Gambar PNG (ZIP)",
           "webpImagesZip": "Gambar WebP (ZIP)",
           "bmpImagesZip": "Gambar BMP (ZIP)",
+          "icoImagesZip": "Favicon ICO (ZIP)",
           "svgImagesZip": "Gambar SVG (ZIP)",
           "more": "Lainnya",
           "moveToTrash": "Pindahkan ke sampah",

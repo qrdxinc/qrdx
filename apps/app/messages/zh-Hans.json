@@ -1190,6 +1190,7 @@
         "formatPng": "PNG（图片）",
         "formatWebp": "WebP（图片，体积更小）",
         "formatBmp": "BMP（未压缩图像）",
+        "formatIco": "ICO（favicon，16 至 256 px）",
         "formatSvg": "SVG（矢量，适合印刷）",
         "size": "{format} 尺寸",
         "quietZone": "添加 {modules, number} 个模块宽度的静区（印刷时推荐）",
@@ -3453,6 +3454,7 @@
           "jpg": "适合电子邮件和小文件。",
           "webp": "适合需要快速加载的网站 · 无损，通常比 PNG 更小。",
           "bmp": "适合只支持 BMP 的旧系统和嵌入式工具 · 未压缩 24 位，透明背景会变为白色。",
+          "ico": "适合用作网站图标 · 一个文件包含 16、32、48 和 256 px 的图像。小尺寸仅用于图标，不适合扫描。",
           "svg": "适合 Figma、Illustrator 和网站 · 任意尺寸都保持清晰。",
           "pdf": "适合文档和快速打印 · 如需矢量 PDF，请使用“印刷就绪”。",
           "eps": "适合印刷厂和矢量应用 · 任意尺寸都保持清晰。"
@@ -5710,7 +5712,10 @@
           "noCodeCheckSpamIf": "没有收到验证码？请检查垃圾邮件。如果里面也没有，请核对邮箱地址后重试。",
           "weSentANoteAbout": "我们已向 {currentEmail} 发送了一封关于此次更改的通知。",
           "wellSendANoteAbout": "我们会向 {currentEmail} 发送一封关于此次更改的通知。",
-          "yourEmailIsNowSentto": "你的邮箱现为 {sentTo}"
+          "yourEmailIsNowSentto": "你的邮箱现为 {sentTo}",
+          "invalidEmail": "请输入有效的邮箱地址。",
+          "sameEmail": "这已经是你当前的邮箱。",
+          "connectionFailed": "出了点问题。请检查网络连接后重试。"
         },
         "communityProfileSection": {
           "liveAtCommunityHandleClear": "已上线：<link>/community/@{handle}</link>。清空即可释放该用户名。",
@@ -5828,7 +5833,15 @@
           "oneTimeCodeSentTo": "一次性验证码已发送至 {email}。",
           "linkedOn": "绑定于 {date}。",
           "linkedOnReason": "绑定于 {date}。{reason}",
-          "notLinkedUseThe": "尚未绑定。请使用邮箱为 {email} 的 {provider} 账号。"
+          "notLinkedUseThe": "尚未绑定。请使用邮箱为 {email} 的 {provider} 账号。",
+          "emailCodesRemain": "您仍可使用发送到邮箱的验证码登录。",
+          "linkError": {
+            "emailDoesNotMatch": "该账号使用的是另一个邮箱地址。只有与您的 QRdx 账号邮箱相同的账号才能关联。",
+            "alreadyLinked": "该账号已用于登录另一个 QRdx 账号。",
+            "notVerified": "该账号的邮箱地址尚未通过服务商验证，因此无法关联。",
+            "cancelled": "已取消关联。",
+            "failed": "无法关联该账号，请重试。"
+          }
         },
         "twoFactorResetNotice": {
           "supportWillTurnThisOff": "支持团队将于 {dueDate} 关闭此功能",
@@ -5877,7 +5890,10 @@
           "afterYouSignInQrdx2": "登录后，QRdx 会要求输入备用码。",
           "passkeySpotlight": "现在可以用通行密钥作为第二步验证，不必再输入验证器代码。",
           "addedOn": "添加于 {date}",
-          "passkeyName": "通行密钥"
+          "passkeyName": "通行密钥",
+          "backupCodesDetails": "当您无法使用通行密钥或验证器应用时可用。每个备份码只能使用一次。",
+          "backupCodesLeft": "共 {total, number} 个，剩余 {left, number} 个。每个备份码只能使用一次。",
+          "backupCodesLeftSoon": "共 {total, number} 个，剩余 {left, number} 个。每个备份码只能使用一次。请尽快重新生成。"
         },
         "twoFactorSetupDialog": {
           "stepStepnumberOfLength": "第 {stepNumber, number} 步，共 {length, number} 步",
@@ -5915,7 +5931,11 @@
           "authenticatorApp": "验证器应用",
           "passkeyAddedButTwoStep": "通行密钥已添加，但两步验证未能开启。请再次点击“开启”。",
           "confirmationCancelled": "确认已取消",
-          "sessionNotFresh": "登录状态已过期，请重新登录"
+          "sessionNotFresh": "登录状态已过期，请重新登录",
+          "authenticatorAppAdded": "已添加验证器应用",
+          "passkeyAdded": "已添加通行密钥",
+          "otherDevicesSignedOut": "您的其他设备已退出登录。",
+          "otherDevicesNotSignedOut": "无法让您的其他设备退出登录。请在“会话”下使用“退出其他所有设备”。"
         },
         "workspaceTwoFactorNotice": {
           "twoStepVerificationIsOn": "两步验证已开启，现在可以打开 <span>{name}</span> 了。",
@@ -7230,6 +7250,7 @@
           "downloadWebp": "下载 WebP",
           "downloadSvg": "下载 SVG",
           "downloadBmp": "下载 BMP",
+          "downloadIco": "下载 ICO",
           "moreFormats": "更多格式",
           "editLinkValue": "编辑链接",
           "codeSettings": "二维码设置",
@@ -7327,6 +7348,7 @@
           "pngImagesZip": "PNG 图片（ZIP）",
           "webpImagesZip": "WebP 图片（ZIP）",
           "bmpImagesZip": "BMP 图片（ZIP）",
+          "icoImagesZip": "ICO 网站图标 (ZIP)",
           "svgImagesZip": "SVG 图片（ZIP）",
           "more": "更多",
           "moveToTrash": "移至回收站",

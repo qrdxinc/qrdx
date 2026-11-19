@@ -3327,6 +3327,10 @@
     "source": "a1de34968007",
     "status": "machine"
   },
+  "tools.bulk.generator.formatIco": {
+    "source": "cff1556f0a13",
+    "status": "machine"
+  },
   "tools.bulk.generator.formatSvg": {
     "source": "c6299e75cb4a",
     "status": "machine"
@@ -10221,6 +10225,10 @@
   },
   "editor.actionBar.downloadDialog.formatHints.bmp": {
     "source": "f4ff37385b9f",
+    "status": "machine"
+  },
+  "editor.actionBar.downloadDialog.formatHints.ico": {
+    "source": "809036c56b1c",
     "status": "machine"
   },
   "editor.actionBar.downloadDialog.formatHints.svg": {
@@ -17151,6 +17159,18 @@
     "source": "0f0032614bbe",
     "status": "machine"
   },
+  "app.settings.account.changeEmailDialog.invalidEmail": {
+    "source": "8a966af884a0",
+    "status": "machine"
+  },
+  "app.settings.account.changeEmailDialog.sameEmail": {
+    "source": "8e3914536155",
+    "status": "machine"
+  },
+  "app.settings.account.changeEmailDialog.connectionFailed": {
+    "source": "067b61d20082",
+    "status": "machine"
+  },
   "app.settings.account.communityProfileSection.liveAtCommunityHandleClear": {
     "source": "4ed7286af84d",
     "status": "machine"
@@ -17567,6 +17587,30 @@
     "source": "b72aea42c98e",
     "status": "machine"
   },
+  "app.settings.account.signInMethodsSection.emailCodesRemain": {
+    "source": "2e09158c0f33",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkError.emailDoesNotMatch": {
+    "source": "8975ad118171",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkError.alreadyLinked": {
+    "source": "6a73aa21b09b",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkError.notVerified": {
+    "source": "a10884f3acb2",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkError.cancelled": {
+    "source": "6b68b457b991",
+    "status": "machine"
+  },
+  "app.settings.account.signInMethodsSection.linkError.failed": {
+    "source": "06c543743a1c",
+    "status": "machine"
+  },
   "app.settings.account.twoFactorResetNotice.supportWillTurnThisOff": {
     "source": "14a60950efe4",
     "status": "machine"
@@ -17747,6 +17791,18 @@
     "source": "904c9aa9baae",
     "status": "machine"
   },
+  "app.settings.account.twoFactorSettings.backupCodesDetails": {
+    "source": "30b06e1443d5",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSettings.backupCodesLeft": {
+    "source": "a1118c8aeccd",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSettings.backupCodesLeftSoon": {
+    "source": "39c351b1b30d",
+    "status": "machine"
+  },
   "app.settings.account.twoFactorSetupDialog.stepStepnumberOfLength": {
     "source": "c103e940197b",
     "status": "machine"
@@ -17889,6 +17945,22 @@
   },
   "app.settings.account.twoFactorSetupDialog.sessionNotFresh": {
     "source": "d1ba9bcda051",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSetupDialog.authenticatorAppAdded": {
+    "source": "6199bc799798",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSetupDialog.passkeyAdded": {
+    "source": "dcd91a107200",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSetupDialog.otherDevicesSignedOut": {
+    "source": "bfd7e006ece5",
+    "status": "machine"
+  },
+  "app.settings.account.twoFactorSetupDialog.otherDevicesNotSignedOut": {
+    "source": "eb07419ffe5e",
     "status": "machine"
   },
   "app.settings.account.workspaceTwoFactorNotice.twoStepVerificationIsOn": {
@@ -22451,6 +22523,10 @@
     "source": "26b25903a21b",
     "status": "machine"
   },
+  "app.dashboard.codes.codeActionsMenu.downloadIco": {
+    "source": "56cfcbae213b",
+    "status": "machine"
+  },
   "app.dashboard.codes.codeActionsMenu.moreFormats": {
     "source": "b83931930ce6",
     "status": "machine"
@@ -22789,6 +22865,10 @@
   },
   "app.dashboard.codes.codesList.bmpImagesZip": {
     "source": "6c23f3b9ced1",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codesList.icoImagesZip": {
+    "source": "e7859e50b34f",
     "status": "machine"
   },
   "app.dashboard.codes.codesList.svgImagesZip": {

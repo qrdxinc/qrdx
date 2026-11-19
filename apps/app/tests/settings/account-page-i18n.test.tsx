@@ -10,7 +10,7 @@
 // label (lib/account/session-origin.ts browserFamily).
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import type { Locale } from "@repo/i18n/config";
+import { type Locale, TRANSLATED_LOCALES } from "@repo/i18n/config";
 import { mergeMessages } from "@repo/i18n/messages";
 import { createTranslator, NextIntlClientProvider } from "next-intl";
 import {
@@ -628,3 +628,29 @@ describe("the components no longer write these lines in English", () => {
     for (const line of english) expect(text, line).not.toContain(line);
   });
 });
+
+// The change-email dialog checks the address before sending it, and the
+// server checks it again (settingsActions.emailChange). Both say the same
+// thing, so in every language they read the same.
+describe.each(TRANSLATED_LOCALES)(
+  "the change-email dialog's checks in %s",
+  (locale) => {
+    const catalog = JSON.parse(
+      readFileSync(
+        fileURLToPath(
+          new URL(`../../messages/${locale}.json`, import.meta.url),
+        ),
+        "utf8",
+      ),
+    );
+    const dialog = catalog.app.settings.account.changeEmailDialog;
+    const actions = catalog.settingsActions.emailChange;
+
+    test.each(["invalidEmail", "sameEmail"])(
+      "%s reads like the server's answer",
+      (key) => {
+        expect(dialog[key]).toBe(actions[key]);
+      },
+    );
+  },
+);
