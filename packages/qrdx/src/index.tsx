@@ -5,6 +5,7 @@
 
 export type {
   QRCodePropsSVG,
+  QRFrameSVGProps,
   QRPropsCanvas,
   QRPropsSVG,
 } from "../types/react";
@@ -16,3 +17,4 @@ export * from "./qr-code";
 // package stays usable from React Server Components.
 export { QRCodeCanvas } from "./qr-code-canvas";
 export { QRCodeSVG } from "./qr-code-svg";
+export { QRFrameSVG } from "./qr-frame-svg";

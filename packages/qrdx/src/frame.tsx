@@ -4,6 +4,7 @@ import type { ColorConfig } from "../types";
 import { DEFAULT_FRAME_TEXT, FRAME_TEXT_MAX_LENGTH } from "../types/constants";
 import type { AnyQRFrame } from "../types/frame-spec";
 import { CUSTOM_FRAME_STYLE } from "../types/frame-spec-rules";
+import { DEFAULT_SIZE } from "./constants";
 import { getCustomFrameLayout, getFrameSpecGapRatio } from "./frame-spec";
 import { frameSpecOf, getBuiltInFrameLayout } from "./frames/builtin";
 import { cloneElement, type QRNode } from "./jsx/runtime";
@@ -315,6 +316,56 @@ export function wrapWithFrame(
       ))}
     </svg>
   );
+}
+
+/** What `createFrameTree` draws: a frame with no code in it. */
+export interface FrameTreeOptions {
+  frame: AnyQRFrame;
+  /** The code the frame is laid out around, in pixels (default 128) */
+  size?: number;
+  /** The code's background, for frames that take their plate from it */
+  bgColor?: ColorConfig;
+  /**
+   * Drawn where the code would be, placed as the code is (a nested <svg>
+   * given the code's offset and a `size × size` box). Left out, the slot is
+   * empty.
+   */
+  slot?: QRNode;
+  /** Attributes for the outer <svg> (React's names: className, style…) */
+  svgProps?: Record<string, unknown>;
+}
+
+/**
+ * A frame on its own: its artwork and labels around the slot a code of
+ * `size` pixels would fill (getFrameLayout's qrX, qrY and qrSize), with no
+ * code drawn, for showing what a frame is without a code (a frame gallery).
+ * The markup is the framed code's, with `slot` (or an empty <svg>) in the
+ * code's place. Without an active frame, the slot alone.
+ */
+export function createFrameTree(options: FrameTreeOptions): QRNode {
+  const { frame, size = DEFAULT_SIZE, bgColor, slot, svgProps } = options;
+  const content = slot ?? (
+    <svg
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
+    />
+  );
+  if (!isFrameActive(frame)) {
+    return (
+      <svg
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        width={size}
+        xmlns="http://www.w3.org/2000/svg"
+        {...svgProps}
+      >
+        {cloneElement(content, { x: 0, y: 0, width: size, height: size })}
+      </svg>
+    );
+  }
+  return wrapWithFrame(content, { size, frame, bgColor, svgProps });
 }
 
 /** Every label of a layout: the main one first, then the extra ones. */
