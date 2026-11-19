@@ -244,3 +244,20 @@ describe("community card captions on hover", () => {
     expect(classes).toContain("group-has-[a:focus-visible]:opacity-100");
   });
 });
+
+describe("community card rows", () => {
+  it("leave room above the cards for a hovered card to lift into", async () => {
+    const { RAIL, CARD_ART } = await import(
+      "@/components/community/card-layout"
+    );
+    const classes = RAIL.split(" ");
+    // A row that scrolls sideways clips up and down too: the room above
+    // must be at least the lift, and taken back so the row doesn't move.
+    const lift = CARD_ART.match(/group-hover:-translate-y-(\d+(?:\.\d+)?)/);
+    const room = RAIL.match(/(?:^| )pt-(\d+(?:\.\d+)?)(?: |$)/);
+    expect(lift).not.toBeNull();
+    expect(room).not.toBeNull();
+    expect(Number(room?.[1])).toBeGreaterThan(Number(lift?.[1]));
+    expect(classes).toContain(`-mt-${room?.[1]}`);
+  });
+});
