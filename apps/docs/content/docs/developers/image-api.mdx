@@ -1,12 +1,12 @@
 ---
 title: QR code image API
-description: Turn any URL or text into a QR code image with one GET request and no API key, as SVG, PNG, WebP, BMP or EPS, in the editor's styles, for Markdown, HTML, emails and print.
+description: Turn any URL or text into a QR code image with one GET request and no API key, as SVG, PNG, WebP, BMP, ICO or EPS, in the editor's styles, for Markdown, HTML, emails and print.
 icon: ImageDown
 ---
 
 By the end of this page you will have a QR code image URL you can paste into a README, an `<img>` tag or an email template, styled the way you want, and you will know what the API refuses and why.
 
-`GET https://api.qrdx.dev/v1/qr` returns a QR code as an SVG, PNG, WebP or BMP image, or as a vector EPS file for print and design tools. Everything is in the query string, so the URL itself is the image. It takes the editor's styles too: gradients, frames (custom frames included), borders, eye and dot colors and logo icons. No account or API key is required, apart from a logo you uploaded to QRdx (see [Logos](#logos)).
+`GET https://api.qrdx.dev/v1/qr` returns a QR code as an SVG, PNG, WebP, BMP or ICO image, or as a vector EPS file for print and design tools. Everything is in the query string, so the URL itself is the image. It takes the editor's styles too: gradients, frames (custom frames included), borders, eye and dot colors and logo icons. No account or API key is required, apart from a logo you uploaded to QRdx (see [Logos](#logos)).
 
 ```md title="README.md"
 ![QR code](https://api.qrdx.dev/v1/qr?data=https://github.com/you/repo)
@@ -72,6 +72,7 @@ Quote the URL in a shell so it keeps the `&`. In an HTML page, the URL goes stra
 | `png` | `image/png` | Email, chat apps, documents |
 | `webp` | `image/webp`, lossless, transparency kept | Websites: the PNG's pixels in a smaller file |
 | `bmp` | `image/bmp`, 24-bit and uncompressed; a transparent background comes out white | Legacy systems and embedded tools that only take BMP |
+| `ico` | `image/vnd.microsoft.icon`: a favicon with the code at 16, 32, 48 and 256 px, transparency kept | Favicons. `size` and frames don't apply, and the small sizes are for icons, not for scanning |
 | `eps` | `application/postscript`, sent as a `qr-code.eps` download | Illustrator, InDesign, print shops. `size` is then the width in points, 72 per inch, so `144` is 2 inches |
 
 ```bash title="Terminal"
@@ -123,7 +124,7 @@ Encode the `data` value when it contains `&`, `#`, `+` or spaces, for example wi
 | Parameter | Default | Description |
 | --- | --- | --- |
 | `data` | required | Text or URL to encode, up to 2048 characters |
-| `format` | `svg` | `svg`, `png`, `webp`, `bmp` or `eps` |
+| `format` | `svg` | `svg`, `png`, `webp`, `bmp`, `ico` or `eps` |
 | `size` | `512` | Width and height in pixels, `64` to `2048` (points for EPS) |
 | `fg` | `000000` | Module color as hex (`155dfc`, `fff`, or 8 digits with alpha) |
 | `bg` | `ffffff` | Background color as hex. `00000000` gives a transparent background |
@@ -211,7 +212,7 @@ These are the same styles as the [`qrdx` React library](/docs/features/patterns)
 
 A successful request returns the image with:
 
-- `Content-Type: image/svg+xml`, `image/png`, `image/webp`, `image/bmp` or `application/postscript` (EPS is sent as a `qr-code.eps` download)
+- `Content-Type: image/svg+xml`, `image/png`, `image/webp`, `image/bmp`, `image/vnd.microsoft.icon` or `application/postscript` (EPS is sent as a `qr-code.eps` download)
 - `Cache-Control: public, max-age=31536000, immutable`, except for renders with `item` (5 minutes, 10 at the CDN) and with `logoFileId` (`private, no-store`)
 - `Access-Control-Allow-Origin: *`, so you can `fetch` it from any website
 

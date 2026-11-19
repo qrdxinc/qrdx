@@ -112,6 +112,7 @@ const MIME_TYPES: Record<QrImageFormat, string> = {
   png: "image/png",
   webp: "image/webp",
   bmp: "image/bmp",
+  ico: "image/vnd.microsoft.icon",
   svg: "image/svg+xml",
   eps: "application/postscript",
 };

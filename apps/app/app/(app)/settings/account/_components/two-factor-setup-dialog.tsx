@@ -124,11 +124,6 @@ async function confirmApp(code: string): Promise<
   }
 }
 
-/** What turning it on says about the account's other devices. */
-const SIGNED_OUT_ELSEWHERE = "Your other devices were signed out.";
-const NOT_SIGNED_OUT_ELSEWHERE =
-  "We couldn't sign out your other devices. Use Sign out everywhere else under Sessions.";
-
 /**
  * Turning two-step verification on (a stepper: choose a method, set it up,
  * save the backup codes) and adding a second method (the setup step alone).
@@ -242,7 +237,7 @@ export function TwoFactorSetupDialog({
       setCode("");
       if (result.backupCodes) {
         showCodes(result.backupCodes, result.signedOutElsewhere !== false);
-      } else finish("Authenticator app added");
+      } else finish(t("authenticatorAppAdded"));
     } finally {
       setBusy(false);
     }
@@ -294,7 +289,7 @@ export function TwoFactorSetupDialog({
         toast.error(t("passkeyAddedButTwoStep"));
         finish();
       } else {
-        finish("Passkey added");
+        finish(t("passkeyAdded"));
       }
     } catch (failure) {
       console.error("Adding a passkey failed:", failure);
@@ -761,8 +756,8 @@ export function TwoFactorSetupDialog({
             >
               {t("twoStepVerificationIsOn")}{" "}
               {signedOutElsewhere
-                ? SIGNED_OUT_ELSEWHERE
-                : NOT_SIGNED_OUT_ELSEWHERE}
+                ? t("otherDevicesSignedOut")
+                : t("otherDevicesNotSignedOut")}
             </p>
             <BackupCodesList
               codes={codes}
@@ -776,8 +771,8 @@ export function TwoFactorSetupDialog({
                 onClick={() =>
                   finish(
                     signedOutElsewhere
-                      ? `Two-step verification is on. ${SIGNED_OUT_ELSEWHERE}`
-                      : "Two-step verification is on",
+                      ? `${t("twoStepVerificationIsOn")} ${t("otherDevicesSignedOut")}`
+                      : t("twoStepVerificationIsOn"),
                   )
                 }
                 type="button"

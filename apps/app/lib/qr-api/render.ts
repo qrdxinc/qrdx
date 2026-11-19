@@ -9,7 +9,11 @@ import {
   renderDesignPng,
   renderDesignSvg,
 } from "@/lib/qr-design/score";
-import { type ConvertedFormat, convertPng } from "@/lib/qr-image-formats";
+import {
+  type ConvertedFormat,
+  convertPng,
+  ICO_MASTER_SIZE,
+} from "@/lib/qr-image-formats";
 import { QR_DEFAULTS, QrDataTooLongError } from "@/lib/qr-render";
 import type { ActiveScope } from "@/lib/scope";
 import type { ThemeStyles } from "@/types/theme";
@@ -191,12 +195,22 @@ export async function renderStyledPng(
   }
 }
 
-/** The PNG render converted, such as to lossless WebP or BMP. */
+/** The PNG render converted, such as to lossless WebP, BMP or an ICO favicon. */
 export async function renderStyledImage(
   render: ResolvedRender,
   format: ConvertedFormat,
 ): Promise<Uint8Array> {
-  return await convertPng(await renderStyledPng(render), format);
+  // An ICO is scaled down from one big render, without a frame (as in the
+  // browser): the request's size doesn't apply, and every icon is square.
+  const drawn =
+    format === "ico"
+      ? {
+          ...render,
+          size: ICO_MASTER_SIZE,
+          style: { ...render.style, frame: undefined },
+        }
+      : render;
+  return await convertPng(await renderStyledPng(drawn), format);
 }
 
 /** Vector EPS, the code `size` points wide (frames add to it). */

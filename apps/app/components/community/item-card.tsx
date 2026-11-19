@@ -2,12 +2,21 @@
 // page preview here, so the page itself never goes to the browser.
 
 import { cn } from "@repo/design-system/lib/utils";
-import { Archive } from "iconsax-reactjs";
+import {
+  Archive,
+  Box,
+  Brush2,
+  Folder2,
+  type Icon,
+  Mobile,
+  Scan,
+} from "iconsax-reactjs";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { TemplatePreview } from "@/components/landing/template-preview";
 import {
   type CommunityItemCard,
+  type CommunityItemType,
   itemPath,
   TYPE_LABELS,
   TYPE_SEGMENTS,
@@ -15,6 +24,8 @@ import {
 import {
   CARD_ART,
   CARD_FRAME,
+  CARD_GRID,
+  CARD_LINE,
   CARD_TEXT,
   RAIL_CARD,
   RAIL_RANKED,
@@ -25,9 +36,19 @@ import {
 import { CardRail } from "./card-rail";
 import { CreatorLine } from "./creator-line";
 import { LazyDesignQr } from "./design-qr";
+import numeral from "./rank-numeral.module.css";
 import { RowSection } from "./row-section";
 
 const COUNT = new Intl.NumberFormat("en", { notation: "compact" });
+
+/** The mark beside an item's type on its card. */
+export const TYPE_ICONS: Record<CommunityItemType, Icon> = {
+  frame: Scan,
+  theme: Brush2,
+  "page-template": Mobile,
+  collection: Folder2,
+  kit: Box,
+};
 
 /** Where a card goes: its item page, or the type's gallery (legacy themes). */
 export const cardHref = (card: CommunityItemCard) =>
@@ -68,11 +89,18 @@ export function ItemCard({
   const t = useTranslations("community.itemCard");
   const stack = card.type === "collection" ? (card.stack ?? []) : [];
   const type = TYPE_LABELS[card.type].one;
+  const TypeIcon = TYPE_ICONS[card.type];
   // Page previews have links of their own, so the card's link is stretched
   // over the card instead of wrapping it (nested <a> is invalid HTML and
   // breaks hydration), as on the /templates gallery.
   return (
-    <article className={cn(CARD_FRAME, className)}>
+    <article
+      className={cn(
+        CARD_FRAME,
+        rank !== undefined && rankAs === "numeral" && numeral.card,
+        className,
+      )}
+    >
       <Link
         aria-label={`${card.name}, ${type}`}
         className="absolute inset-0 z-10 rounded-xl outline-none"
@@ -80,9 +108,7 @@ export function ItemCard({
       />
       <div className="relative">
         {rank !== undefined && rankAs === "numeral" && (
-          <span aria-hidden className={RANK_NUMERAL}>
-            {rank}
-          </span>
+          <RankNumeral rank={rank} />
         )}
         <div className={CARD_ART}>
           {card.type === "collection" ? (
@@ -173,27 +199,25 @@ export function ItemCard({
         </div>
       </div>
       <div className={CARD_TEXT}>
-        <div className="flex min-w-0 items-center justify-between gap-2">
+        <div className={CARD_LINE}>
           <span className="truncate text-sm font-medium">{card.name}</span>
           {card.saveCount > 0 && (
             <span className="text-muted-foreground flex shrink-0 items-center gap-1 text-xs tabular-nums">
-              <Archive aria-hidden className="size-3.5" />
+              <Archive aria-hidden className="size-4" />
               <span className="sr-only">{t("saves")}</span>
               {COUNT.format(card.saveCount)}
             </span>
           )}
         </div>
-        <div className="text-muted-foreground flex min-w-0 items-center gap-1.5 text-xs">
+        <div className={cn(CARD_LINE, "text-muted-foreground text-xs")}>
           <CreatorLine
             className="min-w-0"
             creator={card.creator}
             handle={false}
             link={false}
           />
-          <span aria-hidden className="shrink-0">
-            ·
-          </span>
-          <span className="shrink-0">
+          <span className="flex shrink-0 items-center gap-1">
+            <TypeIcon aria-hidden className="size-4" />
             {card.type === "collection" && card.itemCount !== undefined
               ? t("itemCount", { count: card.itemCount })
               : type}
@@ -201,6 +225,46 @@ export function ItemCard({
         </div>
       </div>
     </article>
+  );
+}
+
+/**
+ * A rank's numeral: a faint, solid figure whose outline draws in when its
+ * card is hovered or focused (./rank-numeral.module.css). The figure in the
+ * HTML is invisible and only gives the numeral its size; both visible
+ * layers are SVG text anchored to its right edge, so they line up.
+ */
+function RankNumeral({ rank }: { rank: number }) {
+  // The baseline of a line-height-1 figure, about the same in every face.
+  const baseline = "0.86em";
+  return (
+    <span aria-hidden className={cn(RANK_NUMERAL, numeral.numeral)}>
+      <span className="invisible">{rank}</span>
+      <svg aria-hidden className={numeral.art} focusable="false">
+        <text
+          className={cn(
+            numeral.fill,
+            "fill-foreground/[0.08] dark:fill-foreground/[0.1]",
+          )}
+          textAnchor="end"
+          x="100%"
+          y={baseline}
+        >
+          {rank}
+        </text>
+        <text
+          className={cn(
+            numeral.trace,
+            "stroke-foreground/45 dark:stroke-foreground/55",
+          )}
+          textAnchor="end"
+          x="100%"
+          y={baseline}
+        >
+          {rank}
+        </text>
+      </svg>
+    </span>
   );
 }
 
@@ -279,7 +343,7 @@ export function ItemRow({
 /** Every card of a list, in a responsive grid. */
 export function ItemGrid({
   cards,
-  className = "grid gap-x-4 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+  className = CARD_GRID,
   eager = 0,
 }: {
   cards: CommunityItemCard[];

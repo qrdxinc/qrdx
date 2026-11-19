@@ -81,9 +81,10 @@ import { buildQrProps, QUIET_ZONE_MODULES } from "./qr-props";
 
 /**
  * WebP is lossless, the same pixels as PNG in a smaller file. BMP is an
- * uncompressed 24-bit bitmap (a transparent background comes out white).
+ * uncompressed 24-bit bitmap (a transparent background comes out white). ICO
+ * is a favicon with the code at 16, 32, 48 and 256 px, so it has no size.
  */
-type Format = "png" | "webp" | "bmp" | "svg";
+type Format = "png" | "webp" | "bmp" | "ico" | "svg";
 
 /** The raster formats' names for the size label. */
 const RASTER_NAMES = { png: "PNG", webp: "WebP", bmp: "BMP" } as const;
@@ -432,7 +433,7 @@ export function BulkGenerator({
 
     const allocate = createFilenameAllocator();
     const failures: Failure[] = [];
-    const size = format === "svg" ? 1024 : pngSize;
+    const size = format === "svg" || format === "ico" ? 1024 : pngSize;
     let generated = 0;
 
     for (let start = 0; start < total; start += BATCH_SIZE) {
@@ -831,11 +832,12 @@ export function BulkGenerator({
                   <SelectItem value="png">{t("formatPng")}</SelectItem>
                   <SelectItem value="webp">{t("formatWebp")}</SelectItem>
                   <SelectItem value="bmp">{t("formatBmp")}</SelectItem>
+                  <SelectItem value="ico">{t("formatIco")}</SelectItem>
                   <SelectItem value="svg">{t("formatSvg")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            {format !== "svg" && (
+            {format !== "svg" && format !== "ico" && (
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs" htmlFor="bulk-png-size">
                   {t("size", { format: RASTER_NAMES[format] })}

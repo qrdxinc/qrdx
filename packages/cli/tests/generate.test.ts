@@ -203,6 +203,55 @@ describe("generate command", () => {
     });
   });
 
+  describe("ICO file output", () => {
+    it("-o file.ico writes a favicon with 16, 32, 48 and 256 px images", () => {
+      const out = tmp("output.ico");
+      cleanups.push(out);
+      const { exitCode } = runCli(["generate", "https://qrdx.dev", "-o", out]);
+      expect(exitCode).toBe(0);
+      const buf = readFileSync(out);
+      expect(buf.readUInt16LE(0)).toBe(0);
+      expect(buf.readUInt16LE(2)).toBe(1);
+      const count = buf.readUInt16LE(4);
+      expect(count).toBe(4);
+      const sizes = Array.from(
+        { length: count },
+        (_, index) => buf[6 + 16 * index] || 256
+      );
+      expect(sizes).toEqual([16, 32, 48, 256]);
+    });
+
+    it("--format ico applies to a file name without an extension", () => {
+      const out = tmp("cli-noext-ico");
+      cleanups.push(out);
+      const { exitCode } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--format",
+        "ico",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      expect(readFileSync(out).readUInt16LE(2)).toBe(1);
+    });
+
+    it("ignores --size, so a huge one is no error", () => {
+      const out = tmp("size-ignored.ico");
+      cleanups.push(out);
+      const { exitCode } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--size",
+        "20000",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      expect(existsSync(out)).toBe(true);
+    });
+  });
+
   describe("flags", () => {
     it("--level flag is accepted", () => {
       const out = tmp("flag-level.svg");

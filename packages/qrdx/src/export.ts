@@ -7,6 +7,7 @@ import type { QRProps } from "../types";
 import { canvasToBMP } from "./bmp";
 import { DEFAULT_SIZE } from "./constants";
 import { getFrameDimensions } from "./frame";
+import { canvasToICO, ICO_MIME } from "./ico";
 import { toSVGString } from "./svg";
 import { blobToDataUrl, canvasToWebP } from "./webp";
 
@@ -192,6 +193,13 @@ export async function getQRAsCanvas(
         } else if (type === "image/bmp") {
           // toDataURL would hand back a PNG: no browser encodes BMP.
           blobToDataUrl(canvasToBMP(canvas))
+            .then(resolve, reject)
+            .finally(() => canvas.remove());
+        } else if (type === ICO_MIME || type === "image/x-icon") {
+          // toDataURL would hand back a PNG: no browser encodes ICO. This is
+          // an ICO of the one canvas (at most 256 px); getQRAsICO makes the
+          // favicon with several sizes.
+          blobToDataUrl(canvasToICO(canvas))
             .then(resolve, reject)
             .finally(() => canvas.remove());
         } else {
