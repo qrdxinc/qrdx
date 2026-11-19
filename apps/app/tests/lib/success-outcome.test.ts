@@ -5,6 +5,7 @@ import {
   type CheckoutClient,
   checkoutIdFrom,
   resolveCheckoutOutcome,
+  resolveVisitOutcome,
   type SubscriptionView,
 } from "@/app/(app)/(home)/success/_lib/outcome";
 import type { PaidPlan } from "@/lib/pricing";
@@ -114,15 +115,33 @@ describe("resolveCheckoutOutcome", () => {
     ).toEqual({ kind: "active", plan: "pro" });
   });
 
-  it("says pending while Polar has the payment and the row isn't in", async () => {
-    expect(await resolve()).toEqual({ kind: "pending" });
+  it('says processing, never "received", until the row grants the plan', async () => {
+    // "succeeded": paid; "confirmed": the buyer pressed Pay, the payment may
+    // still fail. Both wait for the webhook's row.
+    expect(await resolve()).toEqual({ kind: "processing" });
     expect(await resolve({ client: client({ status: "confirmed" }) })).toEqual({
-      kind: "pending",
+      kind: "processing",
     });
-    // A row that doesn't grant the plan yet is still pending.
+    // A subscription whose first payment is still going through.
     expect(
       await resolve({ subscriptions: [row({ status: "incomplete" })] }),
-    ).toEqual({ kind: "pending" });
+    ).toEqual({ kind: "processing" });
+  });
+
+  it("says the plan ended when this checkout's row no longer grants it", async () => {
+    const polar = client();
+    for (const status of [
+      "canceled",
+      "unpaid",
+      "past_due",
+      "incomplete_expired",
+    ]) {
+      expect(
+        await resolve({ client: polar, subscriptions: [row({ status })] }),
+      ).toEqual({ kind: "ended" });
+    }
+    // The row is the answer: Polar isn't asked.
+    expect(polar.checkouts.get).not.toHaveBeenCalled();
   });
 
   it("never says active for a checkout that wasn't finished or failed", async () => {
@@ -163,7 +182,9 @@ describe("resolveCheckoutOutcome", () => {
         throw new Error("not asked");
       }),
     });
-    expect(await resolve({ client: byExternal })).toEqual({ kind: "pending" });
+    expect(await resolve({ client: byExternal })).toEqual({
+      kind: "processing",
+    });
 
     const getExternal = vi.fn(async () => ({ id: "unused" }));
     expect(
@@ -171,7 +192,7 @@ describe("resolveCheckoutOutcome", () => {
         client: client({ getExternal }),
         subscriptions: [row({ checkoutId: "older", status: "canceled" })],
       }),
-    ).toEqual({ kind: "pending" });
+    ).toEqual({ kind: "processing" });
     expect(getExternal).not.toHaveBeenCalled();
   });
 
@@ -186,29 +207,54 @@ describe("resolveCheckoutOutcome", () => {
     expect(await resolve({ client: null })).toEqual({ kind: "unknown" });
   });
 
-  it("says it couldn't check when Polar fails, and reports only name and status", async () => {
+  it.each([
+    [
+      "a token without checkouts:read (403)",
+      polarError("HTTPClientError", 403),
+    ],
+    ["an expired token (401)", polarError("HTTPClientError", 401)],
+    ["Polar down (503)", polarError("HTTPClientError", 503)],
+    ["a network error", new TypeError("fetch failed")],
+  ])('says processing, not "couldn\'t check", for %s', async (_, error) => {
     const onFailure = vi.fn();
-    const down = client({
+    const failing = client({
       get: vi.fn(async () => {
-        throw polarError("HTTPClientError", 503);
+        throw error;
       }),
     });
-    expect(await resolve({ client: down, onFailure })).toEqual({
-      kind: "unverified",
+    expect(await resolve({ client: failing, onFailure })).toEqual({
+      kind: "processing",
     });
+    // Its name and status code only, never the request.
     expect(onFailure).toHaveBeenCalledWith({
-      error: "HTTPClientError",
-      status: 503,
+      error: error.name,
+      status: (error as { statusCode?: number }).statusCode,
     });
+  });
 
+  it("says processing when the customer lookup fails", async () => {
     const lookupDown = client({
       getExternal: vi.fn(async () => {
         throw polarError("HTTPClientError", 502);
       }),
     });
     expect(await resolve({ client: lookupDown })).toEqual({
-      kind: "unverified",
+      kind: "processing",
     });
+  });
+
+  it("doesn't ask Polar past the rate limit, and waits for the row", async () => {
+    const polar = client();
+    const allowLookup = vi.fn(async () => false);
+    expect(await resolve({ client: polar, allowLookup })).toEqual({
+      kind: "processing",
+    });
+    expect(polar.checkouts.get).not.toHaveBeenCalled();
+    // The row still answers without a lookup.
+    expect(
+      await resolve({ client: polar, allowLookup, subscriptions: [row()] }),
+    ).toEqual({ kind: "active", plan: "pro" });
+    expect(allowLookup).toHaveBeenCalledTimes(1);
   });
 
   it("keeps saying active for a plan that's on, whatever the link", async () => {
@@ -222,5 +268,63 @@ describe("resolveCheckoutOutcome", () => {
     expect(
       await resolve({ checkoutId: null, subscriptions: [current] }),
     ).toEqual({ kind: "active", plan: "pro" });
+  });
+});
+
+describe("resolveVisitOutcome", () => {
+  const base = {
+    checkoutId: CHECKOUT,
+    userId: USER,
+    client: client(),
+    planOf,
+  };
+
+  it("puts a failed read of this app's rows down to this app, not Polar", async () => {
+    const onLoadError = vi.fn();
+    const polar = client();
+    expect(
+      await resolveVisitOutcome({
+        ...base,
+        client: polar,
+        load: vi.fn(async () => {
+          throw new Error("connection refused");
+        }),
+        onLoadError,
+      }),
+    ).toEqual({ kind: "error" });
+    expect(onLoadError).toHaveBeenCalledTimes(1);
+    expect(polar.checkouts.get).not.toHaveBeenCalled();
+  });
+
+  it("reads the rows, then decides as resolveCheckoutOutcome does", async () => {
+    const load = vi.fn(async () => [row()]);
+    expect(await resolveVisitOutcome({ ...base, load })).toEqual({
+      kind: "active",
+      plan: "pro",
+    });
+    expect(load).toHaveBeenCalledWith(USER);
+  });
+
+  it("asks a signed-out visitor to sign in without reading anything", async () => {
+    const load = vi.fn(async () => []);
+    expect(await resolveVisitOutcome({ ...base, userId: null, load })).toEqual({
+      kind: "signed-out",
+    });
+    expect(load).not.toHaveBeenCalled();
+  });
+
+  it("waits for the row when the rate limiter itself fails", async () => {
+    const polar = client();
+    expect(
+      await resolveVisitOutcome({
+        ...base,
+        client: polar,
+        load: async () => [],
+        allowLookup: async () => {
+          throw new Error("limiter down");
+        },
+      }),
+    ).toEqual({ kind: "processing" });
+    expect(polar.checkouts.get).not.toHaveBeenCalled();
   });
 });

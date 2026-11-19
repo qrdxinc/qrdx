@@ -1,22 +1,26 @@
 // What /success says when Polar sends a buyer back with ?checkout_id=: the
 // plan is "active" only once the subscription row the webhook writes says
-// so; "pending" while Polar has the payment and the webhook hasn't arrived;
-// and a plain answer for a checkout that wasn't finished, failed, or isn't
-// this account's. No server-only imports, so every outcome is unit tested
-// directly (the Polar client and the rows are passed in).
+// so; "processing" while it hasn't (Polar's checkout says the buyer paid or
+// pressed Pay, or Polar can't be asked); and a plain answer for a checkout
+// that wasn't finished, failed, ended or isn't this account's. No server-only
+// imports, so every outcome is unit tested directly (the Polar client, the
+// rows and the rate limit are passed in).
 
 import type { PaidPlan } from "@/lib/pricing";
 
 export type CheckoutOutcome =
   | { kind: "active"; plan: PaidPlan }
-  | { kind: "pending" }
+  /** Not active yet: the webhook's row will switch the plan on */
+  | { kind: "processing" }
+  /** This checkout's subscription exists but no longer grants the plan */
+  | { kind: "ended" }
   | { kind: "incomplete" }
   | { kind: "failed" }
-  /** Polar couldn't be asked just now */
-  | { kind: "unverified" }
   /** No checkout of this account to speak of */
   | { kind: "unknown" }
-  | { kind: "signed-out" };
+  | { kind: "signed-out" }
+  /** This app couldn't read the person's plan (its database, not Polar) */
+  | { kind: "error" };
 
 /** The slice of the Polar SDK this page uses. */
 export interface CheckoutClient {
@@ -42,6 +46,12 @@ export interface SubscriptionView {
 
 /** Statuses that grant the plan, as lib/subscription.ts counts them. */
 const ENTITLED = new Set(["active", "trialing"]);
+
+/**
+ * A subscription Polar created while the first payment is still going
+ * through: not ended, just not active yet.
+ */
+const STARTING = new Set(["incomplete"]);
 
 const entitled = (row: SubscriptionView) => ENTITLED.has(row.status);
 
@@ -75,17 +85,23 @@ export interface ResolveOutcomeOptions {
   subscriptions: SubscriptionView[];
   /** The plan a product sells (lib/pricing.ts planForProductId) */
   planOf: (productId: string) => PaidPlan | null;
+  /**
+   * Whether this visit may ask Polar (the per-person rate limit); false
+   * leaves it to the webhook's row. Default: always.
+   */
+  allowLookup?: () => Promise<boolean>;
   /** Polar errors carry the request: only their name and status are passed. */
   onFailure?: (failure: { error: string; status?: number }) => void;
 }
 
-/** Never throws. */
+/** Never throws, except when `allowLookup` does. */
 export async function resolveCheckoutOutcome({
   checkoutId,
   userId,
   client,
   subscriptions,
   planOf,
+  allowLookup = async () => true,
   onFailure,
 }: ResolveOutcomeOptions): Promise<CheckoutOutcome> {
   if (!userId) return { kind: "signed-out" };
@@ -95,42 +111,50 @@ export async function resolveCheckoutOutcome({
     plan: planOf(row.productId) ?? "pro",
   });
   const current = subscriptions.find(entitled) ?? null;
-
-  if (checkoutId) {
-    const row = subscriptions.find((item) => item.checkoutId === checkoutId);
-    if (row && entitled(row)) return active(row);
-  }
   // Whatever the link says, a plan that's on is on.
   const otherwise = (outcome: CheckoutOutcome) =>
     current ? active(current) : outcome;
+
+  if (checkoutId) {
+    // The webhook has written this checkout's subscription: it's the answer.
+    const row = subscriptions.find((item) => item.checkoutId === checkoutId);
+    if (row) {
+      if (entitled(row)) return active(row);
+      return otherwise(
+        STARTING.has(row.status) ? { kind: "processing" } : { kind: "ended" },
+      );
+    }
+  }
   if (!(checkoutId && client)) return otherwise({ kind: "unknown" });
+  if (!(await allowLookup())) return otherwise({ kind: "processing" });
 
   let checkout: Awaited<ReturnType<CheckoutClient["checkouts"]["get"]>>;
   try {
     checkout = await client.checkouts.get(checkoutId);
   } catch (error) {
     if (isNotFound(error)) return otherwise({ kind: "unknown" });
+    // Any other answer (a token without checkouts:read, Polar down): the
+    // webhook's row still switches the plan on, so say only that.
     onFailure?.({ error: nameOf(error), status: statusOf(error) });
-    return otherwise({ kind: "unverified" });
+    return otherwise({ kind: "processing" });
   }
 
   const owner = await ownedBy(checkout, userId, subscriptions, client);
-  if (owner === "unknown") {
-    onFailure?.({ error: "customer lookup failed" });
-    return otherwise({ kind: "unverified" });
-  }
+  if (owner === "unknown") return otherwise({ kind: "processing" });
   if (!owner) return otherwise({ kind: "unknown" });
   switch (checkout.status) {
+    // "succeeded": paid. "confirmed": the buyer pressed Pay; the payment
+    // may still fail. Neither means the plan is on until the row says so.
     case "succeeded":
     case "confirmed":
-      return otherwise({ kind: "pending" });
+      return otherwise({ kind: "processing" });
     case "failed":
       return otherwise({ kind: "failed" });
     case "open":
     case "expired":
       return otherwise({ kind: "incomplete" });
     default:
-      return otherwise({ kind: "unverified" });
+      return otherwise({ kind: "processing" });
   }
 }
 
@@ -155,5 +179,38 @@ async function ownedBy(
   } catch (error) {
     // No Polar customer for this person: the checkout can't be theirs.
     return isNotFound(error) ? false : "unknown";
+  }
+}
+
+/**
+ * resolveCheckoutOutcome after reading the person's rows with `load`: a
+ * failed read is this app's error ("error"), never put down to Polar.
+ * Never throws.
+ */
+export async function resolveVisitOutcome({
+  load,
+  onLoadError,
+  ...options
+}: Omit<ResolveOutcomeOptions, "subscriptions"> & {
+  load: (userId: string) => Promise<SubscriptionView[]>;
+  onLoadError?: (error: unknown) => void;
+}): Promise<CheckoutOutcome> {
+  if (!options.userId) return { kind: "signed-out" };
+  let subscriptions: SubscriptionView[];
+  try {
+    subscriptions = await load(options.userId);
+  } catch (error) {
+    onLoadError?.(error);
+    return { kind: "error" };
+  }
+  try {
+    return await resolveCheckoutOutcome({ ...options, subscriptions });
+  } catch {
+    // Only allowLookup can throw: without it, wait for the webhook's row.
+    return resolveCheckoutOutcome({
+      ...options,
+      subscriptions,
+      allowLookup: async () => false,
+    });
   }
 }

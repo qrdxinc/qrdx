@@ -6,8 +6,9 @@ import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 
 // The page editor's plain Free/Pro line (lib/landing/plan-line.ts), shown
 // next to file uploads and once the page is published. The editor's route
-// provides it, already in the person's language; everywhere else the upload
-// fields are used (no provider), nothing shows.
+// provides it, already in the person's language, only on Free and only to
+// people who can buy Pro here (checkout open, billing.manage); everywhere
+// else the upload fields are used (no provider), nothing shows.
 
 /** The line's words, from app.dashboard.pages.planLine. */
 export interface PagePlanCopy {

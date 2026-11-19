@@ -25952,7 +25952,7 @@
     "status": "machine"
   },
   "app.dashboard.home.codeLiveCard.scanEmails": {
-    "source": "e5d4d9ea0659",
+    "source": "220d43bc2dbe",
     "status": "machine"
   },
   "app.dashboard.home.codeLiveCard.linkControls": {
@@ -25960,7 +25960,7 @@
     "status": "machine"
   },
   "app.dashboard.home.codeLiveCard.fullHistory": {
-    "source": "6b5cc51abe2b",
+    "source": "89d856daf615",
     "status": "machine"
   },
   "app.dashboard.home.codeLiveCard.price": {
@@ -27775,12 +27775,20 @@
     "source": "703c0671a2a1",
     "status": "machine"
   },
-  "app.success.pendingTitle": {
-    "source": "2fef7951de07",
+  "app.success.processingTitle": {
+    "source": "f6bce9cb2282",
     "status": "machine"
   },
-  "app.success.pendingBody": {
-    "source": "ec845e70c114",
+  "app.success.processingBody": {
+    "source": "3d5325f8f61e",
+    "status": "machine"
+  },
+  "app.success.checksStopped": {
+    "source": "c10bbd94e667",
+    "status": "machine"
+  },
+  "app.success.reload": {
+    "source": "bdc090ec61e3",
     "status": "machine"
   },
   "app.success.checkNow": {
@@ -27807,12 +27815,20 @@
     "source": "0330cba5cdfe",
     "status": "machine"
   },
-  "app.success.unverifiedTitle": {
-    "source": "058d3b7fbe6d",
+  "app.success.endedTitle": {
+    "source": "77bc5e4690c2",
     "status": "machine"
   },
-  "app.success.unverifiedBody": {
-    "source": "803233306e28",
+  "app.success.endedBody": {
+    "source": "a5951a2e44b3",
+    "status": "machine"
+  },
+  "app.success.errorTitle": {
+    "source": "81ecbc0a22e3",
+    "status": "machine"
+  },
+  "app.success.errorBody": {
+    "source": "28678085beb1",
     "status": "machine"
   },
   "app.success.unknownTitle": {

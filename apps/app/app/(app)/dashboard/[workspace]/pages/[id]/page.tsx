@@ -13,6 +13,7 @@ import {
   PagePlanLineProvider,
 } from "@/components/landing/editor/page-plan-line";
 import { hostedPageBranding } from "@/ee/white-label/access";
+import { getCheckoutOpen } from "@/lib/checkout-availability";
 import { HttpError } from "@/lib/error-response";
 import { formatBytes } from "@/lib/files/types";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
@@ -52,11 +53,15 @@ export default async function EditLandingPage({
     page.codes.find((item) => !item.inTrash) ??
     null;
 
-  // Free's page limits next to uploads and after publishing.
-  const planLine = pagePlanLine(plan, {
-    free: getPlanLimits("free"),
-    pro: getPlanLimits("pro"),
-  });
+  // Free's page limits next to uploads and after publishing, for people
+  // who can buy Pro here.
+  const planLine = pagePlanLine(
+    plan,
+    { free: getPlanLimits("free"), pro: getPlanLimits("pro") },
+    {
+      canBuyPro: getCheckoutOpen().pro && can(scope.role, "billing.manage"),
+    },
+  );
   const planCopy = planLine && (await pagePlanCopy(planLine));
 
   const editor = (

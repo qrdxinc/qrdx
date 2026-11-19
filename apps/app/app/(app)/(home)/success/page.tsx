@@ -6,6 +6,7 @@ import { Button } from "@repo/design-system/components/ui/button";
 import { Card } from "@repo/design-system/components/ui/card";
 import { cn } from "@repo/design-system/lib/utils";
 import { pickMessages } from "@repo/i18n/messages";
+import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { desc, eq } from "drizzle-orm";
 import {
   ArrowRight,
@@ -39,14 +40,21 @@ import {
   type CheckoutClient,
   type CheckoutOutcome,
   checkoutIdFrom,
-  resolveCheckoutOutcome,
+  resolveVisitOutcome,
 } from "./_lib/outcome";
 import { CheckAgain, CheckNowButton } from "./check-again";
 
-export const metadata: Metadata = {
-  title: "Your upgrade",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getAppTranslations("app.success");
+  return { title: t("metaTitle"), robots: { index: false, follow: false } };
+}
+
+// Polar lookups per person: a processing page re-checks 15 times in about a
+// minute (check-again.tsx), plus "Check now" and reloads; past this the page
+// waits for the webhook's row instead of asking Polar.
+const lookupLimiter = createRateLimiter({
+  limiter: slidingWindow(40, "10 m"),
+});
 
 const NEXT_STEPS: {
   icon: Icon;
@@ -108,25 +116,24 @@ export default async function SuccessPage({
 }: PageProps<"/success">) {
   const checkoutId = checkoutIdFrom((await searchParams).checkout_id);
   const userId = await signedInUserId();
-  let outcome: CheckoutOutcome;
-  try {
-    outcome = await resolveCheckoutOutcome({
-      checkoutId,
-      userId,
-      client: isBillingConfigured ? (polar as CheckoutClient) : null,
-      subscriptions: userId ? await subscriptionsOf(userId) : [],
-      planOf: planForProductId,
-      onFailure: (failure) =>
-        logError(new Error("Checkout check failed"), {
-          action: "success.checkout",
-          ...failure,
-        }),
-    });
-  } catch (error) {
-    // The subscription read failed: say so rather than guess.
-    logError(error as Error, { action: "success.subscriptions" });
-    outcome = { kind: "unverified" };
-  }
+  const outcome = await resolveVisitOutcome({
+    checkoutId,
+    userId,
+    client: isBillingConfigured ? (polar as CheckoutClient) : null,
+    load: subscriptionsOf,
+    planOf: planForProductId,
+    allowLookup: async () =>
+      (await lookupLimiter.limit(`success-check:${userId}`)).success,
+    // Name and status code only (a missing checkouts:read scope is 403).
+    onFailure: (failure) =>
+      logError(new Error(`Checkout lookup failed: ${failure.error}`), {
+        action: "success.checkout",
+        ...failure,
+      }),
+    // This app's own read (the subscription rows), not Polar.
+    onLoadError: (error) =>
+      logError(error as Error, { action: "success.subscriptions" }),
+  });
 
   const t = await getAppTranslations("app.success");
   const here = checkoutId
@@ -270,17 +277,35 @@ export default async function SuccessPage({
           </ul>
         )}
       </div>
-      {outcome.kind === "pending" && <CheckAgain />}
+      {outcome.kind === "processing" && (
+        <CheckAgain
+          labels={{
+            stopped: t.rich("checksStopped", {
+              email: SUPPORT_EMAIL,
+              mail: (chunks) => (
+                <a
+                  className="font-medium text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground"
+                  href={`mailto:${SUPPORT_EMAIL}`}
+                >
+                  {chunks}
+                </a>
+              ),
+            }),
+            reload: t("reload"),
+          }}
+        />
+      )}
     </main>
   );
 }
 
 const ICONS: Record<CheckoutOutcome["kind"], Icon> = {
   active: TickCircle,
-  pending: Clock,
+  processing: Clock,
+  ended: InfoCircle,
   incomplete: InfoCircle,
   failed: InfoCircle,
-  unverified: Clock,
+  error: InfoCircle,
   unknown: InfoCircle,
   "signed-out": InfoCircle,
 };
@@ -345,8 +370,8 @@ function OutcomeActions({
           </Button>
         </>
       );
-    case "pending":
-    case "unverified":
+    case "processing":
+    case "error":
       return (
         <>
           <CheckNowButton label={labels.checkNow} />
@@ -358,6 +383,18 @@ function OutcomeActions({
         <Button asChild>
           <a href={signInHref}>{labels.signIn}</a>
         </Button>
+      );
+    case "ended":
+      return (
+        <>
+          <Button asChild>
+            {/* Route handler that redirects to the billing portal. */}
+            <a href="/settings/portal">{labels.manageSubscription}</a>
+          </Button>
+          <Button asChild variant="outline">
+            <a href="/pricing">{labels.backToPricing}</a>
+          </Button>
+        </>
       );
     default:
       return (

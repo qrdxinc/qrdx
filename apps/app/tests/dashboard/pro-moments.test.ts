@@ -12,6 +12,7 @@ import { showsSidebarUpgrade } from "@/components/app-shell/upgrade-row";
 import { NOTIFICATION_EVENTS } from "@/lib/events/types";
 import { pagePlanLine } from "@/lib/landing/plan-line";
 import { PLAN_LIMITS, type PlanLimits } from "@/lib/plans";
+import en from "@/messages/en.json";
 
 const free = PLAN_LIMITS.free;
 const pro = PLAN_LIMITS.pro;
@@ -91,6 +92,29 @@ describe("Your code is live", () => {
     ]);
   });
 
+  it("describes Pro's scan emails as the offer on Pro Home does", () => {
+    // Milestones (the first scan, then 10, 100, 500 …) and the weekly
+    // summary, with the same three milestone numbers.
+    const card = en.app.dashboard.home.codeLiveCard.scanEmails;
+    const offer = en.app.dashboard.home.scanAlertsOffer.body;
+    for (const argument of [
+      "{first, number}",
+      "{second, number}",
+      "{third, number}",
+    ]) {
+      expect(card).toContain(argument);
+      expect(offer).toContain(argument);
+    }
+    expect(card).toMatch(/first scan/);
+    expect(card).toMatch(/weekly summary/);
+  });
+
+  it("says Free's history limit is on viewing, not keeping, scans", () => {
+    expect(en.app.dashboard.home.codeLiveCard.fullHistory).toMatch(
+      /^Look back over every scan/,
+    );
+  });
+
   it("names only what Pro really adds (a server that gives Free the same)", () => {
     const generousFree: PlanLimits = {
       ...free,
@@ -138,8 +162,10 @@ describe("sidebar Upgrade row", () => {
 });
 
 describe("page editor Free/Pro line", () => {
+  const canBuy = { canBuyPro: true };
+
   it("takes every number from the plan limits", () => {
-    expect(pagePlanLine("free", { free, pro })).toEqual({
+    expect(pagePlanLine("free", { free, pro }, canBuy)).toEqual({
       freePages: free.landingPages,
       freeFileBytes: free.maxFileBytes,
       proFileBytes: pro.maxFileBytes,
@@ -157,25 +183,34 @@ describe("page editor Free/Pro line", () => {
   });
 
   it("isn't shown on paid plans", () => {
-    expect(pagePlanLine("pro", { free, pro })).toBeNull();
-    expect(pagePlanLine("business", { free, pro })).toBeNull();
+    expect(pagePlanLine("pro", { free, pro }, canBuy)).toBeNull();
+    expect(pagePlanLine("business", { free, pro }, canBuy)).toBeNull();
+  });
+
+  it("isn't shown to someone who can't buy Pro here", () => {
+    // Checkout closed, or a member without billing.manage.
+    expect(
+      pagePlanLine("free", { free, pro }, { canBuyPro: false }),
+    ).toBeNull();
   });
 
   it("isn't shown where Pro doesn't do what it says", () => {
     expect(
-      pagePlanLine("free", {
-        free: { ...free, landingPageBadge: false },
-        pro,
-      }),
+      pagePlanLine(
+        "free",
+        { free: { ...free, landingPageBadge: false }, pro },
+        canBuy,
+      ),
     ).toBeNull();
     expect(
-      pagePlanLine("free", { free, pro: { ...pro, landingPages: 20 } }),
+      pagePlanLine("free", { free, pro: { ...pro, landingPages: 20 } }, canBuy),
     ).toBeNull();
     expect(
-      pagePlanLine("free", {
-        free,
-        pro: { ...pro, maxFileBytes: free.maxFileBytes },
-      }),
+      pagePlanLine(
+        "free",
+        { free, pro: { ...pro, maxFileBytes: free.maxFileBytes } },
+        canBuy,
+      ),
     ).toBeNull();
   });
 });

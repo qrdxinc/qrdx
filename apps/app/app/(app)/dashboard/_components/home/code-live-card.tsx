@@ -7,6 +7,7 @@ import { Card } from "@repo/design-system/components/ui/card";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { LocaleLink } from "@/components/i18n/locale-link";
+import { SCAN_MILESTONES } from "@/lib/events/types";
 import type { CodeLiveCard as CodeLiveCardData } from "./pro-moments-rules";
 
 const hiddenKey = (organizationId: string) =>
@@ -45,6 +46,19 @@ export function CodeLiveCard({
   const [hidden, setHidden] = useState(true);
   useEffect(() => setHidden(readHidden(organizationId)), [organizationId]);
   if (hidden) return null;
+  // Pro's scan emails are milestones (the first scan, then 10, 100, 500 …)
+  // and the weekly summary, as the offer on Pro Home says.
+  const [, first, second, third] = SCAN_MILESTONES;
+  const featureText = (feature: CodeLiveCardData["features"][number]) => {
+    switch (feature) {
+      case "fullHistory":
+        return t("fullHistory", { years: card.freeHistoryYears });
+      case "scanEmails":
+        return t("scanEmails", { first, second, third });
+      default:
+        return t(feature);
+    }
+  };
 
   return (
     <Card className="gap-3 p-5 shadow-xs">
@@ -60,11 +74,7 @@ export function CodeLiveCard({
               className="mt-0.5 size-4 shrink-0 text-muted-foreground"
               strokeWidth={2}
             />
-            <span>
-              {feature === "fullHistory"
-                ? t("fullHistory", { years: card.freeHistoryYears })
-                : t(feature)}
-            </span>
+            <span>{featureText(feature)}</span>
           </li>
         ))}
       </ul>
