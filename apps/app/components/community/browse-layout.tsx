@@ -2,7 +2,9 @@
 
 // One layout for every community gallery: the sidebar on the left (a sheet
 // behind "Filters" below lg), the toolbar, then the grid. It runs from rail
-// to rail of the site's frame, with no extra side margin.
+// to rail of the site's frame, with no extra side margin. Its frame's classes
+// are shared with the skeleton that stands in while a gallery loads
+// (./browse-geometry.ts).
 import { Button } from "@repo/design-system/components/ui/button";
 import {
   Sheet,
@@ -15,6 +17,13 @@ import { cn } from "@repo/design-system/lib/utils";
 import { Filter } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
+import {
+  BROWSE_ASIDE,
+  BROWSE_MAIN,
+  BROWSE_NAV,
+  BROWSE_ROOT,
+  BROWSE_TOOLBAR,
+} from "./browse-geometry";
 
 export function BrowseLayout({
   sidebar,
@@ -39,15 +48,15 @@ export function BrowseLayout({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex min-h-[60vh] w-full">
-      <aside className="hidden w-60 shrink-0 border-r lg:block">
-        <nav aria-label={t("filters")} className="space-y-1 p-3">
+    <div className={BROWSE_ROOT}>
+      <aside className={BROWSE_ASIDE}>
+        <nav aria-label={t("filters")} className={BROWSE_NAV}>
           {sidebar}
         </nav>
       </aside>
 
-      <div className="min-w-0 flex-1 space-y-6 px-4 py-6 sm:px-6">
-        <div className="flex items-center justify-between gap-4">
+      <div className={BROWSE_MAIN}>
+        <div className={BROWSE_TOOLBAR}>
           <div className="flex items-center gap-2">
             <Sheet onOpenChange={setOpen} open={open}>
               <SheetTrigger asChild>

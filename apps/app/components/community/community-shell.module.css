@@ -1,0 +1,62 @@
+/*
+ * The community's views fading in under the shared header
+ * (community-shell.tsx). A view's content (CommunityContent) fades in when
+ * it arrives after a navigation: in place of its loading placeholder, or of
+ * the view before. Never on the first page load, which the server draws
+ * whole, and not at all with reduced motion. Opacity only, so nothing moves.
+ */
+
+/* From a fifth, not from nothing: the placeholder it replaces is gone at
+   once, and a fade from zero reads as a blank frame. */
+@keyframes arrive {
+  from {
+    opacity: 0.2;
+  }
+}
+
+.navigated .content {
+  animation: arrive 180ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigated .content {
+    animation: none;
+  }
+}
+
+/*
+ * The header's ASCII field: faint, and fading out toward the text. Phones
+ * keep it at the top, behind the title, gone before the line under it;
+ * wider screens fade it in from the left, so the title, search and buttons
+ * sit on the plain page and the code on the right is whole.
+ */
+.field {
+  color: color-mix(in oklab, var(--foreground) 12%, transparent);
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 55%),
+    linear-gradient(to bottom, black 0%, black 18%, transparent 42%);
+  mask-composite: intersect;
+}
+
+:global(.dark) .field {
+  color: color-mix(in oklab, var(--foreground) 9%, transparent);
+}
+
+@media (min-width: 48rem) {
+  .field {
+    mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        rgb(0 0 0 / 0.35) 45%,
+        black 75%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 14%,
+        black 86%,
+        transparent 100%
+      );
+  }
+}

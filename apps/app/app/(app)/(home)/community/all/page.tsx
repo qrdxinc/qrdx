@@ -7,13 +7,11 @@ import {
   SidebarLink,
   SidebarSection,
 } from "@/components/community/browse-sidebar";
-import { CommunitySearch } from "@/components/community/community-search";
-import { CommunityTabs } from "@/components/community/community-tabs";
+import { CommunityContent } from "@/components/community/community-content";
+import { GALLERY_FRAME } from "@/components/community/community-skeletons";
 import { cardKey, ItemCard } from "@/components/community/item-card";
 import { readsDatabaseWhileRendering } from "@/lib/build-without-database";
-import { hasCollections, hasKits, hasTemplates } from "@/lib/community/home";
 import type { RankPeriod } from "@/lib/community/home-sections";
-import { LICENSE_SHORT } from "@/lib/community/licence";
 import { createMetadata } from "@/lib/metadata";
 import {
   type AllFrom,
@@ -91,12 +89,7 @@ export default async function CommunityAllPage({
 }) {
   await readsDatabaseWhileRendering();
   const query = parseAllQuery(await searchParams);
-  const [cards, showCollections, showTemplates, showKits] = await Promise.all([
-    allCards(query),
-    hasCollections(),
-    hasTemplates(),
-    hasKits(),
-  ]);
+  const cards = await allCards(query);
   const ranked = isRanking(query);
   const link = (next: Partial<AllQuery>) => allHref(query, next);
 
@@ -147,71 +140,44 @@ export default async function CommunityAllPage({
     </>
   );
 
+  // The header (with the search), tabs and licence line are the shared
+  // community frame (../layout.tsx); the placeholder while this loads is
+  // ./loading.tsx.
   return (
-    <main className="w-full border-b">
-      <section className="mx-6 px-4 pt-12 pb-6 sm:px-6">
-        <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
-          Community
-        </p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight md:text-4xl">
-          Everything
-        </h1>
-        <p className="text-muted-foreground mt-2 max-w-2xl text-pretty">
-          Frames, themes, collections and page templates in one list. Rank them
-          by saves, see what&apos;s new, or search.
-        </p>
-        <p className="text-muted-foreground mt-1 text-xs">{LICENSE_SHORT}</p>
-      </section>
-
-      <CommunityTabs
-        active="all"
-        showCollections={showCollections}
-        showKits={showKits}
-        showTemplates={showTemplates}
-        wide
-      />
-
-      <div className="mx-6">
-        <BrowseLayout
-          activeFilters={
-            (query.q ? 1 : 0) +
-            (query.sort !== "saved" ? 1 : 0) +
-            (ranked && query.period !== "all" ? 1 : 0) +
-            (query.from !== "all" ? 1 : 0)
-          }
-          sheetTitle="Everything"
-          sidebar={sidebar}
-          toolbar={
-            <CommunitySearch
-              className="w-56 sm:w-80"
-              defaultValue={query.q ?? ""}
-            />
-          }
-        >
-          <div className="space-y-6">
-            <h2 className="text-lg font-semibold tracking-tight">
-              {headingOf(query)}
-            </h2>
-            {cards.length > 0 ? (
-              <ol className={GALLERY_GRID}>
-                {cards.map((card, index) => (
-                  <li key={cardKey(card)}>
-                    <ItemCard
-                      card={card}
-                      eager={index < EAGER_CARDS}
-                      rank={ranked ? index + 1 : undefined}
-                      rankAs="badge"
-                    />
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <Empty query={query} />
-            )}
-          </div>
-        </BrowseLayout>
-      </div>
-    </main>
+    <CommunityContent className={GALLERY_FRAME}>
+      <BrowseLayout
+        activeFilters={
+          (query.q ? 1 : 0) +
+          (query.sort !== "saved" ? 1 : 0) +
+          (ranked && query.period !== "all" ? 1 : 0) +
+          (query.from !== "all" ? 1 : 0)
+        }
+        sheetTitle="Everything"
+        sidebar={sidebar}
+        toolbar={
+          <h2 className="text-lg font-semibold tracking-tight">
+            {headingOf(query)}
+          </h2>
+        }
+      >
+        {cards.length > 0 ? (
+          <ol className={GALLERY_GRID}>
+            {cards.map((card, index) => (
+              <li key={cardKey(card)}>
+                <ItemCard
+                  card={card}
+                  eager={index < EAGER_CARDS}
+                  rank={ranked ? index + 1 : undefined}
+                  rankAs="badge"
+                />
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <Empty query={query} />
+        )}
+      </BrowseLayout>
+    </CommunityContent>
   );
 }
 
