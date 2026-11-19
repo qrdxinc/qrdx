@@ -5427,8 +5427,12 @@
       "empty": "空",
       "viewAll": "すべて見る",
       "saves": "保存数",
-      "itemCount": "{count, plural, one {#件} other {#件}}",
-      "yourQrCode": "あなたのQRコード"
+      "typeFrame": "フレーム",
+      "typeTheme": "テーマ",
+      "typePage": "ページ",
+      "typeKit": "キット",
+      "typeCollection": "コレクション",
+      "typeCollectionCount": "コレクション · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "テーブルテントに配置した例",

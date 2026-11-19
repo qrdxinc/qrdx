@@ -1,10 +1,12 @@
 import { Info, Tick } from "@repo/design-system/components/icons";
 import { Badge } from "@repo/design-system/components/ui/badge";
+import { cn } from "@repo/design-system/lib/utils";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { getAdminUser } from "@/app/(app)/admin/_lib/guard";
+import { STAGE } from "@/components/community/card-layout";
 import { CreatorLine } from "@/components/community/creator-line";
 import { ItemActions } from "@/components/community/item-actions";
 import { ItemGrid, ItemRow } from "@/components/community/item-card";
@@ -16,9 +18,9 @@ import {
   withoutFrame,
 } from "@/components/community/item-details";
 import { FrameInUse, ThemeInUse } from "@/components/community/item-previews";
-import { PagePreview } from "@/components/community/page-preview";
 import { RemoveItemButton } from "@/components/community/remove-item-button";
 import { RowSection } from "@/components/community/row-section";
+import { LightPhone } from "@/components/community/stage-mockups";
 import { TryIt } from "@/components/community/try-it";
 import { frameParts } from "@/lib/community/design-parts";
 import { itemScanGate } from "@/lib/community/home";
@@ -128,15 +130,35 @@ export default async function CommunityItemPage({
                 from the community.
               </div>
             ) : item.type === "kit" ? (
-              <div className="grid grid-cols-2 items-start gap-4">
-                <TryIt style={item.preview} />
-                {page && <PagePreview content={page.content} />}
-              </div>
-            ) : page ? (
-              <PagePreview
-                className="mx-auto w-full max-w-[340px]"
-                content={page.content}
+              // The look with your link, and the page on its phone beside
+              // it, rising from the stage's edge.
+              <TryIt
+                page={
+                  page && (
+                    <LightPhone
+                      className="absolute top-[9%] left-[54%] w-[38%]"
+                      content={page.content}
+                      still
+                    />
+                  )
+                }
+                style={item.preview}
               />
+            ) : page ? (
+              // The whole page on a light phone, standing on the stage.
+              <div
+                className={cn(
+                  "relative mx-auto aspect-[4/5] w-full max-w-[560px] overflow-hidden rounded-2xl",
+                  STAGE,
+                )}
+                data-stage=""
+              >
+                <LightPhone
+                  className="absolute top-[6%] left-1/2 h-[88%] -translate-x-1/2"
+                  content={page.content}
+                  still
+                />
+              </div>
             ) : (
               <TryIt style={item.preview} />
             )}

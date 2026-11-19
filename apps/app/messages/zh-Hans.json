@@ -5427,8 +5427,12 @@
       "empty": "空",
       "viewAll": "查看全部",
       "saves": "收藏",
-      "itemCount": "{count, plural, one {# 个项目} other {# 个项目}}",
-      "yourQrCode": "你的二维码"
+      "typeFrame": "边框",
+      "typeTheme": "主题",
+      "typePage": "页面",
+      "typeKit": "套件",
+      "typeCollection": "合集",
+      "typeCollectionCount": "合集 · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "台卡上的效果",

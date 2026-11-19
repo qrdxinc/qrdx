@@ -9,6 +9,7 @@ import {
 import { listFrames, listItems } from "@/lib/community/queries";
 import { COMMUNITY_TAG } from "@/lib/community/store";
 import {
+  CARD_CACHE_KEY,
   type CommunityItemCard,
   type CommunityItemType,
   TYPE_SEGMENTS,
@@ -188,7 +189,7 @@ const withOfficialPreviews = (cards: CommunityItemCard[]) =>
 const publicCards = unstable_cache(
   async (type: GalleryType, filter: Filter, sort: Sort) =>
     withoutOfficialPreviews(await listCards(type, filter, sort, null)),
-  ["community-gallery"],
+  ["community-gallery", CARD_CACHE_KEY],
   { revalidate: 60, tags: [COMMUNITY_TAG] },
 );
 

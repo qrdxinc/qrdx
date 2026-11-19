@@ -1,50 +1,26 @@
-// The pictures that say what an item is: a frame around an empty slot (no
-// code drawn), placed where the engine puts the code, and a theme's swatch,
-// a crop of its code that holds one whole eye and stops short of the next.
+// A theme's swatch: the whole code is drawn, and a transform crops it to a
+// close-up (one whole eye, short of the next) that fills its box; hovered,
+// one transition carries it back to the whole code, centred on its own
+// background.
 
-import { getFrameLayout, getOfficialFrame, QRCode } from "qrdx";
+import { QRCode } from "qrdx";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
-  FrameSlot,
   SWATCH_CODE,
-  SWATCH_VIEW_BOX,
+  SWATCH_UNITS,
   SwatchCrop,
+  swatchTransforms,
 } from "@/components/community/type-previews";
-import { officialFramePreview } from "@/lib/community/catalog";
 
-const TABLE_TENT = getOfficialFrame("table-tent");
-if (!TABLE_TENT) throw new Error("table-tent is missing");
-const FRAME_STYLE = officialFramePreview(TABLE_TENT);
-
-/** The opening tag of the first element whose tag matches `pattern`. */
-const tagWith = (html: string, pattern: RegExp) =>
-  html.match(new RegExp(`<svg[^>]*${pattern.source}[^>]*>`))?.[0] ?? "";
-
-describe("FrameSlot", () => {
-  it("draws the frame with a holder in the code's place and no code", () => {
-    const html = renderToStaticMarkup(
-      <FrameSlot label="Your QR code" style={FRAME_STYLE} />,
-    );
-    const frame = FRAME_STYLE.frame;
-    if (!frame) throw new Error("no frame");
-    const layout = getFrameLayout(128, frame, FRAME_STYLE.bgColor);
-    const slot = tagWith(html, /viewBox="0 0 100 100"/);
-    expect(slot).toContain(`x="${Math.round(layout.qrX * 100) / 100}"`);
-    expect(slot).toContain(`y="${Math.round(layout.qrY * 100) / 100}"`);
-    expect(slot).toContain('width="128"');
-    expect(html).toContain(">Your QR code</text>");
-    expect(html).toContain('data-qrdx-frame="custom"');
-    // The code would be a 128 × 128 <svg>: there is none
-    expect(html).not.toContain('viewBox="0 0 128 128"');
-  });
-
-  it("draws nothing for a style without a frame", () => {
-    expect(
-      renderToStaticMarkup(<FrameSlot label="Your QR code" style={{}} />),
-    ).toBe("");
-  });
-});
+/** A transform's translate (percent of the element) and scale. */
+const parse = (transform: unknown) => {
+  const match = String(transform).match(
+    /^translate\(([-\d.]+)%, ([-\d.]+)%\) scale\(([\d.]+)\)$/,
+  );
+  if (!match) throw new Error(`not a swatch transform: ${transform}`);
+  return { x: Number(match[1]), y: Number(match[2]), scale: Number(match[3]) };
+};
 
 describe("SwatchCrop", () => {
   it("is cut from a 25-module code: one whole eye, short of the next", () => {
@@ -63,17 +39,20 @@ describe("SwatchCrop", () => {
       html.match(
         new RegExp(`data-qrdx-eye="${eye}"><path d="M ([\\d.]+) ([\\d.]+)`),
       );
-    const [, , width, height] = SWATCH_VIEW_BOX.split(" ").map(Number);
-    const topLeft = eyeStart("top-left");
-    const topRight = eyeStart("top-right");
     // 10 units a module: the eye spans 10–80, the next eye starts at 190
-    expect(topLeft?.slice(1)).toEqual(["10", "10"]);
-    expect(topRight?.slice(1)).toEqual(["190", "10"]);
-    expect(80).toBeLessThan(height as number);
-    expect(190).toBeGreaterThan(width as number);
+    expect(eyeStart("top-left")?.slice(1)).toEqual(["10", "10"]);
+    expect(eyeStart("top-right")?.slice(1)).toEqual(["190", "10"]);
+    // At rest a box shows SWATCH_UNITS across, from a little before the
+    // corner: the whole first eye, and not the next one.
+    const { x } = parse(swatchTransforms(4 / 3)["--swatch-rest" as never]);
+    const side = SWATCH_CODE.size / SWATCH_UNITS;
+    const start = -(x / 100) * side * SWATCH_UNITS;
+    expect(start).toBeLessThan(10);
+    expect(start + SWATCH_UNITS).toBeGreaterThan(80);
+    expect(start + SWATCH_UNITS).toBeLessThan(190);
   });
 
-  it("shows that part of the theme's code, filling its box", () => {
+  it("draws the whole code in the theme's colors, without its frame", () => {
     const html = renderToStaticMarkup(
       <SwatchCrop
         style={{
@@ -84,13 +63,37 @@ describe("SwatchCrop", () => {
         }}
       />,
     );
-    const root = html.match(/<svg[^>]*>/)?.[0] ?? "";
-    expect(root).toContain(`viewBox="${SWATCH_VIEW_BOX}"`);
-    expect(root).toContain('preserveAspectRatio="xMinYMin slice"');
-    // In its own colors, without the frame or template around it
+    const root = html.match(/<div[^>]*>/)?.[0] ?? "";
+    expect(root).toContain("width:150%");
+    expect(root).toContain("--swatch-rest");
+    const svg = html.match(/<svg[^>]*>/)?.[0] ?? "";
+    expect(svg).toContain(
+      `viewBox="0 0 ${SWATCH_CODE.size} ${SWATCH_CODE.size}"`,
+    );
     expect(html).toContain("#1d4ed8");
     expect(html).toContain("#eff6ff");
     expect(html).not.toContain("data-qrdx-frame");
     expect(html).not.toContain("svgQrWrapper");
+  });
+
+  it("pulls back to the whole code, centred and inside its box", () => {
+    for (const aspect of [4 / 3, 1]) {
+      const vars = swatchTransforms(aspect);
+      const rest = parse(vars["--swatch-rest" as never]);
+      const full = parse(vars["--swatch-full" as never]);
+      expect(rest.scale).toBe(1);
+      // The element is SWATCH_CODE.size / SWATCH_UNITS box widths across
+      const side = SWATCH_CODE.size / SWATCH_UNITS;
+      const width = side * full.scale;
+      const left = (full.x / 100) * side;
+      const top = (full.y / 100) * side;
+      const height = 1 / aspect;
+      // Centred both ways, with room on every side
+      expect(left + width / 2).toBeCloseTo(0.5, 2);
+      expect(top + width / 2).toBeCloseTo(height / 2, 2);
+      expect(left).toBeGreaterThan(0);
+      expect(top).toBeGreaterThan(0);
+      expect(top + width).toBeLessThan(height);
+    }
   });
 });

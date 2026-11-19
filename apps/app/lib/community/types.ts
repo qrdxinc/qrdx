@@ -56,6 +56,23 @@ export interface CommunityCreator {
   verified: boolean;
 }
 
+/**
+ * The cards' shape, as a part of every cache key that holds cards: change
+ * it when a card changes shape, so lists cached before aren't read as the
+ * new shape (since v2 a collection's stack entries carry their type).
+ */
+export const CARD_CACHE_KEY = "cards-v2";
+
+/**
+ * One of a collection's items on the collection's card: its type, its
+ * design and, for a page template, its page (server only, as on its card).
+ */
+export interface CommunityStackEntry {
+  type: CommunityItemType;
+  preview: ThemeStyles;
+  page?: CommunityItemCard["page"];
+}
+
 /** One card in a grid or row. */
 export interface CommunityItemCard {
   /** null: an official frame read from the engine (not in the database yet) */
@@ -74,8 +91,8 @@ export interface CommunityItemCard {
   publishedAt: string | null;
   /** The design to draw on the card (frames on a plain code) */
   preview: ThemeStyles;
-  /** Collections: up to 3 designs from their items */
-  stack?: ThemeStyles[];
+  /** Collections: their first few items, as their cards draw them */
+  stack?: CommunityStackEntry[];
   /** Collections and kits: how many items they hold */
   itemCount?: number;
   /** Kits whose page template was removed: shown as no longer available */

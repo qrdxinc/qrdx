@@ -2,21 +2,13 @@
 // page preview here, so the page itself never goes to the browser.
 
 import { cn } from "@repo/design-system/lib/utils";
-import {
-  Archive,
-  Box,
-  Brush2,
-  Folder2,
-  type Icon,
-  Mobile,
-  Scan,
-} from "iconsax-reactjs";
+import { Archive } from "iconsax-reactjs";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { TemplatePreview } from "@/components/landing/template-preview";
+import type { CSSProperties, ReactNode } from "react";
 import {
   type CommunityItemCard,
-  type CommunityItemType,
+  type CommunityStackEntry,
   itemPath,
   TYPE_LABELS,
   TYPE_SEGMENTS,
@@ -33,25 +25,18 @@ import {
   RANK_NUMERAL,
   RANK_ROOM,
   RANK_ROOM_WIDE,
+  STAGE_LABEL,
 } from "./card-layout";
 import { CardRail } from "./card-rail";
 import { CreatorLine } from "./creator-line";
 import { LazyDesignQr } from "./design-qr";
 import numeral from "./rank-numeral.module.css";
 import { RowSection } from "./row-section";
+import stage from "./stage.module.css";
+import { LightPhone } from "./stage-mockups";
 import { ThemeSwatch } from "./theme-swatch";
-import { LazyFrameSlot } from "./type-previews";
 
 const COUNT = new Intl.NumberFormat("en", { notation: "compact" });
-
-/** The mark beside an item's type on its card. */
-export const TYPE_ICONS: Record<CommunityItemType, Icon> = {
-  frame: Scan,
-  theme: Brush2,
-  "page-template": Mobile,
-  collection: Folder2,
-  kit: Box,
-};
 
 /** Where a card goes: its item page, or the type's gallery (legacy themes). */
 export const cardHref = (card: CommunityItemCard) =>
@@ -68,10 +53,12 @@ const frameOnlyKit = (card: CommunityItemCard) =>
   Boolean(card.kit?.frame && !card.kit.theme && card.preview.frame);
 
 /**
- * One item in a grid or row: the design on a calm surface, then its name,
- * saves and creator. The design is drawn in the browser as the card nears
- * the screen; `eager` draws it in the server's HTML too (first-screen cards
- * only: a framed design is tens of kilobytes of SVG).
+ * One item in a grid or row: its preview on a light stage, labelled with
+ * its type, then its name and saves, and its creator. The preview is drawn
+ * in the browser as the card nears the screen; `eager` draws it in the
+ * server's HTML too (first-screen cards only: a framed design is tens of
+ * kilobytes of SVG). Hovering the card, or focusing its link, plays the
+ * preview's motion (./stage.module.css).
  */
 export function ItemCard({
   card,
@@ -86,15 +73,14 @@ export function ItemCard({
   /** Its place in a ranking */
   rank?: number;
   /**
-   * How the place shows: large and half behind the design's box (rows,
-   * which leave room for it), or a small badge on the box (grids)
+   * How the place shows: large and half behind the stage (rows, which
+   * leave room for it), or a small label on the stage beside its type
+   * (grids)
    */
   rankAs?: "numeral" | "badge";
 }) {
   const t = useTranslations("community.itemCard");
-  const stack = card.type === "collection" ? (card.stack ?? []) : [];
   const type = TYPE_LABELS[card.type].one;
-  const TypeIcon = TYPE_ICONS[card.type];
   // Page previews have links of their own, so the card's link is stretched
   // over the card instead of wrapping it (nested <a> is invalid HTML and
   // breaks hydration), as on the /templates gallery.
@@ -102,6 +88,7 @@ export function ItemCard({
     <article
       className={cn(
         CARD_FRAME,
+        stage.card,
         rank !== undefined && rankAs === "numeral" && numeral.card,
         className,
       )}
@@ -115,100 +102,23 @@ export function ItemCard({
         {rank !== undefined && rankAs === "numeral" && (
           <RankNumeral id={rankId(card, rank)} rank={rank} />
         )}
-        <div className={CARD_ART}>
-          {card.type === "collection" ? (
-            <div className="absolute inset-5 grid place-items-center">
-              {stack.length === 0 ? (
-                <span className="text-muted-foreground text-xs">
-                  {t("empty")}
-                </span>
-              ) : (
-                stack.map((style, index) => (
-                  <div
-                    className="absolute grid aspect-square h-[80%] place-items-center rounded-lg bg-white p-2 shadow-sm ring-1 ring-black/5"
-                    key={index}
-                    style={{
-                      transform: `translateX(${(index - (stack.length - 1) / 2) * 24}%) rotate(${(index - (stack.length - 1) / 2) * 5}deg)`,
-                      zIndex: index,
-                    }}
-                  >
-                    {/* Only the front design of an eager card is in the
-                      HTML; the ones behind it draw in the browser. */}
-                    <LazyDesignQr
-                      className="size-full"
-                      eager={eager && index === stack.length - 1}
-                      style={style}
-                    />
-                  </div>
-                ))
-              )}
-            </div>
-          ) : card.type === "kit" ? (
-            // The look (a swatch, or the frame it brings) and the page, side
-            // by side: "look + page".
-            <div className="absolute inset-0 flex items-start justify-center gap-3 px-5 pt-5">
-              {frameOnlyKit(card) ? (
-                <LazyFrameSlot
-                  className="mt-6 aspect-square w-[36%] drop-shadow-sm"
-                  eager={eager}
-                  label={t("yourQrCode")}
-                  style={card.preview}
-                />
-              ) : (
-                <ThemeSwatch
-                  className="mt-6 aspect-square w-[36%]"
-                  compact
-                  eager={eager}
-                  style={card.preview}
-                />
-              )}
-              <div className="aspect-[9/16] w-[34%] overflow-hidden rounded-t-xl bg-white shadow-sm ring-1 ring-black/5">
-                {card.page ? (
-                  <TemplatePreview
-                    className="size-full"
-                    content={card.page.content}
-                  />
-                ) : null}
-              </div>
-            </div>
-          ) : card.type === "page-template" ? (
-            // The top of the page on a phone-sized screen, cropped by the box.
-            <div className="absolute top-5 left-1/2 aspect-[9/16] w-[42%] -translate-x-1/2 overflow-hidden rounded-t-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-300 motion-safe:group-hover:-translate-y-1">
-              {card.page ? (
-                <TemplatePreview
-                  className="size-full"
-                  content={card.page.content}
-                />
-              ) : null}
-            </div>
-          ) : card.type === "frame" ? (
-            // A frame is a card of its own, drawn as it is with a holder
-            // where your code goes: a frame, not a code.
-            <div className="absolute inset-y-[8%] inset-x-0 transition-transform duration-300 motion-safe:group-hover:scale-[1.03]">
-              <LazyFrameSlot
-                className="size-full drop-shadow-sm"
-                eager={eager}
-                label={t("yourQrCode")}
-                style={card.preview}
-              />
-            </div>
-          ) : (
-            // A theme is a look: a close-up of its code with its colors.
-            // One that carries a frame shows it on its page.
-            <ThemeSwatch
-              className="absolute inset-[8%] transition-transform duration-300 motion-safe:group-hover:scale-[1.02]"
-              eager={eager}
-              style={card.preview}
-            />
-          )}
-          {rank !== undefined && rankAs === "badge" && (
-            <span
-              aria-hidden
-              className="bg-background/90 text-foreground absolute top-2 left-2 grid h-6 min-w-6 place-items-center rounded-md border px-1.5 text-xs font-semibold tabular-nums shadow-xs"
-            >
-              {rank}
+        <div className={CARD_ART} data-stage="">
+          <CardPicture card={card} eager={eager} />
+          <div
+            aria-hidden
+            className="absolute top-2.5 left-2.5 z-[3] flex items-center gap-1"
+          >
+            {rank !== undefined && rankAs === "badge" && (
+              <span className={cn(STAGE_LABEL, "font-semibold tabular-nums")}>
+                {rank}
+              </span>
+            )}
+            <span className={STAGE_LABEL} data-type-label="">
+              {card.type === "collection" && card.itemCount !== undefined
+                ? t("typeCollectionCount", { count: card.itemCount })
+                : t(TYPE_KEYS[card.type])}
             </span>
-          )}
+          </div>
         </div>
       </div>
       <div className={cn(CARD_TEXT, CARD_TEXT_REVEAL)}>
@@ -229,15 +139,231 @@ export function ItemCard({
             handle={false}
             link={false}
           />
-          <span className="flex shrink-0 items-center gap-1">
-            <TypeIcon aria-hidden className="size-4" />
-            {card.type === "collection" && card.itemCount !== undefined
-              ? t("itemCount", { count: card.itemCount })
-              : type}
-          </span>
         </div>
       </div>
     </article>
+  );
+}
+
+/** The words of each type's label on the stage (community.itemCard). */
+const TYPE_KEYS = {
+  frame: "typeFrame",
+  theme: "typeTheme",
+  "page-template": "typePage",
+  kit: "typeKit",
+  collection: "typeCollection",
+} as const;
+
+/** What a card shows on its stage, by its type. */
+function CardPicture({
+  card,
+  eager,
+}: {
+  card: CommunityItemCard;
+  eager: boolean;
+}) {
+  switch (card.type) {
+    case "frame":
+      // A printed piece standing on the stage, around a sample code; it
+      // lifts off the stage when the card is hovered.
+      return (
+        <div
+          className={cn("absolute inset-x-[8%] inset-y-[6%]", stage.frame)}
+          data-frame-piece=""
+        >
+          <LazyDesignQr
+            className="size-full"
+            eager={eager}
+            style={card.preview}
+          />
+        </div>
+      );
+    case "theme":
+      // A look: a close-up of its code, filling the stage, with its colors.
+      return <ThemeSwatch eager={eager} style={card.preview} />;
+    case "page-template":
+      // The top of the page on a phone, rising from the stage's edge.
+      return card.page ? (
+        <LightPhone
+          className="absolute top-[12%] left-1/4 w-1/2"
+          content={card.page.content}
+        />
+      ) : null;
+    case "kit":
+      return <KitPicture card={card} eager={eager} />;
+    case "collection":
+      return <CollectionPicture eager={eager} stack={card.stack ?? []} />;
+    default:
+      return null;
+  }
+}
+
+/**
+ * A kit: its look (a swatch, or the frame it brings) in front of its page,
+ * overlapping a little, like a product shot. Hovered, they part.
+ */
+function KitPicture({
+  card,
+  eager,
+}: {
+  card: CommunityItemCard;
+  eager: boolean;
+}) {
+  return (
+    <>
+      {card.page && (
+        <div
+          className={cn("absolute top-[9%] left-[47%] w-[40%]", stage.kitPage)}
+        >
+          <LightPhone className="w-full" content={card.page.content} still />
+        </div>
+      )}
+      <div
+        className={cn(
+          "absolute top-[27%] left-[10%] aspect-square w-[42%]",
+          stage.kitLook,
+        )}
+      >
+        {frameOnlyKit(card) ? (
+          <LazyDesignQr
+            className={cn("absolute inset-0", stage.object)}
+            eager={eager}
+            style={card.preview}
+          />
+        ) : (
+          <div className={cn("absolute inset-0 rounded-xl", stage.object)}>
+            <ThemeSwatch
+              aspect={1}
+              className="rounded-xl"
+              compact
+              eager={eager}
+              style={card.preview}
+            />
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+/** One of a collection's items, as its own card draws it, fitting its box. */
+function StackPiece({
+  entry,
+  eager,
+}: {
+  entry: CommunityStackEntry;
+  eager: boolean;
+}) {
+  if (entry.type === "frame") {
+    return (
+      <LazyDesignQr
+        className={cn("absolute inset-0", stage.object)}
+        eager={eager}
+        style={entry.preview}
+      />
+    );
+  }
+  if (entry.type === "page-template") {
+    return entry.page ? (
+      <div className="absolute inset-0 grid place-items-center">
+        <LightPhone className="h-full" content={entry.page.content} still />
+      </div>
+    ) : null;
+  }
+  return (
+    <div className="absolute inset-0 grid place-items-center [container-type:size]">
+      <div
+        className={cn(
+          "relative aspect-square w-[min(100cqw,100cqh)] overflow-hidden rounded-lg",
+          stage.object,
+        )}
+      >
+        <ThemeSwatch aspect={1} compact eager={eager} style={entry.preview} />
+      </div>
+    </div>
+  );
+}
+
+/** A piece of a fan: where it stands, at rest and spread (hovered). */
+interface FanPlace {
+  left: string;
+  rest: string;
+  spread: string;
+}
+
+/** The side pieces of a fan: a little smaller and lower, turned out. */
+const side = (left: string, turn: 1 | -1, shift: number): FanPlace => ({
+  left,
+  rest: `translateY(5%) rotate(${turn * 3}deg) scale(0.9)`,
+  spread: `translate(${turn * shift}px, 5%) rotate(${turn * 4}deg) scale(0.9)`,
+});
+
+/** Where each piece of a fan stands, by how many there are. */
+const FAN: Record<number, FanPlace[]> = {
+  1: [{ left: "31%", rest: "none", spread: "translateY(-3px)" }],
+  2: [side("17%", -1, 6), side("45%", 1, 6)],
+  3: [
+    side("5%", -1, 7),
+    { left: "31%", rest: "none", spread: "translateY(-3px)" },
+    side("57%", 1, 7),
+  ],
+};
+
+/**
+ * A collection: its first items (up to three), each drawn as its own card
+ * draws it (a frame around a code, a theme's swatch, a page on a phone),
+ * standing in a tidy fan, the first in front. Hovered, the fan spreads.
+ */
+function CollectionPicture({
+  stack,
+  eager,
+}: {
+  stack: CommunityStackEntry[];
+  eager: boolean;
+}): ReactNode {
+  const t = useTranslations("community.itemCard");
+  if (stack.length === 0) {
+    return (
+      <span className="absolute inset-0 grid place-items-center text-xs text-zinc-500">
+        {t("empty")}
+      </span>
+    );
+  }
+  const pieces = stack.slice(0, 3);
+  const places = FAN[pieces.length] ?? FAN[3];
+  const middle = Math.floor((pieces.length - 1) / 2);
+  // The first item stands in the middle, in front; the next ones beside it
+  const order =
+    pieces.length === 3 ? [pieces[1], pieces[0], pieces[2]] : pieces;
+  return (
+    <>
+      {order.map((entry, index) => {
+        const place = places[index];
+        if (!(entry && place)) return null;
+        return (
+          <div
+            className={cn(
+              "absolute top-[15%] bottom-[7%] w-[38%] origin-bottom",
+              stage.piece,
+            )}
+            data-stack-piece={entry.type}
+            // A collection may hold the same design twice
+            key={index}
+            style={
+              {
+                left: place.left,
+                zIndex: index === middle ? 2 : 1,
+                "--piece": index,
+                "--piece-rest": place.rest,
+                "--piece-spread": place.spread,
+              } as CSSProperties
+            }
+          >
+            <StackPiece entry={entry} eager={eager && index === middle} />
+          </div>
+        );
+      })}
+    </>
   );
 }
 

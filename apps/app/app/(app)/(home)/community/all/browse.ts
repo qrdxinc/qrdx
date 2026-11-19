@@ -14,7 +14,11 @@ import {
   trendingItems,
 } from "@/lib/community/queries";
 import { COMMUNITY_TAG } from "@/lib/community/store";
-import type { CommunityItemCard, RankedCard } from "@/lib/community/types";
+import {
+  CARD_CACHE_KEY,
+  type CommunityItemCard,
+  type RankedCard,
+} from "@/lib/community/types";
 
 // /community/all: every type in one list. The overview's "View all" links
 // land here: a ranking (most saved, trending) over a period, the newest
@@ -107,7 +111,7 @@ async function listFor(
     : mostSavedItems({ since, limit: ALL_LIMIT, filter });
 }
 
-const cachedList = unstable_cache(listFor, ["community-all"], {
+const cachedList = unstable_cache(listFor, ["community-all", CARD_CACHE_KEY], {
   revalidate: 60,
   tags: [COMMUNITY_TAG],
 });

@@ -5826,8 +5826,12 @@
       "empty": "Empty",
       "viewAll": "View all",
       "saves": "Saves",
-      "itemCount": "{count, plural, one {# item} other {# items}}",
-      "yourQrCode": "Your QR code"
+      "typeFrame": "Frame",
+      "typeTheme": "Theme",
+      "typePage": "Page",
+      "typeKit": "Kit",
+      "typeCollection": "Collection",
+      "typeCollectionCount": "Collection · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "On a table tent",
