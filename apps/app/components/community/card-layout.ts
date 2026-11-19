@@ -7,10 +7,13 @@
 /**
  * A row that scrolls sideways: it runs to the frame's rails on both sides,
  * so the last card is cut at the edge, and snaps card by card on touch.
- * The gap leaves each card's caption clear of its neighbour's.
+ * The gap leaves each card's caption clear of its neighbour's. A row that
+ * scrolls sideways clips up and down too, so it keeps room above the cards
+ * for a hovered card to lift into (pt-3, taken back by -mt-3 so the row
+ * stays where it was); without it the card's top edge was cut off.
  */
 export const RAIL =
-  "no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-pl-4 gap-5 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:-mx-6 sm:scroll-pl-6 sm:px-6 md:gap-6 xl:gap-8";
+  "no-scrollbar -mx-4 -mt-3 flex snap-x snap-mandatory scroll-pl-4 gap-5 overflow-x-auto overscroll-x-contain px-4 pt-3 pb-2 sm:-mx-6 sm:scroll-pl-6 sm:px-6 md:gap-6 xl:gap-8";
 
 /** A card's box in a row: about four and a half across a wide screen. */
 export const RAIL_CARD =

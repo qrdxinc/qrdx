@@ -7,6 +7,7 @@ import { Card } from "@repo/design-system/components/ui/card";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { LocaleLink } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import { SCAN_MILESTONES } from "@/lib/events/types";
 import type { CodeLiveCard as CodeLiveCardData } from "./pro-moments-rules";
 
@@ -84,11 +85,12 @@ export function CodeLiveCard({
       <div className="flex flex-wrap gap-2">
         <Button asChild size="sm">
           <LocaleLink
-            href="/pricing"
+            href={pricingHref("home_card")}
             onClick={() =>
               track("upgrade_clicked", {
                 source: "home_code_live",
                 plan: "pro",
+                surface: "home_card",
               })
             }
           >

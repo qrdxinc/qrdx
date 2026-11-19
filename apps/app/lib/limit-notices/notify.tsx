@@ -14,6 +14,7 @@ import cuid from "cuid";
 import { and, eq, inArray, like } from "drizzle-orm";
 import { resolveMeterCaps } from "@/app/(app)/settings/usage/_lib/meters";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
+import { pricingHref } from "@/lib/checkout-surface";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { sendEmail } from "@/lib/email/send";
 import { emailIntl } from "@/lib/i18n/email";
@@ -270,7 +271,7 @@ export async function sendLimitNotice(
               copy.upgradePlan
                 ? {
                     planName: copy.upgradePlan,
-                    url: absolute("/pricing?interval=month"),
+                    url: absolute(pricingHref("limit_email", "month")),
                   }
                 : undefined
             }

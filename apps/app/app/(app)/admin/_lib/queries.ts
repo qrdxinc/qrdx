@@ -34,6 +34,7 @@ import {
   sql,
 } from "drizzle-orm";
 import type { PgColumn } from "drizzle-orm/pg-core";
+import { recordedSurface } from "@/lib/checkout-surface";
 import { JOB_STORE_PROVIDER } from "@/lib/migrate/server/repo";
 import { offsetOf, PAGE_SIZE } from "@/lib/paging";
 import { type Plan, planForSubscriptionProduct } from "@/lib/plans";
@@ -321,6 +322,7 @@ export async function listSubscriptions({
         currentPeriodEnd: subscription.currentPeriodEnd,
         cancelAtPeriodEnd: subscription.cancelAtPeriodEnd,
         createdAt: subscription.createdAt,
+        metadata: subscription.metadata,
         userId: user.id,
         email: user.email,
       })
@@ -333,7 +335,15 @@ export async function listSubscriptions({
     db.select({ total: count() }).from(subscription).where(where),
   ]);
 
-  return { total, subscriptions: rows };
+  return {
+    total,
+    subscriptions: rows.map(({ metadata, ...row }) => ({
+      ...row,
+      // The button or page that led to the payment, as checkout recorded
+      // it (lib/checkout-surface.ts); null before it was recorded.
+      surface: recordedSurface(metadata),
+    })),
+  };
 }
 
 // Integrations

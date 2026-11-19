@@ -69,6 +69,12 @@ export interface LlmsTxtInput {
   offered: PricingOptions;
   /** False for links to pages this deployment hides (lib/feature-availability). */
   showsPath: (path: string) => boolean;
+  /**
+   * Whether the marketing site serves its custom domain page here
+   * (SITE_GROUPS.products, lib/site-zone-on.ts). This app has no page
+   * there, so it's listed only then. Defaults to false.
+   */
+  customDomainPage?: boolean;
   limits: Record<Plan, PlanLimits>;
   docs: LlmsDocsSection[];
   blog: LlmsLink[];
@@ -138,12 +144,25 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     `- Markdown versions: add \`.md\` to any docs URL (for example ${abs("/docs/developers/mcp.md")}); ${abs("/pricing.md")} and ${abs("/mcp.md")} are Markdown too, and ${abs("/llms-full.txt")} has every docs page in one file.`,
   ].join("\n");
 
+  const domainPlans = (["pro", "business"] as const satisfies PaidPlan[])
+    .filter((plan) => input.limits[plan].customDomains > 0)
+    .map(
+      (plan) =>
+        `${input.limits[plan].customDomains} on ${PLAN_NAMES[plan]} (${formatPrice(PRICING[plan].month.amounts.USD, "USD")} a month)`,
+    );
   const product = links([
     {
       title: "Dynamic QR code generator",
       url: "/dynamic-qr-code",
       description: `What dynamic codes do on each plan: ${input.limits.free.dynamicCodes} free with unlimited scans, editing after printing, scan analytics, hosted pages, smart routing and the REST API`,
     },
+    on("customDomains") &&
+      Boolean(input.customDomainPage) &&
+      domainPlans.length > 0 && {
+        title: "QR codes on your own domain",
+        url: "/custom-domain-qr-codes",
+        description: `Dynamic QR codes whose short links use a domain you own, like go.yourbrand.com/menu, connected with one DNS record and served over HTTPS. Custom domains per plan: ${domainPlans.join(", ")}`,
+      },
     {
       title: "Dynamic QR codes",
       url: "/docs/dynamic-qr-codes",

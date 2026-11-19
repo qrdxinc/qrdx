@@ -45,6 +45,7 @@ export function InlineLimit({
         copy={copy}
         meter={meter}
         source="inline_limit"
+        surface="inline_limit"
         usageHref={limits.usageHref}
       />
     </div>

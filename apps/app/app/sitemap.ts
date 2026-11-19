@@ -46,6 +46,9 @@ export const revalidate = false;
 
 type Entry = MetadataRoute.Sitemap[number];
 
+/** The marketing site's custom domain page (SITE_GROUPS.products). */
+const CUSTOM_DOMAIN_PAGE = "/custom-domain-qr-codes";
+
 // lastmod is a real date or absent, never the build time (lib/seo-dates.ts).
 /**
  * Every translated page (packages/i18n/localized-paths.json `paths`) as its
@@ -308,6 +311,19 @@ function entries(docs: Entry[]): Entry[] {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    // Only the marketing site has this page (@repo/next-config/site-zone
+    // `products`), so it's listed while the site serves the group and
+    // custom domains can be added here. No lastmod: its copy isn't in this
+    // repo.
+    ...(siteServes("products") && isPathAvailable(CUSTOM_DOMAIN_PAGE)
+      ? [
+          {
+            url: url(CUSTOM_DOMAIN_PAGE),
+            changeFrequency: "monthly",
+            priority: 0.8,
+          } satisfies Entry,
+        ]
+      : []),
     {
       url: url("/plugins"),
       lastModified: pageDate("/plugins"),

@@ -34,6 +34,7 @@ import {
   useLocalizeHref,
   useLocaleRouter as useRouter,
 } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 import { playgroundHref } from "@/lib/playground-links";
 import { PLAN_NAMES, type Plan } from "@/lib/pricing";
@@ -198,7 +199,7 @@ export function UserProfileDropdown({
               </DropdownMenuItem>
             ) : (
               <DropdownMenuItem asChild>
-                <Link href="/pricing">
+                <Link href={pricingHref("account_menu")}>
                   <Crown1 /> {t("upgradeToPro")}
                 </Link>
               </DropdownMenuItem>

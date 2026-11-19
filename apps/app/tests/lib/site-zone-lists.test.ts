@@ -190,7 +190,9 @@ describe("before the site serves the generators and barcodes", () => {
 
 // Stage two's groups and the home page (/) keep their URLs whichever app
 // serves them, so this app's sitemap goes on listing them and robots.txt
-// names no sitemap of theirs (SITE_SITEMAPS has none).
+// names no sitemap of theirs (SITE_SITEMAPS has none). The one page only the
+// site has, /custom-domain-qr-codes, joins the list while the site serves
+// `products` (below).
 describe("while the marketing site serves pages without a sitemap of their own", () => {
   const groups = [
     "trust",
@@ -216,7 +218,9 @@ describe("while the marketing site serves pages without a sitemap of their own",
     const before = (await sitemap()).map((entry) => entry.url);
     zone.groups = new Set(groups);
     const after = (await sitemap()).map((entry) => entry.url);
-    expect(after).toEqual(before);
+    expect(after.filter((url) => !url.endsWith(CUSTOM_DOMAIN_PAGE))).toEqual(
+      before,
+    );
     for (const path of ["/pricing", "/integrations", "/security", "/"]) {
       expect(after, path).toContain(new URL(path, after[0]).toString());
     }
@@ -228,5 +232,41 @@ describe("while the marketing site serves pages without a sitemap of their own",
     expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
       "/sitemap.xml",
     ]);
+  });
+});
+
+// /custom-domain-qr-codes is the marketing site's page alone (SITE_GROUPS
+// .products): this app has none, so its sitemap and llms.txt list it only
+// while the site serves that group.
+const CUSTOM_DOMAIN_PAGE = "/custom-domain-qr-codes";
+
+describe("the site's custom domain page", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set();
+  });
+
+  it("is in neither list without the site", async () => {
+    const paths = (await sitemap()).map((entry) => new URL(entry.url).pathname);
+    expect(paths).not.toContain(CUSTOM_DOMAIN_PAGE);
+    expect(await llmsTxt()).not.toContain(CUSTOM_DOMAIN_PAGE);
+  });
+
+  it("is in both while the site serves the product pages", async () => {
+    zone.groups = new Set(["products"]);
+    const entries = (await sitemap()).filter(
+      (entry) => new URL(entry.url).pathname === CUSTOM_DOMAIN_PAGE,
+    );
+    // No lastmod: its copy isn't in this repo.
+    expect(entries).toEqual([
+      {
+        url: expect.stringMatching(/\/custom-domain-qr-codes$/),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+    ]);
+    expect(await llmsTxt()).toMatch(
+      /- \[QR codes on your own domain\]\([^)]*\/custom-domain-qr-codes\): /,
+    );
   });
 });

@@ -57,6 +57,7 @@ import { conversionsAllowed } from "@/ee/conversions/access";
 import { ConversionsSummary } from "@/ee/conversions/analytics-cards";
 import { getConversionSummary } from "@/ee/conversions/queries";
 import { getCheckoutOpen } from "@/lib/checkout-availability";
+import { pricingHref } from "@/lib/checkout-surface";
 import { getAppTranslations } from "@/lib/i18n/app-locale";
 import { can } from "@/lib/permissions";
 import { getPlanForScope, getPlanLimits } from "@/lib/plans";
@@ -316,7 +317,9 @@ export default async function AnalyticsPage({
         {upgrade &&
           SCAN_RANGE_KEYS.some((key) => SCAN_RANGES[key] > retentionDays) && (
             <Button asChild size="sm" variant="link">
-              <LocaleLink href="/pricing">{t("comparePlans")}</LocaleLink>
+              <LocaleLink href={pricingHref("analytics_locked")}>
+                {t("comparePlans")}
+              </LocaleLink>
             </Button>
           )}
       </nav>

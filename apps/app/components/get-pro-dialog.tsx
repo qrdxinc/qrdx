@@ -25,6 +25,7 @@ import {
 import { GridLines } from "@/components/fx";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
 import { buildUpgradeHighlights } from "@/components/sections/pricing/upgrade-highlights";
+import { pricingHref } from "@/lib/checkout-surface";
 import { easterEggUrl } from "@/lib/easter-eggs";
 import { PAID_PLANS, type PaidPlan, PLAN_NAMES } from "@/lib/pricing";
 import type { UpgradePayer } from "@/store/get-pro-dialog-store";
@@ -161,6 +162,7 @@ export function GetProDialog({
                   onNavigate={onClose}
                   plan={plan}
                   source="dialog"
+                  surface="get_pro_dialog"
                   waiting={waiting}
                 />
               )}
@@ -175,10 +177,14 @@ export function GetProDialog({
                 variant={checkout ? "ghost" : "default"}
               >
                 <Link
-                  href="/pricing"
+                  href={pricingHref("get_pro_dialog")}
                   onClick={() => {
                     if (!checkout) {
-                      track("upgrade_clicked", { source: "dialog", plan });
+                      track("upgrade_clicked", {
+                        source: "dialog",
+                        plan,
+                        surface: "get_pro_dialog",
+                      });
                     }
                   }}
                   onNavigate={onClose}

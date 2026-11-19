@@ -12,6 +12,7 @@ import {
   meterValue,
   upgradeTo,
 } from "@/app/(app)/settings/usage/_lib/meters";
+import type { KnownCheckoutSurface } from "@/lib/checkout-surface";
 import { PLAN_NAMES, type Plan } from "@/lib/pricing";
 import { usePlanLimits } from "./plan-limits-provider";
 import { UpgradeButton } from "./upgrade-button";
@@ -29,6 +30,7 @@ export function CapMeter({
   plan,
   note,
   source,
+  surface,
 }: {
   meterId: MeterId;
   used: number;
@@ -38,6 +40,8 @@ export function CapMeter({
   note: string;
   /** For the upgrade click's analytics */
   source: string;
+  /** Recorded on the payment (lib/checkout-surface.ts) */
+  surface: KnownCheckoutSurface;
 }) {
   const t = useTranslations("limits.capMeter");
   const limits = usePlanLimits();
@@ -97,6 +101,7 @@ export function CapMeter({
         <UpgradeButton
           className="shrink-0 self-start sm:self-center"
           source={source}
+          surface={surface}
           upgrade={upgrade}
           variant="outline"
         />

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Fragment } from "react";
 import { LocaleLink } from "@/components/i18n/locale-link";
+import { type KnownCheckoutSurface, withSurface } from "@/lib/checkout-surface";
 import { EUR_PRICES, type PricingCurrency } from "@/lib/pricing";
 import {
   CURRENCY_COOKIE,
@@ -28,11 +29,19 @@ export function switchTargets(
  * cookie. Display only: checkout charges the currency of the visitor's
  * country (lib/region.ts checkoutCurrency).
  */
-export function CurrencyNote({ currency }: { currency: PricingCurrency }) {
+export function CurrencyNote({
+  currency,
+  from = null,
+}: {
+  currency: PricingCurrency;
+  /** The link that brought them to pricing: switching currency keeps it */
+  from?: KnownCheckoutSurface | null;
+}) {
   const t = useTranslations("pricing.currency");
   const note = { USD: "usd", INR: "inr", EUR: "eur" } as const;
   const label = { USD: "showUsd", INR: "showInr", EUR: "showEur" } as const;
 
+  const withFrom = (href: string) => (from ? withSurface(href, from) : href);
   const remember = (next: PricingCurrency) => () => {
     try {
       // biome-ignore lint/suspicious/noDocumentCookie: a display preference; the server reads it on the next render
@@ -50,7 +59,9 @@ export function CurrencyNote({ currency }: { currency: PricingCurrency }) {
           {index > 0 && <span aria-hidden> · </span>}
           <LocaleLink
             className={LINK}
-            href={`/pricing?${CURRENCY_PARAM}=${overrideForCurrency(next)}`}
+            href={withFrom(
+              `/pricing?${CURRENCY_PARAM}=${overrideForCurrency(next)}`,
+            )}
             onClick={remember(next)}
             replace
             scroll={false}

@@ -25,6 +25,7 @@ import {
 } from "@/lib/agents/well-known";
 import { MCP_PUBLIC_URL } from "@/lib/mcp-clients";
 import { PLAN_LIMITS } from "@/lib/plans";
+import { formatPrice, PRICING } from "@/lib/pricing";
 import { PRODUCT_FACTS } from "@/lib/product-facts";
 import { QR_TYPES } from "@/lib/qr-types-content";
 import { HOSTED_QR_TYPES, hostedTypePath } from "@/lib/qr-types-content-hosted";
@@ -243,6 +244,30 @@ describe("llms.txt", () => {
     expect(limited).not.toContain("/ai/art");
     expect(limited).not.toContain(`${LOCAL.origin}/ai)`);
     expect(limited).not.toMatch(/AI art/);
+  });
+
+  it("lists the site's custom domain page only while the site serves it", () => {
+    const page = `${LOCAL.origin}/custom-domain-qr-codes)`;
+    // This app has no page there: without the site it's never listed.
+    expect(text).not.toContain(page);
+    const served = buildLlmsTxt(fixture({ customDomainPage: true }));
+    const product = served.slice(
+      served.indexOf("## Product"),
+      served.indexOf("## Playground and tools"),
+    );
+    expect(product).toContain(
+      `- [QR codes on your own domain](${page}: Dynamic QR codes whose short links use a domain you own, like go.yourbrand.com/menu, connected with one DNS record and served over HTTPS. Custom domains per plan: ${PLAN_LIMITS.pro.customDomains} on Pro (${formatPrice(PRICING.pro.month.amounts.USD, "USD")} a month), ${PLAN_LIMITS.business.customDomains} on Business (${formatPrice(PRICING.business.month.amounts.USD, "USD")} a month)`,
+    );
+    // Nor where custom domains can't be added.
+    for (const limited of [
+      fixture({ customDomainPage: true, offered: { customDomains: false } }),
+      fixture({
+        customDomainPage: true,
+        showsPath: (p) => p !== "/custom-domain-qr-codes",
+      }),
+    ]) {
+      expect(buildLlmsTxt(limited)).not.toContain(page);
+    }
   });
 
   it("puts help pages under Help center and the rest under Docs", () => {

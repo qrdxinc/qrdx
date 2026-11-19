@@ -3,6 +3,7 @@
 import { ArrowRight } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { LocaleLink as Link } from "@/components/i18n/locale-link";
+import { pricingHref } from "@/lib/checkout-surface";
 import { useSubscription } from "@/lib/hooks/use-subscription";
 
 export function AIAnnouncement() {
@@ -17,7 +18,7 @@ export function AIAnnouncement() {
   return (
     <div className="mx-auto max-w-3xl">
       <Link
-        href="/pricing"
+        href={pricingHref("ai_page")}
         className="group bg-muted flex items-center justify-between gap-2 rounded-full px-2 py-1.5 shadow-sm transition-all duration-200 hover:shadow-md"
       >
         <span className="text-muted-foreground group-hover:text-foreground text-sm font-medium transition-colors">

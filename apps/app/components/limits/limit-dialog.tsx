@@ -119,6 +119,7 @@ export function LimitDialogHost() {
             onNavigate={close}
             showStatus={false}
             source="limit_dialog"
+            surface="limit_dialog"
             usageHref={limits.usageHref}
           />
         )}

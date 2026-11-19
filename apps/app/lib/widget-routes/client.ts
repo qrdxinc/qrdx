@@ -6,6 +6,7 @@
 import type { z } from "zod";
 import type { SavedTheme } from "@/app/(app)/dashboard/themes/_lib/theme";
 import type { createBarcodeSchema } from "@/lib/barcodes/schema";
+import type { KnownCheckoutSurface } from "@/lib/checkout-surface";
 import type { BillingInterval, PaidPlan } from "@/lib/pricing";
 import type {
   BarcodeActionResult,
@@ -158,10 +159,14 @@ export function saveGeneratorBarcode(
   return call(inLocale(WIDGET_ROUTES.barcodes, locale), "POST", input);
 }
 
-/** A Polar checkout for `plan`, or why not (sign_in, subscribed, …). */
+/**
+ * A Polar checkout for `plan`, or why not (sign_in, subscribed, …).
+ * `surface`: the button or page it starts from (lib/checkout-surface.ts).
+ */
 export function startCheckout(input: {
   plan: PaidPlan;
   interval: BillingInterval;
+  surface: KnownCheckoutSurface;
 }): Promise<CheckoutResult> {
   return call(WIDGET_ROUTES.checkout, "POST", input, isCheckoutResult);
 }
