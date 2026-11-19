@@ -6980,6 +6980,7 @@
           "noPassword": "Tanpa kata sandi",
           "noLimit": "Tanpa batas",
           "heldForReview": "Menunggu peninjauan",
+          "heldQuestions": "Ada pertanyaan? Tulis ke {email}.",
           "turnedOffByQrdx": "Dinonaktifkan oleh QRdx",
           "ourAutomatedChecksFlaggedA": "Pemeriksaan otomatis kami menandai sebuah tautan pada kode ini (misalnya pemendek URL, alamat IP, atau domain tiruan), sehingga kode tetap nonaktif hingga disetujui oleh peninjau, biasanya dalam sehari. Anda tidak perlu melakukan apa pun.",
           "thisCodeWasSwitchedOff": "Kode ini dinonaktifkan setelah peninjauan penyalahgunaan dan tidak mengalihkan. Hubungi support@qrdx.dev jika Anda merasa ini keliru.",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "Akses & jadwal"
         },
         "codeOverview": {
+          "heldNote": "Menunggu pemeriksaan keamanan singkat. Tautan dari akun baru ke jenis alamat tertentu, seperti pemendek URL, alamat IP, atau domain tiruan, diperiksa oleh petugas sebelum aktif, jadi kode ini nonaktif sampai saat itu. Jangan dicetak dulu. Pertanyaan: {email}",
           "editLink": "Edit tautan",
           "changeType": "Ubah tipe",
           "shortLinkEncodedInThe": "Tautan pendek (dikodekan dalam kode QR)",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "Dijeda",
           "pausedScansGoToThe": "Dijeda: pemindaian diarahkan ke URL cadangan atau halaman “dijeda” netral",
-          "turnedOffByQrdxModeration": "Dinonaktifkan oleh moderasi QRdx. Hubungi dukungan jika ini suatu kesalahan."
+          "turnedOffByQrdxModeration": "Dinonaktifkan oleh moderasi QRdx. Hubungi dukungan jika ini suatu kesalahan.",
+          "held": "Cek keamanan",
+          "heldTitle": "Menunggu pemeriksaan keamanan singkat sebelum aktif. Pertanyaan: {email}"
         },
         "tagDialogs": {
           "color": "Warna",

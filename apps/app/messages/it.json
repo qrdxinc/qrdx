@@ -6980,6 +6980,7 @@
           "noPassword": "Nessuna password",
           "noLimit": "Nessun limite",
           "heldForReview": "In attesa di revisione",
+          "heldQuestions": "Domande? Scrivi a {email}.",
           "turnedOffByQrdx": "Disattivato da QRdx",
           "ourAutomatedChecksFlaggedA": "I nostri controlli automatici hanno segnalato un link in questo codice (ad esempio un abbreviatore di URL, un indirizzo IP o un dominio che imita un altro), quindi resta disattivato finché un revisore non lo approva, di solito entro un giorno. Non devi fare nient’altro.",
           "thisCodeWasSwitchedOff": "Questo codice è stato disattivato dopo una revisione per abuso e non reindirizza. Scrivi a support@qrdx.dev se pensi che sia un errore.",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "Accesso e pianificazione"
         },
         "codeOverview": {
+          "heldNote": "In attesa di un rapido controllo di sicurezza. I link degli account nuovi verso alcuni tipi di indirizzi, come i servizi per accorciare gli URL, gli indirizzi IP o i domini che imitano altri, vengono controllati da una persona prima di andare online, quindi fino ad allora questo codice è disattivato. Non stamparlo ancora. Domande: {email}",
           "editLink": "Modifica link",
           "changeType": "Cambia tipo",
           "shortLinkEncodedInThe": "Link breve (codificato nel QR code)",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "In pausa",
           "pausedScansGoToThe": "In pausa: le scansioni vanno all’URL di riserva o a una pagina neutra di pausa",
-          "turnedOffByQrdxModeration": "Disattivato dalla moderazione di QRdx. Contatta il supporto se pensi sia un errore."
+          "turnedOffByQrdxModeration": "Disattivato dalla moderazione di QRdx. Contatta il supporto se pensi sia un errore.",
+          "held": "Controllo sicurezza",
+          "heldTitle": "In attesa di un rapido controllo di sicurezza prima di andare online. Domande: {email}"
         },
         "tagDialogs": {
           "color": "Colore",

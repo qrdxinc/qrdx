@@ -6980,6 +6980,7 @@
           "noPassword": "パスワードなし",
           "noLimit": "上限なし",
           "heldForReview": "審査待ち",
+          "heldQuestions": "ご質問は {email} までご連絡ください。",
           "turnedOffByQrdx": "QRdxによりオフ",
           "ourAutomatedChecksFlaggedA": "自動チェックにより、このコード内のリンク（URL短縮サービス、IPアドレス、紛らわしいドメインなど）が検出されたため、審査担当者が承認するまでオフのままになります。通常は1日以内に完了します。お客様側での対応は不要です。",
           "thisCodeWasSwitchedOff": "このコードは不正利用の審査後にオフになり、リダイレクトされません。誤りだと思われる場合は、support@qrdx.dev までご連絡ください。",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "アクセスとスケジュール"
         },
         "codeOverview": {
+          "heldNote": "簡易的な安全確認を待っています。新しいアカウントから、URL短縮サービス、IPアドレス、紛らわしいドメインなど一部の種類のアドレスへ向かうリンクは、公開前に担当者が確認します。そのため、確認が終わるまでこのコードは無効です。まだ印刷しないでください。ご質問: {email}",
           "editLink": "リンクを編集",
           "changeType": "タイプを変更",
           "shortLinkEncodedInThe": "短縮リンク(QRコードにエンコード)",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "一時停止中",
           "pausedScansGoToThe": "一時停止中：スキャンするとフォールバックURLか、中立的な「一時停止中」ページに移動します",
-          "turnedOffByQrdxModeration": "QRdxのモデレーションによりオフになっています。誤りの場合はサポートまでご連絡ください。"
+          "turnedOffByQrdxModeration": "QRdxのモデレーションによりオフになっています。誤りの場合はサポートまでご連絡ください。",
+          "held": "安全確認中",
+          "heldTitle": "公開前の簡易的な安全確認を待っています。ご質問: {email}"
         },
         "tagDialogs": {
           "color": "色",

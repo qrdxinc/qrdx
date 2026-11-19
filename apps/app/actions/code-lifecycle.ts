@@ -1,9 +1,9 @@
 "use server";
 
-import { abuseReport, database as db, qrCode } from "@repo/database";
+import { database as db, qrCode } from "@repo/database";
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { hash } from "bcryptjs";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import {
@@ -25,6 +25,7 @@ import { getPlanForScope, getPlanLimits } from "@/lib/plans";
 import { type EndedReason, lifecycleState } from "@/lib/redirect/lifecycle";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { screenUrlChange } from "@/lib/safety/destinations";
+import { heldForReviewIds } from "@/lib/safety/holds";
 import { type ActiveScope, getActiveScope, isInScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError, ValidationError } from "@/types/errors";
@@ -186,18 +187,7 @@ async function findRow(scope: ActiveScope, id: string): Promise<CodeRow> {
 }
 
 async function isHeldForReview(codeId: string): Promise<boolean> {
-  const [report] = await db
-    .select({ id: abuseReport.id })
-    .from(abuseReport)
-    .where(
-      and(
-        eq(abuseReport.qrCodeId, codeId),
-        eq(abuseReport.reason, "auto-hold"),
-        eq(abuseReport.status, "open"),
-      ),
-    )
-    .limit(1);
-  return Boolean(report);
+  return (await heldForReviewIds([codeId])).has(codeId);
 }
 
 async function toView(

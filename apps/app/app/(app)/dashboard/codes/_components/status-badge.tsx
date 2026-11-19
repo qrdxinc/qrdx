@@ -1,3 +1,4 @@
+import { SUPPORT_EMAIL } from "@repo/config";
 import { Badge } from "@repo/design-system/components/ui/badge";
 import { useTranslations } from "next-intl";
 import type { QrCodeStatus } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
@@ -11,12 +12,25 @@ const LABELS: Record<QrCodeStatus, string> = {
 export function StatusBadge({
   status,
   paused = false,
+  held = false,
 }: {
   status: QrCodeStatus;
   /** Shown instead of "Active" for paused codes */
   paused?: boolean;
+  /**
+   * Off only while a safety check runs (QrCodeView.heldForReview): not a
+   * moderation decision, so it never says so.
+   */
+  held?: boolean;
 }) {
   const t = useTranslations("app.dashboard.codes.statusBadge");
+  if (held && status === "disabled") {
+    return (
+      <Badge title={t("heldTitle", { email: SUPPORT_EMAIL })} variant="outline">
+        {t("held")}
+      </Badge>
+    );
+  }
   if (paused && status === "active") {
     return (
       <Badge title={t("pausedScansGoToThe")} variant="outline">

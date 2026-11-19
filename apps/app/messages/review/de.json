@@ -21539,6 +21539,10 @@
     "source": "57b7af20f83c",
     "status": "machine"
   },
+  "app.dashboard.codes.lifecyclePanelForm.heldQuestions": {
+    "source": "a4d8a79cac9e",
+    "status": "machine"
+  },
   "app.dashboard.codes.lifecyclePanelForm.turnedOffByQrdx": {
     "source": "bcd8f83c5c42",
     "status": "machine"
@@ -22573,6 +22577,10 @@
   },
   "app.dashboard.codes.codeOptions.accessSchedule": {
     "source": "9ee6f86b7f2f",
+    "status": "machine"
+  },
+  "app.dashboard.codes.codeOverview.heldNote": {
+    "source": "ad9cac192195",
     "status": "machine"
   },
   "app.dashboard.codes.codeOverview.editLink": {
@@ -24577,6 +24585,14 @@
   },
   "app.dashboard.codes.statusBadge.turnedOffByQrdxModeration": {
     "source": "9ee07d6a9f84",
+    "status": "machine"
+  },
+  "app.dashboard.codes.statusBadge.held": {
+    "source": "e92cb2cbf3e2",
+    "status": "machine"
+  },
+  "app.dashboard.codes.statusBadge.heldTitle": {
+    "source": "56f15e3d3217",
     "status": "machine"
   },
   "app.dashboard.codes.tagDialogs.color": {

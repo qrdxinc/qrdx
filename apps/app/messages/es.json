@@ -6980,6 +6980,7 @@
           "noPassword": "Sin contraseña",
           "noLimit": "Sin límite",
           "heldForReview": "En revisión",
+          "heldQuestions": "¿Dudas? Escribe a {email}.",
           "turnedOffByQrdx": "Desactivado por QRdx",
           "ourAutomatedChecksFlaggedA": "Nuestras comprobaciones automáticas marcaron un enlace de este código (por ejemplo, un acortador de URL, una dirección IP o un dominio parecido a otro), así que permanece desactivado hasta que un revisor lo apruebe, normalmente en un día. No tienes que hacer nada más.",
           "thisCodeWasSwitchedOff": "Este código se desactivó tras una revisión por abuso y no redirige. Escribe a support@qrdx.dev si crees que es un error.",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "Acceso y programación"
         },
         "codeOverview": {
+          "heldNote": "Esperando una revisión de seguridad rápida. Los enlaces de cuentas nuevas a ciertos tipos de direcciones, como acortadores de URL, direcciones IP o dominios que imitan a otros, los revisa una persona antes de publicarse, así que este código está desactivado hasta entonces. No lo imprimas todavía. Consultas: {email}",
           "editLink": "Editar enlace",
           "changeType": "Cambiar tipo",
           "shortLinkEncodedInThe": "Enlace corto (codificado en el código QR)",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "En pausa",
           "pausedScansGoToThe": "En pausa: los escaneos van a la URL alternativa o a una página neutra de «pausa»",
-          "turnedOffByQrdxModeration": "Desactivado por la moderación de QRdx. Contacta con soporte si es un error."
+          "turnedOffByQrdxModeration": "Desactivado por la moderación de QRdx. Contacta con soporte si es un error.",
+          "held": "Revisión",
+          "heldTitle": "Esperando una revisión de seguridad rápida antes de publicarse. Consultas: {email}"
         },
         "tagDialogs": {
           "color": "Color",

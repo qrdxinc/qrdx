@@ -57,6 +57,7 @@ import { PLAN_NAMES } from "@/lib/pricing";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { signInPath } from "@/lib/safe-redirect";
 import { screenNewCodes, screenUrlChange } from "@/lib/safety/destinations";
+import { heldForReviewIds } from "@/lib/safety/holds";
 import { recheckAfterResponse } from "@/lib/safety/recheck";
 import { asksPreciseLocation } from "@/lib/scan-location/server";
 import {
@@ -269,6 +270,12 @@ export interface QrCodeView {
    * but scans go to the fallback URL or a "paused" page until it's resumed.
    */
   paused?: boolean;
+  /**
+   * Switched off ("disabled") only while a safety check runs: a new
+   * account's address waits for a person (lib/safety/holds.ts), not a
+   * moderation decision. Dashboard wording only; never in the REST API.
+   */
+  heldForReview?: boolean;
 }
 
 type QrCodeRow = typeof qrCode.$inferSelect;
@@ -311,12 +318,23 @@ export function toCodeView(
   };
 }
 
-/** Views for rows, with their custom domains loaded in one query. */
+/**
+ * Views for rows, with their custom domains loaded in one query, and the
+ * switched-off ones that are only held for a safety check marked.
+ */
 async function toCodeViews(rows: QrCodeRow[]): Promise<QrCodeView[]> {
-  const domains = await getDomainRefs(rows.map((row) => row.domainId));
-  return rows.map((row) =>
-    toCodeView(row, row.domainId ? (domains.get(row.domainId) ?? null) : null),
-  );
+  const off = rows.filter((row) => !row.isActive).map((row) => row.id);
+  const [domains, held] = await Promise.all([
+    getDomainRefs(rows.map((row) => row.domainId)),
+    heldForReviewIds(off),
+  ]);
+  return rows.map((row) => {
+    const view = toCodeView(
+      row,
+      row.domainId ? (domains.get(row.domainId) ?? null) : null,
+    );
+    return held.has(row.id) ? { ...view, heldForReview: true } : view;
+  });
 }
 
 const toOneCodeView = async (row: QrCodeRow) =>

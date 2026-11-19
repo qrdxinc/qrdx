@@ -6980,6 +6980,7 @@
           "noPassword": "无密码",
           "noLimit": "不限",
           "heldForReview": "待审核",
+          "heldQuestions": "有疑问？请联系 {email}。",
           "turnedOffByQrdx": "已被 QRdx 关闭",
           "ourAutomatedChecksFlaggedA": "我们的自动检查标记了此二维码中的一个链接（例如短链接服务、IP 地址或仿冒域名），因此在审核人员批准之前它会保持关闭，通常一天内完成。你无需进行任何操作。",
           "thisCodeWasSwitchedOff": "此二维码在滥用审核后已被关闭，不会再跳转。如果你认为这是误判，请联系 support@qrdx.dev。",
@@ -7263,6 +7264,7 @@
           "accessSchedule": "访问与排期"
         },
         "codeOverview": {
+          "heldNote": "正在等待快速安全检查。新账户中指向某些类型地址的链接，例如短链接服务、IP 地址或仿冒域名，会先由人工审核后才会上线，因此在此之前这个二维码处于停用状态。请先不要打印。如有疑问：{email}",
           "editLink": "编辑链接",
           "changeType": "更改类型",
           "shortLinkEncodedInThe": "短链接（编码在二维码中）",
@@ -7825,7 +7827,9 @@
         "statusBadge": {
           "paused": "已暂停",
           "pausedScansGoToThe": "已暂停：扫描将跳转到备用网址或中性的“已暂停”页面",
-          "turnedOffByQrdxModeration": "已被 QRdx 审核关闭。如有误判，请联系支持团队。"
+          "turnedOffByQrdxModeration": "已被 QRdx 审核关闭。如有误判，请联系支持团队。",
+          "held": "安全检查",
+          "heldTitle": "正在等待快速安全检查，通过后才会上线。如有疑问：{email}"
         },
         "tagDialogs": {
           "color": "颜色",
