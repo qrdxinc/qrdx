@@ -32,8 +32,15 @@ function qrdxValues(text: string): Map<string, string> {
   return values;
 }
 
+/** The `{facts.*}` token copy writes for a plan's dollar price. */
+const PRICE_FACTS = {
+  pro: { month: "proMonthlyPrice", year: "proYearlyPrice" },
+  business: { month: "businessMonthlyPrice", year: "businessYearlyPrice" },
+} as const;
+
+/** "{facts.proMonthlyPrice}": a price as the compare pages write it. */
 const usd = (plan: "pro" | "business", interval: BillingInterval) =>
-  `$${PRICING[plan][interval].amounts.USD}`;
+  `{facts.${PRICE_FACTS[plan][interval]}}`;
 
 /**
  * QRdx's scan-history cell. Free's history is a facts token
@@ -59,10 +66,23 @@ describe("compare pages", () => {
     yr: PAID_PLANS.map((plan) => usd(plan, "year")),
   };
 
+  it("fill the price tokens in from lib/pricing.ts", () => {
+    for (const plan of PAID_PLANS) {
+      for (const interval of ["month", "year"] as const) {
+        expect(PRODUCT_FACTS[PRICE_FACTS[plan][interval]]).toBe(
+          `$${PRICING[plan][interval].amounts.USD}`,
+        );
+      }
+    }
+  });
+
   it.each(pages)("%s quotes QRdx prices from lib/pricing.ts", (file) => {
     const text = readFileSync(join(COMPARE, file), "utf8");
     for (const [feature, value] of qrdxValues(text)) {
-      for (const match of value.matchAll(/(\$\d+)\/(mo|yr)\b/g)) {
+      // A typed "$5/mo" fails here as well as a wrong token.
+      for (const match of value.matchAll(
+        /(\$\d+|\{facts\.\w+\})\/(mo|yr)\b/g,
+      )) {
         const [, amount, unit] = match as unknown as [
           string,
           string,
@@ -97,7 +117,7 @@ describe.each(["qr-io.mdx", "qr-code-creator.mdx"])(
       );
       expect(rows.get("QR types")).toBe("{facts.contentTypes} static types");
       expect(rows.get("Dynamic (editable) codes")).toBe(
-        `${free.dynamicCodes} free; unlimited on Pro`,
+        `{facts.freeDynamicCodes} free; unlimited on Pro`,
       );
       expect(rows.get("Scan analytics")).toBe(SCAN_HISTORY_CELL);
       expect(rows.get("Team members")).toBe(
@@ -110,8 +130,8 @@ describe.each(["qr-io.mdx", "qr-code-creator.mdx"])(
 
     test("uses the same numbers in the highlights and the body", () => {
       for (const phrase of [
-        `QRdx Free has no time limit and includes ${free.dynamicCodes} dynamic codes and ${free.landingPages} hosted pages.`,
-        `The Free plan adds ${free.dynamicCodes} dynamic codes and ${free.landingPages} hosted pages.`,
+        `QRdx Free has no time limit and includes {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages.`,
+        `The Free plan adds {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages.`,
         `Pro (${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr) makes both unlimited`,
         `Business (${usd("business", "month")}/mo or ${usd("business", "year")}/yr) adds unlimited team members and white-label pages`,
         `QRdx Pro is ${usd("pro", "month")} a month or ${usd("pro", "year")} a year for unlimited dynamic codes`,
@@ -125,11 +145,10 @@ describe.each(["qr-io.mdx", "qr-code-creator.mdx"])(
 
 describe("QR.io compare page", () => {
   const text = readFileSync(join(COMPARE, "qr-io.mdx"), "utf8");
-  const { free } = PLAN_LIMITS;
 
   it("states hosted-page limits and Business pricing that match the code", () => {
     expect(qrdxValues(text).get("Hosted pages")).toBe(
-      `${free.landingPages} free; unlimited on Pro`,
+      `{facts.freeHostedPages} free; unlimited on Pro`,
     );
     expect(text).toContain(
       `Business is ${usd("business", "month")} a month or ${usd("business", "year")} a year with unlimited team members.`,
@@ -150,7 +169,7 @@ describe("QR Code Creator compare page", () => {
 
   it("uses the Free dynamic-code limit in the body", () => {
     expect(text).toContain(
-      `QRdx Free has ${free.dynamicCodes}, although they don't expire.`,
+      `QRdx Free has {facts.freeDynamicCodes}, although they don't expire.`,
     );
   });
 });
@@ -158,7 +177,7 @@ describe("QR Code Creator compare page", () => {
 describe("LatestQR compare page", () => {
   const text = readFileSync(join(COMPARE, "latestqr.mdx"), "utf8");
   const rows = qrdxValues(text);
-  const { free, pro, business } = PLAN_LIMITS;
+  const { pro, business } = PLAN_LIMITS;
 
   it("states plan limits and prices that match the code", () => {
     expect(pro.dynamicCodes).toBe(UNLIMITED);
@@ -175,19 +194,19 @@ describe("LatestQR compare page", () => {
     );
     expect(rows.get("QR types")).toBe("{facts.contentTypes} static types");
     expect(rows.get("Dynamic (editable) codes")).toBe(
-      `${free.dynamicCodes} free; unlimited on Pro`,
+      `{facts.freeDynamicCodes} free; unlimited on Pro`,
     );
     expect(rows.get("Scan analytics")).toBe(SCAN_HISTORY_CELL);
     expect(rows.get("Hosted pages")).toBe(
-      `${free.landingPages} free; unlimited on Pro`,
+      `{facts.freeHostedPages} free; unlimited on Pro`,
     );
   });
 
   it("uses the same numbers in the highlights and the body", () => {
     for (const phrase of [
-      `The Free plan includes ${free.dynamicCodes}, and Pro makes them unlimited.`,
+      `The Free plan includes {facts.freeDynamicCodes}, and Pro makes them unlimited.`,
       "keeps {facts.freeScanHistoryYears} year of history on Free and all of it on Pro and Business",
-      `The Free plan adds ${free.dynamicCodes} dynamic codes and ${free.landingPages} hosted pages.`,
+      `The Free plan adds {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages.`,
       `Pro (${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr) makes both unlimited`,
       `Business (${usd("business", "month")}/mo or ${usd("business", "year")}/yr) adds unlimited team members and white-label pages`,
     ]) {
@@ -218,11 +237,11 @@ describe("QR Code AI compare page", () => {
     );
     expect(rows.get("QR types")).toBe("{facts.contentTypes} static types");
     expect(rows.get("Dynamic (editable) codes")).toBe(
-      `${free.dynamicCodes} free; unlimited on Pro`,
+      `{facts.freeDynamicCodes} free; unlimited on Pro`,
     );
     expect(rows.get("Scan analytics")).toBe(SCAN_HISTORY_CELL);
     expect(rows.get("Hosted pages")).toBe(
-      `${free.landingPages} free; unlimited on Pro`,
+      `{facts.freeHostedPages} free; unlimited on Pro`,
     );
     expect(rows.get("AI art")).toBe(
       `${free.aiArtPerMonth} images a month free; ${pro.aiArtPerMonth} on Pro; ${business.aiArtPerMonth} shared on Business`,
@@ -234,10 +253,10 @@ describe("QR Code AI compare page", () => {
 
   it("uses the same numbers in the highlights and the body", () => {
     for (const phrase of [
-      `QRdx Free includes ${free.dynamicCodes} dynamic codes with no time limit.`,
+      `QRdx Free includes {facts.freeDynamicCodes} dynamic codes with no time limit.`,
       `QRdx Pro is ${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr, and Business is ${usd("business", "month")}/mo or ${usd("business", "year")}/yr.`,
-      `its Free plan keeps up to ${free.dynamicCodes} dynamic codes working with no time limit`,
-      `The Free plan adds ${free.dynamicCodes} dynamic codes, ${free.landingPages} hosted pages and ${free.aiArtPerMonth} AI art images a month, with no trial.`,
+      `its Free plan keeps up to {facts.freeDynamicCodes} dynamic codes working with no time limit`,
+      `The Free plan adds {facts.freeDynamicCodes} dynamic codes, {facts.freeHostedPages} hosted pages and ${free.aiArtPerMonth} AI art images a month, with no trial.`,
       `Pro (${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr) makes codes and pages unlimited`,
       `Business (${usd("business", "month")}/mo or ${usd("business", "year")}/yr) adds unlimited team members and white-label pages`,
       `${free.aiArtPerMonth} images a month on Free and ${pro.aiArtPerMonth} on Pro, from {facts.aiArtStyles} style presets`,
@@ -310,7 +329,7 @@ describe("MyQRCode compare page", () => {
     );
     expect(rows.get("QR types")).toBe("{facts.contentTypes} static types");
     expect(rows.get("Dynamic (editable) codes")).toBe(
-      `${free.dynamicCodes} free; unlimited on Pro`,
+      `{facts.freeDynamicCodes} free; unlimited on Pro`,
     );
     expect(rows.get("Scan analytics")).toBe(SCAN_HISTORY_CELL);
   });
@@ -318,13 +337,13 @@ describe("MyQRCode compare page", () => {
   it("uses the same numbers in the metadata, highlights and body", () => {
     for (const phrase of [
       `QRdx has a free plan, Pro at ${usd("pro", "month")}/mo`,
-      `QRdx Free has no time limit and includes ${free.dynamicCodes} dynamic codes and ${free.landingPages} hosted pages`,
+      `QRdx Free has no time limit and includes {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages`,
       `QRdx Pro is ${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr with unlimited dynamic codes and hosted pages.`,
       `title: Monthly billing from ${usd("pro", "month")}`,
-      `The Free plan adds ${free.dynamicCodes} dynamic codes and ${free.landingPages} hosted pages.`,
+      `The Free plan adds {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages.`,
       `Pro (${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr) makes both unlimited`,
       `Business (${usd("business", "month")}/mo or ${usd("business", "year")}/yr) adds unlimited team members and white-label pages`,
-      `the Free plan includes ${free.dynamicCodes} dynamic codes.`,
+      `the Free plan includes {facts.freeDynamicCodes} dynamic codes.`,
     ]) {
       expect(text).toContain(phrase);
     }
@@ -356,28 +375,28 @@ describe("Pageloot compare page", () => {
       `Free; Pro ${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr; Business ${usd("business", "month")}/mo or ${usd("business", "year")}/yr`,
     );
     expect(rows.get("Dynamic (editable) codes")).toBe(
-      `${free.dynamicCodes} free; unlimited on Pro`,
+      `{facts.freeDynamicCodes} free; unlimited on Pro`,
     );
     expect(rows.get("Scan history")).toBe(SCAN_HISTORY_CELL);
     expect(rows.get("Team members")).toBe(
       `${free.teamMembers} free; ${pro.teamMembers} on Pro; unlimited on Business`,
     );
     expect(rows.get("Hosted pages")).toBe(
-      `${free.landingPages} free; unlimited on Pro`,
+      `{facts.freeHostedPages} free; unlimited on Pro`,
     );
   });
 
   it("uses the same numbers in the metadata, highlights and body", () => {
     for (const phrase of [
-      `QRdx has a free plan with ${free.dynamicCodes} dynamic codes and unlimited codes on ${usd("pro", "month")}/mo Pro.`,
+      `QRdx has a free plan with {facts.freeDynamicCodes} dynamic codes and unlimited codes on ${usd("pro", "month")}/mo Pro.`,
       `unlimited dynamic codes from ${usd("pro", "month")}/mo.`,
       `title: Unlimited dynamic codes from ${usd("pro", "month")}`,
       `QRdx Pro is ${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr with unlimited dynamic codes and hosted pages.`,
-      `QRdx Free has no time limit and includes ${free.dynamicCodes} dynamic codes and ${free.landingPages} hosted pages.`,
-      `The Free plan adds ${free.dynamicCodes} dynamic codes and ${free.landingPages} hosted pages.`,
+      `QRdx Free has no time limit and includes {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages.`,
+      `The Free plan adds {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages.`,
       `Pro (${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr) makes both unlimited`,
       `Business (${usd("business", "month")}/mo or ${usd("business", "year")}/yr) adds unlimited team members and white-label pages`,
-      `QRdx Free includes ${free.dynamicCodes} dynamic codes with no time limit.`,
+      `QRdx Free includes {facts.freeDynamicCodes} dynamic codes with no time limit.`,
     ]) {
       expect(text).toContain(phrase);
     }

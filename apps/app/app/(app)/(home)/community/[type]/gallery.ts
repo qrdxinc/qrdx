@@ -16,12 +16,12 @@ import {
 } from "@/lib/community/types";
 import { viewerId } from "@/lib/community/viewer";
 
-// One community gallery (/community/frames, /templates, /collections,
-// /kits): what its filters, sort, group and tag show. Shared by the page,
+// One community gallery (/community/frames, /themes, /templates,
+// /collections, /kits): what its filters, sort, group and tag show. Shared by the page,
 // which draws the first page, and the server action that loads the pages
 // after it as someone scrolls (./actions.tsx).
 
-export type GalleryType = Exclude<CommunityItemType, "theme">;
+export type GalleryType = CommunityItemType;
 export type Filter = "all" | "official" | "community" | "mine" | "saved";
 export type Sort = "popular" | "newest" | "oldest";
 
@@ -45,6 +45,7 @@ export interface GalleryQuery {
 
 const GALLERY_TYPES = [
   "frame",
+  "theme",
   "collection",
   "page-template",
   "kit",
@@ -132,6 +133,29 @@ export function galleryHref(
   const search = params.toString();
   const base = `/community/${TYPE_SEGMENTS[query.type]}`;
   return search ? `${base}?${search}` : base;
+}
+
+/**
+ * The canonical URL of a gallery page. Each page of the full list is its
+ * own, so search engines reach the items past the first page; a filtered,
+ * re-sorted or tagged view points at the full list's first page.
+ */
+export function galleryCanonical(query: GalleryQuery, page: number): string {
+  const full =
+    query.filter === "all" &&
+    query.sort === "popular" &&
+    query.group === null &&
+    query.tag === null;
+  return galleryHref(
+    {
+      type: query.type,
+      filter: "all",
+      sort: "popular",
+      group: null,
+      tag: null,
+    },
+    { page: full ? page : 1 },
+  );
 }
 
 /** Names the list a query shows, for the infinite list's restore on Back. */

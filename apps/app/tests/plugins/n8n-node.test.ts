@@ -81,6 +81,36 @@ describe("n8n node: GET /qr options", () => {
   });
 });
 
+// plugins/n8n/test/barcode-api.test.ts holds the same lists to the app's
+// modules; this one runs when the API changes, that one when the node does.
+describe("n8n node: GET /barcode options", () => {
+  it.each([
+    ["format", n8n.BARCODE_FORMATS],
+    ["type", n8n.BARCODE_FILE_TYPES],
+    ["rotate", n8n.BARCODE_ROTATIONS],
+  ] as const)("%s offers exactly the API's values", (name, values) => {
+    expect(sorted(values)).toEqual(sorted(parameter("/barcode", name).enum));
+  });
+
+  it("uses the API's limits", () => {
+    expect(parameter("/barcode", "scale")).toMatchObject({
+      minimum: n8n.BARCODE_SCALE.min,
+      maximum: n8n.BARCODE_SCALE.max,
+    });
+    expect(parameter("/barcode", "height")).toMatchObject({
+      minimum: n8n.BARCODE_HEIGHT.min,
+      maximum: n8n.BARCODE_HEIGHT.max,
+    });
+    expect(parameter("/barcode", "quietZone")).toMatchObject({
+      minimum: n8n.BARCODE_QUIET_ZONE.min,
+      maximum: n8n.BARCODE_QUIET_ZONE.max,
+    });
+    expect(parameter("/barcode", "data").maxLength).toBe(
+      n8n.BARCODE_DATA_MAX_LENGTH,
+    );
+  });
+});
+
 describe("n8n node: codes, scans and hooks", () => {
   it("pages codes and scans within the API's limits", () => {
     expect(sorted(parameter("/codes", "status").enum)).toEqual(

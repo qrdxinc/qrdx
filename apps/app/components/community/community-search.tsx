@@ -26,7 +26,9 @@ export function CommunitySearch({
         <Input
           aria-label={t("label")}
           autoComplete="off"
-          className="h-10 rounded-full pl-10"
+          // A narrow phone fits the hint at a size smaller than what's typed
+          // (16px, so iOS doesn't zoom), and a long one ends in "…"
+          className="h-10 rounded-full pl-10 text-ellipsis placeholder:text-sm"
           defaultValue={defaultValue}
           enterKeyHint="search"
           key={defaultValue}

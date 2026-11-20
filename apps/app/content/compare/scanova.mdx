@@ -2,19 +2,19 @@
 title: Scanova
 description: "QRdx vs Scanova: an open-source QR platform with a free plan and monthly billing, compared with a dynamic QR service priced per code whose trial codes stop working."
 seoTitle: "QRdx vs Scanova: Dynamic QR Pricing and Trial Rules"
-seoDescription: "Scanova starts at $60/yr for 3 dynamic codes, and trial codes stop after the trial. QRdx has a free plan with 10 codes and Pro from $5 a month."
+seoDescription: "Scanova starts at $60/yr for 3 dynamic codes, and trial codes stop after the trial. QRdx has a free plan with {facts.freeDynamicCodes} codes and Pro from {facts.proMonthlyPrice} a month."
 competitor: Scanova
 competitorUrl: https://scanova.io
 category: generator
 tagline: "Scanova is a dynamic QR platform with yearly and monthly plans and a 14-day trial. QRdx is open source, with a permanent free plan, monthly billing and codes that never stop."
-qrdxPlan: "Free · Pro from $5/mo"
+qrdxPlan: "Free · Pro from {facts.proMonthlyPrice}/mo"
 competitorPlan: "From $5/mo, billed yearly"
 lastVerified: "2026-11-15"
 sources:
   - https://scanova.io/pricing/
 tableRows:
   - feature: Price
-    qrdx: "Free; Pro $5/mo or $48/yr; Business $15/mo or $144/yr"
+    qrdx: "Free; Pro {facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr; Business {facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr"
     competitor: "Basic $60/yr; Lite $108/yr or $15/mo; Standard $420/yr or $50/mo; Pro $900/yr or $100/mo; Ultra Lite $150 once for 1 code; Enterprise custom"
   - feature: Monthly billing
     qrdx: true
@@ -26,7 +26,7 @@ tableRows:
     qrdx: "No trial; codes keep working on every plan"
     competitor: "Dynamic codes stop working"
   - feature: Dynamic codes
-    qrdx: "10 free; unlimited on Pro"
+    qrdx: "{facts.freeDynamicCodes} free; unlimited on Pro"
     competitor: "3 / 10 / 50 / 500 by plan"
   - feature: Scans
     qrdx: "Unlimited"
@@ -51,13 +51,13 @@ tableRows:
     competitor: false
 featureHighlights:
   - title: Free plan instead of a 14-day deadline
-    description: "Scanova's pricing page says a dynamic QR code will stop working once the free trial ends. QRdx has no trial: the Free plan includes 10 dynamic codes that keep working for as long as you like."
+    description: "Scanova's pricing page says a dynamic QR code will stop working once the free trial ends. QRdx has no trial: the Free plan includes {facts.freeDynamicCodes} dynamic codes that keep working for as long as you like."
   - title: Unlimited codes for less
-    description: "Scanova's Standard plan is $420 a year for 50 dynamic codes. QRdx Pro is $48 a year for unlimited dynamic codes and hosted pages."
+    description: "Scanova's Standard plan is $420 a year for 50 dynamic codes. QRdx Pro is {facts.proYearlyPrice} a year for unlimited dynamic codes and hosted pages."
   - title: API on every plan
     description: "Scanova's API is part of Enterprise. QRdx's REST API is available on every plan, with bulk creation on Pro and an MCP server for AI assistants."
   - title: Seats and domains included
-    description: "QRdx Business includes unlimited members and 25 custom domains for $144 a year. Scanova charges extra per user and per domain beyond the Pro plan's allowance."
+    description: "QRdx Business includes unlimited members and 25 custom domains for {facts.businessYearlyPrice} a year. Scanova charges extra per user and per domain beyond the Pro plan's allowance."
 ---
 
 Scanova and QRdx both make dynamic QR codes with unlimited scans, hosted pages and analytics. Scanova sells plans priced by the number of dynamic codes, after a 14-day trial. QRdx has a permanent free plan and monthly or yearly paid plans with unlimited codes.
@@ -66,7 +66,7 @@ Scanova and QRdx both make dynamic QR codes with unlimited scans, hosted pages a
 
 Scanova suits organizations that want a vendor with an Enterprise tier. Basic is $5 a month, billed yearly only ($60 a year), for 3 dynamic codes. The other plans can be paid yearly or monthly: Lite is $108 a year or $15 a month for 10 codes, Standard $420 a year or $50 a month for 50, and Pro $900 a year or $100 a month for 500, with 5 users and 1 custom domain included on Pro. Ultra Lite is a one-time $150 for a single dynamic code with "lifetime validity".
 
-QRdx suits individuals, small businesses and teams that want to start free and grow without per-code pricing. Free includes 10 dynamic codes and 3 hosted pages; Pro ($5/mo or $48/yr) makes both unlimited; Business ($15/mo or $144/yr) adds unlimited members, webhooks, conversion tracking and white-label pages.
+QRdx suits individuals, small businesses and teams that want to start free and grow without per-code pricing. Free includes {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages; Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes both unlimited; Business ({facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr) adds unlimited members, webhooks, conversion tracking and white-label pages.
 
 ## Where Scanova is the better choice
 

@@ -1,6 +1,8 @@
 import type { ILoadOptionsFunctions } from "n8n-workflow";
 import { NodeApiError } from "n8n-workflow";
 import { describe, expect, it } from "vitest";
+import { barcodeImageFile } from "../nodes/Qrdx/barcode-image";
+import { BARCODE_FILE_TYPES, BARCODE_FORMATS } from "../nodes/Qrdx/constants";
 import { Qrdx } from "../nodes/Qrdx/Qrdx.node";
 import { CREDENTIALS, executeContext } from "./support/fakes";
 
@@ -99,6 +101,195 @@ describe("QR Image → Generate", () => {
     });
     const [items] = await node.execute.call(context);
     expect(items?.[0]?.json.error).toMatch(/hex color/);
+    expect(items?.[0]?.pairedItem).toEqual({ item: 0 });
+  });
+});
+
+const barcodeParams = (
+  fields: Record<string, unknown> = {},
+  options: Record<string, unknown> = {}
+) => ({
+  resource: "barcodeImage",
+  operation: "generate",
+  barcodeFormat: "ean13",
+  data: "590123412345",
+  fileType: "png",
+  binaryPropertyName: "barcode",
+  options,
+  ...fields,
+});
+
+describe("Barcode Image → Generate", () => {
+  it("calls GET /barcode without a key and outputs the image as binary", async () => {
+    const { context, requests, credentialReads } = executeContext({
+      params: barcodeParams({}, { scale: 3, showText: false }),
+      respond: () => ({ statusCode: 200, body: PNG_BYTES }),
+    });
+    const [items] = await node.execute.call(context);
+
+    expect(requests).toHaveLength(1);
+    const { credentialType, options } = requests[0] ?? {};
+    expect(credentialType).toBeUndefined();
+    expect(credentialReads()).toBe(0);
+    expect(options).toMatchObject({
+      method: "GET",
+      url: "https://api.qrdx.dev/v1/barcode",
+      qs: {
+        format: "ean13",
+        data: "590123412345",
+        type: "png",
+        scale: "3",
+        text: "false",
+      },
+      encoding: "arraybuffer",
+    });
+    expect(options?.headers).toBeUndefined();
+
+    expect(items).toHaveLength(1);
+    const item = items?.[0];
+    expect(item?.pairedItem).toEqual({ item: 0 });
+    expect(item?.binary?.barcode).toEqual({
+      data: PNG_BYTES.toString("base64"),
+      fileName: "barcode.png",
+      mimeType: "image/png",
+      fileSize: String(PNG_BYTES.length),
+    });
+    expect(item?.json).toEqual({
+      data: "590123412345",
+      format: "ean13",
+      fileType: "png",
+      fileName: "barcode.png",
+      mimeType: "image/png",
+      fileSize: PNG_BYTES.length,
+      url: "https://api.qrdx.dev/v1/barcode?format=ean13&data=590123412345&type=png&scale=3&text=false",
+    });
+  });
+
+  it.each(BARCODE_FORMATS)("makes a %s barcode", async (format) => {
+    const { context, requests } = executeContext({
+      params: barcodeParams({ barcodeFormat: format }),
+      respond: () => ({ statusCode: 200, body: PNG_BYTES }),
+    });
+    const [items] = await node.execute.call(context);
+    expect(requests[0]?.options.qs).toMatchObject({ format });
+    expect(items?.[0]?.json.format).toBe(format);
+  });
+
+  it.each(BARCODE_FILE_TYPES)("returns a %s file", async (type) => {
+    const bytes = Buffer.from(`${type} bytes`);
+    const { context, requests } = executeContext({
+      params: barcodeParams(
+        {
+          barcodeFormat: "datamatrix",
+          data: "https://qrdx.dev",
+          fileType: type,
+        },
+        { fileName: "part-1042" }
+      ),
+      respond: () => ({
+        statusCode: 200,
+        body: bytes.buffer.slice(
+          bytes.byteOffset,
+          bytes.byteOffset + bytes.byteLength
+        ),
+      }),
+    });
+    const [items] = await node.execute.call(context);
+    expect(requests[0]?.options.qs).toMatchObject({ type });
+    const file = barcodeImageFile(type, "part-1042");
+    expect(items?.[0]?.binary?.barcode).toEqual({
+      data: bytes.toString("base64"),
+      fileName: `part-1042.${type}`,
+      mimeType: file.mimeType,
+      fileSize: String(bytes.length),
+    });
+    expect(items?.[0]?.json).toMatchObject({
+      fileType: type,
+      fileName: `part-1042.${type}`,
+      mimeType: file.mimeType,
+      fileSize: bytes.length,
+    });
+  });
+
+  it("sends a number from an expression as text", async () => {
+    const { context, requests } = executeContext({
+      params: barcodeParams({ data: 5_901_234_123_457 }),
+      respond: () => ({ statusCode: 200, body: PNG_BYTES }),
+    });
+    await node.execute.call(context);
+    expect(requests[0]?.options.qs).toMatchObject({ data: "5901234123457" });
+  });
+
+  it("uses a self-hosted base URL from the options", async () => {
+    const { context, requests } = executeContext({
+      params: barcodeParams(
+        { fileType: "svg" },
+        { baseUrl: "https://qr.example.com/api/v1/" }
+      ),
+      respond: () => ({ statusCode: 200, body: Buffer.from("<svg/>") }),
+    });
+    const [items] = await node.execute.call(context);
+    expect(requests[0]?.options.url).toBe(
+      "https://qr.example.com/api/v1/barcode"
+    );
+    expect(items?.[0]?.json.url).toMatch(
+      /^https:\/\/qr\.example\.com\/api\/v1\/barcode\?/
+    );
+  });
+
+  // The body GET /v1/barcode sent for a wrong EAN-13 check digit.
+  const CHECK_DIGIT_ERROR = {
+    code: "VALIDATION_ERROR",
+    message: "Invalid query parameters",
+    data: {
+      details: [
+        {
+          param: "data",
+          message:
+            "EAN-13: The check digit should be 7, not 8. Check the number, or leave the last digit off and it's worked out for you.",
+        },
+      ],
+    },
+    status: 400,
+  };
+
+  it("shows QRdx's 400 message, such as a wrong check digit", async () => {
+    const { context } = executeContext({
+      params: barcodeParams({ data: "5901234123458" }),
+      respond: () => ({
+        statusCode: 400,
+        body: Buffer.from(JSON.stringify(CHECK_DIGIT_ERROR)),
+      }),
+    });
+    const failure = await node.execute.call(context).catch((e: unknown) => e);
+    expect(failure).toBeInstanceOf(NodeApiError);
+    expect((failure as NodeApiError).message).toBe("Invalid query parameters");
+    expect((failure as NodeApiError).description).toBe(
+      [
+        "data: EAN-13: The check digit should be 7, not 8. Check the number, or leave the last digit off and it's worked out for you.",
+        "Error code: VALIDATION_ERROR",
+      ].join("\n")
+    );
+    expect((failure as NodeApiError).httpCode).toBe("400");
+  });
+
+  it("refuses an unknown format or file type before calling QRdx", async () => {
+    for (const fields of [{ barcodeFormat: "qr" }, { fileType: "gif" }]) {
+      const { context, requests } = executeContext({
+        params: barcodeParams(fields),
+      });
+      await expect(node.execute.call(context)).rejects.toThrow(/isn't a/);
+      expect(requests).toHaveLength(0);
+    }
+  });
+
+  it("puts the error on the item with Continue On Fail", async () => {
+    const { context } = executeContext({
+      params: barcodeParams({ data: "" }),
+      continueOnFail: true,
+    });
+    const [items] = await node.execute.call(context);
+    expect(items?.[0]?.json.error).toMatch(/number or text/);
     expect(items?.[0]?.pairedItem).toEqual({ item: 0 });
   });
 });

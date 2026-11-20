@@ -8,6 +8,7 @@ import { MAX_CODES_PER_REQUEST } from "@repo/config";
 import { ART_TEXT_MAX_LENGTH } from "@/components/sections/ai-art/config";
 import { AI_ART_DAILY_LIMIT } from "@/lib/ai/art";
 import { formatCount } from "@/lib/format-count";
+import { PATH_ALIASES_PER_CODE } from "@/lib/path-alias-limits";
 
 export interface ApiErrorInfo {
   /** The `code` field of the error body */
@@ -35,6 +36,13 @@ export const API_ERRORS = [
     fix: "Choose another back-half. The message names the rule.",
   },
   {
+    code: "INVALID_PATH_ALIAS",
+    status: 400,
+    meaning:
+      "The path can't be a path alias: it's empty, too long, has too many parts or characters QRdx doesn't allow, fits a back-half, is a path QRdx uses on custom domains, or is a link on another domain. `data.reason` says which (`empty`, `length`, `segments`, `characters`, `backHalf`, `reserved`, `otherDomain`).",
+    fix: "Follow the message: send the path after the domain, such as `/r/abc`. For a path that fits a back-half, give the code that back-half instead.",
+  },
+  {
     code: "TOO_MANY_CODES",
     status: 400,
     meaning: `More than ${formatCount(MAX_CODES_PER_REQUEST)} codes in one request. The body schema normally rejects this first, as \`VALIDATION_ERROR\`.`,
@@ -43,7 +51,8 @@ export const API_ERRORS = [
   {
     code: "DOMAIN_NOT_VERIFIED",
     status: 400,
-    meaning: "`domainId` points to a custom domain that isn't verified yet.",
+    meaning:
+      "`domainId` points to a custom domain that isn't verified yet, or a path alias was added to a code whose domain isn't verified yet.",
     fix: "Finish verifying the domain on the Domains page, or leave `domainId` out.",
   },
   {
@@ -77,7 +86,7 @@ export const API_ERRORS = [
     code: "PLAN_REQUIRED",
     status: 402,
     meaning:
-      "The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains need Pro; conversions and hooks need Business.",
+      "The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains (with their path aliases) need Pro; conversions and hooks need Business.",
     fix: "Upgrade the workspace, or leave the feature out of the request.",
   },
   {
@@ -132,7 +141,7 @@ export const API_ERRORS = [
     code: "NOT_FOUND",
     status: 404,
     meaning:
-      "No such endpoint, or the code, hook, theme or custom domain doesn't exist in the workspace the key or token acts on.",
+      "No such endpoint, or the code, hook, theme, custom domain or path alias doesn't exist in the workspace the key or token acts on.",
     fix: "Check the path and the id. An API key acts on the workspace it was created in; an OAuth token acts on its user's own workspace.",
   },
   {
@@ -150,10 +159,30 @@ export const API_ERRORS = [
     fix: "Choose another back-half.",
   },
   {
+    code: "NO_CUSTOM_DOMAIN",
+    status: 409,
+    meaning:
+      "Path aliases are for codes on a custom domain, and this code is on QRdx's own.",
+    fix: "Move the code to a verified custom domain with `domainId` (PATCH the code) first.",
+  },
+  {
+    code: "PATH_ALIAS_TAKEN",
+    status: 409,
+    meaning:
+      "Another code on the domain already answers at that path: its path alias (`data.reason` `taken`), or, for `/p/<x>`, its hosted page, because it has the back-half x (`hostedPage`).",
+    fix: "Remove the other code's alias first, or keep the path on the code that has it.",
+  },
+  {
+    code: "PATH_ALIAS_LIMIT",
+    status: 409,
+    meaning: `The code already has as many path aliases as a code can have on its domain (${PATH_ALIASES_PER_CODE}).`,
+    fix: "Remove an alias the code no longer needs.",
+  },
+  {
     code: "PAYLOAD_TOO_LARGE",
     status: 413,
     meaning:
-      "The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
+      "The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks and path aliases, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
     fix: "Send a smaller body. For codes, a large inline logo is the usual cause; for a batch, send `Prefer: return=minimal` or fewer codes.",
   },
   {
@@ -249,6 +278,13 @@ export const API_ERRORS = [
     meaning:
       "Custom domains aren't set up on this deployment (a self-hosted instance without them).",
     fix: "Leave `domainId` out, or configure custom domains on your instance.",
+  },
+  {
+    code: "PATH_ALIASES_UNAVAILABLE",
+    status: 503,
+    meaning:
+      "Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance that hasn't applied `packages/database/manual-sql/2026-11-18-path-aliases.sql`).",
+    fix: "Use the hosted QRdx API, or apply that SQL file to your instance's database.",
   },
   {
     code: "AI_ART_TIMEOUT",

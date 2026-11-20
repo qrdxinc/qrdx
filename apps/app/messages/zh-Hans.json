@@ -2013,7 +2013,7 @@
     "alt": "{value} 的 {format} 条形码",
     "loadFailed": "条形码绘制代码未能加载。请检查网络连接后重新加载页面。",
     "fixInput": "请修正高亮的输入内容，以查看条形码。",
-    "sizes": "PNG、JPG、WebP 和 AVIF 的尺寸为 {width, number, ::group-off} × {height, number, ::group-off} 像素。SVG、PDF 和 EPS 为矢量格式，尺寸为 {widthMm} × {heightMm} 毫米，模块大小为 {moduleMm} 毫米；可根据需要在版面中自行缩放。",
+    "sizes": "PNG、JPG、WebP、AVIF 和 BMP 的尺寸为 {width, number, ::group-off} × {height, number, ::group-off} px。SVG、PDF 和 EPS 为矢量格式，尺寸为 {widthMm} × {heightMm} mm，模块尺寸为 {moduleMm} mm；可在你的版面中按需缩放。",
     "more": "更多",
     "moreFormats": "更多格式",
     "footnote": "在浏览器中生成；你输入的任何内容都不会发送到 QRdx。选择 WebP 和 AVIF 时，由 QRdx 的服务器编码，且不会保留任何内容。",
@@ -5437,7 +5437,11 @@
       "onATableTent": "台卡上的效果",
       "onAPoster": "海报上的效果",
       "asASticker": "贴纸上的效果",
-      "onABusinessCard": "名片上的效果"
+      "onABusinessCard": "名片上的效果",
+      "onAPhone": "在手机上，显示于其托管页面",
+      "inFrames": "在边框中",
+      "onABadge": "在徽章上",
+      "asAsciiArt": "ASCII 字符画"
     },
     "itemPages": {
       "previous": "上一页",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "搜索社区",
-      "placeholder": "搜索边框、主题和页面"
+      "placeholder": "搜索社区"
     }
   },
   "communityActions": {
@@ -9906,7 +9910,27 @@
       "signedOut": "请登录后更改通知设置。",
       "webhookUrlMissing": "请粘贴 webhook 网址",
       "rateLimited": "已超出请求频率限制，请稍后再试。",
-      "failed": "出了点问题，请重试。"
+      "failed": "出了点问题，请重试。",
+      "notMember": "你不是该工作区的成员。",
+      "emailAlertsPro": "邮件提醒和每周摘要属于 Pro 功能。",
+      "chatBusiness": "Slack 和 Discord 提醒属于 Business 方案。",
+      "accountNotFound": "未找到账户。",
+      "webhookAlreadyAdded": "该 Webhook 已添加。",
+      "tooManyWebhooks": "每个工作区最多可添加 {max, number} 个 Slack 或 Discord Webhook。",
+      "targetNotFound": "未找到通知目标。",
+      "notDelivered": "未送达：{error}",
+      "pickEvent": "请至少选择一个事件",
+      "url": {
+        "missing": "请输入端点 URL。",
+        "tooLong": "URL 太长。",
+        "notFull": "请输入以 https:// 开头的完整 URL。",
+        "notHttps": "Webhook URL 必须使用 https://",
+        "credentials": "请从 URL 中删除用户名和密码。",
+        "ipAddress": "请使用主机名，而不是 IP 地址。",
+        "notPublic": "请使用公共主机名。",
+        "notSlack": "请粘贴 Slack 传入 Webhook 的 URL（https://hooks.slack.com/services/…）。",
+        "notDiscord": "请粘贴 Discord Webhook 的 URL（https://discord.com/api/webhooks/…）。"
+      }
     }
   },
   "codeBuilder": {

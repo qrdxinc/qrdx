@@ -44,6 +44,23 @@ export const SEO_OVERRIDES: Readonly<Record<string, SeoOverride>> = {
   "/docs/components/qr-code-scanner": { title: component("QrCodeScanner") },
   "/docs/components/wifi-qr-code": { title: component("WifiQrCode") },
   "/docs/components/vcard-qr-code": { title: component("VCardQrCode") },
+  // React library pages whose sidebar titles ("Basic usage", "Utilities")
+  // are too short for a search result to say what's on the page.
+  "/docs/usage": {
+    title: "Render a QR code in React with qrdx: components and props",
+  },
+  "/docs/qr-detection": {
+    title: "Decode QR codes from images in the browser with qrdx",
+  },
+  "/docs/features/templates": {
+    title: "Frame templates in qrdx: built-in ones or write your own",
+  },
+  "/docs/features/logos": {
+    title: "Add a logo to a QR code in React with qrdx, kept scannable",
+  },
+  "/docs/utilities": {
+    title: "qrdx helpers: color contrast, size checks, feature detection",
+  },
   "/docs/developers/build-an-integration": {
     description:
       "Create an OAuth app, connect people's QRdx accounts with OAuth 2.0 and PKCE, call the REST API for them and get listed in the integrations directory.",

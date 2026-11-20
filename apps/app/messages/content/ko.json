@@ -22715,6 +22715,12 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "BMP만 지원하는 오래된 시스템용 · 비압축 24비트",
+    "status": "machine",
+    "context": "barcodes.files.bmp.hint"
+  },
   "2f6bec725ba6": {
     "source": "Vector for print and design tools",
     "text": "인쇄 및 디자인 도구용 벡터",
@@ -22889,9 +22895,9 @@
     "status": "machine",
     "context": "barcodes.faqs.4.question"
   },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "인쇄용으로는 SVG, PDF, EPS를 추천해요. 벡터 형식이라 어떤 크기에서도 막대가 선명합니다. SVG와 EPS는 Illustrator, InDesign, Affinity 같은 디자인 도구에서 열리고, PDF는 어디서나 열려요. PNG는 화면, 문서, 온라인 쇼핑몰에 알맞고, JPG는 PNG를 받지 않는 곳에 쓰세요. WebP와 AVIF는 웹사이트용으로 파일이 더 작아요. 더 큰 이미지가 필요하면 이미지 크기를 키우세요.",
+  "3dfd44b42064": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "인쇄에는 SVG, PDF, EPS를 추천해요. 벡터 형식이라 어떤 크기에서도 바가 선명하게 유지돼요. SVG와 EPS는 Illustrator, InDesign, Affinity 같은 디자인 도구에서 열 수 있고, PDF는 어디서든 열 수 있어요. PNG는 화면, 문서, 온라인 쇼핑몰에 알맞고, JPG는 PNG를 지원하지 않는 곳에 쓰세요. WebP와 AVIF는 웹사이트용으로 파일 크기가 더 작고, BMP는 BMP만 지원하는 오래된 시스템용이에요. 더 큰 이미지가 필요하면 이미지 크기를 키우세요.",
     "status": "machine",
     "context": "barcodes.faqs.4.answer"
   },

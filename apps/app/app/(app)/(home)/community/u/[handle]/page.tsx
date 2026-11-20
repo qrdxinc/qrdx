@@ -10,7 +10,11 @@ import {
   pageOf,
   pageParam,
 } from "@/components/community/item-pages";
-import { normalizeHandle, profilePath } from "@/lib/community/handles";
+import {
+  normalizeHandle,
+  profileCanonical,
+  profileHref,
+} from "@/lib/community/handles";
 import { LICENSE_SHORT } from "@/lib/community/licence";
 import { getProfileByHandle } from "@/lib/community/queries";
 import {
@@ -28,17 +32,28 @@ const loadProfile = cache(async (raw: string) => {
   return handle ? getProfileByHandle(handle) : null;
 });
 
+/** The tab in `?type=` (a gallery segment, "templates"), if it names one. */
+const tabOf = (value: string | string[] | undefined) =>
+  typeof value === "string" ? typeFromSegment(value) : null;
+
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ handle: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const profile = await loadProfile((await params).handle);
   if (!profile?.creator.handle) return {};
+  const query = await searchParams;
   return createMetadata({
     title: `${profile.creator.displayName} (@${profile.creator.handle}) | Community`,
     description: `QR code frames and themes by ${profile.creator.displayName} on QRdx.`,
-    path: profilePath(profile.creator.handle),
+    path: profileCanonical(
+      profile.creator.handle,
+      tabOf(query.type),
+      pageParam(query.page),
+    ),
   });
 }
 
@@ -54,8 +69,7 @@ export default async function CreatorProfilePage({
   const profile = await loadProfile((await params).handle);
   if (!profile?.creator.handle) notFound();
   const query = await searchParams;
-  const tab =
-    typeof query.type === "string" ? typeFromSegment(query.type) : null;
+  const tab = tabOf(query.type);
   const counts = new Map<CommunityItemType, number>();
   for (const item of profile.items) {
     counts.set(item.type, (counts.get(item.type) ?? 0) + 1);
@@ -64,7 +78,7 @@ export default async function CreatorProfilePage({
     ? profile.items.filter((item) => item.type === tab)
     : profile.items;
   const { page, pages, items } = pageOf(listed, pageParam(query.page));
-  const base = profilePath(profile.creator.handle);
+  const handle = profile.creator.handle;
   const tabs: { id: CommunityItemType | null; label: string; count: number }[] =
     [
       { id: null, label: "All", count: profile.items.length },
@@ -106,9 +120,7 @@ export default async function CreatorProfilePage({
         <div className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 sm:px-6">
           {tabs.map((entry) => {
             const active = entry.id === tab;
-            const href = entry.id
-              ? `${base}?type=${entry.id === "frame" ? "frames" : entry.id === "theme" ? "themes" : "collections"}`
-              : base;
+            const href = profileHref(handle, { tab: entry.id });
             return (
               <Link
                 aria-current={active ? "page" : undefined}
@@ -136,14 +148,7 @@ export default async function CreatorProfilePage({
           <div className="space-y-5">
             <ItemGrid cards={items} eager={4} />
             <ItemPages
-              href={(next) => {
-                const params = new URLSearchParams();
-                if (typeof query.type === "string")
-                  params.set("type", query.type);
-                if (next > 1) params.set("page", String(next));
-                const search = params.toString();
-                return search ? `${base}?${search}` : base;
-              }}
+              href={(next) => profileHref(handle, { tab, page: next })}
               page={page}
               pages={pages}
             />

@@ -10,8 +10,10 @@
 // lookup, plan and audit log writer are stubbed.
 import { ownWorkspaceId } from "@repo/auth/own-workspace-id";
 import { NextRequest } from "next/server";
+import { isBMPFile } from "qrdx";
 import sharp from "sharp";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { readBMP } from "../../../../packages/qrdx/tests/support/bmp";
 import { fakeDb } from "../support/fake-db";
 
 const FULL = ["profile:read", "themes:read", "codes:read", "codes:write"];
@@ -216,6 +218,41 @@ describe("GET /v1/barcode", () => {
     expect((await sharp(bytes).metadata()).format).toBe(sharpFormat);
   });
 
+  it("type=bmp is the PNG's pixels as a real 24-bit BMP, cached like the rest", async () => {
+    const query = "format=ean13&data=5901234123457&bg=fffbeb&fg=1e3a8a&scale=3";
+    const [bmp, png] = await Promise.all([
+      getImage(`${query}&type=bmp`),
+      getImage(`${query}&type=png`),
+    ]);
+    expect(bmp.status).toBe(200);
+    expect(bmp.headers.get("content-type")).toBe("image/bmp");
+    expect(bmp.headers.get("cache-control")).toBe(
+      "public, max-age=31536000, immutable",
+    );
+    expect(bmp.headers.get("access-control-allow-origin")).toBe("*");
+    expect(bmp.headers.get("content-disposition")).toBe(
+      'inline; filename="ean13-5901234123457.bmp"',
+    );
+    const bytes = new Uint8Array(await bmp.arrayBuffer());
+    expect(isBMPFile(bytes)).toBe(true);
+    const decoded = readBMP(bytes);
+    const pixels = await sharp(new Uint8Array(await png.arrayBuffer()))
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    expect([decoded.width, decoded.height]).toEqual([
+      pixels.info.width,
+      pixels.info.height,
+    ]);
+    // The colored background stays its color: the PNG is opaque.
+    expect([...decoded.rgba.subarray(0, 4)]).toEqual([0xff, 0xfb, 0xeb, 255]);
+    expect(Buffer.from(decoded.rgba).equals(pixels.data)).toBe(true);
+
+    const upper = await getImage("format=code128&data=QRDX-42&type=BMP");
+    expect(upper.headers.get("content-type")).toBe("image/bmp");
+    expect(isBMPFile(new Uint8Array(await upper.arrayBuffer()))).toBe(true);
+  });
+
   it("type=pdf and type=eps are vector files; EPS downloads", async () => {
     const pdf = await getImage("format=datamatrix&data=SN-42&type=pdf");
     expect(pdf.headers.get("content-type")).toBe("application/pdf");
@@ -348,6 +385,16 @@ describe("POST /v1/barcode", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toBe("image/png");
     expect(response.headers.get("cache-control")).toBe("no-store");
+
+    const bmp = await image.POST(
+      request("POST", "/api/v1/barcode", {
+        body: { format: "aztec", data: "Internal note 42", type: "bmp" },
+      }),
+    );
+    expect(bmp.status).toBe(200);
+    expect(bmp.headers.get("content-type")).toBe("image/bmp");
+    expect(bmp.headers.get("cache-control")).toBe("no-store");
+    expect(isBMPFile(new Uint8Array(await bmp.arrayBuffer()))).toBe(true);
   });
 
   it("refuses a body that isn't JSON, and bad fields by name", async () => {
@@ -634,6 +681,29 @@ describe("/v1/barcodes", () => {
     expect(response.headers.get("content-type")).toBe("image/webp");
     expect(response.headers.get("cache-control")).toBe("private, no-store");
     expect(response.headers.get("x-ratelimit-limit")).toBe("1000");
+
+    const bmp = await saved.GET(
+      request("GET", `/api/v1/barcodes/${barcode.id}/image?type=bmp`, {
+        token: READ_KEY,
+      }),
+      ctx(barcode.id),
+    );
+    expect(bmp.status).toBe(200);
+    expect(bmp.headers.get("content-type")).toBe("image/bmp");
+    expect(bmp.headers.get("cache-control")).toBe("private, no-store");
+    const bytes = new Uint8Array(await bmp.arrayBuffer());
+    expect(isBMPFile(bytes)).toBe(true);
+    const png = await saved.GET(
+      request("GET", `/api/v1/barcodes/${barcode.id}/image?type=png`, {
+        token: READ_KEY,
+      }),
+      ctx(barcode.id),
+    );
+    const pixels = await sharp(new Uint8Array(await png.arrayBuffer()))
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    expect(Buffer.from(readBMP(bytes).rgba).equals(pixels.data)).toBe(true);
 
     const bad = await saved.GET(
       request("GET", `/api/v1/barcodes/${barcode.id}/image?type=gif`, {

@@ -92,43 +92,69 @@ const BLOCKED_HOST_SUFFIXES = [
   ".corp",
 ];
 
-export type UrlCheck = { ok: true; url: URL } | { ok: false; message: string };
+/**
+ * Why a webhook URL is refused, in English (`message`). Settings >
+ * Notifications says them in the person's language by `problem`
+ * (settingsActions.notifications.url in messages/en.json).
+ */
+export const WEBHOOK_URL_PROBLEMS = {
+  missing: "Enter the endpoint URL.",
+  tooLong: "The URL is too long.",
+  notFull: "Enter a full URL, starting with https://",
+  notHttps: "Webhook URLs must use https://",
+  credentials: "Remove the user name and password from the URL.",
+  ipAddress: "Use a host name, not an IP address.",
+  notPublic: "Use a public host name.",
+  notSlack:
+    "Paste a Slack incoming webhook URL (https://hooks.slack.com/services/…).",
+  notDiscord:
+    "Paste a Discord webhook URL (https://discord.com/api/webhooks/…).",
+} as const;
+
+export type WebhookUrlProblem = keyof typeof WEBHOOK_URL_PROBLEMS;
+
+export type UrlCheck =
+  | { ok: true; url: URL }
+  | { ok: false; problem: WebhookUrlProblem; message: string };
+
+const refuse = (problem: WebhookUrlProblem): UrlCheck => ({
+  ok: false,
+  problem,
+  message: WEBHOOK_URL_PROBLEMS[problem],
+});
 
 /** Static checks for a webhook target (no DNS): public https host names only. */
 export function checkWebhookUrl(value: string): UrlCheck {
   const trimmed = value.trim();
-  if (!trimmed) return { ok: false, message: "Enter the endpoint URL." };
+  if (!trimmed) return refuse("missing");
   if (trimmed.length > MAX_WEBHOOK_URL_LENGTH) {
-    return { ok: false, message: "The URL is too long." };
+    return refuse("tooLong");
   }
   let url: URL;
   try {
     url = new URL(trimmed);
   } catch {
-    return { ok: false, message: "Enter a full URL, starting with https://" };
+    return refuse("notFull");
   }
   if (url.protocol !== "https:") {
-    return { ok: false, message: "Webhook URLs must use https://" };
+    return refuse("notHttps");
   }
   if (url.username || url.password) {
-    return {
-      ok: false,
-      message: "Remove the user name and password from the URL.",
-    };
+    return refuse("credentials");
   }
   const host = url.hostname.toLowerCase().replace(/\.$/, "");
   if (isIP(host.replace(/^\[|\]$/g, ""))) {
-    return { ok: false, message: "Use a host name, not an IP address." };
+    return refuse("ipAddress");
   }
   if (!host.includes(".")) {
-    return { ok: false, message: "Use a public host name." };
+    return refuse("notPublic");
   }
   if (
     BLOCKED_HOST_SUFFIXES.some(
       (suffix) => host === suffix.replace(/^\./, "") || host.endsWith(suffix),
     )
   ) {
-    return { ok: false, message: "Use a public host name." };
+    return refuse("notPublic");
   }
   url.hash = "";
   return { ok: true, url };
@@ -154,11 +180,7 @@ export function checkSlackWebhookUrl(value: string): UrlCheck {
       url.pathname,
     )
   ) {
-    return {
-      ok: false,
-      message:
-        "Paste a Slack incoming webhook URL (https://hooks.slack.com/services/…).",
-    };
+    return refuse("notSlack");
   }
   url.search = "";
   return { ok: true, url };
@@ -174,11 +196,7 @@ export function checkDiscordWebhookUrl(value: string): UrlCheck {
     url.port ||
     !/^\/api(?:\/v\d+)?\/webhooks\/\d+\/[A-Za-z0-9_-]+\/?$/.test(url.pathname)
   ) {
-    return {
-      ok: false,
-      message:
-        "Paste a Discord webhook URL (https://discord.com/api/webhooks/…).",
-    };
+    return refuse("notDiscord");
   }
   url.search = "";
   return { ok: true, url };

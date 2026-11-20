@@ -22,10 +22,10 @@ import { cn } from "@repo/design-system/lib/utils";
 import { ArrowDown2 } from "iconsax-reactjs";
 import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
+import { GRID_GAPS } from "./card-layout";
 
 /** The galleries' card grid: the sidebar leaves room for three columns. */
-export const GALLERY_GRID =
-  "grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3";
+export const GALLERY_GRID = `grid ${GRID_GAPS} sm:grid-cols-2 xl:grid-cols-3`;
 
 const ROW =
   "flex w-full items-center justify-between gap-3 rounded-md px-3 py-1.5 text-left text-sm transition-colors";
