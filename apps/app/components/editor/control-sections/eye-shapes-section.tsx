@@ -19,6 +19,7 @@ import {
   hasEyeShapes,
   withEyeShape,
 } from "./eye-shapes";
+import { NewLookTag } from "./new-look-tag";
 import { ShapePicker } from "./option-tiles";
 import { eyeName } from "./pattern-controls";
 import {
@@ -56,6 +57,7 @@ export function EyeShapesSection({
 
   return (
     <ControlSection
+      badge={<NewLookTag id="eye-shapes" />}
       expanded={expanded}
       popover
       section="eye-shapes"

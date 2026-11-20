@@ -14,6 +14,7 @@ import {
 import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
 import type { QRStyle } from "@/types/theme";
+import { NewLookTag } from "./new-look-tag";
 
 const percent = (share: number) => Math.round(share * 100);
 
@@ -77,6 +78,7 @@ export function ShadowSection({
 
   return (
     <ControlSection
+      badge={<NewLookTag id="shadow" />}
       expanded={expanded}
       section="shadow"
       summary={on ? `${percent(shadow.opacity)}%` : t("off")}

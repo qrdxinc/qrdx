@@ -29,6 +29,8 @@ interface Props extends ControlSectionProps {
   description?: string;
   /** Info (i) next to the title; content lives in lib/help/hints.ts */
   hint?: HintId;
+  /** A small mark after the title, such as the "New" pill (components/new-tag.tsx) */
+  badge?: React.ReactNode;
   /**
    * Opens beside the panel (a bottom sheet on phones) instead of expanding
    * in place: for the shape sections, so the preview stays in view.
@@ -51,6 +53,7 @@ function ControlSection({
   section,
   description,
   hint,
+  badge,
   popover = false,
 }: Props) {
   const [isExpanded, setIsExpanded] = useState(expanded);
@@ -91,6 +94,7 @@ function ControlSection({
                     type="button"
                   >
                     <span className="text-sm font-medium">{title}</span>
+                    {badge}
                     {hint && <span aria-hidden className="size-4 shrink-0" />}
                     {showKbd && <Kbd>{kbd}</Kbd>}
                     <span className="text-muted-foreground ml-auto flex min-w-0 items-center gap-2 truncate text-xs">
@@ -121,6 +125,7 @@ function ControlSection({
                 type="button"
               >
                 <span className="text-sm font-medium">{title}</span>
+                {badge}
                 {hint && <span aria-hidden className="size-4 shrink-0" />}
                 {showKbd && <Kbd>{kbd}</Kbd>}
                 <span
@@ -147,6 +152,11 @@ function ControlSection({
               <span aria-hidden className="invisible text-sm font-medium">
                 {title}
               </span>
+              {badge && (
+                <span aria-hidden className="invisible">
+                  {badge}
+                </span>
+              )}
               <InfoHint className="pointer-events-auto" id={hint} />
             </span>
           )}

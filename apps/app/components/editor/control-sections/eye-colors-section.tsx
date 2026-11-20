@@ -20,11 +20,13 @@ import {
 } from "@/components/editor/gradient-picker";
 import type { QRStyle } from "@/types/theme";
 import {
+  EYE_GRADIENT_CONTROL,
   eyeInnerColor,
   eyeOuterColor,
   hasEyeColors,
   withEyeColor,
 } from "./eye-colors";
+import { NewLookTag } from "./new-look-tag";
 
 interface EyeColorsSectionProps {
   /** The style with defaults filled in */
@@ -141,6 +143,7 @@ export function EyeColorsSection({
           <div className="flex items-center justify-between gap-3">
             <Label className="text-sm" htmlFor="eye-gradient-span">
               {t("eyesContinueTheCodes")}
+              <NewLookTag className="ml-1.5" id={EYE_GRADIENT_CONTROL} />
             </Label>
             <Switch
               checked={style.eyeGradient === "code"}

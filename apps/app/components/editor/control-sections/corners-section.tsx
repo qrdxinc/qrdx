@@ -11,6 +11,7 @@ import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
 import { useQREditorStore } from "@/store/editor-store";
 import type { QRStyle } from "@/types/theme";
+import { NewLookTag } from "./new-look-tag";
 
 const percent = (share: number) => Math.round(share * 100);
 /** Backdrop color when the switch is first turned on. */
@@ -63,6 +64,7 @@ export function CornersSection({
 
   return (
     <ControlSection
+      badge={<NewLookTag id="corners" />}
       expanded={expanded}
       section="corners"
       summary={rounded ? `${shown}%` : t("square")}
