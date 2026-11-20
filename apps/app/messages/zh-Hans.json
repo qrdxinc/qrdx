@@ -2013,7 +2013,7 @@
     "alt": "{value} 的 {format} 条形码",
     "loadFailed": "条形码绘制代码未能加载。请检查网络连接后重新加载页面。",
     "fixInput": "请修正高亮的输入内容，以查看条形码。",
-    "sizes": "PNG、JPG、WebP 和 AVIF 的尺寸为 {width, number, ::group-off} × {height, number, ::group-off} 像素。SVG、PDF 和 EPS 为矢量格式，尺寸为 {widthMm} × {heightMm} 毫米，模块大小为 {moduleMm} 毫米；可根据需要在版面中自行缩放。",
+    "sizes": "PNG、JPG、WebP、AVIF 和 BMP 的尺寸为 {width, number, ::group-off} × {height, number, ::group-off} px。SVG、PDF 和 EPS 为矢量格式，尺寸为 {widthMm} × {heightMm} mm，模块尺寸为 {moduleMm} mm；可在你的版面中按需缩放。",
     "more": "更多",
     "moreFormats": "更多格式",
     "footnote": "在浏览器中生成；你输入的任何内容都不会发送到 QRdx。选择 WebP 和 AVIF 时，由 QRdx 的服务器编码，且不会保留任何内容。",

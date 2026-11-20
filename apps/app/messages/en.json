@@ -2412,7 +2412,7 @@
     "alt": "{format} barcode for {value}",
     "loadFailed": "The barcode drawing code didn't load. Check your connection and reload the page.",
     "fixInput": "Fix the highlighted input to see the barcode.",
-    "sizes": "PNG, JPG, WebP and AVIF {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF and EPS are vectors sized {widthMm} × {heightMm} mm, with a {moduleMm} mm module; scale them in your layout as needed.",
+    "sizes": "PNG, JPG, WebP, AVIF and BMP {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF and EPS are vectors sized {widthMm} × {heightMm} mm, with a {moduleMm} mm module; scale them in your layout as needed.",
     "more": "More",
     "moreFormats": "More formats",
     "footnote": "Made in your browser; nothing you type is sent to QRdx. WebP and AVIF are encoded by QRdx's server when you pick them, and nothing is kept.",

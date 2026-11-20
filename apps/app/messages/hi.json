@@ -2013,7 +2013,7 @@
     "alt": "{value} के लिए {format} बारकोड",
     "loadFailed": "बारकोड बनाने वाला कोड लोड नहीं हुआ। अपना कनेक्शन जाँचें और पेज रीलोड करें।",
     "fixInput": "बारकोड देखने के लिए हाइलाइट किया गया इनपुट ठीक करें।",
-    "sizes": "PNG, JPG, WebP और AVIF {width, number, ::group-off} × {height, number, ::group-off} px में। SVG, PDF और EPS वेक्टर हैं, जिनका साइज़ {widthMm} × {heightMm} mm है और मॉड्यूल {moduleMm} mm का है; ज़रूरत हो तो अपने लेआउट में इन्हें स्केल कर लें।",
+    "sizes": "PNG, JPG, WebP, AVIF और BMP {width, number, ::group-off} × {height, number, ::group-off} px में। SVG, PDF और EPS वेक्टर हैं, जिनका साइज़ {widthMm} × {heightMm} mm है और मॉड्यूल {moduleMm} mm का है; ज़रूरत के हिसाब से इन्हें अपने लेआउट में स्केल करें।",
     "more": "और",
     "moreFormats": "और फ़ॉर्मैट",
     "footnote": "यह आपके ब्राउज़र में बनता है; आप जो भी टाइप करते हैं, वह QRdx को नहीं भेजा जाता। WebP और AVIF चुनने पर वे QRdx के सर्वर पर एन्कोड होते हैं, और कुछ भी सेव नहीं किया जाता।",
