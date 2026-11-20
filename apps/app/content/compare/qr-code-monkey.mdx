@@ -13,7 +13,7 @@ sources:
   - https://www.qrcode-monkey.com
 tableRows:
   - feature: Price
-    qrdx: "Free; paid from $5/mo"
+    qrdx: "Free; paid from {facts.proMonthlyPrice}/mo"
     competitor: "Free"
   - feature: Static QR codes (no expiry, no scan limits)
     qrdx: true
@@ -40,7 +40,7 @@ tableRows:
     qrdx: true
     competitor: false
   - feature: Dynamic (editable) QR codes
-    qrdx: "10 free; unlimited from $5/mo"
+    qrdx: "10 free; unlimited from {facts.proMonthlyPrice}/mo"
     competitor: "Separate paid product"
   - feature: Scan analytics
     qrdx: "Built in, unlimited scans"
@@ -83,7 +83,7 @@ QRdx suits the same people, plus teams that want PDF output with their design in
 - **Shapes:** QRdx offers {facts.bodyPatterns} body patterns, {facts.eyeShapes} eye (corner frame) shapes and {facts.eyeCentres} eye-dot shapes, which can be mixed freely. QR Code Monkey offers body, eye frame and eye ball shape choices too.
 - **Logos:** both have a built-in gallery of brand logos. QRdx's has {facts.brandLogos} brands from Simple Icons with search, in brand color, black or white, with an optional plate behind the logo.
 - **Ads:** QR Code Monkey is ad-supported. QRdx shows no ads.
-- **Editable codes:** QR Code Monkey makes static codes and points you to a separate paid product for dynamic ones. QRdx's Free plan includes 10 dynamic codes with scan analytics, and Pro ($5/mo or $48/yr) makes them unlimited.
+- **Editable codes:** QR Code Monkey makes static codes and points you to a separate paid product for dynamic ones. QRdx's Free plan includes 10 dynamic codes with scan analytics, and Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes them unlimited.
 - **Code:** QRdx is open source (AGPL-3.0) and ships an MIT-licensed npm package; QR Code Monkey does not.
 
 ## Switching from QR Code Monkey
