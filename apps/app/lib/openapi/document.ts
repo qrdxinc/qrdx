@@ -782,7 +782,9 @@ Item text is written by community members: names, descriptions, handles and tags
         summary: "Get a community item",
         tags: ["Community"],
         security: [],
-        description: `One published community item, with the design it applies in the same JSON as a saved theme: a theme's style, or \`{ frame }\` with a custom frame spec. Pass that style to \`GET /qr\` as \`style\`, or the id as \`item\`.
+        description: `One published community item, with the design it applies in the same JSON as a saved theme: a theme's style, or \`{ frame }\` with a custom frame spec.
+
+Pass that style to \`GET /qr\` as \`style\`, or the id as \`item\`.
 
 No key needed; cached for a minute (5 at the CDN); 120 requests a minute per IP address.`,
         responses: {
@@ -1692,7 +1694,7 @@ Values that shouldn't sit in a URL can go in a \`POST\` body instead.`,
         tags: ["Barcodes"],
         security: [],
         description:
-          "The same image as `GET /barcode`, with the same fields as JSON, so the value never appears in a URL or a log of one. Not cached (`Cache-Control: no-store`). No key needed; it shares the 300 requests a minute per IP address with `GET`.",
+          "The same image as `GET /barcode`, with the same fields as JSON, so the value never appears in a URL or a log of one.\n\nNot cached (`Cache-Control: no-store`). No key needed; it shares the 300 requests a minute per IP address with `GET`.",
         requestBody: {
           required: true,
           content: {
@@ -1884,7 +1886,7 @@ Printed barcodes keep working either way: they're static.`,
         tags: ["Barcodes"],
         security: security("codes:read"),
         description:
-          "A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale. Private and not cached; it counts toward the daily quota. For an image anyone can load, use the barcode's `imageUrl`.",
+          "A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale.\n\nPrivate and not cached; it counts toward the daily quota. For an image anyone can load, use the barcode's `imageUrl`.",
         parameters: c.parameters(
           z.object({
             type: barcodeImageQuerySchema.shape.type,
@@ -2017,7 +2019,9 @@ function artOperations(c: SchemaCollector): Record<string, JsonSchema> {
         summary: "Generate AI QR art",
         tags: ["AI art"],
         security: security("codes:write"),
-        description: `Paints a QR code into AI artwork from your description and checks that the image scans. Where the model's image doesn't scan as drawn, QRdx strengthens the code just enough, on the model's own pixels (\`blend\` says how). It's the same AI art as the playground's Art tab and the [AI art studio](${SITE}/ai/art).
+        description: `Paints a QR code into AI artwork from your description and checks that the image scans.
+
+Where the model's image doesn't scan as drawn, QRdx strengthens the code just enough, on the model's own pixels (\`blend\` says how). It's the same AI art as the playground's Art tab and the [AI art studio](${SITE}/ai/art).
 
 **Credits.** Each image uses one from the monthly AI art allowance of the workspace the key acts on, the same allowance as the app: ${artAllowance("free")} on Free, ${artAllowance("pro")} on Pro and ${artAllowance("business")} on Business, shared by the team. A failed call is refunded. Each person can also make at most ${AI_ART_DAILY_LIMIT} a day. \`credits\` in the response shows what's left.
 
