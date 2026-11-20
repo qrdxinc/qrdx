@@ -5427,8 +5427,12 @@
       "empty": "Vuoto",
       "viewAll": "Vedi tutti",
       "saves": "Salvataggi",
-      "itemCount": "{count, plural, one {# elemento} other {# elementi}}",
-      "yourQrCode": "Il tuo QR code"
+      "typeFrame": "Cornice",
+      "typeTheme": "Tema",
+      "typePage": "Pagina",
+      "typeKit": "Kit",
+      "typeCollection": "Raccolta",
+      "typeCollectionCount": "Raccolta · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "Su un segnatavolo",

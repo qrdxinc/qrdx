@@ -203,6 +203,20 @@ describe("collections", () => {
       "frame",
       "theme",
     ]);
+
+    // Its card draws its first items each as its own type: the page on a
+    // phone (so it carries the page), the frame and the theme's swatch.
+    const [card] = await listItems({ type: "collection" });
+    expect(card?.stack?.map((entry) => entry.type)).toEqual([
+      "page-template",
+      "frame",
+      "theme",
+    ]);
+    const [pageEntry, frameEntry, themeEntry] = card?.stack ?? [];
+    expect(pageEntry?.page?.content).toBeDefined();
+    expect(frameEntry?.preview.frame).toMatchObject({ style: "custom" });
+    expect(frameEntry?.page).toBeUndefined();
+    expect(themeEntry?.preview.fgColor).toBe("#1E3A8A");
   });
 
   it("refuses fewer than 2 items, removed items and collections in collections", async () => {

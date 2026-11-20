@@ -1,0 +1,186 @@
+/*
+ * How community previews stand on their stage (STAGE in ./card-layout.ts)
+ * and how they move there: the cards (item-card.tsx), their pictures
+ * (type-previews.tsx, theme-swatch.tsx, stage-mockups.tsx) and the item
+ * page's hero (try-it.tsx).
+ *
+ * Previews stand on the stage as objects with a soft contact shadow, one
+ * tight layer and one wide, drawn as filters so they follow a frame's own
+ * outline.
+ *
+ * Motion says what an item is: a frame lifts off the stage, a theme's
+ * close-up pulls back to the whole code, a page scrolls on its phone, a
+ * kit's look and page part, a collection's pieces spread. It plays on hover
+ * where the device can hover with a fine pointer, and whenever the card's
+ * link has keyboard focus; touch screens stay at rest. Only transform and
+ * filter change, so a hover cut off halfway reverses smoothly from where it
+ * is. Exits run a little faster than entries. With reduced motion nothing
+ * moves.
+ */
+
+/* The tokens, on everything that stands or moves: one ease-out curve, and
+   the contact shadow at rest and lifted. */
+.object,
+.frame,
+.swatchCode,
+.chip,
+.phone,
+.pageScroll,
+.kitLook,
+.kitPage,
+.piece {
+  --stage-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --stage-shadow: drop-shadow(0 1px 1px rgb(24 24 27 / 0.1))
+    drop-shadow(0 6px 10px rgb(24 24 27 / 0.1));
+  --stage-shadow-lifted: drop-shadow(0 2px 2px rgb(24 24 27 / 0.1))
+    drop-shadow(0 12px 16px rgb(24 24 27 / 0.13));
+}
+
+/* Something standing on the stage: its contact shadow. */
+.object {
+  filter: var(--stage-shadow);
+}
+
+/* ── Frame: a printed piece with a sample code; it lifts off the stage ── */
+
+.frame {
+  filter: var(--stage-shadow);
+  transition:
+    transform 220ms var(--stage-ease),
+    filter 220ms var(--stage-ease);
+}
+
+/* ── Theme: the close-up pulls back to the whole code ──────────────────── */
+
+.swatchCode {
+  transform: var(--swatch-rest);
+  transform-origin: 0 0;
+  transition: transform 450ms var(--stage-ease);
+}
+
+.chip {
+  transition: transform 180ms var(--stage-ease);
+}
+
+/* ── Page template: the phone rises, its page scrolls ──────────────────── */
+
+.phone {
+  filter: var(--stage-shadow);
+  transition:
+    transform 240ms var(--stage-ease),
+    filter 240ms var(--stage-ease);
+}
+
+.pageScroll {
+  transition: transform 600ms var(--stage-ease);
+}
+
+/* ── Kit: the look and the page part ───────────────────────────────────── */
+
+.kitLook,
+.kitPage {
+  transition: transform 240ms var(--stage-ease);
+}
+
+/* ── Collection: its pieces spread ─────────────────────────────────────── */
+
+.piece {
+  transform: var(--piece-rest);
+  transition: transform 240ms var(--stage-ease);
+}
+
+/* ── Hover (fine pointers) and keyboard focus ──────────────────────────── */
+
+@media (hover: hover) and (pointer: fine) and (
+    prefers-reduced-motion: no-preference
+  ) {
+  .card:hover .frame {
+    transform: translateY(-3px);
+    filter: var(--stage-shadow-lifted);
+    transition-duration: 280ms;
+  }
+  .card:hover .swatchCode {
+    transform: var(--swatch-full);
+    transition-duration: 600ms;
+  }
+  .card:hover .chip {
+    transform: translateY(-2px);
+    transition-duration: 240ms;
+    transition-delay: calc(var(--chip) * 35ms);
+  }
+  .card:hover .phone {
+    transform: translateY(-4px);
+    filter: var(--stage-shadow-lifted);
+    transition-duration: 300ms;
+  }
+  .card:hover .pageScroll {
+    transform: translateY(-20%);
+    transition-duration: 850ms;
+  }
+  .card:hover .kitLook {
+    transform: translate(-5px, 1px);
+    transition-duration: 300ms;
+  }
+  .card:hover .kitPage {
+    transform: translate(5px, -3px);
+    transition-duration: 300ms;
+  }
+  .card:hover .piece {
+    transform: var(--piece-spread);
+    transition-duration: 300ms;
+    transition-delay: calc(var(--piece) * 40ms);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card:has(a:focus-visible) .frame {
+    transform: translateY(-3px);
+    filter: var(--stage-shadow-lifted);
+    transition-duration: 280ms;
+  }
+  .card:has(a:focus-visible) .swatchCode {
+    transform: var(--swatch-full);
+    transition-duration: 600ms;
+  }
+  .card:has(a:focus-visible) .chip {
+    transform: translateY(-2px);
+    transition-duration: 240ms;
+    transition-delay: calc(var(--chip) * 35ms);
+  }
+  .card:has(a:focus-visible) .phone {
+    transform: translateY(-4px);
+    filter: var(--stage-shadow-lifted);
+    transition-duration: 300ms;
+  }
+  .card:has(a:focus-visible) .pageScroll {
+    transform: translateY(-20%);
+    transition-duration: 850ms;
+  }
+  .card:has(a:focus-visible) .kitLook {
+    transform: translate(-5px, 1px);
+    transition-duration: 300ms;
+  }
+  .card:has(a:focus-visible) .kitPage {
+    transform: translate(5px, -3px);
+    transition-duration: 300ms;
+  }
+  .card:has(a:focus-visible) .piece {
+    transform: var(--piece-spread);
+    transition-duration: 300ms;
+    transition-delay: calc(var(--piece) * 40ms);
+  }
+}
+
+/* Reduced motion: everything stays at rest. */
+@media (prefers-reduced-motion: reduce) {
+  .frame,
+  .swatchCode,
+  .chip,
+  .phone,
+  .pageScroll,
+  .kitLook,
+  .kitPage,
+  .piece {
+    transition: none;
+  }
+}

@@ -5427,8 +5427,12 @@
       "empty": "Vacío",
       "viewAll": "Ver todo",
       "saves": "Guardados",
-      "itemCount": "{count, plural, one {# elemento} other {# elementos}}",
-      "yourQrCode": "Tu código QR"
+      "typeFrame": "Marco",
+      "typeTheme": "Tema",
+      "typePage": "Página",
+      "typeKit": "Kit",
+      "typeCollection": "Colección",
+      "typeCollectionCount": "Colección · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "En un display de mesa",

@@ -5427,8 +5427,12 @@
       "empty": "खाली",
       "viewAll": "सभी देखें",
       "saves": "सेव",
-      "itemCount": "{count, plural, one {# आइटम} other {# आइटम}}",
-      "yourQrCode": "आपका QR कोड"
+      "typeFrame": "फ़्रेम",
+      "typeTheme": "थीम",
+      "typePage": "पेज",
+      "typeKit": "किट",
+      "typeCollection": "कलेक्शन",
+      "typeCollectionCount": "कलेक्शन · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "टेबल टेंट पर",

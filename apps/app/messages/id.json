@@ -5427,8 +5427,12 @@
       "empty": "Kosong",
       "viewAll": "Lihat semua",
       "saves": "Disimpan",
-      "itemCount": "{count, plural, other {# item}}",
-      "yourQrCode": "Kode QR Anda"
+      "typeFrame": "Bingkai",
+      "typeTheme": "Tema",
+      "typePage": "Halaman",
+      "typeKit": "Kit",
+      "typeCollection": "Koleksi",
+      "typeCollectionCount": "Koleksi · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "Di tent card meja",

@@ -5427,8 +5427,12 @@
       "empty": "Vide",
       "viewAll": "Tout voir",
       "saves": "Ajouts",
-      "itemCount": "{count, plural, one {# élément} other {# éléments}}",
-      "yourQrCode": "Votre QR code"
+      "typeFrame": "Cadre",
+      "typeTheme": "Thème",
+      "typePage": "Page",
+      "typeKit": "Kit",
+      "typeCollection": "Collection",
+      "typeCollectionCount": "Collection · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "Sur un chevalet de table",
