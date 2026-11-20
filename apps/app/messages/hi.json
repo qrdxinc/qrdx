@@ -5437,7 +5437,11 @@
       "onATableTent": "टेबल टेंट पर",
       "onAPoster": "पोस्टर पर",
       "asASticker": "स्टिकर के रूप में",
-      "onABusinessCard": "बिज़नेस कार्ड पर"
+      "onABusinessCard": "बिज़नेस कार्ड पर",
+      "onAPhone": "फ़ोन पर, उसके होस्टेड पेज पर",
+      "inFrames": "फ़्रेम में",
+      "onABadge": "बैज पर",
+      "asAsciiArt": "ASCII आर्ट के रूप में"
     },
     "itemPages": {
       "previous": "पिछला",
@@ -9906,7 +9910,27 @@
       "signedOut": "नोटिफ़िकेशन बदलने के लिए साइन इन करें।",
       "webhookUrlMissing": "वेबहुक URL पेस्ट करें",
       "rateLimited": "रेट लिमिट पूरी हो गई। कृपया बाद में दोबारा कोशिश करें।",
-      "failed": "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश करें।"
+      "failed": "कुछ गड़बड़ हो गई। कृपया दोबारा कोशिश करें।",
+      "notMember": "आप उस वर्कस्पेस के सदस्य नहीं हैं।",
+      "emailAlertsPro": "ईमेल अलर्ट और साप्ताहिक डाइजेस्ट Pro में शामिल हैं।",
+      "chatBusiness": "Slack और Discord अलर्ट Business प्लान में शामिल हैं।",
+      "accountNotFound": "अकाउंट नहीं मिला।",
+      "webhookAlreadyAdded": "यह वेबहुक पहले से जुड़ा है।",
+      "tooManyWebhooks": "हर वर्कस्पेस में अधिकतम {max, number} Slack या Discord वेबहुक जोड़ें।",
+      "targetNotFound": "नोटिफ़िकेशन टारगेट नहीं मिला।",
+      "notDelivered": "भेजा नहीं जा सका: {error}",
+      "pickEvent": "कम से कम एक इवेंट चुनें",
+      "url": {
+        "missing": "एंडपॉइंट URL डालें।",
+        "tooLong": "URL बहुत लंबा है।",
+        "notFull": "https:// से शुरू होने वाला पूरा URL डालें।",
+        "notHttps": "वेबहुक URL में https:// होना ज़रूरी है",
+        "credentials": "URL से यूज़र नेम और पासवर्ड हटाएँ।",
+        "ipAddress": "IP एड्रेस नहीं, होस्ट नेम इस्तेमाल करें।",
+        "notPublic": "पब्लिक होस्ट नेम इस्तेमाल करें।",
+        "notSlack": "Slack इनकमिंग वेबहुक URL पेस्ट करें (https://hooks.slack.com/services/…)।",
+        "notDiscord": "Discord वेबहुक URL पेस्ट करें (https://discord.com/api/webhooks/…)।"
+      }
     }
   },
   "codeBuilder": {

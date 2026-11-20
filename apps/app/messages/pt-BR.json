@@ -5437,7 +5437,11 @@
       "onATableTent": "Em um display de mesa",
       "onAPoster": "Em um pôster",
       "asASticker": "Como adesivo",
-      "onABusinessCard": "Em um cartão de visita"
+      "onABusinessCard": "Em um cartão de visita",
+      "onAPhone": "No celular, na página hospedada",
+      "inFrames": "Em molduras",
+      "onABadge": "Em um crachá",
+      "asAsciiArt": "Como arte ASCII"
     },
     "itemPages": {
       "previous": "Anterior",
@@ -9906,7 +9910,27 @@
       "signedOut": "Entre para alterar as notificações.",
       "webhookUrlMissing": "Cole a URL do webhook",
       "rateLimited": "Limite de requisições excedido. Tente novamente mais tarde.",
-      "failed": "Algo deu errado. Tente novamente."
+      "failed": "Algo deu errado. Tente novamente.",
+      "notMember": "Você não é membro desse workspace.",
+      "emailAlertsPro": "Alertas por e-mail e o resumo semanal fazem parte do Pro.",
+      "chatBusiness": "Os alertas do Slack e do Discord fazem parte do plano Business.",
+      "accountNotFound": "Conta não encontrada.",
+      "webhookAlreadyAdded": "Esse webhook já foi adicionado.",
+      "tooManyWebhooks": "Adicione até {max, number} webhooks do Slack ou do Discord por workspace.",
+      "targetNotFound": "Destino de notificação não encontrado.",
+      "notDelivered": "Não entregue: {error}",
+      "pickEvent": "Escolha pelo menos um evento",
+      "url": {
+        "missing": "Informe a URL do endpoint.",
+        "tooLong": "A URL é longa demais.",
+        "notFull": "Informe uma URL completa, começando com https://",
+        "notHttps": "URLs de webhook precisam usar https://",
+        "credentials": "Remova o nome de usuário e a senha da URL.",
+        "ipAddress": "Use um nome de host, não um endereço IP.",
+        "notPublic": "Use um nome de host público.",
+        "notSlack": "Cole a URL de um webhook de entrada do Slack (https://hooks.slack.com/services/…).",
+        "notDiscord": "Cole a URL de um webhook do Discord (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {

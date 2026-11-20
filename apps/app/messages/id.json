@@ -5437,7 +5437,11 @@
       "onATableTent": "Di tent card meja",
       "onAPoster": "Pada poster",
       "asASticker": "Sebagai stiker",
-      "onABusinessCard": "Pada kartu nama"
+      "onABusinessCard": "Pada kartu nama",
+      "onAPhone": "Di ponsel, pada halaman yang di-hosting",
+      "inFrames": "Dalam bingkai",
+      "onABadge": "Pada lencana",
+      "asAsciiArt": "Sebagai seni ASCII"
     },
     "itemPages": {
       "previous": "Sebelumnya",
@@ -9906,7 +9910,27 @@
       "signedOut": "Masuk untuk mengubah notifikasi.",
       "webhookUrlMissing": "Tempel URL webhook",
       "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
-      "failed": "Terjadi kesalahan. Silakan coba lagi."
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "notMember": "Anda bukan anggota workspace tersebut.",
+      "emailAlertsPro": "Peringatan email dan ringkasan mingguan tersedia di Pro.",
+      "chatBusiness": "Peringatan Slack dan Discord tersedia di paket Business.",
+      "accountNotFound": "Akun tidak ditemukan.",
+      "webhookAlreadyAdded": "Webhook itu sudah ditambahkan.",
+      "tooManyWebhooks": "Tambahkan hingga {max, number} webhook Slack atau Discord per workspace.",
+      "targetNotFound": "Tujuan notifikasi tidak ditemukan.",
+      "notDelivered": "Tidak terkirim: {error}",
+      "pickEvent": "Pilih minimal satu peristiwa",
+      "url": {
+        "missing": "Masukkan URL endpoint.",
+        "tooLong": "URL terlalu panjang.",
+        "notFull": "Masukkan URL lengkap yang diawali https://",
+        "notHttps": "URL webhook harus memakai https://",
+        "credentials": "Hapus nama pengguna dan kata sandi dari URL.",
+        "ipAddress": "Gunakan nama host, bukan alamat IP.",
+        "notPublic": "Gunakan nama host publik.",
+        "notSlack": "Tempel URL webhook masuk Slack (https://hooks.slack.com/services/…).",
+        "notDiscord": "Tempel URL webhook Discord (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {
