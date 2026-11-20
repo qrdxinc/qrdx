@@ -5437,7 +5437,11 @@
       "onATableTent": "Su un segnatavolo",
       "onAPoster": "Su un poster",
       "asASticker": "Come adesivo",
-      "onABusinessCard": "Su un biglietto da visita"
+      "onABusinessCard": "Su un biglietto da visita",
+      "onAPhone": "Su un telefono, nella sua pagina ospitata",
+      "inFrames": "Nei frame",
+      "onABadge": "Su un badge",
+      "asAsciiArt": "Come ASCII art"
     },
     "itemPages": {
       "previous": "Precedente",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Cerca nella community",
-      "placeholder": "Cerca cornici, temi e pagine"
+      "placeholder": "Cerca nella community"
     }
   },
   "communityActions": {

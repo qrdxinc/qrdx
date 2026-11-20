@@ -5437,7 +5437,11 @@
       "onATableTent": "台卡上的效果",
       "onAPoster": "海报上的效果",
       "asASticker": "贴纸上的效果",
-      "onABusinessCard": "名片上的效果"
+      "onABusinessCard": "名片上的效果",
+      "onAPhone": "在手机上，显示于其托管页面",
+      "inFrames": "在边框中",
+      "onABadge": "在徽章上",
+      "asAsciiArt": "ASCII 字符画"
     },
     "itemPages": {
       "previous": "上一页",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "搜索社区",
-      "placeholder": "搜索边框、主题和页面"
+      "placeholder": "搜索社区"
     }
   },
   "communityActions": {

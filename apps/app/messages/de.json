@@ -5437,7 +5437,11 @@
       "onATableTent": "Auf einem Tischaufsteller",
       "onAPoster": "Auf einem Poster",
       "asASticker": "Als Sticker",
-      "onABusinessCard": "Auf einer Visitenkarte"
+      "onABusinessCard": "Auf einer Visitenkarte",
+      "onAPhone": "Auf dem Handy, auf der gehosteten Seite",
+      "inFrames": "In Rahmen",
+      "onABadge": "Auf einem Badge",
+      "asAsciiArt": "Als ASCII-Art"
     },
     "itemPages": {
       "previous": "Zurück",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Community durchsuchen",
-      "placeholder": "Rahmen, Themes und Seiten suchen"
+      "placeholder": "Community durchsuchen"
     }
   },
   "communityActions": {
