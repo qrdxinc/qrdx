@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "unbegrenzte dynamische Codes",
       "longerAnalytics": "dein gesamter Scan-Verlauf",
-      "analyticsHistory": "vollständiger Analyse-Verlauf",
       "customDomains": "eigene Domains",
       "teams": "Teams"
     },
@@ -1099,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "Kostenloser Massen-QR-Code-Generator aus CSV: gestaltet, SVG, ohne Upload",
-      "metaDescription": "Verwandle eine CSV in bis zu {rows, number} gestylte QR-Codes und lade sie als PNG, WebP oder SVG in einer ZIP-Datei herunter. Läuft in deinem Browser: kein Upload, kein Wasserzeichen, keine Registrierung bis {limit, number} Zeilen.",
+      "metaTitle": "Kostenloser QR-Code-Generator für viele Codes aus CSV, ohne Upload",
+      "metaDescription": "Verwandle eine CSV in bis zu {rows, number} gestylte QR-Codes als PNG, WebP oder SVG in einer ZIP. Läuft in deinem Browser: kein Upload, kein Wasserzeichen, keine Anmeldung bis {limit, number} Zeilen.",
       "crumb": "Bulk-Generator",
       "title": "Bulk-QR-Code-Generator",
       "intro1": "Verwandle eine CSV-Datei in einem Rutsch in Tausende QR-Codes, so gestaltet, wie du es willst, und als PNG, WebP oder SVG in einer ZIP heruntergeladen. Eine Zeile pro Code, mit Dateinamen aus einer Spalte: Produktetiketten, Event-Tickets, Asset-Tags, Tischnummern oder Mailings.",
@@ -1936,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Kostenloser Barcode-Generator: EAN-13, UPC, Code 128",
-    "metaDescription": "Erstelle EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix und mehr: {count, number} Barcode-Typen, Prüfziffern werden für dich berechnet. PNG, JPG, SVG, PDF und EPS. Kostenlos, ohne Anmeldung.",
+    "metaDescription": "Erstelle EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix und mehr: {count, number} Barcode-Typen, Prüfziffern werden automatisch berechnet. PNG, JPG, SVG, PDF, EPS. Kostenlos, ohne Anmeldung.",
     "crumb": "Barcode-Generator",
     "title": "Kostenloser Barcode-Generator",
     "intro1": "Erstelle Barcodes für Handel, Versand und Inventur in {count, number} Formaten, von EAN-13 und UPC-A bis Code 128, GS1-128, ITF-14 und Data Matrix. Gib die Nummer ein, und die Prüfziffer wird für dich berechnet. Eine falsche fällt auf, bevor du druckst.",
@@ -2117,8 +2116,8 @@
     "questions": "Fragen zur Garantie? Schreib uns an <mail>{email}</mail>. Zuletzt aktualisiert am <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise: SSO, Audit-Log, Verträge und Reaktionszeiten",
-    "metaDescription": "QRdx für größere Teams: Single Sign-on, ein Audit-Log mit CSV-Export, Rollen, eigene Domains und ein Kundenportal, mit Jahresvertrag, schriftlichen Reaktionszeiten und Zahlung auf Rechnung.",
+    "metaTitle": "QRdx Enterprise: SSO, Audit-Log und Verträge",
+    "metaDescription": "QRdx für größere Teams: SSO, ein Audit-Log mit CSV-Export, Rollen, eigene Domains und ein Kundenportal, mit Jahresvertrag, Antwortzeiten und Rechnungen.",
     "crumb": "Enterprise",
     "title": "QRdx für Enterprise-Teams",
     "intro1": "Für Unternehmen, die QR-Codes auf Verpackungen, Schildern und in Kampagnen für viele Teams, Marken oder Kunden einsetzen und vor dem Rollout Single Sign-on, einen Prüfpfad und einen Vertrag brauchen.",
@@ -2268,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "Sicherheit bei QRdx: Anmeldung, Datenspeicherung und Meldung von Problemen",
-    "metaDescription": "So schützt QRdx Konten und Daten: HTTPS mit HSTS, eine Content Security Policy, Passkeys und Zwei-Schritt-Verifizierung, Single Sign-on, ein Audit-Log, Link-Prüfungen, der Speicherort der Daten und die Meldung von Sicherheitslücken.",
+    "metaTitle": "Sicherheit bei QRdx: Anmeldung, Daten und Meldung von Problemen",
+    "metaDescription": "So schützt QRdx Konten und Daten: HSTS und CSP, Passkeys, Bestätigung in zwei Schritten, SSO, ein Audit-Log, Link-Prüfungen, wo Daten liegen und wie du eine Schwachstelle meldest.",
     "crumb": "Sicherheit",
     "title": "Sicherheit bei QRdx",
     "intro1": "Was QRdx tut, um dein Konto, deine Codes und die Daten deiner Besucher zu schützen. Jeder Punkt beschreibt etwas, das heute auf qrdx.dev läuft, und der Code ist Open Source, du kannst es also selbst prüfen.",
@@ -2738,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "Kostenlose QR-Code-API: ohne Key, mit SVG, PNG und Logos",
-    "metaDescription": "Eine kostenlose QR-Code-API ohne Key und ohne Anmeldung. Eine URL liefert einen QR-Code als SVG, PNG, WebP oder EPS, mit deinen Farben, Formen und einem Logo. {perMinute, number} Anfragen pro Minute, ein Jahr lang gecacht.",
+    "metaDescription": "Eine kostenlose QR-Code-API ohne Schlüssel. Eine URL liefert dir einen QR-Code als SVG, PNG, WebP oder EPS mit deinen Farben, Formen und deinem Logo. {perMinute, number} Anfragen pro Minute, ein Jahr lang im Cache.",
     "crumb": "QR-Code-API",
     "title": "Kostenlose QR-Code-API",
     "intro1": "Setz einen QR-Code überall hin, wo eine URL hinpasst. Eine GET-Anfrage an api.qrdx.dev liefert direkt das Bild: ohne Konto, ohne API-Key, ohne SDK. Farben, Formen, Fehlerkorrektur und ein Logo kommen in den Query-String.",
@@ -3136,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "KI-QR-Code-Generator – QR-Codes per Prompt gestalten",
-    "metaDescription": "Sag der KI von QRdx, was der Code öffnen soll (ein Link, Wi-Fi, eine Kontaktkarte und mehr) und wie er aussehen soll. Sie prüft den Scan-Score, verbessert das Design, bis er „Great“ erreicht, und fragt nach, bevor sie etwas in deinem Editor ändert. Kostenlose Konten enthalten {count, number} KI-Anfragen; Pro schaltet unbegrenzte frei.",
+    "metaDescription": "Beschreibe einen QR-Code und die KI von QRdx gestaltet ihn, verbessert ihn so lange, bis der Scan-Score „Great“ erreicht, und fragt nach, bevor sie etwas in deinem Editor ändert. Kostenlose Konten erhalten {count, number} KI-Anfragen.",
     "artLink": "Oder verwandle einen Link in scanbare KI-QR-Kunst",
     "chat": {
       "upgrade": "Mit Pro unbegrenzt Anfragen stellen",

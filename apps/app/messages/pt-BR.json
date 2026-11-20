@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "códigos dinâmicos ilimitados",
       "longerAnalytics": "todo o seu histórico de leituras",
-      "analyticsHistory": "histórico completo de análises",
       "customDomains": "domínios próprios",
       "teams": "equipes"
     },
@@ -1099,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "Gerador de QR code em massa grátis a partir de CSV: estilizado, SVG, sem upload",
-      "metaDescription": "Transforme um CSV em até {rows, number} QR codes estilizados e baixe em PNG, WebP ou SVG dentro de um ZIP. Roda no seu navegador: sem upload, sem marca d’água e sem cadastro até {limit, number} linhas.",
+      "metaTitle": "Gerador de QR code em massa a partir de CSV, grátis e sem upload",
+      "metaDescription": "Transforme um CSV em até {rows, number} QR codes estilizados em PNG, WebP ou SVG dentro de um ZIP. Tudo roda no seu navegador: sem upload, sem marca d’água e sem cadastro até {limit, number} linhas.",
       "crumb": "Gerador em massa",
       "title": "Gerador de QR code em massa",
       "intro1": "Transforme um arquivo CSV em milhares de QR codes de uma só vez, com o estilo que você quiser, e baixe em PNG, WebP ou SVG dentro de um ZIP. Uma linha por código, com os nomes dos arquivos vindos de uma coluna: etiquetas de produto, ingressos de eventos, etiquetas de patrimônio, números de mesa ou malas diretas.",
@@ -1936,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Gerador de código de barras grátis: EAN-13, UPC, Code 128",
-    "metaDescription": "Crie EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e mais: {count, number} tipos de código de barras com dígito verificador calculado para você. PNG, JPG, SVG, PDF e EPS. Grátis, sem cadastro.",
+    "metaDescription": "Crie EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e mais: {count, number} tipos de código de barras com dígitos verificadores calculados para você. PNG, JPG, SVG, PDF, EPS. Grátis, sem cadastro.",
     "crumb": "Gerador de código de barras",
     "title": "Gerador de código de barras grátis",
     "intro1": "Crie códigos de barras de varejo, envio e estoque em {count, number} formatos, de EAN-13 e UPC-A a Code 128, GS1-128, ITF-14 e Data Matrix. Digite o número e o dígito verificador é calculado para você; se estiver errado, o erro é detectado antes de você imprimir.",
@@ -2117,8 +2116,8 @@
     "questions": "Dúvidas sobre a garantia? Escreva para <mail>{email}</mail>. Última atualização em <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise: SSO, log de auditoria, contratos e prazos de resposta",
-    "metaDescription": "QRdx para equipes maiores: login único, log de auditoria com exportação em CSV, papéis, domínios próprios e portal do cliente, com contrato anual, prazos de resposta por escrito e pagamento por boleto ou fatura.",
+    "metaTitle": "QRdx Enterprise: SSO, log de auditoria e contratos",
+    "metaDescription": "QRdx para times maiores: SSO, log de auditoria com exportação em CSV, papéis, domínios personalizados e portal do cliente, em contrato anual com prazos de resposta e pagamento por fatura.",
     "crumb": "Enterprise",
     "title": "QRdx para equipes enterprise",
     "intro1": "Para empresas que usam QR codes em embalagens, placas e campanhas em várias equipes, marcas ou clientes, e precisam de login único, trilha de auditoria e contrato antes de colocá-los em uso.",
@@ -2268,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "Segurança no QRdx: login, armazenamento de dados e como reportar problemas",
-    "metaDescription": "Como o QRdx protege contas e dados: HTTPS com HSTS, política de segurança de conteúdo, passkeys e verificação em duas etapas, login único, log de auditoria, verificação de links, onde os dados ficam armazenados e como reportar uma vulnerabilidade.",
+    "metaTitle": "Segurança no QRdx: login, dados e como reportar problemas",
+    "metaDescription": "Como o QRdx protege contas e dados: HSTS e CSP, passkeys, verificação em duas etapas, SSO, registro de auditoria, verificação de links, onde ficam os dados e como reportar uma falha.",
     "crumb": "Segurança",
     "title": "Segurança no QRdx",
     "intro1": "O que o QRdx faz para proteger sua conta, seus códigos e os dados dos seus visitantes. Cada item descreve algo que já roda no qrdx.dev hoje, e o código é aberto, então você pode conferir.",
@@ -2738,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API de QR code grátis: sem chave, SVG, PNG e logos",
-    "metaDescription": "Uma API de QR code grátis, sem chave nem cadastro. Uma única URL retorna um QR code em SVG, PNG, WebP ou EPS, com suas cores, formas e um logo. {perMinute, number} requisições por minuto, com cache de um ano.",
+    "metaDescription": "Uma API de QR code grátis e sem chave. Uma única URL retorna um QR code em SVG, PNG, WebP ou EPS com suas cores, formas e logo. {perMinute, number} requisições por minuto, com cache de um ano.",
     "crumb": "API de QR code",
     "title": "API de QR code grátis",
     "intro1": "Coloque um QR code em qualquer lugar onde caiba uma URL. Uma única requisição GET para api.qrdx.dev retorna a própria imagem: sem conta, sem chave de API, sem SDK. Cores, formas, correção de erros e um logo vão na query string.",
@@ -3136,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "Gerador de QR code com IA — Crie QR codes a partir de um prompt",
-    "metaDescription": "Diga para a IA do QRdx o que o código deve abrir (um link, Wi-Fi, um cartão de contato e mais) e como ele deve ser. Ela confere a pontuação de leitura, corrige o design até ficar Ótima e pergunta antes de mudar o seu editor. Contas Grátis incluem {count, number} solicitações de IA; o Pro libera solicitações ilimitadas.",
+    "metaDescription": "Descreva um QR code e a IA do QRdx cria o design, ajusta até a pontuação de leitura ficar Ótima e pede confirmação antes de mexer no seu editor. Contas grátis têm {count, number} solicitações de IA.",
     "artLink": "Ou transforme um link em arte de QR code com IA que dá para ler",
     "chat": {
       "upgrade": "Assine o Pro para solicitações ilimitadas",

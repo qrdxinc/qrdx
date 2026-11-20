@@ -218,9 +218,12 @@ describe("while the marketing site serves pages without a sitemap of their own",
     const before = (await sitemap()).map((entry) => entry.url);
     zone.groups = new Set(groups);
     const after = (await sitemap()).map((entry) => entry.url);
-    expect(after.filter((url) => !url.endsWith(CUSTOM_DOMAIN_PAGE))).toEqual(
-      before,
-    );
+    expect(
+      after.filter(
+        (url) =>
+          !url.endsWith(CUSTOM_DOMAIN_PAGE) && !url.endsWith(TRACKING_PAGE),
+      ),
+    ).toEqual(before);
     for (const path of ["/pricing", "/integrations", "/security", "/"]) {
       expect(after, path).toContain(new URL(path, after[0]).toString());
     }
@@ -268,5 +271,60 @@ describe("the site's custom domain page", () => {
     expect(await llmsTxt()).toMatch(
       /- \[QR codes on your own domain\]\([^)]*\/custom-domain-qr-codes\): /,
     );
+  });
+});
+
+// /qr-code-tracking is the marketing site's page alone too (SITE_GROUPS
+// .products), and /qr-code-generator/app-download a generator only the site
+// has (SITE_GROUPS.generators): this app's sitemap lists the first while the
+// site serves `products` (the site's own generator sitemap lists the
+// second), and llms.txt lists each while the site serves its group.
+const TRACKING_PAGE = "/qr-code-tracking";
+const APP_DOWNLOAD_PAGE = "/qr-code-generator/app-download";
+
+describe("the site's scan tracking page and app download generator", () => {
+  beforeEach(() => {
+    zone.blog = false;
+    zone.groups = new Set();
+  });
+
+  it("are in neither list without the site", async () => {
+    const paths = (await sitemap()).map((entry) => new URL(entry.url).pathname);
+    expect(paths).not.toContain(TRACKING_PAGE);
+    expect(paths).not.toContain(APP_DOWNLOAD_PAGE);
+    const text = await llmsTxt();
+    expect(text).not.toContain(TRACKING_PAGE);
+    expect(text).not.toContain(APP_DOWNLOAD_PAGE);
+  });
+
+  it("the tracking page is in both while the site serves the product pages", async () => {
+    zone.groups = new Set(["products"]);
+    const entries = (await sitemap()).filter(
+      (entry) => new URL(entry.url).pathname === TRACKING_PAGE,
+    );
+    // No lastmod: its copy isn't in this repo.
+    expect(entries).toEqual([
+      {
+        url: expect.stringMatching(/\/qr-code-tracking$/),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+    ]);
+    const text = await llmsTxt();
+    expect(text).toMatch(
+      /- \[QR code scan tracking\]\([^)]*\/qr-code-tracking\): /,
+    );
+    expect(text).not.toContain(APP_DOWNLOAD_PAGE);
+  });
+
+  it("the app download generator is in llms.txt while the site serves the generators", async () => {
+    zone.groups = new Set(["generators"]);
+    const paths = (await sitemap()).map((entry) => new URL(entry.url).pathname);
+    expect(paths).not.toContain(APP_DOWNLOAD_PAGE);
+    const text = await llmsTxt();
+    expect(text).toMatch(
+      /- \[App Store and Google Play QR Code Generator\]\([^)]*\/qr-code-generator\/app-download\): /,
+    );
+    expect(text).not.toContain(TRACKING_PAGE);
   });
 });

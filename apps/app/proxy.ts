@@ -329,6 +329,7 @@ export const config = {
     "/:prefix([qQ][rR]-[cC][oO][dD][eE]-[aA][pP][iI])/:path*",
     "/:prefix([oO][pP][eE][nN]-[sS][oO][uU][rR][cC][eE]-[qQ][rR]-[cC][oO][dD][eE]-[gG][eE][nN][eE][rR][aA][tT][oO][rR])/:path*",
     "/:prefix([cC][uU][sS][tT][oO][mM]-[dD][oO][mM][aA][iI][nN]-[qQ][rR]-[cC][oO][dD][eE][sS])/:path*",
+    "/:prefix([qQ][rR]-[cC][oO][dD][eE]-[tT][rR][aA][cC][kK][iI][nN][gG])/:path*",
     "/:prefix([eE][nN][tT][eE][rR][pP][rR][iI][sS][eE])/:path*",
     "/:prefix([pP][rR][iI][cC][iI][nN][gG])/:path*",
     "/:prefix([iI][nN][tT][eE][gG][rR][aA][tT][iI][oO][nN][sS])/:path*",

@@ -270,6 +270,46 @@ describe("llms.txt", () => {
     }
   });
 
+  it("lists the site's scan tracking page only while the site serves it", () => {
+    const page = `${LOCAL.origin}/qr-code-tracking)`;
+    expect(text).not.toContain(page);
+    const served = buildLlmsTxt(fixture({ trackingPage: true }));
+    const product = served.slice(
+      served.indexOf("## Product"),
+      served.indexOf("## Playground and tools"),
+    );
+    const usd = (plan: "pro" | "business") =>
+      formatPrice(PRICING[plan].month.amounts.USD, "USD");
+    expect(PLAN_LIMITS.free.analyticsRetentionDays).toBe(365);
+    expect(product).toContain(
+      `- [QR code scan tracking](${page}: How a dynamic code counts its scans: the time, place, device, browser and referrer of each, without cookies or stored IP addresses, with bots left out and a CSV export on every plan. Scan history is 1 year on Free and unlimited on Pro (${usd("pro")} a month), which adds email alerts, precise location, tracking pixels and UTM tags; conversion tracking on Business (${usd("business")} a month)`,
+    );
+    // Only what this deployment offers.
+    const limited = buildLlmsTxt(
+      fixture({
+        trackingPage: true,
+        offered: { emailAlerts: false, conversions: false },
+      }),
+    );
+    expect(limited).toContain(
+      "which adds precise location, tracking pixels and UTM tags\n",
+    );
+    expect(limited).not.toMatch(/conversion tracking on Business/);
+  });
+
+  it("lists the site's app download generator only while the site serves it", () => {
+    const page = `${LOCAL.origin}/qr-code-generator/app-download)`;
+    // This app has no such hosted type.
+    expect(HOSTED_QR_TYPES.map((type) => type.slug)).not.toContain(
+      "app-download",
+    );
+    expect(text).not.toContain(page);
+    const served = buildLlmsTxt(fixture({ appDownloadGenerator: true }));
+    expect(served).toContain(
+      `- [App Store and Google Play QR Code Generator](${page}: One code for an app: a free hosted App download page shows iPhones the App Store button first and Android phones Google Play; on Pro (${formatPrice(PRICING.pro.month.amounts.USD, "USD")} a month) a smart app link skips the page and opens the right store directly`,
+    );
+  });
+
   it("puts help pages under Help center and the rest under Docs", () => {
     const docs = text.slice(text.indexOf("## Docs"), text.indexOf("## Help"));
     const help = text.slice(

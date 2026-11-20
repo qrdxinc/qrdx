@@ -49,6 +49,9 @@ type Entry = MetadataRoute.Sitemap[number];
 /** The marketing site's custom domain page (SITE_GROUPS.products). */
 const CUSTOM_DOMAIN_PAGE = "/custom-domain-qr-codes";
 
+/** The marketing site's scan tracking page (SITE_GROUPS.products). */
+const TRACKING_PAGE = "/qr-code-tracking";
+
 // lastmod is a real date or absent, never the build time (lib/seo-dates.ts).
 /**
  * Every translated page (packages/i18n/localized-paths.json `paths`) as its
@@ -319,6 +322,17 @@ function entries(docs: Entry[]): Entry[] {
       ? [
           {
             url: url(CUSTOM_DOMAIN_PAGE),
+            changeFrequency: "monthly",
+            priority: 0.8,
+          } satisfies Entry,
+        ]
+      : []),
+    // The same for the site's scan tracking page, which every deployment
+    // can offer (scan analytics need nothing optional).
+    ...(siteServes("products")
+      ? [
+          {
+            url: url(TRACKING_PAGE),
             changeFrequency: "monthly",
             priority: 0.8,
           } satisfies Entry,

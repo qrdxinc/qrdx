@@ -126,7 +126,7 @@ export function indexPage(
 
   return `---
 title: API reference
-description: Every QRdx REST API endpoint by resource, with the base URL, authentication, rate limits, errors, pagination and idempotency rules, and a Try it panel on every page.
+description: Every QRdx REST API endpoint by resource, with the base URL, authentication, rate limits, errors, pagination and idempotency, and a Try it panel on every page.
 icon: FileCode
 ---
 
