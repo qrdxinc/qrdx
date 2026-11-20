@@ -34,10 +34,13 @@ import {
   CARD_ART,
   CARD_GRID,
   RAIL,
+  RAIL_RANKED,
+  RANK_ROOM,
+  RANK_ROOM_WIDE,
   STAGE,
   STAGE_LABEL,
 } from "@/components/community/card-layout";
-import { ItemGrid } from "@/components/community/item-card";
+import { ItemGrid, RankedRowCards } from "@/components/community/item-card";
 import stage from "@/components/community/stage.module.css";
 import { MAX_CHIPS } from "@/components/community/theme-swatch";
 import { officialFramePreview } from "@/lib/community/catalog";
@@ -392,6 +395,57 @@ describe("community card captions on hover", () => {
       expect(classes).toContain(
         "[@media(hover:hover)_and_(pointer:fine)]:gap-y-6",
       );
+    }
+  });
+});
+
+describe("ranked rows", () => {
+  /** Each breakpoint's value of a utility, from a class list ("" = none). */
+  const byBreakpoint = (classes: string, utility: "w" | "pl") => {
+    const out: Record<string, string> = {};
+    for (const name of classes.split(" ")) {
+      const match = name.match(/^(?:(sm|md|lg|xl):)?(w|pl)-(.+)$/);
+      if (match && match[2] === utility) out[match[1] ?? ""] = match[3] ?? "";
+    }
+    return out;
+  };
+  /** A Tailwind length in rem: "12" (spacing steps of 0.25rem) or "[4.5rem]". */
+  const rem = (value: string) =>
+    value.startsWith("[")
+      ? Number.parseFloat(value.slice(1))
+      : Number(value) / 4;
+
+  it("give every card the same width, ten's numeral its own room", () => {
+    const cards = Array.from({ length: 10 }, (_, index) =>
+      card({ id: `it_${index}`, slug: `item-${index}` }),
+    );
+    const html = renderIntl(<RankedRowCards cards={cards} label="Top today" />);
+    // The row's own items (cards hold lists of their own)
+    const items = [...html.matchAll(/<li class="([^"]+)"/g)]
+      .map((match) => match[1] ?? "")
+      .filter((classes) => classes.includes("snap-start"));
+    expect(items).toHaveLength(10);
+    for (const [index, classes] of items.entries()) {
+      // The same width for every card: the room is added to it, not taken from it
+      expect(classes).toContain(RAIL_RANKED);
+      expect(classes).toContain("box-content");
+      expect(classes).toContain(index === 9 ? RANK_ROOM_WIDE : RANK_ROOM);
+    }
+  });
+
+  it("keep the items as wide as before with one digit: the width leaves out the room", () => {
+    const widths = byBreakpoint(RAIL_RANKED, "w");
+    const rooms = byBreakpoint(RANK_ROOM, "pl");
+    let room = "";
+    for (const breakpoint of ["", "sm", "md", "lg", "xl"]) {
+      room = rooms[breakpoint] ?? room;
+      const width = widths[breakpoint];
+      // w-[calc(27%-4.5rem)]: the item's old width less the room
+      const match = width?.match(
+        /^\[calc\((\d+(?:\.\d+)?)%-(\d+(?:\.\d+)?)rem\)\]$/,
+      );
+      expect(match, `${breakpoint || "base"} width ${width}`).not.toBeNull();
+      expect(Number(match?.[2])).toBe(rem(room));
     }
   });
 });
