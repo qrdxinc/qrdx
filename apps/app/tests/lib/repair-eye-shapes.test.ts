@@ -10,12 +10,13 @@ import {
 import { CLASSIC_STYLE } from "@/lib/qr-design/style";
 
 describe("repairs with per-eye shapes", () => {
-  it("normalizeDesign repairs a dot-eye pair that only a per-eye frame makes", () => {
+  it("normalizeDesign repairs a dot-eye pair that only a per-eye centre makes", () => {
+    // A retired diamond centre can only come from a saved per-eye override
     const { style, changes, eyeShapes } = normalizeDesign(
       {
         ...CLASSIC_STYLE,
         cornerEyePattern: "gear",
-        cornerEyeDotPattern: "diamond",
+        cornerEyeDotPattern: "circle",
       },
       {
         hasLogo: false,
