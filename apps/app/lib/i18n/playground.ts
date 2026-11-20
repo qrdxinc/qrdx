@@ -41,8 +41,7 @@ export const EDITOR_NAMESPACES = [
   "community",
   "aiArt",
   // The "New" pill on recently added options (components/new-tag.tsx)
-  "common.newTag",
-  "common.nameIsNew",
+  "common",
 ] as const;
 
 /** The playground page: the editor under the site header. */
