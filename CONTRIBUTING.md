@@ -150,6 +150,13 @@ bun x next build
 
 Variables set in the shell win over `apps/app/.env.local`, but `next build` still reads the rest of that file, so move it aside to build with exactly CI's settings. It can run while `next dev` does: dev keeps its files in `.next/dev`.
 
+The first job also checks the `qrdx` package the way npm ships it. `packages/qrdx/scripts/check-package.mjs` packs it with `bun pm pack`, as the Publish workflow does, and runs [publint](https://publint.dev) and [are-the-types-wrong](https://arethetypeswrong.github.io) on the tarball, so an entry that Node, TypeScript or a bundler can't resolve properly fails CI instead of breaking for the people who install it. Any publint message fails it, except the suggestion to declare `"type"`, which the package leaves out on purpose (the script says why), and so does any problem are-the-types-wrong finds under node10, node16 or bundler resolution. A pull request into `staging` gets it when it changes `packages/qrdx`, a package `qrdx` uses or the CI workflow; everything else always does. After changing the package's `exports`, its build or the files it publishes, run it yourself:
+
+```bash
+bun run --filter qrdx build:inplace
+bun run --filter qrdx check:package
+```
+
 The official frames (`packages/qrdx/src/frames/official`, hundreds of them) all get their spec, color, layout and generator checks and one crisp decode on every run, but the slow scan checks (the phone-camera model at three distances, 160 and 320 px, the scan score, zbar, PDF and EPS) only go to a sample: the hand-made frames, one frame per layout, and a set that rotates daily so every frame comes round (`packages/qrdx/scripts/official-frames/sample.mjs`). To scan every frame, as the weekly and release `Frame scan` workflow does, set `QRDX_FULL_FRAME_SCAN=1`:
 
 ```bash
@@ -203,13 +210,13 @@ Translated so far:
   - `workspaceActions`: workspace and team (`apps/app/lib/i18n/workspace-actions.ts`);
   - `codeActions`: codes, pages, files, domains, analytics, webhooks (`codeActionText()` in `apps/app/lib/code-actions/messages-server.ts`);
   - `communityActions`: publishing to the community, themes, the code builder, search (`communityActionText()` in `apps/app/lib/community/action-text.ts`);
-  - `settingsActions`: Settings (`settingsActionText()` in `apps/app/lib/i18n/settings-action-text.ts`).
+  - `settingsActions`: Settings (`settingsActionText()` in `apps/app/lib/i18n/settings-action-text.ts`), including what the notification settings refuse with (`NotificationSettingsError` in `apps/app/lib/events/notification-settings.ts`, which carries the plan a refusal needs, so the upgrade offered never depends on the words).
 
   Keep these namespaces out of the lists in `apps/app/lib/i18n/playground.ts`: only the server reads them. Each area keeps its English in constants, with a test that the catalog matches. A helper that throws for an action to report throws an error whose message stays English, for logs and the REST API, and the action reads it again in the person's language (`WorkspaceActionError`, `CheckError`).
 
   Actions that pages under `app/[lang]` also call can't tell the page's language from the request. These are the editor's publish, import and like actions, saving a theme, and the code builder, which opens over `/[lang]/playground`. Their client components pass next-intl's `useLocale()` with the call, and the action answers through `actionText()` in `apps/app/lib/i18n/action-locale.ts`: the language sent when `isLocale()` accepts it, otherwise the app's rule. `tests/i18n/action-locale-callers.test.ts` and `tests/i18n/code-action-locale-callers.test.ts` check that every client call passes it.
 
-  Actions that only English pages call answer in English: pricing's checkout, non-profit and invoice requests, the enterprise form, the single sign-on, audit log and client portal settings, linking a Slack account, applying on `/affiliates`, the community gallery and `/report-abuse`. Messages that shared services throw (codes, folders and tags, pages, domains, files, OAuth apps, API keys, notification settings) still pass through in English.
+  Actions that only English pages call answer in English: pricing's checkout, non-profit and invoice requests, the enterprise form, the single sign-on, audit log and client portal settings, linking a Slack account, applying on `/affiliates`, the community gallery and `/report-abuse`. Messages that shared services throw (codes, folders and tags, pages, domains, files, OAuth apps, API keys) still pass through in English.
 - **Emails.** Each email is in the language of whoever reads it, picked in `apps/app/lib/i18n/email-locale.ts`:
   - The sign-in code, the new-address code and the "Confirm it's you" code: the recipient's saved language, else the language the site was in when they asked for the code, else English.
   - Team and client-portal invitations: the invitee's saved language when the address has an account, else the inviter's language (they're sent from the inviter's own request; an invitation resent from admin falls back to English), else English.

@@ -5946,7 +5946,7 @@
     },
     "search": {
       "label": "Search the community",
-      "placeholder": "Search frames, themes and pages"
+      "placeholder": "Search the community"
     }
   },
   "communityActions": {
@@ -10316,7 +10316,27 @@
       "signedOut": "Sign in to change notifications.",
       "webhookUrlMissing": "Paste the webhook URL",
       "rateLimited": "Rate limit exceeded. Please try again later.",
-      "failed": "Something went wrong. Please try again."
+      "failed": "Something went wrong. Please try again.",
+      "notMember": "You're not a member of that workspace.",
+      "emailAlertsPro": "Email alerts and the weekly digest are part of Pro.",
+      "chatBusiness": "Slack and Discord alerts are part of the Business plan.",
+      "accountNotFound": "Account not found.",
+      "webhookAlreadyAdded": "That webhook is already added.",
+      "tooManyWebhooks": "Add up to {max, number} Slack or Discord webhooks per workspace.",
+      "targetNotFound": "Notification target not found.",
+      "notDelivered": "Not delivered: {error}",
+      "pickEvent": "Pick at least one event",
+      "url": {
+        "missing": "Enter the endpoint URL.",
+        "tooLong": "The URL is too long.",
+        "notFull": "Enter a full URL, starting with https://",
+        "notHttps": "Webhook URLs must use https://",
+        "credentials": "Remove the user name and password from the URL.",
+        "ipAddress": "Use a host name, not an IP address.",
+        "notPublic": "Use a public host name.",
+        "notSlack": "Paste a Slack incoming webhook URL (https://hooks.slack.com/services/…).",
+        "notDiscord": "Paste a Discord webhook URL (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {

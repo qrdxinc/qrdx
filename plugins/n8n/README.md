@@ -1,6 +1,6 @@
 # @qrdx/n8n-nodes-qrdx
 
-n8n nodes for [QRdx](https://qrdx.dev). The **QRdx** node makes QR code images, creates and edits dynamic QR codes, and reads their scans. The **QRdx Trigger** node starts a workflow when a code is scanned, created or changed, or when someone submits a form on a hosted page. Both work in self-hosted n8n, and the QRdx node can also be a tool for an n8n AI Agent.
+n8n nodes for [QRdx](https://qrdx.dev). The **QRdx** node makes QR code and barcode images, creates and edits dynamic QR codes, and reads their scans. The **QRdx Trigger** node starts a workflow when a code is scanned, created or changed, or when someone submits a form on a hosted page. Both work in self-hosted n8n, and the QRdx node can also be a tool for an n8n AI Agent.
 
 Install it from npm: in n8n, open **Settings → Community Nodes**, click **Install** and enter `@qrdx/n8n-nodes-qrdx`. From the command line, run `npm install @qrdx/n8n-nodes-qrdx` in the `nodes` folder of your n8n user folder (`~/.n8n/nodes`) and restart n8n. To build it from this repository instead, see [Install from source](#install-from-source).
 
@@ -21,13 +21,14 @@ The key acts on the workspace it was created in. n8n tests the credential with `
 | Code → Create, Update, Delete; QRdx Trigger | Manage codes (`codes:write`) |
 | Theme → Get, Get Many | Themes (`themes:read`) |
 
-QR Image → Generate needs no credential at all.
+QR Image → Generate and Barcode Image → Generate need no credential at all.
 
 ## QRdx node
 
 | Resource | Operation | API call |
 | --- | --- | --- |
 | QR Image | Generate | `GET /qr`, no key |
+| Barcode Image | Generate | `GET /barcode`, no key |
 | Code | Create | `POST /codes` |
 | Code | Get | `GET /codes/{id}` |
 | Code | Get Many | `GET /codes`, paged with `limit` and `offset` |
@@ -39,6 +40,8 @@ QR Image → Generate needs no credential at all.
 | Theme | Get Many | `GET /themes` |
 
 **QR Image → Generate** returns the image as binary data (PNG, WebP, GIF, BMP, ICO, SVG or EPS) in the field you name, `data` by default, so you can attach it to an email or upload it somewhere. Its options cover size, foreground, background, eye and eye dot colors, body, eye and eye dot shapes, error correction, margin, a call-to-action frame with its label, and a center logo icon. The item's JSON also has `url`: the same image as a keyless link you can put in an `<img>` tag.
+
+**Barcode Image → Generate** makes a barcode for shipping and product labels: EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, Code 93, Codabar, ITF-14, GS1-128, Data Matrix, PDF417 or Aztec. It returns the file as binary data (PNG, JPG, WebP, AVIF, BMP, SVG, PDF or EPS) in the field you name, with `url` in the JSON as for QR images. Retail numbers (EAN, UPC, ITF-14) can leave the check digit off and QRdx adds it. A value the format can't take, such as a wrong check digit, fails with QRdx's message in the error's description. Its options cover bar and background colors, scale (pixels per module in PNG, JPG, WebP, AVIF and BMP), bar height, quiet zone, the printed text under linear barcodes, and rotation.
 
 **Code → Create** makes a dynamic code: a short link that redirects to the destination URL. Point it somewhere else later with **Update** and printed codes keep working. Update also archives and restores codes. Some fields depend on the plan: a custom back-half needs Pro or Business, and a custom domain needs Pro. When the plan doesn't include a field, QRdx refuses the request and the node shows QRdx's message.
 
@@ -105,7 +108,7 @@ The tests use fake n8n contexts and never call the network. The lint config is t
 
 To try changes in a real n8n, run `npx @n8n/node-cli dev` in this folder. It compiles in watch mode, links the package into its own n8n user folder and starts n8n at `http://localhost:5678` (it needs Docker or Podman for that). To use an n8n you already run, pass `--external-n8n --custom-user-folder <the folder that holds .n8n>` and start that n8n with `N8N_DEV_RELOAD=true`.
 
-The dropdown values (shapes, frames, events, scan ranges) are copied from QRdx's OpenAPI document. `apps/app/tests/plugins/n8n-node.test.ts` fails when they drift from the API.
+The dropdown values (shapes, frames, barcode formats and file types, events, scan ranges) are copied from QRdx's OpenAPI document. `apps/app/tests/plugins/n8n-node.test.ts` fails when they drift from the API, and so does `test/barcode-api.test.ts` here for the barcode lists, which it reads from the app's source.
 
 ## Publishing
 

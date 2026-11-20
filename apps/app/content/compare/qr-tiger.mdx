@@ -15,13 +15,13 @@ sources:
   - https://www.qrcode-tiger.com/payment
 tableRows:
   - feature: Price
-    qrdx: "Free; paid from $5/mo"
+    qrdx: "Free; paid from {facts.proMonthlyPrice}/mo"
     competitor: "Free plan; paid from US$7"
   - feature: Static QR codes
     qrdx: "Unlimited"
     competitor: "Unlimited"
   - feature: Dynamic (editable) QR codes
-    qrdx: "10 free; unlimited from $5/mo"
+    qrdx: "10 free; unlimited from {facts.proMonthlyPrice}/mo"
     competitor: "3 free (500 scans each); 12–1,200 paid"
   - feature: Scan tracking
     qrdx: "Built in, unlimited scans"
@@ -45,7 +45,7 @@ featureHighlights:
   - title: A bigger free plan
     description: "QRdx makes unlimited static codes with every design option for free, plus 10 dynamic codes with unlimited scans. QR TIGER's free plan also allows unlimited static codes, but only 3 dynamic codes with a 500-scan limit each."
   - title: Free design, no paid tier needed
-    description: "Patterns, gradients, logos, frames and SVG/PDF export are all on QRdx's free tier. QRdx Pro ($5/mo) adds unlimited dynamic codes, full analytics history and custom domains."
+    description: "Patterns, gradients, logos, frames and SVG/PDF export are all on QRdx's free tier. QRdx Pro ({facts.proMonthlyPrice}/mo) adds unlimited dynamic codes, full analytics history and custom domains."
   - title: Daily API quotas, plus a library with none
     description: "QRdx's REST API allows 1,000 requests a day on Free and 10,000 on Pro, and the qrdx npm package renders codes in your own app with no quota at all. QR TIGER's API is metered per plan, from 500 requests a month on Regular."
   - title: Open source and self-hostable
@@ -58,7 +58,7 @@ QR TIGER and QRdx now cover much of the same ground. QR TIGER is a dynamic QR co
 
 QR TIGER fits marketing teams that print codes on packaging, posters or menus and need to change destinations and report on scans. Its plans range from Regular (from US$7, 12 dynamic codes) to Advanced (US$16 billed annually, 200 codes, bulk generation), Premium (US$37 billed yearly, 600 codes) and Professional (US$89, up to 1,200 codes).
 
-QRdx fits people who want to start free and pay little: static codes need no account, the Free plan includes 10 dynamic codes with unlimited scans, Pro ($5/mo or $48/yr) makes dynamic codes and hosted pages unlimited, and Business ($15/mo or $144/yr) adds unlimited team members. Developers get a REST API, an MCP server and a React library.
+QRdx fits people who want to start free and pay little: static codes need no account, the Free plan includes 10 dynamic codes with unlimited scans, Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes dynamic codes and hosted pages unlimited, and Business ({facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr) adds unlimited team members. Developers get a REST API, an MCP server and a React library.
 
 ## Where QR TIGER is the better choice
 
@@ -66,7 +66,7 @@ QRdx fits people who want to start free and pay little: static codes need no acc
 
 ## Key differences
 
-- **Pricing model:** QR TIGER charges by number of dynamic codes and API requests. QRdx's static codes are free; Pro ($5/mo or $48/yr) adds unlimited dynamic codes, full analytics history and custom domains.
+- **Pricing model:** QR TIGER charges by number of dynamic codes and API requests. QRdx's static codes are free; Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) adds unlimited dynamic codes, full analytics history and custom domains.
 - **Scan locations:** both offer GPS scan locations and geofencing. On QRdx they're part of Pro and Business: you turn on [precise location](/docs/precise-location) per code, each scanner chooses whether to share theirs, and other scans record country, region and city from the network.
 - **Free tier:** both allow unlimited static codes. QR TIGER adds 3 dynamic codes capped at 500 scans each; QRdx adds 10 with unlimited scans.
 - **When a plan ends:** QR TIGER's pricing page says codes stop working once the plan expires. QRdx dynamic codes keep redirecting on every plan, including after a cancellation ([Never-Hostage Guarantee](/guarantee)).

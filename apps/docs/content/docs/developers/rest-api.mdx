@@ -19,6 +19,7 @@ curl https://api.qrdx.dev/v1/codes -H "Authorization: Bearer $QRDX_API_KEY"
 | `GET /v1/community/items`, `GET /v1/community/items/{id}` | None | Published community frames, themes and collections, with the style each applies. See [Community items](#community-items) |
 | `/v1/codes` | `codes:read`, `codes:write` | List, create (one or up to {facts.apiBatchCodes} at a time, with an optional back-half in `slug`), update (including switching `kind` between a website link and a hosted page) and delete dynamic codes |
 | `GET /v1/codes/{id}/scans` | `codes:read` | Scan analytics for a code, or individual scans page by page |
+| `/v1/codes/{id}/aliases` | `codes:read`, `codes:write` | A code's path aliases: old paths on its custom domain that also open it. List, add and remove. See [Path aliases](/docs/migrate#path-aliases) |
 | `/v1/barcodes` | `codes:read`, `codes:write` | Saved barcodes: list, save, update, trash and download. See [Saved barcodes](/docs/developers/barcode-api#saved-barcodes) |
 | `POST /v1/art` | `codes:write` | A QR code painted into AI artwork, checked to scan, on the workspace's monthly AI art images. See [AI art API](/docs/developers/ai-art-api) |
 | `POST /v1/conversions` | `codes:write` | Attribute a sale or sign-up to the scan that led to it (Business). See [Tracking and conversions](/docs/tracking-and-conversions) |

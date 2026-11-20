@@ -12,21 +12,30 @@ import { HttpError } from "@/lib/error-response";
 import {
   addChatTarget,
   chatEventsSchema,
+  NOTIFICATION_SETTINGS_MESSAGES,
+  NotificationSettingsError,
   notificationEventsSchema,
+  notificationSettingsMessages,
   removeChatTarget,
   sendTestChatMessage,
   setEmailEvents,
   updateChatTarget,
 } from "@/lib/events/notification-settings";
+import { MAX_WEBHOOK_URL_LENGTH } from "@/lib/events/url-safety";
 import { settingsActionText } from "@/lib/i18n/settings-action-text";
+import {
+  workspaceActionsText,
+  workspaceErrorText,
+} from "@/lib/i18n/workspace-actions";
 import { enforceRateLimits } from "@/lib/request-guards";
 import { getCurrentUserId, logError } from "@/lib/shared";
 import { UnauthorizedError } from "@/types/errors";
 
-// Refusals of its own are in the person's language
-// (settingsActions.notifications). The settings' own checks and plan limits
-// (lib/events/notification-settings.ts) are English: the upgrade prompt
-// below reads which plan from that English.
+// Every refusal is in the person's language (settingsActions.notifications):
+// the action's own, and the settings' checks and plan limits
+// (lib/events/notification-settings.ts), which throw English for logs and
+// say it again here. The upgrade offered is the plan the refusal carries.
+// A workspace that shuts the person out says so in workspaceActions' words.
 
 export type NotificationActionResult<T = null> =
   | { ok: true; data: T }
@@ -47,8 +56,12 @@ const emailSchema = z.object({
 const addSchema = z.object({
   organizationId: workspaceSchema,
   channel: z.enum(["slack", "discord"]),
-  // Its key in settingsActions.notifications.
-  url: z.string().trim().min(1, "webhookUrlMissing").max(2048),
+  // Their keys in settingsActions.notifications.
+  url: z
+    .string()
+    .trim()
+    .min(1, "webhookUrlMissing")
+    .max(MAX_WEBHOOK_URL_LENGTH, "url.tooLong"),
   events: chatEventsSchema,
 });
 const updateSchema = z.object({ id: idSchema, events: chatEventsSchema });
@@ -63,18 +76,18 @@ async function failure(
   if (error instanceof UnauthorizedError) {
     return { ok: false, error: (await text())("signedOut") };
   }
+  if (error instanceof NotificationSettingsError) {
+    const message = error.messageIn(notificationSettingsMessages(await text()));
+    return error.plan
+      ? { ok: false, error: message, upgrade: error.plan }
+      : { ok: false, error: message };
+  }
   if (error instanceof HttpError) {
     if (error.code === "RATE_LIMITED") {
       return { ok: false, error: (await text())("rateLimited") };
     }
-    if (error.status === 402) {
-      return {
-        ok: false,
-        error: error.message,
-        upgrade: /Business/.test(error.message) ? "business" : "pro",
-      };
-    }
-    return { ok: false, error: error.message };
+    const workspace = workspaceErrorText(await workspaceActionsText(), error);
+    return { ok: false, error: workspace ?? error.message };
   }
   logError(error as Error, { action });
   return { ok: false, error: (await text())("failed") };
@@ -106,15 +119,20 @@ async function run<T>(
   }
 }
 
-// Only an empty webhook URL gets past the form; anything else is a request
-// it never sends, answered in zod's own words, as before.
+// What the form can send wrong: an empty or too long webhook URL, or no
+// events. Anything else is a request it never sends, answered in zod's own
+// words, as before.
 async function invalid(
   error: z.ZodError,
 ): Promise<NotificationActionResult<never>> {
   const issue = error.issues[0]?.message;
-  if (issue === "webhookUrlMissing") {
+  if (issue === "webhookUrlMissing" || issue === "url.tooLong") {
     const t = await settingsActionText("settingsActions.notifications")();
-    return { ok: false, error: t("webhookUrlMissing") };
+    return { ok: false, error: t(issue) };
+  }
+  if (issue === NOTIFICATION_SETTINGS_MESSAGES.pickEvent) {
+    const t = await settingsActionText("settingsActions.notifications")();
+    return { ok: false, error: t("pickEvent") };
   }
   return { ok: false, error: issue ?? "Invalid input." };
 }

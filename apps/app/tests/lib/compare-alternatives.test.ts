@@ -168,7 +168,7 @@ describe("copy around the lists", () => {
         `the free plan includes ${free.dynamicCodes}`,
       ],
       "bitly-qr.mdx": [
-        `${free.dynamicCodes} dynamic codes on the free plan with unlimited scans, and Pro at $${PRICING.pro.month.amounts.USD}/mo or $${PRICING.pro.year.amounts.USD}/yr.`,
+        `${free.dynamicCodes} dynamic codes on the free plan with unlimited scans, and Pro at {facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr.`,
       ],
     })) {
       for (const phrase of phrases) expect(read(file), file).toContain(phrase);

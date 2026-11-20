@@ -130,9 +130,12 @@ export function OptionTile({
   className?: string;
 }) {
   const t = useTranslations("editor.controlSections.optionTiles");
-  const note = blocked ? t("wontScanHere") : risk ? t("mayNotScan") : hint;
+  // A risky option keeps its usual hint: the amber dot on the preview and the
+  // tooltip carry the warning, so the tile's text stays clean.
+  const note = blocked ? t("wontScanHere") : hint;
   return (
     <button
+      aria-label={risk && !blocked ? t("nameMayNotScan", { name }) : undefined}
       aria-pressed={selected}
       className={cn(
         "group bg-card relative flex min-w-0 flex-col items-center gap-1.5 rounded-lg border p-1.5 pb-2 text-center transition-[color,background-color,border-color,transform] outline-none active:scale-[0.97]",
@@ -159,14 +162,7 @@ export function OptionTile({
         {name}
       </span>
       {note && (
-        <span
-          className={cn(
-            "-mt-1 text-[10px] leading-tight tabular-nums",
-            risk
-              ? "text-amber-700 dark:text-amber-400"
-              : "text-muted-foreground",
-          )}
-        >
+        <span className="text-muted-foreground -mt-1 text-[10px] leading-tight tabular-nums">
           {note}
         </span>
       )}
@@ -174,6 +170,12 @@ export function OptionTile({
         <span className="bg-primary text-primary-foreground absolute top-1 right-1 grid size-4 place-items-center rounded-full shadow-sm">
           <Tick className="size-3" />
         </span>
+      )}
+      {risk && !blocked && (
+        <span
+          aria-hidden
+          className="absolute top-2.5 left-2.5 size-1.5 rounded-full bg-amber-500 ring-2 ring-white"
+        />
       )}
     </button>
   );
@@ -541,10 +543,10 @@ export function ShapePicker<T extends string>({
           <span className="text-foreground font-medium">{current?.name}</span>
           {currentRisk && (
             <span
-              className="text-amber-700 dark:text-amber-400"
+              className="size-1.5 shrink-0 self-center rounded-full bg-amber-500"
               title={currentRisk}
             >
-              {t("mayNotScan")}
+              <span className="sr-only">{t("mayNotScan")}</span>
             </span>
           )}
         </span>

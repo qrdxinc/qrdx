@@ -5437,7 +5437,11 @@
       "onATableTent": "Su un segnatavolo",
       "onAPoster": "Su un poster",
       "asASticker": "Come adesivo",
-      "onABusinessCard": "Su un biglietto da visita"
+      "onABusinessCard": "Su un biglietto da visita",
+      "onAPhone": "Su un telefono, nella sua pagina ospitata",
+      "inFrames": "Nei frame",
+      "onABadge": "Su un badge",
+      "asAsciiArt": "Come ASCII art"
     },
     "itemPages": {
       "previous": "Precedente",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Cerca nella community",
-      "placeholder": "Cerca cornici, temi e pagine"
+      "placeholder": "Cerca nella community"
     }
   },
   "communityActions": {
@@ -9906,7 +9910,27 @@
       "signedOut": "Accedi per modificare le notifiche.",
       "webhookUrlMissing": "Incolla l’URL del webhook",
       "rateLimited": "Limite di richieste superato. Riprova più tardi.",
-      "failed": "Qualcosa è andato storto. Riprova."
+      "failed": "Qualcosa è andato storto. Riprova.",
+      "notMember": "Non fai parte di quel workspace.",
+      "emailAlertsPro": "Gli avvisi via email e il riepilogo settimanale sono inclusi in Pro.",
+      "chatBusiness": "Gli avvisi su Slack e Discord sono inclusi nel piano Business.",
+      "accountNotFound": "Account non trovato.",
+      "webhookAlreadyAdded": "Questo webhook è già stato aggiunto.",
+      "tooManyWebhooks": "Aggiungi fino a {max, number} webhook Slack o Discord per workspace.",
+      "targetNotFound": "Destinazione di notifica non trovata.",
+      "notDelivered": "Non consegnato: {error}",
+      "pickEvent": "Scegli almeno un evento",
+      "url": {
+        "missing": "Inserisci l’URL dell’endpoint.",
+        "tooLong": "L’URL è troppo lungo.",
+        "notFull": "Inserisci un URL completo, che inizi con https://",
+        "notHttps": "Gli URL dei webhook devono usare https://",
+        "credentials": "Rimuovi nome utente e password dall’URL.",
+        "ipAddress": "Usa un nome host, non un indirizzo IP.",
+        "notPublic": "Usa un nome host pubblico.",
+        "notSlack": "Incolla l’URL di un webhook in entrata di Slack (https://hooks.slack.com/services/…).",
+        "notDiscord": "Incolla l’URL di un webhook di Discord (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {

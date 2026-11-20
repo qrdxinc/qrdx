@@ -73,6 +73,16 @@ Scan analytics of a code.
 | --- | --- | --- | --- |
 | [Get scan analytics](/docs/developers/api/get-code-scans) | `GET /codes/{id}/scans` | `codes:read` | Scan analytics of a code for a range of days. |
 
+### Path aliases
+
+Old paths on a code's custom domain that also open it, so codes printed with another provider's links keep working.
+
+| Endpoint | Request | Scope | What it does |
+| --- | --- | --- | --- |
+| [List path aliases](/docs/developers/api/list-code-aliases) | `GET /codes/{id}/aliases` | `codes:read` | The old paths on a code's custom domain that also open the code, oldest first. |
+| [Add a path alias](/docs/developers/api/add-code-alias) | `POST /codes/{id}/aliases` | `codes:write` | Makes an old path on the code's custom domain open the code, so codes printed with that link keep working. |
+| [Remove a path alias](/docs/developers/api/delete-code-alias) | `DELETE /codes/{id}/aliases/{aliasId}` | `codes:write` | Removes one of the code's path aliases: the old path stops opening the code, and another code on the domain can take it. |
+
 ### Conversions
 
 Sales and sign-ups attributed to the scan behind them. Under the QRdx commercial license: on a self-hosted server only where a valid license key from QRdx turns conversion tracking on.

@@ -27,7 +27,7 @@ export const qrImageOperations: INodeProperties[] = [
         name: "Generate",
         value: "generate",
         description:
-          "Make a QR code image as PNG, SVG or EPS. Needs no API key.",
+          "Make a QR code image as PNG, WebP, BMP, ICO, SVG or EPS. Needs no API key.",
         action: "Generate a QR code image",
       },
     ],

@@ -5437,7 +5437,11 @@
       "onATableTent": "Auf einem Tischaufsteller",
       "onAPoster": "Auf einem Poster",
       "asASticker": "Als Sticker",
-      "onABusinessCard": "Auf einer Visitenkarte"
+      "onABusinessCard": "Auf einer Visitenkarte",
+      "onAPhone": "Auf dem Handy, auf der gehosteten Seite",
+      "inFrames": "In Rahmen",
+      "onABadge": "Auf einem Badge",
+      "asAsciiArt": "Als ASCII-Art"
     },
     "itemPages": {
       "previous": "Zurück",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Community durchsuchen",
-      "placeholder": "Rahmen, Themes und Seiten suchen"
+      "placeholder": "Community durchsuchen"
     }
   },
   "communityActions": {
@@ -9906,7 +9910,27 @@
       "signedOut": "Melde dich an, um Benachrichtigungen zu ändern.",
       "webhookUrlMissing": "Füge die Webhook-URL ein",
       "rateLimited": "Limit überschritten. Bitte versuch es später erneut.",
-      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
+      "failed": "Etwas ist schiefgelaufen. Bitte versuch es erneut.",
+      "notMember": "Du bist kein Mitglied dieses Workspaces.",
+      "emailAlertsPro": "E-Mail-Benachrichtigungen und die wöchentliche Zusammenfassung sind Teil von Pro.",
+      "chatBusiness": "Slack- und Discord-Benachrichtigungen sind Teil des Business-Plans.",
+      "accountNotFound": "Konto nicht gefunden.",
+      "webhookAlreadyAdded": "Dieser Webhook wurde bereits hinzugefügt.",
+      "tooManyWebhooks": "Du kannst pro Workspace bis zu {max, number} Slack- oder Discord-Webhooks hinzufügen.",
+      "targetNotFound": "Benachrichtigungsziel nicht gefunden.",
+      "notDelivered": "Nicht zugestellt: {error}",
+      "pickEvent": "Wähle mindestens ein Ereignis aus",
+      "url": {
+        "missing": "Gib die Endpunkt-URL ein.",
+        "tooLong": "Die URL ist zu lang.",
+        "notFull": "Gib eine vollständige URL ein, die mit https:// beginnt.",
+        "notHttps": "Webhook-URLs müssen https:// verwenden",
+        "credentials": "Entferne Benutzername und Passwort aus der URL.",
+        "ipAddress": "Verwende einen Hostnamen, keine IP-Adresse.",
+        "notPublic": "Verwende einen öffentlichen Hostnamen.",
+        "notSlack": "Füge eine eingehende Slack-Webhook-URL ein (https://hooks.slack.com/services/…).",
+        "notDiscord": "Füge eine Discord-Webhook-URL ein (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {

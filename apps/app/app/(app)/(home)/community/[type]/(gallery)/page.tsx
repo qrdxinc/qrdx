@@ -36,6 +36,7 @@ import {
   type Filter,
   type GalleryQuery,
   type GalleryType,
+  galleryCanonical,
   galleryCards,
   galleryHref,
   galleryListKey,
@@ -48,15 +49,20 @@ import {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ type: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const type = typeFromSegment((await params).type);
   if (!type) return {};
+  const search = await searchParams;
+  const query = parseGalleryQuery(type, search);
+  if (!query) return {};
   return createMetadata({
     title: `${COPY[type].title} | Community`,
     description: COPY[type].description,
-    path: `/community/${(await params).type}`,
+    path: galleryCanonical(query, parsePage(search.page)),
     ownOgImage: true,
   });
 }

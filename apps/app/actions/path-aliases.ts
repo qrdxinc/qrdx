@@ -2,31 +2,30 @@
 
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import { z } from "zod";
-import {
-  codeIdSchema,
-  getCode,
-} from "@/app/(app)/dashboard/codes/_lib/qr-codes";
-import {
-  assertBindableDomains,
-  type DomainRef,
-} from "@/app/(app)/dashboard/domains/_lib/domains";
+import { codeIdSchema } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
+import type { DomainRef } from "@/app/(app)/dashboard/domains/_lib/domains";
 import { codeActionText } from "@/lib/code-actions/messages-server";
+import {
+  addCodeAlias,
+  type PathAliasRefusal,
+  readCodeAliases,
+  removeCodeAlias,
+} from "@/lib/code-path-aliases";
 import { HttpError } from "@/lib/error-response";
 import { PATH_ALIASES_PER_CODE } from "@/lib/path-alias-limits";
-import { claimAlias, listAliases, removeAlias } from "@/lib/path-alias-store";
 import {
   PATH_ALIAS_MESSAGES,
   type PathAliasClaimProblem,
-  parsePathAlias,
 } from "@/lib/path-aliases";
 import { assertCan } from "@/lib/permissions-server";
 import { enforceRateLimits } from "@/lib/request-guards";
-import { type ActiveScope, getActiveScope } from "@/lib/scope";
+import { getActiveScope } from "@/lib/scope";
 import { logError } from "@/lib/shared";
 import { UnauthorizedError } from "@/types/errors";
 
 // A code's path aliases in its edit dialog (lib/path-aliases.ts): the old
-// paths another provider printed on the code's custom domain.
+// paths another provider printed on the code's custom domain. The checks are
+// lib/code-path-aliases.ts, shared with the REST API.
 
 export type PathAliasErrorCode =
   | PathAliasClaimProblem
@@ -91,18 +90,19 @@ async function failure(error: unknown, action: string, who: Asker) {
   return fail("failed", text.failed);
 }
 
-/** The code (in the caller's workspace) and its custom domain. */
-async function codeOnDomain(
-  scope: ActiveScope,
-  codeId: string,
-): Promise<DomainRef | null> {
-  return (await getCode(scope, codeId)).domain;
-}
-
 const noDomain = async (who: Asker) =>
   fail("noDomain", (await codeActionText(who)).pathAliases.noDomain);
 const problem = (code: PathAliasClaimProblem) =>
   fail(code, PATH_ALIAS_MESSAGES[code]);
+
+/** The answer for a refusal of lib/code-path-aliases.ts. */
+function refused(refusal: PathAliasRefusal, who: Asker) {
+  if (refusal.problem === "noDomain") return noDomain(who);
+  if (refusal.problem === "domain") {
+    return fail("domain", refusal.error.message);
+  }
+  return problem(refusal.problem);
+}
 
 export async function getPathAliases(
   codeId: string,
@@ -112,15 +112,13 @@ export async function getPathAliases(
   try {
     const scope = await getActiveScope();
     who.userId = scope.userId;
-    const domain = await codeOnDomain(scope, codeIdSchema.parse(codeId));
-    if (!domain) return noDomain(who);
-    const aliases = await listAliases(codeId, domain.id);
-    if (!aliases) return problem("unavailable");
+    const result = await readCodeAliases(scope, codeIdSchema.parse(codeId));
+    if (!result.ok) return refused(result, who);
     return {
       success: true,
       data: {
-        domain,
-        aliases: aliases.map(({ id, path }) => ({ id, path })),
+        domain: result.value.domain,
+        aliases: result.value.aliases.map(({ id, path }) => ({ id, path })),
         max: PATH_ALIASES_PER_CODE,
       },
     };
@@ -142,27 +140,10 @@ export async function addPathAlias(
     await enforceRateLimits([
       { limiter: mutationLimiter, key: `path-aliases:user:${scope.userId}` },
     ]);
-    const domain = await codeOnDomain(scope, codeId);
-    if (!domain) return noDomain(who);
-    try {
-      // In the workspace, verified, and custom domains on the plan.
-      await assertBindableDomains(scope, [domain.id]);
-    } catch (error) {
-      if (error instanceof HttpError) return fail("domain", error.message);
-      throw error;
-    }
-    const parsed = parsePathAlias(path, domain.hostname);
-    if (!parsed.ok) return problem(parsed.problem);
-    const claim = await claimAlias({
-      codeId,
-      domainId: domain.id,
-      path: parsed.path,
-    });
-    if (!claim.ok) return problem(claim.problem);
-    return {
-      success: true,
-      data: { id: claim.alias.id, path: claim.alias.path },
-    };
+    const result = await addCodeAlias(scope, codeId, path);
+    if (!result.ok) return refused(result, who);
+    const { alias } = result.value;
+    return { success: true, data: { id: alias.id, path: alias.path } };
   } catch (error) {
     return failure(error, "addPathAlias", who);
   }
@@ -181,11 +162,8 @@ export async function removePathAlias(
     await enforceRateLimits([
       { limiter: mutationLimiter, key: `path-aliases:user:${scope.userId}` },
     ]);
-    // Throws for codes outside the workspace, so their aliases stay put.
-    await getCode(scope, codeId);
-    if ((await removeAlias(codeId, aliasId)) === null) {
-      return problem("unavailable");
-    }
+    const result = await removeCodeAlias(scope, codeId, aliasId);
+    if (!result.ok) return refused(result, who);
     return { success: true, data: { id: aliasId } };
   } catch (error) {
     return failure(error, "removePathAlias", who);

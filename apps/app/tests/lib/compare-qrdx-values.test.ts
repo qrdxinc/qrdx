@@ -32,8 +32,15 @@ function qrdxValues(text: string): Map<string, string> {
   return values;
 }
 
+/** The `{facts.*}` token copy writes for a plan's dollar price. */
+const PRICE_FACTS = {
+  pro: { month: "proMonthlyPrice", year: "proYearlyPrice" },
+  business: { month: "businessMonthlyPrice", year: "businessYearlyPrice" },
+} as const;
+
+/** "{facts.proMonthlyPrice}": a price as the compare pages write it. */
 const usd = (plan: "pro" | "business", interval: BillingInterval) =>
-  `$${PRICING[plan][interval].amounts.USD}`;
+  `{facts.${PRICE_FACTS[plan][interval]}}`;
 
 /**
  * QRdx's scan-history cell. Free's history is a facts token
@@ -59,10 +66,23 @@ describe("compare pages", () => {
     yr: PAID_PLANS.map((plan) => usd(plan, "year")),
   };
 
+  it("fill the price tokens in from lib/pricing.ts", () => {
+    for (const plan of PAID_PLANS) {
+      for (const interval of ["month", "year"] as const) {
+        expect(PRODUCT_FACTS[PRICE_FACTS[plan][interval]]).toBe(
+          `$${PRICING[plan][interval].amounts.USD}`,
+        );
+      }
+    }
+  });
+
   it.each(pages)("%s quotes QRdx prices from lib/pricing.ts", (file) => {
     const text = readFileSync(join(COMPARE, file), "utf8");
     for (const [feature, value] of qrdxValues(text)) {
-      for (const match of value.matchAll(/(\$\d+)\/(mo|yr)\b/g)) {
+      // A typed "$5/mo" fails here as well as a wrong token.
+      for (const match of value.matchAll(
+        /(\$\d+|\{facts\.\w+\})\/(mo|yr)\b/g,
+      )) {
         const [, amount, unit] = match as unknown as [
           string,
           string,
