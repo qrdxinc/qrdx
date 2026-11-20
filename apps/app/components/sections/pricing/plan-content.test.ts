@@ -391,10 +391,12 @@ describe("features this deployment can't offer", () => {
       buildPricingIntro({ customDomains: false }),
       "Static QR codes are free forever. Paid plans add unlimited dynamic codes, your full scan history and teams.",
     );
-    assert.match(
+    assert.equal(
       buildPricingDescription(),
-      /full analytics history, custom domains and teams/,
+      "Static QR codes are free forever. Pro ($5/mo) and Business ($15/mo) add unlimited dynamic codes, custom domains and teams. Codes keep working if you cancel.",
     );
+    // Search results cut descriptions at about 160 characters.
+    assert.ok(buildPricingDescription().length <= 160);
     assert.doesNotMatch(
       buildPricingDescription({ customDomains: false }),
       /custom domain/,

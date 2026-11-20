@@ -1,12 +1,12 @@
 ---
 title: QR code image API
-description: Turn any URL or text into a QR code image with one GET request and no API key, as SVG, PNG, WebP, BMP, ICO or EPS, in the editor's styles, for Markdown, HTML, emails and print.
+description: Turn any URL or text into a QR code image with one GET request and no API key, as SVG, PNG, WebP, BMP, ICO or EPS, in the editor's styles, for web and print.
 icon: ImageDown
 ---
 
 By the end of this page you will have a QR code image URL you can paste into a README, an `<img>` tag or an email template, styled the way you want, and you will know what the API refuses and why.
 
-`GET https://api.qrdx.dev/v1/qr` returns a QR code as an SVG, PNG, WebP, BMP or ICO image, or as a vector EPS file for print and design tools. Everything is in the query string, so the URL itself is the image. It takes the editor's styles too: gradients, frames (custom frames included), borders, eye and dot colors and logo icons. No account or API key is required, apart from a logo you uploaded to QRdx (see [Logos](#logos)).
+`GET https://api.qrdx.dev/v1/qr` returns a QR code as an SVG, PNG, WebP, BMP or ICO image, or as a vector EPS file for print and design tools. Everything is in the query string, so the URL itself is the image. It takes the editor's styles too: gradients, frames (custom frames included), borders, eye and dot colors and logo icons. No account or API key is required, apart from a logo you uploaded to QRdx (see [Logos](#logos)). The [free QR code API](/qr-code-api) page has the short overview.
 
 ```md title="README.md"
 ![QR code](https://api.qrdx.dev/v1/qr?data=https://github.com/you/repo)

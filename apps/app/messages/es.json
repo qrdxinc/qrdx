@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "códigos dinámicos ilimitados",
       "longerAnalytics": "tu historial completo de escaneos",
-      "analyticsHistory": "historial completo de analíticas",
       "customDomains": "dominios propios",
       "teams": "equipos"
     },
@@ -1099,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "Generador gratuito de códigos QR en lote desde CSV: con estilo, SVG, sin subir archivos",
-      "metaDescription": "Convierte un CSV en hasta {rows, number} códigos QR con estilo y descárgalos como PNG, WebP o SVG en un ZIP. Funciona en tu navegador: sin subir archivos, sin marca de agua y sin registro hasta {limit, number} filas.",
+      "metaTitle": "Generador gratuito de códigos QR en lote desde CSV, sin subir archivos",
+      "metaDescription": "Convierte un CSV en hasta {rows, number} códigos QR con estilo en PNG, WebP o SVG dentro de un ZIP. Funciona en tu navegador: sin subir archivos, sin marca de agua y sin registro hasta {limit, number} filas.",
       "crumb": "Generador masivo",
       "title": "Generador de códigos QR en masa",
       "intro1": "Convierte un archivo CSV en miles de códigos QR de una sola vez, con el estilo que quieras y descargados como PNG, WebP o SVG en un ZIP. Una fila por código, con los nombres de archivo tomados de una columna: etiquetas de producto, entradas de eventos, etiquetas de activos, números de mesa o envíos postales.",
@@ -1936,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Generador de códigos de barras gratis: EAN-13, UPC, Code 128",
-    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix y más: {count, number} tipos de códigos de barras con el dígito de control calculado por ti. PNG, JPG, SVG, PDF y EPS. Gratis, sin registro.",
+    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix y más: {count, number} tipos de códigos de barras con los dígitos de control calculados por ti. PNG, JPG, SVG, PDF, EPS. Gratis, sin registro.",
     "crumb": "Generador de códigos de barras",
     "title": "Generador de códigos de barras gratis",
     "intro1": "Crea códigos de barras para comercio, envíos e inventario en {count, number} formatos, desde EAN-13 y UPC-A hasta Code 128, GS1-128, ITF-14 y Data Matrix. Escribe el número y el dígito de control se calcula solo; si es incorrecto, se detecta antes de imprimir.",
@@ -2117,8 +2116,8 @@
     "questions": "¿Tienes preguntas sobre la garantía? Escribe a <mail>{email}</mail>. Última actualización: <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise: SSO, registro de auditoría, contratos y tiempos de respuesta",
-    "metaDescription": "QRdx para equipos grandes: inicio de sesión único, registro de auditoría con exportación a CSV, roles, dominios propios y un portal para clientes, con contrato anual, tiempos de respuesta por escrito y pago con factura.",
+    "metaTitle": "QRdx Enterprise: SSO, registro de auditoría y contratos",
+    "metaDescription": "QRdx para equipos grandes: SSO, un registro de auditoría con exportación a CSV, roles, dominios personalizados y un portal para clientes, con contrato anual, tiempos de respuesta y facturas.",
     "crumb": "Enterprise",
     "title": "QRdx para equipos enterprise",
     "intro1": "Para empresas que ponen códigos QR en envases, carteles y campañas en muchos equipos, marcas o clientes, y necesitan inicio de sesión único, un registro de auditoría y un contrato antes de desplegarlos.",
@@ -2268,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "Seguridad en QRdx: inicio de sesión, almacenamiento de datos y cómo informar de problemas",
-    "metaDescription": "Cómo protege QRdx las cuentas y los datos: HTTPS con HSTS, una política de seguridad de contenido, llaves de acceso y verificación en dos pasos, inicio de sesión único, un registro de auditoría, comprobación de enlaces, dónde se almacenan los datos y cómo informar de una vulnerabilidad.",
+    "metaTitle": "Seguridad en QRdx: inicio de sesión, datos e informe de problemas",
+    "metaDescription": "Cómo protege QRdx las cuentas y los datos: HSTS y CSP, passkeys, verificación en dos pasos, SSO, un registro de auditoría, comprobación de enlaces, dónde se almacenan los datos y cómo informar de una vulnerabilidad.",
     "crumb": "Seguridad",
     "title": "Seguridad en QRdx",
     "intro1": "Lo que hace QRdx para proteger tu cuenta, tus códigos y los datos de tus visitantes. Cada punto describe algo que funciona hoy en qrdx.dev, y el código es abierto, así que puedes comprobarlo.",
@@ -2738,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API de códigos QR gratis: sin clave, SVG, PNG y logos",
-    "metaDescription": "Una API de códigos QR gratis, sin clave ni registro. Una sola URL devuelve un código QR en SVG, PNG, WebP o EPS, con tus colores, formas y un logo. {perMinute, number} solicitudes por minuto, en caché durante un año.",
+    "metaDescription": "Una API de códigos QR gratuita y sin clave. Una sola URL devuelve un código QR en SVG, PNG, WebP o EPS con tus colores, formas y logo. {perMinute, number} solicitudes por minuto, en caché durante un año.",
     "crumb": "API de códigos QR",
     "title": "API de códigos QR gratis",
     "intro1": "Pon un código QR en cualquier lugar donde quepa una URL. Una sola solicitud GET a api.qrdx.dev devuelve la propia imagen: sin cuenta, sin clave de API, sin SDK. Los colores, las formas, la corrección de errores y un logo van en la cadena de consulta.",
@@ -3136,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "Generador de códigos QR con IA: diseña códigos QR a partir de un prompt",
-    "metaDescription": "Dile a la IA de QRdx qué debe abrir el código (un enlace, Wi-Fi, una tarjeta de contacto y más) y cómo debe verse. Comprueba la puntuación de escaneo, repara el diseño hasta que sea Excelente y te pregunta antes de modificar tu editor. Las cuentas Gratis incluyen {count, number} solicitudes de IA; Pro ofrece solicitudes ilimitadas.",
+    "metaDescription": "Describe un código QR y la IA de QRdx lo diseña, lo repara hasta que la puntuación de escaneo sea Excelente y te pregunta antes de modificar tu editor. Las cuentas Gratis incluyen {count, number} solicitudes de IA.",
     "artLink": "O convierte un enlace en arte QR con IA que se puede escanear",
     "chat": {
       "upgrade": "Pásate a Pro para solicitudes ilimitadas",

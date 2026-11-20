@@ -5,6 +5,8 @@ import { isPathAvailable } from "@/lib/feature-availability";
 /** The product pages a docs reader is most likely to want next. */
 const LINKS = [
   { href: "/playground", key: "links.playground" },
+  { href: "/dynamic-qr-code", key: "links.dynamicCodes" },
+  { href: "/ai/art", key: "links.aiArt" },
   { href: "/qr-code-generator", key: "links.generators" },
   { href: "/barcode-generator", key: "links.barcode" },
   { href: "/compare", key: "columns.compare" },

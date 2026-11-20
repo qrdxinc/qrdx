@@ -571,7 +571,6 @@
     "extras": {
       "unlimitedDynamic": "kode dinamis tanpa batas",
       "longerAnalytics": "seluruh riwayat pemindaian Anda",
-      "analyticsHistory": "riwayat analitik lengkap",
       "customDomains": "domain kustom",
       "teams": "tim"
     },
@@ -1099,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "Generator Kode QR Massal Gratis dari CSV: Bergaya, SVG, Tanpa Unggah",
-      "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dan unduh sebagai PNG, WebP, atau SVG dalam ZIP. Berjalan di browser Anda: tanpa unggahan, tanpa watermark, tanpa pendaftaran hingga {limit, number} baris.",
+      "metaTitle": "Generator Kode QR Massal Gratis dari CSV, Tanpa Unggah",
+      "metaDescription": "Ubah CSV menjadi hingga {rows, number} kode QR bergaya dalam format PNG, WebP, atau SVG di dalam ZIP. Berjalan di browser Anda: tanpa unggah, tanpa watermark, tanpa pendaftaran hingga {limit, number} baris.",
       "crumb": "Generator massal",
       "title": "Generator kode QR massal",
       "intro1": "Ubah file CSV menjadi ribuan kode QR sekaligus, dengan gaya sesuai keinginan Anda dan diunduh sebagai PNG, WebP, atau SVG dalam ZIP. Satu baris untuk satu kode, dengan nama file diambil dari sebuah kolom: label produk, tiket acara, label aset, nomor meja, atau surat kiriman.",
@@ -1936,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Pembuat Barcode Gratis: EAN-13, UPC, Code 128",
-    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa yang dihitung otomatis untuk Anda. PNG, JPG, SVG, PDF, dan EPS. Gratis, tanpa daftar.",
+    "metaDescription": "Buat EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix, dan lainnya: {count, number} jenis barcode dengan digit pemeriksa yang dihitung otomatis. PNG, JPG, SVG, PDF, EPS. Gratis, tanpa daftar.",
     "crumb": "Pembuat barcode",
     "title": "Pembuat barcode gratis",
     "intro1": "Buat barcode untuk ritel, pengiriman, dan inventaris dalam {count, number} format, mulai dari EAN-13 dan UPC-A hingga Code 128, GS1-128, ITF-14, dan Data Matrix. Ketik nomornya, lalu digit pemeriksa dihitung otomatis untuk Anda; digit yang salah akan terdeteksi sebelum Anda mencetak.",
@@ -2117,8 +2116,8 @@
     "questions": "Ada pertanyaan tentang jaminan ini? Kirim email ke <mail>{email}</mail>. Terakhir diperbarui <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise: SSO, Log Audit, Kontrak, dan Waktu Balasan",
-    "metaDescription": "QRdx untuk tim besar: single sign-on, log audit dengan ekspor CSV, peran, domain khusus, dan portal klien, dengan kontrak tahunan, waktu balasan tertulis, dan pembayaran melalui faktur.",
+    "metaTitle": "QRdx Enterprise: SSO, Log Audit, dan Kontrak",
+    "metaDescription": "QRdx untuk tim yang lebih besar: SSO, log audit dengan ekspor CSV, peran, domain kustom, dan portal klien, dengan kontrak tahunan, waktu balasan yang tertulis, dan faktur.",
     "crumb": "Enterprise",
     "title": "QRdx untuk tim enterprise",
     "intro1": "Untuk perusahaan yang menempatkan kode QR pada kemasan, papan petunjuk, dan kampanye di banyak tim, merek, atau klien, serta membutuhkan single sign-on, jejak audit, dan kontrak sebelum menggunakannya secara luas.",
@@ -2268,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "Keamanan di QRdx: Proses Masuk, Penyimpanan Data, dan Pelaporan Masalah",
-    "metaDescription": "Cara QRdx melindungi akun dan data: HTTPS dengan HSTS, kebijakan keamanan konten, passkey dan verifikasi dua langkah, single sign-on, log audit, pemeriksaan tautan, lokasi penyimpanan data, serta cara melaporkan kerentanan.",
+    "metaTitle": "Keamanan di QRdx: Masuk, Data, dan Pelaporan Masalah",
+    "metaDescription": "Cara QRdx melindungi akun dan data: HSTS dan CSP, passkey, verifikasi dua langkah, SSO, log audit, pemeriksaan tautan, lokasi penyimpanan data, dan cara melaporkan celah keamanan.",
     "crumb": "Keamanan",
     "title": "Keamanan di QRdx",
     "intro1": "Apa yang dilakukan QRdx untuk melindungi akun, kode, dan data pengunjung Anda. Setiap poin menjelaskan sesuatu yang berjalan di qrdx.dev saat ini, dan kodenya bersifat open source, sehingga Anda dapat memeriksanya sendiri.",
@@ -2738,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API Kode QR Gratis: Tanpa Kunci, SVG, PNG, dan Logo",
-    "metaDescription": "API kode QR gratis tanpa kunci atau pendaftaran. Satu URL mengembalikan kode QR sebagai SVG, PNG, WebP, atau EPS, lengkap dengan warna, bentuk, dan logo Anda. {perMinute, number} permintaan per menit, di-cache selama setahun.",
+    "metaDescription": "API kode QR gratis tanpa kunci. Satu URL menghasilkan kode QR dalam format SVG, PNG, WebP, atau EPS dengan warna, bentuk, dan logo pilihan Anda. {perMinute, number} permintaan per menit, di-cache selama setahun.",
     "crumb": "API kode QR",
     "title": "API kode QR gratis",
     "intro1": "Pasang kode QR di mana pun URL bisa digunakan. Satu permintaan GET ke api.qrdx.dev langsung mengembalikan gambarnya: tanpa akun, tanpa kunci API, tanpa SDK. Warna, bentuk, koreksi kesalahan, dan logo cukup ditulis di query string.",
@@ -3136,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "Generator Kode QR AI — Desain Kode QR dari Sebuah Prompt",
-    "metaDescription": "Beri tahu AI QRdx apa yang harus dibuka oleh kode tersebut (tautan, Wi-Fi, kartu kontak, dan lainnya) serta bagaimana tampilannya. AI memeriksa skor pemindaian, memperbaiki desain hingga mencapai Great, dan meminta persetujuan sebelum mengubah editor Anda. Akun Gratis mencakup {count, number} permintaan AI; Pro membuka akses tanpa batas.",
+    "metaDescription": "Deskripsikan kode QR dan AI QRdx akan merancangnya, memperbaikinya hingga skor pemindaian menjadi Great, serta meminta persetujuan sebelum mengubah editor Anda. Akun Gratis mendapat {count, number} permintaan AI.",
     "artLink": "Atau ubah tautan menjadi seni kode QR AI yang bisa dipindai",
     "chat": {
       "upgrade": "Upgrade ke Pro untuk permintaan tanpa batas",
