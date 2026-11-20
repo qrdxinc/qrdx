@@ -72,7 +72,9 @@ export type HomeSectionId =
 
 /** What each row needs to be shown at all. */
 export const SECTION_MIN: Record<HomeSectionId, number> = {
-  top: 1,
+  // One or two saved items make a lonely ranking: until three have saves,
+  // the overview starts with the next row.
+  top: 3,
   // Trending repeats what Top shows, minus Top's items: a short row isn't one
   trending: 4,
   picks: 1,

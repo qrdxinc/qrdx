@@ -2,11 +2,19 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type {
   ICredentialType,
+  INodeProperties,
+  INodePropertyOptions,
   INodeType,
   INodeTypeDescription,
 } from "n8n-workflow";
 import { describe, expect, it } from "vitest";
 import { QrdxApi } from "../credentials/QrdxApi.credentials";
+import {
+  BARCODE_FILE_TYPES,
+  BARCODE_FORMATS,
+  BARCODE_ROTATIONS,
+  BARCODE_SCALE,
+} from "../nodes/Qrdx/constants";
 import { Qrdx } from "../nodes/Qrdx/Qrdx.node";
 import { QrdxTrigger } from "../nodes/Qrdx/QrdxTrigger.node";
 
@@ -106,8 +114,67 @@ describe("node and credential descriptions", () => {
     expect(new Qrdx().description.usableAsTool).toBe(true);
   });
 
-  it("keep QR images keyless: no credential for that resource", () => {
+  it("keep QR and barcode images keyless: no credential for those resources", () => {
     const [entry] = new Qrdx().description.credentials ?? [];
     expect(entry?.displayOptions?.show?.resource).not.toContain("qrImage");
+    expect(entry?.displayOptions?.show?.resource).not.toContain("barcodeImage");
+  });
+});
+
+describe("image operations", () => {
+  const { properties } = new Qrdx().description;
+
+  /** The resource's parameter `name`. */
+  function field(resource: string, name: string): INodeProperties {
+    const found = properties.find(
+      (p) =>
+        p.name === name && p.displayOptions?.show?.resource?.includes(resource)
+    );
+    if (!found) throw new Error(`No ${name} field for ${resource}`);
+    return found;
+  }
+
+  const values = (property: INodeProperties) =>
+    (property.options as INodePropertyOptions[]).map((o) => o.value).sort();
+  const names = (property: INodeProperties) =>
+    (property.options as INodePropertyOptions[]).map((o) => o.name);
+  const generate = (resource: string) =>
+    (field(resource, "operation").options as INodePropertyOptions[]).find(
+      (o) => o.value === "generate"
+    );
+  const option = (resource: string, name: string) =>
+    (field(resource, "options").options as INodeProperties[]).find(
+      (o) => o.name === name
+    );
+
+  it("offers every barcode format and file type in the node's lists", () => {
+    expect(values(field("barcodeImage", "barcodeFormat"))).toEqual(
+      [...BARCODE_FORMATS].sort()
+    );
+    expect(values(field("barcodeImage", "fileType"))).toEqual(
+      [...BARCODE_FILE_TYPES].sort()
+    );
+  });
+
+  it("describe Generate with every file type it makes", () => {
+    for (const [resource, formatField] of [
+      ["qrImage", "format"],
+      ["barcodeImage", "fileType"],
+    ] as const) {
+      const description = generate(resource)?.description ?? "";
+      for (const name of names(field(resource, formatField))) {
+        expect(description, `${resource}: ${name}`).toContain(name);
+      }
+    }
+  });
+
+  it("start the barcode options at the API's limits", () => {
+    expect(option("barcodeImage", "scale")).toMatchObject({
+      default: BARCODE_SCALE.default,
+      typeOptions: { minValue: BARCODE_SCALE.min, maxValue: BARCODE_SCALE.max },
+    });
+    expect(
+      values(option("barcodeImage", "rotation") as INodeProperties)
+    ).toEqual([...BARCODE_ROTATIONS].sort());
   });
 });

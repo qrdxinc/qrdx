@@ -145,6 +145,22 @@ export const scansQuerySchema = z.object({
   before: z.iso.datetime().optional(),
 });
 
+// ─── Path aliases (lib/code-path-aliases.ts) ────────────────────────────────
+
+/** POST /v1/codes/{id}/aliases body */
+export const addPathAliasSchema = z.object({
+  // Checked by lib/path-aliases.ts parsePathAlias, which gives the reasons.
+  path: z
+    .string()
+    .max(2048)
+    .describe(
+      "The old path on the code's custom domain, such as `/r/abc`, or the whole old link on that domain (`https://go.example.com/r/abc`). The query string and a `/` at the end are dropped.",
+    ),
+});
+
+/** A path alias's `id` (DELETE /v1/codes/{id}/aliases/{aliasId}) */
+export const pathAliasIdSchema = z.string().trim().min(1).max(64);
+
 /**
  * A code's `style` as the API takes it: the saved-theme JSON (the `Style`
  * component) plus the API-only logo fields, which ./style.ts resolves before

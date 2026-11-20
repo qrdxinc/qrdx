@@ -211,7 +211,7 @@ describe("pickSections", () => {
   it("leaves out rows without enough items", () => {
     const shown = pickSections({
       ...sizes,
-      top: 0,
+      top: 2,
       trending: 3,
       makers: 2,
       collections: 0,
@@ -220,6 +220,10 @@ describe("pickSections", () => {
     expect(shown).not.toContain("trending");
     expect(shown).not.toContain("makers");
     expect(shown).toContain("picks");
+  });
+
+  it("ranks once three items have saves", () => {
+    expect(pickSections({ ...sizes, top: 3 })).toContain("top");
   });
 });
 

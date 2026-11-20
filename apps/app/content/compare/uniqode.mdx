@@ -53,7 +53,7 @@ alternatives:
       lastVerified: "2026-11-15"
 tableRows:
   - feature: Price
-    qrdx: "Free; paid from $5/mo"
+    qrdx: "Free; paid from {facts.proMonthlyPrice}/mo"
     competitor: "From $9/mo, annual billing only"
   - feature: Free static QR codes
     qrdx: true
@@ -62,7 +62,7 @@ tableRows:
     qrdx: "Not needed"
     competitor: "14 days"
   - feature: Dynamic (editable) QR codes
-    qrdx: "10 free; unlimited from $5/mo"
+    qrdx: "10 free; unlimited from {facts.proMonthlyPrice}/mo"
     competitor: "Paid plans"
   - feature: Scan analytics
     qrdx: "Built in, unlimited scans"
@@ -99,7 +99,7 @@ Uniqode is built for larger organizations: dynamic codes, digital business cards
 
 Uniqode fits companies that need editable codes at scale with the paperwork enterprise buyers ask for. Its pricing page lists SOC 2, HIPAA, GDPR, ISO, 2FA and SSO in its security section, offers a 14-day free trial, bills annually only, and starts premium features at $9/month, with its Core plan at $49/month. Static codes are free.
 
-QRdx fits individuals, small teams and developers who want unlimited, fully styled static codes for free, dynamic codes from the Free plan (10) to unlimited on Pro ($5/mo or $48/yr), or to self-host the whole platform.
+QRdx fits individuals, small teams and developers who want unlimited, fully styled static codes for free, dynamic codes from the Free plan (10) to unlimited on Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr), or to self-host the whole platform.
 
 ## Where Uniqode is the better choice
 
@@ -110,7 +110,7 @@ QRdx does not offer compliance certifications. It does have two-step verificatio
 
 ## Key differences
 
-- **Pricing:** Uniqode's paid plans are annual only, from $9/month. QRdx's static codes are free; Pro ($5/mo or $48/yr) adds unlimited dynamic codes, full analytics history and custom domains.
+- **Pricing:** Uniqode's paid plans are annual only, from $9/month. QRdx's static codes are free; Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) adds unlimited dynamic codes, full analytics history and custom domains.
 - **Code model:** Uniqode's dynamic codes stop working if you do not keep a subscription. QRdx static codes need no service, and QRdx dynamic codes keep redirecting on every plan ([Never-Hostage Guarantee](/guarantee)).
 - **Developers:** QRdx has a REST API and an MCP server, and is an npm package with TypeScript types and a CLI, so codes can also be generated locally.
 

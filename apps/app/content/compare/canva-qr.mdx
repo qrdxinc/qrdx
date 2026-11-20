@@ -59,7 +59,7 @@ faqs:
     answer: "Yes. Design the code in the QRdx playground, download it as a PNG or SVG, and upload it to Canva like any other image. Canva takes SVG files under 3 MB and recommends avoiding gradients in them, so a high-resolution PNG is the safer choice for a code with gradients or a logo."
 tableRows:
   - feature: Price
-    qrdx: "Free; paid from $5/mo"
+    qrdx: "Free; paid from {facts.proMonthlyPrice}/mo"
     competitor: "Free; some QR features need a paid plan"
   - feature: Static QR codes
     qrdx: true
@@ -74,7 +74,7 @@ tableRows:
     qrdx: "Free"
     competitor: "Business, Enterprise and Nonprofit"
   - feature: Dynamic (editable) QR codes
-    qrdx: "10 free; unlimited from $5/mo"
+    qrdx: "10 free; unlimited from {facts.proMonthlyPrice}/mo"
     competitor: "Yes; on Free and Pro they carry the Canva logo"
   - feature: Scan insights
     qrdx: "Built in, unlimited scans"
@@ -119,7 +119,7 @@ QRdx fits anyone who wants a distinctive code for free, with a logo, custom patt
 ## Key differences
 
 - **Styling:** QRdx's free tier has {facts.bodyPatterns} body patterns, {facts.eyeShapes} eye shapes, {facts.eyeCentres} eye-dot shapes, linear and radial gradients, logos and {facts.frames} frames. Canva's static codes are limited to colors and margin.
-- **Editable codes:** Canva offers dynamic codes natively, with logos and insights depending on your plan. QRdx's Free plan includes 10 dynamic codes with logos and scan analytics, and Pro ($5/mo or $48/yr) makes them unlimited.
+- **Editable codes:** Canva offers dynamic codes natively, with logos and insights depending on your plan. QRdx's Free plan includes 10 dynamic codes with logos and scan analytics, and Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes them unlimited.
 - **Export:** QRdx downloads PNG, JPG, WebP, SVG, PDF and EPS of the code itself, ready to place in any design tool, including Canva.
 - **Developers:** QRdx is an npm package with React components, so the same design can be rendered in your own app. Canva's QR codes are created inside Canva.
 
