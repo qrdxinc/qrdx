@@ -16,12 +16,12 @@ import {
 } from "@/lib/community/types";
 import { viewerId } from "@/lib/community/viewer";
 
-// One community gallery (/community/frames, /templates, /collections,
-// /kits): what its filters, sort, group and tag show. Shared by the page,
+// One community gallery (/community/frames, /themes, /templates,
+// /collections, /kits): what its filters, sort, group and tag show. Shared by the page,
 // which draws the first page, and the server action that loads the pages
 // after it as someone scrolls (./actions.tsx).
 
-export type GalleryType = Exclude<CommunityItemType, "theme">;
+export type GalleryType = CommunityItemType;
 export type Filter = "all" | "official" | "community" | "mine" | "saved";
 export type Sort = "popular" | "newest" | "oldest";
 
@@ -45,6 +45,7 @@ export interface GalleryQuery {
 
 const GALLERY_TYPES = [
   "frame",
+  "theme",
   "collection",
   "page-template",
   "kit",

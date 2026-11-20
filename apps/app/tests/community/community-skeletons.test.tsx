@@ -66,10 +66,10 @@ describe("a gallery's placeholder", () => {
     expect(count(markup, `${CARD_TEXT} ${CARD_TEXT_REVEAL}`)).toBe(6);
   });
 
-  it("holds the themes gallery's own loading cards on Themes", () => {
-    const markup = html(<GallerySkeleton view="themes" />);
-    expect(count(markup, CARD_ART)).toBe(0);
-    expect(markup.split("h-44").length - 1).toBe(6);
+  it("holds the same cards on Themes as on the other galleries", () => {
+    expect(html(<GallerySkeleton view="themes" />)).toBe(
+      html(<GallerySkeleton view="frames" />),
+    );
   });
 
   it("is hidden from screen readers but for one status", () => {
