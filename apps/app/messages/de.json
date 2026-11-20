@@ -5438,10 +5438,6 @@
       "onATableTent": "Auf einem Tischaufsteller",
       "onAPoster": "Auf einem Poster",
       "asASticker": "Als Sticker",
-      "plainCode": "Ein schlichter Code",
-      "withThisTheme": "Derselbe Code mit diesem Theme",
-      "inTheFrame": "Im Rahmen {name}",
-      "withItsOwnFrame": "Mit eigenem Rahmen",
       "onABusinessCard": "Auf einer Visitenkarte"
     },
     "itemPages": {

@@ -1,0 +1,1127 @@
+/*
+ * "How it looks" on a theme's or frame's page (item-previews.tsx): a bento
+ * of tiles, each showing the design somewhere real, each with its own
+ * motion when hovered (or tapped, on a touch screen): the sticker tilts and
+ * its corner peels, the phone's page scrolls to the code and taps it, the
+ * business card flips, a phone rises to scan the table tent, the shop's
+ * lights come on and the poster swings, the frames fan out, the badge
+ * swings on its lanyard. A glow in the design's colour follows the pointer
+ * round the tiles' edges.
+ *
+ * The sticker's spring tilt, foil and glare are adapted from Holo Card by
+ * Motiq (https://motiq.dev/components/holo-card), MIT licensed.
+ *
+ * Sizes inside a tile are shares of the tile (container query units), so
+ * every scene scales with its tile. With reduced motion, tiles show their
+ * hovered state without moving into it.
+ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* ---- A tile: a lit stage in the design's colour ---- */
+.tile {
+  /* Every duration and delay here is scaled by it: 0 with reduced motion */
+  --m: 1;
+  --stage-a: #f7f6f3;
+  --stage-b: #e7e5e0;
+  --floor-a: #e2e0da;
+  --floor-b: #d5d2cb;
+  --edge: rgb(20 20 24 / 0.08);
+  --edge-hi: rgb(255 255 255 / 0.9);
+  --shade: rgb(16 18 26 / 0.34);
+  --light: 30%;
+  --mx: -500px;
+  --my: -500px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  border-radius: 22px;
+  container-type: inline-size;
+  perspective: 900px;
+  background:
+    radial-gradient(
+      85% 70% at 50% -8%,
+      color-mix(in oklab, var(--tone) var(--light), transparent),
+      transparent 72%
+    ),
+    radial-gradient(130% 95% at 50% 125%, rgb(0 0 0 / 0.1), transparent 62%),
+    linear-gradient(180deg, var(--stage-a), var(--stage-b));
+  box-shadow:
+    inset 0 1px 0 var(--edge-hi),
+    inset 0 0 0 1px var(--edge),
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 18px 40px -28px rgb(0 0 0 / 0.25);
+}
+
+:global(.dark) .tile {
+  --stage-a: #1d1d21;
+  --stage-b: #111114;
+  --floor-a: #232328;
+  --floor-b: #18181c;
+  --edge: rgb(255 255 255 / 0.07);
+  --edge-hi: rgb(255 255 255 / 0.06);
+  --shade: rgb(0 0 0 / 0.65);
+  --light: 36%;
+}
+
+/* Film grain over the stage, for a printed, photographic feel */
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* The edge glow that follows the pointer across the grid */
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    color-mix(in oklab, var(--tone) 80%, white),
+    transparent 62%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.hero {
+  grid-column: span 2;
+  aspect-ratio: 8 / 3.1;
+}
+
+.tall {
+  grid-row: span 2;
+  aspect-ratio: auto;
+  min-height: 420px;
+}
+
+.wide {
+  grid-column: span 2;
+  aspect-ratio: 8 / 3.1;
+}
+
+.floor {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 0;
+  height: 27%;
+  background:
+    radial-gradient(
+      45% 80% at 50% 0%,
+      color-mix(in oklab, var(--tone) 14%, transparent),
+      transparent 75%
+    ),
+    linear-gradient(180deg, var(--floor-a), var(--floor-b));
+  box-shadow: inset 0 1px 0 var(--edge);
+}
+
+.ground {
+  position: absolute;
+  left: 50%;
+  bottom: 21%;
+  z-index: 1;
+  width: 44%;
+  height: 7%;
+  translate: -50% 0;
+  background: radial-gradient(closest-side, var(--shade), transparent);
+  filter: blur(5px);
+  transition: transform calc(0.7s * var(--m)) cubic-bezier(0.3, 1.3, 0.4, 1);
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+}
+
+.onFloor {
+  align-items: end;
+  padding-bottom: 22%;
+}
+
+/* Bars that stand for text */
+.bar {
+  display: block;
+  height: 5px;
+  border-radius: 9px;
+  background: rgb(0 0 0 / 0.1);
+}
+
+.barDark {
+  background: rgb(0 0 0 / 0.72);
+  height: 7px;
+}
+
+/* ---- Sticker: spring tilt, foil, a corner that peels ---- */
+.stickerRig {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.sticker {
+  position: relative;
+  width: 27cqw;
+  aspect-ratio: 1;
+  padding: 6%;
+  border-radius: 16%;
+  background: #fff;
+  rotate: -5deg;
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 2px rgb(0 0 0 / 0.2),
+    0 26px 44px -20px var(--shade);
+}
+
+.sticker > :first-child {
+  width: 100%;
+  height: 100%;
+}
+
+.hero .sticker {
+  width: min(30cqw, calc(27cqw * var(--fa, 1)));
+  aspect-ratio: var(--fa, 1);
+}
+
+/* Smaller stickers from the same sheet, lying flat behind the main one */
+.hero .sideSticker {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: min(16cqw, calc(14cqw * var(--fa, 1)));
+  /* Its own 6%, not the tile's (an absolute box's % padding is the tile's) */
+  padding: 0.96cqw;
+  aspect-ratio: var(--fa, 1);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 2px rgb(0 0 0 / 0.2),
+    0 14px 24px -14px var(--shade);
+  transition: translate calc(0.7s * var(--m)) cubic-bezier(0.2, 1.3, 0.35, 1);
+}
+
+.sideLeft {
+  left: 14%;
+  rotate: -14deg;
+  translate: 0 -40%;
+}
+
+.sideRight {
+  right: 13%;
+  rotate: 11deg;
+  translate: 0 -62%;
+}
+
+.hero:hover .sideLeft,
+.hero[data-on] .sideLeft {
+  translate: -10% -46%;
+}
+
+.hero:hover .sideRight,
+.hero[data-on] .sideRight {
+  translate: 10% -68%;
+}
+
+.foil,
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  transition: opacity calc(0.4s * var(--m));
+}
+
+.foil {
+  background:
+    repeating-linear-gradient(
+      115deg,
+      rgb(255 255 255 / 0.1) 0 1px,
+      transparent 1px 5px
+    ),
+    conic-gradient(
+      from calc(210deg + var(--hue, 0) * 1deg) at calc(var(--px, 0.6) * 100%)
+        calc(var(--py, 0.35) * 100%),
+      #6ef3ff,
+      #a58bff 60deg,
+      #ff86d4 120deg,
+      #ffe680 180deg,
+      #7dffbe 240deg,
+      #6ef3ff 360deg
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.16;
+}
+
+.glare {
+  z-index: 3;
+  background: radial-gradient(
+    circle at calc(var(--px, 0.62) * 100%) calc(var(--py, 0.3) * 100%),
+    rgb(255 255 255 / 0.65),
+    rgb(255 255 255 / 0) 44%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.4;
+}
+
+.peel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  width: 0;
+  height: 0;
+  border-radius: 0 0 40% 0;
+  background: linear-gradient(
+    135deg,
+    transparent 49%,
+    #d6d6dc 50%,
+    #fff 72%,
+    #e7e7eb 100%
+  );
+  box-shadow: -4px -4px 10px -4px rgb(0 0 0 / 0.35);
+  transition:
+    width calc(0.5s * var(--m)) cubic-bezier(0.2, 1.4, 0.4, 1),
+    height calc(0.5s * var(--m)) cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+.hero:hover .foil,
+.hero[data-on] .foil {
+  opacity: 0.55;
+}
+
+.hero:hover .glare,
+.hero[data-on] .glare {
+  opacity: 1;
+}
+
+.hero:hover .peel,
+.hero[data-on] .peel {
+  width: 18%;
+  height: 18%;
+}
+
+/* ---- Phone: the page scrolls to the code, a thumb taps it ---- */
+.phone {
+  position: relative;
+  width: 62cqw;
+  max-width: 230px;
+  aspect-ratio: 9 / 19;
+  padding: 3.5%;
+  border-radius: 15% / 7%;
+  background: linear-gradient(145deg, #3a3a40, #0e0e10 40%);
+  box-shadow:
+    inset 0 0 0 1.5px #4a4a52,
+    0 30px 50px -22px var(--shade);
+  rotate: 3deg;
+  transition:
+    rotate calc(0.6s * var(--m)) cubic-bezier(0.2, 1.2, 0.3, 1),
+    translate calc(0.6s * var(--m)) cubic-bezier(0.2, 1.2, 0.3, 1);
+}
+
+.tile:hover .phone,
+.tile[data-on] .phone {
+  rotate: 0deg;
+  translate: 0 -10px;
+}
+
+.screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12% / 5.6%;
+  background: #fff;
+}
+
+.island {
+  position: absolute;
+  top: 2.2%;
+  left: 50%;
+  z-index: 3;
+  width: 32%;
+  height: 3%;
+  translate: -50% 0;
+  border-radius: 99px;
+  background: #0b0b0d;
+}
+
+.page {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 22% 8% 10%;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--tone) 45%, #fff),
+    #fff 34%
+  );
+  transition: transform calc(1.3s * var(--m)) cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.tile:hover .page,
+.tile[data-on] .page {
+  transform: translateY(-36%);
+}
+
+.avatar {
+  width: 22%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.photo {
+  width: 100%;
+  aspect-ratio: 2.4;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--tone) 70%, #000),
+    color-mix(in oklab, var(--tone) 30%, #fff)
+  );
+}
+
+.button {
+  width: 100%;
+  height: 26px;
+  border-radius: 9px;
+  background: #f0f0f3;
+}
+
+.buttonInk {
+  background: #111;
+}
+
+.codeOnPage {
+  position: relative;
+  width: min(80%, calc(64% * var(--fa, 1)));
+  aspect-ratio: var(--fa, 1);
+  padding: 6px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 18px -8px rgb(0 0 0 / 0.35);
+}
+
+.tap {
+  position: absolute;
+  left: 56%;
+  top: 54%;
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgb(0 0 0 / 0.45);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.18);
+  opacity: 0;
+  scale: 0.4;
+  pointer-events: none;
+}
+
+.tile:hover .tap,
+.tile[data-on] .tap {
+  animation: tap calc(0.9s * var(--m)) calc(1.35s * var(--m)) ease-out both;
+}
+
+@keyframes tap {
+  0% {
+    opacity: 0;
+    scale: 0.4;
+  }
+  25% {
+    opacity: 1;
+    scale: 0.7;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.8;
+  }
+}
+
+.done {
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  z-index: 4;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  box-shadow: 0 8px 20px -8px rgb(0 0 0 / 0.5);
+  opacity: 0;
+  translate: -50% -12px;
+}
+
+.tile:hover .done,
+.tile[data-on] .done {
+  animation: drop calc(0.5s * var(--m)) calc(1.9s * var(--m))
+    cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    translate: -50% -12px;
+  }
+  to {
+    opacity: 1;
+    translate: -50% 0;
+  }
+}
+
+/* ---- Business card: flips to the code ---- */
+.cards {
+  position: relative;
+  width: 62cqw;
+  aspect-ratio: 1.75;
+  transform: rotateX(14deg) rotateZ(-3deg);
+  transform-style: preserve-3d;
+}
+
+.flipper {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform calc(0.9s * var(--m)) cubic-bezier(0.3, 1.35, 0.4, 1);
+}
+
+.tile:hover .flipper,
+.tile[data-on] .flipper {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.18),
+    0 20px 30px -16px var(--shade);
+}
+
+.front {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 6px;
+  padding: 9%;
+  background: #fff;
+}
+
+.mark {
+  width: 11%;
+  aspect-ratio: 1;
+  border-radius: 30%;
+  background: var(--tone);
+}
+
+.lines {
+  display: grid;
+  gap: 6px;
+}
+
+.back {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: auto 1fr;
+  gap: 8%;
+  align-items: center;
+  padding: 8%;
+  transform: rotateY(180deg);
+}
+
+.back > :first-child {
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: var(--fa, 1);
+}
+
+.tile:hover .flipGround,
+.tile[data-on] .flipGround {
+  transform: scaleX(0.7);
+}
+
+/* ---- Table tent: a phone rises and scans it ---- */
+.tent {
+  position: relative;
+  width: min(34cqw, calc(40cqw * var(--fa, 0.8)));
+  aspect-ratio: var(--fa, 0.8);
+  transform: perspective(600px) rotateX(7deg);
+  transform-origin: 50% 100%;
+}
+
+.tentBack {
+  position: absolute;
+  inset: 4% 4% 0;
+  border-radius: 12px;
+  background: rgb(0 0 0 / 0.55);
+  translate: 9% -4%;
+}
+
+.tentFace {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 18px 18px var(--shade));
+}
+
+.brackets {
+  --b: color-mix(in oklab, var(--tone) 65%, white);
+  position: absolute;
+  inset: 8%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(var(--b), var(--b)) 0 0 / 24% 3px,
+    linear-gradient(var(--b), var(--b)) 0 0 / 3px 24%,
+    linear-gradient(var(--b), var(--b)) 100% 0 / 24% 3px,
+    linear-gradient(var(--b), var(--b)) 100% 0 / 3px 24%,
+    linear-gradient(var(--b), var(--b)) 0 100% / 24% 3px,
+    linear-gradient(var(--b), var(--b)) 0 100% / 3px 24%,
+    linear-gradient(var(--b), var(--b)) 100% 100% / 24% 3px,
+    linear-gradient(var(--b), var(--b)) 100% 100% / 3px 24%;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 4px rgb(0 0 0 / 0.6));
+}
+
+.tile:hover .brackets,
+.tile[data-on] .brackets {
+  animation: lock calc(0.7s * var(--m)) calc(0.55s * var(--m))
+    cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+@keyframes lock {
+  from {
+    opacity: 0;
+    scale: 1.3;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.scanner {
+  position: absolute;
+  right: 8%;
+  bottom: -6%;
+  z-index: 5;
+  width: 29%;
+  aspect-ratio: 9 / 16;
+  padding: 5px;
+  border-radius: 16px;
+  background: #0d0d10;
+  box-shadow:
+    inset 0 0 0 1.5px #44444c,
+    0 20px 30px -12px rgb(0 0 0 / 0.55);
+  rotate: 8deg;
+  translate: 0 105%;
+  transition:
+    translate calc(0.6s * var(--m)) cubic-bezier(0.2, 1.25, 0.35, 1),
+    rotate calc(0.6s * var(--m)) cubic-bezier(0.2, 1.25, 0.35, 1);
+}
+
+.tile:hover .scanner,
+.tile[data-on] .scanner {
+  rotate: -6deg;
+  translate: 0 0;
+}
+
+.view {
+  position: relative;
+  display: grid;
+  height: 100%;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #1b1b20;
+}
+
+.view > :first-child {
+  width: 74%;
+  aspect-ratio: 1;
+}
+
+.link {
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px 5px 5px;
+  border: 1px solid var(--edge);
+  border-radius: 999px;
+  background: var(--stage-a);
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -10px var(--shade);
+  opacity: 0;
+  translate: -50% 0;
+}
+
+.linkDot {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--tone);
+  color: #111;
+}
+
+.tile:hover .link,
+.tile[data-on] .link {
+  animation: pop calc(0.5s * var(--m)) calc(1.15s * var(--m))
+    cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    scale: 0.7;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* ---- Shop window: the lights come on, the poster swings ---- */
+.window {
+  position: absolute;
+  inset: 9% 11% 20%;
+  overflow: hidden;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #262a33, #171a20);
+  box-shadow:
+    0 0 0 6px #3e414a,
+    0 0 0 7px rgb(0 0 0 / 0.35);
+}
+
+.lights {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    70% 80% at 50% 0%,
+    color-mix(in oklab, #ffd9a0 70%, var(--tone)),
+    transparent 75%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+
+.tile:hover .lights,
+.tile[data-on] .lights {
+  animation: flicker calc(0.9s * var(--m)) ease-out both;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.8;
+  }
+  20% {
+    opacity: 0.1;
+  }
+  34% {
+    opacity: 0.9;
+  }
+  42% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0.95;
+  }
+}
+
+.sill {
+  position: absolute;
+  inset: auto 0 18%;
+  height: 3px;
+  background: #3a3d45;
+}
+
+.reflect {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 32%,
+    rgb(255 255 255 / 0.14) 40%,
+    transparent 48%
+  );
+  translate: -60% 0;
+}
+
+.tile:hover .reflect,
+.tile[data-on] .reflect {
+  animation: sweep calc(1.4s * var(--m)) calc(0.2s * var(--m)) ease-in-out both;
+}
+
+@keyframes sweep {
+  to {
+    translate: 60% 0;
+  }
+}
+
+.hanger {
+  position: absolute;
+  left: 50%;
+  top: 9%;
+  z-index: 3;
+  display: grid;
+  width: 22cqw;
+  justify-items: center;
+  translate: -50% 0;
+  transform-origin: 50% 0;
+}
+
+.wide .hanger {
+  width: 14cqw;
+}
+
+.tile:hover .hanger,
+.tile[data-on] .hanger {
+  animation: swing calc(1.8s * var(--m)) calc(0.1s * var(--m))
+    cubic-bezier(0.3, 0.6, 0.4, 1) both;
+}
+
+@keyframes swing {
+  0% {
+    rotate: 0deg;
+  }
+  15% {
+    rotate: 7deg;
+  }
+  35% {
+    rotate: -5deg;
+  }
+  55% {
+    rotate: 3deg;
+  }
+  75% {
+    rotate: -1.5deg;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+.strings {
+  width: 70%;
+  height: 16px;
+  border-right: 1.5px solid #8a8d96;
+  border-left: 1.5px solid #8a8d96;
+}
+
+.poster {
+  display: grid;
+  width: 100%;
+  align-content: start;
+  gap: 6px;
+  padding: 10%;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 14px 22px -12px rgb(0 0 0 / 0.6);
+}
+
+.poster > :last-child {
+  width: min(86%, calc(70% * var(--fa, 1)));
+  margin-top: 4%;
+  justify-self: center;
+  aspect-ratio: var(--fa, 1);
+}
+
+/* ---- Frames: a hand that fans out ---- */
+.fan {
+  position: relative;
+  width: 30cqw;
+  aspect-ratio: 0.78;
+}
+
+.fanCard {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 120%;
+  filter: drop-shadow(0 14px 14px var(--shade));
+  transition: transform calc(0.6s * var(--m)) cubic-bezier(0.2, 1.35, 0.35, 1);
+}
+
+.tile:hover .fanCard:nth-child(1),
+.tile[data-on] .fanCard:nth-child(1) {
+  transform: rotate(-16deg) translateX(-12%);
+  transition-delay: calc(0.06s * var(--m));
+}
+
+.tile:hover .fanCard:nth-child(2),
+.tile[data-on] .fanCard:nth-child(2) {
+  transform: rotate(16deg) translateX(12%);
+  transition-delay: calc(0.03s * var(--m));
+}
+
+.tile:hover .fanCard:nth-child(3),
+.tile[data-on] .fanCard:nth-child(3) {
+  transform: translateY(-8%);
+}
+
+/* ---- Badge on a lanyard: swings ---- */
+.badgeRig {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  translate: -50% 0;
+  transform-origin: 50% 0;
+}
+
+.tile:hover .badgeRig,
+.tile[data-on] .badgeRig {
+  animation: swing calc(2s * var(--m)) cubic-bezier(0.3, 0.6, 0.4, 1) both;
+}
+
+.lanyard {
+  width: 3.4cqw;
+  height: 12cqw;
+  background: repeating-linear-gradient(
+    90deg,
+    #18181b 0 38%,
+    var(--tone) 38% 62%,
+    #18181b 62% 100%
+  );
+}
+
+.clip {
+  width: 4.6cqw;
+  height: 2.4cqw;
+  margin-top: -2px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, #d6d6dc, #8d8d95);
+}
+
+.badge {
+  position: relative;
+  display: grid;
+  width: 25cqw;
+  align-content: start;
+  justify-items: center;
+  gap: 6%;
+  margin-top: -1px;
+  padding: 12% 10% 9%;
+  border-radius: 7%;
+  background: #f8f8fa;
+  box-shadow: 0 30px 46px -24px var(--shade);
+}
+
+.badge::before {
+  content: "";
+  position: absolute;
+  top: 3.5%;
+  left: 50%;
+  width: 20%;
+  height: 3%;
+  border-radius: 9px;
+  background: #d9d9de;
+  translate: -50% 0;
+}
+
+.badge > :nth-child(2) {
+  width: min(74%, calc(60% * var(--fa, 1)));
+  aspect-ratio: var(--fa, 1);
+}
+
+.stripe {
+  width: 100%;
+  height: 9%;
+  border-radius: 6px;
+  background: var(--tone);
+}
+
+/* ---- ASCII: the code made of characters, in a field of them ---- */
+.ascii {
+  --cw: 24cqw;
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 5;
+  background:
+    radial-gradient(
+      60% 90% at 50% 50%,
+      color-mix(in oklab, var(--tone) 22%, transparent),
+      transparent 70%
+    ),
+    #08080b;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    inset 0 0 0 1px rgb(255 255 255 / 0.06),
+    0 18px 40px -28px rgb(0 0 0 / 0.4);
+}
+
+.field,
+.glyphs {
+  margin: 0;
+  overflow: hidden;
+  color: transparent;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: pre;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 300% 100%;
+  animation: flow calc(9s * var(--m)) linear infinite;
+  user-select: none;
+}
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  font-size: calc(100cqw / 130 / 0.6);
+  line-height: 1.25;
+  background-image: linear-gradient(
+    100deg,
+    var(--tone),
+    color-mix(in oklab, var(--tone) 40%, white),
+    color-mix(in oklab, var(--tone) 55%, #5b5bff),
+    var(--tone)
+  );
+  opacity: 0.13;
+  mask: radial-gradient(ellipse 60% 75% at 50% 50%, transparent 22%, #000 70%);
+  transition: opacity calc(0.4s * var(--m));
+}
+
+.ascii:hover .field,
+.ascii[data-on] .field {
+  opacity: 0.24;
+}
+
+.asciiCode {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: var(--cw);
+  aspect-ratio: 1;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 6px;
+  background: #000;
+  translate: -50% -50%;
+  box-shadow: 0 0 90px -20px color-mix(in oklab, var(--tone) 65%, transparent);
+}
+
+/* A black sheet of colored characters, multiplied over the white squares */
+.asciiInk {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  mix-blend-mode: multiply;
+}
+
+.glyphs {
+  position: absolute;
+  inset: 0;
+  font-size: calc(var(--cw) / 64 / 0.6);
+  line-height: calc(var(--cw) / 64);
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--tone) 75%, white),
+    color-mix(in oklab, var(--tone) 30%, white),
+    color-mix(in oklab, var(--tone) 55%, #ff6bd6),
+    color-mix(in oklab, var(--tone) 55%, #6bd8ff),
+    color-mix(in oklab, var(--tone) 75%, white)
+  );
+}
+
+.ascii:hover .glyphs,
+.ascii[data-on] .glyphs {
+  animation-duration: calc(3s * var(--m));
+}
+
+@keyframes flow {
+  to {
+    background-position: 300% 0;
+  }
+}
+
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tall {
+    grid-row: span 1;
+    aspect-ratio: 3 / 4;
+    min-height: 0;
+  }
+
+  .wide {
+    grid-column: span 1;
+    aspect-ratio: 4 / 3;
+  }
+
+  .wide .hanger {
+    width: 22cqw;
+  }
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ascii {
+    --cw: 64cqw;
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero {
+    grid-column: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero .sticker {
+    width: 46cqw;
+  }
+
+  .hero .sideSticker {
+    width: 24cqw;
+    padding: 1.44cqw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hovered states without the motion into them */
+  .tile {
+    --m: 0;
+  }
+}

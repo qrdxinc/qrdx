@@ -5837,11 +5837,11 @@
       "onATableTent": "On a table tent",
       "onAPoster": "On a poster",
       "asASticker": "As a sticker",
-      "plainCode": "A plain code",
-      "withThisTheme": "The same code with this theme",
-      "inTheFrame": "In the {name} frame",
-      "withItsOwnFrame": "With its own frame",
-      "onABusinessCard": "On a business card"
+      "onABusinessCard": "On a business card",
+      "onAPhone": "On a phone, on its hosted page",
+      "inFrames": "In frames",
+      "onABadge": "On a badge",
+      "asAsciiArt": "As ASCII art"
     },
     "itemPages": {
       "previous": "Previous",

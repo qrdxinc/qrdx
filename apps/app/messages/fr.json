@@ -5438,10 +5438,6 @@
       "onATableTent": "Sur un chevalet de table",
       "onAPoster": "Sur une affiche",
       "asASticker": "En autocollant",
-      "plainCode": "Un code simple",
-      "withThisTheme": "Le même code avec ce thème",
-      "inTheFrame": "Dans le cadre {name}",
-      "withItsOwnFrame": "Avec son propre cadre",
       "onABusinessCard": "Sur une carte de visite"
     },
     "itemPages": {
