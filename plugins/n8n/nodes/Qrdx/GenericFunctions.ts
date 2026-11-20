@@ -102,16 +102,17 @@ export function requesterFor(
   return (request) => qrdxApiRequest.call(context, request, itemIndex);
 }
 
-/** GET /qr: keyless, so no credential. Resolves with the image bytes. */
-export async function qrImageRequest(
+/** GET /qr or /barcode: keyless, so no credential. Resolves with the image bytes. */
+export async function imageRequest(
   this: IExecuteFunctions,
+  path: "/qr" | "/barcode",
   baseUrl: string,
   query: Record<string, string>,
   itemIndex: number
 ): Promise<Buffer> {
   const response = (await this.helpers.httpRequest({
     method: "GET",
-    url: `${baseUrl}/qr`,
+    url: `${baseUrl}${path}`,
     qs: query,
     encoding: "arraybuffer",
     returnFullResponse: true,
