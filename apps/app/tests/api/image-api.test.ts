@@ -331,6 +331,108 @@ describe("BMP", () => {
   });
 });
 
+describe("GIF", () => {
+  const gifOf = async (response: Response) => {
+    const { default: sharp } = await import("sharp");
+    const bytes = Buffer.from(await response.arrayBuffer());
+    const { data, info } = await sharp(bytes)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { bytes, data: new Uint8ClampedArray(data), info };
+  };
+  const isGif = (bytes: Buffer) => bytes.toString("latin1", 0, 4) === "GIF8";
+
+  it("is the PNG's pixels in at most 256 colors, with the same caching", async () => {
+    const query = { data: "https://qrdx.dev/gif", size: "300", fg: "155dfc" };
+    const [gif, png] = await Promise.all([
+      get(q({ ...query, format: "gif" })),
+      get(q({ ...query, format: "png" })),
+    ]);
+    expect(gif.status).toBe(200);
+    expect(gif.headers.get("content-type")).toBe("image/gif");
+    expect(gif.headers.get("cache-control")).toBe(IMMUTABLE);
+    expect(gif.headers.get("cdn-cache-control")).toBe(IMMUTABLE);
+    expect(gif.headers.get("access-control-allow-origin")).toBe("*");
+    const fromGif = await gifOf(gif);
+    const fromPng = await gifOf(png);
+    expect(isGif(fromGif.bytes)).toBe(true);
+    expect([fromGif.info.width, fromGif.info.height]).toEqual([300, 300]);
+    // A GIF can't say more than 256 colors, and a flat code needs fewer
+    const colors = new Set<number>();
+    for (let at = 0; at < fromGif.data.length; at += 4) {
+      colors.add(
+        ((fromGif.data[at] as number) << 16) |
+          ((fromGif.data[at + 1] as number) << 8) |
+          (fromGif.data[at + 2] as number),
+      );
+    }
+    expect(colors.size).toBeLessThanOrEqual(256);
+    expect(decodeQR({ data: fromGif.data, width: 300, height: 300 })).toBe(
+      "https://qrdx.dev/gif",
+    );
+    // Same pixels as the PNG, give or take the palette's rounding
+    let worst = 0;
+    for (let at = 0; at < fromGif.data.length; at++) {
+      worst = Math.max(
+        worst,
+        Math.abs((fromGif.data[at] as number) - (fromPng.data[at] as number)),
+      );
+    }
+    expect(worst).toBeLessThan(40);
+  });
+
+  it("takes GIF in any case, and styles, frames and a transparent background", async () => {
+    const response = await get(
+      q({
+        data: "https://qrdx.dev/styled-gif",
+        size: "240",
+        format: "GIF",
+        frame: "border",
+        style: JSON.stringify({ bgColor: "transparent" }),
+      }),
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe("image/gif");
+    const { bytes, data, info } = await gifOf(response);
+    expect(isGif(bytes)).toBe(true);
+    // The frame makes it larger than the code.
+    expect(info.width).toBeGreaterThan(240);
+    // GIF has one transparent color: every pixel is clear or solid
+    const alphas = new Set<number>();
+    for (let at = 3; at < data.length; at += 4) {
+      alphas.add(data[at] as number);
+    }
+    expect([...alphas].sort((a, b) => a - b)).toEqual([0, 255]);
+  });
+
+  it("scans after a gradient is reduced to a palette", async () => {
+    const style = {
+      fgColor: {
+        type: "linear",
+        angle: 45,
+        stops: [
+          { color: "#1d4ed8", offset: 0 },
+          { color: "#0f172a", offset: 100 },
+        ],
+      },
+    };
+    const response = await get(
+      q({
+        data: "https://qrdx.dev/gradient-gif",
+        size: "400",
+        format: "gif",
+        style: JSON.stringify(style),
+      }),
+    );
+    expect(response.status).toBe(200);
+    const { data, info } = await gifOf(response);
+    expect(decodeQR({ data, width: info.width, height: info.height })).toBe(
+      "https://qrdx.dev/gradient-gif",
+    );
+  });
+});
+
 describe("ICO", () => {
   const icoOf = async (response: Response) =>
     new Uint8Array(await response.arrayBuffer());

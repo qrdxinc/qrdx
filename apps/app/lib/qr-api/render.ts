@@ -210,7 +210,7 @@ export async function renderStyledImage(
           style: { ...render.style, frame: undefined },
         }
       : render;
-  return await convertPng(await renderStyledPng(drawn), format);
+  return await convertPng(await renderStyledPng(drawn), format, render.data);
 }
 
 /** Vector EPS, the code `size` points wide (frames add to it). */

@@ -238,13 +238,22 @@ const LINK_ONLY = new Set<ContentType>(["dubsh", "google-drive"]);
 /**
  * WebP is lossless: the PNG's pixels in a smaller file. BMP is an
  * uncompressed 24-bit bitmap (a transparent background comes out white). ICO
- * is a favicon with the code at 16, 32, 48 and 256 px.
+ * is a favicon with the code at 16, 32, 48 and 256 px. GIF holds at most 256
+ * colors and says so when a design would stop scanning in them.
  */
-type ImageFormat = "png" | "webp" | "bmp" | "ico" | "svg";
-const IMAGE_FORMATS: ImageFormat[] = ["png", "webp", "bmp", "ico", "svg"];
+type ImageFormat = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
+const IMAGE_FORMATS: ImageFormat[] = [
+  "png",
+  "webp",
+  "gif",
+  "bmp",
+  "ico",
+  "svg",
+];
 const IMAGE_FORMAT_LABELS: Record<ImageFormat, string> = {
   png: "PNG",
   webp: "WebP",
+  gif: "GIF",
   bmp: "BMP",
   ico: "ICO",
   svg: "SVG",

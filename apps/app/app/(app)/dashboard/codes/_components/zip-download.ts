@@ -20,13 +20,15 @@ const BATCH = 6;
 /**
  * Image files a ZIP of codes can hold (WebP is lossless; BMP is an
  * uncompressed 24-bit bitmap, so the archive compresses it; an ICO is a
- * favicon of PNGs at 16, 32, 48 and 256 px).
+ * favicon of PNGs at 16, 32, 48 and 256 px; a GIF is left out of the archive,
+ * and counted as failed, when its design would stop scanning in 256 colors).
  */
-export type ZipFormat = "png" | "webp" | "bmp" | "ico" | "svg";
+export type ZipFormat = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
 
 export const ZIP_FORMAT_LABELS: Record<ZipFormat, string> = {
   png: "PNG",
   webp: "WebP",
+  gif: "GIF",
   bmp: "BMP",
   ico: "ICO",
   svg: "SVG",

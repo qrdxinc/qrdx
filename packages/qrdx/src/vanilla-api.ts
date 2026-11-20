@@ -21,7 +21,7 @@ export interface QRCodeExportOptions {
 }
 
 export interface QRCodeDownloadOptions extends QRCodeExportOptions {
-  /** "png" (default), "jpg", "webp", "bmp", "ico", "svg", "pdf" (needs jspdf) or "eps" */
+  /** "png" (default), "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" (needs jspdf) or "eps" */
   format?: DownloadFormat;
   /** File name; defaults to one with the format and pixel size */
   filename?: string;
@@ -40,7 +40,7 @@ export interface QRCodeInstance {
   update(options: Partial<QRSVGOptions>): void;
   /** The code's SVG markup, as `toSVGString` writes it */
   toSVGString(): string;
-  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "ico", "svg", "pdf" or "eps" */
+  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps" */
   toDataURL(
     format?: DownloadFormat,
     options?: QRCodeExportOptions

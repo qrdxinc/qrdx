@@ -159,6 +159,7 @@ export type {
   OfficialFrameIndexEntry,
 } from "./frames/official-types";
 export { frameSpecHash } from "./frames/spec-hash";
+export * from "./gif";
 export { getLogoSizeLimit, getQRData } from "./helpers";
 export * from "./ico";
 export {

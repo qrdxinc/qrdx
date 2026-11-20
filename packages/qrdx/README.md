@@ -144,7 +144,7 @@ const qr = createQRCode("#qr", {
 
 qr.update({ fgColor: "#1d4ed8" }); // merges, redraws only when the markup changes
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 qr.destroy(); // removes the <svg>
 ```
@@ -164,7 +164,7 @@ qr.destroy(); // removes the <svg>
 </script>
 ```
 
-Add `@` and a version after `qrdx` in the URL to pin one. The file leaves out the official frame library's data (`OFFICIAL_FRAMES`, `getOfficialFrame`, `OFFICIAL_FRAME_INDEX`); import those from `dist/frames-official.mjs` and `dist/frames-index.mjs` next to it. PDF export and the scan score load `jspdf` and `jsqr` when they run, so a page that uses them maps both with an import map:
+Add `@` and a version after `qrdx` in the URL to pin one. The file leaves out the official frame library's data (`OFFICIAL_FRAMES`, `getOfficialFrame`, `OFFICIAL_FRAME_INDEX`); import those from `dist/frames-official.mjs` and `dist/frames-index.mjs` next to it. PDF export, the scan score and the check on a GIF with more than 256 colors load `jspdf` and `jsqr` when they run, so a page that uses them maps both with an import map:
 
 ```html
 <script type="importmap">
@@ -252,7 +252,7 @@ qr.frame = { style: "banner-bottom", text: "Scan me" };
 qr.props = { margin: 2 }; // every option at once; attributes and named properties win over it
 
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 ```
 
@@ -547,6 +547,7 @@ import {
   copyQRCodeToClipboard,
   downloadQRCode,
   getQRAsBMP,
+  getQRAsGIF,
   getQRAsICO,
   getQRAsWebP,
   getQRCodeDataUrl,
@@ -556,13 +557,15 @@ import {
 
 const props = { value: "https://example.com", bodyPattern: "rounded" as const };
 
-await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | bmp | ico | svg | pdf | eps
+await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | bmp | ico | gif | svg | pdf | eps
 await downloadQRCode(props, { format: "webp", size: PRESET_SIZES.large }); // lossless WebP
 await downloadQRCode(props, { format: "bmp", size: PRESET_SIZES.large }); // 24-bit BMP, transparent areas white
 await downloadQRCode(props, { format: "ico", size: PRESET_SIZES.large }); // a favicon: 16, 32, 48 and 256 px in one file
+await downloadQRCode(props, { format: "gif", size: PRESET_SIZES.large }); // GIF, at most 256 colors
 const webp = await getQRAsWebP({ ...props, size: 1024 }); // a Blob; { quality: 0.9 } makes it lossy
 const bmp = await getQRAsBMP({ ...props, size: 1024 }); // a Blob of type image/bmp
 const ico = await getQRAsICO(props); // a Blob of type image/vnd.microsoft.icon
+const gif = await getQRAsGIF({ ...props, size: 1024 }); // a Blob of type image/gif
 const png = await getQRAsPNG({ ...props, size: 1024 }); // PNG bytes, plain Node — import from "qrdx/node"
 await downloadQRCode(props, { format: "pdf", size: { width: 1200, height: 1200 }, filename: "qr.pdf" });
 const dataUrl = await getQRCodeDataUrl(props, "svg", { width: 512, height: 512 });
@@ -587,6 +590,8 @@ WebP is lossless by default, so module edges stay exact, and a transparent backg
 BMP is an uncompressed 24-bit bitmap, for the legacy systems and embedded tools that only take it. No browser can encode BMP from a canvas, so QRdx writes the file itself (`canvasToBMP`, `encodeBMP`), and `isBMPFile` checks a file's header. 24-bit BMP has no alpha channel, so a transparent background comes out white.
 
 ICO is a favicon file: the code at 16, 32, 48 and 256 px, each stored as a PNG inside the ICO, which every browser and Windows since Vista read. No browser can encode ICO from a canvas, so QRdx writes the file itself (`getQRAsICO`, `canvasesToICO`, `encodeICO`), and `isICOFile` checks a file before it is saved. A transparent background stays transparent. `size` doesn't apply, and a frame is left out, because every image is square and at most 256 px. The small sizes are for icons, not for scanning.
+
+GIF is for the older tools and email builders that only take it. A GIF holds at most 256 colors and one transparent color. No browser can encode GIF from a canvas, so QRdx writes the file itself (`getQRAsGIF`, `canvasToGIF`, `pixelsToGIF`, `encodeGIF`), and `isGIFFile` checks a file before it is saved. A code in flat colors has few enough colors to be written exactly, pixel for pixel. A gradient, a photo logo or an image fill is reduced to a 256-color palette (median cut, with no dithering, because dither noise stops a code scanning), and the reduced image is scanned against the original: if the original scanned and the GIF would not, `getQRAsGIF` throws a `GIFScanError` instead of handing out a code that no longer reads, so offer a PNG then. A pixel under half opaque becomes the transparent color, and any other becomes opaque, so the soft edge of a code on a transparent background is hard-edged in a GIF.
 
 Vector output writes coordinates with at most 3 decimals (0.001 px in SVG, 0.001 pt in PDF and EPS; scale factors keep 6), so edges move by at most 0.0005 px and SVG markup is roughly 30% smaller than with full-precision numbers.
 

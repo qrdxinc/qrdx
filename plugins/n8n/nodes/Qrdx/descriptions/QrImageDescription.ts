@@ -27,7 +27,7 @@ export const qrImageOperations: INodeProperties[] = [
         name: "Generate",
         value: "generate",
         description:
-          "Make a QR code image as PNG, WebP, BMP, ICO, SVG or EPS. Needs no API key.",
+          "Make a QR code image as PNG, WebP, GIF, BMP, ICO, SVG or EPS. Needs no API key.",
         action: "Generate a QR code image",
       },
     ],
@@ -61,6 +61,12 @@ export const qrImageFields: INodeProperties[] = [
         name: "EPS",
         value: "eps",
         description: "Vector PostScript for print",
+      },
+      {
+        name: "GIF",
+        value: "gif",
+        description:
+          "For older tools and email builders; at most 256 colors, so a design with a gradient or photo logo may be refused",
       },
       {
         name: "ICO",

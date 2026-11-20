@@ -104,6 +104,11 @@ describe("qrImageFile", () => {
       mimeType: "image/bmp",
       fileExtension: "bmp",
     });
+    expect(qrImageFile("gif", "badge")).toEqual({
+      fileName: "badge.gif",
+      mimeType: "image/gif",
+      fileExtension: "gif",
+    });
     expect(qrImageFile("ico", "favicon")).toEqual({
       fileName: "favicon.ico",
       mimeType: "image/vnd.microsoft.icon",
@@ -113,7 +118,9 @@ describe("qrImageFile", () => {
 
   it("knows the formats", () => {
     expect(
-      ["png", "webp", "bmp", "ico", "svg", "eps", "jpg"].map(isQrImageFormat)
-    ).toEqual([true, true, true, true, true, true, false]);
+      ["png", "webp", "gif", "bmp", "ico", "svg", "eps", "jpg"].map(
+        isQrImageFormat
+      )
+    ).toEqual([true, true, true, true, true, true, true, false]);
   });
 });
