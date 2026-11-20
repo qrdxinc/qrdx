@@ -101,7 +101,7 @@ export function registerBarcodeTools(server: McpServer) {
     {
       title: "Generate a barcode",
       description:
-        "Draw a static barcode: EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (check digits added or verified), Code 128, Code 39, Code 93 (its check characters added), Codabar, or the 2D Data Matrix, PDF417 and Aztec. Checks the value against the format's rules (characters, length, check digit) and says what it added. Options: bar and background colors, bar height, quiet zone, scale, the text under the bars and rotation. Returns a PNG and public image URLs (SVG, PNG, JPG, WebP, AVIF, PDF and EPS) for embedding or printing. No account needed.",
+        "Draw a static barcode: EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (check digits added or verified), Code 128, Code 39, Code 93 (its check characters added), Codabar, or the 2D Data Matrix, PDF417 and Aztec. Checks the value against the format's rules (characters, length, check digit) and says what it added. Options: bar and background colors, bar height, quiet zone, scale, the text under the bars and rotation. Returns a PNG and public image URLs (SVG, PNG, JPG, WebP, AVIF, BMP, PDF and EPS) for embedding or printing. No account needed.",
       inputSchema: generateInput,
       annotations: {
         readOnlyHint: true,
@@ -128,6 +128,7 @@ export function registerBarcodeTools(server: McpServer) {
           `SVG URL: ${url("svg")}`,
           `PNG URL: ${url("png")}`,
           `PDF URL (vector, for print): ${url("pdf")}`,
+          `BMP URL (24-bit, for legacy systems that only take BMP): ${url("bmp")}`,
           `Other files: add type=jpg, webp, avif or eps to the URL.`,
           `Markdown: ![${label} barcode](${url("svg")})`,
         ];

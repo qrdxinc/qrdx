@@ -14,13 +14,13 @@ sources:
   - https://me-qr.com/
 tableRows:
   - feature: Price
-    qrdx: "Free; paid from $5/mo"
+    qrdx: "Free; paid from {facts.proMonthlyPrice}/mo"
     competitor: "Free with ads; Lite and Premium paid"
   - feature: Ads shown to people who scan
     qrdx: "Never"
     competitor: "Free plan, after 10 scans"
   - feature: Dynamic (editable) QR codes
-    qrdx: "10 free; unlimited from $5/mo"
+    qrdx: "{facts.freeDynamicCodes} free; unlimited from {facts.proMonthlyPrice}/mo"
     competitor: true
   - feature: Scan analytics
     qrdx: "Built in, unlimited scans"
@@ -64,7 +64,7 @@ QRdx fits anyone printing codes for customers, guests or clients who should land
 
 ## Where ME-QR is the better choice
 
-- You need **thousands of editable codes for free**, and ads are acceptable. ME-QR's free plan allows up to 10,000; QRdx Free includes 10.
+- You need **thousands of editable codes for free**, and ads are acceptable. ME-QR's free plan allows up to 10,000; QRdx Free includes {facts.freeDynamicCodes}.
 
 ## Key differences
 

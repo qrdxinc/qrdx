@@ -14,9 +14,9 @@ export const COPY = {
     heading: "Themes",
     title: "QR code themes",
     description:
-      "Colors and shapes for QR codes shared by the QRdx community. Free under CC0.",
+      "Colors, dot shapes and eyes for QR codes, from QRdx and the community. Free under CC0.",
     intro:
-      "Colors, dot shapes and eyes, shared by QRdx users. Preview any theme, then open it in the editor.",
+      "Colors, dot shapes and eyes, from QRdx and the community. Open one to see it in use, then use it in the editor.",
   },
   collection: {
     heading: "Collections",

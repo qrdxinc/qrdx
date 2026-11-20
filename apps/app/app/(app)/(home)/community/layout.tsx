@@ -70,7 +70,9 @@ export default async function CommunityLayout({
     <>
       <CommunityShell
         actions={
-          <div className="grid shrink-0 grid-cols-2 gap-2 sm:flex">
+          // Side by side from 390px; on a narrower phone "Make your own"
+          // doesn't fit half the row, so the buttons stack.
+          <div className="grid shrink-0 gap-2 min-[24.375rem]:grid-cols-2 sm:flex">
             <Button asChild className="h-10 rounded-full px-3 sm:px-4">
               <Link href={playgroundHref({ tab: "design" })}>
                 <Brush2 aria-hidden />

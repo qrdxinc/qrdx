@@ -2013,7 +2013,7 @@
     "alt": "{value}の{format}バーコード",
     "loadFailed": "バーコードの描画コードを読み込めませんでした。接続を確認して、ページを再読み込みしてください。",
     "fixInput": "バーコードを表示するには、強調表示された入力を修正してください。",
-    "sizes": "PNG、JPG、WebP、AVIFは {width, number, ::group-off} × {height, number, ::group-off} px です。SVG、PDF、EPSはベクター形式で、サイズは {widthMm} × {heightMm} mm、モジュールは {moduleMm} mm です。必要に応じてレイアウト内で拡大縮小してください。",
+    "sizes": "PNG、JPG、WebP、AVIF、BMPは {width, number, ::group-off} × {height, number, ::group-off} px です。SVG、PDF、EPSはベクター形式で、サイズは {widthMm} × {heightMm} mm、モジュールは {moduleMm} mm です。レイアウト上で必要に応じて拡大縮小してください。",
     "more": "その他",
     "moreFormats": "その他の形式",
     "footnote": "生成はブラウザー上で行われ、入力した内容がQRdxに送信されることはありません。WebPとAVIFは、選択した場合にのみQRdxのサーバーでエンコードされ、データは保存されません。",
@@ -5437,7 +5437,11 @@
       "onATableTent": "テーブルテントに配置した例",
       "onAPoster": "ポスターに配置した例",
       "asASticker": "ステッカーにした例",
-      "onABusinessCard": "名刺に配置した例"
+      "onABusinessCard": "名刺に配置した例",
+      "onAPhone": "スマートフォンでのホスト型ページ表示",
+      "inFrames": "フレーム内での表示",
+      "onABadge": "バッジでの表示",
+      "asAsciiArt": "ASCIIアート表示"
     },
     "itemPages": {
       "previous": "前へ",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "コミュニティを検索",
-      "placeholder": "フレーム、テーマ、ページを検索"
+      "placeholder": "コミュニティを検索"
     }
   },
   "communityActions": {
@@ -9906,7 +9910,27 @@
       "signedOut": "通知を変更するにはサインインしてください。",
       "webhookUrlMissing": "Webhook URLを貼り付けてください",
       "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
-      "failed": "問題が発生しました。もう一度お試しください。"
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "notMember": "そのワークスペースのメンバーではありません。",
+      "emailAlertsPro": "メールアラートと週次ダイジェストは Pro のご利用に含まれます。",
+      "chatBusiness": "Slack と Discord のアラートは Business プランに含まれます。",
+      "accountNotFound": "アカウントが見つかりません。",
+      "webhookAlreadyAdded": "その Webhook はすでに追加されています。",
+      "tooManyWebhooks": "Slack または Discord の Webhook は、ワークスペースごとに最大{max, number}件まで追加できます。",
+      "targetNotFound": "通知先が見つかりません。",
+      "notDelivered": "配信できませんでした：{error}",
+      "pickEvent": "イベントを1つ以上選択してください",
+      "url": {
+        "missing": "エンドポイントのURLを入力してください。",
+        "tooLong": "URLが長すぎます。",
+        "notFull": "https:// から始まる完全なURLを入力してください。",
+        "notHttps": "Webhook のURLは https:// を使用してください。",
+        "credentials": "URLからユーザー名とパスワードを削除してください。",
+        "ipAddress": "IPアドレスではなく、ホスト名を使用してください。",
+        "notPublic": "公開されているホスト名を使用してください。",
+        "notSlack": "Slack の受信 Webhook のURL（https://hooks.slack.com/services/…）を貼り付けてください。",
+        "notDiscord": "Discord の Webhook のURL（https://discord.com/api/webhooks/…）を貼り付けてください。"
+      }
     }
   },
   "codeBuilder": {

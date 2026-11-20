@@ -7,7 +7,7 @@ competitor: LatestQR
 competitorUrl: https://latestqr.com
 category: generator
 tagline: "LatestQR is a free, no-sign-up generator for static QR codes, with hosted link pages and file uploads. QRdx adds editable dynamic codes, scan analytics and open-source code."
-qrdxPlan: "Free · Pro from $5/mo"
+qrdxPlan: "Free · Pro from {facts.proMonthlyPrice}/mo"
 competitorPlan: "Free"
 lastVerified: "2026-11-10"
 sources:
@@ -25,7 +25,7 @@ sources:
   - https://latestqr.com/terms
 tableRows:
   - feature: Price
-    qrdx: "Free; Pro $5/mo or $48/yr; Business $15/mo or $144/yr"
+    qrdx: "Free; Pro {facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr; Business {facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr"
     competitor: "Free; no paid plans listed"
   - feature: Sign-up to make a code
     qrdx: "Not needed for static codes"
@@ -34,13 +34,13 @@ tableRows:
     qrdx: "{facts.contentTypes} static types"
     competitor: "23 types, plus 4 logo and design tools"
   - feature: Dynamic (editable) codes
-    qrdx: "10 free; unlimited on Pro"
+    qrdx: "{facts.freeDynamicCodes} free; unlimited on Pro"
     competitor: "Not advertised; tool pages describe static codes"
   - feature: Scan analytics
     qrdx: "{facts.freeScanHistoryYears} year free; unlimited on Pro and Business"
     competitor: "Not advertised"
   - feature: Hosted pages
-    qrdx: "3 free; unlimited on Pro"
+    qrdx: "{facts.freeHostedPages} free; unlimited on Pro"
     competitor: "Link, business and social profile pages"
   - feature: Shape options
     qrdx: "{facts.bodyPatterns} body · {facts.eyeShapes} eye · {facts.eyeCentres} eye-dot"
@@ -59,7 +59,7 @@ tableRows:
     competitor: "Not advertised"
 featureHighlights:
   - title: Change a code after it's printed
-    description: "LatestQR's URL tool says the destination is fixed inside the downloaded code, so a new address needs a new QR. A QRdx dynamic code can be pointed somewhere else at any time. The Free plan includes 10, and Pro makes them unlimited."
+    description: "LatestQR's URL tool says the destination is fixed inside the downloaded code, so a new address needs a new QR. A QRdx dynamic code can be pointed somewhere else at any time. The Free plan includes {facts.freeDynamicCodes}, and Pro makes them unlimited."
   - title: See how often codes are scanned
     description: "QRdx records every scan of a dynamic code and keeps {facts.freeScanHistoryYears} year of history on Free and all of it on Pro and Business. LatestQR doesn't advertise scan tracking."
   - title: Hosted pages that stay up
@@ -74,7 +74,7 @@ LatestQR and QRdx both let you design a QR code in the browser and download it w
 
 LatestQR suits someone who needs a code today and doesn't want to pay or sign up. It has a separate form for each job (URLs, PDFs, Wi-Fi, UPI payments, WhatsApp, menus, social profiles and more), and you can add a logo, a frame or a sticker before downloading. It can also publish a simple link page, business page or social profile page, and it accepts PDF, image and video uploads.
 
-QRdx suits people who print codes they may need to change later, or who want to know how often those codes are scanned. Static codes are free and need no account. The Free plan adds 10 dynamic codes and 3 hosted pages. Pro ($5/mo or $48/yr) makes both unlimited, and Business ($15/mo or $144/yr) adds unlimited team members and white-label pages. Developers can use the REST API, the MCP server or the npm library, and the whole app can be self-hosted.
+QRdx suits people who print codes they may need to change later, or who want to know how often those codes are scanned. Static codes are free and need no account. The Free plan adds {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages. Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes both unlimited, and Business ({facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr) adds unlimited team members and white-label pages. Developers can use the REST API, the MCP server or the npm library, and the whole app can be self-hosted.
 
 ## Where LatestQR is the better choice
 

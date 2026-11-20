@@ -24,7 +24,19 @@ import {
   unwrapData,
   unwrapList,
 } from "./api";
+import {
+  type BarcodeImageOptions,
+  barcodeImageFile,
+  barcodeImageUrl,
+  buildBarcodeImageQuery,
+  isBarcodeFileType,
+  isBarcodeFormat,
+} from "./barcode-image";
 import { CODES_PAGE_SIZE } from "./constants";
+import {
+  barcodeImageFields,
+  barcodeImageOperations,
+} from "./descriptions/BarcodeImageDescription";
 import { codeFields, codeOperations } from "./descriptions/CodeDescription";
 import {
   qrImageFields,
@@ -34,8 +46,8 @@ import { scanFields, scanOperations } from "./descriptions/ScanDescription";
 import { themeFields, themeOperations } from "./descriptions/ThemeDescription";
 import {
   CREDENTIAL_NAME,
+  imageRequest,
   qrdxApiRequest,
-  qrImageRequest,
   requesterFor,
 } from "./GenericFunctions";
 import {
@@ -46,7 +58,7 @@ import {
   qrImageUrl,
 } from "./qr-image";
 
-type Resource = "qrImage" | "code" | "scan" | "theme";
+type Resource = "qrImage" | "barcodeImage" | "code" | "scan" | "theme";
 
 /** The id of the Code resource locator (list or ID mode). */
 function codeIdParameter(context: IExecuteFunctions, itemIndex: number) {
@@ -93,7 +105,7 @@ async function generateQrImage(
   }
   const baseUrl = normalizeBaseUrl(options.baseUrl);
   const query = buildQrImageQuery(data, format, options);
-  const image = await qrImageRequest.call(this, baseUrl, query, itemIndex);
+  const image = await imageRequest.call(this, "/qr", baseUrl, query, itemIndex);
   const file = qrImageFile(format, options.fileName);
   const binary = await this.helpers.prepareBinaryData(
     image,
@@ -109,6 +121,69 @@ async function generateQrImage(
         mimeType: file.mimeType,
         fileSize: image.length,
         url: qrImageUrl(baseUrl, query),
+      },
+      binary: { [binaryPropertyName]: binary },
+      pairedItem: { item: itemIndex },
+    },
+  ];
+}
+
+async function generateBarcodeImage(
+  this: IExecuteFunctions,
+  itemIndex: number
+): Promise<INodeExecutionData[]> {
+  // An expression can give a number (an EAN from a spreadsheet, say).
+  const data = String(this.getNodeParameter("data", itemIndex) ?? "");
+  const format = this.getNodeParameter("barcodeFormat", itemIndex) as string;
+  const fileType = this.getNodeParameter("fileType", itemIndex) as string;
+  const binaryPropertyName = this.getNodeParameter(
+    "binaryPropertyName",
+    itemIndex
+  ) as string;
+  const options = this.getNodeParameter(
+    "options",
+    itemIndex,
+    {}
+  ) as BarcodeImageOptions;
+  if (!isBarcodeFormat(format)) {
+    throw new NodeOperationError(
+      this.getNode(),
+      `"${format}" isn't a barcode format QRdx makes.`,
+      { itemIndex }
+    );
+  }
+  if (!isBarcodeFileType(fileType)) {
+    throw new NodeOperationError(
+      this.getNode(),
+      `"${fileType}" isn't a file type QRdx makes barcodes in.`,
+      { itemIndex }
+    );
+  }
+  const baseUrl = normalizeBaseUrl(options.baseUrl);
+  const query = buildBarcodeImageQuery(data, format, fileType, options);
+  const image = await imageRequest.call(
+    this,
+    "/barcode",
+    baseUrl,
+    query,
+    itemIndex
+  );
+  const file = barcodeImageFile(fileType, options.fileName);
+  const binary = await this.helpers.prepareBinaryData(
+    image,
+    file.fileName,
+    file.mimeType
+  );
+  return [
+    {
+      json: {
+        data,
+        format,
+        fileType,
+        fileName: file.fileName,
+        mimeType: file.mimeType,
+        fileSize: image.length,
+        url: barcodeImageUrl(baseUrl, query),
       },
       binary: { [binaryPropertyName]: binary },
       pairedItem: { item: itemIndex },
@@ -289,7 +364,7 @@ export class Qrdx implements INodeType {
     version: 1,
     subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
     description:
-      "Make QR code images, manage dynamic QR codes and read their scans with QRdx",
+      "Make QR code and barcode images, manage dynamic QR codes and read their scans with QRdx",
     defaults: { name: "QRdx" },
     usableAsTool: true,
     inputs: [NodeConnectionTypes.Main],
@@ -308,6 +383,12 @@ export class Qrdx implements INodeType {
         type: "options",
         noDataExpression: true,
         options: [
+          {
+            name: "Barcode Image",
+            value: "barcodeImage",
+            description:
+              "A barcode image (EAN, UPC, Code 128, Data Matrix and more), with no account or API key",
+          },
           {
             name: "Code",
             value: "code",
@@ -334,6 +415,8 @@ export class Qrdx implements INodeType {
       },
       ...qrImageOperations,
       ...qrImageFields,
+      ...barcodeImageOperations,
+      ...barcodeImageFields,
       ...codeOperations,
       ...codeFields,
       ...scanOperations,
@@ -399,6 +482,19 @@ export class Qrdx implements INodeType {
             );
           }
           returnData.push(...(await generateQrImage.call(this, itemIndex)));
+          continue;
+        }
+        if (resource === "barcodeImage") {
+          if (operation !== "generate") {
+            throw new NodeOperationError(
+              this.getNode(),
+              `The operation "${operation}" isn't supported for barcode images.`,
+              { itemIndex }
+            );
+          }
+          returnData.push(
+            ...(await generateBarcodeImage.call(this, itemIndex))
+          );
           continue;
         }
         const run =

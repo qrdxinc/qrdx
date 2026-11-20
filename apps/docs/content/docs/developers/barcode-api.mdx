@@ -106,8 +106,8 @@ In JSON, `text` is a boolean and `scale`, `height`, `quietZone` and `rotate` are
 | --- | --- | --- |
 | `format` | required | The barcode type; see [Formats](#formats). Case and dashes don't matter: `EAN-13` works too |
 | `data` | required | The number or text to encode, up to 1,000 characters (less for most linear formats) |
-| `type` | `svg` | `svg`, `png`, `jpg`, `webp`, `avif`, `pdf` or `eps` |
-| `scale` | `4` | Pixels per module in PNG, JPG, WebP and AVIF, `1` to `10` |
+| `type` | `svg` | `svg`, `png`, `jpg`, `webp`, `avif`, `bmp`, `pdf` or `eps` |
+| `scale` | `4` | Pixels per module in PNG, JPG, WebP, AVIF and BMP, `1` to `10` |
 | `height` | depends on the format | Bar height of linear barcodes in millimeters at the vector size, `5` to `60` (23 for EAN-13) |
 | `quietZone` | the format's minimum | Blank margin in modules: each side of linear barcodes (`0` to `20`), all round 2D codes (`0` to `10`) |
 | `text` | `true` | Print the digits or text under linear barcodes |
@@ -139,7 +139,9 @@ Retail numbers (EAN, UPC, ITF-14, GS1-128's GTIN) are licensed to companies by G
 
 ## Sizes
 
-PNG, JPG, WebP and AVIF are `scale` pixels per module, the narrowest bar's width. A 2D cell is two modules wide.
+PNG, JPG, WebP, AVIF and BMP are `scale` pixels per module, the narrowest bar's width. A 2D cell is two modules wide.
+
+BMP is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.
 
 SVG, PDF and EPS are vectors at one point per module (0.353 mm), so an EAN-13 at the defaults comes out at about 45 × 28 mm, about 107% of its nominal size. Scale vector files in your layout; for retail barcodes, keep between 80% and 200% and don't cut the bar height.
 

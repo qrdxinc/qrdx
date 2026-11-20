@@ -20,6 +20,7 @@ import {
   CARD_LINE,
   CARD_TEXT,
   CARD_TEXT_REVEAL,
+  CARD_TEXT_TOUCH_ONLY,
   RAIL_CARD,
   RAIL_RANKED,
   RANK_NUMERAL,
@@ -132,7 +133,13 @@ export function ItemCard({
             </span>
           )}
         </div>
-        <div className={cn(CARD_LINE, "text-muted-foreground text-xs")}>
+        <div
+          className={cn(
+            CARD_LINE,
+            CARD_TEXT_TOUCH_ONLY,
+            "text-muted-foreground text-xs",
+          )}
+        >
           <CreatorLine
             className="min-w-0"
             creator={card.creator}

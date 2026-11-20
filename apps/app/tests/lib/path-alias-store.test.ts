@@ -77,13 +77,13 @@ const claim = (codeId: string, path: string, domainId = "dom_brand") =>
 describe("claimAlias", () => {
   it("gives a code an old path, once per domain", async () => {
     const first = await claim("code_a", "/r/NBDX");
-    expect(first.ok).toBe(true);
+    expect(first).toMatchObject({ ok: true, created: true });
     expect(fakeDb.rows("linkPathAlias")).toMatchObject([
       { domainId: "dom_brand", qrCodeId: "code_a", path: "/r/NBDX" },
     ]);
     // The same code again: the alias it has, no second row.
     const again = await claim("code_a", "/r/NBDX");
-    expect(again).toMatchObject({ ok: true });
+    expect(again).toMatchObject({ ok: true, created: false });
     expect(fakeDb.rows("linkPathAlias")).toHaveLength(1);
     // Another code on the domain: taken. Case counts, so /r/nbdx is free.
     expect(await claim("code_b", "/r/NBDX")).toEqual({

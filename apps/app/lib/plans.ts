@@ -8,6 +8,7 @@ import { database as db, member } from "@repo/database";
 import { and, eq, like, or } from "drizzle-orm";
 import { cache } from "react";
 import { featureContext } from "./feature-context";
+import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "./free-plan-limits";
 import { holdsPlanRole } from "./permissions";
 import { type Plan, planForProductId } from "./pricing";
 import { SCAN_HISTORY_DAYS } from "./scan-history";
@@ -153,8 +154,8 @@ export interface PlanLimits {
 
 export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
   free: {
-    dynamicCodes: 10,
-    landingPages: 3,
+    dynamicCodes: FREE_DYNAMIC_CODES,
+    landingPages: FREE_HOSTED_PAGES,
     landingPageBadge: true,
     whiteLabel: false,
     customCss: false,

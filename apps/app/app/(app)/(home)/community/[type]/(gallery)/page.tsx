@@ -23,6 +23,7 @@ import { cardKey, ItemCard } from "@/components/community/item-card";
 import { ItemPages } from "@/components/community/item-pages";
 import { InfiniteList } from "@/components/infinite/infinite-list";
 import { COLLECTION_MIN_ITEMS } from "@/lib/community/bundles";
+import { communityState } from "@/lib/community/store";
 import { TYPE_LABELS, typeFromSegment } from "@/lib/community/types";
 import { createMetadata } from "@/lib/metadata";
 import { pageSlice, parsePage } from "@/lib/paging";
@@ -35,6 +36,7 @@ import {
   type Filter,
   type GalleryQuery,
   type GalleryType,
+  galleryCanonical,
   galleryCards,
   galleryHref,
   galleryListKey,
@@ -47,15 +49,20 @@ import {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ type: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const type = typeFromSegment((await params).type);
   if (!type) return {};
+  const search = await searchParams;
+  const query = parseGalleryQuery(type, search);
+  if (!query) return {};
   return createMetadata({
     title: `${COPY[type].title} | Community`,
     description: COPY[type].description,
-    path: `/community/${(await params).type}`,
+    path: galleryCanonical(query, parsePage(search.page)),
     ownOgImage: true,
   });
 }
@@ -71,22 +78,31 @@ export default async function CommunityTypePage({
   if (!type) notFound();
   const search = await searchParams;
   // Official frames come in groups (holidays, seasons, uses): ?group=<id>
-  const query = type === "theme" ? null : parseGalleryQuery(type, search);
+  const query = parseGalleryQuery(type, search);
+  if (!query) notFound();
   const page = parsePage(search.page);
+
+  // Themes have pages of their own once the backfill has copied them into
+  // community_item. Until a deployment runs it, its themes are still in
+  // community_theme, with no pages, so it keeps the gallery that previews
+  // them in a dialog (lib/community/store.ts).
+  if (type === "theme" && (await communityState()).themes === "legacy") {
+    return (
+      // nuqs reads search params; without a boundary the whole page renders client-side
+      <Suspense fallback={<GallerySkeleton view="themes" />}>
+        <CommunityContent className={GALLERY_FRAME}>
+          <CommunityThemesContent />
+        </CommunityContent>
+      </Suspense>
+    );
+  }
 
   // The header, tabs and licence line are the shared community frame
   // (../../layout.tsx); the placeholder while this loads is ./loading.tsx.
-  return query ? (
+  return (
     <CommunityContent className={GALLERY_FRAME}>
       <TypeBrowse page={page} query={query} />
     </CommunityContent>
-  ) : (
-    // nuqs reads search params; without a boundary the whole page renders client-side
-    <Suspense fallback={<GallerySkeleton view="themes" />}>
-      <CommunityContent className={GALLERY_FRAME}>
-        <CommunityThemesContent />
-      </CommunityContent>
-    </Suspense>
   );
 }
 
@@ -97,6 +113,11 @@ const EMPTY: Record<
   frame: {
     title: "No frames here yet",
     body: "Make a frame in the editor's Frame section, then publish it.",
+    link: { href: playgroundHref({ tab: "design" }), label: "Open the editor" },
+  },
+  theme: {
+    title: "No themes here yet",
+    body: "Save a look in the editor as a theme, then publish it.",
     link: { href: playgroundHref({ tab: "design" }), label: "Open the editor" },
   },
   collection: {
@@ -134,6 +155,25 @@ function Help({ type }: { type: GalleryType }) {
           Make a frame in the editor's Frame section, then choose{" "}
           <span className="text-foreground font-medium">Publish frame</span>. It
           must scan Great to be published.
+        </HowToPublish>
+      );
+    case "theme":
+      return (
+        <HowToPublish
+          footer={
+            <>
+              You can also manage all your saved themes from{" "}
+              <Link className={LINK} href={dashboardEntry("themes")}>
+                Themes
+              </Link>
+              .
+            </>
+          }
+          title="Publish your theme"
+        >
+          After saving a theme, click the{" "}
+          <span className="text-foreground font-medium">Publish</span> button in
+          the editor to share it.
         </HowToPublish>
       );
     case "collection":

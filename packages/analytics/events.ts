@@ -121,7 +121,7 @@ export interface AnalyticsEvents {
    * dashboard: the file type and symbology id ("ean13"), never the data.
    */
   barcode_downloaded: {
-    format: "png" | "jpg" | "webp" | "avif" | "svg" | "pdf" | "eps";
+    format: "png" | "jpg" | "webp" | "avif" | "bmp" | "svg" | "pdf" | "eps";
     symbology: string;
     source?: "generator" | "dashboard";
   };

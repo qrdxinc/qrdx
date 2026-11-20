@@ -22715,6 +22715,12 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "Per i sistemi più vecchi che accettano solo BMP · 24 bit non compresso",
+    "status": "machine",
+    "context": "barcodes.files.bmp.hint"
+  },
   "2f6bec725ba6": {
     "source": "Vector for print and design tools",
     "text": "Vettoriale per stampa e strumenti di design",
@@ -22889,9 +22895,9 @@
     "status": "machine",
     "context": "barcodes.faqs.4.question"
   },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "SVG, PDF o EPS per la stampa: sono vettoriali, quindi le barre restano nitide a qualsiasi dimensione. SVG ed EPS si aprono in strumenti di progettazione come Illustrator, InDesign e Affinity, mentre il PDF si apre ovunque. PNG è per schermi, documenti e negozi online, e JPG per i posti che non accettano il PNG; WebP e AVIF creano file più leggeri per i siti web. Aumenta la dimensione dell'immagine per ottenere immagini più grandi.",
+  "3dfd44b42064": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "SVG, PDF o EPS per la stampa: sono vettoriali, quindi le barre restano nitide a qualsiasi dimensione. SVG ed EPS si aprono con strumenti di design come Illustrator, InDesign e Affinity, mentre il PDF si apre ovunque. PNG è per schermi, documenti e negozi online, e JPG per i posti che non accettano il PNG; WebP e AVIF creano file più leggeri per i siti web, e BMP serve per i sistemi più datati che accettano solo BMP. Aumenta la dimensione dell'immagine per avere immagini più grandi.",
     "status": "machine",
     "context": "barcodes.faqs.4.answer"
   },

@@ -9,7 +9,6 @@ import {
   listTemplateDemos,
   pageTypePhrase,
 } from "@/lib/landing/demo";
-import { TEMPLATES_PATH } from "@/lib/landing/demo-paths";
 import { baseUrl, createMetadata } from "@/lib/metadata";
 import { buildTimeParams } from "@/lib/static-params";
 
@@ -49,10 +48,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return createMetadata({
     title,
     description,
-    // Samples, not content of their own: the gallery is the page to index.
-    path: TEMPLATES_PATH,
+    // Samples, not content of their own: the gallery (/templates) is the
+    // page to index, and noindex alone keeps the demos out. The canonical
+    // is the demo itself: a canonical pointing at the gallery with noindex
+    // here sends Google two signals that disagree, and it ignored it anyway
+    // (Search Console chose each demo as its own canonical).
+    path: demo.path,
     robots: { index: false, follow: true },
-    openGraph: { url: new URL(demo.path, baseUrl).toString() },
   });
 }
 
