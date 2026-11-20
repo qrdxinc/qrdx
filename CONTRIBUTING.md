@@ -150,6 +150,13 @@ bun x next build
 
 Variables set in the shell win over `apps/app/.env.local`, but `next build` still reads the rest of that file, so move it aside to build with exactly CI's settings. It can run while `next dev` does: dev keeps its files in `.next/dev`.
 
+The first job also checks the `qrdx` package the way npm ships it. `packages/qrdx/scripts/check-package.mjs` packs it with `bun pm pack`, as the Publish workflow does, and runs [publint](https://publint.dev) and [are-the-types-wrong](https://arethetypeswrong.github.io) on the tarball, so an entry that Node, TypeScript or a bundler can't resolve properly fails CI instead of breaking for the people who install it. Any publint message fails it, except the suggestion to declare `"type"`, which the package leaves out on purpose (the script says why), and so does any problem are-the-types-wrong finds under node10, node16 or bundler resolution. A pull request into `staging` gets it when it changes `packages/qrdx`, a package `qrdx` uses or the CI workflow; everything else always does. After changing the package's `exports`, its build or the files it publishes, run it yourself:
+
+```bash
+bun run --filter qrdx build:inplace
+bun run --filter qrdx check:package
+```
+
 The official frames (`packages/qrdx/src/frames/official`, hundreds of them) all get their spec, color, layout and generator checks and one crisp decode on every run, but the slow scan checks (the phone-camera model at three distances, 160 and 320 px, the scan score, zbar, PDF and EPS) only go to a sample: the hand-made frames, one frame per layout, and a set that rotates daily so every frame comes round (`packages/qrdx/scripts/official-frames/sample.mjs`). To scan every frame, as the weekly and release `Frame scan` workflow does, set `QRDX_FULL_FRAME_SCAN=1`:
 
 ```bash
