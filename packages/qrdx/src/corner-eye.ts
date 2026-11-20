@@ -320,8 +320,9 @@ function ringCorners(
 
 /**
  * Bud: round at the corner pointing away from the code and at the one
- * facing its centre, cut at the other two. Tag: cut at the outer corner,
- * round elsewhere. Both turn to face their corner of the code.
+ * facing its centre, cut at the other two; it turns to face its corner of
+ * the code. Tag: cut at the top-left corner, round elsewhere, the same on
+ * every eye (turned, it fails light-on-dark codes at 4 px per module).
  */
 function generateCornerFacingPattern(
   offsetX: number,
@@ -334,11 +335,15 @@ function generateCornerFacingPattern(
   const outer = corner === "top-left" ? 0 : corner === "top-right" ? 1 : 3;
   const opposite = (outer + 2) % 4;
   const [outerCorners, innerCorners] = ringCorners(m, (i) =>
-    style === "bud" ? i === outer || i === opposite : i !== outer
+    style === "bud" ? i === outer || i === opposite : i !== 0
   );
+  // The tag keeps a round hole: a cut hole corner under its cut outer
+  // corner fails light-on-dark codes at 4 px per module.
   return (
     cornersPath(offsetX, offsetY, size, outerCorners) +
-    cornersPath(offsetX + m, offsetY + m, 5 * m, innerCorners)
+    (style === "tag"
+      ? roundHole(offsetX, offsetY, m)
+      : cornersPath(offsetX + m, offsetY + m, 5 * m, innerCorners))
   );
 }
 

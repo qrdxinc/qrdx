@@ -125,7 +125,7 @@ const EYE_DESCRIPTIONS: Record<PickableCornerEyePattern, string> = {
   plus: "Plus-shaped frame",
   stamp: "Chamfered frame with bites along each side, like a postage stamp",
   bud: "Frame with round corners facing the code's corner and its center, cut corners elsewhere",
-  tag: "Round frame with one cut corner, pointing away from the code",
+  tag: "Round frame with one cut corner",
   bowl: "Frame with cut corners at the top and a round bottom",
   crest: "Shield-shaped frame with soft shoulders",
 };

@@ -130,6 +130,8 @@ const BODIES: Record<BodyPattern, Base> = {
   "circle-mixed": { label: "Mixed", category: "Playful", popularity: null },
   x: { label: "X", category: "Decorative", popularity: null },
   flower: { label: "Flower", category: "Playful", popularity: null },
+  pebble: { label: "Pebble", category: "Rounded", popularity: null },
+  petal: { label: "Petal", category: "Decorative", popularity: null },
   bubble: { label: "Bubble", category: "Playful", popularity: null },
   squircle: { label: "Squircle", category: "Rounded", popularity: null },
   drop: { label: "Drop", category: "Rounded", popularity: null },
