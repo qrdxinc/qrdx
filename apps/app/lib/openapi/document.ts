@@ -6,10 +6,12 @@ import {
   MAX_BULK_CREATE,
 } from "@/app/(app)/dashboard/codes/_lib/qr-codes";
 import {
+  addPathAliasSchema,
   createCodeInputSchema,
   createCodesHeadersSchema,
   listCodesQuerySchema,
   patchCodeInputSchema,
+  pathAliasIdSchema,
   scansQuerySchema,
 } from "@/app/api/v1/codes/_lib/schemas";
 import {
@@ -50,11 +52,20 @@ import {
 import { WEBHOOK_EVENTS, type WebhookEvent } from "@/lib/events/types";
 import { baseUrl } from "@/lib/metadata";
 import { OAUTH_SCOPE_INFO, OAUTH_SCOPES } from "@/lib/oauth-scopes";
+import {
+  PATH_ALIAS_MAX_LENGTH,
+  PATH_ALIAS_MAX_SEGMENTS,
+  PATH_ALIASES_PER_CODE,
+} from "@/lib/path-alias-limits";
 import { getPlanLimits } from "@/lib/plans";
 import { qrOptionsSchema } from "@/lib/qr-render";
 import { SCAN_HISTORY_DAYS, scanHistoryLabel } from "@/lib/scan-history";
 import { DAILY_SERIES_MAX_DAYS } from "@/lib/scan-ranges";
-import { SHORT_LINK_BASE } from "@/lib/short-links";
+import {
+  CUSTOM_SLUG_MAX,
+  CUSTOM_SLUG_MIN,
+  SHORT_LINK_BASE,
+} from "@/lib/short-links";
 import { API_ERRORS, type ApiErrorCode, type ApiErrorInfo } from "./errors";
 import {
   artResponseSchema,
@@ -75,6 +86,8 @@ import {
   hookSampleResponseSchema,
   named,
   oauthCompatibleErrorSchema,
+  pathAliasListResponseSchema,
+  pathAliasResponseSchema,
   profileResponseSchema,
   scanAnalyticsResponseSchema,
   themeListResponseSchema,
@@ -487,6 +500,13 @@ const exampleCode = {
   preciseLocation: false,
 };
 
+const exampleAlias = {
+  id: "cm5alias0old0flyer0link01",
+  path: "/r/abc",
+  url: "https://go.example.com/r/abc",
+  createdAt: EXAMPLE_TIME,
+};
+
 const exampleHook = {
   id: "cm5hook0zapier0scans00001",
   target_url: "https://hooks.zapier.com/hooks/catch/123456/abcdef/",
@@ -532,6 +552,12 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
     "path",
     { id: "The code's `id`" },
     { id: exampleCode.id },
+  );
+  const aliasPath = c.parameters(
+    z.object({ id: codeIdSchema, aliasId: pathAliasIdSchema }),
+    "path",
+    { id: "The code's `id`", aliasId: "The path alias's `id`" },
+    { id: exampleCode.id, aliasId: exampleAlias.id },
   );
   const hookId = c.parameters(
     z.object({ id: hookIdSchema }),
@@ -1108,6 +1134,128 @@ On Pro and Business, \`preciseLocations\` lists the locations scanners chose to 
             "VALIDATION_ERROR",
             "NOT_FOUND",
           ]),
+        },
+      },
+    },
+
+    "/codes/{id}/aliases": {
+      parameters: codeId,
+      get: {
+        operationId: "listCodeAliases",
+        summary: "List path aliases",
+        tags: ["Path aliases"],
+        security: security("codes:read"),
+        description: `The old paths on a code's custom domain that also open the code, oldest first.
+
+A path alias keeps codes printed with another provider's links working after your domain moves to QRdx: \`go.example.com/r/abc\` opens the code as its own short link does, with its scans, password, schedule, scan limit and pause. Aliases belong to the code's current domain, so a code on QRdx's own domain has none (\`NO_CUSTOM_DOMAIN\`). More in [Path aliases](${docs("migrate#path-aliases")}).`,
+        responses: {
+          "200": json(
+            "The code's path aliases",
+            c.schema(pathAliasListResponseSchema),
+            { aliases: { data: [exampleAlias] } },
+          ),
+          ...errorResponses(c, [
+            ...AUTH_ERRORS,
+            "VALIDATION_ERROR",
+            "NOT_FOUND",
+            "NO_CUSTOM_DOMAIN",
+            "PATH_ALIASES_UNAVAILABLE",
+          ]),
+        },
+      },
+      post: {
+        operationId: "addCodeAlias",
+        summary: "Add a path alias",
+        tags: ["Path aliases"],
+        security: security("codes:write"),
+        description: `Makes an old path on the code's custom domain open the code, so codes printed with that link keep working.
+
+Send the path after the domain (\`/r/abc\`) or the whole old link on the code's domain. The rules are the dashboard's, with its reasons as the error messages:
+
+- The code has to be on a verified custom domain of the workspace, with custom domains on the plan (Pro and Business).
+- The path matches exactly and capitals count. The query string and a \`/\` at the end are dropped.
+- At most ${PATH_ALIAS_MAX_LENGTH} characters and ${PATH_ALIAS_MAX_SEGMENTS} parts separated by \`/\`, each made of letters, digits, \`-\`, \`_\`, \`.\` and \`~\`.
+- A path that fits a back-half (one part of ${CUSTOM_SLUG_MIN} to ${CUSTOM_SLUG_MAX} letters, digits, \`-\` or \`_\`) can't be an alias: give the code that back-half instead.
+- QRdx keeps \`/api/…\`, \`/stats/…\`, \`/q/…\`, GS1 Digital Links (\`/01/…\`) and files such as \`/robots.txt\` for itself.
+- On a domain, each path opens one code. \`/p/<x>\` is refused while a code there has the back-half x, because its hosted page answers at that path.
+- A code can have up to ${PATH_ALIASES_PER_CODE} path aliases.
+
+A new alias is a \`201\`. A path the code already has returns that alias with a \`200\`. A domain's first alias can take a minute to start answering.`,
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: c.schema(
+                named(
+                  "PathAliasInput",
+                  addPathAliasSchema,
+                  "An old path on the code's custom domain",
+                ),
+              ),
+              examples: {
+                path: { summary: "A path", value: { path: "/r/abc" } },
+                link: {
+                  summary: "The whole old link",
+                  value: { path: "https://go.example.com/r/abc" },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          "200": json(
+            "The code already had this path: its alias",
+            c.schema(pathAliasResponseSchema),
+            { alias: { data: exampleAlias } },
+          ),
+          "201": json("Added", c.schema(pathAliasResponseSchema), {
+            alias: { data: exampleAlias },
+          }),
+          ...errorResponses(
+            c,
+            [
+              ...AUTH_ERRORS,
+              ...WRITE_ERRORS,
+              "NOT_FOUND",
+              "INVALID_PATH_ALIAS",
+              "DOMAIN_NOT_VERIFIED",
+              "PLAN_REQUIRED",
+              "NO_CUSTOM_DOMAIN",
+              "PATH_ALIAS_TAKEN",
+              "PATH_ALIAS_LIMIT",
+              "PATH_ALIASES_UNAVAILABLE",
+            ],
+            { scope: "codes:write" },
+          ),
+        },
+      },
+    },
+
+    "/codes/{id}/aliases/{aliasId}": {
+      parameters: aliasPath,
+      delete: {
+        operationId: "deleteCodeAlias",
+        summary: "Remove a path alias",
+        tags: ["Path aliases"],
+        security: security("codes:write"),
+        description: `Removes one of the code's path aliases: the old path stops opening the code, and another code on the domain can take it.
+
+The response is \`{ "data": { "id", "deleted": true } }\`. An alias the code doesn't have is a \`404\`.`,
+        responses: {
+          "200": json("Removed", c.schema(codeDeletedResponseSchema), {
+            deleted: { data: { id: exampleAlias.id, deleted: true } },
+          }),
+          ...errorResponses(
+            c,
+            [
+              ...AUTH_ERRORS,
+              "VALIDATION_ERROR",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "PATH_ALIASES_UNAVAILABLE",
+            ],
+            { scope: "codes:write" },
+          ),
         },
       },
     },
@@ -2036,6 +2184,11 @@ export function buildOpenApiDocument(): Document {
           "QR codes painted into AI artwork, checked to scan, on the workspace's monthly AI art allowance.",
       },
       { name: "Scans", description: "Scan analytics of a code." },
+      {
+        name: "Path aliases",
+        description:
+          "Old paths on a code's custom domain that also open it, so codes printed with another provider's links keep working.",
+      },
       {
         name: "Conversions",
         description:

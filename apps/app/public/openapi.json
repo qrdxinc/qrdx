@@ -45,6 +45,10 @@
       "description": "Scan analytics of a code."
     },
     {
+      "name": "Path aliases",
+      "description": "Old paths on a code's custom domain that also open it, so codes printed with another provider's links keep working."
+    },
+    {
       "name": "Conversions",
       "description": "Sales and sign-ups attributed to the scan behind them. Under the QRdx commercial license: on a self-hosted server only where a valid license key from QRdx turns conversion tracking on."
     },
@@ -1739,6 +1743,370 @@
           },
           "500": {
             "$ref": "#/components/responses/Error500_InternalError"
+          }
+        }
+      }
+    },
+    "/codes/{id}/aliases": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "The code's `id`",
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "example": "cm5code0spring0menu00001"
+        }
+      ],
+      "get": {
+        "operationId": "listCodeAliases",
+        "summary": "List path aliases",
+        "tags": ["Path aliases"],
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "oauth2": ["codes:read"]
+          }
+        ],
+        "description": "The old paths on a code's custom domain that also open the code, oldest first.\n\nA path alias keeps codes printed with another provider's links working after your domain moves to QRdx: `go.example.com/r/abc` opens the code as its own short link does, with its scans, password, schedule, scan limit and pause. Aliases belong to the code's current domain, so a code on QRdx's own domain has none (`NO_CUSTOM_DOMAIN`). More in [Path aliases](https://qrdx.dev/docs/migrate#path-aliases).\n\n**Scope:** `codes:read` or `codes:write`, for API keys and OAuth tokens alike.",
+        "responses": {
+          "200": {
+            "description": "The code's path aliases",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PathAlias"
+                      },
+                      "description": "Oldest first"
+                    }
+                  },
+                  "required": ["data"]
+                },
+                "examples": {
+                  "aliases": {
+                    "value": {
+                      "data": [
+                        {
+                          "id": "cm5alias0old0flyer0link01",
+                          "path": "/r/abc",
+                          "url": "https://go.example.com/r/abc",
+                          "createdAt": "2026-01-05T09:30:00.000Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400_ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401_Unauthorized_InvalidToken"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403_InsufficientScope_CodesRead"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404_NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409_NoCustomDomain"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429_RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500_InternalError"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503_PathAliasesUnavailable"
+          }
+        }
+      },
+      "post": {
+        "operationId": "addCodeAlias",
+        "summary": "Add a path alias",
+        "tags": ["Path aliases"],
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "oauth2": ["codes:write"]
+          }
+        ],
+        "description": "Makes an old path on the code's custom domain open the code, so codes printed with that link keep working.\n\nSend the path after the domain (`/r/abc`) or the whole old link on the code's domain. The rules are the dashboard's, with its reasons as the error messages:\n\n- The code has to be on a verified custom domain of the workspace, with custom domains on the plan (Pro and Business).\n- The path matches exactly and capitals count. The query string and a `/` at the end are dropped.\n- At most 200 characters and 8 parts separated by `/`, each made of letters, digits, `-`, `_`, `.` and `~`.\n- A path that fits a back-half (one part of 3 to 64 letters, digits, `-` or `_`) can't be an alias: give the code that back-half instead.\n- QRdx keeps `/api/…`, `/stats/…`, `/q/…`, GS1 Digital Links (`/01/…`) and files such as `/robots.txt` for itself.\n- On a domain, each path opens one code. `/p/<x>` is refused while a code there has the back-half x, because its hosted page answers at that path.\n- A code can have up to 5 path aliases.\n\nA new alias is a `201`. A path the code already has returns that alias with a `200`. A domain's first alias can take a minute to start answering.\n\n**Scope:** `codes:write`, for API keys and OAuth tokens alike.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathAliasInput"
+              },
+              "examples": {
+                "path": {
+                  "summary": "A path",
+                  "value": {
+                    "path": "/r/abc"
+                  }
+                },
+                "link": {
+                  "summary": "The whole old link",
+                  "value": {
+                    "path": "https://go.example.com/r/abc"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The code already had this path: its alias",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PathAlias"
+                    }
+                  },
+                  "required": ["data"]
+                },
+                "examples": {
+                  "alias": {
+                    "value": {
+                      "data": {
+                        "id": "cm5alias0old0flyer0link01",
+                        "path": "/r/abc",
+                        "url": "https://go.example.com/r/abc",
+                        "createdAt": "2026-01-05T09:30:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Added",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PathAlias"
+                    }
+                  },
+                  "required": ["data"]
+                },
+                "examples": {
+                  "alias": {
+                    "value": {
+                      "data": {
+                        "id": "cm5alias0old0flyer0link01",
+                        "path": "/r/abc",
+                        "url": "https://go.example.com/r/abc",
+                        "createdAt": "2026-01-05T09:30:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400_ValidationError_InvalidPathAlias_DomainNotVerified"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401_Unauthorized_InvalidToken"
+          },
+          "402": {
+            "$ref": "#/components/responses/Error402_PlanRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403_InsufficientScope_Forbidden_CodesWrite"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404_NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409_NoCustomDomain_PathAliasTaken_PathAliasLimit"
+          },
+          "413": {
+            "$ref": "#/components/responses/Error413_PayloadTooLarge"
+          },
+          "415": {
+            "$ref": "#/components/responses/Error415_UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429_RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500_InternalError"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503_PathAliasesUnavailable"
+          }
+        }
+      }
+    },
+    "/codes/{id}/aliases/{aliasId}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "The code's `id`",
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "example": "cm5code0spring0menu00001"
+        },
+        {
+          "name": "aliasId",
+          "in": "path",
+          "required": true,
+          "description": "The path alias's `id`",
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "example": "cm5alias0old0flyer0link01"
+        }
+      ],
+      "delete": {
+        "operationId": "deleteCodeAlias",
+        "summary": "Remove a path alias",
+        "tags": ["Path aliases"],
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "oauth2": ["codes:write"]
+          }
+        ],
+        "description": "Removes one of the code's path aliases: the old path stops opening the code, and another code on the domain can take it.\n\nThe response is `{ \"data\": { \"id\", \"deleted\": true } }`. An alias the code doesn't have is a `404`.\n\n**Scope:** `codes:write`, for API keys and OAuth tokens alike.",
+        "responses": {
+          "200": {
+            "description": "Removed",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "$ref": "#/components/headers/X-RateLimit-Limit"
+              },
+              "X-RateLimit-Remaining": {
+                "$ref": "#/components/headers/X-RateLimit-Remaining"
+              },
+              "X-RateLimit-Reset": {
+                "$ref": "#/components/headers/X-RateLimit-Reset"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "deleted": {
+                          "type": "boolean",
+                          "const": true
+                        }
+                      },
+                      "required": ["id", "deleted"]
+                    }
+                  },
+                  "required": ["data"]
+                },
+                "examples": {
+                  "deleted": {
+                    "value": {
+                      "data": {
+                        "id": "cm5alias0old0flyer0link01",
+                        "deleted": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400_ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401_Unauthorized_InvalidToken"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403_InsufficientScope_Forbidden_CodesWrite"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404_NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429_RateLimited"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500_InternalError"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503_PathAliasesUnavailable"
           }
         }
       }
@@ -4614,8 +4982,52 @@
           }
         }
       },
+      "Error400_ValidationError_InvalidPathAlias_DomainNotVerified": {
+        "description": "`VALIDATION_ERROR`: The body, query or path failed validation. `data.details` lists each problem as `{ path, message }` (`{ param, message }` on the image API), with the row's `index` when the body is an array of codes.\n\n`INVALID_PATH_ALIAS`: The path can't be a path alias: it's empty, too long, has too many parts or characters QRdx doesn't allow, fits a back-half, is a path QRdx uses on custom domains, or is a link on another domain. `data.reason` says which (`empty`, `length`, `segments`, `characters`, `backHalf`, `reserved`, `otherDomain`).\n\n`DOMAIN_NOT_VERIFIED`: `domainId` points to a custom domain that isn't verified yet, or a path alias was added to a code whose domain isn't verified yet.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "VALIDATION_ERROR": {
+                "summary": "VALIDATION_ERROR",
+                "value": {
+                  "code": "VALIDATION_ERROR",
+                  "message": "Invalid request body",
+                  "status": 400,
+                  "data": {
+                    "details": [
+                      {
+                        "path": "destinationUrl",
+                        "message": "Enter a full URL, starting with https://"
+                      }
+                    ]
+                  }
+                }
+              },
+              "INVALID_PATH_ALIAS": {
+                "summary": "INVALID_PATH_ALIAS",
+                "value": {
+                  "code": "INVALID_PATH_ALIAS",
+                  "message": "The path can't be a path alias: it's empty, too long, has too many parts or characters QRdx doesn't allow, fits a back-half, is a path QRdx uses on custom domains, or is a link on another domain. data.reason says which (empty, length, segments, characters, backHalf, reserved, otherDomain).",
+                  "status": 400
+                }
+              },
+              "DOMAIN_NOT_VERIFIED": {
+                "summary": "DOMAIN_NOT_VERIFIED",
+                "value": {
+                  "code": "DOMAIN_NOT_VERIFIED",
+                  "message": "domainId points to a custom domain that isn't verified yet, or a path alias was added to a code whose domain isn't verified yet.",
+                  "status": 400
+                }
+              }
+            }
+          }
+        }
+      },
       "Error400_ValidationError_InvalidSlug_DomainNotVerified": {
-        "description": "`VALIDATION_ERROR`: The body, query or path failed validation. `data.details` lists each problem as `{ path, message }` (`{ param, message }` on the image API), with the row's `index` when the body is an array of codes.\n\n`INVALID_SLUG`: The custom back-half (`slug`) breaks a rule: a reserved word, or the same back-half twice in one request. For an array, `data.details` lists each row by `index`.\n\n`DOMAIN_NOT_VERIFIED`: `domainId` points to a custom domain that isn't verified yet.",
+        "description": "`VALIDATION_ERROR`: The body, query or path failed validation. `data.details` lists each problem as `{ path, message }` (`{ param, message }` on the image API), with the row's `index` when the body is an array of codes.\n\n`INVALID_SLUG`: The custom back-half (`slug`) breaks a rule: a reserved word, or the same back-half twice in one request. For an array, `data.details` lists each row by `index`.\n\n`DOMAIN_NOT_VERIFIED`: `domainId` points to a custom domain that isn't verified yet, or a path alias was added to a code whose domain isn't verified yet.",
         "content": {
           "application/json": {
             "schema": {
@@ -4650,7 +5062,7 @@
                 "summary": "DOMAIN_NOT_VERIFIED",
                 "value": {
                   "code": "DOMAIN_NOT_VERIFIED",
-                  "message": "domainId points to a custom domain that isn't verified yet.",
+                  "message": "domainId points to a custom domain that isn't verified yet, or a path alias was added to a code whose domain isn't verified yet.",
                   "status": 400
                 }
               }
@@ -4659,7 +5071,7 @@
         }
       },
       "Error400_ValidationError_InvalidSlug_TooManyCodes_DomainNotVerified": {
-        "description": "`VALIDATION_ERROR`: The body, query or path failed validation. `data.details` lists each problem as `{ path, message }` (`{ param, message }` on the image API), with the row's `index` when the body is an array of codes.\n\n`INVALID_SLUG`: The custom back-half (`slug`) breaks a rule: a reserved word, or the same back-half twice in one request. For an array, `data.details` lists each row by `index`.\n\n`TOO_MANY_CODES`: More than 1,000 codes in one request. The body schema normally rejects this first, as `VALIDATION_ERROR`.\n\n`DOMAIN_NOT_VERIFIED`: `domainId` points to a custom domain that isn't verified yet.",
+        "description": "`VALIDATION_ERROR`: The body, query or path failed validation. `data.details` lists each problem as `{ path, message }` (`{ param, message }` on the image API), with the row's `index` when the body is an array of codes.\n\n`INVALID_SLUG`: The custom back-half (`slug`) breaks a rule: a reserved word, or the same back-half twice in one request. For an array, `data.details` lists each row by `index`.\n\n`TOO_MANY_CODES`: More than 1,000 codes in one request. The body schema normally rejects this first, as `VALIDATION_ERROR`.\n\n`DOMAIN_NOT_VERIFIED`: `domainId` points to a custom domain that isn't verified yet, or a path alias was added to a code whose domain isn't verified yet.",
         "content": {
           "application/json": {
             "schema": {
@@ -4702,7 +5114,7 @@
                 "summary": "DOMAIN_NOT_VERIFIED",
                 "value": {
                   "code": "DOMAIN_NOT_VERIFIED",
-                  "message": "domainId points to a custom domain that isn't verified yet.",
+                  "message": "domainId points to a custom domain that isn't verified yet, or a path alias was added to a code whose domain isn't verified yet.",
                   "status": 400
                 }
               }
@@ -4867,7 +5279,7 @@
         }
       },
       "Error402_PlanRequired": {
-        "description": "`PLAN_REQUIRED`: The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains need Pro; conversions and hooks need Business.",
+        "description": "`PLAN_REQUIRED`: The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains (with their path aliases) need Pro; conversions and hooks need Business.",
         "content": {
           "application/json": {
             "schema": {
@@ -4878,7 +5290,7 @@
                 "summary": "PLAN_REQUIRED",
                 "value": {
                   "code": "PLAN_REQUIRED",
-                  "message": "The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains need Pro; conversions and hooks need Business.",
+                  "message": "The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains (with their path aliases) need Pro; conversions and hooks need Business.",
                   "status": 402
                 }
               }
@@ -4887,7 +5299,7 @@
         }
       },
       "Error402_PlanRequired_LimitReached": {
-        "description": "`PLAN_REQUIRED`: The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains need Pro; conversions and hooks need Business.\n\n`LIMIT_REACHED`: The workspace has as many active dynamic codes as its plan includes (10 on Free).",
+        "description": "`PLAN_REQUIRED`: The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains (with their path aliases) need Pro; conversions and hooks need Business.\n\n`LIMIT_REACHED`: The workspace has as many active dynamic codes as its plan includes (10 on Free).",
         "content": {
           "application/json": {
             "schema": {
@@ -4898,7 +5310,7 @@
                 "summary": "PLAN_REQUIRED",
                 "value": {
                   "code": "PLAN_REQUIRED",
-                  "message": "The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains need Pro; conversions and hooks need Business.",
+                  "message": "The feature isn't on the workspace's plan: bulk creation, custom back-halves and custom domains (with their path aliases) need Pro; conversions and hooks need Business.",
                   "status": 402
                 }
               },
@@ -5122,7 +5534,7 @@
         }
       },
       "Error404_NotFound": {
-        "description": "`NOT_FOUND`: No such endpoint, or the code, hook, theme or custom domain doesn't exist in the workspace the key or token acts on.",
+        "description": "`NOT_FOUND`: No such endpoint, or the code, hook, theme, custom domain or path alias doesn't exist in the workspace the key or token acts on.",
         "content": {
           "application/json": {
             "schema": {
@@ -5142,7 +5554,7 @@
         }
       },
       "Error404_NotFound_InvalidSid": {
-        "description": "`NOT_FOUND`: No such endpoint, or the code, hook, theme or custom domain doesn't exist in the workspace the key or token acts on.\n\n`INVALID_SID`: The `qrdx_sid` is unknown or older than 30 days, the attribution window.",
+        "description": "`NOT_FOUND`: No such endpoint, or the code, hook, theme, custom domain or path alias doesn't exist in the workspace the key or token acts on.\n\n`INVALID_SID`: The `qrdx_sid` is unknown or older than 30 days, the attribution window.",
         "content": {
           "application/json": {
             "schema": {
@@ -5170,7 +5582,7 @@
         }
       },
       "Error404_NotFound_OAuth": {
-        "description": "`NOT_FOUND`: No such endpoint, or the code, hook, theme or custom domain doesn't exist in the workspace the key or token acts on.",
+        "description": "`NOT_FOUND`: No such endpoint, or the code, hook, theme, custom domain or path alias doesn't exist in the workspace the key or token acts on.",
         "content": {
           "application/json": {
             "schema": {
@@ -5185,6 +5597,62 @@
                   "code": "NOT_FOUND",
                   "message": "QR code not found",
                   "status": 404
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error409_NoCustomDomain": {
+        "description": "`NO_CUSTOM_DOMAIN`: Path aliases are for codes on a custom domain, and this code is on QRdx's own.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "NO_CUSTOM_DOMAIN": {
+                "summary": "NO_CUSTOM_DOMAIN",
+                "value": {
+                  "code": "NO_CUSTOM_DOMAIN",
+                  "message": "Path aliases are for codes on a custom domain, and this code is on QRdx's own.",
+                  "status": 409
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error409_NoCustomDomain_PathAliasTaken_PathAliasLimit": {
+        "description": "`NO_CUSTOM_DOMAIN`: Path aliases are for codes on a custom domain, and this code is on QRdx's own.\n\n`PATH_ALIAS_TAKEN`: Another code on the domain already answers at that path: its path alias (`data.reason` `taken`), or, for `/p/<x>`, its hosted page, because it has the back-half x (`hostedPage`).\n\n`PATH_ALIAS_LIMIT`: The code already has as many path aliases as a code can have on its domain (5).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "NO_CUSTOM_DOMAIN": {
+                "summary": "NO_CUSTOM_DOMAIN",
+                "value": {
+                  "code": "NO_CUSTOM_DOMAIN",
+                  "message": "Path aliases are for codes on a custom domain, and this code is on QRdx's own.",
+                  "status": 409
+                }
+              },
+              "PATH_ALIAS_TAKEN": {
+                "summary": "PATH_ALIAS_TAKEN",
+                "value": {
+                  "code": "PATH_ALIAS_TAKEN",
+                  "message": "Another code on the domain already answers at that path: its path alias (data.reason taken), or, for /p/<x>, its hosted page, because it has the back-half x (hostedPage).",
+                  "status": 409
+                }
+              },
+              "PATH_ALIAS_LIMIT": {
+                "summary": "PATH_ALIAS_LIMIT",
+                "value": {
+                  "code": "PATH_ALIAS_LIMIT",
+                  "message": "The code already has as many path aliases as a code can have on its domain (5).",
+                  "status": 409
                 }
               }
             }
@@ -5212,7 +5680,7 @@
         }
       },
       "Error413_PayloadTooLarge": {
-        "description": "`PAYLOAD_TOO_LARGE`: The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
+        "description": "`PAYLOAD_TOO_LARGE`: The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks and path aliases, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
         "content": {
           "application/json": {
             "schema": {
@@ -5223,7 +5691,7 @@
                 "summary": "PAYLOAD_TOO_LARGE",
                 "value": {
                   "code": "PAYLOAD_TOO_LARGE",
-                  "message": "The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
+                  "message": "The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks and path aliases, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
                   "status": 413
                 }
               }
@@ -5232,7 +5700,7 @@
         }
       },
       "Error413_PayloadTooLarge_AiArtImageTooLarge": {
-        "description": "`PAYLOAD_TOO_LARGE`: The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.\n\n`AI_ART_IMAGE_TOO_LARGE`: The `photo` or `reference` image is over the AI art size limit (the message says which).",
+        "description": "`PAYLOAD_TOO_LARGE`: The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks and path aliases, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.\n\n`AI_ART_IMAGE_TOO_LARGE`: The `photo` or `reference` image is over the AI art size limit (the message says which).",
         "content": {
           "application/json": {
             "schema": {
@@ -5243,7 +5711,7 @@
                 "summary": "PAYLOAD_TOO_LARGE",
                 "value": {
                   "code": "PAYLOAD_TOO_LARGE",
-                  "message": "The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
+                  "message": "The body is over the endpoint's limit: 4 MB for codes, 16 KB for hooks and path aliases, 8 KB for conversions. Also a batch of codes whose response (each code with its design) would be over 4 MB; nothing is created.",
                   "status": 413
                 }
               },
@@ -5536,6 +6004,26 @@
                 "value": {
                   "code": "AI_NOT_CONFIGURED",
                   "message": "AI art isn't set up on this deployment (a self-hosted instance without AI_GATEWAY_API_KEY).",
+                  "status": 503
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error503_PathAliasesUnavailable": {
+        "description": "`PATH_ALIASES_UNAVAILABLE`: Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance that hasn't applied `packages/database/manual-sql/2026-11-18-path-aliases.sql`).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "PATH_ALIASES_UNAVAILABLE": {
+                "summary": "PATH_ALIASES_UNAVAILABLE",
+                "value": {
+                  "code": "PATH_ALIASES_UNAVAILABLE",
+                  "message": "Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance that hasn't applied packages/database/manual-sql/2026-11-18-path-aliases.sql).",
                   "status": 503
                 }
               }
@@ -9490,6 +9978,43 @@
         },
         "required": ["code", "message", "status", "error", "error_description"],
         "description": "The API error shape plus the OAuth fields /v1/me and /v1/themes have always sent"
+      },
+      "PathAlias": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Path alias id"
+          },
+          "path": {
+            "type": "string",
+            "description": "The old path, exact and case-sensitive, such as `/r/abc`; the query string never counts"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "The old link: the code's custom domain and the path"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the alias was added (ISO 8601, UTC)"
+          }
+        },
+        "required": ["id", "path", "url", "createdAt"],
+        "description": "An old path on a code's custom domain that also opens the code"
+      },
+      "PathAliasInput": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "maxLength": 2048,
+            "description": "The old path on the code's custom domain, such as `/r/abc`, or the whole old link on that domain (`https://go.example.com/r/abc`). The query string and a `/` at the end are dropped."
+          }
+        },
+        "required": ["path"],
+        "description": "An old path on the code's custom domain"
       },
       "Profile": {
         "type": "object",
