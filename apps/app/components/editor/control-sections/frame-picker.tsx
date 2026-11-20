@@ -25,6 +25,7 @@ import {
   viewerHemisphere,
 } from "@/lib/frames/occasions";
 import { useFrameLibrary } from "@/lib/frames/use-frame-library";
+import { FrameNewTag } from "../../frames/frame-new-tag";
 import { OptionGrid, OptionTile } from "./option-tiles";
 import { useInsideSidePanel } from "./side-panel";
 
@@ -685,7 +686,16 @@ export function FramePicker({
                     onSelect={() => pick(item.id)}
                     selected={value === item.id}
                   >
-                    {tilePreview(item.id)}
+                    <span className="relative grid size-full place-items-center">
+                      {tilePreview(item.id)}
+                      {/* The selected tile's check takes the corner instead */}
+                      {item.entry && value !== item.id && (
+                        <FrameNewTag
+                          className="absolute top-0 right-0"
+                          id={item.entry.id}
+                        />
+                      )}
+                    </span>
                   </OptionTile>
                 ))}
               </OptionGrid>

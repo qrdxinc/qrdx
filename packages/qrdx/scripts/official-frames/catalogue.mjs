@@ -621,9 +621,15 @@ let current = {
   occasion: undefined,
   tags: [],
   ct: [],
+  batch: undefined,
 };
-const section = (collection, occasion, tags = [], ct = []) => {
-  current = { collection, occasion, tags, ct };
+/**
+ * The frames that follow go in `collection`. `batch` names the round that
+ * added them (YYYY-MM), so the app can mark them as new for a while
+ * (src/frames/catalogue/batches.ts); the first catalogue has none.
+ */
+const section = (collection, occasion, tags = [], ct = [], batch) => {
+  current = { collection, occasion, tags, ct, batch };
 };
 
 /**
@@ -647,6 +653,7 @@ function f(id, name, layout, cta, note, options, palette, extraTags, ct) {
     tags: [...new Set([...current.tags, ...(extraTags ?? [])])],
     contentTypes: ct ?? current.ct,
     description: describe(layout, o, pal),
+    ...(current.batch ? { batch: current.batch } : {}),
   });
 }
 

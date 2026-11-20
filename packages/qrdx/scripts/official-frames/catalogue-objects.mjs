@@ -1302,6 +1302,9 @@ const PLAYFUL = [
   ],
 ];
 
+/** The round that added these frames (catalogue/batches.ts marks them as new). */
+const BATCH = "2026-11";
+
 /** Adds the frames, through catalogue.mjs's own section() and f(). */
 export function addObjectFrames({ section, f }) {
   const add = (rows) => {
@@ -1319,10 +1322,10 @@ export function addObjectFrames({ section, f }) {
       f(id, name, layout, cta, note, options, palette, tags, ct);
     }
   };
-  section("call-to-action", undefined, ["call to action"]);
+  section("call-to-action", undefined, ["call to action"], undefined, BATCH);
   add(SHAPES);
-  section("objects", undefined, ["object"], ["url"]);
+  section("objects", undefined, ["object"], ["url"], BATCH);
   add(OBJECTS);
-  section("playful", undefined, ["playful"], ["url"]);
+  section("playful", undefined, ["playful"], ["url"], BATCH);
   add(PLAYFUL);
 }

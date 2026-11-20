@@ -13,6 +13,7 @@ import {
   TYPE_LABELS,
   TYPE_SEGMENTS,
 } from "@/lib/community/types";
+import { FrameNewTag } from "../frames/frame-new-tag";
 import {
   CARD_ART,
   CARD_FRAME,
@@ -119,6 +120,9 @@ export function ItemCard({
                 ? t("typeCollectionCount", { count: card.itemCount })
                 : t(TYPE_KEYS[card.type])}
             </span>
+            {card.type === "frame" && card.slug && (
+              <FrameNewTag id={card.slug} />
+            )}
           </div>
         </div>
       </div>
