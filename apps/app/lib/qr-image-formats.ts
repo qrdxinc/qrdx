@@ -1,6 +1,13 @@
 import "server-only";
 
-import { encodeBMP, encodeICO, ICO_MIME, ICO_SIZES } from "qrdx";
+import {
+  assertGIFStillScans,
+  encodeBMP,
+  encodeICO,
+  GIF_MIME,
+  ICO_MIME,
+  ICO_SIZES,
+} from "qrdx";
 
 // The image API's pixel formats beyond PNG, converted on the server from
 // the same PNG render with sharp (loaded only when one is asked for). To add
@@ -9,7 +16,7 @@ import { encodeBMP, encodeICO, ICO_MIME, ICO_SIZES } from "qrdx";
 // it up from there.
 
 /** Formats made from the PNG render. */
-export const CONVERTED_FORMATS = ["webp", "bmp", "ico"] as const;
+export const CONVERTED_FORMATS = ["webp", "bmp", "ico", "gif"] as const;
 
 /**
  * The size an ICO's render is drawn at before it is scaled down to each of the
@@ -22,6 +29,7 @@ export const IMAGE_CONTENT_TYPES: Record<ConvertedFormat, string> = {
   webp: "image/webp",
   bmp: "image/bmp",
   ico: ICO_MIME,
+  gif: GIF_MIME,
 };
 
 export const isConvertedFormat = (format: string): format is ConvertedFormat =>
@@ -34,10 +42,16 @@ export const isConvertedFormat = (format: string): format is ConvertedFormat =>
  * transparent background laid over white. ICO is a favicon: the PNG scaled
  * to 16, 32, 48 and 256 px (kept whole and centered if it isn't square),
  * each stored as a PNG inside the engine's ICO writer, transparency kept.
+ * GIF is written by sharp with at most 256 colors, no dithering (its noise
+ * stops a code scanning) and one transparent color. A design that needs more
+ * colors is checked against the PNG when `expected` (the value the code
+ * encodes) is given, and a GIFScanError is thrown if the original scanned and
+ * the GIF would not.
  */
 export async function convertPng(
   png: ArrayBuffer | Uint8Array,
   format: ConvertedFormat,
+  expected?: string,
 ): Promise<Uint8Array> {
   const { default: sharp } = await import("sharp");
   const image = sharp(new Uint8Array(png));
@@ -69,6 +83,33 @@ export async function convertPng(
         }),
       );
       return encodeICO(images);
+    }
+    case "gif": {
+      const file = new Uint8Array(
+        await image
+          .clone()
+          .gif({ colors: 256, dither: 0, effort: 7 })
+          .toBuffer(),
+      );
+      // The "GIF8" every GIF starts with: nothing else leaves as image/gif
+      if (String.fromCharCode(...file.subarray(0, 4)) !== "GIF8") {
+        throw new Error("Could not write a GIF file");
+      }
+      if (expected !== undefined) {
+        const pixels = async (source: typeof image) => {
+          const { data, info } = await source
+            .ensureAlpha()
+            .raw()
+            .toBuffer({ resolveWithObject: true });
+          return { data, width: info.width, height: info.height };
+        };
+        await assertGIFStillScans(
+          await pixels(image.clone()),
+          await pixels(sharp(file)),
+          expected,
+        );
+      }
+      return file;
     }
     default:
       throw new TypeError(`Unknown image format: ${format satisfies never}`);

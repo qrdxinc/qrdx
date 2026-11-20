@@ -63,6 +63,7 @@ import { BRAND_LOGO_COUNT } from "./brand-logos/catalog.generated";
 import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "./free-plan-limits";
 import { PAGE_TYPE_IDS } from "./landing/page-type-ids";
 import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
+import { AI_ART_PER_MONTH, API_REQUESTS_PER_DAY } from "./plan-allowances";
 import {
   formatPrice,
   MONEY_BACK_DAYS,
@@ -197,6 +198,14 @@ export const PRODUCT_FACTS = {
   freeDynamicCodes: FREE_DYNAMIC_CODES,
   /** Hosted pages on Free (lib/free-plan-limits.ts): "3". */
   freeHostedPages: FREE_HOSTED_PAGES,
+  /** REST API requests a day (lib/plan-allowances.ts): "1,000", "10,000", "100,000". */
+  freeApiRequestsPerDay: formatCount(API_REQUESTS_PER_DAY.free),
+  proApiRequestsPerDay: formatCount(API_REQUESTS_PER_DAY.pro),
+  businessApiRequestsPerDay: formatCount(API_REQUESTS_PER_DAY.business),
+  /** AI art images a month (lib/plan-allowances.ts): "3", "30", "150". */
+  freeAiArtPerMonth: AI_ART_PER_MONTH.free,
+  proAiArtPerMonth: AI_ART_PER_MONTH.pro,
+  businessAiArtPerMonth: AI_ART_PER_MONTH.business,
   /** Path aliases one code can have on its custom domain (lib/path-alias-limits.ts). */
   pathAliasesPerCode: PATH_ALIASES_PER_CODE,
 } as const;

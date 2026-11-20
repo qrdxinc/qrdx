@@ -37,13 +37,13 @@
 
 **Design and download, free and without an account**
 
-- Start from one of 113 built-in themes, or build a look from 23 body patterns, 17 corner-eye shapes and 21 eye centers. Pick one of 1,032 frames, from 19 call-to-action frames to holiday, seasonal and industry designs, and edit its text right in the preview.
+- Start from one of 113 built-in themes, or build a look from 32 body patterns, 27 corner-eye shapes and 24 eye centers. Pick one of 1,032 frames, from 19 call-to-action frames to holiday, seasonal and industry designs, and edit its text right in the preview.
 - Or give the code itself a shape: a circle of dots, a heart, or a silhouette traced in your browser from a PNG, JPEG or SVG you upload.
 - Color the background, dots and eyes with a solid color, a linear, radial or angular gradient, a see-through color or a photo.
 - Use the Art tab to blend a logo or photo into the dots (Logo QR and Image QR). They're vector art, so they export to every format. When you're signed in, AI art is there too.
 - Describe the code you want in the Generate tab and an AI assistant designs it (5 free requests with an account).
 - Check the scan score before you print. The playground decodes your design at 96, 160 and 320 px with simulated camera blur and tells you what to fix.
-- Download PNG, JPG, WebP, BMP, ICO, SVG, PDF or EPS with no watermark. Print-ready PDF and EPS come at an exact size in mm or inches, in RGB or CMYK, with optional bleed and PDF crop marks. EPS can't carry a photo fill, so designs with one download as PDF, SVG or PNG.
+- Download PNG, JPG, WebP, GIF, BMP, ICO, SVG, PDF or EPS with no watermark. Print-ready PDF and EPS come at an exact size in mm or inches, in RGB or CMYK, with optional bleed and PDF crop marks. EPS can't carry a photo fill, so designs with one download as PDF, SVG or PNG.
 - Browse the [community](https://qrdx.dev/community) for frames and themes, all shared under CC0.
 - Free tools: a [bulk generator](https://qrdx.dev/tools/bulk) from CSV, a [scan checker](https://qrdx.dev/tools/scan-checker) for pictures of QR codes, a [print size calculator](https://qrdx.dev/tools/print-size) and a [QR code scanner](https://qrdx.dev/scan).
 

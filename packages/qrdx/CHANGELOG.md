@@ -2,6 +2,14 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## Unreleased
+
+- **10 new eye frames** (`cornerEyePattern`): `pebble`, `porthole`, `doodle`, `notch`, `plus`, `stamp`, `bud`, `tag`, `bowl` and `crest`. `bud` turns to face its corner of the code. Every one keeps the finder's 1:1:3:1:1 runs on its rows and columns, with its corners cut or rounded so that a circle centre reads in sharp renders and a square centre keeps a light gap: none of them joins `WEAK_SHARP_DOT_EYES`, and `getStylePairRisk` flags no pair that includes them.
+- **3 new eye centres** (`cornerEyeDotPattern`): `cushion`, `bevel` and `notch`. Each keeps nearly all of its 3×3 block, which is what reads in every eye in sharp renders. `petal` turns its big round corner away from the code, like the `petal` eye.
+- **9 new body patterns** (`bodyPattern`): `x`, `flower`, `pebble`, `bubble`, `petal`, `squircle`, `drop`, `beads` and `chain`. `beads` links round modules along rows and columns, `chain` along the diagonals; `pebble`, `petal` and `drop` vary per module and always draw the same code for the same value. `MODULE_SCALE_FLOOR` has their smallest `moduleScale`.
+- Every new value decodes with jsQR through the phone-camera model at 4, 6 and 9 px per module next to every other body, eye and centre, at every error correction level, light-on-dark, with brand colors and with a centre logo (tests/catalog-*.test.ts, tests/decode-*.test.ts). The new eyes read with circle and rounded centres in sharp renders at 4 to 20 px per module (tests/decode-sharp-centre.test.ts), and the new centres read in every eye in sharp renders with circle and square bodies. They were also checked by hand with ZXing.
+- New geometry helpers in `shapes.ts` (`radialPoints`, `scoopedRectPath`, `notchedRectPath`, `stampPath`, `cushionPath`, `shieldPath`, `octagonPoints`, `superellipseRadius`, `doodleRadius`); `circlePath` takes a `ccw` flag for holes. These are internal.
+
 ## 0.0.57
 
 - **BMP export.** `"bmp"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write an uncompressed 24-bit BMP, for legacy systems and embedded tools that only take BMP. No browser encodes BMP from a canvas (`toBlob("image/bmp")` returns a PNG), so the engine writes the file itself, the same way in every browser.

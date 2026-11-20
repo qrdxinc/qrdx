@@ -1,6 +1,6 @@
 ---
 title: CLI
-description: Generate styled QR codes as SVG, PNG, WebP, BMP, ICO or EPS from your terminal or CI with @qrdx/cli, one with qrdx generate or a whole CSV with qrdx batch.
+description: Generate styled QR codes as SVG, PNG, WebP, GIF, BMP, ICO or EPS from your terminal or CI with @qrdx/cli, one with qrdx generate or a whole CSV with qrdx batch.
 icon: Terminal
 ---
 
@@ -39,6 +39,7 @@ The file extension picks the format, or use `--format` when the file name has no
 | `.svg` | Web pages, design tools, scaling without loss | Width in pixels (default 512) |
 | `.png` | Documents, slides, anywhere that needs an image | Width in pixels |
 | `.webp` | Websites: the PNG's pixels, lossless, in a smaller file | Width in pixels |
+| `.gif` | Older tools and email builders that only take GIF: at most 256 colors and one transparent color. A design with more colors is reduced, and the command fails and writes nothing if that would stop the code scanning | Width in pixels |
 | `.bmp` | Legacy systems that only take BMP: 24-bit and uncompressed, a transparent background comes out white | Width in pixels |
 | `.ico` | Favicons: the code at 16, 32, 48 and 256 px in one file, transparency kept | Not used |
 | `.eps` | Print shops, Illustrator, InDesign | Width in points (72 per inch, so `144` is 2 inches) |
@@ -77,7 +78,7 @@ With a frame, `--size` is the code's width and the frame adds to the image. To p
 | Flag | Default | Description |
 | --- | --- | --- |
 | `-o`, `--output` | `qr.svg` | Output file |
-| `--format` | from the extension | `svg`, `png`, `webp`, `bmp`, `ico` or `eps` |
+| `--format` | from the extension | `svg`, `png`, `webp`, `gif`, `bmp`, `ico` or `eps` |
 | `--size` | `512` | Output size (see above) |
 | `-l`, `--level` | `Q` | Error correction: `L`, `M`, `Q` or `H` |
 | `--body` | `square` | Data module [pattern](/docs/features/patterns) |
@@ -96,7 +97,7 @@ With a frame, `--size` is the code's width and the frame adds to the image. To p
 `qrdx --help` lists every pattern name. An invalid value exits with code `1` and lists what is accepted:
 
 ```txt title="qrdx generate https://example.com --body nope -o bad.svg"
-✗ Invalid --body "nope". Expected one of: circle, circle-large, square, diamond, circle-mixed, pacman, rounded, small-square, vertical-line, horizontal-line, liquid, liquid-horizontal, liquid-vertical, classy, classy-rounded, leaf, plus, hexagon, star, heart, random-dots, mosaic, octagon
+✗ Invalid --body "nope". Expected one of: circle, circle-large, square, diamond, circle-mixed, pacman, rounded, small-square, vertical-line, horizontal-line, liquid, liquid-horizontal, liquid-vertical, classy, classy-rounded, leaf, plus, hexagon, star, heart, random-dots, mosaic, octagon, x, flower, pebble, bubble, petal, squircle, drop, beads, chain
 ```
 
 ## 3. Make many codes from a CSV

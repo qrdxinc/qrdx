@@ -101,11 +101,50 @@ describe("circle centres in sharp renders (the research table)", () => {
 describe("WEAK_SHARP_DOT_EYES matches the decoder", () => {
   const weakEyes = WEAK_SHARP_DOT_EYES.circle ?? [];
 
-  it("lists every eye but the round ones", () => {
+  // The eyes added after 0.0.57 cut or round every corner (see corner-eye.ts),
+  // so a circle centre keeps the finder's proportions on their diagonals.
+  const SOUND_NEW_EYES: CornerEyePattern[] = [
+    "pebble",
+    "porthole",
+    "doodle",
+    "notch",
+    "plus",
+    "stamp",
+    "bud",
+    "tag",
+    "bowl",
+    "crest",
+  ];
+
+  it("lists every eye but the round-cornered ones", () => {
     expect(
       CORNER_EYE_PATTERNS.filter((eye) => !weakEyes.includes(eye))
-    ).toEqual(["gear", "circle", "octagon"]);
+    ).toEqual(["gear", "circle", "octagon", ...SOUND_NEW_EYES]);
   });
+
+  // The new eyes read every sharp render with a circle and a rounded centre
+  // on the bodies the research table measured, so they stay out of the table.
+  for (const eye of SOUND_NEW_EYES) {
+    for (const dot of ["circle", "rounded"] as const) {
+      it(`${eye} eyes, ${dot} centre: read every sharp render, no warning`, () => {
+        for (const body of [
+          "circle",
+          "square",
+          "rounded",
+          "circle-large",
+        ] as const) {
+          expect(sharpFailures(body, eye, dot)).toEqual([]);
+          expect(
+            getStylePairRisk({
+              bodyPattern: body,
+              cornerEyePattern: eye,
+              cornerEyeDotPattern: dot,
+            })
+          ).toBeNull();
+        }
+      });
+    }
+  }
 
   // One render each eye was measured to fail (body, px per module, value)
   const KNOWN_MISS: Partial<

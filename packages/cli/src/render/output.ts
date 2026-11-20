@@ -7,6 +7,7 @@ import {
   encodeICO,
   ICO_SIZES,
   type IcoImage,
+  pixelsToGIF,
   QRCodeSVG,
   svgToEPS,
 } from "qrdx";
@@ -17,14 +18,24 @@ import { renderToStaticMarkup } from "react-dom/server";
 /**
  * "webp" is lossless: the PNG's pixels in a smaller file. "bmp" is an
  * uncompressed 24-bit bitmap; a transparent background comes out white.
- * "ico" is a favicon holding the code at 16, 32, 48 and 256 px.
+ * "ico" is a favicon holding the code at 16, 32, 48 and 256 px. "gif" holds
+ * at most 256 colors and one transparent color; a design that needs more is
+ * reduced, and refused when the reduced image would no longer scan.
  */
-export type OutputFormat = "svg" | "png" | "webp" | "bmp" | "ico" | "eps";
+export type OutputFormat =
+  | "svg"
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "eps";
 
 export const OUTPUT_FORMATS: readonly OutputFormat[] = [
   "svg",
   "png",
   "webp",
+  "gif",
   "bmp",
   "ico",
   "eps",
@@ -166,6 +177,19 @@ export async function saveOutput(options: OutputOptions): Promise<void> {
       outputPath,
       encodeBMP(pixels.data, pixels.width, pixels.height)
     );
+    return;
+  }
+
+  // GIF: the PNG's pixels written by the engine's own encoder, so it needs no
+  // sharp. A design with more than 256 colors is reduced, and a GIFScanError
+  // is thrown (nothing is written) if that would stop it scanning.
+  if (format === "gif") {
+    const pixels = await decodePNGPixels(pngBytes);
+    if (!pixels) {
+      throw new Error("Could not read the rendered PNG to write a GIF file.");
+    }
+    const { file } = await pixelsToGIF(pixels, qrProps.value);
+    writeFileSync(outputPath, file);
     return;
   }
 

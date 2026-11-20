@@ -99,8 +99,7 @@ describe.each(["qr-io.mdx", "qr-code-creator.mdx"])(
   (file) => {
     const text = readFileSync(join(COMPARE, file), "utf8");
     const rows = qrdxValues(text);
-    const { free, pro, business } = PLAN_LIMITS;
-    const count = (n: number) => n.toLocaleString("en-US");
+    const { pro, business } = PLAN_LIMITS;
 
     test("states plan limits and prices that match the code", () => {
       expect(pro.dynamicCodes).toBe(UNLIMITED);
@@ -124,7 +123,7 @@ describe.each(["qr-io.mdx", "qr-code-creator.mdx"])(
         `${pro.teamMembers} on Pro, unlimited on Business`,
       );
       expect(rows.get("API")).toBe(
-        `${count(free.apiRequestsPerDay)} requests a day free; ${count(pro.apiRequestsPerDay)} on Pro`,
+        "{facts.freeApiRequestsPerDay} requests a day free; {facts.proApiRequestsPerDay} on Pro",
       );
     });
 
@@ -135,7 +134,7 @@ describe.each(["qr-io.mdx", "qr-code-creator.mdx"])(
         `Pro (${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr) makes both unlimited`,
         `Business (${usd("business", "month")}/mo or ${usd("business", "year")}/yr) adds unlimited team members and white-label pages`,
         `QRdx Pro is ${usd("pro", "month")} a month or ${usd("pro", "year")} a year for unlimited dynamic codes`,
-        `The QRdx REST API allows ${count(free.apiRequestsPerDay)} requests a day on Free and ${count(pro.apiRequestsPerDay)} on Pro`,
+        "The QRdx REST API allows {facts.freeApiRequestsPerDay} requests a day on Free and {facts.proApiRequestsPerDay} on Pro",
       ]) {
         expect(text).toContain(phrase);
       }
@@ -218,8 +217,7 @@ describe("LatestQR compare page", () => {
 describe("QR Code AI compare page", () => {
   const text = readFileSync(join(COMPARE, "qrcode-ai.mdx"), "utf8");
   const rows = qrdxValues(text);
-  const { free, pro, business } = PLAN_LIMITS;
-  const perDay = (requests: number) => requests.toLocaleString("en-US");
+  const { pro, business } = PLAN_LIMITS;
 
   it("states plan limits and prices that match the code", () => {
     expect(pro.dynamicCodes).toBe(UNLIMITED);
@@ -244,7 +242,7 @@ describe("QR Code AI compare page", () => {
       `{facts.freeHostedPages} free; unlimited on Pro`,
     );
     expect(rows.get("AI art")).toBe(
-      `${free.aiArtPerMonth} images a month free; ${pro.aiArtPerMonth} on Pro; ${business.aiArtPerMonth} shared on Business`,
+      "{facts.freeAiArtPerMonth} images a month free; {facts.proAiArtPerMonth} on Pro; {facts.businessAiArtPerMonth} shared on Business",
     );
     expect(rows.get("Custom domains")).toBe(
       `${pro.customDomains} on Pro; ${business.customDomains} on Business`,
@@ -256,12 +254,12 @@ describe("QR Code AI compare page", () => {
       `QRdx Free includes {facts.freeDynamicCodes} dynamic codes with no time limit.`,
       `QRdx Pro is ${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr, and Business is ${usd("business", "month")}/mo or ${usd("business", "year")}/yr.`,
       `its Free plan keeps up to {facts.freeDynamicCodes} dynamic codes working with no time limit`,
-      `The Free plan adds {facts.freeDynamicCodes} dynamic codes, {facts.freeHostedPages} hosted pages and ${free.aiArtPerMonth} AI art images a month, with no trial.`,
+      `The Free plan adds {facts.freeDynamicCodes} dynamic codes, {facts.freeHostedPages} hosted pages and {facts.freeAiArtPerMonth} AI art images a month, with no trial.`,
       `Pro (${usd("pro", "month")}/mo or ${usd("pro", "year")}/yr) makes codes and pages unlimited`,
       `Business (${usd("business", "month")}/mo or ${usd("business", "year")}/yr) adds unlimited team members and white-label pages`,
-      `${free.aiArtPerMonth} images a month on Free and ${pro.aiArtPerMonth} on Pro, from {facts.aiArtStyles} style presets`,
+      "{facts.freeAiArtPerMonth} images a month on Free and {facts.proAiArtPerMonth} on Pro, from {facts.aiArtStyles} style presets",
       "keeps {facts.freeScanHistoryYears} year of scan history on Free and all of it on Pro and Business",
-      `(${perDay(free.apiRequestsPerDay)} requests a day on Free, ${perDay(pro.apiRequestsPerDay)} on Pro)`,
+      "({facts.freeApiRequestsPerDay} requests a day on Free, {facts.proApiRequestsPerDay} on Pro)",
     ]) {
       expect(text).toContain(phrase);
     }
