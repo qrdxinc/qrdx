@@ -13580,7 +13580,7 @@
     "status": "machine"
   },
   "editor.controlSections.framePicker.saved": {
-    "source": "b5c120b316c2",
+    "source": "aa69cfa701a6",
     "status": "machine"
   },
   "editor.controlSections.framePicker.results": {
@@ -16088,7 +16088,7 @@
     "status": "machine"
   },
   "community.createBundle.itemsYouSaveInThe": {
-    "source": "eb9ba874f92b",
+    "source": "750a193fb852",
     "status": "machine"
   },
   "community.createBundle.itemsLengthPicked": {
@@ -16144,7 +16144,7 @@
     "status": "machine"
   },
   "community.createBundle.noSavedMany": {
-    "source": "41c176d1d47f",
+    "source": "e4fe7a95dc2c",
     "status": "machine"
   },
   "community.createBundle.none": {
@@ -16236,11 +16236,11 @@
     "status": "machine"
   },
   "community.itemActions.removeFromSaved": {
-    "source": "4115ec23ac38",
+    "source": "b4836106f489",
     "status": "machine"
   },
   "community.itemActions.save": {
-    "source": "1509f561f241",
+    "source": "1bac4007880b",
     "status": "machine"
   },
   "community.itemActions.unlike": {
@@ -16260,7 +16260,7 @@
     "status": "machine"
   },
   "community.itemActions.saved": {
-    "source": "b5c120b316c2",
+    "source": "aa69cfa701a6",
     "status": "machine"
   },
   "community.itemActions.open": {
@@ -16276,15 +16276,15 @@
     "status": "machine"
   },
   "community.itemActions.savedItsInTheEditors": {
-    "source": "1cdeb7714173",
+    "source": "35389d4d83d7",
     "status": "machine"
   },
   "community.itemActions.saved2": {
-    "source": "fca046ccd586",
+    "source": "9ef1eb7b0b2f",
     "status": "machine"
   },
   "community.itemActions.removedFromSaved": {
-    "source": "ad211b77cf43",
+    "source": "ff5893322216",
     "status": "machine"
   },
   "community.itemActions.copiedToWhereAsName": {
@@ -16303,8 +16303,20 @@
     "source": "30a64216eaea",
     "status": "machine"
   },
-  "community.itemCard.saves": {
-    "source": "989716267f5c",
+  "community.itemCard.like": {
+    "source": "64f915cb8bfc",
+    "status": "machine"
+  },
+  "community.itemCard.unlike": {
+    "source": "eaa881c359cf",
+    "status": "machine"
+  },
+  "community.itemCard.bookmark": {
+    "source": "1bac4007880b",
+    "status": "machine"
+  },
+  "community.itemCard.removeBookmark": {
+    "source": "b4836106f489",
     "status": "machine"
   },
   "community.itemCard.typeFrame": {
@@ -16392,7 +16404,7 @@
     "status": "machine"
   },
   "community.makerCard.itemsAndSaves": {
-    "source": "96e13059b4e8",
+    "source": "75c20342d818",
     "status": "machine"
   },
   "community.more.load": {
@@ -16412,7 +16424,7 @@
     "status": "machine"
   },
   "community.newBundle.signInToMakeA": {
-    "source": "5ea430dba6d7",
+    "source": "3e8571d405a6",
     "status": "machine"
   },
   "community.newBundle.signIn": {
@@ -30256,7 +30268,7 @@
     "status": "machine"
   },
   "auth.reasons.communityAction": {
-    "source": "58bc80e06ed1",
+    "source": "d2c2d41edceb",
     "status": "machine"
   },
   "auth.reasons.saveBarcode": {

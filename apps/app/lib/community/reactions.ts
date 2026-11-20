@@ -6,13 +6,14 @@ import {
   communitySave,
   database as db,
 } from "@repo/database";
-import { and, eq, gt, sql } from "drizzle-orm";
+import { and, eq, gt, inArray, sql } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 import { CheckError } from "./messages";
-import { COMMUNITY_TAG, guarded } from "./store";
+import { COMMUNITY_TAG, guarded, guardedRead } from "./store";
 
-// Likes (public appreciation) and saves (private bookmarks) on items. Each
-// toggle checks the item is published, flips the row and moves the count.
+// Likes (public appreciation) and bookmarks on items. Each toggle checks the
+// item is published, flips the row and moves the count. Bookmarks are stored
+// as saves (community_save, saveCount); people only ever see "bookmark".
 
 export class ItemNotFoundError extends CheckError {
   constructor() {
@@ -82,9 +83,17 @@ export async function toggleItemLike(
 export async function toggleItemSave(
   userId: string,
   itemId: string,
-): Promise<{ saved: boolean }> {
+): Promise<{ saved: boolean; saveCount: number }> {
   return guarded(async () => {
     await publishedItem(itemId);
+    const count = async () => {
+      const [row] = await db
+        .select({ saveCount: communityItem.saveCount })
+        .from(communityItem)
+        .where(eq(communityItem.id, itemId))
+        .limit(1);
+      return Number(row?.saveCount ?? 0);
+    };
     const removed = await db
       .delete(communitySave)
       .where(
@@ -99,7 +108,7 @@ export async function toggleItemSave(
           and(eq(communityItem.id, itemId), gt(communityItem.saveCount, 0)),
         );
       revalidateTag(COMMUNITY_TAG, "max");
-      return { saved: false };
+      return { saved: false, saveCount: await count() };
     }
     const added = await db
       .insert(communitySave)
@@ -113,6 +122,73 @@ export async function toggleItemSave(
         .where(eq(communityItem.id, itemId));
     }
     revalidateTag(COMMUNITY_TAG, "max");
-    return { saved: true };
+    return { saved: true, saveCount: await count() };
   });
+}
+
+/** Most items one lookup answers for (a gallery page's cards and more). */
+export const REACTIONS_LOOKUP_MAX = 120;
+
+export interface ItemReactions {
+  liked: string[];
+  bookmarked: string[];
+  /**
+   * The items' counts as they are now: the cards' own come from a list
+   * cached for a minute, which can miss the account's latest like
+   */
+  counts: Record<string, { likes: number; bookmarks: number }>;
+}
+
+/**
+ * Which of these items an account liked and bookmarked, with their counts,
+ * for the cards' buttons (the cards themselves are cached for everyone).
+ */
+export async function itemReactionsOf(
+  userId: string,
+  itemIds: string[],
+): Promise<ItemReactions> {
+  const ids = [...new Set(itemIds)].slice(0, REACTIONS_LOOKUP_MAX);
+  const none: ItemReactions = { liked: [], bookmarked: [], counts: {} };
+  if (ids.length === 0) return none;
+  // A read: without the community tables, nothing is liked or bookmarked
+  return guardedRead(async () => {
+    const [likes, saves, items] = await Promise.all([
+      db
+        .select({ itemId: communityLike.itemId })
+        .from(communityLike)
+        .where(
+          and(
+            eq(communityLike.userId, userId),
+            inArray(communityLike.itemId, ids),
+          ),
+        ),
+      db
+        .select({ itemId: communitySave.itemId })
+        .from(communitySave)
+        .where(
+          and(
+            eq(communitySave.userId, userId),
+            inArray(communitySave.itemId, ids),
+          ),
+        ),
+      db
+        .select({
+          id: communityItem.id,
+          likeCount: communityItem.likeCount,
+          saveCount: communityItem.saveCount,
+        })
+        .from(communityItem)
+        .where(inArray(communityItem.id, ids)),
+    ]);
+    return {
+      liked: likes.map((row) => row.itemId),
+      bookmarked: saves.map((row) => row.itemId),
+      counts: Object.fromEntries(
+        items.map((row) => [
+          row.id,
+          { likes: Number(row.likeCount), bookmarks: Number(row.saveCount) },
+        ]),
+      ),
+    };
+  }, none);
 }

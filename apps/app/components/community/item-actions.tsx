@@ -40,6 +40,7 @@ import { useSessionGuard } from "@/lib/hooks/use-gaurds";
 import { playgroundHref } from "@/lib/playground-links";
 import { soundEvent } from "@/lib/sound/emit";
 import { useQREditorStore } from "@/store/editor-store";
+import { rememberReaction } from "./card-reactions";
 
 /**
  * Puts an item into the editor: a frame joins your design, a theme replaces
@@ -62,7 +63,7 @@ export function useApplyToEditor() {
   };
 }
 
-/** Use in editor (primary), save, like and copy to workspace. */
+/** Use in editor (primary), bookmark, like and copy to workspace. */
 export function ItemActions({
   item,
   layout = "panel",
@@ -127,6 +128,11 @@ export function ItemActions({
     }
     setLiked(result.data.liked);
     setLikes(result.data.likeCount);
+    // Its cards show it too when the visitor goes back to them
+    rememberReaction(item.id, {
+      liked: result.data.liked,
+      likes: result.data.likeCount,
+    });
     router.refresh();
   };
 
@@ -140,6 +146,10 @@ export function ItemActions({
       return;
     }
     setSaved(result.data.saved);
+    rememberReaction(item.id, {
+      bookmarked: result.data.saved,
+      bookmarks: result.data.saveCount,
+    });
     toast.success(
       result.data.saved
         ? item.type === "frame"

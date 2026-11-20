@@ -136,18 +136,18 @@ export function pickSections(
 export const TOP_TITLES: Record<RankPeriod, { title: string; sub: string }> = {
   day: {
     title: "Top today",
-    sub: "Saved most in the last 24 hours",
+    sub: "Bookmarked most in the last 24 hours",
   },
   week: {
     title: "Top this week",
-    sub: "Saved most in the last 7 days",
+    sub: "Bookmarked most in the last 7 days",
   },
   month: {
     title: "Top this month",
-    sub: "Saved most in the last 30 days",
+    sub: "Bookmarked most in the last 30 days",
   },
   all: {
-    title: "Most saved",
-    sub: "Saved most since the community opened",
+    title: "Most bookmarked",
+    sub: "Bookmarked most since the community opened",
   },
 };

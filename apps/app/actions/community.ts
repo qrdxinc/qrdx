@@ -51,11 +51,15 @@ import {
 import { savedFrames } from "@/lib/community/queries";
 import {
   ItemNotFoundError,
+  type ItemReactions,
+  itemReactionsOf,
+  REACTIONS_LOOKUP_MAX,
   toggleItemLike,
   toggleItemSave,
 } from "@/lib/community/reactions";
 import { CommunityUnavailableError } from "@/lib/community/store";
 import { type CommunityItemType, itemPath } from "@/lib/community/types";
+import { viewerId } from "@/lib/community/viewer";
 import { HttpError } from "@/lib/error-response";
 import { getTemplate } from "@/lib/landing/templates";
 import { type ActiveScope, getActiveScope } from "@/lib/scope";
@@ -538,10 +542,13 @@ export async function toggleCommunityLike(
   }
 }
 
-/** Saves or unsaves an item: only the community pages (English) call it. */
+/**
+ * Bookmarks an item or removes the bookmark (stored as a save): only the
+ * community pages (English) call it.
+ */
 export async function toggleCommunitySave(
   itemId: string,
-): Promise<CommunityResult<{ saved: boolean }>> {
+): Promise<CommunityResult<{ saved: boolean; saveCount: number }>> {
   const text = ENGLISH_COMMUNITY_TEXT;
   try {
     const userId = await getCurrentUserId();
@@ -552,6 +559,28 @@ export async function toggleCommunitySave(
     return { ok: true, data: await toggleItemSave(userId, id) };
   } catch (error) {
     return failure(error, "toggleCommunitySave", text);
+  }
+}
+
+const reactionIdsSchema = z.array(idSchema).max(REACTIONS_LOOKUP_MAX);
+
+/**
+ * Which of these items the visitor liked and bookmarked, with their counts
+ * now, for the cards' buttons. Signed out (or anything off), nothing is.
+ */
+export async function communityReactions(
+  itemIds: string[],
+): Promise<ItemReactions> {
+  const none: ItemReactions = { liked: [], bookmarked: [], counts: {} };
+  const parsed = reactionIdsSchema.safeParse(itemIds);
+  if (!parsed.success) return none;
+  const userId = await viewerId();
+  if (!userId) return none;
+  try {
+    return await itemReactionsOf(userId, parsed.data);
+  } catch (error) {
+    logError(error as Error, { action: "communityReactions" });
+    return none;
   }
 }
 
