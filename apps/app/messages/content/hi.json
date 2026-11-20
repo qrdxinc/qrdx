@@ -22715,9 +22715,9 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
-  "30968012d164": {
-    "source": "Older systems that only take BMP · 24-bit, a transparent background comes out white",
-    "text": "पुराने सिस्टम जो सिर्फ़ BMP लेते हैं · 24-bit, पारदर्शी बैकग्राउंड सफ़ेद आता है",
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "पुराने सिस्टम जो सिर्फ़ BMP लेते हैं · बिना कम्प्रेशन वाला 24-bit",
     "status": "machine",
     "context": "barcodes.files.bmp.hint"
   },
@@ -30850,11 +30850,5 @@
     "text": "QRdx आपका प्रॉम्प्ट, रेफ़रेंस इमेज या बनाई गई इमेज सेव नहीं करता; वह सिर्फ़ आपके क्रेडिट गिनता है। आर्टवर्क बनाने के लिए प्रॉम्प्ट, QR कोड इमेज और कोई भी रेफ़रेंस इमेज Vercel AI Gateway के ज़रिए OpenAI के GPT Image 2 को भेजी जाती हैं, और नतीजा सीधे आपके ब्राउज़र में लौट आता है, इसलिए जो इमेज रखनी हों उन्हें डाउनलोड कर लें।",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
-  },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "प्रिंट के लिए SVG, PDF या EPS: ये वेक्टर हैं, इसलिए पट्टियाँ किसी भी साइज़ पर तीखी रहती हैं। SVG और EPS, Illustrator, InDesign और Affinity जैसे डिज़ाइन टूल में खुलते हैं, और PDF कहीं भी खुल जाता है। PNG स्क्रीन, डॉक्यूमेंट और ऑनलाइन दुकानों के लिए है, और JPG उन जगहों के लिए जहाँ PNG नहीं चलता; WebP और AVIF वेबसाइट के लिए छोटी फ़ाइलें बनाते हैं। बड़ी तस्वीर चाहिए तो इमेज साइज़ बढ़ाएँ।",
-    "status": "machine",
-    "context": "barcodes.faqs.4.answer"
   }
 }

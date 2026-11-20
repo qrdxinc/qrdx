@@ -22715,9 +22715,9 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
-  "30968012d164": {
-    "source": "Older systems that only take BMP · 24-bit, a transparent background comes out white",
-    "text": "Sistem lama yang hanya menerima BMP · 24-bit, latar belakang transparan akan menjadi putih",
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "Sistem lama yang hanya menerima BMP · 24-bit tanpa kompresi",
     "status": "machine",
     "context": "barcodes.files.bmp.hint"
   },
@@ -30850,11 +30850,5 @@
     "text": "QRdx tidak menyimpan prompt, gambar referensi, maupun gambar yang dihasilkan; QRdx hanya menghitung kredit Anda. Prompt, gambar kode QR, dan gambar referensi apa pun dikirim melalui Vercel AI Gateway ke GPT Image 2 dari OpenAI untuk membuat karya seninya, dan hasilnya langsung dikirim kembali ke browser Anda, jadi unduh gambar yang ingin Anda simpan.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
-  },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "SVG, PDF, atau EPS untuk cetak: ketiganya berbasis vektor, sehingga batang tetap tajam di ukuran berapa pun. SVG dan EPS dapat dibuka di alat desain seperti Illustrator, InDesign, dan Affinity, sedangkan PDF dapat dibuka di mana saja. PNG untuk layar, dokumen, dan toko online, dan JPG untuk tempat yang tidak menerima PNG; WebP dan AVIF menghasilkan file lebih kecil untuk situs web. Perbesar ukuran gambar untuk gambar yang lebih besar.",
-    "status": "machine",
-    "context": "barcodes.faqs.4.answer"
   }
 }

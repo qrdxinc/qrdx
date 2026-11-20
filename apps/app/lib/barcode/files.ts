@@ -59,7 +59,9 @@ export const BARCODE_FILES: Record<BarcodeFileType, BarcodeFileInfo> = {
     mime: "image/bmp",
     vector: false,
     serverOnly: false,
-    hint: "Older systems that only take BMP · 24-bit, a transparent background comes out white",
+    // Barcode backgrounds are always a solid color, so unlike QR codes there's
+    // no transparency for the 24-bit file to lose.
+    hint: "Older systems that only take BMP · uncompressed 24-bit",
   },
   svg: {
     label: "SVG",

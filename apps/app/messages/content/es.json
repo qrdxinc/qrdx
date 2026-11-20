@@ -22715,9 +22715,9 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
-  "30968012d164": {
-    "source": "Older systems that only take BMP · 24-bit, a transparent background comes out white",
-    "text": "Sistemas antiguos que solo aceptan BMP · 24 bits, un fondo transparente se convierte en blanco",
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "Sistemas antiguos que solo aceptan BMP · 24 bits sin comprimir",
     "status": "machine",
     "context": "barcodes.files.bmp.hint"
   },
@@ -30850,11 +30850,5 @@
     "text": "QRdx no guarda tu prompt, tu imagen de referencia ni las imágenes generadas; solo cuenta tus créditos. El prompt, la imagen del código QR y cualquier imagen de referencia se envían a través de Vercel AI Gateway a GPT Image 2 de OpenAI para crear la ilustración, y el resultado vuelve directamente a tu navegador, así que descarga las que quieras conservar.",
     "status": "machine",
     "context": "aiArt.faqs.10.answer"
-  },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "SVG, PDF o EPS para imprimir: son vectoriales, así que las barras se mantienen nítidas a cualquier tamaño. SVG y EPS se abren en herramientas de diseño como Illustrator, InDesign y Affinity, y el PDF se abre en cualquier sitio. PNG es para pantallas, documentos y tiendas en línea, y JPG para lugares que no aceptan PNG; WebP y AVIF generan archivos más pequeños para sitios web. Aumenta el tamaño de la imagen para obtener imágenes más grandes.",
-    "status": "machine",
-    "context": "barcodes.faqs.4.answer"
   }
 }
