@@ -4918,7 +4918,7 @@
         "comingUp": "Coming up",
         "classic": "Classic",
         "shapedCodes": "Shaped codes",
-        "saved": "Saved",
+        "saved": "Bookmarked",
         "results": "Results"
       },
       "frameShapes": {
@@ -5760,7 +5760,7 @@
       "nameIsLiveInThe": "{name} is live in the community.",
       "viewIt": "View it",
       "whatToMake": "What to make",
-      "itemsYouSaveInThe": "Items you save in the community or publish yourself show up here. <link>Browse the community</link>",
+      "itemsYouSaveInThe": "Items you bookmark in the community or publish yourself show up here. <link>Browse the community</link>",
       "itemsLengthPicked": "Items<span>{length, number} picked</span>",
       "optional": "(optional)",
       "name": "Name",
@@ -5774,7 +5774,7 @@
       "groupFramesThemesAndPage": "Group frames, themes and page templates people can browse together, for example everything for a café. Pick 2 or more.",
       "aPageTemplateAndThe": "A page template and the look it goes with. Using a kit copies the page as a draft and the look as a saved theme.",
       "yours": "yours",
-      "noSavedMany": "No saved {many}",
+      "noSavedMany": "No bookmarked {many}",
       "none": "None",
       "pickOne": "Pick one",
       "publishing": "Publishing",
@@ -5805,26 +5805,29 @@
       "removeFromTheCommunity": "Remove from the community?",
       "itLeavesTheCommunityAt": "It leaves the community at once. People who already used it keep their copies: it was shared under CC0.",
       "cancel": "Cancel",
-      "removeFromSaved": "Remove from saved",
-      "save": "Save",
+      "removeFromSaved": "Remove bookmark",
+      "save": "Bookmark",
       "unlike": "Unlike",
       "like": "Like",
       "useKit": "Use kit",
       "useTemplate": "Use template",
-      "saved": "Saved",
+      "saved": "Bookmarked",
       "open": "Open",
       "nameIsInYourPages": "\"{name}\" is in your pages as a draft, and its look in your themes.",
       "nameIsInYourPages2": "\"{name}\" is in your pages as a draft.",
-      "savedItsInTheEditors": "Saved. It's in the editor's frame picker.",
-      "saved2": "Saved.",
-      "removedFromSaved": "Removed from saved.",
+      "savedItsInTheEditors": "Bookmarked. It's in the editor's frame picker.",
+      "saved2": "Bookmarked.",
+      "removedFromSaved": "Bookmark removed.",
       "copiedToWhereAsName": "Copied to {where} as \"{name}\"",
       "nameIsNoLongerIn": "\"{name}\" is no longer in the community."
     },
     "itemCard": {
       "empty": "Empty",
       "viewAll": "View all",
-      "saves": "Saves",
+      "like": "Like",
+      "unlike": "Unlike",
+      "bookmark": "Bookmark",
+      "removeBookmark": "Remove bookmark",
       "typeFrame": "Frame",
       "typeTheme": "Theme",
       "typePage": "Page",
@@ -5852,7 +5855,7 @@
       "failed": "The next page didn't load."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {# item} other {# items}} · {saves, plural, one {# save} other {# saves}}"
+      "itemsAndSaves": "{items, plural, one {# item} other {# items}} · {saves, plural, one {# bookmark} other {# bookmarks}}"
     },
     "more": {
       "load": "Load more",
@@ -5863,7 +5866,7 @@
       "licence": "Licence:"
     },
     "newBundle": {
-      "signInToMakeA": "Sign in to make a collection or kit from items you saved.",
+      "signInToMakeA": "Sign in to make a collection or kit from items you bookmarked.",
       "signIn": "Sign in"
     },
     "publishDesignDialog": {
@@ -10014,7 +10017,7 @@
       "aiChat": "The AI designer needs a free account. Free accounts get {count, number} requests in total.",
       "uploadFrame": "Uploading your own frames needs a free account.",
       "publishFrame": "Sharing a frame with the community needs a free account.",
-      "communityAction": "Liking, saving, copying and publishing community designs needs a free account.",
+      "communityAction": "Liking, bookmarking, copying and publishing community designs needs a free account.",
       "saveBarcode": "Saved barcodes live in your account, ready to download again.",
       "bulkOverLimit": "Files of up to {limit, number} rows need no account. A free account makes up to {max, number} per file, and your file stays loaded.",
       "keepDesigns": "Keep your designs in your account, on every device.",

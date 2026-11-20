@@ -4519,7 +4519,7 @@
         "comingUp": "Próximamente",
         "classic": "Clásicos",
         "shapedCodes": "Códigos con forma",
-        "saved": "Guardados",
+        "saved": "En marcadores",
         "results": "Resultados"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name} ya está disponible en la comunidad.",
       "viewIt": "Verlo",
       "whatToMake": "Qué crear",
-      "itemsYouSaveInThe": "Los elementos que guardes de la comunidad o publiques tú aparecerán aquí. <link>Explorar la comunidad</link>",
+      "itemsYouSaveInThe": "Los elementos que marques en la comunidad o publiques tú mismo aparecen aquí. <link>Explorar la comunidad</link>",
       "itemsLengthPicked": "Elementos<span>{length, number} elegidos</span>",
       "optional": "(opcional)",
       "name": "Nombre",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "Agrupa marcos, temas y plantillas de página para que se puedan explorar juntos, por ejemplo todo para una cafetería. Elige 2 o más.",
       "aPageTemplateAndThe": "Una plantilla de página y el estilo que la acompaña. Al usar un kit, la página se copia como borrador y el estilo como tema guardado.",
       "yours": "tuyos",
-      "noSavedMany": "Sin {many} guardados",
+      "noSavedMany": "Sin {many} en marcadores",
       "none": "Ninguno",
       "pickOne": "Elige uno",
       "publishing": "Publicando",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "¿Quitar de la comunidad?",
       "itLeavesTheCommunityAt": "Sale de la comunidad al instante. Quienes ya lo usaron conservan sus copias: se compartió bajo CC0.",
       "cancel": "Cancelar",
-      "removeFromSaved": "Quitar de guardados",
-      "save": "Guardar",
+      "removeFromSaved": "Quitar marcador",
+      "save": "Marcador",
       "unlike": "Quitar me gusta",
       "like": "Me gusta",
       "useKit": "Usar kit",
       "useTemplate": "Usar plantilla",
-      "saved": "Guardado",
+      "saved": "En marcadores",
       "open": "Abrir",
       "nameIsInYourPages": "\"{name}\" está en tus páginas como borrador y su aspecto en tus temas.",
       "nameIsInYourPages2": "\"{name}\" está en tus páginas como borrador.",
-      "savedItsInTheEditors": "Guardado. Está en el selector de marcos del editor.",
-      "saved2": "Guardado.",
-      "removedFromSaved": "Quitado de guardados.",
+      "savedItsInTheEditors": "Añadido a marcadores. Está en el selector de marcos del editor.",
+      "saved2": "Añadido a marcadores.",
+      "removedFromSaved": "Marcador quitado.",
       "copiedToWhereAsName": "Copiado en {where} como \"{name}\"",
       "nameIsNoLongerIn": "\"{name}\" ya no está en la comunidad."
     },
     "itemCard": {
       "empty": "Vacío",
       "viewAll": "Ver todo",
-      "saves": "Guardados",
+      "like": "Me gusta",
+      "unlike": "Ya no me gusta",
+      "bookmark": "Marcador",
+      "removeBookmark": "Quitar marcador",
       "typeFrame": "Marco",
       "typeTheme": "Tema",
       "typePage": "Página",
@@ -5453,7 +5456,7 @@
       "failed": "No se cargó la página siguiente."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {# elemento} other {# elementos}} · {saves, plural, one {# guardado} other {# guardados}}"
+      "itemsAndSaves": "{items, plural, one {# elemento} other {# elementos}} · {saves, plural, one {# marcador} other {# marcadores}}"
     },
     "more": {
       "load": "Cargar más",
@@ -5464,7 +5467,7 @@
       "licence": "Licencia:"
     },
     "newBundle": {
-      "signInToMakeA": "Inicia sesión para crear una colección o un kit con los elementos que guardaste.",
+      "signInToMakeA": "Inicia sesión para crear una colección o un kit con los elementos que has añadido a marcadores.",
       "signIn": "Iniciar sesión"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "El diseñador con IA necesita una cuenta gratuita. Las cuentas gratuitas tienen {count, number} solicitudes en total.",
       "uploadFrame": "Subir tus propios marcos requiere una cuenta gratuita.",
       "publishFrame": "Compartir un marco con la comunidad requiere una cuenta gratuita.",
-      "communityAction": "Dar me gusta, guardar, copiar y publicar diseños de la comunidad requiere una cuenta gratuita.",
+      "communityAction": "Dar me gusta, guardar como marcador, copiar y publicar diseños de la comunidad requiere una cuenta gratuita.",
       "saveBarcode": "Los códigos de barras guardados viven en tu cuenta, listos para volver a descargarlos.",
       "bulkOverLimit": "Los archivos de hasta {limit, number} filas no necesitan cuenta. Una cuenta gratuita permite hasta {max, number} por archivo, y tu archivo sigue cargado.",
       "keepDesigns": "Guarda tus diseños en tu cuenta, en todos tus dispositivos.",

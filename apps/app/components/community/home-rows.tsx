@@ -50,7 +50,7 @@ export function homeRow(id: HomeSectionId, home: CommunityHome): HomeRow {
       const cards = home.trending.map((item) => item.card);
       return {
         title: "Trending this week",
-        sub: "Saved, used and remixed most in the last 7 days",
+        sub: "Bookmarked, used and remixed most in the last 7 days",
         href: allHref({ sort: "trending", period: "week" }),
         count: cards.length,
         kind: "ranked",
@@ -113,7 +113,7 @@ export function homeRow(id: HomeSectionId, home: CommunityHome): HomeRow {
     case "makers":
       return {
         title: "Top makers",
-        sub: "Members whose work gets saved most",
+        sub: "Members whose work gets bookmarked most",
         count: home.makers.length,
         kind: "makers",
         cards: () => <MakerRowCards label="Top makers" makers={home.makers} />,

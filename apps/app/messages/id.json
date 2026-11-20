@@ -4519,7 +4519,7 @@
         "comingUp": "Segera hadir",
         "classic": "Klasik",
         "shapedCodes": "Kode berbentuk",
-        "saved": "Tersimpan",
+        "saved": "Di-bookmark",
         "results": "Hasil"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name} kini tersedia di komunitas.",
       "viewIt": "Lihat",
       "whatToMake": "Apa yang dibuat",
-      "itemsYouSaveInThe": "Item yang Anda simpan dari komunitas atau Anda publikasikan sendiri akan muncul di sini. <link>Jelajahi komunitas</link>",
+      "itemsYouSaveInThe": "Item yang Anda bookmark di komunitas atau yang Anda publikasikan sendiri akan muncul di sini. <link>Jelajahi komunitas</link>",
       "itemsLengthPicked": "Item<span>{length, number} dipilih</span>",
       "optional": "(opsional)",
       "name": "Nama",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "Kelompokkan bingkai, tema, dan templat halaman yang dapat dijelajahi bersama, misalnya semua kebutuhan untuk kafe. Pilih 2 atau lebih.",
       "aPageTemplateAndThe": "Satu templat halaman beserta tampilan yang cocok dengannya. Menggunakan kit akan menyalin halaman sebagai draf dan tampilannya sebagai tema tersimpan.",
       "yours": "milik Anda",
-      "noSavedMany": "Belum ada {many} tersimpan",
+      "noSavedMany": "Belum ada {many} di-bookmark",
       "none": "Tidak ada",
       "pickOne": "Pilih satu",
       "publishing": "Memublikasikan",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "Hapus dari komunitas?",
       "itLeavesTheCommunityAt": "Item ini langsung keluar dari komunitas. Orang yang sudah menggunakannya tetap menyimpan salinannya: item ini dibagikan di bawah CC0.",
       "cancel": "Batal",
-      "removeFromSaved": "Hapus dari tersimpan",
-      "save": "Simpan",
+      "removeFromSaved": "Hapus bookmark",
+      "save": "Bookmark",
       "unlike": "Batal suka",
       "like": "Suka",
       "useKit": "Gunakan kit",
       "useTemplate": "Gunakan templat",
-      "saved": "Tersimpan",
+      "saved": "Di-bookmark",
       "open": "Buka",
       "nameIsInYourPages": "\"{name}\" ada di halaman Anda sebagai draf, dan tampilannya ada di tema Anda.",
       "nameIsInYourPages2": "\"{name}\" ada di halaman Anda sebagai draf.",
-      "savedItsInTheEditors": "Tersimpan. Ada di pemilih bingkai pada editor.",
-      "saved2": "Tersimpan.",
-      "removedFromSaved": "Dihapus dari tersimpan.",
+      "savedItsInTheEditors": "Di-bookmark. Item ini ada di pemilih bingkai di editor.",
+      "saved2": "Di-bookmark.",
+      "removedFromSaved": "Bookmark dihapus.",
       "copiedToWhereAsName": "Disalin ke {where} sebagai \"{name}\"",
       "nameIsNoLongerIn": "\"{name}\" tidak lagi ada di komunitas."
     },
     "itemCard": {
       "empty": "Kosong",
       "viewAll": "Lihat semua",
-      "saves": "Disimpan",
+      "like": "Suka",
+      "unlike": "Batal suka",
+      "bookmark": "Bookmark",
+      "removeBookmark": "Hapus bookmark",
       "typeFrame": "Bingkai",
       "typeTheme": "Tema",
       "typePage": "Halaman",
@@ -5453,7 +5456,7 @@
       "failed": "Halaman berikutnya gagal dimuat."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, other {# item}} · {saves, plural, other {# disimpan}}"
+      "itemsAndSaves": "{items, plural, other {# item}} · {saves, plural, other {# bookmark}}"
     },
     "more": {
       "load": "Muat lebih banyak",
@@ -5464,7 +5467,7 @@
       "licence": "Lisensi:"
     },
     "newBundle": {
-      "signInToMakeA": "Masuk untuk membuat koleksi atau kit dari item yang Anda simpan.",
+      "signInToMakeA": "Masuk untuk membuat koleksi atau kit dari item yang Anda bookmark.",
       "signIn": "Masuk"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "Desainer AI memerlukan akun gratis. Akun gratis mendapat total {count, number} permintaan.",
       "uploadFrame": "Mengunggah bingkai Anda sendiri memerlukan akun gratis.",
       "publishFrame": "Membagikan bingkai ke komunitas memerlukan akun gratis.",
-      "communityAction": "Menyukai, menyimpan, menyalin, dan memublikasikan desain komunitas memerlukan akun gratis.",
+      "communityAction": "Menyukai, memberi bookmark, menyalin, dan memublikasikan desain komunitas memerlukan akun gratis.",
       "saveBarcode": "Barcode yang disimpan tersimpan di akun Anda, siap diunduh lagi.",
       "bulkOverLimit": "File hingga {limit, number} baris tidak memerlukan akun. Akun gratis dapat membuat hingga {max, number} per file, dan file Anda tetap dimuat.",
       "keepDesigns": "Simpan desain Anda di akun Anda, di setiap perangkat.",
