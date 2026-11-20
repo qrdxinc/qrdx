@@ -3,6 +3,7 @@
 // (qrdx scan-risk) against the style a change would make.
 import { getStylePairRisk } from "qrdx";
 import type { QRStyle } from "@/types/theme";
+import { haloBlocked, haloRisk } from "./halo-rules";
 
 /** ENGINE's known-weak style pairs (qrdx scan-risk), as a short reason. */
 export function pairRisk(
@@ -15,7 +16,10 @@ export function pairRisk(
     cornerEyePattern: next.cornerEyePattern,
     cornerEyeDotPattern: next.cornerEyeDotPattern,
   });
-  return risk ? `${risk.message}. ${risk.fix}.` : null;
+  if (risk) return `${risk.message}. ${risk.fix}.`;
+  // A halo that's on can't be drawn with this shape (qrdx getHaloRisk)
+  const halo = haloBlocked(next) ? haloRisk(next) : null;
+  return halo ? `${halo.message}. ${halo.fix}.` : null;
 }
 
 /**
@@ -32,5 +36,5 @@ export function pairBlocked(
     cornerEyePattern: next.cornerEyePattern,
     cornerEyeDotPattern: next.cornerEyeDotPattern,
   })?.kind;
-  return kind === "body-eye" || kind === "dot-eye";
+  return kind === "body-eye" || kind === "dot-eye" || haloBlocked(next);
 }

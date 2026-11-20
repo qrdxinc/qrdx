@@ -4,6 +4,7 @@
 // scan score and editors share: each option's defaults and caps live here,
 // so a value outside its range draws as the nearest one that scans.
 import type {
+  BodyPattern,
   CornerEyeDotPattern,
   CornerEyePattern,
   EyePosition,
@@ -28,9 +29,16 @@ import {
   SHADOW_OPACITY_MIN,
 } from "../types/constants";
 import qrcodegen from "./codegen";
-import { DEFAULT_LEVEL, DEFAULT_MARGIN, ERROR_LEVEL_MAP } from "./constants";
+import {
+  DEFAULT_BGCOLOR,
+  DEFAULT_LEVEL,
+  DEFAULT_MARGIN,
+  ERROR_LEVEL_MAP,
+} from "./constants";
 import { isShapedCode } from "./qr-shape";
 import { getStylePairRisk, type StylePairRisk } from "./scan-risk";
+import { getSolidColor } from "./utils/color";
+import { parseColor } from "./utils/parse-color";
 
 type EyeShapeProps = Pick<
   QRProps,
@@ -162,11 +170,74 @@ export function getBgRadiusLimit({
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
-/** A halo with its defaults filled in and its width in range; null without one. */
+/**
+ * Dot shapes a halo is never drawn with on a see-through background. The
+ * light modules of such a code show the page; on a mid-grey page
+ * (#9ca3af) the rim raises the local white level and these shapes, read
+ * without a halo, stop reading with one at 4 to 6 px per module (measured
+ * 20 Nov 2026 at every width from 0.1 to 0.5, three widths for some, every
+ * width for diamond, small-square and random-dots). On white and light
+ * pages no shape gets worse; on a dark page a see-through code doesn't
+ * read with or without a halo, so that is no rule of the halo's.
+ */
+export const HALO_SEE_THROUGH_BLOCKED_BODIES: readonly BodyPattern[] = [
+  "diamond",
+  "small-square",
+  "random-dots",
+  "pacman",
+  "liquid-horizontal",
+  "liquid-vertical",
+  "star",
+];
+
+/**
+ * True when nothing opaque sits under the modules: the background's solid
+ * color is see-through ("transparent", or any alpha below 1). A color the
+ * engine can't parse counts as opaque.
+ */
+export function isSeeThroughBackground(bgColor: QRProps["bgColor"]): boolean {
+  const parsed = parseColor(getSolidColor(bgColor, DEFAULT_BGCOLOR));
+  return parsed !== null && parsed.a < 1;
+}
+
+export interface HaloRisk {
+  message: string;
+  fix: string;
+}
+
+/**
+ * Why a halo isn't drawn on this code: a see-through background with one
+ * of HALO_SEE_THROUGH_BLOCKED_BODIES (see there). Null when the halo is
+ * fine, or when there is none.
+ */
+export function getHaloRisk(
+  props: Pick<QRProps, "halo" | "bodyPattern" | "bgColor">
+): HaloRisk | null {
+  const body = props.bodyPattern ?? "circle";
+  if (
+    !(
+      props.halo &&
+      HALO_SEE_THROUGH_BLOCKED_BODIES.includes(body) &&
+      isSeeThroughBackground(props.bgColor)
+    )
+  ) {
+    return null;
+  }
+  return {
+    message: `A halo on a see-through background makes ${body} dots unreadable on a grey surface, so it isn't drawn`,
+    fix: "Use an opaque background color, or another dot shape",
+  };
+}
+
+/**
+ * A halo with its defaults filled in and its width in range; null without
+ * one, or when `code` is given and the halo is refused on it (getHaloRisk).
+ */
 export function resolveHalo(
-  halo: QRHalo | undefined
+  halo: QRHalo | undefined,
+  code?: Pick<QRProps, "bodyPattern" | "bgColor">
 ): { color: string; width: number } | null {
-  if (!halo) {
+  if (!halo || (code && getHaloRisk({ halo, ...code }))) {
     return null;
   }
   const width = clamp(

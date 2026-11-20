@@ -54,7 +54,7 @@ export function HaloCode() {
 ```
 
 - A halo is a look, not a quiet zone: keep `margin`.
-- It needs a light surface behind the code. With a see-through background on a dark or mid-grey page, the light modules show the page and the thinnest dot shapes (`diamond`, `small-square`, `random-dots`) read worse at phone distances; give such a code a `bgColor`, or round its background on a backdrop. On white and on light pages every dot shape decodes at the widest halo.
+- It needs a light surface behind the code, and with a see-through background it is refused for the dot shapes it would make unreadable on a grey surface: `diamond`, `small-square`, `random-dots`, `pacman`, `liquid-horizontal`, `liquid-vertical` and `star` (`HALO_SEE_THROUGH_BLOCKED_BODIES`). On those the engine draws no halo and the scan score fails a `halo` check with the fix (`getHaloRisk`); the playground blocks the switch and those dot shapes with "Won't scan here". With an opaque `bgColor` every dot shape takes a halo, and on white and light pages every shape decodes at the widest one. A see-through code on a dark page doesn't read with or without a halo.
 - The scan score counts the halo's color as a background color, so a dark halo lowers the contrast check.
 - The rim is an SVG stroke; the PDF and EPS exporters draw it, and `QRCodeCanvas` ignores it.
 

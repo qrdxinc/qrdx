@@ -14,6 +14,9 @@ import {
   eyeShapeOf,
   getBgRadiusLimit,
   getEyeStyleRisk,
+  getHaloRisk,
+  HALO_SEE_THROUGH_BLOCKED_BODIES,
+  isSeeThroughBackground,
   resolveHalo,
   resolveShadow,
   weakestEyePattern,
@@ -481,6 +484,71 @@ describe("the strongest shadow and the widest halo decode with every dot shape",
   }
 });
 
+// The halo rule (looks.ts getHaloRisk): on a see-through background the
+// halo is refused for HALO_SEE_THROUGH_BLOCKED_BODIES, the shapes a halo
+// made unreadable on a mid-grey page in the decode matrix (every width
+// 0.1 to 0.5, pages white, #d1d5db, #9ca3af and #1f2937, 4/6/9 px per
+// module, 20 Nov 2026). The matrix below keeps the rule complete: every
+// other shape is no worse with a halo than without, at every width, on
+// every page tone where a see-through code reads at all.
+describe("a halo on a see-through background", () => {
+  const DIM_PAGE = "#9ca3af";
+  const WIDTHS = [0.1, 0.2, 0.3, 0.4, 0.5];
+  const seeThrough = (body: QRProps["bodyPattern"], halo?: QRProps["halo"]) =>
+    editorProps({
+      value: VALUE,
+      level: "M",
+      bodyPattern: body,
+      bgColor: "transparent",
+      ...(halo && { halo }),
+    });
+
+  it("tells a see-through background from an opaque one", () => {
+    expect(isSeeThroughBackground("transparent")).toBe(true);
+    expect(isSeeThroughBackground("#ffffff80")).toBe(true);
+    expect(isSeeThroughBackground("rgba(255,255,255,0)")).toBe(true);
+    expect(isSeeThroughBackground(undefined)).toBe(false);
+    expect(isSeeThroughBackground("#ffffff")).toBe(false);
+    expect(isSeeThroughBackground(gradient)).toBe(false);
+  });
+
+  it("refuses the halo for the blocked dot shapes only, and only see-through", () => {
+    for (const body of HALO_SEE_THROUGH_BLOCKED_BODIES) {
+      const props = seeThrough(body, { width: 0.3 });
+      expect(getHaloRisk(props)?.message, body).toContain(`${body} dots`);
+      expect(resolveHalo(props.halo, props), body).toBeNull();
+      // Drawn exactly as without a halo
+      expect(renderSvg(props), body).toBe(renderSvg(seeThrough(body)));
+      // An opaque background takes it
+      const opaque = { ...props, bgColor: "#ffffff" };
+      expect(getHaloRisk(opaque), body).toBeNull();
+      expect(renderSvg(opaque), body).toContain('data-qrdx-look="halo"');
+    }
+    expect(getHaloRisk(seeThrough("circle", {}))).toBeNull();
+    expect(getHaloRisk(seeThrough("diamond"))).toBeNull();
+    expect(renderSvg(seeThrough("rounded", {}))).toContain(
+      'data-qrdx-look="halo"'
+    );
+  });
+
+  for (const body of BODY_PATTERN) {
+    if (HALO_SEE_THROUGH_BLOCKED_BODIES.includes(body)) {
+      continue;
+    }
+    it(`${body} dots read no worse with any halo on a dim page`, () => {
+      const without = unreadable(seeThrough(body), DIM_PAGE);
+      for (const width of WIDTHS) {
+        const worse = unreadable(seeThrough(body, { width }), DIM_PAGE).filter(
+          (px) => !without.includes(px)
+        );
+        expect(worse, `width ${width}: px per module that got worse`).toEqual(
+          []
+        );
+      }
+    });
+  }
+});
+
 describe("SVG, print PDF and EPS draw them", () => {
   const props = () =>
     editorProps({
@@ -597,6 +665,30 @@ describe("the scan score accounts for them", () => {
     );
     expect(fine.ratio).toBeGreaterThan(7);
     expect(dark.ratio).toBeLessThan(2);
+  });
+
+  it("fails the halo check on a see-through background with a blocked dot shape", async () => {
+    const result = await getScanScore(
+      editorProps({
+        value: VALUE,
+        level: "M",
+        bodyPattern: "diamond",
+        bgColor: "transparent",
+        halo: {},
+      })
+    );
+    const check = result.checks.find((item) => item.id === "halo");
+    expect(check?.passed).toBe(false);
+    expect(check?.fix).toContain("opaque background");
+    const fine = await getScanScore(
+      editorProps({
+        value: VALUE,
+        level: "M",
+        bodyPattern: "diamond",
+        halo: {},
+      })
+    );
+    expect(fine.checks.find((item) => item.id === "halo")).toBeUndefined();
   });
 
   it("grades the strongest looks great", async () => {

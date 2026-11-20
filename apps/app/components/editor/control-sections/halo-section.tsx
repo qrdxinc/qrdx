@@ -9,7 +9,9 @@ import { HALO_COLOR_DEFAULT, HALO_WIDTH_MAX, HALO_WIDTH_MIN } from "qrdx/types";
 import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
 import type { QRStyle } from "@/types/theme";
+import { haloRisk } from "./halo-rules";
 import { NewLookTag } from "./new-look-tag";
+import { patternName } from "./pattern-controls";
 
 const percent = (share: number) => Math.round(share * 100);
 
@@ -29,7 +31,11 @@ interface HaloSectionProps {
  */
 export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
   const t = useTranslations("editor.controlSections.haloSection");
-  const halo = resolveHalo(style.halo);
+  const tiles = useTranslations("editor.controlSections.optionTiles");
+  // A see-through background with a dot shape the halo makes unreadable on
+  // a grey surface: the engine draws no halo there (qrdx getHaloRisk)
+  const blocked = haloRisk(style) !== null;
+  const halo = blocked ? null : resolveHalo(style.halo);
   const on = halo !== null;
 
   return (
@@ -37,7 +43,13 @@ export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
       badge={<NewLookTag id="halo" />}
       expanded={expanded}
       section="halo"
-      summary={on ? `${percent(halo.width)}%` : t("off")}
+      summary={
+        blocked
+          ? tiles("wontScanHere")
+          : on
+            ? `${percent(halo.width)}%`
+            : t("off")
+      }
       title={t("halo")}
     >
       <div className="flex items-center justify-between gap-3">
@@ -46,13 +58,25 @@ export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
         </Label>
         <Switch
           checked={on}
+          disabled={blocked}
           id="halo-on"
           onCheckedChange={(next) => onChange(next ? {} : undefined)}
         />
       </div>
-      <p className="text-muted-foreground text-xs text-pretty">
-        {t("aLightRimAround")}
-      </p>
+      {blocked ? (
+        <p className="text-xs text-pretty">
+          <span className="font-medium">{tiles("wontScanHere")}</span>{" "}
+          <span className="text-muted-foreground">
+            {t("seeThroughAHalo", {
+              dots: patternName(style.bodyPattern),
+            })}
+          </span>
+        </p>
+      ) : (
+        <p className="text-muted-foreground text-xs text-pretty">
+          {t("aLightRimAround")}
+        </p>
+      )}
       {on && (
         <>
           <div className="space-y-2.5">

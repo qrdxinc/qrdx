@@ -225,7 +225,7 @@ const haloSchema = z
   })
   .strict()
   .describe(
-    "A light rim around the dark modules and eyes, for a code on a picture; it needs a light surface behind the code",
+    "A light rim around the dark modules and eyes, for a code on a picture. With a see-through bgColor it isn't drawn with the diamond, small-square, random-dots, pacman, liquid-horizontal, liquid-vertical or star dot shapes (the scan score's halo check says so)",
   );
 
 /** A shadow: a see-through copy of the dark shapes, shifted. */

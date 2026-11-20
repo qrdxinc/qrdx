@@ -5095,9 +5095,10 @@
         "halo": "Halo",
         "off": "Off",
         "showAHalo": "Show a halo",
-        "aLightRimAround": "A light rim around every dot and eye, for a code placed on a picture. It needs a light surface behind the code: on a dark one, pick a background color instead.",
+        "aLightRimAround": "A light rim around every dot and eye, for a code placed on a picture. On a see-through background some dot shapes can't have one: the rim makes them unreadable on a grey surface.",
         "width": "Width",
-        "color": "Color"
+        "color": "Color",
+        "seeThroughAHalo": "With a see-through background, a halo makes {dots} dots unreadable on a grey surface. Pick an opaque background color or another dot shape."
       },
       "shadowSection": {
         "shadow": "Shadow",
