@@ -327,6 +327,28 @@ export const scanAnalyticsResponseSchema = z.object({
   data: scanAnalyticsSchema,
 });
 
+export const pathAliasSchema = named(
+  "PathAlias",
+  z.object({
+    id: z.string().describe("Path alias id"),
+    path: z
+      .string()
+      .describe(
+        "The old path, exact and case-sensitive, such as `/r/abc`; the query string never counts",
+      ),
+    url: z
+      .url()
+      .describe("The old link: the code's custom domain and the path"),
+    createdAt: dateTime("When the alias was added"),
+  }),
+  "An old path on a code's custom domain that also opens the code",
+);
+
+export const pathAliasResponseSchema = z.object({ data: pathAliasSchema });
+export const pathAliasListResponseSchema = z.object({
+  data: z.array(pathAliasSchema).describe("Oldest first"),
+});
+
 export const conversionResponseSchema = z.object({
   id: z
     .string()

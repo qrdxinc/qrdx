@@ -577,7 +577,7 @@ function BarcodeCardItem({
                             });
                           }}
                         >
-                          <span className="w-10 font-medium">
+                          <span className="w-10 shrink-0 font-medium">
                             {BARCODE_FILES[type].label}
                           </span>
                           <span className="text-muted-foreground truncate text-xs">

@@ -22715,6 +22715,12 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "Anciens systèmes qui n'acceptent que le BMP · 24 bits non compressé",
+    "status": "machine",
+    "context": "barcodes.files.bmp.hint"
+  },
   "2f6bec725ba6": {
     "source": "Vector for print and design tools",
     "text": "Vectoriel pour impression et outils de design",
@@ -22889,9 +22895,9 @@
     "status": "machine",
     "context": "barcodes.faqs.4.question"
   },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "SVG, PDF ou EPS pour l'impression : ce sont des formats vectoriels, donc les barres restent nettes à toute taille. SVG et EPS s'ouvrent dans des outils de création comme Illustrator, InDesign et Affinity, et le PDF s'ouvre partout. Le PNG convient aux écrans, aux documents et aux boutiques en ligne, et le JPG aux endroits qui n'acceptent pas le PNG ; WebP et AVIF donnent des fichiers plus légers pour les sites web. Augmentez la taille de l'image pour obtenir des images plus grandes.",
+  "3dfd44b42064": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "SVG, PDF ou EPS pour l'impression : ce sont des formats vectoriels, donc les barres restent nettes quelle que soit la taille. Le SVG et l'EPS s'ouvrent dans des outils de création comme Illustrator, InDesign et Affinity, et le PDF s'ouvre partout. Le PNG convient aux écrans, aux documents et aux boutiques en ligne, et le JPG aux endroits qui n'acceptent pas le PNG ; WebP et AVIF produisent des fichiers plus légers pour les sites web, et le BMP sert aux anciens systèmes qui n'acceptent que le BMP. Augmentez la taille de l'image pour obtenir des images plus grandes.",
     "status": "machine",
     "context": "barcodes.faqs.4.answer"
   },

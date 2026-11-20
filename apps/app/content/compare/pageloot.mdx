@@ -2,12 +2,12 @@
 title: Pageloot
 description: "QRdx vs Pageloot: an open-source QR platform with a free plan and unlimited dynamic codes on Pro, compared with a dynamic QR service that caps codes per plan and sells a lifetime deal."
 seoTitle: "QRdx vs Pageloot: Pricing, Code Limits and Lifetime Deal"
-seoDescription: "Pageloot plans start at $7/mo billed yearly for 15 dynamic codes. QRdx has a free plan with 10 dynamic codes and unlimited codes on $5/mo Pro."
+seoDescription: "Pageloot plans start at $7/mo billed yearly for 15 dynamic codes. QRdx has a free plan with {facts.freeDynamicCodes} dynamic codes and unlimited codes on {facts.proMonthlyPrice}/mo Pro."
 competitor: Pageloot
 competitorUrl: https://pageloot.com
 category: generator
-tagline: "Pageloot is a dynamic QR platform with plans from 15 to 5,000 codes, a 14-day trial and a one-time lifetime deal. QRdx is open source, has a permanent free plan and unlimited dynamic codes from $5/mo."
-qrdxPlan: "Free · Pro from $5/mo"
+tagline: "Pageloot is a dynamic QR platform with plans from 15 to 5,000 codes, a 14-day trial and a one-time lifetime deal. QRdx is open source, has a permanent free plan and unlimited dynamic codes from {facts.proMonthlyPrice}/mo."
+qrdxPlan: "Free · Pro from {facts.proMonthlyPrice}/mo"
 competitorPlan: "From $7/mo, billed yearly"
 lastVerified: "2026-11-10"
 sources:
@@ -18,7 +18,7 @@ sources:
   - https://pageloot.com/terms/
 tableRows:
   - feature: Price
-    qrdx: "Free; Pro $5/mo or $48/yr; Business $15/mo or $144/yr"
+    qrdx: "Free; Pro {facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr; Business {facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr"
     competitor: "Starter $7/mo billed yearly or $30 monthly; Pro $36 or $150; Agency $99 or $199; Max $299 or $599"
   - feature: One-time payment
     qrdx: "No; monthly or yearly billing"
@@ -30,7 +30,7 @@ tableRows:
     qrdx: "Codes keep working on every plan"
     competitor: "Pricing FAQ: codes \"will become inactive after your plan has expired\""
   - feature: Dynamic (editable) codes
-    qrdx: "10 free; unlimited on Pro"
+    qrdx: "{facts.freeDynamicCodes} free; unlimited on Pro"
     competitor: "15, 300, 1,500 or 5,000 by plan"
   - feature: Scan history
     qrdx: "{facts.freeScanHistoryYears} year free; unlimited on Pro and Business"
@@ -39,7 +39,7 @@ tableRows:
     qrdx: "1 free; 3 on Pro; unlimited on Business"
     competitor: "1, 3, 5 or 10 user seats by plan"
   - feature: Hosted pages
-    qrdx: "3 free; unlimited on Pro"
+    qrdx: "{facts.freeHostedPages} free; unlimited on Pro"
     competitor: "Link-in-bio, App Store and vCard pages, file uploads"
   - feature: Smart routing
     qrdx: "Pro: device, country, time and language rules, A/B splits"
@@ -60,10 +60,10 @@ tableRows:
     qrdx: "AGPL-3.0"
     competitor: "Not advertised"
 featureHighlights:
-  - title: Unlimited dynamic codes from $5
-    description: "Pageloot caps dynamic codes by plan: 15 on Starter ($7/mo billed yearly), 300 on Pro ($36/mo) and up to 5,000 on Max. QRdx Pro is $5/mo or $48/yr with unlimited dynamic codes and hosted pages."
+  - title: Unlimited dynamic codes from {facts.proMonthlyPrice}
+    description: "Pageloot caps dynamic codes by plan: 15 on Starter ($7/mo billed yearly), 300 on Pro ($36/mo) and up to 5,000 on Max. QRdx Pro is {facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr with unlimited dynamic codes and hosted pages."
   - title: A free plan with dynamic codes
-    description: "Pageloot's dynamic codes need a paid plan once the 14-day trial ends. QRdx Free has no time limit and includes 10 dynamic codes and 3 hosted pages."
+    description: "Pageloot's dynamic codes need a paid plan once the 14-day trial ends. QRdx Free has no time limit and includes {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages."
   - title: Codes that keep working after you cancel
     description: "For subscriptions, Pageloot's pricing FAQ (checked 10 November 2026) says \"Your QR codes will become inactive after your plan has expired.\" QRdx dynamic codes keep redirecting on every plan, including after a downgrade or a cancellation."
   - title: Open source, with tools for developers
@@ -76,7 +76,7 @@ Pageloot and QRdx both make dynamic QR codes that you can edit after printing, w
 
 Pageloot suits marketing teams and agencies that want a hosted QR dashboard with a fixed number of codes. Its plans run from Starter (15 dynamic codes and 1 user for $7/mo billed yearly, or $30 monthly) through Pro (300 codes, 3 users, $36 or $150) and Agency (1,500 codes, 5 users, $99 or $199) to Max (5,000 codes, 10 users, $299 or $599). All four include unlimited scans and unlimited scan history, and there is a 14-day trial that needs no credit card.
 
-QRdx suits people who want to start free and pay little as they grow. Static codes are free and need no account. The Free plan adds 10 dynamic codes and 3 hosted pages. Pro ($5/mo or $48/yr) makes both unlimited, and Business ($15/mo or $144/yr) adds unlimited team members and white-label pages. Developers can use the REST API, the MCP server or the npm library, and the whole app can be self-hosted.
+QRdx suits people who want to start free and pay little as they grow. Static codes are free and need no account. The Free plan adds {facts.freeDynamicCodes} dynamic codes and {facts.freeHostedPages} hosted pages. Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes both unlimited, and Business ({facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr) adds unlimited team members and white-label pages. Developers can use the REST API, the MCP server or the npm library, and the whole app can be self-hosted.
 
 ## Where Pageloot is the better choice
 
@@ -88,8 +88,8 @@ QRdx suits people who want to start free and pay little as they grow. Static cod
 - Code limits. Pageloot sets a number of dynamic codes for each plan, from 15 on Starter to 5,000 on Max. QRdx Pro and Business have no limit on dynamic codes or hosted pages.
 - When you stop paying. Pageloot's pricing page (checked 10 November 2026) answers "What happens to my QR codes if I cancel?" with "Your QR codes will become inactive after your plan has expired. If you need to access the statistics or edit your QR codes, you just have to renew your subscription." That answer is about subscriptions; the lifetime deal page doesn't repeat it. On QRdx, dynamic codes keep redirecting after a downgrade or a cancellation, and the account moves to Free.
 - Refunds. Pageloot's pricing page offers a 30-day money-back guarantee. QRdx refunds the first payment for a paid plan in full if you ask within {facts.moneyBackDays} days.
-- Trial and free use. Pageloot's trial gives you 14 days of dynamic codes without a card, and its generator page says dynamic codes "are part of a paid plan". QRdx Free includes 10 dynamic codes with no time limit.
-- Client work. Pageloot's Agency plan ($99/mo billed yearly) adds client reports with each client's logo, a white-label dashboard and payment by invoice. On QRdx Pro, a code's shared stats page can carry a client's name, logo and color. Business ($15/mo) drops the QRdx mark from those pages and can serve them on your own domain, adds a read-only client portal for the folders you share, and lets you ask to pay a year by invoice, which QRdx arranges by hand.
+- Trial and free use. Pageloot's trial gives you 14 days of dynamic codes without a card, and its generator page says dynamic codes "are part of a paid plan". QRdx Free includes {facts.freeDynamicCodes} dynamic codes with no time limit.
+- Client work. Pageloot's Agency plan ($99/mo billed yearly) adds client reports with each client's logo, a white-label dashboard and payment by invoice. On QRdx Pro, a code's shared stats page can carry a client's name, logo and color. Business ({facts.businessMonthlyPrice}/mo) drops the QRdx mark from those pages and can serve them on your own domain, adds a read-only client portal for the folders you share, and lets you ask to pay a year by invoice, which QRdx arranges by hand.
 - Developer access. Pageloot lists "Custom integrations, API & MCP" on its Enterprise plan, which is priced on request. QRdx has a REST API and an MCP server on every plan, plus an npm library and a CLI, and it's open source under AGPL-3.0.
 - Design. Both have logos, colors, gradients and frames. Pageloot's shape, frame and color options grow with the plan, from "Limited" on Starter to "Custom" on Max. QRdx has {facts.bodyPatterns} body patterns, {facts.eyeShapes} eye shapes, {facts.eyeCentres} eye-dot shapes and {facts.frames} frames.
 

@@ -142,7 +142,8 @@ export async function findTakenAliasPaths(
 }
 
 export type ClaimResult =
-  | { ok: true; alias: PathAliasRow }
+  /** `created` is false when the code already had the path */
+  | { ok: true; alias: PathAliasRow; created: boolean }
   | { ok: false; problem: PathAliasClaimProblem };
 
 /**
@@ -185,6 +186,7 @@ export async function claimAlias(input: {
       return {
         ok: true,
         alias: { id: existing.id, path, createdAt: existing.createdAt },
+        created: false,
       };
     }
     if (existing && existing.codeDomainId === domainId) {
@@ -215,7 +217,7 @@ export async function claimAlias(input: {
       if (isUniqueViolation(error)) return { ok: false, problem: "taken" };
       throw error;
     }
-    return { ok: true, alias };
+    return { ok: true, alias, created: true };
   } catch (error) {
     if (noteMissingAliases(error)) return { ok: false, problem: "unavailable" };
     throw error;

@@ -2,7 +2,9 @@
 // and the generator with its browser build (lib/barcode/render.ts). Both get
 // their options from lib/barcode/draw.ts, so for every format and option the
 // SVG must be the same string, and the server's raster files must be the
-// generator's PNG size, pixel for pixel, and decode as the same value.
+// generator's PNG size, pixel for pixel, and decode as the same value. A BMP
+// is the PNG's pixels in a 24-bit bitmap, read back here with an independent
+// reader (sharp can't read BMP).
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import {
@@ -10,6 +12,7 @@ import {
   type BarcodeFormat as DetectorFormat,
   prepareZXingModule,
 } from "barcode-detector/ponyfill";
+import { isBMPFile } from "qrdx";
 import sharp from "sharp";
 import { beforeAll, describe, expect, it } from "vitest";
 import {
@@ -21,8 +24,13 @@ import {
 } from "@/lib/barcode/formats";
 import { renderBarcodeSVG } from "@/lib/barcode/render";
 import { SCAN_CHECK_FORMATS } from "@/lib/barcode/scan-check";
-import { renderBarcodeFile, renderBarcodeServer } from "@/lib/barcode/server";
+import {
+  rasterBarcode,
+  renderBarcodeFile,
+  renderBarcodeServer,
+} from "@/lib/barcode/server";
 import { type BarcodeStyle, defaultBarcodeStyle } from "@/lib/barcode/style";
+import { readBMP } from "../../../../packages/qrdx/tests/support/bmp";
 
 (globalThis as { DOMRectReadOnly?: unknown }).DOMRectReadOnly ??= class {
   constructor(
@@ -114,6 +122,22 @@ describe("browser and server draw the same SVG", () => {
   });
 });
 
+/** `found` holds the value drawn, in one of the format's reader formats. */
+const expectDecodes = async (
+  id: BarcodeFormatId,
+  found: Awaited<ReturnType<BarcodeDetector["detect"]>>,
+) => {
+  const expected = getBarcodeFormat(id).detectorFormats as readonly string[];
+  expect(
+    found.some(
+      (code) =>
+        expected.includes(code.format as DetectorFormat) &&
+        decodedMatches(id, value(id), code.rawValue),
+    ),
+    `decoded ${JSON.stringify(found.map((code) => [code.format, code.rawValue]))}`,
+  ).toBe(true);
+};
+
 async function decode(bytes: Uint8Array) {
   // ZXing reads PNG; JPG, WebP and AVIF are decoded to PNG with sharp first.
   const png = await sharp(bytes).png().toBuffer();
@@ -157,16 +181,118 @@ describe("server raster files are the generator's PNG", () => {
     expect(meta.format).toBe(
       type === "jpg" ? "jpeg" : type === "avif" ? "heif" : type,
     );
-    const found = await decode(file.body as Uint8Array);
-    const expected = getBarcodeFormat(id).detectorFormats as readonly string[];
-    expect(
-      found.some(
-        (code) =>
-          expected.includes(code.format as DetectorFormat) &&
-          decodedMatches(id, value(id), code.rawValue),
+    await expectDecodes(id, await decode(file.body as Uint8Array));
+  });
+});
+
+/** RGBA pixels, as a PNG the decoder reads. */
+const rgbaToPng = (rgba: Uint8ClampedArray, width: number, height: number) =>
+  sharp(Buffer.from(rgba), { raw: { width, height, channels: 4 } })
+    .png()
+    .toBuffer();
+
+describe("server BMP files are the PNG's pixels", () => {
+  it.each(cases)("%s, %s", async (_, __, id, style) => {
+    const [bmp, png] = await Promise.all([
+      renderBarcodeFile(id, value(id), style, "bmp"),
+      renderBarcodeFile(id, value(id), style, "png"),
+    ]);
+    expect(bmp.contentType).toBe("image/bmp");
+    expect(bmp.extension).toBe("bmp");
+    expect([bmp.width, bmp.height]).toEqual([png.width, png.height]);
+    const bytes = bmp.body as Uint8Array;
+    // A real BMP, never a PNG under another name.
+    expect(isBMPFile(bytes)).toBe(true);
+    expect(isBMPFile(png.body as Uint8Array)).toBe(false);
+    const decoded = readBMP(bytes);
+    const pixels = await sharp(png.body as Uint8Array)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    expect([decoded.width, decoded.height]).toEqual([
+      pixels.info.width,
+      pixels.info.height,
+    ]);
+    // Every pixel, the background's color included (the PNG is opaque).
+    expect(Buffer.from(decoded.rgba).equals(pixels.data)).toBe(true);
+  });
+
+  it.each(BARCODE_FORMATS.map((format) => [format.label, format.id] as const))(
+    "%s as BMP decodes as the value drawn",
+    async (_, id) => {
+      const file = await renderBarcodeFile(
+        id,
+        value(id),
+        defaultBarcodeStyle(id),
+        "bmp",
+      );
+      const { rgba, width, height } = readBMP(file.body as Uint8Array);
+      const png = await rgbaToPng(rgba, width, height);
+      await expectDecodes(
+        id,
+        await detector.detect(
+          new Blob([new Uint8Array(png)], { type: "image/png" }),
+        ),
+      );
+    },
+  );
+
+  it("lays a transparent background over white, since 24-bit BMP has no alpha", async () => {
+    // Barcodes are drawn on a solid background today; without its rectangle
+    // the drawing is see-through around the bars, as a transparent one would be.
+    const id = "ean13";
+    const style = { ...defaultBarcodeStyle(id), foreground: "#1e3a8a" };
+    const { svg } = renderBarcodeServer(id, value(id), style);
+    const seeThrough = svg.replace(
+      /<rect width="100%" height="100%" fill="#[0-9a-f]{6}" \/>/,
+      "",
+    );
+    expect(seeThrough).not.toBe(svg);
+    const [png, bmp] = await Promise.all([
+      rasterBarcode({ svg: seeThrough }, "png"),
+      rasterBarcode({ svg: seeThrough }, "bmp"),
+    ]);
+    expect(isBMPFile(bmp)).toBe(true);
+    const { data, info } = await sharp(png)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const alphas = new Set<number>();
+    for (let i = 3; i < data.length; i += 4) alphas.add(data[i] as number);
+    // The PNG has transparent pixels (and opaque bars).
+    expect(alphas.has(0)).toBe(true);
+    expect(alphas.has(255)).toBe(true);
+
+    const decoded = readBMP(bmp);
+    expect([decoded.width, decoded.height]).toEqual([info.width, info.height]);
+    // The top-left corner is in the quiet zone: transparent in the PNG,
+    // white in the BMP.
+    expect(data[3]).toBe(0);
+    expect([...decoded.rgba.subarray(0, 4)]).toEqual([255, 255, 255, 255]);
+    // Every pixel is the PNG's laid over white: opaque ones unchanged.
+    const overWhite = new Uint8ClampedArray(data.length);
+    for (let i = 0; i < data.length; i += 4) {
+      const alpha = data[i + 3] as number;
+      for (let c = 0; c < 3; c++) {
+        overWhite[i + c] = Math.floor(
+          ((data[i + c] as number) * alpha + 255 * (255 - alpha) + 127) / 255,
+        );
+      }
+      overWhite[i + 3] = 255;
+    }
+    expect(Buffer.from(decoded.rgba).equals(Buffer.from(overWhite))).toBe(true);
+    // And it still scans.
+    const scanned = await rgbaToPng(
+      decoded.rgba,
+      decoded.width,
+      decoded.height,
+    );
+    await expectDecodes(
+      id,
+      await detector.detect(
+        new Blob([new Uint8Array(scanned)], { type: "image/png" }),
       ),
-      `decoded ${JSON.stringify(found.map((code) => [code.format, code.rawValue]))}`,
-    ).toBe(true);
+    );
   });
 });
 

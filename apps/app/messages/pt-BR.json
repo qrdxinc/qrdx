@@ -2013,7 +2013,7 @@
     "alt": "Código de barras {format} para {value}",
     "loadFailed": "O código que desenha o código de barras não carregou. Verifique sua conexão e recarregue a página.",
     "fixInput": "Corrija o campo destacado para ver o código de barras.",
-    "sizes": "PNG, JPG, WebP e AVIF em {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF e EPS são vetores com tamanho de {widthMm} × {heightMm} mm, com módulo de {moduleMm} mm; redimensione-os no seu layout conforme precisar.",
+    "sizes": "PNG, JPG, WebP, AVIF e BMP em {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF e EPS são vetores com {widthMm} × {heightMm} mm, com módulo de {moduleMm} mm; ajuste a escala no seu layout conforme precisar.",
     "more": "Mais",
     "moreFormats": "Mais formatos",
     "footnote": "Feito no seu navegador; nada do que você digita é enviado ao QRdx. WebP e AVIF são codificados pelo servidor do QRdx quando você os escolhe, e nada é guardado.",
@@ -5437,7 +5437,11 @@
       "onATableTent": "Em um display de mesa",
       "onAPoster": "Em um pôster",
       "asASticker": "Como adesivo",
-      "onABusinessCard": "Em um cartão de visita"
+      "onABusinessCard": "Em um cartão de visita",
+      "onAPhone": "Em um celular, na página hospedada",
+      "inFrames": "Em molduras",
+      "onABadge": "Em um crachá",
+      "asAsciiArt": "Como arte ASCII"
     },
     "itemPages": {
       "previous": "Anterior",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Pesquisar na comunidade",
-      "placeholder": "Pesquise molduras, temas e páginas"
+      "placeholder": "Pesquisar na comunidade"
     }
   },
   "communityActions": {
@@ -9906,7 +9910,27 @@
       "signedOut": "Entre para alterar as notificações.",
       "webhookUrlMissing": "Cole a URL do webhook",
       "rateLimited": "Limite de requisições excedido. Tente novamente mais tarde.",
-      "failed": "Algo deu errado. Tente novamente."
+      "failed": "Algo deu errado. Tente novamente.",
+      "notMember": "Você não é membro desse workspace.",
+      "emailAlertsPro": "Alertas por e-mail e o resumo semanal fazem parte do Pro.",
+      "chatBusiness": "Os alertas do Slack e do Discord fazem parte do plano Business.",
+      "accountNotFound": "Conta não encontrada.",
+      "webhookAlreadyAdded": "Esse webhook já foi adicionado.",
+      "tooManyWebhooks": "Adicione até {max, number} webhooks do Slack ou do Discord por workspace.",
+      "targetNotFound": "Destino de notificação não encontrado.",
+      "notDelivered": "Não entregue: {error}",
+      "pickEvent": "Escolha pelo menos um evento",
+      "url": {
+        "missing": "Informe a URL do endpoint.",
+        "tooLong": "A URL é longa demais.",
+        "notFull": "Informe uma URL completa, começando com https://",
+        "notHttps": "URLs de webhook precisam usar https://",
+        "credentials": "Remova o nome de usuário e a senha da URL.",
+        "ipAddress": "Use um nome de host, não um endereço IP.",
+        "notPublic": "Use um nome de host público.",
+        "notSlack": "Cole a URL de um webhook de entrada do Slack (https://hooks.slack.com/services/…).",
+        "notDiscord": "Cole a URL de um webhook do Discord (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {

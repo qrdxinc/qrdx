@@ -23,7 +23,10 @@ import { describe, expect, it } from "vitest";
 import { AI_ART_PRESETS } from "@/components/sections/ai-art/presets";
 import { BARCODE_FORMATS } from "@/lib/barcode/formats";
 import { BRAND_LOGO_COUNT } from "@/lib/brand-logos/catalog.generated";
+import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "@/lib/free-plan-limits";
 import { PAGE_TYPE_IDS } from "@/lib/landing/page-type-ids";
+import { PLAN_LIMITS } from "@/lib/plans";
+import { formatPrice, PRICING } from "@/lib/pricing";
 import {
   fillFacts,
   fillFactsDeep,
@@ -96,8 +99,24 @@ describe("PRODUCT_FACTS", () => {
       moneyBackDays: 30,
       switcherMoneyBackDays: 60,
       nonprofitDiscountPercent: 50,
+      // lib/pricing.ts PRICING, with the currency sign
+      proMonthlyPrice: "$5",
+      proYearlyPrice: "$48",
+      businessMonthlyPrice: "$15",
+      businessYearlyPrice: "$144",
+      proMonthlyPriceInr: "₹199",
+      proYearlyPriceInr: "₹1,499",
+      businessMonthlyPriceInr: "₹599",
+      businessYearlyPriceInr: "₹4,999",
+      proMonthlyPriceEur: "€5",
+      proYearlyPriceEur: "€48",
+      businessMonthlyPriceEur: "€15",
+      businessYearlyPriceEur: "€144",
       // lib/scan-history.ts: 365 days, written "1 year"
       freeScanHistoryYears: 1,
+      // lib/free-plan-limits.ts, PLAN_LIMITS.free
+      freeDynamicCodes: 10,
+      freeHostedPages: 3,
       // lib/path-alias-limits.ts
       pathAliasesPerCode: 5,
     });
@@ -197,6 +216,161 @@ function filesUnder(dir: string, extensions: RegExp): string[] {
     .filter((file) => extensions.test(file))
     .map((file) => path.join(dir, file));
 }
+
+// QRdx's own list prices as copy would type them ("$5", "US$15", "₹1,499",
+// "€48"), from PRICING, so a changed price can't be missed in content.
+const PLAN_PRICES = Object.values(PRICING).flatMap((plan) =>
+  Object.values(plan),
+);
+const escapeRegExp = (text: string) =>
+  text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const HARD_CODED_PRICE = new RegExp(
+  [
+    `(?:^|[^\\w$]|US)\\$(?:${[...new Set(PLAN_PRICES.map((price) => price.amounts.USD))].join("|")})(?!\\d|[.,]\\d)`,
+    ...PLAN_PRICES.flatMap((price) =>
+      (["INR", "EUR"] as const).map(
+        (currency) =>
+          `${escapeRegExp(formatPrice(price.amounts[currency], currency))}(?![\\d,])`,
+      ),
+    ),
+  ].join("|"),
+);
+
+/** Lines quoting another product's price that happens to equal one of QRdx's. */
+const NOT_QRDX_PRICES = [
+  'competitorPlan: "From $5/mo, billed yearly"', // compare/scanova.mdx
+  "Basic $60/yr; Lite $108/yr or $15/mo", // compare/scanova.mdx
+  "Basic is $5 a month, billed yearly only", // compare/scanova.mdx
+  "Lite and up also monthly, from $15", // compare/uniqode.mdx
+  "Premium ₹599", // compare/qrcode-ai.mdx
+  "Premium at ₹599", // compare/qrcode-ai.mdx
+  "₹599 a month or ₹3,999 a year", // compare/qrcode-ai.mdx
+  "$3, $4, $5)", // a Perl substitution in docs/developers/goqr-api.mdx
+];
+
+describe("plan prices in copy", () => {
+  it("come from {facts.*Price*} tokens in content and the docs", () => {
+    const docs = path.join(app, "../docs/content/docs");
+    const files = [
+      ...filesUnder("content", /\.mdx?$/)
+        .filter((file) => !file.startsWith(`content${path.sep}changelog`))
+        .map((file) => path.join(app, file)),
+      ...readdirSync(docs, { recursive: true })
+        .map(String)
+        .filter((file) => /\.mdx?$/.test(file))
+        .map((file) => path.join(docs, file)),
+    ];
+    const offenders = files.flatMap((file) =>
+      readFileSync(file, "utf8")
+        .split("\n")
+        .flatMap((line, index) => {
+          if (NOT_QRDX_PRICES.some((allowed) => line.includes(allowed))) {
+            return [];
+          }
+          const match = HARD_CODED_PRICE.exec(line);
+          return match
+            ? [`${path.relative(repo, file)}:${index + 1}: "${match[0]}"`]
+            : [];
+        }),
+    );
+    expect(offenders).toEqual([]);
+  });
+
+  it("catch a typed price", () => {
+    for (const line of [
+      "Pro ($5/mo or $48/yr)",
+      "Pro costs US$5 a month.",
+      "Business is ₹4,999 a year",
+      "Pro is €48/year",
+    ]) {
+      expect(line).toMatch(HARD_CODED_PRICE);
+    }
+    for (const line of [
+      "Pro ({facts.proMonthlyPrice}/mo)",
+      "Advanced $15.58 a month",
+      "Basic $50/mo",
+      "$150 once",
+    ]) {
+      expect(line).not.toMatch(HARD_CODED_PRICE);
+    }
+  });
+});
+
+// QRdx's Free-plan allowances in the phrasings copy uses for QRdx ("The Free
+// plan includes 10", `qrdx: "10 free; …"`, "3 hosted pages"), built from
+// lib/free-plan-limits.ts. Competitors' plans are written in lower case
+// ("its free plan includes 10") or name their own product, so they don't match.
+const D = FREE_DYNAMIC_CODES;
+const H = FREE_HOSTED_PAGES;
+const HARD_CODED_FREE_LIMIT = new RegExp(
+  [
+    `\\b${H} (?:hosted|mobile) pages\\b`,
+    `Free (?:plan )?(?:includes|adds|has|keeps up to) ${D}\\b`,
+    `QRdx Free (?:has|includes) ${D}\\b`,
+    `qrdx: "?${D} free\\b`,
+    `Free workspaces have ${D}\\b`,
+    `Free accounts are limited to ${D}\\b`,
+    `free account adds ${D}\\b`,
+    `\\| Dynamic QR codes \\| ${D} \\|`,
+    `\\| Hosted (?:landing )?pages \\| ${H}\\b`,
+  ].join("|"),
+);
+
+describe("Free plan allowances in copy", () => {
+  it("come from {facts.freeDynamicCodes} and {facts.freeHostedPages}", () => {
+    const docs = path.join(app, "../docs/content/docs");
+    const files = [
+      ...filesUnder("content", /\.mdx?$/)
+        .filter((file) => !file.startsWith(`content${path.sep}changelog`))
+        .map((file) => path.join(app, file)),
+      // The API reference pages are generated from lib/openapi/document.ts,
+      // which reads the limit from lib/plans.ts.
+      ...readdirSync(docs, { recursive: true })
+        .map(String)
+        .filter(
+          (file) =>
+            /\.mdx?$/.test(file) &&
+            !file.startsWith(path.join("developers", "api")),
+        )
+        .map((file) => path.join(docs, file)),
+    ];
+    const offenders = files.flatMap((file) =>
+      readFileSync(file, "utf8")
+        .split("\n")
+        .flatMap((line, index) => {
+          const match = HARD_CODED_FREE_LIMIT.exec(line);
+          return match
+            ? [`${path.relative(repo, file)}:${index + 1}: "${match[0]}"`]
+            : [];
+        }),
+    );
+    expect(offenders).toEqual([]);
+  });
+
+  it("match the Free plan in lib/plans.ts", () => {
+    expect(PRODUCT_FACTS.freeDynamicCodes).toBe(PLAN_LIMITS.free.dynamicCodes);
+    expect(PRODUCT_FACTS.freeHostedPages).toBe(PLAN_LIMITS.free.landingPages);
+  });
+
+  it("catch a typed allowance, not a competitor's", () => {
+    for (const line of [
+      "The Free plan includes 10 dynamic codes and 3 hosted pages.",
+      'qrdx: "10 free; unlimited on Pro"',
+      "QRdx Free has 10 dynamic codes",
+      "| Dynamic QR codes | 10 | Unlimited | Unlimited |",
+    ]) {
+      expect(line).toMatch(HARD_CODED_FREE_LIMIT);
+    }
+    for (const line of [
+      "The Free plan includes {facts.freeDynamicCodes} dynamic codes.",
+      "Its free plan includes 10 dynamic codes, 1,000 scans a month",
+      "QRStuff's free plan has 5 static codes and 10 dynamic codes",
+      'competitor: "10 free; 50–900+ paid"',
+    ]) {
+      expect(line).not.toMatch(HARD_CODED_FREE_LIMIT);
+    }
+  });
+});
 
 describe("product counts in copy", () => {
   it("aren't hard-coded in content, metadata, llms.txt or config", () => {
