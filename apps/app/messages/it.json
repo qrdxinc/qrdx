@@ -4519,7 +4519,7 @@
         "comingUp": "In arrivo",
         "classic": "Classiche",
         "shapedCodes": "Codici sagomati",
-        "saved": "Salvate",
+        "saved": "Nei segnalibri",
         "results": "Risultati"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name} è online nella community.",
       "viewIt": "Vedilo",
       "whatToMake": "Cosa creare",
-      "itemsYouSaveInThe": "Gli elementi che salvi dalla community o pubblichi tu compaiono qui. <link>Sfoglia la community</link>",
+      "itemsYouSaveInThe": "Gli elementi che aggiungi ai segnalibri nella community o che pubblichi tu stesso compaiono qui. <link>Esplora la community</link>",
       "itemsLengthPicked": "Elementi<span>{length, number} selezionati</span>",
       "optional": "(facoltativo)",
       "name": "Nome",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "Raggruppa cornici, temi e template di pagina da sfogliare insieme, per esempio tutto per un caffè. Scegline 2 o più.",
       "aPageTemplateAndThe": "Un template di pagina e lo stile che lo accompagna. Usando un kit, la pagina viene copiata come bozza e lo stile come tema salvato.",
       "yours": "tuoi",
-      "noSavedMany": "Nessun {many} salvato",
+      "noSavedMany": "Nessun {many} nei segnalibri",
       "none": "Nessuno",
       "pickOne": "Scegline uno",
       "publishing": "Pubblicazione",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "Rimuovere dalla community?",
       "itLeavesTheCommunityAt": "Esce subito dalla community. Chi l’ha già usato conserva le proprie copie: è stato condiviso con licenza CC0.",
       "cancel": "Annulla",
-      "removeFromSaved": "Rimuovi dai salvati",
-      "save": "Salva",
+      "removeFromSaved": "Rimuovi segnalibro",
+      "save": "Segnalibro",
       "unlike": "Togli like",
       "like": "Mi piace",
       "useKit": "Usa il kit",
       "useTemplate": "Usa il modello",
-      "saved": "Salvato",
+      "saved": "Nei segnalibri",
       "open": "Apri",
       "nameIsInYourPages": "“{name}” è nelle tue pagine come bozza e il suo aspetto nei tuoi temi.",
       "nameIsInYourPages2": "“{name}” è nelle tue pagine come bozza.",
-      "savedItsInTheEditors": "Salvato. Lo trovi nel selettore di cornici dell’editor.",
-      "saved2": "Salvato.",
-      "removedFromSaved": "Rimosso dai salvati.",
+      "savedItsInTheEditors": "Aggiunto ai segnalibri. Lo trovi nel selettore dei frame dell’editor.",
+      "saved2": "Aggiunto ai segnalibri.",
+      "removedFromSaved": "Segnalibro rimosso.",
       "copiedToWhereAsName": "Copiato in {where} come “{name}”",
       "nameIsNoLongerIn": "“{name}” non è più nella community."
     },
     "itemCard": {
       "empty": "Vuoto",
       "viewAll": "Vedi tutti",
-      "saves": "Salvataggi",
+      "like": "Mi piace",
+      "unlike": "Non mi piace più",
+      "bookmark": "Segnalibro",
+      "removeBookmark": "Rimuovi segnalibro",
       "typeFrame": "Cornice",
       "typeTheme": "Tema",
       "typePage": "Pagina",
@@ -5453,7 +5456,7 @@
       "failed": "La pagina successiva non si è caricata."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {# elemento} other {# elementi}} · {saves, plural, one {# salvataggio} other {# salvataggi}}"
+      "itemsAndSaves": "{items, plural, one {# elemento} other {# elementi}} · {saves, plural, one {# segnalibro} other {# segnalibri}}"
     },
     "more": {
       "load": "Carica altri",
@@ -5464,7 +5467,7 @@
       "licence": "Licenza:"
     },
     "newBundle": {
-      "signInToMakeA": "Accedi per creare una raccolta o un kit con gli elementi che hai salvato.",
+      "signInToMakeA": "Accedi per creare una raccolta o un kit con gli elementi che hai aggiunto ai segnalibri.",
       "signIn": "Accedi"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "Il designer AI richiede un account gratuito. Gli account gratuiti hanno {count, number} richieste in totale.",
       "uploadFrame": "Per caricare le tue cornici serve un account gratuito.",
       "publishFrame": "Per condividere una cornice con la community serve un account gratuito.",
-      "communityAction": "Per mettere mi piace, salvare, copiare e pubblicare i design della community serve un account gratuito.",
+      "communityAction": "Per mettere like, aggiungere ai segnalibri, copiare e pubblicare i design della community serve un account gratuito.",
       "saveBarcode": "I codici a barre salvati restano nel tuo account, pronti da scaricare di nuovo.",
       "bulkOverLimit": "I file fino a {limit, number} righe non richiedono un account. Un account gratuito ne gestisce fino a {max, number} per file e il tuo file resta caricato.",
       "keepDesigns": "Tieni i tuoi design nel tuo account, su ogni dispositivo.",

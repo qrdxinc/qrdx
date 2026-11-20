@@ -25,10 +25,10 @@ import {
 // items, staff picks, or a search. Read-only and public; the lists are
 // cached for a minute like the overview's.
 
-export type AllSort = "saved" | "trending" | "newest";
+export type AllSort = "bookmarked" | "trending" | "newest";
 export type AllFrom = "all" | "community" | "official" | "picks";
 
-export const ALL_SORTS: AllSort[] = ["saved", "trending", "newest"];
+export const ALL_SORTS: AllSort[] = ["bookmarked", "trending", "newest"];
 export const ALL_FROM: AllFrom[] = ["all", "community", "official", "picks"];
 
 /** How many items a list shows. */
@@ -43,7 +43,7 @@ export interface AllQuery {
 }
 
 const DEFAULT: Omit<AllQuery, "q"> = {
-  sort: "saved",
+  sort: "bookmarked",
   period: "all",
   from: "all",
 };
@@ -60,7 +60,12 @@ export function parseAllQuery(params: Record<string, unknown>): AllQuery {
   const search = typeof q === "string" ? q.trim().slice(0, 100) : "";
   return {
     q: search || null,
-    sort: oneOf(ALL_SORTS, params.sort) ?? DEFAULT.sort,
+    // Bookmarks were once called saves: ?sort=saved still ranks them
+    sort:
+      oneOf(
+        ALL_SORTS,
+        first(params.sort) === "saved" ? "bookmarked" : params.sort,
+      ) ?? DEFAULT.sort,
     period: oneOf(RANK_PERIODS, params.period) ?? DEFAULT.period,
     from: oneOf(ALL_FROM, params.from) ?? DEFAULT.from,
   };
