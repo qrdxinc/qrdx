@@ -6,7 +6,6 @@ import { MODULE_SCALE_MAX, MODULE_SCALE_MIN } from "../types/constants";
 import type { QRNode } from "./jsx/runtime";
 import {
   circlePath,
-  cushionPath,
   hash2,
   heartPath,
   type Point,
@@ -45,11 +44,9 @@ export const SHAPED_BODY_PATTERNS = [
   "x",
   "flower",
   "pebble",
-  "hatch",
   "bubble",
   "petal",
   "squircle",
-  "cushion",
   "drop",
   "beads",
   "chain",
@@ -91,14 +88,12 @@ export const MODULE_SCALE_FLOOR: Partial<Record<BodyPattern, number>> = {
   octagon: 0.8,
   x: 0.7,
   flower: 0.75,
-  hatch: 0.5,
   bubble: 0.85,
   petal: 0.85,
   squircle: 0.7,
-  cushion: 0.7,
   drop: 0.75,
   beads: 0.8,
-  chain: 0.5,
+  chain: 0.95,
 };
 
 /**
@@ -387,8 +382,6 @@ function moduleShape(
       );
     case "x":
       return bar(cx, cy, unit, 0.42, 45) + bar(cx, cy, unit, 0.42, -45);
-    case "hatch":
-      return bar(cx, cy, unit, 0.56, (x + y) % 2 === 0 ? 45 : -45, 0.5);
     case "flower": {
       const d = unit * 0.25;
       return (
@@ -422,8 +415,6 @@ function moduleShape(
       return polygonPath(
         superellipsePoints(cx, cy, unit * 0.5, unit * 0.5, 4, 32)
       );
-    case "cushion":
-      return cushionPath(cx - unit / 2, cy - unit / 2, unit, unit * 0.2, unit * 0.07);
     case "drop": {
       // A round tile with one sharp corner, each tile pointing its own way
       const sharp = Math.floor(hash2(x, y, 9) * 4);

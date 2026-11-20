@@ -57,15 +57,8 @@ export const CORNER_EYE_DOT_PATTERNS = [
   "drop-reverse",
   // Added after 0.0.57
   "cushion",
-  "shield",
-  "dome",
   "bevel",
   "notch",
-  "petal",
-  "pebble",
-  "house",
-  "doodle",
-  "stamp",
 ] as const;
 
 /**
@@ -105,18 +98,15 @@ export const CORNER_EYE_PATTERNS = [
   "leaf-reverse",
   // Added after 0.0.57
   "pebble",
-  "dodecagon",
-  "cog",
-  "sprocket",
-  "burst",
-  "scallop",
-  "cloud",
+  "porthole",
+  "doodle",
   "notch",
   "plus",
-  "arch",
-  "bezel",
   "stamp",
-  "doodle",
+  "bud",
+  "tag",
+  "bowl",
+  "crest",
 ] as const;
 
 /**
@@ -157,11 +147,9 @@ export const BODY_PATTERN = [
   "x",
   "flower",
   "pebble",
-  "hatch",
   "bubble",
   "petal",
   "squircle",
-  "cushion",
   "drop",
   "beads",
   "chain",

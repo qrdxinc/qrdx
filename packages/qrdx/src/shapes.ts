@@ -97,18 +97,6 @@ export function superellipseRadius(
 }
 
 /**
- * A radius with `count` round bumps, `depth` deep, the first one centred on
- * the right (angle 0): for radialPoints.
- */
-export function bumpedRadius(
-  radius: number,
-  count: number,
-  depth: number
-): (angle: number) => number {
-  return (angle) => radius - (depth * (1 - Math.cos(count * angle))) / 2;
-}
-
-/**
  * A superellipse radius (exponent 3) with a hand-drawn wobble: a sum of
  * sin(4θ) and sin(8θ), so it vanishes on the axes and the diagonals.
  */
@@ -249,38 +237,6 @@ export function radialPoints(
 }
 
 /**
- * Points of a ring edge with `teeth` flat-topped teeth, each `duty` of its
- * pitch wide, the first tooth centred on the top: tips at `outer`, gaps at
- * `inner`.
- */
-export function toothedPoints(
-  cx: number,
-  cy: number,
-  outer: number,
-  inner: number,
-  teeth: number,
-  duty = 0.5
-): Point[] {
-  const pitch = (2 * Math.PI) / teeth;
-  const half = (pitch * duty) / 2;
-  const points: Point[] = [];
-  const at = (angle: number, r: number): Point => [
-    cx + r * Math.cos(angle),
-    cy + r * Math.sin(angle),
-  ];
-  for (let i = 0; i < teeth; i++) {
-    const centre = -Math.PI / 2 + i * pitch;
-    points.push(
-      at(centre - half, inner),
-      at(centre - half, outer),
-      at(centre + half, outer),
-      at(centre + half, inner)
-    );
-  }
-  return points;
-}
-
-/**
  * Rectangle whose corners are scooped out by concave quarter circles of
  * radius `scoop` (clockwise, like roundedRectPath).
  */
@@ -381,28 +337,6 @@ export function shieldPath(
     `C${P(size, shoulder + 1.55 * m)} ${P(mid + 1.6 * m, size)} ${P(mid, size)}` +
     `C${P(mid - 1.6 * m, size)} ${P(0, shoulder + 1.55 * m)} ${P(0, shoulder)}` +
     `V${fmt(y + radius)}A${fmt(radius)} ${fmt(radius)} 0 0 1 ${P(radius, 0)}Z`
-  );
-}
-
-/**
- * Arch: a square with its top two corners rounded by `top` and the bottom
- * two cut by `cut` (a chamfer), clockwise from the top-left.
- */
-export function archPath(
-  x: number,
-  y: number,
-  size: number,
-  top: number,
-  cut: number
-): string {
-  const r = Math.min(top, size / 2);
-  const c = Math.max(0, Math.min(cut, size / 2));
-  const P = (px: number, py: number) => `${fmt(x + px)} ${fmt(y + py)}`;
-  return (
-    `M${P(r, 0)}H${fmt(x + size - r)}` +
-    `A${fmt(r)} ${fmt(r)} 0 0 1 ${P(size, r)}` +
-    `V${fmt(y + size - c)}L${P(size - c, size)}H${fmt(x + c)}L${P(0, size - c)}` +
-    `V${fmt(y + r)}A${fmt(r)} ${fmt(r)} 0 0 1 ${P(r, 0)}Z`
   );
 }
 
