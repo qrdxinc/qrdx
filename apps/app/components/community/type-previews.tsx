@@ -40,42 +40,71 @@ export const SWATCH_UNITS = 180;
  */
 const SWATCH_START = -24;
 
-/** The whole code's share of the box's shorter side, pulled back. */
-const SWATCH_PULLED_BACK = 0.68;
+/** The swatch code's modules across, with its one-module margin each side. */
+const SWATCH_MODULES = 27;
 
 /**
- * The swatch code's two transforms for a box of `aspect` (width / height),
- * as CSS variables: the close-up at rest, and the whole code centred on its
- * background when the card is hovered (./stage.module.css). Both are
- * transforms of one element, so one transition carries it from one to the
- * other. The element is SWATCH_CODE.size / SWATCH_UNITS box widths across,
- * so the close-up draws at its full size; pulling back scales it down.
+ * The room a pulled-back code leaves free in its box, in px: on a card,
+ * the type's label above it and the chips below it; on a kit's tile or a
+ * collection's piece, only small chips below. Both are fixed sizes while
+ * the box isn't, so the code is sized from the height that's left.
  */
-export function swatchTransforms(aspect: number): CSSProperties {
-  const side = SWATCH_CODE.size / SWATCH_UNITS;
-  const rest = (-SWATCH_START / SWATCH_UNITS / side) * 100;
-  const whole = SWATCH_PULLED_BACK * Math.min(1, 1 / aspect);
-  const x = ((1 - whole) / 2 / side) * 100;
-  const y = ((1 / aspect - whole) / 2 / side) * 100;
-  const round = (value: number) => Math.round(value * 1000) / 1000;
+export const SWATCH_ROOM = {
+  card: { top: 38, bottom: 41 },
+  compact: { top: 8, bottom: 28 },
+} as const;
+
+/**
+ * The whole code pulled back, as CSS expressions of its box's size
+ * (container units: the swatch's box is a size container): its modules
+ * fill the height SWATCH_ROOM leaves, centred across, so neither the label
+ * nor the chips cover one. `x` and `y` place its top-left corner, `scale`
+ * shrinks the element (SWATCH_CODE.size / SWATCH_UNITS box widths across)
+ * to it: tan(atan2(a, b)) is a / b as a plain number.
+ */
+export function swatchPulledBack(compact = false) {
+  const { top, bottom } = SWATCH_ROOM[compact ? "compact" : "card"];
+  const element = (SWATCH_CODE.size / SWATCH_UNITS) * 100;
+  const side = `((100cqh - ${top + bottom}px) * ${SWATCH_MODULES / (SWATCH_MODULES - 2)})`;
   return {
-    "--swatch-rest": `translate(${round(rest)}%, ${round(rest)}%) scale(1)`,
-    "--swatch-full": `translate(${round(x)}%, ${round(y)}%) scale(${round(whole / side)})`,
+    x: `calc((100cqw - ${side}) / 2)`,
+    y: `calc(${top}px - ${side} / ${SWATCH_MODULES})`,
+    scale: `tan(atan2(${side}, ${element}cqw))`,
+  };
+}
+
+/**
+ * The swatch code's two transforms, as CSS variables: the close-up at
+ * rest, and the whole code on its background when the card is hovered
+ * (./stage.module.css). Both are transforms of one element, so one
+ * transition carries it from one to the other; the close-up draws at the
+ * element's full size, and pulling back scales it down.
+ */
+export function swatchTransforms(compact = false): CSSProperties {
+  const side = SWATCH_CODE.size / SWATCH_UNITS;
+  const rest =
+    Math.round((-SWATCH_START / SWATCH_UNITS / side) * 100_000) / 1000;
+  const full = swatchPulledBack(compact);
+  return {
+    "--swatch-rest": `translate(${rest}%, ${rest}%) scale(1)`,
+    "--swatch-full": `translate(${full.x}, ${full.y}) scale(${full.scale})`,
   } as CSSProperties;
 }
 
 /**
- * A close-up of a theme's code, one eye and a patch of its dots, filling a
- * box of `aspect` (width / height) that clips it. The whole code is drawn;
- * a transform crops it, so a hovered card can pull back to all of it.
+ * A close-up of a theme's code, one eye and a patch of its dots, filling
+ * the box that clips it (a size container: see swatchPulledBack). The whole
+ * code is drawn; a transform crops it, so a hovered card can pull back to
+ * all of it.
  */
 export function SwatchCrop({
   style,
-  aspect = 4 / 3,
+  compact = false,
   className,
 }: {
   style: ThemeStyles;
-  aspect?: number;
+  /** A kit's tile or a collection's piece (SWATCH_ROOM) */
+  compact?: boolean;
   className?: string;
 }) {
   const look = swatchStyle(style);
@@ -89,7 +118,7 @@ export function SwatchCrop({
       data-swatch-code=""
       style={{
         width: `${(SWATCH_CODE.size / SWATCH_UNITS) * 100}%`,
-        ...swatchTransforms(aspect),
+        ...swatchTransforms(compact),
       }}
     >
       <QRCode
@@ -118,7 +147,7 @@ export function LazySwatchCrop({
   ...props
 }: {
   style: ThemeStyles;
-  aspect?: number;
+  compact?: boolean;
   className?: string;
   eager?: boolean;
 }) {

@@ -20,15 +20,15 @@ export const MAX_CHIPS = 5;
 export function ThemeSwatch({
   style,
   eager = false,
-  aspect = 4 / 3,
   compact = false,
   className,
 }: {
   style: ThemeStyles;
   eager?: boolean;
-  /** Its box's width / height (the close-up is cut for it) */
-  aspect?: number;
-  /** Smaller chips, for a swatch that shares the stage (a kit's card) */
+  /**
+   * Smaller chips, for a swatch that shares the stage (a kit's tile, a
+   * collection's piece)
+   */
   compact?: boolean;
   /** Its box: it fills it (absolute, inset 0, by default) */
   className?: string;
@@ -36,12 +36,16 @@ export function ThemeSwatch({
   const colors = themeColors(style).slice(0, MAX_CHIPS);
   return (
     <div
-      className={cn("absolute inset-0 overflow-hidden", className)}
+      // A size container: the pulled-back code is sized from its height
+      className={cn(
+        "absolute inset-0 overflow-hidden [container-type:size]",
+        className,
+      )}
       data-theme-swatch=""
       // Its own background fills the box, and shows while the close-up loads
       style={{ backgroundColor: getColorString(style.bgColor, "#ffffff") }}
     >
-      <LazySwatchCrop aspect={aspect} eager={eager} style={style} />
+      <LazySwatchCrop compact={compact} eager={eager} style={style} />
       <ul
         aria-hidden
         className={cn(

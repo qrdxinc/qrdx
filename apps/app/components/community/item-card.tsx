@@ -233,7 +233,6 @@ function KitPicture({
         ) : (
           <div className={cn("absolute inset-0 rounded-xl", stage.object)}>
             <ThemeSwatch
-              aspect={1}
               className="rounded-xl"
               compact
               eager={eager}
@@ -278,7 +277,7 @@ function StackPiece({
           stage.object,
         )}
       >
-        <ThemeSwatch aspect={1} compact eager={eager} style={entry.preview} />
+        <ThemeSwatch compact eager={eager} style={entry.preview} />
       </div>
     </div>
   );

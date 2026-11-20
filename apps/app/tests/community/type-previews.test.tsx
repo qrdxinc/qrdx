@@ -1,15 +1,17 @@
 // A theme's swatch: the whole code is drawn, and a transform crops it to a
 // close-up (one whole eye, short of the next) that fills its box; hovered,
-// one transition carries it back to the whole code, centred on its own
-// background.
+// one transition carries it back to the whole code, between the type's
+// label and the chips, on its own background.
 
 import { QRCode } from "qrdx";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
   SWATCH_CODE,
+  SWATCH_ROOM,
   SWATCH_UNITS,
   SwatchCrop,
+  swatchPulledBack,
   swatchTransforms,
 } from "@/components/community/type-previews";
 
@@ -44,7 +46,7 @@ describe("SwatchCrop", () => {
     expect(eyeStart("top-right")?.slice(1)).toEqual(["190", "10"]);
     // At rest a box shows SWATCH_UNITS across, from a little before the
     // corner: the whole first eye, and not the next one.
-    const { x } = parse(swatchTransforms(4 / 3)["--swatch-rest" as never]);
+    const { x } = parse(swatchTransforms()["--swatch-rest" as never]);
     const side = SWATCH_CODE.size / SWATCH_UNITS;
     const start = -(x / 100) * side * SWATCH_UNITS;
     expect(start).toBeLessThan(10);
@@ -76,24 +78,53 @@ describe("SwatchCrop", () => {
     expect(html).not.toContain("svgQrWrapper");
   });
 
-  it("pulls back to the whole code, centred and inside its box", () => {
-    for (const aspect of [4 / 3, 1]) {
-      const vars = swatchTransforms(aspect);
-      const rest = parse(vars["--swatch-rest" as never]);
-      const full = parse(vars["--swatch-full" as never]);
-      expect(rest.scale).toBe(1);
-      // The element is SWATCH_CODE.size / SWATCH_UNITS box widths across
-      const side = SWATCH_CODE.size / SWATCH_UNITS;
-      const width = side * full.scale;
-      const left = (full.x / 100) * side;
-      const top = (full.y / 100) * side;
-      const height = 1 / aspect;
-      // Centred both ways, with room on every side
-      expect(left + width / 2).toBeCloseTo(0.5, 2);
-      expect(top + width / 2).toBeCloseTo(height / 2, 2);
+  it("pulls back to the whole code between the label and the chips", () => {
+    // Each box size a swatch has: cards in rows and grids, from the
+    // narrowest phone to a wide ranked row, then kits' tiles and
+    // collections' pieces.
+    const boxes = [
+      { width: 205, height: 154, compact: false },
+      { width: 252, height: 189, compact: false },
+      { width: 298, height: 224, compact: false },
+      { width: 105, height: 105, compact: true },
+      { width: 95, height: 95, compact: true },
+    ];
+    for (const { width, height, compact } of boxes) {
+      const { x, y, scale } = swatchPulledBack(compact);
+      const element = (SWATCH_CODE.size / SWATCH_UNITS) * width;
+      const side = element * cssValue(scale, width, height);
+      // The modules, inside the code's one-module margin
+      const margin = side / 27;
+      const left = cssValue(x, width, height) + margin;
+      const top = cssValue(y, width, height) + margin;
+      const modules = side - 2 * margin;
+      const room = SWATCH_ROOM[compact ? "compact" : "card"];
+      expect(top).toBeCloseTo(room.top, 5);
+      expect(top + modules).toBeCloseTo(height - room.bottom, 5);
+      expect(left + modules / 2).toBeCloseTo(width / 2, 5);
       expect(left).toBeGreaterThan(0);
-      expect(top).toBeGreaterThan(0);
-      expect(top + width).toBeLessThan(height);
     }
+    // In the transform the card's hover plays, after the close-up
+    const vars = swatchTransforms(true);
+    expect(vars["--swatch-full" as never]).toBe(
+      `translate(${swatchPulledBack(true).x}, ${swatchPulledBack(true).y}) scale(${swatchPulledBack(true).scale})`,
+    );
   });
 });
+
+/**
+ * A CSS length or number expression's value in px for a size container of
+ * `width` × `height`: calc() as parentheses, container units and px as
+ * numbers, tan(atan2()) as itself.
+ */
+function cssValue(expression: string, width: number, height: number) {
+  const js = expression
+    .replaceAll("calc(", "(")
+    .replace(/([\d.]+)cqw/g, `($1 * ${width} / 100)`)
+    .replace(/([\d.]+)cqh/g, `($1 * ${height} / 100)`)
+    .replace(/([\d.]+)px/g, "$1");
+  return new Function("tan", "atan2", `return ${js};`)(
+    Math.tan,
+    Math.atan2,
+  ) as number;
+}

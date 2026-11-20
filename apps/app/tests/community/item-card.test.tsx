@@ -174,16 +174,19 @@ describe("community card pictures", () => {
         bgColor: "#eff6ff",
       },
     });
-    // Its own background, edge to edge
+    // Its own background, edge to edge, sizing the pulled-back code
     const swatch = tagWith(html, "data-theme-swatch");
     expect(swatch).toContain("absolute inset-0");
+    expect(swatch).toContain("[container-type:size]");
     expect(swatch).toContain("background-color:#eff6ff");
     // The whole code, cropped to a close-up by a transform that can pull back
     const crop = tagWith(html, "data-swatch-code");
     expect(crop).toContain(stage.swatchCode);
     expect(crop).toContain("width:150%");
     expect(crop).toMatch(/--swatch-rest:translate\([^)]*\) scale\(1\)/);
-    expect(crop).toMatch(/--swatch-full:translate\([^)]*\) scale\(0\.\d+\)/);
+    expect(crop).toMatch(
+      /--swatch-full:translate\(calc\([^;]*cqh[^;]*scale\(tan\(atan2\(/,
+    );
     expect(chips(html)).toEqual(["#1d4ed8", "#0f172a", "#eff6ff"]);
     expect(html).not.toContain("data-qrdx-frame");
   });
