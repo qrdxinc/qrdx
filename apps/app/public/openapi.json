@@ -698,7 +698,7 @@
         "summary": "Get a community item",
         "tags": ["Community"],
         "security": [],
-        "description": "One published community item, with the design it applies in the same JSON as a saved theme: a theme's style, or `{ frame }` with a custom frame spec. Pass that style to `GET /qr` as `style`, or the id as `item`.\n\nNo key needed; cached for a minute (5 at the CDN); 120 requests a minute per IP address.",
+        "description": "One published community item, with the design it applies in the same JSON as a saved theme: a theme's style, or `{ frame }` with a custom frame spec.\n\nPass that style to `GET /qr` as `style`, or the id as `item`.\n\nNo key needed; cached for a minute (5 at the CDN); 120 requests a minute per IP address.",
         "responses": {
           "200": {
             "description": "The item",
@@ -3418,7 +3418,7 @@
         "summary": "Render a barcode image from a JSON body",
         "tags": ["Barcodes"],
         "security": [],
-        "description": "The same image as `GET /barcode`, with the same fields as JSON, so the value never appears in a URL or a log of one. Not cached (`Cache-Control: no-store`). No key needed; it shares the 300 requests a minute per IP address with `GET`.",
+        "description": "The same image as `GET /barcode`, with the same fields as JSON, so the value never appears in a URL or a log of one.\n\nNot cached (`Cache-Control: no-store`). No key needed; it shares the 300 requests a minute per IP address with `GET`.",
         "requestBody": {
           "required": true,
           "content": {
@@ -4532,7 +4532,7 @@
             "oauth2": ["codes:read"]
           }
         ],
-        "description": "A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale. Private and not cached; it counts toward the daily quota. For an image anyone can load, use the barcode's `imageUrl`.\n\n**Scope:** `codes:read` or `codes:write`, for API keys and OAuth tokens alike.",
+        "description": "A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale.\n\nPrivate and not cached; it counts toward the daily quota. For an image anyone can load, use the barcode's `imageUrl`.\n\n**Scope:** `codes:read` or `codes:write`, for API keys and OAuth tokens alike.",
         "parameters": [
           {
             "name": "type",
@@ -4656,7 +4656,7 @@
             "oauth2": ["codes:write"]
           }
         ],
-        "description": "Paints a QR code into AI artwork from your description and checks that the image scans. Where the model's image doesn't scan as drawn, QRdx strengthens the code just enough, on the model's own pixels (`blend` says how). It's the same AI art as the playground's Art tab and the [AI art studio](https://qrdx.dev/ai/art).\n\n**Credits.** Each image uses one from the monthly AI art allowance of the workspace the key acts on, the same allowance as the app: 3 on Free, 30 on Pro and 150 on Business, shared by the team. A failed call is refunded. Each person can also make at most 25 a day. `credits` in the response shows what's left.\n\n**Timing.** A call takes about 15 to 45 seconds in code mode, 25 to 45 in photo mode and 40 to 55 in scene mode (it makes its picture first), and gives up before a minute without using a credit: a scene that runs out of time answers `AI_ART_TIMEOUT`, so try again or use code mode. Set your HTTP client's timeout to at least 60 seconds.\n\n**What it encodes.** Send `text`, or a dynamic code's `code` (its `id`) to encode its short link, so you can change where it goes later and its scans are counted. A code in another workspace is a `404`.\n\n**Response.** JSON with the image as a `data:` URL, or the PNG itself with `?format=png` or `Accept: image/png` (seed, mode and blend then come as `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength` and `X-QRdx-Credits-Remaining` headers). Nothing is stored, and photos and reference images are discarded after the call. [AI art API](https://qrdx.dev/docs/developers/ai-art-api).\n\n**Scope:** `codes:write`, for API keys and OAuth tokens alike.",
+        "description": "Paints a QR code into AI artwork from your description and checks that the image scans.\n\nWhere the model's image doesn't scan as drawn, QRdx strengthens the code just enough, on the model's own pixels (`blend` says how). It's the same AI art as the playground's Art tab and the [AI art studio](https://qrdx.dev/ai/art).\n\n**Credits.** Each image uses one from the monthly AI art allowance of the workspace the key acts on, the same allowance as the app: 3 on Free, 30 on Pro and 150 on Business, shared by the team. A failed call is refunded. Each person can also make at most 25 a day. `credits` in the response shows what's left.\n\n**Timing.** A call takes about 15 to 45 seconds in code mode, 25 to 45 in photo mode and 40 to 55 in scene mode (it makes its picture first), and gives up before a minute without using a credit: a scene that runs out of time answers `AI_ART_TIMEOUT`, so try again or use code mode. Set your HTTP client's timeout to at least 60 seconds.\n\n**What it encodes.** Send `text`, or a dynamic code's `code` (its `id`) to encode its short link, so you can change where it goes later and its scans are counted. A code in another workspace is a `404`.\n\n**Response.** JSON with the image as a `data:` URL, or the PNG itself with `?format=png` or `Accept: image/png` (seed, mode and blend then come as `X-QRdx-Seed`, `X-QRdx-Mode`, `X-QRdx-Blend`, `X-QRdx-Blend-Strength` and `X-QRdx-Credits-Remaining` headers). Nothing is stored, and photos and reference images are discarded after the call. [AI art API](https://qrdx.dev/docs/developers/ai-art-api).\n\n**Scope:** `codes:write`, for API keys and OAuth tokens alike.",
         "parameters": [
           {
             "name": "format",
