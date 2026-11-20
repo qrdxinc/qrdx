@@ -100,6 +100,7 @@ export const BARCODE_MIME_TYPES: Record<BarcodeFileType, string> = {
   jpg: "image/jpeg",
   webp: "image/webp",
   avif: "image/avif",
+  bmp: "image/bmp",
   svg: "image/svg+xml",
   pdf: "application/pdf",
   eps: "application/postscript",

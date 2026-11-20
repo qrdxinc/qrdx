@@ -156,6 +156,7 @@ export const BARCODE_FILE_TYPES = [
   "jpg",
   "webp",
   "avif",
+  "bmp",
   "svg",
   "pdf",
   "eps",

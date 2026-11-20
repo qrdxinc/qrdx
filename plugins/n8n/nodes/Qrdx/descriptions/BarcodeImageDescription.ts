@@ -21,7 +21,7 @@ export const barcodeImageOperations: INodeProperties[] = [
         name: "Generate",
         value: "generate",
         description:
-          "Make a barcode image (EAN, UPC, Code 128, Data Matrix and more) as PNG, JPG, WebP, AVIF, SVG, PDF or EPS. Needs no API key.",
+          "Make a barcode image (EAN, UPC, Code 128, Data Matrix and more) as PNG, JPG, WebP, AVIF, BMP, SVG, PDF or EPS. Needs no API key.",
         action: "Generate a barcode image",
       },
     ],
@@ -136,6 +136,12 @@ export const barcodeImageFields: INodeProperties[] = [
         name: "AVIF",
         value: "avif",
         description: "The smallest files, for modern browsers",
+      },
+      {
+        name: "BMP",
+        value: "bmp",
+        description:
+          "Uncompressed 24-bit bitmap for older systems that only take BMP",
       },
       {
         name: "EPS",
@@ -263,7 +269,7 @@ export const barcodeImageFields: INodeProperties[] = [
         },
         default: 4,
         description:
-          "Pixels per module (the narrowest bar, or one 2D cell) in PNG, JPG, WebP and AVIF files. SVG, PDF and EPS are vectors at one point per module.",
+          "Pixels per module (the narrowest bar, or one 2D cell) in PNG, JPG, WebP, AVIF and BMP files. SVG, PDF and EPS are vectors at one point per module.",
       },
       {
         displayName: "Show Text",
