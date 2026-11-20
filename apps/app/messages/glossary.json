@@ -158,6 +158,18 @@
       "zh-Hans": "扫描",
       "id": "pemindaian",
       "hi": "स्कैन"
+    },
+    "bookmark (keeping a community item to find it again; never translate it as save or saved)": {
+      "es": "marcador",
+      "pt-BR": "favorito",
+      "fr": "favori",
+      "de": "Lesezeichen",
+      "it": "segnalibro",
+      "ja": "ブックマーク",
+      "ko": "북마크",
+      "zh-Hans": "收藏",
+      "id": "bookmark",
+      "hi": "बुकमार्क"
     }
   },
   "register": {

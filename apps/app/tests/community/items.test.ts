@@ -53,6 +53,7 @@ import {
 } from "@/lib/community/queries";
 import {
   ItemNotFoundError,
+  itemReactionsOf,
   toggleItemLike,
   toggleItemSave,
 } from "@/lib/community/reactions";
@@ -586,7 +587,7 @@ describe("likes, saves and copies", () => {
     ]);
   });
 
-  it("toggles likes and saves with their counts", async () => {
+  it("toggles likes and bookmarks with their counts", async () => {
     expect(await toggleItemLike("u_was", "ci_f")).toEqual({
       liked: true,
       likeCount: 1,
@@ -595,13 +596,46 @@ describe("likes, saves and copies", () => {
       liked: false,
       likeCount: 0,
     });
-    expect(await toggleItemSave("u_was", "ci_f")).toEqual({ saved: true });
+    // Bookmarks are stored as saves, and come back with their count
+    expect(await toggleItemSave("u_was", "ci_f")).toEqual({
+      saved: true,
+      saveCount: 1,
+    });
     expect(fakeDb.find("communityItem", { id: "ci_f" })?.saveCount).toBe(1);
     expect((await savedFrames("u_was")).map((f) => f.id)).toEqual(["ci_f"]);
-    expect(await toggleItemSave("u_was", "ci_f")).toEqual({ saved: false });
+    expect(await toggleItemSave("u_was", "ci_f")).toEqual({
+      saved: false,
+      saveCount: 0,
+    });
     await expect(toggleItemLike("u_was", "ci_x")).rejects.toThrow(
       ItemNotFoundError,
     );
+  });
+
+  it("tells the cards which items an account liked and bookmarked, with the counts now", async () => {
+    expect(await itemReactionsOf("u_was", ["ci_f"])).toEqual({
+      liked: [],
+      bookmarked: [],
+      counts: { ci_f: { likes: 0, bookmarks: 0 } },
+    });
+    await toggleItemLike("u_was", "ci_f");
+    await toggleItemSave("u_was", "ci_f");
+    expect(await itemReactionsOf("u_was", ["ci_f", "ci_f", "nope"])).toEqual({
+      liked: ["ci_f"],
+      bookmarked: ["ci_f"],
+      counts: { ci_f: { likes: 1, bookmarks: 1 } },
+    });
+    // Someone else's are their own; the counts are everyone's
+    expect(await itemReactionsOf("u_ana", ["ci_f"])).toEqual({
+      liked: [],
+      bookmarked: [],
+      counts: { ci_f: { likes: 1, bookmarks: 1 } },
+    });
+    expect(await itemReactionsOf("u_was", [])).toEqual({
+      liked: [],
+      bookmarked: [],
+      counts: {},
+    });
   });
 
   it("copies a frame into the workspace and counts one use a day", async () => {

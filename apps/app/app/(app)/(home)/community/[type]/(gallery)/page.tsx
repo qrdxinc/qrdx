@@ -122,12 +122,12 @@ const EMPTY: Record<
   },
   collection: {
     title: "No collections yet",
-    body: "Group frames, themes and page templates you saved or made.",
+    body: "Group frames, themes and page templates you bookmarked or made.",
     link: { href: "/community/new", label: "Make a collection" },
   },
   kit: {
     title: "No kits yet",
-    body: "Pair a page template with a theme or frame you saved, then publish it as a kit.",
+    body: "Pair a page template with a theme or frame you bookmarked, then publish it as a kit.",
     link: { href: "/community/new?make=kit", label: "Make a kit" },
   },
   "page-template": {
@@ -187,8 +187,8 @@ function Help({ type }: { type: GalleryType }) {
           label="How to make one"
           title="Make a collection"
         >
-          Save or publish at least {COLLECTION_MIN_ITEMS} frames, themes or page
-          templates, then group them into a collection.
+          Bookmark or publish at least {COLLECTION_MIN_ITEMS} frames, themes or
+          page templates, then group them into a collection.
         </HowToPublish>
       );
     case "kit":
@@ -202,8 +202,8 @@ function Help({ type }: { type: GalleryType }) {
           label="How to make one"
           title="Make a kit"
         >
-          Pair a page template with a theme or frame you saved, then publish it
-          as a kit.
+          Pair a page template with a theme or frame you bookmarked, then
+          publish it as a kit.
         </HowToPublish>
       );
     case "page-template":
@@ -241,7 +241,7 @@ async function TypeBrowse({
 }) {
   const { type, filter, sort, tag } = query;
   const many = TYPE_LABELS[type].many.toLowerCase();
-  const personal = filter === "mine" || filter === "saved";
+  const personal = filter === "mine" || filter === "bookmarked";
   // Groups hold official frames only.
   const groupsApply = groupsApplyTo(query);
   const activeGroup = groupsApply ? query.group : null;
@@ -295,7 +295,7 @@ async function TypeBrowse({
     { value: "official", label: "From QRdx" },
     { value: "community", label: "From the community" },
     { value: "mine", label: `My ${many}` },
-    { value: "saved", label: `Saved ${many}` },
+    { value: "bookmarked", label: `Bookmarked ${many}` },
   ];
 
   const sidebar = (
@@ -416,9 +416,9 @@ async function TypeBrowse({
           body={
             filter === "mine"
               ? `Sign in to see the ${many} you published.`
-              : `Sign in to see the ${many} you saved.`
+              : `Sign in to see the ${many} you bookmarked.`
           }
-          title={filter === "mine" ? `Your ${many}` : `Saved ${many}`}
+          title={filter === "mine" ? `Your ${many}` : `Bookmarked ${many}`}
         />
       ) : narrowed ? (
         <Empty
@@ -433,7 +433,7 @@ async function TypeBrowse({
           body="Nothing matches this filter yet."
           title={`No ${many} here`}
         />
-      ) : filter === "saved" ? (
+      ) : filter === "bookmarked" ? (
         <Empty
           action={
             <Link
@@ -443,8 +443,8 @@ async function TypeBrowse({
               Browse all {many}
             </Link>
           }
-          body={`Choose Save on any ${TYPE_LABELS[type].one.toLowerCase()} to keep it here.`}
-          title={`No saved ${many} yet`}
+          body={`Choose Bookmark on any ${TYPE_LABELS[type].one.toLowerCase()} to keep it here.`}
+          title={`No bookmarked ${many} yet`}
         />
       ) : (
         <Empty

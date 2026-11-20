@@ -4519,7 +4519,7 @@
         "comingUp": "Em breve",
         "classic": "Clássicas",
         "shapedCodes": "Códigos com forma",
-        "saved": "Salvos",
+        "saved": "Favoritado",
         "results": "Resultados"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name} já está na comunidade.",
       "viewIt": "Ver",
       "whatToMake": "O que criar",
-      "itemsYouSaveInThe": "Os itens que você salva da comunidade ou publica aparecem aqui. <link>Explorar a comunidade</link>",
+      "itemsYouSaveInThe": "Os itens que você marca como favorito na comunidade ou publica aparecem aqui. <link>Explorar a comunidade</link>",
       "itemsLengthPicked": "Itens<span>{length, number} selecionados</span>",
       "optional": "(opcional)",
       "name": "Nome",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "Reúna molduras, temas e modelos de página para as pessoas explorarem juntos, por exemplo tudo para uma cafeteria. Escolha 2 ou mais.",
       "aPageTemplateAndThe": "Um modelo de página e o visual que combina com ele. Ao usar um kit, a página é copiada como rascunho e o visual como tema salvo.",
       "yours": "seus",
-      "noSavedMany": "Nenhum {many} salvo",
+      "noSavedMany": "Nenhum favorito em {many}",
       "none": "Nenhum",
       "pickOne": "Escolha um",
       "publishing": "Publicando",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "Remover da comunidade?",
       "itLeavesTheCommunityAt": "Ele sai da comunidade na hora. Quem já usou continua com as próprias cópias: foi compartilhado sob CC0.",
       "cancel": "Cancelar",
-      "removeFromSaved": "Remover dos salvos",
-      "save": "Salvar",
+      "removeFromSaved": "Remover favorito",
+      "save": "Favoritar",
       "unlike": "Descurtir",
       "like": "Curtir",
       "useKit": "Usar kit",
       "useTemplate": "Usar modelo",
-      "saved": "Salvo",
+      "saved": "Favoritado",
       "open": "Abrir",
       "nameIsInYourPages": "“{name}” está nas suas páginas como rascunho, e o visual está nos seus temas.",
       "nameIsInYourPages2": "“{name}” está nas suas páginas como rascunho.",
-      "savedItsInTheEditors": "Salvo. Está no seletor de molduras do editor.",
-      "saved2": "Salvo.",
-      "removedFromSaved": "Removido dos salvos.",
+      "savedItsInTheEditors": "Favoritado. Ele está no seletor de molduras do editor.",
+      "saved2": "Favoritado.",
+      "removedFromSaved": "Favorito removido.",
       "copiedToWhereAsName": "Copiado para {where} como “{name}”",
       "nameIsNoLongerIn": "“{name}” não está mais na comunidade."
     },
     "itemCard": {
       "empty": "Vazio",
       "viewAll": "Ver tudo",
-      "saves": "Salvos",
+      "like": "Curtir",
+      "unlike": "Descurtir",
+      "bookmark": "Favoritar",
+      "removeBookmark": "Remover favorito",
       "typeFrame": "Moldura",
       "typeTheme": "Tema",
       "typePage": "Página",
@@ -5453,7 +5456,7 @@
       "failed": "A próxima página não carregou."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {# item} other {# itens}} · {saves, plural, one {# salvamento} other {# salvamentos}}"
+      "itemsAndSaves": "{items, plural, one {# item} other {# itens}} · {saves, plural, one {# favorito} other {# favoritos}}"
     },
     "more": {
       "load": "Carregar mais",
@@ -5464,7 +5467,7 @@
       "licence": "Licença:"
     },
     "newBundle": {
-      "signInToMakeA": "Entre na sua conta para criar uma coleção ou um kit com os itens que você salvou.",
+      "signInToMakeA": "Entre na sua conta para criar uma coleção ou um kit com os itens que você favoritou.",
       "signIn": "Entrar"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "O designer de IA precisa de uma conta grátis. As contas grátis têm {count, number} solicitações no total.",
       "uploadFrame": "Para enviar seus próprios frames, você precisa de uma conta grátis.",
       "publishFrame": "Para compartilhar um frame com a comunidade, você precisa de uma conta grátis.",
-      "communityAction": "Para curtir, salvar, copiar e publicar designs da comunidade, você precisa de uma conta grátis.",
+      "communityAction": "Curtir, adicionar aos favoritos, copiar e publicar designs da comunidade exige uma conta grátis.",
       "saveBarcode": "Os códigos de barras salvos ficam na sua conta, prontos para baixar de novo.",
       "bulkOverLimit": "Arquivos de até {limit, number} linhas não precisam de conta. Uma conta grátis gera até {max, number} por arquivo, e o seu arquivo continua carregado.",
       "keepDesigns": "Guarde seus designs na sua conta, em todos os dispositivos.",
