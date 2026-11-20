@@ -10,7 +10,7 @@ export function NewTag({ className }: { className?: string }) {
     <span
       className={cn(
         "rounded-full bg-foreground px-1.5 py-0.5 font-medium text-[9px] text-background uppercase leading-none tracking-wide",
-        className
+        className,
       )}
     >
       {t("newTag")}
