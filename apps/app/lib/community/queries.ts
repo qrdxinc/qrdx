@@ -1098,12 +1098,12 @@ export async function themeItemsFeed(
       // Items published at the cursor's very moment (the seed publishes a
       // batch milliseconds apart; a backfill may give many one time) come
       // in id order after it, so no page repeats or skips one.
-      const after =
-        id &&
-        or(
-          past,
-          and(eq(communityItem.publishedAt, at), gt(communityItem.id, id)),
-        );
+      const after = id
+        ? or(
+            past,
+            and(eq(communityItem.publishedAt, at), gt(communityItem.id, id)),
+          )
+        : undefined;
       conditions.push(after ?? past);
     }
     rows = (await itemsQuery()
