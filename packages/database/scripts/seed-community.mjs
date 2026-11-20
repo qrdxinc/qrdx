@@ -5,7 +5,8 @@
 //   official/*.json, listed in ./community-seed.json in catalogue order),
 //   with the engine's ids as their slugs, so /community/frames/<id> keeps
 //   the same URL it had before the seed;
-// - the 10 new themes and 8 collections in ./community-seed.json;
+// - the 10 new themes and 18 collections in ./community-seed.json (8 of
+//   them group the frames and hand-made themes, 10 group the designs);
 // - 41 of the app's built-in themes (apps/app/utils/qr-presets.ts), as
 //   ./community-seed-presets.json stores them: written from the presets by
 //   apps/app/scripts/community-seed/generate.ts, each payload what a

@@ -77,6 +77,8 @@ const isDesign = (item: (typeof items)[number]) =>
 /** The 10 hand-made themes, the 41 built-in ones and the designs */
 const DESIGNS = buildSeedDesigns().length;
 const THEMES = 51 + DESIGNS;
+/** The 8 original collections and the 10 that group the designs */
+const COLLECTIONS = 18;
 /** The design a theme or frame item is shown (and gated) as. */
 const shownStyle = (item: (typeof items)[number]) =>
   item.type === "frame"
@@ -90,14 +92,14 @@ const shownStyle = (item: (typeof items)[number]) =>
       );
 
 describe("the seed's items", () => {
-  it("publishes the engine's official frames, the themes and 8 collections", () => {
+  it("publishes the engine's official frames, the themes and 18 collections", () => {
     expect(byType("frame").map((item) => item.slug)).toEqual(
       OFFICIAL_FRAMES.map((frame) => frame.id),
     );
     expect(byType("theme")).toHaveLength(THEMES);
     expect(byType("theme").filter(isPreset)).toHaveLength(41);
     expect(byType("theme").filter(isDesign)).toHaveLength(DESIGNS);
-    expect(byType("collection")).toHaveLength(8);
+    expect(byType("collection")).toHaveLength(COLLECTIONS);
     expect(new Set(items.map((item) => item.id)).size).toBe(items.length);
     expect(new Set(items.map((item) => `${item.type}:${item.slug}`)).size).toBe(
       items.length,
@@ -340,7 +342,7 @@ describe("seed-community", () => {
     expect(pg.rows("community_item")).toHaveLength(0);
     expect(lines.join("\n")).toMatch(
       new RegExp(
-        `Planned: ${OFFICIAL_FRAMES.length} frame\\(s\\), ${THEMES} theme\\(s\\), 8 collection\\(s\\), 0 existing theme\\(s\\) marked official`,
+        `Planned: ${OFFICIAL_FRAMES.length} frame\\(s\\), ${THEMES} theme\\(s\\), ${COLLECTIONS} collection\\(s\\), 0 existing theme\\(s\\) marked official`,
       ),
     );
   });
@@ -379,11 +381,11 @@ describe("seed-community", () => {
       .rows("community_item")
       .filter((i) => String(i.id).startsWith("ci_official_"));
     expect(seeded).toHaveLength(items.length);
-    // The official frames, the themes and 8 collections, then the pages
+    // The official frames, the themes and the collections, then the pages
     expect(items).toHaveLength(
       OFFICIAL_FRAMES.length +
         THEMES +
-        8 +
+        COLLECTIONS +
         byType("page-template").length +
         byType("kit").length,
     );

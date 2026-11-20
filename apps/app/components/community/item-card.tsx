@@ -6,6 +6,7 @@ import { Archive } from "iconsax-reactjs";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { CSSProperties, ReactNode } from "react";
+import { NewTag } from "@/components/new-tag";
 import {
   type CommunityItemCard,
   type CommunityStackEntry,
@@ -13,6 +14,7 @@ import {
   TYPE_LABELS,
   TYPE_SEGMENTS,
 } from "@/lib/community/types";
+import { isNewPublished } from "@/lib/whats-new/community";
 import {
   CARD_ART,
   CARD_FRAME,
@@ -59,7 +61,10 @@ const frameOnlyKit = (card: CommunityItemCard) =>
  * in the browser as the card nears the screen; `eager` draws it in the
  * server's HTML too (first-screen cards only: a framed design is tens of
  * kilobytes of SVG). Hovering the card, or focusing its link, plays the
- * preview's motion (./stage.module.css).
+ * preview's motion (./stage.module.css). An item published in the last
+ * thirty days wears a "New" pill on its stage (lib/whats-new/community.ts);
+ * the pill is decided here, on the server, so the HTML never differs from
+ * what the browser would compute.
  */
 export function ItemCard({
   card,
@@ -81,7 +86,10 @@ export function ItemCard({
   rankAs?: "numeral" | "badge";
 }) {
   const t = useTranslations("community.itemCard");
+  const common = useTranslations("common");
   const type = TYPE_LABELS[card.type].one;
+  const isNew = isNewPublished(card.publishedAt);
+  const name = isNew ? common("nameIsNew", { name: card.name }) : card.name;
   // Page previews have links of their own, so the card's link is stretched
   // over the card instead of wrapping it (nested <a> is invalid HTML and
   // breaks hydration), as on the /templates gallery.
@@ -95,7 +103,7 @@ export function ItemCard({
       )}
     >
       <Link
-        aria-label={`${card.name}, ${type}`}
+        aria-label={`${name}, ${type}`}
         className="absolute inset-0 z-10 rounded-xl outline-none"
         href={cardHref(card)}
       />
@@ -120,6 +128,15 @@ export function ItemCard({
                 : t(TYPE_KEYS[card.type])}
             </span>
           </div>
+          {isNew && (
+            <span
+              aria-hidden
+              className="absolute top-2.5 right-2.5 z-[3] flex"
+              data-new-tag=""
+            >
+              <NewTag />
+            </span>
+          )}
         </div>
       </div>
       <div className={cn(CARD_TEXT, CARD_TEXT_REVEAL)}>
