@@ -5437,11 +5437,7 @@
       "onATableTent": "टेबल टेंट पर",
       "onAPoster": "पोस्टर पर",
       "asASticker": "स्टिकर के रूप में",
-      "onABusinessCard": "बिज़नेस कार्ड पर",
-      "onAPhone": "फ़ोन पर, उसके होस्टेड पेज पर",
-      "inFrames": "फ़्रेम में",
-      "onABadge": "बैज पर",
-      "asAsciiArt": "ASCII आर्ट के रूप में"
+      "onABusinessCard": "बिज़नेस कार्ड पर"
     },
     "itemPages": {
       "previous": "पिछला",

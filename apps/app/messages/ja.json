@@ -5437,11 +5437,7 @@
       "onATableTent": "テーブルテントに配置した例",
       "onAPoster": "ポスターに配置した例",
       "asASticker": "ステッカーにした例",
-      "onABusinessCard": "名刺に配置した例",
-      "onAPhone": "スマートフォンのホスト型ページ上で",
-      "inFrames": "フレーム内",
-      "onABadge": "バッジ上",
-      "asAsciiArt": "ASCIIアート"
+      "onABusinessCard": "名刺に配置した例"
     },
     "itemPages": {
       "previous": "前へ",

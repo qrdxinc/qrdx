@@ -5437,11 +5437,7 @@
       "onATableTent": "테이블 텐트에 적용",
       "onAPoster": "포스터에 적용",
       "asASticker": "스티커로 적용",
-      "onABusinessCard": "명함에 적용",
-      "onAPhone": "휴대폰의 호스팅 페이지에서",
-      "inFrames": "프레임 적용",
-      "onABadge": "배지에 적용",
-      "asAsciiArt": "ASCII 아트로"
+      "onABusinessCard": "명함에 적용"
     },
     "itemPages": {
       "previous": "이전",

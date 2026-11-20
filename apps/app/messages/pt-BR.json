@@ -5437,11 +5437,7 @@
       "onATableTent": "Em um display de mesa",
       "onAPoster": "Em um pôster",
       "asASticker": "Como adesivo",
-      "onABusinessCard": "Em um cartão de visita",
-      "onAPhone": "No celular, na página hospedada",
-      "inFrames": "Em molduras",
-      "onABadge": "Em um crachá",
-      "asAsciiArt": "Como arte ASCII"
+      "onABusinessCard": "Em um cartão de visita"
     },
     "itemPages": {
       "previous": "Anterior",

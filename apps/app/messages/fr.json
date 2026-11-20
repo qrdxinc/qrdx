@@ -5437,11 +5437,7 @@
       "onATableTent": "Sur un chevalet de table",
       "onAPoster": "Sur une affiche",
       "asASticker": "En autocollant",
-      "onABusinessCard": "Sur une carte de visite",
-      "onAPhone": "Sur un téléphone, sur sa page hébergée",
-      "inFrames": "Dans des cadres",
-      "onABadge": "Sur un badge",
-      "asAsciiArt": "En art ASCII"
+      "onABusinessCard": "Sur une carte de visite"
     },
     "itemPages": {
       "previous": "Précédent",

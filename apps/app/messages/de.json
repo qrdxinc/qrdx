@@ -5437,11 +5437,7 @@
       "onATableTent": "Auf einem Tischaufsteller",
       "onAPoster": "Auf einem Poster",
       "asASticker": "Als Sticker",
-      "onABusinessCard": "Auf einer Visitenkarte",
-      "onAPhone": "Auf dem Smartphone, auf der gehosteten Seite",
-      "inFrames": "In Rahmen",
-      "onABadge": "Auf einem Badge",
-      "asAsciiArt": "Als ASCII-Art"
+      "onABusinessCard": "Auf einer Visitenkarte"
     },
     "itemPages": {
       "previous": "Zurück",
