@@ -27,26 +27,38 @@ export const NEON_DESIGNS: SeedDesign[] = [
     id: "hot-coral",
     name: "Hot coral",
     description:
-      "Near-black rounded modules with extra-rounded eyes on a hot coral. Loud and warm, for summer sales, festival wristbands and beach bars.",
+      "Near-black rounded modules with extra-rounded eyes on a hot coral, in a black sticker that says Scan me. Loud and warm, for summer sales, festival wristbands and beach bars.",
     tags: ["neon", "bold", "vibrant", "tropical"],
     style: {
       ...ink("#FF6F61", "#111111"),
       ...shapes("rounded", "extra-rounded", "rounded"),
       level: "Q",
-      margin: 4,
+      margin: 3,
+      frame: {
+        style: "sticker",
+        text: "Scan me",
+        color: "#111111",
+        textColor: "#FF6F61",
+      },
     },
   },
   {
     id: "cyan-dots",
     name: "Cyan dots",
     description:
-      "Black round dots with octagon eyes and round centres on a bright cyan. Cool and electric, for tech events, gaming cafés and club flyers.",
+      "Black round dots with octagon eyes and round centres on a bright cyan, under a black banner that says Scan me. Cool and electric, for tech events, gaming cafés and club flyers.",
     tags: ["neon", "cool", "futuristic", "cyberpunk"],
     style: {
       ...ink("#22D3EE", "#0B0B0B"),
       ...shapes("circle", "octagon", "circle"),
       level: "Q",
-      margin: 4,
+      margin: 3,
+      frame: {
+        style: "banner-top",
+        text: "Scan me",
+        color: "#0B0B0B",
+        textColor: "#22D3EE",
+      },
     },
   },
   {
@@ -92,13 +104,19 @@ export const NEON_DESIGNS: SeedDesign[] = [
     id: "safety-orange",
     name: "Safety orange",
     description:
-      "Black square modules with bevelled eyes and rounded-triangle centres on a safety orange. Impossible to miss, for site signs, warehouses and workwear.",
+      "Black square modules with bevelled eyes and rounded-triangle centres on a safety orange, over a black banner that says Scan here. Impossible to miss, for site signs, warehouses and workwear.",
     tags: ["neon", "bold", "high-contrast", "industrial"],
     style: {
       ...ink("#FF8A00", "#000000"),
       ...shapes("square", "bevel", "rounded-triangle"),
       level: "Q",
-      margin: 4,
+      margin: 3,
+      frame: {
+        style: "banner-bottom",
+        text: "Scan here",
+        color: "#000000",
+        textColor: "#FF8A00",
+      },
     },
   },
   {
