@@ -60,6 +60,7 @@ import {
 import { ART_MODEL_LABEL } from "./ai/art-models";
 import { BARCODE_FORMATS } from "./barcode/formats";
 import { BRAND_LOGO_COUNT } from "./brand-logos/catalog.generated";
+import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "./free-plan-limits";
 import { PAGE_TYPE_IDS } from "./landing/page-type-ids";
 import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
 import {
@@ -192,6 +193,10 @@ export const PRODUCT_FACTS = {
    * "year". Pro and Business keep all of it, which copy writes as words.
    */
   freeScanHistoryYears: FREE_SCAN_HISTORY_YEARS,
+  /** Dynamic codes on Free (lib/free-plan-limits.ts): "10". */
+  freeDynamicCodes: FREE_DYNAMIC_CODES,
+  /** Hosted pages on Free (lib/free-plan-limits.ts): "3". */
+  freeHostedPages: FREE_HOSTED_PAGES,
   /** Path aliases one code can have on its custom domain (lib/path-alias-limits.ts). */
   pathAliasesPerCode: PATH_ALIASES_PER_CODE,
 } as const;

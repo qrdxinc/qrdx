@@ -875,7 +875,7 @@ No key needed; cached for a minute (5 at the CDN); 120 requests a minute per IP 
         security: security("codes:write"),
         description: `Creates one dynamic code, or up to ${MAX_BULK_CREATE.toLocaleString("en-US")} at once.
 
-Send an object for one code, or an array for several (Pro). The response's \`shortLink\` is what the QR code encodes: point it somewhere else later with PATCH and the printed code keeps working. Render it with the image API, for example \`https://api.qrdx.dev/v1/qr?data=<shortLink>\`. Free workspaces have 10 active codes. Create requests are limited to 20 a minute.
+Send an object for one code, or an array for several (Pro). The response's \`shortLink\` is what the QR code encodes: point it somewhere else later with PATCH and the printed code keeps working. Render it with the image API, for example \`https://api.qrdx.dev/v1/qr?data=<shortLink>\`. Free workspaces have ${getPlanLimits("free").dynamicCodes} active codes. Create requests are limited to 20 a minute.
 
 An array is all or nothing: when any row has a problem, nothing is created and \`data.details\` lists every problem by \`index\`. Generated back-halves never repeat within a batch or clash with existing codes. Send an \`Idempotency-Key\` so a retry after a timeout returns the codes the first try made (\`Idempotent-Replayed: true\`) and finishes one that was cut off, instead of creating them twice. \`Prefer: return=minimal\` leaves each code's \`style\` out of the response.`,
         parameters: c.parameters(
