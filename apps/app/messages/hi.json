@@ -5437,7 +5437,11 @@
       "onATableTent": "टेबल टेंट पर",
       "onAPoster": "पोस्टर पर",
       "asASticker": "स्टिकर के रूप में",
-      "onABusinessCard": "बिज़नेस कार्ड पर"
+      "onABusinessCard": "बिज़नेस कार्ड पर",
+      "onAPhone": "फ़ोन पर, उसके होस्टेड पेज पर",
+      "inFrames": "फ़्रेम में",
+      "onABadge": "बैज पर",
+      "asAsciiArt": "ASCII आर्ट के रूप में"
     },
     "itemPages": {
       "previous": "पिछला",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "कम्युनिटी में खोजें",
-      "placeholder": "फ़्रेम, थीम और पेज खोजें"
+      "placeholder": "कम्युनिटी में खोजें"
     }
   },
   "communityActions": {

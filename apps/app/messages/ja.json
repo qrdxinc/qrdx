@@ -5437,7 +5437,11 @@
       "onATableTent": "テーブルテントに配置した例",
       "onAPoster": "ポスターに配置した例",
       "asASticker": "ステッカーにした例",
-      "onABusinessCard": "名刺に配置した例"
+      "onABusinessCard": "名刺に配置した例",
+      "onAPhone": "スマートフォンでのホスト型ページ表示",
+      "inFrames": "フレーム内での表示",
+      "onABadge": "バッジでの表示",
+      "asAsciiArt": "ASCIIアート表示"
     },
     "itemPages": {
       "previous": "前へ",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "コミュニティを検索",
-      "placeholder": "フレーム、テーマ、ページを検索"
+      "placeholder": "コミュニティを検索"
     }
   },
   "communityActions": {

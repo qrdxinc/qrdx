@@ -75,10 +75,20 @@ export const RANK_ROOM = "pl-12 md:pl-16 xl:pl-[4.5rem]";
 export const RANK_ROOM_WIDE = "pl-24 md:pl-[7.75rem] xl:pl-[8.75rem]";
 
 /**
- * The caption under it, two lines: the name with its saves on the right,
- * then the creator.
+ * The caption under it: the name with its saves on the right, then (on
+ * touch screens) the creator.
  */
 export const CARD_TEXT = "flex min-w-0 flex-col gap-1.5 px-0.5";
+
+/**
+ * The caption's second line (the creator). Where a pointer can hover, the
+ * caption is one line, so the room each card keeps for it is small and
+ * rows of cards sit close; there the creator is left to screen readers.
+ * Touch screens show both lines. A placeholder's second line uses it too,
+ * so it stays as tall as the card it stands in for.
+ */
+export const CARD_TEXT_TOUCH_ONLY =
+  "[@media(hover:hover)_and_(pointer:fine)]:sr-only";
 
 /**
  * Where a pointer can hover (a mouse or trackpad), the caption waits out of
@@ -92,6 +102,13 @@ export const CARD_TEXT_REVEAL =
 /** One line of the caption: one end on the left, the other on the right. */
 export const CARD_LINE = "flex min-w-0 items-center justify-between gap-3";
 
+/**
+ * The space between cards in a grid. Where a pointer can hover, a card's
+ * one-line caption is hidden until hover but keeps its room, which already
+ * parts the rows, so they sit as close as the columns.
+ */
+export const GRID_GAPS =
+  "gap-x-6 gap-y-10 [@media(hover:hover)_and_(pointer:fine)]:gap-y-6";
+
 /** A card grid with room for four columns (a profile, a collection). */
-export const CARD_GRID =
-  "grid gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
+export const CARD_GRID = `grid ${GRID_GAPS} sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4`;

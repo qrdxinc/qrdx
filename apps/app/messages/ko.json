@@ -5437,7 +5437,11 @@
       "onATableTent": "테이블 텐트에 적용",
       "onAPoster": "포스터에 적용",
       "asASticker": "스티커로 적용",
-      "onABusinessCard": "명함에 적용"
+      "onABusinessCard": "명함에 적용",
+      "onAPhone": "휴대폰의 호스팅 페이지에서",
+      "inFrames": "프레임 적용 모습",
+      "onABadge": "배지에 적용",
+      "asAsciiArt": "ASCII 아트로"
     },
     "itemPages": {
       "previous": "이전",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "커뮤니티 검색",
-      "placeholder": "프레임, 테마, 페이지 검색"
+      "placeholder": "커뮤니티 검색"
     }
   },
   "communityActions": {

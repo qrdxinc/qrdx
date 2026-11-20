@@ -2,7 +2,7 @@
 // item is (a frame around a sample code, a theme as a swatch, a page on a
 // phone, a kit as look + page, a collection as a fan of its items), with
 // the item's type on a quiet label in the stage's corner. The caption gives
-// the name with its saves, then the creator.
+// the name with its saves, then (on touch screens) the creator.
 
 import { describe, expect, it, vi } from "vitest";
 import { renderIntl } from "../support/intl";
@@ -29,8 +29,10 @@ vi.mock("next/cache", () => ({
 }));
 
 import { getOfficialFrame } from "qrdx";
+import { GALLERY_GRID } from "@/components/community/browse-sidebar";
 import {
   CARD_ART,
+  CARD_GRID,
   RAIL,
   STAGE,
   STAGE_LABEL,
@@ -148,7 +150,7 @@ describe("community card type labels", () => {
     );
 
     const unsaved = renderIntl(ItemGrid({ cards: [card({ saveCount: 0 })] }));
-    expect(unsaved).not.toContain("sr-only");
+    expect(unsaved).not.toContain('<span class="sr-only">');
   });
 });
 
@@ -329,5 +331,29 @@ describe("community card captions on hover", () => {
     const classes = captionClass(renderIntl(ItemGrid({ cards: [card({})] })));
     expect(classes).toContain("group-hover:opacity-100");
     expect(classes).toContain("group-has-[a:focus-visible]:opacity-100");
+  });
+
+  it("are one line where a pointer can hover, the creator left to screen readers", () => {
+    const html = renderIntl(ItemGrid({ cards: [card({})] }));
+    const at = html.indexOf("Ana Ruiz");
+    expect(at).toBeGreaterThan(-1);
+    // The creator's line: the nearest element above it that's a caption line
+    const open = html.lastIndexOf('<div class="', at);
+    const line = html.slice(open, html.indexOf(">", open));
+    expect(line).toContain("[@media(hover:hover)_and_(pointer:fine)]:sr-only");
+    // Never hidden from screen readers
+    expect(line).not.toMatch(/\b(hidden|invisible)\b|aria-hidden/);
+  });
+
+  it("let rows of cards sit as close as their columns where a pointer can hover", () => {
+    for (const grid of [CARD_GRID, GALLERY_GRID]) {
+      const classes = grid.split(" ");
+      expect(classes).toContain("gap-x-6");
+      // Touch screens show the whole caption, so their rows keep more room
+      expect(classes).toContain("gap-y-10");
+      expect(classes).toContain(
+        "[@media(hover:hover)_and_(pointer:fine)]:gap-y-6",
+      );
+    }
   });
 });

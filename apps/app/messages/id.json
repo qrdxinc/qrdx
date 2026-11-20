@@ -5437,7 +5437,11 @@
       "onATableTent": "Di tent card meja",
       "onAPoster": "Pada poster",
       "asASticker": "Sebagai stiker",
-      "onABusinessCard": "Pada kartu nama"
+      "onABusinessCard": "Pada kartu nama",
+      "onAPhone": "Di ponsel, pada halaman yang di-hosting",
+      "inFrames": "Dalam bingkai",
+      "onABadge": "Pada lencana",
+      "asAsciiArt": "Sebagai seni ASCII"
     },
     "itemPages": {
       "previous": "Sebelumnya",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Cari di komunitas",
-      "placeholder": "Cari bingkai, tema, dan halaman"
+      "placeholder": "Cari di komunitas"
     }
   },
   "communityActions": {

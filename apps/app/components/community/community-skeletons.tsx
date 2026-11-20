@@ -21,6 +21,7 @@ import {
   CARD_FRAME,
   CARD_TEXT,
   CARD_TEXT_REVEAL,
+  CARD_TEXT_TOUCH_ONLY,
   MAKER_CARD,
   RAIL,
   RAIL_CARD,
@@ -45,8 +46,9 @@ const BAR = "bg-foreground/[0.06] rounded-sm";
 const GALLERY_CARDS = 6;
 
 /**
- * A card's shape: the design's box, then its two lines, hidden until hover
- * where the card's own caption is (CARD_TEXT_REVEAL).
+ * A card's shape: the design's box, then its caption's lines, hidden until
+ * hover where the card's own caption is (CARD_TEXT_REVEAL), and one line
+ * there (CARD_TEXT_TOUCH_ONLY).
  */
 export function CardShape() {
   return (
@@ -58,7 +60,7 @@ export function CardShape() {
         <div className="flex h-5 items-center">
           <div className={cn(BAR, "h-3 w-2/5")} />
         </div>
-        <div className="flex h-5 items-center">
+        <div className={cn("flex h-5 items-center", CARD_TEXT_TOUCH_ONLY)}>
           <div className={cn(BAR, "h-2.5 w-1/4")} />
         </div>
       </div>

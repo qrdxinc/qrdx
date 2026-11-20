@@ -16347,6 +16347,22 @@
     "source": "94e9261a0e4c",
     "status": "machine"
   },
+  "community.itemPreviews.onAPhone": {
+    "source": "0dd1b36ec25b",
+    "status": "machine"
+  },
+  "community.itemPreviews.inFrames": {
+    "source": "5364d61f81a5",
+    "status": "machine"
+  },
+  "community.itemPreviews.onABadge": {
+    "source": "e0c02ee212c2",
+    "status": "machine"
+  },
+  "community.itemPreviews.asAsciiArt": {
+    "source": "55670e3ff2e1",
+    "status": "machine"
+  },
   "community.itemPages.previous": {
     "source": "a57b08a480b8",
     "status": "machine"
@@ -16660,7 +16676,7 @@
     "status": "machine"
   },
   "community.search.placeholder": {
-    "source": "ff85aeb387e6",
+    "source": "a409f201afc9",
     "status": "machine"
   },
   "communityActions.community.signIn": {

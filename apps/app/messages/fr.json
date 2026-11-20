@@ -5437,7 +5437,11 @@
       "onATableTent": "Sur un chevalet de table",
       "onAPoster": "Sur une affiche",
       "asASticker": "En autocollant",
-      "onABusinessCard": "Sur une carte de visite"
+      "onABusinessCard": "Sur une carte de visite",
+      "onAPhone": "Sur un téléphone, sur sa page hébergée",
+      "inFrames": "Dans des cadres",
+      "onABadge": "Sur un badge",
+      "asAsciiArt": "En ASCII art"
     },
     "itemPages": {
       "previous": "Précédent",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Rechercher dans la communauté",
-      "placeholder": "Rechercher des cadres, thèmes et pages"
+      "placeholder": "Rechercher dans la communauté"
     }
   },
   "communityActions": {

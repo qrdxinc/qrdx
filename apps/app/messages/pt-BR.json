@@ -5437,7 +5437,11 @@
       "onATableTent": "Em um display de mesa",
       "onAPoster": "Em um pôster",
       "asASticker": "Como adesivo",
-      "onABusinessCard": "Em um cartão de visita"
+      "onABusinessCard": "Em um cartão de visita",
+      "onAPhone": "Em um celular, na página hospedada",
+      "inFrames": "Em molduras",
+      "onABadge": "Em um crachá",
+      "asAsciiArt": "Como arte ASCII"
     },
     "itemPages": {
       "previous": "Anterior",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Pesquisar na comunidade",
-      "placeholder": "Pesquise molduras, temas e páginas"
+      "placeholder": "Pesquisar na comunidade"
     }
   },
   "communityActions": {
