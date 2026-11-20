@@ -22715,6 +22715,12 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "Sistem lama yang hanya menerima BMP · 24-bit tanpa kompresi",
+    "status": "machine",
+    "context": "barcodes.files.bmp.hint"
+  },
   "2f6bec725ba6": {
     "source": "Vector for print and design tools",
     "text": "Vektor untuk cetak dan alat desain",
@@ -22889,9 +22895,9 @@
     "status": "machine",
     "context": "barcodes.faqs.4.question"
   },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "SVG, PDF, atau EPS untuk cetak: ketiganya berbasis vektor, sehingga batang tetap tajam di ukuran berapa pun. SVG dan EPS dapat dibuka di alat desain seperti Illustrator, InDesign, dan Affinity, sedangkan PDF dapat dibuka di mana saja. PNG untuk layar, dokumen, dan toko online, dan JPG untuk tempat yang tidak menerima PNG; WebP dan AVIF menghasilkan file lebih kecil untuk situs web. Perbesar ukuran gambar untuk gambar yang lebih besar.",
+  "3dfd44b42064": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "SVG, PDF, atau EPS untuk cetak: formatnya vektor, jadi garis batang tetap tajam di ukuran berapa pun. SVG dan EPS dapat dibuka di aplikasi desain seperti Illustrator, InDesign, dan Affinity, sedangkan PDF dapat dibuka di mana saja. PNG untuk layar, dokumen, dan toko online, dan JPG untuk tempat yang tidak menerima PNG; WebP dan AVIF menghasilkan file lebih kecil untuk situs web, dan BMP untuk sistem lama yang hanya menerima BMP. Perbesar ukuran gambar untuk gambar yang lebih besar.",
     "status": "machine",
     "context": "barcodes.faqs.4.answer"
   },

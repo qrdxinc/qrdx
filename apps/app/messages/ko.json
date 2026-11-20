@@ -2013,7 +2013,7 @@
     "alt": "{value}용 {format} 바코드",
     "loadFailed": "바코드 그리기 코드를 불러오지 못했어요. 연결 상태를 확인하고 페이지를 새로고침해 주세요.",
     "fixInput": "바코드를 보려면 강조된 입력값을 고쳐 주세요.",
-    "sizes": "PNG, JPG, WebP, AVIF는 {width, number, ::group-off} × {height, number, ::group-off} px입니다. SVG, PDF, EPS는 벡터 형식이며 크기는 {widthMm} × {heightMm} mm, 모듈은 {moduleMm} mm입니다. 레이아웃에서 필요에 맞게 크기를 조정하세요.",
+    "sizes": "PNG, JPG, WebP, AVIF, BMP는 {width, number, ::group-off} × {height, number, ::group-off} px입니다. SVG, PDF, EPS는 벡터이며 크기는 {widthMm} × {heightMm} mm, 모듈은 {moduleMm} mm입니다. 필요에 따라 레이아웃에서 크기를 조정하세요.",
     "more": "더 보기",
     "moreFormats": "더 많은 형식",
     "footnote": "바코드는 브라우저에서 만들어지며, 입력한 내용은 QRdx로 전송되지 않아요. WebP와 AVIF는 선택할 때 QRdx 서버에서 인코딩하며, 아무것도 저장되지 않아요.",

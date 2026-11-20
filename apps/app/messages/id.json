@@ -2013,7 +2013,7 @@
     "alt": "Barcode {format} untuk {value}",
     "loadFailed": "Kode penggambar barcode tidak termuat. Periksa koneksi Anda dan muat ulang halaman.",
     "fixInput": "Perbaiki input yang disorot untuk melihat barcode.",
-    "sizes": "PNG, JPG, WebP, dan AVIF berukuran {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF, dan EPS adalah vektor berukuran {widthMm} × {heightMm} mm, dengan modul {moduleMm} mm; skalakan di tata letak Anda sesuai kebutuhan.",
+    "sizes": "PNG, JPG, WebP, AVIF, dan BMP berukuran {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF, dan EPS berupa vektor berukuran {widthMm} × {heightMm} mm, dengan modul {moduleMm} mm; ubah skalanya di tata letak Anda sesuai kebutuhan.",
     "more": "Lainnya",
     "moreFormats": "Format lainnya",
     "footnote": "Dibuat di browser Anda; tidak ada yang Anda ketik dikirim ke QRdx. WebP dan AVIF dikodekan oleh server QRdx saat Anda memilihnya, dan tidak ada yang disimpan.",

@@ -54,7 +54,7 @@ export const BARCODE_FAQS: { question: string; answer: string }[] = [
   {
     question: "Which file format should I download?",
     answer:
-      "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
+      "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
   },
   {
     question: "Can I save my barcodes?",

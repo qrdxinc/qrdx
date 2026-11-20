@@ -29,7 +29,7 @@ const handleGET = withApiQuotaHeaders(
         throw new ValidationError("Invalid query parameters", [
           {
             param: "type",
-            message: "Must be svg, png, jpg, webp, avif, pdf or eps",
+            message: "Must be svg, png, jpg, webp, avif, bmp, pdf or eps",
           },
         ]);
       }

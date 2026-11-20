@@ -182,7 +182,7 @@ export default async function BarcodeFormatPage({ params }: PageProps) {
               ? ["Check digits calculated and verified"]
               : []),
             "Scan check with an open-source decoder",
-            "PNG, JPG, WebP, AVIF, SVG, PDF and EPS downloads",
+            "PNG, JPG, WebP, AVIF, BMP, SVG, PDF and EPS downloads",
             "Barcode image API with no key",
           ],
         }}

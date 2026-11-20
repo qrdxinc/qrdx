@@ -2013,7 +2013,7 @@
     "alt": "{format}-Barcode für {value}",
     "loadFailed": "Der Code zum Zeichnen des Barcodes wurde nicht geladen. Prüfe deine Verbindung und lade die Seite neu.",
     "fixInput": "Korrigiere die markierte Eingabe, um den Barcode zu sehen.",
-    "sizes": "PNG, JPG, WebP und AVIF mit {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF und EPS sind Vektoren mit {widthMm} × {heightMm} mm und einem Modul von {moduleMm} mm; skaliere sie bei Bedarf in deinem Layout.",
+    "sizes": "PNG, JPG, WebP, AVIF und BMP {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF und EPS sind Vektorformate in der Größe {widthMm} × {heightMm} mm mit einem Modul von {moduleMm} mm; skaliere sie bei Bedarf in deinem Layout.",
     "more": "Mehr",
     "moreFormats": "Mehr Formate",
     "footnote": "Wird in deinem Browser erstellt; nichts, was du eingibst, wird an QRdx gesendet. WebP und AVIF kodiert der Server von QRdx, wenn du sie auswählst, und nichts wird gespeichert.",
