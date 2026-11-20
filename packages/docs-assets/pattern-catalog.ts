@@ -128,6 +128,15 @@ const BODIES: Record<BodyPattern, Base> = {
   heart: { label: "Heart", category: "Playful", popularity: null },
   pacman: { label: "Pacman", category: "Playful", popularity: null },
   "circle-mixed": { label: "Mixed", category: "Playful", popularity: null },
+  x: { label: "X", category: "Decorative", popularity: null },
+  flower: { label: "Flower", category: "Playful", popularity: null },
+  pebble: { label: "Pebble", category: "Rounded", popularity: null },
+  petal: { label: "Petal", category: "Decorative", popularity: null },
+  bubble: { label: "Bubble", category: "Playful", popularity: null },
+  squircle: { label: "Squircle", category: "Rounded", popularity: null },
+  drop: { label: "Drop", category: "Rounded", popularity: null },
+  beads: { label: "Beads", category: "Rounded", popularity: null },
+  chain: { label: "Chain", category: "Decorative", popularity: null },
 };
 
 const EYES: Record<
@@ -242,6 +251,66 @@ const EYES: Record<
     caution: true,
     note: "Only lenient decoders read circle eyes; many apps miss them",
   },
+  pebble: {
+    label: "Pebble",
+    category: "Rounded",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
+  notch: {
+    label: "Notch",
+    category: "Classic",
+    popularity: null,
+    recommendedDot: "notch",
+  },
+  plus: {
+    label: "Plus",
+    category: "Classic",
+    popularity: null,
+    recommendedDot: "square",
+  },
+  stamp: {
+    label: "Stamp",
+    category: "Playful",
+    popularity: null,
+    recommendedDot: "square",
+  },
+  doodle: {
+    label: "Doodle",
+    category: "Playful",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
+  porthole: {
+    label: "Porthole",
+    category: "Rounded",
+    popularity: null,
+    recommendedDot: "bevel",
+  },
+  bud: {
+    label: "Bud",
+    category: "Decorative",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
+  tag: {
+    label: "Tag",
+    category: "Decorative",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
+  bowl: {
+    label: "Bowl",
+    category: "Decorative",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
+  crest: {
+    label: "Crest",
+    category: "Decorative",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
 };
 
 const DOTS: Record<PickableCornerEyeDotPattern, Base> = {
@@ -294,6 +363,9 @@ const DOTS: Record<PickableCornerEyeDotPattern, Base> = {
     category: "Playful",
     popularity: null,
   },
+  cushion: { label: "Cushion", category: "Rounded", popularity: null },
+  bevel: { label: "Bevel", category: "Classic", popularity: null },
+  notch: { label: "Notch", category: "Classic", popularity: null },
 };
 
 // Where each frame sits in the pickers. The name, the second line and what

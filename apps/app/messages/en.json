@@ -1288,7 +1288,9 @@
     "seeAll": "See all",
     "faq": "FAQ",
     "designFree": "Design a free QR code",
-    "createDynamic": "Create a dynamic code"
+    "createDynamic": "Create a dynamic code",
+    "newTag": "New",
+    "nameIsNew": "{name}, new"
   },
   "pageCodes": {
     "sampleNote": "Samples in built-in themes. Each one scans, and none leads to a real account.",
