@@ -623,13 +623,17 @@ let current = {
   ct: [],
   batch: undefined,
 };
+/** The frames that follow go in `collection`. */
+const section = (collection, occasion, tags = [], ct = []) => {
+  current = { collection, occasion, tags, ct, batch: current.batch };
+};
 /**
- * The frames that follow go in `collection`. `batch` names the round that
- * added them (YYYY-MM), so the app can mark them as new for a while
- * (src/frames/catalogue/batches.ts); the first catalogue has none.
+ * The frames that follow were added in round `name` (YYYY-MM), so the app
+ * can mark them as new for a while (src/frames/catalogue/batches.ts); the
+ * first catalogue has none. `batch(undefined)` ends the round.
  */
-const section = (collection, occasion, tags = [], ct = [], batch) => {
-  current = { collection, occasion, tags, ct, batch };
+const batch = (name) => {
+  current = { ...current, batch: name };
 };
 
 /**
@@ -4682,4 +4686,4 @@ addIndustryFrames({ section, f });
 addWorldFrames({ f, section, P, MONO, SOFT, NEON, GREY });
 
 // Shapes, everyday objects and playful scenes (catalogue-objects.mjs)
-addObjectFrames({ section, f });
+addObjectFrames({ section, f, batch });
