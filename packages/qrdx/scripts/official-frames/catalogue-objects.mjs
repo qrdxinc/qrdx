@@ -605,7 +605,7 @@ const OBJECTS = [
   ],
   [
     "open-book",
-    "Open book",
+    "Open book spread",
     "bookOpen",
     "Scan to read",
     "Chapter one is free",
@@ -615,7 +615,7 @@ const OBJECTS = [
   ],
   [
     "bottle-label",
-    "Bottle label",
+    "Bottle with a label",
     "bottle",
     "Scan to pour",
     "Tasting notes inside",

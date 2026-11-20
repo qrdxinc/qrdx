@@ -1,6 +1,6 @@
 {
   "id": "bottle-label",
-  "name": "Bottle label",
+  "name": "Bottle with a label",
   "description": "A bottle with a cap and shoulders, the code on its label.",
   "category": "use-case",
   "collection": "objects",

@@ -38,8 +38,6 @@ const isLight = (paint) =>
   (typeof paint === "object" && paint.mix?.[1] === BG && paint.amount >= 0.6);
 const ink = (on) => (isLight(on) ? F : T);
 
-const mot = (o, cx, cy, size, fill, fill2 = AC) =>
-  o.m ? motif(o.m, cx, cy, size, fill, fill2) : [];
 const cta = (o, box, on, extra = {}) =>
   text("cta", "primary", o.cta, box, { color: ink(on), on, ...extra });
 const note = (o, box, on, extra = {}) =>
@@ -678,7 +676,6 @@ export function bookOpen(o) {
     ),
   ];
   const size = 760;
-  const pad = size * 0.08;
   const qx = spine + 22 + (w - edge - spine - 22 - size) / 2;
   const qy = pageY + (pageH - size) / 2;
   const tx = 120;
@@ -1501,9 +1498,7 @@ export function globeStand(o) {
   const cy = 760;
   const R = 720;
   const size = 800;
-  const pad = size * 0.08;
   const qy = cy - size / 2;
-  const pb = qy + size + pad;
   const h = 1960;
   const fill = o.light ? tint(0.92) : tint(0.7);
   const shapes = [
@@ -1993,7 +1988,6 @@ export function viewfinderHud(o) {
   const w = 1500;
   const h = 1760;
   const qy = 220 + PAD;
-  const pb = qy + QR + PAD;
   const shapes = [shape.rect(0, 0, w, h, F, 24)];
   const len = 160;
   const t = 26;
@@ -2237,7 +2231,6 @@ export function balloonBasket(o) {
   const rx = 740;
   const ry = 780;
   const size = 800;
-  const pad = size * 0.08;
   const qy = cy - 40 - size / 2;
   const shapes = [
     shape.ellipse(cx, cy, rx, ry, F),
@@ -2377,7 +2370,6 @@ export function crystalBall(o) {
   const cy = 760;
   const R = 720;
   const size = 800;
-  const pad = size * 0.08;
   const qy = cy - size / 2;
   const shapes = [
     shape.circle(cx, cy, R, F),
@@ -2643,7 +2635,6 @@ export function washingMachine(o) {
   const cx = w / 2;
   const cy = 1150;
   const size = 870;
-  const pad = size * 0.08;
   const qy = cy - size / 2;
   const shapes = [
     shape.rect(0, 0, w, h, F, 50),
@@ -2668,7 +2659,6 @@ export function magnifyingGlass(o) {
   const cx = 790;
   const cy = 790;
   const size = 860;
-  const pad = size * 0.08;
   const qy = cy - size / 2;
   const shapes = [
     line(
@@ -2694,7 +2684,6 @@ export function porthole(o) {
   const cx = w / 2;
   const cy = 850;
   const size = 860;
-  const pad = size * 0.08;
   const qy = cy - size / 2;
   const shapes = [shape.rect(0, 0, w, h, tint(0.6), 20)];
   for (let i = 0; i < 9; i++) {
@@ -3096,7 +3085,6 @@ export function parkingMeter(o) {
   const size = 900;
   const pad = size * 0.08;
   const qy = 260 + 28 + pad;
-  const pb = qy + size + pad;
   const glass = tint(0.92);
   const shapes = [
     shape.rect(540, 1500, 220, 500, shade(0.3)),
@@ -3145,7 +3133,6 @@ export function snowGlobe(o) {
   const cx = w / 2;
   const cy = 790;
   const size = 860;
-  const pad = size * 0.08;
   const qy = cy - 40 - size / 2;
   const shapes = [
     shape.circle(cx, cy, 770, F),
@@ -3180,7 +3167,6 @@ export function sailboat(o) {
   const w = 1700;
   const h = 2000;
   const qy = 150 + 60 + PAD;
-  const pb = qy + QR + PAD;
   const sail = tint(0.92);
   const shapes = [
     shape.rect(830, 0, 40, 1640, shade(0.3), 20),
@@ -3312,7 +3298,6 @@ export function vhsTape(o) {
   const h = 1500;
   const qx = 150 + 64;
   const qy = 320 + 64;
-  const pb = qy + 800 + 64;
   const paper = tint(0.92);
   const shapes = [
     shape.rect(0, 0, w, h, F, 40),
@@ -3337,7 +3322,6 @@ export function ufoBeam(o) {
   const h = 1640;
   const cx = w / 2;
   const size = 800;
-  const pad = size * 0.08;
   const qy = 604;
   const shapes = [
     shape.path(
@@ -3367,7 +3351,6 @@ export function lighthouse(o) {
   const h = 1960;
   const cx = w / 2;
   const size = 760;
-  const pad = size * 0.08;
   const qy = 760;
   const tower = (y) => {
     const t = (y - 300) / 1500;
