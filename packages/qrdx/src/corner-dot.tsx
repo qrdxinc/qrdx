@@ -5,10 +5,17 @@ import type { EyeCorner } from "./corner-eye";
 import type { QRNode } from "./jsx/runtime";
 import {
   circlePath,
+  cushionPath,
+  doodleRadius,
   heartPath,
+  octagonPoints,
   polygonPath,
+  radialPoints,
   regularPolygon,
   roundedRectPath,
+  scoopedRectPath,
+  shieldPath,
+  stampPath,
   superellipsePoints,
 } from "./shapes";
 import { compact, fmt, SCALE_DECIMALS } from "./utils/fmt";
@@ -180,6 +187,101 @@ export function generateCornerDotPath(
       }
       return <path d={dots.join("")} />;
     }
+
+    // Centres added after 0.0.57: each one is 3 modules wide on the row and
+    // the column through its centre, so the finder's 1:1:3:1:1 runs hold,
+    // and reaches into its corners: round centres with teeth, bumps or a
+    // pill outline fail inside square-cornered eyes at 9 px per module, as
+    // a circle centre does in sharp renders.
+    case "cushion":
+      return (
+        <path
+          d={cushionPath(cx - radius, cy - radius, size, 0.6 * m, 0.15 * m)}
+        />
+      );
+
+    case "shield":
+      return (
+        <path
+          d={shieldPath(
+            cx - radius,
+            cy - radius,
+            size,
+            0.3 * m,
+            1.65 * m,
+            0.43 * m
+          )}
+        />
+      );
+
+    case "dome":
+      return (
+        <path
+          d={compact`M${cx - radius} ${cy + radius}V${cy}A${radius} ${radius} 0 0 1 ${cx + radius} ${cy}V${cy + radius}Z`}
+        />
+      );
+
+    case "bevel":
+      return (
+        <path
+          d={polygonPath(octagonPoints(cx - radius, cy - radius, size, 0.45 * m))}
+        />
+      );
+
+    case "notch":
+      return (
+        <path
+          d={scoopedRectPath(cx - radius, cy - radius, size, size, 0.42 * m)}
+        />
+      );
+
+    case "petal": {
+      // One big round corner, pointing away from the code
+      const outer = outerCornerIndex(corner);
+      const radii = [0, 1, 2, 3].map((i) =>
+        i === outer ? radius : 0.35 * m
+      ) as [number, number, number, number];
+      return (
+        <path
+          d={roundedRectPath(cx - radius, cy - radius, size, size, radii)}
+        />
+      );
+    }
+
+    case "pebble":
+      return (
+        <path
+          d={polygonPath(superellipsePoints(cx, cy, radius, radius, 2.75, 64))}
+        />
+      );
+
+    case "house":
+      return (
+        <path
+          d={polygonPath([
+            [cx - radius, cy + radius],
+            [cx - radius, cy - 0.55 * m],
+            [cx, cy - radius],
+            [cx + radius, cy - 0.55 * m],
+            [cx + radius, cy + radius],
+          ])}
+        />
+      );
+
+    case "doodle":
+      return (
+        <path d={polygonPath(radialPoints(cx, cy, doodleRadius(radius), 96))} />
+      );
+
+    case "stamp":
+      return (
+        <path
+          d={stampPath(cx - radius, cy - radius, size, 0.3 * m, 0.26 * m, [
+            -0.72 * m,
+            0.72 * m,
+          ])}
+        />
+      );
 
     case "square":
       return (

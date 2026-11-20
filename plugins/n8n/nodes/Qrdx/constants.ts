@@ -40,6 +40,17 @@ export const BODY_SHAPES = [
   "random-dots",
   "mosaic",
   "octagon",
+  "x",
+  "flower",
+  "pebble",
+  "hatch",
+  "bubble",
+  "petal",
+  "squircle",
+  "cushion",
+  "drop",
+  "beads",
+  "chain",
 ] as const;
 
 /** `eye`: shape of the three corner eye frames */
@@ -61,6 +72,19 @@ export const EYE_SHAPES = [
   "shield",
   "petal",
   "leaf-reverse",
+  "pebble",
+  "dodecagon",
+  "cog",
+  "sprocket",
+  "burst",
+  "scallop",
+  "cloud",
+  "notch",
+  "plus",
+  "arch",
+  "bezel",
+  "stamp",
+  "doodle",
 ] as const;
 
 /** `dot`: shape of the dot inside each corner eye */
@@ -86,6 +110,16 @@ export const EYE_DOT_SHAPES = [
   "extra-rounded",
   "leaf-reverse",
   "drop-reverse",
+  "cushion",
+  "shield",
+  "dome",
+  "bevel",
+  "notch",
+  "petal",
+  "pebble",
+  "house",
+  "doodle",
+  "stamp",
 ] as const;
 
 /** `frame`: built-in call-to-action frames */

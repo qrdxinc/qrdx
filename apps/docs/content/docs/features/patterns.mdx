@@ -29,11 +29,11 @@ export function ShapedCode() {
 `bodyPattern` shapes the data modules. There are {facts.bodyPatterns} values; the default is `circle`.
 
 - Classic: `square`, `small-square`, `horizontal-line`, `vertical-line`, `octagon`
-- Rounded: `circle`, `circle-large`, `rounded`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `random-dots`
-- Decorative: `classy`, `classy-rounded`, `leaf`, `diamond`, `hexagon`
-- Playful: `mosaic`, `plus`, `star`, `heart`, `pacman`, `circle-mixed`
+- Rounded: `circle`, `circle-large`, `rounded`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `random-dots`, `squircle`, `cushion`, `pebble`, `drop`, `beads`
+- Decorative: `classy`, `classy-rounded`, `leaf`, `diamond`, `hexagon`, `x`, `hatch`, `petal`, `chain`
+- Playful: `mosaic`, `plus`, `star`, `heart`, `pacman`, `circle-mixed`, `flower`, `bubble`
 
-`liquid`, `classy` and `classy-rounded` join neighboring modules into one smooth outline; `liquid-horizontal` and `liquid-vertical` join them in rows or columns only. `random-dots` and `mosaic` vary per module but always draw the same code for the same value. Alignment patterns are always drawn as solid squares, whatever the pattern, so decoders find them.
+`liquid`, `classy` and `classy-rounded` join neighboring modules into one smooth outline; `liquid-horizontal` and `liquid-vertical` join them in rows or columns only, `beads` links round modules along rows and columns with thin bars and `chain` links them along the diagonals. `random-dots`, `mosaic`, `pebble`, `petal` and `drop` vary per module but always draw the same code for the same value. Alignment patterns are always drawn as solid squares, whatever the pattern, so decoders find them.
 
 ### Module scale
 
@@ -55,13 +55,13 @@ export function LightCode() {
 
 ## Eye frames
 
-`cornerEyePattern` shapes the corner eyes. There are {facts.eyeShapes} values; the default is `gear`: `square`, `rounded`, `extra-rounded`, `squircle`, `cushion`, `bevel`, `octagon`, `leaf`, `leaf-reverse`, `drop`, `petal`, `shield`, `gear`, `circle`, `diya`, `message` and `pointy`.
+`cornerEyePattern` shapes the corner eyes. There are {facts.eyeShapes} values; the default is `gear`: `square`, `rounded`, `extra-rounded`, `squircle`, `cushion`, `bevel`, `octagon`, `leaf`, `leaf-reverse`, `drop`, `petal`, `shield`, `gear`, `circle`, `diya`, `message`, `pointy`, `pebble`, `dodecagon`, `notch`, `plus`, `bezel`, `arch`, `scallop`, `cloud`, `cog`, `sprocket`, `burst`, `stamp` and `doodle`.
 
-`leaf`, `leaf-reverse`, `drop` and `petal` turn each of the three eyes to face its corner of the code. `circle` eyes may be missed by some scanner apps; the [scan score](/docs/features/frames#will-it-scan) warns about them.
+`leaf`, `leaf-reverse`, `drop` and `petal` turn each of the three eyes to face its corner of the code. `circle` eyes may be missed by some scanner apps; the [scan score](/docs/features/frames#will-it-scan) warns about them. Every other eye keeps the finder's proportions on its rows, columns and diagonals, so it reads with every center, in sharp renders too.
 
 ## Eye centers
 
-`cornerEyeDotPattern` shapes the dot inside each eye. There are {facts.eyeCentres} values; the default is `circle`: `square`, `rounded`, `extra-rounded`, `circle`, `squircle`, `octagon`, `hexagon`, `dots`, `leaf`, `leaf-reverse`, `drop`, `drop-reverse`, `plus`, `cross-rounded`, `flower`, `heart`, `message`, `message-reverse`, `diya`, `diya-reverse` and `rounded-triangle`.
+`cornerEyeDotPattern` shapes the dot inside each eye. There are {facts.eyeCentres} values; the default is `circle`: `square`, `rounded`, `extra-rounded`, `circle`, `squircle`, `octagon`, `hexagon`, `dots`, `leaf`, `leaf-reverse`, `drop`, `drop-reverse`, `plus`, `cross-rounded`, `flower`, `heart`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `pebble`, `cushion`, `bevel`, `notch`, `dome`, `shield`, `house`, `petal`, `stamp` and `doodle`. The `petal` center turns its big round corner away from the code, like the `petal` eye.
 
 ## Pairs to avoid and retired shapes
 

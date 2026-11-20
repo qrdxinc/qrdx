@@ -6,6 +6,7 @@ import { MODULE_SCALE_MAX, MODULE_SCALE_MIN } from "../types/constants";
 import type { QRNode } from "./jsx/runtime";
 import {
   circlePath,
+  cushionPath,
   hash2,
   heartPath,
   type Point,
@@ -14,6 +15,7 @@ import {
   rotatePoints,
   roundedRectPath,
   starPoints,
+  superellipsePoints,
 } from "./shapes";
 import { compact } from "./utils/fmt";
 
@@ -39,6 +41,18 @@ export const SHAPED_BODY_PATTERNS = [
   "random-dots",
   "mosaic",
   "octagon",
+  // Added after 0.0.57
+  "x",
+  "flower",
+  "pebble",
+  "hatch",
+  "bubble",
+  "petal",
+  "squircle",
+  "cushion",
+  "drop",
+  "beads",
+  "chain",
 ] as const satisfies readonly BodyPattern[];
 
 type ShapedBodyPattern = (typeof SHAPED_BODY_PATTERNS)[number];
@@ -75,6 +89,16 @@ export const MODULE_SCALE_FLOOR: Partial<Record<BodyPattern, number>> = {
   "random-dots": 0.85,
   mosaic: 0.8,
   octagon: 0.8,
+  x: 0.7,
+  flower: 0.75,
+  hatch: 0.5,
+  bubble: 0.85,
+  petal: 0.85,
+  squircle: 0.7,
+  cushion: 0.7,
+  drop: 0.75,
+  beads: 0.8,
+  chain: 0.5,
 };
 
 /**
@@ -189,6 +213,108 @@ const CONNECTED: Partial<Record<ShapedBodyPattern, ConnectedStyle>> = {
   },
 };
 
+/**
+ * A bar through the module's centre, `width` of a module wide and
+ * 2 × `reach` long, at `angle`.
+ */
+function bar(
+  cx: number,
+  cy: number,
+  unit: number,
+  width: number,
+  angle: number,
+  reach = 0.65
+): string {
+  const l = unit * reach;
+  const w = (unit * width) / 2;
+  return polygonPath(
+    rotatePoints(
+      [
+        [cx - l, cy - w],
+        [cx + l, cy - w],
+        [cx + l, cy + w],
+        [cx - l, cy + w],
+      ],
+      cx,
+      cy,
+      angle
+    )
+  );
+}
+
+/**
+ * A quarter disc filling the module from one of its corners (0 top-left,
+ * clockwise), the opposite corner left light.
+ */
+function quarterDisc(cx: number, cy: number, unit: number, corner: number) {
+  const r = unit * 0.98;
+  const h = unit / 2;
+  const x0 = cx - h;
+  const y0 = cy - h;
+  const x1 = cx + h;
+  const y1 = cy + h;
+  switch (corner) {
+    case 1:
+      return compact`M${x1} ${y0}V${y0 + r}A${r} ${r} 0 0 1 ${x1 - r} ${y0}Z`;
+    case 2:
+      return compact`M${x1} ${y1}H${x1 - r}A${r} ${r} 0 0 1 ${x1} ${y1 - r}Z`;
+    case 3:
+      return compact`M${x0} ${y1}V${y1 - r}A${r} ${r} 0 0 1 ${x0 + r} ${y1}Z`;
+    default:
+      return compact`M${x0} ${y0}H${x0 + r}A${r} ${r} 0 0 1 ${x0} ${y0 + r}Z`;
+  }
+}
+
+/**
+ * Beads and chains: round modules linked to their dark neighbours by thin
+ * bars, along the rows and columns (beads) or the diagonals (chain). Each
+ * link is drawn once, from the module to its east, south (or south-east
+ * and south-west) neighbour.
+ */
+function linkedModule(
+  pattern: "beads" | "chain",
+  cx: number,
+  cy: number,
+  cell: number,
+  unit: number,
+  dark: (dx: number, dy: number) => boolean
+): string {
+  let d = circlePath(cx, cy, unit * 0.45);
+  // Chain links run through the corners of light modules, so they stay thin
+  const w = unit * (pattern === "beads" ? 0.3 : 0.22);
+  if (pattern === "beads") {
+    if (dark(1, 0)) {
+      d += roundedRectPath(cx, cy - w / 2, cell, w);
+    }
+    if (dark(0, 1)) {
+      d += roundedRectPath(cx - w / 2, cy, w, cell);
+    }
+    return d;
+  }
+  const l = (cell * Math.SQRT2) / 2;
+  const link = (mx: number, my: number, angle: number) =>
+    polygonPath(
+      rotatePoints(
+        [
+          [mx - l, my - w / 2],
+          [mx + l, my - w / 2],
+          [mx + l, my + w / 2],
+          [mx - l, my + w / 2],
+        ],
+        mx,
+        my,
+        angle
+      )
+    );
+  if (dark(1, 1)) {
+    d += link(cx + cell / 2, cy + cell / 2, 45);
+  }
+  if (dark(-1, 1)) {
+    d += link(cx - cell / 2, cy + cell / 2, -45);
+  }
+  return d;
+}
+
 /** Outline of one module drawn on its own, centered on (cx, cy). */
 function moduleShape(
   pattern: ShapedBodyPattern,
@@ -259,6 +385,54 @@ function moduleShape(
       return polygonPath(
         regularPolygon(cx, cy, (unit * 0.48) / Math.cos(Math.PI / 8), 8, 22.5)
       );
+    case "x":
+      return bar(cx, cy, unit, 0.42, 45) + bar(cx, cy, unit, 0.42, -45);
+    case "hatch":
+      return bar(cx, cy, unit, 0.56, (x + y) % 2 === 0 ? 45 : -45, 0.5);
+    case "flower": {
+      const d = unit * 0.25;
+      return (
+        circlePath(cx - d, cy - d, d) +
+        circlePath(cx + d, cy - d, d) +
+        circlePath(cx + d, cy + d, d) +
+        circlePath(cx - d, cy + d, d) +
+        circlePath(cx, cy, unit * 0.3)
+      );
+    }
+    case "pebble": {
+      // Each tile its own size and corners, so no two look alike
+      const h = (unit * (0.84 + 0.12 * hash2(x, y, 3))) / 2;
+      const radius = (salt: number) => h * (0.35 + 0.55 * hash2(x, y, salt));
+      return roundedRectPath(cx - h, cy - h, 2 * h, 2 * h, [
+        radius(4),
+        radius(5),
+        radius(6),
+        radius(7),
+      ]);
+    }
+    case "bubble":
+      // A round module with a light highlight (a hole, wound the other way)
+      return (
+        circlePath(cx, cy, unit * 0.47) +
+        circlePath(cx - unit * 0.16, cy - unit * 0.16, unit * 0.12, true)
+      );
+    case "petal":
+      return quarterDisc(cx, cy, unit, Math.floor(hash2(x, y, 8) * 4));
+    case "squircle":
+      return polygonPath(
+        superellipsePoints(cx, cy, unit * 0.5, unit * 0.5, 4, 32)
+      );
+    case "cushion":
+      return cushionPath(cx - unit / 2, cy - unit / 2, unit, unit * 0.2, unit * 0.07);
+    case "drop": {
+      // A round tile with one sharp corner, each tile pointing its own way
+      const sharp = Math.floor(hash2(x, y, 9) * 4);
+      const h = unit * 0.5;
+      const radii = [0, 1, 2, 3].map((i) =>
+        i === sharp ? unit * 0.06 : h
+      ) as [number, number, number, number];
+      return roundedRectPath(cx - h, cy - h, 2 * h, 2 * h, radii);
+    }
     default:
       return circlePath(cx, cy, unit * 0.45);
   }
@@ -309,6 +483,14 @@ export function renderShapedBody(
       if (isAlignment(x, y)) {
         solid.push(
           compact`M${cx - cell / 2} ${cy - cell / 2}h${cell}v${cell}h${-cell}z`
+        );
+        continue;
+      }
+      if (pattern === "beads" || pattern === "chain") {
+        shapes.push(
+          linkedModule(pattern, cx, cy, cell, cell * scale, (dx, dy) =>
+            dark(x + dx, y + dy)
+          )
         );
         continue;
       }

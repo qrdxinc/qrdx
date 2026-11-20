@@ -2,6 +2,14 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## Unreleased
+
+- **13 new eye frames** (`cornerEyePattern`): `pebble`, `dodecagon`, `cog`, `sprocket`, `burst`, `scallop`, `cloud`, `notch`, `plus`, `arch`, `bezel`, `stamp` and `doodle`. Every one keeps the finder's 1:1:3:1:1 runs on its rows and columns and stays close to a round ring on its diagonals, so a circle centre reads in sharp renders too: none of them joins `WEAK_SHARP_DOT_EYES`, and `getStylePairRisk` flags no pair that includes them.
+- **10 new eye centres** (`cornerEyeDotPattern`): `cushion`, `shield`, `dome`, `bevel`, `notch`, `petal`, `pebble`, `house`, `doodle` and `stamp`. `petal` turns its big round corner away from the code, like the `petal` eye.
+- **11 new body patterns** (`bodyPattern`): `x`, `flower`, `pebble`, `hatch`, `bubble`, `petal`, `squircle`, `cushion`, `drop`, `beads` and `chain`. `beads` links round modules along rows and columns, `chain` along the diagonals; `pebble`, `petal` and `drop` vary per module and always draw the same code for the same value. `MODULE_SCALE_FLOOR` has their smallest `moduleScale`.
+- Every new value decodes with jsQR through the phone-camera model at 4, 6 and 9 px per module next to every other body, eye and centre, at every error correction level, light-on-dark, with brand colors and with a centre logo, and the new eyes read with circle and rounded centres in sharp renders at 4 to 20 px per module (tests/catalog-*.test.ts, tests/decode-*.test.ts). They were also checked by hand with ZXing.
+- New geometry helpers in `shapes.ts` (`radialPoints`, `toothedPoints`, `scoopedRectPath`, `notchedRectPath`, `archPath`, `stampPath`, `cushionPath`, `shieldPath`, `octagonPoints`, `superellipseRadius`, `bumpedRadius`, `doodleRadius`); `circlePath` takes a `ccw` flag for holes. These are internal.
+
 ## 0.0.57
 
 - **BMP export.** `"bmp"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write an uncompressed 24-bit BMP, for legacy systems and embedded tools that only take BMP. No browser encodes BMP from a canvas (`toBlob("image/bmp")` returns a PNG), so the engine writes the file itself, the same way in every browser.

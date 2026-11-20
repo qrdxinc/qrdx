@@ -50,6 +50,17 @@ export const BODY_CATEGORY: Partial<Record<BodyPattern, ShapeCategory>> = {
   heart: "playful",
   pacman: "playful",
   "circle-mixed": "playful",
+  squircle: "rounded",
+  cushion: "rounded",
+  pebble: "rounded",
+  drop: "rounded",
+  beads: "rounded",
+  chain: "decorative",
+  x: "decorative",
+  hatch: "decorative",
+  petal: "decorative",
+  flower: "playful",
+  bubble: "playful",
 };
 
 export const EYE_FEATURED: CornerEyePattern[] = [
@@ -78,6 +89,19 @@ export const EYE_CATEGORY: Partial<Record<CornerEyePattern, ShapeCategory>> = {
   message: "decorative",
   pointy: "decorative",
   gear: "playful",
+  pebble: "rounded",
+  dodecagon: "classic",
+  notch: "classic",
+  plus: "classic",
+  bezel: "classic",
+  arch: "decorative",
+  scallop: "decorative",
+  cloud: "decorative",
+  cog: "playful",
+  sprocket: "playful",
+  burst: "playful",
+  stamp: "playful",
+  doodle: "playful",
 };
 
 export const EYE_DOT_FEATURED: CornerEyeDotPattern[] = [
@@ -112,6 +136,16 @@ export const EYE_DOT_CATEGORY: Partial<
   diya: "decorative",
   "diya-reverse": "decorative",
   heart: "playful",
+  pebble: "rounded",
+  cushion: "rounded",
+  dome: "rounded",
+  bevel: "classic",
+  notch: "classic",
+  shield: "decorative",
+  petal: "decorative",
+  house: "playful",
+  stamp: "playful",
+  doodle: "playful",
 };
 
 /** Matching outer + centre pairs: one per outer shape, so every eye is one tap. */
@@ -145,6 +179,19 @@ export const EYE_PRESETS: EyePreset[] = [
   { id: "message", name: "Message", outer: "message", centre: "rounded" },
   { id: "pointy", name: "Pointy", outer: "pointy", centre: "square" },
   { id: "gear", name: "Gear", outer: "gear", centre: "circle" },
+  { id: "pebble", name: "Pebble", outer: "pebble", centre: "rounded" },
+  { id: "dodecagon", name: "Dodecagon", outer: "dodecagon", centre: "octagon" },
+  { id: "notch", name: "Notch", outer: "notch", centre: "notch" },
+  { id: "plus", name: "Plus", outer: "plus", centre: "square" },
+  { id: "bezel", name: "Bezel", outer: "bezel", centre: "rounded" },
+  { id: "arch", name: "Arch", outer: "arch", centre: "dome" },
+  { id: "scallop", name: "Scallop", outer: "scallop", centre: "rounded" },
+  { id: "cloud", name: "Cloud", outer: "cloud", centre: "rounded" },
+  { id: "cog", name: "Cog", outer: "cog", centre: "rounded" },
+  { id: "sprocket", name: "Sprocket", outer: "sprocket", centre: "rounded" },
+  { id: "burst", name: "Burst", outer: "burst", centre: "rounded" },
+  { id: "stamp", name: "Stamp", outer: "stamp", centre: "stamp" },
+  { id: "doodle", name: "Doodle", outer: "doodle", centre: "doodle" },
 ];
 
 export const EYE_PRESET_FEATURED = [

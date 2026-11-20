@@ -88,6 +88,17 @@ const BODY_DESCRIPTIONS: Partial<Record<BodyPattern, string>> = {
   "random-dots": "Dots in varied sizes (the same every time)",
   mosaic: "Slightly turned square tiles (the same every time)",
   octagon: "Octagons",
+  x: "Diagonal crosses",
+  flower: "Four-petal flowers",
+  pebble: "Rounded tiles, each its own size and corners (the same every time)",
+  hatch: "Diagonal strokes, leaning left and right in turn",
+  bubble: "Round dots with a highlight",
+  petal: "Quarter discs, each turned its own way (the same every time)",
+  squircle: "Superellipse (squircle) tiles",
+  cushion: "Squares with gently pinched sides",
+  drop: "Round tiles with one sharp corner, each pointing its own way",
+  beads: "Round dots linked along rows and columns",
+  chain: "Round dots linked along the diagonals",
 };
 
 // Complete over the offered values (retired shapes are never listed)
@@ -109,6 +120,19 @@ const EYE_DESCRIPTIONS: Record<PickableCornerEyePattern, string> = {
   squircle: "Superellipse (squircle) frame",
   cushion: "Rounded frame with gently pinched sides",
   shield: "Shield-shaped frame",
+  pebble: "Soft frame, rounder than the squircle",
+  dodecagon: "Twelve-sided frame",
+  cog: "Round frame with square teeth",
+  sprocket: "Round frame with eight big teeth",
+  burst: "Round frame with pointed spikes",
+  scallop: "Round frame with eight soft bumps",
+  cloud: "Round frame with sixteen small bumps",
+  notch: "Square frame with a round bite out of each corner",
+  plus: "Plus-shaped frame",
+  arch: "Frame that is round at the top and chamfered at the bottom",
+  bezel: "Octagonal frame around a round hole",
+  stamp: "Chamfered frame with bites along each side, like a postage stamp",
+  doodle: "Soft square frame drawn by hand",
 };
 
 const DOT_DESCRIPTIONS: Record<PickableCornerEyeDotPattern, string> = {
@@ -133,6 +157,16 @@ const DOT_DESCRIPTIONS: Record<PickableCornerEyeDotPattern, string> = {
   squircle: "Superellipse (squircle) dot",
   dots: "Grid of nine small dots",
   "extra-rounded": "Square dot with very round corners",
+  cushion: "Square dot with gently pinched sides",
+  shield: "Shield-shaped dot",
+  dome: "Dot with a round top and a flat bottom",
+  bevel: "Square dot with cut corners",
+  notch: "Square dot with a round bite out of each corner",
+  petal: "Square dot with one big round corner, pointing away from the code",
+  pebble: "Soft dot, rounder than the squircle",
+  house: "House-shaped dot with a pointed roof",
+  doodle: "Soft square dot drawn by hand",
+  stamp: "Square dot with bites along each side, like a postage stamp",
 };
 
 /**
