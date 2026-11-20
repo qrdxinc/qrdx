@@ -6,6 +6,7 @@ export const BARCODE_FILE_TYPES = [
   "jpg",
   "webp",
   "avif",
+  "bmp",
   "svg",
   "pdf",
   "eps",
@@ -52,6 +53,13 @@ export const BARCODE_FILES: Record<BarcodeFileType, BarcodeFileInfo> = {
     vector: false,
     serverOnly: true,
     hint: "The smallest files for modern browsers",
+  },
+  bmp: {
+    label: "BMP",
+    mime: "image/bmp",
+    vector: false,
+    serverOnly: false,
+    hint: "Older systems that only take BMP · 24-bit, a transparent background comes out white",
   },
   svg: {
     label: "SVG",

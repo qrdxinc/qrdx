@@ -5,7 +5,8 @@ import "server-only";
 // the same options as the browser (lib/barcode/draw.ts), so it's the same
 // SVG the generator draws; raster files are that SVG rasterized with sharp
 // at one pixel per unit (the generator's PNG size), and vector files are
-// converted from it.
+// converted from it. sharp can't write BMP, so a BMP is the same pixels
+// written by the engine's encoder.
 import {
   azteccode,
   code39,
@@ -23,7 +24,7 @@ import {
   upca,
   upce,
 } from "bwip-js/node";
-import { svgToEPS } from "qrdx";
+import { encodeBMP, isBMPFile, svgToEPS } from "qrdx";
 import sharp from "sharp";
 import {
   type BwipBuild,
@@ -99,12 +100,29 @@ export interface BarcodeFile {
   height: number;
 }
 
-async function raster(
-  rendered: RenderedBarcode,
-  type: "png" | "jpg" | "webp" | "avif",
+type RasterType = "png" | "jpg" | "webp" | "avif" | "bmp";
+
+/**
+ * The drawing as a raster file of `type`, one pixel per unit. Exported for
+ * the tests, which also feed it drawings without a background.
+ */
+export async function rasterBarcode(
+  rendered: Pick<RenderedBarcode, "svg">,
+  type: RasterType,
 ): Promise<Uint8Array> {
   // One SVG unit is one pixel at 72 dpi: the generator's PNG size exactly.
   const image = sharp(Buffer.from(rendered.svg), { density: 72 });
+  if (type === "bmp") {
+    // The PNG's pixels as a 24-bit BMP; a transparent pixel is laid over
+    // white. Checked by its bytes, so nothing else goes out as BMP.
+    const { data, info } = await image
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const bmp = encodeBMP(data, info.width, info.height);
+    if (!isBMPFile(bmp)) throw new Error("Couldn't write a BMP file.");
+    return bmp;
+  }
   const encoded =
     type === "png"
       ? image.png({ compressionLevel: 9, palette: false })
@@ -173,7 +191,7 @@ export async function renderBarcodeFile(
     );
   }
   return {
-    body: await raster(rendered, type),
+    body: await rasterBarcode(rendered, type),
     contentType: info.mime,
     extension: type,
     width: Math.round(rendered.width),
