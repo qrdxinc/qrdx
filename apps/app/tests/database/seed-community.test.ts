@@ -53,6 +53,7 @@ import { COMMUNITY_THEME_TAGS } from "@/lib/constants";
 import { defaultPresets } from "@/utils/qr-presets";
 import * as backfill from "../../../../packages/database/scripts/backfill-community.mjs";
 import * as seed from "../../../../packages/database/scripts/seed-community.mjs";
+import { buildSeedDesigns } from "../../scripts/community-seed/designs";
 import {
   buildSeedPageTemplates,
   SEED_KITS,
@@ -70,6 +71,12 @@ const byType = (type: string) => items.filter((item) => item.type === type);
 const presetIds = new Set(Object.keys(PRESET_THEME_DESCRIPTIONS));
 const isPreset = (item: (typeof items)[number]) =>
   item.type === "theme" && item.facets?.preset !== undefined;
+// The official designs are gated in seed-designs-gate-*.test.ts (shards)
+const isDesign = (item: (typeof items)[number]) =>
+  item.type === "theme" && item.facets?.design !== undefined;
+/** The 10 hand-made themes, the 41 built-in ones and the designs */
+const DESIGNS = buildSeedDesigns().length;
+const THEMES = 51 + DESIGNS;
 /** The design a theme or frame item is shown (and gated) as. */
 const shownStyle = (item: (typeof items)[number]) =>
   item.type === "frame"
@@ -83,12 +90,13 @@ const shownStyle = (item: (typeof items)[number]) =>
       );
 
 describe("the seed's items", () => {
-  it("publishes the engine's official frames, 51 themes and 8 collections", () => {
+  it("publishes the engine's official frames, the themes and 8 collections", () => {
     expect(byType("frame").map((item) => item.slug)).toEqual(
       OFFICIAL_FRAMES.map((frame) => frame.id),
     );
-    expect(byType("theme")).toHaveLength(51);
+    expect(byType("theme")).toHaveLength(THEMES);
     expect(byType("theme").filter(isPreset)).toHaveLength(41);
+    expect(byType("theme").filter(isDesign)).toHaveLength(DESIGNS);
     expect(byType("collection")).toHaveLength(8);
     expect(new Set(items.map((item) => item.id)).size).toBe(items.length);
     expect(new Set(items.map((item) => `${item.type}:${item.slug}`)).size).toBe(
@@ -150,7 +158,7 @@ describe("the seed's items", () => {
     timeout: 240_000,
   }, async () => {
     const gated = items.filter(
-      (item) => item.type === "theme" && !isPreset(item),
+      (item) => item.type === "theme" && !(isPreset(item) || isDesign(item)),
     );
     expect(await gateFailures(gated)).toEqual([]);
   });
@@ -332,7 +340,7 @@ describe("seed-community", () => {
     expect(pg.rows("community_item")).toHaveLength(0);
     expect(lines.join("\n")).toMatch(
       new RegExp(
-        `Planned: ${OFFICIAL_FRAMES.length} frame\\(s\\), 51 theme\\(s\\), 8 collection\\(s\\), 0 existing theme\\(s\\) marked official`,
+        `Planned: ${OFFICIAL_FRAMES.length} frame\\(s\\), ${THEMES} theme\\(s\\), 8 collection\\(s\\), 0 existing theme\\(s\\) marked official`,
       ),
     );
   });
@@ -371,10 +379,11 @@ describe("seed-community", () => {
       .rows("community_item")
       .filter((i) => String(i.id).startsWith("ci_official_"));
     expect(seeded).toHaveLength(items.length);
-    // The official frames, 51 themes and 8 collections, then the pages
+    // The official frames, the themes and 8 collections, then the pages
     expect(items).toHaveLength(
       OFFICIAL_FRAMES.length +
-        59 +
+        THEMES +
+        8 +
         byType("page-template").length +
         byType("kit").length,
     );

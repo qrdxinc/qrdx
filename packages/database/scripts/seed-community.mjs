@@ -10,6 +10,10 @@
 //   ./community-seed-presets.json stores them: written from the presets by
 //   apps/app/scripts/community-seed/generate.ts, each payload what a
 //   publish of that theme stores;
+// - the official designs made for the gallery (apps/app/scripts/
+//   community-seed/designs), as ./community-seed-designs.json stores them
+//   (written by the same generate.ts): each payload what a publish stores,
+//   with its official frame, if it has one, put in from the engine here;
 // - QRdx's own page templates (apps/app/lib/landing/templates), each run
 //   through the publish scrub (sample text, no photos, no real data), and
 //   8 official kits pairing one with a seeded theme and/or frame, as
@@ -64,6 +68,11 @@ export const PRESET_SEED = JSON.parse(
   readFileSync(here("./community-seed-presets.json"), "utf8")
 );
 
+/** The official designs, generated from the app's design files (see the header). */
+export const DESIGN_SEED = JSON.parse(
+  readFileSync(here("./community-seed-designs.json"), "utf8")
+);
+
 /** The engine's official frame files, in catalogue order. */
 export function loadOfficialFrames() {
   return SEED.frames.map((id) =>
@@ -77,15 +86,19 @@ export const seedItemId = (type, id) => `ci_official_${type}_${id}`;
 const versionId = (itemId) =>
   `civ_${createHash("sha256").update(`qrdx:community-version:${itemId}:1`).digest("hex").slice(0, 24)}`;
 
-/** A seed theme's full style: its fields plus its official frame. */
+/**
+ * A seed theme's full style: its fields plus its official frame, with the
+ * colors and labels the theme sets on it (`color`, `textColor`,
+ * `secondaryColor`, `text`, `secondaryText`).
+ */
 export function resolveSeedTheme(theme, framesById) {
   const frame = framesById.get(theme.frame.official);
   if (!frame)
     throw new Error(`${theme.id}: no official frame ${theme.frame.official}`);
-  const { official: _id, ...colors } = theme.frame;
+  const { official: _id, ...options } = theme.frame;
   return {
     ...theme.style,
-    frame: { style: "custom", spec: frame.spec, ...colors },
+    frame: { style: "custom", spec: frame.spec, ...options },
   };
 }
 
@@ -170,6 +183,30 @@ export function buildSeedItems(frames = loadOfficialFrames()) {
       tags: theme.tags.slice(0, 5),
       payload: theme.payload,
       facets: { preset: theme.id },
+      featured: featured.has(`theme:${theme.id}`),
+    });
+  }
+  // Already in the shape a publish stores; an official frame is put in
+  // from the engine, as the hand-made themes' are.
+  for (const theme of DESIGN_SEED.themes) {
+    const style = theme.frame
+      ? resolveSeedTheme(
+          { id: theme.id, style: theme.payload.style, frame: theme.frame },
+          framesById
+        )
+      : theme.payload.style;
+    items.push({
+      id: seedItemId("theme", theme.id),
+      ref: `theme:${theme.id}`,
+      type: "theme",
+      slug: theme.slug,
+      name: theme.name,
+      description: theme.description,
+      tags: theme.tags.slice(0, 5),
+      payload: { ...theme.payload, style },
+      facets: theme.frame
+        ? { design: theme.id, pairedFrame: theme.frame.official }
+        : { design: theme.id },
       featured: featured.has(`theme:${theme.id}`),
     });
   }
