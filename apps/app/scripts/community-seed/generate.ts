@@ -9,7 +9,12 @@
 //   cd apps/app && bun x tsx scripts/community-seed/generate.ts
 //
 // tests/database/seed-community.test.ts and seed-designs.test.ts fail
-// while a file is stale. It only reads the presets and designs and writes
+// while a file is stale. The designs' gate scores (community-seed-design-
+// scores.json, stored as scan_score by the seed) are written by the design
+// test, since they need the server's scorer:
+//
+//   cd apps/app && UPDATE_COMMUNITY_SEED_SCORES=1 bun x vitest run tests/database/seed-designs.test.ts
+// It only reads the presets and designs and writes
 // the files: nothing connects to a database. Items already seeded never
 // change (published versions are immutable), so an edit here only reaches
 // a theme that isn't seeded yet.

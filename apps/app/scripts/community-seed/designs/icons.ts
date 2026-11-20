@@ -8,7 +8,7 @@ export const ICON_DESIGNS: SeedDesign[] = [
     name: "Guest Wi-Fi",
     description:
       "Rounded modules in a dark navy with extra-rounded eyes and squircle centres in cobalt, on white, with a Wi-Fi icon in the middle, on the Wi-Fi card frame.",
-    tags: ["professional", "cool", "minimal", "accessible"],
+    tags: ["professional", "cool", "minimal", "corporate"],
     style: {
       ...ink("#FFFFFF", "#0F172A", "#0F172A", "#1D4ED8"),
       ...shapes("rounded", "extra-rounded", "squircle"),
@@ -40,7 +40,7 @@ export const ICON_DESIGNS: SeedDesign[] = [
     name: "Call us",
     description:
       "Rounded modules in a deep teal with a phone icon in the middle, on a mint white, on the scan to call frame. For vans, shop doors and service leaflets.",
-    tags: ["professional", "cool", "accessible", "corporate"],
+    tags: ["professional", "cool", "minimal", "corporate"],
     style: {
       ...ink("#F0FDFA", "#134E4A", "#134E4A", "#0F766E"),
       ...shapes("rounded", "rounded", "rounded"),
@@ -88,7 +88,7 @@ export const ICON_DESIGNS: SeedDesign[] = [
     name: "Download sheet",
     description:
       "Classy rounded modules in a dark slate with square eyes and a file icon in the middle, on white, on the scan to download frame. For spec sheets and menus as PDFs.",
-    tags: ["professional", "minimal", "corporate", "dashboard"],
+    tags: ["professional", "minimal", "corporate", "flat"],
     style: {
       ...ink("#FFFFFF", "#1E293B", "#1E293B", "#1E293B"),
       ...shapes("classy-rounded", "square", "square"),
@@ -105,7 +105,7 @@ export const ICON_DESIGNS: SeedDesign[] = [
   },
   {
     id: "save-the-date",
-    name: "Save the date",
+    name: "Mark the date",
     description:
       "Rounded modules in a deep rose with squircle eyes and a calendar icon in the middle, on a blush white, on the add to calendar frame. For invitations and events.",
     tags: ["romantic", "soft", "elegant", "professional"],
@@ -121,7 +121,7 @@ export const ICON_DESIGNS: SeedDesign[] = [
   },
   {
     id: "find-us",
-    name: "Find us",
+    name: "Map pin",
     description:
       "Liquid modules in a deep green with rounded eyes and a location pin in the middle, on a mint white, on the see the map frame. For flyers, menus and event tickets.",
     tags: ["nature", "professional", "cool", "accessible"],

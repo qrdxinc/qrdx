@@ -342,7 +342,7 @@ describe("seed-community", () => {
     expect(pg.rows("community_item")).toHaveLength(0);
     expect(lines.join("\n")).toMatch(
       new RegExp(
-        `Planned: ${OFFICIAL_FRAMES.length} frame\\(s\\), ${THEMES} theme\\(s\\), ${COLLECTIONS} collection\\(s\\), 0 existing theme\\(s\\) marked official`,
+        `Planned: ${OFFICIAL_FRAMES.length} frame\\(s\\), ${THEMES} theme\\(s\\), ${COLLECTIONS} collection\\(s\\), ${byType("page-template").length} page template\\(s\\), ${byType("kit").length} kit\\(s\\), 0 entry\\(ies\\) added to seeded collections, 0 existing theme\\(s\\) marked official`,
       ),
     );
   });
@@ -414,6 +414,15 @@ describe("seed-community", () => {
       ),
     );
     expect(pg.rows("community_item_version")).toHaveLength(items.length);
+    // A millisecond apart, in seed order, so "newest" pages in a fixed order
+    const times = seeded.map((i) => (i.published_at as Date).getTime());
+    expect(new Set(times).size).toBe(seeded.length);
+    expect([...times].sort((a, b) => a - b)).toEqual(times);
+    // Designs carry the gate's score, as a publish would
+    const design = seeded.find((i) => i.id === "ci_official_theme_paper-ink");
+    expect(typeof design?.scan_score).toBe("number");
+    expect(design?.scan_score).toBeGreaterThanOrEqual(85);
+    expect(design?.scan_checked_at).toEqual(design?.published_at);
     expect(
       pg
         .rows("community_item")
@@ -454,6 +463,62 @@ describe("seed-community", () => {
     const ids = pg.rows("community_item").map((i) => i.id);
     expect(ids).not.toContain("ci_official_theme_aurora");
     expect(ids).toHaveLength(items.length);
+  });
+
+  it("seeds a collection without a colliding design, then adds the entry once the design is in", async () => {
+    const paperInk = items.find((i) => i.id === "ci_official_theme_paper-ink");
+    pg.seed("community_item", [
+      {
+        id: "ci_theirs",
+        type: "theme",
+        slug: "their-look",
+        status: "published",
+        payload_hash: payloadHash(paperInk?.payload),
+        profile_id: "cp_someone",
+        is_official: false,
+        created_by: "u_someone",
+      },
+    ]);
+    const argv = ["--apply", "--backup", "s.json"];
+    expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
+    const warning = lines.find((l) => l.includes("collection minimal-print:"));
+    expect(warning).toMatch(
+      /ci_official_theme_paper-ink isn't seeded \(its design is already published as "their-look"\)/,
+    );
+    const entriesOf = () =>
+      pg
+        .rows("community_collection_entry")
+        .filter(
+          (e) => e.collection_id === "ci_official_collection_minimal-print",
+        )
+        .map((e) => e.item_id);
+    const full = items.find(
+      (i) => i.id === "ci_official_collection_minimal-print",
+    )?.entries as string[];
+    expect(entriesOf()).toEqual(full.filter((id) => id !== paperInk?.id));
+    expect(
+      pg.rows("community_item").find((i) => i.id === "ci_theirs"),
+    ).toMatchObject({
+      profile_id: "cp_someone",
+      is_official: false,
+    });
+
+    // The colliding row is gone: the next run seeds the design and its entry
+    pg.tables.community_item = pg
+      .rows("community_item")
+      .filter((i) => i.id !== "ci_theirs");
+    lines.length = 0;
+    expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
+    expect(lines.join("\n")).toMatch(
+      /INSERT community_collection_entry collection=ci_official_collection_minimal-print item=ci_official_theme_paper-ink position=\d+/,
+    );
+    expect(lines.join("\n")).toMatch(
+      /1 entry\(ies\) added to seeded collections/,
+    );
+    expect(entriesOf().sort()).toEqual([...full].sort());
+    expect(
+      pg.rows("community_item").find((i) => i.id === paperInk?.id),
+    ).toBeTruthy();
   });
 
   it("refuses to seed without the official account", async () => {

@@ -1439,7 +1439,7 @@
     {
       "id": "black-and-gold",
       "name": "Black & gold",
-      "description": "Dark ink with a deep gold accent on ivory, for galas, hotels and jewellers.",
+      "description": "Black or near-black ink with a deep gold accent on white, cream or ivory, for galas, hotels and jewellers.",
       "items": [
         "theme:gilt-grid",
         "theme:black-tie",
@@ -1450,8 +1450,7 @@
         "theme:gala-night",
         "theme:noir-hex",
         "theme:cocktail-hour",
-        "theme:hotel-key",
-        "theme:wedding-invite"
+        "theme:hotel-key"
       ]
     },
     {
@@ -1517,7 +1516,7 @@
     {
       "id": "holidays-and-seasons-looks",
       "name": "Holiday & season looks",
-      "description": "Festive and seasonal looks on the engine's holiday and season frames.",
+      "description": "Festive and seasonal looks on holiday and season frames.",
       "items": [
         "theme:wreath",
         "theme:candlelight",

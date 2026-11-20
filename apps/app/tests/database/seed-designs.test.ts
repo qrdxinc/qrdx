@@ -12,6 +12,9 @@
 // - names, descriptions and tags pass the publish rules.
 // Each design is also rendered and read with every decoder the repo tests
 // with, and gated, in tests/database/seed-designs-gate-*.test.ts.
+
+import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { FRAME_CATALOG } from "@repo/docs-assets/pattern-catalog";
 import {
   getContrastRatio,
@@ -37,7 +40,8 @@ vi.mock("next/cache", () => ({
 
 import { themePayloadSchema } from "@/lib/community/payloads";
 import { cleanDetails } from "@/lib/community/publish";
-import { GATE_SAMPLES } from "@/lib/community/scan-samples";
+import { checkScanGate } from "@/lib/community/scan-gate";
+import { GATE_SAMPLES, MIN_GATE_SCORE } from "@/lib/community/scan-samples";
 import { textProblem } from "@/lib/community/text";
 import { COMMUNITY_THEME_TAGS } from "@/lib/constants";
 import { designQRProps } from "@/lib/qr-design/props";
@@ -55,6 +59,11 @@ import { seededDesigns, shownStyle } from "../support/seed-designs";
 const DESIGN_COUNT = 203;
 /** Fewest designs each body, eye and centre must appear in. */
 const MIN_USES = 3;
+/**
+ * Contrast a design tagged "accessible" must have between every code color
+ * and its background: the enhanced level, well past the 4.5:1 a scan needs.
+ */
+const ACCESSIBLE_CONTRAST = 7;
 
 const designs = seededDesigns();
 const byId = new Map(designs.map((item) => [item.facets.design, item]));
@@ -240,6 +249,33 @@ describe("the official designs", () => {
     expect(eyes.has("circle")).toBe(false);
   });
 
+  it("never take an official frame's name unless they sit on that frame", () => {
+    const frameByName = new Map(
+      OFFICIAL_FRAMES.map((frame) => [frame.name.toLowerCase(), frame.id]),
+    );
+    const clashes = designs.flatMap((item) => {
+      const namesake = frameByName.get(item.name.toLowerCase());
+      return namesake && item.facets.pairedFrame !== namesake
+        ? [`${item.slug} is named like the ${namesake} frame`]
+        : [];
+    });
+    expect(clashes).toEqual([]);
+  });
+
+  it(`are tagged accessible only at ${ACCESSIBLE_CONTRAST}:1 or more`, () => {
+    const low = designs.flatMap((item) => {
+      if (!item.tags.includes("accessible")) return [];
+      const { ratio } = getScanContrast(propsOf(shownStyle(item)));
+      return ratio < ACCESSIBLE_CONTRAST
+        ? [`${item.slug}: ${ratio.toFixed(1)}:1`]
+        : [];
+    });
+    expect(low).toEqual([]);
+    expect(
+      designs.filter((item) => item.tags.includes("accessible")).length,
+    ).toBeGreaterThan(0);
+  });
+
   it("put a frame from every official collection on some design", () => {
     const collectionOf = new Map(
       OFFICIAL_FRAMES.map((frame) => [frame.id, frame.collection]),
@@ -282,6 +318,47 @@ describe("the official designs", () => {
       for (const tag of item.tags) {
         expect(COMMUNITY_THEME_TAGS, item.slug).toContain(tag);
       }
+    }
+  });
+
+  // Each design's gate score, stored as scan_score by the seed. Written by
+  // this test on demand (the gate is the server's real scorer), checked to
+  // be current otherwise.
+  const SCORES_FILE = join(
+    __dirname,
+    "../../../../packages/database/scripts/community-seed-design-scores.json",
+  );
+  it.runIf(process.env.UPDATE_COMMUNITY_SEED_SCORES === "1")(
+    "write the gate scores file",
+    { timeout: 1_800_000 },
+    async () => {
+      const scores: Record<string, number> = {};
+      for (const item of designs) {
+        scores[item.slug] = (await checkScanGate(shownStyle(item))).minScore;
+      }
+      const sorted = Object.fromEntries(
+        Object.entries(scores).sort(([a], [b]) => (a < b ? -1 : 1)),
+      );
+      const file = JSON.parse(readFileSync(SCORES_FILE, "utf8"));
+      writeFileSync(
+        SCORES_FILE,
+        `${JSON.stringify({ note: file.note, scores: sorted }, null, 2)}\n`,
+      );
+    },
+  );
+
+  it("store a current gate score for every design, none below the gate", () => {
+    const { scores } = JSON.parse(readFileSync(SCORES_FILE, "utf8")) as {
+      scores: Record<string, number>;
+    };
+    const message =
+      "Run `UPDATE_COMMUNITY_SEED_SCORES=1 bun x vitest run tests/database/seed-designs.test.ts` in apps/app";
+    expect(Object.keys(scores).sort(), message).toEqual(
+      designs.map((item) => item.slug).sort(),
+    );
+    for (const [id, score] of Object.entries(scores)) {
+      expect(Number.isInteger(score), id).toBe(true);
+      expect(score, id).toBeGreaterThanOrEqual(MIN_GATE_SCORE);
     }
   });
 

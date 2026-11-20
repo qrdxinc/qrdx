@@ -21,7 +21,7 @@ export const PASTEL_DESIGNS: SeedDesign[] = [
     name: "Mint drop",
     description:
       "Round dots in a deep teal with extra-rounded eyes and drop-shaped centres, on a pale mint. Cool and clean, for dentists, pharmacies and spas.",
-    tags: ["pastel", "cool", "soft", "accessible"],
+    tags: ["pastel", "cool", "soft", "pastel"],
     style: {
       ...ink("#E6FBF4", "#115E59", "#134E4A", "#0F766E"),
       ...shapes("circle", "extra-rounded", "drop"),

@@ -123,7 +123,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   },
   {
     id: "wine-list",
-    name: "Wine list",
+    name: "Cellar list",
     description:
       "Classy modules in a deep burgundy with leaf eyes and reversed leaf centres, on a warm ivory, on the wine pairings frame. For restaurants and cellar doors.",
     tags: ["elegant", "warm", "romantic", "vintage"],
@@ -179,7 +179,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   },
   {
     id: "loyalty-card",
-    name: "Loyalty card",
+    name: "Coffee stamps",
     description:
       "Large touching dots in an espresso brown with squircle eyes and caramel centres, on a warm cream, on the coffee club stamp frame. For loyalty cards and counters.",
     tags: ["warm", "earthy", "soft", "e-commerce"],
@@ -194,7 +194,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   // ── Shops & packaging ──────────────────────────────────────────────────
   {
     id: "sale-tag",
-    name: "Sale tag",
+    name: "Red tag",
     description:
       "Rounded modules in black with bevelled eyes and square centres in red, on white, on the sale tag frame. For price tags, shelf edges and clearance racks.",
     tags: ["bold", "high-contrast", "e-commerce", "vibrant"],
@@ -522,7 +522,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "zoo-facts",
     name: "Zoo facts",
     description:
-      "Pac-shaped modules in a dark chestnut with extra-rounded eyes and burnt orange centres, on a pale butter, on the animal facts frame. For zoos and farm parks.",
+      "Bitten dots in a dark chestnut with extra-rounded eyes and burnt orange centres, on a pale butter, on the animal facts frame. For zoos and farm parks.",
     tags: ["playful", "warm", "nature", "earthy"],
     style: {
       ...ink("#FFFBEB", "#7C2D12", "#7C2D12", "#9A3412"),
@@ -555,7 +555,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "yard-sign",
     name: "Yard sign",
     description:
-      "Rounded modules in a dark red with navy square eyes, on white, on the for sale yard sign frame. Reads from the pavement, for sign riders and listing flyers.",
+      "Rounded modules in a dark red with navy square eyes, on white, on the for sale yard sign frame. For sign riders and listing flyers.",
     tags: ["bold", "high-contrast", "professional", "corporate"],
     style: {
       ...ink("#FFFFFF", "#7F1D1D", "#0F1F3D", "#0F1F3D"),
@@ -575,7 +575,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "pay-and-display",
     name: "Pay and display",
     description:
-      "Rounded modules in a dark slate with bevelled eyes, on white, on the pay for parking frame. Clear at arm's length on a post, for car parks and meters.",
+      "Rounded modules in a dark slate with bevelled eyes, on white, on the pay for parking frame. Plain and clear, for car parks and meters.",
     tags: ["professional", "minimal", "accessible", "industrial"],
     style: {
       ...ink("#FFFFFF", "#1F2937", "#1F2937", "#374151"),
@@ -633,7 +633,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     name: "Clinic card",
     description:
       "Rounded modules in a deep sea blue with cushion eyes and brighter blue centres, on a pale sky white, on the appointments frame. For clinics and dentists.",
-    tags: ["professional", "cool", "soft", "accessible"],
+    tags: ["professional", "cool", "soft", "minimal"],
     style: {
       ...ink("#F0F9FF", "#0C4A6E", "#0C4A6E", "#0369A1"),
       ...shapes("rounded", "cushion", "rounded"),
@@ -717,7 +717,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "gym-schedule",
     name: "Gym schedule",
     description:
-      "Diamond modules in black with bevelled eyes and red square centres, on white, on the timetable frame. Sharp and fast, for gyms, boxes and class boards.",
+      "Diamond modules in black with bevelled eyes and red square centres, on white, on the timetable frame. Sharp and fast, for gyms and class timetables.",
     tags: ["bold", "high-contrast", "geometric", "brutalist"],
     style: {
       ...ink("#FFFFFF", "#0A0A0A", "#0A0A0A", "#BE123C"),
@@ -762,7 +762,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   },
   {
     id: "team-kit",
-    name: "Team kit",
+    name: "Club jersey",
     description:
       "Diamond modules in a dark navy with extra-rounded eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
     tags: ["bold", "geometric", "vibrant", "high-contrast"],
@@ -824,7 +824,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   // ── Business & social ──────────────────────────────────────────────────
   {
     id: "business-card",
-    name: "Business card",
+    name: "Dark card",
     description:
       "Classy modules in black with square eyes and rounded centres, on white, on the dark business card frame. For printed cards and email signatures.",
     tags: ["minimal", "monochrome", "professional", "corporate"],
@@ -852,7 +852,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   },
   {
     id: "tap-to-pay",
-    name: "Tap to pay",
+    name: "Pay at the counter",
     description:
       "Rounded modules in a deep emerald with squircle eyes, on white, on the tap or scan to pay frame. Calm and clear, for counters, market stalls and invoices.",
     tags: ["professional", "cool", "minimal", "e-commerce"],
@@ -885,7 +885,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   },
   {
     id: "follow-us",
-    name: "Follow us",
+    name: "New posts",
     description:
       "Round dots in a deep violet with petal eyes in a darker purple and raspberry centres, on white, on the follow us bubble frame. For profiles and shop counters.",
     tags: ["vibrant", "playful", "startup", "candy"],
@@ -977,7 +977,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     name: "Volunteer",
     description:
       "Rounded modules in a deep rose with rounded eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
-    tags: ["warm", "romantic", "soft", "accessible"],
+    tags: ["warm", "romantic", "soft", "bold"],
     style: {
       ...ink("#FFFFFF", "#9F1239", "#9F1239", "#BE123C"),
       ...shapes("rounded", "rounded", "heart"),

@@ -104,7 +104,7 @@ export const NEON_DESIGNS: SeedDesign[] = [
     id: "safety-orange",
     name: "Safety orange",
     description:
-      "Black square modules with bevelled eyes and rounded-triangle centres on a safety orange, over a black banner that says Scan here. Impossible to miss, for site signs, warehouses and workwear.",
+      "Black square modules with bevelled eyes and rounded-triangle centres on a safety orange, over a black banner that says Scan here. Bright and plain, for site signs, warehouses and workwear.",
     tags: ["neon", "bold", "high-contrast", "industrial"],
     style: {
       ...ink("#FF8A00", "#000000"),
@@ -123,7 +123,7 @@ export const NEON_DESIGNS: SeedDesign[] = [
     id: "neon-mint",
     name: "Neon mint",
     description:
-      "Dark green-black horizontal lines with squircle eyes on a neon mint. Bright and crisp, for smoothie bars, vape-free gyms and app launches.",
+      "Dark green-black horizontal lines with squircle eyes on a neon mint. Bright and crisp, for smoothie bars, gyms and app launches.",
     tags: ["neon", "cool", "vibrant", "futuristic"],
     style: {
       ...ink("#5CFFB0", "#061A14"),

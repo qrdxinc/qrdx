@@ -49,8 +49,8 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
     id: "red-lantern",
     name: "Red lantern",
     description:
-      "Square modules in a lantern red with diya eyes in a deeper red and golden brown centres, on a warm white, on the lunar lantern frame. For Lunar New Year.",
-    tags: ["warm", "bold", "vibrant", "romantic"],
+      "Square modules in a lantern red with pointed flame-shaped eyes in a deeper red and golden brown centres, on a warm white, on the lunar lantern frame. For Lunar New Year.",
+    tags: ["warm", "bold", "vibrant", "colorful"],
     style: {
       ...ink("#FFF7ED", "#991B1B", "#7F1D1D", "#854D0E"),
       ...shapes("square", "diya", "diya"),
@@ -90,7 +90,7 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
   },
   {
     id: "pumpkin-patch",
-    name: "Pumpkin patch",
+    name: "Trick or treat",
     description:
       "Round dots in a near-black with octagon eyes in burnt orange, on a warm white, on the Halloween pumpkin frame. For trick-or-treat trails and haunted houses.",
     tags: ["autumn", "playful", "bold", "warm"],
@@ -146,7 +146,7 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
   },
   {
     id: "festival-of-lights",
-    name: "Festival of lights",
+    name: "Menorah blue",
     description:
       "Square modules in a deep blue with squircle eyes and deep gold centres, on white, on the Hanukkah menorah frame. For community dinners and school notices.",
     tags: ["cool", "elegant", "winter", "geometric"],
@@ -216,7 +216,7 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
   },
   {
     id: "harvest",
-    name: "Harvest",
+    name: "Wheat and amber",
     description:
       "Hexagon modules in a dark amber with extra-rounded eyes in toast brown and amber centres, on a pale butter, on the Thanksgiving wheat frame. For harvest menus.",
     tags: ["autumn", "warm", "earthy", "nature"],
@@ -233,7 +233,7 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
     name: "Rainbow eyes",
     description:
       "Rounded modules in a dark navy with squircle eyes in red, green and blue, on white, on the Pride rainbow frame. For Pride events, bars and community groups.",
-    tags: ["colorful", "playful", "vibrant", "accessible"],
+    tags: ["colorful", "playful", "vibrant", "bold"],
     style: {
       ...ink("#FFFFFF", "#111827"),
       ...shapes("rounded", "squircle", "rounded"),

@@ -128,7 +128,7 @@ export const RETRO_DESIGNS: SeedDesign[] = [
     id: "arcade",
     name: "Arcade",
     description:
-      "Black pac-shaped modules with square eyes and royal blue centres, on white, under a black speech bubble that says Scan to play. For arcades and game nights.",
+      "Black bitten dots with square eyes and royal blue centres, on white, under a black speech bubble that says Scan to play. For arcades and game nights.",
     tags: ["retro", "playful", "high-contrast", "bold"],
     style: {
       ...ink("#FFFFFF", "#111111", "#111111", "#1D4ED8"),

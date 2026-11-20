@@ -80,11 +80,24 @@ function zxing(): BarcodeDetector {
   return detector;
 }
 
-/** Whether `zbarimg` is installed; the zbar check is skipped without it. */
+/**
+ * Whether `zbarimg` is installed. Without it the zbar check is skipped on
+ * a developer's machine; in the frame-scan workflow (QRDX_REQUIRE_ZBAR=1,
+ * which installs zbar) a missing zbar fails the gate instead.
+ */
 export const ZBAR_INSTALLED = (() => {
   const probe = spawnSync("zbarimg", ["--version"], { encoding: "utf8" });
   return probe.status === 0;
 })();
+if (
+  !ZBAR_INSTALLED &&
+  process.env.CI === "true" &&
+  process.env.QRDX_REQUIRE_ZBAR === "1"
+) {
+  throw new Error(
+    "zbarimg is not installed, and this workflow requires it (apt-get install zbar-tools): the design gate can't read with zbar",
+  );
+}
 
 let zbarDir: string | null = null;
 function zbarWorkDir(): string {

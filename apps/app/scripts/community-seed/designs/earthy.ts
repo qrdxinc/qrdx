@@ -96,7 +96,7 @@ export const EARTHY_DESIGNS: SeedDesign[] = [
     id: "cedar",
     name: "Cedar",
     description:
-      "Classy rounded modules in a cedar brown with reversed leaf eyes, on a warm white. Smells of a wood shop, for carpenters, saunas and furniture makers.",
+      "Classy rounded modules in a cedar brown with reversed leaf eyes, on a warm white. Warm and plain, for carpenters, saunas and furniture makers.",
     tags: ["earthy", "warm", "nature", "elegant"],
     style: {
       ...ink("#FAF3EA", "#5C3A21", "#4A2E1A", "#7A4A2A"),

@@ -48,7 +48,7 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
     name: "Ask away",
     description:
       "Classy rounded modules in a deep teal with message-shaped eyes and message centres in a brighter teal, on white. For FAQ pages, feedback forms and reception desks.",
-    tags: ["professional", "cool", "soft", "accessible"],
+    tags: ["professional", "cool", "soft", "minimal"],
     style: {
       ...ink("#FFFFFF", "#134E4A", "#134E4A", "#0F766E"),
       ...shapes("classy-rounded", "message", "message"),
@@ -151,7 +151,7 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
     id: "chomp",
     name: "Chomp",
     description:
-      "Pac-shaped modules in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Bitten dots with a wink, for game shops and arcades.",
+      "Bitten dots in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Bitten dots with a wink, for game shops and arcades.",
     tags: ["playful", "retro", "bold", "cool"],
     style: {
       ...ink("#FFFFFF", "#0F172A", "#0F172A", "#1D4ED8"),
@@ -214,7 +214,7 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
   },
   {
     id: "first-aid",
-    name: "First aid",
+    name: "Pharmacy cross",
     description:
       "Plus-shaped modules in a deep teal green with squircle eyes and rounded-cross centres, on a mint white. Calm and clinical, for pharmacies and first-aid points.",
     tags: ["cool", "professional", "accessible", "minimal"],

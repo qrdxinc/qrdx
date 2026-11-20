@@ -640,7 +640,7 @@
       "slug": "mint-drop",
       "name": "Mint drop",
       "description": "Round dots in a deep teal with extra-rounded eyes and drop-shaped centres, on a pale mint. Cool and clean, for dentists, pharmacies and spas.",
-      "tags": ["pastel", "cool", "soft", "accessible"],
+      "tags": ["pastel", "cool", "soft"],
       "payload": {
         "style": {
           "bgColor": "#E6FBF4",
@@ -997,7 +997,7 @@
       "id": "safety-orange",
       "slug": "safety-orange",
       "name": "Safety orange",
-      "description": "Black square modules with bevelled eyes and rounded-triangle centres on a safety orange, over a black banner that says Scan here. Impossible to miss, for site signs, warehouses and workwear.",
+      "description": "Black square modules with bevelled eyes and rounded-triangle centres on a safety orange, over a black banner that says Scan here. Bright and plain, for site signs, warehouses and workwear.",
       "tags": ["neon", "bold", "high-contrast", "industrial"],
       "payload": {
         "style": {
@@ -1023,7 +1023,7 @@
       "id": "neon-mint",
       "slug": "neon-mint",
       "name": "Neon mint",
-      "description": "Dark green-black horizontal lines with squircle eyes on a neon mint. Bright and crisp, for smoothie bars, vape-free gyms and app launches.",
+      "description": "Dark green-black horizontal lines with squircle eyes on a neon mint. Bright and crisp, for smoothie bars, gyms and app launches.",
       "tags": ["neon", "cool", "vibrant", "futuristic"],
       "payload": {
         "style": {
@@ -1195,7 +1195,7 @@
       "id": "cedar",
       "slug": "cedar",
       "name": "Cedar",
-      "description": "Classy rounded modules in a cedar brown with reversed leaf eyes, on a warm white. Smells of a wood shop, for carpenters, saunas and furniture makers.",
+      "description": "Classy rounded modules in a cedar brown with reversed leaf eyes, on a warm white. Warm and plain, for carpenters, saunas and furniture makers.",
       "tags": ["earthy", "warm", "nature", "elegant"],
       "payload": {
         "style": {
@@ -1624,7 +1624,7 @@
       "id": "arcade",
       "slug": "arcade",
       "name": "Arcade",
-      "description": "Black pac-shaped modules with square eyes and royal blue centres, on white, under a black speech bubble that says Scan to play. For arcades and game nights.",
+      "description": "Black bitten dots with square eyes and royal blue centres, on white, under a black speech bubble that says Scan to play. For arcades and game nights.",
       "tags": ["retro", "playful", "high-contrast", "bold"],
       "payload": {
         "style": {
@@ -1704,7 +1704,7 @@
       "id": "building-blocks",
       "slug": "building-blocks",
       "name": "Building blocks",
-      "description": "Square modules in a dark slate with rounded eyes in red, blue and green, on white, in a white polaroid frame that says Scan me. For toy shops and nurseries.",
+      "description": "Square modules in a dark slate with rounded eyes in red, blue and green, on white, in a dark instant-photo frame that says Scan me. For toy shops and nurseries.",
       "tags": ["playful", "colorful", "bold", "geometric"],
       "payload": {
         "style": {
@@ -1976,8 +1976,8 @@
       "id": "red-lantern",
       "slug": "red-lantern",
       "name": "Red lantern",
-      "description": "Square modules in a lantern red with diya eyes in a deeper red and golden brown centres, on a warm white, on the lunar lantern frame. For Lunar New Year.",
-      "tags": ["warm", "bold", "vibrant", "romantic"],
+      "description": "Square modules in a lantern red with pointed flame-shaped eyes in a deeper red and golden brown centres, on a warm white, on the lunar lantern frame. For Lunar New Year.",
+      "tags": ["warm", "bold", "vibrant", "colorful"],
       "payload": {
         "style": {
           "bgColor": "#FFF7ED",
@@ -2058,7 +2058,7 @@
     {
       "id": "pumpkin-patch",
       "slug": "pumpkin-patch",
-      "name": "Pumpkin patch",
+      "name": "Trick or treat",
       "description": "Round dots in a near-black with octagon eyes in burnt orange, on a warm white, on the Halloween pumpkin frame. For trick-or-treat trails and haunted houses.",
       "tags": ["autumn", "playful", "bold", "warm"],
       "payload": {
@@ -2153,7 +2153,7 @@
     {
       "id": "festival-of-lights",
       "slug": "festival-of-lights",
-      "name": "Festival of lights",
+      "name": "Menorah blue",
       "description": "Square modules in a deep blue with squircle eyes and deep gold centres, on white, on the Hanukkah menorah frame. For community dinners and school notices.",
       "tags": ["cool", "elegant", "winter", "geometric"],
       "payload": {
@@ -2271,7 +2271,7 @@
     {
       "id": "harvest",
       "slug": "harvest",
-      "name": "Harvest",
+      "name": "Wheat and amber",
       "description": "Hexagon modules in a dark amber with extra-rounded eyes in toast brown and amber centres, on a pale butter, on the Thanksgiving wheat frame. For harvest menus.",
       "tags": ["autumn", "warm", "earthy", "nature"],
       "payload": {
@@ -2297,7 +2297,7 @@
       "slug": "rainbow-eyes",
       "name": "Rainbow eyes",
       "description": "Rounded modules in a dark navy with squircle eyes in red, green and blue, on white, on the Pride rainbow frame. For Pride events, bars and community groups.",
-      "tags": ["colorful", "playful", "vibrant", "accessible"],
+      "tags": ["colorful", "playful", "vibrant", "bold"],
       "payload": {
         "style": {
           "bgColor": "#FFFFFF",
@@ -2533,7 +2533,7 @@
     {
       "id": "wine-list",
       "slug": "wine-list",
-      "name": "Wine list",
+      "name": "Cellar list",
       "description": "Classy modules in a deep burgundy with leaf eyes and reversed leaf centres, on a warm ivory, on the wine pairings frame. For restaurants and cellar doors.",
       "tags": ["elegant", "warm", "romantic", "vintage"],
       "payload": {
@@ -2633,7 +2633,7 @@
     {
       "id": "loyalty-card",
       "slug": "loyalty-card",
-      "name": "Loyalty card",
+      "name": "Coffee stamps",
       "description": "Large touching dots in an espresso brown with squircle eyes and caramel centres, on a warm cream, on the coffee club stamp frame. For loyalty cards and counters.",
       "tags": ["warm", "earthy", "soft", "e-commerce"],
       "payload": {
@@ -2658,7 +2658,7 @@
     {
       "id": "sale-tag",
       "slug": "sale-tag",
-      "name": "Sale tag",
+      "name": "Red tag",
       "description": "Rounded modules in black with bevelled eyes and square centres in red, on white, on the sale tag frame. For price tags, shelf edges and clearance racks.",
       "tags": ["bold", "high-contrast", "e-commerce", "vibrant"],
       "payload": {
@@ -3225,7 +3225,7 @@
       "id": "zoo-facts",
       "slug": "zoo-facts",
       "name": "Zoo facts",
-      "description": "Pac-shaped modules in a dark chestnut with extra-rounded eyes and burnt orange centres, on a pale butter, on the animal facts frame. For zoos and farm parks.",
+      "description": "Bitten dots in a dark chestnut with extra-rounded eyes and burnt orange centres, on a pale butter, on the animal facts frame. For zoos and farm parks.",
       "tags": ["playful", "warm", "nature", "earthy"],
       "payload": {
         "style": {
@@ -3275,7 +3275,7 @@
       "id": "yard-sign",
       "slug": "yard-sign",
       "name": "Yard sign",
-      "description": "Rounded modules in a dark red with navy square eyes, on white, on the for sale yard sign frame. Reads from the pavement, for sign riders and listing flyers.",
+      "description": "Rounded modules in a dark red with navy square eyes, on white, on the for sale yard sign frame. For sign riders and listing flyers.",
       "tags": ["bold", "high-contrast", "professional", "corporate"],
       "payload": {
         "style": {
@@ -3301,7 +3301,7 @@
       "id": "pay-and-display",
       "slug": "pay-and-display",
       "name": "Pay and display",
-      "description": "Rounded modules in a dark slate with bevelled eyes, on white, on the pay for parking frame. Clear at arm's length on a post, for car parks and meters.",
+      "description": "Rounded modules in a dark slate with bevelled eyes, on white, on the pay for parking frame. Plain and clear, for car parks and meters.",
       "tags": ["professional", "minimal", "accessible", "industrial"],
       "payload": {
         "style": {
@@ -3402,7 +3402,7 @@
       "slug": "clinic-card",
       "name": "Clinic card",
       "description": "Rounded modules in a deep sea blue with cushion eyes and brighter blue centres, on a pale sky white, on the appointments frame. For clinics and dentists.",
-      "tags": ["professional", "cool", "soft", "accessible"],
+      "tags": ["professional", "cool", "soft", "minimal"],
       "payload": {
         "style": {
           "bgColor": "#F0F9FF",
@@ -3549,7 +3549,7 @@
       "id": "gym-schedule",
       "slug": "gym-schedule",
       "name": "Gym schedule",
-      "description": "Diamond modules in black with bevelled eyes and red square centres, on white, on the timetable frame. Sharp and fast, for gyms, boxes and class boards.",
+      "description": "Diamond modules in black with bevelled eyes and red square centres, on white, on the timetable frame. Sharp and fast, for gyms and class timetables.",
       "tags": ["bold", "high-contrast", "geometric", "brutalist"],
       "payload": {
         "style": {
@@ -3624,7 +3624,7 @@
     {
       "id": "team-kit",
       "slug": "team-kit",
-      "name": "Team kit",
+      "name": "Club jersey",
       "description": "Diamond modules in a dark navy with extra-rounded eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
       "tags": ["bold", "geometric", "vibrant", "high-contrast"],
       "payload": {
@@ -3725,7 +3725,7 @@
     {
       "id": "business-card",
       "slug": "business-card",
-      "name": "Business card",
+      "name": "Dark card",
       "description": "Classy modules in black with square eyes and rounded centres, on white, on the dark business card frame. For printed cards and email signatures.",
       "tags": ["minimal", "monochrome", "professional", "corporate"],
       "payload": {
@@ -3775,7 +3775,7 @@
     {
       "id": "tap-to-pay",
       "slug": "tap-to-pay",
-      "name": "Tap to pay",
+      "name": "Pay at the counter",
       "description": "Rounded modules in a deep emerald with squircle eyes, on white, on the tap or scan to pay frame. Calm and clear, for counters, market stalls and invoices.",
       "tags": ["professional", "cool", "minimal", "e-commerce"],
       "payload": {
@@ -3826,7 +3826,7 @@
     {
       "id": "follow-us",
       "slug": "follow-us",
-      "name": "Follow us",
+      "name": "New posts",
       "description": "Round dots in a deep violet with petal eyes in a darker purple and raspberry centres, on white, on the follow us bubble frame. For profiles and shop counters.",
       "tags": ["vibrant", "playful", "startup", "candy"],
       "payload": {
@@ -3978,7 +3978,7 @@
       "slug": "volunteer",
       "name": "Volunteer",
       "description": "Rounded modules in a deep rose with rounded eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
-      "tags": ["warm", "romantic", "soft", "accessible"],
+      "tags": ["warm", "romantic", "soft", "bold"],
       "payload": {
         "style": {
           "bgColor": "#FFFFFF",
@@ -4163,7 +4163,7 @@
       "slug": "ask-away",
       "name": "Ask away",
       "description": "Classy rounded modules in a deep teal with message-shaped eyes and message centres in a brighter teal, on white. For FAQ pages, feedback forms and reception desks.",
-      "tags": ["professional", "cool", "soft", "accessible"],
+      "tags": ["professional", "cool", "soft", "minimal"],
       "payload": {
         "style": {
           "bgColor": "#FFFFFF",
@@ -4322,7 +4322,7 @@
       "id": "chomp",
       "slug": "chomp",
       "name": "Chomp",
-      "description": "Pac-shaped modules in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Bitten dots with a wink, for game shops and arcades.",
+      "description": "Bitten dots in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Bitten dots with a wink, for game shops and arcades.",
       "tags": ["playful", "retro", "bold", "cool"],
       "payload": {
         "style": {
@@ -4421,7 +4421,7 @@
     {
       "id": "first-aid",
       "slug": "first-aid",
-      "name": "First aid",
+      "name": "Pharmacy cross",
       "description": "Plus-shaped modules in a deep teal green with squircle eyes and rounded-cross centres, on a mint white. Calm and clinical, for pharmacies and first-aid points.",
       "tags": ["cool", "professional", "accessible", "minimal"],
       "payload": {
@@ -4543,7 +4543,7 @@
       "slug": "guest-wifi",
       "name": "Guest Wi-Fi",
       "description": "Rounded modules in a dark navy with extra-rounded eyes and squircle centres in cobalt, on white, with a Wi-Fi icon in the middle, on the Wi-Fi card frame.",
-      "tags": ["professional", "cool", "minimal", "accessible"],
+      "tags": ["professional", "cool", "minimal", "corporate"],
       "payload": {
         "style": {
           "bgColor": "#FFFFFF",
@@ -4596,7 +4596,7 @@
       "slug": "call-us",
       "name": "Call us",
       "description": "Rounded modules in a deep teal with a phone icon in the middle, on a mint white, on the scan to call frame. For vans, shop doors and service leaflets.",
-      "tags": ["professional", "cool", "accessible", "corporate"],
+      "tags": ["professional", "cool", "minimal", "corporate"],
       "payload": {
         "style": {
           "bgColor": "#F0FDFA",
@@ -4675,7 +4675,7 @@
       "slug": "download-sheet",
       "name": "Download sheet",
       "description": "Classy rounded modules in a dark slate with square eyes and a file icon in the middle, on white, on the scan to download frame. For spec sheets and menus as PDFs.",
-      "tags": ["professional", "minimal", "corporate", "dashboard"],
+      "tags": ["professional", "minimal", "corporate", "flat"],
       "payload": {
         "style": {
           "bgColor": "#FFFFFF",
@@ -4700,7 +4700,7 @@
     {
       "id": "save-the-date",
       "slug": "save-the-date",
-      "name": "Save the date",
+      "name": "Mark the date",
       "description": "Rounded modules in a deep rose with squircle eyes and a calendar icon in the middle, on a blush white, on the add to calendar frame. For invitations and events.",
       "tags": ["romantic", "soft", "elegant", "professional"],
       "payload": {
@@ -4727,7 +4727,7 @@
     {
       "id": "find-us",
       "slug": "find-us",
-      "name": "Find us",
+      "name": "Map pin",
       "description": "Liquid modules in a deep green with rounded eyes and a location pin in the middle, on a mint white, on the see the map frame. For flyers, menus and event tickets.",
       "tags": ["nature", "professional", "cool", "accessible"],
       "payload": {

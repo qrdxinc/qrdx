@@ -1080,17 +1080,31 @@ export async function themeItemsFeed(
     const offset = typeof cursor === "number" ? cursor : 0;
     rows = (await itemsQuery()
       .where(and(...conditions))
-      .orderBy(desc(communityItem.likeCount), desc(communityItem.publishedAt))
+      .orderBy(
+        desc(communityItem.likeCount),
+        desc(communityItem.publishedAt),
+        asc(communityItem.id),
+      )
       .limit(limit + 1)
       .offset(offset)) as ItemRow[];
   } else {
-    if (typeof cursor === "string" && cursor) {
-      const at = new Date(cursor);
-      conditions.push(
+    const parsed = typeof cursor === "string" ? parseFeedCursor(cursor) : null;
+    if (parsed) {
+      const { at, id } = parsed;
+      const past =
         sort === "newest"
           ? lt(communityItem.publishedAt, at)
-          : gt(communityItem.publishedAt, at),
-      );
+          : gt(communityItem.publishedAt, at);
+      // Items published at the cursor's very moment (the seed publishes a
+      // batch milliseconds apart; a backfill may give many one time) come
+      // in id order after it, so no page repeats or skips one.
+      const after =
+        id &&
+        or(
+          past,
+          and(eq(communityItem.publishedAt, at), gt(communityItem.id, id)),
+        );
+      conditions.push(after ?? past);
     }
     rows = (await itemsQuery()
       .where(and(...conditions))
@@ -1098,6 +1112,7 @@ export async function themeItemsFeed(
         sort === "newest"
           ? desc(communityItem.publishedAt)
           : asc(communityItem.publishedAt),
+        asc(communityItem.id),
       )
       .limit(limit + 1)) as ItemRow[];
   }
@@ -1140,12 +1155,32 @@ export async function themeItemsFeed(
   }));
   let nextCursor: string | number | null = null;
   if (hasMore) {
+    const last = page.at(-1);
     nextCursor =
       sort === "popular"
         ? (typeof cursor === "number" ? cursor : 0) + limit
-        : (themes.at(-1)?.publishedAt ?? null);
+        : last?.publishedAt
+          ? feedCursor(new Date(last.publishedAt), last.id)
+          : null;
   }
   return { themes, nextCursor };
+}
+
+/** A newest/oldest page cursor: the last item's published time and id. */
+const feedCursor = (at: Date, id: string) => `${at.toISOString()}|${id}`;
+
+/**
+ * The time and id a cursor points at. Cursors from before the id was added
+ * (the time alone) still work, without the tiebreak; one that doesn't
+ * parse starts the feed over.
+ */
+function parseFeedCursor(
+  cursor: string,
+): { at: Date; id: string | null } | null {
+  const [time, id] = cursor.split("|");
+  const at = new Date(time ?? "");
+  if (!cursor || Number.isNaN(at.getTime())) return null;
+  return { at, id: id || null };
 }
 
 /** Tag counts over visible theme items. */

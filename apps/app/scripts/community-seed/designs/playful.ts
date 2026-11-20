@@ -33,7 +33,7 @@ export const PLAYFUL_DESIGNS: SeedDesign[] = [
     id: "building-blocks",
     name: "Building blocks",
     description:
-      "Square modules in a dark slate with rounded eyes in red, blue and green, on white, in a white polaroid frame that says Scan me. For toy shops and nurseries.",
+      "Square modules in a dark slate with rounded eyes in red, blue and green, on white, in a dark instant-photo frame that says Scan me. For toy shops and nurseries.",
     tags: ["playful", "colorful", "bold", "geometric"],
     style: {
       ...ink("#FFFFFF", "#1F2937"),
