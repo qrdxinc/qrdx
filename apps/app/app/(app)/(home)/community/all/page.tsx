@@ -26,12 +26,12 @@ import {
 export const metadata: Metadata = createMetadata({
   title: "Everything | Community",
   description:
-    "Every QR code frame, theme, collection and page template in the QRdx community, ranked by saves or newest first. Free under CC0.",
+    "Every QR code frame, theme, collection and page template in the QRdx community, ranked by bookmarks or newest first. Free under CC0.",
   path: "/community/all",
 });
 
 const SORTS: { value: AllSort; label: string }[] = [
-  { value: "saved", label: "Most saved" },
+  { value: "bookmarked", label: "Most bookmarked" },
   { value: "trending", label: "Trending" },
   { value: "newest", label: "Newest" },
 ];
@@ -57,7 +57,7 @@ const PERIOD_WORDS: Record<RankPeriod, string> = {
   all: "of all time",
 };
 
-/** What the list shows, in a few words ("Most saved this week"). */
+/** What the list shows, in a few words ("Most bookmarked this week"). */
 function headingOf(query: AllQuery): string {
   if (query.q) return `Results for “${query.q}”`;
   const who =
@@ -75,7 +75,7 @@ function headingOf(query: AllQuery): string {
         ? query.period === "all"
           ? "Trending, all time"
           : `Trending ${PERIOD_WORDS[query.period]}`
-        : `Most saved ${PERIOD_WORDS[query.period]}`;
+        : `Most bookmarked ${PERIOD_WORDS[query.period]}`;
   return who ? `${who}: ${what.toLowerCase()}` : what;
 }
 
@@ -148,7 +148,7 @@ export default async function CommunityAllPage({
       <BrowseLayout
         activeFilters={
           (query.q ? 1 : 0) +
-          (query.sort !== "saved" ? 1 : 0) +
+          (query.sort !== "bookmarked" ? 1 : 0) +
           (ranked && query.period !== "all" ? 1 : 0) +
           (query.from !== "all" ? 1 : 0)
         }
@@ -196,9 +196,9 @@ function Empty({ query }: { query: AllQuery }) {
         ]
       : [
           query.period === "all"
-            ? "Nothing saved yet"
-            : `Nothing saved ${PERIOD_WORDS[query.period]} yet`,
-          "Items people save in this time show up here.",
+            ? "Nothing bookmarked yet"
+            : `Nothing bookmarked ${PERIOD_WORDS[query.period]} yet`,
+          "Items people bookmark in this time show up here.",
           {
             href: allHref(query, { period: "all", from: "all" }),
             label: "Show all time",

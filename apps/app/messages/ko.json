@@ -4519,7 +4519,7 @@
         "comingUp": "곧 출시",
         "classic": "클래식",
         "shapedCodes": "모양 코드",
-        "saved": "저장됨",
+        "saved": "북마크됨",
         "results": "검색 결과"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name}이(가) 커뮤니티에 게시되었어요.",
       "viewIt": "보러 가기",
       "whatToMake": "만들 항목",
-      "itemsYouSaveInThe": "커뮤니티에 저장하거나 직접 게시한 항목이 여기에 표시돼요. <link>커뮤니티 둘러보기</link>",
+      "itemsYouSaveInThe": "커뮤니티에서 북마크했거나 직접 게시한 항목이 여기에 표시돼요. <link>커뮤니티 둘러보기</link>",
       "itemsLengthPicked": "항목<span>{length, number}개 선택됨</span>",
       "optional": "(선택)",
       "name": "이름",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "프레임, 테마, 페이지 템플릿을 함께 묶어 사람들이 한 번에 둘러볼 수 있어요. 예를 들면 카페를 위한 모든 것이 있어요. 2개 이상 선택하세요.",
       "aPageTemplateAndThe": "페이지 템플릿과 어울리는 스타일을 함께 묶어요. 키트를 사용하면 페이지는 초안으로, 스타일은 저장된 테마로 복사돼요.",
       "yours": "내 것",
-      "noSavedMany": "저장된 {many} 없음",
+      "noSavedMany": "북마크한 {many} 없음",
       "none": "없음",
       "pickOne": "하나 선택",
       "publishing": "게시 중",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "커뮤니티에서 삭제할까요?",
       "itLeavesTheCommunityAt": "커뮤니티에서 바로 사라져요. 이미 사용한 사람들은 복사본을 그대로 가지고 있어요. CC0로 공유된 항목이기 때문이에요.",
       "cancel": "취소",
-      "removeFromSaved": "저장 취소",
-      "save": "저장",
+      "removeFromSaved": "북마크 해제",
+      "save": "북마크",
       "unlike": "좋아요 취소",
       "like": "좋아요",
       "useKit": "키트 사용",
       "useTemplate": "템플릿 사용",
-      "saved": "저장됨",
+      "saved": "북마크됨",
       "open": "열기",
       "nameIsInYourPages": "\"{name}\"이(가) 내 페이지에 초안으로, 그 스타일이 내 테마에 추가되었어요.",
       "nameIsInYourPages2": "\"{name}\"이(가) 내 페이지에 초안으로 추가되었어요.",
-      "savedItsInTheEditors": "저장했어요. 에디터의 프레임 선택기에서 확인할 수 있어요.",
-      "saved2": "저장했어요.",
-      "removedFromSaved": "저장을 취소했어요.",
+      "savedItsInTheEditors": "북마크했어요. 에디터의 프레임 선택기에서 볼 수 있어요.",
+      "saved2": "북마크했어요.",
+      "removedFromSaved": "북마크를 해제했어요.",
       "copiedToWhereAsName": "{where}에 \"{name}\" 이름으로 복사했어요",
       "nameIsNoLongerIn": "\"{name}\"은(는) 더 이상 커뮤니티에 없어요."
     },
     "itemCard": {
       "empty": "비어 있음",
       "viewAll": "모두 보기",
-      "saves": "저장",
+      "like": "좋아요",
+      "unlike": "좋아요 취소",
+      "bookmark": "북마크",
+      "removeBookmark": "북마크 해제",
       "typeFrame": "프레임",
       "typeTheme": "테마",
       "typePage": "페이지",
@@ -5453,7 +5456,7 @@
       "failed": "다음 페이지를 불러오지 못했어요."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {#개 항목} other {#개 항목}} · {saves, plural, one {저장 #회} other {저장 #회}}"
+      "itemsAndSaves": "{items, plural, one {항목 #개} other {항목 #개}} · {saves, plural, one {북마크 #개} other {북마크 #개}}"
     },
     "more": {
       "load": "더 보기",
@@ -5464,7 +5467,7 @@
       "licence": "라이선스:"
     },
     "newBundle": {
-      "signInToMakeA": "저장한 항목으로 컬렉션이나 키트를 만들려면 로그인하세요.",
+      "signInToMakeA": "북마크한 항목으로 컬렉션이나 키트를 만들려면 로그인하세요.",
       "signIn": "로그인"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "AI 디자이너를 사용하려면 무료 계정이 필요해요. 무료 계정은 총 {count, number}번 요청할 수 있어요.",
       "uploadFrame": "직접 만든 프레임을 업로드하려면 무료 계정이 필요해요.",
       "publishFrame": "프레임을 커뮤니티에 공유하려면 무료 계정이 필요해요.",
-      "communityAction": "커뮤니티 디자인에 좋아요를 누르거나 저장, 복사, 게시하려면 무료 계정이 필요해요.",
+      "communityAction": "커뮤니티 디자인에 좋아요를 누르거나 북마크, 복사, 게시를 하려면 무료 계정이 필요해요.",
       "saveBarcode": "저장한 바코드는 계정에 보관되어 언제든 다시 다운로드할 수 있어요.",
       "bulkOverLimit": "최대 {limit, number}행까지의 파일은 계정 없이 사용할 수 있어요. 무료 계정은 파일당 최대 {max, number}개까지 만들 수 있고, 불러온 파일도 그대로 유지돼요.",
       "keepDesigns": "디자인을 계정에 보관하고 모든 기기에서 사용하세요.",

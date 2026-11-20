@@ -264,12 +264,16 @@ export default async function CommunityItemPage({
                   <dd>{item.tags.join(" · ")}</dd>
                 </>
               )}
-              {(item.likeCount > 0 || item.useCount > 0) && (
+              {(item.likeCount > 0 ||
+                item.saveCount > 0 ||
+                item.useCount > 0) && (
                 <>
                   <dt className="text-muted-foreground">Activity</dt>
                   <dd className="tabular-nums">
                     {item.useCount} {item.useCount === 1 ? "use" : "uses"} ·{" "}
-                    {item.likeCount} {item.likeCount === 1 ? "like" : "likes"}
+                    {item.likeCount} {item.likeCount === 1 ? "like" : "likes"} ·{" "}
+                    {item.saveCount}{" "}
+                    {item.saveCount === 1 ? "bookmark" : "bookmarks"}
                   </dd>
                 </>
               )}

@@ -44,6 +44,17 @@ import { officialFramePreview } from "@/lib/community/catalog";
 import type { CommunityItemCard } from "@/lib/community/types";
 import { buildTemplateContent } from "@/lib/landing/templates";
 
+/** A card's like or bookmark button, from its opening tag to its end. */
+const buttonOf = (html: string, reaction: "like" | "bookmark") => {
+  const start = html.indexOf(`data-reaction="${reaction}"`);
+  if (start < 0) throw new Error(`no ${reaction} button`);
+  const open = html.lastIndexOf("<button", start);
+  return html.slice(
+    open,
+    html.indexOf("</button>", start) + "</button>".length,
+  );
+};
+
 const card = (overrides: Partial<CommunityItemCard>): CommunityItemCard => ({
   id: "it_1",
   type: "theme",
@@ -143,14 +154,40 @@ describe("community card type labels", () => {
     expect(html).not.toContain("·");
   });
 
-  it("show the saves with their icon when there are any", () => {
-    const saved = renderIntl(ItemGrid({ cards: [card({ saveCount: 1234 })] }));
-    expect(saved).toMatch(
-      /<svg[\s\S]*?<\/svg><span class="sr-only">[^<]+<\/span>1.2K/,
+  it("have a like and a bookmark button, with their counts", () => {
+    const html = renderIntl(
+      ItemGrid({ cards: [card({ likeCount: 12, saveCount: 1234 })] }),
     );
+    const like = buttonOf(html, "like");
+    expect(like).toContain('aria-pressed="false"');
+    expect(like).toContain('<span class="sr-only">Like</span>12');
+    const bookmark = buttonOf(html, "bookmark");
+    expect(bookmark).toContain('aria-pressed="false"');
+    expect(bookmark).toContain('<span class="sr-only">Bookmark</span>1.2K');
+    // Pressable over the card's link, which covers the card: the caption
+    // sits above it and lets clicks through everywhere but the buttons
+    expect(like).toContain("pointer-events-auto");
+    const reveal = html.indexOf("group-hover:opacity-100");
+    const captionTag = html.slice(
+      html.lastIndexOf("<div", reveal),
+      html.indexOf(">", reveal),
+    );
+    expect(captionTag).toContain("pointer-events-none relative z-20");
+    // Never "save": they're bookmarks
+    expect(html).not.toMatch(/\bsaves?\b/i);
 
-    const unsaved = renderIntl(ItemGrid({ cards: [card({ saveCount: 0 })] }));
-    expect(unsaved).not.toContain('<span class="sr-only">');
+    // No counts until someone likes or bookmarks it
+    const fresh = renderIntl(ItemGrid({ cards: [card({})] }));
+    expect(buttonOf(fresh, "like")).toMatch(/Like<\/span><\/button>/);
+    expect(buttonOf(fresh, "bookmark")).toMatch(/Bookmark<\/span><\/button>/);
+  });
+
+  it("leave the buttons off items that aren't stored yet", () => {
+    // An official frame the seed hasn't stored, a theme from before the backfill
+    for (const unstored of [card({ id: null }), card({ slug: "" })]) {
+      const html = renderIntl(ItemGrid({ cards: [unstored] }));
+      expect(html).not.toContain("data-reaction");
+    }
   });
 });
 
@@ -330,7 +367,8 @@ describe("community card captions on hover", () => {
   it("come back when the card is hovered or holds keyboard focus", () => {
     const classes = captionClass(renderIntl(ItemGrid({ cards: [card({})] })));
     expect(classes).toContain("group-hover:opacity-100");
-    expect(classes).toContain("group-has-[a:focus-visible]:opacity-100");
+    // Its link's focus, or its like and bookmark buttons
+    expect(classes).toContain("group-has-[:focus-visible]:opacity-100");
   });
 
   it("are one line where a pointer can hover, the creator left to screen readers", () => {

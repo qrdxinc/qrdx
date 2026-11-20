@@ -4519,7 +4519,7 @@
         "comingUp": "近日公開",
         "classic": "クラシック",
         "shapedCodes": "シェイプ型コード",
-        "saved": "保存済み",
+        "saved": "ブックマーク済み",
         "results": "検索結果"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name}がコミュニティに公開されました。",
       "viewIt": "表示する",
       "whatToMake": "作成する種類",
-      "itemsYouSaveInThe": "コミュニティに保存したアイテムや自分で公開したアイテムがここに表示されます。<link>コミュニティを見る</link>",
+      "itemsYouSaveInThe": "コミュニティでブックマークしたアイテムや、ご自身で公開したアイテムがここに表示されます。<link>コミュニティを見る</link>",
       "itemsLengthPicked": "アイテム<span>{length, number}件選択中</span>",
       "optional": "（任意）",
       "name": "名前",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "フレーム、テーマ、ページテンプレートをまとめて、みんなが一緒に閲覧できるようにします。たとえば、カフェ向けのひとそろいです。2つ以上選んでください。",
       "aPageTemplateAndThe": "ページテンプレートと、それに合うデザインのセットです。キットを使うと、ページは下書きとして、デザインは保存済みのテーマとしてコピーされます。",
       "yours": "自分用",
-      "noSavedMany": "保存済みの{many}はありません",
+      "noSavedMany": "ブックマークした{many}はありません",
       "none": "なし",
       "pickOne": "1つ選択",
       "publishing": "公開中",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "コミュニティから削除しますか？",
       "itLeavesTheCommunityAt": "コミュニティからはすぐに削除されます。すでに利用した人のコピーは残ります。CC0で共有されているためです。",
       "cancel": "キャンセル",
-      "removeFromSaved": "保存を解除",
-      "save": "保存",
+      "removeFromSaved": "ブックマークを解除",
+      "save": "ブックマーク",
       "unlike": "いいねを取り消す",
       "like": "いいね",
       "useKit": "キットを使う",
       "useTemplate": "テンプレートを使う",
-      "saved": "保存済み",
+      "saved": "ブックマーク済み",
       "open": "開く",
       "nameIsInYourPages": "「{name}」を下書きとしてページに、デザインをテーマに追加しました。",
       "nameIsInYourPages2": "「{name}」を下書きとしてページに追加しました。",
-      "savedItsInTheEditors": "保存しました。エディタのフレーム選択に表示されます。",
-      "saved2": "保存しました。",
-      "removedFromSaved": "保存を解除しました。",
+      "savedItsInTheEditors": "ブックマークしました。エディターのフレーム選択に表示されます。",
+      "saved2": "ブックマークしました。",
+      "removedFromSaved": "ブックマークを解除しました。",
       "copiedToWhereAsName": "{where}に「{name}」としてコピーしました",
       "nameIsNoLongerIn": "「{name}」はコミュニティから削除されました。"
     },
     "itemCard": {
       "empty": "空",
       "viewAll": "すべて見る",
-      "saves": "保存数",
+      "like": "いいね",
+      "unlike": "いいね解除",
+      "bookmark": "ブックマーク",
+      "removeBookmark": "ブックマークを解除",
       "typeFrame": "フレーム",
       "typeTheme": "テーマ",
       "typePage": "ページ",
@@ -5453,7 +5456,7 @@
       "failed": "次のページを読み込めませんでした。"
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {#件} other {#件}} · 保存{saves, plural, one {#件} other {#件}}"
+      "itemsAndSaves": "{items, plural, one {# 件のアイテム} other {# 件のアイテム}} · {saves, plural, one {# 件のブックマーク} other {# 件のブックマーク}}"
     },
     "more": {
       "load": "さらに読み込む",
@@ -5464,7 +5467,7 @@
       "licence": "ライセンス:"
     },
     "newBundle": {
-      "signInToMakeA": "保存したアイテムからコレクションやキットを作成するには、ログインしてください。",
+      "signInToMakeA": "ブックマークしたアイテムからコレクションやキットを作成するには、サインインしてください。",
       "signIn": "ログイン"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "AIデザイナーのご利用にはフリーアカウントが必要です。フリーアカウントでは合計{count, number}回までリクエストできます。",
       "uploadFrame": "オリジナルのフレームをアップロードするには、フリーアカウントが必要です。",
       "publishFrame": "フレームをコミュニティと共有するには、フリーアカウントが必要です。",
-      "communityAction": "コミュニティのデザインへの「いいね」、保存、コピー、公開には、フリーアカウントが必要です。",
+      "communityAction": "コミュニティデザインへのいいね、ブックマーク、コピー、公開には、無料アカウントが必要です。",
       "saveBarcode": "保存したバーコードはアカウント内に残るので、いつでもまたダウンロードできます。",
       "bulkOverLimit": "{limit, number}行までのファイルはアカウント不要です。フリーアカウントなら1ファイルあたり最大{max, number}件まで作成でき、ファイルは読み込まれたままです。",
       "keepDesigns": "デザインをアカウントに保存して、すべてのデバイスで使えます。",

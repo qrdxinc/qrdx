@@ -4519,7 +4519,7 @@
         "comingUp": "Bientôt",
         "classic": "Classiques",
         "shapedCodes": "Codes à forme",
-        "saved": "Enregistrés",
+        "saved": "En favori",
         "results": "Résultats"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name} est en ligne dans la communauté.",
       "viewIt": "Voir",
       "whatToMake": "Que créer",
-      "itemsYouSaveInThe": "Les éléments que vous enregistrez depuis la communauté ou que vous publiez vous-même s’affichent ici. <link>Parcourir la communauté</link>",
+      "itemsYouSaveInThe": "Les éléments que vous mettez en favori dans la communauté ou que vous publiez vous-même apparaissent ici. <link>Parcourir la communauté</link>",
       "itemsLengthPicked": "Éléments<span>{length, number} sélectionnés</span>",
       "optional": "(facultatif)",
       "name": "Nom",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "Regroupez des cadres, des thèmes et des modèles de page que l’on peut parcourir ensemble, par exemple tout pour un café. Choisissez-en 2 ou plus.",
       "aPageTemplateAndThe": "Un modèle de page et le style qui l’accompagne. Utiliser un kit copie la page comme brouillon et le style comme thème enregistré.",
       "yours": "les vôtres",
-      "noSavedMany": "Aucun {many} enregistré",
+      "noSavedMany": "Aucun favori : {many}",
       "none": "Aucun",
       "pickOne": "Choisissez-en un",
       "publishing": "Publication",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "Retirer de la communauté ?",
       "itLeavesTheCommunityAt": "Il quitte immédiatement la communauté. Les personnes qui l’ont déjà utilisé conservent leurs copies : il a été partagé sous CC0.",
       "cancel": "Annuler",
-      "removeFromSaved": "Retirer des favoris",
-      "save": "Enregistrer",
+      "removeFromSaved": "Retirer le favori",
+      "save": "Favori",
       "unlike": "Je n’aime plus",
       "like": "J’aime",
       "useKit": "Utiliser le kit",
       "useTemplate": "Utiliser le modèle",
-      "saved": "Enregistré",
+      "saved": "En favori",
       "open": "Ouvrir",
       "nameIsInYourPages": "« {name} » est dans vos pages en brouillon, et son style dans vos thèmes.",
       "nameIsInYourPages2": "« {name} » est dans vos pages en brouillon.",
-      "savedItsInTheEditors": "Enregistré. Il se trouve dans le sélecteur de cadres de l’éditeur.",
-      "saved2": "Enregistré.",
-      "removedFromSaved": "Retiré des favoris.",
+      "savedItsInTheEditors": "Ajouté aux favoris. Il se trouve dans le sélecteur de cadres de l’éditeur.",
+      "saved2": "Ajouté aux favoris.",
+      "removedFromSaved": "Favori retiré.",
       "copiedToWhereAsName": "Copié dans {where} sous « {name} »",
       "nameIsNoLongerIn": "« {name} » n’est plus dans la communauté."
     },
     "itemCard": {
       "empty": "Vide",
       "viewAll": "Tout voir",
-      "saves": "Ajouts",
+      "like": "J’aime",
+      "unlike": "Je n’aime plus",
+      "bookmark": "Favori",
+      "removeBookmark": "Retirer le favori",
       "typeFrame": "Cadre",
       "typeTheme": "Thème",
       "typePage": "Page",
@@ -5453,7 +5456,7 @@
       "failed": "La page suivante n’a pas chargé."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {# élément} other {# éléments}} · {saves, plural, one {# ajout} other {# ajouts}}"
+      "itemsAndSaves": "{items, plural, one {# élément} other {# éléments}} · {saves, plural, one {# favori} other {# favoris}}"
     },
     "more": {
       "load": "Voir plus",
@@ -5464,7 +5467,7 @@
       "licence": "Licence :"
     },
     "newBundle": {
-      "signInToMakeA": "Connectez-vous pour créer une collection ou un kit à partir des éléments que vous avez enregistrés.",
+      "signInToMakeA": "Connectez-vous pour créer une collection ou un kit à partir des éléments que vous avez mis en favori.",
       "signIn": "Se connecter"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "Le designer IA nécessite un compte gratuit. Les comptes gratuits disposent de {count, number} requêtes au total.",
       "uploadFrame": "Importer vos propres cadres nécessite un compte gratuit.",
       "publishFrame": "Partager un cadre avec la communauté nécessite un compte gratuit.",
-      "communityAction": "Aimer, enregistrer, copier et publier des designs de la communauté nécessite un compte gratuit.",
+      "communityAction": "Aimer, ajouter en favori, copier et publier des designs de la communauté nécessite un compte gratuit.",
       "saveBarcode": "Les codes-barres enregistrés vivent dans votre compte, prêts à être téléchargés à nouveau.",
       "bulkOverLimit": "Les fichiers jusqu’à {limit, number} lignes ne nécessitent aucun compte. Un compte gratuit permet d’en générer jusqu’à {max, number} par fichier, et votre fichier reste chargé.",
       "keepDesigns": "Conservez vos designs dans votre compte, sur chaque appareil.",
