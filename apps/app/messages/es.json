@@ -9906,7 +9906,27 @@
       "signedOut": "Inicia sesión para cambiar las notificaciones.",
       "webhookUrlMissing": "Pega la URL del webhook",
       "rateLimited": "Has superado el límite de solicitudes. Inténtalo de nuevo más tarde.",
-      "failed": "Algo salió mal. Inténtalo de nuevo."
+      "failed": "Algo salió mal. Inténtalo de nuevo.",
+      "notMember": "No eres miembro de ese espacio de trabajo.",
+      "emailAlertsPro": "Las alertas por correo y el resumen semanal forman parte de Pro.",
+      "chatBusiness": "Las alertas de Slack y Discord forman parte del plan Business.",
+      "accountNotFound": "Cuenta no encontrada.",
+      "webhookAlreadyAdded": "Ese webhook ya está añadido.",
+      "tooManyWebhooks": "Añade hasta {max, number} webhooks de Slack o Discord por espacio de trabajo.",
+      "targetNotFound": "Destino de notificación no encontrado.",
+      "notDelivered": "No entregado: {error}",
+      "pickEvent": "Elige al menos un evento",
+      "url": {
+        "missing": "Introduce la URL del endpoint.",
+        "tooLong": "La URL es demasiado larga.",
+        "notFull": "Introduce una URL completa que empiece por https://",
+        "notHttps": "Las URL de webhook deben usar https://",
+        "credentials": "Quita el nombre de usuario y la contraseña de la URL.",
+        "ipAddress": "Usa un nombre de host, no una dirección IP.",
+        "notPublic": "Usa un nombre de host público.",
+        "notSlack": "Pega la URL de un webhook entrante de Slack (https://hooks.slack.com/services/…).",
+        "notDiscord": "Pega la URL de un webhook de Discord (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {

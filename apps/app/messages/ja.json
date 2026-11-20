@@ -9906,7 +9906,27 @@
       "signedOut": "通知を変更するにはサインインしてください。",
       "webhookUrlMissing": "Webhook URLを貼り付けてください",
       "rateLimited": "レート制限を超えました。しばらくしてからもう一度お試しください。",
-      "failed": "問題が発生しました。もう一度お試しください。"
+      "failed": "問題が発生しました。もう一度お試しください。",
+      "notMember": "そのワークスペースのメンバーではありません。",
+      "emailAlertsPro": "メールアラートと週次ダイジェストは Pro のご利用に含まれます。",
+      "chatBusiness": "Slack と Discord のアラートは Business プランに含まれます。",
+      "accountNotFound": "アカウントが見つかりません。",
+      "webhookAlreadyAdded": "その Webhook はすでに追加されています。",
+      "tooManyWebhooks": "Slack または Discord の Webhook は、ワークスペースごとに最大{max, number}件まで追加できます。",
+      "targetNotFound": "通知先が見つかりません。",
+      "notDelivered": "配信できませんでした：{error}",
+      "pickEvent": "イベントを1つ以上選択してください",
+      "url": {
+        "missing": "エンドポイントのURLを入力してください。",
+        "tooLong": "URLが長すぎます。",
+        "notFull": "https:// から始まる完全なURLを入力してください。",
+        "notHttps": "Webhook のURLは https:// を使用してください。",
+        "credentials": "URLからユーザー名とパスワードを削除してください。",
+        "ipAddress": "IPアドレスではなく、ホスト名を使用してください。",
+        "notPublic": "公開されているホスト名を使用してください。",
+        "notSlack": "Slack の受信 Webhook のURL（https://hooks.slack.com/services/…）を貼り付けてください。",
+        "notDiscord": "Discord の Webhook のURL（https://discord.com/api/webhooks/…）を貼り付けてください。"
+      }
     }
   },
   "codeBuilder": {

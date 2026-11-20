@@ -9906,7 +9906,27 @@
       "signedOut": "请登录后更改通知设置。",
       "webhookUrlMissing": "请粘贴 webhook 网址",
       "rateLimited": "已超出请求频率限制，请稍后再试。",
-      "failed": "出了点问题，请重试。"
+      "failed": "出了点问题，请重试。",
+      "notMember": "你不是该工作区的成员。",
+      "emailAlertsPro": "邮件提醒和每周摘要属于 Pro 功能。",
+      "chatBusiness": "Slack 和 Discord 提醒属于 Business 方案。",
+      "accountNotFound": "未找到账户。",
+      "webhookAlreadyAdded": "该 Webhook 已添加。",
+      "tooManyWebhooks": "每个工作区最多可添加 {max, number} 个 Slack 或 Discord Webhook。",
+      "targetNotFound": "未找到通知目标。",
+      "notDelivered": "未送达：{error}",
+      "pickEvent": "请至少选择一个事件",
+      "url": {
+        "missing": "请输入端点 URL。",
+        "tooLong": "URL 太长。",
+        "notFull": "请输入以 https:// 开头的完整 URL。",
+        "notHttps": "Webhook URL 必须使用 https://",
+        "credentials": "请从 URL 中删除用户名和密码。",
+        "ipAddress": "请使用主机名，而不是 IP 地址。",
+        "notPublic": "请使用公共主机名。",
+        "notSlack": "请粘贴 Slack 传入 Webhook 的 URL（https://hooks.slack.com/services/…）。",
+        "notDiscord": "请粘贴 Discord Webhook 的 URL（https://discord.com/api/webhooks/…）。"
+      }
     }
   },
   "codeBuilder": {
