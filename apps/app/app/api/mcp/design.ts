@@ -136,6 +136,13 @@ const engineInputFields = {
   autoLevel: apiStyleFields.autoLevel,
   shape: apiStyleFields.shape,
   logoOptions: apiStyleFields.logoOptions,
+  // The looks around the shapes (qrdx looks.ts)
+  eyeShapes: apiStyleFields.eyeShapes,
+  eyeGradient: apiStyleFields.eyeGradient,
+  bgRadius: apiStyleFields.bgRadius,
+  backdrop: apiStyleFields.backdrop,
+  halo: apiStyleFields.halo,
+  shadow: apiStyleFields.shadow,
 };
 type EngineInput = {
   [K in keyof typeof engineInputFields]?: z.output<
@@ -237,6 +244,12 @@ export function styleFromInput(style: DesignQrInput["style"]): DesignStyle {
     autoLevel: _auto,
     shape: _shape,
     logoOptions: _layout,
+    eyeShapes: _eyeShapes,
+    eyeGradient: _eyeGradient,
+    bgRadius: _bgRadius,
+    backdrop: _backdrop,
+    halo: _halo,
+    shadow: _shadow,
     ...rest
   } = style ?? {};
   return {
@@ -260,6 +273,12 @@ function styleOnBase(base: DesignStyle, style: StyleInput | undefined) {
     autoLevel: _auto,
     shape: _shape,
     logoOptions: _layout,
+    eyeShapes: _eyeShapes,
+    eyeGradient: _eyeGradient,
+    bgRadius: _bgRadius,
+    backdrop: _backdrop,
+    halo: _halo,
+    shadow: _shadow,
     ...rest
   } = style ?? {};
   const fg = rest.fgColor;
@@ -690,7 +709,7 @@ export function designOptions() {
       })),
       margin: { min: 0, max: MARGIN_MAX, ideal: 4 },
       engineOptions:
-        "eyeColors { topLeft, topRight, bottomLeft: { outer, inner } } (#RRGGBB), moduleScale 0.5-1 (dot size), autoLevel, shape (square or circle), logoOptions { size 0.1-0.3, padding 0-2 modules, x and y 0-1, shape square|rounded|circle (crop), plate (color) }. Drawn and scored as given; repairs never change them.",
+        "eyeColors { topLeft, topRight, bottomLeft: { outer, inner } } (#RRGGBB), moduleScale 0.5-1 (dot size), autoLevel, shape (square or circle), logoOptions { size 0.1-0.3, padding 0-2 modules, x and y 0-1, shape square|rounded|circle (crop), plate (color) }, eyeShapes { topLeft, topRight, bottomLeft: { outer (an eye frame), inner (an eye center) } }, eyeGradient (corner or code: the eyes continue the dots' gradient), bgRadius 0-0.5 (rounded background corners; needs a margin), backdrop (a color outside the rounded background), halo { color, width 0.1-0.5 modules } (a light rim around the dark shapes), shadow { color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 modules }. Drawn and scored as given; repairs never change them.",
       logos: {
         icons: LOGO_ICON_IDS,
         brands: brandLogoOptions(),

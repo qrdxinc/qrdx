@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@repo/design-system/components/ui/button";
+import { Label } from "@repo/design-system/components/ui/label";
+import { Switch } from "@repo/design-system/components/ui/switch";
 import { RefreshLeftSquare } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import {
@@ -9,6 +11,7 @@ import {
   type EyeColorOverride,
   type EyePosition,
   getColorString,
+  isGradient,
 } from "qrdx/types";
 import ControlSection from "@/components/editor/control-section";
 import {
@@ -27,8 +30,23 @@ interface EyeColorsSectionProps {
   /** The style with defaults filled in */
   style: QRStyle;
   onChange: (eyeColors: QRStyle["eyeColors"]) => void;
+  /** Where the eyes' gradients run (qrdx `eyeGradient`); shown with a gradient on an eye */
+  onEyeGradientChange?: (eyeGradient: QRStyle["eyeGradient"]) => void;
   /** Open it (a link asked for this section) */
   expanded?: boolean;
+}
+
+/** True when any eye is painted with a gradient (the span switch matters). */
+function hasEyeGradient(style: QRStyle): boolean {
+  const paints = [
+    style.eyeColor,
+    style.dotColor,
+    ...EYE_POSITIONS.flatMap((position) => [
+      style.eyeColors?.[position]?.outer,
+      style.eyeColors?.[position]?.inner,
+    ]),
+  ];
+  return paints.some((paint) => paint !== undefined && isGradient(paint));
 }
 
 /**
@@ -38,6 +56,7 @@ interface EyeColorsSectionProps {
 export function EyeColorsSection({
   style,
   onChange,
+  onEyeGradientChange,
   expanded,
 }: EyeColorsSectionProps) {
   const t = useTranslations("editor.controlSections.eyeColorsSection");
@@ -116,6 +135,25 @@ export function EyeColorsSection({
           <RefreshLeftSquare />
           {t("useTheSameColorsFor")}
         </Button>
+      )}
+      {onEyeGradientChange && hasEyeGradient(style) && (
+        <div className="space-y-2 border-t pt-3">
+          <div className="flex items-center justify-between gap-3">
+            <Label className="text-sm" htmlFor="eye-gradient-span">
+              {t("eyesContinueTheCodes")}
+            </Label>
+            <Switch
+              checked={style.eyeGradient === "code"}
+              id="eye-gradient-span"
+              onCheckedChange={(on) =>
+                onEyeGradientChange(on ? "code" : undefined)
+              }
+            />
+          </div>
+          <p className="text-muted-foreground text-xs text-pretty">
+            {t("offEachEyeSweeps")}
+          </p>
+        </div>
       )}
     </ControlSection>
   );

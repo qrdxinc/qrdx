@@ -1,0 +1,94 @@
+---
+title: Round the background, add a halo or a shadow
+description: Round the background's corners with a color around them, rim the dots with a halo for a code on a picture, and give the dots a shadow, within the ranges that keep every look scannable.
+icon: Grid3x3
+---
+
+Three props change what sits around the dots and eyes without changing the dots themselves: `bgRadius` (with `backdrop`) rounds the background, `halo` rims every dark shape with a light edge, and `shadow` draws a see-through copy of the dark shapes under them. Each has a range the package's decode tests cover at three phone distances, and the engine keeps a value inside it, so a look never costs a scan on a light surface.
+
+Designing in the playground instead? They are the **Rounded corners**, **Halo** and **Shadow** sections of the Design tab.
+
+## Rounded corners
+
+`bgRadius` rounds the background's corners. It is a share of the code's width, from 0 (square, the default) to `BG_RADIUS_MAX` (0.5). `backdrop` is a solid color drawn outside the rounded corners; without it they are see-through, so a PNG or SVG placed on a page shows the page there.
+
+```tsx title="components/rounded-code.tsx"
+import { QRCode } from "qrdx";
+
+export function RoundedCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      margin={4}
+      bgColor="#fff7ed"
+      bgRadius={0.2}
+      backdrop="#1e3a8a"
+    />
+  );
+}
+```
+
+- The arc never reaches the code. The engine caps the radius at `BG_RADIUS_QUIET_RATIO` (2) times `margin` modules, so a code without a margin stays square, and with a margin of 4 a version 2 code rounds up to about a quarter of its width. `getBgRadiusLimit({ value, level, margin })` returns the cap for a slider.
+- A circle, heart or silhouette code has its own outline and ignores `bgRadius`.
+- SVG, PNG, JPG, WebP, PDF and EPS downloads keep the rounding and the backdrop; the print PDF's bleed continues the backdrop. `QRCodeCanvas` draws both too.
+
+## Halo
+
+`halo` draws a light rim around every dark module and eye: `{ color, width }`, with `width` in modules from `HALO_WIDTH_MIN` (0.1) to `HALO_WIDTH_MAX` (0.5, default 0.25) and `color` a solid color (default white). The eye frames fill their hole with it too, so the light ring inside each eye stays clean. It is for a code placed on a picture or a tinted page.
+
+```tsx title="components/halo-code.tsx"
+import { QRCode } from "qrdx";
+
+export function HaloCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      margin={4}
+      bgColor="transparent"
+      halo={{ color: "#ffffff", width: 0.3 }}
+    />
+  );
+}
+```
+
+- A halo is a look, not a quiet zone: keep `margin`.
+- It needs a light surface behind the code. With a see-through background on a dark or mid-grey page, the light modules show the page and the thinnest dot shapes (`diamond`, `small-square`, `random-dots`) read worse at phone distances; give such a code a `bgColor`, or round its background on a backdrop. On white and on light pages every dot shape decodes at the widest halo.
+- The scan score counts the halo's color as a background color, so a dark halo lowers the contrast check.
+- The rim is an SVG stroke; the PDF and EPS exporters draw it, and `QRCodeCanvas` ignores it.
+
+## Shadow
+
+`shadow` draws a see-through copy of the dark modules and eyes under them, shifted by `dx` and `dy` modules (each from -`SHADOW_OFFSET_MAX` to `SHADOW_OFFSET_MAX`, that is -0.3 to 0.3, default 0.2), in a solid `color` (default black) at `opacity` (`SHADOW_OPACITY_MIN` 0.1 to `SHADOW_OPACITY_MAX` 0.4, default 0.3). Every dot shape decodes at the strongest setting through the camera model.
+
+```tsx title="components/shadow-code.tsx"
+import { QRCode } from "qrdx";
+
+export function ShadowCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      bodyPattern="rounded"
+      shadow={{ dx: 0.2, dy: 0.2, opacity: 0.3 }}
+    />
+  );
+}
+```
+
+- A shadow with `dx` and `dy` both 0 draws nothing.
+- The print PDF keeps the opacity; EPS has no transparency, so the shadow is mixed with the background. `QRCodeCanvas` ignores it.
+- With Logo QR or Image QR art the dots are the picture, so only the eyes get a halo or a shadow.
+
+## In the API and MCP
+
+The image API, `POST /v1/codes` and the MCP tools take the same fields in `style`: `bgRadius`, `backdrop`, `halo` and `shadow`, with colors as hex, `rgb()`/`hsl()` or a color name. See the [image API](/docs/developers/image-api#style) and the [MCP server](/docs/developers/mcp).
+
+## Related
+
+<Cards>
+  <Card href="/docs/features/patterns" title="Choose module and eye shapes" description="Dot shapes, eye shapes, per-eye shapes and the dot size." />
+  <Card href="/docs/features/colors-gradients" title="Set colors and gradients" description="Colors, gradients, see-through colors and image fills." />
+  <Card href="/docs/features/downloads" title="Export and download" description="Which formats keep transparency and see-through colors." />
+</Cards>

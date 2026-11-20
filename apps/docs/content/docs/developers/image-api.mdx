@@ -159,6 +159,12 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 | `eyeColors` | Colors per eye, over `eyeColor` and `dotColor`: `{ "topLeft": { "outer": "#b91c1c", "inner": "#1d4ed8" }, "topRight": …, "bottomLeft": … }`, each a color or a gradient |
 | `moduleScale` | Size of each dot, `0.5` to `1` (default `1`) |
 | `shape` | `square` (default) or `circle`: the code in a disc of decorative dots |
+| `eyeShapes` | Shapes per eye, over `cornerEyePattern` and `cornerEyeDotPattern`: `{ "topLeft": { "outer": "leaf", "inner": "leaf" }, "topRight": …, "bottomLeft": … }` |
+| `eyeGradient` | `corner` (default: each eye sweeps its own gradient) or `code` (the eyes continue the dots' gradient across the code) |
+| `bgRadius` | Corner radius of the background, `0` to `0.5` of the code's width; needs a `margin` (the engine caps it at twice the margin, in modules) |
+| `backdrop` | A color outside the rounded corners (see-through without it) |
+| `halo` | A light rim around the dots and eyes: `{ "color": "#ffffff", "width": 0.25 }`, `width` in modules from `0.1` to `0.5` |
+| `shadow` | A see-through copy of the dots and eyes under them: `{ "color": "#000000", "opacity": 0.3, "dx": 0.2, "dy": 0.2 }`, shifts from `-0.3` to `0.3` modules, opacity `0.1` to `0.4` |
 | `autoLevel` | Raise error correction to `H` when the logo covers more than 7% of the code (always on here when there's a logo) |
 | `logoOptions` | The logo's layout: `size` (`0.1` to `0.3` of the code's width; QRdx shrinks it when the code can't spare the modules), `padding` (`0` to `2` modules), `x` and `y` (`0` to `1`), `shape` (`square`, `rounded` or `circle` crop) and `plate` (a color behind it) |
 | `showLogo`, `logoIcon`, `logoFileId` | See [Logos](#logos) |

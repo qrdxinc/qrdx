@@ -168,6 +168,36 @@ describe("the API style", () => {
     }
   });
 
+  it("takes the looks around the shapes in the engine's ranges", () => {
+    const ok = parseApiStyle({
+      eyeShapes: {
+        topLeft: { outer: "leaf", inner: "leaf" },
+        bottomLeft: { inner: "dots" },
+      },
+      eyeGradient: "code",
+      bgRadius: 0.2,
+      backdrop: "0f172a",
+      halo: { color: "#fde68a", width: 0.3 },
+      shadow: { color: "rgb(124, 45, 18)", opacity: 0.25, dx: 0.2, dy: -0.1 },
+    });
+    expect(ok.ok, JSON.stringify(ok)).toBe(true);
+    if (ok.ok) expect(ok.style.backdrop).toBe("#0f172a");
+    for (const bad of [
+      { eyeShapes: { topLeft: { outer: "blob" } } },
+      { eyeShapes: { middle: { outer: "leaf" } } },
+      { eyeGradient: "whole" },
+      { bgRadius: 0.6 },
+      { backdrop: "url(https://example.com/p.png)" },
+      { halo: { width: 0.6 } },
+      { halo: { color: "url(#x)" } },
+      { halo: { blur: 1 } },
+      { shadow: { dx: 0.4 } },
+      { shadow: { opacity: 0.5 } },
+    ]) {
+      expect(parseApiStyle(bad).ok, JSON.stringify(bad)).toBe(false);
+    }
+  });
+
   it("refuses logo addresses and art with the reason, never fetching anything", () => {
     const logoUrl = parseApiStyle({ customLogo: "https://example.com/l.png" });
     expect(logoUrl).toMatchObject({

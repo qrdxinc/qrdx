@@ -24,6 +24,7 @@ import {
 import { drawFrameOnCanvas, getFrameLayout, isFrameActive } from "./frame";
 import { logoImageBox, traceLogoShape } from "./logo";
 import { capImageSettings } from "./logo-budget";
+import { clampBgRadius } from "./looks";
 import { getLayoutMargin, shapeBackground, shapeDecoration } from "./qr-shape";
 import {
   excavateModules,
@@ -59,10 +60,16 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
     art: _art,
     eyeColors: _eyeColors,
     moduleScale: _moduleScale,
-    frameLabelMarkers: _frameLabelMarkers,
-    partMarkers: _partMarkers,
+    eyeShapes: _eyeShapes,
+    eyeGradient: _eyeGradient,
+    halo: _halo,
+    shadow: _shadow,
     autoLevel,
     shape,
+    bgRadius,
+    backdrop,
+    frameLabelMarkers: _frameLabelMarkers,
+    partMarkers: _partMarkers,
     ...otherProps
   } = props;
   // A logo no bigger than the code can repair (logo-budget.ts)
@@ -153,12 +160,26 @@ export function QRCodeCanvas(props: QRPropsCanvas) {
       // underlay (QRCodeSVG and the exports draw them in full).
       ctx.fillStyle = getSolidColor(bgColor, DEFAULT_BGCOLOR);
       const background = shapeBackground(shape, numCells);
+      // Rounded corners, capped by the quiet zone (looks.ts), with the
+      // backdrop color showing outside them
+      const radius =
+        clampBgRadius(bgRadius, cells.length, layoutMargin, shape) * numCells;
       if (background && "circle" in background) {
         ctx.beginPath();
         ctx.arc(numCells / 2, numCells / 2, background.circle, 0, 2 * Math.PI);
         ctx.fill();
       } else if (background && SUPPORTS_PATH2D) {
         ctx.fill(new Path2D(background.path), "evenodd");
+      } else if (radius > 0 && typeof ctx.roundRect === "function") {
+        if (backdrop) {
+          ctx.save();
+          ctx.fillStyle = backdrop;
+          ctx.fillRect(0, 0, numCells, numCells);
+          ctx.restore();
+        }
+        ctx.beginPath();
+        ctx.roundRect(0, 0, numCells, numCells, radius);
+        ctx.fill();
       } else {
         ctx.fillRect(0, 0, numCells, numCells);
       }

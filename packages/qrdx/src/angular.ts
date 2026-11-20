@@ -94,6 +94,12 @@ export class QRCode implements QRCodeInputs {
   readonly margin: Prop<"margin"> = input();
   readonly moduleScale: Prop<"moduleScale"> = input();
   readonly shape: Prop<"shape"> = input();
+  readonly eyeShapes: Prop<"eyeShapes"> = input();
+  readonly eyeGradient: Prop<"eyeGradient"> = input();
+  readonly bgRadius: Prop<"bgRadius"> = input();
+  readonly backdrop: Prop<"backdrop"> = input();
+  readonly halo: Prop<"halo"> = input();
+  readonly shadow: Prop<"shadow"> = input();
   readonly frame: Prop<"frame"> = input();
   readonly art: Prop<"art"> = input();
   readonly logo: Prop<"logo"> = input();
@@ -130,6 +136,12 @@ export class QRCode implements QRCodeInputs {
       margin: this.margin(),
       moduleScale: this.moduleScale(),
       shape: this.shape(),
+      eyeShapes: this.eyeShapes(),
+      eyeGradient: this.eyeGradient(),
+      bgRadius: this.bgRadius(),
+      backdrop: this.backdrop(),
+      halo: this.halo(),
+      shadow: this.shadow(),
       frame: this.frame(),
       art: this.art(),
       logo: this.logo(),

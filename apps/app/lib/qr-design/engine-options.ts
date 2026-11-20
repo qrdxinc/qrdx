@@ -1,4 +1,13 @@
-import type { EyeColors, LogoOptions, QRCodeShape } from "qrdx/types";
+import { resolveShadow } from "qrdx";
+import type {
+  EyeColors,
+  EyeGradientSpan,
+  EyeShapes,
+  LogoOptions,
+  QRCodeShape,
+  QRHalo,
+  QRShadow,
+} from "qrdx/types";
 import type { ThemeStyles } from "@/types/theme";
 
 /** Engine options a style can carry beyond colors, shapes and the frame. */
@@ -8,6 +17,35 @@ export interface StyleEngineOptions {
   autoLevel?: boolean;
   logoOptions?: LogoOptions;
   shape?: QRCodeShape;
+  // The looks around the shapes (qrdx looks.ts)
+  eyeShapes?: EyeShapes;
+  eyeGradient?: EyeGradientSpan;
+  bgRadius?: number;
+  backdrop?: string;
+  halo?: QRHalo;
+  shadow?: QRShadow;
+}
+
+/** The looks a style sets, each only when it draws something. */
+function styleLooks(
+  style: Partial<ThemeStyles>,
+): Pick<
+  StyleEngineOptions,
+  "eyeShapes" | "eyeGradient" | "bgRadius" | "backdrop" | "halo" | "shadow"
+> {
+  const eyeShapes = style.eyeShapes;
+  const hasEyeShapes =
+    eyeShapes !== undefined &&
+    Object.values(eyeShapes).some((eye) => eye?.outer || eye?.inner);
+  const rounded = (style.bgRadius ?? 0) > 0;
+  return {
+    ...(hasEyeShapes && { eyeShapes }),
+    ...(style.eyeGradient === "code" && { eyeGradient: "code" as const }),
+    ...(rounded && { bgRadius: style.bgRadius }),
+    ...(rounded && style.backdrop && { backdrop: style.backdrop }),
+    ...(style.halo && { halo: style.halo }),
+    ...(style.shadow && resolveShadow(style.shadow) && { shadow: style.shadow }),
+  };
 }
 
 /**
@@ -45,21 +83,22 @@ export function styleEngineOptions(
         logoOptions: style.logoOptions,
       }),
     ...(codeShape(style) && { shape: codeShape(style) }),
+    ...styleLooks(style),
   };
 }
 
 /**
- * The options `<QRCodeSVG>` takes directly (per-eye colors, module size
- * and the code shape), for previews without a logo. Logo layout goes
- * through `getQRData`.
+ * The options `<QRCodeSVG>` takes directly (per-eye colors, module size,
+ * the code shape and the looks around the shapes), for previews without a
+ * logo. Logo layout goes through `getQRData`.
  */
 export function styleSvgOptions(
   style: Partial<ThemeStyles>,
-): Pick<StyleEngineOptions, "eyeColors" | "moduleScale" | "shape"> {
-  const { eyeColors, moduleScale, shape } = styleEngineOptions(style);
-  return {
-    ...(eyeColors && { eyeColors }),
-    ...(moduleScale !== undefined && { moduleScale }),
-    ...(shape && { shape }),
-  };
+): Omit<StyleEngineOptions, "autoLevel" | "logoOptions"> {
+  const {
+    autoLevel: _autoLevel,
+    logoOptions: _logoOptions,
+    ...rest
+  } = styleEngineOptions(style);
+  return rest;
 }

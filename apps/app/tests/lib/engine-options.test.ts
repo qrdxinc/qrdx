@@ -43,6 +43,30 @@ describe("styleEngineOptions", () => {
     expect(styleSvgOptions({ shape: "circle" })).toEqual({ shape: "circle" });
   });
 
+  it("carries the looks around the shapes, each only when it draws", () => {
+    const looks = {
+      eyeShapes: { topLeft: { outer: "leaf" as const } },
+      eyeGradient: "code" as const,
+      bgRadius: 0.2,
+      backdrop: "#0f172a",
+      halo: { width: 0.3 },
+      shadow: { dx: 0.1, dy: 0.1 },
+    };
+    expect(styleEngineOptions(looks)).toEqual(looks);
+    expect(styleSvgOptions(looks)).toEqual(looks);
+    expect(
+      styleEngineOptions({
+        eyeShapes: { topLeft: {} },
+        eyeGradient: "corner",
+        bgRadius: 0,
+        backdrop: "#0f172a",
+        shadow: { dx: 0, dy: 0 },
+      }),
+    ).toEqual({});
+    // A backdrop only with a rounded corner to show outside
+    expect(styleEngineOptions({ backdrop: "#0f172a" })).toEqual({});
+  });
+
   it("gives <QRCodeSVG> only the props it takes", () => {
     expect(
       styleSvgOptions({

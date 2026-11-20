@@ -138,6 +138,31 @@ export function SilhouetteCode({ shape }: { shape: Awaited<ReturnType<typeof sil
 
 In the dashboard a silhouette stays with the design, like an uploaded logo: shared links, community items, code snippets and the AI chat use a square code instead.
 
+## Per-eye shapes
+
+`eyeShapes` gives each of the three eyes its own frame and center shape: `topLeft`, `topRight` and `bottomLeft`, each with an `outer` (an eye frame) and an `inner` (an eye center). An eye you leave out keeps `cornerEyePattern` and `cornerEyeDotPattern`.
+
+```tsx title="components/eye-shapes-code.tsx"
+import { QRCode } from "qrdx";
+
+export function EyeShapesCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      cornerEyePattern="rounded"
+      cornerEyeDotPattern="rounded"
+      eyeShapes={{
+        topLeft: { outer: "leaf", inner: "leaf" },
+        bottomLeft: { inner: "dots" },
+      }}
+    />
+  );
+}
+```
+
+Each eye is judged on its own: the [scan score](/docs/features/frames#will-it-scan) checks every eye's frame and center with the dot shape, and warns about the worst pair, as it does for one `cornerEyePattern`. One `circle` eye counts as circle eyes. The playground's Eye shapes section offers, for each eye, only the shapes that scan with the rest of the design.
+
 ## Per-eye colors
 
 `eyeColor` and `dotColor` color all three eyes. `eyeColors` overrides them per eye (`topLeft`, `topRight`, `bottomLeft`), each with an `outer` (frame) and `inner` (dot) color or gradient:

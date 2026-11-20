@@ -8432,6 +8432,236 @@
                       }
                     }
                   },
+                  "eyeShapes": {
+                    "description": "Per-eye shapes (topLeft, topRight, bottomLeft), each with an outer frame and inner center shape that override cornerEyePattern and cornerEyeDotPattern",
+                    "type": "object",
+                    "properties": {
+                      "topLeft": {
+                        "type": "object",
+                        "properties": {
+                          "outer": {
+                            "type": "string",
+                            "enum": [
+                              "square",
+                              "rounded",
+                              "gear",
+                              "circle",
+                              "diya",
+                              "extra-rounded",
+                              "message",
+                              "pointy",
+                              "leaf",
+                              "drop",
+                              "octagon",
+                              "bevel",
+                              "squircle",
+                              "cushion",
+                              "shield",
+                              "petal",
+                              "leaf-reverse",
+                              "curly"
+                            ]
+                          },
+                          "inner": {
+                            "type": "string",
+                            "enum": [
+                              "square",
+                              "rounded",
+                              "circle",
+                              "message",
+                              "message-reverse",
+                              "diya",
+                              "diya-reverse",
+                              "rounded-triangle",
+                              "leaf",
+                              "drop",
+                              "plus",
+                              "cross-rounded",
+                              "hexagon",
+                              "octagon",
+                              "flower",
+                              "heart",
+                              "squircle",
+                              "dots",
+                              "extra-rounded",
+                              "leaf-reverse",
+                              "drop-reverse",
+                              "diamond",
+                              "star",
+                              "banner"
+                            ]
+                          }
+                        }
+                      },
+                      "topRight": {
+                        "type": "object",
+                        "properties": {
+                          "outer": {
+                            "type": "string",
+                            "enum": [
+                              "square",
+                              "rounded",
+                              "gear",
+                              "circle",
+                              "diya",
+                              "extra-rounded",
+                              "message",
+                              "pointy",
+                              "leaf",
+                              "drop",
+                              "octagon",
+                              "bevel",
+                              "squircle",
+                              "cushion",
+                              "shield",
+                              "petal",
+                              "leaf-reverse",
+                              "curly"
+                            ]
+                          },
+                          "inner": {
+                            "type": "string",
+                            "enum": [
+                              "square",
+                              "rounded",
+                              "circle",
+                              "message",
+                              "message-reverse",
+                              "diya",
+                              "diya-reverse",
+                              "rounded-triangle",
+                              "leaf",
+                              "drop",
+                              "plus",
+                              "cross-rounded",
+                              "hexagon",
+                              "octagon",
+                              "flower",
+                              "heart",
+                              "squircle",
+                              "dots",
+                              "extra-rounded",
+                              "leaf-reverse",
+                              "drop-reverse",
+                              "diamond",
+                              "star",
+                              "banner"
+                            ]
+                          }
+                        }
+                      },
+                      "bottomLeft": {
+                        "type": "object",
+                        "properties": {
+                          "outer": {
+                            "type": "string",
+                            "enum": [
+                              "square",
+                              "rounded",
+                              "gear",
+                              "circle",
+                              "diya",
+                              "extra-rounded",
+                              "message",
+                              "pointy",
+                              "leaf",
+                              "drop",
+                              "octagon",
+                              "bevel",
+                              "squircle",
+                              "cushion",
+                              "shield",
+                              "petal",
+                              "leaf-reverse",
+                              "curly"
+                            ]
+                          },
+                          "inner": {
+                            "type": "string",
+                            "enum": [
+                              "square",
+                              "rounded",
+                              "circle",
+                              "message",
+                              "message-reverse",
+                              "diya",
+                              "diya-reverse",
+                              "rounded-triangle",
+                              "leaf",
+                              "drop",
+                              "plus",
+                              "cross-rounded",
+                              "hexagon",
+                              "octagon",
+                              "flower",
+                              "heart",
+                              "squircle",
+                              "dots",
+                              "extra-rounded",
+                              "leaf-reverse",
+                              "drop-reverse",
+                              "diamond",
+                              "star",
+                              "banner"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "eyeGradient": {
+                    "description": "Where the eyes' gradients run: corner (each eye on its own, the default) or code (across the whole code, so eyes continue the dots' gradient)",
+                    "type": "string",
+                    "enum": ["corner", "code"]
+                  },
+                  "bgRadius": {
+                    "description": "Corner radius of the background as a share of the code's width, 0 to 0.5; the engine caps it so the quiet zone keeps the code's corners",
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 0.5
+                  },
+                  "backdrop": {
+                    "description": "Solid color outside the rounded background (see-through by default)",
+                    "type": "string"
+                  },
+                  "halo": {
+                    "description": "A light rim around the dark modules and eyes: { color, width } with width in modules, 0.1 to 0.5",
+                    "type": "object",
+                    "properties": {
+                      "color": {
+                        "type": "string"
+                      },
+                      "width": {
+                        "type": "number",
+                        "minimum": 0.1,
+                        "maximum": 0.5
+                      }
+                    }
+                  },
+                  "shadow": {
+                    "description": "A see-through copy of the dark modules and eyes under them: { color, opacity 0.1 to 0.4, dx and dy from -0.3 to 0.3 modules }",
+                    "type": "object",
+                    "properties": {
+                      "color": {
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "type": "number",
+                        "minimum": 0.1,
+                        "maximum": 0.4
+                      },
+                      "dx": {
+                        "type": "number",
+                        "minimum": -0.3,
+                        "maximum": 0.3
+                      },
+                      "dy": {
+                        "type": "number",
+                        "minimum": -0.3,
+                        "maximum": 0.3
+                      }
+                    }
+                  },
                   "logoIcon": {
                     "description": "A quick logo icon or a brand logo, by id (instead of customLogo): `wifi`, `spotify`, `paypal:white`",
                     "type": "string"
@@ -11860,6 +12090,236 @@
               },
               "plate": {
                 "type": "string"
+              }
+            }
+          },
+          "eyeShapes": {
+            "description": "Per-eye shapes (topLeft, topRight, bottomLeft), each with an outer frame and inner center shape that override cornerEyePattern and cornerEyeDotPattern",
+            "type": "object",
+            "properties": {
+              "topLeft": {
+                "type": "object",
+                "properties": {
+                  "outer": {
+                    "type": "string",
+                    "enum": [
+                      "square",
+                      "rounded",
+                      "gear",
+                      "circle",
+                      "diya",
+                      "extra-rounded",
+                      "message",
+                      "pointy",
+                      "leaf",
+                      "drop",
+                      "octagon",
+                      "bevel",
+                      "squircle",
+                      "cushion",
+                      "shield",
+                      "petal",
+                      "leaf-reverse",
+                      "curly"
+                    ]
+                  },
+                  "inner": {
+                    "type": "string",
+                    "enum": [
+                      "square",
+                      "rounded",
+                      "circle",
+                      "message",
+                      "message-reverse",
+                      "diya",
+                      "diya-reverse",
+                      "rounded-triangle",
+                      "leaf",
+                      "drop",
+                      "plus",
+                      "cross-rounded",
+                      "hexagon",
+                      "octagon",
+                      "flower",
+                      "heart",
+                      "squircle",
+                      "dots",
+                      "extra-rounded",
+                      "leaf-reverse",
+                      "drop-reverse",
+                      "diamond",
+                      "star",
+                      "banner"
+                    ]
+                  }
+                }
+              },
+              "topRight": {
+                "type": "object",
+                "properties": {
+                  "outer": {
+                    "type": "string",
+                    "enum": [
+                      "square",
+                      "rounded",
+                      "gear",
+                      "circle",
+                      "diya",
+                      "extra-rounded",
+                      "message",
+                      "pointy",
+                      "leaf",
+                      "drop",
+                      "octagon",
+                      "bevel",
+                      "squircle",
+                      "cushion",
+                      "shield",
+                      "petal",
+                      "leaf-reverse",
+                      "curly"
+                    ]
+                  },
+                  "inner": {
+                    "type": "string",
+                    "enum": [
+                      "square",
+                      "rounded",
+                      "circle",
+                      "message",
+                      "message-reverse",
+                      "diya",
+                      "diya-reverse",
+                      "rounded-triangle",
+                      "leaf",
+                      "drop",
+                      "plus",
+                      "cross-rounded",
+                      "hexagon",
+                      "octagon",
+                      "flower",
+                      "heart",
+                      "squircle",
+                      "dots",
+                      "extra-rounded",
+                      "leaf-reverse",
+                      "drop-reverse",
+                      "diamond",
+                      "star",
+                      "banner"
+                    ]
+                  }
+                }
+              },
+              "bottomLeft": {
+                "type": "object",
+                "properties": {
+                  "outer": {
+                    "type": "string",
+                    "enum": [
+                      "square",
+                      "rounded",
+                      "gear",
+                      "circle",
+                      "diya",
+                      "extra-rounded",
+                      "message",
+                      "pointy",
+                      "leaf",
+                      "drop",
+                      "octagon",
+                      "bevel",
+                      "squircle",
+                      "cushion",
+                      "shield",
+                      "petal",
+                      "leaf-reverse",
+                      "curly"
+                    ]
+                  },
+                  "inner": {
+                    "type": "string",
+                    "enum": [
+                      "square",
+                      "rounded",
+                      "circle",
+                      "message",
+                      "message-reverse",
+                      "diya",
+                      "diya-reverse",
+                      "rounded-triangle",
+                      "leaf",
+                      "drop",
+                      "plus",
+                      "cross-rounded",
+                      "hexagon",
+                      "octagon",
+                      "flower",
+                      "heart",
+                      "squircle",
+                      "dots",
+                      "extra-rounded",
+                      "leaf-reverse",
+                      "drop-reverse",
+                      "diamond",
+                      "star",
+                      "banner"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "eyeGradient": {
+            "description": "Where the eyes' gradients run: corner (each eye on its own, the default) or code (across the whole code, so eyes continue the dots' gradient)",
+            "type": "string",
+            "enum": ["corner", "code"]
+          },
+          "bgRadius": {
+            "description": "Corner radius of the background as a share of the code's width, 0 to 0.5; the engine caps it so the quiet zone keeps the code's corners",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.5
+          },
+          "backdrop": {
+            "description": "Solid color outside the rounded background (see-through by default)",
+            "type": "string"
+          },
+          "halo": {
+            "description": "A light rim around the dark modules and eyes: { color, width } with width in modules, 0.1 to 0.5",
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string"
+              },
+              "width": {
+                "type": "number",
+                "minimum": 0.1,
+                "maximum": 0.5
+              }
+            }
+          },
+          "shadow": {
+            "description": "A see-through copy of the dark modules and eyes under them: { color, opacity 0.1 to 0.4, dx and dy from -0.3 to 0.3 modules }",
+            "type": "object",
+            "properties": {
+              "color": {
+                "type": "string"
+              },
+              "opacity": {
+                "type": "number",
+                "minimum": 0.1,
+                "maximum": 0.4
+              },
+              "dx": {
+                "type": "number",
+                "minimum": -0.3,
+                "maximum": 0.3
+              },
+              "dy": {
+                "type": "number",
+                "minimum": -0.3,
+                "maximum": 0.3
               }
             }
           }

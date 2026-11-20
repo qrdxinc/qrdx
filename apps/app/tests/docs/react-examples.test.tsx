@@ -14,7 +14,11 @@ import {
 } from "../../../../packages/qrdx/tests/support/raster";
 import { AngularCode } from "../docs-examples/colors/angular-code";
 import { BrandCode as ColorsBrandCode } from "../docs-examples/colors/brand-code";
+import { EyeGradientCode } from "../docs-examples/colors/eye-gradient-code";
 import { GradientCode } from "../docs-examples/colors/gradient-code";
+import { HaloCode } from "../docs-examples/effects/halo-code";
+import { RoundedCode as EffectsRoundedCode } from "../docs-examples/effects/rounded-code";
+import { ShadowCode } from "../docs-examples/effects/shadow-code";
 import { RadialCode } from "../docs-examples/colors/radial-code";
 import { MenuFrameCode } from "../docs-examples/frames/menu-frame-code";
 import { OfficialFrameCode } from "../docs-examples/frames/official-frame-code";
@@ -32,6 +36,7 @@ import Page from "../docs-examples/nextjs/server-page";
 import TicketPage from "../docs-examples/nextjs/ticket-page";
 import { CircleCode } from "../docs-examples/patterns/circle-code";
 import { EyeColorsCode } from "../docs-examples/patterns/eye-colors-code";
+import { EyeShapesCode } from "../docs-examples/patterns/eye-shapes-code";
 import { HeartCode } from "../docs-examples/patterns/heart-code";
 import { LightCode } from "../docs-examples/patterns/light-code";
 import { ShapedCode } from "../docs-examples/patterns/shaped-code";
@@ -89,6 +94,7 @@ const PAGES: Record<string, string[]> = {
     "patterns/light-code.tsx",
     "patterns/circle-code.tsx",
     "patterns/heart-code.tsx",
+    "patterns/eye-shapes-code.tsx",
     "patterns/eye-colors-code.tsx",
   ],
   "features/colors-gradients.mdx": [
@@ -96,6 +102,12 @@ const PAGES: Record<string, string[]> = {
     "colors/gradient-code.tsx",
     "colors/radial-code.tsx",
     "colors/angular-code.tsx",
+    "colors/eye-gradient-code.tsx",
+  ],
+  "features/effects.mdx": [
+    "effects/rounded-code.tsx",
+    "effects/halo-code.tsx",
+    "effects/shadow-code.tsx",
   ],
   "features/logos.mdx": [
     "logos/logo-code.tsx",
@@ -300,6 +312,11 @@ describe("the shape, color, logo, template and frame examples", () => {
     ["a circle code", <CircleCode key="circle" />],
     ["a heart code", <HeartCode key="heart" />],
     ["per-eye colors", <EyeColorsCode key="eyes" />],
+    ["per-eye shapes", <EyeShapesCode key="eye-shapes" />],
+    ["eyes on the code's gradient", <EyeGradientCode key="eye-gradient" />],
+    ["a rounded background on a backdrop", <EffectsRoundedCode key="rounded" />],
+    ["a halo", <HaloCode key="halo" />],
+    ["a shadow", <ShadowCode key="shadow" />],
     ["brand colors", <ColorsBrandCode key="brand" />],
     ["a linear gradient", <GradientCode key="linear" />],
     ["a radial gradient", <RadialCode key="radial" />],
