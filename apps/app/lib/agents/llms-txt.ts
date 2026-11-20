@@ -380,7 +380,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "Barcode generator",
       url: "/barcode-generator",
-      description: `${PRODUCT_FACTS.barcodeFormats} static barcode formats (${BARCODE_FORMATS.map((format) => format.label).join(", ")}) with check digits and a scan check, as PNG, JPG, WebP, AVIF, SVG, PDF or EPS; no account needed, and signed in you can save barcodes to the dashboard`,
+      description: `${PRODUCT_FACTS.barcodeFormats} static barcode formats (${BARCODE_FORMATS.map((format) => format.label).join(", ")}) with check digits and a scan check, as PNG, JPG, WebP, AVIF, BMP, SVG, PDF or EPS; no account needed, and signed in you can save barcodes to the dashboard`,
     },
     {
       title: "QR code generators by type",
@@ -474,7 +474,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
     {
       title: "Barcode API",
       url: "/docs/developers/barcode-api",
-      description: `\`GET ${api}/barcode?format=ean13&data=…\` returns an SVG, PNG, JPG, WebP, AVIF, PDF or EPS barcode in ${PRODUCT_FACTS.barcodeFormats} formats, with check digits worked out or verified; no key. Saved barcodes under \`${api}/barcodes\` with an API key`,
+      description: `\`GET ${api}/barcode?format=ean13&data=…\` returns an SVG, PNG, JPG, WebP, AVIF, BMP, PDF or EPS barcode in ${PRODUCT_FACTS.barcodeFormats} formats, with check digits worked out or verified; no key. Saved barcodes under \`${api}/barcodes\` with an API key`,
     },
     on("aiArt") && {
       title: "AI art API",
