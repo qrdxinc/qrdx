@@ -1,6 +1,7 @@
 // Values the QRdx REST API accepts, copied from its OpenAPI document
 // (https://qrdx.dev/openapi.json). This package can't import the app, so
-// apps/app/tests/plugins/n8n-node.test.ts holds these lists to the API.
+// apps/app/tests/plugins/n8n-node.test.ts holds these lists to the API, and
+// test/barcode-api.test.ts holds the barcode ones to the app's own lists.
 
 /** The hosted API; self-hosted copies set their own in the credential. */
 export const DEFAULT_BASE_URL = "https://api.qrdx.dev/v1";
@@ -164,6 +165,48 @@ export const QR_SIZE = { min: 64, max: 2048, default: 512 } as const;
 export const QR_MARGIN = { min: 0, max: 16, default: 4 } as const;
 export const FRAME_TEXT_MAX_LENGTH = 24;
 export const DATA_MAX_LENGTH = 2048;
+
+/** GET /barcode `format`: the symbologies QRdx draws */
+export const BARCODE_FORMATS = [
+  "ean13",
+  "ean8",
+  "upca",
+  "upce",
+  "code128",
+  "code39",
+  "code93",
+  "codabar",
+  "itf14",
+  "gs1-128",
+  "datamatrix",
+  "pdf417",
+  "aztec",
+] as const;
+export type BarcodeFormat = (typeof BARCODE_FORMATS)[number];
+
+/** GET /barcode `type`: the file types */
+export const BARCODE_FILE_TYPES = [
+  "png",
+  "jpg",
+  "webp",
+  "avif",
+  "bmp",
+  "svg",
+  "pdf",
+  "eps",
+] as const;
+export type BarcodeFileType = (typeof BARCODE_FILE_TYPES)[number];
+
+/** GET /barcode `rotate`: clockwise, in degrees */
+export const BARCODE_ROTATIONS = ["0", "90", "180", "270"] as const;
+
+/** Pixels per module in raster files */
+export const BARCODE_SCALE = { min: 1, max: 10, default: 4 } as const;
+/** Bar height of linear barcodes, in millimetres */
+export const BARCODE_HEIGHT = { min: 5, max: 60 } as const;
+/** Quiet zone in modules (2D codes take up to 10) */
+export const BARCODE_QUIET_ZONE = { min: 0, max: 20 } as const;
+export const BARCODE_DATA_MAX_LENGTH = 1000;
 
 /** GET /codes `status` */
 export const CODE_STATUSES = ["active", "archived", "all"] as const;

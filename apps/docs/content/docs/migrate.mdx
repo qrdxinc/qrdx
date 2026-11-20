@@ -115,10 +115,11 @@ Shapes it covers, among others:
 | BL.INK | two words, such as `/code-of-conduct/clip` |
 | QR Planet | `/object/<id>` |
 
-There are two ways to add one:
+There are three ways to add one:
 
 - **With an import.** Keep the back-halves on your domain (above). When a link's path can't be a back-half there, the code gets a generated back-half and keeps the old path as an alias. The preview shows both, for example `r/abc → Ab3xK9q` and "Also answers at go.yourbrand.com/r/abc", and the import adds the alias.
 - **By hand.** Open a code on your domain, click **Edit**, and add the old path under **Path aliases**: `/r/abc`, or paste the whole old link. The domain has to be verified first. A code can have up to {facts.pathAliasesPerCode} path aliases.
+- **With the API.** [Add a path alias](/docs/developers/api/add-code-alias) (`POST /v1/codes/{id}/aliases` with `{ "path": "/r/abc" }`, or the whole old link) follows the same rules and refuses a path with the same reason as the dialog. [List path aliases](/docs/developers/api/list-code-aliases) and [Remove a path alias](/docs/developers/api/delete-code-alias) do the rest. The key needs `codes:write` to add or remove.
 
 How a path alias matches:
 

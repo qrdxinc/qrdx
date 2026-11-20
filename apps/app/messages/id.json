@@ -2013,7 +2013,7 @@
     "alt": "Barcode {format} untuk {value}",
     "loadFailed": "Kode penggambar barcode tidak termuat. Periksa koneksi Anda dan muat ulang halaman.",
     "fixInput": "Perbaiki input yang disorot untuk melihat barcode.",
-    "sizes": "PNG, JPG, WebP, dan AVIF berukuran {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF, dan EPS adalah vektor berukuran {widthMm} × {heightMm} mm, dengan modul {moduleMm} mm; skalakan di tata letak Anda sesuai kebutuhan.",
+    "sizes": "PNG, JPG, WebP, AVIF, dan BMP berukuran {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF, dan EPS berupa vektor berukuran {widthMm} × {heightMm} mm, dengan modul {moduleMm} mm; ubah skalanya di tata letak Anda sesuai kebutuhan.",
     "more": "Lainnya",
     "moreFormats": "Format lainnya",
     "footnote": "Dibuat di browser Anda; tidak ada yang Anda ketik dikirim ke QRdx. WebP dan AVIF dikodekan oleh server QRdx saat Anda memilihnya, dan tidak ada yang disimpan.",
@@ -5437,7 +5437,11 @@
       "onATableTent": "Di tent card meja",
       "onAPoster": "Pada poster",
       "asASticker": "Sebagai stiker",
-      "onABusinessCard": "Pada kartu nama"
+      "onABusinessCard": "Pada kartu nama",
+      "onAPhone": "Di ponsel, pada halaman yang di-hosting",
+      "inFrames": "Dalam bingkai",
+      "onABadge": "Pada lencana",
+      "asAsciiArt": "Sebagai seni ASCII"
     },
     "itemPages": {
       "previous": "Sebelumnya",
@@ -5540,7 +5544,7 @@
     },
     "search": {
       "label": "Cari di komunitas",
-      "placeholder": "Cari bingkai, tema, dan halaman"
+      "placeholder": "Cari di komunitas"
     }
   },
   "communityActions": {
@@ -9906,7 +9910,27 @@
       "signedOut": "Masuk untuk mengubah notifikasi.",
       "webhookUrlMissing": "Tempel URL webhook",
       "rateLimited": "Batas permintaan terlampaui. Silakan coba lagi nanti.",
-      "failed": "Terjadi kesalahan. Silakan coba lagi."
+      "failed": "Terjadi kesalahan. Silakan coba lagi.",
+      "notMember": "Anda bukan anggota workspace tersebut.",
+      "emailAlertsPro": "Peringatan email dan ringkasan mingguan tersedia di Pro.",
+      "chatBusiness": "Peringatan Slack dan Discord tersedia di paket Business.",
+      "accountNotFound": "Akun tidak ditemukan.",
+      "webhookAlreadyAdded": "Webhook itu sudah ditambahkan.",
+      "tooManyWebhooks": "Tambahkan hingga {max, number} webhook Slack atau Discord per workspace.",
+      "targetNotFound": "Tujuan notifikasi tidak ditemukan.",
+      "notDelivered": "Tidak terkirim: {error}",
+      "pickEvent": "Pilih minimal satu peristiwa",
+      "url": {
+        "missing": "Masukkan URL endpoint.",
+        "tooLong": "URL terlalu panjang.",
+        "notFull": "Masukkan URL lengkap yang diawali https://",
+        "notHttps": "URL webhook harus memakai https://",
+        "credentials": "Hapus nama pengguna dan kata sandi dari URL.",
+        "ipAddress": "Gunakan nama host, bukan alamat IP.",
+        "notPublic": "Gunakan nama host publik.",
+        "notSlack": "Tempel URL webhook masuk Slack (https://hooks.slack.com/services/…).",
+        "notDiscord": "Tempel URL webhook Discord (https://discord.com/api/webhooks/…)."
+      }
     }
   },
   "codeBuilder": {

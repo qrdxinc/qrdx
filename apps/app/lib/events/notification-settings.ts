@@ -12,6 +12,7 @@ import cuid from "cuid";
 import { and, asc, eq, isNull, type SQL } from "drizzle-orm";
 import { z } from "zod";
 import { HttpError } from "@/lib/error-response";
+import type { Translator } from "@/lib/i18n/translator";
 import { baseUrl } from "@/lib/metadata";
 import { getPlanForScope, getPlanLimits, type Plan } from "@/lib/plans";
 import { assertNotShutOut } from "@/lib/workspaces";
@@ -32,6 +33,8 @@ import {
   checkDiscordWebhookUrl,
   checkSlackWebhookUrl,
   maskChatWebhookUrl,
+  WEBHOOK_URL_PROBLEMS,
+  type WebhookUrlProblem,
 } from "./url-safety";
 
 // notification_setting rows belong to one person and one workspace
@@ -43,6 +46,116 @@ import {
 
 export type ChatChannel = "slack" | "discord";
 
+/**
+ * What the settings refuse with, in English: what logs and anything that
+ * shows errors as they are get. Settings > Notifications says them in the
+ * person's language (notificationSettingsMessages), and
+ * tests/i18n/notification-settings.test.ts keeps the catalog's copies equal.
+ */
+export const NOTIFICATION_SETTINGS_MESSAGES = {
+  notMember: "You're not a member of that workspace.",
+  emailAlertsPro: "Email alerts and the weekly digest are part of Pro.",
+  chatBusiness: "Slack and Discord alerts are part of the Business plan.",
+  accountNotFound: "Account not found.",
+  webhookAlreadyAdded: "That webhook is already added.",
+  tooManyWebhooks: (max: number) =>
+    `Add up to ${max} Slack or Discord webhooks per workspace.`,
+  targetNotFound: "Notification target not found.",
+  notDelivered: (error: string) => `Not delivered: ${error}`,
+  pickEvent: "Pick at least one event",
+  url: WEBHOOK_URL_PROBLEMS,
+} satisfies NotificationSettingsMessages;
+
+/** NOTIFICATION_SETTINGS_MESSAGES in any language. */
+export interface NotificationSettingsMessages {
+  notMember: string;
+  emailAlertsPro: string;
+  chatBusiness: string;
+  accountNotFound: string;
+  webhookAlreadyAdded: string;
+  tooManyWebhooks: (max: number) => string;
+  targetNotFound: string;
+  /** `error` is the delivery's own detail, as it came */
+  notDelivered: (error: string) => string;
+  pickEvent: string;
+  url: Record<WebhookUrlProblem, string>;
+}
+
+/**
+ * NOTIFICATION_SETTINGS_MESSAGES in t's language
+ * (settingsActions.notifications in messages/en.json), for the actions'
+ * answers.
+ */
+export function notificationSettingsMessages(
+  t: Translator<"settingsActions.notifications">,
+): NotificationSettingsMessages {
+  return {
+    notMember: t("notMember"),
+    emailAlertsPro: t("emailAlertsPro"),
+    chatBusiness: t("chatBusiness"),
+    accountNotFound: t("accountNotFound"),
+    webhookAlreadyAdded: t("webhookAlreadyAdded"),
+    tooManyWebhooks: (max) => t("tooManyWebhooks", { max }),
+    targetNotFound: t("targetNotFound"),
+    notDelivered: (error) => t("notDelivered", { error }),
+    pickEvent: t("pickEvent"),
+    url: {
+      missing: t("url.missing"),
+      tooLong: t("url.tooLong"),
+      notFull: t("url.notFull"),
+      notHttps: t("url.notHttps"),
+      credentials: t("url.credentials"),
+      ipAddress: t("url.ipAddress"),
+      notPublic: t("url.notPublic"),
+      notSlack: t("url.notSlack"),
+      notDiscord: t("url.notDiscord"),
+    },
+  };
+}
+
+/**
+ * What the settings refuse with: `message` is the English, `messageIn` says
+ * it in another language, and `plan` is the plan a PLAN_REQUIRED refusal
+ * needs (the upgrade Settings offers).
+ */
+export class NotificationSettingsError extends HttpError {
+  readonly plan?: "pro" | "business";
+  private readonly say: (messages: NotificationSettingsMessages) => string;
+
+  constructor(
+    status: number,
+    code: string,
+    say: (messages: NotificationSettingsMessages) => string,
+    plan?: "pro" | "business",
+  ) {
+    super(status, code, say(NOTIFICATION_SETTINGS_MESSAGES));
+    this.name = "NotificationSettingsError";
+    this.plan = plan;
+    this.say = say;
+  }
+
+  /** The message from `messages` (another language's set). */
+  messageIn(messages: NotificationSettingsMessages): string {
+    return this.say(messages);
+  }
+}
+
+const emailAlertsNeedPro = () =>
+  new NotificationSettingsError(
+    402,
+    "PLAN_REQUIRED",
+    (m) => m.emailAlertsPro,
+    "pro",
+  );
+
+const chatNeedsBusiness = () =>
+  new NotificationSettingsError(
+    402,
+    "PLAN_REQUIRED",
+    (m) => m.chatBusiness,
+    "business",
+  );
+
 export const notificationEventsSchema = z
   .array(z.enum(NOTIFICATION_EVENTS))
   .max(NOTIFICATION_EVENTS.length)
@@ -50,14 +163,17 @@ export const notificationEventsSchema = z
 
 export const chatEventsSchema = z
   .array(z.enum(NOTIFICATION_EVENTS))
-  .min(1, "Pick at least one event")
+  .min(1, NOTIFICATION_SETTINGS_MESSAGES.pickEvent)
   .max(NOTIFICATION_EVENTS.length)
   .transform((events) => [
     ...new Set(
       events.filter((event) => CHAT_NOTIFICATION_EVENTS.includes(event)),
     ),
   ])
-  .refine((events) => events.length > 0, "Pick at least one event");
+  .refine(
+    (events) => events.length > 0,
+    NOTIFICATION_SETTINGS_MESSAGES.pickEvent,
+  );
 
 export interface NotificationWorkspace {
   organizationId: string | null;
@@ -112,11 +228,7 @@ const scopeOf = (userId: string, organizationId: string | null) => ({
 async function assertMember(userId: string, organizationId: string | null) {
   if (!organizationId) return;
   if (!(await isMember(userId, organizationId))) {
-    throw new HttpError(
-      403,
-      "FORBIDDEN",
-      "You're not a member of that workspace.",
-    );
+    throw new NotificationSettingsError(403, "FORBIDDEN", (m) => m.notMember);
   }
   await assertNotShutOut(userId, organizationId);
 }
@@ -204,11 +316,7 @@ export async function setEmailEvents(
   }
   await assertMember(userId, organizationId);
   if (!(await planFor(userId, organizationId)).emailAlerts) {
-    throw new HttpError(
-      402,
-      "PLAN_REQUIRED",
-      "Email alerts and the weekly digest are part of Pro.",
-    );
+    throw emailAlertsNeedPro();
   }
   await saveEmailEvents(userId, organizationId, events);
 }
@@ -239,7 +347,13 @@ async function saveEmailEvents(
     .from(user)
     .where(eq(user.id, userId))
     .limit(1);
-  if (!account) throw new HttpError(404, "NOT_FOUND", "Account not found.");
+  if (!account) {
+    throw new NotificationSettingsError(
+      404,
+      "NOT_FOUND",
+      (m) => m.accountNotFound,
+    );
+  }
 
   const existing = await db
     .select({ id: notificationSetting.id })
@@ -275,7 +389,12 @@ export function checkChatUrl(channel: ChatChannel, url: string): string {
       ? checkSlackWebhookUrl(url)
       : checkDiscordWebhookUrl(url);
   if (!checked.ok) {
-    throw new HttpError(400, "VALIDATION_ERROR", checked.message);
+    const { problem } = checked;
+    throw new NotificationSettingsError(
+      400,
+      "VALIDATION_ERROR",
+      (m) => m.url[problem],
+    );
   }
   return checked.url.toString();
 }
@@ -287,11 +406,7 @@ export async function addChatTarget(
 ): Promise<{ id: string }> {
   await assertMember(userId, organizationId);
   if (!(await planFor(userId, organizationId)).chat) {
-    throw new HttpError(
-      402,
-      "PLAN_REQUIRED",
-      "Slack and Discord alerts are part of the Business plan.",
-    );
+    throw chatNeedsBusiness();
   }
   const url = checkChatUrl(input.channel, input.url);
   const rows = await db
@@ -304,17 +419,15 @@ export async function addChatTarget(
     .where(workspaceWhere(userId, organizationId));
   const chats = rows.filter((row) => row.channel !== "email");
   if (chats.some((row) => row.target === url)) {
-    throw new HttpError(
+    throw new NotificationSettingsError(
       409,
       "ALREADY_EXISTS",
-      "That webhook is already added.",
+      (m) => m.webhookAlreadyAdded,
     );
   }
   if (chats.length >= MAX_CHAT_TARGETS) {
-    throw new HttpError(
-      403,
-      "LIMIT_REACHED",
-      `Add up to ${MAX_CHAT_TARGETS} Slack or Discord webhooks per workspace.`,
+    throw new NotificationSettingsError(403, "LIMIT_REACHED", (m) =>
+      m.tooManyWebhooks(MAX_CHAT_TARGETS),
     );
   }
   const id = cuid();
@@ -342,7 +455,11 @@ async function findOwnChatTarget(userId: string, id: string) {
     )
     .limit(1);
   if (!row || row.channel === "email") {
-    throw new HttpError(404, "NOT_FOUND", "Notification target not found.");
+    throw new NotificationSettingsError(
+      404,
+      "NOT_FOUND",
+      (m) => m.targetNotFound,
+    );
   }
   return row;
 }
@@ -356,11 +473,7 @@ export async function updateChatTarget(
   // More events to a webhook is sending more of the workspace somewhere.
   await assertMember(userId, row.organizationId);
   if (!(await planFor(userId, row.organizationId)).chat) {
-    throw new HttpError(
-      402,
-      "PLAN_REQUIRED",
-      "Slack and Discord alerts are part of the Business plan.",
-    );
+    throw chatNeedsBusiness();
   }
   await db
     .update(notificationSetting)
@@ -379,21 +492,16 @@ export async function removeChatTarget(userId: string, id: string) {
 export async function sendTestChatMessage(userId: string, id: string) {
   const row = await findOwnChatTarget(userId, id);
   if (!(await planFor(userId, row.organizationId)).chat) {
-    throw new HttpError(
-      402,
-      "PLAN_REQUIRED",
-      "Slack and Discord alerts are part of the Business plan.",
-    );
+    throw chatNeedsBusiness();
   }
   const result = await postChatMessage(row.channel as ChatChannel, row.target, {
     text: "Test notification from QRdx. Alerts you picked will show up here.",
     url: new URL("/settings/notifications", baseUrl.origin).toString(),
   });
   if (!result.ok) {
-    throw new HttpError(
-      502,
-      "DELIVERY_FAILED",
-      `Not delivered: ${result.error}`,
+    const { error } = result;
+    throw new NotificationSettingsError(502, "DELIVERY_FAILED", (m) =>
+      m.notDelivered(error),
     );
   }
 }

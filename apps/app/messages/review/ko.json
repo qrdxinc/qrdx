@@ -5980,7 +5980,7 @@
     "status": "machine"
   },
   "barcodeTool.sizes": {
-    "source": "a003a144e754",
+    "source": "9606d02f4d29",
     "status": "machine"
   },
   "barcodeTool.more": {
@@ -16347,6 +16347,22 @@
     "source": "94e9261a0e4c",
     "status": "machine"
   },
+  "community.itemPreviews.onAPhone": {
+    "source": "0dd1b36ec25b",
+    "status": "machine"
+  },
+  "community.itemPreviews.inFrames": {
+    "source": "5364d61f81a5",
+    "status": "machine"
+  },
+  "community.itemPreviews.onABadge": {
+    "source": "e0c02ee212c2",
+    "status": "machine"
+  },
+  "community.itemPreviews.asAsciiArt": {
+    "source": "55670e3ff2e1",
+    "status": "machine"
+  },
   "community.itemPages.previous": {
     "source": "a57b08a480b8",
     "status": "machine"
@@ -16660,7 +16676,7 @@
     "status": "machine"
   },
   "community.search.placeholder": {
-    "source": "ff85aeb387e6",
+    "source": "a409f201afc9",
     "status": "machine"
   },
   "communityActions.community.signIn": {
@@ -31173,6 +31189,78 @@
   },
   "settingsActions.notifications.failed": {
     "source": "3ccd9d6586ef",
+    "status": "machine"
+  },
+  "settingsActions.notifications.notMember": {
+    "source": "a2668ea18a82",
+    "status": "machine"
+  },
+  "settingsActions.notifications.emailAlertsPro": {
+    "source": "0826558a9302",
+    "status": "machine"
+  },
+  "settingsActions.notifications.chatBusiness": {
+    "source": "e9da15dd3501",
+    "status": "machine"
+  },
+  "settingsActions.notifications.accountNotFound": {
+    "source": "e9b1e0403a1e",
+    "status": "machine"
+  },
+  "settingsActions.notifications.webhookAlreadyAdded": {
+    "source": "b779ec6e802f",
+    "status": "machine"
+  },
+  "settingsActions.notifications.tooManyWebhooks": {
+    "source": "da59168366c7",
+    "status": "machine"
+  },
+  "settingsActions.notifications.targetNotFound": {
+    "source": "7002a77876f8",
+    "status": "machine"
+  },
+  "settingsActions.notifications.notDelivered": {
+    "source": "426a03c5b03d",
+    "status": "machine"
+  },
+  "settingsActions.notifications.pickEvent": {
+    "source": "602a4aa4fbfe",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.missing": {
+    "source": "6013825a6456",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.tooLong": {
+    "source": "1fa8a58d2e6c",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.notFull": {
+    "source": "e449dfc95349",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.notHttps": {
+    "source": "c415829a6d9c",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.credentials": {
+    "source": "5db3d8aa0abc",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.ipAddress": {
+    "source": "d9df66457f79",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.notPublic": {
+    "source": "49cf9bfb86dc",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.notSlack": {
+    "source": "54b2ae56fd6f",
+    "status": "machine"
+  },
+  "settingsActions.notifications.url.notDiscord": {
+    "source": "454200ef33b7",
     "status": "machine"
   },
   "codeBuilder.builderOptions.on": {

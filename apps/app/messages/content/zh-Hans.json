@@ -22715,6 +22715,12 @@
     "status": "machine",
     "context": "barcodes.files.avif.hint"
   },
+  "7918d6a3213b": {
+    "source": "Older systems that only take BMP · uncompressed 24-bit",
+    "text": "仅支持 BMP 的旧系统 · 未压缩 24 位",
+    "status": "machine",
+    "context": "barcodes.files.bmp.hint"
+  },
   "2f6bec725ba6": {
     "source": "Vector for print and design tools",
     "text": "矢量格式，适用于印刷和设计工具",
@@ -22889,9 +22895,9 @@
     "status": "machine",
     "context": "barcodes.faqs.4.question"
   },
-  "a3d783fa6e0e": {
-    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites. Raise the image size for bigger pictures.",
-    "text": "印刷请选 SVG、PDF 或 EPS：它们是矢量格式，无论放大到多大，条都保持清晰。SVG 和 EPS 可在 Illustrator、InDesign 和 Affinity 等设计工具中打开，PDF 则几乎可以在任何地方打开。PNG 适用于屏幕、文档和网店，不支持 PNG 的地方可用 JPG；WebP 和 AVIF 的文件更小，适合网站。如需更大的图片，请调高图片尺寸。",
+  "3dfd44b42064": {
+    "source": "SVG, PDF or EPS for print: they're vectors, so the bars stay sharp at any size. SVG and EPS open in design tools such as Illustrator, InDesign and Affinity, and PDF opens anywhere. PNG is for screens, documents and online shops, and JPG for places that don't take PNG; WebP and AVIF make smaller files for websites, and BMP is for older systems that only take BMP. Raise the image size for bigger pictures.",
+    "text": "印刷请选 SVG、PDF 或 EPS：它们是矢量格式，条码无论放大到多大，线条都保持清晰。SVG 和 EPS 可以在 Illustrator、InDesign 和 Affinity 等设计工具中打开，PDF 则几乎在任何地方都能打开。PNG 适用于屏幕、文档和网店，JPG 适用于不支持 PNG 的场合；WebP 和 AVIF 生成的文件更小，适合网站使用，BMP 则用于只支持 BMP 的旧系统。需要更大的图片，请调高图片尺寸。",
     "status": "machine",
     "context": "barcodes.faqs.4.answer"
   },

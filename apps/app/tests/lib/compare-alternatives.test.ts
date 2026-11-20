@@ -157,24 +157,24 @@ describe("copy around the lists", () => {
       365 * PRODUCT_FACTS.freeScanHistoryYears,
     );
     for (const [file, phrases] of Object.entries({
-      "uniqode.mdx": [`with logos and ${free.dynamicCodes} dynamic codes.`],
+      "uniqode.mdx": [`with logos and {facts.freeDynamicCodes} dynamic codes.`],
       "qr-verse.mdx": [
-        `QRdx gives you logos, SVG and ${free.dynamicCodes} dynamic codes free.`,
+        `QRdx gives you logos, SVG and {facts.freeDynamicCodes} dynamic codes free.`,
       ],
       "canva-qr.mdx": [
-        `SVG and ${free.dynamicCodes} tracked codes free.`,
-        `for up to ${free.dynamicCodes} dynamic codes with {facts.freeScanHistoryYears} year of history.`,
+        `SVG and {facts.freeDynamicCodes} tracked codes free.`,
+        `for up to {facts.freeDynamicCodes} dynamic codes with {facts.freeScanHistoryYears} year of history.`,
         `up to ${mb} MB per file on the free plan`,
-        `the free plan includes ${free.dynamicCodes}`,
+        `the free plan includes {facts.freeDynamicCodes}`,
       ],
       "bitly-qr.mdx": [
-        `${free.dynamicCodes} dynamic codes on the free plan with unlimited scans, and Pro at $${PRICING.pro.month.amounts.USD}/mo or $${PRICING.pro.year.amounts.USD}/yr.`,
+        `{facts.freeDynamicCodes} dynamic codes on the free plan with unlimited scans, and Pro at {facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr.`,
       ],
     })) {
       for (const phrase of phrases) expect(read(file), file).toContain(phrase);
     }
     expect(blog).toContain(
-      `a free account adds ${free.dynamicCodes} dynamic codes with unlimited scans and {facts.freeScanHistoryYears} year of history`,
+      `a free account adds {facts.freeDynamicCodes} dynamic codes with unlimited scans and {facts.freeScanHistoryYears} year of history`,
     );
   });
 
