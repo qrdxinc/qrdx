@@ -291,6 +291,9 @@ async function toCards(rows: ItemRow[]): Promise<CommunityItemCard[]> {
   return (await buildCards(rows)).filter(listable);
 }
 
+/** How many of a collection's items its card shows. */
+export const STACK_SIZE = 3;
+
 async function buildCards(rows: ItemRow[]): Promise<CommunityItemCard[]> {
   const ids = rows.map((row) => row.id);
   const collectionIds = rows
@@ -327,7 +330,11 @@ async function buildCards(rows: ItemRow[]): Promise<CommunityItemCard[]> {
     return {
       ...card,
       itemCount: items.length,
-      stack: items.slice(0, 3).map((item) => item.preview),
+      stack: items.slice(0, STACK_SIZE).map((item) => ({
+        type: item.type,
+        preview: item.preview,
+        ...(item.page ? { page: item.page } : {}),
+      })),
       preview: items[0]?.preview ?? {},
     };
   });

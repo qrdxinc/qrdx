@@ -9,8 +9,8 @@
  * so the last card is cut at the edge, and snaps card by card on touch.
  * The gap leaves each card's caption clear of its neighbour's. A row that
  * scrolls sideways clips up and down too, so it keeps room above the cards
- * for a hovered card to lift into (pt-3, taken back by -mt-3 so the row
- * stays where it was); without it the card's top edge was cut off.
+ * (pt-3, taken back by -mt-3 so the row stays where it was) for a focused
+ * card's ring; without it a card's top edge was cut off.
  */
 export const RAIL =
   "no-scrollbar -mx-4 -mt-3 flex snap-x snap-mandatory scroll-pl-4 gap-5 overflow-x-auto overscroll-x-contain px-4 pt-3 pb-2 sm:-mx-6 sm:scroll-pl-6 sm:px-6 md:gap-6 xl:gap-8";
@@ -35,13 +35,29 @@ export const MAKER_CARD =
 export const CARD_FRAME = "group relative flex min-w-0 flex-col gap-3";
 
 /**
- * The design's box: a calm surface with a hairline edge, the same shape for
- * every type. Opaque, so a rank's numeral can sit partly behind it. On
- * hover it lifts a little, with a soft shadow under it (it stays put with
- * reduced motion).
+ * The stage every preview stands on: light in both colour schemes, like a
+ * lit product shot, so a design shows in its own colours whatever the
+ * page's (stepped down a little on a dark page, so it doesn't glare), with
+ * a hairline edge drawn over whatever fills it. Give it `relative`. What
+ * stands on it, and how it moves, is ./stage.module.css.
  */
-export const CARD_ART =
-  "bg-muted relative z-[1] aspect-[4/3] overflow-hidden rounded-xl border border-foreground/[0.07] transition-[border-color,translate,box-shadow] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:border-foreground/20 group-hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/0.3)] group-has-[a:focus-visible]:ring-ring/50 group-has-[a:focus-visible]:ring-[3px] motion-reduce:group-hover:translate-y-0";
+export const STAGE =
+  "bg-zinc-100 dark:bg-zinc-200 after:pointer-events-none after:absolute after:inset-0 after:z-[2] after:rounded-[inherit] after:shadow-[inset_0_0_0_1px_rgb(0_0_0/0.06)]";
+
+/**
+ * The preview's box on a card (and on its placeholder), the same shape for
+ * every type: the stage, opaque, so a rank's numeral can sit partly behind
+ * it. The box itself stays put on hover: what stands on it moves.
+ */
+export const CARD_ART = `relative z-[1] aspect-[4/3] overflow-hidden rounded-xl group-has-[a:focus-visible]:ring-ring/50 group-has-[a:focus-visible]:ring-[3px] ${STAGE}`;
+
+/**
+ * A quiet label on the stage's top-left corner: the item's type ("Frame",
+ * "Collection · 6"), and a grid's rank beside it. The stage is light in
+ * both colour schemes, so one style serves both.
+ */
+export const STAGE_LABEL =
+  "rounded-full bg-white/90 px-2 py-0.5 text-[11px] leading-4 font-medium text-zinc-900 ring-1 ring-black/[0.06] backdrop-blur-sm";
 
 /**
  * Where a rank's numeral sits and how large it is: a little above the
@@ -59,8 +75,8 @@ export const RANK_ROOM = "pl-12 md:pl-16 xl:pl-[4.5rem]";
 export const RANK_ROOM_WIDE = "pl-24 md:pl-[7.75rem] xl:pl-[8.75rem]";
 
 /**
- * The caption under it, two lines of two ends: the name and its saves, then
- * the creator and what kind of item it is.
+ * The caption under it, two lines: the name with its saves on the right,
+ * then the creator.
  */
 export const CARD_TEXT = "flex min-w-0 flex-col gap-1.5 px-0.5";
 

@@ -16311,12 +16311,28 @@
     "source": "989716267f5c",
     "status": "machine"
   },
-  "community.itemCard.itemCount": {
-    "source": "1eb9964e9518",
+  "community.itemCard.typeFrame": {
+    "source": "d0b50e064a4f",
     "status": "machine"
   },
-  "community.itemCard.yourQrCode": {
-    "source": "38dfcddf7b8e",
+  "community.itemCard.typeTheme": {
+    "source": "efb52e7172b7",
+    "status": "machine"
+  },
+  "community.itemCard.typePage": {
+    "source": "0a30a815d67d",
+    "status": "machine"
+  },
+  "community.itemCard.typeKit": {
+    "source": "875d60ed20f4",
+    "status": "machine"
+  },
+  "community.itemCard.typeCollection": {
+    "source": "7b790708ff1b",
+    "status": "machine"
+  },
+  "community.itemCard.typeCollectionCount": {
+    "source": "bcddaa27e934",
     "status": "machine"
   },
   "community.itemPreviews.onATableTent": {
@@ -16329,22 +16345,6 @@
   },
   "community.itemPreviews.asASticker": {
     "source": "e9130271e04b",
-    "status": "machine"
-  },
-  "community.itemPreviews.plainCode": {
-    "source": "9b38f897f46f",
-    "status": "machine"
-  },
-  "community.itemPreviews.withThisTheme": {
-    "source": "f0e4540a07cb",
-    "status": "machine"
-  },
-  "community.itemPreviews.inTheFrame": {
-    "source": "0ea923f002b3",
-    "status": "machine"
-  },
-  "community.itemPreviews.withItsOwnFrame": {
-    "source": "a6a694e38c20",
     "status": "machine"
   },
   "community.itemPreviews.onABusinessCard": {

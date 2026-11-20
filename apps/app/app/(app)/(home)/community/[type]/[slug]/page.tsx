@@ -1,10 +1,12 @@
 import { Info, Tick } from "@repo/design-system/components/icons";
 import { Badge } from "@repo/design-system/components/ui/badge";
+import { cn } from "@repo/design-system/lib/utils";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { getAdminUser } from "@/app/(app)/admin/_lib/guard";
+import { STAGE } from "@/components/community/card-layout";
 import { CreatorLine } from "@/components/community/creator-line";
 import { ItemActions } from "@/components/community/item-actions";
 import { ItemGrid, ItemRow } from "@/components/community/item-card";
@@ -16,9 +18,9 @@ import {
   withoutFrame,
 } from "@/components/community/item-details";
 import { FrameInUse, ThemeInUse } from "@/components/community/item-previews";
-import { PagePreview } from "@/components/community/page-preview";
 import { RemoveItemButton } from "@/components/community/remove-item-button";
 import { RowSection } from "@/components/community/row-section";
+import { LightPhone } from "@/components/community/stage-mockups";
 import { TryIt } from "@/components/community/try-it";
 import { frameParts } from "@/lib/community/design-parts";
 import { itemScanGate } from "@/lib/community/home";
@@ -26,7 +28,6 @@ import {
   COMMUNITY_LICENSE_NAME,
   COMMUNITY_LICENSE_URL,
 } from "@/lib/community/licence";
-import { FRAME_BASE_STYLE } from "@/lib/community/payloads";
 import { workspaceCanUnpublish } from "@/lib/community/publish-access";
 import { getItem, moreFromCreator, remixesOf } from "@/lib/community/queries";
 import { MIN_GATE_SCORE } from "@/lib/community/scan-samples";
@@ -128,15 +129,35 @@ export default async function CommunityItemPage({
                 from the community.
               </div>
             ) : item.type === "kit" ? (
-              <div className="grid grid-cols-2 items-start gap-4">
-                <TryIt style={item.preview} />
-                {page && <PagePreview content={page.content} />}
-              </div>
-            ) : page ? (
-              <PagePreview
-                className="mx-auto w-full max-w-[340px]"
-                content={page.content}
+              // The look with your link, and the page on its phone beside
+              // it, rising from the stage's edge.
+              <TryIt
+                page={
+                  page && (
+                    <LightPhone
+                      className="absolute top-[9%] left-[54%] w-[38%]"
+                      content={page.content}
+                      still
+                    />
+                  )
+                }
+                style={item.preview}
               />
+            ) : page ? (
+              // The whole page on a light phone, standing on the stage.
+              <div
+                className={cn(
+                  "relative mx-auto aspect-[4/5] w-full max-w-[560px] overflow-hidden rounded-2xl",
+                  STAGE,
+                )}
+                data-stage=""
+              >
+                <LightPhone
+                  className="absolute top-[6%] left-1/2 h-[88%] -translate-x-1/2"
+                  content={page.content}
+                  still
+                />
+              </div>
             ) : (
               <TryIt style={item.preview} />
             )}
@@ -259,7 +280,7 @@ export default async function CommunityItemPage({
         <div className="mt-14 space-y-10">
           {item.type === "frame" && (
             <RowSection
-              sub="With a sample code, the way it prints."
+              sub="With a sample code, on the things people print it on."
               title="How it looks"
             >
               <FrameInUse style={item.preview} />
@@ -267,13 +288,12 @@ export default async function CommunityItemPage({
           )}
           {item.type === "theme" && (
             <RowSection
-              sub="With a sample code, beside a plain one and in use."
+              sub="With a sample code, on the things people print it on."
               title="How it looks"
             >
               <ThemeInUse
                 frames={sampleFrames(item.preview)}
                 look={withoutFrame(item.preview)}
-                plain={FRAME_BASE_STYLE}
               />
             </RowSection>
           )}

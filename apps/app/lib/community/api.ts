@@ -18,6 +18,7 @@ import { fullTextSearchAvailable, searchWords, toPrefixQuery } from "./search";
 import { COMMUNITY_TAG } from "./store";
 import { untrustedText } from "./text";
 import {
+  CARD_CACHE_KEY,
   COMMUNITY_TYPES,
   type CommunityItemCard,
   type CommunityItemDetail,
@@ -219,7 +220,7 @@ const cachedCards = unstable_cache(
     type === "frame"
       ? listFrames()
       : listItems({ type, limit: COMMUNITY_SEARCH_POOL }),
-  ["api-community-cards"],
+  ["api-community-cards", CARD_CACHE_KEY],
   { revalidate: COMMUNITY_API_TTL, tags: [COMMUNITY_TAG] },
 );
 

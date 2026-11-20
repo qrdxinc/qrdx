@@ -14,25 +14,23 @@ import {
   SidebarSection,
   SortMenu,
 } from "@/components/community/browse-sidebar";
-import { CommunityTabs } from "@/components/community/community-tabs";
+import { CommunityContent } from "@/components/community/community-content";
+import {
+  GALLERY_FRAME,
+  GallerySkeleton,
+} from "@/components/community/community-skeletons";
 import { cardKey, ItemCard } from "@/components/community/item-card";
 import { ItemPages } from "@/components/community/item-pages";
 import { InfiniteList } from "@/components/infinite/infinite-list";
 import { COLLECTION_MIN_ITEMS } from "@/lib/community/bundles";
-import { hasCollections, hasKits, hasTemplates } from "@/lib/community/home";
-import { LICENSE_SHORT } from "@/lib/community/licence";
-import {
-  type CommunityItemType,
-  TYPE_LABELS,
-  typeFromSegment,
-} from "@/lib/community/types";
+import { TYPE_LABELS, typeFromSegment } from "@/lib/community/types";
 import { createMetadata } from "@/lib/metadata";
 import { pageSlice, parsePage } from "@/lib/paging";
 import { playgroundHref } from "@/lib/playground-links";
 import { dashboardEntry } from "@/lib/workspace-paths";
-import { CommunityThemesContent } from "../_components/community-themes-content";
-import { loadCommunityGalleryPage } from "../actions";
-import { COPY } from "./copy";
+import { CommunityThemesContent } from "../../_components/community-themes-content";
+import { loadCommunityGalleryPage } from "../../actions";
+import { COPY } from "../copy";
 import {
   type Filter,
   type GalleryQuery,
@@ -45,7 +43,7 @@ import {
   groupsApply as groupsApplyTo,
   parseGalleryQuery,
   type Sort,
-} from "./gallery";
+} from "../gallery";
 
 export async function generateMetadata({
   params,
@@ -75,57 +73,22 @@ export default async function CommunityTypePage({
   // Official frames come in groups (holidays, seasons, uses): ?group=<id>
   const query = type === "theme" ? null : parseGalleryQuery(type, search);
   const page = parsePage(search.page);
-  const [showCollections, showTemplates, showKits] = await Promise.all([
-    hasCollections(),
-    hasTemplates(),
-    hasKits(),
-  ]);
 
-  return (
-    <main className="w-full border-b">
-      {/* Rail to rail: the text lines up with the sidebar's rows below. */}
-      <section className="mx-6 px-4 pt-12 pb-6 sm:px-6">
-        <p className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
-          Community
-        </p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight md:text-4xl">
-          {COPY[type].heading}
-        </h1>
-        <p className="text-muted-foreground mt-2 max-w-2xl text-pretty">
-          {COPY[type].intro}
-        </p>
-        <p className="text-muted-foreground mt-1 text-xs">{LICENSE_SHORT}</p>
-      </section>
-
-      <CommunityTabs
-        active={TAB_OF[type]}
-        showCollections={showCollections || type === "collection"}
-        showKits={showKits}
-        showTemplates={showTemplates}
-        wide
-      />
-
-      <div className="mx-6">
-        {query ? (
-          <TypeBrowse page={page} query={query} />
-        ) : (
-          // nuqs reads search params; without a boundary the whole page renders client-side
-          <Suspense fallback={<div className="min-h-[60vh] w-full" />}>
-            <CommunityThemesContent />
-          </Suspense>
-        )}
-      </div>
-    </main>
+  // The header, tabs and licence line are the shared community frame
+  // (../../layout.tsx); the placeholder while this loads is ./loading.tsx.
+  return query ? (
+    <CommunityContent className={GALLERY_FRAME}>
+      <TypeBrowse page={page} query={query} />
+    </CommunityContent>
+  ) : (
+    // nuqs reads search params; without a boundary the whole page renders client-side
+    <Suspense fallback={<GallerySkeleton view="themes" />}>
+      <CommunityContent className={GALLERY_FRAME}>
+        <CommunityThemesContent />
+      </CommunityContent>
+    </Suspense>
   );
 }
-
-const TAB_OF = {
-  frame: "frames",
-  theme: "themes",
-  collection: "collections",
-  "page-template": "templates",
-  kit: "kits",
-} as const satisfies Record<CommunityItemType, string>;
 
 const EMPTY: Record<
   GalleryType,

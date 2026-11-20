@@ -21,7 +21,12 @@ import {
 } from "./queries";
 import { checkScanGate, type ScanGate } from "./scan-gate";
 import { COMMUNITY_TAG, communityState } from "./store";
-import type { CommunityItemCard, CommunityMaker, RankedCard } from "./types";
+import {
+  CARD_CACHE_KEY,
+  type CommunityItemCard,
+  type CommunityMaker,
+  type RankedCard,
+} from "./types";
 
 /** Cards in each of the overview's plain rows. */
 export const ROW_SIZE = 10;
@@ -113,10 +118,14 @@ async function loadHome(): Promise<CommunityHome> {
 }
 
 /** Everything the /community overview shows (cached for a minute). */
-export const getCommunityHome = unstable_cache(loadHome, ["community-home"], {
-  revalidate: 60,
-  tags: [COMMUNITY_TAG, "community-themes"],
-});
+export const getCommunityHome = unstable_cache(
+  loadHome,
+  ["community-home", CARD_CACHE_KEY],
+  {
+    revalidate: 60,
+    tags: [COMMUNITY_TAG, "community-themes"],
+  },
+);
 
 /** How many items each of the overview's rows has (for pickSections). */
 export const homeSizes = (

@@ -5427,17 +5427,17 @@
       "empty": "Vide",
       "viewAll": "Tout voir",
       "saves": "Ajouts",
-      "itemCount": "{count, plural, one {# élément} other {# éléments}}",
-      "yourQrCode": "Votre QR code"
+      "typeFrame": "Cadre",
+      "typeTheme": "Thème",
+      "typePage": "Page",
+      "typeKit": "Kit",
+      "typeCollection": "Collection",
+      "typeCollectionCount": "Collection · {count, number}"
     },
     "itemPreviews": {
       "onATableTent": "Sur un chevalet de table",
       "onAPoster": "Sur une affiche",
       "asASticker": "En autocollant",
-      "plainCode": "Un code simple",
-      "withThisTheme": "Le même code avec ce thème",
-      "inTheFrame": "Dans le cadre {name}",
-      "withItsOwnFrame": "Avec son propre cadre",
       "onABusinessCard": "Sur une carte de visite"
     },
     "itemPages": {

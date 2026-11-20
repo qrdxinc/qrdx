@@ -191,7 +191,7 @@ describe("routes with a fixed param list", () => {
       "(app)/templates/[type]/page.tsx",
       "(app)/templates/[type]/[template]/page.tsx",
       "(app)/(home)/blog/category/[slug]/opengraph-image.tsx",
-      "(app)/(home)/community/[type]/opengraph-image.tsx",
+      "(app)/(home)/community/[type]/(gallery)/opengraph-image.tsx",
       "og/legal/[...slug]/route.tsx",
       "[lang]/layout.tsx",
       "[lang]/(home)/pricing/opengraph-image.tsx",

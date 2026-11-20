@@ -1,118 +1,18 @@
 "use client";
 
-// Pictures that say what a community item is before it's opened: a frame
-// drawn around an empty slot ("Your QR code") instead of a code, and a
-// close-up of a theme's code (one eye and a patch of its dots). Drawn in the
-// browser as they near the screen, like the cards' designs (./design-qr.tsx).
+// A theme's swatch: a close-up of its code (one eye and a patch of its
+// dots), drawn in the browser as it nears the screen, like the cards'
+// designs (./design-qr.tsx). How it moves on a card is ./stage.module.css.
 
 import { CANONICAL_ORIGIN } from "@repo/config";
 import { cn } from "@repo/design-system/lib/utils";
-import { Scanning } from "iconsax-reactjs";
-import { getColorString, QRCode, QRFrameSVG } from "qrdx";
+import { QRCode } from "qrdx";
+import type { CSSProperties } from "react";
 import { swatchStyle } from "@/lib/community/design-parts";
 import { useNearViewport } from "@/lib/hooks/use-infinite-scroll";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
 import type { ThemeStyles } from "@/types/theme";
-
-/** The slot's own units (its viewBox): a 100 × 100 square. */
-const SLOT = 100;
-
-/**
- * What stands in for the code in a frame's slot, placed and sized by the
- * engine as the code would be (it gives the slot's <svg> its x, y, width
- * and height): the code's background, then a quiet dashed holder with a
- * scan mark and `label`.
- */
-function CodeSlot({
-  label,
-  background,
-  ...placement
-}: {
-  label: string;
-  background: string;
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-}) {
-  return (
-    <svg {...placement} viewBox={`0 0 ${SLOT} ${SLOT}`}>
-      <rect fill={background} height={SLOT} width={SLOT} />
-      <rect
-        fill="#f4f4f5"
-        height={84}
-        rx={6}
-        stroke="#a1a1aa"
-        strokeDasharray="3.5 2.5"
-        strokeWidth={1}
-        width={84}
-        x={8}
-        y={8}
-      />
-      <Scanning color="#71717a" size={24} x={38} y={25} />
-      <text
-        fill="#71717a"
-        fontSize={10.5}
-        fontWeight={500}
-        textAnchor="middle"
-        x={SLOT / 2}
-        y={67}
-      >
-        {label}
-      </text>
-    </svg>
-  );
-}
-
-/** A frame (`style.frame`) with an empty slot where the code goes. */
-export function FrameSlot({
-  style,
-  label,
-  className,
-}: {
-  style: ThemeStyles;
-  /** The slot's words ("Your QR code") */
-  label: string;
-  className?: string;
-}) {
-  if (!style.frame) return null;
-  return (
-    <div
-      className={cn(
-        "flex items-center justify-center [&>svg]:size-full",
-        className,
-      )}
-    >
-      <QRFrameSVG
-        aria-hidden
-        bgColor={style.bgColor}
-        frame={style.frame}
-        slot={
-          <CodeSlot
-            background={getColorString(style.bgColor, "#ffffff")}
-            label={label}
-          />
-        }
-      />
-    </div>
-  );
-}
-
-/** FrameSlot drawn once it nears the screen (`eager`: on the server too). */
-export function LazyFrameSlot({
-  eager = false,
-  className,
-  ...props
-}: {
-  style: ThemeStyles;
-  label: string;
-  className?: string;
-  eager?: boolean;
-}) {
-  const [ref, near] = useNearViewport<HTMLDivElement>({ initial: eager });
-  if (near) return <FrameSlot className={className} {...props} />;
-  return <div aria-hidden className={className} ref={ref} />;
-}
+import stage from "./stage.module.css";
 
 /**
  * The code a swatch is cut from: this link at level L with a one-module
@@ -128,22 +28,99 @@ export const SWATCH_CODE = {
 } as const;
 
 /**
- * The part of it a swatch shows: the margin, the top-left eye and the dots
- * beside and under it, short of the top-right eye (4:3).
+ * How close a swatch is at rest: this many of the code's units across its
+ * box (the top-left eye and the dots beside it, short of the next eye).
  */
-export const SWATCH_VIEW_BOX = "0 0 180 135";
+export const SWATCH_UNITS = 180;
 
-/** A close-up of a theme's code: one eye and a patch of its dots. */
+/**
+ * Where the close-up starts, in the code's units: a little before its
+ * corner, so the corner shows with room around it (the type's label sits
+ * there on a card).
+ */
+const SWATCH_START = -24;
+
+/** The swatch code's modules across, with its one-module margin each side. */
+const SWATCH_MODULES = 27;
+
+/**
+ * The room a pulled-back code leaves free in its box, in px: on a card,
+ * the type's label above it and the chips below it; on a kit's tile or a
+ * collection's piece, only small chips below. Both are fixed sizes while
+ * the box isn't, so the code is sized from the height that's left.
+ */
+export const SWATCH_ROOM = {
+  card: { top: 38, bottom: 41 },
+  compact: { top: 8, bottom: 28 },
+} as const;
+
+/**
+ * The whole code pulled back, as CSS expressions of its box's size
+ * (container units: the swatch's box is a size container): its modules
+ * fill the height SWATCH_ROOM leaves, centred across, so neither the label
+ * nor the chips cover one. `x` and `y` place its top-left corner, `scale`
+ * shrinks the element (SWATCH_CODE.size / SWATCH_UNITS box widths across)
+ * to it: tan(atan2(a, b)) is a / b as a plain number.
+ */
+export function swatchPulledBack(compact = false) {
+  const { top, bottom } = SWATCH_ROOM[compact ? "compact" : "card"];
+  const element = (SWATCH_CODE.size / SWATCH_UNITS) * 100;
+  const side = `((100cqh - ${top + bottom}px) * ${SWATCH_MODULES / (SWATCH_MODULES - 2)})`;
+  return {
+    x: `calc((100cqw - ${side}) / 2)`,
+    y: `calc(${top}px - ${side} / ${SWATCH_MODULES})`,
+    scale: `tan(atan2(${side}, ${element}cqw))`,
+  };
+}
+
+/**
+ * The swatch code's two transforms, as CSS variables: the close-up at
+ * rest, and the whole code on its background when the card is hovered
+ * (./stage.module.css). Both are transforms of one element, so one
+ * transition carries it from one to the other; the close-up draws at the
+ * element's full size, and pulling back scales it down.
+ */
+export function swatchTransforms(compact = false): CSSProperties {
+  const side = SWATCH_CODE.size / SWATCH_UNITS;
+  const rest =
+    Math.round((-SWATCH_START / SWATCH_UNITS / side) * 100_000) / 1000;
+  const full = swatchPulledBack(compact);
+  return {
+    "--swatch-rest": `translate(${rest}%, ${rest}%) scale(1)`,
+    "--swatch-full": `translate(${full.x}, ${full.y}) scale(${full.scale})`,
+  } as CSSProperties;
+}
+
+/**
+ * A close-up of a theme's code, one eye and a patch of its dots, filling
+ * the box that clips it (a size container: see swatchPulledBack). The whole
+ * code is drawn; a transform crops it, so a hovered card can pull back to
+ * all of it.
+ */
 export function SwatchCrop({
   style,
+  compact = false,
   className,
 }: {
   style: ThemeStyles;
+  /** A kit's tile or a collection's piece (SWATCH_ROOM) */
+  compact?: boolean;
   className?: string;
 }) {
   const look = swatchStyle(style);
   return (
-    <div className={cn("[&>svg]:size-full", className)}>
+    <div
+      className={cn(
+        "absolute top-0 left-0 aspect-square [&>svg]:size-full",
+        stage.swatchCode,
+        className,
+      )}
+      data-swatch-code=""
+      style={{
+        width: `${(SWATCH_CODE.size / SWATCH_UNITS) * 100}%`,
+        ...swatchTransforms(compact),
+      }}
+    >
       <QRCode
         aria-hidden
         bgColor={look.bgColor}
@@ -156,10 +133,8 @@ export function SwatchCrop({
         hideLogo
         level={SWATCH_CODE.level}
         margin={SWATCH_CODE.margin}
-        preserveAspectRatio="xMinYMin slice"
         size={SWATCH_CODE.size}
         value={SWATCH_CODE.value}
-        viewBox={SWATCH_VIEW_BOX}
         {...styleEngineOptions(look)}
       />
     </div>
@@ -169,14 +144,14 @@ export function SwatchCrop({
 /** SwatchCrop drawn once it nears the screen (`eager`: on the server too). */
 export function LazySwatchCrop({
   eager = false,
-  className,
   ...props
 }: {
   style: ThemeStyles;
+  compact?: boolean;
   className?: string;
   eager?: boolean;
 }) {
   const [ref, near] = useNearViewport<HTMLDivElement>({ initial: eager });
-  if (near) return <SwatchCrop className={className} {...props} />;
-  return <div aria-hidden className={className} ref={ref} />;
+  if (near) return <SwatchCrop {...props} />;
+  return <div aria-hidden className="absolute inset-0" ref={ref} />;
 }
