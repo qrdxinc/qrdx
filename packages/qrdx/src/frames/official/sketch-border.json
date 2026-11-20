@@ -5,13 +5,7 @@
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": [
-    "call to action",
-    "pattern",
-    "sketch",
-    "hand-drawn",
-    "border"
-  ],
+  "tags": ["call to action", "pattern", "sketch", "hand-drawn", "border"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -60,10 +54,7 @@
         "height": 1570,
         "radius": 24,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       }

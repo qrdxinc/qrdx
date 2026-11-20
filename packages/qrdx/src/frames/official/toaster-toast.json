@@ -4,16 +4,8 @@
   "description": "A toaster with a slice of toast popping up, the code on the toast.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "toaster",
-    "toast",
-    "breakfast",
-    "kitchen"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "toaster", "toast", "breakfast", "kitchen"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -43,10 +35,7 @@
         "type": "path",
         "d": "M140 1500L140 340C140 170 310 70 450 150C560 210 640 210 750 150C860 210 940 210 1050 150C1190 70 1360 170 1360 340L1360 1500Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.86
         }
       },
@@ -67,10 +56,7 @@
         "height": 40,
         "radius": 10,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.4
         }
       },
@@ -82,10 +68,7 @@
         "height": 140,
         "radius": 14,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -95,10 +78,7 @@
         "cy": 1560,
         "r": 50,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -110,10 +90,7 @@
         "height": 60,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       }

@@ -4,16 +4,8 @@
   "description": "A cassette tape: the code on its label, two reels in the window below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "cassette",
-    "tape",
-    "music",
-    "retro"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "cassette", "tape", "music", "retro"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +44,7 @@
         "height": 1040,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -75,10 +64,7 @@
         "height": 240,
         "radius": 120,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.35
         }
       },
@@ -96,10 +82,7 @@
         "r": 95,
         "hole": 62,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -147,10 +130,7 @@
         "r": 95,
         "hole": 62,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -190,10 +170,7 @@
         "cy": 1440,
         "r": 22,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -203,10 +180,7 @@
         "cy": 1440,
         "r": 22,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       }

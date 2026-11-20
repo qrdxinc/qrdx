@@ -4,16 +4,8 @@
   "description": "A floppy disk: a metal shutter on top, the code on the label below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "floppy",
-    "disk",
-    "retro",
-    "save"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "floppy", "disk", "retro", "save"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -48,10 +40,7 @@
         "height": 300,
         "radius": 16,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.4
         }
       },
@@ -63,10 +52,7 @@
         "height": 210,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },
@@ -78,10 +64,7 @@
         "height": 1200,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -99,10 +82,7 @@
         "cy": 1530,
         "r": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       }

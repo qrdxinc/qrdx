@@ -4,16 +4,8 @@
   "description": "A camera viewfinder display with brackets, a recording dot and a status bar.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "camera",
-    "viewfinder",
-    "video",
-    "record"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "camera", "viewfinder", "video", "record"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -158,10 +150,7 @@
         "width": 1500,
         "height": 200,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.4
         }
       }

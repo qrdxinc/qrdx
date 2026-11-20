@@ -4,15 +4,8 @@
   "description": "An arcade cabinet: a marquee on top, the code on the screen, a joystick below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "arcade",
-    "game",
-    "retro"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "arcade", "game", "retro"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -69,10 +62,7 @@
         "height": 160,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.35
         }
       },
@@ -84,10 +74,7 @@
         "height": 140,
         "radius": 12,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -104,10 +91,7 @@
         "cy": 1740,
         "r": 46,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -117,10 +101,7 @@
         "cy": 1740,
         "r": 46,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -130,10 +111,7 @@
         "cy": 1740,
         "r": 46,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -145,10 +123,7 @@
         "height": 36,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       }

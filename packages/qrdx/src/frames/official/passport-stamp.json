@@ -4,16 +4,8 @@
   "description": "A passport-style entry stamp with a double outline and a plane in the corner.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "passport",
-    "stamp",
-    "travel",
-    "entry"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "passport", "stamp", "travel", "entry"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",

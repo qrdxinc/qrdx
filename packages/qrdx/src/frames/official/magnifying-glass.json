@@ -4,16 +4,8 @@
   "description": "A magnifying glass: the code under the lens, a handle going down to the right.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "magnifier",
-    "lens",
-    "search",
-    "detail"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "magnifier", "lens", "search", "detail"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +44,7 @@
         "cy": 790,
         "r": 720,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.94
         }
       },

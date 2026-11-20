@@ -4,15 +4,8 @@
   "description": "A laptop seen from the front, the code on its screen.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "laptop",
-    "screen",
-    "device"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "laptop", "screen", "device"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -57,10 +50,7 @@
         "cy": 25,
         "r": 10,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -68,10 +58,7 @@
         "type": "path",
         "d": "M0 1850L40 1700L1960 1700L2000 1850Z",
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.2
         }
       },
@@ -83,10 +70,7 @@
         "height": 40,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -97,10 +81,7 @@
         "width": 2000,
         "height": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.35
         }
       }

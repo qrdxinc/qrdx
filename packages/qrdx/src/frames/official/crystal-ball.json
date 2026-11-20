@@ -4,16 +4,8 @@
   "description": "A crystal ball on a stand with the code glowing inside it.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "crystal",
-    "ball",
-    "magic",
-    "fortune"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "crystal", "ball", "magic", "fortune"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -48,10 +40,7 @@
         "cy": 760,
         "r": 680,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -92,10 +81,7 @@
         "height": 90,
         "radius": 45,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       }

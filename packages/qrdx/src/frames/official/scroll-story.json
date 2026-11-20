@@ -5,12 +5,7 @@
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": [
-    "call to action",
-    "scroll",
-    "parchment",
-    "story"
-  ],
+  "tags": ["call to action", "scroll", "parchment", "story"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -38,10 +33,7 @@
         "width": 1180,
         "height": 1600,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -52,10 +44,7 @@
         "width": 1180,
         "height": 28,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.7
         }
       },
@@ -66,10 +55,7 @@
         "width": 1180,
         "height": 28,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.7
         }
       },
@@ -90,10 +76,7 @@
         "height": 36,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.35
         }
       },
@@ -103,10 +86,7 @@
         "cy": 100,
         "r": 58,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -116,10 +96,7 @@
         "cy": 100,
         "r": 58,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -140,10 +117,7 @@
         "height": 36,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.35
         }
       },
@@ -153,10 +127,7 @@
         "cy": 1840,
         "r": 58,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -166,10 +137,7 @@
         "cy": 1840,
         "r": 58,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       }

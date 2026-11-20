@@ -4,15 +4,8 @@
   "description": "A handheld console: the code on its screen, a d-pad and buttons below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "handheld",
-    "console",
-    "game"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "handheld", "console", "game"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -51,10 +44,7 @@
         "height": 1948,
         "radius": 70,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       },
@@ -112,10 +102,7 @@
         "type": "path",
         "d": "M1024.24 1884.24L1104.24 1804.24A6 6 0 0 1 1095.76 1795.76L1015.76 1875.76A6 6 0 0 1 1024.24 1884.24Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -123,10 +110,7 @@
         "type": "path",
         "d": "M1074.24 1884.24L1154.24 1804.24A6 6 0 0 1 1145.76 1795.76L1065.76 1875.76A6 6 0 0 1 1074.24 1884.24Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -134,10 +118,7 @@
         "type": "path",
         "d": "M1124.24 1884.24L1204.24 1804.24A6 6 0 0 1 1195.76 1795.76L1115.76 1875.76A6 6 0 0 1 1124.24 1884.24Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -145,10 +126,7 @@
         "type": "path",
         "d": "M1174.24 1884.24L1254.24 1804.24A6 6 0 0 1 1245.76 1795.76L1165.76 1875.76A6 6 0 0 1 1174.24 1884.24Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -156,10 +134,7 @@
         "type": "path",
         "d": "M1224.24 1884.24L1304.24 1804.24A6 6 0 0 1 1295.76 1795.76L1215.76 1875.76A6 6 0 0 1 1224.24 1884.24Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       }

@@ -4,16 +4,8 @@
   "description": "A snow globe: the code in the glass with snow falling, the label on the base.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "snow",
-    "globe",
-    "winter",
-    "gift"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "snow", "globe", "winter", "gift"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -47,10 +39,7 @@
         "cy": 790,
         "r": 730,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.94
         }
       },
@@ -148,10 +137,7 @@
         "height": 120,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.35
         }
       },

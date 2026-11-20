@@ -4,15 +4,8 @@
   "description": "A hot-air balloon: the code on the envelope, the label on the basket.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "balloon",
-    "sky",
-    "travel"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "balloon", "sky", "travel"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -48,10 +41,7 @@
         "rx": 407,
         "ry": 780,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.25
         }
       },
@@ -67,10 +57,7 @@
         "type": "path",
         "d": "M560 1520L1040 1520L950 1670L650 1670Z",
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.35
         }
       },
@@ -78,10 +65,7 @@
         "type": "path",
         "d": "M646.4 1664L496.4 1754A7 7 0 0 1 503.6 1766L653.6 1676A7 7 0 0 1 646.4 1664Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -89,10 +73,7 @@
         "type": "path",
         "d": "M946.4 1676L1096.4 1766A7 7 0 0 1 1103.6 1754L953.6 1664A7 7 0 0 1 946.4 1676Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -104,10 +85,7 @@
         "height": 220,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },

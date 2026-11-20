@@ -4,16 +4,8 @@
   "description": "A roll-up banner stand: the code on the banner, a cassette and a foot at its base.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "banner",
-    "stand",
-    "event",
-    "expo"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "banner", "stand", "event", "expo"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +34,7 @@
         "height": 50,
         "radius": 16,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -65,10 +54,7 @@
         "height": 120,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -80,10 +66,7 @@
         "height": 90,
         "radius": 45,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -95,10 +78,7 @@
         "height": 24,
         "radius": 12,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       }

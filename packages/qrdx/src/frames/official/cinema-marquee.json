@@ -4,16 +4,8 @@
   "description": "A cinema marquee: bulbs all round the board, a header band for the note.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "cinema",
-    "marquee",
-    "lights",
-    "movie"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "cinema", "marquee", "lights", "movie"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -51,10 +43,7 @@
         "height": 1580,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.94
         }
       },
@@ -64,10 +53,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -77,10 +63,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -90,10 +73,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -103,10 +83,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -116,10 +93,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -129,10 +103,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -142,10 +113,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -155,10 +123,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -168,10 +133,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -181,10 +143,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -194,10 +153,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -207,10 +163,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -220,10 +173,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -233,10 +183,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -246,10 +193,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -259,10 +203,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -272,10 +213,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -285,10 +223,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -298,10 +233,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -311,10 +243,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -324,10 +253,7 @@
         "cy": 55,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -337,10 +263,7 @@
         "cy": 1745,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -350,10 +273,7 @@
         "cy": 195.83,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -363,10 +283,7 @@
         "cy": 195.83,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -376,10 +293,7 @@
         "cy": 336.67,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -389,10 +303,7 @@
         "cy": 336.67,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -402,10 +313,7 @@
         "cy": 477.5,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -415,10 +323,7 @@
         "cy": 477.5,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -428,10 +333,7 @@
         "cy": 618.33,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -441,10 +343,7 @@
         "cy": 618.33,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -454,10 +353,7 @@
         "cy": 759.17,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -467,10 +363,7 @@
         "cy": 759.17,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -480,10 +373,7 @@
         "cy": 900,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -493,10 +383,7 @@
         "cy": 900,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -506,10 +393,7 @@
         "cy": 1040.83,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -519,10 +403,7 @@
         "cy": 1040.83,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -532,10 +413,7 @@
         "cy": 1181.67,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -545,10 +423,7 @@
         "cy": 1181.67,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -558,10 +433,7 @@
         "cy": 1322.5,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -571,10 +443,7 @@
         "cy": 1322.5,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -584,10 +453,7 @@
         "cy": 1463.33,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -597,10 +463,7 @@
         "cy": 1463.33,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -610,10 +473,7 @@
         "cy": 1604.17,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -623,10 +483,7 @@
         "cy": 1604.17,
         "r": 26,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },

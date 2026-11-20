@@ -4,16 +4,8 @@
   "description": "A flying saucer with its beam on the code, the label on the ground.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "ufo",
-    "saucer",
-    "space",
-    "alien"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "ufo", "saucer", "space", "alien"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -39,10 +31,7 @@
         "type": "path",
         "d": "M350 300L1250 300L1550 1500L50 1500Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.9
         }
       },
@@ -53,10 +42,7 @@
         "rx": 260,
         "ry": 150,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -75,10 +61,7 @@
         "rx": 400,
         "ry": 60,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },

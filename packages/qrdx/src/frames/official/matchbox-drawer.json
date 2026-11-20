@@ -4,15 +4,8 @@
   "description": "A matchbox with its drawer slid out, the code on the sleeve.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "matchbox",
-    "matches",
-    "fire"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "matchbox", "matches", "fire"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +35,7 @@
         "height": 1180,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       },
@@ -73,10 +63,7 @@
         "height": 34,
         "radius": 17,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -95,10 +82,7 @@
         "height": 34,
         "radius": 17,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -117,10 +101,7 @@
         "height": 34,
         "radius": 17,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -147,10 +128,7 @@
         "width": 1480,
         "height": 70,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },

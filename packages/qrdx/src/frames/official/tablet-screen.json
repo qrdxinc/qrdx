@@ -4,15 +4,8 @@
   "description": "A tablet standing upright, the code on its screen.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "tablet",
-    "screen",
-    "device"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "tablet", "screen", "device"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -41,10 +34,7 @@
         "height": 160,
         "radius": 7,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.2
         }
       },
@@ -56,10 +46,7 @@
         "height": 160,
         "radius": 7,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.2
         }
       },
@@ -87,10 +74,7 @@
         "cy": 34,
         "r": 12,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       }

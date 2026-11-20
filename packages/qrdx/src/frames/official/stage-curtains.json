@@ -4,16 +4,8 @@
   "description": "A stage with curtains drawn back, the code on the backdrop, the label on the boards.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "stage",
-    "theatre",
-    "curtains",
-    "show"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "stage", "theatre", "curtains", "show"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +34,7 @@
         "width": 1200,
         "height": 1400,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -56,10 +45,7 @@
         "width": 1800,
         "height": 200,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -87,10 +73,7 @@
         "height": 1480,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },
@@ -102,10 +85,7 @@
         "height": 1480,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },
@@ -117,10 +97,7 @@
         "height": 1480,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },
@@ -149,10 +126,7 @@
         "height": 1480,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },
@@ -164,10 +138,7 @@
         "height": 1480,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },
@@ -179,10 +150,7 @@
         "height": 1480,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },

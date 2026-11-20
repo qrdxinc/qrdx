@@ -4,17 +4,8 @@
   "description": "A map pin: the code in its round head, the point below.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "location",
-    "url"
-  ],
-  "tags": [
-    "object",
-    "map",
-    "pin",
-    "location",
-    "directions"
-  ],
+  "contentTypes": ["location", "url"],
+  "tags": ["object", "map", "pin", "location", "directions"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -53,10 +44,7 @@
         "cy": 870,
         "r": 806,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.9
         }
       },
@@ -64,10 +52,7 @@
         "type": "path",
         "d": "M850 1870L1327.08 1519.64L372.92 1519.64Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.9
         }
       }

@@ -4,17 +4,8 @@
   "description": "A map pin: the code in its round head, the point below.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "location",
-    "url"
-  ],
-  "tags": [
-    "object",
-    "map",
-    "pin",
-    "location",
-    "directions"
-  ],
+  "contentTypes": ["location", "url"],
+  "tags": ["object", "map", "pin", "location", "directions"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",

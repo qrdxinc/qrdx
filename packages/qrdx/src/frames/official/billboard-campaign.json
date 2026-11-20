@@ -4,15 +4,8 @@
   "description": "A billboard on two posts with a row of lights along its top.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "billboard",
-    "sign",
-    "outdoor"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "billboard", "sign", "outdoor"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -40,10 +33,7 @@
         "width": 70,
         "height": 360,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -54,10 +44,7 @@
         "width": 70,
         "height": 360,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -78,10 +65,7 @@
         "height": 24,
         "radius": 12,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -91,10 +75,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -111,10 +92,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -131,10 +109,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -151,10 +126,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -171,10 +143,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -191,10 +160,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -211,10 +177,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -231,10 +194,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },
@@ -251,10 +211,7 @@
         "cy": 32,
         "r": 42,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.6
         }
       },

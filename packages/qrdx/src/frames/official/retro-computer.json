@@ -4,16 +4,8 @@
   "description": "A boxy old computer: the code on its screen, a keyboard in front.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "computer",
-    "retro",
-    "screen",
-    "tech"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "computer", "retro", "screen", "tech"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +44,7 @@
         "height": 1440,
         "radius": 36,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       },
@@ -76,10 +65,7 @@
         "height": 1080,
         "radius": 44,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.95
         }
       },
@@ -91,10 +77,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -112,10 +95,7 @@
         "width": 700,
         "height": 90,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -136,10 +116,7 @@
         "height": 220,
         "radius": 28,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       },
@@ -151,10 +128,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -166,10 +140,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -181,10 +152,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -196,10 +164,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -211,10 +176,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -226,10 +188,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -241,10 +200,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -256,10 +212,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -271,10 +224,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -286,10 +236,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -301,10 +248,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -316,10 +260,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -331,10 +272,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -346,10 +284,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -361,10 +296,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -376,10 +308,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -391,10 +320,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -406,10 +332,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -421,10 +344,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -436,10 +356,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -451,10 +368,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -466,10 +380,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -481,10 +392,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -496,10 +404,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -511,10 +416,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -526,10 +428,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -541,10 +440,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -556,10 +452,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -571,10 +464,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -586,10 +476,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -601,10 +488,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -616,10 +500,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -631,10 +512,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -646,10 +524,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -661,10 +536,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -676,10 +548,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -691,10 +560,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -706,10 +572,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -721,10 +584,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -736,10 +596,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -751,10 +608,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -766,10 +620,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       }

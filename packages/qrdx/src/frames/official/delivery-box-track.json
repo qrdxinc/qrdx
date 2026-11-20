@@ -4,16 +4,8 @@
   "description": "A delivery box with a tape strip and a shipping label holding the code.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "box",
-    "parcel",
-    "delivery",
-    "shipping"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "box", "parcel", "delivery", "shipping"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +34,7 @@
         "height": 1860,
         "radius": 24,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -53,10 +42,7 @@
         "type": "path",
         "d": "M0 120L750 120L690 0L60 0Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },
@@ -64,10 +50,7 @@
         "type": "path",
         "d": "M750 120L1500 120L1440 0L810 0Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.3
         }
       },

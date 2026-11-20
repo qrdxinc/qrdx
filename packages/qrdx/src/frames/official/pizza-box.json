@@ -4,16 +4,8 @@
   "description": "An open pizza box: the note on the lid, the code and label in the base.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "pizza",
-    "box",
-    "food",
-    "delivery"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "pizza", "box", "food", "delivery"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -43,10 +35,7 @@
         "type": "path",
         "d": "M170 40L1330 40L1450 480L50 480Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       },
@@ -57,10 +46,7 @@
         "width": 1500,
         "height": 60,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.35
         }
       },
@@ -81,10 +67,7 @@
         "height": 1390,
         "radius": 12,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       }

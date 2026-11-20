@@ -4,15 +4,8 @@
   "description": "A bottle with a cap and shoulders, the code on its label.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "bottle",
-    "label",
-    "drink"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "bottle", "label", "drink"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -47,10 +40,7 @@
         "height": 120,
         "radius": 36,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -62,10 +52,7 @@
         "height": 22,
         "radius": 11,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -77,10 +64,7 @@
         "height": 1318,
         "radius": 28,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.9
         }
       },

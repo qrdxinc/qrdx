@@ -4,15 +4,8 @@
   "description": "A rocket with a square window on its side, the code in the window.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "rocket",
-    "space",
-    "launch"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "rocket", "space", "launch"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +45,7 @@
         "height": 120,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.4
         }
       },
@@ -81,10 +71,7 @@
         "height": 1280,
         "radius": 120,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },

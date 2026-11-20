@@ -163,7 +163,9 @@ export function writeModules({ check = false } = {}) {
   const batches = {};
   for (const entry of ENTRIES) {
     if (!entry.batch) continue;
-    (batches[entry.batch] ??= []).push(entry.id);
+    const list = batches[entry.batch] ?? [];
+    list.push(entry.id);
+    batches[entry.batch] = list;
   }
   out.set(
     "catalogue/batches.ts",

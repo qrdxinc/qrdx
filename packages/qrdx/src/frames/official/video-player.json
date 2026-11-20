@@ -4,15 +4,8 @@
   "description": "A video player: the code is the video, with a play button and a progress bar.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "video",
-    "player",
-    "watch"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "video", "player", "watch"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -51,10 +44,7 @@
         "height": 14,
         "radius": 7,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },

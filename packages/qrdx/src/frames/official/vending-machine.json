@@ -4,15 +4,8 @@
   "description": "A vending machine: the code in its glass front, a keypad beside it, a flap below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "vending",
-    "machine",
-    "snack"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "vending", "machine", "snack"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -51,10 +44,7 @@
         "height": 1260,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -66,10 +56,7 @@
         "height": 1260,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -99,10 +86,7 @@
         "height": 150,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.35
         }
       },
@@ -114,10 +98,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -129,10 +110,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -144,10 +122,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -159,10 +134,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -174,10 +146,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -189,10 +158,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -204,10 +170,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -219,10 +182,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -234,10 +194,7 @@
         "height": 40,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       }

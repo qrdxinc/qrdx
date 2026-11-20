@@ -4,16 +4,8 @@
   "description": "A museum plaque: a metal plate with screws in its corners and a double rule.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "museum",
-    "plaque",
-    "exhibit",
-    "gallery"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "museum", "plaque", "exhibit", "gallery"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -51,10 +43,7 @@
         "height": 1570,
         "radius": 24,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.1
         }
       },
@@ -80,10 +69,7 @@
         "cy": 48,
         "r": 22,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -101,10 +87,7 @@
         "cy": 48,
         "r": 22,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -122,10 +105,7 @@
         "cy": 1562,
         "r": 22,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -143,10 +123,7 @@
         "cy": 1562,
         "r": 22,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },

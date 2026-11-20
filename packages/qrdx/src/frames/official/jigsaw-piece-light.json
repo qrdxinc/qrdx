@@ -4,15 +4,8 @@
   "description": "A jigsaw piece with knobs out on the top and right and sockets in on the left and bottom.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "jigsaw",
-    "puzzle",
-    "piece"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "jigsaw", "puzzle", "piece"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +35,7 @@
         "type": "path",
         "d": "M220 220L1560 220A40 40 0 0 1 1600 260L1600 1800A40 40 0 0 1 1560 1840L220 1840A40 40 0 0 1 180 1800L180 260A40 40 0 0 1 220 220ZM780 220A110 110 0 1 1 1000 220A110 110 0 1 1 780 220ZM1490 1030A110 110 0 1 1 1710 1030A110 110 0 1 1 1490 1030ZM20 1030A160 160 0 1 0 340 1030A160 160 0 1 0 20 1030ZM730 1840A160 160 0 1 0 1050 1840A160 160 0 1 0 730 1840Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.9
         }
       }

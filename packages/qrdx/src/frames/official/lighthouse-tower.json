@@ -4,16 +4,8 @@
   "description": "A lighthouse: a lamp room on top, bands down the tower, the code on the tower.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "lighthouse",
-    "sea",
-    "guide",
-    "coast"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "lighthouse", "sea", "guide", "coast"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -37,49 +29,17 @@
     "shapes": [
       {
         "type": "polygon",
-        "points": [
-          [
-            400,
-            120
-          ],
-          [
-            0,
-            0
-          ],
-          [
-            0,
-            260
-          ]
-        ],
+        "points": [[400, 120], [0, 0], [0, 260]],
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       },
       {
         "type": "polygon",
-        "points": [
-          [
-            1100,
-            120
-          ],
-          [
-            1500,
-            0
-          ],
-          [
-            1500,
-            260
-          ]
-        ],
+        "points": [[1100, 120], [1500, 0], [1500, 260]],
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.85
         }
       },
@@ -91,10 +51,7 @@
         "height": 240,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -125,68 +82,22 @@
       },
       {
         "type": "polygon",
-        "points": [
-          [
-            250,
-            300
-          ],
-          [
-            1250,
-            300
-          ],
-          [
-            1351.33,
-            1820
-          ],
-          [
-            148.67,
-            1820
-          ]
-        ],
+        "points": [[250, 300], [1250, 300], [1351.33, 1820], [148.67, 1820]],
         "fill": "frame"
       },
       {
         "type": "polygon",
         "points": [
-          [
-            232.67,
-            560
-          ],
-          [
-            1267.33,
-            560
-          ],
-          [
-            1276.67,
-            700
-          ],
-          [
-            223.33,
-            700
-          ]
+          [232.67, 560],
+          [1267.33, 560],
+          [1276.67, 700],
+          [223.33, 700]
         ],
         "fill": "accent"
       },
       {
         "type": "polygon",
-        "points": [
-          [
-            162,
-            1620
-          ],
-          [
-            1338,
-            1620
-          ],
-          [
-            1347.33,
-            1760
-          ],
-          [
-            152.67,
-            1760
-          ]
-        ],
+        "points": [[162, 1620], [1338, 1620], [1347.33, 1760], [152.67, 1760]],
         "fill": "accent"
       },
       {
@@ -197,10 +108,7 @@
         "height": 140,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       }

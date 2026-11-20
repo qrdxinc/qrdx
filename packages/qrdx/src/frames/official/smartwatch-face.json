@@ -4,16 +4,8 @@
   "description": "A smartwatch: the code on its square face, straps above and below.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "watch",
-    "smartwatch",
-    "wearable",
-    "device"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "watch", "smartwatch", "wearable", "device"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +34,7 @@
         "height": 260,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -57,10 +46,7 @@
         "height": 190,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -72,10 +58,7 @@
         "height": 160,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -103,10 +86,7 @@
         "cy": 1860,
         "r": 16,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -116,10 +96,7 @@
         "cy": 1910,
         "r": 16,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       }

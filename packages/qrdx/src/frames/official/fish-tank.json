@@ -4,16 +4,8 @@
   "description": "A fish tank: the code in the water, a plant and bubbles beside it, gravel below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "fish",
-    "tank",
-    "aquarium",
-    "water"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "fish", "tank", "aquarium", "water"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -51,10 +43,7 @@
         "width": 1620,
         "height": 1560,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -65,10 +54,7 @@
         "width": 1620,
         "height": 60,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -85,10 +71,7 @@
         "cy": 1622,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -98,10 +81,7 @@
         "cy": 1634,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -118,10 +98,7 @@
         "cy": 1622,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -131,10 +108,7 @@
         "cy": 1634,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -151,10 +125,7 @@
         "cy": 1622,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -164,10 +135,7 @@
         "cy": 1634,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -184,10 +152,7 @@
         "cy": 1622,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -197,10 +162,7 @@
         "cy": 1634,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -217,10 +179,7 @@
         "cy": 1622,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -230,10 +189,7 @@
         "cy": 1634,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },

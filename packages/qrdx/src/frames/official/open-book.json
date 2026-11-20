@@ -4,15 +4,8 @@
   "description": "An open book: the code on the right page, the words on the left.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "book",
-    "reading",
-    "library"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "book", "reading", "library"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -47,10 +40,7 @@
         "type": "path",
         "d": "M1000 70L40 50L32 1330Q550 1280 1000 1310Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.94
         }
       },
@@ -58,10 +48,7 @@
         "type": "path",
         "d": "M1000 70L1960 50L1968 1330Q1450 1280 1000 1310Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.94
         }
       },
@@ -72,10 +59,7 @@
         "width": 44,
         "height": 1240,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.7
         }
       },
@@ -92,10 +76,7 @@
         "height": 18,
         "radius": 9,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -107,10 +88,7 @@
         "height": 18,
         "radius": 9,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -122,10 +100,7 @@
         "height": 18,
         "radius": 9,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       }

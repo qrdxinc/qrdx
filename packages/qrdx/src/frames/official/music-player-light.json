@@ -4,16 +4,8 @@
   "description": "A music player: the code as the album art, a track bar and play controls.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "music",
-    "player",
-    "listen",
-    "playlist"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "music", "player", "listen", "playlist"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +44,7 @@
         "height": 1778,
         "radius": 44,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -67,10 +56,7 @@
         "height": 12,
         "radius": 6,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -101,10 +87,7 @@
         "type": "path",
         "d": "M628 1700L628 1780L694 1740Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },

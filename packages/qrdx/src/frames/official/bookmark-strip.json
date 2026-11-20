@@ -4,15 +4,8 @@
   "description": "A bookmark: a tall strip with a punched hole on top and a notch at the foot.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "bookmark",
-    "book",
-    "reading"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "bookmark", "book", "reading"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +45,7 @@
         "r": 46,
         "hole": 32,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       }

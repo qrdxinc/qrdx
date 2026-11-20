@@ -4,16 +4,8 @@
   "description": "A train carriage: the code in the big window, wheels on the rail.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "train",
-    "rail",
-    "travel",
-    "window"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "train", "rail", "travel", "window"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -52,10 +44,7 @@
         "height": 960,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -67,10 +56,7 @@
         "height": 960,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -98,10 +84,7 @@
         "width": 2000,
         "height": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -118,10 +101,7 @@
         "cy": 1470,
         "r": 60,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -138,10 +118,7 @@
         "cy": 1470,
         "r": 60,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -158,10 +135,7 @@
         "cy": 1470,
         "r": 60,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       },
@@ -178,10 +152,7 @@
         "cy": 1470,
         "r": 60,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.55
         }
       }

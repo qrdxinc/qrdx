@@ -4,15 +4,8 @@
   "description": "A round tag with an eyelet and a loop of string, the label under the code.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "tag",
-    "round",
-    "label"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "tag", "round", "label"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -37,10 +30,7 @@
         "type": "path",
         "d": "M905.21 163.93L873.66 136.83L853.08 113.03L841.99 92.52L838.83 75.48L841.92 61.23L850.54 48.57L864.5 37.29L883.1 27.75L905.3 20.21L929.99 14.81L956.08 11.57L982.5 10.5L1008.16 11.56L1031.98 14.69L1052.83 19.8L1069.53 26.67L1080.91 34.74L1086.45 43.09L1086.9 52.34L1080.98 64.91L1066.19 80.84L1041.2 99.36L1005.06 120.02L956.6 142.76A8 8 0 0 1 963.4 157.24L1012.37 134.26L1049.84 112.82L1076.7 92.91L1094.02 74.17L1102.5 55.88L1101.67 38.16L1092.29 23.5L1077.14 12.59L1057.72 4.57L1034.89 -1.04L1009.52 -4.38L982.5 -5.5L954.78 -4.37L927.3 -0.97L901.03 4.79L876.9 13L855.84 23.84L838.83 37.68L827.22 54.93L822.83 75.45L827 98.11L840.04 122.3L862.46 148.26L894.79 176.07A8 8 0 0 1 905.21 163.93Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -65,10 +55,7 @@
         "r": 56,
         "hole": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       }

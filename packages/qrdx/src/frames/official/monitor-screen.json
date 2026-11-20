@@ -4,15 +4,8 @@
   "description": "A desktop monitor on a stand, the code on its screen.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "monitor",
-    "screen",
-    "desktop"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "monitor", "screen", "desktop"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -57,10 +50,7 @@
         "cy": 1723,
         "r": 16,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -71,10 +61,7 @@
         "width": 140,
         "height": 130,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.25
         }
       },
@@ -86,10 +73,7 @@
         "height": 80,
         "radius": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.25
         }
       }

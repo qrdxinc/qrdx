@@ -5,13 +5,7 @@
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": [
-    "call to action",
-    "3d",
-    "raised",
-    "shadow",
-    "border"
-  ],
+  "tags": ["call to action", "3d", "raised", "shadow", "border"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -40,10 +34,7 @@
         "height": 1560,
         "radius": 36,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.45
         }
       },
@@ -64,10 +55,7 @@
         "height": 1500,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       }

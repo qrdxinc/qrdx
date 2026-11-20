@@ -4,16 +4,8 @@
   "description": "A film clapperboard with a striped hinged bar open over the board.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "film",
-    "clapperboard",
-    "video",
-    "cinema"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "film", "clapperboard", "video", "cinema"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -94,10 +86,7 @@
         "cy": 430,
         "r": 40,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },

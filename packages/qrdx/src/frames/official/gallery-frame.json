@@ -4,16 +4,8 @@
   "description": "A gallery frame with a mount around the code, hung from a nail.",
   "category": "use-case",
   "collection": "objects",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "object",
-    "picture",
-    "frame",
-    "art",
-    "gallery"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["object", "picture", "frame", "art", "gallery"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -38,10 +30,7 @@
         "type": "path",
         "d": "M301.82 176.76L820 37L1338.18 176.76A7 7 0 0 1 1341.82 163.24L820 23L298.18 163.24A7 7 0 0 1 301.82 176.76Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -51,10 +40,7 @@
         "cy": 26,
         "r": 24,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -74,10 +60,7 @@
         "width": 1532,
         "height": 1752,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -88,10 +71,7 @@
         "width": 1460,
         "height": 1680,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.94
         }
       },
@@ -101,10 +81,7 @@
         "cy": 165,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -121,10 +98,7 @@
         "cy": 165,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -141,10 +115,7 @@
         "cy": 1935,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },
@@ -161,10 +132,7 @@
         "cy": 1935,
         "r": 34,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.4
         }
       },

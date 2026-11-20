@@ -5,12 +5,7 @@
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": [
-    "call to action",
-    "ribbon",
-    "banner",
-    "top"
-  ],
+  "tags": ["call to action", "ribbon", "banner", "top"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -49,10 +44,7 @@
         "height": 1690,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -65,10 +57,7 @@
         "type": "path",
         "d": "M100 310L180 340L180 310Z",
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.5
         }
       },
@@ -81,10 +70,7 @@
         "type": "path",
         "d": "M1300 310L1220 340L1220 310Z",
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.5
         }
       },

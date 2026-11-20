@@ -4,16 +4,8 @@
   "description": "A gable-top milk carton, the code on its front.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "milk",
-    "carton",
-    "dairy",
-    "grocery"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "milk", "carton", "dairy", "grocery"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -53,10 +45,7 @@
         "type": "path",
         "d": "M60 400L1340 400L700 120Z",
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.75
         }
       },
@@ -77,10 +66,7 @@
         "height": 1500,
         "radius": 12,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },

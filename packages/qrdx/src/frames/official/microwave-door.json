@@ -4,15 +4,8 @@
   "description": "A microwave: the code behind its door window, a dial and buttons at the side.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "microwave",
-    "kitchen",
-    "appliance"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "microwave", "kitchen", "appliance"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -41,10 +34,7 @@
         "height": 70,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -56,10 +46,7 @@
         "height": 70,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -80,10 +67,7 @@
         "height": 1100,
         "radius": 30,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.92
         }
       },
@@ -111,10 +95,7 @@
         "height": 50,
         "radius": 25,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -124,10 +105,7 @@
         "cy": 400,
         "r": 120,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -146,10 +124,7 @@
         "height": 60,
         "radius": 8,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       },
@@ -161,10 +136,7 @@
         "height": 90,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -176,10 +148,7 @@
         "height": 90,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -191,10 +160,7 @@
         "height": 90,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -206,10 +172,7 @@
         "height": 90,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -221,10 +184,7 @@
         "height": 90,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       },
@@ -236,10 +196,7 @@
         "height": 90,
         "radius": 18,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.45
         }
       }

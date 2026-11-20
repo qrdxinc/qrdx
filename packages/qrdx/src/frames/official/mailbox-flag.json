@@ -4,16 +4,8 @@
   "description": "A curbside mailbox on a post with its flag up, the code on its side.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": [
-    "url"
-  ],
-  "tags": [
-    "playful",
-    "mailbox",
-    "post",
-    "mail",
-    "newsletter"
-  ],
+  "contentTypes": ["url"],
+  "tags": ["playful", "mailbox", "post", "mail", "newsletter"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -42,10 +34,7 @@
         "width": 200,
         "height": 300,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -57,10 +46,7 @@
         "height": 70,
         "radius": 20,
         "fill": {
-          "mix": [
-            "frame",
-            "#000000"
-          ],
+          "mix": ["frame", "#000000"],
           "amount": 0.3
         }
       },
@@ -93,10 +79,7 @@
         "cy": 1200,
         "r": 36,
         "fill": {
-          "mix": [
-            "frame",
-            "background"
-          ],
+          "mix": ["frame", "background"],
           "amount": 0.5
         }
       }
