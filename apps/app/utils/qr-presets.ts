@@ -1192,7 +1192,7 @@ const looks: Record<string, ThemePreset> = {
   },
   chainmail: {
     label: "Chainmail",
-    category: "industry",
+    category: "elegant",
     tags: ["chain", "steel", "net", "link"],
     styles: {
       bgColor: "#F2F4F6",
@@ -1208,7 +1208,7 @@ const looks: Record<string, ThemePreset> = {
   },
   postage: {
     label: "Postage",
-    category: "industry",
+    category: "brand",
     tags: ["stamp", "red", "mail", "post"],
     styles: {
       bgColor: "#FBF3EC",
@@ -1220,6 +1220,7 @@ const looks: Record<string, ThemePreset> = {
       cornerEyeDotPattern: "square",
       level: "Q",
       margin: 4,
+      frame: { style: "banner-bottom", text: "Scan to track" },
     },
   },
   // ── Gradient ───────────────────────────────────────────────

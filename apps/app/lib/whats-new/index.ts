@@ -10,8 +10,10 @@ export interface NewBatch {
 export function isNewIn(
   batches: readonly NewBatch[],
   id: string,
-  now: Date = new Date()
+  now: Date = new Date(),
 ): boolean {
   const today = now.toISOString().slice(0, 10);
-  return batches.some((batch) => today <= batch.until && batch.ids.includes(id));
+  return batches.some(
+    (batch) => today <= batch.until && batch.ids.includes(id),
+  );
 }
