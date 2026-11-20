@@ -7,7 +7,7 @@ import { TAB_OF } from "./community-views";
 
 /**
  * A gallery's loading placeholder, for the type in the URL (a loading.tsx
- * gets no params; the themes gallery's cards are shaped differently).
+ * gets no params).
  */
 export function GalleryLoading() {
   const segment = useParams<{ type: string }>().type;

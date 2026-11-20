@@ -1,7 +1,8 @@
 // A community gallery's infinite scroll (app/(app)/(home)/community): the
 // server draws page 1, and loadCommunityGalleryPage returns each page after
 // it with the same filters, against in-memory tables (tests/support/
-// fake-db) where the frames gallery is the engine's official library.
+// fake-db) where the frames gallery is the engine's official library and
+// the themes gallery is the themes seeded below.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock(
@@ -46,7 +47,7 @@ import {
   parseGalleryQuery,
 } from "@/app/(app)/(home)/community/[type]/gallery";
 import { loadCommunityGalleryPage } from "@/app/(app)/(home)/community/actions";
-import { cardKey } from "@/components/community/item-card";
+import { cardHref, cardKey } from "@/components/community/item-card";
 import { pageSlice } from "@/lib/paging";
 import { fakeDb } from "../support/fake-db";
 
@@ -108,7 +109,6 @@ describe("community gallery pages", () => {
     expect(await loadCommunityGalleryPage("frame", {}, 1)).toEqual(empty);
     expect(await loadCommunityGalleryPage("frame", {}, 999)).toEqual(empty);
     expect(await loadCommunityGalleryPage("frame", {}, 2.5)).toEqual(empty);
-    expect(await loadCommunityGalleryPage("theme", {}, 2)).toEqual(empty);
     expect(await loadCommunityGalleryPage("nope", {}, 2)).toEqual(empty);
     // Signed out, "mine" has nothing to page through.
     expect(
@@ -149,7 +149,17 @@ describe("gallery queries", () => {
       group: null,
       tag: "cafe",
     });
-    expect(parseGalleryQuery("theme", {})).toBeNull();
+    // Themes are a gallery like the others, with tags.
+    expect(
+      parseGalleryQuery("theme", { from: "official", tag: "warm" }),
+    ).toEqual({
+      type: "theme",
+      filter: "official",
+      sort: "popular",
+      group: null,
+      tag: "warm",
+    });
+    expect(parseGalleryQuery("themes", {})).toBeNull();
   });
 
   it("link pages with the filters kept, and name each list apart", () => {
@@ -173,8 +183,131 @@ describe("gallery queries", () => {
 
   it("draw shorter pages of page templates and kits", () => {
     expect(galleryPerPage("frame")).toBe(24);
+    expect(galleryPerPage("theme")).toBe(24);
     expect(galleryPerPage("collection")).toBe(24);
     expect(galleryPerPage("page-template")).toBe(6);
     expect(galleryPerPage("kit")).toBe(6);
+  });
+});
+
+// ─── Themes ────────────────────────────────────────────────────────────────
+
+/** 26 of @qrdx's themes and 4 of a member's, every third one tagged "warm". */
+function seedThemes() {
+  fakeDb.seed("communityProfile", [
+    {
+      id: "cp_qrdx",
+      kind: "official",
+      userId: null,
+      handle: "qrdx",
+      displayName: "QRdx",
+      avatarUrl: null,
+      verifiedAt: null,
+      status: "active",
+    },
+    {
+      id: "cp_ana",
+      kind: "person",
+      userId: "u_ana",
+      handle: "ana",
+      displayName: "Ana",
+      avatarUrl: null,
+      verifiedAt: null,
+      status: "active",
+    },
+  ]);
+  fakeDb.seed("user", [
+    { id: "u_ana", name: "Ana", banned: false, banExpires: null },
+  ]);
+  const items = Array.from({ length: 30 }, (_, index) => {
+    const official = index < 26;
+    return {
+      id: `ci_${index}`,
+      type: "theme",
+      slug: `theme-${index}`,
+      profileId: official ? "cp_qrdx" : "cp_ana",
+      createdBy: official ? null : "u_ana",
+      name: `Theme ${index}`,
+      description: null,
+      status: "published",
+      license: "CC0-1.0",
+      currentVersion: 1,
+      payload: { style: { bgColor: "#ffffff", dotColor: "#0b3d91" } },
+      payloadHash: `hash-${index}`,
+      facets: null,
+      scanScore: null,
+      isOfficial: official,
+      featuredAt: null,
+      remixedFromLabel: null,
+      sourceKind: null,
+      sourceId: null,
+      // Popular is most liked first: the oldest theme here
+      likeCount: 30 - index,
+      saveCount: 0,
+      useCount: 0,
+      remixCount: 0,
+      removedAt: null,
+      publishedAt: new Date(Date.UTC(2026, 10, 1) + index * 60_000),
+    };
+  });
+  fakeDb.seed("communityItem", items);
+  fakeDb.seed(
+    "communityItemTag",
+    items
+      .filter((_, index) => index % 3 === 0)
+      .map((item) => ({ itemId: item.id, tag: "warm" })),
+  );
+}
+
+describe("the themes gallery", () => {
+  it("lists QRdx's themes and members' alike, a page at a time", async () => {
+    seedThemes();
+    const { shown, keys, pages } = await scrollThrough("theme", {});
+    expect(shown).toHaveLength(30);
+    expect(pages).toEqual([24, 6]);
+    expect(keys).toEqual(shown.map(cardKey));
+    expect(new Set(keys).size).toBe(30);
+  });
+
+  it("links every theme to its own page, credited to who made it", async () => {
+    seedThemes();
+    const { shown } = await scrollThrough("theme", {});
+    for (const card of shown) {
+      expect(card.type).toBe("theme");
+      expect(cardHref(card)).toBe(`/community/themes/${card.slug}`);
+      expect(card.creator.official).toBe(card.isOfficial);
+    }
+    const qrdx = shown.find((card) => card.isOfficial);
+    expect(qrdx?.creator).toMatchObject({ handle: "qrdx", official: true });
+    const ana = shown.find((card) => !card.isOfficial);
+    expect(ana?.creator).toMatchObject({ handle: "ana", official: false });
+  });
+
+  it("narrows to QRdx's, the community's or a tag", async () => {
+    seedThemes();
+    const official = await scrollThrough("theme", { from: "official" });
+    expect(official.shown).toHaveLength(26);
+    expect(official.shown.every((card) => card.isOfficial)).toBe(true);
+    const community = await scrollThrough("theme", { from: "community" });
+    expect(community.shown.map((card) => card.slug)).toEqual([
+      "theme-26",
+      "theme-27",
+      "theme-28",
+      "theme-29",
+    ]);
+    const warm = await scrollThrough("theme", { tag: "warm" });
+    expect(warm.shown).toHaveLength(10);
+    expect(warm.shown.every((card) => card.tags.includes("warm"))).toBe(true);
+  });
+
+  it("sorts by likes, newest or oldest", async () => {
+    seedThemes();
+    const popular = await scrollThrough("theme", {});
+    expect(popular.shown[0]?.slug).toBe("theme-0");
+    const newest = await scrollThrough("theme", { sort: "newest" });
+    expect(newest.shown[0]?.slug).toBe("theme-29");
+    const oldest = await scrollThrough("theme", { sort: "oldest" });
+    expect(oldest.shown[0]?.slug).toBe("theme-0");
+    expect(oldest.shown.at(-1)?.slug).toBe("theme-29");
   });
 });
