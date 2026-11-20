@@ -204,7 +204,7 @@ export function buildLlmsTxt(input: LlmsTxtInput): string {
       domainPlans.length > 0 && {
         title: "QR codes on your own domain",
         url: "/custom-domain-qr-codes",
-        description: `Dynamic QR codes whose short links use a domain you own, like go.yourbrand.com/menu, connected with one DNS record and served over HTTPS. Custom domains per plan: ${domainPlans.join(", ")}`,
+        description: `Dynamic QR codes whose short links use a domain you own, like go.yourbrand.com/menu, connected with a CNAME record (an A record for a root domain, plus a TXT record when ownership has to be confirmed) and served over HTTPS. Custom domains per plan: ${domainPlans.join(", ")}`,
       },
     Boolean(input.trackingPage) &&
       historyPlan !== undefined && {
