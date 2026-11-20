@@ -2,7 +2,7 @@
 title: QR Tiger
 description: "QRdx vs QR TIGER: two dynamic QR code platforms compared on free plans, prices, scan limits, bulk tools, APIs and what happens to codes when a plan ends."
 seoTitle: "QRdx vs QR TIGER: Free Plans, Dynamic QR Codes and Pricing"
-seoDescription: "QR TIGER sells dynamic QR codes from US$7/mo with a 3-code free plan. QRdx is open source, with 10 free dynamic codes and unlimited scans. Compare both."
+seoDescription: "QR TIGER sells dynamic QR codes from US$7/mo with a 3-code free plan. QRdx is open source, with {facts.freeDynamicCodes} free dynamic codes and unlimited scans. Compare both."
 competitor: QR Tiger
 competitorUrl: https://www.qrcode-tiger.com
 tagline: "QR TIGER is a dynamic QR code platform with tracking and bulk tools. QRdx is an open-source QR platform with free static codes, dynamic codes and hosted pages."
@@ -21,7 +21,7 @@ tableRows:
     qrdx: "Unlimited"
     competitor: "Unlimited"
   - feature: Dynamic (editable) QR codes
-    qrdx: "10 free; unlimited from {facts.proMonthlyPrice}/mo"
+    qrdx: "{facts.freeDynamicCodes} free; unlimited from {facts.proMonthlyPrice}/mo"
     competitor: "3 free (500 scans each); 12–1,200 paid"
   - feature: Scan tracking
     qrdx: "Built in, unlimited scans"
@@ -43,7 +43,7 @@ tableRows:
     competitor: false
 featureHighlights:
   - title: A bigger free plan
-    description: "QRdx makes unlimited static codes with every design option for free, plus 10 dynamic codes with unlimited scans. QR TIGER's free plan also allows unlimited static codes, but only 3 dynamic codes with a 500-scan limit each."
+    description: "QRdx makes unlimited static codes with every design option for free, plus {facts.freeDynamicCodes} dynamic codes with unlimited scans. QR TIGER's free plan also allows unlimited static codes, but only 3 dynamic codes with a 500-scan limit each."
   - title: Free design, no paid tier needed
     description: "Patterns, gradients, logos, frames and SVG/PDF export are all on QRdx's free tier. QRdx Pro ({facts.proMonthlyPrice}/mo) adds unlimited dynamic codes, full analytics history and custom domains."
   - title: Daily API quotas, plus a library with none
@@ -58,7 +58,7 @@ QR TIGER and QRdx now cover much of the same ground. QR TIGER is a dynamic QR co
 
 QR TIGER fits marketing teams that print codes on packaging, posters or menus and need to change destinations and report on scans. Its plans range from Regular (from US$7, 12 dynamic codes) to Advanced (US$16 billed annually, 200 codes, bulk generation), Premium (US$37 billed yearly, 600 codes) and Professional (US$89, up to 1,200 codes).
 
-QRdx fits people who want to start free and pay little: static codes need no account, the Free plan includes 10 dynamic codes with unlimited scans, Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes dynamic codes and hosted pages unlimited, and Business ({facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr) adds unlimited team members. Developers get a REST API, an MCP server and a React library.
+QRdx fits people who want to start free and pay little: static codes need no account, the Free plan includes {facts.freeDynamicCodes} dynamic codes with unlimited scans, Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) makes dynamic codes and hosted pages unlimited, and Business ({facts.businessMonthlyPrice}/mo or {facts.businessYearlyPrice}/yr) adds unlimited team members. Developers get a REST API, an MCP server and a React library.
 
 ## Where QR TIGER is the better choice
 
@@ -68,7 +68,7 @@ QRdx fits people who want to start free and pay little: static codes need no acc
 
 - **Pricing model:** QR TIGER charges by number of dynamic codes and API requests. QRdx's static codes are free; Pro ({facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr) adds unlimited dynamic codes, full analytics history and custom domains.
 - **Scan locations:** both offer GPS scan locations and geofencing. On QRdx they're part of Pro and Business: you turn on [precise location](/docs/precise-location) per code, each scanner chooses whether to share theirs, and other scans record country, region and city from the network.
-- **Free tier:** both allow unlimited static codes. QR TIGER adds 3 dynamic codes capped at 500 scans each; QRdx adds 10 with unlimited scans.
+- **Free tier:** both allow unlimited static codes. QR TIGER adds 3 dynamic codes capped at 500 scans each; QRdx adds {facts.freeDynamicCodes} with unlimited scans.
 - **When a plan ends:** QR TIGER's pricing page says codes stop working once the plan expires. QRdx dynamic codes keep redirecting on every plan, including after a cancellation ([Never-Hostage Guarantee](/guarantee)).
 - **Bulk:** QR TIGER's Advanced plan generates up to 3,000 codes per batch. QRdx's free bulk tool makes up to {facts.bulkToolRows} static codes per file in your browser ({facts.bulkToolRowsSignedOut} without an account); on Pro, a CSV import makes up to {facts.importRows} dynamic codes per file, and the API up to {facts.apiBatchCodes} per request.
 - **Developer access:** QR TIGER's API allows 500 requests a month on Regular, 3,000 on Advanced and 10,000 on Premium. QRdx's REST API allows 1,000 requests a day on Free, 10,000 on Pro and 100,000 on Business, and the npm package runs in your own app with no quotas.
