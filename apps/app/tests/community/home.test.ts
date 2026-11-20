@@ -273,7 +273,7 @@ describe("the overview", () => {
     expect(home.top?.period).toBe("week");
     const row = homeRow("top", home);
     expect(row.title).toBe("Top this week");
-    expect(row.sub).toBe("Saved most in the last 7 days");
+    expect(row.sub).toBe("Bookmarked most in the last 7 days");
     expect(row.href).toBe("/community/all?period=week");
   });
 
@@ -303,10 +303,12 @@ describe("/community/all's query", () => {
   it("reads known values and drops the rest", () => {
     expect(parseAllQuery({})).toEqual({
       q: null,
-      sort: "saved",
+      sort: "bookmarked",
       period: "all",
       from: "all",
     });
+    // Bookmarks were once called saves: old links still rank them
+    expect(parseAllQuery({ sort: "saved" }).sort).toBe("bookmarked");
     expect(
       parseAllQuery({
         sort: "trending",
@@ -323,7 +325,7 @@ describe("/community/all's query", () => {
   it("links with the defaults left out", () => {
     const query = parseAllQuery({ sort: "trending", period: "week" });
     expect(allHref(query)).toBe("/community/all?sort=trending&period=week");
-    expect(allHref(query, { sort: "saved", period: "all" })).toBe(
+    expect(allHref(query, { sort: "bookmarked", period: "all" })).toBe(
       "/community/all",
     );
     // Newest has no period

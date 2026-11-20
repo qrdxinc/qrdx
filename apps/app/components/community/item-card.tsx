@@ -2,7 +2,6 @@
 // page preview here, so the page itself never goes to the browser.
 
 import { cn } from "@repo/design-system/lib/utils";
-import { Archive } from "iconsax-reactjs";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { CSSProperties, ReactNode } from "react";
@@ -30,6 +29,7 @@ import {
   STAGE_LABEL,
 } from "./card-layout";
 import { CardRail } from "./card-rail";
+import { CardReactions } from "./card-reactions";
 import { CreatorLine } from "./creator-line";
 import { LazyDesignQr } from "./design-qr";
 import numeral from "./rank-numeral.module.css";
@@ -37,8 +37,6 @@ import { RowSection } from "./row-section";
 import stage from "./stage.module.css";
 import { LightPhone } from "./stage-mockups";
 import { ThemeSwatch } from "./theme-swatch";
-
-const COUNT = new Intl.NumberFormat("en", { notation: "compact" });
 
 /** Where a card goes: its item page, or the type's gallery (legacy themes). */
 export const cardHref = (card: CommunityItemCard) =>
@@ -126,15 +124,29 @@ export function ItemCard({
           </div>
         </div>
       </div>
-      <div className={cn(CARD_TEXT, CARD_TEXT_REVEAL)}>
+      {/* Above the card's link, so its like and bookmark buttons can be
+          pressed (the caption's fade makes it a layer of its own, which
+          would otherwise sit under the link); the rest of it lets clicks
+          through to the link */}
+      <div
+        className={cn(
+          CARD_TEXT,
+          CARD_TEXT_REVEAL,
+          "pointer-events-none relative z-20",
+        )}
+      >
         <div className={CARD_LINE}>
           <span className="truncate text-sm font-medium">{card.name}</span>
-          {card.saveCount > 0 && (
-            <span className="text-muted-foreground flex shrink-0 items-center gap-1 text-xs tabular-nums">
-              <Archive aria-hidden className="size-4" />
-              <span className="sr-only">{t("saves")}</span>
-              {COUNT.format(card.saveCount)}
-            </span>
+          {/* Items in the database (not official frames the seed hasn't
+              stored yet, nor themes from before the backfill) can be liked
+              and bookmarked from their card */}
+          {card.id && card.slug && (
+            <CardReactions
+              bookmarkCount={card.saveCount}
+              id={card.id}
+              likeCount={card.likeCount}
+              type={card.type}
+            />
           )}
         </div>
         <div

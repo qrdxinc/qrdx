@@ -22,7 +22,7 @@ import { viewerId } from "@/lib/community/viewer";
 // after it as someone scrolls (./actions.tsx).
 
 export type GalleryType = CommunityItemType;
-export type Filter = "all" | "official" | "community" | "mine" | "saved";
+export type Filter = "all" | "official" | "community" | "mine" | "bookmarked";
 export type Sort = "popular" | "newest" | "oldest";
 
 export const FILTERS = [
@@ -30,7 +30,7 @@ export const FILTERS = [
   "official",
   "community",
   "mine",
-  "saved",
+  "bookmarked",
 ] as const satisfies readonly Filter[];
 
 export interface GalleryQuery {
@@ -83,7 +83,11 @@ export function parseGalleryQuery(
       : null;
   return {
     type: galleryType,
-    filter: FILTERS.find((option) => option === from) ?? "all",
+    // Bookmarks were once called saves: ?from=saved still lists them
+    filter:
+      FILTERS.find(
+        (option) => option === (from === "saved" ? "bookmarked" : from),
+      ) ?? "all",
     sort:
       sortParam === "newest" || sortParam === "oldest" ? sortParam : "popular",
     group,
@@ -167,7 +171,7 @@ export interface GalleryCards {
   cards: CommunityItemCard[];
   /** The cards the gallery shows, in order */
   shown: CommunityItemCard[];
-  /** The visitor, for "mine" and "saved" */
+  /** The visitor, for "mine" and "bookmarked" */
   userId: string | null;
 }
 
@@ -180,7 +184,7 @@ async function listCards(
   const official =
     filter === "official" ? true : filter === "community" ? false : undefined;
   const createdBy = filter === "mine" ? (userId ?? undefined) : undefined;
-  const savedBy = filter === "saved" ? (userId ?? undefined) : undefined;
+  const savedBy = filter === "bookmarked" ? (userId ?? undefined) : undefined;
   return type === "frame"
     ? await listFrames({ official, sort, createdBy, savedBy })
     : await listItems({ type, official, sort, createdBy, savedBy, limit: 200 });
@@ -206,7 +210,7 @@ const withOfficialPreviews = (cards: CommunityItemCard[]) =>
   });
 
 /**
- * A gallery's list for everyone (not "mine" or "saved"), cached for a
+ * A gallery's list for everyone (not "mine" or "bookmarked"), cached for a
  * minute like the overview's (lib/community/home.ts): the page and each
  * page the list loads after it read the same list, not one query each.
  */
@@ -218,7 +222,7 @@ const publicCards = unstable_cache(
 );
 
 export async function galleryCards(query: GalleryQuery): Promise<GalleryCards> {
-  const personal = query.filter === "mine" || query.filter === "saved";
+  const personal = query.filter === "mine" || query.filter === "bookmarked";
   const userId = personal ? await viewerId() : null;
   const cards = personal
     ? userId

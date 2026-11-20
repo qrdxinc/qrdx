@@ -105,7 +105,7 @@ export const HEADINGS: Record<CommunityTab, { title: string; lede: string }> = {
   },
   all: {
     title: "Everything",
-    lede: "Frames, themes, collections and page templates in one list. Rank them by saves, see what's new, or search.",
+    lede: "Frames, themes, collections and page templates in one list. Rank them by bookmarks, see what's new, or search.",
   },
   frames: { title: COPY.frame.heading, lede: COPY.frame.intro },
   themes: { title: COPY.theme.heading, lede: COPY.theme.intro },

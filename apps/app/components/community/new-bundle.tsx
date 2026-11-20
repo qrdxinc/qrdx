@@ -11,7 +11,7 @@ import { CreateBundle } from "./create-bundle";
 
 export const NEW_BUNDLE_TITLE = "Make a collection or kit";
 export const NEW_BUNDLE_INTRO =
-  "Put together items from the community: the ones you saved and the ones you published.";
+  "Put together items from the community: the ones you bookmarked and the ones you published.";
 
 export type NewBundleMode = "collection" | "kit";
 

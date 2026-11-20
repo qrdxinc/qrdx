@@ -4519,7 +4519,7 @@
         "comingUp": "Demnächst",
         "classic": "Klassisch",
         "shapedCodes": "Formcodes",
-        "saved": "Gespeichert",
+        "saved": "Gemerkt",
         "results": "Ergebnisse"
       },
       "frameShapes": {
@@ -5361,7 +5361,7 @@
       "nameIsLiveInThe": "{name} ist jetzt in der Community live.",
       "viewIt": "Ansehen",
       "whatToMake": "Was erstellen?",
-      "itemsYouSaveInThe": "Elemente, die du in der Community speicherst oder selbst veröffentlichst, erscheinen hier. <link>Community durchsuchen</link>",
+      "itemsYouSaveInThe": "Elemente, die du in der Community als Lesezeichen speicherst oder selbst veröffentlichst, erscheinen hier. <link>Community durchstöbern</link>",
       "itemsLengthPicked": "Elemente<span>{length, number} ausgewählt</span>",
       "optional": "(optional)",
       "name": "Name",
@@ -5375,7 +5375,7 @@
       "groupFramesThemesAndPage": "Fasse Rahmen, Themes und Seitenvorlagen zusammen, die andere gemeinsam durchstöbern können, zum Beispiel alles für ein Café. Wähle 2 oder mehr aus.",
       "aPageTemplateAndThe": "Eine Seitenvorlage und der passende Look dazu. Wenn du ein Kit verwendest, wird die Seite als Entwurf und der Look als gespeichertes Theme kopiert.",
       "yours": "deine",
-      "noSavedMany": "Keine gespeicherten {many}",
+      "noSavedMany": "Keine Lesezeichen für {many}",
       "none": "Keine",
       "pickOne": "Wähle eins aus",
       "publishing": "Wird veröffentlicht",
@@ -5406,26 +5406,29 @@
       "removeFromTheCommunity": "Aus der Community entfernen?",
       "itLeavesTheCommunityAt": "Es verschwindet sofort aus der Community. Wer es schon genutzt hat, behält seine Kopien: Es wurde unter CC0 geteilt.",
       "cancel": "Abbrechen",
-      "removeFromSaved": "Nicht mehr speichern",
-      "save": "Speichern",
+      "removeFromSaved": "Lesezeichen entfernen",
+      "save": "Lesezeichen",
       "unlike": "Entliken",
       "like": "Liken",
       "useKit": "Kit nutzen",
       "useTemplate": "Vorlage nutzen",
-      "saved": "Gespeichert",
+      "saved": "Gemerkt",
       "open": "Öffnen",
       "nameIsInYourPages": "„{name}“ liegt als Entwurf in deinen Seiten, das Aussehen in deinen Themes.",
       "nameIsInYourPages2": "„{name}“ liegt als Entwurf in deinen Seiten.",
-      "savedItsInTheEditors": "Gespeichert. Du findest ihn in der Rahmenauswahl des Editors.",
-      "saved2": "Gespeichert.",
-      "removedFromSaved": "Aus Gespeicherten entfernt.",
+      "savedItsInTheEditors": "Lesezeichen gesetzt. Es ist in der Rahmenauswahl des Editors.",
+      "saved2": "Lesezeichen gesetzt.",
+      "removedFromSaved": "Lesezeichen entfernt.",
       "copiedToWhereAsName": "Nach {where} kopiert als „{name}“",
       "nameIsNoLongerIn": "„{name}“ ist nicht mehr in der Community."
     },
     "itemCard": {
       "empty": "Leer",
       "viewAll": "Alle ansehen",
-      "saves": "Speicherungen",
+      "like": "Gefällt mir",
+      "unlike": "Nicht mehr",
+      "bookmark": "Lesezeichen",
+      "removeBookmark": "Lesezeichen entfernen",
       "typeFrame": "Rahmen",
       "typeTheme": "Theme",
       "typePage": "Seite",
@@ -5453,7 +5456,7 @@
       "failed": "Die nächste Seite wurde nicht geladen."
     },
     "makerCard": {
-      "itemsAndSaves": "{items, plural, one {# Element} other {# Elemente}} · {saves, plural, one {# Speicherung} other {# Speicherungen}}"
+      "itemsAndSaves": "{items, plural, one {# Element} other {# Elemente}} · {saves, plural, one {# Lesezeichen} other {# Lesezeichen}}"
     },
     "more": {
       "load": "Mehr laden",
@@ -5464,7 +5467,7 @@
       "licence": "Lizenz:"
     },
     "newBundle": {
-      "signInToMakeA": "Melde dich an, um aus gespeicherten Elementen eine Sammlung oder ein Kit zu erstellen.",
+      "signInToMakeA": "Melde dich an, um aus Elementen mit Lesezeichen eine Sammlung oder ein Kit zu erstellen.",
       "signIn": "Anmelden"
     },
     "publishDesignDialog": {
@@ -9615,7 +9618,7 @@
       "aiChat": "Der KI-Designer braucht ein kostenloses Konto. Kostenlose Konten erhalten insgesamt {count, number} Anfragen.",
       "uploadFrame": "Zum Hochladen eigener Rahmen brauchst du ein kostenloses Konto.",
       "publishFrame": "Um einen Rahmen mit der Community zu teilen, brauchst du ein kostenloses Konto.",
-      "communityAction": "Zum Liken, Speichern, Kopieren und Veröffentlichen von Community-Designs brauchst du ein kostenloses Konto.",
+      "communityAction": "Für Likes, Lesezeichen, Kopieren und Veröffentlichen von Community-Designs brauchst du ein kostenloses Konto.",
       "saveBarcode": "Gespeicherte Barcodes liegen in deinem Konto und stehen bereit, erneut heruntergeladen zu werden.",
       "bulkOverLimit": "Dateien mit bis zu {limit, number} Zeilen brauchen kein Konto. Mit einem kostenlosen Konto sind bis zu {max, number} pro Datei möglich, und deine Datei bleibt geladen.",
       "keepDesigns": "Bewahre deine Designs in deinem Konto auf, auf jedem Gerät.",
