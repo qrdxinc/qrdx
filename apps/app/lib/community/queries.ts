@@ -50,15 +50,17 @@ import { readPageTemplate } from "./page-template";
 import { framePreviewStyle } from "./payloads";
 import { publicStyleFromSaved, toPublicStyle } from "./public-style-server";
 import { SEARCH_DOCUMENT } from "./search";
+import type { SitemapItem } from "./sitemap";
 import { guardedRead } from "./store";
-import type {
-  CommunityCreator,
-  CommunityItemCard,
-  CommunityItemDetail,
-  CommunityItemType,
-  CommunityMaker,
-  CommunityProfileView,
-  RankedCard,
+import {
+  COMMUNITY_TYPES,
+  type CommunityCreator,
+  type CommunityItemCard,
+  type CommunityItemDetail,
+  type CommunityItemType,
+  type CommunityMaker,
+  type CommunityProfileView,
+  type RankedCard,
 } from "./types";
 import { authorNotBanned } from "./visibility";
 
@@ -449,6 +451,64 @@ export async function listFrames(
   const seeded = new Set(official.map((card) => card.slug));
   const missing = officialFrameCards().filter((card) => !seeded.has(card.slug));
   return [...official, ...missing, ...others];
+}
+
+// ─── Sitemap (app/(app)/(home)/community/sitemap.ts) ───────────────────────
+
+/**
+ * Every item the galleries list: visible items, less the collections and
+ * kits the lists leave out (listable). The official frames the seed hasn't
+ * stored yet are added by ./sitemap.ts.
+ */
+export async function sitemapItems(): Promise<SitemapItem[]> {
+  return guardedRead(async () => {
+    const rows = await db
+      .select({
+        id: communityItem.id,
+        type: communityItem.type,
+        slug: communityItem.slug,
+        handle: communityProfile.handle,
+        publishedAt: communityItem.publishedAt,
+        updatedAt: communityItem.updatedAt,
+      })
+      .from(communityItem)
+      .innerJoin(
+        communityProfile,
+        eq(communityProfile.id, communityItem.profileId),
+      )
+      .leftJoin(userTable, eq(userTable.id, communityProfile.userId))
+      .where(visible());
+    const grouped = (type: string) => type === "collection" || type === "kit";
+    const groupIds = rows.filter((row) => grouped(row.type)).map((r) => r.id);
+    const listed = new Set(
+      groupIds.length > 0
+        ? (
+            await toCards(
+              (await itemsQuery().where(
+                and(visible(), inArray(communityItem.id, groupIds)),
+              )) as ItemRow[],
+            )
+          ).map((card) => card.id)
+        : [],
+    );
+    return rows.flatMap((row) => {
+      const type = row.type as CommunityItemType;
+      if (!COMMUNITY_TYPES.includes(type)) return [];
+      if (grouped(type) && !listed.has(row.id)) return [];
+      const changed = Math.max(
+        row.updatedAt.getTime(),
+        row.publishedAt.getTime(),
+      );
+      return [
+        {
+          type,
+          slug: row.slug,
+          handle: row.handle,
+          lastModified: new Date(changed).toISOString(),
+        },
+      ];
+    });
+  }, []);
 }
 
 // ─── Rankings (the overview's rows and /community/top) ─────────────────────
