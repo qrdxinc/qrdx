@@ -228,7 +228,7 @@ export async function renderQrImage(
   // An ICO is scaled down from one big render: the request's size doesn't apply.
   const drawn =
     format === "ico" ? { ...options, size: ICO_MASTER_SIZE } : options;
-  return await convertPng(await renderQrPng(drawn), format);
+  return await convertPng(await renderQrPng(drawn), format, options.data);
 }
 
 /**

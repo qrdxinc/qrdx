@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-QR Image → Generate can return ICO (a favicon with 16, 32, 48 and 256 px images in one file).
+QR Image → Generate can return ICO (a favicon with 16, 32, 48 and 256 px images in one file) and GIF (at most 256 colors; a design that would stop scanning when reduced is refused).
 
 ## 0.1.2
 

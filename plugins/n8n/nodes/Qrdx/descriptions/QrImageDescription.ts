@@ -63,6 +63,12 @@ export const qrImageFields: INodeProperties[] = [
         description: "Vector PostScript for print",
       },
       {
+        name: "GIF",
+        value: "gif",
+        description:
+          "For older tools and email builders; at most 256 colors, so a design with a gradient or photo logo may be refused",
+      },
+      {
         name: "ICO",
         value: "ico",
         description:

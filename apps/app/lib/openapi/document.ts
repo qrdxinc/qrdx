@@ -567,7 +567,7 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
         summary: "Render a QR code image",
         tags: ["QR images"],
         security: [],
-        description: `A QR code image as SVG (default), PNG, WebP, BMP, ICO or EPS, with no key.
+        description: `A QR code image as SVG (default), PNG, WebP, GIF, BMP, ICO or EPS, with no key.
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Colors are hex without \`#\` (or with \`#\` encoded as \`%23\`). Limit: 300 requests a minute per IP address. More in the [Image API guide](${docs("developers/image-api")}).
 
@@ -578,6 +578,8 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
 **Caching.** Renders with \`item\` are cached for 5 minutes (10 at the CDN), since an item can change; renders with \`logoFileId\` aren't cached.
 
 **WebP** is lossless: the same pixels as the PNG in a smaller file, transparency included.
+
+**GIF** is for older tools and email builders that only take it. It holds at most 256 colors and one transparent color (a pixel under half opaque is transparent, so the soft edge of a code on a transparent background is hard-edged). A code in flat colors is written exactly. A gradient, image fill or photo logo is reduced to a palette without dithering, and if the PNG would scan and the GIF would not, the request fails with a \`VALIDATION_ERROR\` on \`format\` instead of returning a code that no longer reads: use PNG for that design.
 
 **BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel, so a transparent background comes out white.
 
@@ -609,6 +611,9 @@ function operations(c: SchemaCollector): Record<string, JsonSchema> {
               },
               "image/webp": {
                 schema: { type: "string", contentMediaType: "image/webp" },
+              },
+              "image/gif": {
+                schema: { type: "string", contentMediaType: "image/gif" },
               },
               "image/bmp": {
                 schema: { type: "string", contentMediaType: "image/bmp" },

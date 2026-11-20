@@ -1,5 +1,6 @@
 import { createRateLimiter, slidingWindow } from "@repo/rate-limit";
 import type { NextRequest } from "next/server";
+import { GIFScanError } from "qrdx";
 import { withApiUsage } from "@/lib/analytics/usage";
 import { CommunityItemError } from "@/lib/community/api";
 import { OFFICIAL_FRAME_RESOLVER } from "@/lib/community/catalog";
@@ -294,6 +295,17 @@ async function handleGET(req: NextRequest) {
         handleError(
           new ValidationError("Invalid query parameters", [
             { param: "data", message: error.message },
+          ]),
+        ),
+      );
+    }
+    if (error instanceof GIFScanError) {
+      // The design needs more colors than a GIF holds and the reduced image
+      // wouldn't scan: the request is fine, this format isn't for this code.
+      return withCors(
+        handleError(
+          new ValidationError("Invalid query parameters", [
+            { param: "format", message: error.message },
           ]),
         ),
       );

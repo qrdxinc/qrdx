@@ -111,6 +111,7 @@ export function qrImageUrl(
 const MIME_TYPES: Record<QrImageFormat, string> = {
   png: "image/png",
   webp: "image/webp",
+  gif: "image/gif",
   bmp: "image/bmp",
   ico: "image/vnd.microsoft.icon",
   svg: "image/svg+xml",
