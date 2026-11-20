@@ -764,11 +764,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "team-kit",
     name: "Team kit",
     description:
-      "Diamond modules in a dark navy with shield eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
+      "Diamond modules in a dark navy with extra-rounded eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
     tags: ["bold", "geometric", "vibrant", "high-contrast"],
     style: {
       ...ink("#FFFFFF", "#0F1F3D", "#0F1F3D", "#B91C1C"),
-      ...shapes("diamond", "shield", "square"),
+      ...shapes("diamond", "extra-rounded", "square"),
       level: "Q",
       margin: 3,
     },

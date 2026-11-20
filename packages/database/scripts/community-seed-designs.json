@@ -3625,7 +3625,7 @@
       "id": "team-kit",
       "slug": "team-kit",
       "name": "Team kit",
-      "description": "Diamond modules in a dark navy with shield eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
+      "description": "Diamond modules in a dark navy with extra-rounded eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
       "tags": ["bold", "geometric", "vibrant", "high-contrast"],
       "payload": {
         "style": {
@@ -3634,7 +3634,7 @@
           "eyeColor": "#0F1F3D",
           "dotColor": "#B91C1C",
           "bodyPattern": "diamond",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "extra-rounded",
           "cornerEyeDotPattern": "square",
           "level": "Q",
           "margin": 3
