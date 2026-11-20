@@ -1098,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "CSV로 만드는 무료 대량 QR 코드 생성기: 스타일 적용, SVG, 업로드 없음",
-      "metaDescription": "CSV 파일 하나로 스타일이 적용된 QR 코드를 최대 {rows, number}개까지 만들고, PNG, WebP 또는 SVG 형식으로 ZIP 파일에 담아 내려받으세요. 브라우저에서 실행되므로 업로드도, 워터마크도 없고 {limit, number}행까지는 가입도 필요 없어요.",
+      "metaTitle": "CSV로 만드는 무료 QR 코드 대량 생성기, 업로드 불필요",
+      "metaDescription": "CSV 파일 하나로 스타일이 적용된 QR 코드를 최대 {rows, number}개까지 만들어 PNG, WebP, SVG 형식의 ZIP으로 받으세요. 브라우저에서 바로 실행되어 업로드도, 워터마크도 없고 {limit, number}행까지는 가입도 필요 없어요.",
       "crumb": "대량 생성기",
       "title": "QR 코드 대량 생성기",
       "intro1": "CSV 파일 하나로 수천 개의 QR 코드를 한 번에 만들어 보세요. 원하는 스타일을 적용해 PNG, WebP, SVG 형식으로 ZIP에 담아 내려받을 수 있습니다. 한 행이 코드 하나이고, 파일 이름은 열에서 가져옵니다. 제품 라벨, 행사 티켓, 자산 태그, 테이블 번호, 우편물에 활용해 보세요.",
@@ -1935,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "무료 바코드 생성기: EAN-13, UPC, Code 128",
-    "metaDescription": "EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix 등 {count, number}가지 바코드 유형을 만들어 보세요. 체크 디지트는 자동으로 계산해 드려요. PNG, JPG, SVG, PDF, EPS를 지원합니다. 무료이며 가입이 필요 없어요.",
+    "metaDescription": "EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix 등 {count, number}가지 바코드 유형을 만들 수 있어요. 체크 디지트는 자동으로 계산해 드려요. PNG, JPG, SVG, PDF, EPS 지원. 무료, 가입 없이 이용하세요.",
     "crumb": "바코드 생성기",
     "title": "무료 바코드 생성기",
     "intro1": "EAN-13과 UPC-A부터 Code 128, GS1-128, ITF-14, Data Matrix까지 {count, number}가지 형식으로 소매, 배송, 재고 관리용 바코드를 만들 수 있어요. 번호를 입력하면 체크 디지트가 자동으로 계산되고, 잘못된 번호는 인쇄 전에 걸러져요.",
@@ -2116,8 +2116,8 @@
     "questions": "보장에 대해 궁금한 점이 있으신가요? <mail>{email}</mail>로 이메일을 보내 주세요. 마지막 업데이트: <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise: SSO, 감사 로그, 계약, 응답 시간",
-    "metaDescription": "대규모 팀을 위한 QRdx: 싱글 사인온, CSV 내보내기가 되는 감사 로그, 역할, 사용자 지정 도메인, 클라이언트 포털을 제공하며 연간 계약, 서면 응답 시간, 청구서 결제를 지원합니다.",
+    "metaTitle": "QRdx Enterprise: SSO, 감사 로그, 계약",
+    "metaDescription": "대규모 팀을 위한 QRdx: SSO, CSV 내보내기를 지원하는 감사 로그, 역할, 사용자 지정 도메인, 고객 포털을 제공하며, 응답 시간이 명시된 연간 계약과 청구서 결제를 지원합니다.",
     "crumb": "Enterprise",
     "title": "엔터프라이즈 팀을 위한 QRdx",
     "intro1": "여러 팀, 브랜드, 클라이언트에 걸쳐 포장, 간판, 캠페인에 QR 코드를 사용하면서 도입 전에 싱글 사인온, 감사 기록, 계약이 필요한 기업을 위한 플랜입니다.",
@@ -2267,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "QRdx 보안: 로그인, 데이터 저장, 취약점 신고",
-    "metaDescription": "QRdx가 계정과 데이터를 보호하는 방법을 안내합니다. HSTS를 적용한 HTTPS, 콘텐츠 보안 정책, 패스키와 2단계 인증, 싱글 사인온, 감사 로그, 링크 검사, 데이터 저장 위치, 취약점 신고 방법을 다룹니다.",
+    "metaTitle": "QRdx 보안: 로그인, 데이터, 취약점 신고",
+    "metaDescription": "QRdx가 계정과 데이터를 보호하는 방법을 안내해 드려요. HSTS와 CSP, 패스키, 2단계 인증, SSO, 감사 로그, 링크 검사, 데이터 저장 위치, 취약점 신고 방법을 다뤄요.",
     "crumb": "보안",
     "title": "QRdx 보안",
     "intro1": "QRdx가 회원님의 계정, 코드, 방문자 데이터를 보호하기 위해 하는 일을 소개합니다. 각 항목은 현재 qrdx.dev에서 실제로 작동하는 내용이며, 코드가 오픈 소스라서 직접 확인할 수 있습니다.",
@@ -2737,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "무료 QR 코드 API: 키 없이 SVG, PNG, 로고까지",
-    "metaDescription": "키나 가입이 필요 없는 무료 QR 코드 API예요. URL 하나로 원하는 색상, 모양, 로고를 적용한 QR 코드를 SVG, PNG, WebP, EPS로 받을 수 있어요. 분당 {perMinute, number}회 요청할 수 있고, 1년 동안 캐시돼요.",
+    "metaDescription": "키 없이 쓸 수 있는 무료 QR 코드 API예요. URL 하나로 색상, 모양, 로고를 적용한 SVG, PNG, WebP, EPS QR 코드를 받을 수 있어요. 분당 {perMinute, number}회 요청할 수 있고, 1년간 캐시돼요.",
     "crumb": "QR 코드 API",
     "title": "무료 QR 코드 API",
     "intro1": "URL을 넣을 수 있는 곳이면 어디든 QR 코드를 넣어 보세요. api.qrdx.dev로 GET 요청을 한 번 보내면 이미지가 바로 반환돼요. 계정도, API 키도, SDK도 필요 없어요. 색상, 모양, 오류 정정, 로고는 쿼리 문자열에 넣으면 돼요.",
@@ -3135,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "AI QR 코드 생성기 — 프롬프트로 QR 코드 디자인하기",
-    "metaDescription": "QRdx의 AI에게 코드가 무엇을 열어야 하는지(링크, Wi-Fi, 연락처 카드 등)와 어떤 모양이어야 하는지 알려 주세요. 스캔 점수를 확인하고, 점수가 Great가 될 때까지 디자인을 보정하며, 에디터를 바꾸기 전에 먼저 물어봐요. 무료 계정에는 AI 요청 {count, number}회가 포함되고, Pro에서는 무제한으로 이용할 수 있어요.",
+    "metaDescription": "만들고 싶은 QR 코드를 설명하면 QRdx의 AI가 디자인하고, 스캔 점수가 Great가 될 때까지 보정하며, 에디터를 바꾸기 전에는 먼저 물어봐요. 무료 계정은 AI 요청을 {count, number}회 사용할 수 있어요.",
     "artLink": "또는 링크를 스캔 가능한 AI QR 아트로 만들어 보세요",
     "chat": {
       "upgrade": "Pro로 업그레이드하고 무제한으로 요청하세요",

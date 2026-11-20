@@ -1098,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "Generatore gratuito di QR code in blocco da CSV: personalizzati, SVG, senza upload",
-      "metaDescription": "Trasforma un CSV in fino a {rows, number} QR code personalizzati e scaricali come PNG, WebP o SVG in un file ZIP. Funziona nel browser: nessun caricamento, nessuna filigrana, nessuna registrazione fino a {limit, number} righe.",
+      "metaTitle": "Generatore gratuito di QR code in blocco da CSV, senza upload",
+      "metaDescription": "Trasforma un CSV in un massimo di {rows, number} QR code personalizzati in PNG, WebP o SVG in un file ZIP. Funziona nel tuo browser: nessun upload, nessuna filigrana, nessuna registrazione fino a {limit, number} righe.",
       "crumb": "Generatore in blocco",
       "title": "Generatore di QR code in blocco",
       "intro1": "Trasforma un file CSV in migliaia di QR code in un colpo solo, con lo stile che preferisci, da scaricare come PNG, WebP o SVG in un ZIP. Una riga per ogni codice, con i nomi dei file presi da una colonna: etichette di prodotto, biglietti per eventi, targhette per asset, numeri di tavolo o mailing.",
@@ -1935,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Generatore di codici a barre gratuito: EAN-13, UPC, Code 128",
-    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e altro: {count, number} tipi di codici a barre con le cifre di controllo calcolate al posto tuo. PNG, JPG, SVG, PDF ed EPS. Gratis, senza registrazione.",
+    "metaDescription": "Crea EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix e altro: {count, number} tipi di codici a barre con le cifre di controllo calcolate al posto tuo. PNG, JPG, SVG, PDF, EPS. Gratis, senza registrazione.",
     "crumb": "Generatore di codici a barre",
     "title": "Generatore di codici a barre gratis",
     "intro1": "Crea codici a barre per vendita al dettaglio, spedizioni e inventario in {count, number} formati, da EAN-13 e UPC-A a Code 128, GS1-128, ITF-14 e Data Matrix. Scrivi il numero e la cifra di controllo viene calcolata al posto tuo; se è sbagliata, te ne accorgi prima di stampare.",
@@ -2116,8 +2116,8 @@
     "questions": "Domande sulla garanzia? Scrivi a <mail>{email}</mail>. Ultimo aggiornamento: <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise: SSO, audit log, contratti e tempi di risposta",
-    "metaDescription": "QRdx per i team più grandi: single sign-on, audit log con esportazione CSV, ruoli, domini personalizzati e portale clienti, con contratto annuale, tempi di risposta scritti e pagamento tramite fattura.",
+    "metaTitle": "QRdx Enterprise: SSO, audit log e contratti",
+    "metaDescription": "QRdx per i team più grandi: SSO, un audit log con esportazione CSV, ruoli, domini personalizzati e un portale clienti, con contratto annuale, tempi di risposta e fatture.",
     "crumb": "Enterprise",
     "title": "QRdx per i team enterprise",
     "intro1": "Per le aziende che mettono QR code su confezioni, insegne e campagne in molti team, marchi o clienti, e che prima del lancio hanno bisogno di single sign-on, di una traccia di audit e di un contratto.",
@@ -2267,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "Sicurezza su QRdx: accesso, archiviazione dei dati e segnalazione di problemi",
-    "metaDescription": "Come QRdx protegge account e dati: HTTPS con HSTS, una content security policy, passkey e verifica in due passaggi, single sign-on, un registro di audit, controlli sui link, dove sono archiviati i dati e come segnalare una vulnerabilità.",
+    "metaTitle": "Sicurezza in QRdx: accesso, dati e segnalazione di problemi",
+    "metaDescription": "Come QRdx protegge account e dati: HSTS e CSP, passkey, verifica in due passaggi, SSO, un registro di controllo, verifiche dei link, dove risiedono i dati e come segnalare una falla.",
     "crumb": "Sicurezza",
     "title": "Sicurezza su QRdx",
     "intro1": "Cosa fa QRdx per proteggere il tuo account, i tuoi codici e i dati dei tuoi visitatori. Ogni punto descrive qualcosa che oggi funziona su qrdx.dev, e il codice è open source, quindi puoi verificarlo.",
@@ -2737,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API QR code gratuita: senza chiave, SVG, PNG e loghi",
-    "metaDescription": "Un’API per QR code gratuita, senza chiave né registrazione. Un solo URL restituisce un QR code in SVG, PNG, WebP o EPS, con i tuoi colori, le tue forme e un logo. {perMinute, number} richieste al minuto, in cache per un anno.",
+    "metaDescription": "Un’API gratuita per QR code, senza chiave. Un solo URL restituisce un QR code in SVG, PNG, WebP o EPS con i tuoi colori, le tue forme e il tuo logo. {perMinute, number} richieste al minuto, in cache per un anno.",
     "crumb": "API QR code",
     "title": "API QR code gratuita",
     "intro1": "Metti un QR code ovunque possa andare un URL. Una sola richiesta GET a api.qrdx.dev restituisce direttamente l’immagine: nessun account, nessuna chiave API, nessun SDK. Colori, forme, correzione degli errori e logo vanno nella query string.",
@@ -3135,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "Generatore di QR code con AI — Progetta QR code partendo da un prompt",
-    "metaDescription": "Dì all'AI di QRdx cosa deve aprire il codice (un link, Wi-Fi, un biglietto da visita e altro) e che aspetto deve avere. Controlla il punteggio di scansione, ripara il design finché non è Ottimo e chiede prima di modificare il tuo editor. Gli account gratuiti includono {count, number} richieste AI; Pro le sblocca senza limiti.",
+    "metaDescription": "Descrivi un QR code e l’IA di QRdx lo progetta, lo corregge finché il punteggio di scansione non è Ottimo e chiede prima di modificare il tuo editor. Gli account gratuiti hanno {count, number} richieste IA.",
     "artLink": "Oppure trasforma un link in arte QR con AI da scansionare",
     "chat": {
       "upgrade": "Passa a Pro per richieste illimitate",

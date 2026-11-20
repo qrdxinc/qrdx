@@ -1098,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "Générateur de QR codes en masse gratuit à partir d’un CSV : personnalisés, SVG, sans envoi de fichier",
-      "metaDescription": "Transformez un CSV en jusqu’à {rows, number} QR codes personnalisés et téléchargez-les en PNG, WebP ou SVG dans un ZIP. Fonctionne dans votre navigateur : sans envoi de fichier, sans filigrane, sans inscription jusqu’à {limit, number} lignes.",
+      "metaTitle": "Générateur de QR codes en masse gratuit à partir d’un CSV, sans envoi de fichier",
+      "metaDescription": "Transformez un CSV en jusqu’à {rows, number} QR codes personnalisés au format PNG, WebP ou SVG dans un ZIP. Tout s’exécute dans votre navigateur : aucun envoi de fichier, aucun filigrane, aucune inscription jusqu’à {limit, number} lignes.",
       "crumb": "Générateur en masse",
       "title": "Générateur de QR code en masse",
       "intro1": "Transformez un fichier CSV en milliers de QR codes en une seule fois, personnalisés selon vos goûts et téléchargés en PNG, WebP ou SVG dans un ZIP. Une ligne par code, avec des noms de fichiers issus d’une colonne : étiquettes produits, billets d’événement, étiquettes d’inventaire, numéros de table ou courriers.",
@@ -1935,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "Générateur de codes-barres gratuit : EAN-13, UPC, Code 128",
-    "metaDescription": "Créez des codes EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix et plus encore : {count, number} types de codes-barres, avec chiffre de contrôle calculé pour vous. PNG, JPG, SVG, PDF et EPS. Gratuit, sans inscription.",
+    "metaDescription": "Créez des codes EAN-13, UPC-A, Code 128, GS1-128, ITF-14, Data Matrix et plus encore : {count, number} types de codes-barres, avec chiffres de contrôle calculés pour vous. PNG, JPG, SVG, PDF, EPS. Gratuit, sans inscription.",
     "crumb": "Générateur de codes-barres",
     "title": "Générateur de codes-barres gratuit",
     "intro1": "Créez des codes-barres pour le commerce, l'expédition et l'inventaire dans {count, number} formats, d'EAN-13 et UPC-A à Code 128, GS1-128, ITF-14 et Data Matrix. Saisissez le numéro : le chiffre de contrôle est calculé pour vous, et un chiffre erroné est détecté avant l'impression.",
@@ -2116,8 +2116,8 @@
     "questions": "Des questions sur la garantie ? Écrivez à <mail>{email}</mail>. Dernière mise à jour : <time>{date, date, long}</time>."
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise : SSO, journal d’audit, contrats et délais de réponse",
-    "metaDescription": "QRdx pour les grandes équipes : authentification unique, journal d’audit avec export CSV, rôles, domaines personnalisés et portail client, avec contrat annuel, délais de réponse écrits et paiement sur facture.",
+    "metaTitle": "QRdx Enterprise : SSO, journal d’audit et contrats",
+    "metaDescription": "QRdx pour les grandes équipes : SSO, journal d’audit avec export CSV, rôles, domaines personnalisés et portail client, avec un contrat annuel, des délais de réponse et des factures.",
     "crumb": "Enterprise",
     "title": "QRdx pour les grandes entreprises",
     "intro1": "Pour les entreprises qui placent des QR codes sur des emballages, des panneaux et des campagnes dans de nombreuses équipes, marques ou clients, et qui ont besoin d’une authentification unique, d’une piste d’audit et d’un contrat avant de les déployer.",
@@ -2267,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "Sécurité chez QRdx : connexion, stockage des données et signalement de failles",
-    "metaDescription": "Comment QRdx protège les comptes et les données : HTTPS avec HSTS, une politique de sécurité du contenu, des clés d’accès et la vérification en deux étapes, l’authentification unique, un journal d’audit, des vérifications des liens, l’emplacement de stockage des données et la marche à suivre pour signaler une vulnérabilité.",
+    "metaTitle": "Sécurité chez QRdx : connexion, données et signalement de failles",
+    "metaDescription": "Comment QRdx protège les comptes et les données : HSTS et CSP, clés d’accès, vérification en deux étapes, SSO, journal d’audit, contrôle des liens, lieu de stockage des données et signalement d’une faille.",
     "crumb": "Sécurité",
     "title": "Sécurité chez QRdx",
     "intro1": "Ce que fait QRdx pour protéger votre compte, vos codes et les données de vos visiteurs. Chaque point décrit quelque chose qui fonctionne aujourd’hui sur qrdx.dev, et le code est open source : vous pouvez donc le vérifier.",
@@ -2737,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "API de QR code gratuite : sans clé, SVG, PNG et logos",
-    "metaDescription": "Une API de QR code gratuite, sans clé ni inscription. Une seule URL renvoie un QR code en SVG, PNG, WebP ou EPS, avec vos couleurs, vos formes et un logo. {perMinute, number} requêtes par minute, mis en cache pendant un an.",
+    "metaDescription": "Une API de QR code gratuite, sans clé. Une seule URL renvoie un QR code en SVG, PNG, WebP ou EPS, avec vos couleurs, vos formes et votre logo. {perMinute, number} requêtes par minute, mises en cache pendant un an.",
     "crumb": "API de QR code",
     "title": "API de QR code gratuite",
     "intro1": "Placez un QR code partout où une URL peut aller. Une seule requête GET vers api.qrdx.dev renvoie directement l’image : sans compte, sans clé API, sans SDK. Les couleurs, les formes, la correction d’erreur et un logo se règlent dans la chaîne de requête.",
@@ -3135,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "Générateur de QR code IA : créez des QR codes à partir d'un prompt",
-    "metaDescription": "Indiquez à l'IA de QRdx ce que le code doit ouvrir (un lien, un Wi-Fi, une carte de contact, etc.) et son apparence. Elle vérifie le score de scan, répare le design jusqu'à obtenir « Excellent » et demande votre accord avant de modifier votre éditeur. Les comptes gratuits incluent {count, number} requêtes IA\r ; Pro offre un nombre illimité.",
+    "metaDescription": "Décrivez un QR code et l’IA de QRdx le conçoit, le répare jusqu’à ce que le score de scan soit « Excellent » et vous demande votre accord avant de modifier votre éditeur. Les comptes gratuits disposent de {count, number} requêtes IA.",
     "artLink": "Ou transformez un lien en art QR IA scannable",
     "chat": {
       "upgrade": "Passez à Pro pour des requêtes illimitées",

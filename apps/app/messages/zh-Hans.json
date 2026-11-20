@@ -1098,8 +1098,8 @@
       }
     },
     "bulk": {
-      "metaTitle": "免费 CSV 批量二维码生成器：自定义样式，支持 SVG，无需上传",
-      "metaDescription": "将 CSV 转换为最多 {rows, number} 个带样式的二维码，并以 ZIP 压缩包下载 PNG、WebP 或 SVG 文件。在浏览器中运行：无需上传，无水印，{limit, number} 行以内无需注册。",
+      "metaTitle": "免费 CSV 批量二维码生成器，无需上传",
+      "metaDescription": "将 CSV 转换为最多 {rows, number} 个带样式的二维码，以 PNG、WebP 或 SVG 格式打包为 ZIP。全程在浏览器中运行：无需上传，无水印，不超过 {limit, number} 行无需注册。",
       "crumb": "批量生成器",
       "title": "二维码批量生成器",
       "intro1": "一次性将 CSV 文件转换为数千个二维码，按你的想法设置样式，并以 ZIP 压缩包下载 PNG、WebP 或 SVG 文件。每行对应一个二维码，文件名取自某一列：适用于产品标签、活动门票、资产标签、桌号或邮寄信函。",
@@ -1935,7 +1935,7 @@
   },
   "barcodeGenerator": {
     "metaTitle": "免费条形码生成器：EAN-13、UPC、Code 128",
-    "metaDescription": "可生成 EAN-13、UPC-A、Code 128、GS1-128、ITF-14、Data Matrix 等 {count, number} 种条形码，校验位自动计算。支持 PNG、JPG、SVG、PDF 和 EPS。免费使用，无需注册。",
+    "metaDescription": "可生成 EAN-13、UPC-A、Code 128、GS1-128、ITF-14、Data Matrix 等 {count, number} 种条形码，校验位自动计算。支持 PNG、JPG、SVG、PDF、EPS。免费使用，无需注册。",
     "crumb": "条形码生成器",
     "title": "免费条形码生成器",
     "intro1": "支持 {count, number} 种格式，可制作零售、物流和库存条形码，从 EAN-13、UPC-A 到 Code 128、GS1-128、ITF-14 和 Data Matrix。输入号码，校验位自动计算；校验位有误，打印前就会发现。",
@@ -2116,8 +2116,8 @@
     "questions": "对这项保障有疑问？请发送邮件至 <mail>{email}</mail>。最后更新于 <time>{date, date, long}</time>。"
   },
   "enterprise": {
-    "metaTitle": "QRdx Enterprise：SSO、审计日志、合同与响应时限",
-    "metaDescription": "QRdx 面向大型团队：单点登录、支持 CSV 导出的审计日志、角色权限、自定义域名和客户门户，提供年度合同、书面响应时限和发票付款。",
+    "metaTitle": "QRdx 企业版：SSO、审计日志与合同",
+    "metaDescription": "为大型团队打造的 QRdx：SSO、支持 CSV 导出的审计日志、角色权限、自定义域名和客户门户，提供含响应时限的年度合同，并可按发票付款。",
     "crumb": "企业版",
     "title": "面向企业团队的 QRdx",
     "intro1": "适合在包装、标牌和营销活动中跨多个团队、品牌或客户使用二维码的公司，这些公司在正式推广之前需要单点登录、审计记录和合同。",
@@ -2267,8 +2267,8 @@
     }
   },
   "security": {
-    "metaTitle": "QRdx 安全：登录、数据存储与问题报告",
-    "metaDescription": "QRdx 如何保护账户和数据：启用 HSTS 的 HTTPS、内容安全策略、通行密钥和两步验证、单点登录、审计日志、链接检查、数据存储位置，以及如何报告安全漏洞。",
+    "metaTitle": "QRdx 安全：登录、数据与问题报告",
+    "metaDescription": "了解 QRdx 如何保护账户与数据：HSTS 和 CSP、通行密钥、两步验证、SSO、审计日志、链接检查、数据存放位置，以及如何报告漏洞。",
     "crumb": "安全",
     "title": "QRdx 安全",
     "intro1": "QRdx 为保护你的账户、二维码以及访客数据所做的工作。每一项都是目前在 qrdx.dev 上实际运行的内容，代码开源，你可以自行查验。",
@@ -2737,7 +2737,7 @@
   },
   "qrCodeApi": {
     "metaTitle": "免费二维码 API：无需密钥，支持 SVG、PNG 和 Logo",
-    "metaDescription": "免费的二维码 API，无需密钥，无需注册。一个 URL 即可返回 SVG、PNG、WebP 或 EPS 格式的二维码，可自定义颜色、形状并添加 Logo。每分钟 {perMinute, number} 次请求，缓存一年。",
+    "metaDescription": "免费的二维码 API，无需密钥。一个 URL 即可返回带有你的颜色、形状和标志的 SVG、PNG、WebP 或 EPS 二维码。每分钟 {perMinute, number} 次请求，缓存一年。",
     "crumb": "二维码 API",
     "title": "免费二维码 API",
     "intro1": "只要能放 URL 的地方，就能放二维码。向 api.qrdx.dev 发送一个 GET 请求，即可直接返回图片：无需账户，无需 API 密钥，无需 SDK。颜色、形状、纠错等级和 Logo 都通过查询字符串设置。",
@@ -3135,7 +3135,7 @@
   },
   "ai": {
     "metaTitle": "AI 二维码生成器——用一句提示词设计二维码",
-    "metaDescription": "告诉 QRdx 的 AI 二维码要打开什么（链接、Wi-Fi、名片等）以及外观要求。它会检查扫描评分，反复修复设计直到达到“优秀”，并在修改你的编辑器之前先征求你的同意。免费账户包含 {count, number} 次 AI 请求；Pro 可解锁无限次。",
+    "metaDescription": "描述你想要的二维码，QRdx 的 AI 会为你设计，并持续修复，直到扫描评分达到“优秀”，修改你的编辑器之前还会先征求你的同意。免费版账户可获得 {count, number} 次 AI 请求。",
     "artLink": "或者把链接变成可扫描的 AI 二维码艺术图",
     "chat": {
       "upgrade": "升级到 Pro，享无限次请求",
