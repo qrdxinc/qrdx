@@ -42,7 +42,7 @@ file after.png
 | `chs=<width>x<height>` | `size=<width>` | One number, because QR codes are square: `64` to `2048` pixels |
 | `chld=<level>\|<margin>` | `level=<level>&margin=<margin>` | The same letters, `L`, `M`, `Q` and `H`. The margin is in modules, `0` to `16` |
 | `choe=UTF-8` | not needed | QRdx always encodes text as UTF-8, which was Google's default. There's no Shift_JIS or ISO-8859-1 option. Left in, it's ignored |
-| always PNG | `format=png` | QRdx returns SVG unless you ask for `png`, `webp`, `bmp`, `ico` or `eps`. Keep PNG for email, since many email clients don't show SVG |
+| always PNG | `format=png` | QRdx returns SVG unless you ask for `png`, `webp`, `gif`, `bmp`, `ico` or `eps`. Keep PNG for email, since many email clients don't show SVG |
 
 Two defaults differ. Without `chld`, Google used error correction `L`; QRdx uses `Q`, which survives more damage but makes a denser code. Add `level=L` if you need the old look. Both default to a 4-module margin.
 

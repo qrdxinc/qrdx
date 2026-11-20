@@ -1,6 +1,6 @@
 ---
 title: Export and download
-description: Save a QR code as PNG, JPG, WebP, BMP, ICO, SVG, PDF or EPS with downloadQRCode, get a data URL, Blob or SVG markup, copy it, or make a PNG in Node.
+description: Save a QR code as PNG, JPG, WebP, GIF, BMP, ICO, SVG, PDF or EPS with downloadQRCode, get a data URL, Blob or SVG markup, copy it, or make a PNG in Node.
 icon: Download
 ---
 
@@ -41,6 +41,7 @@ Props are the same as on `QRCode`, except that a logo goes in `imageSettings`. T
 | `png` | Image | Keeps a transparent background. The default for most uses |
 | `jpg` | Image | Solid background only, smaller file |
 | `webp` | Image | PNG's pixels in a smaller file; lossless unless `quality` is set |
+| `gif` | Image | At most 256 colors, with one transparent color, for older tools and email builders. A design that needs more colors is reduced, and refused if it would stop scanning |
 | `bmp` | Image | Uncompressed 24-bit bitmap for legacy systems; a transparent background comes out white |
 | `ico` | Image | A favicon: the code at 16, 32, 48 and 256 px in one file, with transparency kept. `size` doesn't apply |
 | `svg` | Vector | Sharp at any size; the file for print shops and design tools |
@@ -61,6 +62,28 @@ const lossy = await getQRAsWebP({ value: "https://example.com", size: 1024 }, { 
 ```
 
 `canvasToWebP(canvas, options)` does the same for any canvas, and `encodeWebPLossless(rgba, width, height)` encodes RGBA pixels with no DOM.
+
+### GIF
+
+GIF is for the older tools and email builders that only take it. A GIF holds at most 256 colors and one transparent color. A code in flat colors fits as it is, so the GIF has exactly the pixels of the PNG. A gradient, an image fill or a photo logo has more colors, so it is reduced to a 256-color palette, with no dithering, because dither noise is what stops a code scanning. A pixel under half opaque becomes the transparent color and any other becomes opaque, so the soft edge of a code on a transparent background comes out hard-edged.
+
+After a reduction the library decodes the original and the GIF: if the original reads and the GIF would not, `downloadQRCode` and `getQRAsGIF` throw a `GIFScanError` instead of saving a code that no longer scans, and the download dialog turns the button off and says to use a PNG. A design that doesn't decode to begin with isn't blamed on GIF. The check loads `jsqr` (a dependency of `qrdx`); a page without a bundler maps it in its import map, and without it a reduced GIF is refused, not passed on unchecked.
+
+No browser can write GIF from a canvas (`toBlob("image/gif")` returns a PNG), so the library writes the file itself, in every browser, and checks its header before saving: a `.gif` file is always a GIF. `getQRAsGIF` returns it as a `Blob`:
+
+```ts title="lib/gif.ts"
+import { getQRAsGIF, GIFScanError } from "qrdx";
+
+try {
+  const gif = await getQRAsGIF({ value: "https://example.com", size: 1024 });
+} catch (error) {
+  if (error instanceof GIFScanError) {
+    // The design needs more than 256 colors and would stop scanning: use PNG
+  }
+}
+```
+
+`canvasToGIF(canvas, expected?)` does the same for any canvas, `pixelsToGIF(pixels, expected?)` for RGBA pixels with no DOM, and `encodeGIF(image)` writes an image you have already reduced to a palette (`quantizeRGBA` does that step).
 
 ### BMP
 

@@ -157,6 +157,7 @@ describe("MCP over Streamable HTTP", () => {
     expect(summary).toMatch(/SVG URL: https?:\/\/\S+\/v1\/qr\?/);
     expect(summary).toMatch(/PNG URL: \S+format=png/);
     expect(summary).toMatch(/WebP URL .*format=webp/);
+    expect(summary).toMatch(/GIF URL .*format=gif/);
     expect(summary).toMatch(/BMP URL .*format=bmp/);
     expect(summary).toMatch(/ICO URL .*format=ico/);
     expect(summary).toMatch(/EPS URL .*format=eps/);
