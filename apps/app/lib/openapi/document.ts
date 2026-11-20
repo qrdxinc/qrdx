@@ -1599,6 +1599,7 @@ const BARCODE_IMAGE_CONTENT = {
   "image/jpeg": { schema: { type: "string", contentMediaType: "image/jpeg" } },
   "image/webp": { schema: { type: "string", contentMediaType: "image/webp" } },
   "image/avif": { schema: { type: "string", contentMediaType: "image/avif" } },
+  "image/bmp": { schema: { type: "string", contentMediaType: "image/bmp" } },
   "application/pdf": {
     schema: { type: "string", contentMediaType: "application/pdf" },
   },
@@ -1659,13 +1660,15 @@ function barcodeOperations(c: SchemaCollector): Record<string, JsonSchema> {
         summary: "Render a barcode image",
         tags: ["Barcodes"],
         security: [],
-        description: `A static barcode as SVG (default), PNG, JPG, WebP, AVIF, PDF or EPS, with no key.
+        description: `A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key.
 
 **No key or token needed**, and it doesn't use your daily quota: put the URL straight into an \`<img>\` tag. The same query always returns the same bytes, so responses are cached for a year. Limit: 300 requests a minute per IP address, like \`GET /qr\`.
 
 **Formats.** EAN-13, EAN-8, UPC-A, UPC-E, ITF-14 and GS1-128 (GTIN and SSCC fields) take the number with or without its check digit: one digit short and it's added, the full length and it's checked. A wrong check digit, a wrong length or a character the format can't hold is a \`400\` that says what's wrong. Code 128 takes printable ASCII, Code 39 and Code 93 capitals, digits and \`- . $ / + %\` (Code 93's two check characters are added for you), Codabar a start and stop letter (A to D) around digits and \`- $ : / . +\`, and Data Matrix, PDF417 and Aztec any text up to 1,000 characters.
 
 **Sizes.** Raster images are \`scale\` pixels per module (a linear bar or a 2D cell's half). SVG, PDF and EPS are vectors at one point per module (0.353 mm, about 107% of an EAN-13's nominal size), with bars \`height\` millimetres tall.
+
+**BMP** is an uncompressed 24-bit bitmap, for legacy systems and embedded tools that only take BMP. It has no alpha channel; the background is always a solid color, so it has the same pixels as the PNG.
 
 Values that shouldn't sit in a URL can go in a \`POST\` body instead.`,
         parameters: c.parameters(
@@ -1881,7 +1884,7 @@ Printed barcodes keep working either way: they're static.`,
         tags: ["Barcodes"],
         security: security("codes:read"),
         description:
-          "A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale. Private and not cached; it counts toward the daily quota. For an image anyone can load, use the barcode's `imageUrl`.",
+          "A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale. Private and not cached; it counts toward the daily quota. For an image anyone can load, use the barcode's `imageUrl`.",
         parameters: c.parameters(
           z.object({
             type: barcodeImageQuerySchema.shape.type,

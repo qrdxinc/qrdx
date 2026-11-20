@@ -89,7 +89,7 @@ type RenderModule = typeof import("@/lib/barcode/render");
 
 /** The buttons; the rest are in the More menu. */
 const MAIN_FILES: BarcodeFileType[] = ["png", "svg", "pdf"];
-const MORE_FILES: BarcodeFileType[] = ["jpg", "webp", "avif", "eps"];
+const MORE_FILES: BarcodeFileType[] = ["jpg", "webp", "avif", "bmp", "eps"];
 
 /** A valid barcode as the form has it: what a Save button stores. */
 export interface CurrentBarcode {
@@ -529,6 +529,14 @@ export function useBarcodeGenerator({
           rendered.height,
         );
         blob = await canvasToBlob(canvas, BARCODE_FILES[type].mime);
+      } else if (type === "bmp") {
+        // Canvases can't encode BMP, so the engine writes the PNG's pixels
+        // (loaded only when asked for); it checks the bytes are a BMP.
+        const [canvas, { canvasToBMP }] = await Promise.all([
+          svgToCanvas(rendered.svg, rendered.width, rendered.height),
+          import("@/lib/qrdx-lazy/bmp"),
+        ]);
+        blob = canvasToBMP(canvas);
       } else if (type === "svg") {
         const svg = renderer?.printableSVG(rendered) ?? rendered.svg;
         blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
@@ -1035,7 +1043,7 @@ export function BarcodeDownloads({
           <DropdownMenuSeparator />
           {MORE_FILES.map((type) => (
             <DropdownMenuItem key={type} onSelect={() => download(type)}>
-              <span className="w-10 font-medium">
+              <span className="w-10 shrink-0 font-medium">
                 {BARCODE_FILES[type].label}
               </span>
               <span className="text-muted-foreground text-xs">

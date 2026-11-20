@@ -48,14 +48,14 @@ Static barcodes (EAN, UPC, Code 128, Data Matrix and more): keyless images, and 
 
 | Endpoint | Request | Scope | What it does |
 | --- | --- | --- | --- |
-| [Render a barcode image](/docs/developers/api/get-barcode-image) | `GET /barcode` | None | A static barcode as SVG (default), PNG, JPG, WebP, AVIF, PDF or EPS, with no key. |
+| [Render a barcode image](/docs/developers/api/get-barcode-image) | `GET /barcode` | None | A static barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, with no key. |
 | [Render a barcode image from a JSON body](/docs/developers/api/create-barcode-image) | `POST /barcode` | None | The same image as `GET /barcode`, with the same fields as JSON, so the value never appears in a URL or a log of one. |
 | [List saved barcodes](/docs/developers/api/list-barcodes) | `GET /barcodes` | `codes:read` | The saved barcodes of the workspace the key or token acts on, most recently changed first. |
 | [Save a barcode](/docs/developers/api/create-barcode) | `POST /barcodes` | `codes:write` | Saves a static barcode to the workspace, listed under Barcodes in the dashboard. |
 | [Get a saved barcode](/docs/developers/api/get-barcode) | `GET /barcodes/{id}` | `codes:read` | One saved barcode of the workspace the key or token acts on, in the trash or not. |
 | [Update a saved barcode](/docs/developers/api/update-barcode) | `PATCH /barcodes/{id}` | `codes:write` | Changes a saved barcode's title, format, value, options or folder. |
 | [Delete a saved barcode](/docs/developers/api/delete-barcode) | `DELETE /barcodes/{id}` | `codes:write` | Moves a saved barcode to the trash, where the dashboard can restore it. |
-| [Download a saved barcode](/docs/developers/api/get-saved-barcode-image) | `GET /barcodes/{id}/image` | `codes:read` | A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale. |
+| [Download a saved barcode](/docs/developers/api/get-saved-barcode-image) | `GET /barcodes/{id}/image` | `codes:read` | A saved barcode as SVG (default), PNG, JPG, WebP, AVIF, BMP, PDF or EPS, drawn as saved: `type` picks the file and `scale` (1-10) overrides its raster scale. |
 
 ### AI art
 

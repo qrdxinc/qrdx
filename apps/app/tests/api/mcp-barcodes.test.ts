@@ -7,7 +7,11 @@ import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { ownWorkspaceId } from "@repo/auth/own-workspace-id";
 import { BarcodeDetector, prepareZXingModule } from "barcode-detector/ponyfill";
+import { NextRequest } from "next/server";
+import { isBMPFile } from "qrdx";
+import sharp from "sharp";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { readBMP } from "../../../../packages/qrdx/tests/support/bmp";
 import { fakeDb } from "../support/fake-db";
 
 const KEY = `qrdx_${"a".repeat(40)}`;
@@ -63,6 +67,7 @@ vi.mock("@/lib/api-keys/service", () => ({
 };
 
 const route = await import("@/app/api/mcp/route");
+const image = await import("@/app/api/v1/barcode/route");
 
 let detector: BarcodeDetector;
 beforeAll(() => {
@@ -153,6 +158,34 @@ describe("generate_barcode", () => {
     const png = result.content.find((part) => part.type === "image")?.data;
     const found = await detector.detect(
       new Blob([Buffer.from(png ?? "", "base64")], { type: "image/png" }),
+    );
+    expect(found.map((code) => code.rawValue)).toEqual(["5901234123457"]);
+  });
+
+  it("links a BMP that the image API serves as a real BMP", async () => {
+    const result = await call("generate_barcode", {
+      format: "ean13",
+      data: "5901234123457",
+    });
+    const line = (result.content[0]?.text ?? "")
+      .split("\n")
+      .find((text) => text.startsWith("BMP URL"));
+    const url = line?.match(/https?:\/\/\S+/)?.[0];
+    expect(url).toBe(
+      "http://localhost:3000/api/v1/barcode?format=ean13&data=5901234123457&type=bmp",
+    );
+    const response = await image.GET(new NextRequest(url as string));
+    expect(response.headers.get("content-type")).toBe("image/bmp");
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    expect(isBMPFile(bytes)).toBe(true);
+    const { rgba, width, height } = readBMP(bytes);
+    const png = await sharp(Buffer.from(rgba), {
+      raw: { width, height, channels: 4 },
+    })
+      .png()
+      .toBuffer();
+    const found = await detector.detect(
+      new Blob([new Uint8Array(png)], { type: "image/png" }),
     );
     expect(found.map((code) => code.rawValue)).toEqual(["5901234123457"]);
   });

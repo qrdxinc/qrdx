@@ -2013,7 +2013,7 @@
     "alt": "Código de barras {format} de {value}",
     "loadFailed": "No se cargó el código que dibuja el código de barras. Revisa tu conexión y recarga la página.",
     "fixInput": "Corrige el dato resaltado para ver el código de barras.",
-    "sizes": "PNG, JPG, WebP y AVIF de {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF y EPS son vectores de {widthMm} × {heightMm} mm, con un módulo de {moduleMm} mm; escálalos en tu diseño según necesites.",
+    "sizes": "PNG, JPG, WebP, AVIF y BMP de {width, number, ::group-off} × {height, number, ::group-off} px. SVG, PDF y EPS son vectoriales, con un tamaño de {widthMm} × {heightMm} mm y un módulo de {moduleMm} mm; escálalos en tu diseño según necesites.",
     "more": "Más",
     "moreFormats": "Más formatos",
     "footnote": "Se crea en tu navegador; nada de lo que escribes se envía a QRdx. WebP y AVIF los codifica el servidor de QRdx cuando los eliges, y no se guarda nada.",
