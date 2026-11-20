@@ -82,12 +82,19 @@ import { buildQrProps, QUIET_ZONE_MODULES } from "./qr-props";
 /**
  * WebP is lossless, the same pixels as PNG in a smaller file. BMP is an
  * uncompressed 24-bit bitmap (a transparent background comes out white). ICO
- * is a favicon with the code at 16, 32, 48 and 256 px, so it has no size.
+ * is a favicon with the code at 16, 32, 48 and 256 px, so it has no size. A
+ * GIF holds at most 256 colors: a row whose design would stop scanning in
+ * them is listed in errors.csv instead of saved.
  */
-type Format = "png" | "webp" | "bmp" | "ico" | "svg";
+type Format = "png" | "webp" | "gif" | "bmp" | "ico" | "svg";
 
 /** The raster formats' names for the size label. */
-const RASTER_NAMES = { png: "PNG", webp: "WebP", bmp: "BMP" } as const;
+const RASTER_NAMES = {
+  png: "PNG",
+  webp: "WebP",
+  gif: "GIF",
+  bmp: "BMP",
+} as const;
 type LevelChoice = "style" | "L" | "M" | "Q" | "H";
 
 interface Failure {
@@ -831,6 +838,7 @@ export function BulkGenerator({
                 <SelectContent>
                   <SelectItem value="png">{t("formatPng")}</SelectItem>
                   <SelectItem value="webp">{t("formatWebp")}</SelectItem>
+                  <SelectItem value="gif">{t("formatGif")}</SelectItem>
                   <SelectItem value="bmp">{t("formatBmp")}</SelectItem>
                   <SelectItem value="ico">{t("formatIco")}</SelectItem>
                   <SelectItem value="svg">{t("formatSvg")}</SelectItem>

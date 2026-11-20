@@ -33,6 +33,7 @@ import {
 } from "@repo/design-system/components/ui/toggle-group";
 import {
   Bezier,
+  Colorfilter,
   Copy,
   DocumentText,
   Gallery,
@@ -55,9 +56,11 @@ import {
   downloadPrintSVG,
   downloadQRCode,
   EPS_IMAGE_FILL_REASON,
+  GIFScanError,
   getDownloadFilename,
   getFrameDimensions,
   getPrintLayout,
+  getQRAsGIF,
   getQRData,
   getQRModuleCount,
   getSVGString,
@@ -68,6 +71,7 @@ import {
   type PrintUnit,
   QRCodeSVG,
   validateSize,
+  withQRSize,
 } from "qrdx";
 import type { QRArt } from "qrdx/types";
 import React from "react";
@@ -178,9 +182,13 @@ const MORE_FORMATS: {
   Icon: Icon;
   vector?: boolean;
 }[] = [
+  { id: "gif", label: "GIF", Icon: Colorfilter },
   { id: "bmp", label: "BMP", Icon: Grid2 },
   { id: "ico", label: "ICO", Icon: Layer },
 ];
+
+/** The code's width (px) a GIF is checked at when the format is picked. */
+const GIF_CHECK_SIZE = 600;
 
 /** Formats that can't keep a transparent background (JPG and 24-bit BMP). */
 const OPAQUE_FORMATS: readonly ImageFormat[] = ["jpg", "bmp"];
@@ -305,6 +313,43 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
     [value, themeState, transparent],
   );
 
+  // A GIF holds 256 colors. A code in flat colors fits exactly; a gradient or
+  // a photo logo is reduced, and the engine refuses a GIF that would stop
+  // scanning. Picking GIF checks that once (at a size that gives the same
+  // palette, not the export size), so Download is off with the reason shown
+  // instead of failing after a click. The download itself checks again.
+  const [gifRefusal, setGifRefusal] = React.useState<Error | null>(null);
+  React.useEffect(() => {
+    if (!(open && format === "gif" && value)) {
+      setGifRefusal(null);
+      return;
+    }
+    let current = true;
+    const timer = setTimeout(() => {
+      getQRAsGIF(withQRSize(qrProps, GIF_CHECK_SIZE)).then(
+        () => {
+          if (current) setGifRefusal(null);
+        },
+        (error: unknown) => {
+          if (current) {
+            setGifRefusal(
+              error instanceof Error ? error : new Error(String(error)),
+            );
+          }
+        },
+      );
+    }, 300);
+    return () => {
+      current = false;
+      clearTimeout(timer);
+    };
+  }, [open, format, value, qrProps]);
+  const gifRefusalText = gifRefusal
+    ? gifRefusal instanceof GIFScanError
+      ? t("gifWouldNotScan")
+      : gifRefusal.message
+    : "";
+
   // Print files always use the real background color.
   const printProps = React.useMemo(
     () => ({ ...qrProps, bgColor: themeState.styles.bgColor }),
@@ -406,7 +451,7 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
     getDownloadFilename(format, exportSize, themeState.styles.frame);
 
   const handleDownload = async () => {
-    if (sizeError) return;
+    if (sizeError || gifRefusal) return;
     setIsDownloading(true);
     try {
       await downloadQRCode(qrProps, {
@@ -823,6 +868,16 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                     {sizeError}
                   </p>
                 )}
+
+                {format === "gif" && gifRefusal && (
+                  <p
+                    className="text-destructive flex items-start gap-1.5 text-sm"
+                    role="alert"
+                  >
+                    <InfoCircle className="mt-0.5 size-4 shrink-0" />
+                    {gifRefusalText}
+                  </p>
+                )}
               </TabsContent>
 
               <TabsContent className="mt-0 min-w-0" value="print">
@@ -863,7 +918,9 @@ export function DownloadDialog({ open, onOpenChange }: DownloadDialogProps) {
                   </Button>
                   <Button
                     className="min-w-0 sm:flex-1"
-                    disabled={isDownloading || !!sizeError || !value}
+                    disabled={
+                      isDownloading || !!sizeError || !!gifRefusal || !value
+                    }
                     onClick={handleDownload}
                   >
                     {isDownloading ? <ModuleOrbit aria-hidden /> : <Import />}
