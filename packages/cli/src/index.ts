@@ -89,10 +89,11 @@ ${BOLD}Commands:${RESET}
 
 ${BOLD}Generate Options:${RESET}
   <data>              URL or text to encode (positional)
-  -o, --output        Output file path (.svg, .png, .webp, .bmp, .ico or .eps)
+  -o, --output        Output file path (.svg, .png, .webp, .gif, .bmp, .ico or .eps)
   --format            Output format when the file name has no extension:
-                        ${DIM}svg, png, webp, bmp, ico, eps${RESET}  ${DIM}(WebP is lossless; BMP is 24-bit,${RESET}
-                        ${DIM}transparent = white; ICO is a favicon with 16, 32, 48${RESET}
+                        ${DIM}svg, png, webp, gif, bmp, ico, eps${RESET}  ${DIM}(WebP is lossless; GIF is${RESET}
+                        ${DIM}256 colors, refused if it would stop scanning; BMP is${RESET}
+                        ${DIM}24-bit, transparent = white; ICO is a favicon with 16, 32, 48${RESET}
                         ${DIM}and 256 px, --size doesn't apply; EPS is vector,${RESET}
                         ${DIM}--size = width in points)${RESET}
   -l, --level         Error correction: L, M, Q, H  ${DIM}(default: Q)${RESET}
@@ -113,7 +114,7 @@ ${BOLD}Generate Options:${RESET}
   --logo              Logo URL for center image (use with --level H)
   --no-logo           Skip the logo prompt in interactive mode
   --margin            Quiet zone margin in modules  ${DIM}(default: 0)${RESET}
-  --size              Output pixel size for SVG/PNG/WebP/BMP  ${DIM}(default: 512)${RESET}
+  --size              Output pixel size for SVG/PNG/WebP/GIF/BMP  ${DIM}(default: 512)${RESET}
   --template          A frame drawn as a template (the whole artwork is --size):
                         ${DIM}${getTemplateIds()
                           .filter((id) => id !== "default")

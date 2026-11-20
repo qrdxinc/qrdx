@@ -1,6 +1,6 @@
 # @qrdx/cli
 
-QR code generator CLI for developers. Generate styled, scannable QR codes as SVG, PNG, WebP, BMP, ICO or vector EPS. It runs non-interactively in scripts and CI, and guides you with prompts when run in a terminal. It renders with the same [`qrdx`](https://www.npmjs.com/package/qrdx) library as the [QRdx](https://qrdx.dev) web app.
+QR code generator CLI for developers. Generate styled, scannable QR codes as SVG, PNG, WebP, GIF, BMP, ICO or vector EPS. It runs non-interactively in scripts and CI, and guides you with prompts when run in a terminal. It renders with the same [`qrdx`](https://www.npmjs.com/package/qrdx) library as the [QRdx](https://qrdx.dev) web app.
 
 ## Install
 
@@ -33,9 +33,9 @@ qrdx generate <data> [options]
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
-| `--output` | `-o` | `qr.svg` | Output path; the extension sets the format (`.svg`, `.png`, `.webp`, `.bmp`, `.ico` or `.eps`) |
+| `--output` | `-o` | `qr.svg` | Output path; the extension sets the format (`.svg`, `.png`, `.webp`, `.gif`, `.bmp`, `.ico` or `.eps`) |
 | `--format` | | from the extension | `svg`, `png`, `webp`, `bmp`, `ico` or `eps`, for a file name without an extension |
-| `--size` | | `512` | Output size: pixels for SVG, PNG, WebP and BMP, points (72 per inch) for EPS |
+| `--size` | | `512` | Output size: pixels for SVG, PNG, WebP, GIF and BMP, points (72 per inch) for EPS |
 | `--level` | `-l` | `Q` | Error correction: `L` `M` `Q` `H` |
 | `--body` | | `square` | Body dot pattern |
 | `--eye` | | `square` | Corner eye pattern |
@@ -68,6 +68,10 @@ qrdx generate "https://qrdx.dev" -o qr.png --size 2048 --level H
 
 # Lossless WebP for a website: the PNG's pixels in a smaller file
 qrdx generate "https://qrdx.dev" -o qr.webp --size 1024
+
+# GIF for an older tool or an email builder that only takes GIF: at most 256 colors,
+# so a gradient or photo logo is reduced, and refused if it would stop scanning
+qrdx generate "https://qrdx.dev" -o qr.gif --size 400
 
 # 24-bit BMP for a legacy system that only takes BMP (a transparent background comes out white)
 qrdx generate "https://qrdx.dev" -o qr.bmp --size 600
