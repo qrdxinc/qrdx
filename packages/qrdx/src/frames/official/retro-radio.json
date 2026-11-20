@@ -1,0 +1,221 @@
+{
+  "id": "retro-radio",
+  "name": "Radio",
+  "description": "A retro radio: a speaker on the left, the code in the dial window, knobs below.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "radio",
+    "retro",
+    "music",
+    "podcast"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1500
+    },
+    "qr": {
+      "x": 1010,
+      "y": 214,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M1702.91 119.57L1932.91 49.57A10 10 0 0 1 1927.09 30.43L1697.09 100.43A10 10 0 0 1 1702.91 119.57Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1936,
+        "cy": 36,
+        "r": 24,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "path",
+        "d": "M774.29 190.89L789.66 167.18L806.78 146.03L826.03 126.78L847.18 109.66L870 94.83L894.25 82.48L919.66 72.73L945.94 65.68L972.82 61.42L1000 60L1027.18 61.42L1054.06 65.68L1080.34 72.73L1105.75 82.48L1130 94.83L1152.82 109.66L1173.97 126.78L1193.22 146.03L1210.34 167.18L1225.71 190.89A20 20 0 0 1 1259.26 169.11L1242.71 143.66L1222.94 119.26L1200.74 97.06L1176.34 77.29L1150 60.19L1122.02 45.94L1092.71 34.68L1062.37 26.56L1031.36 21.64L1000 20L968.64 21.64L937.63 26.56L907.29 34.68L877.98 45.94L850 60.19L823.66 77.29L799.26 97.06L777.06 119.26L757.29 143.66L740.74 169.11A20 20 0 0 1 774.29 190.89Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 80,
+        "width": 2000,
+        "height": 1420,
+        "radius": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 920,
+        "y": 150,
+        "width": 980,
+        "height": 1080,
+        "radius": 30,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 480,
+        "cy": 650,
+        "r": 360,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 480,
+        "cy": 650,
+        "r": 300,
+        "hole": 290,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 480,
+        "cy": 650,
+        "r": 220,
+        "hole": 210,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 480,
+        "cy": 650,
+        "r": 140,
+        "hole": 130,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 480,
+        "cy": 650,
+        "r": 50,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 300,
+        "cy": 1300,
+        "r": 90,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 300,
+        "cy": 1300,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 700,
+        "cy": 1300,
+        "r": 90,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 700,
+        "cy": 1300,
+        "r": 30,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to tune in",
+        "color": "text",
+        "box": {
+          "x": 940,
+          "y": 1270,
+          "width": 940,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

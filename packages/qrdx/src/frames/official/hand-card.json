@@ -1,0 +1,144 @@
+{
+  "id": "hand-card",
+  "name": "Hand holding a card",
+  "description": "A hand holding up a card with the code.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": [
+    "vcard",
+    "url"
+  ],
+  "tags": [
+    "object",
+    "hand",
+    "card",
+    "contact"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1560,
+      "height": 1970
+    },
+    "qr": {
+      "x": 300,
+      "y": 260,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M300 1290L1240 1290C1310 1650 1220 1830 1080 1890L1080 1970L560 1970L560 1890C380 1830 240 1670 300 1290Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.2
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1310,
+        "y": 1070,
+        "width": 210,
+        "height": 120,
+        "radius": 60,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.2
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1290,
+        "y": 1210,
+        "width": 230,
+        "height": 120,
+        "radius": 60,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.2
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1300,
+        "y": 1350,
+        "width": 220,
+        "height": 120,
+        "radius": 60,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.2
+        }
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 0,
+        "width": 1240,
+        "height": 1590,
+        "radius": 48,
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M140 1570C120 1230 320 1170 480 1260C600 1330 560 1530 480 1650L340 1750C220 1790 140 1710 140 1570Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.2
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan my card",
+        "color": "text",
+        "box": {
+          "x": 540,
+          "y": 1380,
+          "width": 780,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Take it with you",
+        "color": "text",
+        "box": {
+          "x": 300,
+          "y": 50,
+          "width": 1000,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

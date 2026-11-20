@@ -58,6 +58,8 @@ export const COLLECTIONS = [
   "sports-fitness",
   "business",
   "nonprofit",
+  "objects",
+  "playful",
 ];
 
 /** JSON with object keys sorted. */

@@ -1,0 +1,261 @@
+{
+  "id": "vending-machine",
+  "name": "Vending machine",
+  "description": "A vending machine: the code in its glass front, a keypad beside it, a flap below.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "vending",
+    "machine",
+    "snack"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1600,
+      "height": 1800
+    },
+    "qr": {
+      "x": 230,
+      "y": 260,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 1800,
+        "radius": 40,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 80,
+        "width": 1200,
+        "height": 1260,
+        "radius": 20,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1320,
+        "y": 80,
+        "width": 220,
+        "height": 1260,
+        "radius": 20,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1370,
+        "y": 140,
+        "width": 120,
+        "height": 30,
+        "radius": 10,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 1370,
+        "y": 1140,
+        "width": 120,
+        "height": 120,
+        "radius": 20,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 300,
+        "y": 1600,
+        "width": 1000,
+        "height": 150,
+        "radius": 30,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1360,
+        "y": 260,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1410,
+        "y": 260,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1460,
+        "y": 260,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1360,
+        "y": 320,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1410,
+        "y": 320,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1460,
+        "y": 320,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1360,
+        "y": 380,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1410,
+        "y": 380,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1460,
+        "y": 380,
+        "width": 40,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to pick one",
+        "color": "text",
+        "box": {
+          "x": 120,
+          "y": 1380,
+          "width": 1160,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

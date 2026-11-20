@@ -1,0 +1,67 @@
+{
+  "id": "map-pin",
+  "name": "Map pin",
+  "description": "A map pin: the code in its round head, the point below.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": [
+    "location",
+    "url"
+  ],
+  "tags": [
+    "object",
+    "map",
+    "pin",
+    "location",
+    "directions"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1700,
+      "height": 2000
+    },
+    "qr": {
+      "x": 420,
+      "y": 350,
+      "size": 860,
+      "padding": 68.8,
+      "radius": 20.64
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "circle",
+        "cx": 850,
+        "cy": 870,
+        "r": 850,
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M850 1960L1382.11 1532.84L317.89 1532.84Z",
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for directions",
+        "color": "text",
+        "box": {
+          "x": 370,
+          "y": 1308.8,
+          "width": 960,
+          "height": 160
+        }
+      }
+    ]
+  }
+}

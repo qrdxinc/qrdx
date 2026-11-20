@@ -1,0 +1,263 @@
+{
+  "id": "microwave-door",
+  "name": "Microwave",
+  "description": "A microwave: the code behind its door window, a dial and buttons at the side.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "microwave",
+    "kitchen",
+    "appliance"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1900,
+      "height": 1620
+    },
+    "qr": {
+      "x": 310,
+      "y": 250,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 1550,
+        "width": 160,
+        "height": 70,
+        "radius": 20,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1620,
+        "y": 1550,
+        "width": 160,
+        "height": 70,
+        "radius": 20,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1900,
+        "height": 1560,
+        "radius": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 160,
+        "y": 150,
+        "width": 1200,
+        "height": 1100,
+        "radius": 30,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 80,
+        "width": 1360,
+        "height": 1400,
+        "radius": 40,
+        "fill": "frame",
+        "hole": {
+          "x": 160,
+          "y": 150,
+          "width": 1200,
+          "height": 1100,
+          "radius": 30
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1460,
+        "y": 1180,
+        "width": 380,
+        "height": 50,
+        "radius": 25,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1650,
+        "cy": 400,
+        "r": 120,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1650,
+        "cy": 400,
+        "r": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1642,
+        "y": 300,
+        "width": 16,
+        "height": 60,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1500,
+        "y": 620,
+        "width": 130,
+        "height": 90,
+        "radius": 18,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1670,
+        "y": 620,
+        "width": 130,
+        "height": 90,
+        "radius": 18,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1500,
+        "y": 760,
+        "width": 130,
+        "height": 90,
+        "radius": 18,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1670,
+        "y": 760,
+        "width": 130,
+        "height": 90,
+        "radius": 18,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1500,
+        "y": 900,
+        "width": 130,
+        "height": 90,
+        "radius": 18,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1670,
+        "y": 900,
+        "width": 130,
+        "height": 90,
+        "radius": 18,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to heat up",
+        "color": "text",
+        "box": {
+          "x": 160,
+          "y": 1290,
+          "width": 1200,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

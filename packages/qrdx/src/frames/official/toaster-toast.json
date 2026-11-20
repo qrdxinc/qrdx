@@ -1,0 +1,137 @@
+{
+  "id": "toaster-toast",
+  "name": "Toaster",
+  "description": "A toaster with a slice of toast popping up, the code on the toast.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "toaster",
+    "toast",
+    "breakfast",
+    "kitchen"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 2000
+    },
+    "qr": {
+      "x": 250,
+      "y": 340,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M100 1500L100 330C100 120 300 20 450 110C560 170 640 170 750 110C860 170 940 170 1050 110C1200 20 1400 120 1400 330L1400 1500Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M140 1500L140 340C140 170 310 70 450 150C560 210 640 210 750 150C860 210 940 210 1050 150C1190 70 1360 170 1360 340L1360 1500Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.86
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1400,
+        "width": 1500,
+        "height": 600,
+        "radius": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 1400,
+        "width": 1380,
+        "height": 40,
+        "radius": 10,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1410,
+        "y": 1480,
+        "width": 50,
+        "height": 140,
+        "radius": 14,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 130,
+        "cy": 1560,
+        "r": 50,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1940,
+        "width": 1500,
+        "height": 60,
+        "radius": 30,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for breakfast",
+        "color": "text",
+        "box": {
+          "x": 200,
+          "y": 1560,
+          "width": 1100,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

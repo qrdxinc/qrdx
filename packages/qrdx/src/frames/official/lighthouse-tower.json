@@ -1,0 +1,224 @@
+{
+  "id": "lighthouse-tower",
+  "name": "Lighthouse",
+  "description": "A lighthouse: a lamp room on top, bands down the tower, the code on the tower.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "lighthouse",
+    "sea",
+    "guide",
+    "coast"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 1960
+    },
+    "qr": {
+      "x": 370,
+      "y": 760,
+      "size": 760,
+      "padding": 60.800000000000004,
+      "radius": 18.240000000000002
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "polygon",
+        "points": [
+          [
+            400,
+            120
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            260
+          ]
+        ],
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.85
+        }
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [
+            1100,
+            120
+          ],
+          [
+            1500,
+            0
+          ],
+          [
+            1500,
+            260
+          ]
+        ],
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.85
+        }
+      },
+      {
+        "type": "rect",
+        "x": 400,
+        "y": 0,
+        "width": 700,
+        "height": 240,
+        "radius": 40,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 400,
+        "y": 0,
+        "width": 700,
+        "height": 240,
+        "radius": 40,
+        "fill": "frame",
+        "hole": {
+          "x": 430,
+          "y": 30,
+          "width": 640,
+          "height": 180,
+          "radius": 20
+        }
+      },
+      {
+        "type": "rect",
+        "x": 330,
+        "y": 240,
+        "width": 840,
+        "height": 60,
+        "radius": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [
+            250,
+            300
+          ],
+          [
+            1250,
+            300
+          ],
+          [
+            1351.33,
+            1820
+          ],
+          [
+            148.67,
+            1820
+          ]
+        ],
+        "fill": "frame"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [
+            232.67,
+            560
+          ],
+          [
+            1267.33,
+            560
+          ],
+          [
+            1276.67,
+            700
+          ],
+          [
+            223.33,
+            700
+          ]
+        ],
+        "fill": "accent"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [
+            162,
+            1620
+          ],
+          [
+            1338,
+            1620
+          ],
+          [
+            1347.33,
+            1760
+          ],
+          [
+            152.67,
+            1760
+          ]
+        ],
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1820,
+        "width": 1500,
+        "height": 140,
+        "radius": 30,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to find your way",
+        "color": "text",
+        "box": {
+          "x": 100,
+          "y": 1820,
+          "width": 1300,
+          "height": 140
+        }
+      }
+    ]
+  }
+}

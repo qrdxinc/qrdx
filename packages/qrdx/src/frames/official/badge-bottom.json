@@ -1,0 +1,84 @@
+{
+  "id": "badge-bottom",
+  "name": "Bottom badge",
+  "description": "A card with a pill badge straddling its bottom edge for the label.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": [
+    "call to action",
+    "badge",
+    "pill",
+    "label"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 1590
+    },
+    "qr": {
+      "x": 150,
+      "y": 250,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1300,
+        "height": 1480,
+        "radius": 48,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 150,
+        "y": 1370,
+        "width": 1000,
+        "height": 220,
+        "radius": 110,
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "text",
+        "box": {
+          "x": 210,
+          "y": 1395,
+          "width": 880,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Point your camera here",
+        "color": "text",
+        "box": {
+          "x": 100,
+          "y": 50,
+          "width": 1100,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

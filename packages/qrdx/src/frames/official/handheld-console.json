@@ -1,0 +1,183 @@
+{
+  "id": "handheld-console",
+  "name": "Handheld console",
+  "description": "A handheld console: the code on its screen, a d-pad and buttons below.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "handheld",
+    "console",
+    "game"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1400,
+      "height": 2000
+    },
+    "qr": {
+      "x": 250,
+      "y": 262,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1400,
+        "height": 2000,
+        "radius": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 26,
+        "y": 26,
+        "width": 1348,
+        "height": 1948,
+        "radius": 70,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.85
+        }
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 120,
+        "width": 1160,
+        "height": 1314,
+        "radius": 40,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 150,
+        "y": 150,
+        "width": 1100,
+        "height": 1254,
+        "radius": 24,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 170,
+        "y": 1700,
+        "width": 300,
+        "height": 100,
+        "radius": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 270,
+        "y": 1600,
+        "width": 100,
+        "height": 300,
+        "radius": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1040,
+        "cy": 1700,
+        "r": 70,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1220,
+        "cy": 1640,
+        "r": 70,
+        "fill": "accent"
+      },
+      {
+        "type": "path",
+        "d": "M1024.24 1884.24L1104.24 1804.24A6 6 0 0 1 1095.76 1795.76L1015.76 1875.76A6 6 0 0 1 1024.24 1884.24Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "path",
+        "d": "M1074.24 1884.24L1154.24 1804.24A6 6 0 0 1 1145.76 1795.76L1065.76 1875.76A6 6 0 0 1 1074.24 1884.24Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "path",
+        "d": "M1124.24 1884.24L1204.24 1804.24A6 6 0 0 1 1195.76 1795.76L1115.76 1875.76A6 6 0 0 1 1124.24 1884.24Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "path",
+        "d": "M1174.24 1884.24L1254.24 1804.24A6 6 0 0 1 1245.76 1795.76L1165.76 1875.76A6 6 0 0 1 1174.24 1884.24Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "path",
+        "d": "M1224.24 1884.24L1304.24 1804.24A6 6 0 0 1 1295.76 1795.76L1215.76 1875.76A6 6 0 0 1 1224.24 1884.24Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to play",
+        "color": "frame",
+        "box": {
+          "x": 160,
+          "y": 1244,
+          "width": 1080,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

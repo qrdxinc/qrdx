@@ -1,0 +1,91 @@
+{
+  "id": "map-pin-light",
+  "name": "Map pin, light",
+  "description": "A map pin: the code in its round head, the point below.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": [
+    "location",
+    "url"
+  ],
+  "tags": [
+    "object",
+    "map",
+    "pin",
+    "location",
+    "directions"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1700,
+      "height": 2000
+    },
+    "qr": {
+      "x": 420,
+      "y": 350,
+      "size": 860,
+      "padding": 68.8,
+      "radius": 20.64
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "circle",
+        "cx": 850,
+        "cy": 870,
+        "r": 850,
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M850 1960L1382.11 1532.84L317.89 1532.84Z",
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 850,
+        "cy": 870,
+        "r": 806,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "path",
+        "d": "M850 1870L1327.08 1519.64L372.92 1519.64Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.9
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Find us here",
+        "color": "frame",
+        "box": {
+          "x": 370,
+          "y": 1308.8,
+          "width": 960,
+          "height": 160
+        }
+      }
+    ]
+  }
+}

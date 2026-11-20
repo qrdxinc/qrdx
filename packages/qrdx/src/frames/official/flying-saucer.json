@@ -1,0 +1,145 @@
+{
+  "id": "flying-saucer",
+  "name": "Flying saucer",
+  "description": "A flying saucer with its beam on the code, the label on the ground.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "ufo",
+    "saucer",
+    "space",
+    "alien"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1600,
+      "height": 1640
+    },
+    "qr": {
+      "x": 400,
+      "y": 604,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M350 300L1250 300L1550 1500L50 1500Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 800,
+        "cy": 170,
+        "rx": 260,
+        "ry": 150,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 800,
+        "cy": 250,
+        "rx": 600,
+        "ry": 110,
+        "fill": "frame"
+      },
+      {
+        "type": "ellipse",
+        "cx": 800,
+        "cy": 300,
+        "rx": 400,
+        "ry": 60,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1500,
+        "width": 1600,
+        "height": 140,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 400,
+        "cy": 265,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 600,
+        "cy": 265,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 800,
+        "cy": 265,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1000,
+        "cy": 265,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1200,
+        "cy": 265,
+        "r": 26,
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to beam up",
+        "color": "text",
+        "box": {
+          "x": 100,
+          "y": 1500,
+          "width": 1400,
+          "height": 140
+        }
+      }
+    ]
+  }
+}

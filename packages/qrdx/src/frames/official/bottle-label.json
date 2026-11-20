@@ -1,0 +1,134 @@
+{
+  "id": "bottle-label",
+  "name": "Bottle label",
+  "description": "A bottle with a cap and shoulders, the code on its label.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "object",
+    "bottle",
+    "label",
+    "drink"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 1958
+    },
+    "qr": {
+      "x": 250,
+      "y": 684,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M520 100L520 240C520 330 0 320 0 420L0 1848Q0 1958 110 1958L1190 1958Q1300 1958 1300 1848L1300 420C1300 320 780 330 780 240L780 100Z",
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 480,
+        "y": 0,
+        "width": 340,
+        "height": 120,
+        "radius": 36,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 520,
+        "y": 30,
+        "width": 260,
+        "height": 22,
+        "radius": 11,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 50,
+        "y": 450,
+        "width": 1200,
+        "height": 1318,
+        "radius": 28,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "rect",
+        "x": 50,
+        "y": 494,
+        "width": 1200,
+        "height": 12,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 50,
+        "y": 1712,
+        "width": 1200,
+        "height": 12,
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to pour",
+        "color": "frame",
+        "box": {
+          "x": 100,
+          "y": 1578,
+          "width": 1100,
+          "height": 160
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Tasting notes inside",
+        "color": "frame",
+        "box": {
+          "x": 140,
+          "y": 512,
+          "width": 1020,
+          "height": 96
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

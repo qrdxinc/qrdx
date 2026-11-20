@@ -1,0 +1,151 @@
+{
+  "id": "roll-up-banner-light",
+  "name": "Roll-up banner, light",
+  "description": "A roll-up banner stand: the code on the banner, a cassette and a foot at its base.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "object",
+    "banner",
+    "stand",
+    "event",
+    "expo"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1340,
+      "height": 1900
+    },
+    "qr": {
+      "x": 170,
+      "y": 320,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#1f1f1f",
+      "text": "#ffffff",
+      "accent": "#5a5a5a"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 0,
+        "width": 1180,
+        "height": 50,
+        "radius": 16,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 40,
+        "width": 1140,
+        "height": 1660,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 130,
+        "y": 60,
+        "width": 1080,
+        "height": 1620,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 1660,
+        "width": 1220,
+        "height": 120,
+        "radius": 40,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1810,
+        "width": 1340,
+        "height": 90,
+        "radius": 45,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 470,
+        "y": 1840,
+        "width": 400,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.4
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to sign up",
+        "color": "frame",
+        "box": {
+          "x": 180,
+          "y": 1440,
+          "width": 980,
+          "height": 180
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Talk to us today",
+        "color": "frame",
+        "box": {
+          "x": 200,
+          "y": 100,
+          "width": 940,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

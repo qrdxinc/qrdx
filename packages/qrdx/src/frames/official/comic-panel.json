@@ -1,0 +1,655 @@
+{
+  "id": "comic-panel",
+  "name": "Comic panel",
+  "description": "A comic panel with a burst over its corner for the note and a caption box.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "comic",
+    "burst",
+    "panel",
+    "fun"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 1840
+    },
+    "qr": {
+      "x": 250,
+      "y": 500,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 60,
+        "width": 1380,
+        "height": 1720,
+        "radius": 10,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 100,
+        "width": 1300,
+        "height": 1640,
+        "radius": 2,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 140,
+        "cy": 1700,
+        "r": 15,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 186,
+        "cy": 1700,
+        "r": 14,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 232,
+        "cy": 1700,
+        "r": 13,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 278,
+        "cy": 1700,
+        "r": 12,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 324,
+        "cy": 1700,
+        "r": 11,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 370,
+        "cy": 1700,
+        "r": 10,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 140,
+        "cy": 1654,
+        "r": 14,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 186,
+        "cy": 1654,
+        "r": 13,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 232,
+        "cy": 1654,
+        "r": 12,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 278,
+        "cy": 1654,
+        "r": 11,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 324,
+        "cy": 1654,
+        "r": 10,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 140,
+        "cy": 1608,
+        "r": 13,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 186,
+        "cy": 1608,
+        "r": 12,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 232,
+        "cy": 1608,
+        "r": 11,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 278,
+        "cy": 1608,
+        "r": 10,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 140,
+        "cy": 1562,
+        "r": 12,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 186,
+        "cy": 1562,
+        "r": 11,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 232,
+        "cy": 1562,
+        "r": 10,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 140,
+        "cy": 1516,
+        "r": 11,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 186,
+        "cy": 1516,
+        "r": 10,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 140,
+        "cy": 1470,
+        "r": 10,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 300,
+        "y": 1620,
+        "width": 900,
+        "height": 170,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.85
+        }
+      },
+      {
+        "type": "rect",
+        "x": 300,
+        "y": 1620,
+        "width": 900,
+        "height": 170,
+        "fill": "frame",
+        "hole": {
+          "x": 312,
+          "y": 1632,
+          "width": 876,
+          "height": 146
+        }
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [
+            1160,
+            29.6
+          ],
+          [
+            1208.24,
+            76.61
+          ],
+          [
+            1283.22,
+            44.09
+          ],
+          [
+            1297.36,
+            98.44
+          ],
+          [
+            1387.69,
+            85.37
+          ],
+          [
+            1365.58,
+            138.78
+          ],
+          [
+            1457.49,
+            147.14
+          ],
+          [
+            1402.5,
+            191.48
+          ],
+          [
+            1482,
+            220
+          ],
+          [
+            1402.5,
+            248.52
+          ],
+          [
+            1457.49,
+            292.86
+          ],
+          [
+            1365.58,
+            301.22
+          ],
+          [
+            1387.69,
+            354.63
+          ],
+          [
+            1297.36,
+            341.56
+          ],
+          [
+            1283.22,
+            395.91
+          ],
+          [
+            1208.24,
+            363.39
+          ],
+          [
+            1160,
+            410.4
+          ],
+          [
+            1111.76,
+            363.39
+          ],
+          [
+            1036.78,
+            395.91
+          ],
+          [
+            1022.64,
+            341.56
+          ],
+          [
+            932.31,
+            354.63
+          ],
+          [
+            954.42,
+            301.22
+          ],
+          [
+            862.51,
+            292.86
+          ],
+          [
+            917.5,
+            248.52
+          ],
+          [
+            838,
+            220
+          ],
+          [
+            917.5,
+            191.48
+          ],
+          [
+            862.51,
+            147.14
+          ],
+          [
+            954.42,
+            138.78
+          ],
+          [
+            932.31,
+            85.37
+          ],
+          [
+            1022.64,
+            98.44
+          ],
+          [
+            1036.78,
+            44.09
+          ],
+          [
+            1111.76,
+            76.61
+          ]
+        ],
+        "fill": "frame"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [
+            1160,
+            60.06
+          ],
+          [
+            1202.45,
+            99.55
+          ],
+          [
+            1268.44,
+            72.24
+          ],
+          [
+            1280.88,
+            117.89
+          ],
+          [
+            1360.37,
+            106.91
+          ],
+          [
+            1340.91,
+            151.77
+          ],
+          [
+            1421.79,
+            158.8
+          ],
+          [
+            1373.4,
+            196.04
+          ],
+          [
+            1443.36,
+            220
+          ],
+          [
+            1373.4,
+            243.96
+          ],
+          [
+            1421.79,
+            281.2
+          ],
+          [
+            1340.91,
+            288.23
+          ],
+          [
+            1360.37,
+            333.09
+          ],
+          [
+            1280.88,
+            322.11
+          ],
+          [
+            1268.44,
+            367.76
+          ],
+          [
+            1202.45,
+            340.45
+          ],
+          [
+            1160,
+            379.94
+          ],
+          [
+            1117.55,
+            340.45
+          ],
+          [
+            1051.56,
+            367.76
+          ],
+          [
+            1039.12,
+            322.11
+          ],
+          [
+            959.63,
+            333.09
+          ],
+          [
+            979.09,
+            288.23
+          ],
+          [
+            898.21,
+            281.2
+          ],
+          [
+            946.6,
+            243.96
+          ],
+          [
+            876.64,
+            220
+          ],
+          [
+            946.6,
+            196.04
+          ],
+          [
+            898.21,
+            158.8
+          ],
+          [
+            979.09,
+            151.77
+          ],
+          [
+            959.63,
+            106.91
+          ],
+          [
+            1039.12,
+            117.89
+          ],
+          [
+            1051.56,
+            72.24
+          ],
+          [
+            1117.55,
+            99.55
+          ]
+        ],
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan the next page",
+        "color": "frame",
+        "box": {
+          "x": 320,
+          "y": 1630,
+          "width": 860,
+          "height": 150
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Pow!",
+        "color": "text",
+        "box": {
+          "x": 910,
+          "y": 165,
+          "width": 500,
+          "height": 110
+        }
+      }
+    ]
+  }
+}

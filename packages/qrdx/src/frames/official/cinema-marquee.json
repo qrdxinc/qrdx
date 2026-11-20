@@ -1,0 +1,671 @@
+{
+  "id": "cinema-marquee",
+  "name": "Cinema marquee",
+  "description": "A cinema marquee: bulbs all round the board, a header band for the note.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "cinema",
+    "marquee",
+    "lights",
+    "movie"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 1800
+    },
+    "qr": {
+      "x": 250,
+      "y": 420,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1500,
+        "height": 1800,
+        "radius": 40,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 110,
+        "y": 110,
+        "width": 1280,
+        "height": 1580,
+        "radius": 20,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.94
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 194,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 194,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 333,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 333,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 472,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 472,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 611,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 611,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 750,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 750,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 889,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 889,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1028,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1028,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1167,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1167,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1306,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1306,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 55,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 1745,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 195.83,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 195.83,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 336.67,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 336.67,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 477.5,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 477.5,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 618.33,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 618.33,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 759.17,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 759.17,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 900,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 900,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 1040.83,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 1040.83,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 1181.67,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 1181.67,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 1322.5,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 1322.5,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 1463.33,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 1463.33,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 55,
+        "cy": 1604.17,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1445,
+        "cy": 1604.17,
+        "r": 26,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "rect",
+        "x": 110,
+        "y": 110,
+        "width": 1280,
+        "height": 200,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for tickets",
+        "color": "frame",
+        "box": {
+          "x": 180,
+          "y": 1540,
+          "width": 1140,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Now showing",
+        "color": "text",
+        "box": {
+          "x": 160,
+          "y": 150,
+          "width": 1180,
+          "height": 120
+        }
+      }
+    ]
+  }
+}

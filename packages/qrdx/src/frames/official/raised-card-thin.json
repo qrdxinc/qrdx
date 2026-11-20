@@ -1,0 +1,105 @@
+{
+  "id": "raised-card-thin",
+  "name": "Raised card, thin",
+  "description": "A card raised off the page over a dark offset block.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": [
+    "call to action",
+    "3d",
+    "raised",
+    "shadow",
+    "border"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 1580
+    },
+    "qr": {
+      "x": 140,
+      "y": 250,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 20,
+        "y": 20,
+        "width": 1280,
+        "height": 1560,
+        "radius": 36,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 1560,
+        "radius": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 30,
+        "y": 30,
+        "width": 1220,
+        "height": 1500,
+        "radius": 20,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.92
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to open",
+        "color": "frame",
+        "box": {
+          "x": 80,
+          "y": 1360,
+          "width": 1120,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "No app needed",
+        "color": "frame",
+        "box": {
+          "x": 100,
+          "y": 50,
+          "width": 1080,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

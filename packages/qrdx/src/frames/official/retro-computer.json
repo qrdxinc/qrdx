@@ -1,0 +1,793 @@
+{
+  "id": "retro-computer",
+  "name": "Retro computer",
+  "description": "A boxy old computer: the code on its screen, a keyboard in front.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "computer",
+    "retro",
+    "screen",
+    "tech"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1700,
+      "height": 1900
+    },
+    "qr": {
+      "x": 400,
+      "y": 220,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 0,
+        "width": 1500,
+        "height": 1500,
+        "radius": 50,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 130,
+        "y": 30,
+        "width": 1440,
+        "height": 1440,
+        "radius": 36,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.85
+        }
+      },
+      {
+        "type": "rect",
+        "x": 200,
+        "y": 100,
+        "width": 1300,
+        "height": 1140,
+        "radius": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 230,
+        "y": 130,
+        "width": 1240,
+        "height": 1080,
+        "radius": 44,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.95
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1360,
+        "y": 1300,
+        "width": 120,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1540,
+        "cy": 1320,
+        "r": 22,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 500,
+        "y": 1500,
+        "width": 700,
+        "height": 90,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1620,
+        "width": 1700,
+        "height": 280,
+        "radius": 40,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 30,
+        "y": 1650,
+        "width": 1640,
+        "height": 220,
+        "radius": 28,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.85
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 192,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 304,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 416,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 528,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 640,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 752,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 864,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 976,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1088,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1200,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1312,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1424,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1536,
+        "y": 1680,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 212,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 324,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 436,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 548,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 660,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 772,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 884,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 996,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1108,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1220,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1332,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1444,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1556,
+        "y": 1740,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 232,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 344,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 456,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 568,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 680,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 792,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 904,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1016,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1128,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1240,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1352,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1464,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1576,
+        "y": 1800,
+        "width": 80,
+        "height": 40,
+        "radius": 8,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to load",
+        "color": "frame",
+        "box": {
+          "x": 260,
+          "y": 1270,
+          "width": 1180,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

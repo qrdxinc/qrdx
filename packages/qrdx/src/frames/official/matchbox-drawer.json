@@ -1,0 +1,183 @@
+{
+  "id": "matchbox-drawer",
+  "name": "Matchbox",
+  "description": "A matchbox with its drawer slid out, the code on the sleeve.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "matchbox",
+    "matches",
+    "fire"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1500
+    },
+    "qr": {
+      "x": 396,
+      "y": 284,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 1300,
+        "y": 160,
+        "width": 660,
+        "height": 1180,
+        "radius": 20,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.85
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1300,
+        "y": 160,
+        "width": 660,
+        "height": 1180,
+        "radius": 20,
+        "fill": "frame",
+        "hole": {
+          "x": 1324,
+          "y": 184,
+          "width": 612,
+          "height": 1132,
+          "radius": 10
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1400,
+        "y": 420,
+        "width": 480,
+        "height": 34,
+        "radius": 17,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1880,
+        "cy": 437,
+        "r": 42,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 1400,
+        "y": 720,
+        "width": 480,
+        "height": 34,
+        "radius": 17,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1880,
+        "cy": 737,
+        "r": 42,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 1400,
+        "y": 1020,
+        "width": 480,
+        "height": 34,
+        "radius": 17,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1880,
+        "cy": 1037,
+        "r": 42,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 100,
+        "width": 1480,
+        "height": 1300,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 100,
+        "width": 1480,
+        "height": 70,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 200,
+        "width": 1320,
+        "height": 1120,
+        "radius": 20,
+        "fill": "background"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to light it up",
+        "color": "frame",
+        "box": {
+          "x": 120,
+          "y": 1188,
+          "width": 1240,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

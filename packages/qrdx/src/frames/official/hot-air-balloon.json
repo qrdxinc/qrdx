@@ -1,0 +1,154 @@
+{
+  "id": "hot-air-balloon",
+  "name": "Hot-air balloon",
+  "description": "A hot-air balloon: the code on the envelope, the label on the basket.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "balloon",
+    "sky",
+    "travel"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1600,
+      "height": 2000
+    },
+    "qr": {
+      "x": 400,
+      "y": 360,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "ellipse",
+        "cx": 800,
+        "cy": 800,
+        "rx": 740,
+        "ry": 780,
+        "fill": "frame"
+      },
+      {
+        "type": "ellipse",
+        "cx": 800,
+        "cy": 800,
+        "rx": 407,
+        "ry": 780,
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.25
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 800,
+        "cy": 800,
+        "rx": 148,
+        "ry": 780,
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M560 1520L1040 1520L950 1670L650 1670Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "path",
+        "d": "M646.4 1664L496.4 1754A7 7 0 0 1 503.6 1766L653.6 1676A7 7 0 0 1 646.4 1664Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "path",
+        "d": "M946.4 1676L1096.4 1766A7 7 0 0 1 1103.6 1754L953.6 1664A7 7 0 0 1 946.4 1676Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 440,
+        "y": 1740,
+        "width": 720,
+        "height": 220,
+        "radius": 40,
+        "fill": {
+          "mix": [
+            "frame",
+            "#000000"
+          ],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 440,
+        "y": 1740,
+        "width": 720,
+        "height": 50,
+        "radius": 25,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to fly",
+        "color": "text",
+        "box": {
+          "x": 480,
+          "y": 1790,
+          "width": 640,
+          "height": 150
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Up and away",
+        "color": "text",
+        "box": {
+          "x": 400,
+          "y": 110,
+          "width": 800,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

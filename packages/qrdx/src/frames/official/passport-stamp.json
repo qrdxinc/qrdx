@@ -1,0 +1,122 @@
+{
+  "id": "passport-stamp",
+  "name": "Passport stamp",
+  "description": "A passport-style entry stamp with a double outline and a plane in the corner.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "passport",
+    "stamp",
+    "travel",
+    "entry"
+  ],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1400,
+      "height": 1700
+    },
+    "qr": {
+      "x": 200,
+      "y": 340,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1400,
+        "height": 1700,
+        "radius": 60,
+        "fill": "frame",
+        "hole": {
+          "x": 26,
+          "y": 26,
+          "width": 1348,
+          "height": 1648,
+          "radius": 40
+        }
+      },
+      {
+        "type": "rect",
+        "x": 56,
+        "y": 56,
+        "width": 1288,
+        "height": 1588,
+        "radius": 30,
+        "fill": "frame",
+        "hole": {
+          "x": 66,
+          "y": 66,
+          "width": 1268,
+          "height": 1568,
+          "radius": 22
+        }
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 240,
+        "width": 1160,
+        "height": 8,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 1450,
+        "width": 1160,
+        "height": 8,
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1170 101C1177.5 101 1179 113 1179 125L1179 152L1236 182L1236 194L1179 179L1179 212L1197 227L1197 236L1170 227L1143 236L1143 227L1161 212L1161 179L1104 194L1104 182L1161 152L1161 125C1161 113 1162.5 101 1170 101Z",
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to enter",
+        "color": "frame",
+        "box": {
+          "x": 120,
+          "y": 1480,
+          "width": 1160,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Welcome aboard",
+        "color": "frame",
+        "box": {
+          "x": 120,
+          "y": 90,
+          "width": 920,
+          "height": 110
+        },
+        "align": "start"
+      }
+    ]
+  }
+}
