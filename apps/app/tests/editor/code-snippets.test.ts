@@ -1099,7 +1099,14 @@ describe("the looks around the shapes", () => {
 
   it("passes them to React's QRCode", () => {
     const { code, omitted } = reactSnippet(urlInput(looks));
-    for (const prop of ["eyeShapes", "eyeGradient", "bgRadius", "backdrop", "halo", "shadow"]) {
+    for (const prop of [
+      "eyeShapes",
+      "eyeGradient",
+      "bgRadius",
+      "backdrop",
+      "halo",
+      "shadow",
+    ]) {
       expect(code, prop).toContain(prop);
     }
     expect(omitted).toEqual([]);

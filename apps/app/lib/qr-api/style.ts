@@ -32,8 +32,8 @@ import {
   cornerEyePatternSchema,
   customFrameSchema,
   EYE_POSITIONS,
-  eyeGradientSpanSchema,
   errorLevelSchema,
+  eyeGradientSpanSchema,
   frameSchema,
   HALO_WIDTH_MAX,
   HALO_WIDTH_MIN,
@@ -185,9 +185,7 @@ const eyeColorsSchema = z
 
 const eyeShapeOverrideSchema = z
   .object({
-    outer: cornerEyePatternSchema
-      .optional()
-      .describe("The eye's frame shape"),
+    outer: cornerEyePatternSchema.optional().describe("The eye's frame shape"),
     inner: cornerEyeDotPatternSchema
       .optional()
       .describe("The eye's center shape"),
@@ -198,7 +196,10 @@ const eyeShapeOverrideSchema = z
 const eyeShapesSchema = z
   .object(
     Object.fromEntries(
-      EYE_POSITIONS.map((position) => [position, eyeShapeOverrideSchema.optional()]),
+      EYE_POSITIONS.map((position) => [
+        position,
+        eyeShapeOverrideSchema.optional(),
+      ]),
     ) as Record<
       (typeof EYE_POSITIONS)[number],
       z.ZodOptional<typeof eyeShapeOverrideSchema>
@@ -230,15 +231,15 @@ const haloSchema = z
 /** A shadow: a see-through copy of the dark shapes, shifted. */
 const shadowSchema = z
   .object({
-    color: colorString.optional().describe("The shadow's color (default black)"),
+    color: colorString
+      .optional()
+      .describe("The shadow's color (default black)"),
     opacity: z
       .number()
       .min(SHADOW_OPACITY_MIN)
       .max(SHADOW_OPACITY_MAX)
       .optional()
-      .describe(
-        `${SHADOW_OPACITY_MIN} to ${SHADOW_OPACITY_MAX} (default 0.3)`,
-      ),
+      .describe(`${SHADOW_OPACITY_MIN} to ${SHADOW_OPACITY_MAX} (default 0.3)`),
     dx: z
       .number()
       .min(-SHADOW_OFFSET_MAX)

@@ -44,7 +44,8 @@ function styleLooks(
     ...(rounded && { bgRadius: style.bgRadius }),
     ...(rounded && style.backdrop && { backdrop: style.backdrop }),
     ...(style.halo && { halo: style.halo }),
-    ...(style.shadow && resolveShadow(style.shadow) && { shadow: style.shadow }),
+    ...(style.shadow &&
+      resolveShadow(style.shadow) && { shadow: style.shadow }),
   };
 }
 

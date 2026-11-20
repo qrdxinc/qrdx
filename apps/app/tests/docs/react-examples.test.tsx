@@ -16,10 +16,10 @@ import { AngularCode } from "../docs-examples/colors/angular-code";
 import { BrandCode as ColorsBrandCode } from "../docs-examples/colors/brand-code";
 import { EyeGradientCode } from "../docs-examples/colors/eye-gradient-code";
 import { GradientCode } from "../docs-examples/colors/gradient-code";
+import { RadialCode } from "../docs-examples/colors/radial-code";
 import { HaloCode } from "../docs-examples/effects/halo-code";
 import { RoundedCode as EffectsRoundedCode } from "../docs-examples/effects/rounded-code";
 import { ShadowCode } from "../docs-examples/effects/shadow-code";
-import { RadialCode } from "../docs-examples/colors/radial-code";
 import { MenuFrameCode } from "../docs-examples/frames/menu-frame-code";
 import { OfficialFrameCode } from "../docs-examples/frames/official-frame-code";
 import { DownloadSvgButton as MenuDownloadSvgButton } from "../docs-examples/getting-started/download-svg-button";
@@ -314,7 +314,10 @@ describe("the shape, color, logo, template and frame examples", () => {
     ["per-eye colors", <EyeColorsCode key="eyes" />],
     ["per-eye shapes", <EyeShapesCode key="eye-shapes" />],
     ["eyes on the code's gradient", <EyeGradientCode key="eye-gradient" />],
-    ["a rounded background on a backdrop", <EffectsRoundedCode key="rounded" />],
+    [
+      "a rounded background on a backdrop",
+      <EffectsRoundedCode key="rounded" />,
+    ],
     ["a halo", <HaloCode key="halo" />],
     ["a shadow", <ShadowCode key="shadow" />],
     ["brand colors", <ColorsBrandCode key="brand" />],
