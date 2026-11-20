@@ -63,8 +63,10 @@ import { BRAND_LOGO_COUNT } from "./brand-logos/catalog.generated";
 import { PAGE_TYPE_IDS } from "./landing/page-type-ids";
 import { PATH_ALIASES_PER_CODE } from "./path-alias-limits";
 import {
+  formatPrice,
   MONEY_BACK_DAYS,
   NONPROFIT_DISCOUNT_PERCENT,
+  PRICING,
   SWITCHER_MONEY_BACK_DAYS,
 } from "./pricing";
 import { FREE_SCAN_HISTORY_YEARS } from "./scan-history";
@@ -152,6 +154,39 @@ export const PRODUCT_FACTS = {
   switcherMoneyBackDays: SWITCHER_MONEY_BACK_DAYS,
   /** The non-profit discount, as copy writes it: "50" (followed by "%"). */
   nonprofitDiscountPercent: NONPROFIT_DISCOUNT_PERCENT,
+  // List prices (lib/pricing.ts) with their currency sign, for compare pages,
+  // posts and the plans docs: "Pro ({facts.proMonthlyPrice}/mo or
+  // {facts.proYearlyPrice}/yr)". The pricing page and checkout read PRICING.
+  /** Pro, a month, in US dollars: "$5". */
+  proMonthlyPrice: formatPrice(PRICING.pro.month.amounts.USD, "USD"),
+  /** Pro, a year, in US dollars: "$48". */
+  proYearlyPrice: formatPrice(PRICING.pro.year.amounts.USD, "USD"),
+  /** Business, a month, in US dollars: "$15". */
+  businessMonthlyPrice: formatPrice(PRICING.business.month.amounts.USD, "USD"),
+  /** Business, a year, in US dollars: "$144". */
+  businessYearlyPrice: formatPrice(PRICING.business.year.amounts.USD, "USD"),
+  /** Pro, a month, in rupees (India): "₹199". */
+  proMonthlyPriceInr: formatPrice(PRICING.pro.month.amounts.INR, "INR"),
+  /** Pro, a year, in rupees (India): "₹1,499". */
+  proYearlyPriceInr: formatPrice(PRICING.pro.year.amounts.INR, "INR"),
+  /** Business, a month, in rupees (India): "₹599". */
+  businessMonthlyPriceInr: formatPrice(
+    PRICING.business.month.amounts.INR,
+    "INR",
+  ),
+  /** Business, a year, in rupees (India): "₹4,999". */
+  businessYearlyPriceInr: formatPrice(PRICING.business.year.amounts.INR, "INR"),
+  /** Pro, a month, in euros (EU and EEA, once EUR_PRICES is on): "€5". */
+  proMonthlyPriceEur: formatPrice(PRICING.pro.month.amounts.EUR, "EUR"),
+  /** Pro, a year, in euros: "€48". */
+  proYearlyPriceEur: formatPrice(PRICING.pro.year.amounts.EUR, "EUR"),
+  /** Business, a month, in euros: "€15". */
+  businessMonthlyPriceEur: formatPrice(
+    PRICING.business.month.amounts.EUR,
+    "EUR",
+  ),
+  /** Business, a year, in euros: "€144". */
+  businessYearlyPriceEur: formatPrice(PRICING.business.year.amounts.EUR, "EUR"),
   /**
    * Years of scan history Free shows (lib/scan-history.ts): "1", followed by
    * "year". Pro and Business keep all of it, which copy writes as words.

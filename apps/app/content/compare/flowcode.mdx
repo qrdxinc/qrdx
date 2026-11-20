@@ -13,7 +13,7 @@ sources:
   - https://www.flowcode.com/pricing
 tableRows:
   - feature: Price
-    qrdx: "Free; paid from $5/mo"
+    qrdx: "Free; paid from {facts.proMonthlyPrice}/mo"
     competitor: "Free; Pro Plus $25/mo billed annually"
   - feature: Codes on the free plan
     qrdx: "Unlimited static + 10 dynamic"
@@ -22,7 +22,7 @@ tableRows:
     qrdx: "Built in, unlimited scans"
     competitor: "500 scans free; 6,000 on Pro Plus"
   - feature: Tracked, redirect-based codes
-    qrdx: "10 free; unlimited from $5/mo"
+    qrdx: "10 free; unlimited from {facts.proMonthlyPrice}/mo"
     competitor: true
   - feature: Landing pages
     qrdx: "Hosted pages: 3 free, unlimited on Pro"
@@ -53,7 +53,7 @@ Flowcode is a marketing platform built around tracked QR codes. Each Flowcode po
 
 Flowcode fits brands running campaigns who want scan data, landing pages and CRM connections in one product. Its self-serve plans are Free (up to 2 Flowcodes, analytics for 500 scans), Pro Plus ($25/mo billed annually, up to 50 Flowcodes and landing pages, analytics for 6,000 scans) and Growth ($250, annual only, starting at 150 Flowcodes with geo-location analytics, CRM integrations and API access). Larger plans are usage-based or custom.
 
-QRdx fits designers, small businesses and developers who want polished codes without a big subscription: static codes need no account, the Free plan includes 10 dynamic codes and 3 hosted pages, and Pro is $5/mo or $48/yr. Developers can use the REST API, the MCP server or the React library.
+QRdx fits designers, small businesses and developers who want polished codes without a big subscription: static codes need no account, the Free plan includes 10 dynamic codes and 3 hosted pages, and Pro is {facts.proMonthlyPrice}/mo or {facts.proYearlyPrice}/yr. Developers can use the REST API, the MCP server or the React library.
 
 ## Where Flowcode is the better choice
 

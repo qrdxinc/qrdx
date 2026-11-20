@@ -10,6 +10,7 @@ import { dirname, join, relative } from "node:path";
 import { loader, type VirtualFile } from "fumadocs-core/source";
 import { describe, expect, it } from "vitest";
 import { createMetadata } from "@/lib/metadata";
+import { fillFacts } from "@/lib/product-facts";
 import {
   brandedTitle,
   MAX_DESCRIPTION,
@@ -119,8 +120,13 @@ describe("comparison pages", () => {
   const files = readdirSync(join(CONTENT, "compare")).filter((file) =>
     file.endsWith(".mdx"),
   );
-  const field = (text: string, name: string) =>
-    new RegExp(`^${name}:\\s*"?(.*?)"?\\s*$`, "m").exec(text)?.[1];
+  // Measured as rendered: `{facts.proMonthlyPrice}` shows as "$5".
+  const field = (text: string, name: string) => {
+    const value = new RegExp(`^${name}:\\s*"?(.*?)"?\\s*$`, "m").exec(
+      text,
+    )?.[1];
+    return value === undefined ? undefined : fillFacts(value);
+  };
 
   it.each(files)("%s has a short seoTitle and seoDescription", (file) => {
     const text = readFileSync(join(CONTENT, "compare", file), "utf8");
