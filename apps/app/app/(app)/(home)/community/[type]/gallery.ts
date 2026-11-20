@@ -135,6 +135,29 @@ export function galleryHref(
   return search ? `${base}?${search}` : base;
 }
 
+/**
+ * The canonical URL of a gallery page. Each page of the full list is its
+ * own, so search engines reach the items past the first page; a filtered,
+ * re-sorted or tagged view points at the full list's first page.
+ */
+export function galleryCanonical(query: GalleryQuery, page: number): string {
+  const full =
+    query.filter === "all" &&
+    query.sort === "popular" &&
+    query.group === null &&
+    query.tag === null;
+  return galleryHref(
+    {
+      type: query.type,
+      filter: "all",
+      sort: "popular",
+      group: null,
+      tag: null,
+    },
+    { page: full ? page : 1 },
+  );
+}
+
 /** Names the list a query shows, for the infinite list's restore on Back. */
 export const galleryListKey = (query: GalleryQuery) =>
   galleryHref(query).replace("/community/", "community:");
