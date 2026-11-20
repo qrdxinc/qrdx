@@ -78,7 +78,7 @@ export default async function BarcodeGeneratorPage() {
             `${FORMAT_COUNT} barcode types: ${BARCODE_FORMATS.map((format) => format.label).join(", ")}`,
             "Check digits calculated and verified",
             "Scan check with an open-source decoder",
-            "PNG, JPG, WebP, AVIF, SVG, PDF and EPS downloads",
+            "PNG, JPG, WebP, AVIF, BMP, SVG, PDF and EPS downloads",
             "Save barcodes to a free QRdx account to edit later",
             "Barcode image API with no key",
           ],

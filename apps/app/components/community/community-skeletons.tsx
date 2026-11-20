@@ -6,8 +6,6 @@
 // (./community-shell.tsx). No "use client": the server draws them for
 // loading.tsx, the browser for a tab still loading.
 
-import { Card } from "@repo/design-system/components/ui/card";
-import { Skeleton } from "@repo/design-system/components/ui/skeleton";
 import { cn } from "@repo/design-system/lib/utils";
 import { useTranslations } from "next-intl";
 import {
@@ -155,19 +153,6 @@ export function OverviewSkeleton() {
   );
 }
 
-/** A themes card (app/(app)/(home)/community/_components), as it loads. */
-function ThemeCardShape() {
-  return (
-    <Card className="gap-0 overflow-hidden py-0 shadow-xs">
-      <Skeleton className="h-44 rounded-none" />
-      <div className="flex items-center gap-2 px-4 py-3">
-        <Skeleton className="size-5 rounded-full" />
-        <Skeleton className="h-3 w-1/3" />
-      </div>
-    </Card>
-  );
-}
-
 /** Sidebar rows: the filters (bold) and one titled section after them. */
 function SidebarShape({
   filters,
@@ -207,17 +192,13 @@ const TOOL = "h-8 rounded-md border";
  * gallery's frame (./browse-layout.tsx).
  */
 export function GallerySkeleton({ view }: { view: CommunityTab }) {
-  const themes = view === "themes";
   const all = view === "all";
   return (
     <div className={GALLERY_FRAME}>
       <div className={BROWSE_ROOT}>
         <Status />
         <div aria-hidden className={BROWSE_ASIDE}>
-          <SidebarShape
-            filters={themes || all ? 3 : 5}
-            section={themes ? 5 : 6}
-          />
+          <SidebarShape filters={all ? 3 : 5} section={6} />
         </div>
         <div aria-hidden className={BROWSE_MAIN}>
           <div className={BROWSE_TOOLBAR}>
@@ -226,7 +207,7 @@ export function GallerySkeleton({ view }: { view: CommunityTab }) {
               {all ? (
                 <div className={cn(BAR, "h-4 w-44")} />
               ) : (
-                <div className={cn(TOOL, themes ? "w-36" : "w-24")} />
+                <div className={cn(TOOL, "w-24")} />
               )}
             </div>
             {!all && (
@@ -236,13 +217,9 @@ export function GallerySkeleton({ view }: { view: CommunityTab }) {
             )}
           </div>
           <div className={GALLERY_GRID}>
-            {Array.from({ length: GALLERY_CARDS }, (_, index) =>
-              themes ? (
-                <ThemeCardShape key={index} />
-              ) : (
-                <CardShape key={index} />
-              ),
-            )}
+            {Array.from({ length: GALLERY_CARDS }, (_, index) => (
+              <CardShape key={index} />
+            ))}
           </div>
         </div>
       </div>

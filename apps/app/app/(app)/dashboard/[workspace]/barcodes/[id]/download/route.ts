@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * A saved barcode as a file, for the dashboard's Download menu: the browser
- * session's workspace, no API quota. ?type=png|jpg|webp|avif|svg|pdf|eps.
+ * session's workspace, no API quota. ?type=png|jpg|webp|avif|bmp|svg|pdf|eps.
  */
 export async function GET(
   request: NextRequest,

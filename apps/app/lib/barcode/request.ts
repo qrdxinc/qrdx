@@ -68,7 +68,7 @@ const typeField = z
   .enum(BARCODE_FILE_TYPES)
   .default("svg")
   .describe(
-    "File type: svg (default), png, jpg, webp, avif, pdf or eps. Raster images are `scale` pixels per module; SVG, PDF and EPS are vectors at one point per module (0.353 mm).",
+    "File type: svg (default), png, jpg, webp, avif, bmp, pdf or eps. Raster images are `scale` pixels per module; SVG, PDF and EPS are vectors at one point per module (0.353 mm). BMP is an uncompressed 24-bit bitmap (no transparency) for older systems that only take BMP.",
   );
 
 const hexText = (what: string) =>
