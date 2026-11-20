@@ -83,13 +83,17 @@ export function weakestEyePattern(props: EyeShapeProps): CornerEyePattern {
   return outers[0]?.outer ?? DEFAULT_EYE;
 }
 
-/** Risk kinds from the one that blocks a pick to the one that only warns. */
+/**
+ * Risk kinds from the one that blocks a pick to the one that only warns.
+ * A weak eye on its own comes last: the scan score has its own eye-shape
+ * check for it, so a sharp-render pair on another eye still gets reported.
+ */
 const RISK_SEVERITY: StylePairRisk["kind"][] = [
   "dot-eye",
   "body-eye",
   "dot",
-  "eye",
   "sharp-dot-eye",
+  "eye",
 ];
 
 /**
@@ -139,7 +143,12 @@ export function clampBgRadius(
   margin: number,
   shape?: QRCodeShape
 ): number {
-  if (!radius || radius <= 0 || isShapedCode(shape) || margin <= 0) {
+  if (
+    !(radius && Number.isFinite(radius)) ||
+    radius <= 0 ||
+    isShapedCode(shape) ||
+    margin <= 0
+  ) {
     return 0;
   }
   const limit = Math.min(
@@ -167,8 +176,20 @@ export function getBgRadiusLimit({
   return clampBgRadius(BG_RADIUS_MAX, modules, margin ?? DEFAULT_MARGIN, shape);
 }
 
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, value));
+/** `value` kept between `min` and `max`; anything that isn't a finite number is `fallback`. */
+const clamp = (
+  value: number | undefined,
+  fallback: number,
+  min: number,
+  max: number
+) =>
+  Math.min(
+    max,
+    Math.max(
+      min,
+      typeof value === "number" && Number.isFinite(value) ? value : fallback
+    )
+  );
 
 /**
  * Dot shapes a halo is never drawn with on a see-through background. The
@@ -241,11 +262,20 @@ export function resolveHalo(
     return null;
   }
   const width = clamp(
-    halo.width ?? HALO_WIDTH_DEFAULT,
+    halo.width,
+    HALO_WIDTH_DEFAULT,
     HALO_WIDTH_MIN,
     HALO_WIDTH_MAX
   );
-  return { color: halo.color || HALO_COLOR_DEFAULT, width };
+  // The rim is always opaque: a see-through rim would compound where rims
+  // overlap in the print PDF, which paints each shape on its own
+  const parsed = parseColor(halo.color || HALO_COLOR_DEFAULT);
+  const color = parsed
+    ? `#${[parsed.r, parsed.g, parsed.b]
+        .map((channel) => Math.round(channel).toString(16).padStart(2, "0"))
+        .join("")}`
+    : HALO_COLOR_DEFAULT;
+  return { color, width };
 }
 
 /**
@@ -259,11 +289,7 @@ export function resolveShadow(
     return null;
   }
   const shift = (value: number | undefined) =>
-    clamp(
-      value ?? SHADOW_OFFSET_DEFAULT,
-      -SHADOW_OFFSET_MAX,
-      SHADOW_OFFSET_MAX
-    );
+    clamp(value, SHADOW_OFFSET_DEFAULT, -SHADOW_OFFSET_MAX, SHADOW_OFFSET_MAX);
   const dx = shift(shadow.dx);
   const dy = shift(shadow.dy);
   if (dx === 0 && dy === 0) {
@@ -272,7 +298,8 @@ export function resolveShadow(
   return {
     color: shadow.color || SHADOW_COLOR_DEFAULT,
     opacity: clamp(
-      shadow.opacity ?? SHADOW_OPACITY_DEFAULT,
+      shadow.opacity,
+      SHADOW_OPACITY_DEFAULT,
       SHADOW_OPACITY_MIN,
       SHADOW_OPACITY_MAX
     ),

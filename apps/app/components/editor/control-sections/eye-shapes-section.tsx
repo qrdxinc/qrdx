@@ -21,7 +21,7 @@ import {
 } from "./eye-shapes";
 import { NewLookTag } from "./new-look-tag";
 import { ShapePicker } from "./option-tiles";
-import { eyeName } from "./pattern-controls";
+import { eyeDotName, eyeName } from "./pattern-controls";
 import {
   EYE_CATEGORY,
   EYE_DOT_CATEGORY,
@@ -64,7 +64,11 @@ export function EyeShapesSection({
       summary={
         custom
           ? EYE_POSITIONS.filter((eye) => style.eyeShapes?.[eye])
-              .map((eye) => eyeName(eyeShapeAt(style, eye).outer))
+              .map((eye) =>
+                style.eyeShapes?.[eye]?.outer
+                  ? eyeName(eyeShapeAt(style, eye).outer)
+                  : eyeDotName(eyeShapeAt(style, eye).inner),
+              )
               .join(" · ")
           : t("sameForAll")
       }

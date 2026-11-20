@@ -4,10 +4,13 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { Switch } from "@repo/design-system/components/ui/switch";
 import { useTranslations } from "next-intl";
-import { getSolidColor, resolveShadow } from "qrdx";
+import { getSolidColor } from "qrdx";
 import {
+  type QRShadow,
   SHADOW_COLOR_DEFAULT,
+  SHADOW_OFFSET_DEFAULT,
   SHADOW_OFFSET_MAX,
+  SHADOW_OPACITY_DEFAULT,
   SHADOW_OPACITY_MAX,
   SHADOW_OPACITY_MIN,
 } from "qrdx/types";
@@ -17,6 +20,29 @@ import type { QRStyle } from "@/types/theme";
 import { NewLookTag } from "./new-look-tag";
 
 const percent = (share: number) => Math.round(share * 100);
+
+const finite = (value: number | undefined, fallback: number) =>
+  typeof value === "number" && Number.isFinite(value) ? value : fallback;
+
+/**
+ * The shadow's controls as shown: the style's values with the defaults
+ * filled in. A shadow that is on stays on at a shift of 0 (the engine then
+ * draws nothing), so dragging a slider through 0 keeps the controls and
+ * the other values.
+ */
+export function shadowValues(shadow: QRShadow): {
+  color: string;
+  opacity: number;
+  dx: number;
+  dy: number;
+} {
+  return {
+    color: shadow.color || SHADOW_COLOR_DEFAULT,
+    opacity: finite(shadow.opacity, SHADOW_OPACITY_DEFAULT),
+    dx: finite(shadow.dx, SHADOW_OFFSET_DEFAULT),
+    dy: finite(shadow.dy, SHADOW_OFFSET_DEFAULT),
+  };
+}
 
 interface ShadowSectionProps {
   /** The style with defaults filled in */
@@ -71,7 +97,7 @@ export function ShadowSection({
   expanded,
 }: ShadowSectionProps) {
   const t = useTranslations("editor.controlSections.shadowSection");
-  const shadow = resolveShadow(style.shadow);
+  const shadow = style.shadow ? shadowValues(style.shadow) : null;
   const on = shadow !== null;
   const set = (change: NonNullable<QRStyle["shadow"]>) =>
     onChange({ ...style.shadow, ...change });

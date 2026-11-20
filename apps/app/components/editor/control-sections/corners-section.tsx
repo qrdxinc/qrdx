@@ -4,11 +4,17 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { Switch } from "@repo/design-system/components/ui/switch";
 import { useTranslations } from "next-intl";
-import { getBgRadiusLimit, getSolidColor } from "qrdx";
+import {
+  getBgRadiusLimit,
+  getSolidColor,
+  resolveErrorLevel,
+  resolveQRCodeProps,
+} from "qrdx";
 import { BG_RADIUS_MAX } from "qrdx/types";
 import * as React from "react";
 import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
+import { editorCodeProps } from "@/lib/qr-design/props";
 import { useQREditorStore } from "@/store/editor-store";
 import type { QRStyle } from "@/types/theme";
 import { NewLookTag } from "./new-look-tag";
@@ -30,19 +36,23 @@ interface CornersSectionProps {
  * the quiet zone keeps the code's corners (qrdx getBgRadiusLimit), so the
  * range grows with the padding and is 0 without any, or for a shaped code.
  */
+export function bgRadiusLimitFor(style: QRStyle, value: string): number {
+  // The level the code is really drawn at: autoLevel and the logo can raise it
+  const props = resolveQRCodeProps(editorCodeProps(style, value));
+  return getBgRadiusLimit({
+    value,
+    level: resolveErrorLevel(props),
+    margin: style.margin,
+    shape: style.silhouette ?? style.shape,
+  });
+}
+
+/** `bgRadiusLimitFor` on the code being edited. */
 export function useBgRadiusLimit(style: QRStyle) {
   const value = useQREditorStore((state) => state.value);
   return React.useMemo(
-    () =>
-      value.trim()
-        ? getBgRadiusLimit({
-            value,
-            level: style.level,
-            margin: style.margin,
-            shape: style.silhouette ?? style.shape,
-          })
-        : BG_RADIUS_MAX,
-    [value, style.level, style.margin, style.shape, style.silhouette],
+    () => (value.trim() ? bgRadiusLimitFor(style, value) : BG_RADIUS_MAX),
+    [value, style],
   );
 }
 

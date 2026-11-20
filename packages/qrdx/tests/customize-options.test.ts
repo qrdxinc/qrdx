@@ -182,6 +182,50 @@ describe("looks.ts helpers", () => {
     expect(mixed?.kind).toBe("dot");
   });
 
+  it("keeps a sharp-render pair over a weak eye on another eye", () => {
+    // Rounded eyes with circle centres warn in sharp renders; one circle
+    // eye must not hide that warning behind the eye-shape check's own
+    expect(
+      getEyeStyleRisk({
+        bodyPattern: "circle",
+        cornerEyePattern: "rounded",
+        cornerEyeDotPattern: "circle",
+        eyeShapes: { topLeft: { outer: "circle" } },
+      })?.kind
+    ).toBe("sharp-dot-eye");
+  });
+
+  it("treats a value that isn't a finite number as unset", () => {
+    expect(resolveHalo({ width: Number.NaN })?.width).toBe(0.25);
+    expect(
+      resolveShadow({ dx: Number.NaN, dy: Number.POSITIVE_INFINITY })
+    ).toEqual({
+      color: "#000000",
+      opacity: 0.3,
+      dx: 0.2,
+      dy: 0.2,
+    });
+    expect(clampBgRadius(Number.NaN, 25, 4)).toBe(0);
+    expect(
+      renderSvg({ value: VALUE, halo: { width: Number.NaN } })
+    ).not.toContain("NaN");
+  });
+
+  it("draws the halo opaque, so the print PDF's per-shape painting matches", () => {
+    expect(resolveHalo({ color: "#ffffff80" })?.color).toBe("#ffffff");
+    expect(resolveHalo({ color: "rgba(253, 230, 138, 0.5)" })?.color).toBe(
+      "#fde68a"
+    );
+    const svg = renderSvg({
+      value: VALUE,
+      margin: 4,
+      halo: { color: "#ffffff80" },
+    });
+    expect(svg).toContain(
+      'data-qrdx-look="halo" fill="#ffffff" stroke="#ffffff"'
+    );
+  });
+
   it("clampBgRadius: capped at BG_RADIUS_MAX and by the quiet zone", () => {
     expect(clampBgRadius(undefined, 25, 4)).toBe(0);
     expect(clampBgRadius(0.3, 25, 0)).toBe(0);
@@ -328,6 +372,18 @@ describe("each look decodes at three phone distances", () => {
           value: VALUE,
           level: "M",
           margin: 1,
+          bgRadius: BG_RADIUS_MAX,
+          backdrop: DARK_PAGE,
+        }),
+      DARK_PAGE,
+    ],
+    [
+      "rounded corners with two modules of margin, dark backdrop, dark page",
+      () =>
+        editorProps({
+          value: VALUE,
+          level: "M",
+          margin: 2,
           bgRadius: BG_RADIUS_MAX,
           backdrop: DARK_PAGE,
         }),
@@ -547,6 +603,30 @@ describe("a halo on a see-through background", () => {
       }
     });
   }
+});
+
+describe("a halo through a real rasteriser", () => {
+  // The decode tests' own rasteriser strokes with butt caps and no joins;
+  // resvg draws the rim as a browser does (round joins and caps)
+  it("decodes at 6 px per module with resvg", async () => {
+    const { Resvg } = await import("@resvg/resvg-js");
+    const props = editorProps({
+      value: VALUE,
+      level: "M",
+      bodyPattern: "rounded",
+      bgColor: "transparent",
+      halo: { width: HALO_WIDTH_MAX },
+    });
+    const modules = symbolSize(VALUE, "M") + 8;
+    const image = new Resvg(renderSvg(props), {
+      fitTo: { mode: "width", value: modules * 6 },
+      background: LIGHT_PAGE,
+    }).render();
+    const pixels = new Uint8ClampedArray(image.pixels);
+    expect(
+      decodeQR({ data: pixels, width: image.width, height: image.height })
+    ).toBe(VALUE);
+  });
 });
 
 describe("SVG, print PDF and EPS draw them", () => {

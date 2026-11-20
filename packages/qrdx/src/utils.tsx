@@ -1449,12 +1449,11 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     // A rim of the halo color: the shapes filled and stroked with it, the
     // stroke twice the width since half of it lies under the shape. The eye
     // frames fill their hole too, so the ring's light gap is halo-colored.
-    const { color, opacity } = splitAlpha(resolvedHalo.color);
+    const { color } = resolvedHalo;
     haloLayer = (
       <g
         data-qrdx-look="halo"
         fill={color}
-        opacity={opacity}
         stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"

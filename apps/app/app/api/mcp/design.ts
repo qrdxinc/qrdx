@@ -6,6 +6,7 @@ import {
   OFFICIAL_FRAME_COLLECTIONS,
   OFFICIAL_FRAMES,
 } from "qrdx";
+import type { EyeShapes } from "qrdx/types";
 import {
   BODY_PATTERN,
   CORNER_EYE_DOT_PATTERNS,
@@ -522,20 +523,34 @@ export async function designQr(
       ...engineOptionsOf(base),
       ...engineOptionsOf(input.style),
     };
-    const withFrame = (style: ThemeStyles): ThemeStyles => ({
-      ...style,
-      ...(engine as ThemeStyles),
-      ...(customFrame ? { frame: customFrame } : {}),
-    });
+    // Per-eye shapes travel beside the loop: a repair of the eyes clears
+    // the weak ones (repair.ts), so the result keeps only those that scan
+    const withFrame = (
+      style: ThemeStyles,
+      eyeShapes: EyeShapes | undefined = engine.eyeShapes,
+    ): ThemeStyles => {
+      const { eyeShapes: _eyes, ...rest } = engine;
+      return {
+        ...style,
+        ...(rest as ThemeStyles),
+        ...(eyeShapes ? { eyeShapes } : {}),
+        ...(customFrame ? { frame: customFrame } : {}),
+      };
+    };
 
     const result = await runDesignLoop({
       value: content.value,
       initial,
       hasLogo: Boolean(logoFile),
-      score: (value, style) => scoreDesign(value, withFrame(style)),
+      eyeShapes: engine.eyeShapes,
+      score: (value, style, eyeShapes) =>
+        scoreDesign(value, withFrame(style, eyeShapes)),
     });
 
-    const themeStyles = withFrame(toThemeStyles(result.style));
+    const themeStyles = withFrame(
+      toThemeStyles(result.style),
+      result.eyeShapes,
+    );
     const drawnLogo =
       result.style.logo === "keep" && logoFile
         ? logoFile
