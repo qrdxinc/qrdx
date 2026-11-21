@@ -40,6 +40,7 @@ import { capImageSettings } from "./logo-budget";
 import { isShapedCode } from "./qr-shape";
 import { getStylePairRisk, type StylePairRisk } from "./scan-risk";
 import { resolveErrorLevel } from "./utils";
+import { oklchToRgb, rgbToOklch } from "./utils/oklab";
 import { parseColor, type RGBAColor } from "./utils/parse-color";
 
 type EyeShapeProps = Pick<
@@ -314,54 +315,271 @@ export function isSeeThroughBackground(bgColor: QRProps["bgColor"]): boolean {
 }
 
 /**
- * How light a color reads to decoders, 0 to 255: the darker of the two
- * grey conversions they use (Rec. 709 weights, as jsQR, and Rec. 601, as
- * ZXing), so a saturated color is judged as its darkest reading.
+ * How light a color reads to each decoder, 0 to 255: the two grey
+ * conversions they use, Rec. 709 weights (jsQR) and Rec. 601 (ZXing). A
+ * saturated color reads differently to each, so the halo rule holds for
+ * both.
  */
-const decoderLuma = ({ r, g, b }: RGBAColor) =>
-  Math.min(
-    0.2126 * r + 0.7152 * g + 0.0722 * b,
-    0.299 * r + 0.587 * g + 0.114 * b
+type Lumas = [rec709: number, rec601: number];
+const decoderLumas = ({ r, g, b }: RGBAColor): Lumas => [
+  0.2126 * r + 0.7152 * g + 0.0722 * b,
+  0.299 * r + 0.587 * g + 0.114 * b,
+];
+
+const HALO_LIGHT_LUMAS = decoderLumas(parseColor(HALO_LIGHT_MIN) as RGBAColor);
+
+/** Rounding slack in the halo rule's comparisons. */
+const LUMA_SLACK = 1e-9;
+
+/** True when every decoder reads `lumas` between `lower` and `upper`. */
+const lumasWithin = (lumas: Lumas, lower: Lumas, upper: Lumas) =>
+  lumas.every(
+    (luma, decoder) =>
+      luma >= lower[decoder] - LUMA_SLACK && luma <= upper[decoder] + LUMA_SLACK
   );
 
-const HALO_LIGHT_LUMA = decoderLuma(parseColor(HALO_LIGHT_MIN) as RGBAColor);
+const toHex = ({ r, g, b }: RGBAColor) =>
+  `#${[r, g, b]
+    .map((channel) => Math.round(channel).toString(16).padStart(2, "0"))
+    .join("")}`;
 
-/** How light a color reads (decoderLuma), or null when it can't be read. */
-const lumaOf = (color: string | undefined) => {
-  const parsed = readColor(color);
-  return parsed ? decoderLuma(parsed) : null;
-};
-
-/** The rim color as drawn: opaque, the default when it can't be read. */
+/** The rim color as picked: opaque, the default when it can't be read. */
 function haloColorOf(halo: QRHalo): string {
   const parsed = readColor(halo.color || HALO_COLOR_DEFAULT);
-  return parsed && parsed.a > 0
-    ? `#${[parsed.r, parsed.g, parsed.b]
-        .map((channel) => Math.round(channel).toString(16).padStart(2, "0"))
-        .join("")}`
-    : HALO_COLOR_DEFAULT;
+  return parsed && parsed.a > 0 ? toHex(parsed) : HALO_COLOR_DEFAULT;
 }
 
-export interface HaloRisk {
-  /** Which part of the design refuses it */
-  reason: "see-through" | "picture" | "dark-background" | "rim";
+/** Halvings of the lightness and of the chroma when a rim moves: well past a channel step. */
+const FIT_STEPS = 24;
+const CHROMA_STEPS = 12;
+
+/**
+ * `color` with its lightness moved until every decoder reads it between
+ * `lower` and `upper`, as little as it takes: its OKLab hue and chroma are
+ * kept (the chroma reduced only where sRGB has no such color, or where no
+ * lightness fits both decoders at it). Null when not even a grey fits.
+ */
+function fitLightness(
+  color: RGBAColor,
+  lower: Lumas,
+  upper: Lumas
+): RGBAColor | null {
+  if (lumasWithin(decoderLumas(color), lower, upper)) {
+    return color;
+  }
+  if (color.r === color.g && color.g === color.b) {
+    // A grey stays a grey: every decoder reads it as its own channel
+    const grey = Math.min(
+      Math.floor(Math.min(...upper) + LUMA_SLACK),
+      Math.max(color.r, Math.ceil(Math.max(...lower) - LUMA_SLACK))
+    );
+    return grey >= Math.max(...lower) - LUMA_SLACK
+      ? { r: grey, g: grey, b: grey, a: 1 }
+      : null;
+  }
+  const start = rgbToOklch(color);
+  const atChroma = (c: number) => {
+    const here = oklchToRgb({ l: start.l, c, h: start.h });
+    const lumas = decoderLumas(here);
+    if (lumasWithin(lumas, lower, upper)) {
+      return here;
+    }
+    // Too dark for a decoder: lighten toward white, which clears `lower`;
+    // else darken toward black, which clears `upper`
+    const lighten = lumas.some((luma, decoder) => luma < lower[decoder]);
+    const clears = (rgb: RGBAColor) =>
+      decoderLumas(rgb).every((luma, decoder) =>
+        lighten
+          ? luma >= lower[decoder] - LUMA_SLACK
+          : luma <= upper[decoder] + LUMA_SLACK
+      );
+    // The lightness nearest the color's own that clears the bound it missed
+    let missed = start.l;
+    let cleared = lighten ? 1 : 0;
+    for (let step = 0; step < FIT_STEPS; step++) {
+      const l = (missed + cleared) / 2;
+      if (clears(oklchToRgb({ l, c, h: start.h }))) {
+        cleared = l;
+      } else {
+        missed = l;
+      }
+    }
+    const rgb = oklchToRgb({ l: cleared, c, h: start.h });
+    return lumasWithin(decoderLumas(rgb), lower, upper) ? rgb : null;
+  };
+  const full = atChroma(start.c);
+  if (full) {
+    return full;
+  }
+  // As much of the chroma as still fits
+  let best = atChroma(0);
+  if (!best) {
+    return null;
+  }
+  let fits = 0;
+  let fails = start.c;
+  for (let step = 0; step < CHROMA_STEPS; step++) {
+    const c = (fits + fails) / 2;
+    const rgb = atChroma(c);
+    if (rgb) {
+      fits = c;
+      best = rgb;
+    } else {
+      fails = c;
+    }
+  }
+  return best;
+}
+
+export interface HaloRefusal {
+  /** Which part of the design refuses a halo */
+  reason: "see-through" | "picture" | "dark-background";
   message: string;
   fix: string;
 }
 
+export interface HaloAdjustment {
+  /** The rim is drawn, in another color than the one picked */
+  reason: "adjusted";
+  /** The color the rim is drawn in */
+  color: string;
+  message: string;
+  fix: string;
+}
+
+/** Why a halo isn't drawn on a code, or how its color was moved. */
+export type HaloRisk = HaloRefusal | HaloAdjustment;
+
+const TURN_OFF = "or turn the halo off";
+
 /**
- * Why a halo isn't drawn on this code, or null when it is (or there is
- * none). A halo is drawn only where it was measured never to cost a decode
- * (tests/halo-decode.test.ts): on an opaque background, in a rim at least
- * as light as HALO_LIGHT_MIN and no lighter than any background color (the
- * color, every gradient stop). A rim lighter than the background raises
- * the light level around every dot, and decoders then misread light
- * modules: at every width on a grey page under a see-through code, and
- * with grey or colored dots on a light grey background (measured 21 Nov
- * 2026, every dot shape, widths 0.1 to 0.5, 4, 6 and 9 px per module,
- * four rasteriser and decoder pipelines). A see-through background shows
- * whatever is under the code, and a picture its own tones, so neither
- * takes a halo.
+ * How light a rim may read to each decoder on this background (as light
+ * as its darkest color, every gradient stop included), or why no rim is
+ * drawn on it: a picture, any see-through paint, or a color darker than
+ * HALO_LIGHT_MIN.
+ */
+function rimCeiling(bgColor: QRProps["bgColor"]): Lumas | HaloRefusal {
+  const paint = normalizeColorConfig(bgColor, DEFAULT_BGCOLOR);
+  if (paint.type === "image") {
+    return {
+      reason: "picture",
+      message:
+        "A halo isn't drawn on a picture background: on the picture's darker parts the rim makes the code unreadable",
+      fix: `Use a background color, ${TURN_OFF}`,
+    };
+  }
+  if (isSeeThroughBackground(bgColor)) {
+    return {
+      reason: "see-through",
+      message:
+        "A halo needs an opaque background: on a grey surface under a see-through code the rim makes it unreadable",
+      fix: `Give the code an opaque background, ${TURN_OFF}`,
+    };
+  }
+  const colors = (
+    paint.type === "solid"
+      ? [paint.color]
+      : paint.stops.map((stop) => stop.color)
+  ).map(readColor);
+  const ceiling: Lumas = [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY];
+  for (const color of colors) {
+    const lumas = color ? decoderLumas(color) : ([0, 0] as Lumas);
+    ceiling[0] = Math.min(ceiling[0], lumas[0]);
+    ceiling[1] = Math.min(ceiling[1], lumas[1]);
+  }
+  if (!lumasWithin(HALO_LIGHT_LUMAS, HALO_LIGHT_LUMAS, ceiling)) {
+    return {
+      reason: "dark-background",
+      message: `A halo needs a light background, at least as light as ${HALO_LIGHT_MIN}: on a darker one the rim makes the code unreadable`,
+      fix: `Lighten the background to ${HALO_LIGHT_MIN} or lighter, ${TURN_OFF}`,
+    };
+  }
+  return ceiling;
+}
+
+/**
+ * The halo's rim on this background: the color it is drawn in, the color
+ * picked, or why none is drawn.
+ */
+function planRim(
+  halo: QRHalo,
+  bgColor: QRProps["bgColor"]
+): { drawn: string; picked: string } | HaloRefusal {
+  const ceiling = rimCeiling(bgColor);
+  if (!Array.isArray(ceiling)) {
+    return ceiling;
+  }
+  const picked = haloColorOf(halo);
+  const fitted = fitLightness(
+    parseColor(picked) as RGBAColor,
+    HALO_LIGHT_LUMAS,
+    ceiling
+  );
+  // HALO_LIGHT_MIN fits wherever a halo is drawn (rimCeiling)
+  return { drawn: fitted ? toHex(fitted) : HALO_LIGHT_MIN, picked };
+}
+
+/**
+ * The color a halo's rim is drawn in on this background, or null where no
+ * halo is drawn (getHaloRisk says why). A rim is drawn only where it was
+ * measured never to cost a decode (tests/halo-decode.test.ts): every
+ * decoder must read it at least as light as HALO_LIGHT_MIN and no lighter
+ * than any background color (the color, every gradient stop). Any color
+ * can be picked: one outside that range is drawn in the closest color
+ * inside it, its hue and as much of its chroma as fits kept, only its
+ * lightness moved (tests/halo-colors-decode.test.ts reads those rims).
+ */
+export function fitHaloColor(
+  color: string | undefined,
+  bgColor: QRProps["bgColor"]
+): string | null {
+  const plan = planRim({ color }, bgColor);
+  return "drawn" in plan ? plan.drawn : null;
+}
+
+/**
+ * Up to `count` tints of `color` a halo draws as they are on this
+ * background: its hue at evenly spaced lightness from the darkest rim the
+ * rule takes toward the background's own, darkest (the most visible)
+ * first. Empty where no halo is drawn.
+ */
+export function haloTints(
+  color: string | undefined,
+  bgColor: QRProps["bgColor"],
+  count = 4
+): string[] {
+  const ceiling = rimCeiling(bgColor);
+  const base = readColor(color);
+  if (!(Array.isArray(ceiling) && base)) {
+    return [];
+  }
+  const tints = new Set<string>();
+  for (let index = 0; index < count; index++) {
+    const share = index / count;
+    const floor = HALO_LIGHT_LUMAS.map(
+      (luma, decoder) => luma + share * ((ceiling[decoder] ?? luma) - luma)
+    ) as Lumas;
+    const tint = fitLightness({ ...base, a: 1 }, floor, ceiling);
+    if (tint) {
+      tints.add(toHex(tint));
+    }
+  }
+  return [...tints];
+}
+
+/**
+ * Why a halo isn't drawn on this code, or how its color was moved: null
+ * when it is drawn as picked (or there is none). A rim lighter than the
+ * background raises the light level around every dot, and decoders then
+ * misread light modules: at every width on a grey page under a
+ * see-through code, and with grey or colored dots on a light grey
+ * background (measured 21 Nov 2026, every dot shape, widths 0.1 to 0.5, 4,
+ * 6 and 9 px per module, four rasteriser and decoder pipelines). A
+ * see-through background shows whatever is under the code, and a picture
+ * its own tones, so neither takes a halo, nor does a background darker
+ * than HALO_LIGHT_MIN; those are refusals. On any other background a
+ * color outside the rule's range is "adjusted": drawn in the closest one
+ * inside it (fitHaloColor).
  */
 export function getHaloRisk(
   props: Pick<QRProps, "halo" | "bgColor">
@@ -369,60 +587,35 @@ export function getHaloRisk(
   if (!props.halo) {
     return null;
   }
-  const off = "or turn the halo off";
-  const paint = normalizeColorConfig(props.bgColor, DEFAULT_BGCOLOR);
-  if (paint.type === "image") {
-    return {
-      reason: "picture",
-      message:
-        "A halo isn't drawn on a picture background: on the picture's darker parts the rim makes the code unreadable",
-      fix: `Use a background color, ${off}`,
-    };
+  const plan = planRim(props.halo, props.bgColor);
+  if (!("drawn" in plan)) {
+    return plan;
   }
-  if (isSeeThroughBackground(props.bgColor)) {
-    return {
-      reason: "see-through",
-      message:
-        "A halo isn't drawn on a see-through background: on a grey surface under the code the rim makes it unreadable",
-      fix: `Give the code an opaque background, ${off}`,
-    };
+  if (plan.drawn === plan.picked) {
+    return null;
   }
-  const grounds = (
-    paint.type === "solid"
-      ? [paint.color]
-      : paint.stops.map((stop) => stop.color)
-  ).map(lumaOf);
-  const ground = grounds.includes(null)
-    ? null
-    : Math.min(...(grounds as number[]));
-  if (ground === null || ground < HALO_LIGHT_LUMA - 1e-9) {
-    return {
-      reason: "dark-background",
-      message: `A halo is drawn only on a background at least as light as ${HALO_LIGHT_MIN}: on a darker one the rim makes the code unreadable`,
-      fix: `Lighten the background to ${HALO_LIGHT_MIN} or lighter, ${off}`,
-    };
-  }
-  const rim = lumaOf(haloColorOf(props.halo)) as number;
-  if (rim < HALO_LIGHT_LUMA - 1e-9 || rim > ground + 1e-9) {
-    return {
-      reason: "rim",
-      message: `A halo is drawn only in a color between ${HALO_LIGHT_MIN} and the background's own: a rim lighter than the background, or darker than ${HALO_LIGHT_MIN}, makes the code unreadable`,
-      fix: `Pick a halo color no lighter than the background and at least as light as ${HALO_LIGHT_MIN}, ${off}`,
-    };
-  }
-  return null;
+  return {
+    reason: "adjusted",
+    color: plan.drawn,
+    message: `Halo drawn as ${plan.drawn} instead of ${plan.picked} so the code still scans: a rim must read no lighter than the background and at least as light as ${HALO_LIGHT_MIN}`,
+    fix: `To have it drawn as picked, choose a color in that range, such as ${plan.drawn}`,
+  };
 }
 
 /**
  * A halo with its defaults filled in, its width in range and its rim
- * opaque; null without one, or when `code` is given and the halo is
- * refused on it (getHaloRisk).
+ * opaque; null without one. With `code`, the rim is in the color drawn on
+ * that code's background (fitHaloColor), and null where none is drawn.
  */
 export function resolveHalo(
   halo: QRHalo | undefined,
   code?: Pick<QRProps, "bgColor">
 ): { color: string; width: number } | null {
-  if (!halo || (code && getHaloRisk({ halo, bgColor: code.bgColor }))) {
+  if (!halo) {
+    return null;
+  }
+  const plan = code ? planRim(halo, code.bgColor) : null;
+  if (plan && !("drawn" in plan)) {
     return null;
   }
   const width = clamp(
@@ -433,7 +626,7 @@ export function resolveHalo(
   );
   // The rim is always opaque: a see-through rim would compound where rims
   // overlap in the print PDF, which paints each shape on its own
-  return { color: haloColorOf(halo), width };
+  return { color: plan ? plan.drawn : haloColorOf(halo), width };
 }
 
 /**

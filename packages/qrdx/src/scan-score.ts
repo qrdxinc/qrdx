@@ -793,7 +793,11 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
   };
 }
 
-/** A halo the engine refuses to draw (looks.ts getHaloRisk): the design asked for a look it can't have. */
+/**
+ * A halo the engine refuses to draw (looks.ts getHaloRisk): the design
+ * asked for a look it can't have. A rim drawn in another color than the
+ * one picked, to stay readable, passes and says which.
+ */
 function haloCheck(props: QRProps): {
   check: ScanCheck | null;
   penalty: number;
@@ -801,6 +805,12 @@ function haloCheck(props: QRProps): {
   const risk = getHaloRisk(props);
   if (!risk) {
     return { check: null, penalty: 0 };
+  }
+  if (risk.reason === "adjusted") {
+    return {
+      check: { id: "halo", passed: true, message: risk.message },
+      penalty: 0,
+    };
   }
   return {
     check: { id: "halo", passed: false, message: risk.message, fix: risk.fix },
