@@ -1,68 +1,110 @@
-// The halo rule in the editor (control-sections/halo-rules.ts, and the
-// Dots picker's pair rules): with a see-through background a halo is
-// blocked with the dot shapes the engine refuses it for, both from the
-// Halo section and when picking such a shape while a halo is on.
-import { HALO_SEE_THROUGH_BLOCKED_BODIES } from "qrdx";
+// The halo rule in the editor (control-sections/halo-rules.ts): whether a
+// halo is drawn depends on the background and the rim only (qrdx
+// getHaloRisk), so no shape picker blocks for it, the Halo switch always
+// turns a halo off, and the background picker offers no see-through or
+// picture fill while a halo is on. Review finding 1: a halo on diamond dots
+// over an opaque background, then a see-through background, left the switch
+// off and disabled and every eye preset blocked.
+import { CORNER_EYE_DOT_PATTERNS, CORNER_EYE_PATTERNS } from "qrdx/types";
 import { describe, expect, it } from "vitest";
 import {
-  haloBlocked,
+  backgroundPickerFor,
   haloRisk,
+  haloSwitch,
 } from "@/components/editor/control-sections/halo-rules";
 import {
   pairBlocked,
   pairRisk,
 } from "@/components/editor/control-sections/pair-rules";
+import { EYE_PRESETS } from "@/components/editor/control-sections/shape-catalog";
+import { QR_IMAGE_KINDS } from "@/components/editor/paint-picker/paint-panel";
+import { randomEyes } from "@/components/editor/part-inline/random-part";
 import type { QRStyle } from "@/types/theme";
 
-const base: Partial<QRStyle> = {
-  bgColor: "transparent",
+const opaque: Partial<QRStyle> = {
+  bgColor: "#ffffff",
+  bodyPattern: "diamond",
   cornerEyePattern: "rounded",
   cornerEyeDotPattern: "rounded",
 };
 
 describe("halo rules", () => {
-  it("blocks the halo on a see-through background with a refused dot shape", () => {
-    for (const body of HALO_SEE_THROUGH_BLOCKED_BODIES) {
-      expect(haloRisk({ ...base, bodyPattern: body })?.fix, body).toContain(
-        "opaque background",
+  it("never strands the editor: a halo on, then a see-through background", () => {
+    // A halo on diamond dots over an opaque background: drawn
+    const on = { ...opaque, halo: {} };
+    expect(haloRisk(on)).toBeNull();
+    // The background goes see-through (the picker still offered it before)
+    const stuck = { ...on, bgColor: "#ffffff00" };
+    expect(haloRisk(stuck)?.reason).toBe("see-through");
+    // The switch shows the halo on and can turn it off
+    expect(haloSwitch(stuck)).toEqual({ checked: true, disabled: false });
+    // No eye preset, frame or centre is blocked for the halo: each is blocked
+    // exactly as without one
+    const { halo: _halo, ...noHalo } = stuck;
+    for (const preset of EYE_PRESETS) {
+      const change = {
+        cornerEyePattern: preset.outer,
+        cornerEyeDotPattern: preset.centre,
+      };
+      expect(pairBlocked(stuck, change), preset.id).toBe(
+        pairBlocked(noHalo, change),
       );
-      expect(haloBlocked({ ...base, bodyPattern: body, halo: {} }), body).toBe(
-        true,
-      );
-      // Nothing to block without a halo, or on an opaque background
-      expect(haloBlocked({ ...base, bodyPattern: body })).toBe(false);
-      expect(
-        haloBlocked({
-          ...base,
-          bgColor: "#ffffff",
-          bodyPattern: body,
-          halo: {},
-        }),
-      ).toBe(false);
+      expect(pairRisk(stuck, change), preset.id).toBe(pairRisk(noHalo, change));
     }
-    expect(haloRisk({ ...base, bodyPattern: "rounded" })).toBeNull();
+    for (const cornerEyePattern of CORNER_EYE_PATTERNS) {
+      expect(pairBlocked(stuck, { cornerEyePattern }), cornerEyePattern).toBe(
+        pairBlocked(noHalo, { cornerEyePattern }),
+      );
+    }
+    for (const cornerEyeDotPattern of CORNER_EYE_DOT_PATTERNS) {
+      expect(
+        pairBlocked(stuck, { cornerEyeDotPattern }),
+        cornerEyeDotPattern,
+      ).toBe(pairBlocked(noHalo, { cornerEyeDotPattern }));
+    }
+    expect(randomEyes(stuck, () => 0.5)).not.toBeNull();
+    // Turning it off clears the state
+    expect(haloSwitch(noHalo)).toEqual({ checked: false, disabled: true });
+    expect(haloSwitch({ ...noHalo, bgColor: "#ffffff" })).toEqual({
+      checked: false,
+      disabled: false,
+    });
   });
 
-  it("blocks picking a refused dot shape while a halo is on", () => {
-    const withHalo = { ...base, bodyPattern: "rounded" as const, halo: {} };
-    expect(pairBlocked(withHalo, { bodyPattern: "diamond" })).toBe(true);
-    expect(pairRisk(withHalo, { bodyPattern: "diamond" })).toContain(
-      "diamond dots",
-    );
-    expect(pairBlocked(withHalo, { bodyPattern: "circle" })).toBe(false);
-    expect(pairRisk(withHalo, { bodyPattern: "circle" })).toBeNull();
-    // Without a halo, or with an opaque background, the shape is free
+  it("blocks no dot shape for a halo", () => {
+    const on = { ...opaque, halo: {} };
+    for (const bodyPattern of ["diamond", "small-square", "star"] as const) {
+      expect(pairBlocked(on, { bodyPattern }), bodyPattern).toBe(
+        pairBlocked(opaque, { bodyPattern }),
+      );
+    }
+  });
+
+  it("keeps the background opaque and solid while a halo is on", () => {
+    expect(backgroundPickerFor(opaque, QR_IMAGE_KINDS)).toEqual({
+      alpha: true,
+      kinds: QR_IMAGE_KINDS,
+    });
+    const picker = backgroundPickerFor({ ...opaque, halo: {} }, QR_IMAGE_KINDS);
+    expect(picker.alpha).toBe(false);
+    expect(picker.kinds).not.toContain("image");
+    expect(picker.kinds).toContain("solid");
+  });
+
+  it("says why for each refusal", () => {
+    expect(haloRisk({ bgColor: "#9ca3af" })?.reason).toBe("dark-background");
     expect(
-      pairBlocked(
-        { ...base, bodyPattern: "rounded" },
-        { bodyPattern: "diamond" },
-      ),
-    ).toBe(false);
-    expect(
-      pairBlocked(
-        { ...withHalo, bgColor: "#f8fafc" },
-        { bodyPattern: "diamond" },
-      ),
-    ).toBe(false);
+      haloRisk({ bgColor: "#e5e7eb", halo: { color: "#ffffff" } })?.reason,
+    ).toBe("rim");
+    const picture = {
+      type: "image" as const,
+      src: "data:image/png;base64,AA",
+      underlay: "#ffffff",
+      fit: "cover" as const,
+      scale: 1,
+      position: "center" as const,
+      opacity: 1,
+    };
+    expect(haloRisk({ bgColor: picture })?.reason).toBe("picture");
   });
 });
