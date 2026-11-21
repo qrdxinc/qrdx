@@ -14,7 +14,6 @@ import {
   TYPE_SEGMENTS,
 } from "@/lib/community/types";
 import { isNewPublished } from "@/lib/whats-new/community";
-import { FrameNewTag } from "../frames/frame-new-tag";
 import {
   CARD_ART,
   CARD_FRAME,
@@ -126,9 +125,6 @@ export function ItemCard({
                 ? t("typeCollectionCount", { count: card.itemCount })
                 : t(TYPE_KEYS[card.type])}
             </span>
-            {card.type === "frame" && card.slug && (
-              <FrameNewTag id={card.slug} />
-            )}
           </div>
           {isNew && (
             <span
