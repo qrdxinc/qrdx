@@ -7,6 +7,7 @@ import { cn } from "@repo/design-system/lib/utils";
 import { SearchNormal1 } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import * as React from "react";
+import { NewTag } from "@/components/new-tag";
 import { SHAPE_CATEGORIES } from "./shape-catalog";
 import {
   offsetBeyond,
@@ -114,6 +115,7 @@ export function OptionTile({
   hint,
   risk,
   blocked,
+  isNew,
   onSelect,
   children,
   className,
@@ -125,17 +127,26 @@ export function OptionTile({
   risk?: string | null;
   /** Doesn't scan with the rest of the style, so it can't be picked. */
   blocked?: boolean;
+  /** Added recently: carries the "New" tag (lib/whats-new). */
+  isNew?: boolean;
   onSelect: () => void;
   children: React.ReactNode;
   className?: string;
 }) {
   const t = useTranslations("editor.controlSections.optionTiles");
+  const common = useTranslations("common");
   // A risky option keeps its usual hint: the amber dot on the preview and the
   // tooltip carry the warning, so the tile's text stays clean.
   const note = blocked ? t("wontScanHere") : hint;
   return (
     <button
-      aria-label={risk && !blocked ? t("nameMayNotScan", { name }) : undefined}
+      aria-label={
+        risk && !blocked
+          ? t("nameMayNotScan", { name })
+          : isNew
+            ? common("nameIsNew", { name })
+            : undefined
+      }
       aria-pressed={selected}
       className={cn(
         "group bg-card relative flex min-w-0 flex-col items-center gap-1.5 rounded-lg border p-1.5 pb-2 text-center transition-[color,background-color,border-color,transform] outline-none active:scale-[0.97]",
@@ -177,6 +188,13 @@ export function OptionTile({
           className="absolute top-2.5 left-2.5 size-1.5 rounded-full bg-amber-500 ring-2 ring-white"
         />
       )}
+      {isNew && (
+        // Top-right, beside the check when the tile is selected; the amber
+        // dot keeps the top-left.
+        <NewTag
+          className={cn("absolute top-2.5 right-2.5", selected && "right-6")}
+        />
+      )}
     </button>
   );
 }
@@ -206,6 +224,7 @@ export function CompactTile({
   selected,
   risk,
   blocked,
+  isNew,
   onSelect,
   children,
 }: {
@@ -213,10 +232,13 @@ export function CompactTile({
   selected: boolean;
   risk?: string | null;
   blocked?: boolean;
+  /** Added recently: carries the "New" tag (lib/whats-new). */
+  isNew?: boolean;
   onSelect: () => void;
   children: React.ReactNode;
 }) {
   const t = useTranslations("editor.controlSections.optionTiles");
+  const common = useTranslations("common");
   return (
     <button
       aria-label={
@@ -224,7 +246,9 @@ export function CompactTile({
           ? t("nameWontScanWithThis", { name })
           : risk
             ? t("nameMayNotScan", { name })
-            : name
+            : isNew
+              ? common("nameIsNew", { name })
+              : name
       }
       aria-pressed={selected}
       className={cn(
@@ -258,6 +282,15 @@ export function CompactTile({
           className="ring-card absolute bottom-1 left-1 size-1.5 rounded-full bg-amber-500 ring-2"
         />
       )}
+      {isNew && (
+        // Hangs off the top-right corner, under the check when selected
+        <NewTag
+          className={cn(
+            "absolute -top-1.5 -right-1 scale-90",
+            selected && "top-3",
+          )}
+        />
+      )}
     </button>
   );
 }
@@ -286,6 +319,8 @@ interface ShapePickerProps<T extends string> {
   riskOf?: (id: T) => string | null;
   /** Options that don't scan with the rest of the style (can't be picked). */
   blockedOf?: (id: T) => boolean;
+  /** Options added recently, which carry the "New" tag. */
+  newOf?: (id: T) => boolean;
 }
 
 /**
@@ -308,6 +343,7 @@ export function ShapePicker<T extends string>({
   preview,
   riskOf,
   blockedOf,
+  newOf,
 }: ShapePickerProps<T>) {
   const t = useTranslations("editor.controlSections.optionTiles");
   const inPanel = useInsideSidePanel();
@@ -500,6 +536,7 @@ export function ShapePicker<T extends string>({
             {visible.map((option) => (
               <OptionTile
                 blocked={value !== option.id && blockedOf?.(option.id)}
+                isNew={newOf?.(option.id)}
                 key={option.id}
                 name={option.name}
                 onSelect={() => onChange(option.id)}
@@ -556,6 +593,7 @@ export function ShapePicker<T extends string>({
         {row.map((id) => (
           <CompactTile
             blocked={value !== id && blockedOf?.(id)}
+            isNew={newOf?.(id)}
             key={id}
             name={byId.get(id)?.name ?? id}
             onSelect={() => onChange(id)}

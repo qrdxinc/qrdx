@@ -443,16 +443,19 @@ let nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        // Except the endpoint, its Server Card and the discovery documents.
+        // Except the endpoint, its Server Card, the discovery documents and
+        // robots.txt (rewritten to app/api/machine-robots below).
         source:
-          "/:path((?!mcp$|mcp/server-card$|api/mcp$|api/mcp/server-card$|\\.well-known/|_next/).*)",
+          "/:path((?!mcp$|mcp/server-card$|api/mcp$|api/mcp/server-card$|robots\\.txt$|\\.well-known/|_next/).*)",
         has: [{ type: "host", value: MCP_HOST }],
         destination: `${CANONICAL_ORIGIN}/mcp`,
         permanent: false,
       },
-      // api.qrdx.dev/openapi.json is the API's OpenAPI document (public/).
+      // api.qrdx.dev/openapi.json is the API's OpenAPI document (public/);
+      // its robots.txt is app/api/machine-robots (rewritten below).
       {
-        source: "/:path((?!v1(?:/|$)|openapi\\.json$|\\.well-known/|_next/).*)",
+        source:
+          "/:path((?!v1(?:/|$)|openapi\\.json$|robots\\.txt$|\\.well-known/|_next/).*)",
         has: [{ type: "host", value: API_HOST }],
         destination: `${CANONICAL_ORIGIN}/docs/developers/rest-api`,
         permanent: false,
@@ -534,6 +537,13 @@ let nextConfig: NextConfig = {
           has: [{ type: "host", value: MCP_HOST }],
           destination: "/api/mcp/server-card",
         },
+        // The API and MCP hosts' robots.txt: keep crawlers out of the
+        // endpoints (lib/agents/robots-rules.ts, machineHostRobots).
+        ...[API_HOST, MCP_HOST].map((host) => ({
+          source: "/robots.txt",
+          has: [{ type: "host" as const, value: host }],
+          destination: "/api/machine-robots",
+        })),
         // api.qrdx.dev/v1/... is the public REST API (same routes as
         // qrdx.dev/api/v1/..., which keeps working).
         {

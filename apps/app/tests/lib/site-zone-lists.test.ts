@@ -75,9 +75,10 @@ describe("without the marketing site", () => {
     );
   });
 
-  it("robots.txt names this app's sitemap only", () => {
+  it("robots.txt names this app's sitemaps only", () => {
     expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
       "/sitemap.xml",
+      "/community/sitemap.xml",
     ]);
   });
 
@@ -101,6 +102,7 @@ describe("while the marketing site serves the blog", () => {
   it("robots.txt names the site's blog sitemap too", () => {
     expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
       "/sitemap.xml",
+      "/community/sitemap.xml",
       "/blog/sitemap.xml",
     ]);
   });
@@ -133,6 +135,7 @@ describe("while the marketing site serves compare and the SEO collections", () =
   it("robots.txt names each group's own sitemap", () => {
     expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
       "/sitemap.xml",
+      "/community/sitemap.xml",
       "/compare/sitemap.xml",
       "/qr-codes-for/sitemap.xml",
       "/qr-codes-on/sitemap.xml",
@@ -169,6 +172,7 @@ describe("while the marketing site serves the generators and barcodes", () => {
   it("robots.txt names their sitemaps", () => {
     expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
       "/sitemap.xml",
+      "/community/sitemap.xml",
       "/qr-code-generator/sitemap.xml",
       "/barcode-generator/sitemap.xml",
     ]);
@@ -229,11 +233,12 @@ describe("while the marketing site serves pages without a sitemap of their own",
     }
   });
 
-  it("robots.txt names this app's sitemap only", () => {
+  it("robots.txt names this app's sitemaps only", () => {
     zone.blog = false;
     zone.groups = new Set(groups);
     expect(sitemaps().map((url) => new URL(url).pathname)).toEqual([
       "/sitemap.xml",
+      "/community/sitemap.xml",
     ]);
   });
 });

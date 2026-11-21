@@ -177,7 +177,7 @@ Two kinds of limit apply. Both answer `429 RATE_LIMITED` with a `Retry-After` he
 
 | Limit | Free | Pro | Business |
 | --- | --- | --- | --- |
-| API requests a day per workspace | 1,000 | 10,000 | 100,000 |
+| API requests a day per workspace | {facts.freeApiRequestsPerDay} | {facts.proApiRequestsPerDay} | {facts.businessApiRequestsPerDay} |
 
 - **Daily quota.** The day runs from 00:00 to 24:00 UTC. Every authenticated request counts. Requests made with an API key count against the key's workspace and its plan. Requests made with an access token count against the token owner's own workspace. Requests made with a browser session count against the workspace last opened in that session. The numbers are also in [Plans and limits](/docs/plans-and-limits).
 - **Per-minute limits.** The codes, barcodes, conversions and hooks endpoints allow 120 reads and 30 writes a minute per user, and 300 requests a minute per IP address. Creating codes is limited to 20 requests a minute.
