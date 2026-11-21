@@ -38,7 +38,7 @@ The Design tab has a new color picker. The background, foreground, eyes and dots
 
 Frame text is edited where it's drawn. Click the label in the preview, type, and a small menu next to it changes the text size, the text and frame colors and the icon. Enter keeps the edit as one undo step, and Escape puts the frame back.
 
-The Art tab holds Logo QR and Image QR, which blend a logo or a photo into the dots themselves. They're drawn as vectors with no AI involved, so they work in every download format.<IfAvailable feature="aiArt"> Signed in, you can also generate AI art, which paints a scene into the code and checks that the result scans. The Free plan includes 3 AI art images a month.</IfAvailable>
+The Art tab holds Logo QR and Image QR, which blend a logo or a photo into the dots themselves. They're drawn as vectors with no AI involved, so they work in every download format.<IfAvailable feature="aiArt"> Signed in, you can also generate AI art, which paints a scene into the code and checks that the result scans. The Free plan includes {facts.freeAiArtPerMonth} AI art images a month.</IfAvailable>
 
 <IfAvailable feature="aiThemes">
 The Generate tab makes or changes a design from a sentence you type. It also needs an account.
@@ -98,7 +98,7 @@ The [MCP server](/docs/developers/mcp) at `https://mcp.qrdx.dev/mcp` lets Claude
 claude mcp add --transport http qrdx https://mcp.qrdx.dev/mcp
 ```
 
-The [REST API](/docs/developers/rest-api) at `https://api.qrdx.dev/v1` creates and edits dynamic codes, reads scan analytics and reports conversions. It takes an [API key](/docs/developers/api-keys) you create in settings, or an OAuth 2.0 access token when your app acts for other QRdx users. The OpenAPI 3.1 document is at [qrdx.dev/openapi.json](/openapi.json), and a Free account can make 1,000 requests a day. On Business, signed webhooks send scans, code changes and form responses to your own URL.
+The [REST API](/docs/developers/rest-api) at `https://api.qrdx.dev/v1` creates and edits dynamic codes, reads scan analytics and reports conversions. It takes an [API key](/docs/developers/api-keys) you create in settings, or an OAuth 2.0 access token when your app acts for other QRdx users. The OpenAPI 3.1 document is at [qrdx.dev/openapi.json](/openapi.json), and a Free account can make {facts.freeApiRequestsPerDay} requests a day. On Business, signed webhooks send scans, code changes and form responses to your own URL.
 
 The `qrdx` package renders and exports styled codes in React, and the [shadcn/ui registry](/docs/developers/shadcn) has ready-made components built on it, such as a scanner and a Wi-Fi code.
 

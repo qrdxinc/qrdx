@@ -120,6 +120,32 @@ const DESIGNS = {
   },
   circle: { shape: "circle", bodyPattern: "rounded", margin: 4 },
   heart: { shape: "heart", fgColor: "#be123c" },
+  looks: {
+    margin: 4,
+    bodyPattern: "rounded",
+    fgColor: {
+      type: "linear",
+      angle: 45,
+      stops: [
+        { color: "#1d4ed8", offset: 0 },
+        { color: "#db2777", offset: 100 },
+      ],
+    },
+    eyeColor: {
+      type: "linear",
+      angle: 45,
+      stops: [
+        { color: "#1d4ed8", offset: 0 },
+        { color: "#db2777", offset: 100 },
+      ],
+    },
+    eyeGradient: "code",
+    eyeShapes: { topLeft: { outer: "squircle", inner: "squircle" } },
+    bgRadius: 0.15,
+    backdrop: "#0f172a",
+    halo: { width: 0.2 },
+    shadow: { dx: 0.15, dy: 0.15, opacity: 0.25 },
+  },
   newerShapes: {
     bodyPattern: "liquid",
     cornerEyePattern: "squircle",

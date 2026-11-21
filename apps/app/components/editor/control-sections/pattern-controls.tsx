@@ -98,7 +98,7 @@ export function eyeName(id: string | undefined) {
   return eyePatterns.find((pattern) => pattern.id === id)?.name ?? "Square";
 }
 
-function eyeDotName(id: string | undefined) {
+export function eyeDotName(id: string | undefined) {
   return eyeDotPatterns.find((pattern) => pattern.id === id)?.name ?? "Square";
 }
 

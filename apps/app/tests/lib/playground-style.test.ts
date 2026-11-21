@@ -311,6 +311,46 @@ describe("engine options", () => {
   });
 });
 
+describe("engine options: the looks around the shapes", () => {
+  it("round-trips per-eye shapes, the gradient span, rounded corners, a halo and a shadow", () => {
+    const styles: ThemeStyles = {
+      bgColor: "#ffffff",
+      eyeShapes: {
+        topLeft: { outer: "leaf", inner: "leaf" },
+        bottomLeft: { inner: "dots" },
+      },
+      eyeGradient: "code",
+      bgRadius: 0.2,
+      backdrop: "#0f172a",
+      halo: { color: "#fde68a", width: 0.3 },
+      shadow: { color: "#7c2d12", opacity: 0.25, dx: 0.2, dy: -0.1 },
+    };
+    const { value, omitted } = encode(styles);
+    expect(omitted).toEqual([]);
+    expect(decodeStyleParam(value)).toEqual({ styles });
+  });
+
+  it("rejects unknown shapes, out-of-range numbers and unsafe colors whole", () => {
+    for (const json of [
+      { es: { topLeft: { outer: "blob" } } },
+      { es: { middle: { outer: "leaf" } } },
+      { es: { topLeft: { frame: "leaf" } } },
+      { eg: "whole" },
+      { br: 0.6 },
+      { br: -0.1 },
+      { bd: "url(https://tracker.example/x)" },
+      { ha: { width: 0.6 } },
+      { ha: { color: "url(https://tracker.example/x)" } },
+      { ha: { blur: 2 } },
+      { sd: { dx: 0.4 } },
+      { sd: { opacity: 0.05 } },
+      { sd: { color: "url(https://tracker.example/x)" } },
+    ]) {
+      expect(decodeStyleParam(forge(json)), JSON.stringify(json)).toBeNull();
+    }
+  });
+});
+
 describe("engine options: logo shape and plate", () => {
   it("round-trips the crop and a safe plate color", () => {
     const styles: ThemeStyles = {

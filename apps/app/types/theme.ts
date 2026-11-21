@@ -1,14 +1,19 @@
 import {
   anyFrameSchema,
+  BG_RADIUS_MAX,
   bodyPatternSchema,
   cornerEyeDotPatternSchema,
   cornerEyePatternSchema,
   errorLevelSchema,
+  eyeGradientSpanSchema,
+  eyeShapesSchema,
+  haloSchema,
   logoOptionsSchema,
   MODULE_SCALE_MAX,
   MODULE_SCALE_MIN,
   qrArtSchema,
   qrShapeSchema,
+  shadowSchema,
 } from "qrdx/types";
 import { z } from "zod";
 import {
@@ -108,6 +113,40 @@ export const themeStylePropsSchema = z.object({
     .optional()
     .describe(
       "Logo size (share of the code width), clear space in modules and position (0 to 1 across the code)",
+    ),
+  eyeShapes: eyeShapesSchema
+    .optional()
+    .describe(
+      "Per-eye shapes (topLeft, topRight, bottomLeft), each with an outer frame and inner center shape that override cornerEyePattern and cornerEyeDotPattern",
+    ),
+  eyeGradient: eyeGradientSpanSchema
+    .optional()
+    .describe(
+      "Where the eyes' gradients run: corner (each eye on its own, the default) or code (across the whole code, so eyes continue the dots' gradient)",
+    ),
+  bgRadius: z
+    .number()
+    .min(0)
+    .max(BG_RADIUS_MAX)
+    .optional()
+    .describe(
+      "Corner radius of the background as a share of the code's width, 0 to 0.5; the engine caps it so the quiet zone keeps the code's corners",
+    ),
+  backdrop: z
+    .string()
+    .optional()
+    .describe(
+      "Solid color outside the rounded background (see-through by default)",
+    ),
+  halo: haloSchema
+    .optional()
+    .describe(
+      "A light rim around the dark modules and eyes: { color, width } with width in modules, 0.1 to 0.5",
+    ),
+  shadow: shadowSchema
+    .optional()
+    .describe(
+      "A see-through copy of the dark modules and eyes under them: { color, opacity 0.1 to 0.4, dx and dy from -0.3 to 0.3 modules }",
     ),
 });
 

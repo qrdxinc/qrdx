@@ -17,8 +17,13 @@ import { withQRSize } from "./download";
 import { getQRAsSVGDataUri } from "./export";
 import { getFrameDimensions, getFrameGapRatio, isFrameActive } from "./frame";
 import { getLogoBlockDamage } from "./logo-budget";
+import {
+  getEyeStyleRisk,
+  getHaloRisk,
+  resolveHalo,
+  weakestEyePattern,
+} from "./looks";
 import { circleQuietZone, getLayoutMargin, isShapedCode } from "./qr-shape";
-import { getStylePairRisk } from "./scan-risk";
 import { getTemplateCodeShare } from "./template-placement";
 import { getImageSettings, getLuminance, resolveErrorLevel } from "./utils";
 import { parseColor, type RGBAColor } from "./utils/parse-color";
@@ -519,6 +524,11 @@ export function getScanContrast(
     ...perEye,
   ];
   const lightColors = samples(props.bgColor, DEFAULT_BGCOLOR);
+  // A halo wraps every dark shape in its color: the code sits on it too
+  const haloColor = resolveHalo(props.halo, props)?.color;
+  if (haloColor) {
+    lightColors.push({ color: haloColor, picture: false });
+  }
   // A transparent background prints on whatever is behind it; assume paper.
   const background = (
     lightColors.length > 0
@@ -783,9 +793,25 @@ function quietZoneCheck(props: QRProps): { check: ScanCheck; penalty: number } {
   };
 }
 
+/** A halo the engine refuses to draw (looks.ts getHaloRisk): the design asked for a look it can't have. */
+function haloCheck(props: QRProps): {
+  check: ScanCheck | null;
+  penalty: number;
+} {
+  const risk = getHaloRisk(props);
+  if (!risk) {
+    return { check: null, penalty: 0 };
+  }
+  return {
+    check: { id: "halo", passed: false, message: risk.message, fix: risk.fix },
+    penalty: 15,
+  };
+}
+
 function eyeCheck(props: QRProps): { check: ScanCheck; penalty: number } {
-  // QRCodeSVG draws "gear" eyes when no pattern is given.
-  const pattern = props.cornerEyePattern ?? "gear";
+  // QRCodeSVG draws "gear" eyes when no pattern is given; one fragile eye
+  // among the three (eyeShapes) is judged like all three.
+  const pattern = weakestEyePattern(props);
   if (pattern === "curly") {
     return {
       check: {
@@ -936,9 +962,12 @@ async function scoreArtwork(
   penalty += quietZone.penalty;
   const eye = eyeCheck(props);
   penalty += eye.penalty;
-  // Known-weak style pairs and centres (see scan-risk.ts); weak eyes on
-  // their own are already covered by the eye-shape check above.
-  const styleRisk = getStylePairRisk(props);
+  const halo = haloCheck(props);
+  penalty += halo.penalty;
+  // Known-weak style pairs and centres (see scan-risk.ts), on any of the
+  // three eyes; weak eyes on their own are already covered by the
+  // eye-shape check above.
+  const styleRisk = getEyeStyleRisk(props);
   const pairRisk = styleRisk?.kind === "eye" ? null : styleRisk;
   // Sharp-render pairs fail one strict decoder only (see scan-risk.ts): they
   // show as a check with its fix but cost nothing until a phone test
@@ -975,6 +1004,9 @@ async function scoreArtwork(
     checks.push(logo.check);
   }
   checks.push(eye.check, quietZone.check);
+  if (halo.check) {
+    checks.push(halo.check);
+  }
   if (pairRisk) {
     checks.push({
       id: "style-pair",

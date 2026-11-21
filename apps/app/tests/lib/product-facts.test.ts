@@ -25,6 +25,7 @@ import { BARCODE_FORMATS } from "@/lib/barcode/formats";
 import { BRAND_LOGO_COUNT } from "@/lib/brand-logos/catalog.generated";
 import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "@/lib/free-plan-limits";
 import { PAGE_TYPE_IDS } from "@/lib/landing/page-type-ids";
+import { AI_ART_PER_MONTH, API_REQUESTS_PER_DAY } from "@/lib/plan-allowances";
 import { PLAN_LIMITS } from "@/lib/plans";
 import { formatPrice, PRICING } from "@/lib/pricing";
 import {
@@ -117,6 +118,13 @@ describe("PRODUCT_FACTS", () => {
       // lib/free-plan-limits.ts, PLAN_LIMITS.free
       freeDynamicCodes: 10,
       freeHostedPages: 3,
+      // lib/plan-allowances.ts, PLAN_LIMITS.*.apiRequestsPerDay and aiArtPerMonth
+      freeApiRequestsPerDay: "1,000",
+      proApiRequestsPerDay: "10,000",
+      businessApiRequestsPerDay: "100,000",
+      freeAiArtPerMonth: 3,
+      proAiArtPerMonth: 30,
+      businessAiArtPerMonth: 150,
       // lib/path-alias-limits.ts
       pathAliasesPerCode: 5,
     });
@@ -315,6 +323,81 @@ const HARD_CODED_FREE_LIMIT = new RegExp(
     `\\| Hosted (?:landing )?pages \\| ${H}\\b`,
   ].join("|"),
 );
+
+// QRdx's API requests a day and AI art images a month, in the phrasings copy
+// uses for QRdx, built from lib/plan-allowances.ts. Saved-barcode limits
+// share the numbers but are another limit, so they don't match.
+const count = (value: number) => value.toLocaleString("en-US");
+const HARD_CODED_ALLOWANCE = new RegExp(
+  [
+    `${count(API_REQUESTS_PER_DAY.free)} (?:API )?requests(?: a |/)day`,
+    `\\b${AI_ART_PER_MONTH.free} (?:AI art )?images a month`,
+    `Free accounts get ${AI_ART_PER_MONTH.free} a month`,
+    `\\| API requests (?:a|per) day[^|]*\\| ${count(API_REQUESTS_PER_DAY.free)} \\|`,
+    `\\| AI art images per month \\| ${AI_ART_PER_MONTH.free} \\|`,
+  ].join("|"),
+);
+
+/** The example error body in the REST API docs (a code block) quotes the API's own message. */
+const API_MESSAGE_EXAMPLE = "Daily API limit reached: the Free plan allows";
+
+describe("API and AI art allowances in copy", () => {
+  it("come from the {facts.*ApiRequestsPerDay} and {facts.*AiArtPerMonth} tokens", () => {
+    const docs = path.join(app, "../docs/content/docs");
+    const files = [
+      ...filesUnder("content", /\.mdx?$/)
+        .filter((file) => !file.startsWith(`content${path.sep}changelog`))
+        .map((file) => path.join(app, file)),
+      ...readdirSync(docs, { recursive: true })
+        .map(String)
+        .filter(
+          (file) =>
+            /\.mdx?$/.test(file) &&
+            !file.startsWith(path.join("developers", "api")),
+        )
+        .map((file) => path.join(docs, file)),
+    ];
+    const offenders = files.flatMap((file) =>
+      readFileSync(file, "utf8")
+        .split("\n")
+        .flatMap((line, index) => {
+          if (line.includes(API_MESSAGE_EXAMPLE)) return [];
+          const match = HARD_CODED_ALLOWANCE.exec(line);
+          return match
+            ? [`${path.relative(repo, file)}:${index + 1}: "${match[0]}"`]
+            : [];
+        }),
+    );
+    expect(offenders).toEqual([]);
+  });
+
+  it("match lib/plans.ts", () => {
+    for (const plan of ["free", "pro", "business"] as const) {
+      expect(PLAN_LIMITS[plan].apiRequestsPerDay).toBe(
+        API_REQUESTS_PER_DAY[plan],
+      );
+      expect(PLAN_LIMITS[plan].aiArtPerMonth).toBe(AI_ART_PER_MONTH[plan]);
+    }
+  });
+
+  it("catch a typed allowance, not a saved-barcode limit", () => {
+    expect("allows 1,000 requests a day on Free and 10,000 on Pro").toMatch(
+      HARD_CODED_ALLOWANCE,
+    );
+    expect("The Free plan includes 3 AI art images a month.").toMatch(
+      HARD_CODED_ALLOWANCE,
+    );
+    expect("| AI art images per month | 3 | 30 | 150, pooled |").toMatch(
+      HARD_CODED_ALLOWANCE,
+    );
+    expect('qrdx: "1,000 requests/day free; 10,000 on Pro"').toMatch(
+      HARD_CODED_ALLOWANCE,
+    );
+    expect(
+      "Every plan saves barcodes: up to 1,000 on Free, 10,000 on Pro",
+    ).not.toMatch(HARD_CODED_ALLOWANCE);
+  });
+});
 
 describe("Free plan allowances in copy", () => {
   it("come from {facts.freeDynamicCodes} and {facts.freeHostedPages}", () => {
