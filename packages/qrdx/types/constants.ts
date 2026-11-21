@@ -236,9 +236,11 @@ export const BG_RADIUS_QUIET_RATIO = 2;
 /**
  * A halo is a light rim around every dark module and eye (`halo`); its
  * width is in modules. It is a look, not a quiet zone: decoders still need
- * `margin`. It is drawn only on an opaque background, in a rim at least as
- * light as HALO_LIGHT_MIN and no lighter than the background (looks.ts
- * getHaloRisk). The default rim is a light grey, so it shows on white.
+ * `margin`. It is drawn only on an opaque background at least as light as
+ * HALO_LIGHT_MIN, in a rim at least as light as HALO_LIGHT_MIN and no
+ * lighter than the background: any other rim color is drawn in the
+ * closest one inside that range (looks.ts fitHaloColor). The default rim
+ * is a light grey, so it shows on white.
  */
 export const HALO_WIDTH_MIN = 0.1;
 export const HALO_WIDTH_MAX = 0.5;

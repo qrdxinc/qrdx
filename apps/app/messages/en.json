@@ -5104,13 +5104,14 @@
         "halo": "Halo",
         "off": "Off",
         "showAHalo": "Show a halo",
-        "aLightRimAround": "A light rim around every dot and eye, in a color no lighter than the background. It needs an opaque background at least light grey.",
+        "aLightRimAround": "A light rim around every dot and eye. Pick any color: it's drawn light enough for the code to scan.",
         "width": "Width",
         "color": "Color",
-        "seeThroughBackground": "A see-through background shows what's under the code, and on a grey surface the rim makes it unreadable. Pick an opaque background color.",
-        "pictureBackground": "On a picture's darker parts the rim makes the code unreadable. Pick a background color.",
-        "darkBackground": "On a background darker than light grey the rim makes the code unreadable. Pick a lighter background.",
-        "rimColor": "A rim lighter than the background, or darker than light grey, makes the code unreadable. Pick a color between the two."
+        "drawnAs": "Drawn as {color} so the code still scans",
+        "tintsOfYourDots": "Tints of your dots",
+        "seeThroughBackground": "A halo needs an opaque background. Pick a solid background color to show it.",
+        "pictureBackground": "A halo can't go on a picture. Pick a background color to show it.",
+        "darkBackground": "A halo needs a light background, at least light grey. Pick a lighter background to show it."
       },
       "shadowSection": {
         "shadow": "Shadow",
