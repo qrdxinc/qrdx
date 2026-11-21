@@ -1067,8 +1067,8 @@ describe("New tags and the scan dot on the toolbar", () => {
     // Opposite corners: the dot bottom left, the tag top right
     expect(risk?.className).toMatch(/bottom-0\.5/);
     expect(risk?.className).toMatch(/left-0\.5/);
-    expect(tag?.className).toMatch(/-top-1\.5/);
-    expect(tag?.className).toMatch(/-right-1\.5/);
+    expect(tag?.className).toMatch(/-top-2\.5/);
+    expect(tag?.className).toMatch(/-right-2\b/);
     // Shadow is new too, and draws here: no dot
     const shadow = itemButtons("dots").find((button) =>
       nameOf(button).startsWith("Shadow"),

@@ -2,7 +2,6 @@
 
 import {
   Popover,
-  PopoverAnchor,
   PopoverContent,
   PopoverTrigger,
 } from "@repo/design-system/components/ui/popover";
@@ -159,7 +158,8 @@ function PlaceMenu({
 /**
  * A toolbar button that opens a menu (a popover) beside the toolbar. The
  * menu opens on the toolbar's far side (`side`, away from the code) when it
- * fits there, else beside the code (`avoid` says where it is), else it
+ * fits there, else beside the code (`avoid` says where it is), from the
+ * button's top past the code's edge, else it
  * scrolls on the far side: it never flips over the code while there's
  * another place (menu-placement.ts, placeToolbarMenu).
  */
@@ -193,26 +193,6 @@ export function MenuPopover<M extends string>({
   };
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [placement, setPlacement] = useState<MenuPlacement | null>(null);
-  const placementRef = useRef(placement);
-  placementRef.current = placement;
-  const avoidRef = useRef(avoid);
-  avoidRef.current = avoid;
-  // What the menu opens against: the button, or the code beside it
-  const anchor = useRef({
-    getBoundingClientRect: (): DOMRect => {
-      const code =
-        placementRef.current?.against === "code" ? avoidRef.current?.() : null;
-      if (code) {
-        return new DOMRect(
-          code.left,
-          code.top,
-          code.right - code.left,
-          code.bottom - code.top,
-        );
-      }
-      return triggerRef.current?.getBoundingClientRect() ?? new DOMRect();
-    },
-  });
   const beside = placement?.side === "left" || placement?.side === "right";
   return (
     <Popover
@@ -222,7 +202,6 @@ export function MenuPopover<M extends string>({
       }}
       open={open}
     >
-      <PopoverAnchor virtualRef={anchor} />
       <TooltipWrapper label={label} side="top">
         <PopoverTrigger asChild>
           <button
@@ -237,11 +216,12 @@ export function MenuPopover<M extends string>({
       </TooltipWrapper>
       <PopoverContent
         align={beside ? "start" : "center"}
+        alignOffset={placement?.alignOffset ?? 0}
         aria-label={label}
         className={cn("z-[120] w-64 space-y-3 overflow-y-auto p-3", className)}
         collisionPadding={MENU_EDGE}
         side={placement?.side ?? side}
-        sideOffset={MENU_OFFSET}
+        sideOffset={placement?.offset ?? MENU_OFFSET}
         style={
           placement?.maxHeight ? { maxHeight: placement.maxHeight } : undefined
         }

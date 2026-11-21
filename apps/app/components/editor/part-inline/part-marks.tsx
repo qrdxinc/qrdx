@@ -52,7 +52,8 @@ export function ItemMarks({
         <NewTag
           className={cn(
             "pointer-events-none",
-            corner && "absolute -top-1.5 -right-1.5 px-1 text-[8px]",
+            // Placed only: the pill is staging's own NewTag
+            corner && "absolute -top-2.5 -right-2",
           )}
         />
       )}

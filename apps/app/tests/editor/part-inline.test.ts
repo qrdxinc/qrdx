@@ -483,82 +483,80 @@ describe("part buttons", () => {
 
 describe("where a toolbar's menu opens (placeToolbarMenu)", () => {
   const viewport = { width: 1440, height: 1000 };
-  // A toolbar above a code in the middle of a wide preview
+  // A toolbar button above a code in the middle of a wide preview
   const trigger = { left: 900, top: 330, right: 932, bottom: 358 };
   const code = { left: 600, top: 380, right: 1100, bottom: 880 };
-  const farRoom = trigger.top - MENU_OFFSET - MENU_EDGE;
+  const farRoom = Math.floor(trigger.top - MENU_OFFSET - MENU_EDGE) - 1;
+  const alignOffset = code.top - trigger.top;
+  const downward =
+    Math.floor(viewport.height - trigger.top - alignOffset - MENU_EDGE) - 1;
+  const place = (
+    menu: { width: number; height: number },
+    over = code,
+    button = trigger,
+    far: "top" | "bottom" = "top",
+  ) => placeToolbarMenu({ menu, trigger: button, code: over, viewport, far });
+
   it("on the far side when the whole menu fits there", () => {
-    const menu = { width: 300, height: farRoom - 10 };
-    const placement = placeToolbarMenu({
-      menu,
-      trigger,
-      code,
-      viewport,
-      far: "top",
-    });
-    expect(placement).toEqual({
+    expect(place({ width: 300, height: farRoom })).toEqual({
       side: "top",
-      against: "trigger",
+      offset: MENU_OFFSET,
+      alignOffset: 0,
       maxHeight: farRoom,
     });
   });
 
-  it("beside the code, right first, when it's too tall for the far side", () => {
-    const menu = { width: 300, height: 600 };
-    expect(
-      placeToolbarMenu({ menu, trigger, code, viewport, far: "top" }),
-    ).toEqual({
+  it("beside the code, right first, clear of its edge, when too tall for the far side", () => {
+    const right = place({ width: 300, height: 600 });
+    expect(right).toEqual({
       side: "right",
-      against: "code",
-      maxHeight: viewport.height - 2 * MENU_EDGE,
+      offset: code.right - trigger.right + MENU_OFFSET,
+      alignOffset,
+      maxHeight: downward,
     });
-    // No room on the right: the left
-    const left = { ...code, right: 1400, left: 900 };
-    expect(
-      placeToolbarMenu({ menu, trigger, code: left, viewport, far: "top" })
-        .side,
-    ).toBe("left");
+    // The menu's left edge (the button's right plus the offset) clears the code
+    expect(trigger.right + right.offset).toBeGreaterThan(code.right);
+    // No room on the right: the left, clear of the code's left edge
+    const wideRight = { ...code, left: 900, right: 1400 };
+    const left = place({ width: 300, height: 600 }, wideRight, {
+      ...trigger,
+      left: 1000,
+      right: 1032,
+    });
+    expect(left.side).toBe("left");
+    expect(1000 - left.offset).toBeLessThan(wideRight.left);
   });
 
   it("scrolls on the far side when neither side of the code has room", () => {
-    const menu = { width: 300, height: 600 };
     const wide = { left: 100, top: 380, right: 1340, bottom: 880 };
-    expect(
-      placeToolbarMenu({ menu, trigger, code: wide, viewport, far: "top" }),
-    ).toEqual({ side: "top", against: "trigger", maxHeight: farRoom });
+    expect(place({ width: 300, height: 600 }, wide)).toEqual({
+      side: "top",
+      offset: MENU_OFFSET,
+      alignOffset: 0,
+      maxHeight: farRoom,
+    });
     // Below the toolbar the same way
     const below = { left: 900, top: 572, right: 932, bottom: 600 };
-    expect(
-      placeToolbarMenu({
-        menu,
-        trigger: below,
-        code: wide,
-        viewport,
-        far: "bottom",
-      }),
-    ).toEqual({
+    const room =
+      Math.floor(viewport.height - below.bottom - MENU_OFFSET - MENU_EDGE) - 1;
+    expect(room).toBeGreaterThanOrEqual(MENU_MIN_HEIGHT);
+    expect(place({ width: 300, height: 600 }, wide, below, "bottom")).toEqual({
       side: "bottom",
-      against: "trigger",
-      maxHeight: viewport.height - below.bottom - MENU_OFFSET - MENU_EDGE,
+      offset: MENU_OFFSET,
+      alignOffset: 0,
+      maxHeight: room,
     });
-    expect(
-      viewport.height - below.bottom - MENU_OFFSET - MENU_EDGE,
-    ).toBeGreaterThanOrEqual(MENU_MIN_HEIGHT);
   });
 
   it("finds its own place only when the far side is too short to scroll in", () => {
-    const menu = { width: 300, height: 600 };
     const wide = { left: 100, top: 120, right: 1340, bottom: 620 };
     const high = { left: 900, top: 70, right: 932, bottom: 98 };
-    expect(
-      placeToolbarMenu({
-        menu,
-        trigger: high,
-        code: wide,
-        viewport,
-        far: "top",
-      }),
-    ).toEqual({ side: "top", against: "trigger", maxHeight: null });
+    expect(place({ width: 300, height: 600 }, wide, high)).toEqual({
+      side: "top",
+      offset: MENU_OFFSET,
+      alignOffset: 0,
+      maxHeight: null,
+    });
   });
 });
 
