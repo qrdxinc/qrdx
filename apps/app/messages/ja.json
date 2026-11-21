@@ -4812,9 +4812,7 @@
       "codeShape": {
         "codeShape": "コードの形",
         "names": {
-          "square": "四角",
-          "circle": "円",
-          "heart": "ハート"
+          "square": "四角"
         }
       },
       "errorCorrection": {

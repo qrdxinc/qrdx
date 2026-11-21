@@ -4812,9 +4812,7 @@
       "codeShape": {
         "codeShape": "Bentuk kode",
         "names": {
-          "square": "Persegi",
-          "circle": "Lingkaran",
-          "heart": "Hati"
+          "square": "Persegi"
         }
       },
       "errorCorrection": {

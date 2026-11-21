@@ -1,4 +1,5 @@
-// Where the inline editor's menu floats beside a frame label. Pure.
+// Where the inline editors' toolbars float beside a frame label or a part
+// of the code, and where their menus open. Pure.
 import type { Box } from "./preview-labels";
 
 // Room kept between the menu and the text, and around the preview's edge
@@ -43,4 +44,74 @@ export function placeMenu(
     Math.max(EDGE, bounds.width - menu.width - EDGE),
   );
   return { left, top: chosen.top, above: chosen.above };
+}
+
+/** A box in the viewport (CSS px), as getBoundingClientRect gives it. */
+export interface Rect {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+}
+
+/** How far a toolbar's menu opens from what it's placed against. */
+export const MENU_OFFSET = 8;
+/** How close a menu comes to the viewport's edge. */
+export const MENU_EDGE = 12;
+/** The least height worth scrolling in; below it a menu may cover the code. */
+export const MENU_MIN_HEIGHT = 120;
+
+export interface MenuPlacement {
+  /** Where the menu opens */
+  side: "top" | "bottom" | "left" | "right";
+  /** What it opens against: the toolbar button, or the code itself */
+  against: "trigger" | "code";
+  /** Its height is capped (it scrolls), or null to let it fit itself */
+  maxHeight: number | null;
+}
+
+/**
+ * Where a toolbar menu opens so the code stays in view while it's used:
+ * on the toolbar's far side (`far`, away from the code) when the whole menu
+ * fits there; else beside the code, right then left, when the gap there
+ * takes its width (the whole viewport's height to grow into); else on the
+ * far side again, capped to the room there so it scrolls instead of
+ * flipping over the code. Only when the far side has less than
+ * MENU_MIN_HEIGHT and the code has no room beside it may the menu cover
+ * the code (it then finds its own place). Pure.
+ */
+export function placeToolbarMenu({
+  menu,
+  trigger,
+  code,
+  viewport,
+  far,
+}: {
+  /** The menu's whole size, content unscrolled */
+  menu: { width: number; height: number };
+  trigger: Rect;
+  /** The code to keep clear of, if it's on screen */
+  code: Rect | null;
+  viewport: { width: number; height: number };
+  far: "top" | "bottom";
+}): MenuPlacement {
+  const farRoom =
+    far === "top"
+      ? trigger.top - MENU_OFFSET - MENU_EDGE
+      : viewport.height - trigger.bottom - MENU_OFFSET - MENU_EDGE;
+  if (menu.height <= farRoom) {
+    return { side: far, against: "trigger", maxHeight: farRoom };
+  }
+  if (code) {
+    const fullHeight = viewport.height - 2 * MENU_EDGE;
+    if (menu.width <= viewport.width - code.right - MENU_OFFSET - MENU_EDGE) {
+      return { side: "right", against: "code", maxHeight: fullHeight };
+    }
+    if (menu.width <= code.left - MENU_OFFSET - MENU_EDGE) {
+      return { side: "left", against: "code", maxHeight: fullHeight };
+    }
+  }
+  return farRoom >= MENU_MIN_HEIGHT
+    ? { side: far, against: "trigger", maxHeight: farRoom }
+    : { side: far, against: "trigger", maxHeight: null };
 }

@@ -4,6 +4,7 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { useTranslations } from "next-intl";
 import { FRAME_FONT_SCALE_MAX, FRAME_FONT_SCALE_MIN } from "qrdx";
+import { useId } from "react";
 import { SolidColorField } from "@/components/editor/gradient-picker";
 
 // Fields shared by the built-in and custom frame controls.
@@ -48,10 +49,11 @@ export function FrameTextSize({
   onChange: (value: number) => void;
 }) {
   const t = useTranslations("editor.controlSections.frameFields");
+  const id = useId();
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <Label className="text-xs" htmlFor="frame-font-scale">
+        <Label className="text-xs" htmlFor={id}>
           {t("textSize")}
         </Label>
         <span className="text-muted-foreground text-xs tabular-nums">
@@ -59,8 +61,9 @@ export function FrameTextSize({
         </span>
       </div>
       <Slider
+        aria-label={t("textSize")}
         disabled={disabled}
-        id="frame-font-scale"
+        id={id}
         max={FRAME_FONT_SCALE_MAX}
         min={FRAME_FONT_SCALE_MIN}
         onValueChange={([next]) => onChange(next ?? 1)}

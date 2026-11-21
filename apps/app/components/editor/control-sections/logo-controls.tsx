@@ -163,17 +163,18 @@ export function useBrandLogos(
 
 export type BrandLogos = ReturnType<typeof useBrandLogos>;
 
-/** The logo's name in the collapsed Logo header. */
-function logoNameOf(style: Partial<ThemeStyles>) {
+/** The logo's name (the collapsed Logo header, the shown logo's alt text). */
+function useLogoName(style: Partial<ThemeStyles>) {
+  const t = useTranslations("editor.controlSections.logoControls");
   const iconName = logoIconName(style.customLogo);
   const brandName = brandLogoName(style.customLogo);
   return iconName
-    ? `${iconName} icon`
+    ? t("iconName", { name: iconName })
     : brandName
-      ? `${brandName} logo`
+      ? t("brandName", { name: brandName })
       : style.customLogo
-        ? "Your logo"
-        : "QRdx logo";
+        ? t("yourLogo")
+        : t("qrdxLogo");
 }
 
 export function LogoControls({
@@ -186,7 +187,7 @@ export function LogoControls({
     onStyleChange({ ...style, customLogo: logo, showLogo: true }),
   );
   const brands = useBrandLogos(style, onStyleChange);
-  const logoName = logoNameOf(style);
+  const logoName = useLogoName(style);
 
   return (
     <ControlSection
@@ -229,11 +230,11 @@ export function LogoSourceControls({
   const showLogo = style.showLogo ?? false;
   const iconName = logoIconName(style.customLogo);
   const brandName = brandLogoName(style.customLogo);
-  const logoName = logoNameOf(style);
+  const logoName = useLogoName(style);
   const brandButtonLabel =
     brandName && showLogo
       ? brandName
-      : `${BRAND_LOGO_COUNT.toLocaleString("en-US")} brands`;
+      : t("brandCount", { count: BRAND_LOGO_COUNT });
   const handleClearLogo = () => {
     onStyleChange({ ...style, customLogo: undefined });
     upload.clear();

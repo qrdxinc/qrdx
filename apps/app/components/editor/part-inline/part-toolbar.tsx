@@ -20,7 +20,7 @@ import {
   ToolbarButton,
   toolbarClass,
 } from "../frame-inline/inline-toolbar";
-import { placeMenu } from "../frame-inline/menu-placement";
+import { placeMenu, type Rect } from "../frame-inline/menu-placement";
 import type { Box } from "../frame-inline/preview-labels";
 import type { PartItem, PartMenuItem } from "./part-controls";
 import { CloseMenuProvider, ItemMarks, useItemLabel } from "./part-marks";
@@ -44,11 +44,15 @@ export interface PartToolbarProps {
   artwork: Box | null;
   /** The preview container's size, to keep the toolbar inside it */
   bounds: { width: number; height: number };
+  /** Where the code is in the viewport: menus open clear of it */
+  avoidCode?: () => Rect | null;
   onRandom: () => void;
   /** Opens the Design tab at `section` (the last menu's), or the part's own */
   onMoreOptions: (section?: DesignSection) => void;
-  /** Enter or Escape: the edit closes, focus goes back to the part */
+  /** Enter: the edit closes, focus goes back to the part */
   onClose: () => void;
+  /** Escape: the same, and the content goes back as it was */
+  onCancel: () => void;
   /** Focus left the editor (Tab past the toolbar) */
   onLeave: () => void;
 }
@@ -62,15 +66,18 @@ function MenuItem({
   open,
   onOpenChange,
   side,
+  avoid,
 }: {
   item: PartMenuItem;
   open: boolean;
   onOpenChange: (menu: string | null) => void;
   side: "top" | "bottom";
+  avoid?: () => Rect | null;
 }) {
   const label = useItemLabel(item);
   return (
     <MenuPopover
+      avoid={avoid}
       className={item.className}
       kind="part"
       label={label}
@@ -107,9 +114,11 @@ export function PartToolbar({
   outlineColor,
   artwork,
   bounds,
+  avoidCode,
   onRandom,
   onMoreOptions,
   onClose,
+  onCancel,
   onLeave,
 }: PartToolbarProps) {
   const t = useTranslations("editor.partInline");
@@ -182,7 +191,7 @@ export function PartToolbar({
     if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();
-      onClose();
+      onCancel();
       return;
     }
     // Enter on a button presses it; anywhere else it closes the edit
@@ -246,6 +255,7 @@ export function PartToolbar({
         {items.map((item) =>
           item.kind === "menu" ? (
             <MenuItem
+              avoid={avoidCode}
               item={item}
               key={item.id}
               onOpenChange={openMenu}

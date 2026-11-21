@@ -8,7 +8,7 @@ import { Magicpen } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
 import { removeLogoBackground } from "qrdx";
 import { LOGO_SHAPES, type LogoOptions, type LogoShape } from "qrdx/types";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import type { QRStyle } from "@/types/theme";
 import { FrameColorField } from "./frame-fields";
 
@@ -73,6 +73,7 @@ export function LogoCropControls({
 }: LogoCropControlsProps) {
   const logoShapeNames = useLogoShapeNames();
   const t = useTranslations("editor.controlSections.logoCropControls");
+  const plateId = useId();
   const shape = style.logoOptions?.shape ?? "square";
   const plate = style.logoOptions?.plate;
   const cleanup = useBackgroundCleanup(style.customLogo);
@@ -109,7 +110,7 @@ export function LogoCropControls({
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <div className="space-y-0.5">
-            <Label className="cursor-pointer text-sm" htmlFor="logo-plate">
+            <Label className="cursor-pointer text-sm" htmlFor={plateId}>
               {t("plateBehindTheLogo")}
             </Label>
             <p className="text-muted-foreground text-xs">
@@ -118,7 +119,7 @@ export function LogoCropControls({
           </div>
           <Switch
             checked={Boolean(plate)}
-            id="logo-plate"
+            id={plateId}
             onCheckedChange={(on) =>
               setOptions({ plate: on ? PLATE_DEFAULT : undefined })
             }
@@ -126,7 +127,7 @@ export function LogoCropControls({
         </div>
         {plate && (
           <FrameColorField
-            id="logo-plate-color"
+            id={`${plateId}-color`}
             label={t("plateColor")}
             onChange={(color) => setOptions({ plate: color })}
             value={plate}

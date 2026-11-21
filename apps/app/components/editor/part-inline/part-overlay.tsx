@@ -3,6 +3,7 @@
 import { useIsMobile } from "@repo/design-system/hooks/use-mobile";
 import { cn } from "@repo/design-system/lib/utils";
 import { useTranslations } from "next-intl";
+import { isFrameActive } from "qrdx";
 import { EYE_POSITIONS, getSolidColor, LOGO_SIZE_MIN } from "qrdx/types";
 import {
   type ReactNode,
@@ -21,7 +22,6 @@ import type { DesignSection } from "@/lib/playground-links";
 import { soundEvent } from "@/lib/sound/emit";
 import { useQREditorStore } from "@/store/editor-store";
 import { usePlaygroundFocusStore } from "@/store/playground-focus-store";
-import type { ThemeEditorState } from "@/types/editor";
 import type { QRStyle } from "@/types/theme";
 import { withStyleChange } from "../control-sections/customization-sections";
 import { frameShapeOf } from "../control-sections/frame-shapes";
@@ -32,9 +32,18 @@ import {
 import { logoIconId, quickIconDataUrl } from "../control-sections/logo-presets";
 import { MAX_PADDING } from "../control-sections/padding-controls";
 import { InsideSidePanel } from "../control-sections/side-panel";
-import { PREVIEW_CODE_SELECTOR } from "../frame-inline/frame-text-overlay";
 import { insideInlineEditor } from "../frame-inline/inline-toolbar";
-import { type Box, previewFrameSvg } from "../frame-inline/preview-labels";
+import {
+  type Box,
+  PREVIEW_CODE_SELECTOR,
+  previewCodeRect,
+  previewFrameSvg,
+} from "../frame-inline/preview-labels";
+import {
+  type ContentSnapshot,
+  contentSnapshot,
+  restoreContent,
+} from "./content-field";
 import { LogoDrop } from "./logo-drop";
 import { measureParts, partsKey } from "./part-boxes";
 import {
@@ -43,7 +52,7 @@ import {
   type PartItemsContext,
   usePartItems,
 } from "./part-controls";
-import { type DragGesture, LogoHandles, PaddingHandle } from "./part-handles";
+import { LogoHandles, PaddingHandle } from "./part-handles";
 import { isTyping, partKeyAction } from "./part-keys";
 import { PartSheet } from "./part-sheet";
 import {
@@ -70,10 +79,12 @@ import {
 // Tab reaches them), and choosing one opens a toolbar beside it (a bottom
 // sheet on phones) with the Design tab's controls for that part and a
 // Random button. Every change goes to the editor the way the Design tab's
-// do (setThemeState): one undo step per change, a slider's drag folded into
-// one, and the Design tab shows it at once. A drag of the logo or the
-// padding handle is one step. Enter, Escape, Done, a click outside or Tab
-// out close the toolbar; focus goes back to the part. Frame text editing
+// do (setThemeState), and the Design tab shows it at once. The editor keeps
+// one undo step per gesture (lib/editor-gestures.ts): a slider, color or
+// handle drag is one step, and two picks are two however quick. Enter, Done,
+// a click outside or Tab out close the toolbar; Escape closes it too and
+// puts back the code's content (which has no undo) as it was when the
+// toolbar opened. Focus goes back to the part. Frame text editing
 // (../frame-inline) stays on top and never opens at the same time.
 
 // SVG attributes that move or resize a part
@@ -114,6 +125,14 @@ interface Session {
   eye: number;
   /** The eyes' shapes and colors go to every eye, or to that one */
   eyeScope: EyeScope;
+  /** The content as it was (Escape puts it back; it has no undo) */
+  content: ContentSnapshot;
+  /**
+   * The background's Logo and Frame menus, offered when the edit started
+   * without one: kept for the whole edit, so picking a logo or a frame
+   * there doesn't take away the menu (and the focus) in use
+   */
+  offer: { logo: boolean; frame: boolean };
 }
 
 /** The button under the pointer or focus: its part, which box, a ring? */
@@ -145,7 +164,8 @@ const currentState = () => useQREditorStore.getState().themeState;
 
 /**
  * Merges `change` into the design the way the Design tab does (its
- * onChange: setThemeState), so each change is one undo step there too.
+ * onChange: setThemeState), so it's undone the same way: one step per
+ * gesture.
  */
 function applyChange(change: Partial<QRStyle>) {
   const state = currentState();
@@ -153,25 +173,6 @@ function applyChange(change: Partial<QRStyle>) {
     ...state,
     styles: withStyleChange(state.styles, change),
   });
-}
-
-/** Merges `change` into the design without an undo step (a drag's draft). */
-function draftChange(change: Partial<QRStyle>) {
-  const state = currentState();
-  useQREditorStore.getState().draftThemeState({
-    ...state,
-    styles: withStyleChange(state.styles, change),
-  });
-}
-
-/**
- * `change` as an undo step of its own, never merged with a quick edit
- * before or after it: a random look, a hidden or dropped logo.
- */
-function changeAsOneStep(change: Partial<QRStyle>) {
-  const before = currentState();
-  draftChange(change);
-  useQREditorStore.getState().commitThemeDraft(before);
 }
 
 /** Another look for `part`, as a style change, or null when there's none. */
@@ -235,7 +236,6 @@ function LogoEditHandles({
   symbol,
   code,
   color,
-  gesture,
   onChange,
   onHide,
   onCancel,
@@ -245,7 +245,6 @@ function LogoEditHandles({
   symbol: Box;
   code: Box;
   color: string;
-  gesture: DragGesture;
   onChange: (change: Partial<QRStyle>) => void;
   onHide: () => void;
   onCancel: () => void;
@@ -257,7 +256,6 @@ function LogoEditHandles({
     <LogoHandles
       code={code}
       color={color}
-      gesture={gesture}
       logo={logo}
       maxSize={Math.max(LOGO_SIZE_MIN, maxPercent / 100)}
       onCancel={onCancel}
@@ -407,45 +405,22 @@ export function PartOverlay({
     focusAfterClose.current = null;
   }, [session]);
 
-  // A drag of a handle: its draft, kept as one undo step when it ends
-  const dragBefore = useRef<ThemeEditorState | null>(null);
-  const endDrag = useCallback(() => {
-    const before = dragBefore.current;
-    if (!before) return;
-    dragBefore.current = null;
-    useQREditorStore.getState().commitThemeDraft(before);
-  }, []);
-  const gesture: DragGesture = {
-    start: () => {
-      endDrag();
-      dragBefore.current = currentState();
-    },
-    end: endDrag,
-  };
-  /** A handle's change: part of the drag while one is on, else one step. */
-  const handleChange = (change: Partial<QRStyle>) => {
-    if (dragBefore.current) draftChange(change);
-    else applyChange(change);
-  };
-
   /** Ends the edit; `focusBack` returns focus to the part's button. */
-  const close = useCallback(
-    (focusBack: boolean) => {
-      const open = sessionRef.current;
-      if (!open) return;
-      endDrag();
-      focusAfterClose.current = focusBack ? open.part : null;
-      sessionRef.current = null;
-      setSession(null);
-    },
-    [endDrag],
-  );
+  const close = useCallback((focusBack: boolean) => {
+    const open = sessionRef.current;
+    if (!open) return;
+    focusAfterClose.current = focusBack ? open.part : null;
+    sessionRef.current = null;
+    setSession(null);
+  }, []);
 
-  // Unmounted mid-drag (the layout switched between phone and desktop, say):
-  // keep the drag as a proper undo step instead of leaving it unrecorded.
-  const endDragRef = useRef(endDrag);
-  endDragRef.current = endDrag;
-  useEffect(() => () => endDragRef.current(), []);
+  /** Escape: ends the edit and puts the content back as it was. */
+  const cancel = useCallback(() => {
+    const open = sessionRef.current;
+    if (!open) return;
+    restoreContent(open.content);
+    close(true);
+  }, [close]);
 
   const start = (part: PartId, eye = 0) => {
     const open = sessionRef.current;
@@ -478,6 +453,11 @@ export function PartOverlay({
       sheet: isMobile,
       eye,
       eyeScope: "all",
+      content: contentSnapshot(),
+      offer: {
+        logo: !currentState().styles.showLogo,
+        frame: !isFrameActive(currentState().styles.frame),
+      },
     };
     sessionRef.current = next;
     setSession(next);
@@ -500,20 +480,20 @@ export function PartOverlay({
       return next;
     });
 
-  /** A random look for `part`, as its own undo step. */
+  /** A random look for `part`. */
   const randomFor = (part: PartId) => {
     const change = randomChange(part, currentState().styles, Math.random);
     if (!change) return;
-    changeAsOneStep(change);
+    applyChange(change);
     soundEvent("tick");
   };
 
-  /** Hides the logo right away, as its own undo step. */
-  const hideLogo = () => changeAsOneStep({ showLogo: false });
+  /** Hides the logo (the toolbar's Hide logo does the same). */
+  const hideLogo = () => applyChange({ showLogo: false });
 
-  /** A dropped image becomes the logo, as its own undo step. */
+  /** A dropped image becomes the logo. */
   const dropLogo = (logo: string) =>
-    changeAsOneStep({ customLogo: logo, showLogo: true });
+    applyChange({ customLogo: logo, showLogo: true });
 
   /** Ends the edit and opens the Content tab with its form focused. */
   const openContent = () => {
@@ -652,7 +632,7 @@ export function PartOverlay({
                 onKeyDown={(event) => {
                   if (editing && event.key === "Escape") {
                     event.preventDefault();
-                    close(true);
+                    cancel();
                     return;
                   }
                   const action = partKeyAction({
@@ -706,10 +686,9 @@ export function PartOverlay({
           <LogoEditHandles
             code={measured.background}
             color={codeColor}
-            gesture={gesture}
             logo={measured.logo}
-            onCancel={() => close(true)}
-            onChange={handleChange}
+            onCancel={cancel}
+            onChange={applyChange}
             onHide={hideLogo}
             styles={styles}
             symbol={measured.symbol}
@@ -720,15 +699,14 @@ export function PartOverlay({
         measured.eyes[0] && (
           <PaddingHandle
             code={measured.background}
-            gesture={gesture}
             margin={styles.margin ?? 0}
             max={MAX_PADDING}
-            onCancel={() => close(true)}
+            onCancel={cancel}
             // A finder eye is 7 modules across
             modulePx={measured.eyes[0].width / 7}
             onMargin={(margin) => {
               if (margin !== (currentState().styles.margin ?? 0)) {
-                handleChange({ margin });
+                applyChange({ margin });
               }
             }}
           />
@@ -742,6 +720,7 @@ export function PartOverlay({
             context={{
               eye: EYE_POSITIONS[session.eye] ?? "topLeft",
               eyeScope: session.eyeScope,
+              offer: session.offer,
               onEyeScope: (scope) => setEye(session.eye, scope),
               onOpenContent: openContent,
             }}
@@ -753,6 +732,7 @@ export function PartOverlay({
                 <PartSheet
                   extra={extra}
                   items={items}
+                  onCancel={cancel}
                   onClose={() => close(true)}
                   onMoreOptions={moreOptions}
                   onRandom={() => randomFor(session.part)}
@@ -763,9 +743,11 @@ export function PartOverlay({
                   <PartToolbar
                     anchor={session.anchor}
                     artwork={measured.artwork}
+                    avoidCode={() => previewCodeRect(rootRef.current)}
                     bounds={bounds}
                     extra={extra}
                     items={items}
+                    onCancel={cancel}
                     onClose={() => close(true)}
                     onLeave={() => close(false)}
                     onMoreOptions={moreOptions}

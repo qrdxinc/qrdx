@@ -20,7 +20,37 @@ import { encodeText } from "@/utils/qr-content-encoder";
 // textSchema): only a valid entry changes the code, and an invalid one shows
 // the form's message. Every other content type has a form of its own, so the
 // field is a button to it. Content isn't part of the design's undo history,
-// here as in the Content tab.
+// here as in the Content tab, so the toolbar keeps it as it was when it
+// opened, and Escape puts it back (part-overlay.tsx).
+
+/** The content as it was, so Escape can put it back. */
+export interface ContentSnapshot {
+  value: string;
+  url: UrlContent | undefined;
+  text: TextContent | undefined;
+}
+
+export function contentSnapshot(): ContentSnapshot {
+  const { value, contentConfigs } = useQREditorStore.getState();
+  return {
+    value,
+    url: contentConfigs.url as UrlContent | undefined,
+    text: contentConfigs.text as TextContent | undefined,
+  };
+}
+
+/** Puts back the content `snapshot` holds (the forms' too, set or not). */
+export function restoreContent(snapshot: ContentSnapshot) {
+  useQREditorStore.setState((state) => ({
+    contentConfigs: {
+      ...state.contentConfigs,
+      url: snapshot.url,
+      text: snapshot.text,
+    },
+  }));
+  const store = useQREditorStore.getState();
+  if (store.value !== snapshot.value) store.setValue(snapshot.value);
+}
 
 export function ContentField({
   onOpenContent,

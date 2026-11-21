@@ -14,8 +14,15 @@ import {
 import { BODY_PATTERN } from "qrdx/types";
 import { describe, expect, it } from "vitest";
 import { EYE_PRESETS } from "@/components/editor/control-sections/shape-catalog";
-import { placeMenu } from "@/components/editor/frame-inline/menu-placement";
+import {
+  MENU_EDGE,
+  MENU_MIN_HEIGHT,
+  MENU_OFFSET,
+  placeMenu,
+  placeToolbarMenu,
+} from "@/components/editor/frame-inline/menu-placement";
 import type { Box } from "@/components/editor/frame-inline/preview-labels";
+import { sheetMaxHeight } from "@/components/editor/part-inline/part-sheet";
 import {
   anchorOf,
   BACKGROUND_REACH,
@@ -471,5 +478,98 @@ describe("part buttons", () => {
       );
     }
     expect(toolbarAnchor(box(1, 2, 3), null)).toEqual(box(1, 2, 3));
+  });
+});
+
+describe("where a toolbar's menu opens (placeToolbarMenu)", () => {
+  const viewport = { width: 1440, height: 1000 };
+  // A toolbar above a code in the middle of a wide preview
+  const trigger = { left: 900, top: 330, right: 932, bottom: 358 };
+  const code = { left: 600, top: 380, right: 1100, bottom: 880 };
+  const farRoom = trigger.top - MENU_OFFSET - MENU_EDGE;
+  it("on the far side when the whole menu fits there", () => {
+    const menu = { width: 300, height: farRoom - 10 };
+    const placement = placeToolbarMenu({
+      menu,
+      trigger,
+      code,
+      viewport,
+      far: "top",
+    });
+    expect(placement).toEqual({
+      side: "top",
+      against: "trigger",
+      maxHeight: farRoom,
+    });
+  });
+
+  it("beside the code, right first, when it's too tall for the far side", () => {
+    const menu = { width: 300, height: 600 };
+    expect(
+      placeToolbarMenu({ menu, trigger, code, viewport, far: "top" }),
+    ).toEqual({
+      side: "right",
+      against: "code",
+      maxHeight: viewport.height - 2 * MENU_EDGE,
+    });
+    // No room on the right: the left
+    const left = { ...code, right: 1400, left: 900 };
+    expect(
+      placeToolbarMenu({ menu, trigger, code: left, viewport, far: "top" })
+        .side,
+    ).toBe("left");
+  });
+
+  it("scrolls on the far side when neither side of the code has room", () => {
+    const menu = { width: 300, height: 600 };
+    const wide = { left: 100, top: 380, right: 1340, bottom: 880 };
+    expect(
+      placeToolbarMenu({ menu, trigger, code: wide, viewport, far: "top" }),
+    ).toEqual({ side: "top", against: "trigger", maxHeight: farRoom });
+    // Below the toolbar the same way
+    const below = { left: 900, top: 572, right: 932, bottom: 600 };
+    expect(
+      placeToolbarMenu({
+        menu,
+        trigger: below,
+        code: wide,
+        viewport,
+        far: "bottom",
+      }),
+    ).toEqual({
+      side: "bottom",
+      against: "trigger",
+      maxHeight: viewport.height - below.bottom - MENU_OFFSET - MENU_EDGE,
+    });
+    expect(
+      viewport.height - below.bottom - MENU_OFFSET - MENU_EDGE,
+    ).toBeGreaterThanOrEqual(MENU_MIN_HEIGHT);
+  });
+
+  it("finds its own place only when the far side is too short to scroll in", () => {
+    const menu = { width: 300, height: 600 };
+    const wide = { left: 100, top: 120, right: 1340, bottom: 620 };
+    const high = { left: 900, top: 70, right: 932, bottom: 98 };
+    expect(
+      placeToolbarMenu({
+        menu,
+        trigger: high,
+        code: wide,
+        viewport,
+        far: "top",
+      }),
+    ).toEqual({ side: "top", against: "trigger", maxHeight: null });
+  });
+});
+
+describe("the phone sheet stops above the scan score (sheetMaxHeight)", () => {
+  it("up to 56% of the screen, short of the badge, never under 40%", () => {
+    expect(sheetMaxHeight(844, null)).toBeCloseTo(844 * 0.56);
+    // The badge's bottom at 380: the sheet starts 8px below it
+    expect(sheetMaxHeight(844, 380)).toBe(844 - 380 - 8);
+    // A badge low on the screen: the sheet keeps 40%
+    expect(sheetMaxHeight(844, 700)).toBeCloseTo(844 * 0.4);
+    // A badge high up: the usual 56%
+    expect(sheetMaxHeight(844, 200)).toBeCloseTo(844 * 0.56);
   });
 });

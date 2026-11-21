@@ -2,7 +2,11 @@
 // marked label (data-qrdx-frame-label) is drawn on screen, at what size,
 // weight and color, and what color is painted behind it. The inline editor
 // lays its input exactly over a label from this. Browser only.
-import { FRAME_LABEL_ATTRIBUTE } from "qrdx";
+import { FRAME_LABEL_ATTRIBUTE, QR_PART_ATTRIBUTE } from "qrdx";
+import type { Rect } from "./menu-placement";
+
+/** The code box in the preview (QRPreviewPanel marks it). */
+export const PREVIEW_CODE_SELECTOR = "[data-preview-code]";
 
 export interface Box {
   left: number;
@@ -177,4 +181,24 @@ export function setLabelHidden(
       marker !== null && text.getAttribute(FRAME_LABEL_ATTRIBUTE) === marker;
     text.style.opacity = hide ? "0" : "";
   }
+}
+
+/**
+ * Where the code (its background, quiet zone included) is drawn in the
+ * viewport, in the preview inside `root`: what a toolbar's menus keep off.
+ * Null when it isn't drawn.
+ */
+export function previewCodeRect(root: ParentNode | null): Rect | null {
+  const svg = root?.querySelector(`${PREVIEW_CODE_SELECTOR} > svg`);
+  if (!svg) return null;
+  const rects = [
+    ...svg.querySelectorAll(`[${QR_PART_ATTRIBUTE}="background"]`),
+  ].map((element) => element.getBoundingClientRect());
+  if (rects.length === 0) return null;
+  return {
+    left: Math.min(...rects.map((rect) => rect.left)),
+    top: Math.min(...rects.map((rect) => rect.top)),
+    right: Math.max(...rects.map((rect) => rect.right)),
+    bottom: Math.max(...rects.map((rect) => rect.bottom)),
+  };
 }

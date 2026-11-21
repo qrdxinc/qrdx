@@ -2,12 +2,27 @@
 
 import {
   Popover,
+  PopoverAnchor,
   PopoverContent,
   PopoverTrigger,
 } from "@repo/design-system/components/ui/popover";
 import { cn } from "@repo/design-system/lib/utils";
-import type { KeyboardEvent, ReactNode } from "react";
+import {
+  type KeyboardEvent,
+  type ReactNode,
+  type RefObject,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
+import {
+  MENU_EDGE,
+  MENU_OFFSET,
+  type MenuPlacement,
+  placeToolbarMenu,
+  type Rect,
+} from "./menu-placement";
 
 // The pill toolbar the preview's inline editors share (frame text here,
 // the code's parts in ../part-inline): its buttons, dividers, swatches and
@@ -108,7 +123,46 @@ export function ToolbarButton({
   );
 }
 
-/** A toolbar button that opens a menu (a popover) beside the toolbar. */
+/** Measures the open menu and tells it where to go (placeToolbarMenu). */
+function PlaceMenu({
+  far,
+  triggerRef,
+  avoid,
+  onPlace,
+}: {
+  far: "top" | "bottom";
+  triggerRef: RefObject<HTMLButtonElement | null>;
+  avoid?: () => Rect | null;
+  onPlace: (placement: MenuPlacement) => void;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  // Once per opening, before it shows: the menu then keeps its place while
+  // it's used (a menu that grows scrolls where it is)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: placed once when it opens
+  useLayoutEffect(() => {
+    const content = ref.current?.parentElement;
+    const trigger = triggerRef.current?.getBoundingClientRect();
+    if (!(content && trigger)) return;
+    onPlace(
+      placeToolbarMenu({
+        menu: { width: content.offsetWidth, height: content.scrollHeight },
+        trigger,
+        code: avoid?.() ?? null,
+        viewport: { width: window.innerWidth, height: window.innerHeight },
+        far,
+      }),
+    );
+  }, []);
+  return <span hidden ref={ref} />;
+}
+
+/**
+ * A toolbar button that opens a menu (a popover) beside the toolbar. The
+ * menu opens on the toolbar's far side (`side`, away from the code) when it
+ * fits there, else beside the code (`avoid` says where it is), else it
+ * scrolls on the far side: it never flips over the code while there's
+ * another place (menu-placement.ts, placeToolbarMenu).
+ */
 export function MenuPopover<M extends string>({
   kind,
   label,
@@ -117,6 +171,7 @@ export function MenuPopover<M extends string>({
   onOpenChange,
   trigger,
   side,
+  avoid,
   className,
   children,
 }: {
@@ -127,6 +182,8 @@ export function MenuPopover<M extends string>({
   onOpenChange: (menu: M | null) => void;
   trigger: ReactNode;
   side: "top" | "bottom";
+  /** Where the code is in the viewport, to keep the menu off it */
+  avoid?: () => Rect | null;
   className?: string;
   children: ReactNode;
 }) {
@@ -134,26 +191,70 @@ export function MenuPopover<M extends string>({
     [`data-${kind}-inline`]: "",
     [`data-${kind}-inline-menu`]: "",
   };
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [placement, setPlacement] = useState<MenuPlacement | null>(null);
+  const placementRef = useRef(placement);
+  placementRef.current = placement;
+  const avoidRef = useRef(avoid);
+  avoidRef.current = avoid;
+  // What the menu opens against: the button, or the code beside it
+  const anchor = useRef({
+    getBoundingClientRect: (): DOMRect => {
+      const code =
+        placementRef.current?.against === "code" ? avoidRef.current?.() : null;
+      if (code) {
+        return new DOMRect(
+          code.left,
+          code.top,
+          code.right - code.left,
+          code.bottom - code.top,
+        );
+      }
+      return triggerRef.current?.getBoundingClientRect() ?? new DOMRect();
+    },
+  });
+  const beside = placement?.side === "left" || placement?.side === "right";
   return (
     <Popover
-      onOpenChange={(next) => onOpenChange(next ? menu : null)}
+      onOpenChange={(next) => {
+        if (!next) setPlacement(null);
+        onOpenChange(next ? menu : null);
+      }}
       open={open}
     >
+      <PopoverAnchor virtualRef={anchor} />
       <TooltipWrapper label={label} side="top">
         <PopoverTrigger asChild>
-          <button aria-label={label} className={menuButton} type="button">
+          <button
+            aria-label={label}
+            className={menuButton}
+            ref={triggerRef}
+            type="button"
+          >
             {trigger}
           </button>
         </PopoverTrigger>
       </TooltipWrapper>
       <PopoverContent
+        align={beside ? "start" : "center"}
         aria-label={label}
-        className={cn("z-[120] w-64 space-y-3 p-3", className)}
-        collisionPadding={12}
-        side={side}
-        sideOffset={8}
+        className={cn("z-[120] w-64 space-y-3 overflow-y-auto p-3", className)}
+        collisionPadding={MENU_EDGE}
+        side={placement?.side ?? side}
+        sideOffset={MENU_OFFSET}
+        style={
+          placement?.maxHeight ? { maxHeight: placement.maxHeight } : undefined
+        }
         {...marker}
       >
+        {open && (
+          <PlaceMenu
+            avoid={avoid}
+            far={side}
+            onPlace={setPlacement}
+            triggerRef={triggerRef}
+          />
+        )}
         {children}
       </PopoverContent>
     </Popover>

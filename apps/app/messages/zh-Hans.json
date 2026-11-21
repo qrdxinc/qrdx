@@ -4812,9 +4812,7 @@
       "codeShape": {
         "codeShape": "二维码形状",
         "names": {
-          "square": "方形",
-          "circle": "圆形",
-          "heart": "心形"
+          "square": "方形"
         }
       },
       "errorCorrection": {

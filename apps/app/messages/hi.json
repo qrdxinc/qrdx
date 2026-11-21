@@ -4812,9 +4812,7 @@
       "codeShape": {
         "codeShape": "कोड का आकार",
         "names": {
-          "square": "चौकोर",
-          "circle": "गोल",
-          "heart": "दिल"
+          "square": "चौकोर"
         }
       },
       "errorCorrection": {

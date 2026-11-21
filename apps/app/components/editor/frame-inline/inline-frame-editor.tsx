@@ -43,7 +43,7 @@ import {
   Swatch,
   toolbarClass,
 } from "./inline-toolbar";
-import { placeMenu } from "./menu-placement";
+import { placeMenu, type Rect } from "./menu-placement";
 import type { Box, PreviewLabel } from "./preview-labels";
 
 type Menu = "size" | "text-color" | "frame-color" | "icon";
@@ -59,6 +59,8 @@ export interface InlineFrameEditorProps {
   bounds: { width: number; height: number };
   /** Where the whole frame is drawn: the menu stays off it when there's room */
   artwork: Box | null;
+  /** Where the code is in the viewport: its menus keep off it */
+  avoidCode?: () => Rect | null;
   onText: (text: string) => void;
   onTweak: (tweak: FrameTweak) => void;
   /** Enter */
@@ -119,6 +121,7 @@ export function InlineFrameEditor({
   tweaks,
   bounds,
   artwork,
+  avoidCode,
   onText,
   onTweak,
   onCommit,
@@ -262,6 +265,7 @@ export function InlineFrameEditor({
           label={t("textSize")}
           menu="size"
           onOpenChange={setMenu}
+          avoid={avoidCode}
           side={menuSide}
           open={menu === "size"}
           trigger={
@@ -285,6 +289,7 @@ export function InlineFrameEditor({
             label={t("textColor")}
             menu="text-color"
             onOpenChange={setMenu}
+            avoid={avoidCode}
             side={menuSide}
             open={menu === "text-color"}
             trigger={
@@ -309,6 +314,7 @@ export function InlineFrameEditor({
             label={t("frameColor")}
             menu="frame-color"
             onOpenChange={setMenu}
+            avoid={avoidCode}
             side={menuSide}
             open={menu === "frame-color"}
             trigger={
@@ -334,6 +340,7 @@ export function InlineFrameEditor({
             label={t("icon")}
             menu="icon"
             onOpenChange={setMenu}
+            avoid={avoidCode}
             side={menuSide}
             open={menu === "icon"}
             trigger={<Shapes aria-hidden className="size-4" />}

@@ -11,7 +11,7 @@ import {
 import { cn } from "@repo/design-system/lib/utils";
 import { ArrowDown2, Setting4, Shuffle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useId, useState } from "react";
+import { type ReactNode, useId, useLayoutEffect, useState } from "react";
 import type { DesignSection } from "@/lib/playground-links";
 import { insideInlineEditor } from "../frame-inline/inline-toolbar";
 import type { PartItem, PartMenuItem } from "./part-controls";
@@ -60,14 +60,37 @@ function MenuRow({
  * Phones: tapping a part of the code opens this sheet with its toolbar's
  * items stacked, one open at a time. It doesn't cover the preview (no
  * overlay), so every change shows above it. Every change is kept as it's
- * made; Done, Escape or a tap outside close the sheet.
+ * made (Undo takes design changes back); Done or a tap outside close the
+ * sheet, and Escape also puts the content back as it was.
  */
+/** The sheet's tallest share of the screen, and the least it shrinks to. */
+const SHEET_MAX = 0.56;
+const SHEET_MIN = 0.4;
+
+/**
+ * The sheet's height: up to SHEET_MAX of the screen, stopping short of the
+ * scan score badge under the preview so the score stays readable while
+ * the code changes (not below SHEET_MIN). Pure.
+ */
+export function sheetMaxHeight(
+  viewportHeight: number,
+  badgeBottom: number | null,
+): number {
+  const most = viewportHeight * SHEET_MAX;
+  if (badgeBottom === null) return most;
+  return Math.max(
+    viewportHeight * SHEET_MIN,
+    Math.min(most, viewportHeight - badgeBottom - 8),
+  );
+}
+
 export function PartSheet({
   part,
   items,
   extra,
   onRandom,
   onClose,
+  onCancel,
   onMoreOptions,
 }: {
   part: PartId;
@@ -75,7 +98,10 @@ export function PartSheet({
   /** Rendered with the sheet, outside its items (a file input) */
   extra?: ReactNode;
   onRandom: () => void;
+  /** Done or a tap outside */
   onClose: () => void;
+  /** Escape: also puts the content back as it was */
+  onCancel: () => void;
   /** Opens the Design tab at `section` (the open row's), or the part's own */
   onMoreOptions: (section?: DesignSection) => void;
 }) {
@@ -85,6 +111,16 @@ export function PartSheet({
   const baseId = useId();
   const first = items.find((item) => item.kind === "menu")?.id ?? null;
   const [open, setOpen] = useState<string | null>(first);
+  const [maxHeight, setMaxHeight] = useState<number | undefined>();
+  useLayoutEffect(() => {
+    const badge = document.querySelector("[data-scan-score-badge]");
+    setMaxHeight(
+      sheetMaxHeight(
+        window.innerHeight,
+        badge ? badge.getBoundingClientRect().bottom : null,
+      ),
+    );
+  }, []);
 
   return (
     <Sheet
@@ -99,9 +135,10 @@ export function PartSheet({
         className="z-[120] max-h-[56svh] gap-0 rounded-t-xl p-0"
         data-part-inline=""
         data-part-sheet={part}
+        style={maxHeight ? { maxHeight } : undefined}
         onEscapeKeyDown={(event) => {
           event.preventDefault();
-          onClose();
+          onCancel();
         }}
         // The preview's handles (moving the logo, the padding) belong to
         // this edit: using them keeps the sheet open

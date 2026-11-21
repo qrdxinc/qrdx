@@ -4812,9 +4812,7 @@
       "codeShape": {
         "codeShape": "Formato do código",
         "names": {
-          "square": "Quadrado",
-          "circle": "Círculo",
-          "heart": "Coração"
+          "square": "Quadrado"
         }
       },
       "errorCorrection": {

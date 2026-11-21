@@ -26,7 +26,6 @@ import {
 import { useTranslations } from "next-intl";
 import {
   getQRData,
-  isFrameActive,
   QRCodeSVG,
   resolveErrorLevel,
   resolveHalo,
@@ -39,7 +38,6 @@ import { DEFAULT_QR_LOGO } from "@/lib/constants";
 import { roleOf } from "@/lib/paint/contrast";
 import type { DesignSection } from "@/lib/playground-links";
 import { styleEngineOptions } from "@/lib/qr-design/engine-options";
-import { soundEvent } from "@/lib/sound/emit";
 import type { QRStyle } from "@/types/theme";
 import { ColorPresets } from "../control-sections/color-presets";
 import { CornersControl } from "../control-sections/corners-section";
@@ -55,7 +53,7 @@ import {
   EyeGradientControl,
   SameEyeColorsButton,
 } from "../control-sections/eye-colors-section";
-import { hasEyeShapes, withEyeShape } from "../control-sections/eye-shapes";
+import { hasEyeShapes, withoutEyeShape } from "../control-sections/eye-shapes";
 import {
   EyeShapeControls,
   SameEyeShapesButton,
@@ -69,7 +67,6 @@ import {
   FRAME_SHAPE_IDS,
   ShapePreview,
   useShapedCodes,
-  withoutShape,
 } from "../control-sections/frame-shapes";
 import { frameColors } from "../control-sections/frame-specs";
 import { backgroundPickerFor, haloRisk } from "../control-sections/halo-rules";
@@ -108,7 +105,7 @@ import {
   paintBackground,
   QR_IMAGE_KINDS,
 } from "../paint-picker/paint-panel";
-import { useEditableStyle, useEditorValue } from "../style-scope";
+import { useEditorValue } from "../style-scope";
 import { ContentField } from "./content-field";
 import { useCloseMenu } from "./part-marks";
 import type { PartId } from "./part-targets";
@@ -137,6 +134,8 @@ export interface PartMenuItem {
   isNew?: string;
   /** What it holds can't be drawn here (the amber dot, "Won't scan here") */
   risk?: boolean;
+  /** The value its button shows, for its accessible name too */
+  value?: string;
 }
 
 /** A toolbar item that switches something on or off. */
@@ -172,6 +171,8 @@ export interface PartItemsContext {
   onEyeScope: (scope: EyeScope) => void;
   /** Ends the edit and opens the Content tab with its form */
   onOpenContent: () => void;
+  /** The background offers the Logo and Frame menus (no logo, no frame) */
+  offer: { logo: boolean; frame: boolean };
 }
 
 const icon = "size-4";
@@ -303,7 +304,6 @@ function ErrorCorrectionMenu({
  */
 function CodeShapeMenu() {
   const t = useTranslations("editor.partInline.codeShape");
-  const { style, setStyle } = useEditableStyle();
   const shapes = useShapedCodes();
   const current = shapes.current ?? "square";
   return (
@@ -311,10 +311,7 @@ function CodeShapeMenu() {
       <OptionGrid columns={4} label={t("codeShape")}>
         <CompactTile
           name={t("names.square")}
-          onSelect={() => {
-            soundEvent("tick");
-            setStyle(withoutShape(style));
-          }}
+          onSelect={shapes.square}
           selected={current === "square"}
         >
           <QRCodeSVG
@@ -342,19 +339,6 @@ function CodeShapeMenu() {
       {shapes.panel}
       <Note>{t("aShapeTakesThePlace")}</Note>
     </div>
-  );
-}
-
-/** `eyeShapes` without `eye`'s own shapes. */
-function withoutEyeShape(
-  eyeShapes: QRStyle["eyeShapes"],
-  eye: EyePosition,
-): QRStyle["eyeShapes"] {
-  return withEyeShape(
-    withEyeShape(eyeShapes, eye, "outer", undefined),
-    eye,
-    "inner",
-    undefined,
   );
 }
 
@@ -421,6 +405,8 @@ export function usePartItems(
   context: PartItemsContext,
 ): { items: PartItem[]; extra: ReactNode } {
   const t = useTranslations("editor.partInline.items");
+  const handles = useTranslations("editor.partInline.handles");
+  const modules = (count: number) => handles("modules", { count });
   const current: QRStyle = { ...defaultThemeState.styles, ...style };
   const upload = useLogoUpload((logo) =>
     update({ customLogo: logo, showLogo: true }),
@@ -569,7 +555,7 @@ export function usePartItems(
           content: (
             <PaintField
               fallback="#000000"
-              label={t("eyeColor")}
+              label={one ? t("thisEyesColor") : t("eyeColor")}
               name="eyeColor"
               onChange={(color) => setColor("outer", color)}
               value={outer}
@@ -589,7 +575,7 @@ export function usePartItems(
           content: (
             <PaintField
               fallback="#000000"
-              label={t("centerColor")}
+              label={one ? t("thisEyesCenterColor") : t("centerColor")}
               name="dotColor"
               onChange={(color) => setColor("inner", color)}
               value={inner}
@@ -639,6 +625,7 @@ export function usePartItems(
           kind: "menu",
           id: "dot-size",
           label: t("dotSize"),
+          value: `${dotSize(current).value}%`,
           trigger: valueTrigger(
             <Size aria-hidden className={icon} />,
             `${dotSize(current).value}%`,
@@ -656,6 +643,7 @@ export function usePartItems(
           kind: "menu",
           id: "halo",
           label: t("halo"),
+          value: halo ? `${percent(halo.width)}%` : undefined,
           trigger: valueTrigger(
             <Sun1 aria-hidden className={icon} />,
             halo ? `${percent(halo.width)}%` : undefined,
@@ -677,6 +665,7 @@ export function usePartItems(
           kind: "menu",
           id: "shadow",
           label: t("shadow"),
+          value: shadow ? `${percent(shadow.opacity)}%` : undefined,
           trigger: valueTrigger(
             <Layer aria-hidden className={icon} />,
             shadow ? `${percent(shadow.opacity)}%` : undefined,
@@ -713,6 +702,7 @@ export function usePartItems(
           kind: "menu",
           id: "logo-size",
           label: t("logoSize"),
+          value: `${logoSize}%`,
           trigger: valueTrigger(
             <Size aria-hidden className={icon} />,
             `${logoSize}%`,
@@ -745,6 +735,7 @@ export function usePartItems(
           kind: "menu",
           id: "clear-space",
           label: t("clearSpace"),
+          value: modules(current.logoOptions?.padding ?? 0),
           trigger: valueTrigger(
             <Maximize4 aria-hidden className={icon} />,
             String(current.logoOptions?.padding ?? 0),
@@ -779,11 +770,12 @@ export function usePartItems(
   }
 
   if (part === "background") {
-    // No frame drawn (so no frame button): its menu is here
-    const noFrame = !isFrameActive(current.frame);
+    // No logo or frame when the edit started: their menus are here, for
+    // the whole edit (picking one keeps the menu, and the focus, in place)
+    const { offer } = context;
     return {
       // While no logo shows, the logo's menu is here (with its extras)
-      extra: current.showLogo ? null : logoExtra,
+      extra: offer.logo ? logoExtra : null,
       items: [
         {
           kind: "menu",
@@ -825,6 +817,7 @@ export function usePartItems(
           kind: "menu",
           id: "padding",
           label: t("paddingAndCorners"),
+          value: modules(current.margin ?? 0),
           trigger: valueTrigger(
             <Maximize4 aria-hidden className={icon} />,
             String(current.margin ?? 0),
@@ -858,6 +851,7 @@ export function usePartItems(
           kind: "menu",
           id: "error-correction",
           label: t("errorCorrection"),
+          value: current.level ?? "Q",
           trigger: valueTrigger(
             <SecuritySafe aria-hidden className={icon} />,
             current.level ?? "Q",
@@ -866,7 +860,7 @@ export function usePartItems(
           section: "error-correction",
           content: <ErrorCorrectionMenu style={current} update={update} />,
         },
-        ...(current.showLogo
+        ...(!offer.logo
           ? []
           : [
               logoMenu(current, logo, {
@@ -875,7 +869,7 @@ export function usePartItems(
                 glyph: <GalleryAdd aria-hidden className={icon} />,
               }),
             ]),
-        ...(noFrame
+        ...(offer.frame
           ? [
               {
                 kind: "menu" as const,

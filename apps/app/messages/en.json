@@ -4967,7 +4967,12 @@
         "logosMustBeValueMb": "Logos must be {value, number}MB or smaller.",
         "unsupportedLogoFormat": "Unsupported logo format",
         "logoIsTooLarge": "Logo is too large",
-        "failedToReadLogoFile": "Failed to read logo file"
+        "failedToReadLogoFile": "Failed to read logo file",
+        "brandCount": "{count, number} brands",
+        "iconName": "{name} icon",
+        "brandName": "{name} logo",
+        "yourLogo": "Your logo",
+        "qrdxLogo": "QRdx logo"
       },
       "logoCropControls": {
         "shape": "Shape",
@@ -5271,7 +5276,7 @@
       "moreOptions": "More options",
       "labelWontScanHere": "{label}: won't scan here",
       "sheet": {
-        "changesShowOnTheCode": "Changes show on the code as you make them. Undo takes each one back.",
+        "changesShowOnTheCode": "Changes show on the code as you make them. Undo takes back each design change, and Escape puts the code's content back as it was.",
         "done": "Done"
       },
       "content": {
@@ -5286,9 +5291,7 @@
       "codeShape": {
         "codeShape": "Code shape",
         "names": {
-          "square": "Square",
-          "circle": "Circle",
-          "heart": "Heart"
+          "square": "Square"
         },
         "aShapeTakesThePlace": "A shaped code takes the place of a frame."
       },
@@ -5306,7 +5309,8 @@
       },
       "drop": {
         "dropToUseAsLogo": "Drop to use as logo"
-      }
+      },
+      "labelWithValue": "{label} ({value})"
     },
     "gradientPicker": {
       "pickASolidColorA": "Pick a solid color, a gradient or a swatch for {label}."

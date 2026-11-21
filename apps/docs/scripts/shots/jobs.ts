@@ -157,7 +157,7 @@ export const JOBS: Job[] = [
       await page.click("button", "Wi-Fi icon", { exact: true });
       await page.pause(800);
       await page.evaluate(
-        `() => { const toggle = document.getElementById("show-logo"); if (toggle && toggle.getAttribute("aria-checked") !== "true") window.__e2e.click(toggle); return true; }`,
+        `() => { const toggle = window.__e2e.byLabel("Logo in the center"); if (toggle && toggle.getAttribute("aria-checked") !== "true") window.__e2e.click(toggle); return true; }`,
       );
       // The panel from its top, so the Logo row and its options are in view whole.
       await page.evaluate(

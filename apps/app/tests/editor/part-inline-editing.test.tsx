@@ -239,8 +239,12 @@ function itemButtons(part: string): HTMLElement[] {
     : [];
 }
 
+/** An item's own name, without its value, "won't scan here" or "new". */
 const nameOf = (button: Element) =>
-  (button.getAttribute("aria-label") ?? "").replace(/, new$/, "");
+  (button.getAttribute("aria-label") ?? "")
+    .replace(/, new$/, "")
+    .replace(/: won't scan here$/, "")
+    .replace(/ \([^)]*\)$/, "");
 
 /**
  * Opens the item named `label` of the open part and returns where its
@@ -267,54 +271,88 @@ async function openItem(part: string, label: string): Promise<HTMLElement> {
   return menu;
 }
 
-/** An element by its accessible name: aria-label, a <label>, or a legend. */
-function byName(scope: ParentNode, name: string | RegExp): Element | null {
-  const matches = (text: string | null | undefined) =>
-    text != null &&
-    (typeof name === "string" ? text.trim() === name : name.test(text.trim()));
-  for (const element of scope.querySelectorAll("*")) {
-    if (matches(element.getAttribute("aria-label"))) return element;
-    if (element instanceof HTMLLabelElement && matches(element.textContent)) {
-      const target = element.htmlFor
-        ? document.getElementById(element.htmlFor)
-        : element.querySelector("input, button");
-      if (target) return target;
-    }
-    if (element.tagName === "LEGEND" && matches(element.textContent)) {
-      return element.parentElement;
-    }
+/** An element's accessible name: aria-label, its <label>, a legend, or its text. */
+function accessibleName(element: Element): string {
+  const aria = element.getAttribute("aria-label");
+  if (aria) return aria.trim();
+  if (element.id) {
+    const label = [...document.querySelectorAll("label")].find(
+      (item) => item.htmlFor === element.id,
+    );
+    if (label) return label.textContent?.trim() ?? "";
   }
-  return null;
+  if (element.tagName === "FIELDSET") {
+    const legend = element.querySelector(":scope > legend");
+    if (legend) return legend.textContent?.trim() ?? "";
+  }
+  return element.textContent?.trim() ?? "";
 }
 
-/** The smallest element whose own text is `text`. */
+/** An element's role: its role attribute, or the one its tag implies. */
+function roleOf(element: Element): string | null {
+  const role = element.getAttribute("role");
+  if (role) return role;
+  switch (element.tagName) {
+    case "BUTTON":
+      return "button";
+    case "TEXTAREA":
+      return "textbox";
+    case "FIELDSET":
+      return "group";
+    case "INPUT":
+      return (element as HTMLInputElement).type === "range"
+        ? "slider"
+        : "textbox";
+    default:
+      return null;
+  }
+}
+
+const matches = (text: string, name: string | RegExp) =>
+  typeof name === "string" ? text === name : name.test(text);
+
+/** The smallest element whose own text is `text` (notes, which have no role). */
 function byText(scope: ParentNode, text: string | RegExp): Element | null {
   let found: Element | null = null;
   for (const element of scope.querySelectorAll("*")) {
-    const own = element.textContent?.trim() ?? "";
-    const hit = typeof text === "string" ? own === text : text.test(own);
-    if (hit) found = element;
+    if (matches(element.textContent?.trim() ?? "", text)) found = element;
   }
   return found;
 }
 
-/** A control the row's query names, with the role it should have. */
-type Find =
-  | { name: string | RegExp; role?: string }
-  | { text: string | RegExp };
+/**
+ * A control the row names: by role and accessible name (a slider by the
+ * name on its root, the role on its thumb), or a note by its text.
+ */
+type Find = { role: string; name: string | RegExp } | { text: string | RegExp };
 
 function findControl(scope: HTMLElement, find: Find): Element | null {
   if ("text" in find) return byText(scope, find.text);
-  const element = byName(scope, find.name);
-  if (!(element && find.role)) return element;
-  const role =
-    element.getAttribute("role") ??
-    (element.tagName === "INPUT" ? "textbox" : element.tagName.toLowerCase());
-  // A Radix slider's name is on its root, the role on its thumb
-  if (find.role === "slider" && role !== "slider") {
-    return element.querySelector('[role="slider"]');
+  for (const element of scope.querySelectorAll("*")) {
+    if (!matches(accessibleName(element), find.name)) continue;
+    if (roleOf(element) === find.role) return element;
+    // A Radix slider's name is on its root, the role on its thumb
+    const thumb =
+      find.role === "slider" ? element.querySelector('[role="slider"]') : null;
+    if (thumb) return thumb;
   }
-  return role === find.role ? element : null;
+  return null;
+}
+
+/**
+ * The row's control, inside the menu or sheet row that opened (never the
+ * side panel's twin), its id its own (a label points at it, not elsewhere).
+ */
+function expectControl(where: HTMLElement, row: Row) {
+  const control = findControl(where, row.find);
+  expect(control, `${row.control} in ${row.part} › ${row.item}`).toBeTruthy();
+  expect(where.contains(control)).toBe(true);
+  if (control?.id) {
+    expect(
+      document.getElementById(control.id),
+      `#${control.id} is unique (${row.control})`,
+    ).toBe(control);
+  }
 }
 
 /** An official frame with a second line, an accent color and an icon. */
@@ -363,56 +401,56 @@ const INVENTORY: Row[] = [
     control: "Colors › Background",
     part: "background",
     item: "Background color",
-    find: { name: "Fill type" },
+    find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › Foreground (the dots)",
     part: "dots",
     item: "Dot color",
-    find: { name: "Fill type" },
+    find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › Eyes (the eyes' frames)",
     part: "eyes",
     item: "Eye color",
-    find: { name: "Fill type" },
+    find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › Dots (the eyes' centers)",
     part: "eyes",
     item: "Center color",
-    find: { name: "Fill type" },
+    find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › palettes",
     part: "background",
     item: "Background color",
-    find: { text: "Ink & paper" },
+    find: { role: "button", name: "Ink & paper" },
   },
   // Dots and eyes
   {
     control: "Dots › Dot shape",
     part: "dots",
     item: "Pattern",
-    find: { name: "Common dot shapes" },
+    find: { role: "group", name: "Common dot shapes" },
   },
   {
     control: "Eyes › Eye style (pairs)",
     part: "eyes",
     item: "Eye shape",
-    find: { name: "Common eye styles" },
+    find: { role: "group", name: "Common eye styles" },
   },
   {
     control: "Eyes › Outer eye shape",
     part: "eyes",
     item: "Eye shape",
-    find: { name: "Common outer shapes" },
+    find: { role: "group", name: "Common outer shapes" },
   },
   {
     control: "Eyes › Inner eye shape",
     part: "eyes",
     item: "Eye shape",
-    find: { name: "Common center shapes" },
+    find: { role: "group", name: "Common center shapes" },
   },
   // Logo
   {
@@ -433,21 +471,21 @@ const INVENTORY: Row[] = [
     part: "logo",
     item: "Logo",
     styles: { ...base, showLogo: true },
-    find: { text: "Quick icons" },
+    find: { role: "group", name: "Quick logo icons" },
   },
   {
     control: "Logo › Brand logos",
     part: "logo",
     item: "Logo",
     styles: { ...base, showLogo: true },
-    find: { name: /^Brand logos: / },
+    find: { role: "button", name: /^Brand logos: / },
   },
   {
     control: "Logo › Upload or replace your logo",
     part: "logo",
     item: "Logo",
     styles: { ...base, showLogo: true },
-    find: { text: "Upload your logo" },
+    find: { role: "button", name: "Upload your logo" },
   },
   {
     control: "Logo › Remove",
@@ -458,7 +496,7 @@ const INVENTORY: Row[] = [
       showLogo: true,
       customLogo: "data:image/png;base64,iVBORw0KGgo=",
     },
-    find: { text: "Remove" },
+    find: { role: "button", name: "Remove" },
   },
   // Logo options
   {
@@ -466,7 +504,7 @@ const INVENTORY: Row[] = [
     part: "logo",
     item: "Logo shape and plate",
     styles: { ...base, showLogo: true },
-    find: { text: "Plate behind the logo" },
+    find: { role: "switch", name: "Plate behind the logo" },
   },
   {
     control: "Logo options › Size",
@@ -502,21 +540,21 @@ const INVENTORY: Row[] = [
     part: "eyes",
     item: "This eye's color",
     oneEye: true,
-    find: { name: "Fill type" },
+    find: { role: "radio", name: "Solid" },
   },
   {
     control: "Eye colors › an eye's center",
     part: "eyes",
     item: "This eye's center color",
     oneEye: true,
-    find: { name: "Fill type" },
+    find: { role: "radio", name: "Solid" },
   },
   {
     control: "Eye colors › Use the same colors for all eyes",
     part: "eyes",
     item: "Eye color",
     styles: { ...base, eyeColors: { topRight: { outer: "#9b2c2c" } } },
-    find: { text: "Use the same colors for all eyes" },
+    find: { role: "button", name: "Use the same colors for all eyes" },
   },
   {
     control: "Eye colors › Eyes continue the code's gradient",
@@ -531,21 +569,21 @@ const INVENTORY: Row[] = [
     part: "eyes",
     item: "This eye's shape",
     oneEye: true,
-    find: { name: "Common frame shapes" },
+    find: { role: "group", name: "Common frame shapes" },
   },
   {
     control: "Eye shapes › an eye's center",
     part: "eyes",
     item: "This eye's shape",
     oneEye: true,
-    find: { name: "Common center shapes" },
+    find: { role: "group", name: "Common center shapes" },
   },
   {
     control: "Eye shapes › Use the same shapes for all eyes",
     part: "eyes",
     item: "Eye shape",
     styles: { ...base, eyeShapes: { topRight: { outer: "square" } } },
-    find: { text: "Use the same shapes for all eyes" },
+    find: { role: "button", name: "Use the same shapes for all eyes" },
   },
   // Dot size, corners, halo, shadow
   {
@@ -592,7 +630,7 @@ const INVENTORY: Row[] = [
     part: "dots",
     item: "Halo",
     styles: { ...base, halo: {} },
-    find: { name: /^Color: / },
+    find: { role: "button", name: /^Color: / },
   },
   {
     control: "Shadow › Show a shadow",
@@ -626,55 +664,55 @@ const INVENTORY: Row[] = [
     part: "dots",
     item: "Shadow",
     styles: { ...base, shadow: {} },
-    find: { name: /^Color: / },
+    find: { role: "button", name: /^Color: / },
   },
   // Frame
   {
     control: "Frame › the frame picker (no frame on)",
     part: "background",
     item: "Frame",
-    find: { name: "Search frames" },
+    find: { role: "textbox", name: "Search frames" },
   },
   {
     control: "Frame › label ideas (no frame on)",
     part: "background",
     item: "Frame",
-    find: { text: "Scan me" },
+    find: { role: "button", name: "Scan me" },
   },
   {
     control: "Frame › the frame picker",
     part: "frame",
     item: "Frame style",
     styles: withFrame,
-    find: { name: "Search frames" },
+    find: { role: "textbox", name: "Search frames" },
   },
   {
     control: "Frame › Label",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
-    find: { name: "Label" },
+    find: { role: "textbox", name: "Label" },
   },
   {
     control: "Frame › Frame color",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
-    find: { name: /^Frame color: / },
+    find: { role: "button", name: /^Frame color: / },
   },
   {
     control: "Frame › Text color",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
-    find: { name: /^Text color: / },
+    find: { role: "button", name: /^Text color: / },
   },
   {
     control: "Frame › Text size",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
-    find: { text: "Text size" },
+    find: { role: "slider", name: "Text size" },
   },
   ...(officialWithIcon
     ? ([
@@ -686,7 +724,7 @@ const INVENTORY: Row[] = [
             ...base,
             frame: { style: "custom", spec: officialWithIcon.spec },
           },
-          find: { name: "Second line" },
+          find: { role: "textbox", name: "Second line" },
         },
         {
           control: "Frame › Accent color (a custom frame)",
@@ -696,7 +734,7 @@ const INVENTORY: Row[] = [
             ...base,
             frame: { style: "custom", spec: officialWithIcon.spec },
           },
-          find: { name: /^Accent color: / },
+          find: { role: "button", name: /^Accent color: / },
         },
         {
           control: "Frame › Icon (a custom frame)",
@@ -706,7 +744,7 @@ const INVENTORY: Row[] = [
             ...base,
             frame: { style: "custom", spec: officialWithIcon.spec },
           },
-          find: { text: "Icon" },
+          find: { role: "group", name: "Icon" },
         },
         {
           control: "Frame › Publish frame (a custom frame)",
@@ -716,7 +754,7 @@ const INVENTORY: Row[] = [
             ...base,
             frame: { style: "custom", spec: officialWithIcon.spec },
           },
-          find: { text: "Publish frame" },
+          find: { role: "button", name: "Publish frame" },
         },
       ] satisfies Row[])
     : []),
@@ -724,7 +762,7 @@ const INVENTORY: Row[] = [
     control: "Frame › shaped codes (circle, heart, your own shape)",
     part: "background",
     item: "Code shape",
-    find: { name: "Silhouette" },
+    find: { role: "button", name: "Silhouette" },
   },
   // Padding and error correction
   {
@@ -737,14 +775,14 @@ const INVENTORY: Row[] = [
     control: "Error correction",
     part: "background",
     item: "Error correction",
-    find: { name: "Error correction" },
+    find: { role: "group", name: "Error correction" },
   },
   // The Content tab's link
   {
     control: "Content › the link",
     part: "background",
     item: "Content",
-    find: { name: "Link" },
+    find: { role: "textbox", name: "Link" },
   },
 ];
 
@@ -770,7 +808,13 @@ describe("every Design control is reachable from the preview", () => {
   for (const layout of ["desktop", "phone"] as const) {
     describe(layout === "desktop" ? "toolbar menus" : "phone sheet", () => {
       it.each(INVENTORY)("$control: $part › $item", async (row) => {
-        await mount({ styles: row.styles, phone: layout === "phone" });
+        // The side panel mounted too, so a control's id that clashes with
+        // its twin there shows
+        await mount({
+          styles: row.styles,
+          phone: layout === "phone",
+          panel: true,
+        });
         await openPart(row.part);
         // Phones get the bottom sheet, wider screens the toolbar
         expect(
@@ -788,10 +832,7 @@ describe("every Design control is reachable from the preview", () => {
           );
         }
         const where = await openItem(row.part, row.item);
-        expect(
-          findControl(where, row.find),
-          `${row.control} in ${row.part} › ${row.item}`,
-        ).toBeTruthy();
+        expectControl(where, row);
       });
     });
   }
@@ -926,7 +967,10 @@ describe("the scan rules are the side panel's", () => {
       ),
     );
     const menu = await openItem("eyes", "This eye's shape");
-    const frames = findControl(menu, { name: "Common frame shapes" });
+    const frames = findControl(menu, {
+      role: "group",
+      name: "Common frame shapes",
+    });
     for (const outer of EYE_FEATURED) {
       const name = eyePatterns.find((item) => item.id === outer)?.name ?? outer;
       const tile = [...(frames?.querySelectorAll("button") ?? [])].find(
@@ -1009,7 +1053,9 @@ describe("New tags and the scan dot on the toolbar", () => {
     await mount({ styles: { ...base, bgColor: "#111111", halo: {} } });
     await openPart("dots");
     const halo = itemButtons("dots").find(
-      (button) => nameOf(button) === "Halo: won't scan here",
+      (button) =>
+        nameOf(button) === "Halo" &&
+        (button.getAttribute("aria-label") ?? "").includes(": won't scan here"),
     );
     expect(halo, "the halo's item says it won't scan here").toBeTruthy();
     const risk = halo?.querySelector('[data-part-mark="risk"]');
@@ -1046,5 +1092,80 @@ describe("New tags and the scan dot on the toolbar", () => {
         (span) => span.textContent === "New",
       ),
     ).toBe(false);
+  });
+});
+
+describe("Escape puts the content back", () => {
+  it("the link typed in the toolbar goes back on Escape, stays on Enter", async () => {
+    await mount();
+    for (const key of ["Escape", "Enter"]) {
+      const typed = `https://qrdx.dev/changed-${key.toLowerCase()}`;
+      await openPart("background");
+      const menu = await openItem("background", "Content");
+      const field = findControl(menu, {
+        role: "textbox",
+        name: "Link",
+      }) as HTMLInputElement;
+      await act(async () => {
+        const setter = Object.getOwnPropertyDescriptor(
+          HTMLInputElement.prototype,
+          "value",
+        )?.set;
+        setter?.call(field, typed);
+        field.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+      await settle(2);
+      expect(useQREditorStore.getState().value).toBe(typed);
+      // The key on the toolbar (the menu closed first)
+      await act(async () => {
+        document
+          .querySelector("[data-part-toolbar]")
+          ?.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+      });
+      await settle(2);
+      expect(document.querySelector("[data-part-toolbar]")).toBeNull();
+      expect(useQREditorStore.getState().value).toBe(
+        key === "Escape" ? VALUE : typed,
+      );
+    }
+  });
+});
+
+describe("the background's Logo and Frame menus stay while they're used", () => {
+  it("picking a logo there keeps the menu (and its focus) open", async () => {
+    await mount({ panel: true });
+    await openPart("background");
+    const menu = await openItem("background", "Logo");
+    const tile = menu.querySelector<HTMLElement>(
+      'fieldset[aria-label="Quick logo icons"] button[aria-pressed="false"]',
+    );
+    await click(tile);
+    expect(useQREditorStore.getState().themeState.styles.showLogo).toBe(true);
+    // Still offered, still open
+    expect(
+      itemButtons("background").some((button) => nameOf(button) === "Logo"),
+    ).toBe(true);
+    expect(document.querySelector("[data-part-inline-menu]")).toBeTruthy();
+  });
+});
+
+describe("a toolbar button that shows a value says it", () => {
+  it("names the value with the item", async () => {
+    await mount();
+    await openPart("dots");
+    const labels = itemButtons("dots").map(
+      (button) => button.getAttribute("aria-label") ?? "",
+    );
+    expect(labels).toContain("Dot size (100%)");
+    await openPart("background");
+    const background = itemButtons("background").map(
+      (button) => button.getAttribute("aria-label") ?? "",
+    );
+    expect(background).toContain("Error correction (Q)");
+    expect(
+      background.some((label) =>
+        label.startsWith("Padding and corners (0 modules)"),
+      ),
+    ).toBe(true);
   });
 });
