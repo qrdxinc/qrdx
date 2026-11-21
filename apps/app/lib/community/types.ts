@@ -47,7 +47,7 @@ export const itemPath = (type: CommunityItemType, slug: string) =>
   `/community/${TYPE_SEGMENTS[type]}/${slug}`;
 
 export interface CommunityCreator {
-  /** null for the official catalogue before the seed runs */
+  /** null for official frames the database doesn't hold */
   profileId: string | null;
   handle: string | null;
   displayName: string;

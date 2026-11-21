@@ -89,10 +89,10 @@ export function canEditTheme(scope: ActiveScope, theme: ThemeOwner): boolean {
 
 /**
  * Which of `themeIds` are in the community, read where the gallery reads
- * (lib/community/store.ts): community_item once the backfill has copied the
- * themes there (publishing and unpublishing only change items from then on,
- * so a leftover community_theme row means nothing), community_theme before
- * that or where the community tables don't exist. Never both at once.
+ * (lib/community/store.ts): community_item once it holds the themes
+ * (publishing and unpublishing only change items from then on, so a
+ * leftover community_theme row means nothing), community_theme before that
+ * or where the community tables don't exist. Never both at once.
  */
 async function publishedThemeIds(themeIds: string[]): Promise<Set<string>> {
   if (themeIds.length === 0) return new Set();

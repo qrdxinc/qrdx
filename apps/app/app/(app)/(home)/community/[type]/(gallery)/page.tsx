@@ -82,10 +82,10 @@ export default async function CommunityTypePage({
   if (!query) notFound();
   const page = parsePage(search.page);
 
-  // Themes have pages of their own once the backfill has copied them into
-  // community_item. Until a deployment runs it, its themes are still in
-  // community_theme, with no pages, so it keeps the gallery that previews
-  // them in a dialog (lib/community/store.ts).
+  // Themes have pages of their own once they are in community_item. A
+  // deployment whose themes are only in community_theme has no theme pages,
+  // so it keeps the gallery that previews them in a dialog
+  // (lib/community/store.ts).
   if (type === "theme" && (await communityState()).themes === "legacy") {
     return (
       // nuqs reads search params; without a boundary the whole page renders client-side

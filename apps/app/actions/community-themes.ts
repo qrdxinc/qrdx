@@ -276,9 +276,8 @@ export async function getCommunityThemes(
 
     const userId = await getOptionalUserId();
 
-    // community_item once the backfill has copied the themes; until then
-    // (and before the community tables exist) the gallery reads
-    // community_theme.
+    // community_item once it holds the themes; until then (and before the
+    // community tables exist) the gallery reads community_theme.
     if ((await communityState()).themes === "items") {
       if ((filter === "mine" || filter === "liked") && !userId) {
         throw new UnauthorizedError();
@@ -573,8 +572,8 @@ export async function toggleLikeTheme(
       throw new ValidationError("Community theme ID required");
     }
 
-    // The gallery lists items once the backfill has run: their ids are
-    // community_item ids, liked through community_like.
+    // The gallery lists items once community_item holds the themes: their
+    // ids are community_item ids, liked through community_like.
     if ((await communityState()).themes === "items") {
       return actionSuccess(await toggleItemLike(userId, communityThemeId));
     }
