@@ -28,7 +28,7 @@ const later = (a: string | undefined, b: string | undefined) =>
 /**
  * The item pages, then the profiles with any of them. A profile's date is
  * its latest item's. The engine's official frames have pages whether or
- * not the seed has stored them (queries.ts, getItem), so each is listed,
+ * not the database holds them (queries.ts, getItem), so each is listed,
  * and with them @qrdx; one the database holds keeps the database's date.
  */
 export function communitySitemapEntries({

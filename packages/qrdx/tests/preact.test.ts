@@ -17,6 +17,7 @@ import { QRCode, QRCodeSVG } from "../src/preact";
 import type { QRCodeProps } from "../src/qr-code-props";
 import type { TemplateDefinition } from "../types";
 import { domSnapshot } from "./support/dom-snapshot";
+import { lookToggles } from "./support/look-steps";
 import { type ParityCase, parityCases } from "./support/parity-cases";
 import { decodeQR, rasterizeSvg } from "./support/raster";
 
@@ -149,6 +150,28 @@ describe("qrdx/preact", () => {
     render(h(QRCodeSVG, props), container);
     expect(domSnapshot(container)).toBe(coreSnapshot(props));
   });
+
+  // Each look turned on and off in a mounted QRCode (support/look-steps.ts)
+  it.each(lookToggles().map((toggle) => [toggle.name, toggle] as const))(
+    "QRCode follows a look turned on and off: %s",
+    (_name, { before, after }) => {
+      const container = mount();
+      // Attributes in any order: Preact patches an element in place
+      const snapshot = (node: Node) => domSnapshot(node, { anyOrder: true });
+      const drawn = (props: QRCodeProps) => {
+        const holder = document.createElement("div");
+        holder.append(toSVGElement(resolveQRCodeProps(props)));
+        return snapshot(holder);
+      };
+      render(h(QRCode, before), container);
+      expect(snapshot(container)).toBe(drawn(before));
+      expect(drawn(after)).not.toBe(drawn(before));
+      render(h(QRCode, after), container);
+      expect(snapshot(container)).toBe(drawn(after));
+      render(h(QRCode, before), container);
+      expect(snapshot(container)).toBe(drawn(before));
+    }
+  );
 
   it("QRCode takes the logo API", () => {
     const container = mount();

@@ -14,6 +14,7 @@ import {
   SHADOW_OPACITY_MAX,
   SHADOW_OPACITY_MIN,
 } from "qrdx/types";
+import { useId } from "react";
 import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
 import type { QRStyle } from "@/types/theme";
@@ -109,10 +110,6 @@ export function ShadowSection({
   expanded,
 }: ShadowSectionProps) {
   const t = useTranslations("editor.controlSections.shadowSection");
-  const shadow = style.shadow ? shadowValues(style.shadow) : null;
-  const on = shadow !== null;
-  const set = (change: NonNullable<QRStyle["shadow"]>) =>
-    onChange({ ...style.shadow, ...change });
 
   return (
     <ControlSection
@@ -122,13 +119,35 @@ export function ShadowSection({
       summary={shadowSummary(style.shadow, t("off"))}
       title={t("shadow")}
     >
+      <ShadowControl onChange={onChange} style={style} />
+    </ControlSection>
+  );
+}
+
+/**
+ * The shadow's switch, shifts, opacity and color: the Shadow section, and
+ * the preview's dots toolbar.
+ */
+export function ShadowControl({
+  style,
+  onChange,
+}: Omit<ShadowSectionProps, "expanded">) {
+  const t = useTranslations("editor.controlSections.shadowSection");
+  const switchId = useId();
+  const shadow = style.shadow ? shadowValues(style.shadow) : null;
+  const on = shadow !== null;
+  const set = (change: NonNullable<QRStyle["shadow"]>) =>
+    onChange({ ...style.shadow, ...change });
+
+  return (
+    <>
       <div className="flex items-center justify-between gap-3">
-        <Label className="text-sm" htmlFor="shadow-on">
+        <Label className="text-sm" htmlFor={switchId}>
           {t("showAShadow")}
         </Label>
         <Switch
           checked={on}
-          id="shadow-on"
+          id={switchId}
           onCheckedChange={(next) => onChange(next ? {} : undefined)}
         />
       </div>
@@ -172,6 +191,6 @@ export function ShadowSection({
           />
         </>
       )}
-    </ControlSection>
+    </>
   );
 }

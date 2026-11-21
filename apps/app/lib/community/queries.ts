@@ -73,7 +73,7 @@ import { authorNotBanned } from "./visibility";
 // Reads for the community pages. Every query joins the creator's profile
 // and account and keeps only published items by active, unbanned creators.
 // A missing community table reads as "nothing yet", and the
-// official frames come from the engine's catalogue until they are seeded.
+// official frames the database doesn't hold come from the engine's catalogue.
 
 const ROW = {
   id: communityItem.id,
@@ -431,8 +431,8 @@ export async function listItems(
 }
 
 /**
- * Frames: the database's, plus the official catalogue frames the seed
- * hasn't put there yet (same slugs), so @qrdx's frames always show.
+ * Frames: the database's, plus the official catalogue frames it doesn't
+ * hold (same slugs), so @qrdx's frames always show.
  */
 export async function listFrames(
   options: Omit<ListOptions, "type"> = {},
@@ -449,13 +449,13 @@ export async function listFrames(
   // Official and member frames apart: the official library is long enough
   // to crowd members' frames out of one list.
   const [official, others] = await Promise.all([
-    seededOfficialFrames(options.sort),
+    storedOfficialFrames(options.sort),
     options.official
       ? Promise.resolve([])
       : listItems({ ...options, type: "frame", official: false, limit: 200 }),
   ]);
-  const seeded = new Set(official.map((card) => card.slug));
-  const missing = officialFrameCards().filter((card) => !seeded.has(card.slug));
+  const stored = new Set(official.map((card) => card.slug));
+  const missing = officialFrameCards().filter((card) => !stored.has(card.slug));
   return [...official, ...missing, ...others];
 }
 
@@ -463,8 +463,8 @@ export async function listFrames(
 
 /**
  * Every item the galleries list: visible items, less the collections and
- * kits the lists leave out (listable). The official frames the seed hasn't
- * stored yet are added by ./sitemap.ts.
+ * kits the lists leave out (listable). The official frames the database
+ * doesn't hold are added by ./sitemap.ts.
  */
 export async function sitemapItems(): Promise<SitemapItem[]> {
   return guardedRead(async () => {
@@ -755,7 +755,7 @@ export async function topMakers(limit: number): Promise<CommunityMaker[]> {
 }
 
 // An official frame's row without its payload: its spec, name, description
-// and tags are the engine's (the seed copies them), so listing the library
+// and tags are the engine's (the row holds a copy), so listing the library
 // reads a few fields a frame instead of every spec, and parses none.
 const OFFICIAL_ROW = {
   id: communityItem.id,
@@ -790,8 +790,8 @@ type OfficialRow = Pick<
   | "verifiedAt"
 >;
 
-/** The seeded official frames, as cards built from the engine's catalogue. */
-async function seededOfficialFrames(
+/** The stored official frames, as cards built from the engine's catalogue. */
+async function storedOfficialFrames(
   sort: ListSort | undefined,
 ): Promise<CommunityItemCard[]> {
   return guardedRead(async () => {
@@ -961,7 +961,7 @@ export async function moreFromCreator(
     .slice(0, limit);
 }
 
-/** A public profile by handle; @qrdx works before the seed (frames only). */
+/** A public profile by handle; @qrdx works without its row (frames only). */
 export async function getProfileByHandle(
   handle: string,
 ): Promise<CommunityProfileView | null> {
@@ -1041,7 +1041,8 @@ export async function getProfileByHandle(
 }
 
 /**
- * Popular themes from community_theme, as cards (before the backfill):
+ * Popular themes from community_theme, as cards (before community_item
+ * holds the themes):
  * cleaned like the legacy gallery, banned authors left out, and linking to
  * the gallery rather than to an item page.
  */

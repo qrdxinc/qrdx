@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "外側の形",
-        "centerShape": "中心の形",
         "eyeColor": "目の色",
         "centerColor": "中心の色",
         "pattern": "パターン",
@@ -4782,15 +4780,12 @@
         "logoSize": "ロゴのサイズ",
         "hideLogo": "ロゴを非表示",
         "backgroundColor": "背景色",
-        "padding": "余白",
         "frameStyle": "フレームのスタイル",
-        "frameColor": "フレームの色",
         "whichEyes": "対象のアイ",
         "allEyes": "すべてのアイ",
         "thisEye": "このアイ",
         "thisEyesColor": "このアイの色",
         "thisEyesCenterColor": "このアイの中心の色",
-        "shapesChangeAllThreeEyes": "形は3つのアイすべてに反映されます。",
         "sameAsTheOthers": "他と同じ",
         "eyesWithTheirOwnColor": "独自の色を設定したアイはその色のままです。変更するには「このアイ」を選択してください。",
         "logoShapeAndPlate": "ロゴの形とプレート",
@@ -4817,11 +4812,8 @@
       "codeShape": {
         "codeShape": "コードの形",
         "names": {
-          "square": "四角",
-          "circle": "円",
-          "heart": "ハート"
-        },
-        "aCircleOrHeartTakes": "円またはハートを選ぶと、フレームの代わりになります。"
+          "square": "四角"
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "現在はロゴの影響でレベル{level}に引き上げられています。"

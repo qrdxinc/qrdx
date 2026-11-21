@@ -61,7 +61,7 @@ describe("communitySitemapEntries", () => {
   it("lists the engine's official frames and @qrdx, without invented dates", () => {
     const entries = communitySitemapEntries({
       items: [
-        // Seeded: the database's row and date win.
+        // Stored: the database's row and date win.
         item({ type: "frame", slug: "scan-me", handle: "qrdx" }),
       ],
       officialFrameSlugs: ["scan-me", "tap-here"],
@@ -76,7 +76,7 @@ describe("communitySitemapEntries", () => {
     ]);
   });
 
-  it("lists @qrdx before the seed, from the engine's frames alone", () => {
+  it("lists @qrdx with no stored items, from the engine's frames alone", () => {
     expect(
       communitySitemapEntries({ items: [], officialFrameSlugs: ["scan-me"] }),
     ).toEqual([

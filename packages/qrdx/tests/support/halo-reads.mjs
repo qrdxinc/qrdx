@@ -5,7 +5,8 @@
 // a short-lived process per batch instead of growing one worker past what a
 // CI runner has.
 //
-// stdin: { value, jobs: [{ svg, page, modulePx }] }; stdout: one boolean
+// Input (a JSON file named by the first argument, support/child-reads.ts):
+// { value, modules, jobs: [{ svg, page, modulePx }] }; stdout: one boolean
 // pair [jsQR, ZXing] per job.
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -14,7 +15,9 @@ import jsQR from "jsqr";
 import { prepareZXingModule, readBarcodes } from "zxing-wasm/reader";
 
 const require = createRequire(import.meta.url);
-const { value, modules, jobs } = JSON.parse(readFileSync(0, "utf8"));
+const { value, modules, jobs } = JSON.parse(
+  readFileSync(process.argv[2], "utf8")
+);
 const wasm = readFileSync(
   require.resolve("zxing-wasm/reader/zxing_reader.wasm")
 );

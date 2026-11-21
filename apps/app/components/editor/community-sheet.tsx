@@ -82,10 +82,10 @@ import { useCommunitySheetStore } from "./community-sheet-store";
 //
 // Data: the gallery's own server actions. getCommunityThemes and
 // getCommunityTagCounts read the community_item model (themeItemsFeed in
-// lib/community/queries.ts) once the backfill has run, as /community/themes
-// does; actions/community.ts has no listing. Likes go through the v1
-// reaction (toggleCommunityLike), so only item themes (with a slug) can be
-// liked.
+// lib/community/queries.ts) once community_item holds the themes, as
+// /community/themes does; actions/community.ts has no listing. Likes go
+// through the v1 reaction (toggleCommunityLike), so only item themes (with a
+// slug) can be liked.
 
 // ─── Logic (exported for tests) ─────────────────────────────────────────────
 

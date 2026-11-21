@@ -144,9 +144,9 @@ export function ItemCard({
       >
         <div className={CARD_LINE}>
           <span className="truncate text-sm font-medium">{card.name}</span>
-          {/* Items in the database (not official frames the seed hasn't
-              stored yet, nor themes from before the backfill) can be liked
-              and bookmarked from their card */}
+          {/* Items in the database (not official frames it doesn't hold,
+              nor themes still read from community_theme) can be liked and
+              bookmarked from their card */}
           {card.id && card.slug && (
             <CardReactions
               bookmarkCount={card.saveCount}

@@ -248,6 +248,8 @@ export function ScanScoreBadge({
         <button
           ref={button}
           aria-busy={checking}
+          // The preview's phone sheet stops above it (part-inline/part-sheet.tsx)
+          data-scan-score-badge=""
           aria-label={
             result
               ? t("scanScoreScoreValueShow", {

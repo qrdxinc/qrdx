@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "Forme extérieure",
-        "centerShape": "Forme centrale",
         "eyeColor": "Couleur des yeux",
         "centerColor": "Couleur du centre",
         "pattern": "Motif",
@@ -4782,15 +4780,12 @@
         "logoSize": "Taille du logo",
         "hideLogo": "Masquer le logo",
         "backgroundColor": "Couleur d’arrière-plan",
-        "padding": "Marge",
         "frameStyle": "Style de cadre",
-        "frameColor": "Couleur du cadre",
         "whichEyes": "Quels yeux",
         "allEyes": "Tous les yeux",
         "thisEye": "Cet œil",
         "thisEyesColor": "Couleur de cet œil",
         "thisEyesCenterColor": "Couleur du centre de cet œil",
-        "shapesChangeAllThreeEyes": "Les formes modifient les trois yeux.",
         "sameAsTheOthers": "Comme les autres",
         "eyesWithTheirOwnColor": "Les yeux dotés de leur propre couleur la conservent. Choisissez Cet œil pour en modifier un.",
         "logoShapeAndPlate": "Forme et fond du logo",
@@ -4817,11 +4812,8 @@
       "codeShape": {
         "codeShape": "Forme du code",
         "names": {
-          "square": "Carré",
-          "circle": "Cercle",
-          "heart": "Cœur"
-        },
-        "aCircleOrHeartTakes": "Un cercle ou un cœur remplace le cadre."
+          "square": "Carré"
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "Pour l’instant, le logo le porte au niveau {level}."

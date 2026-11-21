@@ -223,6 +223,67 @@ export function AutoLevelControl({
 }
 
 /**
+ * Where the logo sits: back to the center, and left to right, top to
+ * bottom (logoOptions.x and y). The preview's logo can also be dragged.
+ */
+export function LogoPositionControl({
+  style,
+  onChange,
+}: {
+  /** The style with defaults filled in */
+  style: QRStyle;
+  onChange: (change: Partial<QRStyle>) => void;
+}) {
+  const t = useTranslations("editor.controlSections.logoOptionsSection");
+  const options = style.logoOptions ?? {};
+  const x = options.x ?? 0.5;
+  const y = options.y ?? 0.5;
+  const centered = x === 0.5 && y === 0.5;
+  const setOptions = (change: Partial<LogoOptions>) =>
+    onChange(logoOptionsChange(options, change));
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-muted-foreground text-sm">{t("position")}</span>
+        <Button
+          disabled={centered}
+          onClick={() => setOptions({ x: 0.5, y: 0.5 })}
+          size="sm"
+          type="button"
+          variant="outline"
+        >
+          <Gps />
+          {t("center")}
+        </Button>
+      </div>
+      <SliderRow label={t("leftToRight")} value={`${percent(x)}%`}>
+        <Slider
+          aria-label={t("logoPositionLeftToRight")}
+          max={100}
+          min={0}
+          onValueChange={([next]) => setOptions({ x: (next ?? 50) / 100 })}
+          step={1}
+          value={[percent(x)]}
+        />
+      </SliderRow>
+      <SliderRow label={t("topToBottom")} value={`${percent(y)}%`}>
+        <Slider
+          aria-label={t("logoPositionTopToBottom")}
+          max={100}
+          min={0}
+          onValueChange={([next]) => setOptions({ y: (next ?? 50) / 100 })}
+          step={1}
+          value={[percent(y)]}
+        />
+      </SliderRow>
+      <p className="text-muted-foreground text-xs text-pretty">
+        {t("keepTheLogoOffThe")}
+      </p>
+    </div>
+  );
+}
+
+/**
  * The logo's shape, plate and background, its size, clear space and
  * position, and automatic error correction. Shown while the logo is on.
  */
@@ -266,44 +327,7 @@ export function LogoOptionsSection({
 
       <LogoClearSpaceControl onChange={onChange} style={style} />
 
-      <div className="space-y-3">
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-muted-foreground text-sm">{t("position")}</span>
-          <Button
-            disabled={centered}
-            onClick={() => setOptions({ x: 0.5, y: 0.5 })}
-            size="sm"
-            type="button"
-            variant="outline"
-          >
-            <Gps />
-            {t("center")}
-          </Button>
-        </div>
-        <SliderRow label={t("leftToRight")} value={`${percent(x)}%`}>
-          <Slider
-            aria-label={t("logoPositionLeftToRight")}
-            max={100}
-            min={0}
-            onValueChange={([next]) => setOptions({ x: (next ?? 50) / 100 })}
-            step={1}
-            value={[percent(x)]}
-          />
-        </SliderRow>
-        <SliderRow label={t("topToBottom")} value={`${percent(y)}%`}>
-          <Slider
-            aria-label={t("logoPositionTopToBottom")}
-            max={100}
-            min={0}
-            onValueChange={([next]) => setOptions({ y: (next ?? 50) / 100 })}
-            step={1}
-            value={[percent(y)]}
-          />
-        </SliderRow>
-        <p className="text-muted-foreground text-xs text-pretty">
-          {t("keepTheLogoOffThe")}
-        </p>
-      </div>
+      <LogoPositionControl onChange={onChange} style={style} />
 
       <AutoLevelControl onChange={onChange} style={style} />
     </ControlSection>

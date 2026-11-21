@@ -16,7 +16,7 @@ import { cleanText, textProblem } from "./text";
 
 // Creator profiles. Every item belongs to one: a person's (made the first
 // time they publish, showing their account name and picture as the gallery
-// always has) or the official QRdx profile (made by the seed, owned by the
+// always has) or the official QRdx profile (kind "official", owned by the
 // team account). Handles are opt-in, claimed and released in Settings.
 
 export const DISPLAY_NAME_MAX_LENGTH = 40;

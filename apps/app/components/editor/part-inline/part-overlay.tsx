@@ -3,6 +3,7 @@
 import { useIsMobile } from "@repo/design-system/hooks/use-mobile";
 import { cn } from "@repo/design-system/lib/utils";
 import { useTranslations } from "next-intl";
+import { isFrameActive } from "qrdx";
 import { EYE_POSITIONS, getSolidColor, LOGO_SIZE_MIN } from "qrdx/types";
 import {
   type ReactNode,
@@ -21,8 +22,8 @@ import type { DesignSection } from "@/lib/playground-links";
 import { soundEvent } from "@/lib/sound/emit";
 import { useQREditorStore } from "@/store/editor-store";
 import { usePlaygroundFocusStore } from "@/store/playground-focus-store";
-import type { ThemeEditorState } from "@/types/editor";
 import type { QRStyle } from "@/types/theme";
+import { withStyleChange } from "../control-sections/customization-sections";
 import { frameShapeOf } from "../control-sections/frame-shapes";
 import {
   logoOptionsChange,
@@ -31,10 +32,13 @@ import {
 import { logoIconId, quickIconDataUrl } from "../control-sections/logo-presets";
 import { MAX_PADDING } from "../control-sections/padding-controls";
 import { InsideSidePanel } from "../control-sections/side-panel";
-import { PREVIEW_CODE_SELECTOR } from "../frame-inline/frame-text-overlay";
 import { insideInlineEditor } from "../frame-inline/inline-toolbar";
-import { type Box, previewFrameSvg } from "../frame-inline/preview-labels";
-import { QRStyleScopeProvider } from "../style-scope";
+import {
+  type Box,
+  PREVIEW_CODE_SELECTOR,
+  previewFrameSvg,
+  previewRects,
+} from "../frame-inline/preview-labels";
 import {
   type ContentSnapshot,
   contentSnapshot,
@@ -57,6 +61,7 @@ import {
   NO_PARTS,
   type PartId,
   type PartTarget,
+  partLabelPlace,
   partTargets,
 } from "./part-targets";
 import { OUTLINE_PAD, PartToolbar } from "./part-toolbar";
@@ -70,13 +75,17 @@ import {
 
 // The code's parts in the playground preview, editable where they're drawn:
 // the eyes, the dots, the logo, the background and the frame each get a
-// button over them (hover shows an outline, Tab reaches them), and choosing
-// one opens a small toolbar beside it (a bottom sheet on phones) with that
-// part's options and a Random button. Changes show live as a draft in the
-// editor store, so the preview and scan score follow; Enter, a click
-// outside, Tab out or More options keep the whole edit as one undo step,
-// Escape puts the code back as it was. Same model as frame text editing
-// (../frame-inline), which stays on top and never opens at the same time.
+// button over them (hover or focus shows an outline and the part's name,
+// Tab reaches them), and choosing one opens a toolbar beside it (a bottom
+// sheet on phones) with the Design tab's controls for that part and a
+// Random button. Every change goes to the editor the way the Design tab's
+// do (setThemeState), and the Design tab shows it at once. The editor keeps
+// one undo step per gesture (lib/editor-gestures.ts): a slider, color or
+// handle drag is one step, and two picks are two however quick. Enter, Done,
+// a click outside or Tab out close the toolbar; Escape closes it too and
+// puts back the code's content (which has no undo) as it was when the
+// toolbar opened. Focus goes back to the part. Frame text editing
+// (../frame-inline) stays on top and never opens at the same time.
 
 // SVG attributes that move or resize a part
 const WATCHED_ATTRIBUTES = [
@@ -107,8 +116,6 @@ const SECTION: Record<PartId, DesignSection> = {
 
 interface Session {
   part: PartId;
-  /** The editor state the edit started from (Escape returns to it) */
-  before: ThemeEditorState;
   /** Last place the part was drawn (kept while it isn't, e.g. a hidden logo) */
   anchor: Box;
   outlines: Box[];
@@ -116,10 +123,23 @@ interface Session {
   sheet: boolean;
   /** The eye chosen (an index into EYE_POSITIONS) */
   eye: number;
-  /** The eyes' colors go to every eye, or to that one */
+  /** The eyes' shapes and colors go to every eye, or to that one */
   eyeScope: EyeScope;
-  /** The content as it was (Escape puts it back; it has no undo step) */
+  /** The content as it was (Escape puts it back; it has no undo) */
   content: ContentSnapshot;
+  /**
+   * The background's Logo and Frame menus, offered when the edit started
+   * without one: kept for the whole edit, so picking a logo or a frame
+   * there doesn't take away the menu (and the focus) in use
+   */
+  offer: { logo: boolean; frame: boolean };
+}
+
+/** The button under the pointer or focus: its part, which box, a ring? */
+interface Pointed {
+  part: PartId;
+  box: Box;
+  ring: boolean;
 }
 
 /** The outlines around a part while it's edited. */
@@ -142,18 +162,17 @@ function outlinesOf(
 
 const currentState = () => useQREditorStore.getState().themeState;
 
-/** Shows `styles` in the preview as part of the open draft (no undo step). */
-function draftStyles(styles: QRStyle) {
-  useQREditorStore.getState().draftThemeState({ ...currentState(), styles });
-}
-
-/** Merges `change` into the design as a draft; cleared options leave it. */
-function draftChange(change: Partial<QRStyle>) {
-  const next: QRStyle = { ...currentState().styles, ...change };
-  for (const key of Object.keys(change) as (keyof QRStyle)[]) {
-    if (next[key] === undefined) delete next[key];
-  }
-  draftStyles(next);
+/**
+ * Merges `change` into the design the way the Design tab does (its
+ * onChange: setThemeState), so it's undone the same way: one step per
+ * gesture.
+ */
+function applyChange(change: Partial<QRStyle>) {
+  const state = currentState();
+  useQREditorStore.getState().setThemeState({
+    ...state,
+    styles: withStyleChange(state.styles, change),
+  });
 }
 
 /** Another look for `part`, as a style change, or null when there's none. */
@@ -206,7 +225,7 @@ function WithPartItems({
   context: PartItemsContext;
   children: (items: PartItem[], extra: ReactNode) => ReactNode;
 }) {
-  const { items, extra } = usePartItems(part, styles, draftChange, context);
+  const { items, extra } = usePartItems(part, styles, applyChange, context);
   return children(items, extra);
 }
 
@@ -217,6 +236,7 @@ function LogoEditHandles({
   symbol,
   code,
   color,
+  onChange,
   onHide,
   onCancel,
 }: {
@@ -225,6 +245,7 @@ function LogoEditHandles({
   symbol: Box;
   code: Box;
   color: string;
+  onChange: (change: Partial<QRStyle>) => void;
   onHide: () => void;
   onCancel: () => void;
 }) {
@@ -240,7 +261,7 @@ function LogoEditHandles({
       onCancel={onCancel}
       onHide={onHide}
       onOptions={(change) =>
-        draftChange(
+        onChange(
           logoOptionsChange(currentState().styles.logoOptions ?? {}, change),
         )
       }
@@ -256,6 +277,31 @@ function focusContentForm() {
     '[role="tabpanel"][data-state="active"] :is(input:not([type=hidden]), textarea, select)',
   );
   field?.focus();
+}
+
+/** The part's name beside its button while it's pointed at or focused. */
+function PartLabel({
+  pointed,
+  bounds,
+}: {
+  pointed: Pointed;
+  bounds: { width: number; height: number };
+}) {
+  const t = useTranslations("editor.partInline");
+  const name = pointed.ring
+    ? t("items.codeShape")
+    : t(`parts.${pointed.part}.name`);
+  const place = partLabelPlace(pointed.box, OUTLINE_PAD, bounds);
+  return (
+    <span
+      aria-hidden
+      className="bg-foreground text-background pointer-events-none absolute z-10 rounded-full px-2 py-0.5 text-[11px] leading-4 font-medium whitespace-nowrap shadow-xs"
+      data-part-label={pointed.part}
+      style={{ left: place.left, top: place.top }}
+    >
+      {name}
+    </span>
+  );
 }
 
 export function PartOverlay({
@@ -274,12 +320,12 @@ export function PartOverlay({
   const isMobile = useIsMobile();
   const { handleSetTab } = useControlsTabFromUrl();
   const styles = useQREditorStore((state) => state.themeState.styles);
-  const value = useQREditorStore((state) => state.value);
   const [measured, setMeasured] = useState<MeasuredParts>(NO_PARTS);
   const [session, setSession] = useState<Session | null>(null);
   const sessionRef = useRef<Session | null>(null);
   sessionRef.current = session;
-  const [highlight, setHighlight] = useState<PartId | null>(null);
+  const [pointed, setPointed] = useState<Pointed | null>(null);
+  const highlight = pointed?.part ?? null;
   const buttons = useRef(new Map<PartId, HTMLButtonElement>());
   const focusAfterClose = useRef<PartId | null>(null);
   const targets = partTargets(measured, {
@@ -350,7 +396,7 @@ export function PartOverlay({
     );
   }, [measured]);
 
-  // Back to the part's button after Escape (keyboard flow)
+  // Back to the part's button after the edit closes (keyboard flow)
   useEffect(() => {
     if (session || !focusAfterClose.current) return;
     buttons.current.get(focusAfterClose.current)?.focus({
@@ -359,6 +405,7 @@ export function PartOverlay({
     focusAfterClose.current = null;
   }, [session]);
 
+  /** Ends the edit; `focusBack` returns focus to the part's button. */
   const close = useCallback((focusBack: boolean) => {
     const open = sessionRef.current;
     if (!open) return;
@@ -367,38 +414,17 @@ export function PartOverlay({
     setSession(null);
   }, []);
 
-  const commit = useCallback(
-    (focusBack: boolean) => {
-      const open = sessionRef.current;
-      if (!open) return;
-      useQREditorStore.getState().commitThemeDraft(open.before);
-      close(focusBack);
-    },
-    [close],
-  );
-
-  // Unmounted mid-edit (the layout switched between phone and desktop, say):
-  // keep the draft as a proper undo step instead of leaving it unrecorded.
-  const commitRef = useRef(commit);
-  commitRef.current = commit;
-  useEffect(
-    () => () => {
-      if (sessionRef.current) commitRef.current(false);
-    },
-    [],
-  );
-
+  /** Escape: ends the edit and puts the content back as it was. */
   const cancel = useCallback(() => {
     const open = sessionRef.current;
     if (!open) return;
-    useQREditorStore.getState().draftThemeState(open.before);
     restoreContent(open.content);
     close(true);
   }, [close]);
 
   const start = (part: PartId, eye = 0) => {
     const open = sessionRef.current;
-    // Another eye while colors go to one eye: the edit moves to it
+    // Another eye while the edit is on one eye: the edit moves to it
     if (
       open?.part === "eyes" &&
       part === "eyes" &&
@@ -410,16 +436,15 @@ export function PartOverlay({
     }
     // The part being edited, chosen again: done
     if (open?.part === part) {
-      commit(true);
+      close(true);
       return;
     }
-    if (open) commit(false);
+    if (open) close(false);
     const anchor = anchorOf(part, measured);
     if (!anchor) return;
     soundEvent("tick");
     const next: Session = {
       part,
-      before: currentState(),
       anchor,
       outlines: outlinesOf(part, measured, targets, {
         index: eye,
@@ -429,6 +454,10 @@ export function PartOverlay({
       eye,
       eyeScope: "all",
       content: contentSnapshot(),
+      offer: {
+        logo: !currentState().styles.showLogo,
+        frame: !isFrameActive(currentState().styles.frame),
+      },
     };
     sessionRef.current = next;
     setSession(next);
@@ -451,38 +480,24 @@ export function PartOverlay({
       return next;
     });
 
-  /** A random look for `part` right away, as its own undo step. */
-  const randomNow = (part: PartId) => {
-    if (sessionRef.current) {
-      random();
-      return;
-    }
+  /** A random look for `part`. */
+  const randomFor = (part: PartId) => {
     const change = randomChange(part, currentState().styles, Math.random);
     if (!change) return;
-    const before = currentState();
-    draftChange(change);
-    useQREditorStore.getState().commitThemeDraft(before);
+    applyChange(change);
     soundEvent("tick");
   };
 
-  /** Hides the logo right away, as its own undo step. */
-  const hideLogoNow = () => {
-    const before = currentState();
-    draftChange({ showLogo: false });
-    useQREditorStore.getState().commitThemeDraft(before);
-  };
+  /** Hides the logo (the toolbar's Hide logo does the same). */
+  const hideLogo = () => applyChange({ showLogo: false });
 
-  /** A dropped image becomes the logo, as its own undo step. */
-  const dropLogo = (logo: string) => {
-    if (sessionRef.current) commit(false);
-    const before = currentState();
-    draftChange({ customLogo: logo, showLogo: true });
-    useQREditorStore.getState().commitThemeDraft(before);
-  };
+  /** A dropped image becomes the logo. */
+  const dropLogo = (logo: string) =>
+    applyChange({ customLogo: logo, showLogo: true });
 
-  /** Keeps the edit and opens the Content tab with its form focused. */
+  /** Ends the edit and opens the Content tab with its form focused. */
   const openContent = () => {
-    commit(false);
+    close(false);
     handleSetTab("content");
     // The tab renders on the next frames
     requestAnimationFrame(() =>
@@ -490,45 +505,37 @@ export function PartOverlay({
     );
   };
 
-  const random = () => {
+  /** Ends the edit and opens `section` of the Design tab (the part's own by default). */
+  const moreOptions = (section?: DesignSection) => {
     const open = sessionRef.current;
     if (!open) return;
-    const change = randomChange(open.part, currentState().styles, Math.random);
-    if (!change) return;
-    draftChange(change);
-    soundEvent("tick");
-  };
-
-  const moreOptions = () => {
-    const open = sessionRef.current;
-    if (!open) return;
-    const section = SECTION[open.part];
-    commit(false);
+    const target = section ?? SECTION[open.part];
+    close(false);
     handleSetTab("customisations");
     // Ask again even when the section was asked for before (a closed section)
     const focus = usePlaygroundFocusStore.getState();
-    if (focus.section === section) {
+    if (focus.section === target) {
       focus.setSection(null);
       requestAnimationFrame(() =>
-        usePlaygroundFocusStore.getState().setSection(section),
+        usePlaygroundFocusStore.getState().setSection(target),
       );
     } else {
-      focus.setSection(section);
+      focus.setSection(target);
     }
   };
 
   // A click anywhere but the editor, its menus or the part being edited
-  // commits (desktop; the sheet handles its own outside clicks).
+  // closes it (desktop; the sheet handles its own outside clicks).
   useEffect(() => {
     if (!session || session.sheet) return;
     const onPointerDown = (event: PointerEvent) => {
       if (insideInlineEditor(event.target as Element | null, "part")) return;
-      commit(false);
+      close(false);
     };
     document.addEventListener("pointerdown", onPointerDown, true);
     return () =>
       document.removeEventListener("pointerdown", onPointerDown, true);
-  }, [session, commit]);
+  }, [session, close]);
 
   // R gives the open part a random look (not while typing)
   useEffect(() => {
@@ -544,7 +551,7 @@ export function PartOverlay({
       });
       if (action?.type !== "random") return;
       event.preventDefault();
-      random();
+      randomFor(session.part);
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -554,7 +561,7 @@ export function PartOverlay({
   useKeyboardShortcut(
     RANDOM_KEYS,
     () => {
-      if (highlight) randomNow(highlight);
+      if (highlight) randomFor(highlight);
     },
     {
       enabled: shortcutsEnabled && !session && highlight !== null,
@@ -564,8 +571,8 @@ export function PartOverlay({
 
   // An AI art result covering the code ends an open edit.
   useEffect(() => {
-    if (disabled) commit(false);
-  }, [disabled, commit]);
+    if (disabled) close(false);
+  }, [disabled, close]);
 
   const root = rootRef.current;
   if (disabled) return null;
@@ -580,6 +587,9 @@ export function PartOverlay({
     }
     return;
   };
+  const bounds = root
+    ? { width: root.clientWidth, height: root.clientHeight }
+    : { width: 0, height: 0 };
 
   return (
     <>
@@ -596,6 +606,7 @@ export function PartOverlay({
               : t(`parts.${target.part}.edit`);
             const lit = highlight === target.part && !editing;
             const color = outlineOver(target.part, box);
+            const point = () => setPointed({ part: target.part, box, ring });
             return (
               <button
                 aria-expanded={first ? editing : undefined}
@@ -610,11 +621,11 @@ export function PartOverlay({
                   lit && "ring-1 ring-current/45",
                 )}
                 // The part being edited stays part of its editor: choosing
-                // it again closes the edit instead of committing twice
+                // it again closes the edit
                 data-part-button={target.part}
                 {...(editing && { "data-part-inline": "" })}
                 key={`${target.part}-${target.kind}-${index}`}
-                onBlur={() => setHighlight(null)}
+                onBlur={() => setPointed(null)}
                 onClick={() =>
                   start(target.part, target.part === "eyes" ? index : 0)
                 }
@@ -634,16 +645,13 @@ export function PartOverlay({
                   });
                   if (action?.type !== "hide-logo") return;
                   event.preventDefault();
-                  if (editing) draftChange({ showLogo: false });
-                  else hideLogoNow();
+                  hideLogo();
                 }}
                 onFocus={(event) => {
-                  if (event.currentTarget.matches(":focus-visible")) {
-                    setHighlight(target.part);
-                  }
+                  if (event.currentTarget.matches(":focus-visible")) point();
                 }}
-                onPointerEnter={() => setHighlight(target.part)}
-                onPointerLeave={() => setHighlight(null)}
+                onPointerEnter={point}
+                onPointerLeave={() => setPointed(null)}
                 ref={(node) => {
                   if (!first) return;
                   if (node) buttons.current.set(target.part, node);
@@ -664,6 +672,9 @@ export function PartOverlay({
             );
           }),
         )}
+        {pointed && session?.part !== pointed.part && (
+          <PartLabel bounds={bounds} pointed={pointed} />
+        )}
       </div>
 
       {/* Direct handles on the code while its part is edited */}
@@ -677,7 +688,8 @@ export function PartOverlay({
             color={codeColor}
             logo={measured.logo}
             onCancel={cancel}
-            onHide={() => draftChange({ showLogo: false })}
+            onChange={applyChange}
+            onHide={hideLogo}
             styles={styles}
             symbol={measured.symbol}
           />
@@ -694,7 +706,7 @@ export function PartOverlay({
             modulePx={measured.eyes[0].width / 7}
             onMargin={(margin) => {
               if (margin !== (currentState().styles.margin ?? 0)) {
-                draftChange({ margin });
+                applyChange({ margin });
               }
             }}
           />
@@ -703,62 +715,55 @@ export function PartOverlay({
       <LogoDrop onLogo={dropLogo} rootRef={rootRef} />
 
       {session && (
-        <QRStyleScopeProvider
-          onChange={draftStyles}
-          style={styles}
-          value={value}
-        >
-          <InsideSidePanel>
-            <WithPartItems
-              context={{
-                eye: EYE_POSITIONS[session.eye] ?? "topLeft",
-                eyeScope: session.eyeScope,
-                onEyeScope: (scope) => setEye(session.eye, scope),
-                onOpenContent: openContent,
-              }}
-              part={session.part}
-              styles={styles}
-            >
-              {(items, extra) =>
-                session.sheet ? (
-                  <PartSheet
+        <InsideSidePanel>
+          <WithPartItems
+            context={{
+              eye: EYE_POSITIONS[session.eye] ?? "topLeft",
+              eyeScope: session.eyeScope,
+              offer: session.offer,
+              onEyeScope: (scope) => setEye(session.eye, scope),
+              onOpenContent: openContent,
+            }}
+            part={session.part}
+            styles={styles}
+          >
+            {(items, extra) =>
+              session.sheet ? (
+                <PartSheet
+                  extra={extra}
+                  items={items}
+                  onCancel={cancel}
+                  onClose={() => close(true)}
+                  onMoreOptions={moreOptions}
+                  onRandom={() => randomFor(session.part)}
+                  part={session.part}
+                />
+              ) : (
+                root && (
+                  <PartToolbar
+                    anchor={session.anchor}
+                    artwork={measured.artwork}
+                    avoidCode={() => previewRects(rootRef.current)}
+                    bounds={bounds}
                     extra={extra}
                     items={items}
                     onCancel={cancel}
-                    onCommit={() => commit(true)}
+                    onClose={() => close(true)}
+                    onLeave={() => close(false)}
                     onMoreOptions={moreOptions}
-                    onRandom={random}
+                    onRandom={() => randomFor(session.part)}
+                    outlineColor={
+                      outlineOver(session.part, session.anchor) ??
+                      "var(--foreground)"
+                    }
+                    outlines={session.outlines}
                     part={session.part}
                   />
-                ) : (
-                  root && (
-                    <PartToolbar
-                      anchor={session.anchor}
-                      artwork={measured.artwork}
-                      bounds={{
-                        width: root.clientWidth,
-                        height: root.clientHeight,
-                      }}
-                      extra={extra}
-                      items={items}
-                      onCancel={cancel}
-                      onCommit={() => commit(true)}
-                      onLeave={() => commit(false)}
-                      onMoreOptions={moreOptions}
-                      onRandom={random}
-                      outlineColor={
-                        outlineOver(session.part, session.anchor) ??
-                        "var(--foreground)"
-                      }
-                      outlines={session.outlines}
-                      part={session.part}
-                    />
-                  )
                 )
-              }
-            </WithPartItems>
-          </InsideSidePanel>
-        </QRStyleScopeProvider>
+              )
+            }
+          </WithPartItems>
+        </InsideSidePanel>
       )}
     </>
   );

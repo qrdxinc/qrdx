@@ -40,6 +40,19 @@ export function withEyeShape(
   return Object.keys(next).length > 0 ? next : undefined;
 }
 
+/** `eyeShapes` without `position`'s own shapes (it takes the code's again). */
+export function withoutEyeShape(
+  eyeShapes: EyeShapes | undefined,
+  position: EyePosition,
+): EyeShapes | undefined {
+  return withEyeShape(
+    withEyeShape(eyeShapes, position, "outer", undefined),
+    position,
+    "inner",
+    undefined,
+  );
+}
+
 /** The frame and centre drawn at `position` (its own, else the code's). */
 export function eyeShapeAt(style: Partial<QRStyle>, position: EyePosition) {
   return eyeShapeOf(

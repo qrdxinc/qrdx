@@ -13,6 +13,7 @@ import {
   getColorString,
   isGradient,
 } from "qrdx/types";
+import { useId } from "react";
 import ControlSection from "@/components/editor/control-section";
 import {
   GradientPicker,
@@ -39,7 +40,7 @@ interface EyeColorsSectionProps {
 }
 
 /** True when any eye is painted with a gradient (the span switch matters). */
-function hasEyeGradient(style: QRStyle): boolean {
+export function hasEyeGradient(style: Partial<QRStyle>): boolean {
   const paints = [
     style.eyeColor,
     style.dotColor,
@@ -49,6 +50,53 @@ function hasEyeGradient(style: QRStyle): boolean {
     ]),
   ];
   return paints.some((paint) => paint !== undefined && isGradient(paint));
+}
+
+/**
+ * "Eyes continue the code's gradient" (qrdx `eyeGradient`), shown while an
+ * eye is painted with a gradient: the Eye colors section and the preview's
+ * eye color menus.
+ */
+export function EyeGradientControl({
+  style,
+  onChange,
+}: {
+  /** The style with defaults filled in */
+  style: Partial<QRStyle>;
+  onChange: (eyeGradient: QRStyle["eyeGradient"]) => void;
+}) {
+  const t = useTranslations("editor.controlSections.eyeColorsSection");
+  const id = useId();
+  if (!hasEyeGradient(style)) return null;
+  return (
+    <div className="space-y-2 border-t pt-3">
+      <div className="flex items-center justify-between gap-3">
+        <Label className="text-sm" htmlFor={id}>
+          {t("eyesContinueTheCodes")}
+          <NewLookTag className="ml-1.5" id={EYE_GRADIENT_CONTROL} />
+        </Label>
+        <Switch
+          checked={style.eyeGradient === "code"}
+          id={id}
+          onCheckedChange={(on) => onChange(on ? "code" : undefined)}
+        />
+      </div>
+      <p className="text-muted-foreground text-xs text-pretty">
+        {t("offEachEyeSweeps")}
+      </p>
+    </div>
+  );
+}
+
+/** Takes every eye back to the Eyes and Dots colors. */
+export function SameEyeColorsButton({ onClick }: { onClick: () => void }) {
+  const t = useTranslations("editor.controlSections.eyeColorsSection");
+  return (
+    <Button onClick={onClick} size="sm" type="button" variant="outline">
+      <RefreshLeftSquare />
+      {t("useTheSameColorsFor")}
+    </Button>
+  );
 }
 
 /**
@@ -127,36 +175,9 @@ export function EyeColorsSection({
           </div>
         </fieldset>
       ))}
-      {custom && (
-        <Button
-          onClick={() => onChange(undefined)}
-          size="sm"
-          type="button"
-          variant="outline"
-        >
-          <RefreshLeftSquare />
-          {t("useTheSameColorsFor")}
-        </Button>
-      )}
-      {onEyeGradientChange && hasEyeGradient(style) && (
-        <div className="space-y-2 border-t pt-3">
-          <div className="flex items-center justify-between gap-3">
-            <Label className="text-sm" htmlFor="eye-gradient-span">
-              {t("eyesContinueTheCodes")}
-              <NewLookTag className="ml-1.5" id={EYE_GRADIENT_CONTROL} />
-            </Label>
-            <Switch
-              checked={style.eyeGradient === "code"}
-              id="eye-gradient-span"
-              onCheckedChange={(on) =>
-                onEyeGradientChange(on ? "code" : undefined)
-              }
-            />
-          </div>
-          <p className="text-muted-foreground text-xs text-pretty">
-            {t("offEachEyeSweeps")}
-          </p>
-        </div>
+      {custom && <SameEyeColorsButton onClick={() => onChange(undefined)} />}
+      {onEyeGradientChange && (
+        <EyeGradientControl onChange={onEyeGradientChange} style={style} />
       )}
     </ControlSection>
   );

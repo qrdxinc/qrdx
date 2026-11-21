@@ -10,15 +10,15 @@ import { COMMUNITY_TAG, isMissingSchemaError } from "./tables";
 export { COMMUNITY_TAG, isMissingSchemaError } from "./tables";
 
 // Which tables the community reads, so the code is safe before and after
-// the community tables exist and the backfill runs:
+// the community tables exist and hold the themes:
 // - before the tables exist, `tables` is false: themes come from
 //   community_theme, frames from the engine's official catalogue, and
 //   anything that writes (publishing frames, likes on items, handles) says
 //   it isn't available;
-// - after the tables but before the backfill, themes still come from
-//   community_theme (community_item holds no themes yet, community_theme
-//   does), so the gallery never empties;
-// - once the backfill has copied the themes, everything reads community_item.
+// - while community_item holds no themes and community_theme does, themes
+//   still come from community_theme, so the gallery never empties;
+// - once community_item holds themes (or community_theme has none),
+//   everything reads community_item.
 
 export interface CommunityState {
   /** The community_* tables exist */
