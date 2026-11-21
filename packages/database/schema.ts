@@ -5,6 +5,7 @@ import {
   boolean,
   date,
   doublePrecision,
+  foreignKey,
   index,
   integer,
   json,
@@ -71,16 +72,14 @@ export const user = pgTable(
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),
     // Better Auth two-factor plugin field: true once an authenticator app is
-    // verified. SQL: packages/database/manual-sql/0019_sign_in_security.sql
+    // verified.
     twoFactorEnabled: boolean("two_factor_enabled").default(false),
     // i18n-play lane: the app's and the emails' language ("es", "pt-BR");
-    // null follows the language cookie. SQL:
-    // packages/database/manual-sql/2026-11-11-user-locale.sql
+    // null follows the language cookie.
     locale: text("locale"),
     // "Notes from the QRdx team": the personal notes the team sends from the
     // console and the welcome email. On unless the person turns it off
-    // (Settings > Notifications, or the link in every note). SQL:
-    // packages/database/manual-sql/2026-11-19-team-notes.sql
+    // (Settings > Notifications, or the link in every note).
     teamNotes: boolean("team_notes").notNull().default(true),
     createdAt: timestamp("created_at").notNull(),
     updatedAt: timestamp("updated_at").notNull(),
@@ -138,7 +137,7 @@ export const verification = pgTable(
     updatedAt: timestamp("updated_at"),
   },
   // Every lookup is by identifier: sign-in codes, "Confirm it's you", and
-  // session markers on signed-in requests. SQL: manual-sql/0024.
+  // session markers on signed-in requests.
   (table) => [index("verification_identifier_idx").on(table.identifier)]
 );
 
@@ -147,7 +146,7 @@ export const verification = pgTable(
 // session cookie and sends with every signed call to the app's internal
 // API, so a call proves which admin is at the console. Only the grant's
 // SHA-256 is stored. It goes with the qrdx.dev session it was made from,
-// and with its user. SQL: manual-sql/2026-11-18-console-grants.sql
+// and with its user.
 export const adminConsoleGrant = pgTable(
   "admin_console_grant",
   {
@@ -170,7 +169,6 @@ export const adminConsoleGrant = pgTable(
 // Sign-in security: two-step verification, passkeys and workspace SSO. Field
 // names match better-auth 1.7.14's twoFactor, @better-auth/passkey and
 // @better-auth/sso schemas; written only through those plugins.
-// SQL: packages/database/manual-sql/0019_sign_in_security.sql
 
 // One row per user with an authenticator app. `secret` and `backup_codes` are
 // encrypted by the plugin with BETTER_AUTH_SECRET.
@@ -217,7 +215,6 @@ export const passkey = pgTable(
     index("passkey_user_id_idx").on(table.userId),
     index("passkey_credential_id_idx").on(table.credentialID),
     // One row per credential: sign-in looks passkeys up by credential id.
-    // SQL: packages/database/manual-sql/0021_passkey_credential_unique.sql
     uniqueIndex("passkey_credential_id_unique").on(table.credentialID),
   ]
 );
@@ -257,7 +254,6 @@ export const ssoProvider = pgTable(
 // only the cookie's SHA-256 is stored. `alerted_at` is set on the browsers
 // that got an alert (the per-account alert limits count them). Written only
 // through that plugin; the daily cron deletes rows not seen for 400 days.
-// SQL: packages/database/manual-sql/0023_known_device.sql
 export const knownDevice = pgTable(
   "known_device",
   {
@@ -310,7 +306,6 @@ export const member = pgTable(
     index("member_user_id_idx").on(table.userId),
     // One membership per person per workspace. SSO sign-ins add people on
     // every sign-in, so two at once must not double up.
-    // SQL: packages/database/manual-sql/0020_member_unique.sql
     uniqueIndex("member_organization_id_user_id_unique").on(
       table.organizationId,
       table.userId
@@ -346,7 +341,6 @@ export const invitation = pgTable(
 // per workspace; only a SHA-256 hash of the token is stored, so the link is
 // shown once, when it's made or reset. Turning it off deletes the row, and
 // deleting the workspace deletes it.
-// SQL: packages/database/manual-sql/0014_workspace_join_link.sql
 export const workspaceJoinLink = pgTable(
   "workspace_join_link",
   {
@@ -387,11 +381,10 @@ export const qrPreset = pgTable(
   (table) => [
     index("qr_preset_user_id_idx").on(table.userId),
     index("qr_preset_organization_id_idx").on(table.organizationId),
-    // /admin/themes, newest first a page at a time
-    // (manual-sql/2026-11-13-paging-indexes.sql).
+    // /admin/themes, newest first a page at a time.
     index("qr_preset_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -445,11 +438,10 @@ export const subscription = pgTable(
   (table) => [
     index("subscription_status_idx").on(table.status),
     index("subscription_user_id_idx").on(table.userId),
-    // /admin/subscriptions, newest first a page at a time
-    // (manual-sql/2026-11-13-paging-indexes.sql).
+    // /admin/subscriptions, newest first a page at a time.
     index("subscription_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -474,18 +466,17 @@ export const integration = pgTable(
   },
   (table) => [
     index("integration_user_id_idx").on(table.userId),
-    // /admin/integrations, newest first a page at a time
-    // (manual-sql/2026-11-13-paging-indexes.sql).
+    // /admin/integrations, newest first a page at a time.
     index("integration_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
 
 // ─── The QRdx bot for Slack (apps/app/lib/slack-bot) ───────────────────────
-// Two tables of their own (manual-sql/2026-11-10-slack-bot.sql); the app only
-// reads or writes them while the bot is configured (SLACK_SIGNING_SECRET and
+// Two tables of their own; the app only reads or writes them while the bot
+// is configured (SLACK_SIGNING_SECRET and
 // the Slack app keys). No message text is ever stored.
 
 /** One row per Slack workspace the bot is installed in. */
@@ -597,13 +588,13 @@ export const themeLike = pgTable(
   (table) => [primaryKey({ columns: [table.userId, table.themeId] })]
 );
 
-// ─── Community (manual-sql/0012_community.sql) ──────────────────────────────
+// ─── Community ──────────────────────────────────────────────────────────────
 // Items people share (frames, themes, collections) belong to a creator
 // profile. Each publish is an immutable version; `payload` on the item is a
 // copy of the current version for fast reads. Only new tables: nothing
-// existing changes, so code deployed before the SQL keeps working, and code
-// that reads these tables falls back to community_theme until they exist
-// (apps/app/lib/community/store.ts).
+// existing changes, so code keeps working on a database without them, and
+// code that reads these tables falls back to community_theme until they
+// exist (apps/app/lib/community/store.ts).
 
 /** Item types, in gallery order (a text column: a new type needs no SQL). */
 export const COMMUNITY_ITEM_TYPES = [
@@ -712,8 +703,8 @@ export const communityItem = pgTable(
     index("community_item_profile_id_idx").on(table.profileId),
     index("community_item_payload_hash_idx").on(table.payloadHash),
     index("community_item_source_idx").on(table.sourceKind, table.sourceId),
-    // Full-text search (manual-sql/0017_community_search.sql; the expression
-    // must stay the one apps/app/lib/community/search.ts queries)
+    // Full-text search (the expression must stay the one
+    // apps/app/lib/community/search.ts queries)
     index("community_item_search_idx").using(
       "gin",
       sql`to_tsvector('simple'::regconfig, coalesce("name", '') || ' ' || coalesce("description", ''))`
@@ -825,7 +816,7 @@ export const communityUse = pgTable(
       table.day
     ),
     index("community_use_item_id_idx").on(table.itemId),
-    // Remix lineage lookups (manual-sql/0018_community_use_preset_index.sql)
+    // Remix lineage lookups
     index("community_use_preset_id_idx")
       .on(table.presetId)
       .where(sql`"preset_id" IS NOT NULL`),
@@ -853,11 +844,10 @@ export const communityCollectionEntry = pgTable(
   ]
 );
 
-// OAuth apps. Apps without an owner (owner_user_id null) were registered by the
-// QRdx team (scripts/create-oauth-app.ts) and count as first-party. Apps that
+// OAuth apps. Apps without an owner (owner_user_id null) were added by the
+// QRdx team, straight in the database, and count as first-party. Apps that
 // developers create in Settings → Developers belong to their creator, plus the
 // team in organization_id when they were made in a team workspace.
-// SQL: packages/database/manual-sql/0008_oauth_app_owner.sql
 export const oauthApp = pgTable(
   "oauth_app",
   {
@@ -943,7 +933,7 @@ export const oauthToken = pgTable(
 // visible beginning ("qrdx_aB3dE5") for telling keys apart. Revoked keys keep
 // their row (revoked_at) so the history stays readable. Deleting the creator
 // or the team deletes the key: a team key must never fall back to a personal
-// workspace. SQL: packages/database/manual-sql/0011_api_key.sql
+// workspace.
 export const apiKey = pgTable(
   "api_key",
   {
@@ -991,7 +981,7 @@ export const adminAuditLog = pgTable(
 
 // Workspace audit log (apps/app/ee/audit-log, Business): who changed what in
 // a workspace, read by its owners and admins. Separate from the staff log
-// above. manual-sql/2026-11-09-workspace-audit-log.sql creates it.
+// above.
 export const workspaceAuditLog = pgTable(
   "workspace_audit_log",
   {
@@ -1038,7 +1028,7 @@ export const workspaceAuditLog = pgTable(
 // accounts. Paid Polar orders from those accounts earn a commission, which
 // waits 30 days and is then paid by hand through PayPal; the app only records
 // what's owed and what's been paid. Money is in minor units, in the currency
-// Polar reports. manual-sql/2026-11-10-affiliates.sql creates these tables.
+// Polar reports.
 
 export const affiliate = pgTable(
   "affiliate",
@@ -1208,12 +1198,11 @@ export const affiliateCommission = pgTable(
       table.availableAt
     ),
     index("affiliate_commission_payout_id_idx").on(table.payoutId),
-    // An affiliate's commissions a page at a time, newest payment first
-    // (manual-sql/2026-11-13-paging-indexes.sql).
+    // An affiliate's commissions a page at a time, newest payment first.
     index("affiliate_commission_affiliate_paid_idx").on(
       table.affiliateId,
-      table.orderPaidAt.desc(),
-      table.id.desc()
+      table.orderPaidAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -1232,7 +1221,7 @@ export const affiliateRefundedOrder = pgTable("affiliate_refunded_order", {
   createdAt: timestamp("created_at").notNull(),
 });
 
-// ─── Growth analytics (manual-sql/2026-11-13-growth-analytics.sql) ───────────
+// ─── Growth analytics ───────────────────────────────────────────────────────
 // apps/app/lib/analytics: how an account found QRdx, where codes are made,
 // and daily API, MCP and chat bot usage counts.
 
@@ -1259,9 +1248,7 @@ export type AcquisitionChannel = (typeof ACQUISITION_CHANNELS)[number];
 export const userAcquisition = pgTable(
   "user_acquisition",
   {
-    userId: text("user_id")
-      .primaryKey()
-      .references(() => user.id, { onDelete: "cascade" }),
+    userId: text("user_id").primaryKey(),
     channel: text("channel", { enum: ACQUISITION_CHANNELS }).notNull(),
     // External referrers only, host name only.
     referrerHost: text("referrer_host"),
@@ -1275,7 +1262,15 @@ export const userAcquisition = pgTable(
     signupPath: text("signup_path"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },
-  (table) => [index("user_acquisition_channel_idx").on(table.channel)]
+  (table) => [
+    index("user_acquisition_channel_idx").on(table.channel),
+    // Named as Postgres named it when the table was made by hand.
+    foreignKey({
+      name: "user_acquisition_user_id_fkey",
+      columns: [table.userId],
+      foreignColumns: [user.id],
+    }).onDelete("cascade"),
+  ]
 );
 
 /** usage_daily.channel and .metric (lib/analytics/usage.ts). */
@@ -1309,7 +1304,9 @@ export const usageDaily = pgTable(
     count: integer("count").notNull().default(0),
   },
   (table) => [
+    // Named as Postgres named it when the table was made by hand.
     primaryKey({
+      name: "usage_daily_pkey",
       columns: [table.day, table.channel, table.metric, table.key],
     }),
   ]
@@ -1327,12 +1324,12 @@ export const SCAN_DEVICE_TYPES = [
 ] as const;
 export type ScanDeviceType = (typeof SCAN_DEVICE_TYPES)[number];
 
-// ─── NFC taps (manual-sql/2026-11-11-nfc.sql) ────────────────────────────────
+// ─── NFC taps ───────────────────────────────────────────────────────────────
 /** How a scan reached the short link: a QR code, or a tap on an NFC tag (`?nfc`). */
 export const SCAN_SOURCES = ["qr", "nfc"] as const;
 export type ScanSource = (typeof SCAN_SOURCES)[number];
 
-/** Where a scan's location comes from (qr_scan.location_source, manual-sql/2026-11-11-gps.sql). */
+/** Where a scan's location comes from (qr_scan.location_source). */
 export const SCAN_LOCATION_SOURCES = ["gps", "ip"] as const;
 export type ScanLocationSource = (typeof SCAN_LOCATION_SOURCES)[number];
 
@@ -1340,7 +1337,7 @@ export type ScanLocationSource = (typeof SCAN_LOCATION_SOURCES)[number];
 export const QR_CODE_KINDS = ["redirect", "page"] as const;
 export type QrCodeKind = (typeof QR_CODE_KINDS)[number];
 
-/** Where a code was made (qr_code.created_via, manual-sql/2026-11-13-growth-analytics.sql). */
+/** Where a code was made (qr_code.created_via). */
 export const CODE_CREATED_VIA = [
   "dashboard",
   "playground",
@@ -1405,8 +1402,8 @@ export const qrCode = pgTable(
     }),
     // Generated (7 base62 characters) or a custom back-half (3–64 of
     // [A-Za-z0-9_-]), case-sensitive. Unique per slug_scope, and per domain
-    // (the two unique indexes below, from manual-sql/0009). The old global
-    // unique constraint was dropped by manual-sql/0010 on 2 Nov 2026.
+    // (the two unique indexes below). The old global unique constraint was
+    // dropped on 2 Nov 2026.
     slug: text("slug").notNull(),
     // Namespace of the slug: '' = shared (qrdx.dev/q/<slug>: generated slugs
     // and back-halves chosen on the default link), else the custom_domain id
@@ -1451,14 +1448,14 @@ export const qrCode = pgTable(
     pixels: json("pixels").$type<unknown>(),
     // Moved to the trash (restorable)
     deletedAt: timestamp("deleted_at"),
-    // Large batches (manual-sql/2026-11-11-large-batches.sql): set when the
+    // Large batches: set when the
     // destination's Google Web Risk lookup was skipped at creation (a batch
     // past its time budget, or Web Risk unreachable); lib/safety/recheck.ts
     // looks it up after the response and from the webhook worker, then
     // clears it. NULL = nothing pending (every older code).
     webRiskRecheckAt: timestamp("web_risk_recheck_at"),
     // Where the code was made (CODE_CREATED_VIA): set by createCodesBatch's
-    // callers. NULL = made before manual-sql/2026-11-13-growth-analytics.sql.
+    // callers. NULL = made before the column existed (13 Nov 2026).
     createdVia: text("created_via", { enum: CODE_CREATED_VIA }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at")
@@ -1469,11 +1466,10 @@ export const qrCode = pgTable(
   (table) => [
     index("qr_code_user_id_idx").on(table.userId),
     // /admin/codes, newest first a page at a time; codes made in one batch
-    // share created_at, so the id orders them
-    // (manual-sql/2026-11-13-paging-indexes.sql).
+    // share created_at, so the id orders them.
     index("qr_code_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
     index("qr_code_organization_id_idx").on(table.organizationId),
     index("qr_code_domain_id_idx").on(table.domainId),
@@ -1494,7 +1490,7 @@ export const qrCode = pgTable(
 );
 
 /**
- * Path aliases (manual-sql/2026-11-18-path-aliases.sql): an exact legacy
+ * Path aliases: an exact legacy
  * path on a custom domain (`/r/abc`, `/s/<uuid>/code_batch-1/<uuid>`) that
  * opens a code on that domain, for codes printed by another provider before
  * the domain moved to QRdx. Rules in apps/app/lib/path-aliases.ts; an alias
@@ -1546,10 +1542,10 @@ export const qrScan = pgTable(
     language: text("language"),
     /** A/B variant served, as "<ruleId>:<variantId>", when a split rule matched */
     variant: text("variant"),
-    // NFC taps (manual-sql/2026-11-11-nfc.sql): "qr" or "nfc"; null = before
+    // NFC taps: "qr" or "nfc"; null = before
     // sources were stored, counted as a QR scan.
     source: text("source", { enum: SCAN_SOURCES }),
-    // ── Precise location (manual-sql/2026-11-11-gps.sql) ──
+    // ── Precise location ──
     // Only when the code asks (pixels.preciseLocation, Pro and Business) and
     // the scanner allowed it in the browser: rounded to 3 decimals (~100 m).
     latitude: doublePrecision("latitude"),
@@ -1585,7 +1581,7 @@ export const brandKit = pgTable(
     // Patterns and template (body, corner eye, eye dot, template id)
     style: json("style").$type<ThemeStyles>(),
     isDefault: boolean("is_default").notNull().default(false),
-    // Agency tools (manual-sql/2026-11-11-agency.sql): what the kit is for.
+    // Agency tools: what the kit is for.
     // NULL: an older QR design kit (merged into saved themes, unused);
     // "client": a client's name, logo and accent (colors.accent) for shared
     // stats pages; "portal": the workspace's client-portal branding, one per
@@ -1624,7 +1620,7 @@ export const landingPage = pgTable(
     content: json("content").$type<Record<string, unknown>>().notNull(),
     // Content revision, incremented on save
     version: integer("version").notNull().default(1),
-    // ── Page types (manual-sql/2026-11-11-page-types.sql) ──
+    // ── Page types ──
     // Product pages: the GTIN (14 digits) from the page's product block, set
     // on publish. https://<custom domain>/01/<GTIN> (GS1 Digital Link) opens
     // the page through its code on that domain. Null for other pages.
@@ -1881,11 +1877,11 @@ export const webhookDelivery = pgTable(
       table.nextAttemptAt
     ),
     index("webhook_delivery_endpoint_id_idx").on(table.endpointId),
-    // An endpoint's deliveries page, newest first (manual-sql/2026-11-13-webhook-delivery-paging.sql)
+    // An endpoint's deliveries page, newest first
     index("webhook_delivery_endpoint_created_at_id_idx").on(
       table.endpointId,
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -1937,18 +1933,18 @@ export const abuseReport = pgTable(
       table.status,
       table.createdAt
     ),
-    // A code's reports (manual-sql/2026-11-19-abuse-report-qr-code-idx.sql)
+    // A code's reports
     index("abuse_report_qr_code_id_idx").on(table.qrCodeId),
   ]
 );
 
 // ─── Code features: UTM templates, limit notices, public stats ──────────────
-// Each is a table of its own (manual-sql/0013, 0015, 0016) and no existing
-// table gains a column, so queries that read whole rows keep working on a
-// database where those files aren't applied yet. The app treats a missing
-// table as "feature off" (isMissingSchemaError in lib/community/tables.ts).
+// Each is a table of its own and no existing table gains a column, so
+// queries that read whole rows keep working on a database that doesn't have
+// them yet. The app treats a missing table as "feature off"
+// (isMissingSchemaError in lib/community/tables.ts).
 
-/** A named set of UTM parameters a workspace reuses (manual-sql/0013). */
+/** A named set of UTM parameters a workspace reuses. */
 export const utmTemplate = pgTable(
   "utm_template",
   {
@@ -1972,7 +1968,7 @@ export const utmTemplate = pgTable(
 );
 
 /**
- * Plan-limit emails already sent (manual-sql/0015): one row per workspace,
+ * Plan-limit emails already sent: one row per workspace,
  * limit, subject, period and threshold, so each is sent once.
  */
 export const limitNotice = pgTable(
@@ -2006,8 +2002,8 @@ export const limitNotice = pgTable(
 );
 
 /**
- * A code's public, read-only analytics page, /stats/<token>
- * (manual-sql/0016). No row = off; a new token = a reset link.
+ * A code's public, read-only analytics page, /stats/<token>.
+ * No row = off; a new token = a reset link.
  */
 export const codePublicStats = pgTable(
   "code_public_stats",
@@ -2021,7 +2017,7 @@ export const codePublicStats = pgTable(
     createdBy: text("created_by"),
     // When the current link was made (a reset makes a new one)
     createdAt: timestamp("created_at").notNull().defaultNow(),
-    // Agency tools (manual-sql/2026-11-11-agency.sql). The client brand the
+    // Agency tools. The client brand the
     // page shows (a brand_kit with purpose "client"; Pro and Business), and
     // the verified custom domain the link is served on (Business). NULL: the
     // page looks as before and lives on QRdx's own host.
@@ -2043,7 +2039,7 @@ export const codePublicStats = pgTable(
 // view of some of its folders at /portal/<workspace-slug>. They are never
 // workspace members: nothing in the dashboard or the API knows them. A row
 // is matched to a signed-in person by user_id once claimed, before that by
-// their verified email. manual-sql/2026-11-11-agency.sql creates both tables.
+// their verified email.
 export const portalClient = pgTable(
   "portal_client",
   {
@@ -2094,7 +2090,7 @@ export const portalClientFolder = pgTable(
 // Static barcodes (EAN-13, Code 128, Data Matrix, ...) kept in a workspace to
 // edit and download again: the symbology, the value it encodes and how it's
 // drawn. Nothing is hosted: the bars hold the data. Folders are the codes'
-// folders. manual-sql/2026-11-11-barcodes.sql creates the table.
+// folders.
 export const barcode = pgTable(
   "barcode",
   {

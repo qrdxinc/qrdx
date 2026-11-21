@@ -43,7 +43,7 @@ export interface PortalClientView {
   lastSeenAt: string | null;
 }
 
-/** The agency tables aren't there yet (manual-sql/2026-11-11-agency.sql). */
+/** The agency tables aren't there yet. */
 export class PortalUnavailableError extends HttpError {
   constructor() {
     super(

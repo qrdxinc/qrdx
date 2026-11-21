@@ -1,6 +1,6 @@
 // The community's search box: a plain GET form to /community/all, so it
 // works before (and without) any script. Results are found by
-// lib/community/api.ts (full-text search once manual-sql/0017 is applied).
+// lib/community/api.ts (full-text search once its index exists).
 
 import { Input } from "@repo/design-system/components/ui/input";
 import { cn } from "@repo/design-system/lib/utils";

@@ -277,7 +277,8 @@ export async function getCommunityThemes(
     const userId = await getOptionalUserId();
 
     // community_item once the backfill has copied the themes; until then
-    // (and before manual-sql/0012) the gallery reads community_theme.
+    // (and before the community tables exist) the gallery reads
+    // community_theme.
     if ((await communityState()).themes === "items") {
       if ((filter === "mine" || filter === "liked") && !userId) {
         throw new UnauthorizedError();

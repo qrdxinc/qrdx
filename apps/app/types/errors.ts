@@ -11,7 +11,7 @@ export const ErrorCode = {
   SCAN_GATE: "SCAN_GATE",
   /** The creator didn't accept the community licence (CC0) */
   LICENSE_REQUIRED: "LICENSE_REQUIRED",
-  /** The community tables aren't there yet (manual-sql/0012) */
+  /** The community tables aren't there yet */
   COMMUNITY_UNAVAILABLE: "COMMUNITY_UNAVAILABLE",
   RATE_LIMITED: "RATE_LIMITED",
   UNKNOWN_ERROR: "UNKNOWN_ERROR",

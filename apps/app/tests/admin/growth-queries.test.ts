@@ -1,8 +1,7 @@
 // /admin/growth reads the shared, live database: every statement is a
 // read-only aggregate, sent in one READ ONLY transaction with a statement
 // timeout, and admin accounts and test addresses are left out of every
-// count. Tables and columns that packages/database/manual-sql/
-// 2026-11-13-growth-analytics.sql adds may not exist yet: those parts say
+// count. The growth tables and columns may not exist yet: those parts say
 // "not set up" instead of failing. The database is faked here.
 
 import type { SQL } from "drizzle-orm";

@@ -550,7 +550,7 @@ describe("new sign-in alerts", () => {
         expect.stringContaining('"outcome":"not-sent"'),
       );
 
-      // The table is missing (code deployed before its SQL).
+      // The table is missing (code deployed before the schema change).
       const saved = db.knownDevice;
       delete (db as Partial<typeof db>).knownDevice;
       try {

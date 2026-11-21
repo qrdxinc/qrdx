@@ -10,7 +10,7 @@ import {
 } from "@/lib/short-links";
 
 // Where a slug resolves and who may claim it (see SHARED_SLUG_SCOPE).
-// Uniqueness is enforced by two indexes (manual-sql/0009):
+// Uniqueness is enforced by two unique indexes on qr_code:
 //   (slug_scope, slug): a namespace holds each slug once;
 //   (domain_id, slug):  a custom domain serves each slug once, whichever
 //                       namespace it came from.

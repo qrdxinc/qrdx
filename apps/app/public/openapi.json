@@ -6018,7 +6018,7 @@
         }
       },
       "Error503_PathAliasesUnavailable": {
-        "description": "`PATH_ALIASES_UNAVAILABLE`: Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance that hasn't applied `packages/database/manual-sql/2026-11-18-path-aliases.sql`).",
+        "description": "`PATH_ALIASES_UNAVAILABLE`: Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance whose database schema is older).",
         "content": {
           "application/json": {
             "schema": {
@@ -6029,7 +6029,7 @@
                 "summary": "PATH_ALIASES_UNAVAILABLE",
                 "value": {
                   "code": "PATH_ALIASES_UNAVAILABLE",
-                  "message": "Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance that hasn't applied packages/database/manual-sql/2026-11-18-path-aliases.sql).",
+                  "message": "Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance whose database schema is older).",
                   "status": 503
                 }
               }

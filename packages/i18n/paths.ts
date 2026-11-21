@@ -1,9 +1,9 @@
 // Which pages exist in every language, and their URLs. Client-safe.
 //
 // A page is translated once it lives under apps/app/app/[lang] and its path
-// is in localized-paths.json (apps/app/scripts/i18n-split-roots.mjs moves it
-// there). Links to any other page stay unprefixed in every language: the
-// docs (/docs/...), for one, are English only.
+// is in localized-paths.json (apps/app/tests/i18n/split-roots.test.ts checks
+// that every listed page is there). Links to any other page stay unprefixed
+// in every language: the docs (/docs/...), for one, are English only.
 //
 // The marketing pages are English only too (owner decision, 17 Nov 2026):
 // they still live under app/[lang], listed as `englishOnly`, and render in

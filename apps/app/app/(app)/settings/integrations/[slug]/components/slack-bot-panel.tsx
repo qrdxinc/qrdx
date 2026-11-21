@@ -19,7 +19,7 @@ export interface SlackBotSettings {
     workspaceName: string | null;
     linkedAt: Date;
   }[];
-  /** The tables aren't there yet (manual SQL not applied). */
+  /** The tables aren't there yet. */
   unavailable?: boolean;
 }
 

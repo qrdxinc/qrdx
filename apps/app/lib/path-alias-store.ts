@@ -14,8 +14,8 @@ import { type RedirectCode, redirectCodeColumns } from "./redirect/code";
 import { findTakenSlugs, isUniqueViolation } from "./slug-claims";
 
 // Reads and writes of link_path_alias (lib/path-aliases.ts has the rules).
-// The table comes from manual-sql/2026-11-18-path-aliases.sql: until it's
-// applied, every lookup here answers "no alias" (and logs that once), so
+// Until the table exists, every lookup here answers "no alias" (and logs
+// that once), so
 // custom domains keep answering as before.
 
 /** An alias answers only while its code is on the alias's domain. */

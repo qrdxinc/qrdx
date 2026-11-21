@@ -25,7 +25,7 @@ The order matters: Slack checks the Events URL when the manifest is saved, and t
 
 1. At [api.slack.com/apps](https://api.slack.com/apps), choose **Create New App → From scratch**, name it QRdx and pick a workspace. (If you already have a QRdx app for "Add to Slack" alerts, use that one instead.)
 2. From **Basic Information → App Credentials**, set `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET` and `SLACK_SIGNING_SECRET` in your environment (on Vercel: Production and Preview). In production also set `INTEGRATION_ENCRYPTION_KEY` (32 characters or more), which encrypts the bot tokens. The bot stays off, and its routes answer 404, until all of them are set.
-3. Apply `packages/database/manual-sql/2026-11-10-slack-bot.sql` to the database, or run `bun run db:push` against your own database.
+3. Create the bot's two tables by updating your database's schema (the `migrate` service with Docker, `bun run db:push` otherwise).
 4. Deploy (or restart) so the new variables are live.
 5. Open **App Manifest**, paste [`manifest.json`](manifest.json) and save. When self-hosting, first replace every `https://qrdx.dev` in it with your app's URL (`NEXT_PUBLIC_APP_URL`); the request URLs must be reachable over HTTPS. If Slack says the Events URL isn't verified, open **Event Subscriptions** and click **Retry**. The manifest lists three redirect URLs: the alerts' install, the bot's install and `/api/integrations/slack/link/callback`, where Sign in with Slack returns when someone links their account.
 6. To let other Slack workspaces add the app, open **Manage Distribution** and click **Activate Public Distribution**.

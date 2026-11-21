@@ -185,7 +185,7 @@ export async function removeCommunityThemeAction(
   return result;
 }
 
-/** Soft-removes community items (nothing to do before manual-sql/0012). */
+/** Soft-removes community items (nothing to do before the tables exist). */
 async function markItemsRemoved(where: SQL): Promise<number> {
   try {
     const rows = await db

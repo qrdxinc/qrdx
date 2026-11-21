@@ -7,8 +7,7 @@ export const COMMUNITY_TAG = "community-items";
 /**
  * Postgres's "undefined table" (42P01) or "undefined column" (42703),
  * however deeply the driver error is wrapped (drizzle's DrizzleQueryError
- * keeps it in `cause`): the community tables from manual-sql/0012 aren't
- * there yet.
+ * keeps it in `cause`): the community tables aren't there yet.
  */
 export function isMissingSchemaError(error: unknown): boolean {
   let current: unknown = error;

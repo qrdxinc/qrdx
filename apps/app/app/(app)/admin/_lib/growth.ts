@@ -13,12 +13,10 @@ import { pivotWeeks, type WeekCount, type WeekPivot } from "./weeks";
 // them. Admin accounts and reserved test addresses are left out of every
 // count, with everything they own.
 //
-// user_acquisition, usage_daily and qr_code.created_via come from
-// GROWTH_SQL_FILE. Until it's applied, the parts that read them report
-// "not set up" (Postgres 42P01 / 42703) instead of failing the page.
+// Where user_acquisition, usage_daily or qr_code.created_via don't exist
+// yet, the parts that read them report "not set up" (Postgres 42P01 /
+// 42703) instead of failing the page; the schema sync makes them.
 
-export const GROWTH_SQL_FILE =
-  "packages/database/manual-sql/2026-11-13-growth-analytics.sql";
 /** Per statement, on the database. */
 export const GROWTH_STATEMENT_TIMEOUT = "5s";
 /** Overall wait for one batch's HTTP round trip. */
