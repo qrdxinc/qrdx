@@ -113,7 +113,7 @@ function reads(codes: { props: QRProps; page: string }[]): Set<string>[] {
         modules: symbolSize(VALUE, "M") + 8,
         jobs,
       }),
-      maxBuffer: 1 << 24,
+      maxBuffer: 16 * 1024 * 1024,
     }).toString()
   ) as [boolean, boolean][];
   return codes.map((_, code) => {
