@@ -74,6 +74,15 @@
           "mix": ["frame", "background"],
           "amount": 0.45
         }
+      },
+      {
+        "type": "rect",
+        "x": 1056,
+        "y": 490,
+        "width": 604,
+        "height": 200,
+        "radius": 100,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -84,9 +93,9 @@
         "text": "Scan me",
         "color": "text",
         "box": {
-          "x": 1056,
+          "x": 1136,
           "y": 490,
-          "width": 604,
+          "width": 444,
           "height": 200
         }
       },

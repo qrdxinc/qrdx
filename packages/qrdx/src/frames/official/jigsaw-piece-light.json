@@ -38,6 +38,15 @@
           "mix": ["frame", "background"],
           "amount": 0.9
         }
+      },
+      {
+        "type": "rect",
+        "x": 290,
+        "y": 280,
+        "width": 1100,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -46,11 +55,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan the missing piece",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 290,
+          "x": 358,
           "y": 280,
-          "width": 1100,
+          "width": 964,
           "height": 170
         }
       }

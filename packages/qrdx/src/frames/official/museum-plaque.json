@@ -134,6 +134,15 @@
         "width": 32,
         "height": 6,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 1390,
+        "width": 1160,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -144,9 +153,9 @@
         "text": "Scan to learn more",
         "color": "text",
         "box": {
-          "x": 120,
+          "x": 188,
           "y": 1390,
-          "width": 1160,
+          "width": 1024,
           "height": 170
         }
       },

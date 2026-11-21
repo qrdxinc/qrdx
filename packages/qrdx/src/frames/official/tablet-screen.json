@@ -77,6 +77,15 @@
           "mix": ["frame", "background"],
           "amount": 0.5
         }
+      },
+      {
+        "type": "rect",
+        "x": 160,
+        "y": 1460,
+        "width": 1200,
+        "height": 180,
+        "radius": 90,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -85,11 +94,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to open",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 160,
+          "x": 232,
           "y": 1460,
-          "width": 1200,
+          "width": 1056,
           "height": 180
         }
       },

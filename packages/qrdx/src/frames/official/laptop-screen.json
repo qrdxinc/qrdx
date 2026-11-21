@@ -84,6 +84,15 @@
           "mix": ["frame", "#000000"],
           "amount": 0.35
         }
+      },
+      {
+        "type": "rect",
+        "x": 380,
+        "y": 1440,
+        "width": 1240,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -92,11 +101,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to visit",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 380,
+          "x": 448,
           "y": 1440,
-          "width": 1240,
+          "width": 1104,
           "height": 170
         }
       },

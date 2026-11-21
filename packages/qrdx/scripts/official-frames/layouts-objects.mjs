@@ -52,6 +52,18 @@ const note = (o, box, on, extra = {}) =>
         }),
       ];
 
+/**
+ * The call to action as light lettering on a dark pill, pushed onto
+ * `shapes`. Dark lettering on a light ground just under the code can look
+ * like finder patterns to a decoder (jsQR missed the code at several widths
+ * under some labels); on a dark pill it can't.
+ */
+const ctaPill = (o, box, shapes, extra = {}) => {
+  const [x, y, w, h] = box;
+  shapes.push(shape.rect(x, y, w, h, F, h / 2));
+  return cta(o, [x + h * 0.4, y, w - h * 0.8, h], F, extra);
+};
+
 /** A polyline as a round-ended stroke shape. */
 const line = (points, width, fill) =>
   shape.path(strokeLine(points, width, { round: true }), fill);
@@ -160,7 +172,7 @@ export function scroll(o) {
     shapes.push(shape.circle(roll / 2, y + roll / 2, 58, tint(0.55)));
     shapes.push(shape.circle(w - roll / 2, y + roll / 2, 58, tint(0.55)));
   }
-  const labels = [cta(o, [bodyX + 60, pb + 40, bodyW - 120, 170], paper)];
+  const labels = [ctaPill(o, [bodyX + 60, pb + 40, bodyW - 120, 170], shapes)];
   labels.push(...note(o, [bodyX + 80, bodyY + 60, bodyW - 160, 100], paper));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -197,7 +209,7 @@ export function swallowtailFlag(o) {
   const qy = flagY + (flagH - size) / 2;
   const tx = qx + size + pad + 50;
   const tw = w - notch - tx - 40;
-  const labels = [cta(o, [tx, flagY + flagH / 2 - 200, tw, 200], fill)];
+  const labels = [ctaPill(o, [tx, flagY + flagH / 2 - 200, tw, 200], shapes)];
   labels.push(...note(o, [tx, flagY + flagH / 2 + 20, tw, 100], fill));
   return { w, h, qr: qrSized(qx, qy, size), shapes, labels };
 }
@@ -219,7 +231,7 @@ export function tablet(o) {
     shape.rect(bezel, bezel, w - 2 * bezel, h - 2 * bezel, BG, 70),
     shape.circle(w / 2, 34, 12, tint(0.5)),
   ];
-  const labels = [cta(o, [160, pb + 40, w - 320, 180], BG)];
+  const labels = [ctaPill(o, [160, pb + 40, w - 320, 180], shapes)];
   labels.push(...note(o, [200, bezel + 60, w - 400, 100], BG));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -253,7 +265,7 @@ export function laptop(o) {
     shape.rect(w / 2 - 170, deckY, 340, 40, tint(0.4), 20),
     shape.rect(0, deckY + 110, w, 40, shade(0.35)),
   ];
-  const labels = [cta(o, [sx + 120, pb + 40, sw - 240, 170], BG)];
+  const labels = [ctaPill(o, [sx + 120, pb + 40, sw - 240, 170], shapes)];
   labels.push(...note(o, [sx + 160, bezel + 50, sw - 320, 100], BG));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -361,7 +373,9 @@ export function deliveryBox(o) {
     // The shipping label
     shape.rect(labelX, labelY, labelW, labelH, BG, 16),
   ];
-  const labels = [cta(o, [labelX + 60, pb + 40, labelW - 120, 170], BG)];
+  const labels = [
+    ctaPill(o, [labelX + 60, pb + 40, labelW - 120, 170], shapes),
+  ];
   labels.push(
     ...note(o, [labelX + 80, labelY + 50, labelW - 160, 100], BG, {
       align: "start",
@@ -583,7 +597,9 @@ export function bottle(o) {
     shape.rect(labelX, labelY + 44, labelW, 12, AC),
     shape.rect(labelX, labelY + labelH - 56, labelW, 12, AC),
   ];
-  const labels = [cta(o, [labelX + 50, pb + 30, labelW - 100, 160], labelFill)];
+  const labels = [
+    ctaPill(o, [labelX + 50, pb + 30, labelW - 100, 160], shapes),
+  ];
   labels.push(
     ...note(o, [labelX + 90, labelY + 62, labelW - 180, 96], labelFill)
   );
@@ -927,7 +943,7 @@ export function clapperboard(o) {
     shapes.push(
       shape.rect(30, boardTop + 30, w - 60, h - boardTop - 60, fill, 20)
     );
-  const labels = [cta(o, [80, pb + 30, w - 160, 160], fill)];
+  const labels = [ctaPill(o, [80, pb + 30, w - 160, 160], shapes)];
   labels.push(...note(o, [100, boardTop + 30, w - 200, 96], fill));
   return { w, h, qr: qrSized((w - size) / 2, qy, size), shapes, labels };
 }
@@ -953,7 +969,7 @@ export function notebook(o) {
     shapes.push(shape.rect(x - 26, pageY + 10, 52, 80, F, 26));
     shapes.push(shape.circle(x, 60, 56, F, 36));
   }
-  const labels = [cta(o, [100, pb + 40, w - 200, 170], paper)];
+  const labels = [ctaPill(o, [100, pb + 40, w - 200, 170], shapes)];
   labels.push(
     ...note(o, [220, pageY + 110, w - 320, 100], paper, { align: "start" })
   );
@@ -986,7 +1002,7 @@ export function bannerStand(o) {
   );
   shapes.push(shape.rect(0, h - 90, w, 90, shade(0.3), 45));
   shapes.push(shape.rect(w / 2 - 200, h - 60, 400, 24, tint(0.4), 12));
-  const labels = [cta(o, [bx + 80, pb + 40, bw - 160, 180], fill)];
+  const labels = [ctaPill(o, [bx + 80, pb + 40, bw - 160, 180], shapes)];
   labels.push(...note(o, [bx + 100, panelY + 60, bw - 200, 100], fill));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -1077,7 +1093,7 @@ export function outlineBorder(o) {
     }),
   ];
   const labels = [
-    cta(o, [weight + 60, pb + 30, w - 2 * weight - 120, 170], BG),
+    ctaPill(o, [weight + 60, pb + 30, w - 2 * weight - 120, 170], shapes),
   ];
   labels.push(
     ...note(o, [weight + 80, weight + 50, w - 2 * weight - 160, 100], BG)
@@ -1522,7 +1538,7 @@ export function pizzaBox(o) {
     shape.rect(0, baseY, w, h - baseY, F, 20),
     shape.rect(40, baseY + 30, w - 80, h - baseY - 60, card, 12),
   ];
-  const labels = [cta(o, [100, pb + 30, w - 200, 170], card)];
+  const labels = [ctaPill(o, [100, pb + 30, w - 200, 170], shapes)];
   labels.push(
     ...note(o, [220, lidH / 2 - 60, w - 440, 120], card, { weight: "bold" })
   );
@@ -1580,7 +1596,7 @@ export function fishTank(o) {
   ]) {
     shapes.push(shape.circle(x, y, r, F, r - 8));
   }
-  const labels = [cta(o, [300, pb + 20, w - 600, 150], water)];
+  const labels = [ctaPill(o, [300, pb + 20, w - 600, 150], shapes)];
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 
@@ -1689,7 +1705,9 @@ export function comicPanel(o) {
     }
   }
   // Caption box
-  shapes.push(shape.rect(300, pb + 40, w - 600, 170, tint(0.85)));
+  // A dark caption box: dark lettering on a light ground just under the code
+  // can look like finder patterns to a decoder (see ctaPill)
+  shapes.push(shape.rect(300, pb + 40, w - 600, 170, F));
   shapes.push(
     shape.rect(300, pb + 40, w - 600, 170, F, 0, {
       x: 312,
@@ -1715,7 +1733,7 @@ export function comicPanel(o) {
       AC
     )
   );
-  const labels = [cta(o, [320, pb + 50, w - 640, 150], tint(0.85))];
+  const labels = [cta(o, [320, pb + 50, w - 640, 150], F)];
   labels.push(
     ...note(o, [bx - 250, by - 55, 500, 110], AC, { weight: "bold" })
   );
@@ -1775,7 +1793,7 @@ export function jigsawPiece(o) {
   const shapes = [shape.path(piece(0), F)];
   if (o.light) shapes.push(shape.path(piece(30), fill));
   const qy = 570;
-  const labels = [cta(o, [mx - 550, y0 + 60, 1100, 170], fill)];
+  const labels = [ctaPill(o, [mx - 550, y0 + 60, 1100, 170], shapes)];
   return { w, h, qr: qrAt(mx - QR / 2, qy), shapes, labels };
 }
 
@@ -1805,7 +1823,7 @@ export function passportStamp(o) {
     shape.rect(120, pb + 30, w - 240, 8, F),
     ...motif("plane", w - 230, 170, 150, AC, AC),
   ];
-  const labels = [cta(o, [120, pb + 60, w - 240, 170], BG)];
+  const labels = [ctaPill(o, [120, pb + 60, w - 240, 170], shapes)];
   labels.push(
     ...note(o, [120, 90, w - 480, 110], BG, { align: "start", weight: "bold" })
   );
@@ -2218,7 +2236,7 @@ export function museumPlaque(o) {
     shapes.push(shape.circle(x, y, 22, tint(0.55)));
     shapes.push(shape.rect(x - 16, y - 3, 32, 6, F));
   }
-  const labels = [cta(o, [120, pb + 40, w - 240, 170], plate)];
+  const labels = [ctaPill(o, [120, pb + 40, w - 240, 170], shapes)];
   labels.push(...note(o, [140, 110, w - 280, 100], plate));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -2636,7 +2654,7 @@ export function milkCarton(o) {
     shape.rect(40, 460, w - 80, h - 500, card, 12),
     shape.rect(40, 460, w - 80, 70, AC),
   ];
-  const labels = [cta(o, [120, pb + 40, w - 240, 170], card)];
+  const labels = [ctaPill(o, [120, pb + 40, w - 240, 170], shapes)];
   labels.push(
     ...note(o, [200, 250, w - 400, 110], tint(0.75), { weight: "bold" })
   );
@@ -2664,7 +2682,7 @@ export function sodaCan(o) {
     shape.rect(100, 400, w - 200, 44, AC),
     shape.rect(100, pb + 206, w - 200, 44, AC),
   ];
-  const labels = [cta(o, [160, pb + 30, w - 320, 160], paper)];
+  const labels = [ctaPill(o, [160, pb + 30, w - 320, 160], shapes)];
   return { w, h, qr: qrSized((w - size) / 2, qy, size), shapes, labels };
 }
 
@@ -2693,7 +2711,7 @@ export function mailbox(o) {
   ];
   if (o.light) shapes.push(shape.path(box(40), fill));
   shapes.push(shape.circle(1540, 1200, 36, tint(0.5)));
-  const labels = [cta(o, [220, pb + 30, 1160, 150], fill)];
+  const labels = [ctaPill(o, [220, pb + 30, 1160, 150], shapes)];
   return { w, h, qr: qrAt(300, qy), shapes, labels };
 }
 
@@ -2835,7 +2853,7 @@ export function matchbox(o) {
   shapes.push(shape.rect(0, 100, sleeve, 1300, F, 30));
   shapes.push(shape.rect(0, 100, sleeve, 70, tint(0.45)));
   shapes.push(shape.rect(80, 200, sleeve - 160, 1120, BG, 20));
-  const labels = [cta(o, [120, pb + 40, sleeve - 240, 150], BG)];
+  const labels = [ctaPill(o, [120, pb + 40, sleeve - 240, 150], shapes)];
   return {
     w,
     h,
@@ -2870,7 +2888,7 @@ export function cinemaMarquee(o) {
     shapes.push(shape.circle(w - 55, y, 26, tint(0.75)));
   }
   shapes.push(shape.rect(110, 110, w - 220, head, F));
-  const labels = [cta(o, [180, pb + 40, w - 360, 170], board)];
+  const labels = [ctaPill(o, [180, pb + 40, w - 360, 170], shapes)];
   labels.push(...note(o, [160, 150, w - 320, 120], F, { weight: "bold" }));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }

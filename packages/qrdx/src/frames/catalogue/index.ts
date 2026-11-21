@@ -8719,7 +8719,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Scroll",
     collection: "call-to-action",
     tags: ["call to action", "scroll", "parchment", "story"],
-    hash: "a82427a4",
+    hash: "ba8dbe80",
     ratio: 0.763,
   },
   {
@@ -8727,7 +8727,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Team flag",
     collection: "call-to-action",
     tags: ["call to action", "flag", "team", "sports"],
-    hash: "c325c996",
+    hash: "c0ad5aa1",
     ratio: 1.429,
   },
   {
@@ -8735,7 +8735,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Team flag, light",
     collection: "call-to-action",
     tags: ["call to action", "flag", "team", "sports"],
-    hash: "ff9b42fd",
+    hash: "6554c834",
     ratio: 1.429,
   },
   {
@@ -8839,7 +8839,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Thin border",
     collection: "call-to-action",
     tags: ["call to action", "border", "outline", "thin"],
-    hash: "3ccbe139",
+    hash: "fc2ba21f",
     ratio: 0.811,
   },
   {
@@ -8847,7 +8847,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Medium border",
     collection: "call-to-action",
     tags: ["call to action", "border", "outline"],
-    hash: "079e8c96",
+    hash: "bc6ee71b",
     ratio: 0.818,
   },
   {
@@ -8855,7 +8855,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Thick border",
     collection: "call-to-action",
     tags: ["call to action", "border", "outline", "thick"],
-    hash: "c31daabc",
+    hash: "474dd5ed",
     ratio: 0.83,
   },
   {
@@ -8903,7 +8903,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Tablet",
     collection: "objects",
     tags: ["object", "tablet", "screen", "device"],
-    hash: "d10df52f",
+    hash: "b493e2ff",
     ratio: 0.869,
   },
   {
@@ -8911,7 +8911,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Laptop",
     collection: "objects",
     tags: ["object", "laptop", "screen", "device"],
-    hash: "61bd11b3",
+    hash: "b043edc3",
     ratio: 1.081,
   },
   {
@@ -8943,7 +8943,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Delivery box",
     collection: "objects",
     tags: ["object", "box", "parcel", "delivery", "shipping"],
-    hash: "833a8396",
+    hash: "788b2965",
     ratio: 0.758,
   },
   {
@@ -8951,7 +8951,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Delivery box, light",
     collection: "objects",
     tags: ["object", "box", "parcel", "delivery", "shipping"],
-    hash: "83d44af4",
+    hash: "97b6b10b",
     ratio: 0.758,
   },
   {
@@ -8991,7 +8991,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Bottle with a label",
     collection: "objects",
     tags: ["object", "bottle", "label", "drink"],
-    hash: "21503732",
+    hash: "fa6d3a3b",
     ratio: 0.664,
   },
   {
@@ -8999,7 +8999,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Bottle label, light",
     collection: "objects",
     tags: ["object", "bottle", "label", "drink"],
-    hash: "a18ed3d6",
+    hash: "b5568673",
     ratio: 0.664,
   },
   {
@@ -9039,7 +9039,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Clapperboard",
     collection: "objects",
     tags: ["object", "film", "clapperboard", "video", "cinema"],
-    hash: "3f8de146",
+    hash: "666a6724",
     ratio: 0.723,
   },
   {
@@ -9047,7 +9047,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Clapperboard, light",
     collection: "objects",
     tags: ["object", "film", "clapperboard", "video", "cinema"],
-    hash: "2dd70d07",
+    hash: "ac28ad73",
     ratio: 0.723,
   },
   {
@@ -9055,7 +9055,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Spiral notebook",
     collection: "objects",
     tags: ["object", "notebook", "notes", "school", "paper"],
-    hash: "c67af07c",
+    hash: "3f6f0f17",
     ratio: 0.787,
   },
   {
@@ -9063,7 +9063,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Roll-up banner",
     collection: "objects",
     tags: ["object", "banner", "stand", "event", "expo"],
-    hash: "f7925586",
+    hash: "b603f5b3",
     ratio: 0.705,
   },
   {
@@ -9071,7 +9071,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Roll-up banner, light",
     collection: "objects",
     tags: ["object", "banner", "stand", "event", "expo"],
-    hash: "d11b04af",
+    hash: "c9849c08",
     ratio: 0.705,
   },
   {
@@ -9159,7 +9159,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Pizza box",
     collection: "playful",
     tags: ["playful", "pizza", "box", "food", "delivery"],
-    hash: "c13bc2bd",
+    hash: "e761457e",
     ratio: 0.754,
   },
   {
@@ -9167,7 +9167,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Fish tank",
     collection: "playful",
     tags: ["playful", "fish", "tank", "aquarium", "water"],
-    hash: "78116816",
+    hash: "cc525300",
     ratio: 0.966,
   },
   {
@@ -9191,7 +9191,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Comic panel",
     collection: "playful",
     tags: ["playful", "comic", "burst", "panel", "fun"],
-    hash: "69129ecc",
+    hash: "89d682b5",
     ratio: 0.815,
   },
   {
@@ -9199,7 +9199,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Jigsaw piece",
     collection: "playful",
     tags: ["playful", "jigsaw", "puzzle", "piece"],
-    hash: "c22988da",
+    hash: "37e9c79a",
     ratio: 0.964,
   },
   {
@@ -9207,7 +9207,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Jigsaw piece, light",
     collection: "playful",
     tags: ["playful", "jigsaw", "puzzle", "piece"],
-    hash: "d12c1d1a",
+    hash: "020b03fc",
     ratio: 0.964,
   },
   {
@@ -9215,7 +9215,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Passport stamp",
     collection: "playful",
     tags: ["playful", "passport", "stamp", "travel", "entry"],
-    hash: "4e12d96d",
+    hash: "521d5413",
     ratio: 0.824,
   },
   {
@@ -9279,7 +9279,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Museum plaque",
     collection: "playful",
     tags: ["playful", "museum", "plaque", "exhibit", "gallery"],
-    hash: "5faa17e6",
+    hash: "9581b3e8",
     ratio: 0.87,
   },
   {
@@ -9287,7 +9287,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Museum plaque, light",
     collection: "playful",
     tags: ["playful", "museum", "plaque", "exhibit", "gallery"],
-    hash: "3b75af9d",
+    hash: "39f64e8b",
     ratio: 0.87,
   },
   {
@@ -9375,7 +9375,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Milk carton",
     collection: "playful",
     tags: ["playful", "milk", "carton", "dairy", "grocery"],
-    hash: "07784a15",
+    hash: "7a8ae2e3",
     ratio: 0.7,
   },
   {
@@ -9383,7 +9383,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Drinks can",
     collection: "playful",
     tags: ["playful", "can", "drink", "soda", "refresh"],
-    hash: "06346adc",
+    hash: "5dcad551",
     ratio: 0.65,
   },
   {
@@ -9391,7 +9391,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Mailbox",
     collection: "playful",
     tags: ["playful", "mailbox", "post", "mail", "newsletter"],
-    hash: "4e7359c4",
+    hash: "0f11ac92",
     ratio: 0.85,
   },
   {
@@ -9399,7 +9399,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Mailbox, light",
     collection: "playful",
     tags: ["playful", "mailbox", "post", "mail", "newsletter"],
-    hash: "7fe95773",
+    hash: "b02b69d5",
     ratio: 0.85,
   },
   {
@@ -9439,7 +9439,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Matchbox",
     collection: "playful",
     tags: ["playful", "matchbox", "matches", "fire"],
-    hash: "9950f13e",
+    hash: "136ef2a3",
     ratio: 1.333,
   },
   {
@@ -9447,7 +9447,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Cinema marquee",
     collection: "playful",
     tags: ["playful", "cinema", "marquee", "lights", "movie"],
-    hash: "24bc8332",
+    hash: "b5ca774c",
     ratio: 0.833,
   },
   {

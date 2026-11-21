@@ -77,6 +77,15 @@
         "width": 1320,
         "height": 70,
         "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 1660,
+        "width": 1160,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -85,11 +94,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan for the recipe",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 120,
+          "x": 188,
           "y": 1660,
-          "width": 1160,
+          "width": 1024,
           "height": 170
         }
       },

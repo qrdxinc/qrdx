@@ -41,6 +41,15 @@
           "height": 1560,
           "radius": 3.5
         }
+      },
+      {
+        "type": "rect",
+        "x": 74,
+        "y": 1374,
+        "width": 1140,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -49,11 +58,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan me",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 74,
+          "x": 142,
           "y": 1374,
-          "width": 1140,
+          "width": 1004,
           "height": 170
         }
       },

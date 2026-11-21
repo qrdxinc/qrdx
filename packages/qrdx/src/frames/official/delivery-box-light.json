@@ -78,6 +78,15 @@
         "height": 1590,
         "radius": 16,
         "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 210,
+        "y": 1650,
+        "width": 1080,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -86,11 +95,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to reorder",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 210,
+          "x": 278,
           "y": 1650,
-          "width": 1080,
+          "width": 944,
           "height": 170
         }
       },

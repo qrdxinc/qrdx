@@ -81,6 +81,15 @@
           "mix": ["frame", "background"],
           "amount": 0.4
         }
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 1440,
+        "width": 980,
+        "height": 180,
+        "radius": 90,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -91,9 +100,9 @@
         "text": "Scan to learn more",
         "color": "text",
         "box": {
-          "x": 180,
+          "x": 252,
           "y": 1440,
-          "width": 980,
+          "width": 836,
           "height": 180
         }
       },

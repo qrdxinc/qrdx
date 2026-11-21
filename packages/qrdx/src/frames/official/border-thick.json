@@ -41,6 +41,15 @@
           "height": 1560,
           "radius": 25
         }
+      },
+      {
+        "type": "rect",
+        "x": 160,
+        "y": 1460,
+        "width": 1140,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -49,11 +58,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan here",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 160,
+          "x": 228,
           "y": 1460,
-          "width": 1140,
+          "width": 1004,
           "height": 170
         }
       },

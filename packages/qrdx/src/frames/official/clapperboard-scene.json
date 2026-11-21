@@ -98,6 +98,15 @@
         "height": 1414,
         "radius": 30,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1774,
+        "width": 1260,
+        "height": 160,
+        "radius": 80,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -108,9 +117,9 @@
         "text": "Scan to watch",
         "color": "text",
         "box": {
-          "x": 80,
+          "x": 144,
           "y": 1774,
-          "width": 1260,
+          "width": 1132,
           "height": 160
         }
       },

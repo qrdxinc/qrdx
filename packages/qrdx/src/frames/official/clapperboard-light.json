@@ -110,6 +110,15 @@
           "mix": ["frame", "background"],
           "amount": 0.9
         }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1774,
+        "width": 1260,
+        "height": 160,
+        "radius": 80,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -118,11 +127,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan the trailer",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 80,
+          "x": 144,
           "y": 1774,
-          "width": 1260,
+          "width": 1132,
           "height": 160
         }
       },

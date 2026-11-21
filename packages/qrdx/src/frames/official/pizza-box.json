@@ -70,6 +70,15 @@
           "mix": ["frame", "background"],
           "amount": 0.85
         }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 1790,
+        "width": 1300,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -78,11 +87,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to order",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 100,
+          "x": 168,
           "y": 1790,
-          "width": 1300,
+          "width": 1164,
           "height": 170
         }
       },

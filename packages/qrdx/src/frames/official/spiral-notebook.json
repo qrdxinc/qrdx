@@ -422,6 +422,15 @@
         "r": 56,
         "hole": 36,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 1560,
+        "width": 1200,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -430,11 +439,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan the notes",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 100,
+          "x": 168,
           "y": 1560,
-          "width": 1200,
+          "width": 1064,
           "height": 170
         }
       },
