@@ -21,18 +21,9 @@ export function polygonPath(points: Point[]): string {
     .join("")}Z`;
 }
 
-/**
- * Clockwise circle as two arcs. A counter-clockwise one (`ccw`) inside a
- * clockwise shape cuts a hole under the nonzero rule.
- */
-export function circlePath(
-  cx: number,
-  cy: number,
-  r: number,
-  ccw = false
-): string {
-  const sweep = ccw ? 0 : 1;
-  return `M${fmt(cx - r)} ${fmt(cy)}A${fmt(r)} ${fmt(r)} 0 1 ${sweep} ${fmt(cx + r)} ${fmt(cy)}A${fmt(r)} ${fmt(r)} 0 1 ${sweep} ${fmt(cx - r)} ${fmt(cy)}Z`;
+/** Clockwise circle as two arcs. */
+export function circlePath(cx: number, cy: number, r: number): string {
+  return `M${fmt(cx - r)} ${fmt(cy)}A${fmt(r)} ${fmt(r)} 0 1 1 ${fmt(cx + r)} ${fmt(cy)}A${fmt(r)} ${fmt(r)} 0 1 1 ${fmt(cx - r)} ${fmt(cy)}Z`;
 }
 
 /**
