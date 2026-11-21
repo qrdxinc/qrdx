@@ -3,6 +3,11 @@ import { colorConfigSchema, getSolidColor } from "qrdx/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { defaultThemeState } from "@/config/qr";
+import {
+  currentGesture,
+  noteChange,
+  trackGestures,
+} from "@/lib/editor-gestures";
 import { noteEditorVisitStart } from "@/lib/sign-up-nudges";
 import { isShuffleId } from "@/lib/themes/shuffle";
 import { isDeepEqual } from "@/lib/utils";
@@ -11,7 +16,13 @@ import type { ContentType, QRContentConfig } from "@/types/qr-content";
 import { getPresetThemeStyles } from "@/utils/qr-presets-helper";
 
 const MAX_HISTORY_COUNT = 30;
-const HISTORY_OVERRIDE_THRESHOLD_MS = 500; // 0.5 seconds
+
+const withoutGesture = ({ gesture: _gesture, ...entry }: QRHistoryEntry) =>
+  entry;
+
+// One undo step per input gesture (lib/editor-gestures.ts): a slider or
+// color drag is one step, two picks are two, however fast.
+if (typeof document !== "undefined") trackGestures(document);
 
 /**
  * The look a state's preset stands for: what Reset returns to and what the
@@ -75,6 +86,11 @@ function freezeShuffleStyles(state: unknown) {
 interface QRHistoryEntry {
   state: ThemeEditorState;
   timestamp: number;
+  /**
+   * The input gesture that made this step; later changes in it merge in.
+   * Never saved: gesture ids belong to one page load.
+   */
+  gesture?: string;
 }
 
 /**
@@ -166,7 +182,6 @@ export const useQREditorStore = create<QREditorStore>()(
         const oldThemeState = get().themeState;
         const newState = withOwnPresetStyles(state, oldThemeState);
         let currentHistory = get().history;
-        let currentFuture = get().future;
 
         // Check if only currentMode changed
         const oldStateWithoutMode = {
@@ -181,27 +196,21 @@ export const useQREditorStore = create<QREditorStore>()(
           return;
         }
 
-        const currentTime = Date.now();
-
-        // If other things changed, or if it's an actual identical state set (though less likely here)
-        // Proceed with history logic
-        const lastHistoryEntry =
-          currentHistory.length > 0
-            ? currentHistory[currentHistory.length - 1]
-            : null;
-
-        if (
-          !lastHistoryEntry ||
-          currentTime - lastHistoryEntry.timestamp >=
-            HISTORY_OVERRIDE_THRESHOLD_MS
-        ) {
-          // Add a new history entry
+        // A change in the gesture that made the last step merges into it
+        // (a drag); anything else is a step of its own
+        const gesture = currentGesture();
+        const lastHistoryEntry = currentHistory.at(-1);
+        if (gesture === null || lastHistoryEntry?.gesture !== gesture) {
           currentHistory = [
             ...currentHistory,
-            { state: oldThemeState, timestamp: currentTime },
+            {
+              state: oldThemeState,
+              timestamp: Date.now(),
+              ...(gesture !== null && { gesture }),
+            },
           ];
-          currentFuture = [];
         }
+        if (gesture !== null) noteChange();
 
         if (currentHistory.length > MAX_HISTORY_COUNT) {
           currentHistory.shift(); // Remove the oldest entry
@@ -210,7 +219,8 @@ export const useQREditorStore = create<QREditorStore>()(
         set({
           themeState: newState,
           history: currentHistory,
-          future: currentFuture,
+          // Any real change, merged or not, ends what redo could bring back
+          future: [],
         });
       },
       applyThemePreset: (preset: string) => {
@@ -244,7 +254,8 @@ export const useQREditorStore = create<QREditorStore>()(
       replaceThemeState: (state: ThemeEditorState) => {
         const currentThemeState = get().themeState;
         const newThemeState = withOwnPresetStyles(state, currentThemeState);
-        // Always its own history entry (setThemeState merges quick edits).
+        // Always its own history entry (setThemeState merges the changes of one
+        // gesture).
         const updatedHistory = [
           ...get().history,
           { state: currentThemeState, timestamp: Date.now() },
@@ -387,14 +398,10 @@ export const useQREditorStore = create<QREditorStore>()(
       },
       commitThemeDraft: (before: ThemeEditorState) => {
         if (isDeepEqual(before, get().themeState)) return;
-        // Dated past the merge window, so the next quick edit (setThemeState)
-        // gets its own step instead of joining this one.
+        // No gesture of its own, so no later edit merges into it
         const updatedHistory = [
           ...get().history,
-          {
-            state: before,
-            timestamp: Date.now() - HISTORY_OVERRIDE_THRESHOLD_MS,
-          },
+          { state: before, timestamp: Date.now() },
         ];
         if (updatedHistory.length > MAX_HISTORY_COUNT) {
           updatedHistory.shift();
@@ -404,6 +411,13 @@ export const useQREditorStore = create<QREditorStore>()(
     }),
     {
       name: "editor-storage",
+      // Everything is saved but the history's gesture ids, which belong to
+      // this page load: a new visit's first gesture must not merge into them
+      partialize: (state) => ({
+        ...state,
+        history: state.history.map(withoutGesture),
+        future: state.future.map(withoutGesture),
+      }),
       merge: (persistedState, currentState) => {
         // Helper function to normalize ColorConfig in a styles object
         const normalizeColorConfig = (

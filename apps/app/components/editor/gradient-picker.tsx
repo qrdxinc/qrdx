@@ -194,8 +194,9 @@ export function GradientPicker({
 
   useEffect(() => {
     if (!name) return;
-    registerColor(name, rootRef.current);
-    return () => unregisterColor(name);
+    const root = rootRef.current;
+    registerColor(name, root);
+    return () => unregisterColor(name, root);
   }, [name, registerColor, unregisterColor]);
 
   const isHighlighted = name && highlightTarget === name;

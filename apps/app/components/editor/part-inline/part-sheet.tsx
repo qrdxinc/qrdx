@@ -11,23 +11,85 @@ import {
 import { cn } from "@repo/design-system/lib/utils";
 import { ArrowDown2, Setting4, Shuffle } from "iconsax-reactjs";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useId, useState } from "react";
+import { type ReactNode, useId, useLayoutEffect, useState } from "react";
+import type { DesignSection } from "@/lib/playground-links";
 import { insideInlineEditor } from "../frame-inline/inline-toolbar";
-import type { PartItem } from "./part-controls";
+import type { PartItem, PartMenuItem } from "./part-controls";
+import { ItemMarks, useItemLabel } from "./part-marks";
 import type { PartId } from "./part-targets";
+
+/** A menu item's row: its trigger, name and marks, and the chevron. */
+function MenuRow({
+  item,
+  expanded,
+  panelId,
+  onToggle,
+}: {
+  item: PartMenuItem;
+  expanded: boolean;
+  panelId: string;
+  onToggle: () => void;
+}) {
+  const label = useItemLabel(item);
+  return (
+    <button
+      aria-controls={panelId}
+      aria-expanded={expanded}
+      aria-label={label}
+      className={cn(rowClass, "border-0")}
+      onClick={onToggle}
+      type="button"
+    >
+      <span className="flex min-w-0 items-center gap-2">
+        {item.trigger}
+        <span className="truncate">{item.label}</span>
+        <ItemMarks item={item} placement="inline" />
+      </span>
+      <ArrowDown2
+        aria-hidden
+        className={cn(
+          "text-muted-foreground size-3.5 shrink-0 transition-transform duration-200",
+          expanded && "rotate-180",
+        )}
+      />
+    </button>
+  );
+}
 
 /**
  * Phones: tapping a part of the code opens this sheet with its toolbar's
  * items stacked, one open at a time. It doesn't cover the preview (no
- * overlay), so every change shows above it. Done or a tap outside keeps
- * the edit; Escape puts it back.
+ * overlay), so every change shows above it. Every change is kept as it's
+ * made (Undo takes design changes back); Done or a tap outside close the
+ * sheet, and Escape also puts the content back as it was.
  */
+/** The sheet's tallest share of the screen, and the least it shrinks to. */
+const SHEET_MAX = 0.56;
+const SHEET_MIN = 0.4;
+
+/**
+ * The sheet's height: up to SHEET_MAX of the screen, stopping short of the
+ * scan score badge under the preview so the score stays readable while
+ * the code changes (not below SHEET_MIN). Pure.
+ */
+export function sheetMaxHeight(
+  viewportHeight: number,
+  badgeBottom: number | null,
+): number {
+  const most = viewportHeight * SHEET_MAX;
+  if (badgeBottom === null) return most;
+  return Math.max(
+    viewportHeight * SHEET_MIN,
+    Math.min(most, viewportHeight - badgeBottom - 8),
+  );
+}
+
 export function PartSheet({
   part,
   items,
   extra,
   onRandom,
-  onCommit,
+  onClose,
   onCancel,
   onMoreOptions,
 }: {
@@ -36,9 +98,12 @@ export function PartSheet({
   /** Rendered with the sheet, outside its items (a file input) */
   extra?: ReactNode;
   onRandom: () => void;
-  onCommit: () => void;
+  /** Done or a tap outside */
+  onClose: () => void;
+  /** Escape: also puts the content back as it was */
   onCancel: () => void;
-  onMoreOptions: () => void;
+  /** Opens the Design tab at `section` (the open row's), or the part's own */
+  onMoreOptions: (section?: DesignSection) => void;
 }) {
   const t = useTranslations("editor.partInline");
   // Featurebase's launcher would sit over Done
@@ -46,12 +111,22 @@ export function PartSheet({
   const baseId = useId();
   const first = items.find((item) => item.kind === "menu")?.id ?? null;
   const [open, setOpen] = useState<string | null>(first);
+  const [maxHeight, setMaxHeight] = useState<number | undefined>();
+  useLayoutEffect(() => {
+    const badge = document.querySelector("[data-scan-score-badge]");
+    setMaxHeight(
+      sheetMaxHeight(
+        window.innerHeight,
+        badge ? badge.getBoundingClientRect().bottom : null,
+      ),
+    );
+  }, []);
 
   return (
     <Sheet
       modal={false}
       onOpenChange={(next) => {
-        if (!next) onCommit();
+        if (!next) onClose();
       }}
       open
     >
@@ -60,6 +135,7 @@ export function PartSheet({
         className="z-[120] max-h-[56svh] gap-0 rounded-t-xl p-0"
         data-part-inline=""
         data-part-sheet={part}
+        style={maxHeight ? { maxHeight } : undefined}
         onEscapeKeyDown={(event) => {
           event.preventDefault();
           onCancel();
@@ -133,27 +209,14 @@ export function PartSheet({
             const panelId = `${baseId}-${item.id}`;
             return (
               <div className="rounded-md border" key={item.id}>
-                <button
-                  aria-controls={panelId}
-                  aria-expanded={expanded}
-                  className={cn(rowClass, "border-0")}
-                  onClick={() =>
+                <MenuRow
+                  expanded={expanded}
+                  item={item}
+                  onToggle={() =>
                     setOpen((current) => (current === item.id ? null : item.id))
                   }
-                  type="button"
-                >
-                  <span className="flex items-center gap-2">
-                    {item.trigger}
-                    {item.label}
-                  </span>
-                  <ArrowDown2
-                    aria-hidden
-                    className={cn(
-                      "text-muted-foreground size-3.5 shrink-0 transition-transform duration-200",
-                      expanded && "rotate-180",
-                    )}
-                  />
-                </button>
+                  panelId={panelId}
+                />
                 {expanded && (
                   <div className="space-y-3 border-t p-3" id={panelId}>
                     {item.content}
@@ -178,7 +241,14 @@ export function PartSheet({
               {t("random")}
             </Button>
             <Button
-              onClick={onMoreOptions}
+              onClick={() =>
+                onMoreOptions(
+                  items.find(
+                    (item): item is PartMenuItem =>
+                      item.kind === "menu" && item.id === open,
+                  )?.section,
+                )
+              }
               size="sm"
               type="button"
               variant="ghost"
@@ -187,7 +257,7 @@ export function PartSheet({
               {t("moreOptions")}
             </Button>
           </div>
-          <Button onClick={onCommit} size="sm" type="button">
+          <Button onClick={onClose} size="sm" type="button">
             {t("sheet.done")}
           </Button>
         </div>

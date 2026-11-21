@@ -6,8 +6,22 @@ import {
   PopoverTrigger,
 } from "@repo/design-system/components/ui/popover";
 import { cn } from "@repo/design-system/lib/utils";
-import type { KeyboardEvent, ReactNode } from "react";
+import {
+  type KeyboardEvent,
+  type ReactNode,
+  type RefObject,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
+import {
+  MENU_EDGE,
+  MENU_OFFSET,
+  type MenuAvoid,
+  type MenuPlacement,
+  placeToolbarMenu,
+} from "./menu-placement";
 
 // The pill toolbar the preview's inline editors share (frame text here,
 // the code's parts in ../part-inline): its buttons, dividers, swatches and
@@ -27,7 +41,7 @@ export const inlineMenuSelector = (kind: InlineKind) =>
 // Floating content a menu opens on its own (a select's list, a color
 // model menu, a dialog): portaled out of the menu, but still part of it.
 const NESTED_FLOATING =
-  "[data-radix-popper-content-wrapper], [role='listbox'], [role='dialog']";
+  "[data-radix-popper-content-wrapper], [role='listbox'], [role='dialog'], [role='menu']";
 
 /**
  * Whether a click on `target` stays inside the `kind` editor: on it, its
@@ -41,6 +55,29 @@ export function insideInlineEditor(
   return Boolean(
     target.closest(inlineSelector(kind)) || target.closest(NESTED_FLOATING),
   );
+}
+
+/**
+ * Whether a key pressed in the `kind` editor belongs to something open over
+ * it, so the editor leaves it alone: one of its menus (Radix closes it on
+ * Escape), a layer a menu opened (a select's list, a color model menu:
+ * portaled out of the menu, its keys still reach the editor through React),
+ * or a key from anything else portaled that already handled it (Radix marks
+ * the Escape that closes a layer). A layer the editor itself sits in (a
+ * dialog around the preview) doesn't count.
+ */
+export function keyForNestedLayer(
+  event: KeyboardEvent<HTMLElement>,
+  kind: InlineKind,
+): boolean {
+  const target = event.target as Element | null;
+  if (!target?.closest) return event.defaultPrevented;
+  if (target.closest(inlineMenuSelector(kind))) return true;
+  const layer = target.closest(NESTED_FLOATING);
+  if (layer && !layer.contains(event.currentTarget)) return true;
+  // Not on the editor's own buttons and field: a tooltip shown there marks
+  // the Escape that hides it handled too, and that Escape still cancels
+  return event.defaultPrevented && !event.currentTarget.contains(target);
 }
 
 /** Left and right arrows move between the menu's buttons (a toolbar). */
@@ -59,7 +96,7 @@ export function moveAlongToolbar(event: KeyboardEvent<HTMLDivElement>) {
 }
 
 export const menuButton =
-  "hover:bg-accent focus-visible:ring-ring/50 aria-expanded:bg-accent aria-pressed:bg-accent inline-flex h-7 items-center gap-1.5 rounded-full px-2 text-xs font-medium outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50";
+  "hover:bg-accent focus-visible:ring-ring/50 aria-expanded:bg-accent aria-pressed:bg-accent relative inline-flex h-7 items-center gap-1.5 rounded-full px-2 text-xs font-medium outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50";
 
 // w-max: an absolute box near the container's edge would otherwise shrink
 // to fit, and placing it by its width would then move it again
@@ -108,7 +145,47 @@ export function ToolbarButton({
   );
 }
 
-/** A toolbar button that opens a menu (a popover) beside the toolbar. */
+/** Measures the open menu and tells it where to go (placeToolbarMenu). */
+function PlaceMenu({
+  far,
+  triggerRef,
+  avoid,
+  onPlace,
+}: {
+  far: "top" | "bottom";
+  triggerRef: RefObject<HTMLButtonElement | null>;
+  avoid?: () => MenuAvoid | null;
+  onPlace: (placement: MenuPlacement) => void;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  // Once per opening, before it shows: the menu then keeps its place while
+  // it's used (a menu that grows scrolls where it is)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: placed once when it opens
+  useLayoutEffect(() => {
+    const content = ref.current?.parentElement;
+    const trigger = triggerRef.current?.getBoundingClientRect();
+    if (!(content && trigger)) return;
+    onPlace(
+      placeToolbarMenu({
+        menu: { width: content.offsetWidth, height: content.scrollHeight },
+        trigger,
+        avoid: avoid?.() ?? null,
+        viewport: { width: window.innerWidth, height: window.innerHeight },
+        far,
+      }),
+    );
+  }, []);
+  return <span hidden ref={ref} />;
+}
+
+/**
+ * A toolbar button that opens a menu (a popover) beside the toolbar. The
+ * menu opens on the toolbar's far side (`side`, away from the code) when it
+ * fits there, else beside the whole artwork (`avoid` says where it and the
+ * code are), on the side with more room, else it scrolls on the far side:
+ * it never flips over the code while there's another place
+ * (menu-placement.ts, placeToolbarMenu).
+ */
 export function MenuPopover<M extends string>({
   kind,
   label,
@@ -117,6 +194,7 @@ export function MenuPopover<M extends string>({
   onOpenChange,
   trigger,
   side,
+  avoid,
   className,
   children,
 }: {
@@ -127,6 +205,8 @@ export function MenuPopover<M extends string>({
   onOpenChange: (menu: M | null) => void;
   trigger: ReactNode;
   side: "top" | "bottom";
+  /** Where the code and the artwork are in the viewport, to keep the menu off them */
+  avoid?: () => MenuAvoid | null;
   className?: string;
   children: ReactNode;
 }) {
@@ -134,26 +214,53 @@ export function MenuPopover<M extends string>({
     [`data-${kind}-inline`]: "",
     [`data-${kind}-inline-menu`]: "",
   };
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [placement, setPlacement] = useState<MenuPlacement | null>(null);
   return (
     <Popover
-      onOpenChange={(next) => onOpenChange(next ? menu : null)}
+      onOpenChange={(next) => {
+        if (!next) setPlacement(null);
+        onOpenChange(next ? menu : null);
+      }}
       open={open}
     >
       <TooltipWrapper label={label} side="top">
         <PopoverTrigger asChild>
-          <button aria-label={label} className={menuButton} type="button">
+          <button
+            aria-label={label}
+            className={menuButton}
+            ref={triggerRef}
+            type="button"
+          >
             {trigger}
           </button>
         </PopoverTrigger>
       </TooltipWrapper>
       <PopoverContent
+        align={placement?.align ?? "center"}
+        alignOffset={placement?.alignOffset ?? 0}
         aria-label={label}
-        className={cn("z-[120] w-64 space-y-3 p-3", className)}
-        collisionPadding={12}
-        side={side}
-        sideOffset={8}
+        className={cn("z-[120] w-64 space-y-3 overflow-y-auto p-3", className)}
+        collisionPadding={MENU_EDGE}
+        side={placement?.side ?? side}
+        sideOffset={placement?.offset ?? MENU_OFFSET}
+        // The room where it was placed, else (before that, or when it fits
+        // itself) the room Radix measures
+        style={{
+          maxHeight:
+            placement?.maxHeight ??
+            "var(--radix-popover-content-available-height)",
+        }}
         {...marker}
       >
+        {open && (
+          <PlaceMenu
+            avoid={avoid}
+            far={side}
+            onPlace={setPlacement}
+            triggerRef={triggerRef}
+          />
+        )}
         {children}
       </PopoverContent>
     </Popover>

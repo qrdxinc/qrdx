@@ -4967,7 +4967,12 @@
         "logosMustBeValueMb": "Logos must be {value, number}MB or smaller.",
         "unsupportedLogoFormat": "Unsupported logo format",
         "logoIsTooLarge": "Logo is too large",
-        "failedToReadLogoFile": "Failed to read logo file"
+        "failedToReadLogoFile": "Failed to read logo file",
+        "brandCount": "{count, number} brands",
+        "iconName": "{name} icon",
+        "brandName": "{name} logo",
+        "yourLogo": "Your logo",
+        "qrdxLogo": "QRdx logo"
       },
       "logoCropControls": {
         "shape": "Shape",
@@ -5195,24 +5200,28 @@
     "partInline": {
       "parts": {
         "eyes": {
+          "name": "Eyes",
           "edit": "Edit eyes",
           "options": "Eye options",
           "random": "Random eyes",
           "more": "More eye options"
         },
         "dots": {
+          "name": "Dots",
           "edit": "Edit dots",
           "options": "Dot options",
           "random": "Random dots",
           "more": "More dot options"
         },
         "logo": {
+          "name": "Logo",
           "edit": "Edit logo",
           "options": "Logo options",
           "random": "Random logo",
           "more": "More logo options"
         },
         "background": {
+          "name": "Background",
           "edit": "Edit background",
           "options": "Background options",
           "random": "Random background",
@@ -5220,6 +5229,7 @@
           "editShape": "Edit code shape"
         },
         "frame": {
+          "name": "Frame",
           "edit": "Edit frame",
           "options": "Frame options",
           "random": "Random frame",
@@ -5227,29 +5237,35 @@
         }
       },
       "items": {
-        "outerShape": "Outer shape",
-        "centerShape": "Center shape",
+        "eyeShape": "Eye shape",
+        "thisEyesShape": "This eye's shape",
         "eyeColor": "Eye color",
         "centerColor": "Center color",
         "pattern": "Pattern",
         "dotColor": "Dot color",
         "dotSize": "Dot size",
+        "halo": "Halo",
+        "shadow": "Shadow",
         "logo": "Logo",
         "quickIcons": "Quick icons",
         "logoSize": "Logo size",
+        "logoPosition": "Logo position",
         "hideLogo": "Hide logo",
         "backgroundColor": "Background color",
-        "padding": "Padding",
+        "palettes": "Palettes",
+        "paddingAndCorners": "Padding and corners",
+        "roundedCorners": "Rounded corners",
         "frameStyle": "Frame style",
-        "frameColor": "Frame color",
+        "frameTextAndColors": "Frame text and colors",
+        "frame": "Frame",
         "whichEyes": "Which eyes",
         "allEyes": "All eyes",
         "thisEye": "This eye",
         "thisEyesColor": "This eye's color",
         "thisEyesCenterColor": "This eye's center color",
-        "shapesChangeAllThreeEyes": "Shapes change all three eyes.",
         "sameAsTheOthers": "Same as the others",
         "eyesWithTheirOwnColor": "Eyes with a color of their own keep it. Choose This eye to change one.",
+        "eyesWithTheirOwnShape": "Eyes with a shape of their own keep it. Choose This eye to change one.",
         "logoShapeAndPlate": "Logo shape and plate",
         "clearSpace": "Clear space",
         "content": "Content",
@@ -5258,8 +5274,9 @@
       },
       "random": "Random",
       "moreOptions": "More options",
+      "labelWontScanHere": "{label}: won't scan here",
       "sheet": {
-        "changesShowOnTheCode": "Changes show on the code as you make them. Done keeps them.",
+        "changesShowOnTheCode": "Changes show on the code as you make them. Undo takes back each design change, and Escape puts the code's content back as it was.",
         "done": "Done"
       },
       "content": {
@@ -5274,11 +5291,9 @@
       "codeShape": {
         "codeShape": "Code shape",
         "names": {
-          "square": "Square",
-          "circle": "Circle",
-          "heart": "Heart"
+          "square": "Square"
         },
-        "aCircleOrHeartTakes": "A circle or heart takes the place of a frame."
+        "aShapeTakesThePlace": "A shaped code takes the place of a frame."
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "The logo raises it to level {level} for now."
@@ -5294,7 +5309,8 @@
       },
       "drop": {
         "dropToUseAsLogo": "Drop to use as logo"
-      }
+      },
+      "labelWithValue": "{label} ({value})"
     },
     "gradientPicker": {
       "pickASolidColorA": "Pick a solid color, a gradient or a swatch for {label}."

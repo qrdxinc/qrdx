@@ -106,6 +106,9 @@ export function useLogoUpload(onLogo: (dataUrl: string) => void) {
   };
 }
 
+/** What useLogoUpload gives: the file input, and a way to open it. */
+export type LogoUpload = ReturnType<typeof useLogoUpload>;
+
 interface LogoControlsProps {
   style: Partial<ThemeStyles>;
   onStyleChange: (styles: Partial<ThemeStyles>) => void;
@@ -113,38 +116,21 @@ interface LogoControlsProps {
   expanded?: boolean;
 }
 
-export function LogoControls({
-  style,
-  onStyleChange,
-  expanded,
-}: LogoControlsProps) {
-  const t = useTranslations("editor.controlSections.logoControls");
-  const upload = useLogoUpload((logo) =>
-    onStyleChange({ ...style, customLogo: logo, showLogo: true }),
-  );
-  const showLogo = style.showLogo ?? false;
-  const iconName = logoIconName(style.customLogo);
-  const brandName = brandLogoName(style.customLogo);
-  const logoName = iconName
-    ? `${iconName} icon`
-    : brandName
-      ? `${brandName} logo`
-      : style.customLogo
-        ? "Your logo"
-        : "QRdx logo";
-  const brandButtonLabel =
-    brandName && showLogo
-      ? brandName
-      : `${BRAND_LOGO_COUNT.toLocaleString("en-US")} brands`;
+/**
+ * The brand logo gallery: `open` shows it, and picking a brand makes it the
+ * logo (with its plate, on a rounded logo). Render `gallery` where it
+ * outlives the control that opens it: the Logo section, or beside the
+ * preview's toolbar (a menu closes when the dialog takes focus).
+ */
+export function useBrandLogos(
+  style: Partial<ThemeStyles>,
+  onStyleChange: (styles: Partial<ThemeStyles>) => void,
+) {
   // Mounted on first open, then kept (so it can animate closed).
-  const [galleryOpen, setGalleryOpen] = React.useState(false);
-  const [galleryMounted, setGalleryMounted] = React.useState(false);
-  const openGallery = () => {
-    setGalleryMounted(true);
-    setGalleryOpen(true);
-  };
+  const [open, setOpen] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
 
-  const handleBrandPick = ({ logo, plate }: BrandLogoPick) => {
+  const pick = ({ logo, plate }: BrandLogoPick) => {
     const { plate: _plate, ...options } = style.logoOptions ?? {};
     const logoOptions = plate
       ? { ...options, plate, shape: options.shape ?? "rounded" }
@@ -158,23 +144,107 @@ export function LogoControls({
     });
   };
 
-  const handleClearLogo = () => {
-    onStyleChange({ ...style, customLogo: undefined });
-    upload.clear();
+  return {
+    open: () => {
+      setMounted(true);
+      setOpen(true);
+    },
+    gallery: mounted ? (
+      <BrandLogoGallery
+        current={style.customLogo}
+        hasPlate={Boolean(style.logoOptions?.plate)}
+        onOpenChange={setOpen}
+        onPick={pick}
+        open={open}
+      />
+    ) : null,
   };
+}
+
+export type BrandLogos = ReturnType<typeof useBrandLogos>;
+
+/** The logo's name (the collapsed Logo header, the shown logo's alt text). */
+function useLogoName(style: Partial<ThemeStyles>) {
+  const t = useTranslations("editor.controlSections.logoControls");
+  const iconName = logoIconName(style.customLogo);
+  const brandName = brandLogoName(style.customLogo);
+  return iconName
+    ? t("iconName", { name: iconName })
+    : brandName
+      ? t("brandName", { name: brandName })
+      : style.customLogo
+        ? t("yourLogo")
+        : t("qrdxLogo");
+}
+
+export function LogoControls({
+  style,
+  onStyleChange,
+  expanded,
+}: LogoControlsProps) {
+  const t = useTranslations("editor.controlSections.logoControls");
+  const upload = useLogoUpload((logo) =>
+    onStyleChange({ ...style, customLogo: logo, showLogo: true }),
+  );
+  const brands = useBrandLogos(style, onStyleChange);
+  const logoName = useLogoName(style);
 
   return (
     <ControlSection
       expanded={expanded}
       hint="logo"
       id="section-logo"
-      summary={showLogo ? logoName : t("off")}
+      summary={(style.showLogo ?? false) ? logoName : t("off")}
       title={t("logo")}
     >
       {upload.input}
+      {brands.gallery}
+      <LogoSourceControls
+        brands={brands}
+        onStyleChange={onStyleChange}
+        style={style}
+        upload={upload}
+      />
+    </ControlSection>
+  );
+}
+
+/**
+ * Everything the Logo section holds: the switch, quick icons, brand logos,
+ * and the logo shown with Upload, Replace and Remove. The Logo section, the
+ * preview's logo toolbar, and its background toolbar while no logo shows.
+ * `upload` and `brands` come from the caller, which renders the file input
+ * and the gallery where they outlive a menu.
+ */
+export function LogoSourceControls({
+  style,
+  onStyleChange,
+  upload,
+  brands,
+}: Omit<LogoControlsProps, "expanded"> & {
+  upload: LogoUpload;
+  brands: BrandLogos;
+}) {
+  const t = useTranslations("editor.controlSections.logoControls");
+  const switchId = React.useId();
+  const showLogo = style.showLogo ?? false;
+  const iconName = logoIconName(style.customLogo);
+  const brandName = brandLogoName(style.customLogo);
+  const logoName = useLogoName(style);
+  const brandButtonLabel =
+    brandName && showLogo
+      ? brandName
+      : t("brandCount", { count: BRAND_LOGO_COUNT });
+  const handleClearLogo = () => {
+    onStyleChange({ ...style, customLogo: undefined });
+    upload.clear();
+  };
+
+  return (
+    <>
       <div className="flex items-center justify-between gap-3">
         <div className="space-y-0.5">
-          <Label className="cursor-pointer text-sm" htmlFor="show-logo">
+          <Label className="cursor-pointer text-sm" htmlFor={switchId}>
             {t("logoInTheCenter")}
           </Label>
           <p className="text-muted-foreground text-xs">
@@ -183,7 +253,7 @@ export function LogoControls({
         </div>
         <Switch
           checked={showLogo}
-          id="show-logo"
+          id={switchId}
           onCheckedChange={(value) =>
             onStyleChange({ ...style, showLogo: value })
           }
@@ -208,7 +278,7 @@ export function LogoControls({
           aria-haspopup="dialog"
           aria-label={t("brandLogosBrandbuttonlabel", { brandButtonLabel })}
           className="w-full max-w-[17.5rem] justify-start"
-          onClick={openGallery}
+          onClick={brands.open}
           type="button"
           variant="outline"
         >
@@ -218,15 +288,6 @@ export function LogoControls({
           </span>
           <ArrowRight2 className="text-muted-foreground" />
         </Button>
-        {galleryMounted && (
-          <BrandLogoGallery
-            current={style.customLogo}
-            hasPlate={Boolean(style.logoOptions?.plate)}
-            onOpenChange={setGalleryOpen}
-            onPick={handleBrandPick}
-            open={galleryOpen}
-          />
-        )}
       </div>
 
       {showLogo && (
@@ -279,6 +340,6 @@ export function LogoControls({
           </div>
         </div>
       )}
-    </ControlSection>
+    </>
   );
 }

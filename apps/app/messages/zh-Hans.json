@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "外框形状",
-        "centerShape": "中心形状",
         "eyeColor": "定位点颜色",
         "centerColor": "中心颜色",
         "pattern": "图案",
@@ -4782,15 +4780,12 @@
         "logoSize": "标志大小",
         "hideLogo": "隐藏标志",
         "backgroundColor": "背景颜色",
-        "padding": "内边距",
         "frameStyle": "边框样式",
-        "frameColor": "边框颜色",
         "whichEyes": "选择定位点",
         "allEyes": "所有定位点",
         "thisEye": "此定位点",
         "thisEyesColor": "此定位点的颜色",
         "thisEyesCenterColor": "此定位点的中心颜色",
-        "shapesChangeAllThreeEyes": "形状会同时更改三个定位点。",
         "sameAsTheOthers": "与其他定位点相同",
         "eyesWithTheirOwnColor": "有独立颜色的定位点会保持原色。如需单独更改，请选择“此定位点”。",
         "logoShapeAndPlate": "Logo 形状和底板",
@@ -4817,11 +4812,8 @@
       "codeShape": {
         "codeShape": "二维码形状",
         "names": {
-          "square": "方形",
-          "circle": "圆形",
-          "heart": "心形"
-        },
-        "aCircleOrHeartTakes": "圆形或心形会取代边框。"
+          "square": "方形"
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "目前，Logo 将纠错级别提高到了 {level}。"

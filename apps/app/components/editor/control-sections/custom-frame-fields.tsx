@@ -12,6 +12,7 @@ import {
   type FrameSpecIcon,
   getFrameIconPath,
 } from "qrdx";
+import { useId } from "react";
 import { soundEvent } from "@/lib/sound/emit";
 import { FrameColorField, FrameTextSize } from "./frame-fields";
 import {
@@ -48,13 +49,15 @@ export function FrameSpecFields({
   const icons = specIcons(spec);
   const update = (changes: Partial<AnyQRFrame>) =>
     onChange({ ...frame, ...changes } as AnyQRFrame);
+  // Its own ids: the side panel and the preview's toolbar both show these
+  const id = useId();
 
   return (
     <>
       {primary && (
         <div className="space-y-1.5">
           <FrameLabelField
-            id="frame-text"
+            id={`${id}-text`}
             label={t("label")}
             max={primary.maxLength ?? FRAME_TEXT_MAX_LENGTH}
             onChange={(text) => update({ text })}
@@ -66,7 +69,7 @@ export function FrameSpecFields({
       )}
       {secondary && (
         <FrameLabelField
-          id="frame-secondary-text"
+          id={`${id}-secondary-text`}
           label={t("secondLine")}
           max={secondary.maxLength ?? FRAME_TEXT_MAX_LENGTH}
           onChange={(secondaryText) => update({ secondaryText })}
@@ -84,7 +87,7 @@ export function FrameSpecFields({
         <div className="grid grid-cols-2 gap-3">
           {tokens.has("frame") && (
             <FrameColorField
-              id="frame-color"
+              id={`${id}-color`}
               label={t("frameColor")}
               onChange={(color) => update({ color })}
               value={colors.frame}
@@ -92,7 +95,7 @@ export function FrameSpecFields({
           )}
           {tokens.has("text") && (
             <FrameColorField
-              id="frame-text-color"
+              id={`${id}-text-color`}
               label={t("textColor")}
               onChange={(textColor) => update({ textColor })}
               value={colors.text}
@@ -100,7 +103,7 @@ export function FrameSpecFields({
           )}
           {tokens.has("accent") && (
             <FrameColorField
-              id="frame-accent-color"
+              id={`${id}-accent-color`}
               label={t("accentColor")}
               onChange={(secondaryColor) => update({ secondaryColor })}
               value={colors.accent}

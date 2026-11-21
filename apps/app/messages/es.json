@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "Forma exterior",
-        "centerShape": "Forma del centro",
         "eyeColor": "Color del ojo",
         "centerColor": "Color del centro",
         "pattern": "Patrón",
@@ -4782,15 +4780,12 @@
         "logoSize": "Tamaño del logo",
         "hideLogo": "Ocultar logo",
         "backgroundColor": "Color de fondo",
-        "padding": "Margen",
         "frameStyle": "Estilo de marco",
-        "frameColor": "Color del marco",
         "whichEyes": "Qué ojos",
         "allEyes": "Todos los ojos",
         "thisEye": "Este ojo",
         "thisEyesColor": "Color de este ojo",
         "thisEyesCenterColor": "Color del centro de este ojo",
-        "shapesChangeAllThreeEyes": "Las formas cambian los tres ojos.",
         "sameAsTheOthers": "Igual que los demás",
         "eyesWithTheirOwnColor": "Los ojos con un color propio lo conservan. Elige Este ojo para cambiar uno.",
         "logoShapeAndPlate": "Forma y base del logo",
@@ -4817,11 +4812,8 @@
       "codeShape": {
         "codeShape": "Forma del código",
         "names": {
-          "square": "Cuadrado",
-          "circle": "Círculo",
-          "heart": "Corazón"
-        },
-        "aCircleOrHeartTakes": "Un círculo o un corazón ocupa el lugar del marco."
+          "square": "Cuadrado"
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "Por ahora, el logo lo sube al nivel {level}."

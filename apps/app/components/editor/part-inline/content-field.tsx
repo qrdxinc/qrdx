@@ -19,8 +19,9 @@ import { encodeText } from "@/utils/qr-content-encoder";
 // or text is edited in place with the Content tab's own checks (checkUrl,
 // textSchema): only a valid entry changes the code, and an invalid one shows
 // the form's message. Every other content type has a form of its own, so the
-// field is a button to it. Content isn't part of the design's undo history;
-// the toolbar's session puts it back on Escape (part-overlay.tsx).
+// field is a button to it. Content isn't part of the design's undo history,
+// here as in the Content tab, so the toolbar keeps it as it was when it
+// opened, and Escape puts it back (part-overlay.tsx).
 
 /** The content as it was, so Escape can put it back. */
 export interface ContentSnapshot {
@@ -38,18 +39,23 @@ export function contentSnapshot(): ContentSnapshot {
   };
 }
 
-/** Puts back the content `snapshot` holds, if it changed. */
+/** Puts back the content `snapshot` holds (the forms' too, set or not). */
 export function restoreContent(snapshot: ContentSnapshot) {
+  useQREditorStore.setState((state) => ({
+    contentConfigs: {
+      ...state.contentConfigs,
+      url: snapshot.url,
+      text: snapshot.text,
+    },
+  }));
   const store = useQREditorStore.getState();
-  if (snapshot.url) store.setContentConfig("url", snapshot.url);
-  if (snapshot.text) store.setContentConfig("text", snapshot.text);
   if (store.value !== snapshot.value) store.setValue(snapshot.value);
 }
 
 export function ContentField({
   onOpenContent,
 }: {
-  /** Keeps the edit and opens the Content tab with its form */
+  /** Ends the edit and opens the Content tab with its form */
   onOpenContent: () => void;
 }) {
   const t = useTranslations("editor.partInline.content");

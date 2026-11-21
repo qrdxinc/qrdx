@@ -35,15 +35,15 @@ import {
 } from "./frame-text-menu";
 import {
   Divider,
-  inlineMenuSelector,
   insideInlineEditor,
+  keyForNestedLayer,
   MenuPopover,
   menuButton,
   moveAlongToolbar,
   Swatch,
   toolbarClass,
 } from "./inline-toolbar";
-import { placeMenu } from "./menu-placement";
+import { type MenuAvoid, placeMenu } from "./menu-placement";
 import type { Box, PreviewLabel } from "./preview-labels";
 
 type Menu = "size" | "text-color" | "frame-color" | "icon";
@@ -59,6 +59,8 @@ export interface InlineFrameEditorProps {
   bounds: { width: number; height: number };
   /** Where the whole frame is drawn: the menu stays off it when there's room */
   artwork: Box | null;
+  /** Where the code and the artwork are in the viewport: its menus keep off them */
+  avoidCode?: () => MenuAvoid | null;
   onText: (text: string) => void;
   onTweak: (tweak: FrameTweak) => void;
   /** Enter */
@@ -119,6 +121,7 @@ export function InlineFrameEditor({
   tweaks,
   bounds,
   artwork,
+  avoidCode,
   onText,
   onTweak,
   onCommit,
@@ -163,8 +166,9 @@ export function InlineFrameEditor({
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== "Escape") return;
-    // An open menu closes first (Radix handles its own Escape)
-    if ((event.target as Element).closest(inlineMenuSelector("frame"))) return;
+    // An open menu, or a layer it opened, closes first (Radix handles its
+    // own Escape)
+    if (keyForNestedLayer(event, "frame")) return;
     event.preventDefault();
     event.stopPropagation();
     onCancel();
@@ -262,6 +266,7 @@ export function InlineFrameEditor({
           label={t("textSize")}
           menu="size"
           onOpenChange={setMenu}
+          avoid={avoidCode}
           side={menuSide}
           open={menu === "size"}
           trigger={
@@ -285,6 +290,7 @@ export function InlineFrameEditor({
             label={t("textColor")}
             menu="text-color"
             onOpenChange={setMenu}
+            avoid={avoidCode}
             side={menuSide}
             open={menu === "text-color"}
             trigger={
@@ -309,6 +315,7 @@ export function InlineFrameEditor({
             label={t("frameColor")}
             menu="frame-color"
             onOpenChange={setMenu}
+            avoid={avoidCode}
             side={menuSide}
             open={menu === "frame-color"}
             trigger={
@@ -334,6 +341,7 @@ export function InlineFrameEditor({
             label={t("icon")}
             menu="icon"
             onOpenChange={setMenu}
+            avoid={avoidCode}
             side={menuSide}
             open={menu === "icon"}
             trigger={<Shapes aria-hidden className="size-4" />}
