@@ -8,9 +8,7 @@
 // - the catalogue is used widely: every body pattern, eye frame and eye
 //   centre the editor offers (except circle eyes, which only lenient apps
 //   read) appears in at least three designs, and a frame from every
-//   official collection appears; the shapes of the November 2026 patterns
-//   round (lib/whats-new/patterns.ts), still being settled in their own
-//   pull request, appear in none yet;
+//   official collection appears;
 // - names, descriptions and tags pass the publish rules.
 // Each design is also rendered and read with every decoder the repo tests
 // with, and gated, in tests/database/seed-designs-gate-*.test.ts.
@@ -44,12 +42,6 @@ import { textProblem } from "@/lib/community/text";
 import { COMMUNITY_THEME_TAGS } from "@/lib/constants";
 import { designQRProps } from "@/lib/qr-design/props";
 import { FRAME_TEXT_CONTRAST } from "@/lib/themes/compose";
-import type { NewBatch } from "@/lib/whats-new";
-import {
-  NEW_BODY_PATTERNS,
-  NEW_EYE_CENTRES,
-  NEW_EYE_FRAMES,
-} from "@/lib/whats-new/patterns";
 import type { ThemeStyles } from "@/types/theme";
 import * as seed from "../../../../packages/database/scripts/seed-community.mjs";
 import {
@@ -225,7 +217,7 @@ describe("the official designs", () => {
     }
   });
 
-  it("use the whole catalogue: every body, eye and centre, several times, and none of the patterns round's yet", () => {
+  it("use the whole catalogue: every body, eye and centre, several times", () => {
     const uses = (pick: (style: ThemeStyles) => string | undefined) => {
       const counts = new Map<string, number>();
       for (const item of designs) {
@@ -237,36 +229,19 @@ describe("the official designs", () => {
     const bodies = uses((style) => style.bodyPattern);
     const eyes = uses((style) => style.cornerEyePattern);
     const dots = uses((style) => style.cornerEyeDotPattern);
-    // The patterns round's shapes, whatever their New tag's date: they join
-    // the designs (and this bar) once their own pull request settles them
-    const round = (batches: readonly NewBatch[]) =>
-      new Set(batches.flatMap((batch) => batch.ids));
-    const pending = {
-      body: round(NEW_BODY_PATTERNS),
-      eye: round(NEW_EYE_FRAMES),
-      centre: round(NEW_EYE_CENTRES),
-    };
     const short: string[] = [];
-    const early: string[] = [];
-    const check = (
-      kind: keyof typeof pending,
-      shape: string,
-      counts: Map<string, number>,
-    ) => {
-      if (pending[kind].has(shape)) {
-        if (counts.has(shape)) early.push(`${kind} ${shape}`);
-      } else if ((counts.get(shape) ?? 0) < MIN_USES) {
-        short.push(`${kind} ${shape}`);
-      }
-    };
-    for (const body of BODY_PATTERN) check("body", body, bodies);
+    for (const body of BODY_PATTERN) {
+      if ((bodies.get(body) ?? 0) < MIN_USES) short.push(`body ${body}`);
+    }
     for (const eye of CORNER_EYE_PATTERNS) {
       // Circle eyes only read in lenient decoders: a scan-risk flag
-      if (eye !== "circle") check("eye", eye, eyes);
+      if (eye === "circle") continue;
+      if ((eyes.get(eye) ?? 0) < MIN_USES) short.push(`eye ${eye}`);
     }
-    for (const dot of CORNER_EYE_DOT_PATTERNS) check("centre", dot, dots);
+    for (const dot of CORNER_EYE_DOT_PATTERNS) {
+      if ((dots.get(dot) ?? 0) < MIN_USES) short.push(`centre ${dot}`);
+    }
     expect(short).toEqual([]);
-    expect(early).toEqual([]);
     expect(eyes.has("circle")).toBe(false);
   });
 
