@@ -40,7 +40,7 @@ export const EDITOR_NAMESPACES = [
   "limits",
   "community",
   "aiArt",
-  // The "New" tags on recently added options (components/new-tag.tsx)
+  // The "New" tag on recently added options
   "common",
 ] as const;
 

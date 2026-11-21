@@ -81,6 +81,12 @@ const svgProps = {
   moduleScale: Number,
   autoLevel: flag,
   shape: null,
+  eyeShapes: null,
+  eyeGradient: null,
+  bgRadius: Number,
+  backdrop: null,
+  halo: null,
+  shadow: null,
   frameLabelMarkers: flag,
   partMarkers: flag,
 } as const;

@@ -1,0 +1,51 @@
+{
+  "id": "jigsaw-piece",
+  "name": "Jigsaw piece",
+  "description": "A jigsaw piece with knobs out on the top and right and sockets in on the left and bottom.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "jigsaw", "puzzle", "piece"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1800,
+      "height": 2000
+    },
+    "qr": {
+      "x": 390,
+      "y": 520,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M180 180L1600 180A40 40 0 0 1 1640 220L1640 1840A40 40 0 0 1 1600 1880L180 1880A40 40 0 0 1 140 1840L140 220A40 40 0 0 1 180 180ZM740 180A150 150 0 1 1 1040 180A150 150 0 1 1 740 180ZM1490 1030A150 150 0 1 1 1790 1030A150 150 0 1 1 1490 1030ZM20 1030A120 120 0 1 0 260 1030A120 120 0 1 0 20 1030ZM770 1880A120 120 0 1 0 1010 1880A120 120 0 1 0 770 1880Z",
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to fit in",
+        "color": "text",
+        "box": {
+          "x": 340,
+          "y": 230,
+          "width": 1100,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

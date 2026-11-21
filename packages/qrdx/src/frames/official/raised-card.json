@@ -1,0 +1,81 @@
+{
+  "id": "raised-card",
+  "name": "Raised card",
+  "description": "A card raised off the page over a dark offset block.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "3d", "raised", "shadow", "border"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 1580
+    },
+    "qr": {
+      "x": 126,
+      "y": 250,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 48,
+        "y": 48,
+        "width": 1252,
+        "height": 1532,
+        "radius": 36,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1252,
+        "height": 1532,
+        "radius": 36,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "text",
+        "box": {
+          "x": 80,
+          "y": 1360,
+          "width": 1092,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Point your camera here",
+        "color": "text",
+        "box": {
+          "x": 100,
+          "y": 50,
+          "width": 1052,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

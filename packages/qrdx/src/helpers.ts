@@ -174,6 +174,12 @@ export function getQRData({
   moduleScale,
   autoLevel,
   shape,
+  eyeShapes,
+  eyeGradient,
+  bgRadius,
+  backdrop,
+  halo,
+  shadow,
 }: QRDataProps): QRDataResult {
   const code = {
     value: `${value}`,
@@ -203,6 +209,12 @@ export function getQRData({
     ...(moduleScale !== undefined && { moduleScale }),
     ...(autoLevel && { autoLevel }),
     ...(shape && shape !== "square" && { shape }),
+    ...(eyeShapes && { eyeShapes }),
+    ...(eyeGradient && eyeGradient !== "corner" && { eyeGradient }),
+    ...(bgRadius && { bgRadius }),
+    ...(backdrop && { backdrop }),
+    ...(halo && { halo }),
+    ...(shadow && { shadow }),
     ...(imageSettings && { imageSettings }),
   };
 }

@@ -16,7 +16,9 @@ import healthLearning from "../src/frames/catalogue/health-learning";
 import holidays from "../src/frames/catalogue/holidays";
 import { OFFICIAL_FRAME_INDEX } from "../src/frames/catalogue/index";
 import nonprofit from "../src/frames/catalogue/nonprofit";
+import objects from "../src/frames/catalogue/objects";
 import places from "../src/frames/catalogue/places";
+import playful from "../src/frames/catalogue/playful";
 import realEstate from "../src/frames/catalogue/real-estate";
 import seasons from "../src/frames/catalogue/seasons";
 import shopping from "../src/frames/catalogue/shopping";
@@ -53,6 +55,8 @@ const MODULES: Record<OfficialFrameCollection, readonly OfficialFrame[]> = {
   "sports-fitness": sportsFitness,
   business,
   nonprofit,
+  objects,
+  playful,
 };
 
 describe("the official frame catalogue", () => {

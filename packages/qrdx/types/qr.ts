@@ -3,7 +3,11 @@ import { z } from "zod";
 import { type QRArt, qrArtSchema } from "./art";
 import { type ColorConfig, colorConfigSchema } from "./color";
 import {
+  BG_RADIUS_MAX,
+  EYE_GRADIENT_SPANS,
   type EYE_POSITIONS,
+  HALO_WIDTH_MAX,
+  HALO_WIDTH_MIN,
   LOGO_PADDING_MAX,
   LOGO_SHAPES,
   LOGO_SIZE_MAX,
@@ -13,6 +17,9 @@ import {
   QR_SHAPES,
   QR_SILHOUETTE_MAX_CELLS,
   QR_SILHOUETTE_MIN_CELLS,
+  SHADOW_OFFSET_MAX,
+  SHADOW_OPACITY_MAX,
+  SHADOW_OPACITY_MIN,
 } from "./constants";
 import {
   type CornerEyeDotPattern,
@@ -25,7 +32,14 @@ import type { TemplateDefinition } from "./template";
 
 export {
   AUTO_LEVEL_LOGO_COVERAGE,
+  BG_RADIUS_MAX,
+  BG_RADIUS_QUIET_RATIO,
+  EYE_GRADIENT_SPANS,
   EYE_POSITIONS,
+  HALO_COLOR_DEFAULT,
+  HALO_WIDTH_DEFAULT,
+  HALO_WIDTH_MAX,
+  HALO_WIDTH_MIN,
   LOGO_PADDING_MAX,
   LOGO_SHAPES,
   LOGO_SIZE_DEFAULT,
@@ -38,6 +52,12 @@ export {
   QR_SILHOUETTE_MAX_CELLS,
   QR_SILHOUETTE_MIN_CELLS,
   QR_SILHOUETTE_MIN_SHARE,
+  SHADOW_COLOR_DEFAULT,
+  SHADOW_OFFSET_DEFAULT,
+  SHADOW_OFFSET_MAX,
+  SHADOW_OPACITY_DEFAULT,
+  SHADOW_OPACITY_MAX,
+  SHADOW_OPACITY_MIN,
 } from "./constants";
 
 export const logoShapeSchema = z.enum(LOGO_SHAPES);
@@ -143,6 +163,49 @@ export const eyeColorsSchema = z.object({
   bottomLeft: eyeColorOverrideSchema.optional(),
 });
 
+/** Shapes of one eye: `outer` is the frame, `inner` the centre. */
+export const eyeShapeOverrideSchema = z.object({
+  outer: cornerEyePatternSchema.optional(),
+  inner: cornerEyeDotPatternSchema.optional(),
+});
+
+/** Per-eye overrides of `cornerEyePattern` (outer) and `cornerEyeDotPattern` (inner). */
+export const eyeShapesSchema = z.object({
+  topLeft: eyeShapeOverrideSchema.optional(),
+  topRight: eyeShapeOverrideSchema.optional(),
+  bottomLeft: eyeShapeOverrideSchema.optional(),
+});
+
+/** Where an eye's gradient runs: around its own corner, or across the code. */
+export const eyeGradientSpanSchema = z.enum(EYE_GRADIENT_SPANS);
+
+/**
+ * A light rim around every dark module and eye, for a code on a picture or
+ * a dark page. `width` is in modules (HALO_WIDTH_MIN to HALO_WIDTH_MAX,
+ * default HALO_WIDTH_DEFAULT); `color` is a solid color (default white).
+ */
+export const haloSchema = z.object({
+  color: z.string().optional(),
+  width: z.number().min(HALO_WIDTH_MIN).max(HALO_WIDTH_MAX).optional(),
+});
+
+/**
+ * A see-through copy of the dark modules and eyes under them, shifted by
+ * `dx` and `dy` modules (−SHADOW_OFFSET_MAX to SHADOW_OFFSET_MAX, default
+ * SHADOW_OFFSET_DEFAULT each), in a solid `color` (default black) at
+ * `opacity` (SHADOW_OPACITY_MIN to SHADOW_OPACITY_MAX).
+ */
+export const shadowSchema = z.object({
+  color: z.string().optional(),
+  opacity: z
+    .number()
+    .min(SHADOW_OPACITY_MIN)
+    .max(SHADOW_OPACITY_MAX)
+    .optional(),
+  dx: z.number().min(-SHADOW_OFFSET_MAX).max(SHADOW_OFFSET_MAX).optional(),
+  dy: z.number().min(-SHADOW_OFFSET_MAX).max(SHADOW_OFFSET_MAX).optional(),
+});
+
 export const qrPropsSchema = z.object({
   value: z.string(),
   size: z.number().optional(),
@@ -169,6 +232,12 @@ export const qrPropsSchema = z.object({
     .optional(),
   autoLevel: z.boolean().optional(),
   shape: qrCodeShapeSchema.optional(),
+  eyeShapes: eyeShapesSchema.optional(),
+  eyeGradient: eyeGradientSpanSchema.optional(),
+  bgRadius: z.number().min(0).max(BG_RADIUS_MAX).optional(),
+  backdrop: z.string().optional(),
+  halo: haloSchema.optional(),
+  shadow: shadowSchema.optional(),
 });
 
 // Inferred types
@@ -176,6 +245,11 @@ export type ImageSettings = z.infer<typeof imageSettingsSchema>;
 export type ErrorLevel = z.infer<typeof errorLevelSchema>;
 export type EyeColorOverride = z.infer<typeof eyeColorOverrideSchema>;
 export type EyeColors = z.infer<typeof eyeColorsSchema>;
+export type EyeShapeOverride = z.infer<typeof eyeShapeOverrideSchema>;
+export type EyeShapes = z.infer<typeof eyeShapesSchema>;
+export type EyeGradientSpan = z.infer<typeof eyeGradientSpanSchema>;
+export type QRHalo = z.infer<typeof haloSchema>;
+export type QRShadow = z.infer<typeof shadowSchema>;
 
 export interface QRProps {
   value: string;
@@ -215,6 +289,27 @@ export interface QRProps {
   // decorative modules (see QR_SHAPES); a QRSilhouette fills an outline of
   // your own. Ignored with a template.
   shape?: QRCodeShape;
+  // Per-eye shapes; each overrides cornerEyePattern (outer) /
+  // cornerEyeDotPattern (inner) on that eye only
+  eyeShapes?: EyeShapes;
+  // Where the eyes' gradients run: "corner" (default) sweeps each eye on its
+  // own; "code" lays them over the whole code like the dots' gradient, so
+  // eyes that share the dots' gradient continue it
+  eyeGradient?: EyeGradientSpan;
+  // Corner radius of the background, as a share of the code's width (0 to
+  // BG_RADIUS_MAX; 0.5 is a disc). Capped so the symbol keeps its quiet
+  // zone (BG_RADIUS_QUIET_RATIO × margin modules). Square codes only: a
+  // shaped code (circle, heart, silhouette) has its own outline.
+  bgRadius?: number;
+  // Solid color outside the rounded background (see-through by default);
+  // drawn only when bgRadius rounds a corner
+  backdrop?: string;
+  // A light rim around the dark modules and eyes, for a code on a picture
+  // or a dark page (see QRHalo). A look, not a quiet zone.
+  halo?: QRHalo;
+  // A see-through copy of the dark modules and eyes under them, shifted a
+  // fraction of a module (see QRShadow)
+  shadow?: QRShadow;
   // For editors drawing a live preview: marks each frame label <text> with
   // data-qrdx-frame-label (its FrameLabel.field). Off by default, and every
   // export (getQRAsSVGDataUri and the PNG, JPG, PDF and EPS built on it)

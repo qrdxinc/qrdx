@@ -9,7 +9,7 @@ import type {
   PickableCornerEyePattern,
 } from "qrdx/types";
 
-// Every body pattern, simplest first
+// Every body pattern, simplest first (23: no lone tile in 3 or 4 columns)
 export const BODY_PATTERNS: { id: BodyPattern; name: string }[] = [
   { id: "square", name: "Square" },
   { id: "rounded", name: "Rounded" },
@@ -34,15 +34,6 @@ export const BODY_PATTERNS: { id: BodyPattern; name: string }[] = [
   { id: "heart", name: "Heart" },
   { id: "pacman", name: "Pacman" },
   { id: "circle-mixed", name: "Mixed" },
-  { id: "squircle", name: "Squircle" },
-  { id: "pebble", name: "Pebble" },
-  { id: "drop", name: "Drop" },
-  { id: "beads", name: "Beads" },
-  { id: "chain", name: "Chain" },
-  { id: "x", name: "X" },
-  { id: "petal", name: "Petal" },
-  { id: "flower", name: "Flower" },
-  { id: "bubble", name: "Bubble" },
 ];
 
 // Every offered eye frame (curly was retired: it doesn't scan reliably;
@@ -65,16 +56,6 @@ export const EYE_PATTERNS: { id: PickableCornerEyePattern; name: string }[] = [
   { id: "pointy", name: "Pointy" },
   { id: "gear", name: "Gear" },
   { id: "circle", name: "Circle" },
-  { id: "pebble", name: "Pebble" },
-  { id: "porthole", name: "Porthole" },
-  { id: "notch", name: "Notch" },
-  { id: "plus", name: "Plus" },
-  { id: "bud", name: "Bud" },
-  { id: "tag", name: "Tag" },
-  { id: "bowl", name: "Bowl" },
-  { id: "crest", name: "Crest" },
-  { id: "stamp", name: "Stamp" },
-  { id: "doodle", name: "Doodle" },
 ];
 
 // Every offered eye dot (diamond, star and banner were retired: they don't
@@ -104,9 +85,6 @@ export const EYE_DOT_PATTERNS: {
   { id: "diya", name: "Diya" },
   { id: "diya-reverse", name: "Diya Reverse" },
   { id: "rounded-triangle", name: "Rounded Triangle" },
-  { id: "cushion", name: "Cushion" },
-  { id: "bevel", name: "Bevel" },
-  { id: "notch", name: "Notch" },
 ];
 
 /** A pattern's name in the editor, or null for one it doesn't offer. */

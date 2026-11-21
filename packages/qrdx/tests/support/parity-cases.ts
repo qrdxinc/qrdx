@@ -220,6 +220,45 @@ export function parityCases(
       bottomLeft: { inner: "#2563eb" },
     },
   });
+  // The looks around the shapes (src/looks.ts)
+  add("per-eye shapes", {
+    cornerEyePattern: "rounded",
+    cornerEyeDotPattern: "rounded",
+    eyeShapes: {
+      topLeft: { outer: "leaf", inner: "leaf" },
+      topRight: { outer: "squircle" },
+      bottomLeft: { inner: "dots" },
+    },
+  });
+  add("eyes on the code's gradient", {
+    fgColor: linear(45, "#1d4ed8", "#db2777"),
+    eyeColor: linear(45, "#1d4ed8", "#db2777"),
+    dotColor: linear(90, "#0f766e", "#0c4a6e"),
+    eyeGradient: "code",
+  });
+  add("rounded background on a backdrop", {
+    margin: 4,
+    bgRadius: 0.2,
+    backdrop: "#0f172a",
+  });
+  add("halo and shadow", {
+    margin: 4,
+    bodyPattern: "rounded",
+    halo: { width: 0.3, color: "#fde68a" },
+    shadow: { dx: 0.2, dy: -0.1, opacity: 0.25, color: "#7c2d12" },
+  });
+  add("halo and shadow with a template", {
+    margin: 2,
+    templateId: "dot-ring",
+    halo: { width: 0.2 },
+    shadow: {},
+  });
+  add("halo and shadow on a circle code", {
+    margin: 4,
+    shape: "circle",
+    halo: {},
+    shadow: { dx: 0.3, dy: 0.3 },
+  });
   add("image fills", {
     level: "H",
     fgColor: { type: "image", src: LOGO, opacity: 0.85, underlay: "#1f2937" },

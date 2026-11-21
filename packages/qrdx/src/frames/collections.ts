@@ -20,4 +20,6 @@ export const OFFICIAL_FRAME_COLLECTIONS: readonly {
   { id: "sports-fitness", label: "Sports & fitness" },
   { id: "business", label: "Business & social" },
   { id: "nonprofit", label: "Nonprofits & community" },
+  { id: "objects", label: "Everyday objects" },
+  { id: "playful", label: "Playful & surprising" },
 ];

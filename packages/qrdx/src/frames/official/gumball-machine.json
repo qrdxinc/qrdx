@@ -1,0 +1,451 @@
+{
+  "id": "gumball-machine",
+  "name": "Gumball machine",
+  "description": "A gumball machine: the code in the jar among gumballs, the label on the base.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "gumball", "candy", "machine", "sweet"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 2000
+    },
+    "qr": {
+      "x": 250,
+      "y": 320,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 590,
+        "y": 0,
+        "width": 320,
+        "height": 160,
+        "radius": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 120,
+        "width": 1300,
+        "height": 1400,
+        "radius": 300,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 140,
+        "y": 160,
+        "width": 1220,
+        "height": 1320,
+        "radius": 260,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 260,
+        "cy": 240,
+        "r": 40,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 260,
+        "cy": 1400,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 382.5,
+        "cy": 264,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 382.5,
+        "cy": 1376,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 505,
+        "cy": 240,
+        "r": 48,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 505,
+        "cy": 1400,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 627.5,
+        "cy": 264,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 627.5,
+        "cy": 1376,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 750,
+        "cy": 240,
+        "r": 56,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 750,
+        "cy": 1400,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 872.5,
+        "cy": 264,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 872.5,
+        "cy": 1376,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 995,
+        "cy": 240,
+        "r": 40,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 995,
+        "cy": 1400,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1117.5,
+        "cy": 264,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1117.5,
+        "cy": 1376,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1240,
+        "cy": 240,
+        "r": 48,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1240,
+        "cy": 1400,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 230,
+        "cy": 356,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1270,
+        "cy": 356,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 210,
+        "cy": 472,
+        "r": 56,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1290,
+        "cy": 472,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 230,
+        "cy": 588,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1270,
+        "cy": 588,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 210,
+        "cy": 704,
+        "r": 40,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1290,
+        "cy": 704,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 230,
+        "cy": 820,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1270,
+        "cy": 820,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 210,
+        "cy": 936,
+        "r": 48,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1290,
+        "cy": 936,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 230,
+        "cy": 1052,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1270,
+        "cy": 1052,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 210,
+        "cy": 1168,
+        "r": 56,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1290,
+        "cy": 1168,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 230,
+        "cy": 1284,
+        "r": 48,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1270,
+        "cy": 1284,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 1510,
+        "width": 1140,
+        "height": 60,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 1560,
+        "width": 1300,
+        "height": 440,
+        "radius": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 630,
+        "y": 1600,
+        "width": 240,
+        "height": 40,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 600,
+        "y": 1840,
+        "width": 300,
+        "height": 100,
+        "radius": 30,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for a treat",
+        "color": "text",
+        "box": {
+          "x": 180,
+          "y": 1670,
+          "width": 1140,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

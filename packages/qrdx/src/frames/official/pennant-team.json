@@ -1,0 +1,109 @@
+{
+  "id": "pennant-team",
+  "name": "Pennant",
+  "description": "A pennant on a pole: the code at the hoist, the label along the fly.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "flag", "pennant", "team"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1400
+    },
+    "qr": {
+      "x": 250,
+      "y": 340,
+      "size": 700,
+      "padding": 56,
+      "radius": 16.8
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 46,
+        "y": 60,
+        "width": 48,
+        "height": 1340,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 70,
+        "cy": 60,
+        "r": 56,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "path",
+        "d": "M94 130L2000 130L1700 690L2000 1250L94 1250Z",
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 70,
+        "cy": 190,
+        "r": 30,
+        "hole": 14,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 70,
+        "cy": 1190,
+        "r": 30,
+        "hole": 14,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "text",
+        "box": {
+          "x": 1056,
+          "y": 490,
+          "width": 604,
+          "height": 200
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Join the team",
+        "color": "text",
+        "box": {
+          "x": 1056,
+          "y": 710,
+          "width": 604,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

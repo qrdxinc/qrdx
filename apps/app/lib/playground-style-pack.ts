@@ -31,6 +31,13 @@ export const STYLE_KEYS = {
   autoLevel: "al",
   logoOptions: "lo",
   shape: "sh",
+  // The looks around the shapes (qrdx looks.ts)
+  eyeShapes: "es",
+  eyeGradient: "eg",
+  bgRadius: "br",
+  backdrop: "bd",
+  halo: "ha",
+  shadow: "sd",
 } as const satisfies Partial<Record<keyof ThemeStyles, string>>;
 
 export type LinkedField = keyof typeof STYLE_KEYS;

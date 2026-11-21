@@ -118,6 +118,38 @@ export function AngularCode() {
 
 SVG has no conic gradient, so the code draws a fan of thin wedges, about two color levels apart. PDF and EPS draw the same wedges.
 
+## One gradient across the eyes
+
+By default each eye sweeps its own gradient: a linear gradient runs across the eye, a radial one out from the eye's center. `eyeGradient="code"` lays the eyes' gradients over the whole code instead, like the dots', so eyes painted with the dots' gradient continue it from corner to corner.
+
+```tsx title="components/eye-gradient-code.tsx"
+import { QRCode } from "qrdx";
+
+const brand = {
+  type: "linear" as const,
+  angle: 45,
+  stops: [
+    { color: "#1d4ed8", offset: 0 },
+    { color: "#db2777", offset: 100 },
+  ],
+};
+
+export function EyeGradientCode() {
+  return (
+    <QRCode
+      value="https://example.com"
+      size={256}
+      fgColor={brand}
+      eyeColor={brand}
+      dotColor={brand}
+      eyeGradient="code"
+    />
+  );
+}
+```
+
+The eyes then share the dots' gradient definition in the SVG. `"corner"` is the default; the playground's Eye colors section has the switch once an eye is painted with a gradient.
+
 ## See-through colors
 
 Colors and gradient stops can carry alpha, such as `#1d4ed8cc` or `rgba(29, 78, 216, 0.8)`. SVG writes it as `fill-opacity` and `stop-opacity`, and PDF keeps it. EPS has no transparency, so a see-through color is mixed with the background. The scan check judges a see-through color the way it looks on the background.

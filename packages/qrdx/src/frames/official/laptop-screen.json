@@ -1,0 +1,119 @@
+{
+  "id": "laptop-screen",
+  "name": "Laptop",
+  "description": "A laptop seen from the front, the code on its screen.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "laptop", "screen", "device"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1850
+    },
+    "qr": {
+      "x": 500,
+      "y": 320,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 260,
+        "y": 0,
+        "width": 1480,
+        "height": 1730,
+        "radius": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 310,
+        "y": 50,
+        "width": 1380,
+        "height": 1600,
+        "radius": 24,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1000,
+        "cy": 25,
+        "r": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "path",
+        "d": "M0 1850L40 1700L1960 1700L2000 1850Z",
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.2
+        }
+      },
+      {
+        "type": "rect",
+        "x": 830,
+        "y": 1700,
+        "width": 340,
+        "height": 40,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1810,
+        "width": 2000,
+        "height": 40,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.35
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to visit",
+        "color": "frame",
+        "box": {
+          "x": 380,
+          "y": 1440,
+          "width": 1240,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Open it on your phone",
+        "color": "frame",
+        "box": {
+          "x": 420,
+          "y": 100,
+          "width": 1160,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

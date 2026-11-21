@@ -12,6 +12,7 @@ import { MAX_GRADIENT_STOPS } from "@repo/config";
 import { type FrameSpec, getTemplateIds } from "qrdx";
 import {
   anyFrameSchema,
+  BG_RADIUS_MAX,
   bodyPatternSchema,
   type ColorConfig,
   colorConfigSchema,
@@ -20,6 +21,8 @@ import {
   EYE_POSITIONS,
   type EyePosition,
   errorLevelSchema,
+  HALO_WIDTH_MAX,
+  HALO_WIDTH_MIN,
   LOGO_PADDING_MAX,
   LOGO_SIZE_MAX,
   LOGO_SIZE_MIN,
@@ -27,6 +30,9 @@ import {
   MODULE_SCALE_MAX,
   MODULE_SCALE_MIN,
   qrShapeSchema,
+  SHADOW_OFFSET_MAX,
+  SHADOW_OPACITY_MAX,
+  SHADOW_OPACITY_MIN,
 } from "qrdx/types";
 import { z } from "zod";
 import { LOADED_OFFICIAL_FRAMES } from "@/lib/frames/library";
@@ -125,6 +131,56 @@ const ENGINE_OPTION_FIELDS = {
     .strict()
     .optional(),
   shape: qrShapeSchema.optional(),
+  // The looks around the shapes (qrdx looks.ts): shapes by name, numbers in
+  // the engine's ranges, colors through the safe-color check
+  eyeShapes: z
+    .object(
+      Object.fromEntries(
+        EYE_POSITIONS.map((position) => [
+          position,
+          z
+            .object({
+              outer: cornerEyePatternSchema.optional(),
+              inner: cornerEyeDotPatternSchema.optional(),
+            })
+            .strict()
+            .optional(),
+        ]),
+      ) as Record<
+        EyePosition,
+        z.ZodOptional<
+          z.ZodObject<{
+            outer: z.ZodOptional<typeof cornerEyePatternSchema>;
+            inner: z.ZodOptional<typeof cornerEyeDotPatternSchema>;
+          }>
+        >
+      >,
+    )
+    .strict()
+    .optional(),
+  eyeGradient: z.literal("code").optional(),
+  bgRadius: z.number().min(0).max(BG_RADIUS_MAX).optional(),
+  backdrop: safeOptionalColor,
+  halo: z
+    .object({
+      color: safeOptionalColor,
+      width: z.number().min(HALO_WIDTH_MIN).max(HALO_WIDTH_MAX).optional(),
+    })
+    .strict()
+    .optional(),
+  shadow: z
+    .object({
+      color: safeOptionalColor,
+      opacity: z
+        .number()
+        .min(SHADOW_OPACITY_MIN)
+        .max(SHADOW_OPACITY_MAX)
+        .optional(),
+      dx: z.number().min(-SHADOW_OFFSET_MAX).max(SHADOW_OFFSET_MAX).optional(),
+      dy: z.number().min(-SHADOW_OFFSET_MAX).max(SHADOW_OFFSET_MAX).optional(),
+    })
+    .strict()
+    .optional(),
 };
 
 /** The style a link carries, as strict as the editor's own schema or more. */

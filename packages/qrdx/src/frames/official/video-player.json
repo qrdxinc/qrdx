@@ -1,0 +1,118 @@
+{
+  "id": "video-player",
+  "name": "Video player",
+  "description": "A video player: the code is the video, with a play button and a progress bar.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "video", "player", "watch"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1400,
+      "height": 1660
+    },
+    "qr": {
+      "x": 200,
+      "y": 240,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1400,
+        "height": 1660,
+        "radius": 40,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 1360,
+        "width": 1280,
+        "height": 14,
+        "radius": 7,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 1360,
+        "width": 520,
+        "height": 14,
+        "radius": 7,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 580,
+        "cy": 1367,
+        "r": 30,
+        "fill": "text"
+      },
+      {
+        "type": "path",
+        "d": "M80 1430L80 1590L230 1510Z",
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 1200,
+        "y": 1470,
+        "width": 40,
+        "height": 80,
+        "radius": 6,
+        "fill": "text"
+      },
+      {
+        "type": "path",
+        "d": "M1240 1510L1310 1450L1310 1570Z",
+        "fill": "text"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to watch",
+        "color": "text",
+        "box": {
+          "x": 300,
+          "y": 1430,
+          "width": 840,
+          "height": 160
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Tap play on your phone",
+        "color": "text",
+        "box": {
+          "x": 100,
+          "y": 40,
+          "width": 1200,
+          "height": 100
+        },
+        "weight": "regular",
+        "align": "start"
+      }
+    ]
+  }
+}

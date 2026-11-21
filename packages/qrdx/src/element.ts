@@ -37,9 +37,15 @@ export interface QRdxCodeProperties {
   moduleScale?: QRProps["moduleScale"];
   autoLevel?: QRProps["autoLevel"];
   shape?: QRProps["shape"];
+  eyeGradient?: QRProps["eyeGradient"];
+  bgRadius?: QRProps["bgRadius"];
+  backdrop?: QRProps["backdrop"];
   frame?: QRProps["frame"];
   imageSettings?: QRProps["imageSettings"];
   eyeColors?: QRProps["eyeColors"];
+  eyeShapes?: QRProps["eyeShapes"];
+  halo?: QRProps["halo"];
+  shadow?: QRProps["shadow"];
   art?: QRProps["art"];
   customTemplate?: QRProps["customTemplate"];
   customProps?: QRProps["customProps"];
@@ -66,6 +72,9 @@ export interface QRdxCodeAttributes {
   "module-scale"?: number | string;
   "auto-level"?: boolean | string;
   shape?: string;
+  "eye-gradient"?: string;
+  "bg-radius"?: number | string;
+  backdrop?: string;
   label?: string;
   /** Options as JSON, for markup without script */
   props?: string;
@@ -105,6 +114,9 @@ const ATTRIBUTES: Record<string, [OptionKey, AttributeKind]> = {
   "module-scale": ["moduleScale", "number"],
   "auto-level": ["autoLevel", "boolean"],
   shape: ["shape", "string"],
+  "eye-gradient": ["eyeGradient", "string"],
+  "bg-radius": ["bgRadius", "number"],
+  backdrop: ["backdrop", "string"],
 };
 
 /** Options that are properties of the element. */
@@ -113,6 +125,9 @@ const OPTION_KEYS: readonly OptionKey[] = [
   "frame",
   "imageSettings",
   "eyeColors",
+  "eyeShapes",
+  "halo",
+  "shadow",
   "art",
   "customTemplate",
   "customProps",

@@ -55,10 +55,6 @@ export const CORNER_EYE_DOT_PATTERNS = [
   "extra-rounded",
   "leaf-reverse",
   "drop-reverse",
-  // Added after 0.0.57
-  "cushion",
-  "bevel",
-  "notch",
 ] as const;
 
 /**
@@ -96,17 +92,6 @@ export const CORNER_EYE_PATTERNS = [
   "shield",
   "petal",
   "leaf-reverse",
-  // Added after 0.0.57
-  "pebble",
-  "porthole",
-  "doodle",
-  "notch",
-  "plus",
-  "stamp",
-  "bud",
-  "tag",
-  "bowl",
-  "crest",
 ] as const;
 
 /**
@@ -143,16 +128,6 @@ export const BODY_PATTERN = [
   "random-dots",
   "mosaic",
   "octagon",
-  // Added after 0.0.57 (drawn by src/body-patterns.tsx)
-  "x",
-  "flower",
-  "pebble",
-  "bubble",
-  "petal",
-  "squircle",
-  "drop",
-  "beads",
-  "chain",
 ] as const;
 
 // ── Frames (frame.ts) ──────────────────────────────────────────────────────
@@ -245,3 +220,46 @@ export const QR_SILHOUETTE_MIN_SHARE = 0.42;
 
 /** The three finder patterns, for per-eye colors. */
 export const EYE_POSITIONS = ["topLeft", "topRight", "bottomLeft"] as const;
+
+// ── Looks around the code (qr.ts: bgRadius, backdrop, halo, shadow) ────────
+
+/**
+ * Largest `bgRadius`: the background's corner radius as a share of the
+ * code's width (0.5 rounds it into a disc). The engine also caps it so the
+ * symbol keeps its quiet zone: at most BG_RADIUS_QUIET_RATIO × `margin`
+ * modules (the arc then never reaches the finder rows), so a code with no
+ * margin keeps square corners.
+ */
+export const BG_RADIUS_MAX = 0.5;
+export const BG_RADIUS_QUIET_RATIO = 2;
+
+/**
+ * A halo is a light rim around every dark module and eye (`halo`), for a
+ * code placed on a picture or a dark page; its width is in modules.
+ * It is a look, not a quiet zone: decoders still need `margin`.
+ */
+export const HALO_WIDTH_MIN = 0.1;
+export const HALO_WIDTH_MAX = 0.5;
+export const HALO_WIDTH_DEFAULT = 0.25;
+export const HALO_COLOR_DEFAULT = "#ffffff";
+
+/**
+ * A shadow is a see-through copy of the dark modules and eyes drawn under
+ * them, shifted by `dx` and `dy` modules (`shadow`). Shifts and opacity are
+ * capped where every body shape still decodes through the camera model
+ * (tests/customize-options.test.ts).
+ */
+export const SHADOW_OFFSET_MAX = 0.3;
+export const SHADOW_OFFSET_DEFAULT = 0.2;
+export const SHADOW_OPACITY_MIN = 0.1;
+export const SHADOW_OPACITY_MAX = 0.4;
+export const SHADOW_OPACITY_DEFAULT = 0.3;
+export const SHADOW_COLOR_DEFAULT = "#000000";
+
+/**
+ * Where an eye's gradient runs (`eyeGradient`): "corner" sweeps each eye on
+ * its own (the default, as before); "code" lays the eyes' gradients over
+ * the whole code, like the dots', so eyes that share the dots' gradient
+ * continue it.
+ */
+export const EYE_GRADIENT_SPANS = ["corner", "code"] as const;
