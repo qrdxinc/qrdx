@@ -136,16 +136,19 @@ export function OptionTile({
   const t = useTranslations("editor.controlSections.optionTiles");
   const common = useTranslations("common");
   // A risky option keeps its usual hint: the amber dot on the preview and the
-  // tooltip carry the warning, so the tile's text stays clean.
+  // tooltip carry the warning, so the tile's text stays clean. A blocked one
+  // says so, in its note and its name, over the "New" tag.
   const note = blocked ? t("wontScanHere") : hint;
   return (
     <button
       aria-label={
-        risk && !blocked
-          ? t("nameMayNotScan", { name })
-          : isNew
-            ? common("nameIsNew", { name })
-            : undefined
+        blocked
+          ? t("nameWontScanWithThis", { name })
+          : risk
+            ? t("nameMayNotScan", { name })
+            : isNew
+              ? common("nameIsNew", { name })
+              : undefined
       }
       aria-pressed={selected}
       className={cn(
@@ -182,17 +185,15 @@ export function OptionTile({
           <Tick className="size-3" />
         </span>
       )}
+      {isNew && !blocked && (
+        // Hangs from the top edge, centred: clear of the preview's corners
+        // (several eye frames differ only there), the name and the check
+        <NewTag className="absolute -top-1 left-1/2 -translate-x-1/2" />
+      )}
       {risk && !blocked && (
         <span
           aria-hidden
           className="absolute top-2.5 left-2.5 size-1.5 rounded-full bg-amber-500 ring-2 ring-white"
-        />
-      )}
-      {isNew && (
-        // Top-right, beside the check when the tile is selected; the amber
-        // dot keeps the top-left.
-        <NewTag
-          className={cn("absolute top-2.5 right-2.5", selected && "right-6")}
         />
       )}
     </button>
@@ -282,7 +283,7 @@ export function CompactTile({
           className="ring-card absolute bottom-1 left-1 size-1.5 rounded-full bg-amber-500 ring-2"
         />
       )}
-      {isNew && (
+      {isNew && !blocked && (
         // Hangs off the top-right corner, under the check when selected
         <NewTag
           className={cn(

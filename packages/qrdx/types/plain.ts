@@ -74,6 +74,10 @@ export {
   SHADOW_OPACITY_DEFAULT,
   SHADOW_OPACITY_MAX,
   SHADOW_OPACITY_MIN,
+  WITHDRAWN_BODY_PATTERNS,
+  WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+  WITHDRAWN_CORNER_EYE_PATTERNS,
+  withdrawnFallback,
 } from "./constants";
 export type {
   CornerEyeDotPattern,

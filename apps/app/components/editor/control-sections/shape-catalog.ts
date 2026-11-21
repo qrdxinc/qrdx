@@ -50,15 +50,8 @@ export const BODY_CATEGORY: Partial<Record<BodyPattern, ShapeCategory>> = {
   heart: "playful",
   pacman: "playful",
   "circle-mixed": "playful",
-  squircle: "rounded",
   pebble: "rounded",
-  drop: "rounded",
-  beads: "rounded",
-  chain: "decorative",
-  x: "decorative",
-  petal: "decorative",
   flower: "playful",
-  bubble: "playful",
 };
 
 export const EYE_FEATURED: CornerEyePattern[] = [
@@ -87,14 +80,11 @@ export const EYE_CATEGORY: Partial<Record<CornerEyePattern, ShapeCategory>> = {
   message: "decorative",
   pointy: "decorative",
   gear: "playful",
-  pebble: "rounded",
   porthole: "rounded",
   notch: "classic",
   plus: "classic",
   bud: "decorative",
-  tag: "decorative",
   bowl: "decorative",
-  crest: "decorative",
   stamp: "playful",
   doodle: "playful",
 };
@@ -132,8 +122,6 @@ export const EYE_DOT_CATEGORY: Partial<
   "diya-reverse": "decorative",
   heart: "playful",
   cushion: "rounded",
-  bevel: "classic",
-  notch: "classic",
 };
 
 /** Matching outer + centre pairs: one per outer shape, so every eye is one tap. */
@@ -167,15 +155,15 @@ export const EYE_PRESETS: EyePreset[] = [
   { id: "message", name: "Message", outer: "message", centre: "rounded" },
   { id: "pointy", name: "Pointy", outer: "pointy", centre: "square" },
   { id: "gear", name: "Gear", outer: "gear", centre: "circle" },
-  { id: "pebble", name: "Pebble", outer: "pebble", centre: "rounded" },
-  { id: "porthole", name: "Porthole", outer: "porthole", centre: "bevel" },
-  { id: "notch", name: "Notch", outer: "notch", centre: "notch" },
-  { id: "plus", name: "Plus", outer: "plus", centre: "square" },
+  // The eyes added after qrdx 0.0.57 cut or round every corner, so a square
+  // centre misses strict decoders in sharp renders inside them; each pairs
+  // with a centre that reads (tests/editor/new-eye-presets.test.ts).
+  { id: "porthole", name: "Porthole", outer: "porthole", centre: "circle" },
+  { id: "notch", name: "Notch", outer: "notch", centre: "cushion" },
+  { id: "plus", name: "Plus", outer: "plus", centre: "rounded" },
   { id: "bud", name: "Bud", outer: "bud", centre: "rounded" },
-  { id: "tag", name: "Tag", outer: "tag", centre: "rounded" },
   { id: "bowl", name: "Bowl", outer: "bowl", centre: "rounded" },
-  { id: "crest", name: "Crest", outer: "crest", centre: "rounded" },
-  { id: "stamp", name: "Stamp", outer: "stamp", centre: "square" },
+  { id: "stamp", name: "Stamp", outer: "stamp", centre: "squircle" },
   { id: "doodle", name: "Doodle", outer: "doodle", centre: "rounded" },
 ];
 

@@ -4,39 +4,18 @@ import type { NewBatch } from "./index";
 
 export const NEW_BODY_PATTERNS: NewBatch[] = [
   {
-    ids: [
-      "x",
-      "flower",
-      "pebble",
-      "bubble",
-      "petal",
-      "squircle",
-      "drop",
-      "beads",
-      "chain",
-    ],
+    ids: ["flower", "pebble"],
     until: "2026-12-31",
   },
 ];
 
 export const NEW_EYE_FRAMES: NewBatch[] = [
   {
-    ids: [
-      "pebble",
-      "porthole",
-      "doodle",
-      "notch",
-      "plus",
-      "stamp",
-      "bud",
-      "tag",
-      "bowl",
-      "crest",
-    ],
+    ids: ["porthole", "doodle", "notch", "plus", "stamp", "bud", "bowl"],
     until: "2026-12-31",
   },
 ];
 
 export const NEW_EYE_CENTRES: NewBatch[] = [
-  { ids: ["cushion", "bevel", "notch"], until: "2026-12-31" },
+  { ids: ["cushion"], until: "2026-12-31" },
 ];

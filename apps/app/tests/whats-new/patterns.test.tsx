@@ -50,10 +50,11 @@ describe("the patterns batch", () => {
 });
 
 describe("the tiles", () => {
-  const tile = (isNew: boolean, compact: boolean) =>
+  const tile = (isNew: boolean, compact: boolean, blocked = false) =>
     renderIntl(
       compact ? (
         <CompactTile
+          blocked={blocked}
           isNew={isNew}
           name="Pebble"
           onSelect={() => undefined}
@@ -63,6 +64,7 @@ describe("the tiles", () => {
         </CompactTile>
       ) : (
         <OptionTile
+          blocked={blocked}
           isNew={isNew}
           name="Pebble"
           onSelect={() => undefined}
@@ -81,6 +83,17 @@ describe("the tiles", () => {
       const plain = tile(false, compact);
       expect(plain).not.toContain(">New<");
       expect(plain).not.toContain("Pebble, new");
+    });
+
+    it(`${compact ? "compact" : "full"} tile that is new and blocked says it won't scan`, () => {
+      const html = tile(true, compact, true);
+      expect(html).toContain("disabled");
+      expect(html).toContain(
+        'aria-label="Pebble, won&#x27;t scan with this style"',
+      );
+      if (!compact) expect(html).toContain("Won&#x27;t scan here");
+      expect(html).not.toContain(">New<");
+      expect(html).not.toContain("Pebble, new");
     });
   }
 });

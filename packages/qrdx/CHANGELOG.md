@@ -2,6 +2,15 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## Unreleased
+
+- **7 new eye frames** (`cornerEyePattern`): `porthole`, `doodle`, `notch`, `plus`, `stamp`, `bud` and `bowl`. `bud` turns to face its corner of the code. Each keeps the finder's 1:1:3:1:1 runs on its rows and columns and cuts or rounds every corner, so a `circle` or `rounded` centre reads inside it in sharp renders at 4 to 20 px per module (tests/decode-sharp-centre.test.ts) and none of them joins `WEAK_SHARP_DOT_EYES`. A `square` centre inside them is missed by jsQR in some sharp renders, as it is in `gear` and `octagon` eyes (tests/decode-new-eyes.test.ts).
+- **A new eye centre** (`cornerEyeDotPattern`): `cushion`, a square with gently pinched sides.
+- **2 new body patterns** (`bodyPattern`): `flower` (four round petals around a round heart) and `pebble` (soft square tiles, each with its own corners, the same for the same value). `MODULE_SCALE_FLOOR` has `flower`'s smallest `moduleScale`.
+- Each new shape reads every render its reference shapes read (circle, square and rounded bodies; gear and octagon eyes; square and rounded centres) with a fixed sample of partners from the catalogue, in sharp renders (resvg, 4 to 20 px per module) and through the phone-camera model (4, 6 and 9 px), decoded by jsQR and by ZXing (tests/decode-new-*.test.ts). Through the camera model, jsQR also reads each one next to every eye or body and centre, at every error correction level, light-on-dark, with brand colors and with a centre logo (tests/catalog-*.test.ts).
+- `WITHDRAWN_BODY_PATTERNS`, `WITHDRAWN_CORNER_EYE_PATTERNS` and `WITHDRAWN_CORNER_EYE_DOT_PATTERNS` map the shapes that preview builds offered and that were dropped before this release (bodies `x`, `beads`, `bubble`, `chain`, `petal`, `drop` and `squircle`; eyes `pebble`, `tag` and `crest`; centres `bevel` and `notch`) to existing ones: the schemas parse such an id as its replacement and the renderer draws it, so no design that names one fails (tests/withdrawn-shapes.test.ts).
+- New geometry helpers in `shapes.ts` (`radialPoints`, `scoopedRectPath`, `notchedRectPath`, `perforatedSquarePath`, `cushionPath`, `shieldPath`, `octagonPoints`, `superellipseRadius`, `doodleRadius`). These are internal.
+
 ## 0.0.58
 
 - **GIF export.** `"gif"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write a GIF, for older tools and email builders that only take it. No browser encodes GIF from a canvas (`toBlob("image/gif")` returns a PNG), so the engine writes the file itself, the same way in every browser.
@@ -11,11 +20,6 @@ Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/
 - **A frame on its own.** `createFrameTree(options)` draws a frame's artwork and labels around the empty slot a code of `size` pixels would fill, or around an element you pass as `slot`, for showing a frame without a code. React's `QRFrameSVG` (from `qrdx`) is the same as a component, and renders in React Server Components.
 - The standalone `<qrdx-code>` file loads `jsqr` on demand, as well as `jspdf`: a page without a bundler maps it in its import map to export a GIF of a design with more than 256 colors.
 - `@qrdx/cli` 0.0.15 writes ICO and GIF too: `-o qr.ico` or `--format ico`, and `-o qr.gif` or `--format gif`.
-- **10 new eye frames** (`cornerEyePattern`): `pebble`, `porthole`, `doodle`, `notch`, `plus`, `stamp`, `bud`, `tag`, `bowl` and `crest`. `bud` turns to face its corner of the code. Every one keeps the finder's 1:1:3:1:1 runs on its rows and columns, with its corners cut or rounded so that a circle centre reads in sharp renders and a square centre keeps a light gap: none of them joins `WEAK_SHARP_DOT_EYES`, and `getStylePairRisk` flags no pair that includes them.
-- **3 new eye centres** (`cornerEyeDotPattern`): `cushion`, `bevel` and `notch`. Each keeps nearly all of its 3×3 block, which is what reads in every eye in sharp renders. `petal` turns its big round corner away from the code, like the `petal` eye.
-- **9 new body patterns** (`bodyPattern`): `x`, `flower`, `pebble`, `bubble`, `petal`, `squircle`, `drop`, `beads` and `chain`. `beads` links round modules along rows and columns, `chain` along the diagonals; `pebble`, `petal` and `drop` vary per module and always draw the same code for the same value. `MODULE_SCALE_FLOOR` has their smallest `moduleScale`.
-- Every new value decodes with jsQR through the phone-camera model at 4, 6 and 9 px per module next to every other body, eye and centre, at every error correction level, light-on-dark, with brand colors and with a centre logo (tests/catalog-*.test.ts, tests/decode-*.test.ts). The new eyes read with circle and rounded centres in sharp renders at 4 to 20 px per module (tests/decode-sharp-centre.test.ts), and the new centres read in every eye in sharp renders with circle and square bodies. They were also checked by hand with ZXing.
-- New geometry helpers in `shapes.ts` (`radialPoints`, `scoopedRectPath`, `notchedRectPath`, `stampPath`, `cushionPath`, `shieldPath`, `octagonPoints`, `superellipseRadius`, `doodleRadius`); `circlePath` takes a `ccw` flag for holes. These are internal.
 
 ## 0.0.57
 
