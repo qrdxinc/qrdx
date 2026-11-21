@@ -620,6 +620,42 @@ describe("the halo rule", () => {
     }
   });
 
+  it("reads every hue form hsl() takes", () => {
+    for (const hue of ["120", "120.5", ".5", "-30deg", "120.", "+7"]) {
+      expect(colorAlpha(`hsl(${hue} 50% 50% / 0.5)`), hue).toBe(0.5);
+    }
+    // Not a hue: the color doesn't parse, so it counts as opaque
+    for (const hue of ["1.2.3", "deg", "12x"]) {
+      expect(colorAlpha(`hsl(${hue} 50% 50% / 0.5)`), hue).toBe(1);
+    }
+    // Nor is an alpha with junk after it ("0x" isn't 0)
+    expect(colorAlpha("hsla(0, 50%, 50%, 0x)")).toBe(1);
+    expect(colorAlpha("hsl(0 50% 50% / 40%)")).toBe(0.4);
+  });
+
+  // The color patterns read library input: each runs in linear time on a
+  // long adversarial string (a pattern with overlapping quantifiers takes
+  // seconds here)
+  it("reads long adversarial colors in linear time", () => {
+    const n = 50_000;
+    const adversarial = [
+      `hsl(${"0".repeat(n)}x, 50%, 50%)`,
+      `hsl(${"0".repeat(n)}.${"0".repeat(n)}x, 50%, 50%)`,
+      `hsl(${"a".repeat(n)}`,
+      `hsl(${" ,".repeat(n / 2)}x)`,
+      `hsla(0, 50%, 50%, ${"0".repeat(n)}x)`,
+    ];
+    for (const color of adversarial) {
+      let fastest = Number.POSITIVE_INFINITY;
+      for (let run = 0; run < 3; run++) {
+        const start = performance.now();
+        expect(colorAlpha(color)).toBe(1);
+        fastest = Math.min(fastest, performance.now() - start);
+      }
+      expect(fastest, color.slice(0, 24)).toBeLessThan(50);
+    }
+  });
+
   it("reads a color's alpha in every form", () => {
     expect(colorAlpha("none")).toBe(0);
     expect(colorAlpha("transparent")).toBe(0);

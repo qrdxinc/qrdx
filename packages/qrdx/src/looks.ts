@@ -219,15 +219,21 @@ const clamp = (
   );
 
 const HSL_COLOR = /^hsla?\(([^)]*)\)$/;
-const HUE = /^[+-]?(?:\d+\.?\d*|\.\d+)(?:deg)?$/;
+// A number with an optional fraction: the digits before and after a "." can't
+// both match the same characters, so "000…0x" fails in linear time (CodeQL
+// polynomial-redos)
+const HUE = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:deg)?$/;
+/** A CSS number or percentage, in the same linear shape. */
+const CSS_NUMBER = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)%?$/;
 
 /** A CSS alpha or percentage as 0 to 1 ("50%" is 0.5); NaN when it isn't one. */
 function cssShare(text: string | undefined, percentOnly: boolean): number {
   const value = text?.trim() ?? "";
-  const number = Number.parseFloat(value);
-  if (!(value && Number.isFinite(number))) {
+  // parseFloat alone would read "0x" as 0
+  if (!CSS_NUMBER.test(value)) {
     return Number.NaN;
   }
+  const number = Number.parseFloat(value);
   const share = value.endsWith("%") || percentOnly ? number / 100 : number;
   return Math.min(1, Math.max(0, share));
 }
