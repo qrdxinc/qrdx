@@ -33,7 +33,7 @@ describe("the new frames batch", () => {
     const ids = new Set(OFFICIAL_FRAMES.map((frame) => frame.id));
     const batch = NEW_FRAMES.flatMap((item) => item.ids);
     expect(batch.filter((id) => !ids.has(id))).toEqual([]);
-    expect(batch).toHaveLength(112);
+    expect(batch).toHaveLength(101);
     expect(new Set(batch).size).toBe(batch.length);
     for (const item of NEW_FRAMES) {
       expect(item.until).toMatch(/^\d{4}-\d{2}-\d{2}$/);

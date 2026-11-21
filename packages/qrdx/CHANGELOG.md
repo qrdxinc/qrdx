@@ -6,8 +6,8 @@ Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/
 
 ### Frame library: shapes, everyday objects and playful scenes
 
-- **112 more official frames**, 1,125 in all. 30 join `call-to-action`: hexagons, octagons, hearts, a scroll, pennants, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
-- **Two new collections:** `objects` ("Everyday objects", 33 frames: tablets, laptops, monitors, smartwatches, mugs, parcels, bottles, billboards, open books, map pins and more) and `playful` ("Playful & surprising", 49 frames: a rocket window, a TV set, an arcade cabinet, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
+- **101 more official frames**, 1,114 in all. 29 join `call-to-action`: hexagons, octagons, hearts, a scroll, swallowtail flags, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, a sketched circle, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
+- **Two new collections:** `objects` ("Everyday objects", 28 frames: tablets, laptops, monitors, mugs, parcels, bottles, billboards, open books, map pins, a globe and more) and `playful` ("Playful & surprising", 44 frames: a TV set, a record sleeve, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
 - The generator now also writes `src/frames/catalogue/batches.ts`, the official frame ids by the round that added them, so the app can mark the latest ones as new. It isn't exported.
 
 ## 0.0.58
