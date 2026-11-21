@@ -478,10 +478,9 @@ describe("seed-community", () => {
     const themes = seeded.filter((i) => i.type === "theme");
     expect(themes).toHaveLength(THEMES);
     for (const row of themes) {
-      expect(row.scan_score, row.id as string).toBe(scoreOf.get(row.id));
-      expect(row.scan_score, row.id as string).toBeGreaterThanOrEqual(
-        MIN_GATE_SCORE,
-      );
+      const id = row.id as string;
+      expect(row.scan_score, id).toBe(scoreOf.get(id));
+      expect(row.scan_score, id).toBeGreaterThanOrEqual(MIN_GATE_SCORE);
       expect(row.scan_checked_at).toEqual(row.published_at);
     }
     expect(
@@ -582,7 +581,7 @@ describe("seed-community", () => {
         .sort((a, b) => Number(a.position) - Number(b.position))
         .map((e) => [e.item_id, e.position]);
     const placed = (id: string, without?: string) =>
-      (items.find((i) => i.id === id)?.entries ?? []).flatMap(
+      ((items.find((i) => i.id === id)?.entries ?? []) as string[]).flatMap(
         (entry, position) => (entry === without ? [] : [[entry, position]]),
       );
     const minimal = "ci_official_collection_minimal-print";
