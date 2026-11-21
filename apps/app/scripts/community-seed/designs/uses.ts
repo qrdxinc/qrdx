@@ -122,7 +122,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     frame: { id: "farmers-market", color: "#14532D", textColor: "#F7FEE7" },
   },
   {
-    id: "wine-list",
+    id: "cellar-list",
     name: "Cellar list",
     description:
       "Classy modules in a deep burgundy with leaf eyes and reversed leaf centres, on a warm ivory, on the wine pairings frame. For restaurants and cellar doors.",
@@ -178,7 +178,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     frame: { id: "ice-cream-shop", color: "#9D174D", textColor: "#FCE7F3" },
   },
   {
-    id: "loyalty-card",
+    id: "coffee-stamps",
     name: "Coffee stamps",
     description:
       "Large touching dots in an espresso brown with squircle eyes and caramel centres, on a warm cream, on the coffee club stamp frame. For loyalty cards and counters.",
@@ -193,7 +193,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   },
   // ── Shops & packaging ──────────────────────────────────────────────────
   {
-    id: "sale-tag",
+    id: "red-tag",
     name: "Red tag",
     description:
       "Rounded modules in black with bevelled eyes and square centres in red, on white, on the sale tag frame. For price tags, shelf edges and clearance racks.",
@@ -761,7 +761,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     },
   },
   {
-    id: "team-kit",
+    id: "club-jersey",
     name: "Club jersey",
     description:
       "Diamond modules in a dark navy with extra-rounded eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
@@ -823,7 +823,7 @@ export const USE_DESIGNS: SeedDesign[] = [
   },
   // ── Business & social ──────────────────────────────────────────────────
   {
-    id: "business-card",
+    id: "dark-card",
     name: "Dark card",
     description:
       "Classy modules in black with square eyes and rounded centres, on white, on the dark business card frame. For printed cards and email signatures.",
@@ -851,7 +851,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     frame: { id: "review-star", color: "#2B2111", textColor: "#FFFDF5" },
   },
   {
-    id: "tap-to-pay",
+    id: "pay-at-the-counter",
     name: "Pay at the counter",
     description:
       "Rounded modules in a deep emerald with squircle eyes, on white, on the tap or scan to pay frame. Calm and clear, for counters, market stalls and invoices.",
@@ -884,7 +884,7 @@ export const USE_DESIGNS: SeedDesign[] = [
     },
   },
   {
-    id: "follow-us",
+    id: "new-posts",
     name: "New posts",
     description:
       "Round dots in a deep violet with petal eyes in a darker purple and raspberry centres, on white, on the follow us bubble frame. For profiles and shop counters.",

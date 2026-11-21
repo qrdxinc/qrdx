@@ -2056,8 +2056,8 @@
       }
     },
     {
-      "id": "pumpkin-patch",
-      "slug": "pumpkin-patch",
+      "id": "trick-or-treat",
+      "slug": "trick-or-treat",
       "name": "Trick or treat",
       "description": "Round dots in a near-black with octagon eyes in burnt orange, on a warm white, on the Halloween pumpkin frame. For trick-or-treat trails and haunted houses.",
       "tags": ["autumn", "playful", "bold", "warm"],
@@ -2269,8 +2269,8 @@
       }
     },
     {
-      "id": "harvest",
-      "slug": "harvest",
+      "id": "wheat-and-amber",
+      "slug": "wheat-and-amber",
       "name": "Wheat and amber",
       "description": "Hexagon modules in a dark amber with extra-rounded eyes in toast brown and amber centres, on a pale butter, on the Thanksgiving wheat frame. For harvest menus.",
       "tags": ["autumn", "warm", "earthy", "nature"],
@@ -2531,8 +2531,8 @@
       }
     },
     {
-      "id": "wine-list",
-      "slug": "wine-list",
+      "id": "cellar-list",
+      "slug": "cellar-list",
       "name": "Cellar list",
       "description": "Classy modules in a deep burgundy with leaf eyes and reversed leaf centres, on a warm ivory, on the wine pairings frame. For restaurants and cellar doors.",
       "tags": ["elegant", "warm", "romantic", "vintage"],
@@ -2631,8 +2631,8 @@
       }
     },
     {
-      "id": "loyalty-card",
-      "slug": "loyalty-card",
+      "id": "coffee-stamps",
+      "slug": "coffee-stamps",
       "name": "Coffee stamps",
       "description": "Large touching dots in an espresso brown with squircle eyes and caramel centres, on a warm cream, on the coffee club stamp frame. For loyalty cards and counters.",
       "tags": ["warm", "earthy", "soft", "e-commerce"],
@@ -2656,8 +2656,8 @@
       }
     },
     {
-      "id": "sale-tag",
-      "slug": "sale-tag",
+      "id": "red-tag",
+      "slug": "red-tag",
       "name": "Red tag",
       "description": "Rounded modules in black with bevelled eyes and square centres in red, on white, on the sale tag frame. For price tags, shelf edges and clearance racks.",
       "tags": ["bold", "high-contrast", "e-commerce", "vibrant"],
@@ -3622,8 +3622,8 @@
       }
     },
     {
-      "id": "team-kit",
-      "slug": "team-kit",
+      "id": "club-jersey",
+      "slug": "club-jersey",
       "name": "Club jersey",
       "description": "Diamond modules in a dark navy with extra-rounded eyes and red square centres, on white, on the team jersey frame. For club sign-ups, kit orders and fixtures.",
       "tags": ["bold", "geometric", "vibrant", "high-contrast"],
@@ -3723,8 +3723,8 @@
       }
     },
     {
-      "id": "business-card",
-      "slug": "business-card",
+      "id": "dark-card",
+      "slug": "dark-card",
       "name": "Dark card",
       "description": "Classy modules in black with square eyes and rounded centres, on white, on the dark business card frame. For printed cards and email signatures.",
       "tags": ["minimal", "monochrome", "professional", "corporate"],
@@ -3773,8 +3773,8 @@
       }
     },
     {
-      "id": "tap-to-pay",
-      "slug": "tap-to-pay",
+      "id": "pay-at-the-counter",
+      "slug": "pay-at-the-counter",
       "name": "Pay at the counter",
       "description": "Rounded modules in a deep emerald with squircle eyes, on white, on the tap or scan to pay frame. Calm and clear, for counters, market stalls and invoices.",
       "tags": ["professional", "cool", "minimal", "e-commerce"],
@@ -3824,8 +3824,8 @@
       }
     },
     {
-      "id": "follow-us",
-      "slug": "follow-us",
+      "id": "new-posts",
+      "slug": "new-posts",
       "name": "New posts",
       "description": "Round dots in a deep violet with petal eyes in a darker purple and raspberry centres, on white, on the follow us bubble frame. For profiles and shop counters.",
       "tags": ["vibrant", "playful", "startup", "candy"],
@@ -4322,7 +4322,7 @@
       "id": "chomp",
       "slug": "chomp",
       "name": "Chomp",
-      "description": "Bitten dots in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Bitten dots with a wink, for game shops and arcades.",
+      "description": "Bitten dots in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Playful, for game shops and arcades.",
       "tags": ["playful", "retro", "bold", "cool"],
       "payload": {
         "style": {
@@ -4419,8 +4419,8 @@
       }
     },
     {
-      "id": "first-aid",
-      "slug": "first-aid",
+      "id": "pharmacy-cross",
+      "slug": "pharmacy-cross",
       "name": "Pharmacy cross",
       "description": "Plus-shaped modules in a deep teal green with squircle eyes and rounded-cross centres, on a mint white. Calm and clinical, for pharmacies and first-aid points.",
       "tags": ["cool", "professional", "accessible", "minimal"],
@@ -4698,8 +4698,8 @@
       }
     },
     {
-      "id": "save-the-date",
-      "slug": "save-the-date",
+      "id": "mark-the-date",
+      "slug": "mark-the-date",
       "name": "Mark the date",
       "description": "Rounded modules in a deep rose with squircle eyes and a calendar icon in the middle, on a blush white, on the add to calendar frame. For invitations and events.",
       "tags": ["romantic", "soft", "elegant", "professional"],
@@ -4725,8 +4725,8 @@
       }
     },
     {
-      "id": "find-us",
-      "slug": "find-us",
+      "id": "map-pin",
+      "slug": "map-pin",
       "name": "Map pin",
       "description": "Liquid modules in a deep green with rounded eyes and a location pin in the middle, on a mint white, on the see the map frame. For flyers, menus and event tickets.",
       "tags": ["nature", "professional", "cool", "accessible"],
