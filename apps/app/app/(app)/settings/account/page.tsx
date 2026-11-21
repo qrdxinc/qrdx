@@ -192,7 +192,7 @@ export default async function AccountPage({
 
         <SessionsSection sessions={sessions} />
 
-        {/* Hidden until the community tables exist (manual-sql/0012). */}
+        {/* Hidden until the community tables exist. */}
         {communityProfile && (
           <CommunityProfileSection profile={communityProfile} />
         )}

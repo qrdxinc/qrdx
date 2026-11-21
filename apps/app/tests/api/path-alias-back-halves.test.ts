@@ -106,7 +106,7 @@ const SCOPE = {
   role: "owner" as const,
 };
 
-/** The indexes of 0009; `afterContract` = also 0010 (no global slug unique). */
+/** qr_code's slug indexes; `afterContract` = without the old global slug unique. */
 function indexes({ afterContract = false } = {}) {
   if (!afterContract) fakeDb.unique("qrCode", "slug");
   fakeDb.unique("qrCode", "slugScope", "slug");
@@ -195,7 +195,7 @@ function seedAlias({ codeDomainId = "dom_brand" } = {}) {
 const ALIAS_MESSAGE = /\/p\/menu-page is another code's path alias/;
 
 describe("back-halves on a domain with /p/ path aliases", () => {
-  // The indexes production has (0010 dropped the global slug index).
+  // The indexes production has (the global slug index is gone).
   beforeEach(() => {
     indexes({ afterContract: true });
     seedAlias();

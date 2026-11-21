@@ -34,8 +34,8 @@ export function signUpLocale(
 
 /**
  * Saves the sign-up's language on the new account (user.locale). Never
- * throws: before packages/database/manual-sql/2026-11-11-user-locale.sql is
- * applied the column doesn't exist, and the account just has no language.
+ * throws: where the column doesn't exist yet, the account just has no
+ * language.
  */
 export async function saveSignUpLocale(
   userId: string,

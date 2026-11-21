@@ -69,7 +69,7 @@ const TEAM_CONTENT = [
   tag,
   fileAsset,
   webhookEndpoint,
-  // Saved barcodes (manual-sql/2026-11-11-barcodes.sql)
+  // Saved barcodes
   barcode,
 ] as const;
 
@@ -143,7 +143,8 @@ async function ownWorkspaceAlone(userId: string): Promise<boolean> {
 
 /**
  * Likes and saves the user gave on community items stop counting (their
- * rows cascade with the user). Nothing to do before manual-sql/0012.
+ * rows cascade with the user). Nothing to do before the community tables
+ * exist.
  */
 async function uncountCommunityReactions(userId: string): Promise<void> {
   try {
@@ -422,8 +423,8 @@ export async function executeAccountDeletion({
       ),
     );
 
-  // 6b. The same for community items (likes and saves), once
-  //     manual-sql/0012 exists. Their own profile and items cascade with
+  // 6b. The same for community items (likes and saves), once the
+  //     community tables exist. Their own profile and items cascade with
   //     the user row.
   await uncountCommunityReactions(userId);
 

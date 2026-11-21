@@ -11,7 +11,6 @@ import { formatAgo, formatDate, formatNumber } from "../_lib/format";
 import {
   type AcquisitionField,
   type Cohort,
-  GROWTH_SQL_FILE,
   getActivation,
   getCodesAndScans,
   getDeveloperAccounts,
@@ -39,8 +38,9 @@ type Weeks = readonly string[];
 function NotSetUp({ children }: { children: ReactNode }) {
   return (
     <p className="text-muted-foreground py-2 text-sm">
-      {children} Not set up yet: it starts once{" "}
-      <code className="text-xs">{GROWTH_SQL_FILE}</code> is applied.
+      {children} Not set up yet: it starts once the database schema is updated
+      (the <code className="text-xs">migrate</code> service with Docker,{" "}
+      <code className="text-xs">bun run db:push</code> otherwise).
     </p>
   );
 }

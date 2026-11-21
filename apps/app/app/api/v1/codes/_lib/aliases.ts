@@ -48,7 +48,7 @@ export function pathAliasError(refusal: PathAliasRefusal): HttpError {
     case "limit":
       return new HttpError(409, "PATH_ALIAS_LIMIT", PATH_ALIAS_MESSAGES.limit);
     case "unavailable":
-      // Before manual-sql/2026-11-18-path-aliases.sql (lib/path-alias-missing.ts).
+      // Before the link_path_alias table exists (lib/path-alias-missing.ts).
       return new HttpError(
         503,
         "PATH_ALIASES_UNAVAILABLE",

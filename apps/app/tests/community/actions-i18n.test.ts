@@ -301,7 +301,7 @@ describe("the editor's community actions (pages under [lang])", () => {
     expect(await toggleCommunityLike("item_gone", "en")).toMatchObject({
       message: "This item isn't in the community.",
     });
-    // Before manual-sql/0012: the community isn't available yet.
+    // Before the community tables exist: the community isn't available yet.
     fakeDb.missing("communityItem");
     expect(await toggleCommunityLike("item_gone", "es")).toMatchObject({
       code: "UNAVAILABLE",

@@ -10,7 +10,7 @@ import { cookies } from "next/headers";
 
 /**
  * A person's saved language, or null when they haven't chosen one. Also null
- * when the column can't be read (before its SQL is applied), so the app falls
+ * when the column can't be read (before it exists), so the app falls
  * back to the cookie instead of failing.
  */
 export async function savedUserLocale(userId: string): Promise<Locale | null> {

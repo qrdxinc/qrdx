@@ -1,9 +1,6 @@
 // Pure community rules: handles (opt-in, reserved words and look-alikes),
-// text checks, editing a custom frame through its spec in the editor, the
-// theme schema accepting custom frames, and manual-sql/0012 creating every
-// table and column the schema declares. No database or network.
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+// text checks, editing a custom frame through its spec in the editor, and
+// the theme schema accepting custom frames. No database or network.
 import { getOfficialFrame, OFFICIAL_FRAMES } from "qrdx";
 import { describe, expect, it } from "vitest";
 import {
@@ -138,64 +135,5 @@ describe("editing a custom frame through its spec", () => {
       themeStylePropsSchema.safeParse({ frame: { style: "banner-bottom" } })
         .success,
     ).toBe(true);
-  });
-});
-
-describe("manual-sql/0012_community.sql", () => {
-  const root = join(
-    import.meta.dirname,
-    "..",
-    "..",
-    "..",
-    "..",
-    "packages",
-    "database",
-  );
-  const sql = readFileSync(
-    join(root, "manual-sql", "0012_community.sql"),
-    "utf8",
-  );
-  const schema = readFileSync(join(root, "schema.ts"), "utf8");
-  const section = schema.slice(
-    schema.indexOf("// ─── Community"),
-    schema.indexOf("// OAuth apps."),
-  );
-  const tables = [
-    ...section.matchAll(/pgTable\(\s*"(\w+)",\s*\{([\s\S]*?)\n {2}\},/g),
-  ].map((match) => ({
-    name: match[1] as string,
-    columns: [...(match[2] as string).matchAll(/^\s+\w+: \w+\("(\w+)"/gm)].map(
-      (column) => column[1] as string,
-    ),
-  }));
-
-  it("creates every community table with every column, idempotently", () => {
-    expect(tables.map((t) => t.name)).toEqual([
-      "community_profile",
-      "community_item",
-      "community_item_version",
-      "community_item_tag",
-      "community_like",
-      "community_save",
-      "community_use",
-      "community_collection_entry",
-    ]);
-    for (const table of tables) {
-      const create = new RegExp(
-        `CREATE TABLE IF NOT EXISTS "${table.name}" \\(([\\s\\S]*?)\\n\\);`,
-      ).exec(sql);
-      expect(create, table.name).not.toBeNull();
-      const body = create?.[1] ?? "";
-      for (const column of table.columns) {
-        expect(body, `${table.name}.${column}`).toContain(`"${column}"`);
-      }
-    }
-    const statements = sql.replace(/^--.*$/gm, "");
-    expect(statements).not.toMatch(
-      /\b(DROP|RENAME|TRUNCATE)\b|(?<!ON )DELETE\b/i,
-    );
-    expect(sql).not.toMatch(/ALTER TABLE "(?!community_)/);
-    expect(sql.trim().startsWith("--")).toBe(true);
-    expect(sql).toMatch(/BEGIN;[\s\S]*COMMIT;/);
   });
 });
