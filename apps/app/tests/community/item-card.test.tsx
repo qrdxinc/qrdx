@@ -157,7 +157,8 @@ describe("community card type labels", () => {
     for (const name of TYPE_CHIP.split(" ")) expect(chip).toContain(name);
     // An icon, no words on the stage
     expect(chip).toContain("<svg");
-    expect(chip.replace(/<[^>]+>/g, "")).toBe("");
+    // No text between any of its tags
+    expect(chip).not.toMatch(/>\s*[^<\s]/);
     // Above the card's link (z-10) so it can be hovered, going where the
     // card goes, and left to the card's own link for keyboards and readers
     expect(chip).toContain("z-20");
