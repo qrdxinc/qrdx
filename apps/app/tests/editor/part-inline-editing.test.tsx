@@ -27,6 +27,7 @@ import {
   PART_LABEL_HEIGHT,
   partLabelPlace,
 } from "@/components/editor/part-inline/part-targets";
+import type { DesignSection } from "@/lib/playground-links";
 import en from "@/messages/en.json";
 import type { QRStyle } from "@/types/theme";
 
@@ -353,6 +354,15 @@ function expectControl(where: HTMLElement, row: Row) {
       `#${control.id} is unique (${row.control})`,
     ).toBe(control);
   }
+  // No control's id on the page twice: the menu's and its twin's in the
+  // open section (the drawings' own ids inside thumbnails aside)
+  const ids = [
+    ...document.querySelectorAll(
+      "input[id], textarea[id], select[id], button[id], label[id], [role][id]",
+    ),
+  ].map((node) => node.id);
+  const twice = ids.filter((id, index) => id && ids.indexOf(id) !== index);
+  expect(twice, `ids used twice (${row.control})`).toEqual([]);
 }
 
 /** An official frame with a second line, an accent color and an icon. */
@@ -388,6 +398,26 @@ interface Row {
   styles?: QRStyle;
   /** The eyes' This eye */
   oneEye?: boolean;
+  /**
+   * The side panel's section it's in (DESIGN_SECTIONS, or Logo options),
+   * open for the check so its ids are in the page too; none for Content
+   */
+  section?: DesignSection | "logo-options";
+}
+
+/** The header button of the side panel's section (its anchor, section-<id>). */
+function sectionHeader(section: NonNullable<Row["section"]>) {
+  const header = document.querySelector<HTMLElement>(
+    `#section-${section} h3 button`,
+  );
+  expect(header, `the side panel's ${section} section`).toBeTruthy();
+  return header;
+}
+
+/** Expands a section, or opens it beside the panel (a popover section). */
+async function openSection(header: HTMLElement | null) {
+  if (header?.getAttribute("aria-expanded") !== "true") await click(header);
+  expect(header?.getAttribute("aria-expanded")).toBe("true");
 }
 
 /**
@@ -399,30 +429,35 @@ const INVENTORY: Row[] = [
   // Colors
   {
     control: "Colors › Background",
+    section: "colors",
     part: "background",
     item: "Background color",
     find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › Foreground (the dots)",
+    section: "colors",
     part: "dots",
     item: "Dot color",
     find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › Eyes (the eyes' frames)",
+    section: "colors",
     part: "eyes",
     item: "Eye color",
     find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › Dots (the eyes' centers)",
+    section: "colors",
     part: "eyes",
     item: "Center color",
     find: { role: "radio", name: "Solid" },
   },
   {
     control: "Colors › palettes",
+    section: "colors",
     part: "background",
     item: "Background color",
     find: { role: "button", name: "Ink & paper" },
@@ -430,24 +465,28 @@ const INVENTORY: Row[] = [
   // Dots and eyes
   {
     control: "Dots › Dot shape",
+    section: "dots",
     part: "dots",
     item: "Pattern",
     find: { role: "group", name: "Common dot shapes" },
   },
   {
     control: "Eyes › Eye style (pairs)",
+    section: "eyes",
     part: "eyes",
     item: "Eye shape",
     find: { role: "group", name: "Common eye styles" },
   },
   {
     control: "Eyes › Outer eye shape",
+    section: "eyes",
     part: "eyes",
     item: "Eye shape",
     find: { role: "group", name: "Common outer shapes" },
   },
   {
     control: "Eyes › Inner eye shape",
+    section: "eyes",
     part: "eyes",
     item: "Eye shape",
     find: { role: "group", name: "Common center shapes" },
@@ -455,6 +494,7 @@ const INVENTORY: Row[] = [
   // Logo
   {
     control: "Logo › Logo in the center",
+    section: "logo",
     part: "logo",
     item: "Logo",
     styles: { ...base, showLogo: true },
@@ -462,12 +502,14 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo › Logo in the center (no logo shown)",
+    section: "logo",
     part: "background",
     item: "Logo",
     find: { name: "Logo in the center", role: "switch" },
   },
   {
     control: "Logo › Quick icons",
+    section: "logo",
     part: "logo",
     item: "Logo",
     styles: { ...base, showLogo: true },
@@ -475,6 +517,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo › Brand logos",
+    section: "logo",
     part: "logo",
     item: "Logo",
     styles: { ...base, showLogo: true },
@@ -482,6 +525,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo › Upload or replace your logo",
+    section: "logo",
     part: "logo",
     item: "Logo",
     styles: { ...base, showLogo: true },
@@ -489,6 +533,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo › Remove",
+    section: "logo",
     part: "logo",
     item: "Logo",
     styles: {
@@ -501,6 +546,7 @@ const INVENTORY: Row[] = [
   // Logo options
   {
     control: "Logo options › Shape and plate",
+    section: "logo-options",
     part: "logo",
     item: "Logo shape and plate",
     styles: { ...base, showLogo: true },
@@ -508,6 +554,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo options › Size",
+    section: "logo-options",
     part: "logo",
     item: "Logo size",
     styles: { ...base, showLogo: true },
@@ -515,6 +562,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo options › Clear space",
+    section: "logo-options",
     part: "logo",
     item: "Clear space",
     styles: { ...base, showLogo: true },
@@ -522,6 +570,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo options › Position",
+    section: "logo-options",
     part: "logo",
     item: "Logo position",
     styles: { ...base, showLogo: true },
@@ -529,6 +578,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Logo options › Raise error correction for big logos",
+    section: "logo-options",
     part: "logo",
     item: "Logo size",
     styles: { ...base, showLogo: true },
@@ -537,6 +587,7 @@ const INVENTORY: Row[] = [
   // Eye colors
   {
     control: "Eye colors › an eye's frame",
+    section: "eye-colors",
     part: "eyes",
     item: "This eye's color",
     oneEye: true,
@@ -544,6 +595,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Eye colors › an eye's center",
+    section: "eye-colors",
     part: "eyes",
     item: "This eye's center color",
     oneEye: true,
@@ -551,6 +603,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Eye colors › Use the same colors for all eyes",
+    section: "eye-colors",
     part: "eyes",
     item: "Eye color",
     styles: { ...base, eyeColors: { topRight: { outer: "#9b2c2c" } } },
@@ -558,6 +611,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Eye colors › Eyes continue the code's gradient",
+    section: "eye-colors",
     part: "eyes",
     item: "Eye color",
     styles: { ...base, eyeColor: gradient },
@@ -566,6 +620,7 @@ const INVENTORY: Row[] = [
   // Eye shapes
   {
     control: "Eye shapes › an eye's frame",
+    section: "eye-shapes",
     part: "eyes",
     item: "This eye's shape",
     oneEye: true,
@@ -573,6 +628,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Eye shapes › an eye's center",
+    section: "eye-shapes",
     part: "eyes",
     item: "This eye's shape",
     oneEye: true,
@@ -580,6 +636,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Eye shapes › Use the same shapes for all eyes",
+    section: "eye-shapes",
     part: "eyes",
     item: "Eye shape",
     styles: { ...base, eyeShapes: { topRight: { outer: "square" } } },
@@ -588,18 +645,21 @@ const INVENTORY: Row[] = [
   // Dot size, corners, halo, shadow
   {
     control: "Dot size",
+    section: "dot-size",
     part: "dots",
     item: "Dot size",
     find: { name: "Dot size", role: "slider" },
   },
   {
     control: "Rounded corners › Corner radius",
+    section: "corners",
     part: "background",
     item: "Padding and corners",
     find: { name: "Corner radius", role: "slider" },
   },
   {
     control: "Rounded corners › Color around it",
+    section: "corners",
     part: "background",
     item: "Padding and corners",
     styles: { ...base, margin: 4, bgRadius: 0.2 },
@@ -607,6 +667,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Rounded corners › the note in a frame",
+    section: "corners",
     part: "background",
     item: "Padding and corners",
     styles: { ...withFrame, margin: 4, bgRadius: 0.2 },
@@ -614,12 +675,14 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Halo › Show a halo (and why it can't be drawn)",
+    section: "halo",
     part: "dots",
     item: "Halo",
     find: { name: "Show a halo", role: "switch" },
   },
   {
     control: "Halo › Width",
+    section: "halo",
     part: "dots",
     item: "Halo",
     styles: { ...base, halo: {} },
@@ -627,6 +690,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Halo › Color",
+    section: "halo",
     part: "dots",
     item: "Halo",
     styles: { ...base, halo: {} },
@@ -634,12 +698,14 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Shadow › Show a shadow",
+    section: "shadow",
     part: "dots",
     item: "Shadow",
     find: { name: "Show a shadow", role: "switch" },
   },
   {
     control: "Shadow › Across",
+    section: "shadow",
     part: "dots",
     item: "Shadow",
     styles: { ...base, shadow: {} },
@@ -647,6 +713,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Shadow › Down",
+    section: "shadow",
     part: "dots",
     item: "Shadow",
     styles: { ...base, shadow: {} },
@@ -654,6 +721,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Shadow › Opacity",
+    section: "shadow",
     part: "dots",
     item: "Shadow",
     styles: { ...base, shadow: {} },
@@ -661,6 +729,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Shadow › Color",
+    section: "shadow",
     part: "dots",
     item: "Shadow",
     styles: { ...base, shadow: {} },
@@ -669,18 +738,21 @@ const INVENTORY: Row[] = [
   // Frame
   {
     control: "Frame › the frame picker (no frame on)",
+    section: "frame",
     part: "background",
     item: "Frame",
     find: { role: "textbox", name: "Search frames" },
   },
   {
     control: "Frame › label ideas (no frame on)",
+    section: "frame",
     part: "background",
     item: "Frame",
     find: { role: "button", name: "Scan me" },
   },
   {
     control: "Frame › the frame picker",
+    section: "frame",
     part: "frame",
     item: "Frame style",
     styles: withFrame,
@@ -688,6 +760,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Frame › Label",
+    section: "frame",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
@@ -695,6 +768,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Frame › Frame color",
+    section: "frame",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
@@ -702,6 +776,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Frame › Text color",
+    section: "frame",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
@@ -709,6 +784,7 @@ const INVENTORY: Row[] = [
   },
   {
     control: "Frame › Text size",
+    section: "frame",
     part: "frame",
     item: "Frame text and colors",
     styles: withFrame,
@@ -718,6 +794,7 @@ const INVENTORY: Row[] = [
     ? ([
         {
           control: "Frame › Second line (a custom frame)",
+          section: "frame",
           part: "frame",
           item: "Frame text and colors",
           styles: {
@@ -728,6 +805,7 @@ const INVENTORY: Row[] = [
         },
         {
           control: "Frame › Accent color (a custom frame)",
+          section: "frame",
           part: "frame",
           item: "Frame text and colors",
           styles: {
@@ -738,6 +816,7 @@ const INVENTORY: Row[] = [
         },
         {
           control: "Frame › Icon (a custom frame)",
+          section: "frame",
           part: "frame",
           item: "Frame text and colors",
           styles: {
@@ -748,6 +827,7 @@ const INVENTORY: Row[] = [
         },
         {
           control: "Frame › Publish frame (a custom frame)",
+          section: "frame",
           part: "frame",
           item: "Frame text and colors",
           styles: {
@@ -760,6 +840,7 @@ const INVENTORY: Row[] = [
     : []),
   {
     control: "Frame › shaped codes (circle, heart, your own shape)",
+    section: "frame",
     part: "background",
     item: "Code shape",
     find: { role: "button", name: "Silhouette" },
@@ -767,12 +848,14 @@ const INVENTORY: Row[] = [
   // Padding and error correction
   {
     control: "Padding",
+    section: "padding",
     part: "background",
     item: "Padding and corners",
     find: { name: "Padding", role: "slider" },
   },
   {
     control: "Error correction",
+    section: "error-correction",
     part: "background",
     item: "Error correction",
     find: { role: "group", name: "Error correction" },
@@ -815,6 +898,15 @@ describe("every Design control is reachable from the preview", () => {
           phone: layout === "phone",
           panel: true,
         });
+        // Its section open there, so a clash with an id inside it shows: a
+        // section that expands in place, first. One that opens beside the
+        // panel (Eyes, Eye shapes, Frame) closes when the part opens: on
+        // phones it then opens over the sheet; on wider screens it and the
+        // toolbar's menu close each other, so their ids never meet
+        const header = row.section ? sectionHeader(row.section) : null;
+        const beside = header?.getAttribute("aria-haspopup") === "dialog";
+        const open = beside && layout !== "phone" ? null : header;
+        if (open && !beside) await openSection(open);
         await openPart(row.part);
         // Phones get the bottom sheet, wider screens the toolbar
         expect(
@@ -832,6 +924,10 @@ describe("every Design control is reachable from the preview", () => {
           );
         }
         const where = await openItem(row.part, row.item);
+        if (open && beside) await openSection(open);
+        // Both open: the section, and the menu or sheet row
+        expect(open?.getAttribute("aria-expanded") ?? "true").toBe("true");
+        expect(document.body.contains(where)).toBe(true);
         expectControl(where, row);
       });
     });
@@ -1167,5 +1263,74 @@ describe("a toolbar button that shows a value says it", () => {
         label.startsWith("Padding and corners (0 modules)"),
       ),
     ).toBe(true);
+  });
+});
+
+describe("Escape inside a layer a toolbar menu opened closes only that layer", () => {
+  it("the color model's list closes; the edit and the typed link stay", async () => {
+    await mount();
+    await openPart("background");
+    const typed = "https://qrdx.dev/typed-in-toolbar";
+    // As the toolbar's Content field does after the edit started
+    await act(async () => {
+      useQREditorStore
+        .getState()
+        .setContentConfig("url", { type: "url", url: typed });
+      useQREditorStore.getState().setValue(typed);
+    });
+    const menu = await openItem("background", "Background color");
+    const combo = menu.querySelector<HTMLElement>("[role='combobox']");
+    expect(combo, "the paint panel's color model select").toBeTruthy();
+    await act(async () => {
+      combo?.focus();
+      combo?.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: "ArrowDown",
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+    });
+    await settle(3);
+    const listbox = document.querySelector<HTMLElement>("[role='listbox']");
+    expect(listbox, "the select's list opened").toBeTruthy();
+    // Portaled out of the menu
+    expect(listbox?.closest("[data-part-inline-menu]")).toBeNull();
+    const option =
+      listbox?.querySelector<HTMLElement>("[role='option']") ?? listbox;
+    option?.focus();
+    await act(async () => {
+      option?.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: "Escape",
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+    });
+    await settle(3);
+    expect(document.querySelector("[data-part-toolbar]")).not.toBeNull();
+    expect(useQREditorStore.getState().value).toBe(typed);
+  });
+
+  it("Escape on a toolbar button still cancels the edit at once", async () => {
+    await mount();
+    await openPart("background");
+    const button = itemButtons("background")[0];
+    await act(async () => {
+      button?.focus();
+    });
+    await settle(3);
+    await act(async () => {
+      button?.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: "Escape",
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+    });
+    await settle(2);
+    expect(document.querySelector("[data-part-toolbar]")).toBeNull();
   });
 });

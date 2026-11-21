@@ -13,8 +13,8 @@ import {
 import type { DesignSection } from "@/lib/playground-links";
 import {
   Divider,
-  inlineMenuSelector,
   insideInlineEditor,
+  keyForNestedLayer,
   MenuPopover,
   moveAlongToolbar,
   ToolbarButton,
@@ -185,9 +185,9 @@ export function PartToolbar({
   const side = placed.above ? "top" : "bottom";
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    // An open menu, or a layer it opened, handles its own keys
+    if (keyForNestedLayer(event, "part")) return;
     const target = event.target as Element;
-    // An open menu handles its own keys (Radix closes it on Escape)
-    if (target.closest(inlineMenuSelector("part"))) return;
     if (event.key === "Escape") {
       event.preventDefault();
       event.stopPropagation();

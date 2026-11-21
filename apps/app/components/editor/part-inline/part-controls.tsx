@@ -176,14 +176,11 @@ export interface PartItemsContext {
 }
 
 const icon = "size-4";
-const SHAPE_MENU =
-  "w-[19rem] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto";
-const PAINT_MENU =
-  "w-[18.5rem] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto";
-const SLIDER_MENU =
-  "w-72 max-h-[var(--radix-popover-content-available-height)] overflow-y-auto";
-const LIST_MENU =
-  "w-80 max-h-[var(--radix-popover-content-available-height)] overflow-y-auto";
+// MenuPopover caps their height (the room where it placed them)
+const SHAPE_MENU = "w-[19rem] overflow-y-auto";
+const PAINT_MENU = "w-[18.5rem] overflow-y-auto";
+const SLIDER_MENU = "w-72 overflow-y-auto";
+const LIST_MENU = "w-80 overflow-y-auto";
 
 /** A color of the code, in the editor's paint picker (fills and contrast check). */
 function PaintField({

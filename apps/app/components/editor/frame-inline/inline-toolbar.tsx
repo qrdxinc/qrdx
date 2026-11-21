@@ -41,7 +41,7 @@ export const inlineMenuSelector = (kind: InlineKind) =>
 // Floating content a menu opens on its own (a select's list, a color
 // model menu, a dialog): portaled out of the menu, but still part of it.
 const NESTED_FLOATING =
-  "[data-radix-popper-content-wrapper], [role='listbox'], [role='dialog']";
+  "[data-radix-popper-content-wrapper], [role='listbox'], [role='dialog'], [role='menu']";
 
 /**
  * Whether a click on `target` stays inside the `kind` editor: on it, its
@@ -55,6 +55,29 @@ export function insideInlineEditor(
   return Boolean(
     target.closest(inlineSelector(kind)) || target.closest(NESTED_FLOATING),
   );
+}
+
+/**
+ * Whether a key pressed in the `kind` editor belongs to something open over
+ * it, so the editor leaves it alone: one of its menus (Radix closes it on
+ * Escape), a layer a menu opened (a select's list, a color model menu:
+ * portaled out of the menu, its keys still reach the editor through React),
+ * or a key from anything else portaled that already handled it (Radix marks
+ * the Escape that closes a layer). A layer the editor itself sits in (a
+ * dialog around the preview) doesn't count.
+ */
+export function keyForNestedLayer(
+  event: KeyboardEvent<HTMLElement>,
+  kind: InlineKind,
+): boolean {
+  const target = event.target as Element | null;
+  if (!target?.closest) return event.defaultPrevented;
+  if (target.closest(inlineMenuSelector(kind))) return true;
+  const layer = target.closest(NESTED_FLOATING);
+  if (layer && !layer.contains(event.currentTarget)) return true;
+  // Not on the editor's own buttons and field: a tooltip shown there marks
+  // the Escape that hides it handled too, and that Escape still cancels
+  return event.defaultPrevented && !event.currentTarget.contains(target);
 }
 
 /** Left and right arrows move between the menu's buttons (a toolbar). */
@@ -221,9 +244,13 @@ export function MenuPopover<M extends string>({
         collisionPadding={MENU_EDGE}
         side={placement?.side ?? side}
         sideOffset={placement?.offset ?? MENU_OFFSET}
-        style={
-          placement?.maxHeight ? { maxHeight: placement.maxHeight } : undefined
-        }
+        // The room where it was placed, else (before that, or when it fits
+        // itself) the room Radix measures
+        style={{
+          maxHeight:
+            placement?.maxHeight ??
+            "var(--radix-popover-content-available-height)",
+        }}
         {...marker}
       >
         {open && (

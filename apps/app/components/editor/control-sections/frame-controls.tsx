@@ -16,7 +16,7 @@ import {
   getBuiltInFrame,
   QRCodeSVG,
 } from "qrdx";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useId, useMemo, useState } from "react";
 import { getSavedCommunityFrames } from "@/actions/community";
 import { useEditableStyle } from "@/components/editor/style-scope";
 import { peekOfficialEntryOfSpec } from "@/lib/frames/library";
@@ -432,12 +432,14 @@ export function FrameFields({
  */
 function NoFrameFields() {
   const t = useTranslations("editor.controlSections.frameControls");
+  // Its own id: the side panel and the preview's toolbar both show it
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs" htmlFor="frame-text">
+      <Label className="text-xs" htmlFor={id}>
         {t("label")}
       </Label>
-      <Input disabled id="frame-text" placeholder={t("pickAFrameFirst")} />
+      <Input disabled id={id} placeholder={t("pickAFrameFirst")} />
       <FrameTextPresets />
     </div>
   );

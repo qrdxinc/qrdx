@@ -35,8 +35,8 @@ import {
 } from "./frame-text-menu";
 import {
   Divider,
-  inlineMenuSelector,
   insideInlineEditor,
+  keyForNestedLayer,
   MenuPopover,
   menuButton,
   moveAlongToolbar,
@@ -166,8 +166,9 @@ export function InlineFrameEditor({
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== "Escape") return;
-    // An open menu closes first (Radix handles its own Escape)
-    if ((event.target as Element).closest(inlineMenuSelector("frame"))) return;
+    // An open menu, or a layer it opened, closes first (Radix handles its
+    // own Escape)
+    if (keyForNestedLayer(event, "frame")) return;
     event.preventDefault();
     event.stopPropagation();
     onCancel();
