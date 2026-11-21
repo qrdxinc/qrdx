@@ -568,6 +568,13 @@ const INVENTORY: Row[] = [
     find: { name: "Color around it", role: "switch" },
   },
   {
+    control: "Rounded corners › the note in a frame",
+    part: "background",
+    item: "Padding and corners",
+    styles: { ...withFrame, margin: 4, bgRadius: 0.2 },
+    find: { text: /^In a frame, the frame fills the space around the code/ },
+  },
+  {
     control: "Halo › Show a halo (and why it can't be drawn)",
     part: "dots",
     item: "Halo",
