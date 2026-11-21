@@ -5,6 +5,7 @@ import {
   boolean,
   date,
   doublePrecision,
+  foreignKey,
   index,
   integer,
   json,
@@ -390,8 +391,8 @@ export const qrPreset = pgTable(
     // /admin/themes, newest first a page at a time
     // (manual-sql/2026-11-13-paging-indexes.sql).
     index("qr_preset_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -448,8 +449,8 @@ export const subscription = pgTable(
     // /admin/subscriptions, newest first a page at a time
     // (manual-sql/2026-11-13-paging-indexes.sql).
     index("subscription_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -477,8 +478,8 @@ export const integration = pgTable(
     // /admin/integrations, newest first a page at a time
     // (manual-sql/2026-11-13-paging-indexes.sql).
     index("integration_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -1212,8 +1213,8 @@ export const affiliateCommission = pgTable(
     // (manual-sql/2026-11-13-paging-indexes.sql).
     index("affiliate_commission_affiliate_paid_idx").on(
       table.affiliateId,
-      table.orderPaidAt.desc(),
-      table.id.desc()
+      table.orderPaidAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
@@ -1259,9 +1260,7 @@ export type AcquisitionChannel = (typeof ACQUISITION_CHANNELS)[number];
 export const userAcquisition = pgTable(
   "user_acquisition",
   {
-    userId: text("user_id")
-      .primaryKey()
-      .references(() => user.id, { onDelete: "cascade" }),
+    userId: text("user_id").primaryKey(),
     channel: text("channel", { enum: ACQUISITION_CHANNELS }).notNull(),
     // External referrers only, host name only.
     referrerHost: text("referrer_host"),
@@ -1275,7 +1274,15 @@ export const userAcquisition = pgTable(
     signupPath: text("signup_path"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },
-  (table) => [index("user_acquisition_channel_idx").on(table.channel)]
+  (table) => [
+    index("user_acquisition_channel_idx").on(table.channel),
+    // Named as Postgres named it when the table was made by hand.
+    foreignKey({
+      name: "user_acquisition_user_id_fkey",
+      columns: [table.userId],
+      foreignColumns: [user.id],
+    }).onDelete("cascade"),
+  ]
 );
 
 /** usage_daily.channel and .metric (lib/analytics/usage.ts). */
@@ -1309,7 +1316,9 @@ export const usageDaily = pgTable(
     count: integer("count").notNull().default(0),
   },
   (table) => [
+    // Named as Postgres named it when the table was made by hand.
     primaryKey({
+      name: "usage_daily_pkey",
       columns: [table.day, table.channel, table.metric, table.key],
     }),
   ]
@@ -1472,8 +1481,8 @@ export const qrCode = pgTable(
     // share created_at, so the id orders them
     // (manual-sql/2026-11-13-paging-indexes.sql).
     index("qr_code_created_at_id_idx").on(
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
     index("qr_code_organization_id_idx").on(table.organizationId),
     index("qr_code_domain_id_idx").on(table.domainId),
@@ -1884,8 +1893,8 @@ export const webhookDelivery = pgTable(
     // An endpoint's deliveries page, newest first (manual-sql/2026-11-13-webhook-delivery-paging.sql)
     index("webhook_delivery_endpoint_created_at_id_idx").on(
       table.endpointId,
-      table.createdAt.desc(),
-      table.id.desc()
+      table.createdAt.desc().nullsFirst(),
+      table.id.desc().nullsFirst()
     ),
   ]
 );
