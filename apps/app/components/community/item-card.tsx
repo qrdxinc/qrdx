@@ -13,8 +13,8 @@ import {
   TYPE_LABELS,
   TYPE_SEGMENTS,
 } from "@/lib/community/types";
-import { FrameNewTag } from "../frames/frame-new-tag";
 import { isNewPublished } from "@/lib/whats-new/community";
+import { FrameNewTag } from "../frames/frame-new-tag";
 import {
   CARD_ART,
   CARD_FRAME,
