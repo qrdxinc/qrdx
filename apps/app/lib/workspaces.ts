@@ -42,9 +42,7 @@ import { isUniqueViolation } from "@/lib/slug-claims";
 // Every signed-in person works in a workspace (a Better Auth organization).
 // Each person has one of their own, made at sign-up (packages/auth/server.ts)
 // or, for accounts from before workspaces, here on their first visit, when
-// the rows they had without a workspace move into it. The backfill
-// (packages/database/scripts/backfill-workspaces.mjs) does the same for every
-// account at once; this code is correct whether or not it has run.
+// the rows they had without a workspace move into it.
 
 export { strongestRole, type WorkspaceRole } from "@/lib/permissions";
 
@@ -205,8 +203,7 @@ export async function workspaceSlug(
 
 /**
  * Tables whose rows belonged to "no workspace" (organization_id null) before
- * workspaces: they move into their creator's own workspace. The backfill
- * script lists the same tables.
+ * workspaces: they move into their creator's own workspace.
  */
 const ADOPTED_TABLES = [
   qrCode,
@@ -323,7 +320,7 @@ export async function ensureOwnWorkspaceFor(
 
 /**
  * The user's workspaces, making their own workspace first if they don't have
- * it yet (accounts from before workspaces, until the backfill has run).
+ * it yet (accounts from before workspaces).
  */
 export async function loadWorkspaces(
   person: WorkspaceUser,
