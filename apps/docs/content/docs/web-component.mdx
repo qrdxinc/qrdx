@@ -109,13 +109,20 @@ await qr.download({ format: "png", size: 1024, filename: "menu.png" });
 
 `download` saves `menu.png` at 1024 px. The exports draw the code from `qr.options`, as `toSVGString` and `downloadQRCode` from `qrdx/core` do, without the element's `part`, `role` and `aria-label`. `toDataURL` and `download` default to PNG at the code's `size`. The formats are `png`, `jpg`, `webp`, `svg`, `pdf` and `eps`. Without a value they throw (`toSVGString`) or reject.
 
-PDF needs the optional `jspdf` package. From a CDN, map it with an import map placed before the module script:
+PDF needs the optional `jspdf` package. A GIF of a design with more than 256 colors (a gradient or a photo logo) loads `jsqr` to check that the reduced image still scans; a code in flat colors never does. From a CDN, map them with an import map placed before the module script:
 
 ```html title="index.html"
 <script type="importmap">
-  { "imports": { "jspdf": "https://cdn.jsdelivr.net/npm/jspdf@4/+esm" } }
+  {
+    "imports": {
+      "jspdf": "https://cdn.jsdelivr.net/npm/jspdf@4/+esm",
+      "jsqr": "https://cdn.jsdelivr.net/npm/jsqr@1/+esm"
+    }
+  }
 </script>
 ```
+
+Without `jsqr` mapped, that GIF is refused and a PNG is the way to save the design.
 
 ## Attributes
 

@@ -131,6 +131,7 @@ export const qrImageFormats = [
   "webp",
   "bmp",
   "ico",
+  "gif",
   "eps",
 ] as const;
 export type QrImageFormat = (typeof qrImageFormats)[number];

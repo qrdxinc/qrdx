@@ -619,3 +619,124 @@ describe("saveOutput – ICO", () => {
     }
   });
 });
+
+describe("saveOutput – GIF", () => {
+  // jsqr ships with qrdx, so resolve it from there.
+  const require = createRequire(import.meta.url);
+  const jsQR = createRequire(require.resolve("qrdx/package.json"))(
+    "jsqr"
+  ) as typeof import("jsqr").default;
+
+  /**
+   * What sharp (an independent reader) makes of a GIF file: RGBA, top row
+   * first. sharp reads by content, so the header is checked here: a WebP or
+   * PNG with a .gif name would decode just as well.
+   */
+  const pixels = async (file: string) => {
+    const bytes = readFileSync(file);
+    expect(bytes.toString("latin1", 0, 6)).toBe("GIF89a");
+    expect(bytes.at(-1)).toBe(0x3b);
+    const { data, info } = await sharp(file)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { data: new Uint8ClampedArray(data), info };
+  };
+
+  /** The PNG's pixels: this one is not a GIF, so no header check. */
+  const pngPixels = async (file: string) => {
+    const { data, info } = await sharp(file)
+      .ensureAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    return { data: new Uint8ClampedArray(data), info };
+  };
+
+  it("writes the PNG's pixels as a GIF, and it scans", async () => {
+    const gif = tmp("save.gif");
+    const png = tmp("same-gif.png");
+    cleanups.push(gif, png);
+    const props = { value: "https://qrdx.dev/cli-gif", size: 300 };
+    await saveOutput({ ...props, outputPath: gif, format: "gif" });
+    await saveOutput({ ...props, outputPath: png, format: "png" });
+    const fromGif = await pixels(gif);
+    const fromPng = await pngPixels(png);
+    expect([fromGif.info.width, fromGif.info.height]).toEqual([300, 300]);
+    // A code in flat colors fits in 256 colors, so nothing is lost
+    expect(
+      Buffer.compare(Buffer.from(fromGif.data), Buffer.from(fromPng.data))
+    ).toBe(0);
+    expect(jsQR(fromGif.data, 300, 300)?.data).toBe("https://qrdx.dev/cli-gif");
+  });
+
+  it("keeps a transparent background transparent and sizes a frame", async () => {
+    const gif = tmp("frame.gif");
+    const png = tmp("frame-gif.png");
+    cleanups.push(gif, png);
+    const props = {
+      value: "https://qrdx.dev",
+      size: 200,
+      bgColor: "transparent",
+      // A margin, so the corner is background (the CLI's own default is none)
+      margin: 4,
+      frame: { style: "banner-bottom", text: "Scan me" },
+    } as const;
+    await saveOutput({ ...props, outputPath: gif, format: "gif" });
+    await saveOutput({ ...props, outputPath: png, format: "png" });
+    const fromGif = await pixels(gif);
+    const fromPng = await pngPixels(png);
+    expect([fromGif.info.width, fromGif.info.height]).toEqual([
+      fromPng.info.width,
+      fromPng.info.height,
+    ]);
+    // The frame makes it taller than wide.
+    expect(fromGif.info.height).toBeGreaterThan(fromGif.info.width);
+    // Clear stays clear and solid stays exactly as the PNG has it
+    let transparent = 0;
+    let opaque = 0;
+    for (let index = 0; index < fromPng.data.length; index += 4) {
+      const alpha = fromPng.data[index + 3] as number;
+      const out = fromGif.data.subarray(index, index + 4);
+      if (alpha === 0) {
+        transparent++;
+        expect(out[3]).toBe(0);
+      } else if (alpha === 255) {
+        opaque++;
+        expect([...out]).toEqual([...fromPng.data.subarray(index, index + 4)]);
+      }
+    }
+    // Both kinds are really there, so neither branch passed on nothing.
+    expect(transparent).toBeGreaterThan(0);
+    expect(opaque).toBeGreaterThan(0);
+    // GIF has one transparent color: every pixel is clear or solid
+    const alphas = new Set<number>();
+    for (let index = 3; index < fromGif.data.length; index += 4) {
+      alphas.add(fromGif.data[index] as number);
+    }
+    expect([...alphas].sort((a, b) => a - b)).toEqual([0, 255]);
+  });
+
+  it("reduces a gradient to a palette and the GIF still scans", async () => {
+    const gif = tmp("gradient.gif");
+    cleanups.push(gif);
+    await saveOutput({
+      value: "https://qrdx.dev/cli-gradient",
+      size: 400,
+      level: "Q",
+      outputPath: gif,
+      format: "gif",
+      fgColor: {
+        type: "linear",
+        angle: 45,
+        stops: [
+          { color: "#1d4ed8", offset: 0 },
+          { color: "#0f172a", offset: 100 },
+        ],
+      },
+    });
+    const { data, info } = await pixels(gif);
+    expect(jsQR(data, info.width, info.height)?.data).toBe(
+      "https://qrdx.dev/cli-gradient"
+    );
+  });
+});

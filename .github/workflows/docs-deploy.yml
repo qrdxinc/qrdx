@@ -36,6 +36,7 @@ on:
       - apps/app/lib/pricing.ts
       - apps/app/lib/scan-history.ts
       - apps/app/lib/free-plan-limits.ts
+      - apps/app/lib/plan-allowances.ts
       - apps/app/lib/path-alias-limits.ts
       - apps/app/lib/affiliates/terms.ts
       - apps/app/lib/ai/art-models.ts

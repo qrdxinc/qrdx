@@ -47,7 +47,7 @@ featureHighlights:
   - title: Free design, no paid tier needed
     description: "Patterns, gradients, logos, frames and SVG/PDF export are all on QRdx's free tier. QRdx Pro ({facts.proMonthlyPrice}/mo) adds unlimited dynamic codes, full analytics history and custom domains."
   - title: Daily API quotas, plus a library with none
-    description: "QRdx's REST API allows 1,000 requests a day on Free and 10,000 on Pro, and the qrdx npm package renders codes in your own app with no quota at all. QR TIGER's API is metered per plan, from 500 requests a month on Regular."
+    description: "QRdx's REST API allows {facts.freeApiRequestsPerDay} requests a day on Free and {facts.proApiRequestsPerDay} on Pro, and the qrdx npm package renders codes in your own app with no quota at all. QR TIGER's API is metered per plan, from 500 requests a month on Regular."
   - title: Open source and self-hostable
     description: "QRdx is AGPL-3.0 licensed. Audit it, fork it, or run it yourself. QR TIGER is a closed-source SaaS."
 ---
@@ -71,7 +71,7 @@ QRdx fits people who want to start free and pay little: static codes need no acc
 - **Free tier:** both allow unlimited static codes. QR TIGER adds 3 dynamic codes capped at 500 scans each; QRdx adds {facts.freeDynamicCodes} with unlimited scans.
 - **When a plan ends:** QR TIGER's pricing page says codes stop working once the plan expires. QRdx dynamic codes keep redirecting on every plan, including after a cancellation ([Never-Hostage Guarantee](/guarantee)).
 - **Bulk:** QR TIGER's Advanced plan generates up to 3,000 codes per batch. QRdx's free bulk tool makes up to {facts.bulkToolRows} static codes per file in your browser ({facts.bulkToolRowsSignedOut} without an account); on Pro, a CSV import makes up to {facts.importRows} dynamic codes per file, and the API up to {facts.apiBatchCodes} per request.
-- **Developer access:** QR TIGER's API allows 500 requests a month on Regular, 3,000 on Advanced and 10,000 on Premium. QRdx's REST API allows 1,000 requests a day on Free, 10,000 on Pro and 100,000 on Business, and the npm package runs in your own app with no quotas.
+- **Developer access:** QR TIGER's API allows 500 requests a month on Regular, 3,000 on Advanced and 10,000 on Premium. QRdx's REST API allows {facts.freeApiRequestsPerDay} requests a day on Free, {facts.proApiRequestsPerDay} on Pro and {facts.businessApiRequestsPerDay} on Business, and the npm package runs in your own app with no quotas.
 - **Openness:** QRdx is open source (AGPL-3.0) and self-hostable. QR TIGER is not.
 
 ## Switching from QR TIGER

@@ -121,8 +121,10 @@ describe("<qrdx-code> bundles", () => {
   it("the no-bundler element file stands alone", () => {
     if (!existsSync(dist("element.browser.mjs"))) return;
     const code = read("element.browser.mjs");
-    // Only PDF export's on-demand jspdf, which a page maps itself
-    expect(imports(code)).toEqual(["jspdf"]);
+    // Only on-demand imports, which a page maps itself: jspdf for PDF export,
+    // and jsqr to check that a GIF of a design with over 256 colors still
+    // scans (a flat-color code never loads it)
+    expect(imports(code)).toEqual(["jspdf", "jsqr"]);
     expect(code).not.toMatch(/\bfrom\s*["']/);
     expect(code).not.toMatch(/allergen-info/);
     expect(code).toMatch(/\bdefineQRdxCode\b/);

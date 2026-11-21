@@ -109,6 +109,7 @@ A logo bigger than the code can repair is shrunk around its center (`capImageSet
 | `getQRCodeDataUrl(props, format, size, { quality? })` | `Promise<string>` | The same file as a data URL |
 | `getQRAsWebP(props, { quality? })` | `Promise<Blob>` | Lossless unless `quality` is set; encodes itself where the browser cannot |
 | `getQRAsBMP(props)` | `Promise<Blob>` | A 24-bit BMP; a transparent background comes out white. Written by the library in every browser |
+| `getQRAsGIF(props)` | `Promise<Blob>` | A GIF of at most 256 colors, with a transparent background kept as the one transparent color. A design that needs more colors is reduced, and throws a `GIFScanError` when the reduced image would no longer scan. Written by the library in every browser |
 | `getQRAsICO(props, sizes?)` | `Promise<Blob>` | A favicon: the code at 16, 32, 48 and 256 px (or `sizes`, up to 256), each a PNG in the ICO. Transparency kept, a frame left out |
 | `copyQRCodeToClipboard(props, size?)` | `Promise<void>` | A PNG on the clipboard. Call it from a user gesture |
 | `getSVGString(props)` | `Promise<string>` | SVG markup with the logo embedded |
@@ -122,9 +123,10 @@ A logo bigger than the code can repair is shrunk around its center (`capImageSet
 | `withQRSize(props, size)` | `QRProps` | The props drawn at `size`, with a pixel logo scaled along |
 | `canvasToWebP(canvas, { quality? })`, `blobToDataUrl(blob)`, `encodeWebPLossless(rgba, width, height)` | | WebP helpers |
 | `canvasToBMP(canvas)`, `encodeBMP(rgba, width, height)`, `isBMPFile(bytes)` | | BMP helpers |
+| `canvasToGIF(canvas, expected?)`, `pixelsToGIF(pixels, expected?)`, `encodeGIF(image)`, `quantizeRGBA(rgba, width, height)`, `isGIFFile(bytes)`, `GIFScanError` | | GIF helpers |
 | `canvasToICO(canvas)`, `canvasesToICO(canvases)`, `encodeICO(images)`, `isICOFile(bytes)` | | ICO helpers |
 
-Constants: `DownloadFormat` is `"png" \| "jpg" \| "webp" \| "bmp" \| "ico" \| "svg" \| "pdf" \| "eps"`; `DOWNLOAD_FORMATS` maps each to its MIME type and extension; `PRESET_SIZES` has `small` (200), `medium` (400), `large` (800), `xlarge` (1200), `2xl` (1600) and `3xl` (2000); `DEFAULT_SIZE` is 128.
+Constants: `DownloadFormat` is `"png" \| "jpg" \| "webp" \| "bmp" \| "ico" \| "gif" \| "svg" \| "pdf" \| "eps"`; `DOWNLOAD_FORMATS` maps each to its MIME type and extension; `PRESET_SIZES` has `small` (200), `medium` (400), `large` (800), `xlarge` (1200), `2xl` (1600) and `3xl` (2000); `DEFAULT_SIZE` is 128.
 
 ## Print and EPS
 

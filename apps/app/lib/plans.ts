@@ -10,6 +10,7 @@ import { cache } from "react";
 import { featureContext } from "./feature-context";
 import { FREE_DYNAMIC_CODES, FREE_HOSTED_PAGES } from "./free-plan-limits";
 import { holdsPlanRole } from "./permissions";
+import { AI_ART_PER_MONTH, API_REQUESTS_PER_DAY } from "./plan-allowances";
 import { type Plan, planForProductId } from "./pricing";
 import { SCAN_HISTORY_DAYS } from "./scan-history";
 import { getMyActiveSubscription } from "./subscription";
@@ -180,9 +181,9 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     webhooks: false,
     oauthApps: 1,
     formResponsesPerMonth: 50,
-    apiRequestsPerDay: 1000,
+    apiRequestsPerDay: API_REQUESTS_PER_DAY.free,
     bulkApi: false,
-    aiArtPerMonth: 3,
+    aiArtPerMonth: AI_ART_PER_MONTH.free,
     aiArtPooled: false,
     savedThemes: MAX_FREE_THEMES,
     teamThemes: false,
@@ -222,9 +223,9 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     webhooks: false,
     oauthApps: 5,
     formResponsesPerMonth: 1000,
-    apiRequestsPerDay: 10_000,
+    apiRequestsPerDay: API_REQUESTS_PER_DAY.pro,
     bulkApi: true,
-    aiArtPerMonth: 30,
+    aiArtPerMonth: AI_ART_PER_MONTH.pro,
     aiArtPooled: false,
     savedThemes: UNLIMITED,
     // Pro includes 3-member teams; shared themes are what make them useful.
@@ -265,9 +266,9 @@ export const PLAN_LIMITS: Record<Plan, PlanLimits> = {
     webhooks: true,
     oauthApps: 25,
     formResponsesPerMonth: 10_000,
-    apiRequestsPerDay: 100_000,
+    apiRequestsPerDay: API_REQUESTS_PER_DAY.business,
     bulkApi: true,
-    aiArtPerMonth: 150,
+    aiArtPerMonth: AI_ART_PER_MONTH.business,
     aiArtPooled: true,
     savedThemes: UNLIMITED,
     teamThemes: true,

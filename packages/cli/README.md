@@ -1,6 +1,6 @@
 # @qrdx/cli
 
-QR code generator CLI for developers. Generate styled, scannable QR codes as SVG, PNG, WebP, BMP, ICO or vector EPS. It runs non-interactively in scripts and CI, and guides you with prompts when run in a terminal. It renders with the same [`qrdx`](https://www.npmjs.com/package/qrdx) library as the [QRdx](https://qrdx.dev) web app.
+QR code generator CLI for developers. Generate styled, scannable QR codes as SVG, PNG, WebP, GIF, BMP, ICO or vector EPS. It runs non-interactively in scripts and CI, and guides you with prompts when run in a terminal. It renders with the same [`qrdx`](https://www.npmjs.com/package/qrdx) library as the [QRdx](https://qrdx.dev) web app.
 
 ## Install
 
@@ -33,9 +33,9 @@ qrdx generate <data> [options]
 
 | Flag | Short | Default | Description |
 |------|-------|---------|-------------|
-| `--output` | `-o` | `qr.svg` | Output path; the extension sets the format (`.svg`, `.png`, `.webp`, `.bmp`, `.ico` or `.eps`) |
+| `--output` | `-o` | `qr.svg` | Output path; the extension sets the format (`.svg`, `.png`, `.webp`, `.gif`, `.bmp`, `.ico` or `.eps`) |
 | `--format` | | from the extension | `svg`, `png`, `webp`, `bmp`, `ico` or `eps`, for a file name without an extension |
-| `--size` | | `512` | Output size: pixels for SVG, PNG, WebP and BMP, points (72 per inch) for EPS |
+| `--size` | | `512` | Output size: pixels for SVG, PNG, WebP, GIF and BMP, points (72 per inch) for EPS |
 | `--level` | `-l` | `Q` | Error correction: `L` `M` `Q` `H` |
 | `--body` | | `square` | Body dot pattern |
 | `--eye` | | `square` | Corner eye pattern |
@@ -68,6 +68,10 @@ qrdx generate "https://qrdx.dev" -o qr.png --size 2048 --level H
 
 # Lossless WebP for a website: the PNG's pixels in a smaller file
 qrdx generate "https://qrdx.dev" -o qr.webp --size 1024
+
+# GIF for an older tool or an email builder that only takes GIF: at most 256 colors,
+# so a gradient or photo logo is reduced, and refused if it would stop scanning
+qrdx generate "https://qrdx.dev" -o qr.gif --size 400
 
 # 24-bit BMP for a legacy system that only takes BMP (a transparent background comes out white)
 qrdx generate "https://qrdx.dev" -o qr.bmp --size 600
@@ -118,11 +122,11 @@ Every style option of `generate` applies to all the codes. The file is read as a
 
 ## Patterns
 
-**Body** (`--body`): <!-- catalogue:BODY_PATTERN -->`circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`<!-- /catalogue -->
+**Body** (`--body`): <!-- catalogue:BODY_PATTERN -->`circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`, `x`, `flower`, `pebble`, `bubble`, `petal`, `squircle`, `drop`, `beads`, `chain`<!-- /catalogue -->
 
-**Eye** (`--eye`): <!-- catalogue:CORNER_EYE_PATTERNS -->`square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`<!-- /catalogue -->
+**Eye** (`--eye`): <!-- catalogue:CORNER_EYE_PATTERNS -->`square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`, `pebble`, `porthole`, `doodle`, `notch`, `plus`, `stamp`, `bud`, `tag`, `bowl`, `crest`<!-- /catalogue -->
 
-**Dot** (`--dot`): <!-- catalogue:CORNER_EYE_DOT_PATTERNS -->`square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`<!-- /catalogue -->
+**Dot** (`--dot`): <!-- catalogue:CORNER_EYE_DOT_PATTERNS -->`square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`, `cushion`, `bevel`, `notch`<!-- /catalogue -->
 
 See them all at [qrdx.dev/docs/styles](https://qrdx.dev/docs/styles). Every option decodes in our tests; `square` and `rounded` eyes scan most reliably, and `circle` eyes may be missed by strict scanners. Curly eyes and diamond, star and banner dots were retired because they don't scan reliably.
 
