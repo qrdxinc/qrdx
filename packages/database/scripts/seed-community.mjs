@@ -31,6 +31,9 @@
 //       counts and commits (or rolls back and exits 1). The backup file is
 //       written before the apply and never overwritten, so it stays after
 //       a rollback too: a rerun needs a new --backup path.
+//   --official-email <email> names another account as the official one (its
+//       themes move to @qrdx); it is refused unless
+//       --allow-other-official-email is passed too.
 //
 // Run after manual-sql/0012_community.sql and backfill-community.mjs. Safe
 // to run more than once: ids are fixed ("ci_official_frame_wifi-card"),
@@ -127,7 +130,7 @@ export const SQL = {
   officialProfile:
     "SELECT id, user_id, workspace_id, verified_at FROM community_profile WHERE kind = 'official' OR id = $1",
   items:
-    "SELECT id, type, slug, status, payload_hash, profile_id, is_official, created_by FROM community_item",
+    "SELECT id, type, slug, status, payload_hash, profile_id, is_official, created_by, updated_at::text AS updated_at FROM community_item",
   collectionEntries:
     "SELECT collection_id, item_id FROM community_collection_entry WHERE collection_id LIKE 'ci_official_%'",
   insertProfile:
@@ -142,8 +145,9 @@ export const SQL = {
     "INSERT INTO community_item_tag (item_id, tag) VALUES ($1, $2) ON CONFLICT DO NOTHING",
   insertEntry:
     "INSERT INTO community_collection_entry (collection_id, item_id, position) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
+  // Every condition planSeed adopts by, so a wrong plan moves nothing
   adoptTheme:
-    "UPDATE community_item SET profile_id = $2, is_official = true, updated_at = $3 WHERE id = $1",
+    "UPDATE community_item SET profile_id = $2, is_official = true, updated_at = $3 WHERE id = $1 AND type = 'theme' AND created_by = $4 AND NOT starts_with(id, 'ci_official_') AND (is_official IS NOT TRUE OR profile_id IS DISTINCT FROM $2)",
   countSeeded:
     "SELECT count(*)::int AS n FROM community_item WHERE id = ANY($1::text[]) AND is_official = true AND profile_id = $2",
   countEntries:
@@ -318,6 +322,7 @@ export async function loadSnapshot(client, options) {
   const items = await read(SQL.items);
   const entries = await read(SQL.collectionEntries);
   return {
+    officialEmail: options.officialEmail.toLowerCase(),
     officialUserId: user?.id ?? null,
     officialWorkspaceId: workspace?.id ?? null,
     officialProfile: profiles[0] ?? null,
@@ -326,11 +331,58 @@ export async function loadSnapshot(client, options) {
   };
 }
 
+/**
+ * A collection or kit with only the items in `present` (in the database
+ * after this run), with a warning for each one left out; null when too few
+ * are left (a collection needs one item, a kit its page template and a
+ * theme or frame, as a publish does). Its payload and entries both leave
+ * the missing items out, so it never points at a row that isn't there.
+ */
+function withPresentItems(item, present, reason, warnings) {
+  const missing = item.entries.filter((id) => !present.has(id));
+  if (missing.length === 0) return item;
+  const entries = item.entries.filter((id) => present.has(id));
+  const named = missing.map((id) => `${id} (${reason(id)})`).join(", ");
+  if (item.type === "kit") {
+    const { theme, frame, page } = item.payload.kit;
+    const kit = {
+      ...(theme && present.has(theme) ? { theme } : {}),
+      ...(frame && present.has(frame) ? { frame } : {}),
+      ...(present.has(page) ? { page } : {}),
+    };
+    if (!(kit.page && (kit.theme || kit.frame))) {
+      warnings.push(
+        `kit ${item.slug}: not seeded: ${named}; a kit needs its page template and a theme or frame, so it is skipped.`
+      );
+      return null;
+    }
+    warnings.push(
+      `kit ${item.slug}: not seeded: ${named}; the kit goes in without it (payload and entries).`
+    );
+    return { ...item, payload: { kit }, entries, allEntries: item.entries };
+  }
+  if (entries.length === 0) {
+    warnings.push(
+      `collection ${item.slug}: none of its items is seeded (${named}): skipped.`
+    );
+    return null;
+  }
+  warnings.push(
+    `collection ${item.slug}: not seeded: ${named}; left out of its payload and entries, and a later run adds the entry once the item is in.`
+  );
+  return {
+    ...item,
+    payload: { items: entries },
+    entries,
+    allEntries: item.entries,
+  };
+}
+
 export function planSeed(snapshot, seedItems, now = new Date()) {
   const warnings = [];
   if (!snapshot.officialUserId) {
     throw new Error(
-      "The official account isn't in the database: sign in once as it, or pass --official-email."
+      "The official account isn't in the database: sign in once as it, or pass --official-email with --allow-other-official-email."
     );
   }
   if (!snapshot.officialWorkspaceId) {
@@ -364,15 +416,30 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
       .map((item) => [`${item.type}:${item.payload_hash}`, item.slug])
   );
   const inserts = [];
-  // Why a seed item isn't going in, by id (for the collections that list it)
+  // Why a seed item isn't going in, by id (for the collections and kits
+  // that list it)
   const skipped = new Map();
-  for (const item of seedItems) {
-    if (existingIds.has(item.id)) continue;
-    if (takenSlugs.has(`${item.type}:${item.slug}`)) {
-      skipped.set(item.id, `its ${item.type} slug "${item.slug}" is taken`);
-      warnings.push(
-        `${item.type} slug "${item.slug}" is taken by another item: ${item.id} is skipped.`
+  const reason = (id) => skipped.get(id) ?? "it isn't in this seed";
+  // Items in the database after this run: a collection or kit lists only
+  // these (its items come before it in seed order)
+  const present = new Set(existingIds);
+  for (const seedItem of seedItems) {
+    if (existingIds.has(seedItem.id)) continue;
+    if (takenSlugs.has(`${seedItem.type}:${seedItem.slug}`)) {
+      skipped.set(
+        seedItem.id,
+        `its ${seedItem.type} slug "${seedItem.slug}" is taken`
       );
+      warnings.push(
+        `${seedItem.type} slug "${seedItem.slug}" is taken by another item: ${seedItem.id} is skipped.`
+      );
+      continue;
+    }
+    const item = seedItem.entries
+      ? withPresentItems(seedItem, present, reason, warnings)
+      : seedItem;
+    if (!item) {
+      skipped.set(seedItem.id, "too few of its items are seeded");
       continue;
     }
     const design = `${item.type}:${payloadHash(item.payload)}`;
@@ -388,35 +455,11 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
     }
     published.set(design, item.slug);
     inserts.push(item);
+    present.add(item.id);
   }
-  // A collection or kit goes in with the items it lists that are in the
-  // database; a missing one is named, and a later run adds its entry once
-  // the item is seeded. Nothing else is written to another creator's rows.
-  const present = new Set([...existingIds, ...inserts.map((item) => item.id)]);
-  const reason = (id) => skipped.get(id) ?? "it isn't in this seed";
-  const insertable = [];
-  for (const item of inserts) {
-    if (!item.entries) {
-      insertable.push(item);
-      continue;
-    }
-    const missing = item.entries.filter((id) => !present.has(id));
-    for (const id of missing) {
-      warnings.push(
-        `${item.type} ${item.slug}: ${id} isn't seeded (${reason(id)}); its entry is left out and a later run adds it once the item is in.`
-      );
-    }
-    const entries = item.entries.filter((id) => present.has(id));
-    if (entries.length === 0) {
-      warnings.push(
-        `${item.type} ${item.slug}: none of its items is seeded: skipped.`
-      );
-      continue;
-    }
-    insertable.push({ ...item, entries, allEntries: item.entries });
-  }
-  // Entries an earlier run left out of a seeded collection or kit, whose
-  // items are in now
+  // Entries an earlier run left out of a seeded collection, whose items are
+  // in now (the gallery shows a collection's entries). A kit is used by its
+  // payload's parts, so a part it went in without stays out.
   const seededEntries = new Set(
     snapshot.entries.map((row) => `${row.collection_id}:${row.item_id}`)
   );
@@ -429,7 +472,7 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
   }
   const entryInserts = [];
   for (const item of seedItems) {
-    if (!(item.entries && existingIds.has(item.id))) continue;
+    if (!(item.type === "collection" && existingIds.has(item.id))) continue;
     for (const [position, entry] of item.entries.entries()) {
       if (seededEntries.has(`${item.id}:${entry}`) || !present.has(entry)) {
         continue;
@@ -438,21 +481,25 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
     }
   }
 
-  const adopt = snapshot.items
-    .filter(
-      (item) =>
-        item.type === "theme" &&
-        item.created_by === snapshot.officialUserId &&
-        !item.id.startsWith("ci_official_") &&
-        (item.is_official !== true || item.profile_id !== profileId)
-    )
-    .map((item) => item.id);
+  // The official account's own themes, moved to @qrdx (SQL.adoptTheme
+  // repeats each condition)
+  const adopted = snapshot.items.filter(
+    (item) =>
+      item.type === "theme" &&
+      item.created_by === snapshot.officialUserId &&
+      !item.id.startsWith("ci_official_") &&
+      (item.is_official !== true || item.profile_id !== profileId)
+  );
+  const adopt = adopted.map((item) => item.id);
 
   return {
     profile,
     verify,
     profileId,
-    inserts: insertable,
+    officialUserId: snapshot.officialUserId,
+    officialEmail: snapshot.officialEmail ?? null,
+    adoptedSlugs: new Map(adopted.map((item) => [item.id, item.slug])),
+    inserts,
     entryInserts,
     entriesBefore,
     adopt,
@@ -486,8 +533,15 @@ export function describeSeed(plan) {
       `INSERT community_collection_entry collection=${entry.collectionId} item=${entry.itemId} position=${entry.position}`
     );
   }
+  if (plan.adopt.length > 0) {
+    lines.push(
+      `Adopting ${plan.adopt.length} theme(s) created by ${plan.officialEmail ?? "the official account"} (user ${plan.officialUserId}): they move to @qrdx, marked official`
+    );
+  }
   for (const id of plan.adopt) {
-    lines.push(`UPDATE community_item id=${id} SET profile=@qrdx, official`);
+    lines.push(
+      `UPDATE community_item theme slug=${plan.adoptedSlugs?.get(id) ?? "-"} id=${id} SET profile=@qrdx, official`
+    );
   }
   return lines;
 }
@@ -497,16 +551,30 @@ export function backupOf(snapshot, plan) {
   return {
     kind: "qrdx-seed-community-backup",
     createdAt: new Date().toISOString(),
-    note: "Inserted rows are listed by id (delete them to undo). Updated rows are as they were before --apply.",
+    note: "Inserted rows are listed by id: delete them to undo (an item's versions, tags and entries go with it). Entries added to collections seeded before are listed by collection and item: delete those rows too. Updated rows are as they were before --apply, updated_at as the database held it (UTC).",
     insertedProfile: plan.profile?.id ?? null,
     insertedItems: plan.inserts.map((item) => item.id),
+    insertedEntries: plan.entryInserts.map((entry) => ({
+      collection_id: entry.collectionId,
+      item_id: entry.itemId,
+      position: entry.position,
+    })),
     updatedItems: snapshot.items.filter((item) => adopting.has(item.id)),
     verifiedProfile: plan.verify,
   };
 }
 
+/**
+ * A time as a timestamp parameter: UTC text, the way the app writes these
+ * columns. They are timestamp without time zone, and the driver sends a
+ * Date as local time with an offset that such a column drops, so a Date
+ * from a machine east of UTC lands hours in the future (apps/app/lib/
+ * keyset-sql.ts has the same note).
+ */
+const utc = (date) => date.toISOString();
+
 export async function applySeed(client, plan, userId) {
-  const now = plan.now;
+  const now = utc(plan.now);
   if (plan.profile) {
     await client.query(SQL.insertProfile, [
       plan.profile.id,
@@ -525,7 +593,7 @@ export async function applySeed(client, plan, userId) {
   for (const [index, item] of ordered.entries()) {
     const hash = payloadHash(item.payload);
     // A millisecond apart in seed order, so "newest" has a stable order
-    const published = new Date(now.getTime() + index);
+    const published = utc(new Date(plan.now.getTime() + index));
     await client.query(SQL.insertItem, [
       item.id,
       item.type,
@@ -571,7 +639,7 @@ export async function applySeed(client, plan, userId) {
     ]);
   }
   for (const id of plan.adopt) {
-    await client.query(SQL.adoptTheme, [id, plan.profileId, now]);
+    await client.query(SQL.adoptTheme, [id, plan.profileId, now, userId]);
   }
 }
 
@@ -641,6 +709,7 @@ export function parseArgs(argv) {
     lockTimeout: "5s",
     statementTimeout: "60s",
     officialEmail: OFFICIAL_EMAIL,
+    allowOtherOfficialEmail: false,
     officialWorkspace: OFFICIAL_WORKSPACE_SLUG,
   };
   for (let i = 0; i < argv.length; i++) {
@@ -653,6 +722,8 @@ export function parseArgs(argv) {
       options.statementTimeout = argv[++i];
     else if (arg === "--official-email")
       options.officialEmail = argv[++i] ?? "";
+    else if (arg === "--allow-other-official-email")
+      options.allowOtherOfficialEmail = true;
     else if (arg === "--official-workspace")
       options.officialWorkspace = argv[++i] ?? "";
     else throw new Error(`Unknown option: ${arg}`);
@@ -665,6 +736,14 @@ export function parseArgs(argv) {
     )
   ) {
     throw new Error("Timeouts look like 5s, 500ms or 2min.");
+  }
+  if (
+    options.officialEmail.toLowerCase() !== OFFICIAL_EMAIL.toLowerCase() &&
+    !options.allowOtherOfficialEmail
+  ) {
+    throw new Error(
+      `--official-email ${options.officialEmail} isn't the official account (${OFFICIAL_EMAIL}): its themes would move to @qrdx. Pass --allow-other-official-email too to mean it.`
+    );
   }
   if (options.apply && !options.backup) {
     throw new Error(

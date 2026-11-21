@@ -104,7 +104,7 @@ export const ICON_DESIGNS: SeedDesign[] = [
     logoIcon: "file",
   },
   {
-    id: "save-the-date",
+    id: "mark-the-date",
     name: "Mark the date",
     description:
       "Rounded modules in a deep rose with squircle eyes and a calendar icon in the middle, on a blush white, on the add to calendar frame. For invitations and events.",
@@ -120,10 +120,10 @@ export const ICON_DESIGNS: SeedDesign[] = [
     logoIcon: "calendar",
   },
   {
-    id: "find-us",
+    id: "map-pin",
     name: "Map pin",
     description:
-      "Liquid modules in a deep green with rounded eyes and a location pin in the middle, on a mint white, on the see the map frame. For flyers, menus and event tickets.",
+      "Liquid modules in a deep green with rounded eyes and a location pin in the middle, on a mint white, on the map pin frame. For flyers, menus and event tickets.",
     tags: ["nature", "professional", "cool", "accessible"],
     style: {
       ...ink("#ECFDF5", "#064E3B", "#064E3B", "#065F46"),
@@ -132,7 +132,7 @@ export const ICON_DESIGNS: SeedDesign[] = [
       margin: 3,
       showLogo: true,
     },
-    frame: { id: "see-the-map", color: "#064E3B", textColor: "#ECFDF5" },
+    frame: { id: "map-pin", color: "#064E3B", textColor: "#ECFDF5" },
     logoIcon: "location",
   },
   {
