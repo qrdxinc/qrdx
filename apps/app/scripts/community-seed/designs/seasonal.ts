@@ -145,7 +145,7 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
     frame: { id: "eid-fitr-lantern", color: "#14532D" },
   },
   {
-    id: "festival-of-lights",
+    id: "menorah-blue",
     name: "Menorah blue",
     description:
       "Square modules in a deep blue with squircle eyes and deep gold centres, on white, on the Hanukkah menorah frame. For community dinners and school notices.",

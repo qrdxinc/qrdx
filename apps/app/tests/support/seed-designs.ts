@@ -28,6 +28,8 @@ export interface SeededDesign {
   tags: string[];
   payload: ThemePayload;
   facets: { design: string; pairedFrame?: string };
+  /** The gate score the seed stores (scan_score) */
+  scanScore: number | null;
 }
 
 /** The seeded designs, in seed order. */
@@ -98,6 +100,15 @@ if (
     "zbarimg is not installed, and this workflow requires it (apt-get install zbar-tools): the design gate can't read with zbar",
   );
 }
+
+/** The decoders a design is read with here, for test names. */
+export const DECODERS = ZBAR_INSTALLED
+  ? "ZXing and zbar"
+  : "ZXing (zbar isn't installed)";
+
+/** How to rewrite the gate scores the seed stores when one is stale. */
+export const SCORES_UPDATE =
+  "The stored gate score is stale: run `UPDATE_COMMUNITY_SEED_SCORES=1 bun x vitest run tests/database/seed-community.test.ts` in apps/app";
 
 let zbarDir: string | null = null;
 function zbarWorkDir(): string {

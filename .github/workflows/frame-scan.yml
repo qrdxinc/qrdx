@@ -7,12 +7,12 @@ name: Frame scan
 # through the engine's scan checks and the community publish gate, and
 # gates every official community design (apps/app/scripts/community-seed/
 # designs) the same way, with zbar required:
-# - on each release (a push to main that changes the frames),
+# - on each release (a push to main that changes the frames or designs),
 # - weekly, and
 # - by hand (Actions > Frame scan > Run workflow).
-# The frames are split across the parallel jobs below: part i of n checks
-# every n-th frame (QRDX_FRAME_SCAN_PART, sample.mjs), so together they
-# check every one. With 1,013 frames a single job took over 25 minutes, and
+# The frames and designs are split across the parallel jobs below: part i
+# of n checks every n-th one (QRDX_FRAME_SCAN_PART, sample.mjs), so together
+# they check every one. With 1,013 frames a single job took over 25 minutes, and
 # the gate, then one test for all its frames, ran past its 5-minute limit
 # (13 Nov 2026). Add a part when the library grows.
 # It runs on GitHub's runners only; nothing here runs on Vercel.
@@ -104,6 +104,6 @@ jobs:
           bun x next typegen
           bun x vitest run tests/database/seed-frames-gate-1.test.ts tests/database/seed-frames-gate-2.test.ts tests/database/seed-frames-gate-3.test.ts
 
-      - name: Publish gate and decoders, every official design
+      - name: Publish gate, stored scores and decoders, this part's designs
         working-directory: apps/app
         run: bun x vitest run tests/database/seed-designs-gate-1.test.ts tests/database/seed-designs-gate-2.test.ts tests/database/seed-designs-gate-3.test.ts

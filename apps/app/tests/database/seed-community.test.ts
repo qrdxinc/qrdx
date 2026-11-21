@@ -3,10 +3,11 @@
 // frames are exactly the engine's official catalogue, the built-in themes
 // are their presets as a publish stores them (and the generated file is
 // current), every seeded design scans Great with the publish gate (the real
-// server scorer), and the script runs end to end against the fake Postgres
-// client. Nothing connects to a database.
+// server scorer) and stores the score the gate gives it, and the script
+// runs end to end against the fake Postgres client. Nothing connects to a
+// database.
 import { spawnSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { OFFICIAL_FRAMES } from "qrdx";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -49,6 +50,7 @@ import {
 import { toPublicStyle } from "@/lib/community/public-style-server";
 import { cleanDetails, payloadHash } from "@/lib/community/publish";
 import { checkScanGate } from "@/lib/community/scan-gate";
+import { MIN_GATE_SCORE } from "@/lib/community/scan-samples";
 import { COMMUNITY_THEME_TAGS } from "@/lib/constants";
 import { defaultPresets } from "@/utils/qr-presets";
 import * as backfill from "../../../../packages/database/scripts/backfill-community.mjs";
@@ -64,6 +66,7 @@ import {
   PRESET_THEME_DESCRIPTIONS,
 } from "../../scripts/community-seed/preset-themes";
 import { FakeCommunityPg } from "../support/fake-pg-community";
+import { SCORES_UPDATE } from "../support/seed-designs";
 
 const NOW = new Date("2026-11-03T12:00:00Z");
 const items = seed.buildSeedItems();
@@ -142,6 +145,8 @@ describe("the seed's items", () => {
     }
   });
 
+  // A theme that fails the gate, or whose stored score (scan_score) isn't
+  // the one the gate gives it now
   const gateFailures = async (gated: typeof items) => {
     const failures: string[] = [];
     for (const item of gated) {
@@ -150,10 +155,59 @@ describe("the seed's items", () => {
         failures.push(
           `${item.ref}: ${gate.results.map((r) => `${r.sample}=${r.score}`).join(" ")}`,
         );
+      } else if (item.type === "theme" && gate.minScore !== item.scanScore) {
+        failures.push(
+          `${item.ref}: stores ${item.scanScore}, scores ${gate.minScore}`,
+        );
       }
     }
     return failures;
   };
+
+  // Each theme's gate score, stored as scan_score by the seed (as a publish
+  // stores it). Written by this test on demand, since it takes the server's
+  // scorer; each score is checked against the gate where its theme is gated
+  // (above, and seed-designs-gate-*.test.ts for the designs).
+  const SCORES_FILE = join(
+    __dirname,
+    "../../../../packages/database/scripts/community-seed-theme-scores.json",
+  );
+  it.runIf(process.env.UPDATE_COMMUNITY_SEED_SCORES === "1")(
+    "write the theme scores file",
+    { timeout: 1_800_000 },
+    async () => {
+      const scores: Record<string, number> = {};
+      for (const item of byType("theme")) {
+        scores[item.slug] = (await checkScanGate(shownStyle(item))).minScore;
+      }
+      const sorted = Object.fromEntries(
+        Object.entries(scores).sort(([a], [b]) => (a < b ? -1 : 1)),
+      );
+      const file = JSON.parse(readFileSync(SCORES_FILE, "utf8"));
+      writeFileSync(
+        SCORES_FILE,
+        `${JSON.stringify({ note: file.note, scores: sorted }, null, 2)}\n`,
+      );
+    },
+  );
+
+  it("stores a gate score for every theme and only for themes, none below the gate", () => {
+    const { scores } = JSON.parse(readFileSync(SCORES_FILE, "utf8")) as {
+      scores: Record<string, number>;
+    };
+    expect(Object.keys(scores).sort(), SCORES_UPDATE).toEqual(
+      byType("theme")
+        .map((item) => item.slug)
+        .sort(),
+    );
+    for (const [slug, score] of Object.entries(scores)) {
+      expect(Number.isInteger(score), slug).toBe(true);
+      expect(score, slug).toBeGreaterThanOrEqual(MIN_GATE_SCORE);
+    }
+    expect(
+      items.filter((item) => item.type !== "theme" && item.scanScore != null),
+    ).toEqual([]);
+  });
 
   // Every frame is gated in seed-frames-gate-*.test.ts (hundreds, in shards)
   it("scans Great with the publish gate, every hand-made theme", {
@@ -418,11 +472,25 @@ describe("seed-community", () => {
     const times = seeded.map((i) => (i.published_at as Date).getTime());
     expect(new Set(times).size).toBe(seeded.length);
     expect([...times].sort((a, b) => a - b)).toEqual(times);
-    // Designs carry the gate's score, as a publish would
-    const design = seeded.find((i) => i.id === "ci_official_theme_paper-ink");
-    expect(typeof design?.scan_score).toBe("number");
-    expect(design?.scan_score).toBeGreaterThanOrEqual(85);
-    expect(design?.scan_checked_at).toEqual(design?.published_at);
+    // Themes carry their gate score, checked when published, as a publish
+    // stores them; nothing else is gated by a publish, nor by the seed
+    const scoreOf = new Map(items.map((i) => [i.id, i.scanScore ?? null]));
+    const themes = seeded.filter((i) => i.type === "theme");
+    expect(themes).toHaveLength(THEMES);
+    for (const row of themes) {
+      expect(row.scan_score, row.id as string).toBe(scoreOf.get(row.id));
+      expect(row.scan_score, row.id as string).toBeGreaterThanOrEqual(
+        MIN_GATE_SCORE,
+      );
+      expect(row.scan_checked_at).toEqual(row.published_at);
+    }
+    expect(
+      seeded.filter(
+        (i) =>
+          i.type !== "theme" &&
+          (i.scan_score !== null || i.scan_checked_at !== null),
+      ),
+    ).toEqual([]);
     expect(
       pg
         .rows("community_item")
@@ -465,9 +533,15 @@ describe("seed-community", () => {
     expect(ids).toHaveLength(items.length);
   });
 
-  it("seeds a collection without a colliding design, then adds the entry once the design is in", async () => {
+  it("seeds collections without their colliding designs, then adds the entries in place once the designs are in", async () => {
     const paperInk = items.find((i) => i.id === "ci_official_theme_paper-ink");
-    pg.seed("community_item", [
+    const pastel = items.find(
+      (i) => i.id === "ci_official_collection_soft-and-pastel",
+    );
+    const slugTaken = items.find((i) => i.id === pastel?.entries?.[1]);
+    // Someone published paper-ink's design, and someone else took the slug
+    // of a soft-and-pastel look with a design of their own
+    const theirs = [
       {
         id: "ci_theirs",
         type: "theme",
@@ -478,47 +552,100 @@ describe("seed-community", () => {
         is_official: false,
         created_by: "u_someone",
       },
-    ]);
+      {
+        id: "ci_their_slug",
+        type: "theme",
+        slug: slugTaken?.slug,
+        status: "published",
+        payload_hash: "their-own-design",
+        profile_id: "cp_someone_else",
+        is_official: false,
+        created_by: "u_someone_else",
+      },
+    ];
+    pg.seed("community_item", theirs);
     const argv = ["--apply", "--backup", "s.json"];
     expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
-    const warning = lines.find((l) => l.includes("collection minimal-print:"));
-    expect(warning).toMatch(
+    expect(lines.find((l) => l.includes("collection minimal-print:"))).toMatch(
       /ci_official_theme_paper-ink isn't seeded \(its design is already published as "their-look"\)/,
     );
-    const entriesOf = () =>
+    expect(
+      lines.find((l) => l.includes("collection soft-and-pastel:")),
+    ).toContain(
+      `${slugTaken?.id} isn't seeded (its theme slug "${slugTaken?.slug}" is taken)`,
+    );
+    // Entries in position order; each keeps its place in the full list
+    const entriesOf = (id: string) =>
       pg
         .rows("community_collection_entry")
-        .filter(
-          (e) => e.collection_id === "ci_official_collection_minimal-print",
-        )
-        .map((e) => e.item_id);
-    const full = items.find(
-      (i) => i.id === "ci_official_collection_minimal-print",
-    )?.entries as string[];
-    expect(entriesOf()).toEqual(full.filter((id) => id !== paperInk?.id));
+        .filter((e) => e.collection_id === id)
+        .sort((a, b) => Number(a.position) - Number(b.position))
+        .map((e) => [e.item_id, e.position]);
+    const placed = (id: string, without?: string) =>
+      (items.find((i) => i.id === id)?.entries ?? []).flatMap(
+        (entry, position) => (entry === without ? [] : [[entry, position]]),
+      );
+    const minimal = "ci_official_collection_minimal-print";
+    expect(entriesOf(minimal)).toEqual(placed(minimal, paperInk?.id));
+    expect(entriesOf(pastel?.id as string)).toEqual(
+      placed(pastel?.id as string, slugTaken?.id),
+    );
+    // Their rows are never written
+    const rowsOf = () =>
+      pg
+        .rows("community_item")
+        .filter((i) => String(i.id).startsWith("ci_their"));
+    expect(rowsOf()).toEqual(theirs);
     expect(
-      pg.rows("community_item").find((i) => i.id === "ci_theirs"),
-    ).toMatchObject({
-      profile_id: "cp_someone",
-      is_official: false,
-    });
+      pg
+        .rows("community_collection_entry")
+        .filter((e) => String(e.item_id).startsWith("ci_their")),
+    ).toEqual([]);
 
-    // The colliding row is gone: the next run seeds the design and its entry
+    // The colliding rows are gone: the next run seeds both designs and
+    // puts each entry back at its place
     pg.tables.community_item = pg
       .rows("community_item")
-      .filter((i) => i.id !== "ci_theirs");
+      .filter((i) => !String(i.id).startsWith("ci_their"));
     lines.length = 0;
     expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
     expect(lines.join("\n")).toMatch(
       /INSERT community_collection_entry collection=ci_official_collection_minimal-print item=ci_official_theme_paper-ink position=\d+/,
     );
     expect(lines.join("\n")).toMatch(
-      /1 entry\(ies\) added to seeded collections/,
+      /2 entry\(ies\) added to seeded collections/,
     );
-    expect(entriesOf().sort()).toEqual([...full].sort());
-    expect(
-      pg.rows("community_item").find((i) => i.id === paperInk?.id),
-    ).toBeTruthy();
+    expect(entriesOf(minimal)).toEqual(placed(minimal));
+    expect(entriesOf(pastel?.id as string)).toEqual(
+      placed(pastel?.id as string),
+    );
+    const ids = pg.rows("community_item").map((i) => i.id);
+    expect(ids).toContain(paperInk?.id);
+    expect(ids).toContain(slugTaken?.id);
+  });
+
+  it("asks for a new --backup path when the backup file is there already", async () => {
+    await expect(
+      seed.run({ client: pg, argv: ["--apply"], log, save, now: NOW }),
+    ).rejects.toThrow(/a new file each run/);
+    const exists = async () => {
+      throw Object.assign(new Error("EEXIST: file already exists"), {
+        code: "EEXIST",
+      });
+    };
+    await expect(
+      seed.run({
+        client: pg,
+        argv: ["--apply", "--backup", "s.json"],
+        log,
+        save: exists,
+        now: NOW,
+      }),
+    ).rejects.toThrow(
+      "s.json already exists: a rerun needs a new --backup path (a backup is never overwritten).",
+    );
+    expect(pg.log.at(-1)).toBe("ROLLBACK");
+    expect(pg.rows("community_item")).toHaveLength(0);
   });
 
   it("refuses to seed without the official account", async () => {

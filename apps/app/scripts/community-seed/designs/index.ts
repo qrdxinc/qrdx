@@ -5,7 +5,10 @@
 // from this module; tests/database/seed-designs.test.ts fails while that
 // file is stale, and holds every design to the gallery's bar: no two
 // alike, no scan-risk flag, enough contrast, decodes with every decoder
-// the repo tests with, and Great with the publish gate.
+// the repo tests with, and Great with the publish gate. A design is tagged
+// "accessible" only at 7:1 contrast or more (the enhanced level) between
+// every code color and its ground, and never takes the name of an
+// official frame it doesn't sit on.
 //
 // To add designs, append to a group (or add a group file and list it
 // below), then run `bun x tsx scripts/community-seed/generate.ts` in
