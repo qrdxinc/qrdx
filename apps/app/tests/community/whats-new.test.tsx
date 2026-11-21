@@ -98,10 +98,25 @@ describe("isNewIn", () => {
 });
 
 describe("the item card", () => {
-  it("wears the New pill and says so in its link when just published", () => {
+  it("wears the New pill on the stage and says so in its link when just published", () => {
     const html = renderIntl(<ItemCard card={card(daysAgo(1))} />);
     expect(html).toContain("data-new-tag");
-    expect(html).toMatch(/<span class="[^"]*rounded-full[^"]*">New<\/span>/);
+    // A pill on the stage's top-left: the accent with a white dot, then the word
+    const tag =
+      html.match(/<span[^>]*data-new-tag[^>]*>[\s\S]*?New<\/span>/)?.[0] ?? "";
+    for (const name of [
+      "absolute",
+      "top-2.5",
+      "left-2.5",
+      "rounded-full",
+      "bg-primary",
+      "text-primary-foreground",
+    ]) {
+      expect(tag).toContain(name);
+    }
+    expect(tag).toMatch(
+      /<span aria-hidden="true" class="[^"]*rounded-full bg-primary-foreground"><\/span>New/,
+    );
     expect(html).toContain('aria-label="Paper and ink, new, Theme"');
   });
 
