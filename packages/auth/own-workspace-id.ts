@@ -1,13 +1,11 @@
 import { createHash } from "node:crypto";
 
-// Everyone has one workspace of their own, created at sign-up (./server.ts),
-// on their first dashboard visit (apps/app/lib/workspaces.ts) or by the
-// backfill (packages/database/scripts/backfill-workspaces.mjs). Its row ids
-// are derived from the user id, so every one of those paths writes the same
-// rows: `INSERT ... ON CONFLICT (id) DO NOTHING` makes creating it idempotent
-// and safe under races, and "is this X's own workspace?" is a comparison, not
-// a lookup. The backfill script computes the same ids (a test keeps them
-// equal); never change the formula, or existing workspaces stop being found.
+// Everyone has one workspace of their own, created at sign-up (./server.ts)
+// or on their first dashboard visit (apps/app/lib/workspaces.ts). Its row ids
+// are derived from the user id, so both paths write the same rows:
+// `INSERT ... ON CONFLICT (id) DO NOTHING` makes creating it idempotent and
+// safe under races, and "is this X's own workspace?" is a comparison, not a
+// lookup. Never change the formula, or existing workspaces stop being found.
 
 function digest(userId: string): string {
   return createHash("sha256")

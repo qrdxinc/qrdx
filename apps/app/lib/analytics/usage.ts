@@ -18,9 +18,8 @@ import { logError } from "@/lib/log-error";
 // ("qr:keyed", "design_qr", "track"); never user data, content or ids. Keys
 // that don't look like one are counted as "other".
 //
-// One upsert per call, after the response, never throwing. Before
-// packages/database/manual-sql/2026-11-13-growth-analytics.sql is applied
-// the table doesn't exist: that's noted once and nothing is written.
+// One upsert per call, after the response, never throwing. Where the table
+// doesn't exist yet, that's noted once and nothing is written.
 
 /** A key as the calling code names it: lower-case words, digits and : _ . - */
 const KEY = /^[a-z0-9][a-z0-9_:.-]{0,63}$/;
@@ -76,7 +75,7 @@ export async function addUsage(
       if (!warnedMissing) {
         warnedMissing = true;
         console.warn(
-          "Growth analytics: usage_daily doesn't exist yet (packages/database/manual-sql/2026-11-13-growth-analytics.sql). API, MCP and bot usage isn't counted until it does.",
+          "Growth analytics: usage_daily doesn't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise). API, MCP and bot usage isn't counted until it does.",
         );
       }
       return;

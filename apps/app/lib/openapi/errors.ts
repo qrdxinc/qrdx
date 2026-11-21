@@ -283,8 +283,8 @@ export const API_ERRORS = [
     code: "PATH_ALIASES_UNAVAILABLE",
     status: 503,
     meaning:
-      "Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance that hasn't applied `packages/database/manual-sql/2026-11-18-path-aliases.sql`).",
-    fix: "Use the hosted QRdx API, or apply that SQL file to your instance's database.",
+      "Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance whose database schema is older).",
+    fix: "Use the hosted QRdx API, or update your instance's database schema (the `migrate` service with Docker, `bun run db:push` otherwise).",
   },
   {
     code: "AI_ART_TIMEOUT",

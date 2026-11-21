@@ -161,7 +161,8 @@ beforeEach(() => {
     createdAt: new Date(),
     updatedAt: new Date(),
   }));
-  // As the database after manual-sql/0009 (0010 drops the first).
+  // The old global slug index (dropped since) and today's per-scope and
+  // per-domain ones.
   fakeDb.unique("qrCode", "slug");
   fakeDb.unique("qrCode", "slugScope", "slug");
   fakeDb.unique("qrCode", "domainId", "slug");

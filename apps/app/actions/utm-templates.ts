@@ -80,7 +80,7 @@ async function run<T>(
   }
 }
 
-/** The open workspace's templates (`available: false` before manual-sql/0013). */
+/** The open workspace's templates (`available: false` before the table exists). */
 export async function getUtmTemplates(
   pageLocale?: string,
 ): Promise<UtmTemplateResult<UtmTemplateList>> {

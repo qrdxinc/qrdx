@@ -2,8 +2,8 @@
 // through the real route handlers with real API keys: list, add and remove
 // with a key that may write, every refusal of the edit dialog with its
 // reason and sentence (checked against actions/path-aliases.ts itself), the
-// plan, domain and role checks, and a deployment that hasn't applied
-// manual-sql/2026-11-18-path-aliases.sql yet (a 503, never a 500).
+// plan, domain and role checks, and a deployment whose database has no
+// link_path_alias table yet (a 503, never a 500).
 //
 // Real: the route handlers, Bearer parsing, lib/api-keys, resolveApiCaller,
 // lib/code-path-aliases (shared with the dialog), assertBindableDomains and

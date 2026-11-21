@@ -2,8 +2,9 @@
 // creating a key stores only its hash and returns the key once; lists show
 // a team's keys to owners and admins and only their own to members; only the
 // creator, owners and admins revoke; each person has at most MAX_API_KEYS
-// active keys per workspace; and before manual-sql/0011 the service reports
-// "unavailable" instead of failing. In-memory tables (tests/support/fake-db).
+// active keys per workspace; and before the api_key table exists the service
+// reports "unavailable" instead of failing. In-memory tables
+// (tests/support/fake-db).
 import { createHash } from "node:crypto";
 import { ownWorkspaceId } from "@repo/auth/own-workspace-id";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

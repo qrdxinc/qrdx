@@ -151,7 +151,7 @@ export type PathAliasClaimProblem =
   | "hostedPage"
   /** The code has PATH_ALIASES_PER_CODE on the domain already */
   | "limit"
-  /** link_path_alias doesn't exist yet (manual SQL not applied) */
+  /** link_path_alias doesn't exist yet */
   | "unavailable";
 
 export const PATH_ALIAS_MESSAGES: Record<PathAliasClaimProblem, string> = {

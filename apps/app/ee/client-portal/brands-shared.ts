@@ -88,7 +88,7 @@ export function brandNameProblem(name: string): string | null {
 
 /** What the share dialog needs to brand a code's page. */
 export interface StatsBranding {
-  /** false until manual-sql/2026-11-11-agency.sql is applied */
+  /** false until the agency columns and tables exist */
   available: boolean;
   /** The viewer may change it (owners, admins and members) */
   canManage: boolean;

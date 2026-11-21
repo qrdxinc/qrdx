@@ -38,7 +38,7 @@ vi.mock("@repo/database", async () => {
     string,
     (...args: unknown[]) => unknown
   >;
-  // Until manual-sql/0014 is applied, Postgres answers 42P01 for the table.
+  // Until the table exists, Postgres answers 42P01 for it.
   const missing = (table: unknown) =>
     state.missingTable &&
     (table as { __table?: string })?.__table === "workspaceJoinLink";

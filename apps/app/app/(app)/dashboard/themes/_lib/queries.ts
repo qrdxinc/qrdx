@@ -43,7 +43,8 @@ export const canManageTeamThemes = (scope: Pick<ActiveScope, "role">) =>
 /**
  * "Your themes" are the ones in your own workspace: saved from the editor,
  * picked in every workspace, published to the community. Rows from before
- * workspaces (no organization yet, until the backfill moves them) count too.
+ * workspaces (no organization yet, until their owner's first visit moves
+ * them) count too.
  */
 export function personalThemesWhere(userId: string) {
   return or(

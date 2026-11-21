@@ -27,13 +27,13 @@ import {
 
 // Saved UTM templates: a workspace's named sets of
 // UTM parameters, picked in the UTM panel to fill it. Scoped to the
-// workspace, behind the same plan limit as UTM itself (`routing`). The table
-// comes from manual-sql/0013; until it's applied every read says
-// `available: false` and the panel shows no templates.
+// workspace, behind the same plan limit as UTM itself (`routing`). Until
+// the table exists every read says `available: false` and the panel shows no
+// templates.
 
 export type { UtmTemplateList, UtmTemplateView } from "./utm-templates-shared";
 
-/** The utm_template table isn't there yet (manual-sql/0013). */
+/** The utm_template table isn't there yet. */
 export class UtmTemplatesUnavailableError extends HttpError {
   constructor() {
     super(
@@ -57,7 +57,7 @@ async function guarded<T>(query: () => Promise<T>): Promise<T> {
         missingLogged = true;
         logError(error as Error, {
           action: "utm-templates",
-          hint: "Apply packages/database/manual-sql/0013_utm_template.sql",
+          hint: "The utm_template table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
         });
       }
       throw new UtmTemplatesUnavailableError();
@@ -137,7 +137,7 @@ function toView(scope: ActiveScope, row: Row, utm: UtmConfig): UtmTemplateView {
   };
 }
 
-/** Every template of the workspace, by name; `available: false` before 0013. */
+/** Every template of the workspace, by name; `available: false` before the table exists. */
 export async function listUtmTemplates(
   scope: ActiveScope,
 ): Promise<UtmTemplateList> {

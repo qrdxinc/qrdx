@@ -3,7 +3,7 @@
 
 /**
  * Postgres's "undefined table" (42P01), however deeply the driver wraps it:
- * what every read and write of link_path_alias hits until the SQL is applied.
+ * what every read and write of link_path_alias hits until the table exists.
  */
 export function isMissingTableError(error: unknown): boolean {
   let current: unknown = error;
@@ -18,14 +18,14 @@ let warned = false;
 
 /**
  * True when `error` is the missing table; logs it once per process (a
- * warning: it's expected until the SQL is applied).
+ * warning: it's expected until the table exists).
  */
 export function noteMissingAliases(error: unknown): boolean {
   if (!isMissingTableError(error)) return false;
   if (!warned) {
     warned = true;
     console.warn(
-      "Path aliases: link_path_alias doesn't exist yet (packages/database/manual-sql/2026-11-18-path-aliases.sql). Custom domains answer without aliases until it does.",
+      "Path aliases: link_path_alias doesn't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise). Custom domains answer without aliases until it does.",
     );
   }
   return true;

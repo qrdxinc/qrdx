@@ -2,7 +2,7 @@
 // on per code; the page shows aggregates only (no destination path or query,
 // nothing finer than country, no visitor data); turning it off or resetting
 // the link applies at once; a trashed or admin-disabled code has none; and
-// before manual-sql/0016 sharing says "unavailable" and links are 404s.
+// before the table exists sharing says "unavailable" and links are 404s.
 // In-memory tables (tests/support/fake-db); nothing touches a database.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb, repoDatabase } from "../support/fake-db";

@@ -13,14 +13,14 @@ import { and, asc, eq, isNull } from "drizzle-orm";
 import { isMissingSchemaError } from "@/lib/community/tables";
 import { installationUpsert } from "./install-upsert";
 
-// The bot's two tables (packages/database/schema.ts, manual-sql/
-// 2026-11-10-slack-bot.sql). Only called while the bot is configured
-// (isFeatureAvailable("slackBot")); before the SQL is applied every call
+// The bot's two tables (packages/database/schema.ts). Only called while the
+// bot is configured (isFeatureAvailable("slackBot")); before the tables
+// exist every call
 // here fails with SlackBotStoreUnavailableError, which callers turn into
 // "not available yet". Bot tokens are encrypted at rest and decrypted only
 // to post a reply.
 
-/** The tables aren't there yet (manual-sql/2026-11-10-slack-bot.sql). */
+/** The tables aren't there yet. */
 export class SlackBotStoreUnavailableError extends Error {
   constructor() {
     super("The Slack bot tables don't exist yet");
