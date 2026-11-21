@@ -505,8 +505,17 @@ export function backupOf(snapshot, plan) {
   };
 }
 
+/**
+ * A time as a timestamp parameter: UTC text, the way the app writes these
+ * columns. They are timestamp without time zone, and the driver sends a
+ * Date as local time with an offset that such a column drops, so a Date
+ * from a machine east of UTC lands hours in the future (apps/app/lib/
+ * keyset-sql.ts has the same note).
+ */
+const utc = (date) => date.toISOString();
+
 export async function applySeed(client, plan, userId) {
-  const now = plan.now;
+  const now = utc(plan.now);
   if (plan.profile) {
     await client.query(SQL.insertProfile, [
       plan.profile.id,
@@ -525,7 +534,7 @@ export async function applySeed(client, plan, userId) {
   for (const [index, item] of ordered.entries()) {
     const hash = payloadHash(item.payload);
     // A millisecond apart in seed order, so "newest" has a stable order
-    const published = new Date(now.getTime() + index);
+    const published = utc(new Date(plan.now.getTime() + index));
     await client.query(SQL.insertItem, [
       item.id,
       item.type,

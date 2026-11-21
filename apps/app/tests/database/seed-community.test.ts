@@ -429,7 +429,7 @@ describe("seed-community", () => {
       handle: "qrdx",
       user_id: "u_team",
       workspace_id: "org_qrdx",
-      verified_at: NOW,
+      verified_at: NOW.toISOString(),
     });
     const seeded = pg
       .rows("community_item")
@@ -452,7 +452,7 @@ describe("seed-community", () => {
         .find((i) => i.id === "ci_official_frame_wifi-card"),
     ).toMatchObject({
       slug: "wifi-card",
-      featured_at: NOW,
+      featured_at: NOW.toISOString(),
       license: "CC0-1.0",
     });
     expect(
@@ -469,9 +469,41 @@ describe("seed-community", () => {
     );
     expect(pg.rows("community_item_version")).toHaveLength(items.length);
     // A millisecond apart, in seed order, so "newest" pages in a fixed order
-    const times = seeded.map((i) => (i.published_at as Date).getTime());
+    const times = seeded.map((i) => Date.parse(i.published_at as string));
     expect(new Set(times).size).toBe(seeded.length);
     expect([...times].sort((a, b) => a - b)).toEqual(times);
+    expect(times[0]).toBe(NOW.getTime());
+    // Every time the seed writes is UTC text, as the app writes these
+    // timestamp-without-time-zone columns (a Date would go out as local
+    // time and lose its offset; the fake refuses one)
+    const utc = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+    const written = [
+      ...seeded.flatMap((i) =>
+        [
+          "published_at",
+          "created_at",
+          "updated_at",
+          "featured_at",
+          "scan_checked_at",
+        ].map((column) => [i.id, column, i[column]] as const),
+      ),
+      ...pg
+        .rows("community_item_version")
+        .map((v) => [v.item_id, "created_at", v.created_at] as const),
+      ...["verified_at", "created_at", "updated_at"].map(
+        (column) => ["profile", column, profile?.[column]] as const,
+      ),
+    ].filter(([, , value]) => value !== null);
+    // Each item's published, created and updated time, the featured and
+    // scored ones' extra time, each version's and the profile's three
+    expect(written).toHaveLength(
+      items.length * 3 + seed.SEED.featured.length + THEMES + items.length + 3,
+    );
+    expect(
+      written.filter(
+        ([, , value]) => !(typeof value === "string" && utc.test(value)),
+      ),
+    ).toEqual([]);
     // Themes carry their gate score, checked when published, as a publish
     // stores them; nothing else is gated by a publish, nor by the seed
     const scoreOf = new Map(items.map((i) => [i.id, i.scanScore ?? null]));

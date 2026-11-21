@@ -88,6 +88,17 @@ export class FakeCommunityPg {
     });
     const B = backfill.SQL;
     const S = seed.SQL;
+    // The seed's timestamp columns are timestamp without time zone, and
+    // the driver sends a Date as local time with an offset such a column
+    // drops: the seed must send UTC text (toISOString), as the app does.
+    if (
+      Object.values(S).includes(text) &&
+      params.some((value) => value instanceof Date)
+    ) {
+      throw new Error(
+        `fake pg: a Date parameter would be written as local time: ${text.slice(0, 60)}`,
+      );
+    }
     const p = (i: number) => params[i];
     const parse = (value: unknown) =>
       typeof value === "string" ? JSON.parse(value) : value;
@@ -255,6 +266,8 @@ export class FakeCommunityPg {
           display_name: "QRdx",
           verified_at: p(4),
           status: "active",
+          created_at: p(4),
+          updated_at: p(4),
         }),
       );
     }
@@ -262,7 +275,10 @@ export class FakeCommunityPg {
       const row = this.rows("community_profile").find(
         (r) => r.id === p(0) && !r.verified_at,
       );
-      if (row) row.verified_at = p(1);
+      if (row) {
+        row.verified_at = p(1);
+        row.updated_at = p(1);
+      }
       return result([], row ? 1 : 0);
     }
     if (text === B.insertItem) {
@@ -309,6 +325,8 @@ export class FakeCommunityPg {
           is_official: true,
           featured_at: p(11),
           published_at: p(12),
+          created_at: p(12),
+          updated_at: p(12),
           scan_score: p(13) ?? null,
           scan_checked_at: p(14) ?? null,
         }),
@@ -324,6 +342,7 @@ export class FakeCommunityPg {
           payload: parse(p(2)),
           payload_hash: p(3),
           created_by: p(4),
+          created_at: p(5),
         }),
       );
     }
