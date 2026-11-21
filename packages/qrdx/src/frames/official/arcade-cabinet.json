@@ -1,0 +1,160 @@
+{
+  "id": "arcade-cabinet",
+  "name": "Arcade cabinet",
+  "description": "An arcade cabinet: a marquee on top, the code on the screen, a joystick below.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "arcade", "game", "retro"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 2000
+    },
+    "qr": {
+      "x": 300,
+      "y": 352,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1500,
+        "height": 2000,
+        "radius": 50,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 0,
+        "width": 1420,
+        "height": 200,
+        "radius": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 200,
+        "y": 240,
+        "width": 1100,
+        "height": 1380,
+        "radius": 30,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 1660,
+        "width": 1380,
+        "height": 160,
+        "radius": 30,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "rect",
+        "x": 130,
+        "y": 1560,
+        "width": 36,
+        "height": 140,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 148,
+        "cy": 1540,
+        "r": 64,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 980,
+        "cy": 1740,
+        "r": 46,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.55
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1140,
+        "cy": 1740,
+        "r": 46,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.55
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1300,
+        "cy": 1740,
+        "r": 46,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.55
+        }
+      },
+      {
+        "type": "rect",
+        "x": 630,
+        "y": 1880,
+        "width": 240,
+        "height": 36,
+        "radius": 18,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to play",
+        "color": "frame",
+        "box": {
+          "x": 260,
+          "y": 1350,
+          "width": 980,
+          "height": 160
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Insert coin",
+        "color": "text",
+        "box": {
+          "x": 100,
+          "y": 40,
+          "width": 1300,
+          "height": 120
+        }
+      }
+    ]
+  }
+}

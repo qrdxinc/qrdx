@@ -1,0 +1,145 @@
+{
+  "id": "clapperboard-light",
+  "name": "Clapperboard, light",
+  "description": "A film clapperboard with a striped hinged bar open over the board.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "film", "clapperboard", "video", "cinema"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1420,
+      "height": 1964
+    },
+    "qr": {
+      "x": 260,
+      "y": 772,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M33.95 282.28L1353.6 49.59L1379.64 197.31L60 430Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M116.21 288.08L247.05 265.01L216.91 382.02L86.07 405.09Z",
+        "fill": "background"
+      },
+      {
+        "type": "path",
+        "d": "M476.37 224.58L607.21 201.51L577.07 318.52L446.23 341.59Z",
+        "fill": "background"
+      },
+      {
+        "type": "path",
+        "d": "M836.53 161.07L967.37 138L937.23 255.01L806.39 278.08Z",
+        "fill": "background"
+      },
+      {
+        "type": "path",
+        "d": "M1196.69 97.57L1327.52 74.5L1297.38 191.51L1166.55 214.58Z",
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 420,
+        "width": 1420,
+        "height": 130,
+        "radius": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M80 440L212.86 440L162.86 530L30 530Z",
+        "fill": "background"
+      },
+      {
+        "type": "path",
+        "d": "M445.71 440L578.57 440L528.57 530L395.71 530Z",
+        "fill": "background"
+      },
+      {
+        "type": "path",
+        "d": "M811.43 440L944.29 440L894.29 530L761.43 530Z",
+        "fill": "background"
+      },
+      {
+        "type": "path",
+        "d": "M1177.14 440L1310 440L1260 530L1127.14 530Z",
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 60,
+        "cy": 430,
+        "r": 40,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 550,
+        "width": 1420,
+        "height": 1414,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 30,
+        "y": 580,
+        "width": 1360,
+        "height": 1354,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan the trailer",
+        "color": "frame",
+        "box": {
+          "x": 80,
+          "y": 1774,
+          "width": 1260,
+          "height": 160
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Now showing",
+        "color": "frame",
+        "box": {
+          "x": 100,
+          "y": 580,
+          "width": 1220,
+          "height": 96
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

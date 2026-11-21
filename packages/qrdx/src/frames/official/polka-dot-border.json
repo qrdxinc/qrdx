@@ -1,0 +1,502 @@
+{
+  "id": "polka-dot-border",
+  "name": "Polka dot border",
+  "description": "A light card with a border of polka dots.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "pattern", "dots", "border"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1400,
+      "height": 1870
+    },
+    "qr": {
+      "x": 200,
+      "y": 400,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#8a8a8a"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1400,
+        "height": 1870,
+        "radius": 40,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 75,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1795,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 171.15,
+        "cy": 75,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 171.15,
+        "cy": 1795,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 267.31,
+        "cy": 75,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 267.31,
+        "cy": 1795,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 363.46,
+        "cy": 75,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 363.46,
+        "cy": 1795,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 459.62,
+        "cy": 75,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 459.62,
+        "cy": 1795,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 555.77,
+        "cy": 75,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 555.77,
+        "cy": 1795,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 651.92,
+        "cy": 75,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 651.92,
+        "cy": 1795,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 748.08,
+        "cy": 75,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 748.08,
+        "cy": 1795,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 844.23,
+        "cy": 75,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 844.23,
+        "cy": 1795,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 940.38,
+        "cy": 75,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 940.38,
+        "cy": 1795,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1036.54,
+        "cy": 75,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1036.54,
+        "cy": 1795,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1132.69,
+        "cy": 75,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1132.69,
+        "cy": 1795,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1228.85,
+        "cy": 75,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1228.85,
+        "cy": 1795,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 75,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1795,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 176.18,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 176.18,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 277.35,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 277.35,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 378.53,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 378.53,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 479.71,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 479.71,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 580.88,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 580.88,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 682.06,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 682.06,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 783.24,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 783.24,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 884.41,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 884.41,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 985.59,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 985.59,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1086.76,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1086.76,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1187.94,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1187.94,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1289.12,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1289.12,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1390.29,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1390.29,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1491.47,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1491.47,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1592.65,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1592.65,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 75,
+        "cy": 1693.82,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1325,
+        "cy": 1693.82,
+        "r": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 150,
+        "y": 150,
+        "width": 1100,
+        "height": 1570,
+        "radius": 28,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "frame",
+        "box": {
+          "x": 210,
+          "y": 1510,
+          "width": 980,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Point your camera here",
+        "color": "frame",
+        "box": {
+          "x": 230,
+          "y": 200,
+          "width": 940,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

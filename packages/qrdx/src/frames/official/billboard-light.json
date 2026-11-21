@@ -1,0 +1,269 @@
+{
+  "id": "billboard-light",
+  "name": "Billboard, light",
+  "description": "A billboard on two posts with a row of lights along its top.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "billboard", "sign", "outdoor"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1500
+    },
+    "qr": {
+      "x": 160,
+      "y": 220,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#1f1f1f",
+      "text": "#ffffff",
+      "accent": "#5a5a5a"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 300,
+        "y": 1140,
+        "width": 70,
+        "height": 360,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1630,
+        "y": 1140,
+        "width": 70,
+        "height": 360,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 80,
+        "width": 2000,
+        "height": 1080,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 120,
+        "width": 1920,
+        "height": 1000,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 50,
+        "width": 1840,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 160,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 160,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 370,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 370,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 580,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 580,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 790,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 790,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1000,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1000,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1210,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1210,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1420,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1420,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1630,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1630,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1840,
+        "cy": 32,
+        "r": 42,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.6
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1840,
+        "cy": 32,
+        "r": 22,
+        "fill": "background"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for tickets",
+        "color": "frame",
+        "box": {
+          "x": 1114,
+          "y": 400,
+          "width": 756,
+          "height": 220
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Opening this week",
+        "color": "frame",
+        "box": {
+          "x": 1114,
+          "y": 650,
+          "width": 756,
+          "height": 110
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

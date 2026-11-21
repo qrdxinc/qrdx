@@ -1,0 +1,87 @@
+{
+  "id": "hexagon-light",
+  "name": "Hexagon, light",
+  "description": "A hexagon around the code, the label in its lower half.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "hexagon", "shape"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1732,
+      "height": 2000
+    },
+    "qr": {
+      "x": 416,
+      "y": 472,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "polygon",
+        "points": [
+          [866, 0],
+          [1732.03, 500],
+          [1732.03, 1500],
+          [866, 2000],
+          [-0.03, 1500],
+          [-0.03, 500]
+        ],
+        "fill": "frame"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [866, 40],
+          [1697.38, 520],
+          [1697.38, 1480],
+          [866, 1960],
+          [34.62, 1480],
+          [34.62, 520]
+        ],
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to learn more",
+        "color": "frame",
+        "box": {
+          "x": 416,
+          "y": 1480,
+          "width": 900,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Open with your camera",
+        "color": "frame",
+        "box": {
+          "x": 556,
+          "y": 230,
+          "width": 620,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

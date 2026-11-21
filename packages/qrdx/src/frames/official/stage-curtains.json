@@ -1,0 +1,303 @@
+{
+  "id": "stage-curtains",
+  "name": "Stage curtains",
+  "description": "A stage with curtains drawn back, the code on the backdrop, the label on the boards.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "stage", "theatre", "curtains", "show"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1800,
+      "height": 1800
+    },
+    "qr": {
+      "x": 450,
+      "y": 332,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 300,
+        "y": 200,
+        "width": 1200,
+        "height": 1400,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1600,
+        "width": 1800,
+        "height": 200,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1580,
+        "width": 1800,
+        "height": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 300,
+        "height": 1600,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 67,
+        "y": 60,
+        "width": 16,
+        "height": 1480,
+        "radius": 8,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 142,
+        "y": 60,
+        "width": 16,
+        "height": 1480,
+        "radius": 8,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 217,
+        "y": 60,
+        "width": 16,
+        "height": 1480,
+        "radius": 8,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 980,
+        "width": 260,
+        "height": 60,
+        "radius": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 1500,
+        "y": 0,
+        "width": 300,
+        "height": 1600,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1717,
+        "y": 60,
+        "width": 16,
+        "height": 1480,
+        "radius": 8,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1642,
+        "y": 60,
+        "width": 16,
+        "height": 1480,
+        "radius": 8,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1567,
+        "y": 60,
+        "width": 16,
+        "height": 1480,
+        "radius": 8,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1500,
+        "y": 980,
+        "width": 260,
+        "height": 60,
+        "radius": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1800,
+        "height": 200,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 100,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 300,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 500,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 700,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 900,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1100,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1300,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1500,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1700,
+        "cy": 200,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 390,
+        "cy": 1560,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 560,
+        "cy": 1560,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 730,
+        "cy": 1560,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 900,
+        "cy": 1560,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1070,
+        "cy": 1560,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1240,
+        "cy": 1560,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1410,
+        "cy": 1560,
+        "r": 26,
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for the show",
+        "color": "text",
+        "box": {
+          "x": 250,
+          "y": 1620,
+          "width": 1300,
+          "height": 160
+        }
+      }
+    ]
+  }
+}

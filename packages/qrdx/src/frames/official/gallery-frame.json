@@ -1,0 +1,177 @@
+{
+  "id": "gallery-frame",
+  "name": "Gallery frame",
+  "description": "A gallery frame with a mount around the code, hung from a nail.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "picture", "frame", "art", "gallery"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1640,
+      "height": 1980
+    },
+    "qr": {
+      "x": 320,
+      "y": 510,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M301.82 176.76L820 37L1338.18 176.76A7 7 0 0 1 1341.82 163.24L820 23L298.18 163.24A7 7 0 0 1 301.82 176.76Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 820,
+        "cy": 26,
+        "r": 24,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 120,
+        "width": 1640,
+        "height": 1860,
+        "radius": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 54,
+        "y": 174,
+        "width": 1532,
+        "height": 1752,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 90,
+        "y": 210,
+        "width": 1460,
+        "height": 1680,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.94
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 45,
+        "cy": 165,
+        "r": 34,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 45,
+        "cy": 165,
+        "r": 16,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1595,
+        "cy": 165,
+        "r": 34,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1595,
+        "cy": 165,
+        "r": 16,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 45,
+        "cy": 1935,
+        "r": 34,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 45,
+        "cy": 1935,
+        "r": 16,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1595,
+        "cy": 1935,
+        "r": 34,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1595,
+        "cy": 1935,
+        "r": 16,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to see more",
+        "color": "frame",
+        "box": {
+          "x": 190,
+          "y": 1610,
+          "width": 1260,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "The story behind it",
+        "color": "frame",
+        "box": {
+          "x": 230,
+          "y": 320,
+          "width": 1180,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

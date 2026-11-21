@@ -1,0 +1,105 @@
+{
+  "id": "crystal-ball",
+  "name": "Crystal ball",
+  "description": "A crystal ball on a stand with the code glowing inside it.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "crystal", "ball", "magic", "fortune"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1600,
+      "height": 1860
+    },
+    "qr": {
+      "x": 400,
+      "y": 360,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "circle",
+        "cx": 800,
+        "cy": 760,
+        "r": 720,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 800,
+        "cy": 760,
+        "r": 680,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 470,
+        "cy": 380,
+        "rx": 150,
+        "ry": 70,
+        "fill": "background"
+      },
+      {
+        "type": "icon",
+        "icon": "sparkle",
+        "x": 235,
+        "y": 1015,
+        "size": 90,
+        "fill": "accent"
+      },
+      {
+        "type": "icon",
+        "icon": "star",
+        "x": 1300,
+        "y": 640,
+        "size": 80,
+        "fill": "accent"
+      },
+      {
+        "type": "path",
+        "d": "M380 1480L1220 1480L1320 1800L280 1800Z",
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 240,
+        "y": 1770,
+        "width": 1120,
+        "height": 90,
+        "radius": 45,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan your future",
+        "color": "text",
+        "box": {
+          "x": 400,
+          "y": 1540,
+          "width": 800,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

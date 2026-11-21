@@ -1,0 +1,111 @@
+{
+  "id": "mailbox-light",
+  "name": "Mailbox, light",
+  "description": "A curbside mailbox on a post with its flag up, the code on its side.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "mailbox", "post", "mail", "newsletter"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1700,
+      "height": 2000
+    },
+    "qr": {
+      "x": 300,
+      "y": 440,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 650,
+        "y": 1700,
+        "width": 200,
+        "height": 300,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 560,
+        "y": 1660,
+        "width": 380,
+        "height": 70,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1520,
+        "y": 700,
+        "width": 40,
+        "height": 500,
+        "radius": 20,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 1520,
+        "y": 700,
+        "width": 170,
+        "height": 150,
+        "radius": 20,
+        "fill": "accent"
+      },
+      {
+        "type": "path",
+        "d": "M100 1720L100 650A350 350 0 0 1 450 300L1150 300A350 350 0 0 1 1500 650L1500 1720Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M140 1680L140 650A310 310 0 0 1 450 340L1150 340A310 310 0 0 1 1460 650L1460 1680Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1540,
+        "cy": 1200,
+        "r": 36,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "You have mail",
+        "color": "frame",
+        "box": {
+          "x": 220,
+          "y": 1550,
+          "width": 1160,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

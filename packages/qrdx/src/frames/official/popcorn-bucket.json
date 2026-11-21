@@ -1,0 +1,296 @@
+{
+  "id": "popcorn-bucket",
+  "name": "Popcorn bucket",
+  "description": "A striped popcorn bucket with popcorn on top, the code on its label band.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "popcorn", "cinema", "movie", "snack"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 2000
+    },
+    "qr": {
+      "x": 250,
+      "y": 540,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "polygon",
+        "points": [[0, 280], [214.29, 280], [357.14, 2000], [200, 2000]],
+        "fill": "accent"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [214.29, 280],
+          [428.57, 280],
+          [514.29, 2000],
+          [357.14, 2000]
+        ],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [428.57, 280],
+          [642.86, 280],
+          [671.43, 2000],
+          [514.29, 2000]
+        ],
+        "fill": "accent"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [642.86, 280],
+          [857.14, 280],
+          [828.57, 2000],
+          [671.43, 2000]
+        ],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [857.14, 280],
+          [1071.43, 280],
+          [985.71, 2000],
+          [828.57, 2000]
+        ],
+        "fill": "accent"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [1071.43, 280],
+          [1285.71, 280],
+          [1142.86, 2000],
+          [985.71, 2000]
+        ],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[1285.71, 280], [1500, 280], [1300, 2000], [1142.86, 2000]],
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 260,
+        "width": 1500,
+        "height": 60,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 170,
+        "y": 1960,
+        "width": 1160,
+        "height": 40,
+        "radius": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 330,
+        "cy": 170,
+        "r": 110,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 330,
+        "cy": 170,
+        "r": 84,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.8
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 520,
+        "cy": 130,
+        "r": 120,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 520,
+        "cy": 130,
+        "r": 94,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 740,
+        "cy": 160,
+        "r": 130,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 740,
+        "cy": 160,
+        "r": 104,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.8
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 960,
+        "cy": 125,
+        "r": 115,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 960,
+        "cy": 125,
+        "r": 89,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1160,
+        "cy": 170,
+        "r": 110,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1160,
+        "cy": 170,
+        "r": 84,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.8
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 230,
+        "cy": 280,
+        "r": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 230,
+        "cy": 280,
+        "r": 64,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1270,
+        "cy": 280,
+        "r": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1270,
+        "cy": 280,
+        "r": 64,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.8
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 630,
+        "cy": 240,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 630,
+        "cy": 240,
+        "r": 74,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 860,
+        "cy": 250,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 860,
+        "cy": 250,
+        "r": 74,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.8
+        }
+      },
+      {
+        "type": "rect",
+        "x": 170,
+        "y": 420,
+        "width": 1160,
+        "height": 1440,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 200,
+        "y": 450,
+        "width": 1100,
+        "height": 1380,
+        "radius": 20,
+        "fill": "background"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for showtimes",
+        "color": "frame",
+        "box": {
+          "x": 240,
+          "y": 1650,
+          "width": 1020,
+          "height": 160
+        }
+      }
+    ]
+  }
+}

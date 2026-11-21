@@ -1,0 +1,79 @@
+{
+  "id": "text-frame",
+  "name": "Text frame",
+  "description": "No card at all: big bold text over and under the code is the frame.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "text", "bold", "minimal"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 1760
+    },
+    "qr": {
+      "x": 150,
+      "y": 380,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1300,
+        "height": 16,
+        "radius": 8,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1744,
+        "width": 1300,
+        "height": 16,
+        "radius": 8,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "frame",
+        "box": {
+          "x": 40,
+          "y": 1500,
+          "width": 1220,
+          "height": 260
+        },
+        "fontSize": 150
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Scan me",
+        "color": "frame",
+        "box": {
+          "x": 40,
+          "y": 0,
+          "width": 1220,
+          "height": 260
+        },
+        "fontSize": 150
+      }
+    ]
+  }
+}

@@ -85,8 +85,7 @@ export const loadPublicPage = cache(
       .where(where)
       .limit(1);
     if (
-      !row ||
-      row.kind !== "page" ||
+      row?.kind !== "page" ||
       !row.isActive ||
       row.archivedAt ||
       row.deletedAt ||
