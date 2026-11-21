@@ -33,11 +33,13 @@ vi.mock("next/cache", () => ({
   revalidateTag: vi.fn(),
 }));
 
+import { COLLECTION_MIN_ITEMS } from "@/lib/community/bundles";
 import {
   readPageTemplate,
   scrubPageContent,
 } from "@/lib/community/page-template";
 import {
+  COLLECTION_MAX_ITEMS,
   collectionPayloadSchema,
   FRAME_TAGS,
   framePayloadSchema,
@@ -135,10 +137,19 @@ describe("the seed's items", () => {
     }
   });
 
-  it("lists only seeded items in its collections", () => {
+  it("holds a collection's items to the app's minimum", () => {
+    expect(seed.COLLECTION_MIN_ITEMS).toBe(COLLECTION_MIN_ITEMS);
+  });
+
+  it("lists only seeded items in its collections, as many as a publish takes", () => {
     const ids = new Set(items.map((item) => item.id));
     for (const collection of byType("collection")) {
-      expect(collection.entries?.length).toBeGreaterThan(1);
+      expect(collection.entries?.length).toBeGreaterThanOrEqual(
+        COLLECTION_MIN_ITEMS,
+      );
+      expect(collection.entries?.length).toBeLessThanOrEqual(
+        COLLECTION_MAX_ITEMS,
+      );
       for (const entry of collection.entries ?? []) {
         expect(ids.has(entry)).toBe(true);
       }
@@ -752,14 +763,16 @@ describe("seed-community", () => {
       pg.rows("community_item_version").find((v) => v.item_id === kit?.id)
         ?.payload,
     ).toEqual(kit?.payload);
-    const kitEntries = () =>
+    const entriesOf = (id: string | undefined) =>
       pg
         .rows("community_collection_entry")
-        .filter((e) => e.collection_id === businessCard?.id)
+        .filter((e) => e.collection_id === id)
         .map((e) => [e.item_id, e.position]);
+    const kitEntries = () => entriesOf(businessCard?.id);
+    // Numbered from 0, as a publish of a frame and a page stores them
     expect(kitEntries()).toEqual([
-      [parts.frame, 1],
-      [parts.page, 2],
+      [parts.frame, 0],
+      [parts.page, 1],
     ]);
     expect(
       pg
@@ -781,11 +794,73 @@ describe("seed-community", () => {
     ).toEqual(
       items.find((i) => i.id === "ci_official_kit_cafe-table")?.payload,
     );
+    expect(entriesOf("ci_official_kit_cafe-table")).toEqual(
+      (
+        items.find((i) => i.id === "ci_official_kit_cafe-table")?.entries ?? []
+      ).map((id, position) => [id, position]),
+    );
     expect(kitEntries()).toEqual([
-      [parts.frame, 1],
-      [parts.page, 2],
+      [parts.frame, 0],
+      [parts.page, 1],
     ]);
     expect(lines.join("\n")).not.toContain(`collection=${businessCard?.id}`);
+  });
+
+  it(`skips a collection left with fewer than ${COLLECTION_MIN_ITEMS} items, then seeds it whole once they are in`, async () => {
+    const id = "ci_official_collection_payments-and-donations";
+    const collection = items.find((i) => i.id === id);
+    const [first, second, third] = (collection?.entries ?? []) as string[];
+    expect(collection?.entries).toHaveLength(3);
+    // Someone published the designs of two of its three items
+    const theirs = [first, second].map((entry, n) => {
+      const item = items.find((i) => i.id === entry);
+      return {
+        id: `ci_their_${n}`,
+        type: item?.type,
+        slug: `their-${n}`,
+        status: "published",
+        payload_hash: payloadHash(item?.payload),
+        profile_id: "cp_someone",
+        is_official: false,
+        created_by: "u_someone",
+      };
+    });
+    pg.seed("community_item", theirs);
+    const argv = ["--apply", "--backup", "s.json"];
+    expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
+    expect(
+      lines.find((l) => l.includes("collection payments-and-donations:")),
+    ).toContain(
+      `; only 1 of its items would be in, and a collection holds ${COLLECTION_MIN_ITEMS} or more, so it is skipped.`,
+    );
+    const ids = () => pg.rows("community_item").map((i) => i.id);
+    expect(ids()).toContain(third);
+    expect(ids()).not.toContain(id);
+    expect(
+      pg
+        .rows("community_collection_entry")
+        .filter((e) => e.collection_id === id),
+    ).toEqual([]);
+
+    // Once its items are in, the next run seeds the collection whole
+    pg.tables.community_item = pg
+      .rows("community_item")
+      .filter((i) => !String(i.id).startsWith("ci_their"));
+    lines.length = 0;
+    expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
+    expect(pg.rows("community_item").find((i) => i.id === id)?.payload).toEqual(
+      collection?.payload,
+    );
+    expect(
+      pg
+        .rows("community_collection_entry")
+        .filter((e) => e.collection_id === id)
+        .map((e) => [e.item_id, e.position]),
+    ).toEqual([
+      [first, 0],
+      [second, 1],
+      [third, 2],
+    ]);
   });
 
   it("adopts only rows its UPDATE itself allows, and names whose themes they are", async () => {
