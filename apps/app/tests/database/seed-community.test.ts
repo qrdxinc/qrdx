@@ -707,8 +707,8 @@ describe("seed-community", () => {
     const businessCard = items.find(
       (i) => i.id === "ci_official_kit_business-card",
     );
-    const parts = (businessCard?.payload as { kit: Record<string, string> })
-      .kit;
+    if (!businessCard) throw new Error("no business-card kit in the seed");
+    const parts = (businessCard.payload as { kit: Record<string, string> }).kit;
     expect(parts.theme).toBe(onyx?.id);
     expect(parts.frame).toBeTruthy();
     pg.seed("community_item", [
