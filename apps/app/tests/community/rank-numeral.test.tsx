@@ -119,12 +119,12 @@ describe("ranked row numerals", () => {
     expect(new Set(all).size).toBe(all.length);
   });
 
-  it("are left out of grids, which show a badge instead", () => {
-    const html = renderIntl(
-      <ItemCard card={card(1)} rank={1} rankAs="badge" />,
-    );
+  it("are left out of grids, which show no places at all", () => {
+    const html = renderIntl(<ItemCard card={card(1)} />);
     expect(numerals(html)).toEqual([]);
     expect(html).not.toContain("<text");
+    // No place written on the stage either
+    expect(html).not.toMatch(/>1</);
   });
 
   it("drift the currents only while hovered, and never with reduced motion", () => {

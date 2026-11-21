@@ -59,12 +59,18 @@ export const STAGE =
 export const CARD_ART = `relative z-[1] aspect-[4/3] overflow-hidden rounded-xl group-has-[a:focus-visible]:ring-ring/50 group-has-[a:focus-visible]:ring-[3px] ${STAGE}`;
 
 /**
- * A quiet label on the stage's top-left corner: the item's type ("Frame",
- * "Collection · 6"), and a grid's rank beside it. The stage is light in
- * both colour schemes, so one style serves both.
+ * The "New" tag's size on the stage's top-left corner (./item-card.tsx): a
+ * little larger than in the editor, level with the type mark across it.
  */
-export const STAGE_LABEL =
-  "rounded-full bg-white/90 px-2 py-0.5 text-[11px] leading-4 font-medium text-zinc-900 ring-1 ring-black/[0.06] backdrop-blur-sm";
+export const NEW_CHIP = "px-2 py-0.5 text-[11px]";
+
+/**
+ * The item's type as a small round mark on the stage's top-right corner,
+ * its name in a tooltip (./card-type-chip.tsx). The stage is light in both
+ * colour schemes, so one style serves both.
+ */
+export const TYPE_CHIP =
+  "pointer-events-auto grid size-7 place-items-center rounded-full bg-white/90 text-zinc-900 ring-1 ring-black/[0.06] backdrop-blur-sm outline-none transition-colors hover:bg-white";
 
 /**
  * Where a rank's numeral sits and how large it is: a little above the
