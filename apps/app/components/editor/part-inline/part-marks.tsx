@@ -19,8 +19,10 @@ export function useItemLabel(item: PartMenuItem): string {
   const common = useTranslations("common");
   const t = useTranslations("editor.partInline");
   const isNew = useIsNewLook(item.isNew);
-  const label = isNew ? common("nameIsNew", { name: item.label }) : item.label;
-  return item.risk ? t("labelWontScanHere", { label }) : label;
+  const label = item.risk
+    ? t("labelWontScanHere", { label: item.label })
+    : item.label;
+  return isNew ? common("nameIsNew", { name: label }) : label;
 }
 
 export function ItemMarks({
