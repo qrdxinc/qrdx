@@ -51,7 +51,7 @@ interface Claim {
 /**
  * Records the thresholds as sent and returns the ones this call recorded
  * (another request may have won the race). null when limit_notice isn't
- * there yet (manual-sql/0015): then nothing is sent.
+ * there yet: then nothing is sent.
  */
 export async function claimThresholds(
   claim: Claim,
@@ -71,7 +71,7 @@ export async function claimThresholds(
       if (!missingLogged) {
         missingLogged = true;
         log("limit_notice.unavailable", {
-          hint: "Apply packages/database/manual-sql/0015_limit_notices.sql",
+          hint: "The limit_notice table doesn't exist yet: update the database schema (bun run db:push)",
         });
       }
       return null;

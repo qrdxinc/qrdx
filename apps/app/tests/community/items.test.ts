@@ -1,6 +1,6 @@
 // The community data layer (lib/community/*) against in-memory tables
-// (tests/support/fake-db): which tables it reads before and after
-// manual-sql/0012 and the backfill, the official catalogue fallback, banned
+// (tests/support/fake-db): which tables it reads before and after the
+// community tables and the backfill, the official catalogue fallback, banned
 // creators hidden everywhere, publishing frames and themes (snapshots,
 // duplicates, text and spec checks, the real scan gate), likes, saves,
 // copies with their use counts and plan limits, and handles. Nothing
@@ -188,7 +188,7 @@ beforeEach(() => {
 });
 
 describe("which tables the community reads", () => {
-  it("reads community_theme until 0012 exists", async () => {
+  it("reads community_theme until the community tables exist", async () => {
     vi.spyOn(fakeDatabase, "batch").mockRejectedValueOnce(missingTable());
     expect(await probeCommunityState()).toEqual({
       tables: false,
@@ -225,7 +225,7 @@ describe("which tables the community reads", () => {
 });
 
 describe("reading items", () => {
-  it("shows the engine's official frames before 0012 exists", async () => {
+  it("shows the engine's official frames before the community tables exist", async () => {
     vi.spyOn(fakeDatabase, "select").mockImplementationOnce(() => {
       throw missingTable();
     });

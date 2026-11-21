@@ -23,9 +23,8 @@ import {
 //
 // Best effort, like the affiliate referral it runs after
 // (lib/analytics/sign-up-hook.ts): it never throws and never holds up the
-// sign-up. Before packages/database/manual-sql/2026-11-13-growth-analytics.sql
-// is applied the table doesn't exist: that's noted once and nothing is
-// written.
+// sign-up. Where the table doesn't exist yet, that's noted once and nothing
+// is written.
 
 /** What a new account's sign-up carried about its visit, cleaned; null when nothing. */
 export function signUpLandingOf(
@@ -90,7 +89,7 @@ export async function recordAcquisition(input: {
       if (!warnedMissing) {
         warnedMissing = true;
         console.warn(
-          "Growth analytics: user_acquisition doesn't exist yet (packages/database/manual-sql/2026-11-13-growth-analytics.sql). Sign-up channels aren't recorded until it does.",
+          "Growth analytics: user_acquisition doesn't exist yet (update the database schema: bun run db:push). Sign-up channels aren't recorded until it does.",
         );
       }
       return "missing_table";

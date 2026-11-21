@@ -214,7 +214,7 @@ describe("through the route, end to end", () => {
   });
 });
 
-describe("before the affiliate SQL is applied", () => {
+describe("before the affiliate tables exist", () => {
   beforeEach(() => {
     fakeDb.missing(
       "affiliate",

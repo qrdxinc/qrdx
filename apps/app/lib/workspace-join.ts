@@ -25,9 +25,8 @@ import { isUniqueViolation } from "@/lib/slug-claims";
 // Workspace join links (Settings → Team). Anyone signed in who opens
 // /join/<token> can join as the link's role (never owner) while the plan has
 // seats. The token is 32 random bytes; only its SHA-256 is stored, so the
-// link is shown once, when it's made or reset. The table comes from
-// packages/database/manual-sql/0014_workspace_join_link.sql: until it's
-// applied every call here throws JoinLinksUnavailableError (a clear 503),
+// link is shown once, when it's made or reset. Until the table exists
+// every call here throws JoinLinksUnavailableError (a clear 503),
 // never a 500. Errors are WorkspaceActionErrors: English messages that
 // actions/workspace-join.ts says in the person's language.
 
@@ -71,7 +70,7 @@ async function guarded<T>(query: () => Promise<T>): Promise<T> {
         reported = true;
         logError(error as Error, {
           action: "workspaceJoin.missingTable",
-          hint: "apply packages/database/manual-sql/0014_workspace_join_link.sql",
+          hint: "the workspace_join_link table doesn't exist yet: update the database schema (bun run db:push)",
         });
       }
       throw new JoinLinksUnavailableError();

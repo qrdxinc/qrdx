@@ -29,8 +29,8 @@ import { isUnsolicitedSignIn } from "./unsolicited-sign-in";
 // device cookie and aren't sign-ins either: skipped.
 //
 // A browser is known by a random 32-byte cookie (qrdx_device, HttpOnly,
-// SameSite=Lax, 400 days); only its SHA-256 is stored (known_device,
-// packages/database/manual-sql/0023_known_device.sql). No alert:
+// SameSite=Lax, 400 days); only its SHA-256 is stored (known_device). No
+// alert:
 // - for a browser the account has signed in from before;
 // - when the account has no known devices yet: a brand-new account, and
 //   every existing account's first sign-in after this shipped, is recorded

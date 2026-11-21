@@ -162,15 +162,15 @@ const CREATED_ROWS = [
   schema.tag,
   schema.webhookEndpoint,
   schema.notificationSetting,
-  // Saved barcodes (manual-sql/2026-11-11-barcodes.sql)
+  // Saved barcodes
   schema.barcode,
 ] as const;
 
 /**
  * Before a workspace is deleted: every row goes to the own workspace of the
  * member who created it. Creators without one yet (accounts from before
- * workspaces) get the row back with no workspace, as before, and the app or
- * the backfill moves it into theirs when it's made.
+ * workspaces) get the row back with no workspace, as before, and the app
+ * moves it into theirs when it's made.
  */
 export async function handRowsBackToCreators(
   organizationId: string

@@ -2,7 +2,7 @@
 // owner lists, adds and removes the old paths another provider printed on
 // the code's custom domain, only for codes in their workspace, on a
 // verified domain, with custom domains on the plan, and with a clear answer
-// before manual-sql/2026-11-18-path-aliases.sql is applied. In memory.
+// before the link_path_alias table exists. In memory.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 
@@ -177,7 +177,7 @@ describe("path aliases in the edit dialog", () => {
     expect(fakeDb.rows("linkPathAlias")).toHaveLength(0);
   });
 
-  it("says aliases aren't available before the SQL is applied", async () => {
+  it("says aliases aren't available before the table exists", async () => {
     fakeDb.missing("linkPathAlias");
     vi.spyOn(console, "warn").mockImplementation(() => {});
     expect(await actions.getPathAliases("code_menu")).toMatchObject({

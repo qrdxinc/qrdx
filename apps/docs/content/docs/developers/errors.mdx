@@ -61,7 +61,7 @@ Ordered by status. A code that appears twice has a different meaning at each sta
 | 503 | `AI_ART_BUSY` | The image model is over capacity right now. No AI art credit was used. | Wait a minute and try again. |
 | 503 | `AI_NOT_CONFIGURED` | AI art isn't set up on this deployment (a self-hosted instance without `AI_GATEWAY_API_KEY`). | Use the hosted QRdx API, or set up Vercel AI Gateway on your instance. |
 | 503 | `UNAVAILABLE` | Custom domains aren't set up on this deployment (a self-hosted instance without them). | Leave `domainId` out, or configure custom domains on your instance. |
-| 503 | `PATH_ALIASES_UNAVAILABLE` | Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance that hasn't applied `packages/database/manual-sql/2026-11-18-path-aliases.sql`). | Use the hosted QRdx API, or apply that SQL file to your instance's database. |
+| 503 | `PATH_ALIASES_UNAVAILABLE` | Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance whose database schema is older). | Use the hosted QRdx API, or update your instance's database schema (`bun run db:push`). |
 | 504 | `AI_ART_TIMEOUT` | The image model took too long, and QRdx stopped waiting before the request's one-minute limit. No AI art credit was used. | Try again. Calls usually take 15 to 45 seconds. |
 
 ## The error body

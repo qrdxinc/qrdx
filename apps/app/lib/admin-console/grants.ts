@@ -17,8 +17,8 @@ import { ADMIN_CONSOLE_GRANT_SECONDS } from "./client";
 // database nor the console's server holds a usable grant for an admin who
 // isn't using the console. A row goes with its session and its user.
 //
-// Before manual-sql/2026-11-18-console-grants.sql is applied, sign-in mints
-// none (logged once per process) and no presented grant can hold.
+// Before the admin_console_grant table exists, sign-in mints none (logged
+// once per process) and no presented grant can hold.
 
 /** The row's key for a grant: never the grant itself. */
 export const grantHash = (grant: string): string =>
@@ -32,7 +32,8 @@ function warnMissing(): void {
   console.warn(
     JSON.stringify({
       event: "admin_console.grants_missing",
-      detail: "manual-sql/2026-11-18-console-grants.sql isn't applied",
+      detail:
+        "The admin_console_grant table doesn't exist yet: update the database schema (bun run db:push)",
     }),
   );
 }

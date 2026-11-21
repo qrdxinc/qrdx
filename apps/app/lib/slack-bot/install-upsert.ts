@@ -2,8 +2,8 @@ import { type SQL, sql } from "drizzle-orm";
 
 // "Add the bot to Slack" saves the install with one statement, so two
 // installs of the same Slack workspace at once can't both insert. The
-// unique index is on (team_id, coalesce(enterprise_id, '')) (manual-sql/
-// 2026-11-10-slack-bot.sql), an expression Drizzle's onConflictDoUpdate
+// unique index is on (team_id, coalesce(enterprise_id, '')), an expression
+// Drizzle's onConflictDoUpdate
 // can't name as its target, so the statement is written here. Pure: the
 // database call is lib/slack-bot/store.ts saveInstallation.
 

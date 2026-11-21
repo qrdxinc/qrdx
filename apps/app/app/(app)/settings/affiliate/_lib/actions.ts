@@ -72,7 +72,7 @@ async function failure(
 
 export interface ApplyState {
   signedIn: boolean;
-  /** The tables exist (the SQL was applied). */
+  /** The affiliate tables exist. */
   ready: boolean;
   status: AffiliateStatus | null;
 }

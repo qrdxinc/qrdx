@@ -279,7 +279,7 @@ export async function searchCommunityCards(
     COMMUNITY_PAGE_MAX,
   );
   const offset = search.offset ?? 0;
-  // Postgres full-text search once manual-sql/0017 is applied; until then
+  // Postgres full-text search once its index exists; until then
   // (or if it fails) the in-memory search below.
   const query = toPrefixQuery(search.q ?? "");
   if (query && (await fullTextSearchAvailable())) {

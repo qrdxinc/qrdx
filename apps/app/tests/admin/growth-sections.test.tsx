@@ -1,6 +1,6 @@
 // What /admin/growth shows: each section rendered from a fake database and
-// faked npm and Google answers. Until the growth SQL is applied, the parts
-// that need its tables say "not set up" and the rest still shows; Search
+// faked npm and Google answers. Until the growth tables exist, the parts
+// that need them say "not set up" and the rest still shows; Search
 // Console explains its setup when the key isn't there. Nothing goes out.
 
 import type { SQL } from "drizzle-orm";
@@ -125,7 +125,7 @@ vi.mock("@/env", () => ({ env: state.env }));
 
 const sections = await import("@/app/(app)/admin/growth/sections");
 const { growthWeeks } = await import("@/app/(app)/admin/_lib/weeks");
-const { GROWTH_SQL_FILE } = await import("@/app/(app)/admin/_lib/growth");
+const { GROWTH_SETUP_COMMAND } = await import("@/app/(app)/admin/_lib/growth");
 
 const weeks = growthWeeks(NOW);
 const html = async (section: Promise<ReactElement>) =>
@@ -155,7 +155,7 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe("before the growth SQL is applied", () => {
+describe("before the growth tables exist", () => {
   beforeEach(() => {
     state.missing = ["user_acquisition", "c.created_via", "usage_daily"];
   });
@@ -163,7 +163,7 @@ describe("before the growth SQL is applied", () => {
   it("still shows sign-ups per week and says channels aren't recorded", async () => {
     const shown = text(await html(sections.Signups({ weeks })));
     expect(shown).toContain(
-      `Channels aren't recorded. Not set up yet: it starts once ${GROWTH_SQL_FILE} is applied.`,
+      `Channels aren't recorded. Not set up yet: it starts once ${GROWTH_SETUP_COMMAND} has updated the database schema.`,
     );
     expect(shown).toContain("Sign-ups");
     expect(shown).toMatch(/Nov 9 · so far 6/);

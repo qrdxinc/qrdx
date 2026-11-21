@@ -1,7 +1,7 @@
 // Reads and writes of path aliases (lib/path-alias-store.ts) against
 // in-memory tables: who may claim a path on a domain, that an alias answers
 // only while its code is on that domain, and that everything keeps working
-// (as "no alias") before manual-sql/2026-11-18-path-aliases.sql is applied.
+// (as "no alias") before the link_path_alias table exists.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeDb } from "../support/fake-db";
 
@@ -201,7 +201,7 @@ describe("listAliases and removeAlias", () => {
   });
 });
 
-describe("before the SQL is applied (no link_path_alias table)", () => {
+describe("before the link_path_alias table exists", () => {
   it("answers 'no alias' everywhere and logs that once", async () => {
     fakeDb.missing("linkPathAlias");
     const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -217,7 +217,7 @@ describe("before the SQL is applied (no link_path_alias table)", () => {
     // Six failed queries, one warning (each test file has its own modules).
     expect(warn).toHaveBeenCalledTimes(1);
     expect(String(warn.mock.calls[0]?.[0])).toMatch(
-      /2026-11-18-path-aliases\.sql/,
+      /doesn't exist yet \(update the database schema: bun run db:push\)/,
     );
   });
 

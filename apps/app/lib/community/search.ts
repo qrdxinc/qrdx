@@ -5,15 +5,18 @@ import { sql } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 import { logError } from "@/lib/log-error";
 
-// Full-text search over community items (manual-sql/0017_community_search
-// .sql): a GIN expression index on the 'simple' tsvector of each item's name
-// and description. Until that index exists and is valid, searches keep using
-// the in-memory search (lib/community/api.ts), so production never breaks
-// before the SQL is applied.
+// Full-text search over community items (community_item_search_idx): a GIN
+// expression index on the 'simple' tsvector of each item's name and
+// description. Until that index exists and is valid, searches keep using the
+// in-memory search (lib/community/api.ts), so a database without it never
+// breaks search.
 
 export const SEARCH_INDEX = "community_item_search_idx";
 
-/** The indexed document; must stay exactly the expression in 0017. */
+/**
+ * The indexed document; must stay exactly the index's expression in
+ * packages/database/schema.ts (tests/community/search.test.ts checks).
+ */
 export const SEARCH_DOCUMENT = sql`to_tsvector('simple'::regconfig, coalesce(${communityItem.name}, '') || ' ' || coalesce(${communityItem.description}, ''))`;
 
 const MAX_WORDS = 8;
@@ -53,7 +56,7 @@ async function indexIsValid(): Promise<boolean> {
   }
 }
 
-/** Whether 0017's index exists and is valid (checked every 5 minutes). */
+/** Whether the search index exists and is valid (checked every 5 minutes). */
 export const fullTextSearchAvailable = unstable_cache(
   indexIsValid,
   ["community-search-index"],

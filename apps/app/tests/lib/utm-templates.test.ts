@@ -1,6 +1,6 @@
 // Saved UTM templates (lib/utm-templates.ts): scoped to the workspace, behind
 // the UTM plan limit (`routing`, Pro), names unique per workspace, only the
-// creator or an owner/admin renames and deletes, and before manual-sql/0013
+// creator or an owner/admin renames and deletes, and before the table exists
 // every read says "unavailable" instead of failing. In-memory tables
 // (tests/support/fake-db); nothing touches a database.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";

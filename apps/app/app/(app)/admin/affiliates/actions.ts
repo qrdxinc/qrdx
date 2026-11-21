@@ -61,7 +61,7 @@ async function findAffiliate(affiliateId: string) {
   } catch (error) {
     if (isMissingTableError(error)) {
       throw adminError(
-        "The affiliate tables don't exist yet. Apply packages/database/manual-sql/2026-11-10-affiliates.sql first.",
+        "The affiliate tables don't exist yet. Update the database schema first (bun run db:push).",
       );
     }
     throw error;

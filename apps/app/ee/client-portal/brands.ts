@@ -51,8 +51,8 @@ import {
 
 // Client brands and the portal's branding (agency tools, ee/ under the QRdx
 // commercial licence: ./access.ts). Both reuse the
-// brand_kit table: name, logo and colors.accent, told apart by `purpose`
-// (manual-sql/2026-11-11-agency.sql). Older QR design kits (purpose NULL)
+// brand_kit table: name, logo and colors.accent, told apart by `purpose`.
+// Older QR design kits (purpose NULL)
 // are never listed here. Logos follow the workspace logo's rules
 // (lib/workspace-logo.ts): an upload under workspace-logos/<workspace>/ or
 // an https URL the browser loads; the server never fetches a typed URL.
@@ -61,7 +61,7 @@ export type { ClientBrand } from "@/ee/client-portal/brands-shared";
 
 type Purpose = (typeof BRAND_KIT_PURPOSES)[number];
 
-/** brand_kit.purpose isn't there yet (manual-sql/2026-11-11-agency.sql). */
+/** brand_kit.purpose isn't there yet. */
 export class ClientBrandsUnavailableError extends HttpError {
   constructor() {
     super(
@@ -85,7 +85,7 @@ export async function brandsGuarded<T>(query: () => Promise<T>): Promise<T> {
         missingLogged = true;
         logError(error as Error, {
           action: "client-brands",
-          hint: "Apply packages/database/manual-sql/2026-11-11-agency.sql",
+          hint: "The agency columns and tables don't exist yet: update the database schema (bun run db:push)",
         });
       }
       throw new ClientBrandsUnavailableError();

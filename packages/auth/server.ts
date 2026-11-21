@@ -405,7 +405,7 @@ export const auth = betterAuth({
         },
       },
     }),
-    // Sign-in security (packages/database/manual-sql/0019_sign_in_security.sql).
+    // Sign-in security (the two_factor, passkey and sso_provider tables).
     // Two-step verification (Lane A): the plugin, then the challenge after
     // every session-creating endpoint (./sign-in-challenge.ts), answered with
     // a code or a passkey (same relying party as the passkey plugin below).
