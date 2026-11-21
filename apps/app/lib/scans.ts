@@ -762,7 +762,7 @@ export function scansToCsv(events: ScanEvent[]): string {
   return `${[header, ...lines].join("\r\n")}\r\n`;
 }
 
-// ─── NFC taps (feat/nfc, manual-sql/2026-11-11-nfc.sql) ──────────────────────
+// ─── NFC taps ────────────────────────────────────────────────────────────────
 // qr_scan.source is "nfc" for visits through a code's NFC link and "qr" for
 // the rest; rows from before the column existed are null and count as QR.
 

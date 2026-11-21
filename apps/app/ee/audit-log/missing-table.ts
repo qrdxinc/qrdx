@@ -1,7 +1,7 @@
 /**
  * Postgres's "undefined table" (42P01), however deeply the driver wraps it:
- * what every read and write of workspace_audit_log hits until
- * packages/database/manual-sql/2026-11-09-workspace-audit-log.sql is applied.
+ * what every read and write of workspace_audit_log hits until the table
+ * exists.
  */
 export function isMissingTableError(error: unknown): boolean {
   let current: unknown = error;

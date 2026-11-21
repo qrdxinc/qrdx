@@ -105,7 +105,7 @@ export const fakeDb = {
     missingTables.clear();
   },
   /**
-   * Makes tables behave as if their SQL hadn't been applied yet: every
+   * Makes tables behave as if they didn't exist yet: every
    * query that reads or writes them rejects with Postgres's 42P01. Cleared
    * by reset().
    */

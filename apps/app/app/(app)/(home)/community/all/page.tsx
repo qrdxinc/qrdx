@@ -164,12 +164,7 @@ export default async function CommunityAllPage({
           <ol className={GALLERY_GRID}>
             {cards.map((card, index) => (
               <li key={cardKey(card)}>
-                <ItemCard
-                  card={card}
-                  eager={index < EAGER_CARDS}
-                  rank={ranked ? index + 1 : undefined}
-                  rankAs="badge"
-                />
+                <ItemCard card={card} eager={index < EAGER_CARDS} />
               </li>
             ))}
           </ol>

@@ -37,8 +37,8 @@ import { codeLinks } from "@/lib/short-links";
 // Public analytics pages: an owner or editor turns one on for a
 // code and gets /stats/<token>, a read-only page with scans over time, top
 // countries, devices and referrer hosts. No row = off; a new token = a reset
-// link. The table comes from manual-sql/0016; until it's applied, sharing
-// says it isn't available and every /stats link is a 404.
+// link. Until the table exists, sharing says it isn't available and every
+// /stats link is a 404.
 
 export type {
   PublicStats,
@@ -53,7 +53,7 @@ import { assertCan } from "@/lib/permissions-server";
 export const TOKEN_PATTERN = /^[A-Za-z0-9_-]{32}$/;
 const newToken = () => randomBytes(24).toString("base64url");
 
-/** The code_public_stats table isn't there yet (manual-sql/0016). */
+/** The code_public_stats table isn't there yet. */
 export class PublicStatsUnavailableError extends HttpError {
   constructor() {
     super(
@@ -76,7 +76,7 @@ async function guarded<T>(query: () => Promise<T>): Promise<T> {
         missingLogged = true;
         logError(error as Error, {
           action: "public-stats",
-          hint: "Apply packages/database/manual-sql/0016_public_stats.sql",
+          hint: "The code_public_stats table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
         });
       }
       throw new PublicStatsUnavailableError();
@@ -113,8 +113,8 @@ export async function findSharedCode(scope: ActiveScope, codeId: string) {
   return row;
 }
 
-// The columns from manual-sql/0016 only: sharing keeps working before the
-// agency columns (brand_kit_id, domain_id) exist.
+// The table's first columns only: sharing keeps working before the agency
+// columns (brand_kit_id, domain_id) exist.
 const shareColumns = {
   id: codePublicStats.id,
   qrCodeId: codePublicStats.qrCodeId,

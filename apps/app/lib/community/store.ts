@@ -9,12 +9,13 @@ import { COMMUNITY_TAG, isMissingSchemaError } from "./tables";
 
 export { COMMUNITY_TAG, isMissingSchemaError } from "./tables";
 
-// Which tables the community reads, so the code is safe on either side of
-// manual-sql/0012_community.sql and the backfill:
-// - before the SQL, `tables` is false: themes come from community_theme,
-//   frames from the engine's official catalogue, and anything that writes
-//   (publishing frames, likes on items, handles) says it isn't available;
-// - after the SQL but before the backfill, themes still come from
+// Which tables the community reads, so the code is safe before and after
+// the community tables exist and the backfill runs:
+// - before the tables exist, `tables` is false: themes come from
+//   community_theme, frames from the engine's official catalogue, and
+//   anything that writes (publishing frames, likes on items, handles) says
+//   it isn't available;
+// - after the tables but before the backfill, themes still come from
 //   community_theme (community_item holds no themes yet, community_theme
 //   does), so the gallery never empties;
 // - once the backfill has copied the themes, everything reads community_item.
@@ -26,7 +27,7 @@ export interface CommunityState {
   themes: "items" | "legacy";
 }
 
-/** The community tables can't be used here yet (manual-sql/0012). */
+/** The community tables can't be used here yet. */
 export class CommunityUnavailableError extends CheckError {
   constructor() {
     super((m) => m.unavailable);
@@ -40,7 +41,7 @@ function reportMissing(error: unknown) {
   reported = true;
   logError(error as Error, {
     action: "community",
-    hint: "Apply packages/database/manual-sql/0012_community.sql",
+    hint: "The community tables don't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
   });
 }
 

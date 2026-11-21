@@ -8,14 +8,14 @@
 //
 //   AFF_E2E_BASE_URL=http://localhost:<port> AFF_E2E_DEV_LOG=<dev.log> \
 //   AFF_E2E_PSQL="psql -h localhost -p <pg> -U postgres -d qrdx" \
-//   AFF_E2E_SQL=../../packages/database/manual-sql/2026-11-10-affiliates.sql \
-//   AFF_E2E_SHOTS=<dir> bun x tsx e2e/affiliates.e2e.mts
+//   AFF_E2E_PUSH=1 AFF_E2E_SHOTS=<dir> bun x tsx e2e/affiliates.e2e.mts
 //
-// Start it with the affiliate tables NOT created (AFF_E2E_SQL set): the
+// Start it with the affiliate tables NOT created (AFF_E2E_PUSH=1): the
 // first part proves sign-up, the referral link, the pages and the webhook
-// work without them; the suite then applies the SQL file itself, twice
-// (it's idempotent), and goes on:
-// apply → the admin approves (after "Confirm it's you" with a second
+// work without them; the suite then creates them itself with
+// `bun run db:push` against that local database, twice (the second run
+// changes nothing), and goes on:
+// create → the admin approves (after "Confirm it's you" with a second
 // factor) → the affiliate adds a PayPal email → a visitor who rejected
 // cookies signs up through the link (attributed, no cookie) → a visitor who
 // allowed Analytics gets no cookie either, and a sign-up on a later page load
@@ -29,7 +29,7 @@
 // submit with the same reference records nothing → the affiliate sees the
 // payout. Screenshots at 1440 and 390 px, light and dark (AFF_E2E_SHOTS),
 // with a no-horizontal-scroll check at 390 px.
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import { createHmac } from "node:crypto";
 import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -39,7 +39,7 @@ const env = (name: string) => process.env[`AFF_E2E_${name}`] ?? "";
 const BASE = env("BASE_URL").replace(/\/$/, "");
 const DEV_LOG = env("DEV_LOG");
 const PSQL = env("PSQL");
-const SQL_FILE = env("SQL");
+const PUSH = env("PUSH") === "1";
 const SHOTS = env("SHOTS");
 const RUN = Date.now().toString(36);
 const ANA = `ana-${RUN}@qrdx.test`;
@@ -623,7 +623,7 @@ async function referralRedirect(code: string): Promise<string | null> {
   return response.headers.get("location");
 }
 
-// ─── Before the SQL: nothing breaks ─────────────────────────────────────────
+// ─── Before the tables exist: nothing breaks ────────────────────────────────
 
 async function withoutTables() {
   console.log("without the affiliate tables");
@@ -650,9 +650,9 @@ async function withoutTables() {
   );
   // Logged once per server process (the /r/ request above may have done it).
   check(
-    "the server says which SQL to apply",
+    "the server says how to create them",
     readFileSync(DEV_LOG, "utf8").includes(
-      "the affiliate tables don't exist yet (packages/database/manual-sql/2026-11-10-affiliates.sql)",
+      "the affiliate tables don't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise)",
     ),
   );
   await goto(`${BASE}/settings/affiliate`);
@@ -669,14 +669,50 @@ async function withoutTables() {
     "a signed order.paid webhook still gets a 2xx",
     (await webhook(order(`order_early_${RUN}`, userId(EARLY), 1500))) === 200,
   );
-  if (!SQL_FILE) throw new Error("Set AFF_E2E_SQL to the manual SQL file");
-  execSync(`${PSQL} -v ON_ERROR_STOP=1 -q -f ${JSON.stringify(SQL_FILE)}`);
-  execSync(
-    `${PSQL} -v ON_ERROR_STOP=1 -q -f ${JSON.stringify(SQL_FILE)} 2>/dev/null`,
-  );
+  // What `bun run db:push` runs (drizzle-kit push in packages/database), on
+  // the local database checked above only, as one process so the timeout
+  // stops it. No --force: making the affiliate tables needs no answer, so a
+  // question (a rename, a data-loss statement) means the database differs
+  // from the schema in more than these tables, and the run stops there.
+  const database = join(process.cwd(), "../../packages/database");
+  const pushSeconds = 120;
+  const push = () => {
+    try {
+      execFileSync(
+        process.execPath,
+        [join(database, "node_modules/drizzle-kit/bin.cjs"), "push"],
+        {
+          cwd: database,
+          env: { ...process.env, DATABASE_URL: dbUrl },
+          input: "",
+          stdio: "pipe",
+          timeout: pushSeconds * 1000,
+          killSignal: "SIGKILL",
+        },
+      );
+    } catch (error) {
+      const failed = error as {
+        signal?: string | null;
+        stdout?: Buffer;
+        stderr?: Buffer;
+      };
+      const output = `${failed.stdout ?? ""}${failed.stderr ?? ""}`
+        .trim()
+        .split("\n")
+        .slice(-20)
+        .join("\n");
+      throw new Error(
+        failed.signal
+          ? `drizzle-kit push didn't finish in ${pushSeconds} s. It is probably asking a question (a rename or a data-loss statement): the local database differs from the schema in more than the affiliate tables. Run bun run db:push there by hand, answer it, drop the affiliate tables and start again.\n${output}`
+          : `drizzle-kit push failed:\n${output}`,
+      );
+    }
+  };
+  push();
+  push();
   check(
-    "the SQL file applies, and again without errors",
-    tablesExist() === "4",
+    "db:push creates the tables, and runs again without errors",
+    tablesExist() === "5",
   );
 }
 
@@ -1068,7 +1104,7 @@ async function program() {
 }
 
 try {
-  if (SQL_FILE && tablesExist() === "0") await withoutTables();
+  if (PUSH && tablesExist() === "0") await withoutTables();
   await program();
 } catch (error) {
   failures++;

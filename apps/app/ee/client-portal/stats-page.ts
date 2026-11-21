@@ -19,8 +19,7 @@ import type { ActiveScope } from "@/lib/scope";
 // drops QRdx's marks, and the verified custom domain its link is served
 // on. lib/public-stats.ts (the page itself, AGPL) asks statsLinkHost and
 // statsPageBranding; without the licence key (./access.ts) every page is
-// plain, on QRdx's host. The columns come from
-// manual-sql/2026-11-11-agency.sql.
+// plain, on QRdx's host.
 
 export interface ShareExtras {
   brandKitId: string | null;

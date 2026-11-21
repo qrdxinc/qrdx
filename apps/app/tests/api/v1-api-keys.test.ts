@@ -3,8 +3,8 @@
 // workspace it was created in, as its creator, with their role there right
 // now and never more, narrowed by its scopes. Revoked and expired keys, keys
 // of banned users and team keys whose creator left the team get 401. OAuth
-// tokens behave exactly as before. Before manual-sql/0011 creates the
-// api_key table, keys get 401 and nothing answers 500.
+// tokens behave exactly as before. Before the api_key table exists, keys
+// get 401 and nothing answers 500.
 //
 // The route handlers run the real codes service against in-memory tables
 // (tests/support/fake-db); only side systems are stubbed.
@@ -595,9 +595,9 @@ describe("OAuth tokens and sessions are unaffected", () => {
   });
 });
 
-// ─── Before the SQL is applied ──────────────────────────────────────────────
+// ─── Before the table exists ────────────────────────────────────────────────
 
-describe("before manual-sql/0011 creates the api_key table", () => {
+describe("before the api_key table exists", () => {
   beforeEach(() => {
     // Make every query that reads api_key fail the way Postgres does.
     const database = repoDatabase.database as {

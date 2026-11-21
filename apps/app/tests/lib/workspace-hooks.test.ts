@@ -163,7 +163,7 @@ describe("deleting a workspace", () => {
       fakeDb.find(table, { id })?.organizationId;
     expect(orgOf("qrCode", "c_alice")).toBe(own("u_alice"));
     // Left in place: the delete's ON DELETE SET NULL returns it to Bob, and
-    // his first visit (or the backfill) moves it into his own workspace.
+    // his first visit moves it into his own workspace.
     expect(orgOf("qrCode", "c_bob")).toBe("org_team");
     expect(orgOf("qrCode", "c_other")).toBe("org_other");
     expect(orgOf("oauthApp", "app_alice")).toBe(own("u_alice"));

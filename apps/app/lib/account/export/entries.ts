@@ -14,8 +14,8 @@ import {
 } from "./queries";
 
 /**
- * Rows from the community tables, or null before manual-sql/0012 made them
- * (the export still works then).
+ * Rows from the community tables, or null before they exist (the export
+ * still works then).
  */
 async function whenCommunityExists<T>(
   query: PromiseLike<T>,
@@ -373,7 +373,7 @@ export function exportEntries(userId: string): ExportEntry[] {
               try {
                 return await q.slackLinks;
               } catch (error) {
-                // Before manual-sql/2026-11-10-slack-bot.sql: nothing linked.
+                // Before the Slack bot tables exist: nothing linked.
                 if (isMissingSchemaError(error)) return [];
                 throw error;
               }

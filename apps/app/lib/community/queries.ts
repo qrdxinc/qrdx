@@ -72,7 +72,7 @@ import { authorNotBanned } from "./visibility";
 
 // Reads for the community pages. Every query joins the creator's profile
 // and account and keeps only published items by active, unbanned creators.
-// A missing table (before manual-sql/0012) reads as "nothing yet", and the
+// A missing community table reads as "nothing yet", and the
 // official frames come from the engine's catalogue until they are seeded.
 
 const ROW = {
@@ -1449,7 +1449,7 @@ export function fullTextSearchQueries(options: FullTextSearch) {
 }
 
 /**
- * Full-text search (manual-sql/0017): published items whose name or
+ * Full-text search: published items whose name or
  * description matches every word as a prefix, or that carry one of the
  * words as a tag, or whose creator's handle starts with one; best match
  * first. Only called once the index exists (lib/community/search.ts).

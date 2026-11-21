@@ -50,8 +50,8 @@ import { AFFILIATE_TERMS_VERSION } from "./terms";
 // Affiliate program, /admin/affiliates). The webhook's side is
 // ./commissions.ts and sign-up's is ./attribution.ts.
 //
-// Until packages/database/manual-sql/2026-11-10-affiliates.sql is applied,
-// every read here hits a missing table: loaders return { ready: false } and
+// Until the affiliate tables exist, every read here hits a missing table:
+// loaders return { ready: false } and
 // the pages say the program isn't available yet, instead of failing.
 
 export type AffiliateRow = typeof affiliate.$inferSelect;
