@@ -306,6 +306,31 @@ describe("MCP over Streamable HTTP", () => {
     );
   });
 
+  // Review of #747: the repair clears a weak per-eye frame, and design_qr
+  // must score and draw the shapes the loop carries, not the caller's
+  it("design_qr scores and draws the per-eye shapes its repairs leave", async () => {
+    const { message } = await call("design_qr", {
+      content: { type: "url", url: "https://qrdx.dev/q/Ab3dE9x" },
+      style: {
+        cornerEyePattern: "rounded",
+        cornerEyeDotPattern: "rounded",
+        eyeShapes: { topLeft: { outer: "circle" } },
+      },
+    });
+    expect(message?.result.isError).toBeFalsy();
+    const content = message?.result.content as {
+      type: string;
+      text?: string;
+    }[];
+    const design = JSON.parse(content[1]?.text as string);
+    expect(design.grade).toBe("great");
+    expect(design.fellBack).toBeFalsy();
+    expect(design.qrdxStyle.eyeShapes).toBeUndefined();
+    expect(design.changes.join("\n")).toContain(
+      "Changed the eyes from circle to rounded",
+    );
+  });
+
   it("design_qr refuses content the editor's form would refuse", async () => {
     const { message } = await call("design_qr", {
       content: {

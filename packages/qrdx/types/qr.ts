@@ -180,9 +180,12 @@ export const eyeShapesSchema = z.object({
 export const eyeGradientSpanSchema = z.enum(EYE_GRADIENT_SPANS);
 
 /**
- * A light rim around every dark module and eye, for a code on a picture or
- * a dark page. `width` is in modules (HALO_WIDTH_MIN to HALO_WIDTH_MAX,
- * default HALO_WIDTH_DEFAULT); `color` is a solid color (default white).
+ * A light rim around every dark module and eye. `width` is in modules
+ * (HALO_WIDTH_MIN to HALO_WIDTH_MAX, default HALO_WIDTH_DEFAULT); `color`
+ * is a solid color (default HALO_COLOR_DEFAULT, #e5e7eb), drawn opaque
+ * (its alpha is dropped). Drawn only on an opaque background, in a color at
+ * least as light as HALO_LIGHT_MIN and no lighter than the background
+ * (getHaloRisk says why not otherwise).
  */
 export const haloSchema = z.object({
   color: z.string().optional(),
@@ -304,8 +307,8 @@ export interface QRProps {
   // Solid color outside the rounded background (see-through by default);
   // drawn only when bgRadius rounds a corner
   backdrop?: string;
-  // A light rim around the dark modules and eyes, for a code on a picture
-  // or a dark page (see QRHalo). A look, not a quiet zone.
+  // A light rim around the dark modules and eyes, on a light opaque
+  // background (see QRHalo). A look, not a quiet zone.
   halo?: QRHalo;
   // A see-through copy of the dark modules and eyes under them, shifted a
   // fraction of a module (see QRShadow)

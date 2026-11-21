@@ -4,7 +4,7 @@
 // fake data layer (lib/qr-api/save-template.ts): the key's workspace, the
 // plan's saved-theme limit and the API's LIMIT_REACHED shape.
 import { ownWorkspaceId } from "@repo/auth/own-workspace-id";
-import { OFFICIAL_FRAMES } from "qrdx";
+import { getHaloRisk, OFFICIAL_FRAMES } from "qrdx";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { HttpError } from "@/lib/error-response";
 import { encodeStyleParam } from "@/lib/playground-style";
@@ -196,6 +196,38 @@ describe("the API style", () => {
     ]) {
       expect(parseApiStyle(bad).ok, JSON.stringify(bad)).toBe(false);
     }
+  });
+
+  // "none" is taken as it always was (live callers send it); the engine
+  // reads it as see-through, so a halo isn't drawn on it
+  it('takes "none" and every color form the engine reads, and no halo on a "none" background', () => {
+    for (const good of [
+      { bgColor: "none" },
+      { fgColor: { type: "solid", color: "none" } },
+      {
+        bgColor: {
+          type: "linear",
+          stops: [
+            { color: "#ffffff", offset: 0 },
+            { color: "none", offset: 100 },
+          ],
+        },
+      },
+      { halo: { color: "none" } },
+      { backdrop: "none" },
+      { bgColor: "transparent" },
+      { bgColor: "hsla(0,0%,100%,0)" },
+      { bgColor: "hsl(0 0% 100% / 0)" },
+      { halo: { color: "hsl(0, 0%, 90%)" } },
+    ]) {
+      expect(parseApiStyle(good).ok, JSON.stringify(good)).toBe(true);
+    }
+    const parsed = parseApiStyle({ bgColor: "none", halo: {} });
+    if (!parsed.ok) throw new Error("not parsed");
+    expect(parsed.style.bgColor).toBe("none");
+    expect(getHaloRisk({ halo: {}, bgColor: "none" })?.reason).toBe(
+      "see-through",
+    );
   });
 
   it("refuses logo addresses and art with the reason, never fetching anything", () => {

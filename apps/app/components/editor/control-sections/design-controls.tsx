@@ -19,6 +19,7 @@ import { CustomizationSections } from "./customization-sections";
 import { FrameControls, frameName } from "./frame-controls";
 import { frameShapeOf, useFrameShapeNames } from "./frame-shapes";
 import { templateOf } from "./frame-templates";
+import { backgroundPickerFor } from "./halo-rules";
 import { LogoControls } from "./logo-controls";
 import { PaddingControls } from "./padding-controls";
 import {
@@ -143,8 +144,10 @@ export function DesignControls({
         title={t("colors")}
       >
         <div className="grid grid-cols-2 gap-2">
+          {/* While a halo is on, no see-through or picture background (they
+              always refuse it, halo-rules.ts) */}
           <GradientPicker
-            kinds={QR_IMAGE_KINDS}
+            {...backgroundPickerFor(current, QR_IMAGE_KINDS)}
             label={t("background")}
             name="bgColor"
             onChange={(color) => updateStyle("bgColor", color)}
