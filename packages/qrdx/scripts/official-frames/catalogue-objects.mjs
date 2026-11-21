@@ -1,8 +1,7 @@
-// Official frames shaped like things: the shapes other generators are known
-// for (hexagons, hearts, scrolls, pennants, pattern borders), everyday
-// objects holding the code (tablets, mugs, parcels, bottles, billboards) and
-// the playful ones nobody else has (a rocket window, a TV set, a cat holding
-// the code). catalogue.mjs adds them (through addObjectFrames, with its own
+// Official frames shaped like things: simple shapes (hexagons, hearts,
+// scrolls, pennants, pattern borders), everyday objects holding the code
+// (tablets, mugs, parcels, bottles, billboards) and playful scenes (a rocket
+// window, a TV set, a cat holding the code). catalogue.mjs adds them (through addObjectFrames, with its own
 // section() and f()) after the industry frames, and spreads the words below
 // into its description tables. The layouts are in layouts-objects.mjs.
 //
