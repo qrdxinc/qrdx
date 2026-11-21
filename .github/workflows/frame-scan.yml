@@ -102,12 +102,12 @@ jobs:
       # The gate steps below run whatever the steps before them found (once
       # the engine is built), so a failing frame never hides the others'
       # results: each step reports its own.
-      - name: Publish gate, this part's seeded frames
+      - name: Publish gate, this part's frames
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         working-directory: apps/app
         run: |
           bun x next typegen
-          bun x vitest run tests/database/seed-frames-gate-1.test.ts tests/database/seed-frames-gate-2.test.ts tests/database/seed-frames-gate-3.test.ts
+          bun x vitest run tests/community/official-frames-gate-1.test.ts tests/community/official-frames-gate-2.test.ts tests/community/official-frames-gate-3.test.ts
 
       - name: Publish gate, stored scores and decoders, this part's designs
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
