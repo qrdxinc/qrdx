@@ -182,9 +182,10 @@ export const eyeGradientSpanSchema = z.enum(EYE_GRADIENT_SPANS);
 /**
  * A light rim around every dark module and eye. `width` is in modules
  * (HALO_WIDTH_MIN to HALO_WIDTH_MAX, default HALO_WIDTH_DEFAULT); `color`
- * is a solid color (default white), drawn opaque (its alpha is dropped).
- * Drawn only on an opaque background at least as light as HALO_LIGHT_MIN,
- * in a color at least as light (getHaloRisk says why not otherwise).
+ * is a solid color (default HALO_COLOR_DEFAULT, #e5e7eb), drawn opaque
+ * (its alpha is dropped). Drawn only on an opaque background, in a color at
+ * least as light as HALO_LIGHT_MIN and no lighter than the background
+ * (getHaloRisk says why not otherwise).
  */
 export const haloSchema = z.object({
   color: z.string().optional(),

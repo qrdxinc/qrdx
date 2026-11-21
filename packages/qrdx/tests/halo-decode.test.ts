@@ -6,7 +6,7 @@
 // as HALO_LIGHT_MIN and no lighter than the background. These cases are the
 // rule's edges: the darkest rim it takes, on white and on a light grey
 // background, with black, grey and blue dots, and on a gradient. At each,
-// every dot shape at the narrowest and the widest halo must read at 4, 6
+// every dot shape at the narrowest, a middle and the widest halo must read at 4, 6
 // and 9 px per module wherever it reads without one. Just outside the edges
 // (customize-options.test.ts) the engine draws the code without a halo.
 // Nothing here may be loosened: a case that stops reading is a rule change.
@@ -31,7 +31,7 @@ import { renderSvg, symbolSize } from "./support/qr";
 
 const VALUE = "https://qrdx.dev/q/Ab3dE9x?utm=campaign";
 const SIZES = [4, 6, 9] as const;
-const WIDTHS = [HALO_WIDTH_MIN, HALO_WIDTH_MAX] as const;
+const WIDTHS = [HALO_WIDTH_MIN, 0.3, HALO_WIDTH_MAX] as const;
 const LIGHT_GREY = "#e5e7eb";
 
 interface Edge {

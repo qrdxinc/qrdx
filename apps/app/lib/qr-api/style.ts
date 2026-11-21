@@ -75,12 +75,8 @@ const HEX =
 const FUNCTIONAL = /^(?:rgba?|hsla?)\([\d\s.,%/+-]{1,64}\)$/i;
 const NAMED = /^[a-zA-Z]{3,24}$/;
 
-/**
- * A colour that can't load anything: hex, rgb()/hsl() or a colour name.
- * "none" isn't a colour: it paints nothing, so a part given it would vanish.
- */
+/** A colour that can't load anything: hex, rgb()/hsl() or a colour name. */
 export function isSafeColor(value: string): boolean {
-  if (value.toLowerCase() === "none") return false;
   return HEX.test(value) || FUNCTIONAL.test(value) || NAMED.test(value);
 }
 

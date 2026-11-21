@@ -671,7 +671,9 @@ describe("the halo rule", () => {
   it("draws no halo on a see-through background, in any form", () => {
     for (const [name, bgColor] of seeThrough) {
       const props = withHalo(bgColor);
-      expect(getHaloRisk(props)?.reason, name).toBe("see-through");
+      expect(getHaloRisk(props)?.reason, name).toBe(
+        name.startsWith("a picture") ? "picture" : "see-through"
+      );
       expect(resolveHalo(props.halo, props), name).toBeNull();
       expect(notDrawn(props), name).toBe(true);
     }
@@ -701,8 +703,20 @@ describe("the halo rule", () => {
       ],
       [
         "a color the engine can't read",
-        withHalo("whitesmoke"),
+        withHalo("notacolor"),
         "dark-background",
+      ],
+      ["a dark CSS color name", withHalo("slategray"), "dark-background"],
+      // lightgray (#d3d3d3) reads just darker than #d1d5db to decoders
+      [
+        "a named rim just darker than HALO_LIGHT_MIN",
+        withHalo("whitesmoke", { color: "lightgray" }),
+        "rim",
+      ],
+      [
+        "a rim lighter than a named background",
+        withHalo("gainsboro", { color: "white" }),
+        "rim",
       ],
       [
         "a white rim on light grey",
@@ -761,6 +775,8 @@ describe("the halo rule", () => {
         "a light gradient",
         withHalo(stops("#ffffff", "#e5e7eb"), { color: HALO_LIGHT_MIN }),
       ],
+      ["CSS color names", withHalo("whitesmoke", { color: "gainsboro" })],
+      ["a named rim on ivory", withHalo("ivory", { color: "lavender" })],
     ];
     for (const [name, props] of drawn) {
       expect(getHaloRisk(props), name).toBeNull();

@@ -370,14 +370,6 @@ export function getHaloRisk(
     return null;
   }
   const off = "or turn the halo off";
-  if (isSeeThroughBackground(props.bgColor)) {
-    return {
-      reason: "see-through",
-      message:
-        "A halo isn't drawn on a see-through background: on a grey surface under the code the rim makes it unreadable",
-      fix: `Give the code an opaque background, ${off}`,
-    };
-  }
   const paint = normalizeColorConfig(props.bgColor, DEFAULT_BGCOLOR);
   if (paint.type === "image") {
     return {
@@ -385,6 +377,14 @@ export function getHaloRisk(
       message:
         "A halo isn't drawn on a picture background: on the picture's darker parts the rim makes the code unreadable",
       fix: `Use a background color, ${off}`,
+    };
+  }
+  if (isSeeThroughBackground(props.bgColor)) {
+    return {
+      reason: "see-through",
+      message:
+        "A halo isn't drawn on a see-through background: on a grey surface under the code the rim makes it unreadable",
+      fix: `Give the code an opaque background, ${off}`,
     };
   }
   const grounds = (
