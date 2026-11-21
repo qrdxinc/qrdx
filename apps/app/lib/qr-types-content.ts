@@ -153,7 +153,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Type or paste your text into the text box. Line breaks are kept.",
       "If you paste a link, QRdx detects it and switches to the matching generator, so the code opens as a link instead of showing text.",
       "Scan the preview to check how the text appears on your phone.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "<your text>",
@@ -203,7 +203,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Enter the recipient address.",
       "Optionally add a subject and a message, for example 'Feedback: table 12', so incoming emails are easy to sort.",
       "Scan the preview: your mail app should open a draft with the fields filled in.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "mailto:<address>?subject=<subject>&body=<message>",
@@ -250,7 +250,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Enter the number with its country code, for example +1 415 555 0132.",
       "Don't worry about formatting: QRdx removes spaces, brackets and dashes and keeps the digits and the leading +.",
       "Scan the preview and confirm the dialer shows the right number.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "tel:<+country code><number>",
@@ -295,7 +295,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Enter the destination number with its country code.",
       "Optionally type the message, such as a keyword like JOIN.",
       "Scan the preview to confirm the messaging app opens with the number and text.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "SMSTO:<number>:<message>   or   sms:<number>",
@@ -345,7 +345,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Enter your WhatsApp number in international format, starting with the country code.",
       "Optionally write the message people will send, for example 'Hi, I want to book a table'.",
       "Scan the preview to check that the chat opens with your number.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://wa.me/<number>?text=<url-encoded message>",
@@ -499,7 +499,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Type an address or place name, or enter coordinates as latitude, longitude (for example 48.8584, 2.2945).",
       "Use coordinates for places without a street address, like a trailhead, a gate or a festival entrance.",
       "Scan the preview to confirm the right pin appears.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format:
@@ -546,7 +546,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Open your page, group or event on Facebook and copy its address, or use Share and then Copy link.",
       "Paste the full URL, starting with https://, into the field.",
       "Scan the preview to check that it opens the right page.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://www.facebook.com/<page-or-profile>",
@@ -596,7 +596,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Type your username, with or without the @.",
       "Check that the encoded link matches instagram.com/yourname.",
       "Scan the preview to make sure your profile opens.",
-      "Download a PNG, WebP or SVG, or style the code in the full editor.",
+      "Download a PNG, SVG, WebP, GIF, BMP or ICO, or style the code in the full editor.",
     ],
     payload: {
       format: "https://www.instagram.com/<username>",
@@ -646,7 +646,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Enter a subreddit (with or without r/) or a username (with or without u/).",
       "Fill in only one of the two fields so the code points where you expect.",
       "Scan the preview to check that it opens the right community or profile.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format:
@@ -697,7 +697,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Type your TikTok username, with or without the @.",
       "Check that the encoded link ends in /@yourname.",
       "Scan the preview to make sure your profile opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://www.tiktok.com/@<username>",
@@ -747,7 +747,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Type your handle, with or without the @.",
       "Check that the encoded link ends with your handle.",
       "Scan the preview to make sure your profile opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://twitter.com/<handle>",
@@ -849,7 +849,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Copy the link of your video (Share, then Copy link) or your channel page.",
       "Paste it into the Video URL or Channel URL field.",
       "Scan the preview to check that the right video or channel opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format:
@@ -897,7 +897,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Find your username in your Pinterest profile URL (pinterest.com/username): open your profile in a browser and look at the address bar.",
       "Type it into the field.",
       "Scan the preview to make sure your profile opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://www.pinterest.com/<username>",
@@ -946,7 +946,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Type your Snapchat username (not your display name).",
       "Check that the encoded link ends with /add/yourname.",
       "Scan the preview to make sure your add-friend page opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://www.snapchat.com/add/<username>",
@@ -996,7 +996,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Type your Threads username, with or without the @. It is the same as your Instagram username.",
       "Check that the encoded link ends in /@yourname.",
       "Scan the preview to make sure your profile opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://www.threads.net/@<username>",
@@ -1044,7 +1044,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "In Spotify, open the song, album, playlist or podcast and choose Share, then Copy link.",
       "Paste the link into the field.",
       "Scan the preview to check that it opens the right item.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://open.spotify.com/<type>/<id>   or   spotify:<type>:<id>",
@@ -1142,7 +1142,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Copy your PayPal.Me link from your PayPal account.",
       "To request a set amount, add it to the end of the link, for example paypal.me/yourname/25.",
       "Paste the link and scan the preview to check the payment page.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://paypal.me/<name>/<amount><currency code>",
@@ -1187,7 +1187,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Open Google's Place ID Finder (linked under the field), search for your business and copy its ID, which usually begins with ChIJ.",
       "Paste the Place ID into the field.",
       "Scan the preview and check that the review box opens for your business.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://search.google.com/local/writereview?placeid=<place-id>",
@@ -1233,7 +1233,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Enter your Venmo username, with or without the @.",
       "Optionally add an amount in US dollars and a note, such as 'Lemonade'.",
       "Scan the preview with your phone to check what Venmo shows.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format:
@@ -1284,7 +1284,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Copy a receiving address from your wallet and paste it into the address field.",
       "Optionally enter an amount in BTC (with a period as the decimal point), a label such as your name and a message.",
       "Scan the preview with a wallet and check that the address matches exactly.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "bitcoin:<address>?amount=<btc>&label=<label>&message=<message>",
@@ -1337,7 +1337,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Copy your address (starting with 0x) from your wallet and paste it in.",
       "Optionally enter an amount in ETH and a gas limit.",
       "Scan the preview with your wallet and check the address and amount.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "ethereum:<address>?value=<amount>e18&gas=<gas limit>",
@@ -1437,7 +1437,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Create a short link in Dub, or copy one you already have.",
       "Paste it into the field, including https://.",
       "Scan the preview to check that it redirects to your destination.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://dub.sh/<key>   or   https://<your-domain>/<key>",
@@ -1487,7 +1487,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "In Google Drive, open Share, set General access to 'Anyone with the link' and copy the link.",
       "Paste the link into the field.",
       "Scan the preview on a phone that isn't signed in to your account to check access.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://drive.google.com/file/d/<file-id>/view",
@@ -1578,7 +1578,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Open the product or store page on Amazon and copy the URL.",
       "Shorten product links to amazon.com/dp/ followed by the 10-character product ID (ASIN).",
       "Paste the link and scan the preview to check the right page opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://www.amazon.com/dp/<ASIN>",
@@ -1627,7 +1627,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Open the product on Flipkart and copy its link (or use Share in the app).",
       "Paste the link into the field.",
       "Scan the preview to check that the right product opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://www.flipkart.com/<product-path>/p/<item-id>?pid=<id>",
@@ -1677,7 +1677,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Copy your profile or event link from Cal.com.",
       "Paste it into the field.",
       "Scan the preview to check that the booking page opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://cal.com/<username>/<event>",
@@ -1963,7 +1963,7 @@ export const QR_TYPES: QrTypeContent[] = [
     steps: [
       "Enter your $Cashtag, with or without the $.",
       "Scan the preview to check it opens your page.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://cash.app/$<cashtag>",
@@ -2040,7 +2040,7 @@ export const QR_TYPES: QrTypeContent[] = [
       "Choose whether the code opens a username, channel or group, or a chat with a phone number.",
       "Enter the username (5 to 32 letters, digits and underscores) or paste a t.me link.",
       "Scan the preview to check the right chat opens.",
-      "Download the code as PNG, WebP or SVG.",
+      "Download the code as PNG, SVG, WebP, GIF, BMP or ICO.",
     ],
     payload: {
       format: "https://t.me/<username>   or   https://t.me/+<phone number>",
