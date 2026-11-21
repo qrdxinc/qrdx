@@ -274,7 +274,7 @@ export function laptop(o) {
     shape.rect(0, deckY + 110, w, 40, shade(0.35)),
   ];
   const labels = [ctaPill(o, [sx + 120, pb + 40, sw - 240, 170], shapes)];
-  labels.push(...note(o, [sx + 160, bezel + 50, sw - 320, 100], BG));
+  labels.push(...notePill(o, [sx + 160, bezel + 50, sw - 320, 100], shapes));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 
@@ -385,7 +385,7 @@ export function deliveryBox(o) {
     ctaPill(o, [labelX + 60, pb + 40, labelW - 120, 170], shapes),
   ];
   labels.push(
-    ...note(o, [labelX + 80, labelY + 50, labelW - 160, 100], BG, {
+    ...notePill(o, [labelX + 80, labelY + 50, labelW - 160, 100], shapes, {
       align: "start",
     })
   );
@@ -803,7 +803,7 @@ export function cornerTab(o) {
     shapes.push(shape.rect(30, cardY + 30, w - 60, h - cardY - 60, fill, 30));
   shapes.push(shape.rect(0, 0, tabW, tabH, AC, 40));
   const labels = [cta(o, [40, 20, tabW - 80, 140], AC, { align: "start" })];
-  labels.push(...note(o, [80, pb + 30, w - 160, 100], fill));
+  labels.push(...notePill(o, [80, pb + 30, w - 160, 100], shapes));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 

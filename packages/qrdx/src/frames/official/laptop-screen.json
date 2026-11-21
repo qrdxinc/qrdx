@@ -93,6 +93,15 @@
         "height": 170,
         "radius": 85,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 420,
+        "y": 100,
+        "width": 1160,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -114,11 +123,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Open it on your phone",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 420,
+          "x": 460,
           "y": 100,
-          "width": 1160,
+          "width": 1080,
           "height": 100
         },
         "weight": "regular"

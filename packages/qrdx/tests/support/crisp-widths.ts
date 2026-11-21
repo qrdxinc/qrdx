@@ -15,9 +15,9 @@ import { SAMPLE_PAYLOADS } from "./frames";
 import { renderSvg } from "./qr";
 
 /**
- * The frames that missed at some width in a sweep, under any of the fonts
- * checked (macOS system fonts, Liberation Sans, DejaVu Sans, Geist) or
- * error levels (M, Q).
+ * The frames that missed at some width in a sweep (10 px steps, or 2 px
+ * steps at level Q), under any of the fonts checked (macOS system fonts,
+ * Liberation Sans, DejaVu Sans, Geist) or error levels (M, Q).
  */
 export const CRISP_FRAMES = [
   "billboard-light",
@@ -28,6 +28,7 @@ export const CRISP_FRAMES = [
   "cinema-marquee",
   "clapperboard-light",
   "comic-panel",
+  "corner-tab-light",
   "delivery-box-light",
   "fish-tank",
   "flag-light",

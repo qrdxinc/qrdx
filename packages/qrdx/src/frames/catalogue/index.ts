@@ -8783,7 +8783,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Corner tab",
     collection: "call-to-action",
     tags: ["call to action", "tab", "corner", "label"],
-    hash: "ca34499b",
+    hash: "9cb6d2ee",
     ratio: 0.848,
   },
   {
@@ -8791,7 +8791,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Corner tab, light",
     collection: "call-to-action",
     tags: ["call to action", "tab", "corner", "label"],
-    hash: "4390e3f4",
+    hash: "ca16d75b",
     ratio: 0.848,
   },
   {
@@ -8911,7 +8911,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Laptop",
     collection: "objects",
     tags: ["object", "laptop", "screen", "device"],
-    hash: "b043edc3",
+    hash: "fb7a5b97",
     ratio: 1.081,
   },
   {
@@ -8943,7 +8943,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Delivery box",
     collection: "objects",
     tags: ["object", "box", "parcel", "delivery", "shipping"],
-    hash: "788b2965",
+    hash: "891f154c",
     ratio: 0.758,
   },
   {
@@ -8951,7 +8951,7 @@ export const OFFICIAL_FRAME_INDEX: readonly OfficialFrameIndexEntry[] = [
     name: "Delivery box, light",
     collection: "objects",
     tags: ["object", "box", "parcel", "delivery", "shipping"],
-    hash: "97b6b10b",
+    hash: "ef3284be",
     ratio: 0.758,
   },
   {
