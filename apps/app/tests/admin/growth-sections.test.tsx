@@ -163,7 +163,7 @@ describe("before the growth tables exist", () => {
   it("still shows sign-ups per week and says channels aren't recorded", async () => {
     const shown = text(await html(sections.Signups({ weeks })));
     expect(shown).toContain(
-      `Channels aren't recorded. Not set up yet: it starts once the database schema is updated (${GROWTH_SETUP_COMMAND}).`,
+      `Channels aren't recorded. Not set up yet: it starts once ${GROWTH_SETUP_COMMAND} has updated the database schema.`,
     );
     expect(shown).toContain("Sign-ups");
     expect(shown).toMatch(/Nov 9 · so far 6/);

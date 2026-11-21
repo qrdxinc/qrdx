@@ -39,8 +39,9 @@ type Weeks = readonly string[];
 function NotSetUp({ children }: { children: ReactNode }) {
   return (
     <p className="text-muted-foreground py-2 text-sm">
-      {children} Not set up yet: it starts once the database schema is updated (
-      <code className="text-xs">{GROWTH_SETUP_COMMAND}</code>).
+      {children} Not set up yet: it starts once{" "}
+      <code className="text-xs">{GROWTH_SETUP_COMMAND}</code> has updated the
+      database schema.
     </p>
   );
 }
