@@ -47,6 +47,10 @@ export {
   errorLevelSchema,
   eyeColorOverrideSchema,
   eyeColorsSchema,
+  eyeGradientSpanSchema,
+  eyeShapeOverrideSchema,
+  eyeShapesSchema,
+  haloSchema,
   imageSettingsSchema,
   logoOptionsSchema,
   logoShapeSchema,
@@ -54,6 +58,7 @@ export {
   qrPropsSchema,
   qrShapeSchema,
   qrSilhouetteSchema,
+  shadowSchema,
 } from "./qr";
 export {
   baseTemplatePropsSchema,

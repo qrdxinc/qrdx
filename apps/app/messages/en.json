@@ -1288,7 +1288,9 @@
     "seeAll": "See all",
     "faq": "FAQ",
     "designFree": "Design a free QR code",
-    "createDynamic": "Create a dynamic code"
+    "createDynamic": "Create a dynamic code",
+    "newTag": "New",
+    "nameIsNew": "{name}, new"
   },
   "pageCodes": {
     "sampleNote": "Samples in built-in themes. Each one scans, and none leads to a real account.",
@@ -4892,7 +4894,9 @@
           "topLeft": "Top left",
           "topRight": "Top right",
           "bottomLeft": "Bottom left"
-        }
+        },
+        "eyesContinueTheCodes": "Eyes continue the code's gradient",
+        "offEachEyeSweeps": "Off, each eye sweeps its own gradient. On, the eyes lay their gradient across the whole code, so eyes painted like the dots continue them."
       },
       "frameControls": {
         "uploadSvg": "Upload SVG",
@@ -5061,6 +5065,53 @@
       },
       "sidePanel": {
         "closeTitle": "Close {title}"
+      },
+      "eyeShapesSection": {
+        "eyeShapes": "Eye shapes",
+        "sameForAll": "Same for all",
+        "giveEachCornerEyeIts": "Give each corner eye its own frame and center shape. Eyes you leave alone use the Eyes shapes.",
+        "whichEye": "Which eye",
+        "frame": "Frame",
+        "center": "Center",
+        "frameShapes": "frame shapes",
+        "centerShapes": "center shapes",
+        "useTheSameShapesFor": "Use the same shapes for all eyes",
+        "positions": {
+          "topLeft": "Top left",
+          "topRight": "Top right",
+          "bottomLeft": "Bottom left"
+        }
+      },
+      "cornersSection": {
+        "roundedCorners": "Rounded corners",
+        "square": "Square",
+        "cornerRadius": "Corner radius",
+        "roundTheBackgroundsCorners": "Round the background's corners. The code keeps its padding inside them.",
+        "upToMaxpercentWithThis": "Up to {maxPercent, number}% with this padding: add padding to round the corners more.",
+        "addPaddingToRound": "Add padding to round the corners: the code's corners need the quiet zone.",
+        "aShapedCodeHasIts": "A shaped code has its own outline.",
+        "colorAroundIt": "Color around it",
+        "backdrop": "Backdrop",
+        "seeThroughOutsideThe": "See-through outside the corners: whatever is behind the code shows there."
+      },
+      "haloSection": {
+        "halo": "Halo",
+        "off": "Off",
+        "showAHalo": "Show a halo",
+        "aLightRimAround": "A light rim around every dot and eye, for a code placed on a picture. On a see-through background some dot shapes can't have one: the rim makes them unreadable on a grey surface.",
+        "width": "Width",
+        "color": "Color",
+        "seeThroughAHalo": "With a see-through background, a halo makes {dots} dots unreadable on a grey surface. Pick an opaque background color or another dot shape."
+      },
+      "shadowSection": {
+        "shadow": "Shadow",
+        "off": "Off",
+        "showAShadow": "Show a shadow",
+        "aSeeThroughCopy": "A see-through copy of the dots and eyes, shifted under them.",
+        "across": "Across",
+        "down": "Down",
+        "opacity": "Opacity",
+        "color": "Color"
       }
     },
     "customTextarea": {

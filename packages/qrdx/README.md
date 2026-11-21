@@ -109,7 +109,7 @@ The logo is drawn at 25% of the code's width with the modules behind it excavate
 
 ### `QRCodeCanvas`
 
-Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `moduleScale` and template props are ignored. Use `QRCodeSVG` for styled codes.
+Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo`, `shadow` and template props are ignored (`bgRadius` and `backdrop` are drawn). Use `QRCodeSVG` for styled codes.
 
 ```tsx
 "use client";
@@ -342,6 +342,12 @@ The same lists are exported as `BODY_PATTERN`, `CORNER_EYE_PATTERNS` and `CORNER
 | `eyeColors` | Per-eye `{ outer, inner }` colors (or gradients) for `topLeft`, `topRight`, `bottomLeft`; each overrides `eyeColor` / `dotColor` |
 | `moduleScale` | 0.5–1 (default 1): smaller modules for a spaced look; each pattern stops at the smallest size that still scans (`MODULE_SCALE_FLOOR`) |
 | `autoLevel` | Raise `level` to H when a logo covers more than 7% of the code (off by default) |
+| `eyeShapes` | Per-eye `{ outer, inner }` shapes (an eye frame and an eye center) for `topLeft`, `topRight`, `bottomLeft`; each overrides `cornerEyePattern` / `cornerEyeDotPattern`. The scan score judges each eye on its own (`getEyeStyleRisk`, `weakestEyePattern`) |
+| `eyeGradient` | `"corner"` (default: each eye sweeps its own gradient) or `"code"`: the eyes' gradients run across the whole code, so eyes painted with the dots' gradient continue it |
+| `bgRadius` | Corner radius of the background, 0 (default) to `BG_RADIUS_MAX` (0.5) of the code's width; capped at `BG_RADIUS_QUIET_RATIO` (2) × `margin` modules so the quiet zone keeps the code's corners (`getBgRadiusLimit` gives the cap). Square codes only |
+| `backdrop` | Solid color outside the rounded corners (see-through by default); drawn only when `bgRadius` rounds a corner |
+| `halo` | `{ color, width }`: a light rim around every dark module and eye, `width` in modules (`HALO_WIDTH_MIN` 0.1 to `HALO_WIDTH_MAX` 0.5, default 0.25), `color` default white. A look, not a quiet zone: it needs a light surface behind the code |
+| `shadow` | `{ color, opacity, dx, dy }`: a see-through copy of the dark modules and eyes under them, shifted `dx`/`dy` modules (−`SHADOW_OFFSET_MAX` 0.3 to 0.3, default 0.2) at `opacity` (0.1 to 0.4, default 0.3); `color` default black |
 | `shape` | `"square"` (default), `"circle"` or `"heart"`: the symbol sits in a disc or a heart filled with decorative modules, behind a light ring of `margin` modules (at least `QR_CIRCLE_QUIET_MIN`, 3). It also takes a `QRSilhouette` traced from a picture (`loadQRSilhouette` in the browser, `createQRSilhouette` from pixels); `getQRSilhouetteFit` refuses one too thin to hold the code, which then draws square. `getLayoutMargin` gives the margin it is drawn with; print sizes and logos follow it. `getQRAsSVG` draws it square |
 | `frameLabelMarkers` | For editors: marks each frame label `<text>` with `data-qrdx-frame-label` (`"text"`, `"secondaryText"` or a spec label's id), so a preview can edit labels in place. Off by default; exports never include it |
 | `imageSettings.padding` | Extra clear space around an excavated logo, in pixels |
