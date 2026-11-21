@@ -202,7 +202,7 @@ describe("community card type labels", () => {
   });
 
   it("leave the buttons off items that aren't stored yet", () => {
-    // An official frame the seed hasn't stored, a theme from before the backfill
+    // An official frame the database doesn't hold, a theme from community_theme
     for (const unstored of [card({ id: null }), card({ slug: "" })]) {
       const html = renderIntl(ItemGrid({ cards: [unstored] }));
       expect(html).not.toContain("data-reaction");

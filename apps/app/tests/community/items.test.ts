@@ -1,9 +1,9 @@
 // The community data layer (lib/community/*) against in-memory tables
 // (tests/support/fake-db): which tables it reads before and after the
-// community tables and the backfill, the official catalogue fallback, banned
-// creators hidden everywhere, publishing frames and themes (snapshots,
-// duplicates, text and spec checks, the real scan gate), likes, saves,
-// copies with their use counts and plan limits, and handles. Nothing
+// community tables exist and hold the themes, the official catalogue
+// fallback, banned creators hidden everywhere, publishing frames and themes
+// (snapshots, duplicates, text and spec checks, the real scan gate), likes,
+// saves, copies with their use counts and plan limits, and handles. Nothing
 // connects to a database.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -196,7 +196,7 @@ describe("which tables the community reads", () => {
     });
   });
 
-  it("keeps reading community_theme until the backfill copied the themes", async () => {
+  it("keeps reading community_theme until community_item holds the themes", async () => {
     fakeDb.seed("communityTheme", [
       { id: "ct_1", themeId: "t_1", userId: "u_ana", likeCount: 0 },
     ]);
@@ -238,7 +238,7 @@ describe("reading items", () => {
     );
   });
 
-  it("uses the seeded official frame and keeps the rest from the catalogue", async () => {
+  it("uses the stored official frame and keeps the rest from the catalogue", async () => {
     fakeDb.seed("communityProfile", [
       profile("cp_official_qrdx", "u_team", {
         kind: "official",
@@ -278,7 +278,7 @@ describe("reading items", () => {
     ]);
   });
 
-  it("keeps members' frames when the whole official library is seeded", async () => {
+  it("keeps members' frames when the whole official library is stored", async () => {
     fakeDb.seed("communityProfile", [
       profile("cp_official_qrdx", "u_team", {
         kind: "official",
@@ -750,7 +750,7 @@ describe("profiles and handles", () => {
     });
   });
 
-  it("shows @qrdx before the seed, from the catalogue", async () => {
+  it("shows @qrdx without its profile row, from the catalogue", async () => {
     vi.spyOn(fakeDatabase, "select").mockImplementationOnce(() => {
       throw missingTable();
     });

@@ -622,7 +622,7 @@ export const communityProfile = pgTable(
     displayName: text("display_name").notNull(),
     bio: text("bio"),
     avatarUrl: text("avatar_url"),
-    // Set only by the seed script or an admin
+    // Set only by an admin, never by the app
     verifiedAt: timestamp("verified_at"),
     // "active" | "suspended"
     status: text("status").notNull().default("active"),
@@ -680,7 +680,7 @@ export const communityItem = pgTable(
     saveCount: integer("save_count").notNull().default(0),
     useCount: integer("use_count").notNull().default(0),
     remixCount: integer("remix_count").notNull().default(0),
-    // community_theme.id this item was copied from (the backfill's key)
+    // The community_theme.id a theme from the old gallery was copied from
     legacyCommunityThemeId: text("legacy_community_theme_id").unique(),
     publishedAt: timestamp("published_at").notNull().defaultNow(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
