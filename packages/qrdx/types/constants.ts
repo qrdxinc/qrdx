@@ -57,8 +57,6 @@ export const CORNER_EYE_DOT_PATTERNS = [
   "drop-reverse",
   // Added after 0.0.57
   "cushion",
-  "bevel",
-  "notch",
 ] as const;
 
 /**
@@ -97,14 +95,12 @@ export const CORNER_EYE_PATTERNS = [
   "petal",
   "leaf-reverse",
   // Added after 0.0.57
-  "pebble",
   "porthole",
   "doodle",
   "notch",
   "plus",
   "stamp",
   "bud",
-  "tag",
   "bowl",
   "crest",
 ] as const;
@@ -144,16 +140,50 @@ export const BODY_PATTERN = [
   "mosaic",
   "octagon",
   // Added after 0.0.57 (drawn by src/body-patterns.tsx)
-  "x",
   "flower",
   "pebble",
-  "bubble",
-  "petal",
-  "squircle",
-  "drop",
-  "beads",
-  "chain",
 ] as const;
+
+// ── Withdrawn before release ───────────────────────────────────────────────
+
+/**
+ * Shapes that staging builds offered after 0.0.57 and that were withdrawn
+ * before any release: they missed strict decoders in sharp renders, or
+ * looked like a shape the catalogue already has. A saved design, link or
+ * API call that still names one draws the shape it maps to.
+ */
+export const WITHDRAWN_BODY_PATTERNS = {
+  x: "plus",
+  beads: "circle",
+  bubble: "circle",
+  chain: "circle",
+  petal: "leaf",
+  drop: "rounded",
+  squircle: "rounded",
+} as const satisfies Record<string, (typeof BODY_PATTERN)[number]>;
+
+export const WITHDRAWN_CORNER_EYE_PATTERNS = {
+  pebble: "squircle",
+  tag: "rounded",
+} as const satisfies Record<string, (typeof CORNER_EYE_PATTERNS)[number]>;
+
+export const WITHDRAWN_CORNER_EYE_DOT_PATTERNS = {
+  bevel: "square",
+  notch: "square",
+} as const satisfies Record<string, (typeof CORNER_EYE_DOT_PATTERNS)[number]>;
+
+/**
+ * The shape to draw for `value`: its replacement when it was withdrawn,
+ * otherwise `value` itself (anything else, valid or not, passes through).
+ */
+export function withdrawnFallback<T>(
+  withdrawn: Readonly<Record<string, string>>,
+  value: T
+): T {
+  return typeof value === "string" && Object.hasOwn(withdrawn, value)
+    ? (withdrawn[value] as T)
+    : value;
+}
 
 // ── Frames (frame.ts) ──────────────────────────────────────────────────────
 

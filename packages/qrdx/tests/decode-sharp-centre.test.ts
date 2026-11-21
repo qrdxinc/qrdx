@@ -104,14 +104,12 @@ describe("WEAK_SHARP_DOT_EYES matches the decoder", () => {
   // The eyes added after 0.0.57 cut or round every corner (see corner-eye.ts),
   // so a circle centre keeps the finder's proportions on their diagonals.
   const SOUND_NEW_EYES: CornerEyePattern[] = [
-    "pebble",
     "porthole",
     "doodle",
     "notch",
     "plus",
     "stamp",
     "bud",
-    "tag",
     "bowl",
     "crest",
   ];

@@ -4,12 +4,12 @@ import {
   doodleRadius,
   notchedRectPath,
   octagonPoints,
+  perforatedSquarePath,
   polygonPath,
   radialPoints,
   roundedRectPath,
   scoopedRectPath,
   shieldPath,
-  stampPath,
   superellipsePoints,
 } from "./shapes";
 import { compact, roundTo } from "./utils/fmt";
@@ -186,24 +186,12 @@ function roundHole(offsetX: number, offsetY: number, m: number): string {
   return roundedRectPath(offsetX + m, offsetY + m, 5 * m, 5 * m, 1.5 * m);
 }
 
-/** Pebble: a superellipse rounder than the squircle (exponent 2.75). */
+/** A superellipse rounder than the squircle eye (exponent 2.75). */
 function pebbleOutline(cx: number, cy: number, m: number): string {
   return polygonPath(superellipsePoints(cx, cy, 3.5 * m, 3.5 * m, 2.75, 96));
 }
 
-function generateCornerPebblePattern(
-  offsetX: number,
-  offsetY: number,
-  size: number
-): string {
-  const m = size / 7;
-  return (
-    pebbleOutline(offsetX + size / 2, offsetY + size / 2, m) +
-    roundHole(offsetX, offsetY, m)
-  );
-}
-
-/** Porthole: the pebble outline around a square hole with cut corners. */
+/** Porthole: a soft round outline around a square hole with cut corners. */
 function generateCornerPortholePattern(
   offsetX: number,
   offsetY: number,
@@ -257,7 +245,11 @@ function generateCornerPlusPattern(
   );
 }
 
-/** Stamp: a chamfered ring with two bites out of each side. */
+/**
+ * Stamp: a square with a perforated edge (four small bites along each side)
+ * and corners scooped like the notch's, so they sit 3.8 modules out on the
+ * diagonals, around a round hole.
+ */
 function generateCornerStampPattern(
   offsetX: number,
   offsetY: number,
@@ -265,8 +257,12 @@ function generateCornerStampPattern(
 ): string {
   const m = size / 7;
   return (
-    stampPath(offsetX, offsetY, size, 1.6 * m, 0.3 * m, [-1.1 * m, 1.1 * m]) +
-    roundHole(offsetX, offsetY, m)
+    perforatedSquarePath(offsetX, offsetY, size, 1.15 * m, 0.28 * m, [
+      -1.75 * m,
+      -0.75 * m,
+      0.75 * m,
+      1.75 * m,
+    ]) + roundHole(offsetX, offsetY, m)
   );
 }
 
@@ -321,29 +317,24 @@ function ringCorners(
 /**
  * Bud: round at the corner pointing away from the code and at the one
  * facing its centre, cut at the other two; it turns to face its corner of
- * the code. Tag: cut at the top-left corner, round elsewhere, the same on
- * every eye (turned, it fails light-on-dark codes at 4 px per module).
+ * the code.
  */
-function generateCornerFacingPattern(
+function generateCornerBudPattern(
   offsetX: number,
   offsetY: number,
   size: number,
-  corner: EyeCorner,
-  style: "bud" | "tag"
+  corner: EyeCorner
 ): string {
   const m = size / 7;
   const outer = corner === "top-left" ? 0 : corner === "top-right" ? 1 : 3;
   const opposite = (outer + 2) % 4;
-  const [outerCorners, innerCorners] = ringCorners(m, (i) =>
-    style === "bud" ? i === outer || i === opposite : i !== 0
+  const [outerCorners, innerCorners] = ringCorners(
+    m,
+    (i) => i === outer || i === opposite
   );
-  // The tag keeps a round hole: a cut hole corner under its cut outer
-  // corner fails light-on-dark codes at 4 px per module.
   return (
     cornersPath(offsetX, offsetY, size, outerCorners) +
-    (style === "tag"
-      ? roundHole(offsetX, offsetY, m)
-      : cornersPath(offsetX + m, offsetY + m, 5 * m, innerCorners))
+    cornersPath(offsetX + m, offsetY + m, 5 * m, innerCorners)
   );
 }
 
@@ -634,8 +625,6 @@ export function generateCornerSquarePath(
       return generateCornerShieldPattern(offsetX, offsetY, size);
     case "petal":
       return generateCornerPetalPattern(offsetX, offsetY, size, corner);
-    case "pebble":
-      return generateCornerPebblePattern(offsetX, offsetY, size);
     case "porthole":
       return generateCornerPortholePattern(offsetX, offsetY, size);
     case "doodle":
@@ -647,9 +636,7 @@ export function generateCornerSquarePath(
     case "stamp":
       return generateCornerStampPattern(offsetX, offsetY, size);
     case "bud":
-      return generateCornerFacingPattern(offsetX, offsetY, size, corner, "bud");
-    case "tag":
-      return generateCornerFacingPattern(offsetX, offsetY, size, corner, "tag");
+      return generateCornerBudPattern(offsetX, offsetY, size, corner);
     case "bowl":
       return generateCornerBowlPattern(offsetX, offsetY, size);
     case "crest":

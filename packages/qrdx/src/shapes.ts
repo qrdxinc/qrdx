@@ -341,15 +341,15 @@ export function shieldPath(
 }
 
 /**
- * Square with chamfered corners (`cut` along each edge) and semicircular
- * bites of radius `bite` taken out of each side at `offsets` from the
- * side's middle, like the edge of a postage stamp. Clockwise.
+ * Square with a concave quarter circle of radius `scoop` at each corner and
+ * semicircular bites of radius `bite` out of each side at `offsets` from the
+ * side's middle, like the perforated edge of a postage stamp. Clockwise.
  */
-export function stampPath(
+export function perforatedSquarePath(
   x: number,
   y: number,
   size: number,
-  cut: number,
+  scoop: number,
   bite: number,
   offsets: number[]
 ): string {
@@ -357,35 +357,26 @@ export function stampPath(
   const sorted = [...offsets].sort((a, b) => a - b);
   // One side, drawn left to right along the top; the others are the same
   // side turned around the centre.
-  const bites = sorted.map((offset): Point[] => [
-    [mid + offset - bite, 0],
-    [mid + offset + bite, 0],
-  ]);
-  const turn = (point: Point, quarter: number): Point => {
-    const [px, py] = [point[0] - mid, point[1] - mid];
+  const turn = (px: number, py: number, quarter: number): string => {
+    const [dx, dy] = [px - mid, py - mid];
     const [qx, qy] =
       quarter === 0
-        ? [px, py]
+        ? [dx, dy]
         : quarter === 1
-          ? [-py, px]
+          ? [-dy, dx]
           : quarter === 2
-            ? [-px, -py]
-            : [py, -px];
-    return [x + mid + qx, y + mid + qy];
+            ? [-dx, -dy]
+            : [dy, -dx];
+    return `${fmt(x + mid + qx)} ${fmt(y + mid + qy)}`;
   };
-  let d = "";
+  let d = `M${turn(scoop, 0, 0)}`;
   for (let quarter = 0; quarter < 4; quarter++) {
-    const start = turn([cut, 0], quarter);
-    d += quarter === 0 ? `M${fmt(start[0])} ${fmt(start[1])}` : "";
-    for (const [from, to] of bites) {
-      const a = turn(from, quarter);
-      const b = turn(to, quarter);
-      d += `L${fmt(a[0])} ${fmt(a[1])}A${fmt(bite)} ${fmt(bite)} 0 0 0 ${fmt(b[0])} ${fmt(b[1])}`;
+    for (const offset of sorted) {
+      d += `L${turn(mid + offset - bite, 0, quarter)}`;
+      d += `A${fmt(bite)} ${fmt(bite)} 0 0 0 ${turn(mid + offset + bite, 0, quarter)}`;
     }
-    const end = turn([size - cut, 0], quarter);
-    d += `L${fmt(end[0])} ${fmt(end[1])}`;
-    const next = turn([cut, 0], (quarter + 1) % 4);
-    d += `L${fmt(next[0])} ${fmt(next[1])}`;
+    d += `L${turn(size - scoop, 0, quarter)}`;
+    d += `A${fmt(scoop)} ${fmt(scoop)} 0 0 0 ${turn(size, scoop, quarter)}`;
   }
   return `${d}Z`;
 }
