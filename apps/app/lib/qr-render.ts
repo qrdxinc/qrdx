@@ -120,7 +120,6 @@ const EYE_DESCRIPTIONS: Record<PickableCornerEyePattern, string> = {
     "Square frame with a perforated edge and scooped corners, like a postage stamp",
   bud: "Frame with round corners facing the code's corner and its center, cut corners elsewhere",
   bowl: "Frame with cut corners at the top and a round bottom",
-  crest: "Shield-shaped frame with soft shoulders",
 };
 
 const DOT_DESCRIPTIONS: Record<PickableCornerEyeDotPattern, string> = {

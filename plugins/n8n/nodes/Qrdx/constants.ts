@@ -72,7 +72,6 @@ export const EYE_SHAPES = [
   "stamp",
   "bud",
   "bowl",
-  "crest",
 ] as const;
 
 /** `dot`: shape of the dot inside each corner eye */

@@ -19,7 +19,6 @@ export const NEW_EYE_FRAMES: NewBatch[] = [
       "stamp",
       "bud",
       "bowl",
-      "crest",
     ],
     until: "2026-12-31",
   },

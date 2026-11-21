@@ -85,7 +85,6 @@ export const EYE_CATEGORY: Partial<Record<CornerEyePattern, ShapeCategory>> = {
   plus: "classic",
   bud: "decorative",
   bowl: "decorative",
-  crest: "decorative",
   stamp: "playful",
   doodle: "playful",
 };
@@ -164,7 +163,6 @@ export const EYE_PRESETS: EyePreset[] = [
   { id: "plus", name: "Plus", outer: "plus", centre: "rounded" },
   { id: "bud", name: "Bud", outer: "bud", centre: "rounded" },
   { id: "bowl", name: "Bowl", outer: "bowl", centre: "rounded" },
-  { id: "crest", name: "Crest", outer: "crest", centre: "rounded" },
   { id: "stamp", name: "Stamp", outer: "stamp", centre: "squircle" },
   { id: "doodle", name: "Doodle", outer: "doodle", centre: "rounded" },
 ];

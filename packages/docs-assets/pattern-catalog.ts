@@ -286,12 +286,6 @@ const EYES: Record<
     popularity: null,
     recommendedDot: "rounded",
   },
-  crest: {
-    label: "Crest",
-    category: "Decorative",
-    popularity: null,
-    recommendedDot: "rounded",
-  },
 };
 
 const DOTS: Record<PickableCornerEyeDotPattern, Base> = {

@@ -50,7 +50,6 @@ test("the new eyes are the ones added after 0.0.57", () => {
     "stamp",
     "bud",
     "bowl",
-    "crest",
   ]);
 });
 

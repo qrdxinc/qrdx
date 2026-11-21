@@ -22,11 +22,19 @@ import {
 } from "@/lib/whats-new/patterns";
 import { defaultPresets } from "@/utils/qr-presets";
 
+/** The part of jsQR's signature these tests use. */
+type JsQR = (
+  data: Uint8ClampedArray,
+  width: number,
+  height: number,
+  options?: { inversionAttempts?: "attemptBoth" },
+) => { data: string; version: number } | null;
+
 const require = createRequire(import.meta.url);
 // jsqr ships with qrdx, so resolve it from there.
 const jsQR = createRequire(require.resolve("qrdx/package.json"))(
   "jsqr",
-) as typeof import("jsqr").default;
+) as JsQR;
 
 // The ponyfill builds a DOMRectReadOnly for each result's bounding box; Node
 // has none. Decoding doesn't touch it.

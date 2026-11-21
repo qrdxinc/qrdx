@@ -63,7 +63,6 @@ export const EYE_PATTERNS: { id: PickableCornerEyePattern; name: string }[] = [
   { id: "plus", name: "Plus" },
   { id: "bud", name: "Bud" },
   { id: "bowl", name: "Bowl" },
-  { id: "crest", name: "Crest" },
   { id: "stamp", name: "Stamp" },
   { id: "doodle", name: "Doodle" },
 ];

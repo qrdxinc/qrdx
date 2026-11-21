@@ -355,19 +355,6 @@ function generateCornerBowlPattern(
   );
 }
 
-/** Crest: a shield with soft shoulders. */
-function generateCornerCrestPattern(
-  offsetX: number,
-  offsetY: number,
-  size: number
-): string {
-  const m = size / 7;
-  return (
-    shieldPath(offsetX, offsetY, size, 2.6 * m, 3.9 * m, m) +
-    shieldPath(offsetX + m, offsetY + m, 5 * m, 1.5 * m, 2.7 * m, 0.8 * m)
-  );
-}
-
 /**
  * Pattern 1: Basic square corners
  */
@@ -639,8 +626,6 @@ export function generateCornerSquarePath(
       return generateCornerBudPattern(offsetX, offsetY, size, corner);
     case "bowl":
       return generateCornerBowlPattern(offsetX, offsetY, size);
-    case "crest":
-      return generateCornerCrestPattern(offsetX, offsetY, size);
     case "gear":
       return generateCornerGearPattern(offsetX, offsetY, size);
     case "rounded":

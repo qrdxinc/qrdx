@@ -169,16 +169,11 @@ export function OptionTile({
       </span>
       <span
         className={cn(
-          "text-muted-foreground flex w-full min-w-0 items-center justify-center gap-1 text-[11px] leading-tight font-medium",
+          "text-muted-foreground w-full truncate text-[11px] leading-tight font-medium",
           selected && "text-foreground",
         )}
       >
-        <span className="truncate">{name}</span>
-        {isNew && !blocked && (
-          // Beside the name, so it never covers a corner of the preview
-          // (several eye frames differ only there)
-          <NewTag className="shrink-0" />
-        )}
+        {name}
       </span>
       {note && (
         <span className="text-muted-foreground -mt-1 text-[10px] leading-tight tabular-nums">
@@ -189,6 +184,11 @@ export function OptionTile({
         <span className="bg-primary text-primary-foreground absolute top-1 right-1 grid size-4 place-items-center rounded-full shadow-sm">
           <Tick className="size-3" />
         </span>
+      )}
+      {isNew && !blocked && (
+        // Hangs from the top edge, centred: clear of the preview's corners
+        // (several eye frames differ only there), the name and the check
+        <NewTag className="absolute -top-1 left-1/2 -translate-x-1/2" />
       )}
       {risk && !blocked && (
         <span

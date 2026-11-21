@@ -500,7 +500,7 @@ export const STYLE_FAMILIES: readonly StyleFamily[] = [
     id: "geometric",
     word: "Facet",
     bodies: ["hexagon", "octagon"],
-    eyes: ["octagon", "bevel", "shield", "crest", "bowl"],
+    eyes: ["octagon", "bevel", "shield", "bowl"],
   },
   {
     id: "playful",
@@ -556,7 +556,6 @@ export const EYE_DOTS: Readonly<
   stamp: ["squircle", "rounded"],
   bud: ["rounded", "leaf"],
   bowl: ["rounded", "squircle"],
-  crest: ["rounded", "squircle"],
 };
 
 /** Eye centres a playful body may borrow (a plus body with plus centres). */

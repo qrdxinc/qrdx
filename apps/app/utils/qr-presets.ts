@@ -1184,7 +1184,7 @@ const looks: Record<string, ThemePreset> = {
       eyeColor: "#6B3F23",
       dotColor: "#6B3F23",
       bodyPattern: "circle",
-      cornerEyePattern: "crest",
+      cornerEyePattern: "rounded",
       cornerEyeDotPattern: "rounded",
       level: "Q",
       margin: 4,

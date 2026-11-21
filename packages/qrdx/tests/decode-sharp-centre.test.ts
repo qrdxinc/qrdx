@@ -111,7 +111,6 @@ describe("WEAK_SHARP_DOT_EYES matches the decoder", () => {
     "stamp",
     "bud",
     "bowl",
-    "crest",
   ];
 
   it("lists every eye but the round-cornered ones", () => {

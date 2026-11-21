@@ -102,7 +102,6 @@ export const CORNER_EYE_PATTERNS = [
   "stamp",
   "bud",
   "bowl",
-  "crest",
 ] as const;
 
 /**
@@ -165,6 +164,7 @@ export const WITHDRAWN_BODY_PATTERNS = {
 export const WITHDRAWN_CORNER_EYE_PATTERNS = {
   pebble: "squircle",
   tag: "rounded",
+  crest: "shield",
 } as const satisfies Record<string, (typeof CORNER_EYE_PATTERNS)[number]>;
 
 export const WITHDRAWN_CORNER_EYE_DOT_PATTERNS = {
