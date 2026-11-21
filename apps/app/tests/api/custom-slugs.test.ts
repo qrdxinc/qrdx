@@ -3,8 +3,8 @@
 // choose a code's back-half (3–64 of A–Z a–z 0–9 - _, no dash at either end,
 // case-sensitive); on qrdx.dev it's unique across QRdx and QRdx words are
 // reserved; on a custom domain it's unique on that domain only. Runs the real
-// codes service and REST routes against in-memory tables with the indexes of
-// manual-sql/0009 (and, where it says so, without the global one 0010 drops).
+// codes service and REST routes against in-memory tables with qr_code's two
+// unique indexes (and, where it says so, the old global one, since dropped).
 
 import { ownWorkspaceId } from "@repo/auth/own-workspace-id";
 import { NextRequest } from "next/server";
@@ -108,7 +108,7 @@ const SCOPE = {
   role: "owner" as const,
 };
 
-/** The indexes of 0009; `afterContract` = also 0010 (no global slug unique). */
+/** qr_code's slug indexes; `afterContract` = without the old global slug unique. */
 function indexes({ afterContract = false } = {}) {
   if (!afterContract) fakeDb.unique("qrCode", "slug");
   fakeDb.unique("qrCode", "slugScope", "slug");
@@ -328,7 +328,7 @@ describe("POST /v1/codes with a slug", () => {
   });
 });
 
-describe("uniqueness per namespace (after 0010)", () => {
+describe("uniqueness per namespace (without the global slug unique)", () => {
   beforeEach(() => indexes({ afterContract: true }));
 
   it("lets two custom domains and qrdx.dev each have the same back-half", async () => {

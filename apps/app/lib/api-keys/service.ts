@@ -37,9 +37,8 @@ import {
  * working when its creator leaves the team, is banned, or deletes their
  * account; deleting the team deletes its keys.
  *
- * Until packages/database/manual-sql/0011_api_key.sql is applied there is no
- * api_key table: keys then authenticate nothing (401, never a 500) and the
- * settings page says keys aren't available.
+ * Until the api_key table exists, keys authenticate nothing (401, never a
+ * 500) and the settings page says keys aren't available.
  */
 
 export interface ApiKeyView {
@@ -84,7 +83,7 @@ function reportMissingTable(error: unknown) {
   missingTableLogged = true;
   logError(error as Error, {
     action: "api-keys",
-    hint: "Apply packages/database/manual-sql/0011_api_key.sql",
+    hint: "The api_key table doesn't exist yet: update the database schema (bun run db:push)",
   });
 }
 

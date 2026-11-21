@@ -11,7 +11,7 @@ import { formatAgo, formatDate, formatNumber } from "../_lib/format";
 import {
   type AcquisitionField,
   type Cohort,
-  GROWTH_SQL_FILE,
+  GROWTH_SETUP_COMMAND,
   getActivation,
   getCodesAndScans,
   getDeveloperAccounts,
@@ -39,8 +39,8 @@ type Weeks = readonly string[];
 function NotSetUp({ children }: { children: ReactNode }) {
   return (
     <p className="text-muted-foreground py-2 text-sm">
-      {children} Not set up yet: it starts once{" "}
-      <code className="text-xs">{GROWTH_SQL_FILE}</code> is applied.
+      {children} Not set up yet: it starts once the database schema is updated (
+      <code className="text-xs">{GROWTH_SETUP_COMMAND}</code>).
     </p>
   );
 }

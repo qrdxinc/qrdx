@@ -10,7 +10,7 @@ export type { NoticeLimitId } from "./levels";
 // The write paths call noteLimitUsage after they add something a plan caps
 // (codes, pages, themes, files, AI art, form responses). It returns at once
 // and does the rest after the response: read the usage, claim the notice
-// (limit_notice, manual-sql/0015) and email the owners (./notify.tsx).
+// (limit_notice) and email the owners (./notify.tsx).
 // Never throws, and never touches the database where email can't go out:
 // local dev and previews share the live database, so a notice "sent" there
 // would stop the real one.

@@ -78,9 +78,8 @@ export default async function AdminAffiliatePage({
   if (!loaded.ready) {
     return (
       <p className="bg-muted/40 rounded-lg border p-4 text-sm">
-        The affiliate tables don't exist yet. Apply{" "}
-        <code>packages/database/manual-sql/2026-11-10-affiliates.sql</code>{" "}
-        first.
+        The affiliate tables don't exist yet. Update the database schema first (
+        <code>bun run db:push</code>).
       </p>
     );
   }

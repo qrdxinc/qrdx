@@ -111,7 +111,7 @@ You don't need a database or any environment variables to work on the React libr
 | `packages/cli` | The command-line tool, published to npm as `@qrdx/cli` |
 | `packages/auth` | Better Auth server and client configuration |
 | `packages/email` | `@repo/email`: the email templates and their layout (`templates/`, React Email), rendering, and sending through Resend; the app binds the sender to its environment in `apps/app/lib/email/send.ts` |
-| `packages/database` | Drizzle schema (`schema.ts`), the database client, and hand-applied SQL (`manual-sql/`) |
+| `packages/database` | Drizzle schema (`schema.ts`) and the database client |
 | `packages/design-system` | Shared UI components (shadcn/ui), icons, styles and fonts; the logo, the figure set, JSON-LD helpers and the Open Graph image frame (`og/`, with the Geist files server images use) |
 | `packages/integrations`, `packages/integration-kit` | The integrations catalogue (`src/catalog`), the connected-account integrations (`src/integrations`) and the shared integration types |
 | `packages/config` | Platform constants: the brand, the hosted service's URLs, contact emails, social links and limits shared across the app (its README says what belongs there) |
@@ -196,7 +196,7 @@ The app suite signs in with a test account's Better Auth session cookie. Sign in
 
 Edit `packages/database/schema.ts` and apply it to your own development database with `bun run db:push`.
 
-A maintainer applies schema changes to the production database before the code that needs them ships, so the code already running has to keep working against the new schema. That means schema changes are additive and safe to run twice: new columns are nullable or have a default, and a pull request never drops or renames a column or table. Put the SQL for your change in `packages/database/manual-sql/`, numbered after the last file there and guarded so it can run more than once (`IF NOT EXISTS`), and describe it in your pull request.
+A maintainer applies schema changes to the production database before the code that needs them ships, so the code already running has to keep working against the new schema. That means schema changes are additive and safe to run twice: new columns are nullable or have a default, and a pull request never drops or renames a column or table. Change `packages/database/schema.ts`, and put the SQL a maintainer runs for it in your pull request description, guarded so it can run more than once (`IF NOT EXISTS`).
 
 ## Translating QRdx
 

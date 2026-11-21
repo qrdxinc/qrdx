@@ -68,7 +68,7 @@ const missing = (error: unknown, action: string) => {
   if (!isMissingSchemaError(error)) return false;
   logError(error as Error, {
     action,
-    hint: "Apply packages/database/manual-sql/2026-11-11-agency.sql",
+    hint: "The agency columns and tables don't exist yet: update the database schema (bun run db:push)",
   });
   return true;
 };

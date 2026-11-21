@@ -2,7 +2,7 @@
 // through proxy.ts): an old path another provider printed opens the alias's
 // code with the same pipeline as its short link (scan counting, password,
 // schedule, pause), only on its domain, and answers "not found" (never a
-// 500) before manual-sql/2026-11-18-path-aliases.sql is applied. Runs the
+// 500) before the link_path_alias table exists. Runs the
 // real pipeline against in-memory tables, as apps/docs/content/docs/migrate.mdx
 // ("Path aliases") describes it.
 import bcrypt from "bcryptjs";

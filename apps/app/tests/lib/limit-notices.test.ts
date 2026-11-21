@@ -1,7 +1,7 @@
 // Plan-limit emails (lib/limit-notices): owners get one email when a
 // workspace reaches 90% of a capped limit and one at 100%, per limit and
 // calendar month; the "sent" row is claimed before sending so it never
-// repeats; nothing happens before manual-sql/0015 or where email can't go
+// repeats; nothing happens before limit_notice exists or where email can't go
 // out (local dev and previews share the live database). sendEmail is a
 // mock and the tables are in memory: no email is sent, nothing is stored.
 import { render } from "@react-email/render";

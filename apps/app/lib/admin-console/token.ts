@@ -93,7 +93,7 @@ export async function exchangeAdminConsoleCode(
   if (!grant) {
     return oauthError(
       "server_error",
-      "This deployment can't mint console grants yet (manual-sql/2026-11-18-console-grants.sql)",
+      "This deployment can't mint console grants yet (update the database schema: bun run db:push)",
       503,
     );
   }

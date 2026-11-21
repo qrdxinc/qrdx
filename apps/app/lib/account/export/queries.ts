@@ -384,8 +384,8 @@ export function exportQueries(userId: string) {
       .where(eq(themeLike.userId, userId))
       .orderBy(asc(themeLike.createdAt)),
 
-    // Community items (manual-sql/0012): the export reads them only when
-    // the tables exist (lib/account/export/entries.ts).
+    // Community items: the export reads them only when the tables exist
+    // (lib/account/export/entries.ts).
     communityProfile: db
       .select({
         id: communityProfile.id,

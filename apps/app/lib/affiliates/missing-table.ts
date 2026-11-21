@@ -1,7 +1,6 @@
 /**
  * Postgres's "undefined table" (42P01), however deeply the driver wraps it:
- * what every read and write of the affiliate tables hits until
- * packages/database/manual-sql/2026-11-10-affiliates.sql is applied.
+ * what every read and write of the affiliate tables hits until they exist.
  */
 export function isMissingTableError(error: unknown): boolean {
   let current: unknown = error;
@@ -16,14 +15,14 @@ let warned = false;
 
 /**
  * Logs the missing tables once per process (a warning, not an error: it's
- * expected until the SQL is applied). Returns true when `error` was that.
+ * expected until the tables exist). Returns true when `error` was that.
  */
 export function noteMissingTables(error: unknown): boolean {
   if (!isMissingTableError(error)) return false;
   if (!warned) {
     warned = true;
     console.warn(
-      "Affiliate program: the affiliate tables don't exist yet (packages/database/manual-sql/2026-11-10-affiliates.sql). Referrals and commissions aren't recorded until they do.",
+      "Affiliate program: the affiliate tables don't exist yet (update the database schema: bun run db:push). Referrals and commissions aren't recorded until they do.",
     );
   }
   return true;

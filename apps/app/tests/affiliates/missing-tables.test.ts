@@ -1,5 +1,5 @@
-// Until packages/database/manual-sql/2026-11-10-affiliates.sql is applied,
-// every affiliate query hits a missing table (Postgres 42P01). None of that
+// Until the affiliate tables exist, every affiliate query hits a missing
+// table (Postgres 42P01). None of that
 // may reach a person: sign-up still works and records nothing, the pages'
 // loaders say "not ready" instead of failing, the referral link still
 // redirects, the data export and the daily cron carry on. (The webhook's

@@ -264,7 +264,7 @@ export async function writeAuditEvents(
       if (!missingTableLogged) {
         missingTableLogged = true;
         console.warn(
-          "Workspace audit log: the workspace_audit_log table doesn't exist yet (packages/database/manual-sql/2026-11-09-workspace-audit-log.sql). Nothing is recorded until it does.",
+          "Workspace audit log: the workspace_audit_log table doesn't exist yet (update the database schema: bun run db:push). Nothing is recorded until it does.",
         );
       }
       return 0;

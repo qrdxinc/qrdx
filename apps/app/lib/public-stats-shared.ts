@@ -24,7 +24,7 @@ export function parsePublicStatsRange(value: unknown): PublicStatsRange {
 }
 
 export interface PublicStatsShare {
-  /** false until manual-sql/0016 is applied */
+  /** false until the code_public_stats table exists */
   available: boolean;
   /** The viewer may turn sharing on or off and reset the link */
   canManage: boolean;

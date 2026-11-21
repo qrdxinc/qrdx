@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 // Saved UTM templates in the UTM panel: fill the panel from a template, save
 // its values as one,
 // rename and delete them. Shown only when the workspace's plan has UTM and
-// the server has the table (manual-sql/0013); otherwise nothing renders.
+// the server has the table (utm_template); otherwise nothing renders.
 
 import { toast } from "@repo/design-system";
 import { Button } from "@repo/design-system/components/ui/button";
