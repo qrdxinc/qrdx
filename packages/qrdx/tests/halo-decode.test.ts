@@ -7,8 +7,10 @@
 // rule's edges: the darkest rim it takes, on white and on a light grey
 // background, with black, grey and blue dots, and on a gradient. At each,
 // every dot shape at the narrowest, a middle and the widest halo must read at 4, 6
-// and 9 px per module wherever it reads without one. Just outside the edges
-// (customize-options.test.ts) the engine draws the code without a halo.
+// and 9 px per module wherever it reads without one. On a background past
+// the edges (customize-options.test.ts) the engine draws the code without a
+// halo; a rim color past them is drawn in the closest one inside them
+// (halo-colors-decode.test.ts reads those).
 // Nothing here may be loosened: a case that stops reading is a rule change.
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";

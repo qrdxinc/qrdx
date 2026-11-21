@@ -7,12 +7,7 @@
 // The Halo section says why a halo isn't drawn (its switch always turns
 // off), and while a halo is on the background picker offers no
 // see-through or picture fill, the two choices that always refuse it.
-import {
-  getHaloRisk,
-  getSolidColor,
-  type HaloRefusal,
-  haloTints,
-} from "qrdx";
+import { getHaloRisk, getSolidColor, type HaloRefusal, haloTints } from "qrdx";
 import { HALO_LIGHT_MIN } from "qrdx/types";
 import type { PaintKind } from "@/components/editor/paint-picker/paint-panel";
 import type { QRStyle } from "@/types/theme";

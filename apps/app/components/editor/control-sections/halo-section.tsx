@@ -157,7 +157,9 @@ export function HaloControl({
               kinds={["solid"]}
               label={t("color")}
               name="halo.color"
-              onChange={(color) => pick(getSolidColor(color, HALO_COLOR_DEFAULT))}
+              onChange={(color) =>
+                pick(getSolidColor(color, HALO_COLOR_DEFAULT))
+              }
               value={halo.color}
             />
             {drawn && (

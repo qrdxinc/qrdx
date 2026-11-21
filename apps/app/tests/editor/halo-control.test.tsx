@@ -44,7 +44,7 @@ describe("the halo's color control", () => {
     });
     const drawn = fitHaloColor("#881337", "#ffffff") as string;
     expect(html).toContain(
-      `Drawn as ${drawn.toUpperCase()} so the code still scans`
+      `Drawn as ${drawn.toUpperCase()} so the code still scans`,
     );
     expect(html).toContain(`data-halo-drawn="${drawn}"`);
     expect(html).not.toContain("Won&#x27;t scan here");
@@ -63,7 +63,7 @@ describe("the halo's color control", () => {
     const dark = render({ bgColor: "#9ca3af", halo: {} });
     expect(dark).toContain("Won&#x27;t scan here");
     expect(dark).toContain(
-      "A halo needs a light background, at least light grey."
+      "A halo needs a light background, at least light grey.",
     );
     expect(dark).not.toContain("Drawn as");
     expect(swatches(dark)).toBe(0);
@@ -76,11 +76,11 @@ describe("the halo's color control", () => {
     expect(
       haloSummary(
         style({ bgColor: "#ffffff", halo: { color: "#881337", width: 0.3 } }),
-        copy
-      )
+        copy,
+      ),
     ).toBe("30%");
     expect(haloSummary(style({ bgColor: "#9ca3af", halo: {} }), copy)).toBe(
-      "Won't scan here"
+      "Won't scan here",
     );
   });
 });

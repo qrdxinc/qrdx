@@ -8,13 +8,14 @@
 // switch off and disabled and every eye preset blocked. The owner's report
 // (22 Nov 2026): a dark red rim on white was refused, so the color control
 // looked dead.
+
+import { fitHaloColor, getHaloRisk } from "qrdx";
 import {
   CORNER_EYE_DOT_PATTERNS,
   CORNER_EYE_PATTERNS,
   HALO_LIGHT_MIN,
 } from "qrdx/types";
 import { describe, expect, it } from "vitest";
-import { fitHaloColor, getHaloRisk } from "qrdx";
 import {
   backgroundPickerFor,
   haloDotTints,
@@ -124,8 +125,9 @@ describe("halo rules", () => {
     expect(haloRisk(white)).toBeNull();
     expect(haloDrawnAs(white)).toBe("#e6e6e6");
     // Drawn as picked: nothing to say
-    expect(haloDrawnAs({ bgColor: "#ffffff", halo: { color: "#fde68a" } }))
-      .toBeNull();
+    expect(
+      haloDrawnAs({ bgColor: "#ffffff", halo: { color: "#fde68a" } }),
+    ).toBeNull();
     // No halo, or none drawn here: nothing drawn instead
     expect(haloDrawnAs({ bgColor: "#ffffff" })).toBeNull();
     expect(haloDrawnAs({ bgColor: "#9ca3af", halo: {} })).toBeNull();
