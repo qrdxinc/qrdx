@@ -184,15 +184,8 @@
                 "random-dots",
                 "mosaic",
                 "octagon",
-                "x",
                 "flower",
-                "pebble",
-                "bubble",
-                "petal",
-                "squircle",
-                "drop",
-                "beads",
-                "chain"
+                "pebble"
               ]
             }
           },
@@ -222,14 +215,12 @@
                 "shield",
                 "petal",
                 "leaf-reverse",
-                "pebble",
                 "porthole",
                 "doodle",
                 "notch",
                 "plus",
                 "stamp",
                 "bud",
-                "tag",
                 "bowl",
                 "crest"
               ]
@@ -265,9 +256,7 @@
                 "extra-rounded",
                 "leaf-reverse",
                 "drop-reverse",
-                "cushion",
-                "bevel",
-                "notch"
+                "cushion"
               ]
             }
           },
@@ -7681,15 +7670,8 @@
                       "random-dots",
                       "mosaic",
                       "octagon",
-                      "x",
                       "flower",
-                      "pebble",
-                      "bubble",
-                      "petal",
-                      "squircle",
-                      "drop",
-                      "beads",
-                      "chain"
+                      "pebble"
                     ]
                   },
                   "cornerEyePattern": {
@@ -7713,14 +7695,12 @@
                       "shield",
                       "petal",
                       "leaf-reverse",
-                      "pebble",
                       "porthole",
                       "doodle",
                       "notch",
                       "plus",
                       "stamp",
                       "bud",
-                      "tag",
                       "bowl",
                       "crest",
                       "curly"
@@ -7752,8 +7732,6 @@
                       "leaf-reverse",
                       "drop-reverse",
                       "cushion",
-                      "bevel",
-                      "notch",
                       "diamond",
                       "star",
                       "banner"
@@ -11171,15 +11149,8 @@
               "random-dots",
               "mosaic",
               "octagon",
-              "x",
               "flower",
-              "pebble",
-              "bubble",
-              "petal",
-              "squircle",
-              "drop",
-              "beads",
-              "chain"
+              "pebble"
             ]
           },
           "cornerEyePattern": {
@@ -11203,14 +11174,12 @@
               "shield",
               "petal",
               "leaf-reverse",
-              "pebble",
               "porthole",
               "doodle",
               "notch",
               "plus",
               "stamp",
               "bud",
-              "tag",
               "bowl",
               "crest",
               "curly"
@@ -11242,8 +11211,6 @@
               "leaf-reverse",
               "drop-reverse",
               "cushion",
-              "bevel",
-              "notch",
               "diamond",
               "star",
               "banner"

@@ -41,11 +41,11 @@ import {
   CORNER_EYE_DOT_PATTERNS,
   CORNER_EYE_PATTERNS,
   type ColorConfig,
-  cornerEyeDotPatternSchema,
-  cornerEyePatternSchema,
   type LinearGradient,
   normalizeColorConfig,
   type RadialGradient,
+  RETIRED_CORNER_EYE_DOT_PATTERNS,
+  RETIRED_CORNER_EYE_PATTERNS,
 } from "qrdx/types";
 import { presetLogoIcon } from "@/lib/community/public-style";
 import { DEFAULT_QR_LOGO } from "@/lib/constants";
@@ -622,12 +622,12 @@ export function imageSnippet(input: SnippetInput): ImageSnippet {
     [
       "eye",
       style.cornerEyePattern ?? ENGINE_DEFAULTS.cornerEyePattern,
-      cornerEyePatternSchema.options,
+      [...CORNER_EYE_PATTERNS, ...RETIRED_CORNER_EYE_PATTERNS],
     ],
     [
       "dot",
       style.cornerEyeDotPattern ?? ENGINE_DEFAULTS.cornerEyeDotPattern,
-      cornerEyeDotPatternSchema.options,
+      [...CORNER_EYE_DOT_PATTERNS, ...RETIRED_CORNER_EYE_DOT_PATTERNS],
     ],
   ] as const;
   for (const [name, value, known] of shapes) {
