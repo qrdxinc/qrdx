@@ -4,9 +4,8 @@
 // it took the letters for finder patterns. Their labels now sit on dark
 // pills; these tests render each such frame with resvg at every code width
 // from 160 to 450 px in 10 px steps and decode every render.
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { Resvg } from "@resvg/resvg-js";
-import jsQR from "jsqr";
 import { describe, expect, it } from "vitest";
 import { getFrameDimensions } from "../../src/frame";
 import { OFFICIAL_FRAMES } from "../../src/frames/official";
@@ -62,45 +61,35 @@ export const CRISP_WIDTHS = Array.from({ length: 30 }, (_, i) => 160 + i * 10);
  * and no system fonts: the frames' font stack resolves to different fonts on
  * macOS and Linux, and the lettering's shapes decide what the decoder sees.
  */
-const FONT = {
-  fontDirs: [
-    fileURLToPath(new URL("../../../design-system/og/fonts", import.meta.url)),
-  ],
-  loadSystemFonts: false,
-  defaultFontFamily: "Geist",
-  sansSerifFamily: "Geist",
-};
+const FONT_DIR = fileURLToPath(
+  new URL("../../../design-system/og/fonts", import.meta.url)
+);
 
-/** Renders the framed code `width` px wide with resvg and decodes it with jsQR. */
-export function decodesCrisp(
+const READER = fileURLToPath(new URL("./crisp-reads.mjs", import.meta.url));
+
+/**
+ * The widths in CRISP_WIDTHS at which the framed code doesn't decode. The
+ * codes are drawn by resvg and read by jsQR in a child process
+ * (crisp-reads.mjs: resvg-js keeps every render's memory until its process
+ * exits).
+ */
+export function crispMisses(
   frame: AnyQRFrame,
-  width: number,
   level: QRProps["level"]
-): boolean {
+): number[] {
   const value = SAMPLE_PAYLOADS.link;
-  const svg = renderSvg({ value, size: width, level, frame });
-  const artwork = getFrameDimensions(width, frame);
-  const image = new Resvg(svg, {
-    fitTo: { mode: "width", value: Math.round(artwork.width) },
-    background: "#ffffff",
-    font: FONT,
-  }).render();
-  // A white margin around the artwork, as a page or a screen gives it
-  const pad = Math.round(width * 0.12);
-  const w = image.width + 2 * pad;
-  const h = image.height + 2 * pad;
-  const data = new Uint8ClampedArray(w * h * 4).fill(255);
-  // Read once: each read of `pixels` copies the whole image
-  const pixels = image.pixels;
-  const row = image.width * 4;
-  for (let y = 0; y < image.height; y++) {
-    data.set(
-      pixels.subarray(y * row, (y + 1) * row),
-      ((y + pad) * w + pad) * 4
-    );
-  }
-  const result = jsQR(data, w, h, { inversionAttempts: "attemptBoth" });
-  return result?.data === value;
+  const jobs = CRISP_WIDTHS.map((width) => ({
+    svg: renderSvg({ value, size: width, level, frame }),
+    width: Math.round(getFrameDimensions(width, frame).width),
+    margin: Math.round(width * 0.12),
+  }));
+  const reads = JSON.parse(
+    execFileSync(process.execPath, [READER], {
+      input: JSON.stringify({ value, fontDir: FONT_DIR, jobs }),
+      maxBuffer: 16 * 1024 * 1024,
+    }).toString()
+  ) as boolean[];
+  return CRISP_WIDTHS.filter((_, i) => !reads[i]);
 }
 
 /** Every frame in CRISP_FRAMES decodes at every width at error level `level`. */
@@ -110,9 +99,7 @@ export function describeCrispWidths(level: QRProps["level"]) {
       const official = OFFICIAL_FRAMES.find((frame) => frame.id === id);
       if (!official) throw new Error(`No official frame ${id}`);
       const frame: AnyQRFrame = { style: "custom", spec: official.spec };
-      expect(
-        CRISP_WIDTHS.filter((width) => !decodesCrisp(frame, width, level))
-      ).toEqual([]);
+      expect(crispMisses(frame, level)).toEqual([]);
     });
   });
 }
