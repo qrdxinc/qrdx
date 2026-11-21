@@ -5,12 +5,17 @@
 // picture fill while a halo is on. Review finding 1: a halo on diamond dots
 // over an opaque background, then a see-through background, left the switch
 // off and disabled and every eye preset blocked.
-import { CORNER_EYE_DOT_PATTERNS, CORNER_EYE_PATTERNS } from "qrdx/types";
+import {
+  CORNER_EYE_DOT_PATTERNS,
+  CORNER_EYE_PATTERNS,
+  HALO_LIGHT_MIN,
+} from "qrdx/types";
 import { describe, expect, it } from "vitest";
 import {
   backgroundPickerFor,
   haloRisk,
   haloSwitch,
+  haloToTurnOn,
 } from "@/components/editor/control-sections/halo-rules";
 import {
   pairBlocked,
@@ -69,6 +74,17 @@ describe("halo rules", () => {
       checked: false,
       disabled: false,
     });
+  });
+
+  it("turns on a rim the background takes", () => {
+    expect(haloToTurnOn({ bgColor: "#ffffff" })).toEqual({});
+    // The default rim (#e5e7eb) is lighter than this background
+    const grey = { bgColor: "#dcdfe3" };
+    expect(haloToTurnOn(grey)).toEqual({ color: HALO_LIGHT_MIN });
+    expect(haloSwitch(grey)).toEqual({ checked: false, disabled: false });
+    expect(haloRisk({ ...grey, halo: haloToTurnOn(grey) })).toBeNull();
+    // Nothing fits a background darker than HALO_LIGHT_MIN
+    expect(haloSwitch({ bgColor: "#9ca3af" }).disabled).toBe(true);
   });
 
   it("blocks no dot shape for a halo", () => {

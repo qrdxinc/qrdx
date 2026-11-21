@@ -5,12 +5,30 @@
 // always turns off), and while a halo is on the background picker offers
 // no see-through or picture fill, the two choices that always refuse it.
 import { getHaloRisk, type HaloRisk } from "qrdx";
+import { HALO_LIGHT_MIN } from "qrdx/types";
 import type { PaintKind } from "@/components/editor/paint-picker/paint-panel";
 import type { QRStyle } from "@/types/theme";
 
+/**
+ * The halo the switch turns on: the default rim, or the darkest one the
+ * engine takes where the default is lighter than the background.
+ */
+export function haloToTurnOn(
+  style: Partial<QRStyle>,
+): NonNullable<QRStyle["halo"]> {
+  const darkest = { color: HALO_LIGHT_MIN };
+  return getHaloRisk({ halo: {}, bgColor: style.bgColor }) &&
+    !getHaloRisk({ halo: darkest, bgColor: style.bgColor })
+    ? darkest
+    : {};
+}
+
 /** Why a halo can't be drawn on `style` (with one switched on), or null. */
 export function haloRisk(style: Partial<QRStyle>): HaloRisk | null {
-  return getHaloRisk({ halo: style.halo ?? {}, bgColor: style.bgColor });
+  return getHaloRisk({
+    halo: style.halo ?? haloToTurnOn(style),
+    bgColor: style.bgColor,
+  });
 }
 
 /**

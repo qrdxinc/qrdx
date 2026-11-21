@@ -9,7 +9,7 @@ import { HALO_COLOR_DEFAULT, HALO_WIDTH_MAX, HALO_WIDTH_MIN } from "qrdx/types";
 import ControlSection from "@/components/editor/control-section";
 import { GradientPicker } from "@/components/editor/gradient-picker";
 import type { QRStyle } from "@/types/theme";
-import { haloRisk, haloSwitch } from "./halo-rules";
+import { haloRisk, haloSwitch, haloToTurnOn } from "./halo-rules";
 import { NewLookTag } from "./new-look-tag";
 
 const percent = (share: number) => Math.round(share * 100);
@@ -70,7 +70,9 @@ export function HaloSection({ style, onChange, expanded }: HaloSectionProps) {
         <Switch
           {...haloSwitch(style)}
           id="halo-on"
-          onCheckedChange={(next) => onChange(next ? {} : undefined)}
+          onCheckedChange={(next) =>
+            onChange(next ? haloToTurnOn(style) : undefined)
+          }
         />
       </div>
       {reason ? (
