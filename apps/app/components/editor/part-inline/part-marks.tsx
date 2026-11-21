@@ -2,6 +2,7 @@
 
 import { cn } from "@repo/design-system/lib/utils";
 import { useTranslations } from "next-intl";
+import { createContext, useContext } from "react";
 import { NewTag } from "@/components/new-tag";
 import { useIsNewLook } from "../control-sections/new-look-tag";
 import type { PartMenuItem } from "./part-controls";
@@ -54,4 +55,17 @@ export function ItemMarks({
       )}
     </>
   );
+}
+
+/**
+ * Closes the toolbar's open menu, for a control in it that hands over to a
+ * dialog of its own (the brand logo gallery): the menu would sit over it.
+ * The phone sheet keeps its rows open (the dialog covers the sheet).
+ */
+const CloseMenu = createContext<() => void>(() => {});
+
+export const CloseMenuProvider = CloseMenu.Provider;
+
+export function useCloseMenu(): () => void {
+  return useContext(CloseMenu);
 }

@@ -23,7 +23,7 @@ import {
 import { placeMenu } from "../frame-inline/menu-placement";
 import type { Box } from "../frame-inline/preview-labels";
 import type { PartItem, PartMenuItem } from "./part-controls";
-import { ItemMarks, useItemLabel } from "./part-marks";
+import { CloseMenuProvider, ItemMarks, useItemLabel } from "./part-marks";
 import { type PartId, toolbarAnchor } from "./part-targets";
 
 /** Room between a part and the outline drawn around it while it's edited. */
@@ -85,7 +85,9 @@ function MenuItem({
         </>
       }
     >
-      {item.content}
+      <CloseMenuProvider value={() => onOpenChange(null)}>
+        {item.content}
+      </CloseMenuProvider>
     </MenuPopover>
   );
 }

@@ -75,8 +75,10 @@ import { frameColors } from "../control-sections/frame-specs";
 import { backgroundPickerFor, haloRisk } from "../control-sections/halo-rules";
 import { HaloControl } from "../control-sections/halo-section";
 import {
+  type BrandLogos,
   LogoSourceControls,
   type LogoUpload,
+  useBrandLogos,
   useLogoUpload,
 } from "../control-sections/logo-controls";
 import { LogoCropControls } from "../control-sections/logo-crop-controls";
@@ -108,6 +110,7 @@ import {
 } from "../paint-picker/paint-panel";
 import { useEditableStyle, useEditorValue } from "../style-scope";
 import { ContentField } from "./content-field";
+import { useCloseMenu } from "./part-marks";
 import type { PartId } from "./part-targets";
 
 // What each part's toolbar offers (the phone sheet stacks the same items).
@@ -355,11 +358,38 @@ function withoutEyeShape(
   );
 }
 
-/** The logo's own items, with the file input their Upload opens. */
+/**
+ * The Logo section's controls in a toolbar menu: opening the brand gallery
+ * closes the menu first (the gallery lives outside it, in the extras).
+ */
+function LogoMenuControls({
+  style,
+  logo,
+}: {
+  style: QRStyle;
+  logo: { upload: LogoUpload; brands: BrandLogos; onChange: LogoChange };
+}) {
+  const closeMenu = useCloseMenu();
+  return (
+    <LogoSourceControls
+      brands={{
+        ...logo.brands,
+        open: () => {
+          closeMenu();
+          logo.brands.open();
+        },
+      }}
+      onStyleChange={logo.onChange}
+      style={style}
+      upload={logo.upload}
+    />
+  );
+}
+
+/** The Logo section as a menu (its file input and gallery live outside it). */
 function logoMenu(
   current: QRStyle,
-  update: (change: Partial<QRStyle>) => void,
-  upload: LogoUpload,
+  logo: { upload: LogoUpload; brands: BrandLogos; onChange: LogoChange },
   { id, label, glyph }: { id: string; label: string; glyph: ReactNode },
 ): PartMenuItem {
   return {
@@ -371,21 +401,14 @@ function logoMenu(
     section: "logo",
     content: (
       <div className="space-y-4">
-        <LogoSourceControls
-          onStyleChange={(next) =>
-            update({
-              customLogo: next.customLogo,
-              showLogo: next.showLogo,
-              logoOptions: next.logoOptions,
-            })
-          }
-          style={current}
-          upload={upload}
-        />
+        <LogoMenuControls logo={logo} style={current} />
       </div>
     ),
   };
 }
+
+/** A change from the Logo section's controls: the logo's own fields. */
+type LogoChange = (next: Partial<QRStyle>) => void;
 
 /**
  * The items of `part`'s toolbar for `style` (the design as stored, defaults
@@ -401,6 +424,23 @@ export function usePartItems(
   const current: QRStyle = { ...defaultThemeState.styles, ...style };
   const upload = useLogoUpload((logo) =>
     update({ customLogo: logo, showLogo: true }),
+  );
+  // As the Logo section's onStyleChange (design-controls.tsx): its fields only
+  const onLogoChange: LogoChange = (next) =>
+    update({
+      customLogo: next.customLogo,
+      showLogo: next.showLogo,
+      logoOptions: next.logoOptions,
+    });
+  const brands = useBrandLogos(current, onLogoChange);
+  const logo = { upload, brands, onChange: onLogoChange };
+  // The Upload tile's file input and the brand gallery, outside the menus
+  // (a menu closes when its file picker or the gallery takes over)
+  const logoExtra = (
+    <>
+      {upload.input}
+      {brands.gallery}
+    </>
   );
   // The logo's size as drawn (capped to what the code can repair)
   const logoSize = useLogoSize(current).shown;
@@ -662,11 +702,9 @@ export function usePartItems(
     const setOptions = (change: Parameters<typeof logoOptionsChange>[1]) =>
       update(logoOptionsChange(current.logoOptions ?? {}, change));
     return {
-      // The file input the Upload tile opens (outside the menu, so it
-      // survives the menu closing)
-      extra: upload.input,
+      extra: logoExtra,
       items: [
-        logoMenu(current, update, upload, {
+        logoMenu(current, logo, {
           id: "logo",
           label: t("logo"),
           glyph: <Gallery aria-hidden className={icon} />,
@@ -744,8 +782,8 @@ export function usePartItems(
     // No frame drawn (so no frame button): its menu is here
     const noFrame = !isFrameActive(current.frame);
     return {
-      // While no logo shows, the logo's menu is here (its Upload's input too)
-      extra: current.showLogo ? null : upload.input,
+      // While no logo shows, the logo's menu is here (with its extras)
+      extra: current.showLogo ? null : logoExtra,
       items: [
         {
           kind: "menu",
@@ -831,7 +869,7 @@ export function usePartItems(
         ...(current.showLogo
           ? []
           : [
-              logoMenu(current, update, upload, {
+              logoMenu(current, logo, {
                 id: "add-logo",
                 label: t("logo"),
                 glyph: <GalleryAdd aria-hidden className={icon} />,
