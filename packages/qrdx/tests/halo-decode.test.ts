@@ -10,15 +10,11 @@
 // and 9 px per module wherever it reads without one. Just outside the edges
 // (customize-options.test.ts) the engine draws the code without a halo.
 // Nothing here may be loosened: a case that stops reading is a rule change.
-import { readFileSync } from "node:fs";
-import { createRequire } from "node:module";
-import { Resvg } from "@resvg/resvg-js";
-import jsQR from "jsqr";
-import { beforeAll, describe, expect, it } from "vitest";
-import { prepareZXingModule, readBarcodes } from "zxing-wasm/reader";
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+import { describe, expect, it } from "vitest";
 import { getQRData } from "../src/helpers";
 import { getHaloRisk } from "../src/looks";
-import { parseColor, type RGBAColor } from "../src/utils/parse-color";
 import type { QRProps } from "../types";
 import type { ColorConfig } from "../types/color";
 import {
@@ -96,77 +92,40 @@ function props(
   };
 }
 
-interface Pixels {
-  data: Uint8ClampedArray;
-  width: number;
-  height: number;
-}
+const READER = fileURLToPath(
+  new URL("./support/halo-reads.mjs", import.meta.url)
+);
 
-/** The code drawn by resvg at `modulePx`, with four modules of page around it. */
-function draw(svg: string, page: string, modulePx: number): Pixels {
-  const modules = symbolSize(VALUE, "M") + 8;
-  const pad = 4 * modulePx;
-  const image = new Resvg(svg, {
-    fitTo: { mode: "width", value: modules * modulePx },
-    background: page,
-  }).render();
-  const width = image.width + 2 * pad;
-  const height = image.height + 2 * pad;
-  const data = new Uint8ClampedArray(width * height * 4);
-  const tone = parseColor(page) as RGBAColor;
-  for (let i = 0; i < width * height; i++) {
-    data.set([tone.r, tone.g, tone.b, 255], i * 4);
-  }
-  for (let y = 0; y < image.height; y++) {
-    data.set(
-      image.pixels.subarray(y * image.width * 4, (y + 1) * image.width * 4),
-      ((y + pad) * width + pad) * 4
-    );
-  }
-  return { data, width, height };
-}
-
-const readsJsQR = (image: Pixels) =>
-  jsQR(image.data, image.width, image.height, {
-    inversionAttempts: "attemptBoth",
-  })?.data === VALUE;
-
-async function readsZXing(image: Pixels): Promise<boolean> {
-  const results = await readBarcodes(image as unknown as ImageData, {
-    formats: ["QRCode"],
-    tryHarder: true,
-    maxNumberOfSymbols: 1,
+/**
+ * "<decoder>@<px>" for each read of each code, drawn by resvg and read by
+ * jsQR and ZXing in a child process (support/halo-reads.mjs: resvg-js keeps
+ * every render's memory until its process exits).
+ */
+function reads(codes: { props: QRProps; page: string }[]): Set<string>[] {
+  const jobs = codes.flatMap(({ props, page }) => {
+    const svg = renderSvg(props);
+    return SIZES.map((modulePx) => ({ svg, page, modulePx }));
   });
-  return results.some((result) => result.text === VALUE);
-}
-
-/** "<decoder>@<px>" for each read at each size. */
-async function reads(props: QRProps, page: string): Promise<Set<string>> {
-  const svg = renderSvg(props);
-  const read = new Set<string>();
-  for (const modulePx of SIZES) {
-    const image = draw(svg, page, modulePx);
-    if (readsJsQR(image)) read.add(`jsQR@${modulePx}`);
-    if (await readsZXing(image)) read.add(`ZXing@${modulePx}`);
-  }
-  return read;
-}
-
-beforeAll(async () => {
-  const require = createRequire(import.meta.url);
-  const wasm = readFileSync(
-    require.resolve("zxing-wasm/reader/zxing_reader.wasm")
-  );
-  await prepareZXingModule({
-    overrides: {
-      wasmBinary: wasm.buffer.slice(
-        wasm.byteOffset,
-        wasm.byteOffset + wasm.byteLength
-      ) as ArrayBuffer,
-    },
-    fireImmediately: true,
+  const result = JSON.parse(
+    execFileSync(process.execPath, [READER], {
+      input: JSON.stringify({
+        value: VALUE,
+        modules: symbolSize(VALUE, "M") + 8,
+        jobs,
+      }),
+      maxBuffer: 1 << 24,
+    }).toString()
+  ) as [boolean, boolean][];
+  return codes.map((_, code) => {
+    const read = new Set<string>();
+    SIZES.forEach((modulePx, size) => {
+      const [byJsQR, byZXing] = result[code * SIZES.length + size] ?? [];
+      if (byJsQR) read.add(`jsQR@${modulePx}`);
+      if (byZXing) read.add(`ZXing@${modulePx}`);
+    });
+    return read;
   });
-});
+}
 
 describe("a halo at the rule's edges reads wherever the code reads without one", () => {
   it("draws the halo at every edge", () => {
@@ -178,18 +137,22 @@ describe("a halo at the rule's edges reads wherever the code reads without one",
   });
 
   for (const body of BODY_PATTERN) {
-    it(`${body} dots, through resvg with jsQR and ZXing`, async () => {
+    it(`${body} dots, through resvg with jsQR and ZXing`, () => {
       const worse: string[] = [];
       for (const edge of EDGES) {
-        const without = await reads(props(body, edge), edge.page);
-        for (const width of WIDTHS) {
-          const withHalo = await reads(props(body, edge, width), edge.page);
-          for (const read of without) {
-            if (!withHalo.has(read)) {
+        const [without, ...withHalo] = reads(
+          [undefined, ...WIDTHS].map((width) => ({
+            props: props(body, edge, width),
+            page: edge.page,
+          }))
+        );
+        WIDTHS.forEach((width, index) => {
+          for (const read of without ?? []) {
+            if (!withHalo[index]?.has(read)) {
               worse.push(`${edge.name}, width ${width}: ${read}`);
             }
           }
-        }
+        });
       }
       expect(worse, "reads lost to the halo").toEqual([]);
     }, 120_000);
