@@ -494,7 +494,7 @@
     },
     "packages/qrdx": {
       "name": "qrdx",
-      "version": "0.0.58",
+      "version": "0.0.59",
       "dependencies": {
         "csstype": "^3.2.3",
         "jsqr": "^1.4.0",

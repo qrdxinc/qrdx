@@ -4,7 +4,12 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { Switch } from "@repo/design-system/components/ui/switch";
 import { useTranslations } from "next-intl";
-import { getBgRadiusLimit, getSolidColor, resolveQRCodeProps } from "qrdx";
+import {
+  getBgRadiusLimit,
+  getSolidColor,
+  isFrameActive,
+  resolveQRCodeProps,
+} from "qrdx";
 import { BG_RADIUS_MAX } from "qrdx/types";
 import * as React from "react";
 import ControlSection from "@/components/editor/control-section";
@@ -57,6 +62,18 @@ function useCornerRadius(style: QRStyle) {
   const maxPercent = Math.floor(limit * 100 + 1e-6);
   const shown = Math.min(percent(style.bgRadius ?? 0), maxPercent);
   return { maxPercent, shown };
+}
+
+/**
+ * The note under Color around it while it's off. In a frame, the frame
+ * fills the space around the code (its plate, in the background color when
+ * that's opaque: qrdx frame-spec.ts), so the rounded corners show only
+ * against a color around them.
+ */
+export function backdropOffNote(frame: QRStyle["frame"]) {
+  return isFrameActive(frame)
+    ? ("inAFrameTheFrame" as const)
+    : ("seeThroughOutsideThe" as const);
 }
 
 /**
@@ -162,7 +179,7 @@ export function CornersControl({
             />
           ) : (
             <p className="text-muted-foreground text-xs text-pretty">
-              {t("seeThroughOutsideThe")}
+              {t(backdropOffNote(style.frame))}
             </p>
           )}
         </>

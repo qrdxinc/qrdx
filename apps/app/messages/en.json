@@ -5092,7 +5092,8 @@
         "aShapedCodeHasIts": "A shaped code has its own outline.",
         "colorAroundIt": "Color around it",
         "backdrop": "Backdrop",
-        "seeThroughOutsideThe": "See-through outside the corners: whatever is behind the code shows there."
+        "seeThroughOutsideThe": "See-through outside the corners: whatever is behind the code shows there.",
+        "inAFrameTheFrame": "In a frame, the frame fills the space around the code: turn on Color around it to see the corners."
       },
       "haloSection": {
         "halo": "Halo",
