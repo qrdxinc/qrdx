@@ -160,6 +160,12 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 | `eyeColors` | Colors per eye, over `eyeColor` and `dotColor`: `{ "topLeft": { "outer": "#b91c1c", "inner": "#1d4ed8" }, "topRight": …, "bottomLeft": … }`, each a color or a gradient |
 | `moduleScale` | Size of each dot, `0.5` to `1` (default `1`) |
 | `shape` | `square` (default) or `circle`: the code in a disc of decorative dots |
+| `eyeShapes` | Shapes per eye, over `cornerEyePattern` and `cornerEyeDotPattern`: `{ "topLeft": { "outer": "leaf", "inner": "leaf" }, "topRight": …, "bottomLeft": … }` |
+| `eyeGradient` | `corner` (default: each eye sweeps its own gradient) or `code` (the eyes continue the dots' gradient across the code) |
+| `bgRadius` | Corner radius of the background, `0` to `0.5` of the code's width; needs a `margin` (the engine caps it at twice the margin, in modules) |
+| `backdrop` | A color outside the rounded corners (see-through without it) |
+| `halo` | A light rim around the dots and eyes: `{ "color": "#ffffff", "width": 0.25 }`, `width` in modules from `0.1` to `0.5` |
+| `shadow` | A see-through copy of the dots and eyes under them: `{ "color": "#000000", "opacity": 0.3, "dx": 0.2, "dy": 0.2 }`, shifts from `-0.3` to `0.3` modules, opacity `0.1` to `0.4` |
 | `autoLevel` | Raise error correction to `H` when the logo covers more than 7% of the code (always on here when there's a logo) |
 | `logoOptions` | The logo's layout: `size` (`0.1` to `0.3` of the code's width; QRdx shrinks it when the code can't spare the modules), `padding` (`0` to `2` modules), `x` and `y` (`0` to `1`), `shape` (`square`, `rounded` or `circle` crop) and `plate` (a color behind it) |
 | `showLogo`, `logoIcon`, `logoFileId` | See [Logos](#logos) |
@@ -202,9 +208,9 @@ The response is private (`Cache-Control: private, no-store`) and counts toward t
 
 ### Pattern values
 
-- `body`: `circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`, `x`, `flower`, `pebble`, `bubble`, `petal`, `squircle`, `drop`, `beads`, `chain`
-- `eye`: `square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`, `pebble`, `porthole`, `doodle`, `notch`, `plus`, `stamp`, `bud`, `tag`, `bowl`, `crest`
-- `dot`: `square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`, `cushion`, `bevel`, `notch`
+- `body`: `circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`
+- `eye`: `square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`
+- `dot`: `square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`
 - `template`: `default`, `Arrow`, `StandardBox`, `SquareBorder`, `StrikedBox`, `Halloween`, `DotRing`
 
 These are the same styles as the [`qrdx` React library](/docs/features/patterns). The [MCP server](/docs/developers/mcp) can also list them with short descriptions.

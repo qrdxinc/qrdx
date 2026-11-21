@@ -224,7 +224,6 @@ export function CompactTile({
   selected,
   risk,
   blocked,
-  isNew,
   onSelect,
   children,
 }: {
@@ -232,13 +231,10 @@ export function CompactTile({
   selected: boolean;
   risk?: string | null;
   blocked?: boolean;
-  /** Added recently: carries the "New" tag (lib/whats-new). */
-  isNew?: boolean;
   onSelect: () => void;
   children: React.ReactNode;
 }) {
   const t = useTranslations("editor.controlSections.optionTiles");
-  const common = useTranslations("common");
   return (
     <button
       aria-label={
@@ -246,9 +242,7 @@ export function CompactTile({
           ? t("nameWontScanWithThis", { name })
           : risk
             ? t("nameMayNotScan", { name })
-            : isNew
-              ? common("nameIsNew", { name })
-              : name
+            : name
       }
       aria-pressed={selected}
       className={cn(
@@ -282,15 +276,6 @@ export function CompactTile({
           className="ring-card absolute bottom-1 left-1 size-1.5 rounded-full bg-amber-500 ring-2"
         />
       )}
-      {isNew && (
-        // Hangs off the top-right corner, under the check when selected
-        <NewTag
-          className={cn(
-            "absolute -top-1.5 -right-1 scale-90",
-            selected && "top-3",
-          )}
-        />
-      )}
     </button>
   );
 }
@@ -319,8 +304,6 @@ interface ShapePickerProps<T extends string> {
   riskOf?: (id: T) => string | null;
   /** Options that don't scan with the rest of the style (can't be picked). */
   blockedOf?: (id: T) => boolean;
-  /** Options added recently, which carry the "New" tag. */
-  newOf?: (id: T) => boolean;
 }
 
 /**
@@ -343,7 +326,6 @@ export function ShapePicker<T extends string>({
   preview,
   riskOf,
   blockedOf,
-  newOf,
 }: ShapePickerProps<T>) {
   const t = useTranslations("editor.controlSections.optionTiles");
   const inPanel = useInsideSidePanel();
@@ -536,7 +518,6 @@ export function ShapePicker<T extends string>({
             {visible.map((option) => (
               <OptionTile
                 blocked={value !== option.id && blockedOf?.(option.id)}
-                isNew={newOf?.(option.id)}
                 key={option.id}
                 name={option.name}
                 onSelect={() => onChange(option.id)}
@@ -593,7 +574,6 @@ export function ShapePicker<T extends string>({
         {row.map((id) => (
           <CompactTile
             blocked={value !== id && blockedOf?.(id)}
-            isNew={newOf?.(id)}
             key={id}
             name={byId.get(id)?.name ?? id}
             onSelect={() => onChange(id)}

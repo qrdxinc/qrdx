@@ -109,7 +109,7 @@ The logo is drawn at 25% of the code's width with the modules behind it excavate
 
 ### `QRCodeCanvas`
 
-Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `moduleScale` and template props are ignored. Use `QRCodeSVG` for styled codes.
+Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo`, `shadow` and template props are ignored (`bgRadius` and `backdrop` are drawn). Use `QRCodeSVG` for styled codes.
 
 ```tsx
 "use client";
@@ -327,11 +327,11 @@ export class MenuCode {}
 
 See every option drawn live at [qrdx.dev/docs/styles](https://qrdx.dev/docs/styles).
 
-**Body** (`bodyPattern`, default `circle`): <!-- catalogue:BODY_PATTERN -->`circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`, `x`, `flower`, `pebble`, `bubble`, `petal`, `squircle`, `drop`, `beads`, `chain`<!-- /catalogue -->
+**Body** (`bodyPattern`, default `circle`): <!-- catalogue:BODY_PATTERN -->`circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`<!-- /catalogue -->
 
-**Corner eye** (`cornerEyePattern`, default `gear`): <!-- catalogue:CORNER_EYE_PATTERNS -->`square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`, `pebble`, `porthole`, `doodle`, `notch`, `plus`, `stamp`, `bud`, `tag`, `bowl`, `crest`<!-- /catalogue -->
+**Corner eye** (`cornerEyePattern`, default `gear`): <!-- catalogue:CORNER_EYE_PATTERNS -->`square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`<!-- /catalogue -->
 
-**Corner eye dot** (`cornerEyeDotPattern`, default `circle`): <!-- catalogue:CORNER_EYE_DOT_PATTERNS -->`square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`, `cushion`, `bevel`, `notch`<!-- /catalogue -->
+**Corner eye dot** (`cornerEyeDotPattern`, default `circle`): <!-- catalogue:CORNER_EYE_DOT_PATTERNS -->`square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`<!-- /catalogue -->
 
 The same lists are exported as `BODY_PATTERN`, `CORNER_EYE_PATTERNS` and `CORNER_EYE_DOT_PATTERNS`. `liquid` and `classy` join neighbouring modules into one outline; `leaf`, `drop` and `petal` eyes turn to face their corner of the code. Alignment patterns are always drawn as solid squares. Every value is tested to decode with jsQR through a phone-camera model next to every other value (and was checked with ZXing and in sharp renders); `square` and `rounded` eyes scan most reliably and `circle` eyes may be missed by some apps. A few body × eye pairs are weak together (`WEAK_BODY_EYES`), and `getStylePairRisk(props)` returns the warning `getScanScore` shows.
 
@@ -342,6 +342,12 @@ The same lists are exported as `BODY_PATTERN`, `CORNER_EYE_PATTERNS` and `CORNER
 | `eyeColors` | Per-eye `{ outer, inner }` colors (or gradients) for `topLeft`, `topRight`, `bottomLeft`; each overrides `eyeColor` / `dotColor` |
 | `moduleScale` | 0.5–1 (default 1): smaller modules for a spaced look; each pattern stops at the smallest size that still scans (`MODULE_SCALE_FLOOR`) |
 | `autoLevel` | Raise `level` to H when a logo covers more than 7% of the code (off by default) |
+| `eyeShapes` | Per-eye `{ outer, inner }` shapes (an eye frame and an eye center) for `topLeft`, `topRight`, `bottomLeft`; each overrides `cornerEyePattern` / `cornerEyeDotPattern`. The scan score judges each eye on its own (`getEyeStyleRisk`, `weakestEyePattern`) |
+| `eyeGradient` | `"corner"` (default: each eye sweeps its own gradient) or `"code"`: the eyes' gradients run across the whole code, so eyes painted with the dots' gradient continue it |
+| `bgRadius` | Corner radius of the background, 0 (default) to `BG_RADIUS_MAX` (0.5) of the code's width; capped at `BG_RADIUS_QUIET_RATIO` (2) × `margin` modules so the quiet zone keeps the code's corners (`getBgRadiusLimit` gives the cap). Square codes only |
+| `backdrop` | Solid color outside the rounded corners (see-through by default); drawn only when `bgRadius` rounds a corner |
+| `halo` | `{ color, width }`: a light rim around every dark module and eye, `width` in modules (`HALO_WIDTH_MIN` 0.1 to `HALO_WIDTH_MAX` 0.5, default 0.25), `color` default white. A look, not a quiet zone: it needs a light surface behind the code |
+| `shadow` | `{ color, opacity, dx, dy }`: a see-through copy of the dark modules and eyes under them, shifted `dx`/`dy` modules (−`SHADOW_OFFSET_MAX` 0.3 to 0.3, default 0.2) at `opacity` (0.1 to 0.4, default 0.3); `color` default black |
 | `shape` | `"square"` (default), `"circle"` or `"heart"`: the symbol sits in a disc or a heart filled with decorative modules, behind a light ring of `margin` modules (at least `QR_CIRCLE_QUIET_MIN`, 3). It also takes a `QRSilhouette` traced from a picture (`loadQRSilhouette` in the browser, `createQRSilhouette` from pixels); `getQRSilhouetteFit` refuses one too thin to hold the code, which then draws square. `getLayoutMargin` gives the margin it is drawn with; print sizes and logos follow it. `getQRAsSVG` draws it square |
 | `frameLabelMarkers` | For editors: marks each frame label `<text>` with `data-qrdx-frame-label` (`"text"`, `"secondaryText"` or a spec label's id), so a preview can edit labels in place. Off by default; exports never include it |
 | `imageSettings.padding` | Extra clear space around an excavated logo, in pixels |

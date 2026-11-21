@@ -212,6 +212,11 @@ export const LEFT_OUT = {
   autoLevel: "Automatic error correction for the logo",
   logoOptions: "The logo's size, position, shape and plate",
   shape: "The code shape",
+  eyeShapes: "Per-eye shapes",
+  eyeGradient: "The eyes continuing the dots' gradient",
+  bgRadius: "The rounded background and its backdrop",
+  halo: "The halo",
+  shadow: "The shadow",
   silhouette:
     "Your code shape (traced from your picture, it stays with your design)",
   apiArt:
@@ -310,6 +315,11 @@ function noteEngineOptions(style: ThemeStyles, notes: Notes) {
   if (logo && options.logoOptions) notes.add(LEFT_OUT.logoOptions);
   if (hasSilhouette(style)) notes.add(LEFT_OUT.silhouette);
   else if (options.shape) notes.add(LEFT_OUT.shape);
+  if (options.eyeShapes) notes.add(LEFT_OUT.eyeShapes);
+  if (options.eyeGradient) notes.add(LEFT_OUT.eyeGradient);
+  if (options.bgRadius) notes.add(LEFT_OUT.bgRadius);
+  if (options.halo) notes.add(LEFT_OUT.halo);
+  if (options.shadow) notes.add(LEFT_OUT.shadow);
 }
 
 /** A traced silhouette, for the API tabs: it never leaves the editor. */
@@ -362,6 +372,28 @@ function apiEngineOptions(
       ...layout,
       ...(plate && isSafeColor(plate.trim()) ? { plate: plate.trim() } : {}),
     };
+  }
+  // The looks around the shapes: numbers as they are, colors only when the
+  // API takes them (hex, rgb()/hsl() or a name)
+  const safe = (value: string | undefined) =>
+    value && isSafeColor(value.trim()) ? value.trim() : undefined;
+  if (options.eyeShapes) out.eyeShapes = options.eyeShapes;
+  if (options.eyeGradient) out.eyeGradient = options.eyeGradient;
+  if (options.bgRadius) out.bgRadius = options.bgRadius;
+  if (options.bgRadius && safe(options.backdrop)) {
+    out.backdrop = safe(options.backdrop);
+  }
+  if (options.halo) {
+    const color = safe(options.halo.color);
+    out.halo = {
+      ...(options.halo.width !== undefined && { width: options.halo.width }),
+      ...(color && { color }),
+    };
+  }
+  if (options.shadow) {
+    const { color, ...rest } = options.shadow;
+    const safeColor = safe(color);
+    out.shadow = { ...rest, ...(safeColor && { color: safeColor }) };
   }
   return out;
 }
@@ -1155,6 +1187,12 @@ function libraryProps(
   }
   if (engine.moduleScale !== undefined) props.moduleScale = engine.moduleScale;
   if (typeof engine.shape === "string") props.shape = engine.shape;
+  if (engine.eyeShapes) props.eyeShapes = engine.eyeShapes;
+  if (engine.eyeGradient) props.eyeGradient = engine.eyeGradient;
+  if (engine.bgRadius) props.bgRadius = engine.bgRadius;
+  if (engine.backdrop) props.backdrop = engine.backdrop;
+  if (engine.halo) props.halo = engine.halo;
+  if (engine.shadow) props.shadow = engine.shadow;
   if (style.level) props.level = style.level;
   // The default quiet zone is 0, as in the editor.
   if (style.margin) props.margin = style.margin;
@@ -1447,6 +1485,9 @@ const ELEMENT_ATTRIBUTES: Record<string, "string" | "number" | "boolean"> = {
   moduleScale: "number",
   autoLevel: "boolean",
   shape: "string",
+  eyeGradient: "string",
+  bgRadius: "number",
+  backdrop: "string",
 };
 
 /** Characters an attribute in double quotes escapes. */
