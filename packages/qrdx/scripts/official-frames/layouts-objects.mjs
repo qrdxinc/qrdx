@@ -64,6 +64,14 @@ const ctaPill = (o, box, shapes, extra = {}) => {
   return cta(o, [x + h * 0.4, y, w - h * 0.8, h], F, extra);
 };
 
+/** The second line on a dark pill too, where it sits near the code (see ctaPill). */
+const notePill = (o, box, shapes, extra = {}) => {
+  if (o.note === undefined || o.note === null) return [];
+  const [x, y, w, h] = box;
+  shapes.push(shape.rect(x, y, w, h, F, h / 2));
+  return note(o, [x + h * 0.4, y, w - h * 0.8, h], F, extra);
+};
+
 /** A polyline as a round-ended stroke shape. */
 const line = (points, width, fill) =>
   shape.path(strokeLine(points, width, { round: true }), fill);
@@ -210,7 +218,7 @@ export function swallowtailFlag(o) {
   const tx = qx + size + pad + 50;
   const tw = w - notch - tx - 40;
   const labels = [ctaPill(o, [tx, flagY + flagH / 2 - 200, tw, 200], shapes)];
-  labels.push(...note(o, [tx, flagY + flagH / 2 + 20, tw, 100], fill));
+  labels.push(...notePill(o, [tx, flagY + flagH / 2 + 20, tw, 100], shapes));
   return { w, h, qr: qrSized(qx, qy, size), shapes, labels };
 }
 
@@ -601,7 +609,7 @@ export function bottle(o) {
     ctaPill(o, [labelX + 50, pb + 30, labelW - 100, 160], shapes),
   ];
   labels.push(
-    ...note(o, [labelX + 90, labelY + 62, labelW - 180, 96], labelFill)
+    ...notePill(o, [labelX + 90, labelY + 62, labelW - 180, 96], shapes)
   );
   return { w, h, qr: qrSized(cx - size / 2, qy, size), shapes, labels };
 }
@@ -944,7 +952,7 @@ export function clapperboard(o) {
       shape.rect(30, boardTop + 30, w - 60, h - boardTop - 60, fill, 20)
     );
   const labels = [ctaPill(o, [80, pb + 30, w - 160, 160], shapes)];
-  labels.push(...note(o, [100, boardTop + 30, w - 200, 96], fill));
+  labels.push(...notePill(o, [100, boardTop + 30, w - 200, 96], shapes));
   return { w, h, qr: qrSized((w - size) / 2, qy, size), shapes, labels };
 }
 
@@ -971,7 +979,7 @@ export function notebook(o) {
   }
   const labels = [ctaPill(o, [100, pb + 40, w - 200, 170], shapes)];
   labels.push(
-    ...note(o, [220, pageY + 110, w - 320, 100], paper, { align: "start" })
+    ...notePill(o, [220, pageY + 110, w - 320, 100], shapes, { align: "start" })
   );
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -1068,7 +1076,7 @@ export function ribbonTop(o) {
   }
   shapes.push(shape.rect(100, bandY, w - 200, bandH, AC));
   const labels = [cta(o, [160, bandY + 25, w - 320, 170], AC)];
-  labels.push(...note(o, [180, pb + 40, w - 360, 100], fill));
+  labels.push(...notePill(o, [180, pb + 40, w - 360, 100], shapes));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 
@@ -1096,7 +1104,11 @@ export function outlineBorder(o) {
     ctaPill(o, [weight + 60, pb + 30, w - 2 * weight - 120, 170], shapes),
   ];
   labels.push(
-    ...note(o, [weight + 80, weight + 50, w - 2 * weight - 160, 100], BG)
+    ...notePill(
+      o,
+      [weight + 80, weight + 50, w - 2 * weight - 160, 100],
+      shapes
+    )
   );
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -1540,7 +1552,9 @@ export function pizzaBox(o) {
   ];
   const labels = [ctaPill(o, [100, pb + 30, w - 200, 170], shapes)];
   labels.push(
-    ...note(o, [220, lidH / 2 - 60, w - 440, 120], card, { weight: "bold" })
+    ...notePill(o, [220, lidH / 2 - 60, w - 440, 120], shapes, {
+      weight: "bold",
+    })
   );
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -1825,7 +1839,10 @@ export function passportStamp(o) {
   ];
   const labels = [ctaPill(o, [120, pb + 60, w - 240, 170], shapes)];
   labels.push(
-    ...note(o, [120, 90, w - 480, 110], BG, { align: "start", weight: "bold" })
+    ...notePill(o, [120, 90, w - 480, 110], shapes, {
+      align: "start",
+      weight: "bold",
+    })
   );
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -2237,7 +2254,7 @@ export function museumPlaque(o) {
     shapes.push(shape.rect(x - 16, y - 3, 32, 6, F));
   }
   const labels = [ctaPill(o, [120, pb + 40, w - 240, 170], shapes)];
-  labels.push(...note(o, [140, 110, w - 280, 100], plate));
+  // No second line: lettering this near the code made the decoder miss it
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 
@@ -2656,7 +2673,7 @@ export function milkCarton(o) {
   ];
   const labels = [ctaPill(o, [120, pb + 40, w - 240, 170], shapes)];
   labels.push(
-    ...note(o, [200, 250, w - 400, 110], tint(0.75), { weight: "bold" })
+    ...notePill(o, [200, 250, w - 400, 110], shapes, { weight: "bold" })
   );
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }

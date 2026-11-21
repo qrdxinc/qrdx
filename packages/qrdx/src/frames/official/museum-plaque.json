@@ -158,20 +158,6 @@
           "width": 1024,
           "height": 170
         }
-      },
-      {
-        "type": "text",
-        "id": "note",
-        "slot": "secondary",
-        "text": "About this piece",
-        "color": "text",
-        "box": {
-          "x": 140,
-          "y": 110,
-          "width": 1120,
-          "height": 100
-        },
-        "weight": "regular"
       }
     ]
   }

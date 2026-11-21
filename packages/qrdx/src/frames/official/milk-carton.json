@@ -86,6 +86,15 @@
         "height": 170,
         "radius": 85,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 200,
+        "y": 250,
+        "width": 1000,
+        "height": 110,
+        "radius": 55,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -107,11 +116,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Fresh today",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 200,
+          "x": 244,
           "y": 250,
-          "width": 1000,
+          "width": 912,
           "height": 110
         }
       }

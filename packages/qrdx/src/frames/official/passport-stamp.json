@@ -88,6 +88,15 @@
         "height": 170,
         "radius": 85,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 90,
+        "width": 920,
+        "height": 110,
+        "radius": 55,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -109,11 +118,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Welcome aboard",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 120,
+          "x": 164,
           "y": 90,
-          "width": 920,
+          "width": 832,
           "height": 110
         },
         "align": "start"

@@ -79,6 +79,15 @@
         "height": 170,
         "radius": 85,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 220,
+        "y": 200,
+        "width": 1060,
+        "height": 120,
+        "radius": 60,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -100,11 +109,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Hot and fresh",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 220,
+          "x": 268,
           "y": 200,
-          "width": 1060,
+          "width": 964,
           "height": 120
         }
       }

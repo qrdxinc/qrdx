@@ -431,6 +431,15 @@
         "height": 170,
         "radius": 85,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 220,
+        "y": 220,
+        "width": 1080,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -452,11 +461,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Today's lesson",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 220,
+          "x": 260,
           "y": 220,
-          "width": 1080,
+          "width": 1000,
           "height": 100
         },
         "weight": "regular",

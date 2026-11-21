@@ -119,6 +119,15 @@
         "height": 160,
         "radius": 80,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 580,
+        "width": 1220,
+        "height": 96,
+        "radius": 48,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -140,11 +149,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Now showing",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 100,
+          "x": 138.4,
           "y": 580,
-          "width": 1220,
+          "width": 1143.2,
           "height": 96
         },
         "weight": "regular"
