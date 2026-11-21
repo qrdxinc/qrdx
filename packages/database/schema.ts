@@ -853,8 +853,8 @@ export const communityCollectionEntry = pgTable(
   ]
 );
 
-// OAuth apps. Apps without an owner (owner_user_id null) were registered by the
-// QRdx team (scripts/create-oauth-app.ts) and count as first-party. Apps that
+// OAuth apps. Apps without an owner (owner_user_id null) were added by the
+// QRdx team, straight in the database, and count as first-party. Apps that
 // developers create in Settings → Developers belong to their creator, plus the
 // team in organization_id when they were made in a team workspace.
 // SQL: packages/database/manual-sql/0008_oauth_app_owner.sql
