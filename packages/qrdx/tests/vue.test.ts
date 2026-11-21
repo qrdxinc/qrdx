@@ -22,6 +22,8 @@ import { resolveQRCodeProps, toSVGString } from "../src/core";
 import { getOfficialFrame } from "../src/frames/official";
 import * as source from "../src/vue";
 import type { QRSVGOptions } from "../types";
+import { domSnapshot } from "./support/dom-snapshot";
+import { lookToggles } from "./support/look-steps";
 import { type ParityCase, parityCases } from "./support/parity-cases";
 import { decodeQR, rasterizeSvg } from "./support/raster";
 
@@ -259,6 +261,34 @@ for (const [label, entry] of ENTRIES) {
       app.unmount();
       expect(container.childNodes).toHaveLength(0);
     });
+
+    // Each look turned on and off in a mounted QRCode (support/look-steps.ts)
+    test.each(lookToggles().map((toggle) => [toggle.name, toggle] as const))(
+      "QRCode follows a look turned on and off: %s",
+      async (_name, { before, after }) => {
+        const props = ref(before);
+        const container = mount();
+        const app = createApp({ render: () => h(api.QRCode, props.value) });
+        app.mount(container);
+        // Attributes in any order: Vue patches an element in place
+        const snapshot = (markup: string) => {
+          const holder = document.createElement("div");
+          holder.innerHTML = markup;
+          return domSnapshot(holder, { anyOrder: true });
+        };
+        const drawn = (code: typeof before) =>
+          snapshot(toSVGString(resolveQRCodeProps(code)));
+        expect(snapshot(container.innerHTML)).toBe(drawn(before));
+        expect(drawn(after)).not.toBe(drawn(before));
+        props.value = after;
+        await nextTick();
+        expect(snapshot(container.innerHTML)).toBe(drawn(after));
+        props.value = before;
+        await nextTick();
+        expect(snapshot(container.innerHTML)).toBe(drawn(before));
+        app.unmount();
+      }
+    );
 
     test("reads boolean props the way Vue templates write them", async () => {
       const logo = { value: VALUE, logo: LOGO, level: "L" as const };
