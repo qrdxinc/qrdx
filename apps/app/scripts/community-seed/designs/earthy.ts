@@ -64,11 +64,11 @@ export const EARTHY_DESIGNS: SeedDesign[] = [
     id: "lichen",
     name: "Lichen",
     description:
-      "Scattered dots in a mossy green with shield eyes and a brighter moss in the centres, on a pale stone. For trail maps, nature reserves and hiking gear.",
+      "Scattered dots in a mossy green with leaf eyes and a brighter moss in the centres, on a pale stone. For trail maps, nature reserves and hiking gear.",
     tags: ["earthy", "nature", "forest", "soft"],
     style: {
       ...ink("#EEF1E6", "#374A2B", "#2F3F22", "#4F6A38"),
-      ...shapes("random-dots", "shield", "rounded"),
+      ...shapes("random-dots", "leaf", "rounded"),
       level: "Q",
       margin: 4,
     },

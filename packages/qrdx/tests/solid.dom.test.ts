@@ -20,6 +20,7 @@ import {
 import type { QRCodeProps } from "../src/qr-code-props";
 import { QRCode, QRCodeSVG } from "../src/solid";
 import { domSnapshot } from "./support/dom-snapshot";
+import { lookToggles } from "./support/look-steps";
 import { type ParityCase, parityCases } from "./support/parity-cases";
 import { decodeQR, rasterizeSvg } from "./support/raster";
 
@@ -138,6 +139,26 @@ describe("qrdx/solid in the browser", () => {
     expect(container.children).toHaveLength(1);
     expect(domSnapshot(container)).toBe(coreSnapshot(framed));
   });
+
+  // Each look turned on and off in a mounted QRCode (support/look-steps.ts)
+  it.each(lookToggles().map((toggle) => [toggle.name, toggle] as const))(
+    "QRCode follows a look turned on and off: %s",
+    (_name, { before, after }) => {
+      const container = mount();
+      const [options, setOptions] = createSignal<QRCodeProps>(before);
+      disposers.push(
+        render(() => createComponent(QRCode, mergeProps(options)), container)
+      );
+      const drawn = (props: QRCodeProps) =>
+        coreSnapshot(resolveQRCodeProps(props));
+      expect(domSnapshot(container)).toBe(drawn(before));
+      expect(drawn(after)).not.toBe(drawn(before));
+      setOptions(after);
+      expect(domSnapshot(container)).toBe(drawn(after));
+      setOptions(before);
+      expect(domSnapshot(container)).toBe(drawn(before));
+    }
+  );
 
   it("follows single reactive props, next to other nodes", () => {
     const container = mount();

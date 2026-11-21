@@ -23,11 +23,11 @@ export const ICON_DESIGNS: SeedDesign[] = [
     id: "wifi-sticker",
     name: "Wi-Fi sticker",
     description:
-      "Black round dots with gear eyes and a Wi-Fi icon in the middle, on white, on the Wi-Fi sticker frame. For the till, the fridge door and the back of the menu.",
+      "Black round dots with octagon eyes and a Wi-Fi icon in the middle, on white, on the Wi-Fi sticker frame. For the till, the fridge door and the back of the menu.",
     tags: ["minimal", "monochrome", "high-contrast", "accessible"],
     style: {
       ...ink("#FFFFFF", "#111827"),
-      ...shapes("circle", "gear", "circle"),
+      ...shapes("circle", "octagon", "circle"),
       level: "H",
       margin: 3,
       showLogo: true,

@@ -136,10 +136,10 @@ export const USE_DESIGNS: SeedDesign[] = [
     frame: { id: "wine-pairings", color: "#7A1F2B", textColor: "#FFFCF5" },
   },
   {
-    id: "tea-time",
-    name: "Tea time",
+    id: "loose-leaf",
+    name: "Loose leaf",
     description:
-      "Liquid rows in a deep olive green with extra-rounded eyes, on a pale sage white, on the tea menu frame. Calm and leafy, for tea rooms and loose-leaf tins.",
+      "Liquid rows in a deep olive green with extra-rounded eyes, on a pale sage white, on the tea menu frame. Calm and leafy, for tea rooms, tea lists and caddies.",
     tags: ["zen", "nature", "soft", "earthy"],
     style: {
       ...ink("#F4F6EC", "#365314", "#365314", "#3F6212"),
@@ -480,11 +480,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "explore",
     name: "Explore",
     description:
-      "Octagon modules in a deep forest green with shield eyes and octagon centres in rust, on a pale stone, on the compass frame. For trail heads, parks and tours.",
+      "Octagon modules in a deep forest green with bevel eyes and octagon centres in rust, on a pale stone, on the compass frame. For trail heads, parks and tours.",
     tags: ["nature", "forest", "earthy", "geometric"],
     style: {
       ...ink("#F5F3EF", "#14532D", "#14532D", "#9A3412"),
-      ...shapes("octagon", "shield", "octagon"),
+      ...shapes("octagon", "bevel", "octagon"),
       level: "Q",
       margin: 3,
     },
@@ -603,11 +603,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "charging-rates",
     name: "Charging rates",
     description:
-      "Vertical lines in a dark slate with shield eyes and octagon centres in cobalt, on white, on the prices and speeds frame. For charger posts and forecourts.",
+      "Vertical lines in a dark slate with bevel eyes and octagon centres in cobalt, on white, on the prices and speeds frame. For charger posts and forecourts.",
     tags: ["futuristic", "professional", "cool", "industrial"],
     style: {
       ...ink("#FFFFFF", "#1E293B", "#1E293B", "#1D4ED8"),
-      ...shapes("vertical-line", "shield", "octagon"),
+      ...shapes("vertical-line", "bevel", "octagon"),
       level: "Q",
       margin: 3,
     },
@@ -674,11 +674,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "vet-visit",
     name: "Vet visit",
     description:
-      "Heart-shaped modules in a deep teal with rounded eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
+      "Heart-shaped modules in a deep teal with shield eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
     tags: ["playful", "soft", "cool", "nature"],
     style: {
       ...ink("#F0FDFA", "#134E4A", "#134E4A", "#0F766E"),
-      ...shapes("heart", "rounded", "heart"),
+      ...shapes("heart", "shield", "heart"),
       level: "M",
       margin: 3,
     },
@@ -783,11 +783,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "tee-time",
     name: "Tee time",
     description:
-      "Round dots in a deep forest green with shield eyes and rounded centres, on a pale lime white, on the golf club frame. For tee bookings and clubhouse menus.",
+      "Round dots in a deep forest green with cushion eyes and rounded centres, on a pale lime white, on the golf club frame. For tee bookings and clubhouse menus.",
     tags: ["forest", "elegant", "nature", "professional"],
     style: {
       ...ink("#F7FEE7", "#14532D", "#14532D", "#3F6212"),
-      ...shapes("circle", "shield", "rounded"),
+      ...shapes("circle", "cushion", "rounded"),
       level: "Q",
       margin: 3,
     },
@@ -962,11 +962,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "donation-jar",
     name: "Donation jar",
     description:
-      "Large touching dots in a deep teal green with shield eyes and rust centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
+      "Large touching dots in a deep teal green with shield eyes and rust heart centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
     tags: ["warm", "soft", "accessible", "professional"],
     style: {
       ...ink("#FFFFFF", "#0F3D33", "#0F3D33", "#9A3412"),
-      ...shapes("circle-large", "shield", "rounded"),
+      ...shapes("circle-large", "shield", "heart"),
       level: "Q",
       margin: 3,
     },
@@ -976,11 +976,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "volunteer",
     name: "Volunteer",
     description:
-      "Rounded modules in a deep rose with rounded eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
+      "Rounded modules in a deep rose with shield eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
     tags: ["warm", "romantic", "soft", "bold"],
     style: {
       ...ink("#FFFFFF", "#9F1239", "#9F1239", "#BE123C"),
-      ...shapes("rounded", "rounded", "heart"),
+      ...shapes("rounded", "shield", "heart"),
       level: "Q",
       margin: 3,
     },

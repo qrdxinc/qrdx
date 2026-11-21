@@ -434,7 +434,7 @@
       "id": "lime-ink",
       "slug": "lime-ink",
       "name": "Lime ink",
-      "description": "Hexagon modules in a deep olive lime with shield eyes, on a pale lime white. Fresh without being neon, for juice brands, gyms and garden centres.",
+      "description": "Hexagon modules in a deep olive lime with octagon eyes, on a pale lime white. Fresh without being neon, for juice brands, gyms and garden centres.",
       "tags": ["bold", "nature", "vibrant", "geometric"],
       "payload": {
         "style": {
@@ -443,7 +443,7 @@
           "eyeColor": "#365314",
           "dotColor": "#3F6212",
           "bodyPattern": "hexagon",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "octagon",
           "cornerEyeDotPattern": "hexagon",
           "level": "Q",
           "margin": 4
@@ -1149,7 +1149,7 @@
       "id": "lichen",
       "slug": "lichen",
       "name": "Lichen",
-      "description": "Scattered dots in a mossy green with shield eyes and a brighter moss in the centres, on a pale stone. For trail maps, nature reserves and hiking gear.",
+      "description": "Scattered dots in a mossy green with leaf eyes and a brighter moss in the centres, on a pale stone. For trail maps, nature reserves and hiking gear.",
       "tags": ["earthy", "nature", "forest", "soft"],
       "payload": {
         "style": {
@@ -1158,7 +1158,7 @@
           "eyeColor": "#2F3F22",
           "dotColor": "#4F6A38",
           "bodyPattern": "random-dots",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "leaf",
           "cornerEyeDotPattern": "rounded",
           "level": "Q",
           "margin": 4
@@ -1400,7 +1400,7 @@
       "id": "gala-night",
       "slug": "gala-night",
       "name": "Gala night",
-      "description": "Black round dots with bevelled eyes and deep gold centres, on white, on the gala dinner frame in black and gold. For auctions, award nights and fundraisers.",
+      "description": "Black round dots with bevelled eyes and deep gold octagon centres, on white, on the gala dinner frame in black and gold. For auctions, award nights and fundraisers.",
       "tags": ["elegant", "midnight", "art-deco", "professional"],
       "payload": {
         "style": {
@@ -1410,7 +1410,7 @@
           "dotColor": "#7A5A14",
           "bodyPattern": "circle",
           "cornerEyePattern": "bevel",
-          "cornerEyeDotPattern": "square",
+          "cornerEyeDotPattern": "octagon",
           "level": "Q",
           "margin": 3
         }
@@ -2561,10 +2561,10 @@
       }
     },
     {
-      "id": "tea-time",
-      "slug": "tea-time",
-      "name": "Tea time",
-      "description": "Liquid rows in a deep olive green with extra-rounded eyes, on a pale sage white, on the tea menu frame. Calm and leafy, for tea rooms and loose-leaf tins.",
+      "id": "loose-leaf",
+      "slug": "loose-leaf",
+      "name": "Loose leaf",
+      "description": "Liquid rows in a deep olive green with extra-rounded eyes, on a pale sage white, on the tea menu frame. Calm and leafy, for tea rooms, tea lists and caddies.",
       "tags": ["zen", "nature", "soft", "earthy"],
       "payload": {
         "style": {
@@ -3155,7 +3155,7 @@
       "id": "explore",
       "slug": "explore",
       "name": "Explore",
-      "description": "Octagon modules in a deep forest green with shield eyes and octagon centres in rust, on a pale stone, on the compass frame. For trail heads, parks and tours.",
+      "description": "Octagon modules in a deep forest green with bevel eyes and octagon centres in rust, on a pale stone, on the compass frame. For trail heads, parks and tours.",
       "tags": ["nature", "forest", "earthy", "geometric"],
       "payload": {
         "style": {
@@ -3164,7 +3164,7 @@
           "eyeColor": "#14532D",
           "dotColor": "#9A3412",
           "bodyPattern": "octagon",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "bevel",
           "cornerEyeDotPattern": "octagon",
           "level": "Q",
           "margin": 3
@@ -3356,7 +3356,7 @@
       "id": "charging-rates",
       "slug": "charging-rates",
       "name": "Charging rates",
-      "description": "Vertical lines in a dark slate with shield eyes and octagon centres in cobalt, on white, on the prices and speeds frame. For charger posts and forecourts.",
+      "description": "Vertical lines in a dark slate with bevel eyes and octagon centres in cobalt, on white, on the prices and speeds frame. For charger posts and forecourts.",
       "tags": ["futuristic", "professional", "cool", "industrial"],
       "payload": {
         "style": {
@@ -3365,7 +3365,7 @@
           "eyeColor": "#1E293B",
           "dotColor": "#1D4ED8",
           "bodyPattern": "vertical-line",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "bevel",
           "cornerEyeDotPattern": "octagon",
           "level": "Q",
           "margin": 3
@@ -3481,7 +3481,7 @@
       "id": "vet-visit",
       "slug": "vet-visit",
       "name": "Vet visit",
-      "description": "Heart-shaped modules in a deep teal with rounded eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
+      "description": "Heart-shaped modules in a deep teal with shield eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
       "tags": ["playful", "soft", "cool", "nature"],
       "payload": {
         "style": {
@@ -3490,7 +3490,7 @@
           "eyeColor": "#134E4A",
           "dotColor": "#0F766E",
           "bodyPattern": "heart",
-          "cornerEyePattern": "rounded",
+          "cornerEyePattern": "shield",
           "cornerEyeDotPattern": "heart",
           "level": "M",
           "margin": 3
@@ -3656,7 +3656,7 @@
       "id": "tee-time",
       "slug": "tee-time",
       "name": "Tee time",
-      "description": "Round dots in a deep forest green with shield eyes and rounded centres, on a pale lime white, on the golf club frame. For tee bookings and clubhouse menus.",
+      "description": "Round dots in a deep forest green with cushion eyes and rounded centres, on a pale lime white, on the golf club frame. For tee bookings and clubhouse menus.",
       "tags": ["forest", "elegant", "nature", "professional"],
       "payload": {
         "style": {
@@ -3665,7 +3665,7 @@
           "eyeColor": "#14532D",
           "dotColor": "#3F6212",
           "bodyPattern": "circle",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "cushion",
           "cornerEyeDotPattern": "rounded",
           "level": "Q",
           "margin": 3
@@ -3957,7 +3957,7 @@
       "id": "donation-jar",
       "slug": "donation-jar",
       "name": "Donation jar",
-      "description": "Large touching dots in a deep teal green with shield eyes and rust centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
+      "description": "Large touching dots in a deep teal green with shield eyes and rust heart centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
       "tags": ["warm", "soft", "accessible", "professional"],
       "payload": {
         "style": {
@@ -3967,7 +3967,7 @@
           "dotColor": "#9A3412",
           "bodyPattern": "circle-large",
           "cornerEyePattern": "shield",
-          "cornerEyeDotPattern": "rounded",
+          "cornerEyeDotPattern": "heart",
           "level": "Q",
           "margin": 3
         }
@@ -3982,7 +3982,7 @@
       "id": "volunteer",
       "slug": "volunteer",
       "name": "Volunteer",
-      "description": "Rounded modules in a deep rose with rounded eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
+      "description": "Rounded modules in a deep rose with shield eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
       "tags": ["warm", "romantic", "soft", "bold"],
       "payload": {
         "style": {
@@ -3991,7 +3991,7 @@
           "eyeColor": "#9F1239",
           "dotColor": "#BE123C",
           "bodyPattern": "rounded",
-          "cornerEyePattern": "rounded",
+          "cornerEyePattern": "shield",
           "cornerEyeDotPattern": "heart",
           "level": "Q",
           "margin": 3
@@ -4407,7 +4407,7 @@
       "id": "club-colors",
       "slug": "club-colors",
       "name": "Club colors",
-      "description": "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
+      "description": "Octagon modules in a deep red with bevel eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
       "tags": ["bold", "vibrant", "geometric", "high-contrast"],
       "payload": {
         "style": {
@@ -4416,7 +4416,7 @@
           "eyeColor": "#0F1F3D",
           "dotColor": "#991B1B",
           "bodyPattern": "octagon",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "bevel",
           "cornerEyeDotPattern": "rounded-triangle",
           "level": "Q",
           "margin": 4
@@ -4574,7 +4574,7 @@
       "id": "wifi-sticker",
       "slug": "wifi-sticker",
       "name": "Wi-Fi sticker",
-      "description": "Black round dots with gear eyes and a Wi-Fi icon in the middle, on white, on the Wi-Fi sticker frame. For the till, the fridge door and the back of the menu.",
+      "description": "Black round dots with octagon eyes and a Wi-Fi icon in the middle, on white, on the Wi-Fi sticker frame. For the till, the fridge door and the back of the menu.",
       "tags": ["minimal", "monochrome", "high-contrast", "accessible"],
       "payload": {
         "style": {
@@ -4583,7 +4583,7 @@
           "eyeColor": "#111827",
           "dotColor": "#111827",
           "bodyPattern": "circle",
-          "cornerEyePattern": "gear",
+          "cornerEyePattern": "octagon",
           "cornerEyeDotPattern": "circle",
           "level": "H",
           "margin": 3,
