@@ -9,6 +9,7 @@
 //                                         spec hash per frame, no specs
 //   src/frames/catalogue/counts.ts        counts
 //   src/frames/catalogue/tags.ts          every tag, sorted
+//   src/frames/catalogue/batches.ts       ids by the round that added them
 // Run through write.mjs.
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -58,6 +59,8 @@ export const COLLECTIONS = [
   "sports-fitness",
   "business",
   "nonprofit",
+  "objects",
+  "playful",
 ];
 
 /** JSON with object keys sorted. */
@@ -156,6 +159,17 @@ export function writeModules({ check = false } = {}) {
   out.set(
     "catalogue/counts.ts",
     `${HEADER}\n/** How many official frames there are. */\nexport const OFFICIAL_FRAME_COUNT = ${frames.length};\n\n/** Official frames per collection. */\nexport const OFFICIAL_FRAME_COUNTS = ${JSON.stringify(counts, null, 2)} as const;\n`
+  );
+  const batches = {};
+  for (const entry of ENTRIES) {
+    if (!entry.batch) continue;
+    const list = batches[entry.batch] ?? [];
+    list.push(entry.id);
+    batches[entry.batch] = list;
+  }
+  out.set(
+    "catalogue/batches.ts",
+    `${HEADER}\n/**\n * Official frames by the round that added them (YYYY-MM), so an app can\n * mark the latest ones as new for a while. The first catalogue has none.\n */\nexport const OFFICIAL_FRAME_BATCHES: Readonly<Record<string, readonly string[]>> = ${JSON.stringify(batches, null, 2)};\n`
   );
   out.set(
     "catalogue/tags.ts",

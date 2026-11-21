@@ -1,0 +1,117 @@
+{
+  "id": "parking-meter",
+  "name": "Parking meter",
+  "description": "A parking meter: the code in its window, the label under it, a pole below.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["upi", "paypal", "url"],
+  "tags": ["playful", "parking", "meter", "pay"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 2000
+    },
+    "qr": {
+      "x": 200,
+      "y": 360,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 540,
+        "y": 1500,
+        "width": 220,
+        "height": 500,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1300,
+        "height": 1540,
+        "radius": 200,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 450,
+        "y": 60,
+        "width": 400,
+        "height": 50,
+        "radius": 25,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 540,
+        "y": 150,
+        "width": 220,
+        "height": 36,
+        "radius": 18,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 260,
+        "width": 1100,
+        "height": 1100,
+        "radius": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 350,
+        "cy": 168,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 950,
+        "cy": 168,
+        "r": 30,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to pay parking",
+        "color": "text",
+        "box": {
+          "x": 140,
+          "y": 1370,
+          "width": 1020,
+          "height": 140
+        }
+      }
+    ]
+  }
+}

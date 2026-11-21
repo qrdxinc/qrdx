@@ -1,0 +1,446 @@
+{
+  "id": "spiral-notebook",
+  "name": "Spiral notebook",
+  "description": "A spiral notebook with rings along the top and a ruled page.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "notebook", "notes", "school", "paper"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1400,
+      "height": 1720
+    },
+    "qr": {
+      "x": 200,
+      "y": 380,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#8a8a8a"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 110,
+        "width": 1400,
+        "height": 1610,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 24,
+        "y": 134,
+        "width": 1352,
+        "height": 1562,
+        "radius": 16,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.94
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 440,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 530,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 620,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 710,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 800,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 890,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 980,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1070,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1160,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1250,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1340,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1430,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1520,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1610,
+        "width": 1240,
+        "height": 6,
+        "radius": 3,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.78
+        }
+      },
+      {
+        "type": "rect",
+        "x": 170,
+        "y": 134,
+        "width": 8,
+        "height": 1562,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 84,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 110,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 202,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 228,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 320,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 346,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 438,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 464,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 556,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 582,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 674,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 700,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 792,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 818,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 910,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 936,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1028,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1054,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1146,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1172,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1264,
+        "y": 120,
+        "width": 52,
+        "height": 80,
+        "radius": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1290,
+        "cy": 60,
+        "r": 56,
+        "hole": 36,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan the notes",
+        "color": "frame",
+        "box": {
+          "x": 100,
+          "y": 1500,
+          "width": 1200,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Today's lesson",
+        "color": "frame",
+        "box": {
+          "x": 220,
+          "y": 170,
+          "width": 1080,
+          "height": 100
+        },
+        "weight": "regular",
+        "align": "start"
+      }
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "id": "magnifying-glass",
+  "name": "Magnifying glass",
+  "description": "A magnifying glass: the code under the lens, a handle going down to the right.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "magnifier", "lens", "search", "detail"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1720,
+      "height": 1720
+    },
+    "qr": {
+      "x": 360,
+      "y": 360,
+      "size": 860,
+      "padding": 68.8,
+      "radius": 20.64
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M1281.97 1388.03L1576.97 1683.03A75 75 0 0 1 1683.03 1576.97L1388.03 1281.97A75 75 0 0 1 1281.97 1388.03Z",
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 790,
+        "cy": 790,
+        "r": 770,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 790,
+        "cy": 790,
+        "r": 720,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.94
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 460,
+        "cy": 370,
+        "rx": 170,
+        "ry": 70,
+        "fill": "background"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Look closer",
+        "color": "frame",
+        "box": {
+          "x": 60,
+          "y": 1580,
+          "width": 1160,
+          "height": 130
+        }
+      }
+    ]
+  }
+}

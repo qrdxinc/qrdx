@@ -1,0 +1,180 @@
+{
+  "id": "monster-mouth",
+  "name": "Monster mouth",
+  "description": "A monster's open mouth holding the code, eyes on top and teeth all round.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "monster", "mouth", "teeth", "fun"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1700,
+      "height": 2000
+    },
+    "qr": {
+      "x": 350,
+      "y": 580,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "ellipse",
+        "cx": 850,
+        "cy": 1040,
+        "rx": 850,
+        "ry": 960,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 550,
+        "cy": 200,
+        "r": 140,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1150,
+        "cy": 200,
+        "r": 140,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 550,
+        "cy": 200,
+        "r": 140,
+        "hole": 126,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1150,
+        "cy": 200,
+        "r": 140,
+        "hole": 126,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 580,
+        "cy": 220,
+        "r": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1180,
+        "cy": 220,
+        "r": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 150,
+        "y": 380,
+        "width": 1400,
+        "height": 1540,
+        "radius": 220,
+        "fill": "frame"
+      },
+      {
+        "type": "polygon",
+        "points": [[230, 380], [370, 380], [300, 470]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[230, 1920], [370, 1920], [300, 1840]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[413.33, 380], [553.33, 380], [483.33, 470]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[413.33, 1920], [553.33, 1920], [483.33, 1840]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[596.67, 380], [736.67, 380], [666.67, 470]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[596.67, 1920], [736.67, 1920], [666.67, 1840]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[780, 380], [920, 380], [850, 470]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[780, 1920], [920, 1920], [850, 1840]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[963.33, 380], [1103.33, 380], [1033.33, 470]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[963.33, 1920], [1103.33, 1920], [1033.33, 1840]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[1146.67, 380], [1286.67, 380], [1216.67, 470]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[1146.67, 1920], [1286.67, 1920], [1216.67, 1840]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[1330, 380], [1470, 380], [1400, 470]],
+        "fill": "background"
+      },
+      {
+        "type": "polygon",
+        "points": [[1330, 1920], [1470, 1920], [1400, 1840]],
+        "fill": "background"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan if you dare",
+        "color": "text",
+        "box": {
+          "x": 350,
+          "y": 1690,
+          "width": 1000,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

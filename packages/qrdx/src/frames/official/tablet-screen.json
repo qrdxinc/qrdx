@@ -1,0 +1,112 @@
+{
+  "id": "tablet-screen",
+  "name": "Tablet",
+  "description": "A tablet standing upright, the code on its screen.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "tablet", "screen", "device"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1520,
+      "height": 1750
+    },
+    "qr": {
+      "x": 260,
+      "y": 340,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 1506,
+        "y": 300,
+        "width": 14,
+        "height": 160,
+        "radius": 7,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.2
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1506,
+        "y": 500,
+        "width": 14,
+        "height": 160,
+        "radius": 7,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.2
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1520,
+        "height": 1750,
+        "radius": 120,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 60,
+        "width": 1400,
+        "height": 1630,
+        "radius": 70,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 760,
+        "cy": 34,
+        "r": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to open",
+        "color": "frame",
+        "box": {
+          "x": 160,
+          "y": 1460,
+          "width": 1200,
+          "height": 180
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "On any device",
+        "color": "frame",
+        "box": {
+          "x": 200,
+          "y": 120,
+          "width": 1120,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

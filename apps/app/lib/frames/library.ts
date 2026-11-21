@@ -49,6 +49,10 @@ const COLLECTION_LOADERS: Record<
     import("../../../../packages/qrdx/src/frames/catalogue/business"),
   nonprofit: () =>
     import("../../../../packages/qrdx/src/frames/catalogue/nonprofit"),
+  objects: () =>
+    import("../../../../packages/qrdx/src/frames/catalogue/objects"),
+  playful: () =>
+    import("../../../../packages/qrdx/src/frames/catalogue/playful"),
 };
 
 const loadIndexModule = () =>
