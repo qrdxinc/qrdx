@@ -284,7 +284,7 @@ export const API_ERRORS = [
     status: 503,
     meaning:
       "Path aliases aren't available on this deployment yet: its database doesn't have their table (a self-hosted instance whose database schema is older).",
-    fix: "Use the hosted QRdx API, or update your instance's database schema (`bun run db:push`).",
+    fix: "Use the hosted QRdx API, or update your instance's database schema (the `migrate` service with Docker, `bun run db:push` otherwise).",
   },
   {
     code: "AI_ART_TIMEOUT",

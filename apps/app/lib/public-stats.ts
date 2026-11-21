@@ -76,7 +76,7 @@ async function guarded<T>(query: () => Promise<T>): Promise<T> {
         missingLogged = true;
         logError(error as Error, {
           action: "public-stats",
-          hint: "The code_public_stats table doesn't exist yet: update the database schema (bun run db:push)",
+          hint: "The code_public_stats table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
         });
       }
       throw new PublicStatsUnavailableError();

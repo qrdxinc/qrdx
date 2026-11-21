@@ -92,7 +92,8 @@ export default async function AdminAffiliatesPage({
       {!loaded.ready ? (
         <p className="bg-muted/40 rounded-lg border p-4 text-sm">
           The affiliate tables don't exist yet. Update the database schema first
-          (<code>bun run db:push</code>).
+          (the <code>migrate</code> service with Docker,{" "}
+          <code>bun run db:push</code> otherwise).
         </p>
       ) : (
         <AffiliateLists list={loaded.value} />

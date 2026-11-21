@@ -33,7 +33,7 @@ function warnMissing(): void {
     JSON.stringify({
       event: "admin_console.grants_missing",
       detail:
-        "The admin_console_grant table doesn't exist yet: update the database schema (bun run db:push)",
+        "The admin_console_grant table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
     }),
   );
 }

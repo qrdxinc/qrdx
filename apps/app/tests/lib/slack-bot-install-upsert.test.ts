@@ -50,7 +50,7 @@ describe("installationUpsert", () => {
     ]);
   });
 
-  it("conflicts on exactly the schema's unique index", () => {
+  it("finds that index in schema.ts: slack_bot_installation_team_unique on (team_id, coalesce(enterprise_id, ''))", () => {
     const schema = readFileSync(
       join(ROOT, "packages/database/schema.ts"),
       "utf8",

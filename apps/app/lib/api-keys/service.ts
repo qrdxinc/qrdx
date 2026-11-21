@@ -83,7 +83,7 @@ function reportMissingTable(error: unknown) {
   missingTableLogged = true;
   logError(error as Error, {
     action: "api-keys",
-    hint: "The api_key table doesn't exist yet: update the database schema (bun run db:push)",
+    hint: "The api_key table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
   });
 }
 

@@ -264,7 +264,7 @@ export async function writeAuditEvents(
       if (!missingTableLogged) {
         missingTableLogged = true;
         console.warn(
-          "Workspace audit log: the workspace_audit_log table doesn't exist yet (update the database schema: bun run db:push). Nothing is recorded until it does.",
+          "Workspace audit log: the workspace_audit_log table doesn't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise). Nothing is recorded until it does.",
         );
       }
       return 0;

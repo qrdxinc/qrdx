@@ -41,7 +41,7 @@ function reportMissing(error: unknown) {
   reported = true;
   logError(error as Error, {
     action: "community",
-    hint: "The community tables don't exist yet: update the database schema (bun run db:push)",
+    hint: "The community tables don't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
   });
 }
 

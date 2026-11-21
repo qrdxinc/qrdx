@@ -75,7 +75,7 @@ export async function addUsage(
       if (!warnedMissing) {
         warnedMissing = true;
         console.warn(
-          "Growth analytics: usage_daily doesn't exist yet (update the database schema: bun run db:push). API, MCP and bot usage isn't counted until it does.",
+          "Growth analytics: usage_daily doesn't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise). API, MCP and bot usage isn't counted until it does.",
         );
       }
       return;

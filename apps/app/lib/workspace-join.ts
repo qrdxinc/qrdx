@@ -70,7 +70,7 @@ async function guarded<T>(query: () => Promise<T>): Promise<T> {
         reported = true;
         logError(error as Error, {
           action: "workspaceJoin.missingTable",
-          hint: "the workspace_join_link table doesn't exist yet: update the database schema (bun run db:push)",
+          hint: "the workspace_join_link table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
         });
       }
       throw new JoinLinksUnavailableError();

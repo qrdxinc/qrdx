@@ -22,7 +22,7 @@ export function noteMissingTables(error: unknown): boolean {
   if (!warned) {
     warned = true;
     console.warn(
-      "Affiliate program: the affiliate tables don't exist yet (update the database schema: bun run db:push). Referrals and commissions aren't recorded until they do.",
+      "Affiliate program: the affiliate tables don't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise). Referrals and commissions aren't recorded until they do.",
     );
   }
   return true;

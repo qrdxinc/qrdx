@@ -15,10 +15,8 @@ import { pivotWeeks, type WeekCount, type WeekPivot } from "./weeks";
 //
 // Where user_acquisition, usage_daily or qr_code.created_via don't exist
 // yet, the parts that read them report "not set up" (Postgres 42P01 /
-// 42703) instead of failing the page.
+// 42703) instead of failing the page; the schema sync makes them.
 
-/** What makes them: the database schema, updated. */
-export const GROWTH_SETUP_COMMAND = "bun run db:push";
 /** Per statement, on the database. */
 export const GROWTH_STATEMENT_TIMEOUT = "5s";
 /** Overall wait for one batch's HTTP round trip. */

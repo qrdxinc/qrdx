@@ -61,7 +61,7 @@ async function findAffiliate(affiliateId: string) {
   } catch (error) {
     if (isMissingTableError(error)) {
       throw adminError(
-        "The affiliate tables don't exist yet. Update the database schema first (bun run db:push).",
+        "The affiliate tables don't exist yet. Update the database schema first (the migrate service with Docker, bun run db:push otherwise).",
       );
     }
     throw error;

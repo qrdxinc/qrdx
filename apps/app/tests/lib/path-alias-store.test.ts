@@ -217,7 +217,7 @@ describe("before the link_path_alias table exists", () => {
     // Six failed queries, one warning (each test file has its own modules).
     expect(warn).toHaveBeenCalledTimes(1);
     expect(String(warn.mock.calls[0]?.[0])).toMatch(
-      /doesn't exist yet \(update the database schema: bun run db:push\)/,
+      /doesn't exist yet \(update the database schema: the migrate service with Docker, bun run db:push otherwise\)/,
     );
   });
 

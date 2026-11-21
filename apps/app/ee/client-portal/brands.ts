@@ -85,7 +85,7 @@ export async function brandsGuarded<T>(query: () => Promise<T>): Promise<T> {
         missingLogged = true;
         logError(error as Error, {
           action: "client-brands",
-          hint: "The agency columns and tables don't exist yet: update the database schema (bun run db:push)",
+          hint: "The agency columns and tables don't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
         });
       }
       throw new ClientBrandsUnavailableError();

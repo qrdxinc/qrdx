@@ -68,7 +68,7 @@ const missing = (error: unknown, action: string) => {
   if (!isMissingSchemaError(error)) return false;
   logError(error as Error, {
     action,
-    hint: "The agency columns and tables don't exist yet: update the database schema (bun run db:push)",
+    hint: "The agency columns and tables don't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
   });
   return true;
 };

@@ -89,7 +89,7 @@ export async function recordAcquisition(input: {
       if (!warnedMissing) {
         warnedMissing = true;
         console.warn(
-          "Growth analytics: user_acquisition doesn't exist yet (update the database schema: bun run db:push). Sign-up channels aren't recorded until it does.",
+          "Growth analytics: user_acquisition doesn't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise). Sign-up channels aren't recorded until it does.",
         );
       }
       return "missing_table";

@@ -29,7 +29,7 @@
 // submit with the same reference records nothing → the affiliate sees the
 // payout. Screenshots at 1440 and 390 px, light and dark (AFF_E2E_SHOTS),
 // with a no-horizontal-scroll check at 390 px.
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import { createHmac } from "node:crypto";
 import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -652,7 +652,7 @@ async function withoutTables() {
   check(
     "the server says how to create them",
     readFileSync(DEV_LOG, "utf8").includes(
-      "the affiliate tables don't exist yet (update the database schema: bun run db:push)",
+      "the affiliate tables don't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise)",
     ),
   );
   await goto(`${BASE}/settings/affiliate`);
@@ -669,17 +669,49 @@ async function withoutTables() {
     "a signed order.paid webhook still gets a 2xx",
     (await webhook(order(`order_early_${RUN}`, userId(EARLY), 1500))) === 200,
   );
-  // drizzle-kit push, on the local database checked above only.
-  const push = () =>
-    execSync("bun run db:push", {
-      cwd: join(process.cwd(), "../.."),
-      env: { ...process.env, DATABASE_URL: dbUrl },
-      stdio: "pipe",
-    });
+  // What `bun run db:push` runs (drizzle-kit push in packages/database), on
+  // the local database checked above only, as one process so the timeout
+  // stops it. No --force: making the affiliate tables needs no answer, so a
+  // question (a rename, a data-loss statement) means the database differs
+  // from the schema in more than these tables, and the run stops there.
+  const database = join(process.cwd(), "../../packages/database");
+  const pushSeconds = 120;
+  const push = () => {
+    try {
+      execFileSync(
+        process.execPath,
+        [join(database, "node_modules/drizzle-kit/bin.cjs"), "push"],
+        {
+          cwd: database,
+          env: { ...process.env, DATABASE_URL: dbUrl },
+          input: "",
+          stdio: "pipe",
+          timeout: pushSeconds * 1000,
+          killSignal: "SIGKILL",
+        },
+      );
+    } catch (error) {
+      const failed = error as {
+        signal?: string | null;
+        stdout?: Buffer;
+        stderr?: Buffer;
+      };
+      const output = `${failed.stdout ?? ""}${failed.stderr ?? ""}`
+        .trim()
+        .split("\n")
+        .slice(-20)
+        .join("\n");
+      throw new Error(
+        failed.signal
+          ? `drizzle-kit push didn't finish in ${pushSeconds} s. It is probably asking a question (a rename or a data-loss statement): the local database differs from the schema in more than the affiliate tables. Run bun run db:push there by hand, answer it, drop the affiliate tables and start again.\n${output}`
+          : `drizzle-kit push failed:\n${output}`,
+      );
+    }
+  };
   push();
   push();
   check(
-    "bun run db:push creates the tables, and runs again without errors",
+    "db:push creates the tables, and runs again without errors",
     tablesExist() === "5",
   );
 }

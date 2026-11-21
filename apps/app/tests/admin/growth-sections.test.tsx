@@ -125,7 +125,6 @@ vi.mock("@/env", () => ({ env: state.env }));
 
 const sections = await import("@/app/(app)/admin/growth/sections");
 const { growthWeeks } = await import("@/app/(app)/admin/_lib/weeks");
-const { GROWTH_SETUP_COMMAND } = await import("@/app/(app)/admin/_lib/growth");
 
 const weeks = growthWeeks(NOW);
 const html = async (section: Promise<ReactElement>) =>
@@ -163,7 +162,7 @@ describe("before the growth tables exist", () => {
   it("still shows sign-ups per week and says channels aren't recorded", async () => {
     const shown = text(await html(sections.Signups({ weeks })));
     expect(shown).toContain(
-      `Channels aren't recorded. Not set up yet: it starts once ${GROWTH_SETUP_COMMAND} has updated the database schema.`,
+      "Channels aren't recorded. Not set up yet: it starts once the database schema is updated (the migrate service with Docker, bun run db:push otherwise).",
     );
     expect(shown).toContain("Sign-ups");
     expect(shown).toMatch(/Nov 9 · so far 6/);

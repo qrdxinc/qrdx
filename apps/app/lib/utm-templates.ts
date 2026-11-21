@@ -57,7 +57,7 @@ async function guarded<T>(query: () => Promise<T>): Promise<T> {
         missingLogged = true;
         logError(error as Error, {
           action: "utm-templates",
-          hint: "The utm_template table doesn't exist yet: update the database schema (bun run db:push)",
+          hint: "The utm_template table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
         });
       }
       throw new UtmTemplatesUnavailableError();

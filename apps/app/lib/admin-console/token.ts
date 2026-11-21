@@ -93,7 +93,7 @@ export async function exchangeAdminConsoleCode(
   if (!grant) {
     return oauthError(
       "server_error",
-      "This deployment can't mint console grants yet (update the database schema: bun run db:push)",
+      "This deployment can't mint console grants yet (update the database schema: the migrate service with Docker, bun run db:push otherwise)",
       503,
     );
   }

@@ -71,7 +71,7 @@ export async function claimThresholds(
       if (!missingLogged) {
         missingLogged = true;
         log("limit_notice.unavailable", {
-          hint: "The limit_notice table doesn't exist yet: update the database schema (bun run db:push)",
+          hint: "The limit_notice table doesn't exist yet: update the database schema (the migrate service with Docker, bun run db:push otherwise)",
         });
       }
       return null;

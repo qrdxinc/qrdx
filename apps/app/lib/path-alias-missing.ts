@@ -25,7 +25,7 @@ export function noteMissingAliases(error: unknown): boolean {
   if (!warned) {
     warned = true;
     console.warn(
-      "Path aliases: link_path_alias doesn't exist yet (update the database schema: bun run db:push). Custom domains answer without aliases until it does.",
+      "Path aliases: link_path_alias doesn't exist yet (update the database schema: the migrate service with Docker, bun run db:push otherwise). Custom domains answer without aliases until it does.",
     );
   }
   return true;

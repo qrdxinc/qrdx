@@ -65,14 +65,26 @@ describe("root layout split", () => {
   it("has the page of every path in localized-paths.json under app/[lang]", () => {
     const lang = pagesUnder("[lang]");
     const app = pagesUnder("(app)");
-    const misplaced = LISTED.filter((route) => !lang.has(route)).map(
-      (route) => {
-        const found = app.get(route);
-        return found
-          ? `${route}: app/${found} is listed in packages/i18n/localized-paths.json, so it belongs under app/[lang]/(home)/ (move its folder there)`
-          : `${route}: listed in packages/i18n/localized-paths.json, but there is no page for it under app/[lang]`;
-      },
-    );
+    const misplaced = LISTED.flatMap((route) => {
+      const inLang = lang.get(route);
+      const inApp = app.get(route);
+      if (inLang && inApp) {
+        return [
+          `${route}: both app/${inLang} and app/${inApp} serve it; it's listed in packages/i18n/localized-paths.json, so keep app/${inLang} and delete the copy under app/(app)`,
+        ];
+      }
+      if (inApp) {
+        return [
+          `${route}: app/${inApp} is listed in packages/i18n/localized-paths.json, so it belongs under app/[lang]/(home)/ (move its folder there)`,
+        ];
+      }
+      if (!inLang) {
+        return [
+          `${route}: listed in packages/i18n/localized-paths.json, but there is no page for it under app/[lang]`,
+        ];
+      }
+      return [];
+    });
     expect(misplaced).toEqual([]);
   });
 
