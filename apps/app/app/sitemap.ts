@@ -255,7 +255,9 @@ function entries(docs: Entry[]): Entry[] {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    // The community's galleries; item pages are found through them.
+    // The community's galleries. Its item pages and profiles have a
+    // sitemap of their own, read from the database when it's asked for
+    // (/community/sitemap.xml, named in robots.txt).
     ...["all", ...Object.values(TYPE_SEGMENTS)].map(
       (segment) =>
         ({
