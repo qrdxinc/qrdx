@@ -332,11 +332,19 @@ export async function loadSnapshot(client, options) {
 }
 
 /**
+ * The fewest items a collection holds: a publish refuses fewer
+ * (apps/app/lib/community/bundles.ts COLLECTION_MIN_ITEMS; the seed test
+ * keeps the two equal).
+ */
+export const COLLECTION_MIN_ITEMS = 2;
+
+/**
  * A collection or kit with only the items in `present` (in the database
  * after this run), with a warning for each one left out; null when too few
- * are left (a collection needs one item, a kit its page template and a
- * theme or frame, as a publish does). Its payload and entries both leave
- * the missing items out, so it never points at a row that isn't there.
+ * are left (a collection needs COLLECTION_MIN_ITEMS items, a kit its page
+ * template and a theme or frame, as a publish does). Its payload and
+ * entries both leave the missing items out, so it never points at a row
+ * that isn't there.
  */
 function withPresentItems(item, present, reason, warnings) {
   const missing = item.entries.filter((id) => !present.has(id));
@@ -359,11 +367,11 @@ function withPresentItems(item, present, reason, warnings) {
     warnings.push(
       `kit ${item.slug}: not seeded: ${named}; the kit goes in without it (payload and entries).`
     );
-    return { ...item, payload: { kit }, entries, allEntries: item.entries };
+    return { ...item, payload: { kit }, entries };
   }
-  if (entries.length === 0) {
+  if (entries.length < COLLECTION_MIN_ITEMS) {
     warnings.push(
-      `collection ${item.slug}: none of its items is seeded (${named}): skipped.`
+      `collection ${item.slug}: not seeded: ${named}; ${entries.length === 0 ? "none" : `only ${entries.length}`} of its items would be in, and a collection holds ${COLLECTION_MIN_ITEMS} or more, so it is skipped.`
     );
     return null;
   }
@@ -624,8 +632,9 @@ export async function applySeed(client, plan, userId) {
     for (const tag of item.tags) {
       await client.query(SQL.insertTag, [item.id, tag]);
     }
-    // Each entry at its place in the full list, so one left out (above)
-    // goes back where it belongs when a later run adds it
+    // A collection's entries at their places in its full list, so one left
+    // out (above) goes back where it belongs when a later run adds it; a
+    // kit's from 0, as a publish stores them (its parts never change)
     for (const entry of item.entries ?? []) {
       const position = (item.allEntries ?? item.entries).indexOf(entry);
       await client.query(SQL.insertEntry, [item.id, entry, position]);

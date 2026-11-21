@@ -245,15 +245,24 @@ describe("the official designs", () => {
     expect(eyes.has("circle")).toBe(false);
   });
 
-  it("never take an official frame's name unless they sit on that frame", () => {
+  it("never take an official frame's name, id or slug unless they sit on that frame", () => {
     const frameByName = new Map(
       OFFICIAL_FRAMES.map((frame) => [frame.name.toLowerCase(), frame.id]),
     );
+    const frameIds = new Set(OFFICIAL_FRAMES.map((frame) => frame.id));
     const clashes = designs.flatMap((item) => {
+      const found: string[] = [];
       const namesake = frameByName.get(item.name.toLowerCase());
-      return namesake && item.facets.pairedFrame !== namesake
-        ? [`${item.slug} is named like the ${namesake} frame`]
-        : [];
+      if (namesake && item.facets.pairedFrame !== namesake) {
+        found.push(`${item.slug} is named like the ${namesake} frame`);
+      }
+      // A frame's id is its slug (/community/frames/<id>)
+      for (const id of new Set([item.facets.design, item.slug])) {
+        if (frameIds.has(id) && item.facets.pairedFrame !== id) {
+          found.push(`${item.slug} has the ${id} frame's id`);
+        }
+      }
+      return found;
     });
     expect(clashes).toEqual([]);
   });
