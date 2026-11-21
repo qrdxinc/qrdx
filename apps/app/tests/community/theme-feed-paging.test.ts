@@ -1,8 +1,9 @@
 // The theme feed pages through items that share one published time (a
-// seed publishes a batch together) without repeating or skipping any: the
-// newest cursor carries the last item's id as a tiebreak, the popular sort
-// breaks ties by id under its offset, and a cursor from before the tiebreak
-// (the time alone) still works.
+// backfill or a batch published together) without repeating or skipping
+// any: the newest and oldest cursors carry the last item's id as a
+// tiebreak (lib/keyset-sql.ts), the popular sort breaks ties by id under
+// its offset, and a cursor from before the tiebreak (the time alone) still
+// works.
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock(
@@ -91,11 +92,15 @@ describe("the theme feed over one published time", () => {
         status: "active",
       },
     ]);
-    // 45 items in one batch, 5 published earlier; likes tie too
-    fakeDb.seed("communityItem", [
-      ...Array.from({ length: 45 }, (_, i) => theme(i + 1, NOW, i % 3)),
-      ...Array.from({ length: 5 }, (_, i) => theme(100 + i, EARLIER)),
-    ]);
+    // 45 items in one batch, 5 published earlier; likes tie too. Stored in
+    // reverse, so an order the fake keeps from insertion shows up.
+    fakeDb.seed(
+      "communityItem",
+      [
+        ...Array.from({ length: 45 }, (_, i) => theme(i + 1, NOW, i % 3)),
+        ...Array.from({ length: 5 }, (_, i) => theme(100 + i, EARLIER)),
+      ].reverse(),
+    );
   });
 
   it("newest: 50 items over 3 pages, each once, batch before the older ones", async () => {
@@ -103,17 +108,20 @@ describe("the theme feed over one published time", () => {
     expect(pages.map((p) => p.length)).toEqual([20, 20, 10]);
     const all = pages.flat();
     expect(new Set(all).size).toBe(50);
+    // One moment's items by id, highest first, then the older ones
+    expect(all.slice(0, 2)).toEqual(["look-45", "look-44"]);
     expect(all.slice(45)).toEqual([
-      "look-100",
-      "look-101",
-      "look-102",
-      "look-103",
       "look-104",
+      "look-103",
+      "look-102",
+      "look-101",
+      "look-100",
     ]);
   });
 
   it("oldest: the same 50 once, older ones first", async () => {
     const pages = await allPages("oldest");
+    expect(pages.map((p) => p.length)).toEqual([20, 20, 10]);
     const all = pages.flat();
     expect(new Set(all).size).toBe(50);
     expect(all.slice(0, 5)).toEqual([
@@ -123,6 +131,7 @@ describe("the theme feed over one published time", () => {
       "look-103",
       "look-104",
     ]);
+    expect(all.slice(5, 7)).toEqual(["look-1", "look-2"]);
   });
 
   it("popular: 50 items over 3 pages with ties broken the same way every time", async () => {
@@ -131,20 +140,23 @@ describe("the theme feed over one published time", () => {
     expect(first).toEqual(again);
     expect(new Set(first.flat()).size).toBe(50);
     expect(first.map((p) => p.length)).toEqual([20, 20, 10]);
+    // Most liked first; one like count and time in id order
+    expect(first[0]?.slice(0, 3)).toEqual(["look-3", "look-6", "look-9"]);
   });
 
   it("takes a cursor from before the tiebreak (the time alone) and starts over on junk", async () => {
     const older = await feed("newest", NOW.toISOString());
     expect(older.themes.map((t) => t.slug)).toEqual([
-      "look-100",
-      "look-101",
-      "look-102",
-      "look-103",
       "look-104",
+      "look-103",
+      "look-102",
+      "look-101",
+      "look-100",
     ]);
     expect(older.nextCursor).toBeNull();
     const fresh = await feed("newest", "not-a-cursor");
     expect(fresh.themes).toHaveLength(20);
-    expect(fresh.nextCursor).toMatch(/^2026-11-20T12:00:00\.000Z\|ci_020$/);
+    // The last item's time (epoch ms) and id (lib/keyset-cursor.ts)
+    expect(fresh.nextCursor).toBe(`${NOW.getTime()}.ci_026`);
   });
 });

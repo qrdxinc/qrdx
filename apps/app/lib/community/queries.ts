@@ -34,6 +34,12 @@ import {
 import { unionAll } from "drizzle-orm/pg-core";
 import { OFFICIAL_FRAME_COUNT } from "qrdx";
 import { customFrameSchema, type QRCustomFrame } from "qrdx/types";
+import { decodeKeyset, encodeKeyset } from "@/lib/keyset-cursor";
+import {
+  type KeysetDirection,
+  keysetAfter,
+  keysetOrder,
+} from "@/lib/keyset-sql";
 import type {
   CommunityTheme,
   CommunityThemesResponse,
@@ -1148,31 +1154,16 @@ export async function themeItemsFeed(
       .limit(limit + 1)
       .offset(offset)) as ItemRow[];
   } else {
-    const parsed = typeof cursor === "string" ? parseFeedCursor(cursor) : null;
-    if (parsed) {
-      const { at, id } = parsed;
-      const past =
-        sort === "newest"
-          ? lt(communityItem.publishedAt, at)
-          : gt(communityItem.publishedAt, at);
-      // Items published at the cursor's very moment (the seed publishes a
-      // batch milliseconds apart; a backfill may give many one time) come
-      // in id order after it, so no page repeats or skips one.
-      const after = id
-        ? or(
-            past,
-            and(eq(communityItem.publishedAt, at), gt(communityItem.id, id)),
-          )
-        : undefined;
-      conditions.push(after ?? past);
-    }
+    // Keyed by published time to the millisecond and id (lib/keyset-sql.ts):
+    // items published in one moment (a backfill, a batch) page in id order,
+    // none repeated or skipped.
+    const direction = sort === "newest" ? "desc" : "asc";
+    const after = afterFeedCursor(cursor, direction);
+    if (after) conditions.push(after);
     rows = (await itemsQuery()
       .where(and(...conditions))
       .orderBy(
-        sort === "newest"
-          ? desc(communityItem.publishedAt)
-          : asc(communityItem.publishedAt),
-        asc(communityItem.id),
+        ...keysetOrder(communityItem.publishedAt, communityItem.id, direction),
       )
       .limit(limit + 1)) as ItemRow[];
   }
@@ -1214,33 +1205,40 @@ export async function themeItemsFeed(
     official: row.profileKind === "official",
   }));
   let nextCursor: string | number | null = null;
-  if (hasMore) {
-    const last = page.at(-1);
+  const last = page.at(-1);
+  if (hasMore && last) {
     nextCursor =
       sort === "popular"
         ? (typeof cursor === "number" ? cursor : 0) + limit
-        : last?.publishedAt
-          ? feedCursor(new Date(last.publishedAt), last.id)
-          : null;
+        : encodeKeyset({ at: new Date(last.publishedAt), id: last.id });
   }
   return { themes, nextCursor };
 }
 
-/** A newest/oldest page cursor: the last item's published time and id. */
-const feedCursor = (at: Date, id: string) => `${at.toISOString()}|${id}`;
-
 /**
- * The time and id a cursor points at. Cursors from before the id was added
- * (the time alone) still work, without the tiebreak; one that doesn't
- * parse starts the feed over.
+ * Where a newest/oldest page starts: after the cursor's item. A cursor from
+ * before the id was added (an ISO time alone, still held by an open sheet)
+ * pages by the time alone, as it did; one that doesn't parse starts over.
  */
-function parseFeedCursor(
-  cursor: string,
-): { at: Date; id: string | null } | null {
-  const [time, id] = cursor.split("|");
-  const at = new Date(time ?? "");
-  if (!cursor || Number.isNaN(at.getTime())) return null;
-  return { at, id: id || null };
+function afterFeedCursor(
+  cursor: string | number | null,
+  direction: KeysetDirection,
+): SQL | undefined {
+  if (typeof cursor !== "string" || !cursor) return;
+  const keyset = decodeKeyset(cursor);
+  if (keyset) {
+    return keysetAfter(
+      communityItem.publishedAt,
+      communityItem.id,
+      keyset,
+      direction,
+    );
+  }
+  const at = new Date(cursor);
+  if (Number.isNaN(at.getTime())) return;
+  return direction === "desc"
+    ? lt(communityItem.publishedAt, at)
+    : gt(communityItem.publishedAt, at);
 }
 
 /** Tag counts over visible theme items. */
