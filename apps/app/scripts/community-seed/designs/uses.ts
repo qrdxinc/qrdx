@@ -136,10 +136,10 @@ export const USE_DESIGNS: SeedDesign[] = [
     frame: { id: "wine-pairings", color: "#7A1F2B", textColor: "#FFFCF5" },
   },
   {
-    id: "tea-time",
-    name: "Tea time",
+    id: "loose-leaf",
+    name: "Loose leaf",
     description:
-      "Liquid rows in a deep olive green with extra-rounded eyes, on a pale sage white, on the tea menu frame. Calm and leafy, for tea rooms and loose-leaf tins.",
+      "Liquid rows in a deep olive green with extra-rounded eyes, on a pale sage white, on the tea menu frame. Calm and leafy, for tea rooms, tea lists and caddies.",
     tags: ["zen", "nature", "soft", "earthy"],
     style: {
       ...ink("#F4F6EC", "#365314", "#365314", "#3F6212"),
