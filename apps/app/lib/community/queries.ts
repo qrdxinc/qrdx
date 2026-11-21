@@ -34,6 +34,12 @@ import {
 import { unionAll } from "drizzle-orm/pg-core";
 import { OFFICIAL_FRAME_COUNT } from "qrdx";
 import { customFrameSchema, type QRCustomFrame } from "qrdx/types";
+import { decodeKeyset, encodeKeyset } from "@/lib/keyset-cursor";
+import {
+  type KeysetDirection,
+  keysetAfter,
+  keysetOrder,
+} from "@/lib/keyset-sql";
 import type {
   CommunityTheme,
   CommunityThemesResponse,
@@ -1140,24 +1146,24 @@ export async function themeItemsFeed(
     const offset = typeof cursor === "number" ? cursor : 0;
     rows = (await itemsQuery()
       .where(and(...conditions))
-      .orderBy(desc(communityItem.likeCount), desc(communityItem.publishedAt))
+      .orderBy(
+        desc(communityItem.likeCount),
+        desc(communityItem.publishedAt),
+        asc(communityItem.id),
+      )
       .limit(limit + 1)
       .offset(offset)) as ItemRow[];
   } else {
-    if (typeof cursor === "string" && cursor) {
-      const at = new Date(cursor);
-      conditions.push(
-        sort === "newest"
-          ? lt(communityItem.publishedAt, at)
-          : gt(communityItem.publishedAt, at),
-      );
-    }
+    // Keyed by published time to the millisecond and id (lib/keyset-sql.ts):
+    // items published in one moment (a backfill, a batch) page in id order,
+    // none repeated or skipped.
+    const direction = sort === "newest" ? "desc" : "asc";
+    const after = afterFeedCursor(cursor, direction);
+    if (after) conditions.push(after);
     rows = (await itemsQuery()
       .where(and(...conditions))
       .orderBy(
-        sort === "newest"
-          ? desc(communityItem.publishedAt)
-          : asc(communityItem.publishedAt),
+        ...keysetOrder(communityItem.publishedAt, communityItem.id, direction),
       )
       .limit(limit + 1)) as ItemRow[];
   }
@@ -1199,13 +1205,40 @@ export async function themeItemsFeed(
     official: row.profileKind === "official",
   }));
   let nextCursor: string | number | null = null;
-  if (hasMore) {
+  const last = page.at(-1);
+  if (hasMore && last) {
     nextCursor =
       sort === "popular"
         ? (typeof cursor === "number" ? cursor : 0) + limit
-        : (themes.at(-1)?.publishedAt ?? null);
+        : encodeKeyset({ at: new Date(last.publishedAt), id: last.id });
   }
   return { themes, nextCursor };
+}
+
+/**
+ * Where a newest/oldest page starts: after the cursor's item. A cursor from
+ * before the id was added (an ISO time alone, still held by an open sheet)
+ * pages by the time alone, as it did; one that doesn't parse starts over.
+ */
+function afterFeedCursor(
+  cursor: string | number | null,
+  direction: KeysetDirection,
+): SQL | undefined {
+  if (typeof cursor !== "string" || !cursor) return;
+  const keyset = decodeKeyset(cursor);
+  if (keyset) {
+    return keysetAfter(
+      communityItem.publishedAt,
+      communityItem.id,
+      keyset,
+      direction,
+    );
+  }
+  const at = new Date(cursor);
+  if (Number.isNaN(at.getTime())) return;
+  return direction === "desc"
+    ? lt(communityItem.publishedAt, at)
+    : gt(communityItem.publishedAt, at);
 }
 
 /** Tag counts over visible theme items. */

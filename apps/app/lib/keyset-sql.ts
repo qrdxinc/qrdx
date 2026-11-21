@@ -1,5 +1,6 @@
 // The SQL half of keyset paging (lib/keyset-cursor.ts has the cursors): a
-// list ordered by a timestamp, newest first, with the id breaking ties.
+// list ordered by a timestamp, newest first (or oldest first), with the id
+// breaking ties.
 //
 // Postgres keeps microseconds; a cursor carries a JS Date, which stops at
 // milliseconds. Ordering and comparing on the timestamp truncated to the
@@ -8,8 +9,10 @@
 import {
   type AnyColumn,
   and,
+  asc,
   desc,
   eq,
+  gt,
   lt,
   or,
   type SQL,
@@ -30,22 +33,31 @@ export const toMilliseconds = (column: AnyColumn): SQL<Date> =>
 const cursorTime = (at: Date): SQL<Date> =>
   sql<Date>`${at.toISOString()}::timestamp`;
 
+/** Newest first ("desc", the default) or oldest first ("asc"). */
+export type KeysetDirection = "desc" | "asc";
+
 /** Rows after `after` in keysetOrder; undefined (no condition) for the first page. */
 export function keysetAfter(
   time: AnyColumn,
   id: AnyColumn,
   after: Keyset | null,
+  direction: KeysetDirection = "desc",
 ): SQL | undefined {
   if (!after) return;
   const at = toMilliseconds(time);
+  const past = direction === "desc" ? lt : gt;
   return or(
-    lt(at, cursorTime(after.at)),
-    and(eq(at, cursorTime(after.at)), lt(id, after.id)),
+    past(at, cursorTime(after.at)),
+    and(eq(at, cursorTime(after.at)), past(id, after.id)),
   );
 }
 
-/** Newest first to the millisecond, then by id. */
-export const keysetOrder = (time: AnyColumn, id: AnyColumn): SQL[] => [
-  desc(toMilliseconds(time)),
-  desc(id),
-];
+/** Newest (or oldest) first to the millisecond, then by id the same way. */
+export const keysetOrder = (
+  time: AnyColumn,
+  id: AnyColumn,
+  direction: KeysetDirection = "desc",
+): SQL[] => {
+  const by = direction === "desc" ? desc : asc;
+  return [by(toMilliseconds(time)), by(id)];
+};

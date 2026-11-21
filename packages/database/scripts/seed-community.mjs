@@ -5,11 +5,16 @@
 //   official/*.json, listed in ./community-seed.json in catalogue order),
 //   with the engine's ids as their slugs, so /community/frames/<id> keeps
 //   the same URL it had before the seed;
-// - the 10 new themes and 8 collections in ./community-seed.json;
+// - the 10 new themes and 18 collections in ./community-seed.json (8 of
+//   them group the frames and hand-made themes, 10 group the designs);
 // - 41 of the app's built-in themes (apps/app/utils/qr-presets.ts), as
 //   ./community-seed-presets.json stores them: written from the presets by
 //   apps/app/scripts/community-seed/generate.ts, each payload what a
 //   publish of that theme stores;
+// - the official designs made for the gallery (apps/app/scripts/
+//   community-seed/designs), as ./community-seed-designs.json stores them
+//   (written by the same generate.ts): each payload what a publish stores,
+//   with its official frame, if it has one, put in from the engine here;
 // - QRdx's own page templates (apps/app/lib/landing/templates), each run
 //   through the publish scrub (sample text, no photos, no real data), and
 //   8 official kits pairing one with a seeded theme and/or frame, as
@@ -23,7 +28,9 @@
 //       rolls back. Writes nothing.
 //   ... seed-community.mjs --apply --backup ./community-seed-backup.json
 //       writes the backup, applies the plan in one transaction, checks the
-//       counts and commits (or rolls back and exits 1).
+//       counts and commits (or rolls back and exits 1). The backup file is
+//       written before the apply and never overwritten, so it stays after
+//       a rollback too: a rerun needs a new --backup path.
 //
 // Run after manual-sql/0012_community.sql and backfill-community.mjs. Safe
 // to run more than once: ids are fixed ("ci_official_frame_wifi-card"),
@@ -64,6 +71,22 @@ export const PRESET_SEED = JSON.parse(
   readFileSync(here("./community-seed-presets.json"), "utf8")
 );
 
+/** The official designs, generated from the app's design files (see the header). */
+export const DESIGN_SEED = JSON.parse(
+  readFileSync(here("./community-seed-designs.json"), "utf8")
+);
+
+/**
+ * Each seeded theme's publish-gate score by slug, written by the app's seed
+ * test with the scorer a publish uses: stored as scan_score, as a publish
+ * of a theme stores it. Frames go in without one (1,013 of them; the
+ * Frame scan workflow gates every one), as do page templates, kits and
+ * collections, which a publish doesn't gate either.
+ */
+export const THEME_SCORES = JSON.parse(
+  readFileSync(here("./community-seed-theme-scores.json"), "utf8")
+).scores;
+
 /** The engine's official frame files, in catalogue order. */
 export function loadOfficialFrames() {
   return SEED.frames.map((id) =>
@@ -77,15 +100,19 @@ export const seedItemId = (type, id) => `ci_official_${type}_${id}`;
 const versionId = (itemId) =>
   `civ_${createHash("sha256").update(`qrdx:community-version:${itemId}:1`).digest("hex").slice(0, 24)}`;
 
-/** A seed theme's full style: its fields plus its official frame. */
+/**
+ * A seed theme's full style: its fields plus its official frame, with the
+ * colors and labels the theme sets on it (`color`, `textColor`,
+ * `secondaryColor`, `text`, `secondaryText`).
+ */
 export function resolveSeedTheme(theme, framesById) {
   const frame = framesById.get(theme.frame.official);
   if (!frame)
     throw new Error(`${theme.id}: no official frame ${theme.frame.official}`);
-  const { official: _id, ...colors } = theme.frame;
+  const { official: _id, ...options } = theme.frame;
   return {
     ...theme.style,
-    frame: { style: "custom", spec: frame.spec, ...colors },
+    frame: { style: "custom", spec: frame.spec, ...options },
   };
 }
 
@@ -101,12 +128,14 @@ export const SQL = {
     "SELECT id, user_id, workspace_id, verified_at FROM community_profile WHERE kind = 'official' OR id = $1",
   items:
     "SELECT id, type, slug, status, payload_hash, profile_id, is_official, created_by FROM community_item",
+  collectionEntries:
+    "SELECT collection_id, item_id FROM community_collection_entry WHERE collection_id LIKE 'ci_official_%'",
   insertProfile:
     "INSERT INTO community_profile (id, kind, user_id, workspace_id, handle, display_name, verified_at, status, created_at, updated_at) VALUES ($1, 'official', $2, $3, $4, 'QRdx', $5, 'active', $5, $5) ON CONFLICT DO NOTHING",
   verifyProfile:
     "UPDATE community_profile SET verified_at = $2, updated_at = $2 WHERE id = $1 AND verified_at IS NULL",
   insertItem:
-    "INSERT INTO community_item (id, type, slug, profile_id, created_by, name, description, status, license, current_version, payload, payload_hash, facets, is_official, featured_at, published_at, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, 'published', $8, 1, $9, $10, $11, true, $12, $13, $13, $13) ON CONFLICT DO NOTHING",
+    "INSERT INTO community_item (id, type, slug, profile_id, created_by, name, description, status, license, current_version, payload, payload_hash, facets, is_official, featured_at, published_at, created_at, updated_at, scan_score, scan_checked_at) VALUES ($1, $2, $3, $4, $5, $6, $7, 'published', $8, 1, $9, $10, $11, true, $12, $13, $13, $13, $14, $15) ON CONFLICT DO NOTHING",
   insertVersion:
     "INSERT INTO community_item_version (id, item_id, version, payload, payload_hash, created_by, created_at) VALUES ($1, $2, 1, $3, $4, $5, $6) ON CONFLICT DO NOTHING",
   insertTag:
@@ -119,6 +148,10 @@ export const SQL = {
     "SELECT count(*)::int AS n FROM community_item WHERE id = ANY($1::text[]) AND is_official = true AND profile_id = $2",
   countEntries:
     "SELECT count(*)::int AS n FROM community_collection_entry WHERE collection_id = ANY($1::text[])",
+  countVersions:
+    "SELECT count(*)::int AS n FROM community_item_version WHERE item_id = ANY($1::text[])",
+  countTags:
+    "SELECT count(*)::int AS n FROM community_item_tag WHERE item_id = ANY($1::text[])",
 };
 
 // ─── Plan ────────────────────────────────────────────────────────────────────
@@ -156,6 +189,7 @@ export function buildSeedItems(frames = loadOfficialFrames()) {
       payload,
       facets: { pairedFrame: theme.frame.official },
       featured: featured.has(`theme:${theme.id}`),
+      scanScore: THEME_SCORES[theme.id] ?? null,
     });
   }
   // Already in the shape a publish stores: the payload is used as it is.
@@ -171,6 +205,32 @@ export function buildSeedItems(frames = loadOfficialFrames()) {
       payload: theme.payload,
       facets: { preset: theme.id },
       featured: featured.has(`theme:${theme.id}`),
+      scanScore: THEME_SCORES[theme.slug] ?? null,
+    });
+  }
+  // Already in the shape a publish stores; an official frame is put in
+  // from the engine, as the hand-made themes' are.
+  for (const theme of DESIGN_SEED.themes) {
+    const style = theme.frame
+      ? resolveSeedTheme(
+          { id: theme.id, style: theme.payload.style, frame: theme.frame },
+          framesById
+        )
+      : theme.payload.style;
+    items.push({
+      id: seedItemId("theme", theme.id),
+      ref: `theme:${theme.id}`,
+      type: "theme",
+      slug: theme.slug,
+      name: theme.name,
+      description: theme.description,
+      tags: theme.tags.slice(0, 5),
+      payload: { ...theme.payload, style },
+      facets: theme.frame
+        ? { design: theme.id, pairedFrame: theme.frame.official }
+        : { design: theme.id },
+      featured: featured.has(`theme:${theme.id}`),
+      scanScore: THEME_SCORES[theme.slug] ?? null,
     });
   }
   // Already in the shape a publish stores, scrubbed by the app.
@@ -256,11 +316,13 @@ export async function loadSnapshot(client, options) {
   ]);
   const profiles = await read(SQL.officialProfile, [OFFICIAL_PROFILE_ID]);
   const items = await read(SQL.items);
+  const entries = await read(SQL.collectionEntries);
   return {
     officialUserId: user?.id ?? null,
     officialWorkspaceId: workspace?.id ?? null,
     officialProfile: profiles[0] ?? null,
     items,
+    entries,
   };
 }
 
@@ -302,9 +364,12 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
       .map((item) => [`${item.type}:${item.payload_hash}`, item.slug])
   );
   const inserts = [];
+  // Why a seed item isn't going in, by id (for the collections that list it)
+  const skipped = new Map();
   for (const item of seedItems) {
     if (existingIds.has(item.id)) continue;
     if (takenSlugs.has(`${item.type}:${item.slug}`)) {
+      skipped.set(item.id, `its ${item.type} slug "${item.slug}" is taken`);
       warnings.push(
         `${item.type} slug "${item.slug}" is taken by another item: ${item.id} is skipped.`
       );
@@ -312,6 +377,10 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
     }
     const design = `${item.type}:${payloadHash(item.payload)}`;
     if (published.has(design)) {
+      skipped.set(
+        item.id,
+        `its design is already published as "${published.get(design)}"`
+      );
       warnings.push(
         `${item.type} ${item.slug} is already published as "${published.get(design)}": ${item.id} is skipped.`
       );
@@ -320,16 +389,52 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
     published.set(design, item.slug);
     inserts.push(item);
   }
-  // Seeding a collection or kit needs every item it lists in the database.
+  // A collection or kit goes in with the items it lists that are in the
+  // database; a missing one is named, and a later run adds its entry once
+  // the item is seeded. Nothing else is written to another creator's rows.
   const present = new Set([...existingIds, ...inserts.map((item) => item.id)]);
-  const insertable = inserts.filter(
-    (item) => !item.entries || item.entries.every((id) => present.has(id))
-  );
+  const reason = (id) => skipped.get(id) ?? "it isn't in this seed";
+  const insertable = [];
   for (const item of inserts) {
-    if (!insertable.includes(item)) {
+    if (!item.entries) {
+      insertable.push(item);
+      continue;
+    }
+    const missing = item.entries.filter((id) => !present.has(id));
+    for (const id of missing) {
       warnings.push(
-        `${item.type} ${item.slug} lists an item that wasn't seeded: skipped.`
+        `${item.type} ${item.slug}: ${id} isn't seeded (${reason(id)}); its entry is left out and a later run adds it once the item is in.`
       );
+    }
+    const entries = item.entries.filter((id) => present.has(id));
+    if (entries.length === 0) {
+      warnings.push(
+        `${item.type} ${item.slug}: none of its items is seeded: skipped.`
+      );
+      continue;
+    }
+    insertable.push({ ...item, entries, allEntries: item.entries });
+  }
+  // Entries an earlier run left out of a seeded collection or kit, whose
+  // items are in now
+  const seededEntries = new Set(
+    snapshot.entries.map((row) => `${row.collection_id}:${row.item_id}`)
+  );
+  const entriesBefore = new Map();
+  for (const row of snapshot.entries) {
+    entriesBefore.set(
+      row.collection_id,
+      (entriesBefore.get(row.collection_id) ?? 0) + 1
+    );
+  }
+  const entryInserts = [];
+  for (const item of seedItems) {
+    if (!(item.entries && existingIds.has(item.id))) continue;
+    for (const [position, entry] of item.entries.entries()) {
+      if (seededEntries.has(`${item.id}:${entry}`) || !present.has(entry)) {
+        continue;
+      }
+      entryInserts.push({ collectionId: item.id, itemId: entry, position });
     }
   }
 
@@ -348,6 +453,8 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
     verify,
     profileId,
     inserts: insertable,
+    entryInserts,
+    entriesBefore,
     adopt,
     warnings,
     now,
@@ -357,6 +464,7 @@ export function planSeed(snapshot, seedItems, now = new Date()) {
 export const isEmptySeed = (plan) =>
   !(plan.profile || plan.verify) &&
   plan.inserts.length === 0 &&
+  plan.entryInserts.length === 0 &&
   plan.adopt.length === 0;
 
 export function describeSeed(plan) {
@@ -371,6 +479,11 @@ export function describeSeed(plan) {
   for (const item of plan.inserts) {
     lines.push(
       `INSERT community_item ${item.type} slug=${item.slug} id=${item.id}${item.featured ? " featured" : ""}${item.entries ? ` (${item.entries.length} items)` : ""}`
+    );
+  }
+  for (const entry of plan.entryInserts) {
+    lines.push(
+      `INSERT community_collection_entry collection=${entry.collectionId} item=${entry.itemId} position=${entry.position}`
     );
   }
   for (const id of plan.adopt) {
@@ -409,8 +522,10 @@ export async function applySeed(client, plan, userId) {
     ...plan.inserts.filter((item) => !item.entries),
     ...plan.inserts.filter((item) => item.entries),
   ];
-  for (const item of ordered) {
+  for (const [index, item] of ordered.entries()) {
     const hash = payloadHash(item.payload);
+    // A millisecond apart in seed order, so "newest" has a stable order
+    const published = new Date(now.getTime() + index);
     await client.query(SQL.insertItem, [
       item.id,
       item.type,
@@ -423,8 +538,12 @@ export async function applySeed(client, plan, userId) {
       JSON.stringify(item.payload),
       hash,
       item.facets ? JSON.stringify(item.facets) : null,
-      item.featured ? now : null,
-      now,
+      item.featured ? published : null,
+      published,
+      item.scanScore ?? null,
+      item.scanScore === undefined || item.scanScore === null
+        ? null
+        : published,
     ]);
     await client.query(SQL.insertVersion, [
       versionId(item.id),
@@ -432,14 +551,24 @@ export async function applySeed(client, plan, userId) {
       JSON.stringify(item.payload),
       hash,
       userId,
-      now,
+      published,
     ]);
     for (const tag of item.tags) {
       await client.query(SQL.insertTag, [item.id, tag]);
     }
-    for (const [position, entry] of (item.entries ?? []).entries()) {
+    // Each entry at its place in the full list, so one left out (above)
+    // goes back where it belongs when a later run adds it
+    for (const entry of item.entries ?? []) {
+      const position = (item.allEntries ?? item.entries).indexOf(entry);
       await client.query(SQL.insertEntry, [item.id, entry, position]);
     }
+  }
+  for (const entry of plan.entryInserts) {
+    await client.query(SQL.insertEntry, [
+      entry.collectionId,
+      entry.itemId,
+      entry.position,
+    ]);
   }
   for (const id of plan.adopt) {
     await client.query(SQL.adoptTheme, [id, plan.profileId, now]);
@@ -467,6 +596,38 @@ export async function verifySeed(client, plan) {
   ]);
   if (entries !== expected) {
     problems.push(`community_collection_entry: ${entries} of ${expected}`);
+  }
+  const insertedIds = plan.inserts.map((item) => item.id);
+  const versions = await count(SQL.countVersions, [insertedIds]);
+  if (versions !== insertedIds.length) {
+    problems.push(
+      `community_item_version: ${versions} of ${insertedIds.length}`
+    );
+  }
+  const expectedTags = plan.inserts.reduce(
+    (sum, item) => sum + item.tags.length,
+    0
+  );
+  const tags = await count(SQL.countTags, [insertedIds]);
+  if (tags !== expectedTags) {
+    problems.push(`community_item_tag: ${tags} of ${expectedTags}`);
+  }
+  // Entries added to collections seeded by an earlier run
+  const touched = [...new Set(plan.entryInserts.map((e) => e.collectionId))];
+  if (touched.length > 0) {
+    const expectedAdded = touched.reduce(
+      (sum, id) =>
+        sum +
+        (plan.entriesBefore.get(id) ?? 0) +
+        plan.entryInserts.filter((e) => e.collectionId === id).length,
+      0
+    );
+    const added = await count(SQL.countEntries, [touched]);
+    if (added !== expectedAdded) {
+      problems.push(
+        `community_collection_entry (added): ${added} of ${expectedAdded}`
+      );
+    }
   }
   return problems;
 }
@@ -506,7 +667,9 @@ export function parseArgs(argv) {
     throw new Error("Timeouts look like 5s, 500ms or 2min.");
   }
   if (options.apply && !options.backup) {
-    throw new Error("--apply needs --backup <file>.");
+    throw new Error(
+      "--apply needs --backup <file>, a new file each run (a backup is never overwritten)."
+    );
   }
   return options;
 }
@@ -537,16 +700,25 @@ export async function run({
     }
     const counts = (type) =>
       plan.inserts.filter((item) => item.type === type).length;
-    const summary = `${counts("frame")} frame(s), ${counts("theme")} theme(s), ${counts("collection")} collection(s), ${plan.adopt.length} existing theme(s) marked official`;
+    const summary = `${counts("frame")} frame(s), ${counts("theme")} theme(s), ${counts("collection")} collection(s), ${counts("page-template")} page template(s), ${counts("kit")} kit(s), ${plan.entryInserts.length} entry(ies) added to seeded collections, ${plan.adopt.length} existing theme(s) marked official`;
     if (!options.apply) {
-      log(`Planned: ${summary}. Run with --apply --backup <file> to write.`);
+      log(
+        `Planned: ${summary}. Run with --apply --backup <new file> to write.`
+      );
       await client.query("ROLLBACK");
       return 0;
     }
-    await save(
-      options.backup,
-      `${JSON.stringify(backupOf(snapshot, plan), null, 2)}\n`
-    );
+    try {
+      await save(
+        options.backup,
+        `${JSON.stringify(backupOf(snapshot, plan), null, 2)}\n`
+      );
+    } catch (error) {
+      if (error?.code !== "EEXIST") throw error;
+      throw new Error(
+        `${options.backup} already exists: a rerun needs a new --backup path (a backup is never overwritten).`
+      );
+    }
     log(`Backup written to ${options.backup}`);
     await applySeed(client, plan, snapshot.officialUserId);
     const problems = await verifySeed(client, plan);

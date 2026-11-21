@@ -309,6 +309,8 @@ export class FakeCommunityPg {
           is_official: true,
           featured_at: p(11),
           published_at: p(12),
+          scan_score: p(13) ?? null,
+          scan_checked_at: p(14) ?? null,
         }),
       );
     }
@@ -412,6 +414,29 @@ export class FakeCommunityPg {
             ids.has(r.id as string) &&
             r.is_official === true &&
             r.profile_id === p(1),
+        ).length,
+      );
+    }
+    if (text === S.collectionEntries) {
+      return result(
+        this.rows("community_collection_entry")
+          .filter((r) => String(r.collection_id).startsWith("ci_official_"))
+          .map(({ collection_id, item_id }) => ({ collection_id, item_id })),
+      );
+    }
+    if (text === S.countVersions) {
+      const ids = inList(p(0));
+      return n(
+        this.rows("community_item_version").filter((r) =>
+          ids.has(r.item_id as string),
+        ).length,
+      );
+    }
+    if (text === S.countTags) {
+      const ids = inList(p(0));
+      return n(
+        this.rows("community_item_tag").filter((r) =>
+          ids.has(r.item_id as string),
         ).length,
       );
     }
