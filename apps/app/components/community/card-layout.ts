@@ -19,9 +19,16 @@ export const RAIL =
 export const RAIL_CARD =
   "w-[68%] shrink-0 snap-start sm:w-[42%] md:w-[31%] lg:w-[23.5%] xl:w-[21.5%]";
 
-/** A ranked item's box (its numeral and card): a little wider. */
+/**
+ * A ranked item's box: its card's width, with the room for its numeral
+ * (RANK_ROOM, RANK_ROOM_WIDE) added on its left (content-box). So every
+ * card in the row is the same size, and "10", whose numeral needs more
+ * room, takes more of the row rather than shrinking its card. With the
+ * one-digit room, an item is as wide as ever: 80% of the row on phones to
+ * 27% on wide screens.
+ */
 export const RAIL_RANKED =
-  "w-[80%] shrink-0 snap-start sm:w-[50%] md:w-[37%] lg:w-[29%] xl:w-[27%]";
+  "box-content w-[calc(80%-3rem)] shrink-0 snap-start sm:w-[calc(50%-3rem)] md:w-[calc(37%-4rem)] lg:w-[calc(29%-4rem)] xl:w-[calc(27%-4.5rem)]";
 
 /** A maker's box in their row. */
 export const RAIL_MAKER =
@@ -68,7 +75,10 @@ export const STAGE_LABEL =
 export const RANK_NUMERAL =
   "pointer-events-none absolute top-[46%] right-[calc(100%-0.12em)] -translate-y-1/2 text-[5.5rem] leading-none font-black tracking-tighter select-none md:text-[7rem] xl:text-[8rem]";
 
-/** The room a one-digit numeral needs on its item's left. */
+/**
+ * The room a one-digit numeral needs on its item's left (RAIL_RANKED's
+ * widths take it off, so keep the two in step).
+ */
 export const RANK_ROOM = "pl-12 md:pl-16 xl:pl-[4.5rem]";
 
 /** The room "10" needs. */

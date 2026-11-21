@@ -77,7 +77,7 @@ The component downloads and exports the code it draws, like `qrdx/vanilla`. Reac
 
 Clicking the button saves `qr-code.svg`.
 
-- `download({ format, size, filename, quality })` saves a file: PNG by default, or `"jpg"`, `"webp"`, `"bmp"`, `"ico"`, `"svg"`, `"pdf"` or `"eps"`. PDF needs the optional `jspdf` package.
+- `download({ format, size, filename, quality })` saves a file: PNG by default, or `"jpg"`, `"webp"`, `"bmp"`, `"ico"`, `"gif"`, `"svg"`, `"pdf"` or `"eps"`. PDF needs the optional `jspdf` package.
 - `toDataURL(format, { size, quality })` returns the code as a data URL.
 - `markup()` is the SVG markup, `options()` the props the code is drawn with, and `svg` the `<svg>` element.
 
@@ -91,7 +91,8 @@ Every prop of React's `<QRCode>` is an input with the same name and type, and An
 | --- | --- |
 | `value`, `size`, `level`, `margin`, `autoLevel` | Content, pixel size, error correction, quiet zone, and raising the level for a large logo |
 | `fgColor`, `bgColor`, `eyeColor`, `dotColor`, `eyeColors` | Colors, gradients and image fills |
-| `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern`, `moduleScale` | Dot and eye shapes |
+| `bodyPattern`, `cornerEyePattern`, `cornerEyeDotPattern`, `eyeShapes`, `moduleScale` | Dot and eye shapes |
+| `eyeGradient`, `bgRadius`, `backdrop`, `halo`, `shadow` | The eyes' gradient span, rounded corners with a backdrop, a halo and a shadow |
 | `logo`, `logoOptions`, `hideLogo`, `scale` | A logo in the middle, laid out like `<QRCode>`'s |
 | `frame`, `shape`, `art` | Frames with a call to action, circle and heart outlines, Logo QR and Image QR |
 | `templateId`, `customTemplate`, `customProps` | Templates |

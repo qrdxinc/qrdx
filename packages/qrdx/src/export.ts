@@ -7,6 +7,7 @@ import type { QRProps } from "../types";
 import { canvasToBMP } from "./bmp";
 import { DEFAULT_SIZE } from "./constants";
 import { getFrameDimensions } from "./frame";
+import { canvasToGIF, GIF_MIME } from "./gif";
 import { canvasToICO, ICO_MIME } from "./ico";
 import { toSVGString } from "./svg";
 import { blobToDataUrl, canvasToWebP } from "./webp";
@@ -193,6 +194,13 @@ export async function getQRAsCanvas(
         } else if (type === "image/bmp") {
           // toDataURL would hand back a PNG: no browser encodes BMP.
           blobToDataUrl(canvasToBMP(canvas))
+            .then(resolve, reject)
+            .finally(() => canvas.remove());
+        } else if (type === GIF_MIME) {
+          // toDataURL would hand back a PNG: no browser encodes GIF. A design
+          // that needs more than 256 colors and would stop scanning is refused.
+          canvasToGIF(canvas, props.value)
+            .then(blobToDataUrl)
             .then(resolve, reject)
             .finally(() => canvas.remove());
         } else if (type === ICO_MIME || type === "image/x-icon") {

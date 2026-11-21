@@ -1,0 +1,198 @@
+{
+  "id": "game-cartridge",
+  "name": "Game cartridge",
+  "description": "A game cartridge: the code on its label sticker, a connector edge at the foot.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "cartridge", "game", "retro"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1400,
+      "height": 1900
+    },
+    "qr": {
+      "x": 200,
+      "y": 550,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1400,
+        "height": 1800,
+        "radius": 80,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 200,
+        "y": 1760,
+        "width": 1000,
+        "height": 140,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 80,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1240,
+        "y": 80,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 130,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1240,
+        "y": 130,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 180,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1240,
+        "y": 180,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 230,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1240,
+        "y": 230,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 300,
+        "width": 1200,
+        "height": 1400,
+        "radius": 24,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 300,
+        "width": 1200,
+        "height": 60,
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to play",
+        "color": "frame",
+        "box": {
+          "x": 160,
+          "y": 1660,
+          "width": 1080,
+          "height": 160
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Press start",
+        "color": "frame",
+        "box": {
+          "x": 180,
+          "y": 370,
+          "width": 1040,
+          "height": 96
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

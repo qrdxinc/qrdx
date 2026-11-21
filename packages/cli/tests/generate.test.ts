@@ -203,6 +203,58 @@ describe("generate command", () => {
     });
   });
 
+  describe("GIF file output", () => {
+    it("-o file.gif writes a GIF of the size asked for", () => {
+      const out = tmp("output.gif");
+      cleanups.push(out);
+      const { exitCode } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--size",
+        "300",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      const buf = readFileSync(out);
+      expect(buf.toString("latin1", 0, 6)).toBe("GIF89a");
+      expect(buf.readUInt16LE(6)).toBe(300);
+      expect(buf.readUInt16LE(8)).toBe(300);
+      expect(buf.at(-1)).toBe(0x3b);
+    });
+
+    it("--format gif applies to a file name without an extension", () => {
+      const out = tmp("cli-noext-gif");
+      cleanups.push(out);
+      const { exitCode } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--format",
+        "gif",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(0);
+      expect(readFileSync(out).toString("latin1", 0, 3)).toBe("GIF");
+    });
+
+    it("caps the GIF size like PNG", () => {
+      const out = tmp("too-big.gif");
+      cleanups.push(out);
+      const { exitCode, stdout, stderr } = runCli([
+        "generate",
+        "https://qrdx.dev",
+        "--size",
+        "20000",
+        "-o",
+        out,
+      ]);
+      expect(exitCode).toBe(1);
+      expect(stdout + stderr).toContain("GIF output is at most 10000 px");
+      expect(existsSync(out)).toBe(false);
+    });
+  });
+
   describe("ICO file output", () => {
     it("-o file.ico writes a favicon with 16, 32, 48 and 256 px images", () => {
       const out = tmp("output.ico");
@@ -381,7 +433,7 @@ describe("generate command", () => {
       ["--fg", ["--fg", '{"type":"linear"'], "Invalid gradient JSON"],
       ["--bg", ["--bg", '{"type":"linear","stops":[]}'], "Invalid gradient"],
       ["-o", ["-o", "qr.jpg"], 'Unsupported output format ".jpg"'],
-      ["--format", ["--format", "gif"], 'Invalid --format "gif"'],
+      ["--format", ["--format", "tiff"], 'Invalid --format "tiff"'],
       ["--frame", ["--frame", "banner"], 'Invalid --frame "banner"'],
       [
         "--frame-text",

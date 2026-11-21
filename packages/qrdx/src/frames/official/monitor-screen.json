@@ -1,0 +1,111 @@
+{
+  "id": "monitor-screen",
+  "name": "Monitor",
+  "description": "A desktop monitor on a stand, the code on its screen.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "monitor", "screen", "desktop"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1700,
+      "height": 1958
+    },
+    "qr": {
+      "x": 350,
+      "y": 314,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1700,
+        "height": 1758,
+        "radius": 40,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 44,
+        "y": 44,
+        "width": 1612,
+        "height": 1600,
+        "radius": 12,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 850,
+        "cy": 1723,
+        "r": 16,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 780,
+        "y": 1758,
+        "width": 140,
+        "height": 130,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.25
+        }
+      },
+      {
+        "type": "rect",
+        "x": 430,
+        "y": 1878,
+        "width": 840,
+        "height": 80,
+        "radius": 40,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.25
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to continue",
+        "color": "frame",
+        "box": {
+          "x": 120,
+          "y": 1434,
+          "width": 1460,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Pick up on your phone",
+        "color": "frame",
+        "box": {
+          "x": 160,
+          "y": 94,
+          "width": 1380,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

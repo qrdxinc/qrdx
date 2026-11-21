@@ -54,6 +54,12 @@ import { QRCode } from "qrdx";
 | `cornerEyePattern` | `CornerEyePattern` | `"gear"` | Shape of the corner eyes, one of {facts.eyeShapes} |
 | `cornerEyeDotPattern` | `CornerEyeDotPattern` | `"circle"` | Shape of the eye dots, one of {facts.eyeCentres} |
 | `moduleScale` | `number` | `1` | Size of each data module, 0.5 to 1. Each pattern stops at the smallest size that still scans (`MODULE_SCALE_FLOOR`) |
+| `eyeShapes` | `EyeShapes` | none | Per-eye `{ outer, inner }` shapes for `topLeft`, `topRight` and `bottomLeft`, over `cornerEyePattern` and `cornerEyeDotPattern` |
+| `eyeGradient` | `"corner"` or `"code"` | `"corner"` | Where the eyes' gradients run: each eye on its own, or across the whole code like the dots' |
+| `bgRadius` | `number` | `0` | Corner radius of the background as a share of the code's width, up to `BG_RADIUS_MAX` (0.5); capped at `BG_RADIUS_QUIET_RATIO` × `margin` modules (`getBgRadiusLimit`) |
+| `backdrop` | `string` | none | Solid color outside the rounded corners (see-through without it) |
+| `halo` | `QRHalo` | none | `{ color, width }`: a light rim around the dark modules and eyes, `width` in modules (0.1 to 0.5), drawn opaque; only on an opaque background, in a color at least as light as `HALO_LIGHT_MIN` (`#d1d5db`) and no lighter than the background |
+| `shadow` | `QRShadow` | none | `{ color, opacity, dx, dy }`: a see-through copy of the dark shapes under them, shifted `dx`/`dy` modules (−0.3 to 0.3) at `opacity` (0.1 to 0.4) |
 | `logo` | `string` | none | A path, URL or data URL drawn in the middle, with the modules behind it cleared. No logo is drawn without it |
 | `logoOptions` | `LogoOptions` | none | The logo's `size` (0.1 to 0.3, default 0.25), `padding` (0 to 2 modules), `x` and `y` (0 to 1), `shape` and `plate` |
 | `hideLogo` | `boolean` | `false` | Hides the logo even when `logo` is set |
@@ -89,7 +95,7 @@ A logo bigger than the code can repair is shrunk around its center (`capImageSet
 
 ### QRCodeCanvas
 
-`QRProps` plus React's canvas attributes (`QRPropsCanvas`), drawn on a `<canvas>` at the device's pixel ratio. It draws plain square modules with solid colors: a gradient falls back to its first stop, and the pattern, eye color, `eyeColors`, `moduleScale`, `art` and template props are ignored. It ships with `"use client"`.
+`QRProps` plus React's canvas attributes (`QRPropsCanvas`), drawn on a `<canvas>` at the device's pixel ratio. It draws plain square modules with solid colors: a gradient falls back to its first stop, and the pattern, eye color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo`, `shadow`, `art` and template props are ignored (`bgRadius` and `backdrop` are drawn). It ships with `"use client"`.
 
 ### getQRAsSVG
 
@@ -103,6 +109,7 @@ A logo bigger than the code can repair is shrunk around its center (`capImageSet
 | `getQRCodeDataUrl(props, format, size, { quality? })` | `Promise<string>` | The same file as a data URL |
 | `getQRAsWebP(props, { quality? })` | `Promise<Blob>` | Lossless unless `quality` is set; encodes itself where the browser cannot |
 | `getQRAsBMP(props)` | `Promise<Blob>` | A 24-bit BMP; a transparent background comes out white. Written by the library in every browser |
+| `getQRAsGIF(props)` | `Promise<Blob>` | A GIF of at most 256 colors, with a transparent background kept as the one transparent color. A design that needs more colors is reduced, and throws a `GIFScanError` when the reduced image would no longer scan. Written by the library in every browser |
 | `getQRAsICO(props, sizes?)` | `Promise<Blob>` | A favicon: the code at 16, 32, 48 and 256 px (or `sizes`, up to 256), each a PNG in the ICO. Transparency kept, a frame left out |
 | `copyQRCodeToClipboard(props, size?)` | `Promise<void>` | A PNG on the clipboard. Call it from a user gesture |
 | `getSVGString(props)` | `Promise<string>` | SVG markup with the logo embedded |
@@ -116,9 +123,10 @@ A logo bigger than the code can repair is shrunk around its center (`capImageSet
 | `withQRSize(props, size)` | `QRProps` | The props drawn at `size`, with a pixel logo scaled along |
 | `canvasToWebP(canvas, { quality? })`, `blobToDataUrl(blob)`, `encodeWebPLossless(rgba, width, height)` | | WebP helpers |
 | `canvasToBMP(canvas)`, `encodeBMP(rgba, width, height)`, `isBMPFile(bytes)` | | BMP helpers |
+| `canvasToGIF(canvas, expected?)`, `pixelsToGIF(pixels, expected?)`, `encodeGIF(image)`, `quantizeRGBA(rgba, width, height)`, `isGIFFile(bytes)`, `GIFScanError` | | GIF helpers |
 | `canvasToICO(canvas)`, `canvasesToICO(canvases)`, `encodeICO(images)`, `isICOFile(bytes)` | | ICO helpers |
 
-Constants: `DownloadFormat` is `"png" \| "jpg" \| "webp" \| "bmp" \| "ico" \| "svg" \| "pdf" \| "eps"`; `DOWNLOAD_FORMATS` maps each to its MIME type and extension; `PRESET_SIZES` has `small` (200), `medium` (400), `large` (800), `xlarge` (1200), `2xl` (1600) and `3xl` (2000); `DEFAULT_SIZE` is 128.
+Constants: `DownloadFormat` is `"png" \| "jpg" \| "webp" \| "bmp" \| "ico" \| "gif" \| "svg" \| "pdf" \| "eps"`; `DOWNLOAD_FORMATS` maps each to its MIME type and extension; `PRESET_SIZES` has `small` (200), `medium` (400), `large` (800), `xlarge` (1200), `2xl` (1600) and `3xl` (2000); `DEFAULT_SIZE` is 128.
 
 ## Print and EPS
 
@@ -203,6 +211,10 @@ Constants: `FRAME_STYLES` (the {facts.frameStyles} built-in styles plus `none`),
 | `getQRSilhouetteFit(silhouette)` | `{ ok: true, share }` or `{ ok: false, reason, message }` |
 | `isShapedCode(shape)`, `getQRShapePath(...)`, `circleQuietZone(...)`, `getLayoutMargin(...)` | Shape helpers |
 | `clampModuleScale(scale, pattern?)`, `MODULE_SCALE_FLOOR` | The smallest `moduleScale` each pattern scans at |
+| `getBgRadiusLimit({ value, level, margin, shape })`, `clampBgRadius(...)` | The largest `bgRadius` a code keeps its quiet zone with |
+| `eyeShapeOf(props, position)`, `getEyeStyleRisk(props)`, `weakestEyePattern(props)` | Per-eye shapes: the shapes drawn at one eye, and the scan risk across the three |
+| `resolveHalo(halo, code?)`, `resolveShadow(shadow)` | A halo or a shadow with its defaults filled in and its values in range (with `code`, null where the halo isn't drawn) |
+| `getHaloRisk({ halo, bgColor })`, `isSeeThroughBackground(bgColor)`, `colorAlpha(color)` | Why a halo isn't drawn on a code (`reason`, `message`, `fix`), or null; whether any of a background's paint is see-through; a color's alpha (hex, `rgb()`, `hsl()`, `none`) |
 
 Constants: `QR_SHAPES` (`square`, `circle`, `heart`), `QR_CIRCLE_QUIET_MIN` (3), `QR_SILHOUETTE_MAX_CELLS` (64), `QR_ART_MODES` (`logo`, `halftone`), `QR_ART_VARIANTS`, `QR_ART_MAX_SAMPLE_SIZE` (192), `DEFAULT_ART_INTENSITY` (0.6).
 

@@ -129,6 +129,7 @@ QR code, 512x512px, error correction Q.
 SVG URL: https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&fg=155dfc&body=rounded
 PNG URL: https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=png&fg=155dfc&body=rounded
 WebP URL (lossless, smaller than PNG): https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=webp&fg=155dfc&body=rounded
+GIF URL (for older tools and email builders; at most 256 colors, so a gradient or photo logo may be refused): https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=gif&fg=155dfc&body=rounded
 BMP URL (24-bit, for legacy systems; a transparent background comes out white): https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=bmp&fg=155dfc&body=rounded
 ICO URL (a favicon: 16, 32, 48 and 256 px in one file; the small sizes are for icons, not scanning): https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=ico&fg=155dfc&body=rounded
 EPS URL (vector, for print; 512 pt wide): https://api.qrdx.dev/v1/qr?data=https%3A%2F%2Fexample.com&format=eps&fg=155dfc&body=rounded
@@ -143,7 +144,7 @@ For the second, it calls `qr_payload_wifi`, which returns `WIFI:T:WPA;S:Office G
 | --- | --- |
 | `design_qr` | Designs a code for any content type with the style your assistant chooses, or starting from a built-in theme or a community item, checks its scan score and repairs the style until it is Great. Returns the score, what it changed, the style JSON, a playground link, a PNG and the SVG |
 | `list_options` | Lists every value `design_qr` accepts: content types and their fields, colors and gradients, shapes, frames (with the ids of QRdx's official frames), borders, logo icons and brand logos, built-in themes, error correction levels and limits |
-| `generate_qr_code` | Renders a QR code with the editor's styles. Returns a PNG image and public [image API](/docs/developers/image-api) URLs (SVG, PNG, lossless WebP, BMP, ICO and vector EPS) ready for Markdown, HTML or print, plus the SVG markup on request |
+| `generate_qr_code` | Renders a QR code with the editor's styles. Returns a PNG image and public [image API](/docs/developers/image-api) URLs (SVG, PNG, lossless WebP, GIF, BMP, ICO and vector EPS) ready for Markdown, HTML or print, plus the SVG markup on request |
 | `list_qr_styles` | Lists body patterns, corner eye and eye dot shapes, frames (the built-in styles and those drawn as templates), logo icons, error correction levels, defaults and limits |
 | `search_community` | Finds published [community](/community) frames, themes and collections by words, type or tag |
 | `get_community_item` | One community item with the style it applies, ready for `design_qr` or `generate_qr_code` |
@@ -195,7 +196,7 @@ More inputs:
 - **`community_item`**: start from a community frame or theme by id, such as `frame:wifi-card`. A frame item sits on a classic code; your style options change the code under it. QRdx's official frames are community items too, so `frame:diwali-diya` or `frame:menu-cutlery` works here.
 - **A custom frame**: `style.frame` can be `{ "style": "custom", "spec": … }` with a frame spec, such as a community frame's from `get_community_item`. It's drawn and scored as it is; repairs change the code, never the frame.
 - **`style.logo`**: a quick logo icon (`wifi`, `location`, `phone`, `email`, `link`, `file`, `calendar`, `whatsapp` or `instagram`), or a brand logo by its [Simple Icons](https://simpleicons.org) slug (`spotify`, `paypal:white`). `list_options` lists the popular brand slugs.
-- **Engine options**: `style.eyeColors` (per-eye `#RRGGBB` colors), `moduleScale` (dot size, `0.5` to `1`), `shape` (`circle` for a round code), `autoLevel` and `logoOptions` (the logo's size, clear space, position, crop and plate). They're drawn and scored as given; repairs don't change them.
+- **Engine options**: `style.eyeColors` (per-eye `#RRGGBB` colors), `moduleScale` (dot size, `0.5` to `1`), `shape` (`circle` for a round code), `autoLevel` and `logoOptions` (the logo's size, clear space, position, crop and plate), plus the looks around the shapes: `eyeShapes` (per-eye `{ outer, inner }` shapes), `eyeGradient` (`corner` or `code`), `bgRadius` with `backdrop` (rounded corners and the color around them; needs a margin), `halo` (`{ color, width }`) and `shadow` (`{ color, opacity, dx, dy }`). They're drawn and scored as given, and repairs don't change them, except that a repair of the eyes clears the `eyeShapes` it replaces (the result's `qrdxStyle` holds what was drawn).
 
 <IfAvailable feature="fileStorage">
 `logo_file_id` draws a logo you uploaded to QRdx instead, with an [API key](#use-an-api-key).

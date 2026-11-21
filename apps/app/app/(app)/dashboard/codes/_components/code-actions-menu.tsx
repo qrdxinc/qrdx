@@ -48,6 +48,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { GIFScanError } from "qrdx";
 import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import {
   duplicateQrCode,
@@ -194,8 +195,13 @@ export function CodeActionsMenu({
   };
 
   const download = (format: CodeImageFormat) => {
-    downloadCodeQr(code, format).catch(() =>
-      toast.error(t("downloadFailedPleaseTryAgain")),
+    downloadCodeQr(code, format).catch((error: unknown) =>
+      // Trying again can't help a GIF the palette would break: say why
+      toast.error(
+        error instanceof GIFScanError
+          ? t("gifWouldNotScan")
+          : t("downloadFailedPleaseTryAgain"),
+      ),
     );
   };
 
@@ -364,6 +370,9 @@ export function CodeActionsMenu({
               <GalleryImport /> {t("moreFormats")}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
+              <DropdownMenuItem onSelect={() => download("gif")}>
+                <GalleryImport /> {t("downloadGif")}
+              </DropdownMenuItem>
               <DropdownMenuItem onSelect={() => download("bmp")}>
                 <GalleryImport /> {t("downloadBmp")}
               </DropdownMenuItem>
@@ -423,6 +432,9 @@ export function CodeActionsMenu({
               <GalleryImport /> {t("moreFormats")}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
+              <DropdownMenuItem onSelect={() => download("gif")}>
+                <GalleryImport /> {t("downloadGif")}
+              </DropdownMenuItem>
               <DropdownMenuItem onSelect={() => download("bmp")}>
                 <GalleryImport /> {t("downloadBmp")}
               </DropdownMenuItem>

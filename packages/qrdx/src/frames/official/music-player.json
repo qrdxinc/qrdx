@@ -1,0 +1,136 @@
+{
+  "id": "music-player",
+  "name": "Music player",
+  "description": "A music player: the code as the album art, a track bar and play controls.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "music", "player", "listen", "playlist"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 1830
+    },
+    "qr": {
+      "x": 150,
+      "y": 200,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1300,
+        "height": 1830,
+        "radius": 60,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 130,
+        "y": 1610,
+        "width": 1040,
+        "height": 12,
+        "radius": 6,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 130,
+        "y": 1610,
+        "width": 380,
+        "height": 12,
+        "radius": 6,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 510,
+        "cy": 1616,
+        "r": 26,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 650,
+        "cy": 1740,
+        "r": 80,
+        "fill": "text"
+      },
+      {
+        "type": "path",
+        "d": "M628 1700L628 1780L694 1740Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M440 1700L440 1780L360 1740Z",
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 352,
+        "y": 1700,
+        "width": 16,
+        "height": 80,
+        "fill": "text"
+      },
+      {
+        "type": "path",
+        "d": "M860 1700L860 1780L940 1740Z",
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 932,
+        "y": 1700,
+        "width": 16,
+        "height": 80,
+        "fill": "text"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to listen",
+        "color": "text",
+        "box": {
+          "x": 120,
+          "y": 1310,
+          "width": 1060,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Now playing",
+        "color": "text",
+        "box": {
+          "x": 140,
+          "y": 1490,
+          "width": 1020,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

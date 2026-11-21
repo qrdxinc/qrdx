@@ -17,7 +17,9 @@ export type OfficialFrameCollection =
   | "health-learning"
   | "sports-fitness"
   | "business"
-  | "nonprofit";
+  | "nonprofit"
+  | "objects"
+  | "playful";
 
 export interface OfficialFrame {
   /** Stable id (also the file name). Never renamed or reused. */

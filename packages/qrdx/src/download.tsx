@@ -4,12 +4,16 @@ import { DEFAULT_SIZE } from "./constants";
 import { epsToDataUrl, getQRAsEPS } from "./eps";
 import { getQRAsCanvas, getQRAsSVGDataUri } from "./export";
 import { getFrameDimensions } from "./frame";
+import { canvasToGIF, GIF_MIME } from "./gif";
 import { canvasesToICO, ICO_MIME, ICO_SIZES } from "./ico";
 import { blobToDataUrl, canvasToWebP, type WebPOptions } from "./webp";
 
 /**
  * "webp" is lossless unless `quality` is set. "bmp" is an uncompressed
- * 24-bit bitmap: a transparent background comes out white. "ico" is one
+ * 24-bit bitmap: a transparent background comes out white. "gif" keeps a
+ * transparent background as GIF's one transparent color and holds at most
+ * 256 colors: a design that needs more is reduced, and refused (a
+ * GIFScanError) when the reduced image would no longer scan. "ico" is one
  * favicon file holding the code at 16, 32, 48 and 256 px, each an embedded
  * PNG with its transparency; `size` doesn't apply, and a frame is left out.
  * "eps" is vector PostScript: `size.width` becomes points (72 per inch).
@@ -19,6 +23,7 @@ export type DownloadFormat =
   | "jpg"
   | "webp"
   | "bmp"
+  | "gif"
   | "ico"
   | "svg"
   | "pdf"
@@ -37,7 +42,8 @@ export interface DownloadFormatInfo {
  * Every download format with its MIME type and file extension. Each is made
  * by one branch of downloadQRCode and getQRCodeDataUrl: PNG and JPG by the
  * canvas, WebP by canvasToWebP (the canvas, or the built-in lossless
- * encoder), BMP by canvasToBMP (the built-in encoder: no browser writes it),
+ * encoder), BMP by canvasToBMP and GIF by canvasToGIF (the built-in encoders:
+ * no browser writes either),
  * ICO by canvasesToICO (a PNG of each size inside the built-in ICO writer),
  * SVG from the markup, PDF with jspdf, EPS by getQRAsEPS. A new
  * format needs an entry here and a branch there.
@@ -47,6 +53,7 @@ export const DOWNLOAD_FORMATS: Record<DownloadFormat, DownloadFormatInfo> = {
   jpg: { mimeType: "image/jpeg", extension: "jpg", vector: false },
   webp: { mimeType: "image/webp", extension: "webp", vector: false },
   bmp: { mimeType: "image/bmp", extension: "bmp", vector: false },
+  gif: { mimeType: GIF_MIME, extension: "gif", vector: false },
   ico: {
     mimeType: ICO_MIME,
     extension: "ico",
@@ -160,7 +167,7 @@ const getMimeType = (format: DownloadFormat): string =>
   (DOWNLOAD_FORMATS[format] ?? DOWNLOAD_FORMATS.png).mimeType;
 
 /**
- * The default file name of a download: for PNG, JPG, WebP and BMP (and the image
+ * The default file name of a download: for PNG, JPG, WebP, GIF and BMP (and the image
  * a PDF holds) the exact pixel size of what is saved, which a frame makes
  * bigger than the code (a 400 px code in a bottom banner is 496 × 568);
  * SVG and EPS have no pixel size and name none, and nor does an ICO, which
@@ -214,6 +221,26 @@ export async function getQRAsBMP(qrProps: QRProps): Promise<Blob> {
   )) as HTMLCanvasElement;
   try {
     return canvasToBMP(canvas);
+  } finally {
+    canvas.remove();
+  }
+}
+
+/**
+ * The code as a GIF image (plus its frame, if any), with a transparent
+ * background kept as GIF's one transparent color. A design that needs more
+ * than 256 colors is reduced to a palette, and refused with a GIFScanError
+ * when the reduced image would no longer scan. Every browser gets it from
+ * QRdx's own encoder.
+ */
+export async function getQRAsGIF(qrProps: QRProps): Promise<Blob> {
+  const canvas = (await getQRAsCanvas(
+    qrProps,
+    "image/png",
+    true
+  )) as HTMLCanvasElement;
+  try {
+    return await canvasToGIF(canvas, qrProps.value);
   } finally {
     canvas.remove();
   }
@@ -401,6 +428,9 @@ export async function downloadQRCode(
     } else if (format === "bmp") {
       const bmp = await getQRAsBMP(propsWithSize);
       downloadFile(await blobToDataUrl(bmp), finalFilename);
+    } else if (format === "gif") {
+      const gif = await getQRAsGIF(propsWithSize);
+      downloadFile(await blobToDataUrl(gif), finalFilename);
     } else if (format === "ico") {
       const ico = await getQRAsICO(propsWithSize);
       downloadFile(await blobToDataUrl(ico), finalFilename);
@@ -456,6 +486,10 @@ export async function getQRCodeDataUrl(
 
   if (format === "bmp") {
     return await blobToDataUrl(await getQRAsBMP(propsWithSize));
+  }
+
+  if (format === "gif") {
+    return await blobToDataUrl(await getQRAsGIF(propsWithSize));
   }
 
   if (format === "ico") {

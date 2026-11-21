@@ -35,6 +35,7 @@ import {
   collectGradientColors,
   collectImageHrefs,
   length,
+  lineStyleOf,
   type PaintState,
   rasterizeImage,
   SvgPainter,
@@ -434,8 +435,14 @@ class EpsPainter extends SvgPainter {
       this.out.push(`${this.color(fill)} ${path} ${fillOp}`);
     }
     if (stroke) {
+      const draw = `${this.color(stroke)} ${fmt(state.strokeWidth * matrixScale(state.matrix))} w ${path} s`;
+      // Round joins and caps where the SVG asks for them (the halo's rim),
+      // kept to this stroke
+      const { join, cap } = lineStyleOf(state);
       this.out.push(
-        `${this.color(stroke)} ${fmt(state.strokeWidth * matrixScale(state.matrix))} w ${path} s`
+        join || cap
+          ? `gsave ${join} setlinejoin ${cap} setlinecap ${draw} grestore`
+          : draw
       );
     }
   }

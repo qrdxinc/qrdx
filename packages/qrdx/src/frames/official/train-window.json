@@ -1,0 +1,176 @@
+{
+  "id": "train-window",
+  "name": "Train carriage",
+  "description": "A train carriage: the code in the big window, wheels on the rail.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "train", "rail", "travel", "window"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1600
+    },
+    "qr": {
+      "x": 600,
+      "y": 220,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 2000,
+        "height": 1420,
+        "radius": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 120,
+        "width": 340,
+        "height": 960,
+        "radius": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1580,
+        "y": 120,
+        "width": 340,
+        "height": 960,
+        "radius": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 500,
+        "y": 120,
+        "width": 1000,
+        "height": 960,
+        "radius": 40,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1120,
+        "width": 2000,
+        "height": 50,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1580,
+        "width": 2000,
+        "height": 20,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 420,
+        "cy": 1470,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 420,
+        "cy": 1470,
+        "r": 60,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.55
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 640,
+        "cy": 1470,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 640,
+        "cy": 1470,
+        "r": 60,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.55
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1360,
+        "cy": 1470,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1360,
+        "cy": 1470,
+        "r": 60,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.55
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1580,
+        "cy": 1470,
+        "r": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1580,
+        "cy": 1470,
+        "r": 60,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.55
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for the timetable",
+        "color": "text",
+        "box": {
+          "x": 200,
+          "y": 1200,
+          "width": 1600,
+          "height": 140
+        }
+      }
+    ]
+  }
+}

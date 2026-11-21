@@ -57,6 +57,12 @@ const QR_CODE_PROP_KEYS = {
   moduleScale: true,
   autoLevel: true,
   shape: true,
+  eyeShapes: true,
+  eyeGradient: true,
+  bgRadius: true,
+  backdrop: true,
+  halo: true,
+  shadow: true,
   frameLabelMarkers: true,
   partMarkers: true,
   hideLogo: true,
@@ -100,6 +106,12 @@ export function getQRCodeData(props: QRCodeProps): QRData {
     margin: props.margin ?? DEFAULT_MARGIN,
     autoLevel: props.autoLevel,
     shape: props.shape,
+    eyeShapes: props.eyeShapes,
+    eyeGradient: props.eyeGradient,
+    bgRadius: props.bgRadius,
+    backdrop: props.backdrop,
+    halo: props.halo,
+    shadow: props.shadow,
   });
 }
 
@@ -128,6 +140,15 @@ export function getQRCodeSVGProps(
     frameLabelMarkers,
     partMarkers,
   } = props;
+  // The looks around the shapes, as getQRData kept them
+  const looks = {
+    ...(qrData.eyeShapes && { eyeShapes: qrData.eyeShapes }),
+    ...(qrData.eyeGradient && { eyeGradient: qrData.eyeGradient }),
+    ...(qrData.bgRadius && { bgRadius: qrData.bgRadius }),
+    ...(qrData.backdrop && { backdrop: qrData.backdrop }),
+    ...(qrData.halo && { halo: qrData.halo }),
+    ...(qrData.shadow && { shadow: qrData.shadow }),
+  };
   // getQRData lays the logo out on a 1024px canvas; scale it to the rendered size.
   const renderSize = size * scale;
   // Pixels of the 1024px layout → pixels of the rendered code
@@ -165,6 +186,7 @@ export function getQRCodeSVGProps(
     ...(moduleScale !== undefined && { moduleScale }),
     ...(autoLevel && { autoLevel }),
     ...(shape && shape !== "square" && { shape }),
+    ...looks,
     ...(frameLabelMarkers && { frameLabelMarkers }),
     ...(partMarkers && { partMarkers }),
     size: renderSize,

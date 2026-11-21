@@ -35,6 +35,7 @@ export async function RootDocument({
       lang={DOCS_LOCALE}
       suppressHydrationWarning
     >
+      {/* biome-ignore lint/style/noHeadElement: the docs' root document renders its own <head> (consent script, search styles) */}
       <head>
         <ConsentEarlyScript />
         <SearchHighlightStyle />

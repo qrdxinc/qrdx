@@ -45,6 +45,10 @@ export interface PaintState {
   fillRule: string;
   stroke: string;
   strokeWidth: number;
+  /** Inherited `stroke-linejoin` (SVG's miter when unset) */
+  strokeLinejoin?: string;
+  /** Inherited `stroke-linecap` (SVG's butt when unset) */
+  strokeLinecap?: string;
   fontSize: number;
   fontWeight: string;
   textAnchor: string;
@@ -57,6 +61,17 @@ export interface PaintState {
    * shapes that don't overlap inside a see-through group, as in QR codes.
    */
   opacity?: number;
+}
+
+/**
+ * A stroke's line join and cap as PDF and PostScript number them (0 miter
+ * or butt, 1 round, 2 bevel or square), for painters that draw SVG strokes.
+ * Both are 0 for SVG's defaults, which are also PDF's and PostScript's.
+ */
+export function lineStyleOf(state: PaintState): { join: number; cap: number } {
+  const join = { round: 1, bevel: 2 }[state.strokeLinejoin?.trim() ?? ""];
+  const cap = { round: 1, square: 2 }[state.strokeLinecap?.trim() ?? ""];
+  return { join: join ?? 0, cap: cap ?? 0 };
 }
 
 export type PaintColor = RGBAColor | null;
@@ -824,6 +839,9 @@ export abstract class SvgPainter {
         readStyle(node, "stroke-width") === undefined
           ? parent.strokeWidth
           : length(readStyle(node, "stroke-width"), viewport[0], 1),
+      strokeLinejoin:
+        readStyle(node, "stroke-linejoin") ?? parent.strokeLinejoin,
+      strokeLinecap: readStyle(node, "stroke-linecap") ?? parent.strokeLinecap,
       fontSize:
         fontSize === undefined ? parent.fontSize : length(fontSize, 16, 16),
       fontWeight: readStyle(node, "font-weight") ?? parent.fontWeight,

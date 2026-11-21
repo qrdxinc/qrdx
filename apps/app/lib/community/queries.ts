@@ -34,6 +34,12 @@ import {
 import { unionAll } from "drizzle-orm/pg-core";
 import { OFFICIAL_FRAME_COUNT } from "qrdx";
 import { customFrameSchema, type QRCustomFrame } from "qrdx/types";
+import { decodeKeyset, encodeKeyset } from "@/lib/keyset-cursor";
+import {
+  type KeysetDirection,
+  keysetAfter,
+  keysetOrder,
+} from "@/lib/keyset-sql";
 import type {
   CommunityTheme,
   CommunityThemesResponse,
@@ -50,15 +56,17 @@ import { readPageTemplate } from "./page-template";
 import { framePreviewStyle } from "./payloads";
 import { publicStyleFromSaved, toPublicStyle } from "./public-style-server";
 import { SEARCH_DOCUMENT } from "./search";
+import type { SitemapItem } from "./sitemap";
 import { guardedRead } from "./store";
-import type {
-  CommunityCreator,
-  CommunityItemCard,
-  CommunityItemDetail,
-  CommunityItemType,
-  CommunityMaker,
-  CommunityProfileView,
-  RankedCard,
+import {
+  COMMUNITY_TYPES,
+  type CommunityCreator,
+  type CommunityItemCard,
+  type CommunityItemDetail,
+  type CommunityItemType,
+  type CommunityMaker,
+  type CommunityProfileView,
+  type RankedCard,
 } from "./types";
 import { authorNotBanned } from "./visibility";
 
@@ -449,6 +457,64 @@ export async function listFrames(
   const seeded = new Set(official.map((card) => card.slug));
   const missing = officialFrameCards().filter((card) => !seeded.has(card.slug));
   return [...official, ...missing, ...others];
+}
+
+// ─── Sitemap (app/(app)/(home)/community/sitemap.ts) ───────────────────────
+
+/**
+ * Every item the galleries list: visible items, less the collections and
+ * kits the lists leave out (listable). The official frames the seed hasn't
+ * stored yet are added by ./sitemap.ts.
+ */
+export async function sitemapItems(): Promise<SitemapItem[]> {
+  return guardedRead(async () => {
+    const rows = await db
+      .select({
+        id: communityItem.id,
+        type: communityItem.type,
+        slug: communityItem.slug,
+        handle: communityProfile.handle,
+        publishedAt: communityItem.publishedAt,
+        updatedAt: communityItem.updatedAt,
+      })
+      .from(communityItem)
+      .innerJoin(
+        communityProfile,
+        eq(communityProfile.id, communityItem.profileId),
+      )
+      .leftJoin(userTable, eq(userTable.id, communityProfile.userId))
+      .where(visible());
+    const grouped = (type: string) => type === "collection" || type === "kit";
+    const groupIds = rows.filter((row) => grouped(row.type)).map((r) => r.id);
+    const listed = new Set(
+      groupIds.length > 0
+        ? (
+            await toCards(
+              (await itemsQuery().where(
+                and(visible(), inArray(communityItem.id, groupIds)),
+              )) as ItemRow[],
+            )
+          ).map((card) => card.id)
+        : [],
+    );
+    return rows.flatMap((row) => {
+      const type = row.type as CommunityItemType;
+      if (!COMMUNITY_TYPES.includes(type)) return [];
+      if (grouped(type) && !listed.has(row.id)) return [];
+      const changed = Math.max(
+        row.updatedAt.getTime(),
+        row.publishedAt.getTime(),
+      );
+      return [
+        {
+          type,
+          slug: row.slug,
+          handle: row.handle,
+          lastModified: new Date(changed).toISOString(),
+        },
+      ];
+    });
+  }, []);
 }
 
 // ─── Rankings (the overview's rows and /community/top) ─────────────────────
@@ -1080,24 +1146,24 @@ export async function themeItemsFeed(
     const offset = typeof cursor === "number" ? cursor : 0;
     rows = (await itemsQuery()
       .where(and(...conditions))
-      .orderBy(desc(communityItem.likeCount), desc(communityItem.publishedAt))
+      .orderBy(
+        desc(communityItem.likeCount),
+        desc(communityItem.publishedAt),
+        asc(communityItem.id),
+      )
       .limit(limit + 1)
       .offset(offset)) as ItemRow[];
   } else {
-    if (typeof cursor === "string" && cursor) {
-      const at = new Date(cursor);
-      conditions.push(
-        sort === "newest"
-          ? lt(communityItem.publishedAt, at)
-          : gt(communityItem.publishedAt, at),
-      );
-    }
+    // Keyed by published time to the millisecond and id (lib/keyset-sql.ts):
+    // items published in one moment (a backfill, a batch) page in id order,
+    // none repeated or skipped.
+    const direction = sort === "newest" ? "desc" : "asc";
+    const after = afterFeedCursor(cursor, direction);
+    if (after) conditions.push(after);
     rows = (await itemsQuery()
       .where(and(...conditions))
       .orderBy(
-        sort === "newest"
-          ? desc(communityItem.publishedAt)
-          : asc(communityItem.publishedAt),
+        ...keysetOrder(communityItem.publishedAt, communityItem.id, direction),
       )
       .limit(limit + 1)) as ItemRow[];
   }
@@ -1139,13 +1205,40 @@ export async function themeItemsFeed(
     official: row.profileKind === "official",
   }));
   let nextCursor: string | number | null = null;
-  if (hasMore) {
+  const last = page.at(-1);
+  if (hasMore && last) {
     nextCursor =
       sort === "popular"
         ? (typeof cursor === "number" ? cursor : 0) + limit
-        : (themes.at(-1)?.publishedAt ?? null);
+        : encodeKeyset({ at: new Date(last.publishedAt), id: last.id });
   }
   return { themes, nextCursor };
+}
+
+/**
+ * Where a newest/oldest page starts: after the cursor's item. A cursor from
+ * before the id was added (an ISO time alone, still held by an open sheet)
+ * pages by the time alone, as it did; one that doesn't parse starts over.
+ */
+function afterFeedCursor(
+  cursor: string | number | null,
+  direction: KeysetDirection,
+): SQL | undefined {
+  if (typeof cursor !== "string" || !cursor) return;
+  const keyset = decodeKeyset(cursor);
+  if (keyset) {
+    return keysetAfter(
+      communityItem.publishedAt,
+      communityItem.id,
+      keyset,
+      direction,
+    );
+  }
+  const at = new Date(cursor);
+  if (Number.isNaN(at.getTime())) return;
+  return direction === "desc"
+    ? lt(communityItem.publishedAt, at)
+    : gt(communityItem.publishedAt, at);
 }
 
 /** Tag counts over visible theme items. */

@@ -1,0 +1,146 @@
+{
+  "id": "washing-machine",
+  "name": "Washing machine",
+  "description": "A front-loading washing machine: the code in the round door, the label on the panel.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "washing", "laundry", "appliance"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1640,
+      "height": 2000
+    },
+    "qr": {
+      "x": 385,
+      "y": 715,
+      "size": 870,
+      "padding": 69.60000000000001,
+      "radius": 20.88
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1640,
+        "height": 2000,
+        "radius": 50,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 30,
+        "y": 300,
+        "width": 1580,
+        "height": 1670,
+        "radius": 30,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 350,
+        "cy": 150,
+        "r": 70,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 350,
+        "cy": 150,
+        "r": 44,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 490,
+        "y": 110,
+        "width": 60,
+        "height": 80,
+        "radius": 14,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 580,
+        "y": 110,
+        "width": 60,
+        "height": 80,
+        "radius": 14,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 670,
+        "y": 110,
+        "width": 60,
+        "height": 80,
+        "radius": 14,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 820,
+        "cy": 1150,
+        "r": 790,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 820,
+        "cy": 1150,
+        "r": 740,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 820,
+        "cy": 1150,
+        "r": 720,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.96
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to start",
+        "color": "text",
+        "box": {
+          "x": 780,
+          "y": 60,
+          "width": 760,
+          "height": 180
+        },
+        "align": "end"
+      }
+    ]
+  }
+}

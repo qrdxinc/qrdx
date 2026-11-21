@@ -1,0 +1,59 @@
+{
+  "id": "heart-light",
+  "name": "Heart, light",
+  "description": "A heart around the code, the label in its point.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "heart", "love", "shape"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1800
+    },
+    "qr": {
+      "x": 550,
+      "y": 352,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M1000 230C1000 60 760 0 500 0C240 0 0 200 0 500C0 1150 600 1620 1000 1800C1400 1620 2000 1150 2000 500C2000 200 1760 0 1500 0C1240 0 1000 60 1000 230Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1000 265.2C1000 104 760 44 500 44C262 44 44 226.4 44 517.6C44 1150 613.2 1593.6 1000 1725.2C1386.8 1593.6 1956 1150 1956 517.6C1956 226.4 1738 44 1500 44C1240 44 1000 104 1000 265.2Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "frame",
+        "box": {
+          "x": 590,
+          "y": 1360,
+          "width": 820,
+          "height": 150
+        }
+      }
+    ]
+  }
+}

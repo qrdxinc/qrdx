@@ -7,6 +7,9 @@ import {
   type EyeColorOverride,
   type EyePosition,
 } from "qrdx/types";
+/** The "Eyes continue the code's gradient" switch (Eye colors section), for NEW_LOOKS. */
+export const EYE_GRADIENT_CONTROL = "eye-gradient";
+
 import type { QRStyle } from "@/types/theme";
 
 /** True when at least one eye has its own color. */

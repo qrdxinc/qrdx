@@ -3,7 +3,14 @@
 // written out here and tests/home/qr-code-api.test.ts checks them against
 // the API's own (lib/qr-render.ts).
 
-export type ImageFormat = "svg" | "png" | "webp" | "bmp" | "ico" | "eps";
+export type ImageFormat =
+  | "svg"
+  | "png"
+  | "webp"
+  | "gif"
+  | "bmp"
+  | "ico"
+  | "eps";
 
 export const LEVELS = ["L", "M", "Q", "H"] as const;
 

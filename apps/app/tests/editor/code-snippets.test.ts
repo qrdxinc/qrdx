@@ -1037,3 +1037,78 @@ describe("engine options", () => {
     expect(omitted).not.toContain(LEFT_OUT.autoLevel);
   });
 });
+
+// ── The looks around the shapes (per-eye shapes, the eyes' gradient span,
+// rounded corners with a backdrop, a halo, a shadow) ──────────────────────
+describe("the looks around the shapes", () => {
+  const looks: ThemeStyles = {
+    ...plain,
+    margin: 4,
+    eyeShapes: { topLeft: { outer: "leaf", inner: "leaf" } },
+    eyeGradient: "code",
+    bgRadius: 0.2,
+    backdrop: "#0f172a",
+    halo: { color: "#fde68a", width: 0.3 },
+    shadow: { color: "#7c2d12", opacity: 0.25, dx: 0.2, dy: -0.1 },
+  };
+  const notes = [
+    LEFT_OUT.eyeShapes,
+    LEFT_OUT.eyeGradient,
+    LEFT_OUT.bgRadius,
+    LEFT_OUT.halo,
+    LEFT_OUT.shadow,
+  ];
+
+  it("lists them as left out where the tab can't express them", () => {
+    for (const [tab, serialize] of Object.entries(ALL_SERIALIZERS)) {
+      if (["api", "image", "mcp", "react"].includes(tab)) continue;
+      const { omitted } = serialize(urlInput(looks));
+      for (const note of notes)
+        expect(omitted, `${tab}: ${note}`).toContain(note);
+    }
+  });
+
+  it("carries them in the REST body, the image URL and design_qr", () => {
+    const rest = restSnippet(urlInput(looks));
+    expect(createCodeSchema.safeParse(restBody(rest.code)).success).toBe(true);
+    expect(restBody(rest.code).style).toEqual(looks);
+    expect(rest.omitted).toEqual([]);
+
+    const image = imageSnippet(urlInput(looks));
+    expect(styleOf(image.url)).toMatchObject({
+      eyeShapes: looks.eyeShapes,
+      eyeGradient: "code",
+      bgRadius: 0.2,
+      backdrop: "#0f172a",
+      halo: looks.halo,
+      shadow: looks.shadow,
+    });
+    expect(image.omitted).toEqual([]);
+
+    const { args, omitted } = mcpArgs(urlInput(looks));
+    expect(args.style).toMatchObject({
+      eyeShapes: looks.eyeShapes,
+      eyeGradient: "code",
+      bgRadius: 0.2,
+      backdrop: "#0f172a",
+      halo: looks.halo,
+      shadow: looks.shadow,
+    });
+    expect(omitted).toEqual([]);
+  });
+
+  it("passes them to React's QRCode", () => {
+    const { code, omitted } = reactSnippet(urlInput(looks));
+    for (const prop of [
+      "eyeShapes",
+      "eyeGradient",
+      "bgRadius",
+      "backdrop",
+      "halo",
+      "shadow",
+    ]) {
+      expect(code, prop).toContain(prop);
+    }
+    expect(omitted).toEqual([]);
+  });
+});

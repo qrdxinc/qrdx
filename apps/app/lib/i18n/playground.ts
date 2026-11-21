@@ -40,6 +40,8 @@ export const EDITOR_NAMESPACES = [
   "limits",
   "community",
   "aiArt",
+  // The "New" tag on recently added options
+  "common",
 ] as const;
 
 /** The playground page: the editor under the site header. */

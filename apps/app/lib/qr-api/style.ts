@@ -26,13 +26,19 @@
 
 import { getTemplateIds } from "qrdx";
 import {
+  BG_RADIUS_MAX,
   bodyPatternSchema,
   cornerEyeDotPatternSchema,
   cornerEyePatternSchema,
   customFrameSchema,
   EYE_POSITIONS,
   errorLevelSchema,
+  eyeGradientSpanSchema,
   frameSchema,
+  HALO_COLOR_DEFAULT,
+  HALO_LIGHT_MIN,
+  HALO_WIDTH_MAX,
+  HALO_WIDTH_MIN,
   LOGO_PADDING_MAX,
   LOGO_SIZE_MAX,
   LOGO_SIZE_MIN,
@@ -40,6 +46,9 @@ import {
   MODULE_SCALE_MAX,
   MODULE_SCALE_MIN,
   qrShapeSchema,
+  SHADOW_OFFSET_MAX,
+  SHADOW_OPACITY_MAX,
+  SHADOW_OPACITY_MIN,
 } from "qrdx/types";
 import { z } from "zod";
 import {
@@ -176,6 +185,89 @@ const eyeColorsSchema = z
     "Per-eye colors: { topLeft, topRight, bottomLeft }, each { outer, inner }",
   );
 
+const eyeShapeOverrideSchema = z
+  .object({
+    outer: cornerEyePatternSchema.optional().describe("The eye's frame shape"),
+    inner: cornerEyeDotPatternSchema
+      .optional()
+      .describe("The eye's center shape"),
+  })
+  .strict();
+
+/** Per-eye shapes: each eye's frame and centre, over the code's shapes. */
+const eyeShapesSchema = z
+  .object(
+    Object.fromEntries(
+      EYE_POSITIONS.map((position) => [
+        position,
+        eyeShapeOverrideSchema.optional(),
+      ]),
+    ) as Record<
+      (typeof EYE_POSITIONS)[number],
+      z.ZodOptional<typeof eyeShapeOverrideSchema>
+    >,
+  )
+  .strict()
+  .describe(
+    "Per-eye shapes: { topLeft, topRight, bottomLeft }, each { outer, inner } (an eye frame and an eye center shape)",
+  );
+
+/** A halo: a light rim around the dark modules and eyes. */
+const haloSchema = z
+  .object({
+    color: colorString
+      .optional()
+      .describe(
+        `The rim's color (default ${HALO_COLOR_DEFAULT}): at least as light as ${HALO_LIGHT_MIN} and no lighter than the background; drawn opaque (alpha is dropped)`,
+      ),
+    width: z
+      .number()
+      .min(HALO_WIDTH_MIN)
+      .max(HALO_WIDTH_MAX)
+      .optional()
+      .describe(
+        `Width in modules, ${HALO_WIDTH_MIN} to ${HALO_WIDTH_MAX} (default 0.25)`,
+      ),
+  })
+  .strict()
+  .describe(
+    `A light rim around the dark modules and eyes. Drawn only on an opaque bgColor (no picture), in a color at least as light as ${HALO_LIGHT_MIN} and no lighter than any background color; otherwise the code is drawn without it (the scan score's halo check says why)`,
+  );
+
+/** A shadow: a see-through copy of the dark shapes, shifted. */
+const shadowSchema = z
+  .object({
+    color: colorString
+      .optional()
+      .describe("The shadow's color (default black)"),
+    opacity: z
+      .number()
+      .min(SHADOW_OPACITY_MIN)
+      .max(SHADOW_OPACITY_MAX)
+      .optional()
+      .describe(`${SHADOW_OPACITY_MIN} to ${SHADOW_OPACITY_MAX} (default 0.3)`),
+    dx: z
+      .number()
+      .min(-SHADOW_OFFSET_MAX)
+      .max(SHADOW_OFFSET_MAX)
+      .optional()
+      .describe(
+        `Shift across, in modules, -${SHADOW_OFFSET_MAX} to ${SHADOW_OFFSET_MAX} (default 0.2)`,
+      ),
+    dy: z
+      .number()
+      .min(-SHADOW_OFFSET_MAX)
+      .max(SHADOW_OFFSET_MAX)
+      .optional()
+      .describe(
+        `Shift down, in modules, -${SHADOW_OFFSET_MAX} to ${SHADOW_OFFSET_MAX} (default 0.2)`,
+      ),
+  })
+  .strict()
+  .describe(
+    "A see-through copy of the dark modules and eyes drawn under them, shifted a fraction of a module",
+  );
+
 /** The logo's layout, in the engine's ranges. */
 const logoOptionsSchema = z
   .object({
@@ -259,6 +351,27 @@ export const apiStyleFields = {
       "square (default), or circle: the code in a disc of decorative dots",
     ),
   logoOptions: logoOptionsSchema.optional(),
+  eyeShapes: eyeShapesSchema.optional(),
+  eyeGradient: eyeGradientSpanSchema
+    .optional()
+    .describe(
+      "Where the eyes' gradients run: corner (each eye on its own, the default) or code (across the whole code, so eyes continue the dots' gradient)",
+    ),
+  bgRadius: z
+    .number()
+    .min(0)
+    .max(BG_RADIUS_MAX)
+    .optional()
+    .describe(
+      `Corner radius of the background as a share of the code's width, 0 to ${BG_RADIUS_MAX} (0.5 is a disc); capped so the quiet zone (margin) keeps the code's corners, so it needs a margin`,
+    ),
+  backdrop: colorString
+    .optional()
+    .describe(
+      "Solid color outside the rounded background (see-through by default); drawn only with bgRadius",
+    ),
+  halo: haloSchema.optional(),
+  shadow: shadowSchema.optional(),
   showLogo: z
     .boolean()
     .optional()
@@ -298,7 +411,7 @@ export type ApiStyle = z.output<typeof apiStyleSchema>;
 export const apiStyleToolSchema = z
   .record(z.string(), z.unknown())
   .describe(
-    'The editor\'s style JSON, as design_qr returns it in qrdxStyle and a saved theme stores it. Fields: bgColor, fgColor, eyeColor, dotColor (a color such as #155dfc, or a gradient { type: linear | radial, angle, stops: [{ color, offset 0-100 }] } with 2 to 8 stops), bodyPattern, cornerEyePattern, cornerEyeDotPattern, level (L, M, Q, H), margin (0-16), templateId, frame (a built-in style with text, or { style: "custom", spec }), eyeColors ({ topLeft, topRight, bottomLeft: { outer, inner } }), moduleScale (0.5-1), autoLevel, shape (square or circle), logoOptions ({ size 0.1-0.3, padding 0-2, x and y 0-1, shape square, rounded or circle, plate }), showLogo, logoIcon, logoFileId. Unknown fields are refused.',
+    'The editor\'s style JSON, as design_qr returns it in qrdxStyle and a saved theme stores it. Fields: bgColor, fgColor, eyeColor, dotColor (a color such as #155dfc, or a gradient { type: linear | radial, angle, stops: [{ color, offset 0-100 }] } with 2 to 8 stops), bodyPattern, cornerEyePattern, cornerEyeDotPattern, level (L, M, Q, H), margin (0-16), templateId, frame (a built-in style with text, or { style: "custom", spec }), eyeColors ({ topLeft, topRight, bottomLeft: { outer, inner } }), moduleScale (0.5-1), autoLevel, shape (square or circle), logoOptions ({ size 0.1-0.3, padding 0-2, x and y 0-1, shape square, rounded or circle, plate }), eyeShapes ({ topLeft, topRight, bottomLeft: { outer, inner } shapes }), eyeGradient (corner or code), bgRadius (0-0.5, needs a margin), backdrop (a color outside the rounded background), halo ({ color, width 0.1-0.5 }), shadow ({ color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 }), showLogo, logoIcon, logoFileId. Unknown fields are refused.',
   );
 
 export interface StyleIssue {

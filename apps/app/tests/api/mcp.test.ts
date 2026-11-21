@@ -157,6 +157,7 @@ describe("MCP over Streamable HTTP", () => {
     expect(summary).toMatch(/SVG URL: https?:\/\/\S+\/v1\/qr\?/);
     expect(summary).toMatch(/PNG URL: \S+format=png/);
     expect(summary).toMatch(/WebP URL .*format=webp/);
+    expect(summary).toMatch(/GIF URL .*format=gif/);
     expect(summary).toMatch(/BMP URL .*format=bmp/);
     expect(summary).toMatch(/ICO URL .*format=ico/);
     expect(summary).toMatch(/EPS URL .*format=eps/);
@@ -302,6 +303,31 @@ describe("MCP over Streamable HTTP", () => {
     expect(svg).toMatch(/^<svg/);
     expect(decodeQR(rasterizeSvg(svg, { width: 480, pad: 24 }))).toBe(
       "WIFI:T:WPA;S:Cafe Guest;P:sunshine123;H:false;;",
+    );
+  });
+
+  // Review of #747: the repair clears a weak per-eye frame, and design_qr
+  // must score and draw the shapes the loop carries, not the caller's
+  it("design_qr scores and draws the per-eye shapes its repairs leave", async () => {
+    const { message } = await call("design_qr", {
+      content: { type: "url", url: "https://qrdx.dev/q/Ab3dE9x" },
+      style: {
+        cornerEyePattern: "rounded",
+        cornerEyeDotPattern: "rounded",
+        eyeShapes: { topLeft: { outer: "circle" } },
+      },
+    });
+    expect(message?.result.isError).toBeFalsy();
+    const content = message?.result.content as {
+      type: string;
+      text?: string;
+    }[];
+    const design = JSON.parse(content[1]?.text as string);
+    expect(design.grade).toBe("great");
+    expect(design.fellBack).toBeFalsy();
+    expect(design.qrdxStyle.eyeShapes).toBeUndefined();
+    expect(design.changes.join("\n")).toContain(
+      "Changed the eyes from circle to rounded",
     );
   });
 

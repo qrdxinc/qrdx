@@ -1,0 +1,151 @@
+{
+  "id": "soda-can",
+  "name": "Drinks can",
+  "description": "A drinks can with a pull tab, the code on its label.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "can", "drink", "soda", "refresh"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1300,
+      "height": 2000
+    },
+    "qr": {
+      "x": 200,
+      "y": 532,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 40,
+        "y": 120,
+        "width": 1220,
+        "height": 1880,
+        "radius": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 160,
+        "width": 1300,
+        "height": 60,
+        "radius": 30,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1940,
+        "width": 1300,
+        "height": 60,
+        "radius": 30,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 650,
+        "cy": 150,
+        "rx": 560,
+        "ry": 110,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 650,
+        "cy": 150,
+        "rx": 500,
+        "ry": 80,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 610,
+        "y": 60,
+        "width": 80,
+        "height": 170,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 624,
+        "y": 76,
+        "width": 52,
+        "height": 60,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 400,
+        "width": 1100,
+        "height": 1354,
+        "radius": 40,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 400,
+        "width": 1100,
+        "height": 44,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 1710,
+        "width": 1100,
+        "height": 44,
+        "fill": "accent"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan for a refill",
+        "color": "frame",
+        "box": {
+          "x": 160,
+          "y": 1534,
+          "width": 980,
+          "height": 160
+        }
+      }
+    ]
+  }
+}

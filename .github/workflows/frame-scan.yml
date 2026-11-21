@@ -4,13 +4,15 @@ name: Frame scan
 # official). Pull request CI scans a sample (the hand-made frames, one frame
 # per layout and a rotating set, packages/qrdx/scripts/official-frames/
 # sample.mjs), which keeps it inside its time limit; this runs every frame
-# through the engine's scan checks and the community publish gate:
-# - on each release (a push to main that changes the frames),
+# through the engine's scan checks and the community publish gate, and
+# gates every official community design (apps/app/scripts/community-seed/
+# designs) the same way, with zbar required:
+# - on each release (a push to main that changes the frames or designs),
 # - weekly, and
 # - by hand (Actions > Frame scan > Run workflow).
-# The frames are split across the parallel jobs below: part i of n checks
-# every n-th frame (QRDX_FRAME_SCAN_PART, sample.mjs), so together they
-# check every one. With 1,013 frames a single job took over 25 minutes, and
+# The frames and designs are split across the parallel jobs below: part i
+# of n checks every n-th one (QRDX_FRAME_SCAN_PART, sample.mjs), so together
+# they check every one. With 1,013 frames a single job took over 25 minutes, and
 # the gate, then one test for all its frames, ran past its 5-minute limit
 # (13 Nov 2026). Add a part when the library grows.
 # It runs on GitHub's runners only; nothing here runs on Vercel.
@@ -23,6 +25,10 @@ on:
       - packages/qrdx/scripts/official-frames/**
       - packages/qrdx/src/frame*.ts
       - packages/qrdx/src/frame*.tsx
+      - apps/app/scripts/community-seed/**
+      - apps/app/tests/database/seed-designs*
+      - apps/app/tests/support/seed-design*
+      - packages/database/scripts/community-seed*.json
   schedule:
     - cron: "17 4 * * 1"
   workflow_dispatch:
@@ -43,6 +49,8 @@ env:
   NEXT_TELEMETRY_DISABLED: 1
   TURBO_TELEMETRY_DISABLED: 1
   QRDX_FULL_FRAME_SCAN: 1
+  # The design gate fails, rather than skips, when zbar is missing here
+  QRDX_REQUIRE_ZBAR: 1
 
 jobs:
   scan:
@@ -84,14 +92,26 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y zbar-tools
 
       - name: Build qrdx
+        id: build
         run: bun run --filter qrdx build:inplace
 
       - name: Engine scan checks, this part's frames
         working-directory: packages/qrdx
         run: bun x vitest run tests/official-frames tests/frame-label-markers.test.ts
 
+      # The gate steps below run whatever the steps before them found (once
+      # the engine is built), so a failing frame never hides the others'
+      # results: each step reports its own.
       - name: Publish gate, this part's seeded frames
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         working-directory: apps/app
         run: |
           bun x next typegen
           bun x vitest run tests/database/seed-frames-gate-1.test.ts tests/database/seed-frames-gate-2.test.ts tests/database/seed-frames-gate-3.test.ts
+
+      - name: Publish gate, stored scores and decoders, this part's designs
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        working-directory: apps/app
+        run: |
+          bun x next typegen
+          bun x vitest run tests/database/seed-designs-gate-1.test.ts tests/database/seed-designs-gate-2.test.ts tests/database/seed-designs-gate-3.test.ts

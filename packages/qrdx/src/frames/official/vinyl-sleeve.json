@@ -1,0 +1,127 @@
+{
+  "id": "vinyl-sleeve",
+  "name": "Record sleeve",
+  "description": "A record sleeve with the vinyl peeking out, the code as the cover art.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "vinyl", "record", "music"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1960,
+      "height": 1560
+    },
+    "qr": {
+      "x": 250,
+      "y": 302,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "circle",
+        "cx": 1320,
+        "cy": 780,
+        "r": 640,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1320,
+        "cy": 780,
+        "r": 580,
+        "hole": 570,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1320,
+        "cy": 780,
+        "r": 480,
+        "hole": 470,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1320,
+        "cy": 780,
+        "r": 380,
+        "hole": 370,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1320,
+        "cy": 780,
+        "r": 210,
+        "fill": "accent"
+      },
+      {
+        "type": "circle",
+        "cx": 1320,
+        "cy": 780,
+        "r": 30,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 80,
+        "width": 1400,
+        "height": 1400,
+        "radius": 16,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to listen",
+        "color": "text",
+        "box": {
+          "x": 120,
+          "y": 1294,
+          "width": 1160,
+          "height": 150
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Side A",
+        "color": "text",
+        "box": {
+          "x": 140,
+          "y": 124,
+          "width": 1120,
+          "height": 96
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

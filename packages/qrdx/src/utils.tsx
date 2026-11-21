@@ -44,6 +44,7 @@ import { isFrameActive, wrapWithFrame } from "./frame";
 import { cloneElement, type QRNode } from "./jsx/runtime";
 import { LOGO_PLATE_INSET, LOGO_ROUNDED_RADIUS, renderLogo } from "./logo";
 import { capImageSettings } from "./logo-budget";
+import { clampBgRadius, eyeShapeOf, resolveHalo, resolveShadow } from "./looks";
 import { partMarker, type QRPart, type QRPartEye } from "./part-markers";
 import { getLayoutMargin, shapeBackground, shapeDecoration } from "./qr-shape";
 import { hashString } from "./shapes";
@@ -968,6 +969,12 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     moduleScale,
     autoLevel,
     shape,
+    eyeShapes,
+    eyeGradient,
+    bgRadius,
+    backdrop,
+    halo,
+    shadow,
     frameLabelMarkers,
     partMarkers,
     ...otherProps
@@ -1017,9 +1024,46 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
   // Editors find each part by its marker (partMarkers, part-markers.ts)
   const part = (name: QRPart, eye?: QRPartEye) =>
     partMarker(partMarkers, name, eye);
+  // Rounded corners on a square code's background, capped by its quiet zone
+  // (looks.ts); the backdrop shows outside them
+  const radiusShare = clampBgRadius(
+    bgRadius,
+    cells.length,
+    layoutMargin,
+    shape
+  );
   const outline = (px: number, fill: FillProps) => {
     const background = shapeBackground(shape, px);
     if (!background) {
+      if (radiusShare > 0) {
+        const radius = fmt(radiusShare * px);
+        const backdropFill = backdrop ? splitAlpha(backdrop) : null;
+        return (
+          <>
+            {backdropFill && (
+              <rect
+                data-qrdx-look="backdrop"
+                fill={backdropFill.color}
+                fillOpacity={backdropFill.opacity}
+                height={px}
+                width={px}
+                x={0}
+                y={0}
+              />
+            )}
+            <rect
+              {...fill}
+              height={px}
+              rx={radius}
+              ry={radius}
+              width={px}
+              x={0}
+              y={0}
+              {...part("background")}
+            />
+          </>
+        );
+      }
       return (
         <rect
           {...fill}
@@ -1229,17 +1273,30 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     idPrefix: string
   ) => {
     const normalized = normalizeColorConfig(color, fgSolid);
-    return hasPaintDef(normalized)
-      ? generateCornerGradientDef(
-          normalized,
-          cornerX,
-          cornerY,
-          cornerSize,
-          cornerType,
-          idPrefix,
-          size
-        )
-      : null;
+    if (!hasPaintDef(normalized)) {
+      return null;
+    }
+    // eyeGradient "code": the eye's gradient is laid over the whole code,
+    // like the dots' (an eye painted with the dots' gradient shares its
+    // definition, so it continues it)
+    if (eyeGradient === "code" && isGradient(normalized)) {
+      const sameAsDots =
+        JSON.stringify(normalized) === JSON.stringify(normalizedFgColor);
+      return generateGradientDef(
+        normalized,
+        size,
+        sameAsDots ? "fg-color" : idPrefix
+      );
+    }
+    return generateCornerGradientDef(
+      normalized,
+      cornerX,
+      cornerY,
+      cornerSize,
+      cornerType,
+      idPrefix,
+      size
+    );
   };
 
   // Gradient definitions for the corner squares and dots, per corner
@@ -1319,11 +1376,13 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     fgSolid
   );
 
+  // Each eye's frame and centre: its own shapes, else the code's
+  const eyeShapeProps = { cornerEyePattern, cornerEyeDotPattern, eyeShapes };
   const topLeftEye = generateCornerSquarePath(
     topLeftX,
     topLeftY,
     cornerSize,
-    cornerEyePattern,
+    eyeShapeOf(eyeShapeProps, "topLeft").outer,
     "top-left"
   );
 
@@ -1331,7 +1390,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     topLeftX + cornerSize / 2,
     topLeftY + cornerSize / 2,
     cornerDotRadius,
-    cornerEyeDotPattern,
+    eyeShapeOf(eyeShapeProps, "topLeft").inner,
     "top-left"
   );
 
@@ -1339,7 +1398,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     topRightX,
     topRightY,
     cornerSize,
-    cornerEyePattern,
+    eyeShapeOf(eyeShapeProps, "topRight").outer,
     "top-right"
   );
 
@@ -1347,7 +1406,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     topRightX + cornerSize / 2,
     topRightY + cornerSize / 2,
     cornerDotRadius,
-    cornerEyeDotPattern,
+    eyeShapeOf(eyeShapeProps, "topRight").inner,
     "top-right"
   );
 
@@ -1355,7 +1414,7 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     bottomLeftX,
     bottomLeftY,
     cornerSize,
-    cornerEyePattern,
+    eyeShapeOf(eyeShapeProps, "bottomLeft").outer,
     "bottom-left"
   );
 
@@ -1363,9 +1422,62 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     bottomLeftX + cornerSize / 2,
     bottomLeftY + cornerSize / 2,
     cornerDotRadius,
-    cornerEyeDotPattern,
+    eyeShapeOf(eyeShapeProps, "bottomLeft").inner,
     "bottom-left"
   );
+
+  // The halo and the shadow (looks.ts): the dark shapes drawn once more
+  // under themselves. Art modes draw their own body, so only the eyes (and
+  // a shaped code's decoration) get them there. Neither carries a part
+  // marker: a click lands on the shape above it.
+  const resolvedHalo = resolveHalo(halo, { bgColor });
+  const resolvedShadow = resolveShadow(shadow);
+  const darkShapes = (eyeFillRule: "evenodd" | "nonzero") => (
+    <>
+      {artLayer ? null : dataCircles}
+      {decorationShapes}
+      <path d={topLeftEye} fillRule={eyeFillRule} />
+      {topLeftDot}
+      <path d={topRightEye} fillRule={eyeFillRule} />
+      {topRightDot}
+      <path d={bottomLeftEye} fillRule={eyeFillRule} />
+      {bottomLeftDot}
+    </>
+  );
+  let haloLayer: QRNode | null = null;
+  if (resolvedHalo) {
+    // A rim of the halo color: the shapes filled and stroked with it, the
+    // stroke twice the width since half of it lies under the shape. The eye
+    // frames fill their hole too, so the ring's light gap is halo-colored.
+    const { color } = resolvedHalo;
+    haloLayer = (
+      <g
+        data-qrdx-look="halo"
+        fill={color}
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={fmt(2 * resolvedHalo.width * pixelSize)}
+      >
+        {darkShapes("nonzero")}
+      </g>
+    );
+  }
+  let shadowLayer: QRNode | null = null;
+  if (resolvedShadow) {
+    // One see-through group, so overlapping shadows don't darken twice
+    const { color } = splitAlpha(resolvedShadow.color);
+    shadowLayer = (
+      <g
+        data-qrdx-look="shadow"
+        fill={color}
+        opacity={fmt(resolvedShadow.opacity)}
+        transform={compact`translate(${resolvedShadow.dx * pixelSize},${resolvedShadow.dy * pixelSize})`}
+      >
+        {darkShapes("evenodd")}
+      </g>
+    );
+  }
 
   // QR Code content (can be used standalone or inside wrapper)
   const qrContent = (
@@ -1386,6 +1498,10 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
 
       {/* Background: the square, or a shaped code's outline */}
       {outline(size, bgFillValue)}
+
+      {/* The halo and the shadow, under the shapes they copy */}
+      {haloLayer}
+      {shadowLayer}
 
       {/* Data module circles */}
       {dataLayer}
@@ -1486,6 +1602,9 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
 
         {/* Scale all QR elements to fit template coordinate system */}
         <g transform={`scale(${fmt(templateSize / size, SCALE_DECIMALS)})`}>
+          {haloLayer}
+          {shadowLayer}
+
           {/* Data module circles */}
           {dataLayer}
 

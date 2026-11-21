@@ -16,6 +16,7 @@ const FRAME_SCAN_ENV = [
   "QRDX_FULL_FRAME_SCAN",
   "QRDX_FRAME_SCAN_DAY",
   "QRDX_FRAME_SCAN_PART",
+  "QRDX_REQUIRE_ZBAR",
 ].flatMap((key) =>
   process.env[key] === undefined ? [] : [[key, process.env[key]]],
 );
