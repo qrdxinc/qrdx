@@ -198,6 +198,36 @@ describe("the API style", () => {
     }
   });
 
+  // Review finding 3: "none" paints nothing, so no part may take it
+  it('refuses "none" as a colour, and takes every other form the engine reads', () => {
+    for (const bad of [
+      { bgColor: "none" },
+      { bgColor: "NONE" },
+      { fgColor: { type: "solid", color: "none" } },
+      {
+        bgColor: {
+          type: "linear",
+          stops: [
+            { color: "#ffffff", offset: 0 },
+            { color: "none", offset: 100 },
+          ],
+        },
+      },
+      { halo: { color: "none" } },
+      { backdrop: "none" },
+    ]) {
+      expect(parseApiStyle(bad).ok, JSON.stringify(bad)).toBe(false);
+    }
+    for (const good of [
+      { bgColor: "transparent" },
+      { bgColor: "hsla(0,0%,100%,0)" },
+      { bgColor: "hsl(0 0% 100% / 0)" },
+      { halo: { color: "hsl(0, 0%, 90%)" } },
+    ]) {
+      expect(parseApiStyle(good).ok, JSON.stringify(good)).toBe(true);
+    }
+  });
+
   it("refuses logo addresses and art with the reason, never fetching anything", () => {
     const logoUrl = parseApiStyle({ customLogo: "https://example.com/l.png" });
     expect(logoUrl).toMatchObject({
