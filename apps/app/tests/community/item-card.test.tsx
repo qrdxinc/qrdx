@@ -38,7 +38,7 @@ import {
   RANK_ROOM,
   RANK_ROOM_WIDE,
   STAGE,
-  STAGE_LABEL,
+  TYPE_CHIP,
 } from "@/components/community/card-layout";
 import { ItemGrid, RankedRowCards } from "@/components/community/item-card";
 import stage from "@/components/community/stage.module.css";
@@ -92,9 +92,9 @@ const PAGE = { type: "links", content: buildTemplateContent("links") };
 const eagerCard = (overrides: Partial<CommunityItemCard>) =>
   renderIntl(ItemGrid({ cards: [card(overrides)], eager: 1 }));
 
-/** The words on the stage's type label. */
+/** The name in the stage's type mark (its tooltip's words). */
 const typeLabel = (html: string) =>
-  html.match(/data-type-label="">([^<]*)</)?.[1];
+  html.match(/data-type-label="([^"]*)"/)?.[1];
 
 /** The caption's second line: from the creator's name to the card's end. */
 const creatorLine = (html: string) => html.slice(html.indexOf("Ana Ruiz"));
@@ -146,9 +146,24 @@ describe("community card type labels", () => {
     expect(typeLabel(labels.page)).toBe("Page");
     expect(typeLabel(labels.kit)).toBe("Kit");
     expect(typeLabel(labels.collection)).toBe("Collection · 6");
-    expect(tagWith(labels.frame, "data-type-label")).toContain(
-      STAGE_LABEL.split(" ")[0],
+  });
+
+  it("show the type as a mark, its name only in a tooltip", () => {
+    const html = eagerCard({ type: "frame", preview: FRAME_PREVIEW });
+    const chip = html.slice(
+      html.lastIndexOf("<a", html.indexOf("data-type-label")),
+      html.indexOf("</a>", html.indexOf("data-type-label")) + 4,
     );
+    for (const name of TYPE_CHIP.split(" ")) expect(chip).toContain(name);
+    // An icon, no words on the stage
+    expect(chip).toContain("<svg");
+    expect(chip.replace(/<[^>]+>/g, "")).toBe("");
+    // Above the card's link (z-10) so it can be hovered, going where the
+    // card goes, and left to the card's own link for keyboards and readers
+    expect(chip).toContain("z-20");
+    expect(chip).toContain('href="/community/frames/harbour-blue-ab12"');
+    expect(chip).toContain('tabindex="-1"');
+    expect(chip).toContain('aria-hidden="true"');
   });
 
   it("leave the caption to the name, saves and creator", () => {
