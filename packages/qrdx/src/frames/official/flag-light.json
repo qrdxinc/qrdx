@@ -1,11 +1,16 @@
 {
-  "id": "pennant-team",
-  "name": "Pennant",
-  "description": "A pennant on a pole: the code at the hoist, the label along the fly.",
+  "id": "flag-light",
+  "name": "Team flag, light",
+  "description": "A swallowtail flag on a pole: the code at the hoist, the label along the fly.",
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": ["call to action", "flag", "pennant", "team"],
+  "tags": [
+    "call to action",
+    "flag",
+    "team",
+    "sports"
+  ],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -22,8 +27,9 @@
       "radius": 16.8
     },
     "colors": {
-      "frame": "#111111",
-      "text": "#ffffff"
+      "frame": "#1f1f1f",
+      "text": "#ffffff",
+      "accent": "#5a5a5a"
     },
     "shapes": [
       {
@@ -34,7 +40,10 @@
         "height": 1340,
         "radius": 12,
         "fill": {
-          "mix": ["frame", "#000000"],
+          "mix": [
+            "frame",
+            "#000000"
+          ],
           "amount": 0.3
         }
       },
@@ -44,7 +53,10 @@
         "cy": 60,
         "r": 56,
         "fill": {
-          "mix": ["frame", "#000000"],
+          "mix": [
+            "frame",
+            "#000000"
+          ],
           "amount": 0.3
         }
       },
@@ -54,13 +66,27 @@
         "fill": "frame"
       },
       {
+        "type": "path",
+        "d": "M130 166L1935.2 173.2L1721.6 690L1935.2 1206.8L130 1214Z",
+        "fill": {
+          "mix": [
+            "frame",
+            "background"
+          ],
+          "amount": 0.9
+        }
+      },
+      {
         "type": "circle",
         "cx": 70,
         "cy": 190,
         "r": 30,
         "hole": 14,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.45
         }
       },
@@ -71,7 +97,10 @@
         "r": 30,
         "hole": 14,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.45
         }
       }
@@ -81,8 +110,8 @@
         "type": "text",
         "id": "cta",
         "slot": "primary",
-        "text": "Scan me",
-        "color": "text",
+        "text": "Scan to join",
+        "color": "frame",
         "box": {
           "x": 1056,
           "y": 490,
@@ -94,8 +123,8 @@
         "type": "text",
         "id": "note",
         "slot": "secondary",
-        "text": "Join the team",
-        "color": "text",
+        "text": "Game day details",
+        "color": "frame",
         "box": {
           "x": 1056,
           "y": 710,

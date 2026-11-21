@@ -15,13 +15,14 @@ import bubbleTailRight from "../official/bubble-tail-right.json";
 import chatPair from "../official/chat-pair.json";
 import circleBadgeTop from "../official/circle-badge-top.json";
 import circleViewfinder from "../official/circle-viewfinder.json";
-import confettiBorder from "../official/confetti-border.json";
 import continuedOnline from "../official/continued-online.json";
 import cornerTab from "../official/corner-tab.json";
 import cornerTabLight from "../official/corner-tab-light.json";
 import curlArrow from "../official/curl-arrow.json";
 import curlArrowTinted from "../official/curl-arrow-tinted.json";
 import doubleBorder from "../official/double-border.json";
+import flagLight from "../official/flag-light.json";
+import flagTeam from "../official/flag-team.json";
 import folderTab from "../official/folder-tab.json";
 import folderTabArrow from "../official/folder-tab-arrow.json";
 import geoCorners from "../official/geo-corners.json";
@@ -44,8 +45,6 @@ import learnMoreCard from "../official/learn-more-card.json";
 import neonTube from "../official/neon-tube.json";
 import octagonLight from "../official/octagon-light.json";
 import octagonSign from "../official/octagon-sign.json";
-import pennantLight from "../official/pennant-light.json";
-import pennantTeam from "../official/pennant-team.json";
 import phoneButton from "../official/phone-button.json";
 import phoneOutline from "../official/phone-outline.json";
 import phoneScreen from "../official/phone-screen.json";
@@ -251,10 +250,9 @@ const frames = [
   heartScan,
   heartLight,
   scrollStory,
-  pennantTeam,
-  pennantLight,
+  flagTeam,
+  flagLight,
   polkaDotBorder,
-  confettiBorder,
   swirlBorder,
   sketchBorder,
   raisedCard,

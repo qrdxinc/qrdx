@@ -5,17 +5,21 @@
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": ["call to action", "border", "outline"],
+  "tags": [
+    "call to action",
+    "border",
+    "outline"
+  ],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
     "version": 1,
     "artboard": {
-      "width": 1200,
+      "width": 1348,
       "height": 1648
     },
     "qr": {
-      "x": 100,
+      "x": 174,
       "y": 294,
       "size": 1000,
       "padding": 80,
@@ -30,14 +34,14 @@
         "type": "rect",
         "x": 0,
         "y": 0,
-        "width": 1200,
+        "width": 1348,
         "height": 1648,
         "radius": 22,
         "fill": "frame",
         "hole": {
           "x": 44,
           "y": 44,
-          "width": 1112,
+          "width": 1260,
           "height": 1560,
           "radius": 11
         }
@@ -53,7 +57,7 @@
         "box": {
           "x": 104,
           "y": 1404,
-          "width": 992,
+          "width": 1140,
           "height": 170
         }
       },
@@ -66,7 +70,7 @@
         "box": {
           "x": 124,
           "y": 94,
-          "width": 952,
+          "width": 1100,
           "height": 100
         },
         "weight": "regular"

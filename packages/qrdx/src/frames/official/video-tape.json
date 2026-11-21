@@ -4,8 +4,16 @@
   "description": "A video tape: two reel windows on top, the code on the big label, a spine strip.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": ["url"],
-  "tags": ["playful", "video", "tape", "retro", "watch"],
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "video",
+    "tape",
+    "retro",
+    "watch"
+  ],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -44,7 +52,10 @@
         "height": 200,
         "radius": 20,
         "fill": {
-          "mix": ["frame", "#000000"],
+          "mix": [
+            "frame",
+            "#000000"
+          ],
           "amount": 0.35
         }
       },
@@ -54,7 +65,10 @@
         "cy": 160,
         "r": 80,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.5
         }
       },
@@ -71,7 +85,10 @@
         "cy": 160,
         "r": 80,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.5
         }
       },
@@ -90,7 +107,10 @@
         "height": 980,
         "radius": 20,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.92
         }
       },
@@ -122,7 +142,7 @@
         "type": "text",
         "id": "note",
         "slot": "secondary",
-        "text": "Be kind, rewind",
+        "text": "Press play",
         "color": "frame",
         "box": {
           "x": 1158,

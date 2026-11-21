@@ -4,15 +4,23 @@
   "description": "A floppy disk: a metal shutter on top, the code on the label below.",
   "category": "use-case",
   "collection": "playful",
-  "contentTypes": ["url"],
-  "tags": ["playful", "floppy", "disk", "retro", "save"],
+  "contentTypes": [
+    "url"
+  ],
+  "tags": [
+    "playful",
+    "floppy",
+    "disk",
+    "retro",
+    "save"
+  ],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
     "version": 1,
     "artboard": {
       "width": 1600,
-      "height": 1620
+      "height": 1720
     },
     "qr": {
       "x": 350,
@@ -29,7 +37,7 @@
     "shapes": [
       {
         "type": "path",
-        "d": "M0 0L1480 0L1600 120L1600 1620L0 1620Z",
+        "d": "M0 0L1480 0L1600 120L1600 1720L0 1720Z",
         "fill": "frame"
       },
       {
@@ -40,7 +48,10 @@
         "height": 300,
         "radius": 16,
         "fill": {
-          "mix": ["frame", "#000000"],
+          "mix": [
+            "frame",
+            "#000000"
+          ],
           "amount": 0.4
         }
       },
@@ -52,7 +63,10 @@
         "height": 210,
         "radius": 8,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.3
         }
       },
@@ -61,10 +75,13 @@
         "x": 200,
         "y": 360,
         "width": 1200,
-        "height": 1200,
+        "height": 1300,
         "radius": 20,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.92
         }
       },
@@ -79,10 +96,13 @@
       {
         "type": "circle",
         "cx": 90,
-        "cy": 1530,
+        "cy": 1630,
         "r": 30,
         "fill": {
-          "mix": ["frame", "background"],
+          "mix": [
+            "frame",
+            "background"
+          ],
           "amount": 0.4
         }
       }
@@ -96,7 +116,7 @@
         "color": "frame",
         "box": {
           "x": 260,
-          "y": 1454,
+          "y": 1474,
           "width": 1080,
           "height": 150
         }

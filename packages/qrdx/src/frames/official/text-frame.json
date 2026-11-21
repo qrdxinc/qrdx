@@ -5,7 +5,12 @@
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": ["call to action", "text", "bold", "minimal"],
+  "tags": [
+    "call to action",
+    "text",
+    "bold",
+    "minimal"
+  ],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -64,7 +69,7 @@
         "type": "text",
         "id": "note",
         "slot": "secondary",
-        "text": "Scan me",
+        "text": "No app needed",
         "color": "frame",
         "box": {
           "x": 40,

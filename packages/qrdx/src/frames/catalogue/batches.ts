@@ -5,9 +5,7 @@
  * Official frames by the round that added them (YYYY-MM), so an app can
  * mark the latest ones as new for a while. The first catalogue has none.
  */
-export const OFFICIAL_FRAME_BATCHES: Readonly<
-  Record<string, readonly string[]>
-> = {
+export const OFFICIAL_FRAME_BATCHES: Readonly<Record<string, readonly string[]>> = {
   "2026-11": [
     "hexagon-scan",
     "hexagon-light",
@@ -16,10 +14,9 @@ export const OFFICIAL_FRAME_BATCHES: Readonly<
     "heart-scan",
     "heart-light",
     "scroll-story",
-    "pennant-team",
-    "pennant-light",
+    "flag-team",
+    "flag-light",
     "polka-dot-border",
-    "confetti-border",
     "swirl-border",
     "sketch-border",
     "raised-card",
@@ -46,9 +43,6 @@ export const OFFICIAL_FRAME_BATCHES: Readonly<
     "mug-light",
     "delivery-box-track",
     "delivery-box-light",
-    "delivery-scooter-order",
-    "hand-card",
-    "hand-card-light",
     "gallery-frame",
     "billboard-campaign",
     "billboard-light",
@@ -61,20 +55,16 @@ export const OFFICIAL_FRAME_BATCHES: Readonly<
     "bookmark-light",
     "clapperboard-scene",
     "clapperboard-light",
-    "smartwatch-face",
     "spiral-notebook",
     "roll-up-banner",
     "roll-up-banner-light",
-    "card-reader",
     "globe-stand",
     "video-player",
     "music-player",
     "music-player-light",
     "round-tag",
     "round-tag-light",
-    "rocket-window",
     "tv-set",
-    "arcade-cabinet",
     "vinyl-sleeve",
     "vinyl-sleeve-light",
     "cassette-tape",
@@ -102,8 +92,6 @@ export const OFFICIAL_FRAME_BATCHES: Readonly<
     "porthole",
     "toaster-toast",
     "vending-machine",
-    "retro-computer",
-    "game-cartridge",
     "floppy-disk",
     "retro-radio",
     "popcorn-bucket",
@@ -117,9 +105,8 @@ export const OFFICIAL_FRAME_BATCHES: Readonly<
     "sailboat-sail",
     "matchbox-drawer",
     "cinema-marquee",
-    "handheld-console",
     "video-tape",
     "flying-saucer",
-    "lighthouse-tower",
-  ],
+    "lighthouse-tower"
+  ]
 };

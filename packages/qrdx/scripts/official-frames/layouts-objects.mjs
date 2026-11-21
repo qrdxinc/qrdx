@@ -79,10 +79,10 @@ export function hexagon(o) {
   const shapes = [shape.poly(polygon(cx, cy, R, 6, -90), F)];
   if (o.light) shapes.push(shape.poly(polygon(cx, cy, R - 40, 6, -90), fill));
   const size = 900;
-  const qy = cy - 600 + 72;
+  const qy = cy - 500;
   const pb = qy + size + 72;
   const labels = [cta(o, [cx - 450, pb + 36, 900, 170], fill)];
-  labels.push(...note(o, [cx - 310, 230, 620, 100], fill));
+  labels.push(...note(o, [cx - 420, 240, 840, 160], fill));
   return { w, h, qr: qrSized(cx - size / 2, qy, size), shapes, labels };
 }
 
@@ -96,10 +96,10 @@ export function octagon(o) {
   const shapes = [shape.poly(polygon(cx, cy, R, 8, 22.5), F)];
   shapes.push(shape.poly(polygon(cx, cy, R - 44, 8, 22.5), o.light ? fill : T));
   shapes.push(shape.poly(polygon(cx, cy, R - 60, 8, 22.5), fill));
-  const qy = cy - 640;
+  const qy = cy - 580;
   const pb = qy + QR + PAD;
   const labels = [cta(o, [cx - 500, pb + 40, 1000, 180], fill)];
-  labels.push(...note(o, [cx - 350, cy - 940, 700, 100], fill));
+  labels.push(...note(o, [cx - 400, 120, 800, 150], fill));
   return { w, h: w, qr: qrAt(cx - 500, qy), shapes, labels };
 }
 
@@ -165,8 +165,8 @@ export function scroll(o) {
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 
-/** A pennant on a pole: the code at the hoist, the label along the fly. Wide. */
-export function pennant(o) {
+/** A swallowtail flag on a pole: the code at the hoist, the label along the fly. Wide. */
+export function swallowtailFlag(o) {
   const w = 2000;
   const h = 1400;
   const poleX = 70;
@@ -368,165 +368,6 @@ export function deliveryBox(o) {
     })
   );
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
-}
-
-/** A delivery scooter with a big box on the back holding the code. Wide. */
-export function scooter(o) {
-  const w = 2000;
-  const boxW = 1300;
-  const boxX = 40;
-  const boxY = 0;
-  const head = o.note ? 150 : 60;
-  const qy = boxY + head + PAD;
-  const pb = qy + QR + PAD;
-  const boxH = pb - boxY + 230;
-  const groundY = boxY + boxH + 440;
-  const h = groundY + 20;
-  const fill = o.light ? tint(0.9) : F;
-  const shapes = [];
-  // Scooter: a seat under the box, a floorboard, a front shield and bars
-  const seatY = boxY + boxH + 10;
-  shapes.push(shape.rect(boxX + 200, seatY, 720, 80, shade(0.3), 40));
-  shapes.push(
-    shape.path(
-      path()
-        .M(boxX + 860, seatY + 50)
-        .L(w - 470, seatY + 50)
-        .L(w - 280, seatY - 330)
-        .L(w - 190, seatY - 330)
-        .L(w - 380, seatY + 170)
-        .L(boxX + 540, seatY + 170)
-        .Z(),
-      F
-    )
-  );
-  shapes.push(
-    line(
-      [
-        [w - 310, seatY - 330],
-        [w - 130, seatY - 450],
-      ],
-      36,
-      F
-    )
-  );
-  shapes.push(shape.circle(w - 120, seatY - 458, 40, F));
-  shapes.push(shape.circle(w - 280, seatY - 300, 60, tint(0.6)));
-  for (const x of [boxX + 380, w - 400]) {
-    shapes.push(shape.circle(x, groundY - 150, 150, F));
-    shapes.push(shape.circle(x, groundY - 150, 92, tint(0.55)));
-    shapes.push(shape.circle(x, groundY - 150, 32, F));
-  }
-  shapes.push(shape.rect(0, groundY - 16, w, 16, tint(0.5)));
-  shapes.push(shape.rect(boxX, boxY, boxW, boxH, F, 48));
-  if (o.light)
-    shapes.push(
-      shape.rect(boxX + 30, boxY + 30, boxW - 60, boxH - 60, fill, 30)
-    );
-  shapes.push(
-    shape.rect(boxX + 60, boxY + boxH - 60, boxW - 120, 14, tint(0.45), 7)
-  );
-  const labels = [cta(o, [boxX + 100, pb + 36, boxW - 200, 170], fill)];
-  labels.push(...note(o, [boxX + 140, boxY + 44, boxW - 280, 96], fill));
-  return { w, h, qr: qrAt(boxX + (boxW - QR) / 2, qy), shapes, labels };
-}
-
-/** A hand holding up a card with the code. */
-export function handCard(o) {
-  const w = 1560;
-  const cardX = 180;
-  const cardW = 1240;
-  const cardY = 0;
-  const head = o.note ? 180 : 60;
-  const qy = cardY + head + PAD;
-  const pb = qy + QR + PAD;
-  const cardH = pb - cardY + 250;
-  const h = cardH + 380;
-  const fill = o.light ? tint(0.9) : F;
-  const skin = shade(0.2);
-  const shapes = [];
-  // Wrist and palm, behind the card's lower edge
-  shapes.push(
-    shape.path(
-      path()
-        .M(cardX + 120, cardH - 300)
-        .L(cardX + 1060, cardH - 300)
-        .C(
-          cardX + 1130,
-          cardH + 60,
-          cardX + 1040,
-          cardH + 240,
-          cardX + 900,
-          cardH + 300
-        )
-        .L(cardX + 900, h)
-        .L(cardX + 380, h)
-        .L(cardX + 380, cardH + 300)
-        .C(
-          cardX + 200,
-          cardH + 240,
-          cardX + 60,
-          cardH + 80,
-          cardX + 120,
-          cardH - 300
-        )
-        .Z(),
-      skin
-    )
-  );
-  // Fingertips over the card's right edge
-  for (const [y, len] of [
-    [cardH - 520, 150],
-    [cardH - 380, 170],
-    [cardH - 240, 160],
-  ]) {
-    shapes.push(
-      shape.rect(cardX + cardW - len + 40, y, len + 60, 120, skin, 60)
-    );
-  }
-  // The card
-  shapes.push(shape.rect(cardX, cardY, cardW, cardH, F, 48));
-  if (o.light)
-    shapes.push(
-      shape.rect(cardX + 28, cardY + 28, cardW - 56, cardH - 56, fill, 30)
-    );
-  // Thumb over the card's lower left corner
-  shapes.push(
-    shape.path(
-      path()
-        .M(cardX - 40, cardH - 20)
-        .C(
-          cardX - 60,
-          cardH - 360,
-          cardX + 140,
-          cardH - 420,
-          cardX + 300,
-          cardH - 330
-        )
-        .C(
-          cardX + 420,
-          cardH - 260,
-          cardX + 380,
-          cardH - 60,
-          cardX + 300,
-          cardH + 60
-        )
-        .L(cardX + 160, cardH + 160)
-        .C(
-          cardX + 40,
-          cardH + 200,
-          cardX - 40,
-          cardH + 120,
-          cardX - 40,
-          cardH - 20
-        )
-        .Z(),
-      skin
-    )
-  );
-  const labels = [cta(o, [cardX + 360, pb + 40, cardW - 460, 170], fill)];
-  labels.push(...note(o, [cardX + 120, cardY + 50, cardW - 240, 100], fill));
-  return { w, h, qr: qrAt(cardX + (cardW - QR) / 2, qy), shapes, labels };
 }
 
 /** A gallery frame with a mount around the code, hung from a nail. */
@@ -802,52 +643,6 @@ export function polkaBorder(o) {
   };
 }
 
-/** A border of short scattered dashes, like confetti, around a light card. */
-export function dashBorder(o) {
-  const w = 1400;
-  const band = 150;
-  const c = patternCard(o, band, w);
-  const { h } = c;
-  let i = 0;
-  const dash = (x, y) => {
-    const a = noise(i, 1) * Math.PI;
-    const len = 36 + noise(i, 2) * 30;
-    const dx = Math.cos(a) * len;
-    const dy = Math.sin(a) * len;
-    c.shapes.push(
-      line(
-        [
-          [x - dx, y - dy],
-          [x + dx, y + dy],
-        ],
-        18,
-        i % 3 === 0 ? AC : F
-      )
-    );
-    i += 1;
-  };
-  const along = (x0, y0, x1, y1, n) => {
-    for (let k = 0; k <= n; k++) {
-      const t = k / n;
-      const jx = (noise(i, 3) - 0.5) * 40;
-      const jy = (noise(i, 4) - 0.5) * 40;
-      dash(x0 + (x1 - x0) * t + jx, y0 + (y1 - y0) * t + jy);
-    }
-  };
-  along(band / 2, band / 2, w - band / 2, band / 2, 14);
-  along(band / 2, h - band / 2, w - band / 2, h - band / 2, 14);
-  along(band / 2, band / 2 + 100, band / 2, h - band / 2 - 100, 14);
-  along(w - band / 2, band / 2 + 100, w - band / 2, h - band / 2 - 100, 14);
-  c.shapes.push(shape.rect(...c.inner, c.fill, 28));
-  return {
-    w,
-    h,
-    qr: qrAt((w - QR) / 2, c.qy),
-    shapes: c.shapes,
-    labels: c.labels,
-  };
-}
-
 /** A border of waves with a curl in each corner, around a light card. */
 export function swirlBorder(o) {
   const w = 1400;
@@ -866,11 +661,13 @@ export function swirlBorder(o) {
     }
     c.shapes.push(line(pts, 16, F));
   };
+  // A curl spirals out from the corner and ends pointing along the side, so
+  // its last turn meets the side's wave and its tail runs into the other one
   const curl = (cx, cy, dir) => {
     const pts = [];
     for (let k = 0; k <= 30; k++) {
       const t = k / 30;
-      const a = t * Math.PI * 2.4;
+      const a = t * Math.PI * 2.5;
       const rad = 8 + t * 50;
       pts.push([
         cx + Math.cos(a) * rad * dir[0],
@@ -879,10 +676,11 @@ export function swirlBorder(o) {
     }
     c.shapes.push(line(pts, 16, AC));
   };
-  wave(mid + 110, mid, w - mid - 110, mid);
-  wave(mid + 110, h - mid, w - mid - 110, h - mid);
-  wave(mid, mid + 110, mid, h - mid - 110);
-  wave(w - mid, mid + 110, w - mid, h - mid - 110);
+  // The curl crosses its own side at radius 48 and ends at radius 58
+  wave(mid + 48, mid, w - mid - 48, mid);
+  wave(mid + 48, h - mid, w - mid - 48, h - mid);
+  wave(mid, mid + 58, mid, h - mid - 58);
+  wave(w - mid, mid + 58, w - mid, h - mid - 58);
   curl(mid, mid, [1, 1]);
   curl(w - mid, mid, [-1, 1]);
   curl(mid, h - mid, [1, -1]);
@@ -1134,56 +932,11 @@ export function clapperboard(o) {
   return { w, h, qr: qrSized((w - size) / 2, qy, size), shapes, labels };
 }
 
-/** A smartwatch: the code on its square face, straps above and below. */
-export function smartwatch(o) {
-  const w = 1380;
-  const faceX = 0;
-  const faceW = 1300;
-  const bezel = 60;
-  const faceY = 220;
-  const head = o.note ? 120 : 50;
-  const qy = faceY + bezel + head + PAD;
-  const pb = qy + QR + PAD;
-  const faceH = pb + 200 + bezel - faceY;
-  const h = faceY + faceH + 150;
-  const strapX = faceX + 330;
-  const strapW = faceW - 660;
-  const shapes = [
-    shape.rect(strapX, 0, strapW, faceY + 40, shade(0.3), 40),
-    shape.rect(
-      strapX,
-      faceY + faceH - 40,
-      strapW,
-      h - faceY - faceH + 40,
-      shade(0.3),
-      40
-    ),
-    shape.rect(faceX + faceW - 10, faceY + 300, 90, 160, shade(0.3), 30),
-    shape.rect(faceX, faceY, faceW, faceH, F, 180),
-    shape.rect(
-      faceX + bezel,
-      faceY + bezel,
-      faceW - 2 * bezel,
-      faceH - 2 * bezel,
-      BG,
-      130
-    ),
-  ];
-  for (const y of [h - 110, h - 60]) {
-    shapes.push(shape.circle(faceX + faceW / 2, y, 16, tint(0.5)));
-  }
-  const labels = [cta(o, [faceX + 140, pb + 20, faceW - 280, 160], BG)];
-  labels.push(
-    ...note(o, [faceX + 180, faceY + bezel + 20, faceW - 360, 96], BG)
-  );
-  return { w, h, qr: qrAt(faceX + (faceW - QR) / 2, qy), shapes, labels };
-}
-
 /** A spiral notebook: rings along the top, a ruled page below. */
 export function notebook(o) {
   const w = 1400;
   const pageY = 110;
-  const head = o.note ? 190 : 80;
+  const head = o.note ? 250 : 80;
   const qy = pageY + head + PAD;
   const pb = qy + QR + PAD;
   const h = pb + 260;
@@ -1202,7 +955,7 @@ export function notebook(o) {
   }
   const labels = [cta(o, [100, pb + 40, w - 200, 170], paper)];
   labels.push(
-    ...note(o, [220, pageY + 60, w - 320, 100], paper, { align: "start" })
+    ...note(o, [220, pageY + 110, w - 320, 100], paper, { align: "start" })
   );
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
@@ -1236,47 +989,6 @@ export function bannerStand(o) {
   const labels = [cta(o, [bx + 80, pb + 40, bw - 160, 180], fill)];
   labels.push(...note(o, [bx + 100, panelY + 60, bw - 200, 100], fill));
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
-}
-
-/** A card reader: the code on its screen, a keypad under it and a card slot on top. */
-export function paymentTerminal(o) {
-  const w = 1300;
-  const screenX = 90;
-  const screenW = w - 180;
-  const screenY = 120;
-  const size = 900;
-  const pad = size * 0.08;
-  const head = o.note ? 150 : 60;
-  const qy = screenY + head + pad;
-  const pb = qy + size + pad;
-  const screenH = pb + 230 - screenY;
-  const keysY = screenY + screenH + 60;
-  const h = keysY + 280 + 60;
-  const shapes = [
-    shape.rect(0, 40, w, h - 40, F, 80),
-    shape.rect(w / 2 - 300, 0, 600, 70, shade(0.35), 20),
-    shape.rect(w / 2 - 260, 24, 520, 22, BG, 11),
-    shape.rect(screenX, screenY, screenW, screenH, BG, 36),
-  ];
-  for (let row = 0; row < 3; row++) {
-    for (let col = 0; col < 4; col++) {
-      const kx = screenX + col * ((screenW - 60) / 4 + 20);
-      const ky = keysY + row * 100;
-      shapes.push(
-        shape.rect(
-          kx,
-          ky,
-          (screenW - 60) / 4,
-          80,
-          col === 3 && row === 2 ? AC : tint(0.35),
-          18
-        )
-      );
-    }
-  }
-  const labels = [cta(o, [screenX + 60, pb + 30, screenW - 120, 170], BG)];
-  labels.push(...note(o, [screenX + 80, screenY + 40, screenW - 160, 96], BG));
-  return { w, h, qr: qrSized((w - size) / 2, qy, size), shapes, labels };
 }
 
 // ── More label styles and borders ───────────────────────────────────────────
@@ -1347,7 +1059,9 @@ export function ribbonTop(o) {
 /** A plain outline border of a chosen weight, the label under the code. */
 export function outlineBorder(o) {
   const weight = o.weight ?? 40;
-  const w = 1200;
+  // The plate stays clear of the border's inner edge at every weight
+  const gap = 50;
+  const w = QR + 2 * (PAD + gap + weight);
   const head = o.note ? 170 : 40;
   const qy = weight + head + PAD;
   const pb = qy + QR + PAD;
@@ -1433,7 +1147,7 @@ export function sketchCircle(o) {
     pts.push([...pts[1]]);
     return line(pts, width, fill);
   };
-  const shapes = [ring(790, 0.4, 14, F), ring(760, 2.1, 9, AC)];
+  const shapes = [ring(792, 0.4, 30, F), ring(752, 2.1, 16, AC)];
   const labels = [cta(o, [150, cy + 800 + 70, w - 300, 170], BG)];
   return { w, h, qr: qrSized(cx - size / 2, qy, size), shapes, labels };
 }
@@ -1525,7 +1239,10 @@ export function globeStand(o) {
     const half = Math.sqrt((R - 36) ** 2 - dy ** 2);
     shapes.push(shape.rect(cx - half, cy + dy - 6, 2 * half, 12, tint(0.5)));
   }
-  shapes.push(shape.rect(cx - 90, cy + R - 40, 180, 160, shade(0.3), 20));
+  // The post runs from under the sphere down into the foot
+  shapes.push(
+    shape.rect(cx - 90, cy + R - 40, 180, h - 60 - (cy + R - 40), shade(0.3), 20)
+  );
   shapes.push(shape.rect(cx - 520, h - 120, 1040, 120, F, 60));
   const labels = [cta(o, [cx - 460, h - 115, 920, 110], F)];
   return { w, h, qr: qrSized(cx - size / 2, qy, size), shapes, labels };
@@ -1644,54 +1361,6 @@ export function roundTag(o) {
 
 // ── Playful ─────────────────────────────────────────────────────────────────
 
-/** A rocket with a square window on its side, the code in the window. */
-export function rocketWindow(o) {
-  const w = 1800;
-  const h = 2000;
-  const bl = 220;
-  const br = w - 220;
-  const cx = w / 2;
-  const shapes = [
-    // Fins
-    shape.path(
-      path().poly([
-        [bl, 1420],
-        [0, 1900],
-        [0, 1990],
-        [bl, 1960],
-      ]),
-      AC
-    ),
-    shape.path(
-      path().poly([
-        [br, 1420],
-        [w, 1900],
-        [w, 1990],
-        [br, 1960],
-      ]),
-      AC
-    ),
-    // Nozzle
-    shape.rect(cx - 220, 1880, 440, 120, shade(0.4), 30),
-    // Body and nose
-    shape.rect(bl, 420, br - bl, 1540, F, 60),
-    shape.path(
-      path()
-        .M(bl, 460)
-        .C(bl + 80, 180, cx - 240, 0, cx, 0)
-        .C(cx + 240, 0, br - 80, 180, br, 460)
-        .Z(),
-      AC
-    ),
-    // Window rim and glass
-    shape.rect(cx - 640, 480, 1280, 1280, tint(0.55), 120),
-    shape.rect(cx - 590, 530, 1180, 1180, BG, 90),
-  ];
-  const qy = 620;
-  const labels = [cta(o, [bl + 80, 1770, br - bl - 160, 160], F)];
-  return { w, h, qr: qrAt(cx - QR / 2, qy), shapes, labels };
-}
-
 /** A retro TV set: the code on its screen, knobs on the side, antennas on top. */
 export function tvSet(o) {
   const w = 1700;
@@ -1741,32 +1410,6 @@ export function tvSet(o) {
   const labels = [cta(o, [screenX + 100, pb + 30, screenW - 200, 160], BG)];
   labels.push(...note(o, [screenX + 120, bodyY + 130, screenW - 240, 96], BG));
   return { w, h, qr: qrAt(screenX + (screenW - QR) / 2, qy), shapes, labels };
-}
-
-/** An arcade cabinet: a marquee on top, the code on the screen, a joystick below. */
-export function arcadeCabinet(o) {
-  const w = 1500;
-  const h = 2000;
-  const size = 900;
-  const pad = size * 0.08;
-  const qy = 240 + 40 + pad;
-  const pb = qy + size + pad;
-  const shapes = [
-    shape.rect(0, 0, w, h, F, 50),
-    shape.rect(40, 0, w - 80, 200, AC, 30),
-    shape.rect(200, 240, w - 400, 1380, BG, 30),
-    // Control deck: a joystick at the left, three buttons at the right
-    shape.rect(60, 1660, w - 120, 160, shade(0.35), 30),
-    shape.rect(130, 1560, 36, 140, tint(0.5), 12),
-    shape.circle(148, 1540, 64, AC),
-  ];
-  for (const x of [980, 1140, 1300]) {
-    shapes.push(shape.circle(x, 1740, 46, tint(0.55)));
-  }
-  shapes.push(shape.rect(w / 2 - 120, 1880, 240, 36, tint(0.4), 18));
-  const labels = [cta(o, [260, pb + 26, w - 520, 160], BG)];
-  labels.push(...note(o, [100, 40, w - 200, 120], AC, { weight: "bold" }));
-  return { w, h, qr: qrSized((w - size) / 2, qy, size), shapes, labels };
 }
 
 /** A record sleeve with the vinyl peeking out, the code as the cover art. Wide. */
@@ -2072,35 +1715,60 @@ export function comicPanel(o) {
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 
-/** A jigsaw piece: knobs out on the top and right, sockets in on the left and bottom. */
+/**
+ * A jigsaw piece: knobs out on the top and right, sockets in on the left and
+ * bottom. Each knob and socket is an arc of one circle whose centre sits off
+ * the edge, so the neck is narrower than the knob; the light version's inner
+ * outline uses the same centres (radius minus or plus the inset).
+ */
 export function jigsawPiece(o) {
-  const w = 1800;
-  const h = 2000;
-  const x0 = 140;
+  const R = 130;
+  const d = 50;
+  const k = 40;
+  const x0 = 40;
   const x1 = 1640;
-  const y0 = 180;
-  const y1 = 1880;
+  const y0 = 40 + d + R;
+  const y1 = 1890;
+  const w = x1 + d + R + 40;
+  const h = y1 + 40;
   const mx = (x0 + x1) / 2;
   const my = (y0 + y1) / 2;
   const piece = (inset) => {
-    const p = path().rrect(
-      x0 + inset,
-      y0 + inset,
-      x1 - x0 - 2 * inset,
-      y1 - y0 - 2 * inset,
-      40
-    );
-    p.circle(mx, y0 + inset, 150 - inset);
-    p.circle(x1 - inset, my, 150 - inset);
-    p.circle(x0 + inset, my, 120 + inset, true);
-    p.circle(mx, y1 - inset, 120 + inset, true);
-    return p;
+    const a = x0 + inset;
+    const b = x1 - inset;
+    const t = y0 + inset;
+    const u = y1 - inset;
+    const c = Math.max(4, k - inset);
+    // Knob: centre `d` outside the edge; socket: centre `d` inside it
+    const kr = R - inset;
+    const kn = Math.sqrt(kr * kr - (d + inset) ** 2);
+    const sr = R + inset;
+    const sn = Math.sqrt(sr * sr - (d - inset) ** 2);
+    return path()
+      .M(a + c, t)
+      .L(mx - kn, t)
+      .A(kr, kr, 0, 1, 1, mx + kn, t)
+      .L(b - c, t)
+      .A(c, c, 0, 0, 1, b, t + c)
+      .L(b, my - kn)
+      .A(kr, kr, 0, 1, 1, b, my + kn)
+      .L(b, u - c)
+      .A(c, c, 0, 0, 1, b - c, u)
+      .L(mx + sn, u)
+      .A(sr, sr, 0, 1, 0, mx - sn, u)
+      .L(a + c, u)
+      .A(c, c, 0, 0, 1, a, u - c)
+      .L(a, my + sn)
+      .A(sr, sr, 0, 1, 0, a, my - sn)
+      .L(a, t + c)
+      .A(c, c, 0, 0, 1, a + c, t)
+      .Z();
   };
   const fill = o.light ? tint(0.9) : F;
   const shapes = [shape.path(piece(0), F)];
-  if (o.light) shapes.push(shape.path(piece(40), fill));
-  const qy = 520;
-  const labels = [cta(o, [mx - 550, 230, 1100, 170], fill)];
+  if (o.light) shapes.push(shape.path(piece(30), fill));
+  const qy = 570;
+  const labels = [cta(o, [mx - 550, y0 + 60, 1100, 170], fill)];
   return { w, h, qr: qrAt(mx - QR / 2, qy), shapes, labels };
 }
 
@@ -2401,7 +2069,8 @@ export function catHolding(o) {
   const cardX = 70;
   const cardW = 1300;
   const cardY = 440;
-  const qy = cardY + 40 + PAD;
+  // Room under the card's top edge for the paws that hold it
+  const qy = cardY + 120 + PAD;
   const pb = qy + QR + PAD;
   const cardH = pb + 200 - cardY;
   const fur = shade(0.25);
@@ -2492,18 +2161,20 @@ export function catHolding(o) {
     shapes.push(
       shape.rect(cardX + 28, cardY + 28, cardW - 56, cardH - 56, fill, 24)
     );
-  // Paws over the card's bottom corners
-  for (const px of [cardX + 110, cardX + cardW - 110]) {
-    shapes.push(shape.circle(px, cardY + cardH - 10, 100, fur));
-    for (const dx of [-45, 0, 45])
+  // Paws gripping the card's top edge either side of the head, outlined and
+  // with toes marked so they read on a dark card too
+  for (const px of [cx - 330, cx + 330]) {
+    shapes.push(shape.ellipse(px, cardY + 10, 122, 82, tint(0.45)));
+    shapes.push(shape.ellipse(px, cardY + 10, 108, 68, fur));
+    for (const dx of [-36, 36])
       shapes.push(
         line(
           [
-            [px + dx, cardY + cardH + 40],
-            [px + dx, cardY + cardH + 80],
+            [px + dx, cardY + 34],
+            [px + dx, cardY + 72],
           ],
           10,
-          F
+          tint(0.45)
         )
       );
   }
@@ -2780,69 +2451,10 @@ export function vendingMachine(o) {
   };
 }
 
-/** A boxy old computer: the code on its screen, a keyboard in front. */
-export function retroComputer(o) {
-  const w = 1700;
-  const h = 1900;
-  const size = 900;
-  const pad = size * 0.08;
-  const qy = 100 + 48 + pad;
-  const shell = tint(0.85);
-  const shapes = [
-    shape.rect(100, 0, 1500, 1500, F, 50),
-    shape.rect(130, 30, 1440, 1440, shell, 36),
-    shape.rect(200, 100, 1300, 1140, F, 60),
-    shape.rect(230, 130, 1240, 1080, tint(0.95), 44),
-    shape.rect(1360, 1300, 120, 40, tint(0.5), 8),
-    shape.circle(1540, 1320, 22, AC),
-    shape.rect(500, 1500, 700, 90, shade(0.3)),
-    shape.rect(0, 1620, w, 280, F, 40),
-    shape.rect(30, 1650, w - 60, 220, shell, 28),
-  ];
-  for (let r = 0; r < 3; r++) {
-    for (let c = 0; c < 14; c++) {
-      shapes.push(
-        shape.rect(80 + c * 112 + r * 20, 1680 + r * 60, 80, 40, tint(0.45), 8)
-      );
-    }
-  }
-  const labels = [cta(o, [260, 1270, 1180, 150], shell)];
-  return {
-    w,
-    h,
-    qr: qrSized(230 + (1240 - size) / 2, qy, size),
-    shapes,
-    labels,
-  };
-}
-
-/** A game cartridge: the code on its label sticker, a connector edge at the foot. */
-export function gameCartridge(o) {
-  const w = 1400;
-  const h = 1900;
-  const head = o.note ? 170 : 40;
-  const qy = 300 + head + PAD;
-  const pb = qy + QR + PAD;
-  const paper = tint(0.92);
-  const shapes = [
-    shape.rect(0, 0, w, 1800, F, 80),
-    shape.rect(200, 1760, w - 400, 140, shade(0.35), 10),
-  ];
-  for (let i = 0; i < 4; i++) {
-    shapes.push(shape.rect(40, 80 + i * 50, 120, 20, tint(0.4), 10));
-    shapes.push(shape.rect(w - 160, 80 + i * 50, 120, 20, tint(0.4), 10));
-  }
-  shapes.push(shape.rect(100, 300, w - 200, 1400, paper, 24));
-  shapes.push(shape.rect(100, 300, w - 200, 60, AC));
-  const labels = [cta(o, [160, pb + 30, w - 320, 160], paper)];
-  labels.push(...note(o, [180, 370, w - 360, 96], paper));
-  return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
-}
-
 /** A floppy disk: a metal shutter on top, the code on the label below. */
 export function floppyDisk(o) {
   const w = 1600;
-  const h = 1620;
+  const h = 1720;
   const size = 900;
   const pad = size * 0.08;
   const qy = 360 + 30 + pad;
@@ -2861,11 +2473,11 @@ export function floppyDisk(o) {
     ),
     shape.rect(450, 40, 700, 300, shade(0.4), 16),
     shape.rect(770, 90, 120, 210, tint(0.3), 8),
-    shape.rect(200, 360, 1200, 1200, paper, 20),
+    shape.rect(200, 360, 1200, 1300, paper, 20),
     shape.rect(200, 360, 1200, 50, AC),
     shape.circle(90, h - 90, 30, tint(0.4)),
   ];
-  const labels = [cta(o, [260, pb + 20, 1080, 150], paper)];
+  const labels = [cta(o, [260, pb + 40, 1080, 150], paper)];
   return {
     w,
     h,
@@ -3088,12 +2700,13 @@ export function parkingMeter(o) {
   const glass = tint(0.92);
   const shapes = [
     shape.rect(540, 1500, 220, 500, shade(0.3)),
-    shape.rect(0, 0, w, 1540, F, 200),
-    shape.rect(w / 2 - 200, 60, 400, 50, tint(0.5), 25),
-    shape.rect(w / 2 - 110, 150, 220, 36, BG, 18),
+    // A domed head on a squarer body, a collar where it meets the pole
+    shape.ellipse(w / 2, 300, 600, 290, F),
+    shape.rect(0, 220, w, 1320, F, 90),
+    shape.rect(w / 2 - 260, 1500, 520, 80, shade(0.3), 24),
+    // The coin slot in the dome
+    shape.rect(w / 2 - 18, 60, 36, 150, BG, 18),
     shape.rect(100, 260, 1100, 1100, glass, 40),
-    shape.circle(w / 2 - 300, 168, 30, AC),
-    shape.circle(w / 2 + 300, 168, 30, tint(0.5)),
   ];
   const labels = [cta(o, [140, 1370, 1020, 140], F)];
   return {
@@ -3137,7 +2750,7 @@ export function snowGlobe(o) {
   const shapes = [
     shape.circle(cx, cy, 770, F),
     shape.circle(cx, cy, 730, tint(0.94)),
-    shape.ellipse(cx, cy + 600, 620, 150, BG),
+    shape.ellipse(cx, cy + 560, 380, 110, BG),
     shape.ellipse(cx - 300, cy - 420, 150, 70, BG),
   ];
   let k = 0;
@@ -3255,45 +2868,8 @@ export function cinemaMarquee(o) {
   return { w, h, qr: qrAt((w - QR) / 2, qy), shapes, labels };
 }
 
-/** A handheld console: the code on its screen, a d-pad and buttons below. */
-export function handheldConsole(o) {
-  const w = 1400;
-  const h = 2000;
-  const size = 900;
-  const pad = size * 0.08;
-  const qy = 120 + 70 + pad;
-  const pb = qy + size + pad;
-  const shell = tint(0.85);
-  const shapes = [
-    shape.rect(0, 0, w, h, F, 90),
-    shape.rect(26, 26, w - 52, h - 52, shell, 70),
-    shape.rect(120, 120, w - 240, pb + 200 - 120, F, 40),
-    shape.rect(150, 150, w - 300, pb + 170 - 150, BG, 24),
-    // D-pad
-    shape.rect(170, 1700, 300, 100, F, 20),
-    shape.rect(270, 1600, 100, 300, F, 20),
-    // Buttons
-    shape.circle(1040, 1700, 70, AC),
-    shape.circle(1220, 1640, 70, AC),
-  ];
-  for (let i = 0; i < 5; i++) {
-    shapes.push(
-      line(
-        [
-          [1020 + i * 50, 1880],
-          [1100 + i * 50, 1800],
-        ],
-        12,
-        tint(0.5)
-      )
-    );
-  }
-  const labels = [cta(o, [160, pb + 10, w - 320, 150], BG)];
-  return { w, h, qr: qrSized((w - size) / 2, qy, size), shapes, labels };
-}
-
 /** A video tape: two reel windows on top, the code on the big label, a spine strip. Wide. */
-export function vhsTape(o) {
+export function videoTape(o) {
   const w = 2000;
   const h = 1500;
   const qx = 150 + 64;

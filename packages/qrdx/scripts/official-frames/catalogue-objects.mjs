@@ -1,9 +1,10 @@
 // Official frames shaped like things: simple shapes (hexagons, hearts,
-// scrolls, pennants, pattern borders), everyday objects holding the code
-// (tablets, mugs, parcels, bottles, billboards) and playful scenes (a rocket
-// window, a TV set, a cat holding the code). catalogue.mjs adds them (through addObjectFrames, with its own
-// section() and f()) after the industry frames, and spreads the words below
-// into its description tables. The layouts are in layouts-objects.mjs.
+// scrolls, pattern borders), everyday objects holding the code (tablets,
+// mugs, parcels, bottles, billboards) and playful scenes (a TV set, a cat
+// holding the code, a flying saucer). catalogue.mjs adds them (through
+// addObjectFrames, with its own section() and f()) after the industry frames,
+// and spreads the words below into its description tables. The layouts are
+// in layouts-objects.mjs.
 //
 // Rows: [id, name, layout, cta, note, options, palette, tags, contentTypes].
 // Ids are permanent (see write.mjs). Labels are short, plain calls to action
@@ -24,23 +25,20 @@ export const OBJECT_LAYOUT_WORDS = {
   octagon: "An octagon like a road sign, with a hairline inside its edge",
   heart: "A heart around the code, the label in its point",
   scroll: "A parchment scroll with rolled ends top and bottom",
-  pennant:
-    "A pennant on a pole: the code at the hoist, the label along the fly",
+  swallowtailFlag:
+    "A swallowtail flag on a pole: the code at the hoist, the label along the fly",
   tablet: "A tablet standing upright, the code on its screen",
   laptop: "A laptop seen from the front, the code on its screen",
   monitor: "A desktop monitor on a stand, the code on its screen",
   mug: "A mug with a big handle and steam, the code on its side",
   deliveryBox:
     "A delivery box with a tape strip and a shipping label holding the code",
-  scooter: "A delivery scooter with a big box on the back holding the code",
-  handCard: "A hand holding up a card with the code",
   pictureFrame:
     "A gallery frame with a mount around the code, hung from a nail",
   billboard: "A billboard on two posts with a row of lights along its top",
   bookOpen: "An open book: the code on the right page, the words on the left",
   bottle: "A bottle with a cap and shoulders, the code on its label",
   polkaBorder: "A light card with a border of polka dots",
-  dashBorder: "A light card with a border of scattered dashes, like confetti",
   swirlBorder: "A light card with a border of waves and a curl in each corner",
   sketchBorder:
     "A light card with a sketched border: two wobbly hand-drawn outlines",
@@ -54,13 +52,9 @@ export const OBJECT_LAYOUT_WORDS = {
     "A bookmark: a tall strip with a punched hole on top and a notch at the foot",
   clapperboard:
     "A film clapperboard with a striped hinged bar open over the board",
-  smartwatch:
-    "A smartwatch: the code on its square face, straps above and below",
   notebook: "A spiral notebook with rings along the top and a ruled page",
   bannerStand:
     "A roll-up banner stand: the code on the banner, a cassette and a foot at its base",
-  paymentTerminal:
-    "A card reader: the code on its screen, a keypad under it and a card slot on top",
   badgeBottom:
     "A card with a pill badge straddling its bottom edge for the label",
   ribbonTop: "A card with a ribbon banner with folded tails across the top",
@@ -80,12 +74,8 @@ export const OBJECT_LAYOUT_WORDS = {
     "A music player: the code as the album art, a track bar and play controls",
   roundTag:
     "A round tag with an eyelet and a loop of string, the label under the code",
-  rocketWindow:
-    "A rocket with a square window on its side, the code in the window",
   tvSet:
     "A retro TV set: the code on its screen, knobs on the side, antennas on top",
-  arcadeCabinet:
-    "An arcade cabinet: a marquee on top, the code on the screen, a joystick below",
   vinylSleeve:
     "A record sleeve with the vinyl peeking out, the code as the cover art",
   cassette:
@@ -128,10 +118,6 @@ export const OBJECT_LAYOUT_WORDS = {
   toaster: "A toaster with a slice of toast popping up, the code on the toast",
   vendingMachine:
     "A vending machine: the code in its glass front, a keypad beside it, a flap below",
-  retroComputer:
-    "A boxy old computer: the code on its screen, a keyboard in front",
-  gameCartridge:
-    "A game cartridge: the code on its label sticker, a connector edge at the foot",
   floppyDisk:
     "A floppy disk: a metal shutter on top, the code on the label below",
   radio:
@@ -152,9 +138,7 @@ export const OBJECT_LAYOUT_WORDS = {
   matchbox: "A matchbox with its drawer slid out, the code on the sleeve",
   cinemaMarquee:
     "A cinema marquee: bulbs all round the board, a header band for the note",
-  handheldConsole:
-    "A handheld console: the code on its screen, a d-pad and buttons below",
-  vhsTape:
+  videoTape:
     "A video tape: two reel windows on top, the code on the big label, a spine strip",
   ufoBeam: "A flying saucer with its beam on the code, the label on the ground",
   lighthouse:
@@ -172,7 +156,7 @@ const SHAPES = [
     "Hexagon",
     "hexagon",
     "Scan me",
-    "Point your camera here",
+    "Open your camera",
     {},
     MONO,
     ["hexagon", "shape"],
@@ -182,7 +166,7 @@ const SHAPES = [
     "Hexagon, light",
     "hexagon",
     "Scan to learn more",
-    "Open with your camera",
+    "No app needed",
     { light: true },
     MONO,
     ["hexagon", "shape"],
@@ -238,24 +222,24 @@ const SHAPES = [
     ["scroll", "parchment", "story"],
   ],
   [
-    "pennant-team",
-    "Pennant",
-    "pennant",
+    "flag-team",
+    "Team flag",
+    "swallowtailFlag",
     "Scan me",
     "Join the team",
     {},
     MONO,
-    ["flag", "pennant", "team"],
+    ["flag", "team", "sports"],
   ],
   [
-    "pennant-light",
-    "Pennant, light",
-    "pennant",
+    "flag-light",
+    "Team flag, light",
+    "swallowtailFlag",
     "Scan to join",
     "Game day details",
     { light: true },
     SLATE,
-    ["flag", "pennant", "team"],
+    ["flag", "team", "sports"],
   ],
   [
     "polka-dot-border",
@@ -266,16 +250,6 @@ const SHAPES = [
     {},
     SOFT,
     ["pattern", "dots", "border"],
-  ],
-  [
-    "confetti-border",
-    "Confetti border",
-    "dashBorder",
-    "Scan to celebrate",
-    "You're invited",
-    {},
-    SOFT,
-    ["pattern", "confetti", "border", "party"],
   ],
   [
     "swirl-border",
@@ -342,7 +316,7 @@ const SHAPES = [
     "Text frame",
     "textFrame",
     "Scan me",
-    "Scan me",
+    "No app needed",
     {},
     MONO,
     ["text", "bold", "minimal"],
@@ -541,38 +515,6 @@ const OBJECTS = [
     ["box", "parcel", "delivery", "shipping"],
   ],
   [
-    "delivery-scooter-order",
-    "Delivery scooter",
-    "scooter",
-    "Scan to order",
-    "Delivered to your door",
-    {},
-    MONO,
-    ["scooter", "delivery", "food"],
-  ],
-  [
-    "hand-card",
-    "Hand holding a card",
-    "handCard",
-    "Scan my card",
-    "Take it with you",
-    {},
-    MONO,
-    ["hand", "card", "contact"],
-    ["vcard", "url"],
-  ],
-  [
-    "hand-card-light",
-    "Hand holding a card, light",
-    "handCard",
-    "Scan to connect",
-    "Let's keep in touch",
-    { light: true },
-    MONO,
-    ["hand", "card", "contact"],
-    ["vcard", "url"],
-  ],
-  [
     "gallery-frame",
     "Gallery frame",
     "pictureFrame",
@@ -695,16 +637,6 @@ const OBJECTS = [
     ["film", "clapperboard", "video", "cinema"],
   ],
   [
-    "smartwatch-face",
-    "Smartwatch",
-    "smartwatch",
-    "Scan to pair",
-    "Works on your wrist",
-    {},
-    MONO,
-    ["watch", "smartwatch", "wearable", "device"],
-  ],
-  [
     "spiral-notebook",
     "Spiral notebook",
     "notebook",
@@ -733,17 +665,6 @@ const OBJECTS = [
     { light: true },
     SLATE,
     ["banner", "stand", "event", "expo"],
-  ],
-  [
-    "card-reader",
-    "Card reader",
-    "paymentTerminal",
-    "Scan to pay",
-    "Tap, scan or swipe",
-    {},
-    MONO,
-    ["payment", "terminal", "card reader", "checkout"],
-    ["upi", "paypal", "url"],
   ],
   [
     "globe-stand",
@@ -809,16 +730,6 @@ const OBJECTS = [
 
 const PLAYFUL = [
   [
-    "rocket-window",
-    "Rocket",
-    "rocketWindow",
-    "Scan to launch",
-    undefined,
-    {},
-    MONO,
-    ["rocket", "space", "launch"],
-  ],
-  [
     "tv-set",
     "TV set",
     "tvSet",
@@ -827,16 +738,6 @@ const PLAYFUL = [
     {},
     MONO,
     ["tv", "television", "retro", "screen"],
-  ],
-  [
-    "arcade-cabinet",
-    "Arcade cabinet",
-    "arcadeCabinet",
-    "Scan to play",
-    "Insert coin",
-    {},
-    MONO,
-    ["arcade", "game", "retro"],
   ],
   [
     "vinyl-sleeve",
@@ -1109,26 +1010,6 @@ const PLAYFUL = [
     ["vending", "machine", "snack"],
   ],
   [
-    "retro-computer",
-    "Retro computer",
-    "retroComputer",
-    "Scan to load",
-    undefined,
-    {},
-    MONO,
-    ["computer", "retro", "screen", "tech"],
-  ],
-  [
-    "game-cartridge",
-    "Game cartridge",
-    "gameCartridge",
-    "Scan to play",
-    "Press start",
-    {},
-    MONO,
-    ["cartridge", "game", "retro"],
-  ],
-  [
     "floppy-disk",
     "Floppy disk",
     "floppyDisk",
@@ -1260,21 +1141,11 @@ const PLAYFUL = [
     ["cinema", "marquee", "lights", "movie"],
   ],
   [
-    "handheld-console",
-    "Handheld console",
-    "handheldConsole",
-    "Scan to play",
-    undefined,
-    {},
-    MONO,
-    ["handheld", "console", "game"],
-  ],
-  [
     "video-tape",
     "Video tape",
-    "vhsTape",
+    "videoTape",
     "Scan to rewind",
-    "Be kind, rewind",
+    "Press play",
     {},
     MONO,
     ["video", "tape", "retro", "watch"],
