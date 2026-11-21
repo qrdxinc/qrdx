@@ -37,6 +37,7 @@ import {
 import { remarkNpmStatus } from "@/lib/remark-npm-status";
 import { remarkProductFacts } from "@/lib/remark-product-facts";
 import { CONTENT_TYPE_IDS } from "@/types/content-type-ids";
+import { defaultPresets } from "@/utils/qr-presets";
 import qrdxPackage from "../../../../packages/qrdx/package.json";
 
 const app = path.resolve(import.meta.dirname, "../..");
@@ -485,15 +486,19 @@ describe("product counts in copy", () => {
       "eye centers": PRODUCT_FACTS.eyeCentres,
       "call-to-action frames": PRODUCT_FACTS.frameStyles,
       frames: PRODUCT_FACTS.frames,
+      "built-in themes": Object.keys(defaultPresets).length,
     };
     // Counts may use a thousands separator ("1,032 frames")
     for (const match of readme.matchAll(
-      /\b(\d{1,3}(?:,\d{3})+|\d+) (body patterns|corner-eye shapes|eye centers|call-to-action frames|frames)\b/g,
+      /\b(\d{1,3}(?:,\d{3})+|\d+) (body patterns|corner-eye shapes|eye centers|call-to-action frames|frames|built-in themes)\b/g,
     )) {
       expect(`${match[1].replaceAll(",", "")} ${match[2]}`).toBe(
         `${expected[match[2]]} ${match[2]}`,
       );
     }
     expect(readme).toContain(`${PRODUCT_FACTS.bodyPatterns} body patterns`);
+    expect(readme).toContain(
+      `${Object.keys(defaultPresets).length} built-in themes`,
+    );
   });
 });
