@@ -130,6 +130,15 @@
         "width": 1100,
         "height": 44,
         "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 160,
+        "y": 1534,
+        "width": 980,
+        "height": 160,
+        "radius": 80,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -138,11 +147,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan for a refill",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 160,
+          "x": 224,
           "y": 1534,
-          "width": 980,
+          "width": 852,
           "height": 160
         }
       }

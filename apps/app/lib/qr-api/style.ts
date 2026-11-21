@@ -35,6 +35,8 @@ import {
   errorLevelSchema,
   eyeGradientSpanSchema,
   frameSchema,
+  HALO_COLOR_DEFAULT,
+  HALO_LIGHT_MIN,
   HALO_WIDTH_MAX,
   HALO_WIDTH_MIN,
   LOGO_PADDING_MAX,
@@ -213,7 +215,11 @@ const eyeShapesSchema = z
 /** A halo: a light rim around the dark modules and eyes. */
 const haloSchema = z
   .object({
-    color: colorString.optional().describe("The rim's color (default white)"),
+    color: colorString
+      .optional()
+      .describe(
+        `The rim's color (default ${HALO_COLOR_DEFAULT}): at least as light as ${HALO_LIGHT_MIN} and no lighter than the background; drawn opaque (alpha is dropped)`,
+      ),
     width: z
       .number()
       .min(HALO_WIDTH_MIN)
@@ -225,7 +231,7 @@ const haloSchema = z
   })
   .strict()
   .describe(
-    "A light rim around the dark modules and eyes, for a code on a picture. With a see-through bgColor it isn't drawn with the diamond, small-square, random-dots, pacman, liquid-horizontal, liquid-vertical or star dot shapes (the scan score's halo check says so)",
+    `A light rim around the dark modules and eyes. Drawn only on an opaque bgColor (no picture), in a color at least as light as ${HALO_LIGHT_MIN} and no lighter than any background color; otherwise the code is drawn without it (the scan score's halo check says why)`,
   );
 
 /** A shadow: a see-through copy of the dark shapes, shifted. */

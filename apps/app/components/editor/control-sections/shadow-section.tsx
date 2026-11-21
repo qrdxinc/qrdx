@@ -4,7 +4,7 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { Switch } from "@repo/design-system/components/ui/switch";
 import { useTranslations } from "next-intl";
-import { getSolidColor } from "qrdx";
+import { getSolidColor, resolveShadow } from "qrdx";
 import {
   type QRShadow,
   SHADOW_COLOR_DEFAULT,
@@ -42,6 +42,18 @@ export function shadowValues(shadow: QRShadow): {
     dx: finite(shadow.dx, SHADOW_OFFSET_DEFAULT),
     dy: finite(shadow.dy, SHADOW_OFFSET_DEFAULT),
   };
+}
+
+/**
+ * The collapsed section's summary: the opacity the engine draws, or `off`
+ * when it draws nothing (no shadow, or a shift of 0 both ways).
+ */
+export function shadowSummary(
+  shadow: QRShadow | undefined,
+  off: string,
+): string {
+  const drawn = resolveShadow(shadow);
+  return drawn ? `${percent(drawn.opacity)}%` : off;
 }
 
 interface ShadowSectionProps {
@@ -107,7 +119,7 @@ export function ShadowSection({
       badge={<NewLookTag id="shadow" />}
       expanded={expanded}
       section="shadow"
-      summary={on ? `${percent(shadow.opacity)}%` : t("off")}
+      summary={shadowSummary(style.shadow, t("off"))}
       title={t("shadow")}
     >
       <div className="flex items-center justify-between gap-3">

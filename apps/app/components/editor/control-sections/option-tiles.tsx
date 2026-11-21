@@ -145,7 +145,9 @@ export function OptionTile({
         blocked
           ? t("nameWontScanWithThis", { name })
           : risk
-            ? t("nameMayNotScan", { name })
+            ? t("nameMayNotScan", {
+                name: isNew ? common("nameIsNew", { name }) : name,
+              })
             : isNew
               ? common("nameIsNew", { name })
               : undefined
@@ -194,6 +196,13 @@ export function OptionTile({
         <span
           aria-hidden
           className="absolute top-2.5 left-2.5 size-1.5 rounded-full bg-amber-500 ring-2 ring-white"
+        />
+      )}
+      {isNew && (
+        // Top-right, beside the check when the tile is selected; the amber
+        // dot keeps the top-left.
+        <NewTag
+          className={cn("absolute top-2.5 right-2.5", selected && "right-6")}
         />
       )}
     </button>

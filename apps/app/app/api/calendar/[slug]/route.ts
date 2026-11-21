@@ -86,7 +86,7 @@ export async function GET(request: NextRequest, { params }: Context) {
         ),
       )
       .limit(1);
-    if (!row?.isActive || row.archivedAt || row.deletedAt) {
+    if (!row || !row.isActive || row.archivedAt || row.deletedAt) {
       return notFound();
     }
     // Same rules as viewing the page: password (unlock cookie), schedule, pause.

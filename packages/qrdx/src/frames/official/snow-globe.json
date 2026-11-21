@@ -46,9 +46,9 @@
       {
         "type": "ellipse",
         "cx": 800,
-        "cy": 1390,
-        "rx": 620,
-        "ry": 150,
+        "cy": 1350,
+        "rx": 380,
+        "ry": 110,
         "fill": "background"
       },
       {

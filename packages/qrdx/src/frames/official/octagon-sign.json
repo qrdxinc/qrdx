@@ -16,7 +16,7 @@
     },
     "qr": {
       "x": 479.5,
-      "y": 339.5,
+      "y": 399.5,
       "size": 1000,
       "padding": 80,
       "radius": 24
@@ -67,6 +67,24 @@
           [1903.38, 596.82]
         ],
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 529.5,
+        "y": 1519.5,
+        "width": 900,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 599.5,
+        "y": 130,
+        "width": 760,
+        "height": 120,
+        "radius": 60,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -77,10 +95,10 @@
         "text": "Scan me",
         "color": "text",
         "box": {
-          "x": 479.5,
-          "y": 1459.5,
-          "width": 1000,
-          "height": 180
+          "x": 597.5,
+          "y": 1519.5,
+          "width": 764,
+          "height": 170
         }
       },
       {
@@ -90,10 +108,10 @@
         "text": "Stop and scan",
         "color": "text",
         "box": {
-          "x": 629.5,
-          "y": 39.5,
-          "width": 700,
-          "height": 100
+          "x": 647.5,
+          "y": 130,
+          "width": 664,
+          "height": 120
         },
         "weight": "regular"
       }

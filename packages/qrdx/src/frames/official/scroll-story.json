@@ -140,6 +140,15 @@
           "mix": ["frame", "background"],
           "amount": 0.55
         }
+      },
+      {
+        "type": "rect",
+        "x": 210,
+        "y": 1550,
+        "width": 1060,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -148,11 +157,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to read more",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 210,
+          "x": 278,
           "y": 1550,
-          "width": 1060,
+          "width": 924,
           "height": 170
         }
       },

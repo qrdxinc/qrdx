@@ -80,6 +80,24 @@
         "width": 1200,
         "height": 12,
         "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 1578,
+        "width": 1100,
+        "height": 160,
+        "radius": 80,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 140,
+        "y": 512,
+        "width": 1020,
+        "height": 96,
+        "radius": 48,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -88,11 +106,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan the label",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 100,
+          "x": 164,
           "y": 1578,
-          "width": 1100,
+          "width": 972,
           "height": 160
         }
       },
@@ -101,11 +119,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Where it comes from",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 140,
+          "x": 178.4,
           "y": 512,
-          "width": 1020,
+          "width": 943.2,
           "height": 96
         },
         "weight": "regular"
