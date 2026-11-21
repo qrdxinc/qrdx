@@ -1,5 +1,5 @@
-// Designs that show the shapes added after qrdx 0.0.57: the pebble body,
-// the porthole, notch, plus, stamp, bud and bowl eyes and the
+// Designs that show the shapes added after qrdx 0.0.57: the porthole,
+// notch, plus, bud and bowl eyes and the
 // cushion centre, each in at least three designs. Deep inks on pale grounds,
 // like the pastel group, so each one clears the gallery's contrast bar.
 import { ink, type SeedDesign, shapes } from "./shared";
@@ -9,11 +9,11 @@ export const NEW_SHAPE_DESIGNS: SeedDesign[] = [
     id: "creek-bed",
     name: "Creek bed",
     description:
-      "Soft pebble tiles in a deep moss green with porthole eyes and cushion centres, on a pale sage. Calm and natural, for garden centres, trail maps and plant shops.",
+      "Rounded modules in a deep moss green with porthole eyes and cushion centres, on a pale sage. Calm and natural, for garden centres, trail maps and plant shops.",
     tags: ["nature", "earthy", "soft"],
     style: {
       ...ink("#EEF3EA", "#2F4A2A", "#24391F", "#2F4A2A"),
-      ...shapes("pebble", "porthole", "cushion"),
+      ...shapes("rounded", "porthole", "cushion"),
       level: "Q",
       margin: 4,
     },
@@ -48,11 +48,11 @@ export const NEW_SHAPE_DESIGNS: SeedDesign[] = [
     id: "terrazzo",
     name: "Terrazzo",
     description:
-      "Pebble tiles in a deep clay red with notch eyes and cushion centres, on a stone white. Grounded and modern, for tile shops, interior studios and cafes.",
+      "Classy rounded modules in a deep clay red with notch eyes and cushion centres, on a stone white. Grounded and modern, for tile shops, interior studios and cafes.",
     tags: ["earthy", "warm", "elegant"],
     style: {
       ...ink("#F5F0EA", "#7A2E1F", "#5E2216", "#7A2E1F"),
-      ...shapes("pebble", "notch", "cushion"),
+      ...shapes("classy-rounded", "notch", "cushion"),
       level: "Q",
       margin: 4,
     },
@@ -110,7 +110,7 @@ export const NEW_SHAPE_DESIGNS: SeedDesign[] = [
     },
   },
   {
-    id: "first-aid",
+    id: "sick-bay",
     name: "Sick bay",
     description:
       "Square modules in a deep red with plus eyes and rounded centres, on a clean white. Plain and direct, for clinics, safety posters and first-aid kits.",
@@ -118,45 +118,6 @@ export const NEW_SHAPE_DESIGNS: SeedDesign[] = [
     style: {
       ...ink("#FFFFFF", "#9B1C1C", "#7F1616", "#9B1C1C"),
       ...shapes("square", "plus", "rounded"),
-      level: "Q",
-      margin: 4,
-    },
-  },
-  {
-    id: "airmail",
-    name: "Airmail",
-    description:
-      "Square modules in a navy with perforated stamp eyes and squircle centres, on a pale envelope blue. Neat and traditional, for post offices, pen pals and parcel desks.",
-    tags: ["retro", "cool", "professional"],
-    style: {
-      ...ink("#EEF3FB", "#1B2A5C", "#121E45", "#1B2A5C"),
-      ...shapes("square", "stamp", "squircle"),
-      level: "Q",
-      margin: 4,
-    },
-  },
-  {
-    id: "first-class",
-    name: "First class",
-    description:
-      "Rounded modules in a deep postbox red with stamp eyes and rounded centres, on a warm paper. Classic and tidy, for stationers, mailrooms and invitations.",
-    tags: ["retro", "warm", "elegant"],
-    style: {
-      ...ink("#FBF4EA", "#8A1E15", "#6B160F", "#8A1E15"),
-      ...shapes("rounded", "stamp", "rounded"),
-      level: "Q",
-      margin: 4,
-    },
-  },
-  {
-    id: "collector",
-    name: "Collector",
-    description:
-      "Pebble tiles in a sepia brown with stamp eyes and cushion centres, on an album cream. Nostalgic, for antique shops, flea markets and hobby clubs.",
-    tags: ["retro", "earthy", "warm"],
-    style: {
-      ...ink("#F8F1E4", "#4E3421", "#3B2718", "#4E3421"),
-      ...shapes("pebble", "stamp", "cushion"),
       level: "Q",
       margin: 4,
     },
@@ -214,7 +175,7 @@ export const NEW_SHAPE_DESIGNS: SeedDesign[] = [
     },
   },
   {
-    id: "noodle-bar",
+    id: "broth",
     name: "Broth",
     description:
       "Round dots in a deep soy brown with bowl eyes and squircle centres, on a warm rice white. Homely, for noodle shops, ramen menus and takeaway bags.",

@@ -29,11 +29,11 @@ export function ShapedCode() {
 `bodyPattern` shapes the data modules. There are {facts.bodyPatterns} values; the default is `circle`.
 
 - Classic: `square`, `small-square`, `horizontal-line`, `vertical-line`, `octagon`
-- Rounded: `circle`, `circle-large`, `rounded`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `random-dots`, `pebble`
+- Rounded: `circle`, `circle-large`, `rounded`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `random-dots`
 - Decorative: `classy`, `classy-rounded`, `leaf`, `diamond`, `hexagon`
 - Playful: `mosaic`, `plus`, `star`, `heart`, `pacman`, `circle-mixed`
 
-`liquid`, `classy` and `classy-rounded` join neighboring modules into one smooth outline; `liquid-horizontal` and `liquid-vertical` join them in rows or columns only. `random-dots`, `mosaic` and `pebble` vary per module but always draw the same code for the same value. Alignment patterns are always drawn as solid squares, whatever the pattern, so decoders find them.
+`liquid`, `classy` and `classy-rounded` join neighboring modules into one smooth outline; `liquid-horizontal` and `liquid-vertical` join them in rows or columns only. `random-dots` and `mosaic` vary per module but always draw the same code for the same value. Alignment patterns are always drawn as solid squares, whatever the pattern, so decoders find them.
 
 ### Module scale
 
@@ -55,11 +55,11 @@ export function LightCode() {
 
 ## Eye frames
 
-`cornerEyePattern` shapes the corner eyes. There are {facts.eyeShapes} values; the default is `gear`: `square`, `rounded`, `extra-rounded`, `squircle`, `cushion`, `bevel`, `octagon`, `leaf`, `leaf-reverse`, `drop`, `petal`, `shield`, `gear`, `circle`, `diya`, `message`, `pointy`, `porthole`, `notch`, `plus`, `stamp`, `bud` and `bowl`.
+`cornerEyePattern` shapes the corner eyes. There are {facts.eyeShapes} values; the default is `gear`: `square`, `rounded`, `extra-rounded`, `squircle`, `cushion`, `bevel`, `octagon`, `leaf`, `leaf-reverse`, `drop`, `petal`, `shield`, `gear`, `circle`, `diya`, `message`, `pointy`, `porthole`, `notch`, `plus`, `bud` and `bowl`.
 
 `leaf`, `leaf-reverse`, `drop`, `petal` and `bud` turn each of the three eyes to face its corner of the code. `circle` eyes may be missed by some scanner apps; the [scan score](/docs/features/frames#will-it-scan) warns about them.
 
-`porthole`, `notch`, `plus`, `stamp`, `bud` and `bowl` cut or round every corner. A `circle` or `rounded` center reads inside them in sharp renders, but a `square` center can be missed by strict decoders on screens and in PNG exports, as it can in `gear` and `octagon` eyes. The playground pairs each of them with a center that reads: `circle`, `rounded`, `squircle` or `cushion`.
+`porthole`, `notch`, `plus`, `bud` and `bowl` cut or round every corner. With the default body, `circle`, `rounded`, `squircle` and `cushion` centres read inside them in the package's sharp-render tests; `square`, `diya` and `rounded-triangle` centres are missed by strict decoders in many sharp renders and `heart` in some, as they are in `gear` and `octagon` eyes. The playground pairs each of these eyes with a centre that reads.
 
 ## Eye centers
 

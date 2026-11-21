@@ -98,7 +98,6 @@ export const CORNER_EYE_PATTERNS = [
   "porthole",
   "notch",
   "plus",
-  "stamp",
   "bud",
   "bowl",
 ] as const;
@@ -137,8 +136,6 @@ export const BODY_PATTERN = [
   "random-dots",
   "mosaic",
   "octagon",
-  // Added after 0.0.57 (drawn by src/body-patterns.tsx)
-  "pebble",
 ] as const;
 
 // ── Withdrawn before release ───────────────────────────────────────────────
@@ -151,6 +148,7 @@ export const BODY_PATTERN = [
  */
 export const WITHDRAWN_BODY_PATTERNS = {
   x: "plus",
+  pebble: "rounded",
   flower: "circle",
   beads: "circle",
   bubble: "circle",
@@ -165,6 +163,7 @@ export const WITHDRAWN_CORNER_EYE_PATTERNS = {
   tag: "rounded",
   crest: "shield",
   doodle: "squircle",
+  stamp: "notch",
 } as const satisfies Record<string, (typeof CORNER_EYE_PATTERNS)[number]>;
 
 export const WITHDRAWN_CORNER_EYE_DOT_PATTERNS = {

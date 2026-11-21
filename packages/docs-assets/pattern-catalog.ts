@@ -128,7 +128,6 @@ const BODIES: Record<BodyPattern, Base> = {
   heart: { label: "Heart", category: "Playful", popularity: null },
   pacman: { label: "Pacman", category: "Playful", popularity: null },
   "circle-mixed": { label: "Mixed", category: "Playful", popularity: null },
-  pebble: { label: "Pebble", category: "Rounded", popularity: null },
 };
 
 const EYES: Record<
@@ -254,12 +253,6 @@ const EYES: Record<
     category: "Classic",
     popularity: null,
     recommendedDot: "rounded",
-  },
-  stamp: {
-    label: "Stamp",
-    category: "Playful",
-    popularity: null,
-    recommendedDot: "squircle",
   },
   porthole: {
     label: "Porthole",

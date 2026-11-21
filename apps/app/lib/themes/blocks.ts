@@ -481,7 +481,7 @@ export const STYLE_FAMILIES: readonly StyleFamily[] = [
   {
     id: "soft",
     word: "Pebble",
-    bodies: ["rounded", "circle-large", "liquid", "classy-rounded", "pebble"],
+    bodies: ["rounded", "circle-large", "liquid", "classy-rounded"],
     eyes: ["rounded", "extra-rounded", "squircle"],
   },
   {
@@ -506,7 +506,7 @@ export const STYLE_FAMILIES: readonly StyleFamily[] = [
     id: "playful",
     word: "Pop",
     bodies: ["heart", "plus", "random-dots"],
-    eyes: ["extra-rounded", "petal", "squircle", "stamp"],
+    eyes: ["extra-rounded", "petal", "squircle"],
     playful: true,
   },
 ];
@@ -552,7 +552,6 @@ export const EYE_DOTS: Readonly<
   porthole: ["circle", "rounded"],
   notch: ["cushion", "rounded"],
   plus: ["rounded", "squircle"],
-  stamp: ["squircle", "rounded"],
   bud: ["rounded", "leaf"],
   bowl: ["rounded", "squircle"],
 };

@@ -50,7 +50,6 @@ export const BODY_CATEGORY: Partial<Record<BodyPattern, ShapeCategory>> = {
   heart: "playful",
   pacman: "playful",
   "circle-mixed": "playful",
-  pebble: "rounded",
 };
 
 export const EYE_FEATURED: CornerEyePattern[] = [
@@ -84,7 +83,6 @@ export const EYE_CATEGORY: Partial<Record<CornerEyePattern, ShapeCategory>> = {
   plus: "classic",
   bud: "decorative",
   bowl: "decorative",
-  stamp: "playful",
 };
 
 export const EYE_DOT_FEATURED: CornerEyeDotPattern[] = [
@@ -161,7 +159,6 @@ export const EYE_PRESETS: EyePreset[] = [
   { id: "plus", name: "Plus", outer: "plus", centre: "rounded" },
   { id: "bud", name: "Bud", outer: "bud", centre: "rounded" },
   { id: "bowl", name: "Bowl", outer: "bowl", centre: "rounded" },
-  { id: "stamp", name: "Stamp", outer: "stamp", centre: "squircle" },
 ];
 
 export const EYE_PRESET_FEATURED = [

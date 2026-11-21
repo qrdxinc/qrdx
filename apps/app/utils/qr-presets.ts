@@ -1097,13 +1097,13 @@ const looks: Record<string, ThemePreset> = {
   riverStone: {
     label: "River Stone",
     category: "pastel",
-    tags: ["pebble", "grey", "green", "calm"],
+    tags: ["stone", "grey", "green", "calm"],
     styles: {
       bgColor: "#EEF2EE",
       fgColor: "#2F3E36",
       eyeColor: "#4C6B5B",
       dotColor: "#4C6B5B",
-      bodyPattern: "pebble",
+      bodyPattern: "rounded",
       cornerEyePattern: "porthole",
       cornerEyeDotPattern: "cushion",
       level: "Q",
@@ -1113,7 +1113,7 @@ const looks: Record<string, ThemePreset> = {
   soda: {
     label: "Soda",
     category: "playful",
-    tags: ["fizz", "orange", "bubbles", "summer"],
+    tags: ["fizz", "orange", "porthole", "summer"],
     styles: {
       bgColor: "#FFF6EA",
       fgColor: "#9A3F00",
@@ -1175,9 +1175,9 @@ const looks: Record<string, ThemePreset> = {
     },
   },
   abacus: {
-    label: "Abacus",
+    label: "Walnut Desk",
     category: "elegant",
-    tags: ["beads", "walnut", "wood", "count"],
+    tags: ["walnut", "wood", "counting", "classic"],
     styles: {
       bgColor: "#F7F2EA",
       fgColor: "#4A2E1A",
@@ -1191,9 +1191,9 @@ const looks: Record<string, ThemePreset> = {
     },
   },
   chainmail: {
-    label: "Chainmail",
+    label: "Steel Mesh",
     category: "elegant",
-    tags: ["mesh", "steel", "net", "link"],
+    tags: ["mesh", "steel", "grey", "industrial"],
     styles: {
       bgColor: "#F2F4F6",
       fgColor: "#263241",
@@ -1216,8 +1216,8 @@ const looks: Record<string, ThemePreset> = {
       eyeColor: "#B42318",
       dotColor: "#B42318",
       bodyPattern: "square",
-      cornerEyePattern: "stamp",
-      cornerEyeDotPattern: "squircle",
+      cornerEyePattern: "notch",
+      cornerEyeDotPattern: "cushion",
       level: "Q",
       margin: 4,
       // The banner in the stamp's red, its label on the paper colour

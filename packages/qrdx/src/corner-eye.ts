@@ -3,7 +3,6 @@ import {
   cushionPath,
   notchedRectPath,
   octagonPoints,
-  perforatedSquarePath,
   polygonPath,
   roundedRectPath,
   scoopedRectPath,
@@ -225,27 +224,6 @@ function generateCornerPlusPattern(
   return (
     notchedRectPath(offsetX, offsetY, size, size, 0.8 * m) +
     notchedRectPath(offsetX + m, offsetY + m, 5 * m, 5 * m, 0.52 * m)
-  );
-}
-
-/**
- * Stamp: a square with a perforated edge (four small bites along each side)
- * and corners scooped like the notch's, so they sit 3.8 modules out on the
- * diagonals, around a round hole.
- */
-function generateCornerStampPattern(
-  offsetX: number,
-  offsetY: number,
-  size: number
-): string {
-  const m = size / 7;
-  return (
-    perforatedSquarePath(offsetX, offsetY, size, 1.15 * m, 0.28 * m, [
-      -1.75 * m,
-      -0.75 * m,
-      0.75 * m,
-      1.75 * m,
-    ]) + roundHole(offsetX, offsetY, m)
   );
 }
 
@@ -601,8 +579,6 @@ export function generateCornerSquarePath(
       return generateCornerNotchPattern(offsetX, offsetY, size);
     case "plus":
       return generateCornerPlusPattern(offsetX, offsetY, size);
-    case "stamp":
-      return generateCornerStampPattern(offsetX, offsetY, size);
     case "bud":
       return generateCornerBudPattern(offsetX, offsetY, size, corner);
     case "bowl":

@@ -89,7 +89,6 @@ const BODY_DESCRIPTIONS: Partial<Record<BodyPattern, string>> = {
   "random-dots": "Dots in varied sizes (the same every time)",
   mosaic: "Slightly turned square tiles (the same every time)",
   octagon: "Octagons",
-  pebble: "Soft square tiles, each with its own corners (the same every time)",
 };
 
 // Complete over the offered values (retired shapes are never listed)
@@ -114,8 +113,6 @@ const EYE_DESCRIPTIONS: Record<PickableCornerEyePattern, string> = {
   porthole: "Soft round frame around a square hole with cut corners",
   notch: "Square frame with a round bite out of each corner",
   plus: "Plus-shaped frame",
-  stamp:
-    "Square frame with a perforated edge and scooped corners, like a postage stamp",
   bud: "Frame with round corners facing the code's corner and its center, cut corners elsewhere",
   bowl: "Frame with cut corners at the top and a round bottom",
 };

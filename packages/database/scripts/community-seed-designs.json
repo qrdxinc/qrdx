@@ -4782,7 +4782,7 @@
       "id": "creek-bed",
       "slug": "creek-bed",
       "name": "Creek bed",
-      "description": "Soft pebble tiles in a deep moss green with porthole eyes and cushion centres, on a pale sage. Calm and natural, for garden centres, trail maps and plant shops.",
+      "description": "Rounded modules in a deep moss green with porthole eyes and cushion centres, on a pale sage. Calm and natural, for garden centres, trail maps and plant shops.",
       "tags": ["nature", "earthy", "soft"],
       "payload": {
         "style": {
@@ -4790,7 +4790,7 @@
           "fgColor": "#2F4A2A",
           "eyeColor": "#24391F",
           "dotColor": "#2F4A2A",
-          "bodyPattern": "pebble",
+          "bodyPattern": "rounded",
           "cornerEyePattern": "porthole",
           "cornerEyeDotPattern": "cushion",
           "level": "Q",
@@ -4842,7 +4842,7 @@
       "id": "terrazzo",
       "slug": "terrazzo",
       "name": "Terrazzo",
-      "description": "Pebble tiles in a deep clay red with notch eyes and cushion centres, on a stone white. Grounded and modern, for tile shops, interior studios and cafes.",
+      "description": "Classy rounded modules in a deep clay red with notch eyes and cushion centres, on a stone white. Grounded and modern, for tile shops, interior studios and cafes.",
       "tags": ["earthy", "warm", "elegant"],
       "payload": {
         "style": {
@@ -4850,7 +4850,7 @@
           "fgColor": "#7A2E1F",
           "eyeColor": "#5E2216",
           "dotColor": "#7A2E1F",
-          "bodyPattern": "pebble",
+          "bodyPattern": "classy-rounded",
           "cornerEyePattern": "notch",
           "cornerEyeDotPattern": "cushion",
           "level": "Q",
@@ -4939,8 +4939,8 @@
       }
     },
     {
-      "id": "first-aid",
-      "slug": "first-aid",
+      "id": "sick-bay",
+      "slug": "sick-bay",
       "name": "Sick bay",
       "description": "Square modules in a deep red with plus eyes and rounded centres, on a clean white. Plain and direct, for clinics, safety posters and first-aid kits.",
       "tags": ["bold", "high-contrast", "flat"],
@@ -4953,66 +4953,6 @@
           "bodyPattern": "square",
           "cornerEyePattern": "plus",
           "cornerEyeDotPattern": "rounded",
-          "level": "Q",
-          "margin": 4
-        }
-      }
-    },
-    {
-      "id": "airmail",
-      "slug": "airmail",
-      "name": "Airmail",
-      "description": "Square modules in a navy with perforated stamp eyes and squircle centres, on a pale envelope blue. Neat and traditional, for post offices, pen pals and parcel desks.",
-      "tags": ["retro", "cool", "professional"],
-      "payload": {
-        "style": {
-          "bgColor": "#EEF3FB",
-          "fgColor": "#1B2A5C",
-          "eyeColor": "#121E45",
-          "dotColor": "#1B2A5C",
-          "bodyPattern": "square",
-          "cornerEyePattern": "stamp",
-          "cornerEyeDotPattern": "squircle",
-          "level": "Q",
-          "margin": 4
-        }
-      }
-    },
-    {
-      "id": "first-class",
-      "slug": "first-class",
-      "name": "First class",
-      "description": "Rounded modules in a deep postbox red with stamp eyes and rounded centres, on a warm paper. Classic and tidy, for stationers, mailrooms and invitations.",
-      "tags": ["retro", "warm", "elegant"],
-      "payload": {
-        "style": {
-          "bgColor": "#FBF4EA",
-          "fgColor": "#8A1E15",
-          "eyeColor": "#6B160F",
-          "dotColor": "#8A1E15",
-          "bodyPattern": "rounded",
-          "cornerEyePattern": "stamp",
-          "cornerEyeDotPattern": "rounded",
-          "level": "Q",
-          "margin": 4
-        }
-      }
-    },
-    {
-      "id": "collector",
-      "slug": "collector",
-      "name": "Collector",
-      "description": "Pebble tiles in a sepia brown with stamp eyes and cushion centres, on an album cream. Nostalgic, for antique shops, flea markets and hobby clubs.",
-      "tags": ["retro", "earthy", "warm"],
-      "payload": {
-        "style": {
-          "bgColor": "#F8F1E4",
-          "fgColor": "#4E3421",
-          "eyeColor": "#3B2718",
-          "dotColor": "#4E3421",
-          "bodyPattern": "pebble",
-          "cornerEyePattern": "stamp",
-          "cornerEyeDotPattern": "cushion",
           "level": "Q",
           "margin": 4
         }
@@ -5099,8 +5039,8 @@
       }
     },
     {
-      "id": "noodle-bar",
-      "slug": "noodle-bar",
+      "id": "broth",
+      "slug": "broth",
       "name": "Broth",
       "description": "Round dots in a deep soy brown with bowl eyes and squircle centres, on a warm rice white. Homely, for noodle shops, ramen menus and takeaway bags.",
       "tags": ["warm", "playful", "flat"],

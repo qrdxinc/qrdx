@@ -42,14 +42,7 @@ const PARTNERS = [
 ];
 
 test("the new eyes are the ones added after 0.0.57", () => {
-  expect(NEW_EYES).toEqual([
-    "porthole",
-    "notch",
-    "plus",
-    "stamp",
-    "bud",
-    "bowl",
-  ]);
+  expect(NEW_EYES).toEqual(["porthole", "notch", "plus", "bud", "bowl"]);
 });
 
 describe.each(NEW_EYES)("%s eyes", (eye) => {

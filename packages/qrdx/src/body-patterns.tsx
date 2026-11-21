@@ -39,8 +39,6 @@ export const SHAPED_BODY_PATTERNS = [
   "random-dots",
   "mosaic",
   "octagon",
-  // Added after 0.0.57
-  "pebble",
 ] as const satisfies readonly BodyPattern[];
 
 type ShapedBodyPattern = (typeof SHAPED_BODY_PATTERNS)[number];
@@ -261,17 +259,6 @@ function moduleShape(
       return polygonPath(
         regularPolygon(cx, cy, (unit * 0.48) / Math.cos(Math.PI / 8), 8, 22.5)
       );
-    case "pebble": {
-      // Each tile its own size and corners, so no two look alike
-      const h = (unit * (0.94 + 0.06 * hash2(x, y, 3))) / 2;
-      const radius = (salt: number) => h * (0.3 + 0.4 * hash2(x, y, salt));
-      return roundedRectPath(cx - h, cy - h, 2 * h, 2 * h, [
-        radius(4),
-        radius(5),
-        radius(6),
-        radius(7),
-      ]);
-    }
     default:
       return circlePath(cx, cy, unit * 0.45);
   }

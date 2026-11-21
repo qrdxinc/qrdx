@@ -34,7 +34,6 @@ export const BODY_PATTERNS: { id: BodyPattern; name: string }[] = [
   { id: "heart", name: "Heart" },
   { id: "pacman", name: "Pacman" },
   { id: "circle-mixed", name: "Mixed" },
-  { id: "pebble", name: "Pebble" },
 ];
 
 // Every offered eye frame (curly was retired: it doesn't scan reliably;
@@ -62,7 +61,6 @@ export const EYE_PATTERNS: { id: PickableCornerEyePattern; name: string }[] = [
   { id: "plus", name: "Plus" },
   { id: "bud", name: "Bud" },
   { id: "bowl", name: "Bowl" },
-  { id: "stamp", name: "Stamp" },
 ];
 
 // Every offered eye dot (diamond, star and banner were retired: they don't

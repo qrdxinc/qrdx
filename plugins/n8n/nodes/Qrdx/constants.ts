@@ -42,7 +42,6 @@ export const BODY_SHAPES = [
   "random-dots",
   "mosaic",
   "octagon",
-  "pebble",
 ] as const;
 
 /** `eye`: shape of the three corner eye frames */
@@ -67,7 +66,6 @@ export const EYE_SHAPES = [
   "porthole",
   "notch",
   "plus",
-  "stamp",
   "bud",
   "bowl",
 ] as const;

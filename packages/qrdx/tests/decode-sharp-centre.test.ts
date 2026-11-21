@@ -107,7 +107,6 @@ describe("WEAK_SHARP_DOT_EYES matches the decoder", () => {
     "porthole",
     "notch",
     "plus",
-    "stamp",
     "bud",
     "bowl",
   ];

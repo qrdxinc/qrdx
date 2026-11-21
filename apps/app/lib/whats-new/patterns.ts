@@ -2,16 +2,11 @@
 // the pickers tag them "New" until the batch's date passes.
 import type { NewBatch } from "./index";
 
-export const NEW_BODY_PATTERNS: NewBatch[] = [
-  {
-    ids: ["pebble"],
-    until: "2026-12-31",
-  },
-];
+export const NEW_BODY_PATTERNS: NewBatch[] = [];
 
 export const NEW_EYE_FRAMES: NewBatch[] = [
   {
-    ids: ["porthole", "notch", "plus", "stamp", "bud", "bowl"],
+    ids: ["porthole", "notch", "plus", "bud", "bowl"],
     until: "2026-12-31",
   },
 ];

@@ -183,8 +183,7 @@
                 "heart",
                 "random-dots",
                 "mosaic",
-                "octagon",
-                "pebble"
+                "octagon"
               ]
             }
           },
@@ -217,7 +216,6 @@
                 "porthole",
                 "notch",
                 "plus",
-                "stamp",
                 "bud",
                 "bowl"
               ]
@@ -7666,8 +7664,7 @@
                       "heart",
                       "random-dots",
                       "mosaic",
-                      "octagon",
-                      "pebble"
+                      "octagon"
                     ]
                   },
                   "cornerEyePattern": {
@@ -7694,7 +7691,6 @@
                       "porthole",
                       "notch",
                       "plus",
-                      "stamp",
                       "bud",
                       "bowl",
                       "curly"
@@ -8999,7 +8995,6 @@
                               "porthole",
                               "notch",
                               "plus",
-                              "stamp",
                               "bud",
                               "bowl",
                               "curly"
@@ -9063,7 +9058,6 @@
                               "porthole",
                               "notch",
                               "plus",
-                              "stamp",
                               "bud",
                               "bowl",
                               "curly"
@@ -9127,7 +9121,6 @@
                               "porthole",
                               "notch",
                               "plus",
-                              "stamp",
                               "bud",
                               "bowl",
                               "curly"
@@ -11393,8 +11386,7 @@
               "heart",
               "random-dots",
               "mosaic",
-              "octagon",
-              "pebble"
+              "octagon"
             ]
           },
           "cornerEyePattern": {
@@ -11421,7 +11413,6 @@
               "porthole",
               "notch",
               "plus",
-              "stamp",
               "bud",
               "bowl",
               "curly"
@@ -12726,7 +12717,6 @@
                       "porthole",
                       "notch",
                       "plus",
-                      "stamp",
                       "bud",
                       "bowl",
                       "curly"
@@ -12790,7 +12780,6 @@
                       "porthole",
                       "notch",
                       "plus",
-                      "stamp",
                       "bud",
                       "bowl",
                       "curly"
@@ -12854,7 +12843,6 @@
                       "porthole",
                       "notch",
                       "plus",
-                      "stamp",
                       "bud",
                       "bowl",
                       "curly"

@@ -327,9 +327,9 @@ export class MenuCode {}
 
 See every option drawn live at [qrdx.dev/docs/styles](https://qrdx.dev/docs/styles).
 
-**Body** (`bodyPattern`, default `circle`): <!-- catalogue:BODY_PATTERN -->`circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`, `pebble`<!-- /catalogue -->
+**Body** (`bodyPattern`, default `circle`): <!-- catalogue:BODY_PATTERN -->`circle`, `circle-large`, `square`, `diamond`, `circle-mixed`, `pacman`, `rounded`, `small-square`, `vertical-line`, `horizontal-line`, `liquid`, `liquid-horizontal`, `liquid-vertical`, `classy`, `classy-rounded`, `leaf`, `plus`, `hexagon`, `star`, `heart`, `random-dots`, `mosaic`, `octagon`<!-- /catalogue -->
 
-**Corner eye** (`cornerEyePattern`, default `gear`): <!-- catalogue:CORNER_EYE_PATTERNS -->`square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`, `porthole`, `notch`, `plus`, `stamp`, `bud`, `bowl`<!-- /catalogue -->
+**Corner eye** (`cornerEyePattern`, default `gear`): <!-- catalogue:CORNER_EYE_PATTERNS -->`square`, `rounded`, `gear`, `circle`, `diya`, `extra-rounded`, `message`, `pointy`, `leaf`, `drop`, `octagon`, `bevel`, `squircle`, `cushion`, `shield`, `petal`, `leaf-reverse`, `porthole`, `notch`, `plus`, `bud`, `bowl`<!-- /catalogue -->
 
 **Corner eye dot** (`cornerEyeDotPattern`, default `circle`): <!-- catalogue:CORNER_EYE_DOT_PATTERNS -->`square`, `rounded`, `circle`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle`, `leaf`, `drop`, `plus`, `cross-rounded`, `hexagon`, `octagon`, `flower`, `heart`, `squircle`, `dots`, `extra-rounded`, `leaf-reverse`, `drop-reverse`, `cushion`<!-- /catalogue -->
 

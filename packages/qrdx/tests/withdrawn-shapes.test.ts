@@ -39,6 +39,7 @@ const cases = [
 test("lists the shapes withdrawn before release", () => {
   expect(WITHDRAWN_BODY_PATTERNS).toEqual({
     x: "plus",
+    pebble: "rounded",
     flower: "circle",
     beads: "circle",
     bubble: "circle",
@@ -52,6 +53,7 @@ test("lists the shapes withdrawn before release", () => {
     tag: "rounded",
     crest: "shield",
     doodle: "squircle",
+    stamp: "notch",
   });
   expect(WITHDRAWN_CORNER_EYE_DOT_PATTERNS).toEqual({
     bevel: "square",
@@ -96,6 +98,16 @@ describe("a withdrawn id", () => {
       getStylePairRisk({ [key]: fallback } as never)
     );
   });
+});
+
+test("a withdrawn id in one eye's own shapes draws as the shape it maps to", () => {
+  const drawn = (outer: string, inner: string) =>
+    renderSvg({
+      value: VALUE,
+      size: 256,
+      eyeShapes: { "top-left": { outer, inner } },
+    } as never);
+  expect(drawn("stamp", "notch")).toBe(drawn("notch", "square"));
 });
 
 test("unknown ids still fail to parse", () => {
