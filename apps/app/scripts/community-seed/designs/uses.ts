@@ -674,11 +674,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "vet-visit",
     name: "Vet visit",
     description:
-      "Heart-shaped modules in a deep teal with rounded eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
+      "Heart-shaped modules in a deep teal with shield eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
     tags: ["playful", "soft", "cool", "nature"],
     style: {
       ...ink("#F0FDFA", "#134E4A", "#134E4A", "#0F766E"),
-      ...shapes("heart", "rounded", "heart"),
+      ...shapes("heart", "shield", "heart"),
       level: "M",
       margin: 3,
     },
@@ -962,11 +962,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "donation-jar",
     name: "Donation jar",
     description:
-      "Large touching dots in a deep teal green with shield eyes and rust octagon centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
+      "Large touching dots in a deep teal green with shield eyes and rust heart centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
     tags: ["warm", "soft", "accessible", "professional"],
     style: {
       ...ink("#FFFFFF", "#0F3D33", "#0F3D33", "#9A3412"),
-      ...shapes("circle-large", "shield", "octagon"),
+      ...shapes("circle-large", "shield", "heart"),
       level: "Q",
       margin: 3,
     },
@@ -976,11 +976,11 @@ export const USE_DESIGNS: SeedDesign[] = [
     id: "volunteer",
     name: "Volunteer",
     description:
-      "Rounded modules in a deep rose with rounded eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
+      "Rounded modules in a deep rose with shield eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
     tags: ["warm", "romantic", "soft", "bold"],
     style: {
       ...ink("#FFFFFF", "#9F1239", "#9F1239", "#BE123C"),
-      ...shapes("rounded", "rounded", "heart"),
+      ...shapes("rounded", "shield", "heart"),
       level: "Q",
       margin: 3,
     },

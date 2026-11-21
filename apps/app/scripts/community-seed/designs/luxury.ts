@@ -87,11 +87,11 @@ export const LUXURY_DESIGNS: SeedDesign[] = [
     id: "gala-night",
     name: "Gala night",
     description:
-      "Black round dots with bevelled eyes and deep gold centres, on white, on the gala dinner frame in black and gold. For auctions, award nights and fundraisers.",
+      "Black round dots with bevelled eyes and deep gold octagon centres, on white, on the gala dinner frame in black and gold. For auctions, award nights and fundraisers.",
     tags: ["elegant", "midnight", "art-deco", "professional"],
     style: {
       ...ink("#FFFFFF", "#0A0A0A", "#0A0A0A", GOLD),
-      ...shapes("circle", "bevel", "square"),
+      ...shapes("circle", "bevel", "octagon"),
       level: "Q",
       margin: 3,
     },

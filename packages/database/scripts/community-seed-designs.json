@@ -434,7 +434,7 @@
       "id": "lime-ink",
       "slug": "lime-ink",
       "name": "Lime ink",
-      "description": "Hexagon modules in a deep olive lime with shield eyes and rounded-triangle centres, on a pale lime white. Fresh without being neon, for juice brands, gyms and garden centres.",
+      "description": "Hexagon modules in a deep olive lime with octagon eyes, on a pale lime white. Fresh without being neon, for juice brands, gyms and garden centres.",
       "tags": ["bold", "nature", "vibrant", "geometric"],
       "payload": {
         "style": {
@@ -443,8 +443,8 @@
           "eyeColor": "#365314",
           "dotColor": "#3F6212",
           "bodyPattern": "hexagon",
-          "cornerEyePattern": "shield",
-          "cornerEyeDotPattern": "rounded-triangle",
+          "cornerEyePattern": "octagon",
+          "cornerEyeDotPattern": "hexagon",
           "level": "Q",
           "margin": 4
         }
@@ -1400,7 +1400,7 @@
       "id": "gala-night",
       "slug": "gala-night",
       "name": "Gala night",
-      "description": "Black round dots with bevelled eyes and deep gold centres, on white, on the gala dinner frame in black and gold. For auctions, award nights and fundraisers.",
+      "description": "Black round dots with bevelled eyes and deep gold octagon centres, on white, on the gala dinner frame in black and gold. For auctions, award nights and fundraisers.",
       "tags": ["elegant", "midnight", "art-deco", "professional"],
       "payload": {
         "style": {
@@ -1410,7 +1410,7 @@
           "dotColor": "#7A5A14",
           "bodyPattern": "circle",
           "cornerEyePattern": "bevel",
-          "cornerEyeDotPattern": "square",
+          "cornerEyeDotPattern": "octagon",
           "level": "Q",
           "margin": 3
         }
@@ -3481,7 +3481,7 @@
       "id": "vet-visit",
       "slug": "vet-visit",
       "name": "Vet visit",
-      "description": "Heart-shaped modules in a deep teal with rounded eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
+      "description": "Heart-shaped modules in a deep teal with shield eyes and heart centres, on a mint white, on the pet visit frame. For vets, groomers and pet shops.",
       "tags": ["playful", "soft", "cool", "nature"],
       "payload": {
         "style": {
@@ -3490,7 +3490,7 @@
           "eyeColor": "#134E4A",
           "dotColor": "#0F766E",
           "bodyPattern": "heart",
-          "cornerEyePattern": "rounded",
+          "cornerEyePattern": "shield",
           "cornerEyeDotPattern": "heart",
           "level": "M",
           "margin": 3
@@ -3957,7 +3957,7 @@
       "id": "donation-jar",
       "slug": "donation-jar",
       "name": "Donation jar",
-      "description": "Large touching dots in a deep teal green with shield eyes and rust octagon centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
+      "description": "Large touching dots in a deep teal green with shield eyes and rust heart centres, on white, on the donate here frame. For collection tins, stalls and notice boards.",
       "tags": ["warm", "soft", "accessible", "professional"],
       "payload": {
         "style": {
@@ -3967,7 +3967,7 @@
           "dotColor": "#9A3412",
           "bodyPattern": "circle-large",
           "cornerEyePattern": "shield",
-          "cornerEyeDotPattern": "octagon",
+          "cornerEyeDotPattern": "heart",
           "level": "Q",
           "margin": 3
         }
@@ -3982,7 +3982,7 @@
       "id": "volunteer",
       "slug": "volunteer",
       "name": "Volunteer",
-      "description": "Rounded modules in a deep rose with rounded eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
+      "description": "Rounded modules in a deep rose with shield eyes and heart centres in red, on white, on the volunteer frame. For charities, shelters and community days.",
       "tags": ["warm", "romantic", "soft", "bold"],
       "payload": {
         "style": {
@@ -3991,7 +3991,7 @@
           "eyeColor": "#9F1239",
           "dotColor": "#BE123C",
           "bodyPattern": "rounded",
-          "cornerEyePattern": "rounded",
+          "cornerEyePattern": "shield",
           "cornerEyeDotPattern": "heart",
           "level": "Q",
           "margin": 3
@@ -4407,7 +4407,7 @@
       "id": "club-colors",
       "slug": "club-colors",
       "name": "Club colors",
-      "description": "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
+      "description": "Octagon modules in a deep red with bevel eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
       "tags": ["bold", "vibrant", "geometric", "high-contrast"],
       "payload": {
         "style": {
@@ -4416,7 +4416,7 @@
           "eyeColor": "#0F1F3D",
           "dotColor": "#991B1B",
           "bodyPattern": "octagon",
-          "cornerEyePattern": "shield",
+          "cornerEyePattern": "bevel",
           "cornerEyeDotPattern": "rounded-triangle",
           "level": "Q",
           "margin": 4
@@ -4574,7 +4574,7 @@
       "id": "wifi-sticker",
       "slug": "wifi-sticker",
       "name": "Wi-Fi sticker",
-      "description": "Black round dots with squircle eyes and a Wi-Fi icon in the middle, on white, on the Wi-Fi sticker frame. For the till, the fridge door and the back of the menu.",
+      "description": "Black round dots with octagon eyes and a Wi-Fi icon in the middle, on white, on the Wi-Fi sticker frame. For the till, the fridge door and the back of the menu.",
       "tags": ["minimal", "monochrome", "high-contrast", "accessible"],
       "payload": {
         "style": {
@@ -4583,7 +4583,7 @@
           "eyeColor": "#111827",
           "dotColor": "#111827",
           "bodyPattern": "circle",
-          "cornerEyePattern": "squircle",
+          "cornerEyePattern": "octagon",
           "cornerEyeDotPattern": "circle",
           "level": "H",
           "margin": 3,

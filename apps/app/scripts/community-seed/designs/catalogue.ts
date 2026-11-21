@@ -203,11 +203,11 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
     id: "club-colors",
     name: "Club colors",
     description:
-      "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
+      "Octagon modules in a deep red with bevel eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
     tags: ["bold", "vibrant", "geometric", "high-contrast"],
     style: {
       ...ink("#FFFFFF", "#991B1B", "#0F1F3D", "#991B1B"),
-      ...shapes("octagon", "shield", "rounded-triangle"),
+      ...shapes("octagon", "bevel", "rounded-triangle"),
       level: "Q",
       margin: 4,
     },
