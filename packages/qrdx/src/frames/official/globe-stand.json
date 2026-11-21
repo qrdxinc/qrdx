@@ -100,7 +100,7 @@
         "x": 710,
         "y": 1440,
         "width": 180,
-        "height": 160,
+        "height": 460,
         "radius": 20,
         "fill": {
           "mix": ["frame", "#000000"],

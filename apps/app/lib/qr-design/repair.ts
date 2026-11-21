@@ -11,6 +11,7 @@ import {
   type ScanCheck,
   type ScanGrade,
   type ScanScoreResult,
+  weakestEyePattern,
 } from "qrdx";
 import { contrastRatio, luminance } from "@/lib/themes/color";
 import type { ThemeStyles } from "@/types/theme";
@@ -110,8 +111,16 @@ const failedChecks = (result: ScanScoreResult): FailedCheck[] =>
     .filter((check) => !check.passed)
     .map(({ id, message, fix }) => ({ id, message, ...(fix ? { fix } : {}) }));
 
-const same = (a: DesignStyle, b: DesignStyle) =>
-  JSON.stringify(a) === JSON.stringify(b);
+const sameEyes = (a: EyeShapes | undefined, b: EyeShapes | undefined) =>
+  JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+
+/** The same design: the style and the per-eye shapes drawn with it. */
+const same = (
+  a: DesignStyle,
+  aEyes: EyeShapes | undefined,
+  b: DesignStyle,
+  bEyes: EyeShapes | undefined,
+) => JSON.stringify(a) === JSON.stringify(b) && sameEyes(aEyes, bEyes);
 
 // ── Normalising ────────────────────────────────────────────────────────────
 
@@ -322,11 +331,16 @@ export function repairDesign(
     next.margin = 4;
   }
   if (ids.has("eye-shape")) {
-    changes.push(
-      `Changed the eyes from ${next.cornerEyePattern} to rounded: strict scanners miss them`,
-    );
-    next.cornerEyePattern = "rounded";
-    eyes = withoutEyeOverrides(eyes, "outer");
+    // The weakest frame drawn, a single eye's own included
+    const weak = weakestEyePattern({ ...next, eyeShapes: eyes });
+    const cleared = withoutEyeOverrides(eyes, "outer");
+    if (next.cornerEyePattern !== "rounded" || !sameEyes(cleared, eyes)) {
+      changes.push(
+        `Changed the eyes from ${weak} to rounded: strict scanners miss them`,
+      );
+      next.cornerEyePattern = "rounded";
+      eyes = cleared;
+    }
   }
   if (ids.has("style-pair")) {
     const risk = eyeRisk(next, eyes);
@@ -445,14 +459,16 @@ export async function runDesignLoop({
   onAttempt,
   eyeShapes: initialEyeShapes,
 }: DesignLoopOptions): Promise<DesignLoopResult> {
-  let eyeShapes = initialEyeShapes;
   const attempts: DesignAttempt[] = [];
   const results: ScanScoreResult[] = [];
+  /** The per-eye shapes drawn with each attempt (scored with it). */
+  const shapes: (EyeShapes | undefined)[] = [];
   /** The attempt each one was made from (-1 for the first). */
   const parents: number[] = [];
 
   const record = async (
     style: DesignStyle,
+    eyeShapes: EyeShapes | undefined,
     changes: string[],
     by: DesignAttempt["by"],
     parent: number,
@@ -468,14 +484,17 @@ export async function runDesignLoop({
     };
     attempts.push(attempt);
     results.push(result);
+    shapes.push(eyeShapes);
     parents.push(parent);
     onAttempt?.(attempt, attempts.length - 1);
     return attempt;
   };
 
-  const first = normalizeDesign(initial, { hasLogo, eyeShapes });
-  eyeShapes = first.eyeShapes;
-  await record(first.style, first.changes, "initial", -1);
+  const first = normalizeDesign(initial, {
+    hasLogo,
+    eyeShapes: initialEyeShapes,
+  });
+  await record(first.style, first.eyeShapes, first.changes, "initial", -1);
 
   /**
    * The best attempt so far. Repairs build on the latest of equal scores, so
@@ -495,8 +514,11 @@ export async function runDesignLoop({
     repairs++;
     const parent = best({ latest: true });
     const base = attempts[parent] as DesignAttempt;
+    // A repair builds on the shapes its parent was drawn with
+    const baseEyes = shapes[parent];
     const final = repairs === maxRepairs;
     let next: DesignStyle | null = null;
+    let nextEyes = baseEyes;
     let changes: string[] = [];
     let by: DesignAttempt["by"] = "repair";
 
@@ -504,11 +526,11 @@ export async function runDesignLoop({
       try {
         const revised = normalizeDesign(
           await revise(base.style, base.failed, base.score),
-          { hasLogo, eyeShapes },
+          { hasLogo, eyeShapes: baseEyes },
         );
-        if (!same(revised.style, base.style)) {
+        if (!same(revised.style, revised.eyeShapes, base.style, baseEyes)) {
           next = revised.style;
-          eyeShapes = revised.eyeShapes;
+          nextEyes = revised.eyeShapes;
           changes = [
             ...styleDiff(base.style, revised.style).map((change) =>
               change.from
@@ -526,29 +548,36 @@ export async function runDesignLoop({
     if (!next) {
       let repaired = repairDesign(base.style, base.failed, {
         final,
-        eyeShapes,
+        eyeShapes: baseEyes,
       });
       // Nothing small left to try: make the bigger changes now.
-      if (!final && same(repaired.style, base.style)) {
+      if (
+        !final &&
+        same(repaired.style, repaired.eyeShapes, base.style, baseEyes)
+      ) {
         repaired = repairDesign(base.style, base.failed, {
           final: true,
-          eyeShapes,
+          eyeShapes: baseEyes,
         });
       }
-      if (same(repaired.style, base.style)) break;
+      if (same(repaired.style, repaired.eyeShapes, base.style, baseEyes)) {
+        break;
+      }
       next = repaired.style;
+      nextEyes = repaired.eyeShapes;
       changes = repaired.changes;
-      eyeShapes = repaired.eyeShapes;
     }
-    await record(next, changes, by, parent);
+    await record(next, nextEyes, changes, by, parent);
   }
 
   if (!isGreat(attempts[best()] as DesignAttempt)) {
     const parent = best();
     const base = attempts[parent] as DesignAttempt;
     for (const fallback of fallbacks(base.style)) {
+      // Classic means classic: no per-eye shapes either
       const attempt = await record(
         fallback,
+        undefined,
         [
           `Fell back to a classic black-on-white code (error correction ${fallback.level}): the design couldn't reach Great`,
         ],
@@ -569,6 +598,8 @@ export async function runDesignLoop({
   const changes = fellBack
     ? result.changes
     : path.flatMap((at) => (attempts[at] as DesignAttempt).changes);
+  // The result's style, score and per-eye shapes are one attempt's
+  const eyeShapes = shapes[index];
   return {
     style: result.style,
     score: result.score,

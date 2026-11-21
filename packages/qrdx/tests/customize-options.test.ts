@@ -11,11 +11,11 @@ import { getQRAsEPS } from "../src/eps";
 import { getQRData } from "../src/helpers";
 import {
   clampBgRadius,
+  colorAlpha,
   eyeShapeOf,
   getBgRadiusLimit,
   getEyeStyleRisk,
   getHaloRisk,
-  HALO_SEE_THROUGH_BLOCKED_BODIES,
   isSeeThroughBackground,
   resolveHalo,
   resolveShadow,
@@ -28,6 +28,8 @@ import type { QRProps } from "../types";
 import {
   BG_RADIUS_MAX,
   BG_RADIUS_QUIET_RATIO,
+  HALO_COLOR_DEFAULT,
+  HALO_LIGHT_MIN,
   HALO_WIDTH_MAX,
   SHADOW_OFFSET_MAX,
   SHADOW_OPACITY_MAX,
@@ -40,6 +42,7 @@ import {
   type RGB,
   rasterizeEps,
   rasterizePdf,
+  readPdf,
 } from "./support/print-raster";
 import {
   capture,
@@ -51,8 +54,6 @@ import { decodeQR } from "./support/raster";
 
 const VALUE = "https://qrdx.dev/q/Ab3dE9x?utm=campaign";
 const DARK_PAGE = "#1f2937";
-/** A light page a see-through code still reads on (its light modules show it). */
-const LIGHT_PAGE = "#d1d5db";
 
 /** QRProps the way the editor builds them (getQRData + the rest). */
 function editorProps(
@@ -251,7 +252,7 @@ describe("looks.ts helpers", () => {
 
   it("resolveHalo and resolveShadow fill defaults and keep values in range", () => {
     expect(resolveHalo(undefined)).toBeNull();
-    expect(resolveHalo({})).toEqual({ color: "#ffffff", width: 0.25 });
+    expect(resolveHalo({})).toEqual({ color: HALO_COLOR_DEFAULT, width: 0.25 });
     expect(resolveHalo({ width: 3, color: "#fde68a" })).toEqual({
       color: "#fde68a",
       width: HALO_WIDTH_MAX,
@@ -399,26 +400,22 @@ describe("each look decodes at three phone distances", () => {
         }),
     ],
     [
-      "the widest halo, see-through background on a light grey page",
+      "the widest halo in the darkest rim it takes, on white",
       () =>
         editorProps({
           value: VALUE,
           level: "M",
-          bgColor: "transparent",
-          halo: { width: HALO_WIDTH_MAX },
+          halo: { width: HALO_WIDTH_MAX, color: HALO_LIGHT_MIN },
         }),
-      LIGHT_PAGE,
     ],
     [
-      "a tinted halo, see-through background on a light grey page",
+      "a tinted halo at the widest, on white",
       () =>
         editorProps({
           value: VALUE,
           level: "M",
-          bgColor: "transparent",
-          halo: { width: 0.3, color: "#fef3c7" },
+          halo: { width: HALO_WIDTH_MAX, color: "#fde68a" },
         }),
-      LIGHT_PAGE,
     ],
     [
       "a halo under a rounded background on a dark page",
@@ -489,13 +486,11 @@ describe("each look decodes at three phone distances", () => {
   }
 });
 
-// A halo is a look, not a quiet zone or a background: a see-through code
-// on a dark page doesn't read with or without one (its light modules show
-// the page), and on a dim grey page the rims make the thinnest dot shapes
-// (diamond, small-square, random-dots) harder to read at phone distances
-// (measured 20 Nov 2026; the docs say to give such a code a background).
-// On the surfaces the scan score models (white paper, light pages) a halo
-// never costs a decode: every dot shape at the widest halo.
+// Where the engine draws a halo (looks.ts getHaloRisk) it never costs a
+// decode: every dot shape at the widest halo in the darkest rim it takes,
+// on white and on a light grey background, through the camera model.
+// halo-decode.test.ts runs the rule's edges through resvg with jsQR and
+// ZXing.
 describe("the strongest shadow and the widest halo decode with every dot shape", () => {
   for (const body of BODY_PATTERN) {
     it(`${body} dots, shadow`, () => {
@@ -515,8 +510,8 @@ describe("the strongest shadow and the widest halo decode with every dot shape",
         "px per module that failed"
       ).toEqual([]);
     });
-    it(`${body} dots, halo on white and see-through on a light page`, () => {
-      const halo = { width: HALO_WIDTH_MAX };
+    it(`${body} dots, the widest halo in the darkest rim, on white and on light grey`, () => {
+      const halo = { width: HALO_WIDTH_MAX, color: HALO_LIGHT_MIN };
       expect(
         unreadable(
           editorProps({ value: VALUE, level: "M", bodyPattern: body, halo })
@@ -529,103 +524,268 @@ describe("the strongest shadow and the widest halo decode with every dot shape",
             value: VALUE,
             level: "M",
             bodyPattern: body,
-            bgColor: "transparent",
+            bgColor: "#e5e7eb",
             halo,
           }),
-          LIGHT_PAGE
+          "#e5e7eb"
         ),
-        "px per module that failed on a light page"
+        "px per module that failed on light grey"
       ).toEqual([]);
     });
   }
 });
 
-// The halo rule (looks.ts getHaloRisk): on a see-through background the
-// halo is refused for HALO_SEE_THROUGH_BLOCKED_BODIES, the shapes a halo
-// made unreadable on a mid-grey page in the decode matrix (every width
-// 0.1 to 0.5, pages white, #d1d5db, #9ca3af and #1f2937, 4/6/9 px per
-// module, 20 Nov 2026). The matrix below keeps the rule complete: every
-// other shape is no worse with a halo than without, at every width, on
-// every page tone where a see-through code reads at all.
-describe("a halo on a see-through background", () => {
-  const DIM_PAGE = "#9ca3af";
-  const WIDTHS = [0.1, 0.2, 0.3, 0.4, 0.5];
-  const seeThrough = (body: QRProps["bodyPattern"], halo?: QRProps["halo"]) =>
-    editorProps({
-      value: VALUE,
-      level: "M",
-      bodyPattern: body,
-      bgColor: "transparent",
-      ...(halo && { halo }),
-    });
+// The halo rule (looks.ts getHaloRisk): drawn only on an opaque background,
+// in a rim at least as light as HALO_LIGHT_MIN and no lighter than the
+// background. A rim lighter than what's around the dots makes decoders
+// misread light modules (measured 21 Nov 2026: on a grey page under a
+// see-through code at every width, and with grey or blue dots as a white
+// rim on #d1d5db), so everywhere outside the rule the code is drawn exactly
+// as without a halo.
+describe("the halo rule", () => {
+  const photo =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
+  const stops = (...colors: string[]) => ({
+    type: "linear" as const,
+    angle: 0,
+    stops: colors.map((color, index) => ({
+      color,
+      offset: (index * 100) / (colors.length - 1),
+    })),
+  });
+  const withHalo = (bgColor: QRProps["bgColor"], halo: QRProps["halo"] = {}) =>
+    editorProps({ value: VALUE, level: "M", bgColor, halo });
+  /** Drawn exactly as the same code without a halo. */
+  const notDrawn = (props: QRProps) => {
+    const { halo: _halo, ...rest } = props;
+    return renderSvg(props) === renderSvg(rest);
+  };
 
-  it("tells a see-through background from an opaque one", () => {
-    expect(isSeeThroughBackground("transparent")).toBe(true);
-    expect(isSeeThroughBackground("#ffffff80")).toBe(true);
-    expect(isSeeThroughBackground("rgba(255,255,255,0)")).toBe(true);
-    expect(isSeeThroughBackground(undefined)).toBe(false);
-    expect(isSeeThroughBackground("#ffffff")).toBe(false);
-    expect(isSeeThroughBackground(gradient)).toBe(false);
+  // Every form the API's colour check and the engine take (review finding 3)
+  const seeThrough: [string, QRProps["bgColor"]][] = [
+    ["transparent", "transparent"],
+    ["none", "none"],
+    ["#rrggbbaa", "#ffffff80"],
+    ["#rgba", "#fff0"],
+    ["rgba() with commas", "rgba(255,255,255,0)"],
+    ["rgb() with a slash and a percentage", "rgb(255 255 255 / 50%)"],
+    ["hsla() with commas", "hsla(0,0%,100%,0)"],
+    ["hsl() with a slash", "hsl(0 0% 100% / 0)"],
+    ["hsl() with a slash and a percentage", "hsl(0 0% 100% / 40%)"],
+    [
+      "a solid paint in hsla()",
+      { type: "solid", color: "hsla(0, 0%, 100%, 0.5)" },
+    ],
+    [
+      "a gradient whose last stop is see-through",
+      stops("#ffffff", "#ffffff00"),
+    ],
+    [
+      "a gradient whose middle stop is see-through",
+      stops("#ffffff", "hsl(0 0% 100% / 0.2)", "#ffffff"),
+    ],
+    [
+      "a radial gradient",
+      { type: "radial", stops: stops("#ffffff", "transparent").stops },
+    ],
+    [
+      "an angular gradient",
+      { type: "angular", angle: 0, stops: stops("#ffffff", "none").stops },
+    ],
+    ["a picture without an underlay", { type: "image", src: photo }],
+    [
+      "a picture over a see-through underlay",
+      { type: "image", src: photo, underlay: "rgba(255,255,255,0.5)" },
+    ],
+  ];
+
+  it("tells a see-through background from an opaque one, in every form", () => {
+    for (const [name, bgColor] of seeThrough) {
+      expect(isSeeThroughBackground(bgColor), name).toBe(true);
+    }
+    const opaque: [string, QRProps["bgColor"]][] = [
+      ["no background", undefined],
+      ["hex", "#ffffff"],
+      ["a name", "white"],
+      ["hsl()", "hsl(0 0% 100%)"],
+      ["hsla() at full alpha", "hsla(0,0%,100%,1)"],
+      ["an opaque gradient", gradient],
+      [
+        "a picture over an opaque underlay",
+        { type: "image", src: photo, underlay: "#ffffff" },
+      ],
+    ];
+    for (const [name, bgColor] of opaque) {
+      expect(isSeeThroughBackground(bgColor), name).toBe(false);
+    }
   });
 
-  it("refuses the halo for the blocked dot shapes only, and only see-through", () => {
-    for (const body of HALO_SEE_THROUGH_BLOCKED_BODIES) {
-      const props = seeThrough(body, { width: 0.3 });
-      expect(getHaloRisk(props)?.message, body).toContain(`${body} dots`);
-      expect(resolveHalo(props.halo, props), body).toBeNull();
-      // Drawn exactly as without a halo
-      expect(renderSvg(props), body).toBe(renderSvg(seeThrough(body)));
-      // An opaque background takes it
-      const opaque = { ...props, bgColor: "#ffffff" };
-      expect(getHaloRisk(opaque), body).toBeNull();
-      expect(renderSvg(opaque), body).toContain('data-qrdx-look="halo"');
+  it("reads every hue form hsl() takes", () => {
+    for (const hue of ["120", "120.5", ".5", "-30deg", "120.", "+7"]) {
+      expect(colorAlpha(`hsl(${hue} 50% 50% / 0.5)`), hue).toBe(0.5);
     }
-    expect(getHaloRisk(seeThrough("circle", {}))).toBeNull();
-    expect(getHaloRisk(seeThrough("diamond"))).toBeNull();
-    expect(renderSvg(seeThrough("rounded", {}))).toContain(
-      'data-qrdx-look="halo"'
-    );
+    // Not a hue: the color doesn't parse, so it counts as opaque
+    for (const hue of ["1.2.3", "deg", "12x"]) {
+      expect(colorAlpha(`hsl(${hue} 50% 50% / 0.5)`), hue).toBe(1);
+    }
+    // Nor is an alpha with junk after it ("0x" isn't 0)
+    expect(colorAlpha("hsla(0, 50%, 50%, 0x)")).toBe(1);
+    expect(colorAlpha("hsl(0 50% 50% / 40%)")).toBe(0.4);
   });
 
-  for (const body of BODY_PATTERN) {
-    if (HALO_SEE_THROUGH_BLOCKED_BODIES.includes(body)) {
-      continue;
-    }
-    it(`${body} dots read no worse with any halo on a dim page`, () => {
-      const without = unreadable(seeThrough(body), DIM_PAGE);
-      for (const width of WIDTHS) {
-        const worse = unreadable(seeThrough(body, { width }), DIM_PAGE).filter(
-          (px) => !without.includes(px)
-        );
-        expect(worse, `width ${width}: px per module that got worse`).toEqual(
-          []
-        );
+  // The color patterns read library input: each runs in linear time on a
+  // long adversarial string (a pattern with overlapping quantifiers takes
+  // seconds here)
+  it("reads long adversarial colors in linear time", () => {
+    const n = 50_000;
+    const adversarial = [
+      `hsl(${"0".repeat(n)}x, 50%, 50%)`,
+      `hsl(${"0".repeat(n)}.${"0".repeat(n)}x, 50%, 50%)`,
+      `hsl(${"a".repeat(n)}`,
+      `hsl(${" ,".repeat(n / 2)}x)`,
+      `hsla(0, 50%, 50%, ${"0".repeat(n)}x)`,
+    ];
+    for (const color of adversarial) {
+      let fastest = Number.POSITIVE_INFINITY;
+      for (let run = 0; run < 3; run++) {
+        const start = performance.now();
+        expect(colorAlpha(color)).toBe(1);
+        fastest = Math.min(fastest, performance.now() - start);
       }
-    });
-  }
-});
+      expect(fastest, color.slice(0, 24)).toBeLessThan(50);
+    }
+  });
 
-describe("a halo through a real rasteriser", () => {
-  // The decode tests' own rasteriser strokes with butt caps and no joins;
-  // resvg draws the rim as a browser does (round joins and caps)
-  it("decodes at 6 px per module with resvg", async () => {
-    const { Resvg } = await import("@resvg/resvg-js");
-    const props = editorProps({
-      value: VALUE,
-      level: "M",
-      bodyPattern: "rounded",
-      bgColor: "transparent",
-      halo: { width: HALO_WIDTH_MAX },
-    });
-    const modules = symbolSize(VALUE, "M") + 8;
-    const image = new Resvg(renderSvg(props), {
-      fitTo: { mode: "width", value: modules * 6 },
-      background: LIGHT_PAGE,
-    }).render();
-    const pixels = new Uint8ClampedArray(image.pixels);
-    expect(
-      decodeQR({ data: pixels, width: image.width, height: image.height })
-    ).toBe(VALUE);
+  it("reads a color's alpha in every form", () => {
+    expect(colorAlpha("none")).toBe(0);
+    expect(colorAlpha("transparent")).toBe(0);
+    expect(colorAlpha("#ffffff80")).toBeCloseTo(128 / 255);
+    expect(colorAlpha("rgb(0 0 0 / 25%)")).toBe(0.25);
+    expect(colorAlpha("hsla(0,0%,100%,0.3)")).toBe(0.3);
+    expect(colorAlpha("hsl(120 50% 50% / 60%)")).toBe(0.6);
+    expect(colorAlpha("hsl(120, 50%, 50%)")).toBe(1);
+    expect(colorAlpha("rebeccapurple")).toBe(1);
+    expect(colorAlpha(undefined)).toBe(1);
+  });
+
+  it("draws no halo on a see-through background, in any form", () => {
+    for (const [name, bgColor] of seeThrough) {
+      const props = withHalo(bgColor);
+      expect(getHaloRisk(props)?.reason, name).toBe(
+        name.startsWith("a picture") ? "picture" : "see-through"
+      );
+      expect(resolveHalo(props.halo, props), name).toBeNull();
+      expect(notDrawn(props), name).toBe(true);
+    }
+  });
+
+  it("draws no halo on a picture, on a dark background, or in a rim outside its range", () => {
+    const refused: [string, QRProps, string][] = [
+      [
+        "a picture over an opaque underlay",
+        withHalo({ type: "image", src: photo, underlay: "#ffffff" }),
+        "picture",
+      ],
+      [
+        "a background just darker than HALO_LIGHT_MIN",
+        withHalo("#d0d4da"),
+        "dark-background",
+      ],
+      [
+        "a grey background",
+        withHalo("#9ca3af", { color: "#9ca3af" }),
+        "dark-background",
+      ],
+      [
+        "a gradient with one dark stop",
+        withHalo(stops("#ffffff", "#9ca3af")),
+        "dark-background",
+      ],
+      [
+        "a color the engine can't read",
+        withHalo("notacolor"),
+        "dark-background",
+      ],
+      ["a dark CSS color name", withHalo("slategray"), "dark-background"],
+      // lightgray (#d3d3d3) reads just darker than #d1d5db to decoders
+      [
+        "a named rim just darker than HALO_LIGHT_MIN",
+        withHalo("whitesmoke", { color: "lightgray" }),
+        "rim",
+      ],
+      [
+        "a rim lighter than a named background",
+        withHalo("gainsboro", { color: "white" }),
+        "rim",
+      ],
+      [
+        "a white rim on light grey",
+        withHalo("#e5e7eb", { color: "#ffffff" }),
+        "rim",
+      ],
+      [
+        "a rim lighter than one gradient stop",
+        withHalo(stops("#ffffff", "#e5e7eb"), { color: "#f3f4f6" }),
+        "rim",
+      ],
+      [
+        "a rim just darker than HALO_LIGHT_MIN",
+        withHalo("#ffffff", { color: "#d0d4da" }),
+        "rim",
+      ],
+      ["a dark rim", withHalo("#ffffff", { color: "#333333" }), "rim"],
+      [
+        "a dark hsl() rim",
+        withHalo("#ffffff", { color: "hsl(0, 0%, 50%)" }),
+        "rim",
+      ],
+    ];
+    for (const [name, props, reason] of refused) {
+      expect(getHaloRisk(props)?.reason, name).toBe(reason);
+      expect(getHaloRisk(props)?.fix, name).toContain("turn the halo off");
+      expect(notDrawn(props), name).toBe(true);
+    }
+  });
+
+  it("draws it in a rim between HALO_LIGHT_MIN and the background", () => {
+    const drawn: [string, QRProps][] = [
+      ["the default rim on white", withHalo(undefined)],
+      [
+        "the darkest rim on white",
+        withHalo("#ffffff", { color: HALO_LIGHT_MIN }),
+      ],
+      [
+        "the darkest rim on light grey",
+        withHalo("#e5e7eb", { color: HALO_LIGHT_MIN }),
+      ],
+      [
+        "a rim as light as the background",
+        withHalo("#e5e7eb", { color: "#e5e7eb" }),
+      ],
+      [
+        "the darkest rim on the darkest background",
+        withHalo(HALO_LIGHT_MIN, { color: HALO_LIGHT_MIN }),
+      ],
+      ["a tinted rim on white", withHalo("#ffffff", { color: "#fde68a" })],
+      [
+        "an hsl() background",
+        withHalo("hsl(0 0% 100%)", { color: "hsl(0, 0%, 90%)" }),
+      ],
+      [
+        "a light gradient",
+        withHalo(stops("#ffffff", "#e5e7eb"), { color: HALO_LIGHT_MIN }),
+      ],
+      ["CSS color names", withHalo("whitesmoke", { color: "gainsboro" })],
+      ["a named rim on ivory", withHalo("ivory", { color: "lavender" })],
+    ];
+    for (const [name, props] of drawn) {
+      expect(getHaloRisk(props), name).toBeNull();
+      expect(renderSvg(props), name).toContain('data-qrdx-look="halo"');
+    }
+    // A see-through rim is drawn opaque (its alpha is dropped)
+    expect(resolveHalo({ color: "hsla(0, 0%, 90%, 0.4)" })?.color).toBe(
+      "#e6e6e6"
+    );
   });
 });
 
@@ -698,6 +858,31 @@ describe("SVG, print PDF and EPS draw them", () => {
     const rendered = rasterizeEps(eps, 3);
     expect(decodeQR(rendered.image)).toBe(VALUE);
   });
+
+  // The SVG strokes the rim with round joins and caps; print's default
+  // miter ran it about twice as far out at a star's tips
+  it("print PDF and EPS stroke the rim with round joins and caps", async () => {
+    const star = editorProps({
+      value: VALUE,
+      level: "M",
+      bodyPattern: "star",
+      halo: { width: HALO_WIDTH_MAX, color: HALO_LIGHT_MIN },
+    });
+    const { halo: _halo, ...plain } = star;
+    const content = async (code: QRProps) =>
+      readPdf(await getQRAsPrintPDFBuffer(code, { size: 50, unit: "mm" }))
+        .content;
+    const pdf = await content(star);
+    expect(pdf).toMatch(/(^|\s)1 j\s+1 J(\s|$)/);
+    // Set back to PDF's defaults after each rim, so other strokes keep them
+    expect(pdf).toMatch(/(^|\s)0 j\s+0 J(\s|$)/);
+    expect(await content(plain)).not.toMatch(/(^|\s)1 j(\s|$)/);
+    const eps = await getQRAsEPS(star, { sizeMm: 50 });
+    expect(eps).toContain("gsave 1 setlinejoin 1 setlinecap");
+    expect(await getQRAsEPS(plain, { sizeMm: 50 })).not.toContain(
+      "setlinejoin"
+    );
+  });
 });
 
 describe("the scan score accounts for them", () => {
@@ -736,23 +921,29 @@ describe("the scan score accounts for them", () => {
     expect(pair?.message).toContain("diamond centres in square eyes");
   });
 
-  it("counts a dark halo against the contrast", () => {
-    const fine = getScanContrast(
-      editorProps({ value: VALUE, level: "M", halo: { color: "#ffffff" } })
+  it("counts the halo's color as a background color", () => {
+    const rim = getScanContrast(
+      editorProps({ value: VALUE, level: "M", halo: { color: HALO_LIGHT_MIN } })
     );
+    const onGrey = getScanContrast(
+      editorProps({ value: VALUE, level: "M", bgColor: HALO_LIGHT_MIN })
+    );
+    expect(rim.ratio).toBeCloseTo(onGrey.ratio);
+    // A dark rim isn't drawn, so it costs no contrast
     const dark = getScanContrast(
       editorProps({ value: VALUE, level: "M", halo: { color: "#333333" } })
     );
-    expect(fine.ratio).toBeGreaterThan(7);
-    expect(dark.ratio).toBeLessThan(2);
+    expect(dark.ratio).toBeCloseTo(
+      getScanContrast(editorProps({ value: VALUE, level: "M" })).ratio
+    );
   });
 
-  it("fails the halo check on a see-through background with a blocked dot shape", async () => {
+  it("fails the halo check where the halo isn't drawn", async () => {
     const result = await getScanScore(
       editorProps({
         value: VALUE,
         level: "M",
-        bodyPattern: "diamond",
+        bodyPattern: "rounded",
         bgColor: "transparent",
         halo: {},
       })

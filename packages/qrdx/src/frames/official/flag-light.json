@@ -1,11 +1,11 @@
 {
-  "id": "pennant-team",
-  "name": "Pennant",
-  "description": "A pennant on a pole: the code at the hoist, the label along the fly.",
+  "id": "flag-light",
+  "name": "Team flag, light",
+  "description": "A swallowtail flag on a pole: the code at the hoist, the label along the fly.",
   "category": "use-case",
   "collection": "call-to-action",
   "contentTypes": [],
-  "tags": ["call to action", "flag", "pennant", "team"],
+  "tags": ["call to action", "flag", "team", "sports"],
   "license": "CC0-1.0",
   "spec": {
     "kind": "qrdx.frame",
@@ -22,8 +22,9 @@
       "radius": 16.8
     },
     "colors": {
-      "frame": "#111111",
-      "text": "#ffffff"
+      "frame": "#1f1f1f",
+      "text": "#ffffff",
+      "accent": "#5a5a5a"
     },
     "shapes": [
       {
@@ -54,6 +55,14 @@
         "fill": "frame"
       },
       {
+        "type": "path",
+        "d": "M130 166L1935.2 173.2L1721.6 690L1935.2 1206.8L130 1214Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
         "type": "circle",
         "cx": 70,
         "cy": 190,
@@ -74,6 +83,24 @@
           "mix": ["frame", "background"],
           "amount": 0.45
         }
+      },
+      {
+        "type": "rect",
+        "x": 1056,
+        "y": 490,
+        "width": 604,
+        "height": 200,
+        "radius": 100,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1056,
+        "y": 710,
+        "width": 604,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -81,12 +108,12 @@
         "type": "text",
         "id": "cta",
         "slot": "primary",
-        "text": "Scan me",
+        "text": "Scan to join",
         "color": "text",
         "box": {
-          "x": 1056,
+          "x": 1136,
           "y": 490,
-          "width": 604,
+          "width": 444,
           "height": 200
         }
       },
@@ -94,12 +121,12 @@
         "type": "text",
         "id": "note",
         "slot": "secondary",
-        "text": "Join the team",
+        "text": "Game day details",
         "color": "text",
         "box": {
-          "x": 1056,
+          "x": 1096,
           "y": 710,
-          "width": 604,
+          "width": 524,
           "height": 100
         },
         "weight": "regular"

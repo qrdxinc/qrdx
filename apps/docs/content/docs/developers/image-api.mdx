@@ -164,7 +164,7 @@ Enum values (`level`, `format`, `template`, `frame`) are case-insensitive. With 
 | `eyeGradient` | `corner` (default: each eye sweeps its own gradient) or `code` (the eyes continue the dots' gradient across the code) |
 | `bgRadius` | Corner radius of the background, `0` to `0.5` of the code's width; needs a `margin` (the engine caps it at twice the margin, in modules) |
 | `backdrop` | A color outside the rounded corners (see-through without it) |
-| `halo` | A light rim around the dots and eyes: `{ "color": "#ffffff", "width": 0.25 }`, `width` in modules from `0.1` to `0.5` |
+| `halo` | A light rim around the dots and eyes: `{ "color": "#fde68a", "width": 0.25 }`, `width` in modules from `0.1` to `0.5`, `color` default `#e5e7eb`. The rim is drawn opaque (a color's alpha is dropped). It is drawn only on an opaque `bgColor` (no picture), in a color at least as light as `#d1d5db` and no lighter than any background color; otherwise the code is drawn without it and the scan score's `halo` check says why |
 | `shadow` | A see-through copy of the dots and eyes under them: `{ "color": "#000000", "opacity": 0.3, "dx": 0.2, "dy": 0.2 }`, shifts from `-0.3` to `0.3` modules, opacity `0.1` to `0.4` |
 | `autoLevel` | Raise error correction to `H` when the logo covers more than 7% of the code (always on here when there's a logo) |
 | `logoOptions` | The logo's layout: `size` (`0.1` to `0.3` of the code's width; QRdx shrinks it when the code can't spare the modules), `padding` (`0` to `2` modules), `x` and `y` (`0` to `1`), `shape` (`square`, `rounded` or `circle` crop) and `plate` (a color behind it) |

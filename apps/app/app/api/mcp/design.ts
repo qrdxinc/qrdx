@@ -114,9 +114,11 @@ const eyeInput = z
   .strict();
 
 /**
- * Engine options design_qr draws as they are (repairs never change them):
- * per-eye colours (#RRGGBB, like the rest of design_qr), dot size, auto
- * error correction, the circle shape and the logo's layout.
+ * Engine options design_qr draws as they are: per-eye colours (#RRGGBB,
+ * like the rest of design_qr), dot size, auto error correction, the circle
+ * shape, the logo's layout and the looks around the shapes. Repairs never
+ * change them, except that a repair of the eyes clears the per-eye shapes
+ * (eyeShapes) it replaces (repair.ts).
  */
 const engineInputFields = {
   eyeColors: z
@@ -524,10 +526,12 @@ export async function designQr(
       ...engineOptionsOf(input.style),
     };
     // Per-eye shapes travel beside the loop: a repair of the eyes clears
-    // the weak ones (repair.ts), so the result keeps only those that scan
+    // the weak ones (repair.ts), so the result keeps only those that scan.
+    // Always the loop's shapes, none included: a default here would put the
+    // cleared ones back
     const withFrame = (
       style: ThemeStyles,
-      eyeShapes: EyeShapes | undefined = engine.eyeShapes,
+      eyeShapes: EyeShapes | undefined,
     ): ThemeStyles => {
       const { eyeShapes: _eyes, ...rest } = engine;
       return {
@@ -724,7 +728,7 @@ export function designOptions() {
       })),
       margin: { min: 0, max: MARGIN_MAX, ideal: 4 },
       engineOptions:
-        "eyeColors { topLeft, topRight, bottomLeft: { outer, inner } } (#RRGGBB), moduleScale 0.5-1 (dot size), autoLevel, shape (square or circle), logoOptions { size 0.1-0.3, padding 0-2 modules, x and y 0-1, shape square|rounded|circle (crop), plate (color) }, eyeShapes { topLeft, topRight, bottomLeft: { outer (an eye frame), inner (an eye center) } }, eyeGradient (corner or code: the eyes continue the dots' gradient), bgRadius 0-0.5 (rounded background corners; needs a margin), backdrop (a color outside the rounded background), halo { color, width 0.1-0.5 modules } (a light rim around the dark shapes), shadow { color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 modules }. Drawn and scored as given; repairs never change them.",
+        "eyeColors { topLeft, topRight, bottomLeft: { outer, inner } } (#RRGGBB), moduleScale 0.5-1 (dot size), autoLevel, shape (square or circle), logoOptions { size 0.1-0.3, padding 0-2 modules, x and y 0-1, shape square|rounded|circle (crop), plate (color) }, eyeShapes { topLeft, topRight, bottomLeft: { outer (an eye frame), inner (an eye center) } }, eyeGradient (corner or code: the eyes continue the dots' gradient), bgRadius 0-0.5 (rounded background corners; needs a margin), backdrop (a color outside the rounded background), halo { color, width 0.1-0.5 modules } (a light rim around the dark shapes, drawn opaque, only on an opaque bgColor in a color at least as light as #d1d5db and no lighter than the background), shadow { color, opacity 0.1-0.4, dx and dy -0.3 to 0.3 modules }. Drawn and scored as given; repairs never change them, except that a repair of the eyes clears the eyeShapes it replaces (qrdxStyle in the result holds what was drawn).",
       logos: {
         icons: LOGO_ICON_IDS,
         brands: brandLogoOptions(),

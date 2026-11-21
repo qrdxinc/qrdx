@@ -194,11 +194,11 @@ export {
 } from "./logo-cleanup";
 export {
   clampBgRadius,
+  colorAlpha,
   eyeShapeOf,
   getBgRadiusLimit,
   getEyeStyleRisk,
   getHaloRisk,
-  HALO_SEE_THROUGH_BLOCKED_BODIES,
   type HaloRisk,
   isSeeThroughBackground,
   resolveHalo,

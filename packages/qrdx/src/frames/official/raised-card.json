@@ -46,6 +46,24 @@
         "height": 1532,
         "radius": 36,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1360,
+        "width": 1092,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 50,
+        "width": 1052,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -56,9 +74,9 @@
         "text": "Scan me",
         "color": "text",
         "box": {
-          "x": 80,
+          "x": 148,
           "y": 1360,
-          "width": 1092,
+          "width": 956,
           "height": 170
         }
       },
@@ -69,9 +87,9 @@
         "text": "Point your camera here",
         "color": "text",
         "box": {
-          "x": 100,
+          "x": 140,
           "y": 50,
-          "width": 1052,
+          "width": 972,
           "height": 100
         },
         "weight": "regular"

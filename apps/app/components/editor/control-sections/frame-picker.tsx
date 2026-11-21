@@ -25,7 +25,7 @@ import {
   viewerHemisphere,
 } from "@/lib/frames/occasions";
 import { useFrameLibrary } from "@/lib/frames/use-frame-library";
-import { FrameNewTag } from "../../frames/frame-new-tag";
+import { useNewFrames } from "../../frames/use-new-frames";
 import { OptionGrid, OptionTile } from "./option-tiles";
 import { useInsideSidePanel } from "./side-panel";
 
@@ -291,6 +291,7 @@ export function FramePicker({
 }) {
   const t = useTranslations("editor.controlSections.framePicker");
   const inPanel = useInsideSidePanel();
+  const isNewFrame = useNewFrames();
   const [query, setQuery] = React.useState("");
   const [filter, setFilter] = React.useState(ALL);
   // Null until worked out in the browser (below)
@@ -681,21 +682,13 @@ export function FramePicker({
                 {section.items.map((item) => (
                   <OptionTile
                     hint={loadingId === item.id ? "Loading…" : undefined}
+                    isNew={item.entry ? isNewFrame(item.entry.id) : false}
                     key={item.id}
                     name={item.entry?.name ?? nameOf(item.id)}
                     onSelect={() => pick(item.id)}
                     selected={value === item.id}
                   >
-                    <span className="relative grid size-full place-items-center">
-                      {tilePreview(item.id)}
-                      {/* The selected tile's check takes the corner instead */}
-                      {item.entry && value !== item.id && (
-                        <FrameNewTag
-                          className="absolute top-0 right-0"
-                          id={item.entry.id}
-                        />
-                      )}
-                    </span>
+                    {tilePreview(item.id)}
                   </OptionTile>
                 ))}
               </OptionGrid>

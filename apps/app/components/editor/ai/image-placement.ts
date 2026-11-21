@@ -5,10 +5,11 @@
 // editor's own scan score; this module builds the style, repairs it toward
 // Great like design_qr does, and says plainly what still fails.
 import {
-  getStylePairRisk,
+  getEyeStyleRisk,
   type ImageToneMap,
   type ScanCheck,
   type ScanGrade,
+  weakestEyePattern,
 } from "qrdx";
 import {
   type ColorConfig,
@@ -32,6 +33,7 @@ import {
   isGreat,
   MAX_REPAIRS,
   type ScoreFn,
+  withoutEyeOverrides,
 } from "@/lib/qr-design/repair";
 import type { ThemeStyles } from "@/types/theme";
 
@@ -276,20 +278,32 @@ export function repairPlacement(
     );
     next.margin = 4;
   }
-  if (ids.has("eye-shape") && next.cornerEyePattern !== "rounded") {
-    changes.push(
-      "Changed the eyes to rounded: strict scanners miss the other shape",
-    );
-    next.cornerEyePattern = "rounded";
+  // Every eye's own shapes count (eyeShapes): a single circle eye fails the
+  // eye-shape check as three would, so the repair reaches it too
+  if (ids.has("eye-shape")) {
+    const weak = weakestEyePattern(next);
+    const eyeShapes = withoutEyeOverrides(next.eyeShapes, "outer");
+    if (
+      next.cornerEyePattern !== "rounded" ||
+      JSON.stringify(eyeShapes ?? null) !==
+        JSON.stringify(next.eyeShapes ?? null)
+    ) {
+      changes.push(
+        `Changed the eyes from ${weak} to rounded: strict scanners miss them`,
+      );
+      next.cornerEyePattern = "rounded";
+      next.eyeShapes = eyeShapes;
+    }
   }
   if (ids.has("style-pair")) {
-    const risk = getStylePairRisk(next);
+    const risk = getEyeStyleRisk(next);
     if (risk?.kind === "body-eye") {
       changes.push(`Changed the dots to rounded: ${risk.message}`);
       next.bodyPattern = "rounded";
     } else if (risk) {
       changes.push(`Changed the eye centers to rounded: ${risk.message}`);
       next.cornerEyeDotPattern = "rounded";
+      next.eyeShapes = withoutEyeOverrides(next.eyeShapes, "inner");
     }
   }
   if (ids.has("logo")) {

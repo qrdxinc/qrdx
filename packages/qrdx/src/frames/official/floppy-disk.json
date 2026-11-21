@@ -12,7 +12,7 @@
     "version": 1,
     "artboard": {
       "width": 1600,
-      "height": 1620
+      "height": 1720
     },
     "qr": {
       "x": 350,
@@ -29,7 +29,7 @@
     "shapes": [
       {
         "type": "path",
-        "d": "M0 0L1480 0L1600 120L1600 1620L0 1620Z",
+        "d": "M0 0L1480 0L1600 120L1600 1720L0 1720Z",
         "fill": "frame"
       },
       {
@@ -61,7 +61,7 @@
         "x": 200,
         "y": 360,
         "width": 1200,
-        "height": 1200,
+        "height": 1300,
         "radius": 20,
         "fill": {
           "mix": ["frame", "background"],
@@ -79,7 +79,7 @@
       {
         "type": "circle",
         "cx": 90,
-        "cy": 1530,
+        "cy": 1630,
         "r": 30,
         "fill": {
           "mix": ["frame", "background"],
@@ -96,7 +96,7 @@
         "color": "frame",
         "box": {
           "x": 260,
-          "y": 1454,
+          "y": 1474,
           "width": 1080,
           "height": 150
         }

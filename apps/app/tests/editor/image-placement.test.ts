@@ -192,6 +192,41 @@ describe("repairing toward Great", () => {
     expect(changes).toHaveLength(2);
   });
 
+  // Review finding 4: the repairs judge every eye's own shapes
+  it("clears a circle frame on one eye when the code's eyes are already rounded", () => {
+    const { style, changes } = repairPlacement(
+      {
+        ...BASE,
+        cornerEyePattern: "rounded",
+        eyeShapes: { bottomLeft: { outer: "circle", inner: "dots" } },
+      },
+      "background",
+      [{ id: "eye-shape", message: "Circle eyes" }],
+    );
+    expect(style.cornerEyePattern).toBe("rounded");
+    expect(style.eyeShapes).toEqual({ bottomLeft: { inner: "dots" } });
+    expect(changes).toEqual([
+      "Changed the eyes from circle to rounded: strict scanners miss them",
+    ]);
+  });
+
+  it("repairs a pair only one eye makes", () => {
+    const { style, changes } = repairPlacement(
+      {
+        ...BASE,
+        bodyPattern: "circle",
+        cornerEyePattern: "rounded",
+        cornerEyeDotPattern: "rounded",
+        eyeShapes: { topRight: { outer: "square", inner: "diamond" } },
+      },
+      "background",
+      [{ id: "style-pair", message: "diamond centres in square eyes" }],
+    );
+    expect(style.cornerEyeDotPattern).toBe("rounded");
+    expect(style.eyeShapes).toEqual({ topRight: { outer: "square" } });
+    expect(changes[0]).toContain("Changed the eye centers to rounded");
+  });
+
   it("shrinks a logo that still hides too much at H", () => {
     const { style, changes } = repairPlacement(
       { ...BASE, level: "H", showLogo: true, customLogo: LOGO },

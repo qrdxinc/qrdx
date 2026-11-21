@@ -4,12 +4,7 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Slider } from "@repo/design-system/components/ui/slider";
 import { Switch } from "@repo/design-system/components/ui/switch";
 import { useTranslations } from "next-intl";
-import {
-  getBgRadiusLimit,
-  getSolidColor,
-  resolveErrorLevel,
-  resolveQRCodeProps,
-} from "qrdx";
+import { getBgRadiusLimit, getSolidColor, resolveQRCodeProps } from "qrdx";
 import { BG_RADIUS_MAX } from "qrdx/types";
 import * as React from "react";
 import ControlSection from "@/components/editor/control-section";
@@ -37,11 +32,11 @@ interface CornersSectionProps {
  * range grows with the padding and is 0 without any, or for a shaped code.
  */
 export function bgRadiusLimitFor(style: QRStyle, value: string): number {
-  // The level the code is really drawn at: autoLevel and the logo can raise it
+  // The level the code is really drawn at: the engine holds the logo to its
+  // budget, then autoLevel and the logo can raise the level (in that order)
   const props = resolveQRCodeProps(editorCodeProps(style, value));
   return getBgRadiusLimit({
-    value,
-    level: resolveErrorLevel(props),
+    ...props,
     margin: style.margin,
     shape: style.silhouette ?? style.shape,
   });

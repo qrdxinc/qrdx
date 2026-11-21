@@ -44,6 +44,15 @@
         "height": 180,
         "radius": 40,
         "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1430,
+        "width": 1180,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -68,9 +77,9 @@
         "text": "Point your camera here",
         "color": "text",
         "box": {
-          "x": 80,
+          "x": 120,
           "y": 1430,
-          "width": 1180,
+          "width": 1100,
           "height": 100
         },
         "weight": "regular"

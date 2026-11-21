@@ -6,8 +6,7 @@ export function HaloCode() {
       value="https://example.com"
       size={256}
       margin={4}
-      bgColor="transparent"
-      halo={{ color: "#ffffff", width: 0.3 }}
+      halo={{ color: "#fde68a", width: 0.3 }}
     />
   );
 }

@@ -38,6 +38,7 @@ import {
   imageFormat,
   imagePlacement,
   length,
+  lineStyleOf,
   type PaintState,
   rasterizeImage,
   SvgPainter,
@@ -432,9 +433,16 @@ class PdfPainter extends SvgPainter {
       if (fill) {
         this.setColor("fill", fill);
       }
+      // Round joins and caps where the SVG asks for them (the halo's rim),
+      // set back to the defaults after this shape
+      const line = stroke ? lineStyleOf(state) : { join: 0, cap: 0 };
       if (stroke) {
         this.setColor("draw", stroke);
         this.pdf.setLineWidth(state.strokeWidth * matrixScale(state.matrix));
+        if (line.join || line.cap) {
+          this.pdf.setLineJoin(line.join);
+          this.pdf.setLineCap(line.cap);
+        }
       }
       this.tracePath(segments, state.matrix);
       if (fill && stroke) {
@@ -451,6 +459,10 @@ class PdfPainter extends SvgPainter {
         }
       } else {
         this.pdf.stroke();
+      }
+      if (line.join || line.cap) {
+        this.pdf.setLineJoin(0);
+        this.pdf.setLineCap(0);
       }
     });
   }

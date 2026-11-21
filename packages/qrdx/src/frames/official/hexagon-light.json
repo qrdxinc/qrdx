@@ -16,7 +16,7 @@
     },
     "qr": {
       "x": 416,
-      "y": 472,
+      "y": 500,
       "size": 900,
       "padding": 72,
       "radius": 21.6
@@ -63,7 +63,7 @@
         "color": "frame",
         "box": {
           "x": 416,
-          "y": 1480,
+          "y": 1508,
           "width": 900,
           "height": 170
         }
@@ -72,13 +72,13 @@
         "type": "text",
         "id": "note",
         "slot": "secondary",
-        "text": "Open with your camera",
+        "text": "No app needed",
         "color": "frame",
         "box": {
-          "x": 556,
-          "y": 230,
-          "width": 620,
-          "height": 100
+          "x": 446,
+          "y": 240,
+          "width": 840,
+          "height": 160
         },
         "weight": "regular"
       }

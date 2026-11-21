@@ -78,6 +78,24 @@
         "height": 1590,
         "radius": 16,
         "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 210,
+        "y": 1650,
+        "width": 1080,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 230,
+        "y": 320,
+        "width": 1040,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -86,11 +104,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to reorder",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 210,
+          "x": 278,
           "y": 1650,
-          "width": 1080,
+          "width": 944,
           "height": 170
         }
       },
@@ -99,11 +117,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Thanks for your order",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 230,
+          "x": 270,
           "y": 320,
-          "width": 1040,
+          "width": 960,
           "height": 100
         },
         "weight": "regular",
