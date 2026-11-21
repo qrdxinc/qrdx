@@ -79,6 +79,24 @@
         "type": "path",
         "d": "M1170 101C1177.5 101 1179 113 1179 125L1179 152L1236 182L1236 194L1179 179L1179 212L1197 227L1197 236L1170 227L1143 236L1143 227L1161 212L1161 179L1104 194L1104 182L1161 152L1161 125C1161 113 1162.5 101 1170 101Z",
         "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 1480,
+        "width": 1160,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 90,
+        "width": 920,
+        "height": 110,
+        "radius": 55,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -87,11 +105,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to enter",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 120,
+          "x": 188,
           "y": 1480,
-          "width": 1160,
+          "width": 1024,
           "height": 170
         }
       },
@@ -100,11 +118,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Welcome aboard",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 120,
+          "x": 164,
           "y": 90,
-          "width": 920,
+          "width": 832,
           "height": 110
         },
         "align": "start"

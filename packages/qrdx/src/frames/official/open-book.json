@@ -70,6 +70,24 @@
       },
       {
         "type": "rect",
+        "x": 120,
+        "y": 510,
+        "width": 788,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 740,
+        "width": 788,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
         "x": 180,
         "y": 250,
         "width": 668,
@@ -111,12 +129,12 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to read",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 120,
-          "y": 490,
-          "width": 788,
-          "height": 210
+          "x": 188,
+          "y": 510,
+          "width": 652,
+          "height": 170
         }
       },
       {
@@ -124,12 +142,12 @@
         "id": "note",
         "slot": "secondary",
         "text": "Chapter one is free",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 120,
+          "x": 160,
           "y": 740,
-          "width": 788,
-          "height": 110
+          "width": 708,
+          "height": 100
         },
         "weight": "regular"
       }

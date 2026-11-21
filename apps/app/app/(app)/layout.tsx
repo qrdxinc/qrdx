@@ -25,7 +25,8 @@ const SHARED_CLIENT_MESSAGES = [
   "editor.hooks.useCommunityThemes",
   // components/limits: plan limit notices.
   "limits",
-  // components/new-tag.tsx: the "New" pill on recently added frames.
+  // Words shared across pages: breadcrumbs, the "New" pill
+  // (components/new-tag.tsx), the design and create calls to action.
   "common",
 ];
 

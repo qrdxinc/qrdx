@@ -183,6 +183,24 @@
           "mix": ["frame", "background"],
           "amount": 0.4
         }
+      },
+      {
+        "type": "rect",
+        "x": 1104,
+        "y": 465,
+        "width": 736,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1104,
+        "y": 690,
+        "width": 736,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -191,12 +209,12 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to play",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 1104,
-          "y": 450,
-          "width": 736,
-          "height": 200
+          "x": 1172,
+          "y": 465,
+          "width": 600,
+          "height": 170
         }
       },
       {
@@ -204,12 +222,12 @@
         "id": "note",
         "slot": "secondary",
         "text": "Rewind with your camera",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 1104,
+          "x": 1144,
           "y": 690,
-          "width": 736,
-          "height": 110
+          "width": 656,
+          "height": 100
         },
         "weight": "regular"
       }

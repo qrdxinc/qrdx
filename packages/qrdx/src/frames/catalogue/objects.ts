@@ -7,16 +7,12 @@ import bookmarkLight from "../official/bookmark-light.json";
 import bookmarkStrip from "../official/bookmark-strip.json";
 import bottleLabel from "../official/bottle-label.json";
 import bottleLight from "../official/bottle-light.json";
-import cardReader from "../official/card-reader.json";
 import clapperboardLight from "../official/clapperboard-light.json";
 import clapperboardScene from "../official/clapperboard-scene.json";
 import deliveryBoxLight from "../official/delivery-box-light.json";
 import deliveryBoxTrack from "../official/delivery-box-track.json";
-import deliveryScooterOrder from "../official/delivery-scooter-order.json";
 import galleryFrame from "../official/gallery-frame.json";
 import globeStand from "../official/globe-stand.json";
-import handCard from "../official/hand-card.json";
-import handCardLight from "../official/hand-card-light.json";
 import laptopScreen from "../official/laptop-screen.json";
 import mapPin from "../official/map-pin.json";
 import mapPinLight from "../official/map-pin-light.json";
@@ -30,7 +26,6 @@ import rollUpBanner from "../official/roll-up-banner.json";
 import rollUpBannerLight from "../official/roll-up-banner-light.json";
 import roundTag from "../official/round-tag.json";
 import roundTagLight from "../official/round-tag-light.json";
-import smartwatchFace from "../official/smartwatch-face.json";
 import spiralNotebook from "../official/spiral-notebook.json";
 import tabletScreen from "../official/tablet-screen.json";
 import videoPlayer from "../official/video-player.json";
@@ -44,9 +39,6 @@ const frames = [
   mugLight,
   deliveryBoxTrack,
   deliveryBoxLight,
-  deliveryScooterOrder,
-  handCard,
-  handCardLight,
   galleryFrame,
   billboardCampaign,
   billboardLight,
@@ -59,11 +51,9 @@ const frames = [
   bookmarkLight,
   clapperboardScene,
   clapperboardLight,
-  smartwatchFace,
   spiralNotebook,
   rollUpBanner,
   rollUpBannerLight,
-  cardReader,
   globeStand,
   videoPlayer,
   musicPlayer,

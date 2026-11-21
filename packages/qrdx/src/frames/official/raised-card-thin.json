@@ -58,6 +58,24 @@
           "mix": ["frame", "background"],
           "amount": 0.92
         }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 1360,
+        "width": 1120,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 50,
+        "width": 1080,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -66,11 +84,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to open",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 80,
+          "x": 148,
           "y": 1360,
-          "width": 1120,
+          "width": 984,
           "height": 170
         }
       },
@@ -79,11 +97,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "No app needed",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 100,
+          "x": 140,
           "y": 50,
-          "width": 1080,
+          "width": 1000,
           "height": 100
         },
         "weight": "regular"
