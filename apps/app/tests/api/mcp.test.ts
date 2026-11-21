@@ -318,7 +318,10 @@ describe("MCP over Streamable HTTP", () => {
       },
     });
     expect(message?.result.isError).toBeFalsy();
-    const content = message?.result.content as { type: string; text?: string }[];
+    const content = message?.result.content as {
+      type: string;
+      text?: string;
+    }[];
     const design = JSON.parse(content[1]?.text as string);
     expect(design.grade).toBe("great");
     expect(design.fellBack).toBeFalsy();
