@@ -526,10 +526,12 @@ export async function designQr(
       ...engineOptionsOf(input.style),
     };
     // Per-eye shapes travel beside the loop: a repair of the eyes clears
-    // the weak ones (repair.ts), so the result keeps only those that scan
+    // the weak ones (repair.ts), so the result keeps only those that scan.
+    // Always the loop's shapes, none included: a default here would put the
+    // cleared ones back
     const withFrame = (
       style: ThemeStyles,
-      eyeShapes: EyeShapes | undefined = engine.eyeShapes,
+      eyeShapes: EyeShapes | undefined,
     ): ThemeStyles => {
       const { eyeShapes: _eyes, ...rest } = engine;
       return {
