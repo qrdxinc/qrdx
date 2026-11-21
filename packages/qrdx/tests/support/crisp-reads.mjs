@@ -4,14 +4,17 @@
 // codes in a short-lived process instead of growing one test worker by
 // gigabytes on a CI runner.
 //
-// stdin: { value, fontDir, jobs: [{ svg, width, margin }] }: the artwork's
+// Input (a JSON file named by the first argument, support/child-reads.ts):
+// { value, fontDir, jobs: [{ svg, width, margin }] }: the artwork's
 // width and the white margin around it in pixels; stdout: one boolean per
 // job (jsQR read `value`).
 import { readFileSync } from "node:fs";
 import { Resvg } from "@resvg/resvg-js";
 import jsQR from "jsqr";
 
-const { value, fontDir, jobs } = JSON.parse(readFileSync(0, "utf8"));
+const { value, fontDir, jobs } = JSON.parse(
+  readFileSync(process.argv[2], "utf8")
+);
 
 /** One font for every label, and no system fonts (see crisp-widths.ts). */
 const font = {

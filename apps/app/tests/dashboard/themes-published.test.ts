@@ -1,7 +1,7 @@
 // The dashboard's "Published" badge on a saved theme. Since phase 1 of the
 // community, themes are published as community_item rows (type "theme",
-// source "qr_preset" + the theme id) and the gallery reads those once the
-// backfill has run; community_theme is only read before that
+// source "qr_preset" + the theme id) and the gallery reads those once
+// community_item holds the themes; community_theme is only read before that
 // (lib/community/store.ts). The badge must read the same table the gallery
 // does.
 import { ownWorkspaceId } from "@repo/auth/own-workspace-id";
@@ -91,7 +91,7 @@ describe("the Published badge", () => {
     expect(await publishedNames()).toEqual([]);
   });
 
-  it("reads community_theme before the backfill", async () => {
+  it("reads community_theme before community_item holds the themes", async () => {
     state.community = { tables: true, themes: "legacy" };
     fakeDb.seed("communityTheme", [{ id: "ct_b", themeId: "b", userId: ME }]);
     expect(await publishedNames()).toEqual(["b"]);

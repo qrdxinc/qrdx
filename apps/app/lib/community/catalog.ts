@@ -1,6 +1,6 @@
 // QRdx's official frames straight from the engine (qrdx OFFICIAL_FRAMES):
-// what the community shows for @qrdx until the seed puts them in the
-// database (with the same slugs, so their links never change), and the
+// what the community shows for @qrdx when the database doesn't hold them
+// (stored ones have the same slugs, so their links never change), and the
 // full catalogue for server code. It holds every spec, so the browser
 // loads the library through lib/frames/library.ts instead.
 import { frameSpecHash, OFFICIAL_FRAMES, type OfficialFrame } from "qrdx";

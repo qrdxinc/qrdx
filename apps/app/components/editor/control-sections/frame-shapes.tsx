@@ -149,6 +149,8 @@ export interface ShapedCodes {
   silhouette: QRSilhouette | null;
   /** Picks a shaped code (your own shape asks for an upload the first time) */
   pick: (id: FrameShapeId) => void;
+  /** Back to a square code, ending an upload in progress (keeps your shape for later) */
+  square: () => void;
   /** The upload, replace and remove controls, any problem and the help line */
   panel: React.ReactNode;
 }
@@ -239,6 +241,13 @@ export function useShapedCodes(): ShapedCodes {
     }
   };
 
+  const square = () => {
+    setProblem(null);
+    setPicking(false);
+    soundEvent("tick");
+    setStyle(withoutShape(style));
+  };
+
   const remove = () => {
     setProblem(null);
     setPicking(false);
@@ -318,6 +327,7 @@ export function useShapedCodes(): ShapedCodes {
     names,
     silhouette: silhouette ?? lastSilhouette,
     pick,
+    square,
     panel,
   };
 }

@@ -1,9 +1,6 @@
 // Public creator handles (/community/@handle). Opt-in: a person claims one
 // in Settings; nothing is derived from the email address. The official
-// QRdx profile holds "qrdx" (seeded), and no one else can take it or a
-// lookalike. packages/database/scripts/backfill-community.mjs and
-// seed-community.mjs keep their own copy of RESERVED_HANDLES; a test keeps
-// them equal.
+// QRdx profile holds "qrdx", and no one else can take it or a lookalike.
 import {
   COMMUNITY_CHECK_MESSAGES,
   type CommunityCheckMessages,

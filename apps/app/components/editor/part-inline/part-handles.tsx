@@ -17,8 +17,9 @@ import {
 // Handles the preview shows while a part is edited: drag the logo to move
 // it, its corner to resize it (arrow keys too), and the code's edge to
 // change the quiet zone. They belong to the open edit (data-part-inline), so
-// using them never ends it, and every change is a draft like the toolbar's.
-// Pointer events, so touch works the same as a mouse.
+// using them never ends it. A drag is one undo step, as every pointer
+// gesture is (lib/editor-gestures.ts). Pointer events, so touch works the
+// same as a mouse.
 
 const handle =
   "bg-background border-foreground/60 pointer-events-auto absolute border shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-current/70 touch-none";
@@ -93,7 +94,7 @@ export function LogoHandles({
   color: string;
   onOptions: (change: Partial<LogoOptions>) => void;
   onHide: () => void;
-  /** Escape: the edit is put back */
+  /** Escape: the edit closes, the content as it was */
   onCancel: () => void;
 }) {
   const t = useTranslations("editor.partInline.handles");
@@ -212,7 +213,7 @@ export function PaddingHandle({
   margin: number;
   max: number;
   onMargin: (margin: number) => void;
-  /** Escape: the edit is put back */
+  /** Escape: the edit closes, the content as it was */
   onCancel: () => void;
 }) {
   const t = useTranslations("editor.partInline.handles");

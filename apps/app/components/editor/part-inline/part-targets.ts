@@ -211,3 +211,30 @@ export function partAt(
   }
   return found?.part ?? null;
 }
+
+/** A part's name label: about how tall it is, and the gap to the outline. */
+export const PART_LABEL_HEIGHT = 20;
+const LABEL_GAP = 4;
+const LABEL_EDGE = 4;
+
+/**
+ * Where a part's name goes while its button is pointed at or focused: just
+ * above its outline, lined up with its left edge; inside the outline's top
+ * when there's no room above (a frame filling the preview). Always in the
+ * top half of the part, so never over the scan score badge along the
+ * preview's bottom edge, and never over the toolbar's menus (it hides
+ * while its part is edited).
+ */
+export function partLabelPlace(
+  box: Box,
+  pad: number,
+  bounds: { width: number; height: number },
+): { left: number; top: number } {
+  const above = box.top - pad - LABEL_GAP - PART_LABEL_HEIGHT;
+  const top = above >= LABEL_EDGE ? above : box.top + LABEL_GAP;
+  const left = Math.min(
+    Math.max(LABEL_EDGE, box.left - pad),
+    Math.max(LABEL_EDGE, bounds.width - LABEL_EDGE - 96),
+  );
+  return { left, top: Math.max(LABEL_EDGE, top) };
+}

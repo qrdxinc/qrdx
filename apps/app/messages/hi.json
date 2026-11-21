@@ -4770,8 +4770,6 @@
         }
       },
       "items": {
-        "outerShape": "बाहरी शेप",
-        "centerShape": "बीच की शेप",
         "eyeColor": "आइज़ का रंग",
         "centerColor": "बीच का रंग",
         "pattern": "पैटर्न",
@@ -4782,15 +4780,12 @@
         "logoSize": "लोगो का साइज़",
         "hideLogo": "लोगो छिपाएँ",
         "backgroundColor": "बैकग्राउंड का रंग",
-        "padding": "पैडिंग",
         "frameStyle": "फ़्रेम स्टाइल",
-        "frameColor": "फ़्रेम का रंग",
         "whichEyes": "कौन सी आँखें",
         "allEyes": "सभी आँखें",
         "thisEye": "यह आँख",
         "thisEyesColor": "इस आँख का रंग",
         "thisEyesCenterColor": "इस आँख के बीच का रंग",
-        "shapesChangeAllThreeEyes": "आकार बदलने से तीनों आँखें बदलती हैं।",
         "sameAsTheOthers": "बाकी जैसा ही",
         "eyesWithTheirOwnColor": "जिन आँखों का अपना रंग है, वे उसे रखती हैं। किसी एक को बदलने के लिए \"यह आँख\" चुनें।",
         "logoShapeAndPlate": "लोगो का आकार और प्लेट",
@@ -4817,11 +4812,8 @@
       "codeShape": {
         "codeShape": "कोड का आकार",
         "names": {
-          "square": "चौकोर",
-          "circle": "गोल",
-          "heart": "दिल"
-        },
-        "aCircleOrHeartTakes": "गोल या दिल का आकार फ़्रेम की जगह लेता है।"
+          "square": "चौकोर"
+        }
       },
       "errorCorrection": {
         "theLogoRaisesItToLevel": "लोगो की वजह से अभी यह लेवल {level} पर है।"

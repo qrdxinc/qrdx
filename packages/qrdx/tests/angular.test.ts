@@ -39,6 +39,7 @@ import {
 import { builtinEnvironments } from "vitest/runtime";
 import type * as AngularEntry from "../src/angular";
 import { QRCode as ReactQRCode } from "../src/index";
+import { lookToggles } from "./support/look-steps";
 import { type ParityProps, parityCases } from "./support/parity-cases";
 import { decodeQR, rasterizeSvg } from "./support/raster";
 
@@ -194,6 +195,34 @@ describe.skipIf(!existsSync(built))("qrdx/angular", () => {
       }
     );
   });
+
+  // Each look turned on and off in a mounted component (support/look-steps.ts)
+  test.each(lookToggles().map((toggle) => [toggle.name, toggle] as const))(
+    "follows a look turned on and off: %s",
+    (_name, { before, after }) => {
+      configure();
+      const fixture = render(before);
+      const host: HTMLElement = fixture.nativeElement;
+      const drawn = (props: Record<string, unknown>) =>
+        asParsed(
+          ng.toSVGString(
+            ng.resolveQRCodeProps(inputProps(props) as ParityProps)
+          )
+        );
+      const apply = (props: Record<string, unknown>) => {
+        for (const key of Object.keys(inputProps(after))) {
+          fixture.componentRef.setInput(inputFor(key), props[key]);
+        }
+        fixture.detectChanges();
+      };
+      expect(host.innerHTML).toBe(drawn(before));
+      expect(drawn(after)).not.toBe(drawn(before));
+      apply(after);
+      expect(host.innerHTML).toBe(drawn(after));
+      apply(before);
+      expect(host.innerHTML).toBe(drawn(before));
+    }
+  );
 
   test("draws a code that decodes", () => {
     configure();

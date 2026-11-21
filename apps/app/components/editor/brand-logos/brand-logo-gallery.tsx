@@ -203,7 +203,9 @@ export function BrandLogoGallery({
 
   return (
     <ResponsiveDialog onOpenChange={onOpenChange} open={open}>
-      <ResponsiveDialogContent className="max-h-[92dvh] gap-0 overflow-hidden p-0 sm:max-w-3xl dark:!border-border">
+      {/* Above the editor's side panels and the preview's part sheet
+          (z-[120]), like the paint picker */}
+      <ResponsiveDialogContent className="z-[130] max-h-[92dvh] gap-0 overflow-hidden p-0 sm:max-w-3xl dark:!border-border">
         <div className="flex h-[82dvh] flex-col sm:h-[min(640px,85dvh)]">
           <div className="flex items-start gap-3 px-4 pt-1 pb-3 sm:px-5 sm:pt-4">
             <div className="min-w-0 flex-1">

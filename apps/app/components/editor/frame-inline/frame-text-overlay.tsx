@@ -33,8 +33,10 @@ import {
   type Box,
   measureArtwork,
   measurePreviewLabels,
+  PREVIEW_CODE_SELECTOR,
   type PreviewLabel,
   previewFrameSvg,
+  previewRects,
   setLabelHidden,
 } from "./preview-labels";
 
@@ -46,8 +48,7 @@ import {
 // click outside records the whole edit as one undo step, Escape puts the
 // frame back as it was.
 
-/** The code box in the preview (QRPreviewPanel marks it). */
-export const PREVIEW_CODE_SELECTOR = "[data-preview-code]";
+export { PREVIEW_CODE_SELECTOR } from "./preview-labels";
 
 // SVG attributes that move or restyle a label (not the style we set on it)
 const WATCHED_ATTRIBUTES = [
@@ -362,6 +363,7 @@ export function FrameTextOverlay({
       {session && tweaks && !session.sheet && root && (
         <InlineFrameEditor
           artwork={artwork}
+          avoidCode={() => previewRects(rootRef.current)}
           bounds={{ width: root.clientWidth, height: root.clientHeight }}
           label={session.label}
           onCancel={cancel}

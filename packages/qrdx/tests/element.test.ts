@@ -10,6 +10,7 @@ import { afterEach, describe, expect, it, it as test, vi } from "vitest";
 import { getOfficialFrame, h, toSVGString } from "../src/core";
 import * as source from "../src/element";
 import type { QRSVGOptions } from "../types";
+import { lookToggles } from "./support/look-steps";
 import { decodeQR, rasterizeSvg } from "./support/raster";
 
 type ElementModule = typeof source;
@@ -448,6 +449,59 @@ describe("attributes and properties", () => {
     // React 19 and Vue set a string prop as a property
     element.props = '{"fgColor":"#0f766e"}';
     expect(element.props).toEqual({ fgColor: "#0f766e" });
+  });
+});
+
+describe("the looks", () => {
+  const tag = defineFresh(source);
+  const shown = (props: QRSVGOptions) => asParsed(toSVGString(drawn(props)));
+
+  // Each look set and cleared on a connected element (support/look-steps.ts)
+  it.each(lookToggles().map((toggle) => [toggle.name, toggle] as const))(
+    "redraw when one is set and cleared: %s",
+    async (_name, { before, after }) => {
+      const element = create(tag);
+      element.props = before as QRSVGOptions;
+      document.body.append(element);
+      expect(shadowSVG(element)).toBe(shown(before as QRSVGOptions));
+      expect(shown(after as QRSVGOptions)).not.toBe(
+        shown(before as QRSVGOptions)
+      );
+      element.props = after as QRSVGOptions;
+      await flush();
+      expect(shadowSVG(element)).toBe(shown(after as QRSVGOptions));
+      element.props = before as QRSVGOptions;
+      await flush();
+      expect(shadowSVG(element)).toBe(shown(before as QRSVGOptions));
+    }
+  );
+
+  it("redraw when set as properties and attributes", async () => {
+    const element = create(tag, { value: VALUE });
+    document.body.append(element);
+    const looks = {
+      shadow: { dx: 0.2, dy: 0.2, opacity: 0.35, color: "#000000" },
+      halo: { color: "#e5e7eb", width: 0.25 },
+      eyeShapes: { topRight: { outer: "square", inner: "square" } },
+    } as const;
+    element.shadow = looks.shadow;
+    element.halo = looks.halo;
+    element.eyeShapes = looks.eyeShapes;
+    element.setAttribute("bg-radius", "0.21");
+    element.setAttribute("backdrop", "#1F1B16");
+    element.setAttribute("eye-gradient", "code");
+    element.eyeColor = GRADIENT;
+    await flush();
+    expect(shadowSVG(element)).toBe(
+      shown({
+        value: VALUE,
+        ...looks,
+        bgRadius: 0.21,
+        backdrop: "#1F1B16",
+        eyeGradient: "code",
+        eyeColor: GRADIENT,
+      })
+    );
   });
 });
 

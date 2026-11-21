@@ -157,7 +157,7 @@ export async function removeCommunityThemeAction(
       await db
         .delete(communityTheme)
         .where(eq(communityTheme.id, communityThemeId));
-      // Its copy in community_item (made by the backfill) goes too.
+      // Its copy in community_item, if it was copied there, goes too.
       await markItemsRemoved(
         eq(communityItem.legacyCommunityThemeId, communityThemeId),
       );
