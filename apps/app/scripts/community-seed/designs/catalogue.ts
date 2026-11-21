@@ -200,10 +200,10 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
     },
   },
   {
-    id: "pennant",
-    name: "Pennant",
+    id: "club-colors",
+    name: "Club colors",
     description:
-      "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. Club colors with a flag in each corner, for teams and fan days.",
+      "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
     tags: ["bold", "vibrant", "geometric", "high-contrast"],
     style: {
       ...ink("#FFFFFF", "#991B1B", "#0F1F3D", "#991B1B"),

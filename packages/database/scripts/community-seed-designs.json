@@ -1604,7 +1604,7 @@
       "id": "cassette",
       "slug": "cassette",
       "name": "Cassette",
-      "description": "Horizontal lines in a deep indigo with bevelled eyes and red square centres, on a cool grey white. Eighties tape-deck colors, for DJs and mixtape links.",
+      "description": "Horizontal lines in a deep indigo with bevelled eyes and red square centres, on a cool grey white, on the cassette frame with red reels. For DJs and mixtape links.",
       "tags": ["retro", "cool", "vintage", "bold"],
       "payload": {
         "style": {
@@ -1618,6 +1618,11 @@
           "level": "Q",
           "margin": 4
         }
+      },
+      "frame": {
+        "official": "cassette-tape",
+        "color": "#1E1B4B",
+        "secondaryColor": "#BE123C"
       }
     },
     {
@@ -4399,10 +4404,10 @@
       }
     },
     {
-      "id": "pennant",
-      "slug": "pennant",
-      "name": "Pennant",
-      "description": "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. Club colors with a flag in each corner, for teams and fan days.",
+      "id": "club-colors",
+      "slug": "club-colors",
+      "name": "Club colors",
+      "description": "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
       "tags": ["bold", "vibrant", "geometric", "high-contrast"],
       "payload": {
         "style": {
@@ -4728,7 +4733,7 @@
       "id": "map-pin",
       "slug": "map-pin",
       "name": "Map pin",
-      "description": "Liquid modules in a deep green with rounded eyes and a location pin in the middle, on a mint white, on the see the map frame. For flyers, menus and event tickets.",
+      "description": "Liquid modules in a deep green with rounded eyes and a location pin in the middle, on a mint white, on the map pin frame. For flyers, menus and event tickets.",
       "tags": ["nature", "professional", "cool", "accessible"],
       "payload": {
         "style": {
@@ -4746,7 +4751,7 @@
         "logoIcon": "location"
       },
       "frame": {
-        "official": "see-the-map",
+        "official": "map-pin",
         "color": "#064E3B",
         "textColor": "#ECFDF5"
       }
