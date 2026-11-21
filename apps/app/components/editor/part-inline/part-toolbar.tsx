@@ -20,7 +20,7 @@ import {
   ToolbarButton,
   toolbarClass,
 } from "../frame-inline/inline-toolbar";
-import { placeMenu, type Rect } from "../frame-inline/menu-placement";
+import { type MenuAvoid, placeMenu } from "../frame-inline/menu-placement";
 import type { Box } from "../frame-inline/preview-labels";
 import type { PartItem, PartMenuItem } from "./part-controls";
 import { CloseMenuProvider, ItemMarks, useItemLabel } from "./part-marks";
@@ -44,8 +44,8 @@ export interface PartToolbarProps {
   artwork: Box | null;
   /** The preview container's size, to keep the toolbar inside it */
   bounds: { width: number; height: number };
-  /** Where the code is in the viewport: menus open clear of it */
-  avoidCode?: () => Rect | null;
+  /** Where the code and the artwork are in the viewport: menus open clear of them */
+  avoidCode?: () => MenuAvoid | null;
   onRandom: () => void;
   /** Opens the Design tab at `section` (the last menu's), or the part's own */
   onMoreOptions: (section?: DesignSection) => void;
@@ -72,7 +72,7 @@ function MenuItem({
   open: boolean;
   onOpenChange: (menu: string | null) => void;
   side: "top" | "bottom";
-  avoid?: () => Rect | null;
+  avoid?: () => MenuAvoid | null;
 }) {
   const label = useItemLabel(item);
   return (

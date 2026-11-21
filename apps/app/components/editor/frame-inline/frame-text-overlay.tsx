@@ -35,8 +35,8 @@ import {
   measurePreviewLabels,
   PREVIEW_CODE_SELECTOR,
   type PreviewLabel,
-  previewCodeRect,
   previewFrameSvg,
+  previewRects,
   setLabelHidden,
 } from "./preview-labels";
 
@@ -363,7 +363,7 @@ export function FrameTextOverlay({
       {session && tweaks && !session.sheet && root && (
         <InlineFrameEditor
           artwork={artwork}
-          avoidCode={() => previewCodeRect(rootRef.current)}
+          avoidCode={() => previewRects(rootRef.current)}
           bounds={{ width: root.clientWidth, height: root.clientHeight }}
           label={session.label}
           onCancel={cancel}

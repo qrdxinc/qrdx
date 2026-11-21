@@ -36,8 +36,8 @@ import { insideInlineEditor } from "../frame-inline/inline-toolbar";
 import {
   type Box,
   PREVIEW_CODE_SELECTOR,
-  previewCodeRect,
   previewFrameSvg,
+  previewRects,
 } from "../frame-inline/preview-labels";
 import {
   type ContentSnapshot,
@@ -743,7 +743,7 @@ export function PartOverlay({
                   <PartToolbar
                     anchor={session.anchor}
                     artwork={measured.artwork}
-                    avoidCode={() => previewCodeRect(rootRef.current)}
+                    avoidCode={() => previewRects(rootRef.current)}
                     bounds={bounds}
                     extra={extra}
                     items={items}

@@ -43,7 +43,7 @@ import {
   Swatch,
   toolbarClass,
 } from "./inline-toolbar";
-import { placeMenu, type Rect } from "./menu-placement";
+import { type MenuAvoid, placeMenu } from "./menu-placement";
 import type { Box, PreviewLabel } from "./preview-labels";
 
 type Menu = "size" | "text-color" | "frame-color" | "icon";
@@ -59,8 +59,8 @@ export interface InlineFrameEditorProps {
   bounds: { width: number; height: number };
   /** Where the whole frame is drawn: the menu stays off it when there's room */
   artwork: Box | null;
-  /** Where the code is in the viewport: its menus keep off it */
-  avoidCode?: () => Rect | null;
+  /** Where the code and the artwork are in the viewport: its menus keep off them */
+  avoidCode?: () => MenuAvoid | null;
   onText: (text: string) => void;
   onTweak: (tweak: FrameTweak) => void;
   /** Enter */

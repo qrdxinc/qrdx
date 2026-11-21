@@ -18,9 +18,9 @@ import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import {
   MENU_EDGE,
   MENU_OFFSET,
+  type MenuAvoid,
   type MenuPlacement,
   placeToolbarMenu,
-  type Rect,
 } from "./menu-placement";
 
 // The pill toolbar the preview's inline editors share (frame text here,
@@ -131,7 +131,7 @@ function PlaceMenu({
 }: {
   far: "top" | "bottom";
   triggerRef: RefObject<HTMLButtonElement | null>;
-  avoid?: () => Rect | null;
+  avoid?: () => MenuAvoid | null;
   onPlace: (placement: MenuPlacement) => void;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -146,7 +146,7 @@ function PlaceMenu({
       placeToolbarMenu({
         menu: { width: content.offsetWidth, height: content.scrollHeight },
         trigger,
-        code: avoid?.() ?? null,
+        avoid: avoid?.() ?? null,
         viewport: { width: window.innerWidth, height: window.innerHeight },
         far,
       }),
@@ -158,10 +158,10 @@ function PlaceMenu({
 /**
  * A toolbar button that opens a menu (a popover) beside the toolbar. The
  * menu opens on the toolbar's far side (`side`, away from the code) when it
- * fits there, else beside the code (`avoid` says where it is), from the
- * button's top past the code's edge, else it
- * scrolls on the far side: it never flips over the code while there's
- * another place (menu-placement.ts, placeToolbarMenu).
+ * fits there, else beside the whole artwork (`avoid` says where it and the
+ * code are), on the side with more room, else it scrolls on the far side:
+ * it never flips over the code while there's another place
+ * (menu-placement.ts, placeToolbarMenu).
  */
 export function MenuPopover<M extends string>({
   kind,
@@ -182,8 +182,8 @@ export function MenuPopover<M extends string>({
   onOpenChange: (menu: M | null) => void;
   trigger: ReactNode;
   side: "top" | "bottom";
-  /** Where the code is in the viewport, to keep the menu off it */
-  avoid?: () => Rect | null;
+  /** Where the code and the artwork are in the viewport, to keep the menu off them */
+  avoid?: () => MenuAvoid | null;
   className?: string;
   children: ReactNode;
 }) {
@@ -193,7 +193,6 @@ export function MenuPopover<M extends string>({
   };
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [placement, setPlacement] = useState<MenuPlacement | null>(null);
-  const beside = placement?.side === "left" || placement?.side === "right";
   return (
     <Popover
       onOpenChange={(next) => {
@@ -215,7 +214,7 @@ export function MenuPopover<M extends string>({
         </PopoverTrigger>
       </TooltipWrapper>
       <PopoverContent
-        align={beside ? "start" : "center"}
+        align={placement?.align ?? "center"}
         alignOffset={placement?.alignOffset ?? 0}
         aria-label={label}
         className={cn("z-[120] w-64 space-y-3 overflow-y-auto p-3", className)}

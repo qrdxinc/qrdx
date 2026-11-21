@@ -61,15 +61,32 @@ export const MENU_EDGE = 12;
 /** The least height worth scrolling in; below it a menu may cover the code. */
 export const MENU_MIN_HEIGHT = 120;
 
+/** A pixel short of `px`, so rounding never makes a menu flip. */
+const room = (px: number) => Math.floor(px) - 1;
+
+/** What a toolbar's menu keeps clear of, in the viewport. */
+export interface MenuAvoid {
+  /** The code, its quiet zone included */
+  code: Rect;
+  /** Everything drawn: the code, its frame and plate */
+  artwork: Rect;
+}
+
 export interface MenuPlacement {
   /** Which side of its toolbar button the menu opens on */
   side: "top" | "bottom" | "left" | "right";
   /**
-   * How far from its button: beside the code, left or right, it clears the
-   * code's edge (the button sits over the code)
+   * How it lines up with its button: centered on the far side; beside the
+   * artwork, from the button's top down ("start") or from its bottom up
+   * ("end")
+   */
+  align: "start" | "center" | "end";
+  /**
+   * How far from its button: beside the artwork, left or right, it clears
+   * the artwork's edge (the button sits over it)
    */
   offset: number;
-  /** Beside the code: how far down from the button's top it starts (the code's top, under the toolbar) */
+  /** Starting from the button's top: how far down it starts (under the toolbar) */
   alignOffset: number;
   /** Its height is capped (it scrolls), or null to let it fit itself */
   maxHeight: number | null;
@@ -78,70 +95,84 @@ export interface MenuPlacement {
 /**
  * Where a toolbar menu opens so the code stays in view while it's used:
  * on the toolbar's far side (`far`, away from the code) when the whole menu
- * fits there; else beside the code, right then left, when the gap there
- * takes its width (from the button's top, the
- * viewport's height to grow into); else on the
- * far side again, capped to the room there so it scrolls instead of
+ * fits there; else beside the whole artwork (frame and plate too), on the
+ * side with more room, when that gap takes its width and leaves at least
+ * MENU_MIN_HEIGHT to grow in (down from under the toolbar when the far side
+ * is the top, up from the button's bottom when it's the bottom); else on
+ * the far side again, capped to the room there so it scrolls instead of
  * flipping over the code. Only when the far side has less than
- * MENU_MIN_HEIGHT and the code has no room beside it may the menu cover
- * the code (it then finds its own place). Pure.
+ * MENU_MIN_HEIGHT and the artwork has no room beside it may the menu cover
+ * the code (it then finds its own place). Every room is a pixel short, so
+ * rounding never makes it flip. Pure.
  */
 export function placeToolbarMenu({
   menu,
   trigger,
-  code,
+  avoid,
   viewport,
   far,
 }: {
   /** The menu's whole size, content unscrolled */
   menu: { width: number; height: number };
   trigger: Rect;
-  /** The code to keep clear of, if it's on screen */
-  code: Rect | null;
+  /** The code and the artwork to keep clear of, if they're on screen */
+  avoid: MenuAvoid | null;
   viewport: { width: number; height: number };
   far: "top" | "bottom";
 }): MenuPlacement {
-  // A pixel short of the room, so rounding never makes it flip
-  const farRoom =
-    Math.floor(
-      far === "top"
-        ? trigger.top - MENU_OFFSET - MENU_EDGE
-        : viewport.height - trigger.bottom - MENU_OFFSET - MENU_EDGE,
-    ) - 1;
+  const farRoom = room(
+    far === "top"
+      ? trigger.top - MENU_OFFSET - MENU_EDGE
+      : viewport.height - trigger.bottom - MENU_OFFSET - MENU_EDGE,
+  );
   const onFar = (maxHeight: number | null): MenuPlacement => ({
     side: far,
+    align: "center",
     offset: MENU_OFFSET,
     alignOffset: 0,
     maxHeight,
   });
   if (menu.height <= farRoom) return onFar(farRoom);
-  if (code) {
-    // From the code's top (clear of the toolbar above it) to the viewport's edge
-    const alignOffset =
-      far === "top"
-        ? Math.max(
-            Math.round(code.top - trigger.top),
-            Math.round(trigger.bottom - trigger.top) + MENU_OFFSET,
-          )
-        : 0;
-    const downward =
-      Math.floor(viewport.height - trigger.top - alignOffset - MENU_EDGE) - 1;
-    if (menu.width <= viewport.width - code.right - MENU_OFFSET - MENU_EDGE) {
-      return {
-        side: "right",
-        offset: Math.max(0, code.right - trigger.right) + MENU_OFFSET,
-        alignOffset,
-        maxHeight: downward,
-      };
-    }
-    if (menu.width <= code.left - MENU_OFFSET - MENU_EDGE) {
-      return {
-        side: "left",
-        offset: Math.max(0, trigger.left - code.left) + MENU_OFFSET,
-        alignOffset,
-        maxHeight: downward,
-      };
-    }
-  }
+  const beside = avoid && besideArtwork(menu, trigger, avoid, viewport, far);
+  if (beside) return beside;
   return onFar(farRoom >= MENU_MIN_HEIGHT ? farRoom : null);
+}
+
+/** Beside the artwork on the side with more room, or null when neither takes the menu. */
+function besideArtwork(
+  menu: { width: number; height: number },
+  trigger: Rect,
+  { code, artwork }: MenuAvoid,
+  viewport: { width: number; height: number },
+  far: "top" | "bottom",
+): MenuPlacement | null {
+  // Down from the code's top (clear of the toolbar above it), or up from
+  // the button's bottom when the toolbar is under the code
+  const alignOffset =
+    far === "top"
+      ? Math.max(
+          Math.round(code.top - trigger.top),
+          Math.round(trigger.bottom - trigger.top) + MENU_OFFSET,
+        )
+      : 0;
+  const maxHeight =
+    far === "top"
+      ? room(viewport.height - trigger.top - alignOffset - MENU_EDGE)
+      : room(trigger.bottom - MENU_EDGE);
+  if (maxHeight < MENU_MIN_HEIGHT) return null;
+  // The menu's near edge, past both the artwork's edge and the button
+  const rightStart = Math.max(artwork.right, trigger.right) + MENU_OFFSET;
+  const leftStart = Math.min(artwork.left, trigger.left) - MENU_OFFSET;
+  const rightRoom = room(viewport.width - MENU_EDGE - rightStart);
+  const leftRoom = room(leftStart - MENU_EDGE);
+  const best = rightRoom >= leftRoom ? "right" : "left";
+  if (menu.width > Math.max(rightRoom, leftRoom)) return null;
+  return {
+    side: best,
+    align: far === "top" ? "start" : "end",
+    offset:
+      best === "right" ? rightStart - trigger.right : trigger.left - leftStart,
+    alignOffset,
+    maxHeight,
+  };
 }

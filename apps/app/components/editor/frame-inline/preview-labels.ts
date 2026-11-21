@@ -3,7 +3,7 @@
 // weight and color, and what color is painted behind it. The inline editor
 // lays its input exactly over a label from this. Browser only.
 import { FRAME_LABEL_ATTRIBUTE, QR_PART_ATTRIBUTE } from "qrdx";
-import type { Rect } from "./menu-placement";
+import type { MenuAvoid, Rect } from "./menu-placement";
 
 /** The code box in the preview (QRPreviewPanel marks it). */
 export const PREVIEW_CODE_SELECTOR = "[data-preview-code]";
@@ -82,25 +82,44 @@ export function previewFrameSvg(codeBox: HTMLElement): SVGSVGElement | null {
   return svg instanceof SVGSVGElement ? svg : null;
 }
 
-/** Where the whole artwork (frame included) is drawn, relative to `root`. */
-export function measureArtwork(
-  svg: SVGSVGElement,
-  root: HTMLElement,
-): Box | null {
+/** Where the whole artwork (frame included) is drawn in the viewport. */
+function artworkViewportRect(svg: SVGSVGElement): Rect | null {
+  // Not every DOM measures SVG (jsdom has no getScreenCTM)
+  if (
+    typeof svg.getScreenCTM !== "function" ||
+    typeof DOMPoint === "undefined"
+  ) {
+    return null;
+  }
   const matrix = svg.getScreenCTM();
-  const view = svg.viewBox.baseVal;
+  const view = svg.viewBox?.baseVal;
   if (!(matrix && view && view.width > 0)) return null;
-  const origin = root.getBoundingClientRect();
   const topLeft = new DOMPoint(view.x, view.y).matrixTransform(matrix);
   const bottomRight = new DOMPoint(
     view.x + view.width,
     view.y + view.height,
   ).matrixTransform(matrix);
   return {
-    left: topLeft.x - origin.left,
-    top: topLeft.y - origin.top,
-    width: bottomRight.x - topLeft.x,
-    height: bottomRight.y - topLeft.y,
+    left: topLeft.x,
+    top: topLeft.y,
+    right: bottomRight.x,
+    bottom: bottomRight.y,
+  };
+}
+
+/** Where the whole artwork (frame included) is drawn, relative to `root`. */
+export function measureArtwork(
+  svg: SVGSVGElement,
+  root: HTMLElement,
+): Box | null {
+  const rect = artworkViewportRect(svg);
+  if (!rect) return null;
+  const origin = root.getBoundingClientRect();
+  return {
+    left: rect.left - origin.left,
+    top: rect.top - origin.top,
+    width: rect.right - rect.left,
+    height: rect.bottom - rect.top,
   };
 }
 
@@ -183,14 +202,7 @@ export function setLabelHidden(
   }
 }
 
-/**
- * Where the code (its background, quiet zone included) is drawn in the
- * viewport, in the preview inside `root`: what a toolbar's menus keep off.
- * Null when it isn't drawn.
- */
-export function previewCodeRect(root: ParentNode | null): Rect | null {
-  const svg = root?.querySelector(`${PREVIEW_CODE_SELECTOR} > svg`);
-  if (!svg) return null;
+function codeRectOf(svg: Element): Rect | null {
   const rects = [
     ...svg.querySelectorAll(`[${QR_PART_ATTRIBUTE}="background"]`),
   ].map((element) => element.getBoundingClientRect());
@@ -200,5 +212,31 @@ export function previewCodeRect(root: ParentNode | null): Rect | null {
     top: Math.min(...rects.map((rect) => rect.top)),
     right: Math.max(...rects.map((rect) => rect.right)),
     bottom: Math.max(...rects.map((rect) => rect.bottom)),
+  };
+}
+
+/**
+ * Where the preview inside `root` is drawn in the viewport: the code (its
+ * background, quiet zone included) and the whole artwork around it (frame
+ * and plate). What a toolbar's menus keep off. Null when nothing is drawn.
+ */
+export function previewRects(root: ParentNode | null): MenuAvoid | null {
+  const svg = root?.querySelector(`${PREVIEW_CODE_SELECTOR} > svg`);
+  if (!(svg instanceof SVGSVGElement)) return null;
+  const code = codeRectOf(svg);
+  const drawn = artworkViewportRect(svg);
+  if (!(code && drawn)) {
+    const only = code ?? drawn;
+    return only ? { code: only, artwork: only } : null;
+  }
+  return {
+    code,
+    // The code never sits outside the artwork, but keep it inside anyway
+    artwork: {
+      left: Math.min(code.left, drawn.left),
+      top: Math.min(code.top, drawn.top),
+      right: Math.max(code.right, drawn.right),
+      bottom: Math.max(code.bottom, drawn.bottom),
+    },
   };
 }
