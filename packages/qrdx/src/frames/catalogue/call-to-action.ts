@@ -3,16 +3,26 @@
 import type { OfficialFrame } from "../official";
 import addToCalendar from "../official/add-to-calendar.json";
 import arrowTag from "../official/arrow-tag.json";
+import badgeBottom from "../official/badge-bottom.json";
+import badgeBottomLight from "../official/badge-bottom-light.json";
+import borderMedium from "../official/border-medium.json";
+import borderThick from "../official/border-thick.json";
+import borderThin from "../official/border-thin.json";
 import browserWindow from "../official/browser-window.json";
 import bubbleOutline from "../official/bubble-outline.json";
 import bubbleTailLeft from "../official/bubble-tail-left.json";
 import bubbleTailRight from "../official/bubble-tail-right.json";
 import chatPair from "../official/chat-pair.json";
 import circleBadgeTop from "../official/circle-badge-top.json";
+import circleViewfinder from "../official/circle-viewfinder.json";
 import continuedOnline from "../official/continued-online.json";
+import cornerTab from "../official/corner-tab.json";
+import cornerTabLight from "../official/corner-tab-light.json";
 import curlArrow from "../official/curl-arrow.json";
 import curlArrowTinted from "../official/curl-arrow-tinted.json";
 import doubleBorder from "../official/double-border.json";
+import flagLight from "../official/flag-light.json";
+import flagTeam from "../official/flag-team.json";
 import folderTab from "../official/folder-tab.json";
 import folderTabArrow from "../official/folder-tab-arrow.json";
 import geoCorners from "../official/geo-corners.json";
@@ -22,6 +32,10 @@ import hangTag from "../official/hang-tag.json";
 import hangTagLight from "../official/hang-tag-light.json";
 import hangingTab from "../official/hanging-tab.json";
 import hangingTabTwoLines from "../official/hanging-tab-two-lines.json";
+import heartLight from "../official/heart-light.json";
+import heartScan from "../official/heart-scan.json";
+import hexagonLight from "../official/hexagon-light.json";
+import hexagonScan from "../official/hexagon-scan.json";
 import howItWorks from "../official/how-it-works.json";
 import joinTheWaitlist from "../official/join-the-waitlist.json";
 import landscapeLight from "../official/landscape-light.json";
@@ -29,14 +43,19 @@ import landscapePanel from "../official/landscape-panel.json";
 import largePrint from "../official/large-print.json";
 import learnMoreCard from "../official/learn-more-card.json";
 import neonTube from "../official/neon-tube.json";
+import octagonLight from "../official/octagon-light.json";
+import octagonSign from "../official/octagon-sign.json";
 import phoneButton from "../official/phone-button.json";
 import phoneOutline from "../official/phone-outline.json";
 import phoneScreen from "../official/phone-screen.json";
 import polaroidCaption from "../official/polaroid-caption.json";
 import polaroidPhoto from "../official/polaroid-photo.json";
+import polkaDotBorder from "../official/polka-dot-border.json";
 import postageStamp from "../official/postage-stamp.json";
 import postageStampLight from "../official/postage-stamp-light.json";
 import questionsCloud from "../official/questions-cloud.json";
+import raisedCard from "../official/raised-card.json";
+import raisedCardThin from "../official/raised-card-thin.json";
 import readTheFaq from "../official/read-the-faq.json";
 import readTheStory from "../official/read-the-story.json";
 import readTheTranscript from "../official/read-the-transcript.json";
@@ -44,6 +63,8 @@ import reportAProblem from "../official/report-a-problem.json";
 import ribbonBanner from "../official/ribbon-banner.json";
 import ribbonBannerSolid from "../official/ribbon-banner-solid.json";
 import ribbonSparkle from "../official/ribbon-sparkle.json";
+import ribbonTop from "../official/ribbon-top.json";
+import ribbonTopLight from "../official/ribbon-top-light.json";
 import rosetteBadge from "../official/rosette-badge.json";
 import roundBadge from "../official/round-badge.json";
 import roundBadgeLight from "../official/round-badge-light.json";
@@ -79,6 +100,7 @@ import scanToSubscribe from "../official/scan-to-subscribe.json";
 import scanToUnlock from "../official/scan-to-unlock.json";
 import scanToVote from "../official/scan-to-vote.json";
 import scanToWatch from "../official/scan-to-watch.json";
+import scrollStory from "../official/scroll-story.json";
 import seeMoreStack from "../official/see-more-stack.json";
 import seeTheFullList from "../official/see-the-full-list.json";
 import seeTheMap from "../official/see-the-map.json";
@@ -86,16 +108,23 @@ import sideBar from "../official/side-bar.json";
 import sideBarArrow from "../official/side-bar-arrow.json";
 import sideRules from "../official/side-rules.json";
 import sideRulesBorder from "../official/side-rules-border.json";
+import sketchBorder from "../official/sketch-border.json";
+import sketchCircle from "../official/sketch-circle.json";
 import speechBubbleOver from "../official/speech-bubble-over.json";
 import speechBubbleRound from "../official/speech-bubble-round.json";
+import spinRays from "../official/spin-rays.json";
+import starburst from "../official/starburst.json";
+import starburstLight from "../official/starburst-light.json";
 import startHereArrow from "../official/start-here-arrow.json";
 import stickerGrey from "../official/sticker-grey.json";
 import stickerOutline from "../official/sticker-outline.json";
 import stickerPeel from "../official/sticker-peel.json";
 import stitchedCard from "../official/stitched-card.json";
 import stitchedLight from "../official/stitched-light.json";
+import swirlBorder from "../official/swirl-border.json";
 import takeACloserLook from "../official/take-a-closer-look.json";
 import tapOrScanBand from "../official/tap-or-scan-band.json";
+import textFrame from "../official/text-frame.json";
 import ticketLight from "../official/ticket-light.json";
 import ticketStub from "../official/ticket-stub.json";
 import ticketWide from "../official/ticket-wide.json";
@@ -214,6 +243,35 @@ const frames = [
   readTheTranscript,
   scanForTheChecklist,
   scanForTheLatest,
+  hexagonScan,
+  hexagonLight,
+  octagonSign,
+  octagonLight,
+  heartScan,
+  heartLight,
+  scrollStory,
+  flagTeam,
+  flagLight,
+  polkaDotBorder,
+  swirlBorder,
+  sketchBorder,
+  raisedCard,
+  raisedCardThin,
+  cornerTab,
+  cornerTabLight,
+  textFrame,
+  badgeBottom,
+  badgeBottomLight,
+  ribbonTop,
+  ribbonTopLight,
+  borderThin,
+  borderMedium,
+  borderThick,
+  circleViewfinder,
+  sketchCircle,
+  starburst,
+  starburstLight,
+  spinRays,
 ] as unknown as readonly OfficialFrame[];
 
 export default frames;

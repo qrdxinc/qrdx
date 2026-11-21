@@ -1,0 +1,71 @@
+{
+  "id": "border-medium",
+  "name": "Medium border",
+  "description": "A plain outline border, the label under the code.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "border", "outline"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1348,
+      "height": 1518
+    },
+    "qr": {
+      "x": 174,
+      "y": 164,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1348,
+        "height": 1518,
+        "radius": 22,
+        "fill": "frame",
+        "hole": {
+          "x": 44,
+          "y": 44,
+          "width": 1260,
+          "height": 1430,
+          "radius": 11
+        }
+      },
+      {
+        "type": "rect",
+        "x": 104,
+        "y": 1274,
+        "width": 1140,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "text",
+        "box": {
+          "x": 172,
+          "y": 1274,
+          "width": 1004,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

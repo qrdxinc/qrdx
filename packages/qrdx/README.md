@@ -109,7 +109,7 @@ The logo is drawn at 25% of the code's width with the modules behind it excavate
 
 ### `QRCodeCanvas`
 
-Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `moduleScale` and template props are ignored. Use `QRCodeSVG` for styled codes.
+Renders to a `<canvas>` (device-pixel-ratio aware). It draws plain square modules with solid colors only — gradients fall back to their first stop, and the pattern, eye/dot color, `eyeColors`, `eyeShapes`, `moduleScale`, `halo`, `shadow` and template props are ignored (`bgRadius` and `backdrop` are drawn). Use `QRCodeSVG` for styled codes.
 
 ```tsx
 "use client";
@@ -144,7 +144,7 @@ const qr = createQRCode("#qr", {
 
 qr.update({ fgColor: "#1d4ed8" }); // merges, redraws only when the markup changes
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 qr.destroy(); // removes the <svg>
 ```
@@ -164,7 +164,7 @@ qr.destroy(); // removes the <svg>
 </script>
 ```
 
-Add `@` and a version after `qrdx` in the URL to pin one. The file leaves out the official frame library's data (`OFFICIAL_FRAMES`, `getOfficialFrame`, `OFFICIAL_FRAME_INDEX`); import those from `dist/frames-official.mjs` and `dist/frames-index.mjs` next to it. PDF export and the scan score load `jspdf` and `jsqr` when they run, so a page that uses them maps both with an import map:
+Add `@` and a version after `qrdx` in the URL to pin one. The file leaves out the official frame library's data (`OFFICIAL_FRAMES`, `getOfficialFrame`, `OFFICIAL_FRAME_INDEX`); import those from `dist/frames-official.mjs` and `dist/frames-index.mjs` next to it. PDF export, the scan score and the check on a GIF with more than 256 colors load `jspdf` and `jsqr` when they run, so a page that uses them maps both with an import map:
 
 ```html
 <script type="importmap">
@@ -252,7 +252,7 @@ qr.frame = { style: "banner-bottom", text: "Scan me" };
 qr.props = { margin: 2 }; // every option at once; attributes and named properties win over it
 
 qr.toSVGString(); // the SVG markup
-await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "svg", "pdf" or "eps"
+await qr.toDataURL("png", { size: 1024 }); // "png", "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps"
 await qr.download({ format: "svg", filename: "menu.svg" });
 ```
 
@@ -342,6 +342,12 @@ The same lists are exported as `BODY_PATTERN`, `CORNER_EYE_PATTERNS` and `CORNER
 | `eyeColors` | Per-eye `{ outer, inner }` colors (or gradients) for `topLeft`, `topRight`, `bottomLeft`; each overrides `eyeColor` / `dotColor` |
 | `moduleScale` | 0.5–1 (default 1): smaller modules for a spaced look; each pattern stops at the smallest size that still scans (`MODULE_SCALE_FLOOR`) |
 | `autoLevel` | Raise `level` to H when a logo covers more than 7% of the code (off by default) |
+| `eyeShapes` | Per-eye `{ outer, inner }` shapes (an eye frame and an eye center) for `topLeft`, `topRight`, `bottomLeft`; each overrides `cornerEyePattern` / `cornerEyeDotPattern`. The scan score judges each eye on its own (`getEyeStyleRisk`, `weakestEyePattern`) |
+| `eyeGradient` | `"corner"` (default: each eye sweeps its own gradient) or `"code"`: the eyes' gradients run across the whole code, so eyes painted with the dots' gradient continue it |
+| `bgRadius` | Corner radius of the background, 0 (default) to `BG_RADIUS_MAX` (0.5) of the code's width; capped at `BG_RADIUS_QUIET_RATIO` (2) × `margin` modules so the quiet zone keeps the code's corners (`getBgRadiusLimit` gives the cap). Square codes only |
+| `backdrop` | Solid color outside the rounded corners (see-through by default); drawn only when `bgRadius` rounds a corner |
+| `halo` | `{ color, width }`: a light rim around every dark module and eye, `width` in modules (`HALO_WIDTH_MIN` 0.1 to `HALO_WIDTH_MAX` 0.5, default 0.25), `color` default `#e5e7eb`, drawn opaque. A look, not a quiet zone. Drawn only on an opaque background, in a color at least as light as `HALO_LIGHT_MIN` (`#d1d5db`) and no lighter than the background (`getHaloRisk` says why not) |
+| `shadow` | `{ color, opacity, dx, dy }`: a see-through copy of the dark modules and eyes under them, shifted `dx`/`dy` modules (−`SHADOW_OFFSET_MAX` 0.3 to 0.3, default 0.2) at `opacity` (0.1 to 0.4, default 0.3); `color` default black |
 | `shape` | `"square"` (default), `"circle"` or `"heart"`: the symbol sits in a disc or a heart filled with decorative modules, behind a light ring of `margin` modules (at least `QR_CIRCLE_QUIET_MIN`, 3). It also takes a `QRSilhouette` traced from a picture (`loadQRSilhouette` in the browser, `createQRSilhouette` from pixels); `getQRSilhouetteFit` refuses one too thin to hold the code, which then draws square. `getLayoutMargin` gives the margin it is drawn with; print sizes and logos follow it. `getQRAsSVG` draws it square |
 | `frameLabelMarkers` | For editors: marks each frame label `<text>` with `data-qrdx-frame-label` (`"text"`, `"secondaryText"` or a spec label's id), so a preview can edit labels in place. Off by default; exports never include it |
 | `imageSettings.padding` | Extra clear space around an excavated logo, in pixels |
@@ -485,7 +491,7 @@ const spec: FrameSpec = {
 
 **Validation.** `frameSpecSchema` (zod) checks every field and the hard limits in `FRAME_SPEC_LIMITS`: artboard sides of 50 to 2000 units, at most 3 decimals per number, 64 shapes, 8 labels, 256 points per polygon, 16,000 characters per path, 2,000 segments in all, 32 KB of JSON, a code at least half the artboard's shorter side and padding of at least 4% of the code. `getFrameSpecIssues(spec)` lists problems as text. Drawing an invalid spec throws a `FrameSpecError` instead of leaving the frame out.
 
-**Official frames.** `OFFICIAL_FRAMES` is QRdx's frame library: call-to-action styles (tabs, ribbons, speech bubbles, tickets, stamps, badges, phones, arrows and more), holidays and seasons from around the world, and frames for restaurants and cafes, shops and packaging, beauty and wellness, events and weddings, hotels and travel, real estate, cars and parking, health and learning, sports and fitness, business and social, and nonprofits and community groups. Each has an `id`, `name`, `description`, `collection`, an `occasion` when it is seasonal (such as `"diwali"` or `"summer"`), suggested `contentTypes` and `tags`, and is released under CC0 1.0. `getOfficialFrame(id)` returns one. `OFFICIAL_FRAME_COLLECTIONS` lists the groups in picker order, and `OFFICIAL_FRAME_COUNT` and `OFFICIAL_FRAME_COUNTS` count them. `OFFICIAL_FRAME_INDEX` lists every frame without its spec (id, name, collection, occasion, tags, the artboard's width-to-height `ratio` and `frameSpecHash(spec)`, which tells an unchanged copy of a frame apart from an edited one), so a picker can search and lay out the whole library before loading any spec. Ids never change. Every built-in frame's spec (`BUILT_IN_FRAMES`, `BUILT_IN_FRAME_SPECS`) is a starting point too.
+**Official frames.** `OFFICIAL_FRAMES` is QRdx's frame library: call-to-action styles (tabs, ribbons, speech bubbles, tickets, stamps, badges, phones, arrows, hexagons, hearts, pattern borders and more), holidays and seasons from around the world, frames for restaurants and cafes, shops and packaging, beauty and wellness, events and weddings, hotels and travel, real estate, cars and parking, health and learning, sports and fitness, business and social, and nonprofits and community groups, everyday objects that hold the code (tablets, laptops, mugs, parcels, bottles, billboards, map pins) and playful scenes (a TV set, a fish tank, a cat holding the code, a flying saucer). Each has an `id`, `name`, `description`, `collection`, an `occasion` when it is seasonal (such as `"diwali"` or `"summer"`), suggested `contentTypes` and `tags`, and is released under CC0 1.0. `getOfficialFrame(id)` returns one. `OFFICIAL_FRAME_COLLECTIONS` lists the groups in picker order, and `OFFICIAL_FRAME_COUNT` and `OFFICIAL_FRAME_COUNTS` count them. `OFFICIAL_FRAME_INDEX` lists every frame without its spec (id, name, collection, occasion, tags, the artboard's width-to-height `ratio` and `frameSpecHash(spec)`, which tells an unchanged copy of a frame apart from an edited one), so a picker can search and lay out the whole library before loading any spec. Ids never change. Every built-in frame's spec (`BUILT_IN_FRAMES`, `BUILT_IN_FRAME_SPECS`) is a starting point too.
 
 ```ts
 import { getOfficialFrame } from "qrdx";
@@ -547,6 +553,7 @@ import {
   copyQRCodeToClipboard,
   downloadQRCode,
   getQRAsBMP,
+  getQRAsGIF,
   getQRAsICO,
   getQRAsWebP,
   getQRCodeDataUrl,
@@ -556,13 +563,15 @@ import {
 
 const props = { value: "https://example.com", bodyPattern: "rounded" as const };
 
-await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | bmp | ico | svg | pdf | eps
+await downloadQRCode(props, { format: "png", size: PRESET_SIZES.large }); // png | jpg | webp | bmp | ico | gif | svg | pdf | eps
 await downloadQRCode(props, { format: "webp", size: PRESET_SIZES.large }); // lossless WebP
 await downloadQRCode(props, { format: "bmp", size: PRESET_SIZES.large }); // 24-bit BMP, transparent areas white
 await downloadQRCode(props, { format: "ico", size: PRESET_SIZES.large }); // a favicon: 16, 32, 48 and 256 px in one file
+await downloadQRCode(props, { format: "gif", size: PRESET_SIZES.large }); // GIF, at most 256 colors
 const webp = await getQRAsWebP({ ...props, size: 1024 }); // a Blob; { quality: 0.9 } makes it lossy
 const bmp = await getQRAsBMP({ ...props, size: 1024 }); // a Blob of type image/bmp
 const ico = await getQRAsICO(props); // a Blob of type image/vnd.microsoft.icon
+const gif = await getQRAsGIF({ ...props, size: 1024 }); // a Blob of type image/gif
 const png = await getQRAsPNG({ ...props, size: 1024 }); // PNG bytes, plain Node — import from "qrdx/node"
 await downloadQRCode(props, { format: "pdf", size: { width: 1200, height: 1200 }, filename: "qr.pdf" });
 const dataUrl = await getQRCodeDataUrl(props, "svg", { width: 512, height: 512 });
@@ -587,6 +596,8 @@ WebP is lossless by default, so module edges stay exact, and a transparent backg
 BMP is an uncompressed 24-bit bitmap, for the legacy systems and embedded tools that only take it. No browser can encode BMP from a canvas, so QRdx writes the file itself (`canvasToBMP`, `encodeBMP`), and `isBMPFile` checks a file's header. 24-bit BMP has no alpha channel, so a transparent background comes out white.
 
 ICO is a favicon file: the code at 16, 32, 48 and 256 px, each stored as a PNG inside the ICO, which every browser and Windows since Vista read. No browser can encode ICO from a canvas, so QRdx writes the file itself (`getQRAsICO`, `canvasesToICO`, `encodeICO`), and `isICOFile` checks a file before it is saved. A transparent background stays transparent. `size` doesn't apply, and a frame is left out, because every image is square and at most 256 px. The small sizes are for icons, not for scanning.
+
+GIF is for the older tools and email builders that only take it. A GIF holds at most 256 colors and one transparent color. No browser can encode GIF from a canvas, so QRdx writes the file itself (`getQRAsGIF`, `canvasToGIF`, `pixelsToGIF`, `encodeGIF`), and `isGIFFile` checks a file before it is saved. A code in flat colors has few enough colors to be written exactly, pixel for pixel. A gradient, a photo logo or an image fill is reduced to a 256-color palette (median cut, with no dithering, because dither noise stops a code scanning), and the reduced image is scanned against the original: if the original scanned and the GIF would not, `getQRAsGIF` throws a `GIFScanError` instead of handing out a code that no longer reads, so offer a PNG then. A pixel under half opaque becomes the transparent color, and any other becomes opaque, so the soft edge of a code on a transparent background is hard-edged in a GIF.
 
 Vector output writes coordinates with at most 3 decimals (0.001 px in SVG, 0.001 pt in PDF and EPS; scale factors keep 6), so edges move by at most 0.0005 px and SVG markup is roughly 30% smaller than with full-precision numbers.
 

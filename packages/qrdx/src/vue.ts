@@ -81,6 +81,12 @@ const svgProps = {
   moduleScale: Number,
   autoLevel: flag,
   shape: null,
+  eyeShapes: null,
+  eyeGradient: null,
+  bgRadius: Number,
+  backdrop: null,
+  halo: null,
+  shadow: null,
   frameLabelMarkers: flag,
   partMarkers: flag,
 } as const;
@@ -168,7 +174,7 @@ export interface UseQRCodeReturn {
   readonly options: ComputedRef<QRSVGOptions>;
   /** The code's SVG markup, as `toSVGString` writes it; follows the props */
   readonly svg: ComputedRef<string>;
-  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "ico", "svg", "pdf" or "eps" */
+  /** The code as a data URL: "png" (default), "jpg", "webp", "bmp", "ico", "gif", "svg", "pdf" or "eps" */
   toDataURL(
     format?: DownloadFormat,
     options?: QRCodeExportOptions

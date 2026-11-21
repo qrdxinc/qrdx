@@ -1,0 +1,132 @@
+{
+  "id": "delivery-box-track",
+  "name": "Delivery box",
+  "description": "A delivery box with a tape strip and a shipping label holding the code.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "box", "parcel", "delivery", "shipping"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 1980
+    },
+    "qr": {
+      "x": 250,
+      "y": 530,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 120,
+        "width": 1500,
+        "height": 1860,
+        "radius": 24,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "path",
+        "d": "M0 120L750 120L690 0L60 0Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "path",
+        "d": "M750 120L1500 120L1440 0L810 0Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 660,
+        "y": 0,
+        "width": 180,
+        "height": 230,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 660,
+        "y": 1900,
+        "width": 180,
+        "height": 80,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 150,
+        "y": 270,
+        "width": 1200,
+        "height": 1590,
+        "radius": 16,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 210,
+        "y": 1650,
+        "width": 1080,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 230,
+        "y": 320,
+        "width": 1040,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to track",
+        "color": "text",
+        "box": {
+          "x": 278,
+          "y": 1650,
+          "width": 944,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Your parcel, live",
+        "color": "text",
+        "box": {
+          "x": 270,
+          "y": 320,
+          "width": 960,
+          "height": 100
+        },
+        "weight": "regular",
+        "align": "start"
+      }
+    ]
+  }
+}

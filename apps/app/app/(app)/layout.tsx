@@ -25,6 +25,9 @@ const SHARED_CLIENT_MESSAGES = [
   "editor.hooks.useCommunityThemes",
   // components/limits: plan limit notices.
   "limits",
+  // Words shared across pages: breadcrumbs, the "New" pill
+  // (components/new-tag.tsx), the design and create calls to action.
+  "common",
 ];
 
 export default function Layout({ children }: LayoutProps<"/">) {

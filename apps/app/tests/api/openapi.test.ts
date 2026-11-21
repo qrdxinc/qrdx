@@ -13,11 +13,13 @@ import { join, relative, sep } from "node:path";
 import { describe, expect, it } from "vitest";
 import { buildOpenApiDocument } from "@/lib/openapi/document";
 import { API_ERRORS } from "@/lib/openapi/errors";
+import { MAX_DESCRIPTION } from "@/lib/seo-overrides";
 import {
   errorsPage,
   indexPage,
   metaJson,
   operationsOf,
+  plainLead,
 } from "../../scripts/openapi/pages";
 
 const root = join(import.meta.dirname, "..", "..");
@@ -227,6 +229,21 @@ describe("API reference pages (run `bun run openapi:generate`)", () => {
     );
     expect(read("../docs/content/docs/developers/errors.mdx")).toBe(
       errorsPage(),
+    );
+  });
+});
+
+describe("API reference meta descriptions", () => {
+  // Each page's description is its operation's first paragraph; the rest of
+  // the description is the page body, so a long lead moves detail down.
+  it.each(
+    operationsOf(document as never).map((operation) => [
+      operation.id,
+      operation,
+    ]),
+  )("%s has a lead short enough for a search result", (_id, operation) => {
+    expect(plainLead(operation.description).length).toBeLessThanOrEqual(
+      MAX_DESCRIPTION,
     );
   });
 });

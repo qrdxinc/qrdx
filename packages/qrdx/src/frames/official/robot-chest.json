@@ -1,0 +1,197 @@
+{
+  "id": "robot-chest",
+  "name": "Robot",
+  "description": "A robot with a screen on its chest showing the code.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "robot", "screen", "tech"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1660,
+      "height": 2000
+    },
+    "qr": {
+      "x": 380,
+      "y": 632,
+      "size": 900,
+      "padding": 72,
+      "radius": 21.6
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M840 110L840 30A10 10 0 0 1 820 30L820 110A10 10 0 0 1 840 110Z",
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 830,
+        "cy": 30,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 530,
+        "y": 100,
+        "width": 600,
+        "height": 360,
+        "radius": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 580,
+        "y": 150,
+        "width": 500,
+        "height": 260,
+        "radius": 60,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 720,
+        "cy": 280,
+        "r": 50,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 940,
+        "cy": 280,
+        "r": 50,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 770,
+        "y": 380,
+        "width": 120,
+        "height": 20,
+        "radius": 10,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 750,
+        "y": 450,
+        "width": 160,
+        "height": 60,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 560,
+        "width": 160,
+        "height": 900,
+        "radius": 70,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1500,
+        "y": 560,
+        "width": 160,
+        "height": 900,
+        "radius": 70,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 80,
+        "cy": 1500,
+        "r": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1580,
+        "cy": 1500,
+        "r": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 500,
+        "width": 1300,
+        "height": 1380,
+        "radius": 80,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 240,
+        "y": 560,
+        "width": 1180,
+        "height": 1234,
+        "radius": 40,
+        "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 300,
+        "y": 1880,
+        "width": 340,
+        "height": 120,
+        "radius": 40,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1020,
+        "y": 1880,
+        "width": 340,
+        "height": 120,
+        "radius": 40,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to activate",
+        "color": "frame",
+        "box": {
+          "x": 300,
+          "y": 1624,
+          "width": 1060,
+          "height": 160
+        }
+      }
+    ]
+  }
+}

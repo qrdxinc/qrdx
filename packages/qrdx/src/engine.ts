@@ -25,6 +25,9 @@ export {
   excavationSchema,
   eyeColorOverrideSchema,
   eyeColorsSchema,
+  eyeGradientSpanSchema,
+  eyeShapeOverrideSchema,
+  eyeShapesSchema,
   frameSchema,
   frameSpecColorSchema,
   frameSpecLabelSchema,
@@ -34,6 +37,7 @@ export {
   frameStyleSchema,
   getFrameSpecIssues,
   gradientStopSchema,
+  haloSchema,
   imageFitSchema,
   imagePaintSchema,
   imagePositionSchema,
@@ -52,6 +56,7 @@ export {
   qrShapeSchema,
   qrSilhouetteSchema,
   radialGradientSchema,
+  shadowSchema,
   solidColorSchema,
   templateConfigSchema,
   templateDefinitionBaseSchema,
@@ -159,6 +164,7 @@ export type {
   OfficialFrameIndexEntry,
 } from "./frames/official-types";
 export { frameSpecHash } from "./frames/spec-hash";
+export * from "./gif";
 export { getLogoSizeLimit, getQRData } from "./helpers";
 export * from "./ico";
 export {
@@ -186,6 +192,19 @@ export {
   removeLogoBackdrop,
   removeLogoBackground,
 } from "./logo-cleanup";
+export {
+  clampBgRadius,
+  colorAlpha,
+  eyeShapeOf,
+  getBgRadiusLimit,
+  getEyeStyleRisk,
+  getHaloRisk,
+  type HaloRisk,
+  isSeeThroughBackground,
+  resolveHalo,
+  resolveShadow,
+  weakestEyePattern,
+} from "./looks";
 export {
   partMarker,
   QR_EYE_ATTRIBUTE,

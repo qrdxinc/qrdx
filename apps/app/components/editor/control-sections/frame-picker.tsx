@@ -25,6 +25,7 @@ import {
   viewerHemisphere,
 } from "@/lib/frames/occasions";
 import { useFrameLibrary } from "@/lib/frames/use-frame-library";
+import { useNewFrames } from "../../frames/use-new-frames";
 import { OptionGrid, OptionTile } from "./option-tiles";
 import { useInsideSidePanel } from "./side-panel";
 
@@ -290,6 +291,7 @@ export function FramePicker({
 }) {
   const t = useTranslations("editor.controlSections.framePicker");
   const inPanel = useInsideSidePanel();
+  const isNewFrame = useNewFrames();
   const [query, setQuery] = React.useState("");
   const [filter, setFilter] = React.useState(ALL);
   // Null until worked out in the browser (below)
@@ -680,6 +682,7 @@ export function FramePicker({
                 {section.items.map((item) => (
                   <OptionTile
                     hint={loadingId === item.id ? "Loading…" : undefined}
+                    isNew={item.entry ? isNewFrame(item.entry.id) : false}
                     key={item.id}
                     name={item.entry?.name ?? nameOf(item.id)}
                     onSelect={() => pick(item.id)}

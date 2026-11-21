@@ -62,6 +62,11 @@ export const DESIGN_SECTIONS = [
   // with a logo on, so links open it through "logo"
   "eye-colors",
   "dot-size",
+  // The looks around the shapes (feat/more-customization)
+  "eye-shapes",
+  "corners",
+  "halo",
+  "shadow",
   "frame",
   "padding",
   "error-correction",

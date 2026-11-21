@@ -2,6 +2,24 @@
 
 Release notes for earlier versions are at [qrdx.dev/changelog](https://qrdx.dev/changelog).
 
+## Unreleased
+
+### Frame library: shapes, everyday objects and playful scenes
+
+- **101 more official frames**, 1,114 in all. 29 join `call-to-action`: hexagons, octagons, hearts, a scroll, swallowtail flags, pattern borders, raised cards, corner tabs, a text frame, bottom badges, top ribbons, plain borders in three weights, a circle viewfinder, a sketched circle, starbursts and spinning rays. Each decodes at phone distances, scores Great and reads with zbar, like every official frame.
+- **Two new collections:** `objects` ("Everyday objects", 28 frames: tablets, laptops, monitors, mugs, parcels, bottles, billboards, open books, map pins, a globe and more) and `playful` ("Playful & surprising", 44 frames: a TV set, a record sleeve, a fish tank, a robot, a cat holding the code, a snow globe, a flying saucer and more). `OfficialFrameCollection` and `OFFICIAL_FRAME_COLLECTIONS` include them, so code with a case or a `Record` for every collection needs the new ids.
+- The generator now also writes `src/frames/catalogue/batches.ts`, the official frame ids by the round that added them, so the app can mark the latest ones as new. It isn't exported.
+
+## 0.0.58
+
+- **GIF export.** `"gif"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write a GIF, for older tools and email builders that only take it. No browser encodes GIF from a canvas (`toBlob("image/gif")` returns a PNG), so the engine writes the file itself, the same way in every browser.
+- **At most 256 colors, and never a GIF that stops scanning.** A code in flat colors fits as it is, so the GIF has exactly the PNG's pixels. A gradient, an image fill or a photo logo is reduced to a 256-color palette by median cut, with no dithering. A pixel under half opaque becomes GIF's one transparent color, so the soft edge of a code on a transparent background comes out hard-edged. After a reduction the original and the GIF are both decoded: if the original reads and the GIF would not, a `GIFScanError` is thrown and nothing is saved. The check loads `jsqr` on demand (already a dependency); if it can't be loaded, a reduced GIF is refused rather than passed on unchecked.
+- **New GIF exports** from `qrdx`, `qrdx/core` and `qrdx/vanilla`: `getQRAsGIF(props)` returns the code, with its frame, as a GIF `Blob`, and `canvasToGIF(canvas, expected?)` turns a canvas into one. `pixelsToGIF(pixels, expected?)` does it for RGBA pixels without a DOM, so it also runs in Node; `quantizeRGBA`, `encodeGIF`, `encodeGIFFromRGBA` and `indexedToRGBA` are the steps underneath, `assertGIFStillScans` is the scan check, and `isGIFFile(bytes)` checks a file. `GIF_MIME`, `GIF_MAX_COLORS` (256), `GIF_MAX_DIMENSION` (16,384) and `GIF_ALPHA_THRESHOLD` (128) are the limits. `getQRAsCanvas(props, "image/gif")` returns a GIF data URL.
+- **ICO export.** `"ico"` is a new `DownloadFormat`: one favicon file holding the code at 16, 32, 48 and 256 px, each an embedded PNG that keeps a transparent background. The size doesn't apply and a frame is left out. `getQRAsICO(props, sizes?)` returns it as a `Blob`; `canvasesToICO(canvases)`, `canvasToICO(canvas)`, `canvasToPNGBytes(canvas)`, `encodeICO(images)` and `isICOFile(bytes)` are the parts, with `ICO_MIME`, `ICO_SIZES` and `ICO_MAX_DIMENSION` (256). `getQRAsCanvas(props, "image/vnd.microsoft.icon")` returns an ICO data URL of one canvas.
+- **A frame on its own.** `createFrameTree(options)` draws a frame's artwork and labels around the empty slot a code of `size` pixels would fill, or around an element you pass as `slot`, for showing a frame without a code. React's `QRFrameSVG` (from `qrdx`) is the same as a component, and renders in React Server Components.
+- The standalone `<qrdx-code>` file loads `jsqr` on demand, as well as `jspdf`: a page without a bundler maps it in its import map to export a GIF of a design with more than 256 colors.
+- `@qrdx/cli` 0.0.15 writes ICO and GIF too: `-o qr.ico` or `--format ico`, and `-o qr.gif` or `--format gif`.
+
 ## 0.0.57
 
 - **BMP export.** `"bmp"` is a new `DownloadFormat`, so `downloadQRCode`, `getQRCodeDataUrl` and the adapters' `toDataURL` and `download` can write an uncompressed 24-bit BMP, for legacy systems and embedded tools that only take BMP. No browser encodes BMP from a canvas (`toBlob("image/bmp")` returns a PNG), so the engine writes the file itself, the same way in every browser.

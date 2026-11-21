@@ -1,0 +1,126 @@
+{
+  "id": "octagon-light",
+  "name": "Octagon, light",
+  "description": "An octagon like a road sign, with a hairline inside its edge.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "octagon", "sign", "shape"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1959,
+      "height": 1959
+    },
+    "qr": {
+      "x": 479.5,
+      "y": 399.5,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "polygon",
+        "points": [
+          [1958.81, 1385.14],
+          [1385.14, 1958.81],
+          [573.86, 1958.81],
+          [0.19, 1385.14],
+          [0.19, 573.86],
+          [573.86, 0.19],
+          [1385.14, 0.19],
+          [1958.81, 573.86]
+        ],
+        "fill": "frame"
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [1918.16, 1368.31],
+          [1368.31, 1918.16],
+          [590.69, 1918.16],
+          [40.84, 1368.31],
+          [40.84, 590.69],
+          [590.69, 40.84],
+          [1368.31, 40.84],
+          [1918.16, 590.69]
+        ],
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "polygon",
+        "points": [
+          [1903.38, 1362.18],
+          [1362.18, 1903.38],
+          [596.82, 1903.38],
+          [55.62, 1362.18],
+          [55.62, 596.82],
+          [596.82, 55.62],
+          [1362.18, 55.62],
+          [1903.38, 596.82]
+        ],
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "rect",
+        "x": 529.5,
+        "y": 1519.5,
+        "width": 900,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 599.5,
+        "y": 130,
+        "width": 760,
+        "height": 120,
+        "radius": 60,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan here",
+        "color": "text",
+        "box": {
+          "x": 597.5,
+          "y": 1519.5,
+          "width": 764,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "No app needed",
+        "color": "text",
+        "box": {
+          "x": 647.5,
+          "y": 130,
+          "width": 664,
+          "height": 120
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

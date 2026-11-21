@@ -9,7 +9,11 @@ export type FocusColorId =
   | "eyeColor"
   | "dotColor"
   // Per-eye colors (the Eye colors section)
-  | `eyeColors.${EyePosition}.${"outer" | "inner"}`;
+  | `eyeColors.${EyePosition}.${"outer" | "inner"}`
+  // The looks around the shapes (Rounded corners, Halo, Shadow sections)
+  | "backdrop"
+  | "halo.color"
+  | "shadow.color";
 
 interface ColorRefEntry {
   ref: HTMLElement | null;

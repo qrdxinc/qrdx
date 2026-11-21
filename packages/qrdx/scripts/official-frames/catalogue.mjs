@@ -6,6 +6,11 @@ import {
   INDUSTRY_LAYOUT_WORDS,
   INDUSTRY_MOTIF_WORDS,
 } from "./catalogue-industries.mjs";
+import {
+  addObjectFrames,
+  OBJECT_LAYOUT_PLAIN,
+  OBJECT_LAYOUT_WORDS,
+} from "./catalogue-objects.mjs";
 import { addWorldFrames } from "./catalogue-world.mjs";
 import { WORLD_MOTIF_WORDS } from "./motifs-world.mjs";
 
@@ -386,6 +391,7 @@ const LAYOUT = {
     "A wide label with curved top and bottom edges, the code beside {m}",
   flagBand: "Flag colors in a band over the code{mw}",
   ...INDUSTRY_LAYOUT_WORDS,
+  ...OBJECT_LAYOUT_WORDS,
 };
 
 const MOTIF_WORDS = {
@@ -588,6 +594,7 @@ const LAYOUT_PLAIN = {
   shield: "A shield with a banner across the bottom",
   jarLabel: "A wide label with curved top and bottom edges",
   ...INDUSTRY_LAYOUT_PLAIN,
+  ...OBJECT_LAYOUT_PLAIN,
 };
 
 /** Motifs a layout draws when the entry names none. */
@@ -614,9 +621,19 @@ let current = {
   occasion: undefined,
   tags: [],
   ct: [],
+  batch: undefined,
 };
+/** The frames that follow go in `collection`. */
 const section = (collection, occasion, tags = [], ct = []) => {
-  current = { collection, occasion, tags, ct };
+  current = { collection, occasion, tags, ct, batch: current.batch };
+};
+/**
+ * The frames that follow were added in round `name` (YYYY-MM), so the app
+ * can mark them as new for a while (src/frames/catalogue/batches.ts); the
+ * first catalogue has none. `batch(undefined)` ends the round.
+ */
+const batch = (name) => {
+  current = { ...current, batch: name };
 };
 
 /**
@@ -640,6 +657,7 @@ function f(id, name, layout, cta, note, options, palette, extraTags, ct) {
     tags: [...new Set([...current.tags, ...(extraTags ?? [])])],
     contentTypes: ct ?? current.ct,
     description: describe(layout, o, pal),
+    ...(current.batch ? { batch: current.batch } : {}),
   });
 }
 
@@ -4666,3 +4684,6 @@ addIndustryFrames({ section, f });
 
 // Holidays, seasons, events and places from around the world (catalogue-world.mjs)
 addWorldFrames({ f, section, P, MONO, SOFT, NEON, GREY });
+
+// Shapes, everyday objects and playful scenes (catalogue-objects.mjs)
+addObjectFrames({ section, f, batch });

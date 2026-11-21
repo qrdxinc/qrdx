@@ -1,0 +1,236 @@
+{
+  "id": "cassette-tape",
+  "name": "Cassette",
+  "description": "A cassette tape: the code on its label, two reels in the window below.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "cassette", "tape", "music", "retro"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1500
+    },
+    "qr": {
+      "x": 160,
+      "y": 254,
+      "size": 800,
+      "padding": 64,
+      "radius": 19.2
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 2000,
+        "height": 1500,
+        "radius": 70,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 90,
+        "width": 1840,
+        "height": 1040,
+        "radius": 30,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "rect",
+        "x": 80,
+        "y": 90,
+        "width": 1840,
+        "height": 70,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 420,
+        "y": 1170,
+        "width": 1160,
+        "height": 240,
+        "radius": 120,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 640,
+        "cy": 1290,
+        "r": 95,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 640,
+        "cy": 1290,
+        "r": 95,
+        "hole": 62,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "path",
+        "d": "M680 1297L702 1297A7 7 0 0 1 702 1283L680 1283A7 7 0 0 1 680 1297Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M653.94 1328.14L664.94 1347.19A7 7 0 0 1 677.06 1340.19L666.06 1321.14A7 7 0 0 1 653.94 1328.14Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M613.94 1321.14L602.94 1340.19A7 7 0 0 1 615.06 1347.19L626.06 1328.14A7 7 0 0 1 613.94 1321.14Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M600 1283L578 1283A7 7 0 0 1 578 1297L600 1297A7 7 0 0 1 600 1283Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M626.06 1251.86L615.06 1232.81A7 7 0 0 1 602.94 1239.81L613.94 1258.86A7 7 0 0 1 626.06 1251.86Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M666.06 1258.86L677.06 1239.81A7 7 0 0 1 664.94 1232.81L653.94 1251.86A7 7 0 0 1 666.06 1258.86Z",
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1360,
+        "cy": 1290,
+        "r": 95,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1360,
+        "cy": 1290,
+        "r": 95,
+        "hole": 62,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.92
+        }
+      },
+      {
+        "type": "path",
+        "d": "M1400 1297L1422 1297A7 7 0 0 1 1422 1283L1400 1283A7 7 0 0 1 1400 1297Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1373.94 1328.14L1384.94 1347.19A7 7 0 0 1 1397.06 1340.19L1386.06 1321.14A7 7 0 0 1 1373.94 1328.14Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1333.94 1321.14L1322.94 1340.19A7 7 0 0 1 1335.06 1347.19L1346.06 1328.14A7 7 0 0 1 1333.94 1321.14Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1320 1283L1298 1283A7 7 0 0 1 1298 1297L1320 1297A7 7 0 0 1 1320 1283Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1346.06 1251.86L1335.06 1232.81A7 7 0 0 1 1322.94 1239.81L1333.94 1258.86A7 7 0 0 1 1346.06 1251.86Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1386.06 1258.86L1397.06 1239.81A7 7 0 0 1 1384.94 1232.81L1373.94 1251.86A7 7 0 0 1 1386.06 1258.86Z",
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 60,
+        "cy": 1440,
+        "r": 22,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1940,
+        "cy": 1440,
+        "r": 22,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.4
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1104,
+        "y": 465,
+        "width": 736,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1104,
+        "y": 690,
+        "width": 736,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to play",
+        "color": "text",
+        "box": {
+          "x": 1172,
+          "y": 465,
+          "width": 600,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Rewind with your camera",
+        "color": "text",
+        "box": {
+          "x": 1144,
+          "y": 690,
+          "width": 656,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

@@ -59,7 +59,7 @@ tableRows:
     qrdx: "PNG, JPG, WebP, SVG, PDF, EPS"
     competitor: "PNG, JPG, EPS, SVG"
   - feature: API
-    qrdx: "1,000 requests a day free; 10,000 on Pro"
+    qrdx: "{facts.freeApiRequestsPerDay} requests a day free; {facts.proApiRequestsPerDay} on Pro"
     competitor: "Professional only; static codes, 10,000 a month"
   - feature: Open source
     qrdx: "AGPL-3.0"
@@ -104,7 +104,7 @@ In the EU and EEA, QRdx shows and charges the same amounts in euros.
 - What happens when you stop paying. QR Code Creator's homepage says that after the 7-day trial, "Dynamic QR codes generated during the trial will be temporarily deactivated," while static codes "will continue to function." For paid plans, its help center says: "Once your plan expires, all created dynamic QR codes will be invalid." We checked both pages on 10 November 2026. On QRdx, dynamic codes keep redirecting on every plan, including after a cancellation.
 - Billing. QR Code Creator bills every plan yearly. QRdx bills monthly or yearly, and one person with a few codes pays nothing.
 - Code and scan limits. QR Code Creator allows 3, 50 or 250 dynamic codes depending on the plan, and Basic includes 20,000 scans. Its help center says that past that limit, people who scan "will receive a notification that the limit has been reached" until the next subscription cycle. QRdx Pro has unlimited dynamic codes, and no QRdx plan caps scans.
-- Developer access. QR Code Creator's API makes static codes and needs the Professional plan. The QRdx REST API allows 1,000 requests a day on Free and 10,000 on Pro, and QRdx also has an MCP server, a React library on npm and a CLI.
+- Developer access. QR Code Creator's API makes static codes and needs the Professional plan. The QRdx REST API allows {facts.freeApiRequestsPerDay} requests a day on Free and {facts.proApiRequestsPerDay} on Pro, and QRdx also has an MCP server, a React library on npm and a CLI.
 - Openness. QRdx is open source under AGPL-3.0, so you can check how scans are counted or run your own copy. QR Code Creator doesn't advertise its source code.
 
 ## Switching from QR Code Creator

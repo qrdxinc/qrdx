@@ -56,6 +56,14 @@ export class FakeCommunityPg {
   failOn: string | null = null;
   /** Drop rows of this table right after insert (verify must catch it) */
   loseInserts: string | null = null;
+  /**
+   * Throw on a Date parameter (the seed's tests turn this on). The
+   * timestamp columns are timestamp without time zone, and the driver
+   * sends a Date as local time with an offset such a column drops, so the
+   * seed must send UTC text (toISOString), as the app does. The backfill
+   * passes back times it read, which round-trip, so it stays off there.
+   */
+  refuseDates = false;
   private saved: Record<string, Row[]> | null = null;
 
   seed(table: string, rows: Row[]) {
@@ -88,6 +96,11 @@ export class FakeCommunityPg {
     });
     const B = backfill.SQL;
     const S = seed.SQL;
+    if (this.refuseDates && params.some((value) => value instanceof Date)) {
+      throw new Error(
+        `fake pg: a Date parameter would be written as local time: ${text.slice(0, 60)}`,
+      );
+    }
     const p = (i: number) => params[i];
     const parse = (value: unknown) =>
       typeof value === "string" ? JSON.parse(value) : value;
@@ -175,6 +188,7 @@ export class FakeCommunityPg {
             profile_id,
             is_official,
             created_by,
+            updated_at,
           }) => ({
             id,
             type,
@@ -184,6 +198,8 @@ export class FakeCommunityPg {
             profile_id,
             is_official,
             created_by,
+            // updated_at::text: as the database holds it
+            updated_at: updated_at ?? null,
           }),
         ),
       );
@@ -255,6 +271,8 @@ export class FakeCommunityPg {
           display_name: "QRdx",
           verified_at: p(4),
           status: "active",
+          created_at: p(4),
+          updated_at: p(4),
         }),
       );
     }
@@ -262,7 +280,10 @@ export class FakeCommunityPg {
       const row = this.rows("community_profile").find(
         (r) => r.id === p(0) && !r.verified_at,
       );
-      if (row) row.verified_at = p(1);
+      if (row) {
+        row.verified_at = p(1);
+        row.updated_at = p(1);
+      }
       return result([], row ? 1 : 0);
     }
     if (text === B.insertItem) {
@@ -309,6 +330,10 @@ export class FakeCommunityPg {
           is_official: true,
           featured_at: p(11),
           published_at: p(12),
+          created_at: p(12),
+          updated_at: p(12),
+          scan_score: p(13) ?? null,
+          scan_checked_at: p(14) ?? null,
         }),
       );
     }
@@ -322,6 +347,7 @@ export class FakeCommunityPg {
           payload: parse(p(2)),
           payload_hash: p(3),
           created_by: p(4),
+          created_at: p(5),
         }),
       );
     }
@@ -362,10 +388,19 @@ export class FakeCommunityPg {
       return result([], row ? 1 : 0);
     }
     if (text === S.adoptTheme) {
-      const row = this.rows("community_item").find((r) => r.id === p(0));
+      // Every condition in the statement's WHERE
+      const row = this.rows("community_item").find(
+        (r) =>
+          r.id === p(0) &&
+          r.type === "theme" &&
+          r.created_by === p(3) &&
+          !String(r.id).startsWith("ci_official_") &&
+          (r.is_official !== true || r.profile_id !== p(1)),
+      );
       if (row) {
         row.profile_id = p(1);
         row.is_official = true;
+        row.updated_at = p(2);
       }
       return result([], row ? 1 : 0);
     }
@@ -412,6 +447,29 @@ export class FakeCommunityPg {
             ids.has(r.id as string) &&
             r.is_official === true &&
             r.profile_id === p(1),
+        ).length,
+      );
+    }
+    if (text === S.collectionEntries) {
+      return result(
+        this.rows("community_collection_entry")
+          .filter((r) => String(r.collection_id).startsWith("ci_official_"))
+          .map(({ collection_id, item_id }) => ({ collection_id, item_id })),
+      );
+    }
+    if (text === S.countVersions) {
+      const ids = inList(p(0));
+      return n(
+        this.rows("community_item_version").filter((r) =>
+          ids.has(r.item_id as string),
+        ).length,
+      );
+    }
+    if (text === S.countTags) {
+      const ids = inList(p(0));
+      return n(
+        this.rows("community_item_tag").filter((r) =>
+          ids.has(r.item_id as string),
         ).length,
       );
     }

@@ -4,9 +4,13 @@ import * as React from "react";
 import { defaultThemeState } from "@/config/qr";
 import type { DesignSection } from "@/lib/playground-links";
 import type { QRStyle } from "@/types/theme";
+import { CornersSection } from "./corners-section";
 import { DotSizeSection } from "./dot-size-section";
 import { EyeColorsSection } from "./eye-colors-section";
+import { EyeShapesSection } from "./eye-shapes-section";
+import { HaloSection } from "./halo-section";
 import { LogoOptionsSection } from "./logo-options-section";
+import { ShadowSection } from "./shadow-section";
 
 interface CustomizationSectionsProps {
   styles: QRStyle;
@@ -17,9 +21,10 @@ interface CustomizationSectionsProps {
 
 /**
  * Engine options the Design tab adds after the Logo section: logo options
- * (while a logo is on), per-eye colors and dot size (the code's shape is a
- * choice in Frame). One component, so design-controls.tsx wires them in a
- * single place.
+ * (while a logo is on), per-eye colors and shapes, dot size, rounded
+ * corners, the halo and the shadow (the code's shape is a choice in
+ * Frame). One component, so design-controls.tsx wires them in a single
+ * place.
  */
 export function CustomizationSections({
   styles,
@@ -47,11 +52,33 @@ export function CustomizationSections({
       <EyeColorsSection
         expanded={focus === "eye-colors"}
         onChange={(eyeColors) => update({ eyeColors })}
+        onEyeGradientChange={(eyeGradient) => update({ eyeGradient })}
+        style={current}
+      />
+      <EyeShapesSection
+        expanded={focus === "eye-shapes"}
+        onChange={(eyeShapes) => update({ eyeShapes })}
         style={current}
       />
       <DotSizeSection
         expanded={focus === "dot-size"}
         onChange={(moduleScale) => update({ moduleScale })}
+        style={current}
+      />
+      {/* ── The looks around the shapes (feat/more-customization) ── */}
+      <CornersSection
+        expanded={focus === "corners"}
+        onChange={update}
+        style={current}
+      />
+      <HaloSection
+        expanded={focus === "halo"}
+        onChange={(halo) => update({ halo })}
+        style={current}
+      />
+      <ShadowSection
+        expanded={focus === "shadow"}
+        onChange={(shadow) => update({ shadow })}
         style={current}
       />
     </>

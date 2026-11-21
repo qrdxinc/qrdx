@@ -61,6 +61,9 @@ export const CHROME_NAMESPACES = [
   "consent",
   // The sign-in dialog and "Confirm it's you", mounted on every page.
   "auth",
+  // The "New" pill on recently added options (apps/app/components/new-tag.tsx)
+  "common.newTag",
+  "common.nameIsNew",
 ] as const;
 
 /**

@@ -23,6 +23,7 @@ import {
 import { motif } from "./motifs.mjs";
 
 export * from "./layouts-industries.mjs";
+export * from "./layouts-objects.mjs";
 
 const F = "frame";
 const T = "text";

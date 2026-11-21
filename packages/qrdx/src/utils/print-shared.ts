@@ -1,9 +1,18 @@
 import type { QRProps } from "../../types";
 import { isGradient } from "../../types/color-helpers";
-import { DEFAULT_BGCOLOR, DEFAULT_SIZE } from "../constants";
+import qrcodegen from "../codegen";
+import {
+  DEFAULT_BGCOLOR,
+  DEFAULT_MARGIN,
+  DEFAULT_SIZE,
+  ERROR_LEVEL_MAP,
+} from "../constants";
 import { withQRSize } from "../download";
 import { getQRAsSVGDataUri } from "../export";
 import { getFrameLayout, isFrameActive } from "../frame";
+import { clampBgRadius } from "../looks";
+import { getLayoutMargin } from "../qr-shape";
+import { resolveErrorLevel } from "../utils";
 import { getSolidColor } from "./color";
 import { flattenOver } from "./paint";
 import { parseColor } from "./parse-color";
@@ -31,6 +40,21 @@ export function getPrintBleedColor(props: QRProps): string | null {
   if (isFrameActive(props.frame)) {
     const frame = getFrameLayout(PRINT_RENDER_SIZE, props.frame);
     return frame.squareEdges ? frame.color : null;
+  }
+  // Outside rounded corners the backdrop shows, so the bleed continues it
+  if (props.backdrop && props.bgRadius) {
+    const modules = qrcodegen.QrCode.encodeText(
+      props.value,
+      ERROR_LEVEL_MAP[resolveErrorLevel(props)]
+    ).size;
+    const margin = getLayoutMargin(
+      modules,
+      props.margin ?? DEFAULT_MARGIN,
+      props.shape
+    );
+    if (clampBgRadius(props.bgRadius, modules, margin, props.shape) > 0) {
+      return getSolidColor(props.backdrop, DEFAULT_BGCOLOR);
+    }
   }
   return getSolidColor(props.bgColor, DEFAULT_BGCOLOR);
 }

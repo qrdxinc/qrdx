@@ -9,6 +9,7 @@ export const DEFAULT_BASE_URL = "https://api.qrdx.dev/v1";
 export const QR_IMAGE_FORMATS = [
   "png",
   "webp",
+  "gif",
   "bmp",
   "ico",
   "svg",

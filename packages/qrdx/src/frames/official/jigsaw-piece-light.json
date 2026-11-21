@@ -1,0 +1,68 @@
+{
+  "id": "jigsaw-piece-light",
+  "name": "Jigsaw piece, light",
+  "description": "A jigsaw piece with knobs out on the top and right and sockets in on the left and bottom.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "jigsaw", "puzzle", "piece"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1860,
+      "height": 1930
+    },
+    "qr": {
+      "x": 340,
+      "y": 570,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M80 220L720 220A130 130 0 1 1 960 220L1600 220A40 40 0 0 1 1640 260L1640 935A130 130 0 1 1 1640 1175L1640 1850A40 40 0 0 1 1600 1890L960 1890A130 130 0 1 0 720 1890L80 1890A40 40 0 0 1 40 1850L40 1175A130 130 0 1 0 40 935L40 260A40 40 0 0 1 80 220Z",
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M80 250L780 250A100 100 0 1 1 900 250L1600 250A10 10 0 0 1 1610 260L1610 995A100 100 0 1 1 1610 1115L1610 1850A10 10 0 0 1 1600 1860L998.75 1860A160 160 0 1 0 681.25 1860L80 1860A10 10 0 0 1 70 1850L70 1213.75A160 160 0 1 0 70 896.25L70 260A10 10 0 0 1 80 250Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.9
+        }
+      },
+      {
+        "type": "rect",
+        "x": 290,
+        "y": 280,
+        "width": 1100,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan the missing piece",
+        "color": "text",
+        "box": {
+          "x": 358,
+          "y": 280,
+          "width": 964,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

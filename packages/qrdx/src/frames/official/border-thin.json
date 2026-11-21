@@ -1,0 +1,71 @@
+{
+  "id": "border-thin",
+  "name": "Thin border",
+  "description": "A plain outline border, the label under the code.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "border", "outline", "thin"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1288,
+      "height": 1458
+    },
+    "qr": {
+      "x": 144,
+      "y": 134,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1288,
+        "height": 1458,
+        "radius": 8,
+        "fill": "frame",
+        "hole": {
+          "x": 14,
+          "y": 14,
+          "width": 1260,
+          "height": 1430,
+          "radius": 3.5
+        }
+      },
+      {
+        "type": "rect",
+        "x": 74,
+        "y": 1244,
+        "width": 1140,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan me",
+        "color": "text",
+        "box": {
+          "x": 142,
+          "y": 1244,
+          "width": 1004,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "id": "border-thick",
+  "name": "Thick border",
+  "description": "A plain outline border, the label under the code.",
+  "category": "use-case",
+  "collection": "call-to-action",
+  "contentTypes": [],
+  "tags": ["call to action", "border", "outline", "thick"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1460,
+      "height": 1630
+    },
+    "qr": {
+      "x": 230,
+      "y": 220,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1460,
+        "height": 1630,
+        "radius": 50,
+        "fill": "frame",
+        "hole": {
+          "x": 100,
+          "y": 100,
+          "width": 1260,
+          "height": 1430,
+          "radius": 25
+        }
+      },
+      {
+        "type": "rect",
+        "x": 160,
+        "y": 1330,
+        "width": 1140,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan here",
+        "color": "text",
+        "box": {
+          "x": 228,
+          "y": 1330,
+          "width": 1004,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

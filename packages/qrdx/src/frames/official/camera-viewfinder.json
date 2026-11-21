@@ -1,0 +1,174 @@
+{
+  "id": "camera-viewfinder",
+  "name": "Camera viewfinder",
+  "description": "A camera viewfinder display with brackets, a recording dot and a status bar.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "camera", "viewfinder", "video", "record"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1500,
+      "height": 1760
+    },
+    "qr": {
+      "x": 250,
+      "y": 300,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 1500,
+        "height": 1760,
+        "radius": 24,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 90,
+        "y": 90,
+        "width": 160,
+        "height": 26,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 90,
+        "y": 90,
+        "width": 26,
+        "height": 160,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 1250,
+        "y": 90,
+        "width": 160,
+        "height": 26,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 1384,
+        "y": 90,
+        "width": 26,
+        "height": 160,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 90,
+        "y": 1474,
+        "width": 160,
+        "height": 26,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 90,
+        "y": 1340,
+        "width": 26,
+        "height": 160,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 1250,
+        "y": 1474,
+        "width": 160,
+        "height": 26,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 1384,
+        "y": 1340,
+        "width": 26,
+        "height": 160,
+        "fill": "text"
+      },
+      {
+        "type": "circle",
+        "cx": 670,
+        "cy": 150,
+        "r": 30,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 730,
+        "y": 130,
+        "width": 220,
+        "height": 40,
+        "radius": 8,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 1200,
+        "y": 125,
+        "width": 150,
+        "height": 50,
+        "radius": 10,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 1210,
+        "y": 135,
+        "width": 100,
+        "height": 30,
+        "radius": 4,
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 1352,
+        "y": 140,
+        "width": 12,
+        "height": 20,
+        "radius": 3,
+        "fill": "text"
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 1560,
+        "width": 1500,
+        "height": 200,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.4
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to record",
+        "color": "text",
+        "box": {
+          "x": 100,
+          "y": 1575,
+          "width": 1300,
+          "height": 170
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "id": "tv-set",
+  "name": "TV set",
+  "description": "A retro TV set: the code on its screen, knobs on the side, antennas on top.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "tv", "television", "retro", "screen"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1700,
+      "height": 2000
+    },
+    "qr": {
+      "x": 220,
+      "y": 500,
+      "size": 1000,
+      "padding": 80,
+      "radius": 24
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "path",
+        "d": "M648.29 211.32L428.29 1.32A12 12 0 0 1 411.71 18.68L631.71 228.68A12 12 0 0 1 648.29 211.32Z",
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "path",
+        "d": "M768.29 228.68L988.29 18.68A12 12 0 0 1 971.71 1.32L751.71 211.32A12 12 0 0 1 768.29 228.68Z",
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 420,
+        "cy": 20,
+        "r": 20,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 980,
+        "cy": 20,
+        "r": 20,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 260,
+        "y": 1880,
+        "width": 120,
+        "height": 120,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1320,
+        "y": 1880,
+        "width": 120,
+        "height": 120,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
+        }
+      },
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 200,
+        "width": 1700,
+        "height": 1700,
+        "radius": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 300,
+        "width": 1240,
+        "height": 1500,
+        "radius": 70,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 1520,
+        "cy": 460,
+        "r": 80,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1520,
+        "cy": 460,
+        "r": 28,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1520,
+        "cy": 700,
+        "r": 80,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.5
+        }
+      },
+      {
+        "type": "circle",
+        "cx": 1520,
+        "cy": 700,
+        "r": 28,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1450,
+        "y": 900,
+        "width": 140,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1450,
+        "y": 980,
+        "width": 140,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1450,
+        "y": 1060,
+        "width": 140,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1450,
+        "y": 1140,
+        "width": 140,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1450,
+        "y": 1220,
+        "width": 140,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1450,
+        "y": 1300,
+        "width": 140,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      },
+      {
+        "type": "rect",
+        "x": 1450,
+        "y": 1380,
+        "width": 140,
+        "height": 24,
+        "radius": 12,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.45
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to watch",
+        "color": "frame",
+        "box": {
+          "x": 200,
+          "y": 1610,
+          "width": 1040,
+          "height": 160
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Now showing",
+        "color": "frame",
+        "box": {
+          "x": 220,
+          "y": 330,
+          "width": 1000,
+          "height": 96
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

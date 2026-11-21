@@ -1,0 +1,156 @@
+{
+  "id": "open-book",
+  "name": "Open book spread",
+  "description": "An open book: the code on the right page, the words on the left.",
+  "category": "use-case",
+  "collection": "objects",
+  "contentTypes": ["url"],
+  "tags": ["object", "book", "reading", "library"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 2000,
+      "height": 1380
+    },
+    "qr": {
+      "x": 1111,
+      "y": 310,
+      "size": 760,
+      "padding": 60.800000000000004,
+      "radius": 18.240000000000002
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff",
+      "accent": "#111111"
+    },
+    "shapes": [
+      {
+        "type": "rect",
+        "x": 0,
+        "y": 0,
+        "width": 2000,
+        "height": 1380,
+        "radius": 30,
+        "fill": "frame"
+      },
+      {
+        "type": "path",
+        "d": "M1000 70L40 50L32 1330Q550 1280 1000 1310Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.94
+        }
+      },
+      {
+        "type": "path",
+        "d": "M1000 70L1960 50L1968 1330Q1450 1280 1000 1310Z",
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.94
+        }
+      },
+      {
+        "type": "rect",
+        "x": 978,
+        "y": 70,
+        "width": 44,
+        "height": 1240,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.7
+        }
+      },
+      {
+        "type": "path",
+        "d": "M1050 50L1106 50L1106 290L1078 254L1050 290Z",
+        "fill": "accent"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 510,
+        "width": 788,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 740,
+        "width": 788,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 250,
+        "width": 668,
+        "height": 18,
+        "radius": 9,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 326,
+        "width": 668,
+        "height": 18,
+        "radius": 9,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.75
+        }
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 402,
+        "width": 388,
+        "height": 18,
+        "radius": 9,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.75
+        }
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to read",
+        "color": "text",
+        "box": {
+          "x": 188,
+          "y": 510,
+          "width": 652,
+          "height": 170
+        }
+      },
+      {
+        "type": "text",
+        "id": "note",
+        "slot": "secondary",
+        "text": "Chapter one is free",
+        "color": "text",
+        "box": {
+          "x": 160,
+          "y": 740,
+          "width": 708,
+          "height": 100
+        },
+        "weight": "regular"
+      }
+    ]
+  }
+}

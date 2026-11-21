@@ -1,0 +1,170 @@
+{
+  "id": "snow-globe",
+  "name": "Snow globe",
+  "description": "A snow globe: the code in the glass with snow falling, the label on the base.",
+  "category": "use-case",
+  "collection": "playful",
+  "contentTypes": ["url"],
+  "tags": ["playful", "snow", "globe", "winter", "gift"],
+  "license": "CC0-1.0",
+  "spec": {
+    "kind": "qrdx.frame",
+    "version": 1,
+    "artboard": {
+      "width": 1600,
+      "height": 1880
+    },
+    "qr": {
+      "x": 370,
+      "y": 320,
+      "size": 860,
+      "padding": 68.8,
+      "radius": 20.64
+    },
+    "colors": {
+      "frame": "#111111",
+      "text": "#ffffff"
+    },
+    "shapes": [
+      {
+        "type": "circle",
+        "cx": 800,
+        "cy": 790,
+        "r": 770,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 800,
+        "cy": 790,
+        "r": 730,
+        "fill": {
+          "mix": ["frame", "background"],
+          "amount": 0.94
+        }
+      },
+      {
+        "type": "ellipse",
+        "cx": 800,
+        "cy": 1350,
+        "rx": 380,
+        "ry": 110,
+        "fill": "background"
+      },
+      {
+        "type": "ellipse",
+        "cx": 500,
+        "cy": 370,
+        "rx": 150,
+        "ry": 70,
+        "fill": "background"
+      },
+      {
+        "type": "circle",
+        "cx": 240,
+        "cy": 590,
+        "r": 14,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 180,
+        "cy": 850,
+        "r": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 300,
+        "cy": 1090,
+        "r": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1360,
+        "cy": 640,
+        "r": 14,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1420,
+        "cy": 890,
+        "r": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1320,
+        "cy": 1120,
+        "r": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 600,
+        "cy": 150,
+        "r": 14,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 950,
+        "cy": 130,
+        "r": 20,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 1200,
+        "cy": 250,
+        "r": 26,
+        "fill": "frame"
+      },
+      {
+        "type": "circle",
+        "cx": 350,
+        "cy": 310,
+        "r": 14,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 380,
+        "y": 1480,
+        "width": 840,
+        "height": 120,
+        "radius": 20,
+        "fill": {
+          "mix": ["frame", "#000000"],
+          "amount": 0.35
+        }
+      },
+      {
+        "type": "rect",
+        "x": 240,
+        "y": 1580,
+        "width": 1120,
+        "height": 300,
+        "radius": 60,
+        "fill": "frame"
+      }
+    ],
+    "labels": [
+      {
+        "type": "text",
+        "id": "cta",
+        "slot": "primary",
+        "text": "Scan to shake it",
+        "color": "text",
+        "box": {
+          "x": 320,
+          "y": 1640,
+          "width": 960,
+          "height": 170
+        }
+      }
+    ]
+  }
+}
