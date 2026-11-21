@@ -666,14 +666,7 @@ export async function runGenerate(
     if (!flags.body) {
       const res = await p.select<BodyPattern>({
         message: "Body dot pattern",
-        // TypeScript can't relate a 30-way literal union to the prompt's
-        // per-value option union, so the list is cast to what select expects.
-        options: BODY_PATTERN.map((b) => ({
-          value: b,
-          label: b,
-        })) as unknown as Parameters<
-          typeof p.select<BodyPattern>
-        >[0]["options"],
+        options: BODY_PATTERN.map((b) => ({ value: b, label: b })),
         initialValue: "square" as BodyPattern,
       });
       if (isCancel(res)) {
@@ -686,12 +679,7 @@ export async function runGenerate(
     if (!flags.eye) {
       const res = await p.select<CornerEyePattern>({
         message: "Corner eye pattern",
-        options: CORNER_EYE_PATTERNS.map((e) => ({
-          value: e,
-          label: e,
-        })) as unknown as Parameters<
-          typeof p.select<CornerEyePattern>
-        >[0]["options"],
+        options: CORNER_EYE_PATTERNS.map((e) => ({ value: e, label: e })),
         initialValue: "square" as CornerEyePattern,
       });
       if (isCancel(res)) {
@@ -704,12 +692,7 @@ export async function runGenerate(
     if (!flags.dot) {
       const res = await p.select<CornerEyeDotPattern>({
         message: "Corner dot pattern",
-        options: CORNER_EYE_DOT_PATTERNS.map((d) => ({
-          value: d,
-          label: d,
-        })) as unknown as Parameters<
-          typeof p.select<CornerEyeDotPattern>
-        >[0]["options"],
+        options: CORNER_EYE_DOT_PATTERNS.map((d) => ({ value: d, label: d })),
         initialValue: "square" as CornerEyeDotPattern,
       });
       if (isCancel(res)) {
