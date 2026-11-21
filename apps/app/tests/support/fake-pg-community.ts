@@ -186,6 +186,7 @@ export class FakeCommunityPg {
             profile_id,
             is_official,
             created_by,
+            updated_at,
           }) => ({
             id,
             type,
@@ -195,6 +196,8 @@ export class FakeCommunityPg {
             profile_id,
             is_official,
             created_by,
+            // updated_at::text: as the database holds it
+            updated_at: updated_at ?? null,
           }),
         ),
       );
@@ -383,10 +386,19 @@ export class FakeCommunityPg {
       return result([], row ? 1 : 0);
     }
     if (text === S.adoptTheme) {
-      const row = this.rows("community_item").find((r) => r.id === p(0));
+      // Every condition in the statement's WHERE
+      const row = this.rows("community_item").find(
+        (r) =>
+          r.id === p(0) &&
+          r.type === "theme" &&
+          r.created_by === p(3) &&
+          !String(r.id).startsWith("ci_official_") &&
+          (r.is_official !== true || r.profile_id !== p(1)),
+      );
       if (row) {
         row.profile_id = p(1);
         row.is_official = true;
+        row.updated_at = p(2);
       }
       return result([], row ? 1 : 0);
     }
