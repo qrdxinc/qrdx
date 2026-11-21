@@ -134,11 +134,11 @@ export const BRAND_DESIGNS: SeedDesign[] = [
     id: "lime-ink",
     name: "Lime ink",
     description:
-      "Hexagon modules in a deep olive lime with shield eyes, on a pale lime white. Fresh without being neon, for juice brands, gyms and garden centres.",
+      "Hexagon modules in a deep olive lime with shield eyes and rounded-triangle centres, on a pale lime white. Fresh without being neon, for juice brands, gyms and garden centres.",
     tags: ["bold", "nature", "vibrant", "geometric"],
     style: {
       ...ink("#F7FEE7", "#3F6212", "#365314", "#3F6212"),
-      ...shapes("hexagon", "shield", "hexagon"),
+      ...shapes("hexagon", "shield", "rounded-triangle"),
       level: "Q",
       margin: 4,
     },
