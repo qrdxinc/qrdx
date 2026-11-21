@@ -11,6 +11,7 @@ import {
   useState,
 } from "react";
 import type { DesignSection } from "@/lib/playground-links";
+import { useIsNewLook } from "../control-sections/new-look-tag";
 import {
   Divider,
   insideInlineEditor,
@@ -75,6 +76,7 @@ function MenuItem({
   avoid?: () => MenuAvoid | null;
 }) {
   const label = useItemLabel(item);
+  const isNew = useIsNewLook(item.isNew);
   return (
     <MenuPopover
       avoid={avoid}
@@ -87,7 +89,17 @@ function MenuItem({
       side={side}
       trigger={
         <>
-          {item.trigger}
+          {/* A New pill is wider than an icon-only button, and it hangs off
+              the button's top-right corner: keep such a button at least as
+              wide as the pill so two neighbours' pills never touch. */}
+          <span
+            className={cn(
+              "inline-flex items-center justify-center gap-1.5",
+              isNew && "min-w-6",
+            )}
+          >
+            {item.trigger}
+          </span>
           <ItemMarks item={item} placement="corner" />
         </>
       }
