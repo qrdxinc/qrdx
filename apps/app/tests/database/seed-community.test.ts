@@ -384,6 +384,7 @@ describe("seed-community", () => {
 
   beforeEach(() => {
     pg = new FakeCommunityPg();
+    pg.refuseDates = true;
     lines.length = 0;
     pg.seed("user", [{ id: "u_team", name: "QRdx", email: "team@qrdx.dev" }]);
     pg.seed("organization", [{ id: "org_qrdx", slug: "qrdx" }]);

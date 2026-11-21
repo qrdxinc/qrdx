@@ -56,6 +56,14 @@ export class FakeCommunityPg {
   failOn: string | null = null;
   /** Drop rows of this table right after insert (verify must catch it) */
   loseInserts: string | null = null;
+  /**
+   * Throw on a Date parameter (the seed's tests turn this on). The
+   * timestamp columns are timestamp without time zone, and the driver
+   * sends a Date as local time with an offset such a column drops, so the
+   * seed must send UTC text (toISOString), as the app does. The backfill
+   * passes back times it read, which round-trip, so it stays off there.
+   */
+  refuseDates = false;
   private saved: Record<string, Row[]> | null = null;
 
   seed(table: string, rows: Row[]) {
@@ -88,13 +96,7 @@ export class FakeCommunityPg {
     });
     const B = backfill.SQL;
     const S = seed.SQL;
-    // The seed's timestamp columns are timestamp without time zone, and
-    // the driver sends a Date as local time with an offset such a column
-    // drops: the seed must send UTC text (toISOString), as the app does.
-    if (
-      Object.values(S).includes(text) &&
-      params.some((value) => value instanceof Date)
-    ) {
+    if (this.refuseDates && params.some((value) => value instanceof Date)) {
       throw new Error(
         `fake pg: a Date parameter would be written as local time: ${text.slice(0, 60)}`,
       );
