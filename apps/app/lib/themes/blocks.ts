@@ -469,37 +469,37 @@ export const STYLE_FAMILIES: readonly StyleFamily[] = [
   {
     id: "crisp",
     word: "Grid",
-    bodies: ["square", "vertical-line", "horizontal-line", "mosaic", "x"],
+    bodies: ["square", "vertical-line", "horizontal-line", "mosaic"],
     eyes: ["square", "bevel", "octagon", "notch", "plus"],
   },
   {
     id: "dotted",
     word: "Dot",
-    bodies: ["circle", "circle-large", "random-dots", "beads", "bubble"],
+    bodies: ["circle", "circle-large", "random-dots"],
     eyes: ["gear", "extra-rounded", "rounded", "porthole"],
   },
   {
     id: "soft",
     word: "Pebble",
     bodies: ["rounded", "circle-large", "liquid", "classy-rounded", "pebble"],
-    eyes: ["rounded", "extra-rounded", "squircle", "pebble"],
+    eyes: ["rounded", "extra-rounded", "squircle", "doodle"],
   },
   {
     id: "fluid",
     word: "Flow",
     bodies: ["liquid", "liquid-horizontal", "liquid-vertical", "classy"],
-    eyes: ["extra-rounded", "squircle", "rounded", "pebble"],
+    eyes: ["extra-rounded", "squircle", "rounded", "porthole"],
   },
   {
     id: "organic",
     word: "Leaf",
-    bodies: ["leaf", "classy", "classy-rounded", "petal", "drop"],
-    eyes: ["leaf", "leaf-reverse", "drop", "petal", "bud", "tag"],
+    bodies: ["leaf", "classy", "classy-rounded"],
+    eyes: ["leaf", "leaf-reverse", "drop", "petal", "bud"],
   },
   {
     id: "geometric",
     word: "Facet",
-    bodies: ["hexagon", "octagon", "x"],
+    bodies: ["hexagon", "octagon"],
     eyes: ["octagon", "bevel", "shield", "crest", "bowl"],
   },
   {
@@ -547,16 +547,16 @@ export const EYE_DOTS: Readonly<
   "leaf-reverse": ["leaf-reverse"],
   drop: ["drop", "leaf"],
   petal: ["flower"],
-  pebble: ["rounded", "cushion"],
-  porthole: ["bevel", "square"],
+  // The eyes added after qrdx 0.0.57: centres that read inside them in sharp
+  // renders (a square centre doesn't; tests/editor/new-eye-presets.test.ts)
+  porthole: ["circle", "rounded"],
   doodle: ["rounded", "cushion"],
-  notch: ["notch", "square"],
-  plus: ["square", "bevel"],
-  stamp: ["square", "bevel"],
+  notch: ["cushion", "rounded"],
+  plus: ["rounded", "squircle"],
+  stamp: ["squircle", "rounded"],
   bud: ["rounded", "leaf"],
-  tag: ["rounded", "bevel"],
   bowl: ["rounded", "squircle"],
-  crest: ["rounded", "square"],
+  crest: ["rounded", "squircle"],
 };
 
 /** Eye centres a playful body may borrow (a plus body with plus centres). */

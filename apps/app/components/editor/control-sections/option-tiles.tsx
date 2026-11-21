@@ -169,11 +169,16 @@ export function OptionTile({
       </span>
       <span
         className={cn(
-          "text-muted-foreground w-full truncate text-[11px] leading-tight font-medium",
+          "text-muted-foreground flex w-full min-w-0 items-center justify-center gap-1 text-[11px] leading-tight font-medium",
           selected && "text-foreground",
         )}
       >
-        {name}
+        <span className="truncate">{name}</span>
+        {isNew && !blocked && (
+          // Beside the name, so it never covers a corner of the preview
+          // (several eye frames differ only there)
+          <NewTag className="shrink-0" />
+        )}
       </span>
       {note && (
         <span className="text-muted-foreground -mt-1 text-[10px] leading-tight tabular-nums">
@@ -189,13 +194,6 @@ export function OptionTile({
         <span
           aria-hidden
           className="absolute top-2.5 left-2.5 size-1.5 rounded-full bg-amber-500 ring-2 ring-white"
-        />
-      )}
-      {isNew && !blocked && (
-        // Top-right, beside the check when the tile is selected; the amber
-        // dot keeps the top-left.
-        <NewTag
-          className={cn("absolute top-2.5 right-2.5", selected && "right-6")}
         />
       )}
     </button>
