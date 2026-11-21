@@ -187,18 +187,13 @@ export function OptionTile({
           <Tick className="size-3" />
         </span>
       )}
-      {isNew && !blocked && (
-        // Hangs from the top edge, centred: clear of the preview's corners
-        // (several eye frames differ only there), the name and the check
-        <NewTag className="absolute -top-1 left-1/2 -translate-x-1/2" />
-      )}
       {risk && !blocked && (
         <span
           aria-hidden
           className="absolute top-2.5 left-2.5 size-1.5 rounded-full bg-amber-500 ring-2 ring-white"
         />
       )}
-      {isNew && (
+      {isNew && !blocked && (
         // Top-right, beside the check when the tile is selected; the amber
         // dot keeps the top-left.
         <NewTag
