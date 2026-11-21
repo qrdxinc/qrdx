@@ -78,6 +78,21 @@ function FrameTile({
   );
 }
 
+/** The hook with a clock written inline, a new function on every render. */
+function InlineClockTile({ id }: { id: string }) {
+  const isNewFrame = useNewFrames(() => new Date("2026-11-21T12:00:00Z"));
+  return (
+    <OptionTile
+      isNew={isNewFrame(id)}
+      name={nameOf(id)}
+      onSelect={() => undefined}
+      selected={false}
+    >
+      <span />
+    </OptionTile>
+  );
+}
+
 describe("a frame tile's tag", () => {
   let container: HTMLDivElement;
   let root: Root;
@@ -127,5 +142,37 @@ describe("a frame tile's tag", () => {
   it("drops the tag once the batch's date has passed", () => {
     render({ id: NEW_ID, clock: AFTER });
     expect(pill()).toBeUndefined();
+  });
+
+  it("reads an inline clock once, without rendering forever", () => {
+    act(() => {
+      root.render(
+        <NextIntlClientProvider locale="en" messages={en}>
+          <InlineClockTile id={NEW_ID} />
+        </NextIntlClientProvider>,
+      );
+    });
+    expect(pill()).toBeDefined();
+  });
+
+  it("announces both on a new tile that may not scan", () => {
+    act(() => {
+      root.render(
+        <NextIntlClientProvider locale="en" messages={en}>
+          <OptionTile
+            isNew
+            name="Hexagon"
+            onSelect={() => undefined}
+            risk="Thin modules"
+            selected={false}
+          >
+            <span />
+          </OptionTile>
+        </NextIntlClientProvider>,
+      );
+    });
+    expect(button()?.getAttribute("aria-label")).toBe(
+      "Hexagon, new, may not scan",
+    );
   });
 });

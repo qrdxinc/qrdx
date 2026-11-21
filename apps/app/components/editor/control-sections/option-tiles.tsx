@@ -142,7 +142,9 @@ export function OptionTile({
     <button
       aria-label={
         risk && !blocked
-          ? t("nameMayNotScan", { name })
+          ? t("nameMayNotScan", {
+              name: isNew ? common("nameIsNew", { name }) : name,
+            })
           : isNew
             ? common("nameIsNew", { name })
             : undefined
