@@ -796,7 +796,8 @@ describe("seed-community", () => {
     );
     expect(entriesOf("ci_official_kit_cafe-table")).toEqual(
       (
-        items.find((i) => i.id === "ci_official_kit_cafe-table")?.entries ?? []
+        (items.find((i) => i.id === "ci_official_kit_cafe-table")?.entries ??
+          []) as string[]
       ).map((id, position) => [id, position]),
     );
     expect(kitEntries()).toEqual([
