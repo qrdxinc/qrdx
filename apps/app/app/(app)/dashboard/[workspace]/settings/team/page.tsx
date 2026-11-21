@@ -53,8 +53,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * The join link, or "unavailable" until manual-sql/0014 is applied (or when
- * it can't be read): the rest of the page still works.
+ * The join link, or "unavailable" until its table exists (or when it can't
+ * be read): the rest of the page still works.
  */
 async function loadJoinLink(
   organizationId: string,

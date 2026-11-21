@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/** The workspace's keys; "unavailable" until manual-sql/0011 is applied. */
+/** The workspace's keys; "unavailable" until the api_key table exists. */
 async function loadKeys(scope: ActiveScope): Promise<ApiKeysState> {
   try {
     return { available: true, keys: await listApiKeys(scope) };

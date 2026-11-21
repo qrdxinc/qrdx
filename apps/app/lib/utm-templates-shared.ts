@@ -17,7 +17,7 @@ export interface UtmTemplateView {
 }
 
 export interface UtmTemplateList {
-  /** false until manual-sql/0013 is applied: the panel shows no templates */
+  /** false until the utm_template table exists: the panel shows none */
   available: boolean;
   /** The workspace's plan includes UTM parameters (and so templates) */
   allowed: boolean;

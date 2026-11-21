@@ -1,8 +1,6 @@
 // Workspace slugs and names: pure and client-safe. The app (create and
-// rename forms, lib/workspaces.ts), Better Auth's organization hooks
-// (./server.ts) and the backfill script
-// (packages/database/scripts/backfill-workspaces.mjs, which mirrors
-// ownWorkspaceSlugBase and nextFreeSlug; a test keeps them equal) use them.
+// rename forms, lib/workspaces.ts) and Better Auth's organization hooks
+// (./server.ts) use them.
 //
 // A workspace lives at /dashboard/<slug>. Slugs are 3-48 lowercase letters,
 // digits and inner dashes, unique across workspaces, and never one of the

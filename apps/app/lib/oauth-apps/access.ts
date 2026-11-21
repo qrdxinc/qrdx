@@ -9,7 +9,7 @@ export interface OAuthAppOwnership {
   organizationId: string | null;
 }
 
-/** Registered by the QRdx team (scripts/create-oauth-app.ts): no owner. */
+/** Added by the QRdx team, not made in Settings → Developers: no owner. */
 export function isFirstPartyApp(app: OAuthAppOwnership): boolean {
   return app.ownerUserId === null && app.organizationId === null;
 }

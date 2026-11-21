@@ -87,32 +87,45 @@ function rootAttributes(props: QRCodeOptions): QRSVGAttributes {
 
 type QRData = ReturnType<typeof getQRData>;
 
-/** What `getQRData` lays out for `QRCode`'s props. */
+/**
+ * Every prop `getQRCodeData` lays the code out from, in one list. React's
+ * `QRCode` keeps its layout until one of these changes, so a prop the layout
+ * reads can't be left out of that check: the looks once were (the per-eye
+ * shapes, the eyes' gradient span, the rounded background and its backdrop,
+ * the halo and the shadow), and a code drawn without them stayed on screen
+ * after one was turned on.
+ */
+export const QR_CODE_DATA_KEYS = [
+  "value",
+  "fgColor",
+  "hideLogo",
+  "bgColor",
+  "eyeColor",
+  "dotColor",
+  "bodyPattern",
+  "cornerEyePattern",
+  "cornerEyeDotPattern",
+  "level",
+  "templateId",
+  "logo",
+  "logoOptions",
+  "margin",
+  "autoLevel",
+  "shape",
+  "eyeShapes",
+  "eyeGradient",
+  "bgRadius",
+  "backdrop",
+  "halo",
+  "shadow",
+] as const satisfies readonly (keyof QRCodeProps)[];
+
+/** What `getQRData` lays out for `QRCode`'s props (QR_CODE_DATA_KEYS). */
 export function getQRCodeData(props: QRCodeProps): QRData {
-  return getQRData({
-    value: props.value,
-    fgColor: props.fgColor,
-    hideLogo: props.hideLogo,
-    bgColor: props.bgColor,
-    eyeColor: props.eyeColor,
-    dotColor: props.dotColor,
-    bodyPattern: props.bodyPattern,
-    cornerEyePattern: props.cornerEyePattern,
-    cornerEyeDotPattern: props.cornerEyeDotPattern,
-    level: props.level,
-    templateId: props.templateId,
-    logo: props.logo,
-    logoOptions: props.logoOptions,
-    margin: props.margin ?? DEFAULT_MARGIN,
-    autoLevel: props.autoLevel,
-    shape: props.shape,
-    eyeShapes: props.eyeShapes,
-    eyeGradient: props.eyeGradient,
-    bgRadius: props.bgRadius,
-    backdrop: props.backdrop,
-    halo: props.halo,
-    shadow: props.shadow,
-  });
+  const read = Object.fromEntries(
+    QR_CODE_DATA_KEYS.map((key) => [key, props[key]])
+  ) as Pick<QRCodeProps, (typeof QR_CODE_DATA_KEYS)[number]>;
+  return getQRData({ ...read, margin: props.margin ?? DEFAULT_MARGIN });
 }
 
 /**

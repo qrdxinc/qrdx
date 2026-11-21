@@ -22,15 +22,16 @@ import {
   CARD_TEXT,
   CARD_TEXT_REVEAL,
   CARD_TEXT_TOUCH_ONLY,
+  NEW_CHIP,
   RAIL_CARD,
   RAIL_RANKED,
   RANK_NUMERAL,
   RANK_ROOM,
   RANK_ROOM_WIDE,
-  STAGE_LABEL,
 } from "./card-layout";
 import { CardRail } from "./card-rail";
 import { CardReactions } from "./card-reactions";
+import { CardTypeChip } from "./card-type-chip";
 import { CreatorLine } from "./creator-line";
 import { LazyDesignQr } from "./design-qr";
 import numeral from "./rank-numeral.module.css";
@@ -54,14 +55,15 @@ const frameOnlyKit = (card: CommunityItemCard) =>
   Boolean(card.kit?.frame && !card.kit.theme && card.preview.frame);
 
 /**
- * One item in a grid or row: its preview on a light stage, labelled with
- * its type, then its name and saves, and its creator. The preview is drawn
+ * One item in a grid or row: its preview on a light stage, its type as a
+ * mark in the stage's corner (named in a tooltip), then its name, likes and
+ * bookmarks, and its creator. The preview is drawn
  * in the browser as the card nears the screen; `eager` draws it in the
  * server's HTML too (first-screen cards only: a framed design is tens of
  * kilobytes of SVG). Hovering the card, or focusing its link, plays the
  * preview's motion (./stage.module.css). An item published in the last
- * thirty days wears a "New" pill on its stage (lib/whats-new/community.ts);
- * the pill is decided here, on the server, so the HTML never differs from
+ * thirty days wears a "New" chip on the stage's top-left corner
+ * (lib/whats-new/community.ts); the chip is decided here, on the server, so the HTML never differs from
  * what the browser would compute.
  */
 export function ItemCard({
@@ -69,19 +71,15 @@ export function ItemCard({
   className,
   eager = false,
   rank,
-  rankAs = "numeral",
 }: {
   card: CommunityItemCard;
   className?: string;
   eager?: boolean;
-  /** Its place in a ranking */
-  rank?: number;
   /**
-   * How the place shows: large and half behind the stage (rows, which
-   * leave room for it), or a small label on the stage beside its type
-   * (grids)
+   * Its place in a ranked row, drawn large and half behind the stage (rows
+   * leave room for it). Grids show no places.
    */
-  rankAs?: "numeral" | "badge";
+  rank?: number;
 }) {
   const t = useTranslations("community.itemCard");
   const common = useTranslations("common");
@@ -96,7 +94,7 @@ export function ItemCard({
       className={cn(
         CARD_FRAME,
         stage.card,
-        rank !== undefined && rankAs === "numeral" && numeral.card,
+        rank !== undefined && numeral.card,
         className,
       )}
     >
@@ -106,36 +104,32 @@ export function ItemCard({
         href={cardHref(card)}
       />
       <div className="relative">
-        {rank !== undefined && rankAs === "numeral" && (
+        {rank !== undefined && (
           <RankNumeral id={rankId(card, rank)} rank={rank} />
         )}
         <div className={CARD_ART} data-stage="">
           <CardPicture card={card} eager={eager} />
-          <div
-            aria-hidden
-            className="absolute top-2.5 left-2.5 z-[3] flex items-center gap-1"
-          >
-            {rank !== undefined && rankAs === "badge" && (
-              <span className={cn(STAGE_LABEL, "font-semibold tabular-nums")}>
-                {rank}
-              </span>
-            )}
-            <span className={STAGE_LABEL} data-type-label="">
-              {card.type === "collection" && card.itemCount !== undefined
-                ? t("typeCollectionCount", { count: card.itemCount })
-                : t(TYPE_KEYS[card.type])}
-            </span>
-          </div>
           {isNew && (
-            <span
+            // The stage's chip look, matching the type mark across it
+            <NewTag
               aria-hidden
-              className="absolute top-2.5 right-2.5 z-[3] flex"
+              className={cn(NEW_CHIP, "absolute top-2.5 left-2.5 z-[3]")}
               data-new-tag=""
-            >
-              <NewTag />
-            </span>
+            />
           )}
         </div>
+        {/* Outside the stage, whose layer sits under the card's link, so
+            the mark can be hovered for its tooltip */}
+        <CardTypeChip
+          className="absolute top-2.5 right-2.5 z-20"
+          href={cardHref(card)}
+          label={
+            card.type === "collection" && card.itemCount !== undefined
+              ? t("typeCollectionCount", { count: card.itemCount })
+              : t(TYPE_KEYS[card.type])
+          }
+          type={card.type}
+        />
       </div>
       {/* Above the card's link, so its like and bookmark buttons can be
           pressed (the caption's fade makes it a layer of its own, which

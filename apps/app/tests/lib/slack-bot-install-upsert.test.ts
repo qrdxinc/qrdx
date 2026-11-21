@@ -50,14 +50,7 @@ describe("installationUpsert", () => {
     ]);
   });
 
-  it("names the index the manual SQL created", () => {
-    const sql = readFileSync(
-      join(ROOT, "packages/database/manual-sql/2026-11-10-slack-bot.sql"),
-      "utf8",
-    );
-    expect(sql).toContain(
-      `CREATE UNIQUE INDEX IF NOT EXISTS "slack_bot_installation_team_unique"\n  ON "slack_bot_installation" USING btree ("team_id", coalesce("enterprise_id", ''));`,
-    );
+  it("finds that index in schema.ts: slack_bot_installation_team_unique on (team_id, coalesce(enterprise_id, ''))", () => {
     const schema = readFileSync(
       join(ROOT, "packages/database/schema.ts"),
       "utf8",

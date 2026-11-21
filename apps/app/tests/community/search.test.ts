@@ -1,8 +1,8 @@
-// Community full-text search (lib/community/search.ts, manual-sql/0017):
-// queries are built from letters and digits only, searchCommunity uses
-// Postgres full-text search once 0017's index is valid and otherwise (or
-// when it fails) keeps today's in-memory search, and the SQL files are
-// additive, concurrent and idempotent with a dry run first.
+// Community full-text search (lib/community/search.ts): queries are built
+// from letters and digits only, searchCommunity uses Postgres full-text
+// search once the index is valid and otherwise (or when it fails) keeps
+// today's in-memory search, and the index in packages/database/schema.ts is
+// on exactly the document the app queries.
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -91,7 +91,7 @@ describe("toPrefixQuery", () => {
 });
 
 describe("searchCommunity", () => {
-  it("keeps the in-memory search until 0017's index is there", async () => {
+  it("keeps the in-memory search until the search index is there", async () => {
     const result = await searchCommunity({ type: "theme", q: "bistro" });
     expect(state.fullText).not.toHaveBeenCalled();
     expect(result.items.map((item) => item.id)).toEqual(["theme:bistro-ink"]);
@@ -140,49 +140,30 @@ describe("searchCommunity", () => {
   });
 });
 
-describe("the SQL", () => {
-  const dir = join(
-    __dirname,
-    "..",
-    "..",
-    "..",
-    "..",
-    "packages",
-    "database",
-    "manual-sql",
-  );
-  const read = (file: string) => readFileSync(join(dir, file), "utf8");
-  const statements = (text: string) =>
-    text
-      .split("\n")
-      .filter((line) => !line.trim().startsWith("--"))
-      .join("\n");
-
-  for (const file of [
-    "0017_community_search.sql",
-    "0018_community_use_preset_index.sql",
-  ]) {
-    it(`${file}: a dry run first, then one concurrent, idempotent index`, () => {
-      const text = read(file);
-      const code = statements(text);
-      // The read-only dry run comes before the one write.
-      expect(text).toContain("Dry run");
-      expect(code.indexOf("SELECT")).toBeGreaterThan(-1);
-      expect(code.indexOf("SELECT")).toBeLessThan(code.indexOf("CREATE INDEX"));
-      expect(code.match(/CREATE INDEX/g)).toHaveLength(1);
-      expect(code).toMatch(/CREATE INDEX CONCURRENTLY IF NOT EXISTS/);
-      expect(code).not.toMatch(
-        /\b(DROP|DELETE|UPDATE|ALTER|TRUNCATE|INSERT|BEGIN|COMMIT)\b/i,
-      );
-    });
-  }
+describe("the index", () => {
+  const root = join(__dirname, "..", "..", "..", "..");
+  const read = (file: string) => readFileSync(join(root, file), "utf8");
+  const flat = (text: string) => text.replace(/\s+/g, "").replace(/"/g, "");
 
   it("indexes exactly the document the app queries", () => {
-    const flat = (text: string) => text.replace(/\s+/g, "").replace(/"/g, "");
-    expect(flat(statements(read("0017_community_search.sql")))).toContain(
+    const schema = read("packages/database/schema.ts");
+    const index = schema.slice(
+      schema.indexOf('index("community_item_search_idx")'),
+    );
+    expect(index).toMatch(
+      /^index\("community_item_search_idx"\)\.using\(\s*"gin",/,
+    );
+    const indexed = /sql`([^`]+)`/.exec(index)?.[1] ?? "";
+    const queried = (
+      /SEARCH_DOCUMENT = sql`([^`]+)`/.exec(
+        read("apps/app/lib/community/search.ts"),
+      )?.[1] ?? ""
+    ).replace(/\$\{communityItem\.(\w+)\}/g, "$1");
+    expect(flat(indexed)).toBe(
       flat(
         "to_tsvector('simple'::regconfig, coalesce(name, '') || ' ' || coalesce(description, ''))",
       ),
     );
+    expect(flat(queried)).toBe(flat(indexed));
   });
 });

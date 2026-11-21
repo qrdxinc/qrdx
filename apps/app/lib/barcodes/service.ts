@@ -1,7 +1,7 @@
 import "server-only";
 
 // Saved barcodes: static barcodes kept in a workspace to edit and download
-// again (the `barcode` table, manual-sql/2026-11-11-barcodes.sql). Every
+// again (the `barcode` table). Every
 // read and write is scoped to the caller's workspace; rows outside it look
 // missing. Used by the dashboard (actions/barcodes.ts), the REST API
 // (/v1/barcodes) and MCP (save_barcode). Changes are recorded in the
