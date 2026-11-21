@@ -242,6 +242,36 @@ const EYES: Record<
     caution: true,
     note: "Only lenient decoders read circle eyes; many apps miss them",
   },
+  notch: {
+    label: "Notch",
+    category: "Classic",
+    popularity: null,
+    recommendedDot: "cushion",
+  },
+  plus: {
+    label: "Plus",
+    category: "Classic",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
+  porthole: {
+    label: "Porthole",
+    category: "Rounded",
+    popularity: null,
+    recommendedDot: "circle",
+  },
+  bud: {
+    label: "Bud",
+    category: "Decorative",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
+  bowl: {
+    label: "Bowl",
+    category: "Decorative",
+    popularity: null,
+    recommendedDot: "rounded",
+  },
 };
 
 const DOTS: Record<PickableCornerEyeDotPattern, Base> = {
@@ -294,6 +324,7 @@ const DOTS: Record<PickableCornerEyeDotPattern, Base> = {
     category: "Playful",
     popularity: null,
   },
+  cushion: { label: "Cushion", category: "Rounded", popularity: null },
 };
 
 // Where each frame sits in the pickers. The name, the second line and what

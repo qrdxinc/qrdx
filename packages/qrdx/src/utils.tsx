@@ -19,7 +19,13 @@ import {
   isImagePaint,
   normalizeColorConfig,
 } from "../types/color-helpers";
-import { AUTO_LEVEL_LOGO_COVERAGE } from "../types/constants";
+import {
+  AUTO_LEVEL_LOGO_COVERAGE,
+  WITHDRAWN_BODY_PATTERNS,
+  WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+  WITHDRAWN_CORNER_EYE_PATTERNS,
+  withdrawnFallback,
+} from "../types/constants";
 import type { EyePosition, QRCodeShape } from "../types/qr";
 import { getQRArtEyeColors, isQRArtActive, renderQRArt } from "./art";
 import {
@@ -954,9 +960,9 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     fgColor = DEFAULT_FGCOLOR,
     eyeColor,
     dotColor,
-    bodyPattern = "circle",
-    cornerEyePattern = "gear",
-    cornerEyeDotPattern = "circle",
+    bodyPattern: requestedBody = "circle",
+    cornerEyePattern: requestedEye = "gear",
+    cornerEyeDotPattern: requestedDot = "circle",
     margin = DEFAULT_MARGIN,
     isOGContext = false,
     imageSettings: requestedImageSettings,
@@ -979,6 +985,16 @@ export function createQRCodeTree(props: QRSVGOptions): QRNode {
     partMarkers,
     ...otherProps
   } = props;
+  // A shape withdrawn before release draws as the one it maps to
+  const bodyPattern = withdrawnFallback(WITHDRAWN_BODY_PATTERNS, requestedBody);
+  const cornerEyePattern = withdrawnFallback(
+    WITHDRAWN_CORNER_EYE_PATTERNS,
+    requestedEye
+  );
+  const cornerEyeDotPattern = withdrawnFallback(
+    WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+    requestedDot
+  );
   // A logo no bigger than the code can repair (logo-budget.ts)
   const imageSettings = capImageSettings(
     { value, size, margin, level, shape, autoLevel, isOGContext },

@@ -9,7 +9,7 @@ import type {
   PickableCornerEyePattern,
 } from "qrdx/types";
 
-// Every body pattern, simplest first (23: no lone tile in 3 or 4 columns)
+// Every body pattern, simplest first
 export const BODY_PATTERNS: { id: BodyPattern; name: string }[] = [
   { id: "square", name: "Square" },
   { id: "rounded", name: "Rounded" },
@@ -56,6 +56,11 @@ export const EYE_PATTERNS: { id: PickableCornerEyePattern; name: string }[] = [
   { id: "pointy", name: "Pointy" },
   { id: "gear", name: "Gear" },
   { id: "circle", name: "Circle" },
+  { id: "porthole", name: "Porthole" },
+  { id: "notch", name: "Notch" },
+  { id: "plus", name: "Plus" },
+  { id: "bud", name: "Bud" },
+  { id: "bowl", name: "Bowl" },
 ];
 
 // Every offered eye dot (diamond, star and banner were retired: they don't
@@ -85,6 +90,7 @@ export const EYE_DOT_PATTERNS: {
   { id: "diya", name: "Diya" },
   { id: "diya-reverse", name: "Diya Reverse" },
   { id: "rounded-triangle", name: "Rounded Triangle" },
+  { id: "cushion", name: "Cushion" },
 ];
 
 /** A pattern's name in the editor, or null for one it doesn't offer. */

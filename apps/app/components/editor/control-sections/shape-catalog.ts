@@ -78,6 +78,11 @@ export const EYE_CATEGORY: Partial<Record<CornerEyePattern, ShapeCategory>> = {
   message: "decorative",
   pointy: "decorative",
   gear: "playful",
+  porthole: "rounded",
+  notch: "classic",
+  plus: "classic",
+  bud: "decorative",
+  bowl: "decorative",
 };
 
 export const EYE_DOT_FEATURED: CornerEyeDotPattern[] = [
@@ -112,6 +117,7 @@ export const EYE_DOT_CATEGORY: Partial<
   diya: "decorative",
   "diya-reverse": "decorative",
   heart: "playful",
+  cushion: "rounded",
 };
 
 /** Matching outer + centre pairs: one per outer shape, so every eye is one tap. */
@@ -145,6 +151,14 @@ export const EYE_PRESETS: EyePreset[] = [
   { id: "message", name: "Message", outer: "message", centre: "rounded" },
   { id: "pointy", name: "Pointy", outer: "pointy", centre: "square" },
   { id: "gear", name: "Gear", outer: "gear", centre: "circle" },
+  // The eyes added after qrdx 0.0.57 cut or round every corner, so a square
+  // centre misses strict decoders in sharp renders inside them; each pairs
+  // with a centre that reads (tests/editor/new-eye-presets.test.ts).
+  { id: "porthole", name: "Porthole", outer: "porthole", centre: "circle" },
+  { id: "notch", name: "Notch", outer: "notch", centre: "cushion" },
+  { id: "plus", name: "Plus", outer: "plus", centre: "rounded" },
+  { id: "bud", name: "Bud", outer: "bud", centre: "rounded" },
+  { id: "bowl", name: "Bowl", outer: "bowl", centre: "rounded" },
 ];
 
 export const EYE_PRESET_FEATURED = [

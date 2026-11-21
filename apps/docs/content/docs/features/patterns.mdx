@@ -55,13 +55,15 @@ export function LightCode() {
 
 ## Eye frames
 
-`cornerEyePattern` shapes the corner eyes. There are {facts.eyeShapes} values; the default is `gear`: `square`, `rounded`, `extra-rounded`, `squircle`, `cushion`, `bevel`, `octagon`, `leaf`, `leaf-reverse`, `drop`, `petal`, `shield`, `gear`, `circle`, `diya`, `message` and `pointy`.
+`cornerEyePattern` shapes the corner eyes. There are {facts.eyeShapes} values; the default is `gear`: `square`, `rounded`, `extra-rounded`, `squircle`, `cushion`, `bevel`, `octagon`, `leaf`, `leaf-reverse`, `drop`, `petal`, `shield`, `gear`, `circle`, `diya`, `message`, `pointy`, `porthole`, `notch`, `plus`, `bud` and `bowl`.
 
-`leaf`, `leaf-reverse`, `drop` and `petal` turn each of the three eyes to face its corner of the code. `circle` eyes may be missed by some scanner apps; the [scan score](/docs/features/frames#will-it-scan) warns about them.
+`leaf`, `leaf-reverse`, `drop`, `petal` and `bud` turn each of the three eyes to face its corner of the code. `circle` eyes may be missed by some scanner apps; the [scan score](/docs/features/frames#will-it-scan) warns about them.
+
+`porthole`, `notch`, `plus`, `bud` and `bowl` cut or round every corner. With the default body, `circle`, `rounded`, `squircle` and `cushion` centres read inside them in the package's sharp-render tests; `square`, `diya` and `rounded-triangle` centres are missed by strict decoders in many sharp renders and `heart` in some, as they are in `gear` and `octagon` eyes. The playground pairs each of these eyes with a centre that reads.
 
 ## Eye centers
 
-`cornerEyeDotPattern` shapes the dot inside each eye. There are {facts.eyeCentres} values; the default is `circle`: `square`, `rounded`, `extra-rounded`, `circle`, `squircle`, `octagon`, `hexagon`, `dots`, `leaf`, `leaf-reverse`, `drop`, `drop-reverse`, `plus`, `cross-rounded`, `flower`, `heart`, `message`, `message-reverse`, `diya`, `diya-reverse` and `rounded-triangle`.
+`cornerEyeDotPattern` shapes the dot inside each eye. There are {facts.eyeCentres} values; the default is `circle`: `square`, `rounded`, `extra-rounded`, `circle`, `squircle`, `octagon`, `hexagon`, `dots`, `leaf`, `leaf-reverse`, `drop`, `drop-reverse`, `plus`, `cross-rounded`, `flower`, `heart`, `message`, `message-reverse`, `diya`, `diya-reverse`, `rounded-triangle` and `cushion`.
 
 ## Pairs to avoid and retired shapes
 

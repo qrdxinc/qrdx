@@ -212,7 +212,12 @@
                 "cushion",
                 "shield",
                 "petal",
-                "leaf-reverse"
+                "leaf-reverse",
+                "porthole",
+                "notch",
+                "plus",
+                "bud",
+                "bowl"
               ]
             }
           },
@@ -245,7 +250,8 @@
                 "dots",
                 "extra-rounded",
                 "leaf-reverse",
-                "drop-reverse"
+                "drop-reverse",
+                "cushion"
               ]
             }
           },
@@ -7682,6 +7688,11 @@
                       "shield",
                       "petal",
                       "leaf-reverse",
+                      "porthole",
+                      "notch",
+                      "plus",
+                      "bud",
+                      "bowl",
                       "curly"
                     ]
                   },
@@ -7710,6 +7721,7 @@
                       "extra-rounded",
                       "leaf-reverse",
                       "drop-reverse",
+                      "cushion",
                       "diamond",
                       "star",
                       "banner"
@@ -8980,6 +8992,11 @@
                               "shield",
                               "petal",
                               "leaf-reverse",
+                              "porthole",
+                              "notch",
+                              "plus",
+                              "bud",
+                              "bowl",
                               "curly"
                             ]
                           },
@@ -9007,6 +9024,7 @@
                               "extra-rounded",
                               "leaf-reverse",
                               "drop-reverse",
+                              "cushion",
                               "diamond",
                               "star",
                               "banner"
@@ -9037,6 +9055,11 @@
                               "shield",
                               "petal",
                               "leaf-reverse",
+                              "porthole",
+                              "notch",
+                              "plus",
+                              "bud",
+                              "bowl",
                               "curly"
                             ]
                           },
@@ -9064,6 +9087,7 @@
                               "extra-rounded",
                               "leaf-reverse",
                               "drop-reverse",
+                              "cushion",
                               "diamond",
                               "star",
                               "banner"
@@ -9094,6 +9118,11 @@
                               "shield",
                               "petal",
                               "leaf-reverse",
+                              "porthole",
+                              "notch",
+                              "plus",
+                              "bud",
+                              "bowl",
                               "curly"
                             ]
                           },
@@ -9121,6 +9150,7 @@
                               "extra-rounded",
                               "leaf-reverse",
                               "drop-reverse",
+                              "cushion",
                               "diamond",
                               "star",
                               "banner"
@@ -11380,6 +11410,11 @@
               "shield",
               "petal",
               "leaf-reverse",
+              "porthole",
+              "notch",
+              "plus",
+              "bud",
+              "bowl",
               "curly"
             ]
           },
@@ -11408,6 +11443,7 @@
               "extra-rounded",
               "leaf-reverse",
               "drop-reverse",
+              "cushion",
               "diamond",
               "star",
               "banner"
@@ -12678,6 +12714,11 @@
                       "shield",
                       "petal",
                       "leaf-reverse",
+                      "porthole",
+                      "notch",
+                      "plus",
+                      "bud",
+                      "bowl",
                       "curly"
                     ]
                   },
@@ -12705,6 +12746,7 @@
                       "extra-rounded",
                       "leaf-reverse",
                       "drop-reverse",
+                      "cushion",
                       "diamond",
                       "star",
                       "banner"
@@ -12735,6 +12777,11 @@
                       "shield",
                       "petal",
                       "leaf-reverse",
+                      "porthole",
+                      "notch",
+                      "plus",
+                      "bud",
+                      "bowl",
                       "curly"
                     ]
                   },
@@ -12762,6 +12809,7 @@
                       "extra-rounded",
                       "leaf-reverse",
                       "drop-reverse",
+                      "cushion",
                       "diamond",
                       "star",
                       "banner"
@@ -12792,6 +12840,11 @@
                       "shield",
                       "petal",
                       "leaf-reverse",
+                      "porthole",
+                      "notch",
+                      "plus",
+                      "bud",
+                      "bowl",
                       "curly"
                     ]
                   },
@@ -12819,6 +12872,7 @@
                       "extra-rounded",
                       "leaf-reverse",
                       "drop-reverse",
+                      "cushion",
                       "diamond",
                       "star",
                       "banner"

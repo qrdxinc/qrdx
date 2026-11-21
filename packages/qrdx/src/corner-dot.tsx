@@ -5,6 +5,7 @@ import type { EyeCorner } from "./corner-eye";
 import type { QRNode } from "./jsx/runtime";
 import {
   circlePath,
+  cushionPath,
   heartPath,
   polygonPath,
   regularPolygon,
@@ -180,6 +181,20 @@ export function generateCornerDotPath(
       }
       return <path d={dots.join("")} />;
     }
+
+    // The centre added after 0.0.57 is 3 modules wide on the row and the
+    // column through its centre, so the finder's 1:1:3:1:1 runs hold, and
+    // keeps nearly all of its corners. Centres with teeth, bumps, a pill
+    // outline, a round top, a pointed bottom or one big round corner all
+    // read like a circle centre: missed inside some eyes in sharp renders
+    // or at 9 px per module, so they were not kept; neither were a cut-corner
+    // and a bitten-corner square, which looked like the square centre.
+    case "cushion":
+      return (
+        <path
+          d={cushionPath(cx - radius, cy - radius, size, 0.6 * m, 0.15 * m)}
+        />
+      );
 
     case "square":
       return (

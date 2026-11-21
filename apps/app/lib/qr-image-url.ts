@@ -13,6 +13,10 @@ import {
   type CornerEyeDotPattern,
   type CornerEyePattern,
   errorLevelSchema,
+  WITHDRAWN_BODY_PATTERNS,
+  WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+  WITHDRAWN_CORNER_EYE_PATTERNS,
+  withdrawnFallback,
 } from "qrdx/types";
 import { z } from "zod";
 import { baseUrl } from "@/lib/metadata";
@@ -56,6 +60,18 @@ export const hexColor = z
     "Must be a hex color such as 155dfc (in URLs leave out the # or encode it as %23)",
   );
 
+/**
+ * `schema` reading a shape withdrawn before release (qrdx WITHDRAWN_*) as
+ * the shape it maps to, so old links and calls still render. The mapping
+ * runs first, so `schema` keeps its default in the OpenAPI document.
+ */
+export function readingWithdrawn<Schema extends z.ZodType>(
+  withdrawn: Readonly<Record<string, string>>,
+  schema: Schema,
+) {
+  return z.preprocess((value) => withdrawnFallback(withdrawn, value), schema);
+}
+
 /** Render options, validated. Shared by the image API and the MCP tools. */
 export const qrOptionsSchema = z.object({
   data: z
@@ -80,18 +96,18 @@ export const qrOptionsSchema = z.object({
   dotColor: hexColor
     .optional()
     .describe("Color of the dot inside each corner eye (defaults to fg)"),
-  body: z
-    .enum(BODY_PATTERN)
-    .default(QR_DEFAULTS.body)
-    .describe("Shape of the data modules"),
-  eye: z
-    .enum(CORNER_EYE_PATTERNS)
-    .default(QR_DEFAULTS.eye)
-    .describe("Shape of the corner eye frames"),
-  dot: z
-    .enum(CORNER_EYE_DOT_PATTERNS)
-    .default(QR_DEFAULTS.dot)
-    .describe("Shape of the dot inside each corner eye"),
+  body: readingWithdrawn(
+    WITHDRAWN_BODY_PATTERNS,
+    z.enum(BODY_PATTERN).default(QR_DEFAULTS.body),
+  ).describe("Shape of the data modules"),
+  eye: readingWithdrawn(
+    WITHDRAWN_CORNER_EYE_PATTERNS,
+    z.enum(CORNER_EYE_PATTERNS).default(QR_DEFAULTS.eye),
+  ).describe("Shape of the corner eye frames"),
+  dot: readingWithdrawn(
+    WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+    z.enum(CORNER_EYE_DOT_PATTERNS).default(QR_DEFAULTS.dot),
+  ).describe("Shape of the dot inside each corner eye"),
   level: z
     .enum(errorLevelSchema.options)
     .default(QR_DEFAULTS.level)

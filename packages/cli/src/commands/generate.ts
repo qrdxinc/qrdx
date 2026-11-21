@@ -26,6 +26,7 @@ import {
   getFrameDimensions,
   getTemplateIds,
 } from "qrdx";
+import { idOptions } from "../lib/id-options";
 import {
   OUTPUT_FORMATS,
   type OutputFormat,
@@ -666,7 +667,7 @@ export async function runGenerate(
     if (!flags.body) {
       const res = await p.select<BodyPattern>({
         message: "Body dot pattern",
-        options: BODY_PATTERN.map((b) => ({ value: b, label: b })),
+        options: idOptions(BODY_PATTERN),
         initialValue: "square" as BodyPattern,
       });
       if (isCancel(res)) {
@@ -679,7 +680,7 @@ export async function runGenerate(
     if (!flags.eye) {
       const res = await p.select<CornerEyePattern>({
         message: "Corner eye pattern",
-        options: CORNER_EYE_PATTERNS.map((e) => ({ value: e, label: e })),
+        options: idOptions(CORNER_EYE_PATTERNS),
         initialValue: "square" as CornerEyePattern,
       });
       if (isCancel(res)) {
@@ -692,7 +693,7 @@ export async function runGenerate(
     if (!flags.dot) {
       const res = await p.select<CornerEyeDotPattern>({
         message: "Corner dot pattern",
-        options: CORNER_EYE_DOT_PATTERNS.map((d) => ({ value: d, label: d })),
+        options: idOptions(CORNER_EYE_DOT_PATTERNS),
         initialValue: "square" as CornerEyeDotPattern,
       });
       if (isCancel(res)) {

@@ -1,8 +1,12 @@
 import {
-  cornerEyeDotPatternSchema,
-  cornerEyePatternSchema,
+  CORNER_EYE_DOT_PATTERNS,
+  CORNER_EYE_PATTERNS,
   FRAME_STYLES,
   FRAME_TEXT_MAX_LENGTH,
+  RETIRED_CORNER_EYE_DOT_PATTERNS,
+  RETIRED_CORNER_EYE_PATTERNS,
+  WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+  WITHDRAWN_CORNER_EYE_PATTERNS,
 } from "qrdx/types";
 import { z } from "zod";
 import { FILE_ID } from "@/lib/qr-api/style";
@@ -14,6 +18,7 @@ import {
   QR_SIZE_MIN,
   qrImageFormats,
   qrOptionsSchema,
+  readingWithdrawn,
 } from "@/lib/qr-render";
 
 // Query schema of GET /v1/qr, here rather than in the route file so the
@@ -44,8 +49,18 @@ export const STYLED_PARAMS = [
 export const qrImageQuerySchema = qrOptionsSchema.extend({
   // Retired shapes are no longer listed, but existing image URLs that use
   // them keep rendering exactly as before.
-  eye: cornerEyePatternSchema.default(QR_DEFAULTS.eye),
-  dot: cornerEyeDotPatternSchema.default(QR_DEFAULTS.dot),
+  eye: readingWithdrawn(
+    WITHDRAWN_CORNER_EYE_PATTERNS,
+    z
+      .enum([...CORNER_EYE_PATTERNS, ...RETIRED_CORNER_EYE_PATTERNS])
+      .default(QR_DEFAULTS.eye),
+  ),
+  dot: readingWithdrawn(
+    WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+    z
+      .enum([...CORNER_EYE_DOT_PATTERNS, ...RETIRED_CORNER_EYE_DOT_PATTERNS])
+      .default(QR_DEFAULTS.dot),
+  ),
   format: z.enum(qrImageFormats).default("svg"),
   size: z.coerce
     .number()

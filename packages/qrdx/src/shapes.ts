@@ -57,6 +57,25 @@ export function roundedRectPath(
   );
 }
 
+/** Square with `cut` chamfered off each corner, clockwise from the top. */
+export function octagonPoints(
+  x: number,
+  y: number,
+  size: number,
+  cut: number
+): Point[] {
+  return [
+    [x + cut, y],
+    [x + size - cut, y],
+    [x + size, y + cut],
+    [x + size, y + size - cut],
+    [x + size - cut, y + size],
+    [x + cut, y + size],
+    [x, y + size - cut],
+    [x, y + cut],
+  ];
+}
+
 /** Points of a regular polygon (clockwise), first vertex at `rotation` degrees. */
 export function regularPolygon(
   cx: number,
@@ -166,4 +185,108 @@ export function hashString(value: string): string {
     h = Math.imul(h, 0x01_00_01_93);
   }
   return (h >>> 0).toString(36);
+}
+
+/**
+ * Rectangle whose corners are scooped out by concave quarter circles of
+ * radius `scoop` (clockwise, like roundedRectPath).
+ */
+export function scoopedRectPath(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  scoop: number
+): string {
+  const s = Math.max(0, Math.min(scoop, Math.min(width, height) / 2));
+  const arc = (toX: number, toY: number) =>
+    `A${fmt(s)} ${fmt(s)} 0 0 0 ${fmt(toX)} ${fmt(toY)}`;
+  return (
+    `M${fmt(x + s)} ${fmt(y)}` +
+    `H${fmt(x + width - s)}${arc(x + width, y + s)}` +
+    `V${fmt(y + height - s)}${arc(x + width - s, y + height)}` +
+    `H${fmt(x + s)}${arc(x, y + height - s)}` +
+    `V${fmt(y + s)}${arc(x + s, y)}Z`
+  );
+}
+
+/** Rectangle with a square notch of side `notch` cut from each corner. */
+export function notchedRectPath(
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  notch: number
+): string {
+  const n = Math.max(0, Math.min(notch, Math.min(width, height) / 2));
+  return polygonPath([
+    [x + n, y],
+    [x + width - n, y],
+    [x + width - n, y + n],
+    [x + width, y + n],
+    [x + width, y + height - n],
+    [x + width - n, y + height - n],
+    [x + width - n, y + height],
+    [x + n, y + height],
+    [x + n, y + height - n],
+    [x, y + height - n],
+    [x, y + n],
+    [x + n, y + n],
+  ]);
+}
+
+/**
+ * Rounded square whose sides pinch in slightly, like a cushion. Sides meet
+ * the corners tangentially, so the outline has no kinks.
+ */
+export function cushionPath(
+  x: number,
+  y: number,
+  size: number,
+  radius: number,
+  pinch: number
+): string {
+  const r = radius;
+  const mid = size / 2;
+  const pull = (mid - r) * 0.55;
+  const P = (px: number, py: number) => `${fmt(x + px)} ${fmt(y + py)}`;
+  return (
+    `M${P(r, 0)}` +
+    `C${P(r + pull, 0)} ${P(mid - pull, pinch)} ${P(mid, pinch)}` +
+    `C${P(mid + pull, pinch)} ${P(size - r - pull, 0)} ${P(size - r, 0)}` +
+    `A${fmt(r)} ${fmt(r)} 0 0 1 ${P(size, r)}` +
+    `C${P(size, r + pull)} ${P(size - pinch, mid - pull)} ${P(size - pinch, mid)}` +
+    `C${P(size - pinch, mid + pull)} ${P(size, size - r - pull)} ${P(size, size - r)}` +
+    `A${fmt(r)} ${fmt(r)} 0 0 1 ${P(size - r, size)}` +
+    `C${P(size - r - pull, size)} ${P(mid + pull, size - pinch)} ${P(mid, size - pinch)}` +
+    `C${P(mid - pull, size - pinch)} ${P(r + pull, size)} ${P(r, size)}` +
+    `A${fmt(r)} ${fmt(r)} 0 0 1 ${P(0, size - r)}` +
+    `C${P(0, size - r - pull)} ${P(pinch, mid + pull)} ${P(pinch, mid)}` +
+    `C${P(pinch, mid - pull)} ${P(0, r + pull)} ${P(0, r)}` +
+    `A${fmt(r)} ${fmt(r)} 0 0 1 ${P(r, 0)}Z`
+  );
+}
+
+/**
+ * Shield: flat top with corners of `radius`, straight sides down to
+ * `shoulder`, then curving to a point at the bottom. `m` scales the curve.
+ */
+export function shieldPath(
+  x: number,
+  y: number,
+  size: number,
+  radius: number,
+  shoulder: number,
+  m: number
+): string {
+  const mid = size / 2;
+  const P = (px: number, py: number) => `${fmt(x + px)} ${fmt(y + py)}`;
+  return (
+    `M${P(radius, 0)}H${fmt(x + size - radius)}` +
+    `A${fmt(radius)} ${fmt(radius)} 0 0 1 ${P(size, radius)}` +
+    `V${fmt(y + shoulder)}` +
+    `C${P(size, shoulder + 1.55 * m)} ${P(mid + 1.6 * m, size)} ${P(mid, size)}` +
+    `C${P(mid - 1.6 * m, size)} ${P(0, shoulder + 1.55 * m)} ${P(0, shoulder)}` +
+    `V${fmt(y + radius)}A${fmt(radius)} ${fmt(radius)} 0 0 1 ${P(radius, 0)}Z`
+  );
 }

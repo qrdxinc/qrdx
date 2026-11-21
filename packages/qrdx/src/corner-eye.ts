@@ -1,8 +1,12 @@
 import type { CornerEyePattern } from "../types/corner-eye";
 import {
-  type Point,
+  cushionPath,
+  notchedRectPath,
+  octagonPoints,
   polygonPath,
   roundedRectPath,
+  scoopedRectPath,
+  shieldPath,
   superellipsePoints,
 } from "./shapes";
 import { compact, roundTo } from "./utils/fmt";
@@ -29,24 +33,6 @@ function facingRadii(
   return [0, 1, 2, 3].map((i) =>
     i === outer || (inner && i === opposite) ? sharp : round
   ) as Radii;
-}
-
-function octagonPoints(
-  x: number,
-  y: number,
-  size: number,
-  cut: number
-): Point[] {
-  return [
-    [x + cut, y],
-    [x + size - cut, y],
-    [x + size, y + cut],
-    [x + size, y + size - cut],
-    [x + size - cut, y + size],
-    [x + cut, y + size],
-    [x, y + size - cut],
-    [x, y + cut],
-  ];
 }
 
 /**
@@ -129,38 +115,6 @@ function generateCornerSquirclePattern(
   );
 }
 
-/**
- * Rounded square whose sides pinch in slightly, like a cushion. Sides meet
- * the corners tangentially, so the outline has no kinks.
- */
-function cushionPath(
-  x: number,
-  y: number,
-  size: number,
-  radius: number,
-  pinch: number
-): string {
-  const r = radius;
-  const mid = size / 2;
-  const pull = (mid - r) * 0.55;
-  const P = (px: number, py: number) => compact`${x + px} ${y + py}`;
-  return (
-    compact`M${P(r, 0)}` +
-    compact`C${P(r + pull, 0)} ${P(mid - pull, pinch)} ${P(mid, pinch)}` +
-    compact`C${P(mid + pull, pinch)} ${P(size - r - pull, 0)} ${P(size - r, 0)}` +
-    compact`A${r} ${r} 0 0 1 ${P(size, r)}` +
-    compact`C${P(size, r + pull)} ${P(size - pinch, mid - pull)} ${P(size - pinch, mid)}` +
-    compact`C${P(size - pinch, mid + pull)} ${P(size, size - r - pull)} ${P(size, size - r)}` +
-    compact`A${r} ${r} 0 0 1 ${P(size - r, size)}` +
-    compact`C${P(size - r - pull, size)} ${P(mid + pull, size - pinch)} ${P(mid, size - pinch)}` +
-    compact`C${P(mid - pull, size - pinch)} ${P(r + pull, size)} ${P(r, size)}` +
-    compact`A${r} ${r} 0 0 1 ${P(0, size - r)}` +
-    compact`C${P(0, size - r - pull)} ${P(pinch, mid + pull)} ${P(pinch, mid)}` +
-    compact`C${P(pinch, mid - pull)} ${P(0, r + pull)} ${P(0, r)}` +
-    compact`A${r} ${r} 0 0 1 ${P(r, 0)}Z`
-  );
-}
-
 function generateCornerCushionPattern(
   offsetX: number,
   offsetY: number,
@@ -172,27 +126,6 @@ function generateCornerCushionPattern(
   return (
     cushionPath(offsetX, offsetY, size, 1.4 * m, pinch) +
     cushionPath(offsetX + m, offsetY + m, 5 * m, 0.7 * m, pinch)
-  );
-}
-
-/** Shield: flat top, straight sides, curving to a point at the bottom. */
-function shieldPath(
-  x: number,
-  y: number,
-  size: number,
-  radius: number,
-  shoulder: number,
-  m: number
-): string {
-  const mid = size / 2;
-  const P = (px: number, py: number) => compact`${x + px} ${y + py}`;
-  return (
-    compact`M${P(radius, 0)}H${x + size - radius}` +
-    compact`A${radius} ${radius} 0 0 1 ${P(size, radius)}` +
-    compact`V${y + shoulder}` +
-    compact`C${P(size, shoulder + 1.55 * m)} ${P(mid + 1.6 * m, size)} ${P(mid, size)}` +
-    compact`C${P(mid - 1.6 * m, size)} ${P(0, shoulder + 1.55 * m)} ${P(0, shoulder)}` +
-    compact`V${y + radius}A${radius} ${radius} 0 0 1 ${P(radius, 0)}Z`
   );
 }
 
@@ -232,6 +165,154 @@ function generateCornerPetalPattern(
       5 * m,
       facingRadii(corner, 0.25 * m, 1.5 * m, false)
     )
+  );
+}
+
+// Eye frames added after 0.0.57. Every one keeps the finder's 1:1:3:1:1
+// runs along the rows and columns through its centre (outer edge at 3.5
+// modules, hole edge at 2.5). On the diagonals the outer corners sit about
+// 3.8 modules out and the hole's corners about 2.9 (round, radius 1.5, or
+// a straight cut), which is what lets a circle centre read in sharp renders
+// (tests/decode-sharp-centre.test.ts), keeps a light gap inside the ring for
+// square centres, and reads light-on-dark at 4 px per module. Toothed or
+// scalloped rims, holes rounder than that and asymmetric arches all failed
+// one of those checks and were not kept.
+
+/** The 5×5 hole with round corners (radius 1.5 modules). */
+function roundHole(offsetX: number, offsetY: number, m: number): string {
+  return roundedRectPath(offsetX + m, offsetY + m, 5 * m, 5 * m, 1.5 * m);
+}
+
+/** A superellipse rounder than the squircle eye (exponent 2.75). */
+function pebbleOutline(cx: number, cy: number, m: number): string {
+  return polygonPath(superellipsePoints(cx, cy, 3.5 * m, 3.5 * m, 2.75, 96));
+}
+
+/** Porthole: a soft round outline around a square hole with cut corners. */
+function generateCornerPortholePattern(
+  offsetX: number,
+  offsetY: number,
+  size: number
+): string {
+  const m = size / 7;
+  return (
+    pebbleOutline(offsetX + size / 2, offsetY + size / 2, m) +
+    notchedRectPath(offsetX + m, offsetY + m, 5 * m, 5 * m, 0.52 * m)
+  );
+}
+
+/** Notch: a square ring with a round bite out of each corner. */
+function generateCornerNotchPattern(
+  offsetX: number,
+  offsetY: number,
+  size: number
+): string {
+  const m = size / 7;
+  return (
+    scoopedRectPath(offsetX, offsetY, size, size, 1.15 * m) +
+    scoopedRectPath(offsetX + m, offsetY + m, 5 * m, 5 * m, 0.74 * m)
+  );
+}
+
+/** Plus: a square ring with a square notch out of each corner. */
+function generateCornerPlusPattern(
+  offsetX: number,
+  offsetY: number,
+  size: number
+): string {
+  const m = size / 7;
+  return (
+    notchedRectPath(offsetX, offsetY, size, size, 0.8 * m) +
+    notchedRectPath(offsetX + m, offsetY + m, 5 * m, 5 * m, 0.52 * m)
+  );
+}
+
+type CornerStyle = ["round" | "cut", number];
+
+/**
+ * Square with a round or a cut (chamfered) corner each, clockwise from the
+ * top-left, drawn clockwise.
+ */
+function cornersPath(
+  x: number,
+  y: number,
+  size: number,
+  corners: [CornerStyle, CornerStyle, CornerStyle, CornerStyle]
+): string {
+  const [tl, tr, br, bl] = corners;
+  const P = (px: number, py: number) => compact`${x + px} ${y + py}`;
+  const to = (corner: CornerStyle, toX: number, toY: number) =>
+    corner[0] === "round"
+      ? compact`A${corner[1]} ${corner[1]} 0 0 1 ${P(toX, toY)}`
+      : compact`L${P(toX, toY)}`;
+  return (
+    compact`M${P(tl[1], 0)}L${P(size - tr[1], 0)}` +
+    to(tr, size, tr[1]) +
+    compact`L${P(size, size - br[1])}` +
+    to(br, size - br[1], size) +
+    compact`L${P(bl[1], size)}` +
+    to(bl, 0, size - bl[1]) +
+    compact`L${P(0, tl[1])}` +
+    to(tl, tl[1], 0) +
+    "Z"
+  );
+}
+
+/** The corner styles for a ring whose corners `pick` says are round. */
+function ringCorners(
+  m: number,
+  round: (index: number) => boolean
+): [
+  [CornerStyle, CornerStyle, CornerStyle, CornerStyle],
+  [CornerStyle, CornerStyle, CornerStyle, CornerStyle],
+] {
+  const outer = [0, 1, 2, 3].map(
+    (i): CornerStyle => (round(i) ? ["round", 2.8 * m] : ["cut", 1.6 * m])
+  ) as [CornerStyle, CornerStyle, CornerStyle, CornerStyle];
+  const inner = [0, 1, 2, 3].map(
+    (i): CornerStyle => (round(i) ? ["round", 1.5 * m] : ["cut", 1.01 * m])
+  ) as [CornerStyle, CornerStyle, CornerStyle, CornerStyle];
+  return [outer, inner];
+}
+
+/**
+ * Bud: round at the corner pointing away from the code and at the one
+ * facing its centre, cut at the other two; it turns to face its corner of
+ * the code.
+ */
+function generateCornerBudPattern(
+  offsetX: number,
+  offsetY: number,
+  size: number,
+  corner: EyeCorner
+): string {
+  const m = size / 7;
+  const outer = corner === "top-left" ? 0 : corner === "top-right" ? 1 : 3;
+  const opposite = (outer + 2) % 4;
+  const [outerCorners, innerCorners] = ringCorners(
+    m,
+    (i) => i === outer || i === opposite
+  );
+  return (
+    cornersPath(offsetX, offsetY, size, outerCorners) +
+    cornersPath(offsetX + m, offsetY + m, 5 * m, innerCorners)
+  );
+}
+
+/** Bowl: cut at the top, round at the bottom, around a round hole. */
+function generateCornerBowlPattern(
+  offsetX: number,
+  offsetY: number,
+  size: number
+): string {
+  const m = size / 7;
+  return (
+    cornersPath(offsetX, offsetY, size, [
+      ["cut", 1.6 * m],
+      ["cut", 1.6 * m],
+      ["round", 3 * m],
+      ["round", 3 * m],
+    ]) + roundHole(offsetX, offsetY, m)
   );
 }
 
@@ -492,6 +573,16 @@ export function generateCornerSquarePath(
       return generateCornerShieldPattern(offsetX, offsetY, size);
     case "petal":
       return generateCornerPetalPattern(offsetX, offsetY, size, corner);
+    case "porthole":
+      return generateCornerPortholePattern(offsetX, offsetY, size);
+    case "notch":
+      return generateCornerNotchPattern(offsetX, offsetY, size);
+    case "plus":
+      return generateCornerPlusPattern(offsetX, offsetY, size);
+    case "bud":
+      return generateCornerBudPattern(offsetX, offsetY, size, corner);
+    case "bowl":
+      return generateCornerBowlPattern(offsetX, offsetY, size);
     case "gear":
       return generateCornerGearPattern(offsetX, offsetY, size);
     case "rounded":

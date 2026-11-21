@@ -28,6 +28,9 @@ import {
   SHADOW_OPACITY_DEFAULT,
   SHADOW_OPACITY_MAX,
   SHADOW_OPACITY_MIN,
+  WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+  WITHDRAWN_CORNER_EYE_PATTERNS,
+  withdrawnFallback,
 } from "../types/constants";
 import qrcodegen from "./codegen";
 import {
@@ -61,9 +64,16 @@ export function eyeShapeOf(
   position: EyePosition
 ): { outer: CornerEyePattern; inner: CornerEyeDotPattern } {
   const own = props.eyeShapes?.[position];
+  // A shape withdrawn before release draws as the one it maps to
   return {
-    outer: own?.outer ?? props.cornerEyePattern ?? DEFAULT_EYE,
-    inner: own?.inner ?? props.cornerEyeDotPattern ?? DEFAULT_DOT,
+    outer: withdrawnFallback(
+      WITHDRAWN_CORNER_EYE_PATTERNS,
+      own?.outer ?? props.cornerEyePattern ?? DEFAULT_EYE
+    ),
+    inner: withdrawnFallback(
+      WITHDRAWN_CORNER_EYE_DOT_PATTERNS,
+      own?.inner ?? props.cornerEyeDotPattern ?? DEFAULT_DOT
+    ),
   };
 }
 
