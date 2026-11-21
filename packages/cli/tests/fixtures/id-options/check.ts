@@ -22,7 +22,8 @@ export const centre: Options<CornerEyeDotPattern> = idOptions(
 );
 
 // @ts-expect-error body patterns are not eye centres
-export const wrongCentre: Options<CornerEyeDotPattern> = idOptions(BODY_PATTERN);
+export const wrongCentre: Options<CornerEyeDotPattern> =
+  idOptions(BODY_PATTERN);
 // @ts-expect-error eye centres are not eye frames
 export const wrongEye: Options<CornerEyePattern> = idOptions(
   CORNER_EYE_DOT_PATTERNS
