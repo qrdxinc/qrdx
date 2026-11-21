@@ -55,6 +55,15 @@
         "rx": 170,
         "ry": 70,
         "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 60,
+        "y": 1580,
+        "width": 1160,
+        "height": 130,
+        "radius": 65,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -63,11 +72,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Look closer",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 60,
+          "x": 112,
           "y": 1580,
-          "width": 1160,
+          "width": 1056,
           "height": 130
         }
       }

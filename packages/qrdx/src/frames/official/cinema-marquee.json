@@ -494,6 +494,15 @@
         "width": 1280,
         "height": 200,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 180,
+        "y": 1540,
+        "width": 1140,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -502,11 +511,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan for tickets",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 180,
+          "x": 248,
           "y": 1540,
-          "width": 1140,
+          "width": 1004,
           "height": 170
         }
       },

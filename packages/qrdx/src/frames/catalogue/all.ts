@@ -15,7 +15,6 @@ import appInstall from "../official/app-install.json";
 import appPhone from "../official/app-phone.json";
 import appPhoneDark from "../official/app-phone-dark.json";
 import aquariumFeeding from "../official/aquarium-feeding.json";
-import arcadeCabinet from "../official/arcade-cabinet.json";
 import archeryLesson from "../official/archery-lesson.json";
 import arrivalGuide from "../official/arrival-guide.json";
 import arrowTag from "../official/arrow-tag.json";
@@ -120,7 +119,6 @@ import carDetailing from "../official/car-detailing.json";
 import carDetails from "../official/car-details.json";
 import carForSale from "../official/car-for-sale.json";
 import carService from "../official/car-service.json";
-import cardReader from "../official/card-reader.json";
 import carnivalMask from "../official/carnival-mask.json";
 import carnivalPass from "../official/carnival-pass.json";
 import carnivalPlume from "../official/carnival-plume.json";
@@ -169,7 +167,6 @@ import coachSignUp from "../official/coach-sign-up.json";
 import comicPanel from "../official/comic-panel.json";
 import communityNotices from "../official/community-notices.json";
 import compareSpecs from "../official/compare-specs.json";
-import confettiBorder from "../official/confetti-border.json";
 import consultationForm from "../official/consultation-form.json";
 import continuedOnline from "../official/continued-online.json";
 import cookieBox from "../official/cookie-box.json";
@@ -193,7 +190,6 @@ import dashboardLights from "../official/dashboard-lights.json";
 import deliveryBoxLight from "../official/delivery-box-light.json";
 import deliveryBoxTrack from "../official/delivery-box-track.json";
 import deliveryInstructions from "../official/delivery-instructions.json";
-import deliveryScooterOrder from "../official/delivery-scooter-order.json";
 import diwaliDiya from "../official/diwali-diya.json";
 import diwaliLantern from "../official/diwali-lantern.json";
 import diwaliLotus from "../official/diwali-lotus.json";
@@ -342,6 +338,8 @@ import fitnessTest from "../official/fitness-test.json";
 import fitnessTimer from "../official/fitness-timer.json";
 import fitnessTrial from "../official/fitness-trial.json";
 import fitnessYoga from "../official/fitness-yoga.json";
+import flagLight from "../official/flag-light.json";
+import flagTeam from "../official/flag-team.json";
 import floppyDisk from "../official/floppy-disk.json";
 import flyingSaucer from "../official/flying-saucer.json";
 import folderTab from "../official/folder-tab.json";
@@ -354,7 +352,6 @@ import foodTruckLocation from "../official/food-truck-location.json";
 import freedomDaySouthAfrica from "../official/freedom-day-south-africa.json";
 import furnishedRental from "../official/furnished-rental.json";
 import galleryFrame from "../official/gallery-frame.json";
-import gameCartridge from "../official/game-cartridge.json";
 import gameNight from "../official/game-night.json";
 import ganeshMarigold from "../official/ganesh-marigold.json";
 import ganeshModak from "../official/ganesh-modak.json";
@@ -392,10 +389,7 @@ import halloweenWeb from "../official/halloween-web.json";
 import hanamiArch from "../official/hanami-arch.json";
 import hanamiPicnic from "../official/hanami-picnic.json";
 import hanamiSakura from "../official/hanami-sakura.json";
-import handCard from "../official/hand-card.json";
-import handCardLight from "../official/hand-card-light.json";
 import handWashing from "../official/hand-washing.json";
-import handheldConsole from "../official/handheld-console.json";
 import handyman from "../official/handyman.json";
 import hangTag from "../official/hang-tag.json";
 import hangTagLight from "../official/hang-tag-light.json";
@@ -666,8 +660,6 @@ import payTips from "../official/pay-tips.json";
 import payWallet from "../official/pay-wallet.json";
 import payYourRent from "../official/pay-your-rent.json";
 import peaceDayDove from "../official/peace-day-dove.json";
-import pennantLight from "../official/pennant-light.json";
-import pennantTeam from "../official/pennant-team.json";
 import permissionForm from "../official/permission-form.json";
 import personalTrainer from "../official/personal-trainer.json";
 import phoneButton from "../official/phone-button.json";
@@ -765,7 +757,6 @@ import restaurantDelivery from "../official/restaurant-delivery.json";
 import restaurantGiftCard from "../official/restaurant-gift-card.json";
 import restockAlert from "../official/restock-alert.json";
 import restroomFeedback from "../official/restroom-feedback.json";
-import retroComputer from "../official/retro-computer.json";
 import retroRadio from "../official/retro-radio.json";
 import returnYourCup from "../official/return-your-cup.json";
 import returnYourRental from "../official/return-your-rental.json";
@@ -786,7 +777,6 @@ import ribbonTopLight from "../official/ribbon-top-light.json";
 import ringSize from "../official/ring-size.json";
 import roadsideHelp from "../official/roadside-help.json";
 import robotChest from "../official/robot-chest.json";
-import rocketWindow from "../official/rocket-window.json";
 import rollUpBanner from "../official/roll-up-banner.json";
 import rollUpBannerLight from "../official/roll-up-banner-light.json";
 import rosetteBadge from "../official/rosette-badge.json";
@@ -897,7 +887,6 @@ import skateParkRules from "../official/skate-park-rules.json";
 import sketchBorder from "../official/sketch-border.json";
 import sketchCircle from "../official/sketch-circle.json";
 import skincareRoutine from "../official/skincare-routine.json";
-import smartwatchFace from "../official/smartwatch-face.json";
 import snowGlobe from "../official/snow-globe.json";
 import socialCamera from "../official/social-camera.json";
 import socialFollowBubble from "../official/social-follow-bubble.json";
@@ -2150,10 +2139,9 @@ export const OFFICIAL_FRAME_LIST = [
   heartScan,
   heartLight,
   scrollStory,
-  pennantTeam,
-  pennantLight,
+  flagTeam,
+  flagLight,
   polkaDotBorder,
-  confettiBorder,
   swirlBorder,
   sketchBorder,
   raisedCard,
@@ -2180,9 +2168,6 @@ export const OFFICIAL_FRAME_LIST = [
   mugLight,
   deliveryBoxTrack,
   deliveryBoxLight,
-  deliveryScooterOrder,
-  handCard,
-  handCardLight,
   galleryFrame,
   billboardCampaign,
   billboardLight,
@@ -2195,20 +2180,16 @@ export const OFFICIAL_FRAME_LIST = [
   bookmarkLight,
   clapperboardScene,
   clapperboardLight,
-  smartwatchFace,
   spiralNotebook,
   rollUpBanner,
   rollUpBannerLight,
-  cardReader,
   globeStand,
   videoPlayer,
   musicPlayer,
   musicPlayerLight,
   roundTag,
   roundTagLight,
-  rocketWindow,
   tvSet,
-  arcadeCabinet,
   vinylSleeve,
   vinylSleeveLight,
   cassetteTape,
@@ -2236,8 +2217,6 @@ export const OFFICIAL_FRAME_LIST = [
   porthole,
   toasterToast,
   vendingMachine,
-  retroComputer,
-  gameCartridge,
   floppyDisk,
   retroRadio,
   popcornBucket,
@@ -2251,7 +2230,6 @@ export const OFFICIAL_FRAME_LIST = [
   sailboatSail,
   matchboxDrawer,
   cinemaMarquee,
-  handheldConsole,
   videoTape,
   flyingSaucer,
   lighthouseTower,

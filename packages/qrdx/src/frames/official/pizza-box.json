@@ -70,6 +70,24 @@
           "mix": ["frame", "background"],
           "amount": 0.85
         }
+      },
+      {
+        "type": "rect",
+        "x": 100,
+        "y": 1790,
+        "width": 1300,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 220,
+        "y": 200,
+        "width": 1060,
+        "height": 120,
+        "radius": 60,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -78,11 +96,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to order",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 100,
+          "x": 168,
           "y": 1790,
-          "width": 1300,
+          "width": 1164,
           "height": 170
         }
       },
@@ -91,11 +109,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "Hot and fresh",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 220,
+          "x": 268,
           "y": 200,
-          "width": 1060,
+          "width": 964,
           "height": 120
         }
       }

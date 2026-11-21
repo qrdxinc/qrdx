@@ -261,10 +261,7 @@
         "y": 1620,
         "width": 900,
         "height": 170,
-        "fill": {
-          "mix": ["frame", "background"],
-          "amount": 0.85
-        }
+        "fill": "frame"
       },
       {
         "type": "rect",
@@ -363,7 +360,7 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan the next page",
-        "color": "frame",
+        "color": "text",
         "box": {
           "x": 320,
           "y": 1630,

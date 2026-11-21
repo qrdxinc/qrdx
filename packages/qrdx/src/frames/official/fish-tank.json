@@ -246,6 +246,15 @@
         "r": 22,
         "hole": 14,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 380,
+        "y": 1320,
+        "width": 940,
+        "height": 150,
+        "radius": 75,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -254,11 +263,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to dive in",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 300,
+          "x": 440,
           "y": 1320,
-          "width": 1100,
+          "width": 820,
           "height": 150
         }
       }

@@ -140,6 +140,15 @@
         "height": 1120,
         "radius": 20,
         "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 120,
+        "y": 1188,
+        "width": 1240,
+        "height": 150,
+        "radius": 75,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -148,11 +157,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to light it up",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 120,
+          "x": 180,
           "y": 1188,
-          "width": 1240,
+          "width": 1120,
           "height": 150
         }
       }

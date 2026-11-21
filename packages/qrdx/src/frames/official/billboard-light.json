@@ -234,6 +234,24 @@
         "cy": 32,
         "r": 22,
         "fill": "background"
+      },
+      {
+        "type": "rect",
+        "x": 1114,
+        "y": 425,
+        "width": 756,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 1114,
+        "y": 650,
+        "width": 756,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -242,12 +260,12 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan for tickets",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 1114,
-          "y": 400,
-          "width": 756,
-          "height": 220
+          "x": 1182,
+          "y": 425,
+          "width": 620,
+          "height": 170
         }
       },
       {
@@ -255,12 +273,12 @@
         "id": "note",
         "slot": "secondary",
         "text": "Opening this week",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 1114,
+          "x": 1154,
           "y": 650,
-          "width": 756,
-          "height": 110
+          "width": 676,
+          "height": 100
         },
         "weight": "regular"
       }

@@ -82,6 +82,15 @@
           "mix": ["frame", "background"],
           "amount": 0.5
         }
+      },
+      {
+        "type": "rect",
+        "x": 220,
+        "y": 1550,
+        "width": 1160,
+        "height": 150,
+        "radius": 75,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -92,9 +101,9 @@
         "text": "Scan for the news",
         "color": "text",
         "box": {
-          "x": 220,
+          "x": 280,
           "y": 1550,
-          "width": 1160,
+          "width": 1040,
           "height": 150
         }
       }

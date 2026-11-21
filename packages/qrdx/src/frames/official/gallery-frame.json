@@ -142,6 +142,24 @@
         "cy": 1935,
         "r": 16,
         "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 190,
+        "y": 1610,
+        "width": 1260,
+        "height": 170,
+        "radius": 85,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 230,
+        "y": 320,
+        "width": 1180,
+        "height": 100,
+        "radius": 50,
+        "fill": "frame"
       }
     ],
     "labels": [
@@ -150,11 +168,11 @@
         "id": "cta",
         "slot": "primary",
         "text": "Scan to see more",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 190,
+          "x": 258,
           "y": 1610,
-          "width": 1260,
+          "width": 1124,
           "height": 170
         }
       },
@@ -163,11 +181,11 @@
         "id": "note",
         "slot": "secondary",
         "text": "The story behind it",
-        "color": "frame",
+        "color": "text",
         "box": {
-          "x": 230,
+          "x": 270,
           "y": 320,
-          "width": 1180,
+          "width": 1100,
           "height": 100
         },
         "weight": "regular"

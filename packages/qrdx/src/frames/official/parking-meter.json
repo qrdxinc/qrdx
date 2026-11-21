@@ -23,8 +23,7 @@
     },
     "colors": {
       "frame": "#111111",
-      "text": "#ffffff",
-      "accent": "#111111"
+      "text": "#ffffff"
     },
     "shapes": [
       {
@@ -39,32 +38,40 @@
         }
       },
       {
-        "type": "rect",
-        "x": 0,
-        "y": 0,
-        "width": 1300,
-        "height": 1540,
-        "radius": 200,
+        "type": "ellipse",
+        "cx": 650,
+        "cy": 300,
+        "rx": 600,
+        "ry": 290,
         "fill": "frame"
       },
       {
         "type": "rect",
-        "x": 450,
-        "y": 60,
-        "width": 400,
-        "height": 50,
-        "radius": 25,
+        "x": 0,
+        "y": 220,
+        "width": 1300,
+        "height": 1320,
+        "radius": 90,
+        "fill": "frame"
+      },
+      {
+        "type": "rect",
+        "x": 390,
+        "y": 1500,
+        "width": 520,
+        "height": 80,
+        "radius": 24,
         "fill": {
-          "mix": ["frame", "background"],
-          "amount": 0.5
+          "mix": ["frame", "#000000"],
+          "amount": 0.3
         }
       },
       {
         "type": "rect",
-        "x": 540,
-        "y": 150,
-        "width": 220,
-        "height": 36,
+        "x": 632,
+        "y": 60,
+        "width": 36,
+        "height": 150,
         "radius": 18,
         "fill": "background"
       },
@@ -78,23 +85,6 @@
         "fill": {
           "mix": ["frame", "background"],
           "amount": 0.92
-        }
-      },
-      {
-        "type": "circle",
-        "cx": 350,
-        "cy": 168,
-        "r": 30,
-        "fill": "accent"
-      },
-      {
-        "type": "circle",
-        "cx": 950,
-        "cy": 168,
-        "r": 30,
-        "fill": {
-          "mix": ["frame", "background"],
-          "amount": 0.5
         }
       }
     ],
