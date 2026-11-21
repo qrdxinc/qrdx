@@ -151,7 +151,7 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
     id: "chomp",
     name: "Chomp",
     description:
-      "Bitten dots in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Bitten dots with a wink, for game shops and arcades.",
+      "Bitten dots in a dark navy with octagon eyes and reversed diya centres in cobalt, on white. Playful, for game shops and arcades.",
     tags: ["playful", "retro", "bold", "cool"],
     style: {
       ...ink("#FFFFFF", "#0F172A", "#0F172A", "#1D4ED8"),
@@ -200,10 +200,10 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
     },
   },
   {
-    id: "pennant",
-    name: "Pennant",
+    id: "club-colors",
+    name: "Club colors",
     description:
-      "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. Club colors with a flag in each corner, for teams and fan days.",
+      "Octagon modules in a deep red with shield eyes in navy and rounded-triangle centres, on white. For teams, clubs and fan days.",
     tags: ["bold", "vibrant", "geometric", "high-contrast"],
     style: {
       ...ink("#FFFFFF", "#991B1B", "#0F1F3D", "#991B1B"),
@@ -213,7 +213,7 @@ export const CATALOGUE_DESIGNS: SeedDesign[] = [
     },
   },
   {
-    id: "first-aid",
+    id: "pharmacy-cross",
     name: "Pharmacy cross",
     description:
       "Plus-shaped modules in a deep teal green with squircle eyes and rounded-cross centres, on a mint white. Calm and clinical, for pharmacies and first-aid points.",

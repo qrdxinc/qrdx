@@ -384,6 +384,7 @@ describe("seed-community", () => {
 
   beforeEach(() => {
     pg = new FakeCommunityPg();
+    pg.refuseDates = true;
     lines.length = 0;
     pg.seed("user", [{ id: "u_team", name: "QRdx", email: "team@qrdx.dev" }]);
     pg.seed("organization", [{ id: "org_qrdx", slug: "qrdx" }]);
@@ -429,7 +430,7 @@ describe("seed-community", () => {
       handle: "qrdx",
       user_id: "u_team",
       workspace_id: "org_qrdx",
-      verified_at: NOW,
+      verified_at: NOW.toISOString(),
     });
     const seeded = pg
       .rows("community_item")
@@ -452,7 +453,7 @@ describe("seed-community", () => {
         .find((i) => i.id === "ci_official_frame_wifi-card"),
     ).toMatchObject({
       slug: "wifi-card",
-      featured_at: NOW,
+      featured_at: NOW.toISOString(),
       license: "CC0-1.0",
     });
     expect(
@@ -469,9 +470,41 @@ describe("seed-community", () => {
     );
     expect(pg.rows("community_item_version")).toHaveLength(items.length);
     // A millisecond apart, in seed order, so "newest" pages in a fixed order
-    const times = seeded.map((i) => (i.published_at as Date).getTime());
+    const times = seeded.map((i) => Date.parse(i.published_at as string));
     expect(new Set(times).size).toBe(seeded.length);
     expect([...times].sort((a, b) => a - b)).toEqual(times);
+    expect(times[0]).toBe(NOW.getTime());
+    // Every time the seed writes is UTC text, as the app writes these
+    // timestamp-without-time-zone columns (a Date would go out as local
+    // time and lose its offset; the fake refuses one)
+    const utc = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+    const written = [
+      ...seeded.flatMap((i) =>
+        [
+          "published_at",
+          "created_at",
+          "updated_at",
+          "featured_at",
+          "scan_checked_at",
+        ].map((column) => [i.id, column, i[column]] as const),
+      ),
+      ...pg
+        .rows("community_item_version")
+        .map((v) => [v.item_id, "created_at", v.created_at] as const),
+      ...["verified_at", "created_at", "updated_at"].map(
+        (column) => ["profile", column, profile?.[column]] as const,
+      ),
+    ].filter(([, , value]) => value !== null);
+    // Each item's published, created and updated time, the featured and
+    // scored ones' extra time, each version's and the profile's three
+    expect(written).toHaveLength(
+      items.length * 3 + seed.SEED.featured.length + THEMES + items.length + 3,
+    );
+    expect(
+      written.filter(
+        ([, , value]) => !(typeof value === "string" && utc.test(value)),
+      ),
+    ).toEqual([]);
     // Themes carry their gate score, checked when published, as a publish
     // stores them; nothing else is gated by a publish, nor by the seed
     const scoreOf = new Map(items.map((i) => [i.id, i.scanScore ?? null]));
@@ -565,13 +598,15 @@ describe("seed-community", () => {
     pg.seed("community_item", theirs);
     const argv = ["--apply", "--backup", "s.json"];
     expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
-    expect(lines.find((l) => l.includes("collection minimal-print:"))).toMatch(
-      /ci_official_theme_paper-ink isn't seeded \(its design is already published as "their-look"\)/,
+    expect(
+      lines.find((l) => l.includes("collection minimal-print:")),
+    ).toContain(
+      `not seeded: ci_official_theme_paper-ink (its design is already published as "their-look"); left out of its payload and entries, and a later run adds the entry once the item is in.`,
     );
     expect(
       lines.find((l) => l.includes("collection soft-and-pastel:")),
     ).toContain(
-      `${slugTaken?.id} isn't seeded (its theme slug "${slugTaken?.slug}" is taken)`,
+      `not seeded: ${slugTaken?.id} (its theme slug "${slugTaken?.slug}" is taken)`,
     );
     // Entries in position order; each keeps its place in the full list
     const entriesOf = (id: string) =>
@@ -589,6 +624,30 @@ describe("seed-community", () => {
     expect(entriesOf(pastel?.id as string)).toEqual(
       placed(pastel?.id as string, slugTaken?.id),
     );
+    // The stored payload and version list only items that are there
+    const rowOf = (id: string) =>
+      pg.rows("community_item").find((i) => i.id === id);
+    const versionOf = (id: string) =>
+      pg.rows("community_item_version").find((v) => v.item_id === id);
+    const listed = (id: string, without?: string) =>
+      ((items.find((i) => i.id === id)?.entries ?? []) as string[]).filter(
+        (entry) => entry !== without,
+      );
+    expect(rowOf(minimal)?.payload).toEqual({
+      items: listed(minimal, paperInk?.id),
+    });
+    expect(rowOf(pastel?.id as string)?.payload).toEqual({
+      items: listed(pastel?.id as string, slugTaken?.id),
+    });
+    const there = new Set(pg.rows("community_item").map((i) => i.id));
+    for (const row of pg
+      .rows("community_item")
+      .filter((i) => i.type === "collection")) {
+      const payload = row.payload as { items: string[] };
+      expect(versionOf(row.id as string)?.payload).toEqual(payload);
+      expect(row.payload_hash).toBe(payloadHash(payload));
+      expect(payload.items.filter((id) => !there.has(id))).toEqual([]);
+    }
     // Their rows are never written
     const rowsOf = () =>
       pg
@@ -607,10 +666,26 @@ describe("seed-community", () => {
       .rows("community_item")
       .filter((i) => !String(i.id).startsWith("ci_their"));
     lines.length = 0;
-    expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
+    const saved: string[] = [];
+    const keep = async (_path: string, text: string) => {
+      saved.push(text);
+    };
+    expect(
+      await seed.run({ client: pg, argv, log, save: keep, now: NOW }),
+    ).toBe(0);
     expect(lines.join("\n")).toMatch(
       /INSERT community_collection_entry collection=ci_official_collection_minimal-print item=ci_official_theme_paper-ink position=\d+/,
     );
+    // The backup lists the entries this run adds, to undo them
+    const paperAt = (
+      items.find((i) => i.id === minimal)?.entries ?? []
+    ).indexOf(paperInk?.id as string);
+    const slugAt = (pastel?.entries ?? []).indexOf(slugTaken?.id as string);
+    // (in seed order: soft-and-pastel comes before minimal-print)
+    expect(JSON.parse(saved[0] as string).insertedEntries).toEqual([
+      { collection_id: pastel?.id, item_id: slugTaken?.id, position: slugAt },
+      { collection_id: minimal, item_id: paperInk?.id, position: paperAt },
+    ]);
     expect(lines.join("\n")).toMatch(
       /2 entry\(ies\) added to seeded collections/,
     );
@@ -621,6 +696,216 @@ describe("seed-community", () => {
     const ids = pg.rows("community_item").map((i) => i.id);
     expect(ids).toContain(paperInk?.id);
     expect(ids).toContain(slugTaken?.id);
+    // A published payload never changes: the gallery shows the entries
+    expect(rowOf(minimal)?.payload).toEqual({
+      items: listed(minimal, paperInk?.id),
+    });
+  });
+
+  it("seeds a kit without a colliding look part, and skips a kit left with no look", async () => {
+    const onyx = items.find((i) => i.id === "ci_official_theme_onyx");
+    const crema = items.find((i) => i.id === "ci_official_theme_cafe-crema");
+    const businessCard = items.find(
+      (i) => i.id === "ci_official_kit_business-card",
+    );
+    if (!businessCard) throw new Error("no business-card kit in the seed");
+    const parts = (businessCard.payload as { kit: Record<string, string> }).kit;
+    expect(parts.theme).toBe(onyx?.id);
+    expect(parts.frame).toBeTruthy();
+    pg.seed("community_item", [
+      {
+        id: "ci_their_onyx",
+        type: "theme",
+        slug: "their-onyx",
+        status: "published",
+        payload_hash: payloadHash(onyx?.payload),
+        profile_id: "cp_someone",
+        is_official: false,
+        created_by: "u_someone",
+      },
+      {
+        id: "ci_their_crema",
+        type: "theme",
+        slug: "their-crema",
+        status: "published",
+        payload_hash: payloadHash(crema?.payload),
+        profile_id: "cp_someone",
+        is_official: false,
+        created_by: "u_someone",
+      },
+    ]);
+    const argv = ["--apply", "--backup", "s.json"];
+    expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
+    expect(lines.find((l) => l.includes("kit business-card:"))).toContain(
+      `not seeded: ${onyx?.id} (its design is already published as "their-onyx"); the kit goes in without it (payload and entries).`,
+    );
+    expect(lines.find((l) => l.includes("kit cafe-table:"))).toContain(
+      `not seeded: ${crema?.id} (its design is already published as "their-crema"); a kit needs its page template and a theme or frame, so it is skipped.`,
+    );
+    const kit = pg
+      .rows("community_item")
+      .find((i) => i.id === businessCard?.id);
+    expect(kit?.payload).toEqual({
+      kit: { frame: parts.frame, page: parts.page },
+    });
+    expect(
+      pg.rows("community_item_version").find((v) => v.item_id === kit?.id)
+        ?.payload,
+    ).toEqual(kit?.payload);
+    const kitEntries = () =>
+      pg
+        .rows("community_collection_entry")
+        .filter((e) => e.collection_id === businessCard?.id)
+        .map((e) => [e.item_id, e.position]);
+    expect(kitEntries()).toEqual([
+      [parts.frame, 1],
+      [parts.page, 2],
+    ]);
+    expect(
+      pg
+        .rows("community_item")
+        .some((i) => i.id === "ci_official_kit_cafe-table"),
+    ).toBe(false);
+
+    // Once the looks are in, cafe-table goes in whole; business-card stays
+    // as published (a kit is used by its payload's parts)
+    pg.tables.community_item = pg
+      .rows("community_item")
+      .filter((i) => !String(i.id).startsWith("ci_their"));
+    lines.length = 0;
+    expect(await seed.run({ client: pg, argv, log, save, now: NOW })).toBe(0);
+    expect(
+      pg
+        .rows("community_item")
+        .find((i) => i.id === "ci_official_kit_cafe-table")?.payload,
+    ).toEqual(
+      items.find((i) => i.id === "ci_official_kit_cafe-table")?.payload,
+    );
+    expect(kitEntries()).toEqual([
+      [parts.frame, 1],
+      [parts.page, 2],
+    ]);
+    expect(lines.join("\n")).not.toContain(`collection=${businessCard?.id}`);
+  });
+
+  it("adopts only rows its UPDATE itself allows, and names whose themes they are", async () => {
+    // Every condition the plan adopts by is in the statement
+    for (const condition of [
+      "id = $1",
+      "type = 'theme'",
+      "created_by = $4",
+      "NOT starts_with(id, 'ci_official_')",
+      "(is_official IS NOT TRUE OR profile_id IS DISTINCT FROM $2)",
+    ]) {
+      expect(seed.SQL.adoptTheme).toContain(condition);
+    }
+    const before = {
+      id: "ci_legacy",
+      type: "theme",
+      slug: "classic-ab12",
+      profile_id: "cp_other",
+      is_official: false,
+      created_by: "u_team",
+      updated_at: "2026-10-01 09:30:00.123456",
+    };
+    const notOurs = [
+      { ...before, id: "ci_their_theme", slug: "theirs", created_by: "u_x" },
+      { ...before, id: "ci_their_frame", type: "frame", slug: "their-frame" },
+      { ...before, id: "ci_official_theme_x", slug: "x" },
+    ];
+    pg.seed("community_item", [before, ...notOurs]);
+    // Straight at the statement: rows outside its conditions don't move
+    for (const row of notOurs) {
+      const result = await pg.query(seed.SQL.adoptTheme, [
+        row.id,
+        backfill.OFFICIAL_PROFILE_ID,
+        NOW.toISOString(),
+        "u_team",
+      ]);
+      expect(result.rowCount, row.id).toBe(0);
+    }
+    expect(
+      pg.rows("community_item").filter((i) => i.id !== "ci_legacy"),
+    ).toEqual(notOurs);
+
+    // The dry run names whose themes move, and which
+    await seed.run({ client: pg, argv: [], log, save, now: NOW });
+    expect(lines).toContain(
+      "  Adopting 1 theme(s) created by team@qrdx.dev (user u_team): they move to @qrdx, marked official",
+    );
+    expect(lines).toContain(
+      "  UPDATE community_item theme slug=classic-ab12 id=ci_legacy SET profile=@qrdx, official",
+    );
+
+    // A wrong plan (an id outside the conditions) moves nothing: the count
+    // check fails and everything rolls back
+    const snapshot = await seed.loadSnapshot(pg, seed.parseArgs([]));
+    const plan = seed.planSeed(snapshot, [], NOW);
+    expect(plan.adopt).toEqual(["ci_legacy"]);
+    plan.adopt.push("ci_their_theme");
+    await pg.query("BEGIN");
+    await seed.applySeed(pg, plan, snapshot.officialUserId);
+    expect(await seed.verifySeed(pg, plan)).toEqual([
+      "community_item: 1 of 2 official item(s) in place",
+    ]);
+    await pg.query("ROLLBACK");
+    expect(
+      pg.rows("community_item").find((i) => i.id === "ci_their_theme"),
+    ).toEqual(notOurs[0]);
+
+    // The backup keeps an adopted row as it was, updated_at included
+    const saved: string[] = [];
+    const keep = async (_path: string, text: string) => {
+      saved.push(text);
+    };
+    expect(
+      await seed.run({
+        client: pg,
+        argv: ["--apply", "--backup", "s.json"],
+        log,
+        save: keep,
+        now: NOW,
+        seedItems: [],
+      }),
+    ).toBe(0);
+    expect(JSON.parse(saved[0] as string).updatedItems).toEqual([
+      {
+        id: "ci_legacy",
+        type: "theme",
+        slug: "classic-ab12",
+        status: null,
+        payload_hash: null,
+        profile_id: "cp_other",
+        is_official: false,
+        created_by: "u_team",
+        updated_at: "2026-10-01 09:30:00.123456",
+      },
+    ]);
+    expect(
+      pg.rows("community_item").find((i) => i.id === "ci_legacy"),
+    ).toMatchObject({
+      profile_id: backfill.OFFICIAL_PROFILE_ID,
+      is_official: true,
+      updated_at: NOW.toISOString(),
+    });
+  });
+
+  it("takes another --official-email only with --allow-other-official-email", () => {
+    expect(() =>
+      seed.parseArgs(["--official-email", "someone@example.com"]),
+    ).toThrow(
+      "--official-email someone@example.com isn't the official account (team@qrdx.dev): its themes would move to @qrdx. Pass --allow-other-official-email too to mean it.",
+    );
+    expect(
+      seed.parseArgs([
+        "--official-email",
+        "someone@example.com",
+        "--allow-other-official-email",
+      ]).officialEmail,
+    ).toBe("someone@example.com");
+    expect(
+      seed.parseArgs(["--official-email", "Team@QRdx.dev"]).officialEmail,
+    ).toBe("Team@QRdx.dev");
   });
 
   it("asks for a new --backup path when the backup file is there already", async () => {

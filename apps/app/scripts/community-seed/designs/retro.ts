@@ -115,7 +115,7 @@ export const RETRO_DESIGNS: SeedDesign[] = [
     id: "cassette",
     name: "Cassette",
     description:
-      "Horizontal lines in a deep indigo with bevelled eyes and red square centres, on a cool grey white. Eighties tape-deck colors, for DJs and mixtape links.",
+      "Horizontal lines in a deep indigo with bevelled eyes and red square centres, on a cool grey white, on the cassette frame with red reels. For DJs and mixtape links.",
     tags: ["retro", "cool", "vintage", "bold"],
     style: {
       ...ink("#F3F4F6", "#1E1B4B", "#1E1B4B", "#BE123C"),
@@ -123,6 +123,7 @@ export const RETRO_DESIGNS: SeedDesign[] = [
       level: "Q",
       margin: 4,
     },
+    frame: { id: "cassette-tape", color: "#1E1B4B", secondaryColor: "#BE123C" },
   },
   {
     id: "arcade",

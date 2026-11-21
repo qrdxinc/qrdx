@@ -89,7 +89,7 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
     frame: { id: "holi-splash" },
   },
   {
-    id: "pumpkin-patch",
+    id: "trick-or-treat",
     name: "Trick or treat",
     description:
       "Round dots in a near-black with octagon eyes in burnt orange, on a warm white, on the Halloween pumpkin frame. For trick-or-treat trails and haunted houses.",
@@ -215,7 +215,7 @@ export const SEASONAL_DESIGNS: SeedDesign[] = [
     frame: { id: "winter-crystal", color: "#1E3A8A" },
   },
   {
-    id: "harvest",
+    id: "wheat-and-amber",
     name: "Wheat and amber",
     description:
       "Hexagon modules in a dark amber with extra-rounded eyes in toast brown and amber centres, on a pale butter, on the Thanksgiving wheat frame. For harvest menus.",
