@@ -51,6 +51,7 @@ test("lists the shapes withdrawn before release", () => {
     pebble: "squircle",
     tag: "rounded",
     crest: "shield",
+    doodle: "squircle",
   });
   expect(WITHDRAWN_CORNER_EYE_DOT_PATTERNS).toEqual({
     bevel: "square",

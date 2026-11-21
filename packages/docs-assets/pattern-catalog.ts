@@ -261,12 +261,6 @@ const EYES: Record<
     popularity: null,
     recommendedDot: "squircle",
   },
-  doodle: {
-    label: "Doodle",
-    category: "Playful",
-    popularity: null,
-    recommendedDot: "rounded",
-  },
   porthole: {
     label: "Porthole",
     category: "Rounded",

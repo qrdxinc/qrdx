@@ -11,7 +11,7 @@ export const NEW_BODY_PATTERNS: NewBatch[] = [
 
 export const NEW_EYE_FRAMES: NewBatch[] = [
   {
-    ids: ["porthole", "doodle", "notch", "plus", "stamp", "bud", "bowl"],
+    ids: ["porthole", "notch", "plus", "stamp", "bud", "bowl"],
     until: "2026-12-31",
   },
 ];

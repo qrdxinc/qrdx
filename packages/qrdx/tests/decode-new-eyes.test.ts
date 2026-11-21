@@ -44,7 +44,6 @@ const PARTNERS = [
 test("the new eyes are the ones added after 0.0.57", () => {
   expect(NEW_EYES).toEqual([
     "porthole",
-    "doodle",
     "notch",
     "plus",
     "stamp",

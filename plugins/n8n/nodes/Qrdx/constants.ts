@@ -65,7 +65,6 @@ export const EYE_SHAPES = [
   "petal",
   "leaf-reverse",
   "porthole",
-  "doodle",
   "notch",
   "plus",
   "stamp",

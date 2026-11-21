@@ -76,27 +76,6 @@ export function octagonPoints(
   ];
 }
 
-/** Radius of a superellipse |x/a|^n + |y/a|^n = 1 at `angle` (radians). */
-export function superellipseRadius(
-  a: number,
-  exponent: number,
-  angle: number
-): number {
-  const cos = Math.abs(Math.cos(angle));
-  const sin = Math.abs(Math.sin(angle));
-  return a / (cos ** exponent + sin ** exponent) ** (1 / exponent);
-}
-
-/**
- * A superellipse radius (exponent 3) with a hand-drawn wobble: a sum of
- * sin(4θ) and sin(8θ), so it vanishes on the axes and the diagonals.
- */
-export function doodleRadius(a: number): (angle: number) => number {
-  return (angle) =>
-    superellipseRadius(a, 3, angle) *
-    (1 + 0.045 * Math.sin(4 * angle) + 0.03 * Math.sin(8 * angle));
-}
-
 /** Points of a regular polygon (clockwise), first vertex at `rotation` degrees. */
 export function regularPolygon(
   cx: number,
@@ -206,25 +185,6 @@ export function hashString(value: string): string {
     h = Math.imul(h, 0x01_00_01_93);
   }
   return (h >>> 0).toString(36);
-}
-
-/**
- * Points of an outline given in polar form, `radius(angle)` for the angle in
- * radians, sampled `steps` times clockwise from the right. Shapes whose
- * radius is a sum of cosines of multiples of 4θ keep their size on the axes
- * and the diagonals, where decoders measure the finder.
- */
-export function radialPoints(
-  cx: number,
-  cy: number,
-  radius: (angle: number) => number,
-  steps = 96
-): Point[] {
-  return Array.from({ length: steps }, (_, i) => {
-    const t = (2 * Math.PI * i) / steps;
-    const r = radius(t);
-    return [cx + r * Math.cos(t), cy + r * Math.sin(t)];
-  });
 }
 
 /**

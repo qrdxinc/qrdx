@@ -96,7 +96,6 @@ export const CORNER_EYE_PATTERNS = [
   "leaf-reverse",
   // Added after 0.0.57
   "porthole",
-  "doodle",
   "notch",
   "plus",
   "stamp",
@@ -165,6 +164,7 @@ export const WITHDRAWN_CORNER_EYE_PATTERNS = {
   pebble: "squircle",
   tag: "rounded",
   crest: "shield",
+  doodle: "squircle",
 } as const satisfies Record<string, (typeof CORNER_EYE_PATTERNS)[number]>;
 
 export const WITHDRAWN_CORNER_EYE_DOT_PATTERNS = {

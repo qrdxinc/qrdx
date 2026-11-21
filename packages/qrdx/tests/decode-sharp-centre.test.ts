@@ -105,7 +105,6 @@ describe("WEAK_SHARP_DOT_EYES matches the decoder", () => {
   // so a circle centre keeps the finder's proportions on their diagonals.
   const SOUND_NEW_EYES: CornerEyePattern[] = [
     "porthole",
-    "doodle",
     "notch",
     "plus",
     "stamp",

@@ -112,7 +112,6 @@ const EYE_DESCRIPTIONS: Record<PickableCornerEyePattern, string> = {
   cushion: "Rounded frame with gently pinched sides",
   shield: "Shield-shaped frame",
   porthole: "Soft round frame around a square hole with cut corners",
-  doodle: "Soft square frame drawn by hand",
   notch: "Square frame with a round bite out of each corner",
   plus: "Plus-shaped frame",
   stamp:

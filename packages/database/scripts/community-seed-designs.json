@@ -4777,6 +4777,431 @@
         },
         "logoIcon": "wifi"
       }
+    },
+    {
+      "id": "creek-bed",
+      "slug": "creek-bed",
+      "name": "Creek bed",
+      "description": "Soft pebble tiles in a deep moss green with porthole eyes and cushion centres, on a pale sage. Calm and natural, for garden centres, trail maps and plant shops.",
+      "tags": ["nature", "earthy", "soft"],
+      "payload": {
+        "style": {
+          "bgColor": "#EEF3EA",
+          "fgColor": "#2F4A2A",
+          "eyeColor": "#24391F",
+          "dotColor": "#2F4A2A",
+          "bodyPattern": "pebble",
+          "cornerEyePattern": "porthole",
+          "cornerEyeDotPattern": "cushion",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "night-ferry",
+      "slug": "night-ferry",
+      "name": "Night ferry",
+      "description": "Round dots in a deep navy with porthole eyes and round centres, on a pale sky blue. Quiet and nautical, for ferry timetables, harbour cafes and boat hire.",
+      "tags": ["cool", "professional", "minimal"],
+      "payload": {
+        "style": {
+          "bgColor": "#E8F1FA",
+          "fgColor": "#12294A",
+          "eyeColor": "#0B1C36",
+          "dotColor": "#12294A",
+          "bodyPattern": "circle",
+          "cornerEyePattern": "porthole",
+          "cornerEyeDotPattern": "circle",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "tide-pool",
+      "slug": "tide-pool",
+      "name": "Tide pool",
+      "description": "Rounded modules in a dark teal with porthole eyes and rounded centres, on a pale aqua. Fresh and clean, for aquariums, swim schools and beach kiosks.",
+      "tags": ["cool", "soft", "nature"],
+      "payload": {
+        "style": {
+          "bgColor": "#E4F7F5",
+          "fgColor": "#0F4C4A",
+          "eyeColor": "#0A3836",
+          "dotColor": "#0F4C4A",
+          "bodyPattern": "rounded",
+          "cornerEyePattern": "porthole",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "sketchbook",
+      "slug": "sketchbook",
+      "name": "Sketchbook",
+      "description": "Pebble tiles in a graphite grey with hand-drawn doodle eyes and rounded centres, on warm paper. Loose and friendly, for art classes, zines and studio doors.",
+      "tags": ["playful", "monochrome", "soft"],
+      "payload": {
+        "style": {
+          "bgColor": "#F7F3EA",
+          "fgColor": "#2E2E2E",
+          "eyeColor": "#1F1F1F",
+          "dotColor": "#2E2E2E",
+          "bodyPattern": "pebble",
+          "cornerEyePattern": "doodle",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "crayon-box",
+      "slug": "crayon-box",
+      "name": "Crayon box",
+      "description": "Round dots in a deep crayon red with doodle eyes and cushion centres, on a pale cream. Cheerful and handmade, for nurseries, toy shops and kids' menus.",
+      "tags": ["playful", "warm", "colorful"],
+      "payload": {
+        "style": {
+          "bgColor": "#FFF6E8",
+          "fgColor": "#8F1D1D",
+          "eyeColor": "#6E1414",
+          "dotColor": "#8F1D1D",
+          "bodyPattern": "circle",
+          "cornerEyePattern": "doodle",
+          "cornerEyeDotPattern": "cushion",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "margin-notes",
+      "slug": "margin-notes",
+      "name": "Margin notes",
+      "description": "Square modules in an ink blue with doodle eyes and rounded centres, on lined-paper white. Studious and plain, for tutors, notebooks and reading lists.",
+      "tags": ["minimal", "cool", "flat"],
+      "payload": {
+        "style": {
+          "bgColor": "#F6F8FC",
+          "fgColor": "#1C2F6B",
+          "eyeColor": "#142352",
+          "dotColor": "#1C2F6B",
+          "bodyPattern": "square",
+          "cornerEyePattern": "doodle",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "terrazzo",
+      "slug": "terrazzo",
+      "name": "Terrazzo",
+      "description": "Pebble tiles in a deep clay red with notch eyes and cushion centres, on a stone white. Grounded and modern, for tile shops, interior studios and cafes.",
+      "tags": ["earthy", "warm", "elegant"],
+      "payload": {
+        "style": {
+          "bgColor": "#F5F0EA",
+          "fgColor": "#7A2E1F",
+          "eyeColor": "#5E2216",
+          "dotColor": "#7A2E1F",
+          "bodyPattern": "pebble",
+          "cornerEyePattern": "notch",
+          "cornerEyeDotPattern": "cushion",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "linen-fold",
+      "slug": "linen-fold",
+      "name": "Linen fold",
+      "description": "Rounded modules in a charcoal with notch eyes and cushion centres, on an oat linen. Understated, for tailors, bedding stores and craft fairs.",
+      "tags": ["minimal", "elegant", "soft"],
+      "payload": {
+        "style": {
+          "bgColor": "#F2EEE6",
+          "fgColor": "#2B2A28",
+          "eyeColor": "#1E1D1B",
+          "dotColor": "#2B2A28",
+          "bodyPattern": "rounded",
+          "cornerEyePattern": "notch",
+          "cornerEyeDotPattern": "cushion",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "gallery-tag",
+      "slug": "gallery-tag",
+      "name": "Gallery tag",
+      "description": "Classy modules in black with notch eyes and rounded centres, on a gallery white. Crisp and quiet, for exhibition labels, catalogues and studios.",
+      "tags": ["monochrome", "minimal", "elegant"],
+      "payload": {
+        "style": {
+          "bgColor": "#FAFAF7",
+          "fgColor": "#111111",
+          "eyeColor": "#0A0A0A",
+          "dotColor": "#111111",
+          "bodyPattern": "classy",
+          "cornerEyePattern": "notch",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "apothecary",
+      "slug": "apothecary",
+      "name": "Apothecary",
+      "description": "Round dots in a bottle green with plus eyes and rounded centres, on a pale mint cream. Clean and careful, for pharmacies, herbalists and wellness shops.",
+      "tags": ["cool", "professional", "nature"],
+      "payload": {
+        "style": {
+          "bgColor": "#EEF6EF",
+          "fgColor": "#14452F",
+          "eyeColor": "#0D3322",
+          "dotColor": "#14452F",
+          "bodyPattern": "circle",
+          "cornerEyePattern": "plus",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "stitch-sampler",
+      "slug": "stitch-sampler",
+      "name": "Stitch sampler",
+      "description": "Plus-shaped modules in a deep plum with plus eyes and squircle centres, on an aida cream. Crafty and neat, for haberdashers, sewing classes and knit cafes.",
+      "tags": ["playful", "warm", "retro"],
+      "payload": {
+        "style": {
+          "bgColor": "#FBF5EA",
+          "fgColor": "#4A1942",
+          "eyeColor": "#371231",
+          "dotColor": "#4A1942",
+          "bodyPattern": "plus",
+          "cornerEyePattern": "plus",
+          "cornerEyeDotPattern": "squircle",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "first-aid",
+      "slug": "first-aid",
+      "name": "First aid",
+      "description": "Square modules in a deep red with plus eyes and rounded centres, on a clean white. Plain and direct, for clinics, safety posters and first-aid kits.",
+      "tags": ["bold", "high-contrast", "flat"],
+      "payload": {
+        "style": {
+          "bgColor": "#FFFFFF",
+          "fgColor": "#9B1C1C",
+          "eyeColor": "#7F1616",
+          "dotColor": "#9B1C1C",
+          "bodyPattern": "square",
+          "cornerEyePattern": "plus",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "airmail",
+      "slug": "airmail",
+      "name": "Airmail",
+      "description": "Square modules in a navy with perforated stamp eyes and squircle centres, on a pale envelope blue. Neat and traditional, for post offices, pen pals and parcel desks.",
+      "tags": ["retro", "cool", "professional"],
+      "payload": {
+        "style": {
+          "bgColor": "#EEF3FB",
+          "fgColor": "#1B2A5C",
+          "eyeColor": "#121E45",
+          "dotColor": "#1B2A5C",
+          "bodyPattern": "square",
+          "cornerEyePattern": "stamp",
+          "cornerEyeDotPattern": "squircle",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "first-class",
+      "slug": "first-class",
+      "name": "First class",
+      "description": "Rounded modules in a deep postbox red with stamp eyes and rounded centres, on a warm paper. Classic and tidy, for stationers, mailrooms and invitations.",
+      "tags": ["retro", "warm", "elegant"],
+      "payload": {
+        "style": {
+          "bgColor": "#FBF4EA",
+          "fgColor": "#8A1E15",
+          "eyeColor": "#6B160F",
+          "dotColor": "#8A1E15",
+          "bodyPattern": "rounded",
+          "cornerEyePattern": "stamp",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "collector",
+      "slug": "collector",
+      "name": "Collector",
+      "description": "Pebble tiles in a sepia brown with stamp eyes and cushion centres, on an album cream. Nostalgic, for antique shops, flea markets and hobby clubs.",
+      "tags": ["retro", "earthy", "warm"],
+      "payload": {
+        "style": {
+          "bgColor": "#F8F1E4",
+          "fgColor": "#4E3421",
+          "eyeColor": "#3B2718",
+          "dotColor": "#4E3421",
+          "bodyPattern": "pebble",
+          "cornerEyePattern": "stamp",
+          "cornerEyeDotPattern": "cushion",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "seedling",
+      "slug": "seedling",
+      "name": "Seedling",
+      "description": "Classy rounded modules in a leaf green with bud eyes and rounded centres, on a pale spring green. Fresh and growing, for nurseries, seed packets and farm stands.",
+      "tags": ["nature", "soft", "playful"],
+      "payload": {
+        "style": {
+          "bgColor": "#EFF7E8",
+          "fgColor": "#24502A",
+          "eyeColor": "#1A3B1F",
+          "dotColor": "#24502A",
+          "bodyPattern": "classy-rounded",
+          "cornerEyePattern": "bud",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "orchard",
+      "slug": "orchard",
+      "name": "Orchard",
+      "description": "Round dots in a deep plum with bud eyes and cushion centres, on a pale blossom pink. Gentle and seasonal, for orchards, jam makers and markets.",
+      "tags": ["nature", "warm", "soft"],
+      "payload": {
+        "style": {
+          "bgColor": "#FCEFF3",
+          "fgColor": "#5B1A3A",
+          "eyeColor": "#43122A",
+          "dotColor": "#5B1A3A",
+          "bodyPattern": "circle",
+          "cornerEyePattern": "bud",
+          "cornerEyeDotPattern": "cushion",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "greenhouse",
+      "slug": "greenhouse",
+      "name": "Greenhouse",
+      "description": "Liquid modules in a forest green with bud eyes and rounded centres, on a pale glass green. Lush and calm, for plant shops, conservatories and botanical tours.",
+      "tags": ["nature", "cool", "elegant"],
+      "payload": {
+        "style": {
+          "bgColor": "#EAF5EF",
+          "fgColor": "#1D4A35",
+          "eyeColor": "#143626",
+          "dotColor": "#1D4A35",
+          "bodyPattern": "liquid",
+          "cornerEyePattern": "bud",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "glaze",
+      "slug": "glaze",
+      "name": "Glaze",
+      "description": "Rounded modules in a cobalt with bowl eyes and rounded centres, on a porcelain white. Clean and crafted, for potters, ceramic studios and tableware shops.",
+      "tags": ["cool", "elegant", "minimal"],
+      "payload": {
+        "style": {
+          "bgColor": "#F5F7FB",
+          "fgColor": "#1E3A8A",
+          "eyeColor": "#172E6E",
+          "dotColor": "#1E3A8A",
+          "bodyPattern": "rounded",
+          "cornerEyePattern": "bowl",
+          "cornerEyeDotPattern": "rounded",
+          "level": "Q",
+          "margin": 4
+        }
+      }
+    },
+    {
+      "id": "noodle-bar",
+      "slug": "noodle-bar",
+      "name": "Noodle bar",
+      "description": "Round dots in a deep soy brown with bowl eyes and squircle centres, on a warm rice white. Homely, for noodle shops, ramen menus and takeaway bags.",
+      "tags": ["warm", "playful", "flat"],
+      "payload": {
+        "style": {
+          "bgColor": "#FBF6EE",
+          "fgColor": "#4A2A14",
+          "eyeColor": "#38200F",
+          "dotColor": "#4A2A14",
+          "bodyPattern": "circle",
+          "cornerEyePattern": "bowl",
+          "cornerEyeDotPattern": "squircle",
+          "level": "Q",
+          "margin": 4
+        }
+      },
+      "frame": {
+        "official": "cafe-cup",
+        "color": "#2B1D14",
+        "textColor": "#F8F1E7"
+      }
+    },
+    {
+      "id": "hearth",
+      "slug": "hearth",
+      "name": "Hearth",
+      "description": "Classy rounded modules in a deep ember brown with bowl eyes and cushion centres, on an oatmeal. Cosy, for bakeries, soup kitchens and winter menus.",
+      "tags": ["warm", "earthy", "soft"],
+      "payload": {
+        "style": {
+          "bgColor": "#F6EFE4",
+          "fgColor": "#5A2B14",
+          "eyeColor": "#45200F",
+          "dotColor": "#5A2B14",
+          "bodyPattern": "classy-rounded",
+          "cornerEyePattern": "bowl",
+          "cornerEyeDotPattern": "cushion",
+          "level": "Q",
+          "margin": 4
+        }
+      }
     }
   ]
 }

@@ -1,12 +1,10 @@
 import type { CornerEyePattern } from "../types/corner-eye";
 import {
   cushionPath,
-  doodleRadius,
   notchedRectPath,
   octagonPoints,
   perforatedSquarePath,
   polygonPath,
-  radialPoints,
   roundedRectPath,
   scoopedRectPath,
   shieldPath,
@@ -201,21 +199,6 @@ function generateCornerPortholePattern(
   return (
     pebbleOutline(offsetX + size / 2, offsetY + size / 2, m) +
     notchedRectPath(offsetX + m, offsetY + m, 5 * m, 5 * m, 0.52 * m)
-  );
-}
-
-/** Doodle: a soft square drawn by hand (shapes.ts doodleRadius). */
-function generateCornerDoodlePattern(
-  offsetX: number,
-  offsetY: number,
-  size: number
-): string {
-  const m = size / 7;
-  const cx = offsetX + size / 2;
-  const cy = offsetY + size / 2;
-  return (
-    polygonPath(radialPoints(cx, cy, doodleRadius(3.5 * m), 160)) +
-    roundHole(offsetX, offsetY, m)
   );
 }
 
@@ -614,8 +597,6 @@ export function generateCornerSquarePath(
       return generateCornerPetalPattern(offsetX, offsetY, size, corner);
     case "porthole":
       return generateCornerPortholePattern(offsetX, offsetY, size);
-    case "doodle":
-      return generateCornerDoodlePattern(offsetX, offsetY, size);
     case "notch":
       return generateCornerNotchPattern(offsetX, offsetY, size);
     case "plus":

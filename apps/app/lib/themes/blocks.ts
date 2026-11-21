@@ -482,7 +482,7 @@ export const STYLE_FAMILIES: readonly StyleFamily[] = [
     id: "soft",
     word: "Pebble",
     bodies: ["rounded", "circle-large", "liquid", "classy-rounded", "pebble"],
-    eyes: ["rounded", "extra-rounded", "squircle", "doodle"],
+    eyes: ["rounded", "extra-rounded", "squircle"],
   },
   {
     id: "fluid",
@@ -506,7 +506,7 @@ export const STYLE_FAMILIES: readonly StyleFamily[] = [
     id: "playful",
     word: "Pop",
     bodies: ["heart", "plus", "random-dots"],
-    eyes: ["extra-rounded", "petal", "squircle", "stamp", "doodle"],
+    eyes: ["extra-rounded", "petal", "squircle", "stamp"],
     playful: true,
   },
 ];
@@ -550,7 +550,6 @@ export const EYE_DOTS: Readonly<
   // The eyes added after qrdx 0.0.57: centres that read inside them in sharp
   // renders (a square centre doesn't; tests/editor/new-eye-presets.test.ts)
   porthole: ["circle", "rounded"],
-  doodle: ["rounded", "cushion"],
   notch: ["cushion", "rounded"],
   plus: ["rounded", "squircle"],
   stamp: ["squircle", "rounded"],

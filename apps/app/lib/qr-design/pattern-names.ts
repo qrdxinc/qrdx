@@ -63,7 +63,6 @@ export const EYE_PATTERNS: { id: PickableCornerEyePattern; name: string }[] = [
   { id: "bud", name: "Bud" },
   { id: "bowl", name: "Bowl" },
   { id: "stamp", name: "Stamp" },
-  { id: "doodle", name: "Doodle" },
 ];
 
 // Every offered eye dot (diamond, star and banner were retired: they don't
