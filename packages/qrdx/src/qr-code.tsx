@@ -2,8 +2,11 @@
 // on the server; only QRCodeCanvas needs a client boundary.
 import { memo, useMemo } from "react";
 import type { QRCodePropsSVG } from "../types/react";
-import { DEFAULT_MARGIN } from "./constants";
-import { getQRCodeData, getQRCodeSVGProps } from "./qr-code-props";
+import {
+  getQRCodeData,
+  getQRCodeSVGProps,
+  QR_CODE_DATA_KEYS,
+} from "./qr-code-props";
 import { QRCodeSVG } from "./qr-code-svg";
 
 /**
@@ -12,45 +15,10 @@ import { QRCodeSVG } from "./qr-code-svg";
  * goes on the `<svg>`, as with `QRCodeSVG`.
  */
 export const QRCode = memo((props: QRCodePropsSVG) => {
-  const {
-    value,
-    fgColor,
-    hideLogo,
-    logo,
-    logoOptions,
-    bgColor,
-    eyeColor,
-    dotColor,
-    bodyPattern,
-    cornerEyePattern,
-    cornerEyeDotPattern,
-    level,
-    margin = DEFAULT_MARGIN,
-    templateId,
-    autoLevel,
-    shape,
-  } = props;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the layout depends on exactly these props
   const qrData = useMemo(
     () => getQRCodeData(props),
-    [
-      value,
-      fgColor,
-      hideLogo,
-      logo,
-      logoOptions,
-      margin,
-      autoLevel,
-      shape,
-      bgColor,
-      eyeColor,
-      dotColor,
-      bodyPattern,
-      cornerEyePattern,
-      cornerEyeDotPattern,
-      level,
-      templateId,
-    ]
+    // biome-ignore lint/correctness/useExhaustiveDependencies: the layout reads exactly these props (QR_CODE_DATA_KEYS, the list getQRCodeData lays out from)
+    QR_CODE_DATA_KEYS.map((key) => props[key])
   );
 
   return <QRCodeSVG {...getQRCodeSVGProps(props, qrData)} />;
