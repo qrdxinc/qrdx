@@ -35,7 +35,7 @@ export function Header() {
               QRdx
             </p>
           </Link>
-          <HeaderNav />
+          <HeaderNav className="hidden lg:flex" />
         </div>
         <div className="flex items-center gap-3.5">
           <GetProCTA className="h-8" />
