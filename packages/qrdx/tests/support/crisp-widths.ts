@@ -4,12 +4,12 @@
 // it took the letters for finder patterns. Their labels now sit on dark
 // pills; these tests render each such frame with resvg at every code width
 // from 160 to 450 px in 10 px steps and decode every render.
-import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { getFrameDimensions } from "../../src/frame";
 import { OFFICIAL_FRAMES } from "../../src/frames/official";
 import type { AnyQRFrame, QRProps } from "../../types";
+import { childReads } from "./child-reads";
 import { SAMPLE_PAYLOADS } from "./frames";
 import { renderSvg } from "./qr";
 
@@ -83,12 +83,11 @@ export function crispMisses(
     width: Math.round(getFrameDimensions(width, frame).width),
     margin: Math.round(width * 0.12),
   }));
-  const reads = JSON.parse(
-    execFileSync(process.execPath, [READER], {
-      input: JSON.stringify({ value, fontDir: FONT_DIR, jobs }),
-      maxBuffer: 16 * 1024 * 1024,
-    }).toString()
-  ) as boolean[];
+  const reads = childReads<boolean[]>(READER, {
+    value,
+    fontDir: FONT_DIR,
+    jobs,
+  });
   return CRISP_WIDTHS.filter((_, i) => !reads[i]);
 }
 
