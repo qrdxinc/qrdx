@@ -1022,7 +1022,11 @@
     "theme:cafe-crema",
     "theme:pay-blue",
     "theme:ticket-red",
-    "theme:winter-frost"
+    "theme:winter-frost",
+    "theme:gilt-grid",
+    "theme:espresso",
+    "theme:electric-blue",
+    "theme:wreath"
   ],
   "themes": [
     {
@@ -1348,6 +1352,214 @@
         "frame:new-year",
         "theme:winter-frost",
         "theme:new-year-midnight"
+      ]
+    },
+    {
+      "id": "menus-and-counters",
+      "name": "Menus & counters",
+      "description": "Looks for menus, cafés, bars and bakeries, on the frames made for them.",
+      "items": [
+        "theme:chalkboard-menu",
+        "theme:espresso",
+        "theme:cocktail-hour",
+        "theme:bakery-case",
+        "theme:pizza-night",
+        "theme:sushi-bar",
+        "theme:taproom",
+        "theme:wine-list",
+        "theme:tea-time",
+        "theme:juice-bar",
+        "theme:ice-cream",
+        "theme:loyalty-card",
+        "theme:cocoa",
+        "frame:menu-arch",
+        "frame:order-here-tab",
+        "frame:call-a-server"
+      ]
+    },
+    {
+      "id": "cards-and-bookings",
+      "name": "Cards & bookings",
+      "description": "Business cards, member cards, appointments and check-ins.",
+      "items": [
+        "theme:business-card",
+        "theme:hotel-key",
+        "theme:member-card",
+        "theme:clinic-card",
+        "theme:barber-chair",
+        "theme:spa-day",
+        "theme:nail-bar",
+        "theme:day-pass",
+        "theme:course-card",
+        "theme:save-the-date",
+        "theme:call-us",
+        "theme:write-to-us",
+        "frame:bizcard-light",
+        "frame:biz-booking"
+      ]
+    },
+    {
+      "id": "shops-and-packaging-looks",
+      "name": "Shops & packaging looks",
+      "description": "Price tags, gift cards, care labels and product seals.",
+      "items": [
+        "theme:sale-tag",
+        "theme:gift-card",
+        "theme:care-label",
+        "theme:recycled",
+        "theme:shopfront",
+        "theme:genuine",
+        "theme:powder-blue",
+        "theme:marmalade",
+        "theme:download-sheet",
+        "frame:shop-price-check",
+        "frame:pack-instructions",
+        "frame:pack-reorder"
+      ]
+    },
+    {
+      "id": "wifi-and-guest-info",
+      "name": "Wi-Fi & guest info",
+      "description": "Guest Wi-Fi, room service, maps and travel, with a Wi-Fi icon where it helps.",
+      "items": [
+        "theme:guest-wifi",
+        "theme:wifi-sticker",
+        "theme:wifi-plain",
+        "theme:room-service",
+        "theme:boarding-pass",
+        "theme:city-guide",
+        "theme:explore",
+        "theme:find-us",
+        "theme:beach-flag",
+        "frame:wifi-tile",
+        "frame:wifi-tab",
+        "frame:hotel-concierge"
+      ]
+    },
+    {
+      "id": "black-and-gold",
+      "name": "Black & gold",
+      "description": "Black or near-black ink with a deep gold accent on white, cream or ivory, for galas, hotels and jewellers.",
+      "items": [
+        "theme:gilt-grid",
+        "theme:black-tie",
+        "theme:champagne",
+        "theme:deco-fan",
+        "theme:velvet-rope",
+        "theme:gold-leaf",
+        "theme:gala-night",
+        "theme:noir-hex",
+        "theme:cocktail-hour",
+        "theme:hotel-key"
+      ]
+    },
+    {
+      "id": "soft-and-pastel",
+      "name": "Soft & pastel",
+      "description": "Tinted paper and medium-deep inks, still at the contrast a scan needs.",
+      "items": [
+        "theme:peach-sorbet",
+        "theme:mint-drop",
+        "theme:lilac-rows",
+        "theme:butter",
+        "theme:blush-hearts",
+        "theme:pale-sky",
+        "theme:sage-plus",
+        "theme:lavender-stars",
+        "theme:candy-floss",
+        "theme:seafoam-hex",
+        "theme:apricot",
+        "theme:river-stone",
+        "theme:dew"
+      ]
+    },
+    {
+      "id": "bright-and-neon",
+      "name": "Bright & neon",
+      "description": "Dark ink on bright grounds and bold two-ink looks, for posters and sales.",
+      "items": [
+        "theme:volt",
+        "theme:hot-coral",
+        "theme:cyan-dots",
+        "theme:neon-pink",
+        "theme:tennis-ball",
+        "theme:safety-orange",
+        "theme:neon-mint",
+        "theme:glitch-yellow",
+        "theme:cherry-pop",
+        "theme:electric-blue",
+        "theme:confetti",
+        "theme:beach-ball"
+      ]
+    },
+    {
+      "id": "minimal-print",
+      "name": "Minimal print",
+      "description": "One ink on paper, for stationery, labels and anything next to a logo.",
+      "items": [
+        "theme:paper-ink",
+        "theme:soft-graphite",
+        "theme:dot-matrix",
+        "theme:hairline",
+        "theme:newsprint",
+        "theme:cross-stitch",
+        "theme:ruled-lines",
+        "theme:liquid-ink",
+        "theme:cut-corners",
+        "theme:honeycomb",
+        "theme:fine-grid",
+        "theme:quote-card",
+        "frame:scan-me-tile",
+        "frame:underline-bold"
+      ]
+    },
+    {
+      "id": "holidays-and-seasons-looks",
+      "name": "Holiday & season looks",
+      "description": "Festive and seasonal looks on holiday and season frames.",
+      "items": [
+        "theme:wreath",
+        "theme:candlelight",
+        "theme:fireworks",
+        "theme:red-lantern",
+        "theme:diya",
+        "theme:color-splash",
+        "theme:pumpkin-patch",
+        "theme:sweetheart",
+        "theme:crescent",
+        "theme:lantern-green",
+        "theme:menorah-blue",
+        "theme:blossom-branch",
+        "theme:summer-tide",
+        "theme:maple",
+        "theme:crystal",
+        "theme:harvest",
+        "theme:rainbow-eyes"
+      ]
+    },
+    {
+      "id": "earthy-and-retro",
+      "name": "Earthy & retro",
+      "description": "Clay, bark, moss and seventies browns on cream.",
+      "items": [
+        "theme:kiln",
+        "theme:olive-grove",
+        "theme:dune",
+        "theme:bark",
+        "theme:lichen",
+        "theme:rust",
+        "theme:cedar",
+        "theme:wheat-field",
+        "theme:umber",
+        "theme:seventies",
+        "theme:postcard",
+        "theme:diner",
+        "theme:typewriter",
+        "theme:mustard",
+        "theme:vinyl",
+        "theme:teal-tiles",
+        "theme:cassette",
+        "theme:arcade"
       ]
     }
   ]
