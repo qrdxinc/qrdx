@@ -1,14 +1,17 @@
 // @vitest-environment jsdom
 // The "New" tag on this round's official frames: every id in the batch is a
 // real frame, the tag goes away the day after the batch's date, and a frame
-// tile shows it for a new frame and not for an old one.
+// tile in the picker carries it top-right (beside the check when selected)
+// and is named "<name>, new". The clock is fixed, so nothing here depends on
+// the day the tests run.
 
 import { NextIntlClientProvider } from "next-intl";
 import { OFFICIAL_FRAMES } from "qrdx";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { FrameNewTag } from "@/components/frames/frame-new-tag";
+import { OptionTile } from "@/components/editor/control-sections/option-tiles";
+import { useNewFrames } from "@/components/frames/use-new-frames";
 import { isNewIn } from "@/lib/whats-new";
 import { NEW_FRAMES } from "@/lib/whats-new/frames";
 import en from "@/messages/en.json";
@@ -17,12 +20,20 @@ import en from "@/messages/en.json";
   globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
 ).IS_REACT_ACT_ENVIRONMENT = true;
 
+const DURING = () => new Date("2026-11-21T12:00:00Z");
+const AFTER = () => new Date("2027-01-01T00:00:00Z");
+
+const [BATCH] = NEW_FRAMES;
+const NEW_ID = BATCH?.ids[0] ?? "";
+const nameOf = (id: string) =>
+  OFFICIAL_FRAMES.find((frame) => frame.id === id)?.name ?? "";
+
 describe("the new frames batch", () => {
-  it("names only frames the catalogue has, and more than a hundred of them", () => {
+  it("names only frames the catalogue has, each once", () => {
     const ids = new Set(OFFICIAL_FRAMES.map((frame) => frame.id));
     const batch = NEW_FRAMES.flatMap((item) => item.ids);
     expect(batch.filter((id) => !ids.has(id))).toEqual([]);
-    expect(batch.length).toBeGreaterThan(100);
+    expect(batch).toHaveLength(112);
     expect(new Set(batch).size).toBe(batch.length);
     for (const item of NEW_FRAMES) {
       expect(item.until).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -30,24 +41,44 @@ describe("the new frames batch", () => {
   });
 
   it("is new until its date, and old the day after", () => {
-    const [batch] = NEW_FRAMES;
-    if (!batch) throw new Error("no batch");
-    const id = batch.ids[0] ?? "";
-    expect(isNewIn(NEW_FRAMES, id, new Date(`${batch.until}T23:59:59Z`))).toBe(
-      true,
-    );
-    expect(isNewIn(NEW_FRAMES, id, new Date(`${batch.until}T00:00:00Z`))).toBe(
-      true,
-    );
-    const after = new Date(`${batch.until}T00:00:00Z`);
+    if (!BATCH) throw new Error("no batch");
+    const last = `${BATCH.until}T23:59:59Z`;
+    expect(isNewIn(NEW_FRAMES, NEW_ID, new Date(last))).toBe(true);
+    expect(
+      isNewIn(NEW_FRAMES, NEW_ID, new Date(`${BATCH.until}T00:00:00Z`)),
+    ).toBe(true);
+    const after = new Date(`${BATCH.until}T00:00:00Z`);
     after.setUTCDate(after.getUTCDate() + 1);
-    expect(isNewIn(NEW_FRAMES, id, after)).toBe(false);
+    expect(isNewIn(NEW_FRAMES, NEW_ID, after)).toBe(false);
     // The first frame the catalogue ever had is not new
-    expect(isNewIn(NEW_FRAMES, "wifi-card")).toBe(false);
+    expect(isNewIn(NEW_FRAMES, "wifi-card", DURING())).toBe(false);
   });
 });
 
-describe("the frame tile's tag", () => {
+/** A frame tile as the picker draws it (control-sections/frame-picker.tsx). */
+function FrameTile({
+  id,
+  selected = false,
+  clock,
+}: {
+  id: string;
+  selected?: boolean;
+  clock: () => Date;
+}) {
+  const isNewFrame = useNewFrames(clock);
+  return (
+    <OptionTile
+      isNew={isNewFrame(id)}
+      name={nameOf(id)}
+      onSelect={() => undefined}
+      selected={selected}
+    >
+      <span />
+    </OptionTile>
+  );
+}
+
+describe("a frame tile's tag", () => {
   let container: HTMLDivElement;
   let root: Root;
   beforeEach(() => {
@@ -60,23 +91,41 @@ describe("the frame tile's tag", () => {
     container.remove();
   });
 
-  const render = (id: string) =>
+  const render = (tile: Parameters<typeof FrameTile>[0]) =>
     act(() => {
       root.render(
         <NextIntlClientProvider locale="en" messages={en}>
-          <FrameNewTag id={id} />
+          <FrameTile {...tile} />
         </NextIntlClientProvider>,
       );
     });
+  const button = () => container.querySelector("button");
+  const pill = () =>
+    [...container.querySelectorAll("span")].find(
+      (span) => span.textContent === "New",
+    );
 
-  it("shows New on a frame from this round, after mount", () => {
-    const id = NEW_FRAMES[0]?.ids[0] ?? "";
-    render(id);
-    expect(container.textContent).toBe("New");
+  it("shows New on a frame from this round and names the tile '<name>, new'", () => {
+    render({ id: NEW_ID, clock: DURING });
+    expect(pill()).toBeDefined();
+    expect(button()?.getAttribute("aria-label")).toBe(`${nameOf(NEW_ID)}, new`);
+  });
+
+  it("keeps New, beside the check, on the selected tile", () => {
+    render({ id: NEW_ID, selected: true, clock: DURING });
+    expect(button()?.getAttribute("aria-pressed")).toBe("true");
+    expect(pill()?.className).toContain("right-6");
+    expect(button()?.getAttribute("aria-label")).toBe(`${nameOf(NEW_ID)}, new`);
   });
 
   it("shows nothing on an older frame", () => {
-    render("wifi-card");
-    expect(container.textContent).toBe("");
+    render({ id: "wifi-card", clock: DURING });
+    expect(pill()).toBeUndefined();
+    expect(button()?.hasAttribute("aria-label")).toBe(false);
+  });
+
+  it("drops the tag once the batch's date has passed", () => {
+    render({ id: NEW_ID, clock: AFTER });
+    expect(pill()).toBeUndefined();
   });
 });
